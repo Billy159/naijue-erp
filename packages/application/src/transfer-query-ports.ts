@@ -75,6 +75,9 @@ export interface TransferCatalogSizeGroup {
 }
 export interface TransferDetailCatalog { readonly skus: readonly TransferCatalogSku[]; readonly sizeGroups: readonly TransferCatalogSizeGroup[] }
 export interface TransferDetail {
+  /** Opt-in v2 category read projection, bounded by the existing 2000 current-line limit.
+   * CUTOFF_HISTORY classification is UNKNOWN, never inferred from the current native catalog. */
+  readonly categorySummary?: import("./sales-query-ports.ts").DocumentCategorySummary;
   /** Current actual lines only, retaining native SKU identity and persisted display snapshots. */
   readonly document: TransferDocument; readonly stockBasis: "RUNTIME_LEDGER" | "CUTOFF_HISTORY";
   readonly references: TransferReferenceNames;

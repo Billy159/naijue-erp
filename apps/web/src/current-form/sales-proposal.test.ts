@@ -194,7 +194,7 @@ test('exchange price display follows discount/unit price/gift exactly while pres
  const large={...row,product:{...row.product,retailPrice:'90071992547409.93'},pricingRule:'DISCOUNT' as const,discount:'8'};assert.equal(salesProposalPriceDisplay(large).dealPrice,'72057594037927.94');
  h.context.clear();
 });
-test('actual proposal form keeps both filled exchange sections visible and renders linked price/gift fields',async()=>{
+test('actual proposal form keeps both exchange directions in one table and renders linked price/gift fields',async()=>{
  const {build}=await import('esbuild'),{mkdtemp,rm}=await import('node:fs/promises'),{pathToFileURL}=await import('node:url'),{resolve,join}=await import('node:path');
  const temp=await mkdtemp(resolve('apps/web/src/current-form/.exchange-form-'));
  try{
@@ -204,7 +204,7 @@ test('actual proposal form keeps both filled exchange sections visible and rende
   const h=setup();await fill(h.session);h.session.setBusinessType('EXCHANGE');const key=h.session.getSnapshot().draft.lines[0]!.key;h.session.updateLine(key,{quantity:'-1',dealPrice:'10'});
   for(const dir of ['IN','OUT'] as const){const k=h.session.getSnapshot().entries[dir].at(-1)!.key;await h.session.openEntryPicker(dir,'product',k);await h.session.select(product.id);h.session.updateEntry(dir,{dealPrice:'10'},k);}
   const render=()=>new JSDOM(renderToStaticMarkup(createElement(SalesProposalForm,{session:h.session,scope:h.scope,productReader:{},denied(){},actions:null,busy:false})));
-  let dom=render();assert.equal(dom.window.document.querySelectorAll('[data-business-section=out] [data-entry-row]').length,1,'filled inactive entry remains visible');assert.equal(dom.window.document.querySelectorAll('[data-business-section=in] [data-entry-row]').length,3,'saved line, filled entry and active blank input');dom.window.close();
+  let dom=render();assert.equal(dom.window.document.querySelectorAll('[data-business-section]').length,1,'one effective table, no duplicate direction sections');assert.equal(dom.window.document.querySelectorAll('[data-business-section=unified] [data-entry-row]').length,4,'saved line, both filled directional entries and active blank input');for(const direction of ['IN','OUT'] as const){const filled=h.session.getSnapshot().entries[direction].filter(entry=>entry.product);assert.equal(filled.length,1);assert.ok(dom.window.document.querySelector(`[data-business-section=unified] [data-entry-row="${filled[0]!.key}"]`),`${direction} draft remains visible`);}assert.ok(dom.window.document.querySelector(`[data-entry-row="${key}"]`),'saved signed line remains visible');dom.window.close();
   h.session.updateLine(key,{pricingRule:'DISCOUNT',discount:'5',isGift:true});dom=render();const row=dom.window.document.querySelector(`[data-entry-row="${key}"]`)!;assert.equal(row.querySelector('input[aria-label="本行成交单价"]')?.getAttribute('value'),'0.00');assert.equal(row.querySelector('input[aria-label="本行折扣"]')?.getAttribute('value'),'0');assert.equal(row.querySelector('.sale-gift')?.textContent,'赠品');dom.window.close();h.context.clear();
  }finally{await rm(temp,{recursive:true,force:true});}
 });
@@ -236,4 +236,40 @@ test('payment draft add follows Demo amount-only rule, rejects invalid amount wi
 test('PF01 selecting the same product again rereads complete SKU set without revision-free cache',async()=>{
  let count=0;const {session}=setup({async readProductSkus(query){count++;return {page:query.page,pageSize:20,exactTotal:21n,items:Array.from({length:query.page===1?20:1},(_,i)=>({...sku,id:entityId('sku',uuid(1000+(query.page-1)*20+i)),sizeId:entityId('size',uuid(2000+(query.page-1)*20+i))}))};}});
  await session.openPicker('hall');await session.select(hall.id);for(let round=0;round<2;round++){await session.openPicker('product');await session.select(product.id);assert.equal(session.getSnapshot().picker?.phase,'ready');assert.equal(session.getSnapshot().picker?.specSkus?.length,21);session.closePicker();}assert.equal(count,4);session.dispose();
+});
+test('late customer recommendation from previous hall cannot replace current hall picker or choose a customer',async()=>{
+ let finish!:(value:CurrentFormPage<CurrentSalesReferenceItem>)=>void;let pendingSignal:AbortSignal|undefined;
+ const {session}=setup({readSalesReferences:async(query,signal)=>{
+  if(query.kind==='hall')return page([hall,otherHall]);
+  if(query.kind==='customer'&&query.hallId===hallId){pendingSignal=signal;return new Promise(resolve=>{finish=resolve;});}
+  return {...page([ref(22,{code:'OTHER',isRecommended:true})]),recommendationAvailability:'AVAILABLE'};
+ }});
+ await session.openPicker('hall');await session.select(hall.id);const prior=session.openPicker('customer');
+ await session.openPicker('hall');await session.select(otherHall.id);await session.openPicker('customer');
+ assert.equal(pendingSignal?.aborted,true);assert.equal(session.getSnapshot().draft.customer,null);assert.equal(session.getSnapshot().picker?.result?.items[0]?.id,uuid(22));
+ finish({...page([ref(11,{code:'OLD',isRecommended:true})]),recommendationAvailability:'AVAILABLE'});await prior;
+ assert.equal(session.getSnapshot().picker?.result?.items[0]?.id,uuid(22));assert.equal(session.getSnapshot().draft.customer,null);session.dispose();
+});
+
+test('hall change is explicit, atomic and stale confirmation cannot discard a newer draft',async()=>{
+ const {session}=setup();await fill(session);session.setHeader({note:'保留备注',orderDiscount:'2.00'});await session.openPicker('hall');
+ const before=session.getSnapshot();assert.equal(session.hallChangeRequiresReset(otherHall.id),true);assert.equal(await session.select(otherHall.id),false);assert.equal(session.getSnapshot().draft,before.draft);
+ const confirm=session.prepareHallChange(otherHall.id);assert.ok(confirm);assert.equal(confirm(),true);assert.equal(confirm(),false);const changed=session.getSnapshot();
+ assert.equal(changed.draft.hall?.id,otherHall.id);assert.equal(changed.draft.note,'保留备注');assert.equal(changed.draft.businessDate,'2026-10-21');assert.equal(changed.draft.customer,null);assert.equal(changed.draft.salesperson,null);assert.equal(changed.draft.warehouse,null);assert.deepEqual(changed.draft.lines,[]);assert.deepEqual(changed.draft.settlements,[]);assert.equal(changed.draft.orderDiscount,'0.00');assert.equal(changed.picker,null);
+ const next=setup();await fill(next.session);await next.session.openPicker('hall');const captured=next.session.prepareHallChange(otherHall.id);assert.ok(captured);next.session.setHeader({note:'较新的输入'});assert.equal(captured(),false);assert.equal(next.session.getSnapshot().draft.hall?.id,hall.id);assert.equal(next.session.getSnapshot().draft.note,'较新的输入');assert.equal(next.session.getSnapshot().draft.lines.length,1);
+});
+test('trusted initial salesperson default does not turn a clean untouched draft dirty',()=>{const {session}=setup();const draft=session.getSnapshot().draft;assert.equal(session.applyDefaultSalesperson(ref(11),uuid(11),draft),true);assert.equal(session.getSnapshot().dirty,false);});
+
+test('direction-only updates preserve independent line/entry identity and edit cancel/confirm',async()=>{
+ const {salesLineDirectionQuantity:sign}=await import('../../demo-replica/frontend/runtime/documents/sales-line-direction.ts');
+ const h=setup();await fill(h.session);h.session.setBusinessType('EXCHANGE');
+ await h.session.openPicker('product');await h.session.select(product.id);await h.session.select(sku.id);h.session.closePicker();
+ const [first,second]=h.session.getSnapshot().draft.lines;assert.ok(first&&second);h.session.updateLine(first.key,{quantity:'-2',dealPrice:'10',isGift:true,zeroConfirmed:true});
+ const before=h.session.getSnapshot().draft.lines[0]!;h.session.updateLine(first.key,{quantity:sign(before.quantity,'OUT')!});
+ assert.deepEqual(h.session.getSnapshot().draft.lines[0],{...before,quantity:'2'});assert.deepEqual(h.session.getSnapshot().draft.lines[1],second);
+ const original=h.session.getSnapshot().draft;assert.equal(h.session.beginLineEdit(first.key),true);h.session.updateLineEdit({quantity:sign('2','IN')!});assert.equal(h.session.getSnapshot().lineEdit?.quantity,'-2');assert.equal(h.session.getSnapshot().draft,original);h.session.cancelLineEdit();assert.equal(h.session.getSnapshot().draft,original);
+ assert.equal(h.session.beginLineEdit(first.key),true);h.session.updateLineEdit({quantity:'-2'});assert.equal(h.session.confirmLineEdit(),true);assert.equal(h.session.getSnapshot().draft.lines[0]!.quantity,'-2');assert.equal(h.session.getSnapshot().draft.lines[0]!.isGift,true);
+ const key=h.session.getSnapshot().entries.IN.at(-1)!.key;await h.session.openEntryPicker('IN','product',key);await h.session.select(product.id);h.session.updateEntry('IN',{quantity:'-9007199254740993',dealPrice:'0.00',isGift:true,zeroConfirmed:true},key);
+ const entry=h.session.getSnapshot().entries.IN.find(x=>x.key===key)!;h.session.updateEntry('IN',{quantity:sign(entry.quantity,'OUT')!},key);assert.deepEqual(h.session.getSnapshot().entries.OUT.find(x=>x.key===key),{...entry,quantity:'9007199254740993'});assert.ok(!h.session.getSnapshot().entries.IN.some(x=>x.key===key));
+ h.session.clearEntry('OUT',key);assert.ok(!h.session.getSnapshot().entries.OUT.some(x=>x.key===key&&x.product));h.context.clear();
 });

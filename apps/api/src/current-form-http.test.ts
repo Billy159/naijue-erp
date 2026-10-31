@@ -124,3 +124,15 @@ test('CURRENT form HTTP: pending injected disconnect forwards cancellation and c
  assert.equal(forwarded.aborted, true); release(); const response = await pending;
  assert.equal(response.statusCode, 408); assert.equal(raw.listenerCount('aborted'), listeners - 1); assert.equal(app.server.listening, false);
 });
+test('customer recommendation wire is explicitly negotiated and legacy shape stays unchanged',async t=>{
+ const app=Fastify({logger:false});t.after(()=>app.close());
+ const customer={id,name:'同名客户',code:'C001',hallId:null,hallName:null,paymentMethodId:null,paymentMethodName:null,isRecommended:true};
+ const page={page:1,pageSize:20 as const,exactTotal:1n,items:[customer],recommendationAvailability:'AVAILABLE' as const};
+ const unused=async()=>{throw Error('unused');};
+ app.register(createCurrentFormHttpPlugin({authenticate:async()=>actor,reader:{readSalesReferences:async()=>page,readTransferWarehouses:unused,readProducts:unused,readProductSkus:unused,readSkuBatch:unused}}));
+ for(const version of [undefined,'unknown','customer-v1']){
+  const response=await app.inject({method:'POST',url:'/current-form/sales-references/query',headers:{'content-type':'application/json',...(version?{'x-naijue-current-form-recommendation':version}:{})},payload:{kind:'customer',hallId:id,search:'',page:1,pageSize:20}});
+  assert.equal(response.statusCode,200);const body=response.json();
+  assert.equal(Object.hasOwn(body,'recommendationAvailability'),version==='customer-v1');assert.equal(Object.hasOwn(body.items[0],'isRecommended'),version==='customer-v1');
+ }
+});

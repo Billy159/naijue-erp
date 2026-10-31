@@ -39,21 +39,21 @@ const scope: TransferReadScope = { kind: "restricted", clauses: [{ fromHallId: i
 const read = <P>(parameters: P, granted: TransferReadScope = scope, signal = new AbortController().signal) => ({ actor, scope: granted, parameters, signal });
 const reader = (client: ProtocolClient) => new PostgresTransferQueryReader({ async connect() { return client; } });
 const time = "2026-10-20T12:00:00.000000Z";
-const header = () => ({ id: ids.transfer, number: "SYNTHETIC-ONLY", business_date: "2026-10-20", from_warehouse_id: ids.fromWarehouse, to_warehouse_id: ids.toWarehouse,
+const header = () => ({ responsible_staff_id: null, responsible_name: null, id: ids.transfer, number: "SYNTHETIC-ONLY", business_date: "2026-10-20", from_warehouse_id: ids.fromWarehouse, to_warehouse_id: ids.toWarehouse,
   status: "DRAFT", version: 1, note: null, created_by_account_id: ids.account, created_hall_id: ids.hall, created_role: "SALESPERSON", created_at: time,
   updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER", from_warehouse_name: "SYNTHETIC CURRENT SOURCE",
   to_warehouse_name: "SYNTHETIC CURRENT DESTINATION", from_hall_name: "SYNTHETIC CURRENT SOURCE HALL", to_hall_name: "SYNTHETIC CURRENT DESTINATION HALL", created_by_name: "SYNTHETIC CURRENT CREATOR", approved_by_name: null });
 const line = () => ({ id: ids.line, transfer_id: ids.transfer, line_no: 1, sku_id: ids.sku, quantity: "9007199254740993", product_code_snapshot: "SYNTHETIC OLD CODE",
   product_name_snapshot: "SYNTHETIC OLD PRODUCT", color_name_snapshot: "SYNTHETIC OLD COLOR", fit_name_snapshot: "SYNTHETIC OLD FIT", size_name_snapshot: "SYNTHETIC OLD SIZE", barcode_snapshot: "001234560000", is_current: true });
 const catalogIds = { product: sid("product", 301), color: sid("color", 302), fit: sid("fit", 303), size: sid("size", 304), size2: sid("size", 305), size3: sid("size", 306), group: sid("sizeGroup", 307) };
-const sku = () => ({ sku_id: ids.sku, product_id: catalogIds.product, product_code: "CURRENT-CODE", product_name: "SYNTHETIC CURRENT PRODUCT", color_id: catalogIds.color,
+const sku = () => ({ category_id: sid('category',901),category_name:'SYNTHETIC CATEGORY',sku_id: ids.sku, product_id: catalogIds.product, product_code: "CURRENT-CODE", product_name: "SYNTHETIC CURRENT PRODUCT", color_id: catalogIds.color,
   color_name: "SYNTHETIC CURRENT COLOR", fit_id: catalogIds.fit, fit_name: "SYNTHETIC CURRENT FIT", size_id: catalogIds.size, size_group_id: catalogIds.group });
 const member = () => ({ size_group_id: catalogIds.group, group_code: "GROUP", group_name: "SYNTHETIC CURRENT GROUP", size_id: catalogIds.size,
   size_code: null, size_name: "SYNTHETIC CURRENT SIZE", display_order: -1 });
 const catalogSteps = (): Step[] => [{ sql: /^SELECT s.id AS sku_id/, rows: [sku(), { ...sku(), sku_id: ids.sku2, size_id: catalogIds.size2 }], inspect(values, sql) {
   assert.deepEqual(values, [[ids.sku], TRANSFER_DETAIL_MAX_CATALOG_SKUS + 1]); assert.match(sql, /SELECT DISTINCT product_id, color_id, fit_id/);
   assert.match(sql, /present.product_id = s.product_id AND present.color_id = s.color_id AND present.fit_id = s.fit_id/);
-  assert.ok(!/inventory_balance|stock|enabled =|product_category|LATERAL/.test(sql));
+  assert.ok(!/inventory_balance|stock|enabled =|LATERAL/.test(sql));assert.match(sql,/LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id/);
 } }, { sql: /^SELECT g.id AS size_group_id/, rows: [member(), { ...member(), size_id: catalogIds.size2, display_order: 0 }, { ...member(), size_id: catalogIds.size3, display_order: 1 }], inspect(values, sql) {
   assert.deepEqual(values, [[catalogIds.group], TRANSFER_DETAIL_MAX_SIZE_MEMBERS + 1]); assert.match(sql, /ORDER BY g.id, m.display_order, z.id LIMIT \$2/);
 } }];
@@ -78,7 +78,7 @@ test("transfer pg query: count/page share scoped native relations and repeatable
     countedValues = [...values]; countRelations = sql.slice(sql.indexOf("FROM naijue_erp.transfer_header")); assert.ok(!sql.includes("OR TRUE"));
   } }, { sql: /^SELECT h.id/, rows: [header()], inspect(values, sql) {
     scoped(values, sql); assert.deepEqual(values.slice(0, -2), countedValues); assert.deepEqual(values.slice(-2), [50, "50"]);
-    assert.ok(sql.includes(countRelations)); assert.match(sql, /ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC LIMIT \$11 OFFSET \$12::bigint/);
+    assert.ok(sql.includes(countRelations)); assert.match(sql, /ORDER BY h.created_at DESC, h.number COLLATE "C" ASC, h.id ASC LIMIT \$11 OFFSET \$12::bigint/);
     assert.match(sql, /JOIN naijue_erp.user_account ca/); assert.match(sql, /JOIN naijue_erp.staff creator/);
     assert.ok(!/transfer_line|naijue_erp.product|naijue_erp.sku|FOR UPDATE|enabled =/.test(sql));
   } }, { sql: /^SELECT page.id/, rows: [{ transfer_id: ids.transfer, total_quantity: "18446744073709551614" }], inspect(values, sql) {
@@ -255,10 +255,10 @@ const normalTransferIdentity = (): Step => ({ sql: /read-authorization:identity/
   employment_status: '在职', hall_id: actor.hallId, native_hall_id: actor.hallId, hall_enabled: true }] });
 test('normal transfer union: source-bound effective endpoints or ORIGINAL creator hall authorize history independently before global count/page', async () => {
   const live = { ...header(), dataset: 'LIVE', batch_id: null, responsible_staff_id: null, responsible_name: null, quantity: '9007199254740993', incoming_quantity: '0', outgoing_quantity: '9007199254740993',
-    product_count: '1', product_items: [{ productId: catalogIds.product, productCodeSnapshot: 'ORIGINAL', productNameSnapshot: 'ORIGINAL' }], product_has_more: false };
+    product_count: '1', product_items: [{ productId: catalogIds.product, productCodeSnapshot: 'ORIGINAL', productNameSnapshot: 'ORIGINAL' }], product_has_more: false, category_items: [], category_has_more: false, category_count: '0' };
   const historical = { ...live, dataset: 'HISTORY', batch_id: sid('operation', 402), business_date: null, status: 'DRAFT', version: 4, created_by_account_id: null, created_by_name: null,
     created_at: null, updated_at: null, created_local_at: null, updated_local_at: null, quantity: '7', incoming_quantity: '0', outgoing_quantity: '7', product_count: null,
-    product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: null }], product_has_more: false };
+    product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: null }], product_has_more: false, category_items: [], category_has_more: false, category_count: '0' };
   const input = parameters(); Object.assign(input.filter, { fromWarehouseIds: [ids.fromWarehouse], toWarehouseIds: [ids.toWarehouse], statuses: ['DRAFT'] });
   const client = new ProtocolClient([begin(), normalTransferIdentity(), { sql: /normal-document-list:totals/, rows: [{ exact_total: '2', history_valid: true, history_published: true, quantity: '9007199254741000', incoming_quantity: '0', outgoing_quantity: '9007199254741000' }], inspect(values, sql) {
     assert.match(sql, /scope_fw\.id=\(CASE WHEN e\.header_id IS NULL/); assert.match(sql, /scope_tw\.hall_id=/);
@@ -266,7 +266,7 @@ test('normal transfer union: source-bound effective endpoints or ORIGINAL creato
     assert.match(sql, /created_hall_provenance='ORIGINAL'/); assert.match(sql, /field_provenance->'fields'->'created_hall_id'->>'origin'='ORIGINAL'/);
     assert.match(sql, /h\.created_role_source='SALESPERSON'/); assert.match(sql, /h\.from_warehouse_id=ANY/); assert.match(sql, /h\.to_warehouse_id=ANY/);
     assert.ok(!sql.includes('creator.hall_id') && !sql.includes('creator.role')); assert.ok(values.some(v => Array.isArray(v) && v[0] === ids.fromWarehouse));
-  } }, { sql: /normal-document-list:page/, rows: [live, historical], inspect(_values, sql) { assert.match(sql, /ORDER BY h.updated_at DESC NULLS LAST,h.id ASC,h.dataset ASC/); assert.match(sql, /p\.dataset='HISTORY' AND l.batch_id=p.batch_id AND l.header_id=p.id/); } }, commit()]);
+  } }, { sql: /normal-document-list:page/, rows: [live, historical], inspect(_values, sql) { assert.match(sql, /ORDER BY h.sort_created_at DESC NULLS LAST,h.id ASC,h.dataset ASC,h.batch_id ASC NULLS FIRST/); assert.match(sql, /p\.dataset='HISTORY' AND l.batch_id=p.batch_id AND l.header_id=p.id/); } }, commit()]);
   const result = await normalTransferReader(client).readList(read(input)); assert.ok('totals' in result);
   assert.equal(result.exactTotal, 2n); assert.equal(result.totals.totalQuantity, 9007199254741000n); assert.equal(result.historyCoverage, 'PUBLISHED_AUTHORIZED');
   assert.equal(result.items[0]!.totalQuantity, 9007199254740993n); const h = result.items[1]!;
@@ -285,7 +285,7 @@ test('normal transfer pushdown: effective date/endpoints filter before projectio
     Object.assign(input.filter, { startDate: '2026-10-01', endDate: '2026-10-20', statuses: ['DRAFT', 'APPROVED'], fromWarehouseIds: [ids.fromWarehouse], toWarehouseIds: [ids.toWarehouse], number: "%_\\'literal" });
     const historical = { ...header(), dataset: 'HISTORY', batch_id: sid('operation', 402), responsible_staff_id: null, responsible_name: null,
       created_by_account_id: null, created_by_name: null, created_at: null, updated_at: null, created_local_at: null, updated_local_at: null,
-      quantity: '0', incoming_quantity: '0', outgoing_quantity: '0', product_count: null, product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: null }], product_has_more: false };
+      quantity: '0', incoming_quantity: '0', outgoing_quantity: '0', product_count: null, product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: null }], product_has_more: false, category_items: [], category_has_more: false, category_count: '0' };
     const identity = normalTransferIdentity(); identity.rows![0]!.role = role;
     let bound: unknown[] = [];
     const client = new ProtocolClient([begin(), identity, { sql: /normal-document-list:totals/, rows: [{ exact_total: '21', history_valid: true, history_published: true, quantity: '9007199254741000', incoming_quantity: '0', outgoing_quantity: '9007199254741000' }], inspect(values, sql) {
@@ -319,4 +319,40 @@ test('normal transfer pushdown: effective date/endpoints filter before projectio
     assert.equal(result.exactTotal, 21n); assert.equal(result.items.length, 1); assert.equal(result.items[0]!.totalQuantity, 0n);
     assert.equal(result.items[0]!.productSummary.productCount, null); assert.equal(result.totals.totalQuantity, 9007199254741000n); client.done();
   }
+});
+test('detail current category expansion uses existing line cap and deduplicates SKU/products without merging same-name IDs',async()=>{
+ const ls=Array.from({length:5},(_,i)=>({...line(),id:sid('transferLine',980+i),line_no:i+1,sku_id:sid('sku',960+(i===4?0:i)),quantity:i===4?'8':'1'}));
+ const ss=Array.from({length:4},(_,i)=>({...sku(),sku_id:sid('sku',960+i),product_id:sid('product',970+i),category_id:sid('category',990+i),category_name:i<2?'同名':'分类'+i}));
+ const client=new ProtocolClient([begin(),{sql:/^SELECT h.id/,rows:[header()]},{sql:/FROM naijue_erp.transfer_line/,rows:ls,inspect(values){assert.equal(values[1],TRANSFER_DETAIL_MAX_CURRENT_LINES+1);}},{sql:/^SELECT s.id AS sku_id/,rows:ss},{sql:/^SELECT g.id AS size_group_id/,rows:[member()]},commit()]);
+ const result=await reader(client).readDetail(read({transferId:ids.transfer}));assert.equal(result.categorySummary?.basis,'CURRENT');assert.equal(result.categorySummary?.categoryCount,4n);assert.deepEqual(result.categorySummary?.items.map(x=>x.value),[1n,1n,1n,1n]);assert.deepEqual(result.categorySummary?.items.slice(0,2).map(x=>x.categoryName),['同名','同名']);assert.notEqual(result.categorySummary?.items[0]?.categoryId,result.categorySummary?.items[1]?.categoryId);assert.equal(result.categorySummary?.hasMore,false);assert.equal(client.calls.length,6);client.done();
+});
+
+test('category expansion does not relax native detail negative-quantity rejection',async()=>{const client=new ProtocolClient([begin(),{sql:/^SELECT h.id/,rows:[header()]},{sql:/FROM naijue_erp.transfer_line/,rows:[{...line(),quantity:'-1'}]},rollback()]);await assert.rejects(reader(client).readDetail(read({transferId:ids.transfer})),{code:'INVALID_DATABASE_VALUE'});client.done();});
+
+test('CUTOFF_HISTORY detail categories are unknown, not current classifications or a fabricated zero', async () => {
+  for (const empty of [false, true]) {
+    const client = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [{ ...header(), stock_basis: 'CUTOFF_HISTORY' }] },
+      { sql: /FROM naijue_erp.transfer_line/, rows: empty ? [] : [line()] }, ...(empty ? [] : catalogSteps()), commit()]);
+    const result = await reader(client).readDetail(read({ transferId: ids.transfer }));
+    assert.equal(result.stockBasis, 'CUTOFF_HISTORY');
+    assert.deepEqual(result.categorySummary, { basis: 'UNKNOWN', metric: 'PRODUCT_COUNT', categoryCount: null, items: [], hasMore: false });
+    assert.equal(result.document.lines.length, empty ? 0 : 1);
+    if (!empty) {
+      assert.equal(result.document.lines[0]!.snapshot.productName, line().product_name_snapshot);
+      assert.equal(result.catalog.skus[0]!.productName, sku().product_name);
+    }
+    assert.equal(client.calls.length, empty ? 4 : 6); client.done();
+  }
+});
+
+test('historical category unknown does not decode irrelevant current category facts or weaken native catalog checks', async () => {
+  const steps = catalogSteps();
+  const client = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [{ ...header(), stock_basis: 'CUTOFF_HISTORY' }] },
+    { sql: /FROM naijue_erp.transfer_line/, rows: [line()] },
+    { ...steps[0]!, rows: [{ ...sku(), category_id: 'not-a-category-id', category_name: undefined }, { ...sku(), sku_id: ids.sku2, size_id: catalogIds.size2, category_id: 'not-a-category-id', category_name: undefined }] }, steps[1]!, commit()]);
+  const result = await reader(client).readDetail(read({ transferId: ids.transfer }));
+  assert.equal(result.categorySummary?.basis, 'UNKNOWN'); client.done();
+  const invalid = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [{ ...header(), stock_basis: 'CUTOFF_HISTORY' }] },
+    { sql: /FROM naijue_erp.transfer_line/, rows: [line()] }, { sql: /^SELECT s.id AS sku_id/, rows: [] }, rollback()]);
+  await assert.rejects(reader(invalid).readDetail(read({ transferId: ids.transfer })), { code: 'INVALID_DATABASE_VALUE' }); invalid.done();
 });

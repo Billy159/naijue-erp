@@ -32,12 +32,22 @@ try{
   function Harness(){const [selected,setSelected]=useState(null);value=selected;return family==='inventory'?h(CandidateSelect,{kind,value:selected,categoryIds:[],scope,reader,productReader:{},onAccessFailure(){throw new Error('unexpected denial');},onChange:setSelected}):h(ProductFilter,{kind,value:selected,scope,reader,productReader:{},denied(){throw new Error('unexpected denial');},change:setSelected});}
   root=createRoot(host);await act(async()=>root.render(h(Harness)));await settle();const shadow=host.firstElementChild.shadowRoot;await click(shadow.querySelector('.arco-tree-select-view'));
   const nodes=()=>[...shadow.querySelectorAll('.arco-tree-node')];const allNode=()=>nodes().find(n=>n.querySelector('.arco-tree-node-title')?.textContent.startsWith('全部'));const itemNode=()=>nodes().find(n=>n.querySelector('.arco-tree-node-title')?.textContent==='候选0');const checked=node=>!!node.querySelector('.arco-checkbox-checked');
-  assert.equal(nodes().length,21);assert.ok(nodes().every(checked),family+kind+' All checks every loaded child');
+  assert.equal(nodes().length,21);
+  if(family==='inventory'&&kind==='category'){
+   assert.ok(checked(allNode()));assert.ok(nodes().filter(n=>n!==allNode()).every(n=>!checked(n)),'category All is independent, not a complement selection');
+   await click(allNode().querySelector('.arco-checkbox'));assert.equal(value,null);assert.ok(checked(allNode()));
+   await click(itemNode().querySelector('.arco-checkbox'));assert.deepEqual(value,[candidates[0]]);assert.equal(checked(allNode()),false);assert.ok(checked(itemNode()));
+   assert.equal(reads.some(x=>x.parameters.page===2),false,'category single selection does not load a complement universe');
+   await click(allNode().querySelector('.arco-checkbox'));assert.equal(value,null);assert.ok(checked(allNode()));assert.ok(nodes().filter(n=>n!==allNode()).every(n=>!checked(n)));
+  }else{
+  assert.ok(nodes().every(checked),family+kind+' All checks every loaded child');
   await click(allNode().querySelector('.arco-checkbox'));assert.deepEqual(value,[]);assert.ok(nodes().every(n=>!checked(n)));
   await click(allNode().querySelector('.arco-checkbox'));assert.equal(value,null);assert.ok(nodes().every(checked));
   await click(itemNode().querySelector('.arco-checkbox'));assert.equal(value.length,20);assert.equal(value.some(x=>x.id===candidates[0].id),false);assert.equal(value.some(x=>x.id===candidates[20].id),true,'unloaded later-page candidate retained');assert.ok(reads.some(x=>x.parameters.page===2));assert.equal(checked(allNode()),false);assert.equal(checked(itemNode()),false);
-  await click(allNode().querySelector('.arco-checkbox'));assert.equal(value,null);await click(shadow.querySelector('.arco-tag-close-btn'));assert.deepEqual(value,[],'All tag close clears the same selection');
+  await click(allNode().querySelector('.arco-checkbox'));assert.equal(value,null);
+  }
+  await click(shadow.querySelector('.arco-tag-close-btn'));assert.deepEqual(value,family==='inventory'&&kind==='category'?null:[],'category clear restores All; other multi-select clear remains empty');
   await act(async()=>root.unmount());root=null;scope.dispose();
  }
- console.log('PASS: actual Arco TreeSelect inventory5 kinds and product-year All/children check together, All click toggles, deselect from All keeps page2 candidates, All tag close clears. Synthetic DOM only.');
+ console.log('PASS: actual Arco TreeSelect independent category All/one child/no complement read; other inventory kinds and product-year keep All/children toggle/page2 complement; All tag close clears. Synthetic DOM only.');
 }finally{if(root)root.unmount();dom.window.close();await rm(temp,{recursive:true,force:true});}

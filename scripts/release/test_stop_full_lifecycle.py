@@ -51,7 +51,9 @@ class CredentialMount(unittest.TestCase):
   import copy
   with tempfile.TemporaryDirectory() as tmp:
    root=pathlib.Path(tmp).resolve();p,key=self.fixture(root)
-   with patch.object(D,'ROOT',root),patch.object(pathlib.Path,'read_bytes',side_effect=AssertionError('must not read secret bytes')):
+   # Credential test isolates unrelated capacity-file validation, covered by its own suite.
+   capacity={'collector':{'hostFile':str(root/'collector')},'profile':{'hostFile':str(root/'profile')}}
+   with patch.object(D,'ROOT',root),patch.object(D,'capacity_host_binding',return_value=capacity),patch.object(pathlib.Path,'read_bytes',side_effect=AssertionError('must not read secret bytes')):
     self.assertTrue(D.exact26_full(p));D.validate_full_credential(p,{'staffMaintenance':True,'staffCredentialRequestKeyFile':'/run/naijue-rewrite/credential-request.key'})
     args=D.runtime_mount_arguments(p);self.assertIn('type=bind,src='+str(key)+',dst=/run/naijue-rewrite/credential-request.key,readonly',args)
     before=D.runtime_binding(p);key.touch();self.assertNotEqual(before,D.runtime_binding(p))
@@ -93,7 +95,13 @@ class LogRotation(unittest.TestCase):
    def __init__(self):self.calls=[]
    def run(self,args):self.calls.append(args);return ('c'*64).encode()
   p=self.plan();docker=Docker()
-  D.create_app(p,docker);D.create_web(p,docker);D.create_web(p,docker,public=True)
+  # The old direct create_app path is intentionally closed; test the actual gate carrier.
+  gate={'hostFifo':'/isolated/gate','nonce':'a'*64,'shell':{'containerFile':'/bin/sh'}}
+  with patch.object(D,'capacity_host_binding'),patch.object(D,'capacity_gate_binding',return_value=gate),patch.object(D,'runtime_mount_arguments',return_value=[]):
+   D.create_capacity_gate_app(p,docker)
+  D.create_web(p,docker);D.create_web(p,docker,public=True)
+  with self.assertRaisesRegex(D.Refused,'CAPACITY_USE_BOUNDED_CONTROLLER'):
+   D.create_app(p,docker)
   for args in [row for row in docker.calls if row[0]=='create']+[D.limits_args(p,'install')]:
    self.assertEqual(args[args.index('--log-driver')+1],'json-file')
    for option in ('max-size=1048576','max-file=2','compress=true'):self.assertIn(option,args)
@@ -105,7 +113,7 @@ class LogRotation(unittest.TestCase):
    {'maxSizeBytes':1,'maxFiles':1,'compress':False,'endpoint':'not-allowed'}]:
    p=copy.deepcopy(self.plan());p['limits']['app']['logging']=value
    docker=types.SimpleNamespace(run=lambda args:self.fail('must not call Docker'))
-   with self.subTest(value=value),self.assertRaises(D.Refused):D.create_app(p,docker)
+   with self.subTest(value=value),self.assertRaises(D.Refused):D.limits_args(p,'app')
  def test_actual_rotation_mismatch_is_rejected_and_part_of_owned_fingerprint(self):
   import copy
   p=self.plan();info={'Id':'c'*64,'Image':'node-image','Config':{'Labels':{

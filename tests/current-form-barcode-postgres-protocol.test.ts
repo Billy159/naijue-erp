@@ -98,7 +98,7 @@ test("actual barcode POST enforces trusted authentication, exact JSON and no-sto
 });
 
 test("exact2 current forms: customer count/page share predicate only with actual-pool proof; old profile does not probe it", async () => {
-  for (const enabled of [false, true]) {
+  for (const enabled of [false, true]) for (const isRecommended of [false, true]) {
     const calls: string[] = []; let verified = 0;
     const pool = { async connect() { return { async query(sql: string) {
       calls.push(sql); let rows: Record<string, unknown>[] = [];
@@ -107,7 +107,7 @@ test("exact2 current forms: customer count/page share predicate only with actual
       else if (sql.includes("current-form:sales-hall")) rows = [{ id: actor.hallId, enabled: true }];
       else if (sql.includes("current-form:count")) rows = [{ total: "1" }];
       else if (sql.includes("current-form:page")) rows = [{ id: id(44), name: "SYNTHETIC ordinary customer", code: "TEST-44", hall_id: null,
-        hall_name: null, payment_method_id: null, payment_method_name: null }];
+        hall_name: null, payment_method_id: null, payment_method_name: null, is_recommended: isRecommended }];
       else assert.match(sql, /^(BEGIN|COMMIT|ROLLBACK)/);
       return { rows, rowCount: rows.length };
     }, release() {} }; } };
@@ -115,10 +115,40 @@ test("exact2 current forms: customer count/page share predicate only with actual
     const reader = new PostgresCurrentFormReader(pool, createSourceConfirmedCurrentFormAuthorization(), enabled ? { historicalCustomerExclusion: capability } : undefined);
     const result = await reader.readSalesReferences(actor, { kind: "customer", hallId: actor.hallId, search: "", page: 1, pageSize: 20 }, signal());
     assert.equal(result.items.length, 1); assert.equal(result.exactTotal, 1n); assert.equal(verified, enabled ? 1 : 0);
+    assert.equal(result.items[0]!.isRecommended, isRecommended); assert.equal(result.recommendationAvailability, "AVAILABLE");
     const selection = calls.filter(sql => /current-form:(count|page)/.test(sql)); assert.equal(selection.length, 2);
     for (const sql of selection) assert.equal(sql.includes("AND NOT naijue_erp.is_exact_historical_customer_only(r.id)"), enabled);
+    const page = selection.find(sql => sql.includes("current-form:page"))!;
+    assert.match(page, /COALESCE\(r\.id\s*=\s*selected_hall\.default_customer_id,\s*FALSE\) AS is_recommended/);
+    assert.match(page, /ORDER BY is_recommended DESC,\s*r\.name COLLATE "C", r\.id LIMIT/);
     assert.equal(calls[0], "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); assert.equal(calls.at(-1), "COMMIT");
   }
+});
+test("customer recommendations reject missing and non-boolean native values without committing", async t => {
+  const invalid = [
+    ["missing", {}], ["undefined", { is_recommended: undefined }], ["null", { is_recommended: null }],
+    ["string true", { is_recommended: "true" }], ["string false", { is_recommended: "false" }],
+    ["numeric zero", { is_recommended: 0 }], ["numeric one", { is_recommended: 1 }]
+  ] as const;
+  for (const [label, recommendation] of invalid) await t.test(label, async () => {
+    const calls: string[] = []; let released = 0;
+    const pool = { async connect() { return { async query(sql: string) {
+      calls.push(sql); let rows: Record<string, unknown>[] = [];
+      if (sql.includes("current-form:identity")) rows = [{ account_id: actor.accountId, staff_id: id(11), login_enabled: true,
+        role: "SALESPERSON", employment_status: "在职", hall_id: actor.hallId, native_hall_id: actor.hallId, hall_enabled: true }];
+      else if (sql.includes("current-form:sales-hall")) rows = [{ id: actor.hallId, enabled: true }];
+      else if (sql.includes("current-form:count")) rows = [{ total: "1" }];
+      else if (sql.includes("current-form:page")) rows = [{ id: id(44), name: "SYNTHETIC ordinary customer", code: "TEST-44", hall_id: null,
+        hall_name: null, payment_method_id: null, payment_method_name: null, ...recommendation }];
+      else assert.match(sql, /^(BEGIN|COMMIT|ROLLBACK)/);
+      return { rows, rowCount: rows.length };
+    }, release() { released++; } }; } };
+    const reader = new PostgresCurrentFormReader(pool, createSourceConfirmedCurrentFormAuthorization());
+    await assert.rejects(reader.readSalesReferences(actor, { kind: "customer", hallId: actor.hallId, search: "", page: 1, pageSize: 20 }, signal()),
+      { code: "INVALID_DATABASE_VALUE", message: "Expected database boolean" });
+    assert.equal(calls.filter(sql => sql.includes("current-form:page")).length, 1);
+    assert.equal(calls.at(-1), "ROLLBACK"); assert.ok(!calls.includes("COMMIT")); assert.equal(released, 1);
+  });
 });
 test("exact2 current forms: verified missing predicate is fatal and rolls back instead of old-profile fallback", async () => {
   const calls: string[] = []; let released = 0;

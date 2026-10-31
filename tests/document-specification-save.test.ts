@@ -63,20 +63,26 @@ test('v11 stale target/revoked actor and later receipt failure cannot commit par
   }
 });
 test('v11 sales proposal uses original exact pricing and receipt, with one callback and no prepare nonce or stock posting',async()=>{
-  const store=new SyntheticStore();let sequence=3000,callbacks=0,resolved=0;
+  const store=new SyntheticStore();const salespersonId=sid('staff',3999);let sequence=3000,callbacks=0,resolved=0,salespersonStatus='在职';
   const dependencies:SalesDependencies={now:()=> '2026-10-23T12:00:00Z',newId:kind=>sid(kind,sequence++),rules:createNativeManualSalesBusinessRules(),authorization:{async assertAllowed(){}},
     unitOfWork:{transaction(work){callbacks++;return store.transaction(tx=>work({...tx,
       async resolveDocumentSkus(input){resolved++;assert.equal(input.scope.kind,'SALES');return [ids.sku];},
       async getCurrentSalesSnapshots(){return new Map([[ids.sku,{...snapshot,barcode:null}]]);},
       async getCurrentSalesReferenceFacts(d){return {salesId:d.header.id,hall:{id:ids.hall,enabled:true},customer:{id:ids.customer,enabled:true},
-        warehouse:{id:ids.warehouse,hallId:ids.hall,enabled:true},salesperson:null,
+        warehouse:{id:ids.warehouse,hallId:ids.hall,enabled:true},salesperson:{id:salespersonId,employmentStatus:salespersonStatus},
         skus:[{id:ids.sku,productId:spec.productId,enabled:true,snapshot:{...snapshot,barcode:null}}],
         products:[{id:spec.productId,enabled:true,referencePrice:minorAmount('125'),minimumPrice:null}],paymentAccounts:[],barcodes:[],retainedLines:[]};}
     }));}}};
-  const command=parseSalesCommand({action:'SAVE',requestKey:'v11-sales',expectedVersion:null,proposal:salesProposal()},actor),service=createSalesService(dependencies);
+  const command=parseSalesCommand({action:'SAVE',requestKey:'v11-sales',expectedVersion:null,proposal:{...salesProposal(),salespersonId}},actor),service=createSalesService(dependencies);
   const result=await service.execute(command);assert.equal(callbacks,1);assert.equal(resolved,1);
   const saved=store.snapshot();assert.equal(saved.headers.get(result.salesId)!.netDue,250n);assert.equal(saved.receipts.size,1);assert.equal(saved.ledger.length,0);
   const allocated=sequence;assert.deepEqual(await service.execute(command),result);assert.equal(sequence,allocated);assert.equal(resolved,1);
+  for(const mode of ['missing','inactive'] as const){
+    const before=store.snapshot();salespersonStatus=mode==='inactive'?'离职':'在职';
+    const denied=parseSalesCommand({action:'SAVE',requestKey:`v11-sales-${mode}`,expectedVersion:null,proposal:{...salesProposal(),salespersonId:mode==='missing'?null:salespersonId}},actor);
+    await assert.rejects(service.execute(denied),{code:'SALES_REFERENCE_UNAVAILABLE'});assert.deepEqual(store.snapshot(),before);
+  }
+  salespersonStatus='在职';
 });
 test('v11 manual barcode distinguishes actual absence from missing SKU, duplicate MAIN and failed MAIN read',async()=>{
   const target={id:ids.sku,product_code:'P',product_name:'N',color_name:'C',fit_name:'F',size_name:'S'};

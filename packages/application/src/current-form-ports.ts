@@ -5,7 +5,7 @@ import type { EntityId } from "../../domain/src/values.ts";
  * authorization, authoritative transaction facts, numbering or a prepared draft. */
 export interface CurrentFormPage<T> {
   readonly page: number; readonly pageSize: 20; readonly exactTotal: bigint; readonly items: readonly T[];
-  /** Only paymentAccount pages expose this optional hint status. AVAILABLE covers
+  /** PaymentAccount and negotiated customer pages expose this optional hint status. AVAILABLE covers
    * verified runtime-active/source-hall hints, not unproven CUTOFF_HISTORY activity. */
   readonly recommendationAvailability?: "AVAILABLE" | "UNAVAILABLE";
 }
@@ -26,7 +26,7 @@ export interface CurrentSalesReferenceItem {
   /** Account-only method metadata. A paymentMethod item's own canonical ID/name
    * are in id/name; these two fields and its hall/code fields remain null. */
   readonly paymentMethodId: EntityId<"paymentMethod"> | null; readonly paymentMethodName: string | null;
-  /** Account-only server hint, present only when recommendationAvailability is AVAILABLE.
+  /** Server-proven account or current hall default-customer hint, present only when recommendationAvailability is AVAILABLE.
    * Absence is unknown, never an instruction to infer a group from hall identity. */
   readonly isRecommended?: boolean;
 }

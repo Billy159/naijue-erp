@@ -13,7 +13,10 @@ export type SalesLineDto = ExactWire<SalesLineRow>;
  * null is an explicit unknown historical fact, not today's account method. */
 export type SalesSettlementDto = Omit<ExactWire<SalesSettlementRow>, 'paymentMethodId'> & { readonly paymentMethodId: string | null };
 export interface SalesListDto { readonly page: number; readonly pageSize: SalesQueryPageSize; readonly exactTotal: string; readonly items: readonly SalesSummaryDto[] }
+type SummaryWire<T> = T extends bigint ? string : T extends readonly (infer U)[] ? readonly SummaryWire<U>[] : T extends object ? {readonly [K in keyof T]:SummaryWire<T[K]>} : T;
 export interface SalesDetailDto extends Pick<SalesDetail, 'stockBasis' | 'referenceNames' | 'settlementNames'> {
+  readonly productSummary?: SummaryWire<NonNullable<SalesDetail['productSummary']>>;
+  readonly categorySummary?: SummaryWire<NonNullable<SalesDetail['categorySummary']>>;
   readonly document: Omit<SalesDocument, 'header' | 'lines' | 'settlements'> & {
     readonly header: SalesHeaderDto; readonly lines: readonly SalesLineDto[]; readonly settlements: readonly SalesSettlementDto[];
   };

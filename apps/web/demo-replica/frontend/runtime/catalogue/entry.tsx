@@ -48,23 +48,17 @@ export async function mountCatalogue(host: HTMLElement, route: 'product-categori
   const page = route === 'product-categories' ? await import('./category-page.tsx')
     : route === 'product-settings' ? await import('./dictionary-page.tsx') : await import('./scheme-page.tsx');
   if (!options.scope.active) return () => {};
-  // Frozen product-current.js activates the page's final layout selectors.
-  // Keep that presentation mode local to these routes, not the shared shell.
-  const body = host.ownerDocument.body;
-  const hadProductMode = body.classList.contains('pc-mode');
-  body.classList.add('pc-mode');
   let release: () => void;
   try {
-    release = page.mount(host, { ...options, catalogue: createCatalogueSettingsHttpReader(options.http), dictionaries: createDictionaryHttpReader(options.http) });
+    release = page.mount(host, { ...options, catalogue: createCatalogueSettingsHttpReader(options.http), dictionaries: createDictionaryHttpReader(options.http,{schemeSegments:true}) });
   } catch (error) {
-    if (!hadProductMode) body.classList.remove('pc-mode');
     throw error;
   }
   let disposed = false;
   const dispose = () => {
     if (disposed) return;
     disposed = true;
-    try { release(); } finally { if (!hadProductMode) body.classList.remove('pc-mode'); }
+    release();
   };
   const abort = () => dispose();
   options.scope.signal.addEventListener('abort', abort, { once: true });
@@ -76,7 +70,7 @@ export async function mountCatalogue(host: HTMLElement, route: 'product-categori
 export async function mountBarcodeSchemeDetail(host: HTMLElement, schemeId: string, options: Pick<CatalogueRuntimeOptions, 'scope' | 'http' | 'onAccessFailure'>, close: () => void): Promise<() => void> {
   const page = await import('./scheme-page.tsx');
   if (!options.scope.active) return () => {};
-  const release = page.mountDetail(host, schemeId, { scope: options.scope, onAccessFailure: options.onAccessFailure, dictionaries: createDictionaryHttpReader(options.http) }, close);
+  const release = page.mountDetail(host, schemeId, { scope: options.scope, onAccessFailure: options.onAccessFailure, dictionaries: createDictionaryHttpReader(options.http,{schemeSegments:true}) }, close);
   let disposed = false;
   const dispose = () => { if (!disposed) { disposed = true; release(); } };
   options.scope.signal.addEventListener('abort', dispose, { once: true });

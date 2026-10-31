@@ -1,6 +1,7 @@
+import {withSchemeGenerationMetadata} from '../../../../packages/application/src/dictionary-scheme-detail.ts';
 import {QA_REFERENCE_PROFILE} from './qa-reference-fixtures.mts';
 import {createSyntheticUnifiedTransport} from '../../unified-browser-harness/synthetic-transport.ts';
-const detailPaths=new Set(['/inventory/output/query','/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
+const detailPaths=new Set(['/products/maintenance/candidates/query','/inventory/output/query','/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
 type Call={method:string;path:string;phase:'pending'|'completed'|'aborted'|'failed';started:number;finished?:number};
 /** Explicit local SYNTHETIC preview only. Never selected as a production fallback. */
 export function createReplicaPreviewTransport(options:{readonly emptyDocuments?:boolean}={}){
@@ -20,6 +21,7 @@ export function createReplicaPreviewTransport(options:{readonly emptyDocuments?:
   signal?.addEventListener('abort',abort,{once:true});
   const pending=Promise.resolve().then(async()=>{
    if(signal?.aborted)throw new DOMException('Preview read aborted','AbortError');
+   if(path==='/dictionary-read/barcode-scheme/query'&&method==='POST'&&new Headers(init.headers).get('x-naijue-scheme-detail')==='scheme-segments-v1'){const response=await base.http.fetch(input,init);if(!response.ok)return response;const value=await response.json();return new Response(JSON.stringify(value===null?null:withSchemeGenerationMetadata(value)),{status:response.status,headers:response.headers});}
    if(detailPaths.has(path)&&method==='POST')return(await product()).request(url,init);
    if(path.startsWith('/organization/')||path.startsWith('/organization-maintenance/')||path.startsWith('/staff/')||path.startsWith('/accounts/')||path.startsWith('/payment/')||path==='/settings/audit/query'||/^\/(customers|suppliers)(?:\/|$)/.test(path)){
     const adapter=await setting();if(adapter.canHandle(path,method))return adapter.request(url,init);

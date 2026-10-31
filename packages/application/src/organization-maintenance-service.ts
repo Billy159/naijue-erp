@@ -68,7 +68,6 @@ export function createOrganizationMaintenanceReadService(unitOfWork: Organizatio
       const actor = checkedProductActor(actorInput), kind = organizationKind(kindInput), query = parseOrganizationListQuery(input, kind);
       return unitOfWork.transaction(async tx => {
         await tx.evidence.assertAllowed(actor, kind, "LIST");
-        requireDomain(!("loginStatus" in query) || query.loginStatus !== "closed", "STAFF_LOGIN_FILTER_NOT_READY", "Closed-login no-account classification is pending");
         const page = await tx.readList(kind, query);
         requireDomain(page.kind === kind && page.page === query.page && page.pageSize === query.pageSize && Number.isSafeInteger(page.total) && page.total >= 0
           && Array.isArray(page.items) && page.items.length === Math.min(query.pageSize, Math.max(0, page.total - (query.page - 1) * query.pageSize)), "INVALID_DATABASE_VALUE", "Invalid settings page");

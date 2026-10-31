@@ -21,10 +21,23 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
   if (!exactKeys(contract.fontLicense, ['source', 'member'])
       || contract.fontLicense.source !== 'apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt'
       || contract.fontLicense.member !== 'web/source-styles/assets/fonts/LICENSE.txt'
-      || !exactKeys(contract.full, ['profile', 'patchLevel'])
+      || !exactKeys(contract.full, ['profile', 'patchLevel', 'catalogProfiles'])
       || typeof contract.full.profile !== 'string' || !/^source-confirmed-native-exact26-r3-v[1-9][0-9]*$/.test(contract.full.profile)
       || typeof contract.full.patchLevel !== 'string' || !/^26_[A-Za-z0-9_]+$/.test(contract.full.patchLevel)) {
     throw Error('INVALID_RELEASE_CONTRACT');
+  }
+  // Registered profile semantics are finite, not caller-selectable ACL relaxations.
+  const profiles = {
+    'legacy-v1': {format: 'EXACT26_RUNTIME_CATALOG_EXPORT_V1', patchLevel: '26_hv2_history_set_guards_from_v22', aclProofField: null},
+    'complete-write-v6': {format: 'EXACT26_RUNTIME_CATALOG_EXPORT_V6', patchLevel: '26_hv2_history_set_guards_complete_write_xmin_from_v22', aclProofField: 'complete_write_xmin_acl_match'},
+    'recorded-live-ledger-v7': {format: 'EXACT26_RUNTIME_CATALOG_EXPORT_V7', patchLevel: '26_hv2_live_ledger_pairs_complete_write_xmin_from_v22', aclProofField: 'complete_write_xmin_acl_match', observationProofField: 'recorded_live_balance_contract_match', requiredObservation: 'RECORDED_LIVE_LEDGER_PAIRS_V7', runtimeSqlPatch: 'adapters/postgres/patches/0026-live-ledger-balance-pairs.sql'},
+  };
+  if (contract.full.patchLevel !== profiles['legacy-v1'].patchLevel) throw Error('INVALID_RELEASE_LEGACY_PROFILE_DRIFT');
+  if (!exactKeys(contract.full.catalogProfiles, Object.keys(profiles))) throw Error('INVALID_RELEASE_CATALOG_PROFILE');
+  for (const [name, expected] of Object.entries(profiles)) {
+    const actual = contract.full.catalogProfiles[name];
+    if (!exactKeys(actual, Object.keys(expected)) || Object.entries(expected).some(([key, value]) => actual[key] !== value))
+      throw Error('INVALID_RELEASE_CATALOG_PROFILE');
   }
   if (!exactKeys(contract.entrypoints, ['frontend', 'backend'])) throw Error('INVALID_RELEASE_ENTRYPOINTS');
   for (const kind of ['frontend', 'backend']) {
@@ -44,6 +57,12 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
         || sources.has(row.source) || members.has(row.member)) throw Error('INVALID_RELEASE_PATCH');
     sources.add(row.source); members.add(row.member);
   }
+  // Packaged source artifact only; this registration never applies SQL or grants.
+  // A V7 descriptor may not borrow the original11 patch closure without its DDL.
+  const livePatch = contract.runtimeSqlPatches.at(-1);
+  if (!livePatch || livePatch.source !== profiles['recorded-live-ledger-v7'].runtimeSqlPatch
+      || livePatch.member !== 'patches/0026-live-ledger-balance-pairs.sql')
+    throw Error('INVALID_RELEASE_V7_STORAGE_PATCH');
   for (const row of contract.requestBodyBudgets) {
     if (!exactKeys(row, ['path', 'bytes']) || typeof row.path !== 'string'
         || !/^\/api\/[a-z0-9/-]+$/.test(row.path) || routes.has(row.path)
@@ -58,6 +77,17 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
   return `${begin}\n# Generated from config/release-contract.json; edit that source, then regenerate.\nRELEASE_CONTRACT = json.loads(r'''${literal}''')\nRELEASE_CONTRACT_SOURCE = json.loads(r'''${source}''')\n${end}`;
 }
 
+// Current helper requires capacityHost; boot-entry selects this exact pin first.
+// Legacy FULL approval remains immutable and is never used as a fallback.
+export function requireReviewedCapacityHelper(deploy, boot) {
+  const declarations = [...boot.matchAll(/^[ \t]*DEPLOYMENT_CAPACITY_SHA256\b[^\r\n]*$/gm)];
+  const pin = declarations.length === 1 && declarations[0][0].match(/^DEPLOYMENT_CAPACITY_SHA256 = '([a-f0-9]{64})'$/);
+  if (!pin) throw Error('DEPLOYMENT_CAPACITY_PIN_REQUIRED');
+  if (createHash('sha256').update(deploy).digest('hex') !== pin[1])
+    throw Error('DEPLOYMENT_HELPER_REAPPROVAL_REQUIRED');
+  return pin[1];
+}
+
 export async function generateReleaseContract(check = false) {
   const sourceBytes = await readFile(new URL('config/release-contract.json', root));
   const block = contractBlock(JSON.parse(sourceBytes), sourceBytes);
@@ -68,13 +98,13 @@ export async function generateReleaseContract(check = false) {
   const deploy = oldDeploy.replace(pattern, () => block);
   const bootPath = new URL('scripts/release/boot-entry.py', root);
   const oldBoot = await readFile(bootPath, 'utf8');
-  const helper = createHash('sha256').update(deploy).digest('hex');
-  const boot = oldBoot.replace(/DEPLOYMENT_FULL_SHA256 = '[a-f0-9]{64}'/, `DEPLOYMENT_FULL_SHA256 = '${helper}'`);
   if (check) {
-    if (deploy !== oldDeploy || boot !== oldBoot) throw Error('RELEASE_CONTRACT_GENERATED_OUTPUT_STALE');
+    if (deploy !== oldDeploy) throw Error('RELEASE_CONTRACT_GENERATED_OUTPUT_STALE');
+    requireReviewedCapacityHelper(deploy, oldBoot);
   } else {
     if (deploy !== oldDeploy) await writeFile(deployPath, deploy);
-    if (boot !== oldBoot) await writeFile(bootPath, boot);
+    // Approval pins are not generated facts. A distinct reviewed change is required.
+    requireReviewedCapacityHelper(deploy, oldBoot);
   }
 }
 

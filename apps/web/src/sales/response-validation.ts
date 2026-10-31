@@ -58,7 +58,8 @@ export function salesListResponse(value: unknown, parameters: Readonly<SalesList
   return value as SalesListDto;
 }
 export function salesDetailResponse(value: unknown, parameters: Readonly<SalesDetailQuery>): SalesDetailDto {
-  const result = record(value, ['document', 'stockBasis', 'referenceNames', 'settlementNames']); choice(result.stockBasis, ['RUNTIME_LEDGER', 'CUTOFF_HISTORY']);
+  const extended = !!value && typeof value === 'object' && (Object.hasOwn(value, 'categorySummary') || Object.hasOwn(value, 'productSummary'));
+  const result = record(value, ['document', 'stockBasis', 'referenceNames', 'settlementNames', ...(extended ? ['productSummary', 'categorySummary'] : [])]); choice(result.stockBasis, ['RUNTIME_LEDGER', 'CUTOFF_HISTORY']);
   const document = record(result.document, ['header', 'lines', 'settlements']);
   const h = record(document.header, [...summaryFields, 'note', 'createdByAccountId', 'createdHallId', 'createdAt', 'updatedAt', 'approvedByAccountId', 'approvedAt']); header(h);
   if (h.id !== parameters.salesId) invalid(); nullableText(h.note); id('account', h.createdByAccountId); nullableId('hall', h.createdHallId);
@@ -78,6 +79,24 @@ export function salesDetailResponse(value: unknown, parameters: Readonly<SalesDe
     choice(row.zeroConfirmed, [null, true, false]); choice(row.isGift, [true, false]);
     const snapshot = record(row.snapshot, ['productCode', 'productName', 'colorName', 'fitName', 'sizeName', 'barcode']);
     [snapshot.productCode, snapshot.productName, snapshot.colorName, snapshot.fitName, snapshot.sizeName].forEach(text); nullableText(snapshot.barcode);
+  }
+  if (extended) {
+    const products = record(result.productSummary, ['productCount', 'items', 'hasMore']), categories = record(result.categorySummary, ['basis', 'metric', 'categoryCount', 'items', 'hasMore']);
+    const productItems = array(products.items, 3), categoryItems = array(categories.items, 2000);
+    choice(categories.metric, ['QUANTITY']); choice(products.hasMore, [true, false]); choice(categories.hasMore, [false]);
+    if (result.stockBasis === 'CUTOFF_HISTORY') {
+      if (products.productCount !== null || categories.categoryCount !== null || productItems.length || categoryItems.length || products.hasMore || categories.basis !== 'UNKNOWN') invalid();
+    } else {
+      choice(categories.basis, ['CURRENT']); exact(products.productCount, true); exact(categories.categoryCount, true);
+      const count = BigInt(products.productCount); if (count > BigInt(lineIds.size) || BigInt(productItems.length) !== (count > 3n ? 3n : count) || products.hasMore !== (count > 3n) || BigInt(categories.categoryCount) !== BigInt(categoryItems.length)) invalid();
+      const seenProducts = new Set<string>(), seenCategories = new Set<unknown>(); let categoryQuantity = 0n;
+      for (const item of productItems) { const row = record(item, ['productId', 'productCodeSnapshot', 'productNameSnapshot']); id('product', row.productId); nullableText(row.productCodeSnapshot); nullableText(row.productNameSnapshot); if (seenProducts.has(row.productId)) invalid(); seenProducts.add(row.productId); }
+      for (const item of categoryItems) { const row = record(item, ['categoryId', 'categoryName', 'value']); nullableId('category', row.categoryId); nullableText(row.categoryName); exact(row.value);
+        if ((row.categoryId === null) !== (row.categoryName === null) || seenCategories.has(row.categoryId) || row.value === '0') invalid(); seenCategories.add(row.categoryId); categoryQuantity += BigInt(row.value);
+      }
+      const lines = document.lines as {quantity:string;isGift:boolean}[];
+      if (categoryQuantity !== lines.reduce((sum, row) => sum + (row.isGift ? 0n : BigInt(row.quantity)), 0n)) invalid();
+    }
   }
   const settlementIds = new Set<string>(); const settlementAccounts = new Map<string, string>(); const settlementNos = new Set<number>(); let previousSettlement = 0;
   for (const value of array(document.settlements, 3)) {

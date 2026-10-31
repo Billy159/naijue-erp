@@ -105,7 +105,7 @@ try {
   await change(host.querySelector('input[name=loginName]'), 'SYNTHETIC-1');
   const secret = host.querySelector('input[name=password]'); await change(secret, 'SYNTHETIC-password');
   await submit(host.querySelector('form[aria-label="账号登录"]'));
-  assert.equal(secret.value, ''); assert.match(host.textContent, /SYNTHETIC-1/); assert.ok(button('TEST inventory')); assert.ok(button('TEST customers'));
+  assert.equal(secret.value, ''); assert.match(host.textContent, /SYNTHETIC-1/); assert.ok(Boolean(button('TEST inventory'))); assert.ok(Boolean(button('TEST customers')));
   assert.deepEqual(styleLoads, []); assert.equal(calls.length, 2);
   assert.deepEqual(JSON.parse(calls[1].init.body), { loginName: 'SYNTHETIC-1', password: 'SYNTHETIC-password' });
   await click(button('TEST inventory')); assert.equal(app.controller.getSnapshot().phase, 'loading'); assert.deepEqual(styleLoads, ['inventory']); assert.equal(calls.length, 2);
@@ -116,10 +116,10 @@ try {
 
   await submit(host.querySelector('form[aria-label="库存筛选"]')); assert.equal(held.length, 1);
   const oldScope = app.controller.getSnapshot().scope;
-  await click(button('TEST sales')); assert.equal(oldScope.active, false); assert.equal(held[0].signal.aborted, true);
-  assert.deepEqual(styleLoads, ['inventory', 'sales']); assert.ok(host.querySelector('.sales-workbench')); assert.equal(calls.length, 3);
+  const beforeSalesActivation = calls.length, beforeSalesKeys = keyCount; await click(button('TEST sales')); assert.equal(oldScope.active, false); assert.equal(held[0].signal.aborted, true);
+  assert.deepEqual(styleLoads, ['inventory', 'sales']); assert.ok(Boolean(host.querySelector('.sales-workbench'))); assert.equal(calls.length, beforeSalesActivation + 1, 'sales activation reads exactly one first summary page'); assert.equal(calls.at(-1).url, 'https://synthetic.test/api/sales/query'); assert.deepEqual(JSON.parse(calls.at(-1).init.body), { page: 1, pageSize: 20, filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null } }); assert.equal(keyCount, beforeSalesKeys);
   await act(async () => held[0].finish()); await settle(); assert.equal(app.controller.getSnapshot().route, 'sales'); assert.equal(host.querySelector('.iw-workbench:not(.sales-workbench)'), null);
-  await submit(host.querySelector('form[aria-label="销货筛选"]')); assert.equal(calls.length, 4); assert.match(host.textContent, /查询未完成|未能完成|not available/); assert.doesNotMatch(host.textContent, /SYNTHETIC SERVER ERROR MUST NOT LEAK/);
+  const beforeSalesSubmit = calls.length, activatedSalesBody = calls.at(-1).init.body; await submit(host.querySelector('form[aria-label="销货筛选"]')); assert.equal(calls.length, beforeSalesSubmit + 1, 'explicit sales Query adds exactly one read'); assert.equal(calls.at(-1).url, 'https://synthetic.test/api/sales/query'); assert.deepEqual(JSON.parse(calls.at(-1).init.body), JSON.parse(activatedSalesBody)); assert.match(host.textContent, /查询未完成|未能完成|not available/); assert.doesNotMatch(host.textContent, /SYNTHETIC SERVER ERROR MUST NOT LEAK/);
   assert.doesNotMatch(host.textContent, /共 0 张/);
   console.log('PASS DOM 3: route replacement aborts prior real HTTP reader; late responses cannot restore old route; 503 remains a local failure, not empty success or raw server text.');
 
@@ -133,7 +133,7 @@ try {
   console.log('PASS DOM 4: verification/account/permission changes clear scopes before new identity; stale 401 cannot expire newer identity; current business 401 clears all authenticated content.');
 
   currentPrincipal = principal(3, 'SALESPERSON'); await act(async () => { await app.controller.authentication.resolveSession(); }); await settle();
-  assert.equal(button('TEST customers'), undefined); assert.equal(await app.controller.navigate('customers'), false); assert.equal(styleLoads.filter(key => key === 'parties').length, 0);
+  assert.equal(button('TEST customers') === undefined,true); assert.equal(await app.controller.navigate('customers'), false); assert.equal(styleLoads.filter(key => key === 'parties').length, 0);
   currentPrincipal = principal(4, 'WAREHOUSE'); await act(async () => { await app.controller.authentication.resolveSession(); }); await settle();
   const beforePartyActivation = calls.length;
   await click(button('TEST customers')); assert.ok(host.querySelector('.party-workbench')); assert.equal(styleLoads.filter(key => key === 'parties').length, 1);
@@ -145,12 +145,12 @@ try {
   await change(partyDialog().querySelector('input[aria-label="客户名称"]'), 'SYNTHETIC DIRTY CUSTOMER');
   assert.equal(calls.length, partyReads); assert.equal(keyCount, 0);
   await click(button('TEST sales')); assert.equal(app.controller.getSnapshot().route, 'customers'); assert.match(host.textContent, /TEST cannot leave/);
-  await click(partyDialog().querySelector('.arco-modal-close-icon')); await click(button('放弃本次填写'));
+  const beforeDirtyClose = calls.length, beforeDirtyCloseKeys = keyCount; await click(partyDialog().querySelector('.arco-modal-close-icon')); assert.equal(partyDialog() === null,true,'modal dismissed'); assert.equal(button('继续填写') === undefined,true,'no extra popup leave action'); assert.equal(calls.length, beforeDirtyClose, 'dirty close performs no read or write'); assert.equal(keyCount, beforeDirtyCloseKeys);
   await click(button('TEST suppliers')); assert.equal(app.controller.getSnapshot().route, 'suppliers'); assert.equal(calls.length, partyReads + 1); assert.match(calls.at(-1).url, /\/suppliers\?/);
   assert.match(host.textContent, /SYNTHETIC SUPPLIER/); assert.doesNotMatch(host.textContent, /SYNTHETIC CUSTOMER/);
-  await click(button('TEST customers')); assert.equal(calls.length, partyReads + 1); assert.doesNotMatch(host.textContent, /SYNTHETIC DIRTY CUSTOMER/);
-  await click(button('新增客户')); assert.ok(partyDialog()); await click(button('TEST suppliers')); assert.equal(partyDialog(), null);
-  await click(button('TEST customers')); assert.equal(partyDialog(), null); assert.equal(keyCount, 0);
+  const beforeCustomerReturn = calls.length; await click(button('TEST customers')); assert.equal(calls.length, beforeCustomerReturn + 1, 'customer reentry re-reads exactly its bounded executed list'); assert.equal(new URL(calls.at(-1).url).pathname, '/api/customers'); assert.deepEqual(Object.fromEntries(new URL(calls.at(-1).url).searchParams), { search: '', enabled: 'ENABLED', page: '1', pageSize: '20' }); assert.doesNotMatch(host.textContent, /SYNTHETIC DIRTY CUSTOMER/); assert.equal(keyCount, 0);
+  await click(button('新增客户')); assert.ok(Boolean(partyDialog())); await click(button('TEST suppliers')); assert.equal(partyDialog() === null,true,'modal dismissed');
+  await click(button('TEST customers')); assert.equal(partyDialog() === null,true,'modal dismissed'); assert.equal(keyCount, 0);
   await click(host.querySelector('.party-edit')); assert.match(calls.at(-1).url, new RegExp(`/customers/${uuid(101)}$`));
   await change(partyDialog().querySelector('input[aria-label="客户名称"]'), ' SYNTHETIC ATOMIC EDIT ');
   await click(partyDialog().querySelector('[role="switch"][aria-label="使用状态"]')); assert.equal(partyDialog().querySelector('[role="switch"]').getAttribute('aria-checked'), 'false');
@@ -162,11 +162,11 @@ try {
   assert.equal(partyRows.customers[0].version, 8); assert.equal(partyDialog().querySelector('input[aria-label="客户名称"]').disabled, true); assert.equal(partyDialog().querySelector('[role="switch"]').disabled, true);
   await click(button('TEST sales')); assert.equal(app.controller.getSnapshot().route, 'customers'); assert.match(host.textContent, /TEST cannot leave/);
   receiptMode = 'absent'; await click(button('查询原操作回执')); assert.match(partyDialog().textContent, /不代表未提交/); assert.equal(keyCount, 1);
-  receiptMode = 'normal'; await click(button('重放原请求')); assert.deepEqual(JSON.parse(writeCalls().at(-1).init.body), original); assert.equal(keyCount, 1); assert.equal(partyRows.customers[0].version, 8); assert.equal(partyDialog(), null);
+  receiptMode = 'normal'; await click(button('重放原请求')); assert.deepEqual(JSON.parse(writeCalls().at(-1).init.body), original); assert.equal(keyCount, 1); assert.equal(partyRows.customers[0].version, 8); assert.equal(partyDialog() === null,true,'modal dismissed');
   await click(button('TEST suppliers')); await click(host.querySelector('.party-edit')); await change(partyDialog().querySelector('input[aria-label="供应商名称"]'), 'SYNTHETIC PENDING OLD IDENTITY');
   partyMode = 'hold-write'; await click(button('确定')); const pendingPartyWrite = heldPartyWrites.at(-1); assert.ok(pendingPartyWrite);
   currentPrincipal = principal(44, 'WAREHOUSE', 2); await act(async () => { await app.controller.authentication.resolveSession(); }); await settle();
-  assert.equal(pendingPartyWrite.signal.aborted, true); assert.equal(partyDialog(), null); assert.equal(host.querySelector('.party-workbench'), null);
+  assert.equal(pendingPartyWrite.signal.aborted, true); assert.equal(partyDialog() === null,true,'modal dismissed'); assert.equal(host.querySelector('.party-workbench'), null);
   await act(async () => pendingPartyWrite.finish()); await settle(); assert.equal(app.controller.getSnapshot().phase, 'home'); assert.doesNotMatch(host.textContent, /SYNTHETIC PENDING OLD IDENTITY|SYNTHETIC ATOMIC EDIT/);
   partyMode = 'normal';
   console.log('PASS DOM 5: actual Arco parties load only the activated bounded normal-status page; kinds remain independent; clean modal cannot resurrect after route leave; dirty/uncertain work blocks navigation; atomic name+enabled EDIT preserves key/bytes across lost response, absent receipt and exact replay; identity change aborts pending command and discards late facts.');

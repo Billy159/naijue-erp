@@ -137,8 +137,9 @@ test('first click opens deferred native output; cancel/retry keep executed filte
   const originalCreateURL = Object.getOwnPropertyDescriptor(URL, 'createObjectURL');
   const workbooks: Blob[] = [];
   Object.defineProperty(URL, 'createObjectURL', { configurable: true, value: (blob: Blob) => { workbooks.push(blob); return 'blob:synthetic-output'; } });
-  let downloads = 0;
-  dom.window.HTMLAnchorElement.prototype.click = function () { assert.equal(this.download, '库存状况.xlsx'); downloads++; };
+  let downloads = 0, completedDownload!: () => void;
+  const downloadCompleted = new Promise<void>(resolve => { completedDownload = resolve; });
+  dom.window.HTMLAnchorElement.prototype.click = function () { assert.equal(this.download, '库存状况.xlsx'); downloads++; completedDownload(); };
   let root: { render(value: unknown): void; unmount(): void } | undefined, act: ((work: () => Promise<void> | void) => Promise<void>) | undefined;
   try {
     const output = join(temporary, 'entry.mjs');
@@ -150,11 +151,13 @@ test('first click opens deferred native output; cancel/retry keep executed filte
     const native = product(), allMatchesTotal = native.total, data = { readReference: 'UI_READ', exactTotalProducts: 1, warehouseLabels: ['仓库0', '仓库1'], allMatchesTotal, products: [native] };
     const selected = { id: native.id, label: `${native.code} ${native.name}` };
     const seen: unknown[] = [], signals: AbortSignal[] = [];
-    let mode = 'pending';
+    let mode = 'pending', releaseSuccessfulRead!: () => void;
+    // Distinguish a started native read from a completed XLSX download.
+    const successfulReadGate = new Promise<void>(resolve => { releaseSuccessfulRead = resolve; });
     const capability = { onAccessFailure: () => assert.fail('Unexpected access failure'), reader: { readOutput: async (request: { parameters: unknown; signal: AbortSignal }) => {
       seen.push(request.parameters); signals.push(request.signal);
       if (mode === 'pending') return new Promise(() => {});
-      if (mode === 'success') return data;
+      if (mode === 'success') { await successfulReadGate; return data; }
       throw new Error('synthetic unavailable');
     } } };
     await act!(async () => { root!.render(entry.createElement(entry.StrictMode, null, entry.createElement(entry.InventoryPageView, { scope, initialProduct: selected,
@@ -174,7 +177,24 @@ test('first click opens deferred native output; cancel/retry keep executed filte
     await click('重新导出', dialog); await settle(); assert.equal(seen.length, 3); assert.match(host.textContent!, /条件已修改/);
     await click('取消', dialog);
     mode = 'success'; await click('导出'); await settle(); dialog = host.querySelector('dialog')!;
-    await click('导出', dialog); await settle(); assert.equal(downloads, 1); assert.equal(host.querySelector('dialog'), null);
+    await click('导出', dialog); assert.equal(seen.length, 4); assert.equal(downloads, 0);
+    assert.equal(workbooks.length, 0, 'A held native read cannot publish an XLSX');
+    assert.equal((dialog.querySelector('button[type="submit"]') as HTMLButtonElement).disabled, true);
+    releaseSuccessfulRead();
+    // The reader, lazy workbook import, cooperative rows/ZIP and final copy all
+    // complete asynchronously. One 20ms sleep is not their completion contract.
+    let completionTimeout: ReturnType<typeof setTimeout> | undefined;
+    try {
+      await act!(async () => { await Promise.race([downloadCompleted, new Promise<never>((_resolve, reject) => {
+        completionTimeout = setTimeout(() => reject(new Error('Native inventory XLSX did not reach link.click: ' + JSON.stringify({
+          seen: seen.length, downloads, workbooks: workbooks.length, aborted: signals.map(signal => signal.aborted),
+          dialogOpen: dialog.hasAttribute('open'), dialogText: dialog.textContent,
+          submitDisabled: (dialog.querySelector('button[type="submit"]') as HTMLButtonElement | null)?.disabled,
+          visibleError: (dialog.querySelector('[role="alert"]') as HTMLElement | null)?.hidden === false,
+        }))), 10_000);
+      })]); });
+    } finally { if (completionTimeout !== undefined) clearTimeout(completionTimeout); }
+    assert.equal(downloads, 1); assert.equal(host.querySelector('dialog'), null);
     const workbook = new Uint8Array(await workbooks[0]!.arrayBuffer());
     assert.deepEqual([...workbook.subarray(0, 2)], [0x50, 0x4b]);
     const xml = new TextDecoder().decode(workbook); assert.match(xml, /0001<\/t>/); assert.match(xml, /-9007199254740993/); assert.doesNotMatch(xml, /商品合计/);

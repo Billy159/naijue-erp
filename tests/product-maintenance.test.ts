@@ -219,6 +219,7 @@ test("v19 NULL size code retains both real new SKUs and generates only the actua
   const saved = await f.service.executeV2(actor, c), state = f.state()!;
   assert.equal(saved.version, 1); assert.equal(state.skus.length, 2); assert.equal(state.barcodes.length, 1);
   assert.equal(state.barcodes[0]!.barcode, "5A0000123101203");
+  const {nativeBarcodeSchemeInitializationRows26}=await import('../packages/application/src/native-barcode-import.ts'),{withSchemeGenerationMetadata}=await import('../packages/application/src/dictionary-scheme-detail.ts');const n=nativeBarcodeSchemeInitializationRows26().find(x=>x.sourceSchemeKey==='2026')!.native;const metadata=withSchemeGenerationMetadata({id:n.id,name:n.name,barcodeType:n.barcode_type,ruleDescription:n.rule_description,codeLength:n.code_length,ruleVersion:n.rule_version,status:n.status,applicability:null});let offset=0;assert.deepEqual(metadata.generationRule!.segments.map(segment=>{const part=state.barcodes[0]!.barcode.slice(offset,offset+segment.length);offset+=segment.length;return part;}),['5','A','0000123','101','203']);assert.equal(offset,state.barcodes[0]!.barcode.length);
   assert.equal(state.barcodes[0]!.skuId, state.skus.find(s => s.sizeId === gid(809))!.id);
   assert.equal(state.barcodes.some(b => b.skuId === state.skus.find(s => s.sizeId === gid(808))!.id), false);
   assert.equal((f.audit[0]!.after.skus as unknown[]).length, 2); assert.equal((f.audit[0]!.after.barcodes as unknown[]).length, 1);

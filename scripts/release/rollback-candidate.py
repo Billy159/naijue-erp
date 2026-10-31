@@ -12,13 +12,21 @@ from pathlib import Path
 import types
 
 DEPLOYMENT_FULL_SHA256 = 'a7655f237631015c07c72cfdfce2d597d45da341cb156c588e74c9f28872ead3'
+# Same independently reviewed capacity helper registered by boot-entry; not a live deployment approval.
+DEPLOYMENT_CAPACITY_SHA256 = '4620ca2f1672e18991644a2da5398633eae19d75cb60057245590ebe2e3f8b25'
 C = None
 
 
-def deployment_implementation(selector):
+def deployment_implementation(selector, *, capacity=False):
+    if not isinstance(selector, str) or selector not in ('schema19', 'exact26-r1', 'exact26-full'):
+        raise ValueError('UNKNOWN_RUNTIME_SELECTOR')
+    if type(capacity) is not bool:
+        raise ValueError('EXPLICIT_CAPACITY_SELECTION_REQUIRED')
     path = Path(__file__).with_name('deploy-candidate.py')
     source = path.read_bytes()
-    if selector == 'exact26-full' and hashlib.sha256(source).hexdigest() != DEPLOYMENT_FULL_SHA256:
+    if capacity and hashlib.sha256(source).hexdigest() != DEPLOYMENT_CAPACITY_SHA256:
+        raise ValueError('CAPACITY_REVIEWED_DEPLOYMENT_HELPER_REQUIRED')
+    if not capacity and selector == 'exact26-full' and hashlib.sha256(source).hexdigest() != DEPLOYMENT_FULL_SHA256:
         raise ValueError('FULL_REVIEWED_DEPLOYMENT_HELPER_REQUIRED')
     module = types.ModuleType('naijue_candidate_deployment')
     module.__file__ = str(path)
@@ -27,7 +35,7 @@ def deployment_implementation(selector):
 
 
 def rollback(p, mode, implementation=None):
-    C = implementation or deployment_implementation(p.get('runtimeSelector', 'schema19'))
+    C = implementation or deployment_implementation(p.get('runtimeSelector', 'schema19'), capacity='capacityHost' in p)
     job = C.exact_host(p)
     with open('/run/naijue-erp-hdd-test.lock', 'a+') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -90,10 +98,14 @@ def main():
     raw = Path(args.plan).read_bytes()
     if len(raw) > 2 * 1024 * 1024:
         raise ValueError('BOUNDED_DEPLOYMENT_PLAN_REQUIRED')
-    selector = json.loads(raw).get('runtimeSelector', 'schema19')
-    C = deployment_implementation(selector)
+    preliminary = json.loads(raw)
+    if not isinstance(preliminary, dict):
+        raise ValueError('EXPLICIT_DEPLOYMENT_PLAN_REQUIRED')
+    selector = preliminary.get('runtimeSelector', 'schema19')
+    capacity = 'capacityHost' in preliminary
+    C = deployment_implementation(selector, capacity=capacity)
     p = C.read_plan(args.plan)
-    C.need(p.get('runtimeSelector', 'schema19') == selector, 'RUNTIME_SELECTOR_CHANGED')
+    C.need(p.get('runtimeSelector', 'schema19') == selector and ('capacityHost' in p) == capacity, 'RUNTIME_SELECTION_CHANGED')
     if not args.execute:
         C.reference(p.get('activationReceipt'))
         print(json.dumps({'status': 'PLAN_ONLY_NOT_EXECUTED', 'mode': args.mode, 'buildId': p['buildId'],

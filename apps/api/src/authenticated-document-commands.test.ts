@@ -22,6 +22,10 @@ const token = "S".repeat(43);
 async function setup(t: TestContext, nativePreparation = false, productName = snapshot.productName,
   existing: Pick<AuthenticatedDocumentCommandsOptions, "nativeExistingSalesPreparation" | "nativeExistingTransferPreparation"> = {}) {
   const sales = fixture(); const transfers = transferFixture(); let active = true; let allowed = true; let sequence = 8000;
+  // This combined session is ADMIN/account5, not the transfer fixture's default account205.
+  // Its transaction-local current identity must match the captured authenticated principal.
+  transfers.store.seedIdentity({ accountId: ids.account, staffId: sid("staff", 16), loginEnabled: true,
+    role: "ADMIN", employmentStatus: "在职", hallId: ids.hall, hallEnabled: true });
   const service: AuthenticationService = {
     async resolve(value) { return active && value === token ? { accountId: ids.account, staffId: sid("staff", 16),
       loginName: "SYNTHETIC", role: "ADMIN", hallId: ids.hall, authVersion: 1 } : null; },
@@ -97,6 +101,48 @@ test("SYNTHETIC opt-in prepare HTTP excludes caller snapshots, prepares then sav
   const saved = await h.post("transfers", save(draft)); assert.equal(saved.statusCode, 200);
   assert.deepEqual((await h.post("transfers", save(draft))).json(), saved.json());
   const off = await setup(t); assert.equal((await off.app.inject({ method: "POST", url: "/transfers/prepare-create", headers: off.headers, payload: exactJson(proposal) })).statusCode, 404);
+});
+
+test("SYNTHETIC authenticated create preparation preserves optional responsible staff then original SAVE owns creator", async t => {
+  const h = await setup(t, true), original = transferDraft(), before = h.transfers.store.snapshot();
+  const base = { businessDate: "2026-10-21", note: null, fromWarehouseId: original.header.fromWarehouseId,
+    toWarehouseId: original.header.toWarehouseId, lines: [{ skuId: original.lines[0]!.skuId, quantity: "2" }] };
+  const selected = sid("staff", 17);
+  let selectedDraft: unknown;
+  for (const intent of [{ ...base, responsibleStaffId: selected }, { ...base, responsibleStaffId: null }, base]) {
+    const response = await h.app.inject({ method: "POST", url: "/transfers/prepare-create", headers: h.headers, payload: exactJson(intent) });
+    assert.equal(response.statusCode, 200, response.body); const prepared = response.json();
+    assert.equal(Object.hasOwn(prepared.header, "responsibleStaffId"), Object.hasOwn(intent, "responsibleStaffId"));
+    assert.equal(prepared.header.responsibleStaffId, "responsibleStaffId" in intent ? intent.responsibleStaffId : undefined);
+    for (const field of ["createdByAccountId", "createdBy", "createdAt", "createdRole", "createdHallId"]) assert.equal(Object.hasOwn(prepared.header, field), false);
+    assert.deepEqual(h.transfers.store.snapshot(), before, "prepare must not write a document, receipt, audit or inventory effect");
+    if (prepared.header.responsibleStaffId === selected) selectedDraft = prepared;
+  }
+  assert.notEqual(selectedDraft, undefined);
+  const command = save(selectedDraft, "prepared-responsible-save"), response = await h.post("transfers", command);
+  assert.equal(response.statusCode, 200, response.body);
+  const saved = h.transfers.store.snapshot().transfers.get(response.json().transferId)!.document;
+  assert.equal(saved.header.responsibleStaffId, selected); assert.equal(saved.header.createdByAccountId, ids.account);
+  assert.equal(saved.header.createdRole, "ADMIN"); assert.equal(saved.header.createdHallId, ids.hall);
+  assert.deepEqual((await h.post("transfers", command)).json(), response.json(), "replay keeps original request result");
+});
+
+test("SYNTHETIC create preparation still rejects malformed responsible and every caller-owned audit/unknown field", async t => {
+  const h = await setup(t, true), original = transferDraft(), before = h.transfers.store.snapshot();
+  const base = { businessDate: "2026-10-21", note: null, fromWarehouseId: original.header.fromWarehouseId,
+    toWarehouseId: original.header.toWarehouseId, lines: [{ skuId: original.lines[0]!.skuId, quantity: "2" }] };
+  for (const value of [true, 12, {}, [], "", "not-a-staff-id", "AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"]) {
+    const response = await h.app.inject({ method: "POST", url: "/transfers/prepare-create", headers: h.headers, payload: exactJson({ ...base, responsibleStaffId: value }) });
+    assert.equal(response.statusCode, 400, response.body); assert.deepEqual(h.transfers.store.snapshot(), before);
+  }
+  for (const field of ["createdByAccountId", "createdBy", "createdAt", "createdRole", "createdHallId", "actor", "accountId", "role", "staffId", "responsibleName", "unknown"]) {
+    const response = await h.app.inject({ method: "POST", url: "/transfers/prepare-create", headers: h.headers, payload: exactJson({ ...base, responsibleStaffId: sid("staff", 17), [field]: "FORGED" }) });
+    assert.equal(response.statusCode, 400, field + ": " + response.body); assert.equal(response.json().error.code, "INVALID_HTTP_INPUT"); assert.deepEqual(h.transfers.store.snapshot(), before);
+  }
+  for (const value of [null, true, [], 12, "not-a-proposal"]) {
+    const response = await h.app.inject({ method: "POST", url: "/transfers/prepare-create", headers: h.headers, payload: exactJson(value) });
+    assert.equal(response.statusCode, 400, response.body); assert.deepEqual(h.transfers.store.snapshot(), before);
+  }
 });
 
 test("SYNTHETIC 200-line multibyte snapshots and escaped maximum note prepare and SAVE within shared budgets", async t => {

@@ -181,7 +181,9 @@ test("SYNTHETIC transfer query HTTP: strict transport rejects query strings, mal
 
 test('normal transfer HTTP: original POST carries explicit dataset exact totals and unknown historical creator without a write route', async t => {
   const { PostgresTransferQueryReader } = await import('../../../adapters/postgres/src/transfer-query-reader.ts');
-  const client = { async query(sql: string) {
+  const client = { async query(sql: string):Promise<{rows:Record<string,unknown>[];rowCount:number}> {
+    // P03 now returns the original totals/page fixtures in one shared envelope.
+    if(sql.includes('normal-document-list:shared')){const total=await client.query('normal-document-list:totals'),page=await client.query('normal-document-list:page');return {rows:[{...total.rows[0],items:page.rows}],rowCount:1};}
     if (sql.includes('read-authorization:identity')) return { rows: [{ account_id: actor.accountId, staff_id: sid('staff', 950), login_enabled: true, role: actor.role, employment_status: '在职', hall_id: actor.hallId, native_hall_id: actor.hallId, hall_enabled: true }], rowCount: 1 };
     if (sql.includes('normal-document-list:totals')) return { rows: [{ exact_total: '1', history_valid: true, history_published: true, quantity: '9007199254740993', incoming_quantity: '0', outgoing_quantity: '9007199254740993' }], rowCount: 1 };
     if (sql.includes('normal-document-list:page')) return { rows: [{ dataset: 'HISTORY', batch_id: sid('operation', 951), id: ids.transfer, number: 'SYNTHETIC_HISTORY', business_date: null, status: 'DRAFT', version: 2,

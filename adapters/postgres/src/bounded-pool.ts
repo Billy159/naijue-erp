@@ -138,7 +138,10 @@ export class BoundedPostgresPool {
   #dispose: Promise<void> | undefined;
   #checkDisposed: (() => void) | undefined;
 
-  constructor(config: BoundedPostgresConfig, createDriver: PostgresPoolDriverFactory = options => new Pool(options)) {
+  readonly #observer: ((stage: "POOL_ACQUIRE" | "DB_QUERY", error?: unknown) => void) | undefined;
+  #observe(stage: "POOL_ACQUIRE" | "DB_QUERY", error?: unknown): void { try { this.#observer?.(stage, error); } catch { /* Diagnostics cannot affect resource semantics. */ } }
+  constructor(config: BoundedPostgresConfig, createDriver: PostgresPoolDriverFactory = options => new Pool(options), observer?: (stage: "POOL_ACQUIRE" | "DB_QUERY", error?: unknown) => void) {
+    this.#observer = observer;
     this.#config = checkedConfig(config);
     try {
       this.#driver = createDriver(driverConfig(this.#config));
@@ -152,6 +155,10 @@ export class BoundedPostgresPool {
   get backgroundFailureCount(): number { return this.#backgroundFailures; }
 
   connect(): Promise<BoundedPostgresClient> {
+    this.#observe("POOL_ACQUIRE");
+    return this.#connect().catch(error => { this.#observe("POOL_ACQUIRE", error); throw error; });
+  }
+  #connect(): Promise<BoundedPostgresClient> {
     if (this.#closing) return Promise.reject(new PostgresResourceError("PG_POOL_CLOSED"));
     if (this.#slots >= this.#config.max && this.#queue.length >= this.#config.maxPendingAcquisitions)
       return Promise.reject(new PostgresResourceError("PG_POOL_OVERLOADED"));
@@ -224,6 +231,7 @@ export class BoundedPostgresPool {
       },
       client: {
         query: (text: string, values?: unknown[]): Promise<BoundedPostgresResult> => {
+          this.#observe("DB_QUERY");
           if (closed) return Promise.reject(new PostgresResourceError("PG_CLIENT_CLOSED"));
           if (rejectQuery) return Promise.reject(new PostgresResourceError("PG_QUERY_IN_PROGRESS"));
           return new Promise((resolve, reject) => {
@@ -238,6 +246,7 @@ export class BoundedPostgresPool {
               if (closed) return;
               rejectQuery = undefined; tainted = true;
               const safe = new PostgresQueryError(error);
+              this.#observe("DB_QUERY", safe);
               const driverCode = error instanceof Error ? Object.getOwnPropertyDescriptor(error, "code") : undefined;
               if (driverCode && "value" in driverCode && typeof driverCode.value === "string" && knownDriverTransportCodes.has(driverCode.value))
                 knownTransportQueryErrors.add(safe);

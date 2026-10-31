@@ -17,3 +17,24 @@ test('history filters remain intersections and unpublished coverage cannot conta
 test('transfer union preserves unknown creator/time/quantity without weakening LIVE validation',()=>{const item={id:id(1),number:'T001',businessDate:null,fromWarehouseId:id(4),toWarehouseId:id(5),status:'APPROVED',version:1,createdByAccountId:null,createdAt:null,updatedAt:null,responsibleStaffId:null,fromWarehouseName:null,toWarehouseName:null,fromHallName:null,toHallName:null,createdByName:null,approvedByName:null,responsibleName:null,totalQuantity:null,dataset:'HISTORY',batchId:id(8),documentId:id(1),effectiveVersion:1,productSummary,createdLocalAt:null,updatedLocalAt:null};const input={...page([item]),totals:{totalQuantity:null}};assert.equal(normalTransferResponse(input,transfers).items[0].createdByAccountId,null);assert.throws(()=>normalTransferResponse({...input,items:[{...item,createdByAccountId:id(99)}]},transfers));});
 test('full filtered totals remain independent from the currently loaded page',()=>{const expected={quantity:'900719925474099312345',incomingQuantity:'123',outgoingQuantity:'900719925474099312468',grossAmount:'900719925474099312346',orderDiscount:'1',netDue:'900719925474099312345'};const result=normalSalesResponse({...page([live]),totals:expected},sales);assert.deepEqual(result.totals,expected);assert.notEqual(result.totals.quantity,result.items[0].quantity);});
 test('historical transfer signed quantities follow exact26 without relaxing native-only summaries',()=>{const item={id:id(1),number:'T001',businessDate:null,fromWarehouseId:id(4),toWarehouseId:id(5),status:'DRAFT',version:1,createdByAccountId:null,createdAt:null,updatedAt:null,responsibleStaffId:null,fromWarehouseName:null,toWarehouseName:null,fromHallName:null,toHallName:null,createdByName:null,approvedByName:null,responsibleName:null,totalQuantity:'-9007199254740993',dataset:'HISTORY',batchId:id(8),documentId:id(1),effectiveVersion:1,productSummary,createdLocalAt:null,updatedLocalAt:null};const result=normalTransferResponse({...page([item]),totals:{totalQuantity:'-9007199254740993'}},transfers);assert.equal(result.items[0].totalQuantity,'-9007199254740993');assert.equal(result.totals.totalQuantity,'-9007199254740993');});
+
+test('category-v1 accepts bounded CURRENT sales quantities and UNKNOWN history without weakening old shape',()=>{
+ const current={basis:'CURRENT',metric:'QUANTITY',items:[{categoryId:id(70),categoryName:'衬衫',value:'-9007199254740993'}],hasMore:false};
+ const unknown={basis:'UNKNOWN',metric:'QUANTITY',items:[],hasMore:false};
+ assert.deepEqual(normalSalesResponse(page([{...live,categorySummary:current},{...history,categorySummary:unknown}]),sales).items[0].categorySummary,current);
+ assert.equal(normalSalesResponse(page([live]),sales).items[0].categorySummary,undefined);
+ for(const summary of [{...current,basis:'SAVED'},{...current,metric:'PRODUCT_COUNT'},{...current,unit:'件'},{...current,items:Array(4).fill(current.items[0])},{...current,items:[{...current.items[0],value:'1.5'}]}])assert.throws(()=>normalSalesResponse(page([{...live,categorySummary:summary}]),sales));
+ assert.throws(()=>normalSalesResponse(page([{...history,categorySummary:current}]),sales));
+ assert.throws(()=>normalSalesResponse(page([{...live,categorySummary:current,unexpected:true}]),sales));
+});
+test('same-name distinct category IDs and independent historical row identities never collapse',()=>{
+ const categorySummary={basis:'CURRENT',metric:'QUANTITY',items:[{categoryId:id(70),categoryName:'同名',value:'2'},{categoryId:id(71),categoryName:'同名',value:'-3'}],hasMore:false};
+ const unknown={basis:'UNKNOWN',metric:'QUANTITY',items:[],hasMore:false};
+ const result=normalSalesResponse(page([{...live,categorySummary},{...history,categorySummary:unknown},{...history,batchId:id(99),categorySummary:unknown}]),sales);
+ assert.equal(result.items[0].categorySummary.items.length,2);assert.notEqual(documentRowKey(result.items[1]),documentRowKey(result.items[2]));
+});
+test('category-v2 preserves exact total category count while preview remains at most three',()=>{
+ const categorySummary={basis:'CURRENT',metric:'QUANTITY',items:[70,71,72].map(n=>({categoryId:id(n),categoryName:'分类'+n,value:'3'})),hasMore:true,categoryCount:'9007199254740993'};
+ assert.equal(normalSalesResponse(page([{...live,categorySummary}]),sales).items[0].categorySummary.categoryCount,'9007199254740993');
+ for(const categoryCount of ['0','-1','1.1'])assert.throws(()=>normalSalesResponse(page([{...live,categorySummary:{...categorySummary,categoryCount}}]),sales));
+});

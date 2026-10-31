@@ -125,7 +125,6 @@ async function page(context: MaintenancePgContext, kind: OrganizationMaintenance
   organizationKind(kind); const checked = parseOrganizationListQuery(q, kind); if (targetId !== null) entityId("hall", targetId);
   const role = "role" in checked ? checked.role : undefined;
   const loginStatus = "loginStatus" in checked ? checked.loginStatus : undefined;
-  requireDomain(loginStatus !== "closed", "STAFF_LOGIN_FILTER_NOT_READY", "Closed-login no-account classification is pending");
   const loginParameter = role === undefined ? 7 : 8;
   const paymentMethodId = "paymentMethodId" in checked ? checked.paymentMethodId : undefined;
   const s = specification(kind);
@@ -149,7 +148,7 @@ async function page(context: MaintenancePgContext, kind: OrganizationMaintenance
   const rows = (await context.client.query(`WITH matched AS (SELECT ${s.columns},${s.display} AS display_name,
     ${timestamp("created_at")} AS created_at_value,${timestamp("updated_at")} AS updated_at_value FROM ${s.from}
     WHERE ${search} AND ($2::text='all' OR ($2='normal' AND ${s.normal}) OR ($2='disabled' AND ${s.disabled}))
-    AND ($3::uuid IS NULL OR ${s.hallFilter}) AND ($6::uuid IS NULL OR m.id=$6::uuid)${role === undefined ? "" : " AND ($7::text='' OR m.role=$7::text)"}${loginStatus === undefined ? "" : ` AND ($${loginParameter}::text='' OR a.login_enabled IS TRUE)`}${paymentMethodId === undefined ? "" : " AND ($7::uuid IS NULL OR m.payment_method_id=$7::uuid)"}${corePredicate}),
+    AND ($3::uuid IS NULL OR ${s.hallFilter}) AND ($6::uuid IS NULL OR m.id=$6::uuid)${role === undefined ? "" : " AND ($7::text='' OR m.role=$7::text)"}${loginStatus === undefined ? "" : ` AND ($${loginParameter}::text='' OR ($${loginParameter}='open' AND a.login_enabled IS TRUE) OR ($${loginParameter}='closed' AND a.login_enabled IS FALSE))`}${paymentMethodId === undefined ? "" : " AND ($7::uuid IS NULL OR m.payment_method_id=$7::uuid)"}${corePredicate}),
     page AS (SELECT * FROM matched ORDER BY display_name COLLATE "C",id LIMIT $4 OFFSET $5)
     SELECT (SELECT count(*)::text FROM matched) AS total,COALESCE((SELECT jsonb_agg(${s.record} ORDER BY m.display_name COLLATE "C",m.id) FROM page m),'[]'::jsonb) AS items`,
   values)).rows;

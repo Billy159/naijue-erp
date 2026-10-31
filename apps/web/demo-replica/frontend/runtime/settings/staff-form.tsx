@@ -18,7 +18,7 @@ function Editor(props:Props&{editor:StaffSettingsController}){
  useEffect(()=>{if(state.write.phase==='committed'&&state.readback.phase==='idle')void editor.readback();if(state.write.phase==='committed'&&state.readback.phase==='ready'&&!confirmed.current){confirmed.current=true;props.close();}},[state.write.phase,state.readback.phase,editor,props.close]);
  if(state.disposed||!state.draft)return null;
  const draft=state.draft,record=editor.record,editing=editor.intent==='edit',hadAccount=!!record?.account,locked=editor.locked,requiresHall=props.roles.find(role=>role.value===draft.role)?.requiresHall===true;
- const cancel=()=>{if(editor.requestClose())props.close();};
+ const cancel=()=>{if(editor.discard())props.close();};
  const submit=()=>{const value=password.current?.querySelector('input')?.value??'';if(Object.keys(editor.validate(value.length>0)).length)return;void editor.submit(value);setPasswordKey(value=>value+1);};
  const roles=props.roles.map(role=>({value:role.value,label:role.label}));if(draft.role&&!roles.some(role=>role.value===draft.role))roles.unshift({value:draft.role,label:'原角色未配置'});
  return <Modal visible className={`bs-modal iw-arco-modal iw-arco-controls runtime-settings${editing?' bs-modal-staff':''}`} title={editing?`${record?'编辑':'新增'}员工`:editor.intent==='LEAVE'?'确认办理离职':'确认恢复在职'} maskClosable={false} autoFocus={false} onCancel={cancel} onOk={submit} confirmLoading={['submitting','recovering'].includes(state.write.phase)} okText="确定" cancelText="取消" okButtonProps={{disabled:!editor.writesEnabled||locked}}>
@@ -35,6 +35,5 @@ function Editor(props:Props&{editor:StaffSettingsController}){
  {state.write.phase==='rejected'&&<p className="bs-error" role="alert">{staffRejectionMessage(state.write.error?.code??'')}</p>}
  {state.write.phase==='uncertain'&&<section className="bs-error" role="alert"><p>提交结果尚未确认，原请求身份已保留，不能重新提交或放弃。</p><Button onClick={()=>{void editor.recover();}}>查询原操作回执</Button></section>}
  {state.write.phase==='committed'&&<p role="status">保存已确认。{state.readback.phase==='error'?'重新读取资料暂未完成。':'正在重新读取资料…'}{state.readback.phase==='error'&&<Button onClick={()=>{void editor.readback();}}>重试读取</Button>}</p>}
- {state.closePrompt&&<section className="runtime-settings-note" role="alert"><p>放弃本次填写？</p><Button onClick={()=>editor.keepEditing()}>继续填写</Button><Button onClick={()=>{if(editor.discard())props.close();}}>放弃本次填写</Button></section>}
  </Modal>;
 }

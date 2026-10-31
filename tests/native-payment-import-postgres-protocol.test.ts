@@ -1,5 +1,6 @@
 /** Scripted pg protocol only. Does not execute SQL or establish engine constraints. */
 import test from "node:test";import assert from "node:assert/strict";
+import { NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PostgresNativePaymentImportStore, PostgresNativePaymentImportStore26 } from "../adapters/postgres/src/native-payment-import.ts";
 import { prepareNativePaymentImportChunk } from "../packages/application/src/native-payment-import.ts";
 import { paymentChunk,paymentId,PAYMENT_NAMESPACE,PAYMENT_HASH } from "./support/native-payment-fixtures.ts";
@@ -7,7 +8,9 @@ function fixture(options:{runtime26?:boolean;denied?:boolean;booleanProof?:boole
  const calls:{sql:string;values:unknown[]}[]=[],releases:unknown[]=[];let connects=0,proofs=0;let lease:object|undefined;
  const pool={async connect(){connects++;const client={async query(sql:string,values:unknown[]=[]){calls.push({sql,values});const result=(rows:Record<string,unknown>[])=>({rows,rowCount:rows.length});
   if(sql==="COMMIT"&&options.commitFail)throw Error("UNKNOWN_COMMIT");
-  if(sql.includes("inventory:guards"))return result([{integrity_guards_present:true}]);if(sql.includes("native-accounting:guards"))return result([{accounting_guards_present:options.guards!==false}]);
+  if(sql.includes("inventory:guards"))return result([{integrity_guards_present:true}]);
+  if(sql===NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY)return result([{accounting_guards_present:(options.versions?.length??17)!==19&&options.guards!==false}]);
+  if(sql===NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY)return result([{accounting_guards_present:options.versions?.length===19&&options.guards!==false}]);
   if(sql.includes("native-payment:schema"))return result([{versions:options.versions??Array.from({length:17},(_,i)=>i+1)}]);
   if(sql.includes("native-payment:batch"))return result([{id:paymentId(1),mapping_version:"V2_HISTORY_NULLABLE_1",status:"STAGED",source_hash:PAYMENT_HASH,source_name:PAYMENT_NAMESPACE,already_published:false}]);
   if(sql.includes("native-payment:target"))return result(options.existing||options.replay?[{native_equal:!options.drift}]:[]);
@@ -40,13 +43,21 @@ test("old target without creation proof refuses; exact operation replay never ov
  const orphan=fixture({missingReference:true});await assert.rejects(orphan.store.stage(prepareNativePaymentImportChunk(paymentChunk("PAYMENT_ACCOUNT",20))));
  assert.equal(orphan.calls.some(c=>c.sql.includes("native-payment:create:")),false);
 });
-test("raw prepared getter/symbol rejects without connection, future19/missing17/disabled guards refuse before writes",async()=>{
+test("raw prepared getter/symbol rejects without connection, unknown20/missing17/duplicate/disabled guards refuse before writes",async()=>{
  let getters=0;const getter=prepareNativePaymentImportChunk(paymentChunk());Object.defineProperty(getter,"input",{get(){getters++;throw Error();}});
  const f=fixture();await assert.rejects(f.store.stage(getter));assert.equal(f.connects(),0);assert.equal(getters,0);
  const symbol=prepareNativePaymentImportChunk(paymentChunk());Object.defineProperty(symbol.rows[0]!,Symbol("hidden"),{value:true});await assert.rejects(f.store.stage(symbol));assert.equal(f.connects(),0);
- for(const options of [{versions:Array.from({length:19},(_,i)=>i+1)},{versions:Array.from({length:16},(_,i)=>i+1)},{guards:false}]){
-  const f=fixture(options);await assert.rejects(f.store.stage(prepareNativePaymentImportChunk(paymentChunk())));assert.equal(f.calls.some(c=>/\bINSERT\b/.test(c.sql)),false);
+ for(const options of [{versions:Array.from({length:20},(_,i)=>i+1)},{versions:Array.from({length:16},(_,i)=>i+1)},{versions:[...Array.from({length:17},(_,i)=>i+1),17]},{guards:false}]){
+  const f=fixture(options);await assert.rejects(f.store.stage(prepareNativePaymentImportChunk(paymentChunk())));
+  assert.equal(f.calls.some(c=>/native-payment:batch|\b(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)),false);assert.equal(f.calls.at(-1)!.sql,"ROLLBACK");
  }
+});
+test("approved exact19 payment import still requires accounting guards and keeps native/source/binding atomic",async()=>{
+ const versions=Array.from({length:19},(_,i)=>i+1),prepared=prepareNativePaymentImportChunk(paymentChunk()),f=fixture({versions});
+ assert.deepEqual(await f.store.stage(prepared),{inserted:1,replayed:0,nativeCurrentMatchesCreation:true});
+ assert.ok(f.calls.some(c=>c.sql.includes("inventory:guards")));assert.deepEqual(f.calls.filter(c=>c.sql.includes("native-accounting:guards")).map(c=>c.sql),[NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY,NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY]);assert.equal(f.calls.at(-1)!.sql,"COMMIT");
+ const denied=fixture({versions,guards:false});await assert.rejects(denied.store.stage(prepared),{code:"NATIVE_IMPORT_GUARDS_NOT_READY"});
+ assert.equal(denied.calls.some(c=>/native-payment:batch|\b(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)),false);assert.equal(denied.calls.at(-1)!.sql,"ROLLBACK");
 });
 test("known precommit failure rolls back; uncertain COMMIT discards and never rolls back/retries",async()=>{
  for(const options of [{sourceFail:true},{commitFail:true}]){const f=fixture(options);await assert.rejects(f.store.stage(prepareNativePaymentImportChunk(paymentChunk())));

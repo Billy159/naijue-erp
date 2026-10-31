@@ -1,6 +1,7 @@
 /** SCRIPTED PROTOCOL AND APPLICATION EVIDENCE ONLY. No PostgreSQL parser, real locks, races or durability. */
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { PostgresPostingBalances } from "../adapters/postgres/src/inventory-posting-balances.ts";
 import { PostgresSalesUnitOfWork } from "../adapters/postgres/src/sales-unit-of-work.ts";
 import { PostgresTransferUnitOfWork } from "../adapters/postgres/src/transfer-unit-of-work.ts";
@@ -47,11 +48,15 @@ function locks(keys: readonly { warehouseId: string; skuId: string }[], balances
 const firstInsert = (amount: string): Step => ({ sql: /^INSERT INTO naijue_erp.inventory_balance/, inspect(values, sql) { assert.equal(values[2], amount); assert.equal(values[3], 1); assert.equal(values[5], time); assert.match(sql, /ON CONFLICT \(warehouse_id, sku_id\) DO NOTHING/); assert.doesNotMatch(sql, /DO UPDATE/); } });
 const update = (amount: string): Step => ({ sql: /^UPDATE naijue_erp.inventory_balance/, inspect(values) { assert.equal(values[2], amount); assert.equal(values[3], 2); assert.equal(values[6], 1); } });
 const ledger: Step = { sql: /^INSERT INTO naijue_erp.inventory_ledger/ };
-const finals = (kind: "sales" | "transfer"): Step[] => [{ sql: new RegExp(`^UPDATE naijue_erp.${kind}_header`) }, { sql: /^INSERT INTO naijue_erp.audit_change/ }, { sql: /^INSERT INTO naijue_erp.operation_receipt/ }];
+const finals = (kind: "sales" | "transfer"): Step[] => [{ sql: new RegExp(`^UPDATE naijue_erp.${kind}_header`), inspect(values, sql) {
+  assert.match(sql, /responsible_staff_id/); assert.equal(values[kind === "sales" ? 20 : 15], null);
+} }, { sql: /^INSERT INTO naijue_erp.audit_change/ }, { sql: /^INSERT INTO naijue_erp.operation_receipt/ }];
+// These synthetic stored headers deliberately have no responsible employee.
+// A selected nullable database column is explicit SQL NULL, never an omitted key.
 function salesScenario(): { read: Step[]; proof: Step[]; writes: Step[]; execute(client: Client): Promise<unknown> } {
   const source = syntheticDraft("SALE", ["2", "3"]); const draft = { ...source, lines: source.lines.map(line => ({ ...line, skuId: ids.sku })) }; const h = draft.header;
   const header = { id: h.id, number: h.number, business_type: h.businessType, business_date: h.businessDate, hall_id: h.hallId, customer_id: h.customerId, salesperson_id: h.salespersonId, warehouse_id: h.warehouseId,
-    status: "DRAFT", version: 1, gross_amount: moneyToSql(h.grossAmount), order_discount: moneyToSql(h.orderDiscount), net_due: moneyToSql(h.netDue), note: h.note, created_by_account_id: actor.accountId,
+    status: "DRAFT", version: 1, gross_amount: moneyToSql(h.grossAmount), order_discount: moneyToSql(h.orderDiscount), net_due: moneyToSql(h.netDue), note: h.note, responsible_staff_id: null, created_by_account_id: actor.accountId,
     created_hall_id: actor.hallId, created_at: time, updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER" };
   const lines = draft.lines.map(l => ({ id: l.id, sales_id: l.salesId, line_no: l.lineNo, sku_id: l.skuId, quantity: l.quantity.toString(), reference_price: l.referencePrice === null ? null : moneyToSql(l.referencePrice), deal_price: moneyToSql(l.dealPrice),
     line_amount: moneyToSql(l.lineAmount), allocated_discount: moneyToSql(l.allocatedDiscount), is_gift: l.isGift, pricing_rule: l.pricingRule, discount_tenths: l.discountTenths, zero_confirmed: l.zeroConfirmed,
@@ -66,7 +71,7 @@ function transferScenario(): ReturnType<typeof salesScenario> {
   const draft = transferDraft(["2", "3"]); const h = draft.header;
   return { read: [{ sql: /^SELECT pg_advisory_xact_lock/ }, { sql: /FROM naijue_erp.operation_receipt/, rows: [] }, { sql: /^SELECT pg_advisory_xact_lock/ },
     { sql: /FROM naijue_erp.transfer_header/, rows: [{ id: h.id, number: h.number, business_date: h.businessDate, from_warehouse_id: h.fromWarehouseId, to_warehouse_id: h.toWarehouseId, status: "DRAFT", version: 1,
-      note: h.note, created_by_account_id: transferActor.accountId, created_hall_id: transferActor.hallId, created_role: "SALESPERSON", created_at: time, updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER" }] },
+      note: h.note, responsible_staff_id: null, created_by_account_id: transferActor.accountId, created_hall_id: transferActor.hallId, created_role: "SALESPERSON", created_at: time, updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER" }] },
     { sql: /FROM naijue_erp.transfer_line/, rows: draft.lines.map(l => ({ id: l.id, transfer_id: l.transferId, line_no: l.lineNo, sku_id: l.skuId, quantity: l.quantity.toString(), is_current: true,
       product_code_snapshot: l.snapshot.productCode, product_name_snapshot: l.snapshot.productName, color_name_snapshot: l.snapshot.colorName, fit_name_snapshot: l.snapshot.fitName, size_name_snapshot: l.snapshot.sizeName, barcode_snapshot: l.snapshot.barcode })) },
     ...locks([{ warehouseId: h.toWarehouseId, skuId: transferIds.sku }, { warehouseId: h.fromWarehouseId, skuId: transferIds.sku }])],
@@ -76,6 +81,37 @@ function transferScenario(): ReturnType<typeof salesScenario> {
       .execute({ action: "APPROVE", actor: transferActor, transferId: transferIds.transfer, expectedVersion: version(1), requestKey: "first-actual-approval" }); } };
 }
 for (const [kind, scenario] of [["SALES", salesScenario], ["TRANSFER", transferScenario]] as const) {
+  test(`first-use pg protocol ${kind}: selected responsible staff preserves SQL NULL or an exact ID without inference`, async () => {
+    for (const responsibleStaffId of [null, sid("staff", 12003)]) {
+      const s = scenario(); const headerIndex = s.read.findIndex(step => step.sql.test(`FROM naijue_erp.${kind.toLowerCase()}_header`));
+      assert.ok(headerIndex >= 0); const selected = s.read[headerIndex]!;
+      const reads = [...s.read]; reads[headerIndex] = { ...selected, rows: selected.rows!.map(row => ({ ...row, responsible_staff_id: responsibleStaffId })),
+        inspect(values, sql) { selected.inspect?.(values, sql); assert.match(sql, /\bresponsible_staff_id\b/); } };
+      // Sales getSales locks its posting keys while loading; transfer getTransfer only reads header/lines.
+      const client = new Client([begin, ...(kind === "SALES" ? reads : reads.slice(0, headerIndex + 2)), commit]);
+      const pool = { async connect() { return client; } };
+      if (kind === "SALES") await new PostgresSalesUnitOfWork(pool).transaction(async tx => {
+        await tx.getReceipt(actor.accountId, "read-selected-staff"); const stored = await tx.getSales(ids.sales);
+        assert.ok(stored); assert.equal(stored.document.header.responsibleStaffId, responsibleStaffId);
+      });
+      else await new PostgresTransferUnitOfWork(pool).transaction(async tx => {
+        await tx.getReceipt(transferActor.accountId, "read-selected-staff"); const stored = await tx.getTransfer(transferIds.transfer);
+        assert.ok(stored); assert.equal(stored.document.header.responsibleStaffId, responsibleStaffId);
+      });
+      client.done(); assert.ok(client.calls.every(c => !/^(INSERT|UPDATE|DELETE)/.test(c.sql)));
+    }
+  });
+  test(`first-use pg protocol ${kind}: omitted or undefined selected responsible staff remains a decoding error`, async () => {
+    for (const missing of [true, false]) {
+      const s = scenario(); const headerIndex = s.read.findIndex(step => step.sql.test(`FROM naijue_erp.${kind.toLowerCase()}_header`));
+      assert.ok(headerIndex >= 0); const selected = s.read[headerIndex]!;
+      const row: Record<string, unknown> = { ...selected.rows![0], responsible_staff_id: undefined };
+      if (missing) delete row.responsible_staff_id;
+      const client = new Client([begin, ...s.read.slice(0, headerIndex), { ...selected, rows: [row] }, rollback]);
+      await assert.rejects(s.execute(client), { code: "INVALID_DATABASE_VALUE" }); client.done();
+      assert.equal(client.releases[0], undefined); assert.ok(client.calls.every(c => !/^(INSERT|UPDATE|DELETE)/.test(c.sql)));
+    }
+  });
   test(`first-use pg protocol ${kind}: repeated actual lines insert once per used key, preserve negative quantities and commit exact receipt/audit`, async () => {
     const s = scenario(); const client = new Client([begin, ...s.read, ...s.proof, ...s.writes, commit]); await s.execute(client); client.done();
     assert.equal(client.calls.filter(c => /^INSERT INTO naijue_erp.inventory_balance/.test(c.sql)).length, kind === "SALES" ? 1 : 2);
@@ -95,8 +131,9 @@ for (const [kind, scenario] of [["SALES", salesScenario], ["TRANSFER", transferS
     await assert.rejects(s.execute(client), { code: "VERSION_CONFLICT" }); client.done();
   });
   test(`first-use pg protocol ${kind}: unknown COMMIT keeps original outcome unknown, discards connection and never retries`, async () => {
-    const s = scenario(); const error = new Error("synthetic COMMIT acknowledgement lost"); const client = new Client([begin, ...s.read, ...s.proof, ...s.writes, { ...commit, error }, rollback]);
+    const s = scenario(); const error = new Error("synthetic COMMIT acknowledgement lost"); const client = new Client([begin, ...s.read, ...s.proof, ...s.writes, { ...commit, error }]);
     await assert.rejects(s.execute(client), error); client.done(); assert.equal(client.releases[0], error); assert.equal(client.calls.filter(c => c.sql === "COMMIT").length, 1);
+    assert.equal(client.calls.some(c => c.sql === "ROLLBACK"), false, "An uncertain COMMIT is not a known rollback");
   });
 }
 function syntheticEntry(eventKind: "APPROVE" | "UNAPPROVE" = "APPROVE"): InventoryLedgerRow {
@@ -150,4 +187,33 @@ test("first-use pg protocol: zero ledger-insert acknowledgement cannot create a 
   const s = salesScenario(); const client = new Client([begin, ...s.read, ...s.proof, { ...ledger, count: 0 }, rollback]);
   await assert.rejects(s.execute(client), { code: "INVENTORY_INTEGRITY_FAILED" }); client.done();
   assert.ok(client.calls.every(c => !/^INSERT INTO naijue_erp.inventory_balance/.test(c.sql)));
+});
+
+// INACTIVE Layer3 bridge: first zero is authorized by original publication/key
+// proof above; these assertions never infer a missing/unknown balance as zero.
+for (const [kind, scenario] of [["SALES", salesScenario], ["TRANSFER", transferScenario]] as const) {
+  test(`LIVE layer3 RED first-use ${kind}: original proof binds exact zero/running pairs to each real native INSERT`, async () => {
+    const s = scenario();
+    const pairs: readonly (readonly [before: string, after: string])[] = kind === "SALES"
+      ? [["0", "-2"], ["-2", "-5"]] : [["0", "-2"], ["0", "2"], ["-2", "-5"], ["2", "5"]];
+    const client = new Client([begin, ...s.read, ...s.proof, ...s.writes, commit]); await s.execute(client); client.done();
+    const ledgers = client.calls.filter(c => /^INSERT INTO naijue_erp.inventory_ledger/.test(c.sql)); assert.equal(ledgers.length, pairs.length);
+    ledgers.forEach(({ values, sql }, i) => { const pair = pairs[i]!;
+      assert.match(sql, /posted_at,\s*quantity_before,\s*quantity_after/);
+      const offset = kind === "SALES" ? 11 : 12;
+      assert.deepEqual(values.slice(offset), [...pair]); assert.equal(values.length, offset + 2);
+      assert.equal(typeof values[offset], "string"); assert.equal(typeof values[offset + 1], "string");
+      assert.equal(BigInt(pair[0]) + BigInt(String(values[5])), BigInt(pair[1]));
+      assert.match(sql, kind === "SALES" ? /\$12::bigint,\s*\$13::bigint/ : /\$13::bigint,\s*\$14::bigint/);
+    });
+    assert.ok(client.calls.findIndex(c => c.sql.includes("posting:zero-key")) < client.calls.findIndex(c => /^INSERT INTO naijue_erp.inventory_ledger/.test(c.sql)));
+    assert.equal(client.calls.filter(c => /^INSERT INTO naijue_erp.inventory_balance/.test(c.sql)).length, kind === "SALES" ? 1 : 2);
+  });
+}
+test("LIVE layer3 SOURCE ONLY: history revision/import writers still omit pair fields and are not connected to native token bridge", () => {
+  const posting = readFileSync(new URL("../adapters/postgres/src/inventory-posting-balances.ts", import.meta.url), "utf8");
+  const history = posting.slice(posting.indexOf("/* history-posting:ledger */"), posting.indexOf("const actualIds="));
+  assert.ok(history.length > 100); assert.doesNotMatch(history, /quantity_before|quantity_after|prepareLiveAppend|didAppendLive/);
+  const importer = readFileSync(new URL("../adapters/postgres/src/inventory-cutoff-import-store.ts", import.meta.url), "utf8");
+  assert.doesNotMatch(importer, /quantity_before|quantity_after|prepareLiveAppend|didAppendLive/);
 });

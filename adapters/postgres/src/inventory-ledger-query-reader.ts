@@ -1,6 +1,6 @@
 import type { Pool } from "pg";
 import { randomUUID } from "node:crypto";
-import { requireDomain } from "../../../packages/domain/src/errors.ts";
+import { DomainError, requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import type { EntityId, EntityKind } from "../../../packages/domain/src/values.ts";
 import type { InventoryLedgerEntry, InventoryLedgerScopedRead, InventoryLedgerSnapshot, InventoryLedgerSource, TrustedInventoryLedgerSnapshotReader } from "../../../packages/application/src/inventory-ledger-query-contracts.ts";
@@ -13,6 +13,8 @@ import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
 import { booleanValue, stringValue } from "./codec.ts";
 import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { decodeInventoryLedgerBalancePair } from "../../../packages/application/src/inventory-ledger-balance-transition.ts";
+import type { InventoryLedgerBalanceTransition } from "../../../packages/application/src/inventory-ledger-balance-transition.ts";
 import { readInventoryKeyAdmissions } from "./inventory-key-admission-reader.ts";
 
 export interface PgInventoryLedgerQueryResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
@@ -91,13 +93,13 @@ function decodeEntry(row: Row, publishedBatchId: string): InventoryLedgerEntry {
     reversesEntryId: row.reverses_entry_id === null ? null : id("ledger", row.reverses_entry_id), businessDate: row.business_date as InventoryLedgerEntry["businessDate"], postedAt: stringValue(row.posted_at) };
 }
 /** Inert injected driver seam. No pool construction, listener, migrations or database connection on construction. */
-function displayEntry(row: Row): NonNullable<InventoryLedgerEntry["display"]> {
+function displayEntry(row: Row, balanceTransition: InventoryLedgerBalanceTransition): NonNullable<InventoryLedgerEntry["display"]> {
   return {
     date: stringValue(row.display_date), businessType: stringValue(row.display_business_type) as NonNullable<InventoryLedgerEntry["display"]>["businessType"],
     sourceNumber: row.display_source_number === null ? null : stringValue(row.display_source_number),
     operator: { accountId: row.display_operator_account_id === null ? null : id("account", row.display_operator_account_id),
       name: row.display_operator_name === null ? null : stringValue(row.display_operator_name), labelBasis: "CURRENT_REFERENCE" },
-    balanceTransition: { state: "UNKNOWN", before: null, after: null, reason: "NO_RECORDED_BALANCE_TRANSITION" }, navigation: "NOT_CHECKED"
+    balanceTransition, navigation: "NOT_CHECKED"
   };
 }
 
@@ -150,7 +152,7 @@ export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedge
       const s = one(skus); integrity(s.id === parameters.skuId && booleanValue(s.size_member), "Invalid canonical SKU/size-group identity");
       const batchId = await publishedKey(query, parameters.warehouseId, parameters.skuId, this.runtime26);
       const columns = `l.id, l.operation_id, l.event_kind, l.warehouse_id, l.sku_id,
-        l.quantity_delta::text AS quantity_delta, l.source_sales_line_id, sl.sales_id AS source_sales_id,
+        l.quantity_delta::text AS quantity_delta, l.quantity_before::text AS quantity_before, l.quantity_after::text AS quantity_after, l.source_sales_line_id, sl.sales_id AS source_sales_id,
         l.source_transfer_line_id, tl.transfer_id AS source_transfer_id, l.source_import_batch_id, l.endpoint,
         l.source_history_revision_id, l.source_history_sales_line_id, l.source_history_transfer_line_id,
         hr.id AS history_revision_id, hr.document_kind AS history_document_kind, hr.operation_id AS history_revision_operation_id,
@@ -209,7 +211,16 @@ export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedge
       integrity(rows.length <= parameters.pageSize + 1, "Inventory ledger driver exceeded bounded page");
       // Validate the look-ahead row too: malformed/unpublished facts cannot become a mere hasMore hint.
       integrity(rows.every(row => row.warehouse_id === parameters.warehouseId && row.sku_id === parameters.skuId), "Ledger facts escaped their exact key");
-      const entries = rows.map(row => ({ ...decodeEntry(row, batchId), ...(parameters.page !== undefined ? { display: displayEntry(row) } : {}) }));
+      const entries = rows.map(row => {
+        const entry = decodeEntry(row, batchId);
+        // Explicit stored NULL/NULL alone means unknown. Missing projection,
+        // partial values or a driver numeric coercion are integrity failures.
+        // Validate keyset lookahead too, without adding display to legacy wire.
+        const balanceTransition = decodeInventoryLedgerBalancePair(row.quantity_before, row.quantity_after,
+          { eventKind: entry.eventKind, sourceKind: entry.source.kind, quantityDelta: entry.quantityDelta },
+          () => { throw new DomainError("INVENTORY_INTEGRITY_FAILED", "Invalid recorded native inventory balance pair"); });
+        return { ...entry, ...(parameters.page !== undefined ? { display: displayEntry(row, balanceTransition) } : {}) };
+      });
       const all = checkedInventoryLedgerSnapshot({ readReference: randomUUID(), readiness: "ready", data: {
         pageSize: parameters.page !== undefined ? parameters.pageSize : parameters.pageSize + 1, labelBasis: "CURRENT_REFERENCE", warehouse: { id: w.id, hallId: w.hall_id, label: w.name },
         sku: { id: s.id, code: s.sku_code, product: { id: s.product_id, code: s.product_code, name: s.product_name }, color: { id: s.color_id, label: s.color_name },

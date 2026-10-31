@@ -23,14 +23,14 @@ export function CatalogueEntryEditor(props:EditorProps){
 }
 function EntryEditorForm(props:EditorProps&{readonly controller:CatalogueEditorController}){
   const [name,setName]=useState(props.entry?.name??''),[code,setCode]=useState(props.entry?.code??''),[error,setError]=useState('');
-  const [discard,setDiscard]=useState<'close'|'reload'|null>(null),[deleting,setDeleting]=useState(false),guard=useRef<()=>boolean>(()=>true),finished=useRef(false);
+  const [deleting,setDeleting]=useState(false),guard=useRef<()=>boolean>(()=>true),finished=useRef(false);
   const state=useSyncExternalStore(props.controller.subscribe,props.controller.getSnapshot,props.controller.getSnapshot);
   const dirty=name!==(props.entry?.name??'')||code!==(props.entry?.code??''),pending=['submitting','checking','uncertain'].includes(state.phase),committed=state.phase==='committed';
   const allowed=(action:CatalogueMaintenanceAction)=>props.capability.allowedActions.includes(action),writeAction=props.entry?'EDIT':'CREATE';
   guard.current=()=>committed||!dirty&&!pending;
   useEffect(()=>{props.onCanLeaveChange(()=>guard.current());return()=>props.onCanLeaveChange(null);},[props.onCanLeaveChange]);
   const finish=()=>{const result=props.controller.getSnapshot().result;if(result&&!finished.current&&props.scope.active){finished.current=true;const command=props.controller.getSnapshot().command;props.onCommitted(result,command&&'values' in command&&'code' in command.values?{name:command.values.name,code:command.values.code}:undefined);}};
-  const close=(action:'close'|'reload'='close')=>{if(pending)return;if(dirty&&!committed)setDiscard(action);else{props.close();if(action==='reload')props.reload();}};
+  const close=(action:'close'|'reload'='close')=>{if(pending)return;props.close();if(action==='reload')props.reload();};
   const submit=async(action:CatalogueMaintenanceAction=writeAction)=>{if(pending||committed||!allowed(action))return;setError('');try{
     if(action==='CREATE')await props.controller.submit({action,values:{name,code,enabled:true}});
     else if(props.entry&&action==='EDIT')await props.controller.submit({action,id:props.entry.id,expectedVersion:props.entry.version,values:{name,code,enabled:props.entry.enabled}});
@@ -43,7 +43,6 @@ function EntryEditorForm(props:EditorProps&{readonly controller:CatalogueEditorC
     <div className="pc-modal-body"><form id="pc-dict-form" onSubmit={event=>{event.preventDefault();void submit();}} aria-label={`${props.label}维护`}><div className="field"><span className="pc-field-caption">{props.label}名称</span><div id="pc-dict-name"><Input name="name" aria-label={`${props.label}名称`} value={name} maxLength={40} placeholder="" disabled={pending||committed||!allowed(writeAction)} onChange={setName}/></div></div><div className="field"><span className="pc-field-caption">{props.label}代码</span><div id="pc-dict-code"><Input name="code" aria-label={`${props.label}代码`} value={code} maxLength={props.label==='版型'?1:12} placeholder="" disabled={pending||committed||!allowed(writeAction)} onChange={setCode}/></div></div></form></div>
     {error&&<p role="alert" className="catalogue-write-error">{error}</p>}<CatalogueWriteFeedback state={state} controller={props.controller} finish={finish}/>
     {state.error?.code==='VERSION_CONFLICT'&&<UIButton onClick={()=>close('reload')}>关闭并读取最新目录</UIButton>}
-    {discard&&<StandardOverlay presentation="catalogue" title="有未保存的修改" closeLabel="关闭放弃确认" close={()=>setDiscard(null)} footer={dismiss=><div className="pc-modal-foot"><button type="button" className="btn" onClick={dismiss}>继续填写</button><button type="button" className="btn" onClick={()=>{const action=discard;props.close();if(action==='reload')props.reload();}}>放弃填写</button></div>}><p>是否放弃当前未保存的{props.label}资料？</p></StandardOverlay>}
     {deleting&&<StandardOverlay presentation="catalogue" title={`确认删除${props.label}`} closeLabel="关闭删除确认" close={()=>setDeleting(false)} footer={dismiss=><div className="pc-modal-foot"><button type="button" className="btn" onClick={dismiss}>取消</button><button type="button" className="btn primary" onClick={()=>{setDeleting(false);void submit('DELETE');}}>确认删除</button></div>}><p>确认删除“{props.entry?.name}”？仍有商品、规格或图片引用时无法删除。</p></StandardOverlay>}
   </StandardOverlay>;
 }

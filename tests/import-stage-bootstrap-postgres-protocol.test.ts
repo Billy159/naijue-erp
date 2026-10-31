@@ -7,7 +7,7 @@ import { NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY, NATIVE_IMPORT_ACCOUNTING_SCH
 import assert from "node:assert/strict";
 import { PostgresCutoffImportStore } from "../adapters/postgres/src/inventory-cutoff-import-store.ts";
 import type { ImportStageBootstrap, ImportStageBootstrap26 } from "../adapters/postgres/src/inventory-cutoff-import-store.ts";
-import { createCutoffImportService, stableImportId } from "../packages/application/src/inventory-cutoff-import.ts";
+import { createCutoffImportService, stableImportId, COMPLETE_SCOPE_DECISION } from "../packages/application/src/inventory-cutoff-import.ts";
 import { HISTORY_MAPPING_VERSION } from "../packages/application/src/history-storage-contract.ts";
 import { requestHash } from "../packages/application/src/request-hash.ts";
 import { cutoffStage, cutoffTime } from "./support/synthetic-cutoff-fixtures.ts";
@@ -106,6 +106,14 @@ test("unawaited in-flight bootstrap work is drained then rejected before the own
   assert.equal(p.calls.at(-1)!.sql, "ROLLBACK"); assert.ok(p.calls.every(c => !c.sql.startsWith("INSERT INTO naijue_erp.audit_change")));
 });
 
+function legacyBootstrapQueryExpression(arg:ts.Expression,sf:ts.SourceFile):ts.Expression{
+ if(!ts.isConditionalExpression(arg))return arg;
+ if(!ts.isIdentifier(arg.condition)||arg.condition.text!=='exact26'
+  ||!/^NATIVE_BOOTSTRAP26_SQL\.(?:target|oneNewBatch|emptyDomain|account)\.sql$/.test(arg.whenTrue.getText(sf))
+  ||!(ts.isStringLiteral(arg.whenFalse)||ts.isNoSubstitutionTemplateLiteral(arg.whenFalse)||ts.isTemplateExpression(arg.whenFalse)))
+  throw Error('Unreviewed conditional SQL expression '+arg.getText(sf));
+ return arg.whenFalse;
+}
 function actualBootstrapStatements(): readonly string[] {
  const queries: string[]=[];
  const paths=['scripts/import-v3/native-bootstrap.mjs','adapters/postgres/src/native-party-import.ts','adapters/postgres/src/import-v3-history-header-native-reference-store.ts'];
@@ -115,7 +123,7 @@ for(const path of paths) {
  function arrays(n: ts.Node) { if(ts.isVariableDeclaration(n)&&n.name.getText(sf)==='EMPTY_TABLES') tables=JSON.parse(n.initializer!.getText(sf).replaceAll("'",'"')); ts.forEachChild(n,arrays); } arrays(sf);
  function visit(n: ts.Node) {
   if(ts.isCallExpression(n)&&n.expression.getText(sf)==='client.query') {
-   const arg=n.arguments[0]!; let variants: string[]=[];
+   const arg=legacyBootstrapQueryExpression(n.arguments[0]!,sf); let variants: string[]=[];
    if(ts.isStringLiteral(arg)||ts.isNoSubstitutionTemplateLiteral(arg)) variants=[arg.text];
    else if(ts.isTemplateExpression(arg)) {
     const tag=arg.head.text;
@@ -144,6 +152,14 @@ for(const path of paths) {
  return [...new Set(queries)];
 }
 
+test("legacy bootstrap extraction recognizes only named exact26 alternatives and never evaluates unknown expressions",()=>{
+ const expression=(text:string)=>{const sf=ts.createSourceFile('fixture.ts','client.query('+text+');',ts.ScriptTarget.Latest,true);const statement=sf.statements[0] as ts.ExpressionStatement;return {sf,arg:(statement.expression as ts.CallExpression).arguments[0]!};};
+ for(const key of ['target','oneNewBatch','emptyDomain','account']){const {sf,arg}=expression(`exact26 ? NATIVE_BOOTSTRAP26_SQL.${key}.sql : "/* legacy */ SELECT 1"`);assert.equal((legacyBootstrapQueryExpression(arg,sf) as ts.StringLiteral).text,'/* legacy */ SELECT 1');}
+ for(const text of ['other ? NATIVE_BOOTSTRAP26_SQL.target.sql : "SELECT 1"','exact26 ? OTHER_SQL.target.sql : "SELECT 1"','exact26 ? NATIVE_BOOTSTRAP26_SQL.unknown.sql : "SELECT 1"','exact26 ? NATIVE_BOOTSTRAP26_SQL.target.sql : arbitrary()']){
+  const {sf,arg}=expression(text);assert.throws(()=>legacyBootstrapQueryExpression(arg,sf),/Unreviewed conditional SQL expression/);
+ }
+ assert.equal(actualBootstrapStatements().some(sql=>sql.startsWith('/* native-bootstrap26:')),false);
+});
 test("finite bootstrap boundary accepts every actual reviewed provider statement with exact arity", async () => {
   const queries = actualBootstrapStatements(); assert.equal(queries.length, 46);
   const p = protocol();
@@ -248,17 +264,36 @@ function coreStage14(): import('../packages/application/src/inventory-cutoff-imp
    target:{database:'SYNTHETIC_CORE14',role:'SYNTHETIC_OWNER',serverAddress:null,serverPort:null,postmasterStartedAt:coreTime14},bootstrapAt:coreTime14},
   items:parties.filter(p=>p.entity==='WAREHOUSE').map((p,i)=>({sourceEntityType:'WAREHOUSE',sourceKey:p.sourceKey,sourceRecordHash:'a'.repeat(64),sourceFileRef:'synthetic-wh',targetType:'WAREHOUSE',targetId:p.nativeId as import('../packages/domain/src/values.ts').EntityId<'warehouse'>,nativeRecord:{id:id(4000+i),reviewedAt:coreTime14,decisionReason:'SYNTHETIC_REVIEWED'}}))};
 }
-function coreProtocol14(mode?:'zeroClaim'|'unknownCommit'){
+function coreProtocol14(mode?:'zeroClaim'|'unknownCommit',carryMutation?:'missingBirth'|'birthDrift'|'missingCurrentClaim'|'sourceMismatch'|'missingBirthClaim'|'futureCurrentCheckpoint'){
  const calls:{sql:string;values:unknown[]}[]=[],released:unknown[]=[];
- const receipts=new Map<string,Record<string,unknown>>();let batch:Record<string,unknown>|undefined,birth:unknown,callbacks=0,authorized=true;
+ const actualClaims:Record<string,unknown>[]=[];const receipts=new Map<string,Record<string,unknown>>();let batch:Record<string,unknown>|undefined,birth:unknown,callbacks=0,authorized=true;
  const client={async query(sql:string,values:unknown[]=[]){calls.push({sql,values});let rows:Record<string,unknown>[]=[],rowCount=1;
-  if(sql.includes('native-core:carry-forward'))rows=coreStage14().items.map(item=>({checkpoint:batch!.checkpoint,import_batch_id:coreStage14().batchId,import_record_id:item.nativeRecord.id,target_type:'WAREHOUSE',target_id:item.targetId,operation_id:stableImportId('operation',coreStage14().actorAccountId,coreStage14().requestKey),checkpoint_sequence:1,source_entity_type:item.sourceEntityType,source_key:item.sourceKey,source_record_hash:item.sourceRecordHash,source_file_ref:item.sourceFileRef,warehouse_record:item.nativeRecord}));
+  const coreRows=()=>actualClaims.map(claim=>{
+    const command=coreStage14(),item=command.items.find(item=>item.targetId===claim.target_id);assert.ok(item,'Only actual original warehouse claim can be scripted');
+    return {...claim,source_entity_type:item.sourceEntityType,source_key:item.sourceKey,source_record_hash:item.sourceRecordHash,source_file_ref:item.sourceFileRef,warehouse_record:structuredClone(item.nativeRecord)};
+  });
+  if(sql.startsWith('/* native-core:carry-forward */')){
+    const command=coreStage14();assert.deepEqual(values,[command.batchId,stableImportId('operation',command.actorAccountId,command.requestKey),command.coreInitialization.coreSourceDigest]);
+    assert.ok(batch&&birth&&typeof birth==='object');const coreCheckpoint=structuredClone((birth as Record<string,unknown>).checkpoint);
+    if(carryMutation==='birthDrift')(coreCheckpoint as Record<string,unknown>).sequence=2;
+    const checkpoint=structuredClone(batch.checkpoint);if(carryMutation==='futureCurrentCheckpoint')(checkpoint as Record<string,unknown>).sequence=2;
+    rows=coreRows().map(row=>({...row,checkpoint,core_checkpoint:carryMutation==='missingBirth'?undefined:coreCheckpoint,status:batch!.status,source_name:command.sourceName,source_hash:command.sourceHash,source_manifest_ref:command.sourceManifestRef,history_payload_hash:batch!.history_payload_hash,cutoff_at:coreTime14,core_actor:command.actorAccountId}));
+    if(carryMutation==='missingBirthClaim')rows.pop();rowCount=rows.length;
+  }
+  else if(sql.startsWith('/* native-core:committed-chain */')){
+    const command=coreStage14();assert.deepEqual(values,[command.batchId,stableImportId('operation',command.actorAccountId,command.requestKey)]);
+    assert.equal((batch!.checkpoint as {sequence:number}).sequence,1,'Later committed chain must be explicitly scripted, not silently empty');rows=[];rowCount=0;
+  }
+  else if(sql.startsWith('/* native-core:all-claims */')){
+    const command=coreStage14();assert.deepEqual(values,[command.batchId,23,command.sourceHash,COMPLETE_SCOPE_DECISION,command.sourceManifestRef]);
+    rows=coreRows().map(row=>({...row,record_ok:true,source_ok:carryMutation!=='sourceMismatch'}));if(carryMutation==='missingCurrentClaim')rows.pop();rowCount=rows.length;
+  }
   else if(sql.includes('WHERE actor_account_id = $1 AND request_key = $2'))rows=receipts.has(String(values[1]))?[receipts.get(String(values[1]))!]:[];
   else if(sql.includes('FROM naijue_erp.import_batch WHERE id = $1 FOR UPDATE'))rows=batch?[batch]:[];
   else if(sql.includes('native-core:stage'))batch={status:'STAGED',checkpoint:JSON.parse(String(values[6])),history_expected_counts:null,history_payload_hash:null};
   else if(sql.includes('native-core:accounting-batch'))rows=[{checkpoint:batch!.checkpoint}];
   else if(sql.includes('native-core:warehouse-record'))rows=[{id:values[0]}];
-  else if(sql.includes('native-accounting:claim')){rowCount=mode==='zeroClaim'?0:1;rows=rowCount?[{import_batch_id:values[0],import_record_id:values[1],target_type:values[2],target_id:values[3],operation_id:values[4],checkpoint_sequence:values[5]}]:[];}
+  else if(sql.includes('native-accounting:claim')){rowCount=mode==='zeroClaim'?0:1;rows=rowCount?[{import_batch_id:values[0],import_record_id:values[1],target_type:values[2],target_id:values[3],operation_id:values[4],checkpoint_sequence:values[5]}]:[];actualClaims.push(...structuredClone(rows));}
   else if(sql.includes('native-core:checkpoint'))batch!.checkpoint=JSON.parse(String(values[1]));
   else if(sql.includes('native-core:birth'))rows=[{after_values:birth,id:values[0]}];
   else if(sql.includes('native-core:bind-full')){batch!.checkpoint=JSON.parse(String(values[1]));batch!.history_expected_counts=JSON.parse(String(values[2]));batch!.history_payload_hash=values[3];}
@@ -328,6 +363,16 @@ test('v14 full MAIN carry-forward reads all22 exact original claims and returns 
  const p=coreProtocol14(),command=coreStage14(),core=await p.store.execute(command,coreTime14),n=p.calls.length;
  const {readNativeCoreWarehouseCarryForward}=await import('../adapters/postgres/src/native-import-record-accounting.ts');
  const result=await readNativeCoreWarehouseCarryForward(p.client,{batchId:command.batchId,coreReceiptId:core.operationId,coreSourceDigest:command.coreInitialization.coreSourceDigest},p.runtime);
- assert.equal(result.claims.length,22);assert.deepEqual(result.warehouses,command.items);assert.equal((result.checkpoint as {cursor:number}).cursor,22);
+ assert.equal(result.claims.length,22);assert.deepEqual(result.warehouses,command.items);assert.equal((result.checkpoint as {cursor:number}).cursor,22);assert.deepEqual(result.coreClaims,result.claims);assert.deepEqual(result.coreWarehouses,command.items);assert.equal(result.records.length,22);assert.deepEqual(result.committedOperations,[]);assert.equal(result.fullBinding,null);assert.equal(result.status,'STAGED');
  assert.ok(p.calls.slice(n).every(call=>!/(?:INSERT INTO|UPDATE|DELETE FROM)/.test(call.sql)));
+});
+
+test('v14 carry-forward cannot invent missing birth/current claims, source proof or a future checkpoint; no repeated claims',async()=>{
+ const {readNativeCoreWarehouseCarryForward}=await import('../adapters/postgres/src/native-import-record-accounting.ts');
+ for(const mutation of ['missingBirth','birthDrift','missingCurrentClaim','sourceMismatch','missingBirthClaim','futureCurrentCheckpoint'] as const){
+  const p=coreProtocol14(undefined,mutation),command=coreStage14(),core=await p.store.execute(command,coreTime14),n=p.calls.length;
+  await assert.rejects(readNativeCoreWarehouseCarryForward(p.client,{batchId:command.batchId,coreReceiptId:core.operationId,coreSourceDigest:command.coreInitialization.coreSourceDigest},p.runtime),{code:mutation==='missingBirth'?'INVALID_DATABASE_VALUE':'NATIVE_RECORD_ACCOUNTING_CONFLICT'});
+  assert.equal(p.calls.filter(call=>call.sql.includes('native-accounting:claim')).length,22);
+  assert.ok(p.calls.slice(n).every(call=>!/(?:INSERT INTO|UPDATE|DELETE FROM)/.test(call.sql)));
+ }
 });

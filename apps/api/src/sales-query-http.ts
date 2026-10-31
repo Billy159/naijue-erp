@@ -1,3 +1,4 @@
+import { documentListWire, salesDetailWire } from './document-list-wire.ts';
 import type { IncomingHttpHeaders } from "node:http";
 import type { FastifyPluginAsync } from "fastify";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
@@ -58,7 +59,8 @@ export function createSalesQueryHttpPlugin(options: SalesQueryHttpOptions): Fast
         }
         const actor = actors.get(request); const state = reads.get(request);
         if (!actor || !state) throw new Error("Missing trusted sales query context");
-        return reply.type("application/json").send(exactJson(await read(actor, request.body, state.controller.signal)));
+        const result=await read(actor, request.body, state.controller.signal);
+        return reply.type("application/json").send(exactJson(url==='/sales/query'?documentListWire(result,request.headers['x-naijue-document-summary']):url==='/sales/detail/query'?salesDetailWire(result,request.headers['x-naijue-document-summary']):result));
       });
     }
   };

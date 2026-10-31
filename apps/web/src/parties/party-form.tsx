@@ -21,7 +21,7 @@ export function PartyForm(props: { readonly controller: PartyMaintenanceControll
     : <Readonly key="name" title="名称">{editor.record?.name ?? '尚未读取'}</Readonly>];
   fields.push(<Readonly key="code" title="编码"><span className="party-code" role="textbox" aria-label={`${label}编码`} aria-readonly="true">{editor.record?.code ?? '保存后生成'}</span></Readonly>);
   if (editor.action === 'EDIT') fields.push(<Field key="enabled" title="使用状态"><div className="bs-switch"><Switch aria-label="使用状态" checked={editor.draftEnabled} onChange={value => controller.editEnabled(value)} disabled={locked} /><span>{editor.draftEnabled ? '正常' : '已停用'}</span></div></Field>);
-  return <Modal className="demo-ui demo-settings-modal bs-modal iw-arco-modal iw-arco-controls party-modal" visible title={`${verb}${label}`} getPopupContainer={props.getPopupContainer} onCancel={() => { controller.requestClose(); }} onOk={() => { void controller.submit(); }} confirmLoading={pending} okText="确定" cancelText="取消" maskClosable={false} autoFocus={false} focusLock
+  return <Modal className="demo-ui demo-settings-modal bs-modal iw-arco-modal iw-arco-controls party-modal" visible title={`${verb}${label}`} getPopupContainer={props.getPopupContainer} onCancel={() => { controller.discardEditor(); }} onOk={() => { void controller.submit(); }} confirmLoading={pending} okText="确定" cancelText="取消" maskClosable={false} autoFocus={false} focusLock
     okButtonProps={{ disabled: locked || editing && !validName(editor.draftName) || unchanged || !!incompatible || !!editor.current || editor.record !== null && editor.record.version >= 2147483647 }}>
     {editor.phase === 'loading' && <p role="status">正在读取当前{label}…</p>}
     {editor.phase === 'error' && <p className="bs-error" role="alert">当前资料读取失败，不能提交；已输入内容未改变。<Button type="text" onClick={() => { void controller.retryDetail(); }}>重试资料</Button></p>}
@@ -32,7 +32,6 @@ export function PartyForm(props: { readonly controller: PartyMaintenanceControll
     {uncertain && <section className="party-recovery" aria-label="原操作恢复"><strong>结果待核实</strong><p>断线、停止等待或暂未查到回执，都不代表操作未提交。名称、使用状态、目标版本及原请求已锁定，不会自动重试或另建编号。</p><div className="iw-actions"><Button onClick={() => { void controller.checkReceipt(); }}>查询原操作回执</Button><Button onClick={() => { void controller.replayOriginal(); }}>重放原请求</Button></div></section>}
     {write.phase === 'rejected' && editor.id && <Button disabled={editor.phase === 'loading'} onClick={() => { void controller.readCurrent(); }}>读取最新状态</Button>}
     {editor.current && <section className="party-current" aria-label="服务器当前状态"><strong>刚读取的服务器状态</strong><dl><dt>编码</dt><dd className="party-code">{editor.current.code}</dd><dt>名称</dt><dd>{editor.current.name}</dd><dt>状态 / 版本</dt><dd>{editor.current.enabled ? '正常' : '已停用'} / {editor.current.version}</dd></dl><p>您的名称与使用状态草稿未被覆盖，确认比较后才能重新准备。</p><Button onClick={() => controller.prepareCurrentVersion()}>按最新版本重新准备</Button></section>}
-    {editor.closePrompt && <section className="party-close-confirm" role="alert"><strong>放弃本次填写？</strong><p>本次未保存的内容将丢弃，已保存的资料保持不变。</p><div className="iw-actions"><Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => controller.discardEditor()}>放弃本次填写</Button></div></section>}
   </Modal>;
 }
 

@@ -21,7 +21,7 @@ function Editor(props:Props&{editor:AccountSettingsController}){
  useEffect(()=>{if(state.write.phase==='committed'&&state.readback.phase==='idle')void editor.readback();if(state.write.phase==='committed'&&state.readback.phase==='ready'&&!confirmed.current){confirmed.current=true;props.close();}},[state.write.phase,state.readback.phase,editor,props.close]);
  if(state.disposed||!state.draft)return null;
  const draft=state.draft,locked=editor.locked,editing=editor.intent==='CREATE'||editor.intent==='EDIT',withPassword=editor.intent==='CREATE'||editor.intent==='RESET_PASSWORD',role=props.roles.find(role=>role.value===draft.staff?.role)?.label??'未提供';
- const cancel=()=>{if(editor.requestClose())props.close();},submit=()=>{const value=password.current?.querySelector('input')?.value??'';if(Object.keys(editor.validate(value.length>0)).length)return;void editor.submit(value);setPasswordKey(value=>value+1);};
+ const cancel=()=>{if(editor.discard())props.close();},submit=()=>{const value=password.current?.querySelector('input')?.value??'';if(Object.keys(editor.validate(value.length>0)).length)return;void editor.submit(value);setPasswordKey(value=>value+1);};
  return <Modal visible className="bs-modal iw-arco-modal iw-arco-controls runtime-settings" title={{CREATE:'新增账号',EDIT:'编辑账号',DISABLE:'禁用账号',RESTORE:'启用账号',RESET_PASSWORD:'重置密码'}[editor.intent]} maskClosable={false} autoFocus={false} onCancel={cancel} onOk={submit} confirmLoading={['checking','submitting','recovering'].includes(state.write.phase)} okText="确定" cancelText="取消" okButtonProps={{disabled:!editor.writesEnabled||locked}}>
  <div className="bs-form-fields iw-form-fields"><Field title="所属员工" required={editor.intent==='CREATE'} error={state.errors.staff}>{editor.intent==='CREATE'?<StaffPicker {...props} selected={draft.staff} disabled={locked} onChange={staff=>editor.selectStaff(staff)}/>:<div className="bs-readonly">{draft.staff?.name??'未提供'}</div>}</Field>
  {draft.staff&&<Field title="员工资料"><div className="bs-readonly">{role} · {draft.staff.employmentStatus||'未提供'}</div></Field>}
@@ -34,7 +34,6 @@ function Editor(props:Props&{editor:AccountSettingsController}){
  {state.write.phase==='rejected'&&<p className="bs-error" role="alert">{accountRejectionMessage(state.write.error?.code??'')}</p>}
  {state.write.phase==='uncertain'&&<section className="bs-error" role="alert"><p>提交结果尚未确认，原请求身份已保留，不能重新提交或放弃。</p><Button onClick={()=>{void editor.recover();}}>查询原操作回执</Button></section>}
  {state.write.phase==='committed'&&<p role="status">保存已确认。{state.readback.phase==='error'?'重新读取账号暂未完成。':'正在重新读取账号…'}{state.readback.phase==='error'&&<Button onClick={()=>{void editor.readback();}}>重试读取</Button>}</p>}
- {state.closePrompt&&<section className="runtime-settings-note" role="alert"><p>放弃本次填写？</p><Button onClick={()=>editor.keepEditing()}>继续填写</Button><Button onClick={()=>{if(editor.discard())props.close();}}>放弃本次填写</Button></section>}
  </Modal>;
 }
 function StaffPicker(props:Props&{selected:AccountStaffCandidate|null;disabled:boolean;onChange:(staff:AccountStaffCandidate)=>void}){

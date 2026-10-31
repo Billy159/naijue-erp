@@ -4,6 +4,7 @@ import type { EntityId, EntityKind } from "../../domain/src/values.ts";
 import type { InventoryReadScope } from "./inventory-query-contracts.ts";
 import { INVENTORY_LEDGER_MAX_PAGE_SIZE, INVENTORY_LEDGER_BUSINESS_TYPES } from "./inventory-ledger-query-contracts.ts";
 import type { InventoryLedgerCursor, InventoryLedgerEntry, InventoryLedgerPage, InventoryLedgerQuery, InventoryLedgerSnapshot, InventoryLedgerSource } from "./inventory-ledger-query-contracts.ts";
+import { checkedInventoryLedgerBalanceTransition } from "./inventory-ledger-balance-transition.ts";
 
 type Reject = () => never;
 export function invalidInventoryLedgerQuery(): never { throw new DomainError("INVALID_INVENTORY_LEDGER_QUERY", "Invalid inventory ledger read parameters"); }
@@ -102,12 +103,12 @@ function entry(value: unknown, numbered: boolean): InventoryLedgerEntry {
     let date: string; try { if (typeof d.date !== "string") reject(); date = businessDate(d.date); } catch { return reject(); }
     const operator = record(d.operator, ["accountId", "name", "labelBasis"], reject);
     if (operator.labelBasis !== "CURRENT_REFERENCE" || (operator.accountId === null && operator.name !== null)) reject();
-    const transition = record(d.balanceTransition, ["state", "before", "after", "reason"], reject);
-    if (transition.state !== "UNKNOWN" || transition.before !== null || transition.after !== null || transition.reason !== "NO_RECORDED_BALANCE_TRANSITION") reject();
+    const transition = checkedInventoryLedgerBalanceTransition(d.balanceTransition,
+      { eventKind, sourceKind: provenance.kind, quantityDelta: row.quantityDelta as string }, reject);
     display = Object.freeze({ date, businessType: d.businessType as NonNullable<InventoryLedgerEntry["display"]>["businessType"],
       sourceNumber: d.sourceNumber === null ? null : text(d.sourceNumber, reject), operator: Object.freeze({ accountId: operator.accountId === null ? null : id("account", operator.accountId, reject),
         name: operator.name === null ? null : text(operator.name, reject), labelBasis: "CURRENT_REFERENCE" as const }),
-      balanceTransition: Object.freeze({ state: "UNKNOWN" as const, before: null, after: null, reason: "NO_RECORDED_BALANCE_TRANSITION" as const }), navigation: "NOT_CHECKED" as const });
+      balanceTransition: transition, navigation: "NOT_CHECKED" as const });
   }
   return Object.freeze({ id: entryId, operationId: id("operation", row.operationId, reject), eventKind, quantityDelta: row.quantityDelta as string,
     ...(display ? { display } : {}),

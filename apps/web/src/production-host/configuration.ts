@@ -16,6 +16,8 @@ export interface ProductionHostConfiguration {
     readonly productViewer?: boolean; readonly productFullPage?: boolean; readonly salesProductFullPage?: boolean; readonly transferProductFullPage?: boolean; readonly transferInitialSizeGroupId?: string;
     /** Existing stock overview provider must be explicitly enabled by this host. */
     readonly productStockOverview?: boolean;
+    /** Presentation opt-in only after the original R3 media stage is paired; never a server grant. */
+    readonly productMediaReady?: boolean;
     /** Presentation opt-in only after this release is paired with the v16 backend. */
     readonly documentResponsibleReady?: boolean;
     readonly parties?: false | { readonly readOnly: boolean };
@@ -50,7 +52,7 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
     || origin.origin !== http.origin || origin.username || origin.password
     || (http.basePath !== '/api' && http.basePath !== '/__naijue_candidate/replica-private-01/api') || session.verifyOnMount !== true
     || typeof assets.basePath !== 'string' || !/^\/assets\/(?:[A-Za-z0-9_-]+\/)*$/.test(assets.basePath)) return invalid();
-  const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'salesExistingEdit', 'transferExistingEdit', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage', 'salesProductFullPage', 'transferProductFullPage', 'staffSettings', 'paymentSettings', 'accountSettings', 'productStockOverview', 'documentResponsibleReady'] as const;
+  const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'salesExistingEdit', 'transferExistingEdit', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage', 'salesProductFullPage', 'transferProductFullPage', 'staffSettings', 'paymentSettings', 'accountSettings', 'productStockOverview', 'productMediaReady', 'documentResponsibleReady'] as const;
   const routes = record(row.routes, ['inventory', 'sales', 'transfers'], [...booleanKeys.slice(3), 'parties', 'productSettings', 'storeSettings', 'transferInitialSizeGroupId', 'maintenance', 'historyRevision']);
   for (const key of booleanKeys) if (Object.hasOwn(routes, key) && typeof routes[key] !== 'boolean') return invalid();
   for (const [child, parent] of [['inventoryLedger', 'inventory'], ['salesManualCreate', 'sales'], ['transferManualCreate', 'transfers'], ['salesExistingEdit', 'sales'], ['transferExistingEdit', 'transfers'], ['productViewer', 'products'], ['productFullPage', 'products'], ['salesProductFullPage', 'sales'], ['transferProductFullPage', 'transfers']] as const) {
@@ -87,6 +89,7 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
     }
     extras.maintenance = Object.freeze({ ...maintenance });
   }
+  if (routes.productMediaReady === true && (routes.products !== true || (extras.maintenance as {readonly products?:boolean}|undefined)?.products !== true)) return invalid();
   if (Object.hasOwn(routes, 'productSettings')) {
     if (routes.productSettings === false) extras.productSettings = false;
     else {

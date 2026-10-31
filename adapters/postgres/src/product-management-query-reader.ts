@@ -1,3 +1,4 @@
+import { acquireReadClient, awaitRead } from './cancellable-read.ts';
 import type { ProductManagementCandidate, ProductManagementCandidateKind, ProductManagementCandidatePage, ProductManagementCandidateQuery,
   ProductManagementListPage, ProductManagementListQuery, ProductManagementReadGrant, ProductManagementScopedRead,
   TrustedProductManagementSnapshotReader } from "../../../packages/application/src/product-management-query-ports.ts";
@@ -13,7 +14,6 @@ import { decodeImportCheckpoint } from "./inventory-cutoff-import-store.ts";
 import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
 import type { PgProductQueryClient, PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
 import { catalogueRetainedDeleteEnabled, productSeasonArrayEnabled, productSeasonLabelJoin, type ProductSeasonArrayCapability, type CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
-import { readInventoryKeyAdmissions } from "./inventory-key-admission-reader.ts";
 
 export type PgProductManagementQueryPool = PgProductQueryPool;
 type Query = (sql: string, values?: unknown[]) => Promise<PgProductQueryResult>;
@@ -73,18 +73,29 @@ async function stockReadiness(query: Query, values: unknown[], matchedSql: strin
   }
   integrity(!booleanValue(row.invalid_size) && !booleanValue(row.missing_sizes) && !booleanValue(row.invalid_balance), "Native inventory facts are inconsistent");
 }
-/** Qualify only non-cutoff dimensions through the original public SQL decision.
- * One real opposite-dimension witness avoids a warehouses × SKUs expansion.
- * All identities are checked in bounded batches on the same RR snapshot. */
+/** SQL return columns are typed UUID/boolean/text. Preserve the original admission DTO's
+ * nullable basis and native-operation checks before accepting any success decision. */
+const admissionShape = `a.admitted IS NOT NULL
+  AND (a.warehouse_basis IS NULL OR a.warehouse_basis IN ('CUTOFF_MEMBER','POST_CUTOFF_CREATED'))
+  AND (a.sku_basis IS NULL OR a.sku_basis IN ('CUTOFF_MEMBER','POST_CUTOFF_CREATED'))
+  AND (a.warehouse_basis IS DISTINCT FROM 'POST_CUTOFF_CREATED' OR a.warehouse_created_operation_id IS NOT NULL)
+  AND (a.sku_basis IS DISTINCT FROM 'POST_CUTOFF_CREATED' OR a.sku_created_operation_id IS NOT NULL)
+  AND (NOT a.admitted OR (a.published_batch_id IS NOT NULL AND a.warehouse_basis IS NOT NULL AND a.sku_basis IS NOT NULL))`;
+function stockAdditionEvidence(rows: readonly Row[]): void {
+  const row = one(rows);
+  integrity(typeof row.identity_count === "string" && (row.first_issue === null || row.first_issue === "INTEGRITY" || row.first_issue === "NOT_READY"), "Malformed native inventory admission aggregate");
+  integrity(/^[1-9]\d*$/.test(row.identity_count), "A nonempty exact uncovered native identity set is required");
+  integrity(row.first_issue !== "INTEGRITY", "Native admission evidence, creation basis or witness is inconsistent");
+  requireDomain(row.first_issue !== "NOT_READY", "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "New native inventory creation is not qualified");
+}
+/** Qualify the same complete non-cutoff dimensions through the original public SQL decision.
+ * One real opposite-dimension witness avoids a warehouses × SKUs expansion. SQL aggregates
+ * exact per-key evidence; no uncovered identity batches are transferred to the application.
+ * The first returned evidence issue preserves the old 1000-key batch/shape/key order.
+ * All SQL keys may still be evaluated: a later SQL exception can preempt an earlier
+ * returned denial, unlike old early-stop batches. Both reject, never publish zero.
+ * This bounds roundtrips, not per-key PostgreSQL work or measured query latency. */
 async function stockAdditions(query: Query, values: unknown[], matchedSql: string, batchId: string, warehouses: boolean, skus: boolean): Promise<void> {
-  const admissions = async (keys: { warehouseId: string; skuId: string }[]) => {
-    try { return await readInventoryKeyAdmissions({ query }, keys); }
-    catch (error) {
-      if (error instanceof DomainError && error.code === "INVENTORY_INTEGRITY_FAILED")
-        throw new DomainError("PRODUCT_MANAGEMENT_INTEGRITY_FAILED", "Invalid native inventory admission evidence");
-      throw error;
-    }
-  };
   if (warehouses) {
     let witness = (await query(`/* product-management:stock-sku-witness */ SELECT s.id FROM naijue_erp.import_record r
       JOIN naijue_erp.sku s ON s.id=r.target_id WHERE r.import_batch_id=$1::uuid AND r.status='IMPORTED' AND r.target_type='SKU'
@@ -98,38 +109,42 @@ async function stockAdditions(query: Query, values: unknown[], matchedSql: strin
     requireDomain(witness.length > 0, "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "No retained native SKU witness is available for warehouse qualification");
     const sku = one(witness), skuId = entityId("sku", stringValue(sku.id));
     if (basis === "POST_CUTOFF_CREATED") operationId = entityId("operation", stringValue(sku.created_operation_id));
-    let cursor: string | null = null, checked = 0;
-    for (;;) {
-      const rows = (await query(`/* product-management:stock-additional-warehouses */ SELECT w.id FROM naijue_erp.warehouse w
-        WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id=$1::uuid AND r.status='IMPORTED' AND r.target_type='WAREHOUSE' AND r.target_id=w.id)
-        AND ($2::uuid IS NULL OR w.id>$2::uuid) ORDER BY w.id LIMIT 1000`, [batchId, cursor])).rows;
-      integrity(rows.length <= 1000 && (rows.length > 0 || checked > 0), "Uncovered warehouse qualification returned an invalid identity batch");
-      if (!rows.length) break;
-      const keys = rows.map(row => { const warehouseId = entityId("warehouse", stringValue(row.id)); integrity(cursor === null || warehouseId > cursor, "Warehouse qualification did not advance"); cursor = warehouseId; return { warehouseId, skuId }; });
-      for (const decision of await admissions(keys)) {
-        requireDomain(decision.admitted, "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "New warehouse creation is not qualified");
-        integrity(decision.publishedBatchId === batchId && decision.warehouseBasis === "POST_CUTOFF_CREATED" && decision.skuBasis === basis
-          && (basis === "CUTOFF_MEMBER" || decision.skuCreatedOperationId === operationId), "Warehouse admission differs from its native witness");
-      }
-      checked += rows.length; if (rows.length < 1000) break;
-    }
+    stockAdditionEvidence((await query(`/* product-management:stock-additional-warehouse-proof */ WITH uncovered AS MATERIALIZED (
+      SELECT w.id,row_number() OVER (ORDER BY w.id) AS ordinal FROM naijue_erp.warehouse w WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r
+        WHERE r.import_batch_id=$1::uuid AND r.status='IMPORTED' AND r.target_type='WAREHOUSE' AND r.target_id=w.id)
+    ), decisions AS MATERIALIZED (
+      SELECT u.ordinal,(u.ordinal-1)/1000 AS legacy_batch,d.* FROM uncovered u CROSS JOIN LATERAL (
+        SELECT count(*) AS decision_count,coalesce(bool_and((${admissionShape}) IS TRUE),false) AS shape_ok,
+          coalesce(bool_and(a.admitted IS TRUE),false) AS admitted,
+          coalesce(bool_and((a.published_batch_id=$1::uuid AND a.warehouse_basis='POST_CUTOFF_CREATED'
+            AND a.sku_basis=$3::text AND ($3::text='CUTOFF_MEMBER' OR a.sku_created_operation_id=$4::uuid)) IS TRUE),false) AS scope_ok
+        FROM naijue_erp.inventory_key_admission(u.id,$2::uuid) a
+      ) d
+    ), issues AS (
+      SELECT ordinal,legacy_batch,CASE WHEN decision_count<>1 OR shape_ok IS NOT TRUE THEN 0 ELSE 1 END AS shape_priority,
+        CASE WHEN decision_count<>1 OR shape_ok IS NOT TRUE THEN 'INTEGRITY'
+          WHEN admitted IS NOT TRUE THEN 'NOT_READY' WHEN scope_ok IS NOT TRUE THEN 'INTEGRITY' END AS issue FROM decisions
+    ) SELECT (SELECT count(*)::text FROM uncovered) AS identity_count,
+      (SELECT issue FROM issues WHERE issue IS NOT NULL ORDER BY legacy_batch,shape_priority,ordinal LIMIT 1) AS first_issue`, [batchId, skuId, basis, operationId])).rows);
   }
   if (skus) {
     const warehouseId = entityId("warehouse", stringValue(one((await query(`/* product-management:stock-warehouse-witness */ SELECT id FROM naijue_erp.warehouse ORDER BY id LIMIT 1`)).rows).id));
-    let cursor: string | null = null, checked = 0;
-    for (;;) {
-      const rows = (await query(`/* product-management:stock-additional-skus */ ${matchedSql} SELECT s.id FROM naijue_erp.sku s JOIN matched_products p ON p.id=s.product_id
-        WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id=$11::uuid AND r.status='IMPORTED' AND r.target_type='SKU' AND r.target_id=s.id)
-        AND ($12::uuid IS NULL OR s.id>$12::uuid) ORDER BY s.id LIMIT 1000`, [...values, batchId, cursor])).rows;
-      integrity(rows.length <= 1000 && (rows.length > 0 || checked > 0), "Uncovered SKU qualification returned an invalid identity batch");
-      if (!rows.length) break;
-      const keys = rows.map(row => { const skuId = entityId("sku", stringValue(row.id)); integrity(cursor === null || skuId > cursor, "SKU qualification did not advance"); cursor = skuId; return { warehouseId, skuId }; });
-      for (const decision of await admissions(keys)) {
-        requireDomain(decision.admitted, "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "New SKU creation is not qualified");
-        integrity(decision.publishedBatchId === batchId && decision.skuBasis === "POST_CUTOFF_CREATED", "SKU admission differs from its published creation basis");
-      }
-      checked += rows.length; if (rows.length < 1000) break;
-    }
+    stockAdditionEvidence((await query(`/* product-management:stock-additional-sku-proof */ ${matchedSql}, uncovered AS MATERIALIZED (
+      SELECT s.id,row_number() OVER (ORDER BY s.id) AS ordinal FROM naijue_erp.sku s JOIN matched_products p ON p.id=s.product_id WHERE NOT EXISTS (
+        SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id=$11::uuid AND r.status='IMPORTED' AND r.target_type='SKU' AND r.target_id=s.id)
+    ), decisions AS MATERIALIZED (
+      SELECT u.ordinal,(u.ordinal-1)/1000 AS legacy_batch,d.* FROM uncovered u CROSS JOIN LATERAL (
+        SELECT count(*) AS decision_count,coalesce(bool_and((${admissionShape}) IS TRUE),false) AS shape_ok,
+          coalesce(bool_and(a.admitted IS TRUE),false) AS admitted,
+          coalesce(bool_and((a.published_batch_id=$11::uuid AND a.sku_basis='POST_CUTOFF_CREATED') IS TRUE),false) AS scope_ok
+        FROM naijue_erp.inventory_key_admission($12::uuid,u.id) a
+      ) d
+    ), issues AS (
+      SELECT ordinal,legacy_batch,CASE WHEN decision_count<>1 OR shape_ok IS NOT TRUE THEN 0 ELSE 1 END AS shape_priority,
+        CASE WHEN decision_count<>1 OR shape_ok IS NOT TRUE THEN 'INTEGRITY'
+          WHEN admitted IS NOT TRUE THEN 'NOT_READY' WHEN scope_ok IS NOT TRUE THEN 'INTEGRITY' END AS issue FROM decisions
+    ) SELECT (SELECT count(*)::text FROM uncovered) AS identity_count,
+      (SELECT issue FROM issues WHERE issue IS NOT NULL ORDER BY legacy_batch,shape_priority,ordinal LIMIT 1) AS first_issue`, [...values, batchId, warehouseId])).rows);
   }
 }
 /** Native schema has no product created_at. Ordering is explicitly product_code COLLATE C,id;
@@ -145,20 +160,27 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
     this.runtime26 = checkedNativeRuntime26Capability(runtime26);
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query, client: PgProductQueryClient) => Promise<T>): Promise<T> {
-    activeProductManagementRead(signal); const client = await this.pool.connect(); let began = false, committing = false; let discard: Error | undefined;
-    const query: Query = (sql, values = []) => { activeProductManagementRead(signal); return client.query(sql, values); };
+    activeProductManagementRead(signal);
+    const cancelled = () => new DomainError("PRODUCT_MANAGEMENT_READ_ABORTED", "Product management read cancelled");
+    const client = await acquireReadClient(this.pool, signal, cancelled); let began = false, committing = false, released = false; let discard: Error | undefined;
+    const release = (error?: Error) => { if (!released) { released = true; client.release(error); } };
+    const query: Query = (sql, values = []) => {
+      activeProductManagementRead(signal);
+      return awaitRead(client.query(sql, values), signal, cancelled, () => release(cancelled()));
+    };
     try {
       activeProductManagementRead(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
       const result = await work(query, client); activeProductManagementRead(signal); committing = true; await query("COMMIT"); began = false;
       activeProductManagementRead(signal); return result;
     } catch (error) {
+      if (signal.aborted) { release(cancelled()); throw cancelled(); }
       if (!began || committing) discard = error instanceof Error ? error : new Error("Product management snapshot failed");
       if (began) try { await client.query("ROLLBACK"); } catch (rollbackError) {
         discard = rollbackError instanceof Error ? rollbackError : new Error("Product management rollback failed");
         throw new AggregateError([error, rollbackError], "Product management read and rollback failed; client discarded");
       }
       throw error;
-    } finally { client.release(discard); }
+    } finally { release(discard); }
   }
   async readList(read: ProductManagementScopedRead<ProductManagementListQuery>): Promise<ProductManagementListPage> {
     checkedProductActor(read.actor); const grant = checkedProductManagementGrant(read.grant), parameters = parseProductManagementListQuery(read.parameters);

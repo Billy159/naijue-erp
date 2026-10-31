@@ -7,8 +7,8 @@ import { createProductManagementQuery,guardedProductManagementReader } from '../
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { formatQuantity } from '../../../../src/inventory/model.ts';
-import { Pagination } from '../inventory/pagination.tsx';
-import { SourceEmpty } from '../inventory/candidates.tsx';
+import { Pagination } from '../common/ui/pagination.tsx';
+import { SourceEmpty } from '../common/ui/source-control.tsx';
 import { ProductFilter,filterLabels } from './filters.tsx';
 type Draft=Readonly<Record<ProductManagementCandidateKind,readonly Selection[]|null>>;
 const blank=():Draft=>Object.fromEntries(Object.keys(emptyProductFilter()).map(key=>[key,null])) as unknown as Draft;

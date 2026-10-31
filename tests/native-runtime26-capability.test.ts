@@ -190,9 +190,15 @@ test("v14 runtime selector uses its exact123-function probe, retains metadata-on
  const f=fixture();try{
   const calls:string[]=[];const pool={async connect(){return{async query(sql:string){calls.push(sql);assert.equal(sql,NATIVE_RUNTIME26_V14_METADATA_PROBE);return{rows:[observation()],rowCount:1};},release(){}};}};
   const options=f.options({...f.review,catalog:{...f.review.catalog,patchLevel:'26_v14_core_initialization'}});
-  const issuer=await createNativeRuntime26Issuer(pool,options),client=await issuer.pool.connect();
-  await issuer.runtime26.assertReady(client,'IMPORT_STAGE');assert.equal(calls.length,4);
-  await assert.rejects(issuer.runtime26.assertReady(client,'IMPORT_PUBLISH'),{code:'NATIVE_RUNTIME26_NOT_READY'});client.release();
+  const issuer=await createNativeRuntime26Issuer(pool,options);
+  assert.deepEqual(calls,[NATIVE_RUNTIME26_V14_METADATA_PROBE]); // Awaited issuer startup baseline.
+  const client=await issuer.pool.connect();
+  assert.deepEqual(calls,[NATIVE_RUNTIME26_V14_METADATA_PROBE,NATIVE_RUNTIME26_V14_METADATA_PROBE]); // Original live lease.
+  await issuer.runtime26.assertReady(client,'IMPORT_STAGE');
+  assert.deepEqual(calls,Array(3).fill(NATIVE_RUNTIME26_V14_METADATA_PROBE)); // Explicit current-purpose recheck.
+  await assert.rejects(issuer.runtime26.assertReady(client,'IMPORT_PUBLISH'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  assert.equal(calls.length,3); // An unreviewed purpose cannot dispatch another probe.
+  client.release();
   const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,patchLevel:'26_v14_core_initialization'},realImportExecutionAuthorized:true})));assert.equal(p.connects(),0);
  }finally{f.cleanup();}
 });
@@ -215,16 +221,13 @@ function v14BeforeHeapWitnessRepair(full: string): string {
 test("v14 JSON precedence repair preserves every original predicate and changes only two reviewed function bodies", () => {
   const full = readFileSync(new URL('../adapters/postgres/patches/0026-v14-core-initialization.sql', import.meta.url), 'utf8');
   const repair = readFileSync(new URL('../adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql', import.meta.url), 'utf8');
-  const order = readFileSync(new URL('../adapters/postgres/patches/0026-category-reorder-undo.sql', import.meta.url), 'utf8');
   const grouped = ["(birth->'authority')", "(full_binding->'coreMaintenanceBinding')", "(core_a->'authority')"];
   const beforeHeapRepair = v14BeforeHeapWitnessRepair(full);
   let original = beforeHeapRepair;
   for (const text of grouped) { assert.equal(beforeHeapRepair.split(text).length, 2); original = original.replace(text, text.slice(1, -1)); }
   assert.equal(hash(original), 'd1c41d61846fa48e64f178125f4e58610cf6be11d908c88c695ba2ade7d26d1b');
-  assert.ok(order.includes("(result_data->'order')-ARRAY['parentId','undoOfOperationId','members']"));
-  assert.equal(hash(order.replace("(result_data->'order')-ARRAY", "result_data->'order'-ARRAY")
-    .replace('5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d', '665501c212a0576bf154ecd230d32fae36e9f50656e3c17d58bb268b50279bd1')),
-  '7c6c22cd60e931c6bc32d198bc730a2d42232c7ff17c768f248ceef2c724c006');
+  // Category v15 now includes the approved exact-v16 reverse-installation predecessor guards.
+  // Its obsolete whole-file inverse hash belongs to 92932f2f; the V15 test below pins all current routine bodies.
   const functions = [...repair.matchAll(/CREATE OR REPLACE FUNCTION naijue_erp\.(\w+)\([^;]*?AS \$\$(.*?)\$\$;/gs)];
   assert.deepEqual(functions.map(m => m[1]), ['assert_core_initialization_v14', 'assert_native_bootstrap_accounts']);
   for (const m of functions) {
@@ -392,6 +395,8 @@ test('F01 issuer lifecycle: real sanitizer handoff recovers genuine transport ca
 
 test("v15 exact routine pins preserve v14 and every original non-category routine branch", () => {
   const sql = readFileSync(new URL('../adapters/postgres/patches/0026-category-reorder-undo.sql', import.meta.url), 'utf8');
+  // Keep the JSON grouping assertion with its canonical V15 routine pins, not a pre-continuation file hash.
+  assert.ok(sql.includes("(result_data->'order')-ARRAY['parentId','undoOfOperationId','members']"));
   const original = readFileSync(new URL('../adapters/postgres/migrations/0021_native_maintenance_receipts.sql', import.meta.url), 'utf8');
   const routines = [...sql.matchAll(/CREATE(?: OR REPLACE)? FUNCTION naijue_erp\.(\w+)\([^;]*?AS \$\$(.*?)\$\$;/gs)];
   assert.equal(routines.length, 4);
@@ -774,4 +779,180 @@ test('preparation xmin V4 cannot borrow normal or older independently reviewed c
   ['EXACT26_RUNTIME_CATALOG_EXPORT_V3','26_hv2_history_set_guards_preparation_xmin_from_v22'],
   ['EXACT26_RUNTIME_CATALOG_EXPORT_V4','26_hv2_history_set_guards_maintenance_xmin_from_v22'],
  ] as const){const f=fixture();try{const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,format,patchLevel}})),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(p.connects(),0);}finally{f.cleanup();}}
+});
+
+
+/** V5 regression: synthetic protocol evidence only, never actual PostgreSQL ACL approval. */
+import * as completeMaintenanceProfiles from '../adapters/postgres/src/native-import-accounting-capability.ts';
+const completeProfileExports = completeMaintenanceProfiles as unknown as Record<string, unknown>;
+const completeMaintenanceProbe = completeProfileExports.NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_MAINTENANCE_XMIN_FROM_V22_METADATA_PROBE as string;
+const completeMaintenanceTables = completeProfileExports.NATIVE_RUNTIME26_COMPLETE_MAINTENANCE_XMIN_TABLES as readonly string[];
+const completeMaintenancePatch = '26_hv2_history_set_guards_complete_maintenance_xmin_from_v22';
+const completeMaintenanceFormat = 'EXACT26_RUNTIME_CATALOG_EXPORT_V5';
+const completeMaintenanceExpected = [
+ 'audit_change','color','fit','hall','import_batch','import_history_closure_manifest','import_record',
+ 'import_record_accounting_claim','import_source_row','operation_receipt','payment_account','payment_method',
+ 'product','product_category','product_image','sales_header','sales_line','sku','sku_barcode','staff','user_account','warehouse',
+];
+test('complete maintenance V5 covers exact22 including every current maintenance root; V3 and V4 stay separate',()=>{
+ assert.deepEqual(completeMaintenanceTables,completeMaintenanceExpected);
+ assert.equal(completeMaintenanceTables.length,22);
+ assert.deepEqual([...completeMaintenanceTables].sort(),completeMaintenanceTables);
+ assert.equal(new Set(completeMaintenanceTables).size,22);
+ const additional=['color','fit','hall','payment_account','payment_method','product_category','staff','user_account','warehouse'];
+ assert.deepEqual(completeMaintenanceTables.filter(t=>!NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES.includes(t as typeof NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES[number])),additional);
+ assert.equal(NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES.length,13);
+ assert.equal(NATIVE_RUNTIME26_PREPARATION_XMIN_TABLES.length,12);
+ assert.equal(hash(maintenanceProbe),'e2817250d92d6080fbd7590151c1aa23fda5cde0c6a0039d593ee4cd543b2fb5');
+ assert.equal(hash(preparationProbe),'dd659e59cc45b63a6af8828b72c4c57f50170559622988fc1e6459171e9f3674');
+ assert.ok(maintenanceProbe.includes("jsonb_array_length(manifest->'system_column_acls')=13"));
+ assert.ok(preparationProbe.includes("jsonb_array_length(manifest->'system_column_acls')=12"));
+ assert.ok(!maintenanceProbe.includes('EXACT26_RUNTIME_CATALOG_EXPORT_V5'));
+ assert.ok(!preparationProbe.includes('EXACT26_RUNTIME_CATALOG_EXPORT_V5'));
+});
+test('complete maintenance V5 exact ACL probe rejects missing/extra, table SELECT, PUBLIC and grantable xmin; keeps sequence/role canonical evidence',()=>{
+ assert.equal(typeof completeMaintenanceProbe,'string');
+ assert.ok(completeMaintenanceProbe.includes("'format','EXACT26_RUNTIME_CATALOG_EXPORT_V5'"));
+ assert.ok(completeMaintenanceProbe.includes("jsonb_array_length(manifest->'system_column_acls')=22"));
+ const names=completeMaintenanceExpected.map(t=>`'${t}'`).join(',');
+ assert.ok(completeMaintenanceProbe.includes(`ARRAY[${names}]::text[]`));
+ assert.ok(completeMaintenanceProbe.includes("OR pg_catalog.has_column_privilege(current_user,r.oid,a.attnum,'SELECT')"));
+ assert.ok(completeMaintenanceProbe.includes("item->'table_select'='false'::jsonb"));
+ for(const exact of ["item->>'number'='-2'","item->>'name'='xmin'","item->>'type'='xid'","privilege->>'grantee'=current_user::text)=1","privilege->>'privilege'='SELECT'"])
+  assert.ok(completeMaintenanceProbe.includes(exact),exact);
+ assert.ok(completeMaintenanceProbe.includes("privilege->>'grantor'=item->>'owner'"));
+ assert.ok(completeMaintenanceProbe.includes("privilege->'grantable'='false'::jsonb"));
+ assert.ok(completeMaintenanceProbe.includes("privilege->>'grantee'='PUBLIC'"));
+ assert.ok(completeMaintenanceProbe.includes('AS complete_maintenance_xmin_acl_match'));
+ assert.ok(!completeMaintenanceProbe.includes('AS maintenance_xmin_acl_match'));
+ // Do not silently remove sequence ACLs, role elevation/memberships or user-column ACLs from the canonical hash.
+ for(const unchanged of ["c.relkind IN ('r','p','v','m','S')","CASE WHEN relkind='S' THEN 'S'::\"char\"", "'roles'", "'memberships'", "'columns'", "'acl',a.attacl::text", "(manifest-'identity')::text"])
+  assert.ok(completeMaintenanceProbe.includes(unchanged),unchanged);
+ assert.ok(!/\b(?:GRANT|REVOKE|CREATE ROLE|ALTER ROLE)\b/.test(completeMaintenanceProbe));
+});
+test('complete maintenance V5 selects actual new probe and rejects incomplete22, extra xmin and legacy13 result evidence',async()=>{
+ const mutations=['missing-result','legacy13-result','extra-result',...completeMaintenanceExpected.map(t=>`missing:${t}`),'extra:xmin','table-select','public-xmin','grantable-xmin','wrong-grantor','wrong-type','duplicate-current-role-select'];
+ for(const changed of mutations){const f=fixture();try{
+  const row:Record<string,unknown>={...observation(),complete_maintenance_xmin_acl_match:true};
+  const pool={async connect(){return{async query(sql:string){assert.equal(sql,completeMaintenanceProbe);return{rows:[structuredClone(row)],rowCount:1};},release(){}};}};
+  const review={...f.review,catalog:{...f.review.catalog,format:completeMaintenanceFormat,patchLevel:completeMaintenancePatch},purposes:['PRODUCT_MAINTENANCE']};
+  const issuer=await createNativeRuntime26Issuer(pool,f.options(review));
+  const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE');
+  if(changed==='missing-result')delete row.complete_maintenance_xmin_acl_match;
+  else if(changed==='legacy13-result'){delete row.complete_maintenance_xmin_acl_match;row.maintenance_xmin_acl_match=true;}
+  else if(changed==='extra-result')row.maintenance_xmin_acl_match=true;
+  else row.complete_maintenance_xmin_acl_match=false; // Protocol-only false result; this does not execute/evaluate SQL or claim visibility of other system columns.
+  await assert.rejects(issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  await assert.rejects(client.query('COMMIT'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  client.release();
+ }finally{f.cleanup();}}
+});
+test('complete maintenance V5 refuses stale catalog, sequence privilege drift, source and role changes on original lease',async()=>{
+ // Protocol negatives assert that sequence ACL changes cannot be hidden behind the new xmin result.
+ for(const changed of ['catalog','sequence-select','sequence-update','transfer-sequence-usage','source','role','membership']){const f=fixture();try{
+  const row:Record<string,unknown>={...observation(),complete_maintenance_xmin_acl_match:true};
+  const pool={async connect(){return{async query(sql:string){assert.equal(sql,completeMaintenanceProbe);return{rows:[structuredClone(row)],rowCount:1};},release(){}};}};
+  const issuer=await createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,format:completeMaintenanceFormat,patchLevel:completeMaintenancePatch},purposes:['PRODUCT_MAINTENANCE']}));
+  const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE');
+  if(changed==='source')row.source_routines_match=false;
+  else if(changed==='role')row.identity={...observation().identity,current_user:'OTHER'};
+  else row.catalog_sha256=hash(`SYNTHETIC_CHANGED_CANONICAL_${changed}`);
+  await assert.rejects(issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE'),{code:'NATIVE_RUNTIME26_NOT_READY'});client.release();
+ }finally{f.cleanup();}}
+});
+test('complete maintenance V5 and all legacy profiles reject cross-version format borrowing before connecting',async()=>{
+ const pairs=[...['EXACT26_RUNTIME_CATALOG_EXPORT_V1','EXACT26_RUNTIME_CATALOG_EXPORT_V2','EXACT26_RUNTIME_CATALOG_EXPORT_V3','EXACT26_RUNTIME_CATALOG_EXPORT_V4'].map(format=>[format,completeMaintenancePatch]),
+  [completeMaintenanceFormat,'26_hv2_history_set_guards_maintenance_xmin_from_v22'],
+  [completeMaintenanceFormat,'26_hv2_history_set_guards_preparation_xmin_from_v22'],
+  [completeMaintenanceFormat,'26_hv2_history_set_guards_source_xmin_from_v22'],
+  [completeMaintenanceFormat,'26_hv2_history_set_guards_from_v22']];
+ for(const [format,patchLevel]of pairs){const f=fixture();try{const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,format,patchLevel}})),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(p.connects(),0);}finally{f.cleanup();}}
+});
+
+/** V6 regression: synthetic protocol evidence only, never actual PostgreSQL ACL approval. */
+const completeWriteProbe = completeProfileExports.NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_WRITE_XMIN_FROM_V22_METADATA_PROBE as string;
+const completeWriteTables = completeProfileExports.NATIVE_RUNTIME26_COMPLETE_WRITE_XMIN_TABLES as readonly string[];
+const completeWritePatch = '26_hv2_history_set_guards_complete_write_xmin_from_v22';
+const completeWriteFormat = 'EXACT26_RUNTIME_CATALOG_EXPORT_V6';
+const completeWriteExpected = [
+ 'audit_change','color','fit','hall','history_revision','import_batch','import_history_closure_manifest','import_record',
+ 'import_record_accounting_claim','import_source_row','operation_receipt','payment_account','payment_method',
+ 'product','product_category','product_image','sales_header','sales_line','sku','sku_barcode','staff','user_account','warehouse',
+];
+test('complete write V6 covers exact23 including original cross-history ledger reads; V3 V4 V5 stay separate',()=>{
+ assert.deepEqual(completeWriteTables,completeWriteExpected);
+ assert.equal(completeWriteTables.length,23);
+ assert.deepEqual([...completeWriteTables].sort(),completeWriteTables);
+ assert.equal(new Set(completeWriteTables).size,23);
+ assert.deepEqual(completeWriteTables.filter(t=>!completeMaintenanceTables.includes(t)),['history_revision']);
+ assert.deepEqual(completeWriteTables,[...completeMaintenanceTables,'history_revision'].sort());
+ assert.equal(hash(completeMaintenanceProbe),'5d634e368c5c6e37695d9b54aa480547677ac66e6c2984fa8d81983fc6c4620d');
+ assert.equal(completeMaintenanceTables.length,22);
+ assert.equal(NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES.length,13);
+ assert.equal(NATIVE_RUNTIME26_PREPARATION_XMIN_TABLES.length,12);
+ assert.equal(hash(maintenanceProbe),'e2817250d92d6080fbd7590151c1aa23fda5cde0c6a0039d593ee4cd543b2fb5');
+ assert.equal(hash(preparationProbe),'dd659e59cc45b63a6af8828b72c4c57f50170559622988fc1e6459171e9f3674');
+ assert.ok(maintenanceProbe.includes("jsonb_array_length(manifest->'system_column_acls')=13"));
+ assert.ok(preparationProbe.includes("jsonb_array_length(manifest->'system_column_acls')=12"));
+ assert.ok(!maintenanceProbe.includes('EXACT26_RUNTIME_CATALOG_EXPORT_V6'));
+ assert.ok(!preparationProbe.includes('EXACT26_RUNTIME_CATALOG_EXPORT_V6'));
+});
+test('complete write V6 exact ACL probe rejects missing/extra, table SELECT, PUBLIC and grantable xmin; keeps sequence/role canonical evidence',()=>{
+ assert.equal(typeof completeWriteProbe,'string');
+ assert.ok(completeWriteProbe.includes("'format','EXACT26_RUNTIME_CATALOG_EXPORT_V6'"));
+ assert.ok(completeWriteProbe.includes("jsonb_array_length(manifest->'system_column_acls')=23"));
+ const names=completeWriteExpected.map(t=>`'${t}'`).join(',');
+ assert.ok(completeWriteProbe.includes(`ARRAY[${names}]::text[]`));
+ assert.ok(completeWriteProbe.includes("OR pg_catalog.has_column_privilege(current_user,r.oid,a.attnum,'SELECT')"));
+ assert.ok(completeWriteProbe.includes("item->'table_select'='false'::jsonb"));
+ for(const exact of ["item->>'number'='-2'","item->>'name'='xmin'","item->>'type'='xid'","privilege->>'grantee'=current_user::text)=1","privilege->>'privilege'='SELECT'"])
+  assert.ok(completeWriteProbe.includes(exact),exact);
+ assert.ok(completeWriteProbe.includes("privilege->>'grantor'=item->>'owner'"));
+ assert.ok(completeWriteProbe.includes("privilege->'grantable'='false'::jsonb"));
+ assert.ok(completeWriteProbe.includes("privilege->>'grantee'='PUBLIC'"));
+ assert.ok(completeWriteProbe.includes('AS complete_write_xmin_acl_match'));
+ assert.ok(!completeWriteProbe.includes('AS complete_maintenance_xmin_acl_match'));
+ // Do not silently remove sequence ACLs, role elevation/memberships or user-column ACLs from the canonical hash.
+ for(const unchanged of ["c.relkind IN ('r','p','v','m','S')","CASE WHEN relkind='S' THEN 'S'::\"char\"", "'roles'", "'memberships'", "'columns'", "'acl',a.attacl::text", "(manifest-'identity')::text"])
+  assert.ok(completeWriteProbe.includes(unchanged),unchanged);
+ assert.ok(!/\b(?:GRANT|REVOKE|CREATE ROLE|ALTER ROLE)\b/.test(completeWriteProbe));
+});
+test('complete write V6 selects actual new probe and rejects incomplete23, extra xmin and legacy22 result evidence',async()=>{
+ const mutations=['missing-result','legacy22-result','extra-result',...completeWriteExpected.map(t=>`missing:${t}`),'extra:xmin','table-select','public-xmin','grantable-xmin','wrong-grantor','wrong-type','duplicate-current-role-select'];
+ for(const changed of mutations){const f=fixture();try{
+  const row:Record<string,unknown>={...observation(),complete_write_xmin_acl_match:true};
+  const pool={async connect(){return{async query(sql:string){assert.equal(sql,completeWriteProbe);return{rows:[structuredClone(row)],rowCount:1};},release(){}};}};
+  const review={...f.review,catalog:{...f.review.catalog,format:completeWriteFormat,patchLevel:completeWritePatch},purposes:['PRODUCT_MAINTENANCE']};
+  const issuer=await createNativeRuntime26Issuer(pool,f.options(review));
+  const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE');
+  if(changed==='missing-result')delete row.complete_write_xmin_acl_match;
+  else if(changed==='legacy22-result'){delete row.complete_write_xmin_acl_match;row.complete_maintenance_xmin_acl_match=true;}
+  else if(changed==='extra-result')row.complete_maintenance_xmin_acl_match=true;
+  else row.complete_write_xmin_acl_match=false; // Protocol-only false result; this does not execute/evaluate SQL or claim visibility of other system columns.
+  await assert.rejects(issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  await assert.rejects(client.query('COMMIT'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  client.release();
+ }finally{f.cleanup();}}
+});
+test('complete write V6 refuses stale catalog, sequence privilege drift, source and role changes on original lease',async()=>{
+ // Protocol negatives assert that sequence ACL changes cannot be hidden behind the new xmin result.
+ for(const changed of ['catalog','sequence-select','sequence-update','transfer-sequence-usage','source','role','membership']){const f=fixture();try{
+  const row:Record<string,unknown>={...observation(),complete_write_xmin_acl_match:true};
+  const pool={async connect(){return{async query(sql:string){assert.equal(sql,completeWriteProbe);return{rows:[structuredClone(row)],rowCount:1};},release(){}};}};
+  const issuer=await createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,format:completeWriteFormat,patchLevel:completeWritePatch},purposes:['PRODUCT_MAINTENANCE']}));
+  const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE');
+  if(changed==='source')row.source_routines_match=false;
+  else if(changed==='role')row.identity={...observation().identity,current_user:'OTHER'};
+  else row.catalog_sha256=hash(`SYNTHETIC_CHANGED_CANONICAL_${changed}`);
+  await assert.rejects(issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE'),{code:'NATIVE_RUNTIME26_NOT_READY'});client.release();
+ }finally{f.cleanup();}}
+});
+test('complete write V6 and all legacy profiles reject cross-version format borrowing before connecting',async()=>{
+ const pairs=[...['EXACT26_RUNTIME_CATALOG_EXPORT_V1','EXACT26_RUNTIME_CATALOG_EXPORT_V2','EXACT26_RUNTIME_CATALOG_EXPORT_V3','EXACT26_RUNTIME_CATALOG_EXPORT_V4','EXACT26_RUNTIME_CATALOG_EXPORT_V5'].map(format=>[format,completeWritePatch]),
+  [completeWriteFormat,'26_hv2_history_set_guards_maintenance_xmin_from_v22'],
+  [completeWriteFormat,'26_hv2_history_set_guards_complete_maintenance_xmin_from_v22'],
+  [completeWriteFormat,'26_hv2_history_set_guards_preparation_xmin_from_v22'],
+  [completeWriteFormat,'26_hv2_history_set_guards_source_xmin_from_v22'],
+  [completeWriteFormat,'26_hv2_history_set_guards_from_v22']];
+ for(const [format,patchLevel]of pairs){const f=fixture();try{const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,format,patchLevel}})),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(p.connects(),0);}finally{f.cleanup();}}
 });

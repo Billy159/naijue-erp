@@ -50,6 +50,35 @@ test('TRANSFER preserves native prepare/new SAVE receipt and rejects edit or sto
  validateTransferReceipt(await(await call(transport,'/transfers/receipts/SYNTHETIC.transfer:1',undefined,'GET')).json(),command);validateTransferResult(await(await call(transport,'/transfers/commands',command)).json(),command);assert.equal(transport.savedCounts().transfers,1);
  assert.equal((await call(transport,'/transfers/commands',{...command,expectedVersion:1,requestKey:'SYNTHETIC.edit'})).status,409);assert.equal((await call(transport,'/transfers/commands',{action:'APPROVE',transferId:prepared.header.id,expectedVersion:1,requestKey:'SYNTHETIC.no-stock'})).status,409);
 });
+
+test('synthetic new sales creation/readback time is the original SAVE receipt time, never an inherited fixture clock',async()=>{
+ const transport=createSyntheticUnifiedTransport();transport.authorize();
+ const prepared=validateSalesDraft(await(await call(transport,'/sales/prepare-create',salesProposal)).json());
+ const command=validateSalesCommand({action:'SAVE',expectedVersion:null,requestKey:'SYNTHETIC.sale:creation-time',draft:prepared});
+ await call(transport,'/sales/commands',command);
+ const receipt=await(await call(transport,'/sales/receipts/SYNTHETIC.sale:creation-time',undefined,'GET')).json();
+ const first=await(await call(transport,'/sales/detail/query',{salesId:prepared.header.id})).json();
+ assert.equal(first.document.header.createdAt,receipt.completedAt);assert.equal(first.document.header.updatedAt,receipt.completedAt);
+ assert.ok(Number.isFinite(Date.parse(first.document.header.createdAt)));
+ await call(transport,'/sales/commands',command);
+ const second=await(await call(transport,'/sales/detail/query',{salesId:prepared.header.id})).json();
+ assert.equal(second.document.header.createdAt,first.document.header.createdAt);assert.equal(second.document.header.updatedAt,first.document.header.updatedAt);
+ const listed=await(await call(transport,'/sales/query',{filter:{startDate:null,endDate:null,statuses:[],businessTypes:[],hallIds:[],salespersonIds:[],customerIds:[],warehouseIds:[],number:null},page:1,pageSize:20})).json();
+ assert.equal(listed.items.find((row:{id:string})=>row.id===prepared.header.id).updatedAt,receipt.completedAt);
+});
+
+test('synthetic new transfer creation/readback time is stable through receipt replay',async()=>{
+ const transport=createSyntheticUnifiedTransport();transport.authorize();
+ const prepared=validateTransferDraft(await(await call(transport,'/transfers/prepare-create',{businessDate:'2026-10-21',fromWarehouseId:id(20),toWarehouseId:id(21),note:null,lines:[{skuId:id(70),quantity:'2'}]})).json());
+ const command=validateTransferCommand({action:'SAVE',expectedVersion:null,requestKey:'SYNTHETIC.transfer:creation-time',draft:prepared});
+ await call(transport,'/transfers/commands',command);
+ const receipt=await(await call(transport,'/transfers/receipts/SYNTHETIC.transfer:creation-time',undefined,'GET')).json();
+ const first=await(await call(transport,'/transfers/detail/query',{transferId:prepared.header.id})).json();
+ assert.equal(first.document.header.createdAt,receipt.completedAt);assert.equal(first.document.header.updatedAt,receipt.completedAt);
+ await call(transport,'/transfers/commands',command);
+ const second=await(await call(transport,'/transfers/detail/query',{transferId:prepared.header.id})).json();
+ assert.equal(second.document.header.createdAt,first.document.header.createdAt);assert.equal(second.document.header.updatedAt,first.document.header.updatedAt);
+});
 test('management data is reused without copying and one-shot cancellation/failure stays synthetic',async()=>{
  const transport=createSyntheticUnifiedTransport();transport.authorize();transport.setNextReadFailure('forbidden');assert.equal((await call(transport,'/catalogue-settings-read/categories/query',{})).status,403);const tree=await(await call(transport,'/catalogue-settings-read/categories/query',{})).json();assert.ok(tree.items.every((row:{productCount:null})=>row.productCount===null));
  transport.setNextReadFailure('empty');assert.equal((await(await call(transport,'/dictionary-read/size-groups/query',{search:'',page:1,pageSize:20})).json()).total,0);

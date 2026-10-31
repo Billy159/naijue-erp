@@ -1,0 +1,43 @@
+{
+  "status": "NOT_AUTHORIZED_DEFAULT_REFUSE",
+  "executeAllowed": false,
+  "productionAuthorized": false,
+  "newUserApprovalRef": null,
+  "newBlankDatabase": null,
+  "databaseOid": null,
+  "freshLogicalIsolationReceipt": null,
+  "currentClusterProcessSocketOwnerReceipt": null,
+  "selectedRoles": null,
+  "exactHbaBaseAndCandidateSha256": null,
+  "exactIdentBaseAndCandidateSha256": null,
+  "uniquePeerMapName": null,
+  "approvedOSUser": null,
+  "connectAndConnectionLimitDelta": null,
+  "finiteControllerArmedReceipt": null,
+  "startsAt": null,
+  "actionNotAfter": null,
+  "cleanupBy": null,
+  "actualAdminPreparationBeforeCatalogSha256": null,
+  "actualAdminPreparationAfterCatalogSha256": null,
+  "actualOrdinaryRuntimeV7CatalogSha256": null,
+  "ordinaryIndependentReviewSha256": null,
+  "proposedTransportProfileOnly": {
+    "transport": "UNIX_SOCKET_EXACT_V1",
+    "serverConfiguredPort": 55439,
+    "unixSocketDirectory": "/workspace/scratch/f6bee04e937b/pg-test-env/runtime/socket",
+    "listenAddresses": "",
+    "serverAddress": null,
+    "serverPort": null
+  },
+  "scopeSeparateFromAuthority": [
+    "source-only tests/review",
+    "newblankDB+roles/baseV6/syntheticinitialization",
+    "rollback-onlyprepactualcatalogreview",
+    "exactV7DDL+fourcolumncells",
+    "finiteexactlocalpeerHBA+ident+CONNECT/limit",
+    "genuineordinary-runtimeV7metadata+independentreview",
+    "originalAPI/business/UIexactcommands",
+    "ownedcleanup+BASErestore"
+  ],
+  "blockedOutcome": "No live action; all missing facts remain null, source-only proposal delivered"
+}

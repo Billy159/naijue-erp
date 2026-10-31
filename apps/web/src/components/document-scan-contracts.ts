@@ -4,6 +4,8 @@ import type { ReadScope } from '../loading/read-scope.ts';
 export interface DocumentScanTarget { readonly key: string; readonly context: CurrentFormBarcodeContext }
 export interface DocumentScanRow { readonly key: string; readonly sku: CurrentFormSku; readonly quantity: string }
 export interface DocumentScanOptions {
+  /** Optional total exact-lookup budget; does not change other HTTP readers. */
+  readonly timeoutMs?: number;
   readonly scope: ReadScope;
   readonly target: () => DocumentScanTarget | null;
   readonly resolve: (query: CurrentFormBarcodeQuery, signal: AbortSignal) => Promise<CurrentFormBarcodeResult>;

@@ -43,11 +43,7 @@ test("sales-detail PLAN: frozen schema already carries typed columns and payment
   const header=await readFile(new URL("../adapters/postgres/migrations/0012_history_header_native_reference.sql",import.meta.url),"utf8");
   assert.match(header,/entity_type IN \('HALL', 'CUSTOMER', 'STAFF'\)/);
 });
-for(const feature of ["pure SALES_LINE mapper with full input recomputation","pure SETTLEMENT mapper with separate original-method binding",
-  "independently pinned sales-detail exact reader and full source coverage","whole 32-cell approval closure without blanket tolerance",
-  "actual SQL same-transaction source+sales-line INSERT","typed payment native-source directory and distinct existing-target/creation authority",
-  "actual SQL settlement INSERT refuses absent typed payment binding","exact source/typed-row/binding replay and partial/orphan rejection",
-  "maintenance-after-replay without native overwrite","same-batch header/alias/canonical import scope proof","whole-chunk rollback and no stock/progress/publication effects",
-  "unknown-COMMIT both actual outcomes without rollback or retry","independent publication field/lineage verifier before opening capability",
-  "real PostgreSQL schema/guard/isolation acceptance on authorized Mac only"])
-  test.todo(`NOT IMPLEMENTED / NOT RUN: ${feature}`);
+// Implemented checklist items and their actual coverage are retained in
+// docs/history-sales-detail-plan-coverage.md; the five contract tests above remain unchanged.
+// Real engine acceptance is still pending evidence; protocol fakes cannot close it.
+test.todo("NOT RUN / ACCEPTANCE PENDING: real PostgreSQL schema/guard/isolation acceptance on authorized isolated synthetic PostgreSQL");

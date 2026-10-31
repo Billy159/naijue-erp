@@ -1,3 +1,13 @@
+# 当前恢复候选：生产前端检查
+
+本副本是5b873 Git基线上的新恢复版本，不是原e5提交。322个643生产输入SHA精确恢复，route-resources.ts为明确标记的语义重建；测试runner为重新恢复的检查，不冒原测试源码字节。
+
+`npm run check:web:production -- --outdir /ABS/FRESH_DIR --source-checkpoint FULL_HEAD_SHA` 运行当前runtime/类型/真实builder/图检查；加`--browser --python /ABS/PYTHON --chromium /ABS/CHROMIUM --headed`才执行可见真实浏览器。没有浏览器回执必须PARTIAL，不把jsdom当视觉。只用合成session/query，不安装、不部署、不写真实业务。
+
+旧check:web/build:preview/src/application检查是历史或底层组件用途，不替代当前production-bootstrap产物检查。具体恢复证据与未完成见docs/rapid-launch-20261022/DOT-REPAIR-STATUS.md。以下是保留的旧文档。
+
+---
+
 # 库存查询与商品只读查看（TEST ONLY）
 
 已加入可看的最小菜单壳、库存状况表、复用候选选择器和商品分页器。它是重写中的第一个前端切片，不是整套 ERP 完工，也不是已接真实数据库的业务系统。

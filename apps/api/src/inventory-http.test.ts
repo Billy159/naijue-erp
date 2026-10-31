@@ -60,14 +60,32 @@ test("inventory full output HTTP: a failure after all product data never emits a
 test("inventory full output HTTP: disconnected stream aborts the original read, closes its provider and removes request listeners", async t => {
   const directory = await realpath(await mkdtemp(join(tmpdir(), "synthetic-inventory-http-cancel-")));
   const app = Fastify({ logger: false }); t.after(async () => { await app.close(); await rm(directory, { recursive: true, force: true }); }); let response: import("node:http").ServerResponse | undefined, raw: import("node:http").IncomingMessage | undefined, forwarded: AbortSignal | undefined, closed = false;
+  let failed!: () => void; const preparationFailed = new Promise<void>(resolve => { failed = resolve; });
+  app.addHook("onError", async (_request, reply) => { if (reply.raw === response) failed(); });
+  let baselineAborted: unknown[] = [], baselineClose: unknown[] = [], inventoryAborted: unknown, inventoryClose: unknown;
   let release!: () => void, entered!: () => void; const gate = new Promise<void>(r => { release = r; }), reading = new Promise<void>(r => { entered = r; });
-  app.addHook("onRequest", async (request, reply) => { response = reply.raw; raw = request.raw; });
-  app.register(createInventoryHttpPlugin({ outputSpool: { directory, maxBytes: 536870912, maxConcurrent: 1, maxDurationMs: 120000 }, authenticate: async () => inventoryActor, dependencies: { authorization: { async authorize() { return inventoryScope; } }, reader: { ...syntheticInventoryReader(), async *readInventoryOutput(read) {
+  app.addHook("onRequest", async (request, reply) => { response = reply.raw; raw = request.raw; baselineAborted = raw.listeners("aborted"); baselineClose = response.listeners("close"); });
+  app.register(createInventoryHttpPlugin({ outputSpool: { directory, maxBytes: 536870912, maxConcurrent: 1, maxDurationMs: 120000 }, authenticate: async () => {
+    // The inventory hook installs its own callbacks immediately before authentication.
+    // Capture exact identities; framework/injection listeners are not owned by this plugin.
+    const addedAborted = raw!.listeners("aborted").filter(listener => !baselineAborted.includes(listener));
+    const addedClose = response!.listeners("close").filter(listener => !baselineClose.includes(listener));
+    assert.equal(addedAborted.length, 1); assert.equal(addedClose.length, 1);
+    inventoryAborted = addedAborted[0]; inventoryClose = addedClose[0];
+    return inventoryActor;
+  }, dependencies: { authorization: { async authorize() { return inventoryScope; } }, reader: { ...syntheticInventoryReader(), async *readInventoryOutput(read) {
     forwarded = read.signal; try { for await (const frame of syntheticInventoryOutput(read)) { if (frame.kind === "product") { entered(); await gate; } yield frame; } } finally { closed = true; }
   } } } })); await app.ready();
   const pending = app.inject({ method: "POST", url: "/inventory/output/query", payload: { filter: inventoryParameters().filter } }).then(value => value, error => error);
-  await reading; assert.ok(response); assert.ok(raw); response.emit("close"); assert.equal(forwarded?.aborted, true); release(); await pending;
-  assert.equal(closed, true); assert.equal(raw.listenerCount("aborted"), 0); assert.equal(app.server.listening, false);
+  await reading; assert.ok(response); assert.ok(raw); assert.ok(inventoryAborted); assert.ok(inventoryClose); response.emit("close"); assert.equal(forwarded?.aborted, true); release(); const result = await pending;
+  // Injection rejects on the simulated close before asynchronous spool cleanup ends.
+  // The route reaches onError only after its catch has awaited that cleanup.
+  await preparationFailed;
+  assert.equal(closed, true);
+  assert.equal(raw.listeners("aborted").some(listener => listener === inventoryAborted), false, "Inventory must remove its exact request-abort callback");
+  assert.equal(response.listeners("close").some(listener => listener === inventoryClose), false, "Inventory must remove its exact response-close callback");
+  if (!(result instanceof Error)) assert.equal(result.body.includes('"kind":"complete"'), false);
+  assert.deepEqual(await readdir(directory), []); assert.equal(app.server.listening, false);
 });
 test("SYNTHETIC inventory HTTP: required trusted providers, no listener and DTO-compatible read-only routes", async t => {
   assert.throws(() => createInventoryHttpPlugin({} as InventoryHttpOptions), /trusted authentication/);
@@ -254,10 +272,62 @@ test("inventory output spool: one private0600 file and no export queue, ordinary
   const page = await f.app.inject({ method: "POST", url: "/inventory/query", payload: inventoryParameters() }); assert.equal(page.statusCode, 200);
   f.response()!.emit("close"); assert.equal(signal?.aborted, true); release(); await first; await f.preparationFailed; assert.equal(closed, true); assert.deepEqual(await readdir(f.directory), []);
 });
-test("inventory output spool: total deadline aborts preparation and clears its file without completion, without claiming SQL cancellation", async t => {
-  let aborted = false, closed = false;
-  const f = await spoolHttp(t, { ...syntheticInventoryReader(), async *readInventoryOutput(read) { try { for await (const frame of syntheticInventoryOutput(read, 2)) { if (frame.kind === "product") { await new Promise(resolve => setTimeout(resolve, 20)); aborted = read.signal.aborted; } yield frame; } } finally { closed = true; } } }, { maxDurationMs: 5 });
-  const response = await f.post(); assert.equal(response.statusCode, 408); assert.equal(aborted, true); assert.equal(closed, true); assert.equal(response.body.includes('"kind":"complete"'), false); assert.deepEqual(await readdir(f.directory), []);
+test("inventory output spool: total deadline aborts preparation and clears its file without completion, without claiming SQL cancellation", { timeout: 5000 }, async t => {
+  let aborted = false, closed = false, providerEntered = false, signal: AbortSignal | undefined, entered!: () => void;
+  const reading = new Promise<void>(resolve => { entered = resolve; });
+  const f = await spoolHttp(t, { ...syntheticInventoryReader(), async *readInventoryOutput(read) {
+    providerEntered = true; signal = read.signal;
+    try { for await (const frame of syntheticInventoryOutput(read, 2)) {
+      if (frame.kind === "product") {
+        entered();
+        if (!read.signal.aborted) await new Promise<void>(resolve => read.signal.addEventListener("abort", () => resolve(), { once: true }));
+        aborted = read.signal.aborted;
+      }
+      yield frame;
+    } } finally { closed = true; }
+  } }, { maxDurationMs: 5 });
+  // The total timer starts before async filesystem preparation. Control only time,
+  // not the real provider or cleanup, so machine load cannot expire it before entry.
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const pending = f.post(); await reading; assert.equal(providerEntered, true); assert.ok(signal);
+  t.mock.timers.tick(4); assert.equal(signal.aborted, false, "Preparation remains active before its configured deadline");
+  t.mock.timers.tick(1); const response = await pending;
+  assert.equal(response.statusCode, 408); assert.equal(response.json().error.code, "INVENTORY_READ_ABORTED");
+  assert.equal(aborted, true); assert.equal(closed, true); assert.equal(response.headers["x-inventory-readiness"], undefined);
+  assert.equal(response.body.includes('"kind":"complete"'), false); assert.deepEqual(await readdir(f.directory), []);
+});
+test("inventory output spool EARLY: total deadline while authorization is held rejects before provider entry and cleans its file and owned listeners", { timeout: 5000 }, async t => {
+  const directory = await realpath(await mkdtemp(join(tmpdir(), "synthetic-inventory-early-deadline-"))), app = Fastify({ logger: false });
+  t.after(async () => { await app.close(); await rm(directory, { recursive: true, force: true }); });
+  let raw: import("node:http").IncomingMessage | undefined, responseRaw: import("node:http").ServerResponse | undefined, signal: AbortSignal | undefined;
+  let baselineAborted: unknown[] = [], baselineClose: unknown[] = [], inventoryAborted: unknown[] = [], inventoryClose: unknown[] = [];
+  let providerEntered = false, stage = "before-authorization", entered!: () => void;
+  const authorizationHeld = new Promise<void>(resolve => { entered = resolve; });
+  app.addHook("onRequest", async (request, reply) => { raw = request.raw; responseRaw = reply.raw; baselineAborted = raw.listeners("aborted"); baselineClose = responseRaw.listeners("close"); });
+  app.register(createInventoryHttpPlugin({ authenticate: async () => {
+    inventoryAborted = raw!.listeners("aborted").filter(listener => !baselineAborted.includes(listener));
+    inventoryClose = responseRaw!.listeners("close").filter(listener => !baselineClose.includes(listener));
+    return inventoryActor;
+  }, dependencies: { authorization: { async authorize(_actor, _intent, readSignal) {
+    signal = readSignal; stage = "authorization-held"; entered();
+    if (!readSignal.aborted) await new Promise<void>(resolve => readSignal.addEventListener("abort", () => resolve(), { once: true }));
+    stage = "authorization-returned-after-abort"; return inventoryScope;
+  } }, reader: { ...syntheticInventoryReader(), async *readInventoryOutput(read) {
+    providerEntered = true; yield* syntheticInventoryOutput(read, 2);
+  } } }, outputSpool: { directory, maxBytes: 536870912, maxConcurrent: 1, maxDurationMs: 5 } }));
+  await app.ready(); t.mock.timers.enable({ apis: ["setTimeout"] });
+  const pending = app.inject({ method: "POST", url: "/inventory/output/query", payload: { filter: inventoryParameters().filter } });
+  await authorizationHeld; assert.ok(signal); assert.equal(stage, "authorization-held"); assert.equal(providerEntered, false);
+  assert.equal((await readdir(directory)).length, 1, "Real spool preparation must have created its file before authorization");
+  t.mock.timers.tick(4); assert.equal(signal.aborted, false); assert.equal(stage, "authorization-held");
+  t.mock.timers.tick(1); const response = await pending;
+  assert.equal(stage, "authorization-returned-after-abort"); assert.equal(signal.aborted, true); assert.equal(providerEntered, false);
+  assert.equal(response.statusCode, 408); assert.equal(response.json().error.code, "INVENTORY_READ_ABORTED");
+  assert.equal(response.headers["x-inventory-readiness"], undefined); assert.equal(response.body.includes('"kind":"complete"'), false);
+  assert.ok(raw); assert.ok(responseRaw); assert.equal(inventoryAborted.length, 1); assert.equal(inventoryClose.length, 1);
+  assert.equal(raw.listeners("aborted").some(listener => inventoryAborted.includes(listener)), false);
+  assert.equal(responseRaw.listeners("close").some(listener => inventoryClose.includes(listener)), false);
+  assert.deepEqual(await readdir(directory), []); assert.equal(app.server.listening, false);
 });
 test("inventory output spool F01: deadline during final stat never starts a successful network stream after producer EOF", { timeout: 5000 }, async t => {
   const directory = await realpath(await mkdtemp(join(tmpdir(), "synthetic-inventory-post-stat-"))), app = Fastify({ logger: false });

@@ -56,8 +56,7 @@ export interface SalesSummaryQuantities {
 export type SalesSummary = Pick<SalesHeaderRow, "id" | "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status" | "version" | "grossAmount" | "orderDiscount" | "netDue" | "updatedAt" | "responsibleStaffId"> & SalesSummaryQuantities & {
   readonly hallName: string; readonly warehouseName: string; readonly customerName: string; readonly salespersonName: string | null; readonly responsibleName: string | null; readonly createdByName: string;
 };
-// The native line snapshot has no historical category. No category summary is
-// exposed or reconstructed from today's product catalog.
+// Current classification is an explicit read projection, never a historical snapshot.
 /** Exact bigint counts serialize as decimal strings at the HTTP boundary, never unsafe JS numbers. */
 export interface SalesListPage { readonly page: number; readonly pageSize: SalesQueryPageSize; readonly exactTotal: bigint; readonly items: readonly SalesSummary[] }
 /** Exact26 normal-list response. Legacy native-only providers retain SalesListPage. */
@@ -67,7 +66,16 @@ export interface DocumentProductSummary {
   readonly items: readonly { readonly productId: string | null; readonly productCodeSnapshot: string | null; readonly productNameSnapshot: string | null }[];
   readonly hasMore: boolean;
 }
+export interface DocumentCategorySummary {
+  /** v2 only: UNKNOWN has no known category count. */
+  readonly categoryCount?: bigint | null;
+  readonly basis: "CURRENT" | "UNKNOWN";
+  readonly metric: "QUANTITY" | "PRODUCT_COUNT";
+  readonly items: readonly { readonly categoryId: string | null; readonly categoryName: string | null; readonly value: bigint }[];
+  readonly hasMore: boolean;
+}
 export interface DocumentListIdentity {
+  readonly categorySummary?: DocumentCategorySummary;
   readonly dataset: "LIVE" | "HISTORY"; readonly batchId: string | null; readonly documentId: string;
   readonly effectiveVersion: number; readonly productSummary: DocumentProductSummary;
 }
@@ -93,6 +101,8 @@ export interface SalesSettlementNames {
   readonly currentAccountName: string; readonly currentMethodName: string;
 }
 export interface SalesDetail {
+  /** Opt-in current identity summaries; historical classification remains unknown. */
+  readonly productSummary?: DocumentProductSummary; readonly categorySummary?: DocumentCategorySummary;
   /** Current actual lines only. Inactive provenance remains in persistence, not the editable detail. */
   readonly document: SalesDocument; readonly stockBasis: "RUNTIME_LEDGER" | "CUTOFF_HISTORY";
   /** Current master names, including disabled references, in this document's authorized snapshot. */

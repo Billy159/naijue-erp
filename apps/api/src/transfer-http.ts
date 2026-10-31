@@ -92,7 +92,13 @@ export function createTransferHttpPlugin(options: TransferHttpOptions): FastifyP
           && keys.every(key => Object.hasOwn(value, key)), "INVALID_HTTP_INPUT", "Exact preparation input required");
         return value as Record<string, unknown>;
       }
-      const body = object(request.body, ["businessDate", "note", "fromWarehouseId", "toWarehouseId", "lines"]);
+      const hasResponsible = request.body !== null && typeof request.body === "object" && Object.hasOwn(request.body, "responsibleStaffId");
+      const body = object(request.body, ["businessDate", "note", "fromWarehouseId", "toWarehouseId", "lines", ...(hasResponsible ? ["responsibleStaffId"] : [])]);
+      let responsibility: Pick<NativeTransferCreateProposal, "responsibleStaffId"> = {};
+      if (hasResponsible) {
+        requireDomain(body.responsibleStaffId === null || typeof body.responsibleStaffId === "string", "INVALID_HTTP_INPUT", "Actual responsible staff identity or explicit null required");
+        responsibility = { responsibleStaffId: body.responsibleStaffId === null ? null : entityId("staff", body.responsibleStaffId) };
+      }
       requireDomain(typeof body.businessDate === "string" && (body.note === null || typeof body.note === "string")
         && typeof body.fromWarehouseId === "string" && typeof body.toWarehouseId === "string" && Array.isArray(body.lines)
         && body.lines.length > 0 && body.lines.length <= TRANSFER_PREPARE_MAX_LINES
@@ -103,7 +109,7 @@ export function createTransferHttpPlugin(options: TransferHttpOptions): FastifyP
         return { skuId: line.skuId, quantity: line.quantity };
       });
       const draft = await prepare(actor, { businessDate: body.businessDate, note: body.note,
-        fromWarehouseId: body.fromWarehouseId, toWarehouseId: body.toWarehouseId, lines });
+        fromWarehouseId: body.fromWarehouseId, toWarehouseId: body.toWarehouseId, lines, ...responsibility });
       requireDomain(transferPreparedDraftFitsSaveBudget(draft), "TRANSFER_PAYLOAD_TOO_LARGE", "Prepared transfer exceeds the bounded SAVE payload budget");
       return reply.type("application/json").send(exactJson(draft));
     });

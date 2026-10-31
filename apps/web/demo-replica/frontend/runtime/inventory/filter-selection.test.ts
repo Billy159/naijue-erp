@@ -31,3 +31,11 @@ test('B11 explicit caller budgets reject All-minus-one overflow without truncati
   const rejected=rows(maximum+2);await assert.rejects(resolveFilterSelection(null,rejected,[],{trigger:{key:rejected[0]!.id},checked:false},async()=>rejected,true,maximum),new RegExp(String(maximum)));
  }
 });
+
+test('category All is standalone: choosing a child selects only it without materializing other pages',async()=>{
+ const items=[{id:'a',label:'A'},{id:'b',label:'B'}];let loaded=0;
+ assert.deepEqual(checkedFilterValues(null,items,false,true),[ALL]);
+ assert.deepEqual(await resolveFilterSelection(null,items,[ALL,'b'],{trigger:{value:'b'},checked:true},async()=>{loaded++;return items;},false,100,true),[items[1]]);
+ assert.equal(loaded,0);
+ assert.equal(await resolveFilterSelection([items[1]!],items,['b',ALL],{trigger:{value:ALL},checked:true},async()=>items,false,100,true),null);
+});

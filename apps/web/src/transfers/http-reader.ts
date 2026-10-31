@@ -8,6 +8,7 @@ import { transferDetailResponse, transferListResponse, transferWarehousesRespons
  * server session, never browser actor/role/identity/scope, eager catalog or retry. */
 export function createTransferHttpReader(options: HttpQueryOptions): TransferReader {
   const http = createHttpJsonQuery(options);
+  const detailHttp = createHttpJsonQuery({ ...options, fetch: (input, init) => { const headers = new Headers(init.headers); headers.set('x-naijue-document-summary', 'category-v2'); return options.fetch(input, { ...init, headers }); } });
   return Object.freeze({
     readHistory: createTransferHistoryHttpReader(options).readHistory,
     readList(read) {
@@ -18,7 +19,7 @@ export function createTransferHttpReader(options: HttpQueryOptions): TransferRea
     },
     readDetail(read) {
       const body = { transferId: read.parameters.transferId }; const parameters = parseTransferDetailQuery(body);
-      return http.post('/transfers/detail/query', body, read.signal, value => transferDetailResponse(value, parameters));
+      return detailHttp.post('/transfers/detail/query', body, read.signal, value => transferDetailResponse(value, parameters));
     },
   } satisfies TransferReader);
 }

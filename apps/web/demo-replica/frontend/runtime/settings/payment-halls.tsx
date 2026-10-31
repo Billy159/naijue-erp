@@ -4,7 +4,7 @@ import { LatestQuery, type QuerySnapshot } from '../../../../src/loading/latest-
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { SettingsDirectoryPage, SettingsDirectoryParameters, SettingsDirectoryReader, SettingsReference } from '../../../../src/settings/stores/maintenance-contracts.ts';
 import { readMessage, settingsSingleCss } from './controls.tsx';
-import { SourceControl } from '../inventory/candidates.tsx';
+import { SourceControl } from '../common/ui/source-control.tsx';
 import './payment-halls.css';
 const idle=Object.freeze({phase:'idle' as const,request:null,success:null,error:null}),noSubscribe=()=>()=>{};
 /** The approved fund-account multi-hall field; all selected native references survive paging. */

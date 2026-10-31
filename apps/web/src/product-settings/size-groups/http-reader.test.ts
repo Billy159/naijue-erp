@@ -24,3 +24,15 @@ test('dictionary browser permission/unavailable/aborted failures stay typed, san
   for (const [status, kind] of [[401, 'unauthenticated'], [403, 'forbidden'], [503, 'unavailable']] as const) { let calls = 0; const reader = createDictionaryHttpReader({ origin: 'https://synthetic.test', basePath: '', fetch: async () => { calls++; return json({ error: { code: 'PRIVATE CODE', message: 'PRIVATE DETAIL' } }, status); } }); await assert.rejects(() => reader.readSeasons(read()), error => { assert.equal((error as { kind: string }).kind, kind); assert.ok(!String(error).includes('PRIVATE')); return true; }); assert.equal(calls, 1); }
   let calls = 0; const reader = createDictionaryHttpReader({ origin: 'https://synthetic.test', basePath: '', fetch: async () => { calls++; return json({}); } }); const controller = new AbortController(); controller.abort(); await assert.rejects(() => reader.readSeasons({ ...read(), signal: controller.signal }), { kind: 'aborted' }); assert.equal(calls, 0);
 });
+
+test('segments capability is explicit per reader and only sent on detail; legacy responses remain compatible',async()=>{
+ const {withSchemeGenerationMetadata}=await import('../../../../../packages/application/src/dictionary-scheme-detail.ts');
+ const base={id,name:'名字不是规则',barcodeType:'Code128',ruleDescription:'原文',codeLength:14,ruleVersion:'v1',status:'HISTORICAL' as const,applicability:null};
+ const calls:{url:string;header:string|null}[]=[];
+ const options={origin:'https://synthetic.test',basePath:'',fetch:async(input:string,init:RequestInit)=>{const header=new Headers(init.headers).get('x-naijue-scheme-detail');calls.push({url:input,header});return json(input.includes('/barcode-schemes/')?{page:1,pageSize:20,total:1,items:[base]}:header?withSchemeGenerationMetadata(base):base);}};
+ const legacy=createDictionaryHttpReader(options),extended=createDictionaryHttpReader(options,{schemeSegments:true});
+ assert.deepEqual(await legacy.readBarcodeScheme({...read(),parameters:{schemeId:id}}),base);
+ assert.equal((await extended.readBarcodeScheme({...read(),parameters:{schemeId:id}}))?.generationRule?.basis,'UNKNOWN');await extended.readBarcodeSchemes(read());assert.deepEqual(calls.map(x=>x.header),[null,'scheme-segments-v1',null]);
+ const oldServer=createDictionaryHttpReader({...options,fetch:async()=>json(base)},{schemeSegments:true});assert.deepEqual(await oldServer.readBarcodeScheme({...read(),parameters:{schemeId:id}}),base);
+ const strictLegacy=createDictionaryHttpReader({...options,fetch:async()=>json(withSchemeGenerationMetadata(base))});await assert.rejects(()=>strictLegacy.readBarcodeScheme({...read(),parameters:{schemeId:id}}),{kind:'malformed-response'});
+});

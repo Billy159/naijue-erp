@@ -1,0 +1,66 @@
+/** Actual replica carrier + native session/controller, synthetic reads only.
+ * Canonical check-production.mjs recursively discovers runtime test modules automatically.
+ * No server, browser, PG, network, or repository-generated build artifacts. */
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {mkdtemp,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+import {pathToFileURL,fileURLToPath} from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url));
+const repo=path.resolve(here,'../../../../../..');
+const require=createRequire(import.meta.url);
+const args=process.argv.slice(2),mode='live';
+const only=args.find(x=>x.startsWith('--case='))?.slice(7);
+ const {build}=require('esbuild'),{JSDOM}=require('jsdom');
+ const dom=new JSDOM('<div id="root"></div><button id="anchor">扫码录入</button>',{url:'https://scanner.synthetic.test',pretendToBeVisual:true});
+ for(const key of ['window','document','HTMLElement','HTMLInputElement','Node','Event','KeyboardEvent','CompositionEvent','requestAnimationFrame','cancelAnimationFrame'])Object.defineProperty(globalThis,key,{configurable:true,value:dom.window[key]});Object.defineProperty(globalThis,'navigator',{configurable:true,value:dom.window.navigator});globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+ const {act,createElement}=require('react'),{createRoot}=require('react-dom/client');
+ const temp=await mkdtemp(path.join(tmpdir(),'naijue-transfer-scan-'));
+ const entry=[['default as Scanner','apps/web/demo-replica/frontend/runtime/documents/transfer-scanner.tsx'],['TransferProposalSession','apps/web/src/current-form/transfer-proposal.ts'],['ReadContext','apps/web/src/loading/read-scope.ts'],['HttpQueryError','apps/web/src/transport/http-query.ts'],['DocumentScanController','apps/web/src/components/document-scan-controller.ts']].map(([name,p])=>`export {${name}} from ${JSON.stringify(path.join(repo,p))};`).join('\n');
+ let total=0,failed=0;const results=[];
+ try{
+  const output=path.join(temp,'entry.mjs');await build({stdin:{contents:entry,resolveDir:repo,sourcefile:'scanner-audit-entry.tsx',loader:'tsx'},outfile:output,bundle:true,format:'esm',platform:'node',jsx:'automatic',nodePaths:[path.join(repo,'node_modules')],plugins:[{name:'native-react-singleton',setup(b){b.onResolve({filter:/^react(?:-dom)?(?:\/.*)?$/},a=>({path:require.resolve(a.path),external:true}));}}]});
+  const api=await import(pathToFileURL(output).href);
+  const uuid=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
+  const skuA={id:uuid(4),skuCode:'SYNTHETIC-A',productId:uuid(3),productCode:'SYNTHETIC-P',productName:'Synthetic product',colorId:uuid(5),colorName:'Synthetic red',fitId:uuid(6),fitName:'Synthetic fit A',sizeId:uuid(7),sizeName:'165/S',sizeGroupId:uuid(8),barcodeAvailability:'UNAVAILABLE'};
+  const skuB={...skuA,id:uuid(14),skuCode:'SYNTHETIC-B',fitId:uuid(16),fitName:'Synthetic fit B'};
+  const found=code=>({state:'FOUND',barcode:code,binding:{id:uuid(code==='B'?22:21),kind:code==='OLD-A'?'CONFIRMED_OLD':'MAIN'},sku:code==='B'?skuB:skuA});
+  const unavailable=(code,state='NOT_FOUND')=>({state,barcode:code,binding:null,sku:null});
+  const flush=()=>new Promise(r=>setImmediate(r));
+  async function fixture(){
+   document.body.innerHTML='<div id="root"></div><button id="anchor">扫码录入</button>';
+   const reads=new api.ReadContext({accountId:uuid(99),sessionRevision:'synthetic',permissionRevision:'synthetic'}),scope=reads.createScope('synthetic-transfer-scanner');
+   const requests=[];let active=0,peak=0,closed=0;
+   const warehouses=[1,2].map(n=>({id:uuid(n),name:'SYNTHETIC warehouse '+n,hallId:uuid(90),hallName:'SYNTHETIC hall',enabled:true,hallEnabled:true,hasNonzeroInventory:false}));
+   const session=new api.TransferProposalSession(scope,{async readTransferWarehouses(){return {page:1,pageSize:20,exactTotal:2n,items:warehouses};},async readProducts(){throw Error('NO PRODUCT FALLBACK PERMITTED');},async readProductSkus(){throw Error('NO SKU SEARCH FALLBACK PERMITTED');},readBarcode(query,signal){active++;peak=Math.max(peak,active);return new Promise((resolve,reject)=>requests.push({code:query.barcode,signal,done(value){active--;resolve(value);},fail(error){active--;reject(error);}}));}});
+   await session.openPicker('FROM');await session.select(uuid(1));await session.openPicker('TO');await session.select(uuid(2));session.setHeader({businessDate:'2026-10-30',note:'SYNTHETIC ONLY'});
+   const controller=session.createScanner(),root=createRoot(document.getElementById('root')),anchor=document.getElementById('anchor');anchor.focus();
+   const props={session,controller,anchor,busy:false,close(){closed++;root.render(null);}};
+   await act(async()=>root.render(createElement(api.Scanner,props)));
+   const input=()=>document.getElementById('transfer-scan-input');
+   const put=value=>act(async()=>{assert.ok(input());Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input(),value);input().dispatchEvent(new Event('input',{bubbles:true}));});
+   const key=(key='Enter',init={})=>act(async()=>{assert.ok(input());input().dispatchEvent(new KeyboardEvent('keydown',{key,bubbles:true,cancelable:true,...init}));});
+   const scan=async value=>{await put(value);await key();};
+   const settle=async(index,value)=>{assert.ok(requests[index],`request ${index} absent; scans may have been dropped`);await act(async()=>{requests[index].done(value??found(requests[index].code));await flush();});};
+   const button=text=>[...document.querySelectorAll('button')].find(b=>b.textContent===text);
+   const click=text=>act(async()=>{assert.ok(button(text),`missing ${text}`);button(text).click();await flush();});
+   const quantities=()=>Object.fromEntries(session.getSnapshot().draft.lines.map(line=>[line.sku.skuCode,line.quantity]));
+   return {requests,session,controller,scope,reads,input,put,key,scan,settle,button,click,quantities,get peak(){return peak;},get closed(){return closed;},async cleanup(){await act(async()=>{root.unmount();scope.dispose();await flush();});}};
+  }
+  async function check(name,body){if(only&&name!==only)return;total++;let f;try{f=await fixture();await body(f);results.push({name,status:'PASS'});console.log('PASS '+name);}catch(error){failed++;results.push({name,status:'FAIL',message:error.message});console.error('FAIL '+name+'\n'+error.stack);}finally{if(f)await f.cleanup();}}
+  await check('immediate',async f=>{assert.equal(document.activeElement,f.input());await f.scan('A');assert.equal(f.input().value,'','accepted Enter must immediately clear for next hardware burst');assert.equal(f.input().disabled,false,'pending exact read must not discard next physical scan');assert.match(document.querySelector('[data-transfer-scan-feedback]').textContent,/正在核对|已接收/);assert.equal(f.requests.length,1);await f.key();assert.equal(f.requests.length,1,'empty extra Enter is not a second item');await f.settle(0);assert.deepEqual(f.quantities(),{'SYNTHETIC-A':'1'});});
+  await check('fifo',async f=>{await f.scan('A');await f.scan('A');await f.scan('B');assert.equal(f.requests.length,1,'only one active exact read');await f.settle(0);assert.equal(f.requests[1]?.code,'A','second physical A must survive first pending request');await f.settle(1);assert.equal(f.requests[2]?.code,'B');await f.settle(2);assert.equal(f.peak,1);assert.deepEqual(f.quantities(),{'SYNTHETIC-A':'2','SYNTHETIC-B':'1'});assert.equal(document.querySelectorAll('[data-transfer-sku]').length,2,'different actual fit identities must not merge');});
+  await check('pause-retry-ignore',async f=>{await f.scan('A');await f.scan('UNKNOWN');await f.scan('B');await f.settle(0);assert.equal(f.requests[1]?.code,'UNKNOWN');await f.settle(1,unavailable('UNKNOWN'));assert.equal(f.requests.length,2,'error must invalidate queued B');assert.equal(f.input().disabled,true);assert.match(document.querySelector('[data-transfer-scan-feedback]').textContent,/已暂停/);await f.click('重新扫码');assert.equal(f.input().value,'UNKNOWN');assert.equal(f.requests.length,2,'retry restores/selects code; never auto-submits');await f.key();assert.equal(f.requests[2]?.code,'UNKNOWN');await f.settle(2,unavailable('UNKNOWN'));await f.click('忽略并继续');assert.equal(f.input().value,'');await f.scan('B');await f.settle(3);assert.deepEqual(f.quantities(),{'SYNTHETIC-A':'1','SYNTHETIC-B':'1'});});
+  await check('revision',async f=>{await f.scan('A');await f.scan('B');await act(async()=>f.session.setHeader({note:'SYNTHETIC USER EDIT DURING LOOKUP'}));await f.settle(0);assert.deepEqual(f.quantities(),{});assert.equal(f.requests.length,1,'changed draft cancels remaining queue');assert.match(document.querySelector('[data-transfer-scan-feedback]').textContent,/已改变|已变化/);await f.click('忽略并继续');await f.scan('B');await f.settle(1);assert.deepEqual(f.quantities(),{'SYNTHETIC-B':'1'});});
+  await check('close-late',async f=>{await f.scan('A');await f.scan('B');await f.click('×');assert.equal(f.closed,1);assert.equal(f.requests[0].signal.aborted,true);assert.equal(document.getElementById('transfer-scan-drawer'),null);await f.settle(0);assert.deepEqual(f.quantities(),{});assert.equal(f.requests.length,1);assert.equal(document.body.classList.contains('transfer-scan-open'),false);});
+  await check('old-and-unavailable',async f=>{await f.scan('A');await f.settle(0);await f.scan('OLD-A');await f.settle(1);assert.deepEqual(f.quantities(),{'SYNTHETIC-A':'2'});assert.match(document.querySelector('[data-transfer-scan-feedback]').textContent,/1\s*→\s*2/);await f.scan('DISABLED');await f.settle(2,unavailable('DISABLED','UNAVAILABLE'));assert.deepEqual(f.quantities(),{'SYNTHETIC-A':'2'});assert.match(document.querySelector('[data-transfer-scan-feedback]').textContent,/不可用/);});
+  await check('composition-and-empty',async f=>{await f.key();assert.equal(f.requests.length,0);await f.put('A');await f.key('Enter',{isComposing:true});assert.equal(f.requests.length,0);await f.key('Enter',{keyCode:229});assert.equal(f.requests.length,0);await f.key();assert.equal(f.requests.length,1);await f.settle(0);assert.deepEqual(f.quantities(),{'SYNTHETIC-A':'1'});});
+  await check('forbidden',async f=>{await f.scan('A');await f.scan('B');await act(async()=>{f.requests[0].fail(new api.HttpQueryError('forbidden','FORBIDDEN'));await flush();});assert.equal(f.scope.active,false);assert.equal(f.session.getSnapshot().disposed,true);assert.equal(document.getElementById('transfer-scan-drawer'),null);assert.equal(f.requests.length,1);});
+  await check('timeout',async f=>{const start=performance.now();await f.scan('A');await f.scan('B');await act(async()=>{await new Promise(r=>setTimeout(r,3250));await flush();});assert.equal(f.controller.getSnapshot().phase,'error','scan-specific lookup must settle in a few seconds even when reader ignores abort');assert.equal(f.requests[0].signal.aborted,true);assert.equal(f.requests.length,1,'timeout invalidates queued B');assert.deepEqual(f.quantities(),{});assert.match(document.querySelector('[data-transfer-scan-feedback]').textContent,/超时/);console.log('OBSERVED timeout feedback after '+Math.round(performance.now()-start)+'ms (inspection includes fixed 3250ms wait)');await f.settle(0);assert.deepEqual(f.quantities(),{},'late timed-out response must not add');await f.click('重新扫码');assert.equal(f.input().value,'A');await f.key();await f.settle(1);assert.deepEqual(f.quantities(),{'SYNTHETIC-A':'1'},'one deliberate retry, no duplicate late addition');});
+  // Explicit controller cancellation settling is independent of browser unmount.
+  if(!only||only==='cancel-settles'){
+   total++;try{const reads=new api.ReadContext({accountId:uuid(99),sessionRevision:'s',permissionRevision:'p'}),scope=reads.createScope('cancel'),controller=new api.DocumentScanController({scope,target:()=>({key:'1',context:{kind:'TRANSFER',fromWarehouseId:uuid(1),toWarehouseId:uuid(2)}}),resolve:()=>new Promise(()=>{}),apply:()=>{throw Error('must never apply');}});const pending=controller.scan('A');await flush();controller.dispose();const result=await Promise.race([pending,new Promise(r=>setTimeout(()=>r('STILL_PENDING'),100))]);scope.dispose();assert.equal(result,false,'dispose must settle ignored-abort reader');results.push({name:'cancel-settles',status:'PASS'});console.log('PASS cancel-settles');}catch(error){failed++;results.push({name:'cancel-settles',status:'FAIL',message:error.message});console.error('FAIL cancel-settles\n'+error.stack);}
+  }
+ }finally{dom.window.close();await rm(temp,{recursive:true,force:true});}
+ console.log(JSON.stringify({mode,source:'actual replica TransferScanner + real TransferProposalSession/DocumentScanController',syntheticOnly:true,hardwareScanner:false,total,passed:total-failed,failed,results},null,2));process.exitCode=failed?1:0;

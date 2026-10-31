@@ -1,0 +1,12 @@
+{
+  "kind": "naijue-erp-production-host",
+  "http": { "origin": "https://synthetic-management.invalid", "basePath": "/api" },
+  "assets": { "basePath": "/assets/multihall-read/" },
+  "session": { "verifyOnMount": true },
+  "routes": {
+    "inventory": false, "sales": false, "transfers": false,
+    "paymentSettings": true,
+    "maintenance": { "paymentSettings": true, "storeSettings": true },
+    "storeSettings": { "allowedTabs": ["stores", "warehouses"], "initialTab": "stores", "allowHallDirectoryRead": true }
+  }
+}

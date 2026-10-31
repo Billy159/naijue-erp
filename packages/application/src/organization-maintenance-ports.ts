@@ -8,7 +8,7 @@ export interface OrganizationListQuery {
 }
 /** Additive STAFF-only filters; legacy five-field queries remain unchanged. */
 export type StaffRoleFilter = "" | "ADMIN" | "WAREHOUSE" | "SALESPERSON";
-/** CLOSED is recognized but unavailable until no-account classification is decided. */
+/** CLOSED selects only an existing disabled account; account:null remains ALL-only. */
 export type StaffLoginStatusFilter = "" | "open" | "closed";
 export interface StaffRoleListQuery extends OrganizationListQuery { readonly role: StaffRoleFilter }
 export interface StaffLoginStatusListQuery extends OrganizationListQuery { readonly role?: StaffRoleFilter; readonly loginStatus: StaffLoginStatusFilter }

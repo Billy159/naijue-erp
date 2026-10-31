@@ -98,6 +98,11 @@ try {
   const scheme = { id: sid(80), name: '原历史方案', barcodeType: 'Code128', ruleDescription: '来源原值', codeLength: null, ruleVersion: 'source', status: 'HISTORICAL', applicability: null };
   await resolve(requests.at(-1), { page: 1, pageSize: 20, total: 21, items: Array.from({ length: 20 }, (_, i) => ({ ...scheme, id: sid(80 + i) })) });
   assert.ok(host.querySelector('.pc-schemes .iw-pagination .ui-single-host'), 'scheme list uses the same source pagination consumer');
+  const schemeTableScroll=host.querySelector('.pc-schemes .table-scroll'),schemeNote=host.querySelector('.pc-schemes .pc-scheme-note'),schemePager=host.querySelector('.pc-schemes .iw-pagination');
+  assert.equal(Boolean(schemeTableScroll&&schemeNote&&schemePager),true,'scheme table, original note and separate shared pager remain mounted');
+  assert.equal(schemeTableScroll.nextElementSibling===schemeNote,true,'original note must immediately follow a nonempty table, not the viewport bottom');
+  assert.equal(schemeNote.nextElementSibling===schemePager,true,'separate pagination remains after the note');
+  assert.match(schemeTableScroll.textContent,/来源原值/);assert.match(schemeTableScroll.textContent,/未知/,'unknown native facts must not become Demo placeholders');
   assert.equal(latest('/dictionary-read/barcode-scheme/query'), undefined);
   await click(button('查看')); assert.equal(JSON.parse(requests.at(-1).init.body).schemeId, scheme.id);
   await resolve(requests.at(-1), scheme); assert.match(document.querySelector('.pc-rule').textContent, /来源原值/); assert.doesNotMatch(document.querySelector('.pc-rule').textContent, /识别码/);
@@ -107,6 +112,28 @@ try {
   assert.equal(button('查看').disabled, true, 'stale scheme rows cannot open another detail while paging');
   await resolve(requests.at(-1), { page: 2, pageSize: 20, total: 21, items: [{ ...scheme, id: sid(100) }] });
   assert.equal(host.querySelectorAll('tbody tr').length, 1); assert.match(host.textContent, /共 21 条/);
+
+  // RED first: the shared scheme size selector must remain reachable after a
+  // valid size change collapses21 actual synthetic DTOs from2 pages to1.
+  const schemeRows = Array.from({ length: 21 }, (_, i) => ({ ...scheme, id: sid(80 + i) }));
+  const chooseSchemeSize = async size => {
+    const shadow = host.querySelector('.pc-schemes .iw-pagination .ui-single-host > div')?.shadowRoot;
+    assert.ok(shadow, 'scheme list must retain its shared page-size control even on one page');
+    await click(shadow.querySelector('[role="combobox"]'));
+    await click([...shadow.querySelectorAll('[role="option"]')].find(node => node.textContent.trim() === `${size}条/页`));
+    const request = latest('/dictionary-read/barcode-schemes/query'), input = JSON.parse(request.init.body);
+    assert.equal(input.page, 1, 'scheme size change must reset page2 to page1'); assert.equal(input.pageSize, size);
+    return request;
+  };
+  const fifty = await chooseSchemeSize(50);
+  await resolve(fifty, { page: 1, pageSize: 50, total: schemeRows.length, items: schemeRows });
+  assert.equal(host.querySelectorAll('tbody tr').length, 21);
+  assert.ok(host.querySelector('.pc-schemes .iw-pagination .ui-single-host'), 'one-page scheme result must retain size selection so users can return to20');
+  assert.equal(host.querySelector('.pc-schemes .iw-pagination [aria-label="下一页"]'), null, 'one page must not invent a next page');
+  const twenty = await chooseSchemeSize(20);
+  await resolve(twenty, { page: 1, pageSize: 20, total: schemeRows.length, items: schemeRows.slice(0, 20) });
+  assert.equal(host.querySelectorAll('tbody tr').length, 20);
+  assert.ok(host.querySelector('.pc-schemes .iw-pagination [aria-label="下一页"]'));
 
   await act(async () => dispose()); context.clear();
   context = new ReadContext({ accountId: sid(900), sessionRevision: '2', permissionRevision: '2' }); scope = context.createScope('product-scheme-detail', sid(80));

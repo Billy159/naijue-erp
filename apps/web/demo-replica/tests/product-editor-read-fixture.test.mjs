@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createProductEditorReadFixture} from './product-editor-read-fixture.mjs';
+import {qaProducts,qaPrincipal} from '../frontend/qa-reference-fixtures.mts';
+import {validateProductMaintenanceDetailV2} from '../../src/products/product-maintenance-http-client.ts';
+const target=qaProducts[0].id;
+test('formal detailV2 produces strict client DTO from bounded synthetic aggregate',async()=>{const f=createProductEditorReadFixture();const d=await f.service.detailV2(qaPrincipal,{productId:target});assert.equal(validateProductMaintenanceDetailV2(d,target).productId,target);assert.equal(d.values.name,qaProducts[0].name);assert.equal(d.values.seasonIds,null);assert.ok(d.skus.length>0);assert.equal(f.writes(),0);});
+test('unknown product and revoked actor reject, without mutable state',async()=>{const f=createProductEditorReadFixture();await assert.rejects(f.service.detailV2(qaPrincipal,{productId:'00000000-0000-4000-8000-000000999999'}),{code:'PRODUCT_NOT_FOUND'});f.revoke();await assert.rejects(f.service.detailV2(qaPrincipal,{productId:target}),{code:'FORBIDDEN'});assert.equal(f.writes(),0);});
+test('reference mismatch fails actual service FK verification',async()=>{const f=createProductEditorReadFixture({mismatchReferences:true});await assert.rejects(f.service.detailV2(qaPrincipal,{productId:target}),{code:'INVALID_DATABASE_VALUE'});});
+test('only closed origin and exact read endpoints handled; commands never sent',async()=>{const f=createProductEditorReadFixture();for(const path of ['/api/products/v2/commands','/api/products/commands','/api/products/media/uploads'])assert.equal(f.canHandle(path,'POST'),false);const denied=await f.request({url:'https://other.invalid/api/products/maintenance/v2/detail/query',method:'POST',body:JSON.stringify({productId:target})});assert.equal(denied.status,501);assert.equal(f.writes(),0);});

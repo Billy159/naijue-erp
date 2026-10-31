@@ -10,14 +10,23 @@ const ids=(items:readonly Choice[])=>items.filter(item=>!item.disabled).map(item
 const complete=(value:readonly Selection[],items:readonly Choice[])=>{const selected=new Set(value.map(item=>item.id)),keys=ids(items);return keys.length>0&&keys.every(id=>selected.has(id));};
 
 /** null means the complete authorized range, including candidates not loaded yet. */
-export function checkedFilterValues(value:readonly Selection[]|null,items:readonly Choice[],itemsComplete=false):string[]{
+export function checkedFilterValues(value:readonly Selection[]|null,items:readonly Choice[],itemsComplete=false,standaloneAll=false):string[]{
+ if(standaloneAll)return value===null?[ALL_FILTER_VALUE]:value.map(item=>item.id);
  return value===null?[ALL_FILTER_VALUE,...ids(items)]:[...(itemsComplete&&complete(value,items)?[ALL_FILTER_VALUE]:[]),...value.map(item=>item.id)];
 }
 
 /** Materialize the full range only when an individual item is removed from All. */
-export async function resolveFilterSelection(value:readonly Selection[]|null,items:readonly Choice[],next:unknown,extra:Extra,loadAll:()=>Promise<readonly Choice[]>,itemsComplete=false,maxSelections=Infinity):Promise<readonly Selection[]|null>{
+export async function resolveFilterSelection(value:readonly Selection[]|null,items:readonly Choice[],next:unknown,extra:Extra,loadAll:()=>Promise<readonly Choice[]>,itemsComplete=false,maxSelections=Infinity,standaloneAll=false):Promise<readonly Selection[]|null>{
  const bounded=(value:readonly Selection[]|null)=>{assertSelectionBudget(value,maxSelections);return value;};
  const key=extra.trigger?.value??extra.trigger?._key??extra.trigger?.key;
+ // Frozen category contract: All is a standalone choice, not every checked child.
+ if(standaloneAll){
+  if(key===ALL_FILTER_VALUE)return null;
+  const raw=(Array.isArray(next)?next:[]).map(item=>typeof item==='string'?item:(item as {value?:unknown})?.value).filter(id=>id!==ALL_FILTER_VALUE);
+  const known=new Map<string,Choice>([...items,...(value??[])].map(item=>[item.id,item]));
+  const selected=raw.filter((id):id is string=>typeof id==='string').flatMap(id=>{const item=known.get(id);return item&&!item.disabled?[{id:item.id,label:item.label}]:[];});
+  return bounded(selected.length?selected:null);
+ }
  if(key===ALL_FILTER_VALUE)return extra.checked===true?null:[];
  if(typeof key==='string'&&typeof extra.checked==='boolean'){
   if(value===null)return extra.checked?null:bounded((await loadAll()).filter(item=>!item.disabled&&item.id!==key).map(({id,label})=>({id,label})));
@@ -27,6 +36,6 @@ export async function resolveFilterSelection(value:readonly Selection[]|null,ite
  }
  const raw=(Array.isArray(next)?next:[]).map(item=>typeof item==='string'?item:(item as {value?:unknown})?.value);
  if(raw.includes(ALL_FILTER_VALUE))return null;
- const known=new Map([...items,...(value??[])].map(item=>[item.id,item]));
+ const known=new Map<string,Choice>([...items,...(value??[])].map(item=>[item.id,item]));
  return bounded(raw.filter((id):id is string=>typeof id==='string').flatMap(id=>{const item=known.get(id);return item?[{id:item.id,label:item.label}]:[];}));
 }

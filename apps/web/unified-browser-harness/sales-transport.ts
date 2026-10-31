@@ -12,7 +12,7 @@ import type { SyntheticTransactionFailure } from './types.ts';
  * No import-time DOM, actual network, stock command or production host. */
 export function createSyntheticSalesTransport(onRecord: (message: string) => void = () => {}, dataset?:QaReferenceProfile) {
 const uuid = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
-const base = fixtureDetail(), documents = new Map<string, SalesDraftDto>(), receipts = new Map<string, unknown>();
+const base = fixtureDetail(), documents = new Map<string, SalesDraftDto>(), receipts = new Map<string, unknown>(), createdAt = new Map<string, string>();
 const seedSource = seedFixtureDetail(), seed = { ...seedSource, stockBasis: 'CUTOFF_HISTORY' as const, document: { ...seedSource.document, header: { ...seedSource.document.header, number: 'SYN-HISTORY-XS-001', note: '合成只读历史示例（非正式）' } } };
 const seedSummary = { ...seedFixtureSummary(), number: seed.document.header.number };
 
@@ -42,7 +42,8 @@ function prepare(body: NativeSalesCreateProposal) {
 }
 const names = dataset?{hallName:qaHalls[0]!.name,customerName:qaCustomers[0]!.name,warehouseName:qaWarehouses[0]!.name,salespersonName:null}:{hallName:'合成营业厅',customerName:'合成客户',warehouseName:'合成销货仓',salespersonName:null};
 const namesFor=(draft:SalesDraftDto)=>dataset?{hallName:qaHalls.find(x=>x.id===draft.header.hallId)!.name,customerName:qaCustomers.find(x=>x.id===draft.header.customerId)!.name,warehouseName:qaWarehouses.find(x=>x.id===draft.header.warehouseId)!.name,salespersonName:qaStaff.find(x=>x.id===draft.header.salespersonId)?.name??null,createdByName:qaPrincipal.loginName,responsibleName:null}:names;
-const currentDetail = (draft:SalesDraftDto) => ({...base,referenceNames:namesFor(draft),settlementNames:draft.settlements.map(row=>({settlementId:row.id,paymentAccountId:row.paymentAccountId,accountNameSnapshot:dataset?qaPaymentAccounts.find(x=>x.id===row.paymentAccountId)!.name:'合成收款账户',methodNameSnapshot:dataset?qaMethods.find(x=>x.id===row.paymentMethodId)!.name:'合成现金',currentAccountName:dataset?qaPaymentAccounts.find(x=>x.id===row.paymentAccountId)!.name:'合成收款账户',currentMethodName:dataset?qaMethods.find(x=>x.id===row.paymentMethodId)!.name:'合成现金'})),document:{header:{...base.document.header,...draft.header,status:'DRAFT',version:1,createdByAccountId:principal.accountId},lines:draft.lines,settlements:draft.settlements}});
+const savedAt = (id:string):string => { const value=createdAt.get(id); if(!value)throw new TypeError('Synthetic SAVE creation instant was not recorded.'); return value; };
+const currentDetail = (draft:SalesDraftDto) => ({...base,referenceNames:namesFor(draft),settlementNames:draft.settlements.map(row=>({settlementId:row.id,paymentAccountId:row.paymentAccountId,accountNameSnapshot:dataset?qaPaymentAccounts.find(x=>x.id===row.paymentAccountId)!.name:'合成收款账户',methodNameSnapshot:dataset?qaMethods.find(x=>x.id===row.paymentMethodId)!.name:'合成现金',currentAccountName:dataset?qaPaymentAccounts.find(x=>x.id===row.paymentAccountId)!.name:'合成收款账户',currentMethodName:dataset?qaMethods.find(x=>x.id===row.paymentMethodId)!.name:'合成现金'})),document:{header:{...base.document.header,...draft.header,status:'DRAFT',version:1,createdByAccountId:principal.accountId,createdAt:savedAt(draft.header.id),updatedAt:savedAt(draft.header.id)},lines:draft.lines,settlements:draft.settlements}});
 const http = {origin:'https://synthetic-management.invalid',basePath:'/api',fetch:async(url:string,init:RequestInit):Promise<Response>=>{
  const body=init.body?JSON.parse(String(init.body)):null, endpoint=new URL(url).pathname.replace('/api',''); record(`${init.method} ${endpoint}`);
  if(endpoint==='/auth/session') return json({principal}); if(endpoint==='/auth/logout') return json({ok:true});
@@ -60,14 +61,15 @@ const http = {origin:'https://synthetic-management.invalid',basePath:'/api',fetc
  if(endpoint==='/sales/commands') {
   if(body.action!=='SAVE'||body.expectedVersion!==null) return deny(409,'INVALID_STATE');
   if(receipts.has(body.requestKey)) return json((receipts.get(body.requestKey) as {result:unknown}).result);
-  documents.set(body.draft.header.id,body.draft); writes++;
+  const completedAt=new Date().toISOString();
+  documents.set(body.draft.header.id,body.draft); createdAt.set(body.draft.header.id,completedAt); writes++;
   const result={salesId:body.draft.header.id,operationId:crypto.randomUUID(),version:1,status:'DRAFT',ledgerEntryIds:[]};
-  receipts.set(body.requestKey,{requestKey:body.requestKey,action:'SAVE',status:'COMMITTED',completedAt:new Date().toISOString(),result});
+  receipts.set(body.requestKey,{requestKey:body.requestKey,action:'SAVE',status:'COMMITTED',completedAt,result});
   record(`SYNTHETIC ONLY: ${writes} SAVE(s), page memory only; no database/proof writes.`);
   if(failure==='saveUncertain') throw Error('Synthetic lost response after memory save'); return json(result);
  }
  if(endpoint.startsWith('/sales/receipts/')) { const receipt=receipts.get(decodeURIComponent(endpoint.split('/').at(-1)!));return receipt?json(receipt):deny(404,'RECEIPT_NOT_FOUND'); }
- if(endpoint==='/sales/query') return page([...(dataset?qaSalesDocuments.map(d=>({id:d.document.header.id,number:d.document.header.number})): [seedSummary]),...[...documents.values()].map(draft=>({id:draft.header.id,number:draft.header.number,businessType:draft.header.businessType,businessDate:draft.header.businessDate,hallId:draft.header.hallId,customerId:draft.header.customerId,warehouseId:draft.header.warehouseId,salespersonId:draft.header.salespersonId,status:'DRAFT',version:1,grossAmount:draft.header.grossAmount,orderDiscount:draft.header.orderDiscount,netDue:draft.header.netDue,...namesFor(draft),quantity:draft.lines.reduce((s,r)=>s+BigInt(r.quantity),0n).toString(),incomingQuantity:draft.lines.reduce((s,r)=>s+(BigInt(r.quantity)<0n?-BigInt(r.quantity):0n),0n).toString(),outgoingQuantity:draft.lines.reduce((s,r)=>s+(BigInt(r.quantity)>0n?BigInt(r.quantity):0n),0n).toString(),updatedAt:new Date().toISOString()}))],body);
+ if(endpoint==='/sales/query') return page([...(dataset?qaSalesDocuments.map(d=>({id:d.document.header.id,number:d.document.header.number})): [seedSummary]),...[...documents.values()].map(draft=>({id:draft.header.id,number:draft.header.number,businessType:draft.header.businessType,businessDate:draft.header.businessDate,hallId:draft.header.hallId,customerId:draft.header.customerId,warehouseId:draft.header.warehouseId,salespersonId:draft.header.salespersonId,status:'DRAFT',version:1,grossAmount:draft.header.grossAmount,orderDiscount:draft.header.orderDiscount,netDue:draft.header.netDue,...namesFor(draft),quantity:draft.lines.reduce((s,r)=>s+BigInt(r.quantity),0n).toString(),incomingQuantity:draft.lines.reduce((s,r)=>s+(BigInt(r.quantity)<0n?-BigInt(r.quantity):0n),0n).toString(),outgoingQuantity:draft.lines.reduce((s,r)=>s+(BigInt(r.quantity)>0n?BigInt(r.quantity):0n),0n).toString(),updatedAt:savedAt(draft.header.id)}))],body);
  if(endpoint==='/sales/detail/query') {if(dataset){const sample=qaSalesDocuments.find(d=>d.document.header.id===body.salesId);if(sample)return json(sample);}if(!dataset&&body.salesId===seed.document.header.id)return json(seed);const draft=documents.get(body.salesId);return draft?json(currentDetail(draft)):deny(404,'DOCUMENT_NOT_FOUND');}
  if(endpoint==='/sales/references/query') return page([],body);
  throw Error(`Unsupported synthetic endpoint: ${endpoint}`);

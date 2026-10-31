@@ -1,3 +1,6 @@
+import { installRequestDiagnostics, observeRequestStage, requestDiagnostic } from './request-diagnostics.ts';
+import { assertStaffCreateReadPermissionAdmission } from './staff-create-read-permission-admission.ts';
+import { acquireReadClient, awaitRead } from '../../../adapters/postgres/src/cancellable-read.ts';
 import { validateCoreSourceMembers } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import type { CoreSourceMembers } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
@@ -165,7 +168,7 @@ export interface PostgresReadApi {
   close(): Promise<void>;
   readonly postgresBackgroundFailureCount: number;
   /** Fresh original-issuer admission; false for legacy/unverified dependencies and closing APIs. */
-  readiness?(): Promise<boolean>;
+  readiness?(signal?: AbortSignal): Promise<boolean>;
 }
 export interface PostgresApplicationApi extends PostgresReadApi { readonly trustedOrigin: string }
 export interface PostgresDocumentCommandsCapability {
@@ -347,13 +350,15 @@ export function createSourceConfirmedApplicationReadAuthorization(pool: PgReadAu
   const allowed = (condition: unknown): void => requireDomain(condition, "FORBIDDEN", "Current native read authority unavailable");
   async function current(actor: ActorContext, signal: AbortSignal): Promise<"ADMIN" | "WAREHOUSE" | "SALESPERSON"> {
     allowed(!signal.aborted); entityId("account", actor.accountId); if (actor.hallId !== null) entityId("hall", actor.hallId);
-    const client = await pool.connect();
+    const cancelled = () => new Error("Current read authority check cancelled");
+    const client = await acquireReadClient(pool, signal, cancelled); let released = false;
+    const release = (error?: Error) => { if (!released) { released = true; client.release(error); } };
     try {
       allowed(!signal.aborted);
-      const rows = (await client.query(`/* application-read:identity */ SELECT a.id account_id,a.staff_id,a.login_enabled,
+      const rows = (await awaitRead(client.query(`/* application-read:identity */ SELECT a.id account_id,a.staff_id,a.login_enabled,
         s.role,s.employment_status,s.hall_id,h.id native_hall_id,h.enabled hall_enabled
         FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id=a.staff_id
-        LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id WHERE a.id=$1::uuid LIMIT 2`, [actor.accountId])).rows;
+        LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id WHERE a.id=$1::uuid LIMIT 2`, [actor.accountId]), signal, cancelled, () => release(cancelled()))).rows;
       allowed(!signal.aborted && rows.length === 1); const row = rows[0]!;
       allowed(row.account_id === actor.accountId && typeof row.staff_id === "string" && row.login_enabled === true
         && row.employment_status === "在职" && (row.role === "ADMIN" || row.role === "WAREHOUSE" || row.role === "SALESPERSON"));
@@ -362,7 +367,7 @@ export function createSourceConfirmedApplicationReadAuthorization(pool: PgReadAu
         && (actor.hallId === null ? row.native_hall_id === null && row.hall_enabled === null : row.native_hall_id === actor.hallId && row.hall_enabled === true));
       if ("role" in actor) allowed(actor.role === row.role);
       return row.role as "ADMIN" | "WAREHOUSE" | "SALESPERSON";
-    } finally { client.release(); }
+    } finally { release(); }
   }
   return Object.freeze({
     settings: Object.freeze<StoreSettingsReadAuthorization>({ async authorize(actor, intent, signal) {
@@ -584,35 +589,60 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   runtime26HistoryAuthorization?: Runtime26HistoryAuthorization): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
   if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
-  const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
+  // Every non-CORE graph below mounts the new stored-pair ledger reader; command
+  // graphs also construct the new pair writers. Generic EXACT26 is insufficient.
+  // This compiled consumer requirement is not a JSON opt-in or a new authority.
+  const requiresRecordedLivePairs = capabilities?.coreInitializationRead == null;
+  if (requiresRecordedLivePairs && runtime26Review === undefined)
+    throw new TypeError("Recorded live ledger pairs require the independently reviewed V7 runtime");
+  const ownedPool = new BoundedPostgresPool(options.postgres, createDriver, observeRequestStage);
   let app: FastifyInstance | undefined;
   let closing = false;
   try {
     host.capacityRuntimePoolBinder?.(ownedPool, options.postgres.target);
     const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, {
-      ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1"
+      ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1",
+      ...(requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_V7" as const } : {})
     });
     const pool = issuer === null ? ownedPool : issuer.pool;
-    const checkAdmission = async (): Promise<boolean> => {
-      if (closing || issuer === null) return false;
+    const checkAdmission = async (signal?: AbortSignal): Promise<boolean> => {
+      if (closing || signal?.aborted || issuer === null) return false;
       const admission = await pool.connect();
       try {
-        if (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_MAINTENANCE");
-        if (capabilities?.productMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_SEASONS_READ");
-        if (capabilities?.organizationMaintenance || capabilities?.partyMaintenance) await issuer.runtime26.assertReady(admission, "CURRENT_CUSTOMER_READ_WRITE");
-        if (runtime26HistoryAuthorization !== undefined) await issuer.runtime26.assertReady(admission, "HISTORY_REVISION");
+        // Do not retire a lease during issuer verification: that would revoke
+        // the issuer. Cancellation stops subsequent checks and rejects late success.
+        const verify: typeof issuer.runtime26.assertReady = async (...args) => {
+          if (closing || signal?.aborted) throw new Error('Readiness cancelled');
+          await issuer.runtime26.assertReady(...args);
+          if (closing || signal?.aborted) throw new Error('Readiness cancelled');
+        };
+        if (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) await verify(admission, "PRODUCT_MAINTENANCE");
+        if (capabilities?.productMaintenance) await verify(admission, "PRODUCT_SEASONS_READ");
+        if (capabilities?.organizationMaintenance || capabilities?.partyMaintenance) await verify(admission, "CURRENT_CUSTOMER_READ_WRITE");
+        if (runtime26HistoryAuthorization !== undefined) await verify(admission, "HISTORY_REVISION");
         for (const purpose of capabilities?.coreInitializationRead ? ["CURRENT_FORM_READ"] as const : ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"] as const)
-          await issuer.runtime26.assertReady(admission, purpose);
-        return !closing;
+          await verify(admission, purpose);
+        // Private staff selection needs actual column capability, not a purpose
+        // label alone. This is a CREATE/read floor; original role/action guards
+        // and all V7/catalog/no-excess review boundaries remain unchanged.
+        if (requiresRecordedLivePairs && capabilities?.staffMaintenance) {
+          await verify(admission, "PRODUCT_MAINTENANCE");
+          await assertStaffCreateReadPermissionAdmission(admission, capabilities.staffMaintenance.credentialRequestTag !== null);
+          // The catalog-only observation awaited the physical driver. Recheck
+          // original review pins/identity and cancellation after that await.
+          await verify(admission, "PRODUCT_MAINTENANCE");
+        }
+        return !closing && !signal?.aborted;
       } finally { admission.release(); }
     };
-    const readiness = async (): Promise<boolean> => { try { return await checkAdmission(); } catch { return false; } };
+    const readiness = async (signal?: AbortSignal): Promise<boolean> => { try { return await checkAdmission(signal); } catch { return false; } };
     if (issuer !== null) await checkAdmission();
     const policies = host.authorization.kind === "source-confirmed-native"
       ? Object.freeze({ ...createSourceConfirmedPostgresReadAuthorization(pool), transfers: createSourceConfirmedTransferQueryAuthorization() })
       : host.authorization.providers;
     const extensions = capabilities?.nativeReadExtensions ? createSourceConfirmedApplicationReadAuthorization(pool) : null;
-    app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536 });
+    app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536, genReqId: request => requestDiagnostic(request)?.requestId ?? randomUUID() });
+    installRequestDiagnostics(app);
     app.addHook("onClose", async () => { closing = true; try { host.capacityAdmission.close(); } finally { await ownedPool.dispose(); } });
     const migrated = host.credentialCompatibility === 'legacy-pbkdf2-v1';
     const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool), now: host.now, policy: host.policy,

@@ -1,4 +1,4 @@
-import {qaBarcodeSnapshot,qaPrices,type QaReferenceProfile} from '../../qa-reference-fixtures.mts';
+import {qaBarcodeSnapshot,qaPrices,qaReferenceRead,type QaReferenceProfile} from '../../qa-reference-fixtures.mts';
 import { CATALOGUE_PRICE_KEYS } from '../../../../../../packages/application/src/catalogue-price-input.ts';
 import { parseProductQuery } from '../../../../../../packages/application/src/product-query-validation.ts';
 import { parseProductBarcodeQuery,parseProductDetailsPageQuery,parseProductStockOverviewQuery } from '../../../../../../packages/application/src/product-details-query-validation.ts';
@@ -29,7 +29,7 @@ export interface SyntheticProductPreviewOptions {
  /** Explicit complete finite preview output, never a production fallback. */
  readonly syntheticFiniteInventoryOutput?:true;
 }
-const paths=new Set(['/inventory/output/query','/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
+const paths=new Set(['/products/maintenance/candidates/query','/inventory/output/query','/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
 const json=(body:unknown,status=200)=>new Response(JSON.stringify(body),{status,headers:{'content-type':'application/json','cache-control':'no-store','x-data-source':'SYNTHETIC-PREVIEW-ONLY'}});
 const unavailable=()=>json({error:{code:'SYNTHETIC_PRODUCT_FACTS_NOT_DECLARED',message:'This synthetic target has no complete declared facts for this read; no real service was called.'}},501);
 class FixtureResponse extends Error {readonly response:Response;constructor(response:Response){super('Existing synthetic fixture rejected this read.');this.response=response;}}
@@ -47,6 +47,12 @@ export function createSyntheticProductPreviewTransport(options:SyntheticProductP
   active();let body:unknown;try{body=JSON.parse(String(init.body));}catch{return json({error:{code:'INVALID_PRODUCT_DETAILS_QUERY'}},400);}
   const load=async(leaf:string,parameters:unknown)=>{active();const response=await options.existingFetch(options.origin+'/api'+leaf,{...operationInit,method:'POST',body:JSON.stringify(parameters)});active();if(!response.ok)throw new FixtureResponse(response);const data:unknown=await response.json();active();return data;};
   try{
+   if(path==='/products/maintenance/candidates/query'){
+    if(!options.dataset)return unavailable();
+    const authorized=await options.existingFetch(options.origin+'/api/auth/session',{...operationInit,method:'GET',body:null});active();
+    if(!authorized.ok)return authorized;
+    return qaReferenceRead(path,body as Record<string,unknown>)??unavailable();
+   }
    if(path==='/inventory/output/query'){
     if(options.syntheticFiniteInventoryOutput!==true)return unavailable();
     parseInventoryOutputQuery(body);const {filter}=body as {filter:InventoryFilter};

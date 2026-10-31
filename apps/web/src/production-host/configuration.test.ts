@@ -43,3 +43,13 @@ test('history revision is an explicit per-document presentation switch, never im
  assert.throws(()=>parseProductionHostConfiguration({...base,routes:{...base.routes,sales:false,historyRevision:{sales:true}}}));
  assert.throws(()=>parseProductionHostConfiguration({...base,routes:{...base.routes,transfers:false,historyRevision:{transfers:true}}}));
 });
+
+
+test('media presentation is independent and closed unless exact product maintenance is selected',()=>{
+ const base=configuration(),routes={...base.routes,products:true,maintenance:{products:true}};
+ assert.equal(parseProductionHostConfiguration({...base,routes}).routes.productMediaReady,undefined);
+ assert.equal(parseProductionHostConfiguration({...base,routes:{...routes,productMediaReady:false}}).routes.productMediaReady,false);
+ assert.equal(parseProductionHostConfiguration({...base,routes:{...routes,productMediaReady:true}}).routes.productMediaReady,true);
+ for(const productMediaReady of [null,'true',1,{},[]])assert.throws(()=>parseProductionHostConfiguration({...base,routes:{...routes,productMediaReady}}));
+ for(const incomplete of [{...base.routes,productMediaReady:true},{...base.routes,products:true,productMediaReady:true},{...routes,products:false,productMediaReady:true},{...routes,maintenance:{products:false},productMediaReady:true}])assert.throws(()=>parseProductionHostConfiguration({...base,routes:incomplete}));
+});

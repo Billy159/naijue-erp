@@ -10,6 +10,6 @@ export type InventoryMountOptions=Omit<InventoryPageProps,'reader'|'outputReader
 /** F1/C normal #inventory entry calls this once per existing route ReadScope.
  * It mounts only the original inventory body inside the original #page. */
 export function mountInventoryPage(host:HTMLElement,options:InventoryMountOptions):()=>void{
- const {http,...props}=options;const root=createRoot(host);document.body.classList.add('gold-mode','inventory-workbench');document.body.classList.remove('pc-mode');root.render(<InventoryPage {...props} reader={createInventoryHttpReader(http)} productReader={createProductHttpReader(http)} outputReader={createInventoryOutputReader(http)} ledgerReader={createInventoryLedgerHttpReader(http)}/>);let disposed=false;
- return()=>{if(disposed)return;disposed=true;root.unmount();options.scope.dispose();document.body.classList.remove('inventory-workbench');};
+ const {http,...props}=options;const root=createRoot(host);root.render(<InventoryPage {...props} reader={createInventoryHttpReader(http)} productReader={createProductHttpReader(http)} outputReader={createInventoryOutputReader(http)} ledgerReader={createInventoryLedgerHttpReader(http)}/>);let disposed=false;
+ return()=>{if(disposed)return;disposed=true;root.unmount();};
 }

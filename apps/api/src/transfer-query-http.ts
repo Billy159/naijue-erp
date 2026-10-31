@@ -1,3 +1,4 @@
+import { documentListWire, transferDetailWire } from './document-list-wire.ts';
 import type { IncomingHttpHeaders } from "node:http";
 import type { FastifyPluginAsync } from "fastify";
 import type { TransferActor } from "../../../packages/application/src/transfer-ports.ts";
@@ -57,7 +58,8 @@ export function createTransferQueryHttpPlugin(options: TransferQueryHttpOptions)
         }
         const actor = actors.get(request); const state = reads.get(request);
         if (!actor || !state) throw new Error("Missing trusted transfer query context");
-        return reply.type("application/json").send(exactJson(await read(actor, request.body, state.controller.signal)));
+        const result=await read(actor, request.body, state.controller.signal);
+        return reply.type("application/json").send(exactJson(url==='/transfers/query'?documentListWire(result,request.headers['x-naijue-document-summary']):url==='/transfers/detail/query'?transferDetailWire(result,request.headers['x-naijue-document-summary']):result));
       });
     }
   };

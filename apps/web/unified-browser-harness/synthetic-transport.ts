@@ -40,7 +40,7 @@ export function createSyntheticUnifiedTransport(onCall?: (call:SyntheticCall)=>v
    const isRead=!path.endsWith('/commands')&&!path.endsWith('/prepare-create')&&!isReceipt;
    let failure:SyntheticReadFailure='none';
    if(isRead){failure=nextFailure;nextFailure='none';const delay=nextDelay;nextDelay=0;if(delay)await new Promise(resolve=>setTimeout(resolve,delay));if(failure==='forbidden')return error(403);if(failure==='unavailable')return error(503);if(failure==='network')throw new Error('Synthetic dropped read');}
-   if(dataset&&isRead){const fixture=qaReferenceRead(path,init.body?JSON.parse(String(init.body)):{},failure==='empty');if(fixture)return fixture;}
+   if(dataset&&isRead){const fixture=qaReferenceRead(path,init.body?JSON.parse(String(init.body)):{},failure==='empty',new Headers(init.headers).get('x-naijue-current-form-recommendation'));if(fixture)return fixture;}
    if(managementPaths.has(path)){management.setNextFailure(failure);return management.http.fetch(input,init);}
    const body=init.body?JSON.parse(String(init.body)):null;
    if(storeSettingsSyntheticPaths.has(path))return storeSettings.request(path,body,failure==='empty');

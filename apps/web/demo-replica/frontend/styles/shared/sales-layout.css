@@ -1,0 +1,79 @@
+/* Shared authoritative rule sequence. Keep import order in page entries. */
+#page .sale-workbench:is(.sale-list,.sale-editor){gap:10px;min-width:0}
+#page .sale-workbench:is(.sale-list,.sale-editor) .sale-head{position:static;z-index:auto;min-height:40px;padding:0;border:0;border-radius:0;background:transparent}
+#page .sale-workbench:is(.sale-list,.sale-editor) .sale-head h1{font-size:20px}
+#page .sale-editor .sale-title{gap:8px}
+#page .sale-workbench.sale-list .sale-head,#page .sale-workbench.sale-list .sale-quick-filters,#page .sale-workbench.sale-list .sale-filters,#page .sale-workbench.sale-list .sale-query-note,#page .sale-workbench.sale-list .sale-foot{flex:none}
+#page .sale-workbench.sale-list .sale-head .actions .btn.primary{height:32px;min-height:32px;padding:4px 12px;background:var(--ca-primary-fill);border-color:var(--ca-primary-fill);color:#fff;font-size:13px}
+#page .sale-workbench.sale-list .sale-quick-filters{display:flex;gap:4px;align-items:center;margin:0}
+#page .sale-workbench.sale-list .sale-quick-filters .btn{height:28px;min-height:28px;padding:3px 9px;border:0;background:transparent;color:var(--ca-ink-2);font-size:12px}
+#page .sale-workbench.sale-list .sale-quick-filters .btn:hover,#page .sale-workbench.sale-list .sale-quick-filters .btn[aria-pressed="true"]{background:var(--ca-primary-hover-soft);color:var(--ca-primary-ink)}
+#page .sale-workbench.sale-list .sale-filters{grid-template-columns:minmax(116px,.8fr) minmax(116px,.8fr) minmax(185px,1.35fr) minmax(108px,.75fr) minmax(124px,.85fr) minmax(128px,.95fr) minmax(116px,.85fr) auto auto auto;gap:8px;align-items:end}
+#page .sale-workbench.sale-list .sale-filters>label,#page .sale-workbench.sale-list .sale-filters label:has([data-filter="number"]){display:flex;min-width:0;max-width:none;width:auto;gap:4px}
+#page .sale-workbench.sale-list .sale-filters input,#page .sale-workbench.sale-list .sale-filters select,#page .sale-workbench.sale-list .sale-filters .entity-control{width:100%;max-width:none;height:32px;min-height:32px;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);color:var(--ca-ink);font-size:13px}
+#page .sale-workbench.sale-list .sale-filters>.btn{height:32px;min-height:32px;min-width:68px;padding:4px 10px;font-size:13px}
+#page .sale-workbench.sale-list .sale-more-filter{grid-column:auto;align-self:end;justify-self:start;min-height:32px;margin:0}
+#page .sale-workbench.sale-list .sale-more-filter>summary{display:flex;align-items:center;height:32px;padding:0 4px;color:var(--ca-ink-2);font-size:12px}
+#page .sale-workbench.sale-list .sale-more-filter>div{right:0;top:calc(100% + 4px);gap:10px;padding:10px;border-color:var(--ca-line);border-radius:5px;background:#fff;box-shadow:var(--ca-shadow-float)}
+#page .sale-workbench.sale-list .sale-list-scroll{border:1px solid var(--ca-line);border-radius:0}
+#page .sale-workbench.sale-list .sale-list-scroll table{width:100%;table-layout:fixed}
+#page .sale-workbench.sale-list .sale-list-scroll th,#page .sale-workbench.sale-list .sale-list-scroll td{box-sizing:border-box;overflow:hidden;padding:7px 9px;border-bottom:1px solid var(--ca-line);text-overflow:ellipsis;font-size:12px}
+#page .sale-workbench.sale-list .sale-list-scroll th{height:40px;background:var(--ca-table-head);color:var(--ca-ink-2);font-weight:600}
+#page .sale-workbench.sale-list .sale-list-scroll td{height:46px}
+#page .sale-workbench.sale-list .sale-list-scroll tbody tr:hover td{background:var(--ca-table-row-hover)}
+#page .sale-workbench.sale-list .sale-list-scroll td:nth-child(2) .sale-link{display:block;max-width:100%;overflow:hidden;padding-left:0;text-align:left;text-overflow:ellipsis;white-space:nowrap}
+#page .sale-workbench.sale-list .sale-list-scroll td:nth-child(11) .btn{min-height:24px;padding:2px 4px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:12px}
+#page .sale-workbench.sale-list .sale-list-scroll th:last-child.ui-action-cell{background:var(--ca-table-head)!important}
+#page .sale-workbench.sale-list .sale-list-scroll td:last-child.ui-action-cell{background:#fff!important}
+#page .sale-workbench.sale-list .sale-foot{min-height:40px;gap:12px;color:var(--ca-ink-2);font-size:12px}
+#page .sale-workbench.sale-list .sale-foot .btn{min-height:30px;padding:4px 9px;border:1px solid var(--ca-line-strong);background:#fff;font-size:12px}
+#page .sale-workbench.sale-list .sale-foot .btn:disabled{border-color:var(--ca-line-subtle);background:var(--ca-surface-muted);color:var(--ca-disabled-ink)}
+#page .sale-editor .sale-head .actions{gap:4px}
+#page .sale-editor .sale-head .actions>.btn,#page .sale-editor .sale-head .actions>.btn.primary,#page .sale-editor .sale-more>summary.btn{height:var(--ui-control);min-height:var(--ui-control);padding:3px 8px;border:0;border-radius:4px;background:transparent;color:var(--ca-ink-2);font-size:13px}
+#page .sale-editor .sale-head .actions>.btn.primary{color:var(--ca-primary-ink)}
+#page .sale-editor .sale-head .actions>.sale-delete-action{color:var(--ca-danger, #b42318)}
+#page .sale-editor .sale-head .actions>.btn:hover:not(:disabled),#page .sale-editor .sale-more>summary.btn:hover{background:var(--ca-primary-hover-soft);color:var(--ca-primary-ink)}
+#page .sale-editor .sale-head .actions>.btn:disabled{background:transparent}
+#page .sale-editor .sale-more>summary.btn{display:flex;align-items:center;list-style:none}
+#page .sale-editor .sale-more>summary.btn::-webkit-details-marker{display:none}
+#page .sale-editor>.sale-doc-header{align-items:start;border-radius:0}
+#page .sale-editor>.sale-doc-header>label:nth-of-type(8),#page .sale-editor>.sale-doc-header>.sale-discount-field,#page .sale-editor>.sale-doc-header>[data-funds-field],#page .sale-editor>.sale-doc-header>[data-funds-amount-field]{grid-column:auto!important}
+#page .sale-editor .sale-doc-header label>input,#page .sale-editor .sale-doc-header label>select,#page .sale-editor .sale-doc-header label>.entity-control,#page .sale-editor .sale-doc-header label>.sale-read-value,#page .sale-editor .sale-doc-header label>.ui-single-host{display:flex;align-items:center;padding:5px 9px;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);color:var(--ca-ink);line-height:20px}
+#page .sale-editor .sale-doc-header label>.sale-read-value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#page .sale-editor .sale-doc-header label>input:disabled{opacity:1}
+#page .sale-editor .sale-doc-header .sale-meta{grid-column:1/-1;padding:0 1px;color:var(--ca-ink-3);font-size:12px}
+#page .sale-editor .sale-section-head h2{font-size:14px}
+#page .sale-editor .sale-section-head .actions .btn{font-size:12px}
+#page .sale-editor .sale-lines-table th{height:40px}
+#page .sale-editor .sale-lines-table td{height:42px}
+#page .sale-editor .sale-lines-table tbody tr:hover td{background:var(--ca-table-row-hover)}
+#page .sale-editor .sale-lines-table th:nth-child(1){width:240px}
+#page .sale-editor .sale-lines-table th:nth-child(2){width:98px}
+#page .sale-editor .sale-lines-table th:nth-child(3){width:96px}
+#page .sale-editor .sale-lines-table th:nth-child(4){width:126px}
+#page .sale-editor .sale-lines-table th:nth-child(5){width:112px}
+#page .sale-editor .sale-lines-table th:nth-child(6){width:94px}
+#page .sale-editor .sale-lines-table th:nth-child(7){width:118px}
+#page .sale-editor .sale-lines-table th:nth-child(8){width:105px}
+#page .sale-editor .sale-lines-table th:nth-child(9){width:126px}
+#page .sale-editor .sale-lines-table td:first-child{width:240px;min-width:240px;max-width:240px}
+#page .sale-editor .sale-lines-table td input,#page .sale-editor .sale-lines-table td select{box-sizing:border-box;max-width:100%;height:28px;min-height:28px;font-size:12px}
+#page .sale-editor .sale-lines-table td [data-line-qty]{width:58px}
+#page .sale-editor .sale-lines-table .sale-product-cell{gap:5px}
+#page .sale-editor .sale-lines-table .sale-product-cell strong{overflow:hidden;max-width:52%;text-overflow:ellipsis}
+#page .sale-editor .sale-lines-table td:last-child,#page .sale-editor .sale-lines-table th:last-child{white-space:nowrap}
+#page .sale-editor .sale-lines-table th:last-child.ui-action-cell{background:var(--ca-table-head)!important}
+#page .sale-editor .sale-lines-table .sale-row-actions .btn{border:0;background:transparent;color:var(--ca-primary-ink);font-size:12px}
+#page .sale-editor .sale-lines-table .sale-row-actions .btn[data-sale="remove"]{color:var(--ca-ink-2)}
+#page .sale-editor .sale-summary{margin-top:0}
+#page .sale-editor .sale-summary>.sale-core-metrics{gap:24px}
+#page .sale-editor .sale-core-metric>span{font-size:13px}
+#page .sale-editor .sale-core-metric>strong{font-size:19px}
+#page .sale-editor .sale-summary-secondary,#page .sale-editor .sale-category-summary{font-size:12px}
+#page .sale-editor .sale-bottom-note{padding:0 0 8px}
+@media (max-width:1780px){#page .sale-workbench.sale-list .sale-filters{grid-template-columns:repeat(2,minmax(115px,.85fr)) minmax(170px,1.2fr) repeat(4,minmax(110px,1fr))}#page .sale-workbench.sale-list .sale-filters>.btn,#page .sale-workbench.sale-list .sale-more-filter{grid-row:2;justify-self:end}#page .sale-workbench.sale-list .sale-filters>.btn.primary{grid-column:6}#page .sale-workbench.sale-list .sale-filters>.btn:not(.primary){grid-column:7}#page .sale-workbench.sale-list .sale-more-filter{grid-column:5}}
+@media (max-width:1250px){#page .sale-editor>.sale-doc-header{grid-template-columns:repeat(3,minmax(0,1fr))!important}#page .sale-editor .sale-lines{max-height:460px}}
+@media (max-width:1180px){#page .sale-workbench.sale-list .sale-filters{grid-template-columns:repeat(2,minmax(0,1fr))}#page .sale-workbench.sale-list .sale-filters>.btn,#page .sale-workbench.sale-list .sale-more-filter{grid-row:auto;grid-column:auto}}
+@media (max-width:1050px){#page .sale-editor>.sale-doc-header{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media (max-width:650px){#page .sale-workbench.sale-list{height:auto;min-height:calc(100dvh - var(--ui-topbar))}#page .sale-workbench.sale-list .sale-list-scroll{min-height:300px;max-height:55dvh}#page .sale-editor>.sale-doc-header{grid-template-columns:minmax(0,1fr)!important}#page .sale-editor .sale-head .actions{flex-wrap:wrap}}
+

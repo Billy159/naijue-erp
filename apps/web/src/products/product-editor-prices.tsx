@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { CATALOGUE_PRICE_KEYS } from '../../../../packages/application/src/catalogue-price-input.ts';
 import type { ProductWriteValues } from './product-editor-contracts.ts';
-export interface ProductEditorPriceProps { readonly values:ProductWriteValues; readonly disabled:boolean; readonly change:(patch:Partial<ProductWriteValues>)=>void; readonly setError:(message:string)=>void }
+export interface ProductEditorPriceProps { readonly values:Pick<ProductWriteValues,'prices'>; readonly disabled:boolean; readonly change:(patch:Partial<Pick<ProductWriteValues,'prices'>>)=>void; readonly setError:(message:string)=>void }
 /** Direct JSX transport of frozen product-current.js priceBody, with the exact
  * product-master.js priceFields labels/order mapped to the formal price keys.
  * State, command validation and paste ownership stay in the existing adapter. */
@@ -11,7 +11,8 @@ export function ProductPriceSourceBody(props:{readonly value:(key:typeof CATALOG
 }
 export function ProductEditorPrices(p:ProductEditorPriceProps) {const disabled=p.disabled;return <ProductPriceSourceBody value={(key,label,index)=><input data-price-field type="text" inputMode="decimal" placeholder="未设置" aria-label={label} value={p.values.prices[key]??''} disabled={disabled} onChange={event=>{const text=event.currentTarget.value;p.change({prices:{...p.values.prices,[key]:text===''?null:text}});}} onPaste={event=>{
     const raw=event.clipboardData.getData('text/plain');if(disabled||!/[\t\r\n]/.test(raw))return;event.preventDefault();const cells=raw.replace(/\r\n?/g,'\n').replace(/\n$/,'').split(/[\t\n]/).map(text=>text.trim());const keys=CATALOGUE_PRICE_KEYS.slice(index);
-    if(cells.length>keys.length||cells.some(text=>text!==''&&!/^(?:0|[1-9]\d{0,15})(?:\.\d{1,2})?$/.test(text))){p.setError('价格必须是非负金额，最多两位小数；空白表示未设置。');return;}
+    if(cells.length>keys.length){p.setError('价格最多可粘贴 '+keys.length+' 项');return;}
+    if(cells.some(text=>text!==''&&!/^(?:0|[1-9]\d{0,15})(?:\.\d{1,2})?$/.test(text))){p.setError('价格必须是非负金额，最多两位小数；空白表示未设置。');return;}
     const prices={...p.values.prices};cells.forEach((text,i)=>{prices[keys[i]!]=text===''?null:text;});p.change({prices});p.setError('');
  }}/>} />;
 }

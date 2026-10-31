@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../adapters/postgres/src/inventory-posting-balances.ts",
+    "../packages/application/src/inventory-ledger-balance-transition.ts",
+    "../packages/application/src/inventory-ledger-query-contracts.ts",
+    "../packages/application/src/inventory-ledger-query-validation.ts",
+    "./new-live-ledger-offline-contract.test.ts"
+  ]
+}

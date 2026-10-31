@@ -3,7 +3,7 @@ import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import type { InventoryLedgerQueryDependencies } from "../../../packages/application/src/inventory-ledger-query-contracts.ts";
 import { createInventoryLedgerQueryService } from "../../../packages/application/src/inventory-ledger-query-service.ts";
 import { checkedInventoryActor } from "../../../packages/application/src/inventory-query-service.ts";
-import { invalidInventoryLedgerQuery } from "../../../packages/application/src/inventory-ledger-query-validation.ts";
+import { invalidInventoryLedgerQuery, parseInventoryLedgerQuery } from "../../../packages/application/src/inventory-ledger-query-validation.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import type { InventoryAuthenticationInput } from "./inventory-http.ts";
 
@@ -33,9 +33,11 @@ export function createInventoryLedgerQueryHttpPlugin(options: InventoryLedgerQue
     app.addHook("onResponse", async request => { reads.get(request)?.cleanup(); reads.delete(request); actors.delete(request); });
     app.setErrorHandler((error, _request, reply) => {
       if (error instanceof DomainError) {
-        const statuses: Readonly<Record<string, number>> = { INVALID_INVENTORY_LEDGER_QUERY: 400, FORBIDDEN: 403, SKU_NOT_FOUND: 404, INVENTORY_NOT_READY: 503, INVENTORY_READ_ABORTED: 408 };
+        const statuses: Readonly<Record<string, number>> = { INVALID_INVENTORY_LEDGER_QUERY: 400, FORBIDDEN: 403, SKU_NOT_FOUND: 404, INVENTORY_NOT_READY: 503, INVENTORY_READ_ABORTED: 408,
+          INVENTORY_LEDGER_CONTRACT_UPGRADE_REQUIRED: 409 };
         const status = Object.hasOwn(statuses, error.code) ? statuses[error.code] : undefined;
-        if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied" : "Inventory ledger read rejected" } });
+        if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied"
+          : status === 409 ? "Reload the application to read this ledger page" : "Inventory ledger read rejected" } });
       }
       const code = (error as { code?: string }).code;
       if (code === "FST_ERR_CTP_BODY_TOO_LARGE") return reply.code(413).send({ error: { code: "BODY_TOO_LARGE", message: "Request body is too large" } });
@@ -47,7 +49,23 @@ export function createInventoryLedgerQueryHttpPlugin(options: InventoryLedgerQue
       if (!request.query || typeof request.query !== "object" || Array.isArray(request.query) || Object.keys(request.query).length) invalidInventoryLedgerQuery();
       if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
       const actor = actors.get(request); const state = reads.get(request); if (!actor || !state) throw new Error("Missing trusted inventory ledger request context");
-      const snapshot = await service.readLedger(actor, request.body, state.controller.signal);
+      // Authentication has already run. This header negotiates representation,
+      // never actor/scope, and never authorizes any additional business read.
+      const header = "x-naijue-ledger-transition", contract = request.headers[header];
+      let occurrences = 0;
+      for (let i = 0; i < request.raw.rawHeaders.length; i += 2) if (request.raw.rawHeaders[i]?.toLowerCase() === header) occurrences++;
+      if (occurrences > 1 || (contract !== undefined && contract !== "recorded-v1")) invalidInventoryLedgerQuery();
+      const parameters = parseInventoryLedgerQuery(request.body), numbered = parameters.page !== undefined;
+      if (contract !== undefined && !numbered) invalidInventoryLedgerQuery();
+      if (numbered) {
+        const prior = reply.getHeader("Vary"), value = Array.isArray(prior) ? prior.join(", ") : prior === undefined ? "" : String(prior);
+        if (!value.split(",").some(item => item.trim() === "*" || item.trim().toLowerCase() === header))
+          reply.header("Vary", value ? `${value}, X-Naijue-Ledger-Transition` : "X-Naijue-Ledger-Transition");
+      }
+      const snapshot = await service.readLedger(actor, parameters, state.controller.signal);
+      if (contract === undefined && numbered && snapshot.data.entries.some(entry => entry.display?.balanceTransition.state === "KNOWN"))
+        throw new DomainError("INVENTORY_LEDGER_CONTRACT_UPGRADE_REQUIRED", "An explicit recorded-transition contract is required");
+      if (contract === "recorded-v1") reply.header("X-Naijue-Ledger-Transition", "recorded-v1");
       return reply.header("X-Inventory-Read-Reference", snapshot.readReference).header("X-Inventory-Readiness", snapshot.readiness).send(snapshot.data);
     });
   };

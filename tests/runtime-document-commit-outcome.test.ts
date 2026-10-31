@@ -194,7 +194,7 @@ test('runtime26 posting: foreign client proof and closed transaction reject befo
 
 import { syntheticDraft, syntheticSku, ids, sid } from './support/synthetic-fixtures.ts';
 import { CATALOGUE_PRICE_KEYS } from '../packages/application/src/catalogue-price-input.ts';
-function h06UowProtocol(failCommit = false) {
+function h06UowProtocol(failCommit = false, association: 'valid' | 'missing' | 'changed' = 'valid') {
   const calls: string[] = [], released: unknown[] = []; let connections = 0, oldProof = 0;
   const sku = syntheticSku(), draft = { ...syntheticDraft(), settlements: [] }, failure = Error('H06_SYNTHETIC_COMMIT_UNKNOWN');
   const client: PgSalesClient = { async query(sql, values = []) {
@@ -206,7 +206,8 @@ function h06UowProtocol(failCommit = false) {
     else if (sql.includes('native-sales-facts:schema')) rows = [{ installed: true }];
     else if (sql.includes('native-sales-facts:warehouse')) rows = [{ id: ids.warehouse, hall_id: ids.hall, enabled: true }];
     else if (sql.includes('native-sales-facts:customer')) rows = [{ id: ids.customer, enabled: true }];
-    else if (sql.includes('native-sales-facts:sku */')) rows = [{ id: sku.id, product_id: sku.productId, color_id: sku.colorId, fit_id: sku.fitId, size_id: sku.sizeId, enabled: true }];
+    else if (sql.startsWith('/* native-sales-facts:sku-products */')) {assert.deepEqual(values,[[sku.id]]);assert.match(sql,/WHERE id = ANY\(\$1::uuid\[\]\) ORDER BY id$/);rows=association==='missing'?[]:[{id:sku.id,product_id:sku.productId}];}
+    else if (sql.includes('native-sales-facts:sku */')) rows = [{ id: sku.id, product_id: association==='changed'?sid('product',998):sku.productId, color_id: sku.colorId, fit_id: sku.fitId, size_id: sku.sizeId, enabled: true }];
     else if (sql.includes('native-sales-facts:product */')) rows = [{ id: sku.productId, product_code: 'SYNTHETIC', name: 'SYNTHETIC', size_group_id: sid('sizeGroup', 50), enabled: true, ...Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === 'retail_price' ? '1.25' : null])) }];
     else if (sql.includes('native-sales-facts:color */')) rows = [{ id: sku.colorId, name: 'SYNTHETIC', enabled: true }];
     else if (sql.includes('native-sales-facts:fit */')) rows = [{ id: sku.fitId, name: 'SYNTHETIC', enabled: true }];
@@ -229,6 +230,15 @@ test('H06 UOW private selector is closed, exact26-only, own data and never enabl
   const uow = new PostgresSalesUnitOfWork(p.pool, base);
   await uow.transaction(async tx => { await tx.getReceipt(ids.account, 'SYNTHETIC-H06'); await tx.getSales(ids.sales); await tx.getCurrentSalesReferenceFacts!(p.draft); });
   assert.equal(p.oldProof(), 1); assert.ok(!p.calls.some(s => s.includes('maintained-catalogue26:'))); assert.equal(p.calls.at(-1), 'COMMIT');
+  const discovery=p.calls.findIndex(sql=>sql.startsWith('/* native-sales-facts:sku-products */')),product=p.calls.findIndex(sql=>sql.startsWith('/* native-sales-facts:product */')),sku=p.calls.findIndex(sql=>sql.startsWith('/* native-sales-facts:sku */'));
+  assert.ok(discovery>=0&&product>discovery&&sku>product,'Discover associations, lock all products, then lock/revalidate SKUs');
+});
+test('H06 native-facts missing or changed associations cannot reach either catalogue verifier or business writes',async()=>{
+ for(const association of ['missing','changed'] as const){
+  const p=h06UowProtocol(false,association),uow=new PostgresSalesUnitOfWork(p.pool,{catalogueCompleteness:p.catalogueCompleteness,runtime26:p.runtime26});
+  await assert.rejects(uow.transaction(async tx=>{await tx.getReceipt(ids.account,'SYNTHETIC-H06-ASSOCIATION');await tx.getSales(ids.sales);await tx.getCurrentSalesReferenceFacts!(p.draft);}),{code:'SALES_REFERENCE_UNAVAILABLE'});
+  assert.equal(p.oldProof(),0);assert.ok(!p.calls.some(sql=>sql.includes('maintained-catalogue26:')||/^(?:INSERT|UPDATE|DELETE)/.test(sql)));assert.equal(p.calls.at(-1),'ROLLBACK');assert.ok(!p.calls.includes('COMMIT'));assert.equal(p.connections(),1);assert.deepEqual(p.released,[undefined]);
+ }
 });
 test('H06 UOW bound native-facts path consumes private proof, fails closed and rolls back without old-proof fallback', async () => {
   const p = h06UowProtocol(), uow = new PostgresSalesUnitOfWork(p.pool, { catalogueCompleteness: p.catalogueCompleteness, runtime26: p.runtime26, catalogueReadProof: { profile: 'MAINTAINED_CATALOGUE26_V1' } });

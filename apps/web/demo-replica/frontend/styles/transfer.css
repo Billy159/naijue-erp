@@ -1,0 +1,24 @@
+/* Authoritative page composition; shared rules have one source. Bundled at build time. */
+@import "./shared/product-toolbar.css";
+@import "./pages/transfer-1.css";
+@import "./shared/product-dialog.css";
+@import "./shared/inventory-controls.css";
+@import "./shared/transfer-workbench.css";
+@import "./shared/product-finder.css";
+@import "./shared/matrix.css";
+@import "./shared/entity-picker.css";
+@import "./shared/settings-account.css";
+@import "./shared/inventory-query.css";
+@import "./shared/surface-controls.css";
+@import "./shared/transfer-scanner.css";
+@import "./shared/confirmations.css";
+@import "./shared/catalogue-layout.css";
+@import "./pages/transfer-2.css";
+@import "./shared/catalogue-search.css";
+@import "./pages/transfer-3.css";
+@import "./shared/catalogue-tables.css";
+@import "./pages/transfer-4.css";
+@import "./shared/approved-header-navigation.css";
+
+/* Same readonly product drawer used by inventory; document sheet remains active. */
+@import "./shared/product-detail.css";

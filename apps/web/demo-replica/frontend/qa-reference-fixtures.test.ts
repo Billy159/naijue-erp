@@ -13,6 +13,7 @@ import {SalesProposalSession} from '../../src/current-form/sales-proposal.ts';
 import {ReadContext} from '../../src/loading/read-scope.ts';
 import {createOrganizationMaintenanceReadClient} from '../../src/settings/stores/maintenance-http-client.ts';
 import {checkedProductManagementResponse,checkedProductManagementCandidates} from '../../src/products/query-controller.ts';
+import {salesDocumentOutput,transferDocumentOutput} from '../../src/components/document-output-contracts.ts';
 import {entityId} from '../../../../packages/domain/src/values.ts';
 const signal=()=>new AbortController().signal;
 const fixture=createReplicaPreviewTransport(),http=fixture.http;
@@ -88,10 +89,11 @@ test('populated QA document lists have second pages, all statuses, coherent mult
     const d=historyDetailResponse(await post('/imported-history/'+kind+'/detail/query',q),target,q as never);assert.equal(d.document?.sourceStatus,row.status);assert.equal(d.lines.items.length,3);assert.equal(d.document?.createdBy.state,'UNKNOWN');
    }else if(kind==='sales'){
     const q={salesId:entityId('sales',row.id)},d=salesDetailResponse(await post('/sales/detail/query',q),q);assert.equal(d.document.header.status,row.status);assert.equal(d.document.lines.length,3);
+    const printed=salesDocumentOutput(d);assert.equal(printed.printSections![0]!.columns.length,5);assert.equal(printed.printSections!.at(-1)!.columns.length,4);assert.ok(printed.sections[0]!.columns.includes('SKU 编号'));assert.equal(printed.sections.slice(0,-1).flatMap(s=>s.rows).map(r=>r[7]).join(','),d.document.lines.map(l=>l.quantity).join(','),'export keeps original signed quantities');
     assert.equal(d.document.lines.reduce((sum,l)=>sum+BigInt(l.lineAmount),0n).toString(),row.netDue);
     assert.equal(d.document.settlements.reduce((sum,s)=>sum+(s.direction==='REFUND'?-1n:1n)*BigInt(s.amount),0n).toString(),row.netDue);
    }else{
-    const q={transferId:entityId('transfer',row.id)},d=transferDetailResponse(await post('/transfers/detail/query',q),q);assert.equal(d.document.header.status,row.status);assert.equal(d.document.lines.reduce((sum,l)=>sum+BigInt(l.quantity),0n).toString(),row.totalQuantity);
+    const q={transferId:entityId('transfer',row.id)},d=transferDetailResponse(await post('/transfers/detail/query',q),q);assert.equal(d.document.header.status,row.status);assert.equal(d.document.lines.reduce((sum,l)=>sum+BigInt(l.quantity),0n).toString(),row.totalQuantity);const printed=transferDocumentOutput(d);assert.deepEqual(printed.printSections![0]!.columns.slice(0,2),['商品名称','款号']);assert.equal(printed.sections[0]!.columns[2],'款号','raw export order unchanged');
    }
   }
  }
@@ -103,3 +105,40 @@ test('empty documents remain an independent fixture scenario and unsupported edi
  const response=await http.fetch(http.origin+'/api/sales/prepare-existing',{method:'POST',credentials:'same-origin',body:'{}'});assert.equal(response.status,501,'fixtures do not implement a new SAVE/edit engine');
  const q={filter,page:1,pageSize:20},normal=await post('/sales/query',q);assert.equal(normal.exactTotal,'30','empty scenario cannot clear the populated preview');
 });
+
+test('list warehouse fixture uses exact list DTO, selected IDs and hall search without weakening production validation',async()=>{
+ const {transferWarehousesResponse}=await import('../../src/transfers/response-validation.ts');
+ for(const selectedIds of [[],[entityId('warehouse',qaWarehouses[1]!.id)]]){
+  const parameters={selectedIds,search:'',page:1,pageSize:20 as const};
+  const result=transferWarehousesResponse(await post('/transfers/warehouses/query',parameters),parameters);
+  assert.equal(result.items.length,selectedIds.length||qaWarehouses.length);
+  assert.ok(result.items.every(row=>!('hasNonzeroInventory'in row)));
+ }
+ const parameters={selectedIds:[],search:qaWarehouses[0]!.hall.name,page:1,pageSize:20 as const};
+ assert.equal(transferWarehousesResponse(await post('/transfers/warehouses/query',parameters),parameters).items.length,qaWarehouses.length);
+ assert.equal(qaSchemes.filter(row=>row.status==='CURRENT').length,1);assert.equal(qaSchemes.find(row=>row.status==='CURRENT')?.key,'2026');
+ const seasons=await post('/dictionary-read/seasons/query',{search:'',page:1,pageSize:100});assert.deepEqual(seasons.items.map((row:{name:string})=>row.name),['春季','夏季','秋季','冬季']);assert.ok(qaProducts.every(product=>seasons.items.some((row:{id:string})=>row.id===product.seasonId)));
+});
+
+ test('maintenance candidate preview uses the existing finite graph and actual v2 reader, never fabricated edit versions',async()=>{
+ const {createProductMaintenanceHttpReaderV2}=await import('../../src/products/product-maintenance-http-client.ts');const reader=createProductMaintenanceHttpReaderV2(http),context=new ReadContext({accountId:qaPrincipal.accountId,sessionRevision:'candidate',permissionRevision:'candidate'}),scope=context.createScope('maintenance');
+ for(const kind of ['categories','suppliers','seasons','size-groups','colors','fits','barcode-schemes','years','thicknesses'] as const){
+  const result=await reader.readCandidates({parameters:{kind,search:'',page:1,pageSize:100},signal:scope.signal,identity:scope.identity,routeInstanceId:scope.routeInstanceId,entityId:null});assert.equal(result.kind,kind);if(['thicknesses','collar-pants-types'].includes(kind))assert.equal(result.total,0,'declared QA products have null attributes');else assert.ok(result.total>0);if(kind==='categories')assert.ok(result.items.every(item=>item.version===null),'unknown maintenance versions are not invented');
+ }await assert.rejects(reader.readCandidates({parameters:{kind:'collar-pants-types',search:'',page:1,pageSize:100},signal:scope.signal,identity:scope.identity,routeInstanceId:scope.routeInstanceId,entityId:null}),(error:unknown)=>(error as {kind?:string}).kind==='not-implemented');scope.dispose();
+ });
+
+test('maintenance preview registration is exact POST-only and preserves authentication, cancellation and unknown-path rejection',async()=>{
+ const {createSyntheticProductPreviewTransport}=await import('./runtime/products/synthetic-preview-transport.ts');let calls=0;
+ const adapter=createSyntheticProductPreviewTransport({dataset:QA_REFERENCE_PROFILE,origin:http.origin,snapshotVersion:1,existingFetch:async()=>{calls++;return Response.json({error:{code:'UNAUTHENTICATED'}},{status:401});}});
+ const path='/products/maintenance/candidates/query';assert.equal(adapter.canHandle(path,'POST'),true);assert.equal(adapter.canHandle(path,'GET'),false);assert.equal(adapter.canHandle('/products/maintenance/commands','POST'),false);
+ const init={method:'POST',body:JSON.stringify({kind:'categories',search:'',page:1,pageSize:20})};
+ assert.equal((await adapter.request(http.origin+'/api'+path,init)).status,401);assert.equal(calls,1);
+ assert.equal((await adapter.request(http.origin+'/api/products/maintenance/commands',init)).status,501);assert.equal(calls,1,'unknown/writes must not reach provider');
+ const stop=new AbortController();stop.abort();await assert.rejects(adapter.request(http.origin+'/api'+path,{...init,signal:stop.signal}),{name:'AbortError'});assert.equal(calls,1);
+});
+test('declared current product categories survive the synthetic read projection',async()=>{
+ const reader=createCurrentFormHttpReader(http),page=await reader.readProducts({context:{kind:'TRANSFER'},search:'',page:1,pageSize:20},signal());
+ for(const row of page.items){const declared=qaProducts.find(p=>p.id===row.id)!;assert.deepEqual(row.category,{id:declared.categoryId,label:declared.categoryLabel});}
+});
+
+ test('current barcode QA metadata matches exact approved public scheme;2020 does not invent old widths',async()=>{const {nativeBarcodeSchemeInitializationRows26}=await import('../../../../packages/application/src/native-barcode-import.ts');const approved=nativeBarcodeSchemeInitializationRows26();const current=qaSchemes.find(s=>s.key==='2026')!,native=approved.find(s=>s.sourceSchemeKey==='2026')!.native;assert.equal(current.id,native.id);assert.equal(current.name,native.name);assert.equal(current.barcodeType,native.barcode_type);assert.equal(current.ruleVersion,native.rule_version);assert.equal(current.ruleDescription,native.rule_description);assert.equal(qaSchemes.find(s=>s.key==='2020')!.ruleDescription,approved.find(s=>s.sourceSchemeKey==='2020')!.native.rule_description);});

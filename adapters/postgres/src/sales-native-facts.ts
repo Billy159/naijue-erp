@@ -111,9 +111,23 @@ export class PostgresNativeSalesFacts {
     const methodIds = unique([...accountRows.values()].map(row => id("paymentMethod", row.payment_method_id)));
     const methods = await this.targets("paymentMethod", methodIds, "id, enabled", "payment_method");
     const skuIds = unique(current.map(row => row.skuId));
-    const skuRows = await this.targets("sku", skuIds, "id, product_id, color_id, fit_id, size_id, enabled", "sku");
-    const productIds = unique([...skuRows.values()].map(row => id("product", row.product_id)));
+    // Discover only associations without row locks, then match maintenance's
+    // global catalogue order: every product (stable ID), then every SKU.
+    // The unlocked discovery is not a fact: revalidate it under both locks.
+    const discoveredRows: Record<string, unknown>[] = [];
+    for (let start = 0; start < skuIds.length; start += SALES_NATIVE_FACT_QUERY_BATCH_SIZE) {
+      const batch = skuIds.slice(start, start + SALES_NATIVE_FACT_QUERY_BATCH_SIZE);
+      const result = await this.query(`/* native-sales-facts:sku-products */ SELECT id, product_id FROM naijue_erp.sku
+        WHERE id = ANY($1::uuid[]) ORDER BY id`, [[...batch]]);
+      requireDomain(result.rows.length <= batch.length, "INVALID_DATABASE_VALUE", "Native association query exceeded its target batch");
+      discoveredRows.push(...result.rows);
+    }
+    const discovered = exactMap("sku", discoveredRows, skuIds);
+    const productIds = unique([...discovered.values()].map(row => id("product", row.product_id)));
     const products = await this.targets("product", productIds, `id, product_code, name, size_group_id, enabled, ${PRICE_COLUMNS}`, "product");
+    const skuRows = await this.targets("sku", skuIds, "id, product_id, color_id, fit_id, size_id, enabled", "sku");
+    for (const [skuId, row] of skuRows) requireDomain(row.product_id === discovered.get(skuId)!.product_id,
+      "SALES_REFERENCE_UNAVAILABLE", "Native SKU association changed while obtaining catalogue locks");
     const colorIds = unique([...skuRows.values()].map(row => id("color", row.color_id)));
     const fitIds = unique([...skuRows.values()].map(row => id("fit", row.fit_id)));
     const sizeIds = unique([...skuRows.values()].map(row => id("size", row.size_id)));

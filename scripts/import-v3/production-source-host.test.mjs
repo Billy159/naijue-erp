@@ -12,7 +12,10 @@ const history135HostProfiles=[
  ['h135-v2-no-prefix','26_hv2_history_set_guards_source_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V2'],
  ['h135-v3-no-prefix','26_hv2_history_set_guards_maintenance_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V3'],
  ['h135-v4-no-prefix','26_hv2_history_set_guards_preparation_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V4'],
+ ['h135-v5-no-prefix','26_hv2_history_set_guards_complete_maintenance_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V5'],
+ ['h135-v6-no-prefix','26_hv2_history_set_guards_complete_write_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V6'],
 ];
+const live137HostProfile=['live137-v7-no-prefix','26_hv2_live_ledger_pairs_complete_write_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V7'];
 const id = n => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
 const sha = c => c.repeat(64);
 function job(at = Date.now()) {
@@ -194,7 +197,7 @@ test('executableHost26 captures concrete preflight and all11 source sessions plu
  let gets=0;const getter=session26Fixture();Object.defineProperty(getter,'preflight',{enumerable:true,get(){gets++;return async()=>{};}});assert.throws(()=>captureNativeSourceSession26(getter,job26().binding));assert.equal(gets,0);
 });
 async function negativeHost26Fixture(t,mode){
- const historyProfile=history135HostProfiles.find(([key])=>key===mode),fullContinuation=['adopted-denied','v22-no-prefix','xmin-no-prefix'].includes(mode)||historyProfile!==undefined;
+ const historyProfile=[...history135HostProfiles,live137HostProfile].find(([key])=>key===mode),fullContinuation=['adopted-denied','v22-no-prefix','xmin-no-prefix'].includes(mode)||historyProfile!==undefined;
  const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-executable-host26-'));t.after(()=>rm(dir,{recursive:true,force:true}));const j=executableJob26(),save=async(name,value)=>{const bytes=Buffer.from(typeof value==='string'?value:JSON.stringify(value)),path=join(dir,name);await writeFile(path,bytes);return {path,sha:createHash('sha256').update(bytes).digest('hex')};};
  const native=await save('native.json',{schemaVersion:2,validatorVersion:'NATIVE_PRODUCT_REFERENCE_DECISIONS_V2_EXACT26',schemaProfile:'EXACT26',batchId:j.binding.batchId,fixedSourceNamespace:j.binding.fixedSourceNamespace,selection:{entity:'PRODUCT',selectionSha256:j.binding.selectionSha256},mappingFiles:[],decisions:[{synthetic:true}]});j.sources.referenceDecisionFile=native.path;j.sources.trustedReferenceDecisionSha256=native.sha;
  const productReview=await save('native-ref-review.json',{});j.sources.reviewFile=productReview.path;j.sources.trustedReviewSha256=productReview.sha;
@@ -393,12 +396,12 @@ test('PF02 xmin profile cannot activate the target without original independentl
 });
 
 
-test('H135 host accepts only issuer exact V1 V2 V3 V4 formats with full continuation and original prefix',()=>{
+test('H135 host accepts only issuer exact V1 V2 V3 V4 V5 V6 formats with full continuation and original prefix',()=>{
  const {base,b,m}=v20FullRuntimeFixture(),prefix={async capture(){throw Error('METADATA_MUST_NOT_CAPTURE');}};
  for(const [,patchLevel,format] of history135HostProfiles){
   const review={...m,catalog:{...m.catalog,patchLevel,format}};
   assert.equal(validateSourceHostRuntimeReview26(review,b,prefix),undefined);
-  for(const wrongFormat of ['EXACT26_RUNTIME_CATALOG_EXPORT_V1','EXACT26_RUNTIME_CATALOG_EXPORT_V2','EXACT26_RUNTIME_CATALOG_EXPORT_V3','EXACT26_RUNTIME_CATALOG_EXPORT_V4'].filter(x=>x!==format))
+  for(const wrongFormat of ['EXACT26_RUNTIME_CATALOG_EXPORT_V1','EXACT26_RUNTIME_CATALOG_EXPORT_V2','EXACT26_RUNTIME_CATALOG_EXPORT_V3','EXACT26_RUNTIME_CATALOG_EXPORT_V4','EXACT26_RUNTIME_CATALOG_EXPORT_V5','EXACT26_RUNTIME_CATALOG_EXPORT_V6'].filter(x=>x!==format))
    assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,format:wrongFormat}},b,prefix),/RUNTIME_REVIEW/);
   for(const absent of [undefined,true,{capture:true},{capture:async()=>{},verified:true}])
    assert.throws(()=>validateSourceHostRuntimeReview26(review,b,absent),/PREFIX_REQUIRED/);
@@ -431,5 +434,68 @@ test('H135 original issuer retains finite reviewed purposes behind the source ho
    {reviewFile:review.path,trustedReviewSha256:review.sha});
   await assert.rejects(gate.activate(),{code:'NATIVE_RUNTIME26_NOT_READY'});await gate.close();
   assert.equal(borrowed,0);assert.equal(ended,1);
+ }
+});
+
+/** LIVE layer5b SOURCE-HOST synthetic metadata/negative source sessions only.
+ * No actual catalog, approval, PostgreSQL, DDL, grants, credentials or release. */
+test('LIVE layer5b SOURCE-HOST RED exact V7 is metadata-only FULL continuation plus original prefix, without invoking capture',()=>{
+ const {b,m}=v20FullRuntimeFixture();let captures=0;
+ const prefix={async capture(){captures++;throw Error('METADATA_MUST_NOT_CAPTURE');}};
+ const review={...m,catalog:{...m.catalog,patchLevel:live137HostProfile[1],format:live137HostProfile[2]}};
+ assert.equal(validateSourceHostRuntimeReview26(review,b,prefix),undefined);assert.equal(captures,0);
+});
+test('LIVE layer5b SOURCE-HOST RED V7 never borrows V1-V6 formats and V7 format never lends itself to old or unknown profiles',()=>{
+ const {b,m}=v20FullRuntimeFixture(),prefix={async capture(){throw Error('METADATA_MUST_NOT_CAPTURE');}};
+ const review={...m,catalog:{...m.catalog,patchLevel:live137HostProfile[1],format:live137HostProfile[2]}};
+ for(const format of ['EXACT26_RUNTIME_CATALOG_EXPORT_V1','EXACT26_RUNTIME_CATALOG_EXPORT_V2','EXACT26_RUNTIME_CATALOG_EXPORT_V3','EXACT26_RUNTIME_CATALOG_EXPORT_V4','EXACT26_RUNTIME_CATALOG_EXPORT_V5','EXACT26_RUNTIME_CATALOG_EXPORT_V6','EXACT26_RUNTIME_CATALOG_EXPORT_V8'])
+  assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,format}},b,prefix),/RUNTIME_REVIEW/);
+ for(const [,patchLevel]of history135HostProfiles)
+  assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,patchLevel}},b,prefix),/RUNTIME_REVIEW/);
+ for(const patchLevel of [live137HostProfile[1]+'_future',live137HostProfile[1].toUpperCase(),'26_hv2_live_ledger_pairs_complete_write_xmin_from_v23'])
+  assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,patchLevel}},b,prefix),/RUNTIME_REVIEW/);
+});
+test('LIVE layer5b SOURCE-HOST RED V7 retains closed prefix, FULL binding, exact target and metadata-not-execution restrictions',()=>{
+ const {base,b,m}=v20FullRuntimeFixture(),prefix={async capture(){throw Error('METADATA_MUST_NOT_CAPTURE');}};
+ const review={...m,catalog:{...m.catalog,patchLevel:live137HostProfile[1],format:live137HostProfile[2]}};
+ for(const absent of [undefined,true,{capture:true},{capture:async()=>{},verified:true}])
+  assert.throws(()=>validateSourceHostRuntimeReview26(review,b,absent),/PREFIX_REQUIRED/);
+ for(const wrongBinding of [base,job26().binding])assert.throws(()=>validateSourceHostRuntimeReview26(review,wrongBinding,prefix),/RUNTIME_REVIEW/);
+ for(const change of [{database:'different'},{actingRole:'different'},{serverAddress:'127.0.0.2'},{serverPort:1234},{postmasterStart:'different'}])
+  assert.throws(()=>validateSourceHostRuntimeReview26({...review,target:{...review.target,...change}},b,prefix),/RUNTIME_TARGET/);
+ for(const change of [{realImportExecutionAuthorized:true},{scope:'EXECUTION'},{decision:'PASS'},{extra:true}])
+  assert.throws(()=>validateSourceHostRuntimeReview26({...review,...change},b,prefix),/RUNTIME_REVIEW/);
+ assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,extra:true}},b,prefix),/RUNTIME_REVIEW/);
+});
+test('LIVE layer5b SOURCE-HOST hold null or unresolved actual V7 catalog never becomes accepted metadata',()=>{
+ const {b,m}=v20FullRuntimeFixture(),prefix={async capture(){throw Error('METADATA_MUST_NOT_CAPTURE');}};
+ for(const sha256 of [null,undefined,'','PENDING_ACTUAL_PG_CANONICAL_EXPORT']){
+  const review={...m,catalog:{format:live137HostProfile[2],patchLevel:live137HostProfile[1],sha256}};
+  assert.throws(()=>validateSourceHostRuntimeReview26(review,b,prefix),/RUNTIME_REVIEW/);
+ }
+});
+test('LIVE layer5b SOURCE-HOST RED original V7 host without captured prefix closes original source with target gate still closed',async t=>{
+ const f=await negativeHost26Fixture(t,live137HostProfile[0]);
+ await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/PREFIX_REQUIRED/);
+ assert.equal(globalThis[f.marker].opened,1);assert.equal(globalThis[f.marker].closed,1);assert.equal(globalThis[f.marker].closedGate,true);
+});
+test('LIVE layer5b SOURCE-HOST hold original issuer gate rejects unresolved V7 catalog before every pool borrow/query, disposing original owner once',async t=>{
+ const f=await negativeHost26Fixture(t,live137HostProfile[0]),original=JSON.parse(await readFile(f.job.runtime26Review.reviewFile,'utf8'));
+ for(const [i,sha256]of [null,undefined,'','PENDING_ACTUAL_PG_CANONICAL_EXPORT'].entries()){
+  const review=await f.save('unresolved-v7-'+i+'.json',{...original,catalog:{...original.catalog,sha256}});let created=0,borrowed=0,ended=0;
+  const gate=createSourcePreflightRuntimeGate26(()=>{created++;return{async connect(){borrowed++;throw Error('MUST_NOT_BORROW_OR_QUERY');},async end(){ended++;}};},createNativeRuntime26Issuer,
+   {reviewFile:review.path,trustedReviewSha256:review.sha});
+  assert.throws(()=>gate.capability.ready(),/DATABASE_PRECHECK/);
+  await assert.rejects(gate.activate(),{code:'NATIVE_RUNTIME26_NOT_READY'});await gate.close();await gate.close();
+  assert.equal(created,1);assert.equal(borrowed,0);assert.equal(ended,1);assert.throws(()=>gate.capability.ready(),/DATABASE_PRECHECK/);
+ }
+});
+test('LIVE layer5b SOURCE-HOST hold V7 mapping does not relax original issuer finite purposes or grant execution authority',async t=>{
+ const f=await negativeHost26Fixture(t,live137HostProfile[0]),original=JSON.parse(await readFile(f.job.runtime26Review.reviewFile,'utf8'));
+ for(const [i,purposes]of [[],['IMPORT_STAGE','IMPORT_STAGE'],['LIVE_LEDGER_PAIR_WRITE'],['UNREVIEWED_EXECUTION']].entries()){
+  const review=await f.save('v7-invalid-purpose-'+i+'.json',{...original,purposes});let borrowed=0,ended=0;
+  const gate=createSourcePreflightRuntimeGate26(()=>({async connect(){borrowed++;throw Error('MUST_NOT_BORROW');},async end(){ended++;}}),createNativeRuntime26Issuer,
+   {reviewFile:review.path,trustedReviewSha256:review.sha});
+  await assert.rejects(gate.activate(),{code:'NATIVE_RUNTIME26_NOT_READY'});await gate.close();assert.equal(borrowed,0);assert.equal(ended,1);
  }
 });

@@ -1,5 +1,5 @@
 import { authorizedEffectiveDocumentIdentity, nullableEffectiveDocumentQuantity as normalNullableQuantity } from '../../../packages/application/src/authorized-effective-documents.ts';
-import { normalDocumentReferenceScopeOn, assertNormalReferenceHistoryOn, normalDocumentListOn, documentProductSummary, type NativeDocumentListOptions } from "./sales-query-reader.ts";
+import { normalDocumentReferenceScopeOn, assertNormalReferenceHistoryOn, normalDocumentListOn, documentProductSummary, documentCategorySummary, type NativeDocumentListOptions } from "./sales-query-reader.ts";
 import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { TransferUnifiedListPage, TransferUnifiedSummary } from "../../../packages/application/src/transfer-query-ports.ts";
 import type { Pool } from "pg";
@@ -112,14 +112,15 @@ function consistentIdentity(facts: Map<string, string>, identity: string, values
   requireDomain(previous === undefined || previous === fact, "INVALID_DATABASE_VALUE", "Inconsistent canonical identity facts");
   facts.set(identity, fact);
 }
-async function readCatalog(query: ReadQuery, lines: readonly TransferLineRow[]): Promise<TransferDetailCatalog> {
-  if (!lines.length) return { skus: [], sizeGroups: [] };
+async function readCatalog(query: ReadQuery, lines: readonly TransferLineRow[], stockBasis: TransferDetail["stockBasis"]): Promise<{catalog:TransferDetailCatalog;categorySummary:import("../../../packages/application/src/sales-query-ports.ts").DocumentCategorySummary}> {
+  const unknownCategories: import("../../../packages/application/src/sales-query-ports.ts").DocumentCategorySummary = {basis:'UNKNOWN',metric:'PRODUCT_COUNT',items:[],hasMore:false,categoryCount:null};
+  if (!lines.length) return {catalog:{skus:[],sizeGroups:[]},categorySummary:stockBasis==='CUTOFF_HISTORY'?unknownCategories:{basis:'CURRENT',metric:'PRODUCT_COUNT',items:[],hasMore:false,categoryCount:0n}};
   const actualSkuIds = [...new Set(lines.map(line => line.skuId))];
   const rows = (await query(`SELECT s.id AS sku_id, s.product_id, p.product_code, p.name AS product_name, s.color_id, c.name AS color_name,
-    s.fit_id, f.name AS fit_name, s.size_id, p.size_group_id FROM naijue_erp.sku s
+    s.fit_id, f.name AS fit_name, s.size_id, p.size_group_id,pc.id AS category_id,pc.name AS category_name FROM naijue_erp.sku s
     JOIN (SELECT DISTINCT product_id, color_id, fit_id FROM naijue_erp.sku WHERE id = ANY($1::uuid[])) present
       ON present.product_id = s.product_id AND present.color_id = s.color_id AND present.fit_id = s.fit_id
-    JOIN naijue_erp.product p ON p.id = s.product_id JOIN naijue_erp.color c ON c.id = s.color_id JOIN naijue_erp.fit f ON f.id = s.fit_id
+    JOIN naijue_erp.product p ON p.id = s.product_id LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id JOIN naijue_erp.color c ON c.id = s.color_id JOIN naijue_erp.fit f ON f.id = s.fit_id
     ORDER BY s.product_id, s.color_id, s.fit_id, s.size_id, s.id LIMIT $2`, [actualSkuIds, TRANSFER_DETAIL_MAX_CATALOG_SKUS + 1])).rows;
   requireDomain(rows.length <= TRANSFER_DETAIL_MAX_CATALOG_SKUS, "TRANSFER_READ_TOO_LARGE", "Transfer native SKU availability exceeds bounded response limit");
   const skus = rows.map(decodeCatalogSku); const bySku = new Map(skus.map(sku => [sku.skuId, sku]));
@@ -153,7 +154,16 @@ async function readCatalog(query: ReadQuery, lines: readonly TransferLineRow[]):
   }
   requireDomain(groups.size === groupIds.length && skus.every(sku => membership.has(JSON.stringify([sku.sizeGroupId, sku.sizeId]))),
     "INVALID_DATABASE_VALUE", "Native SKU size must belong to its complete product size group");
-  return { skus, sizeGroups: [...groups.values()] };
+  // The native catalog remains a current-identity projection, never evidence of historical classification.
+  if (stockBasis === 'CUTOFF_HISTORY') return {catalog:{skus,sizeGroups:[...groups.values()]},categorySummary:unknownCategories};
+  const categoryBySku=new Map(rows.map(row=>[id('sku',row.sku_id),{categoryId:nullableId('category',row.category_id),categoryName:nullableString(row.category_name)}]));
+  const seenProducts=new Set<string>(),categoryGroups=new Map<string|null,{categoryId:string|null;categoryName:string|null;value:bigint}>();
+  for(const line of lines){if(line.quantity<=0n)continue;const sku=bySku.get(line.skuId)!;if(seenProducts.has(sku.productId))continue;seenProducts.add(sku.productId);const c=categoryBySku.get(line.skuId)!;
+    requireDomain((c.categoryId===null)===(c.categoryName===null),'INVALID_DATABASE_VALUE','Current category identity mismatch');
+    const existing=categoryGroups.get(c.categoryId);requireDomain(!existing||existing.categoryName===c.categoryName,'INVALID_DATABASE_VALUE','Current category label mismatch');
+    categoryGroups.set(c.categoryId,{...c,value:(existing?.value??0n)+1n});
+  }
+  return {catalog:{skus,sizeGroups:[...groups.values()]},categorySummary:{basis:'CURRENT',metric:'PRODUCT_COUNT',items:[...categoryGroups.values()],hasMore:false,categoryCount:BigInt(categoryGroups.size)}};
 }
 /** Injected protocol only. Construction does not create a Pool, connect, migrate, or listen.
  * Each invocation uses one acquired client and one read-only REPEATABLE READ snapshot. */
@@ -195,9 +205,9 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
         const identity = authorizedEffectiveDocumentIdentity(row.dataset, row.batch_id, row.id, row.version);
         const documentId = id("transfer", identity.documentId), effectiveVersion = versionFromSql(identity.effectiveVersion), productSummary = documentProductSummary(row);
         if (identity.dataset === "LIVE") {
-          return { ...decodeSummary(row, count(row.quantity)), dataset: "LIVE", batchId: null, documentId, effectiveVersion, productSummary }; }
+          return { ...decodeSummary(row, count(row.quantity)), dataset: "LIVE", batchId: null, documentId, effectiveVersion, productSummary, categorySummary: documentCategorySummary(row, "PRODUCT_COUNT") }; }
         requireDomain(row.created_by_account_id === null, "INVALID_DATABASE_VALUE", "Historical actor account is not inferred from current staff");
-        return { dataset: "HISTORY", batchId: id("operation", identity.batchId), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary,
+        return { dataset: "HISTORY", batchId: id("operation", identity.batchId), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary, categorySummary: documentCategorySummary(row, "PRODUCT_COUNT"),
           number: stringValue(row.number), businessDate: row.business_date === null ? null : businessDate(stringValue(row.business_date)), status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]),
           fromWarehouseId: id("warehouse", row.from_warehouse_id), toWarehouseId: id("warehouse", row.to_warehouse_id), responsibleStaffId: nullableId("staff", row.responsible_staff_id), responsibleName: nullableString(row.responsible_name),
           createdByAccountId: null, createdByName: nullableString(row.created_by_name), approvedByName: nullableString(row.approved_by_name), createdAt: nullableString(row.created_at), updatedAt: nullableString(row.updated_at),
@@ -211,7 +221,7 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
       const exactTotal = count(one(await query(`SELECT COUNT(*)::text AS exact_total ${RELATIONS} WHERE ${p.where()}`, [...p.values])).exact_total);
       const paging = p.page(parameters.page, parameters.pageSize);
       const rows = (await query(`SELECT ${SUMMARY_COLUMNS}, ${REFERENCES} ${RELATIONS} WHERE ${p.where()}
-        ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC ${paging}`, p.values)).rows;
+        ORDER BY h.created_at DESC, h.number COLLATE "C" ASC, h.id ASC ${paging}`, p.values)).rows;
       requireDomain(rows.length <= parameters.pageSize && BigInt(rows.length) <= exactTotal, "INVALID_DATABASE_VALUE", "Transfer page exceeds exact scope");
       const pageIds = rows.map(row => id("transfer", row.id)); const totals = new Map<EntityId<"transfer">, bigint>();
       requireDomain(new Set(pageIds).size === pageIds.length, "INVALID_DATABASE_VALUE", "Duplicate transfer page identity");
@@ -292,8 +302,9 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
       const lines = rows.map(decodeLine); const ids = new Set<string>(); const positions = new Set<number>();
       requireDomain(lines.every(line => { const valid = line.transferId === header.id && !ids.has(line.id) && !positions.has(line.lineNo);
         ids.add(line.id); positions.add(line.lineNo); return valid; }), "INVALID_DATABASE_VALUE", "Invalid transfer line ownership or identity");
-      const catalog = await readCatalog(query, lines);
-      return { document: { header, lines }, stockBasis: choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]), references: decodeReferences(row), catalog };
+      const stockBasis = choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]);
+      const {catalog,categorySummary} = await readCatalog(query, lines, stockBasis);
+      return { document: { header, lines }, stockBasis, references: decodeReferences(row), catalog, categorySummary };
     });
   }
 }

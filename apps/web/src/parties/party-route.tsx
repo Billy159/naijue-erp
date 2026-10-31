@@ -102,9 +102,8 @@ function PartyFormLeaf(props: { readonly controller: PartyMaintenanceController;
   if (!controller.scope.active || state.disposed || !editor) return null;
   const verb = { CREATE: '新增', EDIT: '编辑', DISABLE: '停用', RESTORE: '恢复' }[editor.action];
   return module ? <module.PartyForm {...props} /> : <Modal className="demo-ui demo-settings-modal bs-modal iw-arco-modal iw-arco-controls party-modal" visible title={`${verb}${partyLabels[controller.kind]}`}
-    getPopupContainer={props.getPopupContainer} onCancel={() => { controller.requestClose(); }} okText="确定" cancelText="取消" maskClosable={false} autoFocus={false} focusLock okButtonProps={{ disabled: true }}>
+    getPopupContainer={props.getPopupContainer} onCancel={() => { controller.discardEditor(); }} okText="确定" cancelText="取消" maskClosable={false} autoFocus={false} focusLock okButtonProps={{ disabled: true }}>
     <p role={error ? 'alert' : 'status'}>{error ? '表单暂不可加载。' : '正在准备表单…'}{error && <Button type="text" onClick={() => setRetry(value => value + 1)}>重试表单</Button>}</p>
     {state.notice && <p className="bs-error" role="alert">{state.notice}</p>}
-    {editor.closePrompt && <section className="party-close-confirm" role="alert"><strong>放弃本次填写？</strong><p>本次未保存的内容将丢弃，已保存的资料保持不变。</p><div className="iw-actions"><Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => controller.discardEditor()}>放弃本次填写</Button></div></section>}
   </Modal>;
 }

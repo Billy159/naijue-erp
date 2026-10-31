@@ -1,4 +1,26 @@
-# PostgreSQL runtime-sales persistence slice
+# PostgreSQL adapters — current implementation and evidence
+
+Current composition is in [`apps/api/src/postgres-read-api.ts`](../../apps/api/src/postgres-read-api.ts) and [`production-provider-composition.ts`](../../apps/api/src/production-provider-composition.ts). Availability still depends on the exact reviewed runtime capability, configuration and authorization; source presence does not enable a feature.
+
+| Implemented adapter area | Entry points |
+| --- | --- |
+| Sales and transfers | `src/sales-unit-of-work.ts`, `src/transfer-unit-of-work.ts` |
+| Product/catalogue/organization maintenance | `src/product-maintenance-store.ts`, `src/catalogue-maintenance-store.ts`, `src/organization-maintenance-store.ts` |
+| Independent historical correction | `src/history-revision-store.ts`; application `history-revision-service.ts` |
+| Queries and stock evidence | `src/product-management-query-reader.ts`, sales/transfer/inventory query readers |
+| Bounded connection ownership | `src/bounded-pool.ts`; no automatic write/unknown-COMMIT retry |
+
+Normal runtime writes still reject `CUTOFF_HISTORY`; this does **not** mean independent authorized HISTORY revision is unimplemented. Unknown historical facts remain unknown. No new schema/identity values are invented by the read adapters.
+
+## Verification, as of 2026-10-29
+
+[Repair-review evidence](../../docs/repair-review-20261029/) distinguishes protocol/DOM tests from isolated PostgreSQL component tests. B1 has real PostgreSQL 17.11 two-session lock-order evidence, against a private Unix-socket synthetic database which was stopped after testing. It does not establish full runtime installation, issuer approval, SAVE/APPROVE/ledger/receipt or production deployment acceptance. Current-base26 is not a complete fresh-install migration registry; do not run numbered SQL files sequentially or self-sign issuer/release review evidence. Production deployment and real data are outside this development task.
+
+## Historical implementation-stage notes (not current feature status)
+
+The following retained notes describe the original runtime-sales-only slice. Their “not implemented”, “not executed” and environment statements apply to that historical slice, **not** to the current provider inventory above. They are retained for provenance, not a current acceptance claim.
+
+# Original runtime-sales persistence slice
 
 This directory now contains a genuine `pg` client-protocol transaction adapter and a versioned SQL migration artifact for the already implemented normal sales service. It is not a complete ERP, an enabled server, or evidence that PostgreSQL has accepted the SQL. No database has been contacted or changed.
 

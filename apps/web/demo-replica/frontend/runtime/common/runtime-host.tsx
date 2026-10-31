@@ -1,3 +1,5 @@
+import {createRoutePresentationOwner} from './route-presentation.ts';
+import {prepareRouteResources} from './route-resources.ts';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createPortal } from 'react-dom';
@@ -73,6 +75,7 @@ function SessionChrome({ session, accountHost, mayChangeIdentity, notice }: { se
  * Uses the original static shell. No old application root or body fallback. */
 export function mountNormalReplica(options: ReadyPageOptions & { readonly page: HTMLElement; readonly accountHost: HTMLElement; readonly app: HTMLElement; readonly breadcrumb: HTMLElement; readonly transportMode: 'same-origin-https' | 'approved-synthetic'; readonly prepareRoute?: (route: string, signal: AbortSignal) => Promise<void> }) {
  const { session, page, app, breadcrumb } = options;
+ const presentation=createRoutePresentationOwner(page);
  if (options.transportMode === 'same-origin-https' && (location.protocol !== 'https:' || location.origin !== session.http.origin)) throw new TypeError('正常运行需要已配置的同源 HTTPS。');
  app.dataset.replicaTransport = options.transportMode;
  const pages = createReadyPageMounts({ ...options, inventory: { ...options.inventory, onOpenSource: options.inventory.onOpenSource ?? openInventorySource } }, next => navigate(next), options.prepareRoute), chromeHost = document.createElement('div');
@@ -118,13 +121,13 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
   pendingLeave={next,replace,owner:current,scope};
   leaveRoot.render(<SaleDialog variant="transfer" className="tc-confirm tc-danger" title="有未保存的修改" close={dismissLeave} footer={<><button type="button" className="btn" onClick={dismissLeave}>继续编辑</button><button type="button" className="btn primary" onClick={()=>{const decision=pendingLeave;if(!decision||current!==decision.owner||scope!==decision.scope||!scope?.active){dismissLeave();return;}if(pages.hasUnresolvedWrite()||!current.canDiscard?.()||!current.discard?.()){dismissLeave();toast('当前操作尚未结束，输入已保留。');return;}dismissLeave();void navigate(decision.next,decision.replace);}}>放弃修改并离开</button></>}><p>离开后，本次未保存的修改将丢失。</p></SaleDialog>);
  };
- const clearPage = () => { sourceNavigation?.abort(); sourceNavigation = null; dismissLeave();serial++; current?.dispose(); current = null; scope?.dispose(); scope = null; page.replaceChildren(); };
+ const clearPage = () => { sourceNavigation?.abort(); sourceNavigation = null; dismissLeave();serial++; current?.dispose(); current = null; scope?.dispose(); scope = null; presentation.clear(); page.replaceChildren(); };
  const status = (message: string, retry?: () => void, retryLabel = '重试加载资料') => { page.replaceChildren(); const box = document.createElement('div'); box.className = 'iw-state'; box.setAttribute('role', retry ? 'alert' : 'status'); box.textContent = message; if (retry) { const button = document.createElement('button'); button.className = 'btn'; button.textContent = retryLabel; button.onclick = retry; box.append(' ', button); } page.append(box); };
  async function navigate(next: string, replace = false): Promise<boolean> {
   if (disposed || !session.auth.getSnapshot().principal) return false;
   if (next === route && current && scope?.active) return true;
   if (!canLeave()) { if(!pages.hasUnresolvedWrite()&&current?.canDiscard?.())askLeave(next,replace);else toast('请先保存或取消当前编辑，当前输入已保留。');return false; }
-  clearPage(); route = next; const request = serial;
+  clearPage(); route = next; presentation.activate(next); const request = serial;
   breadcrumb.textContent = captions[next] ?? (next.startsWith('transfer/')?'库存管理 / 调拨单':next.startsWith('sales/')?'销售管理 / 销货单':next.startsWith('products/')?'商品管理 / 商品信息':'业务页面');
   document.querySelectorAll<HTMLAnchorElement>('.sidebar a[data-route]').forEach(link => { const selected = link.dataset.route === next || (next === 'customers' || next === 'suppliers') && link.dataset.route === 'settings/parties' || next === 'settings/accounts' && link.dataset.route === 'settings/staff' || next.startsWith('transfer/') && next!=='transfer/new' && link.dataset.route==='transfer' || next.startsWith('sales/') && next!=='sales/new' && link.dataset.route==='sales' || next.startsWith('products/') && link.dataset.route==='products'; link.classList.toggle('selected', selected); if (selected) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
   if (replace) history.replaceState(null, '', '#' + next); else if (location.hash !== '#' + next) history.pushState(null, '', '#' + next);
@@ -141,7 +144,7 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
      status('当前页面的访问权限或资料范围已失效，请重新核验。', () => { void session.auth.resolveSession(); }, '重新核验访问权限');
     });
    }, { once: true });
-   await options.prepareRoute?.(next, active.signal);
+   await prepareRouteResources(next,active.signal,pages.prepare,options.prepareRoute);
    if (disposed || request !== serial || !active.active) return false;
    const mounted = await pages.mount(page, next, active);
    if (disposed || request !== serial || !active.active) { mounted.dispose(); return false; }
@@ -165,5 +168,5 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
  chromeRoot.render(<SessionChrome session={session} accountHost={options.accountHost} mayChangeIdentity={canLeave} notice={toast} />);
  document.addEventListener('click', click); window.addEventListener('hashchange', hash); window.addEventListener('beforeunload', beforeUnload);
  authChanged(); if (session.auth.getSnapshot().phase === 'unresolved') void session.auth.resolveSession();
- return { navigate, session, dispose() { if (disposed) return; disposed = true; window.clearTimeout(toastTimer); unsubscribe(); document.removeEventListener('click', click); window.removeEventListener('hashchange', hash); window.removeEventListener('beforeunload', beforeUnload); clearPage(); pages.dispose(); leaveRoot.unmount();leaveHost.remove();chromeRoot.unmount(); chromeHost.remove(); app.inert = false; session.dispose(); } };
+ return { navigate, session, dispose() { if (disposed) return; disposed = true; window.clearTimeout(toastTimer); unsubscribe(); document.removeEventListener('click', click); window.removeEventListener('hashchange', hash); window.removeEventListener('beforeunload', beforeUnload); clearPage(); presentation.dispose(); pages.dispose(); leaveRoot.unmount();leaveHost.remove();chromeRoot.unmount(); chromeHost.remove(); app.inert = false; session.dispose(); } };
 }

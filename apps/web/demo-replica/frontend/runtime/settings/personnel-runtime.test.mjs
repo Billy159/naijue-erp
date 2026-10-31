@@ -20,15 +20,15 @@ const settle=(ms=25)=>act(async()=>{await new Promise(resolve=>setTimeout(resolv
 async function click(node){assert.ok(node,'click target');await act(async()=>node.click());await settle();}
 async function input(node,value){assert.ok(node,'input target');await act(async()=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(node,value);node.dispatchEvent(new Event('input',{bubbles:true}));});await settle();}
 let context,staffWorkspace,accountWorkspace,staffReader,accountReader,staffCalls,accountCalls,staffCommands,accountCommands,directoryCalls,serial=0,keys=0;
-async function fresh(type,keepMounted=false,accountId='SYNTHETIC',sessionRevision=String(++serial)){
+async function fresh(type,keepMounted=false,accountId='SYNTHETIC',sessionRevision=String(++serial),canPrepare=true,loginCapability='open-only'){
  if(!keepMounted)await act(async()=>root.render(null));await act(async()=>context?.clear());context=new ReadContext({accountId,sessionRevision,permissionRevision:'1'});keys=0;staffCalls=[];accountCalls=[];staffCommands=[];accountCommands=[];directoryCalls=[];
  const staff=[{id:uuid(1),name:'无账号员工',role:'ADMIN',hall:null,contact:null,employmentStatus:'在职',version:2,account:null},{id:uuid(2),name:'已开通员工',role:'WAREHOUSE',hall:null,contact:'',employmentStatus:'在职',version:3,account:{id:uuid(12),staffId:uuid(2),loginName:'open',loginEnabled:true,version:2}},{id:uuid(3),name:'已关闭员工',role:'WAREHOUSE',hall:null,contact:null,employmentStatus:'在职',version:4,account:{id:uuid(13),staffId:uuid(3),loginName:'closed',loginEnabled:false,version:1}}];let newStaff=null,newAccount=null;
- staffReader={capabilities:{roleFilter:true,loginNameSearch:true,loginStatusFilter:'open-only'},async readList(read){staffCalls.push(read.parameters);const q=read.parameters,items=[...staff,...(newStaff?[newStaff]:[])].filter(row=>(!q.loginStatus||row.account?.loginEnabled===true)&&(!q.search||row.name.includes(q.search)));return {items,total:items.length,page:q.page,pageSize:q.pageSize};},async readDetail(read){return newStaff?.id===read.parameters.id?newStaff:staff.find(row=>row.id===read.parameters.id)??null;}};
+ staffReader={capabilities:{roleFilter:true,loginNameSearch:true,loginStatusFilter:loginCapability},async readList(read){staffCalls.push(read.parameters);const q=read.parameters,items=[...staff,...(newStaff?[newStaff]:[])].filter(row=>(!q.loginStatus||(q.loginStatus==='open'?row.account?.loginEnabled===true:row.account?.loginEnabled===false))&&(!q.search||row.name.includes(q.search)));return {items,total:items.length,page:q.page,pageSize:q.pageSize};},async readDetail(read){return newStaff?.id===read.parameters.id?newStaff:staff.find(row=>row.id===read.parameters.id)??null;}};
  accountReader={async readList(read){accountCalls.push(read.parameters);return {items:[],total:0,page:read.parameters.page,pageSize:read.parameters.pageSize};},async readDetail(read){return newAccount?.id===read.parameters.id?newAccount:null;}};
  staffWorkspace=createStaffSettingsWorkspace({scope:context.createScope('staff-session'),reader:staffReader,roles,writesEnabled:()=>true,newRequestKey:()=>`staff-key-${++keys}`,onAccessFailure(){},client:{async execute(command){staffCommands.push(command);if(command.account===null){newStaff={id:uuid(30),name:command.values.name,role:command.values.role,hall:null,contact:null,employmentStatus:'在职',version:1,account:null};return {operationId:uuid(100),kind:'STAFF',targetId:newStaff.id,version:1};}throw new StaffClientError('network','NETWORK_ERROR','uncertain');},async receipt(original){const command=staffCommands.at(-1);newStaff={id:uuid(30),name:command.values.name,role:command.values.role,hall:null,contact:null,employmentStatus:'在职',version:1,account:{id:uuid(31),staffId:uuid(30),loginName:command.account.loginName,loginEnabled:true,version:1}};return {requestKey:original.requestKey,action:original.action,status:'COMMITTED',completedAt:'2026-10-25T00:00:00Z',result:{operationId:uuid(100),kind:'STAFF',targetId:newStaff.id,version:1}};}}});
  accountWorkspace=createAccountSettingsWorkspace({scope:context.createScope('account-session'),reader:accountReader,staffReader,writesEnabled:()=>true,newRequestKey:()=>`account-key-${++keys}`,onAccessFailure(){},client:{async execute(command){accountCommands.push(command);throw new AccountClientError('network','NETWORK_ERROR','uncertain');},async receipt(original){const command=accountCommands.at(-1),target=staff.find(row=>row.id===command.values.staffId);newAccount={id:uuid(40),version:1,loginName:command.values.loginName,loginEnabled:command.values.loginEnabled,createdAt:'2026-10-25T00:00:00Z',updatedAt:'2026-10-25T00:00:00Z',staff:{id:target.id,name:target.name,role:target.role,employmentStatus:target.employmentStatus,hallId:null}};return {requestKey:original.requestKey,action:original.action,status:'COMMITTED',completedAt:'2026-10-25T00:00:00Z',result:{operationId:uuid(101),kind:'ACCOUNT',targetId:newAccount.id,version:1}};}}});
  const directory={async read(kind,parameters){directoryCalls.push({kind,parameters});const halls=Array.from({length:23},(_,i)=>({id:uuid(500+i),name:`合成营业厅${String(i+1).padStart(3,'0')}`}));const start=(parameters.page-1)*parameters.pageSize,items=halls.filter(row=>!parameters.search||row.name.includes(parameters.search)).slice(start,start+parameters.pageSize);return {items,total:halls.length,page:parameters.page,pageSize:parameters.pageSize};}};
- const shared={scope:context.createScope(`${type}-route`),roles,directory,canPrepare:true,onAccessFailure(){}};
+ const shared={scope:context.createScope(`${type}-route`),roles,directory,canPrepare,onAccessFailure(){}};
  await act(async()=>root.render(h(StrictMode,null,type==='personnel'?h(PersonnelRuntime,{staff:{...shared,reader:staffReader,workspace:staffWorkspace},accounts:{...shared,reader:accountReader,staffReader,workspace:accountWorkspace}}):type==='staff'?h(StaffRuntime,{...shared,reader:staffReader,workspace:staffWorkspace}):h(AccountsRuntime,{...shared,reader:accountReader,staffReader,workspace:accountWorkspace}))));await settle(60);
 }
 test('staff keeps null-account distinct and opens supported filter without local page filtering',async()=>{
@@ -37,32 +37,91 @@ test('staff keeps null-account distinct and opens supported filter without local
  const before=staffCalls.length;await click(shadowAll('.arco-select-option').find(node=>node.textContent.trim()==='已开通'));assert.equal(staffCalls.length,before);await click(button('查询'));assert.equal(staffCalls.at(-1).loginStatus,'open');assert.match(document.body.textContent,/共 1 条/);assert.equal(staffCalls.some(query=>query.loginStatus==='closed'),false);
  await input(document.querySelector('input[aria-label="搜索姓名或登录账号"]'),'PRIVATE-OLD-DRAFT');const revision=String(serial);await fresh('staff',true,'OTHER-ACCOUNT',revision);assert.equal(document.querySelector('input[aria-label="搜索姓名或登录账号"]').value,'');assert.equal(staffCalls.at(-1).search,'');
 });
-test('staff hall filter copies inventory single-choice styling and restores full range by All or clear',async()=>{
- await fresh('staff');const hallHost=document.querySelectorAll('.bs-filter')[2].querySelector('.ui-single-host');assert.ok(hallHost.classList.contains('inventory-reference-select'));
+test('staff full login capability enables CLOSED only on Query, preserves null labels on ALL and resets without commands',async()=>{
+ await fresh('staff',false,'SYNTHETIC',String(++serial),false,true);
+ const table=()=>document.querySelector('.bs-table-wrap');
+ assert.match(table().textContent,/未开通/);assert.match(table().textContent,/已开通/);assert.match(table().textContent,/已关闭/);
+ const host=[...document.querySelectorAll('.bs-filter .runtime-settings-select')].at(-1);await click(selectView(host));
+ const option=shadowAll('.arco-select-option').find(node=>node.textContent.trim()==='已关闭');assert.ok(option);assert.equal(option.classList.contains('arco-select-option-disabled'),false);
+ const before=staffCalls.length;await click(option);assert.equal(staffCalls.length,before);assert.match(table().textContent,/无账号员工/);
+ await click(button('查询'));assert.deepEqual({...staffCalls.at(-1)},{search:'',role:'',hallId:null,employmentStatus:'在职',loginStatus:'closed',page:1,pageSize:20});
+ assert.match(table().textContent,/已关闭员工/);assert.doesNotMatch(table().textContent,/无账号员工|已开通员工|未开通/);assert.match(document.body.textContent,/共 1 条/);
+ assert.deepEqual(staffCommands,[]);assert.deepEqual(accountCommands,[]);assert.equal(keys,0);
+ await click(button('重置'));assert.equal(staffCalls.at(-1).loginStatus,'');assert.equal(staffCalls.at(-1).page,1);assert.match(table().textContent,/未开通/);assert.match(table().textContent,/已关闭/);
+ await fresh('staff',true,'REPLACED-ACCOUNT',String(serial),false,true);assert.equal(staffCalls.at(-1).loginStatus,'');assert.equal(document.querySelector('input[aria-label="搜索姓名或登录账号"]').value,'');
+ assert.equal(keys,0);assert.deepEqual(staffCommands,[]);
+});
+test('staff without login capability cannot open any login filter or dispatch CLOSED',async()=>{
+ await fresh('staff',false,'SYNTHETIC',String(++serial),false,null);
+ const host=[...document.querySelectorAll('.bs-filter .runtime-settings-select')].at(-1),before=staffCalls.length;
+ assert.ok(host.shadowRoot.querySelector('.arco-select-disabled'));await click(selectView(host));assert.equal(shadowAll('.arco-select-option').length,0);assert.equal(staffCalls.length,before);assert.equal(staffCalls.some(q=>q.loginStatus==='closed'),false);assert.equal(keys,0);
+});
+test('staff hall filter uses frozen flat single-choice styling and restores full range by All or clear',async()=>{
+ await fresh('staff');const hallHost=document.querySelectorAll('.bs-filter')[2].querySelector('.ui-single-host');assert.equal(Boolean(hallHost.shadowRoot.querySelector('.arco-tag')),false,'settings directory must use frozen flat single select, not an inventory chip');
  const root=hallHost.shadowRoot;assert.ok(root.querySelector('.arco-select-single'));assert.equal(root.querySelector('.arco-select-multiple'),null);
  await click(selectView(hallHost));await settle(60);let choices=shadowAll('.arco-select-option');assert.equal(choices[0].textContent.trim(),'全部营业厅');assert.equal(shadowAll('.arco-checkbox').length,0);assert.ok(directoryCalls.some(call=>call.kind==='halls'&&call.parameters.page===1));
  const before=staffCalls.length;await click(choices.find(node=>node.textContent.trim()==='合成营业厅001'));assert.equal(staffCalls.length,before);await click(button('查询'));assert.equal(staffCalls.at(-1).hallId,uuid(500));
  await click(selectView(hallHost));await click(shadowAll('.arco-select-option').find(node=>node.textContent.trim()==='合成营业厅002'));await click(button('查询'));assert.equal(staffCalls.at(-1).hallId,uuid(501));
  await click(selectView(hallHost));await click(shadowAll('.arco-select-option').find(node=>node.textContent.trim()==='全部营业厅'));await click(button('查询'));assert.equal(staffCalls.at(-1).hallId,null);
- await click(selectView(hallHost));await click(shadowAll('.arco-select-option').find(node=>node.textContent.trim()==='合成营业厅001'));await click(shadowAll('[class*="-clear-icon"]',root)[0]);await click(button('查询'));assert.equal(staffCalls.at(-1).hallId,null);
+ await click(selectView(hallHost));await click(shadowAll('.arco-select-option').find(node=>node.textContent.trim()==='合成营业厅001'));await click(shadowAll('.arco-select-clear-icon',root)[0]);await click(button('查询'));assert.equal(staffCalls.at(-1).hallId,null);
 });
-test('staff password-only input survives cancel then clears on uncertain dispatch; receipt/readback closes same editor',async()=>{
+test('staff password-only input clears on uncertain dispatch; receipt/readback closes same editor',async()=>{
  await fresh('staff');await click(button('新增员工'));await settle(60);const editor=staffWorkspace.getSnapshot();await act(async()=>editor.update({name:'合成新员工',role:'ADMIN',loginName:'new-staff'}));await input(modal().querySelector('input[aria-label="初始密码"]'),'SYNTHETIC_SECRET_123');assert.equal(JSON.stringify(editor.getSnapshot()).includes('SYNTHETIC_SECRET'),false);
- await click(button('取消'));await click(button('继续填写'));assert.equal(modal().querySelector('input[aria-label="初始密码"]').value,'SYNTHETIC_SECRET_123');await click(button('确定'));assert.equal(staffCommands.length,1);assert.equal(modal().querySelector('input[aria-label="初始密码"]').value,'');assert.equal(JSON.stringify(editor.getSnapshot()).includes('SYNTHETIC_SECRET'),false);await click(button('取消'));assert.ok(button('查询原操作回执'));await click(button('查询原操作回执'));await settle(60);assert.equal(staffWorkspace.getSnapshot(),null);assert.equal(keys,1);
+ assert.equal(button('继续填写') === undefined,true,'no extra popup leave action');assert.equal(button('放弃本次填写') === undefined,true,'no extra popup leave action');await click(button('确定'));assert.equal(staffCommands.length,1);assert.equal(modal().querySelector('input[aria-label="初始密码"]').value,'');assert.equal(JSON.stringify(editor.getSnapshot()).includes('SYNTHETIC_SECRET'),false);await click(button('取消'));assert.ok(Boolean(button('查询原操作回执')));await click(button('查询原操作回执'));await settle(60);assert.equal(staffWorkspace.getSnapshot(),null);assert.equal(keys,1);
 });
 test('independent account page loads staff only on picker and never retains submitted password',async()=>{
  await fresh('account');assert.equal(document.querySelector('h1').textContent,'登录账号');assert.equal(staffCalls.length,0);await click(button('新增账号'));await settle(60);assert.equal(staffCalls.length,0);
  await click(selectView(modal().querySelector('[role="group"][aria-label="所属员工"]')));await click(shadowAll('.arco-select-option').find(node=>node.textContent.trim()==='无账号员工'));await input(modal().querySelector('input[aria-label="登录账号"]'),'new-account');await input(modal().querySelector('input[aria-label="初始密码"]'),'SYNTHETIC_ACCOUNT_SECRET');await click(button('确定'));
- const editor=accountWorkspace.getSnapshot();assert.equal(accountCommands.length,1);assert.equal(accountCommands[0].values.staffId,uuid(1));assert.equal(JSON.stringify(editor.getSnapshot()).includes('SYNTHETIC_ACCOUNT_SECRET'),false);assert.equal(modal().querySelector('input[aria-label="初始密码"]').value,'');assert.ok(button('查询原操作回执'));await click(button('查询原操作回执'));await settle(60);assert.equal(accountWorkspace.getSnapshot(),null);assert.equal(keys,1);
+ const editor=accountWorkspace.getSnapshot();assert.equal(accountCommands.length,1);assert.equal(accountCommands[0].values.staffId,uuid(1));assert.equal(JSON.stringify(editor.getSnapshot()).includes('SYNTHETIC_ACCOUNT_SECRET'),false);assert.equal(modal().querySelector('input[aria-label="初始密码"]').value,'');assert.ok(Boolean(button('查询原操作回执')));await click(button('查询原操作回执'));await settle(60);assert.equal(accountWorkspace.getSnapshot(),null);assert.equal(keys,1);
 });
 test('combined personnel section reads only active tab and preserves dirty staff input',async()=>{
  await fresh('personnel');assert.equal(accountCalls.length,0);assert.equal(document.querySelector('h1').textContent,'员工与账号');
  const tab=label=>[...document.querySelectorAll('[role="tab"]')].find(node=>node.textContent===label);
  await click(button('新增员工'));await settle(60);await input(modal().querySelector('input[aria-label="姓名"]'),'保留员工草稿');
  await click(tab('登录账号'));assert.equal(accountCalls.length,0);assert.equal(tab('员工').getAttribute('aria-selected'),'true');assert.equal(modal().querySelector('input[aria-label="姓名"]').value,'保留员工草稿');
- await click(button('继续填写'));await click(button('取消'));await click(button('放弃本次填写'));await click(tab('登录账号'));assert.equal(tab('登录账号').getAttribute('aria-selected'),'true');assert.ok(accountCalls.length>0);assert.equal(document.querySelectorAll('.bs-page').length,1);
+ assert.equal(button('继续填写') === undefined,true,'no extra popup leave action');await click(button('取消'));assert.equal(modal() === null,true,'modal dismissed');await click(tab('登录账号'));assert.equal(tab('登录账号').getAttribute('aria-selected'),'true');assert.ok(accountCalls.length>0);assert.equal(document.querySelectorAll('.bs-page').length,1);
 });
 test('ordinary staff without account uses the existing save and native detail readback',async()=>{
  await fresh('staff');await click(button('新增员工'));await settle(60);const editor=staffWorkspace.getSnapshot();await act(async()=>editor.update({name:'普通无账号员工',role:'ADMIN'}));await click(modal().querySelector('input[type="checkbox"]'));assert.equal(editor.getSnapshot().draft.loginEnabled,false);assert.equal(modal().querySelector('input[aria-label="初始密码"]'),null);await click(button('确定'));await settle(60);assert.equal(staffCommands.length,1);assert.equal(staffCommands[0].account,null);assert.equal(staffWorkspace.getSnapshot(),null);assert.equal(keys,1);
+});
+test('read-only staff capability explains disabled edit without weakening it',async()=>{
+ await fresh('staff',false,'SYNTHETIC',String(++serial),false);
+ assert.equal(button('新增员工').disabled,true);assert.equal(button('编辑').disabled,true);
+ assert.match(document.body.textContent,/当前为只读：员工维护未启用或当前账号无维护权限/);
+});
+test('staff table keeps wide native columns horizontally reachable without changing readonly guards',async()=>{
+ await fresh('staff',false,'SYNTHETIC',String(++serial),false,true);
+ const table=document.querySelector('.bs-table-wrap .arco-table');
+ assert.ok(table?.classList.contains('arco-table-layout-fixed'),'wide staff columns require original Arco horizontal scroll ownership');
+ assert.equal(table.querySelector('.arco-table-content-inner table').style.width,'max-content');
+ assert.equal(table.querySelectorAll('tbody tr').length,3);
+ assert.match(table.textContent,/无账号员工/);assert.match(table.textContent,/已开通员工/);assert.match(table.textContent,/已关闭员工/);
+ assert.equal(button('编辑').disabled,true);assert.equal(button('新增员工').disabled,true);
+ assert.deepEqual(staffCommands,[]);assert.deepEqual(accountCommands,[]);
+});
+test('staff remembers native inner horizontal scroll independently of outer vertical query reset',async()=>{
+ await fresh('staff',false,'SYNTHETIC',String(++serial),false,true);
+ const outer=document.querySelector('.bs-table-wrap'),inner=outer.querySelector('.arco-table-content-inner'),view=staffWorkspace.getViewState();
+ await act(async()=>{inner.scrollLeft=83;inner.dispatchEvent(new Event('scroll'));});
+ assert.equal(view.tableScroll.left,83,'native inner scroll must update existing workspace presentation state');
+ await act(async()=>{outer.scrollTop=45;outer.dispatchEvent(new Event('scroll'));});
+ assert.equal(view.tableScroll.top,45);assert.equal(view.tableScroll.left,83,'vertical scrolling must not overwrite remembered horizontal position');
+ inner.scrollLeft=0;await click(button('查询'));
+ assert.equal(inner.scrollLeft,83,'successful query restores the original workspace horizontal position');
+ assert.equal(outer.scrollTop,0,'original Query still resets only vertical scroll');
+ assert.equal(button('编辑').disabled,true);assert.deepEqual(staffCommands,[]);assert.deepEqual(accountCommands,[]);
+});
+test('staff and account dirty Cancel, close icon and Escape discard transient input directly with no command',async()=>{
+ for(const kind of ['staff','account']) {
+  await fresh(kind);
+  for(const mode of ['cancel','icon','escape']) {
+   await click(button(kind==='staff'?'新增员工':'新增账号'));await settle(60);
+   const workspace=kind==='staff'?staffWorkspace:accountWorkspace,editor=workspace.getSnapshot();
+   await input(modal().querySelector('input[aria-label="初始密码"]'),'SYNTHETIC_CANCEL_SECRET');
+   if(mode==='cancel')await click(button('取消'));else if(mode==='icon')await click(modal().querySelector('.arco-modal-close-icon'));else {await act(async()=>modal().querySelector('input').dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',keyCode:27,bubbles:true})));await settle();}
+   assert.equal(modal() === null,true,'modal dismissed');assert.equal(workspace.getSnapshot(),null);assert.equal(editor.getSnapshot().draft,null);assert.equal(staffCommands.length,0);assert.equal(accountCommands.length,0);assert.equal(keys,0);assert.equal(button('继续填写') === undefined,true,'no extra popup leave action');assert.equal(button('放弃本次填写') === undefined,true,'no extra popup leave action');
+  }
+  await click(button(kind==='staff'?'新增员工':'新增账号'));await settle(60);assert.equal(modal().querySelector('input[aria-label="初始密码"]').value,'');await click(button('取消'));
+ }
 });
 test.after(async()=>{await act(async()=>root.unmount());context?.clear();dom.window.close();await rm(folder,{recursive:true,force:true});});

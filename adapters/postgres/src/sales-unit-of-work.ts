@@ -133,6 +133,7 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
       requireDomain(schema.rows.length === 1 && schema.rows[0]!.current_sales_schema_ready === true,
         "SALES_SCHEMA_NOT_READY", "The current sales writer requires reviewed schema version 10");
       const result = await work(tx);
+      tx.assertPostingComplete();
       tx.close();
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       commitAttempted = true; await client.query("COMMIT");
@@ -176,6 +177,10 @@ class PostgresSalesTransaction implements SalesTransaction {
     return JSON.stringify([this.receiptActor, this.receiptKey, this.sales?.id, this.sales?.version, this.sales?.stockBasis,
       this.specificationResolved, this.referenceGeneration, [...this.previousLines.values()].filter(line => line.isCurrent)
         .map(line => [line.id, line.skuId, line.snapshot]).sort((a, b) => String(a[0]).localeCompare(String(b[0])))]);
+  }
+  assertPostingComplete(): void {
+    requireDomain(this.active, "TRANSACTION_CLOSED", "Posting completion requires its active original transaction");
+    this.balances.assertLiveComplete();
   }
   close(): void { this.active = false; this.invalidateReferenceReads(); }
   private readonly client: PgSalesClient;
@@ -423,14 +428,17 @@ class PostgresSalesTransaction implements SalesTransaction {
         skuId: id("sku", row.sku_id), quantityDelta: quantityFromSql(row.quantity_delta), source: { kind: "SALES", salesId: id("sales", row.sales_id), salesLineId: id("salesLine", row.sales_line_id), endpoint: "SALES_WAREHOUSE" },
         sourceDocumentVersion: versionFromSql(row.source_document_version), reversesEntryId: nullableId("ledger", row.reverses_entry_id), businessDate: businessDate(stringValue(row.business_date)), postedAt: stringValue(row.posted_at) }));
   }
-  async appendLedger(row: InventoryLedgerRow): Promise<void> {
-    requireDomain(row.source.kind === "SALES" && row.source.salesId === this.sales?.id, "TRANSACTION_SCOPE", "This adapter persists only runtime sales effects, not transfer commands");
-    this.balances.assertCanAppend(row);
+  async appendLedger(input: InventoryLedgerRow): Promise<void> {
+    const row: InventoryLedgerRow = structuredClone(input);
+    requireDomain(row.source.kind === "SALES" && row.source.salesId === this.sales?.id && this.sales?.stockBasis === "RUNTIME_LEDGER", "TRANSACTION_SCOPE", "This adapter persists only runtime sales effects, not transfer commands");
+    const transition = this.balances.prepareLiveAppend(row);
     const written = await this.query(`INSERT INTO naijue_erp.inventory_ledger (id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta,
-      source_sales_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at) VALUES ($1, $2, $3, $4, $5, $6, $7, 'SALES_WAREHOUSE', $8, $9, $10, $11)`,
-      [row.id, row.operationId, row.eventKind, row.warehouseId, row.skuId, row.quantityDelta.toString(), row.source.salesLineId, versionToSql(row.sourceDocumentVersion), row.reversesEntryId, row.businessDate, row.postedAt]);
+      source_sales_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at, quantity_before, quantity_after)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, 'SALES_WAREHOUSE', $8, $9, $10, $11, $12::bigint, $13::bigint)`,
+      [row.id, row.operationId, row.eventKind, row.warehouseId, row.skuId, row.quantityDelta.toString(), row.source.salesLineId, versionToSql(row.sourceDocumentVersion), row.reversesEntryId, row.businessDate, row.postedAt,
+        transition.quantityBefore.toString(), transition.quantityAfter.toString()]);
     requireDomain(written.rowCount === 1, "INVENTORY_INTEGRITY_FAILED", "Exact native inventory effect was not appended");
-    this.balances.didAppend(row);
+    this.balances.didAppendLive(transition);
   }
   async appendAudit(row: SalesAuditRow): Promise<void> {
     requireDomain(row.salesId === this.sales?.id, "TRANSACTION_SCOPE", "Audit must belong to the command target");

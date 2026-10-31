@@ -77,8 +77,9 @@ test('numbered HTTP keeps paired page/filter through immutable query snapshots o
   const ctx = context(), scope = ctx.createScope('numbered-ledger', id(3)); const bodies: unknown[] = [];
   const reader = createInventoryLedgerHttpReader({ origin: 'https://erp.example', basePath: '/api', fetch: async (url, init) => {
     assert.equal(url, 'https://erp.example/api/inventory/ledger/query'); assert.equal(init.method, 'POST');
+    assert.equal(new Headers(init.headers).get('X-Naijue-Ledger-Transition'), 'recorded-v1');
     bodies.push(JSON.parse(init.body as string));
-    return new Response(JSON.stringify(numberedPage(2)), { status: 200, headers: { 'content-type': 'application/json' } });
+    return new Response(JSON.stringify(numberedPage(2)), { status: 200, headers: { 'content-type': 'application/json', 'X-Naijue-Ledger-Transition': 'recorded-v1' } });
   } });
   const query = createInventoryLedgerQuery(scope, reader, () => assert.fail('unexpected denial'));
   assert.equal(bodies.length, 0);

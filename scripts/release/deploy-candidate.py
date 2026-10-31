@@ -46,8 +46,8 @@ RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CU
 FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
 # BEGIN GENERATED RELEASE CONTRACT
 # Generated from config/release-contract.json; edit that source, then regenerate.
-RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22"},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}}}''')
-RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":3010,"sha256":"0a4b708e228749048e18d8ae2f9f081df1a9e319d56babcb95282f36a46b3a2d"}''')
+RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}}}''')
+RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":4063,"sha256":"3b7c53fcbfe7801195c40265dc538fcfe3fb61bf0aa6b97659c0b3fa2d666178"}''')
 # END GENERATED RELEASE CONTRACT
 FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
 FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
@@ -360,7 +360,8 @@ def exact26_full(p):
         return False
     need('runtime26' not in p, 'FULL_MUST_NOT_REUSE_R1_REFERENCES')
     full = p.get('runtime26Full')
-    need(isinstance(full, dict) and {'references', 'media'} <= set(full) <= {'references', 'media', 'inventorySpool', 'credentialRequestKey'}, 'CLOSED_FULL_REFERENCES_REQUIRED')
+    need(isinstance(full, dict) and {'references', 'media'} <= set(full) <= {'references', 'media', 'inventorySpool', 'credentialRequestKey', 'catalogProfile'}, 'CLOSED_FULL_REFERENCES_REQUIRED')
+    full_catalog_profile(p)
     refs = full['references']
     need(isinstance(refs, dict) and set(refs) == FULL_REFERENCES, 'CLOSED_FULL_REFERENCES_REQUIRED')
     for ref in refs.values():
@@ -407,6 +408,10 @@ def runtime_binding(p):
              'capacityHost': p.get('capacityHost'), 'capacityGate': p.get('capacityGate'), 'capacityFinalInput': p.get('capacityFinalInput')}
     if 'capacityQaObserver' in p: value['capacityQaObserver'] = p['capacityQaObserver']
     if exact26_full(p):
+        profile = full_catalog_profile(p)
+        if p['runtime26Full'].get('catalogProfile', 'legacy-v1') != 'legacy-v1':
+            value['catalogBindingVersion'] = 2
+            value['catalogProfile'] = profile
         value['media'] = p['runtime26Full']['media']
         value['inventorySpool'] = p['runtime26Full'].get('inventorySpool')
         if 'credentialRequestKey' in p['runtime26Full']:
@@ -574,6 +579,16 @@ def capacity_runtime_configuration(p, runtime, pending=False):
     return {k: v for k, v in runtime.items() if k != 'capacityLaunch'}
 
 
+def full_catalog_profile(p):
+    """Finite explicit V1/V6/V7 semantics; never infer compatibility from review bytes."""
+    full = p.get('runtime26Full')
+    need(isinstance(full, dict), 'CLOSED_FULL_REFERENCES_REQUIRED')
+    selected = full.get('catalogProfile', 'legacy-v1')
+    need(isinstance(selected, str) and selected in RELEASE_CONTRACT['full']['catalogProfiles'],
+         'EXPLICIT_SUPPORTED_FULL_CATALOG_PROFILE_REQUIRED')
+    return RELEASE_CONTRACT['full']['catalogProfiles'][selected]
+
+
 def validate_full_metadata(p, runtime, review, metadata, independent, capacity_pending=False):
     """Fresh original issuer observation/review, without old C38/catalog constants."""
     runtime = capacity_runtime_configuration(p, runtime, capacity_pending)
@@ -593,17 +608,36 @@ def validate_full_metadata(p, runtime, review, metadata, independent, capacity_p
     need(('inventoryOutputSpool' in runtime) == ('inventorySpool' in p['runtime26Full']), 'FULL_SPOOL_SELECTION_CHANGED')
     if 'inventoryOutputSpool' in runtime:
         need(runtime['inventoryOutputSpool'] == {'directory': '/private/inventory-exports', 'maxBytes': 536870912, 'maxConcurrent': 1, 'maxDurationMs': 120000}, 'EXACT_FULL_OUTPUT_SPOOL_REQUIRED')
+    catalog_profile = full_catalog_profile(p)
+    v7_observation = catalog_profile.get('requiredObservation') == 'RECORDED_LIVE_LEDGER_PAIRS_V7'
+    if v7_observation:
+        need(isinstance(review, dict) and isinstance(review.get('catalog'), dict) and
+             set(review['catalog']) == {'format', 'patchLevel', 'sha256'}, 'CLOSED_V7_REVIEW_CATALOG_REQUIRED')
     purposes = set(RUNTIME26_PURPOSES + ['PRODUCT_MAINTENANCE', 'HISTORY_REVISION'])
     need(isinstance(review, dict) and set(review) == {'version', 'decision', 'target', 'catalog', 'purposes', 'scope', 'independentReview', 'realImportExecutionAuthorized'} and
          review['version'] == 'C_NATIVE_RUNTIME26_REVIEW_V1' and review['decision'] == 'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA' and
          review['scope'] == 'EXACT_TARGET_METADATA_ONLY' and review['realImportExecutionAuthorized'] is False and
          isinstance(review['purposes'], list) and len(review['purposes']) == len(purposes) and set(review['purposes']) == purposes and
-         review['catalog'].get('format') == 'EXACT26_RUNTIME_CATALOG_EXPORT_V1' and review['catalog'].get('patchLevel') == FULL_PATCH and
+         review['catalog'].get('format') == catalog_profile['format'] and review['catalog'].get('patchLevel') == catalog_profile['patchLevel'] and
          HASH.fullmatch(review['catalog'].get('sha256', '')), 'FRESH_FULL_PURPOSE_PROFILE_REVIEW_REQUIRED')
     need(independent.get('result') == 'PASS' and review['independentReview'] == {'path': RUNTIME26_INDEPENDENT, 'sha256': refs['independentReview']['sha256'], 'result': 'PASS'}, 'FULL_INDEPENDENT_REVIEW_REQUIRED')
-    need(isinstance(metadata, dict) and set(metadata) == {'identity', 'migration_versions', 'catalog_sha256', 'source_routines_match'} and
+    acl_field = catalog_profile['aclProofField']
+    observation_field = catalog_profile.get('observationProofField')
+    metadata_fields = {'identity', 'migration_versions', 'catalog_sha256', 'source_routines_match'}
+    if acl_field is not None:
+        metadata_fields.add(acl_field)
+    if observation_field is not None:
+        metadata_fields.add(observation_field)
+    need(isinstance(metadata, dict) and set(metadata) == metadata_fields and
+         (acl_field is None or metadata.get(acl_field) is True) and
+         (observation_field is None or metadata.get(observation_field) is True) and
          metadata['migration_versions'] == list(range(1, 27)) and metadata['source_routines_match'] is True and metadata['catalog_sha256'] == review['catalog']['sha256'], 'FULL_CURRENT_SCHEMA_SOURCE_ACL_PROOF_REQUIRED')
     identity, target = metadata['identity'], review['target']
+    if v7_observation:
+        # Match the genuine issuer's exact observation envelope, not a summary mock.
+        need(isinstance(identity, dict) and set(identity) == {'database', 'database_oid', 'database_owner',
+             'current_user', 'session_user', 'server_version_num', 'server_addr', 'server_port',
+             'postmaster_start', 'replication_role'}, 'CLOSED_V7_ISSUER_IDENTITY_REQUIRED')
     need(isinstance(target, dict) and set(target) == {'database', 'databaseOid', 'actingRole', 'sessionUser', 'serverAddress', 'serverPort', 'postmasterStart'} and
          target.get('database') == DATABASE and target.get('actingRole') == ROLE and target.get('sessionUser') == ROLE and
          isinstance(target.get('databaseOid'), str) and re.fullmatch(r'[1-9][0-9]*', target['databaseOid']) and
@@ -1782,16 +1816,53 @@ def create_web(p, docker, public=False):
 
 
 def health(p, docker, app_id, via_web=None):
-    # Executed in the app container to avoid starting a probe image or publishing a stage port.
-    script = """const h=require('node:http');const r=h.get({host:process.argv[1],port:Number(process.argv[2]),path:'/healthz',headers:{Host:'1n5635n614.goho.co'}},s=>{let b='';s.on('data',c=>{b+=c;if(b.length>4096)r.destroy()});s.on('end',()=>{try{const v=JSON.parse(b);if(s.statusCode!==200||v.status!=='HOST_READY'||v.databaseChecked!==false||v.sourceCommit!==process.argv[3]||v.buildId!==process.argv[4])process.exit(2);else process.stdout.write('HEALTH_IDENTITY_MATCH')}catch{process.exit(3)}})});r.setTimeout(3000,()=>{r.destroy();process.exit(4)});r.on('error',()=>process.exit(5));"""
+    # Identity/liveness is not readiness: issue both freshly against the same target.
+    script = r"""const h=require('node:http');
+function probe(path,accept,next){
+ const r=h.get({host:process.argv[1],port:Number(process.argv[2]),path,headers:{Host:'1n5635n614.goho.co'}},s=>{
+  let b='',size=0;
+  s.on('data',c=>{size+=Buffer.byteLength(c);if(size>4096){r.destroy();process.exit(2);return}b+=c});
+  s.on('error',()=>process.exit(5));
+  s.on('end',()=>{let v;try{v=JSON.parse(b)}catch{process.exit(3);return}
+   if(s.statusCode!==200||!v||typeof v!=='object'||!accept(v)){process.exit(2);return}next();});
+ });
+ r.setTimeout(3000,()=>{r.destroy();process.exit(4)});r.on('error',()=>process.exit(5));
+}
+probe('/healthz',v=>v.status==='HOST_ALIVE'&&v.databaseChecked===false&&v.sourceCommit===process.argv[3]&&v.buildId===process.argv[4],()=>
+ probe('/readyz',v=>v.status==='READY',()=>process.stdout.write('HEALTH_IDENTITY_AND_READINESS_MATCH')));
+"""
     for _ in range(15):
         try:
             result = docker.run(['exec', app_id, 'node', '-e', script, via_web or '127.0.0.1', '8080' if via_web else '3000', p['sourceCommit'], p['buildId']], 10)
-            need(result == b'HEALTH_IDENTITY_MATCH', 'CANDIDATE_HEALTH_RESPONSE_MISMATCH')
-            return {'path': '/healthz', 'status': 200, 'sourceCommit': p['sourceCommit'], 'buildId': p['buildId'], 'databaseChecked': False}
+            need(result == b'HEALTH_IDENTITY_AND_READINESS_MATCH', 'CANDIDATE_HEALTH_RESPONSE_MISMATCH')
+            return {'path': '/healthz', 'status': 200, 'sourceCommit': p['sourceCommit'], 'buildId': p['buildId'], 'databaseChecked': False,
+                    'readiness': {'path': '/readyz', 'status': 200, 'applicationChecked': True}}
         except Refused:
             time.sleep(1)
     raise Refused('CANDIDATE_INTERNAL_HEALTH_FAILED')
+
+
+def loopback_health(p):
+    # Independent bound-entry identity and fresh application readiness, not business acceptance.
+    checks = (
+        ('/healthz', lambda value: value.get('status') == 'HOST_ALIVE' and
+         value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and value.get('databaseChecked') is False),
+        ('/readyz', lambda value: value.get('status') == 'READY'),
+    )
+    for endpoint, accepts in checks:
+        connection = http.client.HTTPConnection('127.0.0.1', 18080, timeout=5)
+        try:
+            connection.request('GET', endpoint, headers={'Host': HOST})
+            response = connection.getresponse()
+            body = response.read(4097)
+            try:
+                value = json.loads(body)
+            except (ValueError, UnicodeError):
+                raise Refused('ACTUAL_LOOPBACK_ENTRY_HEALTH_MISMATCH') from None
+            need(response.status == 200 and len(body) <= 4096 and isinstance(value, dict) and accepts(value),
+                 'ACTUAL_LOOPBACK_ENTRY_HEALTH_MISMATCH')
+        finally:
+            connection.close()
 
 
 def payload_identity(payload, manifest, include_dependencies=False):
@@ -2069,18 +2140,7 @@ def activate(p, docker, journal, manifest):
         journal.event('PUBLIC_WEB_CREATED', containerId=public_id)
         docker.run(['start', public_id])
         observed = health(p, docker, staged['containers']['app']['id'], p['names']['publicWeb'])
-        # Independently check the loopback bound port with the approved Host header, without authentication or DB traffic.
-        connection = http.client.HTTPConnection('127.0.0.1', 18080, timeout=5)
-        try:
-            connection.request('GET', '/healthz', headers={'Host': HOST})
-            response = connection.getresponse()
-            body = response.read(4097)
-            value = json.loads(body)
-            need(response.status == 200 and len(body) <= 4096 and value.get('status') == 'HOST_READY' and
-                 value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and value.get('databaseChecked') is False,
-                 'ACTUAL_LOOPBACK_ENTRY_HEALTH_MISMATCH')
-        finally:
-            connection.close()
+        loopback_health(p)
         check_old(p, docker, web_running=False)
         write_boundary(p)
         info = docker.inspect(public_id)

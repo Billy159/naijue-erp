@@ -1,21 +1,21 @@
-import { Button, Select, Tag } from '@arco-design/web-react';
+import { Button, Select } from '@arco-design/web-react';
 import { useEffect, useReducer, useRef, useState, useSyncExternalStore, type ComponentType, type ComponentProps, type ReactNode } from 'react';
 import { LatestQuery } from '../../../../src/loading/latest-query.ts';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import type { SettingsDirectoryKind, SettingsDirectoryPage, SettingsDirectoryParameters, SettingsDirectoryReader, SettingsReference } from '../../../../src/settings/stores/maintenance-contracts.ts';
 
-import { Pagination } from '../inventory/pagination.tsx';
-import { SourceControl } from '../inventory/candidates.tsx';
-import { filterCss, singleCss } from '../inventory/source-control-css.ts';
+import { Pagination } from '../common/ui/pagination.tsx';
+import { SourceControl } from '../common/ui/source-control.tsx';
+import { filterCss } from '../inventory/source-control-css.ts';
+import { singleCss } from '../common/ui/control-css.ts';
 import { ALL_FILTER_VALUE } from '../inventory/filter-selection.ts';
 
 export const settingsSingleCss=singleCss+'\n.runtime-settings-directory{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 4px;font-size:12px}';
-const inventoryReferenceCss=filterCss+'\n'+singleCss+'\n:host(.inventory-reference-select) .arco-select-view .ui-single-tag{box-sizing:border-box;display:inline-flex;align-items:center;max-width:100%;height:23px;padding:1px 7px;background:#fff!important;color:var(--ca-ink)!important}\n:host(.inventory-reference-select) .ui-single-tag .arco-tag-content{min-width:0;overflow:hidden;text-overflow:ellipsis}\n:host(.inventory-reference-select) .ui-single-tag .arco-tag-close-btn{flex:none;margin-left:4px;color:var(--ca-ink-2)}\n:host(.inventory-reference-select) .arco-select-view input{min-width:32px}\n:host(.inventory-reference-select) .arco-select-view .arco-icon-hover{color:var(--ca-ink-2)}';
 const ControlledSelect = Select as ComponentType<Omit<ComponentProps<typeof Select>, 'value'> & { value: string | undefined }>;
-type SmallSelectProps = { inventoryReference?: boolean; value: string; items: readonly { value: string; label: string; disabled?: boolean }[]; label: string; placeholder?: string; search?: boolean; clear?: boolean; disabled?: boolean; loading?: boolean; remote?: boolean; onChange: (value: string) => void; onOpen?: () => void; onClose?: () => void; onSearch?: (value: string) => void; footer?: ReactNode };
+type SmallSelectProps = { selectedLabel?: string; value: string; items: readonly { value: string; label: string; disabled?: boolean }[]; label: string; placeholder?: string; search?: boolean; clear?: boolean; disabled?: boolean; loading?: boolean; remote?: boolean; onChange: (value: string) => void; onOpen?: () => void; onClose?: () => void; onSearch?: (value: string) => void; footer?: ReactNode };
 export function SmallSelect(props:SmallSelectProps) {
- return <SourceControl css={props.inventoryReference?inventoryReferenceCss:settingsSingleCss} attributes={{className:'ui-single-host bs-single runtime-settings-select'+(props.inventoryReference?' inventory-reference-select':'')}}>{(portal,host)=><SmallSelectContent {...props} portal={portal} host={host}/>}</SourceControl>;
+ return <SourceControl css={settingsSingleCss} attributes={{className:'ui-single-host bs-single runtime-settings-select'}}>{(portal,host)=><SmallSelectContent {...props} portal={portal} host={host}/>}</SourceControl>;
 }
 function SmallSelectContent(props:SmallSelectProps & {portal:HTMLElement;host:HTMLElement}) {
   const [open, setOpen] = useState(false), [mounted, setMounted] = useState(false), [, refreshPortal] = useReducer(value => value+1, 0);
@@ -24,12 +24,15 @@ function SmallSelectContent(props:SmallSelectProps & {portal:HTMLElement;host:HT
   // Installed Arco's Portal loses its container ref during React19 StrictMode replay.
   useEffect(() => { if (!mounted || !open || props.disabled) return; let active = true; queueMicrotask(() => { if (active) refreshPortal(); }); return () => { active = false; }; }, [mounted, open, props.disabled]);
   return <ControlledSelect className="ui-flat-select" value={props.value || undefined} options={[...props.items]} aria-label={props.label} placeholder={props.placeholder ?? props.label}
-    showSearch={props.search ?? false} filterOption={!props.remote} allowClear={props.inventoryReference ? false : props.clear ?? true} disabled={props.disabled ?? false} loading={props.loading ?? false} unmountOnExit
+    showSearch={props.search ?? false} filterOption={!props.remote} allowClear={props.clear ?? false} disabled={props.disabled ?? false} loading={props.loading ?? false} unmountOnExit
+    onFocus={event => {
+      // Non-search controls still need their wrapper tab stop.
+      if (!props.search) return;
+      const input=event.target;if(input instanceof HTMLInputElement){const view=input.closest<HTMLElement>('[role="combobox"]');if(view)view.tabIndex=-1;}
+    }}
     getPopupContainer={() => props.portal}
     triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: Math.min(Math.max(props.host.getBoundingClientRect().width ?? 180, 300), Math.max(180, window.innerWidth - (props.host.getBoundingClientRect().left ?? 0) - 12)) } }}
-    renderFormat={() => props.inventoryReference ? <Tag visible className="ui-single-tag" bordered={false} closable={!!props.value && (props.clear ?? true) && !props.disabled}
-      onMouseDown={event => { if ((event.target as Element).closest('.arco-tag-close-btn')) { event.preventDefault(); event.stopPropagation(); } }}
-      onClose={event => { event.stopPropagation(); props.onChange(''); setOpen(false); props.onClose?.(); }}>{props.items.find(item => item.value === props.value)?.label ?? ''}</Tag> : <span className="ui-single-tag">{props.items.find(item => item.value === props.value)?.label ?? ''}</span>}
+    renderFormat={() => <span className="ui-single-tag">{props.selectedLabel ?? props.items.find(item => item.value === props.value)?.label ?? ''}</span>}
     popupVisible={mounted && open && !props.disabled} dropdownRender={menu => <>{menu}{props.footer}</>} onVisibleChange={visible => { setOpen(visible); if (visible) props.onOpen?.(); else props.onClose?.(); }} onSearch={value => props.onSearch?.(value)}
     onChange={(value: unknown) => { props.onChange(typeof value === 'string' ? value : (props.items.find(item=>item.value===''||item.value==='all'||item.value==='ALL')?.value ?? '')); setOpen(false); props.onClose?.(); }}/>;
 }
@@ -59,15 +62,15 @@ export function ReferenceSelect(props: { scope: ReadScope; reader?: SettingsDire
   const [opened, setOpened] = useState(false);
   const current = state.phase === 'success' ? state.success : null;
   const options = new Map<string, SettingsReference>();
-  if (props.selected) options.set(props.selected.id, props.selected);
   for (const item of current?.data.items ?? []) options.set(item.id, item);
 
   const run = (search = '', page = 1) => { if (!props.disabled && query) void query.run({ search, page, pageSize: 20, hallId: props.hallId ?? null }); };
   const unavailable = !query || props.kind === 'warehouses' && !props.hallId;
   const page = current?.data;
   const items=[...options.values()].map(item=>({value:item.id,label:item.name??'名称未提供'}));
-  if(props.includeAll&&!props.required)items.unshift({value:ALL_FILTER_VALUE,label:props.allLabel??props.placeholder??props.label});
-  return <SmallSelect inventoryReference value={props.selected?.id ?? (props.includeAll&&!props.required?ALL_FILTER_VALUE:'')} items={items} label={props.label} placeholder={props.placeholder ?? '请选择'} search clear={!props.required} remote disabled={props.disabled || unavailable} loading={state.phase === 'loading'}
+  const searching=!!(state.request?.parameters.search??current?.parameters.search??'').trim();
+  if(props.includeAll&&!props.required&&!searching)items.unshift({value:ALL_FILTER_VALUE,label:props.allLabel??props.placeholder??props.label});
+  return <SmallSelect selectedLabel={props.selected?.name??(props.includeAll&&!props.required?props.allLabel??props.placeholder??props.label:'')} value={props.selected?.id ?? (props.includeAll&&!props.required?ALL_FILTER_VALUE:'')} items={items} label={props.label} placeholder={props.placeholder ?? '请选择'} search clear={!props.required} remote disabled={props.disabled || unavailable} loading={state.phase === 'loading'}
     onOpen={() => { setOpened(true); run(); }} onClose={() => { setOpened(false); query?.cancel(); }} onSearch={search => { if (opened) run(search); }}
     onChange={id => { if (!id || id===ALL_FILTER_VALUE&&props.includeAll&&!props.required) props.onChange(null); else if (current?.data.items.some(item => item.id === id)) props.onChange(options.get(id) ?? null); }}
     footer={<>{state.phase === 'error' && <div className="runtime-settings-directory" role="alert">{readMessage(state.error)}<Button type="text" onMouseDown={e => e.preventDefault()} onClick={() => { if (state.request) void query?.run(state.request.parameters); }}>重试</Button></div>}

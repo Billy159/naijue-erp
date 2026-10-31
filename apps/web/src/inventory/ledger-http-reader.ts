@@ -1,6 +1,7 @@
 import { businessDate, entityId, quantity } from '../../../../packages/domain/src/values.ts';
 import { checkedInventoryLedgerTimestamp, inventoryLedgerBefore, parseInventoryLedgerQuery } from '../../../../packages/application/src/inventory-ledger-query-validation.ts';
 import { INVENTORY_LEDGER_BUSINESS_TYPES } from '../../../../packages/application/src/inventory-ledger-query-contracts.ts';
+import { checkedInventoryLedgerBalanceTransition } from '../../../../packages/application/src/inventory-ledger-balance-transition.ts';
 import type { InventoryLedgerCursor, InventoryLedgerEntry, InventoryLedgerPage, InventoryLedgerQuery, InventoryLedgerReader } from './ledger-contracts.ts';
 import { LatestQuery } from '../loading/latest-query.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
@@ -82,8 +83,8 @@ export function checkedLedgerPage(value: unknown, parameters: InventoryLedgerQue
         if (operator.labelBasis !== 'CURRENT_REFERENCE' || (operator.accountId === null && operator.name !== null)) return invalid();
         if (operator.accountId !== null) uuid(operator.accountId);
         if (operator.name !== null) text(operator.name);
-        const transition = object(display.balanceTransition, ['state', 'before', 'after', 'reason']);
-        if (transition.state !== 'UNKNOWN' || transition.before !== null || transition.after !== null || transition.reason !== 'NO_RECORDED_BALANCE_TRANSITION') return invalid();
+        checkedInventoryLedgerBalanceTransition(display.balanceTransition,
+          { eventKind: item.eventKind as InventoryLedgerEntry['eventKind'], sourceKind: kind as InventoryLedgerEntry['source']['kind'], quantityDelta: item.quantityDelta as string }, invalid);
         // The authoritative source-number predicate uses PostgreSQL's locale.
         // A second JavaScript lowercase filter could reject a valid DB match.
       }
@@ -100,12 +101,24 @@ export function checkedLedgerPage(value: unknown, parameters: InventoryLedgerQue
 }
 export function createInventoryLedgerHttpReader(options: HttpQueryOptions): InventoryLedgerReader {
   const http = createHttpJsonQuery(options);
+  const fetch = options.fetch;
+  const recordedHttp = createHttpJsonQuery({ ...options, fetch: async (input, init) => {
+    const headers = new Headers(init.headers); headers.set('X-Naijue-Ledger-Transition', 'recorded-v1');
+    const response = await fetch(input, { ...init, headers });
+    // A successful old server must not silently masquerade as supporting this
+    // contract. Non200/auth errors retain the original transport precedence.
+    if (response.status === 200 && response.headers.get('X-Naijue-Ledger-Transition') !== 'recorded-v1') {
+      try { void response.body?.cancel().catch(() => {}); } catch { /* Cleanup cannot mask the safe version failure. */ }
+      throw new HttpQueryError('unavailable', 'INVENTORY_LEDGER_CONTRACT_UPGRADE_REQUIRED');
+    }
+    return response;
+  } });
   return Object.freeze({ readLedger: read => {
     const { warehouseId, skuId, pageSize, after, page, filter } = read.parameters;
     const numbered = page !== undefined || filter !== undefined;
     const parameters = parseInventoryLedgerQuery({ warehouseId, skuId, pageSize, after: after ? { postedAt: after.postedAt, entryId: after.entryId } : null,
       ...(numbered ? { page, filter: filter ? { dateFrom: filter.dateFrom, dateTo: filter.dateTo, businessType: filter.businessType, source: filter.source } : filter } : {}) });
-    return http.post('/inventory/ledger/query', parameters, read.signal, value => checkedLedgerPage(value, parameters));
+    return (numbered ? recordedHttp : http).post('/inventory/ledger/query', parameters, read.signal, value => checkedLedgerPage(value, parameters));
   } } satisfies InventoryLedgerReader);
 }
 export function createInventoryLedgerQuery(scope: ReadScope, reader: InventoryLedgerReader, denied: (error: HttpQueryError) => void) {

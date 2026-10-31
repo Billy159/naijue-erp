@@ -8,7 +8,7 @@ export function createInventoryProductActivation(options:{scope:ReadScope;host:H
  const capture=(event:Event)=>{const target=event.target;if(target instanceof options.host.ownerDocument.defaultView!.Element){const button=target.closest<HTMLElement>(options.anchorSelector??'button.mx-view');if(button&&options.host.contains(button))anchor=button;}};
  options.host.addEventListener('click',capture,true);
  const open=async(product:Selection)=>{
-  if(disposed||!options.scope.active)return;const request=++generation,origin=anchor?.isConnected?anchor:options.host.ownerDocument.activeElement instanceof options.host.ownerDocument.defaultView!.HTMLElement?options.host.ownerDocument.activeElement as HTMLElement:null,viewport=options.host.querySelector<HTMLElement>(options.viewportSelector??'#iw-results');
+  if(disposed||!options.scope.active)return;const request=++generation,origin=anchor?.isConnected?anchor:options.host.ownerDocument.activeElement instanceof options.host.ownerDocument.defaultView!.HTMLElement?options.host.ownerDocument.activeElement as HTMLElement:null,viewport=origin?.closest<HTMLElement>(options.viewportSelector??'#iw-results')??options.host.querySelector<HTMLElement>(options.viewportSelector??'#iw-results');
   drawer?.();drawer=null;options.feedback({phase:'loading'});
   try{const leaf=await options.load(retrySelected?'retry':'initial');if(disposed||!options.scope.active||request!==generation)return;drawer=leaf.open({parent:options.scope,product,anchor:origin,viewport,onClosed:()=>{if(request===generation)drawer=null;}});options.feedback({phase:'ready'});}
   catch{if(!disposed&&options.scope.active&&request===generation)options.feedback({phase:'error',retry:()=>{retrySelected=true;anchor=origin;void open(product);}});}

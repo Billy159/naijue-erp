@@ -13,7 +13,7 @@ import { parseTransferListQuery } from '../../../packages/application/src/transf
 export function createSyntheticTransferTransport(onRecord: (message: string) => void = () => {}, profile: UnifiedReviewProfile = 'standard', dataset?:QaReferenceProfile) {
 const readonlyFixtures = reviewProfile(profile) === 'transfer-readonly' ? createReadonlyTransferFixtures() : null;
 const uuid = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
-const base = fixtureDetail(), documents = new Map<string, TransferDraftDto>();
+const base = fixtureDetail(), documents = new Map<string, TransferDraftDto>(), createdAt = new Map<string, string>();
 const seedSource = seedFixtureDetail(), seed = { ...seedSource, stockBasis: 'CUTOFF_HISTORY' as const, document: { ...seedSource.document, header: { ...seedSource.document.header, number: 'SYN-HISTORY-DB-001', note: '合成只读历史示例（非正式）' } } };
 const seedSummary = { ...seedFixtureSummary(), number: seed.document.header.number };
 
@@ -29,7 +29,8 @@ const json = (value: unknown, status = 200) => new Response(JSON.stringify(value
 const deny = (status: number) => json({ error: { code: status === 403 ? 'FORBIDDEN' : 'SERVICE_UNAVAILABLE', message: 'Explicit synthetic failure' } }, status);
 const page = (items: readonly unknown[], query: { page: number; pageSize: number }) => json({ page: query.page, pageSize: query.pageSize, exactTotal: String(items.length), items: items.slice((query.page - 1) * query.pageSize, query.page * query.pageSize) });
 const referenceNames = (draft: TransferDraftDto) => ({ fromWarehouseName: warehouses.find(row => row.id === draft.header.fromWarehouseId)?.name ?? '合成调出仓', toWarehouseName: warehouses.find(row => row.id === draft.header.toWarehouseId)?.name ?? '合成调入仓', fromHallName: dataset?qaHalls[0]!.name:'合成营业厅', toHallName: dataset?qaHalls[0]!.name:'合成营业厅', createdByName: dataset?qaPrincipal.loginName:'合成验收账号', approvedByName: null });
-const currentDetail = (draft: TransferDraftDto) => ({ ...base, ...(dataset?{catalog:qaTransferCatalog(draft.lines)}:{}), document: { header: { ...base.document.header, ...draft.header, status: 'DRAFT', version: 1, createdByAccountId: principal.accountId,...(dataset?{createdHallId:qaHalls[0]!.id}:{}) }, lines: draft.lines }, references: referenceNames(draft) });
+const savedAt = (id:string):string => { const value=createdAt.get(id); if(!value)throw new TypeError('Synthetic SAVE creation instant was not recorded.'); return value; };
+const currentDetail = (draft: TransferDraftDto) => ({ ...base, ...(dataset?{catalog:qaTransferCatalog(draft.lines)}:{}), document: { header: { ...base.document.header, ...draft.header, status: 'DRAFT', version: 1, createdByAccountId: principal.accountId,createdAt:savedAt(draft.header.id),updatedAt:savedAt(draft.header.id),...(dataset?{createdHallId:qaHalls[0]!.id}:{}) }, lines: draft.lines }, references: referenceNames(draft) });
 const http = { origin: 'https://synthetic-management.invalid', basePath: '/api', fetch: async (url: string, init: RequestInit): Promise<Response> => {
   const body = init.body ? JSON.parse(String(init.body)) : null;
   const endpoint = new URL(url).pathname.replace('/api', ''); record(`${init.method} ${endpoint}`);
@@ -54,9 +55,10 @@ const http = { origin: 'https://synthetic-management.invalid', basePath: '/api',
   if (endpoint === '/transfers/commands') {
     if (body.action !== 'SAVE' || body.expectedVersion !== null) return json({ error: { code: 'INVALID_STATE', message: 'Harness only accepts new SAVE; not an edit/stock/approval simulation.' } }, 409);
     if (receipts.has(body.requestKey)) return json((receipts.get(body.requestKey) as { result: unknown }).result);
-    documents.set(body.draft.header.id, body.draft); writes++;
+    const completedAt=new Date().toISOString();
+    documents.set(body.draft.header.id, body.draft); createdAt.set(body.draft.header.id,completedAt); writes++;
     const result = { transferId: body.draft.header.id, operationId: crypto.randomUUID(), version: 1, status: 'DRAFT', ledgerEntryIds: [] };
-    receipts.set(body.requestKey, { requestKey: body.requestKey, action: 'SAVE', status: 'COMMITTED', completedAt: new Date().toISOString(), result });
+    receipts.set(body.requestKey, { requestKey: body.requestKey, action: 'SAVE', status: 'COMMITTED', completedAt, result });
     record(`SYNTHETIC ONLY: ${writes} SAVE(s) in page memory; no database writes.`);
     if (failure === 'saveUncertain') throw Error('Synthetic dropped response after in-memory save');
     return json(result);

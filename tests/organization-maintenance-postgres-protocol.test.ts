@@ -22,13 +22,13 @@ function record(kind: OrganizationMaintenanceKind): Record<string, unknown> {
     case "PAYMENT_ACCOUNT": return { ...base, name: "PAYMENT ACCOUNT", enabled: true, paymentMethod: reference(41), halls: [reference(42), reference(43)] };
   }
 }
-function setup(kind: OrganizationMaintenanceKind, role: "ADMIN" | "WAREHOUSE" | "SALESPERSON" = "ADMIN", raw: Record<string, unknown> | null = record(kind), total = "1") {
+function setup(kind: OrganizationMaintenanceKind, role: "ADMIN" | "WAREHOUSE" | "SALESPERSON" = "ADMIN", raw: Record<string, unknown> | readonly Record<string, unknown>[] | null = record(kind), total = "1", identity: Record<string, unknown> = {}, hallEnabled = true) {
   const calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = [];
   const pool = { async connect() { return { async query(sql: string, values: unknown[] = []) {
     calls.push({ sql, values: structuredClone(values) });
-    if (sql.includes("maintenance:identity")) return { rows: [{ account_id: actor.accountId, staff_id: id(901), login_enabled: true, employment_status: "在职", role, hall_id: actor.hallId }], rowCount: 1 };
-    if (sql.includes("maintenance:hall")) return { rows: [{ id: actor.hallId, enabled: true }], rowCount: 1 };
-    if (sql.startsWith("WITH matched")) return { rows: [{ total, items: raw === null ? [] : [raw] }], rowCount: 1 };
+    if (sql.includes("maintenance:identity")) return { rows: [{ account_id: actor.accountId, staff_id: id(901), login_enabled: true, employment_status: "在职", role, hall_id: actor.hallId, ...identity }], rowCount: 1 };
+    if (sql.includes("maintenance:hall")) return { rows: [{ id: actor.hallId, enabled: hallEnabled }], rowCount: 1 };
+    if (sql.startsWith("WITH matched")) return { rows: [{ total, items: raw === null ? [] : Array.isArray(raw) ? raw : [raw] }], rowCount: 1 };
     return { rows: [], rowCount: 0 };
   }, release(error?: unknown) { releases.push(error); } }; } };
   return { calls, releases, service: createOrganizationMaintenanceReadService(new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool))) };
@@ -139,7 +139,7 @@ test("staff-search F05: one literal search matches original staff name OR the li
   const noAccount = { ...original, account: null }, f = setup("STAFF", "ADMIN", noAccount);
   assert.deepEqual((await f.service.list(actor, "STAFF", { ...query, search: "SOURCE STAFF" })).items, [noAccount]);
 });
-test("staff-search F05: account search preserves other families and pending closed never reaches page SQL", async () => {
+test("staff-search F05: account search preserves other families and approved closed retains literal login-name search", async () => {
   for (const role of ["WAREHOUSE", "SALESPERSON"] as const) {
     const denied = setup("STAFF", role); await assert.rejects(denied.service.list(actor, "STAFF", { ...query, search: "SOURCE LOGIN" }), { code: "FORBIDDEN" });
     assert.ok(!denied.calls.some(c => c.sql.startsWith("WITH matched"))); assert.equal(denied.calls.at(-1)!.sql, "ROLLBACK");
@@ -150,15 +150,18 @@ test("staff-search F05: account search preserves other families and pending clos
     assert.ok(!sql.includes("COALESCE(a.login_name")); assert.match(sql, new RegExp(`WHERE strpos\\(lower\\(m\\.${kind === "ACCOUNT" ? "login_name" : "name"}\\),lower\\(\\$1::text\\)\\)>0 AND`));
   }
   const f = setup("STAFF");
-  await assert.rejects(f.service.list(actor, "STAFF", { ...query, search: "SOURCE LOGIN", loginStatus: "closed" }), { code: "STAFF_LOGIN_FILTER_NOT_READY" });
-  assert.ok(f.calls.some(c => c.sql.includes("maintenance:identity"))); assert.ok(!f.calls.some(c => c.sql.startsWith("WITH matched")));
-  assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
+  const page = await f.service.list(actor, "STAFF", { ...query, search: "SOURCE LOGIN", loginStatus: "closed" });
+  assert.deepEqual(page.items, [record("STAFF")]);
+  const call = f.calls.find(c => c.sql.startsWith("WITH matched"))!;
+  assert.ok(f.calls.some(c => c.sql.includes("maintenance:identity")));
+  assert.match(call.sql, /COALESCE\(a\.login_name/); assert.equal(call.values[0], "SOURCE LOGIN");
+  assert.equal(f.calls.at(-1)!.sql, "COMMIT");
 });
 
-test("staff-login v1 ALL/open filters combine with original search employment hall role before exact count and page", async () => {
+test("staff-login v1 ALL/open/closed filters combine with original search employment hall role before exact count and page", async () => {
   const staff = record("STAFF"), account = staff.account as Record<string, unknown>;
-  for (const loginStatus of ["", "open"]) for (const withRole of [false, true]) {
-    const raw = loginStatus === "open" ? { ...staff, account: { ...account, loginEnabled: true } } : { ...staff, account: null };
+  for (const loginStatus of ["", "open", "closed"]) for (const withRole of [false, true]) {
+    const raw = loginStatus === "" ? { ...staff, account: null } : { ...staff, account: { ...account, loginEnabled: loginStatus === "open" } };
     const f = setup("STAFF", "ADMIN", raw, "21");
     const input = { ...query, search: "LOGIN %_ ' literal", status: "disabled", hallId: id(1), page: 2, ...(withRole ? { role: "WAREHOUSE" } : {}), loginStatus };
     const result = await f.service.list(actor, "STAFF", input);
@@ -167,7 +170,7 @@ test("staff-login v1 ALL/open filters combine with original search employment ha
     assert.ok(f.calls.slice(0, index).some(c => c.sql.includes("maintenance:identity")));
     assert.deepEqual(call.values, [input.search, "disabled", id(1), 20, 20, null, ...(withRole ? ["WAREHOUSE"] : []), loginStatus]);
     const parameter = withRole ? 8 : 7;
-    assert.ok(call.sql.includes(`AND ($${parameter}::text='' OR a.login_enabled IS TRUE)`));
+    assert.ok(call.sql.includes(`AND ($${parameter}::text='' OR ($${parameter}='open' AND a.login_enabled IS TRUE) OR ($${parameter}='closed' AND a.login_enabled IS FALSE))`));
     assert.ok(call.sql.indexOf("a.login_enabled IS TRUE") < call.sql.indexOf("page AS"));
     assert.match(call.sql, /SELECT count\(\*\)::text FROM matched/); assert.match(call.sql, /LIMIT \$4 OFFSET \$5/);
     assert.doesNotMatch(call.sql, /COALESCE\(a\.login_enabled|password_hash|token_hash/);
@@ -185,7 +188,7 @@ test("staff-login v1 strict STAFF-only enums preserve current ADMIN authority an
   for (const kind of ["HALL", "WAREHOUSE", "ACCOUNT", "PAYMENT_METHOD", "PAYMENT_ACCOUNT"] as const) {
     const f = setup(kind); await assert.rejects(f.service.list(actor, kind, { ...query, loginStatus: "open" }), { code: "INVALID_ORGANIZATION_QUERY" }); assert.equal(f.calls.length, 0);
   }
-  for (const role of ["WAREHOUSE", "SALESPERSON"] as const) for (const loginStatus of ["open", "closed"]) {
+  for (const role of ["WAREHOUSE", "SALESPERSON"] as const) for (const loginStatus of ["", "open", "closed"]) {
     const f = setup("STAFF", role);
     await assert.rejects(f.service.list(actor, "STAFF", { ...query, loginStatus }), { code: "FORBIDDEN" });
     assert.ok(!f.calls.some(c => c.sql.startsWith("WITH matched"))); assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
@@ -269,5 +272,74 @@ test('CORE organization protocol: original evidence gates birth IDs and joined r
     } });
     const page = await createOrganizationMaintenanceReadService(reader).list(actor, kind, query); assert.equal(page.total, 1); assert.equal(page.items[0]!.id, nativeId);
     assert.equal(calls.at(-1)!.sql, 'COMMIT');
+  }
+});
+
+
+test("staff-login CLOSED B: common matched predicate excludes SQL NULL, retains exact 21-row boundaries and native projections", async () => {
+  // Independent, explicitly disabled synthetic records. Scripted PG rows do not prove engine membership.
+  const matches = Array.from({ length: 21 }, (_, n) => ({ ...record("STAFF"), id: id(2000 + n), name: `DISABLED ${String(n).padStart(2, "0")}`, account: { ...(record("STAFF").account as Record<string, unknown>), id: id(5000 + n) } }));
+  for (const withRole of [false, true]) for (const page of [1, 2, 3]) {
+    const expected = matches.slice((page - 1) * 20, page * 20);
+    const f = setup("STAFF", "ADMIN", expected, "21"), input = { ...query, page, loginStatus: "closed", ...(withRole ? { role: "WAREHOUSE" } : {}) };
+    const result = await f.service.list(actor, "STAFF", input);
+    assert.equal(result.total, 21); assert.equal(result.page, page); assert.deepEqual(result.items, expected);
+    const index = f.calls.findIndex(c => c.sql.startsWith("WITH matched")), call = f.calls[index]!, parameter = withRole ? 8 : 7;
+    assert.ok(f.calls.slice(0, index).some(c => c.sql.includes("maintenance:identity")));
+    assert.ok(f.calls.slice(0, index).some(c => c.sql.includes("maintenance:hall")));
+    assert.deepEqual(call.values, ["", "all", null, 20, (page - 1) * 20, null, ...(withRole ? ["WAREHOUSE"] : []), "closed"]);
+    assert.ok(call.sql.includes(`($${parameter}='closed' AND a.login_enabled IS FALSE)`));
+    assert.ok(call.sql.indexOf("a.login_enabled IS FALSE") < call.sql.indexOf("page AS"));
+    assert.match(call.sql, /LEFT JOIN naijue_erp\.user_account a ON a\.staff_id=m\.id/);
+    assert.match(call.sql, /SELECT count\(\*\)::text FROM matched/);
+    assert.match(call.sql, /ORDER BY display_name COLLATE "C",id LIMIT \$4 OFFSET \$5/);
+    assert.doesNotMatch(call.sql, /IS NOT TRUE|COALESCE\(a\.login_enabled|password_hash|token_hash/);
+    assert.equal(f.calls.filter(c => c.sql.startsWith("WITH matched")).length, 1);
+    assert.ok(f.calls.every(c => !/INSERT|UPDATE naijue|DELETE FROM/.test(c.sql)));
+  }
+  const noAccount = { ...record("STAFF"), account: null };
+  assert.deepEqual((await setup("STAFF", "ADMIN", noAccount).service.list(actor, "STAFF", { ...query, loginStatus: "" })).items, [noAccount]);
+  // IS FALSE on the LEFT JOIN's absent account is false, not the IS NOT TRUE branch rejected above.
+  const none = setup("STAFF", "ADMIN", null, "0");
+  assert.deepEqual((await none.service.list(actor, "STAFF", { ...query, loginStatus: "closed" })).items, []);
+  for (const input of [query, { ...query, role: "" }, { ...query, loginStatus: "closed" }, { ...query, role: "", loginStatus: "closed" }])
+    assert.deepEqual(parseOrganizationListQuery(input, "STAFF"), input);
+});
+
+test("staff-login CLOSED B: stale current identity/hall remains denied before target SQL, regardless of requested ADMIN", async () => {
+  for (const loginStatus of ["", "open", "closed"]) for (const [identity, hallEnabled] of [
+    [{ login_enabled: false }, true], [{ employment_status: "离职" }, true], [{ role: "LEGACY_ROLE_UNMAPPED" }, true],
+    [{ hall_id: id(999) }, true], [{}, false]
+  ] as const) {
+    const f = setup("STAFF", "ADMIN", record("STAFF"), "1", identity, hallEnabled);
+    await assert.rejects(f.service.list(actor, "STAFF", { ...query, role: "ADMIN", loginStatus }), { code: "FORBIDDEN" });
+    assert.ok(!f.calls.some(c => c.sql.startsWith("WITH matched"))); assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
+  }
+});
+
+test("staff-login CLOSED B: original CORE birth root/hall/account predicates compose after current authorization with stable bind offsets", async () => {
+  for (const withRole of [false, true]) {
+    const calls: { sql: string; values: unknown[] }[] = []; let checked = false;
+    const pool = { async connect() { return { async query(sql: string, values: unknown[] = []) {
+      calls.push({ sql, values });
+      if (sql.includes("maintenance:identity")) return { rows: [{ account_id: actor.accountId, staff_id: id(901), login_enabled: true, employment_status: "在职", role: "ADMIN", hall_id: actor.hallId }], rowCount: 1 };
+      if (sql.includes("maintenance:hall")) return { rows: [{ id: actor.hallId, enabled: true }], rowCount: 1 };
+      if (sql.startsWith("WITH matched")) {
+        assert.equal(checked, true); const start = withRole ? 9 : 8;
+        assert.ok(sql.includes(`m.id=ANY($${start}::uuid[])`));
+        assert.ok(sql.includes(`(m.hall_id IS NULL OR m.hall_id=ANY($${start + 1}::uuid[]))`));
+        assert.ok(sql.includes(`(a.id IS NULL OR a.id=ANY($${start + 2}::uuid[]))`));
+        assert.ok(sql.indexOf("a.login_enabled IS FALSE") < sql.indexOf("page AS"));
+        assert.deepEqual(values.slice(start - 1), [[nativeId], [id(1)], [id(21)]]);
+        return { rows: [{ total: "1", items: [record("STAFF")] }], rowCount: 1 };
+      }
+      return { rows: [], rowCount: 0 };
+    }, release() {} }; } };
+    const reader = new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), { profile: "COMMITTED_CORE_SETTINGS_V14", async assertReady(_context, current, kind) {
+      assert.equal(current.accountId, actor.accountId); assert.equal(kind, "STAFF"); assert.ok(calls.some(c => c.sql.includes("maintenance:identity"))); checked = true;
+      return { ids: [nativeId], hallIds: [id(1)], warehouseIds: [], customerIds: [], staffIds: [nativeId], accountIds: [id(21)] };
+    } });
+    const result = await createOrganizationMaintenanceReadService(reader).list(actor, "STAFF", { ...query, ...(withRole ? { role: "WAREHOUSE" } : {}), loginStatus: "closed" });
+    assert.deepEqual(result.items, [record("STAFF")]); assert.equal(calls.at(-1)!.sql, "COMMIT");
   }
 });

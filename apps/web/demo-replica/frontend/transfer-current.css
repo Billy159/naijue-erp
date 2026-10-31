@@ -81,3 +81,6 @@ body.tc-mode .sidebar-note,body.tc-mode .proto-tag{visibility:hidden}
 .tc-entry-actions{grid-column:1/-1;display:flex;gap:10px;border-top:1px solid var(--border);padding-top:12px}.tc-meta select{max-width:190px}
 
 .tc-doc-header>.tc-entry-actions{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap}.tc-doc-header>.tc-entry-actions>.btn{width:auto;min-width:110px}
+
+/* Shared pager owns the full footer; applied quantity remains a separate note. */
+.tc-list-pagination > .tc-document-pagination{width:100%;min-width:0}

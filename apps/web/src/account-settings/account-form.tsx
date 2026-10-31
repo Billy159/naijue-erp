@@ -32,7 +32,7 @@ export function AccountSettingsForm(props: AccountSettingsProps & { readonly con
   return <Modal className="demo-ui bs-modal demo-settings-modal account-settings-modal iw-arco-modal iw-arco-controls" visible title={titles[controller.intent]} maskClosable={false} autoFocus={false} focusLock
     okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'} confirmLoading={write.phase === 'checking' || write.phase === 'submitting'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || controller.intent === 'EDIT' && !state.dirty }}
-    onOk={() => { const transient = password; setPassword(''); void controller.submit(transient); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
+    onOk={() => { const transient = password; setPassword(''); void controller.submit(transient); }} onCancel={() => { if (controller.discard()) props.close(); }}>
     <div className="bs-form-fields iw-form-fields">{fields}</div>
     {error && <p className="bs-error" role="alert">{error}</p>}
     {controller.intent === 'DISABLE' && <p>确定禁用此账号？员工与历史资料继续保留，原登录会话将失效。</p>}
@@ -46,7 +46,6 @@ export function AccountSettingsForm(props: AccountSettingsProps & { readonly con
     {write.phase === 'uncertain' && <section role="alert" className="settings-note"><p>提交结果尚未确认，请勿重复保存，请查询原提交回执。</p>
       {write.error?.code === 'RECEIPT_NOT_FOUND' && <p>暂未查到原回执，仍不能确定是否已保存。</p>}{write.error?.kind === 'forbidden' && <p>当前无权读取原回执，提交结果仍待确认。</p>}
       <Button onClick={() => { void controller.recover(); }}>查询原提交回执</Button></section>}
-    {state.closePrompt && <section role="alert" className="settings-close-prompt"><strong>放弃本次填写？</strong><p>关闭后将清除本次未保存的内容。</p><div className="bs-row-actions"><Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => { if (controller.discard()) props.close(); }}>放弃本次填写</Button></div></section>}
   </Modal>;
 }
 const empty = Object.freeze({ phase: 'idle' as const, request: null, success: null, error: null });

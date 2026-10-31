@@ -2,7 +2,7 @@ import { authorizedEffectiveDocumentIdentity, assertEffectiveDocumentPage, nulla
 import { importedHistoryReadSql, importedHistoryTransferSingleHallScopeSql } from "./imported-history-query-reader.ts";
 import { sourceConfirmedReadIdentityOn } from "./source-confirmed-read-authorization.ts";
 import { checkedNativeRuntime26Capability, type NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
-import type { DocumentProductSummary, DocumentHistoryCoverage, SalesUnifiedListPage, SalesUnifiedSummary } from "../../../packages/application/src/sales-query-ports.ts";
+import type { DocumentCategorySummary, DocumentProductSummary, DocumentHistoryCoverage, SalesUnifiedListPage, SalesUnifiedSummary } from "../../../packages/application/src/sales-query-ports.ts";
 import type { TransferListQuery, TransferScopedRead } from "../../../packages/application/src/transfer-query-ports.ts";
 import type { Pool } from "pg";
 import type { SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } from "../../../packages/domain/src/documents.ts";
@@ -198,10 +198,10 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         const identity = authorizedEffectiveDocumentIdentity(row.dataset, row.batch_id, row.id, row.version);
         const productSummary = documentProductSummary(row), documentId = id("sales", identity.documentId), effectiveVersion = versionFromSql(identity.effectiveVersion);
         if (identity.dataset === "LIVE") {
-          return { ...decodeSummary(row, summaryQuantities(row)), dataset: "LIVE", batchId: null, documentId, effectiveVersion, productSummary }; }
+          return { ...decodeSummary(row, summaryQuantities(row)), dataset: "LIVE", batchId: null, documentId, effectiveVersion, productSummary, categorySummary: documentCategorySummary(row, "QUANTITY") }; }
         const quantity = normalNullableQuantity(row.quantity), incomingQuantity = normalNullableQuantity(row.incoming_quantity), outgoingQuantity = normalNullableQuantity(row.outgoing_quantity);
         requireDomain(quantity === null && incomingQuantity === null && outgoingQuantity === null || quantity !== null && incomingQuantity !== null && outgoingQuantity !== null && quantity === outgoingQuantity - incomingQuantity, "INVALID_DATABASE_VALUE", "Historical signed quantity totals disagree");
-        return { dataset: "HISTORY", batchId: id("operation", identity.batchId), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary,
+        return { dataset: "HISTORY", batchId: id("operation", identity.batchId), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary, categorySummary: documentCategorySummary(row, "QUANTITY"),
           number: stringValue(row.number), businessType: choice(row.business_type, ["SALE", "RETURN", "EXCHANGE"]), businessDate: row.business_date === null ? null : businessDate(stringValue(row.business_date)),
           status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), hallId: id("hall", row.hall_id), warehouseId: id("warehouse", row.warehouse_id), customerId: id("customer", row.customer_id),
           salespersonId: nullableId("staff", row.salesperson_id), responsibleStaffId: nullableId("staff", row.responsible_staff_id), responsibleName: nullableString(row.responsible_name), createdByName: nullableString(row.created_by_name),
@@ -222,7 +222,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         FROM naijue_erp.sales_header h JOIN naijue_erp.hall hall ON hall.id = h.hall_id
         JOIN naijue_erp.warehouse wh ON wh.id = h.warehouse_id JOIN naijue_erp.customer c ON c.id = h.customer_id
         LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id JOIN naijue_erp.staff creator ON creator.id=creator_account.staff_id WHERE ${p.where()}
-        ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC ${paging}`, p.values)).rows;
+        ORDER BY h.created_at DESC, h.number COLLATE "C" ASC, h.id ASC ${paging}`, p.values)).rows;
       requireDomain(rows.length <= parameters.pageSize && BigInt(rows.length) <= exactTotal, "INVALID_DATABASE_VALUE", "Sales page exceeds exact scope");
       // Only authorized, already-paged native IDs enter this one bounded batch.
       // LEFT JOIN returns an explicit zero aggregate for gift-only/empty documents;
@@ -255,10 +255,13 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id JOIN naijue_erp.staff creator ON creator.id=creator_account.staff_id WHERE ${p.where()}`, p.values)).rows;
       requireDomain(rows.length > 0, "DOCUMENT_NOT_FOUND", "Sales document is unavailable");
       const row = rowOf({ rows, rowCount: rows.length }); const header = decodeHeader(row);
-      const lineRows = (await query(`SELECT id, sales_id, line_no, sku_id, quantity::text, reference_price::text, deal_price::text, line_amount::text,
-        allocated_discount::text, is_gift, pricing_rule, discount_tenths, zero_confirmed, product_code_snapshot, product_name_snapshot,
-        color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current FROM naijue_erp.sales_line
-        WHERE sales_id = $1 AND is_current ORDER BY line_no, id LIMIT $2`, [header.id, SALES_DETAIL_MAX_CURRENT_LINES + 1])).rows;
+      const lineRows = (await query(`SELECT l.id, l.sales_id, l.line_no, l.sku_id, l.quantity::text, l.reference_price::text, l.deal_price::text, l.line_amount::text,
+        l.allocated_discount::text, l.is_gift, l.pricing_rule, l.discount_tenths, l.zero_confirmed, l.product_code_snapshot, l.product_name_snapshot,
+        l.color_name_snapshot, l.fit_name_snapshot, l.size_name_snapshot, l.barcode_snapshot, l.is_current,
+        p.id AS product_id, p.category_id, c.name AS category_name FROM naijue_erp.sales_line l
+        LEFT JOIN naijue_erp.sku sku ON sku.id=l.sku_id LEFT JOIN naijue_erp.product p ON p.id=sku.product_id
+        LEFT JOIN naijue_erp.product_category c ON c.id=p.category_id
+        WHERE l.sales_id = $1 AND l.is_current ORDER BY l.line_no, l.id LIMIT $2`, [header.id, SALES_DETAIL_MAX_CURRENT_LINES + 1])).rows;
       requireDomain(lineRows.length <= SALES_DETAIL_MAX_CURRENT_LINES, "SALES_READ_TOO_LARGE", "Sales detail exceeds the bounded response limit");
       const settlementRows = (await query(`SELECT s.id, s.sales_id, s.line_no, s.payment_account_id, s.payment_method_id_snapshot, s.direction, s.amount::text,
         s.account_name_snapshot, s.method_name_snapshot, pa.name AS current_account_name, pm.name AS current_method_name
@@ -267,7 +270,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         WHERE s.sales_id = $1 ORDER BY s.line_no, s.id LIMIT 4`, [header.id])).rows;
       requireDomain(settlementRows.length <= 3, "INVALID_DATABASE_VALUE", "Sales detail exceeds approved settlement count");
       const document: SalesDocument = { header, lines: lineRows.map(decodeLine), settlements: settlementRows.map(decodeSettlement) };
-      return { document, stockBasis: choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]),
+      return { document, ...salesDetailIdentitySummary(lineRows, row.stock_basis), stockBasis: choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]),
         referenceNames: { responsibleName: nullableString(row.responsible_name), createdByName: stringValue(row.created_by_name), hallName: stringValue(row.hall_name), warehouseName: stringValue(row.warehouse_name),
           customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name) },
         settlementNames: settlementRows.map(settlement => ({ settlementId: id("settlement", settlement.id), paymentAccountId: id("paymentAccount", settlement.payment_account_id),
@@ -399,13 +402,15 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
     const predicate = `strpos(lower(h.number),lower(${bind(filter.number)}::text))>0`;
     liveFilters.push(predicate); historyFilters.push(predicate);
   }
-  const candidates = `live_candidates AS MATERIALIZED (SELECT 'LIVE'::text AS dataset,NULL::uuid AS batch_id,${native.columns},NULL::text AS created_local_at,NULL::text AS updated_local_at FROM ${native.from} WHERE (${liveScope}) AND (${liveFilters.join(' AND ') || 'TRUE'})),
-    history_base AS MATERIALIZED (SELECT ${history.headerColumns}
+  // Creation order is independent from the business date or later edits. This
+  // internal key never expands the strict list wire; unknown history stays NULL.
+  const candidates = `live_candidates AS MATERIALIZED (SELECT 'LIVE'::text AS dataset,NULL::uuid AS batch_id,${native.columns},h.created_at AS sort_created_at,NULL::text AS created_local_at,NULL::text AS updated_local_at FROM ${native.from} WHERE (${liveScope}) AND (${liveFilters.join(' AND ') || 'TRUE'})),
+    history_base AS MATERIALIZED (SELECT ${history.headerColumns},h.created_instant AS sort_created_at
       FROM ${history.headerFrom} WHERE ${history.publishedPredicate} AND (${historyScope}) AND (${historyFilters.join(' AND ') || 'TRUE'})),
-    history_candidates AS MATERIALIZED (SELECT 'HISTORY'::text AS dataset,hb.batch_id,${historyColumns}
+    history_candidates AS MATERIALIZED (SELECT 'HISTORY'::text AS dataset,hb.batch_id,${historyColumns},hb.sort_created_at
       FROM history_base hb ${joins} LEFT JOIN naijue_erp.staff creator ON creator.id=hb.created_by_staff_id
       LEFT JOIN naijue_erp.staff approver ON approver.id=hb.approved_by_staff_id),
-    candidates AS (SELECT dataset,batch_id,${columns} FROM live_candidates UNION ALL SELECT dataset,batch_id,${columns} FROM history_candidates)`;
+    candidates AS (SELECT dataset,batch_id,${columns},sort_created_at FROM live_candidates UNION ALL SELECT dataset,batch_id,${columns},sort_created_at FROM history_candidates)`;
   const common = `${candidates},matched AS MATERIALIZED (SELECT * FROM candidates)`;
   // Preserve the original all-authorized-history corruption check, even for
   // documents outside the requested filters. Run it once in the totals query;
@@ -415,9 +420,9 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
         WHERE l.batch_id=h.batch_id AND l.header_id=h.id AND (${history.lineValidityPredicate}) IS NOT TRUE) AS lines_valid
       FROM ${history.headerFrom} WHERE ${history.publishedPredicate} AND (${historyScope}))`;
   const liveLine = kind === 'sales' ? 'sales_line' : 'transfer_line', nativeId = kind === 'sales' ? 'sales_id' : 'transfer_id';
-  const lines = (headers: string, product: boolean) => `SELECT p.dataset,p.batch_id,p.id AS document_id,l.id AS line_id,l.line_no,l.quantity::numeric AS quantity,${kind === 'sales' ? 'l.is_gift' : 'false'} AS is_gift${product ? ',s.product_id,l.product_code_snapshot,l.product_name_snapshot' : ''}
-      FROM ${headers} p JOIN naijue_erp.${liveLine} l ON p.dataset='LIVE' AND l.${nativeId}=p.id AND l.is_current${product ? ' LEFT JOIN naijue_erp.sku s ON s.id=l.sku_id' : ''}
-    UNION ALL SELECT p.dataset,p.batch_id,p.id,l.id,l.line_no,coalesce(le.quantity,l.quantity)::numeric,${kind === 'sales' ? 'l.is_gift' : 'false'}${product ? ',s.product_id,l.product_code_snapshot,l.product_name_snapshot' : ''}
+  const lines = (headers: string, product: boolean) => `SELECT p.dataset,p.batch_id,p.id AS document_id,l.id AS line_id,l.line_no,l.quantity::numeric AS quantity,${kind === 'sales' ? 'l.is_gift' : 'false'} AS is_gift${product ? ',s.product_id,l.product_code_snapshot,l.product_name_snapshot,cc.id AS category_id,cc.name AS category_name' : ''}
+      FROM ${headers} p JOIN naijue_erp.${liveLine} l ON p.dataset='LIVE' AND l.${nativeId}=p.id AND l.is_current${product ? ' LEFT JOIN naijue_erp.sku s ON s.id=l.sku_id LEFT JOIN naijue_erp.product cp ON cp.id=s.product_id LEFT JOIN naijue_erp.product_category cc ON cc.id=cp.category_id' : ''}
+    UNION ALL SELECT p.dataset,p.batch_id,p.id,l.id,l.line_no,coalesce(le.quantity,l.quantity)::numeric,${kind === 'sales' ? 'l.is_gift' : 'false'}${product ? ',s.product_id,l.product_code_snapshot,l.product_name_snapshot,NULL::uuid AS category_id,NULL::text AS category_name' : ''}
       FROM ${headers} p JOIN ${history.lineTable} l ON p.dataset='HISTORY' AND l.batch_id=p.batch_id AND l.header_id=p.id ${history.lineEffectiveJoins}${product ? ' LEFT JOIN naijue_erp.sku s ON s.id=l.sku_id' : ''}`;
   const metrics = (source: string) => `SELECT dataset,batch_id,document_id,
       CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN NOT is_gift THEN quantity ELSE 0 END) END AS quantity,
@@ -436,8 +441,17 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
       EXISTS(SELECT 1 FROM ${history.publicationFrom} WHERE ${history.publishedPredicate}) AS history_published
     FROM matched h LEFT JOIN total_metrics q ON ${metricJoin}),
     page_headers AS MATERIALIZED (
-      SELECT * FROM matched ORDER BY updated_at DESC NULLS LAST,id ASC,dataset ASC LIMIT $${values.length + 1} OFFSET $${values.length + 2}::bigint),
+      SELECT * FROM matched ORDER BY sort_created_at DESC NULLS LAST,id ASC,dataset ASC,batch_id ASC NULLS FIRST LIMIT $${values.length + 1} OFFSET $${values.length + 2}::bigint),
     page_lines AS MATERIALIZED (${lines('page_headers', true)}),page_metrics AS (${metrics('page_lines')}),
+    category_groups AS (SELECT dataset,batch_id,document_id,category_id,category_name,min(line_no) AS first_line,
+      ${kind === 'sales' ? 'sum(quantity)' : 'CASE WHEN bool_or(product_id IS NULL) THEN NULL ELSE count(DISTINCT product_id) END'} AS value
+      FROM page_lines WHERE dataset='LIVE' AND ${kind === 'sales' ? 'is_gift IS FALSE' : 'quantity>0'}
+      GROUP BY dataset,batch_id,document_id,category_id,category_name
+      HAVING ${kind === 'sales' ? 'sum(quantity)<>0' : 'bool_or(product_id IS NULL) OR count(DISTINCT product_id)>0'}),
+    category_ranked AS (SELECT *,row_number() OVER(PARTITION BY dataset,batch_id,document_id ORDER BY first_line,category_id) AS category_row FROM category_groups),
+    category_summaries AS (SELECT dataset,batch_id,document_id,
+      jsonb_agg(jsonb_build_object('categoryId',category_id,'categoryName',category_name,'value',value::text) ORDER BY category_row) FILTER(WHERE category_row<=3) AS category_items,
+      count(*)::text AS category_count,count(*)>3 AS category_has_more FROM category_ranked GROUP BY dataset,batch_id,document_id),
     products AS (SELECT *,row_number() OVER(PARTITION BY dataset,batch_id,document_id,coalesce(product_id::text,'line:'||line_id::text) ORDER BY line_no,line_id) AS identity_row FROM page_lines),
     previews AS (SELECT *,row_number() OVER(PARTITION BY dataset,batch_id,document_id ORDER BY line_no,line_id) AS preview_row FROM products WHERE identity_row=1),
     product_summaries AS (SELECT dataset,batch_id,document_id,
@@ -445,11 +459,12 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
       coalesce(jsonb_agg(jsonb_build_object('productId',product_id,'productCodeSnapshot',product_code_snapshot,'productNameSnapshot',product_name_snapshot) ORDER BY preview_row) FILTER(WHERE preview_row<=3),'[]'::jsonb) AS product_items,
       count(*)>3 AS product_has_more FROM previews GROUP BY dataset,batch_id,document_id),
     page_rows AS (    SELECT h.*,${['quantity','incoming_quantity','outgoing_quantity'].map(c => `${metricValue(c)}::text AS ${c}`).join(',')},
-      CASE WHEN ps.document_id IS NULL THEN '0' ELSE ps.product_count END AS product_count,coalesce(ps.product_items,'[]'::jsonb) AS product_items,coalesce(ps.product_has_more,false) AS product_has_more
+      CASE WHEN ps.document_id IS NULL THEN '0' ELSE ps.product_count END AS product_count,coalesce(ps.product_items,'[]'::jsonb) AS product_items,coalesce(ps.product_has_more,false) AS product_has_more,coalesce(cs.category_items,'[]'::jsonb) AS category_items,coalesce(cs.category_has_more,false) AS category_has_more,coalesce(cs.category_count,'0') AS category_count
     FROM page_headers h LEFT JOIN page_metrics q ON ${metricJoin}
       LEFT JOIN product_summaries ps ON ps.dataset=h.dataset AND ps.batch_id IS NOT DISTINCT FROM h.batch_id AND ps.document_id=h.id
-    ORDER BY h.updated_at DESC NULLS LAST,h.id ASC,h.dataset ASC)
-    SELECT summary.*,coalesce((SELECT jsonb_agg(to_jsonb(p) ORDER BY p.updated_at DESC NULLS LAST,p.id ASC,p.dataset ASC) FROM page_rows p),'[]'::jsonb) AS items FROM summary`,pageValues));
+      LEFT JOIN category_summaries cs ON cs.dataset=h.dataset AND cs.batch_id IS NOT DISTINCT FROM h.batch_id AND cs.document_id=h.id
+    ORDER BY h.sort_created_at DESC NULLS LAST,h.id ASC,h.dataset ASC,h.batch_id ASC NULLS FIRST)
+    SELECT summary.*,coalesce((SELECT jsonb_agg(to_jsonb(p)-'sort_created_at' ORDER BY p.sort_created_at DESC NULLS LAST,p.id ASC,p.dataset ASC,p.batch_id ASC NULLS FIRST) FROM page_rows p),'[]'::jsonb) AS items FROM summary`,pageValues));
   requireDomain(summary.history_valid === true && typeof summary.history_published === 'boolean','INVALID_DATABASE_VALUE','Published historical header/line facts contradict their effective revision');
   requireDomain(Array.isArray(summary.items),'INVALID_DATABASE_VALUE','Bounded document items required');
   const rows=summary.items as Record<string,unknown>[],exactTotal=count(summary.exact_total);
@@ -468,3 +483,35 @@ export function documentProductSummary(row: Record<string, unknown>): DocumentPr
   return { productCount, items, hasMore: row.product_has_more };
 }
 export { normalNullableQuantity, normalNullableMoney };
+
+export function documentCategorySummary(row: Record<string, unknown>, metric: DocumentCategorySummary['metric']): DocumentCategorySummary {
+  if(row.dataset==='HISTORY')return {basis:'UNKNOWN',metric,items:[],hasMore:false,categoryCount:null};
+  requireDomain(Array.isArray(row.category_items)&&row.category_items.length<=3&&typeof row.category_has_more==='boolean','INVALID_DATABASE_VALUE','Bounded current category projection required');
+  const seen=new Set<string|null>();
+  const items=row.category_items.map((entry:unknown)=>{
+    requireDomain(entry!==null&&typeof entry==='object'&&!Array.isArray(entry),'INVALID_DATABASE_VALUE','Category projection required');
+    const v=entry as Record<string,unknown>,categoryId=nullableId('category',v.categoryId),categoryName=nullableString(v.categoryName),value=normalNullableQuantity(v.value);
+    requireDomain(value!==null,'INVALID_DATABASE_VALUE','Current category value required');
+    requireDomain((categoryId===null)===(categoryName===null)&&!seen.has(categoryId)&&value!==0n&&(metric==='QUANTITY'||value>0n),'INVALID_DATABASE_VALUE','Invalid category projection');seen.add(categoryId);
+    return {categoryId,categoryName,value};
+  });
+  const categoryCount=count(row.category_count);
+  requireDomain(categoryCount>=BigInt(items.length)&&row.category_has_more===(categoryCount>BigInt(items.length)),'INVALID_DATABASE_VALUE','Category count mismatch');
+  return {basis:'CURRENT',metric,items,hasMore:row.category_has_more,categoryCount};
+}
+
+/** Same bounded current-line snapshot, not a second catalogue read. Never names as identity. */
+export function salesDetailIdentitySummary(rows:readonly Record<string,unknown>[],stockBasis:unknown):Pick<SalesDetail,'productSummary'|'categorySummary'>{
+ if(stockBasis==='CUTOFF_HISTORY')return {productSummary:{productCount:null,items:[],hasMore:false},categorySummary:{basis:'UNKNOWN',metric:'QUANTITY',categoryCount:null,items:[],hasMore:false}};
+ requireDomain(stockBasis==='RUNTIME_LEDGER'&&rows.length<=SALES_DETAIL_MAX_CURRENT_LINES,'INVALID_DATABASE_VALUE','Bounded current detail projection required');
+ const products=new Map<string,DocumentProductSummary['items'][number]>(),categories=new Map<string|null,DocumentCategorySummary['items'][number]>();
+ for(const row of rows){const productId=id('product',row.product_id),categoryId=nullableId('category',row.category_id),categoryName=nullableString(row.category_name);
+  requireDomain((categoryId===null)===(categoryName===null),'INVALID_DATABASE_VALUE','Current category identity required');
+  if(!products.has(productId))products.set(productId,{productId,productCodeSnapshot:nullableString(row.product_code_snapshot),productNameSnapshot:nullableString(row.product_name_snapshot)});
+  if(booleanValue(row.is_gift))continue;const value=quantityFromSql(row.quantity),previous=categories.get(categoryId);
+  requireDomain(!previous||previous.categoryName===categoryName,'INVALID_DATABASE_VALUE','Category identity must be consistent');
+  categories.set(categoryId,{categoryId,categoryName,value:(previous?.value??0n)+value});
+ }
+ const items=[...categories.values()].filter(item=>item.value!==0n);
+ return {productSummary:{productCount:BigInt(products.size),items:[...products.values()].slice(0,3),hasMore:products.size>3},categorySummary:{basis:'CURRENT',metric:'QUANTITY',categoryCount:BigInt(items.length),items,hasMore:false}};
+}

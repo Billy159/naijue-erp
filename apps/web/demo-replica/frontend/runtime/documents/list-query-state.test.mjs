@@ -14,8 +14,8 @@ let root;
 try{
  const out=path.join(temp,'lists.mjs');
  await build({stdin:{contents:"export {SalesList,newSalesListViewState} from './sales-list.tsx';export {TransfersList,newTransferListViewState} from './transfers-list.tsx';export {LatestQuery} from '../../../../src/loading/latest-query.ts';export {ReadScope} from '../../../../src/loading/read-scope.ts';",resolveDir:here,loader:'tsx'},outfile:out,bundle:true,platform:'node',format:'esm',external:['react','react-dom','react-dom/*'],jsx:'automatic',logLevel:'warning',plugins:[{name:'nonvisual-controls',setup(b){
- b.onLoad({filter:/source-controls\.tsx$/},()=>({loader:'tsx',contents:'export const SourceDate=()=>null;export const SourceMulti=()=>null;export const SalesReferenceFilter=()=>null;'}));
- b.onLoad({filter:/inventory\/pagination\.tsx$/},()=>({loader:'tsx',contents:'export function Pagination(p){return <div data-pagination={`${p.page}/${p.size}/${p.total}`}><button data-size onClick={()=>p.sizeChange(100)}>100/页</button><button data-page onClick={()=>p.change(2)}>下一页</button></div>}'}));
+ b.onLoad({filter:/source-controls\.tsx$/},()=>({loader:'tsx',contents:'export const SourceDate=p=><input aria-label={p.label} value={p.value} onChange={e=>p.change(e.target.value)}/>;export const SourceMulti=()=>null;export const SalesReferenceFilter=()=>null;'}));
+ b.onLoad({filter:/common\/ui\/pagination\.tsx$/},()=>({loader:'tsx',contents:'export function Pagination(p){return <div data-pagination={`${p.page}/${p.size}/${p.total}`}><button data-size onClick={()=>p.sizeChange(100)}>100/页</button><button data-page onClick={()=>p.change(2)}>下一页</button></div>}'}));
  }}]});
  const api=await import(pathToFileURL(out).href),host=document.getElementById('root');
  const tick=()=>act(async()=>{await Promise.resolve();});
@@ -23,7 +23,8 @@ try{
   const sales=kind==='sales',view=api[sales?'newSalesListViewState':'newTransferListViewState']();view.more=true;
   const pending=[],scope=new api.ReadScope({accountId:'test',sessionRevision:'1',permissionRevision:'1'},kind,null,()=>{});
   const query=new api.LatestQuery({scope,execute:read=>new Promise((resolve,reject)=>pending.push({...read,resolve,reject}))});
-  const session=sales?{scope,list:{list:query}}:{scope,list:query,references:{}};
+  const categoryDetails=new api.LatestQuery({scope,execute:async()=>{throw Error('category detail not requested by query ownership cases');}});
+  const session=sales?{scope,list:{list:query}}:{scope,list:query,references:{},categoryDetails};
   const props={session,view,references:{},canCreate:false,create(){},open(){},denied(e){throw e;},onAccessFailure(e){throw e;}};
   const mount=async()=>{root=createRoot(host);await act(async()=>root.render(createElement(api[sales?'SalesList':'TransfersList'],props)));};
   const unmount=async()=>{await act(async()=>root.unmount());root=null;};
@@ -49,6 +50,8 @@ try{
   // A superseding reset succeeds before C; old result cannot change applied or totals.
   await submit();const old=pending.at(-1);await click('button[type=button].btn:not(.tc-filter-toggle)');const reset=pending.at(-1);assert.equal(reset.parameters.filter.number,null);assert.equal(applied(),'B');await finish(reset,'RESET');await finish(old,'OLD');assert.equal(applied(),'');assert.equal(host.querySelector('[data-pending]').dataset.pending,'false');assert.doesNotMatch(host.querySelector('tbody').textContent,/OLD/);
   await click('[data-page]');assert.equal(pending.at(-1).parameters.pageSize,100);await finish(pending.at(-1),'PAGE2');assert.equal(pagination(),'2/100/120');
+  for(const [label,value] of [['开始日期','2026-10-30'],['结束日期','2026-10-01']])await act(async()=>{const el=host.querySelector('input[aria-label="'+label+'"]');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(el,value);el.dispatchEvent(new Event('input',{bubbles:true}));});
+  const beforeInvalid=pending.length;await submit();assert.equal(pending.length,beforeInvalid);assert.match(host.querySelector('[role=alert]').textContent,/开始日期不能晚于结束日期/);assert.ok(!host.querySelector('[role=alert] button'),'local invalid draft must not offer replay of unrelated previous valid query');
   await unmount();scope.dispose();await tick();console.log('PASS '+kind+': first failure, original retry, delayed labels, canceled reentry, late response, reset and authoritative pagination');
  }
 }finally{if(root)await act(async()=>root.unmount());dom.window.close();await rm(temp,{recursive:true,force:true});}

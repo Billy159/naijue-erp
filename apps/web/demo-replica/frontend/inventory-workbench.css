@@ -118,3 +118,6 @@ body.inventory-workbench #gold-drawer .ledger-scroll table{font:12px Arial,"Ping
 .iw-arco-modal .arco-modal-header{padding:var(--ca-space-3) var(--ca-space-5);height:auto;border-bottom:0}
 .iw-arco-modal .arco-modal-content{padding:var(--ca-space-3) var(--ca-space-5)}
 .iw-arco-modal .arco-modal-footer{padding:var(--ca-space-3) var(--ca-space-5);border-top:1px solid var(--border)}
+
+/* Approved range dialog: one native modal, no legacy popover overlay. */
+.iw-scope-dialog{width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 32px);margin:auto;padding:0}.iw-scope-dialog::backdrop{background:rgba(0,0,0,.28)}.iw-scope-dialog .iw-scope-head{text-align:center;position:relative;padding:16px 44px}.iw-scope-dialog .iw-scope-head button{position:absolute;right:8px;top:8px}.iw-scope-dialog .iw-scope-list{display:block;padding-left:24px;list-style:disc}.iw-scope-dialog .iw-scope-list li{display:list-item;margin:8px 0}

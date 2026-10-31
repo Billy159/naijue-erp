@@ -1,0 +1,13 @@
+# 完整正常写入权限合同 V6
+
+隔离真实PG中，V5已通过分类、颜色、版型、收款资料及商品/SKU的真实创建。随后正常RETURN_SAVE成功，RETURN_APPROVE在原history_numeric_ledger_set_guard处以42501失败。该语句级触发器即使没有历史修订记录，也会规划history_revision的全部用户列与xmin读取；原V5完整维护22项并不包含该正常库存写入依赖。
+
+已按实际135函数、触发器WHEN及正常单据/账本/余额/回执/审计路径核对有限可达范围：新增需要仅为history_revision的15个用户列和xmin SELECT，没有新增历史写入、UPDATE、DELETE、MAINTAIN或其他系统列要求。不通过关闭触发器、改业务规则或切换较弱旧profile解决。
+
+V6作为独立版本增加：EXACT26_RUNTIME_CATALOG_EXPORT_V6 / 26_hv2_history_set_guards_complete_write_xmin_from_v22。精确23项等于V5的22项加history_revision。原V3、V4、V5生成SQL字节与哈希保持不变；新结果字段complete_write_xmin_acl_match必须真实为true。原完整catalog、角色/序列、source135、租约、目的范围和提交前校验全部保留。生产source-host严格profile/format对应表同步支持V6。
+
+原生先RED：7项中6个按预期因缺V6失败，旧跨版本拒绝仍通过；实施后实际运行三个完整相关测试文件177/177通过，后端tsconfig类型检查退出0。真实production-provider构建和路由用例也通过；协议模拟不替代真实V6数据库权限与审核入账验证。本提交时后者仍待执行。
+
+云端证据：recovery/complete-write-v6-fix-prep/red-native-0421、green-native-0424、typecheck-native-0424。此前已提交的九项业务回执（八个创建和一个退货草稿）保留；接续只允许原键的剩余审核/销货操作，不重建数据或重放全部命令。
+
+正式使用还需要对实际目标建立匹配V6的列权限和独立catalog review，不能复用V5的22项review、更不能仅修改字符串放行。本次没有修改数据库迁移/函数业务代码或操作生产；提交源码本身不构成部署放行。

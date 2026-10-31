@@ -5,6 +5,8 @@ import { resolveNativeDocumentSpecifications } from '../adapters/postgres/src/na
 import { createMaintainedCatalogue26TransactionProof } from '../adapters/postgres/src/catalogue-completeness.ts';
 import type { PgSalesClient, PgSalesPool } from '../adapters/postgres/src/sales-unit-of-work.ts';
 import type { NativeRuntime26Capability } from '../packages/application/src/native-import-schema-contract.ts';
+import { PRODUCT_MAINTENANCE_MAX_SKUS, PRODUCT_MAINTENANCE_MAX_BARCODES } from '../packages/application/src/product-maintenance-validation.ts';
+import { COMPLETE_SCOPE_DECISION } from '../packages/application/src/inventory-cutoff-import.ts';
 import { CATALOGUE_PRICE_KEYS } from '../packages/application/src/catalogue-price-input.ts';
 import { actor, ids, sid } from './support/synthetic-fixtures.ts';
 const p=sid('product',610),group=sid('sizeGroup',614),category=sid('category',613),oldOperation=sid('operation',619);
@@ -43,8 +45,16 @@ function fixture(options:{zeroSku?:boolean;outsideGroup?:boolean;uncommitted?:bo
     else if(sql.startsWith('UPDATE naijue_erp.product SET')){for(const m of sql.split('WHERE')[0]!.matchAll(/(\w+)=\$(\d+)/g))root[m[1]!]=values[Number(m[2])-1];return {rows:[],rowCount:1};}
     else if(sql.startsWith('INSERT INTO naijue_erp.sku(')){const keys=['id','product_id','sku_code','color_id','fit_id','size_id','enabled','version','created_operation_id'];skus.push(Object.fromEntries(keys.map((k,i)=>[k,values[i]])));return {rows:[],rowCount:1};}
     else if(sql.includes('FROM naijue_erp.product WHERE id=$1::uuid FOR UPDATE'))rows=[{...root}];
-    else if(sql.includes('FROM naijue_erp.sku WHERE product_id=$1::uuid ORDER BY id'))rows=skus;
-    else if(sql.includes('FROM naijue_erp.sku_barcode b'))rows=[];
+    else if(sql.startsWith('SELECT id, product_id, sku_code, color_id, fit_id, size_id, enabled, version, created_operation_id\n      FROM naijue_erp.sku WHERE product_id=$1::uuid AND ')){
+      assert.match(sql,/ ORDER BY id LIMIT \$2 FOR UPDATE$/);assert.deepEqual(values,[p,PRODUCT_MAINTENANCE_MAX_SKUS+1,COMPLETE_SCOPE_DECISION]);
+      for(const predicate of ["native_creation_operation_valid('SKU',sku.id,sku.created_operation_id)","b.status='IMPORTED'","m.validator_version='HISTORY_TYPED_CLOSURE_V1'","r.action='IMPORT_PUBLISH'","r.status='COMMITTED'",'f.decision_reason=$3::text','pg_current_xact_id_if_assigned()'])assert.ok(sql.includes(predicate),predicate);
+      rows=skus;
+    }
+    else if(sql.startsWith('SELECT bc.id,bc.barcode,bc.sku_id,bc.barcode_kind,bc.scheme_id,bc.enabled FROM naijue_erp.sku_barcode bc\n      WHERE bc.sku_id=ANY($4::uuid[]) AND ')){
+      assert.match(sql,/ ORDER BY bc.id LIMIT \$2 FOR UPDATE OF bc$/);assert.deepEqual(values,[p,PRODUCT_MAINTENANCE_MAX_BARCODES+1,COMPLETE_SCOPE_DECISION,skus.map(row=>row.id)]);
+      for(const predicate of ["s.entity_type='BARCODE'","b.status='IMPORTED'","r.action='IMPORT_PUBLISH'","a.action IN ('CREATE','EDIT')","r.status='COMMITTED'",'pg_current_xact_id_if_assigned()'])assert.ok(sql.includes(predicate),predicate);
+      rows=[];
+    }
     else if(sql.includes('FROM naijue_erp.product_category WHERE'))rows=[{id:category}];
     else if(sql.includes('FROM naijue_erp.size_group WHERE'))rows=[{id:group}];
     else if(sql.includes('FROM naijue_erp.size_group_member WHERE'))rows=(values[1] as string[]).map(size_id=>({size_id}));

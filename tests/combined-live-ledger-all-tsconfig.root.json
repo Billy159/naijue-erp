@@ -1,0 +1,25 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../adapters/postgres/src/inventory-posting-balances.ts",
+    "../packages/application/src/inventory-ledger-balance-transition.ts",
+    "../packages/application/src/inventory-ledger-query-contracts.ts",
+    "../packages/application/src/inventory-ledger-query-validation.ts",
+    "./new-live-ledger-offline-contract.test.ts",
+    "../apps/api/src/inventory-ledger-query-http.ts",
+    "../apps/web/src/inventory/ledger-http-reader.ts",
+    "../apps/web/src/inventory/ledger-balance-transition-view.ts",
+    "../apps/web/src/inventory/ledger-drawer.tsx",
+    "../apps/web/src/inventory/ledger-transition-v1.test.ts",
+    "../apps/web/src/inventory/ledger.test.ts",
+    "./inventory-ledger-transition-http-v1.test.ts",
+    "./inventory-first-use-postgres-protocol.test.ts",
+    "./postgres-protocol.test.ts",
+    "./transfer-postgres-protocol.test.ts",
+    "./inventory-ledger-query.test.ts",
+    "./inventory-ledger-query-postgres-protocol.test.ts",
+    "../apps/api/src/inventory-ledger-query-http.test.ts",
+    "../apps/web/src/transport/http-readers.test.ts",
+    "./live-ledger-storage-source.test.ts"
+  ]
+}

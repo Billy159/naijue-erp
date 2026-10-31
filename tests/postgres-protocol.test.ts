@@ -603,3 +603,89 @@ test("pg protocol method identity: status-only writer preserves original NULL un
   await uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(next); });
   assert.ok(!client.calls.some(call => /^INSERT INTO naijue_erp.sales_settlement/.test(call.sql))); client.done();
 });
+
+// INACTIVE Layer3 writer bridge. Scripted driver acknowledgements are not PG
+// parser, lock, transaction durability or installed-schema evidence.
+function layer3SalesLedger(): Step { return { sql: /^INSERT INTO naijue_erp.inventory_ledger/ }; }
+function assertLayer3SalesPairs(client: ProtocolClient, pairs: readonly (readonly [string, string])[]): void {
+  const calls = client.calls.filter(call => /^INSERT INTO naijue_erp.inventory_ledger/.test(call.sql));
+  assert.equal(calls.length, pairs.length);
+  calls.forEach(({ values, sql }, i) => { const [before, after] = pairs[i]!;
+    assert.match(sql, /posted_at,\s*quantity_before,\s*quantity_after/);
+    assert.match(sql, /\$12::bigint,\s*\$13::bigint/);
+    assert.equal(values.length, 13); assert.deepEqual(values.slice(11), [before, after]);
+    assert.equal(typeof values[11], "string"); assert.equal(typeof values[12], "string");
+    assert.equal(BigInt(before) + BigInt(String(values[5])), BigInt(after));
+  });
+}
+test("LIVE layer3 RED sales writer bridge: actual same-key lines bind100→98→95 to original parameterized INSERTs", async () => {
+  const base = syntheticDraft("SALE", ["2", "3"]), draft = { ...base, lines: base.lines.map(line => ({ ...line, skuId: ids.sku })) };
+  const document = storedDocument(draft), next = storedDocument(draft, "APPROVED", 2), command = approve();
+  const effects = [["100", "98"], ["98", "95"]].flatMap<Step>((pair, i) => [layer3SalesLedger(),
+    { sql: /^UPDATE naijue_erp.inventory_balance/, inspect(values) { assert.equal(values[2], pair[1]); assert.equal(values[3], i + 8); assert.equal(values[6], i + 7); } }]);
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(document, [balanceRow(ids.sku, "100", 7)]),
+    ...effects, ...documentWrites(next, false, document), ...finalWrites("APPROVE"), commit()]);
+  const result = await service(client).execute(command); assert.equal(result.ledgerEntryIds.length, 2); client.done();
+  assertLayer3SalesPairs(client, [["100", "98"], ["98", "95"]]);
+  assert.equal(client.calls.filter(call => /^INSERT INTO naijue_erp.inventory_ledger/.test(call.sql)).length, 2);
+});
+test("LIVE layer3 RED sales writer bridge: UNAPPROVE records current83→85, not inferred original balance or copied old snapshot", async () => {
+  const command: SalesCommand = { action: "UNAPPROVE", actor, requestKey: "layer3-current-reversal", salesId: ids.sales, expectedVersion: version(2) };
+  const originalId = sid("ledger", 92001), document = storedDocument(undefined, "APPROVED", 2), next = storedDocument(undefined, "DRAFT", 3);
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(document, [balanceRow(ids.sku, "83", 9)]),
+    { sql: /FROM naijue_erp.inventory_ledger l JOIN naijue_erp.sales_line sl/, rows: [{ id: originalId, operation_id: sid("operation", 92000), event_kind: "APPROVE", warehouse_id: ids.warehouse,
+      sku_id: ids.sku, quantity_delta: "-2", sales_id: ids.sales, sales_line_id: ids.line, source_document_version: 2, reverses_entry_id: null, business_date: "2026-10-20", posted_at: time }],
+      inspect(_values, sql) { assert.doesNotMatch(sql, /quantity_before|quantity_after/); } },
+    { ...layer3SalesLedger(), inspect(values) { assert.equal(values[8], originalId); assert.equal(values[2], "UNAPPROVE"); } },
+    { sql: /^UPDATE naijue_erp.inventory_balance/, inspect(values) { assert.equal(values[2], "85"); assert.equal(values[3], 10); assert.equal(values[6], 9); } },
+    ...documentWrites(next, false, document), ...finalWrites("UNAPPROVE"), commit()]);
+  assert.equal((await service(client).execute(command)).status, "DRAFT"); client.done();
+  assertLayer3SalesPairs(client, [["83", "85"]]);
+  assert.ok(client.calls.every(call => !/^(UPDATE|DELETE FROM) naijue_erp.inventory_ledger/.test(call.sql)));
+});
+for (const failure of ["ZERO_ROWS", "TWO_ROWS", "DRIVER_THROW"] as const) {
+  test(`LIVE layer3 sales writer failure ${failure}: no token acknowledgement can proceed to balance/header/receipt`, async () => {
+    const command = approve(), broken = new Error("SYNTHETIC layer3 sales ledger failure");
+    const ledger: Step = { ...layer3SalesLedger(), ...(failure === "DRIVER_THROW" ? { error: broken } : { count: failure === "ZERO_ROWS" ? 0 : 2 }) };
+    const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(storedDocument()), ledger, rollback()]);
+    await assert.rejects(service(client).execute(command), failure === "DRIVER_THROW" ? broken : { code: "INVENTORY_INTEGRITY_FAILED" }); client.done();
+    assertLayer3SalesPairs(client, [["0", "-2"]]);
+    assert.equal(client.calls.some(call => /^UPDATE naijue_erp.inventory_balance|^UPDATE naijue_erp.sales_header|^INSERT INTO naijue_erp.audit_change|^INSERT INTO naijue_erp.operation_receipt|^COMMIT$/.test(call.sql)), false);
+  });
+}
+test("LIVE layer3 sales writer CAS failure: exact acknowledged pair cannot publish later facts or claim commit", async () => {
+  const command = approve(), client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(storedDocument()),
+    layer3SalesLedger(), { sql: /^UPDATE naijue_erp.inventory_balance/, count: 0 }, rollback()]);
+  await assert.rejects(service(client).execute(command), { code: "VERSION_CONFLICT" }); client.done();
+  assertLayer3SalesPairs(client, [["0", "-2"]]);
+  assert.equal(client.calls.some(call => /^UPDATE naijue_erp.sales_header|^INSERT INTO naijue_erp.audit_change|^INSERT INTO naijue_erp.operation_receipt|^COMMIT$/.test(call.sql)), false);
+});
+test("LIVE layer3 sales writer replay: original receipt/current authorization wins without snapshots or stock being rewritten from later83", async () => {
+  const command = approve(), result: SalesResult = { operationId: sid("operation", 93000), salesId: ids.sales, version: version(2), status: "APPROVED", ledgerEntryIds: [sid("ledger", 93001)] };
+  const receipt = { id: result.operationId, actor_account_id: actor.accountId, request_key: command.requestKey, request_hash: requestHash({ ...command, actor: { accountId: actor.accountId } }), action: command.action,
+    target_type: "SALES", target_sales_id: ids.sales, status: "COMMITTED", result, completed_at: time };
+  const client = new ProtocolClient([begin(), ...receiptRead(command, receipt), ...salesRead(storedDocument(undefined, "APPROVED", 2), [balanceRow(ids.sku, "83", 9)]), commit()]);
+  let authorized = 0; assert.deepEqual(await service(client, () => { authorized++; }).execute(command), result); assert.equal(authorized, 1); client.done();
+  assert.ok(client.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql)));
+});
+
+for (const failure of ["OMITTED_PUT", "CAUGHT_INSERT_ZERO", "CAUGHT_CAS_ZERO"] as const) {
+  test(`LIVE layer4A RED sales completion ${failure}: trusted callback cannot swallow unfinished posting into COMMIT`, async () => {
+    const row = { id:sid("ledger",96001), operationId:sid("operation",96000), eventKind:"APPROVE" as const,
+      warehouseId:ids.warehouse,skuId:ids.sku,quantityDelta:quantity("-2"),source:{kind:"SALES" as const,salesId:ids.sales,salesLineId:ids.line,endpoint:"SALES_WAREHOUSE" as const},
+      sourceDocumentVersion:version(2),reversesEntryId:null,businessDate:storedDocument().header.businessDate,postedAt:time };
+    const client=new ProtocolClient([begin(),...salesRead(storedDocument()),{sql:/^INSERT INTO naijue_erp.inventory_ledger/,count:failure==="CAUGHT_INSERT_ZERO"?0:1},
+      ...(failure==="CAUGHT_CAS_ZERO"?[{sql:/^UPDATE naijue_erp.inventory_balance/,count:0}]:[]),{sql:/^(COMMIT|ROLLBACK)$/}]);
+    let caught:unknown;
+    try { await uow(client).transaction(async tx=>{
+      await tx.getSales(ids.sales);
+      try { await tx.appendLedger(row); } catch(error) { assert.equal(failure,"CAUGHT_INSERT_ZERO");assert.equal((error as {code:string}).code,"INVENTORY_INTEGRITY_FAILED"); }
+      if(failure==="CAUGHT_CAS_ZERO") {
+        const previous=(await tx.getBalance(ids.warehouse,ids.sku))!;
+        await assert.rejects(tx.putBalance({...previous,quantity:quantity("-2"),version:version(2),lastOperationId:row.operationId,updatedAt:time}),{code:"VERSION_CONFLICT"});
+      }
+    }); } catch(error) { caught=error; }
+    client.done();assert.equal((caught as {code?:string}|undefined)?.code,"INVENTORY_INTEGRITY_FAILED","Missing completion guard must reject before COMMIT");
+    assert.equal(client.calls.at(-1)!.sql,"ROLLBACK");assert.equal(client.calls.some(c=>c.sql==="COMMIT"),false);
+  });
+}

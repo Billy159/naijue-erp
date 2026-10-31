@@ -42,7 +42,8 @@
     "release:pack": "node scripts/release/pack.mjs",
     "test:release:pack": "node --test scripts/release/pack.test.mjs",
     "typecheck:launch-api": "tsc --noEmit -p tsconfig.launch-api.json",
-    "check:launch": "node scripts/check-launch.mjs"
+    "check:launch": "node scripts/check-launch.mjs",
+    "check:web:production": "node apps/web/demo-replica/check-production.mjs"
   },
   "dependencies": {
     "@arco-design/web-react": "2.66.16",

@@ -1,6 +1,7 @@
 import type { BusinessDate, EntityId } from "../../domain/src/values.ts";
 import type { InventoryQueryAuthorization, InventoryReadScope, InventorySelection } from "./inventory-query-contracts.ts";
 import type { ActorContext } from "./ports.ts";
+import type { InventoryLedgerBalanceTransition } from "./inventory-ledger-balance-transition.ts";
 
 /** Technical response bound, not a business history or quantity limit. */
 export const INVENTORY_LEDGER_MAX_PAGE_SIZE = 200;
@@ -45,7 +46,7 @@ export interface InventoryLedgerEntry {
     readonly date: string; readonly businessType: InventoryLedgerBusinessType;
     readonly sourceNumber: string | null;
     readonly operator: { readonly accountId: string | null; readonly name: string | null; readonly labelBasis: "CURRENT_REFERENCE" };
-    readonly balanceTransition: { readonly state: "UNKNOWN"; readonly before: null; readonly after: null; readonly reason: "NO_RECORDED_BALANCE_TRANSITION" };
+    readonly balanceTransition: InventoryLedgerBalanceTransition;
     /** Provenance does not confer document visibility. The destination must independently authorize. */
     readonly navigation: "NOT_CHECKED";
   };

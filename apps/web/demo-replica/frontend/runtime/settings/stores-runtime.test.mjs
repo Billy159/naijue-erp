@@ -56,12 +56,28 @@ test('replica first tab is lazy and server total/page use executed query while f
   await click(shadowAll('.arco-select-view',document.querySelector('.bs-pager'))[0]);await click(shadowAll('.arco-select-option').find(node=>node.textContent.trim()==='50条/页'));assert.equal(calls.at(-1).query.pageSize,50);await click(button('查询'));assert.equal(calls.at(-1).query.pageSize,50);await click(button('重置'));assert.equal(calls.at(-1).query.pageSize,50);
   await click(button('操作记录'));await settle(60);assert.equal(auditReads,1);
 });
-test('replica dirty cancel preserves input, warehouse is single hall, unknown save only reads original receipt',async()=>{
-  await fresh();await click(button('新增营业厅'));await settle(60);await input(modal().querySelector('input[aria-label="名称"]'),'保留输入');await act(async()=>modal().querySelector('input[aria-label="名称"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',keyCode:27,bubbles:true})));await settle();assert.ok(button('继续填写'));await click(button('继续填写'));assert.equal(modal().querySelector('input[aria-label="名称"]').value,'保留输入');assert.equal(keyCount,0);
-  await click(button('取消'));await click(button('放弃本次填写'));assert.equal(workspace.getSnapshot().stores,null);
+test('replica warehouse is single hall and unknown save only reads original receipt',async()=>{
+  await fresh();
   await click([...document.querySelectorAll('[role="tab"]')].find(node=>node.textContent==='仓库'));await click(button('编辑'));await settle(60);
   assert.equal(modal().querySelectorAll('[aria-label="所属营业厅"] .arco-input-tag').length,0);assert.equal(workspace.getSnapshot().warehouses.record.version,4);
   await input(modal().querySelector('input[aria-label="名称"]'),'结果待确认仓');await click(button('确定'));assert.equal(commands.length,1);const original=commands[0];assert.equal(original.values.hallId,uuid(1));assert.equal(workspace.getSnapshot().warehouses.getSnapshot().write.phase,'uncertain');
-  await click(button('取消'));assert.ok(button('查询提交结果'));assert.equal(commands.length,1);await click(button('查询提交结果'));await settle(60);assert.equal(receipts[0],original);assert.equal(keyCount,1);assert.equal(workspace.getSnapshot().warehouses,null);
+  await click(button('取消'));assert.ok(Boolean(button('查询提交结果')));assert.equal(commands.length,1);await click(button('查询提交结果'));await settle(60);assert.equal(receipts[0],original);assert.equal(keyCount,1);assert.equal(workspace.getSnapshot().warehouses,null);
+});
+test('store and warehouse dirty Cancel, close icon and Escape dismiss directly with no write or extra prompt',async()=>{
+  await fresh();
+  for(const [kind,label] of [['stores','营业厅'],['warehouses','仓库']]) {
+    await click([...document.querySelectorAll('[role="tab"]')].find(node=>node.textContent===label));
+    for(const mode of ['cancel','icon','escape']) {
+      await click(button('新增'+label));await settle(60);
+      const editor=workspace.getSnapshot()[kind];await input(modal().querySelector('input[aria-label="名称"]'),'未保存'+label);
+      assert.equal(button('继续填写') === undefined,true,'no extra popup leave action');assert.equal(button('放弃本次填写') === undefined,true,'no extra popup leave action');
+      if(mode==='cancel')await click(button('取消'));
+      else if(mode==='icon')await click(modal().querySelector('.arco-modal-close-icon'));
+      else {await act(async()=>modal().querySelector('input').dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',keyCode:27,bubbles:true})));await settle();}
+      assert.equal(modal() === null,true,'modal dismissed');assert.equal(workspace.getSnapshot()[kind],null);assert.equal(editor.getSnapshot().draft,null);
+      assert.equal(commands.length,0);assert.equal(keyCount,0);assert.equal(receipts.length,0);
+    }
+    await click(button('新增'+label));await settle(60);assert.equal(modal().querySelector('input[aria-label="名称"]').value,'');await click(button('取消'));
+  }
 });
 test.after(async()=>{await act(async()=>root.unmount());context?.clear();dom.window.close();await rm(temporary,{recursive:true,force:true});});

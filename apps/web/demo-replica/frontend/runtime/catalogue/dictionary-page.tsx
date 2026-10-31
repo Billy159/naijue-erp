@@ -16,6 +16,7 @@ function Settings({ options }: { options: CataloguePageOptions }) {
     for (const [kind, target] of [['COLOR', 'colors'], ['FIT', 'fits']] as const) if (allowedTabs.some(([key]) => key === target) && ['submitting', 'checking', 'uncertain', 'committed'].includes(options.commandOwners?.[kind]?.getSnapshot().phase ?? '')) return target;
     return options.initialSettingTab ?? allowedTabs[0]![0];
   }), [deferred, setDeferred] = useState<ProductSettingTab | null>(null);
+  const [pageSizes,setPageSizes]=useState<Partial<Record<ProductSettingTab,Query['pageSize']>>>({});
   const guard = useRef<(() => boolean) | null>(null);
   const [locked, setLocked] = useState(false);
   const receiveGuard = useCallback((value: (() => boolean) | null, pending = false) => { guard.current = value; setLocked(pending); }, []);
@@ -23,13 +24,13 @@ function Settings({ options }: { options: CataloguePageOptions }) {
   const choose = (next: ProductSettingTab) => { if (next === tab || !allowedTabs.some(([key]) => key === next)) return; if (guard.current && !guard.current()) setDeferred(next); else setTab(next); };
   return <div className="pc-workbench pc-settings-page"><Head title="商品设置" /><section className="pc-settings">
     <div className="tabs" role="tablist">{allowedTabs.map(([key, title]) => <button key={key} role="tab" aria-selected={key === tab} className={key === tab ? 'active' : ''} onClick={() => choose(key)}>{title}</button>)}</div>
-    <Dictionary key={tab} options={options} tab={tab} guard={receiveGuard} />
+    <Dictionary key={tab} options={options} tab={tab} pageSize={pageSizes[tab]??20} rememberSize={size=>setPageSizes(sizes=>({...sizes,[tab]:size}))} guard={receiveGuard} />
     {deferred && <SourceModal title="有未保存的修改" close={() => setDeferred(null)} footer={<><button className="btn" onClick={() => setDeferred(null)}>继续编辑</button><button className="btn primary" disabled={locked} onClick={() => { setTab(deferred); setDeferred(null); }}>放弃修改并离开</button></>}><p>离开后，本次未保存的修改将丢失。</p></SourceModal>}
   </section></div>;
 }
-function Dictionary({ options, tab, guard }: { options: CataloguePageOptions; tab: ProductSettingTab; guard: (value: (() => boolean) | null, locked?: boolean) => void }) {
+function Dictionary({ options, tab, guard, pageSize, rememberSize }: { pageSize:Query['pageSize']; rememberSize:(size:Query['pageSize'])=>void; options: CataloguePageOptions; tab: ProductSettingTab; guard: (value: (() => boolean) | null, locked?: boolean) => void }) {
   const execute = useMemo(() => (read: QueryRead<Query>): Promise<Page> => tab === 'colors' ? options.catalogue.readColors(read) : tab === 'fits' ? options.catalogue.readFits(read) : tab === 'groups' ? options.dictionaries.readSizeGroups(read) : options.dictionaries.readSeasons(read), [tab, options]);
-  const { query, snapshot } = useRead(options, execute, initial);
+  const { query, snapshot } = useRead(options, execute, {...initial,pageSize});
   const [search, setSearch] = useState(''), [editing, setEditing] = useState<{ entry: CatalogueSettingsEntry | null; resumeCommand?: CatalogueMaintenanceCommand } | null>(null);
   const [notice, setNotice] = useState('');
   const changedOperations = useRef(new Set<string>());
@@ -51,7 +52,7 @@ function Dictionary({ options, tab, guard }: { options: CataloguePageOptions; ta
     }
   }, [commandState, editing, data]);
   const label = tabs.find(([key]) => key === tab)![1];
-  const read = (next: Query) => { void query.run(next); };
+  const read = (next: Query) => { rememberSize(next.pageSize); void query.run(next); };
   async function saved(result: CatalogueMaintenanceResult, action: string, code: string) {
     if (!kind || !options.scope.active) return false;
     if (!changedOperations.current.has(result.operationId)) { changedOperations.current.add(result.operationId); options.onChanged(kind); }

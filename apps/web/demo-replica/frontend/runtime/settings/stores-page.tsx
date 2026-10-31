@@ -66,7 +66,7 @@ function StoreTabBody(props: Parameters<typeof StoreTab>[0] & { controller: Stor
   useEffect(() => { void controller.queryList(ui.applied); }, [controller]);
   useEffect(() => () => localEditor?.dispose(), [localEditor]);
   useLayoutEffect(() => { if (table.current && state.phase === 'success') { table.current.scrollTop = ui.tableScroll.top; table.current.scrollLeft = ui.tableScroll.left; } }, [state.phase, state.success]);
-  const run = (parameters = ui.applied) => { ui.applied = { ...parameters }; void controller.queryList(ui.applied); refresh(); };
+  const run = (parameters = ui.applied) => { ui.applied = { ...parameters, search: parameters.search.trim() }; void controller.queryList(ui.applied); refresh(); };
   const openEditor = (record: StoreSettingsEntry | null) => {
     controller.closeDetail(); setDetail(null);
     if (workspace) workspace.open(kind, record);
@@ -106,13 +106,10 @@ function StoreTabBody(props: Parameters<typeof StoreTab>[0] & { controller: Stor
     {auditOpen && props.audit && (auditModule ? <auditModule.default scope={props.scope} capability={props.audit} onAccessFailure={props.onAccessFailure} close={() => { setAuditOpen(false); restoreFocus(); }}/> : <Modal visible title="基础设置操作记录" maskClosable={false} footer={<Button onClick={() => { setAuditOpen(false); restoreFocus(); }}>取消</Button>} onCancel={() => { setAuditOpen(false); restoreFocus(); }}><p role={auditFailed ? 'alert' : 'status'}>{auditFailed ? '操作记录暂未加载。' : '正在读取操作记录…'}{auditFailed && <Button type="text" onClick={retryAudit}>重试加载</Button>}</p></Modal>)}
   </section>;
 }
-const emptyEditor = Object.freeze({ closePrompt: false });
 function PendingForm(props: { kind: StoreSettingsKind; editor: StoreMaintenanceController | null; failed: boolean; retry: () => void; close: () => void }) {
-  const state = useSyncExternalStore<{ readonly closePrompt: boolean }>(props.editor?.subscribe ?? noSubscribe, props.editor?.getSnapshot ?? (() => emptyEditor), props.editor?.getSnapshot ?? (() => emptyEditor));
-  const cancel = () => { if (!props.editor || props.editor.requestClose()) props.close(); };
+  const cancel = () => { if (!props.editor || props.editor.discard()) props.close(); };
   return <Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`${props.editor && !props.editor.record ? '新增' : '编辑'}${names[props.kind]}`} footer={<Button onClick={cancel}>取消</Button>} onCancel={cancel} maskClosable={false} autoFocus={false}>
     <p role={props.failed ? 'alert' : 'status'}>{props.failed ? '维护表单暂未加载，资料和输入已保留。' : '正在准备维护表单…'}{props.failed && <Button type="text" onClick={props.retry}>重试加载表单</Button>}</p>
-    {state.closePrompt && <section role="alert"><p>本次填写尚未保存，是否离开？</p><Button onClick={() => props.editor?.keepEditing()}>继续填写</Button><Button onClick={() => { if (props.editor?.discard()) props.close(); }}>放弃本次填写</Button></section>}
   </Modal>;
 }
 export default StoreSettingsRuntime;

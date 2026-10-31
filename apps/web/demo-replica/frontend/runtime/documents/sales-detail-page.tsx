@@ -1,0 +1,32 @@
+import {AsyncLeaf} from '../common/async-leaf.tsx';
+import {salesDocumentOutput} from '../../../../src/components/document-output-contracts.ts';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import {submitDisplayedSalesAction} from './displayed-action.ts';
+import { SaleDialog } from './native-dialog.tsx';
+import { LatestQuery } from '../../../../src/loading/latest-query.ts';
+import { HttpQueryError } from '../../../../src/transport/http-query.ts';
+import { entityId } from '../../../../../../packages/domain/src/values.ts';
+import type {Options} from './sales-page-contracts.ts';
+import {WriteRecovery} from './sales-write-recovery.tsx';
+import {SalesReadBody} from './sales-read-body.tsx';
+const loadDocumentOutputActions=()=>import('../../../../src/components/document-output.tsx').then(module=>({default:module.DocumentOutputActions}));
+const loadHistory=()=>import('./sales-history.tsx');
+export default function ReadDocument(p:Options&{id:string}){
+ const [query]=useState(()=>new LatestQuery({scope:p.scope,execute:p.session.reader.readDetail}));
+ const state=useSyncExternalStore(query.subscribe,query.getSnapshot,query.getSnapshot);
+ const editor=useSyncExternalStore(p.session.editor.subscribe,p.session.editor.getSnapshot,p.session.editor.getSnapshot);
+ const [action,setAction]=useState<'APPROVE'|'UNAPPROVE'|'VOID'|null>(null),[notice,setNotice]=useState(''),[historyOpen,setHistoryOpen]=useState(false);
+ const productRead=useRef<AbortController|null>(null);useEffect(()=>()=>productRead.current?.abort(),[p.scope]);
+ const viewSku=async(skuId:string,label:string)=>{if(!p.viewProduct)return;productRead.current?.abort();const own=new AbortController();productRead.current=own;const signal=AbortSignal.any([own.signal,p.scope.signal]),detail=query.getSnapshot().success?.data;if(!detail)return;try{const h=detail.document.header,rows=await p.session.current.readSkuBatch({context:{kind:'SALES',hallId:h.hallId},skuIds:[entityId('sku',skuId)]},signal);if(signal.aborted||!p.scope.active)return;const actual=rows.find(row=>row.id===skuId);if(!actual){setNotice('原规格的当前商品身份尚未取得。');return;}p.viewProduct({id:actual.productId,label});}catch(error){if(signal.aborted||!p.scope.active)return;if(error instanceof HttpQueryError&&['unauthenticated','forbidden'].includes(error.kind))p.denied(error);else setNotice('商品资料未能读取，请重试。');}};
+
+ const refresh=async()=>{if(await p.session.editor.commands.readCurrent()&&p.session.editor.adoptCurrent(true)){p.view.reload=true;await query.run({salesId:entityId('sales',p.id)});setNotice('已重新读取服务器单据。');}else setNotice('原操作已确认，当前单据尚未重新读取，请继续读取核实。');};
+ const submit=async()=>{const intent=action,shown=state.success?.data;setAction(null);if(!intent||!shown)return;const result=await submitDisplayedSalesAction(p.session,shown,intent);if(result==='committed')await refresh();else if(result==='changed'){p.view.reload=true;await query.run({salesId:entityId('sales',p.id)});setNotice('单据已更新，请核对最新内容后再操作。');}else setNotice(p.session.editor.getSnapshot().command.notice??'状态操作尚未完成，请核对当前提示或原回执。');};
+ useEffect(()=>{void query.run({salesId:entityId('sales',p.id)});return()=>query.dispose();},[query,p.id]);
+ useEffect(()=>{if(state.error instanceof HttpQueryError&&['unauthenticated','forbidden'].includes(state.error.kind))p.denied(state.error);},[state.error]);
+ if(state.phase!=='success'||!state.success)return <div className="sale-empty" role={state.error?'alert':'status'}>{state.error?'销货单读取失败。':'正在读取销货单…'}{!!state.error&&<button className="btn" onClick={()=>void query.run({salesId:entityId('sales',p.id)})}>重试</button>}</div>;
+ const readHistory=p.session.reader.readHistory;
+ const detail=state.success.data,h=detail.document.header,role=p.principal.role,localHall=p.principal.hallId===h.hallId;
+ const mayWrite=p.existingEdit&&detail.stockBasis==='RUNTIME_LEDGER',busy=editor.preparing||editor.command.editor?.phase==='loading'||['submitting','checking','replaying','uncertain','committed'].includes(editor.command.write.phase);
+ return <><SalesReadBody detail={detail} {...(p.viewProduct?{viewSku:(skuId:string,label:string)=>void viewSku(skuId,label)}:{})} actions={<><button className="btn" disabled={busy} onClick={()=>p.navigate('sales')}>返回列表</button>{mayWrite&&h.status==='DRAFT'&&(role!=='SALESPERSON'||localHall)&&<><button className="btn sale-delete-action" disabled={busy} onClick={()=>setAction('VOID')}>作废</button><button className="btn" disabled={busy} onClick={()=>p.navigate('sales/edit/'+encodeURIComponent(p.id))}>修改</button>{(role!=='SALESPERSON'||h.createdByAccountId===p.principal.accountId)&&<button className="btn primary" disabled={busy} onClick={()=>setAction('APPROVE')}>审核</button>}</>}{mayWrite&&h.status==='APPROVED'&&role!=='SALESPERSON'&&<button className="btn" disabled={busy} onClick={()=>setAction('UNAPPROVE')}>弃审</button>}<AsyncLeaf load={loadDocumentOutputActions} scope={p.scope} label="输出功能" pending={<><button className="btn" disabled>导出</button><button className="btn" disabled>打印</button></>}>{DocumentOutputActions=><DocumentOutputActions sourceKey={`${h.id}:${h.version}`} {...(!busy&&!editor.preparing&&p.scope.active&&p.session.editor.canLeave()?{getDocument:()=>salesDocumentOutput(detail)}:{})} unavailableReason="请先完成当前操作并读取已保存单据"/>}</AsyncLeaf>{p.session.reader.readHistory&&<button className="btn" disabled={busy} onClick={()=>setHistoryOpen(true)}>操作历史</button>}</>}/><p role="status">{notice||editor.notice||editor.command.notice}</p>{historyOpen&&readHistory&&<AsyncLeaf load={loadHistory} scope={p.scope} label="操作历史" pending={<p role="status">正在加载操作历史…</p>} close={()=>setHistoryOpen(false)}>{History=><History scope={p.scope} id={p.id} reader={{readHistory}} close={()=>setHistoryOpen(false)} denied={p.denied}/>}</AsyncLeaf>}{editor.command.write.phase==='committed'&&<button className="btn" onClick={()=>void refresh()}>重新读取单据</button>}<WriteRecovery session={p.session} committed={()=>void refresh()}/>{action&&<SaleDialog title={{APPROVE:'审核销货单',UNAPPROVE:'确认弃审',VOID:'确认作废销货单'}[action]} close={()=>setAction(null)} footer={<><button className="btn" onClick={()=>setAction(null)}>取消</button><button className="btn primary" onClick={()=>void submit()}>{action==='VOID'?'确认作废':action==='UNAPPROVE'?'确认弃审':'确定'}</button></>}><p>{{APPROVE:'审核后按本单业务类型处理库存和结算，确定审核？',UNAPPROVE:'撤销本单已生效的库存影响，结算明细保留，保留操作历史。弃审后可修改并重新审核。',VOID:`确定作废销货单 ${h.number} 吗？作废后不能再编辑或审核，操作记录会保留。`}[action]}</p></SaleDialog>}</>;
+
+}

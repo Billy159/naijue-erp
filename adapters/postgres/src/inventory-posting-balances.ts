@@ -18,6 +18,16 @@ type Query = (sql: string, values?: unknown[]) => Promise<PgSalesResult>;
 type PostingProof = Pick<InventoryLedgerRow, "warehouseId" | "skuId" | "quantityDelta" | "operationId" | "postedAt" | "reversesEntryId">
   & { readonly eventKind: InventoryLedgerRow["eventKind"] | "HISTORY_REVISION" };
 interface Key { readonly warehouseId: EntityId<"warehouse">; readonly skuId: EntityId<"sku"> }
+/** Inert prepared facts, not a database capability. The issuing manager owns the
+ * exact token; copies cannot acknowledge another manager's ledger append. */
+export interface PreparedLiveLedgerAppend {
+  readonly quantityBefore: InventoryBalanceRow["quantity"];
+  readonly quantityAfter: InventoryBalanceRow["quantity"];
+}
+interface PendingLiveLedgerAppend {
+  readonly row: InventoryLedgerRow; readonly expected: InventoryBalanceRow;
+  readonly token: PreparedLiveLedgerAppend; appended: boolean;
+}
 const key = (warehouse: string, sku: string): string => JSON.stringify([warehouse, sku]);
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 const integrity = (condition: unknown, message: string): void => requireDomain(condition, "INVENTORY_INTEGRITY_FAILED", message);
@@ -59,6 +69,9 @@ export class PostgresPostingBalances {
   private readonly balances = new Map<string, InventoryBalanceRow>();
   private readonly provenZero = new Set<string>();
   private readonly firstEffects = new Map<string, PostingProof>();
+  private readonly liveByKey = new Map<string, PendingLiveLedgerAppend>();
+  private readonly liveTokens = new WeakMap<PreparedLiveLedgerAppend, PendingLiveLedgerAppend>();
+  private liveWriteFailed = false;
   private batchId: string | undefined;
   private readonly admissionRuntime: InventoryAdmissionRuntime | null;
   private runtime26: { readonly client: PgSalesClient; readonly capability: NativeRuntime26Capability } | undefined;
@@ -190,29 +203,93 @@ export class PostgresPostingBalances {
       && (row.eventKind === "APPROVE" || (row.eventKind === "HISTORY_REVISION" && this.admissionRuntime?.profile === "EXACT24")) && row.reversesEntryId === null),
       "INVENTORY_NOT_READY", "Ledger requires an existing balance or explicit first-approval zero proof");
     requireDomain(!this.firstEffects.has(identity), "TRANSACTION_SCOPE", "Persist the first actual balance before another same-key effect");
+    requireDomain(!this.liveByKey.has(identity), "TRANSACTION_SCOPE", "Persist the prepared live effect before another same-key append");
+  }
+  /** Native append seam only. Call after original coverage proof, before the
+   * original ledger INSERT. Nothing is persisted or acknowledged here. HISTORY
+   * batching deliberately continues to use assertCanAppend without snapshots. */
+  prepareLiveAppend(input: InventoryLedgerRow): PreparedLiveLedgerAppend {
+    const row = structuredClone(input);
+    requireDomain(this.admissionRuntime?.profile !== "EXACT24"
+      && (row.eventKind === "APPROVE" || row.eventKind === "UNAPPROVE")
+      && (row.source.kind === "SALES" || row.source.kind === "TRANSFER")
+      && ((row.eventKind === "UNAPPROVE") === (row.reversesEntryId !== null))
+      && row.quantityDelta !== 0n, "TRANSACTION_SCOPE", "Only exact native live effects may prepare recorded balances");
+    this.assertCanAppend(row);
+    requireDomain(!this.liveWriteFailed, "TRANSACTION_SCOPE", "A failed live write requires transaction abandonment");
+    const previous = this.get(row.warehouseId, row.skuId);
+    // assertCanAppend has already required explicit provenZero for an absent key.
+    // Absence itself is never the authority for assigning this zero.
+    const before = previous === undefined ? quantity("0") : previous.quantity;
+    const after = addQuantity(before, row.quantityDelta);
+    const expected: InventoryBalanceRow = { warehouseId: row.warehouseId, skuId: row.skuId,
+      quantity: after, version: previous === undefined ? version(1) : nextVersion(previous.version),
+      lastOperationId: row.operationId, updatedAt: row.postedAt };
+    versionToSql(expected.version);
+    const token = Object.freeze({ quantityBefore: before, quantityAfter: after });
+    const pending: PendingLiveLedgerAppend = { row, expected: Object.freeze(expected), token, appended: false };
+    this.liveByKey.set(key(row.warehouseId, row.skuId), pending); this.liveTokens.set(token, pending);
+    return token;
+  }
+  /** Call only after the original ledger INSERT acknowledged exactly one row.
+   * On any failed/uncertain append the caller must abandon its transaction. */
+  didAppendLive(token: PreparedLiveLedgerAppend): void {
+    const pending = this.liveTokens.get(token);
+    requireDomain(pending && pending.token === token && !pending.appended
+      && this.liveByKey.get(key(pending.row.warehouseId, pending.row.skuId)) === pending,
+    "TRANSACTION_SCOPE", "An unacknowledged token from this exact manager is required");
+    pending.appended = true;
+    if (!this.balances.has(key(pending.row.warehouseId, pending.row.skuId)))
+      this.firstEffects.set(key(pending.row.warehouseId, pending.row.skuId), structuredClone(pending.row));
   }
   didAppend(row: PostingProof): void {
+    requireDomain(!this.liveByKey.has(key(row.warehouseId, row.skuId)), "TRANSACTION_SCOPE", "Prepared live append requires its exact token acknowledgement");
     if (!this.balances.has(key(row.warehouseId, row.skuId))) this.firstEffects.set(key(row.warehouseId, row.skuId), structuredClone(row));
   }
-  async put(row: InventoryBalanceRow): Promise<void> {
+  /** Success boundary only: close/rollback must remain unconditional and nonthrowing.
+   * Neither a prepared-only nor an acknowledged-but-unpersisted effect may commit. */
+  assertLiveComplete(): void {
+    integrity(!this.liveWriteFailed && this.liveByKey.size === 0, "Unfinished or failed live inventory posting cannot commit");
+  }
+  async put(input: InventoryBalanceRow): Promise<void> {
+    // Bind validation, SQL parameters and post-await cache to the same private
+    // value snapshot. TypeScript readonly does not freeze caller-owned aliases.
+    const row: InventoryBalanceRow = structuredClone(input);
+    integrity(!this.liveWriteFailed, "A failed live write requires transaction abandonment");
     const identity = key(row.warehouseId, row.skuId); const previous = this.get(row.warehouseId, row.skuId);
+    const live = this.liveByKey.get(identity);
+    if (live) requireDomain(live.appended && row.quantity === live.expected.quantity
+      && row.version === live.expected.version && row.lastOperationId === live.expected.lastOperationId
+      && row.updatedAt === live.expected.updatedAt,
+    "INVENTORY_INTEGRITY_FAILED", "Balance must persist this exact acknowledged live transition");
     let result: PgSalesResult;
-    if (previous === undefined) {
-      const first = this.firstEffects.get(identity);
-      requireDomain(this.provenZero.has(identity) && first && row.version === 1 && row.quantity === first.quantityDelta
-        && row.lastOperationId === first.operationId && row.updatedAt === first.postedAt,
-        "INVENTORY_NOT_READY", "First balance must be the exact appended runtime approval, never a zero placeholder");
-      result = await this.query(`INSERT INTO naijue_erp.inventory_balance (warehouse_id, sku_id, quantity, version, last_operation_id, updated_at)
-        VALUES ($1, $2, $3::bigint, $4, $5, $6::timestamptz) ON CONFLICT (warehouse_id, sku_id) DO NOTHING`,
-      [row.warehouseId, row.skuId, row.quantity.toString(), versionToSql(row.version), row.lastOperationId, row.updatedAt]);
-    } else {
-      requireDomain(row.version === previous.version + 1, "VERSION_CONFLICT", "Balance must advance exactly once per effect");
-      result = await this.query(`UPDATE naijue_erp.inventory_balance SET quantity = $3, version = $4, last_operation_id = $5, updated_at = $6
-        WHERE warehouse_id = $1 AND sku_id = $2 AND version = $7`,
-      [row.warehouseId, row.skuId, row.quantity.toString(), versionToSql(row.version), row.lastOperationId, row.updatedAt, versionToSql(previous.version)]);
+    let attempted = false;
+    try {
+      if (previous === undefined) {
+        const first = this.firstEffects.get(identity);
+        requireDomain(this.provenZero.has(identity) && first && row.version === 1 && row.quantity === first.quantityDelta
+          && row.lastOperationId === first.operationId && row.updatedAt === first.postedAt,
+          "INVENTORY_NOT_READY", "First balance must be the exact appended runtime approval, never a zero placeholder");
+        attempted = true;
+        result = await this.query(`INSERT INTO naijue_erp.inventory_balance (warehouse_id, sku_id, quantity, version, last_operation_id, updated_at)
+          VALUES ($1, $2, $3::bigint, $4, $5, $6::timestamptz) ON CONFLICT (warehouse_id, sku_id) DO NOTHING`,
+        [row.warehouseId, row.skuId, row.quantity.toString(), versionToSql(row.version), row.lastOperationId, row.updatedAt]);
+      } else {
+        requireDomain(row.version === previous.version + 1, "VERSION_CONFLICT", "Balance must advance exactly once per effect");
+        attempted = true;
+        result = await this.query(`UPDATE naijue_erp.inventory_balance SET quantity = $3, version = $4, last_operation_id = $5, updated_at = $6
+          WHERE warehouse_id = $1 AND sku_id = $2 AND version = $7`,
+        [row.warehouseId, row.skuId, row.quantity.toString(), versionToSql(row.version), row.lastOperationId, row.updatedAt, versionToSql(previous.version)]);
+      }
+      requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Inventory first-insert or compare-and-swap failed");
+    } catch (error) {
+      // A caller catching a failed/uncertain live CAS may not retry and clear the
+      // pending token. The original unit of work must roll this transaction back.
+      if (live && attempted) this.liveWriteFailed = true;
+      throw error;
     }
-    requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Inventory first-insert or compare-and-swap failed");
     this.balances.set(identity, structuredClone(row)); this.firstEffects.delete(identity);
+    if (live) { this.liveByKey.delete(identity); this.liveTokens.delete(live.token); }
   }
 }
 

@@ -1,3 +1,5 @@
+import { createRequestDiagnostic, withRequestDiagnostic } from './request-diagnostics.ts';
+import { createReadinessProbe } from './readiness-probe.ts';
 import { randomUUID } from "node:crypto";
 import { performance } from "node:perf_hooks";
 import { PRODUCT_IMAGE_CODEC_LIMITS } from "../../../adapters/media/src/sharp-product-image-codec.ts";
@@ -18,14 +20,15 @@ export interface ProductionApplicationHostOptions { readonly api: PostgresApplic
 export interface ProductionApplicationHost { readonly publicOrigin: string; close(): Promise<void> }
 /** One bounded, nonblocking JSON-line emitter. Backpressure drops events, never queues business data. */
 function hostLog(write?: (line: string) => void) {
-  let window = performance.now(), emitted = 0;
+  let window = performance.now(), emitted = 0, dropped = 0;
   return (record: {requestId: string; route: "API" | "HEALTH" | "STATIC" | "HOST"; operation: "READ" | "WRITE" | "CLOSE";
     phase: "REQUEST_END" | "DRAIN_START" | "DRAIN_END"; status: number; durationMs: number;
+    routeTemplate?:string;stage?:string;errorCode?:string|null;failureStage?:string|null;poolRejections?:number;admissionRejections?:number;
     reason: "DRAIN_REQUESTED" | "COMPLETED" | "CLIENT_CLOSED" | "CLEANUP_COMPLETE" | "CLEANUP_FAILED_OUTCOME_UNKNOWN"}): void => {
     const now=performance.now();if(now-window>=1000){window=now;emitted=0;}
-    if(emitted>=128 || (!write && process.stdout.writableNeedDrain))return;
-    const line=JSON.stringify(record)+"\n";if(Buffer.byteLength(line)>1024)return;emitted++;
-    try{if(write)write(line);else process.stdout.write(line,()=>{});}catch{/* A failed operational sink must not alter a business response. */}
+    if(emitted>=128 || (!write && process.stdout.writableNeedDrain)){dropped=Math.min(2147483647,dropped+1);return;}
+    const line=JSON.stringify({...record,dropCount:dropped})+"\n";if(Buffer.byteLength(line)>1024){dropped=Math.min(2147483647,dropped+1);return;}emitted++;
+    try{if(write)write(line);else process.stdout.write(line,()=>{});dropped=0;}catch{/* A failed operational sink must not alter a business response. */}
   };
 }
 const forbidden = (name: string): boolean => name.startsWith(".")
@@ -130,12 +133,16 @@ export async function createProductionRequestHandler(options: ProductionApplicat
   const assets = await captureBuild(config.assets.root, entry);
   const health = Buffer.from(JSON.stringify({ status: "HOST_ALIVE", databaseChecked: false, apiBase: "/api", ...config.build }));
   const log=hostLog(options.writeLog);
+  const readiness = createReadinessProbe(signal => typeof api.readiness === 'function' ? api.readiness(signal) : Promise.resolve(false), isClosing);
   return (request, response) => {
     const raw = request.url;
     const requestId=randomUUID(),started=performance.now();let recorded=false;
+    const diagnostic=createRequestDiagnostic(request,requestId);
     const route=typeof raw==="string" && (raw==="/api" || raw.startsWith("/api/")) ? "API" : typeof raw==="string" && /^\/(?:healthz|readyz)(?:\?|$)/.test(raw) ? "HEALTH" : "STATIC";
     const ended=(reason:"COMPLETED"|"CLIENT_CLOSED")=>{if(recorded)return;recorded=true;
-      log({requestId,route,operation:request.method==="GET"||request.method==="HEAD"?"READ":"WRITE",phase:"REQUEST_END",
+      log({requestId,route,operation:diagnostic.operation,phase:"REQUEST_END",routeTemplate:diagnostic.routeTemplate,
+        stage:reason==='COMPLETED'?'COMPLETE':diagnostic.stage,errorCode:diagnostic.errorCode??(response.statusCode===404?'NOT_FOUND':response.statusCode>=500?'INTERNAL_ERROR':null),
+        failureStage:diagnostic.failureStage,poolRejections:diagnostic.poolRejections,admissionRejections:diagnostic.admissionRejections,
         status:Number.isInteger(response.statusCode)&&response.statusCode>=100&&response.statusCode<=599?response.statusCode:0,
         durationMs:Math.min(2147483647,Math.max(0,Math.round(performance.now()-started))),reason});};
     if(typeof response.once==="function"){response.once("finish",()=>ended("COMPLETED"));response.once("close",()=>ended(response.writableEnded?"COMPLETED":"CLIENT_CLOSED"));}
@@ -147,7 +154,7 @@ export async function createProductionRequestHandler(options: ProductionApplicat
     if (isClosing() && raw.split("?",1)[0] !== "/healthz") return failure(response, 503);
     if (raw === "/api" || raw.startsWith("/api/") || raw.startsWith("/api?")) {
       request.url = raw.slice(4) || "/"; if (request.url.startsWith("?")) request.url = "/" + request.url;
-      routing(request, response); return;
+      withRequestDiagnostic(diagnostic,()=>routing(request, response)); return;
     }
     if (request.method !== "GET" && request.method !== "HEAD") return failure(response, 405);
     const pathname = raw.split("?", 1)[0]!;
@@ -163,7 +170,12 @@ export async function createProductionRequestHandler(options: ProductionApplicat
         response.end(request.method === "HEAD" ? undefined : payload);
       };
       if (typeof api.readiness !== "function") { send(false); return; }
-      void api.readiness().then(send,()=>send(false)).catch(()=>{ if (!response.destroyed) response.destroy(); }); return;
+      const controller = new AbortController();
+      const abort = () => controller.abort();
+      request.once?.('aborted', abort); response.once?.('close', abort);
+      void readiness(controller.signal).then(send,()=>send(false)).catch(()=>{ if (!response.destroyed) response.destroy(); }).finally(()=>{
+        request.removeListener?.('aborted',abort);response.removeListener?.('close',abort);
+      }); return;
     }
     let name: string;
     try { name = pathname === "/" ? entry : pathname.startsWith("/assets/") ? decodeURIComponent(pathname.slice(8)) : ""; }

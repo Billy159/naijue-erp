@@ -1,0 +1,56 @@
+{
+  "status": "BOUND_SOURCE_VALIDATED_AT_BAC60D98_WITH_ISOLATED_TEST_ADAPTERS",
+  "expectedCheckpoint": "bac60d98aef485411c694d07721dcee66e71b355",
+  "sourceFiles": [
+    {
+      "path": "apps/api/src/organization-maintenance-http.ts",
+      "sha256": "028c77f36a2724ded78cc41d0387709bd686ee8e0e17504df5fc43bef934f24b"
+    },
+    {
+      "path": "packages/application/src/organization-maintenance-service.ts",
+      "sha256": "b97428f7a04091a07a56a3f3155968dcf9fb3cf7d40f8ae5537e5afaf18abfd2"
+    },
+    {
+      "path": "packages/application/src/organization-maintenance-ports.ts",
+      "sha256": "1b941ca53c04120b87ee82623e107cbc50505109a4e635cf98db29be9310fb43"
+    },
+    {
+      "path": "packages/application/src/organization-maintenance-validation.ts",
+      "sha256": "9ba5821a046d9c3516ce584ed1e58525e709430789548bdb1867cbfd432a5a7b"
+    },
+    {
+      "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/qa-reference-fixtures.mts",
+      "sha256": "a21da7068d54e3d186b8ad9abe194e63d2379e199ae1c4914ebe4637037c85a6"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime-preview-transport.ts",
+      "sha256": "431b21b31a7839639bd9ffe95fc4bbcd657b45f0c195b7888a3fd4d58cf80662"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/payment-halls.tsx",
+      "sha256": "411f1bcee2e03ad30b9aca0a54d6bbf3796d8b239a1be50afcf948a44a880f0f"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/payment-form.tsx",
+      "sha256": "c5d47a81f54d594f5d4420c9f3df778948173e3d68bef36aa789ff6171d65189"
+    },
+    {
+      "path": "apps/web/src/payment-settings/http-client.ts",
+      "sha256": "c3fd732d3b5c3ab051983d61f82645bda03ef58bad915a00d13bbf4a390ba149"
+    },
+    {
+      "path": "apps/web/src/settings/stores/maintenance-http-client.ts",
+      "sha256": "4debfe2557b95545f033dc76786a79a510f9ccbb072466f2173762bb8258acc8"
+    },
+    {
+      "path": "apps/web/demo-replica/build-production-host.mjs",
+      "sha256": "d8c9e81b8e2e5032d3a87f6887071acb09691709f12adcb73b372a95c3bbd590"
+    }
+  ],
+  "boundary": "Actual HTTP/service parser/projection; auth/evidence/ACL and source queries are test providers; not PG/production/save acceptance.",
+  "checkpointMeaning": "reviewed ancestor baseline; caller expectedCheckpoint must equal current HEAD, every bound source hash must still match"
+}

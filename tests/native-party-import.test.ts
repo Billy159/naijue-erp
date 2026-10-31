@@ -1,3 +1,5 @@
+import { GUARD_CAPABILITY } from '../adapters/postgres/src/inventory-publication-guards.ts';
+import { NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from '../adapters/postgres/src/native-import-accounting-capability.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -38,7 +40,7 @@ type Evidence = Record<string, unknown>;
 /** Synthetic SQL protocol simulator, NOT PostgreSQL or trigger/engine proof. */
 class FakePool implements PgSalesPool {
   calls: Array<{ sql: string; values: unknown[] }> = []; connects = 0; discarded: Error | undefined;
-  records: Evidence[] = []; workingRecords: Evidence[] = []; failHallCompletion = false; failWarehouseRecord = false; recordConflict = false;
+  inventoryGuardsReady = true; guardsReady = true; records: Evidence[] = []; workingRecords: Evidence[] = []; failHallCompletion = false; failWarehouseRecord = false; recordConflict = false;
   evidence: Evidence[] = []; workingEvidence: Evidence[] = []; sources: Evidence[] = []; workingSources: Evidence[] = [];
   natives = new Set<string>(); workingNatives = new Set<string>(); closed = false; published = false; orphan = false; priorBatchEvidence = false; priorSource = false; schemaReady = true; schemaVersions = [1,2,3,4,5,6,7,8,9,10,11,12,13]; conflict = false; failCreateAt = 0; creates = 0; failCommit = false; commitThenLoseAck = false;
   async connect(): Promise<PgSalesClient> { this.connects++; return { query: async (sql, values = []) => this.query(sql, values), release: error => { this.discarded = error instanceof Error ? error : undefined; } }; }
@@ -47,6 +49,9 @@ class FakePool implements PgSalesPool {
     if (sql.startsWith('BEGIN')) { this.workingEvidence = structuredClone(this.evidence); this.workingSources = structuredClone(this.sources); this.workingNatives = new Set(this.natives); this.workingRecords = structuredClone(this.records); return answer(); }
     if (sql === 'COMMIT') { if (this.failCommit) throw Error('commit unknown'); this.evidence = this.workingEvidence; this.sources = this.workingSources; this.natives = this.workingNatives; this.records = this.workingRecords; if (this.commitThenLoseAck) throw Error('commit acknowledged unknown after success'); return answer(); }
     if (sql === 'ROLLBACK') return answer();
+    if (sql === GUARD_CAPABILITY) return answer([{integrity_guards_present:this.inventoryGuardsReady}]);
+    if (sql === NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY) return answer([{accounting_guards_present:this.schemaVersions.length!==19&&this.guardsReady}]);
+    if (sql === NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY) return answer([{accounting_guards_present:this.schemaVersions.length===19&&this.guardsReady}]);
     if (sql.includes('native-party-import:schema')) return answer([{ installed_versions: this.schemaReady ? this.schemaVersions : null }]);
     if (sql.includes(':batch')) return answer([{ mapping_version: 'V2_HISTORY_NULLABLE_1', status: this.closed ? 'IMPORTED' : 'STAGED', source_hash: hash, source_name: 'synthetic-only', already_published: this.published }]);
     if (sql.includes('native-party-import:target')) return answer(this.conflict ? [{ id: id(999) }] : this.workingNatives.has(String(values[0])) ? [{ id: values[0] }] : []);
@@ -118,14 +123,23 @@ test('schema/closed batch/ID or code conflicts stop before any INSERT, and exist
   const schema = new FakePool(); schema.schemaReady = false; await assert.rejects(store(schema).stage(prepareNativePartyImportChunk([fixture()])), { code: 'NATIVE_PARTY_SCHEMA_NOT_READY' });
   const native = new FakePool(); native.natives.add(id(10)); await assert.rejects(store(native).stage(prepareNativePartyImportChunk([fixture()])), /EXISTING_NATIVE/);
 });
-test('native party accepts reviewed schema13–17 but rejects missing, duplicate and future19 before targets or writes', async () => {
+test('native party18/19 recognition still requires actual scripted guard success before any targets or writes',async()=>{
+ for(const length of [18,19])for(const denied of ['inventory','accounting']){
+  const pool=new FakePool();pool.schemaVersions=Array.from({length},(_,i)=>i+1);if(denied==='inventory')pool.inventoryGuardsReady=false;else pool.guardsReady=false;
+  await assert.rejects(store(pool).stage(prepareNativePartyImportChunk([fixture()])),{code:'NATIVE_IMPORT_GUARDS_NOT_READY'});
+  assert.equal(pool.calls.some(c=>/:batch|:target|\b(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)),false);assert.equal(pool.calls.at(-1)!.sql,'ROLLBACK');assert.equal(pool.creates,0);assert.equal(pool.sources.length,0);assert.equal(pool.evidence.length,0);
+ }
+ const pool=new FakePool();pool.schemaVersions=Array.from({length:19},(_,i)=>i+1);await store(pool).stage(prepareNativePartyImportChunk([fixture()]));
+ assert.deepEqual(pool.calls.filter(c=>c.sql===NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY||c.sql===NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY).map(c=>c.sql),[NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY,NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY]);
+});
+test('native party accepts guarded reviewed schema13–19 but rejects missing, duplicate and unknown20 before targets or writes', async () => {
   const prefix = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-  for (const schemaVersions of [prefix, [...prefix,14], [...prefix,14,15], [...prefix,14,15,16], [...prefix,14,15,16,17]]) {
+  for (const schemaVersions of [prefix, [...prefix,14], [...prefix,14,15], [...prefix,14,15,16], [...prefix,14,15,16,17], [...prefix,14,15,16,17,18], [...prefix,14,15,16,17,18,19]]) {
     const pool = new FakePool(); pool.schemaVersions = schemaVersions;
     assert.deepEqual(await store(pool).stage(prepareNativePartyImportChunk([fixture()])), { inserted: 1, replayed: 0 });
   }
   for (const schemaVersions of [prefix.slice(0, -1), prefix.filter(version => version !== 11),
-    [...prefix,13], [...prefix,14,15,16,17,18,19], [...prefix,15]]) {
+    [...prefix,13], [...prefix,14,15,16,17,18,19,20], [...prefix,15]]) {
     const pool = new FakePool(); pool.schemaVersions = schemaVersions;
     await assert.rejects(store(pool).stage(prepareNativePartyImportChunk([fixture()])),
       { code: 'NATIVE_PARTY_SCHEMA_NOT_READY' });

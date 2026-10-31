@@ -1,3 +1,5 @@
+import type {DictionaryBarcodeSchemeDetail} from '../../../../../packages/application/src/dictionary-scheme-detail.ts';
+export type {DictionaryBarcodeSchemeDetail} from '../../../../../packages/application/src/dictionary-scheme-detail.ts';
 import type { QueryRead } from '../../loading/latest-query.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import type { DictionaryBarcodeScheme, DictionaryListQuery, DictionaryPage, DictionarySchemeQuery, DictionarySeason, DictionarySizeGroup } from '../../../../../packages/application/src/dictionary-read-ports.ts';
@@ -6,7 +8,7 @@ export interface DictionaryBrowserReader {
   readSizeGroups(read: QueryRead<DictionaryListQuery>): Promise<DictionaryPage<DictionarySizeGroup>>;
   readSeasons(read: QueryRead<DictionaryListQuery>): Promise<DictionaryPage<DictionarySeason>>;
   readBarcodeSchemes(read: QueryRead<DictionaryListQuery>): Promise<DictionaryPage<DictionaryBarcodeScheme>>;
-  readBarcodeScheme(read: QueryRead<DictionarySchemeQuery>): Promise<DictionaryBarcodeScheme | null>;
+  readBarcodeScheme(read: QueryRead<DictionarySchemeQuery>): Promise<DictionaryBarcodeSchemeDetail | null>;
 }
 export type ProductSettingTab = 'colors' | 'groups' | 'fits' | 'seasons';
 export interface DictionaryPageProps {

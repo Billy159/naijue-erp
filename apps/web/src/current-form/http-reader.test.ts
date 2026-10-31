@@ -86,3 +86,12 @@ test('CURRENT browser proposals: payment method references retain native identit
  assert.equal((await setup(page([methodItem])).reader.readSalesReferences(query, signal())).items[0]!.id, method);
  await assert.rejects(() => setup(page([{ ...methodItem, paymentMethodId: method, paymentMethodName: '猜补' }])).reader.readSalesReferences(query, signal()), { kind: 'malformed-response' });
 });
+test('customer recommendation opt-in accepts legacy pages and only proven boolean hints',async()=>{
+ const query={...reference,kind:'customer' as const,hallId:hall};
+ const customer={...item,id:uuid(12),name:'真实默认客户',code:'C12',hallId:null,hallName:null};
+ for(const payload of [page([customer]),page([{...customer,isRecommended:true}],{recommendationAvailability:'AVAILABLE'})]){
+  const f=setup(payload),result=await f.reader.readSalesReferences(query,signal());assert.equal(new Headers(f.requests[0]!.init.headers).get('x-naijue-current-form-recommendation'),'customer-v1');
+  assert.equal(result.items[0]!.isRecommended,'recommendationAvailability'in payload?true:undefined);
+ }
+ for(const payload of [page([{...customer,isRecommended:true}]),page([{...customer,isRecommended:true}],{recommendationAvailability:'UNAVAILABLE'}),page([{...customer,isRecommended:'true'}],{recommendationAvailability:'AVAILABLE'}),page([customer],{recommendationAvailability:'GUESS'})])await assert.rejects(setup(payload).reader.readSalesReferences(query,signal()));
+});

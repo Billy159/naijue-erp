@@ -8,6 +8,13 @@ import { checkedCurrentFormActor, activeCurrentFormRead, parseCurrentSalesRefere
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { exactJson } from "./sales-http.ts";
 
+/** Opt-in hints preserve the strict legacy customer page shape. No client grant. */
+export function currentCustomerRecommendationWire(value:unknown,kind:unknown,version:unknown):unknown {
+ if(kind!=='customer'||version==='customer-v1'||!value||typeof value!=='object'||Array.isArray(value))return value;
+ const {recommendationAvailability:_availability,items,...legacy}=value as Record<string,unknown>;
+ return {...legacy,items:Array.isArray(items)?items.map(item=>{if(!item||typeof item!=='object'||Array.isArray(item))return item;const {isRecommended:_recommended,...legacyItem}=item;return legacyItem;}):items};
+}
+
 export interface CurrentFormAuthenticationInput {
   readonly headers: Readonly<IncomingHttpHeaders>; readonly ip: string; readonly method: string; readonly url: string;
 }
@@ -82,7 +89,7 @@ export function createCurrentFormHttpPlugin(options: CurrentFormHttpOptions): Fa
         activeCurrentFormRead(state.controller.signal);
         const result = await read(actor, request.body, state.controller.signal);
         activeCurrentFormRead(state.controller.signal);
-        return reply.type("application/json").send(exactJson(result));
+        return reply.type("application/json").send(exactJson(url==="/current-form/sales-references/query"?currentCustomerRecommendationWire(result,(request.body as {kind?:unknown})?.kind,request.headers["x-naijue-current-form-recommendation"]):result));
       });
     }
   };

@@ -14,7 +14,7 @@ const original = fixtureDraft();
 const native: SalesDraftDto = { header: { ...original.header, salespersonId: uuid(950), businessType: 'SALE', grossAmount: '1000', netDue: '1000', orderDiscount: '0' },
   lines: [{ ...original.lines[0]!, quantity: '1', referencePrice: '1005', dealPrice: '1000', lineAmount: '1000', allocatedDiscount: '0' }],
   settlements: [{ ...original.settlements[0]!, direction: 'RECEIVE', amount: '1000' }] };
-const product: CurrentFormProduct = { id: entityId('product', uuid(50)), code: 'TEST', name: 'TEST product', retailPrice: '10.05', minimumPriceAvailability: 'UNAVAILABLE' };
+const product: CurrentFormProduct = { id: entityId('product', uuid(50)), code: 'TEST', name: 'TEST product', sizeGroupId: entityId('sizeGroup', uuid(8)), retailPrice: '10.05', minimumPriceAvailability: 'UNAVAILABLE' };
 const sku: CurrentFormSku = { id: entityId('sku', native.lines[0]!.skuId), skuCode: 'TEST-SKU', productId: product.id, productCode: product.code, productName: product.name, colorId: entityId('color', uuid(5)), colorName: 'TEST red', fitId: entityId('fit', uuid(6)), fitName: 'TEST fit', sizeId: entityId('size', uuid(7)), sizeName: '165/S', sizeGroupId: entityId('sizeGroup', uuid(8)), barcodeAvailability: 'UNAVAILABLE' };
 const ref = (id: string, more = {}): CurrentSalesReferenceItem => ({ id, name: 'TEST reference', code: null, hallId: null, hallName: null, paymentMethodId: null, paymentMethodName: null, ...more });
 const page = <T>(items: readonly T[]) => ({ page: 1, pageSize: 20 as const, exactTotal: BigInt(items.length), items });
@@ -115,7 +115,7 @@ test('resolved native editor discarded through another route cannot revive origi
 });
 test('native RETURN negative and EXCHANGE mixed signs use existing null-CAS SAVE without original-sale linkage', async () => {
  for (const businessType of ['RETURN','EXCHANGE'] as const) {
-  const second = {...sku,id:entityId('sku',uuid(777)),skuCode:'TEST-SECOND'};
+  const second = {...sku,id:entityId('sku',uuid(777)),skuCode:'TEST-SECOND',sizeId:entityId('size',uuid(778)),sizeName:'170/M'};
   const h=await setup({async prepareCreate(intent){
    assert.equal(intent.businessType,businessType);assert.equal(intent.orderDiscount,'0.00');assert.equal('originalSalesId' in intent,false);
    const lines=intent.lines.map((row,index)=>({...native.lines[0]!,id:uuid(800+index),lineNo:index+1,skuId:row.skuId,quantity:row.quantity,lineAmount:(BigInt(row.quantity)*1000n).toString()}));
@@ -125,9 +125,19 @@ test('native RETURN negative and EXCHANGE mixed signs use existing null-CAS SAVE
   h.proposal.setBusinessType(businessType);h.proposal.updateLine(sku.id,{quantity:'-2'});
   if(businessType==='EXCHANGE'){await h.proposal.openPicker('product');await h.proposal.select(product.id);await h.proposal.select(second.id);h.proposal.closePicker();h.proposal.updateLine(second.id,{dealPrice:'10.00',quantity:'1'});}
   h.proposal.updateSettlement(h.proposal.getSnapshot().draft.settlements[0]!.key,{direction:'REFUND'});
+  assert.deepEqual(h.proposal.getSnapshot().draft.lines.map(row=>row.sku?.id),businessType==='RETURN'?[sku.id]:[sku.id,second.id]);
+  assert.deepEqual(h.proposal.getSnapshot().draft.lines.map(row=>row.quantity),businessType==='RETURN'?['-2']:['-2','1']);
+  assert.equal(h.proposal.getSnapshot().draft.businessType,businessType);assert.ok(h.proposal.validate());
   assert.equal(await h.session.save(),true);assert.equal(h.commands.length,1);const command=h.commands[0]!;if(command.action!=='SAVE')throw Error();assert.ok('draft' in command);
   assert.equal(command.expectedVersion,null);assert.equal(command.draft.header.businessType,businessType);assert.deepEqual(command.draft.lines.map(row=>row.quantity),businessType==='RETURN'?['-2']:['-2','1']);
  }
+});
+test('distinct SKU IDs with duplicate current coordinates cannot prepare or dispatch SAVE', async () => {
+ const duplicate = {...sku,id:entityId('sku',uuid(779)),skuCode:'TEST-DUPLICATE-COORDINATES'};
+ const h=await setup(undefined,false,duplicate);
+ assert.equal(h.proposal.getSnapshot().draft.lines.length,0);
+ assert.equal(h.proposal.validate(),null);assert.equal(await h.session.save(),false);
+ assert.equal(h.intents.length,0);assert.equal(h.commands.length,0);assert.equal(h.editor.getSnapshot().command.editor,null);
 });
 test('EXCHANGE same SKU opposing different-price rows preserve order and independent IDs through prepare→SAVE', async () => {
  let captured:NativeSalesCreateProposal|null=null;

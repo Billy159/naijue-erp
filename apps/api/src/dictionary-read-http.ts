@@ -1,3 +1,4 @@
+import {withSchemeGenerationMetadata} from '../../../packages/application/src/dictionary-scheme-detail.ts';
 import type { IncomingHttpHeaders } from "node:http";
 import type { FastifyPluginAsync } from "fastify";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
@@ -55,7 +56,8 @@ export function createDictionaryReadHttpPlugin(options: DictionaryReadHttpOption
         if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
         const actor = actors.get(request); const state = reads.get(request);
         if (!actor || !state) throw new Error("Missing trusted dictionary read context");
-        return reply.type("application/json").send(await read(actor, request.body, state.controller.signal));
+        const payload=await read(actor, request.body, state.controller.signal);
+        return reply.type("application/json").send(url==="/dictionary-read/barcode-scheme/query"&&request.headers["x-naijue-scheme-detail"]==="scheme-segments-v1"&&payload!==null?withSchemeGenerationMetadata(payload):payload);
       });
     }
   };

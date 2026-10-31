@@ -27,7 +27,8 @@ function normalRow(kind: 'sales' | 'transfers', dataset: 'LIVE' | 'HISTORY') {
     created_by_account_id: history ? null : id(30), created_at: history ? null : stamp, updated_at: history ? null : stamp,
     created_local_at: history ? '2026-10-04T12:00:00.123456' : null, updated_local_at: null,
     from_warehouse_id: id(21), to_warehouse_id: id(23), from_warehouse_name: 'from', to_warehouse_name: 'to', from_hall_name: 'fromhall', to_hall_name: 'tohall', approved_by_name: null,
-    product_count: '0', product_items: [], product_has_more: false, syntheticKind: kind };
+    product_count: '0', product_items: [], product_has_more: false,
+    category_count: history ? '0' : '1', category_items: history ? [] : [{categoryId:null,categoryName:null,value:kind==='sales'?'2':'1'}], category_has_more:false, syntheticKind: kind };
 }
 function readerFixture(kind: 'sales' | 'transfers', items: Record<string, unknown>[], valid = true) {
   const calls: { sql: string; values: unknown[] }[] = []; let connects = 0;
@@ -57,6 +58,12 @@ test('H02 actual sales/transfer readers retain LIVE-only, HISTORY-only and mixed
     const historical = result.items.find(row => row.dataset === 'HISTORY');
     if (historical) { assert.equal(historical.effectiveVersion, 3); assert.equal(historical.businessDate, null); assert.equal(historical.updatedAt, null); assert.equal(historical.updatedLocalAt, null); assert.equal(historical.createdLocalAt, '2026-10-04T12:00:00.123456');
       assert.equal(kind === 'sales' ? (historical as { quantity: unknown }).quantity : (historical as { totalQuantity: unknown }).totalQuantity, null); }
+    for(const row of result.items){
+      assert.ok(row.categorySummary,'Actual normal-list reader must provide its bounded category summary');
+      assert.equal(row.categorySummary.metric,kind==='sales'?'QUANTITY':'PRODUCT_COUNT');
+      assert.deepEqual(row.categorySummary,row.dataset==='HISTORY'?{basis:'UNKNOWN',metric:kind==='sales'?'QUANTITY':'PRODUCT_COUNT',items:[],hasMore:false,categoryCount:null}
+        :{basis:'CURRENT',metric:kind==='sales'?'QUANTITY':'PRODUCT_COUNT',items:[{categoryId:null,categoryName:null,value:kind==='sales'?2n:1n}],hasMore:false,categoryCount:1n});
+    }
     assert.equal(kind === 'sales' ? (result.totals as { quantity: unknown }).quantity : (result.totals as { totalQuantity: unknown }).totalQuantity, datasets.includes('HISTORY' as never) ? null : 2n);
   }
 });
@@ -66,6 +73,30 @@ test('H02 real normal reader validates authorized history before exposing page/t
   for (const patch of [{ dataset: 'UNKNOWN' }, { dataset: 'LIVE', batch_id: id(10) }, { dataset: 'HISTORY', batch_id: null }, { version: '3' }, { version: 0 }])
     await assert.rejects(readerFixture('sales', [{ ...normalRow('sales', 'HISTORY'), ...patch }]).read());
   const row = normalRow('transfers', 'HISTORY'); await assert.rejects(readerFixture('transfers', [row, { ...row }]).read(), { code: 'INVALID_DATABASE_VALUE' });
+});
+
+test('normal sales and transfer pages order globally by genuine creation instant before paging without adding wire metadata', async () => {
+  for (const kind of ['sales', 'transfers'] as const) {
+    const f = readerFixture(kind, []);
+    await f.read();
+    const sql = f.calls.find(call => call.sql.includes('normal-document-list:shared'))!.sql;
+    assert.match(sql, /h\.created_at AS sort_created_at/);
+    // Keep the raw instant type; headerColumns also contains formatted display text.
+    assert.match(sql, /h\.created_instant AS sort_created_at/);
+    assert.match(sql, /hb\.sort_created_at/);
+    assert.match(sql, /SELECT \* FROM matched ORDER BY sort_created_at DESC NULLS LAST,id ASC,dataset ASC,batch_id ASC NULLS FIRST LIMIT/);
+    assert.match(sql, /ORDER BY h\.sort_created_at DESC NULLS LAST,h\.id ASC,h\.dataset ASC,h\.batch_id ASC NULLS FIRST/);
+    assert.match(sql, /jsonb_agg\(to_jsonb\(p\)-'sort_created_at' ORDER BY p\.sort_created_at DESC NULLS LAST,p\.id ASC,p\.dataset ASC,p\.batch_id ASC NULLS FIRST\)/);
+    assert.doesNotMatch(sql, /ORDER BY (?:h\.|p\.)?updated_at DESC/);
+    assert.doesNotMatch(sql, /coalesce\([^)]*(?:created_instant|sort_created_at)[^)]*(?:business_date|updated_at|created_local_at)/);
+    assert.deepEqual(f.calls.find(call => call.sql.includes('normal-document-list:shared'))!.values.slice(-2), [20, '0']);
+  }
+});
+
+test('H02 LIVE category projection omissions and inconsistent bounded counts reject rather than fabricate empty categories',async()=>{
+ for(const kind of ['sales','transfers'] as const)for(const patch of [{category_items:undefined},{category_count:undefined},{category_has_more:undefined},{category_count:'0'},{category_has_more:true},{category_items:[{categoryId:null,categoryName:null,value:null}]}]){
+  await assert.rejects(readerFixture(kind,[{...normalRow(kind,'LIVE'),...patch}]).read(),{code:'INVALID_DATABASE_VALUE'});
+ }
 });
 
 test('H02 ordinary transfer and explicit historical transfer grants compile one source-bound effective endpoint/creator predicate with original bind shapes', async () => {

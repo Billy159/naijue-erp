@@ -248,8 +248,8 @@ test("current forms: malformed/disabled/shared-shape payment-method facts fail c
 });
 test("current forms: enabled customers are native master candidates even unused, with literal parameterized search", async () => {
   const value = "%_'\\"; const customer = sid("customer", 1001); const client = new Client([begin(), identity(), selectedHall(),
-    total("1", (values, sql) => { assert.deepEqual(values, [value]); assert.match(sql, /FROM naijue_erp.customer r WHERE r.enabled/); assert.ok(!/sales_header|LIKE|hall_id/.test(sql)); assert.ok(!sql.includes(value)); }),
-    page([item({ id: customer, code: "KH001", hall_id: null, hall_name: null })]), commit()]);
+    total("1", (values, sql) => { assert.deepEqual(values, [value,hall]); assert.match(sql, /FROM naijue_erp.customer r JOIN naijue_erp.hall selected_hall/); assert.ok(!/sales_header|LIKE|hall_id/.test(sql)); assert.ok(!sql.includes(value)); }),
+    page([item({ id: customer, code: "KH001", hall_id: null, hall_name: null,is_recommended:false })]), commit()]);
   const result = await reader(client).readSalesReferences(actor, { ...reference("customer"), search: value }, signal()); assert.equal(result.items[0]!.code, "KH001"); client.done();
 });
 test("current forms: all in-employment staff, not invented salesperson role/same-hall/login eligibility; current user only orders page", async () => {
@@ -609,4 +609,10 @@ test("current forms exact26: invalid, boolean, foreign-client or revoked proof f
     if (phase === "boolean") assert.ok(client.releases[0] instanceof TypeError);
     client.done();
   }
+});
+test('customer recommendation joins authorized hall once and keeps exact native identity',async()=>{
+ const ids=[sid('customer',2101),sid('customer',2102)];
+ const client=new Client([begin(),identity(),selectedHall(),total('2',(values,sql)=>{assert.deepEqual(values,['',hall]);assert.match(sql,/JOIN naijue_erp.hall selected_hall ON selected_hall.id=\$2::uuid AND selected_hall.enabled/);assert.match(sql,/r.enabled/);}),
+  page(ids.map((id,i)=>item({id,name:'相同名字',code:'C'+i,hall_id:null,hall_name:null,is_recommended:i===1})),(values,sql)=>{assert.deepEqual(values,['',hall,20,0]);assert.match(sql,/r.id=selected_hall.default_customer_id/);assert.match(sql,/ORDER BY is_recommended DESC/);}),commit()]);
+ const result=await reader(client).readSalesReferences(actor,reference('customer'),signal());assert.equal(result.recommendationAvailability,'AVAILABLE');assert.deepEqual(result.items.map(x=>[x.id,x.isRecommended]),[[ids[0],false],[ids[1],true]]);client.done();readonly(client);
 });

@@ -39,13 +39,13 @@ const scope: SalesReadScope = { kind: "restricted", clauses: [{ hallId: ids.hall
 const read = <P>(parameters: P, granted = scope, signal = new AbortController().signal) => ({ actor, scope: granted, parameters, signal });
 const reader = (client: ProtocolClient) => new PostgresSalesQueryReader({ async connect() { return client; } });
 const time = "2026-10-20T12:00:00.000000Z";
-const header = () => ({ id: ids.sales, number: "SYNTHETIC-ONLY", business_type: "SALE", business_date: "2026-10-20", hall_id: ids.hall,
+const header = () => ({ responsible_staff_id: null, responsible_name: null, created_by_name: "SYNTHETIC CREATOR", id: ids.sales, number: "SYNTHETIC-ONLY", business_type: "SALE", business_date: "2026-10-20", hall_id: ids.hall,
   customer_id: ids.customer, salesperson_id: null, warehouse_id: ids.warehouse, status: "DRAFT", version: 1, gross_amount: "90071992547409.93", order_discount: "0.00", net_due: "90071992547409.93",
   note: null, created_by_account_id: ids.account, created_hall_id: ids.hall, created_at: time, updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER", hall_name: "SYNTHETIC HALL", warehouse_name: "SYNTHETIC WAREHOUSE", customer_name: "SYNTHETIC CUSTOMER", salesperson_name: null });
 const summary = () => ({ ...header(), hall_name: "SYNTHETIC HALL", warehouse_name: "SYNTHETIC WAREHOUSE", customer_name: "SYNTHETIC CUSTOMER", salesperson_name: null });
 const quantities = (salesId: string = ids.sales, quantity = "9007199254740993", incoming = "0", outgoing = "9007199254740993") =>
   ({ sales_id: salesId, quantity, incoming_quantity: incoming, outgoing_quantity: outgoing });
-const line = () => ({ id: ids.line, sales_id: ids.sales, line_no: 1, sku_id: ids.sku, quantity: "9007199254740993", reference_price: null, deal_price: "0.00", line_amount: "0.00", allocated_discount: "0.00",
+const line = () => ({ product_id: sid('product',600), category_id: null, category_name: null, id: ids.line, sales_id: ids.sales, line_no: 1, sku_id: ids.sku, quantity: "9007199254740993", reference_price: null, deal_price: "0.00", line_amount: "0.00", allocated_discount: "0.00",
   is_gift: false, pricing_rule: null, discount_tenths: null, zero_confirmed: null, product_code_snapshot: "SYNTHETIC", product_name_snapshot: "SYNTHETIC", color_name_snapshot: "SYNTHETIC", fit_name_snapshot: "SYNTHETIC", size_name_snapshot: "SYNTHETIC", barcode_snapshot: null, is_current: true });
 function scoped(values: unknown[], sql: string) {
   assert.deepEqual(values.slice(0, 3), [ids.hall, ids.warehouse, ids.account]);
@@ -68,7 +68,7 @@ test("sales query pg protocol: exact count, relational page and one page-batched
     assert.match(sql, /strpos\(lower\(h.number\), lower\(\$12\)\) > 0/); assert.ok(!sql.includes("OR TRUE")); seen.push([...values]);
   } }, { sql: /^SELECT h.id/, rows: [summary()], inspect(values, sql) {
     scoped(values, sql); assert.deepEqual(values.slice(0, -2), seen[0]); assert.deepEqual(values.slice(-2), [50, "50"]);
-    assert.match(sql, /ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC LIMIT \$13 OFFSET \$14::bigint/);
+    assert.match(sql, /ORDER BY h.created_at DESC, h.number COLLATE "C" ASC, h.id ASC LIMIT \$13 OFFSET \$14::bigint/);
     assert.ok(!/sales_line|sales_settlement|naijue_erp.product|FOR UPDATE/.test(sql));
   } }, { sql: /^SELECT page.id AS sales_id/, rows: [quantities()], inspect(values, sql) {
     assert.deepEqual(values, [[ids.sales]]); assert.match(sql, /FROM unnest\(\$1::uuid\[\]\) AS page\(id\) LEFT JOIN naijue_erp.sales_line l/);
@@ -78,7 +78,7 @@ test("sales query pg protocol: exact count, relational page and one page-batched
   } }, commit()]);
   const result = await reader(client).readList(read(input)); assert.equal(result.exactTotal, 9007199254740993n); assert.equal(result.items[0]!.netDue, 9007199254740993n);
   assert.equal(result.items[0]!.quantity, 9007199254740993n); assert.equal(result.items[0]!.incomingQuantity, 0n); assert.equal(result.items[0]!.outgoingQuantity, 9007199254740993n);
-  assert.equal(result.items[0]!.updatedAt, time); assert.equal(client.calls.length, 4); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|pg_advisory/.test(call.sql))); client.done();
+  assert.equal(result.items[0]!.updatedAt, time); assert.equal(client.calls.length, 5); assert.equal(client.calls.filter(call=>/^SELECT/.test(call.sql)).length, 3); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|pg_advisory/.test(call.sql))); client.done();
 });
 test("sales query pg protocol: count and page use case-insensitive literal number inclusion with original bound text, never LIKE wildcards", async () => {
   for (const number of ["synthetic", "SyNtHeTiC_%\\", "%'_\\ OR TRUE"]) {
@@ -95,7 +95,7 @@ test("sales query pg protocol: count and page use case-insensitive literal numbe
     const result = await reader(client).readList(read(input)); assert.equal(result.exactTotal, 0n); assert.deepEqual(result.items, []); client.done();
   }
 });
-test("sales query pg protocol: list pages use updated time then binary business number and native identity, never business date", async () => {
+test("sales query pg protocol: list pages use creation time then binary business number and native identity, never business date", async () => {
   const salesIds = [sid("sales", 812), sid("sales", 811), sid("sales", 813), sid("sales", 814)];
   const rows = salesIds.map((salesId, index) => ({ ...summary(), id: salesId,
     number: ["SYNTHETIC-Z", "SYNTHETIC-A", "SYNTHETIC-A", "SYNTHETIC-B"][index],
@@ -103,7 +103,7 @@ test("sales query pg protocol: list pages use updated time then binary business 
     business_date: index === 0 ? "2026-09-01" : "2026-10-20" }));
   const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "24" }] },
     { sql: /^SELECT h.id/, rows, inspect(values, sql) {
-      assert.match(sql, /ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC LIMIT \$4 OFFSET \$5::bigint$/);
+      assert.match(sql, /ORDER BY h.created_at DESC, h.number COLLATE "C" ASC, h.id ASC LIMIT \$4 OFFSET \$5::bigint$/);
       assert.doesNotMatch(sql, /ORDER BY h.business_date/); assert.deepEqual(values.slice(-2), [20, "20"]);
     } }, { sql: /^SELECT page.id AS sales_id/, rows: salesIds.toReversed().map(salesId => quantities(salesId)),
       inspect(values) { assert.deepEqual(values, [salesIds]); } }, commit()]);
@@ -122,7 +122,7 @@ test("sales query pg protocol: one bounded batch preserves signed SALE/RETURN/EX
   const result = await reader(client).readList(read(parameters()));
   assert.deepEqual(result.items.map(row => [row.quantity, row.incomingQuantity, row.outgoingQuantity]),
     [[18446744073709551616n, 0n, 18446744073709551616n], [-9223372036854775808n, 9223372036854775808n, 0n], [-2n, 5n, 3n], [0n, 0n, 0n]]);
-  assert.equal(client.calls.length, 4); client.done();
+  assert.equal(client.calls.length, 5); assert.equal(client.calls.filter(call=>/^SELECT/.test(call.sql)).length, 3); client.done();
 });
 test("sales query pg protocol: incomplete, foreign, duplicate or malformed quantity facts fail closed", async () => {
   for (const aggregateRows of [[], [quantities(sid("sales", 999))], [quantities(), quantities()],
@@ -139,10 +139,10 @@ test("sales query pg protocol: empty out-of-range page retains exact total witho
 });
 test("sales query pg protocol: detail reads authorized native header/current snapshots/settlements in three bounded reads", async () => {
   const client = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [header()], inspect: scoped },
-    { sql: /FROM naijue_erp.sales_line/, rows: [line()], inspect(values, sql) { assert.deepEqual(values, [ids.sales, SALES_DETAIL_MAX_CURRENT_LINES + 1]); assert.match(sql, /WHERE sales_id = \$1 AND is_current ORDER BY line_no, id LIMIT \$2/); } },
+    { sql: /FROM naijue_erp.sales_line/, rows: [line()], inspect(values, sql) { assert.deepEqual(values, [ids.sales, SALES_DETAIL_MAX_CURRENT_LINES + 1]); assert.match(sql, /WHERE l.sales_id = \$1 AND l.is_current ORDER BY l.line_no, l.id LIMIT \$2/); } },
     { sql: /FROM naijue_erp.sales_settlement/, rows: [], inspect(_values, sql) { assert.match(sql, /LIMIT 4$/); } }, commit()]);
   const result = await reader(client).readDetail(read({ salesId: ids.sales })); assert.equal(result.document.lines[0]!.quantity, 9007199254740993n); assert.equal(result.document.lines[0]!.pricingRule, null);
-  assert.equal(result.document.lines[0]!.zeroConfirmed, null); assert.equal(result.stockBasis, "RUNTIME_LEDGER"); assert.equal(client.calls.length, 4); client.done();
+  assert.equal(result.document.lines[0]!.zeroConfirmed, null); assert.equal(result.stockBasis, "RUNTIME_LEDGER"); assert.equal(client.calls.length, 5); assert.equal(client.calls.filter(call=>/^SELECT/.test(call.sql)).length, 3); client.done();
 });
 test("sales query pg protocol: hidden/missing detail and history rollback without reading child facts", async () => {
   for (const kind of ["readDetail", "readHistory"] as const) {
@@ -246,12 +246,12 @@ test("sales detail pg protocol: current master labels and authoritative settleme
     assert.match(sql, /WHERE s.sales_id = \$1 ORDER BY s.line_no, s.id LIMIT 4$/); assert.ok(!/enabled|payment_account_hall/.test(sql));
   } }, commit()]);
   const detail = await reader(client).readDetail(read({ salesId: ids.sales }));
-  assert.deepEqual(detail.referenceNames, { hallName: "SYNTHETIC HALL", warehouseName: "SYNTHETIC WAREHOUSE", customerName: "SYNTHETIC CUSTOMER", salespersonName: "SYNTHETIC former salesperson" });
+  assert.deepEqual(detail.referenceNames, { responsibleName: null, createdByName: "SYNTHETIC CREATOR", hallName: "SYNTHETIC HALL", warehouseName: "SYNTHETIC WAREHOUSE", customerName: "SYNTHETIC CUSTOMER", salespersonName: "SYNTHETIC former salesperson" });
   assert.deepEqual(detail.settlementNames, [{ settlementId: sid("settlement", 15), paymentAccountId: ids.payment,
     accountNameSnapshot: settlement.account_name_snapshot, methodNameSnapshot: settlement.method_name_snapshot,
     currentAccountName: settlement.current_account_name, currentMethodName: settlement.current_method_name }]);
   assert.equal(detail.document.settlements[0]!.amount, 9007199254740993n); assert.equal(detail.document.settlements[0]!.id, detail.settlementNames[0]!.settlementId);
-  assert.equal(client.calls.length, 4); client.done();
+  assert.equal(client.calls.length, 5); assert.equal(client.calls.filter(call=>/^SELECT/.test(call.sql)).length, 3); client.done();
 });
 
 test("sales query pg protocol: list/count and both statistics reads share identical six-dimensional authorized predicates", async () => {
@@ -301,7 +301,7 @@ test("sales detail pg protocol: original method identity comes only from nullabl
 
 const normalSalesSummary = (overrides: Record<string, unknown> = {}) => ({ exact_total: '2', history_valid: true, history_published: true,
   quantity: null, incoming_quantity: null, outgoing_quantity: null, gross_amount: '90071992547409.94', order_discount: '0.00', net_due: '90071992547409.94', ...overrides });
-const normalProduct = { product_count: '1', product_items: [{ productId: sid('product', 300), productCodeSnapshot: 'ORIGINAL', productNameSnapshot: 'ORIGINAL SNAPSHOT' }], product_has_more: false };
+const normalProduct = { product_count: '1', product_items: [{ productId: sid('product', 300), productCodeSnapshot: 'ORIGINAL', productNameSnapshot: 'ORIGINAL SNAPSHOT' }], product_has_more: false, category_items: [], category_has_more: false, category_count: '0' };
 const normalIdentity = (role: 'ADMIN' | 'WAREHOUSE' | 'SALESPERSON' = 'ADMIN'): Step => ({ sql: /read-authorization:identity/, rows: [{ account_id: actor.accountId, staff_id: sid('staff', 301), login_enabled: true,
   role, employment_status: '在职', hall_id: actor.hallId, native_hall_id: actor.hallId, hall_enabled: true }] });
 function normalSalesReader(client: ProtocolClient, proof?: () => void) {
@@ -320,10 +320,17 @@ test('normal sales union: exact same-client authorization precedes published eff
     assert.match(sql, /b\.status='IMPORTED'/); assert.match(sql, /r\.action='IMPORT_PUBLISH'/); assert.match(sql, /history_revision er/);
     assert.match(sql, /bool_and\(effective_valid IS TRUE AND lines_valid IS TRUE\)/); assert.match(sql, /IS NOT TRUE\) AS lines_valid/);
     assert.match(sql, /count\(\*\) FILTER\(WHERE is_gift IS NULL\)>0 THEN NULL/); assert.match(sql, /h\.hall_id=ANY/); assert.match(sql, /h\.warehouse_id=ANY/);
-    assert.ok(values.includes("%_\\'literal")); assert.ok(!sql.includes("%_\\'literal")); assert.ok(!/naijue_erp\.product(?:\s|$)|product_category|auth_session/.test(sql));
+    assert.ok(values.includes("%_\\'literal")); assert.ok(!sql.includes("%_\\'literal")); assert.doesNotMatch(sql,/auth_session/);
+    // category-v1 explicitly permits CURRENT joins, bounded after page_headers;
+    // historical lines and the all-match totals must still never join categories.
+    assert.doesNotMatch(sql.slice(0,sql.indexOf('page_lines AS MATERIALIZED')),/product_category/);
+    const pageLines=sql.slice(sql.indexOf('page_lines AS MATERIALIZED'),sql.indexOf('page_metrics AS'));
+    assert.match(pageLines,/p.dataset='LIVE'[\s\S]*product_category cc ON cc.id=cp.category_id/);
+    assert.doesNotMatch(pageLines.slice(pageLines.indexOf('UNION ALL SELECT')),/product_category/);
+    assert.match(sql,/FROM page_lines WHERE dataset='LIVE' AND is_gift IS FALSE/);
   } }, { sql: /normal-document-list:page/, rows: [live, historical], inspect(values, sql) {
     assert.deepEqual(values.slice(0, -2), bound); assert.deepEqual(values.slice(-2), [20, '0']);
-    assert.match(sql, /ORDER BY updated_at DESC NULLS LAST,id ASC,dataset ASC LIMIT/); assert.match(sql, /page_lines AS MATERIALIZED/);
+    assert.match(sql, /ORDER BY sort_created_at DESC NULLS LAST,id ASC,dataset ASC,batch_id ASC NULLS FIRST LIMIT/); assert.match(sql, /page_lines AS MATERIALIZED/);
     assert.match(sql, /coalesce\(product_id::text,'line:'\|\|line_id::text\)/); assert.match(sql, /FILTER\(WHERE preview_row<=3\)/);
     assert.doesNotMatch(sql, /SELECT.*FROM naijue_erp\.product\b/);
   } }, commit()]);
@@ -364,7 +371,7 @@ test('normal sales pushdown: both branches filter before projection, all-match t
       hallIds: [ids.hall], salespersonIds: [sid('staff', 44)], customerIds: [ids.customer], warehouseIds: [ids.warehouse], number: "%_\\'literal" });
     const historical = { ...summary(), dataset: 'HISTORY', batch_id: sid('operation', 400), responsible_staff_id: null, responsible_name: null, created_by_name: null,
       business_type: 'EXCHANGE', status: 'DRAFT', quantity: '-2', incoming_quantity: '5', outgoing_quantity: '3', gross_amount: '0.01', net_due: '0.01',
-      created_local_at: null, updated_local_at: null, product_count: null, product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: null }], product_has_more: false };
+      created_local_at: null, updated_local_at: null, product_count: null, product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: null }], product_has_more: false, category_items: [], category_has_more: false, category_count: '0' };
     let bound: unknown[] = [];
     const client = new ProtocolClient([begin(), normalIdentity(role), { sql: /normal-document-list:totals/, rows: [normalSalesSummary({ exact_total: '21', quantity: '9007199254740991', incoming_quantity: '5', outgoing_quantity: '9007199254740996' })], inspect(values, sql) {
       bound = values;
@@ -400,4 +407,28 @@ test('normal sales pushdown: both branches filter before projection, all-match t
     assert.equal(result.items[0]!.productSummary.productCount, null); assert.equal(result.totals.quantity, 9007199254740991n);
     assert.equal(result.totals.grossAmount, 9007199254740994n); assert.equal(result.items[0]!.grossAmount, 1n); client.done();
   }
+});
+
+test('sales detail current category projection follows real identities, signed non-gift quantity and historical unknown', async () => {
+ for(const stock_basis of ['RUNTIME_LEDGER','CUTOFF_HISTORY']) {
+  const rows=[{...line(),product_id:sid('product',600),category_id:sid('category',601),category_name:'同名'},
+   {...line(),id:sid('salesLine',602),line_no:2,quantity:'-2',product_id:sid('product',603),category_id:sid('category',604),category_name:'同名'},
+   {...line(),id:sid('salesLine',605),line_no:3,quantity:'7',is_gift:true,product_id:sid('product',600),category_id:sid('category',601),category_name:'同名'}];
+  const client=new ProtocolClient([begin(),{sql:/^SELECT h.id/,rows:[{...header(),stock_basis}]},{sql:/FROM naijue_erp.sales_line/,rows,inspect(_values,sql){assert.match(sql,/LEFT JOIN naijue_erp.sku/);assert.doesNotMatch(sql,/enabled/);}},{sql:/FROM naijue_erp.sales_settlement/,rows:[]},commit()]);
+  const result=await reader(client).readDetail(read({salesId:ids.sales}));
+  assert.equal(result.productSummary?.productCount,stock_basis==='RUNTIME_LEDGER'?2n:null);
+  assert.deepEqual(result.categorySummary,stock_basis==='RUNTIME_LEDGER'?{basis:'CURRENT',metric:'QUANTITY',categoryCount:2n,hasMore:false,items:[{categoryId:sid('category',601),categoryName:'同名',value:9007199254740993n},{categoryId:sid('category',604),categoryName:'同名',value:-2n}]}:{basis:'UNKNOWN',metric:'QUANTITY',categoryCount:null,items:[],hasMore:false});
+  assert.equal(client.calls.length,5);client.done();
+ }
+});
+
+test('sales full detail summary excludes cancelling category totals and rejects broken current identity',async()=>{
+ const {salesDetailIdentitySummary:project}=await import('../adapters/postgres/src/sales-query-reader.ts');
+ const a={...line(),category_id:sid('category',701),category_name:'同名',quantity:'2'};
+ const b={...a,quantity:'-2'};assert.equal(project([a,b],'RUNTIME_LEDGER').categorySummary?.items.length,0);
+ assert.equal(project([{...a,is_gift:true}],'RUNTIME_LEDGER').categorySummary?.categoryCount,0n);
+ assert.equal(project([line()],'RUNTIME_LEDGER').categorySummary?.items[0]?.categoryId,null);
+ for(const patch of [{product_id:null},{category_id:null},{category_name:null}])assert.throws(()=>project([{...a,...patch}],'RUNTIME_LEDGER'));
+ assert.equal(project([{...a,product_id:null}],'CUTOFF_HISTORY').categorySummary?.basis,'UNKNOWN');
+ const many=Array.from({length:4},(_,i)=>({...a,product_id:sid('product',800+i),category_id:sid('category',800+i)}));const result=project(many,'RUNTIME_LEDGER');assert.equal(result.categorySummary?.items.length,4);assert.equal(result.productSummary?.items.length,3);assert.equal(result.productSummary?.hasMore,true);
 });

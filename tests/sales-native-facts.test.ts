@@ -105,6 +105,7 @@ function pgFixture(options: { count?: number; priceChange?: Record<string, unkno
     else if (sql.includes("native-sales-facts:customer")) rows = [{ id: ids.customer, enabled: true }];
     else if (sql.includes("native-sales-facts:membership")) rows = (values[0] as string[]).map((group, index) => ({ size_group_id: group, size_id: (values[1] as string[])[index] }));
     else if (sql.includes("native-sales-facts:barcodes")) rows = options.barcode ? [{ barcode: options.barcode, sku_id: ids.sku, enabled: true }] : [];
+    else if (sql.includes("native-sales-facts:sku-products")) { assert.ok(!sql.includes("FOR SHARE")); const wanted=values[0] as string[]; assert.ok(wanted.length<=200); rows=tables.sku!.filter(row=>wanted.includes(row.id as string)); }
     else if (sql.includes("SYNTHETIC-persisted-completeness")) rows = [{ complete: true }];
     else { const table = /native-sales-facts:([a-z_]+)/.exec(sql)?.[1]; assert.ok(table && tables[table], sql); assert.match(sql, /WHERE id = ANY\(\$1::uuid\[\]\) ORDER BY id FOR SHARE/);
       const wanted = values[0] as string[]; assert.ok(wanted.length <= 200); rows = tables[table].filter(row => wanted.includes(row.id as string)); }
@@ -125,7 +126,7 @@ test("native sales pg facts: original-query bounded target locks, actual member 
   assert.equal(f.calls.filter(row => /native-sales-facts:sku \*\//.test(row.sql)).length, 2);
   assert.equal(f.calls.filter(row => /native-sales-facts:product \*\//.test(row.sql)).length, 1);
   assert.equal(f.calls.filter(row => row.sql.includes("native-sales-facts:membership")).length, 2);
-  assert.ok(f.calls.filter(row => row.sql.includes("native-sales-facts:") && !row.sql.includes(":schema")).every(row => /FOR SHARE/.test(row.sql)));
+  assert.ok(f.calls.filter(row => row.sql.includes("native-sales-facts:") && !row.sql.includes(":schema") && !row.sql.includes(":sku-products")).every(row => /FOR SHARE/.test(row.sql)));
 });
 test("native sales pg facts: missing real verifier, schema10 and incomplete/invalid nine-price facts fail closed", async () => {
   let queried = false; const missing = new PostgresNativeSalesFacts(async () => { queried = true; return { rows: [], rowCount: 0 }; }, () => {}, () => []);
@@ -287,4 +288,25 @@ test("approved LIVE SAVE requires actual in-job salesperson; legacy NULL approva
   assert.deepEqual(store.snapshot(), before);
   assert.deepEqual(await upgraded.execute(command), prior); assert.deepEqual(store.snapshot(), before);
   authorized = false; await assert.rejects(() => upgraded.execute(command), {code:'FORBIDDEN'}); assert.deepEqual(store.snapshot(), before);
+});
+
+// Regression: product maintenance locks product before SKU; sales must agree.
+test("native sales catalogue locks are product then SKU after nonlocking discovery", async () => {
+ const f=pgFixture({count:201});
+ await f.reader.load(f.draft);
+ const productAt=f.calls.findIndex(row=>row.sql.includes('native-sales-facts:product */'));
+ const skuAt=f.calls.findIndex(row=>row.sql.includes('native-sales-facts:sku */'));
+ assert.ok(productAt>=0 && productAt<skuAt, 'all product locks must precede first SKU lock');
+ const discovered=f.calls.filter(row=>row.sql.includes('native-sales-facts:sku-products'));
+ assert.equal(discovered.length,2);assert.ok(discovered.every(row=>!row.sql.includes('FOR SHARE')));
+});
+
+test("native sales association changed between discovery and locking fails closed", async () => {
+ const f=pgFixture();
+ const query:NativeSalesFactQuery=async(sql,values)=>{
+  const result=await f.query(sql,values);
+  return sql.includes('native-sales-facts:sku */')?{...result,rows:result.rows.map(row=>({...row,product_id:sid('product',999)}))}:result;
+ };
+ const reader=new PostgresNativeSalesFacts(query,()=>{},()=>[],{async assertComplete(){throw Error('must reject before completeness');}});
+ await assert.rejects(()=>reader.load(f.draft),{code:'SALES_REFERENCE_UNAVAILABLE'});
 });

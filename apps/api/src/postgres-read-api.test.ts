@@ -22,8 +22,10 @@ import { createSourceConfirmedCurrentFormAuthorization } from "../../../packages
 import type { CurrentFormAuthorization } from "../../../packages/application/src/current-form-ports.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import type { SalesListQuery } from "../../../packages/application/src/sales-query-ports.ts";
-import { createPostgresReadApi } from "./postgres-read-api.ts";
-import type { PostgresReadApiAuthorization, PostgresReadApiExplicitAuthorization, PostgresReadApiOptions } from "./postgres-read-api.ts";
+import { createPostgresReadApi, createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
+import { COMPLETE_SCOPE_DECISION } from "../../../packages/application/src/inventory-cutoff-import.ts";
+import { createSyntheticV7Fixture } from "../../../tests/support/live-ledger-api-v7-fixtures.ts";
+import type { PostgresApplicationApiOptions, PostgresReadApiAuthorization, PostgresReadApiExplicitAuthorization, PostgresReadApiOptions } from "./postgres-read-api.ts";
 import { ids, sid } from "../../../tests/support/synthetic-fixtures.ts";
 import { createSourceConfirmedProductCapacityFactory } from './postgres-read-api.ts';
 import { PostgresMaintenanceCommandUnitOfWork } from '../../../adapters/postgres/src/maintenance-command-unit-of-work.ts';
@@ -54,15 +56,30 @@ function options(): PostgresReadApiOptions & { readonly authorization: PostgresR
     transfers: createSourceConfirmedTransferQueryAuthorization(), products: { async authorize(_actor, intent) { return { productId: intent.parameters.productId }; } }
   }, productMedia: null };
 }
-const nativeOptions = (): PostgresReadApiOptions => ({ ...options(), authorization: { mode: "source-confirmed-native" } });
+// This is an explicit NEW full V7 native graph, not an upgrade of options() or a
+// claim that issuer-null/custom-provider factory positives remain supported.
+const nativeOptions = (): PostgresApplicationApiOptions => ({ ...options(), authorization: { mode: "source-confirmed-native" },
+  currentForms: { authorization: createSourceConfirmedCurrentFormAuthorization() }, nativeReadExtensions: { profile: "source-confirmed-r1-v1" } });
+function createSyntheticV7Api(value: PostgresApplicationApiOptions, driver: ScriptedDriver) {
+  const fixture = createSyntheticV7Fixture(value.postgres.target);
+  driver.proof = fixture;
+  // Call the actual original new entry before any await: currentForms/origin capture
+  // must happen in production composition, never in this test helper.
+  return createPostgresRuntime26ApplicationApi(value, fixture.review, driver.factory).then(api => Object.freeze({ ...api,
+    // The issuer reopens these pinned files on each proof: retain them for the
+    // entire API lifetime, including requests, COMMIT checks and readiness.
+    close: () => api.close().finally(() => fixture.cleanup()),
+    get postgresBackgroundFailureCount() { return api.postgresBackgroundFailureCount; }
+  }), error => { fixture.cleanup(); throw error; });
+}
 test('A02 active API refuses a missing singleton before allocating a pool; no default capacity window',async()=>{
   const {capacityAdmission:_capacity,...value}=options(),driver=new ScriptedDriver();
   await assert.rejects(createPostgresReadApi(value,driver.factory),/explicit singleton capacity admission/);
   assert.equal(driver.allocations,0);assert.equal(driver.connects,0);
 });
 test('A02 actual API forwards new-session capacity after credential work and before final transaction; old session still resolves',async t=>{
-  const value=options(),driver=new ScriptedDriver();let calls=0;
-  const api=await createPostgresReadApi({...value,capacityAdmission:{async acquire(kind){assert.equal(kind,'session');assert.equal(driver.connects,driver.releases.length);calls++;throw new CapacityAdmissionRejected('LOW_WATER',2);},close(){}}},driver.factory);t.after(()=>api.close());
+  const value=nativeOptions(),driver=new ScriptedDriver();let calls=0;
+  const api=await createSyntheticV7Api({...value,capacityAdmission:{async acquire(kind){assert.equal(kind,'session');assert.equal(driver.connects,driver.releases.length);calls++;throw new CapacityAdmissionRejected('LOW_WATER',2);},close(){}}},driver);t.after(()=>api.close());
   const before=driver.sessions.size;
   const response=await api.app.inject({method:'POST',url:'/auth/login',headers:{origin:ORIGIN,'content-type':'application/json'},payload:{loginName:driver.account.login_name,password:PASSWORD}});
   assert.equal(response.statusCode,503);assert.equal(response.headers['retry-after'],'2');assert.equal(response.headers['set-cookie'],undefined);assert.equal(calls,1);
@@ -70,7 +87,7 @@ test('A02 actual API forwards new-session capacity after credential work and bef
   assert.equal((await api.app.inject({url:'/auth/session',headers:{cookie:`__Host-naijue_session=${TOKEN}`}})).statusCode,200);assert.equal(calls,1);
 });
 test('A02 runtime producer is bound to the sole actual API pool; fresh facts permit login and stale facts preserve existing session/logout',async t=>{
-  const value=options(),driver=new ScriptedDriver();let at=1000,facts=0;
+  const value=nativeOptions(),driver=new ScriptedDriver();let at=1000,facts=0;
   const binding={candidateFingerprint:'SYNTHETIC_SOURCE',targetFingerprint:'SYNTHETIC_TARGET',writerTopologyFingerprint:'ONE_WRITER',
     inventoryFingerprint:'SYNTHETIC_INVENTORY',processInstanceId:'SYNTHETIC_INSTANCE',restartGeneration:1,writerCount:1,
     physicalVolumes:{postgres:'pg-wal',wal:'pg-wal',backup:'backup',system:'system-media',media:'system-media'}};
@@ -79,17 +96,18 @@ test('A02 runtime producer is bound to the sole actual API pool; fresh facts per
     budgets:{session:{maxAdmissions:10,maxInFlight:2,worstCaseBytes:bytes(1n)},upload:{maxAdmissions:10,maxInFlight:2,worstCaseBytes:bytes(2n)}},
     minimumFreeBytes:bytes(10n),safetyBytes:bytes(1n),probeTtlMillis:100,probeTimeoutMillis:100,maxProbeWaiters:2,retryAfterSeconds:2,
     now:()=>at,currentBinding:()=>binding,runtimeProbe:{target:{host:value.postgres.target.host,port:value.postgres.target.port,
-      database:value.postgres.target.database,role:value.postgres.target.user,databaseOid:'999',postmasterStart:'SYNTHETIC_POSTMASTER'},
+      database:value.postgres.target.database,role:value.postgres.target.user,databaseOid:'123',postmasterStart:'2026-10-30 00:00:00+00'},
       async readVolumeFacts({window}){facts++;assert.equal(driver.connects,driver.releases.length,'Password/preflight lease must finish before operational IO');
         return{status:'KNOWN',windowToken:window.token,binding,observedAt:1000,freeBytes:bytes(1000n)};}}});
   driver.business=async sql=>{
     if(sql.includes('capacity-runtime:identity'))return{rows:[{database:value.postgres.target.database,role:value.postgres.target.user,session_user:value.postgres.target.user,
-      database_oid:'999',postmaster_start:'SYNTHETIC_POSTMASTER',read_only:'on',isolation:'repeatable read'}],rowCount:1};
+      database_oid:'123',postmaster_start:'2026-10-30 00:00:00+00',read_only:'on',isolation:'repeatable read'}],rowCount:1};
     if(sql.includes('capacity-inventory:storage'))return{rows:[{relation_bytes:'1',index_bytes:'1',total_relation_bytes:'2',database_bytes:'10'}],rowCount:1};
     throw Error('Unexpected synthetic business query');
   };
-  const api=await createPostgresReadApi({...value,capacityAdmission},driver.factory);t.after(()=>api.close());
-  assert.equal(driver.allocations,1);assert.equal(driver.connects,0,'Binding the probe must not eagerly open a connection');
+  const api=await createSyntheticV7Api({...value,capacityAdmission},driver);t.after(()=>api.close());
+  assert.equal(driver.allocations,1);assert.equal(driver.connects,2,'Only V7 catalog/identity startup proof may open connections; binding the operational probe must not sample storage');
+  assert.equal(driver.calls.some(c=>c.sql.includes('capacity-runtime:')||c.sql.includes('capacity-inventory:')),false);
   const login=()=>api.app.inject({method:'POST',url:'/auth/login',headers:{origin:ORIGIN,'content-type':'application/json'},payload:{loginName:driver.account.login_name,password:PASSWORD}});
   assert.equal((await login()).statusCode,200);assert.equal(facts,1);
   assert.equal(driver.allocations,1);assert.equal(driver.connects,driver.releases.length);
@@ -106,7 +124,7 @@ test('A02 runtime producer is bound to the sole actual API pool; fresh facts per
   assert.equal(facts,2,'Existing session reads and logout must bypass new-write capacity');assert.equal(driver.connects,driver.releases.length);
   await api.close();assert.equal(driver.ends,1);
   const retryDriver=new ScriptedDriver();
-  await assert.rejects(createPostgresReadApi({...value,capacityAdmission},retryDriver.factory),/one exact owned pool/);
+  await assert.rejects(createSyntheticV7Api({...value,capacityAdmission},retryDriver),/one exact owned pool/);
   assert.equal(retryDriver.allocations,1);assert.equal(retryDriver.connects,0);assert.equal(retryDriver.ends,1,'Rejected rebind disposes its newly owned pool without a query');
 });
 test('P02 actual API refuses missing instance budgets before pool allocation and never silently selects production defaults',async()=>{
@@ -115,10 +133,10 @@ test('P02 actual API refuses missing instance budgets before pool allocation and
   assert.equal(driver.allocations,0);assert.equal(driver.connects,0);
 });
 test('P02 actual API CPU overload returns429 after released snapshot, without inserting a session or exposing codec details',async t=>{
-  const value=options(),driver=new ScriptedDriver(),gate=value.authentication.work!.passwordGate;
+  const value=nativeOptions(),driver=new ScriptedDriver(),gate=value.authentication.work!.passwordGate;
   let entered!:()=>void,finish!:()=>void;const started=new Promise<void>(done=>{entered=done;}),held=new Promise<void>(done=>{finish=done;});
   const pending=gate.run('login',async()=>{entered();await held;});await started;
-  const api=await createPostgresReadApi(value,driver.factory);t.after(()=>api.close());
+  const api=await createSyntheticV7Api(value,driver);t.after(()=>api.close());
   try{
     const response=await api.app.inject({method:'POST',url:'/auth/login',headers:{origin:ORIGIN,'content-type':'application/json'},payload:{loginName:driver.account.login_name,password:PASSWORD}});
     assert.equal(response.statusCode,429);assert.equal(response.headers['set-cookie'],undefined);assert.ok(Number(response.headers['retry-after'])>=1);
@@ -127,7 +145,7 @@ test('P02 actual API CPU overload returns429 after released snapshot, without in
     assert.equal(driver.connects,driver.releases.length);
   }finally{finish();await pending;}
 });
-const currentOptions = (): PostgresReadApiOptions => ({ ...nativeOptions(), currentForms: { authorization: createSourceConfirmedCurrentFormAuthorization() } });
+const currentOptions = (): PostgresApplicationApiOptions => ({ ...nativeOptions(), currentForms: { authorization: createSourceConfirmedCurrentFormAuthorization() } });
 const currentRoutes = [
   ["/current-form/sales-references/query", { kind: "hall", hallId: null, search: "", page: 1, pageSize: 20 }],
   ["/current-form/transfer-warehouses/query", { direction: "FROM", search: "", page: 1, pageSize: 20 }],
@@ -143,6 +161,7 @@ type Call = { readonly sql: string; readonly values: unknown[] };
 class ScriptedDriver extends EventEmitter {
   allocations = 0; connects = 0; ends = 0; releases: (Error | boolean | undefined)[] = []; calls: Call[] = [];
   failEnd = false; failBusiness = false; loginEnabled = true;
+  proof: ReturnType<typeof createSyntheticV7Fixture> | undefined;
   nativeIdentity: Record<string, unknown> | undefined;
   currentIdentity: Record<string, unknown> | undefined;
   beforeNativeIdentity: (() => Promise<void>) | undefined;
@@ -165,6 +184,7 @@ class ScriptedDriver extends EventEmitter {
   async end(): Promise<void> { this.ends++; if (this.failEnd) throw new Error("SYNTHETIC private driver disposal error"); }
   private async query(sql: string, values: unknown[]): Promise<BoundedPostgresResult> {
     const rows = (value: Record<string, unknown>[]): BoundedPostgresResult => ({ rows: value, rowCount: value.length });
+    const proof = this.proof?.query(sql); if (proof !== undefined) return proof;
     if (sql.includes("auth:login-snapshot")) return rows(values[0]===this.account.login_name?[{account_id:this.account.account_id,login_name:this.account.login_name,password_hash:this.account.password_hash,auth_version:this.account.auth_version}]:[]);
     if (sql.startsWith("BEGIN ") || sql === "COMMIT" || sql === "ROLLBACK") return rows([]);
     if (sql.includes("FROM naijue_erp.user_account a JOIN") && !sql.includes("/* read-authorization:identity */") && !sql.includes("/* current-form:identity */")) {
@@ -202,6 +222,12 @@ class ScriptedDriver extends EventEmitter {
     if (sql.includes("/* current-form:count */")) return rows([{ total: "0" }]);
     if (sql.includes("/* current-form:page */")) return rows([]);
     if (sql.includes("/* current-form:sku-batch */")) return rows([currentSkuRow]);
+    // Exact named original statement protocols, not a general SQL/metadata matcher.
+    // This fixture has no published HISTORY and no LIVE documents; totals are known
+    // from the returned aggregate row, not inferred from an unknown/failed read.
+    if (sql.startsWith("/* imported-history:schema */")) return rows([{ versions: Array.from({length:26},(_,i)=>i+1) }]);
+    if (sql.startsWith("/* normal-document-list:shared */ WITH ")) return rows([{ exact_total: "0", quantity: "0", incoming_quantity: "0", outgoing_quantity: "0",
+      gross_amount: "0", order_discount: "0", net_due: "0", history_valid: true, history_published: false, items: [] }]);
     if (sql.includes("/* inventory:publication */")) return rows([]); // Explicitly unpublished fixture; never invent stock zero.
     if (sql.includes("/* inventory-ledger:warehouse */")) return rows([{ id: warehouse.id, hall_id: warehouse.hallId, name: warehouse.label }]);
     if (sql.includes("/* inventory-ledger:sku */")) return rows([]);
@@ -211,22 +237,29 @@ class ScriptedDriver extends EventEmitter {
     throw new Error("SYNTHETIC scripted protocol does not recognize this query");
   }
 }
-async function setup(t: TestContext, value: PostgresReadApiOptions = options(), driver = new ScriptedDriver()) {
-  const api = await createPostgresReadApi(value, driver.factory); t.after(() => api.close());
+async function setup(t: TestContext, value: PostgresApplicationApiOptions = nativeOptions(), driver = new ScriptedDriver()) {
+  const api = await createSyntheticV7Api(value, driver); t.after(() => api.close());
+  const baseline = { connects: driver.connects, releases: driver.releases.length, calls: driver.calls.length };
+  assert.deepEqual(baseline, { connects: 2, releases: 2, calls: 7 }, "Actual V7 catalog + same-pool identity proof are both awaited/released before ready");
   const post = (url: string, payload: unknown, headers: Record<string, string> = {}) => api.app.inject({ method: "POST", url, payload: JSON.stringify(payload),
     headers: { "content-type": "application/json", origin: ORIGIN, cookie: `__Host-naijue_session=${TOKEN}`, ...headers } });
-  return { ...api, driver, post };
+  return { ...api, driver, post, baseline };
 }
-test("SYNTHETIC composition: one lazy owned pool, 19 native auth/read routes, no business writes/listener", async t => {
-  const f = await setup(t); assert.equal(f.driver.connects, 0); assert.equal(f.app.server.listening, false);
+test("SYNTHETIC V7 composition: one proven owned pool, original19 routes plus explicit native reads, no business writes/listener", async t => {
+  const rejected=new ScriptedDriver();
+  await assert.rejects(createPostgresReadApi(options(),rejected.factory),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+  assert.equal(rejected.allocations,0);assert.equal(rejected.connects,0);
+  const f = await setup(t); assert.equal(f.driver.connects, f.baseline.connects); assert.equal(f.app.server.listening, false);
   const posts = ["/auth/login", "/auth/logout", "/auth/password", "/inventory/query", "/inventory/candidates/query", "/inventory/ledger/query",
     "/sales/query", "/sales/references/query", "/sales/detail/query", "/sales/history/query", "/sales/settlement-statistics/query", "/transfers/query",
     "/transfers/detail/query", "/transfers/warehouses/query", "/products/basics/query", "/products/specifications/query", "/products/images/query", "/products/image/query"];
   for (const url of posts) assert.ok(f.app.hasRoute({ method: "POST", url }), url);
+  for(const [url] of currentRoutes) assert.equal(f.app.hasRoute({method:"POST",url}),true,url);
+  assert.equal(f.app.hasRoute({method:"POST",url:"/imported-history/sales/query"}),true);
   assert.ok(f.app.hasRoute({ method: "GET", url: "/auth/session" }));
   for (const url of ["/sales/commands", "/transfers/commands", "/customers/commands", "/suppliers/commands", "/accounts", "/products/commands"])
     assert.equal((await f.post(url, {})).statusCode, 404, url);
-  assert.equal(f.driver.connects, 0); assert.equal(f.postgresBackgroundFailureCount, 0);
+  assert.equal(f.driver.connects, f.baseline.connects); assert.equal(f.postgresBackgroundFailureCount, 0);
   await f.close(); await f.close(); assert.equal(f.driver.ends, 1); assert.equal(f.app.server.listening, false);
 });
 test("SYNTHETIC composition: explicit origin/policy/media and bounded configuration fail closed", async () => {
@@ -239,6 +272,10 @@ test("SYNTHETIC composition: explicit origin/policy/media and bounded configurat
     { ...options(), postgres: { ...postgres(), max: 0 } }
   ];
   for (const value of invalid) { const driver = new ScriptedDriver(); await assert.rejects(createPostgresReadApi(value, driver.factory)); assert.equal(driver.connects, 0); assert.equal(driver.ends, 0); }
+  // An issuer-null refusal must not mask the applicable bounded-pool validation.
+  const driver=new ScriptedDriver();
+  await assert.rejects(createSyntheticV7Api({...nativeOptions(),postgres:{...postgres(),max:0}},driver),{code:"PG_INVALID_CONFIG"});
+  assert.equal(driver.allocations,0);assert.equal(driver.connects,0);assert.equal(driver.ends,0);
 });
 test("SYNTHETIC native profile: closed host selection rejects unknown/mixed shapes before driver allocation", async () => {
   // Compile-time exclusivity complements runtime checks for untyped server configuration.
@@ -265,12 +302,12 @@ test("SYNTHETIC native profile: closed host selection rejects unknown/mixed shap
   }
   const driver = new ScriptedDriver();
   const authorization: PostgresReadApiAuthorization = Object.assign(Object.create(null), { mode: "source-confirmed-native" as const });
-  const api = await createPostgresReadApi({ ...nativeOptions(), authorization }, driver.factory);
-  assert.equal(driver.allocations, 1); assert.equal(driver.connects, 0); await api.close(); assert.equal(driver.ends, 1);
+  const api = await createSyntheticV7Api({ ...nativeOptions(), authorization }, driver);
+  assert.equal(driver.allocations, 1); assert.equal(driver.connects, 2); assert.equal(driver.releases.length,2); await api.close(); assert.equal(driver.ends, 1);
 });
-test("SYNTHETIC native profile: one lazy pool creates genuine read policies and the canonical transfer policy", async t => {
+test("SYNTHETIC V7 native profile: one proven pool creates genuine read policies and the canonical transfer policy", async t => {
   const f = await setup(t, nativeOptions());
-  assert.equal(f.driver.allocations, 1); assert.equal(f.driver.connects, 0); assert.equal(f.driver.calls.length, 0);
+  assert.equal(f.driver.allocations, 1); assert.equal(f.driver.connects, f.baseline.connects); assert.equal(f.driver.calls.length, f.baseline.calls);
   assert.equal(f.app.server.listening, false);
   for (const [url, payload, status] of [
     ["/sales/query", salesInput(), 200], ["/transfers/query", transferInput(), 200],
@@ -282,13 +319,14 @@ test("SYNTHETIC native profile: one lazy pool creates genuine read policies and 
     assert.equal(response.statusCode, status, `${url}: ${response.body}`);
   }
   const identities = f.driver.calls.filter(call => call.sql.includes("/* read-authorization:identity */"));
-  assert.equal(identities.length, 5); for (const call of identities) assert.deepEqual(call.values, [ids.account]);
+  assert.equal(identities.length, 7); // Normal sales/transfer lists independently re-read current identity on the actual data snapshot.
+  for (const call of identities) assert.deepEqual(call.values, [ids.account]);
   assert.equal(f.driver.calls.filter(call => call.sql.includes("/* read-authorization:warehouses */")).length, 3);
-  const sales = f.driver.calls.find(call => call.sql.includes("COUNT(*)") && call.sql.includes("naijue_erp.sales_header"));
-  assert.ok(sales); assert.deepEqual(sales.values, [ids.hall]); assert.match(sales.sql, /h\.hall_id = \$1::uuid/);
-  const transfer = f.driver.calls.find(call => call.sql.includes("COUNT(*)") && call.sql.includes("naijue_erp.transfer_header"));
-  assert.ok(transfer); assert.deepEqual(transfer.values, [ids.hall, ids.hall, ids.hall, "SALESPERSON"]); assert.match(transfer.sql, /created_role/);
-  assert.equal(f.driver.allocations, 1); assert.equal(f.driver.connects, 17); assert.equal(f.driver.releases.length, 17);
+  const sales = f.driver.calls.find(call => call.sql.startsWith("/* normal-document-list:shared */") && call.sql.includes("naijue_erp.sales_header"));
+  assert.ok(sales); assert.deepEqual(sales.values, [ids.hall, COMPLETE_SCOPE_DECISION, ids.hall, 20, "0"]); assert.match(sales.sql, /h\.hall_id = \$1::uuid/);
+  const transfer = f.driver.calls.find(call => call.sql.startsWith("/* normal-document-list:shared */") && call.sql.includes("naijue_erp.transfer_header"));
+  assert.ok(transfer); assert.deepEqual(transfer.values, [ids.hall, ids.hall, ids.hall, "SALESPERSON", COMPLETE_SCOPE_DECISION, ids.hall, 20, "0"]); assert.match(transfer.sql, /created_role/);
+  assert.equal(f.driver.allocations, 1); assert.equal(f.driver.connects - f.baseline.connects, 17); assert.equal(f.driver.releases.length - f.baseline.releases, 17);
   await f.app.close(); await f.close(); assert.equal(f.driver.ends, 1);
 });
 test("SYNTHETIC native profile: current trusted ADMIN/WAREHOUSE versus salesperson role and hall map to source scopes", async t => {
@@ -299,11 +337,11 @@ test("SYNTHETIC native profile: current trusted ADMIN/WAREHOUSE versus salespers
     assert.equal((await f.post("/sales/query", salesInput())).statusCode, 200);
     assert.equal((await f.post("/transfers/query", transferInput())).statusCode, 200);
     const current = f.driver.calls.slice(offset);
-    const sales = current.find(call => call.sql.includes("COUNT(*)") && call.sql.includes("naijue_erp.sales_header"));
-    const transfer = current.find(call => call.sql.includes("COUNT(*)") && call.sql.includes("naijue_erp.transfer_header"));
+    const sales = current.find(call => call.sql.startsWith("/* normal-document-list:shared */") && call.sql.includes("naijue_erp.sales_header"));
+    const transfer = current.find(call => call.sql.startsWith("/* normal-document-list:shared */") && call.sql.includes("naijue_erp.transfer_header"));
     assert.ok(sales); assert.ok(transfer);
-    assert.deepEqual(sales.values, role === "SALESPERSON" ? [ids.hall] : []);
-    assert.deepEqual(transfer.values, role === "SALESPERSON" ? [ids.hall, ids.hall, ids.hall, role] : []);
+    assert.deepEqual(sales.values, role === "SALESPERSON" ? [ids.hall, COMPLETE_SCOPE_DECISION, ids.hall, 20, "0"] : [COMPLETE_SCOPE_DECISION, 20, "0"]);
+    assert.deepEqual(transfer.values, role === "SALESPERSON" ? [ids.hall, ids.hall, ids.hall, role, COMPLETE_SCOPE_DECISION, ids.hall, 20, "0"] : [COMPLETE_SCOPE_DECISION, 20, "0"]);
   }
   f.driver.account.hall_id = null;
   const offset = f.driver.calls.length;
@@ -332,7 +370,7 @@ test("SYNTHETIC native profile: host choice captures without mutating caller aut
   const explicit = options(); const provider = explicit.authorization.products; const method = provider.authorize;
   const authentication = Object.freeze({ ...explicit.authentication }); const before = Object.keys(explicit.authorization);
   const selector = { mode: "source-confirmed-native" as const };
-  const f = await setup(t, Object.freeze({ ...explicit, authentication, authorization: selector }));
+  const f = await setup(t, Object.freeze({ ...nativeOptions(), authentication, authorization: selector }));
   assert.equal(explicit.authorization.products, provider); assert.equal(provider.authorize, method);
   assert.deepEqual(Object.keys(explicit.authorization), before); assert.equal(authentication.policy, explicit.authentication.policy);
   Object.assign(selector, { mode: "not-a-profile", products: { authorize() { throw new Error("SYNTHETIC replacement must not run"); } } });
@@ -366,16 +404,17 @@ test("SYNTHETIC native profile: abort during native identity query stops later p
   assert.equal(driver.calls.filter(call => call.sql === "ROLLBACK").length, 1);
   assert.equal(driver.calls.filter(call => call.sql.includes("FROM naijue_erp.product p")).length, 1);
   assert.equal(driver.calls.filter(call => call.sql === "COMMIT").length, 4);
-  assert.equal(driver.releases.length, 5); assert.equal(driver.allocations, 1);
+  assert.equal(driver.releases.length - f.baseline.releases, 5); assert.equal(driver.allocations, 1);
 });
-test("SYNTHETIC composition: failed authentication-policy construction cleans its pool without a connection", async () => {
-  for (const value of [options(), nativeOptions(), currentOptions()]) {
+test("SYNTHETIC V7 composition: failed authentication-policy construction cleans its proven pool without a business connection", async () => {
+  for (const value of [nativeOptions(), currentOptions()]) {
     const driver = new ScriptedDriver();
-    await assert.rejects(createPostgresReadApi({ ...value, authentication: { ...value.authentication, policy: { ...value.authentication.policy, sessionTtlSeconds: 0 } } }, driver.factory),
-      /complete policy/);
-    assert.equal(driver.allocations, 1); assert.equal(driver.connects, 0); assert.equal(driver.ends, 1);
+    await assert.rejects(createSyntheticV7Api({ ...value, authentication: { ...value.authentication, policy: { ...value.authentication.policy, sessionTtlSeconds: 0 } } }, driver), /complete policy/);
+    assert.equal(driver.allocations, 1); assert.equal(driver.connects, 2); assert.equal(driver.releases.length,2); assert.equal(driver.ends, 1);
+    assert.equal(driver.calls.length,7,"Authentication construction failure cannot run auth/session or business SQL after admission proof");
   }
 });
+
 test("SYNTHETIC composition: real Node scrypt login/store/session/logout wiring never exposes token in JSON", async t => {
   const f = await setup(t);
   const login = await f.post("/auth/login", { loginName: f.driver.account.login_name, password: PASSWORD });
@@ -399,36 +438,31 @@ test("SYNTHETIC composition: all read families resolve the same current PG sessi
   for (const [url, payload, status] of cases) {
     const response = await f.post(url, payload); assert.equal(response.statusCode, status, `${url}: ${response.body}`);
     assert.equal(response.headers["cache-control"], "no-store"); assert.equal(response.headers.pragma, "no-cache");
-    if (url === "/sales/query" || url === "/transfers/query") assert.deepEqual(response.json(), { page: 1, pageSize: 20, exactTotal: "0", items: [] });
+    if (url === "/sales/query" || url === "/transfers/query") assert.deepEqual(response.json(), { page: 1, pageSize: 20, exactTotal: "0", items: [], historyCoverage: "NOT_PUBLISHED",
+      totals: url === "/sales/query" ? { quantity:"0",incomingQuantity:"0",outgoingQuantity:"0",grossAmount:"0",orderDiscount:"0",netDue:"0" } : { totalQuantity:"0" } });
   }
-  const transferSql = f.driver.calls.find(call => call.sql.includes("COUNT(*)") && call.sql.includes("naijue_erp.transfer_header")); assert.ok(transferSql);
-  assert.ok(transferSql.sql.includes("created_role")); assert.deepEqual(transferSql.values, [ids.hall, ids.hall, ids.hall, "SALESPERSON"]);
+  const transferSql = f.driver.calls.find(call => call.sql.startsWith("/* normal-document-list:shared */") && call.sql.includes("naijue_erp.transfer_header")); assert.ok(transferSql);
+  assert.ok(transferSql.sql.includes("created_role")); assert.deepEqual(transferSql.values, [ids.hall, ids.hall, ids.hall, "SALESPERSON", COMPLETE_SCOPE_DECISION, ids.hall, 20, "0"]);
   assert.equal(f.driver.calls.filter(call => call.sql === "BEGIN ISOLATION LEVEL READ COMMITTED").length, cases.length);
-  assert.equal(f.driver.calls.filter(call => call.sql === "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY").length, cases.length);
-  assert.equal(f.driver.releases.length, cases.length * 2);
+  assert.equal(f.driver.calls.filter(call => call.sql === "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY").length, cases.length * 2 - 1); // Transfer uses its same native scope logic without a separate read-policy snapshot.
+  assert.equal(f.driver.releases.length - f.baseline.releases, cases.length * 3 - 1); // Session + fresh native policy + reader; canonical transfer policy needs no separate policy lease.
 });
-test("SYNTHETIC composition: missing/stale/cross-site credentials cannot reach policies or business SQL", async t => {
-  const value = options(); let policyCalls = 0; const f = await setup(t, { ...value, authorization: { ...value.authorization,
-    products: { async authorize() { policyCalls++; throw new Error("SYNTHETIC must not execute"); } } } });
-  for (const headers of [{ cookie: "" }, { cookie: "__Host-naijue_session=bad" }, { origin: "https://other.invalid" }, { origin: "" },
-    { authorization: `Bearer ${TOKEN}` }, { "sec-fetch-site": "cross-site" }, { cookie: `__Host-naijue_session=${TOKEN}; __Host-naijue_session=${TOKEN}` }])
-    assert.equal((await f.post("/products/basics/query", { productId: sid("product", 123) }, headers)).statusCode, 401);
-  assert.equal(f.driver.connects, 0); assert.equal(policyCalls, 0);
-  f.driver.loginEnabled = false;
-  assert.equal((await f.post("/products/basics/query", { productId: sid("product", 123) })).statusCode, 401);
-  assert.equal(policyCalls, 0); assert.equal(f.driver.calls.some(call => call.sql.includes("FROM naijue_erp.product p")), false);
+test("RETIRED issuer-null composition: custom explicit product callbacks now refuse before provider or pool work", async () => {
+  const value=options(),driver=new ScriptedDriver();let callbacks=0;
+  const custom={async authorize():Promise<never>{callbacks++;throw new DomainError("FORBIDDEN","SYNTHETIC must not run");}};
+  const selected={...value,authorization:{...value.authorization,inventory:custom,products:custom}};
+  await assert.rejects(createPostgresReadApi(selected,driver.factory),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+  assert.equal(callbacks,0);assert.equal(driver.allocations,0);assert.equal(driver.connects,0);assert.equal(driver.ends,0);assert.equal(driver.calls.length,0);
 });
-test("SYNTHETIC composition: hall policy is mandatory, denied inventory/ledger and product reads do not obtain business leases", async t => {
-  const value = options(); let calls = 0;
-  const f = await setup(t, { ...value, authorization: { ...value.authorization, inventory: { async authorize(actor) {
-    calls++; assert.deepEqual(actor, { accountId: ids.account, hallId: ids.hall }); throw new DomainError("FORBIDDEN", "SYNTHETIC private scope");
-  } }, products: { async authorize() { calls++; throw new DomainError("FORBIDDEN", "SYNTHETIC private product grant"); } } } });
-  for (const [url, payload] of [["/inventory/query", inventoryInput()], ["/inventory/ledger/query", { warehouseId: ids.warehouse, skuId: ids.sku, pageSize: 20, after: null }],
-    ["/products/basics/query", { productId: sid("product", 124) }]] as const) {
-    const response = await f.post(url, payload); assert.equal(response.statusCode, 403); assert.equal(response.body.includes("SYNTHETIC"), false);
-  }
-  assert.equal(calls, 3); assert.equal(f.driver.calls.some(call => call.sql.includes("REPEATABLE READ")), false);
+
+test("RETIRED issuer-null composition: custom explicit inventory/product denial callbacks now refuse before provider or pool work", async () => {
+  const value=options(),driver=new ScriptedDriver();let callbacks=0;
+  const custom={async authorize():Promise<never>{callbacks++;throw new DomainError("FORBIDDEN","SYNTHETIC must not run");}};
+  const selected={...value,authorization:{...value.authorization,inventory:custom,products:custom}};
+  await assert.rejects(createPostgresReadApi(selected,driver.factory),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+  assert.equal(callbacks,0);assert.equal(driver.allocations,0);assert.equal(driver.connects,0);assert.equal(driver.ends,0);assert.equal(driver.calls.length,0);
 });
+
 test("SYNTHETIC composition: sanitized provider failures remain local to their read plugin", async t => {
   const f = await setup(t); f.driver.failBusiness = true;
   const failed = await f.post("/products/basics/query", { productId: sid("product", 125) });
@@ -438,38 +472,31 @@ test("SYNTHETIC composition: sanitized provider failures remain local to their r
   const inventory = await f.post("/inventory/query", inventoryInput()); assert.equal(inventory.statusCode, 503); assert.equal(inventory.json().error.code, "INVENTORY_NOT_READY");
   assert.ok(f.driver.releases.some(error => error === true));
 });
-test("SYNTHETIC composition: explicit raw aborted event in a pending policy does not cancel a sibling read", async t => {
-  const value = options(); const signals: AbortSignal[] = []; let enter!: () => void; let resume!: () => void;
-  const entered = new Promise<void>(resolve => { enter = resolve; }); const hold = new Promise<void>(resolve => { resume = resolve; });
-  const f = await setup(t, { ...value, authorization: { ...value.authorization, products: { async authorize(_actor, intent, signal) {
-    signals.push(signal); if (signals.length === 1) { enter(); await hold; } return { productId: intent.parameters.productId };
-  } } } });
-  let raw: IncomingMessage | undefined;
-  // Capture the injected raw request to exercise the installed abort handler only.
-  // This synthetic event is NOT evidence of actual HTTP/network or pg-wire cancellation.
-  const cancelled = inject((request, reply) => { raw = request; f.app.routing(request, reply); }, {
-    method: "POST", url: "/products/basics/query", payload: { productId: sid("product", 126) },
-    headers: { "content-type": "application/json", origin: ORIGIN, cookie: `__Host-naijue_session=${TOKEN}` }
-  });
-  await entered; raw!.emit("aborted");
-  const sibling = await f.post("/products/basics/query", { productId: sid("product", 127) }); assert.equal(sibling.statusCode, 200);
-  resume(); const cancelledResponse = await cancelled; assert.equal(cancelledResponse.statusCode, 408);
-  assert.equal(signals.length, 2); assert.equal(signals[0]!.aborted, true); assert.equal(signals[1]!.aborted, false); assert.notEqual(signals[0], signals[1]);
-  assert.equal(f.driver.calls.filter(call => call.sql.includes("FROM naijue_erp.product p")).length, 1);
+test("RETIRED issuer-null composition: custom explicit pending product callbacks now refuse before provider or pool work", async () => {
+  const value=options(),driver=new ScriptedDriver();let callbacks=0;
+  const custom={async authorize():Promise<never>{callbacks++;throw new DomainError("FORBIDDEN","SYNTHETIC must not run");}};
+  const selected={...value,authorization:{...value.authorization,inventory:custom,products:custom}};
+  await assert.rejects(createPostgresReadApi(selected,driver.factory),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+  assert.equal(callbacks,0);assert.equal(driver.allocations,0);assert.equal(driver.connects,0);assert.equal(driver.ends,0);assert.equal(driver.calls.length,0);
 });
-test("SYNTHETIC composition: caller method replacement cannot widen captured policy after construction", async t => {
-  const value = options(); const f = await setup(t, value); let replaced = 0;
-  Object.assign(value.authorization.products, { authorize: async () => { replaced++; throw new Error("SYNTHETIC replaced provider"); } });
-  const response = await f.post("/products/basics/query", { productId: sid("product", 128) }); assert.equal(response.statusCode, 200); assert.equal(replaced, 0);
+
+test("RETIRED issuer-null composition: custom explicit method-replacement callbacks now refuse before provider or pool work", async () => {
+  const value=options(),driver=new ScriptedDriver();let callbacks=0;
+  const custom={async authorize():Promise<never>{callbacks++;throw new DomainError("FORBIDDEN","SYNTHETIC must not run");}};
+  const selected={...value,authorization:{...value.authorization,inventory:custom,products:custom}};
+  await assert.rejects(createPostgresReadApi(selected,driver.factory),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+  assert.equal(callbacks,0);assert.equal(driver.allocations,0);assert.equal(driver.connects,0);assert.equal(driver.ends,0);assert.equal(driver.calls.length,0);
 });
-test("SYNTHETIC composition: pool disposal errors reject shutdown and never repeat driver end", async () => {
-  for (const value of [options(), nativeOptions(), currentOptions()]) {
-    const driver = new ScriptedDriver(); driver.failEnd = true; const f = await createPostgresReadApi(value, driver.factory);
-    await assert.rejects(f.close(), { code: "PG_DISPOSE_FAILED" }); assert.equal(driver.ends, 1); assert.equal(driver.connects, 0);
-    assert.equal(driver.allocations, 1);
+
+test("SYNTHETIC V7 composition: pool disposal errors reject shutdown and never repeat driver end", async () => {
+  for (const value of [nativeOptions(), currentOptions()]) {
+    const driver = new ScriptedDriver(); driver.failEnd = true; const f = await createSyntheticV7Api(value, driver);
+    await assert.rejects(f.close(), { code: "PG_DISPOSE_FAILED" }); assert.equal(driver.ends, 1); assert.equal(driver.connects, 2);
+    assert.equal(driver.releases.length,2);assert.equal(driver.allocations, 1);
   }
 });
-test("SYNTHETIC composition source: read-only factory selects no application capabilities or unauthorized write routes", async t => {
+
+test("SYNTHETIC composition source: legacy factory selects no capabilities; separate V7 graph has no unauthorized write routes", async t => {
   const source = readFileSync(new URL("./postgres-read-api.ts", import.meta.url), "utf8");
   assert.doesNotMatch(source, /process\.env|dotenv|\.listen\s*\(|readFile/);
   assert.equal((source.match(/new BoundedPostgresPool\(/g) ?? []).length, 1);
@@ -486,18 +513,17 @@ test("SYNTHETIC composition source: read-only factory selects no application cap
   }
 });
 
-test("SYNTHETIC CURRENT composition: absent option, including native profile alone, keeps all five routes 404", async t => {
-  for (const value of [options(), nativeOptions()]) {
-    const f = await setup(t, value);
-    for (const [url, payload] of currentRoutes) {
-      assert.equal(f.app.hasRoute({ method: "POST", url }), false); assert.equal((await f.post(url, payload)).statusCode, 404);
-    }
-    assert.equal(f.driver.allocations, 1); assert.equal(f.driver.connects, 0); assert.equal(f.app.server.listening, false);
+test("RETIRED issuer-null CURRENT composition: absent option no longer constructs an unreviewed graph", async () => {
+  for (const value of [options(), { ...options(), authorization: { mode: "source-confirmed-native" as const } }]) {
+    const driver=new ScriptedDriver();
+    await assert.rejects(createPostgresReadApi(value,driver.factory),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+    assert.equal(driver.allocations,0);assert.equal(driver.connects,0);assert.equal(driver.ends,0);
   }
 });
-test("SYNTHETIC CURRENT composition: explicit opt-in adds five native readers with one owned lazy pool and no commands/listener", async t => {
-  for (const value of [currentOptions(), { ...options(), currentForms: currentOptions().currentForms! }]) {
-    const f = await setup(t, value); assert.equal(f.driver.allocations, 1); assert.equal(f.driver.connects, 0);
+
+test("SYNTHETIC V7 CURRENT composition: explicit native graph adds five readers with one proven owned pool and no commands/listener", async t => {
+  for (const value of [currentOptions()]) {
+    const f = await setup(t, value); assert.equal(f.driver.allocations, 1); assert.equal(f.driver.connects, f.baseline.connects);
     for (const [url, payload] of currentRoutes) {
       assert.equal(f.app.hasRoute({ method: "POST", url }), true);
       const response = await f.post(url, payload, { "x-role": "ADMIN", "x-hall-id": sid("hall", 215) });
@@ -507,7 +533,7 @@ test("SYNTHETIC CURRENT composition: explicit opt-in adds five native readers wi
     }
     assert.equal(f.driver.calls.filter(call => call.sql.includes("/* current-form:identity */")).length, 5);
     assert.equal(f.driver.calls.filter(call => call.sql.includes("/* read-authorization:identity */")).length, 0); // No second policy lease.
-    assert.equal(f.driver.connects, 10); assert.equal(f.driver.releases.length, 10); // Session + one CURRENT snapshot per request.
+    assert.equal(f.driver.connects - f.baseline.connects, 10); assert.equal(f.driver.releases.length - f.baseline.releases, 10); // Session + one CURRENT snapshot per request.
     for (const url of ["/sales/commands", "/transfers/commands", "/customers/commands", "/suppliers/commands", "/accounts", "/products/commands",
       "/current-form/commands", "/current-form/sales/commands", "/current-form/transfers/commands"])
       assert.equal((await f.post(url, {})).statusCode, 404, url);
@@ -539,7 +565,7 @@ test("SYNTHETIC CURRENT composition: capture and bind provider before first awai
     return canonical.authorize(context, intent, signal);
   } };
   const forms = { authorization: provider }; const value = { ...currentOptions(), currentForms: forms };
-  const driver = new ScriptedDriver(); const pending = createPostgresReadApi(value, driver.factory);
+  const driver = new ScriptedDriver(); const pending = createSyntheticV7Api(value, driver);
   const replacement = { async authorize() { replacements++; throw new Error("SYNTHETIC replacement must not run"); } };
   Object.assign(provider, replacement); Object.assign(forms, { authorization: replacement }); Object.assign(value, { currentForms: undefined });
   const api = await pending; t.after(() => api.close());
@@ -554,7 +580,7 @@ test("SYNTHETIC CURRENT composition: cookie/origin/bearer spoof fails before pro
     { cookie: "" }, { cookie: "__Host-naijue_session=bad" }, { origin: "" }, { origin: "https://other.invalid" },
     { authorization: `Bearer ${TOKEN}` }, { "sec-fetch-site": "cross-site" }, { cookie: `__Host-naijue_session=${TOKEN}; __Host-naijue_session=${TOKEN}` }
   ]) assert.equal((await f.post(url, payload, headers)).statusCode, 401);
-  assert.equal(calls, 0); assert.equal(f.driver.connects, 0);
+  assert.equal(calls, 0); assert.equal(f.driver.connects, f.baseline.connects);
   for (const [url, payload] of currentRoutes) assert.equal((await f.post(url, { ...payload, role: "ADMIN", grant: { kind: "all" } })).statusCode, 400);
   assert.equal(calls, 0); assert.equal(f.driver.calls.some(call => call.sql.includes("/* current-form:")), false);
 });
@@ -598,17 +624,17 @@ test("SYNTHETIC CURRENT composition: salesperson may propose cross-hall transfer
     assert.deepEqual(count.values, [""]); assert.match(count.sql, /WHERE TRUE AND/); assert.doesNotMatch(count.sql, /h\.enabled|w\.hall_id =/);
     if (direction === "FROM") assert.match(count.sql, /w\.enabled OR EXISTS/); else assert.match(count.sql, /TRUE AND w\.enabled AND/);
   }
-  assert.equal(driver.calls.some(call => call.sql.includes("read-authorization:")), false); assert.equal(driver.connects, 4);
+  assert.equal(driver.calls.some(call => call.sql.includes("read-authorization:")), false); assert.equal(driver.connects - f.baseline.connects, 4);
 });
 
 
-test('H06 legacy API cannot claim admitted database readiness from construction or healthy background counts',async t=>{
- const f=await setup(t);const connects=f.driver.connects;
- assert.equal(await f.readiness!(),false);assert.equal(f.driver.connects,connects);
- await f.close();assert.equal(await f.readiness!(),false);
+test('H06 issuer-null API refuses construction rather than claiming readiness from background counts',async()=>{
+ const driver=new ScriptedDriver();
+ await assert.rejects(createPostgresReadApi(options(),driver.factory),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+ assert.equal(driver.allocations,0);assert.equal(driver.connects,0);assert.equal(driver.ends,0);
 });
 
-test('H06 exact issuer readiness rechecks original same-pool identity, fails on drift and releases every lease',async t=>{
+test('H06 old V1 catalog cannot admit the new full graph and is not relabeled as V7',async t=>{
  const {mkdtemp,realpath,writeFile,rm}=await import('node:fs/promises');const {tmpdir}=await import('node:os');const {join}=await import('node:path');const {createHash}=await import('node:crypto');
  const {NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE}=await import('../../../adapters/postgres/src/native-import-accounting-capability.ts');
  const {createPostgresRuntime26ApplicationApi}=await import('./postgres-read-api.ts');
@@ -619,9 +645,8 @@ test('H06 exact issuer readiness rechecks original same-pool identity, fails on 
  const text=JSON.stringify(review);await writeFile(reviewFile,text,{mode:0o600});let role=target.actingRole,acquired=0,released=0,ended=0;
  const identity=()=>({database:target.database,database_oid:target.databaseOid,database_owner:'SYNTHETIC_OWNER',current_user:role,session_user:target.sessionUser,server_version_num:'170011',server_addr:null,server_port:null,postmaster_start:target.postmasterStart,replication_role:'origin'});
  const driver=Object.assign(new EventEmitter(),{async connect(){acquired++;return Object.assign(new EventEmitter(),{async query(sql:string){if(sql===NATIVE_RUNTIME26_METADATA_PROBE)return {rows:[{identity:identity(),migration_versions:Array.from({length:26},(_,i)=>i+1),catalog_sha256:'a'.repeat(64),source_routines_match:true}],rowCount:1};if(sql===NATIVE_RUNTIME26_IDENTITY_PROBE)return {rows:[{identity:identity()}],rowCount:1};throw Error('Unexpected synthetic SQL');},release(){released++;}});},async end(){ended++;}});
- const api=await createPostgresRuntime26ApplicationApi({...currentOptions(),nativeReadExtensions:{profile:'source-confirmed-r1-v1'}},{reviewFile,trustedReviewSha256:hash(text)},()=>driver);
- try{const initial=acquired;assert.equal(await api.readiness!(),true);assert.equal(acquired,initial+1);assert.equal(acquired,released);role='WRONG_ROLE';assert.equal(await api.readiness!(),false);assert.equal(acquired,released);}finally{await api.close();}
- const closed=acquired;assert.equal(await api.readiness!(),false);assert.equal(acquired,closed);assert.equal(ended,1);
+ await assert.rejects(createPostgresRuntime26ApplicationApi({...currentOptions(),nativeReadExtensions:{profile:'source-confirmed-r1-v1'}},{reviewFile,trustedReviewSha256:hash(text)},()=>driver),/Recorded live ledger pairs require the exact independently reviewed V7 catalog/);
+ assert.equal(acquired,0);assert.equal(released,0);assert.equal(ended,1); // Old V1 is refused before probing, but its owned driver is disposed.
 });
 test('A01 concrete capacity factory borrows only the original active maintenance client, reuses proof within callback and never caches across transactions',async()=>{
   let leases=0,releases=0,reads=0,checks=0;const sqls:string[]=[];
@@ -657,4 +682,31 @@ test('A01 actual product UOW forwards concrete factory after original root lock;
   assert.equal(borrowed,1);assert.equal(released,1);const root=sqls.findIndex(sql=>sql.includes('FROM naijue_erp.product WHERE id=$1::uuid FOR UPDATE'));
   const capacity=sqls.findIndex(sql=>sql.includes('new-capacity'));assert.ok(root>0&&capacity>root);assert.equal(sqls.at(-1),'COMMIT');
   assert.equal(sqls.some(sql=>/^INSERT|^UPDATE|^DELETE/.test(sql)),false);
+});
+
+// Historical assertion mappings are in the reconciliation packet, not proof of
+// unsupported old custom-provider compatibility. This is the supported graph.
+test('H06 NEW synthetic V7 exact issuer readiness rechecks same-pool identity, fails on drift and releases every lease',async t=>{
+ const driver=new ScriptedDriver(),api=await createSyntheticV7Api(nativeOptions(),driver);t.after(()=>api.close());
+ const initial=driver.connects;assert.equal(initial,2);assert.equal(await api.readiness!(),true);assert.equal(driver.connects,initial+1);
+ assert.equal(driver.connects,driver.releases.length);driver.proof!.observation.identity.current_user='WRONG_ROLE';
+ assert.equal(await api.readiness!(),false);assert.equal(driver.connects,driver.releases.length);
+ await api.close();const closed=driver.connects;assert.equal(await api.readiness!(),false);assert.equal(driver.connects,closed);assert.equal(driver.ends,1);
+});
+
+test('NEW synthetic V7 generic invalid credentials and fresh native denial cannot reach product/inventory readers',async t=>{
+ const f=await setup(t);const initial=f.driver.calls.length;
+ for(const headers of [{cookie:""},{cookie:"__Host-naijue_session=bad"},{origin:"https://other.invalid"},{origin:""},{authorization:`Bearer ${TOKEN}`},{"sec-fetch-site":"cross-site"},{cookie:`__Host-naijue_session=${TOKEN}; __Host-naijue_session=${TOKEN}`}])
+  assert.equal((await f.post('/products/basics/query',{productId:sid('product',123)},headers)).statusCode,401);
+ assert.equal(f.driver.calls.length,initial);assert.equal(f.driver.connects,f.baseline.connects);
+ f.driver.loginEnabled=false;assert.equal((await f.post('/products/basics/query',{productId:sid('product',123)})).statusCode,401);
+ assert.equal(f.driver.calls.some(call=>call.sql.includes('read-authorization:')||call.sql.includes('FROM naijue_erp.product p')),false);
+ f.driver.loginEnabled=true;f.driver.nativeIdentity={account_id:ids.account,staff_id:f.driver.account.staff_id,login_enabled:true,role:'AUDITOR',employment_status:'在职',hall_id:ids.hall,native_hall_id:ids.hall,hall_enabled:true};
+ const before=f.driver.calls.length;
+ for(const [url,payload]of [['/inventory/query',inventoryInput()],['/inventory/ledger/query',{warehouseId:ids.warehouse,skuId:ids.sku,pageSize:20,after:null}],['/products/basics/query',{productId:sid('product',124)}]]as const){
+  const response=await f.post(url,payload);assert.equal(response.statusCode,403);assert.equal(response.body.includes('SYNTHETIC'),false);
+ }
+ const denied=f.driver.calls.slice(before);assert.equal(denied.filter(call=>call.sql.includes('read-authorization:identity')).length,3);
+ assert.equal(denied.some(call=>call.sql.includes('inventory:publication')||call.sql.includes('inventory-ledger:warehouse')||call.sql.includes('FROM naijue_erp.product p')),false);
+ assert.equal(f.driver.connects,f.driver.releases.length);
 });

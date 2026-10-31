@@ -11,6 +11,8 @@ export interface DocumentOutput {
   readonly sections: readonly DocumentOutputSection[];
   readonly printSections?: readonly DocumentOutputSection[];
   readonly printMetadata?: readonly (readonly [string, string | null])[];
+  /** Print-only actual-product count and the already-authorized full category projection. */
+  readonly printSummary?: { readonly productCount: string | null; readonly categorySummary?: NonNullable<TransferDetailDto['categorySummary']> };
   readonly totals: readonly (readonly [string, string])[];
   readonly notes: readonly string[];
 }
@@ -51,22 +53,31 @@ export function salesDocumentOutput(data: SalesDetailDto): DocumentOutput {
     totals: [...(h.businessType === 'SALE' ? [['数量（不含赠品）', (outgoing - incoming).toString()] as const] : [['退回数量（不含赠品）', incoming.toString()] as const, ['换出数量（不含赠品）', outgoing.toString()] as const]),
       ['商品金额', money(h.grossAmount)], ['整单优惠', money(h.orderDiscount)], ['应结金额', money(h.netDue)], ['收款减退款', money(settlements.reduce((sum, row) => sum + (row.direction === 'RECEIVE' ? 1n : -1n) * BigInt(row.amount), 0n).toString())]],
     printMetadata: [['单据日期', h.businessDate], ['单据编号', h.number], ['状态', statuses[h.status]], ['版本', String(h.version)], ['营业厅', data.referenceNames.hallName], ['客户', data.referenceNames.customerName], ['营业员', data.referenceNames.salespersonName], ['仓库', data.referenceNames.warehouseName], ['备注', h.note]],
-    printSections: sections.map((section, index) => printColumns(section, index === sections.length - 1 ? [1, 3, 5, 6] : [2, 3, 4, 5, 6, 7, 11, 12, 14])),
+    printSections: sections.map((section, index) => index === sections.length - 1
+      ? {...printColumns(section,[1,3,5,6]),columns:['方向','收款方式','资金账户','金额']}
+      : {title:section.title,columns:['款号／商品','颜色／版型／尺码','数量','单价','金额'],rows:section.rows.map(row=>[
+        [row[2],row[3]].map(value=>value??'未记录').join(' / ')+(row[14]==='是'?'（赠品）':''),
+        [row[4],row[5],row[6]].map(value=>value??'未记录').join(' / '),
+        row[7]?.replace(/^-/,'')??null,row[11]??null,row[12]?.replace(/^-/,'')??null])}),
     notes: ['商品与收退款名称为原保存记录；营业厅、客户、营业员和仓库名称为当前资料。', '金额单位：元；未记录的事实标为“未记录”。', ...(h.status === 'VOID' ? ['本单已作废，不计入有效销售。'] : [])],
   };
 }
 export function transferDocumentOutput(data: TransferDetailDto): DocumentOutput {
   const { header: h, lines } = data.document;
   const matrices = transferMatrix(data);
+  // A current native catalogue must never supply missing historical classification.
+  const history = data.stockBasis === 'CUTOFF_HISTORY';
+  const categorySummary = history ? { basis: 'UNKNOWN', metric: 'PRODUCT_COUNT', categoryCount: null, items: [], hasMore: false } as const : data.categorySummary;
   return { kind: 'transfer', id: h.id, version: h.version, title: '杰威亚服饰发货单（调拨单）', number: h.number,
     metadata: [['单据日期', h.businessDate], ['单据编号', h.number], ['状态', statuses[h.status]], ['版本', String(h.version)], ['调出仓库', data.references.fromWarehouseName], ['调入仓库', data.references.toWarehouseName],
       ['制单人', data.references.createdByName], ['创建时间', h.createdAt], ['审核人', data.references.approvedByName], ['审核时间', h.approvedAt], ['最后更新', h.updatedAt], ['备注', h.note]],
     sections: [{ title: '调拨原保存明细', columns: lineColumns, rows: lines.map(row => [row.id, row.skuId, row.snapshot.productCode, row.snapshot.productName, row.snapshot.colorName, row.snapshot.fitName, row.snapshot.sizeName, row.quantity, row.snapshot.barcode]) }],
-    printSections: matrices.map(section => ({ title: section.group.name, columns: ['款号', '商品名称', '颜色', '版型', ...section.group.members.map(size => size.name), '小计'],
-      rows: section.rows.map(row => [row.current.productCode, row.current.productName, row.current.colorName, row.current.fitName, ...section.group.members.map(size => {
+    printSections: matrices.map(section => ({ title: section.group.name, columns: ['商品名称', '款号', '颜色', '版型', ...section.group.members.map(size => size.name), '小计'],
+      rows: section.rows.map(row => [row.current.productName, row.current.productCode, row.current.colorName, row.current.fitName, ...section.group.members.map(size => {
         const sku = row.skus.get(size.sizeId); return sku ? row.quantities.get(sku.skuId)?.toString() ?? '' : '—';
       }), row.total.toString()]),
     })),
+    printSummary: { productCount: history ? null : String(new Set(matrices.flatMap(section => section.rows.map(row => row.current.productId))).size), ...(categorySummary ? { categorySummary } : {}) },
     totals: [['数量', lines.reduce((sum, row) => sum + BigInt(row.quantity), 0n).toString()]],
     notes: ['打印矩阵按当前规范规格展示；导出逐行保留原保存名称、规格和条码。仓库与人员名称为当前资料。', '数量为本单数量，不代表实时库存。', ...(data.stockBasis === 'CUTOFF_HISTORY' ? ['历史截止导入记录。'] : [])],
   };

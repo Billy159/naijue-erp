@@ -35,7 +35,7 @@ function Editor(props: Props & { editor: StoreMaintenanceController }) {
   useEffect(() => { if (state.write.phase === 'committed' && !committed.current) { committed.current = true; props.onSaved(); props.close(); } }, [state.write.phase, props.onSaved, props.close]);
   if (state.disposed || !state.draft) return null;
   const draft = state.draft, editing = editor.record !== null, locked = editor.locked;
-  const cancel = () => { if (editor.requestClose()) props.close(); };
+  const cancel = () => { if (editor.discard()) props.close(); };
   return <Modal className="bs-modal iw-arco-modal iw-arco-controls runtime-settings" visible title={`${editing ? '编辑' : '新增'}${names[kind]}`} onCancel={cancel} onOk={() => { void editor.submit(); }} confirmLoading={state.write.phase === 'submitting' || state.write.phase === 'recovering'}
     okText="确定" cancelText="取消" maskClosable={false} autoFocus={false} okButtonProps={{ disabled: !editor.writesEnabled || locked }}>
     <div className="bs-form-fields iw-form-fields"><Field title="名称" required error={state.errors.name}><Input className="iw-arco-input" aria-label="名称" value={draft.name} autoComplete="off" disabled={locked} onChange={name => editor.update({ name })}/></Field>
@@ -47,6 +47,5 @@ function Editor(props: Props & { editor: StoreMaintenanceController }) {
     {!editor.writesEnabled && <p className="runtime-settings-note" role="status">维护保存尚未接入，填写内容不会提交。</p>}
     {state.write.phase === 'rejected' && <p className="bs-error" role="alert">{storeRejectionMessage(state.write.error?.code ?? '')}</p>}
     {(state.write.phase === 'uncertain' || state.write.phase === 'recovering') && <div className="bs-error" role="alert">提交结果尚未确认，输入和原操作身份已保留。确认前不能重新提交或丢弃。<Button type="text" loading={state.write.phase === 'recovering'} disabled={state.write.phase === 'recovering'} onClick={() => { void editor.recover(); }}>查询提交结果</Button></div>}
-    {state.closePrompt && <section className="runtime-settings-note" role="alert"><p>本次填写尚未保存，是否离开？</p><div className="bs-row-actions"><Button onClick={() => editor.keepEditing()}>继续填写</Button><Button onClick={() => { if (editor.discard()) props.close(); }}>放弃本次填写</Button></div></section>}
   </Modal>;
 }

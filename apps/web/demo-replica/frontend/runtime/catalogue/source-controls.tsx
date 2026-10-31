@@ -7,7 +7,7 @@ import { CatalogueEditorController, type CatalogueEditorDraft } from '../../../.
 import type { CatalogueMaintenanceCommand, CatalogueMaintenanceResult } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
 import type { CatalogueMaintenanceCapability } from '../../../../src/product-settings/colors/contracts.ts';
 import type { CataloguePageOptions } from './entry.tsx';
-import { Pagination } from '../inventory/pagination.tsx';
+import { Pagination } from '../common/ui/pagination.tsx';
 
 export const tabs = [['colors', '颜色'], ['groups', '尺码组'], ['fits', '版型'], ['seasons', '季节']] as const;
 export function Head({ title, children }: { title: string; children?: ReactNode }) {
@@ -37,10 +37,10 @@ const sourceModalCss = `
 .pc-arco-modal .pc-spec-transfer .arco-transfer-view-content-item{min-height:31px}
 .pc-arco-modal .pc-spec-transfer .arco-transfer-view-header{background:var(--ca-table-head)}
 `;
-export function SourceModal({ title, children, footer, close }: { title: string; children: ReactNode; footer: ReactNode; close: () => void }) {
+export function SourceModal({ title, children, footer, close, wide = false }: { title: string; children: ReactNode; footer: ReactNode; close: () => void; wide?: boolean }) {
   return <>
     <style>{sourceModalCss}</style>
-    <Modal visible title={title} footer={<div className="pc-modal-foot">{footer}</div>} className="pc-arco-modal iw-arco-controls" maskClosable={false} unmountOnExit onCancel={close} onOk={close}><div className="pc-modal-body">{children}</div></Modal>
+    <Modal visible title={title} footer={<div className="pc-modal-foot">{footer}</div>} className={"pc-arco-modal iw-arco-controls" + (wide ? " pc-wide" : "")} maskClosable={false} unmountOnExit onCancel={close} onOk={close}><div className="pc-modal-body">{children}</div></Modal>
   </>;
 }
 export function useRead<P, D>(options: Pick<CataloguePageOptions, 'scope' | 'onAccessFailure'>, execute: (read: QueryRead<P>) => Promise<D>, initial: P) {

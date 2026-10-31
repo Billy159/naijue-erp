@@ -35,7 +35,7 @@ const compare = (left: string, right: string) => left < right ? -1 : left > righ
 const hall = (index: number): OrganizationReference => ({ id: id(6100 + index), name: `SYNTHETIC 合成营业厅 ${ordinal(index)}`, enabled: index % 7 !== 6 });
 const method = (index: number): OrganizationReference => ({ id: id(10100 + index), name: `SYNTHETIC 合成收款方式 ${ordinal(index)}`, enabled: index % 5 !== 4 });
 
-export function createSettingsPreviewTransport(dataset?:QaReferenceProfile) {
+export function createSettingsPreviewTransport(dataset?:QaReferenceProfile, nativeOverride?:(kind:OrganizationMaintenanceKind)=>readonly OrganizationMaintenanceRecord[]|undefined) {
   const native = new Map<OrganizationMaintenanceKind, readonly OrganizationMaintenanceRecord[]>();
   const parties = new Map<PartyKind, readonly PartyRecord[]>();
   let auditSamples: readonly SettingsAuditItem[] | null = null;
@@ -50,6 +50,7 @@ export function createSettingsPreviewTransport(dataset?:QaReferenceProfile) {
     return result;
   }
   function nativeRows(kind: OrganizationMaintenanceKind): readonly OrganizationMaintenanceRecord[] {
+    const override=nativeOverride?.(kind);if(override)return override;
     if(dataset)return qaOrganization[kind];
     const cached = native.get(kind); if (cached) return cached;
     const base = (number: number, index: number) => ({ id: id(number + index), version: index + 1, createdAt: null, updatedAt: null });
@@ -86,6 +87,7 @@ export function createSettingsPreviewTransport(dataset?:QaReferenceProfile) {
     }
     if ('role' in query && query.role && (row.kind !== 'STAFF' || row.role !== query.role)) return false;
     if ('loginStatus' in query && query.loginStatus === 'open' && (row.kind !== 'STAFF' || row.account?.loginEnabled !== true)) return false;
+    if ('loginStatus' in query && query.loginStatus === 'closed' && (row.kind !== 'STAFF' || row.account?.loginEnabled !== false)) return false;
     if ('paymentMethodId' in query && query.paymentMethodId !== null && (row.kind !== 'PAYMENT_ACCOUNT' || row.paymentMethod.id !== query.paymentMethodId)) return false;
     return true;
   }
@@ -120,7 +122,6 @@ export function createSettingsPreviewTransport(dataset?:QaReferenceProfile) {
         try {
           if (route.detail) { const target = parseOrganizationDetailQuery(body); return json(nativeRows(route.kind).find(row => row.id === target) ?? null); }
           const query = parseOrganizationListQuery(body, route.kind);
-          if ('loginStatus' in query && query.loginStatus === 'closed') return failure(503, 'STAFF_LOGIN_FILTER_NOT_READY');
           const rows = nativeRows(route.kind).filter(row => matches(row, query)).sort((a, b) => compare(a.kind === 'ACCOUNT' ? a.loginName : a.name, b.kind === 'ACCOUNT' ? b.loginName : b.name) || compare(a.id, b.id));
           return json({ kind: route.kind, ...paged(rows, query) });
         } catch { return failure(400, 'INVALID_ORGANIZATION_QUERY'); }

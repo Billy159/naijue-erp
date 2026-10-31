@@ -21,7 +21,7 @@ async function setup(t: TestContext, options: { authenticate?: SalesQueryHttpOpt
       ...syntheticDraft().header, responsibleStaffId: null, responsibleName: null, createdByName: "SYNTHETIC CREATOR", status: "APPROVED", version: version(2), hallName: "SYNTHETIC", customerName: "SYNTHETIC", warehouseName: "SYNTHETIC", salespersonName: null,
       grossAmount: minorAmount("9007199254740993"), orderDiscount: minorAmount("0"), netDue: minorAmount("9007199254740993"),
       quantity: 9007199254740993n, incomingQuantity: 0n, outgoingQuantity: 9007199254740993n, updatedAt: "2026-10-20T00:00:00.000000Z" }] }; },
-    async readDetail() { check(); return { document: { ...syntheticDraft(), header: { ...syntheticDraft().header, responsibleStaffId: null, status: "DRAFT", version: version(1), createdByAccountId: actor.accountId,
+    async readDetail() { check(); return { productSummary:{productCount:1n,items:[{productId:sid('product',901),productCodeSnapshot:'ORIGINAL',productNameSnapshot:'SNAPSHOT'}],hasMore:false},categorySummary:{basis:'CURRENT',metric:'QUANTITY',categoryCount:1n,items:[{categoryId:null,categoryName:null,value:2n}],hasMore:false}, document: { ...syntheticDraft(), header: { ...syntheticDraft().header, responsibleStaffId: null, status: "DRAFT", version: version(1), createdByAccountId: actor.accountId,
       createdHallId: actor.hallId, createdAt: "2026-10-20T00:00:00Z", updatedAt: "2026-10-20T00:00:00Z", approvedByAccountId: null, approvedAt: null } }, stockBasis: "RUNTIME_LEDGER", referenceNames: { responsibleName: null, createdByName: "SYNTHETIC CREATOR", hallName: "SYNTHETIC HALL", salespersonName: null, customerName: "SYNTHETIC CUSTOMER", warehouseName: "SYNTHETIC WAREHOUSE" }, settlementNames: syntheticDraft().settlements.map(row => ({ settlementId: row.id, paymentAccountId: row.paymentAccountId,
         accountNameSnapshot: "SYNTHETIC original account", methodNameSnapshot: "SYNTHETIC original method", currentAccountName: "SYNTHETIC current account", currentMethodName: "SYNTHETIC current method" })) }; },
     async readHistory(read) { check(); return { salesId: read.parameters.salesId, page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotal: 1n,
@@ -203,7 +203,9 @@ test("SYNTHETIC sales query HTTP: the total body cap remains independent of vali
 test('normal sales HTTP: original POST preserves HISTORY composite identity nullable facts and exact full-union totals', async t => {
   const { PostgresSalesQueryReader } = await import('../../../adapters/postgres/src/sales-query-reader.ts');
   let published = true, businessReads = 0;
-  const client = { async query(sql: string) {
+  const client = { async query(sql: string):Promise<{rows:Record<string,unknown>[];rowCount:number}> {
+    // P03 now returns the original totals/page fixtures in one shared envelope.
+    if(sql.includes('normal-document-list:shared')){const total=await client.query('normal-document-list:totals'),page=await client.query('normal-document-list:page');return {rows:[{...total.rows[0],items:page.rows}],rowCount:1};}
     if (sql.includes('read-authorization:identity')) return { rows: [{ account_id: actor.accountId, staff_id: sid('staff', 850), login_enabled: true, role: 'ADMIN', employment_status: '在职', hall_id: actor.hallId, native_hall_id: actor.hallId, hall_enabled: true }], rowCount: 1 };
     if (sql.includes('normal-document-list:totals')) { businessReads++; return { rows: [{ exact_total: '1', history_valid: published, history_published: true, quantity: null, incoming_quantity: null, outgoing_quantity: null, gross_amount: '90071992547409.93', order_discount: '0.00', net_due: '90071992547409.93' }], rowCount: 1 }; }
     if (sql.includes('normal-document-list:page')) return { rows: [{ dataset: 'HISTORY', batch_id: sid('operation', 851), id: ids.sales, number: 'SYNTHETIC_HISTORY', business_type: 'SALE', business_date: null, status: 'DRAFT', version: 2,
@@ -222,3 +224,5 @@ test('normal sales HTTP: original POST preserves HISTORY composite identity null
   assert.equal((await app.inject({ method: 'POST', url: '/sales/query', payload: { ...input(), dataset: 'HISTORY' } })).statusCode, 400); assert.equal(businessReads, 1);
   published = false; const corrupt = await app.inject({ method: 'POST', url: '/sales/query', payload: input() }); assert.equal(corrupt.statusCode, 500); assert.ok(!corrupt.body.includes('revision'));
 });
+
+test('sales detail HTTP retains exact v2 summaries only for explicit opt-in',async t=>{const f=await setup(t);for(const value of [undefined,'category-v1','unknown','category-v2']){const reply=await f.app.inject({method:'POST',url:'/sales/detail/query',payload:{salesId:ids.sales},headers:{...(value?{'x-naijue-document-summary':value}:{})}});assert.equal(reply.statusCode,200);const data=reply.json();assert.equal(Object.hasOwn(data,'productSummary'),value==='category-v2');assert.equal(Object.hasOwn(data,'categorySummary'),value==='category-v2');if(value==='category-v2')assert.equal(data.categorySummary.items[0].value,'2');}});

@@ -4,16 +4,16 @@ import test from 'node:test';
 import type { TestContext } from 'node:test';
 import Fastify from 'fastify';
 import { createDictionaryReadHttpPlugin, type DictionaryReadHttpOptions } from './dictionary-read-http.ts';
-import type { DictionaryReadAuthorization, DictionaryReadDependencies } from '../../../packages/application/src/dictionary-read-ports.ts';
+import type { DictionaryBarcodeScheme, DictionaryReadAuthorization, DictionaryReadDependencies } from '../../../packages/application/src/dictionary-read-ports.ts';
 import { DomainError } from '../../../packages/domain/src/errors.ts';
 import { actor, sid } from '../../../tests/support/synthetic-fixtures.ts';
 const parameters = { search: '', page: 1, pageSize: 20 }, schemeId = sid('product', 901);
 const paths = ['/dictionary-read/size-groups/query', '/dictionary-read/seasons/query', '/dictionary-read/barcode-schemes/query', '/dictionary-read/barcode-scheme/query'] as const;
 const scheme = { id: schemeId, name: '2026 only a name', barcodeType: 'STORED TYPE', ruleDescription: 'STORED ORIGINAL RULE', codeLength: null, ruleVersion: 'STORED VERSION', status: 'HISTORICAL' as const, applicability: null };
-async function setup(t: TestContext, options: { authenticate?: DictionaryReadHttpOptions['authenticate']; authorize?: DictionaryReadAuthorization['authorize']; failure?: Error; malformed?: boolean } = {}) {
+async function setup(t: TestContext, options: { authenticate?: DictionaryReadHttpOptions['authenticate']; authorize?: DictionaryReadAuthorization['authorize']; failure?: Error; malformed?: boolean; scheme?:DictionaryBarcodeScheme } = {}) {
   let policyCalls = 0, readCalls = 0; const empty = { page: 1, pageSize: 20 as const, total: 0, items: [] }; const check = () => { readCalls++; if (options.failure) throw options.failure; };
   const dependencies: DictionaryReadDependencies = { authorization: { async authorize(a, intent, signal) { policyCalls++; assert.deepEqual(a, actor); assert.ok(signal instanceof AbortSignal); return options.authorize ? options.authorize(a, intent, signal) : { kind: intent.kind, targetId: intent.operation === 'detail' ? intent.parameters.schemeId : null }; } }, reader: {
-    async readSizeGroups() { check(); return empty; }, async readSeasons() { check(); return options.malformed ? { ...empty, total: 1 } : empty; }, async readBarcodeSchemes() { check(); return { ...empty, total: 1, items: [scheme] }; }, async readBarcodeScheme() { check(); return scheme; }
+    async readSizeGroups() { check(); return empty; }, async readSeasons() { check(); return options.malformed ? { ...empty, total: 1 } : empty; }, async readBarcodeSchemes() { check(); return { ...empty, total: 1, items: [scheme] }; }, async readBarcodeScheme() { check(); return options.scheme??scheme; }
   } };
   const app = Fastify({ logger: false }); app.register(createDictionaryReadHttpPlugin({ authenticate: options.authenticate ?? (async () => actor), dependencies })); t.after(() => app.close()); await app.ready();
   return { app, counts: () => ({ policyCalls, readCalls }), post: (url: string, body: unknown) => app.inject({ method: 'POST', url, payload: JSON.stringify(body), headers: { 'content-type': 'application/json' } }) };
@@ -47,3 +47,14 @@ test('dictionary HTTP sanitizes DB failures and malformed DTOs; no untrusted err
   for (const options of [{ failure: new Error('PRIVATE DATABASE SECRET') }, { malformed: true }]) { const f = await setup(t, options), response = await f.post(paths[1], parameters); assert.equal(response.statusCode, 500); assert.equal(response.json().error.code, 'INTERNAL_ERROR'); assert.ok(!response.body.includes('PRIVATE')); }
   for (const [code, status] of [['DICTIONARY_READ_ABORTED', 408], ['DICTIONARY_READ_TOO_LARGE', 413]] as const) { const f = await setup(t, { failure: new DomainError(code, 'PRIVATE') }); assert.equal((await f.post(paths[1], parameters)).statusCode, status); }
 });
+
+test('scheme segments are exact opt-in detail only; old/list shapes and authorization remain closed',async t=>{
+ const f=await setup(t);
+ const post=(url:string,header:string|undefined)=>f.app.inject({method:'POST',url,payload:JSON.stringify(url===paths[3]?{schemeId}:parameters),headers:{'content-type':'application/json',...(header?{'x-naijue-scheme-detail':header}:{})}});
+ for(const header of [undefined,'unknown','scheme-segments-v1,unknown'])assert.deepEqual((await post(paths[3],header)).json(),scheme);
+ const detail=(await post(paths[3],'scheme-segments-v1')).json();assert.deepEqual(detail,{...scheme,generationRule:{basis:'UNKNOWN',segments:[]}});
+ assert.deepEqual((await post(paths[2],'scheme-segments-v1')).json().items,[scheme]);assert.deepEqual(f.counts(),{policyCalls:5,readCalls:5});
+ const denied=await setup(t,{authorize:async()=>{throw new DomainError('FORBIDDEN','private');}});const response=await denied.app.inject({method:'POST',url:paths[3],payload:JSON.stringify({schemeId}),headers:{'content-type':'application/json','x-naijue-scheme-detail':'scheme-segments-v1'}});assert.equal(response.statusCode,403);assert.equal(denied.counts().readCalls,0);
+});
+
+test('approved current metadata uses the one authorized detail read, no new query',async t=>{const {nativeBarcodeSchemeInitializationRows26}=await import('../../../packages/application/src/native-barcode-import.ts');const n=nativeBarcodeSchemeInitializationRows26().find(x=>x.sourceSchemeKey==='2026')!.native;const current={id:n.id,name:n.name,barcodeType:n.barcode_type,ruleDescription:n.rule_description,codeLength:n.code_length,ruleVersion:n.rule_version,status:n.status,applicability:null};const f=await setup(t,{scheme:current});const legacy=await f.post(paths[3],{schemeId:current.id});assert.deepEqual(legacy.json(),current);const detail=await f.app.inject({method:'POST',url:paths[3],payload:JSON.stringify({schemeId:current.id}),headers:{'content-type':'application/json','x-naijue-scheme-detail':'scheme-segments-v1'}});assert.equal(detail.statusCode,200);assert.equal(detail.json().generationRule.basis,'CURRENT_GENERATION');assert.deepEqual(detail.json().generationRule.segments.map((s:{length:number})=>s.length),[1,1,7,3,3]);assert.deepEqual(f.counts(),{policyCalls:2,readCalls:2});});

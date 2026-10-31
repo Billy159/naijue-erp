@@ -1,9 +1,10 @@
+import {parseProductMaintenanceCandidates} from '../../../../packages/application/src/product-maintenance-validation.ts';
 /** Local QA display data only. Public dictionary labels/order: frozen Demo
  * frontend/product-catalog.js, product-size-groups.mjs, barcode-2026.js,
  * legacy-adapter.mjs and model.js. Colors(182)/categories(50) use only
  * name/code/parent/order/enabled from credential-free GET
  * 127.0.0.1:8878/reference/{colors,categories} on 2026-10-27. Native IDs
- * remapped to QA UUIDs; category codes/status remain QA metadata because the
+ * remapped to QA UUIDs (except the public exact approved2026 scheme identity); category codes/status remain QA metadata because the
  * current category UI DTO has neither. No database/browser storage read.
  * People/accounts and all IDs/barcodes/quantities/prices below are isolated QA
  * examples, not migrated business facts. No authentication material. */
@@ -1295,7 +1296,7 @@ export const qaColors=[
  }
 ];
 export const qaFits=[['Y','修身'],['A','标准'],['B','宽松'],['C','加肥'],['D','加肥加大'],['E','特体']].map(([code,name],i)=>({id:qaId(2100+i),code:code!,name:`${code}版（${name}）`,enabled:true,version:1}));
-export const qaSeasons=['春季','夏季','秋季','冬季','春夏','秋冬'].map((name,i)=>({id:qaId(2200+i),name}));
+export const qaSeasons=['春季','夏季','秋季','冬季'].map((name,i)=>({id:qaId(2200+i),name}));
 export const qaCategories=[
  {
   "id": "00000000-0000-4000-8000-000000002300",
@@ -1698,7 +1699,7 @@ export const qaCategories=[
   "enabled": true
  }
 ];
-export const qaSchemes=[['2020','2020年新方案',14,'0 + 货号7位 + 颜色3位 + 尺码3位'],['2018','2018年货品',9,'8 + 自定义5位 + 颜色1位 + 尺码2位'],['2021','2021年条码方案',13,'6 + 货号7位 + 颜色3位 + 尺码2位'],['2021fit','2021年版型条码方案',14,'2 + 货号7位 + 版型1位 + 颜色3位 + 尺码2位'],['2023','2023年条码方案',14,'9 + 货号7位 + 颜色3位 + 尺码3位'],['2026','2026 条码方案',15,'5 + 版型1位 + 货号7位 + 颜色3位 + 尺码3位']].map(([key,name,codeLength,ruleDescription],i)=>({id:qaId(2400+i),key:String(key),name:String(name),barcodeType:'CODE128',ruleDescription:String(ruleDescription),codeLength:Number(codeLength),ruleVersion:String(key),status:'CURRENT' as const,applicability:null}));
+export const qaSchemes=[['2020','2020年新方案',14,'原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。2020颜色1位、尺码2位的最后补充优先于原表旧备注。声明总长仅保留方案说明，不代替每条历史原码。'],['2018','2018年货品',9,'8 + 自定义5位 + 颜色1位 + 尺码2位'],['2021','2021年条码方案',13,'6 + 货号7位 + 颜色3位 + 尺码2位'],['2021fit','2021年版型条码方案',14,'2 + 货号7位 + 版型1位 + 颜色3位 + 尺码2位'],['2023','2023年条码方案',14,'9 + 货号7位 + 颜色3位 + 尺码3位'],['2026','2026 条码方案',15,'5 + 版型1位 + 货号7位 + 颜色3位 + 尺码3位']].map(([key,name,codeLength,ruleDescription],i)=>({id:qaId(2400+i),key:String(key),name:String(name),barcodeType:'CODE128',ruleDescription:String(ruleDescription),codeLength:Number(codeLength),ruleVersion:String(key),status:(key==='2026'?'CURRENT':'HISTORICAL') as 'CURRENT'|'HISTORICAL',applicability:null,...(key==='2026'?{id:'0e70e45e-1a51-4d44-afe8-0002cf3fb7ef',name:'2026年条码方案',barcodeType:'Code128',ruleVersion:'NATIVE_SOURCE_RETAINED_V1',ruleDescription:'原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。'}:{})}));
 export const qaCustomers=[{...base,id:qaId(3000),code:'DEMO-C01',name:'零售客户',enabled:true},{...base,id:qaId(3001),code:'DEMO-C02',name:'具名客户（演示）',enabled:true}];
 export const qaSuppliers=['示例供应商 · 华成服饰','示例供应商 · 瑞丰制衣','示例供应商 · 远山贸易'].map((name,i)=>({...base,id:qaId(3100+i),code:'DEMO-GYS0'+(i+1),name,enabled:true}));
 export const qaHalls=[{...base,id:qaId(3200),name:'网点营业厅',enabled:true,kind:'HALL' as const,defaultCustomer:{id:qaCustomers[0]!.id,name:qaCustomers[0]!.name,enabled:true},defaultSalesWarehouse:{id:qaId(3301),name:'网点仓',enabled:true,hallId:qaId(3200)}}];
@@ -1710,7 +1711,7 @@ export const qaStaff=['测试管理员','测试仓库员','测试营业员甲','
 export const qaAccounts=qaStaff.map(s=>({...s.account,kind:'ACCOUNT' as const,createdAt:'2000-01-01T00:00:00Z',updatedAt:'2000-01-01T00:00:00Z',staff:{id:s.id,name:s.name,role:s.role,employmentStatus:s.employmentStatus,hallId:s.hall?.id??null}}));
 export const qaPrincipal={accountId:qaAccounts[0]!.id,staffId:qaStaff[0]!.id,loginName:qaAccounts[0]!.loginName,role:'ADMIN' as const,hallId:null,authVersion:1};
 const productDefs=[['M26001','商务免烫衬衫',0,3,'239.00'],['M26004','多色商务休闲裤',1,6,'299.00'],['QA-W01','女装尺码测试',2,3,'219.00'],['QA-S01','鞋码测试',3,6,'269.00'],['QA-K01','童装尺码测试',4,3,'199.00'],['QA-F01','配饰均码测试',5,3,'59.00']] as const;
-export const qaProducts=productDefs.map(([code,name,g,c,retailPrice],i)=>({id:qaId(4000+i),code,name,retailPrice,minimumPriceAvailability:'UNAVAILABLE' as const,sizeGroupId:qaGroups[g]!.id,categoryId:qaCategories.find(c=>c.name===(g===1?'长裤':g===3?'辅料及其他':g===5?'配饰':'衬衫'))!.id,categoryLabel:qaCategories.find(c=>c.name===(g===1?'长裤':g===3?'辅料及其他':g===5?'配饰':'衬衫'))!.name,year:2026,seasonId:qaSeasons[i%6]!.id,seasonLabel:qaSeasons[i%6]!.name,supplierId:qaSuppliers[i%3]!.id,supplierLabel:qaSuppliers[i%3]!.name,thickness:null,shapeCode:null,systemCode:'QA-DEMO-'+(i+1),fits:qaFits.slice(0,2).map(x=>({id:x.id,label:x.name})),totalStock:String(4*qaGroups[g]!.sizes.reduce((sum,_,si)=>sum+[0,1,2,3].reduce((v,wi)=>v+(wi+si)%5,0),0))}));
+export const qaProducts=productDefs.map(([code,name,g,c,retailPrice],i)=>({id:qaId(4000+i),code,name,retailPrice,minimumPriceAvailability:'UNAVAILABLE' as const,sizeGroupId:qaGroups[g]!.id,categoryId:qaCategories.find(c=>c.name===(g===1?'长裤':g===3?'辅料及其他':g===5?'配饰':'衬衫'))!.id,categoryLabel:qaCategories.find(c=>c.name===(g===1?'长裤':g===3?'辅料及其他':g===5?'配饰':'衬衫'))!.name,year:2026,seasonId:qaSeasons[i%qaSeasons.length]!.id,seasonLabel:qaSeasons[i%qaSeasons.length]!.name,supplierId:qaSuppliers[i%3]!.id,supplierLabel:qaSuppliers[i%3]!.name,thickness:null,shapeCode:null,systemCode:'QA-DEMO-'+(i+1),fits:qaFits.slice(0,2).map(x=>({id:x.id,label:x.name})),totalStock:String(4*qaGroups[g]!.sizes.reduce((sum,_,si)=>sum+[0,1,2,3].reduce((v,wi)=>v+(wi+si)%5,0),0))}));
 export const qaSkus=qaProducts.flatMap((p,pi)=>qaColors.filter(c=>['藏青色','白色'].includes(c.name)).flatMap((color,ci)=>qaFits.slice(0,2).flatMap((fit,fi)=>qaGroups[pi]!.sizes.map((size,si)=>({id:qaId(10000+pi*1000+ci*300+fi*100+si),skuCode:p.code+'-'+(ci+1)+'-'+fit.code+'-'+(si+1),productId:p.id,productCode:p.code,productName:p.name,colorId:color.id,colorName:color.name,fitId:fit.id,fitName:fit.name,sizeId:size.id,sizeName:size.name,sizeGroupId:p.sizeGroupId,barcodeAvailability:'UNAVAILABLE' as const,barcode:'5'+(fi===0?'3':'5')+String(pi+1).padStart(7,'0')+color.code.padStart(3,'0')+(size.code||String(si+1).padStart(3,'0'))})))));
 const reference=(r:{id:string;name:string},extra={})=>({id:r.id,name:r.name,code:null,hallId:null,hallName:null,paymentMethodId:null,paymentMethodName:null,...extra});
 export const qaSalesReferences={hall:qaHalls.map(r=>reference(r,{hallId:r.id,hallName:r.name})),customer:qaCustomers.map(r=>reference(r,{code:r.code})),salesperson:qaStaff.map(r=>reference(r)),warehouse:qaWarehouses.map(r=>reference(r,{hallId:r.hall.id,hallName:r.hall.name})),paymentMethod:qaMethods.map(r=>reference(r)),paymentAccount:qaPaymentAccounts.map(r=>reference(r,{paymentMethodId:r.paymentMethod.id,paymentMethodName:r.paymentMethod.name}))};
@@ -1718,17 +1719,17 @@ export const qaTransferWarehouses=qaWarehouses.map(r=>({id:r.id,name:r.name,hall
 export const qaOrganization={HALL:qaHalls,WAREHOUSE:qaWarehouses,STAFF:qaStaff,ACCOUNT:qaAccounts,PAYMENT_METHOD:qaMethods,PAYMENT_ACCOUNT:qaPaymentAccounts};
 export function qaPage<T>(rows:readonly T[],q:{page:number;pageSize:number},key='total'){return {page:q.page,pageSize:q.pageSize,[key]:rows.length,items:rows.slice((q.page-1)*q.pageSize,q.page*q.pageSize)};}
 export const qaDictionaryGroups=()=>qaGroups.map(({id,name,sizes})=>({id,name,sizes:sizes.map(({id,name,displayOrder})=>({id,name,displayOrder}))}));
-export const qaCurrentProducts=()=>qaProducts.map(({id,code,name,retailPrice,minimumPriceAvailability,sizeGroupId})=>({id,code,name,retailPrice,minimumPriceAvailability,sizeGroupId}));
+export const qaCurrentProducts=()=>qaProducts.map(({id,code,name,retailPrice,minimumPriceAvailability,sizeGroupId,categoryId,categoryLabel})=>({id,code,name,retailPrice,minimumPriceAvailability,sizeGroupId,category:{id:categoryId,label:categoryLabel}}));
 export const qaCurrentSkus=()=>qaSkus.map(({barcode,...sku})=>sku);
 export function qaPrices(productId:string){const p=qaProducts.find(p=>p.id===productId);return p?{productId,version:1,prices:{purchase_price:null,retail_price:p.retailPrice,wholesale5_price:null,wholesale6_price:null,wholesale7_price:null,wholesale8_price:null,wholesale9_price:null,wholesale10_price:null,minimum_price:null}}:null;}
 export function qaSpecifications(productId:string){const p=qaProducts.find(p=>p.id===productId);if(!p)return null;const g=qaGroups.find(g=>g.id===p.sizeGroupId)!;return {productId,sizeGroup:{id:g.id,label:g.name},colors:qaColors.filter(c=>['藏青色','白色'].includes(c.name)).map(c=>({id:c.id,label:c.name})),fits:p.fits,sizes:g.sizes.map(s=>({id:s.id,label:s.name})),skus:qaSkus.filter(s=>s.productId===productId).map(s=>({id:s.id,colorId:s.colorId,fitId:s.fitId,sizeId:s.sizeId}))};}
 const total=(quantity:bigint)=>({knownQuantity:quantity.toString(),completeness:'complete' as const,unknownCells:0 as const});
-export function qaInventory(filter:{products?:readonly {id:string}[];categories?:readonly {id:string}[];warehouses?:readonly {id:string}[];suppliers?:readonly {id:string}[];fits?:readonly {id:string}[];seasons?:readonly {id:string}[]}){
+export function qaInventory(filter:{products?:readonly {id:string}[];categories?:readonly {id:string}[];warehouses?:readonly {id:string}[];suppliers?:readonly {id:string}[];fits?:readonly {id:string}[];seasons?:readonly {id:string}[]},readQuantity?:(warehouseId:string,skuId:string)=>string){
  const has=(list:readonly {id:string}[]|undefined,id:string)=>!list?.length||list.some(x=>x.id===id);
  return qaProducts.filter(p=>has(filter.products,p.id)&&has(filter.categories,p.categoryId)&&has(filter.suppliers,p.supplierId)&&has(filter.seasons,p.seasonId)&&(!filter.fits?.length||p.fits.some(f=>has(filter.fits,f.id)))).map(p=>{
   const specs=qaSpecifications(p.id)!,warehouses=qaWarehouses.filter(w=>has(filter.warehouses,w.id)),fits=qaFits.slice(0,2).filter(f=>has(filter.fits,f.id));
   const colorFits=specs.colors.flatMap(color=>fits.map(f=>{
-   const rows=warehouses.map(w=>{const wi=qaWarehouses.indexOf(w);return {warehouse:{id:w.id,label:w.name},cells:Object.fromEntries(specs.sizes.map((size,si)=>{const sku=qaSkus.find(s=>s.productId===p.id&&s.colorId===color.id&&s.fitId===f.id&&s.sizeId===size.id)!;return [size.id,{state:'known' as const,skuId:sku.id,quantity:String((wi+si)%5)}];})),total:total(specs.sizes.reduce((sum,_,si)=>sum+BigInt((wi+si)%5),0n))};});
+   const rows=warehouses.map(w=>{const wi=qaWarehouses.indexOf(w),cells=Object.fromEntries(specs.sizes.map((size,si)=>{const sku=qaSkus.find(s=>s.productId===p.id&&s.colorId===color.id&&s.fitId===f.id&&s.sizeId===size.id)!;return [size.id,{state:'known' as const,skuId:sku.id,quantity:readQuantity?readQuantity(w.id,sku.id):String((wi+si)%5)}];}));return {warehouse:{id:w.id,label:w.name},cells,total:total(Object.values(cells).reduce((sum,cell)=>sum+BigInt(cell.quantity),0n))};});
    return {color,fit:{id:f.id,label:f.name},rows,sizeTotals:Object.fromEntries(specs.sizes.map(s=>[s.id,total(rows.reduce((sum,r)=>sum+BigInt(r.cells[s.id]!.quantity),0n))])),total:total(rows.reduce((sum,r)=>sum+BigInt(r.total.knownQuantity),0n))};
   }));
   return {id:p.id,code:p.code,name:p.name,categoryLabel:p.categoryLabel,supplierLabel:p.supplierLabel,seasonLabel:p.seasonLabel,sizeGroup:specs.sizeGroup,sizes:specs.sizes,colorFits,sizeTotals:Object.fromEntries(specs.sizes.map(s=>[s.id,total(colorFits.reduce((sum,c)=>sum+BigInt(c.sizeTotals[s.id]!.knownQuantity),0n))])),total:total(colorFits.reduce((sum,c)=>sum+BigInt(c.total.knownQuantity),0n))};
@@ -1736,7 +1737,19 @@ export function qaInventory(filter:{products?:readonly {id:string}[];categories?
 }
 export const qaJson=(value:unknown)=>Response.json(value,{headers:{'cache-control':'no-store','x-data-source':'DEMO-REFERENCE-QA-V1-NOT-PRODUCTION'}});
 /** Finite read projection shared by the existing preview adapters only. */
-export function qaReferenceRead(path:string,q:Record<string,any>,empty=false):Response|undefined{
+export function qaReferenceRead(path:string,q:Record<string,any>,empty=false,customerRecommendationVersion?:string|null,readQuantity?:(warehouseId:string,skuId:string)=>string):Response|undefined{
+ if(path==='/products/maintenance/candidates/query'){
+  let query;try{query=parseProductMaintenanceCandidates(q);}catch{return Response.json({error:{code:'INVALID_PRODUCT_MAINTENANCE_CANDIDATES'}},{status:400});}
+  if(query.kind==='collar-pants-types')return Response.json({error:{code:'SYNTHETIC_COLLAR_FACTS_NOT_DECLARED'}},{status:501});
+  const dictionaries:Record<string,readonly {id:string;name:string;code?:string;parentId?:string|null;version?:number}[]>={categories:qaCategories,suppliers:qaSuppliers,seasons:qaSeasons,'size-groups':qaGroups,colors:qaColors,fits:qaFits,'barcode-schemes':qaSchemes};
+  // Distinct attributes reflect declared QA products, not invented production data.
+  const values=query.kind==='years'?qaProducts.map(row=>String(row.year)):query.kind==='thicknesses'?qaProducts.flatMap(row=>row.thickness===null?[]:[String(row.thickness)]):qaProducts.flatMap(row=>row.shapeCode===null?[]:[String(row.shapeCode)]);
+  const source:readonly {id:string;name:string;code?:string;parentId?:string|null;version?:number}[]=dictionaries[query.kind]??[...new Set(values)].map(value=>({id:value,name:value}));
+  const search=query.search.trim().toLocaleLowerCase();
+  const rows=(empty?[]:source).filter(row=>[row.name,row.code??''].join(' ').toLocaleLowerCase().includes(search)).map(row=>({id:row.id,name:row.name,code:row.code??null,parentId:query.kind==='categories'?row.parentId??null:null,version:row.version??null}));
+  return qaJson({kind:query.kind,...qaPage(rows,query)});
+ }
+
  const search=String(q.search??'').toLowerCase(),matched=<T extends {name?:string;code?:string|null;label?:string}>(rows:readonly T[])=>empty?[]:rows.filter(r=>[r.name,r.code,r.label].join(' ').toLowerCase().includes(search));
  const page=(rows:readonly unknown[],key='total')=>qaJson(qaPage(rows,q as {page:number;pageSize:number},key));
  if(path.startsWith('/store-settings-read/')){
@@ -1758,10 +1771,11 @@ export function qaReferenceRead(path:string,q:Record<string,any>,empty=false):Re
  if(path==='/product-management/query'){
   const f=q.filter,has=(list:readonly string[],id:string)=>!list.length||list.includes(id);
   const rows=empty?[]:qaProducts.filter(p=>has(f.productIds,p.id)&&has(f.categoryIds,p.categoryId)&&has(f.years,'2026')&&has(f.seasonIds,p.seasonId)&&has(f.supplierIds,p.supplierId)&&(!f.fitIds.length||p.fits.some(x=>f.fitIds.includes(x.id))));
-  return page(rows.map(({categoryId,seasonId,supplierId,shapeCode,systemCode,sizeGroupId,minimumPriceAvailability,...p})=>p),'exactTotal');
+  const stock=readQuantity?new Map(qaInventory({},readQuantity).map(row=>[row.id,row.total.knownQuantity])):null;
+  return page(rows.map(({categoryId,seasonId,supplierId,shapeCode,systemCode,sizeGroupId,minimumPriceAvailability,...p})=>({...p,totalStock:stock?stock.get(p.id)!:p.totalStock})),'exactTotal');
  }
  if(path==='/inventory/query'){
-  const products=empty?[]:qaInventory(q.filter),labels=qaWarehouses.filter(w=>!q.filter.warehouses.length||q.filter.warehouses.some((x:{id:string})=>x.id===w.id)).map(w=>w.name);
+  const products=empty?[]:qaInventory(q.filter,readQuantity),labels=qaWarehouses.filter(w=>!q.filter.warehouses.length||q.filter.warehouses.some((x:{id:string})=>x.id===w.id)).map(w=>w.name);
   return qaJson({page:q.page,pageSize:q.pageSize,exactTotalProducts:products.length,products:products.slice((q.page-1)*q.pageSize,q.page*q.pageSize),warehouseLabels:labels,allMatchesTotal:total(products.reduce((s,p)=>s+BigInt(p.total.knownQuantity),0n)),readReference:'DEMO-REFERENCE-QA-V1'});
  }
  if(path==='/current-form/products/query'){const rows=matched(qaCurrentProducts());return qaJson({...qaPage(rows,q as {page:number;pageSize:number},'exactTotal'),exactTotal:String(rows.length)});}
@@ -1773,9 +1787,15 @@ export function qaReferenceRead(path:string,q:Record<string,any>,empty=false):Re
  }
  if(path==='/current-form/sales-references/query'){
   const rows=(qaSalesReferences[q.kind as keyof typeof qaSalesReferences]??[]).filter(r=>(!q.hallId||r.hallId===null||r.hallId===q.hallId)&&(!q.paymentMethodId||r.paymentMethodId===q.paymentMethodId));
+  if(q.kind==='customer'&&customerRecommendationVersion==='customer-v1'){
+   const hall=qaHalls.find(h=>h.id===q.hallId&&h.enabled);if(!hall)return Response.json({error:{code:'FORBIDDEN',message:'Synthetic current hall unavailable'}},{status:403});
+   const recommended=hall.defaultCustomer?.enabled===true?hall.defaultCustomer.id:null;
+   const items=matched(rows).filter(row=>qaCustomers.some(customer=>customer.id===row.id&&customer.enabled)).map(row=>({...row,isRecommended:row.id===recommended})).sort((a,b)=>Number(b.isRecommended)-Number(a.isRecommended));
+   return qaJson({...qaPage(items,q as {page:number;pageSize:number},'exactTotal'),exactTotal:String(items.length),recommendationAvailability:'AVAILABLE'});
+  }
   return qaJson({...qaPage(matched(rows),q as {page:number;pageSize:number},'exactTotal'),exactTotal:String(matched(rows).length),...(q.kind==='paymentAccount'?{recommendationAvailability:'UNAVAILABLE'}:{})});
  }
- if(path==='/current-form/transfer-warehouses/query'||path==='/transfers/warehouses/query'){const rows=matched(qaTransferWarehouses);return qaJson({...qaPage(rows,q as {page:number;pageSize:number},'exactTotal'),exactTotal:String(rows.length)});}
+ if(path==='/current-form/transfer-warehouses/query'||path==='/transfers/warehouses/query'){const rows=(empty?[]:qaTransferWarehouses).filter(row=>(!q.selectedIds?.length||q.selectedIds.includes(row.id))&&(!q.search||row.name.includes(q.search)||row.hallName.includes(q.search)));const items=path==='/transfers/warehouses/query'?rows.map(({hasNonzeroInventory,...row})=>row):rows;return qaJson({...qaPage(items,q as {page:number;pageSize:number},'exactTotal'),exactTotal:String(items.length)});}
  if(path==='/products/basics/query'){const p=qaProducts.find(p=>p.id===q.productId);return qaJson(!p||empty?null:{productId:p.id,code:p.code,name:p.name,categoryLabel:p.categoryLabel,yearLabel:'2026',seasonLabel:p.seasonLabel,supplierLabel:p.supplierLabel,systemCode:p.systemCode,retailPrice:p.retailPrice});}
  if(path==='/products/specifications/query')return qaJson(empty?null:qaSpecifications(q.productId));
  if(path==='/products/images/query')return qaJson({productId:q.productId,images:[]});

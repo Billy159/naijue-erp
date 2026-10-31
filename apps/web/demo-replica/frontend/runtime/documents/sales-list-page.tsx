@@ -1,0 +1,3 @@
+import {SalesList} from './sales-list.tsx';
+import type {Options} from './sales-page-contracts.ts';
+export default function ListPage(p:Options){return <SalesList session={p.session} view={p.view} references={p.references} canCreate={p.manualCreate} open={row=>{p.session.selection.row=row;p.navigate(row.dataset==='LIVE'?(row.status==='DRAFT'&&p.existingEdit&&(p.principal.role!=='SALESPERSON'||row.hallId===p.principal.hallId)?'sales/edit/':'sales/view/')+encodeURIComponent(row.documentId):'sales/history/'+encodeURIComponent(row.batchId)+'/'+encodeURIComponent(row.documentId)+'/'+row.effectiveVersion);}} create={()=>p.navigate('sales/new')} onAccessFailure={p.denied}/>;}

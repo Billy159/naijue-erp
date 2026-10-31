@@ -46,7 +46,7 @@ try {
  await act(async()=>runtime.dispose());runtime=null;
  // A small page double isolates the host-owned leave dialog; business behaviour is covered above.
  const leaveOutput=path.join(temp,'leave-host.mjs');
- await build({...buildOptions,outfile:leaveOutput,plugins:[...buildOptions.plugins,{name:'host-leave-page-double',setup(b){b.onLoad({filter:/ready-pages\.tsx$/},()=>({loader:'tsx',contents:'export function createReadyPageMounts(){return {hasUnresolvedWrite:()=>false,dispose(){},async mount(host){host.textContent="UNSAVED TEST PAGE";return {canLeave:()=>false,canDiscard:()=>true,discard:()=>true,dispose:()=>host.replaceChildren()};}};}'}));}}]});
+ await build({...buildOptions,outfile:leaveOutput,plugins:[...buildOptions.plugins,{name:'host-leave-page-double',setup(b){b.onLoad({filter:/ready-pages\.tsx$/},()=>({loader:'tsx',contents:'export function createReadyPageMounts(){return {prepare:async()=>{},hasUnresolvedWrite:()=>false,dispose(){},async mount(host){host.textContent="UNSAVED TEST PAGE";return {canLeave:()=>false,canDiscard:()=>true,discard:()=>true,dispose:()=>host.replaceChildren()};}};}'}));}}]});
  const leaf=await import(pathToFileURL(leaveOutput).href);
  const session2=leaf.createReplicaSession({origin:'https://catalogue.test',basePath:'/api',fetch:async()=>json({principal:{accountId:id(900),staffId:id(901),loginName:'SYNTHETIC-ONLY',role:'ADMIN',hallId:null,authVersion:1}})});
  await act(async()=>{runtime=leaf.mountNormalReplica({session:session2,page,app:document.getElementById('app'),accountHost:document.getElementById('account'),breadcrumb:document.getElementById('breadcrumb'),transportMode:'same-origin-https',routes:{},newRequestKey:()=>id(600),inventory:{ledgerDialog:document.createElement('dialog'),createWorkbook(){}},catalogue:{onChanged(){}}});});await settle();
@@ -58,13 +58,14 @@ try {
  // T27: retain list state across editor resets, but never across read identity invalidation.
  const viewsOutput=path.join(temp,'document-views.mjs');
  await build({...buildOptions,stdin:{...buildOptions.stdin,contents:buildOptions.stdin.contents+"export {createReadyPageMounts} from './ready-pages.tsx';export {ReadContext} from '../../../../src/loading/read-scope.ts';"},outfile:viewsOutput,plugins:[...buildOptions.plugins,{name:'document-view-consumers',setup(b){
+  b.onLoad({filter:/documents\/(?:sales-(?:list|new|edit|detail)|transfers-(?:list|detail|create))-page\.tsx$/},()=>({loader:'tsx',contents:'export default function TestPage(){return null;}'}));
   b.onLoad({filter:/documents\/(sales|transfers)-entry\.tsx$/},a=>({loader:'tsx',contents:a.path.endsWith('sales-entry.tsx')?
    'export const newSalesListViewState=()=>({draft:{},applied:{},scrollTop:0});export function mountSales(host,route,options){host.documentView=options.view;host.resetEditor=options.onCommitted;return {dispose(){},canLeave:()=>true};}':
    'export const newTransferListViewState=()=>({draft:{},applied:{},scrollTop:0,reload:false});export function mountTransfers(host,route,options){host.documentView=options.view;host.resetEditor=options.reset;return {dispose(){},canLeave:()=>true};}'}));
   b.onLoad({filter:/documents\/(sales|transfers)-session\.ts$/},a=>({loader:'ts',contents:a.path.endsWith('sales-session.ts')?
    'export function createReplicaSalesSession(session){const scope=session.reads.createScope("test-sales-editor");return {scope,dispose:()=>scope.dispose()};}':
    'export function createReplicaTransferSession(session){const scope=session.reads.createScope("test-transfer-editor");return {scope,dispose:()=>scope.dispose()};}export const transferCanLeave=()=>true;'}));
-  b.onLoad({filter:/runtime\/products\/index\.tsx$/},()=>({loader:'tsx',contents:'export async function mountProductDetail(host,options){host.openProductInventory=options.onOpenInventory;return ()=>{};}'}));
+  b.onLoad({filter:/runtime\/products\/detail-entry\.tsx$/},()=>({loader:'tsx',contents:'export async function mountProductDetail(host,options){host.openProductInventory=options.onOpenInventory;return ()=>{};}'}));
   b.onLoad({filter:/runtime\/inventory\/index\.tsx$/},()=>({loader:'tsx',contents:'export function mountInventoryPage(host,options){host.inventoryOptions=options;return ()=>{};}'}));
  }}]});
  const views=await import(pathToFileURL(viewsOutput).href);

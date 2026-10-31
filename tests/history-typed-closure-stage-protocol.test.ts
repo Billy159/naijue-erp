@@ -72,13 +72,16 @@ test("protocol: COMMIT unknown discards once without rollback/retry; earlier que
   assert.equal(p.released.length, 1); assert.equal(p.released[0] instanceof Error, failure === "COMMIT");
  }
 });
-test("finite18 schema recognition rejects17,19,missing,duplicate and unordered arrays; it grants no runtime capability", () => {
+test("finite18 closure stays exact; approved native19 recognition grants no runtime capability and unknown20 rejects", () => {
  const prefix = Array.from({ length: 18 }, (_, i) => i + 1);
  assert.doesNotThrow(() => assertHistoryTypedClosureSchema(prefix));
  // The separately reviewed native-writer18 phase added finite recognition. Its
  // mandatory runtime capability remains covered by the native18 writer protocol.
  assert.equal(assertReviewedNativeImportSchema(prefix, { minimumVersion: 11, errorCode: "TEST_SCHEMA" }).id, "NATIVE_IMPORT_SCHEMA_18_V1");
- assert.throws(() => assertReviewedNativeImportSchema([...prefix, 19], { minimumVersion: 11, errorCode: "TEST_SCHEMA" }), { code: "TEST_SCHEMA" });
+ assert.equal(assertReviewedNativeImportSchema([...prefix, 19], { minimumVersion: 11, errorCode: "TEST_SCHEMA" }).id, "NATIVE_IMPORT_SCHEMA_19_V1");
+ assert.throws(() => assertReviewedNativeImportSchema([...prefix, 19, 20], { minimumVersion: 11, errorCode: "TEST_SCHEMA" }), { code: "TEST_SCHEMA" });
+ for (const versions of [prefix.filter(n => n !== 12), [...prefix, 18], [...prefix].reverse()])
+  assert.throws(() => assertReviewedNativeImportSchema(versions, { minimumVersion: 11, errorCode: "TEST_SCHEMA" }), { code: "TEST_SCHEMA" });
  let reads = 0; const getter = [...prefix]; Object.defineProperty(getter, "0", { enumerable: true, get() { reads++; return 1; } });
  for (const v of [prefix.slice(0, 17), [...prefix, 19], prefix.filter(n => n !== 12), [...prefix, 18], [...prefix].reverse(), new Array(18), Object.assign([...prefix], { extra: 1 }), getter]) assert.throws(() => assertHistoryTypedClosureSchema(v), { code: "HISTORY_CLOSURE_SCHEMA_NOT_READY" });
  assert.equal(reads, 0);

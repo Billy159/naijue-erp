@@ -70,6 +70,7 @@ export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       const value = await work(tx);
+      tx.assertPostingComplete();
       tx.close();
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       commitAttempted = true; await client.query("COMMIT"); return value;
@@ -122,6 +123,10 @@ class PostgresTransferTransaction implements TransferTransaction {
       'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Reviewed exact26 catalogue authority required');
     return resolveNativeDocumentSpecifications({pool:this.specificationPool,client:this.client,runtime:this.specificationRuntime,
       catalogue:this.specificationCatalogue,assertBound:bound},input);
+  }
+  assertPostingComplete(): void {
+    requireDomain(this.active, "TRANSACTION_CLOSED", "Posting completion requires its active original transaction");
+    this.balances.assertLiveComplete();
   }
   close(): void { this.active = false; }
   private assertNumberScope(input: RuntimeDocumentNumberInput): void {
@@ -250,15 +255,17 @@ class PostgresTransferTransaction implements TransferTransaction {
         source: { kind: "TRANSFER", transferId: id("transfer", row.transfer_id), transferLineId: id("transferLine", row.source_transfer_line_id), endpoint: choice(row.endpoint, ["FROM", "TO"]) },
         sourceDocumentVersion: versionFromSql(row.source_document_version), reversesEntryId: nullableId("ledger", row.reverses_entry_id), businessDate: businessDate(stringValue(row.business_date)), postedAt: stringValue(row.posted_at) }));
   }
-  async appendLedger(row: InventoryLedgerRow): Promise<void> {
-    requireDomain(row.source.kind === "TRANSFER" && row.source.transferId === this.loaded?.id, "TRANSACTION_SCOPE", "Only the loaded transfer may post");
-    this.balances.assertCanAppend(row);
+  async appendLedger(input: InventoryLedgerRow): Promise<void> {
+    const row: InventoryLedgerRow = structuredClone(input);
+    requireDomain(row.source.kind === "TRANSFER" && row.source.transferId === this.loaded?.id && this.loaded?.stockBasis === "RUNTIME_LEDGER", "TRANSACTION_SCOPE", "Only the loaded runtime transfer may post");
+    const transition = this.balances.prepareLiveAppend(row);
     const written = await this.query(`INSERT INTO naijue_erp.inventory_ledger (id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta,
-      source_transfer_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
+      source_transfer_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at, quantity_before, quantity_after)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::bigint,$14::bigint)`,
       [row.id, row.operationId, row.eventKind, row.warehouseId, row.skuId, row.quantityDelta.toString(), row.source.transferLineId, row.source.endpoint,
-        versionToSql(row.sourceDocumentVersion), row.reversesEntryId, row.businessDate, row.postedAt]);
+        versionToSql(row.sourceDocumentVersion), row.reversesEntryId, row.businessDate, row.postedAt, transition.quantityBefore.toString(), transition.quantityAfter.toString()]);
     requireDomain(written.rowCount === 1, "INVENTORY_INTEGRITY_FAILED", "Exact native inventory effect was not appended");
-    this.balances.didAppend(row);
+    this.balances.didAppendLive(transition);
   }
   async putRuntimeTransfer(document: TransferDocument): Promise<void> {
     const h = document.header; const loaded = this.loaded;

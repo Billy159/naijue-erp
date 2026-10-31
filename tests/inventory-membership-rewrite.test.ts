@@ -28,8 +28,16 @@ test("inventory membership source: complete filtered range, publication/scope pr
     assert.ok(currentSql.includes(marker));
   for (let number = 1; number <= 8; number++) assert.ok(currentSql.includes(`$${number}::uuid`));
   assert.match(source, /integrity\(!booleanValue\(row\.invalid_category_tree\) && !booleanValue\(row\.missing_sizes\) && !booleanValue\(row\.invalid_sku_size\) && !booleanValue\(row\.invalid_balance\)/u);
-  assert.match(source, /requireDomain\(!booleanValue\(row\.uncovered_sku\), "INVENTORY_NOT_READY"/u);
-  assert.match(source, /const status = await catalogStatus\(query, values\);\s*const products =/u);
+  assert.match(source, /if \(booleanValue\(row\.uncovered_sku\)\) \{\s*requireDomain\(runtime26 !== undefined, "INVENTORY_NOT_READY"[\s\S]*?await verifyAdditionalSkus\(query, catalog\(seasonArray\), values, "filtered_skus"\);/u);
+  assert.match(source, /const status = await catalogStatus\(query, values, this\.seasonArray, this\.runtime26\);\s*const products =/u);
+});
+
+test("inventory membership extractor permits only the two reviewed season predicates and rejects unknown selectors/interpolations",()=>{
+ const arraySql=inventoryCatalogStatusSql(source,true),legacySql=inventoryCatalogStatusSql(source,false);
+ assert.equal(arraySql.replace('p.season_ids && $7::uuid[]','p.season_id = ANY($7::uuid[])'),legacySql);
+ assert.ok(!arraySql.includes('${'));assert.equal(inventoryCatalogStatusSql(previousInventoryMembershipSource(source),true),arraySql.replace(', p.size_group_id FROM naijue_erp.sku s JOIN matched_products',' FROM naijue_erp.sku s JOIN matched_products').replace('FROM filtered_skus s WHERE NOT EXISTS (\n      SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = s.size_group_id','FROM filtered_skus s JOIN matched_products p ON p.id = s.product_id WHERE NOT EXISTS (\n      SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = p.size_group_id'));
+ for(const changed of [source.replace('seasonArray ? "p.season_ids && $7::uuid[]"','other ? "p.season_ids && $7::uuid[]"'),source.replace('catalog(seasonArray)}\n    SELECT','arbitrary(seasonArray)}\n    SELECT')])assert.throws(()=>inventoryCatalogStatusSql(changed),/Unreviewed/);
+ assert.throws(()=>inventoryCatalogStatusSql(source,'true' as never),/Explicit finite season selector/);
 });
 
 type Product = { id: string; group: string; category: string; supplier: string; season: string };

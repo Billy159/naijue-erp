@@ -64,6 +64,11 @@ function amount(raw: string): bigint {
   const [whole, fraction = ''] = value.split('.'); const result = BigInt(whole!) * 100n + BigInt(fraction.padEnd(2, '0'));
   if (result.toString().length > 100) throw Error(); return result;
 }
+/** Unfocused order-discount presentation only. Its minus is never raw money or SAVE input.
+ * Never coerce unfinished, signed or invalid input into zero or a valid amount. */
+export function salesProposalMoneyInputDisplay(raw:string):string {
+ try {const value=amount(raw);return `${value===0n?'':'-'}${value/100n}.${(value%100n).toString().padStart(2,'0')}`;}catch{return raw;}
+}
 /** Display projection only. Missing/invalid input stays unknown, never a saved
  * zero, price authority or an approval decision. Uses the same integer money rules. */
 export function salesProposalMoney(draft: Omit<SalesProposal, 'lines'> & { readonly lines: readonly SalesProposalPricingLine[] }): { readonly grossMinor: string; readonly netDueMinor: string; readonly orderDiscountMinor: string;
@@ -145,7 +150,9 @@ export class SalesProposalSession {
         || (candidate.hallId === null ? candidate.hallName !== null : entityId('hall', candidate.hallId) !== candidate.hallId || typeof candidate.hallName !== 'string')) return false;
     } catch { return false; }
     this.#salespersonDefaultClosed = true;
-    return this.#edit({ ...this.#state.draft, salesperson: structuredClone(candidate) });
+    this.#revision++;
+    this.#publish({ draft: { ...this.#state.draft, salesperson: structuredClone(candidate) }, errors: [], notice: null, totals: null });
+    return true;
   }
   /** Cold session initialization from a validated native saved document plus
    * actual current SKU reads. Local presentation only; never a native draft,
@@ -507,6 +514,26 @@ export class SalesProposalSession {
       this.#publish({ picker: { kind, search, page, product, method, phase: 'error', result: null }, notice: error instanceof Error && error.message.startsWith('CURRENT_PRODUCT_SIZE_GROUP_') ? '商品所属尺码组资料缺失或不一致，请重新读取或核对商品资料；未使用其他尺码组，原输入已保留。' : '候选读取失败，未改变草稿。可明确重试。' });
     } finally { if (this.#request === request) this.#request = null; }
   }
+  hallChangeRequiresReset(id: string): boolean {
+    const { draft } = this.#state;
+    return !!(draft.hall && draft.hall.id !== id && (draft.customer || draft.salesperson || draft.warehouse || draft.lines.length || draft.settlements.length || this.#state.lineEdit || Object.values(this.#state.entries).flat().some(entry => entry.product || entry.query.trim())));
+  }
+  /** Capture a validated candidate before closing its menu; confirmation never trusts a later picker. */
+  prepareHallChange(id: string): (() => boolean) | null {
+    const { picker, draft, entries, lineEdit } = this.#state;
+    if (this.#state.disposed || !this.#scope.active || picker?.kind !== 'hall' || picker.phase !== 'ready' || !this.hallChangeRequiresReset(id)) return null;
+    const hall = picker.result?.items.find(row => row.id === id) as CurrentSalesReferenceItem | undefined;
+    if (!hall || hall.hallId !== hall.id) return null;
+    this.closePicker(); let consumed = false;
+    return () => {
+      if (consumed || this.#state.disposed || !this.#scope.active || this.#state.draft !== draft || this.#state.entries !== entries || this.#state.lineEdit !== lineEdit || this.#state.picker !== null) return false;
+      consumed = true;
+      this.#cancelRead(); this.#savedLines.clear(); this.#specSkus.clear(); this.#savedWarehouse = null;
+      this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#salespersonDefaultClosed = true; this.#revision++;
+      this.#publish({ draft: { ...draft, hall, customer: null, salesperson: null, warehouse: null, lines: [], settlements: [], orderDiscount: '0.00' }, entries: emptyEntries(), lineEdit: null, picker: null, dirty: true, errors: [], notice: null, totals: null });
+      return true;
+    };
+  }
   async select(id: string, initialQuantity: '1' | '-1' = '1'): Promise<boolean> {
     const p = this.#state.picker; if (this.#state.disposed || p?.phase !== 'ready') return false;
     const item = p.result?.items.find(row => row.id === id); if (!item) return false;
@@ -555,7 +582,7 @@ export class SalesProposalSession {
       if (draft.settlements.length >= 3) { this.#publish({ notice: '收退明细已达原生单据 3 行上限。' }); return false; }
       this.closePicker(); return this.#edit({ ...draft, settlements: [...draft.settlements, { key: `local-settlement-${++this.#nextSettlement}`, method: p.method!, account: item as CurrentSalesReferenceItem, direction: 'RECEIVE', amount: '' }] });
     }
-    if (p.kind === 'hall' && draft.hall && draft.hall.id !== id && (draft.customer || draft.salesperson || draft.warehouse || draft.lines.length || draft.settlements.length || Object.values(this.#state.entries).flat().some(entry => entry.product || entry.query.trim()))) {
+    if (p.kind === 'hall' && this.hallChangeRequiresReset(id)) {
       this.#publish({ notice: '切换营业厅会改变候选范围。请先确认重置草稿，再选择新厅。' }); return false;
     }
     if (p.kind === 'salesperson') this.#salespersonDefaultClosed = true;

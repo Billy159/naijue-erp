@@ -138,8 +138,10 @@ class CapacityWiring(unittest.TestCase):
             create.assert_not_called()
 
     def test_actual_local_fifo_shell_exec_keeps_pid_and_rejects_bad_nonce_eof(self):
-        import os,subprocess
-        node='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node'
+        import os,subprocess,shutil
+        # Local offline test executable only; the deployment image remains pinned.
+        node=os.environ.get('RELEASE_TEST_NODE') or shutil.which('node')
+        self.assertTrue(node and pathlib.Path(node).is_file() and os.access(node,os.X_OK),'RELEASE_TEST_NODE or Node on PATH is required; never use a developer-machine path')
         with tempfile.TemporaryDirectory() as tmp:
             fifo=pathlib.Path(tmp).resolve()/'gate';os.mkfifo(fifo,0o600)
             body=D.CAPACITY_GATE_BODY.replace(D.CAPACITY_GATE_PATH,str(fifo))

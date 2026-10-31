@@ -16,7 +16,7 @@ const code = (expected: string) => (error: unknown) => error instanceof DomainEr
 function nativeEntry(entry: InventoryLedgerEntry): Row {
   const history = entry.source.kind === "HISTORY_REVISION" ? entry.source : null;
   return { id: entry.id, operation_id: entry.operationId, event_kind: entry.eventKind, warehouse_id: ledgerWarehouse.id, sku_id: ledgerParameters().skuId,
-    quantity_delta: entry.quantityDelta, source_sales_line_id: entry.source.kind === "SALES" ? entry.source.salesLineId : null,
+    quantity_delta: entry.quantityDelta, quantity_before: entry.display?.balanceTransition.before ?? null, quantity_after: entry.display?.balanceTransition.after ?? null, source_sales_line_id: entry.source.kind === "SALES" ? entry.source.salesLineId : null,
     source_sales_id: entry.source.kind === "SALES" ? entry.source.salesId : null, source_transfer_line_id: entry.source.kind === "TRANSFER" ? entry.source.transferLineId : null,
     source_transfer_id: entry.source.kind === "TRANSFER" ? entry.source.transferId : null, source_import_batch_id: entry.source.kind === "CUTOFF_BASELINE" ? entry.source.importBatchId : null,
     source_history_revision_id: history?.revisionId ?? null, source_history_sales_line_id: history?.documentKind === "SALES" ? history.salesLineId : null,
@@ -344,4 +344,64 @@ test("SCRIPTED ledger PG: abort while COMMIT completes suppresses direct-reader 
   const pool = new ScriptedPool(); const controller = new AbortController(); pool.afterQuery = stage => { if (stage === "COMMIT") controller.abort(); };
   await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(undefined, controller.signal)), code("INVENTORY_READ_ABORTED"));
   assert.equal(stages(pool).at(-1), "COMMIT"); assert.equal(pool.releases.length, 1); assert.deepEqual(pool.releases, [undefined]);
+});
+
+// INACTIVE Layer4B scripted projection only, not installed columns or PG proof.
+function layer4bDisplay(entry: InventoryLedgerEntry): InventoryLedgerEntry {
+  return {...entry,display:{...ledgerDisplayEntry(1).display!,sourceNumber:"SYNTHETIC-LAYER4B",balanceTransition:{state:"UNKNOWN",before:null,after:null,reason:"NO_RECORDED_BALANCE_TRANSITION"}}};
+}
+function layer4bKnown(n:number,before:string,after:string,kind:"SALES"|"TRANSFER"="SALES",reverse=false,endpoint?:"FROM"|"TO"):InventoryLedgerEntry {
+  let e=layer4bDisplay(ledgerEntry(n,kind));
+  if(e.source.kind==="TRANSFER"&&endpoint)e={...e,source:{...e.source,endpoint}};
+  return {...e,eventKind:reverse?"UNAPPROVE":"APPROVE",reversesEntryId:reverse?inventoryId("ledger",20000+n):null,
+    quantityDelta:(BigInt(after)-BigInt(before)).toString(),display:{...e.display!,balanceTransition:{state:"KNOWN",before,after,reason:"RECORDED_BALANCE_TRANSITION"}}};
+}
+test("LIVE layer4B RED reader: thirteen pre-capability NULL pairs stay UNKNOWN while six new native pairs are exact KNOWN",async()=>{
+  const pool=new ScriptedPool();const old=Array.from({length:13},(_,n)=>layer4bDisplay(ledgerEntry(n,n===2?"CUTOFF_BASELINE":n%2?"TRANSFER":"SALES")));
+  const h=historyEntries();old[10]={...layer4bDisplay(h[0]!),id:old[10]!.id,operationId:old[10]!.operationId};old[11]={...layer4bDisplay(h[1]!),id:old[11]!.id,operationId:old[11]!.operationId};
+  const live=[layer4bKnown(13,"9007199254740993","9007199254740995"),layer4bKnown(14,"83","85","SALES",true),
+    layer4bKnown(15,"10","7","TRANSFER",false,"FROM"),layer4bKnown(16,"4","7","TRANSFER"),layer4bKnown(17,"20","23","TRANSFER",true,"FROM"),layer4bKnown(18,"8","5","TRANSFER",true)];
+  pool.entries=[...old,...live];const read=await new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters()));
+  assert.equal(read.data.entries.length,19);assert.deepEqual(read.data.entries.slice(0,13).map(e=>e.display!.balanceTransition),old.map(e=>e.display!.balanceTransition));
+  assert.deepEqual(read.data.entries.slice(13).map(e=>e.display!.balanceTransition),live.map(e=>e.display!.balanceTransition));
+  assert.ok(pool.calls.every(c=>!c.sql.includes("FROM naijue_erp.inventory_balance")&&!c.sql.includes("SUM(")));
+});
+test("LIVE layer4B RED reader: stored int64 endpoints and minimum delta remain exact without Number conversion",async()=>{
+  const pool=new ScriptedPool();pool.entries=[layer4bKnown(1,"9223372036854775807","-1")];
+  const result=await new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters()));
+  assert.deepEqual(result.data.entries[0]!.display!.balanceTransition,pool.entries[0]!.display!.balanceTransition);
+});
+test("LIVE layer4B RED reader: missing, partial, numeric, noncanonical, overflow and mismatched stored pairs reject, never UNKNOWN",async()=>{
+  const bad:readonly(readonly[unknown,unknown])[]=[[undefined,undefined],[null,"2"],["0",null],[0,2],["01","3"],["-0","2"],["9223372036854775808","9223372036854775810"],["0","3"]];
+  for(const [before,after]of bad){const pool=new ScriptedPool();pool.entries=[ledgerDisplayEntry(1)];
+    pool.transform=(stage,rows)=>stage==="numbered-entries"?rows.map(row=>({...row,quantity_before:before,quantity_after:after})):rows;
+    await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters())),code("INVENTORY_INTEGRITY_FAILED"));
+    assert.equal(stages(pool).at(-1),"ROLLBACK");assert.deepEqual(pool.releases,[undefined]);
+  }
+});
+test("LIVE layer4B RED reader: arithmetic-fitting historical and baseline pairs fail closed rather than being presented as KNOWN or UNKNOWN",async()=>{
+  for(const e of [ledgerEntry(1,"CUTOFF_BASELINE"),...historyEntries()]){const pool=new ScriptedPool();pool.entries=[layer4bDisplay(e)];
+    pool.transform=(stage,rows)=>stage==="numbered-entries"?rows.map(row=>({...row,quantity_before:"0",quantity_after:e.quantityDelta})):rows;
+    await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters())),code("INVENTORY_INTEGRITY_FAILED"));assert.equal(stages(pool).at(-1),"ROLLBACK");
+  }
+});
+test("LIVE layer4B RED reader: keyset corrupt lookahead pair rejects before becoming only a hasMore hint",async()=>{
+  const pool=new ScriptedPool();pool.entries=Array.from({length:21},(_,n)=>ledgerEntry(n));
+  pool.transform=(stage,rows)=>stage==="entries"?rows.map((row,n)=>n===20?{...row,quantity_before:null,quantity_after:"2"}:row):rows;
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead()),code("INVENTORY_INTEGRITY_FAILED"));assert.equal(stages(pool).at(-1),"ROLLBACK");
+});
+test("LIVE layer4B RED reader: shared original keyset/numbered SQL explicitly selects both stored columns as text without fallback",async()=>{
+  for(const q of [ledgerParameters(),ledgerNumberedParameters()]){const pool=new ScriptedPool();pool.entries=q.page?[ledgerDisplayEntry(1)]:[ledgerEntry(1)];
+    await new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(q));const call=pool.calls.find(c=>c.sql.includes(q.page?"inventory-ledger:numbered-entries":"inventory-ledger:entries"))!;
+    assert.match(call.sql,/l\.quantity_before::text AS quantity_before/);assert.match(call.sql,/l\.quantity_after::text AS quantity_after/);assert.doesNotMatch(call.sql,/coalesce\(l\.quantity_(?:before|after)/i);
+  }
+});
+test("LIVE layer4B keyset: valid stored KNOWN data is checked but legacy keyset response shape remains display-free",async()=>{
+  const pool=new ScriptedPool();pool.entries=[layer4bKnown(1,"83","85")];const result=await new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead());
+  assert.equal(Object.hasOwn(result.data.entries[0]!,"display"),false);assert.equal(result.data.entries[0]!.quantityDelta,"2");assert.equal(stages(pool).at(-1),"COMMIT");
+});
+test("LIVE layer4B abort: successful stored-pair decode never bypasses existing late-abort suppression",async()=>{
+  const pool=new ScriptedPool(),controller=new AbortController();pool.entries=[layer4bKnown(1,"83","85")];pool.afterQuery=stage=>{if(stage==="COMMIT")controller.abort();};
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters(),controller.signal)),code("INVENTORY_READ_ABORTED"));
+  assert.equal(stages(pool).at(-1),"COMMIT");assert.deepEqual(pool.releases,[undefined]);
 });

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
+import {readFile} from 'node:fs/promises';
 import {runtimeSqlPatches, releaseContract, releaseContractSource} from './manifest.mjs';
 import {contractBlock, generateReleaseContract} from './generate-release-contract.mjs';
 test('shared release facts generate the standalone Python consumer without drift', async () => {
@@ -79,4 +80,12 @@ for member in ['web/LICENSE.txt','patches/unknown.sql','../escape.sql','web/secr
  else:raise AssertionError(member)
 `;
  const r=spawnSync('python3',['-c',code],{input:JSON.stringify(Object.fromEntries(runtimeSqlPatches)),encoding:'utf8'});assert.equal(r.status,0,r.stderr);
+});
+
+test('generated facts alone match exactly while separate full generator check remains required', async () => {
+ const source=await readFile(new URL('../../config/release-contract.json',import.meta.url));
+ const deploy=await readFile(new URL('./deploy-candidate.py',import.meta.url),'utf8');
+ const actual=deploy.match(/# BEGIN GENERATED RELEASE CONTRACT[\s\S]*?# END GENERATED RELEASE CONTRACT/);
+ assert.ok(actual,'RELEASE_CONTRACT_MARKERS_MISSING');
+ assert.equal(actual[0],contractBlock(JSON.parse(source),source),'RELEASE_CONTRACT_GENERATED_OUTPUT_STALE');
 });

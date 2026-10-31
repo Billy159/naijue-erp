@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {mkdtemp,rm} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+import {build} from 'esbuild';
+import {JSDOM} from 'jsdom';
+import {SalesProposalSession} from '../../../../src/current-form/sales-proposal.ts';
+import {ReadContext} from '../../../../src/loading/read-scope.ts';
+const here=path.dirname(fileURLToPath(import.meta.url)),temp=await mkdtemp(path.join(here,'.transfer-matrix-'));
+const dom=new JSDOM('<div id="root"></div>',{url:'https://matrix.test',pretendToBeVisual:true});
+for(const key of ['window','document','HTMLElement','HTMLInputElement','HTMLButtonElement','Node','Event','MouseEvent','KeyboardEvent','Element','SVGElement','MutationObserver','ShadowRoot','getComputedStyle','requestAnimationFrame','cancelAnimationFrame','innerWidth','innerHeight'])Object.defineProperty(globalThis,key,{configurable:true,value:dom.window[key]});
+Object.defineProperty(globalThis,'navigator',{configurable:true,value:dom.window.navigator});dom.window.matchMedia=media=>({matches:false,media,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});globalThis.IS_REACT_ACT_ENVIRONMENT=true;dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;};
+const {act,createElement}=await import('react'),{createRoot}=await import('react-dom/client');let root;
+const id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
+const warehouse=n=>({id:id(n),name:'QA warehouse '+n,hallId:id(90),hallName:'QA',enabled:true,hallEnabled:true,hasNonzeroInventory:false});
+const sku={id:id(4),skuCode:'QA-SKU',productId:id(3),productCode:'QA',productName:'QA product',colorId:id(5),colorName:'red',fitId:id(6),fitName:'fit',sizeId:id(7),sizeName:'165/S',sizeGroupId:id(8),barcodeAvailability:'UNAVAILABLE'};
+const group={id:sku.sizeGroupId,name:'QA group',sizes:[{id:sku.sizeId,name:sku.sizeName,displayOrder:1}]};
+const context=new ReadContext({accountId:id(99),sessionRevision:'test',permissionRevision:'test'}),scope=context.createScope('matrix');
+const page=items=>({page:1,pageSize:20,exactTotal:BigInt(items.length),items});
+try{
+ const output=path.join(temp,'picker.mjs');await build({entryPoints:[path.join(here,'proposal-picker.tsx')],outfile:output,bundle:true,platform:'node',format:'esm',jsx:'automatic',external:['react','react-dom','react-dom/*'],banner:{js:"import {createRequire} from 'node:module';const require=createRequire(import.meta.url);"},plugins:[{name:'preview-identity-probe',setup(b){b.onResolve({filter:/\.css(?:\?inline)?$/},a=>({path:a.path,namespace:'css'}));b.onLoad({filter:/.*/,namespace:'css'},()=>({loader:'js',contents:'export default "";'}));b.onLoad({filter:/products\/preview\.tsx$/},()=>({loader:'tsx',contents:'export const ProductCandidatePreview=({productId})=><output data-preview-id={productId}>{productId}</output>;'}));}}]});
+ const {ProposalPopup}=await import(pathToFileURL(output).href),host=document.getElementById('root');root=createRoot(host);
+ const products=[3,4].map(n=>({id:id(n),code:'QA'+n,name:'Product '+n,sizeGroupId:id(8),retailPrice:'1.00'}));
+ const session={getSnapshot:()=>({sizeGroups:{groups:[]}}),closePicker(){},retry(){},page(){}};
+ const render=async items=>act(async()=>root.render(createElement(ProposalPopup,{session,picker:{kind:'product',phase:'ready',page:1,result:page(items)},scope,productReader:{},denied:e=>{throw e;},choose(){}})));
+ await render(products);await act(async()=>host.querySelectorAll('[data-sale-candidate]')[0].focus());await act(async()=>host.querySelectorAll('[data-sale-candidate]')[0].dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true})));assert.equal(host.querySelector('[data-preview-id]').getAttribute('data-preview-id'),products[1].id,'keyboard focus follows actual product');
+ await render([products[0]]);assert.equal(host.querySelector('[data-preview-id]').getAttribute('data-preview-id'),products[0].id,'changed result must not retain absent prior preview identity');assert.equal(host.querySelector('[data-sale-candidate]').getAttribute('aria-selected'),'true');
+ await render([]);assert.equal(host.querySelector('[data-preview-id]'),null,'empty result never reads former product');
+ console.log('PASS sales popup keyboard and replacement/empty result preview ownership');
+}finally{if(root)await act(async()=>root.unmount());scope.dispose();dom.window.close();await rm(temp,{recursive:true,force:true});}

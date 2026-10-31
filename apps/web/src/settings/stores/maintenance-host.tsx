@@ -41,11 +41,8 @@ function StoreFormPreparation(props: StoreFormViewProps & { readonly failed: boo
   const state = useSyncExternalStore<{ readonly disposed: boolean; readonly closePrompt: boolean }>(controller?.subscribe ?? noSubscribe, controller?.getSnapshot ?? (() => noEditor), controller?.getSnapshot ?? (() => noEditor));
   if (!props.scope.active || state.disposed) return null;
   return <Modal className="demo-ui bs-modal demo-store-modal iw-arco-modal iw-arco-controls" visible title={`${props.record ? '编辑' : '新增'}${props.kind === 'stores' ? '营业厅' : '仓库'}`}
-    maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText="取消" okButtonProps={{ disabled: true }} onCancel={() => { if (!controller || controller.requestClose()) props.close(); }}>
+    maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText="取消" okButtonProps={{ disabled: true }} onCancel={() => { if (!controller || controller.discard()) props.close(); }}>
     {props.failed ? <p className="settings-note" role="alert">维护表单暂未加载。<Button onClick={props.retry}>重试加载表单</Button></p> : <p className="settings-note" role="status">正在准备维护表单…</p>}
-    {controller && state.closePrompt && <section className="settings-close-prompt" role="alert"><strong>放弃本次填写？</strong><p>关闭后将清除本次未保存的内容。</p><div className="bs-row-actions">
-      <Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => { if (controller.discard()) props.close(); }}>放弃本次填写</Button>
-    </div></section>}
   </Modal>;
 }
 

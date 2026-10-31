@@ -208,16 +208,22 @@ test("SYNTHETIC: changing a caller alias while execute waits cannot change the d
 test("SYNTHETIC: audit retains every permitted mutable header field and business line price/display snapshot", async () => {
   const f = fixture(); const draft = syntheticDraft();
   await f.service.execute({ action: "SAVE", actor, requestKey: "s", expectedVersion: null, draft });
-  const edited = { ...draft, header: { ...draft.header, number: "SYNTHETIC-CHANGED-NUMBER", hallId: sid("hall", 994), salespersonId: sid("staff", 995) },
+  const edited = { ...draft, header: { ...draft.header, hallId: sid("hall", 994), salespersonId: sid("staff", 995) },
     lines: draft.lines.map(row => ({ ...row, referencePrice: minorAmount("999"), snapshot: { ...row.snapshot, sizeName: "SYNTHETIC-SNAPSHOT-CHANGED" } })) };
   await f.service.execute({ action: "SAVE", actor, requestKey: "s2", expectedVersion: version(1), draft: edited });
   const audit = f.store.snapshot().audit[1]!;
-  assert.equal(audit.before?.header.number, draft.header.number); assert.equal(audit.after.header.number, edited.header.number);
+  assert.equal(audit.before?.header.number, undefined); assert.equal(audit.after.header.number, undefined);assert.equal(f.document().header.number,draft.header.number);
   assert.equal(audit.before?.header.hallId, ids.hall); assert.equal(audit.after.header.hallId, edited.header.hallId);
   assert.equal(audit.before?.header.salespersonId, null); assert.equal(audit.after.header.salespersonId, edited.header.salespersonId);
   assert.equal(audit.before?.lines[0]?.referencePrice, 125n); assert.equal(audit.after.lines[0]?.referencePrice, 999n);
   assert.equal(audit.before?.lines[0]?.snapshot.sizeName, "SYNTHETIC_SIZE_A");
   assert.equal(audit.after.lines[0]?.snapshot.sizeName, "SYNTHETIC-SNAPSHOT-CHANGED");
+});
+test("SYNTHETIC: saved document number cannot change and rejected rename preserves receipt audit and original replay",async()=>{
+ const f=fixture(),draft=syntheticDraft(),original:SalesCommand={action:"SAVE",actor,requestKey:"number-original",expectedVersion:null,draft};
+ const saved=await f.service.execute(original),before=f.store.snapshot();
+ await assert.rejects(f.service.execute({action:"SAVE",actor,requestKey:"number-illegal-rename",expectedVersion:version(1),draft:{...draft,header:{...draft.header,number:"SYNTHETIC-CHANGED-NUMBER"}}}),{code:"DOCUMENT_NUMBER_MISMATCH"});
+ assert.deepEqual(f.store.snapshot(),before);assert.equal(f.document().header.number,draft.header.number);assert.deepEqual(await f.service.execute(original),saved);assert.deepEqual(f.store.snapshot(),before);
 });
 test("SYNTHETIC: operation keys are scoped by authenticated actor, not globally shared", async () => {
   const f = fixture(); await f.service.execute({ action: "SAVE", actor, requestKey: "same-key", expectedVersion: null, draft: syntheticDraft() });

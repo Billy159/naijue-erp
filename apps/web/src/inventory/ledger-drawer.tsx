@@ -12,6 +12,7 @@ import type { InventoryCellTarget } from './contracts.ts';
 import type { InventoryLedgerBusinessType, InventoryLedgerCapability, InventoryLedgerFilter, InventoryLedgerEntry, InventoryLedgerQuery } from './ledger-contracts.ts';
 import { createInventoryLedgerQuery } from './ledger-http-reader.ts';
 import { formatQuantity } from './model.ts';
+import { ledgerBalanceTransitionView } from './ledger-balance-transition-view.ts';
 import './ledger.css';
 
 const typeLabels: Readonly<Record<InventoryLedgerBusinessType, string>> = {
@@ -132,7 +133,7 @@ function LedgerResults({ query, target, scope, capability, initialFilter }: {
       { title: '时间', render: (_, item) => <time dateTime={item.eventKind === 'CUTOFF_BASELINE' ? item.businessDate : item.postedAt} title={item.postedAt}>{item.eventKind === 'CUTOFF_BASELINE' ? item.display!.date : new Date(item.postedAt).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false })}</time> },
       { title: '业务类型', render: (_, item) => typeLabels[item.display!.businessType] },
       { title: '变化', render: (_, item) => `${BigInt(item.quantityDelta) > 0n ? '+' : ''}${formatQuantity(item.quantityDelta)}` },
-      { title: '变化前 → 后', render: () => <span title="未保存本条流水的变化前后库存">未知 → 未知</span> },
+      { title: '变化前 → 后', render: (_, item) => { const view = ledgerBalanceTransitionView(item.display!.balanceTransition); return <span title={view.title}>{view.text}</span>; } },
       { title: '来源单据', render: (_, item) => item.display!.sourceNumber === null ? '未记录'
         : item.source.kind === 'CUTOFF_BASELINE' ? item.display!.sourceNumber
           : <UIButton className="iw-link ledger-source-link" disabled={unavailable || sourcePending || !capability.onOpenSource} aria-busy={sourcePending} title={capability.onOpenSource ? '查看来源单据' : '来源单据查看尚未接通'} onClick={() => { void openSource(item); }}>{item.display!.sourceNumber}</UIButton> },

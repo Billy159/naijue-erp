@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../adapters/postgres/src/sales-unit-of-work.ts",
+    "../adapters/postgres/src/transfer-unit-of-work.ts",
+    "./postgres-protocol.test.ts",
+    "./transfer-postgres-protocol.test.ts",
+    "./inventory-first-use-postgres-protocol.test.ts"
+  ]
+}

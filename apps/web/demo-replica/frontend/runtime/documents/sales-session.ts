@@ -48,9 +48,18 @@ export function createReplicaSalesSession(runtime: ReplicaSession, options: {
     onAccessFailure: runtime.onAccessFailure,
   });
   return Object.freeze({ scope, reader, current, list, proposal, editor, create, selection, historyOwners, presentation, currentEmployee:{id:principal.staffId,name:principal.staffName??null},
-    async historyOwner(target:HistoryTarget){const key=documentRowKey({dataset:'HISTORY',...target});const existing=historyOwners.get(key);if(existing?.scope.active)return existing.owner;const {HistoryRevisionOwner}=await import('./history-revision.ts');if(!scope.active)throw new Error('登录身份已改变。');const child=runtime.reads.createScope('replica-history:'+key),owner=new HistoryRevisionOwner({scope:child,target,http:runtime.http,denied:runtime.onAccessFailure});historyOwners.set(key,{scope:child,owner});return owner;},
+    async historyOwner(target:HistoryTarget){const key=documentRowKey({dataset:'HISTORY',...target});const existing=historyOwners.get(key);if(existing?.scope.active)return existing.owner;const {HistoryRevisionOwner}=await import('./history-revision.ts');if(!scope.active)throw new Error('登录身份已改变。');const cached=historyOwners.get(key);if(cached?.scope.active)return cached.owner;const child=runtime.reads.createScope('replica-history:'+key),owner=new HistoryRevisionOwner({scope:child,target,http:runtime.http,denied:runtime.onAccessFailure});historyOwners.set(key,{scope:child,owner});return owner;},
     dispose(): void { for(const entry of historyOwners.values()){entry.owner.dispose();entry.scope.dispose();}historyOwners.clear();selection.row=null;scope.dispose(); create.dispose(); proposal.dispose(); editor.dispose(); list.dispose(); },
   });
 }
 
 export type ReplicaSalesSession = ReturnType<typeof createReplicaSalesSession>;
+
+export function salesCanLeave(session:ReplicaSalesSession):boolean {
+ if(!session.scope.active)return true;
+ if([...session.historyOwners.values()].some(entry=>entry.owner.unresolved))return false;
+ if(session.editor.getSnapshot().command.write.phase==='committed')return true;
+ const proposal=session.proposal.getSnapshot();
+ return session.editor.canLeave()&&!session.create.getSnapshot().preparing&&!proposal.dirty&&!proposal.lineEdit&&!Object.values(proposal.entries).flat().some(row=>row.product||row.query.trim());
+}
+export function salesCanDiscard(session:ReplicaSalesSession){return session.scope.active&&!session.create.getSnapshot().preparing&&!session.editor.getSnapshot().preparing&&!session.editor.commands.hasUnresolvedWrite&&![...session.historyOwners.values()].some(entry=>entry.owner.unresolved);}

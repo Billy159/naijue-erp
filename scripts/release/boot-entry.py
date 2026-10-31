@@ -29,7 +29,7 @@ NO = {'Name': 'no', 'MaximumRetryCount': 0}
 DEPLOYMENT_SHA256 = 'a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a'
 # Explicit exact26-r1 only; adoption depends on C90's independent source review.
 DEPLOYMENT26_SHA256 = '3e9a642f82a5355b797135fc13e5012b502e8b0bd08fbd6481e1f93b82de596d'
-DEPLOYMENT_CAPACITY_SHA256 = 'cb3c146b29d0becc50485d57891d774884905110eb635c99610d50d5a94e23da'
+DEPLOYMENT_CAPACITY_SHA256 = '4620ca2f1672e18991644a2da5398633eae19d75cb60057245590ebe2e3f8b25'
 DEPLOYMENT_FULL_SHA256 = 'a2c149cd7543b82c76b249c975d01d6961d22a3fd0bb2ec26b3797e077bbe578'
 
 
@@ -167,7 +167,11 @@ def deployment_binding(dp):
     if selector in ('exact26-r1', 'exact26-full'):
         if selector == 'exact26-full':
             full = dp.get('runtime26Full', {})
-            need(isinstance(full, dict) and {'references', 'media'} <= set(full) <= {'references', 'media', 'inventorySpool'} and 'runtime26' not in dp, 'CLOSED_FULL_REFERENCES_REQUIRED')
+            need(isinstance(full, dict) and {'references', 'media'} <= set(full) <= {'references', 'media', 'inventorySpool', 'credentialRequestKey', 'catalogProfile'} and 'runtime26' not in dp, 'CLOSED_FULL_REFERENCES_REQUIRED')
+            # Explicit versioned selection only; the pinned helper retains private-key stat checks.
+            profile = full.get('catalogProfile', 'legacy-v1')
+            need(isinstance(profile, str) and profile in ('legacy-v1', 'complete-write-v6', 'recorded-live-ledger-v7'),
+                 'EXPLICIT_SUPPORTED_FULL_CATALOG_PROFILE_REQUIRED')
             refs = full['references']
             expected = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
             need(isinstance(refs, dict) and dp.get('newDatabaseReceipt') == refs.get('metadata'), 'FULL_CURRENT_METADATA_NOT_OLD_SCHEMA19_REQUIRED')

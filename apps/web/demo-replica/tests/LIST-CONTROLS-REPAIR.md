@@ -1,0 +1,9 @@
+# N34-S01-01 / N34-S02-DATE-ORDER-01 targeted subcases
+
+Sales-only opt-in pagination mode retains empty/single-page navigation: disabled previous/next, page1 and explicit1/1, zero0–0 range. Matches frozen sales-current list pagination. Other shared inventory/catalogue callers retain their existing hide-when-single-page behavior. Existing page-size/jump tests remain; sales mode follows Demo without jump input.
+
+Sales/transfer date-order errors now say 开始日期不能晚于结束日期。 only when both dates are valid and reversed. Existing authoritative query validators, other invalid-condition message, request cancellation/scope and draft preservation unchanged. No request is issued for the invalid range.
+
+Dot native list-controls-20261029: real Pagination DOM first RED (next/previous absent); green PASS, date helper missing-moduleRED→PASS, typecheck0. Headed fixed8e139051 browser-red: empty/single-page controls absent and both pages generic date message; reset restores multi-page already correct. Fixed6f1b61ab headed5/5 PASS: empty/single navigation, reset multi-page and both reversed-date messages/no request. Screenshot inspected. No whole original composite finding/page automatically closed.
+
+Additional local-error regression: validation error incorrectly offered retry of the previous valid query. Now local validation errors do not expose retry; actual read failure retries preserve their original request snapshot. Native first attempt exited137/Killed (not a RED assertion); bounded boolean assertion then produced real RED, after fix both sales and transfer query-ownership matrices PASS, typecheck0. Headed fixed6f retry-browser-red confirms both incorrect buttons before fix; fixedb718ecdf headed5/5 PASS; exact message, no retry/no HTTP. Final date screenshot inspected. Incremental ledger binds exact evidence SHA.

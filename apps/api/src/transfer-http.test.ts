@@ -124,7 +124,17 @@ test("SYNTHETIC transfer HTTP: trusted actor role and creation identity are isol
 test("SYNTHETIC transfer HTTP: each accepted role comes from authentication, not request defaults", async t => {
   for (const role of ["ADMIN", "WAREHOUSE", "SALESPERSON"] as const) {
     const f = await setup(t, { authenticate: async () => ({ ...actor, role }) });
+    const current = f.store.snapshot().identities.get(actor.accountId)!;
+    f.store.seedIdentity({ ...current, role });
     const response = await f.post(save()); assert.equal(response.statusCode, 200, response.body); assert.equal(f.document().header.createdRole, role);
+  }
+});
+test("SYNTHETIC transfer HTTP: an authenticated role cannot override a different transaction-current role", async t => {
+  for (const role of ["ADMIN", "WAREHOUSE"] as const) {
+    const f = await setup(t, { authenticate: async () => ({ ...actor, role }) });
+    const before = f.store.snapshot(), response = await f.post(save());
+    assert.equal(response.statusCode, 403, response.body);
+    assert.deepEqual(f.store.snapshot(), before);
   }
 });
 test("SYNTHETIC transfer HTTP: exact key replay and receipts expose only current-authorized result fields", async t => {
@@ -148,8 +158,13 @@ test("SYNTHETIC transfer HTTP: receipt ownership and revoked current permission 
   assert.equal((await f.post(save())).statusCode, 403); assert.deepEqual(f.store.snapshot(), before);
 });
 test("SYNTHETIC transfer HTTP: current hall visibility is checked without treating stored creator role as caller authority", async t => {
-  const f = await setup(t); f.authenticateAs({ ...actor, role: "ADMIN" }); await f.post(save());
-  f.authenticateAs({ ...actor, hallId: ids.otherHall }); const before = f.store.snapshot();
+  const f = await setup(t), current = f.store.snapshot().identities.get(actor.accountId)!;
+  f.authenticateAs({ ...actor, role: "ADMIN" });
+  f.store.seedIdentity({ ...current, role: "ADMIN" });
+  const saved = await f.post(save()); assert.equal(saved.statusCode, 200, saved.body);
+  f.authenticateAs({ ...actor, hallId: ids.otherHall });
+  f.store.seedIdentity({ ...current, hallId: ids.otherHall, hallEnabled: true });
+  const before = f.store.snapshot();
   assert.equal((await f.app.inject({ url: "/transfers/receipts/save" })).statusCode, 403);
   assert.equal((await f.post(save(draft(), "edit", 1))).statusCode, 403); assert.deepEqual(f.store.snapshot(), before);
 });

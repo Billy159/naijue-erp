@@ -129,7 +129,12 @@ test("SYNTHETIC transfer: audit stores only actual changed-line deltas, never un
 });
 test("SYNTHETIC transfer: same account/key/content replay survives trusted role/hall changes and rechecks current scope",async()=>{
   const f=fixture();const command=save();const committed=await f.service.execute(command);
+  const current=f.store.snapshot().identities.get(actor.accountId)!;
+  // A caller-only role change is not a real current-identity change and must fail closed.
+  await assert.rejects(f.service.execute({...command,actor:{...actor,role:"ADMIN",hallId:null}}),{code:"FORBIDDEN"});
+  f.store.seedIdentity({...current,role:"ADMIN",hallId:null,hallEnabled:null});
   assert.deepEqual(await f.service.execute({...command,actor:{...actor,role:"ADMIN",hallId:null}}),committed);
+  f.store.seedIdentity({...current,hallId:ids.otherHall,hallEnabled:true});
   await assert.rejects(f.service.execute({...command,actor:{...actor,hallId:ids.otherHall}}),{code:"FORBIDDEN"});
   assert.equal(f.store.snapshot().receipts.size,1);assert.equal(f.store.snapshot().audit.length,1);
 });

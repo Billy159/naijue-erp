@@ -1,0 +1,11 @@
+/* Shared authoritative rule sequence. Keep import order in page entries. */
+main[data-replica-modes~="pc-mode"] #pc-filter.pc-master-filters{box-sizing:border-box;display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;min-width:0;margin:0;padding:0 0 8px;border:0;background:transparent;overflow-x:auto;overflow-y:visible}
+main[data-replica-modes~="pc-mode"] #pc-filter .pc-filter-row{box-sizing:border-box;display:grid;grid-template-columns:minmax(300px,1fr) 190px 160px 160px 112px 72px 72px;align-items:center;width:100%;min-width:1114px}
+main[data-replica-modes~="pc-mode"] #pc-filter .pc-filter-row>*{min-width:0}
+main[data-replica-modes~="pc-mode"] #pc-filter .pc-filter-row>.btn{box-sizing:border-box;width:100%;margin:0;padding:4px 8px;white-space:nowrap}
+main[data-replica-modes~="pc-mode"] #pc-filter .pc-more-filters{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:8px;width:calc(100% - 280px);min-width:700px;margin:0;padding:0;border:0;flex-basis:auto;grid-column:auto}
+main[data-replica-modes~="pc-mode"] #pc-filter .iw-product-select-host,main[data-replica-modes~="pc-mode"] #pc-filter .iw-category-select-host,main[data-replica-modes~="pc-mode"] #pc-filter .iw-filter-host{display:block;box-sizing:border-box;width:100%;height:32px;min-width:0}
+main[data-replica-modes~="pc-mode"] .pc-list-table .table-scroll{max-height:calc(100vh - 247px)}
+body.pc-mode:has(#pc-filter .pc-more-filters) .pc-list-table .table-scroll{max-height:calc(100vh - 287px)}
+@media (max-width:1200px){main[data-replica-modes~="pc-mode"] #pc-filter .pc-filter-row{min-width:1114px}main[data-replica-modes~="pc-mode"] #pc-filter .pc-more-filters{width:700px}}
+

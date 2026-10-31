@@ -1,0 +1,144 @@
+{
+  "status": "NEW_SYNTHETIC_INPUT_CANDIDATE_NOT_APPLIED_NOT_EXECUTED",
+  "authority": "Parent explicitly authorized isolated synthetic input derivation; root and independent reviewer decide before execution.",
+  "historicalIdentity": "Not claimed: absent historical modules were not recovered or read.",
+  "fixtures": [
+    {
+      "name": "product",
+      "status": "NEW_PORTABLE_SYNTHETIC_FIXTURE_NOT_HISTORICAL_RECOVERY",
+      "source": "scripts/import-v3/native-product-source26.test.mjs",
+      "sourceSha256": "9a78d54865e5d5446432172ddd38d6b4c6c5d1e253f909cbad5c760f5e9ab791",
+      "sourcePrefixLines": [
+        1,
+        21
+      ],
+      "sourcePrefixSha256": "7f227d0f79228db5420153b0d7e193c34a9bb98ef5d6f64f1fd9da09ee0d778d",
+      "fixtureConstructorAndBodySha256": "e541b1e2f94a1b2c692755bee28b373a0aeb61121ab7f9a6f3ef3e8cf65bb502",
+      "candidate": "scripts/import-v3/fixtures/production-provider26/retained-native-closure-fixtures-20261026/product.mjs",
+      "candidateSha256": "d80b024dc50f2986a1e39bb1795ceb57c1720fc6a33a5c2d80cec11ce5693ce5",
+      "candidateBytes": 7230,
+      "changes": [
+        "provenance comment header",
+        "remove node:test import to avoid test registration; no original test body copied",
+        "relocate existing static relative source imports",
+        "export existing fixture function without changing its body"
+      ],
+      "moduleSpecifierRewrites": [
+        {
+          "from": "./native-product-source26.mjs",
+          "to": "../../../native-product-source26.mjs"
+        },
+        {
+          "from": "./prepare-native-bindings.mjs",
+          "to": "../../../prepare-native-bindings.mjs"
+        },
+        {
+          "from": "../../packages/application/src/import-v2-contract.ts",
+          "to": "../../../../../packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "from": "../../packages/application/src/native-product-import.ts",
+          "to": "../../../../../packages/application/src/native-product-import.ts"
+        },
+        {
+          "from": "../../packages/application/src/request-hash.ts",
+          "to": "../../../../../packages/application/src/request-hash.ts"
+        }
+      ]
+    },
+    {
+      "name": "sku",
+      "status": "NEW_PORTABLE_SYNTHETIC_FIXTURE_NOT_HISTORICAL_RECOVERY",
+      "source": "scripts/import-v3/native-sku-source26.test.mjs",
+      "sourceSha256": "0697e844fd5e95c2adbee69a436f653268a0e9fa3147279b4231c75e942c2ac1",
+      "sourcePrefixLines": [
+        1,
+        41
+      ],
+      "sourcePrefixSha256": "b7b207192075d37813cc9704d5567713a8c88a0443557654fb404d60e6333893",
+      "fixtureConstructorAndBodySha256": "c2f4c4ae75cdb87c4d2cf7adaf56fa18e286f22d51c5fb38113a242f5e38e5f8",
+      "candidate": "scripts/import-v3/fixtures/production-provider26/retained-native-closure-fixtures-20261026/sku.mjs",
+      "candidateSha256": "ab2a0b7361541dae984470de49f2f49eab1038826d3bab289a0e28f38c569d8b",
+      "candidateBytes": 13682,
+      "changes": [
+        "provenance comment header",
+        "remove node:test import to avoid test registration; no original test body copied",
+        "relocate existing static relative source imports",
+        "export existing fixture function without changing its body"
+      ],
+      "moduleSpecifierRewrites": [
+        {
+          "from": "./native-sku-source26.mjs",
+          "to": "../../../native-sku-source26.mjs"
+        },
+        {
+          "from": "./prepare-native-bindings.mjs",
+          "to": "../../../prepare-native-bindings.mjs"
+        },
+        {
+          "from": "./native-source-authorizers.mjs",
+          "to": "../../../native-source-authorizers.mjs"
+        },
+        {
+          "from": "../../packages/application/src/import-v2-contract.ts",
+          "to": "../../../../../packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "from": "../../packages/application/src/catalogue-price-input.ts",
+          "to": "../../../../../packages/application/src/catalogue-price-input.ts"
+        },
+        {
+          "from": "../../packages/application/src/native-sku-import.ts",
+          "to": "../../../../../packages/application/src/native-sku-import.ts"
+        },
+        {
+          "from": "../../packages/application/src/request-hash.ts",
+          "to": "../../../../../packages/application/src/request-hash.ts"
+        }
+      ]
+    },
+    {
+      "name": "stock",
+      "status": "NEW_PORTABLE_SYNTHETIC_FIXTURE_NOT_HISTORICAL_RECOVERY",
+      "source": "scripts/import-v3/native-stock-source26.test.mjs",
+      "sourceSha256": "43ea316d6754a2afa53295ab797fdb2abc593bb4c98e94356aa489d194960b96",
+      "sourcePrefixLines": [
+        1,
+        33
+      ],
+      "sourcePrefixSha256": "037dd9c0d44880c1132d4276925dd26ba532bb33d9e8843818765756743c5a2b",
+      "fixtureConstructorAndBodySha256": "e9baa00e67e80d7e9ed5f5568a5f6496e9816c683f6ed7a3264f229f36ff13f2",
+      "candidate": "scripts/import-v3/fixtures/production-provider26/retained-native-closure-fixtures-20261026/stock.mjs",
+      "candidateSha256": "583c1d9d47579cf5e2735b3fbdfbfbb3053df581fda6a0f220e02e9c522631b3",
+      "candidateBytes": 13345,
+      "changes": [
+        "provenance comment header",
+        "remove node:test import to avoid test registration; no original test body copied",
+        "relocate existing static relative source imports",
+        "export existing fixture function without changing its body"
+      ],
+      "moduleSpecifierRewrites": [
+        {
+          "from": "./native-stock-source26.mjs",
+          "to": "../../../native-stock-source26.mjs"
+        },
+        {
+          "from": "./prepare-native-bindings.mjs",
+          "to": "../../../prepare-native-bindings.mjs"
+        },
+        {
+          "from": "../../packages/application/src/native-stock-contributor-import.ts",
+          "to": "../../../../../packages/application/src/native-stock-contributor-import.ts"
+        },
+        {
+          "from": "../../packages/application/src/request-hash.ts",
+          "to": "../../../../../packages/application/src/request-hash.ts"
+        },
+        {
+          "from": "../../packages/application/src/inventory-cutoff-import.ts",
+          "to": "../../../../../packages/application/src/inventory-cutoff-import.ts"
+        }
+      ]
+    }
+  ]
+}

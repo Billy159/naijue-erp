@@ -1,0 +1,4 @@
+.pc-schemes-page .pc-scheme-note{margin:0;padding:8px 12px;border-top:1px solid var(--ca-line);color:var(--ca-ink-3);font-size:12px;line-height:1.5}
+@media (max-width:900px){.pc-categories .pc-category-layout{grid-template-columns:220px minmax(0,1fr)}.pc-categories .pc-category-detail .pc-form-grid{grid-template-columns:1fr}.pc-settings-page .pc-attribute-grid{grid-template-columns:1fr}}
+@media (max-width:650px){.pc-categories .pc-category-layout{grid-template-columns:1fr;height:auto;max-height:none}.pc-categories .pc-filter-tree{height:220px;border-right:0;border-bottom:1px solid var(--ca-line)}.pc-categories .pc-category-detail{height:auto;min-height:180px}.pc-products .pc-pagination.iw-pagination{flex-wrap:wrap}}
+

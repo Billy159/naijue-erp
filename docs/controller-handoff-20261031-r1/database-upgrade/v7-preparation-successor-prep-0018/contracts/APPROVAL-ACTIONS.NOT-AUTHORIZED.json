@@ -1,0 +1,81 @@
+{
+  "status": "NOT_AUTHORIZED_DEFAULT_REFUSE",
+  "executeAllowed": false,
+  "productionAuthorized": false,
+  "approvalRef": null,
+  "target": null,
+  "sourceHead": "6a85f14b1b3b18f0c72f40d36d9bbece448f9140",
+  "preparationBeforeCatalogSha256": null,
+  "preparationAfterCatalogSha256": null,
+  "ordinaryRuntimeCatalogSha256": null,
+  "independentOrdinaryReviewSha256": null,
+  "windowControllerReceipt": null,
+  "startsAt": null,
+  "actionNotAfter": null,
+  "cleanupBy": null,
+  "actions": [
+    {
+      "action": "INSTALL_SOURCE_ONLY_SUCCESSOR",
+      "target": "root-authorized new source worktree",
+      "freshAuthorizationAndEvidenceRequired": "Apply tests first, preserve expected missing-module RED; then add sibling renderer and run focused plus immutableV6/release/issuer/STAFF regressions; no automatic source/remote/deployment write",
+      "authorizedHere": false,
+      "observedOutcome": "NOT_EXECUTED"
+    },
+    {
+      "action": "PROVISION_FRESH_ISOLATED_SYNTHETIC_ENVIRONMENT",
+      "target": "fresh environment+DB/OID/server/postmaster/roles NOT_YET_SELECTED",
+      "freshAuthorizationAndEvidenceRequired": "Exact creation/schema/role/baseACL/seed/connection actions require fresh authorization and synthetic provenance; no retained p2/Mac/production target",
+      "authorizedHere": false,
+      "observedOutcome": "NOT_EXECUTED"
+    },
+    {
+      "action": "REHEARSE_ROLLBACK_ONLY_FOR_ACTUAL_PREP_CATALOG_PINS",
+      "target": "same future admin-session target and fixed role shape",
+      "freshAuthorizationAndEvidenceRequired": "Original V6 proof; exact pinned V7 DDL+fourcells; observe actual after canonical hash; ROLLBACK and prove original before; new specific authority required",
+      "authorizedHere": false,
+      "observedOutcome": "NOT_EXECUTED"
+    },
+    {
+      "action": "APPLY_EXACT_V6_TO_V7_PREPARATION_TRANSACTION",
+      "target": "future exact fresh isolated synthetic target",
+      "freshAuthorizationAndEvidenceRequired": "Only fixed DDL+two columnGRANT/fourcells under new external approval and checked source/catalog/window pins; no access or app enable",
+      "authorizedHere": false,
+      "observedOutcome": "NOT_EXECUTED"
+    },
+    {
+      "action": "OPEN_ONE_OWNED_RUNTIME_METADATA_COLLECTOR_WINDOW",
+      "target": "future runtime role+DB with registered owned controller/lease",
+      "freshAuthorizationAndEvidenceRequired": "Only separately listed CONNECT/limit/auth config delta+inverse; armed expiry and private native login availability; API remainsclosed",
+      "authorizedHere": false,
+      "observedOutcome": "NOT_EXECUTED"
+    },
+    {
+      "action": "INDEPENDENTLY_REVIEW_GENUINE_ORDINARY_LOGIN_V7_CATALOG",
+      "target": "current_user=session_user=future runtimeRole, same exact DB/process",
+      "freshAuthorizationAndEvidenceRequired": "Original read-onlyV7 probe; full canonical actual hash and no-excess ACL/role review; exact existing issuer review shape, noexpiresAt",
+      "authorizedHere": false,
+      "observedOutcome": "NOT_EXECUTED"
+    },
+    {
+      "action": "START_FRESH_ORIGINAL_V7_GRAPH",
+      "target": "future final source/build/config/capacity/review/pool identity",
+      "freshAuthorizationAndEvidenceRequired": "All required pins and ordinaryV7 review+selected STAFF admission pass before route exposure; no command authority inferred",
+      "authorizedHere": false,
+      "observedOutcome": "NOT_EXECUTED"
+    },
+    {
+      "action": "EXECUTE_EXPLICIT_SYNTHETIC_BUSINESS_ACCEPTANCE",
+      "target": "future specifically listed docs/keys/actions and owned UI/session",
+      "freshAuthorizationAndEvidenceRequired": "Separate bounded command list+idempotency/recovery; no fullapp/allbuttons claim from minimal STAFFoff graph",
+      "authorizedHere": false,
+      "observedOutcome": "NOT_EXECUTED"
+    },
+    {
+      "action": "FENCE_AND_CLEAN_ONLY_OWNED_WINDOW",
+      "target": "same exact future target and registered resources",
+      "freshAuthorizationAndEvidenceRequired": "Original admissionfence/logout/poolclose; owned exact access/config/ACL inverse and verification; no foreign kill,DBdrop,downgrade or receipt deletion",
+      "authorizedHere": false,
+      "observedOutcome": "NOT_EXECUTED"
+    }
+  ]
+}

@@ -7,7 +7,14 @@ import { createTransferService } from "../packages/application/src/transfer-serv
 import { requestHash } from "../packages/application/src/request-hash.ts";
 import type { TransferCommand, TransferDocument, TransferResult, TransferTransaction } from "../packages/application/src/transfer-ports.ts";
 import { quantity, version } from "../packages/domain/src/values.ts";
-import { actor, draft, fixture, ids, sid } from "./support/synthetic-transfer.ts";
+import { actor, draft as syntheticDraft, fixture, ids, sid } from "./support/synthetic-transfer.ts";
+// This file creates its own synthetic NEW SAVE documents. The real PG adapter
+// validates their explicit persisted allocation; shared legacy fixtures stay unchanged.
+const allocatedNumber = "V2-DB-000000000001";
+const draft: typeof syntheticDraft = (...args) => {
+  const value = syntheticDraft(...args);
+  return { ...value, header: { ...value.header, number: allocatedNumber } };
+};
 interface Step { readonly sql:RegExp; readonly rows?:Record<string,unknown>[]; readonly count?:number; readonly error?:Error; readonly inspect?:(values:unknown[],sql:string)=>void }
 class Client implements PgSalesClient {
   readonly releases:(Error|boolean|undefined)[]=[]; readonly calls:{sql:string;values:unknown[]}[]=[]; private readonly steps:Step[];
@@ -22,10 +29,11 @@ const time="2026-10-20T12:00:00Z";
 const save:TransferCommand={actor,action:"SAVE",expectedVersion:null,requestKey:"original-transfer",draft:draft(["9007199254740993"])};
 const approve:TransferCommand={actor,action:"APPROVE",expectedVersion:version(1),requestKey:"approve-transfer",transferId:ids.transfer};
 const receipt=(row?:Record<string,unknown>):Step[]=>[{sql:/^SELECT pg_advisory_xact_lock/,inspect(v){assert.deepEqual(v,[`naijue:receipt:${JSON.stringify([actor.accountId,row?.request_key??save.requestKey])}`]);}},{sql:/FROM naijue_erp.operation_receipt WHERE actor_account_id = \$1 AND request_key = \$2/,rows:row?[row]:[]}];
-function headerRow(document:TransferDocument):Record<string,unknown>{const h=document.header;return {id:h.id,number:h.number,business_date:h.businessDate,from_warehouse_id:h.fromWarehouseId,to_warehouse_id:h.toWarehouseId,status:h.status,version:h.version,note:h.note,created_by_account_id:h.createdByAccountId,created_hall_id:h.createdHallId,created_role:h.createdRole,created_at:h.createdAt,updated_at:h.updatedAt,approved_by_account_id:h.approvedByAccountId,approved_at:h.approvedAt,stock_basis:"RUNTIME_LEDGER"};}
+function headerRow(document:TransferDocument):Record<string,unknown>{const h=document.header;return {id:h.id,number:h.number,business_date:h.businessDate,from_warehouse_id:h.fromWarehouseId,to_warehouse_id:h.toWarehouseId,status:h.status,version:h.version,note:h.note,responsible_staff_id:h.responsibleStaffId,created_by_account_id:h.createdByAccountId,created_hall_id:h.createdHallId,created_role:h.createdRole,created_at:h.createdAt,updated_at:h.updatedAt,approved_by_account_id:h.approvedByAccountId,approved_at:h.approvedAt,stock_basis:"RUNTIME_LEDGER"};}
 function lineRows(document:TransferDocument):Record<string,unknown>[] {return document.lines.map(l=>({id:l.id,transfer_id:l.transferId,line_no:l.lineNo,sku_id:l.skuId,quantity:l.quantity.toString(),is_current:l.isCurrent,product_code_snapshot:l.snapshot.productCode,product_name_snapshot:l.snapshot.productName,color_name_snapshot:l.snapshot.colorName,fit_name_snapshot:l.snapshot.fitName,size_name_snapshot:l.snapshot.sizeName,barcode_snapshot:l.snapshot.barcode}));}
 function read(document?:TransferDocument):Step[]{const steps:Step[]=[{sql:/^SELECT pg_advisory_xact_lock/,inspect(v){assert.deepEqual(v,[`naijue:transfer:${ids.transfer}`]);}},{sql:/FROM naijue_erp.transfer_header WHERE id = \$1 FOR UPDATE/,rows:document?[headerRow(document)]:[]}];if(document)steps.push({sql:/FROM naijue_erp.transfer_line WHERE transfer_id = \$1 ORDER BY line_no, id/,rows:lineRows(document)});return steps;}
-function writes(isNew:boolean,previousVersion=1):Step[]{return [{sql:isNew?/^INSERT INTO naijue_erp.transfer_header/:/^UPDATE naijue_erp.transfer_header/,inspect(v,sql){assert.equal(v[10],"SALESPERSON");if(!isNew){assert.match(sql,/WHERE id = \$1 AND version = \$16 AND stock_basis = 'RUNTIME_LEDGER'/);assert.equal(v[15],previousVersion);}}},...(isNew?[{sql:/^INSERT INTO naijue_erp.transfer_line/,inspect(v:unknown[],sql:string){assert.equal(v[4],"9007199254740993");assert.match(sql,/WHERE transfer_line.transfer_id = EXCLUDED.transfer_id/);}}]:[]),{sql:/^INSERT INTO naijue_erp.audit_change/,inspect(v){const after=JSON.parse(String(v[9]));if(isNew) assert.equal(after.lines[0].quantity,"9007199254740993"); else assert.deepEqual(after.lines,[]);}},{sql:/^INSERT INTO naijue_erp.operation_receipt/,inspect(v,sql){assert.match(sql,/'TRANSFER'/);assert.equal(v[5],ids.transfer);}}];}
+function numberValidation():Step{return {sql:/\/\* document-number:validate \*\/ SELECT number,actor_account_id FROM naijue_erp.runtime_document_number_allocation/,rows:[{number:allocatedNumber,actor_account_id:actor.accountId}],inspect(v,sql){assert.deepEqual(v,["TRANSFER",ids.transfer]);assert.match(sql,/WHERE document_kind=\$1 AND document_id=\$2::uuid FOR SHARE/);}};}
+function writes(isNew:boolean,previousVersion=1):Step[]{return [...(isNew?[numberValidation()]:[]),{sql:isNew?/^INSERT INTO naijue_erp.transfer_header/:/^UPDATE naijue_erp.transfer_header/,inspect(v,sql){assert.equal(v[10],"SALESPERSON");assert.match(sql,/responsible_staff_id/);assert.equal(v[15],null);assert.equal(v.length,isNew?16:17);if(!isNew){assert.match(sql,/WHERE id = \$1 AND version = \$17 AND stock_basis = 'RUNTIME_LEDGER'/);assert.equal(v[16],previousVersion);}}},...(isNew?[{sql:/^INSERT INTO naijue_erp.transfer_line/,inspect(v:unknown[],sql:string){assert.equal(v[4],"9007199254740993");assert.match(sql,/WHERE transfer_line.transfer_id = EXCLUDED.transfer_id/);}}]:[]),{sql:/^INSERT INTO naijue_erp.audit_change/,inspect(v){const after=JSON.parse(String(v[9]));if(isNew) assert.equal(after.lines[0].quantity,"9007199254740993"); else assert.deepEqual(after.lines,[]);}},{sql:/^INSERT INTO naijue_erp.operation_receipt/,inspect(v,sql){assert.match(sql,/'TRANSFER'/);assert.equal(v[5],ids.transfer);}}];}
 function service(client:Client){let n=3000;return createTransferService({unitOfWork:uow(client),authorization:{async assertAllowed(){}},references:{async assertValid(){}},now:()=>time,newId:kind=>sid(kind,n++)});}
 async function saved():Promise<TransferDocument>{const f=fixture();await f.service.execute(save);return f.document();}
 const lock:Step={sql:/ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b/,rows:[ids.fromWarehouse,ids.toWarehouse].map(warehouse_id=>({warehouse_id,sku_id:ids.sku,quantity:"0",version:1,last_operation_id:null,updated_at:time})),inspect(v,sql){assert.match(sql,/JOIN unnest\(\$1::uuid\[\], \$2::uuid\[\]\)/);assert.deepEqual(v,[[ids.fromWarehouse,ids.toWarehouse],[ids.sku,ids.sku]]);}};
@@ -41,10 +49,10 @@ test("pg protocol transfer: original-key replay decodes exact result then rechec
  const row={id:result.operationId,actor_account_id:actor.accountId,request_key:save.requestKey,request_hash:requestHash({...save,actor:{accountId:actor.accountId}}),action:"SAVE",target_type:"TRANSFER",target_id:ids.transfer,status:"COMMITTED",result_data:result,completed_at:time};
  const client=new Client([begin,...receipt(row),...read(document),commit]);assert.deepEqual(await service(client).execute(save),result);client.done();});
 test("pg protocol transfer: missing coverage remains absent and cannot be inserted",async()=>{const document=await saved();const client=new Client([begin,{sql:/^SELECT pg_advisory_xact_lock/},{sql:/FROM naijue_erp.operation_receipt/,rows:[]},...read(document),{...keyLocks[0]!},{...keyLocks[1]!},{...lock,rows:[]},{sql:/posting:publication/,rows:[]},rollback]);await assert.rejects(service(client).execute(approve),{code:"INVENTORY_NOT_READY"});client.done();assert.ok(client.calls.every(c=>!c.sql.includes("INSERT INTO naijue_erp.inventory_balance")));});
-test("pg protocol transfer: commit uncertainty discards connection and never retries with a new key",async()=>{const error=new Error("COMMIT acknowledgement lost");const client=new Client([begin,{...commit,error},rollback]);await assert.rejects(uow(client).transaction(async()=>42),error);client.done();assert.equal(client.releases[0],error);});
+test("pg protocol transfer: commit uncertainty discards connection and never retries with a new key",async()=>{const error=new Error("COMMIT acknowledgement lost");const client=new Client([begin,{...commit,error}]);await assert.rejects(uow(client).transaction(async()=>42),error);client.done();assert.equal(client.releases[0],error);assert.equal(client.calls.filter(c=>c.sql==="COMMIT").length,1);assert.equal(client.calls.some(c=>c.sql==="ROLLBACK"),false);});
 test("pg protocol transfer: rollback failure discards connection and reports both failures",async()=>{const error=new Error("callback"),rollbackError=new Error("rollback");const client=new Client([begin,{...rollback,error:rollbackError}]);await assert.rejects(uow(client).transaction(async()=>{throw error;}),AggregateError);client.done();assert.equal(client.releases[0],rollbackError);});
 test("pg protocol transfer: transaction handle cannot escape callback lifetime",async()=>{const client=new Client([begin,commit]);let handle:TransferTransaction|undefined;await uow(client).transaction(async tx=>{handle=tx;});await assert.rejects(handle!.getReceipt(actor.accountId,"late"),{code:"TRANSACTION_CLOSED"});client.done();});
-test("pg protocol transfer: absent document race uses CAS and rolls back losing insert",async()=>{const client=new Client([begin,...receipt(),...read(),{sql:/^INSERT INTO naijue_erp.transfer_header/,count:0},rollback]);await assert.rejects(service(client).execute(save),{code:"VERSION_CONFLICT"});client.done();});
+test("pg protocol transfer: absent document race uses CAS and rolls back losing insert",async()=>{const client=new Client([begin,...receipt(),...read(),numberValidation(),{sql:/^INSERT INTO naijue_erp.transfer_header/,count:0},rollback]);await assert.rejects(service(client).execute(save),{code:"VERSION_CONFLICT"});client.done();});
 test("pg protocol transfer: warehouse/SKU facts are current locked database facts, not submitted labels",async()=>{const client=new Client([begin,...read(),{sql:/FROM naijue_erp.warehouse w JOIN naijue_erp.hall h/,rows:[{id:ids.fromWarehouse,hall_id:ids.hall,enabled:false,hall_enabled:true,has_nonzero_inventory:true}],inspect(_v,sql){assert.match(sql,/b.quantity <> 0/);assert.match(sql,/FOR SHARE OF w, h/);}},{sql:/FROM naijue_erp.sku s JOIN naijue_erp.product p/,rows:[{id:ids.sku,enabled:true}],inspect(_v,sql){assert.match(sql,/size_group_member/);assert.match(sql,/FOR SHARE OF s, p, c, f/);}},commit]);await uow(client).transaction(async tx=>{await tx.getTransfer(ids.transfer);assert.equal((await tx.getWarehouseFact(ids.fromWarehouse))?.enabled,false);assert.equal((await tx.getWarehouseFact(ids.fromWarehouse))?.hasNonzeroInventory,true);assert.equal((await tx.getSkuFact(ids.sku))?.enabled,true);});client.done();});
 
 test("pg protocol transfer: UNAPPROVE reads original two endpoint facts and appends linked exact inverses",async()=>{
@@ -72,3 +80,89 @@ test("pg protocol transfer: line-position swap writes only the two real changed 
   await service(client).execute({actor,action:"SAVE",requestKey:"swap",expectedVersion:version(1),draft:proposed});client.done();
   assert.ok(client.calls.every(c=>!/^UPDATE naijue_erp.transfer_line SET is_current/.test(c.sql)));
 });
+
+// INACTIVE Layer3 bridge: protocol strings/acknowledgements only, not real PG.
+function layer3TransferLedger():Step{return {sql:/^INSERT INTO naijue_erp.inventory_ledger/};}
+function assertLayer3TransferPairs(client:Client,pairs:readonly(readonly[string,string])[]):void{
+  const calls=client.calls.filter(c=>/^INSERT INTO naijue_erp.inventory_ledger/.test(c.sql));assert.equal(calls.length,pairs.length);
+  calls.forEach(({values:v,sql},i)=>{const [before,after]=pairs[i]!;
+  assert.match(sql,/posted_at,\s*quantity_before,\s*quantity_after/);assert.match(sql,/\$13::bigint,\s*\$14::bigint/);
+  assert.equal(v.length,14);assert.deepEqual(v.slice(12),[before,after]);assert.equal(typeof v[12],"string");assert.equal(typeof v[13],"string");
+  assert.equal(BigInt(before)+BigInt(String(v[5])),BigInt(after));
+  });
+}
+test("LIVE layer3 RED transfer writer bridge: both endpoint keys preserve exact sequential10→8→5 and4→6→9",async()=>{
+  const f=fixture();await f.service.execute({...save,draft:draft(["2","3"])});const document=f.document();
+  const rows=[{warehouse_id:ids.fromWarehouse,sku_id:ids.sku,quantity:"10",version:7,last_operation_id:null,updated_at:time},
+    {warehouse_id:ids.toWarehouse,sku_id:ids.sku,quantity:"4",version:7,last_operation_id:null,updated_at:time}];
+  const pairs:readonly(readonly[string,string])[]=[["10","8"],["4","6"],["8","5"],["6","9"]];
+  const effects=pairs.flatMap<Step>((pair,i)=>[{...layer3TransferLedger(),inspect(v){
+    assert.equal(v[3],i%2===0?ids.fromWarehouse:ids.toWarehouse);assert.equal(v[7],i%2===0?"FROM":"TO");assert.equal(v[6],i<2?ids.line:ids.line2);}},
+    {sql:/^UPDATE naijue_erp.inventory_balance/,inspect(v){assert.equal(v[2],pair[1]);assert.equal(v[3],Math.floor(i/2)+8);assert.equal(v[6],Math.floor(i/2)+7);}}]);
+  const client=new Client([begin,{sql:/^SELECT pg_advisory_xact_lock/},{sql:/FROM naijue_erp.operation_receipt/,rows:[]},...read(document),...keyLocks,{...lock,rows},...effects,...writes(false),commit]);
+  const result=await service(client).execute(approve);assert.equal(result.ledgerEntryIds.length,4);client.done();
+  assertLayer3TransferPairs(client,pairs);
+});
+test("LIVE layer3 RED transfer writer bridge: current unrelated20/8 balances reverse original endpoints as20→23 and8→5",async()=>{
+  const f=fixture();await f.service.execute({...save,draft:draft(["3"])});await f.service.execute(approve);const document=f.document(),originals=f.store.snapshot().ledger;
+  const originalRows=originals.map(l=>({id:l.id,operation_id:l.operationId,event_kind:l.eventKind,warehouse_id:l.warehouseId,sku_id:l.skuId,quantity_delta:l.quantityDelta.toString(),transfer_id:ids.transfer,source_transfer_line_id:ids.line,endpoint:l.source.endpoint,source_document_version:l.sourceDocumentVersion,reverses_entry_id:null,business_date:l.businessDate,posted_at:l.postedAt}));
+  const rows=[{warehouse_id:ids.fromWarehouse,sku_id:ids.sku,quantity:"20",version:9,last_operation_id:sid("operation",95000),updated_at:time},
+    {warehouse_id:ids.toWarehouse,sku_id:ids.sku,quantity:"8",version:9,last_operation_id:sid("operation",95000),updated_at:time}];
+  const pairs:readonly(readonly[string,string])[]=[["20","23"],["8","5"]];
+  const reverseSteps=originals.flatMap<Step>((original,i)=>[{...layer3TransferLedger(),inspect(v){
+    assert.equal(v[2],"UNAPPROVE");assert.equal(v[9],original.id);assert.equal(v[5],(-original.quantityDelta).toString());}},
+    {sql:/^UPDATE naijue_erp.inventory_balance/,inspect(v){assert.equal(v[2],pairs[i]![1]);assert.equal(v[3],10);assert.equal(v[6],9);}}]);
+  const client=new Client([begin,{sql:/^SELECT pg_advisory_xact_lock/},{sql:/FROM naijue_erp.operation_receipt/,rows:[]},...read(document),
+    {sql:/FROM naijue_erp.inventory_ledger l JOIN naijue_erp.transfer_line tl/,rows:originalRows,inspect(_v,sql){assert.doesNotMatch(sql,/quantity_before|quantity_after/);}},
+    ...keyLocks,{...lock,rows},...reverseSteps,...writes(false,2),commit]);
+  const command:TransferCommand={actor,action:"UNAPPROVE",expectedVersion:version(2),requestKey:"layer3-transfer-reverse",transferId:ids.transfer};
+  assert.equal((await service(client).execute(command)).ledgerEntryIds.length,2);client.done();
+  assertLayer3TransferPairs(client,pairs);
+});
+for(const failure of ["ZERO_ROWS","TWO_ROWS","DRIVER_THROW"]as const){
+  test(`LIVE layer3 transfer writer failure ${failure}: second endpoint never acknowledges incomplete INSERT or commits first side`,async()=>{
+    const document=await saved(),broken=new Error("SYNTHETIC layer3 second endpoint ledger failure");
+    const second:Step={...layer3TransferLedger(),...(failure==="DRIVER_THROW"?{error:broken}:{count:failure==="ZERO_ROWS"?0:2})};
+    const client=new Client([begin,{sql:/^SELECT pg_advisory_xact_lock/},{sql:/FROM naijue_erp.operation_receipt/,rows:[]},...read(document),...keyLocks,lock,
+      layer3TransferLedger(),balance,second,rollback]);
+    await assert.rejects(service(client).execute(approve),failure==="DRIVER_THROW"?broken:{code:"INVENTORY_INTEGRITY_FAILED"});client.done();
+    assertLayer3TransferPairs(client,[["0","-9007199254740993"],["0","9007199254740993"]]);
+    assert.equal(client.calls.some(c=>/^UPDATE naijue_erp.transfer_header|^INSERT INTO naijue_erp.audit_change|^INSERT INTO naijue_erp.operation_receipt|^COMMIT$/.test(c.sql)),false);
+    assert.equal(client.calls.filter(c=>/^UPDATE naijue_erp.inventory_balance/.test(c.sql)).length,1);
+  });
+}
+test("LIVE layer3 transfer writer CAS failure: second acknowledged endpoint failure rolls back command without receipt",async()=>{
+  const document=await saved(),client=new Client([begin,{sql:/^SELECT pg_advisory_xact_lock/},{sql:/FROM naijue_erp.operation_receipt/,rows:[]},...read(document),...keyLocks,lock,
+    layer3TransferLedger(),balance,layer3TransferLedger(),{...balance,count:0},rollback]);
+  await assert.rejects(service(client).execute(approve),{code:"VERSION_CONFLICT"});client.done();
+  assertLayer3TransferPairs(client,[["0","-9007199254740993"],["0","9007199254740993"]]);
+  assert.equal(client.calls.some(c=>/^UPDATE naijue_erp.transfer_header|^INSERT INTO naijue_erp.audit_change|^INSERT INTO naijue_erp.operation_receipt|^COMMIT$/.test(c.sql)),false);
+});
+test("LIVE layer3 transfer writer replay: original APPROVE receipt returns without new endpoints or balance writes",async()=>{
+  const f=fixture();await f.service.execute(save);await f.service.execute(approve);const document=f.document();
+  const result:TransferResult={operationId:sid("operation",96000),transferId:ids.transfer,version:version(2),status:"APPROVED",ledgerEntryIds:[sid("ledger",96001),sid("ledger",96002)]};
+  const row={id:result.operationId,actor_account_id:actor.accountId,request_key:approve.requestKey,request_hash:requestHash({...approve,actor:{accountId:actor.accountId}}),action:"APPROVE",target_type:"TRANSFER",target_id:ids.transfer,status:"COMMITTED",result_data:result,completed_at:time};
+  const client=new Client([begin,...receipt(row),...read(document),commit]);assert.deepEqual(await service(client).execute(approve),result);client.done();
+  assert.ok(client.calls.every(c=>!/^(INSERT|UPDATE|DELETE)/.test(c.sql)));
+});
+
+for (const failure of ["OMITTED_PUT", "CAUGHT_INSERT_ZERO", "CAUGHT_CAS_ZERO"] as const) {
+  test(`LIVE layer4A RED transfer completion ${failure}: trusted callback cannot swallow unfinished endpoint into COMMIT`, async () => {
+    const document=await saved(), row={id:sid("ledger",96001),operationId:sid("operation",96000),eventKind:"APPROVE" as const,
+      warehouseId:ids.fromWarehouse,skuId:ids.sku,quantityDelta:quantity("-9007199254740993"),source:{kind:"TRANSFER" as const,transferId:ids.transfer,transferLineId:ids.line,endpoint:"FROM" as const},
+      sourceDocumentVersion:version(2),reversesEntryId:null,businessDate:document.header.businessDate,postedAt:time};
+    const client=new Client([begin,...read(document),...keyLocks,lock,{sql:/^INSERT INTO naijue_erp.inventory_ledger/,count:failure==="CAUGHT_INSERT_ZERO"?0:1},
+      ...(failure==="CAUGHT_CAS_ZERO"?[{sql:/^UPDATE naijue_erp.inventory_balance/,count:0}]:[]),{sql:/^(COMMIT|ROLLBACK)$/}]);
+    let caught:unknown;
+    try {await uow(client).transaction(async tx=>{
+      await tx.getTransfer(ids.transfer);await tx.lockBalances([{warehouseId:ids.fromWarehouse,skuId:ids.sku},{warehouseId:ids.toWarehouse,skuId:ids.sku}]);
+      try {await tx.appendLedger(row);}catch(error){assert.equal(failure,"CAUGHT_INSERT_ZERO");assert.equal((error as {code:string}).code,"INVENTORY_INTEGRITY_FAILED");}
+      if(failure==="CAUGHT_CAS_ZERO"){
+        const previous=(await tx.getBalance(ids.fromWarehouse,ids.sku))!;
+        await assert.rejects(tx.putBalance({...previous,quantity:quantity("-9007199254740993"),version:version(2),lastOperationId:row.operationId,updatedAt:time}),{code:"VERSION_CONFLICT"});
+      }
+    });}catch(error){caught=error;}
+    client.done();assert.equal((caught as {code?:string}|undefined)?.code,"INVENTORY_INTEGRITY_FAILED","Missing completion guard must reject before COMMIT");
+    assert.equal(client.calls.at(-1)!.sql,"ROLLBACK");assert.equal(client.calls.some(c=>c.sql==="COMMIT"),false);
+  });
+}

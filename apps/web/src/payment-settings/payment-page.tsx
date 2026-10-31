@@ -169,11 +169,8 @@ function PaymentMaintenanceForm(props: Pick<PaymentSettingsProps, 'scope' | 'dir
     : <views.PaymentAccountForm {...props} />;
   return <Modal className="demo-ui bs-modal demo-settings-modal payment-settings-modal iw-arco-modal iw-arco-controls" visible
     title={`${controller.record ? '编辑' : '新增'}${controller.kind === 'methods' ? '收款方式' : '资金账户'}`} maskClosable={false} autoFocus={false} focusLock
-    okText="确定" cancelText="取消" okButtonProps={{ disabled: true }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
+    okText="确定" cancelText="取消" okButtonProps={{ disabled: true }} onCancel={() => { if (controller.discard()) props.close(); }}>
     {failed ? <p className="settings-note" role="alert">维护表单暂未加载。<Button onClick={() => retry(value => value + 1)}>重试加载表单</Button></p>
       : <p className="settings-note" role="status">正在准备维护表单…</p>}
-    {state.closePrompt && <section className="settings-close-prompt" role="alert"><strong>放弃本次填写？</strong><p>关闭后将清除本次未保存的内容。</p><div className="bs-row-actions">
-      <Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => { if (controller.discard()) props.close(); }}>放弃本次填写</Button>
-    </div></section>}
   </Modal>;
 }

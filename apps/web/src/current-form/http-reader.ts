@@ -1,3 +1,5 @@
+import { parseCatalogueSettingsListQuery, validateCatalogueSettingsPage } from '../../../../packages/application/src/catalogue-settings-read-validation.ts';
+import type { CatalogueSettingsListQuery } from '../../../../packages/application/src/catalogue-settings-read-ports.ts';
 import type { DictionaryListQuery } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import { validateDictionaryPage, validateDictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-validation.ts';
 import type { CurrentFormBarcodeQuery, CurrentFormBarcodeResult, CurrentFormPage, CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormSku,
@@ -28,17 +30,18 @@ function price(value: unknown): string | null {
   if (typeof value !== 'string' || !/^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value)) invalid(); return value;
 }
 function page<T extends { readonly id: string }>(value: unknown, parameters: { readonly page: number; readonly pageSize: 20 },
-  decode: (row: unknown, recommendation?: 'AVAILABLE' | 'UNAVAILABLE') => T, account = false): CurrentFormPage<T> {
-  const row = object(value, ['page', 'pageSize', 'exactTotal', 'items'], account ? ['recommendationAvailability'] : []);
+  decode: (row: unknown, recommendation?: 'AVAILABLE' | 'UNAVAILABLE') => T, account = false,customer = false): CurrentFormPage<T> {
+  const row = object(value, ['page', 'pageSize', 'exactTotal', 'items'], account||customer ? ['recommendationAvailability'] : []);
   if (row.page !== parameters.page || row.pageSize !== 20 || typeof row.exactTotal !== 'string' || !/^(?:0|[1-9]\d{0,19})$/.test(row.exactTotal)) invalid();
   const total = BigInt(row.exactTotal); const remaining = total - BigInt((parameters.page - 1) * 20);
   const expected = remaining < 0n ? 0 : remaining > 20n ? 20 : Number(remaining);
   const input = array(row.items); if (input.length !== expected) invalid();
-  if (account && row.recommendationAvailability !== 'AVAILABLE' && row.recommendationAvailability !== 'UNAVAILABLE') invalid();
-  const recommendation = account ? row.recommendationAvailability as 'AVAILABLE' | 'UNAVAILABLE' : undefined;
+  const hasHint=account||customer&&Object.hasOwn(row,'recommendationAvailability');
+  if (hasHint && row.recommendationAvailability !== 'AVAILABLE' && row.recommendationAvailability !== 'UNAVAILABLE') invalid();
+  const recommendation = hasHint ? row.recommendationAvailability as 'AVAILABLE' | 'UNAVAILABLE' : undefined;
   const items = input.map(item => decode(item, recommendation)); if (new Set(items.map(item => item.id)).size !== items.length) invalid();
   return Object.freeze({ page: parameters.page, pageSize: 20, exactTotal: total, items: Object.freeze(items),
-    ...(account ? { recommendationAvailability: row.recommendationAvailability as 'AVAILABLE' | 'UNAVAILABLE' } : {}) });
+    ...(hasHint ? { recommendationAvailability: row.recommendationAvailability as 'AVAILABLE' | 'UNAVAILABLE' } : {}) });
 }
 function salesReference(value: unknown, parameters: CurrentSalesReferenceQuery, recommendation?: 'AVAILABLE' | 'UNAVAILABLE'): CurrentSalesReferenceItem {
   const row = object(value, ['id', 'name', 'code', 'hallId', 'hallName', 'paymentMethodId', 'paymentMethodName'], ['isRecommended']);
@@ -49,7 +52,7 @@ function salesReference(value: unknown, parameters: CurrentSalesReferenceQuery, 
   if (parameters.kind === 'hall' ? hallId !== nativeId : parameters.kind === 'warehouse' ? hallId !== parameters.hallId : parameters.kind === 'salesperson' ? false : hallId !== null) invalid();
   if (parameters.kind === 'paymentAccount' ? paymentMethodId !== parameters.paymentMethodId : paymentMethodId !== null) invalid();
   if (parameters.kind === 'customer' ? row.code === null : parameters.kind !== 'paymentAccount' && row.code !== null) invalid();
-  if (Object.hasOwn(row, 'isRecommended') && (parameters.kind !== 'paymentAccount' || recommendation !== 'AVAILABLE' || typeof row.isRecommended !== 'boolean')) invalid();
+  if (Object.hasOwn(row, 'isRecommended') && (parameters.kind !== 'paymentAccount' && parameters.kind !== 'customer' || recommendation !== 'AVAILABLE' || typeof row.isRecommended !== 'boolean')) invalid();
   return Object.freeze({ ...(Object.hasOwn(row, 'isRecommended') ? { isRecommended: boolean(row.isRecommended) } : {}), id: nativeId, name: text(row.name), code: nullableText(row.code), hallId, hallName, paymentMethodId, paymentMethodName });
 }
 function warehouse(value: unknown, parameters: CurrentTransferWarehouseQuery): CurrentTransferWarehouse {
@@ -77,7 +80,12 @@ function sku(value: unknown): CurrentFormSku {
  * session transport, no retries/cache/mock fallback and no network until a read. */
 export function createCurrentFormHttpReader(options: HttpQueryOptions) {
   const http = createHttpJsonQuery(options);
+  const customerHttp=createHttpJsonQuery({...options,fetch:(input,init)=>{const headers=new Headers(init.headers);headers.set('x-naijue-current-form-recommendation','customer-v1');return options.fetch(input,{...init,headers});}});
   return Object.freeze({
+    readFits(parameters: CatalogueSettingsListQuery, signal: AbortSignal) {
+      const query = parseCatalogueSettingsListQuery(parameters);
+      return http.post('/catalogue-settings-read/fits/query', query, signal, value => validateCatalogueSettingsPage(value, query));
+    },
     readSizeGroups(parameters: DictionaryListQuery, signal: AbortSignal) {
       return http.post('/dictionary-read/size-groups/query', parameters, signal, value => validateDictionaryPage(value, parameters, validateDictionarySizeGroup));
     },
@@ -98,7 +106,7 @@ export function createCurrentFormHttpReader(options: HttpQueryOptions) {
     },
     readSalesReferences(parameters: CurrentSalesReferenceQuery, signal: AbortSignal) {
       const parsed = parseCurrentSalesReferenceQuery(parameters);
-      return http.post('/current-form/sales-references/query', parsed, signal, value => page(value, parsed, (row, recommendation) => salesReference(row, parsed, recommendation), parsed.kind === 'paymentAccount'));
+      return (parsed.kind==='customer'?customerHttp:http).post('/current-form/sales-references/query', parsed, signal, value => page(value, parsed, (row, recommendation) => salesReference(row, parsed, recommendation), parsed.kind === 'paymentAccount',parsed.kind==='customer'));
     },
     readTransferWarehouses(parameters: CurrentTransferWarehouseQuery, signal: AbortSignal) {
       const parsed = parseCurrentTransferWarehouseQuery(parameters);

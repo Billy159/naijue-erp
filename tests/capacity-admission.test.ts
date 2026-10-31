@@ -148,7 +148,9 @@ test('A02 close cancels probe waiters, retains the physical worker until finally
   const a=createCapacityAdmission({...f.options,probe:async c=>{signal=c.signal;try{return await d.promise;}finally{released++;}}});
   const p=a.acquire('session'),rejected=assert.rejects(p,failure('CLOSED'));await tick();a.close();a.close();await rejected;
   assert.equal(signal?.aborted,true);assert.equal(released,0);d.resolve(f.known());await tick();assert.equal(released,1);
-  assert.deepEqual(Object.keys(a).sort(),['acquire','close']);await assert.rejects(a.acquire('session'),failure('CLOSED'));
+  assert.deepEqual(Object.keys(a).sort(),['acquire','close','snapshot']);
+  assert.deepEqual(a.snapshot(),{closed:true,admitted:{session:0,upload:0},active:{session:0,upload:0},chargedBytes:amount(0n),probe:{inFlight:false,waiters:0}});
+  await assert.rejects(a.acquire('session'),failure('CLOSED'));
 });
 test('A02 lease sync recheck never renews captured TTL or probes inside a transaction; release/expiry/binding invalidate it',async()=>{
   for(const change of ['ttl','window','binding','released']as const){

@@ -2,6 +2,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { engineFixtures } from "./integration/native-import-accounting-fixture.ts";
+import { NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PostgresNativePartyImportStore } from "../adapters/postgres/src/native-party-import.ts";
 import { PostgresNativeCatalogueImportStore } from "../adapters/postgres/src/native-catalogue-import.ts";
 import { PostgresNativeProductImportStore } from "../adapters/postgres/src/native-product-import.ts";
@@ -36,6 +37,7 @@ class RefusalPool implements PgSalesPool {
    this.calls.push(sql); await Promise.resolve();
    const answer = (rows: Record<string, unknown>[] = []) => ({ rows, rowCount: rows.length });
    if (/^BEGIN|^ROLLBACK|cutoff_import_lock\(\)/.test(sql)) return answer();
+   if (sql === NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY || sql === NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY) return answer([{ accounting_guards_present: false }]);
    if (sql.includes("array_agg(version ORDER BY version)")) return answer([{ versions: this.versions, installed_versions: this.versions }]);
    if (sql.includes("AS integrity_guards_present")) return answer([{ integrity_guards_present: true }]);
    if (sql.includes("AS accounting_guards_present")) return answer([{ accounting_guards_present: false }]);
@@ -60,14 +62,22 @@ function cases() {
 test("each native/history writer18 requires full runtime capabilities before source/native/batch writes", async () => {
  for (const [name, execute] of cases()) {
   const pool = new RefusalPool(); await assert.rejects(execute(pool), { code: "NATIVE_IMPORT_GUARDS_NOT_READY" }, name);
-  assert.equal(pool.calls.filter(s => s.includes("AS accounting_guards_present")).length, 1, name);
+  assert.deepEqual(pool.calls.filter(s => s.includes("AS accounting_guards_present")),
+   [NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY], name);
   assert.equal(pool.calls.some(s => /INSERT|UPDATE|DELETE|:batch/.test(s)), false, name);
   assert.equal(pool.calls.at(-1), "ROLLBACK", name);
  }
 });
-test("unknown19 and missing earlier migration never reach capability or write paths", async () => {
+test("approved19 is not a runtime grant: every native/history writer still refuses both failed accounting probes before writes", async () => {
+ for (const [name, execute] of cases()) {
+  const pool=new RefusalPool(19);await assert.rejects(execute(pool),{code:"NATIVE_IMPORT_GUARDS_NOT_READY"},name);
+  assert.deepEqual(pool.calls.filter(sql=>sql.includes("AS accounting_guards_present")),[NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY,NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY],name);
+  assert.equal(pool.calls.some(sql=>/INSERT|UPDATE|DELETE|:batch/.test(sql)),false,name);assert.equal(pool.calls.at(-1),"ROLLBACK",name);
+ }
+});
+test("unknown20 and missing earlier migration never reach capability or write paths", async () => {
  for (const [, execute] of cases()) for (const missing of [false, true]) {
-  const pool = new RefusalPool(missing ? 18 : 19); if (missing) pool.versions.splice(12, 1);
+  const pool = new RefusalPool(missing ? 18 : 20); if (missing) pool.versions.splice(12, 1);
   await assert.rejects(execute(pool)); assert.equal(pool.calls.some(s => /AS accounting_guards_present|INSERT|UPDATE|DELETE|:batch/.test(s)), false);
  }
 });

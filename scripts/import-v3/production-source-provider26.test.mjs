@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+const provider26TestSourceRoot=fileURLToPath(new URL('../../',import.meta.url));
+const retainedFixtureRoot=fileURLToPath(new URL('./fixtures/production-provider26',import.meta.url));
 import {createProductionSourceProvider26,providerVersion,sourceGroups,openSourceSession,stagedPrefixStockRow22} from './production-source-provider26.mjs';
 import {captureNativeSourceProvider26,captureNativeSourceSession26} from './production-source-host.mjs';
 import {HISTORY_COUNT_KEYS} from '../../packages/application/src/history-storage-contract.ts';
@@ -118,7 +121,7 @@ async function retainedBarcodeFiles(t,options={}){
  const permutation={version:'BARCODE15018_RETAINED_GLOBAL_ORDER_26_V1',source:order('source'),typed:order('typed'),schemes:{version:'APPROVED_EXACT6_BARCODE_INITIALIZATION_INPUT_26_V1',binding:structuredClone(sourceBinding),rows:schemes,proposalSha256:digest('a'),approvalSha256:digest('b'),humanQuestionCallId:'SYNTHETIC_ONLY'}};options.mutatePermutation?.(permutation);
  const artifacts={prepared:await save('prepared.jsonl',Buffer.concat(encoded)),index:await save('index.jsonl',entries.map(e=>JSON.stringify(e)+'\n').join('')),permutations:await save('permutations.json',JSON.stringify(permutation))};
  const manifest={version:'ORIGINAL_BARCODE15018_APPROVED_SOURCE_CAPTURE_26_V1',binding:sourceBinding,selectedRows:3,summary:{rows:3},source:{path:'/SYNTHETIC_RAW_MUST_NEVER_OPEN',bytes:30},inputPins:{proposal:{sha256:digest('a')},approval:{sha256:digest('b')}},artifacts};options.mutateManifest?.(manifest);
- const helperPath='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs';
+ const helperPath=retainedFixtureRoot+'/retained-native-closure-streams-20261026.mjs';
  const helper=await save('approved-helper.mjs',await readFile(helperPath));assert.equal(helper.sha256,'ada8e60d789c4ded205f901a12326658057a784e97ea5ffd62801e0d6f96ba24');
  f.inputs.producers.BARCODES={mode:'RETAINED',descriptor:await save('capture.json',JSON.stringify(manifest)),closureHelper:helper};
  f.inputs.closureScope.expectedCounts.import_source_row=3;f.inputs.closureScope.expectedCounts.barcodes=3;f.inputs.closureScope.expectedSourceEntityCounts.BARCODE=3;
@@ -315,9 +318,9 @@ test('provider26 production authority: original C144 transport/options/child clo
   const sourceRef={...await rawFile('C144-source.jsonl',Buffer.from(JSON.stringify(sourceRow)+'\n')),rows:1,mode:'0600',entity:'SALES_LINE',actualColumns:12};
   const typedRef={...await rawFile('C144-typed.jsonl',Buffer.from(JSON.stringify(project('history_sales_line',row.line))+'\n')),rows:1,mode:'0600',entity:'SALES_LINE',actualColumns:21};
   const manifest={status:'ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY',referenceOnly:true,nativeBindingsVerified:false,PG:false,MAIN:false,PUBLISH:false,all11:false,actualPayloadHash:null,sourceRows:1,typedRows:1,artifacts:[sourceRef,typedRef]};
-  const helperRoot='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3';
+  const helperRoot=retainedFixtureRoot;
   async function helper(name){const path=join(helperRoot,name),bytes=await readFile(path);return{path,bytes:bytes.length,sha256:sha(bytes)};}
-  inputs.producers.SALES_DETAILS={mode:'CAPTURED_C144',descriptor:{synthetic:'C144'},sourceRoot:'/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022',entity:'SALES_LINE',chunkRows:1,manifestRef:await save('C144-MANIFEST.json',manifest),source:sourceRef,typed:typedRef,moneyRef,trustedApprovalSha256:input.selection.approvalSha256,supportModules:{transport:await helper('retained-sales-settlement-consumer-20261025.mjs'),options:await helper('prepare-retained-sales-options-20261026.mjs'),closure:await helper('sales-header-closure-session-20261026.mjs')}};
+  inputs.producers.SALES_DETAILS={mode:'CAPTURED_C144',descriptor:{synthetic:'C144'},sourceRoot:provider26TestSourceRoot,entity:'SALES_LINE',chunkRows:1,manifestRef:await save('C144-MANIFEST.json',manifest),source:sourceRef,typed:typedRef,moneyRef,trustedApprovalSha256:input.selection.approvalSha256,supportModules:{transport:await helper('retained-sales-settlement-consumer-20261025.mjs'),options:await helper('prepare-retained-sales-options-20261026.mjs'),closure:await helper('sales-header-closure-session-20261026.mjs')}};
  }});
  const a=await f.open();t.after(()=>a.close());let ready=0;const options=await a.capturedOptions('SALES_DETAILS',f.inputs.producers.SALES_DETAILS,{binding:f.binding,signal:f.controller.signal,database:{ready(){ready++;throw Error('SYNTHETIC_ORIGINAL_DATABASE_NOT_ACTIVATED');}}});assert.equal(ready,0);
  const {openAuthorizedSalesDetailReader}=await import('../import-v2/authorized-sales-detail-reader.mjs');const reader=await openAuthorizedSalesDetailReader(options);t.after(()=>reader.close());const rows=await Array.fromAsync(reader.rows());assert.equal(rows.length,1);assert.equal(ready,0);
@@ -327,7 +330,7 @@ test('provider26 production authority: original C144 transport/options/child clo
  await child.close();await reader.close();await a.close();await a.close();
 });
 test('provider26 production authority: explicit original genuine product reader and evidence authorizer are composed, a retained path cannot stand in for a source',async t=>{
- const {fixture:productFixture}=await import('/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-fixtures-20261026/product.mjs');
+ const {fixture:productFixture}=await import(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/product.mjs');
  const {prepareProductEvidenceChunk}=await import('../../packages/application/src/product-evidence-staging.ts');
  const product=await productFixture(t),f=await productionAuthorityFiles(t,{binding:product.options.binding,mutateInputs:inputs=>{
   inputs.producers.PRODUCTS.options=product.options;inputs.producers.PRODUCTS.productEvidenceSource={...product.options.source,binding:product.options.binding};
@@ -339,7 +342,6 @@ test('provider26 production authority: explicit original genuine product reader 
  await reader.close();await a.close();await a.close();await assert.rejects(reader.verify());
 });
 
-const retainedFixtureRoot='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3';
 async function retainedNativeFiles(t,group,{prefix22=false}={}){
  const {pathToFileURL}=await import('node:url'),{mkdtemp,realpath,readFile,writeFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');
  const module={PRODUCTS:'product',SKUS:'sku',STOCK_CONTRIBUTORS:'stock'}[group],data=await(await import(pathToFileURL(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/'+module+'.mjs'))).fixture(t);
@@ -658,9 +660,9 @@ test('source627 physical mapping: unchanged original C144 nested manifest paths 
   const sourceRef={...await rawFile('C144-source.jsonl',Buffer.from(JSON.stringify(sourceRow)+'\n')),rows:1,mode:'0600',entity:'SALES_LINE',actualColumns:12};
   const typedRef={...await rawFile('C144-typed.jsonl',Buffer.from(JSON.stringify(project('history_sales_line',row.line))+'\n')),rows:1,mode:'0600',entity:'SALES_LINE',actualColumns:21};
   const manifest={status:'ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY',referenceOnly:true,nativeBindingsVerified:false,PG:false,MAIN:false,PUBLISH:false,all11:false,actualPayloadHash:null,sourceRows:1,typedRows:1,artifacts:[sourceRef,typedRef]};
-  const helperRoot='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3';
+  const helperRoot=retainedFixtureRoot;
   async function helper(name){const path=join(helperRoot,name),bytes=await readFile(path);return{path,bytes:bytes.length,sha256:sha(bytes)};}
-  inputs.producers.SALES_DETAILS={mode:'CAPTURED_C144',descriptor:{synthetic:'C144'},sourceRoot:'/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022',entity:'SALES_LINE',chunkRows:1,manifestRef:await save('C144-MANIFEST.json',manifest),source:sourceRef,typed:typedRef,moneyRef,trustedApprovalSha256:input.selection.approvalSha256,supportModules:{transport:await helper('retained-sales-settlement-consumer-20261025.mjs'),options:await helper('prepare-retained-sales-options-20261026.mjs'),closure:await helper('sales-header-closure-session-20261026.mjs')}};
+  inputs.producers.SALES_DETAILS={mode:'CAPTURED_C144',descriptor:{synthetic:'C144'},sourceRoot:provider26TestSourceRoot,entity:'SALES_LINE',chunkRows:1,manifestRef:await save('C144-MANIFEST.json',manifest),source:sourceRef,typed:typedRef,moneyRef,trustedApprovalSha256:input.selection.approvalSha256,supportModules:{transport:await helper('retained-sales-settlement-consumer-20261025.mjs'),options:await helper('prepare-retained-sales-options-20261026.mjs'),closure:await helper('sales-header-closure-session-20261026.mjs')}};
   const recipe=inputs.producers.SALES_DETAILS;recipe.supportModules.closureWindow=await helper('prepare-retained-sales-header-window-20261026.mjs');const moved=await relocateFiniteTree26(t,directory+'/capture');recipe.fileLocations=moved.fileLocations;for(const ref of Object.values(recipe.supportModules))recipe.fileLocations.push({logical:ref,physical:ref});
 
  }});
@@ -683,7 +685,7 @@ test('source627 physical mapping: original native, HEADERS and packed TRANSFER f
 });
 test('source627 physical mapping: explicit null location, omitted logical path, wrong requested SHA/size and changed same-size physical bytes never fall back',async t=>{
  const {sourceFileResolver26}=await import('./production-source-provider26.mjs'),f=await mappedPaymentFixture26(t),{dirname}=await import('node:path'),{writeFile,readFile}=await import('node:fs/promises'),{openReviewedPaymentSource26}=await import('./native-payment-source26.mjs'),move=await relocateFiniteTree26(t,dirname(f.files.review)),entry=move.fileLocations.find(e=>e.logical.path===f.files.review);
- await assert.rejects(move.resolveFile({...entry.logical,sha256:digest('f')}),/NOT_LISTED/);await assert.rejects(move.resolveFile({...entry.logical,bytes:entry.logical.bytes+1}),/NOT_LISTED/);await assert.rejects(move.resolveFile({...entry.logical,path:'/Users/SYNTHETIC_UNLISTED.json'}),/NOT_LISTED/);
+ await assert.rejects(move.resolveFile({...entry.logical,sha256:digest('f')}),/NOT_LISTED/);await assert.rejects(move.resolveFile({...entry.logical,bytes:entry.logical.bytes+1}),/NOT_LISTED/);await assert.rejects(move.resolveFile({...entry.logical,path:'/SYNTHETIC_UNLISTED.json'}),/NOT_LISTED/);
  const unavailable=structuredClone(move.fileLocations);unavailable.find(e=>e.logical.path===f.files.review).physical=null;await assert.rejects(openReviewedPaymentSource26(f.options,{resolveFile:sourceFileResolver26({fileLocations:unavailable})}),/UNAVAILABLE/);
  const bytes=await readFile(entry.physical.path);bytes[bytes.indexOf(34)+1]^=1;await writeFile(entry.physical.path,bytes);await assert.rejects(openReviewedPaymentSource26(f.options,{resolveFile:move.resolveFile}),/CHANGED/);
 });

@@ -242,3 +242,12 @@ test('active core-pages sales fixture intersects each selected dimension, with e
   }
   assert.equal(reads.length, filters.length); assert.ok(reads.every(kind => kind === 'salesList')); controller.dispose();
 });
+
+test('sales detail negotiated current summaries preserve identity and reject malformed or historical backfill', async()=>{
+ const productSummary={productCount:'1',items:[{productId:uuid(901),productCodeSnapshot:'old',productNameSnapshot:'原名'}],hasMore:false};
+ const categorySummary={basis:'CURRENT',metric:'QUANTITY',categoryCount:'1',items:[{categoryId:uuid(902),categoryName:'同名',value:'-1'}],hasMore:false};
+ const input={...detail(),stockBasis:'RUNTIME_LEDGER',productSummary,categorySummary};assert.deepEqual(salesDetailResponse(input,salesTarget(uuid(1))).categorySummary,categorySummary);
+ let requested=null;const reader=createSalesHttpReader({origin:'https://synthetic.test',basePath:'/api',fetch:async(_u,init)=>{requested=new Headers(init.headers).get('x-naijue-document-summary');return response(input);}});
+ assert.equal((await createSalesDetailQuery(scope(),reader).run(salesTarget(uuid(1)))).status,'success');assert.equal(requested,'category-v2');
+ for(const patch of [{categorySummary:{...categorySummary,categoryCount:'2'}},{categorySummary:{...categorySummary,items:[{...categorySummary.items[0],value:'0'}]}},{productSummary:{...productSummary,productCount:'0'}},{stockBasis:'CUTOFF_HISTORY'}])assert.throws(()=>salesDetailResponse({...input,...patch},salesTarget(uuid(1))));
+});

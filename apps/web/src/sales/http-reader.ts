@@ -9,6 +9,7 @@ import { createSalesHistoryHttpReader } from './history-http-reader.ts';
  * No automatic retry, product hydration or fixture fallback. */
 export function createSalesHttpReader(options: HttpQueryOptions): SalesReader {
   const http = createHttpJsonQuery(options);
+  const detailHttp = createHttpJsonQuery({ ...options, fetch: (input, init) => { const headers = new Headers(init.headers); headers.set('x-naijue-document-summary', 'category-v2'); return options.fetch(input, { ...init, headers }); } });
   return Object.freeze({
     readHistory: createSalesHistoryHttpReader(options).readHistory,
     readList(read) {
@@ -20,7 +21,7 @@ export function createSalesHttpReader(options: HttpQueryOptions): SalesReader {
     },
     readDetail(read) {
       const parsed = parseSalesDetailQuery({ salesId: read.parameters.salesId });
-      return http.post('/sales/detail/query', { salesId: parsed.salesId }, read.signal, value => salesDetailResponse(value, parsed));
+      return detailHttp.post('/sales/detail/query', { salesId: parsed.salesId }, read.signal, value => salesDetailResponse(value, parsed));
     },
   } satisfies SalesReader);
 }

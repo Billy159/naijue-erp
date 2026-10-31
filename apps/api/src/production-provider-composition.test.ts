@@ -24,9 +24,20 @@ import { dirname as pathDirectory, join } from "node:path";
 import { NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE, NATIVE_RUNTIME26_IDENTITY_PROBE, NATIVE_RUNTIME26_V20_METADATA_PROBE } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
 import { historyDetailQuery, historyListQuery } from "../../../tests/support/imported-history-query-fixtures.ts";
 import { wrapTrustedLegacyCredential } from "../../../packages/authentication/src/legacy-passwords.ts";
-import { createPostgresApplicationApi, createPostgresRuntime26DocumentApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
+import { createPostgresApplicationApi, createPostgresRuntime26ApplicationApi, createPostgresRuntime26DocumentApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
 import {CapacityAdmissionRejected} from './capacity-admission.ts';
 import type {CapacityAdmission} from './capacity-admission.ts';
+import type {ProductionMainDependencies} from './production-main.ts';
+// Explicit protocol-test resource only, not a real capacity window/probe or production approval.
+// A fresh instance is passed at each legacy composition call; A02 missing-resource negatives stay unmodified.
+function syntheticCapacity(): CapacityAdmission {
+  let closed = false;
+  return { async acquire() {
+    if (closed) throw new CapacityAdmissionRejected('SYNTHETIC_CLOSED', 1);
+    let released = false;
+    return { assertValid() { if (closed || released) throw new CapacityAdmissionRejected('SYNTHETIC_CLOSED', 1); }, release() { released = true; } };
+  }, close() { closed = true; } };
+}
 
 function config(): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "NATIVE_RUNTIME", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
@@ -65,9 +76,10 @@ test('A02 normal/R1/CORE/R2/R3/full/history composition rejects missing singleto
   }finally{f.cleanup();core.cleanup();}
 });
 test('A02 full production chain uses one supplied singleton for actual login/upload and closes it once; old sessions bypass it',async()=>{
-  const f=mixedProductionFixture(true),password='SYNTHETIC_A02_COMPOSITION',salt='a'.repeat(48);
+  const f=newLivePairMixedFixture(true),password='SYNTHETIC_A02_COMPOSITION',salt='a'.repeat(48);
   const passwordHash=wrapTrustedLegacyCredential({salt,hash:pbkdf2Sync(password,salt,210000,32,'sha256').toString('hex')});
-  const loginName='SYNTHETIC_A02_COMPOSITION',p=exact26Driver(f.observation,sql=>{
+  const loginName='SYNTHETIC_A02_COMPOSITION',p=exact26Driver(f.observation,(sql,values)=>{
+      const permission=selectedStaffPermissionRows2324(sql,values);if(permission!==undefined)return permission;
     if(sql===V16HistoryProbe)return [structuredClone(f.observation)];
     if(sql.includes('auth:login-snapshot'))return [{account_id:account,login_name:loginName,password_hash:passwordHash,auth_version:1}];
     if(sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s'))return [{account_id:account,staff_id:'00000000-0000-4000-8000-000000000003',login_name:loginName,password_hash:passwordHash,login_enabled:true,auth_version:1,role:'ADMIN',employment_status:'在职',hall_id:hall,native_hall_id:hall,hall_enabled:true}];
@@ -137,36 +149,35 @@ test("native action and reference providers fail closed without original transac
   assert.notEqual(commands.sales.newId("operation"), generated);
 });
 
-test("one real application composition registers protected routes without connecting or listening", async () => {
-  let allocations = 0, connects = 0, ends = 0;
-  const driver = Object.assign(new EventEmitter(), { async connect(): Promise<never> { connects++; throw Error("UNEXPECTED_TEST_CONNECTION"); }, async end() { ends++; } });
-  const api = await createProductionApplicationApi(config(), captured => { allocations++; assert.equal(captured.host, "never-connected.invalid"); assert.equal(captured.max, 1); return driver; });
+test("explicit new synthetic V7 application registers protected routes after proof without further unauthenticated connections or listening", async () => {
+  const f=newLivePairFixture(),p=exact26Driver(f.observation);
+  const api = await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration), captured => { assert.equal(captured.host, "never-connected.invalid"); assert.equal(captured.max, 1); return p.factory(); }, null, undefined, syntheticCapacity());
   try {
     assert.equal(api.app.server.listening, false); assert.equal(api.trustedOrigin, PRODUCTION_PUBLIC_ORIGIN);
-    assert.equal(allocations, 1); assert.equal(connects, 0);
+    assert.equal(p.counts().allocations, 1); const baseline=p.counts().connects;assert.equal(baseline,2);
     for (const url of ["/sales/commands", "/transfers/commands", "/sales/prepare-create", "/transfers/prepare-create", "/inventory/query", "/inventory/ledger/query", "/sales/query", "/transfers/query", "/current-form/sales-references/query"]) {
       assert.equal(api.app.hasRoute({ method: "POST", url }), true, url);
       const response = await api.app.inject({ method: "POST", url, payload: {}, headers: { origin: PRODUCTION_PUBLIC_ORIGIN } });
       assert.equal(response.statusCode, 401, url); assert.equal(response.body.includes("UNEXPECTED_TEST_CONNECTION"), false);
     }
-    assert.equal(connects, 0);
+    assert.equal(p.counts().connects,baseline);
     assert.equal(api.app.hasRoute({ method: "POST", url: "/imported-history/sales/query" }), true);
     assert.equal(api.app.hasRoute({ method: "POST", url: "/sales/CREATE" }), false);
-  } finally { await api.close(); }
-  assert.equal(ends, 1);
+  } finally { await api.close();f.cleanup(); }
+  assert.equal(p.counts().ends, 1);assert.equal(p.counts().connects,p.counts().releases);
 });
 
 test("invalid PG settings refuse before driver construction", async () => {
-  const c = config(); (c.postgres as { queryTimeoutMillis: number }).queryTimeoutMillis = 1;
+  const f=newLivePairFixture(),c=f.configuration; (c.postgres as { queryTimeoutMillis: number }).queryTimeoutMillis = 1;
   let allocations = 0;
-  await assert.rejects(createProductionApplicationApi(c, () => { allocations++; throw Error("must not allocate"); }), { code: "PG_INVALID_CONFIG" });
-  assert.equal(allocations, 0);
+  try{await assert.rejects(createProductionRuntime26ApplicationApi(c, () => { allocations++; throw Error("must not allocate"); }, null, syntheticCapacity()), { code: "PG_INVALID_CONFIG" });
+  assert.equal(allocations, 0);}finally{f.cleanup();}
 });
 
 test("R1 explicit read profile installs no command or preparation routes", async () => {
-  const c = { ...config(), documentCommands: "DISABLED" as const }; let connects = 0;
-  const driver = Object.assign(new EventEmitter(), { async connect(): Promise<never> { connects++; throw Error("must not connect"); }, async end() {} });
-  const api = await createProductionApplicationApi(c, () => driver);
+  const f=newLivePairFixture(),p=exact26Driver(f.observation);
+  const api = await createProductionRuntime26ApplicationApi(f.configuration,p.factory,null,syntheticCapacity());
+  const baseline=p.counts().connects;assert.equal(baseline,2);
   try {
     for (const url of ["/sales/commands", "/transfers/commands", "/sales/prepare-create", "/transfers/prepare-create"]) assert.equal(api.app.hasRoute({ method: "POST", url }), false);
     for (const url of ["/products/prices/query", "/products/barcodes/query", "/products/stock/query", "/dictionary-read/size-groups/query",
@@ -178,8 +189,8 @@ test("R1 explicit read profile installs no command or preparation routes", async
     assert.equal(api.app.hasRoute({ method: "GET", url: "/customers" }), true);
     for (const path of ["/customers/commands", "/suppliers/commands"]) assert.equal(api.app.hasRoute({ method: "POST", url: path }), false);
     for (const path of ["/imported-history/sales/revise", "/imported-history/transfers/revise"]) assert.equal(api.app.hasRoute({ method: "POST", url: path }), false);
-    assert.equal(api.app.hasRoute({ method: "POST", url: "/inventory/query" }), true); assert.equal(connects, 0);
-  } finally { await api.close(); }
+    assert.equal(api.app.hasRoute({ method: "POST", url: "/inventory/query" }), true); assert.equal(p.counts().connects,baseline);
+  } finally { await api.close();f.cleanup(); }
 });
 test("R1 independent read grants use current native role, exact product/tab, original directory operation and separate HISTORY scope", async () => {
   const productId = entityId("product", "00000000-0000-4000-8000-000000000010"), signal = new AbortController().signal;
@@ -230,7 +241,7 @@ test("R1 extension selectors reject unknown profiles or explicit policy override
   const options = productionApplicationOptions({ ...config(), documentCommands: "DISABLED" }); let allocations = 0;
   for (const change of [{ nativeReadExtensions: { profile: "future" } }, { nativeReadExtensions: { profile: "source-confirmed-r1-v1", enabled: true } },
     { partyRead: { authorization: { async authorize() { throw Error("must not run"); } } } }]) {
-    await assert.rejects(createPostgresApplicationApi({ ...options, ...change } as never, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+    await assert.rejects(createPostgresApplicationApi({ ...options, capacityAdmission: syntheticCapacity(), ...change } as never, () => { allocations++; throw Error("must not allocate"); }), TypeError);
   }
   assert.equal(allocations, 0);
 });
@@ -239,8 +250,11 @@ test("explicit production legacy opt-in reaches actual auth service while defaul
   const password = "123456", salt = "c".repeat(48), hash = wrapTrustedLegacyCredential({ salt,
     hash: pbkdf2Sync(password, salt, 210000, 32, "sha256").toString("hex") });
   let inserted = 0;
-  const factory = () => Object.assign(new EventEmitter(), {
+  const baseline=newLivePairFixture(),selected=newLivePairFixture();
+  const factory = (f:ReturnType<typeof newLivePairFixture>) => () => Object.assign(new EventEmitter(), {
     async connect() { return Object.assign(new EventEmitter(), { async query(sql: string) {
+      if(sql===newLivePairProbe)return {rows:[structuredClone(f.observation)],rowCount:1};
+      if(sql===NATIVE_RUNTIME26_IDENTITY_PROBE)return {rows:[{identity:structuredClone(f.observation.identity)}],rowCount:1};
       if (sql.includes("INSERT INTO naijue_erp.auth_session")) inserted++;
       if (sql.includes("auth:login-snapshot")) {
         assert.doesNotMatch(sql, /FOR UPDATE|FOR SHARE|JOIN/i);
@@ -252,15 +266,15 @@ test("explicit production legacy opt-in reaches actual auth service while defaul
     }, release() {} }); }, async end() {}
   });
   const options = productionApplicationOptions({ ...config(), documentCommands: "DISABLED" }), { credentialCompatibility: _optIn, ...defaultAuth } = options.authentication;
-  const original = await createPostgresApplicationApi({ ...options, authentication: defaultAuth }, factory);
-  const production = await createProductionApplicationApi({ ...config(), documentCommands: "DISABLED" }, factory);
+  const original = await createPostgresRuntime26ApplicationApi({ ...options, capacityAdmission: syntheticCapacity(), authentication: defaultAuth },baseline.configuration.runtime26Review, factory(baseline));
+  const production = await createProductionRuntime26ApplicationApi(selected.configuration, factory(selected),null,syntheticCapacity());
   try {
     const request = { method: "POST" as const, url: "/auth/login", headers: { origin: PRODUCTION_PUBLIC_ORIGIN }, payload: { loginName: "SYNTHETIC_LEGACY_USER", password } };
     assert.equal((await original.app.inject(request)).statusCode, 401); assert.equal(inserted, 0);
     const response = await production.app.inject(request); assert.equal(response.statusCode, 200); assert.equal(inserted, 1);
     assert.ok(response.headers["set-cookie"]?.toString().includes("HttpOnly; Secure; SameSite=Strict"));
     assert.equal(response.body.includes(hash), false); assert.equal(response.body.includes(salt), false); assert.equal(response.body.includes(password), false);
-  } finally { await original.close(); await production.close(); }
+  } finally { await original.close(); await production.close();baseline.cleanup();selected.cleanup(); }
 });
 
 test("W13 production mount uses shared pool and fresh maintenance identity; counts cannot expose forbidden staff/account modules", async () => {
@@ -273,13 +287,16 @@ test("W13 production mount uses shared pool and fresh maintenance identity; coun
     { role: "SALESPERSON", module: "ALL", enabled: true, status: 403, modules: 0 },
     { role: "ADMIN", module: "ALL", enabled: false, status: 403, modules: 0 }
   ]) {
+    const f=newLivePairFixture();
     const calls: { sql: string; values: unknown[] }[] = []; let allocations = 0, connections = 0, releases = 0;
     const row = { account_id: account, staff_id: "00000000-0000-4000-8000-000000000003", login_name: "SYNTHETIC_AUDIT",
       password_hash: "SYNTHETIC_UNUSED_CREDENTIAL", login_enabled: true, auth_version: 1, role: "ADMIN", employment_status: "在职", hall_id: hall, hall_enabled: true };
     const driver = Object.assign(new EventEmitter(), { async connect() { connections++; return Object.assign(new EventEmitter(), {
       async query(sql: string, values: unknown[] = []) {
         calls.push({ sql, values }); let rows: Record<string, unknown>[] = [];
-        if (sql.startsWith("BEGIN") || sql === "COMMIT" || sql === "ROLLBACK" || sql.includes("maintenance:administrator-lock")) {}
+        if(sql===newLivePairProbe)rows=[structuredClone(f.observation)];
+        else if(sql===NATIVE_RUNTIME26_IDENTITY_PROBE)rows=[{identity:structuredClone(f.observation.identity)}];
+        else if (sql.startsWith("BEGIN") || sql === "COMMIT" || sql === "ROLLBACK" || sql.includes("maintenance:administrator-lock")) {}
         else if (sql.includes("maintenance:identity")) rows = [{ ...row, role: scenario.role, login_enabled: scenario.enabled }];
         else if (sql.includes("maintenance:hall")) rows = [{ id: hall, enabled: true }];
         else if (sql.includes("settings-audit:role")) rows = [{ account_id: account, role: scenario.role }];
@@ -297,28 +314,28 @@ test("W13 production mount uses shared pool and fresh maintenance identity; coun
       }, release() { releases++; }
     }); }, async end() {} });
     const base = productionApplicationOptions({ ...config(), documentCommands: "DISABLED" });
-    const api = await createPostgresApplicationApi({ ...base, authentication: { ...base.authentication, now: () => now } }, () => { allocations++; return driver; });
+    const api = await createPostgresRuntime26ApplicationApi({ ...base, capacityAdmission: syntheticCapacity(), authentication: { ...base.authentication, now: () => now } },f.configuration.runtime26Review, () => { allocations++; return driver; });
     try {
-      assert.equal(connections, 0); assert.equal(api.app.server.listening, false);
+      const baseline=connections;assert.equal(baseline,2);assert.equal(api.app.server.listening, false);
       const request = { method: "POST" as const, url: "/settings/audit/query", payload: { ...query, module: scenario.module },
         headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${token}` } };
       const response = await api.app.inject(request); assert.equal(response.statusCode, scenario.status, response.body);
       assert.equal(response.headers["cache-control"], "no-store");
       assert.equal(calls.filter(c => c.sql.includes("settings-audit:page")).length, scenario.status === 200 ? 1 : 0);
-      assert.equal(allocations, 1); assert.equal(connections, 2); assert.equal(releases, connections);
+      assert.equal(allocations, 1); assert.equal(connections, baseline+2); assert.equal(releases, connections);
       assert.ok(!calls.some(c => /^(?:INSERT|UPDATE|DELETE)/.test(c.sql)));
       if (scenario.status === 200) assert.deepEqual(response.json(), { items: [], total: 0, page: 1, pageSize: 20 });
       assert.equal(api.app.hasRoute({ method: "POST", url: "/settings/audit/commands" }), false);
       const noOrigin = await api.app.inject({ ...request, headers: { cookie: request.headers.cookie } });
-      assert.equal(noOrigin.statusCode, 401); assert.equal(connections, 2);
-    } finally { await api.close(); }
+      assert.equal(noOrigin.statusCode, 401); assert.equal(connections, baseline+2);
+    } finally { await api.close();f.cleanup(); }
   }
 });
-test("W13 stays absent without the explicit native read profile; authenticated route is not created by base composition", async () => {
+test("W13 unsupported issuer-null base graph now refuses before allocation instead of exposing a new-column reader", async () => {
   const base = productionApplicationOptions({ ...config(), documentCommands: "DISABLED" }), { nativeReadExtensions: _profile, ...without } = base;
-  const driver = Object.assign(new EventEmitter(), { async connect(): Promise<never> { throw Error("must not connect"); }, async end() {} });
-  const api = await createPostgresApplicationApi(without, () => driver);
-  try { assert.equal(api.app.hasRoute({ method: "POST", url: "/settings/audit/query" }), false); } finally { await api.close(); }
+  let allocations=0;
+  await assert.rejects(createPostgresApplicationApi({ ...without, capacityAdmission: syntheticCapacity() }, () => {allocations++;throw Error('MUST_NOT_ALLOCATE');}),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+  assert.equal(allocations,0);
 });
 
 /** Synthetic pinned metadata and driver protocol only: no actual approval/PG. */
@@ -339,6 +356,43 @@ function exact26Fixture(purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_RE
     migration_versions: Array.from({ length: 26 }, (_, i) => i + 1), catalog_sha256: digest, source_routines_match: true };
   return { configuration, observation, cleanup: () => rmSync(directory, { recursive: true, force: true }) };
 }
+const newLivePairProbe=completeProductionProfiles.NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE;
+const newLivePairObservations=new WeakSet<object>();
+/** NEW synthetic-only consumer fixture, NOT an upgraded old review or an actual
+ * V7 catalog pin. It writes fresh independent files and returns both full proof
+ * booleans. Old exact26/category/mixed/CORE fixtures retain their own meaning. */
+function newLivePairFixture(purposes = ['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION']) {
+ const directory=mkdtempSync(join(tmpdir(),'NEW-SYNTHETIC-LIVE-V7-')),independent=join(directory,'independent.json'),reviewFile=join(directory,'review.json');
+ const hash=(value:string)=>createHash('sha256').update(value).digest('hex'),digest='7'.repeat(64);
+ const target={database:'SYNTHETIC_ONLY',databaseOid:'123',actingRole:'SYNTHETIC_ONLY',sessionUser:'SYNTHETIC_ONLY',serverAddress:null,serverPort:null,postmasterStart:'2026-10-23 00:00:00+00'};
+ const receipt=JSON.stringify({result:'PASS',notice:'NEW_SYNTHETIC_V7_DRIVER_PROTOCOL_ONLY_NOT_ACTUAL_CATALOG_OR_APPROVAL'});writeFileSync(independent,receipt,{mode:0o600});
+ const review={version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target,
+  catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V7',patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22',sha256:digest},purposes,
+  scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{path:independent,sha256:hash(receipt),result:'PASS'},realImportExecutionAuthorized:false};
+ const body=JSON.stringify(review);writeFileSync(reviewFile,body,{mode:0o600});
+ const configuration:ProductionRuntime26Configuration={...config(),profile:'source-confirmed-native-exact26-r1-v1',documentCommands:'DISABLED',runtime26Review:{reviewFile,trustedReviewSha256:hash(body)}};
+ const observation={identity:{database:target.database,database_oid:target.databaseOid,database_owner:'synthetic_owner',current_user:target.actingRole,session_user:target.sessionUser,
+  server_version_num:'170011',server_addr:null,server_port:null,postmaster_start:target.postmasterStart,replication_role:'origin'},migration_versions:Array.from({length:26},(_,i)=>i+1),
+  catalog_sha256:digest,source_routines_match:true,complete_write_xmin_acl_match:true,recorded_live_balance_contract_match:true};
+ newLivePairObservations.add(observation);
+ return {configuration,observation,cleanup:()=>rmSync(directory,{recursive:true,force:true})};
+}
+
+/** TEST ONLY explicit positive STAFF CREATE/read privilege map. Only selected
+ * non-CORE fixture callbacks invoke this; exact26Driver's unknown-SQL refusal,
+ * old CORE/omitted selectors, missing-purpose negatives and all9 admission
+ * blocks remain unchanged. This models catalog facts, not PG privileges. */
+function selectedStaffPermissionRows2324(sql:string,values:unknown[],linkedAccountCreateSelected=false):Record<string,unknown>[]|undefined {
+  if(!sql.startsWith('/* staff-maintenance:permission-admission-v1 */'))return undefined;
+  assert.equal(sql,"/* staff-maintenance:permission-admission-v1 */\nWITH required AS (SELECT table_name,column_name,privilege\n FROM pg_catalog.jsonb_to_recordset($1::jsonb) AS r(table_name text,column_name text,privilege text))\nSELECT coalesce(bool_and(pg_catalog.has_column_privilege(current_user,\n pg_catalog.format('naijue_erp.%I',table_name),column_name,privilege)),false) AS allowed,\n count(*)::text AS cell_count FROM required",'Only the exact reviewed read-only permission statement is modeled');
+  assert.equal(values.length,1);assert.equal(typeof values[0],'string');
+  const expected=[...staffAdmissionExpectedCells2159,...(linkedAccountCreateSelected?staffAdmissionLinkedCells2159:[])];
+  const requested=JSON.parse(values[0] as string) as typeof expected;
+  assert.deepEqual(requested,expected,'Explicit selected fixture has only the original91/conditional100-cell footprint');
+  const granted=new Set(expected.map(staffAdmissionCellKey2159));
+  return [{allowed:requested.length>0&&requested.every(cell=>granted.has(staffAdmissionCellKey2159(cell))),cell_count:String(requested.length)}];
+}
+
 function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observation"], extra?: (sql: string, values: unknown[]) => Record<string, unknown>[] | undefined) {
   const calls: { lease: number; sql: string; values: unknown[] }[] = []; let allocations = 0, connects = 0, releases = 0, ends = 0;
   const token = Buffer.alloc(32, 27).toString("base64url"), now = new Date().toISOString(), expires = new Date(Date.now() + 60_000).toISOString();
@@ -347,6 +401,7 @@ function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observati
       calls.push({ lease, sql, values }); let rows: Record<string, unknown>[] = [];
       const supplied = extra?.(sql, values);
       if (supplied !== undefined) rows = supplied;
+      else if (newLivePairObservations.has(observation) && sql === newLivePairProbe) rows = [structuredClone(observation)];
       else if (sql === NATIVE_RUNTIME26_METADATA_PROBE) rows = [structuredClone(observation)];
       else if (sql === NATIVE_RUNTIME26_IDENTITY_PROBE) rows = [{ identity: structuredClone(observation.identity) }];
       else if (/^(BEGIN|COMMIT|ROLLBACK)/.test(sql)) {}
@@ -375,24 +430,24 @@ test("production B07 host: explicit write authorization and full read applicatio
   const policy = { authorization: { async authorize(): Promise<never> { throw Error("not a request"); } } };
   try {
     for (const bad of [{}, { authorization: {} }, { authorization: { authorize: true } }, { ...policy, store: {} }])
-      await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, bad as never, driver), TypeError);
+      await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, bad as never, driver, null, syntheticCapacity()), TypeError);
     const getter = Object.defineProperty({}, "authorization", { enumerable: true, get() { throw Error("must not read accessor"); } });
-    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, getter as never, driver), TypeError);
+    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, getter as never, driver, null, syntheticCapacity()), TypeError);
     await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi({ ...f.configuration,
-      coreInitializationRead: { profile: "COMMITTED_CORE_SETTINGS_V14", batchId: account, operationId: account, coreSourceDigest: "c".repeat(64) } }, policy, driver), TypeError);
+      coreInitializationRead: { profile: "COMMITTED_CORE_SETTINGS_V14", batchId: account, operationId: account, coreSourceDigest: "c".repeat(64) } }, policy, driver, null, syntheticCapacity()), TypeError);
     assert.equal(allocations, 0);
   } finally { f.cleanup(); }
 });
 
 test("production B07 host: read-only runtime metadata cannot enable HISTORY writes and the original owned pool closes", async () => {
-  const f = categoryProductionFixture("26_v11_document_specification_save", false), p = exact26Driver(f.observation); let authorizationCalls = 0;
+  const f = newLivePairFixture(), p = exact26Driver(f.observation); let authorizationCalls = 0;
   try {
     await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, {
       authorization: { async authorize(): Promise<never> { authorizationCalls++; throw Error("not a request"); } }
-    }, p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
+    }, p.factory, null, syntheticCapacity()), { code: "NATIVE_RUNTIME26_NOT_READY" });
     const counts = p.counts(); assert.equal(counts.allocations, 1); assert.equal(counts.ends, 1);
     assert.equal(counts.connects, counts.releases); assert.equal(authorizationCalls, 0);
-    assert.ok(p.calls.some(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
+    assert.ok(p.calls.some(call => call.sql === newLivePairProbe));
     assert.equal(p.calls.filter(call => /^(BEGIN|INSERT|UPDATE|DELETE|TRUNCATE)\b/.test(call.sql)
       || call.sql.includes("history-revise:")).length, 0);
   } finally { f.cleanup(); }
@@ -405,14 +460,14 @@ test("production exact26: separate closed selector refuses legacy, command, pin 
     for (const change of [{ profile: "source-confirmed-native-v1" }, { documentCommands: "NATIVE_RUNTIME" }, { nativeReadExtensions: { profile: "future" } },
       { runtime26Review: { ...f.configuration.runtime26Review, extra: true } }, { runtime26Review: { reviewFile: "relative", trustedReviewSha256: "a".repeat(64) } },
       { runtime26Review: { ...f.configuration.runtime26Review, trustedReviewSha256: true } }])
-      await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, ...change }, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+      await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, ...change }, () => { allocations++; throw Error("must not allocate"); }, null, syntheticCapacity()), TypeError);
     assert.equal(allocations, 0);
   } finally { f.cleanup(); }
 });
 test("production exact26: one owned original pool supplies actual issuer leases to authentication and CURRENT reads with command routes absent", async () => {
-  const f = exact26Fixture(), p = exact26Driver(f.observation);
+  const f = newLivePairFixture(), p = exact26Driver(f.observation);
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try {
       assert.equal(api.app.server.listening, false); assert.deepEqual(p.counts(), { allocations: 1, connects: 2, releases: 2, ends: 0 });
       for (const url of ["/products/media/uploads", "/products/v2/commands", "/sales/commands", "/transfers/commands", "/sales/prepare-create", "/transfers/prepare-create", "/sales/prepare-existing", "/transfers/prepare-existing", "/customers/commands", "/suppliers/commands"])
@@ -425,8 +480,8 @@ test("production exact26: one owned original pool supplies actual issuer leases 
       assert.equal(p.counts().allocations, 1); assert.equal(p.counts().releases, p.counts().connects);
       const leased = new Map<number, typeof p.calls>();
       for (const call of p.calls) { const group = leased.get(call.lease) ?? []; group.push(call); leased.set(call.lease, group); }
-      for (const calls of leased.values()) assert.ok([NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(calls[0]!.sql));
-      assert.equal(p.calls.filter(call=>call.sql===NATIVE_RUNTIME26_METADATA_PROBE).length,1);
+      for (const calls of leased.values()) assert.ok([newLivePairProbe,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(calls[0]!.sql));
+      assert.equal(p.calls.filter(call=>call.sql===newLivePairProbe).length,1);
       const formLease = [...leased.values()].find(calls => calls.some(call => call.sql.includes("current-form:count")))!;
       assert.ok(formLease); assert.equal(formLease.filter(call => call.sql === NATIVE_RUNTIME26_IDENTITY_PROBE).length, 3);
       assert.equal(formLease.at(-1)!.sql, "COMMIT"); assert.ok(p.calls.every(call => !/^(INSERT|UPDATE|DELETE)|nextval|setval/.test(call.sql)));
@@ -436,33 +491,33 @@ test("production exact26: one owned original pool supplies actual issuer leases 
 });
 test("production exact26: target mismatch or missing readonly-view purpose disposes the original pool without legacy fallback", async () => {
   for (const failure of ["catalog", "purpose"]) {
-    const f = exact26Fixture(failure === "purpose" ? ["CURRENT_FORM_READ"] : undefined), p = exact26Driver(f.observation);
+    const f = newLivePairFixture(failure === "purpose" ? ["CURRENT_FORM_READ"] : undefined), p = exact26Driver(f.observation);
     try {
       if (failure === "catalog") f.observation.catalog_sha256 = "b".repeat(64);
-      await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration, p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
+      await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity()), { code: "NATIVE_RUNTIME26_NOT_READY" });
       assert.equal(p.counts().allocations, 1); assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, failure === "catalog" ? 1 : 2); assert.equal(p.counts().releases, p.counts().connects);
-      assert.ok(p.calls.every(call => [NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
+      assert.ok(p.calls.every(call => [newLivePairProbe,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
     } finally { f.cleanup(); }
   }
 });
 test("production exact26: live identity drift denies authenticated reads through the managed pool and shutdown still owns the original pool", async () => {
-  const f = exact26Fixture(), p = exact26Driver(f.observation);
+  const f = newLivePairFixture(), p = exact26Driver(f.observation);
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try {
       f.observation.identity.current_user = "SYNTHETIC_OTHER_ROLE";
       const response = await api.app.inject({ method: "POST", url: "/current-form/products/query", headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` },
         payload: { context: { kind: "SALES", hallId: hall }, search: "", page: 1, pageSize: 20 } });
       assert.ok(response.statusCode >= 400); assert.equal(p.counts().allocations, 1); assert.equal(p.counts().connects, 3);
-      assert.equal(p.counts().releases, 3); assert.ok(p.calls.every(call => [NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
+      assert.equal(p.counts().releases, 3); assert.ok(p.calls.every(call => [newLivePairProbe,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
     } finally { await api.close(); }
     assert.equal(p.counts().ends, 1);
   } finally { f.cleanup(); }
 });
 test("production exact26: HISTORY four POST routes use their separate policy and original issuer lease while publication stays closed", async () => {
-  const f = exact26Fixture(), p = exact26Driver(f.observation);
+  const f = newLivePairFixture(), p = exact26Driver(f.observation);
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try {
       for (const kind of ["sales", "transfers"]) for (const detail of [false, true]) {
         const response = await api.app.inject({ method: "POST", url: `/imported-history/${kind}/${detail ? "detail/" : ""}query`,
@@ -500,7 +555,7 @@ test("production R2 exact26: closed independent profile requires native commands
     for (const change of [{ documentCommands: "DISABLED" }, { profile: "source-confirmed-native-v1" }, { existingPreparation: { sales: true } },
       { existingPreparation: { sales: "true", transfers: true } }, { existingPreparation: { sales: true, transfers: true, create: true } },
       { runtime26Review: { ...config.runtime26Review, issuer: true } }, { catalogueCompleteness: true }])
-      await assert.rejects(createProductionRuntime26R2ApplicationApi({ ...config, ...change }, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+      await assert.rejects(createProductionRuntime26R2ApplicationApi({ ...config, ...change }, () => { allocations++; throw Error("must not allocate"); }, null, undefined, syntheticCapacity()), TypeError);
     const accessor = Object.defineProperty({ sales: true, transfers: true }, "sales", { enumerable: true, get() { getters++; throw Error("MUST_NOT_RUN"); } });
     assert.throws(() => parseProductionRuntime26R2Configuration({ ...config, existingPreparation: accessor }), TypeError);
     const { runtime26Review: _review, existingPreparation: _preparation, ...legacy } = config;
@@ -514,9 +569,9 @@ test("production R2 exact26: closed independent profile requires native commands
 });
 test("production R2 exact26: fresh one-pool composition mounts commands and CREATE with independently selected existing routes", async () => {
   for (const [sales, transfers] of [[false, false], [true, false], [false, true], [true, true]]) {
-    const f = exact26Fixture(), p = exact26Driver(f.observation);
+    const f = newLivePairFixture(), p = exact26Driver(f.observation);
     try {
-      const api = await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, sales, transfers), p.factory);
+      const api = await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, sales, transfers), p.factory, null, undefined, syntheticCapacity());
       try {
         assert.equal(api.app.server.listening, false); assert.deepEqual(p.counts(), { allocations: 1, connects: 2, releases: 2, ends: 0 });
         for (const url of ["/products/media/uploads", "/products/v2/commands"]) assert.equal(api.app.hasRoute({ method: "POST", url }), false);
@@ -526,16 +581,16 @@ test("production R2 exact26: fresh one-pool composition mounts commands and CREA
           assert.equal(api.app.hasRoute({ method: "POST", url: `/${kind}/prepare-existing` }), enabled);
           const response = await api.app.inject({ method: "POST", url: `/${kind}/prepare-existing`, payload: {} }); assert.equal(response.statusCode, enabled ? 401 : 404);
         }
-        assert.equal(p.counts().connects, 2); assert.ok(p.calls.every(call => [NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
+        assert.equal(p.counts().connects, 2); assert.ok(p.calls.every(call => [newLivePairProbe,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
       } finally { await api.close(); }
       assert.equal(p.counts().ends, 1);
     } finally { f.cleanup(); }
   }
 });
 test("production R2 exact26: command, receipt and existing preparation UOWs all carry the same genuine issuer pool/client gates", async () => {
-  const f = exact26Fixture(), p = exact26Driver(f.observation);
+  const f = newLivePairFixture(), p = exact26Driver(f.observation);
   try {
-    const api = await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration), p.factory);
+    const api = await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration), p.factory, null, undefined, syntheticCapacity());
     try {
       const target = "00000000-0000-4000-8000-000000000010", warehouse = "00000000-0000-4000-8000-000000000011", sku = "00000000-0000-4000-8000-000000000012";
       const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
@@ -569,11 +624,11 @@ test("production R2 exact26: command, receipt and existing preparation UOWs all 
   } finally { f.cleanup(); }
 });
 test("production R2 exact26: missing command purpose aborts startup and closes only its owned original pool", async () => {
-  const f = exact26Fixture(["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ"]), p = exact26Driver(f.observation);
+  const f = newLivePairFixture(["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ"]), p = exact26Driver(f.observation);
   try {
-    await assert.rejects(createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration), p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
+    await assert.rejects(createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration), p.factory, null, undefined, syntheticCapacity()), { code: "NATIVE_RUNTIME26_NOT_READY" });
     assert.equal(p.counts().allocations, 1); assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, p.counts().releases);
-    assert.ok(p.calls.every(call => [NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
+    assert.ok(p.calls.every(call => [newLivePairProbe,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
   } finally { f.cleanup(); }
 });
 
@@ -581,27 +636,31 @@ function r3Configuration(base: ProductionRuntime26Configuration, root: string): 
   return { ...r2Configuration(base), profile: "source-confirmed-native-exact26-r3-v1", productMedia: { root, rootKey: "native-images" } };
 }
 test("production R3 media: explicit private root is isolated from R1/R2 and missing maintenance purpose closes its owned pool", async () => {
-  const f = exact26Fixture(), p = exact26Driver(f.observation), c = r3Configuration(f.configuration, "/private-original-images");
+  const f = newLivePairFixture(), p = exact26Driver(f.observation), c = r3Configuration(f.configuration, "/private-original-images");
   try {
     assert.deepEqual(parseProductionRuntime26R3Configuration(c), c);
     assert.throws(() => parseProductionRuntime26Configuration(c), TypeError);
     assert.throws(() => parseProductionRuntime26R2Configuration(c), TypeError);
-    await assert.rejects(createProductionRuntime26R3ApplicationApi({ ...c, productMedia: { root: "relative", rootKey: "native" } }, p.factory), TypeError);
+    await assert.rejects(createProductionRuntime26R3ApplicationApi({ ...c, productMedia: { root: "relative", rootKey: "native" } }, p.factory, null, undefined, syntheticCapacity()), TypeError);
     assert.equal(p.counts().allocations, 0);
-    await assert.rejects(createProductionRuntime26R3ApplicationApi(c, p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
+    await assert.rejects(createProductionRuntime26R3ApplicationApi(c, p.factory, null, undefined, syntheticCapacity()), { code: "NATIVE_RUNTIME26_NOT_READY" });
     assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, p.counts().releases);
   } finally { f.cleanup(); }
 });
 test("production R3 media: real private stage, original prepared transaction, rich read and controlled bytes share one bounded pool", async () => {
   const purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION", "PRODUCT_MAINTENANCE"];
-  const f = exact26Fixture(purposes), root = mkdtempSync(join(realpathSync(tmpdir()), "d1-r3-media-synthetic-"));
+  const f = newLivePairFixture(purposes), root = mkdtempSync(join(realpathSync(tmpdir()), "d1-r3-media-synthetic-"));
   let image: Record<string, unknown> | undefined, productId: string | undefined, audit: unknown[] | undefined, receipt: Record<string, unknown> | undefined;
-  let denied = false;
+  let denied = false, capacityChecks = 0; let loadedProductId: string | undefined;
   const p = exact26Driver(f.observation, (sql, values) => {
     if (sql.includes("maintenance:identity") && denied) return [];
     if (sql.includes("maintenance:hall")) return [{ id: hall, enabled: true }];
     if (sql.includes("maintenance:receipt")) return receipt ? [receipt] : [];
-    if (sql.includes("FROM naijue_erp.product WHERE id=$1::uuid FOR UPDATE")) return [];
+    if (sql.includes("FROM naijue_erp.product WHERE id=$1::uuid FOR UPDATE")) { loadedProductId = values[0] as string; return []; }
+    if (sql.includes("maintained-catalogue26:new-capacity")) {
+      assert.equal(values[0], loadedProductId); assert.equal(productId, undefined); assert.equal(audit, undefined);
+      capacityChecks++; return [{ occupied: false }]; // Same absent identity already observed by this scripted transaction.
+    }
     if (sql.includes("FROM naijue_erp.product_category") || sql.includes("FROM naijue_erp.size_group WHERE")) return [{ id: values[0] }];
     if (sql.includes("FROM naijue_erp.size_group_member")) return (values[1] as string[]).map(size_id => ({ size_id }));
     if (sql.includes("FROM naijue_erp.supplier")) return [{ id: values[0], enabled: true }];
@@ -624,7 +683,7 @@ test("production R3 media: real private stage, original prepared transaction, ri
   });
   const c = r3Configuration(f.configuration, root); (c.postgres as { maxPendingAcquisitions: number }).maxPendingAcquisitions = 0;
   try {
-    const api = await createProductionRuntime26R3ApplicationApi(c, p.factory);
+    const api = await createProductionRuntime26R3ApplicationApi(c, p.factory, null, undefined, syntheticCapacity());
     try {
       assert.equal(api.app.server.listening, false);
       for (const url of ["/products/media/uploads", "/products/v2/commands", "/products/maintenance/images/query", "/products/maintenance/v2/detail/query"]) {
@@ -647,7 +706,7 @@ test("production R3 media: real private stage, original prepared transaction, ri
         skus: [{ id: null, expectedVersion: null, skuCode: "R3-SYNTHETIC-SKU", colorId: id(93), fitId: id(94), sizeId: id(95), enabled: true }], barcodes: [],
         imageChanges: [{ action: "ADD", uploadId: staged.json().uploadId, role: "MAIN", colorId: null, displayOrder: 0 }] };
       const send = () => api.app.inject({ method: "POST", url: "/products/v2/commands", headers, payload: command });
-      const saved = await send(); assert.equal(saved.statusCode, 200, saved.body); assert.ok(audit && image && receipt);
+      const saved = await send(); assert.equal(saved.statusCode, 200, saved.body); assert.ok(audit && image && receipt); assert.equal(capacityChecks, 1);
       const writeCount = p.calls.filter(c => /^(?:\/\* maintenance:(?:audit|complete) \*\/ )?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)).length;
       assert.deepEqual((await send()).json(), saved.json());
       assert.equal(p.calls.filter(c => /^(?:\/\* maintenance:(?:audit|complete) \*\/ )?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)).length, writeCount);
@@ -695,7 +754,7 @@ test("production CORE v14: strict R1 configuration consumes only the exact commi
       { ...f.configuration.coreInitializationRead, operationId: "not-an-id" }, { ...f.configuration.coreInitializationRead, profile: "ALL" }])
       assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, coreInitializationRead: core }));
     let allocations = 0;
-    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, currentForms: {} }, () => { allocations++; throw Error("must not allocate"); }));
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, currentForms: {} }, () => { allocations++; throw Error("must not allocate"); }, null, syntheticCapacity()));
     assert.equal(allocations, 0);
   } finally { f.cleanup(); }
 });
@@ -706,6 +765,10 @@ test("production CORE v14: actual production factory retains legacy login and sa
   const warehouse = f.coreSourceMembers.parties.find(p => p.entity === "WAREHOUSE")!.nativeId;
   const p = exact26Driver(f.observation, (sql, values) => {
     if (sql === NATIVE_RUNTIME26_V14_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql.includes("auth:login-snapshot")) {
+      assert.deepEqual(values, ["SYNTHETIC_CORE_LOGIN"]);
+      return [{ account_id: account, login_name: "SYNTHETIC_CORE_LOGIN", password_hash: wrapper, auth_version: 1 }];
+    }
     if (sql.includes("core-settings:committed-proof")) return [{ after_values: { coreSourceMembers: f.coreSourceMembers }, sources_match: sourcesMatch, claims_match: true }];
     if (sql.includes("core-settings:current-identity")) return [{ id: account, staff_id: f.coreSourceMembers.accounts[0]!.staff_id, login_enabled: true, role: directoryRole, employment_status: "在职", hall_id: hall, hall_enabled: true }];
     if (sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s")) return [{ account_id: account, staff_id: f.coreSourceMembers.accounts[0]!.staff_id,
@@ -719,7 +782,7 @@ test("production CORE v14: actual production factory retains legacy login and sa
     return undefined;
   });
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try {
       assert.equal(api.app.server.listening, false); assert.equal(p.counts().allocations, 1);
       for (const url of ["/auth/login", "/auth/logout", "/auth/password", "/store-settings-read/stores/query", "/store-settings-read/stores/detail/query", "/store-settings-read/warehouses/query", "/store-settings-read/warehouses/detail/query"])
@@ -747,7 +810,22 @@ test("production CORE v14: original exact26 main accepts the private CORE config
     const filename = join(pathDirectory(f.configuration.runtime26Review.reviewFile), "private-core-main.json");
     const missing = join(pathDirectory(filename), "missing-core-metadata-review.json");
     writeFileSync(filename, JSON.stringify({ ...f.configuration, runtime26Review: { ...f.configuration.runtime26Review, reviewFile: missing } }), { mode: 0o600 });
-    await assert.rejects(runProductionRuntime26Main([realpathSync(filename)]), (error: unknown) => (error as NodeJS.ErrnoException).code === "ENOENT");
+    const p = exact26Driver(f.observation); let privateFailure: unknown, apiCalls = 0, hostCalls = 0;
+    const dependencies: ProductionMainDependencies = {
+      async createCapacity() { throw Error("Injected singleton must not be replaced"); },
+      async createApi(mode, configuration, capacity) {
+        apiCalls++; assert.equal(mode, 'r1');
+        try { return await createProductionRuntime26ApplicationApi(configuration, p.factory, null, capacity); }
+        catch (error) { privateFailure = error; throw error; }
+      },
+      async startHost() { hostCalls++; throw Error("Missing review cannot reach a listener"); },
+      writeStarted() { throw Error("Missing review cannot announce ready"); }
+    };
+    await assert.rejects(runProductionRuntime26Main([realpathSync(filename)], syntheticCapacity(), dependencies),
+      { message: 'Production startup refused or failed; private dependencies must be checked by owner' });
+    assert.equal((privateFailure as NodeJS.ErrnoException).code, 'ENOENT');
+    assert.equal(apiCalls, 1); assert.equal(hostCalls, 0);
+    assert.deepEqual(p.counts(), { allocations: 1, connects: 0, releases: 0, ends: 1 });
   } finally { f.cleanup(); }
 });
 
@@ -765,29 +843,31 @@ test('production inventory spool: exact bounded options traverse original profil
  assert.throws(()=>parseProductionRuntime26Configuration({...r1,coreInitializationRead:{profile:'COMMITTED_CORE_SETTINGS_V14',batchId:'14000000-0000-4000-8000-000000003000',operationId:'14000000-0000-4000-8000-000000003001',coreSourceDigest:'c'.repeat(64)}}));
 });
 test('production inventory spool: existing plugin receives captured host resources, missing mount returns503 before producer and frees the one slot',async()=>{
- const original=fsPromises.lstat;let directoryChecks=0,allocations=0,ends=0,producerQueries=0;
+ const f=newLivePairFixture(),original=fsPromises.lstat;let directoryChecks=0,allocations=0,ends=0,producerQueries=0,proofs=0;
  fsPromises.lstat=async function(...args:unknown[]){if(args[0]===approvedInventorySpool.directory){directoryChecks++;throw Object.assign(Error('SYNTHETIC_MISSING_MOUNT'),{code:'ENOENT'});}return Reflect.apply(original,fsPromises,args);} as typeof fsPromises.lstat;
  syncBuiltinESMExports();
  const token=Buffer.alloc(32,42).toString('base64url'),now=new Date().toISOString(),expires=new Date(Date.now()+60000).toISOString();
  const driver=Object.assign(new EventEmitter(),{async connect(){return Object.assign(new EventEmitter(),{async query(sql:string){
   let rows:Record<string,unknown>[]=[];
-  if(/^(BEGIN|COMMIT|ROLLBACK)/.test(sql)){}
+  if(sql===newLivePairProbe){proofs++;rows=[structuredClone(f.observation)];}
+  else if(sql===NATIVE_RUNTIME26_IDENTITY_PROBE)rows=[{identity:structuredClone(f.observation.identity)}];
+  else if(/^(BEGIN|COMMIT|ROLLBACK)/.test(sql)){}
   else if(sql.includes('FROM naijue_erp.auth_session'))rows=[{token_hash:sessionTokenHash(token),account_id:account,auth_version:1,created_at:now,expires_at:expires,revoked_at:null}];
   else if(sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s'))rows=[{account_id:account,staff_id:'00000000-0000-4000-8000-000000000003',login_name:'SYNTHETIC_ONLY',password_hash:'SYNTHETIC_UNUSED',login_enabled:true,auth_version:1,role:'ADMIN',employment_status:'在职',hall_id:null}];
   else{producerQueries++;throw Error('Output producer must not open without private mount');}
   return{rows,rowCount:rows.length};},release(){}});},async end(){ends++;}});
  let api:Awaited<ReturnType<typeof createProductionApplicationApi>>|undefined;
  try{
-  const cfg={...config(),documentCommands:'DISABLED' as const,inventoryOutputSpool:{...approvedInventorySpool}};
-  api=await createProductionApplicationApi(cfg,()=>{allocations++;return driver;});
+  const cfg={...f.configuration,inventoryOutputSpool:{...approvedInventorySpool}};
+  api=await createProductionRuntime26ApplicationApi(cfg,()=>{allocations++;return driver;},null, syntheticCapacity());
   cfg.inventoryOutputSpool.directory='/tmp/caller-mutated-after-capture' as typeof approvedInventorySpool.directory;
-  assert.equal(api.app.server.listening,false);assert.equal(allocations,1);assert.equal(api.app.hasRoute({method:'POST',url:'/inventory/output/query'}),true);
+  assert.equal(api.app.server.listening,false);assert.equal(allocations,1);assert.equal(proofs,1);assert.equal(api.app.hasRoute({method:'POST',url:'/inventory/output/query'}),true);
   for(let i=0;i<2;i++){
    const response: {statusCode:number;body:string;json():{error:{code:string}}}=await api.app.inject({method:'POST',url:'/inventory/output/query',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${token}`},payload:{}});
    assert.equal(response.statusCode,503,response.body);assert.equal(response.json().error.code,'INVENTORY_NOT_READY');assert.ok(!response.body.includes(approvedInventorySpool.directory));
   }
   assert.equal(directoryChecks,2);assert.equal(producerQueries,0);assert.equal(api.app.hasRoute({method:'POST',url:'/inventory/query'}),true);
- }finally{await api?.close();fsPromises.lstat=original;syncBuiltinESMExports();}
+ }finally{await api?.close();fsPromises.lstat=original;syncBuiltinESMExports();f.cleanup();}
  assert.equal(ends,1);
 });
 
@@ -800,7 +880,7 @@ function categoryProductionFixture(patchLevel: string, maintenance: boolean, cor
   return { ...f, configuration: { ...f.configuration, runtime26Review: { ...f.configuration.runtime26Review,
     trustedReviewSha256: createHash('sha256').update(body).digest('hex') } } };
 }
-test('production v15 category: original category-only mounting remains tied to the precise reviewed issuer', async () => {
+test('production v15 category: old non-CORE catalogs refuse new-column graph while original exact v15 CORE mounting remains', async () => {
   for (const [patch, maintenance, core] of [
     ['26_v11_document_specification_save', true, false], ['26_v14_core_initialization', true, false],
     ['26_v15_category_order_undo', false, false], ['26_v15_category_order_undo', true, false], ['26_v15_category_order_undo', true, true]
@@ -809,7 +889,13 @@ test('production v15 category: original category-only mounting remains tied to t
     const probe = patch.includes('v11') ? NATIVE_RUNTIME26_METADATA_PROBE : patch.includes('v14') ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_V15_METADATA_PROBE;
     const p = exact26Driver(f.observation, sql => sql === probe ? [structuredClone(f.observation)] : undefined);
     try {
-      const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+      if (!core) {
+        await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity()),
+          { code: 'NATIVE_RUNTIME26_NOT_READY', message: 'Recorded live ledger pairs require the exact independently reviewed V7 catalog' });
+        assert.deepEqual(p.calls, []); assert.deepEqual(p.counts(), { allocations: 1, connects: 0, releases: 0, ends: 1 });
+        continue;
+      }
+      const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
       try {
         assert.equal(api.app.server.listening, false); assert.equal(p.counts().allocations, 1);
         // The original host registers the reviewed CATEGORY plugin before CORE's
@@ -824,8 +910,8 @@ test('production v15 category: original category-only mounting remains tied to t
     } finally { f.cleanup(); }
   }
 });
-test('production v15 category: original service adapter evidence same pool save exact replay and receipt use current role', async () => {
-  const f = categoryProductionFixture('26_v15_category_order_undo', true), first = '00000000-0000-4000-8000-000000000010', last = '00000000-0000-4000-8000-000000000011';
+test('production v15 category CORE: original service adapter evidence same pool save exact replay and receipt use current role', async () => {
+  const f = categoryProductionFixture('26_v15_category_order_undo', true, true), first = '00000000-0000-4000-8000-000000000010', last = '00000000-0000-4000-8000-000000000011';
   const siblings = [{ id: first, name: 'SYNTHETIC_FIRST', version: 7, parent_id: null, display_order: -10 }, { id: last, name: 'SYNTHETIC_LAST', version: 9, parent_id: null, display_order: 30 }];
   let role = 'ADMIN', receipt: Record<string, unknown> | undefined;
   const p = exact26Driver(f.observation, (sql, values) => {
@@ -848,7 +934,7 @@ test('production v15 category: original service adapter evidence same pool save 
     return undefined;
   });
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try {
       const payload = { action: 'REORDER', requestKey: 'production-v15-original-key', parentId: null, movedId: last,
         expectedSiblings: siblings.map(s => ({ id: s.id, expectedVersion: s.version })), orderedIds: [last, first] };
@@ -917,7 +1003,7 @@ function coreAuditHostFixture() {
 test('production CORE audit: original endpoint binds committed members current role and exact filtered count/page on one maintenance lease', async () => {
   const { f, p, state, warehouse, payload, headers } = coreAuditHostFixture();
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try {
       assert.equal(api.app.hasRoute({ method: 'POST', url: '/settings/audit/query' }), true); assert.equal(api.app.server.listening, false);
       const response = await api.app.inject({ method: 'POST', url: '/settings/audit/query', headers, payload }); assert.equal(response.statusCode, 200, response.body);
@@ -949,7 +1035,7 @@ test('production CORE audit: original endpoint binds committed members current r
 test('production CORE audit: source claim actor and module failures deny before page SQL; genuine absent scope and SQL errors are not fabricated success', async () => {
   const { f, p, state, payload, headers } = coreAuditHostFixture();
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try {
       const request = (body: Record<string, unknown> = payload) => api.app.inject({ method: 'POST', url: '/settings/audit/query', headers, payload: body });
       const before = p.calls.filter(c => c.sql.includes('settings-audit:page')).length;
@@ -968,13 +1054,23 @@ test('production CORE audit: source claim actor and module failures deny before 
 });
 
 import {NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE as V16HistoryProbe} from '../../../adapters/postgres/src/native-import-accounting-capability.ts';
-test('v16 B07 production host: exact HISTORY successor mounts original protected routes without enabling LIVE commands',async()=>{
+test('v16 B07 production host: old exact HISTORY successor refuses new-column full graph before any pool query',async()=>{
  const f=categoryProductionFixture('26_v16_history_responsible_from_v14',false);
  const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));review.purposes.push('HISTORY_REVISION');
  const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
  const config={...f.configuration,runtime26Review:{...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')}};
  const p=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);let grants=0;
- const api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{authorization:{async authorize(actor,command){grants++;return{dataset:'HISTORY',kind:command.kind,documentId:command.documentId,actorAccountId:actor.accountId};}}},p.factory);
+ try{
+  await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(config,{authorization:{async authorize(actor,command){grants++;return{dataset:'HISTORY',kind:command.kind,documentId:command.documentId,actorAccountId:actor.accountId};}}},p.factory, null, syntheticCapacity()),
+   {code:'NATIVE_RUNTIME26_NOT_READY',message:'Recorded live ledger pairs require the exact independently reviewed V7 catalog'});
+  assert.deepEqual(p.calls,[]);assert.deepEqual(p.counts(),{allocations:1,connects:0,releases:0,ends:1});assert.equal(grants,0);
+ }finally{f.cleanup();}
+});
+test('explicit new synthetic V7 HISTORY graph mounts original protected routes without enabling LIVE commands',async()=>{
+ const f=newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','HISTORY_REVISION']);
+ const p=exact26Driver(f.observation);let grants=0;
+ const config=f.configuration;
+ const api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{authorization:{async authorize(actor,command){grants++;return{dataset:'HISTORY',kind:command.kind,documentId:command.documentId,actorAccountId:actor.accountId};}}},p.factory, null, syntheticCapacity());
  try{
   for(const path of ['/imported-history/sales/revise','/imported-history/transfers/revise']){
    assert.equal(api.app.hasRoute({method:'POST',url:path}),true);
@@ -994,7 +1090,7 @@ test('production CORE read modules: explicit private selection rejects duplicate
     assert.equal(parseProductionRuntime26Configuration(f.configuration).coreReadModules, undefined);
     for (const modules of [undefined, null, true, ['customers', 'customers'], ['suppliers'], ['payment'], ['catalogue', 'history']]) {
       let allocations = 0;
-      await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, coreReadModules: modules }, () => { allocations++; throw Error('NO_POOL'); }), TypeError);
+      await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, coreReadModules: modules }, () => { allocations++; throw Error('NO_POOL'); }, null, syntheticCapacity()), TypeError);
       assert.equal(allocations, 0);
     }
     const { coreInitializationRead: _core, ...withoutCore } = f.configuration;
@@ -1040,7 +1136,7 @@ test('production CORE read modules: selected normal HTTP reads use original memb
     return undefined;
   });
   try {
-    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, coreReadModules: ['organization', 'customers', 'catalogue'] }, p.factory);
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, coreReadModules: ['organization', 'customers', 'catalogue'] }, p.factory, null, syntheticCapacity());
     try {
       for (const path of ['/organization/halls', '/organization/warehouses', '/staff', '/accounts']) for (const suffix of ['/query', '/detail/query']) assert.equal(api.app.hasRoute({ method: 'POST', url: path + suffix }), true);
       for (const path of ['/payment/methods/query', '/payment/accounts/query', '/inventory/query', '/products/query', '/sales/query', '/transfers/query', '/imported-history/sales/query', '/current-form/products/query', '/dictionary-read/seasons/query']) assert.equal(api.app.hasRoute({ method: 'POST', url: path }), false);
@@ -1085,10 +1181,11 @@ test('production CORE read modules: selected normal HTTP reads use original memb
 
 test('production catalogue explicit opt-in mounts CATEGORY COLOR FIT with CORE or full reads; no credential borrows no command lease', async () => {
   for (const core of [false, true]) {
-    const f = categoryProductionFixture('26_v15_category_order_undo', true, core);
+    const f = core ? categoryProductionFixture('26_v15_category_order_undo', true, true)
+      : newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE']);
     const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
     try {
-      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, catalogueMaintenance: true }, p.factory);
+      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, catalogueMaintenance: true }, p.factory, null, syntheticCapacity());
       try {
         const before = p.counts().connects;
         for (const family of ['categories', 'colors', 'fits']) {
@@ -1113,7 +1210,7 @@ test('production catalogue selector is exact and a read-only review cannot grant
     for (const value of [false, null, {}, 'true', undefined]) assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, catalogueMaintenance: value }), TypeError);
     assert.throws(() => parseProductionRuntimeConfiguration({ ...config(), catalogueMaintenance: true }), TypeError);
     const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
-    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, catalogueMaintenance: true }, p.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, catalogueMaintenance: true }, p.factory, null, syntheticCapacity()), { code: 'NATIVE_RUNTIME26_NOT_READY' });
     assert.equal(p.counts().ends, 1);
   } finally { f.cleanup(); }
 });
@@ -1132,7 +1229,7 @@ test('production catalogue original committed keys recover and replay without wr
     return undefined;
   });
   try {
-    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, catalogueMaintenance: true }, p.factory);
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, catalogueMaintenance: true }, p.factory, null, syntheticCapacity());
     try {
       const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
       for (const [kind, family] of [['CATEGORY', 'categories'], ['COLOR', 'colors'], ['FIT', 'fits']] as const) {
@@ -1175,12 +1272,13 @@ test('production catalogue original committed keys recover and replay without wr
 
 test('production payment opt-in mounts only original payment reads commands and receipts; exact selector and reviewed purpose required', async () => {
   for (const core of [false, true]) {
-    const f = categoryProductionFixture('26_v15_category_order_undo', true, core);
+    const f = core ? categoryProductionFixture('26_v15_category_order_undo', true, true)
+      : newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE']);
     const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
     try {
       for (const value of [false, null, {}, 'true', undefined]) assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, paymentMaintenance: value }), TypeError);
       assert.throws(() => parseProductionRuntimeConfiguration({ ...config(), paymentMaintenance: true }), TypeError);
-      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, paymentMaintenance: true }, p.factory);
+      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, paymentMaintenance: true }, p.factory, null, syntheticCapacity());
       try {
         const before = p.counts().connects;
         for (const family of ['methods', 'accounts']) {
@@ -1202,11 +1300,11 @@ test('production payment opt-in mounts only original payment reads commands and 
   const closed = categoryProductionFixture('26_v15_category_order_undo', false, true);
   const p = exact26Driver(closed.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(closed.observation)] : undefined);
   try {
-    const api = await createProductionRuntime26ApplicationApi(closed.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(closed.configuration, p.factory, null, syntheticCapacity());
     try { assert.equal(api.app.hasRoute({ method: 'POST', url: '/payment/accounts/commands' }), false); }
     finally { await api.close(); }
     const denied = exact26Driver(closed.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(closed.observation)] : undefined);
-    await assert.rejects(createProductionRuntime26ApplicationApi({ ...closed.configuration, paymentMaintenance: true }, denied.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...closed.configuration, paymentMaintenance: true }, denied.factory, null, syntheticCapacity()), { code: 'NATIVE_RUNTIME26_NOT_READY' });
     assert.equal(denied.counts().ends, 1);
   } finally { closed.cleanup(); }
 });
@@ -1238,7 +1336,7 @@ test('production payment original provider saves two-hall account with prepared 
     return undefined;
   });
   try {
-    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, paymentMaintenance: true }, p.factory);
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, paymentMaintenance: true }, p.factory, null, syntheticCapacity());
     try {
       const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
       const methodCommand = { action: 'CREATE', requestKey: 'synthetic-host-payment-method', values: { name: 'SYNTHETIC_METHOD', enabled: true } };
@@ -1301,11 +1399,12 @@ function partyProductionFixture(core: boolean, allowed = true) {
 }
 test('production party opt-in retains CORE-only default but explicitly mounts native customer supplier reads commands and receipts', async () => {
   for (const core of [false, true]) {
-    const f = partyProductionFixture(core), p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    const f = core ? partyProductionFixture(true) : newLivePairFixture();
+    const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
     try {
       for (const value of [false, null, {}, 'true', undefined]) assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, partyMaintenance: value }), TypeError);
       assert.throws(() => parseProductionRuntimeConfiguration({ ...config(), partyMaintenance: true }), TypeError);
-      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, partyMaintenance: true }, p.factory);
+      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, partyMaintenance: true }, p.factory, null, syntheticCapacity());
       try {
         const connects = p.counts().connects;
         for (const family of ['customers', 'suppliers']) {
@@ -1324,14 +1423,14 @@ test('production party opt-in retains CORE-only default but explicitly mounts na
   }
   const f = partyProductionFixture(true, false), p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try {
       assert.ok(api.app.hasRoute({ method: 'GET', url: '/customers' }));
       assert.equal(api.app.hasRoute({ method: 'GET', url: '/suppliers' }), false);
       assert.equal(api.app.hasRoute({ method: 'POST', url: '/customers/commands' }), false);
     } finally { await api.close(); }
     const denied = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
-    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, partyMaintenance: true }, denied.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, partyMaintenance: true }, denied.factory, null, syntheticCapacity()), { code: 'NATIVE_RUNTIME26_NOT_READY' });
     assert.equal(denied.counts().ends, 1);
   } finally { f.cleanup(); }
 });
@@ -1367,7 +1466,7 @@ test('production party original approved allocator saves edits and rereads nativ
     return undefined;
   });
   try {
-    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, partyMaintenance: true }, p.factory);
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, partyMaintenance: true }, p.factory, null, syntheticCapacity());
     try {
       const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
       for (const [family, prefix, code] of [['customers', 'customer', 'KH000003'], ['suppliers', 'supplier', 'GYS000006']] as const) {
@@ -1414,12 +1513,16 @@ test('production party original approved allocator saves edits and rereads nativ
 
 test('production staff explicit opt-in mounts single staff workflow and native readback without adding account writer or credential defaults', async () => {
   for (const core of [false, true]) {
-    const f = categoryProductionFixture('26_v15_category_order_undo', true, core);
-    const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    const f = core ? categoryProductionFixture('26_v15_category_order_undo', true, true)
+      : newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE']);
+    const p = exact26Driver(f.observation, (sql,values) => {
+      if(!core){const permission=selectedStaffPermissionRows2324(sql,values);if(permission!==undefined)return permission;}
+      return sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined;
+    });
     try {
       for (const value of [false, null, {}, 'true', undefined]) assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, staffMaintenance: value }), TypeError);
       assert.throws(() => parseProductionRuntimeConfiguration({ ...config(), staffMaintenance: true }), TypeError);
-      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, ...(core ? { coreReadModules: ['organization'] } : {}), staffMaintenance: true }, p.factory);
+      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, ...(core ? { coreReadModules: ['organization'] } : {}), staffMaintenance: true }, p.factory, null, syntheticCapacity());
       try {
         const before = p.counts().connects;
         for (const url of ['/staff/commands', '/staff/query', '/staff/detail/query']) {
@@ -1435,10 +1538,10 @@ test('production staff explicit opt-in mounts single staff workflow and native r
   const f = categoryProductionFixture('26_v15_category_order_undo', false, true);
   const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try { assert.equal(api.app.hasRoute({ method: 'POST', url: '/staff/commands' }), false); } finally { await api.close(); }
     const denied = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
-    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, staffMaintenance: true }, denied.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, staffMaintenance: true }, denied.factory, null, syntheticCapacity()), { code: 'NATIVE_RUNTIME26_NOT_READY' });
     assert.equal(denied.counts().ends, 1);
   } finally { f.cleanup(); }
 });
@@ -1485,7 +1588,7 @@ function staffHostProtocol() {
 test('production staff no-credential ordinary create edit readback and employment remain available; password branch honestly rejects', async () => {
   const x = staffHostProtocol(), { f, p } = x;
   try {
-    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, coreReadModules: ['organization'], staffMaintenance: true }, p.factory);
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, coreReadModules: ['organization'], staffMaintenance: true }, p.factory, null, syntheticCapacity());
     try {
       const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
       const values = { name: 'SYNTHETIC_STAFF_ONLY', role: 'WAREHOUSE', hallId: null, contact: null };
@@ -1521,7 +1624,7 @@ test('production staff original injected tag uses original scrypt and policy; li
   // Synthetic-only stable tag capability. No credential file, environment key or real secret.
   const tag = createNodeCredentialRequestTag(Buffer.alloc(32, 65));
   try {
-    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, staffMaintenance: true }, p.factory, tag);
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, staffMaintenance: true }, p.factory, tag, syntheticCapacity());
     try {
       const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` }, password = 'SYNTHETIC_Only_42!';
       const payload = { action: 'CREATE', requestKey: 'synthetic-staff-linked', values: { name: 'SYNTHETIC_ADMIN', role: 'ADMIN', hallId: null, contact: null }, account: { id: null, expectedVersion: null, loginName: 'SYNTHETIC_LOGIN', loginEnabled: true, password } };
@@ -1560,11 +1663,13 @@ function productBaseProductionFixture(core: boolean, maintenance = true) {
 }
 test('production product base opt-in mounts original V2 commands detail and normal bounded list before CORE return without media stage', async () => {
   for (const core of [false, true]) {
-    const f = productBaseProductionFixture(core), p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    const f = core ? productBaseProductionFixture(true)
+      : newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE']);
+    const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
     try {
       for (const value of [false, null, {}, 'true', undefined]) assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, productMaintenance: value }), TypeError);
       assert.throws(() => parseProductionRuntimeConfiguration({ ...config(), productMaintenance: true }), TypeError);
-      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, p.factory);
+      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, p.factory, null, syntheticCapacity());
       try {
         const before = p.counts().connects;
         for (const url of ['/products/v2/commands', '/products/maintenance/v2/detail/query', '/products/maintenance/candidates/query', '/product-management/query']) {
@@ -1580,10 +1685,10 @@ test('production product base opt-in mounts original V2 commands detail and norm
   }
   const f = productBaseProductionFixture(true, false), p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
   try {
-    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity());
     try { assert.equal(api.app.hasRoute({ method: 'POST', url: '/products/v2/commands' }), false); } finally { await api.close(); }
     const denied = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
-    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, denied.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, denied.factory, null, syntheticCapacity()), { code: 'NATIVE_RUNTIME26_NOT_READY' });
     assert.equal(denied.counts().ends, 1);
   } finally { f.cleanup(); }
 });
@@ -1601,7 +1706,7 @@ test('production product base original receipt replay and media rejection do not
     return undefined;
   });
   try {
-    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, p.factory);
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, p.factory, null, syntheticCapacity());
     try {
       const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
       const replay = await api.app.inject({ method: 'POST', url: '/products/v2/commands', headers, payload: command }); assert.equal(replay.statusCode, 200, replay.body); assert.deepEqual(replay.json(), result);
@@ -1628,7 +1733,7 @@ test('production product normal stock list preserves complete-publication gate a
     return undefined;
   });
   try {
-    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, p.factory);
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, p.factory, null, syntheticCapacity());
     try {
       const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
       const response = await api.app.inject({ method: 'POST', url: '/product-management/query', headers, payload: { filter: { productIds: [], categoryIds: [], years: [], seasonIds: [], supplierIds: [], fitIds: [], thicknesses: [], shapeCodes: [] }, page: 1, pageSize: 100 } });
@@ -1648,14 +1753,18 @@ function mixedProductionFixture(historyPurpose: boolean) {
   const body = JSON.stringify(review); writeFileSync(f.configuration.runtime26Review.reviewFile, body, { mode: 0o600 });
   return { ...f, configuration: { ...f.configuration, ...mixedMaintenance, runtime26Review: { ...f.configuration.runtime26Review, trustedReviewSha256: createHash('sha256').update(body).digest('hex') } } };
 }
+function newLivePairMixedFixture(historyPurpose:boolean) {
+ const f=newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE',...(historyPurpose?['HISTORY_REVISION']:[])]);
+ return {...f,configuration:{...f.configuration,...mixedMaintenance}};
+}
 test('unified original R2 and HISTORY hosts retain five private maintenance selections without duplicate routes or cross-granting document commands', async () => {
   for (const mode of ['r2-sales', 'r2-transfers', 'history'] as const) {
-    const f = mixedProductionFixture(mode === 'history'), p = exact26Driver(f.observation, sql => sql === V16HistoryProbe ? [structuredClone(f.observation)] : undefined);
+    const f = newLivePairMixedFixture(mode === 'history'), p = exact26Driver(f.observation, (sql,values) => selectedStaffPermissionRows2324(sql,values) ?? (sql === newLivePairProbe ? [structuredClone(f.observation)] : undefined));
     let historyGrants = 0;
     try {
       const api = mode === 'history'
-        ? await createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, { authorization: { async authorize(): Promise<never> { historyGrants++; throw new DomainError('FORBIDDEN', 'SYNTHETIC_CLOSED_HISTORY'); } } }, p.factory)
-        : await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, mode === 'r2-sales', mode === 'r2-transfers'), p.factory);
+        ? await createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, { authorization: { async authorize(): Promise<never> { historyGrants++; throw new DomainError('FORBIDDEN', 'SYNTHETIC_CLOSED_HISTORY'); } } }, p.factory, null, syntheticCapacity())
+        : await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, mode === 'r2-sales', mode === 'r2-transfers'), p.factory, null, undefined, syntheticCapacity());
       try {
         const before = p.counts().connects;
         for (const [command, receipt] of [['/catalogue/colors/commands', '/catalogue/colors/receipts/:requestKey'], ['/catalogue/fits/commands', '/catalogue/fits/receipts/:requestKey'],
@@ -1681,10 +1790,11 @@ test('unified original R2 and HISTORY hosts retain five private maintenance sele
 
 test('unified R2 and HISTORY propagate only original staff private tag capability; absence stays503 and callback never grants staff authority', async () => {
   for (const mode of ['r2', 'history'] as const) for (const available of [false, true]) {
-    const f = mixedProductionFixture(mode === 'history'); let tagged = 0;
+    const f = newLivePairMixedFixture(mode === 'history'); let tagged = 0;
     const originalTag = createNodeCredentialRequestTag(Buffer.alloc(32, 73)), tag = available ? (password: string) => { tagged++; return originalTag(password); } : null;
-    const p = exact26Driver(f.observation, sql => {
-      if (sql === V16HistoryProbe) return [structuredClone(f.observation)];
+    const p = exact26Driver(f.observation, (sql,values) => {
+      const permission=selectedStaffPermissionRows2324(sql,values,available);if(permission!==undefined)return permission;
+      if (sql === newLivePairProbe) return [structuredClone(f.observation)];
       if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s') || sql.includes('maintenance:identity')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003', login_name: 'SYNTHETIC_ONLY', password_hash: 'SYNTHETIC_UNUSED', login_enabled: true, auth_version: 1, role: 'WAREHOUSE', employment_status: '在职', hall_id: hall }];
       if (sql.includes('maintenance:administrator-lock')) return [];
       if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
@@ -1692,8 +1802,8 @@ test('unified R2 and HISTORY propagate only original staff private tag capabilit
     });
     try {
       const api = mode === 'history'
-        ? await createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, { authorization: { async authorize(): Promise<never> { throw Error('Staff must not invoke historical grants'); } } }, p.factory, tag)
-        : await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, false, false), p.factory, tag);
+        ? await createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, { authorization: { async authorize(): Promise<never> { throw Error('Staff must not invoke historical grants'); } } }, p.factory, tag, syntheticCapacity())
+        : await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, false, false), p.factory, tag, undefined, syntheticCapacity());
       try {
         const response = await api.app.inject({ method: 'POST', url: '/staff/commands', headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` }, payload: {
           action: 'CREATE', requestKey: 'synthetic-mixed-staff-private-cap', values: { name: 'SYNTHETIC_STAFF', role: 'WAREHOUSE', hallId: null, contact: null },
@@ -1709,29 +1819,29 @@ test('unified R2 and HISTORY propagate only original staff private tag capabilit
 });
 
 test('unified selectors remain closed; maintenance and HIST read routes cannot replace independent HISTORY policy purpose or R2 preparation choices', async () => {
-  const f = mixedProductionFixture(true); let allocated = 0;
+  const f = newLivePairMixedFixture(true); let allocated = 0;
   const driver = () => { allocated++; throw Error('No pool before strict independent configuration'); };
   try {
     const r2 = r2Configuration(f.configuration, false, true);
     assert.deepEqual(parseProductionRuntime26R2Configuration(r2), r2);
     for (const key of Object.keys(mixedMaintenance)) for (const value of [false, null, 'true', {}, undefined]) assert.throws(() => parseProductionRuntime26R2Configuration({ ...r2, [key]: value }), TypeError);
     for (const change of [{ existingPreparation: { sales: true } }, { existingPreparation: { sales: true, transfers: 'true' } }, { existingPreparation: { sales: true, transfers: true, all: true } },
-      { authorization: {} }, { staffCredentialRequestTag: () => 'a'.repeat(64) }, { history: {} }, { coreReadModules: ['organization'] }]) await assert.rejects(createProductionRuntime26R2ApplicationApi({ ...r2, ...change }, driver), TypeError);
-    for (const policy of [undefined, {}, { authorization: {} }, { authorization: { authorize: true } }]) await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, policy as never, driver), TypeError);
+      { authorization: {} }, { staffCredentialRequestTag: () => 'a'.repeat(64) }, { history: {} }, { coreReadModules: ['organization'] }]) await assert.rejects(createProductionRuntime26R2ApplicationApi({ ...r2, ...change }, driver, null, undefined, syntheticCapacity()), TypeError);
+    for (const policy of [undefined, {}, { authorization: {} }, { authorization: { authorize: true } }]) await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, policy as never, driver, null, syntheticCapacity()), TypeError);
     const { staffMaintenance: _staff, ...withoutStaff } = f.configuration;
     const tag = createNodeCredentialRequestTag(Buffer.alloc(32, 74));
-    await assert.rejects(createProductionRuntime26R2ApplicationApi(r2Configuration(withoutStaff, false, false), driver, tag), TypeError);
-    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(withoutStaff, { authorization: { async authorize(): Promise<never> { throw Error('No request'); } } }, driver, tag), TypeError);
+    await assert.rejects(createProductionRuntime26R2ApplicationApi(r2Configuration(withoutStaff, false, false), driver, tag, undefined, syntheticCapacity()), TypeError);
+    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(withoutStaff, { authorization: { async authorize(): Promise<never> { throw Error('No request'); } } }, driver, tag, syntheticCapacity()), TypeError);
     assert.equal(allocated, 0);
   } finally { f.cleanup(); }
-  const closed = mixedProductionFixture(false), p = exact26Driver(closed.observation, sql => sql === V16HistoryProbe ? [structuredClone(closed.observation)] : undefined); let grants = 0;
+  const closed = newLivePairMixedFixture(false), p = exact26Driver(closed.observation, sql => sql === newLivePairProbe ? [structuredClone(closed.observation)] : undefined); let grants = 0;
   try {
-    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(closed.configuration, { authorization: { async authorize(): Promise<never> { grants++; throw Error('No request before reviewed purpose'); } } }, p.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(closed.configuration, { authorization: { async authorize(): Promise<never> { grants++; throw Error('No request before reviewed purpose'); } } }, p.factory, null, syntheticCapacity()), { code: 'NATIVE_RUNTIME26_NOT_READY' });
     assert.equal(grants, 0); assert.equal(p.counts().ends, 1);
   } finally { closed.cleanup(); }
-  const deny = mixedProductionFixture(true), pg = exact26Driver(deny.observation, sql => sql === V16HistoryProbe ? [structuredClone(deny.observation)] : undefined);
+  const deny = newLivePairMixedFixture(true), pg = exact26Driver(deny.observation, (sql,values) => selectedStaffPermissionRows2324(sql,values) ?? (sql === newLivePairProbe ? [structuredClone(deny.observation)] : undefined));
   try {
-    const api = await createProductionRuntime26HistoryRevisionApplicationApi(deny.configuration, { authorization: { async authorize(): Promise<never> { grants++; throw new DomainError('FORBIDDEN', 'SYNTHETIC_DENY_ORIGINAL_POLICY'); } } }, pg.factory);
+    const api = await createProductionRuntime26HistoryRevisionApplicationApi(deny.configuration, { authorization: { async authorize(): Promise<never> { grants++; throw new DomainError('FORBIDDEN', 'SYNTHETIC_DENY_ORIGINAL_POLICY'); } } }, pg.factory, null, syntheticCapacity());
     try {
       const response = await api.app.inject({ method: 'POST', url: '/imported-history/sales/revise', headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${pg.token}` }, payload: {
         kind: 'sales', documentId: '00000000-0000-4000-8000-000000000181', expectedVersion: 1, requestKey: 'synthetic-mixed-history-independent-deny', reason: 'Synthetic original quantity correction',
@@ -1745,11 +1855,12 @@ test('unified selectors remain closed; maintenance and HIST read routes cannot r
 
 test('unified original hosts preserve normal reader and original maintenance receipt on their same pool alongside selected document routes', async () => {
   for (const mode of ['r2', 'history'] as const) {
-    const f = mixedProductionFixture(mode === 'history');
+    const f = newLivePairMixedFixture(mode === 'history');
     const operation = '00000000-0000-4000-8000-000000000191', target = '00000000-0000-4000-8000-000000000192', key = 'synthetic-mixed-existing-payment';
     const result = { operationId: operation, kind: 'PAYMENT_ACCOUNT', targetId: target, version: 2 };
-    const p = exact26Driver(f.observation, sql => {
-      if (sql === V16HistoryProbe) return [structuredClone(f.observation)];
+    const p = exact26Driver(f.observation, (sql,values) => {
+      const permission=selectedStaffPermissionRows2324(sql,values);if(permission!==undefined)return permission;
+      if (sql === newLivePairProbe) return [structuredClone(f.observation)];
       if (sql.includes('maintenance:identity')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003', login_enabled: true, role: 'ADMIN', employment_status: '在职', hall_id: hall }];
       if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
       if (sql.includes('maintenance:receipt')) return [{ id: operation, request_hash: 'c'.repeat(64), action: 'EDIT', target_type: 'PAYMENT_ACCOUNT', target_id: target, result_data: result, completed_at: '2026-10-25T00:00:00.000000Z' }];
@@ -1757,8 +1868,8 @@ test('unified original hosts preserve normal reader and original maintenance rec
       return undefined;
     });
     try {
-      const api = mode === 'r2' ? await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, false, false), p.factory)
-        : await createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, { authorization: { async authorize(): Promise<never> { throw Error('Maintenance reader must not invoke historical write policy'); } } }, p.factory);
+      const api = mode === 'r2' ? await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, false, false), p.factory, null, undefined, syntheticCapacity())
+        : await createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, { authorization: { async authorize(): Promise<never> { throw Error('Maintenance reader must not invoke historical write policy'); } } }, p.factory, null, syntheticCapacity());
       try {
         const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
         const receipt = await api.app.inject({ method: 'GET', url: `/payment/accounts/receipts/${key}`, headers });
@@ -1775,12 +1886,12 @@ test('unified original hosts preserve normal reader and original maintenance rec
 
 
 test('complete host bridge: R2 commands and independent HISTORY policy share original pool with selected native organization maintenance', async () => {
-  const f = mixedProductionFixture(true), p = exact26Driver(f.observation, sql => sql === V16HistoryProbe ? [structuredClone(f.observation)] : undefined);
+  const f = newLivePairMixedFixture(true), p = exact26Driver(f.observation, (sql,values) => selectedStaffPermissionRows2324(sql,values) ?? (sql === newLivePairProbe ? [structuredClone(f.observation)] : undefined));
   const selected = { ...r2Configuration(f.configuration, true, false), organizationMaintenance: true as const };
   let grants = 0;
   const policy = { async authorize(): Promise<never> { assert.equal(this, policy); grants++; throw new DomainError('FORBIDDEN', 'SYNTHETIC_INDEPENDENT_HISTORY_DENIAL'); } };
   try {
-    const promise = createProductionRuntime26R2ApplicationApi(selected, p.factory, null, { authorization: policy });
+    const promise = createProductionRuntime26R2ApplicationApi(selected, p.factory, null, { authorization: policy }, syntheticCapacity());
     policy.authorize = async () => { throw Error('Mutated policy must not be used'); };
     const api = await promise;
     try {
@@ -1806,29 +1917,29 @@ test('complete host bridge: R2 commands and independent HISTORY policy share ori
 });
 
 test('complete host bridge: history remains a trusted independent parameter and exact reviewed purpose; new organization selector defaults off', async () => {
-  const f=mixedProductionFixture(false);let allocations=0;
+  const f=newLivePairMixedFixture(false);let allocations=0;
   const noDriver=()=>{allocations++;throw Error('Invalid policy must reject before pool');};
   try {
     const config=r2Configuration(f.configuration,false,false);
     for(const value of [false,null,'true',{},undefined]) assert.throws(()=>parseProductionRuntime26R2Configuration({...config,organizationMaintenance:value}),TypeError);
     for(const history of [{},{authorization:{}},{authorization:{authorize:true}},{authorization:{authorize(){ }},extra:true}])
-      await assert.rejects(createProductionRuntime26R2ApplicationApi(config,noDriver,null,history as never),TypeError);
+      await assert.rejects(createProductionRuntime26R2ApplicationApi(config,noDriver,null,history as never, syntheticCapacity()),TypeError);
     assert.equal(allocations,0);
-    const p=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);
-    await assert.rejects(createProductionRuntime26R2ApplicationApi(config,p.factory,null,{authorization:{async authorize():Promise<never>{throw Error('No request');}}}),{code:'NATIVE_RUNTIME26_NOT_READY'});
+    const p=exact26Driver(f.observation,sql=>sql===newLivePairProbe?[structuredClone(f.observation)]:undefined);
+    await assert.rejects(createProductionRuntime26R2ApplicationApi(config,p.factory,null,{authorization:{async authorize():Promise<never>{throw Error('No request');}}}, syntheticCapacity()),{code:'NATIVE_RUNTIME26_NOT_READY'});
     assert.equal(p.counts().ends,1);assert.equal(p.counts().connects,p.counts().releases);
-    const q=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);
-    const api=await createProductionRuntime26R2ApplicationApi(config,q.factory);
+    const q=exact26Driver(f.observation,(sql,values)=>selectedStaffPermissionRows2324(sql,values)??(sql===newLivePairProbe?[structuredClone(f.observation)]:undefined));
+    const api=await createProductionRuntime26R2ApplicationApi(config,q.factory, null, undefined, syntheticCapacity());
     try {assert.equal(api.app.hasRoute({method:'POST',url:'/organization/halls/commands'}),false);assert.equal(api.app.hasRoute({method:'POST',url:'/imported-history/sales/revise'}),false);}finally{await api.close();}
   }finally{f.cleanup();}
 });
 
 test('complete host bridge: R3 retains original media and all selected maintenance plus HISTORY without duplicate product routes', async () => {
-  const f=mixedProductionFixture(true),p=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);
+  const f=newLivePairMixedFixture(true),p=exact26Driver(f.observation,(sql,values)=>selectedStaffPermissionRows2324(sql,values)??(sql===newLivePairProbe?[structuredClone(f.observation)]:undefined));
   const config={...r2Configuration(f.configuration,false,true),organizationMaintenance:true as const,profile:'source-confirmed-native-exact26-r3-v1' as const,productMedia:{root:'/unopened-private-media',rootKey:'original-media'}};
   try{
     assert.deepEqual(parseProductionRuntime26R3Configuration(config),config);
-    const api=await createProductionRuntime26R3ApplicationApi(config,p.factory,null,{authorization:{async authorize():Promise<never>{throw Error('Not a request');}}});
+    const api=await createProductionRuntime26R3ApplicationApi(config,p.factory,null,{authorization:{async authorize():Promise<never>{throw Error('Not a request');}}}, syntheticCapacity());
     try{
       for(const url of ['/products/v2/commands','/staff/commands','/payment/accounts/commands','/customers/commands','/catalogue/colors/commands','/organization/warehouses/commands','/imported-history/transfers/revise','/sales/commands','/transfers/prepare-existing']) assert.ok(api.app.hasRoute({method:'POST',url}),url);
       assert.equal(p.counts().allocations,1);assert.equal(api.app.server.listening,false);
@@ -1855,7 +1966,7 @@ test('complete host bridge: CORE organization opt-in reads native maintained roo
     return undefined;
   });
   try{
-    const api=await createProductionRuntime26ApplicationApi({...f.configuration,organizationMaintenance:true,coreReadModules:['organization']},p.factory);
+    const api=await createProductionRuntime26ApplicationApi({...f.configuration,organizationMaintenance:true,coreReadModules:['organization']},p.factory, null, syntheticCapacity());
     try{
       const headers={origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`};
       const receipt=await api.app.inject({method:'GET',url:`/organization/halls/receipts/${key}`,headers});
@@ -1878,9 +1989,10 @@ test('complete host bridge: CORE organization opt-in reads native maintained roo
 import { createProductionRuntime26FullApplicationApi } from './production-provider-composition.ts';
 import { runProductionRuntime26FullMain } from './production-main.ts';
 test('full historical production launch: original same-pool source write policy is real, defaults stay closed and JSON functions are rejected', async () => {
-  const f=mixedProductionFixture(true);
-  const p=exact26Driver(f.observation,sql=>{
-    if(sql===V16HistoryProbe)return [structuredClone(f.observation)];
+  const f=newLivePairMixedFixture(true);
+  const p=exact26Driver(f.observation,(sql,values)=>{
+    const permission=selectedStaffPermissionRows2324(sql,values);if(permission!==undefined)return permission;
+    if(sql===newLivePairProbe)return [structuredClone(f.observation)];
     if(sql.includes('history-write-policy:identity'))return [{id:account,login_enabled:true,role:'ADMIN',employment_status:'在职',hall_id:hall,hall_enabled:true}];
     if(sql.includes('history-write-policy:document'))return [];
     return undefined;
@@ -1889,7 +2001,7 @@ test('full historical production launch: original same-pool source write policy 
   try{
     for(const key of ['history','historyRevision','authorization','historyAuthorization'])assert.throws(()=>parseProductionRuntime26R3Configuration({...config,[key]:{profile:'SOURCE_CONFIRMED_HISTORY_REVISION_V16'}}),TypeError);
     await assert.rejects(runProductionRuntime26FullMain([]),TypeError);await assert.rejects(runProductionRuntime26FullMain(['relative.json']),TypeError);
-    const api=await createProductionRuntime26FullApplicationApi(config,p.factory);
+    const api=await createProductionRuntime26FullApplicationApi(config,p.factory, null, syntheticCapacity());
     try{
       const response=await api.app.inject({method:'POST',url:'/imported-history/sales/revise',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`},payload:{kind:'sales',documentId:'00000000-0000-4000-8000-000000000181',expectedVersion:1,requestKey:'synthetic-full-policy-source-denial',reason:'Synthetic correction',lines:[{lineId:'00000000-0000-4000-8000-000000000182',quantity:'2'}],totals:null,settlements:[]}});
       assert.equal(response.statusCode,403,response.body);
@@ -1897,24 +2009,29 @@ test('full historical production launch: original same-pool source write policy 
       assert.equal(p.counts().allocations,1);assert.equal(api.app.server.listening,false);
     }finally{await api.close();}
     assert.equal(p.counts().connects,p.counts().releases);
-    const closed=mixedProductionFixture(false),q=exact26Driver(closed.observation,sql=>sql===V16HistoryProbe?[structuredClone(closed.observation)]:undefined);
-    try{await assert.rejects(createProductionRuntime26FullApplicationApi({...config,runtime26Review:closed.configuration.runtime26Review},q.factory),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(q.counts().ends,1);}finally{closed.cleanup();}
+    const closed=newLivePairMixedFixture(false),q=exact26Driver(closed.observation,sql=>sql===newLivePairProbe?[structuredClone(closed.observation)]:undefined);
+    try{await assert.rejects(createProductionRuntime26FullApplicationApi({...config,runtime26Review:closed.configuration.runtime26Review},q.factory, null, syntheticCapacity()),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(q.counts().ends,1);}finally{closed.cleanup();}
   }finally{f.cleanup();}
 });
 
 
 import { syntheticDraft as fullSyntheticDraft, syntheticSku as fullSyntheticSku, sid as fullSid } from '../../../tests/support/synthetic-fixtures.ts';
 test('full native catalogue host producer: complete-draft SAVE consumes original maintained proof and fails closed without falling back to imported-only evidence',async()=>{
- const f=mixedProductionFixture(false),sku=fullSyntheticSku();
+ const f=newLivePairMixedFixture(false),sku=fullSyntheticSku();
  const seed=fullSyntheticDraft(),draft={...seed,header:{...seed.header,hallId:hall,salespersonId:fullSid('staff',16)},settlements:[]};
  const p=exact26Driver(f.observation,(sql,values)=>{
-  if(sql===V16HistoryProbe)return [structuredClone(f.observation)];
+  const permission=selectedStaffPermissionRows2324(sql,values);if(permission!==undefined)return permission;
+  if(sql===newLivePairProbe)return [structuredClone(f.observation)];
   if(sql.includes('sales-authorization:identity'))return [{account_id:account,staff_id:fullSid('staff',16),login_enabled:true,role:'ADMIN',employment_status:'在职',hall_id:hall}];
   if(sql.includes('sales-authorization:hall')||sql.includes('native-sales-facts:hall'))return [{id:hall,enabled:true}];
   if(sql.includes('native-sales-facts:schema'))return [{installed:true}];
   if(sql.includes('native-sales-facts:warehouse'))return [{id:draft.header.warehouseId,hall_id:hall,enabled:true}];
   if(sql.includes('native-sales-facts:customer'))return [{id:draft.header.customerId,enabled:true}];
   if(sql.includes('native-sales-facts:staff'))return [{id:draft.header.salespersonId,employment_status:'在职'}];
+  if(sql.includes('native-sales-facts:sku-products')){
+   assert.deepEqual(values,[[sku.id]]);assert.doesNotMatch(sql,/FOR SHARE/);
+   return [{id:sku.id,product_id:sku.productId}];
+  }
   if(sql.includes('native-sales-facts:sku */'))return [{id:sku.id,product_id:sku.productId,color_id:sku.colorId,fit_id:sku.fitId,size_id:sku.sizeId,enabled:true}];
   if(sql.includes('native-sales-facts:product */'))return [{id:sku.productId,product_code:'SYNTHETIC',name:'SYNTHETIC',size_group_id:fullSid('sizeGroup',50),enabled:true,...Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k=>[k,k==='retail_price'?'1.25':null]))}];
   if(sql.includes('native-sales-facts:color */'))return [{id:sku.colorId,name:'SYNTHETIC',enabled:true}];
@@ -1925,7 +2042,7 @@ test('full native catalogue host producer: complete-draft SAVE consumes original
   return undefined;
  });
  try{
-  const api=await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration,false,false),p.factory);
+  const api=await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration,false,false),p.factory, null, undefined, syntheticCapacity());
   try{
    const payload=JSON.parse(JSON.stringify({action:'SAVE',requestKey:'synthetic-full-native-proof-reject',expectedVersion:null,draft},(_key,value)=>typeof value==='bigint'?value.toString():value));
    const response=await api.app.inject({method:'POST',url:'/sales/commands',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`},payload});
@@ -1938,13 +2055,17 @@ test('full native catalogue host producer: complete-draft SAVE consumes original
  }finally{f.cleanup();}
 });
 
-test("human F production startup and real login/session/list/detail/page consumers share one awaited baseline",async()=>{
- const f=categoryProductionFixture("26_v20_history_insert_identity_from_v19",false),password="SYNTHETIC_F_ONLY_123456",salt="e".repeat(48);
+test("human F NEW synthetic V7 startup and real login/session/list/detail/page consumers share one awaited baseline",async()=>{
+ const f=newLivePairFixture(),password="SYNTHETIC_F_ONLY_123456",salt="e".repeat(48);
  const passwordHash=wrapTrustedLegacyCredential({salt,hash:pbkdf2Sync(password,salt,210000,32,"sha256").toString("hex")});
  const sessions=new Map<string,Record<string,unknown>>();let role="ADMIN",loginEnabled=true,employment="在职",authVersion=1,hallEnabled=true,changeHallAfterAuth=false;
  const otherHall="00000000-0000-4000-8000-000000000099";
  const p=exact26Driver(f.observation,(sql,values)=>{
-  if(sql===NATIVE_RUNTIME26_V20_METADATA_PROBE)return [structuredClone(f.observation)];
+  if(sql===newLivePairProbe)return [structuredClone(f.observation)];
+  if(sql.includes('auth:login-snapshot')){
+   assert.deepEqual(values,['SYNTHETIC_F_LOGIN']);
+   return [{account_id:account,login_name:'SYNTHETIC_F_LOGIN',password_hash:passwordHash,auth_version:authVersion}];
+  }
   if(sql.startsWith("INSERT INTO naijue_erp.auth_session")){const [token_hash,account_id,auth_version,created_at,expires_at,revoked_at]=values;sessions.set(token_hash as string,{token_hash,account_id,auth_version,created_at,expires_at,revoked_at});return [{saved:true}];}
   if(sql.includes("FROM naijue_erp.auth_session"))return sessions.has(values[0] as string)?[sessions.get(values[0] as string)!]:[];
   if(sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s")){
@@ -1953,14 +2074,13 @@ test("human F production startup and real login/session/list/detail/page consume
     login_enabled:loginEnabled,auth_version:authVersion,role,employment_status:employment,hall_id:currentHall,native_hall_id:currentHall,hall_enabled:hallEnabled}];
   }
   if(sql==="SELECT enabled FROM naijue_erp.hall WHERE id = $1 FOR SHARE")return [{enabled:hallEnabled}];
-  if(sql.includes("normal-document-list:totals"))return [{exact_total:"0",quantity:"0",incoming_quantity:"0",outgoing_quantity:"0",gross_amount:"0.00",order_discount:"0.00",net_due:"0.00",history_valid:true,history_published:false}];
-  if(sql.includes("normal-document-list:page"))return [];
+  if(sql.includes("normal-document-list:shared"))return [{exact_total:"0",quantity:"0",incoming_quantity:"0",outgoing_quantity:"0",gross_amount:"0.00",order_discount:"0.00",net_due:"0.00",history_valid:true,history_published:false,items:[]}];
   return undefined;
  });
  try{
-  const api=await createProductionRuntime26ApplicationApi(f.configuration,p.factory);
+  const api=await createProductionRuntime26ApplicationApi(f.configuration,p.factory, null, syntheticCapacity());
   try{
-   const full=()=>p.calls.filter(q=>q.sql===NATIVE_RUNTIME26_V20_METADATA_PROBE).length;
+   const full=()=>p.calls.filter(q=>q.sql===newLivePairProbe).length;
    assert.equal(full(),1);assert.equal(api.app.server.listening,false);assert.ok(p.calls.some(q=>q.sql===NATIVE_RUNTIME26_IDENTITY_PROBE));
    const login=await api.app.inject({method:"POST",url:"/auth/login",headers:{origin:PRODUCTION_PUBLIC_ORIGIN},payload:{loginName:"SYNTHETIC_F_LOGIN",password}});
    assert.equal(login.statusCode,200,login.body);assert.equal(sessions.size,1);
@@ -1973,11 +2093,12 @@ test("human F production startup and real login/session/list/detail/page consume
     const detail=await api.app.inject({method:"POST",url:`/${kind}/detail/query`,headers,payload:kind==="sales"?{salesId:account}:{transferId:account}});
     assert.equal(detail.statusCode,404,detail.body);
    }
-   assert.equal(full(),1);assert.equal(p.calls.filter(q=>q.sql.includes("normal-document-list:totals")).length,4);
+   assert.equal(full(),1);assert.equal(p.calls.filter(q=>q.sql.includes("normal-document-list:shared")).length,4);
+   assert.ok(!p.calls.some(q=>/normal-document-list:(?:totals|page)/.test(q.sql))); // Current P03 reader owns one shared summary/page query per request.
    assert.ok(p.calls.some(q=>q.sql.includes("FOR UPDATE OF a, s")));assert.ok(p.calls.some(q=>q.sql.includes("FROM naijue_erp.auth_session")&&q.sql.includes("FOR UPDATE")));
-   const before=p.calls.filter(q=>q.sql.includes("normal-document-list:totals")).length;changeHallAfterAuth=true;
+   const before=p.calls.filter(q=>q.sql.includes("normal-document-list:shared")).length;changeHallAfterAuth=true;
    for(const [kind,filter]of [["sales",salesFilter],["transfers",transferFilter]]as const){const response=await api.app.inject({method:"POST",url:`/${kind}/query`,headers,payload:{filter,page:1,pageSize:20}});assert.equal(response.statusCode,403,response.body);}
-   assert.equal(p.calls.filter(q=>q.sql.includes("normal-document-list:totals")).length,before);changeHallAfterAuth=false;
+   assert.equal(p.calls.filter(q=>q.sql.includes("normal-document-list:shared")).length,before);changeHallAfterAuth=false;
    role="WAREHOUSE";const changed=await api.app.inject({method:"GET",url:"/auth/session",headers});assert.equal(changed.statusCode,200);assert.ok(changed.body.includes("WAREHOUSE"));
    for(const change of [()=>{loginEnabled=false;},()=>{employment="离职";},()=>{hallEnabled=false;},()=>{authVersion=2;}]){
     loginEnabled=true;employment="在职";hallEnabled=true;authVersion=1;change();const denied=await api.app.inject({method:"GET",url:"/auth/session",headers});assert.equal(denied.statusCode,200,denied.body);assert.equal(denied.json().principal,null);
@@ -1987,15 +2108,15 @@ test("human F production startup and real login/session/list/detail/page consume
   }finally{await api.close();}assert.equal(p.counts().ends,1);
  }finally{f.cleanup();}
 });
-test("human F production full baseline failure prevents application return; changed current process denies auth before business SQL",async()=>{
+test("human F NEW synthetic V7 full baseline failure prevents application return; changed current process denies auth before business SQL",async()=>{
  for(const failure of ["startup","identity","review"]){
-  const f=categoryProductionFixture("26_v20_history_insert_identity_from_v19",false),p=exact26Driver(f.observation,sql=>sql===NATIVE_RUNTIME26_V20_METADATA_PROBE?[structuredClone(f.observation)]:undefined);
+  const f=newLivePairFixture(),p=exact26Driver(f.observation,sql=>sql===newLivePairProbe?[structuredClone(f.observation)]:undefined);
   try{
-   if(failure==="startup"){f.observation.source_routines_match=false;await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration,p.factory),{code:"NATIVE_RUNTIME26_NOT_READY"});assert.equal(p.counts().ends,1);assert.equal(p.calls.length,1);continue;}
-   const api=await createProductionRuntime26ApplicationApi(f.configuration,p.factory);try{
+   if(failure==="startup"){f.observation.source_routines_match=false;await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration,p.factory, null, syntheticCapacity()),{code:"NATIVE_RUNTIME26_NOT_READY"});assert.equal(p.counts().ends,1);assert.equal(p.calls.length,1);continue;}
+   const api=await createProductionRuntime26ApplicationApi(f.configuration,p.factory, null, syntheticCapacity());try{
     if(failure==="identity")f.observation.identity.postmaster_start="SYNTHETIC_OTHER_PROCESS";else writeFileSync(f.configuration.runtime26Review.reviewFile,"{}");
     const response=await api.app.inject({method:"GET",url:"/auth/session",headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`}});assert.ok(response.statusCode>=400);
-    assert.equal(p.calls.filter(q=>q.sql.includes("FROM naijue_erp.auth_session")).length,0);assert.equal(p.calls.filter(q=>q.sql===NATIVE_RUNTIME26_V20_METADATA_PROBE).length,1);
+    assert.equal(p.calls.filter(q=>q.sql.includes("FROM naijue_erp.auth_session")).length,0);assert.equal(p.calls.filter(q=>q.sql===newLivePairProbe).length,1);
    }finally{await api.close();}
   }finally{f.cleanup();}
  }
@@ -2016,9 +2137,20 @@ test('B10 R3 private credential file is closed, staff-selected, host-private and
 test('B10 selected CLI refuses missing key before pool; disabled path does no file IO; reconstructed tags stable',async()=>{
  const root=mkdtempSync(join(realpathSync(tmpdir()),'b10-cli-synthetic-'));
  try {
-  const c={...r3Configuration(exact26Fixture().configuration,root),staffMaintenance:true};
+  const c={...r3Configuration(exact26Fixture().configuration,root),staffMaintenance:true as const};
   const file=join(root,'configuration.json');writeFileSync(file,JSON.stringify(c),{mode:0o600});
-  for(const run of [runProductionRuntime26R3Main,runProductionRuntime26FullMain]) await assert.rejects(run([file]),/stable private request key/);
+  let apiCalls = 0, hostCalls = 0;
+  const dependencies: ProductionMainDependencies = {
+   async createCapacity() { throw Error('Injected singleton must not be replaced'); },
+   async createApi() { apiCalls++; throw Error('Missing private key must refuse before API/pool allocation'); },
+   async startHost() { hostCalls++; throw Error('Missing private key must refuse before listener'); },
+   writeStarted() { throw Error('Missing private key must not announce ready'); }
+  };
+  await assert.rejects(readProductionStaffCredentialRequestTag(c), /stable private request key/);
+  for(const run of [runProductionRuntime26R3Main,runProductionRuntime26FullMain])
+   await assert.rejects(run([file], syntheticCapacity(), dependencies),
+    { message: 'Production startup refused or failed; private dependencies must be checked by owner' });
+  assert.equal(apiCalls, 0); assert.equal(hostCalls, 0);
   const {staffMaintenance:_staff,...disabled}=c;
   assert.equal(await readProductionStaffCredentialRequestTag({...disabled,staffCredentialRequestKeyFile:'/nonexistent-private-key'}),null);
   const key=join(root,'synthetic-key');writeFileSync(key,Buffer.alloc(32,11),{mode:0o600});
@@ -2046,7 +2178,7 @@ test("P02 production rejects missing, unknown and inconsistent budgets before al
     const c = structuredClone(config()); change(c);
     assert.throws(() => parseProductionRuntimeConfiguration(c), TypeError);
     let allocations = 0;
-    await assert.rejects(createProductionApplicationApi(c, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+    await assert.rejects(createProductionApplicationApi(c, () => { allocations++; throw Error("must not allocate"); }, syntheticCapacity()), TypeError);
     assert.equal(allocations, 0);
   }
 });
@@ -2067,4 +2199,954 @@ test("P02 production budget instances enforce contention, release and per-applic
   const r1 = { ...c, profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED",
     runtime26Review: { reviewFile: "/unopened-review.json", trustedReviewSha256: "a".repeat(64) } };
   assert.deepEqual(parseProductionRuntime26Configuration(r1).authentication, c.authentication);
+});
+
+
+/** Real production composition entry, synthetic pinned metadata/driver only; no PG/network/business write. */
+import * as completeProductionProfiles from '../../../adapters/postgres/src/native-import-accounting-capability.ts';
+test('original V5 exact22 proof stays generic-only; old non-CORE review cannot admit compiled stored-pair graph',async()=>{
+ const probe=(completeProductionProfiles as unknown as Record<string,unknown>).NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_MAINTENANCE_XMIN_FROM_V22_METADATA_PROBE as string;
+ for(const state of ['complete22','missing22','legacy13','extra-key'] as const){
+  const f=exact26Fixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE']);
+  const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));
+  review.catalog={...review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V5',patchLevel:'26_hv2_history_set_guards_complete_maintenance_xmin_from_v22'};
+  const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
+  const configuration={...f.configuration,catalogueMaintenance:true as const,paymentMaintenance:true as const,organizationMaintenance:true as const,
+   runtime26Review:{...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')}};
+  const row:Record<string,unknown>={...f.observation,...(state==='legacy13'?{maintenance_xmin_acl_match:true}:{complete_maintenance_xmin_acl_match:state==='complete22'||state==='extra-key'}),...(state==='extra-key'?{maintenance_xmin_acl_match:true}:{})};
+  const p=exact26Driver(f.observation,sql=>sql===probe?[structuredClone(row)]:undefined);
+  const capacity:CapacityAdmission={async acquire(){throw new CapacityAdmissionRejected('SYNTHETIC_NO_WRITE',2);},close(){}};
+  try{
+   await assert.rejects(createProductionRuntime26ApplicationApi(configuration,p.factory,null,capacity),
+    {code:'NATIVE_RUNTIME26_NOT_READY',message:'Recorded live ledger pairs require the exact independently reviewed V7 catalog'});
+   assert.deepEqual(p.calls,[]);assert.deepEqual(p.counts(),{allocations:1,connects:0,releases:0,ends:1});
+   // Preserve the real old-profile proof semantics on the general issuer instead
+   // of changing this old V5 review into an invented V7 review.
+   const generic=exact26Driver(f.observation,sql=>sql===probe?[structuredClone(row)]:undefined),raw=generic.factory();
+   try{
+    if(state==='complete22')assert.ok(await completeProductionProfiles.createNativeRuntime26Issuer(raw,configuration.runtime26Review));
+    else await assert.rejects(completeProductionProfiles.createNativeRuntime26Issuer(raw,configuration.runtime26Review),{code:'NATIVE_RUNTIME26_NOT_READY'});
+    assert.equal(generic.calls.filter(c=>c.sql===probe).length,1);assert.equal(generic.counts().connects,generic.counts().releases);
+   }finally{await raw.end();}assert.equal(generic.counts().ends,1);
+  }finally{f.cleanup();}
+ }
+});
+
+/** Real production composition entry, synthetic pinned metadata/driver only; no PG/network/business write. */
+test('original V6 exact23 proof stays generic-only; old non-CORE review cannot admit compiled stored-pair graph',async()=>{
+ const probe=(completeProductionProfiles as unknown as Record<string,unknown>).NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_WRITE_XMIN_FROM_V22_METADATA_PROBE as string;
+ for(const state of ['complete23','missing23','legacy22','extra-key'] as const){
+  const f=exact26Fixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE']);
+  const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));
+  review.catalog={...review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V6',patchLevel:'26_hv2_history_set_guards_complete_write_xmin_from_v22'};
+  const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
+  const configuration={...f.configuration,catalogueMaintenance:true as const,paymentMaintenance:true as const,organizationMaintenance:true as const,
+   runtime26Review:{...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')}};
+  const row:Record<string,unknown>={...f.observation,...(state==='legacy22'?{complete_maintenance_xmin_acl_match:true}:{complete_write_xmin_acl_match:state==='complete23'||state==='extra-key'}),...(state==='extra-key'?{complete_maintenance_xmin_acl_match:true}:{})};
+  const p=exact26Driver(f.observation,sql=>sql===probe?[structuredClone(row)]:undefined);
+  const capacity:CapacityAdmission={async acquire(){throw new CapacityAdmissionRejected('SYNTHETIC_NO_WRITE',2);},close(){}};
+  try{
+   await assert.rejects(createProductionRuntime26ApplicationApi(configuration,p.factory,null,capacity),
+    {code:'NATIVE_RUNTIME26_NOT_READY',message:'Recorded live ledger pairs require the exact independently reviewed V7 catalog'});
+   assert.deepEqual(p.calls,[]);assert.deepEqual(p.counts(),{allocations:1,connects:0,releases:0,ends:1});
+   const generic=exact26Driver(f.observation,sql=>sql===probe?[structuredClone(row)]:undefined),raw=generic.factory();
+   try{
+    if(state==='complete23')assert.ok(await completeProductionProfiles.createNativeRuntime26Issuer(raw,configuration.runtime26Review));
+    else await assert.rejects(completeProductionProfiles.createNativeRuntime26Issuer(raw,configuration.runtime26Review),{code:'NATIVE_RUNTIME26_NOT_READY'});
+    assert.equal(generic.calls.filter(c=>c.sql===probe).length,1);assert.equal(generic.counts().connects,generic.counts().releases);
+   }finally{await raw.end();}assert.equal(generic.counts().ends,1);
+  }finally{f.cleanup();}
+ }
+});
+
+/** LIVE layer5 original production composition; synthetic pinned metadata/driver only.
+ * No PG, real approval, socket listen, DDL, grant or document writes. */
+test('LIVE layer5 API RED V7 original issuer is awaited before original routes; incomplete pair/xmin proof or stale catalog denies startup',async()=>{
+ const symbol=(completeProductionProfiles as unknown as Record<string,unknown>).NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE;
+ assert.equal(typeof symbol,'string','Original issuer lacks closed exact137 V7 successor');const probe=symbol as string;
+ for(const state of ['complete','missing-pair','false-pair','missing-xmin','stale-catalog','extra-key'] as const){
+  const f=exact26Fixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE']);
+  const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));
+  review.catalog={...review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V7',patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22'};
+  const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
+  const configuration={...f.configuration,catalogueMaintenance:true as const,paymentMaintenance:true as const,organizationMaintenance:true as const,
+   runtime26Review:{...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')}};
+  const row:Record<string,unknown>={...f.observation,
+   ...(state==='missing-pair'?{}:{recorded_live_balance_contract_match:state!=='false-pair'}),
+   ...(state==='missing-xmin'?{}:{complete_write_xmin_acl_match:true}),
+   ...(state==='stale-catalog'?{catalog_sha256:'b'.repeat(64)}:{}),...(state==='extra-key'?{unreviewed_pair_fallback:true}:{})};
+  const p=exact26Driver(f.observation,sql=>sql===probe?[structuredClone(row)]:undefined);
+  const capacity:CapacityAdmission={async acquire(){throw new CapacityAdmissionRejected('SYNTHETIC_NO_WRITE',2);},close(){}};
+  try{
+   if(state!=='complete')await assert.rejects(createProductionRuntime26ApplicationApi(configuration,p.factory,null,capacity),{code:'NATIVE_RUNTIME26_NOT_READY'});
+   else{
+    const api=await createProductionRuntime26ApplicationApi(configuration,p.factory,null,capacity);
+    try{
+     await api.app.ready();assert.equal(api.app.server.listening,false);
+     for(const family of ['categories','colors','fits'])assert.equal(api.app.hasRoute({method:'POST',url:`/catalogue/${family}/commands`}),true);
+     assert.equal(api.app.hasRoute({method:'POST',url:'/current-form/products/query'}),true);
+     assert.equal(p.calls.filter(c=>c.sql===probe).length,1);assert.ok(p.calls.some(c=>c.sql===NATIVE_RUNTIME26_IDENTITY_PROBE));
+     assert.ok(!p.calls.some(c=>c.sql===completeProductionProfiles.NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_WRITE_XMIN_FROM_V22_METADATA_PROBE));
+    }finally{await api.close();}
+   }
+   assert.ok(!p.calls.some(c=>/^(?:INSERT|UPDATE|DELETE|GRANT|REVOKE|ALTER|CREATE|TRUNCATE)\b/.test(c.sql)));
+   assert.equal(p.counts().allocations,1);assert.equal(p.counts().ends,1);assert.equal(p.counts().connects,p.counts().releases);
+  }finally{f.cleanup();}
+ }
+});
+test('LIVE layer5 API hold unresolved V7 actual catalog fails before every pool connect/query and disposes its allocated driver',async()=>{
+ for(const catalogHash of [null,'','PENDING_ACTUAL_PG_CANONICAL_EXPORT']){
+  const f=exact26Fixture();const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));
+  review.catalog={format:'EXACT26_RUNTIME_CATALOG_EXPORT_V7',patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22',sha256:catalogHash};
+  const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
+  const configuration={...f.configuration,runtime26Review:{...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')}};
+  const p=exact26Driver(f.observation);
+  try{
+   await assert.rejects(createProductionRuntime26ApplicationApi(configuration,p.factory,null,syntheticCapacity()),{code:'NATIVE_RUNTIME26_NOT_READY'});
+   assert.deepEqual(p.calls,[]);assert.deepEqual(p.counts(),{allocations:1,connects:0,releases:0,ends:1});
+  }finally{f.cleanup();}
+ }
+});
+
+/** LIVE admission tests use SYNTHETIC pinned files/driver rows only. They do not
+ * create actual V7 catalog pins, run SQL, grant authority or approve a release. */
+function liveAdmissionFixture(options: {
+ format?: string; patchLevel?: string; catalogHash?: unknown;
+ mutateRow?: (row: Record<string,unknown>) => void;
+} = {}) {
+ const f=exact26Fixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE','HISTORY_REVISION']);
+ const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));
+ review.catalog={format:options.format??'EXACT26_RUNTIME_CATALOG_EXPORT_V7',
+  patchLevel:options.patchLevel??'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22',
+  sha256:Object.hasOwn(options,'catalogHash')?options.catalogHash:'a'.repeat(64)};
+ const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
+ const configuration={...f.configuration,runtime26Review:{...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')}};
+ const v7=review.catalog.format==='EXACT26_RUNTIME_CATALOG_EXPORT_V7';
+ const probe=v7?completeProductionProfiles.NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE
+  :completeProductionProfiles.NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_WRITE_XMIN_FROM_V22_METADATA_PROBE;
+ const row:Record<string,unknown>={...f.observation,complete_write_xmin_acl_match:true,...(v7?{recorded_live_balance_contract_match:true}:{})};
+ options.mutateRow?.(row);
+ const p=exact26Driver(f.observation,sql=>sql===probe?[structuredClone(row)]:undefined);
+ return {...f,configuration,p,probe};
+}
+const liveAdmissionRequirement={requiredObservation:'RECORDED_LIVE_LEDGER_PAIRS_V7' as const};
+
+test('LIVE admission RED original production R1/R2/R3/full V6 cannot expose new ledger reader or writers before any pool connect/query',async()=>{
+ for(const mode of ['r1','r2','r3','full'] as const){
+  const f=liveAdmissionFixture({format:'EXACT26_RUNTIME_CATALOG_EXPORT_V6',patchLevel:'26_hv2_history_set_guards_complete_write_xmin_from_v22'});
+  let closed=0;const capacity:CapacityAdmission={async acquire(){throw Error('NO_BUSINESS_CAPACITY');},close(){closed++;}};
+  let unexpected:Awaited<ReturnType<typeof createProductionRuntime26ApplicationApi>>|undefined;
+  try{
+   const run=async()=>{unexpected=await (mode==='r1'?createProductionRuntime26ApplicationApi(f.configuration,f.p.factory,null,capacity)
+    :mode==='r2'?createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration),f.p.factory,null,undefined,capacity)
+    :mode==='r3'?createProductionRuntime26R3ApplicationApi(r3Configuration(f.configuration,'/unopened-inactive-live-media'),f.p.factory,null,undefined,capacity)
+    :createProductionRuntime26FullApplicationApi(r3Configuration(f.configuration,'/unopened-inactive-live-media'),f.p.factory,null,capacity));return unexpected;};
+   await assert.rejects(run,{code:'NATIVE_RUNTIME26_NOT_READY'});
+   assert.deepEqual(f.p.calls,[]);assert.deepEqual(f.p.counts(),{allocations:1,connects:0,releases:0,ends:1});assert.equal(closed,1);
+  }finally{await unexpected?.close();f.cleanup();}
+ }
+});
+test('LIVE admission RED original non-CORE legacy API cannot instantiate new-column graph without any reviewed runtime',async()=>{
+ let allocations=0;const driver=()=>{allocations++;throw Error('MUST_NOT_ALLOCATE_LEGACY_DRIVER');};
+ await assert.rejects(createProductionApplicationApi(config(),driver,syntheticCapacity()),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+ assert.equal(allocations,0);
+});
+test('LIVE admission original production V7 full proof is awaited before read/R2 route exposure and retains same managed baseline',async()=>{
+ for(const commands of [false,true]){
+  const f=liveAdmissionFixture();
+  try{
+   const api=commands?await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration),f.p.factory,null,undefined,syntheticCapacity())
+    :await createProductionRuntime26ApplicationApi(f.configuration,f.p.factory,null,syntheticCapacity());
+   try{
+    await api.app.ready();assert.equal(api.app.server.listening,false);
+    assert.equal(api.app.hasRoute({method:'POST',url:'/inventory/ledger/query'}),true);
+    for(const url of ['/sales/commands','/transfers/commands'])assert.equal(api.app.hasRoute({method:'POST',url}),commands);
+    assert.equal(f.p.calls.filter(call=>call.sql===f.probe).length,1);
+    assert.ok(f.p.calls.some(call=>call.sql===NATIVE_RUNTIME26_IDENTITY_PROBE));
+    assert.ok(!f.p.calls.some(call=>/^\s*(?:\/\*[\s\S]*?\*\/\s*)?(?:INSERT|UPDATE|DELETE|GRANT|REVOKE|ALTER|CREATE|TRUNCATE)\b/i.test(call.sql)));
+   }finally{await api.close();}
+   assert.equal(f.p.counts().ends,1);assert.equal(f.p.counts().connects,f.p.counts().releases);
+  }finally{f.cleanup();}
+ }
+});
+test('LIVE admission V7 missing false nonboolean pair or xmin proof and stale or extra row never returns original application',async()=>{
+ const edits=[(r:Record<string,unknown>)=>{delete r.recorded_live_balance_contract_match;},
+  (r:Record<string,unknown>)=>{r.recorded_live_balance_contract_match=false;},
+  (r:Record<string,unknown>)=>{r.recorded_live_balance_contract_match='true';},
+  (r:Record<string,unknown>)=>{delete r.complete_write_xmin_acl_match;},
+  (r:Record<string,unknown>)=>{r.complete_write_xmin_acl_match=false;},
+  (r:Record<string,unknown>)=>{r.catalog_sha256='b'.repeat(64);},
+  (r:Record<string,unknown>)=>{r.unreviewedPairFallback=true;}];
+ for(const mutateRow of edits){const f=liveAdmissionFixture({mutateRow});try{
+  await assert.rejects(createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration),f.p.factory,null,undefined,syntheticCapacity()),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  assert.equal(f.p.counts().ends,1);assert.equal(f.p.counts().connects,f.p.counts().releases);
+  assert.ok(!f.p.calls.some(call=>/^\s*(?:\/\*[\s\S]*?\*\/\s*)?(?:INSERT|UPDATE|DELETE|GRANT|REVOKE|ALTER|CREATE|TRUNCATE)\b/i.test(call.sql)));
+ }finally{f.cleanup();}}
+});
+test('LIVE admission null unknown future and borrowed catalogs fail original production before pool connect/query with owner disposal',async()=>{
+ const cases=[...[null,undefined,'','PENDING_ACTUAL_PG_CANONICAL_EXPORT'].map(catalogHash=>({catalogHash})),
+  {format:'EXACT26_RUNTIME_CATALOG_EXPORT_V8'},
+  {patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22_future'},
+  {format:'EXACT26_RUNTIME_CATALOG_EXPORT_V6'}];
+ for(const options of cases){const f=liveAdmissionFixture(options);try{
+  await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration,f.p.factory,null,syntheticCapacity()),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  assert.deepEqual(f.p.calls,[]);assert.deepEqual(f.p.counts(),{allocations:1,connects:0,releases:0,ends:1});
+ }finally{f.cleanup();}}
+});
+test('LIVE admission RED caller-required V7 observation is checked before connect while absent requirement preserves general V6 issuer',async()=>{
+ for(const required of [false,true]){const f=liveAdmissionFixture({format:'EXACT26_RUNTIME_CATALOG_EXPORT_V6',patchLevel:'26_hv2_history_set_guards_complete_write_xmin_from_v22'});
+  const raw=f.p.factory();try{
+   const options={...f.configuration.runtime26Review,...(required?liveAdmissionRequirement:{})};
+   if(required){await assert.rejects(completeProductionProfiles.createNativeRuntime26Issuer(raw,options),{code:'NATIVE_RUNTIME26_NOT_READY',message:'Recorded live ledger pairs require the exact independently reviewed V7 catalog'});assert.equal(f.p.counts().connects,0);assert.deepEqual(f.p.calls,[]);}
+   else{const issuer=await completeProductionProfiles.createNativeRuntime26Issuer(raw,options);const lease=await issuer.pool.connect();await issuer.runtime26.assertReady(lease,'INVENTORY_ADMISSION');lease.release();assert.ok(f.p.calls.every(call=>call.sql===f.probe));}
+  }finally{await raw.end();f.cleanup();}
+ }
+});
+test('LIVE admission caller requirement is a closed exact observation selector and V7 still needs its actual full proof',async()=>{
+ for(const requiredObservation of [undefined,null,true,'RECORDED_LIVE_LEDGER_PAIRS_V8','complete-write-v6']){
+  const f=liveAdmissionFixture(),raw=f.p.factory();try{
+   const options={...f.configuration.runtime26Review,requiredObservation} as unknown as Parameters<typeof completeProductionProfiles.createNativeRuntime26Issuer>[1];
+   await assert.rejects(completeProductionProfiles.createNativeRuntime26Issuer(raw,options),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(f.p.counts().connects,0);assert.deepEqual(f.p.calls,[]);
+  }finally{await raw.end();f.cleanup();}
+ }
+ const f=liveAdmissionFixture(),raw=f.p.factory();try{
+  const issuer=await completeProductionProfiles.createNativeRuntime26Issuer(raw,{...f.configuration.runtime26Review,...liveAdmissionRequirement});
+  assert.ok(issuer);assert.deepEqual(f.p.calls.map(call=>call.sql),[f.probe]);
+ }finally{await raw.end();f.cleanup();}
+});
+
+
+/** STAFF CREATE admission RED: finite source-owned cells; synthetic driver only.
+ * No PG, grant, schema, credential activation or all-action acceptance. */
+const staffAdmissionExpectedCells2159 = [
+  {
+    "table_name": "staff",
+    "column_name": "id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "name",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "role",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "hall_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "contact",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "employment_status",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "version",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "name",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "role",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "hall_id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "contact",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "employment_status",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "version",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "id",
+    "privilege": "UPDATE"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "staff_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "login_name",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "login_enabled",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "auth_version",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "version",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "created_at",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "updated_at",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "password_hash",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "id",
+    "privilege": "UPDATE"
+  },
+  {
+    "table_name": "hall",
+    "column_name": "id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "hall",
+    "column_name": "name",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "hall",
+    "column_name": "enabled",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "hall",
+    "column_name": "name",
+    "privilege": "UPDATE"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "action",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "actor_account_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "after_values",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "before_values",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "new_version",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_account_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_category_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_color_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_customer_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_fit_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_hall_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_history_sales_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_history_transfer_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_payment_account_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_payment_method_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_product_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_sales_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_staff_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_supplier_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_transfer_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_type",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_warehouse_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "occurred_at",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "old_version",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "operation_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "action",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "actor_account_id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "after_values",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "before_values",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "new_version",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "object_type",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "occurred_at",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "old_version",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "audit_change",
+    "column_name": "operation_id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "actor_account_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "request_key",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "request_hash",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "action",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "target_type",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "target_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "status",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "result_data",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "completed_at",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "action",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "actor_account_id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "completed_at",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "request_hash",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "request_key",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "result_data",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "status",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "target_id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "operation_receipt",
+    "column_name": "target_type",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "import_batch",
+    "column_name": "status",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "import_batch",
+    "column_name": "inventory_mode",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "auth_session",
+    "column_name": "account_id",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "auth_session",
+    "column_name": "revoked_at",
+    "privilege": "SELECT"
+  }
+];
+const staffAdmissionLinkedCells2159 = [
+  {
+    "table_name": "user_account",
+    "column_name": "id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "staff_id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "login_name",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "login_enabled",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "auth_version",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "version",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "created_at",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "updated_at",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "password_hash",
+    "privilege": "INSERT"
+  }
+];
+const staffAdmissionCriticalCells2159 = [
+  {
+    "table_name": "staff",
+    "column_name": "contact",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "version",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "version",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "created_at",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "user_account",
+    "column_name": "updated_at",
+    "privilege": "SELECT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "name",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "role",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "hall_id",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "contact",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "employment_status",
+    "privilege": "INSERT"
+  },
+  {
+    "table_name": "staff",
+    "column_name": "version",
+    "privilege": "INSERT"
+  }
+];
+const staffAdmissionCellKey2159 = (c: {table_name:string;column_name:string;privilege:string}) => `${c.table_name}.${c.column_name}:${c.privilege}`;
+function staffAdmissionFixture2159(removed: ReadonlyArray<(typeof staffAdmissionCriticalCells2159)[number]> = [], linked = false) {
+  const f = newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE']);
+  const all = [...staffAdmissionExpectedCells2159, ...(linked ? staffAdmissionLinkedCells2159 : [])];
+  const granted = new Set(all.map(staffAdmissionCellKey2159));
+  for (const cell of removed) granted.delete(staffAdmissionCellKey2159(cell));
+  let role: 'ADMIN' | 'WAREHOUSE' = 'ADMIN';
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql.startsWith('/* staff-maintenance:permission-admission-v1 */')) {
+      assert.equal(values.length, 1); assert.equal(typeof values[0], 'string');
+      const required = JSON.parse(values[0] as string) as typeof all;
+      assert.deepEqual(required, all, 'Source-owned exact statement footprint, not caller booleans or omitted cells');
+      return [{ allowed: required.length > 0 && required.every(cell => granted.has(staffAdmissionCellKey2159(cell))), cell_count: String(required.length) }];
+    }
+    if (sql.includes('maintenance:identity') || sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s'))
+      return [{account_id:account,staff_id:'00000000-0000-4000-8000-000000000003',login_name:'SYNTHETIC_STAFF_ADMISSION',password_hash:'SYNTHETIC_UNUSED',login_enabled:true,auth_version:1,role,employment_status:'在职',hall_id:hall,native_hall_id:hall,hall_enabled:true}];
+    if (sql.includes('maintenance:administrator-lock')) return [];
+    if (sql.includes('maintenance:hall')) return [{id:hall,enabled:true}];
+    if (sql.startsWith('WITH matched AS') && sql.includes('FROM naijue_erp.staff m')) return [{total:'0',items:[]}];
+    return undefined;
+  });
+  const tag = linked ? createNodeCredentialRequestTag(Buffer.alloc(32, 83)) : null;
+  return {...f,p,tag,setRole(value:'ADMIN'|'WAREHOUSE'){role=value;}};
+}
+const staffAdmissionIsBusinessSql2159 = (sql:string) => /^\s*(?:\/\*[\s\S]*?\*\/\s*)?(?:INSERT|UPDATE|DELETE|GRANT|REVOKE|ALTER|CREATE|TRUNCATE)\b/i.test(sql);
+
+test('STAFF CREATE admission RED valid V7 purpose cannot expose enabled staff when any original read or staff INSERT cell is missing', async () => {
+  for (const cell of staffAdmissionCriticalCells2159) {
+    const f = staffAdmissionFixture2159([cell]);
+    let unexpected: Awaited<ReturnType<typeof createProductionRuntime26ApplicationApi>> | undefined;
+    try {
+      await assert.rejects(async () => { unexpected = await createProductionRuntime26ApplicationApi({...f.configuration,staffMaintenance:true},f.p.factory,null,syntheticCapacity()); }, {code:'NATIVE_RUNTIME26_NOT_READY'});
+      assert.equal(unexpected,undefined,'No usable API or maintenance route is returned');
+      const proof = f.p.calls.find(c => c.sql.startsWith('/* staff-maintenance:permission-admission-v1 */'));
+      assert.ok(proof,staffAdmissionCellKey2159(cell));
+      const prior = f.p.calls.filter(c => c.lease===proof.lease).slice(0,-1);
+      assert.ok(prior.some(c => c.sql===NATIVE_RUNTIME26_IDENTITY_PROBE),'Actual issuer identity precedes permission observation on original lease');
+      assert.equal(f.p.calls.filter(c => c.sql===newLivePairProbe).length,1,'Original V7 full proof remains awaited');
+      assert.equal(f.p.calls.some(c => staffAdmissionIsBusinessSql2159(c.sql)),false);
+      assert.equal(f.p.counts().allocations,1); assert.equal(f.p.counts().ends,1); assert.equal(f.p.counts().connects,f.p.counts().releases);
+    } finally { await unexpected?.close(); f.cleanup(); }
+  }
+});
+test('STAFF CREATE admission RED selected credential capability separately needs every original new-account INSERT cell', async () => {
+  for (const cell of staffAdmissionLinkedCells2159) {
+    const f = staffAdmissionFixture2159([cell],true);
+    let unexpected: Awaited<ReturnType<typeof createProductionRuntime26ApplicationApi>> | undefined;
+    try {
+      await assert.rejects(async () => { unexpected=await createProductionRuntime26ApplicationApi({...f.configuration,staffMaintenance:true},f.p.factory,f.tag,syntheticCapacity()); },{code:'NATIVE_RUNTIME26_NOT_READY'});
+      assert.equal(unexpected,undefined); assert.ok(f.p.calls.some(c=>c.sql.startsWith('/* staff-maintenance:permission-admission-v1 */')));
+      assert.equal(f.p.calls.some(c=>staffAdmissionIsBusinessSql2159(c.sql)),false); assert.equal(f.p.counts().ends,1); assert.equal(f.p.counts().connects,f.p.counts().releases);
+    } finally { await unexpected?.close(); f.cleanup(); }
+  }
+});
+test('STAFF CREATE admission omitted private staff selection is unchanged despite missing staff/account cells',async()=>{
+  const f=staffAdmissionFixture2159(staffAdmissionCriticalCells2159);
+  try { const api=await createProductionRuntime26ApplicationApi(f.configuration,f.p.factory,null,syntheticCapacity());
+    try { assert.equal(api.app.hasRoute({method:'POST',url:'/staff/commands'}),false); assert.equal(api.app.hasRoute({method:'POST',url:'/accounts/commands'}),false);
+      assert.equal(f.p.calls.some(c=>c.sql.startsWith('/* staff-maintenance:permission-admission-v1 */')),false); assert.equal(f.p.calls.filter(c=>c.sql===newLivePairProbe).length,1); assert.equal(api.app.server.listening,false);
+    } finally { await api.close(); }
+    assert.equal(f.p.counts().ends,1); assert.equal(f.p.counts().connects,f.p.counts().releases);
+  } finally { f.cleanup(); }
+});
+test('STAFF CREATE admission complete finite proof does not replace original ADMIN-only staff role enforcement',async()=>{
+  const f=staffAdmissionFixture2159();
+  try { const api=await createProductionRuntime26ApplicationApi({...f.configuration,staffMaintenance:true},f.p.factory,null,syntheticCapacity());
+    try { assert.equal(api.app.hasRoute({method:'POST',url:'/staff/commands'}),true); assert.equal(api.app.hasRoute({method:'POST',url:'/accounts/commands'}),false);
+      assert.ok(f.p.calls.some(c=>c.sql.startsWith('/* staff-maintenance:permission-admission-v1 */'))); const headers={origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${f.p.token}`};
+      const query={search:'',status:'all',hallId:null,page:1,pageSize:20};
+      const allowed=await api.app.inject({method:'POST',url:'/staff/query',headers,payload:query}); assert.equal(allowed.statusCode,200,allowed.body);
+      f.setRole('WAREHOUSE'); const denied=await api.app.inject({method:'POST',url:'/staff/query',headers,payload:query}); assert.equal(denied.statusCode,403,denied.body); assert.equal(denied.json().error.code,'FORBIDDEN');
+      assert.equal(f.p.calls.some(c=>staffAdmissionIsBusinessSql2159(c.sql)),false); assert.equal(api.app.server.listening,false);
+    } finally { await api.close(); }
+    assert.equal(f.p.counts().allocations,1); assert.equal(f.p.counts().ends,1); assert.equal(f.p.counts().connects,f.p.counts().releases);
+  } finally { f.cleanup(); }
+});
+
+/** 2251 successor only: original V7 factory/issuer/pool still own admission.
+ * The wrapper changes only the raw permission-query result or its settlement.
+ * No schema/ACL/role SQL, getter invocation, fake issuer or business write. */
+const staffPermissionMarker2251='/* staff-maintenance:permission-admission-v1 */';
+function staffDeferred2251<T>() { let resolve!:(value:T)=>void,reject!:(error:unknown)=>void;const promise=new Promise<T>((yes,no)=>{resolve=yes;reject=no;});return {promise,resolve,reject}; }
+function staffPermissionDriver2251(f:ReturnType<typeof staffAdmissionFixture2159>,alter:(result:unknown,ordinal:number)=>unknown|Promise<unknown>) {
+  const releases:{pending:boolean;discarded:boolean}[]=[];let ordinal=0;
+  return {releases,factory:()=>{const raw=f.p.factory(),connect=raw.connect.bind(raw);
+    raw.connect=async()=>{const client=await connect(),query=client.query.bind(client);const release=client.release.bind(client) as (discard?:Error|boolean)=>void;let pending=false;
+      client.query=async(sql:string,values:unknown[]=[])=>{const result=await query(sql,values);if(!sql.startsWith(staffPermissionMarker2251))return result;
+        pending=true;try{return await alter(result,++ordinal) as Awaited<ReturnType<typeof query>>;}finally{pending=false;}};
+      client.release=(discard?:Error|boolean)=>{releases.push({pending,discarded:discard===true||discard instanceof Error});return release(discard);};return client;};return raw;}};
+}
+// Observation-only barrier: the test race never releases a lease or admits an
+// operation. It prevents an old source lacking the probe from hanging a test.
+async function staffProbeEntered2251<T>(entered:Promise<void>,terminal:Promise<T>):Promise<void>{
+  await Promise.race([entered,terminal.then(()=>{throw Error('STAFF_PERMISSION_PROBE_NOT_OBSERVED');})]);
+}
+class StaffProtocolResult2251 {
+  command='SELECT';fields:unknown[]=[];rows:unknown[];rowCount:number;
+  constructor(rows:unknown[],rowCount=1){this.rows=rows;this.rowCount=rowCount;}
+}
+
+test('STAFF CREATE admission strict own-data shape rejects malformed outer/row evidence without invoking getters',async()=>{
+  let getters=0;
+  const getter=()=>{getters++;return true;},count=String(staffAdmissionExpectedCells2159.length),good=()=>({allowed:true,cell_count:count});
+  const cases:{name:string;make:()=>unknown}[]=[
+    {name:'null-result',make:()=>null},{name:'undefined-result',make:()=>undefined},
+    {name:'inherited-outer-fields',make:()=>Object.create({rows:[good()],rowCount:1})},
+    {name:'outer-rows-accessor',make:()=>Object.defineProperties({rowCount:1},{rows:{enumerable:true,get:getter}})},
+    {name:'outer-count-accessor',make:()=>Object.defineProperties({rows:[good()]},{rowCount:{enumerable:true,get:getter}})},
+    {name:'wrong-outer-count-type',make:()=>({rows:[good()],rowCount:'1'})},
+    {name:'no-rows',make:()=>({rowCount:1})},{name:'non-array-rows',make:()=>({rows:{0:good(),length:1},rowCount:1})},
+    {name:'null-row',make:()=>({rows:[null],rowCount:1})},{name:'undefined-row',make:()=>({rows:[undefined],rowCount:1})},
+    {name:'sparse-row',make:()=>({rows:new Array(1),rowCount:1})},{name:'extra-row',make:()=>({rows:[good(),good()],rowCount:1})},
+    {name:'array-index-accessor',make:()=>{const rows:unknown[]=[];Object.defineProperty(rows,'0',{enumerable:true,configurable:true,get:getter});return {rows,rowCount:1};}},
+    {name:'row-array',make:()=>({rows:[[true,count]],rowCount:1})},
+    {name:'inherited-row-proof-with-unrelated-own-keys',make:()=>({rows:[Object.assign(Object.create(good()),{x:1,y:2})],rowCount:1})},
+    {name:'nonplain-row',make:()=>({rows:[Object.assign(Object.create({unrelated:true}),good())],rowCount:1})},
+    {name:'allowed-accessor',make:()=>({rows:[Object.defineProperty({cell_count:count},'allowed',{enumerable:true,get:getter})],rowCount:1})},
+    {name:'cell-count-accessor',make:()=>({rows:[Object.defineProperty({allowed:true},'cell_count',{enumerable:true,get:getter})],rowCount:1})},
+    {name:'non-enumerable-field',make:()=>({rows:[Object.defineProperty({allowed:true},'cell_count',{value:count,enumerable:false})],rowCount:1})},
+    {name:'extra-symbol',make:()=>({rows:[Object.assign(good(),{[Symbol('extra')]:true})],rowCount:1})},
+    {name:'false-proof',make:()=>({rows:[{allowed:false,cell_count:count}],rowCount:1})},
+    {name:'truthy-nonboolean',make:()=>({rows:[{allowed:'true',cell_count:count}],rowCount:1})},
+    {name:'numeric-cell-count',make:()=>({rows:[{allowed:true,cell_count:Number(count)}],rowCount:1})},
+    {name:'wrong-cell-count',make:()=>({rows:[{allowed:true,cell_count:'0'}],rowCount:1})}
+  ];
+  for(const item of cases){const f=staffAdmissionFixture2159(),driver=staffPermissionDriver2251(f,()=>item.make());let unexpected:Awaited<ReturnType<typeof createProductionRuntime26ApplicationApi>>|undefined;
+    try{await assert.rejects(async()=>{unexpected=await createProductionRuntime26ApplicationApi({...f.configuration,staffMaintenance:true},driver.factory,null,syntheticCapacity());},{code:'NATIVE_RUNTIME26_NOT_READY'},item.name);
+      assert.equal(unexpected,undefined,item.name);assert.ok(f.p.calls.some(c=>c.sql.startsWith(staffPermissionMarker2251)),item.name);assert.equal(getters,0,item.name);
+      assert.equal(f.p.calls.some(c=>staffAdmissionIsBusinessSql2159(c.sql)),false);assert.equal(f.p.counts().ends,1);assert.equal(f.p.counts().connects,f.p.counts().releases);
+    }finally{await unexpected?.close();f.cleanup();}}
+});
+test('STAFF CREATE admission accepts genuine class-shaped PG Result outer data without weakening plain own-data row proof',async()=>{
+  const f=staffAdmissionFixture2159(),driver=staffPermissionDriver2251(f,()=>new StaffProtocolResult2251([{allowed:true,cell_count:String(staffAdmissionExpectedCells2159.length)}]));
+  try{const api=await createProductionRuntime26ApplicationApi({...f.configuration,staffMaintenance:true},driver.factory,null,syntheticCapacity());
+    try{assert.equal(api.app.hasRoute({method:'POST',url:'/staff/commands'}),true);assert.equal(api.app.server.listening,false);
+      const proof=f.p.calls.find(c=>c.sql.startsWith(staffPermissionMarker2251));assert.ok(proof);const same=f.p.calls.filter(c=>c.lease===proof.lease);
+      assert.ok(same.findIndex(c=>c.sql.startsWith(staffPermissionMarker2251))<same.findLastIndex(c=>c.sql===NATIVE_RUNTIME26_IDENTITY_PROBE),'Original verify is awaited after permission observation');
+    }finally{await api.close();}assert.equal(f.p.counts().ends,1);assert.equal(f.p.counts().connects,f.p.counts().releases);
+  }finally{f.cleanup();}
+});
+test('STAFF CREATE admission permission query rejection is fail-closed and uses original sanitized pool disposal',async()=>{
+  for(const code of ['42501','ECONNRESET']){const f=staffAdmissionFixture2159(),driver=staffPermissionDriver2251(f,()=>{throw Object.assign(Error('SYNTHETIC_PRIVATE_PERMISSION_DRIVER_DETAIL'),{code});});let unexpected:Awaited<ReturnType<typeof createProductionRuntime26ApplicationApi>>|undefined;
+    try{await assert.rejects(async()=>{unexpected=await createProductionRuntime26ApplicationApi({...f.configuration,staffMaintenance:true},driver.factory,null,syntheticCapacity());},(error:unknown)=>error instanceof Error&&error.name==='PostgresQueryError'&&!error.message.includes('SYNTHETIC_PRIVATE_PERMISSION_DRIVER_DETAIL'));
+      assert.equal(unexpected,undefined);assert.ok(f.p.calls.some(c=>c.sql.startsWith(staffPermissionMarker2251)));assert.equal(f.p.calls.some(c=>staffAdmissionIsBusinessSql2159(c.sql)),false);assert.equal(f.p.counts().ends,1);assert.equal(f.p.counts().connects,f.p.counts().releases);
+    }finally{await unexpected?.close();f.cleanup();}}
+});
+test('STAFF CREATE admission deferred permission success cannot outlive changed original synthetic review pin',async()=>{
+  const f=staffAdmissionFixture2159(),entered=staffDeferred2251<void>(),gate=staffDeferred2251<void>();let unexpected:Awaited<ReturnType<typeof createProductionRuntime26ApplicationApi>>|undefined;
+  const driver=staffPermissionDriver2251(f,async result=>{entered.resolve();await gate.promise;return result;});
+  const startup=createProductionRuntime26ApplicationApi({...f.configuration,staffMaintenance:true},driver.factory,null,syntheticCapacity()).then(api=>{unexpected=api;return api;});
+  try{await staffProbeEntered2251(entered.promise,startup);assert.equal(unexpected,undefined);
+    const filename=f.configuration.runtime26Review.reviewFile;writeFileSync(filename,readFileSync(filename,'utf8')+' ',{mode:0o600});gate.resolve();
+    await assert.rejects(startup,{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(unexpected,undefined);assert.equal(f.p.calls.some(c=>staffAdmissionIsBusinessSql2159(c.sql)),false);assert.equal(f.p.counts().ends,1);assert.equal(f.p.counts().connects,f.p.counts().releases);
+  }finally{gate.resolve();await startup.catch(()=>{});await unexpected?.close();f.cleanup();}
+});
+test('STAFF CREATE admission pending readiness preserves original cancellation and close/discard lifecycle without late readiness',async()=>{
+  for(const action of ['abort','close'] as const){const f=staffAdmissionFixture2159(),entered=staffDeferred2251<void>(),gate=staffDeferred2251<void>(),drained=staffDeferred2251<void>();
+    const driver=staffPermissionDriver2251(f,async(result,ordinal)=>{if(ordinal===2){entered.resolve();try{await gate.promise;}finally{drained.resolve();}}return result;});
+    let api:Awaited<ReturnType<typeof createProductionRuntime26ApplicationApi>>|undefined,closing:Promise<void>|undefined,pending:Promise<boolean>|undefined;
+    try{api=await createProductionRuntime26ApplicationApi({...f.configuration,staffMaintenance:true},driver.factory,null,syntheticCapacity());const abort=new AbortController();pending=api.readiness!(abort.signal);
+      await staffProbeEntered2251(entered.promise,pending);const before=f.p.counts().connects;
+      if(action==='abort'){abort.abort();await Promise.resolve();assert.equal(driver.releases.some(r=>r.pending),false,'Abort must not invent a premature reusable lease release');gate.resolve();assert.equal(await pending,false);await drained.promise;closing=api.close();await closing;}
+      else{closing=api.close();assert.equal(await pending,false);await closing;const disposed=driver.releases.filter(r=>r.pending);assert.equal(disposed.length,1);assert.ok(disposed.every(r=>r.discarded),'Original close may retire an in-flight lease only by discard');gate.resolve();await drained.promise;}
+      assert.equal(await api.readiness!(),false);assert.equal(f.p.counts().connects,before);assert.equal(f.p.counts().ends,1);assert.equal(f.p.counts().connects,f.p.counts().releases);assert.equal(f.p.calls.some(c=>staffAdmissionIsBusinessSql2159(c.sql)),false);
+    }finally{gate.resolve();await pending?.catch(()=>false);await closing?.catch(()=>{});if(api&&!closing)await api.close();f.cleanup();}}
 });

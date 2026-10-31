@@ -35,7 +35,7 @@ function selected(facts: ReadonlyMap<EntityId<"sku">, SkuSnapshot>, wanted: read
 
 test("native size editing: sales full proposal appends known 160/S and unsized SKUs, preserving signed economics and old observations", async () => {
   const store = new SyntheticStore(); store.seedIdentity(syntheticSalesIdentity());
-  const facts = catalogue(ids.sku), productId = sid("product", 31003); let next = 32000;
+  const facts = catalogue(ids.sku), productId = sid("product", 31003), salespersonId = sid("staff",31004); let next = 32000, salespersonStatus="在职";
   const dependencies: SalesDependencies = {
     authorization: createSalesActionAuthorization(), rules: createNativeManualSalesBusinessRules(),
     now: () => "2026-10-23T12:00:00.000000Z", newId: kind => sid(kind, next++),
@@ -47,7 +47,7 @@ test("native size editing: sales full proposal appends known 160/S and unsized S
         async getCurrentSalesReferenceFacts(draft) {
           return { salesId: draft.header.id, hall: { id: ids.hall, enabled: true },
             warehouse: { id: ids.warehouse, hallId: ids.hall, enabled: true }, customer: { id: ids.customer, enabled: true },
-            salesperson: null, paymentAccounts: [],
+            salesperson: {id:salespersonId,employmentStatus:salespersonStatus}, paymentAccounts: [],
             skus: [...facts].map(([id, value]) => ({ id, productId, enabled: true, snapshot: value })),
             products: [{ id: productId, enabled: true, referencePrice: minorAmount("125"), minimumPrice: null }],
             barcodes: [...facts].map(([skuId, value]) => ({ raw: value.barcode!, skuId, enabled: true })),
@@ -59,8 +59,14 @@ test("native size editing: sales full proposal appends known 160/S and unsized S
   const line = (skuId: string, quantity: string) => ({ skuId, quantity, dealPrice: "1.25", pricingRule: "UNIT_PRICE" as const,
     discountTenths: null, isGift: false, zeroConfirmed: false });
   const initial: NativeSalesCreateProposal = { businessType: "EXCHANGE", businessDate: "2026-10-23", note: null,
-    hallId: ids.hall, customerId: ids.customer, salespersonId: null, warehouseId: ids.warehouse, orderDiscount: "0.00",
+    hallId: ids.hall, customerId: ids.customer, salespersonId, warehouseId: ids.warehouse, orderDiscount: "0.00",
     lines: [line(ids.sku, "1")], settlements: [] };
+  for(const mode of ['missing','inactive'] as const){
+    const before=store.snapshot();salespersonStatus=mode==='inactive'?'离职':'在职';
+    await assert.rejects(createNativeSalesPreparation(dependencies).prepareCreate(actor,{...initial,salespersonId:mode==='missing'?null:salespersonId}),{code:'SALES_REFERENCE_UNAVAILABLE'});
+    assert.deepEqual(store.snapshot(),before);
+  }
+  salespersonStatus='在职';
   const first = await createNativeSalesPreparation(dependencies).prepareCreate(actor, initial);
   const service = createSalesService(dependencies);
   await service.execute({ actor, action: "SAVE", expectedVersion: null, requestKey: "size-sales-initial", draft: first });

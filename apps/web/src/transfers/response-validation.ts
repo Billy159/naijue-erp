@@ -57,7 +57,24 @@ export function transferListResponse(value: unknown, parameters: Readonly<Transf
   return value as TransferListDto;
 }
 export function transferDetailResponse(value: unknown, parameters: Readonly<TransferDetailQuery>): TransferDetailDto {
-  const result = record(value, ['document', 'stockBasis', 'references', 'catalog']); choice(result.stockBasis, ['RUNTIME_LEDGER', 'CUTOFF_HISTORY']);
+  const hasCategories = !!value && typeof value === 'object' && Object.hasOwn(value, 'categorySummary');
+  const result = record(value, ['document', 'stockBasis', 'references', 'catalog', ...(hasCategories ? ['categorySummary'] : [])]);
+  choice(result.stockBasis, ['RUNTIME_LEDGER', 'CUTOFF_HISTORY']);
+  if (hasCategories) {
+    const summary = record(result.categorySummary, ['basis', 'metric', 'categoryCount', 'items', 'hasMore']);
+    choice(summary.metric, ['PRODUCT_COUNT']);
+    const items = array(summary.items, 2000);
+    if (result.stockBasis === 'CUTOFF_HISTORY') {
+      if (summary.basis !== 'UNKNOWN' || summary.categoryCount !== null || items.length || summary.hasMore !== false) invalid();
+    } else {
+      choice(summary.basis, ['CURRENT']); exact(summary.categoryCount);
+      if (BigInt(summary.categoryCount) !== BigInt(items.length) || summary.hasMore !== false) invalid();
+      const ids = new Set<unknown>();
+      for (const item of items) { const entry = record(item, ['categoryId', 'categoryName', 'value']); nullableId('category', entry.categoryId); nullableText(entry.categoryName); exact(entry.value);
+        if ((entry.categoryId === null) !== (entry.categoryName === null) || entry.value === '0' || ids.has(entry.categoryId)) invalid(); ids.add(entry.categoryId);
+      }
+    }
+  }
   const document = record(result.document, ['header', 'lines']);
   const h = record(document.header, [...baseFields, 'note', 'createdByAccountId', 'createdHallId', 'createdRole', 'createdAt', 'updatedAt', 'approvedByAccountId', 'approvedAt']); header(h);
   if (h.id !== parameters.transferId) invalid(); nullableText(h.note); id('account', h.createdByAccountId); nullableId('hall', h.createdHallId);

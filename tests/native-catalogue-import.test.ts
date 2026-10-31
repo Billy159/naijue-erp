@@ -1,3 +1,5 @@
+import { GUARD_CAPABILITY } from '../adapters/postgres/src/inventory-publication-guards.ts';
+import { NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from '../adapters/postgres/src/native-import-accounting-capability.ts';
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
@@ -35,21 +37,30 @@ function input(): NativeCatalogueImportChunk {
   return { batchId: id(1), fixedSourceNamespace: "SYNTHETIC NAMESPACE", selection: { source: "REVIEWED_DICTIONARY_OCCURRENCES_V1", baseManifestSha256: H, selectionSha256: H, approvalSha256: A, occurrenceContractSha256: H }, rows };
 }
 const key = (entity: string, n: JsonObject) => `${entity}/${entity === "SIZE_GROUP_MEMBER" ? `${n.size_group_id}/${n.size_id}` : n.id}`;
-test("catalogue shares exact finite schema14–17 contracts and refuses missing, duplicate or future19 schemas before targets", async () => {
+test("catalogue shares exact finite schema14–19 contracts with guards and refuses missing, duplicate or unknown20 before targets", async () => {
   const prefix = Array.from({ length: 14 }, (_, i) => i + 1), prepared = prepareNativeCatalogueImportChunk(input());
-  for (const schemaVersions of [prefix, [...prefix, 15], [...prefix, 15, 16], [...prefix,15,16,17]]) {
+  for (const schemaVersions of [prefix, [...prefix, 15], [...prefix, 15, 16], [...prefix,15,16,17], [...prefix,15,16,17,18], [...prefix,15,16,17,18,19]]) {
     const p = protocol({ schemaVersions });
     assert.equal((await p.store.stage(prepared)).inserted, 8);
   }
-  for (const schemaVersions of [[], prefix.slice(0, -1), [...prefix, 14], [...prefix, 15, 16, 17,18,19], [...prefix.slice(0, 10), ...prefix.slice(11)]]) {
+  for (const schemaVersions of [[], prefix.slice(0, -1), [...prefix, 14], [...prefix, 15, 16, 17,18,19,20], [...prefix.slice(0, 10), ...prefix.slice(11)]]) {
     const p = protocol({ schemaVersions });
     await assert.rejects(p.store.stage(prepared), { code: "NATIVE_CATALOGUE_SCHEMA_NOT_READY" });
     assert.ok(!p.calls.some(c => /:target:|INSERT INTO/.test(c.sql)));
   }
 });
+test("catalogue18/19 recognition never bypasses failed inventory/accounting guards before targets",async()=>{
+ for(const length of [18,19])for(const denied of ['inventory','accounting']){
+  const p=protocol({schemaVersions:Array.from({length},(_,i)=>i+1),...(denied==='inventory'?{inventoryGuards:false}:{guards:false})});
+  await assert.rejects(p.store.stage(prepareNativeCatalogueImportChunk(input())),{code:"NATIVE_IMPORT_GUARDS_NOT_READY"});
+  assert.equal(p.calls.some(c=>/:batch|:target:|\b(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)),false);assert.equal(p.calls.at(-1)!.sql,"ROLLBACK");assert.deepEqual(p.writes(),[0,0,0]);
+ }
+ const p=protocol({schemaVersions:Array.from({length:19},(_,i)=>i+1)});await p.store.stage(prepareNativeCatalogueImportChunk(input()));
+ assert.deepEqual(p.calls.filter(c=>c.sql===NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY||c.sql===NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY).map(c=>c.sql),[NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY,NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY]);
+});
 type State = { native: Map<string, JsonObject>; sources: Map<string, JsonObject>; bindings: Map<string, JsonObject> };
 /** Transactional SQL protocol fake. NOT evidence for actual PostgreSQL triggers/locks/isolation. */
-function protocol(options: { failBindingAt?: number; commitUnknown?: boolean; wrongBatch?: boolean; missingSchema?: boolean; schemaVersions?: readonly number[]; emptyGroup?: boolean; rollbackFails?: boolean; commitUncommitted?: boolean; badCreateSnapshot?: boolean } = {}) {
+function protocol(options: { inventoryGuards?: boolean; guards?: boolean; failBindingAt?: number; commitUnknown?: boolean; wrongBatch?: boolean; missingSchema?: boolean; schemaVersions?: readonly number[]; emptyGroup?: boolean; rollbackFails?: boolean; commitUncommitted?: boolean; badCreateSnapshot?: boolean } = {}) {
   let state: State = { native: new Map(), sources: new Map(), bindings: new Map() }, draft = structuredClone(state);
   let connects = 0, nativeWrites = 0, sourceWrites = 0, bindingWrites = 0, discarded: Error | boolean | undefined, unknown = options.commitUnknown;
   const calls: { sql: string; values: unknown[] }[] = [];
@@ -62,6 +73,9 @@ function protocol(options: { failBindingAt?: number; commitUnknown?: boolean; wr
     if (sql.startsWith("BEGIN")) { draft = structuredClone(state); return result([]); }
     if (sql === "ROLLBACK") { if (options.rollbackFails) throw Error("SYNTHETIC rollback failure"); draft = structuredClone(state); return result([]); }
     if (sql === "COMMIT") { if (unknown) { unknown = false; if (!options.commitUncommitted) state = structuredClone(draft); throw Error("SYNTHETIC commit ack lost"); } state = structuredClone(draft); return result([]); }
+    if (sql === GUARD_CAPABILITY) return result([{integrity_guards_present:options.inventoryGuards!==false}]);
+    if (sql === NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY) return result([{accounting_guards_present:options.schemaVersions?.length!==19&&options.guards!==false}]);
+    if (sql === NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY) return result([{accounting_guards_present:options.schemaVersions?.length===19&&options.guards!==false}]);
     if (sql.includes("native-catalogue-import:schema")) return result([{ installed_versions: options.missingSchema ? [] : options.schemaVersions ?? Array.from({ length: 14 }, (_, i) => i + 1) }]);
     if (sql.includes("native-catalogue-import:batch")) return result([{ id: id(1), mapping_version: "V2_HISTORY_NULLABLE_1", status: "STAGED", source_hash: options.wrongBatch ? "0".repeat(64) : H, source_name: "SYNTHETIC NAMESPACE", already_published: false }]);
     if (sql.includes("native-catalogue-import:target:")) {

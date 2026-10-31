@@ -112,3 +112,36 @@ test('malformed transport data never becomes successful empty results or fixture
   const scope = context().createScope('TEST'); const reader = createTransferHttpReader({ origin: 'https://synthetic.test', basePath: '', fetch: async () => json({ page: 1, pageSize: 20, exactTotal: '1', items: [] }) });
   const query = createTransferListQuery(scope, reader); assert.equal((await query.run(transferParameters(emptyTransferFilter(), 20))).status, 'error'); assert.equal(query.getSnapshot().success, null); scope.dispose();
 });
+
+test('normal detail negotiates category-v2 and strictly accepts full current identity summaries', async () => {
+  const categorySummary = { basis: 'CURRENT', metric: 'PRODUCT_COUNT', categoryCount: '1', items: [{ categoryId: uuid(900), categoryName: '同名分类', value: '1' }], hasMore: false };
+  const input = { ...detail(), categorySummary };
+  assert.deepEqual(transferDetailResponse(input, transferTarget(uuid(1))).categorySummary, categorySummary);
+  let header: string | null = null;
+  const reader = createTransferHttpReader({ origin: 'https://synthetic.test', basePath: '/api', fetch: async (_url, init) => { header = new Headers(init.headers).get('x-naijue-document-summary'); return json(input); } });
+  const scope = context().createScope('TEST');
+  assert.equal((await createTransferDetailQuery(scope, reader).run(transferTarget(uuid(1)))).status, 'success');
+  assert.equal(header, 'category-v2'); scope.dispose();
+  for (const patch of [{ basis: 'SAVED' }, { metric: 'QUANTITY' }, { categoryCount: '2' }, { hasMore: true }, { items: [{ ...categorySummary.items[0], value: '-1' }] }, { items: [categorySummary.items[0], categorySummary.items[0]], categoryCount: '2' }]) {
+    assert.throws(() => transferDetailResponse({ ...input, categorySummary: { ...categorySummary, ...patch } }, transferTarget(uuid(1))));
+  }
+  assert.equal(transferDetailResponse(detail(), transferTarget(uuid(1))).categorySummary, undefined);
+});
+
+test('category-v2 historical transfer detail accepts only the canonical raw UNKNOWN shape', async () => {
+  const categorySummary = { basis: 'UNKNOWN', metric: 'PRODUCT_COUNT', categoryCount: null, items: [], hasMore: false };
+  const legacy = { ...detail(), stockBasis: 'CUTOFF_HISTORY' as const }, input = { ...legacy, categorySummary };
+  assert.equal(transferDetailResponse(legacy, transferTarget(uuid(1))), legacy);
+  assert.equal(transferDetailResponse(input, transferTarget(uuid(1))), input);
+  assert.deepEqual(input.categorySummary, categorySummary);
+  for (const patch of [{ basis: 'CURRENT', categoryCount: '0' }, { categoryCount: '0' }, { categoryCount: '1' }, { categoryCount: undefined }, { metric: 'QUANTITY' }, { hasMore: true }, { items: [{ categoryId: uuid(900), categoryName: '当前分类不可推断历史', value: '1' }] }, { items: null }, { extra: true }]) {
+    assert.throws(() => transferDetailResponse({ ...input, categorySummary: { ...categorySummary, ...patch } }, transferTarget(uuid(1))));
+  }
+  assert.throws(() => transferDetailResponse({ ...input, stockBasis: 'RUNTIME_LEDGER' }, transferTarget(uuid(1))));
+  assert.throws(() => transferDetailResponse({ ...input, categorySummary: { basis: 'UNKNOWN', metric: 'PRODUCT_COUNT', items: [], hasMore: false } }, transferTarget(uuid(1))));
+  let negotiated: string | null = null;
+  const reader = createTransferHttpReader({ origin: 'https://synthetic.test', basePath: '/api', fetch: async (_url, init) => { negotiated = new Headers(init.headers).get('x-naijue-document-summary'); return json(input); } });
+  const scope = context().createScope('HISTORY-CATEGORY');
+  const result = await createTransferDetailQuery(scope, reader).run(transferTarget(uuid(1)));
+  assert.equal(result.status, 'success'); assert.equal(negotiated, 'category-v2'); scope.dispose();
+});

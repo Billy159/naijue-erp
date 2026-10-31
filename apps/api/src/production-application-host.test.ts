@@ -4,7 +4,7 @@ import { syncBuiltinESMExports } from "node:module";
 import { parseProductionHostConfiguration, productionAssetUrl } from "../../web/src/production-host/configuration.ts";
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from "node:fs/promises";
+import { chmod, mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import { gunzipSync, brotliDecompressSync } from "node:zlib";
 import path from "node:path";
@@ -132,7 +132,7 @@ test("invalid build/startup closes owned API once and never opens a listener", a
 test("runtime entry refuses public or linked config before constructing application resources", async () => {
   const root = await build();
   try {
-    const filename = path.join(root, "runtime.json"); await writeFile(filename, JSON.stringify(config(root)), { mode: 0o644 });
+    const filename = path.join(root, "runtime.json"); await writeFile(filename, JSON.stringify(config(root)), { mode: 0o644 }); await chmod(filename, 0o644);
     await assert.rejects(runProductionMain([filename]), /private configuration/);
     const linked = path.join(root, "runtime-link.json"); await symlink(filename, linked);
     await assert.rejects(runProductionMain([linked]), /private configuration/);
@@ -441,7 +441,7 @@ test('H06 detached readiness response never writes after late probe completion',
  const handle=await createProductionRequestHandler({api,configuration:config(root)});
  const req={url:'/readyz',method:'GET',headers:{host:'web:8080'},destroyed:false} as IncomingMessage;
  const res={destroyed:false,writableEnded:false,writeHead(){writes++;},end(){writes++;}} as unknown as ServerResponse;
- handle(req,res);Object.assign(req,{destroyed:true});Object.assign(res,{destroyed:true});complete(true);
+ handle(req,res);Object.assign(req,{destroyed:true});Object.assign(res,{destroyed:true});await new Promise(r=>setImmediate(r));complete(true);
  await new Promise(resolve=>setImmediate(resolve));assert.equal(writes,0);
  }finally{await rm(root,{recursive:true,force:true});}
 });
@@ -460,6 +460,7 @@ test('H06 logs fixed fields only, bounded size/rate, one finish or cancellation 
   assert.match(records[0].requestId,/^[0-9a-f-]{36}$/);assert.equal(records[0].route,'API');assert.equal(records[0].operation,'WRITE');
   assert.ok(!lines.join('').includes('SECRET'));assert.ok(lines.every(s=>Buffer.byteLength(s)<=1024));
   for(let i=0;i<200;i++)request();assert.ok(lines.length<=128);
+  await new Promise(r=>setTimeout(r,1010));request();assert.ok(JSON.parse(lines.at(-1)!).dropCount>=74);
  }finally{await rm(root,{recursive:true,force:true});}
 });
 
@@ -484,4 +485,28 @@ test('H06 drain logs only fixed cleanup reason once, never the private cleanup e
  assert.equal(events[1].reason,'CLEANUP_FAILED_OUTCOME_UNKNOWN');assert.equal(events[0].requestId,events[1].requestId);
  assert.ok(!lines.join('').includes('PRIVATE'));assert.ok(lines.every(s=>Buffer.byteLength(s)<=1024));
  }finally{http.createServer=original;syncBuiltinESMExports();await rm(root,{recursive:true,force:true});}
+});
+
+test('public readiness coalesces concurrent work without caching a previous success',async()=>{
+ const root=await build(),p=apiDouble();let calls=0,resolve:(v:boolean)=>void=()=>{};
+ const api={...p.api,readiness:async()=>{calls++;return await new Promise<boolean>(r=>{resolve=r;});}};
+ try{
+  const handle=await createProductionRequestHandler({api,configuration:config(root)});
+  const request=()=>new Promise<number>(done=>{let status=0;handle({url:'/readyz',method:'GET',headers:{host:'1n5635n614.goho.co'}} as IncomingMessage,{writeHead(code:number){status=code;},end(){done(status);}} as unknown as ServerResponse);});
+  const pending=Array.from({length:12},request);await new Promise(r=>setImmediate(r));
+  assert.equal(calls,1,'public concurrent probes must consume only one physical admission');
+  resolve(true);assert.deepEqual(await Promise.all(pending),Array(12).fill(200));
+  const fresh=request();await new Promise(r=>setImmediate(r));assert.equal(calls,2,'completed readiness is never a cached success');resolve(false);assert.equal(await fresh,503);
+ }finally{resolve(false);await rm(root,{recursive:true,force:true});}
+});
+
+test('safe request diagnostics classify POST query templates without URL or caller ID leakage',async()=>{
+ const root=await build(),p=apiDouble(),lines:string[]=[];
+ try{
+  const handle=await createProductionRequestHandler({api:p.api,configuration:config(root),writeLog:line=>{lines.push(line);}});
+  const req=Object.assign(new EventEmitter(),{url:'/api/product-management/query?private=SECRET',method:'POST',headers:{host:'web:8080','x-request-id':'SECRET'}}) as unknown as IncomingMessage;
+  const res=Object.assign(new EventEmitter(),{statusCode:0,writableEnded:false,writeHead(n:number){this.statusCode=n;},end(this:{writableEnded:boolean;emit(event:string):boolean}){this.writableEnded=true;this.emit('finish');}}) as unknown as ServerResponse;
+  handle(req,res);const record=JSON.parse(lines[0]!);
+  assert.equal(record.routeTemplate,'/product-management/query');assert.equal(record.operation,'READ');assert.equal(record.stage,'COMPLETE');assert.equal(record.errorCode,'NOT_FOUND');assert.equal(record.dropCount,0);assert.ok(!lines.join('').includes('SECRET'));
+ }finally{await rm(root,{recursive:true,force:true});}
 });

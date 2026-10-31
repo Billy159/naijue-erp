@@ -9,7 +9,7 @@ export function mountProductEditor(host:HTMLElement,options:SourceProductEditorO
  if(!options.parent.active)return()=>{};
  const scope=new ReadScope(options.parent.identity,options.parent.routeInstanceId+':product-editor',options.productId,()=>{});
  const abort=()=>scope.dispose();options.parent.signal.addEventListener('abort',abort,{once:true});
- document.body.classList.add('pc-mode');document.body.classList.remove('gold-mode','inventory-workbench');
+
  const root=createRoot(host);root.render(<ProductEditor {...options} parent={scope}/>);let disposed=false;
- return()=>{if(disposed)return;disposed=true;options.parent.signal.removeEventListener('abort',abort);root.unmount();scope.dispose();options.parent.dispose();};
+ return()=>{if(disposed)return;disposed=true;options.parent.signal.removeEventListener('abort',abort);root.unmount();scope.dispose();};
 }

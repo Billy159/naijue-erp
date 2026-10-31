@@ -299,7 +299,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   return <SalesProductPresentation {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})}>{openProduct => <section ref={formRef} aria-label={saved ? '销货单编辑' : '新增销售草稿'} className="tc-workbench tc-editor sale-workbench sale-editor sales-proposal-editor" onKeyDown={event => {
     if (event.key === 'Escape' && state.lineEdit && !picker) { event.preventDefault(); finishIdentity(state.lineEdit.key, false); }
   }}><SalesDocumentPresentation header={<>
-    <div className="tc-head sale-head"><h1>{saved ? '编辑销货单' : '新增销货单'}</h1><span className="tc-status doc-pending">未审核</span><span id="sale-save-state" className="sale-muted">· {state.dirty ? '有未保存修改' : saved ? '已保存' : '未保存'}</span><div className="actions">
+    <div className="tc-head sale-head"><h1>{saved ? '编辑销货单' : '新增销货单'}</h1><span className="tc-status doc-pending">未审核</span><span id="sale-save-state" className="sale-muted">· {state.lineEdit ? '正在改选，待确认' : state.dirty ? '有未保存修改' : saved ? '已保存' : '未保存'}</span><div className="actions">
       <button type="button" className="btn" data-sale="list" onClick={() => saved ? close() : discard('cancel')}>返回列表</button>{saved?.beforeSave}<button type="button" className="btn" data-sale="save" disabled={!preparation || preparation.disabled || preparation.preparing || !!state.lineEdit && !session.hasSpecificationInputs || !!pendingMode} onClick={save}>保存</button>
       {saved ? saved.actions : ['审核', '导出', '打印'].map(label => <button type="button" className="btn" disabled key={label} title="请先保存单据">{label}</button>)}
     </div></div>

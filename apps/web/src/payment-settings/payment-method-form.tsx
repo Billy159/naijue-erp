@@ -24,7 +24,7 @@ export function PaymentSettingsModal(props: { readonly title: string; readonly c
     visible title={props.title} maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     confirmLoading={write.phase === 'submitting'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || Boolean(controller.record && !state.dirty) }}
-    onOk={() => { void controller.submit(); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
+    onOk={() => { void controller.submit(); }} onCancel={() => { if (controller.discard()) props.close(); }}>
     {props.children}
     {error && <p className="bs-error" role="alert">{error}</p>}
     {!controller.writesEnabled && !controller.hasUnresolvedWrite && write.phase !== 'committed' && <p className="settings-note" role="status">此版本暂未开放保存，填写的内容不会保存。</p>}
@@ -34,8 +34,5 @@ export function PaymentSettingsModal(props: { readonly title: string; readonly c
       {write.error?.code === 'RECEIPT_NOT_FOUND' && <p>暂未查到原回执，仍不能确定是否已保存。</p>}
       {write.error?.kind === 'forbidden' && <p>当前无权读取原回执，提交结果仍待确认。</p>}
       <Button onClick={() => { void controller.recover(); }}>查询原提交回执</Button></section>}
-    {state.closePrompt && <section className="settings-close-prompt" role="alert"><strong>放弃本次填写？</strong><p>关闭后将清除本次未保存的内容。</p><div className="bs-row-actions">
-      <Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => { if (controller.discard()) props.close(); }}>放弃本次填写</Button>
-    </div></section>}
   </Modal>;
 }

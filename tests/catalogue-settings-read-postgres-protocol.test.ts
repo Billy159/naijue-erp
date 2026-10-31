@@ -99,8 +99,8 @@ test('abort between reads or while acquiring stops subsequent SQL and releases o
 // the R1 host. This column-aware scripted seam is NOT PostgreSQL execution.
 const r1Product = sid('product', 8801), r1Image = sid('product', 8802), r1Group = sid('sizeGroup', 8803);
 const r1Row = { id: r1Product, product_code: 'R1-SYNTHETIC', name: 'R1 retained product', year: null, system_item_code: null,
-  category_name: 'Category', season_name: null, supplier_name: null, thickness: null, retail_price: null };
-const r1ImageRow = { id: r1Image, product_id: r1Product, file_ref: 'private:synth', mime: 'image/png', byte_size: '32', display_order: 4 };
+  category_name: 'Category', season_name: null, supplier_name: null, thickness: null, collar_pants_type: null, retail_price: null };
+const r1ImageRow = { id: r1Image, product_id: r1Product, file_ref: 'private:synth', mime: 'image/png', byte_size: '32', display_order: 4, image_role: null, color_id: null };
 type R1ReadCase = 'categories' | 'colors' | 'fits' | 'list' | 'basics' | 'specifications' | 'images' | 'image' | 'prices' | 'barcodes';
 const r1Cases: readonly R1ReadCase[] = ['categories', 'colors', 'fits', 'list', 'basics', 'specifications', 'images', 'image', 'prices', 'barcodes'];
 function r1Rows(name: R1ReadCase): Record<string, unknown>[][] {
@@ -116,8 +116,8 @@ function r1Rows(name: R1ReadCase): Record<string, unknown>[][] {
     case 'barcodes': return [[{ id: r1Product, version: 1 }], [{ total: '0' }], []];
   }
 }
-function r1Pool(name: R1ReadCase, missingColumn = true) {
-  const rows = r1Rows(name), calls: string[] = []; let connected = 0, released = 0;
+function r1Pool(name: R1ReadCase, missingColumn = true, basicsRow: Record<string, unknown> = r1Row, imageRow: Record<string, unknown> = r1ImageRow) {
+  const rows = name === 'basics' ? [[basicsRow]] : name === 'images' ? [[{id:r1Product,name:r1Row.name}],[imageRow]] : r1Rows(name), calls: string[] = []; let connected = 0, released = 0;
   const pool: PgProductQueryPool = { async connect() { connected++; return { async query(sql) {
     calls.push(sql); if (missingColumn && sql.includes('deleted_at')) throw Object.assign(Error('schema19 protocol: column deleted_at does not exist'), { code: '42703' });
     if (sql.startsWith('BEGIN') || sql === 'COMMIT' || sql === 'ROLLBACK') return { rows: [], rowCount: 0 };
@@ -155,6 +155,25 @@ test('QB-R1 capability: host-verified same-pool branch retains soft-delete filte
     }
     assert.equal(f.calls.at(-1), 'COMMIT'); assert.deepEqual(f.counts(), { connected: 1, released: 1, pending: 0 });
   }
+});
+test('QB-R1 retained image classifications preserve explicit unknown and all supported roles; missing or mismatched fields reject',async()=>{
+ const colorId=sid('color',8888);
+ for(const role of [null,'MAIN','WHITE_BACKGROUND','HANG_TAG','DETAIL','COLOR']){
+  const row={...r1ImageRow,image_role:role,color_id:role==='COLOR'?colorId:null},f=r1Pool('images',false,r1Row,row);
+  const result=await r1Invoke('images',f.pool,{profile:'catalogue-retained-delete-v22',assertVerified(pool:PgProductQueryPool){assert.equal(pool,f.pool);}});
+  assert.ok(result&&'images' in result);assert.deepEqual(result.images[0]!.classification,{role,colorId:row.color_id});assert.equal(f.calls.at(-1),'COMMIT');assert.deepEqual(f.counts(),{connected:1,released:1,pending:0});
+ }
+ for(const patch of [{image_role:undefined},{color_id:undefined},{image_role:'OTHER'},{image_role:'COLOR',color_id:null},{image_role:'MAIN',color_id:colorId}]){
+  const f=r1Pool('images',false,r1Row,{...r1ImageRow,...patch});
+  await assert.rejects(r1Invoke('images',f.pool,{profile:'catalogue-retained-delete-v22',assertVerified(pool:PgProductQueryPool){assert.equal(pool,f.pool);}}),{code:'INVALID_DATABASE_VALUE'});
+  assert.equal(f.calls.at(-1),'ROLLBACK');assert.deepEqual(f.counts(),{connected:1,released:1,pending:0});
+ }
+});
+test('QB-R1 retained basics requires an explicit SQL NULL or text, never an omitted collar column',async()=>{
+ const row:Record<string,unknown>={...r1Row};delete row.collar_pants_type;
+ const f=r1Pool('basics',false,row);
+ await assert.rejects(r1Invoke('basics',f.pool,{profile:'catalogue-retained-delete-v22',assertVerified(pool:PgProductQueryPool){assert.equal(pool,f.pool);}}),{code:'INVALID_DATABASE_VALUE'});
+ assert.equal(f.calls.at(-1),'ROLLBACK');assert.equal(f.counts().connected,1);assert.equal(f.counts().released,1);assert.equal(f.counts().pending,0);
 });
 test('QB-R1 capability: a number/profile flag or failed/asynchronous proof cannot activate any reader or acquire a client', () => {
   const constructors = [PostgresCatalogueSettingsReadReader, PostgresProductQueryReader, PostgresProductManagementQueryReader, PostgresProductDetailsQueryReader];
