@@ -44,3 +44,25 @@ test('frozen TCP fixture bytes are independently pinned and proposal has no conn
  const source=readFileSync(new URL('./prepare-runtime26-v7.mjs',import.meta.url),'utf8');
  assert.doesNotMatch(source,/from ['"](?:pg|node:fs|node:child_process)|writeFile|process\.env|spawn\(|execFile|connect\(/);
 });
+
+// Source-approved QA178 transport only. OIDs below are synthetic renderer-test values,
+// never evidence that a new database or an approval exists on any server.
+const qa178Fixture=()=>{const a=unixFixture();a.target={...a.target,transport:'UNIX_SOCKET_QA178_EXACT_V1',database:'demo_8877_v7_r1_rehearsal_20261031_01',ownerRole:'v7_r1_owner_20261031_01',runtimeRole:'v7_r1_runtime_20261031_01',sessionUser:'t15_prod_bootstrap',serverConfiguredPort:5432,unixSocketDirectory:'/qa-socket'};return a;};
+test('QA178 fixed12key Unix branch binds exact endpoint/new names before and after and still grants only original4cells',()=>{
+ const a=qa178Fixture(),original=JSON.stringify(a),r=render(a);assert.equal(Object.keys(a.target).length,12);assert.equal(JSON.stringify(a),original);
+ for(const fragment of ['inet_server_addr() IS NULL','inet_server_port() IS NULL',"current_setting('port')='5432'","current_setting('unix_socket_directories')='/qa-socket'","current_setting('listen_addresses')=''","current_database()='demo_8877_v7_r1_rehearsal_20261031_01'","session_user='t15_prod_bootstrap'","current_user=session_user"])
+  assert.equal(r.sql.split(fragment).length-1,2,fragment);
+ assert.equal(r.addedCells.length,4);assert.equal(r.sql.match(/^GRANT /gm).length,2);assert.equal(r.storagePatchSha256,V7_STORAGE_PATCH_SHA256);assert.equal(r.grantsAuthenticationOrConnect,false);assert.equal(r.productionAuthorized,false);assert.equal(r.ordinaryRuntimeReviewStillRequired,true);
+ assert.doesNotMatch(r.sql,/GRANT DELETE|GRANT SELECT \("cmin"|CREATE ROLE|ALTER ROLE|GRANT CONNECT|pg_reload_conf|ALTER SYSTEM/);
+});
+test('QA178 rejects wrong names endpoint discriminator oldOID extra/nullonly and original source/ACL/window violations',()=>{
+ for(const mutate of [a=>delete a.target.transport,a=>a.target.transport='UNIX_SOCKET_EXACT_V1',a=>a.target.transport='unix',a=>a.target.database='erp_rewrite_20261022_r1',a=>a.target.ownerRole='erp_rewrite_owner_20261022',a=>a.target.runtimeRole='erp_rewrite_runtime_20261022',a=>a.target.sessionUser='other_admin',a=>a.target.serverConfiguredPort='5432',a=>a.target.serverConfiguredPort=55439,a=>a.target.serverPort=5432,a=>a.target.serverAddress='127.0.0.1/32',a=>a.target.unixSocketDirectory='/tmp',a=>a.target.unixSocketDirectory+='/..',a=>a.target.unixSocketDirectory+='/',a=>a.target.unixSocketDirectory+=',/tmp',a=>a.target.unixSocketDirectory='@abstract',a=>a.target.listenAddresses='*',a=>a.target.extra=true,a=>a.target.databaseOid=null,a=>a.target.databaseOid='16391',a=>a.target.databaseOid='21551',a=>a.target.databaseOid='1027659',a=>a.target.runtimeRole=a.target.ownerRole,a=>a.from='V5',a=>a.to='V8',a=>a.expiresAt=NOW,a=>a.expiresAt=a.startsAt+900001,a=>a.sourceCommit='d'.repeat(40),a=>a.afterCatalogSha256=a.beforeCatalogSha256,a=>a.productionAuthorized=true]){
+  const a=qa178Fixture();mutate(a);assert.throws(()=>render(a),mutate.toString());
+ }
+ const r=render(qa178Fixture());for(const code of ['EXACT_TARGET_OR_WINDOW_CHANGED','ORDINARY_RUNTIME_AND_FIXED_OWNER_REQUIRED','NO_TABLE_PRIVILEGES_REQUIRED','EXACT_SYSTEM_COLUMN_RIGHTS_REQUIRED'])assert.equal(r.sql.split(code).length-1,2,code);
+});
+test('original cloud Unix generated return bytes remain equal to two captured preQA source fixtures',()=>{
+ // Captured from the unchanged cloud renderer before adding QA178, not PG/catalog/approval evidence.
+ const expected=['0bce9b6814b146f7e9a607e48d2ed8cf96c98c66fde8ffa5e83739b4dc98f739','0a5f953928bd68a83f9e1ff251d6ce7a669beda0b71dacb1bdc8eb672004c009'];
+ for(let i=0;i<2;i++){const a=unixFixture();if(i)Object.assign(a.target,{database:'another_cloud_synthetic',databaseOid:'88888',ownerRole:'another_owner',runtimeRole:'another_runtime',sessionUser:'another_admin',postmasterStart:'2027-01-15 09:00:00+00'});assert.equal(sha(Buffer.from(JSON.stringify(render(a)))),expected[i]);}
+});

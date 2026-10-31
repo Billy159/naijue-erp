@@ -19909,7 +19909,7 @@
       },
       "qbReview": "PASS_EXACT_16_LEAF_SOURCE_OFFLINE_CONTRACT_ONLY",
       "realPg": "NOT_RUN",
-      "qaUnix": "D1_TWO_LEAVES_DELIVERED_7_TARGETED_PASS_QB_PENDING_V7_T45_IN_PROGRESS",
+      "qaUnix": "V7_AND_V8_DELIVERED_SOURCE_TARGET_TESTS_17_AND_7_PENDING_COMBINED_QB",
       "qbReportSha256": "23adeaa47eec8248b9a25232daea91406f767da93d977d878c88459b96af0c0d",
       "qbReportBytes": 12464,
       "qaUnixReportSha256": "aab3ef429678069c559f15e6ae0f59f5bc6ea7c7c2a9fc28630357bc93a83fbc"
@@ -19944,7 +19944,8 @@
       "scriptSha256": "f44d56ca1e9f6e45313ec8751b94ef653981234b4e6a9cb97924b7af91a2259e",
       "ownerOfflineChecks": 8,
       "restoreTargetExecutionApproval": "NOT_GRANTED",
-      "actualBackupRestore": "NOT_RUN"
+      "actualBackupRestore": "NOT_RUN",
+      "withdrawnObservation": "QB sequence ORDER BY suspicion withdrawn after actual pure generated SQL; no defect or repair assigned"
     },
     "businessScenarioPreparation": {
       "checkpoint": "f421edfb57ecb275dc91fa78533c74a473792770",
@@ -19956,6 +19957,7 @@
       "acceptedSuccessorCheckpoint": "fc7c03bfa98ae97e41d94d91a4d244c27fc7b07b",
       "acceptedSuccessorReportSha256": "448381adf0bae35eb86177c3c32f41b5fa64f8259c7ab9bcca72ee61836527d8"
     },
-    "qaUnixApproval": "Human call_7f5633370b664b06823b617c5848411b/0"
+    "qaUnixApproval": "Human call_7f5633370b664b06823b617c5848411b/0",
+    "qaUnixV7ReportSha256": "21eeb601bf45a4d4190f12f54a1344da1bddd8cb64b5377b750ffc0c3eaf65f8"
   }
 }
