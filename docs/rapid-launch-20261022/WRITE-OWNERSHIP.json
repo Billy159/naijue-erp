@@ -8181,15 +8181,23 @@
     "F2": {
       "threadId": "01a161d2-6bd9-7181-8386-1ecddddd386a",
       "scope": "Original product create/edit/image/colors/barcode/fit UI plus exact own tests; announce exact leaves before edits, shared files require C handoff; no oldR WIP writes",
-      "current": "Original targeted baseline passed; reproduce missing defaultA and duplicate sibling key; repair exact2 only",
+      "current": "Exact2 frozen handed back; C pins match, scoped tests/types adopted",
       "next": "Source-fixed package to independent UI/actual isolation consumer verification",
       "soleWriter": [
         "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
         "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs"
-      ]
+      ],
+      "writeStatus": "FROZEN_NO_FURTHER_WRITES_UNTIL_DIRECTED"
     },
     "T45": "Existing control carrier and server/DB sole owner continues original local caller task; existing CLOSED window not reopened",
     "QB": "Original independent backend review, new increments only",
-    "pending": "Sales/transfer/scanner/list/all-site tasks remain required; assign original owner after latest delivery and file deduplication, not implied complete"
+    "pending": "Sales/transfer/scanner/list/all-site tasks remain required; assign original owner after latest delivery and file deduplication, not implied complete",
+    "F1": {
+      "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
+      "scope": "Original documents module and own tests in N only; exact affected leaves announced before write; no shared config/contracts/API/SQL/product/category edits",
+      "current": "Read latest r1/B05 existing outcome; reproduce document editing/list/window requirements",
+      "next": "Original scanner stability requirements; no service/browser sharing before fixed candidate",
+      "git": "C only"
+    }
   }
 }

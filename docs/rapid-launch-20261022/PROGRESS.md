@@ -1,3 +1,9 @@
+## 2026-10-31 original F2 product exact2 fixed; original F1 takes ready document package
+
+C matched original F2 fixed hashes: editor.tsx723d76c9 and editor-runtime.test.mjsabb54776. Adopted directed actual-component RED/GREEN and scoped TypeScript, no duplicate technical review. Fresh untouched CREATE defaults only a uniquely read exact codeA/native fit, independent of colors, preserving manual changes/EDIT/recovered drafts and current authority. Initial A/scheme pending prevents premature save; failed/absent/ambiguous A is explicit, not guessed. Duplicate sibling keys separated without layout change. Existing save/media/color/barcode local evidence reused; current visible browser/ordinaryPG/save/reopen/native barcode generation still pending. F2 frozen; C integrates exact2 only.
+
+Original F1 confirmed latest prior work was handed back B05, no active writer. Dispatched latest human six-part requirements on N/r1 for document edit/default/responsible/dirty/list/window package, next scanner lifecycle package, first reproduce and announce exact source/test leaves. No duplicate B05 rewrite, no F2/C/shared/API/SQL/service/Git overlap; original T45 DB caller work continues independently. Full site and actual business acceptance remain open.
+
 ## 2026-10-31 latest six-part full handoff adopted; first reproducible fix
 
 User clarified the pasted six-part text is the detailed-handoff document; no missing-file wait. Retain r1 base, old WIP, original packages/backups and existing owners. Four ZIP manifests verified74/2175/8/19 entries with zero mismatch. Independent frozen-Demo source evidence copied byte-for-byte to existing controller intake, no Demo mutation; no screenshots/runtime proof included. Recovery logs do not prove this Mac/QA dependency or DB recovery. Five new performance optimizations remain outside current phase; UI full acceptance does not gate DB preparation.

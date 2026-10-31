@@ -20255,6 +20255,25 @@
       ],
       "mismatches": 0,
       "evidenceMeaning": "Demo source-only66 original files/0screenshots/not standalone; recovery logs separate old execution context not thisMac install/PG proof; NOT-RELEASE test-first only now category candidate applied"
+    },
+    "productEntry": {
+      "status": "F2_EXACT2_SOURCE_FIXED_DIRECTED_CHECKS_PASS_BROWSER_PG_PENDING",
+      "owner": "originalF2",
+      "files": {
+        "apps/web/demo-replica/frontend/runtime/products/editor.tsx": "723d76c95046c1103272a397351af0f7392db7f0fd79355eed25b8b002703813",
+        "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs": "abb547763a8868ef577eacd9f80c84ab9eef0cd5b6e2fb10e0c2414b9883da6b"
+      },
+      "scope": "Fresh untouched CREATE exact existing native A fit independent of color; no overriding edit/recovery/manual selection; save waits for initial defaults; unique keys",
+      "existingCapabilities": "Original save/media/color/barcode composition checks passed; not current visible or PG business acceptance",
+      "next": "Unified fixed candidate and visible affected UI/save/media/color/barcode readback"
+    },
+    "documentFollowup": {
+      "owner": "originalF1",
+      "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
+      "status": "REPRODUCE_R1_AND_ANNOUNCE_EXACT_LEAVES_FIRST",
+      "current": "Sales/transfer edit/defaults/responsible/detail dirty/list refresh/order/window UI",
+      "next": "Existing scanner queue/repeat/color-size/pause-recovery-cancel/timeout-stale response; keyboard vs real scanner evidence separate",
+      "protected": "No F2 product/C category/shared config/API/SQL/Git/service writes"
     }
   }
 }
