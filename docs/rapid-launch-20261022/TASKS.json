@@ -20688,5 +20688,14 @@
     ],
     "basis": "retry04 11 actual memory-host specs/mainbarcodes present but size labels not visible",
     "next": "same original owner minimal display patch; fixed candidate; affected browser only"
+  },
+  "r1FixedBrowser48": {
+    "source": "824667c86e718c1066e3635f2779a3193b592dc0",
+    "status": "BUILT_PAIRED_ORIGINAL_QF2_VISIBLE_AFFECTED_REVIEW_DISPATCHED",
+    "build": "reports/controller/rapid-launch-20261022/ui-preview-824667c8-product-association-48/build",
+    "manifestSha256": "b4e8326791251ddbe65c129197f4e33cde26436d979f111ef52dff2fe4a96c4b",
+    "driverSha256": "dbd5d366a72ec6314d18b8cf2143e803f5cdf908ab847eac90c6028fce967658",
+    "scope": "CATEGORY stable rejection/fresh readback; PRODUCT sizes/images/codes/list/reopen",
+    "boundary": "fresh synthetic original service host, not realPG or formal permission/performance"
   }
 }
