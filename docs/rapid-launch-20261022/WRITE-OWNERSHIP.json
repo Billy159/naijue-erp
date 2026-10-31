@@ -8511,7 +8511,7 @@
   },
   "r1UnifiedCrossPageBrowser": {
     "owner": "F1",
-    "status": "DELIVERED_FIXED_DA3E57F5_STATIC_ONLY",
+    "status": "DRIVER_SUCCESSOR_FIXED_5D11DE67_ACTUAL_RUNNING",
     "paths": [
       "apps/web/demo-replica/tests/unified-cross-page-browser.py"
     ],
@@ -8520,7 +8520,7 @@
   },
   "r1UnifiedAuditReadback": {
     "owner": "D1",
-    "status": "ACTIVE_EXACT_FIVE_TEST_LEAVES",
+    "status": "DELIVERED_FIXED_B47DD07A_QB_READONLY",
     "paths": [
       "tests/support/product-entry-service-host-fixture.mjs",
       "apps/web/demo-replica/tests/payment-maintenance-fixture.mjs",
