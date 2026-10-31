@@ -50,4 +50,26 @@ class Tests(unittest.TestCase):
             self.assertEqual(r['decision'],'REFUSE');self.assertEqual(r['differences'][0]['field'],field)
         a=copy.deepcopy(e);a['observation']['manifest']['system_column_acls'].append(dict(table='t',number=-3,name='cmin',acl='{}'))
         self.assertEqual(m.compare(a,e)['decision'],'REFUSE')
+    def test_PREPARATION13_exact_profile_and_deltas(self):
+        e=fixture();o=e['observation'];o['manifest']['format']='EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1'
+        o['identity'].update(database='demo_8877_v7_r1_rehearsal_20261031_01',current_user='v7_r1_prepare_20261031_01',session_user='v7_r1_prepare_20261031_01')
+        tables=['audit_change','history_revision','import_batch','import_history_closure_manifest','import_source_row','inventory_ledger','operation_receipt','payment_account','payment_account_hall','payment_method','product','staff','user_account']
+        o['manifest']['system_column_acls']=[dict(table=t,number=-2,name='xmin',acl='{}') for t in tables]
+        del o['complete_write_xmin_acl_match'];o['preparation13_xmin_acl_match']=True
+        self.assertEqual(m.compare(copy.deepcopy(e),e)['differenceCount'],0)
+        for change in ['missing','false','alias','extra_proof','extra_cell','missing_cell','wrong_role','wrong_routines']:
+            a=copy.deepcopy(e)
+            if change=='missing':del a['observation']['preparation13_xmin_acl_match']
+            if change=='false':a['observation']['preparation13_xmin_acl_match']=False
+            if change=='alias':del a['observation']['preparation13_xmin_acl_match'];a['observation']['preparation_xmin_acl_match']=True
+            if change=='extra_proof':a['observation']['preparation_xmin_acl_match']=True
+            if change=='extra_cell':a['observation']['manifest']['system_column_acls'].append(dict(table='other',number=-2,name='xmin',acl='{}'))
+            if change=='missing_cell':a['observation']['manifest']['system_column_acls'].pop()
+            if change=='wrong_role':a['observation']['identity']['current_user']='other'
+            if change=='wrong_routines':
+                a['observation']['manifest']['routines']+=copy.deepcopy(a['observation']['manifest']['routines'][:2]);e2=copy.deepcopy(a)
+                with self.assertRaises(ValueError):m.compare(a,e2)
+                continue
+            try:self.assertEqual(m.compare(a,e)['decision'],'REFUSE')
+            except ValueError:pass
 if __name__=='__main__':unittest.main()

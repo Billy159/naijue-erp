@@ -956,3 +956,30 @@ test('complete write V6 and all legacy profiles reject cross-version format borr
   [completeWriteFormat,'26_hv2_history_set_guards_from_v22']];
  for(const [format,patchLevel]of pairs){const f=fixture();try{const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,format,patchLevel}})),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(p.connects(),0);}finally{f.cleanup();}}
 });
+
+// PREPARATION13 protocol DTOs below are synthetic; no actual PG/review/grant.
+import {NATIVE_RUNTIME26_PREPARATION13_XMIN_TABLES as PREP13_TABLES,NATIVE_RUNTIME26_HV2_HISTORY_SET_PREPARATION13_XMIN_FROM_V22_METADATA_PROBE as PREP13,NATIVE_RUNTIME26_PREPARATION13_FORMAT as PREP13_FORMAT,NATIVE_RUNTIME26_PREPARATION13_PATCH_LEVEL as PREP13_PATCH} from '../adapters/postgres/src/native-import-accounting-capability.ts';
+function preparation13Fixture(){
+ const f=fixture(),t={...target,database:'demo_8877_v7_r1_rehearsal_20261031_01',actingRole:'v7_r1_prepare_20261031_01',sessionUser:'v7_r1_prepare_20261031_01'};
+ const review={...f.review,target:t,catalog:{format:PREP13_FORMAT,patchLevel:PREP13_PATCH,sha256:digest},purposes:['IMPORT_STAGE','IMPORT_PRODUCT_SEASONS','IMPORT_PUBLISH']};
+ const row:Record<string,unknown>={...observation(),identity:{...observation().identity,database:t.database,current_user:t.actingRole,session_user:t.sessionUser},preparation13_xmin_acl_match:true};
+ const calls:string[]=[];let connects=0;
+ const pool={async connect(){connects++;return{async query(sql:string){calls.push(sql);return{rows:sql===PREP13?[structuredClone(row)]:sql===NATIVE_RUNTIME26_IDENTITY_PROBE?[{identity:structuredClone(row.identity)}]:[],rowCount:1};},release(){}};}};
+ return{...f,review,row,pool,calls,connects:()=>connects};
+}
+test('PREPARATION13 exact13 source135 proof is distinct from original12 and normal V8',()=>{
+ assert.equal(PREP13_TABLES.length,13);assert.equal(new Set(PREP13_TABLES).size,13);assert.ok(PREP13_TABLES.includes('history_revision'));assert.ok(PREP13_TABLES.includes('inventory_ledger'));
+ assert.ok(PREP13.includes("jsonb_array_length(manifest->'routines')=135"));assert.ok(PREP13.includes("jsonb_array_length(manifest->'system_column_acls')=13"));assert.ok(PREP13.includes('AS preparation13_xmin_acl_match'));assert.ok(!PREP13.includes('AS preparation_xmin_acl_match'));assert.ok(!PREP13.includes('AS recorded_live_balance_contract_match'));
+});
+test('PREPARATION13 genuine issuer protocol selects only new finite profile and original leases',async()=>{
+ const f=preparation13Fixture();try{const issuer=await createNativeRuntime26Issuer(f.pool,{...f.options(f.review),verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});assert.deepEqual(f.calls,[PREP13]);const lease=await issuer.pool.connect();await issuer.runtime26.assertReady(lease,'IMPORT_PUBLISH');lease.release();assert.ok(f.calls.includes(NATIVE_RUNTIME26_IDENTITY_PROBE));}finally{f.cleanup();}
+});
+test('PREPARATION13 missing false alias extra proof, wrong target and V8 consumer refuse',async()=>{
+ for(const edit of [(r:Record<string,unknown>)=>delete r.preparation13_xmin_acl_match,(r:Record<string,unknown>)=>r.preparation13_xmin_acl_match=false,(r:Record<string,unknown>)=>r.preparation13_xmin_acl_match='true',(r:Record<string,unknown>)=>r.preparation_xmin_acl_match=true]){
+  const f=preparation13Fixture();try{edit(f.row);await assert.rejects(createNativeRuntime26Issuer(f.pool,f.options(f.review)));}finally{f.cleanup();}
+ }
+ for(const change of [{target:{...target}},{catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V4',patchLevel:PREP13_PATCH,sha256:digest}}]){
+  const f=preparation13Fixture();try{await assert.rejects(createNativeRuntime26Issuer(f.pool,f.options({...f.review,...change})));assert.equal(f.connects(),0);}finally{f.cleanup();}
+ }
+ const f=preparation13Fixture();try{await assert.rejects(createNativeRuntime26Issuer(f.pool,{...f.options(f.review),requiredObservation:'RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8'}));assert.equal(f.connects(),0);}finally{f.cleanup();}
+});

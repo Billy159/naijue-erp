@@ -41,9 +41,17 @@ def compare(actual,expected):
         schema=m.get('schema')
         need(isinstance(schema,dict) and set(schema)=={'name','owner','acl'} and schema['name']=='naijue_erp' and all(isinstance(schema[k],str) and schema[k] for k in ['owner','acl']),'SCHEMA_REQUIRED')
     need(a['identity']==e['identity']==am.get('identity')==em.get('identity'),'EXACT_SAME_TARGET_ROLE_REQUIRED')
-    need(em.get('format') in ['EXACT26_RUNTIME_CATALOG_EXPORT_V6','EXACT26_RUNTIME_CATALOG_EXPORT_V7','EXACT26_RUNTIME_CATALOG_EXPORT_V8'],'EXPECTED_V6_V7_OR_V8_REQUIRED')
+    need(em.get('format') in ['EXACT26_RUNTIME_CATALOG_EXPORT_V6','EXACT26_RUNTIME_CATALOG_EXPORT_V7','EXACT26_RUNTIME_CATALOG_EXPORT_V8','EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1'],'EXPECTED_V6_V7_V8_OR_PREPARATION13_REQUIRED')
+    prep13=em['format']=='EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1'
+    if prep13:
+        for x in [a,e]:need(set(x)=={'manifest','identity','migration_versions','catalog_sha256','source_routines_match','preparation13_xmin_acl_match'},'EXACT_PREPARATION13_OBSERVATION_REQUIRED')
+        need(a['identity']['database']=='demo_8877_v7_r1_rehearsal_20261031_01' and a['identity']['current_user']=='v7_r1_prepare_20261031_01','EXACT_PREPARATION13_TARGET_REQUIRED')
+        tables=sorted(['audit_change','history_revision','import_batch','import_history_closure_manifest','import_source_row','inventory_ledger','operation_receipt','payment_account','payment_account_hall','payment_method','product','staff','user_account'])
+        for m in [am,em]:
+            cells=m.get('system_column_acls')
+            need(isinstance(cells,list) and len(cells)==13 and sorted(c.get('table','') for c in cells)==tables and all(c.get('number')==-2 and c.get('name')=='xmin' for c in cells),'EXACT_PREPARATION13_CELLS_REQUIRED')
     for x in [a,e]:need(re.fullmatch('[a-f0-9]{64}',x.get('catalog_sha256','')),'REAL_CATALOG_HASH_REQUIRED')
-    need(len(em.get('routines',[]))==(135 if em['format'].endswith('_V6') else 137),'EXPECTED_ROUTINE_CLOSURE_REQUIRED')
+    need(len(em.get('routines',[]))==(135 if prep13 or em['format'].endswith('_V6') else 137),'EXPECTED_ROUTINE_CLOSURE_REQUIRED')
     for m in [am,em]:
         need(isinstance(m.get('routines'),list),'ROUTINES_REQUIRED')
         for r in m['routines']:
@@ -66,7 +74,7 @@ def compare(actual,expected):
                 if av!=ev:add(section,key,field,av,ev)
     for field in ['format','migration_versions','schema']:
         if am.get(field)!=em.get(field):add('manifest',(),field,am.get(field),em.get(field))
-    for field in (['source_routines_match','recorded_live_balance_contract_match','complete_write_system_acl_match_v8','normal_delete_acl_match_v8'] if em['format'].endswith('_V8') else ['source_routines_match','complete_write_xmin_acl_match']+(['recorded_live_balance_contract_match'] if em['format'].endswith('_V7') else [])):
+    for field in (['source_routines_match','preparation13_xmin_acl_match'] if prep13 else ['source_routines_match','recorded_live_balance_contract_match','complete_write_system_acl_match_v8','normal_delete_acl_match_v8'] if em['format'].endswith('_V8') else ['source_routines_match','complete_write_xmin_acl_match']+(['recorded_live_balance_contract_match'] if em['format'].endswith('_V7') else [])):
         if a.get(field) is not True or e.get(field) is not True:add('proof',(),field,a.get(field),e.get(field))
     if a['catalog_sha256']!=e['catalog_sha256']:add('observation',(),'catalog_sha256',a['catalog_sha256'],e['catalog_sha256'])
     return {'format':'RUNTIME26_OFFLINE_DIFF_CANDIDATE_V1','decision':'REFUSE' if diffs else 'EXACT_METADATA_ONLY_NOT_UPGRADE_AUTHORIZATION','differenceCount':len(diffs),'differences':diffs,'actualCatalogSha256':a['catalog_sha256'],'expectedCatalogSha256':e['catalog_sha256'],'sourceCommit':actual['sourceCommit'],'sourceSha256':actual['sourceSha256'],'warning':'Expected review provenance must be independently verified; JSON labels are not signatures. No DB or business tests executed.'}

@@ -158,15 +158,18 @@ test('V7R1 sourceInput target is bound by fresh C digest, registered provider/jo
  const providerPath=new URL('./integration/current-runtime26-source-provider.mjs',import.meta.url),{fileURLToPath}=await import('node:url');
  const metadata={version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target,catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V8',sha256:H('e'),patchLevel:'26_hv2_live_pairs_complete_write_acl_v8_from_v7'},purposes:[],scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{},realImportExecutionAuthorized:false};
  const base={version:'V7_R1_FULL_SOURCE_PROVIDER26_INPUT_V1',binding:b,target,core:{},closureScope:{expectedCounts:{}},warehouses:[],producers:Object.fromEntries(module.sourceGroups.map(g=>[g,{}])),productEvidence:{},coreProjection:{},initialization:{},preparation:{},money:{}};
- async function attempt({inputChange={},metadataChange={},wrongDigest=false,wrongProvider=false}={}){
-  const runtime=await s.save({...metadata,...metadataChange});
-  const job=await s.save({version:'NATIVE_IMPORT_SOURCE_HOST26_V1',registrationId:'UNIT_PROTOCOL_NOT_EXECUTION',deadlineUtc:new Date(Date.now()+60000).toISOString(),maxSteps:100,binding:b,database:{host:'127.0.0.1',port:5432,database:b.target.database,user:b.target.role,tls:'local-transport',caFile:null,statementTimeoutMs:1000},sources,providers:{path:fileURLToPath(providerPath),sha256:wrongProvider?H('f'):sha(await readFile(providerPath))},runtime26Review:{reviewFile:runtime.path,trustedReviewSha256:runtime.sha256}});
-  const data={...base,...inputChange},grant=await s.save({version:'C_PRODUCTION_SOURCE_EXECUTION26_AUTHORIZATION_V1',decision:'AUTHORIZE_EXACT_REGISTERED_FULL_SOURCE_EXECUTION',issuingAuthority:'C',realImportExecutionAuthorized:true,job,sourceInputDigest:wrongDigest?historySettlementRequestHash(base):historySettlementRequestHash(data),groups:module.sourceGroups,mainCommands:{}});
+ async function attempt({inputChange={},metadataChange={},wrongDigest=false,wrongProvider=false,preparation13=false}={}){
+  const actualBinding=preparation13?{...b,target:{...b.target,role:'v7_r1_prepare_20261031_01'}}:b,actualTarget=preparation13?{...target,actingRole:actualBinding.target.role,sessionUser:actualBinding.target.role}:target;
+  const runtime=await s.save({...metadata,target:actualTarget,...preparation13?{catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1',sha256:H('e'),patchLevel:'26_hv2_history_set_guards_preparation13_xmin_from_v22'}}:{},...metadataChange});
+  const job=await s.save({version:'NATIVE_IMPORT_SOURCE_HOST26_V1',registrationId:'UNIT_PROTOCOL_NOT_EXECUTION',deadlineUtc:new Date(Date.now()+60000).toISOString(),maxSteps:100,binding:actualBinding,database:{host:'127.0.0.1',port:5432,database:b.target.database,user:actualBinding.target.role,tls:'local-transport',caFile:null,statementTimeoutMs:1000},sources,providers:{path:fileURLToPath(providerPath),sha256:wrongProvider?H('f'):sha(await readFile(providerPath))},runtime26Review:{reviewFile:runtime.path,trustedReviewSha256:runtime.sha256}});
+  const data={...base,binding:actualBinding,target:actualTarget,...inputChange},grant=await s.save({version:'C_PRODUCTION_SOURCE_EXECUTION26_AUTHORIZATION_V1',decision:'AUTHORIZE_EXACT_REGISTERED_FULL_SOURCE_EXECUTION',issuingAuthority:'C',realImportExecutionAuthorized:true,job,sourceInputDigest:wrongDigest?historySettlementRequestHash(base):historySettlementRequestHash(data),groups:module.sourceGroups,mainCommands:{}});
   const input=await s.save({...data,executionAuthorization:grant});
-  return module.createQa22SourceSession({inputFile:input.path,trustedInputSha256:input.sha256,executionAuthorizationSha256:grant.sha256,binding:b,sources,database:{ready(){activated++;throw Error('MUST_NOT_ACTIVATE');}},signal:new AbortController().signal});
+  return module.createQa22SourceSession({inputFile:input.path,trustedInputSha256:input.sha256,executionAuthorizationSha256:grant.sha256,binding:actualBinding,sources,database:{ready(){activated++;throw Error('MUST_NOT_ACTIVATE');}},signal:new AbortController().signal});
  }
  // Deliberately incomplete scope ends the accepted envelope before factories.
  await assert.rejects(attempt(),/QA_COUNTS/);
+ // PREPARATION13 consumer uses the same fresh source target/grant envelope.
+ await assert.rejects(attempt({preparation13:true}),/QA_COUNTS/);
  await assert.rejects(attempt({inputChange:{target:{...target,databaseOid:'987655'}},wrongDigest:true}),/C_EXECUTION_SCOPE/);
  await assert.rejects(attempt({inputChange:{target:{...target,databaseOid:'987655'}}}),/V7_R1_INPUT_TARGET/);
  await assert.rejects(attempt({metadataChange:{target:{...target,databaseOid:'21551'}}}),/V7_R1_TARGET/);

@@ -50,3 +50,15 @@ test('V8 observes25 system cells and exact three DELETE without borrowing old xm
  assert.ok(sql.includes('AS recorded_live_balance_contract_match'));assert.ok(!sql.includes('AS complete_write_xmin_acl_match'));
  assert.ok(sql.endsWith('ROLLBACK;\n'));assert.ok(sql.includes('a.attnum<0'));
 });
+
+test('PREPARATION13 renderer selects exact source135 preparation13 and fixed direct LOGIN',async()=>{
+ const p=plan();p.profile='PREPARATION13_V1';Object.assign(p.target,{database:'demo_8877_v7_r1_rehearsal_20261031_01',runtimeRole:'v7_r1_prepare_20261031_01',sessionUser:'v7_r1_prepare_20261031_01'});
+ const sql=await renderReadOnlyCheck(p);assert.ok(sql.includes(original.NATIVE_RUNTIME26_HV2_HISTORY_SET_PREPARATION13_XMIN_FROM_V22_METADATA_PROBE.replace(anchor,replacement)+';'));assert.ok(sql.includes('AS preparation13_xmin_acl_match'));assert.ok(sql.includes("jsonb_array_length(manifest->'routines')=135"));assert.ok(sql.endsWith('ROLLBACK;\n'));
+ for(const change of [{database:'production'},{runtimeRole:'v7_r1_runtime_20261031_01',sessionUser:'v7_r1_runtime_20261031_01'},{sessionUser:'administrator'}])await assert.rejects(renderReadOnlyCheck({...p,target:{...p.target,...change}}));
+});
+test('PREPARATION13 extension retains original V4/V6/V7/V8 probe and V6/V7/V8 renderer bytes',async()=>{
+ const keys=['NATIVE_RUNTIME26_HV2_HISTORY_SET_PREPARATION_XMIN_FROM_V22_METADATA_PROBE','NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_WRITE_XMIN_FROM_V22_METADATA_PROBE','NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE','NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE'];
+ const expected=['dd659e59cc45b63a6af8828b72c4c57f50170559622988fc1e6459171e9f3674','2623a9972e326d304dace759badfcabc7e99775d19cc805a6af3bcccbbc4bc2d','e0ec5a9d40f3993e9495a819c6e3ee2e78217f606511220679551d98006bc2fe','2c41f71e48fbf78105a22ba84120295b46b919768da83a421cfa9af92836845d'];
+ const digest=s=>createHash('sha256').update(s).digest('hex');for(let i=0;i<keys.length;i++)assert.equal(digest(original[keys[i]]),expected[i]);
+ const outputs={V6:'06dca8e1104936da1f6bab9093be9a532a6637a06450cc404c741dde6e6ef23e',V7:'ebadb239a8518b4d9a22fde945ff4d9c0c40b7c85c26752858a932b12b0d69f1',V8:'98d179b0f2ee12c87f999d17aa95185782877ab9fa7c50b3ecd8b18d69a7c34d'};for(const profile of Object.keys(outputs))assert.equal(digest(await renderReadOnlyCheck({...plan(),profile})),outputs[profile]);
+});

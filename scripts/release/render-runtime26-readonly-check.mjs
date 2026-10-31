@@ -11,7 +11,7 @@ const lit=x=>"'"+String(x).replaceAll("'","''")+"'";
 export async function renderReadOnlyCheck(plan, loadModule=async p=>import(pathToFileURL(p).href)) {
  need(exact(plan,['format','scope','sourceFile','sourceSha256','sourceCommit','profile','target']), 'CLOSED_PLAN_REQUIRED');
  need(plan.format==='RUNTIME26_READONLY_METADATA_PLAN_V1'&&plan.scope==='EXACT_TARGET_METADATA_ONLY_NO_UPGRADE', 'READONLY_SCOPE_REQUIRED');
- need(hash(plan.sourceSha256)&&/^[a-f0-9]{40}$/.test(plan.sourceCommit)&&['V6','V7','V8'].includes(plan.profile),'SOURCE_PROFILE_REQUIRED');
+ need(hash(plan.sourceSha256)&&/^[a-f0-9]{40}$/.test(plan.sourceCommit)&&['V6','V7','V8','PREPARATION13_V1'].includes(plan.profile),'SOURCE_PROFILE_REQUIRED');
  need(typeof plan.sourceFile==='string'&&plan.sourceFile==='adapters/postgres/src/native-import-accounting-capability.ts','EXACT_REPO_SOURCE_REQUIRED');
  const file=resolve(plan.sourceFile),bytes=readFileSync(file);
  need(createHash('sha256').update(bytes).digest('hex')===plan.sourceSha256,'SOURCE_HASH_MISMATCH');
@@ -21,8 +21,9 @@ export async function renderReadOnlyCheck(plan, loadModule=async p=>import(pathT
  need(typeof t.databaseOid==='string'&&/^[1-9][0-9]*$/.test(t.databaseOid)&&typeof t.serverVersionNum==='string'&&/^[1-9][0-9]*$/.test(t.serverVersionNum),'TARGET_OID_VERSION_REQUIRED');
  need(typeof t.postmasterStart==='string'&&/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d(?:\.\d+)?[+-]\d\d(?::\d\d)?$/.test(t.postmasterStart),'POSTMASTER_REQUIRED');
  need((t.serverAddress===null&&t.serverPort===null)||(typeof t.serverAddress==='string'&&/^[0-9a-fA-F:.\/]+$/.test(t.serverAddress)&&Number.isInteger(t.serverPort)&&t.serverPort>0&&t.serverPort<65536),'EXPLICIT_TRANSPORT_REQUIRED');
+ if(plan.profile==='PREPARATION13_V1')need(t.database==='demo_8877_v7_r1_rehearsal_20261031_01'&&t.runtimeRole==='v7_r1_prepare_20261031_01','EXACT_PREPARATION13_TARGET_REQUIRED');
  const m=await loadModule(file);
- const key=plan.profile==='V8'?'NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE':plan.profile==='V6'?'NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_WRITE_XMIN_FROM_V22_METADATA_PROBE':'NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE';
+ const key=plan.profile==='PREPARATION13_V1'?'NATIVE_RUNTIME26_HV2_HISTORY_SET_PREPARATION13_XMIN_FROM_V22_METADATA_PROBE':plan.profile==='V8'?'NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE':plan.profile==='V6'?'NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_WRITE_XMIN_FROM_V22_METADATA_PROBE':'NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE';
  let probe=m[key]; const anchor="SELECT manifest->'identity' AS identity,manifest->'migration_versions' AS migration_versions,";
  need(typeof probe==='string'&&probe.split(anchor).length===2,'EXACT_ORIGINAL_PROBE_REQUIRED');
  probe=probe.replace(anchor,"SELECT ((manifest - 'routines') || pg_catalog.jsonb_build_object('routines',(SELECT pg_catalog.jsonb_agg(r - 'source') FROM pg_catalog.jsonb_array_elements(manifest->'routines') r))) AS manifest, manifest->'identity' AS identity,manifest->'migration_versions' AS migration_versions,");

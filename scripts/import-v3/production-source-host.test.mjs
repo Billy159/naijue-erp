@@ -514,3 +514,13 @@ test('V8 source host without original captured prefix closes before activating t
  await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/PREFIX_REQUIRED/);
  assert.equal(globalThis[f.marker].opened,1);assert.equal(globalThis[f.marker].closed,1);assert.equal(globalThis[f.marker].closedGate,true);
 });
+
+test('PREPARATION13 source host accepts only finite exact preparation profile with original prefix authority',()=>{
+ const {b:base,m}=v20FullRuntimeFixture(),b={...base,target:{...base.target,database:'demo_8877_v7_r1_rehearsal_20261031_01',role:'v7_r1_prepare_20261031_01'}};
+ const review={...m,target:{...m.target,database:b.target.database,actingRole:b.target.role,sessionUser:b.target.role},catalog:{...m.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1',patchLevel:'26_hv2_history_set_guards_preparation13_xmin_from_v22'}};let captures=0;const prefix={capture(){captures++;}};
+ assert.equal(validateSourceHostRuntimeReview26(review,b,prefix),undefined);assert.equal(captures,0);
+ assert.throws(()=>validateSourceHostRuntimeReview26(review,b),/PREFIX_REQUIRED/);
+ assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V4'}},b,prefix),/RUNTIME_REVIEW/);
+ assert.throws(()=>validateSourceHostRuntimeReview26({...review,target:{...review.target,sessionUser:'admin'}},b,prefix),/PREPARATION13_TARGET/);
+ const wrong={...b,target:{...b.target,role:'v7_r1_runtime_20261031_01'}};assert.throws(()=>validateSourceHostRuntimeReview26({...review,target:{...review.target,actingRole:wrong.target.role,sessionUser:wrong.target.role}},wrong,prefix),/PREPARATION13_TARGET/);
+});

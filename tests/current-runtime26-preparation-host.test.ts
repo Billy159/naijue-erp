@@ -35,3 +35,19 @@ test('independently pinned normal V8/owner review cannot select a preparation is
   await assert.rejects(run({...i,runtime26Review:{reviewFile:path,trustedReviewSha256:createHash('sha256').update(bytes).digest('hex')}}));
  }
 });
+
+import {validateCurrentRuntime26Preparation13Input as validate13,runCurrentRuntime26Preparation13Publication as run13} from './integration/current-runtime26-preparation-host.ts';
+test('PREPARATION13 new routing marker is explicit and never changes original V4 meaning',async()=>{
+ const i={...unitInput(),authorization:'CONFIRMED_NEW_ISOLATED_PREPARATION_135_PREPARATION13_V1' as const};assert.equal(validate13(i),undefined);
+ assert.throws(()=>validate(i as never));assert.throws(()=>validate13(unitInput() as never));await assert.rejects(run13(i),{code:'ENOENT'});
+});
+test('PREPARATION13 entry rejects old V4 review, retains old refusal of new profile, and needs original job',async t=>{
+ const directory=await mkdtemp(join(tmpdir(),'unit-preparation13-'));t.after(()=>rm(directory,{recursive:true,force:true}));
+ const old=unitInput(),base={target:{database:old.blueprint.database,databaseOid:old.expectedDatabaseOid,actingRole:CURRENT_PREPARATION_ROLE,sessionUser:CURRENT_PREPARATION_ROLE}};
+ const save=async(catalog:object)=>{const bytes=JSON.stringify({...base,catalog}),reviewFile=join(directory,'UNIT_GRAMMAR_ONLY.json');await writeFile(reviewFile,bytes);return {reviewFile,trustedReviewSha256:createHash('sha256').update(bytes).digest('hex')};};
+ const v4=await save({format:'EXACT26_RUNTIME_CATALOG_EXPORT_V4',patchLevel:'26_hv2_history_set_guards_preparation_xmin_from_v22'});
+ await assert.rejects(run13({...old,authorization:'CONFIRMED_NEW_ISOLATED_PREPARATION_135_PREPARATION13_V1',runtime26Review:v4}),/EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1/);
+ const p13=await save({format:'EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1',patchLevel:'26_hv2_history_set_guards_preparation13_xmin_from_v22'});
+ await assert.rejects(run({...old,runtime26Review:p13}),/EXACT26_RUNTIME_CATALOG_EXPORT_V4/);
+ await assert.rejects(run13({...old,authorization:'CONFIRMED_NEW_ISOLATED_PREPARATION_135_PREPARATION13_V1',runtime26Review:p13}),{code:'ENOENT'});
+});

@@ -9,7 +9,7 @@ import {createHash} from 'node:crypto';
 import {isAbsolute} from 'node:path';
 import {BoundedPostgresPool} from '../../adapters/postgres/src/bounded-pool.ts';
 import type {BoundedPostgresConfig} from '../../adapters/postgres/src/bounded-pool.ts';
-import {createNativeRuntime26Issuer} from '../../adapters/postgres/src/native-import-accounting-capability.ts';
+import {createNativeRuntime26Issuer,NATIVE_RUNTIME26_PREPARATION13_FORMAT,NATIVE_RUNTIME26_PREPARATION13_PATCH_LEVEL} from '../../adapters/postgres/src/native-import-accounting-capability.ts';
 import {PostgresCutoffImportStore} from '../../adapters/postgres/src/inventory-cutoff-import-store.ts';
 import type {ImportStageBootstrap26,BarcodeSchemeInitialization26} from '../../adapters/postgres/src/inventory-cutoff-import-store.ts';
 import {initializeNativeBarcodeSchemesOnClient26} from '../../adapters/postgres/src/native-barcode-import.ts';
@@ -42,6 +42,10 @@ export interface CurrentRuntime26PreparationInput {
  readonly schemeInitialization:{readonly command:BarcodeSchemeInitializationCommand;readonly writeContractReplyFile:string;readonly trustedWriteContractReplySha256:string};
  readonly publication:CurrentSalesPublicationOptions;
 }
+export interface CurrentRuntime26Preparation13Input extends Omit<CurrentRuntime26PreparationInput,'authorization'> {
+ readonly authorization:'CONFIRMED_NEW_ISOLATED_PREPARATION_135_PREPARATION13_V1';
+}
+type PreparationInput=CurrentRuntime26PreparationInput|CurrentRuntime26Preparation13Input;
 export interface CurrentRuntime26PreparedPublicationResult {
  readonly status:'IMPORTED';
  readonly coreResult:Awaited<ReturnType<ReturnType<typeof createCutoffImportService>['execute']>>;
@@ -50,8 +54,8 @@ export interface CurrentRuntime26PreparedPublicationResult {
 }
 /** Pure finite routing checks, before source/private-file reads or pool creation.
  * This marker checks routing, never grants authority or replaces C execution approval. */
-export function validateCurrentRuntime26PreparationInput(i:CurrentRuntime26PreparationInput):void{
- assert.equal(i?.authorization,'CONFIRMED_NEW_ISOLATED_PREPARATION_135_V4');
+function validatePreparationInput(i:PreparationInput,preparation13:boolean):void{
+ assert.equal(i?.authorization,preparation13?'CONFIRMED_NEW_ISOLATED_PREPARATION_135_PREPARATION13_V1':'CONFIRMED_NEW_ISOLATED_PREPARATION_135_V4');
  const b=i.blueprint;assert.equal(b.database,CURRENT_LIVE_LEDGER_QA_TARGET);assert.equal(b.batchId,CURRENT_LIVE_LEDGER_QA_BATCH);assert.equal(b.namespace,CURRENT_LIVE_LEDGER_QA_NAMESPACE);
  assert.equal(i.postgres.target.database,b.database);assert.equal(i.postgres.target.user,CURRENT_PREPARATION_ROLE);
  assert.equal(i.postgres.target.host,'/qa-socket');assert.equal(i.postgres.target.port,5432);assert.equal(i.postgres.target.ssl,false);
@@ -67,13 +71,13 @@ export function validateCurrentRuntime26PreparationInput(i:CurrentRuntime26Prepa
  assert.ok(i.publication.signal instanceof AbortSignal&&!i.publication.signal.aborted&&isAbsolute(i.publication.configFile)&&Number.isSafeInteger(i.publication.maxSteps)&&i.publication.maxSteps>0&&i.publication.maxSteps<=1_000_000&&typeof i.publication.append==='function');
 }
 
-export async function runCurrentRuntime26PreparedPublication(i:CurrentRuntime26PreparationInput):Promise<CurrentRuntime26PreparedPublicationResult>{
- validateCurrentRuntime26PreparationInput(i);
+async function runPreparedPublication(i:PreparationInput,preparation13:boolean):Promise<CurrentRuntime26PreparedPublicationResult>{
+ validatePreparationInput(i,preparation13);
  // The original issuer re-reads/pins this file and actual metadata on its owned
  // connection. This precheck prevents choosing an unrelated observation profile.
  const bytes=await readFile(i.runtime26Review.reviewFile);assert.equal(createHash('sha256').update(bytes).digest('hex'),i.runtime26Review.trustedReviewSha256);
  const review=JSON.parse(bytes.toString('utf8')) as {catalog:{format:string;patchLevel:string};target:{database:string;databaseOid:string;actingRole:string;sessionUser:string}};
- assert.equal(review.catalog.format,'EXACT26_RUNTIME_CATALOG_EXPORT_V4');assert.equal(review.catalog.patchLevel,V4);
+ assert.equal(review.catalog.format,preparation13?NATIVE_RUNTIME26_PREPARATION13_FORMAT:'EXACT26_RUNTIME_CATALOG_EXPORT_V4');assert.equal(review.catalog.patchLevel,preparation13?NATIVE_RUNTIME26_PREPARATION13_PATCH_LEVEL:V4);
  assert.equal(review.target.database,i.blueprint.database);assert.equal(review.target.databaseOid,i.expectedDatabaseOid);assert.equal(review.target.actingRole,CURRENT_PREPARATION_ROLE);assert.equal(review.target.sessionUser,CURRENT_PREPARATION_ROLE);
  const partyModule=await import(new URL('../../scripts/import-v3/native-party-source26.mjs',import.meta.url).href) as {openReviewedPartySource26(o:Options):Promise<Closable>};
  const sourceModule=await import(new URL('../../scripts/import-v3/native-source-authorizers.mjs',import.meta.url).href) as {
@@ -139,3 +143,10 @@ export async function runCurrentRuntime26PreparedPublication(i:CurrentRuntime26P
  }
  if(failure!==undefined)throw failure;assert.ok(result);return result;
 }
+
+/** Original V4 route remains exact12; it does not silently adopt a new review. */
+export function validateCurrentRuntime26PreparationInput(i:CurrentRuntime26PreparationInput):void{validatePreparationInput(i,false);}
+export function runCurrentRuntime26PreparedPublication(i:CurrentRuntime26PreparationInput):Promise<CurrentRuntime26PreparedPublicationResult>{return runPreparedPublication(i,false);}
+/** Approved preparation13 route: original135 business source, distinct review. */
+export function validateCurrentRuntime26Preparation13Input(i:CurrentRuntime26Preparation13Input):void{validatePreparationInput(i,true);}
+export function runCurrentRuntime26Preparation13Publication(i:CurrentRuntime26Preparation13Input):Promise<CurrentRuntime26PreparedPublicationResult>{return runPreparedPublication(i,true);}
