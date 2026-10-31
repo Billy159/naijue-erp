@@ -90,7 +90,8 @@ try:
    page.locator('.sidebar a[data-route="transfer"]').click();first=list_ready(1,20,25,20);shot('pagination-01-first')
    pager.get_by_role('button',name='下一页',exact=True).click();second=list_ready(2,20,25,5);shot('pagination-02-second')
    assert len(set(first+second))==25 and first+second==sorted(first+second),'normal consumer equal-time ID ordering'
-   opened=second[0];rows.first.locator('td:nth-child(2) button').click();page.wait_for_url(re.compile(r'.*#transfer/(?:view|edit)/'+opened));page.get_by_role('button',name='返回列表',exact=True).wait_for();shot('pagination-03-detail')
+   opened=second[0];rows.first.locator('td:nth-child(2) button').click();page.wait_for_url(re.compile(r'.*#transfer/(?:view|edit)/'+opened));page.get_by_role('heading',name='编辑调拨单',exact=True).wait_for();page.get_by_role('button',name='取消修改',exact=True).wait_for();shot('pagination-03-detail')
+   page.get_by_role('button',name='取消修改',exact=True).click();page.get_by_role('heading',name='查看调拨单',exact=True).wait_for()
    page.get_by_role('button',name='返回列表',exact=True).click();assert list_ready(2,20,25,5)==second;shot('pagination-04-return-second')
    pager.get_by_role('button',name='第1页',exact=True).click();assert list_ready(1,20,25,20)==first
    pager.get_by_role('button',name='下一页',exact=True).click();assert list_ready(2,20,25,5)==second
