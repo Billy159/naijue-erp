@@ -20210,7 +20210,16 @@
     "next": "Original root caller and finite-owner seam; QB new increment only; exact finite successor scope before actual execution",
     "qbReceiptSha256": "1c9e23eff04801784abdc9d67bb3b26eb9c64ccfe049eabf54d1160381fe759c",
     "activeFindings": [],
-    "withdrawnFinding": "F01 wrong consumer reference; correct production-provider env retained"
+    "withdrawnFinding": "F01 wrong consumer reference; correct production-provider env retained",
+    "callerIncrement": {
+      "status": "FIXED_INCREMENT_UNDER_ORIGINAL_QB_REVIEW_NOT_EXECUTABLE",
+      "result": "PRIVATE-PROCESS-CALLER-LOCAL-01/RESULT.json",
+      "sha256": "fe485cd83bcfd179c657bf704008921d296d1ebd2b699fe1b3c915f4de4d6cc6",
+      "filesMatched": 13,
+      "localChecks": 11,
+      "serverEffects": 0,
+      "actualLinuxNode24Pg": "NOT_RUN"
+    }
   },
   "r1LatestFullUserScope20261031": {
     "authority": "Human six-part detailed handoff pasted directly in this Chat; user clarified this IS naijue-erp-codex-detailed-handoff-20261031.txt, no separate file needed",
@@ -20242,7 +20251,7 @@
       "testBodies": "Exact r1 for all13 referenced files; original5 contract tests + realPG TODO retained",
       "retained": "Real PostgreSQL acceptance TODO and P03 performance SKIP unchanged; not PASS"
     },
-    "actualExecutionState": "Original QA178 window CLOSED, no roles/DBs created; T45 local caller preparation active; new environment effects not implied by attachments",
+    "actualExecutionState": "Original QA178 window CLOSED, no roles/DBs created; root caller fixed and original QB incremental review dispatched; new environment effects not authorized",
     "intake": {
       "demoZip": "f1b9b81ac0ed927bbd9e19a5395fbd106161d78bb051799992850f3afd64becc",
       "notReleaseZip": "fae108aeda73f808eb5b067f317d28e839c96c7a6e9565567a86f53288f91ea7",
@@ -20270,10 +20279,16 @@
     "documentFollowup": {
       "owner": "originalF1",
       "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
-      "status": "REPRODUCE_R1_AND_ANNOUNCE_EXACT_LEAVES_FIRST",
-      "current": "Sales/transfer edit/defaults/responsible/detail dirty/list refresh/order/window UI",
-      "next": "Existing scanner queue/repeat/color-size/pause-recovery-cancel/timeout-stale response; keyboard vs real scanner evidence separate",
-      "protected": "No F2 product/C category/shared config/API/SQL/Git/service writes"
+      "status": "F1_EXACT3_HANDED_BACK_DIRECTED_RED_GREEN_PASS_BUILD_BROWSER_PG_PENDING",
+      "current": "Committed create clears stale list filter/request/page state only; preserves pageSize and expanded filters",
+      "next": "Unified immutable candidate and foreground affected scenarios; remaining actual warehouse-default read seam and full editing/scan acceptance",
+      "protected": "No F2 product/C category/shared config/API/SQL/Git/service writes",
+      "files": {
+        "apps/web/demo-replica/frontend/runtime/documents/sales-new-page.tsx": "f8ef9c78a6d41993a48f0d0b0f9463871c58da6510b1a23dce2b6b041440e741",
+        "apps/web/demo-replica/frontend/runtime/documents/transfers-create-page.tsx": "fde5f21fbca478fccf9601a588f61dc8508a196d8aa3ccb5c9fed2b499a264a7",
+        "apps/web/demo-replica/frontend/runtime/documents/document-save-list-state.test.mjs": "4b5ef88213a138debbfc5b91c2daed072c93af24e2f2c7d8db7f98aeb9997964"
+      },
+      "checks": "Original actual-page RED then GREEN eight branches; affected list-query-state checks and strict runtime types passed per original owner; scanner10 synthetic checks reused, hardware/browser/PG not run"
     }
   }
 }
