@@ -8433,5 +8433,16 @@
     "configuration": "apps/web/demo-replica/tests/product-entry-service-public-config.json",
     "sharedBridge": "No writer assigned until exact necessary opt-in line identified; not concurrently modified",
     "buildOwner": "T45"
+  },
+  "r1ScannerRecoveryFollowup": {
+    "owner": "F1",
+    "status": "ACTIVE_SINGLE_TEST_LEAF",
+    "model": "gpt-6.1-sol/medium",
+    "paths": [
+      "apps/web/demo-replica/tests/transfer-chain-browser.py"
+    ],
+    "scope": "Mutually exclusive scan-recovery test branch only; application/fixture read-only; no build/PG/server; original browser lease serial after C acceptance",
+    "base": "ab3556c64f58adc53f116901f00203cfa32eff16",
+    "next": "Fixed test successor then original QF independent bounded headed review; sales scanner exact proposal separately"
   }
 }

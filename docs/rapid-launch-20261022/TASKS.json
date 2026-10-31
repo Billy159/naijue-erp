@@ -21112,12 +21112,13 @@
   },
   "r1ScannerRemainingFollowup": {
     "owner": "F1",
-    "status": "DISPATCHED_READONLY_EVIDENCE_DEDUP_NO_SOURCE_WRITE_LEASE",
+    "status": "F1_SINGLE_TRANSFER_DRIVER_INCREMENT_GRANTED",
     "model": "gpt-6.1-sol/medium",
     "fast": "UNVERIFIED_TOOL_NO_SWITCH",
     "baseline": "80b56347; app0a2fa82d; fixed52/53 profiles separately bound",
     "scope": "Only remaining software error pause/resume/cancel, timeout feedback, late response isolation and equivalent sales consumers; reuse pendingM6, repeated quantity, paging results",
-    "next": "Original F1 returns exact remaining scenarios and minimal driver/test leaves before C grants unique writer; no new build or UI change yet",
-    "hardware": "NOT_TESTED_KEYBOARD_NOT_HARDWARE"
+    "next": "F1 transfer driver one-leaf successor; separately exact sales normal-entry integration scope; do not claim hardware or PG",
+    "hardware": "NOT_TESTED_KEYBOARD_NOT_HARDWARE",
+    "findings": "Transfer source/DOM already covers recovery/3s/late; remaining headed errors and timeout not covered by 2s pending case. Normal sales proposal has no scanner mount; old Arco path is not current proof."
   }
 }
