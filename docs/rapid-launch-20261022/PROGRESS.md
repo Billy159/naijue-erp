@@ -3490,3 +3490,8 @@ T45只读证实统一合成host缺同事实/库存事务接缝，原D1精确9测
 
 ### 统一合成宿主已固定，进入QB增量验收
 D1精确9叶固定bf59bac78119097328de24ed615b03fc56cf75f6，交付SHA873b6c03b43be6355601246c57f51f42fa42a0204b1508ea8d0d2e1ad564e55c，43/43与root类型检查通过。新唯一--unified-service保留旧profile，跨模块当前商品/SKU/条码、收款、员工目录及同库存事务；新商品无库存事实仍UNKNOWN/拒绝不符审核。QB只核此增量，不改源码。C新增原schema统一public配置，SHA064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711，原parser通过；完整inventory/ledger、staff/account/store维护和历史未就绪不提前开启。未构建/浏览器/真实PG/生产通过。
+
+
+### 候选55闭包通过，跨页面准确接缝合批修复
+QB exact9限定SOURCE PASS已采纳，报告f25f9739…；T45统一55固定d0e3b4ce/config064bc2ab，manifest38eebaaccfdd8859bdc6d8a8382f0604cf1dfc541cd0424ad91167fa628c3366，190outputs/1310inputs、0.852秒单次构建及资源闭包通过，未运行browser/PG。
+T45静态发现已启用厅仓只读路由缺口；F1只读发现正常支付新增hallIds=[]在两原过滤里可能被剔除。原D1合批先复现再修（组织读取原端口及既定空关系unrestricted语义），准确3叶租约；不是改业务合同或用脚本补厅。原F1新增唯一跨页面driver，两有限data/docs case，先准备，不对已知缺口版本重复写setup。完成固定后再新candidate串行独立实操。原55/54不覆盖，真实PG与窗口03批准边界不变。

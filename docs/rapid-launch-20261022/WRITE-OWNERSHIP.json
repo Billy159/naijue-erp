@@ -8496,5 +8496,26 @@
     "path": "apps/web/demo-replica/tests/unified-service-public-config.json",
     "sha256": "064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711",
     "scope": "Existing schema, finite synthetic profile only; no production deployment"
+  },
+  "r1UnifiedOrganizationReadSuccessor": {
+    "owner": "D1",
+    "status": "ACTIVE_EXACT_TWO_LEAVES",
+    "paths": [
+      "apps/web/demo-replica/tests/unified-service-fixture.mjs",
+      "apps/web/demo-replica/tests/unified-service-fixture.test.mjs",
+      "apps/web/demo-replica/tests/sales-chain-fixture.mjs"
+    ],
+    "scope": "Reproduce enabled read-only organization halls/warehouses route gap then connect original typed authorized read consumers; no fake fallback or write permissions; same config read menus only; reproduce normal payment CREATE hallIds=[] wrongly excluded; preserve approved unrestricted-empty-hall semantics in original reference and save-fact filters only",
+    "base": "d0e3b4cebd2a1d4ca4e9bcc0cde5caf395e77e47",
+    "model": "gpt-6.1-sol/medium"
+  },
+  "r1UnifiedCrossPageBrowser": {
+    "owner": "F1",
+    "status": "ACTIVE_SINGLE_NEW_DRIVER_LEAF",
+    "paths": [
+      "apps/web/demo-replica/tests/unified-cross-page-browser.py"
+    ],
+    "scope": "Bounded data-linkage/document-linkage cases; immutable build/fixture args; real normal UI CREATE/payment/picker/scanner/save/readback, not API seeding to fake normal UI; no source/host changes",
+    "model": "gpt-6.1-sol/medium"
   }
 }
