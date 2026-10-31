@@ -1,5 +1,6 @@
-"""Two finite normal-menu cases over the frozen original --unified-service host.
-No setup API calls, response substitution, approvals, database or user browser session.
+"""Finite normal-menu cases over the frozen original --unified-service host.
+Only barcode-unavailable uses explicit original HTTP DISABLE/RESTORE condition preparation.
+No response substitution, approvals, database or user browser session.
 """
 import argparse
 import base64
@@ -16,7 +17,7 @@ from urllib.parse import unquote, urlsplit
 
 p = argparse.ArgumentParser()
 p.add_argument('build'); p.add_argument('out')
-p.add_argument('--case', choices=['data-linkage', 'document-linkage', 'transfer-linkage', 'audit-linkage'], action='append', required=True)
+p.add_argument('--case', choices=['data-linkage', 'document-linkage', 'transfer-linkage', 'audit-linkage', 'barcode-unavailable'], action='append', required=True)
 p.add_argument('--fixture-tests', required=True)
 p.add_argument('--source-checkpoint', required=True)
 p.add_argument('--manifest-sha256', required=True)
@@ -335,11 +336,92 @@ try:
             assert len(writes) == 2 and all(r['path'] == '/api/payment/accounts/commands' and r['status'] == 200 for r in writes)
             result['checks'].append({'name': 'normal account CREATE/EDIT and original audit identity/version/changes/filter/date/close/reentry', 'targetId': account['id'], 'operationIds': [created['body']['operationId'], edited['body']['operationId']]})
 
+        def barcode_unavailable(product):
+            # Current normal product editor has no DISABLE/RESTORE buttons. These
+            # two original HTTP commands prepare conditions, not a normal UI test.
+            result['conditionPreparation'] = {'mode': 'ORIGINAL_HTTP_API_NOT_NORMAL_UI', 'writes': [],
+                'reason': 'Normal runtime products/editor.tsx exposes save/delete/cancel only',
+                'requiredProducerRevision': '24151d6922dc36126176ae981bd57d7eead93242',
+                'faultInjection': False}
+
+            def api(path, body=None):
+                received = page.evaluate("""async ({path, body}) => {
+                    const response = await fetch(path, {method: body === null ? 'GET' : 'POST', credentials: 'same-origin',
+                        ...(body === null ? {} : {headers: {'content-type':'application/json'}, body:JSON.stringify(body)})});
+                    return {status:response.status, body:await response.json()};
+                }""", {'path': path, 'body': body})
+                assert received['status'] == 200, received
+                actual = latest(path)
+                assert actual['status'] == received['status'] and actual['body'] == received['body']
+                return received['body']
+
+            baseline = api('/api/products/maintenance/v2/detail/query', {'productId': product['id']})
+            assert baseline['productId'] == product['id'] and baseline['version'] == 1 and baseline['values']['enabled']
+            main = product['barcodeRow']['main']; assert main['id'] and main['barcode'] == product['barcode']
+
+            def state_command(action, expected_version):
+                key = page.evaluate('crypto.randomUUID()')
+                command = {'action': action, 'requestKey': key, 'id': product['id'], 'expectedVersion': expected_version}
+                saved = api('/api/products/v2/commands', command)
+                assert saved['kind'] == 'PRODUCT' and saved['targetId'] == product['id'] and saved['version'] == expected_version + 1
+                receipt = api('/api/products/receipts/' + key)
+                assert receipt['requestKey'] == key and receipt['action'] == action and receipt['status'] == 'COMMITTED' and receipt['result'] == saved
+                detail = api('/api/products/maintenance/v2/detail/query', {'productId': product['id']})
+                assert detail['productId'] == product['id'] and detail['version'] == saved['version']
+                assert detail['values']['enabled'] == (action == 'RESTORE')
+                assert detail['skus'] == baseline['skus'] and detail['barcodes'] == baseline['barcodes'], 'Do not alter SKU/MAIN identity to manufacture unavailable'
+                result['conditionPreparation']['writes'].append({'command': command, 'result': saved, 'receipt': receipt})
+                return saved
+
+            disabled = state_command('DISABLE', baseline['version'])
+            menu('sales/new'); page.get_by_role('textbox', name='整单优惠 / 抹零', exact=True).wait_for()
+            choose_document('业务类型', '销售'); choose_document('营业厅', '网点营业厅')
+            choose_document('客户', '零售客户'); choose_document('出库仓', '备货仓')
+            note = page.get_by_label('备注', exact=True); note.fill('SYN original business unavailable; no SAVE')
+            page.get_by_role('button', name='扫码录入', exact=True).click()
+            scan = page.locator('.document-scan-input input'); feedback = page.locator('.document-scan-feedback')
+            expect(scan).to_be_focused(); scan.fill(product['barcode']); scan.press('Enter')
+            expect(feedback).to_contain_text('不可用', timeout=2500); expect(feedback).to_contain_text('已暂停'); expect(scan).to_be_disabled()
+            unavailable = latest('/api/current-form/barcode/query')
+            assert unavailable['status'] == 200 and unavailable['request']['barcode'] == product['barcode']
+            assert unavailable['request']['context']['kind'] == 'SALES'
+            assert unavailable['body'] == {'state': 'UNAVAILABLE', 'barcode': product['barcode'], 'binding': None, 'sku': None}
+            expect(page.locator('.document-scan-grid input')).to_have_count(0)
+            expect(page.locator('tr[data-entry-row]').filter(has=page.locator('.sale-product-identity'))).to_have_count(0)
+            shot('barcode-unavailable-01-original-business-state')
+            before = len([r for r in result['responses'] if r['path'] == '/api/current-form/barcode/query'])
+            assert before == 1, 'Only the necessary unavailable lookup before restoration'
+            restored = state_command('RESTORE', disabled['version'])
+            assert restored['operationId'] != disabled['operationId']
+            expect(feedback).to_contain_text('已暂停'); expect(scan).to_be_disabled()
+            assert len([r for r in result['responses'] if r['path'] == '/api/current-form/barcode/query']) == before
+            page.get_by_role('button', name='重新扫码', exact=True).click()
+            expect(scan).to_have_value(product['barcode']); expect(scan).to_be_focused()
+            assert len([r for r in result['responses'] if r['path'] == '/api/current-form/barcode/query']) == before, 'Recovery must only restore original input'
+            scan.press('Enter'); expect(page.locator('.document-scan-grid input')).to_have_value('1')
+            found = latest('/api/current-form/barcode/query')
+            assert found['status'] == 200 and found['request'] == unavailable['request'] and found['body']['state'] == 'FOUND'
+            assert found['body']['sku']['id'] == product['skuId'] and found['body']['sku']['productId'] == product['id']
+            assert found['body']['binding']['id'] == main['id'] and found['body']['binding']['kind'] == 'MAIN'
+            assert len([r for r in result['responses'] if r['path'] == '/api/current-form/barcode/query']) == before + 1
+            page.get_by_role('button', name='关闭扫码抽屉', exact=True).click(); expect(scan).to_have_count(0)
+            line = page.locator('tr[data-entry-row]').filter(has=page.locator('.sale-product-identity')); expect(line).to_have_count(1)
+            expect(line.get_by_role('textbox', name='本行数量', exact=True)).to_have_value('1')
+            expect(line.get_by_role('textbox', name='本行成交单价', exact=True)).to_have_value('')
+            expect(note).to_have_value('SYN original business unavailable; no SAVE'); shot('barcode-unavailable-02-restored-same-main-sku')
+            writes = [r for r in result['responses'] if r['path'].endswith('/commands')]
+            assert len(writes) == 3 and all(r['path'] == '/api/products/v2/commands' and r['status'] == 200 for r in writes)
+            assert [r['request']['action'] for r in writes] == ['CREATE', 'DISABLE', 'RESTORE']
+            assert len({r['request']['requestKey'] for r in writes}) == 3 and len({r['body']['operationId'] for r in writes}) == 3
+            result['businessBarcodeStates'] = [unavailable, found]
+            result['checks'].append({'name': 'normal sales scanner original business UNAVAILABLE/null IDs then explicit restored same MAIN/SKU FOUND; no document SAVE', 'productId': product['id']})
+            result['notTested'].extend(['normal UI product DISABLE/RESTORE (no entry)', 'transport failure (separate fixed driver)', 'cancel/late no revival (accepted prior evidence reused; no replay)'])
+
         if case == 'audit-linkage':
             audit_linkage()
         else:
             product = create_product()
-            if case != 'transfer-linkage':
+            if case not in ['transfer-linkage', 'barcode-unavailable']:
                 account = create_account()
             if case == 'data-linkage':
                 menu('settings/staff'); page.get_by_role('heading', name='员工与账号', exact=True).wait_for(); page.wait_for_load_state('networkidle')
@@ -349,6 +431,8 @@ try:
                         assert button.is_disabled(), 'Staff read-only configuration must be honored'
                 shot('04-staff-directory-readonly')
                 result['checks'].append({'name': 'new stock UNKNOWN and normal staff directory read only', 'stock': result['stockTotal']})
+            elif case == 'barcode-unavailable':
+                barcode_unavailable(product)
             elif case == 'transfer-linkage':
                 transfer_linkage(product)
                 assert not [r for r in result['responses'] if r['path'] in ['/api/payment/accounts/commands', '/api/sales/commands']], 'Transfer-only followup must not replay accounts or sales'
