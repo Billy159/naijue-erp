@@ -21182,7 +21182,7 @@
     },
     "unavailableIncrement": {
       "owner": "F1",
-      "status": "TRANSPORT54_AND_BUSINESS59_STATIC_READY_BROWSER_WORK_DISABLED",
+      "status": "TWO_DISTINCT_CASES_FIXED_TRANSPORT54_BUSINESS59_BROWSER_WORK_DISABLED",
       "path": "apps/web/demo-replica/tests/sales-chain-browser.py",
       "scope": "transport fault-injection only; genuine business UNAVAILABLE NOT_TESTED_NO_DECLARED_HOST_INPUT",
       "driverCommit": "7798a27ac3e3b3d3a2b325e338fa5d5742419e55",
@@ -21217,6 +21217,17 @@
         "status": "STATIC_ONLY_T45_FIXED59_PREPARATION",
         "scope": "normal productCREATE;originalHTTP DISABLE/RESTORE condition preparation not normalUI;normal salesdrawer originalUNAVAILABLE->retry-noauto->sameMAIN/SKU FOUND;0SAVE",
         "notRun": "browser/normalUI DISABLE-RESTORE/PG/production/hardware"
+      },
+      "businessBuild59": {
+        "source": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
+        "manifest": "325018fc5de2da6b2354e74fc4a0df335ea868396d3e40321af81afdd23423d0",
+        "config": "064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711",
+        "producerSeconds": 0.868,
+        "outputs": 190,
+        "inputs": 1310,
+        "status": "PASS_BUILD_CLOSURE_ONLY",
+        "browser": "NOT_EXECUTED_BROWSER_WORK_DISABLED",
+        "handoff": "reports/controller/rapid-launch-20261022/ui-preview-f06a0090-unified-cross-page-59/BARCODE-UNAVAILABLE-HANDOFF.WORK-DISABLED.json"
       }
     }
   },
