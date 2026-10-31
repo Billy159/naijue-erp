@@ -16,7 +16,7 @@ from urllib.parse import unquote, urlsplit
 
 p = argparse.ArgumentParser()
 p.add_argument('build'); p.add_argument('out')
-p.add_argument('--case', choices=['data-linkage', 'document-linkage'], action='append', required=True)
+p.add_argument('--case', choices=['data-linkage', 'document-linkage', 'transfer-linkage'], action='append', required=True)
 p.add_argument('--fixture-tests', required=True)
 p.add_argument('--source-checkpoint', required=True)
 p.add_argument('--manifest-sha256', required=True)
@@ -25,7 +25,7 @@ p.add_argument('--node', default='node')
 p.add_argument('--chromium', default='/usr/bin/chromium')
 args = p.parse_args()
 if len(args.case) != 1:
-    p.error('Choose exactly one fresh-store case; never combine data and document cases')
+    p.error('Choose exactly one fresh-store case; never combine linkage cases')
 case = args.case[0]
 build = Path(args.build).resolve(); out = Path(args.out).resolve(); fixtures = Path(args.fixture_tests).resolve()
 manifest_bytes = (build / 'production-build.json').read_bytes()
@@ -222,7 +222,38 @@ try:
             result['checks'].append({'name': 'normal payment account CREATE/readback; empty halls preserved', 'accountId': target})
             return account
 
-        product = create_product(); account = create_account()
+        def transfer_linkage(product):
+            menu('transfer/new'); page.get_by_role('heading', name='新增调拨单', exact=True).wait_for()
+            choose_document('调出仓库', '备货仓'); choose_document('调入仓库', '温州仓')
+            search = page.get_by_role('combobox', name='商品款号 / 名称 / 条码', exact=True); search.fill(product['code'])
+            candidate = page.locator('[data-transfer-candidate]').filter(has_text=product['code']); candidate.wait_for(); expect(candidate).to_have_count(1)
+            products = latest('/api/current-form/products/query', lambda r: r['request'].get('search') == product['code'])
+            assert any(item['id'] == product['id'] for item in products['body']['items'])
+            shot('05-transfer-picker-new-product'); search.fill(''); page.locator('#page h1').click()
+            page.get_by_role('button', name='扫码录入', exact=True).click(); scan = page.locator('#transfer-scan-input'); expect(scan).to_be_focused(); scan.fill(product['barcode']); scan.press('Enter')
+            expect(page.locator('[data-transfer-sku] input[data-transfer-qty]')).to_have_value('1')
+            barcode = latest('/api/current-form/barcode/query'); assert barcode['body']['sku']['id'] == product['skuId'] and barcode['body']['sku']['productId'] == product['id']
+            page.get_by_role('button', name='关闭扫码抽屉', exact=True).click(); expect(scan).to_have_count(0)
+            expect(page.locator('input[data-transfer-quantity][data-transfer-size=' + json.dumps(barcode['body']['sku']['sizeId']) + ']')).to_have_value('1')
+            if case == 'transfer-linkage':
+                groups = latest('/api/dictionary-read/size-groups/query', lambda r: r['request']['pageSize'] == 100)
+                assert groups['status'] == 200, groups
+                actual = next(g for g in groups['body']['items'] if g['id'] == barcode['body']['sku']['sizeGroupId'])
+                assert len(actual['sizes']) == 11 and len({size['id'] for size in actual['sizes']}) == 11
+                assert {size['name'] for size in actual['sizes']} == {'160/XS', '165/S', '170/M', '175/L', '180/XL', '185/2XL', '190/3XL', '195/4XL', '200/5XL', '205/6XL', '无尺码'}
+                matrix = page.locator('tr[data-mx-row]').filter(has_text=product['code']); expect(matrix).to_have_count(1)
+                fields = matrix.locator('input[data-transfer-quantity]'); expect(fields).to_have_count(11)
+                assert {field.get_attribute('data-transfer-size') for field in fields.all()} == {size['id'] for size in actual['sizes']}
+                result['actualTransferSizeGroup'] = actual
+            page.get_by_role('button', name='保存', exact=True).click(); page.get_by_role('heading', name='查看调拨单', exact=True).wait_for(); page.wait_for_load_state('networkidle')
+            transfer = latest('/api/transfers/detail/query')['body']['document']
+            assert transfer['header']['status'] == 'DRAFT' and transfer['header']['version'] == 1
+            assert len(transfer['lines']) == 1 and transfer['lines'][0]['skuId'] == product['skuId'] and transfer['lines'][0]['quantity'] == '1'
+            result['transferReadback'] = transfer; shot('06-transfer-new-product-saved')
+
+        product = create_product()
+        if case != 'transfer-linkage':
+            account = create_account()
         if case == 'data-linkage':
             menu('settings/staff'); page.get_by_role('heading', name='员工与账号', exact=True).wait_for(); page.wait_for_load_state('networkidle')
             staff = latest('/api/staff/query'); assert staff['status'] == 200 and staff['body']['items']
@@ -231,6 +262,15 @@ try:
                     assert button.is_disabled(), 'Staff read-only configuration must be honored'
             shot('04-staff-directory-readonly')
             result['checks'].append({'name': 'new stock UNKNOWN and normal staff directory read only', 'stock': result['stockTotal']})
+        elif case == 'transfer-linkage':
+            transfer_linkage(product)
+            assert not [r for r in result['responses'] if r['path'] in ['/api/payment/accounts/commands', '/api/sales/commands']], 'Transfer-only followup must not replay accounts or sales'
+            writes = [r for r in result['responses'] if r['path'].endswith('/commands')]
+            assert len(writes) == 2 and all(r['status'] == 200 for r in writes)
+            saved = next(r for r in writes if r['path'] == '/api/transfers/commands')
+            assert saved['request']['action'] == 'SAVE' and saved['request']['expectedVersion'] is None
+            assert saved['body']['transferId'] == result['transferReadback']['header']['id'] and saved['body']['version'] == 1
+            result['checks'].append({'name': 'new product real group/matrix/MAIN and original transfer SAVE/detail only', 'productId': product['id']})
         else:
             menu('sales/new'); page.get_by_role('textbox', name='整单优惠 / 抹零', exact=True).wait_for()
             choose_document('业务类型', '销售'); choose_document('营业厅', '网点营业厅')
@@ -260,23 +300,7 @@ try:
             assert len(sale['lines']) == 1 and sale['lines'][0]['skuId'] == product['skuId'] and sale['lines'][0]['quantity'] == '1' and sale['lines'][0]['dealPrice'] == '56800'
             assert len(sale['settlements']) == 1 and sale['settlements'][0]['paymentAccountId'] == account['id'] and sale['settlements'][0]['amount'] == '56800'
             result['salesReadback'] = sale; shot('04-sales-new-product-and-account-saved')
-            menu('transfer/new'); page.get_by_role('heading', name='新增调拨单', exact=True).wait_for()
-            choose_document('调出仓库', '备货仓'); choose_document('调入仓库', '温州仓')
-            search = page.get_by_role('combobox', name='商品款号 / 名称 / 条码', exact=True); search.fill(product['code'])
-            candidate = page.locator('[data-transfer-candidate]').filter(has_text=product['code']); candidate.wait_for(); expect(candidate).to_have_count(1)
-            products = latest('/api/current-form/products/query', lambda r: r['request'].get('search') == product['code'])
-            assert any(item['id'] == product['id'] for item in products['body']['items'])
-            shot('05-transfer-picker-new-product'); search.fill(''); page.locator('#page h1').click()
-            page.get_by_role('button', name='扫码录入', exact=True).click(); scan = page.locator('#transfer-scan-input'); expect(scan).to_be_focused(); scan.fill(product['barcode']); scan.press('Enter')
-            expect(page.locator('[data-transfer-sku] input[data-transfer-qty]')).to_have_value('1')
-            barcode = latest('/api/current-form/barcode/query'); assert barcode['body']['sku']['id'] == product['skuId'] and barcode['body']['sku']['productId'] == product['id']
-            page.get_by_role('button', name='关闭扫码抽屉', exact=True).click(); expect(scan).to_have_count(0)
-            expect(page.locator('input[data-transfer-quantity][data-transfer-size=' + json.dumps(barcode['body']['sku']['sizeId']) + ']')).to_have_value('1')
-            page.get_by_role('button', name='保存', exact=True).click(); page.get_by_role('heading', name='查看调拨单', exact=True).wait_for(); page.wait_for_load_state('networkidle')
-            transfer = latest('/api/transfers/detail/query')['body']['document']
-            assert transfer['header']['status'] == 'DRAFT' and transfer['header']['version'] == 1
-            assert len(transfer['lines']) == 1 and transfer['lines'][0]['skuId'] == product['skuId'] and transfer['lines'][0]['quantity'] == '1'
-            result['transferReadback'] = transfer; shot('06-transfer-new-product-saved')
+            transfer_linkage(product)
             result['checks'].append({'name': 'same-store created product and account feed normal proposals/scans and original DRAFT saves', 'productId': product['id'], 'accountId': account['id']})
         check_no_approval()
         creates = [r for r in result['responses'] if r['path'] == '/api/products/v2/commands' and r['request']['action'] == 'CREATE']
