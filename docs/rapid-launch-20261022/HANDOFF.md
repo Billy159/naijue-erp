@@ -1,3 +1,11 @@
+## 2026-10-31 ordinary entry05 independent acceptance
+
+QB05 source PASS adopted, no finding (7675B SHA5ca61d9df057a85d06c31ebdf8ff6106708e73d1fe07edec0f1053f1e6c771de). OPEN/FENCE/original-key UNKNOWN recovery and freshdirectLOGIN dependency accepted only at source level. Real pool/slot limits, target identity and exitarming facts remain unknown, PLAN disabled. No role changes or actual runtime/business chain. Final environment confirmation must bind reviewed carrier05 and physical-content package, actual observation steps and independent post-creation reviews; old schema/source passes reused.
+
+## 2026-10-31 physical content independent acceptance
+
+QB physical-content PASS adopted, no finding (4751B SHA e8a1832a747c658767513e65129030970077ce86faf4245bd8c1786fd3cd3289). Exact32 monetary candidates remain unadopted;22 synthetic warehouse declarations retain explicit21 zero plus10, never database readback. New physical package can feed original binding channel; independent selection/capture/identity/target-bound adoption/private inputs/job/grant still required. Ordinary-opening05 review remains in progress.
+
 ## 2026-10-31 physical synthetic content and installer05 delivered
 
 D1 physical133-file package fixed (18CSV/43literalJSON/32unadopted monetary candidates); C verified132 listed content pins plus finalmanifest d6a8492b035f2739848df4fd0d76acc2c7d51784a4449afe1edbb6af40d47465. Independentselection/capture/identity/money adoption/actual target/private/job/grant bindings remain absent. No fake approvals, credentials or actual import. OriginalQB now reviews only new content-binding boundary, not old full parser/source suites.

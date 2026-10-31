@@ -19841,7 +19841,7 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "D1 physical synthetic133-file content fixed and handoff pins matched; T45 successor05 fixed four pins matched; original QB reviews content boundaries then05 incremental",
+    "current": "Physical synthetic content and ordinary-entry successor05 QB scoped PASS adopted; T45 final concrete environment scope in progress; all actual PG/business/recovery gates open",
     "next": "Adopt fixed reviews; T45 final exact phase/environment/input/slot/fence execution scope; no environment changes before confirmation",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
@@ -20049,7 +20049,7 @@
     },
     "physicalSyntheticSourcePreparation": {
       "owner": "D1",
-      "status": "FIXED_CONTENT_QB_BINDING_BOUNDARY_REVIEW",
+      "status": "QB_PASS_CONTENT_ONLY_INDEPENDENT_BINDINGS_PENDING",
       "scope": "Reuse or prepare existing-format synthetic source files, money32 fact candidates and manifest only; target/private envelope stays unbound until actual facts and independent authorization",
       "sourceMutation": false,
       "environmentExecution": false,
@@ -20059,10 +20059,12 @@
       "csv": 18,
       "literalJson": 43,
       "moneyCandidates": 32,
-      "independentBindings": "PENDING_NO_ACTUAL_TARGET_OR_APPROVAL"
+      "independentBindings": "PENDING_NO_ACTUAL_TARGET_OR_APPROVAL",
+      "qbReportSha256": "e8a1832a747c658767513e65129030970077ce86faf4245bd8c1786fd3cd3289",
+      "qbReportBytes": 4751
     },
     "ordinaryConnectionOpening": {
-      "status": "FIXED_SUCCESSOR05_QB_INCREMENTAL_QUEUED",
+      "status": "QB_PASS_SUCCESSOR05_SOURCE_ONLY_REAL_BUDGET_UNKNOWN",
       "finding": "CREATE_ROLES leaves ordinary LOGIN CONNECTION LIMIT0; BASELINE_ACL CONNECT does not enable directLOGIN; FRESH_ORDINARY_V6 consumes evidence only",
       "owner": "T45",
       "scope": "Reuse existing exact controlled channel if available; otherwise bounded own-role opening and readback after complete CLOSE_PREP before FRESH_ORDINARY_V6; original-key recovery and own-role exit",
@@ -20072,7 +20074,9 @@
       "scriptSha256": "c91f749e9a175da60a4f5e5e6ed96ab56b131c092316a5a30988a68d62d1779d",
       "verifiedArtifactPins": 4,
       "newOfflineChecks": 8,
-      "actualConnectionBudget": "UNKNOWN_NOT_DEFAULTED"
+      "actualConnectionBudget": "UNKNOWN_NOT_DEFAULTED",
+      "qbReportSha256": "5ca61d9df057a85d06c31ebdf8ff6106708e73d1fe07edec0f1053f1e6c771de",
+      "qbReportBytes": 7675
     }
   }
 }
