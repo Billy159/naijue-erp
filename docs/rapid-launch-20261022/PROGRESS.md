@@ -1,3 +1,11 @@
+## 2026-10-31 DOC01 independent source acceptance and actual M01
+
+QF01-R1-DOC01-E1071F7C-SOURCE-01 PASS_LIMITED_SOURCE_INCREMENT adopted, no new findings, exact4 matched fixed e1071f7cbafbadea2dfd203320153d7b9f741b13; remote independently verified same SHA. Model/UI targeted owner evidence reused; browser/PG/SAVE not proven. Original QF CHECK SHA89ad90f6bdd279686652a66a949d4aa83f1bdf0e082f2af7505d5d7cd7cf1c74.
+
+T45 M01 job314 actual COMPLETED0/0.819182s, versions[1], original raw159039B SHA442a6d12ba7b5ce30dabb91df97858bf8a0db15834ddf96912d4c4b3eedecaf4; no replay.317 independently reads unit inactive/PID0 and original owner active/PID3883827. M02 original stage preparation underway, original deadlines unchanged; fullV6/V7/ordinary business still incomplete.
+
+QF2 retry03 on unchanged fixed47 reaches actual CATEGORY create200 and duplicate409 CATALOGUE_NAME_CONFLICT; visible text 名称或编码已存在。读取最新目录, but expected error element missing, so case FAIL, post-conflict fresh readback not executed. Original F1 receives accurate diagnosis, no assumption backend failed rejection or weakened assertion. PRODUCT original runner still active; no result assumed. Five new performance optimizations PAUSED.
+
 ## 2026-10-31 DOC01 nullable-hall salesperson source delivered; browser retry interrupted
 
 Original F1 exact4 handed back and hashes matched. Existing salesperson protocol hallId:null now consumed by model/UI; customer and warehouse retain real-hall prerequisite. Owner targeted model4/4 and actual Form parent+child2/2 passed, scoped types passed; old57a results reused. This is source checks only: no new build, visible browser or PG save acceptance. Source writer released; independent affected review next.

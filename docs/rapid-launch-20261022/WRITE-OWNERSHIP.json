@@ -8228,5 +8228,15 @@
       "file": "apps/web/demo-replica/tests/product-entry-service-public-config.json",
       "scope": "Explicit synthetic-product-entry origin; exact existing service host profile only, no production configuration or capability bypass"
     }
+  },
+  "r1CategoryBrowserDriverRepair": {
+    "owner": "F1",
+    "status": "ACTIVE_EXACT_ONE_FILE",
+    "files": [
+      "apps/web/demo-replica/tests/product-edit-browser.py"
+    ],
+    "scope": "Fix existing CATEGORY duplicate rejection selector to actual scoped Recovery alert, preserve exact 409/message/count/fresh-readback assertions; reset independent case navigation through existing authorized discard after known rejection. No application source/API/SQL/business rule or weakened assertions.",
+    "baselineSha256": "3a5c761a304ebd9cb7a2ba7e632b0cafdcb02945246d81ca49de7482079b2cad",
+    "browserOwner": "QF2; no active retry03 process per final exit1 receipt"
   }
 }

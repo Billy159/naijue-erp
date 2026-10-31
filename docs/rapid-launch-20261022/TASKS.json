@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-29T02:43:42.597519+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "2aa27c6ccdea4e1ab0a9ca7a6dba90c07fbecd5c",
+  "lastVerifiedRemoteCommit": "e1071f7cbafbadea2dfd203320153d7b9f741b13",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -20563,7 +20563,7 @@
     }
   },
   "r1Doc01NullableHallSalesperson": {
-    "status": "SOURCE_READY_PENDING_INDEPENDENT_AFFECTED_REVIEW",
+    "status": "QF_PASS_LIMITED_SOURCE_BROWSER_PG_NOT_RUN",
     "owner": "F1",
     "paths": [
       "apps/web/src/current-form/sales-proposal.ts",
@@ -20572,12 +20572,22 @@
       "apps/web/demo-replica/frontend/runtime/documents/default-warehouse-selection.test.mjs"
     ],
     "checks": "owner model4/4; actualForm2/2; scopedtypes0; no browser or PG",
-    "next": "QF affected source review; unique build owner integrates complete package"
+    "next": "QF affected source review; unique build owner integrates complete package",
+    "fixedSource": "e1071f7cbafbadea2dfd203320153d7b9f741b13"
   },
   "r1ProductBrowserRetry02": {
     "status": "INTERRUPTED_PARTIAL_OBSERVATION_NOT_PASS",
     "fixedBuild": "d76a54ac47",
     "evidence": "QF2/PRODUCT-ENTRY-SERVICE-D76A47-20261031-01/retry-02-playwright155",
     "remaining": "category duplicate/readback and all PRODUCTv2 steps unproven; no replay until original state reconciled"
+  },
+  "r1ActualM01": {
+    "job": "t45-qa178-p13-20261031-s1-schema-m01-314",
+    "status": "ACTUAL_COMPLETED_EXIT0",
+    "versions": [
+      1
+    ],
+    "rawSha256": "442a6d12ba7b5ce30dabb91df97858bf8a0db15834ddf96912d4c4b3eedecaf4",
+    "ordinaryBusiness": "NOT_RUN"
   }
 }
