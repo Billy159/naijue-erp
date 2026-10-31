@@ -20776,7 +20776,7 @@
   "r1UnreviewedDocumentEditableParity": {
     "userDirective": "Existing DRAFT sales/transfer must expose corresponding create-form editable business fields, preserving original number/creation/source/audit/permissions/version and controlled historical revision",
     "owner": "F1",
-    "status": "INTERFACE_PASS_FIXED_2848F028_BROWSER_CANDIDATE51_BUILDING",
+    "status": "CANDIDATE51_BROWSER_FAILED_BEFORE_FINAL_SAVE_F1_TARGETED_DIAGNOSIS",
     "actual50": "Sales existingEdit true uses same SalesProposalForm; transferExistingEdit false and documentResponsibleReady absent. Existing native prepare/save interface present; cannot mark all fields or history verified.",
     "next": "T45 fixed51 building; original QF only affected existing-fields and existing-pending, including original responsible choices; preserve full field gaps and single-hall limit.",
     "coveredInterface": "F1 actual synthetic existing-fields2 PASS including sales SALE→RETURN version3, negative quantity/refund, exact replay and stale CAS409; no SAVE ledger effect. No real PG/full browser PASS.",
@@ -20785,6 +20785,12 @@
     "fixedSource": "2848f0283fe3f7b5c577cc873607df05494c99e5",
     "configuration": "apps/web/demo-replica/tests/document-existing-fields-public-config.json",
     "configurationMeaning": "Original synthetic configuration only; transferExistingEdit and documentResponsibleReady enabled with original protocol/profile validation. No production config or deployment change.",
-    "bridgeEvidence": "Original employee read baseline already works; 779b3fc9 only transfer responsible validation opt-in, original bridge6 and responsibility3 PASS. No new staff service/store."
+    "bridgeEvidence": "Original employee read baseline already works; 779b3fc9 only transfer responsible validation opt-in, original bridge6 and responsibility3 PASS. No new staff service/store.",
+    "browser51": {
+      "sales": "Seed SAVE200 and existing edit reached; dynamic identity-button row locator invalid after beginLineEdit, test bug confirmed; final SAVE not reached. Original F1 fixing driver only.",
+      "transfer": "Seed SAVE200 and existing edit reached; staff query200; color selection click intercepted by matrix, cause still under original F1 diagnosis; no force click, pending SAVE not reached.",
+      "failureEvidence": "Original logs/results and prior screenshots retained; failure screenshot missing because original catch ran after Playwright exit. Do not claim missing evidence exists.",
+      "next": "Original F1 minimal driver fix and transfer exact cause; QF only failed scenes on same immutable application51 with explicit new driver pin; rebuild only if actual app source changes."
+    }
   }
 }

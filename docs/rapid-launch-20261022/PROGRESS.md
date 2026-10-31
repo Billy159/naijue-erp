@@ -3378,3 +3378,6 @@ C41已经真正R1 runtime TCP认证并捕获完整目录，canonical f62de0a301d
 
 
 固定增量 2848f0283fe3f7b5c577cc873607df05494c99e5 已推送并远端回读。F1 已交还四叶，合成接口两项通过，另实际销售改退货版本3、负量/退款/幂等/CAS 检查通过；不是实际 PG。D1 原员工读取本来有效，只补原 transfer profile 负责人保存校验，9项定向证据采用。C 新增 document-existing-fields-public-config.json，保留50配置；原parser通过，transferExistingEdit/documentResponsibleReady只在合成候选打开。T45正在构建51，后续原QF仅复验已有未审核字段和扫码排队保存。整页浏览器仍未测，跨厅及历史编辑不借此称通过。
+
+
+候选51应用 2848f028，manifest18e6ba25b5a822fba1516471cae8881b41b400cee50ebd4ce9b9ebaae28d67b8 已构建。两项QF actual browser目前均未通过，最终已有单SAVE未达：sales是beginLineEdit后动态locator排除原行的测试错误，原F1修同key定位；transfer颜色选项被矩阵拦截，尚待定向根因，禁止force点击或判通过。原异常截图因退出Playwright后捕获而缺失，已有日志/结果/前置PNG保留。原F1同时修留证生命周期；只复验受影响项，不重审批全链。
