@@ -3443,3 +3443,9 @@ QF补充：固定52应用＋原51fixture，两类调拨（已审核、作废）�
 
 
 隔离实绩增量：原s2 ARM已COMPLETED0（0.418s）；两新文件物化0.268s、252源码读回0.117s通过。旧generic review冲突终态失败已保留，只补独立名称，不覆盖。物化中只读PG观察已在首提交前改为不连接DB，原ARM强制实际fence不变。C已签entry binding7f371083及restore-zero binding8528befa，等待原T45实际结果；普通账号业务与备份恢复仍未验。
+
+
+重要失败接续：entry实际FAILED2/1.069s，配置缺已有必填abiReceipt，原294有效；T45准备与C核准均漏此字段，责任保留。完整252/2228/74校验通过，但新Node/DB未启动。closed=OWN_PHASE_FAILED，运行账号NOLOGIN/limit0/CONNECTfalse/0会话、迁移仍[1,2]。恢复及M03从未提交。已单次REQUEST_EXIT（0.168s），最终退出读回待交。原函数本地5项已复现缺引用拒绝、补原引用通过、3反例仍拒；不改守卫、不重ABI、不重放旧key/ARM，继续准备准确最小继任差异，未获新环境授权不执行。
+
+
+最终收尾已采用T45 cleanup02：unitinactive/PID0、watch-exited safeError null、runtime封禁/0会话、prep absent、versions[1,2]；无新业务或schema写。当前窗关闭，恢复/M03/ordinary/备份均未运行。准确结果见原T45 RESULT-WINDOW02-CLOSED，残留旧awaiting/active字段已由原owner纠正并保留历史。下一仅本地最小继任准备，不复用已关闭窗口。

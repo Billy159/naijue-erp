@@ -20854,7 +20854,7 @@
     "remaining": "Actual target/session for capture reviews, private bootstrap and current window human approval pending; no PostgreSQL actions authorized by these technical reviews."
   },
   "r1Qa178NewFiniteWindowConfirmation": {
-    "status": "ACTUAL_ARM_TWO_FILES_AND_252_READBACK_PASS_ENTRY_AND_ZERO_RESTORE_ACTION_ISSUED",
+    "status": "CLOSED_SAFE_ENTRY_REFUSED_ABI_REFERENCE_OMISSION_SUCCESSOR_LOCAL_PREPARATION",
     "documentSha256": "02379141c17d6c39be87eec8660a0e81d1a95e89ea5b8243f985b1c43ef47984",
     "document": "reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/PRIVATE-PROCESS-QA22-SHARED-POOL-PINS-SOURCE-05/FINAL-ENVIRONMENT-CONFIRMATION-DELTA.NOT-APPROVAL.md",
     "scope": "Same original QA178 target; 90min action+15min cleanup; source06/source05 reviewed shared original pool app1+observer1, cleanup1 reserved; actual facts required by phase. Prior M01/M02 not replayed.",
@@ -20864,15 +20864,27 @@
       "scopeSha256": "02379141c17d6c39be87eec8660a0e81d1a95e89ea5b8243f985b1c43ef47984"
     },
     "actualT0": "2026-10-31T21:08:24+08:00",
-    "armed": true,
+    "armed": false,
     "executionOwner": "T45",
     "noProductionChange": true,
     "T0": 1793452104,
-    "next": "T45 actual noDB child entry then exact runtime zero-limit restore; M03-M26/P01-P11 by real prerequisites; ordinary lifecycle/backup not yet passed",
+    "next": "Original T45 local minimum successor delta and original QB increment review; closedwindow not reused, fresh environment action needs exact scope confirmation",
     "actionExpiresAtEpoch": 1793457504,
     "cleanupDeadlineEpoch": 1793458404,
     "cWindowSha256": "96d3142f65510e97df78c5befc1eedb1b3c9e83884a439f21287a1866592ae97",
-    "actual": "Original s2 ARM COMPLETED0/0.418s, ownunit PID3983695; two files materialized COMPLETED0/0.268s noPG; 252 source readback COMPLETED0/0.117s"
+    "actual": "ARM/new2files/252source2228deps74packages verified; entry FAILED2 before newNode/DB; own window closed OWN_PHASE_FAILED; runtime NOLOGIN0 CONNECTfalse sessions0 versions1,2; REQUEST_EXIT completed, finalunit readback pending",
+    "failure": {
+      "job": "t45-qa178-p13-20261031-s2-entry-no-db-01",
+      "code": "EXACT_ORIGINAL294_ABI_ONLY_NO_REPLAY",
+      "rootCause": "Final PLAN omitted mandatory abiReceipt; original294 valid; T45 preparation and C preadmission both missed field",
+      "newNodeStarted": false,
+      "databaseOpened": false
+    },
+    "cleanupComplete": true,
+    "finalResult": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/ACTUAL-QA22-EXPLICIT-WINDOW02-01/RESULT-WINDOW02-CLOSED.json",
+      "sha256": "bb10686a385cedea44642357bc42cc8c41d556c53ba0639ce7dda92d4a8b9588"
+    }
   },
   "r1PaymentSettingsWriteReadbackFollowup": {
     "owner": "F3",
