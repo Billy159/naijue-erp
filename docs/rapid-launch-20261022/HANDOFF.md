@@ -3481,3 +3481,7 @@ QA178 window02 is CLOSED and final guardian inactive/PID0; runtime NOLOGIN, limi
 - QF2 fixed53/source0a2fa82d 独立颜色正常入口：CREATE v1、EDIT同ID v2、授权列表精确读回、重开及取消0额外写入通过；4步、11响应、2 COLOR命令，自有进程0。仅合成限定范围，不代表真实PG、跨页F03或105项全站通过。证据：/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/COLOR53-STANDALONE-EDIT-F03-20261031-01/QF2-RESULT.json。
 - 用户 call_587ae9f94af24a569602ec666d7cb70f/0 明确批准的7个QB副本逐文件再次匹配固定Git、无占用后已删除；文件分配量336105472B，实际可用空间531193856B，两个源码HEAD回读未变。未删除其他材料。
 - QA178窗口02已关闭，M01/M02不重放；窗口03仍须消费其独立有效批准，清理批准不授权数据库执行。
+
+
+### 原F1扫码剩余范围接续
+已读原F1终态及当前证据，旧分页包完成不重派。F1以gpt-6.1-sol/medium接原扫码剩余软件错误/恢复/取消/超时/迟到范围，先只读去重并报最小测试叶，未获新生产源码写租约；不重复pendingM6/原编辑/分页。真实扫码枪仍未测。数据库窗口03等待其独立用户批准，副本清理授权不替代。
