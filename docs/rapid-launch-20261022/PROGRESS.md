@@ -1,3 +1,5 @@
+2026-10-31 原QB fc7c03bf准确4叶后继PASS已采用：report7954B/SHA448381adf0bae35eb86177c3c32f41b5fa64f8259c7ab9bcca72ee61836527d8。场景F01关闭、新provider有限封装源码通过；旧f421 NEED_FIX保留，actual审核文件/数据/普通LOGIN业务均未执行。新QA Unix V8已固定f9c2ced7并远端回读，等T45V7同包后一次target合同窄验，不单独重复V8一轮。
+
 2026-10-31 新批准QA Unix增量：D1 V8准确2叶已交回，7定向PASS/语法通过，原TCP代表整输出逐字节不变；report3816B/SHAaab3ef42，原V6/V7/issuer/storage未改，待原QB窄验。场景F01及provider新封装4叶已固定fc7c03bf并远端回读，原QB在审。T45继续唯一V7/恢复载体，未执行真实环境。
 
 2026-10-31 用户call_7f5633370b664b06823b617c5848411b/0明确批准本批精确QA Unix源码扩展：仅原V7/V8准备器固定QA178分支；C登记T45唯一V7、D1唯一V8及各自受影响测试，原TCP/云Unix/V6保持，无环境授权。QB新场景5叶回执8801B/SHAcd8fb6f3为NEED_FIX，仅F01：历史修订receipt[A,A]可误配actual[A,B]；交原D1只修唯一性/集合相等及负例，既有24/243和其他有效证据不重跑。provider后继继续同owner，实际DB仍未创建/授权/启动。
