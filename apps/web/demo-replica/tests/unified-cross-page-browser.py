@@ -93,7 +93,9 @@ try:
             if f'{url.scheme}://{url.netloc}' != origin:
                 route.abort(); return
             if url.path.startswith('/api/'):
-                wire = {'url': request.url, 'method': request.method, 'headers': request.headers, 'body': request.post_data}
+                wire = {'url': request.url, 'method': request.method, 'headers': request.headers}
+                if request.post_data is not None:
+                    wire['body'] = request.post_data
                 bridge.stdin.write(json.dumps(wire) + '\n'); bridge.stdin.flush()
                 line = bridge.stdout.readline()
                 assert line, 'Original unified service exited without a response'
