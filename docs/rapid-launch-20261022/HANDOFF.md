@@ -3394,3 +3394,6 @@ C41已经真正R1 runtime TCP认证并捕获完整目录，canonical f62de0a301d
 
 
 候选51应用 2848f028，manifest18e6ba25b5a822fba1516471cae8881b41b400cee50ebd4ce9b9ebaae28d67b8 已构建。两项QF actual browser目前均未通过，最终已有单SAVE未达：sales是beginLineEdit后动态locator排除原行的测试错误，原F1修同key定位；transfer颜色选项被矩阵拦截，尚待定向根因，禁止force点击或判通过。原异常截图因退出Playwright后捕获而缺失，已有日志/结果/前置PNG保留。原F1同时修留证生命周期；只复验受影响项，不重审批全链。
+
+
+未审核同新增字段收口接续：app51未变化。53ab驱动实际已通过销货参考价未知保护、重读239及5折119.50，调拨颜色/版型改选。后续停止点均为新用例操作前提：sales误取追加空白行/款号input当行文本，transfer漏真实改选确认，尚非已证生产计算/CSS缺陷。C已交原F1同两driver合并修并先完成前台浏览器自检；QF已关闭自身所有进程，不继续逐个新driver独立试错。最终edited SAVE/reopen/pending尚未PASS，跨厅、历史、PG仍未测。原失败日志和现场保留。下一回先收F1完整自检及准确hash，再交QF仅剩余受影响范围；不重build未变应用、不重复旧全链。
