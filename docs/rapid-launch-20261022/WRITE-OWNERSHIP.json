@@ -8589,9 +8589,11 @@
         "apps/web/demo-replica/frontend/runtime/documents/transfers-history-page.tsx",
         "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts",
         "apps/web/demo-replica/frontend/runtime/documents/history-edit-read.test.mjs",
-        "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs"
+        "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs",
+        "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx"
       ]
     },
-    "constraints": "Each exact leaf unique writer; request exact extra-file lease before editing. C canonical/profile/metadata leaves remain unleased until actual SQL fingerprints. No tests with actual PG, build, service, production, old-source mutation or permissions."
+    "constraints": "Each exact leaf unique writer; request exact extra-file lease before editing. C canonical/profile/metadata leaves remain unleased until actual SQL fingerprints. No tests with actual PG, build, service, production, old-source mutation or permissions.",
+    "extraLeafBoundary": "transfer-proposal-form.tsx F1 only exports existing TransferProducts; function body and LIVE behavior unchanged, original picker reused; no other writer."
   }
 }

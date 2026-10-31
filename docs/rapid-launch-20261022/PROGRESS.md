@@ -3578,3 +3578,5 @@ QF60最终check1326c2d3…限定实际PASS采用，关闭QF59-S02：原1440×100
 D1历史DRAFT精确补充交付：HISTORY-DRAFT-TRANSFER-EXACT-SUPPLEMENT-20261101.md SHAce965aea06e0f1ea08f9b185fd994554cd1f36dfe799eb8b5a3886eefa0b5ffc，零新表列/ACL、4现有函数后继、revision JSON显式格式与V2目录、旧来源/旧数量FK保留；备注与完整lineSet新分支沿200正整数/1万字符，旧signed数值路径保留。已按用户写合同先确认规则提交一次准确源码合同确认，未获答复，不实施新写分支/SQL/权限。QA178新03窗口及Demo登录仍为各自原等待条件，不以本合同请求替代。
 
 用户明确确认历史未审核调拨补充合同及源码修订（call_4cfb266f…/回答“确认本补充合同与源码修订”），已核原spec SHAce965aea…未变并登记独立批准记录。原D1/D3/F1无同范围WIP，按store/SQL、DTO/投影、前端3组精确独占文件实施；C元数据profile叶等实际SQL指纹后再登记。此确认不授权数据库变更/权限/QA178新03/生产，原两个等待条件仍保留。
+
+三线稳定接缝已转交：D3 plan仅新增可选第四resolved实参承载store同事务分配并核真的lineId/origin/完整nativeGroups，旧三参数兼容；lineSet无resolved拒绝，纯plan不伪分配ID。F1额外唯一租transfer-proposal-form.tsx仅export原TransferProducts，函数体/LIVE不变，避免复制候选。已在WRITE/TASKS登记，其它共享叶仍不预租；D1/D3/F1均真实active，未启动PG/构建/浏览器。

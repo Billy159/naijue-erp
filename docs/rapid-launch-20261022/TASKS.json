@@ -21610,9 +21610,11 @@
           "apps/web/demo-replica/frontend/runtime/documents/transfers-history-page.tsx",
           "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts",
           "apps/web/demo-replica/frontend/runtime/documents/history-edit-read.test.mjs",
-          "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs"
+          "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs",
+          "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx"
         ]
-      }
+      },
+      "interfaceHandoff": "D3 fourth optional plan arg resolved:HistoryRevisionResolvedDraftLineSet with store-allocated verified lines+origins and nativeGroups; legacy3 args retained; commandlineSet without resolved rejects. V1|V2 catalogue union per approved spec. F1 approved existing TransferProducts export-only reuse."
     }
   }
 }
