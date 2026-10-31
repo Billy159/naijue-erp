@@ -8,6 +8,13 @@ Exit 2: browser/environment blocked; exit 1: executed smoke failed; exit 0: list
 import argparse, base64, json, mimetypes, subprocess, sys, re, struct, zlib
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
+def normalized_declared_configuration(declared, node):
+ # Use the producer's parser, including its defaults; do not maintain a second schema here.
+ parser=(Path(__file__).resolve().parents[2]/'src/production-host/configuration.ts').as_uri()
+ script="import {readFileSync} from 'node:fs';import {parseProductionHostConfiguration} from "+json.dumps(parser)+";process.stdout.write(JSON.stringify(parseProductionHostConfiguration(JSON.parse(readFileSync(0,'utf8')))));"
+ result=subprocess.run([node,'--experimental-transform-types','--input-type=module','-e',script],input=json.dumps(declared),text=True,capture_output=True,check=True,timeout=30)
+ return json.loads(result.stdout)
+
 def bridge_request(url, method, headers, raw):
  payload={'url':url,'method':method,'headers':dict(headers)}
  if raw is not None:
@@ -34,7 +41,7 @@ expected_origin='https://synthetic-product-entry.invalid' if args.product_entry_
 if origin!=expected_origin:raise SystemExit('Smoke requires the declared synthetic-only build configuration')
 if args.product_entry_service:
  declared=json.loads(Path(__file__).with_name('product-entry-service-public-config.json').read_text())
- if config!=declared:raise SystemExit('Service profile build must use the declared C-owned public config')
+ if config!=normalized_declared_configuration(declared,args.node):raise SystemExit('Service profile build must use the declared C-owned public config')
 allowed={x['path'] for x in manifest['outputs']};allowed.add('index.html')
 result={'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'fixtureProfile':'product-entry-service' if args.product_entry_service else 'product-edit','postgres':False}
 bridge=None;browser=None

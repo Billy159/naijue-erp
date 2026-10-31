@@ -20325,7 +20325,7 @@
       "New full source/change/test/browser evidence/build-release handoff"
     ],
     "productionAndRealBusinessData": "PROHIBITED by latest request; later exact production authorization required",
-    "fiveNewPerformanceOptimizations": "NOT_STARTED_OUT_OF_CURRENT_PHASE",
+    "fiveNewPerformanceOptimizations": "PAUSED_BY_LATEST_HUMAN_REVISED_HANDOFF_DO_NOT_AUTO_START_AFTER_DELIVERY",
     "categoryNotice": {
       "status": "REPRODUCED_RED_IMPLEMENTATION_GREEN_SCOPED_TYPES_PASS_BROWSER_BUILD_PENDING",
       "files": [
@@ -20375,6 +20375,11 @@
         "unreachable": "SAVE/media upload/default-pending save guard; category typed success/failure/version/unknown read-only",
         "viewport": "UNMEASURED_NO_OVERRIDE",
         "scope": "Foreground Chrome synthetic; no real business PASS"
+      },
+      "driverConfigFix": {
+        "sha256": "3a5c761a304ebd9cb7a2ba7e632b0cafdcb02945246d81ca49de7482079b2cad",
+        "cause": "Driver compared raw C config to producer-normalized config; two default false routes",
+        "status": "FIXED_SINGLE_LEAF_OWNER_CHECKS_PASS_BROWSER_RETRY_PENDING"
       }
     },
     "documentFollowup": {
@@ -20500,6 +20505,54 @@
         "scope": "Explicit headed serviceprofile, originalbinary bytes/status/headers, original service page cases; legacyprofile preserved",
         "next": "OriginalT45 paired immutable production-host build and originalQF2 visible execution, no normal45 reuse"
       }
+    },
+    "revisedFullHandoff": {
+      "source": "/Users/billy/.codex/attachments/b21362b2-c1b3-4112-a46a-009eab82bca2/已粘贴的文本.txt",
+      "bytes": 77245,
+      "sha256": "a6c3b7c20ec7ce920d10eeccd0ead07074730f9420acd508fe8f386b76adbf69",
+      "readCompleteLines": 455,
+      "authority": "Latest human pasted revised full handoff; earlier r1 static claims reconciled with actual later fixes",
+      "scope": "Authorized engineering and synthetic isolation only; no production/realdata/private machine settings or external developer contact",
+      "coverage": [
+        {
+          "id": "PARTIES",
+          "owner": "original settings owner",
+          "scope": "Separate customer/supplier create/edit/save/readback, native candidates into sales/products/hall defaults",
+          "status": "EXISTING_IMPLEMENTATIONS_CURRENT_END_TO_END_PENDING"
+        },
+        {
+          "id": "STAFF",
+          "owner": "original settings owner",
+          "scope": "Combined employee/account creation/edit/login disable/reset/leave/return; original credential gate",
+          "status": "EXISTING_IMPLEMENTATIONS_CURRENT_END_TO_END_PENDING"
+        },
+        {
+          "id": "PAYMENT",
+          "owner": "original settings owner",
+          "scope": "Methods/accounts CRUD readback; remove applicable-hall maintenance UI, preserve legacy hall recommendation and all valid matching accounts",
+          "status": "R1_CONFIRMED_UI_DIFFERENCE_CURRENT_REPRO_PENDING"
+        },
+        {
+          "id": "STORES",
+          "owner": "original settings owner and D1",
+          "scope": "Single-hall warehouse, hall default customer/default warehouse, native candidates and protected references",
+          "status": "EXISTING_IMPLEMENTATIONS_CURRENT_END_TO_END_PENDING"
+        },
+        {
+          "id": "AUDIT_OUTPUT_HISTORY",
+          "owner": "existing owners and original review routes",
+          "scope": "Settings audit HTTP/UI; saved documents/inventory/barcode output files; controlled historical revisions and stock differences",
+          "status": "APPLICABLE_CONSUMERS_PENDING_CURRENT_EVIDENCE"
+        }
+      ],
+      "knownFixReuse": {
+        "defaultA": "ed61696a/normal45 partial visible PASS, real save pending",
+        "categoryNotice": "4fa008b1 targeted DOM PASS, new47 browser pending",
+        "defaultWarehouse": "ad80+57a source paired PASS, realPG/browser pending",
+        "cancelAndList": "2b52+3f3 partial current visible PASS, save/list actual pending"
+      },
+      "selectorCorrection": "Sales nonhall blanket disable distinct from transfer; preserve busy/idempotency/permissions/samehall-save contract; missing context explicit",
+      "barcodeBeforeSave": "Confirmed interaction discrepancy; preview must not claim persisted SKU/barcode; server owns uniqueness, old IDs untouched"
     }
   }
 }
