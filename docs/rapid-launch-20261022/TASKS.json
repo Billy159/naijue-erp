@@ -19841,7 +19841,7 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "A0 job276 actual readonly PASS; A1 private material preparation and minimal missing QA finite-exit wiring with originalT45; no database/role/ACL writes",
+    "current": "Finite-exit wiring fixed and sent originalQB; original277 private role material completed without role/DB changes; C action admission awaits actual reviewed helper arm",
     "next": "Receive original T45 actual preflight/create/readback; C and QB process actual fixed evidence at independent gates",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
@@ -20139,12 +20139,21 @@
       "freeBytes": 46846803968
     },
     "finiteExitController": {
-      "status": "ACTUAL_MISSING_MINIMAL_ORIGINAL_T45_WIRING_ASSIGNED",
+      "status": "FIXED_WIRING_QB_INCREMENTAL_REVIEW_NO_ARM",
       "existingOtherTargetHelper": "NOT_REUSED_WRONG_TARGET",
       "owner": "T45",
       "scope": "Existing original control channel, fixed QA178/new objects only; source pins then QB affected review, actual arm before referencing05",
       "sourceApprovalAndArmedEvidence": "No fabricated PASS/armed allowed",
-      "deadline": "Original T0/deadlines unchanged"
+      "deadline": "Original T0/deadlines unchanged",
+      "helperSha256": "69061ceedb1c13e90dfb8a71f9de0f8f9bc32ab253704cdd3038549809cd7a71",
+      "reportSha256": "00439d5405172e0ccba707fd548f73528f4650ae05ae667dfd3d0be4b44dac20",
+      "newOfflineChecks": 9,
+      "plannedJobsOnly": [
+        "279-arm",
+        "280-bind-preflight",
+        "281-preflight"
+      ],
+      "actualArmed": false
     },
     "independentSourceTransportAdmission": {
       "owner": "C",
@@ -20160,6 +20169,13 @@
         "businessAcceptance"
       ],
       "serverInstallation": "NOT_YET_OBSERVED"
+    },
+    "privateRoleMaterial": {
+      "owner": "T45",
+      "originalJob": 277,
+      "status": "COMPLETED_EXIT0_PRIVATE_FILES_ONLY",
+      "observedMetadata": "Two independent root0600 credential JSON files; secret content/hash not exposed",
+      "newRoleOrDatabaseChanges": 0
     }
   }
 }
