@@ -20667,7 +20667,7 @@
         "fixedSource": "2537dfc17bec83ffd731d1f3c39cd793559a27a1"
       },
       "R01": {
-        "status": "SOURCE_FIXED_DIRECTED_CHECKS_PASS_FIXED50_NATIVE_TAB_RECHECK_PENDING",
+        "status": "QF_ACTUAL_NEW_TRANSFER_PENDING_SAVE_RECHECK_PASS_EXISTING_EDIT_BRANCH_PENDING",
         "scope": "visible keyboard scanner-pending save reachability first; pending blocks save without implicit cancel",
         "owner": "F1",
         "actual": "Fixed49 original transfer-chain, lookup delayed2s below3s timeout;6accepted M scans pending, native Tab background Save/Enter saved200 without M or confirmation; original QF exact evidence retained. Ordinary sales Tab result is not R01 coverage.",
@@ -20763,5 +20763,21 @@
     "status": "QB_CATALOGUE9_MAPPING_PASS_C_TECHNICAL_REVIEW_ISSUED_ORIGINAL_FACTORY9_ROWS_AUTHORIZED_LOCAL_ONLY",
     "money32": "C checked32 original raw fields and fileSHA; static adoption only; actual target-bound envelopes pending",
     "catalogueReviewSha256": "34413b29688c7afd63e0c01b64fc70ce45ec7079afe21e561b49bc85d8122bb7"
+  },
+  "dot1900CandidateReview": {
+    "status": "REVIEWED_NO_DUPLICATE_MERGE_KEEP_CURRENT_MORE_COMPLETE_IMPLEMENTATION",
+    "package": "/Users/billy/Downloads/naijue-erp-main-control-handoff-20261031-1900-CANDIDATE.zip",
+    "checks": "24 SHA members and original baseline matched; independent Dot8staff+6transfer+22original model tests PASS",
+    "finding": "P2 transfer patch line427 rejects legal existing sku=null specification promotion; exact current regression fails Dot candidate but passes current source",
+    "applicationSourceChanges": 0,
+    "report": "reports/controller/rapid-launch-20261022/DOT-1900-CANDIDATE-REVIEW-01/REVIEW.md",
+    "retained": "Provided baseline/candidate/patches/logs preserved; SKU completion normal approved behavior"
+  },
+  "r1UnreviewedDocumentEditableParity": {
+    "userDirective": "Existing DRAFT sales/transfer must expose corresponding create-form editable business fields, preserving original number/creation/source/audit/permissions/version and controlled historical revision",
+    "owner": "F1",
+    "status": "SOURCE_PATH_AND_NARROW_SYNTHETIC_EXISTING_SAVE_READBACK_CHECKED_FULL_FIELD_BROWSER_PACKAGE_IN_PROGRESS",
+    "actual50": "Sales existingEdit true uses same SalesProposalForm; transferExistingEdit false and documentResponsibleReady absent. Existing native prepare/save interface present; cannot mark all fields or history verified.",
+    "next": "Original F1 exact fixture/browser increment; C paired config only after original employee reference and existing preparation capability verified; T45 only build"
   }
 }

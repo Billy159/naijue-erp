@@ -1,3 +1,11 @@
+## Latest user: existing unreviewed sales/transfer editable parity; Dot1900 review
+
+User requires existing DRAFT sales and transfer editable business fields to match respective new-entry form, without changing number, true creation identity/source/audit/version or permissions. OriginalF1 current read-only check: sales existing flagtrue and same SalesProposalForm; transfer-existing flagfalse in fixed50, responsible capability absent. Existing original factories/HTTP preparation/commands/datednote save-readback narrow synthetic checks pass, but complete field UI/PG/historical controlled revision not verified. OriginalF1 now owns exact existing-edit fixture/browser package; C will pair configuration only with actual supported candidate readers, not simply enable fake controls.
+
+Dot1900 candidate24 checksums and baseline matched. C independently reran supplied8staff/6transfer/22original model checks PASS. F08 equivalent already2537; F06 corefix already0581 plus correct legal local-specification promotion and feedback. Dot transfer line427 rejects any existing sku=null line: exact current regression fails isolatedDot copy but passes current. No application overwrite/duplicate patch merge; retain supplied package and review evidence. Product full-group SKU completion remains normal approved behavior.
+
+OriginalQF fixed50 R01 new-transfer actualPASS:pending6 Tab skips disabledSave/DOMclick zero command, queue preserved/completesM6+XS1; explicit Escape7th cancel then onlyoneSAVE200/readbacktotal7. Existing-edit/PG/hardware remain untested. Prior49RED and attempt01 overly-broad abort assertion preserved; corrected barcode-specific assertion passed.
+
 ## R01 repair fixed and next native-keyboard recheck
 
 OriginalF1 exact6 R01 fixed468cab7a49dd7447e1d6a5d9f61a925e0785fba1 pushed and remotely read back. Pending count synchronous ref rejects SAVE before stopScan; buttondisabled plus visiblependingnotice, queue/FIFO/3s/epoch unchanged. Directed queue11/11 and actual New/Native/Form consumer tests plus strictTS passed; actual nativeTab afterfix still pending fixed50 built by originalT45. Original49 RED evidence remains. QF2 fixed49 F08 strictknown429 correction/no retry and D01 nohallcontrols/retaineddetailhall UI/read passed; real password gate/payment writer unavailable, not businessPASS.
