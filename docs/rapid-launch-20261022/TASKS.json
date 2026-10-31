@@ -19842,7 +19842,7 @@
       "QB": "Existing independent backend review"
     },
     "current": "Integration single-leaf QB source PASS adopted; T45 fixed installer 42-file carrier in original QB scoped review; D1 new-target synthetic fixture preparation in progress",
-    "next": "Complete target-specific scenario/proof inputs and installer incremental review; pending finite QA Unix source confirmation; no environment mutation",
+    "next": "T45 minimal fixed connection timeout repair after QB closes carrier review; D1 new-target fixture/proof preparation continues; no database execution",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
     "approvedHistoricalBalanceRule": "NULL_UNKNOWN_NO_BACKFILL",
@@ -19922,12 +19922,13 @@
     },
     "isolatedInstaller": {
       "owner": "T45",
-      "status": "FIXED_CARRIER_IN_QB_INCREMENTAL_REVIEW_NOT_EXECUTED",
+      "status": "QB_NEED_FIX_F01_SERVER_TIMEOUT_PENDING_REVIEW_COMPLETION",
       "contentsSha256": "118c49fb92436200d0af2fb12cd3e83b888da4f996527d640f534e12349b57b0",
       "bundleFilesVerified": 42,
       "scriptSha256": "9900b4aac22fb3874da2af2d01bb8f7b7c5c7c8fb7fd1f23258bb3275c854d60",
       "offlineOwnerChecks": 12,
-      "actualPg": "NOT_RUN"
+      "actualPg": "NOT_RUN",
+      "finding": "F01 P2: some psql mutation branches omit declared server lock/statement timeout; client timeout does not prove remote SQL termination"
     }
   }
 }
