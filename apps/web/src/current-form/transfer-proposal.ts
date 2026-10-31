@@ -416,14 +416,31 @@ export class TransferProposalSession {
       },
       resolve: (query, signal) => this.#reader.readBarcode!(query, signal),
       apply: result => {
-        const draft = this.#state.draft, existing = draft.lines.find(row => row.sku?.id === result.sku.id);
-        if (!existing && draft.lines.length >= TRANSFER_PREPARE_MAX_LINES) return { ok: false, message: '本草稿最多 200 个实际规格，未新增明细。' };
+        const draft = this.#state.draft, matrix = this.#state.matrixQuantities, sku = result.sku;
+        const coordinate = JSON.stringify([sku.productId, sku.colorId, sku.fitId, sku.sizeId]);
+        const matching = draft.lines.filter(row => lineCoordinate(row) === coordinate), existing = matching[0];
+        const matrixKey = JSON.stringify([transferProposalRowKey(sku), sku.sizeId]), cell = matrix[matrixKey];
         try {
+          if (matching.length > 1 || existing && (transferProposalLineIdentity(existing).sizeGroupId !== sku.sizeGroupId || existing.sku && existing.sku.id !== sku.id)
+            || draft.lines.some(row => row.sku?.id === sku.id && row !== existing)) throw Error();
+          if (Object.entries(matrix).some(([key, value]) => key !== matrixKey && value.product.id === sku.productId && value.colorId === sku.colorId && value.fitId === sku.fitId && value.sizeId === sku.sizeId)) throw Error();
+          let matrixQuantity = 0n;
+          if (cell) {
+            if (cell.rowKey !== transferProposalRowKey(sku) || cell.product.id !== sku.productId || cell.product.sizeGroupId !== sku.sizeGroupId || cell.colorId !== sku.colorId || cell.fitId !== sku.fitId || cell.sizeId !== sku.sizeId) throw Error();
+            if (cell.quantity !== '') { if (!/^(?:0|[1-9]\d{0,18})$/.test(cell.quantity)) throw Error(); matrixQuantity = quantity(cell.quantity); }
+          }
+          if (existing && matrixQuantity !== 0n) return { ok: false, message: '同规格存在冲突输入，请先核对；未覆盖原输入。' };
+          if (!existing && draft.lines.length >= TRANSFER_PREPARE_MAX_LINES) return { ok: false, message: '本草稿最多 200 个实际规格，未新增明细。' };
           if (existing && !/^[1-9]\d{0,18}$/.test(existing.quantity)) throw Error();
-          const next = existing ? (quantity(existing.quantity) + 1n).toString() : '1'; quantity(next);
-          const ok = this.#edit({ ...draft, lines: existing ? draft.lines.map(row => row === existing ? { ...row, quantity: next } : row) : [...draft.lines, { sku: result.sku, quantity: next }] });
-          return { ok, message: ok ? `已录入 ${result.sku.skuCode}，数量 ${next}。` : '当前草稿已关闭，未录入。' };
-        } catch { return { ok: false, message: '原行数量尚未有效或已达上限，请先修正原行；未覆盖输入。' }; }
+          const next = quantity(((existing ? quantity(existing.quantity) : matrixQuantity) + 1n).toString()).toString();
+          const provenance = existing?.existingLineId ? this.#savedLines.get(existing.existingLineId) : undefined;
+          const line:TransferProposalLine = existing ? existing.sku ? { ...existing, quantity: next }
+            : { sku, product: existing.product, quantity: next, ...(existing.existingLineId ? { existingLineId: existing.existingLineId } : {}), ...(provenance?.skuId === sku.id ? { sourceSnapshot: provenance.snapshot } : {}) }
+            : { sku, quantity: next, ...(cell ? { product: cell.product } : {}) };
+          const nextMatrix = { ...matrix }; delete nextMatrix[matrixKey];
+          const ok = this.#edit({ ...draft, lines: existing ? draft.lines.map(row => row === existing ? line : row) : [...draft.lines, line] }, nextMatrix);
+          return { ok, message: ok ? `已录入 ${sku.skuCode}，数量 ${next}。` : '当前草稿已关闭，未录入。' };
+        } catch { return { ok: false, message: '原数量或规格尚未有效、存在冲突或已达上限，请先核对；未覆盖输入。' }; }
       },
     });
   }

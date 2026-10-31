@@ -53,4 +53,19 @@ try{
   await act(async()=>root.unmount());root=null;session.cancel(true);
   console.log('PASS actual TransferProposalForm '+(reopened?'reopened':'scanner')+': SKU-only input 1→8, total, invalid raw, visible reject and cancel protection');
  }
+ // F06: actual saved Form, empty M matrix cell, original lazy Scanner and controller.
+ {
+  const m={...sku,id:id(204),skuCode:'QA-M',sizeId:id(207),sizeName:'170/M'},sm={...group,sizes:[...group.sizes,{id:m.sizeId,name:m.sizeName,displayOrder:2}]},product={id:sku.productId,code:sku.productCode,name:sku.productName,sizeGroupId:sku.sizeGroupId,retailPrice:'1.00'};
+  const session=new TransferProposalSession(scope,{readTransferWarehouses:async()=>page([warehouse(1),warehouse(2)]),readProducts:async()=>page([product]),readProductSkus:async()=>page([sku]),readBarcode:async query=>({state:'FOUND',barcode:query.barcode,binding:{id:id(89),kind:'MAIN'},sku:m}),readSizeGroups:async()=>({page:1,pageSize:100,total:1,items:[sm]})});
+  assert.equal(session.initializeFromSaved({businessDate:'2026-10-28',note:'retained',from:warehouse(1),to:warehouse(2),lines:[{sku,product,quantity:'1',existingLineId:id(85)}]}),true);assert.equal(session.getSnapshot().entry,null);
+  root=createRoot(host);await act(async()=>root.render(createElement(TransferProposalForm,{session,scope,productReader:{},denied:e=>{throw e;},busy:false,actions:null})));
+  const until=async(fn,label)=>{for(let i=0;i<80;i++){if(fn())return;await act(async()=>{await new Promise(r=>setTimeout(r,20));});}assert.equal(Boolean(fn()),true,label);};
+  await until(()=>host.querySelector('input[data-transfer-size="'+m.sizeId+'"]'),'M matrix loaded');const input=host.querySelector('input[data-transfer-size="'+m.sizeId+'"]');
+  await act(async()=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,'5');input.dispatchEvent(new Event('input',{bubbles:true}));});assert.equal(input.value,'5');assert.match(host.querySelector('#tc-totals').textContent,/6件/);
+  await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='扫码录入').click());await until(()=>document.querySelector('#transfer-scan-input'),'original scanner loaded');
+  const scan=document.querySelector('#transfer-scan-input');await act(async()=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(scan,'QA-M');scan.dispatchEvent(new Event('input',{bubbles:true}));});await act(async()=>scan.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true})));
+  await until(()=>document.querySelector('[data-transfer-scan-feedback]')?.getAttribute('data-state')==='success','scan success');assert.equal(input.value,'6');assert.match(document.querySelector('[data-transfer-scan-feedback]').textContent,/5 → 6/);assert.match(host.querySelector('#tc-totals').textContent,/7件/);assert.equal(Object.keys(session.getSnapshot().matrixQuantities).length,0);
+  let command;await act(async()=>{command=session.saveProposal(id(70));});assert.ok(command);assert.equal(command.lines.filter(x=>x.skuId===m.id).length,1);assert.equal(command.lines.find(x=>x.skuId===m.id).quantity,'6');assert.equal(command.lines.find(x=>x.skuId===sku.id).existingLineId,id(85));
+  await act(async()=>document.querySelector('[aria-label="关闭扫码抽屉"]').click());await act(async()=>root.unmount());root=null;session.dispose();console.log('PASS F06 actual saved matrix M5 → scan M6, feedback5→6, total7, single SAVE coordinate');
+ }
 }finally{if(root)await act(async()=>root.unmount());scope.dispose();dom.window.close();await rm(temp,{recursive:true,force:true});}

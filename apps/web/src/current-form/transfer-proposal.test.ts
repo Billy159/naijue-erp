@@ -122,3 +122,48 @@ test('PF01 pending product reads complete bounded SKU pages once; incomplete res
  const {session}=setup({async readProducts(){return page([product]);},async readProductSkus(query){calls.push(query.page);active++;peak=Math.max(peak,active);await new Promise(r=>setImmediate(r));active--;return page(Array.from({length:broken&&query.page===2?0:Math.min(20,size-(query.page-1)*20)},(_,i)=>({...sku,id:entityId('sku',uuid(1000+(query.page-1)*20+i)),sizeId:entityId('size',uuid(2000+(query.page-1)*20+i))})),query.page,BigInt(size));}});
  await session.openPicker('PRODUCT');await session.selectPendingProduct(product.id);assert.equal(session.getSnapshot().pending.phase,broken?'error':'ready');if(!broken){assert.equal(session.getSnapshot().pending.skus.length,size);assert.deepEqual([...calls].sort((a,b)=>a-b),[1,2,3]);assert.ok(peak<=4);}session.dispose();}
 });
+
+const matrixM:CurrentFormSku={...sku,id:entityId('sku',uuid(204)),skuCode:'TEST-M',sizeId:entityId('size',uuid(207)),sizeName:'170/M'};
+const matrixSM={...matrixGroup,sizes:[...matrixGroup.sizes,{id:matrixM.sizeId,name:matrixM.sizeName,displayOrder:2}]};
+const savedLabels={productCode:'OLD',productName:'old product',colorName:'old red',fitName:'old fit',sizeName:'old size',barcode:null};
+function scanMatrixSetup(target:CurrentFormSku=matrixM,lines= [{sku,product,quantity:'1',existingLineId:uuid(85),sourceSnapshot:savedLabels}]){
+ const h=setup({async readBarcode(query){return {state:'FOUND',barcode:query.barcode,binding:{id:uuid(89),kind:'MAIN'},sku:target};},async readSizeGroups(){return {page:1,pageSize:100,total:1,items:[matrixSM]};}});
+ assert.equal(h.session.initializeFromSaved({businessDate:'2026-10-28',note:'retained',from:warehouse(1),to:warehouse(2),lines}),true);return h;
+}
+test('F06 empty saved M cell 5 plus real barcode is one atomic quantity 6 and SAVE coordinate',async()=>{
+ const h=scanMatrixSetup(),s=h.session,scanner=s.createScanner();try{
+  assert.equal(s.getSnapshot().entry,null);const key=transferProposalRowKey(sku),cell=JSON.stringify([key,matrixM.sizeId]);assert.equal(s.setMatrixSizeQuantity(key,matrixSM,matrixM.sizeId,'5'),true);
+  const old=s.getSnapshot().draft.lines[0]!,states:ReturnType<typeof s.getSnapshot>[]=[];const stop=s.subscribe(()=>states.push(s.getSnapshot()));
+  assert.equal(await scanner.scan('TEST-M'),true);stop();const after=s.getSnapshot(),m=after.draft.lines.filter(r=>r.sku?.id===matrixM.id);assert.equal(m.length,1);assert.equal(m[0]!.quantity,'6');assert.equal(Object.hasOwn(after.matrixQuantities,cell),false);assert.equal(after.draft.lines[0],old);assert.deepEqual(old.sourceSnapshot,savedLabels);assert.equal(old.existingLineId,uuid(85));
+  assert.equal(states.some(x=>x.draft.lines.some(r=>r.sku?.id===matrixM.id)&&Object.hasOwn(x.matrixQuantities,cell)),false,'no duplicate intermediate publication');
+  const command=s.saveProposal(uuid(70));assert.ok(command);assert.equal(command.lines.filter(r=>'skuId' in r&&r.skuId===matrixM.id).length,1);assert.equal(command.lines.find(r=>'skuId' in r&&r.skuId===matrixM.id)!.quantity,'6');
+ }finally{scanner.dispose();h.context.clear();}
+});
+test('F06 matrix invalid raw and overflow stay identical; zero consumes once',async()=>{
+ for(const raw of ['01','1.5','-1','9223372036854775808','9223372036854775807','0','']){
+  const h=scanMatrixSetup(),s=h.session,scanner=s.createScanner();try{s.setMatrixSizeQuantity(transferProposalRowKey(sku),matrixSM,matrixM.sizeId,raw);const before=s.getSnapshot();const ok=await scanner.scan('TEST-M');assert.equal(ok,raw==='0'||raw==='',raw);
+   if(ok){assert.equal(s.getSnapshot().draft.lines.find(r=>r.sku?.id===matrixM.id)!.quantity,'1');assert.equal(Object.keys(s.getSnapshot().matrixQuantities).length,0);}else{assert.equal(s.getSnapshot().draft,before.draft);assert.equal(s.getSnapshot().matrixQuantities,before.matrixQuantities);assert.equal(Object.values(s.getSnapshot().matrixQuantities)[0]!.quantity,raw);}
+  }finally{scanner.dispose();h.context.clear();}
+ }
+});
+test('F06 conflicting real SKU coordinates reject; existing line at 200 increments but new line cannot exceed cap',async()=>{
+ for(const count of [199,200]){
+  const lines=Array.from({length:count},(_,i)=>({sku:{...sku,id:entityId('sku',uuid(1000+i)),sizeId:entityId('size',uuid(2000+i))},product,quantity:'1',existingLineId:uuid(3000+i),sourceSnapshot:savedLabels}));
+  const h=scanMatrixSetup(matrixM,lines),s=h.session,scanner=s.createScanner();try{s.setMatrixSizeQuantity(transferProposalRowKey(sku),matrixSM,matrixM.sizeId,'5');const before=s.getSnapshot();assert.equal(await scanner.scan('TEST-M'),count===199);if(count===199){assert.equal(s.getSnapshot().draft.lines.length,200);assert.equal(s.getSnapshot().draft.lines.at(-1)!.quantity,'6');}else{assert.equal(s.getSnapshot().draft,before.draft);assert.equal(s.getSnapshot().matrixQuantities,before.matrixQuantities);}}finally{scanner.dispose();h.context.clear();}
+  const existing=scanMatrixSetup(lines[0]!.sku,lines),scan=existing.session.createScanner();try{assert.equal(await scan.scan('TEST-EXISTING'),true);assert.equal(existing.session.getSnapshot().draft.lines.length,count);assert.equal(existing.session.getSnapshot().draft.lines[0]!.quantity,'2');assert.equal(existing.session.getSnapshot().draft.lines[0]!.existingLineId,lines[0]!.existingLineId);}finally{scan.dispose();existing.context.clear();}
+ }
+ const other={...sku,id:entityId('sku',uuid(333))};const h=scanMatrixSetup(other),scanner=h.session.createScanner();try{const before=h.session.getSnapshot();assert.equal(await scanner.scan('TEST-CONFLICT'),false);assert.equal(h.session.getSnapshot().draft,before.draft);}finally{scanner.dispose();h.context.clear();}
+});
+
+test('F06 local specification promotion keeps original pointer and only matching saved SKU provenance',async()=>{
+ for(const sameSku of [true,false]){
+  const original={...matrixM,id:entityId('sku',uuid(sameSku?204:444))};
+  const h=setup({async readProductSkus(){return page([sku]);},async readSizeGroups(){return {page:1,pageSize:100,total:1,items:[matrixSM]};},async readBarcode(query){return {state:'FOUND',barcode:query.barcode,binding:{id:uuid(89),kind:'MAIN'},sku:matrixM};}}),s=h.session,scanner=s.createScanner();
+  try{
+   assert.equal(s.initializeFromSaved({businessDate:'2026-10-28',note:'retained',from:warehouse(1),to:warehouse(2),lines:[{sku:original,product,quantity:'5',existingLineId:uuid(85),sourceSnapshot:savedLabels}]}),true);
+   await s.readSizeGroups({search:'',page:1,pageSize:100},new AbortController().signal);
+   assert.equal(s.beginReplacement(transferProposalRowKey(original)),true);await s.readPendingSkus();assert.equal(s.commitPending(),true);const local=s.getSnapshot().draft.lines[0]!;assert.equal(local.sku,null);assert.equal(local.existingLineId,uuid(85));assert.equal(local.sourceSnapshot,undefined);
+   assert.equal(await scanner.scan('TEST-M'),true);const row=s.getSnapshot().draft.lines[0]!;assert.equal(s.getSnapshot().draft.lines.length,1);assert.equal(row.sku?.id,matrixM.id);assert.equal(row.quantity,'6');assert.equal(row.existingLineId,uuid(85));assert.equal('specification' in row,false);assert.equal(row.product,local.product);assert.deepEqual(row.sourceSnapshot,sameSku?savedLabels:undefined);assert.ok(s.saveProposal(uuid(70)));
+  }finally{scanner.dispose();h.context.clear();}
+ }
+});

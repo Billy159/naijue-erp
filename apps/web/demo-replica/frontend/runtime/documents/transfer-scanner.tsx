@@ -29,13 +29,15 @@ export default function TransferScanner(p:{controller:DocumentScanController;ses
    if(!attached.current||run!==epoch.current)return;
    const owner=latest.current,draft=owner.session.getSnapshot().draft;
    if(owner.busy||!owner.session.canScan||draft!==expectedDraft.current){pause(submitted,'当前单据输入或目标已改变，请核对后重新扫描。');return;}
-   const before=new Map(draft.lines.flatMap(line=>line.sku?[[line.sku.id,line.quantity] as const]:[]));setFeedback('idle');
+   const before=new Map(draft.lines.map(line=>{const id=transferProposalLineIdentity(line);return [JSON.stringify([id.productId,id.colorId,id.fitId,id.sizeId]),line.quantity] as const;}));
+   for(const cell of Object.values(owner.session.getSnapshot().matrixQuantities)){const key=JSON.stringify([cell.product.id,cell.colorId,cell.fitId,cell.sizeId]);if(!before.has(key)&&cell.quantity!==''&&cell.quantity!=='0')before.set(key,cell.quantity);}
+   const previous=(sku:NonNullable<typeof draft.lines[number]['sku']>)=>before.get(JSON.stringify([sku.productId,sku.colorId,sku.fitId,sku.sizeId]));setFeedback('idle');
    const ok=await owner.controller.scan(submitted);
    if(!attached.current||run!==epoch.current||owner.controller.getSnapshot().phase==='disposed')return;
    if(ok){
     const after=owner.session.getSnapshot().draft;expectedDraft.current=after;
-    const changed=after.lines.find(line=>line.sku&&before.get(line.sku.id)!==line.quantity);
-    if(changed?.sku){const identity=transferProposalLineIdentity(changed),labels=changed.sourceSnapshot;setSuccess({key:changed.sku.id,before:before.get(changed.sku.id)??null,after:changed.quantity,code:labels?.productCode??identity.productCode,name:labels?.productName??identity.productName,color:labels?.colorName??identity.colorName,fit:labels?.fitName??identity.fitName,size:labels?.sizeName??identity.sizeName});setFeedback('success');}
+    const changed=after.lines.find(line=>line.sku&&previous(line.sku)!==line.quantity);
+    if(changed?.sku){const identity=transferProposalLineIdentity(changed),labels=changed.sourceSnapshot;setSuccess({key:changed.sku.id,before:previous(changed.sku)??null,after:changed.quantity,code:labels?.productCode??identity.productCode,name:labels?.productName??identity.productName,color:labels?.colorName??identity.colorName,fit:labels?.fitName??identity.fitName,size:labels?.sizeName??identity.sizeName});setFeedback('success');}
     requestAnimationFrame(()=>{if(attached.current&&hadInputFocus&&!paused.current&&(document.activeElement===input.current||document.activeElement===document.body))input.current?.focus({preventScroll:true});});
    }else pause(submitted,owner.controller.getSnapshot().message);
   }).catch(()=>{if(attached.current&&run===epoch.current)pause(submitted,'本次扫码未完成，未自动重试，请核对后重新扫描。');}).finally(()=>{pending.current=Math.max(0,pending.current-1);if(attached.current)setPendingCount(pending.current);if(pending.current===0)expectedDraft.current=null;});
