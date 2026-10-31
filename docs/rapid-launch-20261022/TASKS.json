@@ -19841,8 +19841,8 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "Preparation13 exact11 and installer04 carrier scoped QB source PASS adopted; T45 final environment scope and D1 physical synthetic content preparation active",
-    "next": "T45 smallest ordinary-connection-opening successor plus final environment scope; D1 physical synthetic inputs in parallel",
+    "current": "D1 physical synthetic133-file content fixed and handoff pins matched; T45 successor05 fixed four pins matched; original QB reviews content boundaries then05 incremental",
+    "next": "Adopt fixed reviews; T45 final exact phase/environment/input/slot/fence execution scope; no environment changes before confirmation",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
     "approvedHistoricalBalanceRule": "NULL_UNKNOWN_NO_BACKFILL",
@@ -20049,18 +20049,30 @@
     },
     "physicalSyntheticSourcePreparation": {
       "owner": "D1",
-      "status": "IN_PROGRESS_ORIGINAL_TASK_NEXT_PACKAGE",
+      "status": "FIXED_CONTENT_QB_BINDING_BOUNDARY_REVIEW",
       "scope": "Reuse or prepare existing-format synthetic source files, money32 fact candidates and manifest only; target/private envelope stays unbound until actual facts and independent authorization",
       "sourceMutation": false,
-      "environmentExecution": false
+      "environmentExecution": false,
+      "files": 133,
+      "manifestSha256": "d6a8492b035f2739848df4fd0d76acc2c7d51784a4449afe1edbb6af40d47465",
+      "reportSha256": "e986def76cc825b7bf22147154f1b15b9a5227dd8a6209a989e2beabf8ffad93",
+      "csv": 18,
+      "literalJson": 43,
+      "moneyCandidates": 32,
+      "independentBindings": "PENDING_NO_ACTUAL_TARGET_OR_APPROVAL"
     },
     "ordinaryConnectionOpening": {
-      "status": "SOURCE_SUCCESSOR_ASSIGNED_ORIGINAL_T45",
+      "status": "FIXED_SUCCESSOR05_QB_INCREMENTAL_QUEUED",
       "finding": "CREATE_ROLES leaves ordinary LOGIN CONNECTION LIMIT0; BASELINE_ACL CONNECT does not enable directLOGIN; FRESH_ORDINARY_V6 consumes evidence only",
       "owner": "T45",
       "scope": "Reuse existing exact controlled channel if available; otherwise bounded own-role opening and readback after complete CLOSE_PREP before FRESH_ORDINARY_V6; original-key recovery and own-role exit",
       "actualRoleChange": "NOT_AUTHORIZED_NOT_EXECUTED",
-      "reviewOwner": "QB affected increment only"
+      "reviewOwner": "QB affected increment only",
+      "reportSha256": "81caaefda243eff61e8172f9ee9c8b9a0618d31389fecd2503d111e53112eac5",
+      "scriptSha256": "c91f749e9a175da60a4f5e5e6ed96ab56b131c092316a5a30988a68d62d1779d",
+      "verifiedArtifactPins": 4,
+      "newOfflineChecks": 8,
+      "actualConnectionBudget": "UNKNOWN_NOT_DEFAULTED"
     }
   }
 }
