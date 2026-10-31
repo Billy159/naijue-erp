@@ -14,8 +14,12 @@ import {qaPrincipal,qaHalls,qaWarehouses,qaCustomers,qaStaff,qaPaymentAccounts,q
 import {createSyntheticUnifiedTransport} from '../../unified-browser-harness/synthetic-transport.ts';
 import {createSyntheticDocumentPreviewTransport} from '../frontend/runtime/documents/synthetic-preview-transport.ts';
 import {createSyntheticProductPreviewTransport} from '../frontend/runtime/products/synthetic-preview-transport.ts';
-import {parseSalesHistoryQuery} from '../../../../packages/application/src/sales-query-validation.ts';
-export async function createSalesChainFixture(){
+import {parseSalesHistoryQuery,parseSalesListQuery} from '../../../../packages/application/src/sales-query-validation.ts';
+export async function createSalesChainFixture(options={}){
+ // Opt-in finite pagination scenario: every header/receipt is produced by the original SAVE.
+ const pagination=options.pagination===true;let seeding=pagination,documentSequence=0;
+ let clock='2026-10-29T12:00:00.000000Z';
+ const newId=kind=>pagination&&kind==='sales'?`${(seeding?0x20000000-++documentSequence:0xf0000000+ ++documentSequence).toString(16)}-0000-4000-8000-000000000001`:randomUUID();
  const store=new SyntheticStore(),actor={accountId:qaPrincipal.accountId,hallId:qaPrincipal.hallId},identity={accountId:actor.accountId,staffId:qaPrincipal.staffId,role:'ADMIN',loginEnabled:true,employmentStatus:'在职',hallId:null,hallEnabled:null};
  store.seedIdentity(identity);
  const skuMap=new Map(qaSkus.map(row=>[row.id,structuredClone(row)])),products=new Map(qaProducts.map(row=>[row.id,{...structuredClone(row),referenceMinor:minorAmount(row.retailPrice.replace('.','')),minimumMinor:null}]));
@@ -29,7 +33,7 @@ export async function createSalesChainFixture(){
  const snapshot=row=>({productCode:row.productCode,productName:row.productName,colorName:row.colorName,fitName:row.fitName,sizeName:row.sizeName,barcode:row.barcode});
  const scoped=d=>{requireDomain(qaHalls.some(x=>x.id===d.header.hallId&&x.enabled)&&qaCustomers.some(x=>x.id===d.header.customerId&&x.enabled)&&qaWarehouses.some(x=>x.id===d.header.warehouseId&&x.hall.id===d.header.hallId&&x.enabled),'FORBIDDEN','Outside finite synthetic directory');};
  const policy=createSalesActionAuthorization();
- const dependencies={now:()=> '2026-10-29T12:00:00.000000Z',newId:()=>randomUUID(),rules:createNativeManualSalesBusinessRules(),authorization:{async assertAllowed(context,action,d,tx){await policy.assertAllowed(context,action,d,tx);scoped(d);}},unitOfWork:{transaction(work){return store.transaction(tx=>work({...tx,
+ const dependencies={now:()=>pagination?clock:'2026-10-29T12:00:00.000000Z',newId,rules:createNativeManualSalesBusinessRules(),authorization:{async assertAllowed(context,action,d,tx){await policy.assertAllowed(context,action,d,tx);scoped(d);}},unitOfWork:{transaction(work){return store.transaction(tx=>work({...tx,
   async resolveDocumentSkus(input){requireDomain(input.scope.kind==='SALES','FORBIDDEN','Sales-only scenario');return input.selections.map(selection=>{if('skuId'in selection)return getSku(selection.skuId).id;const matches=[...skuMap.values()].filter(row=>['productId','colorId','fitId','sizeId'].every(k=>row[k]===selection.spec[k]));requireDomain(matches.length===1,'SKU_UNAVAILABLE','Only predeclared exact specifications');return matches[0].id;});},
   async getCurrentSalesSnapshots(ids){return new Map(ids.map(id=>[id,snapshot(getSku(id))]));},
   async getCurrentSalesReferenceFacts(d){scoped(d);const old=await tx.getSales(d.header.id),skus=[...new Set(d.lines.map(x=>x.skuId))].map(getSku),hall=qaHalls.find(x=>x.id===d.header.hallId),warehouse=qaWarehouses.find(x=>x.id===d.header.warehouseId),customer=qaCustomers.find(x=>x.id===d.header.customerId),staff=d.header.salespersonId===null?null:qaStaff.find(x=>x.id===d.header.salespersonId);
@@ -42,12 +46,30 @@ export async function createSalesChainFixture(){
  const app=Fastify({logger:false});app.register(createSalesHttpPlugin({authenticate:async()=>actor,dependencies,preparation:createNativeSalesPreparation(dependencies),existingPreparation:createNativeSalesExistingPreparation(dependencies)}));
  // Explicit fixture-only composition: same committed store and actual ledger IDs.
  app.register(createInventoryLedgerQueryHttpPlugin({authenticate:async()=>actor,dependencies:createSalesChainLedgerDependencies(store,actor)}));await app.ready();
+ if(pagination){
+  try{for(let index=0;index<25;index++){
+   const response=await app.inject({method:'POST',url:'/sales/commands',payload:{action:'SAVE',requestKey:`SYN.pagination.seed.${index}`,expectedVersion:null,proposal:{salesId:null,businessType:'SALE',businessDate:'2026-10-29',note:'SYN finite pagination',hallId:qaHalls[0].id,customerId:qaCustomers[0].id,salespersonId:qaStaff[2].id,warehouseId:qaWarehouses[3].id,orderDiscount:'0.00',lines:[{existingLineId:null,skuId:qaSkus[0].id,quantity:'1',dealPrice:'239.00',pricingRule:'UNIT_PRICE',discountTenths:null,isGift:false,zeroConfirmed:false}],settlements:[{existingSettlementId:null,paymentAccountId:qaPaymentAccounts[0].id,paymentMethodId:qaPaymentAccounts[0].paymentMethod.id,direction:'RECEIVE',amount:'239.00'}]}}});
+   requireDomain(response.statusCode===200,'SYNTHETIC_SEED_FAILED',response.body);
+  }}catch(error){await app.close();throw error;}
+  seeding=false;clock='2026-10-29T12:00:01.000000Z';
+ }
+ // Native protocol keeps its production number/C ordering; normal preview sorts materialized records separately.
+ const nativeList=(parameters,state=store.snapshot())=>{
+  const {filter:f,page,pageSize}=parseSalesListQuery(parameters);
+  const selected=(values,value)=>values.length===0||values.includes(value);
+  const headers=[...state.headers.values()];
+  const rows=headers.filter(h=>(f.startDate===null||h.businessDate>=f.startDate)&&(f.endDate===null||h.businessDate<=f.endDate)&&(f.number===null||h.number.toLowerCase().includes(f.number.toLowerCase()))&&selected(f.statuses,h.status)&&selected(f.businessTypes,h.businessType)&&selected(f.hallIds,h.hallId)&&selected(f.customerIds,h.customerId)&&selected(f.warehouseIds,h.warehouseId)&&selected(f.salespersonIds,h.salespersonId));
+  const timestamp=value=>value.replace(/(?:\.(\d+))?Z$/,(_,fraction='')=>'.'+fraction.padEnd(6,'0')+'Z');
+  rows.sort((a,b)=>{const at=timestamp(a.createdAt),bt=timestamp(b.createdAt);return (at<bt?1:at>bt?-1:0)||Buffer.compare(Buffer.from(a.number),Buffer.from(b.number))||(a.id<b.id?-1:a.id>b.id?1:0);});
+  return {exactTotal:String(rows.length),items:rows.slice((page-1)*pageSize,page*pageSize).map(h=>({id:h.id}))};
+ };
+
  const base=createSyntheticUnifiedTransport(undefined,'standard',QA_REFERENCE_PROFILE);base.authorize();
  const json=(value,status=200)=>new Response(exactJson(value),{status,headers:{'content-type':'application/json','cache-control':'no-store','x-data-source':'SYNTHETIC-REAL-SERVICE-MEMORY-NOT-PG'}});
  const raw=async(input,init,state=store.snapshot())=>{
   const url=new URL(input),path=url.pathname.slice(4),q=init.body?JSON.parse(String(init.body)):{};
   requireDomain(state.identities.get(actor.accountId)?.loginEnabled,'FORBIDDEN','Synthetic identity revoked');
-  if(path==='/sales/query')return json({exactTotal:String(state.headers.size),items:[...state.headers.values()].slice((q.page-1)*q.pageSize,q.page*q.pageSize).map(h=>({id:h.id}))});
+  if(path==='/sales/query')return json(nativeList(q,state));
   if(path==='/sales/detail/query'){
    const header=state.headers.get(q.salesId);if(!header)return json({error:{code:'DOCUMENT_NOT_FOUND',message:'Only documents actually saved by this scenario'}},404);scoped({header});
    const lines=[...state.lines.values()].filter(l=>l.salesId===header.id&&l.isCurrent).sort((a,b)=>a.lineNo-b.lineNo),settlements=[...state.settlements.values()].filter(x=>x.salesId===header.id).sort((a,b)=>a.lineNo-b.lineNo);
@@ -73,7 +95,7 @@ export async function createSalesChainFixture(){
    const init={method,credentials:'same-origin',headers:request.headers,body:request.body,signal:new AbortController().signal};const response=url.pathname==='/api/sales/history/query'?await readFetch(url.href,init):reads.canHandle(url.pathname,method)?await reads.request(url,init):productReads.canHandle(url.pathname,method)?await productReads.request(url,init):await readFetch(url.href,init);return {status:response.status,headers:Object.fromEntries(response.headers),body:await response.text()};}
   catch(error){return {status:error.code==='FORBIDDEN'?403:error.code==='DOCUMENT_NOT_FOUND'?404:500,headers:{'content-type':'application/json'},body:exactJson({error:{code:error.code??'SYNTHETIC_READ_FAILED',message:'Synthetic store read rejected'}})};}
  }
- return {actor,dependencies,request,canHandle,snapshot:()=>store.snapshot(),baseline:()=>structuredClone(baseline),failNextAt(point){store.failNextAt=point;},revoke(){store.seedIdentity({...identity,loginEnabled:false});},async close(){await app.close();},
+ return {actor,dependencies,request,canHandle,nativeList,snapshot:()=>store.snapshot(),baseline:()=>structuredClone(baseline),failNextAt(point){store.failNextAt=point;},revoke(){store.seedIdentity({...identity,loginEnabled:false});},async close(){await app.close();},
   async command(command){const response=await app.inject({method:'POST',url:'/sales/commands',payload:command});return {status:response.statusCode,body:response.json()};}
  };
 }

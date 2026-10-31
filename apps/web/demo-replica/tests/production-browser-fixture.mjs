@@ -1,6 +1,8 @@
 // Closed synthetic stdio profiles. Never a production fallback or listener.
 import {createInterface} from 'node:readline';
 import {createReplicaPreviewTransport} from '../frontend/runtime-preview-transport.ts';
+const documentPagination=process.argv.includes('--document-pagination');
+if(documentPagination&&(process.argv.filter(flag=>['--sales-chain','--transfer-chain'].includes(flag)).length!==1||process.argv.slice(2).some(flag=>!['--document-pagination','--sales-chain','--transfer-chain'].includes(flag))))throw Error('Document pagination requires exactly one original document chain');
 const productEntryProfile=process.argv.includes('--product-entry-service');
 if(productEntryProfile&&(process.argv.slice(2).length!==1||process.argv[2]!=='--product-entry-service'))throw Error('Product entry service fixture requires its own consistent isolated profile');
 if(process.argv.includes('--category-overflow')){const {installCategoryOverflowFixture}=await import('./category-overflow-fixture.mjs');installCategoryOverflowFixture();}
@@ -11,8 +13,8 @@ const productEntry=productEntryProfile?await(await import('../../../../tests/sup
 const transport=productEntryProfile?null:createReplicaPreviewTransport();
 const productEdit=process.argv.includes('--product-edit')?await(await import('./product-edit-fixture.mjs')).createProductEditFixture():null;
 const productRead=process.argv.includes('--product-editor-read')?(await import('./product-editor-read-fixture.mjs')).createProductEditorReadFixture():null;
-const transfer=process.argv.includes('--transfer-chain')?await(await import('./transfer-chain-fixture.mjs')).createTransferChainFixture({responsibleStaffValidation:true}):null;
-const sales=process.argv.includes('--sales-chain')?await(await import('./sales-chain-fixture.mjs')).createSalesChainFixture():null;
+const transfer=process.argv.includes('--transfer-chain')?await(await import('./transfer-chain-fixture.mjs')).createTransferChainFixture({responsibleStaffValidation:true,pagination:documentPagination}):null;
+const sales=process.argv.includes('--sales-chain')?await(await import('./sales-chain-fixture.mjs')).createSalesChainFixture({pagination:documentPagination}):null;
 if(process.argv.includes('--sales-preview')){if(!sales)throw Error('Sales preview requires actual service chain');await(await import('./sales-preview-seed.mjs')).seedSalesPreview(sales);}
 if(process.argv.includes('--payment-maintenance')&&['--product-entry-service','--product-edit','--sales-chain','--transfer-chain','--staff-edit'].some(flag=>process.argv.includes(flag)))throw Error('Payment maintenance requires its own isolated writer profile');
 const payment=process.argv.includes('--payment-maintenance')?await(await import('./payment-maintenance-fixture.mjs')).createPaymentMaintenanceFixture():null;

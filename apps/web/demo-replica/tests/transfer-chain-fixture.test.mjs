@@ -91,3 +91,25 @@ test('detail after SKU replacement and deletion exposes only current rows while 
  }
  assert.deepEqual(h.snapshot(),after,'new read requests must not mutate retained originals');
 });
+
+test('pagination opt-in saves finite transfer drafts, exposes exact stable pages and newest SAVE without approval',async t=>{
+ const plain=await createTransferChainFixture();t.after(()=>plain.close());assert.equal(plain.snapshot().transfers.size,0);
+ const h=await createTransferChainFixture({pagination:true});t.after(()=>h.close());const initial=h.snapshot(),headers=[...initial.transfers.values()].map(x=>x.document.header);assert.equal(headers.length,25);assert.equal(initial.receipts.size,25);assert.equal(initial.audit.length,25);assert.equal(initial.ledger.length,0);assert.ok(headers.every(x=>x.status==='DRAFT'));assert.equal(new Set(headers.map(x=>x.createdAt)).size,1);
+ const filter={startDate:null,endDate:null,number:null,statuses:[],fromWarehouseIds:[],toWarehouseIds:[]},query={filter,page:1,pageSize:20},expected=[...headers].sort((a,b)=>Buffer.compare(Buffer.from(a.number),Buffer.from(b.number))||a.id.localeCompare(b.id)).map(x=>x.id);
+ assert.deepEqual(h.nativeList(query).items.map(x=>x.id),expected.slice(0,20));assert.equal(h.nativeList({...query,filter:{...filter,statuses:['APPROVED']}}).exactTotal,'0');const one=headers.find(x=>x.id===expected[0]);assert.deepEqual(h.nativeList({...query,filter:{...filter,number:one.number.toLowerCase()}}).items.map(x=>x.id),[one.id]);assert.equal(h.nativeList({...query,filter:{...filter,startDate:'2026-10-30'}}).exactTotal,'0');assert.equal(h.nativeList({...query,filter:{...filter,fromWarehouseIds:[qaWarehouses[0].id]}}).exactTotal,'0');
+ const read=async page=>{const r=await h.request({url:'https://synthetic-management.invalid/api/transfers/query',method:'POST',headers:{'x-naijue-document-summary':'category-v2'},body:JSON.stringify({...query,page})});assert.equal(r.status,200,r.body);return JSON.parse(r.body);};const first=await read(1),second=await read(2);assert.equal(first.exactTotal,'25');assert.equal(second.items.length,5);assert.deepEqual([...first.items,...second.items].map(x=>x.id),[...expected].sort());assert.equal(new Set([...first.items,...second.items].map(x=>x.id)).size,25);assert.deepEqual((await read(2)).items,second.items);assert.equal(first.totals.totalQuantity,'50');
+ const saved=await h.command({...save(),requestKey:'SYN.pagination.new'});assert.equal(saved.status,200);const latest=await read(1);assert.equal(latest.exactTotal,'26');assert.equal(latest.items[0].id,saved.body.transferId);assert.ok(saved.body.transferId>expected.at(-1));assert.equal(h.snapshot().ledger.length,0);assert.deepEqual(h.snapshot().balances,initial.balances);
+});
+
+
+test('document pagination stdio is explicit, finite and uses one original chain only',async()=>{
+ const {spawnSync}=await import('node:child_process');
+ for(const kind of ['sales','transfer']){
+  const filter=kind==='sales'?{startDate:null,endDate:null,number:null,statuses:[],businessTypes:[],hallIds:[],customerIds:[],warehouseIds:[],salespersonIds:[]}:{startDate:null,endDate:null,number:null,statuses:[],fromWarehouseIds:[],toWarehouseIds:[]};
+  const input=JSON.stringify({url:`https://synthetic-management.invalid/api/${kind==='sales'?'sales':'transfers'}/query`,method:'POST',headers:{'x-naijue-document-summary':'category-v2'},body:JSON.stringify({filter,page:2,pageSize:20})})+'\n';
+  const run=flags=>spawnSync(process.execPath,['--experimental-transform-types',fileURLToPath(new URL('./production-browser-fixture.mjs',import.meta.url)),...flags],{input,encoding:'utf8',timeout:10000});
+  const plain=run([`--${kind}-chain`]);assert.equal(plain.status,0,plain.stderr);assert.equal(JSON.parse(JSON.parse(plain.stdout).body).exactTotal,'0');
+  const seeded=run([`--${kind}-chain`,'--document-pagination']);assert.equal(seeded.status,0,seeded.stderr);const response=JSON.parse(seeded.stdout);assert.equal(response.status,200,response.body);const body=JSON.parse(response.body);assert.equal(body.exactTotal,'25');assert.equal(body.items.length,5);
+ }
+ const invalid=spawnSync(process.execPath,['--experimental-transform-types',fileURLToPath(new URL('./production-browser-fixture.mjs',import.meta.url)),'--document-pagination'],{encoding:'utf8',timeout:10000});assert.notEqual(invalid.status,0);
+});
