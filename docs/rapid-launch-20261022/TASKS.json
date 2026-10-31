@@ -20885,7 +20885,7 @@
     "next": "Only exact sparse driver exports and explicit future deletion approvals; no huge temporary restore."
   },
   "r1GlobalPaginationAndUiContinuation": {
-    "status": "QF2_14_LISTS_LIMITED_PARTIAL_ADOPTED_F1_DOCUMENT_PAGING_PACKAGE_ASSIGNED",
+    "status": "QF_INDEPENDENT_TWO_DOCUMENT_PAGING_PASS_LIMITED_QF2_DATA_PAGING_PARTIAL",
     "scope": {
       "pages": 37,
       "overlayClasses": 68,
@@ -20897,7 +20897,7 @@
       "documentPublicPreparation": "QF",
       "totalMatrixAndTaskProgressHandoff": "C"
     },
-    "browser": "F1 own0 released; QF exclusive pagination independent then six-sample read-only, versions separate",
+    "browser": "QF released own resources; QF2 minimum setup then product six readonly tabs, QF source-only Demo same-state question",
     "rules": "Reuse same-version same-scope evidence; applicable lists only, single-page data cannot prove page2; no fake totals/zero or backend validation suppression. No five new performance work and no UI prerequisite to DB preparation.",
     "actualEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/PAGINATION-49-READONLY-20261031-01/QF2-RESULT.json",
     "actualScope": "14 lists, 46 query responses. Colors 182 supports page2/pageSize/reset and representative narrow viewport; other13 lists insufficient rows for page2. No application defect found, no whole-page closure.",
@@ -20908,6 +20908,11 @@
       "report": "reports/qa-frontend/rapid-launch-20261022/F1/DOCUMENT-PAGINATION-51-20261031-01/SUMMARY.json",
       "sha256": "65d04103b979a05c6e3b453c7fa1106017735df213a962bf16c9d86c63309ae2",
       "bytes": 9770
+    },
+    "independentDocumentReview": {
+      "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP51-PAGINATION-SIX-STATES-CHECK.json",
+      "sha256": "75acec4e1dbe91b9775e757f09b2927daf635182b837b62e1a38b68219d46b31",
+      "scope": "Each11list responses, page2return/pageSize/reset/stable25IDs/UI SAVE26 newestfirst. Synthetic HTTP/browser only."
     }
   },
   "r1Qa22CaptureStaticReview": {
@@ -20934,14 +20939,29 @@
       "Normal full six-tab read-only page entry not reached from observed list/three-tab drawer",
       "Current image-success and load-failure states absent in this readonly carrier",
       "RealPG/full-page/Demo whole-state acceptance not claimed"
-    ]
+    ],
+    "next": "Original QF2 fixed48 minimal original SAVE setup only, then normal onSaved full readonly six tabs; no repeat full old CREATE/media/SKU suite; own report driver only; no PG."
   },
   "r1SalesReturnApprovedFollowup": {
     "owner": "QF",
-    "status": "QF_BROWSER_SLOT_GRANTED_AFTER_PAGINATION_INDEPENDENT",
+    "status": "QF_LIMITED_FIVE_DETAILS_READONLY_PASS_DEMO_SAME_STATE_PAIR_PENDING",
     "report": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP51-SALES-SIX-SAMPLE-PREP-01.json",
     "sha256": "39e18e5bc87d60678a01cc3c8ca0f4d2660827c253967001501a4f27b911680c",
     "scope": "Original SAVE/APPROVE synthetic SALE/RETURN/EXCHANGE six sample list/details; negative qty/refund, incoming/outgoing and approved readonly states only",
-    "boundary": "No new commands beyond original sample preparation; no DECLINE/VOID/PG/full permissions; F1 own browser first"
+    "boundary": "No new commands beyond original sample preparation; no DECLINE/VOID/PG/full permissions; F1 own browser first",
+    "actual": "RETURN/EXCHANGE DRAFT and APPROVED plus SALE APPROVED; negativeqty/refund/return-outgoing sums consistent, reentry unchanged, approved business fields readonly/no modify-save-approve-void;0browserwrite",
+    "independentReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP51-PAGINATION-SIX-STATES-CHECK.json",
+    "demo": "Frozen same-state approved combined type supports unified table; not full pixel acceptance. Exact quantity direction label gap assigned F1."
+  },
+  "r1SalesReadDirectionLabel": {
+    "id": "QF51-S04-READ-DIRECTION-LABEL-01",
+    "status": "DISCOVERED_ASSIGNED_ORIGINAL_F1_DEDUP_EXISTING_S04",
+    "owner": "F1",
+    "application": "2848f0283fe3f7b5c577cc873607df05494c99e5",
+    "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP51-READONLY-SECTION-ATTRIBUTION-01.json",
+    "sha256": "fdc59818db3625d4b19a576b3cec96c7f372daca6b61e428d312fa275609d20a",
+    "finding": "Frozen same-state combined RETURN/EXCHANGE readonly renderer shows incoming/outgoing prefix and negative style; app51 read body bare signed quantity. Numeric totals correct.",
+    "notFinding": "Do not split current combined table into two zones: frozen actual approved combined type also one table.",
+    "minimalRecheck": "Affected readonly quantity direction/negative style/footer/reentry, no repeated SAVE/approval/pagination."
   }
 }
