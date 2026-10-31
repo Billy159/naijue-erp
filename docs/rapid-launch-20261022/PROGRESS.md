@@ -1,3 +1,9 @@
+2026-10-31 用户human call_2636564572514a74923a34deeeddf9b9/0明确确认本批准准备合同及源码修订：preparation13/独立准备role history_revision15正列+xmin只读候选，旧V4/普通V6-V8/原SQL保持。C登记D1精确5实现+6对应测试唯一writer、T45原control载体ACL/inverse，03在QB只读保留。仅源码/定向验收获批，第三role/实际GRANT/PG/凭据/运行/部署未授权。原pending提案由本条替代，不重复确认。
+
+2026-10-31 D1准确preparation13提案9707B/SHA93874f36已核并提交用户source-only集中确认：只独立准备role history_revision15正列+xmin只读及新版本观察/consumer，旧V4/普通V8/guard保持；未获答复前不实施。T45已交不依赖此项的installer03局部生命周期（script44204B/SHA958e5cca；report3776B/SHA803b145d；6新offline+syntax），明确没有PREPARATION_ACL应用分支/host实际调用，不能记整链ready。0真实环境，旧源/回执保护。
+
+2026-10-31 新实际源闭包缺口覆盖前条“V4准备链可用”推定：T45核P04 history_numeric_ledger_set_guard语句触发器无baseline提前返回，无条件读history_revision.*与xmin；原V4恰12不含此列，无法靠额外GRANT仍满足原V4。仅原两叶组合源码PASS保留，不作权限/真实发布通过。原D1已接精确准备profile后继提案，先列完整source/consumer差异按约定确认；不改旧V4/不删guard/不给ordinaryV8加权。T45继续独立role/inverse载体，actual环境仍0。
+
 2026-10-31 原QB初始化组合2叶固定0b772c0e源码限定PASS采用（report7781B/SHA99d3633cef3966803fa7ecce105ee5cbb9918bdf36ef8ce050ab8dde55005de1）。CORE前原Cgrant/sourcepreflight守卫、真实135/V4准备LOGIN、原初始化/续导/完整PUBLISH读回和异常关闭源码通过，strict+4offline复用；准备账号fence/权限/安装V7V8仍原T45阶段承接，不因module通过自动开启环境。第三role准确最小ACL与逆操作载体仍在原T45实施。
 
 2026-10-31 初始化真实组合2叶已固定0b772c0e并交原QB增量：原工厂/真实boundedPool与V4准备issuer，CORE写前先fullsource Cgrant/preflight，CORE→INIT→catalogue→原full续导→实际publishedpredicate/三facts/反序关闭；strict及4routing早拒离线PASS，尚未实际PG成功路径。report2777B/SHA3b8c78ed。原T45仅据源权限边界实现第三准备role准确列ACL/12xmin/EXEC/seq/DB入口及收口inverse的原installer后继，禁止normal矩阵盲合/普通V8扩权/实际创建或GRANT。最终环境确认尚未到可执行状态。

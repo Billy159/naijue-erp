@@ -8140,5 +8140,30 @@
     "scope": "Compose original factories/services and full continuation only; distinct preparation LOGIN proposed, no actual role/grant; original V4 observation kept; no fabricated authorization or metadata",
     "C": "Only C Git and existing records",
     "T45": "Installer and future environment execution only after exact confirmation"
+  },
+  "dbUpgradeR1Preparation13Approved": {
+    "authority": "Human call_2636564572514a74923a34deeeddf9b9/0 confirmed preparation13 source/contract only",
+    "proposalSha256": "93874f36abe78109adaed7fbdb692dead8b6384c3fca32749497f5845c83c5b1",
+    "scope": "Independent preparation role history_revision15 existing user-column SELECT plus xmin SELECT candidates; versioned preparation13 observation/consumers only; old V4/V6/V7/V8 and SQL guards unchanged; no environment authority",
+    "D1": {
+      "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
+      "soleWriter": [
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "scripts/release/render-runtime26-readonly-check.mjs",
+        "scripts/release/compare-runtime26-metadata.py",
+        "scripts/import-v3/production-source-host.mjs",
+        "tests/integration/current-runtime26-preparation-host.ts",
+        "tests/native-runtime26-capability.test.ts",
+        "scripts/release/render-runtime26-readonly-check.test.mjs",
+        "scripts/release/compare-runtime26-metadata.test.py",
+        "scripts/import-v3/production-source-host.test.mjs",
+        "tests/current-runtime26-preparation-host.test.ts",
+        "tests/current-runtime26-source-provider.test.mjs"
+      ]
+    },
+    "T45": {
+      "soleWriter": "Original controlled installer/boundary/ACL/inverse/collector carrier successors in control reports only; fixed03 currently read-only in QB; no concurrent D1 source edits"
+    },
+    "C": "Git and existing records only"
   }
 }
