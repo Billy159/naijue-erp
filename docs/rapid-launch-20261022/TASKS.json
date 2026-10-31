@@ -20955,13 +20955,29 @@
   },
   "r1SalesReadDirectionLabel": {
     "id": "QF51-S04-READ-DIRECTION-LABEL-01",
-    "status": "DISCOVERED_ASSIGNED_ORIGINAL_F1_DEDUP_EXISTING_S04",
+    "status": "SOURCE_FIXED_12_DIRECTED_PASS_T45_CANDIDATE52_PREPARING_BROWSER_PENDING",
     "owner": "F1",
     "application": "2848f0283fe3f7b5c577cc873607df05494c99e5",
     "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP51-READONLY-SECTION-ATTRIBUTION-01.json",
     "sha256": "fdc59818db3625d4b19a576b3cec96c7f372daca6b61e428d312fa275609d20a",
     "finding": "Frozen same-state combined RETURN/EXCHANGE readonly renderer shows incoming/outgoing prefix and negative style; app51 read body bare signed quantity. Numeric totals correct.",
     "notFinding": "Do not split current combined table into two zones: frozen actual approved combined type also one table.",
-    "minimalRecheck": "Affected readonly quantity direction/negative style/footer/reentry, no repeated SAVE/approval/pagination."
+    "minimalRecheck": "Affected readonly quantity direction/negative style/footer/reentry, no repeated SAVE/approval/pagination.",
+    "source": "513cf76323828363de17acf86752023e8cc29d53",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/documents/sales-read-body.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/sales-display-regression.test.mjs"
+    ],
+    "buildOwner": "T45",
+    "validation": "12 scoped renderer checks pass, browser pending. Shared native readonly consumers only; independent history protocol not changed."
+  },
+  "r1ProductReadonlyNormalEntry": {
+    "owner": "QF2",
+    "status": "ACTUAL_FIXED48_NORMAL_SAVE_VIEW_ENTERED_FIVE_TABS_READ_STOCK_CAPABILITY_GAP",
+    "setup": "One necessary synthetic CREATE200 only, onSaved normal VIEW route; old full CREATE/media/11SKU suite not rerun",
+    "actual": "Basic/spec/barcode/prices/emptyimages200; stock failure UI without newHTTP observed, no fabricated501",
+    "notClaimed": "Not production defect or zero stock; fixed48 stock capability off and originalhost stockReader:null are source clues",
+    "next": "QF2 report+resource release; originalD1 readonly exact existing reader/config seam diagnosis, no implementation yet",
+    "realPg": false
   }
 }

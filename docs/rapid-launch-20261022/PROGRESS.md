@@ -3414,3 +3414,6 @@ V7准备推进：C已按原QB PRODUCT1/PAYMENT3静态PASS签发原格式三份so
 
 
 同状态Demo归属已准确核实：合并退货/换货查看及已审核原本统一表，不能派拆双区；原旧纯换货另论。新增实证QF51-S04-READ-DIRECTION-LABEL-01：冻结sales-current:111数量退回/换出前缀及负数样式，当前sales-read-body裸数，精确汇总正确。原QF补证fdc59818已采用，C交原F1同根只读消费者定向修，修后仅方向/负数/汇总/重入复验，旧错误命名截图不采。其余最新独立通过范围保留，整页未通过。
+
+
+数量方向修复固定513cf763（原F1两file/12定向PASS），T45原owner仅后继52必要构建中，未验browser。QF2已通过一次必要合成CREATE后正常onSaved进入六tab只读，5tab读取200；库存仅失败提示且无新HTTP，未捏造501或补0。原48库存cap未开/host stockReader:null只属载体线索，C交原D1只读核现有reader接缝，禁止当正式缺陷或偷偷叠入52。新QA执行窗口仍等待明确确认。
