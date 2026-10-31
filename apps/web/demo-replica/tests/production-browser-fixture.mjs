@@ -9,7 +9,7 @@ if(process.argv.includes('--category-overflow')){const {installCategoryOverflowF
 if(process.argv.includes('--customer-recommendation')){const {installCustomerRecommendationFixture}=await import('./customer-recommendation-fixture.mjs');installCustomerRecommendationFixture();}
 if(process.argv.includes('--sales-chain')&&process.argv.includes('--transfer-chain'))throw Error('Independent sales and transfer stores cannot share a preview');
 if(process.argv.includes('--product-edit')&&['--sales-chain','--transfer-chain','--staff-edit','--product-editor-read'].some(flag=>process.argv.includes(flag)))throw Error('Product edit fixture requires its own consistent isolated profile');
-const productEntry=productEntryProfile?await(await import('../../../../tests/support/product-entry-service-host-fixture.mjs')).createProductEntryServiceHost({syntheticOnly:true,productWrite:true,colorWrite:true,categoryWrite:true,mediaStage:true}):null;
+const productEntry=productEntryProfile?await(await import('../../../../tests/support/product-entry-service-host-fixture.mjs')).createProductEntryServiceHost({syntheticOnly:true,productWrite:true,colorWrite:true,categoryWrite:true,mediaStage:true,syntheticStock:true}):null;
 const transport=productEntryProfile?null:createReplicaPreviewTransport();
 const productEdit=process.argv.includes('--product-edit')?await(await import('./product-edit-fixture.mjs')).createProductEditFixture():null;
 const productRead=process.argv.includes('--product-editor-read')?(await import('./product-editor-read-fixture.mjs')).createProductEditorReadFixture():null;

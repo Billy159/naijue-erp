@@ -102,3 +102,33 @@ test('CATEGORY shared host: completion rollback, lost response recovery and expl
  host.setIdentity({role:'SALESPERSON'});await assert.rejects(client.receipt(input,scope.signal),e=>e.kind==='forbidden');assert.equal(host.snapshot().state.writes,committed.writes);
  const disabled=await createProductEntryServiceHost({syntheticOnly:true,productWrite:true,colorWrite:true,mediaStage:false});t.after(()=>disabled.close());assert.equal(disabled.frontendRoutes.maintenance.categories,undefined);await assert.rejects(createCatalogueMaintenanceHttpClient(disabled.http,'CATEGORY').execute(input,scope.signal),e=>e.kind==='forbidden');assert.equal(disabled.snapshot().state.writes,0);assert.equal(host.app.server.listening,false);assert.equal(disabled.app.server.listening,false);
 });
+
+test('explicit synthetic stock HTTP uses actual CREATE SKUs; unknown, declared zero, exact signed quantities and scope remain distinct',async t=>{
+ const {SYNTHETIC_STOCK_WAREHOUSES:warehouses}=await import('./support/product-entry-stock-fixture.mjs');
+ const {host,scope,read}=await setup(t,{productWrite:true,colorWrite:false,mediaStage:false,syntheticStock:true});
+ const saved=await createProductMaintenanceHttpClientV2(host.http).execute(command('stock-source-create'),scope.signal),skus=host.snapshot().state.products.get(saved.targetId).skus;
+ assert.equal(skus.length,11);assert.equal(host.frontendRoutes.productStockOverview,true);
+ const full=createProductFullPageHttpReader(host.http,['stock'],{stockOverview:true}),overview=mode=>full.stock.readOverview(read({productId:saved.targetId,warehouseMode:mode}));
+ let result=await overview('NON_ZERO');assert.equal(result.total.state,'UNKNOWN');assert.equal(result.total.quantity,null);assert.equal(result.total.unknownSkuWarehouseKeys,22);assert.equal(result.items.length,2);
+ const entries=warehouses.flatMap(w=>skus.map(s=>({warehouseId:w.id,skuId:s.id,admitted:true,quantity:'0',basis:'EXPLICIT_SYNTHETIC_KNOWN_ZERO'})));
+ host.setSyntheticStockScene({productId:saved.targetId,entries});result=await overview('NON_ZERO');assert.equal(result.total.quantity,'0');assert.equal(result.items.length,0);assert.equal(result.counts.zeroWarehouses,2);assert.equal((await overview('ALL')).items.length,2);
+ const signed=structuredClone(entries);signed[0]={...signed[0],quantity:'-2',basis:'EXPLICIT_SYNTHETIC_QUANTITY'};signed[11]={...signed[11],quantity:'9007199254740993',basis:'EXPLICIT_SYNTHETIC_QUANTITY'};
+ host.setSyntheticStockScene({productId:saved.targetId,entries:signed});result=await overview('ALL');assert.equal(result.total.quantity,'9007199254740991');assert.equal(result.items[0].quantity,'-2');
+ const mixed=structuredClone(signed);mixed[1]={...mixed[1],admitted:false,quantity:null,basis:'EXPLICIT_SYNTHETIC_UNADMITTED'};host.setSyntheticStockScene({productId:saved.targetId,entries:mixed});result=await overview('NON_ZERO');assert.equal(result.total.state,'UNKNOWN');assert.equal(result.total.quantity,null);assert.equal(result.items[0].unknownSkuCount,1);
+ const page=await full.stock.read(read({productId:saved.targetId,page:1,pageSize:20}));assert.equal(page.total,22);assert.equal(page.items.length,20);assert.equal(page.items[1].state,'UNKNOWN');
+ host.setSyntheticInventoryAccess({allowed:true,warehouseIds:[warehouses[1].id]});result=await overview('ALL');assert.equal(result.coverage,'AUTHORIZED_SUBSET');assert.equal(result.counts.authorizedWarehouses,1);assert.equal(result.total.quantity,'9007199254740993');
+ for(const entries of [[{...signed[0],skuId:'00000000-0000-4000-8000-000000999999'}],[signed[0],signed[0]],[{...signed[0],warehouseId:'00000000-0000-4000-8000-000000999999'}],[{...signed[0],quantity:null}]])assert.throws(()=>host.setSyntheticStockScene({productId:saved.targetId,entries}));
+ assert.throws(()=>host.setSyntheticStockScene({productId:'00000000-0000-4000-8000-000000999999',entries:[]}));
+ const second=await createProductMaintenanceHttpClientV2(host.http).execute({...command('stock-new-skus'),values:{...VALUES,productCode:'SYN-STOCK-SECOND',name:'SYNTHETIC second actual product',systemItemCode:'9000054'}},scope.signal);
+ const fresh=await full.stock.readOverview(read({productId:second.targetId,warehouseMode:'ALL'}));assert.equal(fresh.total.state,'UNKNOWN');assert.equal(fresh.total.unknownSkuWarehouseKeys,11,'new actual SKU keys cannot inherit another product declarations');
+});
+
+test('synthetic stock current inventory denial and source faults remain HTTP failure while product stays readable',async t=>{
+ const {host,scope,read}=await setup(t,{productWrite:true,colorWrite:false,mediaStage:false,syntheticStock:true});
+ const saved=await createProductMaintenanceHttpClientV2(host.http).execute(command('stock-denial-create'),scope.signal);
+ const request=()=>host.http.fetch(ORIGIN+'/api/products/stock-overview/query',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({productId:saved.targetId,warehouseMode:'ALL'}),signal:scope.signal});
+ host.setSyntheticInventoryAccess({allowed:false});const before=host.syntheticStockSnapshot().reads;assert.equal((await request()).status,403);assert.equal(host.syntheticStockSnapshot().reads,before);
+ assert.ok(await createProductHttpReader(host.http).readProductBasics(read({productId:saved.targetId})));
+ host.setSyntheticInventoryAccess({allowed:true});host.faultSyntheticStock('NOT_READY');assert.equal((await request()).status,503);host.faultSyntheticStock('FAIL');assert.equal((await request()).status,500);host.faultSyntheticStock(null);
+ host.setIdentity({enabled:false});assert.equal((await request()).status,401);
+});

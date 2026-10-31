@@ -16,6 +16,7 @@
     "transfers": false,
     "products": true,
     "productFullPage": true,
+    "productStockOverview": true,
     "productCategories": true,
     "barcodeSchemes": true,
     "productSettings": {
