@@ -20246,7 +20246,8 @@
       ],
       "red": "Actual DOM role alert != status after committed operation; exit1",
       "green": "Same original runner including error/old-readback/same-key recovery passes exit0",
-      "scope": "Synthetic DOM only, no realPG or browser PASS"
+      "scope": "Synthetic DOM only, no realPG or browser PASS",
+      "browser": "NOT_REACHABLE_CURRENT_REFERENCE_PROVIDER_READONLY"
     },
     "old13Todos": {
       "status": "ALREADY_ARCHIVED_IN_R1_COVERAGE_CONFIRMED_INTACT",
@@ -20278,7 +20279,15 @@
       },
       "scope": "Fresh untouched CREATE exact existing native A fit independent of color; no overriding edit/recovery/manual selection; save waits for initial defaults; unique keys",
       "existingCapabilities": "Original save/media/color/barcode composition checks passed; not current visible or PG business acceptance",
-      "next": "Unified fixed candidate and visible affected UI/save/media/color/barcode readback"
+      "next": "Unified fixed candidate and visible affected UI/save/media/color/barcode readback",
+      "browser": {
+        "resultSha256": "99e3c1f22bbf5419e55f23a729661977d63490d10bd2e359edc3a530c369554c",
+        "status": "PARTIAL_CAPABILITY_LIMITED",
+        "passed": "No-color defaultA three observations; clean cancel; dirty continue preserves and explicit discard",
+        "unreachable": "SAVE/media upload/default-pending save guard; category typed success/failure/version/unknown read-only",
+        "viewport": "UNMEASURED_NO_OVERRIDE",
+        "scope": "Foreground Chrome synthetic; no real business PASS"
+      }
     },
     "documentFollowup": {
       "owner": "originalF1",
@@ -20331,7 +20340,27 @@
         "apps/web/demo-replica/frontend/runtime/documents/default-warehouse-selection.test.mjs": "baef52d937bb47bb7a3b52472bcf05d1ab596c1d7de855eb6f03c69d34d2424f"
       },
       "meaning": "Only unique authorized samehall server recommendation; no single-row guess; manual intent, switch, original document, cancellation and stale responses preserved",
-      "next": "Independent affected QF and paired fixed candidate"
+      "next": "Independent affected QF and paired fixed candidate",
+      "independentReview": {
+        "task": "QF01-R1-DEFAULT-WAREHOUSE-57A528-SOURCE-01",
+        "status": "PASS_SOURCE_AND_3_EXTRA_SYNTHETIC_COMPONENT_CASES_ONLY",
+        "sha256": "8f80fed7b734a8d1d11c9f553bed3cceea813fa6ec03b634b0b10eb140d7ad8d",
+        "actionableFindings": 0,
+        "browserPg": "NOT_RUN"
+      }
+    },
+    "currentLocalCandidate": {
+      "source": "2b52b2b0c99b071e3f444a5cf10538eeea636191",
+      "build": "phase2-normal-2b52b2b-45",
+      "url": "http://127.0.0.1:64349/",
+      "resultSha256": "4df0d89b3a3ee682f63f7f6d7808d7f74fcaa17041d8fbb09cc6d160bcd2b7ee",
+      "buildSeconds": 2.983,
+      "resources": 178,
+      "missingClosure": 0,
+      "boundary": "In-memory demo-reference-v1, connect-src none; no actual backend/PG/persistence/auth/posting/business acceptance",
+      "scope": "Category typed notice/product defaultA/create list reset/clean-dirty cancel; does not include57a warehouse successor",
+      "browserOwner": "QF exclusive afterQF2 tabclosed/draftdiscarded",
+      "browserStatus": "QF2_PARTIAL_CAPABILITY_LIMITED_QF_DOCUMENTS_IN_PROGRESS"
     }
   }
 }

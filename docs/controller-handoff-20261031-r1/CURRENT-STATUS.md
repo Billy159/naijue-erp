@@ -1,3 +1,9 @@
+## 2026-10-31 fixed normal45 available; original frontend independent route resumed
+
+OriginalT45 source2b52b2b0 fixed singleVite build2.983sec/178resources/closure0missing, actual localHTTP200 and resource pins. URL http://127.0.0.1:64349/ build phase2-normal-2b52b2b-45, RESULT SHA4df0d89b3a3ee682f63f7f6d7808d7f74fcaa17041d8fbb09cc6d160bcd2b7ee. Normal default entry/noqueryflag; demo-reference-v1 approvedsynthetic in-memory/connect-src none. No realauth/PG/persistence/posting/history/performance acceptance. OriginalQF2 owns foreground browser for product/category affected scope first, originalQF documents after explicit handoff. Keep user drafts and old services.
+
+OriginalQF57a warehouse consumer SOURCE_ONLY +3extra actualForm/Session/Arco synthetic cases PASS, no actionable findings; RESULT SHA8f80fed7b734a8d1d11c9f553bed3cceea813fa6ec03b634b0b10eb140d7ad8d adopted. BackendQB prior scope reused. normal45 does not contain57a; never attribute its old browser results to new warehouse source. Newpaired candidate needed for warehouse browser. T45 prepares precise isolated-window successor difference only, no server effects.
+
 ## 2026-10-31 r1 repair checkpoint and current independent finding
 
 Latest verified GitHub source checkpoint3f3a7bcfb0914852df8a14b28a01ce134ed7137e, branch codex/db-v7-r1-preparation-20261031. Contains category typed status/error notice, product fresh-create native defaultA and confirmed new-document save clearing stale list filters. Directed source/DOM/component checks only; unified local synthetic candidate is originalT45 next, no foreground browser/ordinaryPG or release acceptance yet. Original F1 is sole writer of subsequent clean/dirty cancel-dialog exact3; old committed source stays fixed for candidate. D1 inspects only existing hall default warehouse read seam.
