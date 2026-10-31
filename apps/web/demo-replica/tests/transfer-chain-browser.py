@@ -3,6 +3,7 @@ Usage: python production-browser-smoke.py BUILD OUT --node NODE --chromium CHROM
 Exit 2: browser/environment blocked; exit 1: executed smoke failed; exit 0: listed checks passed.
 """
 import argparse, json, mimetypes, subprocess, sys, time, re
+from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 p=argparse.ArgumentParser();p.add_argument('--return-mode',action='store_true');p.add_argument('--exchange-mode',action='store_true');p.add_argument('--staff-edit',action='store_true');p.add_argument('--keyboard-preview',action='store_true');p.add_argument('--draft-money',action='store_true');p.add_argument('--customer-recommendation',action='store_true');p.add_argument('--hall-confirm',action='store_true');p.add_argument('--drop-save-response',action='store_true');p.add_argument('--drop-unapprove-response',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');p.add_argument('--existing-fields',action='store_true');p.add_argument('--existing-pending',action='store_true');args=p.parse_args()
@@ -13,11 +14,23 @@ manifest=json.loads((build/'production-build.json').read_text());config=manifest
 if origin!='https://synthetic-management.invalid':raise SystemExit('Smoke requires the declared synthetic-only build configuration')
 allowed={x['path'] for x in manifest['outputs']};allowed.add('index.html')
 result={'commands':[],'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'categoryResponses':[],'case':'existing-fields' if args.existing_fields else 'original-lifecycle','readbacks':[]}
-bridge=None;browser=None
+bridge=None;browser=None;page=None
 held=[];hold_next={'active':False}
+@contextmanager
+def failure_evidence():
+ try:yield
+ except Exception:
+  capture=result.setdefault('failureCapture',{})
+  for key,action in [('screenshot',lambda:page.screenshot(path=str(out/'failure.png'),full_page=True)),('dom',lambda:(out/'failure-dom.txt').write_text(page.locator('body').inner_text()))]:
+   try:
+    if page is None or page.is_closed():raise RuntimeError('Page unavailable before runtime exit')
+    action();capture[key]={'status':'CAPTURED'}
+   except Exception as capture_error:capture[key]={'status':'FAILED','errorType':type(capture_error).__name__}
+  raise
+
 try:
  from playwright.sync_api import sync_playwright
- with sync_playwright() as pw:
+ with sync_playwright() as pw, failure_evidence():
   try:browser=pw.chromium.launch(executable_path=args.chromium,headless=False,chromium_sandbox=True)
   except Exception as error:
    result['reason']=str(error);(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));print('BLOCKED_ENV: Chromium could not start with its sandbox enabled');sys.exit(2)
@@ -83,7 +96,8 @@ try:
    else:result.setdefault('notTested',[]).append('responsible selector: existing provider not enabled; do not claim full-field PASS')
    page.locator('.mx-spec-edit').first.click()
    for label in ['选择颜色','选择版型']:
-    page.get_by_role('button',name=label,exact=True).click();options=page.locator('.mx-spec-menu-options button');options.first.wait_for();options.last.click()
+    page.get_by_role('button',name=label,exact=True).click();options=page.locator('.mx-spec-menu-options button');options.first.wait_for();option=options.last;option.scroll_into_view_if_needed()
+    result.setdefault('specOptionEvidence',[]).append(option.evaluate("el=>{const rect=el.getBoundingClientRect(),point={x:rect.x+rect.width/2,y:rect.y+rect.height/2},describe=n=>{const r=n.getBoundingClientRect(),s=getComputedStyle(n);return {tag:n.tagName,id:n.id,classes:n.className,bounds:{x:r.x,y:r.y,width:r.width,height:r.height},position:s.position,zIndex:s.zIndex,overflow:s.overflow,transform:s.transform,opacity:s.opacity}};let ancestors=[],node=el;while(node){ancestors.push(describe(node));node=node.parentElement;}return {optionId:el.dataset.mxSpecOption,text:el.textContent,point,ancestors,hitStack:document.elementsFromPoint(point.x,point.y).map(describe)};}"));page.screenshot(path=str(out/('before-spec-'+label+'.png')),full_page=True);(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));option.click()
    quantity=page.locator('[data-transfer-pending="true"]').first;quantity.fill('3');quantity.press('Enter');page.locator('tr[data-mx-row]').first.wait_for()
    # Original line can be reselected; its original pointer remains a server-owned relation.
    page.locator('input[data-transfer-row][data-transfer-size]').first.fill('3');page.locator('input[data-transfer-row][data-transfer-size]').first.press('Tab')
@@ -139,9 +153,6 @@ try:
    assert len(result['commands'])==4 and not errors;result['status']='PASS';result['errors']=errors;(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));print('PASS isolated transfer real-service memory lifecycle',flush=True);browser.close();browser=None
 except Exception as error:
  result['status']='FAIL';result['reason']=str(error)
- if page and not page.is_closed():
-  try:page.screenshot(path=str(out/'failure.png'),full_page=True);(out/'failure-dom.txt').write_text(page.locator('body').inner_text())
-  except Exception:pass
  (out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));raise
 finally:
  if bridge:bridge.terminate();bridge.wait(timeout=5)

@@ -3,6 +3,7 @@ Usage: python production-browser-smoke.py BUILD OUT --node NODE --chromium CHROM
 Exit 2: browser/environment blocked; exit 1: executed smoke failed; exit 0: listed checks passed.
 """
 import argparse, json, mimetypes, subprocess, sys, time, re
+from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 p=argparse.ArgumentParser();p.add_argument('--return-mode',action='store_true');p.add_argument('--exchange-mode',action='store_true');p.add_argument('--staff-edit',action='store_true');p.add_argument('--keyboard-preview',action='store_true');p.add_argument('--draft-money',action='store_true');p.add_argument('--customer-recommendation',action='store_true');p.add_argument('--hall-confirm',action='store_true');p.add_argument('--drop-save-response',action='store_true');p.add_argument('--drop-unapprove-response',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');p.add_argument('--existing-fields',action='store_true');args=p.parse_args()
@@ -12,10 +13,22 @@ manifest=json.loads((build/'production-build.json').read_text());config=manifest
 if origin!='https://synthetic-management.invalid':raise SystemExit('Smoke requires the declared synthetic-only build configuration')
 allowed={x['path'] for x in manifest['outputs']};allowed.add('index.html')
 result={'commands':[],'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'categoryResponses':[],'case':'existing-fields' if args.existing_fields else 'original-lifecycle','readbacks':[]}
-bridge=None;browser=None
+bridge=None;browser=None;page=None
+@contextmanager
+def failure_evidence():
+ try:yield
+ except Exception:
+  capture=result.setdefault('failureCapture',{})
+  for key,action in [('screenshot',lambda:page.screenshot(path=str(out/'failure.png'),full_page=True)),('dom',lambda:(out/'failure-dom.txt').write_text(page.locator('body').inner_text()))]:
+   try:
+    if page is None or page.is_closed():raise RuntimeError('Page unavailable before runtime exit')
+    action();capture[key]={'status':'CAPTURED'}
+   except Exception as capture_error:capture[key]={'status':'FAILED','errorType':type(capture_error).__name__}
+  raise
+
 try:
  from playwright.sync_api import sync_playwright
- with sync_playwright() as pw:
+ with sync_playwright() as pw, failure_evidence():
   try:browser=pw.chromium.launch(executable_path=args.chromium,headless=False,chromium_sandbox=True)
   except Exception as error:
    result['reason']=str(error);(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));print('BLOCKED_ENV: Chromium could not start with its sandbox enabled');sys.exit(2)
@@ -88,7 +101,8 @@ try:
    date=page.locator('.tc-gold-doc-fields .arco-picker input').first;date.fill('2026-10-30');date.press('Enter');page.locator('#page h1').click()
    page.get_by_role('combobox',name='业务类型',exact=True).click();page.get_by_role('option',name='退货/换货',exact=True).click();page.get_by_role('dialog',name='切换业务类型',exact=True).get_by_role('button',name='取消',exact=True).click()
    pick('客户','具名客户（演示）');pick('营业员','测试营业员乙');pick('出库仓','总仓');page.get_by_label('备注',exact=True).fill('SYN existing sales fields')
-   line=page.locator('tr[data-entry-row]').filter(has=page.locator('.sale-product-identity')).first;line.locator('.sale-product-identity').click()
+   line=page.locator('tr[data-entry-row]').filter(has=page.locator('.sale-product-identity')).first;line_key=line.get_attribute('data-entry-row');assert line_key;line.locator('.sale-product-identity').click()
+   line=page.locator('tr.sale-identity-edit').filter(has=page.get_by_role('textbox',name='修改商品款号 / 名称 / 条码',exact=True));line=line.and_(page.locator('tr[data-entry-row='+json.dumps(line_key)+']'));line.wait_for();assert line.count()==1
    for index in range(3):
     line.locator('.mx-spec-picker').nth(index).click();options=page.locator('.mx-spec-menu-options button');options.first.wait_for();options.last.click()
    line.get_by_role('textbox',name='本行数量',exact=True).fill('2');line.get_by_role('textbox',name='本行成交单价',exact=True).fill('200');line.get_by_role('button',name='确认',exact=True).click()
@@ -127,9 +141,6 @@ try:
    browser.close();browser=None
 except Exception as error:
  result['status']='FAIL';result['reason']=str(error)
- if page and not page.is_closed():
-  try:page.screenshot(path=str(out/'failure.png'),full_page=True);(out/'failure-dom.txt').write_text(page.locator('body').inner_text())
-  except Exception:pass
  (out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));raise
 finally:
  if bridge:bridge.terminate();bridge.wait(timeout=5)
