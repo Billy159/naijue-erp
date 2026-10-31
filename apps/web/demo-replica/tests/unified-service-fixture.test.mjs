@@ -134,3 +134,18 @@ test('audit readback exact filters pages authorization and original HTTP errors 
  const {createSettingsAuditHttpReader}=await import('../../src/settings/audit/http-reader.ts');let fetched=false;const controller=new AbortController();controller.abort();await assert.rejects(createSettingsAuditHttpReader({origin:h.origin,basePath:'/api',fetch:async()=>{fetched=true;throw Error('should not fetch');}}).readQuery({parameters:auditQuery,signal:controller.signal}));assert.equal(fetched,false);
  h.revoke();assert.equal((await call(h,'/settings/audit/query',auditQuery)).status,403);
 });
+
+test('recommendation contract actual doc03 body rejects in original client; unified account and related reference pages decode without invented hints',async t=>{
+ const {createCurrentFormHttpReader}=await import('../../src/current-form/http-reader.ts'),signal=new AbortController().signal;
+ // Exact failing payment-account payload from fixed56 document-linkage-attempt03.
+ const captured={page:1,pageSize:20,exactTotal:'2',items:[{id:'00000000-0000-4000-8000-000000003500',name:'现金测试账户',code:null,hallId:null,hallName:null,paymentMethodId:'00000000-0000-4000-8000-000000003400',paymentMethodName:'现金'},{id:'00000000-0000-4000-8000-000000990000',name:'SYN UNIFIED CASH document-linkage',code:null,hallId:null,hallName:null,paymentMethodId:'00000000-0000-4000-8000-000000003400',paymentMethodName:'现金'}]};
+ const q={kind:'paymentAccount',hallId:qaHalls[0].id,paymentMethodId:qaMethods[0].id,search:'',page:1,pageSize:20};
+ await assert.rejects(createCurrentFormHttpReader({origin:'https://synthetic-management.invalid',basePath:'/api',fetch:async()=>new Response(JSON.stringify(captured),{headers:{'content-type':'application/json'}})}).readSalesReferences(q,signal),{name:'HttpQueryError',kind:'malformed-response',code:'INVALID_RESPONSE'});
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());const command={action:'CREATE',requestKey:'recommendation-account',values:{name:captured.items[1].name,enabled:true,paymentMethodId:qaMethods[0].id,hallIds:[]}},saved=await call(h,'/payment/accounts/commands',command);assert.equal(saved.status,200);assert.equal(saved.body.targetId,captured.items[1].id);
+ const fetch=async(url,init={})=>{const r=await h.request({url:String(url),method:init.method??'GET',headers:Object.fromEntries(new Headers(init.headers)),...(init.body===undefined?{}:{body:String(init.body)})});return new Response(r.body,{status:r.status,headers:r.headers});};const reader=createCurrentFormHttpReader({origin:h.origin,basePath:'/api',fetch});
+ const raw=await call(h,'/current-form/sales-references/query',q);assert.deepEqual(raw.body,{...captured,recommendationAvailability:'UNAVAILABLE'});
+ const result=await reader.readSalesReferences(q,signal);assert.equal(result.recommendationAvailability,'UNAVAILABLE');assert.ok(result.items.some(r=>r.id===saved.body.targetId));assert.ok(result.items.every(r=>!Object.hasOwn(r,'isRecommended')));assert.deepEqual(h.payment.snapshot().rows.get(saved.body.targetId).hallIds,[]);
+ const empty=await reader.readSalesReferences({...q,search:'no such account'},signal);assert.equal(empty.exactTotal,0n);assert.equal(empty.recommendationAvailability,'UNAVAILABLE');
+ for(const kind of ['hall','customer','warehouse','salesperson','paymentMethod']){const related=await reader.readSalesReferences({kind,hallId:kind==='hall'?null:qaHalls[0].id,search:'',page:1,pageSize:20},signal);assert.ok(related.items.length>0,kind);assert.ok(related.items.every(r=>!Object.hasOwn(r,'isRecommended')),kind);assert.equal(related.recommendationAvailability,undefined,kind);}
+ h.revoke();await assert.rejects(reader.readSalesReferences(q,signal),{kind:'forbidden'});
+});
