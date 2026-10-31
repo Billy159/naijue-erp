@@ -8195,14 +8195,15 @@
     "F1": {
       "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
       "scope": "Original documents module and own tests in N only; exact affected leaves announced before write; no shared config/contracts/API/SQL/product/category edits",
-      "current": "Exact3 frozen handed back; C integration only, no further F1 writes",
+      "current": "Clean/dirty cancel dialog RED/GREEN; exact3 only",
       "next": "Fixed candidate foreground document checks; scanner10 source checks reused, hardware/PG pending",
       "git": "C only",
       "soleWriter": [
-        "apps/web/demo-replica/frontend/runtime/documents/sales-new-page.tsx",
-        "apps/web/demo-replica/frontend/runtime/documents/transfers-create-page.tsx",
-        "apps/web/demo-replica/frontend/runtime/documents/document-save-list-state.test.mjs"
-      ]
+        "apps/web/demo-replica/frontend/runtime/documents/sales-edit-page.tsx",
+        "apps/web/demo-replica/frontend/runtime/documents/transfers-detail-page.tsx",
+        "apps/web/demo-replica/frontend/runtime/documents/document-leave-dialog.test.mjs"
+      ],
+      "frozenPrevious": "3f3a7bcfb0914852df8a14b28a01ce134ed7137e"
     }
   }
 }

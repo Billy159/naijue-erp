@@ -1,3 +1,9 @@
+## 2026-10-31 caller independent check NEED_FIX; no actual execution release
+
+Original QB fixed report7679B SHA47d538c6430c7ca967eab662f97d1c903566169495bc44fcdcf8b8f99db78f47 found P2 caller HARD_CEILING accepts early crash23 as timeout proof (3sec budget,0.000sec acceptance). Original T45 assigned only affected caller/test correction; previous three modules/05/04 not reopened. Current candidate not executable, actual Linux/DB business/restore still pending. Independent finding is not old withdrawn provider-name F01. C adopted result, does not repeat technical review.
+
+GitHub branch codex/db-v7-r1-preparation-20261031 independently read back3f3a7bcfb0914852df8a14b28a01ce134ed7137e; push is source checkpoint only. T45 prepares one local synthetic UI candidate. Original F1 new exact3 clean/dirty leave-dialog correction registered; original D1 only inspects existing authorized hall default warehouse read seam, no server/permission/schema effects.
+
 ## 2026-10-31 F1 exact3 integrated; final caller increment sent to original QB
 
 Original F1 reproduced stale applied list filters after confirmed new-document save (RED OLD-NUMBER remained), then GREEN on actual page callbacks across both documents and committed/uncertain/rejected/cancel branches. Clear draft/applied/requested and scroll only on confirmed commit; retain pageSize/filter expansion and original view navigation, unknown/rejected/cancel inputs unchanged. Original owner reports affected list state and strict runtime types PASS. Exact3 handed back, C integrates without repeating technical checks. Existing scanner10 synthetic tests passed, approximately3255ms timeout feedback; not foreground browser, real scanner or PostgreSQL proof. Default warehouse among multiple warehouses remains a genuine read/consumer seam, no first-item guessing.

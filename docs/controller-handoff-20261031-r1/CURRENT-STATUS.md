@@ -1,3 +1,9 @@
+## 2026-10-31 r1 repair checkpoint and current independent finding
+
+Latest verified GitHub source checkpoint3f3a7bcfb0914852df8a14b28a01ce134ed7137e, branch codex/db-v7-r1-preparation-20261031. Contains category typed status/error notice, product fresh-create native defaultA and confirmed new-document save clearing stale list filters. Directed source/DOM/component checks only; unified local synthetic candidate is originalT45 next, no foreground browser/ordinaryPG or release acceptance yet. Original F1 is sole writer of subsequent clean/dirty cancel-dialog exact3; old committed source stays fixed for candidate. D1 inspects only existing hall default warehouse read seam.
+
+New caller independentQB report SHA47d538c6430c7ca967eab662f97d1c903566169495bc44fcdcf8b8f99db78f47 NEED_FIX: early process crash accepted as hard-ceiling proof. OriginalT45 assigned exact caller/test fix; only affected retest required. Earlier three-module/05/04 evidence retained. Old QA178 window remains closed, no new environment or production effects authorized; actual ordinary-account business/backup/restore incomplete. Latest full six-part human request applies; pasted text is the detailed handoff, no missing file.
+
 ## 2026-10-31 current execution stop and exact continuation
 
 Original QA178 window is CLOSED and exited, not a reusable approval window. Actual281 preflight passed;282 role creation was refused before submission because formatted export SHA was bound to the server raw receipt path. Guard retained; no replay. Original285 final readback14:53:00+08 confirmed both proposed DBs and all three roles absent, exit unit not-found/inactive/dead/PID0. No DB/role/ACL/business writes or production changes. Exact closed result SHA d4bdc2dbc6c557fdd94c19113ccae3cf3efacea1ae160acb0275f89e15448939. Correct server raw281 receipt SHA72507ae34874b798b3e9bb25309ecda77d36bb8e4438f3d9bb7ce84d1825403a; formatted exports must not stand in for server references.

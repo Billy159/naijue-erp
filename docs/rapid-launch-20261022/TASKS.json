@@ -20212,13 +20212,15 @@
     "activeFindings": [],
     "withdrawnFinding": "F01 wrong consumer reference; correct production-provider env retained",
     "callerIncrement": {
-      "status": "FIXED_INCREMENT_UNDER_ORIGINAL_QB_REVIEW_NOT_EXECUTABLE",
+      "status": "NEED_FIX_HARD_CEILING_PROOF_ORIGINAL_T45_ASSIGNED",
       "result": "PRIVATE-PROCESS-CALLER-LOCAL-01/RESULT.json",
       "sha256": "fe485cd83bcfd179c657bf704008921d296d1ebd2b699fe1b3c915f4de4d6cc6",
       "filesMatched": 13,
       "localChecks": 11,
       "serverEffects": 0,
-      "actualLinuxNode24Pg": "NOT_RUN"
+      "actualLinuxNode24Pg": "NOT_RUN",
+      "qbReportSha256": "47d538c6430c7ca967eab662f97d1c903566169495bc44fcdcf8b8f99db78f47",
+      "finding": "P2 early crash23 accepted as hard deadline proof; only affected caller/test fix, previous three modules and05/04 unchanged"
     }
   },
   "r1LatestFullUserScope20261031": {
