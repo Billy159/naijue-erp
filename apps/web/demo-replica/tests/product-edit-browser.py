@@ -47,7 +47,7 @@ result={'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'st
 bridge=None;browser=None
 variant={'nullable':False,'notSet':False,'image':False,'imageFail':False,'stockFail':False};png='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGOwq/78HwAFUwKs5SlCvgAAAABJRU5ErkJggg=='
 try:
- from playwright.sync_api import sync_playwright
+ from playwright.sync_api import sync_playwright, expect
  with sync_playwright() as pw:
   try:browser=pw.chromium.launch(executable_path=args.chromium,headless=not args.headed,chromium_sandbox=True)
   except Exception as error:
@@ -141,7 +141,8 @@ try:
     writes=[x for x in result['readResponses'] if x['path']=='/api/catalogue/categories/commands'];assert len(writes)==1 and writes[0]['status']==200
     saved_id=writes[0]['body']['targetId'];assert saved_id
     item['step']='category original duplicate-name rejection';page.get_by_role('button',name='新增一级分类',exact=True).click();page.locator('input[data-cat="name"]').fill('SYN DRIVER 分类');page.get_by_role('button',name='保存',exact=True).click()
-    error=page.locator('.pc-categories .pc-category-detail > div.inline-error[role="alert"]:not(#pc-category-error)');error.wait_for();assert error.inner_text().strip()=='名称或编码已存在。'
+    error=page.locator('.pc-categories .pc-category-detail > div.inline-error[role="alert"]:not(#pc-category-error)');expect(error).to_have_text('名称或编码已存在。',timeout=30000)
+    expect(page.locator('.pc-categories .pc-category-detail').get_by_role('button',name='读取最新目录',exact=True)).to_be_visible()
     failed=[x for x in result['readResponses'] if x['path']=='/api/catalogue/categories/commands'];assert len(failed)==2 and failed[-1]['status']==409
     shot('PRODUCT-ENTRY-CATEGORY','rejected');page.locator('#pc-category-form').get_by_role('button',name='取消',exact=True).click()
     item['step']='category fresh route readback';page.goto(origin+'/#products');page.locator('.pc-products').wait_for();page.goto(origin+'/#product-categories');page.locator('.arco-tree-node-title').filter(has_text='SYN DRIVER 分类').wait_for()
