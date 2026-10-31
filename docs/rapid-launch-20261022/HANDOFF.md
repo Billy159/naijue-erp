@@ -1,3 +1,5 @@
+2026-10-31 安装载体F01修复交回：原T45 successor02 script29330B/SHA9a5e5f52c81f5115c8b44bab909f7c2d83c295efb03d1d39ce32a3e82e8883d0，仅共同psql连接增加server lock3s/statement60s；4个受影响offline及syntax通过，已交原QB只复该delta，旧01 NEED_FIX保留。备份/兼容接缝清单13952B/SHA1b51a07e已核，旧备份固定prod/QA不能挪用，原T45继续本批最小可执行恢复载体；新写/UNKNOWN后不得旧快照覆盖，旧app×V8兼容未证。全部仍源码准备/0环境执行。
+
 2026-10-31 安装载体新增F01/P2：原QB已实证部分变更分支未把PLAN声明lock3s/statement60s送入PG；client90s不证明远端SQL结束。原载体暂NEED_FIX，待本包审查收尾后由原T45统一连接级最小修复，不改37原事务/CREATE DATABASE边界；断链仍UNKNOWN，禁止原样重放。D1新目标fixture/provider仍在途，备份恢复及配套应用回滚接缝由原T45只作执行准备；未实际建库、权限或部署。
 
 2026-10-31 接续：固定65f17b8b的真实业务integration单叶已获原QB源码限定PASS（8233B/SHA5f8b5372f2ae9290efeedec3067a01b4173d3ba3194bdfbef93ddc964f2ea9b9），不记真实PG通过。T45新安装载体42件全部清单核对一致，脚本SHA9900b4aa，12项原离线检查复用，已交原QB只审新增包装/ACL/授权消费与UNKNOWN清理；0实际环境变更。原D1仅3个登记fixture/provider叶准备新目标场景，旧QA身份/OID/32单元裁决不得挪用。QA有限Unix源码扩展仍等原用户问题答复；未建库、实际GRANT、启动或部署。
