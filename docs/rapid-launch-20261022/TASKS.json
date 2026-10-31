@@ -21581,7 +21581,7 @@
     "sourceReceiptSha256": "d885d806b4007ef264fe7a127031ba8c3a838771c165f3565e7ec7677b189500",
     "finding": "Exact id/note/1+6 rows match original normal50 receipt: LIVE DRAFT RUNTIME_LEDGER; fixed50 transferExistingEdit false. Screenshot lacks URL, so not current-version proof. Fixed51 independent full existing-field SAVE1->2->3 evidence reused; current526ca normal branch present.",
     "contractSupplement": {
-      "status": "SOURCE_IMPLEMENTATION_D3_DELIVERED_D1_F1_ACTIVE",
+      "status": "D3_F1_SOURCE_DELIVERED_D1_ACTIVE",
       "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/HISTORY-DRAFT-TRANSFER-EXACT-SUPPLEMENT-20261101.md",
       "sha256": "ce965aea06e0f1ea08f9b185fd994554cd1f36dfe799eb8b5a3886eefa0b5ffc",
       "scope": "DRAFT/EXCLUDED transfer only; optionalnote and complete lineSet with retained original/source/revision identity,duplicateSKU independentrows,200positive rows10k note/newformat V2; oldsignedquantity branch preserved.0newtable/column/ACL,4existingSQLfunction successors/readprojection closure.",
@@ -21630,6 +21630,22 @@
           "D1 actual allocator/native references/SQL closure/CAS/unknown commit runtime",
           "F1 UI/browser and whole-group build/integration",
           "New profile/canonical metadata and SQL body identity acceptance"
+        ]
+      },
+      "F1Delivery": {
+        "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/F1/HISTORY-DRAFT-TRANSFER-FRONTEND-20261101-01/RESULT.json",
+        "sha256": "bfe09a564f0f2ac01c4d031d68977432942fa491acf6015d8c10b8000f44f212",
+        "checks": {
+          "historyCatalogAndEditRead": "PASS 14/14 node --experimental-transform-types --test history-catalog.test.mjs history-edit-read.test.mjs",
+          "runtimeTypecheck": "PASS exit0 tsc --noEmit -p apps/web/demo-replica/tsconfig.runtime.json",
+          "diffCheck": "PASS",
+          "liveFormPreservation": "exact source comparison: only export keyword added to private TransferProducts; original body/LIVE form unchanged"
+        },
+        "limits": [
+          "No UI/browser or full-module normal-click evidence",
+          "No build/service/actual PostgreSQL/schema install/ACL/QA03/production",
+          "No real HISTORY SAVE/readback or COMMIT recovery run",
+          "New source must integrate with approved D1/D3 producer and C exact profile before use; frontend cannot establish backend ACL/baseline eligibility from sourceStatus alone"
         ]
       }
     }
