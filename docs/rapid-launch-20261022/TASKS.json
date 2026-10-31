@@ -21183,9 +21183,9 @@
   },
   "r1UnifiedSyntheticHostComposition": {
     "owner": "D1",
-    "status": "DATA04_SELF_CHECK_PASS_DOCUMENT02_RUNNING",
+    "status": "DATA04_SELF_CHECK_PASS_QF2_RUNNING_DOCUMENT03_CONTRACT_NEED_FIX_D1",
     "scope": "Unify actual existing synthetic constructors/current facts and posting transaction seams; no fake independent balances; exact files in WRITE-OWNERSHIP",
-    "next": "F1 document02 same fixed56 fresh store; then original QF2 data / QF document affected independent acceptance; audit source successor not in56",
+    "next": "QF2 fixed56 data only; D1 exact2 original unified host recommendation contract correction, then fixed successor/QB increment/F1 document affected retest",
     "notClaimed": "No real PG or production; source-ready not fully writable",
     "source": "bf59bac78119097328de24ed615b03fc56cf75f6",
     "report": "reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/UNIFIED-SERVICE-COMPOSITION-RESULT.json",
@@ -21267,9 +21267,16 @@
         "commands": "two CREATE200; actual sales picker; no sales/transfer SAVE",
         "resources": "own processes0; existing files preserved"
       },
-      "document02": "originalF1 continuing after actual free-space recovery; fresh store; same immutable56",
+      "document02": "FAIL driver ambiguous locator after blank row; fixed original row binding16260, no app change",
       "attempt02": "driver hidden-checkbox click interception;0commands",
-      "attempt03": "driver early lazy-response lookup;1productCREATE; actual stock200UNKNOWN/null"
+      "attempt03": "driver early lazy-response lookup;1productCREATE; actual stock200UNKNOWN/null",
+      "document03": {
+        "status": "FAIL_REAL_PAYMENT_ACCOUNT_READER_CONTRACT",
+        "resultSha256": "77f14cbd9048db0e7e9963d46a79c11cbe2c95a7732cc1ecde1871000ad867c5",
+        "scope": "2CREATE200/new product picker/MAIN scan FOUND;0documentSAVE; payment200 missing recommendationAvailability rejected by original reader",
+        "owner": "D1 exact unified-service-fixture.mjs and test; no reader relaxation",
+        "resources": "own processes0"
+      }
     }
   },
   "r1UnifiedAuditReadback": {

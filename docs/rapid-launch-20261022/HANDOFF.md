@@ -3526,3 +3526,5 @@ D1原审计5叶固定b47dd07a，交付报告SHAabbf5d9981070814a5a7aa665908f7a5a
 
 ### 2026-10-31 固定56跨页实际增量
 驱动159c5a7f（95855d9d…）已推GitHub并远端精确回读。data04正常商品及空厅账户两次CREATE、条码/list读回、库存UNKNOWN/null、员工只读目录限定自检通过，结果ff4ab6e8…。document01两次CREATE及销货候选已出现新商品，截图ENOSPC中止，0单据SAVE；完整FAIL结果bee23f8b…和截图保留，自有进程0。空间实际已恢复约1.48GiB，不推断恢复原因。原F1同56启动document02新freshstore，仅补未完成范围，不重data04、不改应用/fixture/重构建。前三次driver失败分别保留；attempt03确有1商品CREATE。尚未独立跨页验收/真实PG/正式发布；audit新源码未混入56。
+
+固定56 document03发现真实合同缺口：paymentAccount200已有新账户但缺recommendationAvailability，被原HTTPreader拒绝，页面候选读取失败；已完成新商品picker/MAIN扫码、2CREATE，0单据SAVE。result77f14cbd…/PNG/DOM保留、自有进程0。原D1唯一两文件修复及真实reader定向验证，不放宽消费者；QF2接固定56资料独立复验，单据等待新固定候选仅复验受影响项。

@@ -8511,7 +8511,7 @@
   },
   "r1UnifiedCrossPageBrowser": {
     "owner": "F1",
-    "status": "159C5A7F_FIXED_DATA04_SELF_CHECK_PASS_DOCUMENT02_RUNNING",
+    "status": "16260DF7_FIXED_DOCUMENT03_REAL_CONTRACT_FAILURE_READONLY",
     "paths": [
       "apps/web/demo-replica/tests/unified-cross-page-browser.py"
     ],
@@ -8531,5 +8531,15 @@
     "scope": "Actual committed synthetic maintenance audit producer/read route via original HTTP/service/projector; match current PostgreSQL contract id=operationId in separate fields, no new independent allocator or read-time invented IDs/static samples",
     "constraints": "No production SQL/DTO/contracts/permissions changes, no old backfill, failed/replay records not duplicated; original receipt/actor/version closure retained",
     "model": "gpt-6.1-sol/medium"
+  },
+  "r1UnifiedPaymentRecommendationContract": {
+    "owner": "D1",
+    "status": "REPRODUCE_THEN_FIX",
+    "model": "gpt-6.1-sol/medium",
+    "paths": [
+      "apps/web/demo-replica/tests/unified-service-fixture.mjs",
+      "apps/web/demo-replica/tests/unified-service-fixture.test.mjs"
+    ],
+    "scope": "Only original recommended-candidate response facts and original HTTP reader decode test; preserve accepted audit successor; no SQL/reader guard change"
   }
 }
