@@ -1,3 +1,7 @@
+2026-10-31 实际host接缝已定向核实：原full provider仅续导/无CORE，generic host未传scheme init能力，普通V8禁止原CORE必读ledger.xmin。C采用最小135前置阶段独立准备LOGIN+原V4 exact12/准备ACL→合成PUBLISH→封闭准备访问→V7/V8→普通真LOGIN路线，不新增137issuerprofile/不扩大普通V8。D1独占登记单test-only preparation-host叶复用原factory/service，T45精确最终安装清单承接新增准备身份及权限，当前未获任何实际环境批准。恢复02 source已QB PASS，普通PG/backup/restore/线上全部未验。
+
+2026-10-31 原QB恢复F02/F03后继02窄复验PASS采用（report4226B/SHA8a494c78130e022119568c92550c07e44ffb55b1c9945b4544a2df6d0cd6fcb5；script36532B/SHA4a1661a1）。原两literal修正/3affected检查复用，不重复旧套；旧01 NEED_FIX及撤回F01保留。精确restore/安装载体源检查完成不代表实际backup/restore/cleanup通过，均未执行。当前D1原宿主角色/CORE/方案初始化实际接缝技术判断在途，禁止普通V8补IMPORT_PREPARATION/xmin绕过。
+
 2026-10-31 原QB V7/V8有限QA Unix四叶合批源码PASS采用：固定6471f2ca，report6985B/SHA4ee11cdb090ef215e07f46933ec3fd57a8ca0ff9ea92a7ba146a5e09dfa9fdae。原17+7检查复用，无新发现；不覆盖恢复F02/F03，也不冒建库/实际权限/普通LOGIN/PG业务通过。下一原T45后继关闭恢复2项，随后准确原宿主安装/审核/输入/执行清单收齐再申请环境执行。
 
 2026-10-31 原QB恢复载体完整NEED_FIX仅F02/F03（report10831B/SHAf1988a86）已采用：ledger关键5字段敏感性与复用备份的当前DBACL快照比较缺失。原T45已独占接一次最小后继修复，仅补2定向负例/受影响正例/语法，不重旧8及SQL。原误报F01已撤回；0实际PG/backup/restore/权限。原QB接续固定6471f2ca的V7/V8四叶Unix窄验，原宿主调用组合输入仍缺实际事实/准确执行确认。

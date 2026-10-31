@@ -8128,5 +8128,16 @@
     ],
     "C": "Git and existing ledgers; no competing source writes",
     "testNames": "Existing corresponding test paths; announce exact paths if actual repository name differs"
+  },
+  "dbUpgradeR1PreparationHost": {
+    "authority": "Existing goal4/5 isolated synthetic preparation; C selects preparation at strict135 before V7/V8, preserving ordinary V8 role",
+    "owner": "D1 01a16161-e65d-7742-8471-4b3c786ed314",
+    "soleWriter": [
+      "tests/integration/current-runtime26-preparation-host.ts"
+    ],
+    "tests": "One directly related test-only leaf if needed; announce exact name; no production host or issuer edits",
+    "scope": "Compose original factories/services and full continuation only; distinct preparation LOGIN proposed, no actual role/grant; original V4 observation kept; no fabricated authorization or metadata",
+    "C": "Only C Git and existing records",
+    "T45": "Installer and future environment execution only after exact confirmation"
   }
 }
