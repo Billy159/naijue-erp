@@ -20344,7 +20344,7 @@
       "testBodies": "Exact r1 for all13 referenced files; original5 contract tests + realPG TODO retained",
       "retained": "Real PostgreSQL acceptance TODO and P03 performance SKIP unchanged; not PASS"
     },
-    "actualExecutionState": "Original QA178 window CLOSED, no roles/DBs created; root caller fixed and original QB incremental review dispatched; new environment effects not authorized",
+    "actualExecutionState": "Latest verified QA178 window02: DB393218 owner393216 runtime393217 exist; M01/M02 committed, no replay. Entry refused before new Node/DB because PLAN omitted existing abiReceipt. Final guardian inactive/PID0; runtime NOLOGIN limit0 noCONNECT sessions0; prep absent, versions[1,2]. Minimal03 source original QB PASS; new execution awaits human confirmation. No ordinary lifecycle/backuprestore/production acceptance.",
     "intake": {
       "demoZip": "f1b9b81ac0ed927bbd9e19a5395fbd106161d78bb051799992850f3afd64becc",
       "notReleaseZip": "fae108aeda73f808eb5b067f317d28e839c96c7a6e9565567a86f53288f91ea7",
@@ -21075,5 +21075,13 @@
     "actual": "Fresh4 setupcommands200 originalreceipt/detail match; APPROVED/VOID normalview/reentry readonlyhead/full11size quantities2/statebuttons,0browsercommands/pageerrors",
     "next": "Adopt valid limited evidence; no DRAFT/pagination repeat",
     "wholePagePass": false
+  },
+  "r1ColourMaintenanceFollowup": {
+    "owner": "QF2",
+    "status": "RESUMED_LIGHTWEIGHT_DRIVER_PREPARATION_ONLY_AFTER_RESOURCE_RECOVERY",
+    "candidate": "fixed53/source0a2fa82d/manifest046d01bd/config764d4978",
+    "scope": "Standalone color normal CREATE-save-list-EDIT-save-reopen F03 targetId/version; cancel0write; at most2 COLOR commands",
+    "browser": "NOT_STARTED_ENOSPC zero requests; no launch until resource revalidated",
+    "notRepeated": "Old inlinecolor/productSKU/media/stock suites; source/fixture remain read-only"
   }
 }
