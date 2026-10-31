@@ -29,7 +29,7 @@ def failure_evidence():
   raise
 
 try:
- from playwright.sync_api import sync_playwright
+ from playwright.sync_api import sync_playwright, expect
  with sync_playwright() as pw, failure_evidence():
   try:browser=pw.chromium.launch(executable_path=args.chromium,headless=False,chromium_sandbox=True)
   except Exception as error:
@@ -100,10 +100,10 @@ try:
     if trigger.get_attribute('aria-expanded')!='true':trigger.click()
     options=page.locator('.mx-spec-menu-options button');options.first.wait_for();option=options.last;option.scroll_into_view_if_needed()
     result.setdefault('specOptionEvidence',[]).append(option.evaluate("el=>{const rect=el.getBoundingClientRect(),point={x:rect.x+rect.width/2,y:rect.y+rect.height/2},describe=n=>{const r=n.getBoundingClientRect(),s=getComputedStyle(n);return {tag:n.tagName,id:n.id,classes:n.className,bounds:{x:r.x,y:r.y,width:r.width,height:r.height},position:s.position,zIndex:s.zIndex,overflow:s.overflow,transform:s.transform,opacity:s.opacity}};let ancestors=[],node=el;while(node){ancestors.push(describe(node));node=node.parentElement;}return {optionId:el.dataset.mxSpecOption,text:el.textContent,point,ancestors,hitStack:document.elementsFromPoint(point.x,point.y).map(describe)};}"));page.screenshot(path=str(out/('before-spec-'+label+'.png')),full_page=True);(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));option.click()
-   quantity=page.locator('[data-transfer-pending="true"]').first;quantity.fill('3');quantity.press('Enter');page.locator('tr[data-mx-row]').first.wait_for()
+   quantity=page.locator('[data-transfer-pending="true"]').first;quantity.fill('3');quantity.press('Enter');quantity.locator('xpath=ancestor::tr').get_by_role('button',name='确认',exact=True).click();reselected=page.locator('tr[data-mx-row]').filter(has_text='M26001');reselected.wait_for();assert reselected.count()==1;row_key=reselected.get_attribute('data-mx-row');assert row_key;reselected=page.locator('tr[data-mx-row='+json.dumps(row_key)+']')
    # Original line can be reselected; its original pointer remains a server-owned relation.
-   page.locator('input[data-transfer-row][data-transfer-size]').first.fill('3');page.locator('input[data-transfer-row][data-transfer-size]').first.press('Tab')
-   search=page.get_by_role('combobox',name='商品款号 / 名称 / 条码',exact=True);search.fill('M26004');page.locator('[data-transfer-candidate]').filter(has_text='M26004').click();page.wait_for_load_state('networkidle')
+   expect(reselected.locator('input[data-transfer-row][data-transfer-size]').first).to_be_focused();reselected.locator('input[data-transfer-row][data-transfer-size]').first.fill('3');reselected.locator('input[data-transfer-row][data-transfer-size]').first.press('Tab')
+   search=page.get_by_role('combobox',name='商品款号 / 名称 / 条码',exact=True);search.fill('M26004');expect(search).to_be_focused();assert search.input_value()=='M26004';page.locator('[data-transfer-candidate]').filter(has_text='M26004').click();page.wait_for_load_state('networkidle')
    for label in ['选择颜色','选择版型']:
     page.get_by_role('button',name=label,exact=True).click();page.locator('.mx-spec-menu-options button').first.wait_for();page.locator('.mx-spec-menu-options button').first.click()
    extra=page.locator('[data-transfer-pending="true"]').first;extra.fill('2');extra.press('Tab');page.locator('tr[data-mx-row]').filter(has_text='M26004').wait_for()
@@ -131,7 +131,7 @@ try:
    if args.existing_pending:assert sum(int(x['quantity']) for x in after['lines'] if x['isCurrent'] and x['skuId']=='00000000-0000-4000-8000-000000010002')==result['pendingExpectedM']
    assert any(x['snapshot']['productCode']=='M26004' for x in after['lines'] if x['isCurrent']);shot('existing-save-readback')
    page.locator('.sidebar a[data-route="transfer"]').click();page.locator('.tc-list table tbody tr').filter(has_text=before['header']['number']).locator('button').first.click();page.get_by_role('heading',name='编辑调拨单',exact=True).wait_for()
-   extra=page.locator('tr[data-mx-row]').filter(has_text='M26004');extra.locator('[data-t="delete-color"]').click();page.get_by_role('dialog').get_by_role('button',name='删除',exact=True).click();assert extra.count()==0;page.get_by_role('button',name='保存',exact=True).click();page.get_by_role('heading',name='查看调拨单',exact=True).wait_for();page.wait_for_load_state('networkidle');assert len(result['commands'])==3 and result['commands'][-1]['input']['expectedVersion']==2 and result['commands'][-1]['body']['version']==3
+   extra=page.locator('tr[data-mx-row]').filter(has_text='M26004');assert extra.count()==1;extra_key=extra.get_attribute('data-mx-row');assert extra_key;extra=page.locator('tr[data-mx-row='+json.dumps(extra_key)+']');extra.locator('[data-t="delete-color"]').click();page.get_by_role('dialog').get_by_role('button',name='删除',exact=True).click();extra.wait_for(state='detached');assert extra.count()==0;page.get_by_role('button',name='保存',exact=True).click();page.get_by_role('heading',name='查看调拨单',exact=True).wait_for();page.wait_for_load_state('networkidle');assert len(result['commands'])==3 and result['commands'][-1]['input']['expectedVersion']==2 and result['commands'][-1]['body']['version']==3
    final=next(x['body'] for x in reversed(result['readbacks']) if x['path']=='/api/transfers/detail/query' and x['status']==200)['document'];assert not any(x['snapshot']['productCode']=='M26004' for x in final['lines'] if x['isCurrent']);assert final['header']['id']==before['header']['id'];shot('existing-delete-readback')
    result['coverage']=['date','from/to warehouse','note','color/fit reselection','size quantity','add/save/reopen/delete/save line','list→existing edit','actual prepare/SAVE/detail','original header identity/CAS']+(['existing pending native Tab blocks save then settled save'] if args.existing_pending else []);result['notTested']=result.get('notTested',[])+['history controlled revision','existing uncertain receipt recovery browser','non-DRAFT edit rejection browser','PG','full permissions'];assert not errors;result['status']='PASS_LISTED_EXISTING_STEPS';result['errors']=errors;(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));browser.close();browser=None
   else:
