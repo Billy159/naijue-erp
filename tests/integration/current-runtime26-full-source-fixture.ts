@@ -293,7 +293,7 @@ export function mapCurrentRuntime26LiveLedgerScenario(recipe:CurrentRuntime26Liv
  assert.ok(r.dataset==='HISTORY'&&r.kind==='transfers'&&r.documentId===h.documentId&&r.version===2&&r.operationId!==r.revisionId&&r.ledgerEntryIds.length===2);
  assert.equal(actual.historyLedger.length,2);assert.equal(actual.balances.length,2);assert.ok(actual.baselineLedger.length===1);
  const original=actual.baselineLedger[0]!;assert.ok(original.sku_id===e.skuId&&original.warehouse_id===e.fromWarehouseId&&original.source_import_batch_id===recipe.target.batchId&&original.event_kind==='CUTOFF_BASELINE'&&original.quantity_delta==='10'&&original.quantity_before===null&&original.quantity_after===null);
- const ledgerIds=new Set(actual.historyLedger.map(l=>l.id));assert.equal(ledgerIds.size,2);assert.ok(r.ledgerEntryIds.every(id=>ledgerIds.has(id)));
+ const ledgerIds=new Set(actual.historyLedger.map(l=>l.id));assert.equal(ledgerIds.size,2);const receiptLedgerIds=new Set(r.ledgerEntryIds);assert.equal(receiptLedgerIds.size,2);assert.deepEqual(receiptLedgerIds,ledgerIds);
  let total=0n;
  for(const expected of e.quantities){
   const balances=actual.balances.filter(v=>v.warehouse_id===expected.warehouseId&&v.sku_id===e.skuId);assert.equal(balances.length,1);const balance=balances[0]!;
