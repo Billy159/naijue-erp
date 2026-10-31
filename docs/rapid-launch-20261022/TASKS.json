@@ -20776,8 +20776,11 @@
   "r1UnreviewedDocumentEditableParity": {
     "userDirective": "Existing DRAFT sales/transfer must expose corresponding create-form editable business fields, preserving original number/creation/source/audit/permissions/version and controlled historical revision",
     "owner": "F1",
-    "status": "SOURCE_PATH_AND_NARROW_SYNTHETIC_EXISTING_SAVE_READBACK_CHECKED_FULL_FIELD_BROWSER_PACKAGE_IN_PROGRESS",
+    "status": "F1_EXISTING_FIELDS_INTERFACE_INCREMENT_PASS_BROWSER_INCREMENT_IN_PROGRESS_D1_RESPONSIBLE_BRIDGE_ASSIGNED",
     "actual50": "Sales existingEdit true uses same SalesProposalForm; transferExistingEdit false and documentResponsibleReady absent. Existing native prepare/save interface present; cannot mark all fields or history verified.",
-    "next": "Original F1 exact fixture/browser increment; C paired config only after original employee reference and existing preparation capability verified; T45 only build"
+    "next": "Original F1 exact fixture/browser increment; C paired config only after original employee reference and existing preparation capability verified; T45 only build",
+    "coveredInterface": "Original synthetic host prepare-existing→SAVE→fresh detail for sales/date/note/customer/salesperson/warehouse/pricing/settlements and transfer/date/note/warehouse/quantity; preserved original pointers/CAS/idempotence/no SAVE ledger effects. Not PG or full browser PASS.",
+    "remaining": "Actual existing-page full field browser operation; transfer feature/config activation after capabilities; responsible original staff provider; multi-hall selection; approved/void restrictions and controlled history remain separately verified.",
+    "seamOwner": "D1 original production browser fixture only, exact lease pending; F1 retains four chain test/browser files; C alone owns public config; T45 alone builds."
   }
 }

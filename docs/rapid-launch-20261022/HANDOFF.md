@@ -3383,3 +3383,8 @@ C41已经真正R1 runtime TCP认证并捕获完整目录，canonical f62de0a301d
 8. GitHub普通push阻塞如实记录。private draftbundle恢复点必须先断言HEAD，再用base877..HEAD命名范围建包，上传后下载核SHA并git bundle verify；恢复到新codex/recovery分支，不reset当前源码。K/A/私有资料和操作引用跨机缺失不能补造授权。
 
 角色空闲未主动通知就用wait/read拿最终回执继续；没有实际就绪新工作则记录精确等待，不凑任务、不反复盘点。符合本批条件即按既有授权原URL分批上线，不等待全站无关页面。现整体仍ACTIVE，不能因首批、报告或预算停止而标完成。
+
+
+### 未审核单据编辑同新增字段：当前增量
+
+原 F1 保持四个 chain 测试/浏览器文件唯一 writer，正在补已有 DRAFT 的字段操作及准备、保存、重读。新增两项原合成宿主接口用例已通过，但不代表整页或真实 PG 通过。当前候选50销货 existingEdit 已开；调拨 existingEdit 未开、负责人能力未接齐，不能登记完成。D1 沿原 bridge 文件补真实原员工候选接缝，先回报准确 lease，禁止与 F1 同文件修改。C 待能力验证后配对配置，T45 统一构建；QF 仅验新候选受影响状态。
