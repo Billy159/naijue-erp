@@ -14,8 +14,8 @@ const sha=s=>createHash('sha256').update(s).digest('hex'),H=c=>c.repeat(64),id=n
 const binding=()=>({version:'NATIVE_IMPORT_EXECUTION_26_V1',phase:'FULL_SOURCE_CONTINUATION_26_V1',batchId:'e2dfa367-7cda-42d2-9726-f7cc52124cf1',actorAccountId:id(1),fixedSourceNamespace:'synthetic.qa897.sales.20261029',cutoffAt:'2026-10-29T00:00:00.000Z',selectionSha256:H('2'),authorizedPayloadHash:H('3'),coreReceiptId:id(2),coreSourceDigest:H('4'),target:{database:CURRENT_SALES_QA_TARGET,role:'SYNTHETIC_PREPARATION_ROLE',serverAddress:'127.0.0.1',serverPort:5432,postmasterStartedAt:'synthetic'}});
 const sourceFixture=buildCurrentRuntime26FullSourceFixture(buildCurrentRuntime26SalesBlueprint({database:CURRENT_SALES_QA_TARGET,batchId:binding().batchId,now:binding().cutoffAt,pins:{baseManifestSha256:H('1'),selectionSha256:H('2'),approvalSha256:H('3'),occurrenceContractSha256:H('4')}}));
 async function scratch(t){const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-qa897-source-provider-'));t.after(()=>rm(dir,{recursive:true,force:true}));let n=0;const save=async(value,name)=>{const bytes=Buffer.from(typeof value==='string'?value:JSON.stringify(value)),path=join(dir,name??`${n++}.json`);await writeFile(path,bytes);return {path,bytes:bytes.length,sha256:sha(bytes)};};return {dir,save};}
-async function capture(t,entity,mutate){
- const f=await sourceFixture,b=binding(),s=await scratch(t),input=structuredClone(entity==='BARCODE'?f.barcodeInput:f.salesHeaderInput),original=structuredClone(input),source=original.source;
+async function capture(t,entity,mutate,newScene=false){
+ const b=newScene?v7Binding():binding(),f=newScene?await buildCurrentRuntime26FullSourceFixture(buildCurrentRuntime26SalesBlueprint({database:b.target.database,batchId:b.batchId,now:b.cutoffAt,pins:{baseManifestSha256:H('1'),selectionSha256:H('2'),approvalSha256:H('3'),occurrenceContractSha256:H('4')}})):await sourceFixture,s=await scratch(t),input=structuredClone(entity==='BARCODE'?f.barcodeInput:f.salesHeaderInput),original=structuredClone(input),source=original.source;
  const sourceFile={logicalPath:source.fileRef,...await s.save(f.sourceFiles[source.fileRef].utf8)};
  const originals=await s.save([{rawLine:f.rawArtifacts[entity+':'+source.sourceKey].utf8.trimEnd(),sourceFile}]);
  const canonicalCsv=await s.save(f.sources[entity].utf8);
@@ -25,8 +25,8 @@ async function capture(t,entity,mutate){
  const records=await s.save([input]);
  // Temporary component review fixtures test the source-only consumer. They
  // confer no real C execution grant and never reach a database or publisher.
- const independentReview=await s.save({result:'PASS',scope:'UNIT_SOURCE_PROTOCOL_ONLY_NOT_EXECUTION',recordsSha256:records.sha256,originalsSha256:originals.sha256,nativeBindingsSha256:nativeBindings.sha256});
- const review=await s.save({version:'C_QA897_CAPTURE_SOURCE26_REVIEW_V1',decision:'ACCEPT_EXACT_SOURCE_NATIVE_PROJECTIONS',binding:{batchId:b.batchId,fixedSourceNamespace:b.fixedSourceNamespace,cutoffAt:b.cutoffAt,selectionSha256:b.selectionSha256},entity,records,originals,canonicalCsv,nativeBindings,independentReview,realImportExecutionAuthorized:false});
+ const independentReview=await s.save({...newScene?{target:v7Target(b),binding:{batchId:b.batchId,fixedSourceNamespace:b.fixedSourceNamespace,cutoffAt:b.cutoffAt,selectionSha256:b.selectionSha256},canonicalCsvSha256:canonicalCsv.sha256}:{},result:'PASS',scope:'UNIT_SOURCE_PROTOCOL_ONLY_NOT_EXECUTION',recordsSha256:records.sha256,originalsSha256:originals.sha256,nativeBindingsSha256:nativeBindings.sha256});
+ const review=await s.save({...newScene?{target:v7Target(b)}:{},version:newScene?'C_V7_R1_CAPTURE_SOURCE26_REVIEW_V1':'C_QA897_CAPTURE_SOURCE26_REVIEW_V1',decision:'ACCEPT_EXACT_SOURCE_NATIVE_PROJECTIONS',binding:{batchId:b.batchId,fixedSourceNamespace:b.fixedSourceNamespace,cutoffAt:b.cutoffAt,selectionSha256:b.selectionSha256},entity,records,originals,canonicalCsv,nativeBindings,independentReview,realImportExecutionAuthorized:false});
  return {...s,fixture:f,b,recipe:{mode:'QA_CAPTURE',review,records,originals,canonicalCsv,nativeBindings},sourceFile,input};
 }
 const collect=async iterator=>{const rows=[];for await(const row of iterator)rows.push(row);return rows;};
@@ -116,8 +116,74 @@ test('new exact V7R1 binding is finite and cannot open legacy21551 capture/money
  assert.equal(module.validateQa22Binding(b),undefined);
  for(const bad of [{...b,batchId:binding().batchId},{...b,fixedSourceNamespace:binding().fixedSourceNamespace},{...b,target:{...b.target,database:'erp_prod'}}])assert.throws(()=>module.validateQa22Binding(bad),/TARGET/);
  let reads=0,activated=0;const files={async json(){reads++;throw Error('MUST_NOT_READ_OLD_APPROVAL');}};
- await assert.rejects(module.readQa22Money(files,{},b),/V7_R1_FRESH_CAPTURE_MONEY_REVIEW_AND_ACTUAL_TARGET_ENVELOPE_REQUIRED/);
- await assert.rejects(module.openReviewedQa22Capture({},b,new AbortController().signal),/V7_R1_FRESH_CAPTURE_MONEY_REVIEW_AND_ACTUAL_TARGET_ENVELOPE_REQUIRED/);
- await assert.rejects(module.createQa22SourceSession({binding:b,database:{ready(){activated++;throw Error('MUST_NOT_ACTIVATE');}},signal:new AbortController().signal}),/V7_R1_FRESH_CAPTURE_MONEY_REVIEW_AND_ACTUAL_TARGET_ENVELOPE_REQUIRED/);
+ await assert.rejects(module.readQa22Money(files,{},b),/V7_R1_EXTERNAL_TARGET_REQUIRED/);
+ await assert.rejects(module.openReviewedQa22Capture({},b,new AbortController().signal),/V7_R1_EXTERNAL_TARGET_REQUIRED/);
+ await assert.rejects(module.createQa22SourceSession({binding:b,database:{ready(){activated++;throw Error('MUST_NOT_ACTIVATE');}},signal:new AbortController().signal}),/EXTERNAL_PINS/);
  assert.equal(reads,0);assert.equal(activated,0);
+});
+
+// These externally supplied DTOs are unit protocol inputs, never actual target
+// observations, review artifacts or execution grants. No database is opened.
+const v7Binding=()=>({...binding(),batchId:'3884ed09-86a0-a342-421d-3ae4e3f2ffd1',fixedSourceNamespace:'synthetic.v7r1.ledger.20261031',target:{...binding().target,database:'demo_8877_v7_r1_rehearsal_20261031_01',postmasterStartedAt:'2026-10-31T00:00:00.000Z'}});
+const v7Target=b=>({database:b.target.database,databaseOid:'987654',actingRole:b.target.role,sessionUser:'UNIT_PREPARATION_LOGIN',serverAddress:b.target.serverAddress,serverPort:b.target.serverPort,postmasterStart:b.target.postmasterStartedAt});
+test('V7R1 independently pinned capture rederives fresh barcode and NULL-time sales header with finite target',async t=>{
+ for(const entity of ['BARCODE','SALES_HEADER']){
+  const f=await capture(t,entity,undefined,true),target=v7Target(f.b),signal=new AbortController().signal;
+  const r=await module.openReviewedQa22Capture(f.recipe,f.b,signal,target);t.after(()=>r.close());
+  if(entity==='BARCODE'){const rows=await collect(r.rows());assert.equal(rows[0].nativeBarcode.barcode,'831000000000001');await r.authorize(rows[0]);}
+  else {const chunks=await collect(r.chunks());assert.equal(chunks[0].rows[0].prepared.header.approvedLocalAt,null);await r.authorize(chunks[0]);}
+  const altered=await f.save({...JSON.parse(await readFile(f.recipe.review.path,'utf8')),target:{...target,databaseOid:'987655'}});
+  await assert.rejects(module.openReviewedQa22Capture({...f.recipe,review:altered},f.b,signal,target),/CAPTURE_TARGET/);
+ }
+ const b=v7Binding(),target=v7Target(b);
+ for(const change of [{databaseOid:'21551'},{database:'erp_prod'},{actingRole:'other'},{sessionUser:''},{postmasterStart:'2026-10-30T00:00:00Z'}])assert.throws(()=>module.validateV7R1Target({...target,...change},b),/V7_R1_TARGET/);
+});
+test('V7R1 money32 restores only fresh external exact-cell adoption and exact target entries',async t=>{
+ const f=await capture(t,'BARCODE',undefined,true),b=f.b,target=v7Target(b),short={batchId:b.batchId,fixedSourceNamespace:b.fixedSourceNamespace,cutoffAt:b.cutoffAt,selectionSha256:b.selectionSha256};
+ const cells=f.fixture.moneyCellCandidates;
+ const {v2MoneyApprovalSet}=await import('../packages/application/src/import-v2.ts');const expected=v2MoneyApprovalSet(cells,structuredClone(cells));
+ const decision={version:'C_V7_R1_SYNTHETIC_MONEY32_DECISION_SNAPSHOT_V1',fullSourceExecutionAuthorized:false,target,binding:short,adoptedDecision:{decision:'ADOPT_EXACT_32_SYNTHETIC_SOURCE_CELL_NORMALIZATIONS_FOR_NONEXECUTION_SOURCE_PREPARATION',cells}};
+ const decisionRef=await f.save(decision),entries={version:'ORIGINAL_V7_R1_MONEY_APPROVAL_MAP32_ENTRIES_V1',fullSourceExecutionAuthorized:false,target,binding:short,authorityArtifact:decisionRef,entries:[...expected]};
+ const entriesRef=await f.save(entries),values=new Map([[decisionRef.path,decision],[entriesRef.path,entries]]),files={json:async ref=>values.get(ref.path)};
+ assert.deepEqual([...await module.readQa22Money(files,{decision:decisionRef,entries:entriesRef},b,target)],[...expected]);
+ for(const changed of [{...decision,version:'C_ADOPTED_SYNTHETIC_MONEY32_DECISION_SNAPSHOT_V1'},{...decision,target:{...target,databaseOid:'21551'}},{...decision,adoptedDecision:{...decision.adoptedDecision,cells:cells.slice(1)}}]){
+  values.set(decisionRef.path,changed);await assert.rejects(module.readQa22Money(files,{decision:decisionRef,entries:entriesRef},b,target),/MONEY_DECISION/);
+ }
+ values.set(decisionRef.path,decision);values.set(entriesRef.path,{...entries,entries:entries.entries.slice(1)});await assert.rejects(module.readQa22Money(files,{decision:decisionRef,entries:entriesRef},b,target),/MONEY_ENTRIES/);
+});
+
+test('V7R1 sourceInput target is bound by fresh C digest, registered provider/job and pinned runtime metadata before factories',async t=>{
+ const s=await scratch(t),b=v7Binding(),target=v7Target(b);let activated=0;
+ const sources={base:'/unit/base',v3Amendment:'/unit/amendment',v3Approval:'/unit/approval',trustedApprovalSha256:H('a'),approvedMoneyOverlaySha256:H('b'),sourceRoot:'/unit/originals',spoolParent:'/unit/spool',maxSpoolBytes:1000,maxEvidenceSpoolBytes:1000,referenceDecisionFile:'/unit/reference',trustedReferenceDecisionSha256:H('c'),mappingFiles:{catalogue:'/unit/mapping'},reviewFile:'/unit/review',trustedReviewSha256:H('d')};
+ const providerPath=new URL('./integration/current-runtime26-source-provider.mjs',import.meta.url),{fileURLToPath}=await import('node:url');
+ const metadata={version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target,catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V8',sha256:H('e'),patchLevel:'26_hv2_live_pairs_complete_write_acl_v8_from_v7'},purposes:[],scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{},realImportExecutionAuthorized:false};
+ const base={version:'V7_R1_FULL_SOURCE_PROVIDER26_INPUT_V1',binding:b,target,core:{},closureScope:{expectedCounts:{}},warehouses:[],producers:Object.fromEntries(module.sourceGroups.map(g=>[g,{}])),productEvidence:{},coreProjection:{},initialization:{},preparation:{},money:{}};
+ async function attempt({inputChange={},metadataChange={},wrongDigest=false,wrongProvider=false}={}){
+  const runtime=await s.save({...metadata,...metadataChange});
+  const job=await s.save({version:'NATIVE_IMPORT_SOURCE_HOST26_V1',registrationId:'UNIT_PROTOCOL_NOT_EXECUTION',deadlineUtc:new Date(Date.now()+60000).toISOString(),maxSteps:100,binding:b,database:{host:'127.0.0.1',port:5432,database:b.target.database,user:b.target.role,tls:'local-transport',caFile:null,statementTimeoutMs:1000},sources,providers:{path:fileURLToPath(providerPath),sha256:wrongProvider?H('f'):sha(await readFile(providerPath))},runtime26Review:{reviewFile:runtime.path,trustedReviewSha256:runtime.sha256}});
+  const data={...base,...inputChange},grant=await s.save({version:'C_PRODUCTION_SOURCE_EXECUTION26_AUTHORIZATION_V1',decision:'AUTHORIZE_EXACT_REGISTERED_FULL_SOURCE_EXECUTION',issuingAuthority:'C',realImportExecutionAuthorized:true,job,sourceInputDigest:wrongDigest?historySettlementRequestHash(base):historySettlementRequestHash(data),groups:module.sourceGroups,mainCommands:{}});
+  const input=await s.save({...data,executionAuthorization:grant});
+  return module.createQa22SourceSession({inputFile:input.path,trustedInputSha256:input.sha256,executionAuthorizationSha256:grant.sha256,binding:b,sources,database:{ready(){activated++;throw Error('MUST_NOT_ACTIVATE');}},signal:new AbortController().signal});
+ }
+ // Deliberately incomplete scope ends the accepted envelope before factories.
+ await assert.rejects(attempt(),/QA_COUNTS/);
+ await assert.rejects(attempt({inputChange:{target:{...target,databaseOid:'987655'}},wrongDigest:true}),/C_EXECUTION_SCOPE/);
+ await assert.rejects(attempt({inputChange:{target:{...target,databaseOid:'987655'}}}),/V7_R1_INPUT_TARGET/);
+ await assert.rejects(attempt({metadataChange:{target:{...target,databaseOid:'21551'}}}),/V7_R1_TARGET/);
+ await assert.rejects(attempt({metadataChange:{target:{...target,actingRole:'different'}}}),/RUNTIME_TARGET/);
+ await assert.rejects(attempt({wrongProvider:true}),/REGISTERED_JOB/);
+ assert.equal(activated,0);
+});
+
+test('V7R1 source entry selects only its distinct input environment and retains common external grant pin',async t=>{
+ const s=await scratch(t),names=['NAIJUE_V7_R1_SOURCE_INPUT_FILE','NAIJUE_V7_R1_SOURCE_INPUT_SHA256','NAIJUE_QA897_SOURCE_INPUT_FILE','NAIJUE_QA897_SOURCE_INPUT_SHA256','NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256'],saved=names.map(k=>process.env[k]);
+ t.after(()=>names.forEach((k,i)=>{if(saved[i]===undefined)delete process.env[k];else process.env[k]=saved[i];}));
+ const input=await s.save({version:'QA897_FULL_SOURCE_PROVIDER26_INPUT_V1'});
+ process.env.NAIJUE_V7_R1_SOURCE_INPUT_FILE=input.path;process.env.NAIJUE_V7_R1_SOURCE_INPUT_SHA256=input.sha256;
+ process.env.NAIJUE_QA897_SOURCE_INPUT_FILE='/UNIT_OLD_INPUT_MUST_NOT_READ';process.env.NAIJUE_QA897_SOURCE_INPUT_SHA256=H('a');process.env.NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256=H('b');
+ let activated=0;
+ await assert.rejects(module.openSourceSession({binding:v7Binding(),sources:{},database:{ready(){activated++;throw Error('MUST_NOT_ACTIVATE');}},signal:new AbortController().signal}),/SHAPE/);
+ delete process.env.NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256;
+ await assert.rejects(module.openSourceSession({binding:v7Binding(),sources:{},database:{ready(){activated++;}},signal:new AbortController().signal}),/EXTERNAL_PINS/);
+ assert.equal(activated,0);
 });

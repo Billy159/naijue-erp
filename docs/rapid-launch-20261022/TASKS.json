@@ -19909,7 +19909,7 @@
       },
       "qbReview": "PASS_EXACT_16_LEAF_SOURCE_OFFLINE_CONTRACT_ONLY",
       "realPg": "NOT_RUN",
-      "qaUnix": "NOT_IMPLEMENTED_PENDING_HUMAN_CONFIRMATION",
+      "qaUnix": "APPROVED_SOURCE_ONLY_IMPLEMENTATION_ASSIGNED_D1_V8_T45_V7",
       "qbReportSha256": "23adeaa47eec8248b9a25232daea91406f767da93d977d878c88459b96af0c0d",
       "qbReportBytes": 12464
     },
@@ -19939,6 +19939,15 @@
       "owner": "T45",
       "checklistSha256": "1b51a07e388be07cd0e525b7a2f1fcb39007c77776c68aa58590e3da7bd548fa",
       "oldAppCompatibility": "NOT_PROVEN_NO_OLD_SNAPSHOT_OVERWRITE_AFTER_NEW_WRITES_OR_UNKNOWN"
-    }
+    },
+    "businessScenarioPreparation": {
+      "checkpoint": "f421edfb57ecb275dc91fa78533c74a473792770",
+      "status": "QB_NEED_FIX_RECEIPT_ID_SET_F01_ORIGINAL_D1_TARGETED_REPAIR",
+      "reportSha256": "c42c7ca236fb4e56af0893bd05c1ec876ae9bb1a91b25f7f7f440e5b7afdf851",
+      "providerSuccessor": "TWO_LEAVES_DELIVERED_15_DIRECTED_PASS_PENDING_QB_SOURCE_REVIEW_NO_DATA_OR_GRANT",
+      "actualDataReady": false,
+      "qbReportSha256": "cd8fb6f39cb61440a18f4a801a425a143fa1329263f5f46990d69f95455cdc5a"
+    },
+    "qaUnixApproval": "Human call_7f5633370b664b06823b617c5848411b/0"
   }
 }

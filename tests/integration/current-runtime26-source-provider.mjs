@@ -1,4 +1,4 @@
-/** QA897-only source composition for the ORIGINAL openImportHost26/executor26.
+/** Exact QA897/V7R1 synthetic source composition for the ORIGINAL openImportHost26/executor26.
  * Reads independently pinned inputs; never emits a grant, Map approval, SQL,
  * pool, review or publication. Production53 and V3 production counts stay intact.
  *
@@ -41,7 +41,7 @@ import { openReviewedPaymentSource26 } from '../../scripts/import-v3/native-paym
 import { openReviewedTransferHeaderSource26 } from '../../scripts/import-v3/native-transfer-header-source26.mjs';
 import { openReviewedTransferLineSource26 } from '../../scripts/import-v3/native-transfer-line-source26.mjs';
 import { selectProductionContinuation26, stagedPrefixStockRow22, stagedPrefixSkuRecord22 } from '../../scripts/import-v3/production-source-provider26.mjs';
-import { validateExecutableSourceHostJob26 } from '../../scripts/import-v3/production-source-host.mjs';
+import { validateSourceHostRuntimeReview26, validateExecutableSourceHostJob26 } from '../../scripts/import-v3/production-source-host.mjs';
 
 import {CURRENT_LIVE_LEDGER_QA_TARGET,CURRENT_LIVE_LEDGER_QA_NAMESPACE,CURRENT_LIVE_LEDGER_QA_BATCH} from './current-runtime26-sales-fixture.ts';
 
@@ -67,12 +67,19 @@ export function validateQa22Binding(binding){
  must(hash(binding.selectionSha256)&&hash(binding.authorizedPayloadHash)&&hash(binding.coreSourceDigest)&&binding.authorizedPayloadHash!==binding.coreSourceDigest,'FULL_SOURCE_REQUIRED');
  must(typeof binding.coreReceiptId==='string'&&typeof binding.actorAccountId==='string','CORE_BINDING');
 }
-/** This source step does not widen the old QA897 review/OID/32-cell authority.
- * The new exact scene may be built/selected purely, but opening its factories
- * needs C's finite fresh-target review envelope successor first. */
-function originalQa897ReviewOnly(binding){
- must(binding?.target?.database!==CURRENT_LIVE_LEDGER_QA_TARGET&&binding?.fixedSourceNamespace!==CURRENT_LIVE_LEDGER_QA_NAMESPACE&&binding?.batchId!==CURRENT_LIVE_LEDGER_QA_BATCH,'V7_R1_FRESH_CAPTURE_MONEY_REVIEW_AND_ACTUAL_TARGET_ENVELOPE_REQUIRED');
+const isV7=b=>b?.target?.database===CURRENT_LIVE_LEDGER_QA_TARGET;
+/** trustedTarget comes from the independently pinned registered-job runtime
+ * review, never from the capture/money/input document it is compared against. */
+export function validateV7R1Target(target,binding){
+ validateQa22Binding(binding);must(isV7(binding),'V7_R1_TARGET');
+ bag(target,['database','databaseOid','actingRole','sessionUser','serverAddress','serverPort','postmasterStart'],'V7_R1_EXTERNAL_TARGET_REQUIRED');
+ const b=binding.target;
+ must(target.database===b.database&&typeof target.databaseOid==='string'&&/^[1-9]\d*$/.test(target.databaseOid)&&target.databaseOid!=='21551'
+  &&target.actingRole===b.role&&typeof target.actingRole==='string'&&target.actingRole.length>0&&typeof target.sessionUser==='string'&&target.sessionUser.length>0
+  &&target.serverAddress===b.serverAddress&&target.serverPort===b.serverPort&&target.postmasterStart===b.postmasterStartedAt
+  &&typeof target.postmasterStart==='string'&&Number.isFinite(Date.parse(target.postmasterStart)),'V7_R1_TARGET');return target;
 }
+function reviewTarget(binding,trustedTarget){if(isV7(binding))return validateV7R1Target(trustedTarget,binding);}
 /** Metadata only; all trusted pins are supplied outside the file being read. */
 class Inputs {
  constructor(signal){this.signal=signal;this.closed=false;this.files=new Map();}
@@ -88,7 +95,7 @@ const short=b=>Object.fromEntries(['batchId','fixedSourceNamespace','cutoffAt','
 async function csvRows(files,ref,entity){const text=new TextDecoder('utf8',{fatal:true}).decode(await files.bytes(ref));const columns=IMPORT_V2_TABLES.find(t=>t.entity===entity)?.columns.map(c=>c.name);must(columns,'ENTITY');let header;const rows=[];for await(const row of parseV2Csv((async function*(){yield text;})())){if(!header){must(equal(row,columns),'CSV_HEADER');header=row;}else{must(row.length===header.length,'CSV_ROW');rows.push(Object.fromEntries(header.map((k,i)=>[k,row[i]])));}}must(header,'CSV_HEADER');return rows;}
 /** Every captured row is tied to real original bytes and canonical cells, not
  * merely to a prepared JSON/hash. Public original preparers remain authoritative. */
-async function originalRows(files,ref){const list=await files.json(ref);must(Array.isArray(list)&&list.length>0&&list.length<=100,'ORIGINAL_ROWS');const byId=new Map();for(const item of list){bag(item,['rawLine','sourceFile']);const raw=JSON.parse(item.rawLine),f=item.sourceFile;bag(f,['logicalPath','path','bytes','sha256']);await files.bytes({path:f.path,bytes:f.bytes,sha256:f.sha256});must(raw.file===f.logicalPath&&raw.sourceSha256===f.sha256&&typeof raw.sourceId==='string'&&typeof raw.entity==='string'&&Number.isSafeInteger(raw.row)&&raw.row>0,'ORIGINAL_LOCATOR');const id=stableImportId('source-row',NAMESPACE,raw.entity,raw.sourceId);must(!byId.has(id),'ORIGINAL_DUPLICATE');byId.set(id,{raw,line:item.rawLine});}return byId;}
+async function originalRows(files,ref,namespace=NAMESPACE){const list=await files.json(ref);must(Array.isArray(list)&&list.length>0&&list.length<=100,'ORIGINAL_ROWS');const byId=new Map();for(const item of list){bag(item,['rawLine','sourceFile']);const raw=JSON.parse(item.rawLine),f=item.sourceFile;bag(f,['logicalPath','path','bytes','sha256']);await files.bytes({path:f.path,bytes:f.bytes,sha256:f.sha256});must(raw.file===f.logicalPath&&raw.sourceSha256===f.sha256&&typeof raw.sourceId==='string'&&typeof raw.entity==='string'&&Number.isSafeInteger(raw.row)&&raw.row>0,'ORIGINAL_LOCATOR');const id=stableImportId('source-row',namespace,raw.entity,raw.sourceId);must(!byId.has(id),'ORIGINAL_DUPLICATE');byId.set(id,{raw,line:item.rawLine});}return byId;}
 function assertOriginal(source,originals,canonical){const o=originals.get(source.id);must(o&&o.raw.entity===source.entityType&&o.raw.sourceId===source.sourceKey&&o.raw.file===source.fileRef&&o.raw.sheet===source.sheet&&String(o.raw.row)===source.rowNo&&o.raw.sourceSha256===source.sourceFileSha256&&digest(o.line)===source.rowSha256&&equal(o.raw.data,source.rawFields),'ORIGINAL_CHANGED');must(equal(source.normalizedFields,canonical),'CANONICAL_CHANGED');}
 function headerRows(prepared){const h=prepared.header;const common={id:h.id,source_row_id:h.sourceRowId,batch_id:h.batchId,version:h.version,number:h.number,business_date:h.businessDate,source_status:h.sourceStatus,note:h.note,created_by_source_key:h.createdBySourceKey,approved_by_source_key:h.approvedBySourceKey,created_hall_id:h.createdHallId,created_hall_provenance:h.createdHallProvenance,created_hall_reason:h.createdHallReason,created_local_at:h.createdLocalAt,updated_local_at:h.updatedLocalAt,approved_local_at:h.approvedLocalAt,created_instant:h.createdInstant,updated_instant:h.updatedInstant,approved_instant:h.approvedInstant};
  const native={...common,business_type:h.businessType,hall_id:h.hallId,customer_id:h.customerId,warehouse_id:h.warehouseId,salesperson_id:h.salespersonId,gross_amount:h.grossAmount,order_discount:h.orderDiscount,net_due:h.netDue};
@@ -98,18 +105,20 @@ function headerRows(prepared){const h=prepared.header;const common={id:h.id,sour
  * QA_CAPTURE recipe={mode,review,records,originals,canonicalCsv,nativeBindings}.
  * review binds each ref and independent PASS to the same target/selection.
  */
-export async function openReviewedQa22Capture(recipe,binding,signal){
- originalQa897ReviewOnly(binding);
+export async function openReviewedQa22Capture(recipe,binding,signal,trustedTarget){
+ reviewTarget(binding,trustedTarget);
  validateQa22Binding(binding);bag(recipe,['mode','review','records','originals','canonicalCsv','nativeBindings']);must(recipe.mode==='QA_CAPTURE','CAPTURE_MODE');
  const files=new Inputs(signal);try{
-  const review=await files.json(recipe.review);bag(review,['version','decision','binding','entity','records','originals','canonicalCsv','nativeBindings','independentReview','realImportExecutionAuthorized']);
-  must(review.version==='C_QA897_CAPTURE_SOURCE26_REVIEW_V1'&&review.decision==='ACCEPT_EXACT_SOURCE_NATIVE_PROJECTIONS'&&review.realImportExecutionAuthorized===false&&equal(review.binding,short(binding))&&['BARCODE','SALES_HEADER'].includes(review.entity),'CAPTURE_REVIEW');
+  const review=await files.json(recipe.review);bag(review,['version','decision','binding','entity','records','originals','canonicalCsv','nativeBindings','independentReview','realImportExecutionAuthorized',...(isV7(binding)?['target']:[])]);
+  must(review.version===(isV7(binding)?'C_V7_R1_CAPTURE_SOURCE26_REVIEW_V1':'C_QA897_CAPTURE_SOURCE26_REVIEW_V1')&&review.decision==='ACCEPT_EXACT_SOURCE_NATIVE_PROJECTIONS'&&review.realImportExecutionAuthorized===false&&equal(review.binding,short(binding))&&['BARCODE','SALES_HEADER'].includes(review.entity),'CAPTURE_REVIEW');
+  if(isV7(binding))must(equal(review.target,trustedTarget),'V7_R1_CAPTURE_TARGET');
   for(const k of ['records','originals','canonicalCsv','nativeBindings'])must(equal(review[k],recipe[k]),'CAPTURE_REVIEW');
   const qb=await files.json(review.independentReview);must(qb.result==='PASS'&&qb.recordsSha256===recipe.records.sha256&&qb.originalsSha256===recipe.originals.sha256&&qb.nativeBindingsSha256===recipe.nativeBindings.sha256,'CAPTURE_QB');
-  const originals=await originalRows(files,recipe.originals),canonical=await csvRows(files,recipe.canonicalCsv,review.entity),bindings=await files.json(recipe.nativeBindings),inputs=await files.json(recipe.records);must(Array.isArray(bindings)&&bindings.length===1&&Array.isArray(inputs)&&inputs.length===1&&canonical.length===1&&originals.size===1,'CAPTURE_COMPLETE');
+  if(isV7(binding))must(equal(qb.target,trustedTarget)&&equal(qb.binding,short(binding))&&qb.canonicalCsvSha256===recipe.canonicalCsv.sha256,'V7_R1_CAPTURE_QB');
+  const originals=await originalRows(files,recipe.originals,binding.fixedSourceNamespace),canonical=await csvRows(files,recipe.canonicalCsv,review.entity),bindings=await files.json(recipe.nativeBindings),inputs=await files.json(recipe.records);must(Array.isArray(bindings)&&bindings.length===1&&Array.isArray(inputs)&&inputs.length===1&&canonical.length===1&&originals.size===1,'CAPTURE_COMPLETE');
   const known=new Map(),chunks=[];for(const input of inputs){const s=input.source;must(s?.batchId===binding.batchId&&s.entityType===review.entity&&input.selection?.selectionSha256===binding.selectionSha256&&input.selection.csvSha256===recipe.canonicalCsv.sha256,'CAPTURE_SCOPE');assertOriginal(s,originals,canonical.find(r=>r.来源编号===s.sourceKey));
    const native=bindings.find(r=>r.sourceKey===s.sourceKey);must(native&&native.sourceRowId===s.id,'NATIVE_BINDING');
-   if(review.entity==='BARCODE'){must(equal(native.references,{sku:input.sku,scheme:input.scheme})&&native.nativeId===input.nativeBarcodeId,'NATIVE_BINDING');const prepared=prepareNativeBarcode(input);must(prepared.nativeBarcode.barcode==='897000000000001','BARCODE_LITERAL');chunks.push(prepared);known.set(s.id,prepared);}
+   if(review.entity==='BARCODE'){must(equal(native.references,{sku:input.sku,scheme:input.scheme})&&native.nativeId===input.nativeBarcodeId,'NATIVE_BINDING');const prepared=prepareNativeBarcode(input);must(prepared.nativeBarcode.barcode===(isV7(binding)?'831000000000001':'897000000000001'),'BARCODE_LITERAL');chunks.push(prepared);known.set(s.id,prepared);}
    else{must(equal(native.references,{bindings:input.bindings,creatorHallOverlay:input.creatorHallOverlay,temporalEvidence:input.temporalEvidence??{}}),'NATIVE_BINDING');const chunk=prepareV3HistoryHeaderChunk([input]);must(native.nativeId===chunk.rows[0].prepared.header.id,'NATIVE_BINDING');must(chunk.rows[0].prepared.header.sourceStatus==='DRAFT'&&chunk.rows[0].prepared.header.approvedBySourceKey===null,'DRAFT_ONLY');chunks.push(chunk);known.set(s.id,chunk.rows[0]);}}
   const verify=()=>files.verify();
   const authorize=async value=>{await verify();if(review.entity==='BARCODE'){validatePreparedNativeBarcode(value);must(equal(value,known.get(value.source.id)),'ROW_NOT_AUTHORIZED');}else{validatePreparedHistoryHeaderChunk(value);must(value.rows.length===1&&equal(value.rows[0],known.get(value.rows[0].input.source.id)),'ROW_NOT_AUTHORIZED');}await verify();};
@@ -123,9 +132,14 @@ const stage={PRODUCTS:['PRODUCT','chunks'],SKUS:['SKU','rows'],STOCK_CONTRIBUTOR
 async function compositeHeaders(transfer,sales){return {async verify(){await transfer.verify();await sales.verify();},async authorize(chunk){return (chunk.selection.entity==='TRANSFER_HEADER'?transfer:sales).authorize(chunk);},async *chunks(){yield* transfer.chunks();yield* sales.chunks();},async openClosure(scope,context){const children=[await transfer.openClosure(scope,context)];try{children.push(await sales.openClosure(scope,context));}catch(e){await children[0].close();throw e;}return {async verify(){for(const c of children)await c.verify();},async *sourceRows(){const rows=[];for(const c of children)for await(const r of c.sourceRows())rows.push(r);yield* sorted(rows);},async *typedRows(){const rows=[];for(const c of children)for await(const r of c.typedRows())rows.push(r);yield* sorted(rows);},async *documents(){for(const c of children)yield* c.documents();},async close(){for(const c of children.reverse())await c.close();}};},async close(){await sales.close();await transfer.close();}};}
 
 /** Actual C-adopted32 restoration. An entries JSON is not itself an approval. */
-export async function readQa22Money(files,money,binding){originalQa897ReviewOnly(binding);bag(money,['decision','entries']);const decision=await files.json(money.decision),encoded=await files.json(money.entries);
+export async function readQa22Money(files,money,binding,trustedTarget){reviewTarget(binding,trustedTarget);bag(money,['decision','entries']);const decision=await files.json(money.decision),encoded=await files.json(money.entries);
+ if(isV7(binding)){
+  must(decision.version==='C_V7_R1_SYNTHETIC_MONEY32_DECISION_SNAPSHOT_V1'&&decision.fullSourceExecutionAuthorized===false&&equal(decision.target,trustedTarget)&&equal(decision.binding,short(binding))&&decision.adoptedDecision?.decision==='ADOPT_EXACT_32_SYNTHETIC_SOURCE_CELL_NORMALIZATIONS_FOR_NONEXECUTION_SOURCE_PREPARATION'&&Array.isArray(decision.adoptedDecision.cells)&&decision.adoptedDecision.cells.length===32,'V7_R1_MONEY_DECISION');
+  must(encoded.version==='ORIGINAL_V7_R1_MONEY_APPROVAL_MAP32_ENTRIES_V1'&&encoded.fullSourceExecutionAuthorized===false&&equal(encoded.target,trustedTarget)&&equal(encoded.binding,short(binding))&&equal(encoded.authorityArtifact,money.decision)&&Array.isArray(encoded.entries)&&encoded.entries.length===32,'V7_R1_MONEY_ENTRIES');
+ }else{
  must(decision.version==='C_ADOPTED_SYNTHETIC_MONEY32_DECISION_SNAPSHOT_V1'&&decision.fullSourceExecutionAuthorized===false&&decision.syntheticTarget?.database===TARGET&&decision.syntheticTarget.databaseOid==='21551'&&decision.syntheticTarget.batchId===binding.batchId&&decision.syntheticTarget.namespace===binding.fixedSourceNamespace&&decision.adoptedDecision?.decision==='ADOPT_EXACT_32_SYNTHETIC_SOURCE_CELL_NORMALIZATIONS_FOR_NONEXECUTION_SOURCE_PREPARATION','MONEY_DECISION');
  must(encoded.version==='ORIGINAL_V2_MONEY_APPROVAL_MAP32_ENTRIES_V1'&&encoded.fullSourceExecutionAuthorized===false&&encoded.authorityArtifact?.path===money.decision.path&&encoded.authorityArtifact.sha256===money.decision.sha256&&Array.isArray(encoded.entries),'MONEY_ENTRIES');
+ }
  const map=v2MoneyApprovalSet(decision.adoptedDecision.cells,encoded.entries.map(e=>e[1]));must(equal([...map.entries()],[...new Map(encoded.entries).entries()]),'MONEY_ENTRIES_CHANGED');return map;
 }
 /** CAPTURED_MONEY recipe supplies original captured manifest + NDJSON projection
@@ -134,7 +148,7 @@ export async function readQa22Money(files,money,binding){originalQa897ReviewOnly
  */
 async function openMoney(recipe,group,files,binding,money){bag(recipe,['mode','manifest','sourceRows','typedRows','originals','canonicalCsv','nativeBindings','selection']);must(recipe.mode==='CAPTURED_MONEY','MONEY_CAPTURE');const entity=group==='SALES_DETAILS'?'SALES_LINE':'SETTLEMENT';
  await files.json(recipe.manifest);
- const originals=await originalRows(files,recipe.originals),canonical=await csvRows(files,recipe.canonicalCsv,entity),bindings=await files.json(recipe.nativeBindings);
+ const originals=await originalRows(files,recipe.originals,binding.fixedSourceNamespace),canonical=await csvRows(files,recipe.canonicalCsv,entity),bindings=await files.json(recipe.nativeBindings);
  const parse=async ref=>new TextDecoder('utf8',{fatal:true}).decode(await files.bytes(ref,16*1024*1024)).trimEnd().split('\n').map(l=>JSON.parse(l));
  const sourceRows=await parse(recipe.sourceRows),typedRows=await parse(recipe.typedRows);must(sourceRows.length===16&&typedRows.length===16&&originals.size===16&&canonical.length===16&&Array.isArray(bindings)&&bindings.length===16&&new Set(bindings.map(r=>r.sourceKey)).size===16,'MONEY_COMPLETE');
  const byTyped=new Map(typedRows.map(r=>[r.key,r]));must(byTyped.size===16,'MONEY_DUPLICATE');
@@ -160,18 +174,22 @@ export function qa22ContinuationPlan(binding,commands,progress){
 }
 
 export async function createQa22SourceSession({inputFile,trustedInputSha256,executionAuthorizationSha256,binding,sources,database,signal}){
- validateQa22Binding(binding);originalQa897ReviewOnly(binding);must(signal instanceof AbortSignal&&!signal.aborted&&typeof database?.ready==='function','CONTEXT');must(hash(trustedInputSha256)&&hash(executionAuthorizationSha256)&&isAbsolute(inputFile),'EXTERNAL_PINS');
+ validateQa22Binding(binding);must(signal instanceof AbortSignal&&!signal.aborted&&typeof database?.ready==='function','CONTEXT');must(hash(trustedInputSha256)&&hash(executionAuthorizationSha256)&&isAbsolute(inputFile),'EXTERNAL_PINS');
  const files=new Inputs(signal),resources=[];let closed=false,closure,preflight=false,stepped=false,actualCore;
  const active=()=>{files.active();must(!closed,'CLOSED');};const verify=async()=>{active();await files.verify();};
  async function close(){if(closed)return;closed=true;const errors=[];for(const r of [...resources].reverse())try{await r.close();}catch(e){errors.push(e);}files.close();if(errors.length)throw new AggregateError(errors,'QA897 source close failed');}
  try{
   const inputStat=await lstat(inputFile),input=await files.json({path:inputFile,bytes:inputStat.size,sha256:trustedInputSha256});
-  bag(input,['version','binding','core','closureScope','warehouses','producers','productEvidence','coreProjection','initialization','preparation','money','executionAuthorization']);
-  must(input.version==='QA897_FULL_SOURCE_PROVIDER26_INPUT_V1'&&equal(input.binding,binding),'INPUT_BINDING');bag(input.producers,sourceGroups);must(input.executionAuthorization.sha256===executionAuthorizationSha256,'C_EXECUTION_PIN');
+  bag(input,['version','binding','core','closureScope','warehouses','producers','productEvidence','coreProjection','initialization','preparation','money','executionAuthorization',...(isV7(binding)?['target']:[])]);
+  must(input.version===(isV7(binding)?'V7_R1_FULL_SOURCE_PROVIDER26_INPUT_V1':'QA897_FULL_SOURCE_PROVIDER26_INPUT_V1')&&equal(input.binding,binding),'INPUT_BINDING');bag(input.producers,sourceGroups);must(input.executionAuthorization.sha256===executionAuthorizationSha256,'C_EXECUTION_PIN');
   const {executionAuthorization:_authorization,...data}=input,dataDigest=historySettlementRequestHash(data),grant=await files.json(input.executionAuthorization);
   bag(grant,['version','decision','issuingAuthority','realImportExecutionAuthorized','job','sourceInputDigest','groups','mainCommands']);
   must(grant.version==='C_PRODUCTION_SOURCE_EXECUTION26_AUTHORIZATION_V1'&&grant.decision==='AUTHORIZE_EXACT_REGISTERED_FULL_SOURCE_EXECUTION'&&grant.issuingAuthority==='C'&&grant.realImportExecutionAuthorized===true&&grant.sourceInputDigest===dataDigest&&equal([...grant.groups].sort(),[...sourceGroups].sort()),'C_EXECUTION_SCOPE');
   const job=validateExecutableSourceHostJob26(await files.json(grant.job));must(equal(job.binding,binding)&&equal(job.sources,sources)&&job.providers.path===fileURLToPath(import.meta.url)&&job.providers.sha256===digest(await readFile(new URL(import.meta.url))),'REGISTERED_JOB');
+  let trustedTarget;
+  // Reuse the host metadata validator's shape/profile check only. Its callable
+  // check does not invoke this source port or issue any runtime capability.
+  if(isV7(binding)){const runtimeRef=job.runtime26Review,runtimeStat=await lstat(runtimeRef.reviewFile),runtimeReview=await files.json({path:runtimeRef.reviewFile,bytes:runtimeStat.size,sha256:runtimeRef.trustedReviewSha256},65536);validateSourceHostRuntimeReview26(runtimeReview,binding,{capture:openReviewedQa22Capture});trustedTarget=validateV7R1Target(runtimeReview.target,binding);must(equal(input.target,trustedTarget),'V7_R1_INPUT_TARGET');}
   const deadline=Date.parse(job.deadlineUtc);const live=async()=>{await verify();must(Date.now()<deadline,'EXPIRED');};
   const scope=input.closureScope;must(equal(scope.expectedCounts,{history_sales_header:1,history_sales_line:16,history_sales_settlement:16,history_transfer_header:1,history_transfer_line:1,import_source_row:167,import_sku_alias:1,import_stock_contributor:2,barcodes:1}),'QA_COUNTS');must(scope.batchId===binding.batchId&&scope.fixedSourceNamespace===binding.fixedSourceNamespace&&scope.selectionSha256===binding.selectionSha256&&scope.authorizedPayloadHash===binding.authorizedPayloadHash,'CLOSURE_SCOPE');
   must(Array.isArray(input.warehouses)&&input.warehouses.length===22&&new Set(input.warehouses.map(w=>w.targetId)).size===22&&input.core.receiptId===binding.coreReceiptId&&input.core.coreSourceDigest===binding.coreSourceDigest,'CORE_SCOPE');
@@ -180,12 +198,12 @@ export async function createQa22SourceSession({inputFile,trustedInputSha256,exec
   must(commands[0].action==='IMPORT_BIND_FULL_SOURCE'&&commands.at(-1).action==='IMPORT_PUBLISH'&&commands.slice(1,-1).every(c=>c.action==='IMPORT_CHUNK')&&new Set(commands.map(c=>c.requestKey)).size===commands.length,'COMMAND_CHAIN');
   const full=commands[0].fullBinding;must(full.coreReceiptId===binding.coreReceiptId&&full.coreSourceDigest===binding.coreSourceDigest&&full.authorizedPayloadHash===binding.authorizedPayloadHash&&equal(full.inventoryExpectedCounts,{WAREHOUSE:22,SKU:1,INVENTORY_LEDGER:1,IMPORT_BATCH:1})&&equal(full.historyExpectedCounts,scope.expectedCounts)&&full.sourceClosurePins.length===11,'FULL_SOURCE');
   for(const g of sourceGroups)must(full.sourceClosurePins.filter(p=>p.group===g&&hash(p.sha256)).length===1,'FULL_SOURCE');
-  const runtimeRef=job.runtime26Review;const runtimeStat=await lstat(runtimeRef.reviewFile);const runtimeReview=await files.json({path:runtimeRef.reviewFile,bytes:runtimeStat.size,sha256:runtimeRef.trustedReviewSha256},65536);must(runtimeReview.target?.databaseOid==='21551','DATABASE_OID');
-  const moneyMap=await readQa22Money(files,input.money,binding),money={...input.money,map:moneyMap};
+  if(!isV7(binding)){const runtimeRef=job.runtime26Review;const runtimeStat=await lstat(runtimeRef.reviewFile);const runtimeReview=await files.json({path:runtimeRef.reviewFile,bytes:runtimeStat.size,sha256:runtimeRef.trustedReviewSha256},65536);must(runtimeReview.target?.databaseOid==='21551','DATABASE_OID');}
+  const moneyMap=await readQa22Money(files,input.money,binding,trustedTarget),money={...input.money,map:moneyMap};
   const readers=new Map();for(const group of sourceGroups){await live();const recipe=input.producers[group];let reader;
    if(ordinary[group]){bag(recipe,['mode','options']);must(recipe.mode==='ORIGINAL'&&equal(recipe.options.binding,short(binding)),'ORIGINAL_SOURCE_OPTIONS');reader=await ordinary[group](recipe.options);}
-   else if(group==='HEADERS'){bag(recipe,['mode','transfer','sales']);must(recipe.mode==='HEADERS'&&equal(recipe.transfer.binding,short(binding)),'HEADER_OPTIONS');const transfer=await openReviewedTransferHeaderSource26(recipe.transfer);try{reader=await compositeHeaders(transfer,await openReviewedQa22Capture(recipe.sales,binding,signal));}catch(e){await transfer.close();throw e;}}
-   else if(group==='BARCODES')reader=await openReviewedQa22Capture(recipe,binding,signal);
+   else if(group==='HEADERS'){bag(recipe,['mode','transfer','sales']);must(recipe.mode==='HEADERS'&&equal(recipe.transfer.binding,short(binding)),'HEADER_OPTIONS');const transfer=await openReviewedTransferHeaderSource26(recipe.transfer);try{reader=await compositeHeaders(transfer,await openReviewedQa22Capture(recipe.sales,binding,signal,trustedTarget));}catch(e){await transfer.close();throw e;}}
+   else if(group==='BARCODES')reader=await openReviewedQa22Capture(recipe,binding,signal,trustedTarget);
    else reader=await openMoney(recipe,group,files,binding,money);
    must(reader&&typeof reader.close==='function','READER');resources.push(reader);readers.set(group,reader);}
   const evidence=await openReviewedProductEvidenceSource(input.productEvidence);resources.push(evidence);
@@ -228,4 +246,4 @@ export async function createQa22SourceSession({inputFile,trustedInputSha256,exec
    },close};
  }catch(error){try{await close();}catch(c){throw new AggregateError([error,c],'QA897 construction/close');}throw error;}
 }
-export async function openSourceSession(context){return createQa22SourceSession({...context,inputFile:process.env.NAIJUE_QA897_SOURCE_INPUT_FILE,trustedInputSha256:process.env.NAIJUE_QA897_SOURCE_INPUT_SHA256,executionAuthorizationSha256:process.env.NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256});}
+export async function openSourceSession(context){const v7=isV7(context.binding);return createQa22SourceSession({...context,inputFile:process.env[v7?'NAIJUE_V7_R1_SOURCE_INPUT_FILE':'NAIJUE_QA897_SOURCE_INPUT_FILE'],trustedInputSha256:process.env[v7?'NAIJUE_V7_R1_SOURCE_INPUT_SHA256':'NAIJUE_QA897_SOURCE_INPUT_SHA256'],executionAuthorizationSha256:process.env.NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256});}

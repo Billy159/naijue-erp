@@ -8112,5 +8112,21 @@
       "git": "Only C stages/commits/pushes; owner exact paths only"
     },
     "prohibited": "No V6/V7 byte or meaning change, no grants/DB/roles/listeners/deployment, no concurrent editing same file; additional consumer seam needs C assignment"
+  },
+  "dbUpgradeR1QaUnixApproved": {
+    "authority": "Human call_7f5633370b664b06823b617c5848411b/0 confirmed exact QA Unix source extension only",
+    "scope": "Only V7 and V8 finite QA178 target branch matching existing frozen proposal; original TCP/cloud Unix semantics unchanged; V6 unchanged; no environment action",
+    "T45": [
+      "scripts/release/prepare-runtime26-v7.mjs",
+      "scripts/release/prepare-runtime26-v7-unix-target.test.mjs",
+      "scripts/release/prepare-runtime26-v7-boundary.test.mjs",
+      "scripts/release/prepare-runtime26-v7.test.mjs"
+    ],
+    "D1": [
+      "scripts/release/prepare-runtime26-v8.mjs",
+      "scripts/release/prepare-runtime26-v8.test.mjs"
+    ],
+    "C": "Git and existing ledgers; no competing source writes",
+    "testNames": "Existing corresponding test paths; announce exact paths if actual repository name differs"
   }
 }
