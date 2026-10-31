@@ -20945,6 +20945,14 @@
       "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP51-PAGINATION-SIX-STATES-CHECK.json",
       "sha256": "75acec4e1dbe91b9775e757f09b2927daf635182b837b62e1a38b68219d46b31",
       "scope": "Each11list responses, page2return/pageSize/reset/stable25IDs/UI SAVE26 newestfirst. Synthetic HTTP/browser only."
+    },
+    "currentQF": {
+      "owner": "QF",
+      "status": "FIXED59_NEW_SALES_FULL_PAGE_REMAINING_DEMO_STATES_RUNNING",
+      "scope": "only normal new-sales SALE full-page uncovered states vs frozenb8bc;reuse accepted identical evidence;no oldv14/normal34/PG/save/scanner repeats",
+      "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
+      "denominator": "37pages+68overlays unchanged",
+      "next": "actual differences immediate originalowner routing;partial remains partial until all applicable page evidence"
     }
   },
   "r1Qa22CaptureStaticReview": {
@@ -21182,14 +21190,14 @@
     },
     "unavailableIncrement": {
       "owner": "F1",
-      "status": "TWO_DISTINCT_CASES_FIXED_TRANSPORT54_BUSINESS59_BROWSER_WORK_DISABLED",
+      "status": "QF_TRANSPORT54_AND_BUSINESS59_LIMITED_ACTUAL_PASS",
       "path": "apps/web/demo-replica/tests/sales-chain-browser.py",
       "scope": "transport fault-injection only; genuine business UNAVAILABLE NOT_TESTED_NO_DECLARED_HOST_INPUT",
       "driverCommit": "7798a27ac3e3b3d3a2b325e338fa5d5742419e55",
       "driverSHA": "f52ef3b904bee13ed0e1ae39182716b45b57d3903d7c17c3a862d3af8da1f84d",
       "checks": "AST/compile/14argumentcombinations/diffcheck; accepted scan-recovery body unchanged; no browser",
-      "blocker": "OriginalQF cua.getState: browsers[] Local browser use is disabled in Work settings; user enablement requested, no alternate control bypass",
-      "next": "F1 exact immutable54 argv; D1 readonly legitimate business UNAVAILABLE seam; run only after allowed browser restored",
+      "blocker": "QF actual cua inventory restored; Work browser disabled error no longer present at this run; prior refusal retained",
+      "next": "Adopt distinct transport and business results; no repeats; realPG/hardware/fullsite/normalUI gaps remain separate",
       "businessProducer": {
         "owner": "D1",
         "status": "QB_LIMITED_SOURCE_PASS",
@@ -21228,6 +21236,22 @@
         "status": "PASS_BUILD_CLOSURE_ONLY",
         "browser": "NOT_EXECUTED_BROWSER_WORK_DISABLED",
         "handoff": "reports/controller/rapid-launch-20261022/ui-preview-f06a0090-unified-cross-page-59/BARCODE-UNAVAILABLE-HANDOFF.WORK-DISABLED.json"
+      },
+      "transportReview": {
+        "owner": "QF",
+        "status": "PASS_LIMITED_ACTUAL_TRANSPORT_FAULT_INJECTION_ONLY",
+        "report": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP54-SCAN-TRANSPORT-CHECK.json",
+        "sha256": "40eef4479d018333c59783893eda9c9d769cf4f895a99f5ae3a6f6f716aa23cb",
+        "scope": "originalFOUND routeabort once;qty1->1->2/paused/retry-noauto/cancel-late-not-resurrect/note-focus-unknownprice/0SAVE;ownprocess0",
+        "notRun": "businessUNAVAILABLE/existingedit/hardware/PG/production/SAVE/P95"
+      },
+      "businessReview": {
+        "owner": "QF",
+        "status": "PASS_LIMITED_ACTUAL_BUSINESS_UNAVAILABLE_AND_RESTORE_SCAN",
+        "report": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP59-BUSINESS-UNAVAILABLE-CHECK.json",
+        "sha256": "5c5daefa3df8188aea02028380ca29edc0ea6c2ba072d255385f5105efc9b4fe",
+        "scope": "normal productCREATE/API DISABLEv2/RESTOREv3 conditions;normal salesdrawer realUNAVAILABLE/nullIDs->explicit retry FOUND sameMAIN/SKU;0SAVE/account/transfer/approval;3PNG;ownprocess0",
+        "notRun": "normalUI DISABLE-RESTORE/realPG/production/hardware/roles/fullsite"
       }
     }
   },
@@ -21462,5 +21486,20 @@
       "rawSHA": "19c5cc52651fa354d7a2aa13feb8a98b2c58c2e01d87f520749f7724d014a5c9",
       "actual": "18responses200/twoaccountCREATEEDIT/audit2,1,2,0,2/operation-target-version-actor-beforeafter/UI/4PNG/ownprocess0"
     }
+  },
+  "r1CandidateSourceCheckpoint20261101": {
+    "status": "CANDIDATE_NOT_RELEASE",
+    "sourceCommit": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
+    "recordsCommit": "8ac40bd92f26d3e06862bdb42c61d1ce75cc9ee6",
+    "archive": "reports/controller/rapid-launch-20261022/source-checkpoint-f06a0090-20261101-NOT-RELEASE.tar.gz",
+    "bytes": 10106384,
+    "sha256": "376aaf69589c302c4e926c728f516437a2c23e1596befbea4760a196557ee546",
+    "sourceFiles": 2174,
+    "sourceBytes": 26098961,
+    "pngCount": 15,
+    "totalFiles": 2220,
+    "manifestSHA": "73fe42040d529868d63c34a3c84940601b5caa804e6b83d2c21f197646aad16a",
+    "verification": "T45 original one archive-integrity check and allsource Gitblob readback;missing59buildinputs0;C receipt+existence adopted",
+    "notClaimed": "This exported source archive not independently offline fully built;realPG/history/fullsite/production remain incomplete;scanner browser evidence completed after archive cutoff, original archive not rewritten"
   }
 }

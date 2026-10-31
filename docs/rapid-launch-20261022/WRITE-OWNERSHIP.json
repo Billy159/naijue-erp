@@ -8483,7 +8483,7 @@
   },
   "r1SalesScannerBrowserDriver": {
     "owner": "F1",
-    "status": "7798A27A_STATIC_ONLY_WORK_BROWSER_DISABLED",
+    "status": "7798A27A_QF_LIMITED_TRANSPORT_BROWSER_PASS_READONLY",
     "paths": [
       "apps/web/demo-replica/tests/sales-chain-browser.py"
     ],
@@ -8511,7 +8511,7 @@
   },
   "r1UnifiedCrossPageBrowser": {
     "owner": "F1",
-    "status": "F06A0090_BUSINESS_UNAVAILABLE_STATIC_FROZEN_WORK_BROWSER_DISABLED",
+    "status": "F06A0090_QF_LIMITED_BUSINESS_UNAVAILABLE59_PASS_READONLY",
     "paths": [
       "apps/web/demo-replica/tests/unified-cross-page-browser.py"
     ],

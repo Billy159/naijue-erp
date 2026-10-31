@@ -3545,3 +3545,10 @@ D1只读定位业务UNAVAILABLE合法条件：生产reader对精确匹配但prod
 原QB业务UNAVAILABLE两叶SOURCE限定PASS采用（c39f1963…），原F1同crossdriver新barcode-unavailable静态case固定f06a0090/hash2721c7f4…；明确正常商品CREATE+原HTTP DISABLE/RESTORE仅准备条件，normal扫码不等UI停用恢复通过。T45已接唯一59闭包准备，Work browser禁用期间不执行。transport54与业务59分开，已验其他链复用，PG/生产仍未测。
 
 T45固定59本地一次producer/闭包PASS：sourcef06a0090/manifest325018fc…/原config064bc2ab…，0.868s/190输出1310输入，准确未执行argv已交。状态NOT_EXECUTED_BROWSER_WORK_DISABLED，未browser/serve/PG/03窗/发布。准备保全同固定源码的CANDIDATE_NOT_RELEASE检查点交付，不据此改判未测项；原r1/ae7/证据/备份保留。
+
+用户明确“继续QF”后，原QF实际cua inventory恢复可用、无Work disabled，原transport54一次独立限定PASS采用（check40eef447…）：真实FOUND请求网络abort/qty1保持/暂停输入保留/显式retry至2/取消迟到不复活/0SAVE/2PNG，自有进程0。本次观察反馈0.107秒非P95。原QF已接业务59单独增量，不混判；实际工具恢复不借其他方式绕过旧禁用。
+
+原QF业务59限定独立实际PASS采用（check5c5daefa…/3PNG），normalCREATE+原API停用v2/恢复v3仅准备条件，normaldrawer UNAVAILABLE/nullIDs暂停不录入，明确重扫回同MAIN/SKU FOUND，0销货SAVE/账户/调拨/审核、自有进程0。与transport54(check40eef447…)分开收口，不重旧套/不声称normalUI停用、PG或硬件通过。
+T45候选源码检查点已完整落盘并采用原单次校验：sourcef06a0090/records8ac40bd9，archive376aaf69…/10106384B，2174源文件/15PNG/总2220文件。未独立离线全包构建，非发布；原包保留。归档截止早于上述两扫码实测，原NOT_EXECUTED记录保留，新QF结论在本台账/独立报告，不改写冻结包。
+
+用户“继续QF”已落实：两扫码新增限定独立实测通过后，原QF接固定59正常“新增销货单/销售”整页尚缺Demo状态/区域，复用有效配对证据，不重旧扫码/后台/保存套、不恢复关闭专项Chat。只在真实完整证据齐时记整页，通过前仍部分；105分母不变，缺接线能力和批准差异分列，明显问题即时回原owner。

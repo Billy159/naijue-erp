@@ -2,7 +2,7 @@
 
 当前权威增量见 docs/rapid-launch-20261022/TASKS.json、PROGRESS.md、HANDOFF.md。下方历史状态不得覆盖当前固定结论。
 
-- 唯一开发目录 work/erp-db-upgrade-r1-preparation-20261031；分支 codex/db-v7-r1-preparation-20261031，远端 github/Billy159/naijue-erp。最近已核远端05f93555101a92d8999689e69906b344b31e3ac9，后续以实际Git回读为准。
+- 唯一开发目录 work/erp-db-upgrade-r1-preparation-20261031；分支 codex/db-v7-r1-preparation-20261031，远端 github/Billy159/naijue-erp。各阶段推送已精确远端回读；最新SHA以主控当轮Git回执为准。
 - 数据库实际运行源码仍b8fd9e14。QA178主库及两个角色已创建、M01/M02已提交；窗口02因遗漏现有ABI回执引用在新Node/业务前拒绝，已安全关闭。最后实际回执为unit inactive/PID0/runtime NOLOGIN、limit0、noCONNECT、sessions0、prep不存在、迁移[1,2]；这不是本轮新服务器探测。
 - 新03最小源码已获原QB限定PASS，准确执行清单4941B/SHA532bbfc79dd39e0de295945f0f06ef8a10060daf64ae63650f7ba90a4cbf95fe，尚待真人确认。不得借自动目标续跑、UI通过或旧02批准启动新03。普通账号V6→V7→V8保存/审核/弃审/新连接读回和备份恢复仍未执行。
 - 原统一合成host与共享事务、组织只读/空厅账户候选、真实提交审计来源已分批固定并获QB限定源码验收。不是PG、真实权限、导入发布或整站可写证明。
@@ -10,8 +10,8 @@
 - 销货跨页固定57已QF限定独立PASS：正常新增商品与账户→MAIN扫码→原账户选用→SAVE/detail DRAFTv1 qty1，金额/收款56800。推荐能力响应缺字段已修并闭环；不重旧scanner全套。
 - 调拨跨页固定58已QF限定独立PASS：正常商品CREATE→MAIN真实SKU→所属组11尺码与矩阵精确一致→qty1 SAVE/detail DRAFTv1。57字典500源于raw组未走原严格投影，4bad最小修经QB与58实际consumer关闭；旧失败现场保留。
 - 最新待扫码候选59：源码f06a009094a30a6cf05fbe1422f83fed8ec146d8，manifest325018fc5de2da6b2354e74fc4a0df335ea868396d3e40321af81afdd23423d0，公开配置064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711。原producer190输出/1310输入闭包通过；与56/57不同版本的证据只按受影响范围复用。
-- 操作记录audit58正常账户CREATE/EDIT与filter/date/关闭重入已由原QF2限定独立实际通过（943acc43…），不是其他模块或PG审计通过。扫码transport54驱动7798和业务UNAVAILABLE59驱动f06a已固定；业务host修复24151经QB源码限定通过。Work本地browser被原QF实际确认禁用，已向用户请求启用，两个新增场景都未执行，不通过其他通道绕过。已验错误/超时/FIFO/保存不重跑。QF/QF2跨页场景已释放自有浏览器/bridge进程。
-- 全站37页＋68类弹层（105项）及全部适用状态尚未完成，不把三条跨页限定PASS写成整页全站通过。真实PG、历史可编辑、实际权限/库存资金事务、真实扫码枪、最终全站差异、完整新包和正式切换仍各自未完成。五项新增性能优化暂停。
+- 操作记录audit58正常账户CREATE/EDIT与filter/date/关闭重入已由原QF2限定独立实际通过（943acc43…），不是其他模块或PG审计通过。扫码transport54驱动7798和业务UNAVAILABLE59驱动f06a已固定；业务host修复24151经QB源码限定通过。Work本地browser曾禁用，用户“继续QF”后原QF实际工具确认恢复；transport54（40eef447…）与业务UNAVAILABLE59（5c5daefa…）已分别限定独立实测通过；业务case原API停用恢复仅准备条件，normalUI该动作无入口未验。已验错误/超时/FIFO/保存不重跑。QF/QF2跨页场景已释放自有浏览器/bridge进程。
+- 全站37页＋68类弹层（105项）及全部适用状态尚未完成，不把三条跨页限定PASS写成整页全站通过。真实PG、历史可编辑、实际权限/库存资金事务、真实扫码枪、最终全站差异、最终完整交付包和正式切换仍各自未完成。候选源码检查点另已保全：f06a0090源码/8ac记录，10,106,384B tar.gz（376aaf69…）、2174源文件/15代表PNG，仅可审查候选且未独立离线全包构建；冻结记录早于两扫码新实测。五项新增性能优化暂停。
 - 用户批准精确7个QB重复副本已删除，约321MiB分配量；未扩大清单。r1/ae7原包、Demo、真实资料、报告截图和备份保留；磁盘余量用实时观测，不能把瞬时恢复倒推先前ENOSPC不存在。
 
 ## 历史阶段记录（以下原文保留，不代表当前状态）
