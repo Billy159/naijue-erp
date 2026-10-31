@@ -170,7 +170,7 @@ try:
             expect(fit.locator('.pc-spec-values')).to_contain_text('A版（标准）')
             page.get_by_role('button', name='编辑颜色', exact=True).click(); dialog = page.get_by_role('dialog').last
             color = dialog.locator('.arco-transfer-view-item').filter(has_text='上青色')
-            expect(color).to_have_count(1); color.get_by_role('checkbox').check()
+            expect(color).to_have_count(1); color.locator('label.arco-checkbox').click(); expect(color.get_by_role('checkbox')).to_be_checked()
             dialog.get_by_role('button', name='move selected right', exact=True).click()
             dialog.get_by_role('button', name='确定', exact=True).click(); expect(dialog).to_have_count(0)
             choose_product('尺码组', 'SYNTHETIC 男装上衣尺码')
