@@ -235,7 +235,10 @@ try:
             menu('sales/new'); page.get_by_role('textbox', name='整单优惠 / 抹零', exact=True).wait_for()
             choose_document('业务类型', '销售'); choose_document('营业厅', '网点营业厅')
             choose_document('客户', '零售客户'); choose_document('出库仓', '备货仓')
-            search = page.get_by_role('combobox', name='商品款号 / 名称 / 条码', exact=True); search.fill(product['code'])
+            search = page.get_by_role('combobox', name='商品款号 / 名称 / 条码', exact=True); expect(search).to_have_count(1)
+            search_key = search.locator('xpath=ancestor::tr').get_attribute('data-entry-row')
+            assert search_key, 'Bind original sales entry before candidate reads can append another blank row'
+            search = page.locator('tr[data-entry-row=' + json.dumps(search_key) + ']').get_by_role('combobox', name='商品款号 / 名称 / 条码', exact=True); search.fill(product['code'])
             candidate = page.locator('[data-sale-candidate][data-finder-option]').filter(has_text=product['code']); candidate.wait_for(); expect(candidate).to_have_count(1)
             products = latest('/api/current-form/products/query', lambda r: r['request'].get('search') == product['code'])
             assert any(item['id'] == product['id'] for item in products['body']['items'])
