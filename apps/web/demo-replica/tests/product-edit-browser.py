@@ -1,16 +1,19 @@
-from visible_wait import keep_visible
 # Recovery of bounded real-artifact smoke; not original lost test source bytes.
 """Real production bytes, real Chromium layout, closed synthetic network. No sandbox bypass.
 Usage: python product-edit-browser.py BUILD OUT --node NODE --chromium CHROMIUM
 New service profile: add --product-entry-service --headed [--keep-open]; requires the C-owned product-entry-service-public-config.json build.
 Exit 2: browser/environment blocked; exit 1: executed smoke failed; exit 0: listed checks passed.
 """
-import argparse, base64, json, mimetypes, subprocess, sys, re, struct, zlib
+import argparse, base64, hashlib, json, mimetypes, subprocess, sys, re, struct, time, zlib
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
-def normalized_declared_configuration(declared, node):
+def fixture_paths(tests=None):
+ directory=Path(tests).resolve() if tests is not None else Path(__file__).resolve().parent
+ return {'tests':directory,'config':directory/'product-entry-service-public-config.json','parser':directory.parents[1]/'src/production-host/configuration.ts','bridge':directory/'production-browser-fixture.mjs','visibleWait':directory/'visible_wait.py'}
+
+def normalized_declared_configuration(declared, node, fixtures=None):
  # Use the producer's parser, including its defaults; do not maintain a second schema here.
- parser=(Path(__file__).resolve().parents[2]/'src/production-host/configuration.ts').as_uri()
+ parser=(fixtures or fixture_paths())['parser'].as_uri()
  script="import {readFileSync} from 'node:fs';import {parseProductionHostConfiguration} from "+json.dumps(parser)+";process.stdout.write(JSON.stringify(parseProductionHostConfiguration(JSON.parse(readFileSync(0,'utf8')))));"
  result=subprocess.run([node,'--experimental-transform-types','--input-type=module','-e',script],input=json.dumps(declared),text=True,capture_output=True,check=True,timeout=30)
  return json.loads(result.stdout)
@@ -33,17 +36,30 @@ def synthetic_png():
  def chunk(kind,data):return struct.pack('!I',len(data))+kind+data+struct.pack('!I',zlib.crc32(kind+data)&0xffffffff)
  return b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('!2I5B',8,4,8,2,0,0,0))+chunk(b'IDAT',zlib.compress((b'\x00'+b'\x12\x34\x56'*8)*4))+chunk(b'IEND',b'')
 
-p=argparse.ArgumentParser();p.add_argument('--product-entry-service',action='store_true');p.add_argument('--width',type=int,default=1440);p.add_argument('--category-overflow',action='store_true');p.add_argument('--headed',action='store_true');p.add_argument('--keep-open',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');args=p.parse_args()
+def binary_evidence(data, headers=None):
+ allowed={key.lower():value for key,value in (headers or {}).items() if key.lower() in ('content-type','content-encoding')}
+ return {'sha256':hashlib.sha256(data).hexdigest(),'length':len(data),'first16hex':data[:16].hex(),'contentType':allowed.get('content-type'),'contentEncoding':allowed.get('content-encoding')}
+
+p=argparse.ArgumentParser();p.add_argument('--product-entry-service',action='store_true');p.add_argument('--width',type=int,default=1440);p.add_argument('--category-overflow',action='store_true');p.add_argument('--headed',action='store_true');p.add_argument('--keep-open',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');p.add_argument('--case',choices=['all','PRODUCT-ENTRY-CATEGORY','PRODUCT-ENTRY-SAVE'],default='all');p.add_argument('--fixture-tests',help='Existing frozen source apps/web/demo-replica/tests directory');args=p.parse_args()
+fixtures=fixture_paths(args.fixture_tests)
+sys.path.insert(0,str(fixtures['tests']))
+from visible_wait import keep_visible
+if args.case!='all' and not args.product_entry_service:p.error('--case requires --product-entry-service')
 build=Path(args.build).resolve();out=Path(args.out).resolve();out.mkdir(parents=True,exist_ok=False)
 manifest=json.loads((build/'production-build.json').read_text());config=manifest['configuration'];origin=config['http']['origin'];base=config['assets']['basePath']
 if args.product_entry_service and (not args.headed or args.category_overflow):raise SystemExit('Service profile requires --headed and no legacy variants')
 expected_origin='https://synthetic-product-entry.invalid' if args.product_entry_service else 'https://synthetic-management.invalid'
 if origin!=expected_origin:raise SystemExit('Smoke requires the declared synthetic-only build configuration')
 if args.product_entry_service:
- declared=json.loads(Path(__file__).with_name('product-entry-service-public-config.json').read_text())
- if config!=normalized_declared_configuration(declared,args.node):raise SystemExit('Service profile build must use the declared C-owned public config')
+ declared=json.loads(fixtures['config'].read_text())
+ if config!=normalized_declared_configuration(declared,args.node,fixtures):raise SystemExit('Service profile build must use the declared C-owned public config')
 allowed={x['path'] for x in manifest['outputs']};allowed.add('index.html')
-result={'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'fixtureProfile':'product-entry-service' if args.product_entry_service else 'product-edit','postgres':False}
+result={'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'fixtureProfile':'product-entry-service' if args.product_entry_service else 'product-edit','postgres':False,'caseSelection':args.case,'fixtureTests':str(fixtures['tests']),'driverSHA256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'fixtureDependencies':{key:{'path':str(fixtures[key]),'sha256':hashlib.sha256(fixtures[key].read_bytes()).hexdigest()} for key in ('config','parser','bridge','visibleWait')}}
+media_started=time.monotonic_ns()
+def record_media(event,path,data,headers=None,status=None):
+ events=result.setdefault('mediaDiagnostics',[])
+ events.append({'sequence':len(events)+1,'elapsedNs':time.monotonic_ns()-media_started,'event':event,'path':path,**binary_evidence(data,headers),**({'status':status} if status is not None else {})})
+ (out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
 bridge=None;browser=None
 variant={'nullable':False,'notSet':False,'image':False,'imageFail':False,'stockFail':False};png='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGOwq/78HwAFUwKs5SlCvgAAAABJRU5ErkJggg=='
 try:
@@ -52,7 +68,7 @@ try:
   try:browser=pw.chromium.launch(executable_path=args.chromium,headless=not args.headed,chromium_sandbox=True)
   except Exception as error:
    result['reason']=str(error);(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));print('BLOCKED_ENV: Chromium could not start with its sandbox enabled');sys.exit(2)
-  bridge=subprocess.Popen([args.node,'--experimental-transform-types',str(Path(__file__).with_name('production-browser-fixture.mjs')),('--product-entry-service' if args.product_entry_service else '--product-edit')]+(['--category-overflow'] if args.category_overflow else []),stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=(out/'fixture-stderr.log').open('w'),text=True,bufsize=1)
+  bridge=subprocess.Popen([args.node,'--experimental-transform-types',str(fixtures['bridge']),('--product-entry-service' if args.product_entry_service else '--product-edit')]+(['--category-overflow'] if args.category_overflow else []),stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=(out/'fixture-stderr.log').open('w'),text=True,bufsize=1)
   context=browser.new_context(viewport={'width':args.width,'height':1000},device_scale_factor=1)
   errors=[];page=context.new_page();page.on('pageerror',lambda error:errors.append(str(error)))
   detail_mode={'next':None,'versionDelta':0};delivered_media=[]
@@ -65,14 +81,20 @@ try:
     mode=detail_mode['next'] if url.path=='/api/transfers/detail/query' else None
     if mode:detail_mode['next']=None
     if mode=='fail':route.fulfill(status=503,content_type='application/json',body='{"error":{"code":"SYNTHETIC_READ_UNAVAILABLE"}}');return
+    if args.product_entry_service and url.path=='/api/products/media/uploads':record_media('upload-dispatched',url.path,request.post_data_buffer or b'',request.headers)
     bridge.stdin.write(json.dumps(wire)+'\n');bridge.stdin.flush();response=json.loads(bridge.stdout.readline())
     if args.product_entry_service:
      body=bridge_response_bytes(response)
-     if 'binaryBase64' in response:delivered_media.append((url.path,body,response['headers']))
+     media_variant=url.path.startswith('/api/products/media/') and url.path.rsplit('/',1)[-1] in ('original','thumbnail')
+     if 'binaryBase64' in response:
+      delivered_media.append((url.path,body,response['headers']))
+      if media_variant:record_media('bridge-binary-response',url.path,body,response['headers'],response['status'])
      try:decoded=json.loads(body)
      except (ValueError,UnicodeDecodeError):decoded=None
      result.setdefault('readResponses',[]).append({'path':url.path,'request':json.loads(wire['body']) if wire.get('body') and request.headers.get('content-type','').startswith('application/json') else {'binaryBytes':len(request.post_data_buffer or b'')},'status':response['status'],'body':decoded,'binaryBytes':len(body) if 'binaryBase64' in response else None})
-     route.fulfill(status=response['status'],headers=response['headers'],body=body);return
+     route.fulfill(status=response['status'],headers=response['headers'],body=body)
+     if 'binaryBase64' in response and media_variant:record_media('browser-route-fulfilled',url.path,body,response['headers'],response['status'])
+     return
     q=json.loads(request.post_data or '{}')
     if url.path=='/api/products/basics/query' and response['status']==200 and variant['nullable']:
      value=json.loads(response['body'])
@@ -147,7 +169,7 @@ try:
     shot('PRODUCT-ENTRY-CATEGORY','rejected');page.locator('#pc-category-form').get_by_role('button',name='取消',exact=True).click()
     item['step']='category fresh route readback';page.goto(origin+'/#products');page.locator('.pc-products').wait_for();page.goto(origin+'/#product-categories');page.locator('.arco-tree-node-title').filter(has_text='SYN DRIVER 分类').wait_for()
     assert page.locator('#pc-category-error.inline-error').count()==0;item['actual']={'targetId':saved_id,'successRole':'status','duplicateStatus':409,'freshReadback':True}
-   run('PRODUCT-ENTRY-CATEGORY',service_category)
+   if args.case in ('all','PRODUCT-ENTRY-CATEGORY'):run('PRODUCT-ENTRY-CATEGORY',service_category)
    def service_product(item):
     item['step']='leave category draft through original cancel'
     category_form=page.locator('.pc-categories #pc-category-form')
@@ -163,7 +185,7 @@ try:
     choose('尺码组','SYNTHETIC 男装上衣尺码');page.locator('.pc-spec-section').filter(has=page.get_by_role('heading',name='颜色',exact=True)).filter(has_text='SYN DRIVER 蓝').wait_for()
     item['step']='2026 scheme and whole-group draft preview';page.get_by_role('tab',name='条码',exact=True).click();scheme=page.get_by_label('主条码默认方案',exact=True);scheme.filter(has_text='2026年条码方案').wait_for()
     page.wait_for_function("document.querySelectorAll('.pc-barcode-table tbody tr').length===11")
-    item['step']='real PNG upload';page.get_by_role('tab',name='图片',exact=True).click();image=synthetic_png();page.locator('.pc-photo-section').filter(has=page.get_by_role('heading',name='主图',exact=True)).locator('input[type=file]').set_input_files({'name':'synthetic-driver.png','mimeType':'image/png','buffer':image})
+    item['step']='real PNG upload';page.get_by_role('tab',name='图片',exact=True).click();image=synthetic_png();record_media('expected-png','synthetic-driver.png',image,{'content-type':'image/png'});page.locator('.pc-photo-section').filter(has=page.get_by_role('heading',name='主图',exact=True)).locator('input[type=file]').set_input_files({'name':'synthetic-driver.png','mimeType':'image/png','buffer':image})
     page.get_by_role('button',name='保存',exact=True).wait_for(state='visible');page.wait_for_function("[...document.querySelectorAll('button')].some(b=>b.textContent==='保存'&&!b.disabled)")
     uploads=[x for x in result['readResponses'] if x['path']=='/api/products/media/uploads'];assert len(uploads)==1 and uploads[0]['status']==200 and uploads[0]['body']['uploadId'];assert uploads[0]['request']['binaryBytes']==len(image)
     item['step']='original V2 SAVE and detail readback';page.get_by_role('button',name='保存',exact=True).click();page.wait_for_url(re.compile(re.escape(origin)+r'/#products/view/[0-9a-f-]+$'))
@@ -176,7 +198,7 @@ try:
     details=[x['body'] for x in result['readResponses'] if x['path']=='/api/products/maintenance/v2/detail/query' and x['status']==200 and x['body']];assert details and len(details[-1]['skus'])==11 and len(details[-1]['barcodes'])==11
     assert len([x for x in result['readResponses'] if x['path']=='/api/products/v2/commands'])==1
     shot('PRODUCT-ENTRY-SAVE','reopened');item['actual']={'productId':product_id,'version':details[-1]['version'],'skus':11,'barcodes':11,'originalImageBytes':len(image),'saveCalls':1}
-   run('PRODUCT-ENTRY-SAVE',service_product)
+   if args.case in ('all','PRODUCT-ENTRY-SAVE'):run('PRODUCT-ENTRY-SAVE',service_product)
   else:
    target='00000000-0000-4000-8000-000000004000'
    page.goto(origin+'/#products/edit/'+target);page.get_by_label('商品名称',exact=True).wait_for();page.wait_for_function("document.querySelector('input[aria-label=商品名称]')?.value==='商务免烫衬衫'")
