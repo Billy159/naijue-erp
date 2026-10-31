@@ -19812,7 +19812,7 @@
   },
   "databaseUpgradeR1": {
     "status": "PREPARATION_IN_PROGRESS_NOT_DEPLOYED",
-    "sourceCheckpoint": "56bc305a4812574cbdfef9a27e4c3ac552b92c2d",
+    "sourceCheckpoint": "b8fd9e14a9b3453951ac21442263e79fc00467ef",
     "branch": "codex/db-v7-r1-preparation-20261031",
     "sourceFiles": 2129,
     "remoteReadbackMatches": true,
@@ -19837,12 +19837,12 @@
     },
     "owners": {
       "C": "Git integration and existing three ledgers",
-      "D1": "Source-derived V6 ACL constraints trigger candidate matrix only",
+      "D1": "Preparation13 exact11 frozen; directed findings only; source implementation owner",
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "Unix four-leaf source PASS; recovery successor02 source PASS; exact pre-V7 preparation host composition and distinct role/ACL execution plan in progress",
-    "next": "T45 minimal fixed connection timeout repair after QB closes carrier review; D1 new-target fixture/proof preparation continues; no database execution",
+    "current": "Preparation13 exact11 fixed b8fd9e14 QB source PASS; installer03 lifecycle source PASS; T45 successor04 exact ACL/application/collector/host composition in progress",
+    "next": "Receive QB preparation13 decision and T45 fixed carrier; review only new affected scope; prepare final concrete isolated execution confirmation before any role/database/GRANT/run",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
     "approvedHistoricalBalanceRule": "NULL_UNKNOWN_NO_BACKFILL",
@@ -19920,7 +19920,7 @@
       "status": "QB_PASS_SINGLE_LEAF_SOURCE_ONLY_REAL_PG_NOT_RUN",
       "reportBytes": 8233,
       "reportSha256": "5f8b5372f2ae9290efeedec3067a01b4173d3ba3194bdfbef93ddc964f2ea9b9",
-      "newTargetFixtures": "D1_ONLY_THREE_REGISTERED_LEAVES_WIP_NOT_ACCEPTED",
+      "newTargetFixtures": "FIXED_F421EDFB_WITH_FC7C03BF_FIX_QB_SOURCE_PASS_ACTUAL_DATA_NOT_READY",
       "existingCallChainSha256": "0e3e877503af7bd2c8ab63e5554fe279088c0b36114d124c55a159a70c42ef99",
       "remaining": "Original T45 private reviewed host/actual target/ordinary-login/capacity lifecycles; existing exported functions suffice, no new runner"
     },
@@ -19960,7 +19960,7 @@
       "checkpoint": "f421edfb57ecb275dc91fa78533c74a473792770",
       "status": "QB_PASS_F01_FIXED_AND_FINITE_PROVIDER_SOURCE_ONLY_NO_ACTUAL_DATA",
       "reportSha256": "c42c7ca236fb4e56af0893bd05c1ec876ae9bb1a91b25f7f7f440e5b7afdf851",
-      "providerSuccessor": "TWO_LEAVES_DELIVERED_15_DIRECTED_PASS_PENDING_QB_SOURCE_REVIEW_NO_DATA_OR_GRANT",
+      "providerSuccessor": "FIXED_FC7C03BF_QB_SOURCE_PASS_NO_ACTUAL_DATA_OR_GRANT",
       "actualDataReady": false,
       "qbReportSha256": "cd8fb6f39cb61440a18f4a801a425a143fa1329263f5f46990d69f95455cdc5a",
       "acceptedSuccessorCheckpoint": "fc7c03bfa98ae97e41d94d91a4d244c27fc7b07b",
@@ -19969,9 +19969,9 @@
     "qaUnixApproval": "Human call_7f5633370b664b06823b617c5848411b/0",
     "qaUnixV7ReportSha256": "21eeb601bf45a4d4190f12f54a1344da1bddd8cb64b5377b750ffc0c3eaf65f8",
     "preparationRoute": {
-      "status": "PREPARATION13_SOURCE_CONTRACT_APPROVED_IMPLEMENTATION_ASSIGNED",
+      "status": "PREPARATION13_FIXED_AWAITING_QB_AND_T45_CARRIER",
       "owner": "D1 minimal test-only composition; T45 installer/environment",
-      "sequence": "Strict135/V6 prerequisite, separate preparation LOGIN original V4 exact12, synthetic PUBLISH, fence preparation access, V7 then V8, genuine ordinary runtime LOGIN business acceptance",
+      "sequence": "Strict135/V6 prerequisite; separate preparation LOGIN with approved PREPARATION13_V1 proof and exact preparation ACL; synthetic PUBLISH; fence/close preparation access; fresh ordinary V6 proof; V7 then V8; genuine ordinary runtime LOGIN business acceptance",
       "minimalSourceLeaf": "tests/integration/current-runtime26-preparation-host.ts",
       "proposedPreparationRole": "v7_r1_prepare_20261031_01",
       "actualRoleAclApproval": "NOT_GRANTED_MUST_BIND_FINAL_EXACT_EXECUTION_CONFIRMATION",
@@ -19982,12 +19982,12 @@
       "hostChecks": "Strict types and4 directed early-rejection/routing checks PASS; no successful PG publication executed",
       "qbReportSha256": "99d3633cef3966803fa7ecce105ee5cbb9918bdf36ef8ce050ab8dde55005de1",
       "newGap": "inventory_ledger AFTER INSERT statement guard reads history_revision user columns and xmin even baseline branch; old V4 exact12 excludes history_revision, adding privilege conflicts with proof",
-      "next": "D1 precise preparation-profile successor proposal before implementation; T45 unaffected role/inverse carrier preparation; no guard bypass or ordinary V8 widening",
+      "next": "Receive QB preparation13 decision and T45 fixed carrier; review only new affected scope; prepare final concrete isolated execution confirmation before any role/database/GRANT/run",
       "hostSourceAcceptanceBoundary": "Existing two-leaf source PASS retained, not proof of privilege completeness or real publication",
       "proposalSha256": "93874f36abe78109adaed7fbdb692dead8b6384c3fca32749497f5845c83c5b1",
       "pendingHumanConfirmation": null,
       "lifecycleCarrier": {
-        "status": "PARTIAL_LOCAL_SOURCE_PREP_ACL_APPLY_BLOCKED",
+        "status": "INSTALLER03_LIFECYCLE_SCOPED_SOURCE_PASS_NO_PREPARATION_ACL_APPLY_OR_ACTUAL_HOST_RUN",
         "scriptSha256": "958e5cca5c9c08c15be87f13b42229c37d9023a111c1f248dc155c00cfdfd3a0",
         "reportSha256": "803b145df120672264c49a3765c7fc3624a1e1edb30451b8d81f506063693735",
         "newOfflineChecks": 6,
@@ -19996,7 +19996,7 @@
       "preparation13Approval": "Human call_2636564572514a74923a34deeeddf9b9/0 APPROVED_SOURCE_ONLY"
     },
     "preparation13Source": {
-      "status": "FIXED_AWAITING_QB_INCREMENTAL",
+      "status": "QB_PASS_EXACT11_SOURCE_ONLY_NO_ACTUAL_GRANT",
       "commit": "b8fd9e14a9b3453951ac21442263e79fc00467ef",
       "approval": "human call_2636564572514a74923a34deeeddf9b9/0",
       "files": 11,
@@ -20009,7 +20009,9 @@
       "reviewOwner": "QB",
       "report": "reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/PREPARATION13-SOURCE-RESULT.json",
       "next": "QB fixed-source incremental review; T45 original carrier successor exact ACL/apply/inverse/collector/host composition",
-      "environmentExecuted": false
+      "environmentExecuted": false,
+      "qbReportSha256": "c058963910eee778552c594770dcbe1a4627b9f9bd1f63f3ccdc0a6ec0f2dc8f",
+      "qbReportBytes": 8170
     },
     "installer03LifecycleReview": {
       "status": "SCOPED_SOURCE_PASS_CHAIN_PARTIAL",
@@ -20018,6 +20020,8 @@
       "report": "reports/qa-backend/rapid-launch-20261022/QB/INSTALLER-PREPARATION-LIFECYCLE-20261031/QB-INSTALLER-PREPARATION-LIFECYCLE-RESULT.json",
       "sha256": "f02e17e564379bbbe6a9c0eb37179b52f0ffd946e9258312e12eeaea534fa377",
       "actualLoginOrGrant": false
-    }
+    },
+    "r1AdoptionCheckpoint": "56bc305a4812574cbdfef9a27e4c3ac552b92c2d",
+    "lastVerifiedRemoteCheckpoint": "0fd2ad0197e44359054a0514ca1910069db9a283"
   }
 }

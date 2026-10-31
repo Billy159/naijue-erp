@@ -1,3 +1,7 @@
+## 2026-10-31 preparation13 independent result adopted
+
+QB accepted b8fd9e14 exact11 source increment, no new findings. Receipt8170B SHA c058963910eee778552c594770dcbe1a4627b9f9bd1f63f3ccdc0a6ec0f2dc8f. Proof covers exact13 xmin; the additional history_revision15 business columns plus xmin still require T45 exact carrier and real catalog verification. No16READ, publication or ordinary-login business execution is claimed. T45 successor04 continues; existing installer03/source checks are reused.
+
 ## 2026-10-31 preparation13 fixed-source continuation
 
 Human call_2636564572514a74923a34deeeddf9b9/0 approved source/contract preparation only. D1 exact11 file pins were independently matched to its handoff and frozen at `b8fd9e14a9b3453951ac21442263e79fc00467ef`. Targeted10/0/0, strict two TS roots and syntax checks passed per owner evidence; no full-suite rerun. QB now reviews only this fixed increment. PREPARATION13_V1 is separate from oldV4 and ordinaryV6/V7/V8; no ordinary permission expansion or trigger change.

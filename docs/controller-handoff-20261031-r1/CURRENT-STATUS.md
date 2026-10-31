@@ -1,3 +1,7 @@
+## 2026-10-31 preparation13 independent result adopted
+
+QB accepted b8fd9e14 exact11 source increment, no new findings. Receipt8170B SHA c058963910eee778552c594770dcbe1a4627b9f9bd1f63f3ccdc0a6ec0f2dc8f. Proof covers exact13 xmin; the additional history_revision15 business columns plus xmin still require T45 exact carrier and real catalog verification. No16READ, publication or ordinary-login business execution is claimed. T45 successor04 continues; existing installer03/source checks are reused.
+
 ## 2026-10-31 preparation13 fixed-source continuation
 
 Human call_2636564572514a74923a34deeeddf9b9/0 approved source/contract preparation only. D1 exact11 file pins were independently matched to its handoff and frozen at `b8fd9e14a9b3453951ac21442263e79fc00467ef`. Targeted10/0/0, strict two TS roots and syntax checks passed per owner evidence; no full-suite rerun. QB now reviews only this fixed increment. PREPARATION13_V1 is separate from oldV4 and ordinaryV6/V7/V8; no ordinary permission expansion or trigger change.
@@ -8,7 +12,7 @@ QB installer03 lifecycle scoped source PASS adopted (receipt SHA f02e17e564379bb
 
 ## Fixed source and Git
 
-Worktree: work/erp-db-upgrade-r1-preparation-20261031. Branch: codex/db-v7-r1-preparation-20261031. Latest source checkpoint: fc7c03bf (fresh provider successor and exact ledger receipt-ID fix); remote verification is recorded per push. Every one of the 2,129 declared r1 source files was adopted at 56bc305a; 6a85 is comparison provenance only. Original worktree WIP, frozen Demo and historical evidence remain protected.
+Worktree: work/erp-db-upgrade-r1-preparation-20261031. Branch: codex/db-v7-r1-preparation-20261031. Latest source checkpoint: b8fd9e14 (approved preparation13 exact11); prior provider/receipt-ID fix fc7c03bf remains adopted; remote verification is recorded per push. Every one of the 2,129 declared r1 source files was adopted at 56bc305a; 6a85 is comparison provenance only. Original worktree WIP, frozen Demo and historical evidence remain protected.
 
 No deployment workflow or webhook was present when checked. CI is NOT_CONFIGURED, not PASS. No production deployment has been performed.
 
@@ -24,7 +28,7 @@ No deployment workflow or webhook was present when checked. CI is NOT_CONFIGURED
 
 ## Current owners and next work
 
-C alone owns Git and TASKS/PROGRESS/HANDOFF. D1 is writing only the test-only provider and corresponding unit test successor for fresh target/capture/money/source-input envelopes; the three delivered fixture leaves and integration entry are frozen. QB reviews fixed commits and incremental findings only. T45 alone prepares installer, backup/restore/readback and future server/database execution through the existing channel.
+C alone owns Git and TASKS/PROGRESS/HANDOFF. D1 has handed back preparation13 exact11 at b8fd9e14; QB is reviewing only that fixed increment. The provider, fixtures and integration source reviews are adopted; actual target data are not ready. QB reviews fixed commits and incremental findings only. T45 alone prepares installer, backup/restore/readback and future server/database execution through the existing channel.
 
 T45 has identified that existing backup tools bind production or old QA, and is preparing this target's executable recovery carrier. Restore must compare actual captured synthetic facts, not invented expected balances. Old application compatibility with V8 is unproven. After new writes or unknown commit, no old dump overwrite or destructive schema downgrade is allowed.
 
@@ -32,6 +36,6 @@ T45 has identified that existing backup tools bind production or old QA, and is 
 
 The current r1 target is not complete V6: four missing routines, three body mismatches and exact ACL/constraint/trigger predecessors must be repaired against independently established source expectations. Migrations1–26 do not prove completeness. Do not overwrite expected hashes with actual values or sequentially replay old patches on the live target.
 
-Human call_7f5633370b664b06823b617c5848411b/0 has now approved the finite QA Unix preparer source extension only. T45 owns V7 and its directly affected tests; D1 owns V8 and its tests. Implementation is in progress; no environment execution is authorized. QA275 observed no TCP listener and /qa-socket:5432; no service configuration was changed. New database/role OIDs, target catalogs and private execution inputs must come from actual observations and independent review.
+Human call_7f5633370b664b06823b617c5848411b/0 has now approved the finite QA Unix preparer source extension only. T45 owns V7 and its directly affected tests; D1 owns V8 and its tests. The four-leaf finite QA Unix source was fixed at6471f2ca and accepted byQB. No environment execution is authorized. QA275 observed no TCP listener and /qa-socket:5432; no service configuration was changed. New database/role OIDs, target catalogs and private execution inputs must come from actual observations and independent review.
 
 No new database, actual grant, seed/import, ordinary-login business run, restore or service deployment has been performed. The next concrete execution request must bind the reviewed carrier, source, exact target, least privileges, time window and cleanup; production coordinated cutover requires its own confirmation after isolated acceptance and backup/restore evidence. The full goal remains active.
