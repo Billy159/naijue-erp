@@ -20854,7 +20854,7 @@
     "remaining": "Actual target/session for capture reviews, private bootstrap and current window human approval pending; no PostgreSQL actions authorized by these technical reviews."
   },
   "r1Qa178NewFiniteWindowConfirmation": {
-    "status": "HUMAN_CONFIRMED_ORIGINAL_T45_A0_ASSIGNED",
+    "status": "FRESH_A0_MATCHED_C_WINDOW_AND_SOURCE_ADOPTION_ISSUED_T45_EXECUTING",
     "documentSha256": "02379141c17d6c39be87eec8660a0e81d1a95e89ea5b8243f985b1c43ef47984",
     "document": "reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/PRIVATE-PROCESS-QA22-SHARED-POOL-PINS-SOURCE-05/FINAL-ENVIRONMENT-CONFIRMATION-DELTA.NOT-APPROVAL.md",
     "scope": "Same original QA178 target; 90min action+15min cleanup; source06/source05 reviewed shared original pool app1+observer1, cleanup1 reserved; actual facts required by phase. Prior M01/M02 not replayed.",
@@ -20863,12 +20863,15 @@
       "answer": "确认本批新隔离窗口及准确清单",
       "scopeSha256": "02379141c17d6c39be87eec8660a0e81d1a95e89ea5b8243f985b1c43ef47984"
     },
-    "actualT0": null,
+    "actualT0": "2026-10-31T21:08:24+08:00",
     "armed": false,
     "executionOwner": "T45",
     "noProductionChange": true,
-    "T0": null,
-    "next": "OriginalT45 freshactualA0/oldterminal/rawpins/currentbudget before new finite90+15 clock/phase execution; M01/M02 not replayed; no production"
+    "T0": 1793452104,
+    "next": "T45 exact new two files materialization and ARM; actual252 review then exactentry action; M03 follows real prerequisites, no M01/M02 replay",
+    "actionExpiresAtEpoch": 1793457504,
+    "cleanupDeadlineEpoch": 1793458404,
+    "cWindowSha256": "96d3142f65510e97df78c5befc1eedb1b3c9e83884a439f21287a1866592ae97"
   },
   "r1PaymentSettingsWriteReadbackFollowup": {
     "owner": "F3",
@@ -20987,11 +20990,11 @@
   },
   "r1ProductReadonlyNormalEntry": {
     "owner": "QF2",
-    "status": "QF2_53_REAL_STOCK_UNKNOWN_CONFIRMED_DRIVER_WRONG_COMPONENT_HINT_EXPECTATION_IDENTIFIED",
+    "status": "QF2_PASS_LISTED_STOCK_ONLY_SYNTHETIC_STEPS",
     "setup": "One necessary synthetic CREATE200 only, onSaved normal VIEW route; old full CREATE/media/11SKU suite not rerun",
-    "actual": "Basic/spec/barcode/prices/emptyimages200; stock failure UI without newHTTP observed, no fabricated501",
+    "actual": "6 steps PASS, 4 stock200,22 UNKNOWN/null keys/2rows,ALL/NON_ZERO/history reentry,0 oldmediaSKU retest",
     "notClaimed": "Not production defect or zero stock; fixed48 stock capability off and originalhost stockReader:null are source clues",
-    "next": "Preserve oldFAIL, QF2 successor checks actual visible semantic UNKNOWN/not0 and original strict protocol then remaining modes/reentry; no app text added for test.",
+    "next": "Retain limited evidence; PG/knownscene/browser403/fullpage not passed",
     "realPg": false,
     "diagnosis": "Capped48 config lacks readOverview, host stockReader null; single flag would only503. Formal stock reader/API exist; no production defect proved.",
     "source": "0a2fa82d0835273f919a2a026766b73361e5c5d9",
@@ -21011,7 +21014,12 @@
       "configSha256": "764d4978d6c47924b58635a6914077acd99fbe0622e097c8468bc77e54c58525",
       "producer": "1 run PASS185outputs1308inputs;0install;old48/52preserved"
     },
-    "failure": "Expected hint exists only old product-page-stock.tsx:53, actualnormal consumer detail.tsx:59 has correct visible UNKNOWN head/rows but no such noncontract hint."
+    "failure": "Expected hint exists only old product-page-stock.tsx:53, actualnormal consumer detail.tsx:59 has correct visible UNKNOWN head/rows but no such noncontract hint.",
+    "browserResult": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/PRODUCT53-STOCK-0A2FA82D-20261031-01-CONSUMERFIX01/QF2-RESULT.json",
+      "sha256": "716a8e63caeae0b070127362ffdd9f0e9788fd04e8ddc6420fa6957ccc8cd349"
+    },
+    "wholePagePass": false
   },
   "r1StaffNameContactReadback": {
     "owner": "QF2",
