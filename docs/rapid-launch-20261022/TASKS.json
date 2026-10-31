@@ -20948,11 +20948,16 @@
     },
     "currentQF": {
       "owner": "QF",
-      "status": "FIXED59_NEW_SALES_FULL_PAGE_REMAINING_DEMO_STATES_RUNNING",
+      "status": "CANDIDATE59_NEW_SALES_CHECK_RUNNING_DEMO_PAIR_LOGIN_WAIT",
       "scope": "only normal new-sales SALE full-page uncovered states vs frozenb8bc;reuse accepted identical evidence;no oldv14/normal34/PG/save/scanner repeats",
       "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
       "denominator": "37pages+68overlays unchanged",
-      "next": "actual differences immediate originalowner routing;partial remains partial until all applicable page evidence"
+      "next": "actual differences immediate originalowner routing;partial remains partial until all applicable page evidence",
+      "demoPairing": {
+        "observed": "original8877 settings/stores login expired and own new sales/new tab loginpage; own newtab closed, original not refreshed, no credentials read",
+        "baselineEvidenceZip": "8877-ui-evidence-b8bcfe3.zip README says0screens;exact source-layout evidence only, not paired screenshot",
+        "action": "user Demo login requested; continue fixed59 candidate checks; page remains PARTIAL pending actual comparable states"
+      }
     }
   },
   "r1Qa22CaptureStaticReview": {
