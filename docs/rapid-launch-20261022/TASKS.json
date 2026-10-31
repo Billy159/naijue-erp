@@ -20854,15 +20854,21 @@
     "remaining": "Actual target/session for capture reviews, private bootstrap and current window human approval pending; no PostgreSQL actions authorized by these technical reviews."
   },
   "r1Qa178NewFiniteWindowConfirmation": {
-    "status": "CONCRETE_USER_CONFIRMATION_REQUEST_PENDING_NO_EXECUTION",
+    "status": "HUMAN_CONFIRMED_ORIGINAL_T45_A0_ASSIGNED",
     "documentSha256": "02379141c17d6c39be87eec8660a0e81d1a95e89ea5b8243f985b1c43ef47984",
     "document": "reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/PRIVATE-PROCESS-QA22-SHARED-POOL-PINS-SOURCE-05/FINAL-ENVIRONMENT-CONFIRMATION-DELTA.NOT-APPROVAL.md",
     "scope": "Same original QA178 target; 90min action+15min cleanup; source06/source05 reviewed shared original pool app1+observer1, cleanup1 reserved; actual facts required by phase. Prior M01/M02 not replayed.",
-    "humanApproval": null,
+    "humanApproval": {
+      "source": "Human reply in controller call_f08907e7936a40ce97ffd48bbc52399b/0",
+      "answer": "确认本批新隔离窗口及准确清单",
+      "scopeSha256": "02379141c17d6c39be87eec8660a0e81d1a95e89ea5b8243f985b1c43ef47984"
+    },
     "actualT0": null,
     "armed": false,
     "executionOwner": "T45",
-    "noProductionChange": true
+    "noProductionChange": true,
+    "T0": null,
+    "next": "OriginalT45 freshactualA0/oldterminal/rawpins/currentbudget before new finite90+15 clock/phase execution; M01/M02 not replayed; no production"
   },
   "r1PaymentSettingsWriteReadbackFollowup": {
     "owner": "F3",
@@ -20981,11 +20987,11 @@
   },
   "r1ProductReadonlyNormalEntry": {
     "owner": "QF2",
-    "status": "QB_INCREMENT_PASS_FIXED53_BUILD_READY_QF2_STOCK_ONLY_IN_PROGRESS",
+    "status": "QF2_53_REAL_STOCK_UNKNOWN_CONFIRMED_DRIVER_WRONG_COMPONENT_HINT_EXPECTATION_IDENTIFIED",
     "setup": "One necessary synthetic CREATE200 only, onSaved normal VIEW route; old full CREATE/media/11SKU suite not rerun",
     "actual": "Basic/spec/barcode/prices/emptyimages200; stock failure UI without newHTTP observed, no fabricated501",
     "notClaimed": "Not production defect or zero stock; fixed48 stock capability off and originalhost stockReader:null are source clues",
-    "next": "QF2 exact stock-only successor driver and visible normalCREATE→onSaved→real overview request/UNKNOWN/ALL-NON_ZERO/reentry; no old5tab/SKU/media retest",
+    "next": "Preserve oldFAIL, QF2 successor checks actual visible semantic UNKNOWN/not0 and original strict protocol then remaining modes/reentry; no app text added for test.",
     "realPg": false,
     "diagnosis": "Capped48 config lacks readOverview, host stockReader null; single flag would only503. Formal stock reader/API exist; no production defect proved.",
     "source": "0a2fa82d0835273f919a2a026766b73361e5c5d9",
@@ -21004,7 +21010,8 @@
       "manifestSha256": "046d01bd3de1e1e1745cb047641f27258c3f6a91bd5c70b2e150c64414762ca3",
       "configSha256": "764d4978d6c47924b58635a6914077acd99fbe0622e097c8468bc77e54c58525",
       "producer": "1 run PASS185outputs1308inputs;0install;old48/52preserved"
-    }
+    },
+    "failure": "Expected hint exists only old product-page-stock.tsx:53, actualnormal consumer detail.tsx:59 has correct visible UNKNOWN head/rows but no such noncontract hint."
   },
   "r1StaffNameContactReadback": {
     "owner": "QF2",

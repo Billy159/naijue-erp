@@ -3442,3 +3442,6 @@ D3有限合成库存事实/授权三叶方案已交原D1实施，默认hostnull�
 
 
 库存候选53已固定构建，source0a2fa82d/manifest046d01bd/config764d4978，185outputs/1308inputs，QB六叶独核cb4e485e已采用（另补撤权/取消/未声明3探针，旧11+4不重跑）。QF2持独占，准备并运行精确stock-only后继，只正常必要CREATE→onSaved→实际库存请求/UNKNOWN/切换/重入，不借旧48失败或旧5tab冒53通过。原QF并行只读准备调拨APPROVED/VOID正常入口剩余状态，原合法实际命令setup、不造static状态、不重DRAFT链；等待stock窗口交回。新数据库隔离窗口未答，正式和实际QA不动。
+
+
+用户实际答复call_f08907e7936a40ce97ffd48bbc52399b/0“确认本批新隔离窗口及准确清单”，C逐字节复核原8646B/02379141一致，已交原T45优先fresh A0→按阶段执行，新T0/ARM尚待实际回执，M01/M02不重放；不是正式授权。UI53首次真实stock200返回2仓22UNKNOWN/null且实际头/行未知，失败仅driver借旧product-page-stock:53短句（当前detail:59未消费），C定向纠正错consumer预期，保留旧FAIL并以实际未知/not0原严格语义续剩余切换/重入，不为测试额外加Demo文案。
