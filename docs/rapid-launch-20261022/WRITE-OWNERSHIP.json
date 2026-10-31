@@ -8534,7 +8534,7 @@
   },
   "r1UnifiedPaymentRecommendationContract": {
     "owner": "D1",
-    "status": "REPRODUCE_THEN_FIX",
+    "status": "DELIVERED_1FAB7FA6_READONLY_QB_INCREMENT",
     "model": "gpt-6.1-sol/medium",
     "paths": [
       "apps/web/demo-replica/tests/unified-service-fixture.mjs",
