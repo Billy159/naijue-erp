@@ -1,3 +1,5 @@
+2026-10-31 原QB V7/V8有限QA Unix四叶合批源码PASS采用：固定6471f2ca，report6985B/SHA4ee11cdb090ef215e07f46933ec3fd57a8ca0ff9ea92a7ba146a5e09dfa9fdae。原17+7检查复用，无新发现；不覆盖恢复F02/F03，也不冒建库/实际权限/普通LOGIN/PG业务通过。下一原T45后继关闭恢复2项，随后准确原宿主安装/审核/输入/执行清单收齐再申请环境执行。
+
 2026-10-31 原QB恢复载体完整NEED_FIX仅F02/F03（report10831B/SHAf1988a86）已采用：ledger关键5字段敏感性与复用备份的当前DBACL快照比较缺失。原T45已独占接一次最小后继修复，仅补2定向负例/受影响正例/语法，不重旧8及SQL。原误报F01已撤回；0实际PG/backup/restore/权限。原QB接续固定6471f2ca的V7/V8四叶Unix窄验，原宿主调用组合输入仍缺实际事实/准确执行确认。
 
 2026-10-31 恢复carrier原QB新增有效F02/P2：ledger投影遗漏两原行引用/endpoint/business_date/posted_at，可令不同整行误得同snapshot；仅为恢复完整性证据缺口，不称实际损坏。待本包审查完整交回后原T45最小后继补5字段或私有整行摘要/敏感性负例，原carrier保持冻结。前F01序列排序误报已撤回，不修。实际PG/backup/restore仍0。
