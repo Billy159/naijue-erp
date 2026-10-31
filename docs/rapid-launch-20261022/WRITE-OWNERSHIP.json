@@ -8483,7 +8483,7 @@
   },
   "r1SalesScannerBrowserDriver": {
     "owner": "F1",
-    "status": "UNAVAILABLE_ONLY_INCREMENT_PREPARATION_F1",
+    "status": "7798A27A_STATIC_ONLY_WORK_BROWSER_DISABLED",
     "paths": [
       "apps/web/demo-replica/tests/sales-chain-browser.py"
     ],
@@ -8541,5 +8541,15 @@
       "apps/web/demo-replica/tests/unified-service-fixture.test.mjs"
     ],
     "scope": "Only original recommended-candidate response facts and original HTTP reader decode test; preserve accepted audit successor; no SQL/reader guard change"
+  },
+  "r1UnifiedBusinessBarcodeUnavailable": {
+    "owner": "D1",
+    "model": "gpt-6.1-sol/medium",
+    "status": "REPRODUCE_THEN_MINIMAL_TEST_HOST_FIX",
+    "paths": [
+      "apps/web/demo-replica/tests/unified-service-fixture.mjs",
+      "apps/web/demo-replica/tests/unified-service-fixture.test.mjs"
+    ],
+    "scope": "real retained product aggregate DISABLE -> original PostgresCurrentFormReader finite query port -> original HTTP/frontend reader UNAVAILABLE; no productionSQL/contract/permission change or fabricated state"
   }
 }

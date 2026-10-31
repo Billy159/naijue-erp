@@ -3535,3 +3535,7 @@ audit58 attempt01真实两账户写及操作记录200/total2，operation/target/
 audit58 attempt02原F1实际限定自检PASS，raw4977908b…/回执60d452c3…/4PNG。两账户CREATE/EDIT真实operation/target/version/actor/名称beforeafter/UI匹配；五次audit200 totals2/1/2/0/2、日期筛选/未执行条件关闭不查询/重入/重置通过，自有进程0。原QF2已接同58+fixeddriver独立一次，不重后台21写/资料/单据；真实PG/其他模块/完整Demo布局仍未测。
 
 原QF2 audit58限定独立实际PASS采用：raw19c5cc52…/QF2RESULT943acc43…/4PNG；18响应200、恰2账户CREATE/EDIT、真实operation/target/version/actor/beforeafter/UI、filter/date/关闭重入及totals2/1/2/0/2通过，自有资源0。原F1下一仅接扫码明确未测UNAVAILABLE/transport错误准备，复用已过NOT_FOUND/超时/FIFO/保存，不重全套。PG/真实ACL/全站及新03批准仍未完成。
+
+扫码transport故障定向driver固定7798a27a/hashf52ef3b9…，仅静态准备通过，不记browser或业务UNAVAILABLE PASS。原QF实际cua状态browsers[]/Work禁用本地browser，已向用户请求启用，不用Playwright/CLI换通道绕过。F1仅补原54冻结输入准确未执行argv，D1只读核真实UNAVAILABLE合法service接缝；已过NOT_FOUND/timeout/FIFO/SAVE不重。
+
+D1只读定位业务UNAVAILABLE合法条件：生产reader对精确匹配但product/SKU等disabled返回UNAVAILABLE；现统一host预先滤掉disabled会误NOT_FOUND。原D1仅两testhost叶获租，先复现正常CREATE/原MAIN/DISABLE，再经原Postgres reader有限合成query端口修准确producer，非手写假响应/非生产合同改动；真实PG与browser仍未测，工具禁用不绕过。

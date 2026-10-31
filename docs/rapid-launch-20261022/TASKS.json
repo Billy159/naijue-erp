@@ -21182,9 +21182,28 @@
     },
     "unavailableIncrement": {
       "owner": "F1",
-      "status": "CHECK_EXISTING_EVIDENCE_OR_PREPARE_ONLY",
+      "status": "DRIVER_FIXED_STATIC_ONLY_BROWSER_WORK_DISABLED",
       "path": "apps/web/demo-replica/tests/sales-chain-browser.py",
-      "scope": "only explicitly remaining UNAVAILABLE/transport failure visible pause/recovery/cancel/no late resurrection; no repeats of accepted NOT_FOUND/timeout/FIFO/save cases"
+      "scope": "transport fault-injection only; genuine business UNAVAILABLE NOT_TESTED_NO_DECLARED_HOST_INPUT",
+      "driverCommit": "7798a27ac3e3b3d3a2b325e338fa5d5742419e55",
+      "driverSHA": "f52ef3b904bee13ed0e1ae39182716b45b57d3903d7c17c3a862d3af8da1f84d",
+      "checks": "AST/compile/14argumentcombinations/diffcheck; accepted scan-recovery body unchanged; no browser",
+      "blocker": "OriginalQF cua.getState: browsers[] Local browser use is disabled in Work settings; user enablement requested, no alternate control bypass",
+      "next": "F1 exact immutable54 argv; D1 readonly legitimate business UNAVAILABLE seam; run only after allowed browser restored",
+      "businessProducer": {
+        "owner": "D1",
+        "status": "ACTUAL_PRODUCTION_SEAM_IDENTIFIED_TEST_HOST_CORRECTION_IN_PROGRESS",
+        "basis": "production PostgresCurrentFormReader.readBarcode retains disabled matched facts -> UNAVAILABLE; unified host filtering disabled early incorrectly yielded NOT_FOUND",
+        "scope": "two original testhost leaves; CREATE/realMAIN/DISABLE; original reader+HTTP+client; not realPG or browser"
+      },
+      "transportHandoff": {
+        "path": "reports/qa-frontend/rapid-launch-20261022/F1/SALES-SCAN-UNAVAILABLE-54-PREPARATION-20261101-01/HANDOFF.NOT-EXECUTED.json",
+        "sha256": "3e7aeac56453d2c5a156795bcb2a8832e0df4703df669789466769edd9817439",
+        "status": "PREPARED_NOT_EXECUTED_BROWSER_BRANCH_STOPPED",
+        "application": "immutable54 ebbd7d2e1c7e0469b98493b6670f2f5a488e08c7",
+        "browserRuns": 0,
+        "rule": "No execution while Work browser disabled; QF notified to preserve breakpoint, not rerun unchanged status"
+      }
     }
   },
   "r1UnifiedSyntheticHostComposition": {
