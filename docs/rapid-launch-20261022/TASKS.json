@@ -21183,9 +21183,9 @@
   },
   "r1UnifiedSyntheticHostComposition": {
     "owner": "D1",
-    "status": "QF2_DATA56_LIMITED_PASS_PAYMENT_FIX_1FAB_QB_BUILD57_IN_PROGRESS",
+    "status": "QF2_DATA56_PASS_QB_PAYMENT_SOURCE_PASS_BUILD57_PASS_F1_DOCUMENT_RUNNING",
     "scope": "Unify actual existing synthetic constructors/current facts and posting transaction seams; no fake independent balances; exact files in WRITE-OWNERSHIP",
-    "next": "T45 immutable57 + QB exact2; F1 document affected check, QF independent document closure; no repeated data56",
+    "next": "OriginalF1 fixed57 document affected flow, then originalQF independent limited closure; data56 not repeated",
     "notClaimed": "No real PG or production; source-ready not fully writable",
     "source": "bf59bac78119097328de24ed615b03fc56cf75f6",
     "report": "reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/UNIFIED-SERVICE-COMPOSITION-RESULT.json",
@@ -21288,8 +21288,19 @@
     },
     "paymentContractSuccessor": {
       "source": "1fab7fa6cc2ef8aa70153c52e63afe076690bbfc",
-      "status": "D1_TARGETED1_PASS_QB_PENDING",
-      "scope": "paymentAccount recommendationAvailability UNAVAILABLE, originalreader unchanged;5otherkinddecode and403 checked"
+      "status": "QB_LIMITED_SOURCE_PASS",
+      "scope": "paymentAccount recommendationAvailability UNAVAILABLE, originalreader unchanged;5otherkinddecode and403 checked",
+      "qbReport": "reports/qa-backend/rapid-launch-20261022/QB/UNIFIED-PAYMENT-RECOMMENDATION-20261031/QB-UNIFIED-PAYMENT-RECOMMENDATION-RESULT.json",
+      "qbSHA": "7b206751d74cbc9ee6919fa4825fccc1ee0e5bfc451e365de7402a28002ca17f"
+    },
+    "build57": {
+      "source": "1fab7fa6cc2ef8aa70153c52e63afe076690bbfc",
+      "manifest": "f57dda8f88c8672275083c2ca6a1c92a47ee295d6bdcdfc09be0ff608c3c7c14",
+      "config": "064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711",
+      "outputs": 190,
+      "inputs": 1310,
+      "producerSeconds": 0.727,
+      "status": "BUILD_ONLY_PASS_NOT_BROWSER"
     }
   },
   "r1UnifiedAuditReadback": {
