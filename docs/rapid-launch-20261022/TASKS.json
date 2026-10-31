@@ -20667,11 +20667,12 @@
         "fixedSource": "2537dfc17bec83ffd731d1f3c39cd793559a27a1"
       },
       "R01": {
-        "status": "QF_ACTUAL_NEW_TRANSFER_PENDING_SAVE_RECHECK_PASS_EXISTING_EDIT_BRANCH_PENDING",
+        "status": "QF_LIMITED_ACTUAL_NEW50_AND_EXISTING51_PENDING_SAVE_PASS_PG_HARDWARE_NOT_TESTED",
         "scope": "visible keyboard scanner-pending save reachability first; pending blocks save without implicit cancel",
         "owner": "F1",
         "actual": "Fixed49 original transfer-chain, lookup delayed2s below3s timeout;6accepted M scans pending, native Tab background Save/Enter saved200 without M or confirmation; original QF exact evidence retained. Ordinary sales Tab result is not R01 coverage.",
-        "fixedSource": "468cab7a49dd7447e1d6a5d9f61a925e0785fba1"
+        "fixedSource": "468cab7a49dd7447e1d6a5d9f61a925e0785fba1",
+        "actualAfterFix": "app50 new and app51 existing edit: six held scans block native keyboard SAVE; queue retained and exact M6 persisted. Original49 RED retained. Scope limited to recorded original QF cases."
       },
       "D01": {
         "status": "QF2_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
@@ -20911,5 +20912,13 @@
     "scope": "BARCODE1/SALES_HEADER1 raw/native/source fingerprints and original pure consumers only",
     "next": "Fresh actual target/session after human-authorized A0, then exact C/QB capture binding; static scope reused",
     "executionAuthorized": false
+  },
+  "r1ProductSixTabsContinuation": {
+    "owner": "QF2",
+    "status": "ASSIGNED_READY_SCOPE_AND_EXISTING_EVIDENCE_DEDUP_FIRST",
+    "scope": "Remaining normal product EDIT/VIEW tab states only; reuse fixed48 create/media/11SKU/MAIN passes",
+    "browser": "QF2 exclusive own headed context; F1 source work then coordinate handover",
+    "writeBoundary": "QF2 own reports only, application source read-only",
+    "notAssumed": "No source factory or screenshot stands in for realPG/wholepage/production acceptance."
   }
 }
