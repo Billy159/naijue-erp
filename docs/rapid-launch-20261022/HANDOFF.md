@@ -3430,3 +3430,6 @@ V7准备推进：C已按原QB PRODUCT1/PAYMENT3静态PASS签发原格式三份so
 
 
 数量方向修复固定513cf763（原F1两file/12定向PASS），T45原owner仅后继52必要构建中，未验browser。QF2已通过一次必要合成CREATE后正常onSaved进入六tab只读，5tab读取200；库存仅失败提示且无新HTTP，未捏造501或补0。原48库存cap未开/host stockReader:null只属载体线索，C交原D1只读核现有reader接缝，禁止当正式缺陷或偷偷叠入52。新QA执行窗口仍等待明确确认。
+
+
+原QF候选52数量方向问题限定独验PASS，check780f1987/6240B：RETURN/EXCHANGE已审核逐行退回-1真实computed红178,61,66、换出2原色35,42,54、原footer/重入保持，0browsercommands/错误，ownprocess0。该问题关闭，不冒整页/PG/正式。应用513cf763、manifest93b0d4ac、config284705，明确复用原51six fixture，非52新bridge。D1已核商品48库存无HTTP是缺readOverview且hostnull两层载体缺口，单开flag只503；原D3仅核既有授权/准入/基线/UNKNOWN与明确0的有限source接缝，不造值/不改正式接口。新隔离窗口确认仍未答，未操作实际环境。
