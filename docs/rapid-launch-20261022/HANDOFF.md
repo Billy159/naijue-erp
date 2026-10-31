@@ -1,3 +1,9 @@
+## Associated48 actual outcome and next source checkpoints
+
+OriginalQF2 candidate48 actual CATEGORY full listed steps PASS (create/status, duplicate409, freshroute readback); PRODUCT visible165/S now PASS, upload and SAVE actual200, but original-image byte equality FAILED despite200/74bytes and thumbnail200/60. Exact actual response hash absent, so no inference content damaged/fixture wrong; originalD1 diagnoses only retained raw chain/metadata, no newSAVE or guessed patch. Final image/list/reopen/11MAIN assertions remain NOT_RUN. Own headed tty38215 preserves read-only image preview; no userChrome or production.
+
+Source F06 fixed0581a24d and originalQF scoped PASS; F08/D01 fixed2537dfc1 and originalQF2 scoped PASS; F03 fixed73764e68 and originalQF2 independent source review. Necessary owner checks passed, no claims browser/realPG/whole-system complete. Exact-source type one current root check0 after originalreadonly fixture修复. F05 next/source only, R01 visiblekeyboard risk still pending, five new performance optimizations PAUSED.
+
 ## Fixed associated48 browser continuation and DB preparation independent
 
 T45 fixed824667c8 candidate48 built once exit0/0.869s,186outputs/1310inputs; manifestb4e8326791251ddbe65c129197f4e33cde26436d979f111ef52dff2fe4a96c4b; sameconfig49688461/frozen driverdbd5. OriginalQF2 dispatched actual headed affected cases after preserving prior own context, no oldSAVE relabeled newsource. Actual results pending.

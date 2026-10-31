@@ -8336,5 +8336,15 @@
     ],
     "scope": "Atomic same real coordinate matrix+scan reconciliation and accurate before/after feedback; preserve raw, exact IDs, snapshots and limits, no API/controller/FIFO/timeout change",
     "R01": "Not modified; visible native keyboard reproduction still needed, no risk relabeled actual failure"
+  },
+  "r1ProductMediaDiagnosticDriver": {
+    "owner": "F1",
+    "status": "ACTIVE_EXACT_ONE_EXISTING_DRIVER",
+    "files": [
+      "apps/web/demo-replica/tests/product-edit-browser.py"
+    ],
+    "scope": "Diagnostic metadata only for actual synthetic upload/original response: SHA256 bytes count first16hex MIME encoding and event order; retain strict original equality and business assertions. Optional existing-case selection reuses category48 PASS; no new app/framework/profile or production request.",
+    "baselineSha256": "dbd5d366a72ec6314d18b8cf2143e803f5cdf908ab847eac90c6028fce967658",
+    "browserOwner": "QF2 only; frozen48 running driver is not modified in place"
   }
 }

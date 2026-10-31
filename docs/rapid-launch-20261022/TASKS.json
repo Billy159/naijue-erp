@@ -20629,9 +20629,10 @@
         "fixedSource": "b3a18d37309da789cd5730ef17693d5961001460"
       },
       "F03": {
-        "status": "CURRENT_CONFIRMED_F4_EXACT3_RED_THEN_FIX",
+        "status": "SOURCE_FIXED_ORIGINAL_QF2_INDEPENDENT_REVIEW",
         "scope": "targetId/version catalogue readback through authorized pages",
-        "owner": "F4"
+        "owner": "F4",
+        "fixedSource": "73764e68"
       },
       "F04": {
         "status": "QF_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
@@ -20645,9 +20646,10 @@
         "owner": "T45"
       },
       "F06": {
-        "status": "CURRENT_CONFIRMED_F1_EXACT4_RED_THEN_FIX",
+        "status": "QF_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
         "scope": "atomic transfer scanned real SKU and pending matrix coordinate reconciliation",
-        "owner": "F1"
+        "owner": "F1",
+        "fixedSource": "0581a24d9754e26dd0b6426090105d31a9eabebd"
       },
       "F07": {
         "status": "QF2_SOURCE_PASS_BROWSER_REAL_PG_NOT_RUN",
@@ -20656,9 +20658,10 @@
         "fixedSource": "1759546b501bb30d2c012922c3e938e8bde6354c"
       },
       "F08": {
-        "status": "CURRENT_CONFIRMED_F3_EXACT10_RED_THEN_FIX",
+        "status": "QF2_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
         "scope": "strict known 429 AUTHENTICATION_BUSY rejected-before-write; unknown remains uncertain",
-        "owner": "F3"
+        "owner": "F3",
+        "fixedSource": "2537dfc17bec83ffd731d1f3c39cd793559a27a1"
       },
       "R01": {
         "status": "SOURCE_RISK_ONLY_VISIBLE_KEYBOARD_REPRODUCTION_PENDING",
@@ -20666,9 +20669,10 @@
         "owner": "F1"
       },
       "D01": {
-        "status": "CURRENT_CONFIRMED_F3_EXACT10_RED_THEN_FIX",
+        "status": "QF2_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
         "scope": "remove editable payment account hall UI; preserve original edit associations and unrestricted enabled account candidates",
-        "owner": "F3"
+        "owner": "F3",
+        "fixedSource": "2537dfc17bec83ffd731d1f3c39cd793559a27a1"
       }
     },
     "alreadyFixedNotReimplemented": [
@@ -20691,11 +20695,13 @@
   },
   "r1FixedBrowser48": {
     "source": "824667c86e718c1066e3635f2779a3193b592dc0",
-    "status": "BUILT_PAIRED_ORIGINAL_QF2_VISIBLE_AFFECTED_REVIEW_DISPATCHED",
+    "status": "CATEGORY_LISTED_STEPS_PASS_PRODUCT_FAIL_ORIGINAL_IMAGE_BYTE_EQUALITY",
     "build": "reports/controller/rapid-launch-20261022/ui-preview-824667c8-product-association-48/build",
     "manifestSha256": "b4e8326791251ddbe65c129197f4e33cde26436d979f111ef52dff2fe4a96c4b",
     "driverSha256": "dbd5d366a72ec6314d18b8cf2143e803f5cdf908ab847eac90c6028fce967658",
     "scope": "CATEGORY stable rejection/fresh readback; PRODUCT sizes/images/codes/list/reopen",
-    "boundary": "fresh synthetic original service host, not realPG or formal permission/performance"
+    "boundary": "fresh synthetic original service host, not realPG or formal permission/performance",
+    "observed": "this version CATEGORY create+duplicate409+fresh readback PASS; PRODUCT 165/S visible, upload/SAVE200, original200/74bytes but exact content equality assertion failed; list/reopen NOT_RUN",
+    "next": "D1 original raw-media chain diagnosis from actual byte metadata; no speculative fix/no weakened assertion"
   }
 }
