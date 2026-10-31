@@ -20597,7 +20597,7 @@
       1,
       2
     ],
-    "normalExit": "318 acknowledged;322 final readback pending",
+    "normalExit": "318 acknowledged;322 actual closed/fenced/unitinactive PID0/runtimeNOLOGIN0/noCONNECT/sessions0/ownAdmin0/preparationAbsent",
     "ordinaryBusiness": "NOT_RUN"
   },
   "r1BrowserRetry04": {
@@ -20617,20 +20617,23 @@
     "route": "existing r1 branch and original owners; no new team/architecture; five new performance optimizations PAUSED",
     "items": {
       "F01": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "active-category inventory/list/output/candidate semantics; capability and exact ACL"
+        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_OWNER_DIRECTED_FIX",
+        "scope": "active-category inventory/list/output/candidate semantics; capability and exact ACL",
+        "owner": "D1"
       },
       "F02": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "safe sales EXISTING owner reset only at fresh-create boundary"
+        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_OWNER_DIRECTED_FIX",
+        "scope": "safe sales EXISTING owner reset only at fresh-create boundary",
+        "owner": "F1"
       },
       "F03": {
         "status": "VERIFY_CURRENT_THEN_REPRODUCE",
         "scope": "targetId/version catalogue readback through authorized pages"
       },
       "F04": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "exact displayed effective-price zero confirmation"
+        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_OWNER_DIRECTED_FIX",
+        "scope": "exact displayed effective-price zero confirmation",
+        "owner": "F1"
       },
       "F05": {
         "status": "VERIFY_CURRENT_THEN_REPRODUCE",
@@ -20641,8 +20644,9 @@
         "scope": "atomic transfer scanned real SKU and pending matrix coordinate reconciliation"
       },
       "F07": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "only exact VERSION_CONFLICT triggers product baseline discard/reload"
+        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_OWNER_DIRECTED_FIX",
+        "scope": "only exact VERSION_CONFLICT triggers product baseline discard/reload",
+        "owner": "F2"
       },
       "F08": {
         "status": "VERIFY_CURRENT_THEN_REPRODUCE",
@@ -20667,7 +20671,7 @@
   },
   "r1ProductDetailSizesFollowup": {
     "owner": "F2",
-    "status": "IN_PROGRESS_ORIGINAL_EXACT2",
+    "status": "SOURCE_FIXED_03F7957D_PENDING_PAIRED_BROWSER",
     "paths": [
       "apps/web/demo-replica/frontend/runtime/products/detail.tsx",
       "apps/web/demo-replica/frontend/runtime/products/product-runtime.test.mjs"
