@@ -69,7 +69,7 @@ test('common origin original HTTP clients read actual new product and staged ori
  h.revoke();assert.equal((await call(h,'/products/basics/query',{productId:saved.targetId})).status,403);
 });
 
-test('followup organization native menus and party query use original same directory; missing audit is explicit',async t=>{
+test('followup organization native menus and party query use original same directory',async t=>{
  const h=await createUnifiedServiceFixture();t.after(()=>h.close());const q={search:'',status:'all',hallId:null,page:1,pageSize:20};
  for(const [path,rows]of [['halls',qaHalls],['warehouses',qaWarehouses]]){
   const list=await call(h,'/organization/'+path+'/query',q);assert.equal(list.status,200,JSON.stringify(list));assert.deepEqual([...list.body.items].sort((a,b)=>a.id.localeCompare(b.id)),[...rows].sort((a,b)=>a.id.localeCompare(b.id)));
@@ -79,7 +79,7 @@ test('followup organization native menus and party query use original same direc
  const fetch=async(url,init={})=>{const r=await h.request({url:String(url),method:init.method??'GET',headers:Object.fromEntries(new Headers(init.headers)),...(init.body===undefined?{}:{body:String(init.body)})});return new Response(r.body,{status:r.status,headers:r.headers});};const http={origin:h.origin,basePath:'/api',fetch};
  const {createOrganizationStoreSettingsReader}=await import('../../src/settings/stores/maintenance-http-client.ts'),reader=createOrganizationStoreSettingsReader(http),signal=new AbortController().signal;const stores=await reader.readList('stores',{parameters:q,signal});assert.equal(stores.items[0].id,qaHalls[0].id);const warehouse=await reader.readDetail('warehouses',{parameters:{id:qaWarehouses[0].id},signal});assert.equal(warehouse.item.id,qaWarehouses[0].id);
  const {createPartyHttpClient}=await import('../../src/parties/http-client.ts');assert.ok((await createPartyHttpClient(http).candidates('CUSTOMER',{search:'',page:1,pageSize:20},signal)).items.length>0);
- const audit={module:'ALL',objectId:null,objectSearch:'',actorSearch:'',action:'ALL',dateFrom:null,dateTo:null,page:1,pageSize:20};const unavailable=await call(h,'/settings/audit/query',audit);assert.equal(unavailable.status,501,'no static audit samples can replace missing actual audit read port');
+ const audit={module:'ALL',objectId:null,objectSearch:'',actorSearch:'',action:'ALL',dateFrom:null,dateTo:null,page:1,pageSize:20};const unavailable=await call(h,'/settings/audit/query',audit);assert.equal(unavailable.status,200);assert.equal(unavailable.body.total,0,'fresh session has no performed maintenance and never imports static audit samples');
  const party=await h.request({url:h.origin+'/api/customers/candidates?search=&page=1&pageSize=20',method:'GET'});assert.equal(party.status,200,party.body);
  assert.equal((await call(h,'/organization/halls/query',{...q,unknown:true})).status,400);
  h.revoke();assert.equal((await call(h,'/organization/halls/query',q)).status,403);
@@ -94,4 +94,43 @@ test('followup original payment empty hall relations remain unrestricted through
  const prepared=await call(h,'/sales/prepare-create',intent);assert.equal(prepared.status,200,JSON.stringify(prepared));const saved=await call(h,'/sales/commands',{action:'SAVE',requestKey:'unrestricted-sales-save',expectedVersion:null,draft:prepared.body});assert.equal(saved.status,200,JSON.stringify(saved));
  const read=await call(h,'/sales/detail/query',{salesId:saved.body.salesId});assert.equal(read.status,200);assert.equal(read.body.document.settlements[0].paymentAccountId,account.body.targetId);assert.deepEqual(h.payment.snapshot().rows.get(account.body.targetId).hallIds,[]);
  const scoped=await create('SYNTHETIC scoped account',[qaHalls[0].id]);assert.equal(scoped.status,200);const same=await call(h,'/current-form/sales-references/query',query);assert.ok(same.body.items.some(r=>r.id===scoped.body.targetId));const outside=await call(h,'/current-form/sales-references/query',{...query,hallId:'00000000-0000-4000-8000-000000999999'});assert.equal(outside.status,403);
+});
+
+const auditQuery={module:'ALL',objectId:null,objectSearch:'',actorSearch:'',action:'ALL',dateFrom:null,dateTo:null,page:1,pageSize:20};
+test('audit readback actual successful maintenance uses original HTTP/projector and committed operation identities',async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());
+ const command={action:'CREATE',requestKey:'audit-real-method',values:{name:'SYNTHETIC actual audit method',enabled:true}};
+ const saved=await call(h,'/payment/methods/commands',command);assert.equal(saved.status,200);
+ const read=await call(h,'/settings/audit/query',auditQuery);assert.equal(read.status,200,JSON.stringify(read));assert.equal(read.body.total,1);
+ const item=read.body.items[0];assert.equal(item.id,saved.body.operationId);assert.equal(item.operationId,saved.body.operationId);assert.equal(item.object.id,saved.body.targetId);assert.equal(item.object.name,command.values.name);assert.equal(item.module,'PAYMENT_METHOD');assert.equal(item.oldVersion,null);assert.equal(item.newVersion,1);assert.equal(item.action,'CREATE');assert.equal(item.occurredAt,'2026-10-31T00:00:00Z');assert.deepEqual(item.changes.find(c=>c.field==='name'),{field:'name',label:'名称',before:{state:'ABSENT'},after:{state:'VALUE',value:command.values.name}});
+ assert.deepEqual(await call(h,'/payment/methods/commands',command),saved);assert.deepEqual(await call(h,'/settings/audit/query',auditQuery),read);
+ const fetch=async(url,init={})=>{const r=await h.request({url:String(url),method:init.method??'GET',headers:Object.fromEntries(new Headers(init.headers)),...(init.body===undefined?{}:{body:String(init.body)})});return new Response(r.body,{status:r.status,headers:r.headers});};
+ const {createSettingsAuditHttpReader}=await import('../../src/settings/audit/http-reader.ts');const signal=new AbortController().signal;assert.deepEqual(await createSettingsAuditHttpReader({origin:h.origin,basePath:'/api',fetch}).readQuery({parameters:auditQuery,signal}),read.body);
+});
+
+test('audit readback product staff account producers preserve before/after rows, rollback and receipt replay',async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());
+ const product=createProduct();product.requestKey='audit-product';h.product.faultCompletion(true);const before=h.product.snapshot().state;assert.equal((await call(h,'/products/v2/commands',product)).status,500);assert.deepEqual(h.product.snapshot().state,before);assert.equal((await call(h,'/settings/audit/query',auditQuery)).body.total,0);h.product.faultCompletion(false);
+ const p=await call(h,'/products/v2/commands',product);assert.equal(p.status,200);assert.deepEqual(await call(h,'/products/v2/commands',product),p);
+ const account={action:'CREATE',requestKey:'audit-account',values:{name:'SYNTHETIC audit account',enabled:true,paymentMethodId:qaMethods[0].id,hallIds:[]}};
+ const payBefore=h.payment.snapshot();h.payment.failCompletion(true);assert.equal((await call(h,'/payment/accounts/commands',account)).status,500);assert.deepEqual(h.payment.snapshot(),payBefore);h.payment.failCompletion(false);const a=await call(h,'/payment/accounts/commands',account);assert.equal(a.status,200);assert.deepEqual(await call(h,'/payment/accounts/commands',account),a);
+ const old=qaStaff[2],staff={action:'EDIT',requestKey:'audit-staff',id:old.id,expectedVersion:old.version,values:{name:'SYNTHETIC audit staff',contact:'actual contact',role:old.role,hallId:old.hall?.id??null},account:null};const s=await call(h,'/staff/commands',staff);assert.equal(s.status,200);assert.deepEqual(await call(h,'/staff/commands',staff),s);
+ const read=await call(h,'/settings/audit/query',auditQuery);assert.equal(read.status,200,JSON.stringify(read));assert.equal(read.body.total,3);assert.deepEqual(new Set(read.body.items.map(i=>i.module)),new Set(['PRODUCT','PAYMENT_ACCOUNT','STAFF']));for(const item of read.body.items){assert.equal(item.id,item.operationId);assert.ok(item.actor.accountId);assert.ok(item.actor.staffId);assert.ok(item.actor.loginName);assert.deepEqual(item.credentialActions,[]);}
+ const pi=read.body.items.find(i=>i.module==='PRODUCT');assert.equal(pi.object.id,p.body.targetId);assert.equal(pi.changes.find(c=>c.field==='skus').after.value,h.product.snapshot().state.products.get(p.body.targetId).skus.length);
+ const ai=read.body.items.find(i=>i.module==='PAYMENT_ACCOUNT');assert.deepEqual(ai.changes.find(c=>c.field==='payment_halls').after,{state:'ROW_COUNT',value:0});
+ const si=read.body.items.find(i=>i.module==='STAFF');assert.deepEqual(si.changes.find(c=>c.field==='name').before,{state:'VALUE',value:old.name});assert.equal(si.changes.find(c=>c.field==='name').after.value,staff.values.name);
+ const staffBefore=h.staff.snapshot();h.staff.failCompletion();assert.equal((await call(h,'/staff/commands',{...staff,requestKey:'audit-staff-failed',expectedVersion:s.body.version,values:{...staff.values,name:'SYNTHETIC discarded'}})).status,500);assert.deepEqual(h.staff.snapshot(),staffBefore);assert.deepEqual(await call(h,'/settings/audit/query',auditQuery),read);
+});
+
+test('audit readback exact filters pages authorization and original HTTP errors remain effective',async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());let first;
+ for(let n=0;n<21;n++){const r=await call(h,'/payment/methods/commands',{action:'CREATE',requestKey:'audit-page-'+n,values:{name:'SYNTHETIC page '+n,enabled:true}});assert.equal(r.status,200);first??=r.body;}
+ const all=await call(h,'/settings/audit/query',auditQuery),second=await call(h,'/settings/audit/query',{...auditQuery,page:2});assert.equal(all.body.total,21);assert.equal(all.body.items.length,20);assert.equal(second.body.items.length,1);assert.equal(new Set([...all.body.items,...second.body.items].map(i=>i.id)).size,21);assert.equal((await call(h,'/settings/audit/query',{...auditQuery,page:3})).body.items.length,0);
+ const exact=await call(h,'/settings/audit/query',{...auditQuery,module:'PAYMENT_METHOD',objectId:first.targetId});assert.equal(exact.body.total,1);assert.equal(exact.body.items[0].id,first.operationId);
+ for(const patch of [{module:'STAFF'},{action:'EDIT'},{objectSearch:'no-such-object'},{actorSearch:'no-such-actor'},{dateTo:'2026-10-30'},{dateFrom:'2026-11-01'}])assert.equal((await call(h,'/settings/audit/query',{...auditQuery,...patch})).body.total,0);
+ assert.equal((await call(h,'/settings/audit/query',{...auditQuery,objectSearch:'sYnThEtIc',actorSearch:all.body.items[0].actor.loginName,dateFrom:'2026-10-31',dateTo:'2026-10-31'})).body.total,21);
+ assert.equal((await call(h,'/settings/audit/query',{...auditQuery,extra:true})).status,400);assert.equal((await call(h,'/settings/audit/query',{...auditQuery,pageSize:10})).status,400);
+ for(const [body,type,status]of [['{','application/json',400],[JSON.stringify(auditQuery),'text/plain',415]]){const r=await h.request({url:h.origin+'/api/settings/audit/query',method:'POST',headers:{'content-type':type},body});assert.equal(r.status,status);assert.equal(r.headers['cache-control'],'no-store');}
+ const {createSettingsAuditHttpReader}=await import('../../src/settings/audit/http-reader.ts');let fetched=false;const controller=new AbortController();controller.abort();await assert.rejects(createSettingsAuditHttpReader({origin:h.origin,basePath:'/api',fetch:async()=>{fetched=true;throw Error('should not fetch');}}).readQuery({parameters:auditQuery,signal:controller.signal}));assert.equal(fetched,false);
+ h.revoke();assert.equal((await call(h,'/settings/audit/query',auditQuery)).status,403);
 });

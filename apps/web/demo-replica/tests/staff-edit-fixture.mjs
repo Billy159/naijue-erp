@@ -19,11 +19,11 @@ export async function createStaffEditFixture(){
    const value=await work({evidence:{
     async assertAllowed(context,kind,action){requireDomain(context.hallId===qaPrincipal.hallId,'FORBIDDEN','Synthetic current hall mismatch');authorize(context,kind,action);},
     async getReceipt(accountId,requestKey,kind){authorize({accountId},kind,'RECEIPT');return structuredClone(nextReceipts.get(key(accountId,kind,requestKey)));},
-    async prepare(completion){assert.equal(prepared,undefined);prepared=structuredClone(completion);},
+    async prepare(completion){assert.equal(prepared,undefined);prepared=structuredClone(completion);nextAudit.push({...structuredClone(completion),id:completion.operationId});},
     async complete(completion){assert.deepEqual(completion,prepared);assert.equal(nextRows.get(completion.targetId)?.staff.version,completion.newVersion);if(fault)throw Error('SYNTHETIC_COMPLETE_FAULT');
      const receiptKey=key(completion.actorAccountId,completion.kind,completion.requestKey);assert.equal(nextReceipts.has(receiptKey),false);
      const result={operationId:completion.operationId,kind:completion.kind,targetId:completion.targetId,version:completion.newVersion};
-     nextReceipts.set(receiptKey,{result,requestHash:completion.requestHash,action:completion.action,completedAt:completion.completedAt});nextAudit.push(structuredClone(completion));return result;
+     nextReceipts.set(receiptKey,{result,requestHash:completion.requestHash,action:completion.action,completedAt:completion.completedAt});return result;
     }
    },async load(id){return structuredClone(nextRows.get(id));},
    async validateChange(previous,next){requireDomain(previous&&previous.staff.id===next.staff.id&&previous.staff.role===next.staff.role&&previous.staff.hallId===next.staff.hallId&&previous.staff.employmentStatus===next.staff.employmentStatus,'FORBIDDEN','Only synthetic name/contact edits allowed');assert.deepEqual(previous.account,next.account);},
