@@ -52,6 +52,7 @@ try:
     if url.path=='/api/products/stock-overview/query' and variant['stockFail']:
      variant['stockFail']=False;response={'status':500,'headers':{'content-type':'application/json'},'body':json.dumps({'error':{'code':'SYNTHETIC_STOCK_FAILURE'}})}
     result.setdefault('readResponses',[]).append({'path':url.path,'request':q,'status':response['status'],'body':json.loads(response['body'])})
+    if url.path.endswith('/commands'):result.setdefault('writeResponses',[]).append({'path':url.path,'request':q,'status':response['status'],'body':json.loads(response['body'])})
 
     if url.path=='/api/inventory/query' and response['status']==200:result['observedProductId']=json.loads(response['body'])['products'][0]['id']
     # Explicit synthetic business-version transition; no write endpoint is called.
