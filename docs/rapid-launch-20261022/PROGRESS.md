@@ -1,3 +1,11 @@
+## 2026-10-31 detailed repair proposal fully read and reconciled
+
+Human attachment4c08ad78,122175bytes,993lines fully read. F01-F08/R01/D01 registered once in existing TASKS; r1 static claims are reproduction candidates, not current defects/PASS. Current r1 branch, owners, protected inputs and frozenDemo unchanged. DefaultA/category success notice/defaultwarehouse/cancel valid later work reused, not reimplemented. SKU full-group completion remains approved business behavior. No five new performance optimization work.
+
+F1 document next packages merge shared files F02/F04 then F06/R01 after visible evidence, F2 current exact2 actual read-only detail size display then F07; catalogue F03/payment D01/strict staff429 F08 require current-source owner check, not new DTO/routes or blanket unknown unlock. Backend F01 uses existing retained-delete capability and same pool, exact ACL remains actual-QA precondition; F05 only exact six budget routes plus independent helper approval, no live deployment. Proposed filenames/functions are designs until verified, not mandatory new abstractions.
+
+OriginalT45 actual322 cleanup passed at17:58:56: runtimeNOLOGIN/limit0/CONNECTfalse/sessions0, ownadmin0, oldunit inactive/PID0, prep role absent, versions[1,2]; normalclosed/fence/watch-exit all recorded, safeErrornull. Only M01/M02 complete, no ordinary business/backuprestore/fullV7. Source R2-F01 awaits exact local source fix and affected QB review; no new runtimewindow inferred.
+
 ## 2026-10-31 17:59 actual M02, original exit and frontend retry04
 
 T45 original319 actual COMPLETED0/0.818914s, migration versions[1,2], no business seed; original318 normal REQUEST_EXIT acknowledged0/0.2178s. Original322 read-only final fence/session/exit verification in progress. No M03, R2 execution, new ARM or renewed window. Ordinary V6/V7 business lifecycle remains NOT_RUN. QB source R2-F01 identifies missing deadline/closed recheck immediately before runtime permission restore; originalT45 fixes only source after actual cleanup, no actual permission restore.

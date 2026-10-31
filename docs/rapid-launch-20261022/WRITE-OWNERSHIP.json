@@ -8238,5 +8238,24 @@
     "scope": "Fix existing CATEGORY duplicate rejection selector to actual scoped Recovery alert, preserve exact 409/message/count/fresh-readback assertions; reset independent case navigation through existing authorized discard after known rejection. No application source/API/SQL/business rule or weakened assertions.",
     "baselineSha256": "3a5c761a304ebd9cb7a2ba7e632b0cafdcb02945246d81ca49de7482079b2cad",
     "browserOwner": "QF2; no active retry03 process per final exit1 receipt"
+  },
+  "r1ProductDetailSizesFollowup": {
+    "owner": "F2",
+    "status": "SOURCE_READY_EXACT2_WRITER_RELEASED_PENDING_FIXED_CANDIDATE",
+    "paths": [
+      "apps/web/demo-replica/frontend/runtime/products/detail.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/product-runtime.test.mjs"
+    ],
+    "basis": "retry04 11 actual memory-host specs/mainbarcodes present but size labels not visible",
+    "next": "same original owner minimal display patch; fixed candidate; affected browser only"
+  },
+  "r1ProductNonversionConflict": {
+    "owner": "F2",
+    "status": "CURRENT_VERIFY_THEN_DIRECTED_REPRODUCTION",
+    "paths": [
+      "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs"
+    ],
+    "scope": "F07 exact VERSION_CONFLICT baseline gate only; preserve explicit reject draft correction, staged image request key and all uncertain recovery; no new API or write contract"
   }
 }

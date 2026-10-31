@@ -20607,5 +20607,72 @@
     "observed": "CATEGORY200+409;COLOR200;upload200;PRODUCTV2 SAVE200",
     "missing": "category stable error readback; product spec detail and image/list/reopen chain",
     "owner": "F1 original driver only; QF2 independent visible context"
+  },
+  "r1DetailedRepairPlan20261031": {
+    "source": "/Users/billy/.codex/attachments/4c08ad78-ed37-40dc-a507-a440a9913b7d/已粘贴的文本.txt",
+    "bytes": 122175,
+    "sha256": "3795297415419f5b972f5b88c5b239721928fcb6d2aee8561668c83fb934c9c4",
+    "linesRead": "1-993 complete",
+    "evidenceLevel": "r1 static proposals; not current reproduced bugs or PASS",
+    "route": "existing r1 branch and original owners; no new team/architecture; five new performance optimizations PAUSED",
+    "items": {
+      "F01": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "active-category inventory/list/output/candidate semantics; capability and exact ACL"
+      },
+      "F02": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "safe sales EXISTING owner reset only at fresh-create boundary"
+      },
+      "F03": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "targetId/version catalogue readback through authorized pages"
+      },
+      "F04": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "exact displayed effective-price zero confirmation"
+      },
+      "F05": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "six exact LIVE proxy request budgets and independently approved helper pins"
+      },
+      "F06": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "atomic transfer scanned real SKU and pending matrix coordinate reconciliation"
+      },
+      "F07": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "only exact VERSION_CONFLICT triggers product baseline discard/reload"
+      },
+      "F08": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "strict known 429 AUTHENTICATION_BUSY rejected-before-write; unknown remains uncertain"
+      },
+      "R01": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "visible keyboard scanner-pending save reachability first; pending blocks save without implicit cancel"
+      },
+      "D01": {
+        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
+        "scope": "remove editable payment account hall UI; preserve original edit associations and unrestricted enabled account candidates"
+      }
+    },
+    "alreadyFixedNotReimplemented": [
+      "default A source and existing limited browser observations",
+      "category saved success notice source; actual create200 visible saved",
+      "default warehouse recommendation paired source",
+      "prior cancel UI source and scoped observations"
+    ],
+    "truePgAndProxy": "not established by static source or memory host"
+  },
+  "r1ProductDetailSizesFollowup": {
+    "owner": "F2",
+    "status": "IN_PROGRESS_ORIGINAL_EXACT2",
+    "paths": [
+      "apps/web/demo-replica/frontend/runtime/products/detail.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/product-runtime.test.mjs"
+    ],
+    "basis": "retry04 11 actual memory-host specs/mainbarcodes present but size labels not visible",
+    "next": "same original owner minimal display patch; fixed candidate; affected browser only"
   }
 }
