@@ -20409,6 +20409,17 @@
         "sha256": "20cd421883e862cd833f3c6888eeb86583df43ced310f9cc649b83f0a80dc771",
         "findings": 0,
         "pgBrowserDurability": "NOT_TESTED"
+      },
+      "stdio": {
+        "status": "D1_EXACT2_FIXED_4_STDIO_TESTS_PASS_QB_PENDING",
+        "files": {
+          "apps/web/demo-replica/tests/production-browser-fixture.mjs": "a23c894f63f398515afba284e7a1f9c52ea9ae75d4e38ad8bebcc1124dea69c1",
+          "tests/product-entry-service-stdio.test.mjs": "f5d148a1702923c2ad82c1e387585cec13b94e67782c07158f6b5232f4551d78"
+        },
+        "resultSha256": "03f0a4eebe13588396b1f64953c0b9c5743819c0e8d84bca5977cd0cd4459010",
+        "profile": "--product-entry-service",
+        "binary": "request/response binaryBase64 canonical, response no body when binary; actual source PNG bytes and WebP transport",
+        "next": "Original headed driver consumes explicitprofile; no actualPG/browser yet"
       }
     }
   }

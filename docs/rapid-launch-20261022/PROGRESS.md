@@ -1,3 +1,7 @@
+## 2026-10-31 original stdio exact2 source ready for paired headed consumer
+
+D1 originalstdio profile --product-entry-service fixed, RESULT5022B SHA03f0a4eebe13588396b1f64953c0b9c5743819c0e8d84bca5977cd0cd4459010; exactfixturea23c894f/testf5d148a1 matched. Four finite stdio tests PASS per original owner: original frontend clients via realchild CATEGORY/COLOR/PRODUCTv2/media/11SKU/receipts/readbacks, originalPNG bytes and generatedWebP; legacy stdout unchanged, badflags/scope/binary reject. Explicitprofile uses one originalhost state, no staticfallback; binaryBase64 preserves realbytes/status/headers and actualstage close. No listener/browser/PG/durability or production changes. OriginalF1 registered solewriter of one existingheadeddriver leaf to consume this fixedprofile; T45 stays only build/service/actualQA owner.
+
 ## 2026-10-31 actual successor window started16:29:34+08, deadlines fixed
 
 OriginalT45 actual original-channel READY status observed. Start16:29:34+08 epoch1793435374; actiondeadline17:59:34 epoch1793440774; cleanupdeadline18:14:34 epoch1793441674, not reset byA0/ARM. Human scope03 source call_cae24f4344a34772bf9027a769388bd5/0 confirmed. Current only original-job dedup/read-only QA identity/names/resources/Node/existinglockeddeps preflight; no materialization/role/DB/ACL writes yet, no newOID or fakeCwindow/source/action. Latest actual start record in originalP/ACTUAL-ISOLATED-SUCCESSOR-01. UI/testbridge independent source work continues.
