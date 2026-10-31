@@ -19938,14 +19938,20 @@
       "qbSuccessorReportSha256": "ed44ba7594e3ce1505f497cf905e1081c2a5c69320745b42a8d65116ced5cb25"
     },
     "backupRecovery": {
-      "status": "FIXED_EXECUTABLE_CARRIER_IN_QB_SOURCE_REVIEW_NO_ENVIRONMENT_ACTION",
+      "status": "QB_NEED_FIX_F02_F03_ORIGINAL_T45_TARGETED_SUCCESSOR_ASSIGNED",
       "owner": "T45",
       "reportSha256": "2a62024531522ac191e02bf95786dc4441739d4b725baa88c138ba4e2dda8102",
       "scriptSha256": "f44d56ca1e9f6e45313ec8751b94ef653981234b4e6a9cb97924b7af91a2259e",
       "ownerOfflineChecks": 8,
       "restoreTargetExecutionApproval": "NOT_GRANTED",
       "actualBackupRestore": "NOT_RUN",
-      "withdrawnObservation": "QB sequence ORDER BY suspicion withdrawn after actual pure generated SQL; no defect or repair assigned"
+      "withdrawnObservation": "QB sequence ORDER BY suspicion withdrawn after actual pure generated SQL; no defect or repair assigned",
+      "finding": "F02: snapshot omits source_sales_line_id/source_transfer_line_id/endpoint/business_date/posted_at; integrity evidence incomplete, no actual corruption claimed",
+      "qbReportSha256": "f1988a866137950f29d66f203da846ea0f7fdcff97a17cd6ae2c55dd254fc1f3",
+      "findings": [
+        "F02 ledger snapshot missing source-line references endpoint business_date posted_at",
+        "F03 backup reuse does not compare current database-access snapshot to retained access file"
+      ]
     },
     "businessScenarioPreparation": {
       "checkpoint": "f421edfb57ecb275dc91fa78533c74a473792770",

@@ -1,3 +1,7 @@
+2026-10-31 原QB恢复载体完整NEED_FIX仅F02/F03（report10831B/SHAf1988a86）已采用：ledger关键5字段敏感性与复用备份的当前DBACL快照比较缺失。原T45已独占接一次最小后继修复，仅补2定向负例/受影响正例/语法，不重旧8及SQL。原误报F01已撤回；0实际PG/backup/restore/权限。原QB接续固定6471f2ca的V7/V8四叶Unix窄验，原宿主调用组合输入仍缺实际事实/准确执行确认。
+
+2026-10-31 恢复carrier原QB新增有效F02/P2：ledger投影遗漏两原行引用/endpoint/business_date/posted_at，可令不同整行误得同snapshot；仅为恢复完整性证据缺口，不称实际损坏。待本包审查完整交回后原T45最小后继补5字段或私有整行摘要/敏感性负例，原carrier保持冻结。前F01序列排序误报已撤回，不修。实际PG/backup/restore仍0。
+
 2026-10-31 V7精确QA Unix2叶已交回（report3396B/SHA21eeb601；17定向PASS），同D1 V8的7定向合批固定，交原QB只target合同增量。原TCP/云Unix/V6/权限与storage保持。恢复carrier序列SQL疑点已被原QB实际pure生成反例推翻并撤回，未派修/未变源码，不列有效缺陷；最终审查仍在途。全部未实际PG/备份/restore/部署。
 
 2026-10-31 恢复载体已具体交回并交原QB窄审：RECOVERY-CARRIER-01 script36400B/SHAf44d56ca1e9f6e45313ec8751b94ef653981234b4e6a9cb97924b7af91a2259e，report4686B/SHA2a620245；8owner offline+syntax通过，尚无实际backup/restore/建库/权限/服务。独立restorecheck目标执行未批准，disabled保持。D1已有函数调用链14704B/SHA0e3e8775已核并交T45，不新增runner；真实私有review/ordinaryLOGIN/target/capacity仍待供给。原T45接V7已批Unix扩展，V8固定f9c2ced7待同包窄验。
