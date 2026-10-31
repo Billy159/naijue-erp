@@ -1,3 +1,11 @@
+## 2026-10-31 actual successor window started16:29:34+08, deadlines fixed
+
+OriginalT45 actual original-channel READY status observed. Start16:29:34+08 epoch1793435374; actiondeadline17:59:34 epoch1793440774; cleanupdeadline18:14:34 epoch1793441674, not reset byA0/ARM. Human scope03 source call_cae24f4344a34772bf9027a769388bd5/0 confirmed. Current only original-job dedup/read-only QA identity/names/resources/Node/existinglockeddeps preflight; no materialization/role/DB/ACL writes yet, no newOID or fakeCwindow/source/action. Latest actual start record in originalP/ACTUAL-ISOLATED-SUCCESSOR-01. UI/testbridge independent source work continues.
+
+## 2026-10-31 QB shared-host exact2 source increment accepted
+
+OriginalQB report5269B SHA20cd421883e862cd833f3c6888eeb86583df43ced310f9cc649b83f0a80dc771 PASS_EXACT2_ORIGINAL_CATEGORY_SHARED_SYNTHETIC_HOST_SOURCE_ONLY adopted,0finding. Original CATEGORY service controls commands/order/undo/receipt, memory transaction and all product/category readbacks share state. Owner8checks reused, no duplicate 04/05/F01 review. No actualSQL constraint/PG/productionauth/durability/browser proof. D1 solely implements next originalstdio exact2 after registered handoff; C syntheticpublicconfig explicit only. Human scope03 approved and originalT45 actual current-facts A0 live; no actual result assumed.
+
 ## 2026-10-31 original shared service host CATEGORY source delivered, no browser capability shortcut
 
 OriginalD1 exact2 pins matched: fixturef98ce15b/testaa8803e5, RESULT5062B SHA9d7d58f46eb117a1d38b1ace9bcb7ddbea5ddccc58917db7e2fca15b32d84a3f. Eight unique finite service checks passed per owner, original baseline reused. Existing CatalogueMaintenanceService/HTTP uses explicit categoryWrite(defaultfalse) with original PRODUCTv2/COLOR/media same atomic memory state; tree/product reference/list/candidate readback shares state, no static overwrite. No productionservice/SQL/ACL/write-contract changes. Synthetic memory ports not PG, no browser/native proof. C adds one explicit synthetic-product-entry publicconfig for the paired existing host; it must not be used without actual matching profile. Original production consumers unchanged. Existing stdio/headed driver pairing next, no new testing platform or fake enable ofnormal45.

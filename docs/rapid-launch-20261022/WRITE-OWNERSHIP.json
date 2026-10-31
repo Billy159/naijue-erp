@@ -8213,14 +8213,14 @@
     },
     "D1": {
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-      "current": "Host category exact2 frozen handed back, next original stdio profile exact leaves pending registration",
+      "current": "Explicit existing stdio product-entry-service profile exact2",
       "soleWriter": [
-        "tests/support/product-entry-service-host-fixture.mjs",
-        "tests/product-entry-service-host.test.mjs"
+        "apps/web/demo-replica/tests/production-browser-fixture.mjs",
+        "tests/product-entry-service-stdio.test.mjs"
       ],
-      "boundary": "Explicit categoryWrite false by default; original catalogue service/HTTP and shared fixture transaction state only; no production source/rules/SQL/ACL/bridge/service start",
+      "boundary": "Original same service host only; binaryBase64 preserves raw bytes/headers, old profiles unchanged; no driver/config/production/service/DB edits",
       "next": "Hand fixed backend hint to original F1 consumer; no backend-only UI PASS",
-      "frozenPrevious": "57a528846e6ebe066fbe4beeeef757da10cea499"
+      "frozenPrevious": "2bd1faccc5c663d79041a7bec8cd06023593fd26"
     },
     "C_syntheticConfig": {
       "soleWriter": "C",
