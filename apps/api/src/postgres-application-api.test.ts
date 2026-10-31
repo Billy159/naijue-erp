@@ -333,3 +333,9 @@ test("old explicit party read graph now refuses before allocation; malformed par
   for (const options of invalid) { const d = driver(); await assert.rejects(createPostgresApplicationApi(options as PostgresApplicationApiOptions, d.factory), TypeError); assert.equal(d.counts().allocations, 0); }
   assert.equal(getters, 0);
 });
+
+test('inventory reader receives the same issuer retained-delete capability',()=>{
+ const sf=ts.createSourceFile('postgres-read-api.ts',readFileSync(new URL('./postgres-read-api.ts',import.meta.url),'utf8'),ts.ScriptTarget.Latest,true);
+ const nodes:ts.NewExpression[]=[];const walk=(n:ts.Node)=>{if(ts.isNewExpression(n)&&n.expression.getText(sf)==='PostgresInventoryQueryReader')nodes.push(n);ts.forEachChild(n,walk);};walk(sf);
+ assert.equal(nodes.length,1);for(const n of nodes)assert.equal(n.arguments?.[3]?.getText(sf),'issuer?.catalogueRetainedDelete ?? null');
+});

@@ -47,7 +47,7 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
  const defaultScheme=useProductRead(scope,cap.barcodeSchemeReader?.readBarcodeScheme,{schemeId:currentSchemeId},!p.productId&&!originalCommand,p.onAccessFailure);
  useEffect(()=>{const d=defaultScheme.snapshot.success?.data;if(p.productId||originalCommand||controller.getSnapshot().command||schemeTouched.current||!d||d.id!==currentSchemeId||d.status!=='CURRENT')return;setValues(old=>old.defaultBarcodeSchemeId===null?{...old,defaultBarcodeSchemeId:d.id}:old);setLabels(old=>new Map([...old,[d.id,d.name]]));},[defaultScheme.snapshot.success,p.productId,originalCommand]);
  const changeTab=(next:string)=>{setVisited(old=>new Set([...old,next]));setTab(next);};
- const needsBaseline=write.phase==='rejected'&&!!p.productId&&(write.error?.kind==='conflict'||/VERSION_CONFLICT/.test(write.error?.code??''));
+ const needsBaseline=write.phase==='rejected'&&!!p.productId&&write.error?.code==='VERSION_CONFLICT';
  const writeBusy=!['idle','rejected'].includes(write.phase),busy=writeBusy,ready=!p.productId||!!base||!!restoredDraft&&writeBusy;
  const canMaintain=cap.allowedActions.includes(p.productId?'EDIT':'CREATE');
  const waitingForDefault=!p.productId&&!originalCommand&&(!schemeTouched.current&&(defaultScheme.snapshot.phase==='idle'||defaultScheme.snapshot.phase==='loading')||!p.initialBaseline&&!fitTouched.current&&(defaultFit.snapshot.phase==='idle'||defaultFit.snapshot.phase==='loading'));
@@ -67,13 +67,13 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
  useEffect(()=>{const d=detail.snapshot.success?.data;if(d&&write.phase==='idle')applyBaseline(d);},[detail.snapshot.success]);
  useEffect(()=>{if(p.initialBaseline)applyBaseline(p.initialBaseline);},[]);
  const reloadRejectedBaseline=async()=>{
-  const command=write.command;if(write.phase!=='rejected'||!command||!p.productId||baselineReading.current===command.requestKey||!scope.active)return;
+  const command=write.command;if(!needsBaseline||!command||!p.productId||baselineReading.current===command.requestKey||!scope.active)return;
   baselineReading.current=command.requestKey;setPendingBaseline(null);setBaselineStatus('reading');
   try{const outcome=await detail.query.run({productId:p.productId});if(!alive.current||!scope.active||controller.getSnapshot().command?.requestKey!==command.requestKey)return;
    if(outcome.status==='success'&&outcome.data.productId===p.productId&&'seasonIds'in outcome.data.values){setPendingBaseline(outcome.data as ProductMaintenanceDetailV2);setBaselineStatus('idle');}else setBaselineStatus('error');
   }finally{if(baselineReading.current===command.requestKey)baselineReading.current=null;}
  };
- useEffect(()=>{if(write.phase==='rejected'&&p.productId&&write.command&&rejectedKey.current!==write.command.requestKey){rejectedKey.current=write.command.requestKey;if(write.command.action==='DELETE')setModal(null);void reloadRejectedBaseline();}},[write]);
+ useEffect(()=>{if(write.phase==='rejected'&&p.productId&&write.command&&rejectedKey.current!==write.command.requestKey){rejectedKey.current=write.command.requestKey;if(write.command.action==='DELETE')setModal(null);if(needsBaseline)void reloadRejectedBaseline();}},[write]);
  useEffect(()=>{p.onCanLeaveChange(()=>!dirty&&!writeBusy&&(!childGuard.current||childGuard.current()));return()=>p.onCanLeaveChange(null);},[dirty,writeBusy,p.onCanLeaveChange]);
  const confirmSaved=async()=>{
   if(write.phase!=='committed'||!write.result||!write.command||finished.current||finishing.current||!scope.active)return;

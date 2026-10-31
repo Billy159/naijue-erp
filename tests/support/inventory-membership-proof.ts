@@ -35,7 +35,7 @@ export function inventoryCatalogStatusSql(source: string, seasonArray = false): 
     }
     ts.forEachChild(node,visit);
   };visit(sf);
-  if(catalogues!==1||statuses!==1||!catalogue||!status||!ts.isTemplateExpression(catalogue)||catalogue.templateSpans.length!==1||!ts.isTemplateExpression(status)||status.templateSpans.length!==1)throw new Error('Expected the reviewed finite inventory catalogue and status query');
+  if(catalogues!==1||statuses!==1||!catalogue||!status||!ts.isTemplateExpression(catalogue)||catalogue.templateSpans.length!==1||!ts.isTemplateExpression(status)||status.templateSpans.length!==2)throw new Error('Expected the reviewed finite inventory catalogue and status query');
   const span=catalogue.templateSpans[0]!,condition=span.expression;
   if(!ts.isConditionalExpression(condition)||!ts.isIdentifier(condition.condition)||condition.condition.text!=='seasonArray'
     ||!ts.isStringLiteral(condition.whenTrue)||condition.whenTrue.text!=='p.season_ids && $7::uuid[]'
@@ -43,7 +43,10 @@ export function inventoryCatalogStatusSql(source: string, seasonArray = false): 
   const catalogSql=catalogue.head.text+(seasonArray?condition.whenTrue.text:condition.whenFalse.text)+span.literal.text;
   const statusSpan=status.templateSpans[0]!;
   if(statusSpan.expression.getText(sf)!=='catalog(seasonArray)'||!status.head.text.startsWith('/* inventory:catalog-status */ '))throw new Error('Unreviewed catalog-status interpolation');
-  const sql=status.head.text+catalogSql+statusSpan.literal.text;
+  const treeSpan=status.templateSpans[1]!,tree=treeSpan.expression;
+  if(!ts.isConditionalExpression(tree)||tree.condition.getText(sf)!=='retainedDelete'||!ts.isNoSubstitutionTemplateLiteral(tree.whenTrue)||!ts.isNoSubstitutionTemplateLiteral(tree.whenFalse))throw new Error('Unreviewed retained category tree interpolation');
+  // This proof retains the exact legacy branch; retained SQL has separate protocol coverage.
+  const sql=status.head.text+catalogSql+statusSpan.literal.text+tree.whenFalse.text+treeSpan.literal.text;
   if(sql.includes('${'))throw new Error('Unresolved query interpolation is not accepted');
   return sql;
 }

@@ -1,3 +1,5 @@
+import { catalogueRetainedDeleteEnabled } from "./product-query-reader.ts";
+import type { CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
 import type { Pool } from "pg";
 import { randomUUID } from "node:crypto";
 import { INVENTORY_MATRIX_CHUNK_MAX_UNITS, INVENTORY_PRODUCT_MAX_SIZES, INVENTORY_PRODUCT_MAX_VARIANTS, INVENTORY_TEXT_MAX_CHARS, INVENTORY_TOTAL_MAX_CHARS } from "../../../packages/application/src/inventory-query-contracts.ts";
@@ -179,11 +181,13 @@ async function verifyAdditionalSkus(query: Query, prefix: string, values: unknow
   requireDomain(booleanValue(row.all_admitted), "INVENTORY_NOT_READY", "New SKU creation is not qualified for the complete requested scope");
 }
 
-async function catalogStatus(query: Query, values: unknown[], seasonArray: boolean, runtime26?: NativeRuntime26Capability): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
+async function catalogStatus(query: Query, values: unknown[], seasonArray: boolean, runtime26?: NativeRuntime26Capability, retainedDelete = false): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
   const row = one(await query(`/* inventory:catalog-status */ ${catalog(seasonArray)}
     SELECT (SELECT count(*)::text FROM matched_products) AS exact_total,
-    EXISTS (SELECT 1 FROM naijue_erp.product_category child JOIN naijue_erp.product_category parent ON parent.id = child.parent_id
-      WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree,
+    ${retainedDelete ? `EXISTS (SELECT 1 FROM naijue_erp.product_category child LEFT JOIN naijue_erp.product_category parent ON parent.id = child.parent_id
+      WHERE child.parent_id IS NOT NULL AND child.deleted_at IS NULL
+        AND (parent.id IS NULL OR parent.deleted_at IS NOT NULL OR parent.parent_id IS NOT NULL)) AS invalid_category_tree` : `EXISTS (SELECT 1 FROM naijue_erp.product_category child JOIN naijue_erp.product_category parent ON parent.id = child.parent_id
+      WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree`},
     EXISTS (SELECT 1 FROM matched_products p WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = p.size_group_id)) AS missing_sizes,
     EXISTS (SELECT 1 FROM filtered_skus s WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r
       WHERE r.import_batch_id = $8::uuid AND r.status = 'IMPORTED' AND r.target_type = 'SKU' AND r.target_id = s.id)) AS uncovered_sku,
@@ -345,9 +349,11 @@ async function productMatrices(query: Query, products: Row[], input: InventoryQu
 export class PostgresInventoryQueryReader implements TrustedInventorySnapshotReader {
   private readonly pool: PgInventoryQueryPool;
   private readonly seasonArray: boolean;
+  private readonly retainedDelete: boolean;
   private readonly runtime26: NativeRuntime26Capability | undefined;
-  constructor(pool: PgInventoryQueryPool, seasonArray: ProductSeasonArrayCapability | null = null, runtime26?: NativeRuntime26Capability) {
+  constructor(pool: PgInventoryQueryPool, seasonArray: ProductSeasonArrayCapability | null = null, runtime26?: NativeRuntime26Capability, retainedDelete: CatalogueRetainedDeleteCapability | null = null) {
     if (typeof pool?.connect !== "function") throw new TypeError("Inventory query reader requires an explicit PostgreSQL pool");
+    this.retainedDelete = catalogueRetainedDeleteEnabled(pool, retainedDelete);
     this.pool = pool; this.seasonArray = productSeasonArrayEnabled(pool, seasonArray); this.runtime26 = checkedNativeRuntime26Capability(runtime26);
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
@@ -389,10 +395,10 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
   }
   async *readInventoryOutput(read: InventoryScopedRead<InventoryQuery>): AsyncIterable<InventoryOutputFrame> {
     checkedInventoryActor(read.actor); const input = { ...checkedParameters(read.parameters), page: 1, pageSize: 100 as const }, scope = inventoryScope(read.scope, input), seasonArray = this.seasonArray;
-    let completion: Extract<InventoryOutputFrame, { kind: "complete" }> | undefined; const runtime26 = this.runtime26;
+    let completion: Extract<InventoryOutputFrame, { kind: "complete" }> | undefined; const runtime26 = this.runtime26, retainedDelete = this.retainedDelete;
     yield* this.streamSnapshot<InventoryOutputFrame>(read.signal, async function* (query) {
       const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId, runtime26);
-      const values = parameters(scope, input.filter, batchId), status = await catalogStatus(query, values, seasonArray, runtime26), readReference = `inventory:${randomUUID()}`;
+      const values = parameters(scope, input.filter, batchId), status = await catalogStatus(query, values, seasonArray, runtime26, retainedDelete), readReference = `inventory:${randomUUID()}`;
       const warehouseLabels = scope.warehouses.map(w => w.label);
       yield { kind: "summary", readReference, exactTotalProducts: status.exactTotal, warehouseLabels, allMatchesTotal: status.allMatchesTotal };
       let count = 0, sum = 0n, lastCode: string | null = null, lastId: string | null = null;
@@ -419,7 +425,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
     checkedInventoryActor(read.actor); const input = checkedParameters(read.parameters); const scope = inventoryScope(read.scope, input);
     return this.snapshot(read.signal, async query => {
       const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId, this.runtime26);
-      const values = parameters(scope, input.filter, batchId); const status = await catalogStatus(query, values, this.seasonArray, this.runtime26);
+      const values = parameters(scope, input.filter, batchId); const status = await catalogStatus(query, values, this.seasonArray, this.runtime26, this.retainedDelete);
       const products = (await query(`/* inventory:products */ ${catalog(this.seasonArray)}
         ${productSelection(this.seasonArray)}
         ORDER BY p.product_code COLLATE "C", p.id LIMIT $9 OFFSET $10::bigint`, [...values, input.pageSize, String((input.page - 1) * input.pageSize)])).rows;
@@ -437,7 +443,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
       const filter: InventoryQuery["filter"] = { productIds: [], categoryIds: input.kind === "category" || input.kind === "warehouse" ? [] : input.categoryIds,
         warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] };
       const values = parameters(scope, filter, batchId);
-      const source = candidateSource(input.kind, this.seasonArray); values.push(input.search);
+      const source = candidateSource(input.kind, this.seasonArray, this.retainedDelete); values.push(input.search);
       const exactTotal = count(one(await query(`/* inventory:candidate-count */ ${catalog(this.seasonArray)} SELECT count(*)::text AS exact_total ${source.from} WHERE ${source.where}`, [...values])).exact_total);
       const rows = (await query(`/* inventory:candidates */ ${catalog(this.seasonArray)} SELECT ${source.columns} ${source.from} WHERE ${source.where}
         ORDER BY ${source.order} LIMIT $10 OFFSET $11::bigint`, [...values, 20, String((input.page - 1) * 20)])).rows;
@@ -455,14 +461,14 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
   }
 }
 interface CandidateSource { readonly columns: string; readonly from: string; readonly where: string; readonly order: string }
-function candidateSource(kind: InventoryCandidateQuery["kind"], seasonArray: boolean): CandidateSource {
+function candidateSource(kind: InventoryCandidateQuery["kind"], seasonArray: boolean, retainedDelete: boolean): CandidateSource {
   switch (kind) {
     case "warehouse": return { columns: "r.id, r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.warehouse r JOIN authorized_warehouses w ON w.id = r.id",
       where: "strpos(r.name, $9::text) > 0", order: "array_position($1::uuid[], r.id), r.id" };
     case "product": return { columns: "r.id, r.product_code || ' ' || r.name AS label, r.product_code AS code, r.name, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.product r JOIN matched_products p ON p.id = r.id",
       where: "(strpos(r.product_code, $9::text) > 0 OR strpos(r.name, $9::text) > 0 OR strpos(r.system_item_code, $9::text) > 0)", order: 'r.product_code COLLATE "C", r.id' };
-    case "category": return { columns: "r.id, r.name AS label, r.parent_id, NULL::boolean AS disabled, parent.name AS parent_label, CASE WHEN r.parent_id IS NULL THEN 0 ELSE 1 END AS depth, (r.parent_id IS NULL OR (parent.id IS NOT NULL AND parent.parent_id IS NULL)) AS category_valid", from: "FROM naijue_erp.product_category r LEFT JOIN naijue_erp.product_category parent ON parent.id = r.parent_id",
-      where: "EXISTS (SELECT 1 FROM authorized_warehouses) AND strpos(r.name, $9::text) > 0", order: 'r.display_order, r.name COLLATE "C", r.id' };
+    case "category": return { columns: `r.id, r.name AS label, r.parent_id, NULL::boolean AS disabled, parent.name AS parent_label, CASE WHEN r.parent_id IS NULL THEN 0 ELSE 1 END AS depth, (r.parent_id IS NULL OR (parent.id IS NOT NULL AND parent.parent_id IS NULL${retainedDelete ? " AND parent.deleted_at IS NULL" : ""})) AS category_valid`, from: "FROM naijue_erp.product_category r LEFT JOIN naijue_erp.product_category parent ON parent.id = r.parent_id",
+      where: `${retainedDelete ? "r.deleted_at IS NULL AND " : ""}EXISTS (SELECT 1 FROM authorized_warehouses) AND strpos(r.name, $9::text) > 0`, order: 'r.display_order, r.name COLLATE "C", r.id' };
     case "fit": return { columns: "r.id, r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.fit r",
       where: "EXISTS (SELECT 1 FROM filtered_skus s WHERE s.fit_id = r.id) AND (strpos(r.code, $9::text) > 0 OR strpos(r.name, $9::text) > 0)", order: 'r.code COLLATE "C", r.id' };
     case "supplier": return { columns: "r.id, r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.supplier r",

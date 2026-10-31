@@ -728,3 +728,44 @@ test("inventory assembly CPU397: exact mixed-sign row, variant, product and size
   }
   assert.equal(stages(pool).at(-1), "COMMIT"); assert.deepEqual(pool.releases, [undefined]);
 });
+
+// Protocol-only retained category regression; does not issue a production capability.
+const retainedCategoryProof = (pool: ScriptedPool) => ({ profile: "catalogue-retained-delete-v22" as const,
+  assertVerified(target: unknown) { assert.equal(target, pool); } });
+test("retained inventory category SQL excludes deleted B after A moves under C; legacy remains column-free", async () => {
+  for (const enabled of [false, true]) {
+    const pool = new ScriptedPool();
+    const reader = new PostgresInventoryQueryReader(pool, null, undefined, enabled ? retainedCategoryProof(pool) : null);
+    await reader.readInventory(read(pool));
+    for await (const _ of reader.readInventoryOutput(read(pool))) {}
+    const sqls = pool.calls.filter(c => c.sql.includes("inventory:catalog-status")).map(c => c.sql);
+    assert.equal(sqls.length, 2);
+    for (const sql of sqls) {
+      assert.equal(sql.includes("child.deleted_at IS NULL"), enabled);
+      assert.equal(sql.includes("parent.deleted_at IS NOT NULL"), enabled);
+      if (enabled) { assert.match(sql, /LEFT JOIN naijue_erp.product_category parent/); assert.match(sql, /parent.id IS NULL OR parent.deleted_at IS NOT NULL OR parent.parent_id IS NOT NULL/); }
+      else assert.equal(sql.includes(".deleted_at"), false);
+    }
+  }
+});
+
+test("retained category candidates filter deleted rows in count/page and validate live parent; malformed proof refused", async () => {
+ for(const enabled of [false,true]){
+  const pool=new ScriptedPool(); pool.transform=(stage,rows)=>stage==='candidates'?[{id:inventoryId('category',80),label:'Active A',parent_id:inventoryId('category',81),disabled:null,parent_label:'Active C',depth:1,category_valid:true}]:rows;
+  await new PostgresInventoryQueryReader(pool,null,undefined,enabled?retainedCategoryProof(pool):null).readCandidates(candidate(pool, { kind: "category" }));
+  const calls=pool.calls.filter(c=>/inventory:candidate-count|inventory:candidates/.test(c.sql));assert.equal(calls.length,2);
+  for(const c of calls)assert.equal(c.sql.includes('r.deleted_at IS NULL'),enabled);
+  assert.equal(calls.some(c=>c.sql.includes('parent.deleted_at IS NULL')),enabled);
+ }
+ const pool=new ScriptedPool();
+ for(const proof of [true,{profile:'wrong',assertVerified(){}},{profile:'catalogue-retained-delete-v22',async assertVerified(){}},{profile:'catalogue-retained-delete-v22',assertVerified(){return true;}},retainedCategoryProof(new ScriptedPool())])
+  assert.throws(()=>new PostgresInventoryQueryReader(pool,null,undefined,proof as never));
+});
+
+test("retained active missing/deleted/deep parent remains an integrity rejection with rollback",async()=>{
+ for(const fault of ['missing parent','deleted parent','third level']){
+  const pool=new ScriptedPool();pool.flags.invalid_category_tree=true;
+  await assert.rejects(new PostgresInventoryQueryReader(pool,null,undefined,retainedCategoryProof(pool)).readInventory(read(pool)),code('INVENTORY_INTEGRITY_FAILED'),fault);
+  assert.equal(stages(pool).at(-1),'ROLLBACK');assert.equal(stages(pool).includes('COMMIT'),false);
+ }
+});

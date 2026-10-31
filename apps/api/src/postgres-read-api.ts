@@ -781,7 +781,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     // Each register call deliberately preserves the existing plugin's Fastify encapsulation:
     // independent error handlers, per-request identity and independent abort controllers.
     app.register(createAuthenticationHttpPlugin(authentication));
-    app.register(createInventoryHttpPlugin({ authenticate, ...(host.inventoryOutputSpool === undefined ? {} : { outputSpool: host.inventoryOutputSpool }), dependencies: { authorization: policies.inventory, reader: new PostgresInventoryQueryReader(pool, issuer?.productSeasonArray ?? null, issuer?.runtime26) } }));
+    app.register(createInventoryHttpPlugin({ authenticate, ...(host.inventoryOutputSpool === undefined ? {} : { outputSpool: host.inventoryOutputSpool }), dependencies: { authorization: policies.inventory, reader: new PostgresInventoryQueryReader(pool, issuer?.productSeasonArray ?? null, issuer?.runtime26, issuer?.catalogueRetainedDelete ?? null) } }));
     app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: new PostgresInventoryLedgerQueryReader(pool, issuer?.runtime26) } }));
     // A separately explicit source-confirmed historical list policy; CORE already returned above.
     const normalDocumentLists = issuer !== null && host.authorization.kind === "source-confirmed-native" && capabilities?.nativeReadExtensions

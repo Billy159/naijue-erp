@@ -8281,10 +8281,12 @@
       "tests/inventory-query-postgres-protocol.test.ts",
       "apps/api/src/postgres-read-api.ts",
       "apps/api/src/postgres-application-api.test.ts",
-      "tests/inventory-membership-rewrite.test.ts"
+      "tests/inventory-membership-rewrite.test.ts",
+      "tests/support/inventory-membership-proof.ts"
     ],
     "sharedApiBoundary": "Only two existing PostgresInventoryQueryReader constructor fourth arguments; no other API composition/root/capacity change",
     "optionalTest": "inventory-membership-rewrite only if existing call-shape assertion affected",
-    "scope": "Original trusted same-pool retained-delete capability; active tree and exact candidates; oldschema branch identical; no DDL/ACL/SQL files or runtime effects"
+    "scope": "Original trusted same-pool retained-delete capability; active tree and exact candidates; oldschema branch identical; no DDL/ACL/SQL files or runtime effects",
+    "supportBoundary": "Exact two fixed retained-delete catalogStatus templates only; preserve legacy membership proof extraction, reject arbitrary interpolations; no proof algorithm weakening"
   }
 }

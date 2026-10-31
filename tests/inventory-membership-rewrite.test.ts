@@ -29,7 +29,7 @@ test("inventory membership source: complete filtered range, publication/scope pr
   for (let number = 1; number <= 8; number++) assert.ok(currentSql.includes(`$${number}::uuid`));
   assert.match(source, /integrity\(!booleanValue\(row\.invalid_category_tree\) && !booleanValue\(row\.missing_sizes\) && !booleanValue\(row\.invalid_sku_size\) && !booleanValue\(row\.invalid_balance\)/u);
   assert.match(source, /if \(booleanValue\(row\.uncovered_sku\)\) \{\s*requireDomain\(runtime26 !== undefined, "INVENTORY_NOT_READY"[\s\S]*?await verifyAdditionalSkus\(query, catalog\(seasonArray\), values, "filtered_skus"\);/u);
-  assert.match(source, /const status = await catalogStatus\(query, values, this\.seasonArray, this\.runtime26\);\s*const products =/u);
+  assert.match(source, /const status = await catalogStatus\(query, values, this\.seasonArray, this\.runtime26, this\.retainedDelete\);\s*const products =/u);
 });
 
 test("inventory membership extractor permits only the two reviewed season predicates and rejects unknown selectors/interpolations",()=>{
