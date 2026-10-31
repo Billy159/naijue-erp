@@ -1,3 +1,7 @@
+## 2026-10-31 actual isolated A0 began
+
+OriginalT45 actual leasedSSH/dispatcher READY;928 original publicrequest states read. No submitted match for05 scriptSHA. Historical219 public STARTING retains unknown result; real originalunit is not-found/inactive/dead/MainPID0, defaultResult success is not a completedreceipt. No replay/state rewrite. T0=14:02:50+08, actions end15:32:50, cleanup-only end15:47:50. QA178 identity/newnames/slots still being checked; no newjob/PG/role/credentials at this handoff. Three A0 evidence files captured in original ACTUAL-ISOLATED-EXECUTION-20261031-01; their current pins stored in TASKS.
+
 ## 2026-10-31 exact isolated environment approval received
 
 Human call_fb7f059ae86a4506a8b9ef7f0366a7e8/0 explicitly approved the fixed SCOPE02 environment range (scopeSHA504e7a0903733fadd48698128e59b01e809475dab504a444a4203d62213d73ad, confirmationSHAc394971df002c8142157d79c5428a370705089f2d47a48a388c2c99a519e876f). OriginalT45 dispatched actualA0 queue/samekey/target/resource preflight, then phased new2DB/3role synthetic preparation, exactACL, directLOGIN/business/recovery within90min actions+15mincleanup,512MiBbackup cap/min2.5GiBfree. This approval does not authorize production, oldtarget changes or public switch, and is not technicalPASS. Actualtarget/OIDs/slot/config/capture/independentC/QB reviews must be real; unknown stops dependent actions. No actual result assumed at dispatch; original failed/unknown jobs never replayed.

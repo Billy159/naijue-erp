@@ -19841,7 +19841,7 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "Exact isolated environment scope human-approved; original T45 dispatched A0 real queue/target/resource checks, then bounded phased execution; no actual outcome assumed",
+    "current": "Actual A0 started: original channel and public queue observed, no duplicate05 job; QA identity/slot/new-name read pending, no role/database changes",
     "next": "Receive original T45 actual preflight/create/readback; C and QB process actual fixed evidence at independent gates",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
@@ -20079,7 +20079,7 @@
       "qbReportBytes": 7675
     },
     "isolatedEnvironmentApproval": {
-      "status": "HUMAN_APPROVED_DISPATCHED_ORIGINAL_T45_NOT_YET_EXECUTED",
+      "status": "ACTUAL_A0_ORIGINAL_CHANNEL_READONLY_STARTED",
       "source": "human call_fb7f059ae86a4506a8b9ef7f0366a7e8/0",
       "answer": "确认本批隔离执行范围",
       "scopeSha256": "504e7a0903733fadd48698128e59b01e809475dab504a444a4203d62213d73ad",
@@ -20092,6 +20092,35 @@
       "minimumFreeBytes": 2684354560,
       "productionExecution": false,
       "realOidAndSlotFacts": "Must be observed; unknown blocks dependent stage"
+    },
+    "actualA0": {
+      "owner": "T45",
+      "startedAt": "2026-10-31T14:02:50+08:00",
+      "actionDeadline": "2026-10-31T15:32:50+08:00",
+      "cleanupDeadline": "2026-10-31T15:47:50+08:00",
+      "channel": "LIVE_READY",
+      "originalPublicRequestsChecked": 928,
+      "same05ScriptSubmittedMatch": false,
+      "historical219": "PUBLIC_RECEIPT_STARTING_UNIT_NOT_FOUND_INACTIVE_MAINPID0_OUTCOME_UNKNOWN_NOT_REPLAYED",
+      "newJobsSubmitted": 0,
+      "newRoleOrDatabaseChanges": 0,
+      "evidence": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/ACTUAL-ISOLATED-EXECUTION-20261031-01/A0-ORIGINAL-PUBLIC-REQUEST-STATUS.json",
+          "bytes": 2454,
+          "sha256": "59f46bb4b693d3773a99b8553e1f4cb0b73fa57dc2752cec84cb5165fbac48f8"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/ACTUAL-ISOLATED-EXECUTION-20261031-01/A0-ORIGINAL-219-PUBLIC-STATE.json",
+          "bytes": 374,
+          "sha256": "83cf681094471378616d310f6eb023632073310f2b5198d21e6dfe9d3bd0607d"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/ACTUAL-ISOLATED-EXECUTION-20261031-01/A0-ORIGINAL-219-UNIT-READONLY.json",
+          "bytes": 435,
+          "sha256": "809587a530b8b3f53fc0575377c95e18393fc9ee0c229e118fe0f233a5c3f858"
+        }
+      ]
     }
   }
 }
