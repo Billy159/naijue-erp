@@ -1,3 +1,11 @@
+OriginalQF F02/F04 exact7 PASS_LIMITED_SOURCE_INCREMENT adopted at b3a18d37309da789cd5730ef17693d5961001460; no new finding. Current browser/PG not covered. F3 actual verifies F08/D01 remain and receives disjoint exact9 lease including staff-only API gate test; D1 inventory/sharedroot unaffected. Five new performance optimizations remain PAUSED.
+
+## 2026-10-31 current fixed repair deliveries and original-owner next packages
+
+Fixed824667c86e718c1066e3635f2779a3193b592dc0 remotely verified. Includes F01 active-tree/candidates same-pool capability (originalQB exact6 source/protocol PASS; realPG/columnACL not run), F07 exact VERSION_CONFLICT recovery (originalQF2 source PASS; browser/realPG not run), F02/F04 safe new sales owner and exact-zero UI (originalQF source review in progress), product read-only full size labels and stable category error driver. Original D1 immutable negative fixture one-line construction repaired,13/13 and one current roottsc exit0; no production contract relaxed.
+
+OriginalT45 prepares a single associated48 fixed build from this complete source, same47 synthetic-service config/lock/parser; no new server window. OriginalQF2 keeps prior visible failure context, waits paired candidate for affected unfinished steps. F1 next F06 model/matrix-scan atomicity and R01 visible risk reproduction; F3 F08 strict known prewrite429 and D01 payment hall maintenance; F4 F03 exact target-version paged readback. Each first current-source/WIP check and exact file lease, no overlap/new team/production effects. Five new performance optimizations PAUSED.
+
 ## 2026-10-31 detailed repair proposal fully read and reconciled
 
 Human attachment4c08ad78,122175bytes,993lines fully read. F01-F08/R01/D01 registered once in existing TASKS; r1 static claims are reproduction candidates, not current defects/PASS. Current r1 branch, owners, protected inputs and frozenDemo unchanged. DefaultA/category success notice/defaultwarehouse/cancel valid later work reused, not reimplemented. SKU full-group completion remains approved business behavior. No five new performance optimization work.

@@ -8296,5 +8296,22 @@
       "tests/current-runtime26-full-source-fixture.test.ts"
     ],
     "scope": "Preserve readonly production contracts and exact duplicate-ledger negative assertion; build a fresh spread object instead of assigning cloned readonly revisionReceipt. Existing baseline error fc7c03bf, not F01/F1 regression."
+  },
+  "r1SettingsF08D01Combined": {
+    "owner": "F3",
+    "status": "ACTIVE_EXACT9",
+    "files": [
+      "apps/web/src/staff-settings/http-client.ts",
+      "apps/web/src/staff-settings/controller.ts",
+      "tests/staff-command-busy-outcome.test.ts",
+      "apps/web/demo-replica/frontend/runtime/settings/personnel-runtime.test.mjs",
+      "apps/api/src/staff-maintenance-http.test.ts",
+      "apps/web/demo-replica/frontend/runtime/settings/payment-form.tsx",
+      "apps/web/src/payment-settings/controller.ts",
+      "apps/web/src/payment-settings/controller.test.ts",
+      "apps/web/demo-replica/frontend/runtime/settings/payments-runtime.test.mjs"
+    ],
+    "scope": "Strict existing prewrite429 AUTHENTICATION_BUSY classification and payment hall UI removal, EDIT retains original record IDs CREATE[]; no new permissions/API production/SQL; other shared old form read-only until exact separate lease",
+    "sharedApiTest": "staff-maintenance-http.test only F3; D1 inventory API tests disjoint"
   }
 }

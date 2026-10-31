@@ -20617,48 +20617,57 @@
     "route": "existing r1 branch and original owners; no new team/architecture; five new performance optimizations PAUSED",
     "items": {
       "F01": {
-        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_OWNER_DIRECTED_FIX",
+        "status": "QB_SOURCE_PROTOCOL_PASS_REAL_PG_ACL_NOT_RUN",
         "scope": "active-category inventory/list/output/candidate semantics; capability and exact ACL",
-        "owner": "D1"
+        "owner": "D1",
+        "fixedSource": "1759546b501bb30d2c012922c3e938e8bde6354c"
       },
       "F02": {
-        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_OWNER_DIRECTED_FIX",
+        "status": "QF_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
         "scope": "safe sales EXISTING owner reset only at fresh-create boundary",
-        "owner": "F1"
+        "owner": "F1",
+        "fixedSource": "b3a18d37309da789cd5730ef17693d5961001460"
       },
       "F03": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "targetId/version catalogue readback through authorized pages"
+        "status": "ORIGINAL_OWNER_CURRENT_SOURCE_PREFLIGHT",
+        "scope": "targetId/version catalogue readback through authorized pages",
+        "owner": "F4"
       },
       "F04": {
-        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_OWNER_DIRECTED_FIX",
+        "status": "QF_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
         "scope": "exact displayed effective-price zero confirmation",
-        "owner": "F1"
+        "owner": "F1",
+        "fixedSource": "b3a18d37309da789cd5730ef17693d5961001460"
       },
       "F05": {
         "status": "VERIFY_CURRENT_THEN_REPRODUCE",
         "scope": "six exact LIVE proxy request budgets and independently approved helper pins"
       },
       "F06": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "atomic transfer scanned real SKU and pending matrix coordinate reconciliation"
+        "status": "NEXT_ORIGINAL_OWNER_REPRODUCTION_AND_BOUNDARY",
+        "scope": "atomic transfer scanned real SKU and pending matrix coordinate reconciliation",
+        "owner": "F1"
       },
       "F07": {
-        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_OWNER_DIRECTED_FIX",
+        "status": "QF2_SOURCE_PASS_BROWSER_REAL_PG_NOT_RUN",
         "scope": "only exact VERSION_CONFLICT triggers product baseline discard/reload",
-        "owner": "F2"
+        "owner": "F2",
+        "fixedSource": "1759546b501bb30d2c012922c3e938e8bde6354c"
       },
       "F08": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "strict known 429 AUTHENTICATION_BUSY rejected-before-write; unknown remains uncertain"
+        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_F3_EXACT9_FIX",
+        "scope": "strict known 429 AUTHENTICATION_BUSY rejected-before-write; unknown remains uncertain",
+        "owner": "F3"
       },
       "R01": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "visible keyboard scanner-pending save reachability first; pending blocks save without implicit cancel"
+        "status": "WAIT_VISIBLE_KEYBOARD_REPRODUCTION_NO_BUG_PASS",
+        "scope": "visible keyboard scanner-pending save reachability first; pending blocks save without implicit cancel",
+        "owner": "F1"
       },
       "D01": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "remove editable payment account hall UI; preserve original edit associations and unrestricted enabled account candidates"
+        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_F3_EXACT9_FIX",
+        "scope": "remove editable payment account hall UI; preserve original edit associations and unrestricted enabled account candidates",
+        "owner": "F3"
       }
     },
     "alreadyFixedNotReimplemented": [
