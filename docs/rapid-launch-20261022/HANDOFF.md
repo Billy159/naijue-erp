@@ -3485,3 +3485,8 @@ QA178 window02 is CLOSED and final guardian inactive/PID0; runtime NOLOGIN, limi
 
 ### 原F1扫码剩余范围接续
 已读原F1终态及当前证据，旧分页包完成不重派。F1以gpt-6.1-sol/medium接原扫码剩余软件错误/恢复/取消/超时/迟到范围，先只读去重并报最小测试叶，未获新生产源码写租约；不重复pendingM6/原编辑/分页。真实扫码枪仍未测。数据库窗口03等待其独立用户批准，副本清理授权不替代。
+
+
+### 扫码恢复实操与销货正常入口接线
+F1固定5fc29047+app52完成调拨恢复自检：8条码请求、0SAVE，错误暂停恢复/忽略、超时及关闭迟到不加量、重开继续通过；可见超时首次观察3.881秒，非精确3秒/P95达标。QF已接同固定增量独立复验，源码只读。
+正常销货缺挂载，已有SalesProposalSession实际reader和scanner能力；C授原F1精确7叶唯一写，复用原DocumentScan/IN-OUT，补正常new/edit、FIFO恢复、pending保存保护及3000ms预算。不增API/字段/SQL/写合同，不复用旧入口结果冒充完成。硬件和真实PG未测；完整清单位于WRITE-OWNERSHIP.r1SalesNormalScannerIntegration。

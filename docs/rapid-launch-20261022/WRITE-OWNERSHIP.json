@@ -8444,5 +8444,22 @@
     "scope": "Mutually exclusive scan-recovery test branch only; application/fixture read-only; no build/PG/server; original browser lease serial after C acceptance",
     "base": "ab3556c64f58adc53f116901f00203cfa32eff16",
     "next": "Fixed test successor then original QF independent bounded headed review; sales scanner exact proposal separately"
+  },
+  "r1SalesNormalScannerIntegration": {
+    "owner": "F1",
+    "status": "ACTIVE_EXACT_SEVEN_LEAVES",
+    "model": "gpt-6.1-sol/medium",
+    "paths": [
+      "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
+      "apps/web/src/components/document-scan.tsx",
+      "apps/web/src/current-form/sales-proposal.ts",
+      "apps/web/demo-replica/frontend/runtime/documents/sales-new-page.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/sales-edit-page.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/sales-scanner-recovery.test.mjs",
+      "apps/web/src/current-form/sales-proposal.test.ts"
+    ],
+    "scope": "Reuse original DocumentScan and existing SalesProposalSession reader/controller, mount normal new/edit IN/OUT; 3s timeout, FIFO recovery, pending-save protection; preserve original SKU/raw money/quantity/permissions. No API/SQL/contracts/root/CSS changes.",
+    "base": "5fc2904716d8e3ff814c5f24c75849964e4ad1bf",
+    "handoff": "Only one writer; original standard DocumentScan consumer semantics unchanged; fixed app/build by T45 after source delivery; QF sole affected independent review"
   }
 }
