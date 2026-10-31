@@ -21182,7 +21182,7 @@
     },
     "unavailableIncrement": {
       "owner": "F1",
-      "status": "DRIVER_FIXED_STATIC_ONLY_BROWSER_WORK_DISABLED",
+      "status": "TRANSPORT54_AND_BUSINESS59_STATIC_READY_BROWSER_WORK_DISABLED",
       "path": "apps/web/demo-replica/tests/sales-chain-browser.py",
       "scope": "transport fault-injection only; genuine business UNAVAILABLE NOT_TESTED_NO_DECLARED_HOST_INPUT",
       "driverCommit": "7798a27ac3e3b3d3a2b325e338fa5d5742419e55",
@@ -21192,13 +21192,15 @@
       "next": "F1 exact immutable54 argv; D1 readonly legitimate business UNAVAILABLE seam; run only after allowed browser restored",
       "businessProducer": {
         "owner": "D1",
-        "status": "D1_DIRECTED1_PASS_QB_INCREMENT_PENDING",
+        "status": "QB_LIMITED_SOURCE_PASS",
         "basis": "production PostgresCurrentFormReader.readBarcode retains disabled matched facts -> UNAVAILABLE; unified host filtering disabled early incorrectly yielded NOT_FOUND",
         "scope": "two original testhost leaves; CREATE/realMAIN/DISABLE; original reader+HTTP+client; not realPG or browser",
         "source": "24151d6922dc36126176ae981bd57d7eead93242",
         "reportSHA": "9aa1d0d8176c43db228df38ea85400c155447d7ee9a2f02a0927b1fe1ec58bfe",
         "checks": "originalreader/HTTP/client SALES+TRANSFER FOUND->DISABLE/replay->UNAVAILABLE/nulls->RESTORE sameSKU FOUND; miss/baseline/revoke; no stockidentity changes",
-        "notRun": "browser/PG/schema26actual/build/release"
+        "notRun": "browser/PG/schema26actual/build/release",
+        "qbSHA": "c39f196324c12cabf63b374bfa452ff3903cffd5ed2b0934060b28c33da1968b",
+        "qbScope": "original retained facts and query guards; color disable+restore/sameidentity/ledgerunchanged/undeclaredwarehouse403;noPG/browser"
       },
       "transportHandoff": {
         "path": "reports/qa-frontend/rapid-launch-20261022/F1/SALES-SCAN-UNAVAILABLE-54-PREPARATION-20261101-01/HANDOFF.NOT-EXECUTED.json",
@@ -21207,6 +21209,14 @@
         "application": "immutable54 ebbd7d2e1c7e0469b98493b6670f2f5a488e08c7",
         "browserRuns": 0,
         "rule": "No execution while Work browser disabled; QF notified to preserve breakpoint, not rerun unchanged status"
+      },
+      "businessDriver": {
+        "source": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
+        "sha256": "2721c7f4048b84983ad5df7ab8dda12ae9d5fc0efde10716ff30af4b8132329d",
+        "case": "barcode-unavailable",
+        "status": "STATIC_ONLY_T45_FIXED59_PREPARATION",
+        "scope": "normal productCREATE;originalHTTP DISABLE/RESTORE condition preparation not normalUI;normal salesdrawer originalUNAVAILABLE->retry-noauto->sameMAIN/SKU FOUND;0SAVE",
+        "notRun": "browser/normalUI DISABLE-RESTORE/PG/production/hardware"
       }
     }
   },

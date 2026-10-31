@@ -3558,3 +3558,5 @@ audit58 attempt02原F1实际限定自检PASS，raw4977908b…/回执60d452c3…/
 D1只读定位业务UNAVAILABLE合法条件：生产reader对精确匹配但product/SKU等disabled返回UNAVAILABLE；现统一host预先滤掉disabled会误NOT_FOUND。原D1仅两testhost叶获租，先复现正常CREATE/原MAIN/DISABLE，再经原Postgres reader有限合成query端口修准确producer，非手写假响应/非生产合同改动；真实PG与browser仍未测，工具禁用不绕过。
 
 业务UNAVAILABLE合成宿主两叶最小修固定24151d69，D1focused1/1通过（9aa1d0d8…），原QB新增差异验收中；真实聚合停用/原MAIN/SKU事实经原PGreader有限query/HTTP/frontendreader返回UNAVAILABLE，恢复回同原SKU，非路由伪状态/非真实PG。原F1同一crossdriver仅静态准备业务unavailablecase，API状态准备若无UI入口须明确；browser禁用期间不执行。
+
+原QB业务UNAVAILABLE两叶SOURCE限定PASS采用（c39f1963…），原F1同crossdriver新barcode-unavailable静态case固定f06a0090/hash2721c7f4…；明确正常商品CREATE+原HTTP DISABLE/RESTORE仅准备条件，normal扫码不等UI停用恢复通过。T45已接唯一59闭包准备，Work browser禁用期间不执行。transport54与业务59分开，已验其他链复用，PG/生产仍未测。
