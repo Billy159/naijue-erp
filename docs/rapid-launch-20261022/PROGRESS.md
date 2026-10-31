@@ -3574,3 +3574,5 @@ T45固定60构建闭包PASS采用：source526ca75e/manifest6c3d382c…/原config
 F1调拨只读去重回执d885d806…采用：原id/note/1+6行精确命中候选50的LIVE DRAFT/RUNTIME_LEDGER回执，原config existingEdit=false解释旧样例只读；图无URL仍不据此断言当前用户跑50。51有效完整字段SAVE1→2→3独立PASS直接复用，526ca当前正常接线存在。历史备注/增删替换原行是独立真实合同缺口，原D1已接只读准确差异/已批边界核定，不写SQL/source/权限。QF60长表首项普通click195/4XL成功/13独立draft旧12值保留/own已释放，现仅共享spec键盘与调拨滚动未完；稳定截图与加载瞬态bounds分列，等最终回执才关闭问题。
 
 QF60最终check1326c2d3…限定实际PASS采用，关闭QF59-S02：原1440×1000/12→13正常click195/4XL、旧12行key/qty/rawprice/note保留/13件7384.00汇总、规格方向键Enter/Esc焦点及共享调拨色/版型真实横滚0→17/18可用/11尺寸保留。全部单据SAVE/审核0/own0，原59FAIL及QA定位失败保留，加载瞬态bounds不冒稳定几何证据。仅问题与受影响consumer关闭，不新增整页、Demo配对、PG或上线PASS；后续无影响不重测。
+
+D1历史DRAFT精确补充交付：HISTORY-DRAFT-TRANSFER-EXACT-SUPPLEMENT-20261101.md SHAce965aea06e0f1ea08f9b185fd994554cd1f36dfe799eb8b5a3886eefa0b5ffc，零新表列/ACL、4现有函数后继、revision JSON显式格式与V2目录、旧来源/旧数量FK保留；备注与完整lineSet新分支沿200正整数/1万字符，旧signed数值路径保留。已按用户写合同先确认规则提交一次准确源码合同确认，未获答复，不实施新写分支/SQL/权限。QA178新03窗口及Demo登录仍为各自原等待条件，不以本合同请求替代。
