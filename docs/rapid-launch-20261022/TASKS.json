@@ -20197,7 +20197,7 @@
     "businessAcceptance": false
   },
   "qa178PrivateProcessSuccessor": {
-    "status": "LOCAL_SOURCE_SEAMS_DELIVERED_QB_INCREMENTAL_REVIEW_ACTIVE_ROOT_CALLER_PREPARING",
+    "status": "QB_THREE_MODULE_SOURCE_PASS_NOT_EXECUTABLE_ROOT_CALLER_IN_PROGRESS",
     "owner": "T45",
     "reviewer": "originalQB",
     "resultSha256": "8b8c8ad3ed81f61afdf06e1c39b7777342be8a80bbe827ba6b6fb720e816cd35",
@@ -20207,6 +20207,9 @@
     "targetRuntimeAbi": "NOT_RUN",
     "dockerLifetime": "NOT_RUN",
     "environmentExecutionAuthorized": false,
-    "next": "Original root caller and finite-owner seam; QB new increment only; exact finite successor scope before actual execution"
+    "next": "Original root caller and finite-owner seam; QB new increment only; exact finite successor scope before actual execution",
+    "qbReceiptSha256": "1c9e23eff04801784abdc9d67bb3b26eb9c64ccfe049eabf54d1160381fe759c",
+    "activeFindings": [],
+    "withdrawnFinding": "F01 wrong consumer reference; correct production-provider env retained"
   }
 }
