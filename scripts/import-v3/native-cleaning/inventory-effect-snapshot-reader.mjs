@@ -4,6 +4,12 @@ import {readFixedLegacyTableSet} from './reference-snapshot-reader.mjs';
 // Capture evidence, not a current-stock calculation or target posting plan.
 export const legacyInventoryEffectTables = Object.freeze([
   {
+    "table": "erp_prod_source.system_setting",
+    "keys": ["key"],
+    "keyKind": "PRIMARY_KEY",
+    "selection": "STANDARD_SIZE_MAPPING_ONLY"
+  },
+  {
     "table": "erp_prod_runtime.inventory_delta",
     "keys": [
       "warehouse_id",

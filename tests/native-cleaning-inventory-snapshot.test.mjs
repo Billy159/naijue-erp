@@ -30,13 +30,13 @@ function database({tables = {}, counts = {}, failSql} = {}) {
 const row = (keys, raw_json) => ({source_key_json: JSON.stringify(keys), raw_json});
 const sinks = {pageRows: 1, onInventory: async () => {}, onReferences: async () => {}, onDocuments: async () => {}, onRevisions: async () => {}};
 
-test('42 inventory/effect tables share the reference/document snapshot without posting or deriving zeros', async () => {
+test('43 inventory/effect scopes share the reference/document snapshot without posting or deriving zeros', async () => {
   const table = 'erp_prod_runtime.inventory_stock_member';
   const source = row(['generation', 'warehouse', 'sku'], '{"quantity":-9007199254740993,"before":null}');
   const db = database({tables: {[table]: [source]}}), seen = [];
   const result = await readLegacyCleaningSnapshot(db.pool, {...sinks, onInventory: async (name, rows) => seen.push({name, rows})});
   assert.equal(result.status, 'COMPLETE_SCOPED_LEGACY_CLEANING_SNAPSHOT');
-  assert.equal(result.inventory.length, 42); assert.equal(result.references.length, 48);
+  assert.equal(result.inventory.length, 43); assert.equal(result.references.length, 48);
   assert.ok(result.inventory.every(item => item.rowsRead === item.expected && item.eofObserved));
   assert.equal(db.connections, 1);
   assert.equal(db.calls.filter(sql => typeof sql === 'string' && sql.startsWith('BEGIN')).length, 1);
@@ -73,9 +73,16 @@ test('query failure and cancellation roll back and release without claiming inve
   await assert.rejects(readLegacyCleaningSnapshot(db.pool, sinks), /SYNTHETIC_INVENTORY_READ_FAILURE/);
   assert.equal(db.calls.at(-2), 'ROLLBACK');
   const table = legacyInventoryEffectTables[0].table, abort = new AbortController();
-  const cancelled = database({tables: {[table]:[row(['w','s'], '{}')]}});
+  const cancelled = database({tables: {[table]:[row(['inventory.standard-size-mappings'], '{}')]}});
   await assert.rejects(readLegacyCleaningSnapshot(cancelled.pool, {...sinks, signal:abort.signal, onInventory:async()=>abort.abort()}), {name:'AbortError'});
   assert.equal(cancelled.calls.at(-2), 'ROLLBACK');
+});
+test('only the exact mapping setting is queried, with identical COUNT/cursor selection', async () => {
+  const db = database();
+  await readLegacyCleaningSnapshot(db.pool, sinks);
+  const settingQueries = db.calls.filter(sql => typeof sql === 'string' && sql.includes('erp_prod_source.system_setting'));
+  assert.equal(settingQueries.length, 2);
+  assert.ok(settingQueries.every(sql => sql.includes("WHERE r.key='inventory.standard-size-mappings'")));
 });
 test('missing inventory sink and unsafe internal table specifications refuse before querying', async () => {
   const db = database();
