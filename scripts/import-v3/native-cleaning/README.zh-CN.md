@@ -109,3 +109,9 @@ Node24定向检查：`node --test tests/native-cleaning-document-snapshot.test.m
 返回私域转换候选时保留原SKU/商品/颜色/尺码身份、六项来源事实和已有映射目标；文件消费入口只返回聚合覆盖率，另比较派生standard relation与原始表差异，避免用派生表证明自己正确。packSha256语法及六事实一致不等于原批准真实性或新字典映射通过。新写入、目标UUID、库存及独立目标读回仍未接通。
 
 8项Node24定向测试通过：六事实逐项失配、颜色编码与ID区分、空组名/NULL、缺映射/显式NULL、无尺码、重复来源/选项、源表独立关联、实际10文件读取及过期派生标签。真实私域覆盖率已由原T45完成：固定1e0a1ae，10文件66023行/57841203字节，7.989秒。14864原来源SKU中129精确匹配、14735缺自身条目、来源失配0；244运行时关系另计。派生表与原始product/COLOR/SIZE身份比较差异0；未确认但可恢复既有匹配0；仅129已匹配目标四文本差异0。报告SHA256 `d7f1cadd3d72cb37d305eea0ce0a5f07500208ec38bb2f5138058beafdd8e1c1`，原T45 `outputs/T45/revisions/20261102-existing-sku-mapping-coverage-files-01/EXECUTION-RESULT.json`。批准真实性、目标字典/身份、库存守恒、转换写入和目标读回未验，不因本结果改写状态。原SQL不改，无重复采集。
+
+### 当前单据转换输入核查
+
+`document-source-census.mjs` 复用私域流式读取器读取已采集 document/revision 两文件，按每张头的 `current_revision` 精确选当前正文；旧版本仍保留在原快照，不以最大版本/文件顺序替代指针。仅输出固定分类聚合，核对正文 header/lines/fundsRecords 形状、原始 source_quantity 的缺失/NULL/无效/非整数/零/负数及目标 bigint 范围。DELETED、VOID 分别计数，未知状态不擅自映射，数量不求跨单位合计、不舍入，未确认的正文格式不会补空数组。无目标身份分配、业务权限或写入。
+
+5项Node24定向测试通过，包括两份真实临时合成文件的消费及文件不完整拒绝；真实私域运行尚未完成，不据此称单据转换通过。该核查用于确定实际转换缺口，不替代金额、逐行关联、历史效果及独立目标对账。
