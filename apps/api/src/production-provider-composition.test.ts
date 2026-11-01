@@ -3156,7 +3156,7 @@ test('STAFF CREATE admission pending readiness preserves original cancellation a
     }finally{gate.resolve();await pending?.catch(()=>false);await closing?.catch(()=>{});if(api&&!closing)await api.close();f.cleanup();}}
 });
 
-test('V8 compiled non-CORE consumers reject even complete old V7 before any driver connection',async()=>{
+test('compiled non-CORE consumers reject old V7 at their selected exact catalog gate before any driver connection',async()=>{
  for(const mode of ['r1','r2','r3','full'] as const){
   const f=liveAdmissionFixture({format:'EXACT26_RUNTIME_CATALOG_EXPORT_V7',patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22'});
   try{
@@ -3164,7 +3164,12 @@ test('V8 compiled non-CORE consumers reject even complete old V7 before any driv
     :mode==='r2'?createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration),f.p.factory,null,undefined,syntheticCapacity())
     :mode==='r3'?createProductionRuntime26R3ApplicationApi(r3Configuration(f.configuration,'/unopened-inactive-live-media'),f.p.factory,null,undefined,syntheticCapacity())
     :createProductionRuntime26FullApplicationApi(r3Configuration(f.configuration,'/unopened-inactive-live-media'),f.p.factory,null,syntheticCapacity());
-   await assert.rejects(run,{code:'NATIVE_RUNTIME26_NOT_READY',message:'Complete normal writes require the exact independently reviewed V8 catalog'});
+   // Full deliberately selects the original HISTORY provider, so its stricter
+   // successor gate runs first. R1/R2 and R3 without HISTORY still prove V8.
+   // Keep exact messages and zero-connect/disposal assertions for every mode.
+   const message=mode==='full'?'Historical draft line sets require the exact independently reviewed successor catalog'
+    :'Complete normal writes require the exact independently reviewed V8 catalog';
+   await assert.rejects(run,{code:'NATIVE_RUNTIME26_NOT_READY',message});
    assert.deepEqual(f.p.calls,[]);assert.equal(f.p.counts().connects,0);assert.equal(f.p.counts().ends,1);
   }finally{f.cleanup();}
  }

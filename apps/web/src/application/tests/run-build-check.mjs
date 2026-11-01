@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { build } from 'esbuild';
 import { buildApplication } from '../build-application.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const workingDirectory = path.resolve(here, '..');
@@ -9,7 +10,22 @@ const temporary = await mkdtemp(path.join(here, '.build-check-'));
 // This exact negative-only selector prevents a native-text ring on composite
 // Arco inner inputs. It is not an eager Arco dependency or positive Arco style.
 const sharedFocusInputExclusion = ':not(:where(.arco-picker input,.arco-tree-select input,.arco-select input,.arco-input-tag input))';
-const withoutSharedFocusInputExclusion = css => css.replaceAll(sharedFocusInputExclusion, '');
+const nativeControlExclusion = ':not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))';
+const nativeCheckboxExclusion = nativeControlExclusion.replace('input))', 'input,.arco-checkbox input))');
+const nativeTableExclusion = ':not(:where(.arco-table table,.arco-table th,.arco-table td))';
+const inventoryNativeExclusion = ':not(:where([class*=arco-],.arco-select input,.arco-cascader input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input,.arco-checkbox input,.arco-radio input))';
+const withoutSharedFocusInputExclusion = css => css.replaceAll(sharedFocusInputExclusion, '').replaceAll(nativeControlExclusion, '').replaceAll(nativeCheckboxExclusion, '').replaceAll(nativeTableExclusion, '').replaceAll(inventoryNativeExclusion, '').replaceAll(inventoryNativeExclusion.replace('[class*=arco-]', '[class*="arco-"]'), '');
+// Commas inside :is/:where/attribute syntax do not start a new selector.
+const selectorList = selector => { const result = []; let depth = 0, quote = '', start = 0;
+  for (let i = 0; i < selector.length; i++) { const character = selector[i];
+    if (quote) { if (character === quote && selector[i - 1] !== '\\') quote = ''; continue; }
+    if (character === '"' || character === "'") quote = character;
+    else if (character === '(' || character === '[') depth++;
+    else if (character === ')' || character === ']') depth--;
+    else if (character === ',' && depth === 0) { result.push(selector.slice(start, i)); start = i + 1; }
+  } result.push(selector.slice(start)); return result;
+};
+assert.deepEqual(selectorList('.inventory-ledger :is(.a,.b),.arco-btn'), ['.inventory-ledger :is(.a,.b)', '.arco-btn']);
 const assertNoPositiveArcoStyle = css => assert.doesNotMatch(withoutSharedFocusInputExclusion(css), /\.arco-/);
 assertNoPositiveArcoStyle(`.demo-ui input${sharedFocusInputExclusion}:focus-visible{box-shadow:var(--ca-focus-ring)}`);
 for (const forbidden of ['.arco-picker{color:red}', `${sharedFocusInputExclusion} .arco-btn{color:red}`, sharedFocusInputExclusion.replace('.arco-picker input', '.arco-picker textarea')]) {
@@ -51,21 +67,56 @@ try {
   const storesRoute = closure(entryFor('routes/store-settings.tsx'));
   const salesDetail = closure(entryFor('../sales/detail-content.tsx'));
   const transferDetail = closure(entryFor('../transfers/detail-content.tsx'));
+  if (process.env.TRACE_APPLICATION_BOUNDARY) console.log(JSON.stringify({ routeActions: Object.fromEntries([['inventory', inventoryRoute], ['sales', salesRoute], ['transfers', transfersRoute]].map(([name, route]) => [name, [...inputsOf(route)].filter(file => /single-select|multi-select|responsibility|ledger-drawer/.test(file))])), directActionEdges: Object.fromEntries(Object.entries(metafile.inputs).filter(([name]) => !name.includes('node_modules') && !name.includes('/tests/')).map(([name, input]) => [name, input.imports.filter(item => /single-select-action|multi-select-action/.test(item.path))]).filter(([, edges]) => edges.length)) }, null, 2));
   const singleSelect = closure(entryFor('../demo-controls/single-select-action.tsx'));
   assert.ok([...inputsOf(singleSelect)].some(file => file.endsWith('/es/Select/index.js')), 'The shared action reaches the installed Select leaf');
   const selectCopies = Object.entries(outputs).filter(([name, output]) => name.endsWith('.js') && Object.keys(output.inputs).some(file => file.endsWith('/demo-controls/single-select-action.tsx')));
   assert.equal(selectCopies.length, 1, 'All three pagers emit one shared single-select implementation');
+  // The action is also an intentional direct control in ledger/responsibility/
+  // document forms. Prove the pager's own graph in isolation instead of treating
+  // every legitimate shared-action consumer as an eager pager regression.
+  const actionEdges = Object.entries(metafile.inputs).flatMap(([source, input]) => input.imports
+    .filter(item => /demo-controls\/(?:single|multi)-select-action\.tsx$/.test(item.path))
+    .map(item => `${source}:${item.kind}:${item.path}`)).sort();
+  assert.deepEqual(actionEdges, [
+    '../demo-controls/multi-select.tsx:dynamic-import:../demo-controls/multi-select-action.tsx',
+    '../demo-controls/single-select-contract.ts:dynamic-import:../demo-controls/single-select-action.tsx',
+    ...['components/document-responsibility.tsx', 'current-form/sales-proposal-form.tsx', 'current-form/transfer-proposal-form.tsx', 'inventory/ledger-drawer.tsx', 'products/product-editor-specs.tsx', 'transfers/detail-content.tsx']
+      .map(source => `../${source}:import-statement:../demo-controls/single-select-action.tsx`),
+    '../transfers/filter-controls.tsx:import-statement:../demo-controls/multi-select-action.tsx',
+  ].sort(), 'Only enumerated direct consumers and the two exact lazy shell edges may reach shared action implementations');
+  const isolated = await build({ absWorkingDir: workingDirectory, entryPoints: ['../demo-controls/page-size-select.tsx', '../demo-controls/multi-select.tsx'],
+    outdir: path.join(temporary, 'isolated-shells'), bundle: true, splitting: true, write: false, metafile: true, format: 'esm', platform: 'browser',
+    external: ['react', 'react-dom', 'react-dom/*'], loader: { '.css': 'empty' }, jsx: 'automatic', logLevel: 'warning' });
+  const isolatedOutputs = isolated.metafile.outputs;
+  const isolatedByAbsolute = new Map(Object.keys(isolatedOutputs).map(name => [path.resolve(workingDirectory, name), name]));
+  const isolatedClosure = start => {
+    const seen = new Set(); const visit = name => { if (seen.has(name)) return; seen.add(name);
+      for (const item of isolatedOutputs[name].imports) if (!item.external && item.kind !== 'dynamic-import') {
+        const next = isolatedByAbsolute.get(path.resolve(workingDirectory, item.path)) ?? isolatedByAbsolute.get(path.resolve(workingDirectory, path.dirname(name), item.path));
+        assert.ok(next, item.path); visit(next);
+      }
+    }; visit(start); return seen;
+  };
+  for (const shell of ['page-size-select', 'multi-select']) {
+    const entry = Object.keys(isolatedOutputs).find(name => isolatedOutputs[name].entryPoint?.endsWith(`/${shell}.tsx`)); assert.ok(entry);
+    const graph = isolatedClosure(entry), files = [...graph].flatMap(name => Object.keys(isolatedOutputs[name].inputs));
+    for (const file of files) assert.doesNotMatch(file, /demo-controls\/(?:single|multi)-select-action\.tsx$|demo-controls\/(?:single|multi)-select\.css$/, `${shell}'s own static graph excludes action implementation and stylesheet asset`);
+    assert.ok([...graph].some(name => isolatedOutputs[name].imports.some(item => item.kind === 'dynamic-import')), `${shell} retains a real emitted dynamic action edge`);
+  }
   for (const [name, route] of [['inventory', inventoryRoute], ['sales', salesRoute], ['transfers', transfersRoute]]) {
     assert.ok([...inputsOf(route)].some(file => file.endsWith('/demo-controls/page-size-select.tsx')), `${name} statically reaches the shared lightweight shell`);
-    for (const file of inputsOf(route)) assert.doesNotMatch(file, /single-select-(?:action|styles)\.(?:tsx?|css)$|inventory-page-size-action/, `${name} defers the page-size action and its styles`);
+    for (const file of inputsOf(route)) assert.doesNotMatch(file, /demo-controls\/single-select\.css$|inventory-page-size-action/, `${name} keeps the pager stylesheet asset action-loaded; the pure shared style factory may be eager`);
+    if (name === 'inventory') assert.ok([...inputsOf(route)].some(file => file.endsWith('/inventory/ledger-drawer.tsx')), 'The inventory shared-action consumer is the explicitly enumerated ledger drawer');
+    else for (const file of inputsOf(route)) assert.doesNotMatch(file, /demo-controls\/single-select-action\.tsx$/, `${name} still excludes the single-select action implementation until its own activation`);
   }
   for (const file of Object.keys(metafile.inputs)) assert.doesNotMatch(file, /components\/inventory-page-size(?:-action\.tsx|\.css)$/, 'Removed inventory widget/CSS cannot survive in the graph');
   const actionStyles = byAbsolute.get(path.join(outdir, 'chunks/single-select.css')); assert.ok(actionStyles);
   const actionStyleInputs = Object.keys(outputs[actionStyles].inputs);
-  assert.equal(actionStyleInputs.filter(file => file.includes('node_modules')).length, 2, 'Shared action CSS includes only Select/Trigger leaves');
+  assert.equal(actionStyleInputs.filter(file => file.includes('node_modules')).length, 0, 'Shared action CSS is the scoped local adapter; installed Select/Trigger CSS is retained in the shared host shell');
   assert.ok(actionStyleInputs.some(file => file.endsWith('/demo-controls/single-select.css')));
-  const emittedAction = await readFile(path.resolve(workingDirectory, selectCopies[0][0]), 'utf8');
-  assert.match(emittedAction, /single-select\.css/, 'The action resolves the separately emitted CSS beside its chunk');
+  const emittedAction = (await Promise.all([...singleSelect].map(name => readFile(path.resolve(workingDirectory, name), 'utf8')))).join('\n');
+  assert.match(emittedAction, /single-select\.css/, 'The complete action closure resolves the separately emitted CSS beside its stylesheet-factory chunk');
   const multiSelect = closure(entryFor('../demo-controls/multi-select-action.tsx'));
   assert.ok([...inputsOf(multiSelect)].some(file => file.endsWith('/es/TreeSelect/index.js')), 'Sales and transfer reuse the installed TreeSelect leaf');
   const multiCopies = Object.entries(outputs).filter(([name, output]) => name.endsWith('.js') && Object.keys(output.inputs).some(file => file.endsWith('/demo-controls/multi-select-action.tsx')));
@@ -119,10 +170,12 @@ try {
   assert.match(styles.application,/\.erp-breadcrumb/, 'Explicit real-host shell retains shared Breadcrumb styles after aggregate CSS replacement');
   assert.match(styles.application,/\.erp-document-tag/, 'Explicit real-host shell retains shared domain status Tag styles after aggregate CSS replacement');
   assert.match(styles.inventory, /iw-workbench/); assert.match(styles.inventory, /\.mx-table/);
-  assert.doesNotMatch(withoutSharedFocusInputExclusion(styles.inventory), /sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);
+  assert.ok(!/sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs/.test(withoutSharedFocusInputExclusion(styles.inventory)), 'Inventory excludes unrelated business styles');
+  for (const rule of withoutSharedFocusInputExclusion(styles.inventory).split('}')) { const selector = rule.slice(0, rule.indexOf('{')); if (!/\.arco-/.test(selector)) continue; for (const item of selectorList(selector)) assert.match(item, /^(?::where\(\.inventory-source-workbench\)|\.inventory-source-workbench(?:[ .:#>]|$)|\.inventory-ledger|\.iw-workbench \.inventory-product-control)/, 'Positive inventory Arco adapters stay under the frozen inventory root, ledger or exact product-input scope'); }
   assert.match(styles.sales, /sales-workbench/); assert.doesNotMatch(withoutSharedFocusInputExclusion(styles.sales), /party-workbench|\.arco-|sales-detail-(?:facts|page|dialog)|sale-editor|sale-doc-fields|sale-lines-table|sale-summary/);
   assert.match(styles['sales-detail'], /sales-detail-facts/);
-  assert.doesNotMatch(styles['sales-detail'], /sales-workbench|party-workbench|transfer-editor|\.arco-|\.iw-product-drawer|\.pd-tabs|\.mx-/);
+  assert.ok(!/sales-workbench|party-workbench|transfer-editor|\.iw-product-drawer|\.pd-tabs|\.mx-table/.test(styles['sales-detail']), 'Sales detail excludes unrelated route/drawer styles');
+  for (const rule of withoutSharedFocusInputExclusion(styles['sales-detail']).split('}')) { const selector = rule.slice(0, rule.indexOf('{')); if (/\.arco-|\.mx-/.test(selector)) for (const item of selectorList(selector)) assert.match(item, /^(?:\.demo-single-select|\.sales-proposal-editor|\.sales-detail-facts|:is\(\.sales-proposal-editor,\.sales-detail-facts\)|\.sale-|\.document-scan)/, 'Sales detail shared spec/Arco styling is scoped to its explicit single-select/form/scan adapters'); }
   const salesRouteStyles = byAbsolute.get(path.join(outdir, manifest.styles.sales)); assert.ok(salesRouteStyles);
   for (const input of Object.keys(outputs[salesRouteStyles].inputs)) assert.doesNotMatch(input, /\/sales\/detail\.css$/, 'Sales route CSS graph excludes the detail action stylesheet');
   const salesDetailStyles = byAbsolute.get(path.join(outdir, manifest.styles['sales-detail'])); assert.ok(salesDetailStyles);
@@ -148,7 +201,7 @@ try {
   assert.match(styles.products, /pm-products/); assert.match(styles['product-categories'], /catalogue-categories/); assert.match(styles['product-settings'], /dictionary-workbench/); assert.match(styles['barcode-schemes'], /dictionary-workbench/);
   for (const file of inputsOf(settingsRoute)) assert.doesNotMatch(file,/\/product-settings\/(?:colors\/(?:colors-page|entry-page)|fits\/fits-page)\.tsx$/,'Colors/fits UI remains tab-action lazy, even when the settings route is configured');
   for (const route of [productsRoute,categoriesRoute,settingsRoute,schemesRoute,storesRoute]) for (const file of inputsOf(route)) assert.doesNotMatch(file,/synthetic|\/preview\/|\/tests\/|postgres|current-form\/http-reader/,'Management routes never import fixture/transaction-candidate/database fallbacks');
-  assert.ok([...inputsOf(storesRoute)].some(file=>file.endsWith('/settings/stores/http-reader.ts')),'Stores uses the existing exact read port');
+  assert.ok([...inputsOf(storesRoute)].some(file=>file.endsWith('/settings/stores/maintenance-http-client.ts')),'Stores uses the current organization-read adapter, not the retired store-only reader');
   assert.ok([...inputsOf(storesRoute)].some(file=>file.endsWith('/components/standard-overlay.tsx')),'New detail route reuses actual Arco overlay adapter');
   assert.match(styles['store-settings'],/store-settings-workbench/);
   assert.doesNotMatch(styles['store-settings'],/sales-workbench|transfer-route|transfer-editor|\.mx-|party-workbench/);

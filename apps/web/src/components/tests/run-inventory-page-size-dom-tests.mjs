@@ -39,8 +39,11 @@ try {
   console.log('PASS page-size shell: no idle import/native select; first focus loads once; click joins pending work; Escape cancels and a late module cannot replace/open the shell.');
 
   key++; await render(); await click(trigger()); await act(async () => document.getElementById('outside').focus()); await act(async () => resolveAction(mockModule)); await settle();
-  assert.equal(host.querySelector('[data-fake-action]').getAttribute('aria-expanded'), 'false');
-  key++; await render(); await click(trigger()); await render({ disabled: true }); await act(async () => resolveAction(mockModule)); await settle(); assert.equal(host.querySelector('[data-fake-action]').getAttribute('aria-expanded'), 'false');
+  assert.equal(host.querySelector('[data-fake-action]'), null, 'Blurred preparation must not replace the original trigger');
+  assert.equal(trigger().getAttribute('aria-expanded'), 'false');
+  key++; await render(); await click(trigger()); await render({ disabled: true }); await act(async () => resolveAction(mockModule)); await settle();
+  assert.equal(host.querySelector('[data-fake-action]'), null, 'Busy preparation must not attach an action after intent was cancelled');
+  assert.equal(trigger().disabled, true);
   key++; await render(); await click(trigger()); await act(async () => scope.dispose()); await act(async () => resolveAction(mockModule)); await settle(); assert.equal(host.querySelector('[data-fake-action]'), null);
   scope = context.createScope('TEST-PAGE-SIZE-REOPEN'); key++; await render(); await click(trigger()); await act(async () => root.render(null)); await act(async () => resolveAction(mockModule)); await settle(); assert.equal(host.childElementCount, 0);
   console.log('PASS page-size interruption: blur/busy closes pending intent; scope revoke/unmount rejects late attachment.');
@@ -50,7 +53,9 @@ try {
   await click(trigger()); await act(async () => resolveAction(mockModule)); await settle(); assert.ok(host.querySelector('[data-fake-action]'));
   console.log('PASS page-size failure: missing JS or CSS is accessible and retryable, never silently falls back to an OS popup.');
 
-  key++; await render(); await act(async () => trigger().focus()); await act(async () => resolveAction(mockModule)); await settle(); assert.equal(host.querySelector('[data-fake-action]').getAttribute('aria-expanded'), 'false');
+  key++; await render(); await act(async () => trigger().focus()); await act(async () => resolveAction(mockModule)); await settle();
+  assert.equal(host.querySelector('[data-fake-action]'), null, 'Focus-only preparation must keep the same trigger until an explicit opening action');
+  assert.equal(trigger().getAttribute('aria-expanded'), 'false');
   key++; await render(); await click(trigger()); await click([...host.querySelectorAll('button')].find(button => button.textContent === '取消加载')); await act(async () => resolveAction(mockModule)); await settle(); assert.ok(trigger()); assert.equal(host.querySelector('[data-fake-action]'), null);
   const chosen = [];
   key++; await render({ loadAction: undefined, onChange: size => chosen.push(size) });

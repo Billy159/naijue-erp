@@ -36,25 +36,15 @@ export class TransferExistingDocumentSession {
     if (this.#original.stockBasis !== 'RUNTIME_LEDGER' || document.header.status !== 'DRAFT' || !document.lines.length || document.lines.length > 200 || new Set(document.lines.map(row => row.skuId)).size !== document.lines.length || Object.keys(input.quantities).length !== document.lines.length || document.lines.some(row => typeof input.quantities[row.id] !== 'string')) { this.#unavailable(); return; }
     const request = new AbortController(), sequence = ++this.#sequence; this.#request = request; this.#publish({ phase: 'loading' });
     try {
-      const ids = document.lines.map(row => row.skuId), rows = await this.#reader.readSkuBatch({ context: { kind: 'TRANSFER' }, skuIds: ids }, AbortSignal.any([request.signal, this.#scope.signal]));
+      const ids = document.lines.map(row => row.skuId), batch = await this.#reader.readSavedEditSkuBatch({ context: { kind: 'TRANSFER' }, skuIds: ids }, AbortSignal.any([request.signal, this.#scope.signal])), rows = batch.skus;
       if (!this.#current(sequence, request)) return;
       if (this.owner.getSnapshot().editor?.input !== this.#inputReference) { this.#unavailable(); return; }
       if (rows.length !== ids.length || rows.some((row, index) => row.id !== ids[index]) || new Set(rows.map(row => row.id)).size !== rows.length) throw new TypeError('Incomplete actual saved transfer SKU relation.');
       const header = document.header, names = this.#original.references;
-      const products = new Map<string, CurrentFormProduct>();
-      for (const sku of rows) {
-        if (products.has(sku.productId)) continue;
-        for (let page = 1; ; page++) {
-          const found = await this.#reader.readProducts({ context: { kind: 'TRANSFER' }, search: sku.productCode, page, pageSize: 20 }, AbortSignal.any([request.signal, this.#scope.signal]));
-          if (!this.#current(sequence, request)) return;
-          const actual = found.items.find(product => product.id === sku.productId);
-          if (actual) { products.set(actual.id, actual); break; }
-          if (BigInt(page) * 20n >= found.exactTotal) break;
-        }
-      }
+      const groups = new Map(batch.products.flatMap(product => product.state === 'ELIGIBLE' ? [[product.productId, product.sizeGroupId] as const] : []));
       if (this.owner.getSnapshot().editor?.input !== this.#inputReference) { this.#unavailable(); return; }
 
-      const draft: TransferProposal = { businessDate: input.businessDate, note: input.note, from: { id: header.fromWarehouseId, name: names.fromWarehouseName ?? '仓库名称未提供' }, to: { id: header.toWarehouseId, name: names.toWarehouseName ?? '仓库名称未提供' }, lines: document.lines.map((row, index) => { const sku = rows[index]!, product: CurrentFormProduct = { ...(products.get(sku.productId)?.sizeGroupId ? { sizeGroupId: products.get(sku.productId)!.sizeGroupId! } : {}), id: sku.productId, code: sku.productCode, name: sku.productName, retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' }; return { sku, product, quantity: input.quantities[row.id]!, existingLineId: row.id, sourceSnapshot: row.snapshot }; }) };
+      const draft: TransferProposal = { businessDate: input.businessDate, note: input.note, from: { id: header.fromWarehouseId, name: names.fromWarehouseName ?? '仓库名称未提供' }, to: { id: header.toWarehouseId, name: names.toWarehouseName ?? '仓库名称未提供' }, lines: document.lines.map((row, index) => { const sku = rows[index]!, sizeGroupId = groups.get(sku.productId), product: CurrentFormProduct = { ...(sizeGroupId ? { sizeGroupId } : {}), id: sku.productId, code: sku.productCode, name: sku.productName, retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' }; return { sku, product, quantity: input.quantities[row.id]!, existingLineId: row.id, sourceSnapshot: row.snapshot }; }) };
       const proposal = new TransferProposalSession(this.#scope, this.#reader, error => { if (error.kind === 'unauthenticated') this.owner.expireExistingIdentity(); });
       if (!proposal.initializeFromSaved(draft, this.#initialDirty)) { proposal.dispose(); this.#unavailable(); return; }
       let previous = proposal.getSnapshot();

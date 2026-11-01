@@ -44,7 +44,8 @@ try {
   const click = async element => { assert.ok(element); await act(async () => element.click()); };
   const type = async (input, value) => act(async () => { Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, value); input.dispatchEvent(new Event('input', { bubbles: true })); });
   const button = text => [...host.querySelectorAll('button')].find(element => element.textContent.trim() === text);
-  const popup = () => host.querySelector('.iw-settings');
+  // Both existing groups belong to one dialog; .iw-settings is now each group.
+  const popup = () => host.querySelector('[role="dialog"][aria-label="库存显示设置"]');
   const trigger = () => button('显示设置');
   const counts = () => Object.fromEntries([...listeners].map(([type, values]) => [type, values.size]));
   const escape = async target => { const event = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }); await act(async () => target.dispatchEvent(event)); return event; };

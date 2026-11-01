@@ -8,11 +8,44 @@ import { JSDOM } from 'jsdom';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '../../../../..');
 const temporary = await mkdtemp(path.join(here, '.product-filter-layout-'));
+const shellEntry='apps/web/src/application/styles/shell.css';
+const inventoryEntry='apps/web/src/application/styles/inventory.css';
+const actionEntry='apps/web/src/components/product-candidate-action.css';
+const globalArco='node_modules/@arco-design/web-react/dist/css/arco.css';
+const expectedStyleInputs=new Map([
+  [shellEntry,[globalArco,'apps/web/src/components/standard-controls.css','apps/web/src/components/standard-overlay.css','apps/web/src/components/standard-tabs.css','apps/web/src/authentication/authentication.css','apps/web/src/demo-presentation/tokens.css','apps/web/src/demo-presentation/navigation-menu.css','apps/web/src/demo-presentation/frame.css','apps/web/src/demo-controls/page-size-shell.css','apps/web/src/demo-controls/idle-selection-tokens.css','apps/web/src/demo-presentation/controls.css','apps/web/src/components/standard-read-table.css','apps/web/src/components/exact-value.css','apps/web/src/components/standard-pagination.css','apps/web/src/components/standard-breadcrumb.css','apps/web/src/components/standard-status-tag.css',shellEntry]],
+  [inventoryEntry,['apps/web/src/demo-controls/page-size-shell.css','apps/web/src/demo-controls/idle-selection-tokens.css','apps/web/src/demo-presentation/controls.css','apps/web/src/inventory/product-drawer-frame.css','apps/web/src/inventory/inventory.css','apps/web/src/inventory/ledger.css',inventoryEntry]],
+  [actionEntry,[actionEntry]],
+]);
+const assertStyleGraph=(entry,inputs)=>{
+  assert.ok(expectedStyleInputs.has(entry),'Only an explicitly reviewed stylesheet entry may be tested');
+  assert.equal(new Set(inputs).size,inputs.length,'Shared CSS inputs remain deduplicated');
+  if(entry!==shellEntry)for(const input of inputs)assert.doesNotMatch(input,/dist\/css\/arco\.css|\/es\/style\/index\.css$/,'No global Arco reset in inventory/action CSS');
+  // This exact application shell already imported installed Arco at base59.
+  // It is a startup prerequisite for real shared controls, not permission to
+  // import a reset into any business/action leaf or eagerly attach its styles.
+  assert.deepEqual([...inputs].sort(),[...expectedStyleInputs.get(entry)].sort(),`Exact CSS provenance and lazy business boundary: ${entry}`);
+};
+// Negative graph fixtures: the shell exception never widens to an action,
+// inventory scope, alternative reset, duplicated component or business leaf.
+for(const [entry,inputs]of [
+  [actionEntry,[actionEntry,globalArco]],
+  [inventoryEntry,[...expectedStyleInputs.get(inventoryEntry),globalArco]],
+  [shellEntry,[...expectedStyleInputs.get(shellEntry),inventoryEntry]],
+  [shellEntry,expectedStyleInputs.get(shellEntry).map(input=>input===globalArco?'node_modules/@arco-design/web-react/es/style/index.css':input)],
+  [actionEntry,[actionEntry,actionEntry]],
+])assert.throws(()=>assertStyleGraph(entry,inputs));
 const css = async entry => {
-  const result = await build({ entryPoints: [path.join(repo, entry)], bundle: true, write: false, minify: true, metafile: true, logLevel: 'warning' });
-  for (const input of Object.keys(result.metafile.inputs)) assert.doesNotMatch(input, /dist\/css\/arco\.css|\/es\/style\/index\.css$/, 'No global Arco reset');
+  const result = await build({ absWorkingDir:repo, entryPoints: [path.join(repo, entry)], bundle: true, write: false, minify: true, metafile: true, logLevel: 'warning' });
+  assertStyleGraph(entry,Object.keys(result.metafile.inputs));
   return result.outputFiles[0].text;
 };
+// Actual source-graph negative proof, not just a hand-written input array:
+// prepend a forbidden import in memory while leaving repository CSS unchanged.
+const pollutedAction=await build({absWorkingDir:repo,entryPoints:[path.join(repo,actionEntry)],bundle:true,write:false,minify:true,metafile:true,logLevel:'warning',plugins:[{name:'negative-action-reset-fixture',setup(builder){builder.onLoad({filter:/product-candidate-action\.css$/},async args=>({contents:`@import ${JSON.stringify(path.join(repo,globalArco))};\n${await readFile(args.path,'utf8')}`,loader:'css',resolveDir:path.dirname(args.path)}));}}]});
+assert.ok(Object.hasOwn(pollutedAction.metafile.inputs,globalArco),'Negative source fixture actually reaches installed global reset');
+assert.throws(()=>assertStyleGraph(actionEntry,Object.keys(pollutedAction.metafile.inputs)),/No global Arco reset/);
+console.log('PASS exact CSS graph: base59 shared startup Arco only; isolated inventory/product action reject global resets, wrong-scope inputs and duplicates, including an actual in-memory polluted source graph.');
 const portable = await build({ absWorkingDir: path.join(repo, 'apps/web/preview-core-pages'), entryPoints: ['main.tsx'], outdir: path.join(temporary, 'portable'), bundle: true, platform: 'browser', target: 'es2022', format: 'iife', minify: true, write: false, define: { 'process.env.NODE_ENV': '"production"', 'import.meta.url': '"about:blank"' }, logLevel: 'warning' });
 const portableCss = portable.outputFiles.find(file => file.path.endsWith('.css'))?.text;
 assert.ok(portableCss); assert.match(portableCss, /inventory-product-select/);

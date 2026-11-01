@@ -6,10 +6,13 @@ import { build } from 'esbuild';
 import { JSDOM } from 'jsdom';
 const here = path.dirname(fileURLToPath(import.meta.url)), temp = await mkdtemp(path.join(here, '.dom-tmp-'));
 const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
-for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame', 'innerWidth', 'innerHeight', 'pageXOffset', 'pageYOffset']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLIFrameElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame', 'innerWidth', 'innerHeight', 'pageXOffset', 'pageYOffset']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
 dom.window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } });
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+// JSDOM has the native carrier but not its top-layer methods.
+dom.window.HTMLDialogElement.prototype.showModal = function () { this.open = true; };
+dom.window.HTMLDialogElement.prototype.close = function () { this.open = false; };
 globalThis.ResizeObserver = class { observe() {} unobserve() {} disconnect() {} }; dom.window.ResizeObserver = globalThis.ResizeObserver;
 dom.window.HTMLElement.prototype.scrollIntoView = () => {};
 dom.window.HTMLCanvasElement.prototype.getContext = () => ({ font: '', measureText: text => ({ width: text.length * 7 }) });
@@ -41,46 +44,46 @@ try {
   await act(async () => root.render(createElement(SalesCommandForm, { session: h.session, close: () => { closed++; } }))); await settle();
   assert.equal(host.querySelector('h1').textContent, '编辑销货单');
   assert.deepEqual([...host.querySelectorAll('.sale-doc-fields > .tc-gold-field')].slice(0, 6).map(node => node.querySelector('.sale-field-label').textContent), ['单据日期', '业务类型', '营业厅', '营业员', '客户', '出库仓']);
-  assert.deepEqual([...host.querySelectorAll('.sale-lines-table th')].map(node => node.textContent), ['款号／商品名称', '颜色', '版型', '尺码', '数量', '参考零售价', '折扣', '退货单价', '金额', '操作']);
+  assert.deepEqual([...host.querySelectorAll('.sale-lines-table th')].map(node => node.textContent), ['款号／商品名称', '颜色', '版型', '尺码', '数量', '参考零售价', '折扣', '成交单价', '金额', '操作']);
   await input(host.querySelector('input[aria-label$=" 成交单价"]'), '1.'); await click(button('保存'));
   assert.equal(h.commands.length, 0); assert.equal(h.keys, 0); assert.equal(h.session.canLeave(), false); assert.equal(h.session.getSnapshot().input.lines[0].dealPrice, '1.');
-  await click(button('返回列表')); assert.ok(button('放弃修改并返回')); await click(button('取消')); assert.equal(closed, 0); assert.equal(h.session.getSnapshot().input.lines[0].dealPrice, '1.');
-  await click(button('返回列表')); await click(button('放弃修改并返回')); assert.equal(closed, 1); assert.equal(h.session.getSnapshot().command.editor, null);
+  await click(button('返回列表')); assert.ok(button('放弃修改并离开')); await click(button('继续编辑')); assert.equal(closed, 0); assert.equal(h.session.getSnapshot().input.lines[0].dealPrice, '1.');
+  await click(button('返回列表')); await click(button('放弃修改并离开')); assert.equal(closed, 1); assert.equal(h.session.getSnapshot().command.editor, null);
   console.log('PASS SALES COMMAND DOM 1: source header/columns, invalid raw input never sends old facts, Back requires explicit discard and Cancel preserves input.');
 
-  await act(async () => h.session.openExisting(uuid(1))); await settle(); await input(host.querySelector('textarea[aria-label="备注"]'), 'TEST 保存输入'); await click(button('保存'));
-  assert.equal(h.commands.length, 1); assert.equal(h.commands[0].action, 'SAVE'); assert.equal(h.commands[0].expectedVersion, 2); assert.equal(button('保存').disabled, true); assert.equal(h.keys, 1);
+  await act(async () => h.session.openExisting(uuid(1))); await settle(); await input(host.querySelector('input[aria-label="备注"]'), 'TEST 保存输入'); await click(button('保存'));
+  assert.equal(h.commands.length, 1); assert.equal(h.commands[0].action, 'SAVE'); assert.equal(h.commands[0].expectedVersion, 2); assert.equal(button('保存'), undefined, 'Committed readback is not an editable draft'); assert.equal(h.keys, 1);
   assert.equal(h.commands[0].draft.settlements[0].paymentMethodId, uuid(25)); assert.equal(h.commands[0].draft.settlements[0].paymentAccountId, draft().settlements[0].paymentAccountId);
   assert.equal(h.session.getSnapshot().command.editor.detail.document.header.version, 2); assert.ok(button('读取当前单据'));
   h.setCurrent(detail('DRAFT', 3)); await click(button('读取当前单据')); await click(button('采用当前单据'));
   assert.equal(h.session.getSnapshot().command.editor.detail.document.header.version, 3); await click(button('审核')); assert.equal(h.commands.length, 1); await click(button('确认审核')); assert.equal(h.commands[1].action, 'APPROVE');
-  h.setCurrent(detail('APPROVED', 4)); await click(button('读取当前单据')); await click(button('采用当前单据')); assert.equal(button('保存').disabled, true); assert.equal(button('弃审').disabled, false);
+  h.setCurrent(detail('APPROVED', 4)); await click(button('读取当前单据')); await click(button('采用当前单据')); assert.equal(button('保存'), undefined); assert.equal(button('弃审').disabled, false);
   await click(button('弃审')); await click(button('确认弃审')); assert.equal(h.commands[2].action, 'UNAPPROVE');
   h.setCurrent(detail('DRAFT', 5)); await click(button('读取当前单据')); await click(button('采用当前单据')); assert.equal(h.session.editable, true); await act(async () => h.session.dispose());
   console.log('PASS SALES COMMAND DOM 2: SAVE is separate from approval, exact CAS and explicit action confirmations, committed content stays stale until current read/adopt, approved edit requires confirmed unapprove/readback.');
 
   const unknown = setup({ uncertain: true }); await unknown.session.openExisting(uuid(1)); await act(async () => root.render(createElement(SalesCommandForm, { session: unknown.session, close: () => {} }))); await settle();
-  await input(host.querySelector('textarea[aria-label="备注"]'), 'TEST 不确定原输入'); await click(button('保存')); const original = unknown.commands[0];
-  assert.equal(button('返回列表').disabled, true); assert.equal(button('保存').disabled, true); assert.ok(button('重放原请求')); await click(button('重放原请求'));
+  await input(host.querySelector('input[aria-label="备注"]'), 'TEST 不确定原输入'); await click(button('保存')); const original = unknown.commands[0];
+  assert.equal(button('返回列表').disabled, true); assert.equal(button('保存'), undefined, 'Unresolved writes expose no second save action'); assert.ok(button('重放原请求')); await click(button('重放原请求'));
   assert.strictEqual(unknown.commands[1], original); assert.equal(unknown.keys, 1); await click(button('核实原操作回执')); assert.equal(unknown.session.getSnapshot().command.write.phase, 'committed');
   await act(async () => unknown.context.replaceIdentity({ accountId: uuid(999), sessionRevision: '2', permissionRevision: '2' })); await settle();
-  assert.equal(unknown.session.getSnapshot().input, null); assert.equal(host.querySelectorAll('input,textarea').length, 0); await act(async () => unknown.session.dispose());
+  assert.equal(unknown.session.getSnapshot().input, null); assert.equal(host.querySelectorAll('input:not(:disabled),textarea:not(:disabled)').length, 0); await act(async () => unknown.session.dispose());
   console.log('PASS SALES COMMAND DOM 3: unknown results block repeat actions/navigation, original-key replay is exact, receipt recovery and identity disposal clear safely.');
 
   const unknownMethod = setup(), methodDetail = detail(); unknownMethod.setCurrent({ ...methodDetail, document: { ...methodDetail.document,
     settlements: methodDetail.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } });
   await unknownMethod.session.openExisting(uuid(1)); await act(async () => root.render(createElement(SalesCommandForm, { session: unknownMethod.session, close: () => {} }))); await settle();
-  assert.match(host.textContent, /原付款方式编号/); assert.match(host.textContent, /TEST 保存方式/);
-  assert.equal(button('保存').disabled, true); assert.equal(button('审核').disabled, true); assert.equal(host.querySelectorAll('input,textarea').length, 0);
-  await click(button('保存')); await click(button('审核')); assert.equal(unknownMethod.commands.length, 0); assert.equal(unknownMethod.keys, 0);
+  assert.match(host.textContent, /原价格或付款方式资料不完整/); assert.equal(unknownMethod.session.getSnapshot().command.editor.detail.document.settlements[0].paymentMethodId, null); assert.match(host.textContent, /TEST 保存方式/);
+  assert.equal(button('保存'), undefined); assert.equal(button('审核').disabled, true); assert.equal(host.querySelectorAll('input:not(:disabled),textarea:not(:disabled)').length, 0);
+  await click(button('审核')); assert.equal(unknownMethod.commands.length, 0); assert.equal(unknownMethod.keys, 0);
   await act(async () => unknownMethod.session.dispose());
   console.log('PASS SALES METHOD DOM: explicit nullable original method stays readable without inferring current/name facts; unknown method never enables runtime editing or approval.');
 
   const page = setup(); const references = { readReferences: async () => { throw new Error('Unexpected filter candidate read'); } };
   await act(async () => root.render(createElement(SalesCommandPageHost, { scope: page.routeScope, reader: page.reader, references, session: page.session, loadDetailStyles: async () => {} }))); await settle();
-  assert.equal(button('新增销货单').disabled, true); assert.equal(page.listReads, 0); await click(button('查询')); assert.equal(page.listReads, 1);
+  assert.equal(button('新增销货单').disabled, true); assert.equal(page.listReads, 1, 'Entry loads one bounded list page');
   await click(button('查看')); assert.ok(host.querySelector('.sales-command-editor')); assert.equal(host.querySelector('[data-document-list="sales"]').hidden, true);
-  await input(host.querySelector('textarea[aria-label="备注"]'), 'TEST 列表过期'); await click(button('保存')); await click(button('返回列表'));
+  await input(host.querySelector('input[aria-label="备注"]'), 'TEST 列表过期'); await click(button('保存')); await click(button('返回列表'));
   assert.equal(host.querySelector('[data-document-list="sales"]').hidden, false); assert.match(host.textContent, /操作前的查询结果/); assert.equal(page.listReads, 1);
   await click(button('查询')); assert.equal(page.listReads, 2); assert.doesNotMatch(host.textContent, /操作前的查询结果/); await act(async () => page.session.dispose());
   console.log('PASS SALES COMMAND DOM 4: no native preparer keeps NEW disabled, detail/write only on click, retained list is explicitly stale after mutation and refresh is manual.');
@@ -95,7 +98,7 @@ try {
   let posted = null, posts = 0, appKeys = 0; const json = (value, status = 200) => new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } });
   const sheet = { load: async () => {}, dispose() {} };
   const app = new ApplicationController({ http: { origin: 'https://synthetic.test', basePath: '/api', fetch: async (url, init) => {
-    if (url.endsWith('/auth/login')) return json({ principal, expiresAt: '2026-10-22T00:00:00.000Z' });
+    if (url.endsWith('/auth/login')) return json({ principal, expiresAt: new Date(Date.now() + 60 * 60 * 1000).toISOString() });
     if (url.endsWith('/sales/query')) return json({ page: 1, pageSize: 20, exactTotal: '1', items: [summary()] });
     if (url.endsWith('/sales/detail/query')) return json(native);
     if (url.endsWith('/sales/commands')) { posts++; posted = JSON.parse(init.body); return json({ error: { code: 'INTERNAL_ERROR' } }, 500); }
@@ -105,7 +108,7 @@ try {
   assert.equal(await app.authentication.login({ loginName: 'TEST-APP-SALES', password: 'TEST-NOT-REAL-PASSWORD' }), true);
   assert.equal(await app.navigate('sales'), true);
   const renderRoute = async () => { const current = app.getSnapshot(); await act(async () => root.render(createElement(current.prepared.View, { scope: current.scope }))); await settle(); };
-  await renderRoute(); await click(button('查询')); await click(button('查看')); await input(host.querySelector('textarea[aria-label="备注"]'), 'TEST APP raw');
+  await renderRoute(); await click(button('查询')); await click(button('查看')); await input(host.querySelector('input[aria-label="备注"]'), 'TEST APP raw');
   assert.equal(await app.navigate(null), false); assert.equal(app.getSnapshot().notice, 'cannot-leave'); await click(button('保存')); assert.equal(posts, 1); assert.equal(appKeys, 1);
   const appOriginal = JSON.stringify(posted); await act(async () => app.failRoute(app.getSnapshot().scope));
   assert.equal(await app.navigate('sales'), true); await renderRoute(); assert.ok(button('核实原操作回执')); assert.equal(button('返回列表').disabled, true);

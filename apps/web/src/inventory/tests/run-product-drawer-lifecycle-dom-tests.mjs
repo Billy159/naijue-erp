@@ -61,6 +61,12 @@ try {
   const abandonedStyle = document.querySelector('link[rel=stylesheet]');
   await click(host.querySelector('[aria-label="关闭商品资料"]'));
   assert.ok(drawer() === null, 'Arco product layer is absent');
+  const nextPageControl=document.createElement('button');nextPageControl.textContent='SYNTHETIC newer page control';document.body.append(nextPageControl);nextPageControl.focus();
+  // The installed native Drawer entrance timeout is 300ms. Keep the abandoned
+  // entrance closed across that boundary without letting its late focus steal
+  // a newer page's actual connected control (not a fake preview focus hook).
+  await act(async()=>{await new Promise(resolve=>setTimeout(resolve,350));});
+  assert.equal(document.activeElement===nextPageControl,true,'An interrupted entrance must not steal newer-page focus');nextPageControl.remove();
   await act(async () => abandonedStyle.dispatchEvent(new Event('error')));
   await settle();
   assert.equal(requests.length, 0);
@@ -87,6 +93,7 @@ try {
   assert.ok(mainDialog.classList.contains('arco-drawer'), 'StrictMode retains one actual Arco Drawer rather than a native dialog');
   assert.equal(host.querySelectorAll('.erp-product-drawer').length,1);
   assert.equal(mainDialog.tagName,'DIV');
+  await until(()=>mainDialog.classList.contains('slideRight-enter-done'),'The actual Arco Drawer entrance completes before native preview focus interactions');
   await until(()=>document.activeElement === host.querySelector('[aria-label="关闭商品资料"]'),'Product initial close focus');
   assert.ok(document.activeElement === host.querySelector('[aria-label="关闭商品资料"]'), `Product close control receives focus; active=${document.activeElement?.tagName}/${document.activeElement?.getAttribute('aria-label')}/${document.activeElement?.textContent?.slice(0,100)}`);
   await resolve(first, base('test-product-1', 'CURRENT FIRST PRODUCT'));
@@ -107,46 +114,62 @@ try {
   assert.equal(specs.read.signal.aborted, true, 'Tab replacement immediately aborts the previous pending query');
   const images = await waitRead('images', before);
   await resolve(specs, emptySpecs('test-product-1'));
-  assert.equal(host.querySelector('.pd-skus'), null);
+  assert.equal(host.querySelector('.pc-spec-stack'), null, 'The superseded specification tab must not attach after its late result');
+  const beforeImageReferences=requests.length;
   await resolve(images, { productId: 'test-product-1', images: [{ id: 'TEST-IMAGE', label: 'TEST PIXEL', thumbnailUrl: png }] });
+  const imageReferences=await waitRead('specs',beforeImageReferences);
+  await resolve(imageReferences,emptySpecs('test-product-1'));
+  assert.equal(imageReferences.read.entityId,'test-product-1','Image color references use the current product scope');
   assert.equal(requests.filter(request => request.kind === 'original').length, 0, 'Image list does not prefetch originals');
   assert.ok(host.querySelector('img[loading=lazy]'));
   before = requests.length;
-  let immediatePreviewCloses = 0;
-  const originalFocus = HTMLElement.prototype.focus;
-  HTMLElement.prototype.focus = function (...args) {
-    originalFocus.apply(this,args);
-    if (this.matches('[aria-label="关闭图片预览"]')) { immediatePreviewCloses++; this.click(); }
-  };
-  try { await click(host.querySelector('.pd-thumbnail')); await settle(); } finally { HTMLElement.prototype.focus = originalFocus; }
-  assert.ok(immediatePreviewCloses >= 1, 'The close-before-start probe observes the actual Arco initial-focus boundary');
-  assert.equal(requests.slice(before).filter(request => request.kind === 'original').length, 0, 'Preview closed during attachment must not start its queued original read');
-  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
+  // Native Image.Preview has no old custom close-button initial-focus hook.
+  // Exercise the observable event sequence instead of dispatching during React
+  // appendChild: explicit thumbnail, pending original read, real close control.
+  await click(host.querySelector('button[aria-label="预览 TEST PIXEL"]'));
+  const immediatelyClosed = await waitRead('original', before);
+  await click(host.querySelector('.arco-image-preview-close-btn'));
+  assert.equal(immediatelyClosed.read.signal.aborted, true, 'Native close aborts the pending original read at the close boundary');
+  await settle();
+  assert.equal(requests.slice(before).filter(request => request.kind === 'original').length, 1, 'Closing must not start another original read');
+  await resolve(immediatelyClosed, { productId: 'test-product-1', imageId: 'TEST-IMAGE', url: png });
+  assert.ok(!host.querySelector('.arco-image-preview'),'Inner image layer is absent');
   assert.ok(drawer());
   before = requests.length;
-  await click(host.querySelector('.pd-thumbnail'));
+  await click(host.querySelector('button[aria-label="预览 TEST PIXEL"]'));
   const original = await waitRead('original', before);
   const originals = requests.slice(before).filter(request => request.kind === 'original');
   assert.equal(originals.length, 1, 'StrictMode preview replay must start only one original-image read');
   assert.equal(original.read.parameters.imageId, 'TEST-IMAGE');
   assert.equal(original.read.entityId, 'test-product-1');
   await act(async () => original.reject(new Error('TEST synthetic original failure')));
-  assert.match(host.querySelector('.pd-image-preview').textContent, /大图暂不可读取/);
+  assert.match(host.querySelector('.arco-image-preview').textContent, /大图暂不可读取/);
   before = requests.length; await click(button('重试大图'));
   const retriedOriginal = await waitRead('original', before);
   await resolve(retriedOriginal, { productId: 'test-product-1', imageId: 'TEST-IMAGE', url: png });
-  assert.ok(host.querySelector('.pd-image-preview img'));
-  await act(async () => host.querySelector('.pd-image-preview').dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })));
-  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
+  assert.ok(host.querySelector('.arco-image-preview img'));
+  await act(async () => host.querySelector('.arco-image-preview').dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })));
+  assert.ok(!host.querySelector('.arco-image-preview'),'Inner image layer is absent');
   assert.ok(drawer());
-  assert.equal(document.activeElement, host.querySelector('.pd-thumbnail'));
+  await until(() => document.activeElement === host.querySelector('button[aria-label="预览 TEST PIXEL"]'), `Escape restores the native preview opener after its focus-return frame; active=${document.activeElement?.tagName}/${document.activeElement?.getAttribute('aria-label')}/${document.activeElement?.textContent?.slice(0,50)}`);
   before = requests.length;
-  await click(host.querySelector('.pd-thumbnail'));
+  await click(host.querySelector('button[aria-label="预览 TEST PIXEL"]'));
   const closedOriginal = await waitRead('original', before);
-  await click(host.querySelector('[aria-label="关闭图片预览"]'));
+  await click(host.querySelector('.arco-image-preview-close-btn'));
   assert.equal(closedOriginal.read.signal.aborted, true);
   await resolve(closedOriginal, { productId: 'test-product-1', imageId: 'TEST-IMAGE', url: png });
-  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
+  assert.ok(!host.querySelector('.arco-image-preview'),'Inner image layer is absent');
+  // Pointer activation on installed Arco's tabindex=0 thumbnail image keeps
+  // that actual invoker, rather than forcing its enclosing button to steal it.
+  const pointerInvoker=host.querySelector('button[aria-label="预览 TEST PIXEL"] .arco-image-img');
+  assert.ok(pointerInvoker && pointerInvoker.tabIndex===0);
+  before=requests.length;await click(pointerInvoker);
+  const pointerOriginal=await waitRead('original',before);
+  await resolve(pointerOriginal,{productId:'test-product-1',imageId:'TEST-IMAGE',url:png});
+  await act(async()=>pointerInvoker.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true})));
+  await until(()=>document.activeElement===pointerInvoker,'Pointer-image Escape preserves the actual connected invoker');
+  assert.equal(pointerInvoker.closest('button[aria-label="预览 TEST PIXEL"]')?.isConnected,true);
+  assert.equal(host.querySelector('.arco-image-preview'),null);
   console.log('PASS StrictMode: tab replacement aborts; images remain thumbnail-only until explicit preview; original-read replay/retry/close and Escape focus restoration work without stale preview.');
 
   before = requests.length;
@@ -208,7 +231,7 @@ try {
   const revoked = await waitRead('base', before);
   await act(async () => contextB.replaceIdentity(identity('TEST-DRAWER-C', '3')));
   assert.equal(revoked.read.signal.aborted, true);
-  assert.equal(host.querySelector('.pd-fields'), null);
+  assert.equal(host.querySelector('.pc-base-grid'), null);
   await resolve(revoked, base('test-product-3', 'STALE REVOKED IDENTITY'));
   assert.doesNotMatch(host.textContent, /CURRENT THIRD PRODUCT|STALE REVOKED IDENTITY|STALE CANCELLED IDENTITY/);
   props = { ...props, parentScope: contextB.createScope('TEST-DRAWER-ROUTE-C') };
@@ -223,37 +246,37 @@ try {
   before = requests.length; await click(tab('图片'));
   const thirdImages = await waitRead('images', before);
   await resolve(thirdImages, { productId: 'test-product-3', images: [{ id: 'TEST-THIRD-IMAGE', label: 'THIRD PIXEL', thumbnailUrl: png }] });
-  before = requests.length; await click(host.querySelector('.pd-thumbnail'));
+  before = requests.length; await click(host.querySelector('button[aria-label="预览 THIRD PIXEL"]'));
   const replacedPreview = await waitRead('original', before);
   props = { ...props, product: { id: 'test-product-4', label: 'TEST PRODUCT 4' } };
   before = requests.length; await render();
   assert.equal(replacedPreview.read.signal.aborted, true);
-  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
+  assert.ok(!host.querySelector('.arco-image-preview'),'Inner image layer is absent');
   await resolve(replacedPreview, { productId: 'test-product-3', imageId: 'TEST-THIRD-IMAGE', url: png });
   const fourth = await waitRead('base', before);
   await resolve(fourth, base('test-product-4', 'CURRENT FOURTH PRODUCT'));
   before = requests.length; await click(tab('图片'));
   const fourthImages = await waitRead('images', before);
   await resolve(fourthImages, { productId: 'test-product-4', images: [{ id: 'TEST-FOURTH-IMAGE', label: 'FOURTH PIXEL', thumbnailUrl: png }] });
-  before = requests.length; await click(host.querySelector('.pd-thumbnail'));
+  before = requests.length; await click(host.querySelector('button[aria-label="预览 FOURTH PIXEL"]'));
   const revokedPreview = await waitRead('original', before);
   await act(async () => contextB.clear());
   assert.equal(revokedPreview.read.signal.aborted, true);
-  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
+  assert.ok(!host.querySelector('.arco-image-preview'),'Inner image layer is absent');
   await resolve(revokedPreview, { productId: 'test-product-4', imageId: 'TEST-FOURTH-IMAGE', url: png });
-  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
+  assert.ok(!host.querySelector('.arco-image-preview'),'Inner image layer is absent');
   console.log('PASS StrictMode: product replacement and identity revocation also abort explicitly opened original-image reads and remove previews despite late completions.');
   before = requests.length;
   await settle();
   assert.equal(requests.length, before);
-  assert.equal(host.querySelector('.pd-fields'), null);
+  assert.equal(host.querySelector('.pc-base-grid'), null);
   open = false; await render();
   assert.ok(drawer() === null, 'Arco product layer is absent');
   const inactive = contextA.createScope('TEST-DRAWER-INACTIVE'); inactive.dispose();
   props = { ...props, parentScope: inactive };
   open = true; await render(); await settle();
   assert.equal(requests.length, before, 'An already-inactive parent must never start a leaf business read');
-  assert.equal(host.querySelector('.pd-fields'), null);
+  assert.equal(host.querySelector('.pc-base-grid'), null);
   await act(async () => drawer().dispatchEvent(new KeyboardEvent('keydown', { key:'Escape', bubbles: true, cancelable: true })));
   assert.ok(drawer() === null, 'Arco product layer is absent');
   await act(async () => root.unmount()); root = null;
@@ -262,8 +285,31 @@ try {
   console.log('PASS StrictMode: already-inactive parent and final unmount retain no product facts or live descendant scopes.');
   const deferredEntry = Object.entries(result.metafile.outputs).find(([, output]) => output.entryPoint?.endsWith('product-drawer-deferred-start-entry.tsx'));
   assert.ok(deferredEntry);
-  const { useEffect, useProductRead, assertProductBasics } = await import(pathToFileURL(path.resolve(deferredEntry[0])).href);
+  const { useEffect, useLayoutEffect, useProductRead, ProductPanelActivity, assertProductBasics } = await import(pathToFileURL(path.resolve(deferredEntry[0])).href);
   const deferredContext = new ReadContext(identity('TEST-DEFERRED-CANCEL'));
+  const layoutScope=deferredContext.createScope('TEST-LAYOUT-CANCEL-ROUTE','test-product-layout');
+  const layoutReads=[];let layoutControls,layoutCancels=0;
+  function CancelBeforePassiveAttachment({scope,shouldCancel}){
+    layoutControls=useProductRead(scope,async read=>{layoutReads.push(read);return base(read.parameters.productId,'CURRENT LAYOUT PROBE');},assertProductBasics);
+    useLayoutEffect(()=>{if(shouldCancel){layoutCancels++;layoutControls.cancel();}},[scope]);
+    return h('p',null,layoutControls.snapshot.phase);
+  }
+  root=createRoot(host);
+  await act(async()=>root.render(h(StrictMode,null,h(CancelBeforePassiveAttachment,{scope:layoutScope,shouldCancel:true}))));await settle();
+  assert.equal(layoutCancels,2,'The earliest layout-cancel probe also undergoes StrictMode replay');
+  assert.equal(layoutReads.length,0,'Cancellation before passive attachment must survive setup and suppress every queued transport');
+  assert.equal(layoutControls.cancelled,true,'Passive setup must not clear earlier user cancellation intent');
+  await act(async()=>layoutControls.read());await settle();
+  assert.equal(layoutReads.length,1,'Explicit retry after earliest cancellation starts exactly once');
+  const oldLayoutControls=layoutControls;
+  const newLayoutScope=deferredContext.createScope('TEST-LAYOUT-NEW-SCOPE','test-product-layout-new');
+  await act(async()=>root.render(h(StrictMode,null,h(CancelBeforePassiveAttachment,{scope:newLayoutScope,shouldCancel:false}))));await settle();
+  assert.equal(layoutReads.length,2,'A genuinely new scope retains the normal initial read');
+  assert.equal(layoutReads[1].parameters.productId,'test-product-layout-new');assert.equal(layoutControls.cancelled,false,'Old scope cancellation does not leak to the replacement');
+  await act(async()=>{oldLayoutControls.cancel();oldLayoutControls.read();});await settle();
+  assert.equal(layoutReads.length,2,'Retained old-scope actions cannot read through the replacement');assert.equal(layoutControls.cancelled,false,'Retained old-scope cancellation cannot overwrite the new-scope UI');
+  await act(async()=>root.unmount());root=null;
+  console.log('PASS earliest cancellation: layout-before-passive intent survives StrictMode with zero reads; retry once and new-scope default behavior remain correct.');
   const cancelledScope = deferredContext.createScope('TEST-DEFERRED-CANCEL-ROUTE', 'test-product-5');
   const hookReads = [];
   let controls, cancellations = 0;
@@ -294,7 +340,41 @@ try {
   assert.equal(abortEffects, 2);
   assert.equal(hookReads.length, 1, 'A scope cancelled before the microtask never starts transport');
   await act(async () => root.unmount()); root = null;
+  // Actual panel hide/show activity and explicit cancellation are different
+  // intents: only an interrupted visibility read may resume automatically.
+  const activityScope = deferredContext.createScope('TEST-ACTIVITY-CANCEL-ROUTE', 'test-product-7');
+  const activityReads = [];
+  let activityControls, visible = true;
+  function ActivityProbe() {
+    activityControls = useProductRead(activityScope, read => new Promise(resolve => activityReads.push({ read, resolve })), assertProductBasics);
+    return h('p', null, activityControls.snapshot.success?.data.name ?? activityControls.snapshot.phase);
+  }
+  root = createRoot(host);
+  const renderActivity = async () => { await act(async () => root.render(h(StrictMode, null, h(ProductPanelActivity.Provider, {value:visible}, h(ActivityProbe))))); await settle(); };
+  await renderActivity();
+  assert.equal(activityReads.length, 1, 'A normal visible attachment starts exactly once under StrictMode');
+  visible = false; await renderActivity();
+  assert.equal(activityReads[0].read.signal.aborted, true, 'Hiding interrupts the current transport');
+  visible = true; await renderActivity();
+  assert.equal(activityReads.length, 2, 'A normal hidden interruption resumes once on show');
+  visible = false; await renderActivity();
+  assert.equal(activityReads[1].read.signal.aborted, true);
+  await act(async () => activityControls.cancel());
+  visible = true; await renderActivity(); await settle();
+  assert.equal(activityReads.length, 2, 'An explicit cancel while hidden consumes the resume ticket');
+  assert.equal(activityControls.cancelled, true);
+  await act(async () => { activityReads[0].resolve(base('test-product-7','STALE HIDDEN FIRST')); activityReads[1].resolve(base('test-product-7','STALE CANCELLED RESUME')); }); await settle();
+  assert.equal(activityControls.snapshot.success, null, 'Ignored late completions never publish cancelled product facts');
+  assert.doesNotMatch(host.textContent, /STALE HIDDEN FIRST|STALE CANCELLED RESUME/);
+  await act(async () => activityControls.read()); await settle(); await renderActivity();
+  assert.equal(activityReads.length, 3, 'An explicit retry after hidden cancellation starts once without a queued duplicate');
+  assert.equal(activityControls.cancelled, false);
+  await act(async () => root.unmount()); root = null;
+  assert.equal(activityReads[2].read.signal.aborted, true, 'Unmount aborts the explicitly retried transport');
+  await act(async () => activityReads[2].resolve(base('test-product-7','STALE UNMOUNTED RETRY'))); await settle();
+  assert.doesNotMatch(host.textContent, /STALE UNMOUNTED RETRY/);
   deferredContext.clear();
+  console.log('PASS panel activity: ordinary hidden interruption resumes exactly once; explicit hidden cancellation never auto-resumes, late facts stay detached, retry starts once, unmount aborts.');
   console.log('PASS deferred starts: real StrictMode effects replay, but discarded/cancelled/aborted attachments start zero transports; explicit retry starts exactly once.');
   console.log('All shared product-drawer lifecycle regressions passed in real React StrictMode + jsdom with exact single-start basics/specs/images/original actions; this is not real-browser visual/network acceptance.');
 } finally {

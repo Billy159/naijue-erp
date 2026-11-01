@@ -3,8 +3,7 @@
  * owned bounded pool before serving requests; the original admission component
  * owns TTL, waiter limits, shared-volume accounting and the single in-flight probe.
  */
-import type {PgSalesPool} from '../../../adapters/postgres/src/sales-unit-of-work.ts';
-import type {BoundedPostgresConfig} from '../../../adapters/postgres/src/bounded-pool.ts';
+import type {RuntimeDatabaseReadPool, RuntimeDatabaseTargetIdentity} from './runtime-database-read-ports.ts';
 import {CAPACITY_VOLUMES, createCapacityAdmission} from './capacity-admission.ts';
 import type {CapacityAdmission, ObservableCapacityAdmission, CapacityBinding, CapacityBytes, CapacityReading, CapacityWindow} from './capacity-admission.ts';
 
@@ -35,7 +34,10 @@ export interface PreparedOwnedPoolCapacityAdmission extends ObservableCapacityAd
    * This read does not admit a write or consume/refund any window budget. */
   preflight(): Promise<void>;
 }
-type PoolBinder = (pool: PgSalesPool, target: BoundedPostgresConfig['target']) => void;
+// Keep callers' complete target type (including private operator fields) opaque
+// while consuming only the identity subset. Generic acceptance also preserves
+// the existing inline bounded-target call sites without widening this port.
+type PoolBinder = <Target extends RuntimeDatabaseTargetIdentity>(pool: RuntimeDatabaseReadPool, target: Target) => void;
 const binders = new WeakMap<CapacityAdmission, PoolBinder>();
 
 /** Capture before the API's first await, alongside its original singleton.
@@ -75,7 +77,7 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
     || !Number.isSafeInteger(t.port) || t.port < 1 || t.port > 65535 || !/^[1-9]\d*$/.test(t.databaseOid)
     || typeof input.readVolumeFacts !== 'function') throw new TypeError('Explicit capacity runtime target and authorized fresh volume facts required');
   const expected = structuredClone(t), readVolumeFacts = input.readVolumeFacts.bind(input), {now, probeTtlMillis, probeTimeoutMillis} = options;
-  let pool: PgSalesPool | undefined, closed = false;
+  let pool: RuntimeDatabaseReadPool | undefined, closed = false;
   let startup: AbortController | undefined, probing = false;
   const probe: Parameters<typeof createCapacityAdmission>[0]['probe'] = async ({window, signal}) => {
     if (probing) return unknown();
@@ -91,7 +93,7 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
         throw new Error('Capacity runtime observation unavailable');
       return at;
     };
-    let client: Awaited<ReturnType<PgSalesPool['connect']>> | undefined, began = false, discard: Error | undefined;
+    let client: Awaited<ReturnType<RuntimeDatabaseReadPool['connect']>> | undefined, began = false, discard: Error | undefined;
     let result: CapacityReading = unknown();
     try {
       active();

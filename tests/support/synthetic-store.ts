@@ -37,7 +37,9 @@ export class SharedSyntheticInventory {
 export class SyntheticStore implements SalesUnitOfWork {
   private tables: SyntheticTables = { identities: new Map(), headers: new Map(), lines: new Map(), settlements: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), stockBasis: new Map() };
   private tail: Promise<unknown> = Promise.resolve();
-  constructor(private readonly sharedInventory?: SharedSyntheticInventory) {}
+  // Keep shared fixtures executable by the pinned Node native type stripper.
+  private readonly sharedInventory: SharedSyntheticInventory | undefined;
+  constructor(sharedInventory?: SharedSyntheticInventory) { this.sharedInventory = sharedInventory; }
   failNextAt: string | undefined;
   snapshot(): SyntheticTables { return structuredClone({ ...this.tables, ...(this.sharedInventory?.snapshot() ?? {}) }); }
   seedIdentity(identity: SalesCurrentIdentity): void { this.tables.identities.set(identity.accountId, structuredClone(identity)); }

@@ -1,5 +1,5 @@
 import type { HistoryRevisionCommand,HistoryRevisionReceipt } from '../../../../../../packages/application/src/history-revision-contracts.ts';
-import { parseHistoryRevisionCommand } from '../../../../../../packages/application/src/history-revision-service.ts';
+import { parseHistoryRevisionCommand } from '../../../../../../packages/application/src/history-revision-validation.ts';
 import { createHttpJsonQuery,HttpQueryError,type HttpQueryOptions } from '../../../../src/transport/http-query.ts';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { HistoryTarget } from './history-reader.ts';

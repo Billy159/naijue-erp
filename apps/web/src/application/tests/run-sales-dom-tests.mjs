@@ -57,9 +57,9 @@ try {
   assert.equal(calls.length, 1); assert.equal(document.querySelectorAll('link').length, 0);
   await click(navigation()); assert.ok(style('sales')); assert.equal(style('sales-detail'), undefined); assert.equal(count('/sales/query'), 0);
   await styleEvent('sales'); await until(() => host.querySelector('.sales-workbench'), 'Actual sales route');
-  assert.equal(count('/sales/query'), 0); assert.equal(count('/sales/detail/query'), 0); assert.equal(count('/sales/references/query'), 0);
-  await submit(); assert.equal(count('/sales/query'), 1); assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 2); assert.equal(style('sales-detail'), undefined);
-  console.log('PASS sales app 1: malformed optional CSS capability fails closed; auth/route/query never loads detail styles or reads detail/references; actual list uses one explicit bounded query.');
+  assert.equal(count('/sales/query'), 1); assert.equal(count('/sales/detail/query'), 0); assert.equal(count('/sales/references/query'), 0);
+  assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 2); assert.equal(style('sales-detail'), undefined);
+  console.log('PASS sales app 1: malformed optional CSS capability fails closed; auth/route/query never loads detail styles or reads detail/references; entry reads exactly one bounded summary page.');
 
   await click(host.querySelector('.tc-filter-toggle')); await change(host.querySelector('.tc-filter-secondary input'), 'SYNTHETIC UNAPPLIED');
   const list = host.querySelector('[data-document-list=sales]'), region = host.querySelector('.sales-results'); region.scrollTop = 180; region.scrollLeft = 90;
@@ -74,7 +74,7 @@ try {
   trigger.focus(); await click(trigger); await until(() => host.textContent.includes('TEST 保存商品 1'), 'Current full-page sales detail');
   assert.equal(host.querySelector('dialog'), null); assert.equal(host.querySelector('.sales-detail-facts').hasAttribute('aria-modal'), false); assert.equal(count('/sales/detail/query'), 1); assert.equal(list.hidden, true); assert.equal(document.querySelectorAll('link').length, 2);
   assert.equal([...document.querySelectorAll('link')].some(element => /(?:chunks\/|about:blank|detail\.css$)/.test(element.href) && !element.href.endsWith('/sales-detail.css')), false);
-  for (const label of ['导出', '打印', '操作历史']) assert.equal([...host.querySelectorAll('.sales-detail-facts button')].find(element => element.textContent.trim() === label).disabled, true);
+  for (const label of ['导出', '打印', '操作历史']) assert.equal(button(label).disabled, false, `${label} is explicitly available for the saved read-only document`); assert.equal(count('/sales/history/query'), 0, 'History still requires its own click'); assert.equal(count('/sales/commands'), 0);
   await click(button('返回列表')); assert.equal(list.hidden, false); assert.ok(document.activeElement === trigger); assert.equal(count('/sales/query'), 1);
   console.log('PASS sales app 3: configured readiness reaches actual full-page read-only detail via one target HTTP read, no modal/history or relative CSS fallback; Back restores original list.');
 

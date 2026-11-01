@@ -11,7 +11,7 @@ Object.defineProperty(globalThis,'navigator',{configurable:true,value:dom.window
 const {act,createElement}=await import('react'),{createRoot}=await import('react-dom/client');let root;
 try{
  const out=path.join(temp,'scanner.mjs');await build({entryPoints:[path.join(here,'transfer-scanner.tsx')],outfile:out,bundle:true,format:'esm',platform:'node',jsx:'automatic',external:['react','react-dom','react-dom/*']});
- const {default:Scanner}=await import(pathToFileURL(out).href);let enabled=false,calls=[];const snapshot={phase:'idle'},proposal={draft:{lines:[]}};
+ const {default:Scanner}=await import(pathToFileURL(out).href);let enabled=false,calls=[];const snapshot={phase:'idle'},proposal={draft:{lines:[]},matrixQuantities:{}};
  const controller={subscribe:()=>()=>{},getSnapshot:()=>snapshot,scan:async code=>{calls.push(code);return true;},dispose(){}};
  const session={subscribe:()=>()=>{},getSnapshot:()=>proposal,get canScan(){return enabled;}};
  const props={session,controller,anchor:document.getElementById('anchor'),busy:false,close(){}};

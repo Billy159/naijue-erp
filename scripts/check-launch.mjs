@@ -35,7 +35,52 @@ function testsUnder(directory) {
     .map(entry => path.relative(root, path.join(entry.parentPath, entry.name))).sort();
 }
 
-export function launchCommands() {
+function checkedRuntimeConcurrency(value) {
+  if (value !== undefined && (typeof value !== 'number' || !Number.isSafeInteger(value) || value < 1 || value > 64)) {
+    throw Error('INVALID_RUNTIME_TEST_CONCURRENCY');
+  }
+  return value;
+}
+
+export function parseLaunchArgs(args) {
+  const usage = () => { throw Error('USAGE'); };
+  if (!Array.isArray(args) || Object.getPrototypeOf(args) !== Array.prototype
+      || Reflect.ownKeys(args).length !== args.length + 1) usage();
+  const tokens = [];
+  for (let i = 0; i < args.length; i++) {
+    const entry = Object.getOwnPropertyDescriptor(args, String(i));
+    if (!entry?.enumerable || !Object.hasOwn(entry, 'value') || typeof entry.value !== 'string') usage();
+    tokens.push(entry.value);
+  }
+  const selected = {plan: false, acceptancePath: undefined, runtimeConcurrency: undefined}, seen = new Set();
+  for (let i = 0; i < tokens.length; i++) {
+    const flag = tokens[i];
+    if (seen.has(flag)) usage();
+    seen.add(flag);
+    if (flag === '--plan') selected.plan = true;
+    else if (flag === '--acceptance') {
+      const filename = tokens[++i];
+      if (typeof filename !== 'string' || !path.isAbsolute(filename)) usage();
+      selected.acceptancePath = filename;
+    } else if (flag === '--runtime-test-concurrency') {
+      const value = tokens[++i];
+      if (typeof value !== 'string' || !/^[1-9][0-9]*$/.test(value)) usage();
+      const number = Number(value);
+      if (!Number.isSafeInteger(number) || number > 64) usage();
+      selected.runtimeConcurrency = number;
+    } else usage();
+  }
+  // Preserve the original CLI's mutually exclusive plan/acceptance modes.
+  if (selected.plan && selected.acceptancePath !== undefined) usage();
+  return Object.freeze(selected);
+}
+
+export function launchCommands(options = {}) {
+  if (!options || Object.getPrototypeOf(options) !== Object.prototype
+      || Reflect.ownKeys(options).some(key => key !== 'runtimeConcurrency')) throw Error('INVALID_RUNTIME_TEST_RESOURCES');
+  const field = Object.getOwnPropertyDescriptor(options, 'runtimeConcurrency');
+  if (field && (!field.enumerable || !Object.hasOwn(field, 'value'))) throw Error('INVALID_RUNTIME_TEST_RESOURCES');
+  const runtimeConcurrency = checkedRuntimeConcurrency(field?.value);
   const runtime = testsUnder('apps/web/demo-replica/frontend/runtime');
   const imports = testsUnder('scripts/import-v3');
   if (!runtime.length || !imports.length) throw Error('CURRENT_RUNTIME_TESTS_MISSING');
@@ -47,7 +92,7 @@ export function launchCommands() {
     node('module-boundaries', ['scripts/check-module-boundaries.mjs']),
     node('production-api-types', ['node_modules/typescript/bin/tsc', '--noEmit', '-p', 'tsconfig.launch-api.json']),
     node('replica-runtime-types', ['node_modules/typescript/bin/tsc', '--noEmit', '-p', 'apps/web/demo-replica/tsconfig.runtime.json']),
-    node('replica-runtime-tests', ['--test', ...runtime]),
+    node('replica-runtime-tests', ['--test', ...(runtimeConcurrency === undefined ? [] : [`--test-concurrency=${runtimeConcurrency}`]), ...runtime]),
     node('import-v3-tests', ['--test', ...imports]),
     node('release-contract-current', ['scripts/release/generate-release-contract.mjs', '--check']),
     node('release-tests', ['--test', 'scripts/release/build-production.test.mjs', 'scripts/release/pack.test.mjs', 'scripts/release/release-file-contract.test.mjs']),
@@ -98,28 +143,28 @@ export function runLaunch({nodeVersion, npmVersion, commit, acceptance, commands
   return result;
 }
 
-function main() {
-  const args = process.argv.slice(2);
-  if (!(args.length === 0 || args.length === 1 && args[0] === '--plan'
-      || args.length === 2 && args[0] === '--acceptance' && path.isAbsolute(args[1]))) throw Error('USAGE');
-  const commands = launchCommands();
-  if (args[0] === '--plan') {
-    console.log(JSON.stringify({status: 'PLAN_NOT_RUN', commands, requiredAcceptance}, null, 2)); return;
+export function main(args = process.argv.slice(2), {spawn = spawnSync, output = console.log} = {}) {
+  const selected = parseLaunchArgs(args);
+  const commands = launchCommands({runtimeConcurrency: selected.runtimeConcurrency});
+  const resources = selected.runtimeConcurrency === undefined ? {}
+    : {runtimeResources: {replicaRuntimeTestConcurrency: selected.runtimeConcurrency}};
+  if (selected.plan) {
+    output(JSON.stringify({status: 'PLAN_NOT_RUN', commands, requiredAcceptance, ...resources}, null, 2)); return;
   }
   const get = (command, args) => {
-    const out = spawnSync(command, args, {cwd: root, encoding: 'utf8', maxBuffer: 1024 * 1024});
+    const out = spawn(command, args, {cwd: root, encoding: 'utf8', maxBuffer: 1024 * 1024});
     return out.status === 0 ? out.stdout.trim() : '';
   };
   let acceptance;
-  if (args[0] === '--acceptance') {
-    try { acceptance = JSON.parse(readFileSync(args[1], 'utf8')); } catch { /* Missing proof stays blocked. */ }
+  if (selected.acceptancePath !== undefined) {
+    try { acceptance = JSON.parse(readFileSync(selected.acceptancePath, 'utf8')); } catch { /* Missing proof stays blocked. */ }
   }
   const npmVersion = process.env.npm_execpath
     ? get(process.execPath, [process.env.npm_execpath, '--version']) : get('npm', ['--version']);
   const result = runLaunch({nodeVersion: process.versions.node, npmVersion,
     commit: fixedCheckoutCommit(root), acceptance, commands,
-    run: ({command, args}) => spawnSync(command, args, {cwd: root, stdio: 'inherit'}).status});
-  console.log(JSON.stringify(result, null, 2));
+    run: ({command, args}) => spawn(command, args, {cwd: root, stdio: 'inherit'}).status});
+  output(JSON.stringify({...result, ...resources}, null, 2));
   process.exitCode = result.status === 'PASS' ? 0 : result.status === 'FAIL' ? 1 : 2;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main();

@@ -60,6 +60,29 @@ export interface CurrentFormSku {
   /** No current barcode authority exists in 0001–0008. Missing is not a known null barcode. */
   readonly barcodeAvailability: "UNAVAILABLE";
 }
+/** Targeted product metadata admission, not document/warehouse/save authority.
+ * UNAVAILABLE preserves the old saved-edit product lookup's optional group. */
+export type CurrentFormSavedEditProduct = { readonly productId: EntityId<"product">; readonly state: "ELIGIBLE"; readonly sizeGroupId: EntityId<"sizeGroup"> }
+  | { readonly productId: EntityId<"product">; readonly state: "UNAVAILABLE" };
+export interface CurrentFormSavedEditSkuBatch {
+  /** Domain revision, not the HTTP wire revision. Wire V2 decodes back to this exact domain. */
+  readonly version: 1;
+  readonly skus: readonly CurrentFormSku[];
+  /** Exactly one outcome per first-occurrence product ID in skus, in that order. */
+  readonly products: readonly CurrentFormSavedEditProduct[];
+}
+/** FINAL STRING V2: positional transport only; every original SKU value is retained.
+ * Keeping all 13 values saves exactly 151 JSON key/colon bytes per SKU. */
+export const CURRENT_FORM_SAVED_EDIT_SKU_WIRE_FIELDS = Object.freeze([
+  "id", "skuCode", "productId", "productCode", "productName", "colorId", "colorName", "fitId", "fitName", "sizeId", "sizeName", "sizeGroupId", "barcodeAvailability"
+] as const);
+export type CurrentFormSavedEditSkuTupleV2 = readonly [EntityId<"sku">, string, EntityId<"product">, string, string,
+  EntityId<"color">, string, EntityId<"fit">, string, EntityId<"size">, string, EntityId<"sizeGroup">, "UNAVAILABLE"];
+export type CurrentFormSavedEditProductTupleV2 = readonly [EntityId<"product">, "ELIGIBLE", EntityId<"sizeGroup">]
+  | readonly [EntityId<"product">, "UNAVAILABLE"];
+export interface CurrentFormSavedEditSkuBatchWireV2 {
+  readonly version: 2; readonly skus: readonly CurrentFormSavedEditSkuTupleV2[]; readonly products: readonly CurrentFormSavedEditProductTupleV2[];
+}
 export type CurrentFormBarcodeContext = { readonly kind: "SALES"; readonly hallId: EntityId<"hall">; readonly warehouseId: EntityId<"warehouse"> }
   | { readonly kind: "TRANSFER"; readonly fromWarehouseId: EntityId<"warehouse">; readonly toWarehouseId: EntityId<"warehouse"> };
 export interface CurrentFormBarcodeQuery { readonly context: CurrentFormBarcodeContext; readonly barcode: string }
@@ -76,6 +99,7 @@ export type CurrentFormIntent = { readonly kind: "sales-references"; readonly pa
   | { readonly kind: "products"; readonly parameters: CurrentFormProductQuery }
   | { readonly kind: "product-skus"; readonly parameters: CurrentFormProductSkuQuery }
   | { readonly kind: "sku-batch"; readonly parameters: CurrentFormSkuBatchQuery }
+  | { readonly kind: "saved-edit-sku-batch"; readonly parameters: CurrentFormSkuBatchQuery }
   | { readonly kind: "barcode"; readonly parameters: CurrentFormBarcodeQuery };
 /** A trusted host grant for this form, never request-supplied. Halls constrain the
  * form/warehouse scope, not ownership of shared customer/staff/product/method/account records. */
@@ -86,6 +110,9 @@ export interface CurrentFormAuthorization {
     signal: AbortSignal): Promise<CurrentFormReadGrant>;
 }
 export interface CurrentFormReader {
+  /** Additive explicit capability. Older providers remain unavailable, never N+1 fallback.
+   * Combines actual SKU facts and original targeted product metadata admission in one snapshot. */
+  readSavedEditSkuBatch?(actor: ActorContext, parameters: CurrentFormSkuBatchQuery, signal: AbortSignal): Promise<CurrentFormSavedEditSkuBatch>;
   /** Explicit optional availability for older host adapters. A missing method
    * must reject503; it never falls back to product search or guessed SKU. */
   readBarcode?(actor: ActorContext, parameters: CurrentFormBarcodeQuery, signal: AbortSignal): Promise<CurrentFormBarcodeResult>;

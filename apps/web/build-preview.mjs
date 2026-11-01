@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import { build } from 'esbuild';
 import { mkdir, readFile, writeFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -11,6 +12,26 @@ const result = await build({ ...common, entryPoints: { main: 'preview/main.tsx',
 // with only shell rules; route CSS is installed by the explicit leaf style factory.
 const shellStyles = await build({ ...common, entryPoints: ['preview/shell.css'], outfile: path.join(outdir, 'main.css'), metafile: true });
 for (const [file, output] of Object.entries(shellStyles.metafile.outputs)) result.metafile.outputs[file] = output;
+const shellCss = await readFile(path.join(outdir,'main.css'),'utf8');
+for (const selector of ['.arco-menu','.arco-breadcrumb','.arco-drawer','.arco-checkbox','.erp-overlay-anchor','.erp-breadcrumb']) assert.ok(shellCss.includes(selector),`Actual DemoFrame startup dependency ${selector} must retain its styles`);
+assert.doesNotMatch(shellCss,/\.iw-workbench|\.mx-table|\.pd-panel|\.pd-tabs|sales-detail-facts|transfer-editor/,'Startup framework CSS must not pull eager inventory/product/document styling');
+
+// Five existing wrapper adapters live in the shared overlay leaf already used
+// by DemoFrame. They are not the lazy product facts/specs/photos stylesheet.
+const sharedDrawerSelectors=[
+ '.erp-product-drawer.arco-drawer .arco-drawer-header',
+ '.erp-product-drawer.arco-drawer .arco-drawer-scroll',
+ '.erp-product-drawer.arco-drawer .arco-drawer-content',
+ '.erp-product-drawer.arco-drawer .iw-product-drawer-body',
+ '.erp-product-drawer.arco-drawer .arco-drawer-content>.erp-overlay-close',
+];
+const drawerSelectors=css=>[...css.matchAll(/\.erp-product-drawer[^,{}]*/g)].map(match=>match[0].trim()).sort();
+assert.deepEqual(drawerSelectors(shellCss),[...sharedDrawerSelectors].sort(),'Only the exact existing shared overlay wrapper adapters may be eager');
+assert.deepEqual(drawerSelectors(await readFile(path.join(root,'src/components/standard-overlay.css'),'utf8')),[...sharedDrawerSelectors].sort(),'The approved wrappers originate only in the unchanged shared overlay leaf');
+const shellInputs=Object.values(shellStyles.metafile.outputs).flatMap(output=>Object.keys(output.inputs));
+for(const required of ['node_modules/@arco-design/web-react/dist/css/arco.css','src/components/standard-overlay.css','src/components/standard-breadcrumb.css','src/components/standard-controls.css'])assert.ok(shellInputs.some(input=>input.endsWith(required)),`Explicit startup style provenance: ${required}`);
+for(const input of shellInputs)assert.doesNotMatch(input,/src\/(?:inventory|sales|transfers|current-form|products)\//,'Shell CSS excludes lazy business sources');
+
 const inventoryStyles = await build({ ...common, entryPoints: ['src/inventory/inventory.css'], outfile: path.join(outdir, 'inventory-route.css'), metafile: true });
 for (const [file, output] of Object.entries(inventoryStyles.metafile.outputs)) result.metafile.outputs[file] = output;
 const pageSizeStyles = await build({ ...common, entryPoints: ['src/demo-controls/single-select.css'], outfile: path.join(outdir, 'chunks/single-select.css'), metafile: true });

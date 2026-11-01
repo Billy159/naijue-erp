@@ -72,9 +72,9 @@
 .demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)) {height:auto;min-height:72px}
 .demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))[type=search] {width:240px}
 .demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)) {min-width:128px}
-.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))[type=checkbox],
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input,.arco-checkbox input))[type=checkbox],
 .demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))[type=radio] {accent-color:var(--ca-primary-fill)}
-.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))[type=checkbox] {width:15px;height:15px;margin:0;flex-shrink:0}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input,.arco-checkbox input))[type=checkbox] {width:15px;height:15px;margin:0;flex-shrink:0}
 .demo-ui label.check {display:flex;align-items:center;gap:8px;min-height:32px;cursor:pointer}
 .demo-ui .picker-btn {text-align:left;cursor:pointer}
 .demo-ui .toolbar,

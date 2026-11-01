@@ -31,7 +31,9 @@ interface Tables {
 export class SyntheticTransferStore implements TransferUnitOfWork {
   private tables: Tables = { identities: new Map(), transfers: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), warehouses: new Map(), skus: new Map() };
   private tail: Promise<unknown> = Promise.resolve();
-  constructor(private readonly sharedInventory?: SharedSyntheticInventory) {}
+  // Keep shared fixtures executable by the pinned Node native type stripper.
+  private readonly sharedInventory: SharedSyntheticInventory | undefined;
+  constructor(sharedInventory?: SharedSyntheticInventory) { this.sharedInventory = sharedInventory; }
   failNextAt: string | undefined;
   snapshot(): Tables { return structuredClone({ ...this.tables, ...(this.sharedInventory?.snapshot() ?? {}) }); }
   seedIdentity(row: TransferCurrentIdentity): void { this.tables.identities.set(row.accountId, structuredClone(row)); }

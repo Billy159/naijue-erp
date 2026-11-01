@@ -4,11 +4,12 @@ import { spawnSync } from 'node:child_process';
 
 // Run cleanup fault injection in a child so an uncaught AbortSignal exception
 // cannot kill the test runner or conceal which lifecycle failed.
+for (const entry of ['adapters/postgres/src/cancellable-read.ts', 'packages/application/src/read-resource.ts']) {
 for (const scenario of ['abort-cleanup', 'late-lease']) {
- test(`read cancellation settles when cleanup throws: ${scenario}`,()=>{
+ test(`read cancellation settles when cleanup throws: ${entry} ${scenario}`,()=>{
   const child=spawnSync(process.execPath,['--experimental-transform-types','--input-type=module','-e',`
    import assert from 'node:assert/strict';
-   import {awaitRead,acquireReadClient} from './adapters/postgres/src/cancellable-read.ts';
+   import {awaitRead,acquireReadClient} from './${entry}';
    const controller=new AbortController(); let releases=0;
    const release=()=>{releases++;throw new Error('PG_RELEASE_FAILED');};
    const cancelled=()=>new Error('READ_TIMEOUT');
@@ -26,4 +27,5 @@ for (const scenario of ['abort-cleanup', 'late-lease']) {
   assert.equal(child.status,0,child.stderr);
   assert.match(child.stdout,/SETTLED_ONCE/);
  });
+}
 }

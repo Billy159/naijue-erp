@@ -1,0 +1,620 @@
+{
+  "format": "SOURCE_FINITE_NINE_DYNAMIC_SCHEMA_BLOCKS_V1",
+  "sourceFingerprint": "726d84f1303bcb5deb599c19de89f8cdfad89c8f365e34fa36ca4de49051bcbb",
+  "sourceStatementCount": 718,
+  "dynamicMutatingDoBlocks": [
+    {
+      "source": {
+        "path": "adapters/postgres/migrations/0004_transfer_runtime.sql",
+        "fileSha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e",
+        "index": 13,
+        "line": 56,
+        "statementSha256": "c8e3a49e1b90bab40f68ee24ca33325e8bc742adf16d32b0e7b9ee95afc89d4d"
+      },
+      "finiteWrites": [
+        {
+          "operation": "DROP_CHECK_BY_COLUMN",
+          "table": "operation_receipt",
+          "column": "result_data",
+          "cardinality": 1
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+        "fileSha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7",
+        "index": 15,
+        "line": 72,
+        "statementSha256": "7b5a9890c2d236b552c0c0c818333c06f521b05dd2c64f3e238e84eb7267483d"
+      },
+      "finiteWrites": [
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_result_by_kind"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+        "fileSha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61",
+        "index": 4,
+        "line": 33,
+        "statementSha256": "ac134d7e11dccda465d644a268679c8f5316598689b16cd514fc28f930158009"
+      },
+      "finiteWrites": [
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_target_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "audit_change.audit_object_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_action_by_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "audit_change.audit_action_by_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_result_by_kind"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+        "fileSha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61",
+        "index": 64,
+        "line": 664,
+        "statementSha256": "9b9ac158d4501fcae4fb61dc82c374498195dae5110de34c569bd92d6e57be04"
+      },
+      "finiteWrites": [
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "product",
+          "name": "product_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "product",
+          "name": "product_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "product_category",
+          "name": "product_category_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "product_category",
+          "name": "product_category_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "color",
+          "name": "color_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "color",
+          "name": "color_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "fit",
+          "name": "fit_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "fit",
+          "name": "fit_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "hall",
+          "name": "hall_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "hall",
+          "name": "hall_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "warehouse",
+          "name": "warehouse_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "warehouse",
+          "name": "warehouse_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "staff",
+          "name": "staff_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "staff",
+          "name": "staff_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "user_account",
+          "name": "user_account_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "user_account",
+          "name": "user_account_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "payment_method",
+          "name": "payment_method_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "payment_method",
+          "name": "payment_method_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "payment_account",
+          "name": "payment_account_maintenance_final_consistency",
+          "function": "validate_maintenance_root_commit",
+          "events": [
+            "INSERT",
+            "UPDATE"
+          ],
+          "timing": "AFTER",
+          "row": true,
+          "deferrable": true,
+          "initiallyDeferred": true
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "payment_account",
+          "name": "payment_account_retained_identity",
+          "function": "reject_immutable_change",
+          "events": [
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "adapters/postgres/migrations/0024_history_effective_revisions.sql",
+        "fileSha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696",
+        "index": 12,
+        "line": 60,
+        "statementSha256": "ec4f3f87d1aeb0ad162869159c4b0b041ba28625a89daf88768f33af10388073"
+      },
+      "finiteWrites": [
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_sales_effective",
+          "name": "history_sales_effective_write_closed",
+          "function": "history_effective_writes_closed",
+          "events": [
+            "INSERT",
+            "UPDATE",
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_sales_effective",
+          "name": "history_sales_effective_no_truncate",
+          "function": "reject_immutable_change",
+          "events": [
+            "TRUNCATE"
+          ],
+          "timing": "BEFORE",
+          "row": false,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "REVOKE_TABLE_PUBLIC",
+          "table": "history_sales_effective"
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_transfer_effective",
+          "name": "history_transfer_effective_write_closed",
+          "function": "history_effective_writes_closed",
+          "events": [
+            "INSERT",
+            "UPDATE",
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_transfer_effective",
+          "name": "history_transfer_effective_no_truncate",
+          "function": "reject_immutable_change",
+          "events": [
+            "TRUNCATE"
+          ],
+          "timing": "BEFORE",
+          "row": false,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "REVOKE_TABLE_PUBLIC",
+          "table": "history_transfer_effective"
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_sales_line_effective",
+          "name": "history_sales_line_effective_write_closed",
+          "function": "history_effective_writes_closed",
+          "events": [
+            "INSERT",
+            "UPDATE",
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_sales_line_effective",
+          "name": "history_sales_line_effective_no_truncate",
+          "function": "reject_immutable_change",
+          "events": [
+            "TRUNCATE"
+          ],
+          "timing": "BEFORE",
+          "row": false,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "REVOKE_TABLE_PUBLIC",
+          "table": "history_sales_line_effective"
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_transfer_line_effective",
+          "name": "history_transfer_line_effective_write_closed",
+          "function": "history_effective_writes_closed",
+          "events": [
+            "INSERT",
+            "UPDATE",
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_transfer_line_effective",
+          "name": "history_transfer_line_effective_no_truncate",
+          "function": "reject_immutable_change",
+          "events": [
+            "TRUNCATE"
+          ],
+          "timing": "BEFORE",
+          "row": false,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "REVOKE_TABLE_PUBLIC",
+          "table": "history_transfer_line_effective"
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_sales_settlement_effective",
+          "name": "history_sales_settlement_effective_write_closed",
+          "function": "history_effective_writes_closed",
+          "events": [
+            "INSERT",
+            "UPDATE",
+            "DELETE"
+          ],
+          "timing": "BEFORE",
+          "row": true,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "CREATE_TRIGGER",
+          "table": "history_sales_settlement_effective",
+          "name": "history_sales_settlement_effective_no_truncate",
+          "function": "reject_immutable_change",
+          "events": [
+            "TRUNCATE"
+          ],
+          "timing": "BEFORE",
+          "row": false,
+          "deferrable": false,
+          "initiallyDeferred": false
+        },
+        {
+          "operation": "REVOKE_TABLE_PUBLIC",
+          "table": "history_sales_settlement_effective"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+        "fileSha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d",
+        "index": 2,
+        "line": 3,
+        "statementSha256": "5dd8104ea2ae6e2ed4915f144f4d82dbe0fb29c731101759d7eb97574d44d662"
+      },
+      "finiteWrites": [
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_action_by_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "audit_change.audit_action_by_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_result_by_kind"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+        "fileSha256": "09fb597e7b89e77cfb9711ca7ddba8e3d4fa898bf142e77796d0f68be964b1a3",
+        "index": 8,
+        "line": 522,
+        "statementSha256": "e207b4e378090858f9f87bbb094722a012a1511ded54e1f24b013d2cd7aa3b00"
+      },
+      "finiteWrites": [
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_result_by_kind"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+        "fileSha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e",
+        "index": 5,
+        "line": 148,
+        "statementSha256": "05467cc73b928c7c14a49043c68c4ff603257d189d6d7969b57ae8b4bbdf1251"
+      },
+      "finiteWrites": [
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_target_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "audit_change.audit_object_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_action_by_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "audit_change.audit_action_by_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_result_by_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "inventory_ledger.ledger_event_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "inventory_ledger.ledger_closed_source"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+        "fileSha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef",
+        "index": 3,
+        "line": 147,
+        "statementSha256": "06eb730c3e89bf808d8778c590d1e479868fffac6dbcba12ced73bb69ec2babc"
+      },
+      "finiteWrites": [
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "operation_receipt.receipt_action_by_kind"
+        },
+        {
+          "operation": "DROP_ADD_CHECK",
+          "constraint": "audit_change.audit_action_by_kind"
+        }
+      ]
+    }
+  ],
+  "dynamicExpansionDDLCount": 74,
+  "notice": "Source provenance only; no target catalog or runtime/completecanonical expectation. Seven Phase1 scanner markers were not exhaustive."
+}

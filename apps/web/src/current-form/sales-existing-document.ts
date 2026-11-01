@@ -44,22 +44,12 @@ export class SalesExistingDocumentSession {
     const request = new AbortController(), sequence = ++this.#sequence; this.#request = request; this.#publish({ phase: 'loading' });
     try {
       const ids = [...new Set(input.lines.map(line => originals.get(line.id)!.skuId))];
-      const rows = await this.#reader.readSkuBatch({ context: { kind: 'SALES', hallId: document.header.hallId }, skuIds: ids }, AbortSignal.any([request.signal, this.#scope.signal]));
+      const batch = await this.#reader.readSavedEditSkuBatch({ context: { kind: 'SALES', hallId: document.header.hallId }, skuIds: ids }, AbortSignal.any([request.signal, this.#scope.signal])), rows = batch.skus;
       if (!this.#current(sequence, request)) return;
       if (this.owner.getSnapshot().input !== this.#inputReference) { this.#unavailable(); return; }
       if (rows.length !== ids.length || rows.some((row, index) => row.id !== ids[index]) || new Set(rows.map(row => row.id)).size !== rows.length) throw new TypeError('Incomplete actual saved SKU relation.');
       const byId = new Map(rows.map(row => [row.id, row])), h = document.header, names = this.#original!.referenceNames;
-      const products = new Map<string, CurrentFormProduct>();
-      for (const sku of rows) {
-        if (products.has(sku.productId)) continue;
-        for (let page = 1; ; page++) {
-          const found = await this.#reader.readProducts({ context: { kind: 'SALES', hallId: h.hallId }, search: sku.productCode, page, pageSize: 20 }, AbortSignal.any([request.signal, this.#scope.signal]));
-          if (!this.#current(sequence, request)) return;
-          const actual = found.items.find(product => product.id === sku.productId);
-          if (actual) { products.set(actual.id, actual); break; }
-          if (BigInt(page) * 20n >= found.exactTotal) break;
-        }
-      }
+      const groups = new Map(batch.products.flatMap(product => product.state === 'ELIGIBLE' ? [[product.productId, product.sizeGroupId] as const] : []));
       if (this.owner.getSnapshot().input !== this.#inputReference) { this.#unavailable(); return; }
 
       const reference = (id: string, name: string | null, patch: Partial<CurrentSalesReferenceItem> = {}): CurrentSalesReferenceItem => ({ id, name: name ?? '未提供', code: null, hallId: null, hallName: null, paymentMethodId: null, paymentMethodName: null, ...patch });
@@ -67,8 +57,8 @@ export class SalesExistingDocumentSession {
         hall: reference(h.hallId, names.hallName, { hallId: h.hallId, hallName: names.hallName }), customer: reference(h.customerId, names.customerName), salesperson: h.salespersonId ? reference(h.salespersonId, names.salespersonName) : null, warehouse: reference(h.warehouseId, names.warehouseName),
         lines: input.lines.map(raw => {
           const original = originals.get(raw.id)!, sku = byId.get(original.skuId); if (!sku) throw new TypeError('Missing actual saved SKU.');
-          const currentProduct = products.get(sku.productId);
-          const product: CurrentFormProduct = { ...(currentProduct?.sizeGroupId ? { sizeGroupId: currentProduct.sizeGroupId } : {}), id: sku.productId, code: sku.productCode, name: sku.productName, retailPrice: original.referencePrice === null ? null : salesInputMoney(original.referencePrice), minimumPriceAvailability: 'UNAVAILABLE' };
+          const sizeGroupId = groups.get(sku.productId);
+          const product: CurrentFormProduct = { ...(sizeGroupId ? { sizeGroupId } : {}), id: sku.productId, code: sku.productCode, name: sku.productName, retailPrice: original.referencePrice === null ? null : salesInputMoney(original.referencePrice), minimumPriceAvailability: 'UNAVAILABLE' };
           return { key: raw.id, sku, product, sourceSnapshot: original.snapshot, quantity: raw.quantity, dealPrice: raw.dealPrice, pricingRule: raw.pricingRule, discount: raw.discount, isGift: raw.isGift, zeroConfirmed: raw.zeroConfirmed };
         }),
         settlements: input.settlements.map(raw => { const original = settlements.get(raw.id)!, names = this.#original!.settlementNames.find(row => row.settlementId === original.id), methodId = entityId('paymentMethod', original.paymentMethodId!); return { key: raw.id, method: reference(methodId, names?.methodNameSnapshot ?? names?.currentMethodName ?? null), account: reference(original.paymentAccountId, names?.accountNameSnapshot ?? names?.currentAccountName ?? null, { paymentMethodId: methodId, paymentMethodName: names?.methodNameSnapshot ?? names?.currentMethodName ?? null }), direction: raw.direction, amount: raw.amount }; }) };

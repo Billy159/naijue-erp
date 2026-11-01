@@ -104,6 +104,12 @@ try {
       assert.match(computed(host.querySelector('.demo-multi-select')).getPropertyValue('--color-white').trim(), /^#(?:fff|ffffff)$/i);
       assert.equal(computed(host.querySelector('.demo-multi-select')).getPropertyValue('--border-radius-circle').trim(), '50%');
       assert.equal(computed(input).width, '0px'); assert.equal(computed(input).height, '0px'); assert.equal(computed(input).opacity, '0');
+      // Native checkboxes retain the frozen15px size; real Arco's transparent
+      // native input must keep its own0px geometry inside the mask carrier.
+      const nativeCheckbox = document.createElement('input'); nativeCheckbox.type = 'checkbox';
+      host.querySelector('.demo-ui').append(nativeCheckbox);
+      assert.equal(getComputedStyle(nativeCheckbox).width, '15px'); assert.equal(getComputedStyle(nativeCheckbox).height, '15px');
+      nativeCheckbox.disabled = true; assert.equal(getComputedStyle(nativeCheckbox).width, '15px'); nativeCheckbox.remove();
       assert.equal(observation.title.fontSize, '13px');
       assert.equal(observation.search.fontSize, '13px'); assert.equal(observation.search.minWidth, '32px');
       // Installed TreeSelect's size+multiple rule authors height:auto with higher

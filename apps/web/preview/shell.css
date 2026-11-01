@@ -1,3 +1,10 @@
+/* DemoFrame already uses installed Arco Menu/Breadcrumb and the shared dialog
+ * host at startup. Keep only their actual CSS when the builder discards its
+ * aggregate (which also contains lazy business styles). */
+@import '@arco-design/web-react/dist/css/arco.css';
+@import '../src/components/standard-controls.css';
+@import '../src/components/standard-overlay.css';
+@import '../src/components/standard-breadcrumb.css';
 @import '../src/demo-presentation/frame.css';
 @import '../src/demo-presentation/controls.css';
 /* Static synthetic preview chrome is deliberately separate from the restored

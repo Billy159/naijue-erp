@@ -15,7 +15,7 @@ import './harness.css';
 const uuid = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
 const base = fixtureDetail(), documents = new Map<string, SalesDraftDto>(), receipts = new Map<string, unknown>();
 const principal = { accountId: uuid(900), staffId: uuid(950), loginName: 'SYNTHETIC-SALE-ONLY', role: 'ADMIN', hallId: null, authVersion: 1 };
-const product = { id: uuid(40), code: 'SYN-001', name: '合成验收衬衫（非真实商品）', retailPrice: '39.90', minimumPriceAvailability: 'UNAVAILABLE' };
+const product = { id: uuid(40), code: 'SYN-001', name: '合成验收衬衫（非真实商品）', retailPrice: '39.90', sizeGroupId: uuid(50), minimumPriceAvailability: 'UNAVAILABLE' };
 const skus = [70, 71].map((n, index) => ({ id: uuid(n), skuCode: `SYN-SKU-${n}`, productId: product.id, productCode: product.code, productName: product.name, colorId: uuid(41), colorName: '合成红色', fitId: uuid(42), fitName: 'Y版（修身）', sizeId: uuid(60 + index), sizeName: index ? '170/M' : '165/S', sizeGroupId: uuid(50), barcodeAvailability: 'UNAVAILABLE' }));
 const ref = (id: string, name: string, extra = {}) => ({ id, name, code: null, hallId: null, hallName: null, paymentMethodId: null, paymentMethodName: null, ...extra });
 const references: Record<string, unknown[]> = {
@@ -40,12 +40,15 @@ function prepare(body: NativeSalesCreateProposal) {
  return { header:{id,number:sourceConfirmedCreateDocumentNumber('SALE',id),businessType:body.businessType,businessDate:body.businessDate,note:body.note,hallId:body.hallId,customerId:body.customerId,salespersonId:body.salespersonId,warehouseId:body.warehouseId,orderDiscount:orderDiscount.toString(),grossAmount:gross.toString(),netDue:(gross-orderDiscount).toString()}, lines:lines.map((row,index)=>({...row,allocatedDiscount:shares[index]!.toString()})), settlements:body.settlements.map((row,index)=>({...row,id:crypto.randomUUID(),salesId:id,lineNo:index+1,amount:money(row.amount).toString()})) };
 }
 const names = {hallName:'合成营业厅',customerName:'合成客户',warehouseName:'合成销货仓',salespersonName:null};
-const currentDetail = (draft:SalesDraftDto) => ({...base,referenceNames:names,settlementNames:draft.settlements.map(row=>({settlementId:row.id,paymentAccountId:row.paymentAccountId,accountNameSnapshot:'合成收款账户',methodNameSnapshot:'合成现金',currentAccountName:'合成收款账户',currentMethodName:'合成现金'})),document:{header:{...base.document.header,...draft.header,status:'DRAFT',version:1,createdByAccountId:principal.accountId},lines:draft.lines,settlements:draft.settlements}});
+const currentDetail = (draft:SalesDraftDto) => ({...base,referenceNames:{...names,createdByName:principal.loginName,responsibleName:null,salespersonName:draft.header.salespersonId===uuid(12)?'合成营业员':null},settlementNames:draft.settlements.map(row=>({settlementId:row.id,paymentAccountId:row.paymentAccountId,accountNameSnapshot:'合成收款账户',methodNameSnapshot:'合成现金',currentAccountName:'合成收款账户',currentMethodName:'合成现金'})),document:{header:{...base.document.header,...draft.header,status:'DRAFT',version:1,createdByAccountId:principal.accountId},lines:draft.lines,settlements:draft.settlements}});
 const http = {origin:'https://synthetic.invalid',basePath:'/api',fetch:async(url:string,init:RequestInit):Promise<Response>=>{
  const body=init.body?JSON.parse(String(init.body)):null, endpoint=new URL(url).pathname.replace('/api',''); record(`${init.method} ${endpoint}`);
  if(endpoint==='/auth/session') return json({principal}); if(endpoint==='/auth/logout') return json({ok:true});
  if(endpoint.startsWith('/current-form/') && failure==='candidate403') return deny(403,'FORBIDDEN');
  if(endpoint==='/current-form/sales-references/query') { const items=references[body.kind]??[]; return json({page:body.page,pageSize:body.pageSize,exactTotal:String(items.length),items,...(body.kind==='paymentAccount'?{recommendationAvailability:'UNAVAILABLE'}:{})}); }
+ if(endpoint==='/dictionary-read/size-groups/query' || endpoint==='/catalogue-settings-read/fits/query') { if(init.credentials!=='same-origin'||init.mode!=='same-origin'||!init.signal||Object.hasOwn(body,'actor')) throw Error('Invalid synthetic scoped dictionary transport'); record(`SYNTHETIC_READ ${JSON.stringify({endpoint,body})}`); }
+ if(endpoint==='/dictionary-read/size-groups/query') return json({page:body.page,pageSize:body.pageSize,total:1,items:body.page===1?[{id:uuid(50),name:'合成规范尺码组',sizes:[{id:uuid(60),name:'165/S',displayOrder:0},{id:uuid(61),name:'170/M',displayOrder:1}]}]:[]});
+ if(endpoint==='/catalogue-settings-read/fits/query') return json({page:body.page,pageSize:body.pageSize,total:1,items:body.page===1?[{id:uuid(42),code:'Y',name:'Y版（修身）',enabled:true,version:1}]:[]});
  if(endpoint==='/current-form/products/query') return page([product],body);
  if(endpoint==='/current-form/product-skus/query') return page(skus,body);
  if(endpoint==='/sales/prepare-create') {

@@ -1,9 +1,10 @@
 import { parseCatalogueSettingsListQuery, validateCatalogueSettingsPage } from '../../../../packages/application/src/catalogue-settings-read-validation.ts';
 import type { CatalogueSettingsListQuery } from '../../../../packages/application/src/catalogue-settings-read-ports.ts';
 import type { DictionaryListQuery } from '../../../../packages/application/src/dictionary-read-ports.ts';
+import { CURRENT_FORM_SAVED_EDIT_SKU_WIRE_FIELDS } from '../../../../packages/application/src/current-form-ports.ts';
 import { validateDictionaryPage, validateDictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-validation.ts';
 import type { CurrentFormBarcodeQuery, CurrentFormBarcodeResult, CurrentFormPage, CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormSku,
-  CurrentFormSkuBatchQuery, CurrentSalesReferenceItem, CurrentSalesReferenceQuery, CurrentTransferWarehouse, CurrentTransferWarehouseQuery } from '../../../../packages/application/src/current-form-ports.ts';
+  CurrentFormSkuBatchQuery, CurrentFormSavedEditSkuBatch, CurrentFormSavedEditProduct, CurrentSalesReferenceItem, CurrentSalesReferenceQuery, CurrentTransferWarehouse, CurrentTransferWarehouseQuery } from '../../../../packages/application/src/current-form-ports.ts';
 import { parseCurrentSalesReferenceQuery, parseCurrentTransferWarehouseQuery, parseCurrentFormProductQuery,
   parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery, parseCurrentFormBarcodeQuery } from '../../../../packages/application/src/current-form-validation.ts';
 import { entityId } from '../../../../packages/domain/src/values.ts';
@@ -131,6 +132,38 @@ export function createCurrentFormHttpReader(options: HttpQueryOptions) {
         const rows = array(value); if (rows.length !== parsed.skuIds.length) invalid();
         const items = rows.map(sku); if (items.some((item, index) => item.id !== parsed.skuIds[index])) invalid();
         return Object.freeze(items);
+      });
+    },
+    readSavedEditSkuBatch(parameters: CurrentFormSkuBatchQuery, signal: AbortSignal): Promise<CurrentFormSavedEditSkuBatch> {
+      const parsed = parseCurrentFormSkuBatchQuery(parameters);
+      return http.post('/current-form/saved-edit-sku-batch-v2/query', parsed, signal, value => {
+        const root = object(value, ['version', 'skus', 'products']);
+        if (root.version !== 2) invalid();
+        const rows = array(root.skus); if (rows.length !== parsed.skuIds.length) invalid();
+        const skus = rows.map(value => {
+          const tuple = array(value); if (tuple.length !== CURRENT_FORM_SAVED_EDIT_SKU_WIRE_FIELDS.length) invalid();
+          return sku(Object.fromEntries(CURRENT_FORM_SAVED_EDIT_SKU_WIRE_FIELDS.map((key, index) => [key, tuple[index]])));
+        });
+        if (skus.some((item, index) => item.id !== parsed.skuIds[index])) invalid();
+        const unique = new Map<EntityId<'product'>, CurrentFormSku>();
+        for (const item of skus) {
+          const previous = unique.get(item.productId);
+          if (previous && (previous.sizeGroupId !== item.sizeGroupId || previous.productCode !== item.productCode || previous.productName !== item.productName)) invalid();
+          unique.set(item.productId, item);
+        }
+        const productIds = [...unique.keys()], outcomes = array(root.products);
+        if (outcomes.length !== productIds.length) invalid();
+        const products = outcomes.map((value, index): CurrentFormSavedEditProduct => {
+          const tuple = array(value), state = tuple[1];
+          if (state === 'ELIGIBLE' ? tuple.length !== 3 : state !== 'UNAVAILABLE' || tuple.length !== 2) invalid();
+          const productId = id('product', tuple[0]);
+          if (productId !== productIds[index]) invalid();
+          if (state === 'UNAVAILABLE') return Object.freeze({ productId, state: 'UNAVAILABLE' });
+          const sizeGroupId = id('sizeGroup', tuple[2]);
+          if (sizeGroupId !== unique.get(productId)!.sizeGroupId) invalid();
+          return Object.freeze({ productId, state: 'ELIGIBLE', sizeGroupId });
+        });
+        return Object.freeze({ version: 1, skus: Object.freeze(skus), products: Object.freeze(products) });
       });
     }
   });

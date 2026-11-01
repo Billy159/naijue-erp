@@ -1,4 +1,4 @@
-import type { PgSalesClient } from "../../../adapters/postgres/src/sales-unit-of-work.ts";
+import type { RuntimeDatabaseReadQuery } from "./runtime-database-read-ports.ts";
 
 // Source-owned finite CREATE/read/reopen admission floor, not an all-action
 // maintenance ACL profile, role authorization or permission to grant anything.
@@ -541,7 +541,7 @@ function completeStaffPermissionObservation(value: unknown, expectedCells: numbe
   } catch { return false; }
 }
 
-export async function assertStaffCreateReadPermissionAdmission(client: PgSalesClient, linkedAccountCreateSelected: boolean): Promise<void> {
+export async function assertStaffCreateReadPermissionAdmission(client: RuntimeDatabaseReadQuery, linkedAccountCreateSelected: boolean): Promise<void> {
   const cells = linkedAccountCreateSelected ? [...staffCreateReadCells, ...linkedAccountCreateCells] : staffCreateReadCells;
   const observed: unknown = await client.query(staffCreateReadPrivilegeSql, [JSON.stringify(cells)]);
   if (!completeStaffPermissionObservation(observed, cells.length))

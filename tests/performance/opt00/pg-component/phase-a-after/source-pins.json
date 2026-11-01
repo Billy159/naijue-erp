@@ -1,0 +1,3987 @@
+[
+  {
+    "root": "active",
+    "path": "adapters/media/src/controlled-product-media.ts",
+    "sha256": "59e4a6174c9dd4821e6eb9da5c9dd731d1b10362ff6bdba309699733c3dd5525"
+  },
+  {
+    "root": "active",
+    "path": "adapters/media/src/product-image-signature.ts",
+    "sha256": "f937e2c6c49cc4f791485aeb32627fade2b459af536d6579781715aef8190f99"
+  },
+  {
+    "root": "active",
+    "path": "adapters/media/src/product-media-stage.ts",
+    "sha256": "168897688ea338081a9d8fd09004fe556e113857ec665aca7e9713d3741a0113"
+  },
+  {
+    "root": "active",
+    "path": "adapters/media/src/sharp-product-image-codec.ts",
+    "sha256": "21703219de4392baa49c01846447c25621af2a946d954497e8065937061fc456"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0001_runtime_sales.sql",
+    "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+    "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0003_auth_sessions.sql",
+    "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0004_transfer_runtime.sql",
+    "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0005_product_read_fields.sql",
+    "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0006_party_maintenance.sql",
+    "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+    "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0008_runtime_sparse_first_use.sql",
+    "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+    "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+    "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0011_history_storage.sql",
+    "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0012_history_header_native_reference.sql",
+    "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0013_native_party_import.sql",
+    "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0014_native_catalogue_import.sql",
+    "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+    "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+    "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0017_native_payment_import.sql",
+    "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+    "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0019_history_typed_publish_gate.sql",
+    "sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0020_runtime_document_numbers.sql",
+    "sha256": "8e56bbd0124bea56364753c0332a6cd17eaf2d389e843d95ea40c4d291ffc5d4"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+    "sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0022_product_media_retained_delete.sql",
+    "sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0023_inventory_key_admission.sql",
+    "sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0024_history_effective_revisions.sql",
+    "sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0025_product_season_selection.sql",
+    "sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+    "sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-category-depth-successor.sql",
+    "sha256": "6341b48840bf60a6f20fa76ec1ef08a0909e42f9138335db81bfb1eb200f227f"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+    "sha256": "09fb597e7b89e77cfb9711ca7ddba8e3d4fa898bf142e77796d0f68be964b1a3"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+    "sha256": "eb5937320e017b89790a5dd5aa2d08601087e21b35b771f902f55b02ad6f4aaa"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+    "sha256": "2e6829ea72db20d5fdf62372dd9c52d44d32d9dd67d0ea0e9b02b57b082c65eb"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+    "sha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+    "sha256": "0eb5785c7e050c0b1eac5fe0fd8949dfd126f466130c841cef098247ef62cb38"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql",
+    "sha256": "41c491cca5f04cc19d15f0c05113cfb3c81fa39a648a5dc349874ba52ef588c9"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+    "sha256": "9e7c5f0864f19d2f60bd856aa965b12db81d53db40040bbfef521731d76e5d17"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+    "sha256": "5d60b860bc0261ad8103947baac642b20cfc2da5b3f07a88b87ad9135a22a227"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+    "sha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+    "sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+    "sha256": "bebad118d5519b9e899215230e16fce92cbee9148ebbf35ba03af513c1f4f475"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+    "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+    "sha256": "8bc9bbacafc64181a7aece848e4aac3ad565247ceb5498023e979fe2e7bf05de"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/auth-store.ts",
+    "sha256": "02d6469332af00636683de510490871ea0d1d2ce7cd0463d9f6546682db156b2"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/bounded-pool.ts",
+    "sha256": "7919caa6598b14c7070e12364ff386fa942c83dcb88ad3062163d98c5c7314b0"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/cancellable-read.ts",
+    "sha256": "129e8f600835e662fa20566dbece1859ac4ca638a51a78f0c28046327ff5d13b"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/catalogue-completeness.ts",
+    "sha256": "2406060de5a3bacc642fd2ea8264b38dcb5f812186e67cbd926d61324dff8d21"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/catalogue-maintenance-store.ts",
+    "sha256": "f8ccda5795490a69b6c6dad6184cc07dd338879c5b62378b11c8b8c918f706ec"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/catalogue-settings-read-reader.ts",
+    "sha256": "73eb28dcb4a4b4e47f26ed27289dc74795064b15490a0b66c7562dbc158b705b"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/codec.ts",
+    "sha256": "18496bac8de90fce54cdcb861ef057c51d38ce826ebd103456dc203e288b553c"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/current-account-recommendations.ts",
+    "sha256": "a0bd90cb2db3f454676dca3e2c1a60ff7482a85d0152d2dc53f8239716f9881f"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/current-form-reader.ts",
+    "sha256": "5019b940c8b1b65893a8e14babf7a0185c5823e42395e471950403f9e6fafa0d"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/dictionary-read-reader.ts",
+    "sha256": "fd4d745bd17df01ff046cc17bbf2a490ac2990bc4681ead23006d4e77e4fc389"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/history-import-lifecycle.ts",
+    "sha256": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/history-revision-store.ts",
+    "sha256": "67fb25d55a33b5f98bc42449c6a53d2806a1ab237e46d5ff4b4fc2964fa1a767"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/history-typed-publication.ts",
+    "sha256": "0e563c20a8a0eba2fe8d87593d0d437a06ae83323412e338ee7c9932eee3d597"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/imported-history-query-reader.ts",
+    "sha256": "8c66a25d0cf375c86051812e73d3d05d0e3b15ee19754f9f926cdfc42f8e11a9"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+    "sha256": "c0064daa8c74960814b236f8280c48b9c051bc8843a1ac265c3ef44b67ba61f6"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/inventory-key-admission-reader.ts",
+    "sha256": "016d84bcc23668372076c7784cc993028e37cc7350553713cda2616ba0058e42"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+    "sha256": "ba8c33d88d467ffb1a276d170d8584b1756c0b7ecce2d0ba2e2c39cb6b404e3c"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/inventory-posting-balances.ts",
+    "sha256": "915e744fa809737bd7226ef4a9c29a0908b57aaf452cc727ddc1b888fdb33bd6"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/inventory-publication-guards.ts",
+    "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/inventory-query-reader.ts",
+    "sha256": "24a670e7a6dd772b6f5972c31ac989963d5d195fafef07a4d7d0833304254d51"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+    "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/native-core-staged-prefix-bind.ts",
+    "sha256": "a6d74aa6b695bc9d902634ad9a64a867d50e9f2e9f02d7ee1a359ee82c1b555b"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/native-document-specification.ts",
+    "sha256": "b769b6a6bb4f78aff63028fa2bde6f779d174706405d8d53db6a393b1c390d8f"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+    "sha256": "c41bdd26d29a414468676a2a5e858d128595761ba73f5ff8cbf4f561d0cf6413"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/native-import-record-accounting.ts",
+    "sha256": "2812490a9a12a2c3e4f6c7559e5b7322defea48ae311ea6d2162550974097494"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+    "sha256": "d07ab458c0fc3a34f3240e1dbf9cb7dc22ac6005487f84189808f33c5d74d29a"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/organization-maintenance-store.ts",
+    "sha256": "3c0f90b63bbd791572fb60dd07cdbdd476722df3fd794861c4b17550c858bb8e"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/party-maintenance-store.ts",
+    "sha256": "59b83af44a824f4dc7ea592b6ea1dead8b9ff51b77721ee3bd39516c53240ffe"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/party-read-reader.ts",
+    "sha256": "1964f1f54418c9e705f2760b7450a2ec11cdf35b27f83558d1f77991617bb708"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/payment-maintenance-store.ts",
+    "sha256": "c8ab80b5fa078d7318542d38b8af3bf20f8e094a1460b7d4ff6c5bab474e9a07"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/product-details-query-reader.ts",
+    "sha256": "b83e106739a50157813db3236d9be62c59d99ef9810ad348017db356a9c8c35e"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/product-maintenance-store.ts",
+    "sha256": "d6422a76e6b92659fd8a3a0f3da61287939ef1f9a19e5db5091652b331138e5b"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/product-management-query-reader.ts",
+    "sha256": "7021ca6733160465e726b55fde62bf164de780ccdb302ff92a589d1babf872d1"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/product-query-reader.ts",
+    "sha256": "0b2dfb055ede3c9e75d8f3ffca2182932fc57181553ff3591d32849ce535b9a8"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+    "sha256": "fc911a3b6e0db054814c7c9f5890bb8235a7850b7595ca1a87875b70d8537baa"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/runtime-document-number.ts",
+    "sha256": "e81f3a12f40c7a51765a0d9d499105788577b8fde296de27b87f184c6ed0ad89"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/sales-native-facts.ts",
+    "sha256": "2522039d7fc6accf7db8226c2e525eb5663510e100465451613d43466017318d"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/sales-query-reader.ts",
+    "sha256": "8d5199f30c8ea477ffa51dc29f8cb4f227443af1f641373ed5d334497d8d5244"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/sales-unit-of-work.ts",
+    "sha256": "711559a80241197b990dc71d2e08670937cf77c5b8f3dd388f38475e2712bf89"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/settings-audit-reader.ts",
+    "sha256": "135de199e6cdeea99f2eb0f30a0e4b05e296d244793bade2fb410e5918cad32c"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/source-confirmed-read-authorization.ts",
+    "sha256": "b1ae14163d0f00303eac8d13be604f9d3ba555f05c1ec09885176e69afacc6f6"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/staff-maintenance-store.ts",
+    "sha256": "93026b7110919ccadb368e5f292c151596a3c8392d103ab0084df899dee03553"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/store-settings-read-reader.ts",
+    "sha256": "b7e011770a50a93a32881c1e0669f96d3a3cfdc32310d909fdc43609a37b9346"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/transfer-query-reader.ts",
+    "sha256": "9a55cf254be0b7b11b96b49c2314a5b38fba3846a0a641b21bc405ff8b90456d"
+  },
+  {
+    "root": "active",
+    "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+    "sha256": "250096e80d1a8dba84c0a877829b2d4087c88fc476f2b8b6821438f538a06642"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/authenticated-document-commands.ts",
+    "sha256": "63e641e6dd969dd138640816360b0df4e29cef20685aa6a62923dc9dfc120bed"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/authentication.ts",
+    "sha256": "8a935682af1c523ceac6849939bb30f6311c064924f63bff2d7aae51b43574f3"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/capacity-admission.ts",
+    "sha256": "c0eb48b972fbe6e49b35455c6c83929eab7981aa7807d00a6da90e8430155514"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/capacity-runtime-probe.ts",
+    "sha256": "13306c668542cf685281c4d20641cfa68680f8dc42f652c7e27db10df0b7f66f"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/catalogue-maintenance-http.ts",
+    "sha256": "139ea28b168fb94707335f784590db275cc3f6f61ae771cfd8d0279b6cbbc6d7"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/catalogue-settings-read-http.ts",
+    "sha256": "7b6ea62205a43d7108349f5b127aa7a2c8df267baf4568ff569ca4c7fdcc5eba"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/current-form-http.ts",
+    "sha256": "5a043288872e920db4d92d3afdef46caf20099128c7ea2024666a0fc794af0ac"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/dictionary-read-http.ts",
+    "sha256": "8c62f030b54234b52e2ce8579d5e158b53564e3e33f01f89c354a71d883adff1"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/document-list-wire.ts",
+    "sha256": "bb08a6b6c88cb155839c3bc42c725d22581cd85124bd529bfd5fb6edf31eafa7"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/history-revision-authorization.ts",
+    "sha256": "80a3eb83313afd438afa9c94099d5540e644e886ffed8db4fb68e615a842765d"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/history-revision-http.ts",
+    "sha256": "c43f8b08fd8e7342ebdee6578b56f8ff20dc1c44b0818c3725d5aa60abecc925"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/imported-history-query-http.ts",
+    "sha256": "2ff559ebb653345969d56e0303aa4153034412a7cce1cf91949cf7c749ad1e3a"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/input.ts",
+    "sha256": "728f383a9f183b3c3ebaaba26c885c9de49ffd3985931f5793c4824c7c54baa2"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/inventory-http.ts",
+    "sha256": "a8ee89f0ccfd7d1c24fde96ec58f153ac82117016cd4517dd5f1f74c31b08027"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/inventory-ledger-query-http.ts",
+    "sha256": "86a192cf180a7f287c24f89731cec6c673725f98cc2ba9d6eb558ede1cb32d3a"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/login-admission.ts",
+    "sha256": "41f80363387d8dfd9646f06be67da449a172db03e888a39d5b1787641dd9a37e"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/organization-maintenance-http.ts",
+    "sha256": "028c77f36a2724ded78cc41d0387709bd686ee8e0e17504df5fc43bef934f24b"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/party-authentication.ts",
+    "sha256": "e2ebbc2ed2ff3a326c7ef69173d77c7472d539ca605664eef5beb7660bc70c18"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/party-maintenance-http.ts",
+    "sha256": "8568bd26f8ccbafaf6a4b2ad64fc539c61c1cbda89961d2328f90db45061f945"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/party-read-http.ts",
+    "sha256": "e084a55ba3df838a7fd31c842480d8f0250a6ad7e502edf7b0f837639e0b096c"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/payment-maintenance-http.ts",
+    "sha256": "990ce04f61bebf411f96f0b9fc1eb3ed4b776ec17648dc9990001d1281acf7a9"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/postgres-read-api.ts",
+    "sha256": "5dfde4cbde980a45a8fe5a7948e6c9c319b37b1b0702f4fb2604721106669e8b"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/product-details-query-http.ts",
+    "sha256": "1b9bf6c6d707e32c70d4935cf039289cc568b5146f505a1342f7e38ab59252ee"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/product-maintenance-http.ts",
+    "sha256": "0853c999f585b435fee98d99bc28fcc9c4e236da9180832904918d61cb0f0780"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/product-management-query-http.ts",
+    "sha256": "5db71063f51f2814853323dcf71e5b898b306dcf93c1128a67a45290fee35671"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/product-media-http.ts",
+    "sha256": "300a56e6305771aacbef78666630e39f8ede5fd6cb02d7d6f94dd3c66cf8c7dc"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/product-query-http.ts",
+    "sha256": "077d3eb66f222adf848c81c1fd51c03351a046cf45f5b06fd07fc690675f36f1"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/request-diagnostics.ts",
+    "sha256": "697cf5b90fd315e1877483b729b9f9b7188bafc2c7ce7bbde4043993df5998ae"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/runtime-database-read-ports.ts",
+    "sha256": "5bd8187b22c7eb8350a73567fb23aac8f2efe1f0c8811ae373a8792571a8ba87"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/sales-http.ts",
+    "sha256": "a3bf52f212e90c7d8590d2e7e2111b6dc498f51dc4b909f0e3c8c208a940c048"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/sales-preparation-input.ts",
+    "sha256": "5e89890e2a0a3e74d799abadbced877a7ca9b8a4f98dd6fa317982cdb2677707"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/sales-query-http.ts",
+    "sha256": "b7e73e094cb8b554d9b193e53ec3ab15c9cd7ac9ebf5d6989a8aa75200072e46"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/settings-audit-http.ts",
+    "sha256": "ddf8810c175b723b83fe88bf8f0cfce7dab863da754569fbab4861894f7bdbf5"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/staff-create-read-permission-admission.ts",
+    "sha256": "9088a11418cd26a613244ed7e0d3bf98218f87f4cea1b74986328740fc70606f"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/staff-maintenance-http.ts",
+    "sha256": "a1a6e42c0a33ff14b18d096e3d53e10f2bd45e9f627feeaac480b6315c194705"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/store-settings-read-http.ts",
+    "sha256": "bc7c229e6a051d0dd58eb2af55b52249c5c5f4151c69198d5271dd12b73b015f"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/transfer-authentication.ts",
+    "sha256": "c8dc0f8b7037020345fce50598480a3689de08a3a8b1efa3c5fa6f0c3a91a940"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/transfer-http.ts",
+    "sha256": "16be71d16f182853c1c369067d8c0a103f13dce84ecdcce0e79806ed40a884d3"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/transfer-input.ts",
+    "sha256": "b89f23d8d987224555452dbde696b866752d8f7356ba15b03252130238914ec2"
+  },
+  {
+    "root": "active",
+    "path": "apps/api/src/transfer-query-http.ts",
+    "sha256": "bf25ab06ffa0f3a437709b05fe621c914947d47837daf3fbb83a59954b777eb3"
+  },
+  {
+    "root": "active",
+    "path": "apps/web/src/current-form/http-reader.ts",
+    "sha256": "3347bff02a4d1444d71edb56c449699204eb9bb3b6ead9b4f9bbce6601f0fd3e"
+  },
+  {
+    "root": "active",
+    "path": "apps/web/src/current-form/sales-existing-document.ts",
+    "sha256": "132f4e7f208e26e748e94822706616f97428bd7ecdd83c3e54f2add7185203be"
+  },
+  {
+    "root": "active",
+    "path": "apps/web/src/current-form/transfer-existing-document.ts",
+    "sha256": "8e5cfa2fe3e997929313f19fad184f3446976cc4fc396dc6bd313977bff98bbc"
+  },
+  {
+    "root": "active",
+    "path": "package-lock.json",
+    "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+  },
+  {
+    "root": "active",
+    "path": "package.json",
+    "sha256": "b1e9cbd93af28979dc1a228bd0ac46732d9c47e449fe80daf2fb86ce56e629ef"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/account-maintenance-authorization.ts",
+    "sha256": "5119713611eaa6c15f6c5157e7890f9fed0985399c88e86892cffd1b33de8e66"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/account-maintenance-ports.ts",
+    "sha256": "b7ca35df337709a432b9755ce0b45a2068c58961edb93a93df358215589a139d"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/account-maintenance-service.ts",
+    "sha256": "9971493262896bc953c1b6c552592fd61a78d8f5076413ec1cbaa1b3b9abfc5f"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/account-maintenance-validation.ts",
+    "sha256": "a0ae009227385f0a8d0efa9660df7f7e71a51c71b728312255e43c68d7ba2609"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/authorized-effective-documents.ts",
+    "sha256": "201210201d930f458b7acab3fe9d6f3ac851114eb324566a5ed69e460c0fca64"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/catalogue-maintenance-authorization.ts",
+    "sha256": "c27ec26b0bbc31800e11b30644fe2a508e9b33f517828a0bb3922402b936383d"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/catalogue-maintenance-ports.ts",
+    "sha256": "daf830fcd53af144cf8f4cf433f5caf471dc353c408d44cbdf6addee3e64b745"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/catalogue-maintenance-service.ts",
+    "sha256": "06689ec8704408e8b3e44dc45ae1dc5c4d593bb75ea23db408ceb85605435408"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/catalogue-maintenance-validation.ts",
+    "sha256": "83efc7884cb2ff02773a17582c84e275c0bb08aa13046e943254bd2b5f9e1fc7"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/catalogue-price-input.ts",
+    "sha256": "d1a713379e03532dda0d2812945ad1be1324cfb02520e50de2f3dd56e43199d7"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/catalogue-settings-read-ports.ts",
+    "sha256": "e22e2e3892cd9593763f72ee0f5914daf1af099c9fd89d78801627d0eae95a1a"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/catalogue-settings-read-service.ts",
+    "sha256": "be76ffaf83d6a12021ada055bbb438979ee32c613207980acb9d6f0d2e929dd4"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/catalogue-settings-read-validation.ts",
+    "sha256": "ede0c1c9c167a2e166fd3ac5b5677dde2c96dfa8a308e677e39f2eb2b24f0770"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/catalogue-source-proof.ts",
+    "sha256": "b1481007ce402158186023a6cb670d6214d62e51588f8466b56421566c3baaa7"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/current-form-ports.ts",
+    "sha256": "bfe6d7ab16776324e389b4c087a47085599f57b9e93d708e276b38944d07c286"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/current-form-validation.ts",
+    "sha256": "c156fd90c5f3319997fe19ae2bd2e16cb74958bbffc61d0e72492828183973e1"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/dictionary-read-ports.ts",
+    "sha256": "fc3596953513488c0ba920b1dab141ff28e49977a097bed8a34dfd6152293a1c"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/dictionary-read-service.ts",
+    "sha256": "f95438161ca836fe0402e2bf6442b2490353045d1494c54a132268f28fe7322e"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/dictionary-read-validation.ts",
+    "sha256": "0f136ad930764987d0a63928cbed709da0e210b12e806dadb232d182338b5e06"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/dictionary-scheme-detail.ts",
+    "sha256": "8113a3035a034acad0b6102e2a66fa99bd2e10521515ec4a592d2f8f0cd5ae4e"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/document-specification.ts",
+    "sha256": "f8c8013b2b62548ed077e935c93b3aa3a4ecdc9fe8350a756a684734419b01cd"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/history-import-lifecycle.ts",
+    "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/history-revision-contracts.ts",
+    "sha256": "0152d91d74661c6ac2bb16170e6dbee60eec1ddcea9873385cb9ed47928703d2"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/history-revision-service.ts",
+    "sha256": "262d244781db7984491b32f4a65da67030db450395d735117f9edda93e8f250a"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/history-revision-validation.ts",
+    "sha256": "096f5af9d72d226605394c51bb9f9d824497dee80cdaba6815ad00bb826f7b3a"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/history-storage-contract.ts",
+    "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/history-typed-closure.ts",
+    "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/history-typed-publication.ts",
+    "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/import-v2-contract.ts",
+    "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/imported-history-query-ports.ts",
+    "sha256": "19813f6a99c5d36dc63e2875178bf496157a0a6fff42f9119ba7cd587abe649f"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/imported-history-query-service.ts",
+    "sha256": "de42e6047bb68682955960b78221ef25076cd2fc9710de18a5cbce4ed1fea37c"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/imported-history-query-validation.ts",
+    "sha256": "1dfa695c4a80447dd9a602173f62b5257ede3c31c0c2047ea13da8bc5f05ad85"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-cutoff-import.ts",
+    "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-key-admission.ts",
+    "sha256": "bb514d0956e8b3f43238d9ea791f3e9204bd916a1ab5e4a3df4425cd33a8fb21"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-ledger-balance-transition.ts",
+    "sha256": "31c9b2a113cc820a6e0dda7d3a5c06f81c9ad8033199ad0f9f92e12f1bc3a60e"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-ledger-query-contracts.ts",
+    "sha256": "354368e95457ced79afe6d1e7ca929fb0b451fe7d0a81991edf027ce9b588ec5"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-ledger-query-service.ts",
+    "sha256": "da81db41d026fd9e59fde6941f3c5bbb0876beb305394051950b9560558ac5c3"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-ledger-query-validation.ts",
+    "sha256": "eed5198b744772f5e84c32e31ecfdd51b1d2c63f36e40401bf4b55bc2fe78711"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-posting.ts",
+    "sha256": "e2c57e08b556f1c6957a470ae586a61e7ed95c2869e0fa757f9fc4f444eb4043"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-query-contracts.ts",
+    "sha256": "1c4444381922c6fef477f5d6a0a06b798a9de84b86beec491b2e191070db2f6a"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-query-response.ts",
+    "sha256": "ab6b46b8799ba4d57b6271532d8d3cc37f0f129ec6458d8e5e3a2277970e945e"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-query-service.ts",
+    "sha256": "11e78e2a7c2db6c9e08dd7fd124af49f49485a63b80159f2481fbf5ce1c9eb2c"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/inventory-query-validation.ts",
+    "sha256": "070002d26e247982a4d7a3e9b15c5355918e771c3413e7d1b87b11778b6847a4"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/maintenance-commit-ports.ts",
+    "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/native-import-record-accounting.ts",
+    "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/native-import-schema-contract.ts",
+    "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/native-sales-preparation.ts",
+    "sha256": "21370ce117e641f56824c3f825cccb819a5ebe3479c86a6339e5f9f7a53ad315"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/native-stock-contributor-import.ts",
+    "sha256": "87f43586fd737755e6bebcb046116ce8de0d447525e5bfebb2abe1fae6463448"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/native-transfer-preparation.ts",
+    "sha256": "43b15ea0455b5c64c271dbb6c97f33e1031d903c2b4a67469e1595f6238739fb"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/organization-maintenance-authorization.ts",
+    "sha256": "8a848ab1c6f091af2e6c851b7bd1a3571b3088b0583d0f96f1721819f43060cd"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/organization-maintenance-ports.ts",
+    "sha256": "27c870ca691a22d3d3e055e12929a5f42202451218d4013c8eab4e8296d56c53"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/organization-maintenance-service.ts",
+    "sha256": "2c4cbcb61e5da27378582db1efa985a16a11633d798b7b56a99c40d7788a200b"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/organization-maintenance-validation.ts",
+    "sha256": "9ba5821a046d9c3516ce584ed1e58525e709430789548bdb1867cbfd432a5a7b"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/party-maintenance-policy.ts",
+    "sha256": "1fbe42d67c6041fa4c379bd2b52e023e4b34e4d03b02e4d02ea5bb7fe0ef3d01"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/party-maintenance-ports.ts",
+    "sha256": "96d652dd7eb9b02e2951d52a859e717c4d941210eca90e807aa19f8444828183"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/party-maintenance-service.ts",
+    "sha256": "7844fdeda4984b4442d974ad429179d84948f5c5e2c0f2ba7e779f012ab649bb"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/party-maintenance-validation.ts",
+    "sha256": "9dccee7922e9fd16cebecdd232ffe32ce3f4fc29cf6b74216f30c95006587a23"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/party-numbering.ts",
+    "sha256": "8517e8bf065026192dc2c282dd641f122f2765b619f05200230fbcf14c1288fd"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/party-read-ports.ts",
+    "sha256": "68dacd0ec93b8676b413bc585924f1ac0e29b8eccd183eb25746daf56272e1b2"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/party-read-service.ts",
+    "sha256": "08e026d9d519cd497d1fe29a6d7b16212cba1184531386d78f9ca62e23ab72a6"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/payment-maintenance-authorization.ts",
+    "sha256": "094e6e6a0528a75ef7e0cee0d4c6f8d7a51d2baa0914fe234411fcedd75df605"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/payment-maintenance-ports.ts",
+    "sha256": "fca56fa4ada87bf0a7a67c8e8788080a0bfe2730664022671348fd9ea9ea70dd"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/payment-maintenance-service.ts",
+    "sha256": "470f5c0e83b6e84dd829320b4ac655f1379297b2797160a2346f523deb00d387"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/payment-maintenance-validation.ts",
+    "sha256": "2aa1c5d3d0f428c17e6c329e6deaf20ad1b106be5c5d073e1d5357f74477f6be"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/ports.ts",
+    "sha256": "75b5b743fe2f410cc1cd79714d0aee097672c96ce86ce9964ecbdc7b80cd7045"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-details-query-ports.ts",
+    "sha256": "834eda0edce2a579634e057959542acee34d08f2c074562627d9457370a8e599"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-details-query-service.ts",
+    "sha256": "76e69fd573ca9508f991e8f56cac1a36bbc6f22900daff03057ed9ba86e7b058"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-details-query-validation.ts",
+    "sha256": "43603e6b970e44987e06d4670cb88d4c6185ada65b564e35107c5f5813273889"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-maintenance-authorization.ts",
+    "sha256": "ed90d011d73fba1512c97f8badd82204b5c7caff8be9b4967053d5f8dd9d0523"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-maintenance-ports.ts",
+    "sha256": "26bd4c153c4df87ec897820fd5282df61fee92c5859c2070072895fe6d0f639e"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-maintenance-service.ts",
+    "sha256": "b20a0742164208c3f8a04a3fae6e8b90fae0212c8612f6db7e9dd12a9bbbe08f"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-maintenance-validation.ts",
+    "sha256": "374261e28235241167114c95e992032d6f2838b6661446edf46beb3c532c0585"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-management-query-ports.ts",
+    "sha256": "250f2559a695b283f2d898d1fd2c422f528d35a183765ebfbd5c7079d052f192"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-management-query-service.ts",
+    "sha256": "706835730494859e4b8e28a2df0279d2f98309dc8fe3774cf501c61549d73a11"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-management-query-validation.ts",
+    "sha256": "382f2a88c09d899d3b73752eb91417584bea3437a09df3cbde93759cbd34167d"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-query-ports.ts",
+    "sha256": "c7c86ef200c1824df4f4980f52b31ada2e67b8b577de2318275d50ec21fb03b4"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-query-service.ts",
+    "sha256": "50314aebb0ffc62f87f2fbf87d418f1adf18889379df45c8222c5d5c65aef94d"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/product-query-validation.ts",
+    "sha256": "c10241f7d6cd5263753c68f877e5a21cb3a0ee5b4e0987ba403bc66e4f802ef9"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/read-resource.ts",
+    "sha256": "b21bc5db71274ddf355b57902ee3d597b337b6259c49236c9430ef6d9e2e14ea"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/request-hash.ts",
+    "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/runtime-document-number.ts",
+    "sha256": "d7d3fda1580c5516a47dc8c225daca5c89dd3581a0fb3835fc100b5cafb82eae"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/sales-business-rules.ts",
+    "sha256": "925bb3d5a0da89f18e4c0535e5a7db0930ca8b4fb33caa14c245955d95b44b8f"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/sales-change-evidence.ts",
+    "sha256": "b0afa1915998281c17896ea4e038e6e8db1ec190ed4c5e22017d2c209c7448c5"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/sales-native-facts.ts",
+    "sha256": "675c80f71671471fa23947bb6fb73c437df8d8ea081f97307b1d6fb740cd025e"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/sales-payload-budget.ts",
+    "sha256": "e0a100cd17d442170d4421d7ba6c42f30cf71788afd4d22603a19ef5810a5ba1"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/sales-query-ports.ts",
+    "sha256": "d37ac3df050981d435c2c79d252f3f12abcfe336a3485a0fa9ac1f2eb7d1e635"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/sales-query-service.ts",
+    "sha256": "f3f44367c907f0078c6d319d9d68e82540188e0832dfaa55e5da984088aa5d39"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/sales-query-validation.ts",
+    "sha256": "d52bb5a49a9517d0e91c21141e1a109330fe61d70aff232a8c799257a50689ee"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/sales-reference-query-validation.ts",
+    "sha256": "6dd26acd7eca922518d4a866bf8f1e25c290777541bd0c13dacd175897b8f6a1"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/sales-service.ts",
+    "sha256": "b1565bccc82f10ba2b463bf577c654abc141ee314576d45e28c6607cc49c6615"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/settings-audit-ports.ts",
+    "sha256": "e7847cbcc343bc37dc7106ecd5b1c73fade5fac21a9e7b979e17d347eb4e897e"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/settings-audit-service.ts",
+    "sha256": "96b5f0595249a715488138100c476a566b2d358e1dc36d9a864c28277d5f6cec"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/settings-audit-validation.ts",
+    "sha256": "2267c23b4452293a3bb1c5482f434d1495e3b43bcce27d235e1138639b65e4d2"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/source-confirmed-current-form-authorization.ts",
+    "sha256": "22757575891383fe0eaba6dcb6bb2ff2cb2351e023c6f03b2d97b88e0d4289e5"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/source-confirmed-document-number.ts",
+    "sha256": "7e34b86dad89f55708ad8b657d26cdac88d32b3ea39c3ea2b6a887b3c67dfc0a"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/staff-maintenance-authorization.ts",
+    "sha256": "faee59d88b3ae6ee8b1854580383893c040e30b8f2ef046f6211f7d10a317e1f"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/staff-maintenance-ports.ts",
+    "sha256": "23c5045ebd185aa43dc22e1bf47c72414616d613243d96b74f95a40888ec9fe2"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/staff-maintenance-service.ts",
+    "sha256": "3ccf01e92f613cabf35c2d25c0bdab8363b262c9d47415da637fbbf192e5fd1f"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/staff-maintenance-validation.ts",
+    "sha256": "1a22420f339f2196de698a20843cf44c93e43972e09c1e858f33ff8ec9a0e2c5"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/store-settings-read-ports.ts",
+    "sha256": "3f8e63ce3d2ae022a8446d2bd90fb1fc076173c1b8109fc4b58a1b48d0a6ffcf"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/store-settings-read-service.ts",
+    "sha256": "63a1c17d6328341424c3acf2a40b8ebadb6ca35dfec8acbbb77166d924524af9"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/store-settings-read-validation.ts",
+    "sha256": "54667587d05f8fbdb1fdd8d76cdd83d43570cdfa5a18427454fc0f9c7cad6018"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/transfer-payload-budget.ts",
+    "sha256": "d597165d85cd0d51759f22be9945573dcebd518f50a11fdbb4da771956226098"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/transfer-policy.ts",
+    "sha256": "690bd28632ac65e88d773a5c59045bd65e260e2f93127b092f92e608cf9c43a2"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/transfer-ports.ts",
+    "sha256": "bf73f4a4fac82f57a6e7e8085b80f91b9910216163333ec8174f1c52a2830bf3"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/transfer-query-ports.ts",
+    "sha256": "d30c87457efb95777684b90246e66c42567f0c081cec7d2ceb20fac6923ed2db"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/transfer-query-service.ts",
+    "sha256": "e9bf49507a5ac8dacf9ad07c278ab6d8e8970175cbefcf0e25acf686fe4a35e6"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/transfer-query-validation.ts",
+    "sha256": "fba61ebc471ca93b65200cf713ee32843b6783048dad2bb117c8d9c9dd538c2b"
+  },
+  {
+    "root": "active",
+    "path": "packages/application/src/transfer-service.ts",
+    "sha256": "a37b2638312635351a83dd4ffeb4b5bb15ac91f79ec5f5f1ba2962652762f642"
+  },
+  {
+    "root": "active",
+    "path": "packages/authentication/src/legacy-passwords.ts",
+    "sha256": "94bc8e056954cafa7e34e7717948f3b0b56959d052f60d3db7a5273b5409778b"
+  },
+  {
+    "root": "active",
+    "path": "packages/authentication/src/password-work-gate.ts",
+    "sha256": "e621b599676d134ff88d886c128f1f504d05beaff829354413827f507bdc67ae"
+  },
+  {
+    "root": "active",
+    "path": "packages/authentication/src/passwords.ts",
+    "sha256": "f570e5f696ae71df145edb202e18b41eae7798f9d862cb67be6a156b6bf2fafd"
+  },
+  {
+    "root": "active",
+    "path": "packages/authentication/src/ports.ts",
+    "sha256": "e3386820d1f16f8debd1544c209041eb6d53d063a1f77ec9bbfbe1697989c315"
+  },
+  {
+    "root": "active",
+    "path": "packages/authentication/src/service.ts",
+    "sha256": "8263373669c1df67322f6ba8ef53a7d621168df19df220662d935a58710e3557"
+  },
+  {
+    "root": "active",
+    "path": "packages/domain/src/catalog.ts",
+    "sha256": "0771d67dd7374b027c02eaabe8366e793c897f8b6ac95093d74f37d64b65e000"
+  },
+  {
+    "root": "active",
+    "path": "packages/domain/src/documents.ts",
+    "sha256": "15c905972158f1db66055673cfe67ca17b0807f9d65df5ba11fab3ad370df51f"
+  },
+  {
+    "root": "active",
+    "path": "packages/domain/src/errors.ts",
+    "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+  },
+  {
+    "root": "active",
+    "path": "packages/domain/src/inventory.ts",
+    "sha256": "e3872082e0173600f90a48b7571e84860041504e3e49760cd349c5ad7d854f38"
+  },
+  {
+    "root": "active",
+    "path": "packages/domain/src/sales-money.ts",
+    "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30"
+  },
+  {
+    "root": "active",
+    "path": "packages/domain/src/values.ts",
+    "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+  },
+  {
+    "root": "active",
+    "path": "scripts/release/prepare-runtime26-v6.mjs",
+    "sha256": "8c3ef5b3dda046e83c6c9995eb6a5a588561fa07e13a4a12fb188f2c30e613a1"
+  },
+  {
+    "root": "active",
+    "path": "scripts/release/prepare-runtime26-v7.mjs",
+    "sha256": "287344e333ef5cda3b134d460d01df0662fdde8e0e17d1199839c598c8895588"
+  },
+  {
+    "root": "active",
+    "path": "scripts/release/prepare-runtime26-v8.mjs",
+    "sha256": "6cd6b1f0e8ce651788aba4ade5121fb856cf9d19583faa03838fea55c75b3347"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/README.md",
+    "sha256": "0bf160a93ad9e64acee6186c794b1954d2f2209c8c02c06e1be3d1c6e670b510"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/acl-matrix.mjs",
+    "sha256": "75b9202205161eb3f3963641a40c4b447b2e08035c668fa811c8d1bf530bdf60"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/offline.test.mjs",
+    "sha256": "ce13e662e6e1ded6506b444f2cf14ce4c200b3b34e6376b61a120089ead55e95"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/plan.mjs",
+    "sha256": "035b38fcaffecda2a38dc583b7d1d5b703faa2e7b9785dd9c281e6b9e9ecdff9"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/renderer.mjs",
+    "sha256": "70bcd8761306360ec4473fe3e8de1052353733080f8066ad279679cff79eee8b"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/README.md",
+    "sha256": "597916d8a6cfca91526770c02b23f04c9b213b2a9c351f85669c097971c5b209"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/dynamic-source-manifest.json",
+    "sha256": "1a0e32fabfbf0a02b378d747613b6c6915eac9ef6553d53b67bdf118b1ea2671"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/lifecycle.mjs",
+    "sha256": "b217b510595872023f9f0c25ab00201b3e7b81018d85656615efe17963e497ca"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/observer.mjs",
+    "sha256": "7b755a593b1ad0c8bdf3241b188db026ba76db4d2bf5cac438857f04d41a12c3"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/offline.test.mjs",
+    "sha256": "9475ba708a17a6f86e607d4b25228089a156c6a5aecb42f4e3dfeeada37c585d"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/run.mjs",
+    "sha256": "228cc4048e50bb38014eaf74012a44ccdf015d32c9687f209684cb81bfc4949d"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/source-plan.mjs",
+    "sha256": "b4e8e0562b6f9d64922468f39771a6a0fad5352613c7594bbec0dd9709e12099"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/stdin-pipe-bridge.mjs",
+    "sha256": "cf8ce500b1c5aeee2ca0a703ad0c3bae2be86781c9696a81124007e9ecf3fce4"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/stdin-pipe-bridge.native-test.mjs",
+    "sha256": "84b20e81f9dee1825d7f68573770384bb12142e82eb187366c734431f3821470"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/schema-objects-only/v22-carrier.mjs",
+    "sha256": "538b13d79925947992b4707d8c12b30003acec50d4871711c0c190a1a1c42222"
+  },
+  {
+    "root": "active",
+    "path": "tests/integration/runtime26-baseline/source-inventory.mjs",
+    "sha256": "f9227b10292aea809c1748af2d79634f3241cb79ab85d39292e6d8009f833d84"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/README.md",
+    "sha256": "4d76e33a16d2884fe43cfe79fbd86866247dd56221a852c762538c9c30db22d0"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/acl.mjs",
+    "sha256": "ffcdb240fee457389c36a42d36356144505ae1ad86f71c36faf60baef5a0335d"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/component.mjs",
+    "sha256": "d95c3360adaad7a359fc730ed137f85547925a4cbb1f9903a1588b300c405e9a"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/contract.mjs",
+    "sha256": "e1a2ec89cc81a38b408f75fdfaa87c2c01b392c6520bf37f3e18053b237b9f21"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/offline.test.mjs",
+    "sha256": "3d9692f74edb942be64bda1c28b021979af301fca069d5bed81768e479958212"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/read-manifest.mjs",
+    "sha256": "7b2a1c0583e1fc194122c25912354ec776c3246285bf2afafed0e84b8657f521"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/reads.mjs",
+    "sha256": "2e3bf929d105d0373285ff18efd6beb6b469e0f3b462d274c05d6017ccd6f6b3"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/run.mjs",
+    "sha256": "decdfa60af7daef7fe85a50ddda30ba48f37da36a44f52c2aa732b6c722e679b"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/seed.mjs",
+    "sha256": "f7136b7884489a0f665d74437138f2dbb4abb0a555315033323b526325345dfb"
+  },
+  {
+    "root": "active",
+    "path": "tests/performance/opt00/pg-component/source-pins.json",
+    "sha256": "d121159b2a085e73f0b39cdb9ff86ac7d4acb4286b89bceaef068db80ba31a71"
+  },
+  {
+    "root": "after",
+    "path": "adapters/media/src/controlled-product-media.ts",
+    "sha256": "59e4a6174c9dd4821e6eb9da5c9dd731d1b10362ff6bdba309699733c3dd5525"
+  },
+  {
+    "root": "after",
+    "path": "adapters/media/src/product-image-signature.ts",
+    "sha256": "f937e2c6c49cc4f791485aeb32627fade2b459af536d6579781715aef8190f99"
+  },
+  {
+    "root": "after",
+    "path": "adapters/media/src/product-media-stage.ts",
+    "sha256": "168897688ea338081a9d8fd09004fe556e113857ec665aca7e9713d3741a0113"
+  },
+  {
+    "root": "after",
+    "path": "adapters/media/src/sharp-product-image-codec.ts",
+    "sha256": "21703219de4392baa49c01846447c25621af2a946d954497e8065937061fc456"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0001_runtime_sales.sql",
+    "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+    "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0003_auth_sessions.sql",
+    "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0004_transfer_runtime.sql",
+    "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0005_product_read_fields.sql",
+    "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0006_party_maintenance.sql",
+    "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+    "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0008_runtime_sparse_first_use.sql",
+    "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+    "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+    "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0011_history_storage.sql",
+    "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0012_history_header_native_reference.sql",
+    "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0013_native_party_import.sql",
+    "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0014_native_catalogue_import.sql",
+    "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+    "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+    "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0017_native_payment_import.sql",
+    "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+    "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0019_history_typed_publish_gate.sql",
+    "sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0020_runtime_document_numbers.sql",
+    "sha256": "8e56bbd0124bea56364753c0332a6cd17eaf2d389e843d95ea40c4d291ffc5d4"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+    "sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0022_product_media_retained_delete.sql",
+    "sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0023_inventory_key_admission.sql",
+    "sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0024_history_effective_revisions.sql",
+    "sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0025_product_season_selection.sql",
+    "sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+    "sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-category-depth-successor.sql",
+    "sha256": "6341b48840bf60a6f20fa76ec1ef08a0909e42f9138335db81bfb1eb200f227f"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+    "sha256": "09fb597e7b89e77cfb9711ca7ddba8e3d4fa898bf142e77796d0f68be964b1a3"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+    "sha256": "eb5937320e017b89790a5dd5aa2d08601087e21b35b771f902f55b02ad6f4aaa"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+    "sha256": "2e6829ea72db20d5fdf62372dd9c52d44d32d9dd67d0ea0e9b02b57b082c65eb"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+    "sha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+    "sha256": "0eb5785c7e050c0b1eac5fe0fd8949dfd126f466130c841cef098247ef62cb38"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql",
+    "sha256": "41c491cca5f04cc19d15f0c05113cfb3c81fa39a648a5dc349874ba52ef588c9"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+    "sha256": "9e7c5f0864f19d2f60bd856aa965b12db81d53db40040bbfef521731d76e5d17"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+    "sha256": "5d60b860bc0261ad8103947baac642b20cfc2da5b3f07a88b87ad9135a22a227"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+    "sha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+    "sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+    "sha256": "bebad118d5519b9e899215230e16fce92cbee9148ebbf35ba03af513c1f4f475"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+    "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+    "sha256": "8bc9bbacafc64181a7aece848e4aac3ad565247ceb5498023e979fe2e7bf05de"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/auth-store.ts",
+    "sha256": "02d6469332af00636683de510490871ea0d1d2ce7cd0463d9f6546682db156b2"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/bounded-pool.ts",
+    "sha256": "7919caa6598b14c7070e12364ff386fa942c83dcb88ad3062163d98c5c7314b0"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/cancellable-read.ts",
+    "sha256": "129e8f600835e662fa20566dbece1859ac4ca638a51a78f0c28046327ff5d13b"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/catalogue-completeness.ts",
+    "sha256": "2406060de5a3bacc642fd2ea8264b38dcb5f812186e67cbd926d61324dff8d21"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/catalogue-maintenance-store.ts",
+    "sha256": "f8ccda5795490a69b6c6dad6184cc07dd338879c5b62378b11c8b8c918f706ec"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/catalogue-settings-read-reader.ts",
+    "sha256": "73eb28dcb4a4b4e47f26ed27289dc74795064b15490a0b66c7562dbc158b705b"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/codec.ts",
+    "sha256": "18496bac8de90fce54cdcb861ef057c51d38ce826ebd103456dc203e288b553c"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/current-account-recommendations.ts",
+    "sha256": "a0bd90cb2db3f454676dca3e2c1a60ff7482a85d0152d2dc53f8239716f9881f"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/current-form-reader.ts",
+    "sha256": "5019b940c8b1b65893a8e14babf7a0185c5823e42395e471950403f9e6fafa0d"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/dictionary-read-reader.ts",
+    "sha256": "fd4d745bd17df01ff046cc17bbf2a490ac2990bc4681ead23006d4e77e4fc389"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/history-import-lifecycle.ts",
+    "sha256": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/history-revision-store.ts",
+    "sha256": "67fb25d55a33b5f98bc42449c6a53d2806a1ab237e46d5ff4b4fc2964fa1a767"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/history-typed-publication.ts",
+    "sha256": "0e563c20a8a0eba2fe8d87593d0d437a06ae83323412e338ee7c9932eee3d597"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/imported-history-query-reader.ts",
+    "sha256": "8c66a25d0cf375c86051812e73d3d05d0e3b15ee19754f9f926cdfc42f8e11a9"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+    "sha256": "c0064daa8c74960814b236f8280c48b9c051bc8843a1ac265c3ef44b67ba61f6"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/inventory-key-admission-reader.ts",
+    "sha256": "016d84bcc23668372076c7784cc993028e37cc7350553713cda2616ba0058e42"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+    "sha256": "ba8c33d88d467ffb1a276d170d8584b1756c0b7ecce2d0ba2e2c39cb6b404e3c"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/inventory-posting-balances.ts",
+    "sha256": "915e744fa809737bd7226ef4a9c29a0908b57aaf452cc727ddc1b888fdb33bd6"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/inventory-publication-guards.ts",
+    "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/inventory-query-reader.ts",
+    "sha256": "24a670e7a6dd772b6f5972c31ac989963d5d195fafef07a4d7d0833304254d51"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+    "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/native-core-staged-prefix-bind.ts",
+    "sha256": "a6d74aa6b695bc9d902634ad9a64a867d50e9f2e9f02d7ee1a359ee82c1b555b"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/native-document-specification.ts",
+    "sha256": "b769b6a6bb4f78aff63028fa2bde6f779d174706405d8d53db6a393b1c390d8f"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+    "sha256": "c41bdd26d29a414468676a2a5e858d128595761ba73f5ff8cbf4f561d0cf6413"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/native-import-record-accounting.ts",
+    "sha256": "2812490a9a12a2c3e4f6c7559e5b7322defea48ae311ea6d2162550974097494"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+    "sha256": "d07ab458c0fc3a34f3240e1dbf9cb7dc22ac6005487f84189808f33c5d74d29a"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/organization-maintenance-store.ts",
+    "sha256": "3c0f90b63bbd791572fb60dd07cdbdd476722df3fd794861c4b17550c858bb8e"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/party-maintenance-store.ts",
+    "sha256": "59b83af44a824f4dc7ea592b6ea1dead8b9ff51b77721ee3bd39516c53240ffe"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/party-read-reader.ts",
+    "sha256": "1964f1f54418c9e705f2760b7450a2ec11cdf35b27f83558d1f77991617bb708"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/payment-maintenance-store.ts",
+    "sha256": "c8ab80b5fa078d7318542d38b8af3bf20f8e094a1460b7d4ff6c5bab474e9a07"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/product-details-query-reader.ts",
+    "sha256": "b83e106739a50157813db3236d9be62c59d99ef9810ad348017db356a9c8c35e"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/product-maintenance-store.ts",
+    "sha256": "d6422a76e6b92659fd8a3a0f3da61287939ef1f9a19e5db5091652b331138e5b"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/product-management-query-reader.ts",
+    "sha256": "7021ca6733160465e726b55fde62bf164de780ccdb302ff92a589d1babf872d1"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/product-query-reader.ts",
+    "sha256": "0b2dfb055ede3c9e75d8f3ffca2182932fc57181553ff3591d32849ce535b9a8"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+    "sha256": "fc911a3b6e0db054814c7c9f5890bb8235a7850b7595ca1a87875b70d8537baa"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/runtime-document-number.ts",
+    "sha256": "e81f3a12f40c7a51765a0d9d499105788577b8fde296de27b87f184c6ed0ad89"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/sales-native-facts.ts",
+    "sha256": "2522039d7fc6accf7db8226c2e525eb5663510e100465451613d43466017318d"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/sales-query-reader.ts",
+    "sha256": "8d5199f30c8ea477ffa51dc29f8cb4f227443af1f641373ed5d334497d8d5244"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/sales-unit-of-work.ts",
+    "sha256": "711559a80241197b990dc71d2e08670937cf77c5b8f3dd388f38475e2712bf89"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/settings-audit-reader.ts",
+    "sha256": "135de199e6cdeea99f2eb0f30a0e4b05e296d244793bade2fb410e5918cad32c"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/source-confirmed-read-authorization.ts",
+    "sha256": "b1ae14163d0f00303eac8d13be604f9d3ba555f05c1ec09885176e69afacc6f6"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/staff-maintenance-store.ts",
+    "sha256": "93026b7110919ccadb368e5f292c151596a3c8392d103ab0084df899dee03553"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/store-settings-read-reader.ts",
+    "sha256": "b7e011770a50a93a32881c1e0669f96d3a3cfdc32310d909fdc43609a37b9346"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/transfer-query-reader.ts",
+    "sha256": "9a55cf254be0b7b11b96b49c2314a5b38fba3846a0a641b21bc405ff8b90456d"
+  },
+  {
+    "root": "after",
+    "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+    "sha256": "250096e80d1a8dba84c0a877829b2d4087c88fc476f2b8b6821438f538a06642"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/authenticated-document-commands.ts",
+    "sha256": "63e641e6dd969dd138640816360b0df4e29cef20685aa6a62923dc9dfc120bed"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/authentication.ts",
+    "sha256": "8a935682af1c523ceac6849939bb30f6311c064924f63bff2d7aae51b43574f3"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/capacity-admission.ts",
+    "sha256": "c0eb48b972fbe6e49b35455c6c83929eab7981aa7807d00a6da90e8430155514"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/capacity-runtime-probe.ts",
+    "sha256": "13306c668542cf685281c4d20641cfa68680f8dc42f652c7e27db10df0b7f66f"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/catalogue-maintenance-http.ts",
+    "sha256": "139ea28b168fb94707335f784590db275cc3f6f61ae771cfd8d0279b6cbbc6d7"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/catalogue-settings-read-http.ts",
+    "sha256": "7b6ea62205a43d7108349f5b127aa7a2c8df267baf4568ff569ca4c7fdcc5eba"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/current-form-http.ts",
+    "sha256": "5a043288872e920db4d92d3afdef46caf20099128c7ea2024666a0fc794af0ac"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/dictionary-read-http.ts",
+    "sha256": "8c62f030b54234b52e2ce8579d5e158b53564e3e33f01f89c354a71d883adff1"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/document-list-wire.ts",
+    "sha256": "bb08a6b6c88cb155839c3bc42c725d22581cd85124bd529bfd5fb6edf31eafa7"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/history-revision-authorization.ts",
+    "sha256": "80a3eb83313afd438afa9c94099d5540e644e886ffed8db4fb68e615a842765d"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/history-revision-http.ts",
+    "sha256": "c43f8b08fd8e7342ebdee6578b56f8ff20dc1c44b0818c3725d5aa60abecc925"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/imported-history-query-http.ts",
+    "sha256": "2ff559ebb653345969d56e0303aa4153034412a7cce1cf91949cf7c749ad1e3a"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/input.ts",
+    "sha256": "728f383a9f183b3c3ebaaba26c885c9de49ffd3985931f5793c4824c7c54baa2"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/inventory-http.ts",
+    "sha256": "a8ee89f0ccfd7d1c24fde96ec58f153ac82117016cd4517dd5f1f74c31b08027"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/inventory-ledger-query-http.ts",
+    "sha256": "86a192cf180a7f287c24f89731cec6c673725f98cc2ba9d6eb558ede1cb32d3a"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/login-admission.ts",
+    "sha256": "41f80363387d8dfd9646f06be67da449a172db03e888a39d5b1787641dd9a37e"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/organization-maintenance-http.ts",
+    "sha256": "028c77f36a2724ded78cc41d0387709bd686ee8e0e17504df5fc43bef934f24b"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/party-authentication.ts",
+    "sha256": "e2ebbc2ed2ff3a326c7ef69173d77c7472d539ca605664eef5beb7660bc70c18"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/party-maintenance-http.ts",
+    "sha256": "8568bd26f8ccbafaf6a4b2ad64fc539c61c1cbda89961d2328f90db45061f945"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/party-read-http.ts",
+    "sha256": "e084a55ba3df838a7fd31c842480d8f0250a6ad7e502edf7b0f837639e0b096c"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/payment-maintenance-http.ts",
+    "sha256": "990ce04f61bebf411f96f0b9fc1eb3ed4b776ec17648dc9990001d1281acf7a9"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/postgres-read-api.ts",
+    "sha256": "5dfde4cbde980a45a8fe5a7948e6c9c319b37b1b0702f4fb2604721106669e8b"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/product-details-query-http.ts",
+    "sha256": "1b9bf6c6d707e32c70d4935cf039289cc568b5146f505a1342f7e38ab59252ee"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/product-maintenance-http.ts",
+    "sha256": "0853c999f585b435fee98d99bc28fcc9c4e236da9180832904918d61cb0f0780"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/product-management-query-http.ts",
+    "sha256": "5db71063f51f2814853323dcf71e5b898b306dcf93c1128a67a45290fee35671"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/product-media-http.ts",
+    "sha256": "300a56e6305771aacbef78666630e39f8ede5fd6cb02d7d6f94dd3c66cf8c7dc"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/product-query-http.ts",
+    "sha256": "077d3eb66f222adf848c81c1fd51c03351a046cf45f5b06fd07fc690675f36f1"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/request-diagnostics.ts",
+    "sha256": "697cf5b90fd315e1877483b729b9f9b7188bafc2c7ce7bbde4043993df5998ae"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/runtime-database-read-ports.ts",
+    "sha256": "5bd8187b22c7eb8350a73567fb23aac8f2efe1f0c8811ae373a8792571a8ba87"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/sales-http.ts",
+    "sha256": "a3bf52f212e90c7d8590d2e7e2111b6dc498f51dc4b909f0e3c8c208a940c048"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/sales-preparation-input.ts",
+    "sha256": "5e89890e2a0a3e74d799abadbced877a7ca9b8a4f98dd6fa317982cdb2677707"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/sales-query-http.ts",
+    "sha256": "b7e73e094cb8b554d9b193e53ec3ab15c9cd7ac9ebf5d6989a8aa75200072e46"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/settings-audit-http.ts",
+    "sha256": "ddf8810c175b723b83fe88bf8f0cfce7dab863da754569fbab4861894f7bdbf5"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/staff-create-read-permission-admission.ts",
+    "sha256": "9088a11418cd26a613244ed7e0d3bf98218f87f4cea1b74986328740fc70606f"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/staff-maintenance-http.ts",
+    "sha256": "a1a6e42c0a33ff14b18d096e3d53e10f2bd45e9f627feeaac480b6315c194705"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/store-settings-read-http.ts",
+    "sha256": "bc7c229e6a051d0dd58eb2af55b52249c5c5f4151c69198d5271dd12b73b015f"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/transfer-authentication.ts",
+    "sha256": "c8dc0f8b7037020345fce50598480a3689de08a3a8b1efa3c5fa6f0c3a91a940"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/transfer-http.ts",
+    "sha256": "16be71d16f182853c1c369067d8c0a103f13dce84ecdcce0e79806ed40a884d3"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/transfer-input.ts",
+    "sha256": "b89f23d8d987224555452dbde696b866752d8f7356ba15b03252130238914ec2"
+  },
+  {
+    "root": "after",
+    "path": "apps/api/src/transfer-query-http.ts",
+    "sha256": "bf25ab06ffa0f3a437709b05fe621c914947d47837daf3fbb83a59954b777eb3"
+  },
+  {
+    "root": "after",
+    "path": "apps/web/src/current-form/http-reader.ts",
+    "sha256": "3347bff02a4d1444d71edb56c449699204eb9bb3b6ead9b4f9bbce6601f0fd3e"
+  },
+  {
+    "root": "after",
+    "path": "apps/web/src/current-form/sales-existing-document.ts",
+    "sha256": "132f4e7f208e26e748e94822706616f97428bd7ecdd83c3e54f2add7185203be"
+  },
+  {
+    "root": "after",
+    "path": "apps/web/src/current-form/transfer-existing-document.ts",
+    "sha256": "8e5cfa2fe3e997929313f19fad184f3446976cc4fc396dc6bd313977bff98bbc"
+  },
+  {
+    "root": "after",
+    "path": "apps/web/src/transport/http-query.ts",
+    "sha256": "fe9679d865c4fb9f02ad860171a326ebf83e47c3b1a7b84a97e97b2c65316223"
+  },
+  {
+    "root": "after",
+    "path": "package-lock.json",
+    "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+  },
+  {
+    "root": "after",
+    "path": "package.json",
+    "sha256": "954c9d4692806206657ae056f7d12f8d7ffa79efb28d0eb59400c249295b031f"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/account-maintenance-authorization.ts",
+    "sha256": "5119713611eaa6c15f6c5157e7890f9fed0985399c88e86892cffd1b33de8e66"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/account-maintenance-ports.ts",
+    "sha256": "b7ca35df337709a432b9755ce0b45a2068c58961edb93a93df358215589a139d"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/account-maintenance-service.ts",
+    "sha256": "9971493262896bc953c1b6c552592fd61a78d8f5076413ec1cbaa1b3b9abfc5f"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/account-maintenance-validation.ts",
+    "sha256": "a0ae009227385f0a8d0efa9660df7f7e71a51c71b728312255e43c68d7ba2609"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/authorized-effective-documents.ts",
+    "sha256": "201210201d930f458b7acab3fe9d6f3ac851114eb324566a5ed69e460c0fca64"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/catalogue-maintenance-authorization.ts",
+    "sha256": "c27ec26b0bbc31800e11b30644fe2a508e9b33f517828a0bb3922402b936383d"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/catalogue-maintenance-ports.ts",
+    "sha256": "daf830fcd53af144cf8f4cf433f5caf471dc353c408d44cbdf6addee3e64b745"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/catalogue-maintenance-service.ts",
+    "sha256": "06689ec8704408e8b3e44dc45ae1dc5c4d593bb75ea23db408ceb85605435408"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/catalogue-maintenance-validation.ts",
+    "sha256": "83efc7884cb2ff02773a17582c84e275c0bb08aa13046e943254bd2b5f9e1fc7"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/catalogue-price-input.ts",
+    "sha256": "d1a713379e03532dda0d2812945ad1be1324cfb02520e50de2f3dd56e43199d7"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/catalogue-settings-read-ports.ts",
+    "sha256": "e22e2e3892cd9593763f72ee0f5914daf1af099c9fd89d78801627d0eae95a1a"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/catalogue-settings-read-service.ts",
+    "sha256": "be76ffaf83d6a12021ada055bbb438979ee32c613207980acb9d6f0d2e929dd4"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/catalogue-settings-read-validation.ts",
+    "sha256": "ede0c1c9c167a2e166fd3ac5b5677dde2c96dfa8a308e677e39f2eb2b24f0770"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/catalogue-source-proof.ts",
+    "sha256": "b1481007ce402158186023a6cb670d6214d62e51588f8466b56421566c3baaa7"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/current-form-ports.ts",
+    "sha256": "bfe6d7ab16776324e389b4c087a47085599f57b9e93d708e276b38944d07c286"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/current-form-validation.ts",
+    "sha256": "c156fd90c5f3319997fe19ae2bd2e16cb74958bbffc61d0e72492828183973e1"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/dictionary-read-ports.ts",
+    "sha256": "fc3596953513488c0ba920b1dab141ff28e49977a097bed8a34dfd6152293a1c"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/dictionary-read-service.ts",
+    "sha256": "f95438161ca836fe0402e2bf6442b2490353045d1494c54a132268f28fe7322e"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/dictionary-read-validation.ts",
+    "sha256": "0f136ad930764987d0a63928cbed709da0e210b12e806dadb232d182338b5e06"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/dictionary-scheme-detail.ts",
+    "sha256": "8113a3035a034acad0b6102e2a66fa99bd2e10521515ec4a592d2f8f0cd5ae4e"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/document-specification.ts",
+    "sha256": "f8c8013b2b62548ed077e935c93b3aa3a4ecdc9fe8350a756a684734419b01cd"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/history-import-lifecycle.ts",
+    "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/history-revision-contracts.ts",
+    "sha256": "0152d91d74661c6ac2bb16170e6dbee60eec1ddcea9873385cb9ed47928703d2"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/history-revision-service.ts",
+    "sha256": "262d244781db7984491b32f4a65da67030db450395d735117f9edda93e8f250a"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/history-revision-validation.ts",
+    "sha256": "096f5af9d72d226605394c51bb9f9d824497dee80cdaba6815ad00bb826f7b3a"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/history-storage-contract.ts",
+    "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/history-typed-closure.ts",
+    "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/history-typed-publication.ts",
+    "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/import-v2-contract.ts",
+    "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/imported-history-query-ports.ts",
+    "sha256": "19813f6a99c5d36dc63e2875178bf496157a0a6fff42f9119ba7cd587abe649f"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/imported-history-query-service.ts",
+    "sha256": "de42e6047bb68682955960b78221ef25076cd2fc9710de18a5cbce4ed1fea37c"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/imported-history-query-validation.ts",
+    "sha256": "1dfa695c4a80447dd9a602173f62b5257ede3c31c0c2047ea13da8bc5f05ad85"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-cutoff-import.ts",
+    "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-key-admission.ts",
+    "sha256": "bb514d0956e8b3f43238d9ea791f3e9204bd916a1ab5e4a3df4425cd33a8fb21"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-ledger-balance-transition.ts",
+    "sha256": "31c9b2a113cc820a6e0dda7d3a5c06f81c9ad8033199ad0f9f92e12f1bc3a60e"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-ledger-query-contracts.ts",
+    "sha256": "354368e95457ced79afe6d1e7ca929fb0b451fe7d0a81991edf027ce9b588ec5"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-ledger-query-service.ts",
+    "sha256": "da81db41d026fd9e59fde6941f3c5bbb0876beb305394051950b9560558ac5c3"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-ledger-query-validation.ts",
+    "sha256": "eed5198b744772f5e84c32e31ecfdd51b1d2c63f36e40401bf4b55bc2fe78711"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-posting.ts",
+    "sha256": "e2c57e08b556f1c6957a470ae586a61e7ed95c2869e0fa757f9fc4f444eb4043"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-query-contracts.ts",
+    "sha256": "1c4444381922c6fef477f5d6a0a06b798a9de84b86beec491b2e191070db2f6a"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-query-response.ts",
+    "sha256": "ab6b46b8799ba4d57b6271532d8d3cc37f0f129ec6458d8e5e3a2277970e945e"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-query-service.ts",
+    "sha256": "11e78e2a7c2db6c9e08dd7fd124af49f49485a63b80159f2481fbf5ce1c9eb2c"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/inventory-query-validation.ts",
+    "sha256": "070002d26e247982a4d7a3e9b15c5355918e771c3413e7d1b87b11778b6847a4"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/maintenance-commit-ports.ts",
+    "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/native-import-record-accounting.ts",
+    "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/native-import-schema-contract.ts",
+    "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/native-sales-preparation.ts",
+    "sha256": "21370ce117e641f56824c3f825cccb819a5ebe3479c86a6339e5f9f7a53ad315"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/native-stock-contributor-import.ts",
+    "sha256": "87f43586fd737755e6bebcb046116ce8de0d447525e5bfebb2abe1fae6463448"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/native-transfer-preparation.ts",
+    "sha256": "43b15ea0455b5c64c271dbb6c97f33e1031d903c2b4a67469e1595f6238739fb"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/organization-maintenance-authorization.ts",
+    "sha256": "8a848ab1c6f091af2e6c851b7bd1a3571b3088b0583d0f96f1721819f43060cd"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/organization-maintenance-ports.ts",
+    "sha256": "27c870ca691a22d3d3e055e12929a5f42202451218d4013c8eab4e8296d56c53"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/organization-maintenance-service.ts",
+    "sha256": "2c4cbcb61e5da27378582db1efa985a16a11633d798b7b56a99c40d7788a200b"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/organization-maintenance-validation.ts",
+    "sha256": "9ba5821a046d9c3516ce584ed1e58525e709430789548bdb1867cbfd432a5a7b"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/party-maintenance-policy.ts",
+    "sha256": "1fbe42d67c6041fa4c379bd2b52e023e4b34e4d03b02e4d02ea5bb7fe0ef3d01"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/party-maintenance-ports.ts",
+    "sha256": "96d652dd7eb9b02e2951d52a859e717c4d941210eca90e807aa19f8444828183"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/party-maintenance-service.ts",
+    "sha256": "7844fdeda4984b4442d974ad429179d84948f5c5e2c0f2ba7e779f012ab649bb"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/party-maintenance-validation.ts",
+    "sha256": "9dccee7922e9fd16cebecdd232ffe32ce3f4fc29cf6b74216f30c95006587a23"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/party-numbering.ts",
+    "sha256": "8517e8bf065026192dc2c282dd641f122f2765b619f05200230fbcf14c1288fd"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/party-read-ports.ts",
+    "sha256": "68dacd0ec93b8676b413bc585924f1ac0e29b8eccd183eb25746daf56272e1b2"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/party-read-service.ts",
+    "sha256": "08e026d9d519cd497d1fe29a6d7b16212cba1184531386d78f9ca62e23ab72a6"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/payment-maintenance-authorization.ts",
+    "sha256": "094e6e6a0528a75ef7e0cee0d4c6f8d7a51d2baa0914fe234411fcedd75df605"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/payment-maintenance-ports.ts",
+    "sha256": "fca56fa4ada87bf0a7a67c8e8788080a0bfe2730664022671348fd9ea9ea70dd"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/payment-maintenance-service.ts",
+    "sha256": "470f5c0e83b6e84dd829320b4ac655f1379297b2797160a2346f523deb00d387"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/payment-maintenance-validation.ts",
+    "sha256": "2aa1c5d3d0f428c17e6c329e6deaf20ad1b106be5c5d073e1d5357f74477f6be"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/ports.ts",
+    "sha256": "75b5b743fe2f410cc1cd79714d0aee097672c96ce86ce9964ecbdc7b80cd7045"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-details-query-ports.ts",
+    "sha256": "834eda0edce2a579634e057959542acee34d08f2c074562627d9457370a8e599"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-details-query-service.ts",
+    "sha256": "76e69fd573ca9508f991e8f56cac1a36bbc6f22900daff03057ed9ba86e7b058"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-details-query-validation.ts",
+    "sha256": "43603e6b970e44987e06d4670cb88d4c6185ada65b564e35107c5f5813273889"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-maintenance-authorization.ts",
+    "sha256": "ed90d011d73fba1512c97f8badd82204b5c7caff8be9b4967053d5f8dd9d0523"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-maintenance-ports.ts",
+    "sha256": "26bd4c153c4df87ec897820fd5282df61fee92c5859c2070072895fe6d0f639e"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-maintenance-service.ts",
+    "sha256": "b20a0742164208c3f8a04a3fae6e8b90fae0212c8612f6db7e9dd12a9bbbe08f"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-maintenance-validation.ts",
+    "sha256": "374261e28235241167114c95e992032d6f2838b6661446edf46beb3c532c0585"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-management-query-ports.ts",
+    "sha256": "250f2559a695b283f2d898d1fd2c422f528d35a183765ebfbd5c7079d052f192"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-management-query-service.ts",
+    "sha256": "706835730494859e4b8e28a2df0279d2f98309dc8fe3774cf501c61549d73a11"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-management-query-validation.ts",
+    "sha256": "382f2a88c09d899d3b73752eb91417584bea3437a09df3cbde93759cbd34167d"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-query-ports.ts",
+    "sha256": "c7c86ef200c1824df4f4980f52b31ada2e67b8b577de2318275d50ec21fb03b4"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-query-service.ts",
+    "sha256": "50314aebb0ffc62f87f2fbf87d418f1adf18889379df45c8222c5d5c65aef94d"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/product-query-validation.ts",
+    "sha256": "c10241f7d6cd5263753c68f877e5a21cb3a0ee5b4e0987ba403bc66e4f802ef9"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/read-resource.ts",
+    "sha256": "b21bc5db71274ddf355b57902ee3d597b337b6259c49236c9430ef6d9e2e14ea"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/request-hash.ts",
+    "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/runtime-document-number.ts",
+    "sha256": "d7d3fda1580c5516a47dc8c225daca5c89dd3581a0fb3835fc100b5cafb82eae"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/sales-business-rules.ts",
+    "sha256": "925bb3d5a0da89f18e4c0535e5a7db0930ca8b4fb33caa14c245955d95b44b8f"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/sales-change-evidence.ts",
+    "sha256": "b0afa1915998281c17896ea4e038e6e8db1ec190ed4c5e22017d2c209c7448c5"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/sales-native-facts.ts",
+    "sha256": "675c80f71671471fa23947bb6fb73c437df8d8ea081f97307b1d6fb740cd025e"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/sales-payload-budget.ts",
+    "sha256": "e0a100cd17d442170d4421d7ba6c42f30cf71788afd4d22603a19ef5810a5ba1"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/sales-query-ports.ts",
+    "sha256": "d37ac3df050981d435c2c79d252f3f12abcfe336a3485a0fa9ac1f2eb7d1e635"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/sales-query-service.ts",
+    "sha256": "f3f44367c907f0078c6d319d9d68e82540188e0832dfaa55e5da984088aa5d39"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/sales-query-validation.ts",
+    "sha256": "d52bb5a49a9517d0e91c21141e1a109330fe61d70aff232a8c799257a50689ee"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/sales-reference-query-validation.ts",
+    "sha256": "6dd26acd7eca922518d4a866bf8f1e25c290777541bd0c13dacd175897b8f6a1"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/sales-service.ts",
+    "sha256": "b1565bccc82f10ba2b463bf577c654abc141ee314576d45e28c6607cc49c6615"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/settings-audit-ports.ts",
+    "sha256": "e7847cbcc343bc37dc7106ecd5b1c73fade5fac21a9e7b979e17d347eb4e897e"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/settings-audit-service.ts",
+    "sha256": "96b5f0595249a715488138100c476a566b2d358e1dc36d9a864c28277d5f6cec"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/settings-audit-validation.ts",
+    "sha256": "2267c23b4452293a3bb1c5482f434d1495e3b43bcce27d235e1138639b65e4d2"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/source-confirmed-current-form-authorization.ts",
+    "sha256": "22757575891383fe0eaba6dcb6bb2ff2cb2351e023c6f03b2d97b88e0d4289e5"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/source-confirmed-document-number.ts",
+    "sha256": "7e34b86dad89f55708ad8b657d26cdac88d32b3ea39c3ea2b6a887b3c67dfc0a"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/staff-maintenance-authorization.ts",
+    "sha256": "faee59d88b3ae6ee8b1854580383893c040e30b8f2ef046f6211f7d10a317e1f"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/staff-maintenance-ports.ts",
+    "sha256": "23c5045ebd185aa43dc22e1bf47c72414616d613243d96b74f95a40888ec9fe2"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/staff-maintenance-service.ts",
+    "sha256": "3ccf01e92f613cabf35c2d25c0bdab8363b262c9d47415da637fbbf192e5fd1f"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/staff-maintenance-validation.ts",
+    "sha256": "1a22420f339f2196de698a20843cf44c93e43972e09c1e858f33ff8ec9a0e2c5"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/store-settings-read-ports.ts",
+    "sha256": "3f8e63ce3d2ae022a8446d2bd90fb1fc076173c1b8109fc4b58a1b48d0a6ffcf"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/store-settings-read-service.ts",
+    "sha256": "63a1c17d6328341424c3acf2a40b8ebadb6ca35dfec8acbbb77166d924524af9"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/store-settings-read-validation.ts",
+    "sha256": "54667587d05f8fbdb1fdd8d76cdd83d43570cdfa5a18427454fc0f9c7cad6018"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/transfer-payload-budget.ts",
+    "sha256": "d597165d85cd0d51759f22be9945573dcebd518f50a11fdbb4da771956226098"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/transfer-policy.ts",
+    "sha256": "690bd28632ac65e88d773a5c59045bd65e260e2f93127b092f92e608cf9c43a2"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/transfer-ports.ts",
+    "sha256": "bf73f4a4fac82f57a6e7e8085b80f91b9910216163333ec8174f1c52a2830bf3"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/transfer-query-ports.ts",
+    "sha256": "d30c87457efb95777684b90246e66c42567f0c081cec7d2ceb20fac6923ed2db"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/transfer-query-service.ts",
+    "sha256": "e9bf49507a5ac8dacf9ad07c278ab6d8e8970175cbefcf0e25acf686fe4a35e6"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/transfer-query-validation.ts",
+    "sha256": "fba61ebc471ca93b65200cf713ee32843b6783048dad2bb117c8d9c9dd538c2b"
+  },
+  {
+    "root": "after",
+    "path": "packages/application/src/transfer-service.ts",
+    "sha256": "a37b2638312635351a83dd4ffeb4b5bb15ac91f79ec5f5f1ba2962652762f642"
+  },
+  {
+    "root": "after",
+    "path": "packages/authentication/src/legacy-passwords.ts",
+    "sha256": "94bc8e056954cafa7e34e7717948f3b0b56959d052f60d3db7a5273b5409778b"
+  },
+  {
+    "root": "after",
+    "path": "packages/authentication/src/password-work-gate.ts",
+    "sha256": "e621b599676d134ff88d886c128f1f504d05beaff829354413827f507bdc67ae"
+  },
+  {
+    "root": "after",
+    "path": "packages/authentication/src/passwords.ts",
+    "sha256": "f570e5f696ae71df145edb202e18b41eae7798f9d862cb67be6a156b6bf2fafd"
+  },
+  {
+    "root": "after",
+    "path": "packages/authentication/src/ports.ts",
+    "sha256": "e3386820d1f16f8debd1544c209041eb6d53d063a1f77ec9bbfbe1697989c315"
+  },
+  {
+    "root": "after",
+    "path": "packages/authentication/src/service.ts",
+    "sha256": "8263373669c1df67322f6ba8ef53a7d621168df19df220662d935a58710e3557"
+  },
+  {
+    "root": "after",
+    "path": "packages/domain/src/catalog.ts",
+    "sha256": "0771d67dd7374b027c02eaabe8366e793c897f8b6ac95093d74f37d64b65e000"
+  },
+  {
+    "root": "after",
+    "path": "packages/domain/src/documents.ts",
+    "sha256": "15c905972158f1db66055673cfe67ca17b0807f9d65df5ba11fab3ad370df51f"
+  },
+  {
+    "root": "after",
+    "path": "packages/domain/src/errors.ts",
+    "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+  },
+  {
+    "root": "after",
+    "path": "packages/domain/src/inventory.ts",
+    "sha256": "e3872082e0173600f90a48b7571e84860041504e3e49760cd349c5ad7d854f38"
+  },
+  {
+    "root": "after",
+    "path": "packages/domain/src/sales-money.ts",
+    "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30"
+  },
+  {
+    "root": "after",
+    "path": "packages/domain/src/values.ts",
+    "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+  },
+  {
+    "root": "after",
+    "path": "scripts/release/prepare-runtime26-v6.mjs",
+    "sha256": "8c3ef5b3dda046e83c6c9995eb6a5a588561fa07e13a4a12fb188f2c30e613a1"
+  },
+  {
+    "root": "after",
+    "path": "scripts/release/prepare-runtime26-v7.mjs",
+    "sha256": "287344e333ef5cda3b134d460d01df0662fdde8e0e17d1199839c598c8895588"
+  },
+  {
+    "root": "after",
+    "path": "scripts/release/prepare-runtime26-v8.mjs",
+    "sha256": "6cd6b1f0e8ce651788aba4ade5121fb856cf9d19583faa03838fea55c75b3347"
+  },
+  {
+    "root": "before",
+    "path": "adapters/media/src/controlled-product-media.ts",
+    "sha256": "59e4a6174c9dd4821e6eb9da5c9dd731d1b10362ff6bdba309699733c3dd5525"
+  },
+  {
+    "root": "before",
+    "path": "adapters/media/src/product-image-signature.ts",
+    "sha256": "f937e2c6c49cc4f791485aeb32627fade2b459af536d6579781715aef8190f99"
+  },
+  {
+    "root": "before",
+    "path": "adapters/media/src/product-media-stage.ts",
+    "sha256": "168897688ea338081a9d8fd09004fe556e113857ec665aca7e9713d3741a0113"
+  },
+  {
+    "root": "before",
+    "path": "adapters/media/src/sharp-product-image-codec.ts",
+    "sha256": "21703219de4392baa49c01846447c25621af2a946d954497e8065937061fc456"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0001_runtime_sales.sql",
+    "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+    "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0003_auth_sessions.sql",
+    "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0004_transfer_runtime.sql",
+    "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0005_product_read_fields.sql",
+    "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0006_party_maintenance.sql",
+    "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+    "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0008_runtime_sparse_first_use.sql",
+    "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+    "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+    "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0011_history_storage.sql",
+    "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0012_history_header_native_reference.sql",
+    "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0013_native_party_import.sql",
+    "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0014_native_catalogue_import.sql",
+    "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+    "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+    "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0017_native_payment_import.sql",
+    "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+    "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0019_history_typed_publish_gate.sql",
+    "sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0020_runtime_document_numbers.sql",
+    "sha256": "8e56bbd0124bea56364753c0332a6cd17eaf2d389e843d95ea40c4d291ffc5d4"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+    "sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0022_product_media_retained_delete.sql",
+    "sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0023_inventory_key_admission.sql",
+    "sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0024_history_effective_revisions.sql",
+    "sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0025_product_season_selection.sql",
+    "sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+    "sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-category-depth-successor.sql",
+    "sha256": "6341b48840bf60a6f20fa76ec1ef08a0909e42f9138335db81bfb1eb200f227f"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+    "sha256": "09fb597e7b89e77cfb9711ca7ddba8e3d4fa898bf142e77796d0f68be964b1a3"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+    "sha256": "eb5937320e017b89790a5dd5aa2d08601087e21b35b771f902f55b02ad6f4aaa"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+    "sha256": "2e6829ea72db20d5fdf62372dd9c52d44d32d9dd67d0ea0e9b02b57b082c65eb"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+    "sha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+    "sha256": "0eb5785c7e050c0b1eac5fe0fd8949dfd126f466130c841cef098247ef62cb38"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql",
+    "sha256": "41c491cca5f04cc19d15f0c05113cfb3c81fa39a648a5dc349874ba52ef588c9"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+    "sha256": "9e7c5f0864f19d2f60bd856aa965b12db81d53db40040bbfef521731d76e5d17"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+    "sha256": "5d60b860bc0261ad8103947baac642b20cfc2da5b3f07a88b87ad9135a22a227"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+    "sha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+    "sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+    "sha256": "bebad118d5519b9e899215230e16fce92cbee9148ebbf35ba03af513c1f4f475"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+    "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+    "sha256": "8bc9bbacafc64181a7aece848e4aac3ad565247ceb5498023e979fe2e7bf05de"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/auth-store.ts",
+    "sha256": "02d6469332af00636683de510490871ea0d1d2ce7cd0463d9f6546682db156b2"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/bounded-pool.ts",
+    "sha256": "7919caa6598b14c7070e12364ff386fa942c83dcb88ad3062163d98c5c7314b0"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/cancellable-read.ts",
+    "sha256": "129e8f600835e662fa20566dbece1859ac4ca638a51a78f0c28046327ff5d13b"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/catalogue-completeness.ts",
+    "sha256": "2406060de5a3bacc642fd2ea8264b38dcb5f812186e67cbd926d61324dff8d21"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/catalogue-maintenance-store.ts",
+    "sha256": "f8ccda5795490a69b6c6dad6184cc07dd338879c5b62378b11c8b8c918f706ec"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/catalogue-settings-read-reader.ts",
+    "sha256": "73eb28dcb4a4b4e47f26ed27289dc74795064b15490a0b66c7562dbc158b705b"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/codec.ts",
+    "sha256": "18496bac8de90fce54cdcb861ef057c51d38ce826ebd103456dc203e288b553c"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/current-account-recommendations.ts",
+    "sha256": "a0bd90cb2db3f454676dca3e2c1a60ff7482a85d0152d2dc53f8239716f9881f"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/current-form-reader.ts",
+    "sha256": "20b75a3327f450f9d1bb76fd94069a6fa3db26bfc7e1ac8844766b99c2dcfa3e"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/dictionary-read-reader.ts",
+    "sha256": "fd4d745bd17df01ff046cc17bbf2a490ac2990bc4681ead23006d4e77e4fc389"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/history-import-lifecycle.ts",
+    "sha256": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/history-revision-store.ts",
+    "sha256": "67fb25d55a33b5f98bc42449c6a53d2806a1ab237e46d5ff4b4fc2964fa1a767"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/history-typed-publication.ts",
+    "sha256": "0e563c20a8a0eba2fe8d87593d0d437a06ae83323412e338ee7c9932eee3d597"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/imported-history-query-reader.ts",
+    "sha256": "8c66a25d0cf375c86051812e73d3d05d0e3b15ee19754f9f926cdfc42f8e11a9"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+    "sha256": "c0064daa8c74960814b236f8280c48b9c051bc8843a1ac265c3ef44b67ba61f6"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/inventory-key-admission-reader.ts",
+    "sha256": "016d84bcc23668372076c7784cc993028e37cc7350553713cda2616ba0058e42"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+    "sha256": "ba8c33d88d467ffb1a276d170d8584b1756c0b7ecce2d0ba2e2c39cb6b404e3c"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/inventory-posting-balances.ts",
+    "sha256": "915e744fa809737bd7226ef4a9c29a0908b57aaf452cc727ddc1b888fdb33bd6"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/inventory-publication-guards.ts",
+    "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/inventory-query-reader.ts",
+    "sha256": "24a670e7a6dd772b6f5972c31ac989963d5d195fafef07a4d7d0833304254d51"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+    "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/native-core-staged-prefix-bind.ts",
+    "sha256": "a6d74aa6b695bc9d902634ad9a64a867d50e9f2e9f02d7ee1a359ee82c1b555b"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/native-document-specification.ts",
+    "sha256": "b769b6a6bb4f78aff63028fa2bde6f779d174706405d8d53db6a393b1c390d8f"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+    "sha256": "c41bdd26d29a414468676a2a5e858d128595761ba73f5ff8cbf4f561d0cf6413"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/native-import-record-accounting.ts",
+    "sha256": "2812490a9a12a2c3e4f6c7559e5b7322defea48ae311ea6d2162550974097494"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+    "sha256": "d07ab458c0fc3a34f3240e1dbf9cb7dc22ac6005487f84189808f33c5d74d29a"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/organization-maintenance-store.ts",
+    "sha256": "3c0f90b63bbd791572fb60dd07cdbdd476722df3fd794861c4b17550c858bb8e"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/party-maintenance-store.ts",
+    "sha256": "59b83af44a824f4dc7ea592b6ea1dead8b9ff51b77721ee3bd39516c53240ffe"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/party-read-reader.ts",
+    "sha256": "1964f1f54418c9e705f2760b7450a2ec11cdf35b27f83558d1f77991617bb708"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/payment-maintenance-store.ts",
+    "sha256": "c8ab80b5fa078d7318542d38b8af3bf20f8e094a1460b7d4ff6c5bab474e9a07"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/product-details-query-reader.ts",
+    "sha256": "b83e106739a50157813db3236d9be62c59d99ef9810ad348017db356a9c8c35e"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/product-maintenance-store.ts",
+    "sha256": "d6422a76e6b92659fd8a3a0f3da61287939ef1f9a19e5db5091652b331138e5b"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/product-management-query-reader.ts",
+    "sha256": "7021ca6733160465e726b55fde62bf164de780ccdb302ff92a589d1babf872d1"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/product-query-reader.ts",
+    "sha256": "0b2dfb055ede3c9e75d8f3ffca2182932fc57181553ff3591d32849ce535b9a8"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+    "sha256": "fc911a3b6e0db054814c7c9f5890bb8235a7850b7595ca1a87875b70d8537baa"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/runtime-document-number.ts",
+    "sha256": "e81f3a12f40c7a51765a0d9d499105788577b8fde296de27b87f184c6ed0ad89"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/sales-native-facts.ts",
+    "sha256": "2522039d7fc6accf7db8226c2e525eb5663510e100465451613d43466017318d"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/sales-query-reader.ts",
+    "sha256": "8d5199f30c8ea477ffa51dc29f8cb4f227443af1f641373ed5d334497d8d5244"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/sales-unit-of-work.ts",
+    "sha256": "711559a80241197b990dc71d2e08670937cf77c5b8f3dd388f38475e2712bf89"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/settings-audit-reader.ts",
+    "sha256": "135de199e6cdeea99f2eb0f30a0e4b05e296d244793bade2fb410e5918cad32c"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/source-confirmed-read-authorization.ts",
+    "sha256": "b1ae14163d0f00303eac8d13be604f9d3ba555f05c1ec09885176e69afacc6f6"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/staff-maintenance-store.ts",
+    "sha256": "93026b7110919ccadb368e5f292c151596a3c8392d103ab0084df899dee03553"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/store-settings-read-reader.ts",
+    "sha256": "b7e011770a50a93a32881c1e0669f96d3a3cfdc32310d909fdc43609a37b9346"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/transfer-query-reader.ts",
+    "sha256": "9a55cf254be0b7b11b96b49c2314a5b38fba3846a0a641b21bc405ff8b90456d"
+  },
+  {
+    "root": "before",
+    "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+    "sha256": "250096e80d1a8dba84c0a877829b2d4087c88fc476f2b8b6821438f538a06642"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/authenticated-document-commands.ts",
+    "sha256": "63e641e6dd969dd138640816360b0df4e29cef20685aa6a62923dc9dfc120bed"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/authentication.ts",
+    "sha256": "8a935682af1c523ceac6849939bb30f6311c064924f63bff2d7aae51b43574f3"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/capacity-admission.ts",
+    "sha256": "c0eb48b972fbe6e49b35455c6c83929eab7981aa7807d00a6da90e8430155514"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/capacity-runtime-probe.ts",
+    "sha256": "13306c668542cf685281c4d20641cfa68680f8dc42f652c7e27db10df0b7f66f"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/catalogue-maintenance-http.ts",
+    "sha256": "139ea28b168fb94707335f784590db275cc3f6f61ae771cfd8d0279b6cbbc6d7"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/catalogue-settings-read-http.ts",
+    "sha256": "7b6ea62205a43d7108349f5b127aa7a2c8df267baf4568ff569ca4c7fdcc5eba"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/current-form-http.ts",
+    "sha256": "fa9e4c03b4cde247ab39d582b62a416424cec432a7520b4bc2836e6bff9bc139"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/dictionary-read-http.ts",
+    "sha256": "8c62f030b54234b52e2ce8579d5e158b53564e3e33f01f89c354a71d883adff1"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/document-list-wire.ts",
+    "sha256": "bb08a6b6c88cb155839c3bc42c725d22581cd85124bd529bfd5fb6edf31eafa7"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/history-revision-authorization.ts",
+    "sha256": "80a3eb83313afd438afa9c94099d5540e644e886ffed8db4fb68e615a842765d"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/history-revision-http.ts",
+    "sha256": "c43f8b08fd8e7342ebdee6578b56f8ff20dc1c44b0818c3725d5aa60abecc925"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/imported-history-query-http.ts",
+    "sha256": "2ff559ebb653345969d56e0303aa4153034412a7cce1cf91949cf7c749ad1e3a"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/input.ts",
+    "sha256": "728f383a9f183b3c3ebaaba26c885c9de49ffd3985931f5793c4824c7c54baa2"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/inventory-http.ts",
+    "sha256": "a8ee89f0ccfd7d1c24fde96ec58f153ac82117016cd4517dd5f1f74c31b08027"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/inventory-ledger-query-http.ts",
+    "sha256": "86a192cf180a7f287c24f89731cec6c673725f98cc2ba9d6eb558ede1cb32d3a"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/login-admission.ts",
+    "sha256": "41f80363387d8dfd9646f06be67da449a172db03e888a39d5b1787641dd9a37e"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/organization-maintenance-http.ts",
+    "sha256": "028c77f36a2724ded78cc41d0387709bd686ee8e0e17504df5fc43bef934f24b"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/party-authentication.ts",
+    "sha256": "e2ebbc2ed2ff3a326c7ef69173d77c7472d539ca605664eef5beb7660bc70c18"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/party-maintenance-http.ts",
+    "sha256": "8568bd26f8ccbafaf6a4b2ad64fc539c61c1cbda89961d2328f90db45061f945"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/party-read-http.ts",
+    "sha256": "e084a55ba3df838a7fd31c842480d8f0250a6ad7e502edf7b0f837639e0b096c"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/payment-maintenance-http.ts",
+    "sha256": "990ce04f61bebf411f96f0b9fc1eb3ed4b776ec17648dc9990001d1281acf7a9"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/postgres-read-api.ts",
+    "sha256": "5dfde4cbde980a45a8fe5a7948e6c9c319b37b1b0702f4fb2604721106669e8b"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/product-details-query-http.ts",
+    "sha256": "1b9bf6c6d707e32c70d4935cf039289cc568b5146f505a1342f7e38ab59252ee"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/product-maintenance-http.ts",
+    "sha256": "0853c999f585b435fee98d99bc28fcc9c4e236da9180832904918d61cb0f0780"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/product-management-query-http.ts",
+    "sha256": "5db71063f51f2814853323dcf71e5b898b306dcf93c1128a67a45290fee35671"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/product-media-http.ts",
+    "sha256": "300a56e6305771aacbef78666630e39f8ede5fd6cb02d7d6f94dd3c66cf8c7dc"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/product-query-http.ts",
+    "sha256": "077d3eb66f222adf848c81c1fd51c03351a046cf45f5b06fd07fc690675f36f1"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/request-diagnostics.ts",
+    "sha256": "697cf5b90fd315e1877483b729b9f9b7188bafc2c7ce7bbde4043993df5998ae"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/runtime-database-read-ports.ts",
+    "sha256": "5bd8187b22c7eb8350a73567fb23aac8f2efe1f0c8811ae373a8792571a8ba87"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/sales-http.ts",
+    "sha256": "a3bf52f212e90c7d8590d2e7e2111b6dc498f51dc4b909f0e3c8c208a940c048"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/sales-preparation-input.ts",
+    "sha256": "5e89890e2a0a3e74d799abadbced877a7ca9b8a4f98dd6fa317982cdb2677707"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/sales-query-http.ts",
+    "sha256": "b7e73e094cb8b554d9b193e53ec3ab15c9cd7ac9ebf5d6989a8aa75200072e46"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/settings-audit-http.ts",
+    "sha256": "ddf8810c175b723b83fe88bf8f0cfce7dab863da754569fbab4861894f7bdbf5"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/staff-create-read-permission-admission.ts",
+    "sha256": "9088a11418cd26a613244ed7e0d3bf98218f87f4cea1b74986328740fc70606f"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/staff-maintenance-http.ts",
+    "sha256": "a1a6e42c0a33ff14b18d096e3d53e10f2bd45e9f627feeaac480b6315c194705"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/store-settings-read-http.ts",
+    "sha256": "bc7c229e6a051d0dd58eb2af55b52249c5c5f4151c69198d5271dd12b73b015f"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/transfer-authentication.ts",
+    "sha256": "c8dc0f8b7037020345fce50598480a3689de08a3a8b1efa3c5fa6f0c3a91a940"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/transfer-http.ts",
+    "sha256": "16be71d16f182853c1c369067d8c0a103f13dce84ecdcce0e79806ed40a884d3"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/transfer-input.ts",
+    "sha256": "b89f23d8d987224555452dbde696b866752d8f7356ba15b03252130238914ec2"
+  },
+  {
+    "root": "before",
+    "path": "apps/api/src/transfer-query-http.ts",
+    "sha256": "bf25ab06ffa0f3a437709b05fe621c914947d47837daf3fbb83a59954b777eb3"
+  },
+  {
+    "root": "before",
+    "path": "apps/web/src/current-form/http-reader.ts",
+    "sha256": "1b4baa9651d689e86edc4df93983450af69ea07b993259b15282a74f0d89751b"
+  },
+  {
+    "root": "before",
+    "path": "apps/web/src/transport/http-query.ts",
+    "sha256": "fe9679d865c4fb9f02ad860171a326ebf83e47c3b1a7b84a97e97b2c65316223"
+  },
+  {
+    "root": "before",
+    "path": "package-lock.json",
+    "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+  },
+  {
+    "root": "before",
+    "path": "package.json",
+    "sha256": "70cdaa2c9b35529efd8d550fb90758511c9f2e599afbb3a79b9d4f8a009e1616"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/account-maintenance-authorization.ts",
+    "sha256": "5119713611eaa6c15f6c5157e7890f9fed0985399c88e86892cffd1b33de8e66"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/account-maintenance-ports.ts",
+    "sha256": "b7ca35df337709a432b9755ce0b45a2068c58961edb93a93df358215589a139d"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/account-maintenance-service.ts",
+    "sha256": "9971493262896bc953c1b6c552592fd61a78d8f5076413ec1cbaa1b3b9abfc5f"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/account-maintenance-validation.ts",
+    "sha256": "a0ae009227385f0a8d0efa9660df7f7e71a51c71b728312255e43c68d7ba2609"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/authorized-effective-documents.ts",
+    "sha256": "201210201d930f458b7acab3fe9d6f3ac851114eb324566a5ed69e460c0fca64"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/catalogue-maintenance-authorization.ts",
+    "sha256": "c27ec26b0bbc31800e11b30644fe2a508e9b33f517828a0bb3922402b936383d"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/catalogue-maintenance-ports.ts",
+    "sha256": "daf830fcd53af144cf8f4cf433f5caf471dc353c408d44cbdf6addee3e64b745"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/catalogue-maintenance-service.ts",
+    "sha256": "06689ec8704408e8b3e44dc45ae1dc5c4d593bb75ea23db408ceb85605435408"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/catalogue-maintenance-validation.ts",
+    "sha256": "83efc7884cb2ff02773a17582c84e275c0bb08aa13046e943254bd2b5f9e1fc7"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/catalogue-price-input.ts",
+    "sha256": "d1a713379e03532dda0d2812945ad1be1324cfb02520e50de2f3dd56e43199d7"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/catalogue-settings-read-ports.ts",
+    "sha256": "e22e2e3892cd9593763f72ee0f5914daf1af099c9fd89d78801627d0eae95a1a"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/catalogue-settings-read-service.ts",
+    "sha256": "be76ffaf83d6a12021ada055bbb438979ee32c613207980acb9d6f0d2e929dd4"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/catalogue-settings-read-validation.ts",
+    "sha256": "ede0c1c9c167a2e166fd3ac5b5677dde2c96dfa8a308e677e39f2eb2b24f0770"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/catalogue-source-proof.ts",
+    "sha256": "b1481007ce402158186023a6cb670d6214d62e51588f8466b56421566c3baaa7"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/current-form-ports.ts",
+    "sha256": "d41b062dd263e2b072f2bbf3db63eed16da551fa6b1a8acbf3c55d26afec2b1b"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/current-form-validation.ts",
+    "sha256": "c156fd90c5f3319997fe19ae2bd2e16cb74958bbffc61d0e72492828183973e1"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/dictionary-read-ports.ts",
+    "sha256": "fc3596953513488c0ba920b1dab141ff28e49977a097bed8a34dfd6152293a1c"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/dictionary-read-service.ts",
+    "sha256": "f95438161ca836fe0402e2bf6442b2490353045d1494c54a132268f28fe7322e"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/dictionary-read-validation.ts",
+    "sha256": "0f136ad930764987d0a63928cbed709da0e210b12e806dadb232d182338b5e06"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/dictionary-scheme-detail.ts",
+    "sha256": "8113a3035a034acad0b6102e2a66fa99bd2e10521515ec4a592d2f8f0cd5ae4e"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/document-specification.ts",
+    "sha256": "f8c8013b2b62548ed077e935c93b3aa3a4ecdc9fe8350a756a684734419b01cd"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/history-import-lifecycle.ts",
+    "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/history-revision-contracts.ts",
+    "sha256": "0152d91d74661c6ac2bb16170e6dbee60eec1ddcea9873385cb9ed47928703d2"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/history-revision-service.ts",
+    "sha256": "262d244781db7984491b32f4a65da67030db450395d735117f9edda93e8f250a"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/history-revision-validation.ts",
+    "sha256": "096f5af9d72d226605394c51bb9f9d824497dee80cdaba6815ad00bb826f7b3a"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/history-storage-contract.ts",
+    "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/history-typed-closure.ts",
+    "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/history-typed-publication.ts",
+    "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/import-v2-contract.ts",
+    "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/imported-history-query-ports.ts",
+    "sha256": "19813f6a99c5d36dc63e2875178bf496157a0a6fff42f9119ba7cd587abe649f"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/imported-history-query-service.ts",
+    "sha256": "de42e6047bb68682955960b78221ef25076cd2fc9710de18a5cbce4ed1fea37c"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/imported-history-query-validation.ts",
+    "sha256": "1dfa695c4a80447dd9a602173f62b5257ede3c31c0c2047ea13da8bc5f05ad85"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-cutoff-import.ts",
+    "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-key-admission.ts",
+    "sha256": "bb514d0956e8b3f43238d9ea791f3e9204bd916a1ab5e4a3df4425cd33a8fb21"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-ledger-balance-transition.ts",
+    "sha256": "31c9b2a113cc820a6e0dda7d3a5c06f81c9ad8033199ad0f9f92e12f1bc3a60e"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-ledger-query-contracts.ts",
+    "sha256": "354368e95457ced79afe6d1e7ca929fb0b451fe7d0a81991edf027ce9b588ec5"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-ledger-query-service.ts",
+    "sha256": "da81db41d026fd9e59fde6941f3c5bbb0876beb305394051950b9560558ac5c3"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-ledger-query-validation.ts",
+    "sha256": "eed5198b744772f5e84c32e31ecfdd51b1d2c63f36e40401bf4b55bc2fe78711"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-posting.ts",
+    "sha256": "e2c57e08b556f1c6957a470ae586a61e7ed95c2869e0fa757f9fc4f444eb4043"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-query-contracts.ts",
+    "sha256": "1c4444381922c6fef477f5d6a0a06b798a9de84b86beec491b2e191070db2f6a"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-query-response.ts",
+    "sha256": "ab6b46b8799ba4d57b6271532d8d3cc37f0f129ec6458d8e5e3a2277970e945e"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-query-service.ts",
+    "sha256": "11e78e2a7c2db6c9e08dd7fd124af49f49485a63b80159f2481fbf5ce1c9eb2c"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/inventory-query-validation.ts",
+    "sha256": "070002d26e247982a4d7a3e9b15c5355918e771c3413e7d1b87b11778b6847a4"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/maintenance-commit-ports.ts",
+    "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/native-import-record-accounting.ts",
+    "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/native-import-schema-contract.ts",
+    "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/native-sales-preparation.ts",
+    "sha256": "21370ce117e641f56824c3f825cccb819a5ebe3479c86a6339e5f9f7a53ad315"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/native-stock-contributor-import.ts",
+    "sha256": "87f43586fd737755e6bebcb046116ce8de0d447525e5bfebb2abe1fae6463448"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/native-transfer-preparation.ts",
+    "sha256": "43b15ea0455b5c64c271dbb6c97f33e1031d903c2b4a67469e1595f6238739fb"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/organization-maintenance-authorization.ts",
+    "sha256": "8a848ab1c6f091af2e6c851b7bd1a3571b3088b0583d0f96f1721819f43060cd"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/organization-maintenance-ports.ts",
+    "sha256": "27c870ca691a22d3d3e055e12929a5f42202451218d4013c8eab4e8296d56c53"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/organization-maintenance-service.ts",
+    "sha256": "2c4cbcb61e5da27378582db1efa985a16a11633d798b7b56a99c40d7788a200b"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/organization-maintenance-validation.ts",
+    "sha256": "9ba5821a046d9c3516ce584ed1e58525e709430789548bdb1867cbfd432a5a7b"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/party-maintenance-policy.ts",
+    "sha256": "1fbe42d67c6041fa4c379bd2b52e023e4b34e4d03b02e4d02ea5bb7fe0ef3d01"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/party-maintenance-ports.ts",
+    "sha256": "96d652dd7eb9b02e2951d52a859e717c4d941210eca90e807aa19f8444828183"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/party-maintenance-service.ts",
+    "sha256": "7844fdeda4984b4442d974ad429179d84948f5c5e2c0f2ba7e779f012ab649bb"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/party-maintenance-validation.ts",
+    "sha256": "9dccee7922e9fd16cebecdd232ffe32ce3f4fc29cf6b74216f30c95006587a23"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/party-numbering.ts",
+    "sha256": "8517e8bf065026192dc2c282dd641f122f2765b619f05200230fbcf14c1288fd"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/party-read-ports.ts",
+    "sha256": "68dacd0ec93b8676b413bc585924f1ac0e29b8eccd183eb25746daf56272e1b2"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/party-read-service.ts",
+    "sha256": "08e026d9d519cd497d1fe29a6d7b16212cba1184531386d78f9ca62e23ab72a6"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/payment-maintenance-authorization.ts",
+    "sha256": "094e6e6a0528a75ef7e0cee0d4c6f8d7a51d2baa0914fe234411fcedd75df605"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/payment-maintenance-ports.ts",
+    "sha256": "fca56fa4ada87bf0a7a67c8e8788080a0bfe2730664022671348fd9ea9ea70dd"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/payment-maintenance-service.ts",
+    "sha256": "470f5c0e83b6e84dd829320b4ac655f1379297b2797160a2346f523deb00d387"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/payment-maintenance-validation.ts",
+    "sha256": "2aa1c5d3d0f428c17e6c329e6deaf20ad1b106be5c5d073e1d5357f74477f6be"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/ports.ts",
+    "sha256": "75b5b743fe2f410cc1cd79714d0aee097672c96ce86ce9964ecbdc7b80cd7045"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-details-query-ports.ts",
+    "sha256": "834eda0edce2a579634e057959542acee34d08f2c074562627d9457370a8e599"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-details-query-service.ts",
+    "sha256": "76e69fd573ca9508f991e8f56cac1a36bbc6f22900daff03057ed9ba86e7b058"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-details-query-validation.ts",
+    "sha256": "43603e6b970e44987e06d4670cb88d4c6185ada65b564e35107c5f5813273889"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-maintenance-authorization.ts",
+    "sha256": "ed90d011d73fba1512c97f8badd82204b5c7caff8be9b4967053d5f8dd9d0523"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-maintenance-ports.ts",
+    "sha256": "26bd4c153c4df87ec897820fd5282df61fee92c5859c2070072895fe6d0f639e"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-maintenance-service.ts",
+    "sha256": "b20a0742164208c3f8a04a3fae6e8b90fae0212c8612f6db7e9dd12a9bbbe08f"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-maintenance-validation.ts",
+    "sha256": "374261e28235241167114c95e992032d6f2838b6661446edf46beb3c532c0585"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-management-query-ports.ts",
+    "sha256": "250f2559a695b283f2d898d1fd2c422f528d35a183765ebfbd5c7079d052f192"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-management-query-service.ts",
+    "sha256": "706835730494859e4b8e28a2df0279d2f98309dc8fe3774cf501c61549d73a11"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-management-query-validation.ts",
+    "sha256": "382f2a88c09d899d3b73752eb91417584bea3437a09df3cbde93759cbd34167d"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-query-ports.ts",
+    "sha256": "c7c86ef200c1824df4f4980f52b31ada2e67b8b577de2318275d50ec21fb03b4"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-query-service.ts",
+    "sha256": "50314aebb0ffc62f87f2fbf87d418f1adf18889379df45c8222c5d5c65aef94d"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/product-query-validation.ts",
+    "sha256": "c10241f7d6cd5263753c68f877e5a21cb3a0ee5b4e0987ba403bc66e4f802ef9"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/read-resource.ts",
+    "sha256": "b21bc5db71274ddf355b57902ee3d597b337b6259c49236c9430ef6d9e2e14ea"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/request-hash.ts",
+    "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/runtime-document-number.ts",
+    "sha256": "d7d3fda1580c5516a47dc8c225daca5c89dd3581a0fb3835fc100b5cafb82eae"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/sales-business-rules.ts",
+    "sha256": "925bb3d5a0da89f18e4c0535e5a7db0930ca8b4fb33caa14c245955d95b44b8f"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/sales-change-evidence.ts",
+    "sha256": "b0afa1915998281c17896ea4e038e6e8db1ec190ed4c5e22017d2c209c7448c5"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/sales-native-facts.ts",
+    "sha256": "675c80f71671471fa23947bb6fb73c437df8d8ea081f97307b1d6fb740cd025e"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/sales-payload-budget.ts",
+    "sha256": "e0a100cd17d442170d4421d7ba6c42f30cf71788afd4d22603a19ef5810a5ba1"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/sales-query-ports.ts",
+    "sha256": "d37ac3df050981d435c2c79d252f3f12abcfe336a3485a0fa9ac1f2eb7d1e635"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/sales-query-service.ts",
+    "sha256": "f3f44367c907f0078c6d319d9d68e82540188e0832dfaa55e5da984088aa5d39"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/sales-query-validation.ts",
+    "sha256": "d52bb5a49a9517d0e91c21141e1a109330fe61d70aff232a8c799257a50689ee"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/sales-reference-query-validation.ts",
+    "sha256": "6dd26acd7eca922518d4a866bf8f1e25c290777541bd0c13dacd175897b8f6a1"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/sales-service.ts",
+    "sha256": "b1565bccc82f10ba2b463bf577c654abc141ee314576d45e28c6607cc49c6615"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/settings-audit-ports.ts",
+    "sha256": "e7847cbcc343bc37dc7106ecd5b1c73fade5fac21a9e7b979e17d347eb4e897e"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/settings-audit-service.ts",
+    "sha256": "96b5f0595249a715488138100c476a566b2d358e1dc36d9a864c28277d5f6cec"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/settings-audit-validation.ts",
+    "sha256": "2267c23b4452293a3bb1c5482f434d1495e3b43bcce27d235e1138639b65e4d2"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/source-confirmed-current-form-authorization.ts",
+    "sha256": "448ae0ed855f91aab3b018801acae6170e755ee3780854cc13bc197f7950f26c"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/source-confirmed-document-number.ts",
+    "sha256": "7e34b86dad89f55708ad8b657d26cdac88d32b3ea39c3ea2b6a887b3c67dfc0a"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/staff-maintenance-authorization.ts",
+    "sha256": "faee59d88b3ae6ee8b1854580383893c040e30b8f2ef046f6211f7d10a317e1f"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/staff-maintenance-ports.ts",
+    "sha256": "23c5045ebd185aa43dc22e1bf47c72414616d613243d96b74f95a40888ec9fe2"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/staff-maintenance-service.ts",
+    "sha256": "3ccf01e92f613cabf35c2d25c0bdab8363b262c9d47415da637fbbf192e5fd1f"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/staff-maintenance-validation.ts",
+    "sha256": "1a22420f339f2196de698a20843cf44c93e43972e09c1e858f33ff8ec9a0e2c5"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/store-settings-read-ports.ts",
+    "sha256": "3f8e63ce3d2ae022a8446d2bd90fb1fc076173c1b8109fc4b58a1b48d0a6ffcf"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/store-settings-read-service.ts",
+    "sha256": "63a1c17d6328341424c3acf2a40b8ebadb6ca35dfec8acbbb77166d924524af9"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/store-settings-read-validation.ts",
+    "sha256": "54667587d05f8fbdb1fdd8d76cdd83d43570cdfa5a18427454fc0f9c7cad6018"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/transfer-payload-budget.ts",
+    "sha256": "d597165d85cd0d51759f22be9945573dcebd518f50a11fdbb4da771956226098"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/transfer-policy.ts",
+    "sha256": "690bd28632ac65e88d773a5c59045bd65e260e2f93127b092f92e608cf9c43a2"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/transfer-ports.ts",
+    "sha256": "bf73f4a4fac82f57a6e7e8085b80f91b9910216163333ec8174f1c52a2830bf3"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/transfer-query-ports.ts",
+    "sha256": "d30c87457efb95777684b90246e66c42567f0c081cec7d2ceb20fac6923ed2db"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/transfer-query-service.ts",
+    "sha256": "e9bf49507a5ac8dacf9ad07c278ab6d8e8970175cbefcf0e25acf686fe4a35e6"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/transfer-query-validation.ts",
+    "sha256": "fba61ebc471ca93b65200cf713ee32843b6783048dad2bb117c8d9c9dd538c2b"
+  },
+  {
+    "root": "before",
+    "path": "packages/application/src/transfer-service.ts",
+    "sha256": "a37b2638312635351a83dd4ffeb4b5bb15ac91f79ec5f5f1ba2962652762f642"
+  },
+  {
+    "root": "before",
+    "path": "packages/authentication/src/legacy-passwords.ts",
+    "sha256": "94bc8e056954cafa7e34e7717948f3b0b56959d052f60d3db7a5273b5409778b"
+  },
+  {
+    "root": "before",
+    "path": "packages/authentication/src/password-work-gate.ts",
+    "sha256": "e621b599676d134ff88d886c128f1f504d05beaff829354413827f507bdc67ae"
+  },
+  {
+    "root": "before",
+    "path": "packages/authentication/src/passwords.ts",
+    "sha256": "f570e5f696ae71df145edb202e18b41eae7798f9d862cb67be6a156b6bf2fafd"
+  },
+  {
+    "root": "before",
+    "path": "packages/authentication/src/ports.ts",
+    "sha256": "e3386820d1f16f8debd1544c209041eb6d53d063a1f77ec9bbfbe1697989c315"
+  },
+  {
+    "root": "before",
+    "path": "packages/authentication/src/service.ts",
+    "sha256": "8263373669c1df67322f6ba8ef53a7d621168df19df220662d935a58710e3557"
+  },
+  {
+    "root": "before",
+    "path": "packages/domain/src/catalog.ts",
+    "sha256": "0771d67dd7374b027c02eaabe8366e793c897f8b6ac95093d74f37d64b65e000"
+  },
+  {
+    "root": "before",
+    "path": "packages/domain/src/documents.ts",
+    "sha256": "15c905972158f1db66055673cfe67ca17b0807f9d65df5ba11fab3ad370df51f"
+  },
+  {
+    "root": "before",
+    "path": "packages/domain/src/errors.ts",
+    "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+  },
+  {
+    "root": "before",
+    "path": "packages/domain/src/inventory.ts",
+    "sha256": "e3872082e0173600f90a48b7571e84860041504e3e49760cd349c5ad7d854f38"
+  },
+  {
+    "root": "before",
+    "path": "packages/domain/src/sales-money.ts",
+    "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30"
+  },
+  {
+    "root": "before",
+    "path": "packages/domain/src/values.ts",
+    "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+  },
+  {
+    "root": "before",
+    "path": "scripts/release/prepare-runtime26-v6.mjs",
+    "sha256": "8c3ef5b3dda046e83c6c9995eb6a5a588561fa07e13a4a12fb188f2c30e613a1"
+  },
+  {
+    "root": "before",
+    "path": "scripts/release/prepare-runtime26-v7.mjs",
+    "sha256": "287344e333ef5cda3b134d460d01df0662fdde8e0e17d1199839c598c8895588"
+  },
+  {
+    "root": "before",
+    "path": "scripts/release/prepare-runtime26-v8.mjs",
+    "sha256": "6cd6b1f0e8ce651788aba4ade5121fb856cf9d19583faa03838fea55c75b3347"
+  }
+]

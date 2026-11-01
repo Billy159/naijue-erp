@@ -16,14 +16,16 @@ import {SharedSyntheticInventory} from '../../../../tests/support/synthetic-stor
 import {minorAmount} from '../../../../packages/domain/src/values.ts';
 import {requireDomain} from '../../../../packages/domain/src/errors.ts';
 import {createSalesChainFixture} from './sales-chain-fixture.mjs';
+import {createHistoryChainFixture} from './history-chain-fixture.mjs';
 import {createTransferChainFixture} from './transfer-chain-fixture.mjs';
 import {createPaymentMaintenanceFixture} from './payment-maintenance-fixture.mjs';
 import {createStaffEditFixture} from './staff-edit-fixture.mjs';
 import {createReplicaPreviewTransport} from '../frontend/runtime-preview-transport.ts';
 import {qaPrincipal,qaProducts,qaSkus,qaGroups,qaSalesReferences,qaTransferWarehouses,qaHalls,qaCurrentProducts,qaReferenceRead,qaDictionaryGroups} from '../frontend/qa-reference-fixtures.mts';
 export const UNIFIED_ORIGIN='https://synthetic-management.invalid';
-export async function createUnifiedServiceFixture(){
- let enabled=true,inventoryAllowed=true,closed=false,product,sales,transfer,payment,staff;const owned=[],inventory=new SharedSyntheticInventory(),base=createReplicaPreviewTransport(),organizationRead=createSettingsPreviewTransport(QA_REFERENCE_PROFILE);
+export async function createUnifiedServiceFixture(options={}){
+ requireDomain(Object.keys(options).every(key=>key==='syntheticHistory')&&(!Object.hasOwn(options,'syntheticHistory')||typeof options.syntheticHistory==='boolean'),'FORBIDDEN','Explicit test-only unified profile required');
+ let enabled=true,inventoryAllowed=true,closed=false,product,sales,transfer,payment,staff,history;const owned=[],inventory=new SharedSyntheticInventory(),base=createReplicaPreviewTransport(),organizationRead=createSettingsPreviewTransport(QA_REFERENCE_PROFILE);
  const active=(actor,signal)=>requireDomain(enabled&&!closed&&!signal?.aborted&&actor.accountId===qaPrincipal.accountId&&actor.hallId===null,'FORBIDDEN','Current unified synthetic identity required');
  const productsState=()=>product.snapshot().state;
  const dynamicSkus=()=>{const state=productsState();return [...state.products.values()].filter(p=>p.product.enabled&&p.product.deletedAt===null).flatMap(({product:p,skus,barcodes})=>skus.filter(s=>s.enabled).map(s=>({id:s.id,skuCode:s.skuCode,enabled:s.enabled,productId:p.id,productCode:p.productCode,productName:p.name,colorId:s.colorId,colorName:state.colors.get(s.colorId).name,fitId:s.fitId,fitName:state.fits.get(s.fitId).name,sizeId:s.sizeId,sizeName:product.group.sizes.find(z=>z.id===s.sizeId).name,sizeGroupId:p.sizeGroupId,barcodeAvailability:'UNAVAILABLE',barcode:barcodes.find(b=>b.skuId===s.id&&b.enabled&&b.kind==='MAIN')?.barcode??null,barcodeId:barcodes.find(b=>b.skuId===s.id&&b.enabled&&b.kind==='MAIN')?.id??null})));};
@@ -79,12 +81,17 @@ export async function createUnifiedServiceFixture(){
   payment=await createPaymentMaintenanceFixture();owned.push(payment);staff=await createStaffEditFixture();owned.push(staff);
   product=await createProductEntryServiceHost({syntheticOnly:true,productWrite:true,colorWrite:true,categoryWrite:true,fitWrite:true,mediaStage:true,syntheticStock:false,unifiedCandidate:true},{currentFormReader:reader,stockReader,sizeGroups:()=>[...qaDictionaryGroups(),structuredClone(product.group)]});owned.push(product);assert.equal(product.http.origin,UNIFIED_ORIGIN);assert.equal(product.actor.accountId,qaPrincipal.accountId);
   sales=await createSalesChainFixture({sharedInventory:inventory,references:refs});owned.push(sales);transfer=await createTransferChainFixture({sharedInventory:inventory,references:refs,responsibleStaffValidation:true});owned.push(transfer);
+  if(options.syntheticHistory===true){
+   history=await createHistoryChainFixture({syntheticOnly:true,origin:UNIFIED_ORIGIN,actor:product.actor,sourceSkuId:qaSkus[0].id,warehouses:qaTransferWarehouses,references:refs,assertAllowed(input,signal){active(input,signal);const person=staffRows().find(s=>s.account?.id===input.accountId);requireDomain(person?.account.loginEnabled&&person.employmentStatus==='在职'&&['ADMIN','WAREHOUSE'].includes(person.role),'FORBIDDEN','Explicit unified synthetic HISTORY identity required');}});owned.push(history);
+  }
   const auditApp=Fastify({logger:false});owned.push(auditApp);auditApp.register(createSettingsAuditHttpPlugin({authenticate:async()=>product.actor,reader:auditReader}));await auditApp.ready();
   const requestImpl=async r=>{const url=new URL(r.url),method=r.method??'GET';requireDomain(url.origin===UNIFIED_ORIGIN&&(!url.search||method==='GET'&&/^\/api\/(?:customers|suppliers)(?:\/candidates|\/[0-9a-f-]{36})?$/.test(url.pathname))&&!url.hash&&!url.username&&!url.password,'FORBIDDEN','Exact unified origin required');active(product.actor,new AbortController().signal);if(Object.hasOwn(r,'binaryBase64')&&(Object.hasOwn(r,'body')||typeof r.binaryBase64!=='string'||Buffer.from(r.binaryBase64,'base64').toString('base64')!==r.binaryBase64))return {status:400,headers:{'content-type':'application/json'},body:JSON.stringify({error:{code:'INVALID_SYNTHETIC_BINARY'}})};
    if(method==='POST'&&url.pathname==='/api/settings/audit/query'){const res=await auditApp.inject({method,url:url.pathname.slice(4),headers:r.headers,payload:r.body});return {status:res.statusCode,headers:res.headers,body:res.body};}
    if(method==='POST'&&['/api/organization/halls/query','/api/organization/halls/detail/query','/api/organization/warehouses/query','/api/organization/warehouses/detail/query'].includes(url.pathname)){const res=await organizationRead.request(url,{method,headers:r.headers??{},body:r.body});return {status:res.status,headers:Object.fromEntries(res.headers),body:await res.text()};}
    if(method==='POST'&&url.pathname==='/api/transfers/warehouses/query'){const res=await base.http.fetch(r.url,{method,headers:r.headers??{},body:r.body,credentials:'same-origin'});return {status:res.status,headers:Object.fromEntries(res.headers),body:await res.text()};}
    if(method==='POST'&&['/api/products/basics/query','/api/products/specifications/query','/api/products/images/query','/api/products/image/query','/api/products/prices/query','/api/products/barcodes/query'].includes(url.pathname)&&qaProducts.some(p=>p.id===JSON.parse(r.body??'{}').productId)){const res=await base.http.fetch(r.url,{method,headers:r.headers??{},body:r.body,credentials:'same-origin'});return {status:res.status,headers:Object.fromEntries(res.headers),body:await res.text()};}
+   if(history?.canHandle(url.pathname,method))return history.request(r);
+   if(history&&method==='POST'&&url.pathname==='/api/transfers/query')return history.mergeNormalList(r,input=>transfer.request(input));
    if(payment.canHandle(url.pathname,method))return payment.request(r);if(staff.canHandle(url.pathname,method))return staff.request(r);
    if(url.pathname.startsWith('/api/current-form/')){const res=await product.http.fetch(r.url,{method,headers:r.headers??{},body:r.body,credentials:'same-origin'});return {status:res.status,headers:Object.fromEntries(res.headers),body:await res.text()};}
    if(url.pathname.startsWith('/api/sales/')&&sales.canHandle(url.pathname,method))return sales.request(r);
@@ -96,6 +103,6 @@ export async function createUnifiedServiceFixture(){
   };
   let requestTail=Promise.resolve();
   const request=input=>{const r=structuredClone(input),run=async()=>{try{return await requestImpl(r);}catch(e){if(e.code==='FORBIDDEN')return {status:403,headers:{'content-type':'application/json'},body:JSON.stringify({error:{code:'FORBIDDEN'}})};throw e;}};const result=requestTail.then(run);requestTail=result.then(()=>{},()=>{});return result;};
-  return {request,product,sales,transfer,payment,staff,inventory,origin:UNIFIED_ORIGIN,revokeInventory(){inventoryAllowed=false;},revoke(){enabled=false;product.setIdentity({enabled:false});sales.revoke();transfer.revoke();payment.revoke();staff.revoke();},async close(){if(closed)return;await requestTail;closed=true;const results=await Promise.allSettled([...owned].reverse().map(x=>x.close()));const errors=results.filter(r=>r.status==='rejected').map(r=>r.reason);if(errors.length)throw new AggregateError(errors,'Unified synthetic owners failed to close');}};
+  return {request,product,sales,transfer,payment,staff,history,inventory,origin:UNIFIED_ORIGIN,revokeInventory(){inventoryAllowed=false;},revoke(){enabled=false;product.setIdentity({enabled:false});sales.revoke();transfer.revoke();payment.revoke();staff.revoke();history?.revoke();},async close(){if(closed)return;await requestTail;closed=true;const results=await Promise.allSettled([...owned].reverse().map(x=>x.close()));const errors=results.filter(r=>r.status==='rejected').map(r=>r.reason);if(errors.length)throw new AggregateError(errors,'Unified synthetic owners failed to close');}};
  }catch(e){await Promise.allSettled(owned.reverse().map(x=>x.close()));throw e;}
 }

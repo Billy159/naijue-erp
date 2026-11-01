@@ -1,7 +1,8 @@
 import type { IncomingHttpHeaders } from "node:http";
 import type { FastifyPluginAsync } from "fastify";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
-import type { CurrentFormReader } from "../../../packages/application/src/current-form-ports.ts";
+import { CURRENT_FORM_SAVED_EDIT_SKU_WIRE_FIELDS } from "../../../packages/application/src/current-form-ports.ts";
+import type { CurrentFormReader, CurrentFormSavedEditSkuBatch, CurrentFormSavedEditSkuBatchWireV2, CurrentFormSavedEditSkuTupleV2, CurrentFormSavedEditProductTupleV2 } from "../../../packages/application/src/current-form-ports.ts";
 import { checkedCurrentFormActor, activeCurrentFormRead, parseCurrentSalesReferenceQuery,
   parseCurrentTransferWarehouseQuery, parseCurrentFormProductQuery, parseCurrentFormProductSkuQuery,
   parseCurrentFormSkuBatchQuery, parseCurrentFormBarcodeQuery } from "../../../packages/application/src/current-form-validation.ts";
@@ -25,6 +26,28 @@ export interface CurrentFormHttpOptions {
    * This HTTP adapter provides no default grant, DB pool, command or host registration. */
   readonly reader: CurrentFormReader;
 }
+/** Exact transport projection of an already validated domain revision1. No facts
+ * are dropped/inferred; malformed provider keys are not hidden by tuple packing. */
+export function encodeCurrentFormSavedEditSkuBatchWireV2(value: CurrentFormSavedEditSkuBatch): CurrentFormSavedEditSkuBatchWireV2 {
+  const keys = (input: unknown, expected: readonly string[]): void => {
+    if (!input || typeof input !== "object" || Array.isArray(input)
+      || Reflect.ownKeys(input).length !== expected.length || expected.some(key => !Object.hasOwn(input, key)))
+      throw new TypeError("Invalid saved-edit domain response");
+  };
+  keys(value, ["version", "skus", "products"]);
+  if (value.version !== 1 || !Array.isArray(value.skus) || !Array.isArray(value.products)) throw new TypeError("Invalid saved-edit domain revision");
+  const skus = value.skus.map((row): CurrentFormSavedEditSkuTupleV2 => {
+    keys(row, CURRENT_FORM_SAVED_EDIT_SKU_WIRE_FIELDS);
+    return Object.freeze(CURRENT_FORM_SAVED_EDIT_SKU_WIRE_FIELDS.map(key => row[key])) as unknown as CurrentFormSavedEditSkuTupleV2;
+  });
+  const products = value.products.map((row): CurrentFormSavedEditProductTupleV2 => {
+    if (row.state === "ELIGIBLE") { keys(row, ["productId", "state", "sizeGroupId"]); return Object.freeze([row.productId, row.state, row.sizeGroupId] as const); }
+    keys(row, ["productId", "state"]);
+    if (row.state !== "UNAVAILABLE") throw new TypeError("Invalid saved-edit product state");
+    return Object.freeze([row.productId, row.state] as const);
+  });
+  return Object.freeze({ version: 2, skus: Object.freeze(skus), products: Object.freeze(products) });
+}
 /** Read-only POST routes accept structured bounded filters, not commands. No server/listener or pool is created. */
 export function createCurrentFormHttpPlugin(options: CurrentFormHttpOptions): FastifyPluginAsync {
   if (typeof options?.authenticate !== "function") throw new TypeError("Current form HTTP requires explicit trusted authentication");
@@ -36,13 +59,18 @@ export function createCurrentFormHttpPlugin(options: CurrentFormHttpOptions): Fa
   // Capture bound methods before registration so later caller mutation cannot replace a provider.
   const sales = reader.readSalesReferences.bind(reader), warehouses = reader.readTransferWarehouses.bind(reader),
     products = reader.readProducts.bind(reader), skus = reader.readProductSkus.bind(reader), batch = reader.readSkuBatch.bind(reader),
-    barcode = reader.readBarcode?.bind(reader);
+    barcode = reader.readBarcode?.bind(reader), savedEditBatch = reader.readSavedEditSkuBatch?.bind(reader);
   const routes: readonly (readonly [string, (actor: ActorContext, body: unknown, signal: AbortSignal) => Promise<unknown>])[] = [
     ["/current-form/sales-references/query", (a, b, s) => sales(a, parseCurrentSalesReferenceQuery(b), s)],
     ["/current-form/transfer-warehouses/query", (a, b, s) => warehouses(a, parseCurrentTransferWarehouseQuery(b), s)],
     ["/current-form/products/query", (a, b, s) => products(a, parseCurrentFormProductQuery(b), s)],
     ["/current-form/product-skus/query", (a, b, s) => skus(a, parseCurrentFormProductSkuQuery(b), s)],
     ["/current-form/sku-batch/query", (a, b, s) => batch(a, parseCurrentFormSkuBatchQuery(b), s)],
+    ["/current-form/saved-edit-sku-batch-v2/query", async (a, b, s) => {
+      const query = parseCurrentFormSkuBatchQuery(b);
+      if (!savedEditBatch) throw new DomainError("CURRENT_FORM_READ_UNAVAILABLE", "Explicit saved-edit metadata reader unavailable");
+      return encodeCurrentFormSavedEditSkuBatchWireV2(await savedEditBatch(a, query, s));
+    }],
     ["/current-form/barcode/query", (a, b, s) => {
       const query = parseCurrentFormBarcodeQuery(b);
       if (!barcode) throw new DomainError("CURRENT_FORM_READ_UNAVAILABLE", "Explicit current barcode reader unavailable");

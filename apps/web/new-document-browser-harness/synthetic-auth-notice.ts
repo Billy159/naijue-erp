@@ -14,16 +14,32 @@ export function installSyntheticAuthNotice(root: HTMLElement): () => void {
     }
     form?.querySelectorAll<HTMLInputElement>('input').forEach(input => { if (!input.disabled) input.disabled = true; });
     const login = form?.querySelector<HTMLButtonElement>('button[type="submit"]'); if (login && !login.disabled) login.disabled = true;
-    root.querySelectorAll<HTMLButtonElement>('.auth-session button').forEach(button => {
+    const accountItems = root.querySelector('.auth-account-trigger[aria-expanded="true"]')
+      ? Array.from(root.ownerDocument.querySelectorAll<HTMLElement>('.auth-account-options [role=menuitem]')) : [];
+    [...Array.from(root.querySelectorAll<HTMLElement>('.auth-session button')), ...accountItems].forEach(button => {
       if (button.textContent === '修改密码' || button.dataset.syntheticPassword === 'true') {
         button.dataset.syntheticPassword = 'true';
         if (button.textContent !== '无真实密码（合成验收）') button.textContent = '无真实密码（合成验收）';
-        if (!button.disabled) button.disabled = true;
+        if (button instanceof HTMLButtonElement && !button.disabled) button.disabled = true;
+        if (button.getAttribute('role') === 'menuitem') {
+          if (button.getAttribute('aria-disabled') !== 'true') button.setAttribute('aria-disabled', 'true');
+          button.tabIndex = -1; button.classList.add('arco-menu-disabled');
+        }
         button.title = '合成验收没有真实账号或密码；正式认证功能未改动。';
       }
     });
   };
-  const observer = new MutationObserver(update);
-  observer.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled'] }); update();
-  return () => observer.disconnect();
+  // The real account menu uses an Arco portal outside root. Only the exact
+  // synthetic-marked password item is inert; every other account action and
+  // all production AuthenticationAccountMenu code retain their native behavior.
+  const blockSyntheticPassword = (event: Event) => {
+    const target = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-synthetic-password="true"]') : null;
+    if (!target || !(root.contains(target) || root.querySelector('.auth-account-trigger[aria-expanded="true"]') && target.closest('.auth-account-options'))) return;
+    if (event instanceof KeyboardEvent && event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault(); event.stopImmediatePropagation();
+  };
+  const body = root.ownerDocument.body, observer = new MutationObserver(update);
+  body.addEventListener('click', blockSyntheticPassword, true); body.addEventListener('keydown', blockSyntheticPassword, true);
+  observer.observe(body, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled', 'aria-disabled'] }); update();
+  return () => { observer.disconnect(); body.removeEventListener('click', blockSyntheticPassword, true); body.removeEventListener('keydown', blockSyntheticPassword, true); };
 }

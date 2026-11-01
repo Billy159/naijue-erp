@@ -4,7 +4,7 @@ import { readCurrentRecentAccount } from "./current-account-recommendations.ts";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import type { CurrentFormBarcodeQuery, CurrentFormBarcodeResult, CurrentFormAuthorization, CurrentFormContext, CurrentFormIdentity, CurrentFormIntent, CurrentFormPage,
   CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReader, CurrentFormReadGrant,
-  CurrentFormSku, CurrentFormSkuBatchQuery, CurrentSalesReferenceItem, CurrentSalesReferenceQuery,
+  CurrentFormSku, CurrentFormSkuBatchQuery, CurrentFormSavedEditSkuBatch, CurrentFormSavedEditProduct, CurrentSalesReferenceItem, CurrentSalesReferenceQuery,
   CurrentTransferWarehouse, CurrentTransferWarehouseQuery } from "../../../packages/application/src/current-form-ports.ts";
 import { activeCurrentFormRead, checkedCurrentFormActor, checkedCurrentFormGrant, parseCurrentFormProductQuery,
   parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery, parseCurrentSalesReferenceQuery,
@@ -33,6 +33,11 @@ function price(value: unknown): string | null {
   requireDomain(value === null || (typeof value === "string" && /^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value)),
     "INVALID_DATABASE_VALUE", "Expected nullable exact nonnegative decimal(18,2) product price");
   return value;
+}
+function product(row: Record<string, unknown>): CurrentFormProduct {
+  requireDomain(row.enabled === true, "INVALID_DATABASE_VALUE", "Ineligible current product");
+  return Object.freeze({ id: id("product", row.id), code: text(row.product_code), name: text(row.name), retailPrice: price(row.retail_price), minimumPriceAvailability: "UNAVAILABLE", sizeGroupId: id("sizeGroup", row.size_group_id),
+    category: Object.freeze({ id: id("category", row.category_id), label: nullableText(row.category_name) }) });
 }
 function count(rows: readonly Record<string, unknown>[]): bigint {
   requireDomain(rows.length === 1 && typeof rows[0]!.total === "string" && /^(?:0|[1-9]\d*)$/.test(rows[0]!.total),
@@ -305,11 +310,7 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
         NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
           WHERE ib.status<>'IMPORTED' AND src.entity_type='PRODUCT' AND src.field_provenance->>'native_product_id'=p.id::text) AND
         (strpos(lower(p.product_code), lower($1::text)) > 0 OR strpos(lower(p.name), lower($1::text)) > 0${codes})`,
-        "p.id, p.product_code, p.name, p.retail_price::text, p.enabled, p.size_group_id, p.category_id, pc.name AS category_name", `p.product_code COLLATE "C", p.id`, [parameters.search], row => {
-          requireDomain(row.enabled === true, "INVALID_DATABASE_VALUE", "Ineligible current product");
-          return Object.freeze({ id: id("product", row.id), code: text(row.product_code), name: text(row.name), retailPrice: price(row.retail_price), minimumPriceAvailability: "UNAVAILABLE", sizeGroupId: id("sizeGroup", row.size_group_id),
-            category: Object.freeze({ id: id("category", row.category_id), label: nullableText(row.category_name) }) });
-        });
+        "p.id, p.product_code, p.name, p.retail_price::text, p.enabled, p.size_group_id, p.category_id, pc.name AS category_name", `p.product_code COLLATE "C", p.id`, [parameters.search], product);
     });
   }
   readProductSkus(actor: ActorContext, input: CurrentFormProductSkuQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentFormSku>> {
@@ -325,13 +326,48 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
     const parameters = parseCurrentFormSkuBatchQuery(input);
     return this.snapshot(actor, { kind: "sku-batch", parameters }, signal, async (query, identity, grant) => {
       await this.formContext(query, identity, grant, parameters.context);
-      const rows = (await query(`/* current-form:sku-batch */ SELECT ${SKU_COLUMNS} ${SKU_JOINS}
+      return this.skuBatchFacts(query, parameters);
+    });
+  }
+  private async skuBatchFacts(query: Query, parameters: CurrentFormSkuBatchQuery): Promise<readonly CurrentFormSku[]> {
+    const rows = (await query(`/* current-form:sku-batch */ SELECT ${SKU_COLUMNS} ${SKU_JOINS}
         WHERE ${SKU_ENABLED} AND s.id = ANY($1::uuid[]) ORDER BY s.id LIMIT $2`, [[...parameters.skuIds].sort(), parameters.skuIds.length + 1])).rows;
-      // Deliberately do not disclose which requested SKU was disabled/missing.
-      requireDomain(rows.length === parameters.skuIds.length, "SKU_UNAVAILABLE", "Requested current SKU facts are unavailable");
-      const items = rows.map(sku); const byId = new Map(items.map(row => [row.id, row]));
-      requireDomain(byId.size === items.length && items.every(row => parameters.skuIds.includes(row.id)), "INVALID_DATABASE_VALUE", "Unexpected native SKU batch identity");
-      return Object.freeze(parameters.skuIds.map(id => byId.get(id)!));
+    // Deliberately do not disclose which requested SKU was disabled/missing.
+    requireDomain(rows.length === parameters.skuIds.length, "SKU_UNAVAILABLE", "Requested current SKU facts are unavailable");
+    const items = rows.map(sku); const byId = new Map(items.map(row => [row.id, row]));
+    requireDomain(byId.size === items.length && items.every(row => parameters.skuIds.includes(row.id)), "INVALID_DATABASE_VALUE", "Unexpected native SKU batch identity");
+    return Object.freeze(parameters.skuIds.map(id => byId.get(id)!));
+  }
+  readSavedEditSkuBatch(actor: ActorContext, input: CurrentFormSkuBatchQuery, signal: AbortSignal): Promise<CurrentFormSavedEditSkuBatch> {
+    const parameters = parseCurrentFormSkuBatchQuery(input);
+    // This intent must be explicitly admitted by the trusted provider. A legacy
+    // SKU grant is not silently reused as product metadata permission.
+    return this.snapshot(actor, { kind: "saved-edit-sku-batch", parameters }, signal, async (query, identity, grant) => {
+      await this.formContext(query, identity, grant, parameters.context);
+      const skus = await this.skuBatchFacts(query, parameters);
+      const productIds = [...new Set(skus.map(row => row.productId))];
+      // Exact targets only: unlike old code search, unrelated colliding products
+      // are not decoded. Target field validation and source admission stay intact.
+      const rows = (await query(`/* current-form:saved-edit-products */ SELECT p.id, p.product_code, p.name,
+        p.retail_price::text, p.enabled, p.size_group_id, p.category_id, pc.name AS category_name
+        FROM naijue_erp.product p LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id
+        WHERE p.id = ANY($1::uuid[]) AND p.enabled AND
+        NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+          WHERE ib.status<>'IMPORTED' AND src.entity_type='PRODUCT' AND src.field_provenance->>'native_product_id'=p.id::text)
+        ORDER BY p.id LIMIT $2`, [[...productIds].sort(), productIds.length + 1])).rows;
+      const admitted = new Map<EntityId<"product">, CurrentFormProduct>();
+      for (const row of rows) {
+        const item = product(row);
+        requireDomain(productIds.includes(item.id) && !admitted.has(item.id), "INVALID_DATABASE_VALUE", "Unexpected targeted current product identity");
+        requireDomain(skus.filter(sku => sku.productId === item.id).every(sku => sku.sizeGroupId === item.sizeGroupId && sku.productCode === item.code && sku.productName === item.name),
+          "INVALID_DATABASE_VALUE", "Targeted current product differs from actual SKU relation");
+        admitted.set(item.id, item);
+      }
+      const products = productIds.map((productId): CurrentFormSavedEditProduct => {
+        const item = admitted.get(productId);
+        return item ? Object.freeze({ productId, state: "ELIGIBLE", sizeGroupId: item.sizeGroupId! }) : Object.freeze({ productId, state: "UNAVAILABLE" });
+      });
+      return Object.freeze({ version: 1, skus, products: Object.freeze(products) });
     });
   }
   readBarcode(actor: ActorContext, input: CurrentFormBarcodeQuery, signal: AbortSignal): Promise<CurrentFormBarcodeResult> {

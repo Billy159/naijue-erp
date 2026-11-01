@@ -57,7 +57,7 @@ try {
   assert.throws(() => mountDevelopmentHost({ ...environment, configuration, assets }));
   await click(button('核验登录状态')); assert.equal(calls.length, 1); assert.equal(document.querySelectorAll('link').length, 0);
   assert.equal(root.querySelectorAll('.sidebar a').length, 3); assert.ok(root.querySelector('.demo-frame'));
-  for (const label of ['新增调拨单', '新增销货单', '客户', '供应商', '商品信息']) assert.ok([...root.querySelectorAll('.sidebar button:disabled')].some(element => element.textContent === label));
+  for (const label of ['新增调拨单', '新增销货单', '客户', '供应商', '商品信息']) assert.ok([...root.querySelectorAll('.sidebar [role=menuitem][aria-disabled=true]')].some(element => element.textContent === label));
   console.log('PASS host DOM 1: exact HTTPS origin and one-root ownership fail closed; real auth/frame mounts without account defaults, business reads, route CSS or auto-navigation; missing/new/write capabilities remain disabled.');
 
   await click(navigation('库存状况表')); assert.ok(link('inventory')); assert.equal(calls.length, 1);
@@ -67,19 +67,19 @@ try {
   await click(button('关闭当前页')); assert.equal(owner.controller.getSnapshot().phase, 'home');
   await click(navigation('销货单列表')); assert.ok(link('sales')); assert.equal(link('sales-detail'), undefined); await style('sales', 'error');
   assert.equal(owner.controller.getSnapshot().phase, 'error'); assert.match(root.textContent, /页面未能加载/); await click(button('重试页面')); await style('sales');
-  await until(() => root.querySelector('.sales-workbench'), 'Actual sales page'); assert.equal(calls.length, 2); assert.equal(link('sales-detail'), undefined);
-  await submit('销货筛选'); assert.equal(calls.length, 3); assert.doesNotMatch(root.textContent, /SYNTHETIC PRIVATE ERROR MUST NOT LEAK/);
-  console.log('PASS host DOM 2: inventory cancellation/late CSS and sales CSS failure/retry use real lazy routes; queries require explicit submit and 503 is not fabricated empty success.');
+  await until(() => root.querySelector('.sales-workbench'), 'Actual sales page'); assert.equal(calls.length, 3); assert.equal(calls.at(-1).url, 'https://synthetic.test/api/sales/query'); assert.equal(calls.at(-1).body.page, 1); assert.equal(calls.at(-1).body.pageSize, 20); assert.equal(link('sales-detail'), undefined);
+  await submit('销货筛选'); assert.equal(calls.length, 4); assert.doesNotMatch(root.textContent, /SYNTHETIC PRIVATE ERROR MUST NOT LEAK/);
+  console.log('PASS host DOM 2: inventory cancellation/late CSS and sales CSS failure/retry use real lazy routes; inventory requires explicit submit; sales makes one bounded initial read and explicit refresh and 503 is not fabricated empty success.');
 
-  await click(navigation('调拨单列表')); assert.ok(link('transfers')); assert.equal(link('transfer-detail'), undefined); assert.equal(link('transfer-product'), undefined); assert.equal(calls.length, 3);
-  await style('transfers'); await until(() => root.querySelector('.transfer-view'), 'One actual bounded transfer first page'); assert.equal(calls.length, 4); assert.equal(calls.at(-1).body.pageSize, 20);
-  await click(navigation('调拨单列表')); assert.equal(calls.length, 4);
-  await click(root.querySelector('.transfer-view')); assert.ok(link('transfer-detail')); assert.equal(calls.length, 4); await style('transfer-detail');
-  await until(() => root.querySelector('.transfer-editor'), 'Actual native transfer detail'); assert.equal(calls.length, 5); assert.equal(link('transfer-product'), undefined);
-  await click(root.querySelector('.transfer-editor .mx-actions button')); await until(() => link('transfer-product'), 'Shared product action CSS'); assert.equal(calls.length, 5);
-  await style('transfer-product'); await until(() => root.textContent.includes('SYNTHETIC SHARED PRODUCT'), 'Actual lazy product reader/drawer'); assert.equal(calls.length, 6);
+  await click(navigation('调拨单列表')); assert.ok(link('transfers')); assert.equal(link('transfer-detail'), undefined); assert.equal(link('transfer-product'), undefined); assert.equal(calls.length, 4);
+  await style('transfers'); await until(() => root.querySelector('.transfer-view'), 'One actual bounded transfer first page'); assert.equal(calls.length, 5); assert.equal(calls.at(-1).body.pageSize, 20);
+  await click(navigation('调拨单列表')); assert.equal(calls.length, 5);
+  await click(root.querySelector('.transfer-view')); assert.ok(link('transfer-detail')); assert.equal(calls.length, 5); await style('transfer-detail');
+  await until(() => root.querySelector('.transfer-editor'), 'Actual native transfer detail'); assert.equal(calls.length, 6); assert.equal(link('transfer-product'), undefined);
+  await click(root.querySelector('.transfer-editor .mx-actions button')); await until(() => link('transfer-product'), 'Shared product action CSS'); assert.equal(calls.length, 6);
+  await style('transfer-product'); await until(() => root.textContent.includes('SYNTHETIC SHARED PRODUCT'), 'Actual lazy product reader/drawer'); assert.equal(calls.length, 7);
   assert.equal([...document.querySelectorAll('link')].some(element => /chunks\/product-drawer\.css$/.test(element.href)), false);
-  await click(root.querySelector('[aria-label="关闭商品资料"]')); await click(button('返回列表')); assert.equal(calls.length, 6);
+  await click(root.querySelector('[aria-label="关闭商品资料"]')); await click(button('返回列表')); assert.equal(calls.length, 7);
   console.log('PASS host DOM 3: transfer navigation makes one bounded native query; detail and reused product drawer wait separate action CSS/code and real fixed HTTP adapters, without relative fallback CSS or extra list query.');
 
   await click(button('关闭当前页')); transferMode = 'hold'; await click(navigation('调拨单列表')); await until(() => held.length === 1, 'Held real-adapter transfer query');
@@ -108,12 +108,12 @@ try {
   data.remove(); assert.throws(() => startDevelopmentHost(environment));
   console.log('PASS host DOM 5: explicit bootstrap session verification is exactly once per owner; false routes have no target; pagehide discards stale identity/read state and bfcache restore recreates only the configured unselected host; invalid payload never starts.');
 
-  const directoryCalls=[], warehouse={kind:'warehouses',id:uuid(7100),name:'SYNTHETIC HOST WAREHOUSE',enabled:true,version:1,createdAt:null,updatedAt:null,stockFacts:null,hall:{id:uuid(6100),name:null}};
+  const directoryCalls=[], warehouse={kind:'WAREHOUSE',id:uuid(7100),name:'SYNTHETIC HOST WAREHOUSE',enabled:true,version:1,createdAt:null,updatedAt:null,hall:{id:uuid(6100),name:'SYNTHETIC HOST HALL',enabled:true}};
   const directoryFetch=async(url,init)=>{directoryCalls.push({url,init});assert.equal(init.credentials,'same-origin');
     if(url==='https://synthetic.test/api/auth/session')return json({principal});
     assert.equal(init.method,'POST');
-    if(url==='https://synthetic.test/api/store-settings-read/warehouses/query')return json({page:1,pageSize:20,total:1,items:[warehouse]});
-    if(url==='https://synthetic.test/api/store-settings-read/warehouses/detail/query')return json({item:warehouse});
+    if(url==='https://synthetic.test/api/organization/warehouses/query')return json({kind:'WAREHOUSE',page:1,pageSize:20,total:1,items:[warehouse]});
+    if(url==='https://synthetic.test/api/organization/warehouses/detail/query')return json(warehouse);
     throw new Error('Real-host adapter must not substitute a transaction candidate or synthetic fallback');
   };
   const directoryConfiguration={...configuration,assets:{basePath:'/assets/'},routes:{inventory:false,sales:false,transfers:false,storeSettings:{allowedTabs:['warehouses'],initialTab:'warehouses',allowHallDirectoryRead:false}}};
@@ -122,11 +122,18 @@ try {
   await act(async()=>{owner=mountDevelopmentHost({...environment,fetch:directoryFetch,configuration:directoryConfiguration,assets:directoryAssets});});await settle();assert.equal(directoryCalls.length,0);
   await click(button('核验登录状态'));assert.equal(directoryCalls.length,1);assert.deepEqual([...owner.controller.routes],['store-settings']);
   await click(navigation('营业厅与仓库'));assert.equal(link('store-settings').href,'https://synthetic.test/assets/store-settings.css');assert.equal(directoryCalls.length,1,'Route read waits for explicit CSS');
-  await style('store-settings');await until(()=>root.querySelector('button[aria-label^="查看仓库："]'),'Real host store reader');assert.equal(directoryCalls.length,2);
-  assert.ok(button('营业厅').getAttribute('aria-disabled')==='true','Unconfigured tab remains disabled');assert.ok(root.querySelector('[aria-label="所属营业厅"]').classList.contains('arco-select-disabled'),'No directory intention never grants hall-directory reads');
-  await click(root.querySelector('button[aria-label^="查看仓库："]'));await until(()=>root.querySelector('.erp-store-settings-modal [aria-label="名称"]'),'Real host readonly Arco detail');assert.equal(directoryCalls.length,3);assert.equal(root.querySelector('.erp-store-settings-modal [aria-label="所属营业厅"]').value,'名称未提供');assert.equal(root.querySelectorAll('dialog').length,0);
-  await click(root.querySelector('[aria-label="关闭查看仓库"]'));await act(async()=>owner.dispose());assert.equal(root.childElementCount,0);
-  console.log('PASS host DOM 6: optional warehouse-only configuration, fixed /api exact read paths and /assets CSS, explicit CSS prerequisite, absent directory intent stays disabled, shared Arco detail and clean disposal; no injected synthetic fallback.');
+  await style('store-settings');await until(()=>root.querySelector('.bs-table-wrap')?.textContent.includes(warehouse.name),'Real host store reader');assert.equal(directoryCalls.length,2);
+  assert.ok(button('营业厅').disabled,'Unconfigured tab remains disabled');
+  assert.ok(root.querySelector('[aria-label="全部营业厅"]').classList.contains('arco-select-disabled'),'No directory intention never grants hall-directory reads');
+  const edit = button('编辑'), create = button('新增仓库');
+  assert.ok(edit?.disabled && create?.disabled, 'Read-only host cannot grant current maintenance actions');
+  assert.match(root.querySelector('.bs-table-wrap').textContent,/SYNTHETIC HOST HALL/,'Current native DTO uses only the explicitly provided synthetic hall name');
+  await click(edit); await click(create);
+  assert.equal(directoryCalls.length,2,'Disabled maintenance actions make no detail, directory or write request');
+  assert.equal(root.querySelector('.erp-store-settings-modal'),null);
+  assert.equal(root.querySelectorAll('dialog').length,0);
+  await act(async()=>owner.dispose());assert.equal(root.childElementCount,0);
+  console.log('PASS host DOM 6: optional warehouse-only configuration, fixed /api exact read paths and /assets CSS, explicit CSS prerequisite, explicit native warehouse/hall facts and absent directory/maintenance intent stay fail-closed; no injected synthetic fallback.');
   console.log('SYNTHETIC ONLY: mocked fetch, CSS events and jsdom; no browser, TLS/cookie, server, DB, pixel, timing or performance acceptance.');
 } finally {
   if (owner) { if (act) await act(async () => owner.dispose()); else owner.dispose(); }

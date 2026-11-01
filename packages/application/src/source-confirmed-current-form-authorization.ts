@@ -23,6 +23,7 @@ function formContext(intent: CurrentFormIntent): CurrentFormContext | null {
     case "products": return parseCurrentFormProductQuery(intent.parameters).context;
     case "product-skus": return parseCurrentFormProductSkuQuery(intent.parameters).context;
     case "sku-batch": return parseCurrentFormSkuBatchQuery(intent.parameters).context;
+    case "saved-edit-sku-batch": return parseCurrentFormSkuBatchQuery(intent.parameters).context;
     case "barcode": return parseCurrentFormBarcodeQuery(intent.parameters).context;
     default: return denied();
   }

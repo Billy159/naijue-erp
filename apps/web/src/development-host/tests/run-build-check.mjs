@@ -3,6 +3,7 @@ import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { JSDOM } from 'jsdom';
+import { transform } from 'esbuild';
 import { buildDevelopmentHost } from '../build-development-host.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const workingDirectory = path.resolve(here, '../../application');
@@ -10,7 +11,22 @@ const temporary = await mkdtemp(path.join(here, '.host-build-'));
 // This exact negative-only selector prevents a native-text ring on composite
 // Arco inner inputs. It is not an eager Arco dependency or positive Arco style.
 const sharedFocusInputExclusion = ':not(:where(.arco-picker input,.arco-tree-select input,.arco-select input,.arco-input-tag input))';
-const withoutSharedFocusInputExclusion = css => css.replaceAll(sharedFocusInputExclusion, '');
+const nativeControlExclusion = ':not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))';
+const nativeCheckboxExclusion = nativeControlExclusion.replace('input))', 'input,.arco-checkbox input))');
+const nativeTableExclusion = ':not(:where(.arco-table table,.arco-table th,.arco-table td))';
+const inventoryNativeExclusion = ':not(:where([class*=arco-],.arco-select input,.arco-cascader input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input,.arco-checkbox input,.arco-radio input))';
+const withoutSharedFocusInputExclusion = css => css.replaceAll(sharedFocusInputExclusion, '').replaceAll(nativeControlExclusion, '').replaceAll(nativeCheckboxExclusion, '').replaceAll(nativeTableExclusion, '').replaceAll(inventoryNativeExclusion, '').replaceAll(inventoryNativeExclusion.replace('[class*=arco-]', '[class*="arco-"]'), '');
+// Commas inside :is/:where/attribute syntax do not start a new selector.
+const selectorList = selector => { const result = []; let depth = 0, quote = '', start = 0;
+  for (let i = 0; i < selector.length; i++) { const character = selector[i];
+    if (quote) { if (character === quote && selector[i - 1] !== '\\') quote = ''; continue; }
+    if (character === '"' || character === "'") quote = character;
+    else if (character === '(' || character === '[') depth++;
+    else if (character === ')' || character === ']') depth--;
+    else if (character === ',' && depth === 0) { result.push(selector.slice(start, i)); start = i + 1; }
+  } result.push(selector.slice(start)); return result;
+};
+assert.deepEqual(selectorList('.inventory-ledger :is(.a,.b),.arco-btn'), ['.inventory-ledger :is(.a,.b)', '.arco-btn']);
 const assertNoPositiveArcoStyle = css => assert.doesNotMatch(withoutSharedFocusInputExclusion(css), /\.arco-/);
 assertNoPositiveArcoStyle(`.demo-ui input${sharedFocusInputExclusion}:focus-visible{box-shadow:var(--ca-focus-ring)}`);
 for (const forbidden of ['.arco-picker{color:red}', `${sharedFocusInputExclusion} .arco-btn{color:red}`, sharedFocusInputExclusion.replace('.arco-picker input', '.arco-picker textarea')]) {
@@ -75,8 +91,9 @@ try {
   assert.doesNotMatch(withoutSharedFocusInputExclusion(css.application), /\.mx-|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs/);
   for(const component of ['input','btn','picker','checkbox','select','modal','drawer'])assert.ok(css.application.includes(`.arco-${component}`),`Real host retains installed Arco ${component} styles`);
   assert.match(css.application,/erp-date-host/);assert.match(css.application,/erp-overlay-close/);
-  assert.match(css['store-settings'],/store-settings-workbench/);assert.match(css['product-full-page'],/product-full-page/);assert.doesNotMatch(css.products,/product-page-tab-body/);assert.doesNotMatch(css.application,/product-page-tab-body/);
-  assert.match(css.inventory, /iw-workbench/); assert.doesNotMatch(withoutSharedFocusInputExclusion(css.inventory), /\.arco-/);
+  assert.match(css['store-settings'],/store-settings-workbench/);assert.match(css['product-full-page'],/product-source-ui/);assert.ok(Object.keys(outputs[byAbsolute.get(path.join(outdir,result.manifest.styles['product-full-page']))].inputs).some(file=>file.endsWith('/products/product-page.css')),'Full-page style leaf owns the actual reused product source sheet');assert.doesNotMatch(css.products,/product-page-tab-body/);assert.doesNotMatch(css.application,/product-page-tab-body/);
+  assert.match(css.inventory, /iw-workbench/);
+  for (const rule of withoutSharedFocusInputExclusion(css.inventory).split('}')) { const selector = rule.slice(0, rule.indexOf('{')); if (!/\.arco-/.test(selector)) continue; for (const item of selectorList(selector)) assert.match(item, /^(?::where\(\.inventory-source-workbench\)|\.inventory-source-workbench(?:[ .:#>]|$)|\.inventory-ledger|\.iw-workbench \.inventory-product-control)/, 'Positive inventory Arco adapters remain within exact active scopes'); }
   assert.match(css.sales, /sales-workbench/); assert.doesNotMatch(withoutSharedFocusInputExclusion(css.sales), /\.arco-|sale-lines-table|sales-detail-facts/);
   assert.match(css['sales-detail'], /sales-detail-facts/); assert.match(css.transfers, /transfer-route/);
   assert.doesNotMatch(css.transfers, /transfer-editor|pd-tabs|iw-product-drawer/);
@@ -84,7 +101,14 @@ try {
   assert.match(css['transfer-product'], /pd-panel/); assert.match(css['transfer-product'], /iw-product-drawer/); assert.doesNotMatch(css['transfer-product'], /\.mx-/);
   const hostStyles = await readFile(path.join(outdir, result.hostStyles), 'utf8'); assert.match(hostStyles, /background:#fff/);
   assert.doesNotMatch(hostStyles, /@import|sales-workbench|party-workbench|transfer-route|transfer-editor|\.mx-|pd-tabs|\.arco-/);
-  assert.equal(await readFile(path.join(outdir, result.manifest.productDrawerStyles), 'utf8'), await readFile(path.resolve(here, '../../inventory/product-drawer.css'), 'utf8'));
+  const drawerSource = await readFile(path.resolve(here, '../../inventory/product-drawer.css'), 'utf8');
+  const emittedDrawer = await readFile(path.join(outdir, result.manifest.productDrawerStyles), 'utf8');
+  const normalizedDrawerSource = (await transform(drawerSource,{loader:'css',minify:false})).code;
+  // The real builder parses CSS; compare exact normalized declarations instead
+  // of historical formatting bytes, retaining source-input provenance as well.
+  assert.equal((await transform(emittedDrawer,{loader:'css',minify:false})).code,normalizedDrawerSource);
+  const drawerOutput=outputs[byAbsolute.get(path.join(outdir,result.manifest.productDrawerStyles))];
+  assert.deepEqual(Object.keys(drawerOutput.inputs).map(file=>path.resolve(workingDirectory,file)),[path.resolve(here,'../../inventory/product-drawer.css')]);
   assert.deepEqual(JSON.parse(await readFile(path.join(outdir, 'application-assets.json'), 'utf8')), result.manifest);
   assert.deepEqual(JSON.parse(await readFile(path.join(outdir, 'metafile.json'), 'utf8')), result.metafile);
   const enabledConfiguration={...configuration,assets:{basePath:'/assets/'},routes:{...configuration.routes,products:true,salesManualCreate:true,transferManualCreate:true,parties:{readOnly:true},productViewer:true,productFullPage:true}};

@@ -87,7 +87,8 @@ try {
   await click(trigger); await until(() => host.querySelector('.transfer-editor'), 'Inline transfer detail');
   assert.equal(host.querySelector('dialog'), null); assert.equal(count('/transfers/query'), 1); assert.equal(count('/transfers/detail/query'), 1); assert.match(host.textContent, /TEST 当前调出仓库完整名称/);
   assert.equal(hasStyle('transfer-product'), false); assert.equal(count('/products/basics/query'), 0);
-  for (const label of ['保存', '审核', '作废', '导出', '打印', '操作历史']) assert.equal([...host.querySelectorAll('.transfer-editor button')].find(element => element.textContent.trim() === label).disabled, true);
+  for (const label of ['保存', '审核', '作废']) assert.equal([...host.querySelectorAll('.transfer-editor button')].find(element => element.textContent.trim() === label).disabled, true);
+  for (const label of ['导出', '打印', '操作历史']) assert.equal(button(label).disabled, false, `${label} is explicitly available for the saved read-only document`); assert.equal(count('/transfers/history/query'), 0, 'History still requires its own click'); assert.equal(count('/transfers/commands'), 0);
   console.log('PASS transfer app 2: detail code/CSS/data activates only on click, remains an inline full-page read-only view, and cancelled preparation retains the executed list/draft/scroll/focus without a new list read.');
 
   const trace = label => { if (process.env.TRACE_APPLICATION_TRANSFER) console.log(`TRACE ${Date.now()} ${label}`); };

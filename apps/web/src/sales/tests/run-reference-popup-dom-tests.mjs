@@ -35,11 +35,11 @@ globalThis.clearTimeout = token => { if (!remoteDebounces.delete(token)) nativeC
 const registered = new Map();
 const add = document.addEventListener.bind(document), remove = document.removeEventListener.bind(document);
 document.addEventListener = (type, listener, options) => {
-  if ((type === 'pointerdown' || type === 'keydown') && options === true) registered.set(listener, type);
+  if (['pointerdown', 'keydown', 'focusin'].includes(type) && options === true) { const types = registered.get(listener) ?? new Set(); types.add(type); registered.set(listener, types); }
   return add(type, listener, options);
 };
 document.removeEventListener = (type, listener, options) => {
-  if ((type === 'pointerdown' || type === 'keydown') && options === true) registered.delete(listener);
+  if (['pointerdown', 'keydown', 'focusin'].includes(type) && options === true) { const types = registered.get(listener); types?.delete(type); if (!types?.size) registered.delete(listener); }
   return remove(type, listener, options);
 };
 let root;
@@ -81,47 +81,47 @@ try {
   const popup = () => host.querySelector('.sales-reference-menu');
   const tree = label => multi(label)?.querySelector('.arco-tree');
   const nodes = label => [...multi(label).querySelectorAll('.arco-tree-node-title')];
-  const open = async label => { await click(trigger(label)); await settle(); };
+  const open = async label => { if (process.env.TRACE_REFERENCE_POPUP) console.log('TRACE open', label); await click(trigger(label)); await settle(); };
   const close = async label => { await key(input(label) ?? trigger(label), 'Escape'); };
-  const complete = async (call, label, config) => { await act(async () => call.finish(label, config)); await settle(); };
+  const complete = async (call, label, config) => { if (process.env.TRACE_REFERENCE_POPUP) console.log('TRACE complete', label); await act(async () => call.finish(label, config)); await settle(); };
   const bottom = async label => { const element = tree(label); assert.ok(element); Object.defineProperty(element, 'scrollHeight', { configurable: true, value: 640 }); Object.defineProperty(element, 'clientHeight', { configurable: true, value: 288 }); element.scrollTop = 352; await act(async () => { element.dispatchEvent(new Event('scroll')); element.dispatchEvent(new Event('scroll')); }); await settle(); };
   const setter = Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype, 'value').set;
   const type = async (label, text, ms = 200) => { await act(async () => { setter.call(input(label), text); input(label).dispatchEvent(new Event('input', { bubbles: true })); }); await settle(ms); if (ms >= 160) { await act(async () => { for (const [token, run] of [...remoteDebounces]) { remoteDebounces.delete(token); run(); } }); await settle(); } };
   const submit = async () => { await act(async () => host.querySelector('form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))); await settle(); };
   const assertFocus = (element, message) => assert.ok(document.activeElement === element, message);
-  const assertClosed = label => { assert.equal(tree(label), null); assert.equal(trigger(label).getAttribute('aria-expanded'), 'false'); };
+  const assertClosed = async label => { for (let i = 0; i < 30 && tree(label); i++) await settle(20); assert.ok(tree(label) === null, "Expected tree(label) to be absent"); assert.equal(trigger(label).getAttribute('aria-expanded'), 'false'); };
   const render = async (referenceReader = references) => { await act(async () => root.render(createElement(StrictMode, null, createElement(SalesPageHost, { scope, reader, references: referenceReader, loadDetailStyles: async () => {} })))); await settle(); };
   const mount = async () => {
     root = createRoot(host);
     await render();
-    assert.equal(registered.size, 2, 'Exactly one page host owns outside and Escape listeners after StrictMode replay');
+    assert.deepEqual([...registered.values()].flatMap(types => [...types]).sort(), ['focusin', 'keydown', 'keydown', 'pointerdown', 'pointerdown'], 'StrictMode retains exactly the popup host pair and pager external-intent triple');
   };
-  await mount(); assert.equal(candidates.length, 0); assert.equal(lists.length, 0);
+  await mount(); if (process.env.TRACE_REFERENCE_POPUP) console.log('TRACE mounted'); assert.equal(candidates.length, 0); assert.equal(lists.length, 1, 'Entry reads one bounded summary page'); lists.length = 0;
   assert.equal(host.querySelector('.demo-multi-select'), null, 'Idle controls remain lightweight shells');
   assert.equal(document.querySelector('link[data-demo-multi-select-styles]'), null, 'Inlined readiness needs no stylesheet network');
   await open('营业厅'); assert.equal(candidates.length, 1); const firstHall = candidates.at(-1);
   assert.deepEqual(firstHall.body, { kind: 'hall', search: '', page: 1, pageSize: 20 });
   await pointer(input('营业厅')); assert.equal(firstHall.signal.aborted, false);
-  await open('状态'); assert.equal(firstHall.signal.aborted, true); assert.equal(popup(), null); assert.ok(tree('状态')); assert.equal(candidates.length, 1); assert.equal(registered.size, 2);
+  await open('状态'); assert.equal(firstHall.signal.aborted, true); assert.ok(popup() === null, "Expected popup() to be absent"); assert.ok(tree('状态')); assert.equal(candidates.length, 1); assert.equal([...registered.values()].reduce((total, types) => total + types.size, 0), 5);
   assert.match(multi('状态').querySelector('.inv-filter-tools').textContent, /匹配 3 项 · 已选 3 项/);
   for (const term of ['已审核', 'APPROVED', 'yishenhe', 'YSH']) { await type('状态', term, 200); assert.deepEqual(nodes('状态').map(node => node.textContent), ['全部状态', '已审核']); }
   await type('状态', '', 200); assert.equal(candidates.length, 1, 'Static Chinese/native-ID/pinyin/initial search never reads references');
   await complete(firstHall, 'TEST STALE HALL'); assert.doesNotMatch(host.textContent, /TEST STALE HALL/);
-  await open('营业厅'); assertClosed('状态'); assert.equal(candidates.length, 2); const replacedHall = candidates.at(-1);
+  await open('营业厅'); await assertClosed('状态'); assert.equal(candidates.length, 2); const replacedHall = candidates.at(-1);
   await open('营业员'); assert.equal(candidates.length, 3); const firstPerson = candidates.at(-1);
   assert.equal(replacedHall.signal.aborted, true); assert.equal(firstPerson.signal.aborted, false);
-  assert.equal(host.querySelectorAll('.sales-reference-menu').length, 1); assert.ok(multi('营业员').contains(popup())); assertClosed('营业厅');
+  assert.equal(host.querySelectorAll('.sales-reference-menu').length, 1); assert.ok(multi('营业员').contains(popup())); await assertClosed('营业厅');
   assertFocus(input('营业员'), 'New reference input receives focus');
   await complete(replacedHall, 'TEST STALE REPLACED HALL'); assert.doesNotMatch(host.textContent, /TEST STALE REPLACED HALL/);
   console.log('PASS reference popup 1: StrictMode opens one bounded transport; static↔reference and reference replacement synchronously abort old owners, retain one local tree and one listener pair, and reject late facts.');
 
-  await focus(outside); await pointer(outside); assert.equal(popup(), null); assert.equal(firstPerson.signal.aborted, true); assertFocus(outside, 'Outside dismissal must retain outside focus');
-  await complete(firstPerson, 'TEST STALE SALESPERSON'); assert.equal(popup(), null); assert.doesNotMatch(host.textContent, /TEST STALE SALESPERSON/);
+  await focus(outside); await pointer(outside); assert.ok(popup() === null, "Expected popup() to be absent"); assert.equal(firstPerson.signal.aborted, true); assertFocus(outside, 'Outside dismissal must retain outside focus');
+  await complete(firstPerson, 'TEST STALE SALESPERSON'); assert.ok(popup() === null, "Expected popup() to be absent"); assert.doesNotMatch(host.textContent, /TEST STALE SALESPERSON/);
   const beforeEscape = candidates.length; await open('营业厅'); assert.equal(candidates.length, beforeEscape + 1); const escapedRead = candidates.at(-1);
   const escaped = await key(input('营业厅'), 'Escape');
-  assert.equal(escaped.defaultPrevented, true); assert.equal(popup(), null); assert.equal(escapedRead.signal.aborted, true); assertFocus(input('营业厅'), 'Escape restores only the dismissed control input');
+  assert.equal(escaped.defaultPrevented, true); assert.ok(popup() === null, "Expected popup() to be absent"); assert.equal(escapedRead.signal.aborted, true); assertFocus(input('营业厅'), 'Escape restores only the dismissed control input');
   await open('营业厅'); const outsideEscapeRead = candidates.at(-1); await focus(outside); await key(outside, 'Escape');
-  assert.equal(popup(), null); assert.equal(outsideEscapeRead.signal.aborted, true); assertFocus(outside, 'Escape must not steal focus already moved outside');
+  assert.ok(popup() === null, "Expected popup() to be absent"); assert.equal(outsideEscapeRead.signal.aborted, true); assertFocus(outside, 'Escape must not steal focus already moved outside');
   // A reference's remote/search window must never masquerade as the full catalogue.
   await open('营业厅'); await complete(candidates.at(-1), 'TEST LARGE HALL', { total: 205 });
   assert.match(popup().querySelector('.inv-filter-tools').textContent, /匹配 205 项 · 已选 205 项/);
@@ -155,7 +155,7 @@ try {
 
   await click(host.querySelector('.tc-filter-toggle')); const beforeAdvanced = candidates.length; await open('客户'); assert.equal(candidates.length, beforeAdvanced + 1); const advancedRead = candidates.at(-1);
   const advancedToggle = host.querySelector('.tc-filter-toggle'); await focus(advancedToggle); await click(advancedToggle);
-  assert.equal(advancedRead.signal.aborted, true); assert.equal(popup(), null); assert.equal(trigger('客户'), undefined); assertFocus(advancedToggle, 'Removing advanced filter must not focus its hidden trigger');
+  assert.equal(advancedRead.signal.aborted, true); assert.ok(popup() === null, "Expected popup() to be absent"); assert.equal(trigger('客户'), undefined); assertFocus(advancedToggle, 'Removing advanced filter must not focus its hidden trigger');
   await open('营业厅'); const explicitCloseRead = candidates.at(-1); await close('营业厅');
   assert.equal(explicitCloseRead.signal.aborted, true); assertFocus(input('营业厅'), 'Explicit Escape close returns reference focus');
   await open('营业厅'); await complete(candidates.at(-1), 'TEST CHOSEN HALL');
@@ -181,22 +181,22 @@ try {
   console.log('PASS reference popup 3: advanced removal/explicit close clean up without hidden focus; genuine checked ALL and fitted plural tags edit only draft; explicit query carries all six plural dimensions and native RETURN+EXCHANGE grouping.');
 
   await open('营业厅'); const interruptedRead = candidates.at(-1); await click(host.querySelector('.sales-view'));
-  assert.equal(interruptedRead.signal.aborted, true); assert.equal(popup(), null); assert.ok(host.querySelector('.sales-detail-page'));
+  assert.equal(interruptedRead.signal.aborted, true); assert.ok(popup() === null, "Expected popup() to be absent"); assert.ok(host.querySelector('.sales-detail-page'));
   assert.equal(host.querySelector('[data-document-list="sales"]').hidden, true); assert.equal(document.activeElement.textContent, '返回列表');
   await complete(interruptedRead, 'TEST LATE DETAIL INTERRUPTION');
-  await click([...host.querySelectorAll('button')].find(button => button.textContent === '返回列表')); assert.equal(popup(), null); assert.equal(lists.length, 1); assert.equal(details.length, 1);
+  await click([...host.querySelectorAll('button')].find(button => button.textContent === '返回列表')); assert.ok(popup() === null, "Expected popup() to be absent"); assert.equal(lists.length, 1); assert.equal(details.length, 1);
   await open('营业厅'); const unmountedRead = candidates.at(-1); await act(async () => root.unmount()); root = null;
   assert.equal(unmountedRead.signal.aborted, true); assert.equal(registered.size, 0); assert.equal((await key(outside, 'Escape')).defaultPrevented, false);
   await complete(unmountedRead, 'TEST LATE UNMOUNT'); assert.equal(host.textContent, '');
   console.log('PASS reference popup 4: entering detail and route unmount abort pending candidates, drop late completions, preserve the retained applied list and release page listeners.');
 
-  await mount(); await open('营业厅'); const previousProviderRead = candidates.at(-1), beforeProviderChange = candidates.length;
+  await mount(); lists.length = 0; await open('营业厅'); const previousProviderRead = candidates.at(-1), beforeProviderChange = candidates.length;
   const replacementReferences = createSalesFilterReferenceHttpReader(options); await render(replacementReferences);
-  assert.equal(previousProviderRead.signal.aborted, true, 'Changing the reader invalidates its popup child immediately'); assert.equal(popup(), null); assert.equal(candidates.length, beforeProviderChange, 'Provider replacement does not start an implicit read');
+  assert.equal(previousProviderRead.signal.aborted, true, 'Changing the reader invalidates its popup child immediately'); assert.ok(popup() === null, "Expected popup() to be absent"); assert.equal(candidates.length, beforeProviderChange, 'Provider replacement does not start an implicit read');
   await complete(previousProviderRead, 'TEST LATE PREVIOUS PROVIDER'); assert.doesNotMatch(host.textContent, /TEST LATE PREVIOUS PROVIDER/);
   await open('营业员'); assert.equal(candidates.length, beforeProviderChange + 1); const revokedRead = candidates.at(-1), beforeRevocation = candidates.length;
   await act(async () => context.replaceIdentity({ accountId: 'TEST-REFERENCE-POPUP', sessionRevision: '2', permissionRevision: '2' })); await settle();
-  assert.equal(revokedRead.signal.aborted, true); assert.equal(popup(), null); assert.equal(registered.size, 0); assert.match(host.textContent, /旧身份结果已清除/);
+  assert.equal(revokedRead.signal.aborted, true); assert.ok(popup() === null, "Expected popup() to be absent"); assert.equal(registered.size, 0); assert.match(host.textContent, /旧身份结果已清除/);
   await complete(revokedRead, 'TEST LATE REVOKED'); assert.doesNotMatch(host.textContent, /TEST LATE REVOKED/); assert.equal(candidates.length, beforeRevocation);
   assert.equal((await key(outside, 'Escape')).defaultPrevented, false);
   await act(async () => root.unmount()); root = null;

@@ -1,4 +1,38 @@
-# Current disposable PostgreSQL harness, schema 1–10
+# PostgreSQL integration contract status — 2026-10-31 Dot continuation
+
+The older "current schema1–10" wording preserved below is historical. It does
+**not** mean that those business suites can accept today's full ERP adapters.
+Do not remove their failures, skip their cases, patch missing columns into a
+target, or treat a different successful component as their PASS.
+
+| Entry / contract | Actual status | Meaning |
+|---|---|---|
+| `sparse-0001-0010` | Reproduced PG17.11:12 total/5 pass/7 fail | Current sales/transfer adapters query `responsible_staff_id`; exact migrations1–10 do not define it. Five leaf failures plus a later assertion and the parent fail. |
+| `backend-0001-0010` | Reproduced PG17.11:12 total/3 pass/9 fail | Seven missing-column leaf failures; HTTP fixture lacks mandatory shared password/login work. Its capacity resource is also absent. Later HTTP phases were not run. |
+| [Standalone authentication component](../../docs/POSTGRES-AUTHENTICATION-COMPONENT.md) | New independent target:8/8 pass,0 skips | Original auth HTTP/service/real PG store plus explicit shared password, login and session capacity. No ERP business/catalog/ACL acceptance. |
+| Current full ERP V6→V7→V8 / new HISTORY successor | Not established by these suites | Needs the matching full schema/constraints/triggers/column ACL, independently reviewed ordinary-login catalog, published synthetic prerequisites and selected HISTORY successor when applicable. |
+
+The old business failures above were actually rerun on fixed Git source
+`259eaa22da1ad8d882267820e869b2f6c5eaa8d4` with separate fresh databases;
+raw TAP, exact identities and shutdown are preserved in the Dot handoff's
+`latest-results-20261031/pg-component-attempt03/`. Their relevant adapter,
+schema1–10 manifest and HTTP fixture bytes remain unchanged at handoff base
+`59c6ae509fa17caddf58b8ea05d4abdaff16e227`. New additive auth-component evidence
+is preserved separately under `development-results-20261031/pg-auth-component-01/`.
+These are controller evidence locations, not automatic credentials or execution
+inputs; a clone alone does not contain those external artifacts.
+
+Adding the missing auth resources to the old full-API fixture is insufficient:
+`composePostgresApi` also requires independently reviewed V8 metadata before
+constructing its pool. `responsible_staff_id` is introduced only by the guarded
+`0026-history-revision-current-base.sql`, not a migration1–10 repair. The original
+fullV6 dependency/target-bound preparation gates remain in
+[`database-upgrade/README.md`](../../docs/controller-handoff-20261031-r1/database-upgrade/README.md).
+No new full-ERP fixture, permissive factory fallback or fabricated review is
+provided by the standalone auth component. Source fixes and new-target engine
+acceptance for the business harness remain a separate open task.
+
+## Historical schema1–10 runbook (original detail preserved)
 
 ## Status and evidence boundary
 

@@ -8,7 +8,8 @@ import {parseTransferListQuery,parseTransferDetailQuery} from '../../../../../..
 import {parseSalesFilterReferenceQuery} from '../../../../../../packages/application/src/sales-reference-query-validation.ts';
 import {parseCurrentFormProductQuery,parseCurrentFormSkuBatchQuery,parseCurrentFormBarcodeQuery} from '../../../../../../packages/application/src/current-form-validation.ts';
 import {parseDictionaryListQuery,validateDictionaryPage,validateDictionarySizeGroup} from '../../../../../../packages/application/src/dictionary-read-validation.ts';
-import type {CurrentFormContext,CurrentFormSku,CurrentFormProduct} from '../../../../../../packages/application/src/current-form-ports.ts';
+import {CURRENT_FORM_SAVED_EDIT_SKU_WIRE_FIELDS} from '../../../../../../packages/application/src/current-form-ports.ts';
+import type {CurrentFormContext,CurrentFormSku,CurrentFormProduct,CurrentFormSavedEditSkuBatchWireV2,CurrentFormSavedEditSkuTupleV2,CurrentFormSavedEditProductTupleV2} from '../../../../../../packages/application/src/current-form-ports.ts';
 import {createCurrentFormHttpReader} from '../../../../src/current-form/http-reader.ts';
 import {createSalesPreparationHttpClient} from '../../../../src/current-form/sales-create.ts';
 import {createTransferPreparationHttpClient} from '../../../../src/current-form/transfer-create.ts';
@@ -22,10 +23,10 @@ import {normalSalesResponse,normalTransferResponse,type NormalSalesRow,type Norm
 import {detail as declaredTransferFixture} from '../../../../src/transfers/tests/fixtures.ts';
 
 interface Options{readonly includeSyntheticHistory?:boolean;readonly emptyDocuments?:boolean;readonly dataset?:QaReferenceProfile;readonly syntheticOnly:true;readonly origin:string;readonly existingFetch:(input:string,init:RequestInit)=>Promise<Response>}
-const paths=new Set(['/sales/query','/transfers/query','/sales/detail/query','/transfers/detail/query','/current-form/products/query','/current-form/sku-batch/query','/current-form/barcode/query','/dictionary-read/size-groups/query','/sales/references/query','/sales/commands','/transfers/commands','/sales/prepare-existing','/transfers/prepare-existing','/sales/history/query','/transfers/history/query','/imported-history/sales/detail/query','/imported-history/transfers/detail/query']);
+const paths=new Set(['/sales/query','/transfers/query','/sales/detail/query','/transfers/detail/query','/current-form/products/query','/current-form/sku-batch/query','/current-form/saved-edit-sku-batch-v2/query','/current-form/barcode/query','/dictionary-read/size-groups/query','/sales/references/query','/sales/commands','/transfers/commands','/sales/prepare-existing','/transfers/prepare-existing','/sales/history/query','/transfers/history/query','/imported-history/sales/detail/query','/imported-history/transfers/detail/query']);
 const json=(value:unknown,status=200)=>new Response(JSON.stringify(value),{status,headers:{'content-type':'application/json','cache-control':'no-store','x-data-source':'SYNTHETIC-DOCUMENT-PREVIEW-ONLY'}});
 const unavailable=(code='SYNTHETIC_DOCUMENT_OPERATION_NOT_DECLARED')=>json({error:{code,message:'Finite preview fixture does not provide this operation; no real service or alternative business store was called.'}},501);
-class FixtureRejected extends Error{constructor(readonly response:Response){super('Original synthetic fixture rejected this operation.');}}
+class FixtureRejected extends Error{readonly response:Response;constructor(response:Response){super('Original synthetic fixture rejected this operation.');this.response=response;}}
 function object(value:unknown):Record<string,unknown>{if(!value||typeof value!=='object'||Array.isArray(value))throw new TypeError('Invalid synthetic document input');return value as Record<string,unknown>;}
 function text(value:unknown):string{if(typeof value!=='string')throw new TypeError('Missing declared synthetic text');return value;}
 function items(value:unknown):Record<string,unknown>[]{const rows=object(value).items;if(!Array.isArray(rows))throw new TypeError('Missing finite fixture page');return rows.map(object);}
@@ -54,7 +55,7 @@ export function createSyntheticDocumentPreviewTransport(options:Options){
    active();const auth=object(await load('/auth/session',null,'GET')),principal=object(auth.principal);let body:unknown;try{body=JSON.parse(String(init.body));}catch{return json({error:{code:'INVALID_SYNTHETIC_DOCUMENT_JSON'}},400);}
    if(options.dataset&&/^\/imported-history\/(sales|transfers)\/detail\/query$/.test(path)){const kind=path.includes('/sales/')?'sales':'transfers';return json(qaHistoryRead(kind,body as Parameters<typeof qaHistoryRead>[1]));}
    const fixture=options.dataset?qaReferenceRead(path,object(body)):undefined;if(fixture)return fixture;
-   const allProducts=async(context:CurrentFormContext)=>{const result=[];for(let page=1;;page++){const data=await current.readProducts({context,search:'',page,pageSize:20},signal);result.push(...data.items);if(BigInt(page)*20n>=data.exactTotal)break;}return result;};
+   const allProducts=async(context:CurrentFormContext,reader=current)=>{const result=[];for(let page=1;;page++){const data=await reader.readProducts({context,search:'',page,pageSize:20},signal);result.push(...data.items);if(BigInt(page)*20n>=data.exactTotal)break;}return result;};
    let listProducts:CurrentFormProduct[]=[];
    const allSkus=async(context:CurrentFormContext)=>{const result:CurrentFormSku[]=[];for(const product of (listProducts=await allProducts(context)))for(let page=1;;page++){const data=await current.readProductSkus({context,productId:product.id,page,pageSize:20},signal);result.push(...data.items);if(BigInt(page)*20n>=data.exactTotal)break;}return result;};
    const creator=(header:Record<string,unknown>,names:Record<string,unknown>)=>{if(typeof names.createdByName==='string')return names.createdByName;if(header.createdByAccountId!==principal.accountId)throw new TypeError('No declared creator label');return text(principal.loginName);};
@@ -100,6 +101,32 @@ export function createSyntheticDocumentPreviewTransport(options:Options){
    }
    if(path==='/current-form/barcode/query'){parseCurrentFormBarcodeQuery(body);return unavailable('SYNTHETIC_BARCODE_BINDINGS_NOT_DECLARED');}
    if(path==='/current-form/sku-batch/query'){const q=parseCurrentFormSkuBatchQuery(body),skus=await allSkus(q.context),result=q.skuIds.map(id=>skus.find(sku=>sku.id===id));if(result.some(row=>!row))return unavailable('SYNTHETIC_SKU_ID_NOT_DECLARED');return json(result);}
+   if(path==='/current-form/saved-edit-sku-batch-v2/query'){
+    const q=parseCurrentFormSkuBatchQuery(body),result:CurrentFormSku[]=[];let skus:readonly CurrentFormSku[];
+    if(options.dataset){
+     // The QA legacy batch is a direct finite exact-ID projection, not a whole
+     // catalog SKU scan. Decode that original response with the unchanged SDK.
+     const exact=createCurrentFormHttpReader({...http,fetch:async(input,request)=>{
+      const url=new URL(input),leaf=url.pathname.slice(4);if(url.origin!==options.origin||request.method!=='POST'||!['/current-form/sku-batch/query','/current-form/products/query'].includes(leaf))throw new TypeError('Closed original QA read projection');
+      const legacy=qaReferenceRead(leaf,object(JSON.parse(String(request.body))));if(!legacy)throw new TypeError('Original QA read not declared');return legacy;
+     }});
+     result.push(...await exact.readSkuBatch(q,signal));listProducts=await allProducts(q.context,exact);skus=result;
+    }else{
+     skus=await allSkus(q.context);for(const id of q.skuIds){const sku=skus.find(row=>row.id===id);if(!sku)return unavailable('SYNTHETIC_SKU_ID_NOT_DECLARED');result.push(sku);}
+    }
+    const products:CurrentFormSavedEditProductTupleV2[]=[...new Set(result.map(sku=>sku.productId))].map(productId=>{
+     const product=listProducts.find(row=>row.id===productId);if(!product)return [productId,'UNAVAILABLE'] as const;
+     const siblings=skus.filter(sku=>sku.productId===productId);
+     if(siblings.some(sku=>sku.productCode!==product.code||sku.productName!==product.name))throw new TypeError('Conflicting original synthetic product facts');
+     // Same explicit product/group projection as the original products/query
+     // branch. A SKU group alone never admits a product or fills an unknown group.
+     const declared=declaredProductGroups.get(productId),group=declared&&siblings.every(sku=>sku.sizeGroupId===declared)?declared:product.sizeGroupId;
+     if(group&&siblings.some(sku=>sku.sizeGroupId!==group))throw new TypeError('Conflicting original synthetic product group');
+     return group?[productId,'ELIGIBLE',group] as const:[productId,'UNAVAILABLE'] as const;
+    });
+    const wire:CurrentFormSavedEditSkuBatchWireV2={version:2,skus:result.map(sku=>CURRENT_FORM_SAVED_EDIT_SKU_WIRE_FIELDS.map(key=>sku[key]) as unknown as CurrentFormSavedEditSkuTupleV2),products};
+    active();return json(wire);
+   }
    if(path==='/dictionary-read/size-groups/query'){
     const q=parseDictionaryListQuery(body),all=[];for(let page=1;;page++){const query={search:'',page,pageSize:100 as const},data=validateDictionaryPage(await load(path,query),query,validateDictionarySizeGroup);all.push(...data.items);if(page*100>=data.total)break;}
     for(const group of declaredGroups){const existing=all.find(row=>row.id===group.id);if(existing&&JSON.stringify(existing)!==JSON.stringify(group))return unavailable('SYNTHETIC_GROUP_ID_CONFLICT');if(!existing)all.push(group);}const filtered=all.filter(group=>group.name.toLowerCase().includes(q.search.toLowerCase()));return json(validateDictionaryPage({page:q.page,pageSize:q.pageSize,total:filtered.length,items:filtered.slice((q.page-1)*q.pageSize,q.page*q.pageSize)},q,validateDictionarySizeGroup));

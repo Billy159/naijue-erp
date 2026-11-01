@@ -1,6 +1,6 @@
 import { installRequestDiagnostics, observeRequestStage, requestDiagnostic } from './request-diagnostics.ts';
 import { assertStaffCreateReadPermissionAdmission } from './staff-create-read-permission-admission.ts';
-import { acquireReadClient, awaitRead } from '../../../adapters/postgres/src/cancellable-read.ts';
+import { acquireReadClient, awaitRead } from '../../../packages/application/src/read-resource.ts';
 import { validateCoreSourceMembers } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import type { CoreSourceMembers } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";

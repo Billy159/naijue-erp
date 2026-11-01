@@ -94,6 +94,11 @@ try {
   assert.ok(host.querySelector('.mx-product-total.mx-folded'));
   assert.equal(host.querySelector('[data-inventory-product="product-0"] .mx-stock'), null);
   await click(host.querySelector('button[aria-label="展开商品CODE-0"]'));
+  // Folding rebuilds the virtual row model and restores its semantic scroll
+  // anchor. Return this independently tested color action to the first product.
+  viewport = { ...viewport, scrollTop: 0, scrollLeft: 0 };
+  props = { ...props, windowing: windowing() }; await render();
+  assert.ok(host.querySelector('[data-inventory-product="product-0"]'));
   await click(host.querySelector('button[aria-label="折叠CODE-0颜色0FIT0"]'));
   assert.ok(host.querySelector('.mx-color-total.mx-folded'));
   assert.equal(host.querySelectorAll('[data-inventory-product="product-0"] .mx-stock[aria-label*="FIT0"]').length, 0);

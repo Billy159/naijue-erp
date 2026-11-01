@@ -1,7 +1,7 @@
 import { observeRequestStage } from './request-diagnostics.ts';
 import { performance } from 'node:perf_hooks';
 import { PassThrough } from 'node:stream';
-import { awaitRead } from '../../../adapters/postgres/src/cancellable-read.ts';
+import { awaitRead } from '../../../packages/application/src/read-resource.ts';
 import type { IncomingHttpHeaders } from "node:http";
 import type { FastifyPluginAsync } from "fastify";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
