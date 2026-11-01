@@ -11,7 +11,7 @@
 | `record-reconciliation.mjs` | 独立 cohort 中逐记录逐字段精确一致 | 不以总量抵消，不证明源提取或 oracle 独立性 |
 | `typed-stock-cell-candidate.mjs` | 上述合同编排成 opening/net 两分量私域候选 | 不选择 active run、不称当前库存、不调用 BASE_V2 writer |
 
-真实恢复来源的只读 01/02/04/05/06 已有主控回执，03 仍 UNKNOWN；不是共同快照导出，也没有实际清洗/转换/写入。04 支持 typed 两分量的整数/范围设计，但不能从 8 个 source_unit 文本推断单位比例或库存效应。完整私域映射、同快照来源、明确业务规则、目标最终 schema、原生写入接缝及准入仍需另证。见各组件中文合同及 provenance 文件；不会把 DB 导出伪装为原 BASE_V2 CSV 授权。
+真实恢复来源的只读 01/02/04/05/06 已有主控回执；03 在本轮 PAGE16 后继已完整聚合通过（见下），各卡不是共同快照导出，也没有实际清洗/转换/写入。04 支持 typed 两分量的整数/范围设计，但不能从 8 个 source_unit 文本推断单位比例或库存效应。完整私域映射、同快照来源、明确业务规则、目标最终 schema、原生写入接缝及准入仍需另证。见各组件中文合同及 provenance 文件；不会把 DB 导出伪装为原 BASE_V2 CSV 授权。
 
 ## 精确标量接口
 
@@ -40,4 +40,4 @@
 
 `card03_engine.py` 沿用控制目录 `MINIMAL-READONLY-CHECKS-20261101/ro03-v3-review/runtime/card03_engine.py`，唯一行为变化是页量由128降为16。调用方仍提供同一已审核的 session、SQL、packet_protocol、lease 和 deadline；本文件不创建连接、授权或输出原始记录。不是新的清洗写入器。原协议每源10000页上限、3/1/5秒限制、单会话RR、显式EOF、独立COUNT及失败UNKNOWN保留。
 
-本轮重新运行原 test_key_phase.py 的 ProtocolTests/EngineTests 共27项，通过；另连续17页核对所有KEY/PAYLOAD绑定均使用16且两源EOF/COUNT一致，通过。未重跑无变化的源码载体测试，T45须重新绑定执行清单。真实隔离执行未完成前，不称Card03修复通过。已有计划/统计证明两源走有效主键索引，JSON存储体积较大；尚未证明实际超时根因。
+本轮重新运行原 test_key_phase.py 的 ProtocolTests/EngineTests 共27项，通过；另连续17页核对所有KEY/PAYLOAD绑定均使用16且两源EOF/COUNT一致，通过。未重跑无变化的源码载体测试，T45须重新绑定执行清单。真实隔离后继已完成：原T45 job `t45-minimal-rdb-card03-page16-ro03-20261102-01`，单次555.724秒。revision44773行/2800页含空EOF，employee99行/8页含空EOF，同一RR只读会话，两源独立COUNT一致。真实ROLLBACK ACK、客户端退出、最终其他客户端0和原副本停止均有回执，生产/业务写入/新恢复/授权变更0。原五卡未重跑，不能拼为共同快照。准确EXECUTION-RESULT.json SHA256为`f5815e589d8d5f251431700f50bab07374dd309bb758043788adecf672f64b7b`，在原T45 `outputs/T45/revisions/20261102-card03-page16-ro03-preparation-01/`。仅该聚合范围通过，不代表JSON业务映射、完整单据读取器、清洗、迁移或上线。已有计划/统计证明两源走有效主键索引，JSON存储体积较大；尚未证明内部超时根因。
