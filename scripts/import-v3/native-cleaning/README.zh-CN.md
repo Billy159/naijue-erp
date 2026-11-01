@@ -6,6 +6,8 @@
 
 采用的宿主manifest SHA256为 `1a1f8af717881aa78920f505d8efe0bb0c496c95231583956eea9d35bdc260d3`。实际ROLLBACK ACK1、池关闭、最终其他连接0、新Node容器删除，原隔离库2026-11-01T21:33:44.106Z停止且PID0/exit0。主控采用原T45回执，不重复PG检查。报告位于原工程 `outputs/T45/revisions/20261102-cleaning93-private-snapshot-preparation-01/EXECUTION-RESULT.json`，SHA256 `f1f71277949776e089b6fe52dfb51e166d18de3ad77353e46369771742a785f0`；原始收据SHA256 `68f107968017a893150f790b81ef39d82729dd6f9c333a41a6f401b335f0cfc4`。仅限定来源采集通过，尚未独立重读全部文件、转换、写后对账、业务演练或发布；下文各源码阶段“未实际执行”保留为历史过程，以本段准确版本结果为准。
 
+后继固定5e690ebe文件独立重读已实际通过：93文件、388459文件行、9300530988字节与上述manifest全部一致，95.937秒。原T45报告 `outputs/T45/revisions/20261102-private93-source-files-verification-01/EXECUTION-RESULT.json` SHA256 `df1902dd1b183f37d9647644e2664704fe69736e43febbc9f361b5641938116c`，原始收据SHA256 `f253d197e1ee015c481042b831e8902c723b7e635b9180f3815d8cd9558ba89f`。无DB连接/启动、凭据挂载或目标写入，临时校验容器已精确移除。此后继补齐上段采集时点的文件复核待项；不改旧回执，也不补记业务转换或目标读回通过。
+
 ## 私域来源文件接缝（源码及合成验证，尚未实际导出）
 
 `private-snapshot-files.mjs` 将现有48资料表＋document/revision读取器的回调直接写成私域NDJSON，不解析/改写raw_json中的数字。调用者必须提供已有受控连接池、新的绝对目录、明确字节上限和已授权目标；目录0700、文件0600，不覆盖现有路径，不公开正文。所有表包括空表都生成文件，按实际字节记录SHA256/行数；同快照EOF、独立COUNT和current_revision关联全部成立、ROLLBACK确认且数据文件落盘后，才建立完整标志。上限包括来源文件及一份manifest的逻辑字节，不代表文件系统实际占用。
