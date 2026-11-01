@@ -65,3 +65,10 @@ test('empty source still verifies explicit EOF and completes',async()=>{
   const db=database({docs:[],revisions:[]});
   assert.deepEqual((await readLegacyDocumentSnapshot(db.pool,sinks())).counts,{documents:'0',revisions:'0'});
 });
+
+test('unknown BEGIN discards the connection instead of pooling uncertain transaction state',async()=>{
+  const db=database({failAt:'BEGIN'});
+  await assert.rejects(readLegacyDocumentSnapshot(db.pool,sinks()),/QUERY_FAILED/);
+  assert.deepEqual(db.calls.at(-1),{release:'QUERY_FAILED'});
+  assert.equal(db.calls.includes('ROLLBACK'),false);
+});

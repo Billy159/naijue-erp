@@ -16,7 +16,13 @@ export async function readLegacyDocumentSnapshot(pool, {
   const active = () => signal?.throwIfAborted();
   try {
     active();
-    await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
+    try {
+      await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
+    } catch (error) {
+      // A failed/unknown BEGIN must not return a possibly open transaction to the pool.
+      releaseError = error;
+      throw error;
+    }
     transaction = true;
     await client.query("SET LOCAL timezone='UTC'");
     await client.query("SET LOCAL statement_timeout='3s'");
