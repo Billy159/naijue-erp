@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createDocumentSourceCensus,readDocumentSourceCensus} from '../scripts/import-v3/native-cleaning/document-source-census.mjs';
+import {createDocumentSourceCensus,readDocumentSourceCensus,readDocumentHeaderCensus,readDocumentRevisionCensus} from '../scripts/import-v3/native-cleaning/document-source-census.mjs';
 const envelope=(id,n,row)=>({source_document_id:id,source_revision:String(n),raw_json:JSON.stringify(row)});
 const head=(c,id='d',n=1,extra={})=>c.document(envelope(id,n,{id,current_revision:n,document_type:'SALE',status:'DRAFT',baseline_was_included:false,current_effect_active:false,...extra}));
 const rev=(c,n,body,extra={})=>c.revision(envelope('d',n,{document_id:'d',revision:n,original_imported:true,body,...extra}));
@@ -50,5 +50,36 @@ test('actual private file reader verifies both files before returning aggregate 
  await writeFile(join(directory,'SNAPSHOT.json'),manifest,{mode:0o600});
  const options={directory,expectedManifestSha256:hash(manifest),expectedUid:process.getuid()};
  const r=await readDocumentSourceCensus(options);assert.equal(r.sourceRows,'2');assert.equal(r.types.TRANSFER,1);assert.equal(r.currentRuntime,1);assert.equal(r.lines.quantityInteger,1);
+ const checkpoint=await readDocumentHeaderCensus(options);
+ assert.equal(checkpoint.headerState.statistics.documents,1);
+ assert.equal(checkpoint.headerState.statistics.revisions,0);
+ const resumed=await readDocumentRevisionCensus(options,JSON.parse(JSON.stringify(checkpoint)));
+ assert.deepEqual(resumed,r); // Original single-pass results are the independent reference.
+ const wrongSource=structuredClone(checkpoint);wrongSource.sourceManifestSha256='0'.repeat(64);
+ await assert.rejects(readDocumentRevisionCensus(options,wrongSource),/CHECKPOINT_SOURCE_REFUSED/);
+ const wrongCount=structuredClone(checkpoint);wrongCount.file.rows='2';
+ await assert.rejects(readDocumentRevisionCensus(options,wrongCount),/CHECKPOINT_SOURCE_REFUSED/);
  await writeFile(join(directory,files[1].filename),'');await assert.rejects(readDocumentSourceCensus(options),/FILE_PROTECTION_REFUSED/);
+});
+
+test('private header resume retains exact pointers, duplicate checks and every header statistic',()=>{
+ const first=createDocumentSourceCensus();head(first,'d',2,{status:'DELETED',baseline_was_included:true,current_effect_active:null});
+ head(first,'other',1,{document_type:'TRANSFER',status:'APPROVED'});
+ const state=JSON.parse(JSON.stringify(first.headerState()));
+ const resumed=createDocumentSourceCensus(state);rev(resumed,3,{lines:[]});
+ rev(resumed,2,{header:{},lines:[{sku_id:'s',source_quantity:'9223372036854775808'}],fundsRecords:[]});
+ resumed.revision(envelope('other',1,{document_id:'other',revision:1,original_imported:false,body:null}));
+ const r=resumed.finish();assert.equal(r.documents,2);assert.equal(r.states.DELETED,1);assert.equal(r.types.TRANSFER,1);
+ assert.equal(r.unknownActiveEffectFlag,1);assert.equal(r.baselineIncluded,1);assert.equal(r.currentRuntime,1);
+ assert.equal(r.lines.quantityOutsideTargetBigint,1);assert.equal(r.unselectedRevisions,1);
+ assert.throws(()=>resumed.headerState(),/HEADER_PHASE_ALREADY_CONSUMED/);
+ assert.throws(()=>rev(resumed,2,{}),/DUPLICATE_REVISION/);
+ const missing=createDocumentSourceCensus(state);rev(missing,2,{});assert.throws(()=>missing.finish(),/CURRENT_REVISION_MISSING/);
+});
+test('partial revision state or duplicate header state cannot be resumed as a new phase',()=>{
+ const c=createDocumentSourceCensus();head(c);const state=c.headerState();
+ const partial=structuredClone(state);partial.statistics.revisions=1;
+ assert.throws(()=>createDocumentSourceCensus(partial),/HEADER_STATE_REFUSED/);
+ const duplicate=structuredClone(state);duplicate.headers.push(duplicate.headers[0]);duplicate.statistics.documents++;
+ assert.throws(()=>createDocumentSourceCensus(duplicate),/HEADER_STATE_REFUSED/);
 });

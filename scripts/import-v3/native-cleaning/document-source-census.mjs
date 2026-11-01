@@ -11,7 +11,7 @@ function incrementKnown(counts,value){counts[Object.hasOwn(counts,value)?value:'
  * or last file row. Results contain counts only, not document IDs or payloads.
  * This diagnoses conversion inputs; it neither chooses a status mapping nor
  * changes quantities, source identities, historical effects or permissions. */
-export function createDocumentSourceCensus(){
+export function createDocumentSourceCensus(headerState){
  const headers=new Map(),seenRevisions=new Map();
  const result={status:'SCOPED_CURRENT_DOCUMENT_SOURCE_CENSUS_NOT_CONVERSION',documents:0,revisions:0,currentRevisions:0,unselectedRevisions:0,
   types:{SALE:0,TRANSFER:0,OTHER:0},states:{DRAFT:0,UNAUDITED:0,APPROVED:0,DELETED:0,VOID:0,OTHER:0},
@@ -19,6 +19,20 @@ export function createDocumentSourceCensus(){
   body:{object:0,other:0,headerObject:0,headerOther:0,linesArray:0,linesOther:0,fundsArray:0,fundsOther:0},
   lines:{total:0,nonObject:0,missingSku:0,quantityNull:0,quantityMissing:0,quantityInvalid:0,quantityNonInteger:0,quantityNegative:0,quantityZero:0,quantityInteger:0,quantityOutsideTargetBigint:0},
   targetWrites:0,identityAllocation:0,conversionVerified:false,independentTargetReadbackVerified:false};
+ if(headerState!==undefined){
+  need(headerState?.format==='DOCUMENT_HEADER_CENSUS_PRIVATE_V1'&&Array.isArray(headerState.headers)
+   &&headerState.statistics?.documents===headerState.headers.length,'DOCUMENT_CENSUS_HEADER_STATE_REFUSED');
+  // Only a completed header phase may be resumed. Revision progress cannot be
+  // replayed as an empty phase, or counted twice after a failed attempt.
+  const stats=headerState.statistics;
+  need(stats.revisions===0&&stats.currentRevisions===0&&stats.unselectedRevisions===0
+   &&JSON.stringify(Object.keys(stats).sort())===JSON.stringify(Object.keys(result).sort()),'DOCUMENT_CENSUS_HEADER_STATE_REFUSED');
+  for(const [id,current] of headerState.headers){
+   need(typeof id==='string'&&id.length>0&&integer(current)&&!headers.has(id),'DOCUMENT_CENSUS_HEADER_STATE_REFUSED');
+   headers.set(id,{current,selected:false});
+  }
+  Object.assign(result,structuredClone(stats));
+ }
  const quantity=line=>{
   const c=result.lines;
   if(!Object.hasOwn(line,'source_quantity')){c.quantityMissing++;return;}
@@ -57,6 +71,12 @@ export function createDocumentSourceCensus(){
     if(typeof line.sku_id!=='string'||line.sku_id.length===0)result.lines.missingSku++;quantity(line);
    }
   },
+  headerState(){
+   need(result.revisions===0,'DOCUMENT_CENSUS_HEADER_PHASE_ALREADY_CONSUMED');
+   // This contains private source IDs. Keep it in the existing private artifact
+   // directory, never stdout, a report, the source repository or a target table.
+   return {format:'DOCUMENT_HEADER_CENSUS_PRIVATE_V1',headers:[...headers].map(([id,h])=>[id,h.current]),statistics:structuredClone(result)};
+  },
   finish(){need([...headers.values()].every(row=>row.selected),'DOCUMENT_CENSUS_CURRENT_REVISION_MISSING');return structuredClone(result);}
  };
 }
@@ -67,4 +87,32 @@ export async function readDocumentSourceCensus(options){
   files.push(await consumePrivateSnapshotTable({...options,table,maxRowBytes:33554432,onRow}));
  return {...census.finish(),sourceManifestSha256:options.expectedManifestSha256,sourceFilesConsumed:files.length,
   sourceRows:files.reduce((n,f)=>n+BigInt(f.rows),0n).toString(),sourceBytes:files.reduce((n,f)=>n+f.bytes,0),databaseConnections:0};
+}
+
+/** First phase returns private resumable state only after the document file has
+ * passed the original complete EOF/count/hash and unchanged-file checks. */
+export async function readDocumentHeaderCensus(options){
+ const census=createDocumentSourceCensus();
+ const file=await consumePrivateSnapshotTable({...options,table:'erp_prod_runtime.document',maxRowBytes:33554432,onRow:census.document});
+ return {format:'DOCUMENT_HEADER_FILE_CENSUS_PRIVATE_V1',sourceManifestSha256:options.expectedManifestSha256,
+  file,headerState:census.headerState()};
+}
+
+/** Caller pins the private checkpoint bytes from the completed first-phase job
+ * before parsing this object. No state/hash supplied by this function constitutes
+ * independent approval or source completeness. Never replay partial revision work. */
+export async function readDocumentRevisionCensus(options,checkpoint){
+ need(checkpoint?.format==='DOCUMENT_HEADER_FILE_CENSUS_PRIVATE_V1'
+  &&checkpoint.sourceManifestSha256===options.expectedManifestSha256
+  &&checkpoint.file?.status==='CONSUMED_SCOPED_PRIVATE_TABLE'
+  &&checkpoint.file.table==='erp_prod_runtime.document'
+  &&checkpoint.file.sourceManifestSha256===options.expectedManifestSha256
+  &&checkpoint.file.rows===String(checkpoint.headerState?.statistics?.documents)
+  &&typeof checkpoint.file.sha256==='string'&&/^[a-f0-9]{64}$/.test(checkpoint.file.sha256),
+  'DOCUMENT_CENSUS_CHECKPOINT_SOURCE_REFUSED');
+ const census=createDocumentSourceCensus(checkpoint.headerState);
+ const file=await consumePrivateSnapshotTable({...options,table:'erp_prod_runtime.revision',maxRowBytes:33554432,onRow:census.revision});
+ return {...census.finish(),sourceManifestSha256:options.expectedManifestSha256,sourceFilesConsumed:2,
+  sourceRows:(BigInt(checkpoint.file.rows)+BigInt(file.rows)).toString(),
+  sourceBytes:checkpoint.file.bytes+file.bytes,databaseConnections:0};
 }
