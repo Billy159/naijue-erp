@@ -24,3 +24,13 @@ ID 保持原文，不 trim、大小写折叠、UUID cast、按名称合并。输
 ## 成员选择不遍历无关业务 body
 
 `productMembership` 现在仅按密集数组slot读取自有数据型 `id` / `deleted`，不会递归遍历或复制unused body/价格/图像等字段；此改动不表示body已验证。其余最低价/两种master接口字节不变。用冻结对象、不可遍历body、必需metadata getter、重复ID/错误deleted等反例验证。它减少模型中的不必要处理，不是已测数据库/浏览器性能收益。
+
+## 后继：实际 JSONB 数字的精确读取
+
+`minimumPriceFromLegacyJsonText` 接收 profile、overlay、sourcePayload 三份 PostgreSQL `jsonb::text`（无记录用 null），复用上述最低价优先级。`legacy-json.mjs` 使用 Node24 的 JSON reviver 原始 token，将数字保存在不可隐式 JSON 序列化的对象中；选中的价格才显式取回精确十进制文本。超过 JS 安全整数、四位小数、负零及指数均不经过 Number 舍入。字符串与明确 null 原样保留；bool/object/缺值不假装价格。解析错误不回显业务正文。
+
+这只解决旧 JSON 数字进入转换程序时的精度丢失风险，不决定四位到新版两位金额如何转换，不生成商品、SKU、主码或库存，不是目标保存合同批准。原 `minimumPriceText` 的 string/null 合同保持，其他 master 模型不自动接收数字 token。原始 JSON 文本仍须保留为来源，不能把解码对象重新序列化冒充原件。
+
+Node24.21 定向验证：原有效值规则19项加新 JSON/价格适配7项，共26项通过；显式运行 `tests/native-cleaning-legacy-json.test.mjs`，它不在旧 `tests/*.test.ts` 默认集合。实际旧库价格转换及写后独立对账仍未验证。
+
+读取进展另计：固定37aa的单据/版本同快照读取已在保留隔离副本通过44773/44773、EOF及current_revision关联；原Card03聚合也已独立完成。该结果不把历史不同快照的其他五卡合成统一结论；48资料表的5ca后继正在执行，尚不能登记通过。

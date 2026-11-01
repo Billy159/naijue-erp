@@ -1,5 +1,6 @@
 // DRAFT / SOURCE-EXCERPT MODEL ONLY. No I/O, target IDs, writer, or data approval.
 // Only validated JSON-shaped inputs in the explicitly documented narrow domain.
+import {parseLegacyJsonText, legacyDecimalText} from './legacy-json.mjs';
 function refuse(code) { throw Object.assign(new Error(code), { code }); }
 function object(value) {
   if (value === null || typeof value !== 'object' || Array.isArray(value)
@@ -87,6 +88,30 @@ export function minimumPriceText({ profile, overlay, sourcePayload }) {
   if (!Object.hasOwn(source, 'source') || source.source === null) return null;
   const original = object(source.source);
   return Object.hasOwn(original, '最低售价') ? priceTextOrNull(original['最低售价']) : null;
+}
+
+/** Actual jsonb text adapter for the existing minimum-price precedence.
+ * Only the selected price is converted to exact decimal text. It neither rounds
+ * prices nor validates unused lower-precedence fields as if they were selected.
+ */
+export function minimumPriceFromLegacyJsonText({profileJson, overlayJson, sourcePayloadJson}) {
+  const decode = text => text === null ? null : object(parseLegacyJsonText(text));
+  const profile = decode(profileJson), overlay = decode(overlayJson);
+  for (const body of [profile, overlay]) {
+    if (body && Object.hasOwn(body, 'minimumPrice')) {
+      return minimumPriceText({profile: {minimumPrice: legacyDecimalText(body.minimumPrice)}, overlay: null, sourcePayload: null});
+    }
+  }
+  const source = decode(sourcePayloadJson);
+  if (!source) return null;
+  if (Object.hasOwn(source, 'minimumPrice')) {
+    const value = legacyDecimalText(source.minimumPrice);
+    if (value !== null) return minimumPriceText({profile: null, overlay: null, sourcePayload: {minimumPrice: value}});
+  }
+  if (!Object.hasOwn(source, 'source') || source.source === null) return null;
+  const original = object(source.source);
+  return minimumPriceText({profile: null, overlay: null, sourcePayload: {source:
+    Object.hasOwn(original, '最低售价') ? {'最低售价': legacyDecimalText(original['最低售价'])} : {}}});
 }
 
 function master(value) {
