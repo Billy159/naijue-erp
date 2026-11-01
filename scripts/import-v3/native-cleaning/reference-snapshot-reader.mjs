@@ -63,7 +63,8 @@ export async function readLegacyReferenceTables(client, {pageRows, onReferences,
       signal?.throwIfAborted();
       const {table, keys, keyKind} = legacyReferenceTables[index];
       const cursor = `cleaning_reference_${index}`;
-      const receipt = {table, keyKind, expected: null, rowsRead: '0', eofObserved: false};
+      const receipt = {table, keyKind, expected: null, rowsRead: '0', eofObserved: false,
+        rawJsonUtf8Bytes: '0', largestRawJsonRowUtf8Bytes: '0'};
       progress.push(receipt);
       const count = await client.query(`SELECT count(*)::text AS expected FROM ${table}`);
       const expected = count.rows[0]?.expected;
@@ -72,7 +73,7 @@ export async function readLegacyReferenceTables(client, {pageRows, onReferences,
       await client.query(`DECLARE ${cursor} NO SCROLL CURSOR FOR SELECT
         jsonb_build_array(${keys.map(key => `r.${key}::text`).join(', ')})::text AS source_key_json,
         to_jsonb(r)::text AS raw_json FROM ${table} r ORDER BY ${keys.map(key => `r.${key}`).join(', ')}`);
-      const seen = new Set(); let rowsRead = 0n;
+      const seen = new Set(); let rowsRead = 0n, jsonBytes = 0n, largestRowBytes = 0n;
       for (;;) {
         signal?.throwIfAborted();
         const page = await client.query(`FETCH FORWARD ${pageRows} FROM ${cursor}`);
@@ -87,9 +88,14 @@ export async function readLegacyReferenceTables(client, {pageRows, onReferences,
           const identity = JSON.stringify(key);
           if (seen.has(identity)) throw new Error('DUPLICATE_REFERENCE_KEY');
           seen.add(identity);
+          const bytes = BigInt(Buffer.byteLength(row.raw_json, 'utf8'));
+          jsonBytes += bytes;
+          if (bytes > largestRowBytes) largestRowBytes = bytes;
         }
         rowsRead += BigInt(page.rows.length);
         receipt.rowsRead = rowsRead.toString();
+        receipt.rawJsonUtf8Bytes = jsonBytes.toString();
+        receipt.largestRawJsonRowUtf8Bytes = largestRowBytes.toString();
         if (rowsRead > BigInt(expected)) throw new Error('REFERENCE_COUNT_EXCEEDED');
         await onReferences(table, page.rows);
         signal?.throwIfAborted();

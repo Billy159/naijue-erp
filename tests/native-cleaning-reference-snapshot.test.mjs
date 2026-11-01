@@ -40,6 +40,9 @@ test('48 reference tables and documents use one transaction, explicit EOF and in
   assert.equal(result.references.length, 48);
   assert.ok(result.references.every(receipt => receipt.eofObserved && receipt.expected === receipt.rowsRead));
   assert.equal(result.references.find(receipt => receipt.table === 'erp_prod_source.product').rowsRead, '2');
+  assert.equal(result.references.find(receipt => receipt.table === 'erp_prod_source.product').rawJsonUtf8Bytes, String(input.reduce((sum, item) => sum + Buffer.byteLength(item.raw_json), 0)));
+  assert.equal(result.references.find(receipt => receipt.table === 'erp_prod_source.product').largestRawJsonRowUtf8Bytes, String(Buffer.byteLength(input[0].raw_json)));
+  assert.equal(result.rawJsonUtf8Bytes.documents, String(Buffer.byteLength('{"amount":9007199254740993.01}')));
   assert.ok(seen.flatMap(batch => batch.rows).every(value => value.raw_json.includes('9007199254740993.01')));
   assert.equal(JSON.stringify(result).includes('p1'), false); // Receipt is metadata/counts only.
   assert.deepEqual(db.calls.at(-1), {release: null});
@@ -51,6 +54,15 @@ test('retired rows with identical business JSON retain independent snapshot-loca
   assert.equal(seen.length, 2);
   assert.equal(result.references.find(receipt => receipt.table === table).keyKind, 'SNAPSHOT_PHYSICAL_NOT_BUSINESS_ID');
   assert.ok(db.calls.some(sql => typeof sql === 'string' && sql.includes('r.ctid::text')));
+});
+
+test('JSON byte measurements count UTF8 rather than JavaScript character units', async () => {
+  const table = 'erp_prod_source.product', input = {...row('p'), raw_json: '{"值":"衣"}'};
+  const db = database({tables: {[table]: [input]}});
+  const result = await readLegacyDocumentAndReferenceSnapshot(db.pool, sinks());
+  const receipt = result.references.find(item => item.table === table);
+  assert.equal(receipt.rawJsonUtf8Bytes, '13');
+  assert.equal(receipt.largestRawJsonRowUtf8Bytes, '13');
 });
 
 test('composite keys do not collide when their values contain delimiters', async () => {

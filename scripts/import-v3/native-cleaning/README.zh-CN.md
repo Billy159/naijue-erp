@@ -49,3 +49,5 @@
 两个retired条码表的实际目录没有主键，因此只以当前RR快照内的ctid区分物理行，保留内容相同的重复历史行。它不是库存/SKU身份、目标ID、持久来源键或以后快照的续传键；不得据此合并、重编或写业务记录。其他表按已核目录的真实主键。未访问任何认证表或会话，尚未包括库存生效状态、库存流水、全来源追溯和账号凭据，故不是完整旧库转换器。
 
 Node24定向检查：`node --test tests/native-cleaning-document-snapshot.test.mjs tests/native-cleaning-reference-snapshot.test.mjs`。覆盖共同事务、精确JSON文本、复合键、无主键退役重复行、缺页/重复/无效键/消费失败/取消/回滚。真实PG权限、ctid读取、数据规模及48表与单据的完整同快照仍待验证；旧37aa单据专用固定候选不被该未验增量替代。
+
+完整返回还记录各表/单据的 `rawJsonUtf8Bytes` 和 `largestRawJsonRowUtf8Bytes`，只计算原JSON文本的UTF8字节数，不输出原文；不是TOAST存储量、压缩率、PG协议总传输量或性能达标证明。用于接下来核实际私域产物容量，不能以此前存储字节推断展开字节。失败进度仍不代表完整来源。

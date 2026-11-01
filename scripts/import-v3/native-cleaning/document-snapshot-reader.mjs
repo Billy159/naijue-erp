@@ -66,6 +66,7 @@ async function readLegacySnapshot(pool, {
     }
     const headers = new Map(), revisionKeys = new Set(), currentFound = new Set();
     const totals = { documents: 0n, revisions: 0n };
+    const jsonBytes = {documents: 0n, revisions: 0n}, largestRowBytes = {documents: 0n, revisions: 0n};
     const consume = async (cursor, kind, sink) => {
       for (;;) {
         active();
@@ -89,6 +90,9 @@ async function readLegacySnapshot(pool, {
           if (typeof row.source_revision !== 'string' || !/^-?[0-9]+$/.test(row.source_revision)) {
             throw new Error('INVALID_SOURCE_REVISION');
           }
+          const bytes = BigInt(Buffer.byteLength(row.raw_json, 'utf8'));
+          jsonBytes[kind] += bytes;
+          if (bytes > largestRowBytes[kind]) largestRowBytes[kind] = bytes;
         }
         totals[kind] += BigInt(page.rows.length);
         progress[kind].rowsRead = totals[kind].toString();
@@ -114,6 +118,8 @@ async function readLegacySnapshot(pool, {
     return { status: includeReferences ? 'COMPLETE_DOCUMENT_AND_REFERENCE_SNAPSHOT' : 'COMPLETE_DOCUMENT_SNAPSHOT', identity,
       counts: { documents: totals.documents.toString(), revisions: totals.revisions.toString() },
       eof: { documents: true, revisions: true }, currentPointersVerified: true,
+      rawJsonUtf8Bytes: Object.fromEntries(Object.entries(jsonBytes).map(([key, value]) => [key, value.toString()])),
+      largestRawJsonRowUtf8Bytes: Object.fromEntries(Object.entries(largestRowBytes).map(([key, value]) => [key, value.toString()])),
       businessWrites: false, ...(includeReferences ? {references} : {}) };
   } catch (error) {
     // Counts only, never source values. Partial output is not a completion receipt.
