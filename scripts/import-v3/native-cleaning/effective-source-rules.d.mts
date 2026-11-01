@@ -10,6 +10,8 @@ export function productMembership(input: unknown): ProductMembership[];
 export function minimumPriceText(input: unknown): string | null;
 /** PostgreSQL jsonb text adapter; numeric prices retain their exact token, without rounding. */
 export function minimumPriceFromLegacyJsonText(input: {profileJson: string | null; overlayJson: string | null; sourcePayloadJson: string | null}): string | null;
+/** Already losslessly decoded bodies, including exact numeric token wrappers. */
+export function minimumPriceFromLegacyObjects(input: {profile: unknown; overlay: unknown; sourcePayload: unknown}): string | null;
 /** Only the merge AFTER the old source/static master row factory. No kind-specific defaults. */
 export function mergeProductMasterRecord(input: unknown): MasterRecord;
 /** Only replacement AFTER specialized fund/party projections. No permission or login inference. */

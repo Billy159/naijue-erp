@@ -96,13 +96,22 @@ export function minimumPriceText({ profile, overlay, sourcePayload }) {
  */
 export function minimumPriceFromLegacyJsonText({profileJson, overlayJson, sourcePayloadJson}) {
   const decode = text => text === null ? null : object(parseLegacyJsonText(text));
-  const profile = decode(profileJson), overlay = decode(overlayJson);
+  return selectExactMinimumPrice(decode(profileJson),decode(overlayJson),()=>decode(sourcePayloadJson));
+}
+
+/** Same selection on already losslessly decoded private snapshot bodies. Never
+ * serialize opaque numeric tokens to pass them through ordinary JSON again. */
+export function minimumPriceFromLegacyObjects({profile, overlay, sourcePayload}) {
+  return selectExactMinimumPrice(optionalObject(profile),optionalObject(overlay),()=>optionalObject(sourcePayload));
+}
+
+function selectExactMinimumPrice(profile,overlay,readSource) {
   for (const body of [profile, overlay]) {
     if (body && Object.hasOwn(body, 'minimumPrice')) {
       return minimumPriceText({profile: {minimumPrice: legacyDecimalText(body.minimumPrice)}, overlay: null, sourcePayload: null});
     }
   }
-  const source = decode(sourcePayloadJson);
+  const source = readSource();
   if (!source) return null;
   if (Object.hasOwn(source, 'minimumPrice')) {
     const value = legacyDecimalText(source.minimumPrice);
