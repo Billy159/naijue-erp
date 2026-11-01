@@ -52,7 +52,7 @@
 
 本轮重新运行原 test_key_phase.py 的 ProtocolTests/EngineTests 共27项，通过；另连续17页核对所有KEY/PAYLOAD绑定均使用16且两源EOF/COUNT一致，通过。未重跑无变化的源码载体测试，T45须重新绑定执行清单。真实隔离后继已完成：原T45 job `t45-minimal-rdb-card03-page16-ro03-20261102-01`，单次555.724秒。revision44773行/2800页含空EOF，employee99行/8页含空EOF，同一RR只读会话，两源独立COUNT一致。真实ROLLBACK ACK、客户端退出、最终其他客户端0和原副本停止均有回执，生产/业务写入/新恢复/授权变更0。原五卡未重跑，不能拼为共同快照。准确EXECUTION-RESULT.json SHA256为`f5815e589d8d5f251431700f50bab07374dd309bb758043788adecf672f64b7b`，在原T45 `outputs/T45/revisions/20261102-card03-page16-ro03-preparation-01/`。仅该聚合范围通过，不代表JSON业务映射、完整单据读取器、清洗、迁移或上线。已有计划/统计证明两源走有效主键索引，JSON存储体积较大；尚未证明内部超时根因。
 
-## 商品、字典及关联资料与单据的共同快照（源码接入，未验真实PG）
+## 商品、字典及关联资料与单据的共同快照（5ca固定版本已验真实PG）
 
 `readLegacyDocumentAndReferenceSnapshot` 共用原单据读取器的唯一连接和RR只读事务，先读取 `reference-snapshot-reader.mjs` 列明的48张资料、SKU选项、条码、图片和维护记录表，再读全部单据头/版本。`onReferences(table, rows)` 仅接收私域暂存批次；最终完整返回前不得交写入器。逐表游标、原生主键顺序、显式空EOF、独立COUNT及跨页重复检查；JSON原文不经JS数值解析。
 
@@ -61,3 +61,15 @@
 Node24定向检查：`node --test tests/native-cleaning-document-snapshot.test.mjs tests/native-cleaning-reference-snapshot.test.mjs`。覆盖共同事务、精确JSON文本、复合键、无主键退役重复行、缺页/重复/无效键/消费失败/取消/回滚。真实PG权限、ctid读取、数据规模及48表与单据的完整同快照仍待验证；旧37aa单据专用固定候选不被该未验增量替代。
 
 完整返回还记录各表/单据的 `rawJsonUtf8Bytes` 和 `largestRawJsonRowUtf8Bytes`，只计算原JSON文本的UTF8字节数，不输出原文；不是TOAST存储量、压缩率、PG协议总传输量或性能达标证明。用于接下来核实际私域产物容量，不能以此前存储字节推断展开字节。失败进度仍不代表完整来源。
+
+后继实际结果：固定5ca5b5e45d3b0c0be73e378f8d55140f406abbfe、T45 job `t45-legacy-reference48-document-snapshot-readonly-20261102-02` 完成401.704秒。48表74302行、44773单据头、44773版本全部EOF/COUNT一致，同一RRRO，当前版本指针成立。资料原JSON为72483873字节，单据头1407386089字节、版本4552504541字节；最大版本行10662511字节。数据仅内存消费后丢弃，没有形成转换文件。ROLLBACK ACK1、池关闭、末次其他客户端0、临时候选移除、保留库停止均有准确回执。报告SHA256 `dddea3e42786cf9b099e56f91b53d0720d70bc3d035d7641bed3f457550ef73c`，位于原T45 `outputs/T45/revisions/20261102-reference48-document-carrier-staging-fix-01/EXECUTION-RESULT.json`。
+
+第一次同范围尝试因临时目录漏复制reference模块，Node加载失败，原失败收据保留；第二次只补准确复制闭包并用新键新有限窗口执行。此PASS不覆盖下面新增库存读取范围，也不证明所有原生映射、认证、清洗写入、性能目标或正式业务。
+
+## 库存、过账和历史效果来源（新增源码，未验真实PG）
+
+`inventory-effect-snapshot-reader.mjs` 由已留存真实目录的原主键生成42张固定表清单，覆盖当前库存代次/成员/资格关联、原formal/history/opening依据及增量、标准SKU关系、posting/movement/version_history/work记录和原source库存。临时库存导出缓存不纳入；不读取认证/会话。与资料读取共用分页实现，JSON原文、负数量、所有代次和独立版本身份均保留，不求和、不按时间猜有效代次、不补缺失为零。
+
+`readLegacyCleaningSnapshot` 是新增显式入口：42库存/效果表＋48资料表＋单据头/版本同一连接、同一RRRO、逐表独立COUNT/EOF。调用者提供 `onInventory` 等私域回调及实际目标权限/目录核验；缺回调在连接前拒绝。库存错误仅附 `inventorySnapshotProgress` 的表名/计数/EOF/字节元数据，不输出正文，不进入后续资料和单据。原两入口的范围不扩大，库存模块仅新入口按需加载。
+
+新增5项加原读取/文件测试共35项Node24合成通过，未实际读取这42表。该入口仍缺认证身份的私域完整提取、其他原始来源追溯及最终有效库存选择/独立对账，不称全库提取完成。原库存consumer优先维护库存、备用formal投影；不能把捕获的多层数据全部叠加过账。实际原JSON已超过6GB，私域导出必须按真实资源选择明确容量，不能在本机2.5GiB余量下盲目落盘或假称导出完成。

@@ -54,15 +54,28 @@ export const legacyReferenceTables = Object.freeze([
   {"table":"erp_prod_runtime.master_data_history","keys":["kind","id","version"],"keyKind":"PRIMARY_KEY"},
 ].map(row => Object.freeze({...row, keys: Object.freeze(row.keys)})));
 
-export async function readLegacyReferenceTables(client, {pageRows, onReferences, signal}) {
+export function readLegacyReferenceTables(client, options) {
+  return readFixedLegacyTableSet(client, legacyReferenceTables, options);
+}
+
+/** Internal reuse for fixed catalogue-derived table lists, inside the caller's RRRO.
+ * This does not authorize arbitrary callers or establish target identity/permissions.
+ */
+export async function readFixedLegacyTableSet(client, specifications, {pageRows, onReferences, signal, cursorPrefix = 'cleaning_reference', progressProperty = 'referenceSnapshotProgress'}) {
   if (!Number.isSafeInteger(pageRows) || pageRows < 1 || pageRows > 500) throw new Error('INVALID_REFERENCE_PAGE_SIZE');
   if (typeof onReferences !== 'function') throw new Error('REFERENCE_SNAPSHOT_SINK_REQUIRED');
+  if (!['referenceSnapshotProgress', 'inventorySnapshotProgress'].includes(progressProperty)
+    || !/^[a-z_]+$/.test(cursorPrefix) || !Array.isArray(specifications) || !specifications.length
+    || new Set(specifications.map(row => row.table)).size !== specifications.length
+    || specifications.some(row => !/^erp_prod_(source|runtime)\.[a-z_]+$/.test(row.table)
+      || !Array.isArray(row.keys) || !row.keys.length || row.keys.some(key => !/^[a-z_]+$/.test(key))
+      || !['PRIMARY_KEY','SNAPSHOT_PHYSICAL_NOT_BUSINESS_ID'].includes(row.keyKind))) throw new Error('FIXED_LEGACY_TABLE_SPECIFICATION_REQUIRED');
   const progress = [];
   try {
-    for (let index = 0; index < legacyReferenceTables.length; index++) {
+    for (let index = 0; index < specifications.length; index++) {
       signal?.throwIfAborted();
-      const {table, keys, keyKind} = legacyReferenceTables[index];
-      const cursor = `cleaning_reference_${index}`;
+      const {table, keys, keyKind} = specifications[index];
+      const cursor = `${cursorPrefix}_${index}`;
       const receipt = {table, keyKind, expected: null, rowsRead: '0', eofObserved: false,
         rawJsonUtf8Bytes: '0', largestRawJsonRowUtf8Bytes: '0'};
       progress.push(receipt);
@@ -106,7 +119,7 @@ export async function readLegacyReferenceTables(client, {pageRows, onReferences,
     return progress;
   } catch (error) {
     if (error instanceof Error && Object.isExtensible(error)) {
-      error.referenceSnapshotProgress = Object.freeze(progress.map(row => Object.freeze({...row})));
+      error[progressProperty] = Object.freeze(progress.map(row => Object.freeze({...row})));
     }
     throw error;
   }

@@ -15,9 +15,17 @@ export function readLegacyDocumentAndReferenceSnapshot(pool, options) {
   return readLegacySnapshot(pool, options, true);
 }
 
+/** Same snapshot capture of inventory/effect evidence, references and documents.
+ * All generations/bases remain source evidence. This does not select a balance,
+ * sum old postings into stock, grant zero qualification or authorize target writes.
+ */
+export function readLegacyCleaningSnapshot(pool, options) {
+  return readLegacySnapshot(pool, options, true, true);
+}
+
 async function readLegacySnapshot(pool, {
-  pageRows = 100, onDocuments, onRevisions, onReferences, signal,
-}, includeReferences) {
+  pageRows = 100, onDocuments, onRevisions, onReferences, onInventory, signal,
+}, includeReferences, includeInventory = false) {
   if (!Number.isSafeInteger(pageRows) || pageRows < 1 || pageRows > 500) {
     throw new Error('INVALID_DOCUMENT_PAGE_SIZE');
   }
@@ -25,6 +33,7 @@ async function readLegacySnapshot(pool, {
     throw new Error('DOCUMENT_SNAPSHOT_SINK_REQUIRED');
   }
   if (includeReferences && typeof onReferences !== 'function') throw new Error('REFERENCE_SNAPSHOT_SINK_REQUIRED');
+  if (includeInventory && typeof onInventory !== 'function') throw new Error('INVENTORY_SNAPSHOT_SINK_REQUIRED');
   const client = await pool.connect();
   let transaction = false, releaseError;
   const progress = {
@@ -54,6 +63,10 @@ async function readLegacySnapshot(pool, {
     if (identity?.read_only !== 'on' || identity.isolation !== 'repeatable read') {
       throw new Error('DOCUMENT_READONLY_SNAPSHOT_REQUIRED');
     }
+    // Load this additional fixed scope only for its explicit entry point. Existing
+    // document/reference deployments do not acquire an unused module dependency.
+    const inventory = includeInventory
+      ? await (await import('./inventory-effect-snapshot-reader.mjs')).readLegacyInventoryEffectTables(client, {pageRows, onInventory, signal}) : undefined;
     const references = includeReferences
       ? await readLegacyReferenceTables(client, {pageRows, onReferences, signal}) : undefined;
     const counts = await client.query(`SELECT
@@ -115,12 +128,13 @@ async function readLegacySnapshot(pool, {
     active();
     await client.query('ROLLBACK');
     transaction = false;
-    return { status: includeReferences ? 'COMPLETE_DOCUMENT_AND_REFERENCE_SNAPSHOT' : 'COMPLETE_DOCUMENT_SNAPSHOT', identity,
+    return { status: includeInventory ? 'COMPLETE_SCOPED_LEGACY_CLEANING_SNAPSHOT'
+      : includeReferences ? 'COMPLETE_DOCUMENT_AND_REFERENCE_SNAPSHOT' : 'COMPLETE_DOCUMENT_SNAPSHOT', identity,
       counts: { documents: totals.documents.toString(), revisions: totals.revisions.toString() },
       eof: { documents: true, revisions: true }, currentPointersVerified: true,
       rawJsonUtf8Bytes: Object.fromEntries(Object.entries(jsonBytes).map(([key, value]) => [key, value.toString()])),
       largestRawJsonRowUtf8Bytes: Object.fromEntries(Object.entries(largestRowBytes).map(([key, value]) => [key, value.toString()])),
-      businessWrites: false, ...(includeReferences ? {references} : {}) };
+      businessWrites: false, ...(includeReferences ? {references} : {}), ...(includeInventory ? {inventory} : {}) };
   } catch (error) {
     // Counts only, never source values. Partial output is not a completion receipt.
     if (error instanceof Error && Object.isExtensible(error)) {
