@@ -2,22 +2,35 @@ import {mkdir, open, link} from 'node:fs/promises';
 import {isAbsolute, join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {legacyReferenceTables} from './reference-snapshot-reader.mjs';
-import {readLegacyDocumentAndReferenceSnapshot} from './document-snapshot-reader.mjs';
+import {legacyInventoryEffectTables} from './inventory-effect-snapshot-reader.mjs';
+import {readLegacyDocumentAndReferenceSnapshot, readLegacyCleaningSnapshot} from './document-snapshot-reader.mjs';
 
 /** Private provisional source files, not an import authorization or target writer.
  * A new caller-owned directory is mandatory. Existing files are never replaced.
  * COMPLETE.json links to a fully flushed manifest after EOF/count/pointer/ROLLBACK success.
  * Failure retains an incomplete private directory; it cannot be consumed as complete.
  */
-export async function captureLegacyDocumentAndReferenceSnapshot(pool, {
+export function captureLegacyDocumentAndReferenceSnapshot(pool, options) {
+  return captureSnapshot(pool, options, false);
+}
+
+/** Additional inventory/effect evidence and the one exact mapping setting share
+ * the same RR snapshot and bounded private files; credentials remain excluded.
+ */
+export function captureLegacyCleaningSnapshot(pool, options) {
+  return captureSnapshot(pool, options, true);
+}
+
+async function captureSnapshot(pool, {
   directory, maxBytes, pageRows = 16, signal,
-}) {
+}, includeInventory) {
   if (typeof directory !== 'string' || !isAbsolute(directory)) throw new Error('ABSOLUTE_PRIVATE_SNAPSHOT_DIRECTORY_REQUIRED');
   if (!Number.isSafeInteger(maxBytes) || maxBytes <= 0) throw new Error('EXPLICIT_PRIVATE_SNAPSHOT_BYTE_BUDGET_REQUIRED');
   signal?.throwIfAborted();
   // No recursive mkdir: caller must choose/protect the parent outside source/Git.
   await mkdir(directory, {mode: 0o700});
-  const tables = [...legacyReferenceTables.map(row => row.table), 'erp_prod_runtime.document', 'erp_prod_runtime.revision'];
+  const tables = [...(includeInventory ? legacyInventoryEffectTables.map(row => row.table) : []),
+    ...legacyReferenceTables.map(row => row.table), 'erp_prod_runtime.document', 'erp_prod_runtime.revision'];
   const files = new Map(); let totalBytes = 0, failure;
   try {
     for (const table of tables) {
@@ -39,12 +52,14 @@ export async function captureLegacyDocumentAndReferenceSnapshot(pool, {
         file.hash.update(bytes); file.rows++; file.bytes += bytes.length; totalBytes += bytes.length;
       }
     };
-    const receipt = await readLegacyDocumentAndReferenceSnapshot(pool, {
+    const reader = includeInventory ? readLegacyCleaningSnapshot : readLegacyDocumentAndReferenceSnapshot;
+    const receipt = await reader(pool, {
       pageRows, signal, onReferences: append,
+      ...(includeInventory ? {onInventory: append} : {}),
       onDocuments: rows => append('erp_prod_runtime.document', rows),
       onRevisions: rows => append('erp_prod_runtime.revision', rows),
     });
-    const expected = new Map(receipt.references.map(row => [row.table, row.rowsRead]));
+    const expected = new Map([...receipt.references, ...(receipt.inventory ?? [])].map(row => [row.table, row.rowsRead]));
     expected.set('erp_prod_runtime.document', receipt.counts.documents);
     expected.set('erp_prod_runtime.revision', receipt.counts.revisions);
     const manifests = [];
@@ -56,8 +71,9 @@ export async function captureLegacyDocumentAndReferenceSnapshot(pool, {
     }
     signal?.throwIfAborted();
     const manifest = {status: 'COMPLETE_SCOPED_PRIVATE_SNAPSHOT',
-      scope: '48_REFERENCE_TABLES_PLUS_DOCUMENT_AND_REVISION_ONLY',
-      excludes: ['inventory-and-posting', 'credentials', 'target-conversion-and-writes'],
+      scope: includeInventory ? '42_INVENTORY_EFFECT_TABLES_AND_EXACT_SIZE_MAPPING_SETTING_PLUS48_REFERENCES_AND_DOCUMENT_REVISION'
+        : '48_REFERENCE_TABLES_PLUS_DOCUMENT_AND_REVISION_ONLY',
+      excludes: [...(includeInventory ? [] : ['inventory-and-posting']), 'credentials', 'additional-original-source-lineage', 'target-conversion-and-writes'],
       totalBytes, files: manifests, receipt};
     const manifestBytes = Buffer.from(JSON.stringify(manifest, null, 2) + '\n', 'utf8');
     if (manifestBytes.length > maxBytes - totalBytes) throw new Error('PRIVATE_SNAPSHOT_BYTE_BUDGET_EXCEEDED');

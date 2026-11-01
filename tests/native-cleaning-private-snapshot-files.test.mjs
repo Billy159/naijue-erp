@@ -4,7 +4,7 @@ import {mkdtemp, readFile, stat, access} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {captureLegacyDocumentAndReferenceSnapshot} from '../scripts/import-v3/native-cleaning/private-snapshot-files.mjs';
+import {captureLegacyDocumentAndReferenceSnapshot, captureLegacyCleaningSnapshot} from '../scripts/import-v3/native-cleaning/private-snapshot-files.mjs';
 
 function database({failure} = {}) {
   const calls = [], positions = new Map(); let connections = 0;
@@ -19,7 +19,7 @@ function database({failure} = {}) {
       if (sql.startsWith('FETCH')) {
         const cursor = sql.split(' ').at(-1), count = positions.get(cursor) ?? 0;
         positions.set(cursor, count + 1);
-        return {rows: cursor.startsWith('cleaning_reference_') || count > 0 ? [] :
+        return {rows: cursor.startsWith('cleaning_reference_') || cursor.startsWith('cleaning_inventory_effect_') || count > 0 ? [] :
           [{source_document_id: 'synthetic-id', source_revision: '1', raw_json: '{"amount":9007199254740993.1234,"note":"衣\\n"}'}]};
       }
       return {rows: []};
@@ -47,6 +47,18 @@ test('complete private snapshot preserves raw numbers, hashes actual files and c
   assert.equal((await stat(directory)).mode & 0o777, 0o700);
   assert.equal(db.connections, 1);
   assert.equal(db.calls.filter(sql => sql === 'ROLLBACK').length, 1);
+});
+
+test('inventory capture writes all93 scopes in the one original RR transaction', async () => {
+  const directory = await destination(), db = database();
+  const result = await captureLegacyCleaningSnapshot(db.pool, {directory, maxBytes: 1024 * 1024});
+  assert.equal(result.files.length, 93);
+  assert.equal(result.receipt.inventory.length, 43);
+  assert.equal(result.files.find(file => file.table === 'erp_prod_runtime.posting').rows, '0');
+  assert.equal(db.connections, 1);
+  assert.equal(db.calls.filter(sql => sql === 'ROLLBACK').length, 1);
+  assert.ok(result.excludes.includes('credentials'));
+  assert.ok(result.excludes.includes('target-conversion-and-writes'));
 });
 
 test('existing directory is not touched and no database connection is taken', async () => {
