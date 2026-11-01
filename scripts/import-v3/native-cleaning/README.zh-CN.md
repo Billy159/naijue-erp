@@ -26,7 +26,7 @@
 
 测试：exact Node24.21原生TS，`node --test tests/native-cleaning-exact-scalars.test.ts`；不需要npm安装。聚合根tests/*.test.ts可收集。仅数学与恶意输入纯测，不是全转换/PG/全根gate PASS。
 
-## 同快照单据读取（真实隔离首测失败，尚未完整验证）
+## 同快照单据读取（37aa单据专用后继已通过；后续资料联合版本未验）
 
 `document-snapshot-reader.mjs` 的 `readLegacyDocumentSnapshot(pool, options)` 消费调用方已有连接池，使用一个普通账号连接和一个 REPEATABLE READ READ ONLY 事务，顺序读取旧 `erp_prod_runtime.document` 与全部 `revision`。服务端游标分批 FETCH，显式空页确认 EOF，按同快照独立 COUNT 核对数量，拒绝重复身份、孤儿版本和缺少 current_revision。不会按最大版本猜当前值。完整 JSON 保持文本，避免 JavaScript 数值与日期解析丢失精度；不读取认证表。
 
@@ -35,6 +35,8 @@
 12 项合成调用链测试覆盖分页边界、精确 JSON 文本、缺页、重复、孤儿、缺当前版本、失败、取消和连接释放，以及 BEGIN 结果未知时弃用连接。这些测试不证明真实 PostgreSQL 游标、权限、性能或 Card03 聚合通过。其余商品、字典、库存、人员仍待同快照接入，之前五卡不能拼为同快照结论。
 
 失败异常的 `snapshotProgress` 仅含各表已知 expected、rowsRead、eofObserved，不含身份或正文；显式 EOF 与总数不符仍拒绝，进度不是完成凭证。真实隔离首测6455版通过目标与COUNT，但一次document FETCH超时57014；307次成功FETCH不能据此猜总行数，revision未进入，仍未通过。12项是当前改动的合成测试，不替换该真实失败记录。
+
+后继固定37aa/c53版本以pageRows16已实际完成：T45 job `t45-legacy-document-snapshot-page16-readonly-20261102-01` 单次559.723秒，44773个头/44773版本，各2800次FETCH含空EOF，独立COUNT一致、全部current_revision指针成立。实际ROLLBACK ACK1、池关闭、最终其他连接0、原副本停止，新Node容器已移除。原JSON仅内存消费，没有保存转换产物。结果SHA256 `8fd5c9f057035a7ba320d146d2251ea253741ef68be8a31b5a8d4595064ce958`，在原T45 `outputs/T45/revisions/20261102-document-snapshot-page16-preparation-01/EXECUTION-RESULT.json`。此事实不覆盖随后增加的48表共同快照及字节统计，也未覆盖旧posting/movement/version_history等独立效果/审计表。
 
 ## Card03 原聚合流程的有界分页修订
 
