@@ -123,3 +123,9 @@ Node24定向检查：`node --test tests/native-cleaning-document-snapshot.test.m
 此前两项载体失败保留：初始化后的额外全集群membership断言误计内置角色关系；实际安装API源码ROOT带尾斜线，被原规范路径校验在连接前拒绝。准确后继只收窄载体到原守卫范围、规范化ROOT，没有放宽源校验或重放初始化/失败作业。固定新导出直接调用真实 `verifyUnifiedExecutionSource` 已通过。新ROOT回归和原安装定向测试共15项通过；mac journal项需规范 `TMPDIR=/private/tmp`，失败原记录保留。
 
 普通运行角色、员工身份登录、旧数据转换写入、独立目标读回及业务验证仍未完成，不能把结构安装记为迁移完成或可上线。原T45完整收据在 `outputs/T45/revisions/20261102-unified-schema-only-preparation-01/install02-transport/release-receipts/t45-rewrite26-schema-install02-20261102-01/`；raw install-result SHA256 `c48c6815c5137d338b614cb5ec89045696dfa022951fe5726bf5bf7a8c5d7de3`。不将真实数据或凭据复制进源码仓库。
+
+### 单据文件 census 的实际限时失败与诊断边界
+
+原 T45 `t45-document-source-census-files-readonly-20261102-01` 在 300248ms 动作期限结束，整项 305.725 秒、exit2，没有完整聚合或可靠末行进度。准确结果为单据正文统计未知，不是数据错误或业务转换通过；两份文件仍保留，原93项同快照采集与完整文件复核结论不变。无 PG 启动、认证访问或目标写入，临时候选已停止并清理。
+
+本机 Node24 的 6,282,683 字节合成样本，原生 JSON.parse 三次为11/10/12ms，原无损解析为92/98/91ms，仅选中字段包装数字的 reviver 为89/85/99ms。这只说明该合成样本中的遍历回调开销不能靠减少包装对象解决，不证明真实私域文件失败根因，也不作为删掉精确数量解析或提高期限的依据。下一步由原 T45 对同一既存文件做有限前缀分阶段诊断，不重复完整作业、不重新采集数据库；前缀不是完整 EOF、文件摘要核验或转换验证。
