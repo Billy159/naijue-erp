@@ -6,6 +6,7 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {launchCommands, parseLaunchArgs, main, requiredAcceptance, runLaunch, fixedCheckoutCommit} from './check-launch.mjs';
+import {historicalClosureDescriptor} from '../tests/historical-runtime26/oracle.mjs';
 
 const commit = 'a'.repeat(40), bytes = Buffer.from('fixed independently accepted receipt');
 const acceptance = {candidateCommit: commit, entries: requiredAcceptance.map(taskId => ({taskId,
@@ -172,16 +173,40 @@ const preparationUnitTests = Object.freeze([
   'tests/performance/opt00/pg-component/offline.test.mjs',
   'tests/performance/opt01/default-regression.test.mjs'
 ]);
-const rootTestCommand = () => JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).scripts.test;
+// These two original complete leaves remain required effective units. They run
+// only through the source-verified paired oracle, not the active successor graph.
+const historicalOriginalEntrypoints = Object.freeze([
+  'tests/integration/runtime26-baseline/schema-objects-only/offline.test.mjs',
+  'tests/performance/opt00/pg-component/offline.test.mjs'
+]);
+const historicalTestUnits = Object.freeze([
+  'tests/historical-runtime26/oracle-integrity.test.mjs',
+  'tests/historical-runtime26/original-oracle.test.mjs'
+]);
+const packageScripts = () => JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).scripts;
+const rootTestCommand = () => packageScripts().test;
+function effectiveTestUnits(tokens) {
+  assert.deepEqual(tokens.filter(token => token.startsWith('tests/historical-runtime26/')).sort(), [...historicalTestUnits].sort(),
+    'Select exactly the two reviewed historical wrappers, never a directory or wildcard');
+  return tokens.flatMap(token => token === historicalTestUnits[1] ? historicalOriginalEntrypoints :
+    token === historicalTestUnits[0] ? [] : [token]);
+}
 function assertSafeDefaultTestEntry(command) {
   const tokens = command.trim().split(/\s+/);
   assert.deepEqual(tokens.slice(0, 2), ['node', '--test'], 'Preserve the default native Node test entry');
-  const selected = tokens.filter(token => token.startsWith('tests/integration/'));
+  const effective = effectiveTestUnits(tokens);
+  const selected = effective.filter(token => token.startsWith('tests/integration/'));
   assert.deepEqual(selected.sort(), [...sourceOnly].sort());
-  assert.deepEqual(tokens.filter(token => token.startsWith('tests/performance/')).sort(), [...preparationUnitTests].sort());
-  const allowed = new Set(['tests/*.test.ts', ...sourceOnly, ...preparationUnitTests]);
+  assert.deepEqual(effective.filter(token => token.startsWith('tests/performance/')).sort(), [...preparationUnitTests].sort());
+  const allowed = new Set(['tests/*.test.ts', ...sourceOnly, ...preparationUnitTests, ...historicalTestUnits]);
   for (const token of tokens.filter(token => token.startsWith('tests/')))
     assert.ok(allowed.has(token), `Default tests must not implicitly select an engine, collector or benchmark: ${token}`);
+}
+function assertSafeHistoricalTestEntry(command) {
+  const tokens = command.trim().split(/\s+/);
+  effectiveTestUnits(tokens);
+  assert.deepEqual(tokens, ['node', '--test', ...historicalTestUnits,
+    'tests/native-runtime26-sequence-system-acl-successor.test.ts', 'tests/unified-new-target-install.test.ts']);
 }
 
 test('default root tests explicitly select source-only integration and exact offline preparation units', () => {
@@ -219,9 +244,50 @@ test('default test entry refuses engine/collector/browser/recursive-glob additio
     'tests/performance/opt01/*.mjs',
     'tests/**/*.test.mjs'
   ]) assert.throws(() => assertSafeDefaultTestEntry(command + ' ' + forbidden), {name: 'AssertionError'}, forbidden);
-  for (const required of [...sourceOnly, ...preparationUnitTests]) {
-    assert.throws(() => assertSafeDefaultTestEntry(command.replace(required, '')), {name: 'AssertionError'}, 'Missing ' + required);
+  for (const required of [...sourceOnly, ...preparationUnitTests, ...historicalTestUnits]) {
+    const token = historicalOriginalEntrypoints.includes(required) ? historicalTestUnits[1] : required;
+    assert.throws(() => assertSafeDefaultTestEntry(command.replace(token, '')), {name: 'AssertionError'}, 'Missing effective unit ' + required);
     assert.throws(() => assertSafeDefaultTestEntry(command + ' ' + required), {name: 'AssertionError'}, 'Duplicate ' + required);
+  }
+});
+
+test('historical wrapper closes exactly two complete original source leaves and preserves both required unit sets', async () => {
+  // The real helper checks its unchanged manifest digest; it does not accept a
+  // caller-supplied entry list. Its paired graph verifies the original leaf bytes.
+  const closure = await historicalClosureDescriptor();
+  assert.deepEqual(closure.entrypoints, historicalOriginalEntrypoints);
+  const manifest = JSON.parse(readFileSync(new URL('../tests/historical-runtime26/HISTORICAL-TEST-CLOSURE.json', import.meta.url), 'utf8'));
+  for (const entry of historicalOriginalEntrypoints) {
+    assert.ok([...sourceOnly, ...preparationUnitTests].includes(entry));
+    const records = manifest.files.filter(row => row.path === entry);
+    assert.equal(records.length, 1);
+    const bytes = readFileSync(new URL('../' + entry, import.meta.url));
+    assert.equal(bytes.length, records[0].bytes);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), records[0].sha256);
+  }
+  assert.deepEqual(effectiveTestUnits(historicalTestUnits), historicalOriginalEntrypoints);
+});
+
+test('root and dedicated source entries reject missing duplicate unknown or wildcard historical selection', () => {
+  const commands = [[rootTestCommand(), assertSafeDefaultTestEntry],
+    [packageScripts()['test:historical-runtime26'], assertSafeHistoricalTestEntry]];
+  for (const [command, check] of commands) {
+    check(command);
+    for (const required of historicalTestUnits) {
+      assert.throws(() => check(command.replace(required, '')), {name: 'AssertionError'}, 'Missing ' + required);
+      assert.throws(() => check(command + ' ' + required), {name: 'AssertionError'}, 'Duplicate ' + required);
+      for (const forbidden of ['tests/historical-runtime26/*.test.mjs',
+        'tests/historical-runtime26/**/*.test.mjs', 'tests/historical-runtime26',
+        'tests/historical-runtime26/new-unknown.test.mjs',
+        'tests/historical-runtime26/collector.test.mjs', 'tests/historical-runtime26/native.test.mjs']) {
+        assert.throws(() => check(command.replace(required, forbidden)), {name: 'AssertionError'}, forbidden);
+        assert.throws(() => check(command + ' ' + forbidden), {name: 'AssertionError'}, forbidden);
+      }
+    }
+    for (const entry of historicalOriginalEntrypoints) {
+      assert.throws(() => check(command + ' ' + entry), {name: 'AssertionError'}, 'Duplicate effective original ' + entry);
+      assert.throws(() => check(command.replace(historicalTestUnits[1], entry)), {name: 'AssertionError'}, 'Unpaired original ' + entry);
+    }
   }
 });
 

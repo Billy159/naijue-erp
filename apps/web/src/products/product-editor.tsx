@@ -1,3 +1,4 @@
+import { productRequiredFeedback } from './product-required-feedback.ts';
 import { ProductMaintenanceError } from './product-editor-contracts.ts';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode, type Dispatch, type SetStateAction } from 'react';
 import { UIButton } from '../components/standard-controls.tsx';
@@ -14,7 +15,7 @@ import { HttpQueryError } from '../transport/http-query.ts';
 import { CATALOGUE_PRICE_KEYS } from '../../../../packages/application/src/catalogue-price-input.ts';
 import { ProductEditorController, productEditorDraftFingerprint, actualSpecSelection, hasUnresolvedSpecSelection, type ProductSpecSelection } from './product-editor-state.ts';
 import { validateProductMaintenanceDetail, validateProductMaintenanceDetailV2 } from './product-maintenance-http-client.ts';
-import type { ProductEditorProps, ProductMaintenanceDetail, ProductWriteValues, ProductSkuInput, ProductBarcodeInput, ProductMaintenanceCommand } from './product-editor-contracts.ts';
+import type { ProductEditorProps, ProductMaintenanceDetail, ProductWriteValues, ProductSkuInput, ProductBarcodeInput, ProductMaintenanceCommand, ProductEditorDraft } from './product-editor-contracts.ts';
 import type { ProductReadOnlyPageTab } from './product-page-contracts.ts';
 import './product-page.css';
 
@@ -125,13 +126,14 @@ function EditorFields(p:Fields){
  const changeSkus=(skus:readonly ProductSkuInput[])=>{p.setSkus(skus);const actual=actualSpecSelection(skus);p.setSpecSelection({colors:[...new Set([...p.specSelection.colors,...actual.colors])],fits:[...new Set([...p.specSelection.fits,...actual.fits])]});};
  const changeSpecSelection=(kind:'colors'|'fits',ids:readonly string[])=>{p.setSpecSelection({...p.specSelection,[kind]:ids});const selected=new Set(ids);p.setSkus(p.skus.map(s=>s.enabled&&!selected.has(kind==='colors'?s.colorId:s.fitId)?{...s,enabled:false}:s));};
  const finish=()=>{const completed=committedProductWrite(p.write,p.scope,p.capability);if(completed){p.onSaved(completed.result.targetId);if(completed.command.action==='DELETE')p.onClose();else p.reload(completed.result.targetId,currentTab.current);}};
- const save=async(action:ProductMaintenanceCommand['action']=existing?'EDIT':'CREATE')=>{p.setError('');try{
+ const save=async(action:ProductMaintenanceCommand['action']=existing?'EDIT':'CREATE')=>{p.setError('');let draft:ProductEditorDraft|undefined;try{
   if(!can(action)||pending||(action==='CREATE'||action==='EDIT')&&(unresolvedSpecs||mediaBlocked))return;
-  if(action==='CREATE')await p.write.submit({action,values:p.values,skus:p.skus,barcodes:p.barcodes,...(mediaDirty?{imageChanges}:{})});
-  else if(p.detail&&action==='EDIT')await p.write.submit({action,id:p.detail.productId,expectedVersion:p.detail.version,values:p.values,skus:p.skus,barcodes:p.barcodes,...(mediaDirty?{imageChanges}:{})});
-  else if(p.detail)await p.write.submit({action:action as 'DELETE'|'DISABLE'|'RESTORE',id:p.detail.productId,expectedVersion:p.detail.version});
+  if(action==='CREATE')draft={action,values:p.values,skus:p.skus,barcodes:p.barcodes,...(mediaDirty?{imageChanges}:{})};
+  else if(p.detail&&action==='EDIT')draft={action,id:p.detail.productId,expectedVersion:p.detail.version,values:p.values,skus:p.skus,barcodes:p.barcodes,...(mediaDirty?{imageChanges}:{})};
+  else if(p.detail)draft={action:action as 'DELETE'|'DISABLE'|'RESTORE',id:p.detail.productId,expectedVersion:p.detail.version};
+  if(draft)await p.write.submit(draft);
   finish();
- }catch{p.setError('请检查必填资料、规格和价格；金额最多两位小数。');}};
+ }catch(error){p.setError(productRequiredFeedback(draft,error)??'请检查必填资料、规格和价格；金额最多两位小数。');}};
  const close=()=>{if(pending)return;if(dirty)p.setLeave(true);else p.onClose();};
  const mediaDraft:ProductMediaDraft|undefined=p.capability.mediaUpload?{uploads:mediaUploads,removed:removedImages,disabled,colors:p.specSelection.colors.map(id=>({id,label:p.labels[`colors:${id}`]??null})),
   add:(files,role,colorId,replace,displayOrder)=>{if(disabled)return;const selected=replace||role==='COLOR'?files.slice(0,1):files;const entries=selected.map((file,index)=>{const url=URL.createObjectURL(file);uploadUrls.current.add(url);return {uploadKey:crypto.randomUUID(),file,url,role:replace?replace.role:role,colorId:replace?replace.colorId:colorId,displayOrder:replace?.displayOrder??displayOrder+index,replace,phase:'uploading' as const};});if(replace){for(const row of uploadsRef.current.filter(row=>row.replace?.id===replace.id))releaseUpload(row);}if(role==='COLOR'){for(const row of uploadsRef.current.filter(row=>row.role==='COLOR'&&row.colorId===colorId))releaseUpload(row);}setMediaUploads(rows=>[...rows.filter(row=>!(replace&&row.replace?.id===replace.id)&&!(role==='COLOR'&&row.role==='COLOR'&&row.colorId===colorId)),...entries]);for(const entry of entries)runUpload(entry);},

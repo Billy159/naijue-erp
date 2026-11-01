@@ -12,7 +12,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p apps/web/demo-replica/tsconfig.runtime.json",
     "build": "tsc -p tsconfig.build.json",
-    "test": "node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/web/src/components/*.test.ts apps/web/src/demo-controls/category-branch-model.test.ts apps/web/src/inventory/*.test.ts apps/web/src/inventory/windowing/*.test.ts apps/web/src/transport/*.test.ts apps/web/src/authentication/*.test.ts apps/web/src/sales/*.test.ts apps/web/src/sales/commands/*.test.ts apps/web/src/parties/*.test.ts apps/web/src/transfers/*.test.ts apps/web/src/transfers/commands/*.test.ts apps/web/src/demo-presentation/*.test.ts apps/api/src/*.test.ts tests/integration/migration-source.test.ts tests/integration/safety.test.ts tests/integration/proof.test.ts tests/integration/backend-source.test.ts tests/integration/runtime26-baseline/offline.test.mjs tests/integration/runtime26-baseline/schema-objects-only/offline.test.mjs tests/performance/opt00/fixture-generator.test.mjs tests/performance/opt00/evidence.test.mjs tests/performance/opt00/bundle-graph.test.mjs tests/performance/opt00/browser-host/canonical-profile.test.mjs tests/performance/opt00/browser-host/host.test.mjs tests/performance/opt00/pg-component/offline.test.mjs tests/performance/opt01/default-regression.test.mjs apps/web/src/current-form/*.test.ts scripts/import-v2/*.test.mjs",
+    "test": "node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/web/src/components/*.test.ts apps/web/src/demo-controls/category-branch-model.test.ts apps/web/src/inventory/*.test.ts apps/web/src/inventory/windowing/*.test.ts apps/web/src/transport/*.test.ts apps/web/src/authentication/*.test.ts apps/web/src/sales/*.test.ts apps/web/src/sales/commands/*.test.ts apps/web/src/parties/*.test.ts apps/web/src/transfers/*.test.ts apps/web/src/transfers/commands/*.test.ts apps/web/src/demo-presentation/*.test.ts apps/api/src/*.test.ts tests/integration/migration-source.test.ts tests/integration/safety.test.ts tests/integration/proof.test.ts tests/integration/backend-source.test.ts tests/integration/runtime26-baseline/offline.test.mjs tests/historical-runtime26/oracle-integrity.test.mjs tests/historical-runtime26/original-oracle.test.mjs tests/performance/opt00/fixture-generator.test.mjs tests/performance/opt00/evidence.test.mjs tests/performance/opt00/bundle-graph.test.mjs tests/performance/opt00/browser-host/canonical-profile.test.mjs tests/performance/opt00/browser-host/host.test.mjs tests/performance/opt01/default-regression.test.mjs apps/web/src/current-form/*.test.ts scripts/import-v2/*.test.mjs",
     "check": "npm run check:dependencies && npm run typecheck && npm run build && npm run smoke:build && npm test",
     "check:dependencies": "node scripts/verify-dependencies.mjs",
     "smoke:build": "node scripts/smoke-build.mjs",
@@ -20,7 +20,7 @@
     "build:preview": "node apps/web/build-preview.mjs",
     "test:web:dom": "node apps/web/tests/run-dom-tests.mjs && node apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs && node apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs",
     "test:web:preview": "node apps/web/tests/run-bundle-smoke.mjs",
-    "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:parties && npm run test:web:application && npm run test:web:transfers && npm run test:web:application:sales && npm run test:web:application:transfers && npm run test:web:product:styles && npm run test:web:product:lifecycle && npm run test:web:preview && npm run check:web:development-host && npm run test:web:demo-restoration && npm run test:web:current-form && npm run check:web:new-document-harness && npm run test:web:unified-service",
+    "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:parties && npm run test:web:application && npm run test:web:transfers && npm run test:web:application:sales && npm run test:web:application:transfers && npm run test:web:product:styles && npm run test:web:product:lifecycle && npm run test:web:product:required && npm run test:web:preview && npm run check:web:development-host && npm run test:web:demo-restoration && npm run test:web:current-form && npm run check:web:new-document-harness && npm run test:web:unified-service",
     "check:all": "npm run check && npm run check:web && npm run test:history:cell-evidence",
     "test:web:auth": "node apps/web/src/authentication/tests/run-dom-tests.mjs",
     "test:web:unified-service": "node --test apps/web/demo-replica/tests/unified-service-fixture.test.mjs",
@@ -44,7 +44,9 @@
     "test:release:pack": "node --test scripts/release/pack.test.mjs",
     "typecheck:launch-api": "tsc --noEmit -p tsconfig.launch-api.json",
     "check:launch": "node scripts/check-launch.mjs",
-    "check:web:production": "node apps/web/demo-replica/check-production.mjs"
+    "check:web:production": "node apps/web/demo-replica/check-production.mjs",
+    "test:web:product:required": "node --test tests/web-product-required-feedback.test.mjs tests/web-product-empty-season-fixture.test.mjs",
+    "test:historical-runtime26": "node --test tests/historical-runtime26/oracle-integrity.test.mjs tests/historical-runtime26/original-oracle.test.mjs tests/native-runtime26-sequence-system-acl-successor.test.ts tests/unified-new-target-install.test.ts"
   },
   "dependencies": {
     "@arco-design/web-react": "2.66.16",

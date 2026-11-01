@@ -1,0 +1,37 @@
+{
+  "status": "OFFLINE_PRIVATE_COMPONENT_CANDIDATE_NOT_CURRENT_STOCK_NOT_AUTHORIZED",
+  "baseline": "95cba4e9a3aff3ab8a5c479b79de61c8436cd57e",
+  "delegatedContracts": [
+    {
+      "path": "scripts/import-v3/native-cleaning/exact-scalars.mjs",
+      "sha256": "5b985de72d979de4ed2c79488db88a0af464e54a48a3cbd1fc5c633ac6a910be"
+    },
+    {
+      "path": "scripts/import-v3/native-cleaning/identity-crosswalk.mjs",
+      "sha256": "0622c30ff7aa9a2888b0e32cc2279d5c3cee8fea6e5a699f3f3c18b694231b16"
+    },
+    {
+      "path": "scripts/import-v3/native-cleaning/record-reconciliation.mjs",
+      "sha256": "e0a44df6586af79ef4f0fba043e59b9c103e80a856fa023806b4752e3b6eb6b2"
+    },
+    {
+      "path": "packages/domain/src/values.ts",
+      "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+    },
+    {
+      "path": "packages/domain/src/errors.ts",
+      "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+    }
+  ],
+  "externalReportedEvidence": {
+    "path": "schema-delta-review/real-five-card-mapping-readiness-v1/READ-FIRST.zh-CN.md",
+    "sha256": "b55134c1c7d2c8c192e7829c28f817c15979d97e4fd078379a87a2d44ee1a09c",
+    "independentlyQueriedByThisModule": false
+  },
+  "sourceNumericContract": "NOT NULL numeric(18,4), integer-valued subset; abs <= 99999999999999",
+  "currentStockSemanticsEstablished": false,
+  "baseV2AuthorityEstablished": false,
+  "cohortAndOracleIndependenceAuthenticated": false,
+  "databaseConnections": 0,
+  "writerCalls": 0
+}

@@ -317,7 +317,8 @@ export class SalesProposalSession {
   }
   async openEntryPicker(direction: 'IN' | 'OUT', kind: 'product' | 'sku', key?: string): Promise<void> {
     const entry = this.#entry(direction, key);
-    if (this.#state.disposed || !entry || !this.#state.draft.hall || this.#state.lineEdit || direction === 'IN' && this.#state.draft.businessType === 'SALE' || kind === 'sku' && !entry.product) return;
+    if (this.#state.disposed || !entry || this.#state.lineEdit || direction === 'IN' && this.#state.draft.businessType === 'SALE' || kind === 'sku' && !entry.product) return;
+    if (!this.#state.draft.hall) { this.closePicker(); this.#publish({ notice: '请先选择营业厅，再查询商品；已输入的搜索内容已保留。' }); return; }
     this.#entryTarget = { direction, key: entry.key }; this.#settlementTarget = null; this.#inlineSettlement = false;
     await this.#read(kind, kind === 'product' ? entry.query : '', kind === 'sku' ? entry.skuPage : 1, kind === 'sku' ? entry.product : null, null);
   }

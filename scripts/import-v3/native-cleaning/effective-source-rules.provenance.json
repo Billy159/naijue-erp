@@ -1,0 +1,46 @@
+{
+  "scope": "PURE_SOURCE_EXCERPT_SELECTION_MODELS_NOT_DATA_CONVERSION_ACCEPTANCE",
+  "controllerPackageSha256": "c975027d600d4ae9bdc38d018bd4d868a0574c0d93ecdac5f9a3383d1cc8dce4",
+  "sourceExcerptsFileSha256": "60badae79767e07d3e477638355c2ea442c3c202a9badccbe03af652a481e2c3",
+  "pairedDeploymentAndFullFileHashes": "CONTROLLER_ASSERTED_FULL_OLD_FILES_NOT_SUPPLIED",
+  "independentVerification": "Package manifest bytes and selected text semantics verified; no actual old data compliance or deployment pairing proof.",
+  "rules": [
+    {
+      "file": "server/domain/products/catalog.js",
+      "claimedFullFileSha256": "8e855c8f33ccf8daee28bcd18234631f50fc8451b57dcd9fa4317b02d6453341",
+      "startLine": 29,
+      "endLine": 53,
+      "excerptTextSha256": "be02cb060f9afc67c8196f70d47a98e8a6ce2f4381188d8331c3a8dfbbe5de40"
+    },
+    {
+      "file": "server/domain/products/masters.js",
+      "claimedFullFileSha256": "53e9bdd3440bf5b4b37adcab1edecf07f196b82d1aa91557fe7a5131b06e512b",
+      "startLine": 8,
+      "endLine": 15,
+      "excerptTextSha256": "fac21f0b8ed42194df3dbfd862b648cc605562178967ec9c6db49338c15b526c"
+    },
+    {
+      "file": "server/security/master-data.js",
+      "claimedFullFileSha256": "79fc98d76e76f99ff894916dcb28f2d12cce3d3de7327cab21da55a27e8e0d5a",
+      "startLine": 118,
+      "endLine": 190,
+      "excerptTextSha256": "86a507817f077e9c704a65ca6332a3fd1af8a0128c07f5ce92dd4ab24e3c117e"
+    },
+    {
+      "file": "server/domain/sales/references.js",
+      "claimedFullFileSha256": "a73a71e79149da9df10efaf751984233dca7024b1711a57572191a8f07aab489",
+      "startLine": 9,
+      "endLine": 21,
+      "excerptTextSha256": "3056370b01c35065a386bb89c62155e0c5e9154230a6dc86ac810343b32bd293"
+    }
+  ],
+  "databaseActions": false,
+  "targetIdentityMapping": false,
+  "writerWiring": false,
+  "membershipImplementationRefinement": {
+    "scope": "Read only own id/deleted metadata; unused business body is opaque and not validated.",
+    "otherThreeInterfacesByteIdentical": true,
+    "independentEvidenceManifestSha256": "67a027e1c6d5e0fe0f42e7353971a32e4292494e4bc2e3ca6331591674f473ed",
+    "actualDatabasePerformanceMeasured": false
+  }
+}
