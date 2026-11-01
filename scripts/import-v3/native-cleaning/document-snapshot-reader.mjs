@@ -1,0 +1,96 @@
+/** Read original headers and every revision in one PostgreSQL snapshot.
+ * JSON stays text: JS number/date conversion must not change source facts.
+ * Caller owns the existing pool, private output and target authorization.
+ */
+export async function readLegacyDocumentSnapshot(pool, {
+  pageRows = 100, onDocuments, onRevisions, signal,
+}) {
+  if (!Number.isSafeInteger(pageRows) || pageRows < 1 || pageRows > 500) {
+    throw new Error('INVALID_DOCUMENT_PAGE_SIZE');
+  }
+  if (typeof onDocuments !== 'function' || typeof onRevisions !== 'function') {
+    throw new Error('DOCUMENT_SNAPSHOT_SINK_REQUIRED');
+  }
+  const client = await pool.connect();
+  let transaction = false, releaseError;
+  const active = () => signal?.throwIfAborted();
+  try {
+    active();
+    await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
+    transaction = true;
+    await client.query("SET LOCAL timezone='UTC'");
+    await client.query("SET LOCAL statement_timeout='3s'");
+    await client.query("SET LOCAL lock_timeout='1s'");
+    await client.query("SET LOCAL idle_in_transaction_session_timeout='5s'");
+    const metadata = await client.query(`SELECT current_database() AS database,
+      current_user AS role, pg_current_snapshot()::text AS snapshot,
+      current_setting('transaction_read_only') AS read_only,
+      current_setting('transaction_isolation') AS isolation`);
+    const identity = metadata.rows[0];
+    if (identity?.read_only !== 'on' || identity.isolation !== 'repeatable read') {
+      throw new Error('DOCUMENT_READONLY_SNAPSHOT_REQUIRED');
+    }
+    const counts = await client.query(`SELECT
+      (SELECT count(*)::text FROM erp_prod_runtime.document) AS documents,
+      (SELECT count(*)::text FROM erp_prod_runtime.revision) AS revisions`);
+    const expected = counts.rows[0];
+    for (const key of ['documents', 'revisions']) {
+      if (!/^(0|[1-9][0-9]*)$/.test(expected?.[key])) throw new Error('INVALID_SOURCE_COUNT');
+    }
+    const headers = new Map(), revisionKeys = new Set(), currentFound = new Set();
+    const totals = { documents: 0n, revisions: 0n };
+    const consume = async (cursor, kind, sink) => {
+      for (;;) {
+        active();
+        const page = await client.query(`FETCH FORWARD ${pageRows} FROM ${cursor}`);
+        if (!Array.isArray(page.rows) || page.rows.length > pageRows) throw new Error('INVALID_SOURCE_PAGE');
+        if (page.rows.length === 0) break; // Explicit EOF, including exact page multiples.
+        for (const row of page.rows) {
+          if (typeof row.source_document_id !== 'string' || typeof row.raw_json !== 'string') {
+            throw new Error('INVALID_SOURCE_ROW');
+          }
+          if (kind === 'documents') {
+            if (headers.has(row.source_document_id)) throw new Error('DUPLICATE_DOCUMENT_ID');
+            headers.set(row.source_document_id, row.source_revision);
+          } else {
+            const key = JSON.stringify([row.source_document_id, row.source_revision]);
+            if (revisionKeys.has(key)) throw new Error('DUPLICATE_REVISION_KEY');
+            revisionKeys.add(key);
+            if (!headers.has(row.source_document_id)) throw new Error('REVISION_DOCUMENT_OUTSIDE_COHORT');
+            if (headers.get(row.source_document_id) === row.source_revision) currentFound.add(row.source_document_id);
+          }
+          if (typeof row.source_revision !== 'string' || !/^-?[0-9]+$/.test(row.source_revision)) {
+            throw new Error('INVALID_SOURCE_REVISION');
+          }
+        }
+        totals[kind] += BigInt(page.rows.length);
+        if (totals[kind] > BigInt(expected[kind])) throw new Error('SOURCE_COUNT_EXCEEDED');
+        await sink(page.rows); // Private provisional output until the returned completion receipt.
+        active();
+      }
+      if (totals[kind] !== BigInt(expected[kind])) throw new Error('SOURCE_EOF_COUNT_MISMATCH');
+      await client.query(`CLOSE ${cursor}`);
+    };
+    await client.query(`DECLARE cleaning_documents NO SCROLL CURSOR FOR
+      SELECT d.id::text AS source_document_id, d.current_revision::text AS source_revision,
+      to_jsonb(d)::text AS raw_json FROM erp_prod_runtime.document d ORDER BY d.id`);
+    await consume('cleaning_documents', 'documents', onDocuments);
+    await client.query(`DECLARE cleaning_revisions NO SCROLL CURSOR FOR
+      SELECT r.document_id::text AS source_document_id, r.revision::text AS source_revision,
+      to_jsonb(r)::text AS raw_json FROM erp_prod_runtime.revision r ORDER BY r.document_id, r.revision`);
+    await consume('cleaning_revisions', 'revisions', onRevisions);
+    if (currentFound.size !== headers.size) throw new Error('CURRENT_REVISION_MISSING');
+    active();
+    await client.query('ROLLBACK');
+    transaction = false;
+    return { status: 'COMPLETE_DOCUMENT_SNAPSHOT', identity,
+      counts: { documents: totals.documents.toString(), revisions: totals.revisions.toString() },
+      eof: { documents: true, revisions: true }, currentPointersVerified: true,
+      businessWrites: false };
+  } finally {
+    if (transaction) {
+      try { await client.query('ROLLBACK'); } catch (error) { releaseError = error; }
+    }
+    client.release(releaseError);
+  }
+}

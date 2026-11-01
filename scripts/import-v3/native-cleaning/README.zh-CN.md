@@ -25,3 +25,11 @@
 源码依据：packages/domain/src/values.ts 中quantity范围/规范整数、decimalToMinor拒绝非零额外精度理念；sales-money.ts的折扣/分摊是不同业务操作，本模块不调用。adapters/postgres/migrations/0001_runtime_sales.sql:65,90–105,114,157 定义decimal(18,2)/bigint与逐列非负约束。该helper接受显式策略，不能替目标列选择SIGNED。后续patch及真实目标仍需独立核验。
 
 测试：exact Node24.21原生TS，`node --test tests/native-cleaning-exact-scalars.test.ts`；不需要npm安装。聚合根tests/*.test.ts可收集。仅数学与恶意输入纯测，不是全转换/PG/全根gate PASS。
+
+## 同快照单据读取（新增，尚未真实 PG 验证）
+
+`document-snapshot-reader.mjs` 的 `readLegacyDocumentSnapshot(pool, options)` 消费调用方已有连接池，使用一个普通账号连接和一个 REPEATABLE READ READ ONLY 事务，顺序读取旧 `erp_prod_runtime.document` 与全部 `revision`。服务端游标分批 FETCH，显式空页确认 EOF，按同快照独立 COUNT 核对数量，拒绝重复身份、孤儿版本和缺少 current_revision。不会按最大版本猜当前值。完整 JSON 保持文本，避免 JavaScript 数值与日期解析丢失精度；不读取认证表。
+
+`onDocuments`、`onRevisions` 接收原始行批次；输出在返回 COMPLETE_DOCUMENT_SNAPSHOT 前都只是私有暂存，失败不得送入转换写入。调用方负责真实目标绑定、私域保存和整体清洗授权。本函数不创建连接池、不写数据库，不实现目标转换或写后对账。取消在每个查询/暂存边界生效，查询保留 3s/1s/5s 限制，不自动重试；异常回滚失败会弃用连接。
+
+10 项合成调用链测试覆盖分页边界、精确 JSON 文本、缺页、重复、孤儿、缺当前版本、失败、取消和连接释放。这些测试不证明真实 PostgreSQL 游标、权限、性能或 Card03 聚合通过。其余商品、字典、库存、人员仍待同快照接入，之前五卡不能拼为同快照结论。
