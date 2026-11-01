@@ -41,3 +41,11 @@
 `card03_engine.py` 沿用控制目录 `MINIMAL-READONLY-CHECKS-20261101/ro03-v3-review/runtime/card03_engine.py`，唯一行为变化是页量由128降为16。调用方仍提供同一已审核的 session、SQL、packet_protocol、lease 和 deadline；本文件不创建连接、授权或输出原始记录。不是新的清洗写入器。原协议每源10000页上限、3/1/5秒限制、单会话RR、显式EOF、独立COUNT及失败UNKNOWN保留。
 
 本轮重新运行原 test_key_phase.py 的 ProtocolTests/EngineTests 共27项，通过；另连续17页核对所有KEY/PAYLOAD绑定均使用16且两源EOF/COUNT一致，通过。未重跑无变化的源码载体测试，T45须重新绑定执行清单。真实隔离后继已完成：原T45 job `t45-minimal-rdb-card03-page16-ro03-20261102-01`，单次555.724秒。revision44773行/2800页含空EOF，employee99行/8页含空EOF，同一RR只读会话，两源独立COUNT一致。真实ROLLBACK ACK、客户端退出、最终其他客户端0和原副本停止均有回执，生产/业务写入/新恢复/授权变更0。原五卡未重跑，不能拼为共同快照。准确EXECUTION-RESULT.json SHA256为`f5815e589d8d5f251431700f50bab07374dd309bb758043788adecf672f64b7b`，在原T45 `outputs/T45/revisions/20261102-card03-page16-ro03-preparation-01/`。仅该聚合范围通过，不代表JSON业务映射、完整单据读取器、清洗、迁移或上线。已有计划/统计证明两源走有效主键索引，JSON存储体积较大；尚未证明内部超时根因。
+
+## 商品、字典及关联资料与单据的共同快照（源码接入，未验真实PG）
+
+`readLegacyDocumentAndReferenceSnapshot` 共用原单据读取器的唯一连接和RR只读事务，先读取 `reference-snapshot-reader.mjs` 列明的48张资料、SKU选项、条码、图片和维护记录表，再读全部单据头/版本。`onReferences(table, rows)` 仅接收私域暂存批次；最终完整返回前不得交写入器。逐表游标、原生主键顺序、显式空EOF、独立COUNT及跨页重复检查；JSON原文不经JS数值解析。
+
+两个retired条码表的实际目录没有主键，因此只以当前RR快照内的ctid区分物理行，保留内容相同的重复历史行。它不是库存/SKU身份、目标ID、持久来源键或以后快照的续传键；不得据此合并、重编或写业务记录。其他表按已核目录的真实主键。未访问任何认证表或会话，尚未包括库存生效状态、库存流水、全来源追溯和账号凭据，故不是完整旧库转换器。
+
+Node24定向检查：`node --test tests/native-cleaning-document-snapshot.test.mjs tests/native-cleaning-reference-snapshot.test.mjs`。覆盖共同事务、精确JSON文本、复合键、无主键退役重复行、缺页/重复/无效键/消费失败/取消/回滚。真实PG权限、ctid读取、数据规模及48表与单据的完整同快照仍待验证；旧37aa单据专用固定候选不被该未验增量替代。

@@ -1,16 +1,30 @@
+import {readLegacyReferenceTables} from './reference-snapshot-reader.mjs';
+
 /** Read original headers and every revision in one PostgreSQL snapshot.
  * JSON stays text: JS number/date conversion must not change source facts.
  * Caller owns the existing pool, private output and target authorization.
  */
-export async function readLegacyDocumentSnapshot(pool, {
-  pageRows = 100, onDocuments, onRevisions, signal,
-}) {
+export function readLegacyDocumentSnapshot(pool, options) {
+  return readLegacySnapshot(pool, options, false);
+}
+
+/** Catalogue/reference rows and documents share the same owned connection/transaction.
+ * This does not yet include inventory, credential conversion or target writes.
+ */
+export function readLegacyDocumentAndReferenceSnapshot(pool, options) {
+  return readLegacySnapshot(pool, options, true);
+}
+
+async function readLegacySnapshot(pool, {
+  pageRows = 100, onDocuments, onRevisions, onReferences, signal,
+}, includeReferences) {
   if (!Number.isSafeInteger(pageRows) || pageRows < 1 || pageRows > 500) {
     throw new Error('INVALID_DOCUMENT_PAGE_SIZE');
   }
   if (typeof onDocuments !== 'function' || typeof onRevisions !== 'function') {
     throw new Error('DOCUMENT_SNAPSHOT_SINK_REQUIRED');
   }
+  if (includeReferences && typeof onReferences !== 'function') throw new Error('REFERENCE_SNAPSHOT_SINK_REQUIRED');
   const client = await pool.connect();
   let transaction = false, releaseError;
   const progress = {
@@ -40,6 +54,8 @@ export async function readLegacyDocumentSnapshot(pool, {
     if (identity?.read_only !== 'on' || identity.isolation !== 'repeatable read') {
       throw new Error('DOCUMENT_READONLY_SNAPSHOT_REQUIRED');
     }
+    const references = includeReferences
+      ? await readLegacyReferenceTables(client, {pageRows, onReferences, signal}) : undefined;
     const counts = await client.query(`SELECT
       (SELECT count(*)::text FROM erp_prod_runtime.document) AS documents,
       (SELECT count(*)::text FROM erp_prod_runtime.revision) AS revisions`);
@@ -95,10 +111,10 @@ export async function readLegacyDocumentSnapshot(pool, {
     active();
     await client.query('ROLLBACK');
     transaction = false;
-    return { status: 'COMPLETE_DOCUMENT_SNAPSHOT', identity,
+    return { status: includeReferences ? 'COMPLETE_DOCUMENT_AND_REFERENCE_SNAPSHOT' : 'COMPLETE_DOCUMENT_SNAPSHOT', identity,
       counts: { documents: totals.documents.toString(), revisions: totals.revisions.toString() },
       eof: { documents: true, revisions: true }, currentPointersVerified: true,
-      businessWrites: false };
+      businessWrites: false, ...(includeReferences ? {references} : {}) };
   } catch (error) {
     // Counts only, never source values. Partial output is not a completion receipt.
     if (error instanceof Error && Object.isExtensible(error)) {
