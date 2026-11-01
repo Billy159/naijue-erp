@@ -20,6 +20,10 @@ const now=Date.now(),intent={database:'erp_comparison_fresh',admin:'fresh_admin'
 const birth={systemIdentifier:'7703999999999999999',databaseOid:'16391',postmasterStart:'2026-11-01 00:00:00+00',serverVersionNum:'170011'};
 const targetInput={intent,birth,startsAt:now,expiresAt:now+1200000},target=targets.captureFreshTarget(targetInput,now),program=runner.compileUnifiedSchemaProgram({plan,target});
 const sha=(b:string|Buffer)=>createHash('sha256').update(b).digest('hex');
+test('actual install root is accepted by the unchanged release canonical-path validator',async()=>{
+ const {canonicalAbsolute}=await import(new URL('../scripts/release/manifest.mjs',import.meta.url).href);
+ await canonicalAbsolute(source.ROOT,'directory');
+});
 function scripted(options:{failQuery?:(sql:string)=>unknown;failCommit?:(sql:string)=>unknown;failEmit?:(event:Record<string,unknown>)=>unknown}={}){
  const sql:string[]=[],events:Record<string,unknown>[]=[];let quarantined=false;
  const ops={async query(text:string){assert.equal(quarantined,false,'No SQL after uncertain COMMIT');sql.push(text);const e=options.failQuery?.(text);if(e)throw e;return{rows:[]};},async commit(text:string){assert.equal(quarantined,false);sql.push(text);const e=options.failCommit?.(text);if(e){quarantined=true;throw e;}return{rows:[]};},async emit(event:Record<string,unknown>){events.push(event);const e=options.failEmit?.(event);if(e)throw e;},async assertSources(){},quarantined:()=>quarantined};

@@ -8,7 +8,7 @@ import {loadPairedSourcePlan,assertPlan,sourceCohortFor} from '../../../tests/pe
 import {captureData} from '../../../tests/integration/runtime26-baseline/schema-objects-only/lifecycle.mjs';
 
 export const BASE=Object.freeze({commit:'e6a03c9fda216a45fb4f904568a28f797c9e94dd',tree:'e62e85e4a5f7ae7e30b382543941b7635c4abcb8'});
-export const ROOT=fileURLToPath(new URL('../../../',import.meta.url));
+export const ROOT=path.resolve(fileURLToPath(new URL('../../../',import.meta.url)));
 const plans=new WeakMap();
 export const need=(v,c)=>{if(!v)throw Object.assign(new Error(c),{code:c});};
 export const hash=b=>createHash('sha256').update(b).digest('hex');
