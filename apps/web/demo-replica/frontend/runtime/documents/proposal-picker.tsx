@@ -12,7 +12,7 @@ import type { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { ProductCandidatePreview } from '../products/preview.tsx';
 
 const ReferenceSelect=Select as unknown as ComponentType<Omit<SelectProps,'value'>&{value:SelectProps['value']|undefined}>;
-export function ProposalReference(p:{session:SalesProposalSession;picker:SalesProposalSnapshot['picker'];active:boolean;label:string;selected:CurrentSalesReferenceItem|null;disabled:boolean;open:()=>void;close:()=>void;account?:boolean;recommendedId?:string;clear?:()=>void;afterSelect?:()=>void;select?:(id:string)=>Promise<boolean>}) {
+export function ProposalReference(p:{session:SalesProposalSession;picker:SalesProposalSnapshot['picker'];active:boolean;label:string;placeholder?:string;selected:CurrentSalesReferenceItem|null;disabled:boolean;open:()=>void;close:()=>void;account?:boolean;recommendedId?:string;clear?:()=>void;afterSelect?:()=>void;select?:(id:string)=>Promise<boolean>}) {
  const picker=p.active?p.picker:null,items:CurrentSalesReferenceItem[]=(picker?.result?.items??[]).flatMap(item=>'paymentMethodId'in item?[item]:[]);
  // Selected labels are rendered separately; server search results alone own the menu.
  const choices=items;
@@ -20,7 +20,7 @@ export function ProposalReference(p:{session:SalesProposalSession;picker:SalesPr
  const customer=picker?.kind==='customer';
  const isRecommended=(row:CurrentSalesReferenceItem)=>p.account||customer?picker?.result?.recommendationAvailability==='AVAILABLE'&&row.isRecommended===true:row.id===p.recommendedId;
  const recommended=items.filter(isRecommended),grouped=recommended.length>0;
- return <SourceControl css={singleCss}>{(portal,host)=><ReferenceSelect className="ui-flat-select" aria-label={p.label} value={p.selected?.id} allowClear={!!p.clear} {...(p.clear?{onClear:p.clear}:{})} placeholder={'请选择'+p.label} disabled={p.disabled} showSearch filterOption={false} popupVisible={p.active&&!!picker} loading={picker?.phase==='loading'} getPopupContainer={()=>portal} onFocus={event=>{
+ return <SourceControl css={singleCss}>{(portal,host)=><ReferenceSelect className="ui-flat-select" aria-label={p.label} value={p.selected?.id} allowClear={!!p.clear} {...(p.clear?{onClear:p.clear}:{})} placeholder={p.placeholder??'请选择'+p.label} disabled={p.disabled} showSearch filterOption={false} popupVisible={p.active&&!!picker} loading={picker?.phase==='loading'} getPopupContainer={()=>portal} onFocus={event=>{
   // Arco's searchable wrapper refocuses its inner input. Remove that redundant
   // tab stop so Shift+Tab can leave the input instead of returning to itself.
   const input=event.target;if(input instanceof HTMLInputElement){const view=input.closest<HTMLElement>('[role="combobox"]');if(view)view.tabIndex=-1;}

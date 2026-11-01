@@ -394,6 +394,14 @@ export class SalesProposalSession {
     await this.#read(kind, '', 1, null, kind === 'paymentAccount' ? row!.method : null);
   }
   updateSignedSettlement(key: string | null, raw: string): boolean {
+    if (this.#state.disposed) return false;
+    // First visible amount accepts local draft intent before hall selection.
+    // It does not authorize a hall-scoped picker or create a valid settlement:
+    // method/account remain unknown and native SAVE validation is unchanged.
+    if (key === null && !this.#state.draft.hall && !this.#state.draft.settlements.length) {
+      return this.#edit({ ...this.#state.draft, settlements: [{ key: `local-settlement-${++this.#nextSettlement}`, method: null, account: null,
+        direction: raw.startsWith('-') ? 'REFUND' : 'RECEIVE', amount: raw.startsWith('-') ? raw.slice(1) : raw }] });
+    }
     if (key === null) { if (!this.addSettlement()) return false; key = this.#state.draft.settlements.at(-1)!.key; }
     return this.updateSettlement(key, { direction: raw.startsWith('-') ? 'REFUND' : 'RECEIVE', amount: raw.startsWith('-') ? raw.slice(1) : raw });
   }

@@ -68,7 +68,7 @@ export function ChangeOwnPasswordDialogView({ visible, submitting, fields, error
     const description = error ? `account-${key}-error` : hint ? `account-${key}-hint` : undefined;
     return <div className="account-password-field" key={key}>
       <label htmlFor={`account-${key}`}>{label}</label>
-      <Input.Password id={`account-${key}`} data-account-password={key} value={fields[key]}
+      <Input.Password className="iw-arco-input" id={`account-${key}`} data-account-password={key} value={fields[key]}
         onChange={value => onFieldChange(key, value)} placeholder={`请输入${label}`} autoComplete={autoComplete}
         visibilityToggle disabled={submitting} {...(error ? { status: 'error' as const } : {})}
         aria-invalid={!!error} aria-describedby={description} />

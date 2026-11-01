@@ -25,6 +25,29 @@ test('launch gate enumerates actual replica/import/release and preserves origina
   assert.ok(rows.find(row => row.id === 'commit-outcomes').args.includes('tests/cross-layer-contract-fixtures.test.mjs'));
 });
 
+test('aggregate web gate reaches the original unified saved-edit service regression exactly once', () => {
+  const scripts = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).scripts;
+  const checked = value => {
+    assert.equal(value['test:web:unified-service'], 'node --test apps/web/demo-replica/tests/unified-service-fixture.test.mjs');
+    assert.equal(value['check:all'].split(' && ').filter(command => command === 'npm run check:web').length, 1);
+    const web = value['check:web'].split(' && ');
+    assert.equal(web.filter(command => command === 'npm run test:web:unified-service').length, 1);
+    assert.equal(web.at(-1), 'npm run test:web:unified-service');
+  };
+  checked(scripts);
+  assert.deepEqual(launchCommands().find(row => row.id === 'existing-root-check-all').args.slice(-2), ['run', 'check:all']);
+  for (const change of [
+    value => { delete value['test:web:unified-service']; },
+    value => { value['test:web:unified-service'] += ' --test-name-pattern=unused'; },
+    value => { value['check:all'] = value['check:all'].replace('npm run check:web', 'true'); },
+    value => { value['check:web'] = value['check:web'].replace(' && npm run test:web:unified-service', ''); },
+    value => { value['check:web'] += ' && npm run test:web:unified-service'; }
+  ]) {
+    const altered = { ...scripts }; change(altered);
+    assert.throws(() => checked(altered), { name: 'AssertionError' });
+  }
+});
+
 test('explicit runtime resource selection inserts one flag and preserves the original list and other nine stages', () => {
   const original = launchCommands(), originalRuntime = original.find(row => row.id === 'replica-runtime-tests');
   assert.equal(original.length, 10);

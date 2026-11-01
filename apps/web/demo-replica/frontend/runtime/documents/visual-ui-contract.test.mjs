@@ -49,9 +49,9 @@ test('return/exchange alone receives a readable single-row quantity column',()=>
  assert.match(salesCss,/\.sale-quantity-control\{display:flex;align-items:center;gap:4px/);
  assert.match(salesCss,/\.sale-quantity-control>\[data-line-direction\]\{flex:0 0 58px;[^}]*min-width:0;margin:0/);
 });
-test('direction labels have no redundant signs, while the input remains signed raw text',()=>{
+test('direction labels retain signed raw text only for selected products; empty entry projects blank and remains disabled',()=>{
  assert.ok(form.includes("items={[{value:'IN',label:'退回'},{value:'OUT',label:'换出'}]}"));
- assert.ok(form.includes('aria-label="本行数量" disabled={p.busy||!product} value={entry.quantity} onChange={e=>update({quantity:e.target.value})}'));
+ assert.ok(form.includes(`aria-label="本行数量" disabled={p.busy||!product} value={product?entry.quantity:''} onChange={e=>update({quantity:e.target.value})}`));
  assert.ok(form.includes("className={entry.quantity.startsWith('-')?'negative':''}"));
 });
 test('the exact int64 direction helper and its impossible-transition guard remain untouched',()=>{
@@ -62,7 +62,9 @@ test('the exact int64 direction helper and its impossible-transition guard remai
 });
 test('no global or shadow-select shrink is part of the UI correction',()=>{
  for(const [path,sha] of [
-  ['runtime/documents/source-controls.tsx','2d98f2e39224c56b8e45929a5d3e5d2dc4e70853d4e8ea5f64d87184ed6afa26'],
+  // Approved acceptance repair changes only reset/async ownership and optional placeholder, not control geometry.
+  ['runtime/documents/source-controls.tsx','2f81e52158d1440e2d377c9ebd2fb2be496a49966dd93faa976679034367380b'],
+  ['runtime/inventory/source-control-css.ts','1b23b1ba2fe147df29ddae29adede3656d5901aeb3c675cd6e645be084535ff0'],
   ['runtime/common/ui/control-css.ts','91d93d04190ed1a592850a47757bac73a48629e1a76ebbae1a679eeeb8990886'],
  ])assert.equal(createHash('sha256').update(read(path)).digest('hex'),sha,path);
 });

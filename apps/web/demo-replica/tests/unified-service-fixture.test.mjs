@@ -175,3 +175,74 @@ test('barcode unavailable original maintenance disable restore retains actual MA
  assert.equal((await reader.readBarcode({context:contexts[1],barcode:qaSkus[0].barcode},signal)).state,'FOUND');
  h.revoke();await assert.rejects(reader.readBarcode({context:contexts[1],barcode:main.barcode},signal),{kind:'forbidden'});
 });
+
+for(const kind of ['SALES','TRANSFER'])test(`saved-edit v2 ${kind}: original product SAVE/list/reopen keeps exact SKU metadata and draft unchanged`,async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());
+ const made=await call(h,'/products/v2/commands',createProduct());assert.equal(made.status,200,JSON.stringify(made));
+ const aggregate=h.product.snapshot().state.products.get(made.body.targetId),sku=aggregate.skus[0];
+ let saved,detail,list;
+ if(kind==='SALES'){
+  const a=await call(h,'/payment/accounts/commands',{action:'CREATE',requestKey:'saved-edit-account',values:{name:'SYNTHETIC saved edit cash',enabled:true,paymentMethodId:qaMethods[0].id,hallIds:[]}});assert.equal(a.status,200);
+  const {salesId,...p}=sale(sku.id,a.body.targetId,qaMethods[0].id,'568.00');
+  const prepared=await call(h,'/sales/prepare-create',{...p,lines:p.lines.map(({existingLineId,...x})=>x),settlements:p.settlements.map(({existingSettlementId,...x})=>x)});assert.equal(prepared.status,200,JSON.stringify(prepared));
+  saved=await call(h,'/sales/commands',{action:'SAVE',requestKey:'saved-edit-sale',expectedVersion:null,draft:prepared.body});assert.equal(saved.status,200,JSON.stringify(saved));
+  list=await call(h,'/sales/query',{page:1,pageSize:20,filter:{startDate:null,endDate:null,number:null,statuses:[],businessTypes:[],hallIds:[],customerIds:[],warehouseIds:[],salespersonIds:[]}});assert.equal(list.status,200);assert.equal(list.body.items[0].id,saved.body.salesId);
+  detail=await call(h,'/sales/detail/query',{salesId:saved.body.salesId});assert.equal(detail.status,200);assert.equal(detail.body.document.header.netDue,'56800');
+ }else{
+  const {transferId,...p}=transfer(sku.id),prepared=await call(h,'/transfers/prepare-create',{...p,responsibleStaffId:qaStaff[0].id,lines:p.lines.map(({existingLineId,...x})=>x)});assert.equal(prepared.status,200,JSON.stringify(prepared));
+  saved=await call(h,'/transfers/commands',{action:'SAVE',requestKey:'saved-edit-transfer',expectedVersion:null,draft:prepared.body});assert.equal(saved.status,200,JSON.stringify(saved));
+  list=await call(h,'/transfers/query',{page:1,pageSize:20,filter:{startDate:null,endDate:null,number:null,statuses:[],fromWarehouseIds:[],toWarehouseIds:[]}});assert.equal(list.status,200);assert.equal(list.body.items[0].id,saved.body.transferId);
+  detail=await call(h,'/transfers/detail/query',{transferId:saved.body.transferId});assert.equal(detail.status,200);
+ }
+ assert.equal(detail.body.stockBasis,'RUNTIME_LEDGER');assert.equal(detail.body.document.header.status,'DRAFT');assert.equal(detail.body.document.header.version,1);
+ const context=kind==='SALES'?{kind,hallId:qaHalls[0].id}:{kind},skuIds=[...new Set(detail.body.document.lines.map(line=>line.skuId))],q={context,skuIds};
+ const before=h.inventory.snapshot(),wire=await call(h,'/current-form/saved-edit-sku-batch-v2/query',q);
+ assert.equal(wire.status,200,JSON.stringify(wire));assert.deepEqual(Object.keys(wire.body).sort(),['products','skus','version']);assert.equal(wire.body.version,2);
+ assert.ok(wire.body.skus.every(row=>Array.isArray(row)&&row.length===13&&row[12]==='UNAVAILABLE'));
+ assert.deepEqual(wire.body.skus.map(row=>row[0]),skuIds);assert.deepEqual(wire.body.products,[[made.body.targetId,'ELIGIBLE',h.product.group.id]]);
+ const fetch=async(url,init={})=>{const r=await h.request({url:String(url),method:init.method??'GET',headers:Object.fromEntries(new Headers(init.headers)),...(init.body===undefined?{}:{body:String(init.body)})});return new Response(r.body,{status:r.status,headers:r.headers});};
+ const {createCurrentFormHttpReader}=await import('../../src/current-form/http-reader.ts'),reader=createCurrentFormHttpReader({origin:h.origin,basePath:'/api',fetch}),signal=new AbortController().signal;
+ const batch=await reader.readSavedEditSkuBatch(q,signal),legacy=await reader.readSkuBatch(q,signal);
+ assert.equal(batch.version,1);assert.deepEqual(batch.skus,legacy);assert.deepEqual(batch.products,[{productId:made.body.targetId,state:'ELIGIBLE',sizeGroupId:h.product.group.id}]);assert.deepEqual(h.inventory.snapshot(),before);
+ const after=await call(h,kind==='SALES'?'/sales/detail/query':'/transfers/detail/query',kind==='SALES'?{salesId:saved.body.salesId}:{transferId:saved.body.transferId});assert.deepEqual(after,detail);
+});
+
+test('saved-edit v2 exact IDs/order and independent QA/dynamic metadata keep producer bounds; unavailable is not fabricated from SKU',async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());
+ const beforeCreate=h.product.snapshot().state,collision=createProduct();collision.values.productCode=qaSkus[0].productCode;
+ const outside=await call(h,'/products/v2/commands',collision);assert.equal(outside.status,409);assert.equal(outside.body.error.code,'PRODUCT_REFERENCE_UNAVAILABLE');assert.deepEqual(h.product.snapshot().state,beforeCreate);
+ const command=createProduct(),made=await call(h,'/products/v2/commands',command);assert.equal(made.status,200,JSON.stringify(made));
+ const aggregate=h.product.snapshot().state.products.get(made.body.targetId),ids=[aggregate.skus[1].id,qaSkus[0].id,aggregate.skus[0].id],context={kind:'TRANSFER'},q={context,skuIds:ids};
+ const fetch=async(url,init={})=>{const r=await h.request({url:String(url),method:init.method??'GET',headers:Object.fromEntries(new Headers(init.headers)),...(init.body===undefined?{}:{body:String(init.body)})});return new Response(r.body,{status:r.status,headers:r.headers});};
+ const {createCurrentFormHttpReader}=await import('../../src/current-form/http-reader.ts'),reader=createCurrentFormHttpReader({origin:h.origin,basePath:'/api',fetch}),signal=new AbortController().signal;
+ const initial=await reader.readSavedEditSkuBatch(q,signal);assert.deepEqual(initial.skus.map(s=>s.id),ids);
+ assert.deepEqual(initial.products,[{productId:made.body.targetId,state:'ELIGIBLE',sizeGroupId:h.product.group.id},{productId:qaSkus[0].productId,state:'ELIGIBLE',sizeGroupId:qaSkus[0].sizeGroupId}]);
+ assert.equal(initial.skus[0].productName,command.values.name);assert.equal(initial.skus[1].productName,qaSkus[0].productName);assert.ok(initial.skus.every(s=>s.barcodeAvailability==='UNAVAILABLE'));
+ const before=h.inventory.snapshot();h.withholdSavedEditProductMetadata(made.body.targetId,true);
+ const partial=await reader.readSavedEditSkuBatch(q,signal);assert.deepEqual(partial.skus,initial.skus);assert.deepEqual(partial.products,[{productId:made.body.targetId,state:'UNAVAILABLE'},initial.products[1]]);assert.deepEqual(Object.keys(partial.products[0]).sort(),['productId','state']);
+ assert.deepEqual(await reader.readSkuBatch(q,signal),initial.skus);h.withholdSavedEditProductMetadata(made.body.targetId,false);assert.deepEqual(await reader.readSavedEditSkuBatch(q,signal),initial);
+ assert.throws(()=>h.withholdSavedEditProductMetadata('00000000-0000-4000-8000-000000999999',true),{code:'FORBIDDEN'});assert.throws(()=>h.withholdSavedEditProductMetadata(made.body.targetId,'true'),{code:'FORBIDDEN'});
+ const missing='00000000-0000-4000-8000-000000999999';
+ for(const skuIds of [[ids[0],ids[0]],[],Array(201).fill(ids[0])])assert.equal((await call(h,'/current-form/saved-edit-sku-batch-v2/query',{context,skuIds})).status,400);
+ const absent=await call(h,'/current-form/saved-edit-sku-batch-v2/query',{context,skuIds:[missing]});assert.equal(absent.status,409);assert.equal(absent.body.error.code,'SKU_UNAVAILABLE');
+ assert.equal((await call(h,'/current-form/sku-batch/query',{context,skuIds:[missing]})).status,403,'legacy fixture missing-SKU error remains unchanged');
+ assert.equal((await call(h,'/current-form/saved-edit-sku-batch-v2/query',{...q,extra:true})).status,400);
+ assert.equal((await call(h,'/current-form/saved-edit-sku-batch-v2/query',{...q,context:{kind:'SALES',hallId:missing}})).status,403);
+ assert.deepEqual(h.inventory.snapshot(),before);
+ h.revoke();await assert.rejects(reader.readSavedEditSkuBatch(q,signal),{kind:'forbidden'});assert.throws(()=>h.withholdSavedEditProductMetadata(made.body.targetId,true),{code:'FORBIDDEN'});
+});
+
+test('saved-edit v2 retry/abort/disabled references fail closed without another SAVE or invented SKU facts',async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());const made=await call(h,'/products/v2/commands',createProduct());assert.equal(made.status,200);const aggregate=h.product.snapshot().state.products.get(made.body.targetId),q={context:{kind:'TRANSFER'},skuIds:[aggregate.skus[0].id]};
+ let calls=0,temporaryFailure=true;
+ const fetch=async(url,init={})=>{calls++;if(temporaryFailure){temporaryFailure=false;return Response.json({error:{code:'CURRENT_FORM_READ_UNAVAILABLE'}},{status:503});}const r=await h.request({url:String(url),method:init.method??'GET',headers:Object.fromEntries(new Headers(init.headers)),...(init.body===undefined?{}:{body:String(init.body)})});return new Response(r.body,{status:r.status,headers:r.headers});};
+ const {createCurrentFormHttpReader}=await import('../../src/current-form/http-reader.ts'),reader=createCurrentFormHttpReader({origin:h.origin,basePath:'/api',fetch}),signal=new AbortController().signal,before=h.product.snapshot().state;
+ await assert.rejects(reader.readSavedEditSkuBatch(q,signal),{kind:'unavailable'});const recovered=await reader.readSavedEditSkuBatch(q,signal);assert.equal(recovered.skus[0].id,q.skuIds[0]);assert.equal(calls,2);assert.deepEqual(h.product.snapshot().state,before);
+ const aborted=new AbortController();aborted.abort();await assert.rejects(reader.readSavedEditSkuBatch(q,aborted.signal),{kind:'aborted'});assert.equal(calls,2);
+ const disable=await call(h,'/catalogue/colors/commands',{action:'DISABLE',requestKey:'saved-metadata-disable-color',id:REF.color,expectedVersion:1});assert.equal(disable.status,200,JSON.stringify(disable));
+ const denied=await call(h,'/current-form/saved-edit-sku-batch-v2/query',q);assert.equal(denied.status,409);assert.equal(denied.body.error.code,'SKU_UNAVAILABLE');
+ const restore=await call(h,'/catalogue/colors/commands',{action:'RESTORE',requestKey:'saved-metadata-restore-color',id:REF.color,expectedVersion:2});assert.equal(restore.status,200,JSON.stringify(restore));assert.equal((await reader.readSavedEditSkuBatch(q,signal)).skus[0].id,q.skuIds[0]);
+ const disabled=await call(h,'/products/v2/commands',{action:'DISABLE',requestKey:'saved-metadata-disable-product',id:made.body.targetId,expectedVersion:1});assert.equal(disabled.status,200);
+ assert.equal((await call(h,'/current-form/saved-edit-sku-batch-v2/query',q)).status,409,'disabled product is a SKU rejection, never fabricated UNAVAILABLE metadata');
+ await h.close();assert.throws(()=>h.withholdSavedEditProductMetadata(made.body.targetId,true),{code:'FORBIDDEN'});
+});

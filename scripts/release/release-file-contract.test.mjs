@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
 import {readFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
 import {runtimeSqlPatches, releaseContract, releaseContractSource} from './manifest.mjs';
 import {contractBlock, generateReleaseContract} from './generate-release-contract.mjs';
 test('shared release facts generate the standalone Python consumer without drift', async () => {
@@ -88,4 +89,14 @@ test('generated facts alone match exactly while separate full generator check re
  const actual=deploy.match(/# BEGIN GENERATED RELEASE CONTRACT[\s\S]*?# END GENERATED RELEASE CONTRACT/);
  assert.ok(actual,'RELEASE_CONTRACT_MARKERS_MISSING');
  assert.equal(actual[0],contractBlock(JSON.parse(source),source),'RELEASE_CONTRACT_GENERATED_OUTPUT_STALE');
+});
+
+// F01 regression is part of the existing explicit release-tests entry. Pure
+// AST-isolated Python guard only: no deployment entry import, server or SQL.
+test('HISTORY draft metadata helper keeps V8 exact envelopes without changing approval pins', {timeout: 15000}, () => {
+ const result = spawnSync('python3', ['-I', '-B', fileURLToPath(new URL('./test_history_draft_metadata_envelope.py', import.meta.url)), '-v'], {
+  cwd: fileURLToPath(new URL('../../', import.meta.url)), encoding: 'utf8', timeout: 10000, maxBuffer: 1024 * 1024
+ });
+ assert.equal(result.error, undefined, String(result.error));
+ assert.equal(result.status, 0, result.stdout + result.stderr);
 });

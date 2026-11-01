@@ -609,7 +609,9 @@ def validate_full_metadata(p, runtime, review, metadata, independent, capacity_p
     if 'inventoryOutputSpool' in runtime:
         need(runtime['inventoryOutputSpool'] == {'directory': '/private/inventory-exports', 'maxBytes': 536870912, 'maxConcurrent': 1, 'maxDurationMs': 120000}, 'EXACT_FULL_OUTPUT_SPOOL_REQUIRED')
     catalog_profile = full_catalog_profile(p)
-    v8_observation = catalog_profile.get('requiredObservation') == 'RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8'
+    # Draft retains its own format/body proof, while inheriting V8 envelopes.
+    v8_observation = catalog_profile.get('requiredObservation') in (
+        'RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8', 'HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8')
     recorded_observation = v8_observation or catalog_profile.get('requiredObservation') == 'RECORDED_LIVE_LEDGER_PAIRS_V7'
     if recorded_observation:
         need(isinstance(review, dict) and isinstance(review.get('catalog'), dict) and
