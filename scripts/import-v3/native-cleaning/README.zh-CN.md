@@ -26,7 +26,7 @@
 
 测试：exact Node24.21原生TS，`node --test tests/native-cleaning-exact-scalars.test.ts`；不需要npm安装。聚合根tests/*.test.ts可收集。仅数学与恶意输入纯测，不是全转换/PG/全根gate PASS。
 
-## 同快照单据读取（新增，尚未真实 PG 验证）
+## 同快照单据读取（真实隔离首测失败，尚未完整验证）
 
 `document-snapshot-reader.mjs` 的 `readLegacyDocumentSnapshot(pool, options)` 消费调用方已有连接池，使用一个普通账号连接和一个 REPEATABLE READ READ ONLY 事务，顺序读取旧 `erp_prod_runtime.document` 与全部 `revision`。服务端游标分批 FETCH，显式空页确认 EOF，按同快照独立 COUNT 核对数量，拒绝重复身份、孤儿版本和缺少 current_revision。不会按最大版本猜当前值。完整 JSON 保持文本，避免 JavaScript 数值与日期解析丢失精度；不读取认证表。
 
@@ -35,3 +35,9 @@
 12 项合成调用链测试覆盖分页边界、精确 JSON 文本、缺页、重复、孤儿、缺当前版本、失败、取消和连接释放，以及 BEGIN 结果未知时弃用连接。这些测试不证明真实 PostgreSQL 游标、权限、性能或 Card03 聚合通过。其余商品、字典、库存、人员仍待同快照接入，之前五卡不能拼为同快照结论。
 
 失败异常的 `snapshotProgress` 仅含各表已知 expected、rowsRead、eofObserved，不含身份或正文；显式 EOF 与总数不符仍拒绝，进度不是完成凭证。真实隔离首测6455版通过目标与COUNT，但一次document FETCH超时57014；307次成功FETCH不能据此猜总行数，revision未进入，仍未通过。12项是当前改动的合成测试，不替换该真实失败记录。
+
+## Card03 原聚合流程的有界分页修订
+
+`card03_engine.py` 沿用控制目录 `MINIMAL-READONLY-CHECKS-20261101/ro03-v3-review/runtime/card03_engine.py`，唯一行为变化是页量由128降为16。调用方仍提供同一已审核的 session、SQL、packet_protocol、lease 和 deadline；本文件不创建连接、授权或输出原始记录。不是新的清洗写入器。原协议每源10000页上限、3/1/5秒限制、单会话RR、显式EOF、独立COUNT及失败UNKNOWN保留。
+
+本轮重新运行原 test_key_phase.py 的 ProtocolTests/EngineTests 共27项，通过；另连续17页核对所有KEY/PAYLOAD绑定均使用16且两源EOF/COUNT一致，通过。未重跑无变化的源码载体测试，T45须重新绑定执行清单。真实隔离执行未完成前，不称Card03修复通过。已有计划/统计证明两源走有效主键索引，JSON存储体积较大；尚未证明实际超时根因。
