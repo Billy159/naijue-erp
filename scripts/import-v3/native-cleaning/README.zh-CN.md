@@ -115,3 +115,11 @@ Node24定向检查：`node --test tests/native-cleaning-document-snapshot.test.m
 `document-source-census.mjs` 复用私域流式读取器读取已采集 document/revision 两文件，按每张头的 `current_revision` 精确选当前正文；旧版本仍保留在原快照，不以最大版本/文件顺序替代指针。仅输出固定分类聚合，核对正文 header/lines/fundsRecords 形状、原始 source_quantity 的缺失/NULL/无效/非整数/零/负数及目标 bigint 范围。DELETED、VOID 分别计数，未知状态不擅自映射，数量不求跨单位合计、不舍入，未确认的正文格式不会补空数组。无目标身份分配、业务权限或写入。
 
 5项Node24定向测试通过，包括两份真实临时合成文件的消费及文件不完整拒绝；真实私域运行尚未完成，不据此称单据转换通过。该核查用于确定实际转换缺口，不替代金额、逐行关联、历史效果及独立目标对账。
+
+### 隔离目标结构安装已实际完成（不是清洗完成）
+
+2026-11-02北京时间07:14:40–07:15:48，原T45作业 `t45-rewrite26-schema-install02-20261102-01` 在唯一新隔离空目标实际调用原安装API成功：执行源码 `ffc1d3d4a91cde8a5b89d4cddfdd3d83a2e6345b`，40文件、714原始语句、137原函数正文；结果为 `SCHEMA_INSTALLED_SOURCE_CHECKED_NOT_RUNTIME_READY`。实际目录观察1427316字节，SHA256 `41b7b51bee4f3c69654534578193245b7839e2541e412b63b03d389d972dd8e3`。客户端确认关闭，本批Node和PG均已停止，数据、来源、认证及journal保留，不影响原恢复库或正式服务。
+
+此前两项载体失败保留：初始化后的额外全集群membership断言误计内置角色关系；实际安装API源码ROOT带尾斜线，被原规范路径校验在连接前拒绝。准确后继只收窄载体到原守卫范围、规范化ROOT，没有放宽源校验或重放初始化/失败作业。固定新导出直接调用真实 `verifyUnifiedExecutionSource` 已通过。新ROOT回归和原安装定向测试共15项通过；mac journal项需规范 `TMPDIR=/private/tmp`，失败原记录保留。
+
+普通运行角色、员工身份登录、旧数据转换写入、独立目标读回及业务验证仍未完成，不能把结构安装记为迁移完成或可上线。原T45完整收据在 `outputs/T45/revisions/20261102-unified-schema-only-preparation-01/install02-transport/release-receipts/t45-rewrite26-schema-install02-20261102-01/`；raw install-result SHA256 `c48c6815c5137d338b614cb5ec89045696dfa022951fe5726bf5bf7a8c5d7de3`。不将真实数据或凭据复制进源码仓库。
