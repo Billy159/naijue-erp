@@ -13,6 +13,10 @@ export async function readLegacyDocumentSnapshot(pool, {
   }
   const client = await pool.connect();
   let transaction = false, releaseError;
+  const progress = {
+    documents: { expected: null, rowsRead: '0', eofObserved: false },
+    revisions: { expected: null, rowsRead: '0', eofObserved: false },
+  };
   const active = () => signal?.throwIfAborted();
   try {
     active();
@@ -42,6 +46,7 @@ export async function readLegacyDocumentSnapshot(pool, {
     const expected = counts.rows[0];
     for (const key of ['documents', 'revisions']) {
       if (!/^(0|[1-9][0-9]*)$/.test(expected?.[key])) throw new Error('INVALID_SOURCE_COUNT');
+      progress[key].expected = expected[key];
     }
     const headers = new Map(), revisionKeys = new Set(), currentFound = new Set();
     const totals = { documents: 0n, revisions: 0n };
@@ -50,7 +55,7 @@ export async function readLegacyDocumentSnapshot(pool, {
         active();
         const page = await client.query(`FETCH FORWARD ${pageRows} FROM ${cursor}`);
         if (!Array.isArray(page.rows) || page.rows.length > pageRows) throw new Error('INVALID_SOURCE_PAGE');
-        if (page.rows.length === 0) break; // Explicit EOF, including exact page multiples.
+        if (page.rows.length === 0) { progress[kind].eofObserved = true; break; } // Explicit EOF.
         for (const row of page.rows) {
           if (typeof row.source_document_id !== 'string' || typeof row.raw_json !== 'string') {
             throw new Error('INVALID_SOURCE_ROW');
@@ -70,6 +75,7 @@ export async function readLegacyDocumentSnapshot(pool, {
           }
         }
         totals[kind] += BigInt(page.rows.length);
+        progress[kind].rowsRead = totals[kind].toString();
         if (totals[kind] > BigInt(expected[kind])) throw new Error('SOURCE_COUNT_EXCEEDED');
         await sink(page.rows); // Private provisional output until the returned completion receipt.
         active();
@@ -93,6 +99,13 @@ export async function readLegacyDocumentSnapshot(pool, {
       counts: { documents: totals.documents.toString(), revisions: totals.revisions.toString() },
       eof: { documents: true, revisions: true }, currentPointersVerified: true,
       businessWrites: false };
+  } catch (error) {
+    // Counts only, never source values. Partial output is not a completion receipt.
+    if (error instanceof Error && Object.isExtensible(error)) {
+      error.snapshotProgress = Object.freeze(Object.fromEntries(
+        Object.entries(progress).map(([key, value]) => [key, Object.freeze({ ...value })])));
+    }
+    throw error;
   } finally {
     if (transaction) {
       try { await client.query('ROLLBACK'); } catch (error) { releaseError = error; }

@@ -72,3 +72,15 @@ test('unknown BEGIN discards the connection instead of pooling uncertain transac
   assert.deepEqual(db.calls.at(-1),{release:'QUERY_FAILED'});
   assert.equal(db.calls.includes('ROLLBACK'),false);
 });
+
+test('failed read reports exact known counts and observed EOF without claiming completion',async()=>{
+  const db=database({counts:{documents:'3',revisions:'3'}});
+  await assert.rejects(readLegacyDocumentSnapshot(db.pool,{...sinks(),pageRows:1}),error=>{
+    assert.deepEqual(error.snapshotProgress,{
+      documents:{expected:'3',rowsRead:'2',eofObserved:true},
+      revisions:{expected:'3',rowsRead:'0',eofObserved:false},
+    });
+    assert.equal(error.message,'SOURCE_EOF_COUNT_MISMATCH');
+    return true;
+  });
+});
