@@ -1,4 +1,4 @@
-import {parseLegacyJsonText,legacyDecimalText} from './legacy-json.mjs';
+import {parseLegacyJsonTextIterative as parseLegacyJsonText,legacyDecimalText} from './legacy-json.mjs';
 import {consumePrivateSnapshotTable} from './private-row-reader.mjs';
 
 const need=(ok,code)=>{if(!ok)throw new Error(code);};
@@ -93,7 +93,7 @@ export async function readDocumentSourceCensus(options){
  * passed the original complete EOF/count/hash and unchanged-file checks. */
 export async function readDocumentHeaderCensus(options){
  const census=createDocumentSourceCensus();
- const file=await consumePrivateSnapshotTable({...options,table:'erp_prod_runtime.document',maxRowBytes:33554432,onRow:census.document});
+ const file=await consumePrivateSnapshotTable({...options,table:'erp_prod_runtime.document',maxRowBytes:33554432,onRow:(row,meta)=>{census.document(row);return options.onProgress?.({phase:'DOCUMENT',rows:meta.ordinal});}});
  return {format:'DOCUMENT_HEADER_FILE_CENSUS_PRIVATE_V1',sourceManifestSha256:options.expectedManifestSha256,
   file,headerState:census.headerState()};
 }
@@ -111,7 +111,7 @@ export async function readDocumentRevisionCensus(options,checkpoint){
   &&typeof checkpoint.file.sha256==='string'&&/^[a-f0-9]{64}$/.test(checkpoint.file.sha256),
   'DOCUMENT_CENSUS_CHECKPOINT_SOURCE_REFUSED');
  const census=createDocumentSourceCensus(checkpoint.headerState);
- const file=await consumePrivateSnapshotTable({...options,table:'erp_prod_runtime.revision',maxRowBytes:33554432,onRow:census.revision});
+ const file=await consumePrivateSnapshotTable({...options,table:'erp_prod_runtime.revision',maxRowBytes:33554432,onRow:(row,meta)=>{census.revision(row);return options.onProgress?.({phase:'REVISION',rows:meta.ordinal});}});
  return {...census.finish(),sourceManifestSha256:options.expectedManifestSha256,sourceFilesConsumed:2,
   sourceRows:(BigInt(checkpoint.file.rows)+BigInt(file.rows)).toString(),
   sourceBytes:checkpoint.file.bytes+file.bytes,databaseConnections:0};
