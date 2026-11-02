@@ -20,6 +20,7 @@ import sys
 import zipfile
 from pathlib import Path
 from xml.etree import ElementTree as ET
+from xml.parsers import expat
 
 MAIN = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
 DOCREL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
@@ -383,7 +384,7 @@ class _CheckedStream:
 def iter_projected_rows(path: Path, sheet_name: str, columns: tuple[int, ...]):
     """Yield selected cell values then one EOF receipt. Column indexes are zero-based.
 
-    Only selected SST references are decoded and retained. A consumer must exhaust
+    Only selected cell and SST text is collected or retained; XML parsing still processes the input bytes. A consumer must exhaust
     the iterator and require its EOF event; partial iteration is never completion.
     This is a raw cell port, not a source-identity or import authority.
     """
@@ -456,47 +457,62 @@ def iter_projected_rows(path: Path, sheet_name: str, columns: tuple[int, ...]):
                         pass
         selected = set(columns) | (set(ACCOUNT_HEADERS) if account else set())
         def scan(strings=None):
-            last, count = 0, 0
-            with archive.open(part) as stream:
-                try:
-                    stack = []
-                    for event, element in ET.iterparse(_CheckedStream(stream), events=("start", "end")):
-                        if event == "start":
-                            stack.append(element); continue
-                        if element.tag != f"{{{MAIN}}}row":
-                            stack.pop()
-                            continue
-                        parent = stack[-2] if len(stack) > 1 else None
-                        stack.pop()
-                        if element.tag != f"{{{MAIN}}}row":
-                            continue
-                        raw_index = element.attrib.get("r", "")
-                        if not re.fullmatch(r"[1-9][0-9]{0,6}", raw_index) or int(raw_index) > 1048576 or int(raw_index) <= last:
-                            reject("XLSX_ROW_LOCATION_INVALID", "Rows must have unique increasing Excel positions.")
-                        last = int(raw_index); values = {}; seen = set()
-                        for cell in element:
-                            if cell.tag != f"{{{MAIN}}}c": continue
-                            reference = cell.attrib.get("r", "")
-                            try:
-                                col = column_index(reference, last, sheet_name)
-                            except XlsxPreflightError:
-                                reject("XLSX_CELL_LOCATION_INVALID", "Invalid cell location in selected sheet.")
-                            if col in seen: reject("XLSX_DUPLICATE_CELL", "Duplicate cell position.")
-                            seen.add(col)
-                            if col not in selected: continue
-                            if strings is None:
-                                if cell.attrib.get("t") == "s":
-                                    v = cell.find(f"{{{MAIN}}}v"); raw = v.text if v is not None else None
-                                    if raw is None or not re.fullmatch(r"[0-9]{1,9}", raw): reject("XLSX_SHARED_STRING_INVALID", "Selected shared string index invalid.")
-                                    values[col] = int(raw)
-                            else:
-                                values[col] = cell_value(cell, strings, sheet_name, last)
-                        count += 1
-                        yield last, values
-                        element.clear()
-                        if parent is not None: parent.remove(element)
-                except (ET.ParseError, zipfile.BadZipFile, EOFError):
-                    reject("XLSX_INVALID_XML", "Selected worksheet is malformed or truncated.")
+            last, count, current, builder, depth = 0, 0, None, None, 0
+            values, seen, pending = {}, set(), []
+            parser = expat.ParserCreate(namespace_separator="}")
+            def tag(name):
+                return "{" + name if "}" in name else name
+            def start(name, attrs):
+                nonlocal last, current, builder, depth, values, seen
+                name = tag(name)
+                if builder is not None:
+                    builder.start(name, attrs); depth += 1
+                    return
+                if name == f"{{{MAIN}}}row":
+                    raw_index = attrs.get("r", "")
+                    if not re.fullmatch(r"[1-9][0-9]{0,6}", raw_index) or int(raw_index) > 1048576 or int(raw_index) <= last:
+                        reject("XLSX_ROW_LOCATION_INVALID", "Rows must have unique increasing Excel positions.")
+                    last = int(raw_index); current = last; values = {}; seen = set()
+                elif name == f"{{{MAIN}}}c" and current is not None:
+                    try:
+                        col = column_index(attrs.get("r", ""), current, sheet_name)
+                    except XlsxPreflightError:
+                        reject("XLSX_CELL_LOCATION_INVALID", "Invalid cell location in selected sheet.")
+                    if col in seen: reject("XLSX_DUPLICATE_CELL", "Duplicate cell position.")
+                    seen.add(col)
+                    if col in selected:
+                        builder = ET.TreeBuilder(); builder.start(name, attrs); depth = 1
+                        parser.CharacterDataHandler = builder.data
+            def end(name):
+                nonlocal builder, depth, current, count
+                name = tag(name)
+                if builder is not None:
+                    builder.end(name); depth -= 1
+                    if depth == 0:
+                        parser.CharacterDataHandler = None
+                        cell = builder.close(); builder = None
+                        col = column_index(cell.attrib.get("r", ""), current, sheet_name)
+                        if strings is None:
+                            if cell.attrib.get("t") == "s":
+                                v = cell.find(f"{{{MAIN}}}v"); raw = v.text if v is not None else None
+                                if raw is None or not re.fullmatch(r"[0-9]{1,9}", raw): reject("XLSX_SHARED_STRING_INVALID", "Selected shared string index invalid.")
+                                values[col] = int(raw)
+                        else:
+                            values[col] = cell_value(cell, strings, sheet_name, current)
+                    return
+                if name == f"{{{MAIN}}}row" and current is not None:
+                    pending.append((current, values)); count += 1; current = None
+            parser.StartElementHandler = start; parser.EndElementHandler = end
+            try:
+                with archive.open(part) as stream:
+                    checked = _CheckedStream(stream)
+                    while chunk := checked.read(65536):
+                        parser.Parse(chunk, False)
+                        yield from pending; pending.clear()
+                    parser.Parse(b"", True)
+                    yield from pending
+            except (expat.ExpatError, zipfile.BadZipFile, EOFError):
+                reject("XLSX_INVALID_XML", "Selected worksheet is malformed or truncated.")
         # A private disk index bounds retained SST memory even when every selected
         # value is unique. It contains selected columns only, never a whole SST.
         with tempfile.TemporaryDirectory(prefix="naijue-selected-sst-") as temp_dir:
@@ -517,25 +533,36 @@ def iter_projected_rows(path: Path, sheet_name: str, columns: tuple[int, ...]):
                     if "xl/sharedStrings.xml" not in names: reject("XLSX_SHARED_STRING_INVALID", "Selected shared strings are missing.")
                     wanted = iter(db.execute("SELECT id FROM needed ORDER BY id"))
                     target = next(wanted, None)
-                    with archive.open("xl/sharedStrings.xml") as stream:
-                        index = 0
-                        try:
-                            stack = []
-                            for event, element in ET.iterparse(_CheckedStream(stream), events=("start", "end")):
-                                if event == "start":
-                                    stack.append(element); continue
-                                parent = stack[-2] if len(stack) > 1 else None
-                                stack.pop()
-                                if element.tag == f"{{{MAIN}}}si":
-                                    if target is not None and index == target[0]:
-                                        value = visible_string(element)
-                                        if len(value) > MAX_TEXT: reject("XLSX_CELL_TEXT_LIMIT", "Selected shared string exceeds limit.")
-                                        db.execute("INSERT INTO selected(id,value) VALUES(?,?)", (index, value))
-                                        target = next(wanted, None)
-                                    index += 1; element.clear()
-                                    if parent is not None: parent.remove(element)
-                        except (ET.ParseError, zipfile.BadZipFile, EOFError):
-                            reject("XLSX_INVALID_XML", "Shared strings malformed or truncated.")
+                    parser = expat.ParserCreate(namespace_separator="}")
+                    def sst_start(name, attrs):
+                        # Assigned state lives in a small mutable holder below.
+                        name = "{" + name if "}" in name else name
+                        if state["builder"] is not None:
+                            state["builder"].start(name, attrs); state["depth"] += 1
+                        elif name == f"{{{MAIN}}}si" and state["target"] is not None and state["index"] == state["target"][0]:
+                            state["builder"] = ET.TreeBuilder(); state["builder"].start(name, attrs); state["depth"] = 1
+                            parser.CharacterDataHandler = state["builder"].data
+                    def sst_end(name):
+                        name = "{" + name if "}" in name else name
+                        if state["builder"] is not None:
+                            state["builder"].end(name); state["depth"] -= 1
+                            if state["depth"] == 0:
+                                parser.CharacterDataHandler = None
+                                value = visible_string(state["builder"].close()); state["builder"] = None
+                                if len(value) > MAX_TEXT: reject("XLSX_CELL_TEXT_LIMIT", "Selected shared string exceeds limit.")
+                                db.execute("INSERT INTO selected(id,value) VALUES(?,?)", (state["index"], value))
+                                state["target"] = next(wanted, None)
+                        if name == f"{{{MAIN}}}si": state["index"] += 1
+                    state = {"index": 0, "builder": None, "depth": 0, "target": target}
+                    parser.StartElementHandler = sst_start; parser.EndElementHandler = sst_end
+                    try:
+                        with archive.open("xl/sharedStrings.xml") as stream:
+                            checked = _CheckedStream(stream)
+                            while chunk := checked.read(65536): parser.Parse(chunk, False)
+                            parser.Parse(b"", True)
+                    except (expat.ExpatError, zipfile.BadZipFile, EOFError):
+                        reject("XLSX_INVALID_XML", "Shared strings malformed or truncated.")
+                    target = state["target"]
                     if target is not None or db.execute("SELECT count(*) FROM selected").fetchone()[0] != needed_count:
                         reject("XLSX_SHARED_STRING_INVALID", "Selected shared string index missing.")
                 class SelectedStrings:

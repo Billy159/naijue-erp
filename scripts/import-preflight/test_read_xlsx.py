@@ -85,7 +85,7 @@ class ReadXlsxTests(unittest.TestCase):
                 if count == 100002: self.assertEqual(event["cells"][0]["raw"], "100002")
             else: self.assertEqual((event["rows"], count), (100002, 100002))
 
-    def test_stream_selected_shared_strings_never_decode_secret(self):
+    def test_stream_selected_shared_strings_exclude_unselected(self):
         files = parts(data=[row(1, cell("A1", "0", "s"), cell("B1", "1", "s"))])
         files["xl/sharedStrings.xml"] = f'<sst xmlns="{S}"><si><t>SAFE</t></si><si><t>SECRET_UNSELECTED</t></si></sst>'
         self.write(files)
@@ -101,6 +101,28 @@ class ReadXlsxTests(unittest.TestCase):
         self.assertEqual(events[0]["cells"], {0: {"kind": "text", "raw": "SAFE"}})
         self.assertNotIn("SECRET_UNSELECTED", json.dumps(events))
         self.assertEqual(events[-1]["event"], "eof")
+
+    def test_stream_unselected_inline_and_sst_text_never_collected(self):
+        files = parts(data=[row(1, cell("A1", "0", "s"),
+            '<c r="B1" t="inlineStr"><is><t>INLINE_PRIVATE_MARKER</t></is></c>',
+            cell("C1", "1", "s"))])
+        files["xl/sharedStrings.xml"] = f'<sst xmlns="{S}"><si><t>chosen</t></si><si><t>SST_PRIVATE_MARKER</t></si></sst>'
+        self.write(files)
+        original = reader.ET.TreeBuilder
+        collected = []
+        class RecordingBuilder(original):
+            def data(self, text):
+                collected.append(text)
+                return super().data(text)
+        reader.ET.TreeBuilder = RecordingBuilder
+        try:
+            events = list(reader.iter_projected_rows(self.path, "04客户", (0,)))
+        finally:
+            reader.ET.TreeBuilder = original
+        self.assertEqual(events[0]["cells"][0]["raw"], "chosen")
+        self.assertEqual(events[-1]["event"], "eof")
+        self.assertNotIn("INLINE_PRIVATE_MARKER", "".join(collected))
+        self.assertNotIn("SST_PRIVATE_MARKER", "".join(collected))
 
     def test_stream_truncated_xml_never_emits_eof(self):
         files = parts(data=[row(1, cell("A1", "safe"))])

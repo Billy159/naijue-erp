@@ -21884,9 +21884,11 @@
         "selected SST memory grows with selected text"
       ],
       "repairOwner": "D3",
-      "repairState": "UNCOMMITTED_IN_PROGRESS",
-      "deliveryChecks": "22 synthetic PASS at cc82; no real import"
+      "repairState": "EVENT_FILTER_DELIVERED_28_SYNTHETIC_PASS_PENDING_FIXED_QB",
+      "deliveryChecks": "22 synthetic PASS at cc82; no real import",
+      "runtime": "Node24.21.0"
     },
-    "sourceRelationshipStatus": "Nonblank sales key sets match; six-field candidate multiset has 6 differences per side; row identity/continuations/totals/money UNKNOWN"
+    "sourceRelationshipStatus": "Nonblank sales key sets match; six-field candidate multiset has 6 differences per side; row identity/continuations/totals/money UNKNOWN",
+    "serverRefresh": "Actual entry node server/main.js; legacy1-15; new26 stopped; 3 RO metadata SELECT succeeded/rollback+close; no mutation"
   }
 }
