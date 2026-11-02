@@ -1,8 +1,37 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { productMembership, minimumPriceText, mergeProductMasterRecord, replaceBusinessMasterRecord } from '../scripts/import-v3/native-cleaning/effective-source-rules.mjs';
+import { productMembership, linkLegacyEmployeeIdentities, minimumPriceText, mergeProductMasterRecord, replaceBusinessMasterRecord } from '../scripts/import-v3/native-cleaning/effective-source-rules.mjs';
 const p = (profile: unknown = {}, overlay: unknown = {}, sourcePayload: unknown = {}) => minimumPriceText({ profile, overlay, sourcePayload });
 const record = (body: Record<string, unknown>, rest: Record<string, unknown> = {}) => ({ kind: 'warehouses', id: 'opaque-text-key', body, ...rest });
+
+test('employees, accounts and historical operators preserve distinct exact-ID memberships', () => {
+  const r = linkLegacyEmployeeIdentities({ sourceEmployees: [{id:'shared'},{id:'source-only'}],
+    accounts: [{id:'shared'},{id:'account-only'}], operators: [{id:'shared'},{id:'retired-actor'}] });
+  assert.deepEqual(r.counts,{sourceEmployees:2,accounts:2,operators:2,sourceWithoutAccount:1,
+    accountWithoutSource:1,operatorOnly:1,accountWithoutOperator:1});
+  assert.deepEqual(r.links.find(x=>x.id==='retired-actor'),{id:'retired-actor',sourceEmployeePresent:false,
+    accountPresent:false,operatorPresent:true});
+  assert.equal(r.sourceCompletenessVerified,false); assert.equal(r.credentialCompatibilityVerified,false);
+  assert.equal(r.targetWrites,0);
+});
+
+test('same employee name/code and enabled operator do not invent an account or merge IDs', () => {
+  const sourceEmployees=Object.freeze([Object.freeze({id:'A',name:'same',code:'001'})]);
+  const r=linkLegacyEmployeeIdentities({sourceEmployees,accounts:[{id:'a',name:'same',code:'001'}],
+    operators:[{id:'old',name:'same',enabled:true}]});
+  assert.deepEqual(r.links.map(x=>x.id),['A','a','old']);
+  assert.equal(r.counts.sourceWithoutAccount,1);assert.equal(r.counts.operatorOnly,1);
+});
+
+test('identity links reject duplicate IDs in any source and never inspect credential fields', () => {
+  for(const key of ['sourceEmployees','accounts','operators']) {
+    assert.throws(()=>linkLegacyEmployeeIdentities({...{sourceEmployees:[],accounts:[],operators:[]},
+      [key]:[{id:'duplicate'},{id:'duplicate'}]}),{code:'DUPLICATE_SOURCE_ID'});
+  }
+  let reads=0;const account=Object.defineProperty({id:'account'},'password_hash',{get(){reads++;throw Error('secret');}});
+  assert.equal(linkLegacyEmployeeIdentities({sourceEmployees:[],accounts:[account],operators:[]}).counts.accounts,1);
+  assert.equal(reads,0);
+});
 
 test('source wins matching nondeleted overlay; tombstone suppresses source and overlay-only', () => {
   assert.deepEqual(productMembership({ sourceRows: [{ id: 'same', name: 'source' }, { id: 'hidden' }], overlayRows: [

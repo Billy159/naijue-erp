@@ -69,6 +69,25 @@ export function productMembership({ sourceRows, overlayRows }) {
   return result;
 }
 
+/** master-data.js:91–116 and repository.js:38–64 join employee/account by
+ * exact ID; service.js synchronizes operator with that same account ID.
+ * Inputs are private, independently captured ID projections. Names, source
+ * codes, credentials and enabled flags cannot establish an identity link.
+ * This does not create staff/accounts, select a source batch or grant login. */
+export function linkLegacyEmployeeIdentities({ sourceEmployees, accounts, operators }) {
+  const source = uniqueRows(sourceEmployees), auth = uniqueRows(accounts), audit = uniqueRows(operators);
+  const ids = new Set([...source.keys(), ...auth.keys(), ...audit.keys()]);
+  const links = [...ids].map(id => ({ id, sourceEmployeePresent: source.has(id),
+    accountPresent: auth.has(id), operatorPresent: audit.has(id) }));
+  return { status: 'EXACT_ID_LINKS_NOT_TARGET_MAPPING_NOT_LOGIN_AUTHORIZATION', links,
+    counts: { sourceEmployees: source.size, accounts: auth.size, operators: audit.size,
+      sourceWithoutAccount: links.filter(x => x.sourceEmployeePresent && !x.accountPresent).length,
+      accountWithoutSource: links.filter(x => x.accountPresent && !x.sourceEmployeePresent).length,
+      operatorOnly: links.filter(x => x.operatorPresent && !x.accountPresent && !x.sourceEmployeePresent).length,
+      accountWithoutOperator: links.filter(x => x.accountPresent && !x.operatorPresent).length },
+    sourceCompletenessVerified: false, credentialCompatibilityVerified: false, targetWrites: 0 };
+}
+
 function priceTextOrNull(value) {
   if (value !== null && typeof value !== 'string') refuse('UNSUPPORTED_PRICE_JSON_TYPE');
   return value; // No decimal coercion, precision change, unit assumption or empty-string repair.

@@ -6,6 +6,14 @@ export interface MasterRecord extends JsonObject { kind: string; id: string; bod
 export interface MaintainedMasterRecord extends MasterRecord { sourceFacts: JsonObject; }
 /** Documented domain: already validated finite ordinary JSON, no Proxy/cycles/accessors. */
 export function productMembership(input: unknown): ProductMembership[];
+/** Private exact-ID links only; no credential consumption, target ID allocation or login grant. */
+export function linkLegacyEmployeeIdentities(input: {sourceEmployees: unknown; accounts: unknown; operators: unknown}): {
+  status: 'EXACT_ID_LINKS_NOT_TARGET_MAPPING_NOT_LOGIN_AUTHORIZATION';
+  links: {id: string; sourceEmployeePresent: boolean; accountPresent: boolean; operatorPresent: boolean}[];
+  counts: {sourceEmployees: number; accounts: number; operators: number; sourceWithoutAccount: number;
+    accountWithoutSource: number; operatorOnly: number; accountWithoutOperator: number};
+  sourceCompletenessVerified: false; credentialCompatibilityVerified: false; targetWrites: 0;
+};
 /** Only string/null price facts; preserves empty strings/precision and upper-layer explicit null. */
 export function minimumPriceText(input: unknown): string | null;
 /** PostgreSQL jsonb text adapter; numeric prices retain their exact token, without rounding. */
