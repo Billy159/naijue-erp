@@ -1,7 +1,18 @@
 /** T+ current-batch product source candidates. Read-only; no IDs, SQL or grant. */
+import {createHash} from "node:crypto";
+import {parseV2Csv} from "../../packages/application/src/import-v2.ts";
 import { parseImportCnyYuan } from "../../packages/application/src/import-preflight.ts";
 import { IMPORT_V2_TABLES } from "../../packages/application/src/import-v2-contract.ts";
 import { sourceEvidence } from "./prepare-native-bindings.mjs";
+
+// Exact, reviewed master-sheet price labels for this batch. The price-book
+// uses its own separately validated short labels.
+const MASTER_PRICE_HEADERS=Object.freeze({
+  '采购价':'采购价','零售价':'零售价',
+  '五级批发价':'五级批发价(工厂店供货价）', '六级批发价':'六级批发价（贴牌价）',
+  '七级批发价':'七级批发价（批发价）', '八级批发价':'八级批发价（代理商供货价）',
+  '九级批发价':'九级批发价（工厂店零售价）', '十级批发价':'十级批发价（葛玉珠）', '最低售价':'最低售价'
+});
 
 /** Price-book observations are product-level source facts; no SKU or target IDs.
  * Blank prices are preserved, pending full source/contract closure. */
@@ -91,9 +102,8 @@ export async function readTPlusProductMaster(events, expectedHeaders) {
       expectedHeaders.filter(x => x === "尺码所属取值组编码").length !== 1) throw Error("TPLUS_MASTER_HEADER_CONTRACT");
   const priceNames = ["采购价", "零售价", "五级批发价", "六级批发价", "七级批发价", "八级批发价", "九级批发价", "十级批发价", "最低售价"];
   const priceColumns = new Map(priceNames.map(name => {
-    const indexes=expectedHeaders.flatMap((v,i) => v === name || v.startsWith(name+"（") || v.startsWith(name+"(") ? [i] : []);
-    if (indexes.length !== 1) throw Error("TPLUS_MASTER_PRICE_HEADER");
-    return [name,indexes[0]];
+    const indexes=expectedHeaders.flatMap((v,i) => v === MASTER_PRICE_HEADERS[name] ? [i] : []);
+    return [name,indexes.length === 1 ? indexes[0] : null];
   }));
   const products = new Map(); let physical=0, last=0, header=false, eof=false;
   for await (const event of events) {
@@ -112,7 +122,7 @@ export async function readTPlusProductMaster(events, expectedHeaders) {
     const groupCol=expectedHeaders.indexOf("尺码所属取值组编码"), name=event.cells[1], group=event.cells[groupCol];
     products.set(code.raw,{sheet:"存货",excelRow:event.excelRow,sourceProductCode:code.raw,
       sourceProductName:name ?? null,sourceSizeGroup:group ?? null,sourceHeaders:[...expectedHeaders],
-      priceSourceCells:Object.fromEntries([...priceColumns].map(([key,i])=>[key,event.cells[i] ?? {kind:"blank",raw:null}])),sourceCells:event.cells});
+      priceSourceCells:Object.fromEntries([...priceColumns].map(([key,i])=>[key,i === null ? {kind:"unrecognized",raw:null} : event.cells[i] ?? {kind:"blank",raw:null}])),sourceCells:event.cells});
   }
   if (!eof) throw Error("TPLUS_MASTER_EOF");
   return products;
@@ -195,8 +205,9 @@ export function draftTPlusProductFields26(candidate) {
   for (const column of IMPORT_V2_TABLES.find(t=>t.entity==='PRODUCT').columns) {
     const spec=specs[column.name];
     if (!spec) { pending.push(column.name); continue; }
-    const pricePrefix=spec[0].match(/^(五级|六级|七级|八级|九级|十级)批发价/);
-    const indexes=headers.flatMap((name,i)=>name===spec[0] || (pricePrefix && name.startsWith(pricePrefix[0]+'(')) || (pricePrefix && name.startsWith(pricePrefix[0]+'（')) ? [i] : []);
+    const priceKey=Object.keys(MASTER_PRICE_HEADERS).find(key=>column.name===key || column.name.startsWith(key+'（'));
+    const allowedHeader=priceKey ? MASTER_PRICE_HEADERS[priceKey] : spec[0];
+    const indexes=headers.flatMap((name,i)=>name===allowedHeader?[i]:[]);
     if (indexes.length !== 1) { pending.push(column.name); continue; }
     const index=indexes[0], cell=product.sourceCells[index];
     if (cell && !['text','number','blank'].includes(cell.kind)) { pending.push(column.name); continue; }
@@ -249,4 +260,50 @@ export function attachTPlusCategorySource26(candidate, categoryPaths) {
   if (!(categoryPaths instanceof Map) || !Array.isArray(headers) || headers.filter(x=>x==='所属类别编码').length!==1) throw Error('TPLUS_CATEGORY_REFERENCE_INPUT');
   const cell=product.sourceCells[headers.indexOf('所属类别编码')], category=cell?.kind==='text' ? categoryPaths.get(cell.raw) : undefined;
   return {...candidate, categorySource:category ?? null, categoryReferenceStatus:category ? category.status : 'PENDING_CATEGORY_SOURCE',importReady:false};
+}
+
+/** Independently pinned historic per-product decisions are evidence, not an
+ * automatic permission to reuse target IDs or infer a new category hierarchy. */
+export async function readTPlusPriorCategoryDecisions26(bytes, trustedSha256) {
+  if (!Buffer.isBuffer(bytes) || !/^[a-f0-9]{64}$/.test(trustedSha256 ?? '') || createHash('sha256').update(bytes).digest('hex')!==trustedSha256)
+    throw Error('TPLUS_CATEGORY_DECISION_PIN');
+  const records=new Map();let header;
+  for await (const cells of parseV2Csv((async function*(){yield new TextDecoder('utf-8',{fatal:true}).decode(bytes)})())) {
+    if (!header) {
+      header=cells;const required=['code','name','target_id','target_name','decision_status','decision_source','decision_basis','old_category_for_review_only','original_description','original_size_group','original_invoice_name'];
+      if (new Set(header).size!==header.length || required.some(k=>header.filter(x=>x===k).length!==1)) throw Error('TPLUS_CATEGORY_DECISION_HEADER');
+      continue;
+    }
+    if (cells.length!==header.length) throw Error('TPLUS_CATEGORY_DECISION_WIDTH');
+    const record=Object.fromEntries(header.map((h,i)=>[h,cells[i]]));
+    if (!record.code || !record.target_id || records.has(record.code)) throw Error('TPLUS_CATEGORY_DECISION_IDENTITY');
+    records.set(record.code,record);
+  }
+  if (!header) throw Error('TPLUS_CATEGORY_DECISION_HEADER');
+  return {records,sha256:trustedSha256};
+}
+
+/** Match an individual decision against source evidence, retaining missing or
+ * changed facts. Matching is a reference candidate, never target authorization. */
+export function compareTPlusPriorCategoryDecision26(candidate, decisions) {
+  const p=candidate?.productSource,headers=p?.sourceHeaders;
+  if (!(decisions?.records instanceof Map) || !/^[a-f0-9]{64}$/.test(decisions?.sha256 ?? '') || !Array.isArray(headers)) throw Error('TPLUS_CATEGORY_DECISION_INPUT');
+  const record=decisions.records.get(p.sourceProductCode);
+  if (!record) return {status:'PENDING_NO_PRIOR_PRODUCT_DECISION',decisionEvidenceSha256:decisions.sha256,importReady:false};
+  const specs=[['存货名称','name',true],['所属类别','old_category_for_review_only',true],['存货描述','original_description',false],
+    ['尺码所属取值组编码','original_size_group',true],['开票名称','original_invoice_name',false]];
+  const comparisons=[];
+  for (const [field,oldField,required] of specs) {
+    const index=headers.indexOf(field);if(index<0 || headers.lastIndexOf(field)!==index) throw Error('TPLUS_CATEGORY_DECISION_SOURCE_HEADER');
+    const cell=p.sourceCells[index],old=record[oldField];
+    if (cell && !['text','number','blank'].includes(cell.kind)) {comparisons.push({field,status:'SOURCE_UNREADABLE'});continue;}
+    const value=cell?.raw ?? '';
+    comparisons.push({field,status:!old && !required?'PRIOR_NOT_RECORDED':old===value?'EQUAL':'DIFFERENT'});
+  }
+  const sizeEvidenceRelevant=/尺码|尺码组/.test(record.decision_basis+' '+record.decision_source);
+  const materialChange=comparisons.some(x=>['DIFFERENT','SOURCE_UNREADABLE'].includes(x.status) &&
+    (x.field!=='尺码所属取值组编码' || sizeEvidenceRelevant));
+  return {status:materialChange?'PENDING_SOURCE_FACTS_CHANGED':'PRIOR_DECISION_MATCHED_REFERENCE_ONLY',
+    decisionEvidenceSha256:decisions.sha256,sourceProductCode:p.sourceProductCode,sourceRow:p.excelRow,comparisons,
+    sizeEvidenceRelevant,priorTargetId:record.target_id,priorTargetName:record.target_name,importReady:false};
 }

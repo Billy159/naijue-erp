@@ -21988,9 +21988,14 @@
       "sourceDepth3": 2749,
       "privateArtifactSha256": "3c2dfd15909b7a7e6cc4c8a262cea33e4a7bc71f8b7a24bcc061d92bb72fc9fe",
       "receiptSha256": "1c685de98bb887ff4ab0b5e5b5497c946cfe57d8c308edabec99474f703ba15d",
-      "checks": "D3 Node24.21 6/6 synthetic; source hash+EOF; independent QB pending",
-      "approvedMapping": "2941 exact-code prior decision candidates; original proof applicability still being checked; no flattening or name-only adoption",
+      "checks": "D3 Node24.21 affected8/8; QB category tree narrow synthetic pass, price arbitrary-suffix NEED_FIX addressed pending fixed-version retest",
+      "approvedMapping": "2941 exact-code existing decisions referenced with original recorded facts;29 uncovered;target validity/provider pending",
       "importReady": false
+    },
+    "priceHeaderFix": {
+      "status": "SOURCE_FIXED_QB_PENDING",
+      "scope": "Exact observed/approved 9-price headers; unknown parenthetical suffix retained pending; no price-rule change",
+      "actualSourceDefectProven": false
     }
   }
 }

@@ -14,7 +14,7 @@ import {IMPORT_V2_TABLES} from '../../packages/application/src/import-v2-contrac
 import {prepareProductEvidenceChunk} from '../../packages/application/src/product-evidence-staging.ts';
 import {readTPlusProductMaster,readTPlusProductBarcodes,projectTPlusProductPrices,assembleTPlusProductSource26,buildTPlusProductCanonicalEvidence26} from './tplus-product-source26.mjs';
 const text=raw=>({kind:'text',raw}),num=raw=>({kind:'number',raw});
-const mh=['存货编码','存货名称','尺码所属取值组编码','采购价','零售价','五级批发价','六级批发价','七级批发价','八级批发价','九级批发价','十级批发价','最低售价'], bh=['存货编码','存货名称','规格型号','条形码','计量单位','是否默认条码'];
+const mh=['存货编码','存货名称','尺码所属取值组编码','采购价','零售价','五级批发价(工厂店供货价）','六级批发价（贴牌价）','七级批发价（批发价）','八级批发价（代理商供货价）','九级批发价（工厂店零售价）','十级批发价（葛玉珠）','最低售价'], bh=['存货编码','存货名称','规格型号','条形码','计量单位','是否默认条码'];
 const ph=['条形码','存货编码','采购价','零售价','五级批发价','六级批发价','七级批发价','八级批发价','九级批发价','十级批发价','最低售价'];
 const row=(sheet,excelRow,cells)=>({event:'row',sheet,excelRow,cells});
 const head=(sheet,excelRow,labels)=>row(sheet,excelRow,Object.fromEntries(labels.map((x,i)=>[i,text(x)])));
@@ -130,4 +130,37 @@ test('category source tree rejects cycles and keeps third level pending without 
  await assert.rejects(readTPlusCategoryTree26([head('存货分类',1,h),entry(2,'A','root','B'),entry(3,'B','child','A'),end('存货分类',3)],h),/CYCLE/);
  await assert.rejects(readTPlusCategoryTree26([head('存货分类',1,h),entry(2,'A','root','missing'),end('存货分类',2)],h),/PARENT_MISSING/);
  await assert.rejects(readTPlusCategoryTree26(source.slice(0,-1),h),/EOF/);
+});
+
+test('pinned prior per-product category evidence never assumes parent-code equivalence',async()=>{
+ const {readTPlusPriorCategoryDecisions26,compareTPlusPriorCategoryDecision26}=await import('./tplus-product-source26.mjs');
+ const header=['code','name','target_id','target_name','decision_status','decision_source','decision_basis','old_category_for_review_only','original_description','original_size_group','original_invoice_name'];
+ const csv=header.join(',')+'\n001,synthetic,target,synthetic,approved,synthetic,synthetic,sourcecat,,G,\n';const bytes=Buffer.from(csv),pin=createHash('sha256').update(bytes).digest('hex');
+ const decisions=await readTPlusPriorCategoryDecisions26(bytes,pin);
+ const headers=['存货编码','存货名称','所属类别','存货描述','尺码所属取值组编码','开票名称'];
+ const candidate={productSource:{sourceProductCode:'001',excelRow:3,sourceHeaders:headers,sourceCells:{0:text('001'),1:text('synthetic'),2:text('sourcecat'),3:{kind:'blank',raw:null},4:text('G'),5:{kind:'blank',raw:null}}}};
+ assert.equal(compareTPlusPriorCategoryDecision26(candidate,decisions).status,'PRIOR_DECISION_MATCHED_REFERENCE_ONLY');
+ const changed=structuredClone(candidate);changed.productSource.sourceCells[2]=text('other');
+ assert.equal(compareTPlusPriorCategoryDecision26(changed,decisions).status,'PENDING_SOURCE_FACTS_CHANGED');
+ const groupOnly=structuredClone(candidate);groupOnly.productSource.sourceCells[4]=text('other');
+ assert.equal(compareTPlusPriorCategoryDecision26(groupOnly,decisions).status,'PRIOR_DECISION_MATCHED_REFERENCE_ONLY');
+ const missing=structuredClone(candidate);missing.productSource.sourceProductCode='002';
+ assert.equal(compareTPlusPriorCategoryDecision26(missing,decisions).status,'PENDING_NO_PRIOR_PRODUCT_DECISION');
+ await assert.rejects(readTPlusPriorCategoryDecisions26(bytes,'b'.repeat(64)),/PIN/);
+});
+
+
+test('unknown price label meanings remain pending in master comparison and drafts',async()=>{
+ const {draftTPlusProductFields26}=await import('./tplus-product-source26.mjs');
+ const bad=[...mh];bad[5]='五级批发价（其他含义）';bad[6]='六级批发价(其他含义)';
+ const source=row('存货',3,{0:text('001'),1:text('synthetic'),2:text('group'),3:num('12.30'),4:num('0'),5:num('100'),6:num('200')});
+ const master=await readTPlusProductMaster([head('存货',2,bad),source,end('存货',2)],bad);
+ const product=master.get('001');assert.equal(product.priceSourceCells['五级批发价'].kind,'unrecognized');assert.equal(product.priceSourceCells['六级批发价'].kind,'unrecognized');
+ const draft=draftTPlusProductFields26({status:'SOURCE_FACTS_ONLY',productSource:product});
+ assert.ok(draft.pending.includes('五级批发价（工厂店供货价）'));assert.ok(draft.pending.includes('六级批发价（贴牌价）'));
+ assert.equal(draft.fields['五级批发价（工厂店供货价）'],undefined);
+ const barcode=new Map([['001',[{sourceBarcode:'A'}]]]);const price=row('存货价格本',2,{1:text('001'),2:num('12.30'),3:num('0'),4:num('100'),5:num('200')});
+ const out=await Array.fromAsync(assembleTPlusProductSource26({master,barcodes:barcode,prices:projectTPlusProductPrices([head('存货价格本',1,ph),price,end('存货价格本',2)],ph)}));
+ assert.equal(out[0].priceChecks['五级批发价'],'PENDING');assert.equal(out[0].priceChecks['六级批发价'],'PENDING');assert.equal(out[0].status,'PENDING_SOURCE_FACTS');
+ assert.equal(out[0].productSource.sourceHeaders[5],'五级批发价（其他含义）');assert.equal(out[0].productSource.sourceCells[5].raw,'100');
 });
