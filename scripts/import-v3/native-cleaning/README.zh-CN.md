@@ -1,5 +1,13 @@
 # 一次性原生清洗准备组件（离线，未接数据库写入）
 
+## 2026-11-02 当前已验证断点
+
+原 T45 `t45-document-revision-iterative-files-20261102-01` 已 COMPLETED/exit0/285.830秒，原300秒限制不变。复用 ad4 头检查点4b2ded7d…，修订解析固定7309499e…；44773头及44773当前修订完成原 reader EOF/COUNT/hash及finish，检查点前后不变。SALE28282、TRANSFER14279、OTHER2212；未审核2250、已审核42523。391956明细数量均为整数且在bigint范围，负数11801。旧失败保留，临时Node精确停止移除，无PG或目标写入。
+
+261859行sku_id为空或非字符串只是原字段统计。已配对旧销货/调拨 currentSourceBinding 消费者会核同批来源观察，再构造 CURRENT_DISPLAY_ONLY 投影；不能据此判身份丢失，也不能把显示投影当历史原身份。额外来源证明尚未并入93项快照，转换仍未完成。
+
+`effective-source-rules.mjs::linkLegacyEmployeeIdentities` 按准确ID关联当前批来源员工、账号及operator的私域ID投影，不读凭据、姓名、状态或来源编码，不按99个operator数量建账号，不分配目标身份或登录权。来源无账号、账号无来源、历史operator独有及账号缺operator分别保留。新增3项与原规则共22项Node24测试通过；实际认证身份采集、逐人目标映射、权限和登录未验，调用方不得用部分数组宣称全量身份完成。
+
 ## 最新实际断点：93项共同快照已采集，未转换
 
 固定93692f3fd8b48cdc7de7bbae5b8c072eee1b700e，原T45作业 `t45-legacy-cleaning93-private-snapshot-readonly-20261102-01` 已实际完成，exit0、973.637秒。43项库存/映射来源224611行、48张资料表74302行、单据头和版本各44773行，均在同一RR只读快照完成独立COUNT、空EOF及当前修订指针核验。93个NDJSON来源文件9300530988字节，仅在服务器0700私域保存，未进入本机、Git或公开回执。该范围仍排除认证凭据、额外原始来源追溯及目标转换/写入。

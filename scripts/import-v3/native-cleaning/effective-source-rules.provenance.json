@@ -42,5 +42,38 @@
     "otherThreeInterfacesByteIdentical": true,
     "independentEvidenceManifestSha256": "67a027e1c6d5e0fe0f42e7353971a32e4292494e4bc2e3ca6331591674f473ed",
     "actualDatabasePerformanceMeasured": false
+  },
+  "employeeIdentityLinks": {
+    "scope": "Private exact-ID memberships; not target mapping or login authorization",
+    "archiveSha256": "6671ddb657709f90a54980fdc9418959ecffbe6675dca6399712172d3282a530",
+    "sourceEvidence": "T45 t45-employee-account-source-archive-20261102-01/identity-source-facts.json",
+    "rules": [
+      {
+        "file": "server/security/master-data.js",
+        "sha256": "79fc98d76e76f99ff894916dcb28f2d12cce3d3de7327cab21da55a27e8e0d5a",
+        "lines": [
+          91,
+          116
+        ]
+      },
+      {
+        "file": "server/security/repository.js",
+        "sha256": "62812b4f079f21af87dc464b8b0ccf9ddb2c9884ab6d5796611c6625daf16744",
+        "lines": [
+          38,
+          64
+        ]
+      },
+      {
+        "file": "server/security/service.js",
+        "sha256": "6380d69895ce30a3c3c5975d46f62859b8574a817e88109e0939338634215b3f",
+        "lines": [
+          312,
+          410
+        ]
+      }
+    ],
+    "actualAccountCapture": "NOT_DONE",
+    "credentialsConsumed": false
   }
 }
