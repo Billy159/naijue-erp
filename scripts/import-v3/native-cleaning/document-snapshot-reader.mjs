@@ -1,4 +1,4 @@
-import {readLegacyReferenceTables,readLegacySourceProofTables} from './reference-snapshot-reader.mjs';
+import {readLegacyReferenceTables,readLegacySourceProofTables,readLegacyAccountIdentity} from './reference-snapshot-reader.mjs';
 
 /** Read original headers and every revision in one PostgreSQL snapshot.
  * JSON stays text: JS number/date conversion must not change source facts.
@@ -30,9 +30,14 @@ export function readLegacyCleaningWithSourceProofSnapshot(pool, options) {
   return readLegacySnapshot(pool, options, true, true, true);
 }
 
+/** Same-cohort successor: noncredential account identity plus all95 source scopes. */
+export function readLegacyCleaningWithAccountIdentitySnapshot(pool, options) {
+  return readLegacySnapshot(pool, options, true, true, true, true);
+}
+
 async function readLegacySnapshot(pool, {
-  pageRows = 100, onDocuments, onRevisions, onReferences, onInventory, onSourceProof, signal,
-}, includeReferences, includeInventory = false, includeSourceProof = false) {
+  pageRows = 100, onDocuments, onRevisions, onReferences, onInventory, onSourceProof, onAccountIdentity, signal,
+}, includeReferences, includeInventory = false, includeSourceProof = false, includeAccountIdentity = false) {
   if (!Number.isSafeInteger(pageRows) || pageRows < 1 || pageRows > 500) {
     throw new Error('INVALID_DOCUMENT_PAGE_SIZE');
   }
@@ -42,6 +47,7 @@ async function readLegacySnapshot(pool, {
   if (includeReferences && typeof onReferences !== 'function') throw new Error('REFERENCE_SNAPSHOT_SINK_REQUIRED');
   if (includeInventory && typeof onInventory !== 'function') throw new Error('INVENTORY_SNAPSHOT_SINK_REQUIRED');
   if (includeSourceProof && typeof onSourceProof !== 'function') throw new Error('SOURCE_PROOF_SNAPSHOT_SINK_REQUIRED');
+  if (includeAccountIdentity && typeof onAccountIdentity !== 'function') throw new Error('ACCOUNT_IDENTITY_SNAPSHOT_SINK_REQUIRED');
   const client = await pool.connect();
   let transaction = false, releaseError;
   const progress = {
@@ -71,6 +77,8 @@ async function readLegacySnapshot(pool, {
     if (identity?.read_only !== 'on' || identity.isolation !== 'repeatable read') {
       throw new Error('DOCUMENT_READONLY_SNAPSHOT_REQUIRED');
     }
+    const accountIdentity = includeAccountIdentity
+      ? await readLegacyAccountIdentity(client, {pageRows,onAccountIdentity,signal}) : undefined;
     const sourceProof = includeSourceProof
       ? await readLegacySourceProofTables(client, {pageRows,onSourceProof,signal}) : undefined;
     // Load this additional fixed scope only for its explicit entry point. Existing
@@ -138,7 +146,8 @@ async function readLegacySnapshot(pool, {
     active();
     await client.query('ROLLBACK');
     transaction = false;
-    return { status: includeSourceProof ? 'COMPLETE_SCOPED_LEGACY_CLEANING_WITH_SOURCE_PROOF_SNAPSHOT'
+    return { status: includeAccountIdentity ? 'COMPLETE_SCOPED_LEGACY_CLEANING_WITH_ACCOUNT_IDENTITY_SNAPSHOT'
+      : includeSourceProof ? 'COMPLETE_SCOPED_LEGACY_CLEANING_WITH_SOURCE_PROOF_SNAPSHOT'
       : includeInventory ? 'COMPLETE_SCOPED_LEGACY_CLEANING_SNAPSHOT'
       : includeReferences ? 'COMPLETE_DOCUMENT_AND_REFERENCE_SNAPSHOT' : 'COMPLETE_DOCUMENT_SNAPSHOT', identity,
       counts: { documents: totals.documents.toString(), revisions: totals.revisions.toString() },
@@ -146,7 +155,7 @@ async function readLegacySnapshot(pool, {
       rawJsonUtf8Bytes: Object.fromEntries(Object.entries(jsonBytes).map(([key, value]) => [key, value.toString()])),
       largestRawJsonRowUtf8Bytes: Object.fromEntries(Object.entries(largestRowBytes).map(([key, value]) => [key, value.toString()])),
       businessWrites: false, ...(includeReferences ? {references} : {}), ...(includeInventory ? {inventory} : {}),
-      ...(includeSourceProof ? {sourceProof} : {}) };
+      ...(includeSourceProof ? {sourceProof} : {}), ...(includeAccountIdentity ? {accountIdentity} : {}) };
   } catch (error) {
     // Counts only, never source values. Partial output is not a completion receipt.
     if (error instanceof Error && Object.isExtensible(error)) {

@@ -161,3 +161,14 @@ ad4两阶段的header真实完成44773行，但revision仍在原300秒动作期�
 `target-stock-readback.mjs` 从调用者提供的既有目标池，使用单连接RR READ ONLY读取准确批次与外部预期source_hash。独立COUNT和稳定游标分页读取原SKU别名/实际SKU字段、逐来源库存贡献及相应余额；不从转换输入制造读回记录、不创建池、不写目标。共享同一目标SKU的多个原别名/贡献仍逐条保留；余额缺行以balance_present=false及NULL保留，不补0。数量由PG直接转text，保留负数和bigint精度。
 
 实际登录须是非owner、无提升属性/成员关系的普通LOGIN，禁止以owner或管理员SET ROLE冒充普通账号；这仍不是完整应用最小权限验收。未知BEGIN、查询/私域sink失败、取消及ROLLBACK失败沿原连接释放语义处理，不返回成功。12项模拟连接正反例通过。尚未创建运行账号、授予权限、生成目标批次或运行真实PG；需要已配套的目标权限和真实转换批次后，再由原T45完成实际验证。该入口只覆盖库存读回的明确子范围，不是金额/全部单据/员工身份或完整迁移对账通过。
+
+
+### 同快照账号身份后继（96 项，真实采集未执行）
+`captureLegacyCleaningWithAccountIdentitySnapshot` 在原单一连接、同一次 RR READ ONLY
+事务内先读取账号安全投影，再读取 95 项完整来源。旧 50/93/95 入口保持原范围。
+账号仅保留 id/version、body 自有键 code/name/role/hallId/storeId/employmentStatus/enabled/loginEnabled，
+缺失键与显式 null 分开；login_name 仅输出是否存在、是否非空两个布尔量。不读取密码列、
+会话、phone、sourceFacts 或实际登录名。此投影不证明凭据兼容、可登录或授予新版权限。
+私有离线消费者支持准确 95/96 清单，仍以各自实际 manifest 固定输入；不能把旧 93 项
+补上另一快照后称为同批。新投影的真实 PostgreSQL 语义、权限、RLS、实际容量和 EOF
+仍由原 T45 在保留隔离副本验证；不新增授权、不连接生产。

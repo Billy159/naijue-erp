@@ -4,7 +4,7 @@ import {mkdtemp, readFile, stat, access} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {captureLegacyDocumentAndReferenceSnapshot, captureLegacyCleaningSnapshot,captureLegacyCleaningWithSourceProofSnapshot} from '../scripts/import-v3/native-cleaning/private-snapshot-files.mjs';
+import {captureLegacyDocumentAndReferenceSnapshot, captureLegacyCleaningSnapshot,captureLegacyCleaningWithSourceProofSnapshot,captureLegacyCleaningWithAccountIdentitySnapshot} from '../scripts/import-v3/native-cleaning/private-snapshot-files.mjs';
 
 function database({failure} = {}) {
   const calls = [], positions = new Map(); let connections = 0;
@@ -19,7 +19,7 @@ function database({failure} = {}) {
       if (sql.startsWith('FETCH')) {
         const cursor = sql.split(' ').at(-1), count = positions.get(cursor) ?? 0;
         positions.set(cursor, count + 1);
-        return {rows: cursor.startsWith('cleaning_reference_') || cursor.startsWith('cleaning_inventory_effect_') || cursor.startsWith('cleaning_source_proof_') || count > 0 ? [] :
+        return {rows: cursor.startsWith('cleaning_reference_') || cursor.startsWith('cleaning_inventory_effect_') || cursor.startsWith('cleaning_source_proof_') || cursor.startsWith('cleaning_account_identity_') || count > 0 ? [] :
           [{source_document_id: 'synthetic-id', source_revision: '1', raw_json: '{"amount":9007199254740993.1234,"note":"衣\\n"}'}]};
       }
       return {rows: []};
@@ -103,4 +103,16 @@ test('invalid or already cancelled input cannot create private files or take a c
   await assert.rejects(captureLegacyDocumentAndReferenceSnapshot(db.pool, {directory: 'relative', maxBytes: 1024}), /ABSOLUTE/);
   await assert.rejects(captureLegacyDocumentAndReferenceSnapshot(db.pool, {directory, maxBytes: undefined}), /BYTE_BUDGET/);
   assert.equal(db.connections, 0);
+});
+
+test('96-scope capture and downstream consumer agree on exact new profile without credentials',async()=>{
+  const directory=await destination(),db=database();
+  const result=await captureLegacyCleaningWithAccountIdentitySnapshot(db.pool,{directory,maxBytes:1024*1024});
+  assert.equal(result.files.length,96);assert.equal(result.receipt.accountIdentity.length,1);
+  assert.equal(result.excludes.includes('authentication-identity-projection'),false);assert.ok(result.excludes.includes('credentials'));
+  const {consumePrivateSnapshotTable}=await import('../scripts/import-v3/native-cleaning/private-row-reader.mjs');
+  const manifest=await readFile(join(directory,'SNAPSHOT.json'));
+  const read=await consumePrivateSnapshotTable({directory,expectedManifestSha256:createHash('sha256').update(manifest).digest('hex'),expectedUid:process.getuid(),table:'erp_prod_auth.employee_login',maxRowBytes:1024,onRow:async()=>{}});
+  assert.equal(read.rows,'0');assert.equal(read.databaseConnections,0);
+  assert.equal(db.connections,1);assert.equal(db.calls.filter(x=>x==='ROLLBACK').length,1);
 });

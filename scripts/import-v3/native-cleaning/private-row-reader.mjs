@@ -2,11 +2,13 @@ import {open,lstat} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {join,isAbsolute} from 'node:path';
 import {createHash} from 'node:crypto';
-import {legacyReferenceTables} from './reference-snapshot-reader.mjs';
+import {legacyReferenceTables,legacySourceProofTables,legacyAccountIdentityTables} from './reference-snapshot-reader.mjs';
 import {legacyInventoryEffectTables} from './inventory-effect-snapshot-reader.mjs';
 
 const tables=new Set([...legacyReferenceTables,...legacyInventoryEffectTables].map(row=>row.table)
   .concat(['erp_prod_runtime.document','erp_prod_runtime.revision']));
+const proofTables=new Set([...tables,...legacySourceProofTables.map(row=>row.table)]);
+const identityTables=new Set([...proofTables,...legacyAccountIdentityTables.map(row=>row.table)]);
 const need=(yes,code)=>{if(!yes)throw new Error(code);};
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
 const unchanged=(a,b)=>['ino','dev','size','mode','uid','mtimeMs','ctimeMs'].every(k=>a[k]===b[k]);
@@ -18,7 +20,7 @@ const protectedFile=(s,uid)=>s.isFile()&&!s.isSymbolicLink()&&s.uid===uid&&(s.mo
  * or target writer, no source identity allocation and no public row output. */
 export async function consumePrivateSnapshotTable({directory,expectedManifestSha256,expectedUid,table,maxRowBytes,signal,onRow}) {
   need(typeof directory==='string'&&isAbsolute(directory)&&/^[a-f0-9]{64}$/.test(expectedManifestSha256)
-    &&Number.isSafeInteger(expectedUid)&&expectedUid>=0&&tables.has(table)&&typeof onRow==='function'
+    &&Number.isSafeInteger(expectedUid)&&expectedUid>=0&&identityTables.has(table)&&typeof onRow==='function'
     &&Number.isSafeInteger(maxRowBytes)&&maxRowBytes>0&&maxRowBytes<=33554432,'PRIVATE_ROW_EXACT_INPUT_REQUIRED');
   signal?.throwIfAborted();
   const root=await lstat(directory);need(root.isDirectory()&&!root.isSymbolicLink()&&root.uid===expectedUid&&(root.mode&0o777)===0o700,'PRIVATE_ROW_DIRECTORY_REFUSED');
@@ -28,7 +30,12 @@ export async function consumePrivateSnapshotTable({directory,expectedManifestSha
   try {manifestBytes=await mh.readFile();need(unchanged(prior,await mh.stat()),'PRIVATE_ROW_MANIFEST_CHANGED');} finally {await mh.close();}
   need(digest(manifestBytes)===expectedManifestSha256,'PRIVATE_ROW_MANIFEST_PIN_REFUSED');
   let manifest;try {manifest=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(manifestBytes));}catch {throw new Error('PRIVATE_ROW_MANIFEST_JSON_REFUSED');}
-  need(manifest.status==='COMPLETE_SCOPED_PRIVATE_SNAPSHOT'&&manifest.files?.length===93,'PRIVATE_ROW_COMPLETE_SOURCE_REQUIRED');
+  const expectedTables=manifest.scope==='96_SCOPES_SAFE_ACCOUNT_IDENTITY_PLUS95_SOURCE_PROOF_CLEANING_SCOPES' ? identityTables
+    : manifest.scope==='95_SCOPES_ORIGINAL_IMPORT_BATCH_AND_SOURCE_RECORD_PLUS93_CLEANING_SCOPES' ? proofTables : tables;
+  need(expectedTables.has(table),'PRIVATE_ROW_EXACT_INPUT_REQUIRED');
+  need(manifest.status==='COMPLETE_SCOPED_PRIVATE_SNAPSHOT'&&manifest.files?.length===expectedTables.size,'PRIVATE_ROW_COMPLETE_SOURCE_REQUIRED');
+  if(expectedTables!==tables) need(new Set(manifest.files.map(row=>row.table)).size===expectedTables.size
+    &&manifest.files.every(row=>expectedTables.has(row.table)),'PRIVATE_ROW_COMPLETE_SOURCE_REQUIRED');
   const selected=manifest.files.filter(row=>row.table===table);need(selected.length===1,'PRIVATE_ROW_TABLE_REFUSED');
   const file=selected[0];need(file.filename===`${table}.ndjson`&&Number.isSafeInteger(file.bytes)&&file.bytes>=0
     &&/^(0|[1-9][0-9]*)$/.test(file.rows)&&/^[a-f0-9]{64}$/.test(file.sha256),'PRIVATE_ROW_FILE_METADATA_REFUSED');

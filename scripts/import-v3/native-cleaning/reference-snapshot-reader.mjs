@@ -71,18 +71,35 @@ export function readLegacySourceProofTables(client, {pageRows,onSourceProof,sign
   });
 }
 
+/** Noncredential account identity only. Missing body keys remain absent; explicit
+ * JSON null remains null. No login name, password, sourceFacts or session data. */
+export const legacyAccountIdentityTables = Object.freeze([
+  Object.freeze({table:'erp_prod_auth.employee_login',keys:Object.freeze(['id']),keyKind:'PRIMARY_KEY',selection:'ACCOUNT_IDENTITY_ONLY'}),
+]);
+export function readLegacyAccountIdentity(client, {pageRows,onAccountIdentity,signal}) {
+  return readFixedLegacyTableSet(client, legacyAccountIdentityTables, {
+    pageRows,onReferences:onAccountIdentity,signal,cursorPrefix:'cleaning_account_identity',progressProperty:'accountIdentitySnapshotProgress',
+  });
+}
+const accountIdentityJson = `jsonb_build_object('id',r.id,'version',r.version,
+  'body',COALESCE((SELECT jsonb_object_agg(k,r.body->k)
+    FROM unnest(ARRAY['code','name','role','hallId','storeId','employmentStatus','enabled','loginEnabled']::text[]) k
+    WHERE jsonb_typeof(r.body)='object' AND r.body ? k),'{}'::jsonb),
+  'login_name_present',r.login_name IS NOT NULL,
+  'login_name_nonblank',CASE WHEN r.login_name IS NULL THEN false ELSE btrim(r.login_name)<>'' END)`;
+
 /** Internal reuse for fixed catalogue-derived table lists, inside the caller's RRRO.
  * This does not authorize arbitrary callers or establish target identity/permissions.
  */
 export async function readFixedLegacyTableSet(client, specifications, {pageRows, onReferences, signal, cursorPrefix = 'cleaning_reference', progressProperty = 'referenceSnapshotProgress'}) {
   if (!Number.isSafeInteger(pageRows) || pageRows < 1 || pageRows > 500) throw new Error('INVALID_REFERENCE_PAGE_SIZE');
   if (typeof onReferences !== 'function') throw new Error('REFERENCE_SNAPSHOT_SINK_REQUIRED');
-  if (!['referenceSnapshotProgress', 'inventorySnapshotProgress', 'sourceProofSnapshotProgress'].includes(progressProperty)
+  if (!['referenceSnapshotProgress', 'inventorySnapshotProgress', 'sourceProofSnapshotProgress', 'accountIdentitySnapshotProgress'].includes(progressProperty)
     || !/^[a-z_]+$/.test(cursorPrefix) || !Array.isArray(specifications) || !specifications.length
     || new Set(specifications.map(row => row.table)).size !== specifications.length
-    || specifications.some(row => !/^erp_prod_(source|runtime)\.[a-z_]+$/.test(row.table)
+    || specifications.some(row => !(/^erp_prod_(source|runtime)\.[a-z_]+$/.test(row.table) || (row.table==='erp_prod_auth.employee_login' && row.selection==='ACCOUNT_IDENTITY_ONLY' && JSON.stringify(row.keys)==='["id"]'))
       || !Array.isArray(row.keys) || !row.keys.length || row.keys.some(key => !/^[a-z_]+$/.test(key))
-      || (row.selection !== undefined && !(row.selection === 'STANDARD_SIZE_MAPPING_ONLY' && row.table === 'erp_prod_source.system_setting' && JSON.stringify(row.keys) === '["key"]'))
+      || (row.selection !== undefined && !(row.selection === 'STANDARD_SIZE_MAPPING_ONLY' && row.table === 'erp_prod_source.system_setting' && JSON.stringify(row.keys) === '["key"]') && !(row.selection==='ACCOUNT_IDENTITY_ONLY' && row.table==='erp_prod_auth.employee_login' && JSON.stringify(row.keys)==='["id"]'))
       || !['PRIMARY_KEY','SNAPSHOT_PHYSICAL_NOT_BUSINESS_ID'].includes(row.keyKind))) throw new Error('FIXED_LEGACY_TABLE_SPECIFICATION_REQUIRED');
   const progress = [];
   try {
@@ -102,7 +119,7 @@ export async function readFixedLegacyTableSet(client, specifications, {pageRows,
       receipt.expected = expected;
       await client.query(`DECLARE ${cursor} NO SCROLL CURSOR FOR SELECT
         jsonb_build_array(${keys.map(key => `r.${key}::text`).join(', ')})::text AS source_key_json,
-        to_jsonb(r)::text AS raw_json FROM ${table} r${where} ORDER BY ${keys.map(key => `r.${key}`).join(', ')}`);
+        ${selection === 'ACCOUNT_IDENTITY_ONLY' ? accountIdentityJson : 'to_jsonb(r)'}::text AS raw_json FROM ${table} r${where} ORDER BY ${keys.map(key => `r.${key}`).join(', ')}`);
       const seen = new Set(); let rowsRead = 0n, jsonBytes = 0n, largestRowBytes = 0n;
       for (;;) {
         signal?.throwIfAborted();

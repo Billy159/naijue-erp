@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {legacyReferenceTables,legacySourceProofTables, readFixedLegacyTableSet} from '../scripts/import-v3/native-cleaning/reference-snapshot-reader.mjs';
+import {legacyReferenceTables,legacySourceProofTables,legacyAccountIdentityTables, readFixedLegacyTableSet} from '../scripts/import-v3/native-cleaning/reference-snapshot-reader.mjs';
 import {legacyInventoryEffectTables} from '../scripts/import-v3/native-cleaning/inventory-effect-snapshot-reader.mjs';
-import {readLegacyCleaningSnapshot,readLegacyCleaningWithSourceProofSnapshot} from '../scripts/import-v3/native-cleaning/document-snapshot-reader.mjs';
+import {readLegacyCleaningSnapshot,readLegacyCleaningWithSourceProofSnapshot,readLegacyCleaningWithAccountIdentitySnapshot} from '../scripts/import-v3/native-cleaning/document-snapshot-reader.mjs';
 
 function database({tables = {}, counts = {}, failSql} = {}) {
   const calls = [], positions = new Map(); let connections = 0;
@@ -18,8 +18,8 @@ function database({tables = {}, counts = {}, failSql} = {}) {
       if (sql.startsWith('FETCH')) {
         const cursor = sql.split(' ').at(-1), size = Number(sql.split(' ')[2]), offset = positions.get(cursor) ?? 0;
         positions.set(cursor, offset + size);
-        const match = /^cleaning_(reference|inventory_effect|source_proof)_(\d+)$/.exec(cursor);
-        const rows = match ? tables[({reference:legacyReferenceTables,inventory_effect:legacyInventoryEffectTables,source_proof:legacySourceProofTables})[match[1]][Number(match[2])].table] ?? []
+        const match = /^cleaning_(reference|inventory_effect|source_proof|account_identity)_(\d+)$/.exec(cursor);
+        const rows = match ? tables[({reference:legacyReferenceTables,inventory_effect:legacyInventoryEffectTables,source_proof:legacySourceProofTables,account_identity:legacyAccountIdentityTables})[match[1]][Number(match[2])].table] ?? []
           : [{source_document_id: 'synthetic', source_revision: '2', raw_json: '{"version":3,"active_effect_revision":1}'}];
         return {rows: rows.slice(offset, offset + size)};
       }
@@ -123,4 +123,38 @@ test('missing inventory sink and unsafe internal table specifications refuse bef
   await assert.rejects(readLegacyCleaningSnapshot(db.pool, {...sinks,onInventory:undefined}), /INVENTORY_SNAPSHOT_SINK_REQUIRED/);
   assert.equal(db.connections, 0);
   await assert.rejects(readFixedLegacyTableSet({query(){throw Error('MUST_NOT_QUERY');}}, [{table:'erp_prod_runtime.posting; DELETE',keys:['id'],keyKind:'PRIMARY_KEY'}], {pageRows:1,onReferences:async()=>{}}), /FIXED_LEGACY_TABLE_SPECIFICATION_REQUIRED/);
+});
+
+test('account successor shares one RR, selects only safe keys and requires sink before connection',async()=>{
+  const source=row(['account-1'],'{"id":"account-1","body":{"role":null},"login_name_present":true,"login_name_nonblank":false}');
+  const db=database({tables:{'erp_prod_auth.employee_login':[source]}}),seen=[];
+  const result=await readLegacyCleaningWithAccountIdentitySnapshot(db.pool,{...sinks,onSourceProof:async()=>{},onAccountIdentity:async(t,rows)=>seen.push(...rows)});
+  assert.deepEqual(seen,[source]);assert.equal(result.accountIdentity[0].rowsRead,'1');assert.equal(result.accountIdentity[0].eofObserved,true);
+  assert.equal(result.references.length+result.inventory.length+result.sourceProof.length+result.accountIdentity.length+2,96);
+  assert.equal(db.connections,1);assert.equal(db.calls.filter(x=>x==='ROLLBACK').length,1);
+  const sql=db.calls.find(x=>typeof x==='string'&&x.startsWith('DECLARE cleaning_account_identity'));
+  assert.ok(sql.includes("r.body ? k"));assert.ok(sql.includes("r.body->k"));assert.ok(sql.includes("r.login_name IS NOT NULL"));
+  assert.equal(/to_jsonb\(r\)|password|hash|salt|token|phone|sourceFacts|session/i.test(sql),false);
+  assert.equal((sql.match(/r\.login_name/g)||[]).length,3);
+  assert.ok(sql.includes("'login_name_nonblank',CASE WHEN r.login_name IS NULL THEN false ELSE btrim(r.login_name)<>'' END"));
+  const absent=database();await assert.rejects(readLegacyCleaningWithAccountIdentitySnapshot(absent.pool,{...sinks,onSourceProof:async()=>{}}),/ACCOUNT_IDENTITY_SNAPSHOT_SINK_REQUIRED/);assert.equal(absent.connections,0);
+});
+test('account count mismatch, duplicate and sink failure abort entire new cohort',async()=>{
+  const table='erp_prod_auth.employee_login',source=row(['a'],'{"id":"a"}');
+  for(const config of [{tables:{[table]:[source]},counts:{[table]:'2'}},{tables:{[table]:[source,source]}}]) {
+    const db=database(config);await assert.rejects(readLegacyCleaningWithAccountIdentitySnapshot(db.pool,{...sinks,onSourceProof:async()=>{},onAccountIdentity:async()=>{}}),e=>Boolean(e.accountIdentitySnapshotProgress));
+    assert.equal(db.calls.at(-2),'ROLLBACK');assert.equal(db.calls.some(x=>typeof x==='string'&&x.startsWith('DECLARE cleaning_source_proof')),false);
+  }
+});
+
+test('auth cannot be queried as a whole row or through another selection/key',async()=>{
+  for(const spec of [
+    {table:'erp_prod_auth.employee_login',keys:['id'],keyKind:'PRIMARY_KEY'},
+    {table:'erp_prod_auth.employee_login',keys:['login_name'],keyKind:'PRIMARY_KEY',selection:'ACCOUNT_IDENTITY_ONLY'},
+    {table:'erp_prod_auth.session',keys:['id'],keyKind:'PRIMARY_KEY',selection:'ACCOUNT_IDENTITY_ONLY'},
+  ]) {
+    const db=database();const client=await db.pool.connect();
+    await assert.rejects(readFixedLegacyTableSet(client,[spec],{pageRows:1,onReferences:async()=>{}}),/FIXED_LEGACY_TABLE_SPECIFICATION_REQUIRED/);
+    assert.equal(db.calls.length,0);
+  }
 });
