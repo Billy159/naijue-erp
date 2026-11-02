@@ -108,6 +108,16 @@ test('new batch without fit overlay still requires new batch receipts',async t=>
  f.state.changeHeaderReview=q=>{q.decision='ACCEPT_EXACT_TRANSFER_HEADER14279_REFERENCE_BINDINGS';q.scope='TRANSFER_HEADER14279_REFERENCE_DECISIONS_ONLY';};await assert.rejects(openReviewedTransferLineSource26(await f.save()),/HEADER_REVIEW/);
  const old=await fixture(t),oldReader=await openReviewedTransferLineSource26(old.options);await oldReader.close();
 });
+test('reader rejects unsupported cutoff profiles before any review or legacy fallback',async t=>{
+ const f=await fixture(t),b=f.m.binding;b.cutoffAt='2026-11-02T04:00:01Z';const matchingEverything=await f.save();await assert.rejects(openReviewedTransferLineSource26(matchingEverything),/BINDING_PROFILE/);
+ const old=await fixture(t),o=old.options;
+ const cases=[{fixedSourceNamespace:'synthetic.rewrite26.acl.20261102',batchId:stableImportId('batch','synthetic.rewrite26.acl.20261102','FULL_SOURCE','V1'),cutoffAt:'2026-10-31T00:00:00.000Z'},
+ {fixedSourceNamespace:'synthetic.qa897.sales.20261029',batchId:'e2dfa367-7cda-42d2-9726-f7cc52124cf1',cutoffAt:'2026-10-29T00:00:00.000Z'},
+ {fixedSourceNamespace:'synthetic.v7r1.ledger.20261031',batchId:'3884ed09-86a0-a342-421d-3ae4e3f2ffd1',cutoffAt:'2026-10-31T00:00:00.000Z'},
+ {fixedSourceNamespace:'naijue:tplus:primary-ledger',batchId:'aeeba5c6-fb54-4b94-bf80-93d98212a70d',selectionSha256:'964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba',cutoffAt:'2026-10-04T12:00:00+08:00'}];
+ for(const profile of cases)await assert.rejects(openReviewedTransferLineSource26({...o,binding:{...o.binding,...profile}}),/SOURCE_REVIEW/);
+ await assert.rejects(openReviewedTransferLineSource26({...o,binding:{...o.binding,fixedSourceNamespace:'synthetic.rewrite26.acl.20261102',cutoffAt:'2026-10-31T00:00:00Z'}}),/BINDING_PROFILE/);
+});
 const scope=f=>({batchId:f.m.binding.batchId,fixedSourceNamespace:f.m.binding.fixedSourceNamespace,selectionSha256:f.m.binding.selectionSha256,authorizedPayloadHash:payload,expectedCounts:{...Object.fromEntries(HISTORY_COUNT_KEYS.map(k=>[k,0])),history_transfer_line:2,import_source_row:2},expectedSourceEntityCounts:{...Object.fromEntries(HISTORY_CLOSURE_SOURCE_ENTITIES.map(k=>[k,0])),TRANSFER_LINE:2}});
 const context=()=>({group:'TRANSFER_LINES',signal:new AbortController().signal});
 

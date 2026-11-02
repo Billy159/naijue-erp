@@ -34,6 +34,15 @@ const skuKeys=['canonicalSourceKey','nativeSkuId','canonicalSourceEvidenceHash',
 const aliasKeys=['sourceKey','sourceEvidenceHash','rawLineSha256','completeAliasCsvRowHash','consumedMappingHash'];
 const decisionKeys=['sourceKey','sourceRowId','rawLineSha256','sourceEvidenceHash','canonicalRowHash','header','sku','lineId','lineHash','preparedFingerprint'];
 function binding(value){captureHash(value);must(exact(value,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&uuid(value.batchId)&&text(value.fixedSourceNamespace)&&hash(value.selectionSha256)&&typeof value.cutoffAt==='string'&&/(?:Z|[+-]\d\d:\d\d)$/.test(value.cutoffAt)&&Number.isFinite(Date.parse(value.cutoffAt)),'TRANSFER_LINE26_BINDING');return structuredClone(value);}
+function bindingProfile(b){
+ const instant=Date.parse(b.cutoffAt),ns=b.fixedSourceNamespace;
+ if(instant===Date.parse('2026-11-02T04:00:00Z'))return 'NEW_20261102';
+ if(instant===Date.parse('2026-10-04T04:00:00Z')&&((ns==='naijue:tplus:primary-ledger'&&b.batchId==='aeeba5c6-fb54-4b94-bf80-93d98212a70d'&&b.selectionSha256==='964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba')||(ns==='synthetic.transfer-lines26'&&b.batchId==='00000000-0000-4000-8000-000000000001')))return 'LEGACY_20261004';
+ if(instant===Date.parse('2026-10-31T00:00:00Z')&&ns==='synthetic.rewrite26.acl.20261102'&&b.batchId===stableImportId('batch',ns,'FULL_SOURCE','V1'))return 'SYNTHETIC_REWRITE26';
+ if(instant===Date.parse('2026-10-29T00:00:00Z')&&ns==='synthetic.qa897.sales.20261029'&&b.batchId==='e2dfa367-7cda-42d2-9726-f7cc52124cf1')return 'SYNTHETIC_QA897';
+ if(instant===Date.parse('2026-10-31T00:00:00Z')&&ns==='synthetic.v7r1.ledger.20261031'&&b.batchId==='3884ed09-86a0-a342-421d-3ae4e3f2ffd1')return 'SYNTHETIC_V7R1';
+ throw Error('TRANSFER_LINE26_BINDING_PROFILE');
+}
 function selection(value,b){captureHash(value);must(exact(value,selectionKeys)&&['baseManifestSha256','selectionSha256','approvalSha256','csvSha256'].every(k=>hash(value[k]))&&value.selectionSha256===b.selectionSha256&&value.entity==='TRANSFER_LINE'&&value.source==='BASE_V2'&&value.path===table.file,'TRANSFER_LINE26_SELECTION');return structuredClone(value);}
 function referenceIndex(b){
  const headers=new Map(),aliases=new Map(),skus=new Map(),headerIds=new Set(),headerSourceIds=new Set(),skuIds=new Set();
@@ -155,7 +164,7 @@ export async function* capturedTransferLineRows26(index,kind,readRow,current){
 export async function openReviewedTransferLineSource26(options){
  const keys=['binding','authorizedPayloadHash','sourceReviewFile','trustedSourceReviewSha256','referenceReviewFile','trustedReferenceReviewSha256'],optional=Object.hasOwn(options??{},'signal')?['signal']:[];
  must(exact(options,[...keys,...optional]),'TRANSFER_LINE26_OPTIONS');const o=Object.fromEntries([...keys,...optional].map(k=>[k,Object.getOwnPropertyDescriptor(options,k).value]));
- const b=binding(o.binding);must(hash(o.trustedSourceReviewSha256)&&hash(o.trustedReferenceReviewSha256)&&(o.authorizedPayloadHash===null||hash(o.authorizedPayloadHash)),'TRANSFER_LINE26_OUTSIDE_PINS');
+ const b=binding(o.binding),profile=bindingProfile(b);must(hash(o.trustedSourceReviewSha256)&&hash(o.trustedReferenceReviewSha256)&&(o.authorizedPayloadHash===null||hash(o.authorizedPayloadHash)),'TRANSFER_LINE26_OUTSIDE_PINS');
  must(o.signal===undefined||o.signal instanceof AbortSignal,'TRANSFER_LINE26_SIGNAL');
  const files=[],byPath=new Map(),entries=[],bySource=new Map(),sourceOrder=[],typedOrder=[],fitProofs=new Map(),refs=referenceIndex(b);let closed=false,closing,constructing=true,work,fitPin;
  const active=()=>must(!closed&&!o.signal?.aborted,'TRANSFER_LINE26_CLOSED');
@@ -178,7 +187,7 @@ export async function openReviewedTransferLineSource26(options){
    if(expected.fit)must(exact(q.acceptedFitEvidence,['sha256','bytes','rows','sourceFileSha256','decisionSha256'])&&Object.keys(expected.fit).every(k=>q.acceptedFitEvidence[k]===expected.fit[k]),'TRANSFER_LINE26_QB_FIT');
    if(expected.noFit)must(!Object.hasOwn(q,'acceptedFitEvidence'),'TRANSFER_LINE26_QB_FIT');}}
  let rawFile,decisionFile,selected;
- const newBatch=Date.parse(b.cutoffAt)===Date.parse('2026-11-02T04:00:00Z');
+ const newBatch=profile==='NEW_20261102';
  async function readEntry(entry){const rawBytes=await readAt(rawFile,entry.rawOffset,entry.rawLength);active();must(digest(rawBytes)===entry.rawSha256,'TRANSFER_LINE26_RAW_CHANGED');const rawLine=decode(rawBytes),raw=original(rawLine),proof=fitProofs.get(raw.sourceId),result=prepareOne({rawLine,canonical:normalized(raw,refs,proof,fitPin),...(proof?{historicalFitEvidence:proof}:{})},b,selected,refs,fitPin),decisionBytes=await readAt(decisionFile,entry.decisionOffset,entry.decisionLength);active();must(digest(decisionBytes)===entry.decisionSha256&&captureHash(JSON.parse(decode(decisionBytes)))===captureHash(result.decision)&&result.prepared.fingerprint===entry.fingerprint,'TRANSFER_LINE26_PREPARED_CHANGED');return result;}
  try{
   const sr=await json({path:o.sourceReviewFile,bytes:(await lstat(o.sourceReviewFile)).size,sha256:o.trustedSourceReviewSha256});
