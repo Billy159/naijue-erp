@@ -8628,5 +8628,56 @@
     },
     "metadataClosureOwner": "Original D1 sole writer; distinct EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1 format and 26_hv2_history_draft_line_set_from_v8, exact four-body pins inheriting V8 137/ACL/pairs. deploy-candidate.py generated contract block only. Do not change boot/rollback approval pins or ssh-control.",
     "syntheticBoundary": "Only existing unified synthetic fixture/application+HTTP composition; not PostgreSQL/real permission/inventory/production acceptance; T45 sole build and QF actual UI after frozen package."
+  },
+  "newData20261102": {
+    "objective": "新统一源码与2026-11-02新导出配套上线；旧批不默认迁入",
+    "baselineBranch": "codex/e5c5a762-unified-candidate-20261102",
+    "baselineCommit": "4f82af47c6e8f597f747d7792c9eba4bf12994cf",
+    "developmentBranch": "codex/e5c5a762-cleaning-20261102",
+    "inputDirectory": "T+数据2026年11月2日12：00/ (protected original project directory)",
+    "metadataSha256": "c2021a66b4e97448f958615514cc8206a9dbf3cd3da1fdccc4c6bf80f06f292e",
+    "dataAdapterOwner": "D3 / 01a161d2-6712-7691-80af-5d2fa6a30fab",
+    "dataAdapterModelRequested": "gpt-6.1-terra/medium",
+    "actualModelReported": "gpt-6.1-terra",
+    "actualReasoningIndependentlyVerified": false,
+    "serverOwner": "T45 / 01a100d0-cad5-71c1-8042-dc594311d3be",
+    "controllerOwns": [
+      "integration",
+      "git commits/push",
+      "TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP"
+    ],
+    "stages": {
+      "formatAdaptation": "IN_PROGRESS",
+      "isolatedImport": "NOT_EXECUTED_THIS_BATCH",
+      "formalImport": "NOT_EXECUTED",
+      "applicationDeployment": "NOT_EXECUTED",
+      "onlineBusinessVerification": "NOT_EXECUTED"
+    },
+    "productionRule": "Use existing effective authorization; genuinely uncovered precise production changes require one consolidated confirmation; no cleanup of production by default",
+    "preserve": [
+      "original new export",
+      "基础数据导入",
+      "manual hall/warehouse/employee supplements",
+      "510 barcode correction",
+      "history evidence",
+      "old database/backups"
+    ],
+    "noOldSourceFullCaptureOrConversion": true,
+    "activeWriterScope": {
+      "D3": [
+        "scripts/import-preflight/**",
+        "packages/application/src/import-preflight.ts",
+        "packages/application/src/import-preflight-contract.ts",
+        "tests/import-preflight.test.ts",
+        "tests/import-preflight-*.test.mjs"
+      ],
+      "C": [
+        "docs/rapid-launch-20261022/TASKS.json",
+        "docs/rapid-launch-20261022/PROGRESS.md",
+        "docs/rapid-launch-20261022/HANDOFF.md",
+        "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json"
+      ]
+    },
+    "outsideScope": "D3 requests exact seam before editing SQL/contracts/import-v3; no parallel writer"
   }
 }
