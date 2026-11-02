@@ -22168,9 +22168,9 @@
     }
   },
   "currentRoute": {
-    "recordedAt": "2026-11-02T13:15:38.153347+00:00",
+    "recordedAt": "2026-11-02T14:35:13.899042+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "OFFLINE_DRAFTS_INDEXED_WAITING_SPECIFIC_EVIDENCE_AND_DOT_DELIVERY",
+    "status": "PARALLEL_OFFLINE_CLEANING_ACTIVE_DOT_CODE_OWNER",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22193,11 +22193,13 @@
     },
     "owners": {
       "Dot": "Application code, schema upgrades, installer and standard-package importer; new complete source and validation pending user delivery",
-      "D3": "Original thread 01a161d2-6712-7691-80af-5d2fa6a30fab; offline parsing, cleaning, mapping, reconciliation only; private root and central registry sole writer",
+      "D3": "Original central registry/rules owner; delivered size mapping/consumption; other worker dirs excluded",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
-      "D1": "Old code/runtime preparation queue remains stopped; no duplicate implementation",
+      "D1": "New approved offline sales source semantics/identity task only; old ERP code/runtime queue remains stopped",
       "T45": "Sole server executor retained; no new server/database execution in this phase",
-      "QB": "No duplicate whole-code acceptance dispatched"
+      "QB": "No duplicate whole-code acceptance dispatched",
+      "D2": "New approved offline safe funding-account mapping only",
+      "F2": "Temporary offline inventory source reconciliation only; UI source lease closed"
     },
     "model": {
       "D3Requested": "gpt-6.1-terra/medium",
@@ -22211,8 +22213,8 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical sales/transfer source lines only with exact original blank and decision provenance; not stock/product/global default",
-    "current": "13-package DRAFT index delivered; original D3 idle after completed bounded work",
-    "next": "Receive specific missing source evidence and user-delivered complete Dot source; resume only affected mapping/binding/integration",
+    "current": "New size-mapping sidecar delivered and full source-semantics consumption complete; first independent 3-chat wave returned bounded receipts",
+    "next": "Address exact source/semantic gaps and public-business-field reader restriction without secret access; no repeat full scans; Dot complete code delivery remains independent",
     "ordinaryDocumentTables": [
       "sales_header",
       "sales_line",
@@ -22290,6 +22292,132 @@
       "D3State": "IDLE_AFTER_COMPLETED_INDEX",
       "D3Turn": "01a19c5e-0d25-7a21-a1dc-88c59460342b",
       "nextWorkAssessment": "Bounded small-receipt review found no concrete independent next cleaning item without new evidence; avoid duplicate shards and unchanged polling"
+    },
+    "checkpoint": {
+      "repository": "https://github.com/Billy159/naijue-erp",
+      "branch": "codex/e5c5a762-cleaning-20261102",
+      "commit": "e3c2ddc9933d8769ab3849096217025d1542dd16",
+      "remoteHeadReadbackMatched": true,
+      "recordedAt": "2026-11-02T13:18:42.724079+00:00",
+      "scope": "4 coordination records; prior 2 committed source increments retained by fast-forward; 4 source/test WIP excluded; no data uploaded"
+    },
+    "blockedAudit": {
+      "consecutiveImpasseTurns": 0,
+      "resetReason": "New human-provided size crosswalk location and goal resumed; original D3 new evidence task dispatched",
+      "checkedAt": "2026-11-02T14:15:22.986072+00:00",
+      "goalStillActive": true
+    },
+    "sizeMappingEvidence20261102": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/尺码映射表-20261013",
+      "horizontalSha256": "24da17c1b4136bebac5393c460f60812ce556a71c88e708ee397c838ed0c2d07",
+      "employeeSha256": "2a6b9a75a27d3f17513e1d300291d031a74d0369626951d0e14f3f16c51699c4",
+      "uniqueOldCodes": 240,
+      "horizontalDisplayCodePositions": 250,
+      "machineRuleDefinitions": 263,
+      "historicalAuditMatches": 14864,
+      "approvedSkuDecisions": 402,
+      "coverageAgainstCurrentBatch": "BOUNDED_03_COMPLETE_FULL_CONSUMER_INCREMENT_IN_PROGRESS",
+      "D3ModelToolParameters": "gpt-6.1-terra/medium",
+      "sourceReadOnly": true,
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/size-map-20261102-increment-03/coverage-receipt.json",
+      "receiptSha256": "9e01cfccea07423d05ac4c080ad0b02f8fc9a3c5bf7c02fd3f9fa99103b21ec3",
+      "employeeVsCurrentDictionaryExact": 240,
+      "horizontalNameExact": 229,
+      "horizontalNameDifferences": 11,
+      "sourceGroupsWithRuleRangeCandidates": 16,
+      "sourceGroupsCompleteMembershipProven": 0,
+      "currentStandardGroupsWithDefinitions": 6,
+      "prior28ProductsExactSkuBindingsAdded": 0,
+      "historicalRulesInSidecar": 14864,
+      "approvedDecisionsChecked": 402,
+      "materialExceptionsPreserved": 20,
+      "Fast": "UNVERIFIED",
+      "runtimeModelMetadata": "UNVERIFIED_TOOL_OVERRIDE_ACCEPTED",
+      "fullConsumption": {
+        "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/size-map-full-consumption-20261102-02/RESULT.json",
+        "sha256": "8f4e0c4379eeea0424c59047ae3bcafc734d7478d2a36f37afdd68daafc799de",
+        "sidecarTupleCount": 38142,
+        "compressedBytes": 708933,
+        "transfer": {
+          "sourceRows": 273948,
+          "semanticCandidates": 272584,
+          "unresolved": 1364
+        },
+        "sales": {
+          "sourceRows": 83399,
+          "semanticCandidates": 83182,
+          "unresolved": 217
+        },
+        "inventory": {
+          "sourceCells": 42227,
+          "semanticCandidates": 41070,
+          "unresolved": 1157
+        },
+        "exactOriginalSkuMatches": 0,
+        "targetIdentityVerified": false,
+        "importAuthorized": false,
+        "stage": "SOURCE_SEMANTICS_CANDIDATES_NOT_SKU_BINDING"
+      }
+    },
+    "parallelCleaning20261102": {
+      "humanAuthorizationThread": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+      "humanAuthorizationTurn": "01a19ca1-a045-7501-a221-3352d847e50a",
+      "humanTextVerifiedByReadThread": true,
+      "reusedChats": [
+        {
+          "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
+          "title": "奈爵快速上线 D1｜后端宿主事务与公共迁移",
+          "packages": [
+            10,
+            11,
+            12
+          ],
+          "scope": "Sales six amount differences,132 duplicate groups/source-row identity, exact economic evidence",
+          "output": "parallel-cleaning-20261102/sales-source-D1-01",
+          "status": "FIRST_INCREMENT_COMPLETED_SOURCE_ONLY_NOT_IMPORT_PASS",
+          "model": "gpt-6.1-terra/medium",
+          "cursor": "31358d0c-7fe6-45ab-9cd4-473812b715b3:34",
+          "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261102/sales-source-D1-01/receipt.json",
+          "receiptSha256": "be0e221d2c2e2800a5b83f20b105b83f2927272cdc7db1ffbbb74da0fe172c53"
+        },
+        {
+          "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
+          "title": "奈爵快速上线 D2｜后端商品与基础资料维护",
+          "packages": [
+            7
+          ],
+          "scope": "80 funding account safe business fields and exact method/hall references; differentiate reader restriction from missing data",
+          "output": "parallel-cleaning-20261102/payment-account-D2-01",
+          "status": "FIRST_INCREMENT_COMPLETED_SOURCE_ONLY_NOT_IMPORT_PASS",
+          "model": "gpt-6.1-terra/medium",
+          "cursor": "f535cd0b-fbec-44c2-ab49-a8f6658aeb47:1",
+          "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261102/payment-account-D2-01/RECEIPT.json",
+          "receiptSha256": "ba15c5304a215345167b2c08dc1a2df777058528750a01465628df8fa3360165"
+        },
+        {
+          "threadId": "01a161d2-6bd9-7181-8386-1ecddddd386a",
+          "title": "奈爵快速上线 F2｜前端库存与商品",
+          "packages": [
+            13
+          ],
+          "scope": "Temporary data-only scope:47 unresolved inventory row checks and current-batch coverage evidence; no UI code",
+          "output": "parallel-cleaning-20261102/inventory-source-F2-01",
+          "status": "FIRST_INCREMENT_COMPLETED_SOURCE_ONLY_NOT_IMPORT_PASS",
+          "model": "gpt-6.1-terra/medium",
+          "cursor": "6cb096a2-4084-4710-8ba5-bfed4eb138d3:1",
+          "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261102/inventory-source-F2-01/RESULT.json",
+          "receiptSha256": "c66d8fbfe6c5ccbe4617b74b57c57c12aa06689387b166cad33bb9d4a5d635ed"
+        }
+      ],
+      "newChatsCreated": 0,
+      "activeExecutors": 0,
+      "controllerPlusExecutors": 4,
+      "centralRegistryOwner": "D3",
+      "writeScope": "Each worker its own new private child only; all inputs/previous receipts readonly",
+      "modelOverrideToolAccepted": true,
+      "actualRuntimeModelSelfInspection": "UNVERIFIED",
+      "Fast": "UNVERIFIED",
+      "firstWaveActuallyOverlapped": true
     }
   }
 }
