@@ -105,3 +105,14 @@ test('explicit source-column sidecar reaches the existing product evidence consu
  const altered=structuredClone(proof);altered.fields['来源编号'].source.value='002';
  assert.throws(()=>buildTPlusProductCanonicalEvidence26({candidate:sourceCandidate,canonicalFields,mappingEvidence:{proof:altered,sha256:requestHash(altered)},sourceFile:'synthetic.xlsx',sourceSha256:'a'.repeat(64),selectedColumns:headers.map((_,i)=>i),binding}),/SOURCE_CELL/);
 });
+
+test('source drafts preserve directly observed facts and leave unmatched references pending',async()=>{
+ const {draftTPlusProductFields26}=await import('./tplus-product-source26.mjs');
+ const headers=[...mh,'停用'];
+ const source=row('存货',3,{0:text('001'),1:text('synthetic'),2:text('group'),3:num('12.30'),4:num('0'),12:num('0')});
+ const master=await readTPlusProductMaster([head('存货',2,headers),source,end('存货',2)],headers);
+ const draft=draftTPlusProductFields26({status:'SOURCE_FACTS_ONLY',productSource:master.get('001')});
+ assert.equal(draft.fields['来源编号'].value,'001');assert.equal(draft.fields['状态'].value,'正常');
+ assert.ok(draft.pending.includes('分类路径'));assert.ok(draft.pending.includes('尺码组'));assert.equal(draft.importReady,false);
+ assert.throws(()=>draftTPlusProductFields26({status:'PENDING_SOURCE_FACTS',productSource:master.get('001')}),/SOURCE/);
+});

@@ -1,3 +1,15 @@
+### 本批2970商品实际部分草稿已生成并独立文件回读
+
+原D3真实3来源hash/EOF后生成私域PARTIAL_SOURCE_DRAFT：2970行、7608989B、SHA754cca8a1222ff5f37171b5b1a7ee36ff714e39dc637b91271fbfb8162ead12e，回执33c1d8de100c9489f8b4dcafbed777c827e0b4cb0326a5d5d060ef44975376a4。主控只读文件字节/行数/hash及目录0700/文件0600已匹配，未输出业务行，数据与私有路径不入Git。相应2源叶工程Node24.21合成5项通过；商品编码/名称/九价/停用可溯字段已准备，其余8字段仍逐项pending，importReady=false，不是完整canonical或导入。
+
+16原尺码组编码均在既有获批规范化映射出现，可复用其批准标准定义；124个组码/尺码码对中21对多目标，版型仍不足消歧，需按完整商品/颜色/版型/真实尺码身份核，不取出现集合当完整组、不挑一个目标、不重迁旧SKU。D1主链ACL继续，普通列表同时读LIVE及已发布HISTORY，不能为只验LIVE漏授权或暴露STAGED；T45无依赖安全/容量输入准备已完成，准确等待D1角色/私有认证、构建配置review/真实容量及数据量/新窗口，0新环境执行。
+
+### 独立采用56a6来源证明结果，真实闭包继续
+
+原QB固定56a6f936248aba4ac9b896d82ccafc9ec32be09b定向源码/合成PASS：sidecar字段映射值与摘要、覆盖/重复/文件hash拒绝、旧ORIGINAL分支、派生追溯与原外部授权保持。实际原XLSX值/语义须独立核；sidecar自洽不是来源真实性证明，不将原19项重跑或新真实批记通过。该提交已推GitHub并独立回读。
+
+当前依赖按准确范围：16本批组完整成员关系尚未在已核结构找到，不能套旧6组或全240尺码；45稳定员工码与99本批精确匹配，4无码批准计划保留但不猜绑；合法登录初始化/凭据/角色未闭合。D1已取得实际已安装catalog41b7…，137函数及49主链触发器定义可匹配旧观察，ACL须按新目标/当前调用核；runtime不存在不妨碍设计最小正向权限。D3继续本批非时间依赖canonical/原provider接线，T45继续唯一准确安全输入/容量准备，0本批数据库导入/上线。
+
 ### 新批规范化容器→原商品校验合成链已接，真实批未导入
 
 原D3四叶新批字段映射支持显式sidecar证据：原file/sheet/row/column/header/hash/value，COPY或准确停用0/1转换，别名标MIGRATION_DERIVED/evidence_ref，原BASE_V2规范化协议及旧分支保持。合成真实临时容器走preflightV2→sidecar→sourceEvidence→prepareProductEvidenceChunk；工程Node24.21 prepare-native-bindings 15项、T+新源4项通过。此不是完整真实批，测试空表不用于实际闭包；sidecar自有hash不替代原件独立核验/原授权。

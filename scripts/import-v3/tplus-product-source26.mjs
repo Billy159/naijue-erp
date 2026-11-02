@@ -173,3 +173,39 @@ export function buildTPlusProductCanonicalEvidence26({candidate, canonicalFields
   const line=JSON.stringify(raw), source=sourceEvidence(raw,line,canonicalFields,binding,mappingEvidence);
   return {raw,line,source,canonicalFields:structuredClone(canonicalFields),scope:'SOURCE_CANDIDATE_ONLY',importReady:false};
 }
+
+/** Prepare only directly evidenced PRODUCT fields. Missing references and source
+ * semantics stay explicit; this draft is not a canonical import row. */
+export function draftTPlusProductFields26(candidate) {
+  const product=candidate?.productSource, headers=product?.sourceHeaders;
+  if (!product || !Array.isArray(headers) || !product.sourceCells || candidate.status !== 'SOURCE_FACTS_ONLY')
+    throw Error('TPLUS_PRODUCT_DRAFT_SOURCE');
+  const specs={
+    '来源编号':['存货编码','COPY'], '款号':['存货编码','COPY'], '商品名称':['存货名称','COPY'],
+    '采购价':['采购价','COPY'], '零售价':['零售价','COPY'],
+    '五级批发价（工厂店供货价）':['五级批发价（工厂店供货价）','COPY'],
+    '六级批发价（贴牌价）':['六级批发价（贴牌价）','COPY'],
+    '七级批发价（批发价）':['七级批发价（批发价）','COPY'],
+    '八级批发价（代理商供货价）':['八级批发价（代理商供货价）','COPY'],
+    '九级批发价（工厂店零售价）':['九级批发价（工厂店零售价）','COPY'],
+    '十级批发价（葛玉珠）':['十级批发价（葛玉珠）','COPY'],
+    '最低售价':['最低售价','COPY'], '状态':['停用','DISABLED_0_1_TO_STATUS']
+  };
+  const fields={}, pending=[];
+  for (const column of IMPORT_V2_TABLES.find(t=>t.entity==='PRODUCT').columns) {
+    const spec=specs[column.name];
+    if (!spec) { pending.push(column.name); continue; }
+    const pricePrefix=spec[0].match(/^(五级|六级|七级|八级|九级|十级)批发价/);
+    const indexes=headers.flatMap((name,i)=>name===spec[0] || (pricePrefix && name.startsWith(pricePrefix[0]+'(')) || (pricePrefix && name.startsWith(pricePrefix[0]+'（')) ? [i] : []);
+    if (indexes.length !== 1) { pending.push(column.name); continue; }
+    const index=indexes[0], cell=product.sourceCells[index];
+    if (cell && !['text','number','blank'].includes(cell.kind)) { pending.push(column.name); continue; }
+    const raw=cell?.raw ?? '';
+    if (typeof raw !== 'string') { pending.push(column.name); continue; }
+    const value=spec[1]==='COPY' ? raw : raw==='0' ? '正常' : raw==='1' ? '停用' : null;
+    if (value===null || (column.required && value==='')) { pending.push(column.name); continue; }
+    fields[column.name]={value,rule:spec[1],sourceColumn:index,sourceHeader:headers[index],sourceCell:cell ?? {kind:'blank',raw:null}};
+  }
+  return {sheet:product.sheet,excelRow:product.excelRow,sourceProductCode:product.sourceProductCode,
+    fields,pending,scope:'PARTIAL_SOURCE_DRAFT',importReady:false};
+}

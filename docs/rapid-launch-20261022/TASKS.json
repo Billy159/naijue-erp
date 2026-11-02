@@ -21874,7 +21874,7 @@
       "old database/backups"
     ],
     "noOldSourceFullCaptureOrConversion": true,
-    "latestPushedImplementation": "a144cb1e1a71b653e37f7a6abab598821f80ef9c",
+    "latestPushedImplementation": "56a6f936248aba4ac9b896d82ccafc9ec32be09b",
     "readerReview": {
       "status": "NEED_FIX",
       "owner": "QB",
@@ -21948,7 +21948,7 @@
       "limitation": "Runtime target/review, capacity facts, actual environment scope and business checks remain required; old FULL pin unchanged"
     },
     "canonicalContainerDelivery": {
-      "status": "SYNTHETIC_PRODUCT_PREFLIGHT_EVIDENCE_CHAIN_PASS_PENDING_QB",
+      "status": "QB_SOURCE_SYNTHETIC_PASS_56A6_REAL_CANONICAL_PENDING",
       "checks": "prepare-native-bindings15 + tplus-product4 Node24.21.0",
       "scope": "source sidecar mapping, existing preflightV2 and product evidence preparation; no DB/schema change",
       "actualBatch": "NOT_GENERATED_FULL_CANONICAL",
@@ -21958,7 +21958,27 @@
         "actual cutoff/non-atomic export semantics",
         "original reviewed authorization",
         "provider integration/import/readback"
-      ]
+      ],
+      "independentLimit": "Sidecar self-hash is not independent XLSX cell/semantic proof; raw source approval remains required"
+    },
+    "currentDependencies": {
+      "sizeGroups": "16 native group codes/names;240 sizes; complete membership not yet found in examined source structures; no guessed group or SKU",
+      "staffIdentity": "45 original approved source codes match current99;4 approved code-less plans preserved; current role/login/credential/bootstrap subject not yet closed",
+      "runtime": "schema-only target has no runtime LOGIN/ACL; D1 exact SQL+trigger requirements underway",
+      "sourceTime": "actual batch cutoff/non-atomic coverage not proven; directory12:00 not evidence",
+      "stock": "row8 second header identified; true blank totals/fit groups retained pending semantics",
+      "sales": "nonblank document key sets match;6 candidate amount differences involve distinct amount headers; no guessed rounding"
+    },
+    "actualProductDraft": {
+      "status": "PARTIAL_SOURCE_DRAFT_NOT_CANONICAL_NOT_IMPORT_READY",
+      "rows": 2970,
+      "bytes": 7608989,
+      "sha256": "754cca8a1222ff5f37171b5b1a7ee36ff714e39dc637b91271fbfb8162ead12e",
+      "receiptSha256": "33c1d8de100c9489f8b4dcafbed777c827e0b4cb0326a5d5d060ef44975376a4",
+      "privateOnly": true,
+      "controllerFileReadback": "2970lines/bytes/hash/0700dir/0600file matched; no row values printed",
+      "checks": "5 synthetic Node24.21.0 delivered; source3 files hash+EOF",
+      "pending": "8 normalized reference fields per product; source group/member/SKU identity; no target or execution authority"
     }
   }
 }
