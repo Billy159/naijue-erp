@@ -36,7 +36,7 @@ import type { HistoryClosureRow } from '../../packages/application/src/history-t
 import { HISTORY_COUNT_KEYS } from '../../packages/application/src/history-storage-contract.ts';
 import type { ImportSourceEvidence, JsonObject, HistorySalesHeader } from '../../packages/application/src/history-storage-contract.ts';
 import type { CurrentSalesBlueprint } from './current-runtime26-sales-fixture.ts';
-import { currentRuntime26SyntheticScope } from './current-runtime26-sales-fixture.ts';
+import { currentRuntime26SyntheticScope, CURRENT_REWRITE_SYNTHETIC_TARGET } from './current-runtime26-sales-fixture.ts';
 
 import type {LiveLedgerBalancePairsScenario} from './live-ledger-balance-pairs.integration.test.ts';
 import type {HistoryRevisionCommand,HistoryRevisionReceipt} from '../../packages/application/src/history-revision-contracts.ts';
@@ -177,6 +177,48 @@ export async function buildCurrentRuntime26FullSourceFixture(blueprint:CurrentSa
  validateCurrentRuntime26FullSourceFixture(result);return result;
 }
 export type CurrentRuntime26FullSourceFixture=Awaited<ReturnType<typeof buildCurrentRuntime26FullSourceFixture>>;
+
+/** Pure, deliberately incomplete byte projection. It is not the original V2
+ * preflight bundle, a reviewed selection, or permission to materialize/import. */
+export function rewrite26SyntheticSourceByteCandidates(f: CurrentRuntime26FullSourceFixture) {
+ const b=f.blueprint;const scope=currentRuntime26SyntheticScope(b.database,b.batchId);
+ assert.equal(scope.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.equal(scope.namespace,b.namespace);
+ assert.equal(f.executionAuthorized,false);validateCurrentRuntime26FullSourceFixture(f);
+ const originals=Object.entries(f.sourceFiles).map(([logicalPath,value])=>({logicalPath,utf8:value.utf8,bytes:value.bytes,sha256:value.sha256}))
+   .sort((a,b)=>a.logicalPath.localeCompare(b.logicalPath));
+ assert.equal(originals.length,43);
+ assert.equal(b.counts.SUPPLIER,0);assert.equal(f.moneyCellCandidates.length,32);
+ const supplemental=[csv('SUPPLIER',[]),csv('ISSUE',f.moneyCellCandidates.map((v,i)=>({
+   问题编号:`SYNTHETIC-${scope.tag}-MONEY-CANDIDATE-${String(i+1).padStart(2,'0')}`,
+   涉及页签:v.sheet,来源编号:v.sourceId,问题字段:v.field,来源原值:v.rawValue,
+   问题说明:'合成来源尾差；待独立逐单元采纳',拟处理方式:`候选规范值${v.exactCentValue}`,
+   核对结果:'UNADOPTED_NOT_EXECUTION_AUTHORITY'})))];
+ const tables=[...Object.values(f.sources).map(v=>({entity:v.entity,path:v.path,utf8:v.utf8,bytes:v.bytes,sha256:v.sha256,rows:v.rowCount})),
+   ...supplemental.map(v=>({entity:v.entity,path:v.path,utf8:v.utf8,bytes:v.bytes,sha256:v.sha256,rows:v.rowCount})),
+   ...b.partyArtifacts.map(v=>({entity:v.entity,path:v.fileRef,utf8:v.utf8,bytes:Buffer.byteLength(v.utf8,'utf8'),sha256:v.sha256,
+     rows:b.parties.filter(row=>row.source.entityType===v.entity).length}))].sort((a,b)=>a.path.localeCompare(b.path));
+ assert.equal(new Set(tables.map(v=>v.path)).size,tables.length);
+ const catalogue={logicalPath:b.catalogueArtifact.fileRef,utf8:b.catalogueArtifact.utf8,
+   bytes:Buffer.byteLength(b.catalogueArtifact.utf8,'utf8'),sha256:b.catalogueArtifact.sha256};
+ for(const item of [...originals,...tables,catalogue]) {
+   assert.equal(item.bytes,Buffer.byteLength(item.utf8,'utf8'));assert.equal(item.sha256,sha(item.utf8));
+ }
+ const payloadFiles=tables.map(v=>({file:v.path,bytes:v.bytes,sha256:v.sha256}));
+ const sourcePins=[...originals.map(v=>[v.logicalPath,v.sha256] as const),
+   ...b.partyArtifacts.map(v=>[v.fileRef,v.sha256] as const),[catalogue.logicalPath,catalogue.sha256] as const];
+ assert.equal(new Set(sourcePins.map(([path])=>path)).size,sourcePins.length);
+ const manifest={importReady:false as const,payloadFiles,payloadBytes:payloadFiles.reduce((sum,v)=>sum+v.bytes,0),
+   sourceInputSha256:Object.fromEntries(sourcePins)};
+ const manifestUtf8=JSON.stringify(manifest);
+ const omitted=IMPORT_V2_TABLES.filter(t=>!tables.some(v=>v.entity===t.entity)).map(t=>({entity:t.entity,path:t.file}));
+ return {kind:'UNREVIEWED_SYNTHETIC_BYTE_CANDIDATES_V1' as const,executionAuthorized:false as const,
+   database:b.database,batchId:b.batchId,fixedSourceNamespace:b.namespace,syntheticTime:b.now,
+   originals,tables,catalogue,manifestCandidate:{utf8:manifestUtf8,bytes:Buffer.byteLength(manifestUtf8,'utf8'),sha256:sha(manifestUtf8),
+     completeV2Preflight:false as const,omittedBusinessTables:omitted},
+   selectionCandidate:{state:'UNREVIEWED_NOT_A_SELECTION_SCHEMA' as const,source:'BASE_V2' as const,
+     files:tables.map(v=>({entity:v.entity,path:v.path,bytes:v.bytes,sha256:v.sha256,rows:v.rows})),
+     missingBusinessTables:omitted,externalSelectionAndApprovalRequired:true as const}};
+}
 export function validateCurrentRuntime26FullSourceFixture(f:CurrentRuntime26FullSourceFixture){
  validateNativeStockConservationPlan(f.stockConservation);
  assert.deepEqual(f.stockConservation.warehouses,f.warehouseScope.map(({basis:_basis,...w})=>w));

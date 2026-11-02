@@ -8685,7 +8685,7 @@
       "thread": "01a16161-e65d-7742-8471-4b3c786ed314",
       "model": "gpt-6.1-terra/medium",
       "sourceWriteEnabled": true,
-      "scope": "Existing exact26 synthetic-only target successor plus finite49 nonsecret identity materializer; no SQL/schema/server/permission changes, credentials or self-approved reviews; old target branches remain",
+      "scope": "Existing exact26 synthetic-only target successor plus finite49 nonsecret identity materializer; no SQL/schema/server/permission changes, credentials or self-approved reviews; old target branches remain; original D1 history staging mapper only precise approved historical true-blank fit A evidence successor, preserve raw value/authorization/revalidation; no general raw-normalized relaxation",
       "reportWrite": "existing D1 report subdirectory only",
       "exactLeaves": [
         "tests/integration/current-runtime26-sales-fixture.ts",
@@ -8699,7 +8699,9 @@
         "scripts/import-v3/production-source-host.test.mjs",
         "tests/integration/rewrite26-synthetic-account-materializer.mjs",
         "tests/rewrite26-synthetic-account-materializer.test.mjs",
-        "tests/integration/current-runtime26-full-source-fixture.ts"
+        "tests/integration/current-runtime26-full-source-fixture.ts",
+        "packages/application/src/import-v3-history-staging.ts",
+        "tests/import-v3-history-staging.test.ts"
       ]
     },
     "additionalD3ExactLeaves": [
