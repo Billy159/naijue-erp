@@ -455,14 +455,14 @@ export function attachTPlusCanonicalCategory26(draft, reference, sourceFileSha25
  * treated as a SKU identity. These are source occurrences, not import rows. */
 export async function* projectTPlusTransferSkuOccurrences26(events, historicalFitContext) {
   const sheet='调拨单', columns=new Map([[10,'条形码'],[12,'存货编码'],[14,'颜色'],[15,'尺码'],[16,'数量'],[17,'版型']]);
-  if (historicalFitContext && (!/^[a-f0-9]{64}$/.test(historicalFitContext.sourceFileSha256 ?? '') || historicalFitContext.decisionSha256!=='a7533b9b67637efc9723ffe73829c30158649db463e3d7ce4cc13b12fa112396')) throw Error('TPLUS_HISTORICAL_FIT_CONTEXT');
+  if (historicalFitContext && (!/^[a-f0-9]{64}$/.test(historicalFitContext.sourceFileSha256 ?? '') || historicalFitContext.decisionSha256!=='a7533b9b67637efc9723ffe73829c30158649db463e3d7ce4cc13b12fa112396' || !Array.isArray(historicalFitContext.selectedColumns) || historicalFitContext.selectedColumns.length!==columns.size || [...columns.keys()].some((v,i)=>historicalFitContext.selectedColumns[i]!==v))) throw Error('TPLUS_HISTORICAL_FIT_CONTEXT');
   let header=false,eof=false,rows=0,last=0;
   const fitDigest=historicalFitContext ? createHash('sha256') : null,fitCounts={};
   for await (const event of events) {
     if (!event || event.sheet!==sheet || eof) throw Error('TPLUS_TRANSFER_SKU_STREAM');
     if (event.event==='eof') {
       if (!header || event.rows!==rows) throw Error('TPLUS_TRANSFER_SKU_EOF');
-      eof=true;yield {event:'eof',sheet,rows,importReady:false,...(fitDigest?{historicalFitSummary:{sourceFileSha256:historicalFitContext.sourceFileSha256,decisionSha256:historicalFitContext.decisionSha256,rows:rows-1,counts:fitCounts,logicalSha256:fitDigest.digest('hex')}}:{})};continue;
+      eof=true;continue;
     }
     if (event.event!=='row' || !Number.isSafeInteger(event.excelRow) || event.excelRow<=last || !event.cells) throw Error('TPLUS_TRANSFER_SKU_ROW');
     rows++;last=event.excelRow;
@@ -484,6 +484,7 @@ export async function* projectTPlusTransferSkuOccurrences26(events, historicalFi
       status:complete?'OBSERVED_COMPLETE_DIMENSIONS_NOT_IDENTITY':'PENDING_SOURCE_DIMENSIONS_OR_STRUCTURE',importReady:false};
   }
   if (!eof) throw Error('TPLUS_TRANSFER_SKU_EOF');
+  yield {event:'eof',sheet,rows,importReady:false,...(fitDigest?{historicalFitSummary:{sourceFileSha256:historicalFitContext.sourceFileSha256,decisionSha256:historicalFitContext.decisionSha256,selectedColumns:[...historicalFitContext.selectedColumns],rows:rows-1,counts:fitCounts,logicalSha256:fitDigest.digest('hex')}}:{})};
 }
 
 /** Interpret a historical document line without altering its source cell or SKU. */
