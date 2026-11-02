@@ -21964,7 +21964,7 @@
     "currentDependencies": {
       "sizeGroups": "16 native group codes/names;240 sizes; complete membership not yet found in examined source structures; no guessed group or SKU",
       "staffIdentity": "45 original approved source codes match current99;4 approved code-less plans preserved; current role/login/credential/bootstrap subject not yet closed",
-      "runtime": "schema-only target has no runtime LOGIN/ACL; D1 exact SQL+trigger requirements underway",
+      "runtime": "D1 54 grouped ACL candidates, incomplete/not executable; V8+ issuer exact 3 DELETE/23 xmin/2 cmin requirements; remaining dynamic and lock branches need scoped validation",
       "sourceTime": "actual batch cutoff/non-atomic coverage not proven; directory12:00 not evidence",
       "stock": "row8 second header identified; true blank totals/fit groups retained pending semantics",
       "sales": "nonblank document key sets match;6 candidate amount differences involve distinct amount headers; no guessed rounding"
@@ -21979,6 +21979,18 @@
       "controllerFileReadback": "2970lines/bytes/hash/0700dir/0600file matched; no row values printed",
       "checks": "5 synthetic Node24.21.0 delivered; source3 files hash+EOF",
       "pending": "8 normalized reference fields per product; source group/member/SKU identity; no target or execution authority"
+    },
+    "categorySourceDelivery": {
+      "status": "SOURCE_TREE_DRAFT_NOT_APPROVED_CANONICAL",
+      "nodes": 324,
+      "products": 2970,
+      "sourceDepthAtMost2": 221,
+      "sourceDepth3": 2749,
+      "privateArtifactSha256": "3c2dfd15909b7a7e6cc4c8a262cea33e4a7bc71f8b7a24bcc061d92bb72fc9fe",
+      "receiptSha256": "1c685de98bb887ff4ab0b5e5b5497c946cfe57d8c308edabec99474f703ba15d",
+      "checks": "D3 Node24.21 6/6 synthetic; source hash+EOF; independent QB pending",
+      "approvedMapping": "2941 exact-code prior decision candidates; original proof applicability still being checked; no flattening or name-only adoption",
+      "importReady": false
     }
   }
 }

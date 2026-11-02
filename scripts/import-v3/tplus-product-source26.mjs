@@ -209,3 +209,44 @@ export function draftTPlusProductFields26(candidate) {
   return {sheet:product.sheet,excelRow:product.excelRow,sourceProductCode:product.sourceProductCode,
     fields,pending,scope:'PARTIAL_SOURCE_DRAFT',importReady:false};
 }
+
+/** Preserve the source category tree. Deeper paths stay pending for an explicit
+ * approved mapping; no flattening, name matching or source reordering. */
+export async function readTPlusCategoryTree26(events, expectedHeaders) {
+  if (!Array.isArray(expectedHeaders) || expectedHeaders.length !== 4 ||
+      expectedHeaders[0] !== '分类编码' || expectedHeaders[1] !== '分类名称' ||
+      expectedHeaders[2] !== '上级分类编码' || expectedHeaders[3] !== '上级分类') throw Error('TPLUS_CATEGORY_HEADER_CONTRACT');
+  const nodes=new Map(); let header=false,eof=false,count=0,last=0;
+  for await (const event of events) {
+    if (!event || event.sheet !== '存货分类' || eof) throw Error('TPLUS_CATEGORY_STREAM');
+    if (event.event==='eof') { if (!header || event.rows!==count) throw Error('TPLUS_CATEGORY_EOF');eof=true;continue; }
+    if (event.event!=='row' || !Number.isSafeInteger(event.excelRow) || event.excelRow<=last || !event.cells) throw Error('TPLUS_CATEGORY_ROW');
+    count++;last=event.excelRow;const c=i=>event.cells[i];
+    if (!header) { if(event.excelRow!==1 || expectedHeaders.some((h,i)=>c(i)?.kind!=='text'||c(i)?.raw!==h)) throw Error('TPLUS_CATEGORY_HEADER');header=true;continue; }
+    const code=c(0),name=c(1),parent=c(2);
+    if (code?.kind!=='text' || typeof code.raw!=='string' || !code.raw || name?.kind!=='text' || typeof name.raw!=='string' || !name.raw ||
+        (parent && parent.kind!=='blank' && (parent.kind!=='text' || typeof parent.raw!=='string')) || nodes.has(code.raw)) throw Error('TPLUS_CATEGORY_VALUE');
+    nodes.set(code.raw,{sourceCode:code.raw,sourceName:name.raw,parentCode:parent?.raw || null,excelRow:event.excelRow,sourceCells:event.cells});
+  }
+  if (!eof) throw Error('TPLUS_CATEGORY_EOF');
+  const paths=new Map();
+  for (const code of nodes.keys()) {
+    let current=code;const seen=new Set(),chain=[];
+    while (current!==null) {
+      if (seen.has(current)) throw Error('TPLUS_CATEGORY_CYCLE');
+      const node=nodes.get(current);if(!node) throw Error('TPLUS_CATEGORY_PARENT_MISSING');
+      seen.add(current);chain.push(node);current=node.parentCode;
+    }
+    chain.reverse();paths.set(code,{sourceCode:code,path:chain,status:chain.length<=2?'SOURCE_TREE_ONLY':'PENDING_APPROVED_CATEGORY_MAPPING'});
+  }
+  return paths;
+}
+
+/** Attach only the explicit source category code. This does not convert a path
+ * or claim a native category; unreviewed and over-depth paths remain pending. */
+export function attachTPlusCategorySource26(candidate, categoryPaths) {
+  const product=candidate?.productSource, headers=product?.sourceHeaders;
+  if (!(categoryPaths instanceof Map) || !Array.isArray(headers) || headers.filter(x=>x==='所属类别编码').length!==1) throw Error('TPLUS_CATEGORY_REFERENCE_INPUT');
+  const cell=product.sourceCells[headers.indexOf('所属类别编码')], category=cell?.kind==='text' ? categoryPaths.get(cell.raw) : undefined;
+  return {...candidate, categorySource:category ?? null, categoryReferenceStatus:category ? category.status : 'PENDING_CATEGORY_SOURCE',importReady:false};
+}

@@ -116,3 +116,18 @@ test('source drafts preserve directly observed facts and leave unmatched referen
  assert.ok(draft.pending.includes('分类路径'));assert.ok(draft.pending.includes('尺码组'));assert.equal(draft.importReady,false);
  assert.throws(()=>draftTPlusProductFields26({status:'PENDING_SOURCE_FACTS',productSource:master.get('001')}),/SOURCE/);
 });
+
+
+test('category source tree rejects cycles and keeps third level pending without flattening',async()=>{
+ const {readTPlusCategoryTree26,attachTPlusCategorySource26}=await import('./tplus-product-source26.mjs');
+ const h=['分类编码','分类名称','上级分类编码','上级分类'];
+ const entry=(i,code,name,parent)=>row('存货分类',i,{0:text(code),1:text(name),2:parent?text(parent):{kind:'blank',raw:null}});
+ const source=[head('存货分类',1,h),entry(2,'A','root',null),entry(3,'B','child','A'),entry(4,'C','leaf','B'),end('存货分类',4)];
+ const paths=await readTPlusCategoryTree26(source,h);assert.equal(paths.get('C').path.length,3);assert.equal(paths.get('C').status,'PENDING_APPROVED_CATEGORY_MAPPING');
+ const candidate={productSource:{sourceHeaders:['所属类别编码'],sourceCells:{0:text('C')}}};
+ assert.equal(attachTPlusCategorySource26(candidate,paths).categoryReferenceStatus,'PENDING_APPROVED_CATEGORY_MAPPING');
+ assert.equal(attachTPlusCategorySource26({productSource:{sourceHeaders:['所属类别编码'],sourceCells:{0:text('missing')}}},paths).categoryReferenceStatus,'PENDING_CATEGORY_SOURCE');
+ await assert.rejects(readTPlusCategoryTree26([head('存货分类',1,h),entry(2,'A','root','B'),entry(3,'B','child','A'),end('存货分类',3)],h),/CYCLE/);
+ await assert.rejects(readTPlusCategoryTree26([head('存货分类',1,h),entry(2,'A','root','missing'),end('存货分类',2)],h),/PARENT_MISSING/);
+ await assert.rejects(readTPlusCategoryTree26(source.slice(0,-1),h),/EOF/);
+});
