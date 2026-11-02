@@ -1,5 +1,6 @@
 /** T+ current-batch product source candidates. Read-only; no IDs, SQL or grant. */
 import {createHash} from "node:crypto";
+import {requestHash} from "../../packages/application/src/request-hash.ts";
 import {parseV2Csv} from "../../packages/application/src/import-v2.ts";
 import { parseImportCnyYuan } from "../../packages/application/src/import-preflight.ts";
 import { IMPORT_V2_TABLES } from "../../packages/application/src/import-v2-contract.ts";
@@ -264,7 +265,7 @@ export function attachTPlusCategorySource26(candidate, categoryPaths) {
 
 /** Independently pinned historic per-product decisions are evidence, not an
  * automatic permission to reuse target IDs or infer a new category hierarchy. */
-export async function readTPlusPriorCategoryDecisions26(bytes, trustedSha256) {
+export async function readTPlusPriorCategoryDecisions26(bytes, trustedSha256, approvedScope) {
   if (!Buffer.isBuffer(bytes) || !/^[a-f0-9]{64}$/.test(trustedSha256 ?? '') || createHash('sha256').update(bytes).digest('hex')!==trustedSha256)
     throw Error('TPLUS_CATEGORY_DECISION_PIN');
   const records=new Map();let header;
@@ -280,7 +281,40 @@ export async function readTPlusPriorCategoryDecisions26(bytes, trustedSha256) {
     records.set(record.code,record);
   }
   if (!header) throw Error('TPLUS_CATEGORY_DECISION_HEADER');
-  return {records,sha256:trustedSha256};
+  const scopedProducts=new Set(); let scopeSha256=null;
+  if (approvedScope !== undefined) {
+    const raw=approvedScope?.validationBytes, pin=approvedScope?.trustedValidationSha256;
+    if (!Buffer.isBuffer(raw) || !/^[a-f0-9]{64}$/.test(pin ?? '') || createHash('sha256').update(raw).digest('hex')!==pin) throw Error('TPLUS_CATEGORY_SCOPE_PIN');
+    const validation=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(raw)),batches=validation.batch_summary;
+    if (validation.all_pass!==true || !validation.checks || typeof validation.checks!=='object' || Array.isArray(validation.checks) ||
+        Object.keys(validation.checks).length===0 || Object.values(validation.checks).some(v=>v!==true) ||
+        !Array.isArray(batches) || batches.length!==13) throw Error('TPLUS_CATEGORY_SCOPE_VALIDATION');
+    const summaries=new Map(batches.map(x=>[x.batch_id,x]));
+    if (summaries.size!==13 || Array.from({length:13},(_,i)=>'P'+String(i+1).padStart(2,'0')).some(x=>!summaries.has(x))) throw Error('TPLUS_CATEGORY_SCOPE_BATCH');
+    const observed=new Map([...summaries.keys()].map(k=>[k,{count:0,targets:new Map()}]));
+    for (const record of records.values()) {
+      const batch=summaries.get(record.batch_id);if (!batch) continue;
+      if (!['本轮人工裁决','本轮用户补充裁决'].includes(record.decision_status) || !record.group_id || !record.decision_source?.trim() || !record.decision_basis?.trim() ||
+          record.batch_name!==batch.batch_name || !Object.hasOwn(batch.target_counts,record.target_name)) throw Error('TPLUS_CATEGORY_SCOPE_RECORD');
+      const entry=observed.get(record.batch_id);entry.count++;entry.targets.set(record.target_name,(entry.targets.get(record.target_name)??0)+1);scopedProducts.add(record.code);
+    }
+    for (const [id,batch] of summaries) {
+      const entry=observed.get(id), targets=batch.target_counts;
+      if (!Number.isSafeInteger(batch.count) || batch.resolved!==batch.count || batch.unresolved!==0 || entry.count!==batch.count ||
+          Object.keys(targets).length!==entry.targets.size || Object.entries(targets).some(([name,count])=>entry.targets.get(name)!==count))
+        throw Error('TPLUS_CATEGORY_SCOPE_COVERAGE');
+    }
+    if (validation.checks['8_auto_unchanged']!==true || validation.counts?.direct_evidence_preserved!==8) throw Error('TPLUS_CATEGORY_DIRECT_SCOPE');
+    let directCount=0;
+    for (const record of records.values()) if (record.batch_id==='AUTO') {
+      if (record.decision_status!=='此前8款直接证据保留' || !record.group_id ||
+          record.decision_source!=='前轮直接证据消解，未重新裁定' || !record.decision_basis?.trim()) throw Error('TPLUS_CATEGORY_DIRECT_RECORD');
+      scopedProducts.add(record.code);directCount++;
+    }
+    if (directCount!==8) throw Error('TPLUS_CATEGORY_DIRECT_COVERAGE');
+    scopeSha256=pin;
+  }
+  return {records,sha256:trustedSha256,scopedProducts,scopeSha256};
 }
 
 /** Match an individual decision against source evidence, retaining missing or
@@ -290,6 +324,9 @@ export function compareTPlusPriorCategoryDecision26(candidate, decisions) {
   if (!(decisions?.records instanceof Map) || !/^[a-f0-9]{64}$/.test(decisions?.sha256 ?? '') || !Array.isArray(headers)) throw Error('TPLUS_CATEGORY_DECISION_INPUT');
   const record=decisions.records.get(p.sourceProductCode);
   if (!record) return {status:'PENDING_NO_PRIOR_PRODUCT_DECISION',decisionEvidenceSha256:decisions.sha256,importReady:false};
+  const accepted=new Set(['本轮人工裁决','原可靠映射未涉及','此前8款直接证据保留','本轮用户补充裁决']);
+  if (!accepted.has(record.decision_status) || !record.decision_basis?.trim() || !record.decision_source?.trim())
+    return {status:'PENDING_DECISION_EVIDENCE',decisionEvidenceSha256:decisions.sha256,sourceProductCode:p.sourceProductCode,sourceRow:p.excelRow,importReady:false};
   const specs=[['存货名称','name',true],['所属类别','old_category_for_review_only',true],['存货描述','original_description',false],
     ['尺码所属取值组编码','original_size_group',true],['开票名称','original_invoice_name',false]];
   const comparisons=[];
@@ -298,12 +335,45 @@ export function compareTPlusPriorCategoryDecision26(candidate, decisions) {
     const cell=p.sourceCells[index],old=record[oldField];
     if (cell && !['text','number','blank'].includes(cell.kind)) {comparisons.push({field,status:'SOURCE_UNREADABLE'});continue;}
     const value=cell?.raw ?? '';
-    comparisons.push({field,status:!old && !required?'PRIOR_NOT_RECORDED':old===value?'EQUAL':'DIFFERENT'});
+    comparisons.push({field,status:!old?'PRIOR_NOT_RECORDED':old===value?'EQUAL':'DIFFERENT'});
   }
   const materialChange=comparisons.some(x=>['DIFFERENT','SOURCE_UNREADABLE'].includes(x.status));
-  return {status:materialChange?'PENDING_SOURCE_FACTS_CHANGED':'PRIOR_DECISION_MATCHED_REFERENCE_ONLY',
+  const missingEvidence=comparisons.some(x=>x.status==='PRIOR_NOT_RECORDED');
+  const nameOnly=record.decision_basis==='商品名称明确命中唯一最终分类（仅规范同义名称）' && comparisons.find(x=>x.field==='存货名称')?.status==='EQUAL';
+  const nameGroup=record.decision_status==='原可靠映射未涉及' && record.decision_source==='原审计category_reliable.csv，未受本轮人工裁决影响' &&
+    record.decision_basis==='明确套西尺码组与西服名称相互印证' &&
+    ['存货名称','尺码所属取值组编码'].every(field=>comparisons.find(x=>x.field===field)?.status==='EQUAL');
+  const pxx=decisions.scopedProducts instanceof Set && decisions.scopedProducts.has(record.code) && /^[a-f0-9]{64}$/.test(decisions.scopeSha256 ?? '');
+  const decisionRule=missingEvidence ? (nameOnly?'EXPLICIT_NAME_ONLY':nameGroup?'EXPLICIT_NAME_GROUP':pxx?(record.batch_id==='AUTO'?'EXPLICIT_DIRECT_EVIDENCE':'EXPLICIT_PXX_PRODUCT_DECISION'):null) : 'ALL_RECORDED_FIELDS_MATCH';
+  return {status:materialChange?'PENDING_SOURCE_FACTS_CHANGED':!decisionRule?'PENDING_DECISION_SCOPE':'PRIOR_DECISION_MATCHED_REFERENCE_ONLY',
     decisionEvidenceSha256:decisions.sha256,sourceProductCode:p.sourceProductCode,sourceRow:p.excelRow,comparisons,
-    ...(!materialChange ? {priorTargetId:record.target_id,priorTargetName:record.target_name} : {}),importReady:false};
+    ...(!materialChange && decisionRule ? {priorTargetId:record.target_id,priorTargetName:record.target_name,decisionRule,...(['EXPLICIT_PXX_PRODUCT_DECISION','EXPLICIT_DIRECT_EVIDENCE'].includes(decisionRule)?{scopeEvidenceSha256:decisions.scopeSha256}: {})} : {}),importReady:false};
+}
+
+/** The approved frozen reference maps decision target codes to category paths;
+ * its self-contained identity is not a native-ID or execution grant. */
+export function readApprovedCategoryTargets26(bytes, trustedSha256, decisionSha256) {
+  if (!Buffer.isBuffer(bytes) || !/^[a-f0-9]{64}$/.test(trustedSha256 ?? '') || createHash('sha256').update(bytes).digest('hex')!==trustedSha256) throw Error('TPLUS_CATEGORY_TARGET_PIN');
+  const v=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
+  if (v.format!=='FROZEN_APPROVED_CATEGORY_TARGET_REFERENCE_V1' || v.frozenCommit!=='b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3' ||
+      v.sourceFileSha256!=='2bd2f70869eb1b6e2beb6e4c2949588ad5f1d6ab6c999926bb7503e4199c00ca' ||
+      v.decisionMappingSha256!==decisionSha256 || v.comparison?.decisions!==2941 || v.comparison?.allTargetIdsNamesParentsLevelsMatch!==true ||
+      v.nativeTargetIdentityOrImportAuthority!==false || !Array.isArray(v.nodes) || v.nodes.length!==49) throw Error('TPLUS_CATEGORY_TARGET_SCOPE');
+  const nodes=new Map();
+  for (const n of v.nodes) {
+    if (!n || typeof n.sourceTargetId!=='string' || !n.sourceTargetId || typeof n.name!=='string' || !n.name ||
+        typeof n.leaf!=='boolean' || typeof n.canonicalPath!=='string' || !n.canonicalPath || nodes.has(n.sourceTargetId)) throw Error('TPLUS_CATEGORY_TARGET_NODE');
+    nodes.set(n.sourceTargetId,n);
+  }
+  for (const node of nodes.values()) {
+    if (node.parentTargetId===null) {
+      if (node.parentName!==null || node.canonicalPath!==node.name) throw Error('TPLUS_CATEGORY_TARGET_PARENT');
+    } else {
+      const parent=nodes.get(node.parentTargetId);
+      if (!parent || parent.parentTargetId!==null || parent.name!==node.parentName || node.canonicalPath!==parent.name+'/'+node.name) throw Error('TPLUS_CATEGORY_TARGET_PARENT');
+    }
+  }
+  return {nodes,sha256:trustedSha256,decisionMappingSha256:decisionSha256};
 }
 
 /** Prior reviewed normalized PRODUCT rows supply reference evidence only.
@@ -328,15 +398,54 @@ export async function readPriorCanonicalProducts26(bytes, trustedSha256) {
 
 /** Propose a category path only when the same-product decision and the pinned
  * previously reviewed normalized row agree. This is not native-ID authority. */
-export function proposePriorCategoryCanonical26(candidate, decisions, priorProducts) {
+export function proposePriorCategoryCanonical26(candidate, decisions, priorProducts, approvedTargets) {
   const comparison=compareTPlusPriorCategoryDecision26(candidate,decisions),code=candidate?.productSource?.sourceProductCode;
   if (comparison.status!=='PRIOR_DECISION_MATCHED_REFERENCE_ONLY') return {...comparison,canonicalCategory:null};
+  if (approvedTargets !== undefined) {
+    if (!(approvedTargets?.nodes instanceof Map) || !/^[a-f0-9]{64}$/.test(approvedTargets.sha256 ?? '') || approvedTargets.decisionMappingSha256!==decisions.sha256) throw Error('TPLUS_CATEGORY_TARGET_INPUT');
+    const record=decisions.records.get(code),target=approvedTargets.nodes.get(record.target_id);
+    if (!target || target.name!==record.target_name || (record.target_parent_name && target.parentName!==record.target_parent_name) ||
+        !((record.target_level==='叶子' && target.leaf) || (record.target_level==='父级直挂' && !target.leaf)))
+      return {...comparison,status:'PENDING_CATEGORY_TARGET_PROOF',canonicalCategory:null};
+    return {...comparison,status:'PRIOR_CATEGORY_CANONICAL_REFERENCE',canonicalCategory:target.canonicalPath,
+      targetReferenceSha256:approvedTargets.sha256,importReady:false};
+  }
   if (!(priorProducts?.products instanceof Map) || !/^[a-f0-9]{64}$/.test(priorProducts?.sha256 ?? '')) throw Error('TPLUS_PRIOR_PRODUCT_INPUT');
   const decision=decisions.records.get(code), prior=priorProducts.products.get(code);
   if (!prior || prior['商品名称']!==decision.name) return {...comparison,status:'PENDING_PRIOR_PRODUCT_MISMATCH',canonicalCategory:null};
   const path=prior['分类路径'], leaf=decision.target_name, parent=decision.target_parent_name;
-  if (!path || !(path===leaf || (parent && path===parent+'/'+leaf)))
+  if (!path || !(parent ? path===parent+'/'+leaf : path===leaf))
     return {...comparison,status:'PENDING_CATEGORY_PATH_PROOF',canonicalCategory:null};
   return {...comparison,status:'PRIOR_CATEGORY_CANONICAL_REFERENCE',canonicalCategory:path,
     priorProductEvidenceSha256:priorProducts.sha256,importReady:false};
+}
+
+/** Attach a reviewed per-product category reference to an existing partial
+ * source draft. It does not authorize native IDs or execute an import. */
+export function attachTPlusCanonicalCategory26(draft, reference, sourceFileSha256) {
+  if (!draft || draft.scope!=='PARTIAL_SOURCE_DRAFT' || draft.importReady!==false || !Array.isArray(draft.pending) || !draft.fields ||
+      !reference || reference.importReady!==false || reference.sourceProductCode!==draft.sourceProductCode || reference.sourceRow!==draft.excelRow ||
+      !/^[a-f0-9]{64}$/.test(sourceFileSha256 ?? ''))
+    throw Error('TPLUS_CATEGORY_DRAFT_IDENTITY');
+  const result=structuredClone(draft);
+  if (reference.status!=='PRIOR_CATEGORY_CANONICAL_REFERENCE') return result;
+  if (!draft.pending.includes('分类路径') || Object.hasOwn(draft.fields,'分类路径') ||
+      typeof reference.canonicalCategory!=='string' || !reference.canonicalCategory ||
+      !/^[a-f0-9]{64}$/.test(reference.decisionEvidenceSha256 ?? '') ||
+      (!/^[a-f0-9]{64}$/.test(reference.priorProductEvidenceSha256 ?? '') && !/^[a-f0-9]{64}$/.test(reference.targetReferenceSha256 ?? '')) ||
+      !Array.isArray(reference.comparisons) || reference.comparisons.some(x=>!['EQUAL','PRIOR_NOT_RECORDED'].includes(x?.status)) ||
+      !['EXPLICIT_NAME_ONLY','EXPLICIT_NAME_GROUP','EXPLICIT_DIRECT_EVIDENCE','EXPLICIT_PXX_PRODUCT_DECISION','ALL_RECORDED_FIELDS_MATCH'].includes(reference.decisionRule) ||
+      (reference.comparisons.some(x=>x.status==='PRIOR_NOT_RECORDED') && !['EXPLICIT_NAME_ONLY','EXPLICIT_NAME_GROUP','EXPLICIT_DIRECT_EVIDENCE','EXPLICIT_PXX_PRODUCT_DECISION'].includes(reference.decisionRule)) ||
+      (['EXPLICIT_PXX_PRODUCT_DECISION','EXPLICIT_DIRECT_EVIDENCE'].includes(reference.decisionRule) && !/^[a-f0-9]{64}$/.test(reference.scopeEvidenceSha256 ?? '')) ||
+      (['EXPLICIT_NAME_ONLY','EXPLICIT_NAME_GROUP'].includes(reference.decisionRule) && reference.comparisons.find(x=>x.field==='存货名称')?.status!=='EQUAL') ||
+      (reference.decisionRule==='EXPLICIT_NAME_GROUP' && reference.comparisons.find(x=>x.field==='尺码所属取值组编码')?.status!=='EQUAL'))
+    throw Error('TPLUS_CATEGORY_DRAFT_EVIDENCE');
+  const evidence={version:'TPLUS_APPROVED_CATEGORY_REFERENCE_V1',sourceProductCode:draft.sourceProductCode,sourceRow:draft.excelRow,sourceFileSha256,
+    canonicalCategory:reference.canonicalCategory,decisionEvidenceSha256:reference.decisionEvidenceSha256,
+    ...(reference.priorProductEvidenceSha256?{priorProductEvidenceSha256:reference.priorProductEvidenceSha256}:{}),
+    ...(reference.targetReferenceSha256?{targetReferenceSha256:reference.targetReferenceSha256}:{}),decisionRule:reference.decisionRule,...(reference.scopeEvidenceSha256?{scopeEvidenceSha256:reference.scopeEvidenceSha256}:{}),comparisons:reference.comparisons};
+  result.fields['分类路径']={value:reference.canonicalCategory,origin:'MIGRATION_DERIVED',reason:'APPROVED_PRIOR_PRODUCT_CATEGORY_REFERENCE',
+    evidence_ref:requestHash(evidence),evidence};
+  result.pending=result.pending.filter(x=>x!=='分类路径');
+  return result;
 }

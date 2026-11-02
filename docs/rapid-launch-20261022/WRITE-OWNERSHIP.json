@@ -8685,7 +8685,7 @@
       "thread": "01a16161-e65d-7742-8471-4b3c786ed314",
       "model": "gpt-6.1-terra/medium",
       "sourceWriteEnabled": true,
-      "scope": "Exact new26 synthetic-only target successor; old target branches and guards retained; no SQL/schema/server/permission changes; extra leaf requires handoff",
+      "scope": "Existing exact26 synthetic-only target successor plus finite49 nonsecret identity materializer; no SQL/schema/server/permission changes, credentials or self-approved reviews; old target branches remain",
       "reportWrite": "existing D1 report subdirectory only",
       "exactLeaves": [
         "tests/integration/current-runtime26-sales-fixture.ts",
@@ -8696,7 +8696,9 @@
         "tests/current-runtime26-preparation-host.test.ts",
         "adapters/postgres/src/native-import-accounting-capability.ts",
         "scripts/import-v3/production-source-host.mjs",
-        "scripts/import-v3/production-source-host.test.mjs"
+        "scripts/import-v3/production-source-host.test.mjs",
+        "tests/integration/rewrite26-synthetic-account-materializer.mjs",
+        "tests/rewrite26-synthetic-account-materializer.test.mjs"
       ]
     },
     "additionalD3ExactLeaves": [

@@ -21907,10 +21907,13 @@
         "tests/current-runtime26-preparation-host.test.ts",
         "adapters/postgres/src/native-import-accounting-capability.ts",
         "scripts/import-v3/production-source-host.mjs",
-        "scripts/import-v3/production-source-host.test.mjs"
+        "scripts/import-v3/production-source-host.test.mjs",
+        "tests/integration/rewrite26-synthetic-account-materializer.mjs",
+        "tests/rewrite26-synthetic-account-materializer.test.mjs"
       ],
-      "current": "8 leased leaves delivered; existing issuer unchanged;96 targeted checks and tsc delivered;fixed independent source review next",
-      "next": "Fixed package independent source review, final least ACL and private fixture/role inputs, T45 bounded execution"
+      "current": "2e source conditional PASS;finite49 nonsecret materializer source+3 targeted checks delivered, pending fixed review",
+      "next": "Independent real target witness/external controller pin; private role/source/plan assembly and review; T45 bounded synthetic execution",
+      "independentReviewBoundary": "Attestation supplied hash/content self-consistency is not proof of T45 origin or actual systemID; no PG or execution authority from source PASS"
     },
     "effectiveDecisionLimits": [
       "product group is hard boundary; existing SKU identity/code/barcodes retained",
@@ -21980,7 +21983,8 @@
       "runtime": "Original fixture targets do not include new26; D1 exact7-leaf successor authorized, no target wildcard or DB mutation; ordinary role/complete least ACL/private identity fixture/review still pending",
       "sourceTime": "actual batch cutoff/non-atomic coverage not proven; directory12:00 not evidence",
       "stock": "row8 second header identified; true blank totals/fit groups retained pending semantics",
-      "sales": "nonblank document key sets match;6 candidate amount differences involve distinct amount headers; no guessed rounding"
+      "sales": "nonblank document key sets match;6 candidate amount differences involve distinct amount headers; no guessed rounding",
+      "sku": "D3 actual transfer source hash+EOF produced273949 physical occurrences;208 explicit4dimension complete,273741 pending;not valid SKU count or identity binding"
     },
     "actualProductDraft": {
       "status": "PARTIAL_SOURCE_DRAFT_NOT_CANONICAL_NOT_IMPORT_READY",
@@ -21994,17 +21998,18 @@
       "pending": "8 normalized reference fields per product; source group/member/SKU identity; no target or execution authority"
     },
     "categorySourceDelivery": {
-      "status": "SOURCE_TREE_DRAFT_NOT_APPROVED_CANONICAL",
+      "status": "CLASSIFICATION_FIELD_ADAPTER_SOURCE_DELIVERED_QB_INCREMENT_PENDING",
       "nodes": 324,
       "products": 2970,
       "sourceDepthAtMost2": 221,
       "sourceDepth3": 2749,
       "privateArtifactSha256": "3c2dfd15909b7a7e6cc4c8a262cea33e4a7bc71f8b7a24bcc061d92bb72fc9fe",
       "receiptSha256": "1c685de98bb887ff4ab0b5e5b5497c946cfe57d8c308edabec99474f703ba15d",
-      "checks": "Keyword absence cannot prove irrelevance: changed/unreadable recorded source fields now pending; D3 Node24.21 targeted2 PASS; QB retest pending",
+      "checks": "D3 affected scope5/5 +target reference/merge3/3 Node24.21 delivered;QB021d3 findings addressed pending independent fixed-version retest",
       "approvedMapping": "2941 exact-code existing decisions referenced with original recorded facts;29 uncovered;target validity/provider pending",
       "importReady": false,
-      "canonicalReference": "Pinned prior normalized PRODUCT supplies path reference only when same-product approved decision agrees; old private2908 result SUPERSEDED_NOT_FOR_CONSUMPTION until recalculated"
+      "canonicalReference": "2921 derived path fields;49 pending;v7 private file hash/controller verified;not full canonical/native authority",
+      "currentPrivateHash": "dddb5cd3cbc0e6c82ed629e7ffd9a858300ca553e6850b02848f4c9a0a9a8137"
     },
     "priceHeaderFix": {
       "status": "QB_TARGETED_SOURCE_SYNTHETIC_PASS_DDF74",

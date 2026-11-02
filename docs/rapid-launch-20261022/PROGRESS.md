@@ -1,3 +1,17 @@
+### 商品分类字段适配包与49合成候选生成接缝已固定待复核
+
+D3合并021d三定修、精确已有批准scope、49固定分类目标引用和原商品draft分类字段接线。私域v7共2970草稿、2921派生分类字段、49待核；主控独立文件字节/行/hash/0600匹配，不将文件一致冒业务通过。未知决策状态/空依据不放行，有父级只接受完整路径；规则作用来自明确批准，不凭关键词排除。旧候选过宽版本保留并SUPERSEDED。工程24.21定向scope5/5与target/merge3/3采用，原QB仅新增范围复核。
+
+D1两叶有限49 identity materializer仅生成45直接+4待独立审查plan与STAFF原source对应草稿，定向3/3和node --check交付，不生成登录名/credential或已确认/授权review。真实私域装配接口已由T45明确，source/plan/identity/core/execution review与目标外部pin仍待准确材料及实际验证。
+
+D3另已流式读完新调拨源273949物理数据行，保存原SKU维度observations（函数增量已独立保全，尚未纳本提交）。208行四维显式齐备，273741结构/维度待核；版型空不默认A，物理出现不当SKU总数或完整尺码组。继续完整SKU身份及原provider接线。本批隔离导入/正式导入/部署/线上业务仍未执行。
+
+### 2e65279d原D1源码条件通过；真实环境前置继续
+
+原QB仅D1八叶 SOURCE-LEVEL CONDITIONAL PASS：唯一目标/OID/角色、namespace/batch、49候选无执行权、现有137/profile和旧拒绝边界通过源级/少量合成协议核。开发96项+tsc采用，不重跑。targetAttestation调用参数的SHA与内容仅自洽，不独立证明T45或真实systemID，必须由T45真实观察和主控外部pin闭合；无PG/角色/导入/部署通过。
+
+原D1新增两叶有限49非秘密identity materializer获精确租约，接既有blueprint及bootstrap参数；不生成登录名/credential、不写私域、不自批review，也不冒充用户已确认真实4员工。T45准备原私域装配接口，actual目标/角色catalog见证和受托独立审核不可省。D3原两叶继续完整关联消费，分类新字典已接，私域v7剩49项pending，不重原业务表、不重裁旧规则。
+
 ### 原D1固定新26合成接缝交付，分类目标证据已找到
 
 D1原租约8叶交付：新合成目标独立namespace/batch、blueprint 49非秘密候选、原provider/review及OID/普通角色绑定、137函数当前profile preparation host和source-host识别。旧issuer源码未改，旧目标/拒绝守卫保留；4套定向96/96及tsc通过为开发自检，固定后交原QB，尚未PG执行或授权。缺49私域source/45+4合法plan/独立review及完整ordinary ACL，D1继续接缝，T45唯一执行者。
