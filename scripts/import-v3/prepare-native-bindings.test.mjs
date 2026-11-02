@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence, readTPlusFieldMappings26, prepareFullPayloadData26, prepareFullSourceBindings26, writeFullSourceBindings26 } from './prepare-native-bindings.mjs';
+import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence, readTPlusFieldMappings26, prepareNativeBindings, prepareFullPayloadData26, prepareFullSourceBindings26, writeFullSourceBindings26 } from './prepare-native-bindings.mjs';
 import {historyClosureProjectionRow26,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
 import {HISTORY_CLOSURE_SOURCE_GROUPS} from '../import-v2/authorized-history-closure-reader.mjs';
 import {HISTORY_COUNT_KEYS} from '../../packages/application/src/history-storage-contract.ts';
@@ -85,6 +85,26 @@ test('manifest-pinned mapping stream rejects changed source hashes and duplicate
   await assert.rejects(readTPlusFieldMappings26(lines(item),{'synthetic.xlsx':'b'.repeat(64)}),/INPUT_HASH/);
   await assert.rejects(readTPlusFieldMappings26(lines(item,item),{'synthetic.xlsx':pin}),/MAPPING_ROW/);
   await assert.rejects(readTPlusFieldMappings26(lines({...item,sha256:'b'.repeat(64)}),{'synthetic.xlsx':pin}),/MAPPING_ROW/);
+});
+test('party source mappings preserve exact identities and source status with entity-scoped keys',async()=>{
+ const loc=(column,header,value)=>({file:'synthetic.xlsx',sheet:'往来单位',row:3,sha256:pin,column,header,value});
+ const proof={version:'TPLUS_FIELD_MAPPING_EVIDENCE_V1',fields:{'来源编号':{rule:'COPY',source:loc(0,'往来单位编码','001')},'原编码':{rule:'COPY',source:loc(0,'往来单位编码','001')},'名称':{rule:'COPY',source:loc(1,'往来单位名称','synthetic')},'状态':{rule:'DISABLED_0_1_TO_STATUS',source:loc(19,'停用','0')}}};
+ const item={entity:'CUSTOMER',sourceId:'001',proof,sha256:requestHash(proof)},supplier={...item,entity:'SUPPLIER'};
+ const lines=(...x)=>(async function*(){yield x.map(v=>JSON.stringify(v)).join('\n')+'\n'})();
+ const loaded=await readTPlusFieldMappings26(lines(item,supplier),{'synthetic.xlsx':pin});assert.equal(loaded.size,0);assert.equal(loaded.partyMappings.size,2);
+ const data={'来源编号':'001','原编码':'001','名称':'synthetic','状态':'正常'},raw={entity:'CUSTOMER',sourceId:'001',file:'synthetic.xlsx',sheet:'往来单位',row:3,sourceSha256:pin,data};
+ const source=sourceEvidence(raw,JSON.stringify(raw),data,{batchId:id(1),fixedSourceNamespace:'synthetic.party'},loaded.partyMappings.get(JSON.stringify(['CUSTOMER','001'])));
+ assert.equal(source.fieldProvenance.fields['状态'].origin,'MIGRATION_DERIVED');assert.equal(source.normalizedFields['状态'],'正常');
+ await assert.rejects(readTPlusFieldMappings26(lines(item,item),{'synthetic.xlsx':pin}),/MAPPING_ROW/);
+ await assert.rejects(readTPlusFieldMappings26(lines(item),{'synthetic.xlsx':'b'.repeat(64)}),/INPUT_HASH/);
+});
+test('new T+ cutoff requires the field mapping branch and preserves old cutoff',async()=>{
+ const binding={version:'C_NATIVE_IMPORT_PREPARATION_BINDING_V1',batchId:id(1),fixedSourceNamespace:'synthetic.party',selectionSha256:pin};
+ const options={binding,registrationId:'synthetic',outputParent:'not-absolute'};
+ for(const cutoffAt of ['2026-11-02T04:00:00Z','2026-11-02T12:00:00+08:00']) await assert.rejects(prepareNativeBindings({...options,binding:{...binding,cutoffAt},tplusFieldMappingPath:'evidence/tplus-field-mapping.jsonl'}),/NATIVE_BINDING_OUTPUT/);
+ await assert.rejects(prepareNativeBindings({...options,binding:{...binding,cutoffAt:'2026-10-04T12:00:00+08:00'}}),/NATIVE_BINDING_OUTPUT/);
+ await assert.rejects(prepareNativeBindings({...options,binding:{...binding,cutoffAt:'2026-11-02T04:00:00Z'}}),/NATIVE_BINDING_CONTROLLER_BINDING/);
+ await assert.rejects(prepareNativeBindings({...options,binding:{...binding,cutoffAt:'2026-11-02T04:00:01Z'},tplusFieldMappingPath:'evidence/tplus-field-mapping.jsonl'}),/NATIVE_BINDING_CONTROLLER_BINDING/);
 });
 test('party field decisions preserve Chinese employment status, null historical times and exact related identity; unknown enums fail', () => {
   let n = 10; const r = createNativeIdentityRegistry(() => id(n++));

@@ -83,11 +83,12 @@ async function* lines(chunks) {
  * mapping locator to an input hash; an independent reviewer still proves cells. */
 export async function readTPlusFieldMappings26(chunks, inputHashes) {
   must(inputHashes && typeof inputHashes === 'object', 'NATIVE_BINDING_MAPPING_INPUT_HASHES');
-  const mapped = new Map();
+  const mapped = new Map(), partyMappings = new Map();
   for await (const line of lines(chunks)) {
     let item; try { item=JSON.parse(line); } catch { must(false, 'NATIVE_BINDING_MAPPING_JSON'); }
-    must(item && Object.keys(item).sort().join(',') === 'entity,proof,sha256,sourceId' && item.entity === 'PRODUCT' &&
-      typeof item.sourceId === 'string' && item.sourceId && !mapped.has(item.sourceId) &&
+    const partyKey=identityKey(item?.entity,item?.sourceId), isProduct=item?.entity==='PRODUCT';
+    must(item && Object.keys(item).sort().join(',') === 'entity,proof,sha256,sourceId' && ['PRODUCT','CUSTOMER','SUPPLIER'].includes(item.entity) &&
+      typeof item.sourceId === 'string' && item.sourceId && !(isProduct?mapped.has(item.sourceId):partyMappings.has(partyKey)) &&
       /^[a-f0-9]{64}$/.test(item.sha256 ?? '') && item.proof?.version === 'TPLUS_FIELD_MAPPING_EVIDENCE_V1' &&
       item.proof.fields && requestHash(item.proof) === item.sha256, 'NATIVE_BINDING_MAPPING_ROW');
     for (const field of Object.values(item.proof.fields)) {
@@ -95,9 +96,10 @@ export async function readTPlusFieldMappings26(chunks, inputHashes) {
       must(source && typeof source.file === 'string' && inputHashes[source.file] === source.sha256 &&
         /^[a-f0-9]{64}$/.test(source.sha256 ?? ''), 'NATIVE_BINDING_MAPPING_INPUT_HASH');
     }
-    mapped.set(item.sourceId,{proof:item.proof,sha256:item.sha256});
-    must(mapped.size <= 600000, 'NATIVE_BINDING_MAPPING_LIMIT');
+    (isProduct?mapped:partyMappings).set(isProduct?item.sourceId:partyKey,{proof:item.proof,sha256:item.sha256});
+    must(mapped.size+partyMappings.size <= 600000, 'NATIVE_BINDING_MAPPING_LIMIT');
   }
+  Object.defineProperty(mapped,'partyMappings',{value:partyMappings});
   return mapped;
 }
 async function* csv(strings, path) {
@@ -129,7 +131,8 @@ export async function prepareNativeBindings(options) {
   const { base, v3Amendment, v3Approval, trustedApprovalSha256, approvedMoneyOverlaySha256, binding, outputParent, registrationId, tplusFieldMappingPath } = options;
   must(tplusFieldMappingPath === undefined || tplusFieldMappingPath === 'evidence/tplus-field-mapping.jsonl', 'NATIVE_BINDING_MAPPING_PATH');
   must(binding?.version === 'C_NATIVE_IMPORT_PREPARATION_BINDING_V1' && uuid(binding.batchId) && typeof binding.fixedSourceNamespace === 'string'
-    && binding.cutoffAt === '2026-10-04T12:00:00+08:00' && /^[a-f0-9]{64}$/.test(binding.selectionSha256), 'NATIVE_BINDING_CONTROLLER_BINDING');
+    && (binding.cutoffAt === '2026-10-04T12:00:00+08:00' || (tplusFieldMappingPath !== undefined && ['2026-11-02T12:00:00+08:00','2026-11-02T04:00:00Z'].includes(binding.cutoffAt))) && /^[a-f0-9]{64}$/.test(binding.selectionSha256), 'NATIVE_BINDING_CONTROLLER_BINDING');
+  const newTPlusBatch=binding.cutoffAt==='2026-11-02T12:00:00+08:00'||binding.cutoffAt==='2026-11-02T04:00:00Z';
   must(typeof registrationId === 'string' && /^[a-zA-Z0-9_-]{1,100}$/.test(registrationId) && isAbsolute(outputParent), 'NATIVE_BINDING_OUTPUT');
   const parent = resolve(outputParent), roots = [base, v3Amendment, fileURLToPath(new URL('../../', import.meta.url))].map(p => resolve(p));
   must(!roots.some(p => parent === p || parent.startsWith(p + '/')) && !parent.split('/').includes('.git'), 'NATIVE_BINDING_PRIVATE_OUTPUT');
@@ -167,17 +170,19 @@ export async function prepareNativeBindings(options) {
           dictionaryInputs[path] = JSON.parse(s);
         }
         const tplusMappings = tplusFieldMappingPath === undefined ? null : await readTPlusFieldMappings26(strings(tplusFieldMappingPath), inputHashes);
-        let originalRows = 0, mappedProducts = 0;
+        const partyTypes=tplusMappings?new Set([...tplusMappings.partyMappings.keys()].map(key=>JSON.parse(key)[0])):new Set();
+        let originalRows = 0, mappedProducts = 0, mappedParties = 0;
         for await (const line of lines(strings('snapshots/all-business-source-rows.jsonl'))) {
           const raw = JSON.parse(line); originalRows++; if (!['PRODUCT', 'HALL', 'WAREHOUSE', 'STAFF', 'CUSTOMER', 'SUPPLIER'].includes(raw.entity)) continue;
           must(inputHashes[raw.file] === raw.sourceSha256, 'NATIVE_BINDING_ORIGINAL_FILE_PIN');
           const key = identityKey(raw.entity, raw.sourceId), normalized = retained.get(key); must(normalized, 'NATIVE_BINDING_MISSING_ORIGINAL');
           const target = raw.entity === 'PRODUCT' ? productSources : partySources; must(!target.has(key), 'NATIVE_BINDING_DUPLICATE_ORIGINAL');
-          const mapping = raw.entity === 'PRODUCT' && tplusMappings ? tplusMappings.get(raw.sourceId) : undefined;
+          const mapping = raw.entity === 'PRODUCT' && tplusMappings ? tplusMappings.get(raw.sourceId) : tplusMappings?.partyMappings.get(key);
           if (raw.entity === 'PRODUCT' && tplusMappings) { must(mapping, 'NATIVE_BINDING_MAPPING_MISSING'); mappedProducts++; }
+          if (partyTypes.has(raw.entity) || (newTPlusBatch && ['CUSTOMER','SUPPLIER'].includes(raw.entity))) { must(mapping, 'NATIVE_BINDING_MAPPING_MISSING'); mappedParties++; }
           target.set(key, sourceEvidence(raw, line, normalized, binding, mapping));
         }
-        if (tplusMappings) must(mappedProducts === tplusMappings.size, 'NATIVE_BINDING_MAPPING_COVERAGE');
+        if (tplusMappings) must(mappedProducts === tplusMappings.size && mappedParties === tplusMappings.partyMappings.size, 'NATIVE_BINDING_MAPPING_COVERAGE');
         report.originalRowsScanned = originalRows;
         must(productSources.size + partySources.size === retained.size, 'NATIVE_BINDING_SOURCE_COVERAGE');
       }
