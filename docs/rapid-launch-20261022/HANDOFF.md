@@ -1,3 +1,7 @@
+## 2026-11-02 真实新批准备身份固定；STAFF接线76eca6e3
+
+主控用原stableImportId从本批metadataSHA固定batch 11b111ed-f128-09a0-b6cd-f153ef926fa5 / namespace naijue:tplus:20261102 / cutoff2026-11-02T04:00:00Z，见NEW-TPLUS-BATCH-REGISTRATION-20261102.json。仅源准备身份，不造实体身份；selection/target/actor仍未齐、不可执行，不与合成52ae批混用。76eca6e3bf8e921d2152e317c39889f3c5680c79固定STAFF逐字段证明parser，开发4targetPASS，QB尚待新增范围核。45主身份来自现源+已批plan，7历史别名保留；4人工补充plan先按原批准source核，不直接称缺用户资料。隔离/正式导入/部署/线上业务仍未执行。
+
 ## 2026-11-02 原因修复合批64322179；精确清理完成
 
 6432217988b106ea9ef21ba31e890cdf7313e08e固定D3四叶：EOF只是上游声明，必须自然耗尽且无后续行/重复EOF/异常后才发完成摘要；真空历史fitA通过原mapper并保留原值，reader要求本批header/source外审及真实cell/alias证据，不能套旧14279范围。开发定向EOF1/transfer5、mapper16已交，QB本轮仅增量复验，尚未独立通过/真实导入。c2合成字节候选源码PASS采用，T45已从固定c2开始本机小来源候选准备，不代表DB或来源外审通过。
