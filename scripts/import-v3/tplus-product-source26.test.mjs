@@ -264,7 +264,18 @@ test('transfer SKU occurrences preserve raw dimensions and never infer missing f
  const h=row('调拨单',1,headers),r=row('调拨单',2,{10:text('0001'),12:text('product'),14:text('color'),15:text('size'),16:num('-1.0'),17:text('fit')});
  const out=await Array.fromAsync(project([h,r,end('调拨单',2)]));assert.equal(out[0].status,'OBSERVED_COMPLETE_DIMENSIONS_NOT_IDENTITY');assert.equal(out[0].sourceCells['条形码'].raw,'0001');assert.equal(out[0].importReady,false);
  const missing={...r,cells:{...r.cells,17:{kind:'blank',raw:null}}};assert.equal((await Array.fromAsync(project([h,missing,end('调拨单',2)])))[0].status,'PENDING_SOURCE_DIMENSIONS_OR_STRUCTURE');
+ const projected=await Array.fromAsync(project([h,missing,end('调拨单',2)],{sourceFileSha256:'a'.repeat(64),decisionSha256:'a7533b9b67637efc9723ffe73829c30158649db463e3d7ce4cc13b12fa112396'}));const interpreted=projected[0];assert.equal(interpreted.historicalLineFit.value,'A');assert.deepEqual(interpreted.sourceCells['版型'],missing.cells[17]);assert.equal(interpreted.status,'PENDING_SOURCE_DIMENSIONS_OR_STRUCTURE');assert.equal(projected[1].historicalFitSummary.counts.DERIVED_HISTORICAL_LINE_FIT,1);assert.match(projected[1].historicalFitSummary.logicalSha256,/^[a-f0-9]{64}$/);
  const formula={...r,cells:{...r.cells,16:{kind:'formula',raw:null,formula:'1+1'}}};assert.equal((await Array.fromAsync(project([h,formula,end('调拨单',2)])))[0].status,'PENDING_SOURCE_DIMENSIONS_OR_STRUCTURE');
  await assert.rejects(Array.fromAsync(project([h,r])),/EOF/);
  await assert.rejects(Array.fromAsync(project([{...h,cells:{...h.cells,17:text('wrong')}},r,end('调拨单',2)])),/HEADER/);
+});
+
+test('approved historical line fit interpretation preserves source and never creates a SKU',async()=>{
+ const {interpretTPlusHistoricalLineFit26:interpret}=await import('./tplus-product-source26.mjs');
+ const input={sheet:'调拨单',excelRow:2,sourceCell:{kind:'blank',raw:null},sourceFileSha256:'a'.repeat(64),decisionSha256:'a7533b9b67637efc9723ffe73829c30158649db463e3d7ce4cc13b12fa112396'};
+ const derived=interpret(input);assert.equal(derived.value,'A');assert.equal(derived.origin,'MIGRATION_DERIVED');assert.deepEqual(derived.rawCell,input.sourceCell);assert.equal(derived.importReady,false);
+ assert.equal(interpret({...input,sheet:'销货单',sourceCell:text('B版')}).value,'B版');
+ for(const sourceCell of [undefined,{kind:'formula',raw:null,formula:'1+1'},text(' ')]) assert.equal(interpret({...input,sourceCell}).status,'PENDING_HISTORICAL_LINE_FIT');
+ assert.throws(()=>interpret({...input,sheet:'库存状况'}),/CONTEXT/);
+ assert.throws(()=>interpret({...input,decisionSha256:'b'.repeat(64)}),/CONTEXT/);
 });

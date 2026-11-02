@@ -21909,7 +21909,8 @@
         "scripts/import-v3/production-source-host.mjs",
         "scripts/import-v3/production-source-host.test.mjs",
         "tests/integration/rewrite26-synthetic-account-materializer.mjs",
-        "tests/rewrite26-synthetic-account-materializer.test.mjs"
+        "tests/rewrite26-synthetic-account-materializer.test.mjs",
+        "tests/integration/current-runtime26-full-source-fixture.ts"
       ],
       "current": "QB817 nonsecret49 source-level PASS adopted;T45 private assembly input preparation;D1 precise full ACL continues",
       "next": "Independent real target witness/external controller pin; private role/source/plan assembly and review; T45 bounded synthetic execution",
@@ -21984,7 +21985,8 @@
       "sourceTime": "actual batch cutoff/non-atomic coverage not proven; directory12:00 not evidence",
       "stock": "row8 second header identified; true blank totals/fit groups retained pending semantics",
       "sales": "nonblank document key sets match;6 candidate amount differences involve distinct amount headers; no guessed rounding",
-      "sku": "D3 actual transfer source hash+EOF produced273949 physical occurrences;208 explicit4dimension complete,273741 pending;not valid SKU count or identity binding"
+      "sku": "D3 actual transfer source hash+EOF produced273949 physical occurrences;208 explicit4dimension complete,273741 pending;not valid SKU count or identity binding",
+      "disk": "ENOSPC for large full-row duplicate;~200MiB free;small work≤5MiB/floor150MiB,lazy outputs;no old backup or source deleted"
     },
     "actualProductDraft": {
       "status": "PARTIAL_SOURCE_DRAFT_NOT_CANONICAL_NOT_IMPORT_READY",
@@ -22030,7 +22032,8 @@
       "status": "EXISTING_APPROVED_RULE_ADOPTED_FOR_NEW_HISTORICAL_LINE_INTERPRETATION_ONLY",
       "evidenceSha256": "a7533b9b67637efc9723ffe73829c30158649db463e3d7ce4cc13b12fa112396",
       "meaning": "True blank original historical sales/transfer fit interpreted A with raw blank/provenance retained;explicit other fits kept;no SKU invention/reassignment;not matrix/product default",
-      "oldBatchCountsReused": false
+      "oldBatchCountsReused": false,
+      "adapterStatus": "Lazy transfer source interpretation+EOF digest;2 targeted Node24 PASS,not native consumer or DB"
     }
   }
 }

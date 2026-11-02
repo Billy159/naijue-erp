@@ -453,14 +453,16 @@ export function attachTPlusCanonicalCategory26(draft, reference, sourceFileSha25
 /** Preserve exact SKU-dimensional occurrences from the native transfer query.
  * Blank document or fit cells are never filled, and an observed barcode is not
  * treated as a SKU identity. These are source occurrences, not import rows. */
-export async function* projectTPlusTransferSkuOccurrences26(events) {
+export async function* projectTPlusTransferSkuOccurrences26(events, historicalFitContext) {
   const sheet='调拨单', columns=new Map([[10,'条形码'],[12,'存货编码'],[14,'颜色'],[15,'尺码'],[16,'数量'],[17,'版型']]);
+  if (historicalFitContext && (!/^[a-f0-9]{64}$/.test(historicalFitContext.sourceFileSha256 ?? '') || historicalFitContext.decisionSha256!=='a7533b9b67637efc9723ffe73829c30158649db463e3d7ce4cc13b12fa112396')) throw Error('TPLUS_HISTORICAL_FIT_CONTEXT');
   let header=false,eof=false,rows=0,last=0;
+  const fitDigest=historicalFitContext ? createHash('sha256') : null,fitCounts={};
   for await (const event of events) {
     if (!event || event.sheet!==sheet || eof) throw Error('TPLUS_TRANSFER_SKU_STREAM');
     if (event.event==='eof') {
       if (!header || event.rows!==rows) throw Error('TPLUS_TRANSFER_SKU_EOF');
-      eof=true;yield {event:'eof',sheet,rows,importReady:false};continue;
+      eof=true;yield {event:'eof',sheet,rows,importReady:false,...(fitDigest?{historicalFitSummary:{sourceFileSha256:historicalFitContext.sourceFileSha256,decisionSha256:historicalFitContext.decisionSha256,rows:rows-1,counts:fitCounts,logicalSha256:fitDigest.digest('hex')}}:{})};continue;
     }
     if (event.event!=='row' || !Number.isSafeInteger(event.excelRow) || event.excelRow<=last || !event.cells) throw Error('TPLUS_TRANSFER_SKU_ROW');
     rows++;last=event.excelRow;
@@ -473,8 +475,29 @@ export async function* projectTPlusTransferSkuOccurrences26(events) {
     const quantity=sourceCells['数量'],raw=quantity.raw;
     const exactQuantity=['number','text'].includes(quantity.kind) && typeof raw==='string' && /^-?\d+(?:\.0+)?$/.test(raw);
     const complete=['存货编码','颜色','尺码','版型'].every(validText) && exactQuantity;
-    yield {event:'source-occurrence',sheet,excelRow:event.excelRow,sourceCells,
+    const historicalLineFit=historicalFitContext ? (validText('存货编码') ? interpretTPlusHistoricalLineFit26({...historicalFitContext,sheet,excelRow:event.excelRow,sourceCell:sourceCells['版型']}) : {status:'PENDING_DOCUMENT_LINE_IDENTITY',value:null,importReady:false}) : undefined;
+    if (historicalLineFit) {
+      fitCounts[historicalLineFit.status]=(fitCounts[historicalLineFit.status]??0)+1;
+      fitDigest.update(requestHash({sheet,excelRow:event.excelRow,sourceFileSha256:historicalFitContext.sourceFileSha256,rawCellHash:requestHash(sourceCells['版型']),interpretation:historicalLineFit})+'\n');
+    }
+    yield {event:'source-occurrence',sheet,excelRow:event.excelRow,sourceCells,...(historicalLineFit?{historicalLineFit}:{}),
       status:complete?'OBSERVED_COMPLETE_DIMENSIONS_NOT_IDENTITY':'PENDING_SOURCE_DIMENSIONS_OR_STRUCTURE',importReady:false};
   }
   if (!eof) throw Error('TPLUS_TRANSFER_SKU_EOF');
+}
+
+/** Interpret a historical document line without altering its source cell or SKU. */
+export function interpretTPlusHistoricalLineFit26({sheet, excelRow, sourceCell, sourceFileSha256, decisionSha256}) {
+  if (!['销货单','调拨单'].includes(sheet) || !Number.isSafeInteger(excelRow) || excelRow<2 ||
+      !/^[a-f0-9]{64}$/.test(sourceFileSha256 ?? '') ||
+      decisionSha256!=='a7533b9b67637efc9723ffe73829c30158649db463e3d7ce4cc13b12fa112396')
+    throw Error('TPLUS_HISTORICAL_FIT_CONTEXT');
+  const rawCell=structuredClone(sourceCell ?? null);
+  if ((sourceCell?.kind==='blank' && sourceCell.raw===null) || (sourceCell?.kind==='text' && sourceCell.raw==='')) {
+    return {status:'DERIVED_HISTORICAL_LINE_FIT',value:'A',origin:'MIGRATION_DERIVED',rawCell,
+      evidence:{sheet,excelRow,sourceFileSha256,decisionSha256},importReady:false};
+  }
+  if (sourceCell?.kind==='text' && typeof sourceCell.raw==='string' && sourceCell.raw.trim()!=='' )
+    return {status:'EXPLICIT_HISTORICAL_LINE_FIT',value:sourceCell.raw,origin:'SOURCE_ORIGINAL',rawCell,importReady:false};
+  return {status:'PENDING_HISTORICAL_LINE_FIT',value:null,rawCell,importReady:false};
 }
