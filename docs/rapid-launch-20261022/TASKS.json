@@ -23711,6 +23711,14 @@
       "otherPresentUnresolved": 6230,
       "scope": "Existing ZIP projection only; historical validity and target PG identity unverified; no employee FKs or accounts created",
       "ready": false
+    },
+    "staffTemporalEvidence": {
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-staff-temporal-D1-01/receipt.json",
+      "sha256": "23b1472a6dfafe64f5d4e8d197d6da790df303f9ec7b5084830587a0e56e410b",
+      "relationships": 44,
+      "salesHeaders": 22656,
+      "finding": "Approved original identities and current source codes match at endpoints; inspected decisions lack validity intervals and code reuse facts. Historical applicability not proven. No FK written.",
+      "status": "CANDIDATE_NOT_TEMPORALLY_VERIFIED"
     }
   }
 }
