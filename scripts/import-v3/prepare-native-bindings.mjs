@@ -35,11 +35,35 @@ export function createNativeIdentityRegistry(allocate = randomUUID, maximum = 60
     values: () => entries.values(), get size() { return entries.size; }
   };
 }
-export function sourceEvidence(raw, line, normalizedFields, binding) {
+export function sourceEvidence(raw, line, normalizedFields, binding, mappingEvidence) {
   must(raw?.data?.['来源编号'] === raw.sourceId && uuid(binding.batchId) && typeof raw.file === 'string' && typeof raw.sheet === 'string'
     && Number.isSafeInteger(raw.row) && raw.row > 0 && /^[a-f0-9]{64}$/.test(raw.sourceSha256), 'NATIVE_BINDING_SOURCE');
   const rowSha256 = hash(Buffer.from(line)), fields = {};
-  for (const [name, value] of Object.entries(raw.data)) fields[name] = { origin: 'ORIGINAL', reason: 'EXACT_ORIGINAL_SNAPSHOT_CELL', raw: value };
+  if (mappingEvidence === undefined) {
+    for (const [name, value] of Object.entries(raw.data)) fields[name] = { origin: 'ORIGINAL', reason: 'EXACT_ORIGINAL_SNAPSHOT_CELL', raw: value };
+  } else {
+    const proof = mappingEvidence?.proof, pin = mappingEvidence?.sha256;
+    must(proof && proof.version === 'TPLUS_FIELD_MAPPING_EVIDENCE_V1' && proof.fields &&
+      /^[a-f0-9]{64}$/.test(pin ?? '') && requestHash(proof) === pin &&
+      Object.keys(proof.fields).length === Object.keys(raw.data).length &&
+      Object.keys(raw.data).every(name => Object.hasOwn(proof.fields, name)), 'NATIVE_BINDING_MAPPING_EVIDENCE');
+    let parsed; try { parsed = JSON.parse(line); } catch { must(false, 'NATIVE_BINDING_MAPPING_LINE'); }
+    must(requestHash(parsed) === requestHash(raw), 'NATIVE_BINDING_MAPPING_LINE');
+    for (const [name, value] of Object.entries(raw.data)) {
+      const field = proof.fields[name], source = field?.source;
+      must(field && source && typeof source.file === 'string' && source.file && typeof source.sheet === 'string' && source.sheet &&
+        Number.isSafeInteger(source.row) && source.row > 0 && Number.isSafeInteger(source.column) && source.column >= 0 && source.column < 256 &&
+        typeof source.header === 'string' && source.header && /^[a-f0-9]{64}$/.test(source.sha256 ?? '') && typeof source.value === 'string' &&
+        typeof value === 'string', 'NATIVE_BINDING_MAPPING_SOURCE');
+      const mapped = field.rule === 'COPY' ? source.value : field.rule === 'DISABLED_0_1_TO_STATUS' && source.value === '0' ? '正常' :
+        field.rule === 'DISABLED_0_1_TO_STATUS' && source.value === '1' ? '停用' : null;
+      must(mapped !== null && mapped === value, 'NATIVE_BINDING_MAPPING_VALUE');
+      fields[name] = { origin: 'MIGRATION_DERIVED', reason: 'EXPLICIT_TPLUS_FIELD_MAPPING', raw: value, evidence_ref: pin };
+    }
+    const identity = proof.fields['来源编号']?.source;
+    must(identity?.file === raw.file && identity.sheet === raw.sheet && identity.row === raw.row && identity.sha256 === raw.sourceSha256 &&
+      identity.value === raw.sourceId, 'NATIVE_BINDING_MAPPING_IDENTITY');
+  }
   fields.__source_row_hash = { origin: 'ORIGINAL', reason: 'SHA256_JSONL_UTF8_EXCLUDING_LF_RETAINING_CR_V1', raw: rowSha256 };
   return { id: stableImportId('source-row', binding.fixedSourceNamespace, raw.entity, raw.sourceId), batchId: binding.batchId,
     entityType: raw.entity, sourceKey: raw.sourceId, fileRef: raw.file, sheet: raw.sheet, rowNo: String(raw.row),
@@ -54,6 +78,27 @@ async function* lines(chunks) {
     must(pending.length > 0 && ++count <= 1000000, 'NATIVE_BINDING_LINE_COUNT'); yield pending; pending = ''; start = end + 1;
   }}
   if (pending) { must(++count <= 1000000, 'NATIVE_BINDING_LINE_COUNT'); yield pending; }
+}
+/** Only candidate evidence in an already manifest-pinned stream. This binds every
+ * mapping locator to an input hash; an independent reviewer still proves cells. */
+export async function readTPlusFieldMappings26(chunks, inputHashes) {
+  must(inputHashes && typeof inputHashes === 'object', 'NATIVE_BINDING_MAPPING_INPUT_HASHES');
+  const mapped = new Map();
+  for await (const line of lines(chunks)) {
+    let item; try { item=JSON.parse(line); } catch { must(false, 'NATIVE_BINDING_MAPPING_JSON'); }
+    must(item && Object.keys(item).sort().join(',') === 'entity,proof,sha256,sourceId' && item.entity === 'PRODUCT' &&
+      typeof item.sourceId === 'string' && item.sourceId && !mapped.has(item.sourceId) &&
+      /^[a-f0-9]{64}$/.test(item.sha256 ?? '') && item.proof?.version === 'TPLUS_FIELD_MAPPING_EVIDENCE_V1' &&
+      item.proof.fields && requestHash(item.proof) === item.sha256, 'NATIVE_BINDING_MAPPING_ROW');
+    for (const field of Object.values(item.proof.fields)) {
+      const source=field?.source;
+      must(source && typeof source.file === 'string' && inputHashes[source.file] === source.sha256 &&
+        /^[a-f0-9]{64}$/.test(source.sha256 ?? ''), 'NATIVE_BINDING_MAPPING_INPUT_HASH');
+    }
+    mapped.set(item.sourceId,{proof:item.proof,sha256:item.sha256});
+    must(mapped.size <= 600000, 'NATIVE_BINDING_MAPPING_LIMIT');
+  }
+  return mapped;
 }
 async function* csv(strings, path) {
   let header; for await (const cells of parseV2Csv(strings(path))) {
@@ -81,7 +126,8 @@ export function reviewedPartyBinding(entity, row, registry, evidenceRef, reviewe
 /** One explicit source preparation invocation. complete preflight validates current bytes;
  * files are private new artifacts and require QB review plus C's OUTSIDE pin. */
 export async function prepareNativeBindings(options) {
-  const { base, v3Amendment, v3Approval, trustedApprovalSha256, approvedMoneyOverlaySha256, binding, outputParent, registrationId } = options;
+  const { base, v3Amendment, v3Approval, trustedApprovalSha256, approvedMoneyOverlaySha256, binding, outputParent, registrationId, tplusFieldMappingPath } = options;
+  must(tplusFieldMappingPath === undefined || tplusFieldMappingPath === 'evidence/tplus-field-mapping.jsonl', 'NATIVE_BINDING_MAPPING_PATH');
   must(binding?.version === 'C_NATIVE_IMPORT_PREPARATION_BINDING_V1' && uuid(binding.batchId) && typeof binding.fixedSourceNamespace === 'string'
     && binding.cutoffAt === '2026-10-04T12:00:00+08:00' && /^[a-f0-9]{64}$/.test(binding.selectionSha256), 'NATIVE_BINDING_CONTROLLER_BINDING');
   must(typeof registrationId === 'string' && /^[a-zA-Z0-9_-]{1,100}$/.test(registrationId) && isAbsolute(outputParent), 'NATIVE_BINDING_OUTPUT');
@@ -120,14 +166,18 @@ export async function prepareNativeBindings(options) {
           let s = ''; for await (const part of strings(path)) { s += part; must(Buffer.byteLength(s) <= 16777216, 'NATIVE_BINDING_METADATA_LIMIT'); }
           dictionaryInputs[path] = JSON.parse(s);
         }
-        let originalRows = 0;
+        const tplusMappings = tplusFieldMappingPath === undefined ? null : await readTPlusFieldMappings26(strings(tplusFieldMappingPath), inputHashes);
+        let originalRows = 0, mappedProducts = 0;
         for await (const line of lines(strings('snapshots/all-business-source-rows.jsonl'))) {
           const raw = JSON.parse(line); originalRows++; if (!['PRODUCT', 'HALL', 'WAREHOUSE', 'STAFF', 'CUSTOMER', 'SUPPLIER'].includes(raw.entity)) continue;
           must(inputHashes[raw.file] === raw.sourceSha256, 'NATIVE_BINDING_ORIGINAL_FILE_PIN');
           const key = identityKey(raw.entity, raw.sourceId), normalized = retained.get(key); must(normalized, 'NATIVE_BINDING_MISSING_ORIGINAL');
           const target = raw.entity === 'PRODUCT' ? productSources : partySources; must(!target.has(key), 'NATIVE_BINDING_DUPLICATE_ORIGINAL');
-          target.set(key, sourceEvidence(raw, line, normalized, binding));
+          const mapping = raw.entity === 'PRODUCT' && tplusMappings ? tplusMappings.get(raw.sourceId) : undefined;
+          if (raw.entity === 'PRODUCT' && tplusMappings) { must(mapping, 'NATIVE_BINDING_MAPPING_MISSING'); mappedProducts++; }
+          target.set(key, sourceEvidence(raw, line, normalized, binding, mapping));
         }
+        if (tplusMappings) must(mappedProducts === tplusMappings.size, 'NATIVE_BINDING_MAPPING_COVERAGE');
         report.originalRowsScanned = originalRows;
         must(productSources.size + partySources.size === retained.size, 'NATIVE_BINDING_SOURCE_COVERAGE');
       }

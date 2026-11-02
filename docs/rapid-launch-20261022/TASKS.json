@@ -21946,6 +21946,19 @@
       "schemaChangesAuthorizedByThisAdoption": false,
       "oldApprovalRecordsChanged": false,
       "limitation": "Runtime target/review, capacity facts, actual environment scope and business checks remain required; old FULL pin unchanged"
+    },
+    "canonicalContainerDelivery": {
+      "status": "SYNTHETIC_PRODUCT_PREFLIGHT_EVIDENCE_CHAIN_PASS_PENDING_QB",
+      "checks": "prepare-native-bindings15 + tplus-product4 Node24.21.0",
+      "scope": "source sidecar mapping, existing preflightV2 and product evidence preparation; no DB/schema change",
+      "actualBatch": "NOT_GENERATED_FULL_CANONICAL",
+      "pending": [
+        "SKU/category/size-group references",
+        "independent raw-file mapping verification",
+        "actual cutoff/non-atomic export semantics",
+        "original reviewed authorization",
+        "provider integration/import/readback"
+      ]
     }
   }
 }

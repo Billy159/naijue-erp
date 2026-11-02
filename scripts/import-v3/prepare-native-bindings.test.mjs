@@ -1,12 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence, prepareFullPayloadData26, prepareFullSourceBindings26, writeFullSourceBindings26 } from './prepare-native-bindings.mjs';
+import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence, readTPlusFieldMappings26, prepareFullPayloadData26, prepareFullSourceBindings26, writeFullSourceBindings26 } from './prepare-native-bindings.mjs';
 import {historyClosureProjectionRow26,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
 import {HISTORY_CLOSURE_SOURCE_GROUPS} from '../import-v2/authorized-history-closure-reader.mjs';
 import {HISTORY_COUNT_KEYS} from '../../packages/application/src/history-storage-contract.ts';
 import {stableImportId} from '../../packages/application/src/inventory-cutoff-import.ts';
 import {requestHash} from '../../packages/application/src/request-hash.ts';
-import {mkdtemp,readFile,stat,rm} from 'node:fs/promises';
+import {mkdtemp,readFile,writeFile,stat,rm} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {parseV2Csv} from '../../packages/application/src/import-v2.ts';
+import {preflightImport} from '../../packages/application/src/import-preflight.ts';
+import {IMPORT_PREFLIGHT_SHEETS} from '../../packages/application/src/import-preflight-contract.ts';
+import {prepareProductEvidenceChunk} from '../../packages/application/src/product-evidence-staging.ts';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import { prepareNativePartyImportChunk } from '../../packages/application/src/native-party-import.ts';
@@ -26,6 +31,60 @@ test('actual source evidence preserves raw/normalized cells and row hash, withou
   const result = sourceEvidence(raw, JSON.stringify(raw), { '来源编号': 'source-p', '值': '' }, binding);
   assert.deepEqual(result.rawFields, raw.data); assert.equal(result.fieldProvenance.fields['值'].raw, ''); assert.notEqual(result.id, raw.sourceId);
   assert.notEqual(result.rowSha256, sourceEvidence(raw, JSON.stringify(raw) + ' ', result.normalizedFields, binding).rowSha256);
+});
+test('new T+ source aliases carry pinned mapping evidence and never claim original column names', () => {
+  const raw={entity:'PRODUCT',sourceId:'001',file:'synthetic.xlsx',sheet:'存货',row:3,sourceSha256:pin,data:{'来源编号':'001','状态':'正常'}};
+  const src=(column,header,value)=>({file:raw.file,sheet:raw.sheet,row:raw.row,sha256:pin,column,header,value});
+  const proof={version:'TPLUS_FIELD_MAPPING_EVIDENCE_V1',fields:{
+    '来源编号':{rule:'COPY',source:src(0,'存货编码','001')},
+    '状态':{rule:'DISABLED_0_1_TO_STATUS',source:src(10,'停用','0')}
+  }};
+  const mapping={proof,sha256:requestHash(proof)}, line=JSON.stringify(raw);
+  const result=sourceEvidence(raw,line,raw.data,binding,mapping);
+  assert.equal(result.fieldProvenance.fields['来源编号'].origin,'MIGRATION_DERIVED');
+  assert.equal(result.fieldProvenance.fields['来源编号'].evidence_ref,mapping.sha256);
+  assert.equal(result.fieldProvenance.fields['状态'].raw,'正常');
+  assert.throws(()=>sourceEvidence(raw,line,raw.data,binding,{proof,sha256:'b'.repeat(64)}),/MAPPING_EVIDENCE/);
+  const invalid=structuredClone(proof);invalid.fields['状态'].source.value='1';
+  assert.throws(()=>sourceEvidence(raw,line,raw.data,binding,{proof:invalid,sha256:requestHash(invalid)}),/MAPPING_VALUE/);
+  const moved=structuredClone(proof);moved.fields['来源编号'].source.row=4;
+  assert.throws(()=>sourceEvidence(raw,line,raw.data,binding,{proof:moved,sha256:requestHash(moved)}),/MAPPING_IDENTITY/);
+  assert.throws(()=>sourceEvidence(raw,JSON.stringify({...raw,row:4}),raw.data,binding,mapping),/MAPPING_LINE/);
+});
+test('synthetic T+ aliases flow through a real canonical CSV, preflight and existing product evidence reader',async t=>{
+  const dir=await mkdtemp(join(tmpdir(),'synthetic-tplus-canonical-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+  const table=IMPORT_V2_TABLES.find(x=>x.entity==='PRODUCT'), contract=IMPORT_PREFLIGHT_SHEETS.find(x=>x.entityType==='PRODUCT');
+  const normalized=Object.fromEntries(table.columns.map(x=>[x.name,x.required?'SYNTHETIC':'']));
+  Object.assign(normalized,{'来源编号':'001','款号':'001','商品名称':'SYNTHETIC','分类路径':'SYNTHETIC','尺码组':'SYNTHETIC','状态':'正常','零售价':'1.25'});
+  const raw={entity:'PRODUCT',sourceId:'001',file:'synthetic-original.xlsx',sheet:'存货',row:3,sourceSha256:pin,data:normalized};
+  const proof={version:'TPLUS_FIELD_MAPPING_EVIDENCE_V1',fields:{}};
+  for(const [column,[key,value]] of Object.entries(normalized).entries()){
+    const isStatus=key==='状态';proof.fields[key]={rule:isStatus?'DISABLED_0_1_TO_STATUS':'COPY',source:{file:raw.file,sheet:raw.sheet,row:raw.row,sha256:pin,column,header:key==='来源编号'?'存货编码':key,value:isStatus?'0':value}};
+  }
+  const mapping={proof,sha256:requestHash(proof)},line=JSON.stringify(raw),source=sourceEvidence(raw,line,normalized,binding,mapping);
+  const quote=v=>'"'+v.replaceAll('"','""')+'"';const values=table.columns.map(c=>normalized[c.name]);
+  const csv=table.columns.map(c=>quote(c.name)).join(',')+'\n'+values.map(quote).join(',')+'\n';
+  const csvPath=join(dir,'product.csv'),proofPath=join(dir,'mapping.json');await writeFile(csvPath,csv,{mode:0o600});await writeFile(proofPath,JSON.stringify(proof),{mode:0o600});
+  const csvBytes=await readFile(csvPath),csvHash=createHash('sha256').update(csvBytes).digest('hex');
+  assert.equal(requestHash(JSON.parse(await readFile(proofPath,'utf8'))),mapping.sha256);
+  const parsed=[];for await(const row of parseV2Csv((async function*(){yield csvBytes.toString('utf8')})()))parsed.push(row);
+  assert.deepEqual(parsed[1],values);
+  const cell=v=>({kind:'text',raw:v});
+  const preflight=preflightImport({batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,mode:'STAGED',files:[{fileName:'product.csv',sha256:csvHash,dateSystem:'1900',sheets:[{name:'01商品',headerRow:1,headers:contract.fields.map(f=>cell(f.header)),rows:[{excelRow:2,cells:parsed[1].map(cell)}]}]}]});
+  assert.equal(preflight.records.filter(x=>x.entityType==='PRODUCT').length,1);
+  const chunk=prepareProductEvidenceChunk({batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selection:{baseManifestSha256:pin,selectionSha256:pin,approvalSha256:pin,entity:'PRODUCT',source:'BASE_V2',path:'business/01商品.csv',csvSha256:csvHash},rows:[{source,product:{sourceKey:'001',nativeId:id(99),expectedVersion:1},blankPricePolicy:'V03_EXACT_PRICE_COLUMN_BLANK_IS_UNSET'}]});
+  assert.equal(chunk.rows[0].source.fieldProvenance.fields['来源编号'].origin,'MIGRATION_DERIVED');
+  assert.equal(chunk.rows[0].source.fileRef,'synthetic-original.xlsx');
+});
+test('manifest-pinned mapping stream rejects changed source hashes and duplicate product keys',async()=>{
+  const source={file:'synthetic.xlsx',sheet:'存货',row:3,sha256:pin,column:0,header:'存货编码',value:'001'};
+  const proof={version:'TPLUS_FIELD_MAPPING_EVIDENCE_V1',fields:{'来源编号':{rule:'COPY',source}}};
+  const item={entity:'PRODUCT',sourceId:'001',proof,sha256:requestHash(proof)};
+  const lines=(...x)=>(async function*(){yield x.map(v=>JSON.stringify(v)).join('\n')+'\n'})();
+  const loaded=await readTPlusFieldMappings26(lines(item),{'synthetic.xlsx':pin});assert.equal(loaded.size,1);
+  await assert.rejects(readTPlusFieldMappings26(lines(item),{'synthetic.xlsx':'b'.repeat(64)}),/INPUT_HASH/);
+  await assert.rejects(readTPlusFieldMappings26(lines(item,item),{'synthetic.xlsx':pin}),/MAPPING_ROW/);
+  await assert.rejects(readTPlusFieldMappings26(lines({...item,sha256:'b'.repeat(64)}),{'synthetic.xlsx':pin}),/MAPPING_ROW/);
 });
 test('party field decisions preserve Chinese employment status, null historical times and exact related identity; unknown enums fail', () => {
   let n = 10; const r = createNativeIdentityRegistry(() => id(n++));

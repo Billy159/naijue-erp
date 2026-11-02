@@ -1,3 +1,11 @@
+### 新批规范化容器→原商品校验合成链已接，真实批未导入
+
+原D3四叶新批字段映射支持显式sidecar证据：原file/sheet/row/column/header/hash/value，COPY或准确停用0/1转换，别名标MIGRATION_DERIVED/evidence_ref，原BASE_V2规范化协议及旧分支保持。合成真实临时容器走preflightV2→sidecar→sourceEvidence→prepareProductEvidenceChunk；工程Node24.21 prepare-native-bindings 15项、T+新源4项通过。此不是完整真实批，测试空表不用于实际闭包；sidecar自有hash不替代原件独立核验/原授权。
+
+本批完整canonical未生成、SKU/分类/尺码组引用与独立原件审核未完成；旧prepareNativeBindings的2026-10-04 cutoff常量仍在原分支，12:00目录标签及当前时钟都不能冒本批已证同T。真实来源的截止时点/非同T语义需准确落实，格式仍进行中，隔离导入/正式导入/部署/线上操作均未完成。
+
+主控9394容量helper源码pin采纳离线6 rollback+1 boot镜像检查及generator --check通过，无SQL/服务器/生产执行。T45继续准确target/config/容量与原执行清单，D1继续普通运行角色最小ACL/认证准备，D3继续本批规范化/provenance/provider接线；不重旧采集、不改导入schema、不恢复单位配置。
+
 ### 主控采用既有9394源码审查；环境执行未放行
 
 主控核实T45固定7dde→9394源差异及独立审查链，独立回执ff64678f…94a18与QB最终回执e0afcdae…2de50哈希均匹配，精确helper9394f7d5…bd79c已有源码PASS并关闭C12-HELPER-F01。此次采用该已有有效结论，仅将boot/rollback的CAPACITY镜像pin对齐此字节；旧FULL pin及历史批准记录原样。新增历史调拨SQL/profile确属已审允许范围扩展，不以“控制流相同”免审。本次源pin采纳不授权SQL、角色权限、实际启动、部署或生产切换，仍须准确target/catalog/review/capacity/执行范围和业务证据。

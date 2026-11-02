@@ -1,5 +1,7 @@
 /** T+ current-batch product source candidates. Read-only; no IDs, SQL or grant. */
 import { parseImportCnyYuan } from "../../packages/application/src/import-preflight.ts";
+import { IMPORT_V2_TABLES } from "../../packages/application/src/import-v2-contract.ts";
+import { sourceEvidence } from "./prepare-native-bindings.mjs";
 
 /** Price-book observations are product-level source facts; no SKU or target IDs.
  * Blank prices are preserved, pending full source/contract closure. */
@@ -109,7 +111,7 @@ export async function readTPlusProductMaster(events, expectedHeaders) {
     if (code?.kind !== "text" || typeof code.raw !== "string" || !code.raw || products.has(code.raw)) throw Error("TPLUS_MASTER_CODE_INVALID_OR_DUPLICATE");
     const groupCol=expectedHeaders.indexOf("尺码所属取值组编码"), name=event.cells[1], group=event.cells[groupCol];
     products.set(code.raw,{sheet:"存货",excelRow:event.excelRow,sourceProductCode:code.raw,
-      sourceProductName:name ?? null,sourceSizeGroup:group ?? null,
+      sourceProductName:name ?? null,sourceSizeGroup:group ?? null,sourceHeaders:[...expectedHeaders],
       priceSourceCells:Object.fromEntries([...priceColumns].map(([key,i])=>[key,event.cells[i] ?? {kind:"blank",raw:null}])),sourceCells:event.cells});
   }
   if (!eof) throw Error("TPLUS_MASTER_EOF");
@@ -141,4 +143,33 @@ export async function* assembleTPlusProductSource26({master, barcodes, prices}) 
       readiness:"REFERENCE_EVIDENCE_PENDING",importReady:false};
   }
   if (!eof) throw Error("TPLUS_PRODUCT_SOURCE_EOF");
+}
+
+/** Construct one non-authoritative BASE_V2 PRODUCT row from an explicit mapping
+ * sidecar. The caller must independently pin/verify the workbook and projection;
+ * this does not create a target ID, grant, cutoff, or complete batch manifest. */
+export function buildTPlusProductCanonicalEvidence26({candidate, canonicalFields, mappingEvidence, sourceFile, sourceSha256, selectedColumns, binding}) {
+  const product=candidate?.productSource, headers=product?.sourceHeaders, columns=IMPORT_V2_TABLES.find(x=>x.entity==='PRODUCT').columns;
+  const names=['采购价','零售价','五级批发价','六级批发价','七级批发价','八级批发价','九级批发价','十级批发价','最低售价'];
+  if (candidate?.status !== 'SOURCE_FACTS_ONLY' || !candidate.priceChecks || Object.keys(candidate.priceChecks).length !== names.length ||
+      names.some(name=>!['EXACT_MATCH','BOTH_BLANK'].includes(candidate.priceChecks[name])) || !product || !Array.isArray(headers) || !Array.isArray(selectedColumns) ||
+      selectedColumns.length !== headers.length || selectedColumns.some((v,i)=>v!==i) ||
+      typeof sourceFile !== 'string' || !sourceFile || !/^[a-f0-9]{64}$/.test(sourceSha256 ?? '') ||
+      !canonicalFields || Object.keys(canonicalFields).length !== columns.length ||
+      columns.some(x=>typeof canonicalFields[x.name] !== 'string') || canonicalFields['来源编号'] !== product.sourceProductCode)
+    throw Error('TPLUS_CANONICAL_SOURCE');
+  for (const column of columns) {
+    const desc=mappingEvidence?.proof?.fields?.[column.name]?.source, index=desc?.column;
+    if (!Number.isSafeInteger(index) || index < 0 || index >= headers.length ||
+        desc.file !== sourceFile || desc.sha256 !== sourceSha256 || desc.sheet !== product.sheet || desc.row !== product.excelRow ||
+        desc.header !== headers[index]) throw Error('TPLUS_CANONICAL_MAPPING_SOURCE');
+    const cell=product.sourceCells[index];
+    if (cell && !['text','number','blank'].includes(cell.kind)) throw Error('TPLUS_CANONICAL_SOURCE_CELL');
+    const value=cell?.raw ?? '';
+    if (typeof value !== 'string' || desc.value !== value) throw Error('TPLUS_CANONICAL_SOURCE_CELL');
+  }
+  const raw={entity:'PRODUCT',sourceId:product.sourceProductCode,file:sourceFile,sheet:product.sheet,
+    row:product.excelRow,sourceSha256,data:structuredClone(canonicalFields)};
+  const line=JSON.stringify(raw), source=sourceEvidence(raw,line,canonicalFields,binding,mappingEvidence);
+  return {raw,line,source,canonicalFields:structuredClone(canonicalFields),scope:'SOURCE_CANDIDATE_ONLY',importReady:false};
 }
