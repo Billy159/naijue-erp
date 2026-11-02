@@ -59,6 +59,37 @@ if (bridge.readerIssues.length) {
 process.stdout.write(JSON.stringify(report, null, 2) + "\n");
 process.exitCode = report.dataStatus === "INVALID" ? 2 : bridge.readerIssues.length ? 3 : 0;
 }
+/** Finite sales nonblank-key census. Not a row join, source proof or import grant.
+ * Callers pass exact raw document-number strings and close each stream only after
+ * their source reader's verified EOF. Blank continuation rows remain unresolved.
+ */
+export function createSalesDocumentKeyIndex() {
+  const streams = new Map(["report", "detail", "settlement"].map(name => [name, { keys: new Map(), rows: 0, blank: 0, closed: false }]));
+  let completed = false;
+  function get(name) { const value = streams.get(name); if (!value || completed) throw Error("SALES_KEY_INDEX_STATE"); return value; }
+  return Object.freeze({
+    add(name, rawKey) {
+      const s = get(name); if (s.closed || rawKey !== null && typeof rawKey !== "string") throw Error("SALES_KEY_INDEX_INPUT");
+      s.rows++; if (rawKey === null || rawKey === "") { s.blank++; return; }
+      s.keys.set(rawKey, (s.keys.get(rawKey) ?? 0) + 1);
+    },
+    close(name, eof) {
+      const s = get(name); if (s.closed || eof?.event !== "eof" || !Number.isSafeInteger(eof.dataRows) || eof.dataRows !== s.rows) throw Error("SALES_KEY_INDEX_EOF_REQUIRED");
+      s.closed = true;
+    },
+    finish() {
+      if (completed || [...streams.values()].some(s => !s.closed)) throw Error("SALES_KEY_INDEX_EOF_REQUIRED");
+      completed = true; const report = streams.get("report"), detail = streams.get("detail"), settlement = streams.get("settlement");
+      const missing = (from, to) => [...from.keys.keys()].filter(k => !to.keys.has(k)).length;
+      const summarize = s => ({ rows: s.rows, blankKeys: s.blank, distinctNonblankKeys: s.keys.size,
+        repeatedKeyRows: [...s.keys.values()].reduce((sum, n) => sum + n - 1, 0) });
+      return { status: "NONBLANK_KEY_CENSUS_NOT_ROW_CLOSURE", report: summarize(report), detail: summarize(detail), settlement: summarize(settlement),
+        reportKeysAbsentFromDetail: missing(report, detail), detailKeysAbsentFromReport: missing(detail, report),
+        settlementKeysAbsentFromDetail: missing(settlement, detail), unresolvedBlankRows: report.blank + detail.blank + settlement.blank };
+    }
+  });
+}
+
 async function stream() {
   const args = process.argv.slice(3);
   if (args.length !== 3 || !/^[0-9]+(?:,[0-9]+)*$/.test(args[2])) throw Error("STREAM_ARGUMENTS");
@@ -66,24 +97,38 @@ async function stream() {
   if (!info.isFile() || info.isSymbolicLink()) throw Error("STREAM_SOURCE_INVALID");
   const child = spawn("python3", [fileURLToPath(new URL("read-xlsx.py", import.meta.url)), "--stream", path, args[1], args[2]], { stdio: ["ignore", "pipe", "ignore"] });
   const done = new Promise((resolve, reject) => { child.once("error", reject); child.once("close", code => resolve(code)); });
-  let rows = 0, finished = false, failed = false, eofLine;
-  for await (const line of createInterface({ input: child.stdout, crlfDelay: Infinity })) {
-    let event; try { event = JSON.parse(line); } catch { failed = true; break; }
-    if (finished || !event || !["row", "eof", "error"].includes(event.event)) { failed = true; break; }
-    if (event.event === "row") rows++;
-    if (event.event === "eof") { if (event.rows !== rows || event.sheet !== args[1]) { failed = true; break; } finished = true; eofLine = line; continue; }
-    if (event.event === "error") { failed = true; break; }
-    if (!process.stdout.write(line + "\n")) await new Promise(resolve => process.stdout.once("drain", resolve));
+  let rows = 0, finished = false, failed = false, cancelled = false, eofLine;
+  const cancel = () => { cancelled = true; child.kill("SIGTERM"); };
+  const outputError = () => { failed = true; child.kill("SIGTERM"); };
+  process.once("SIGINT", cancel); process.once("SIGTERM", cancel); process.stdout.on("error", outputError);
+  try {
+    for await (const line of createInterface({ input: child.stdout, crlfDelay: Infinity })) {
+      let event; try { event = JSON.parse(line); } catch { failed = true; break; }
+      if (finished || !event || !["row", "eof", "error"].includes(event.event)) { failed = true; break; }
+      if (event.event === "row") rows++;
+      if (event.event === "eof") { if (event.rows !== rows || event.sheet !== args[1]) { failed = true; break; } finished = true; eofLine = line; continue; }
+      if (event.event === "error") { failed = true; break; }
+      if (!process.stdout.write(line + "\n")) await new Promise(resolve => {
+        const done = () => { process.stdout.off("drain", done); process.stdout.off("error", done); resolve(); };
+        process.stdout.once("drain", done); process.stdout.once("error", done);
+      });
+      if (failed || cancelled) break;
+    }
+  } catch { failed = true; }
+  finally {
+    if (failed || cancelled || !finished) child.kill("SIGTERM");
+    const code = await done;
+    process.off("SIGINT", cancel); process.off("SIGTERM", cancel);
+    if (code !== 0 || !finished || failed || cancelled) {
+      if (!process.stdout.destroyed && !process.stdout.errored) process.stdout.write(JSON.stringify({event:"error",code:"XLSX_STREAM_INCOMPLETE",rows}) + "\n");
+      process.exitCode = cancelled ? 143 : 3;
+    } else if (!process.stdout.destroyed) process.stdout.write(eofLine + "\n");
+    process.stdout.off("error", outputError);
   }
-  if (failed) child.kill();
-  if (await done !== 0 || !finished || failed) {
-    process.stdout.write(JSON.stringify({event:"error",code:"XLSX_STREAM_INCOMPLETE",rows}) + "\n");
-    process.exitCode = 3;
-  } else { process.stdout.write(eofLine + "\n"); }
 }
-if (process.argv[2] === "--stream") {
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv[2] === "--stream") {
   stream().catch(() => { process.stdout.write(JSON.stringify({event:"error",code:"XLSX_STREAM_FAILED"}) + "\n"); process.exitCode = 3; });
-} else try { run(); }
+} else if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) try { run(); }
 catch (error) {
   const reason = error instanceof Error ? error.message : String(error);
   const capability = /(?:_LIMIT|MAXBUFFER|ENOBUFS|XLSX_READER_FAILED)/i.test(reason);

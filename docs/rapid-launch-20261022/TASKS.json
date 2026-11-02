@@ -21873,6 +21873,20 @@
       "history evidence",
       "old database/backups"
     ],
-    "noOldSourceFullCaptureOrConversion": true
+    "noOldSourceFullCaptureOrConversion": true,
+    "latestPushedImplementation": "cc82a65686977310c66a4f7a4b42be0d8bed4da0",
+    "readerReview": {
+      "status": "NEED_FIX",
+      "owner": "QB",
+      "scope": "fixed cc82 / 3 leaves",
+      "findings": [
+        "shared-string repeated max O(N^2)",
+        "selected SST memory grows with selected text"
+      ],
+      "repairOwner": "D3",
+      "repairState": "UNCOMMITTED_IN_PROGRESS",
+      "deliveryChecks": "22 synthetic PASS at cc82; no real import"
+    },
+    "sourceRelationshipStatus": "Nonblank sales key sets match; six-field candidate multiset has 6 differences per side; row identity/continuations/totals/money UNKNOWN"
   }
 }

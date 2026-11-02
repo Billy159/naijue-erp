@@ -13,6 +13,9 @@ import json
 import posixpath
 import re
 import stat
+import sqlite3
+import tempfile
+import signal
 import sys
 import zipfile
 from pathlib import Path
@@ -38,6 +41,8 @@ MAX_XML_ELEMENTS = 500_000
 MAX_XML_DEPTH = 64
 GUIDE_SHEETS = frozenset(("字段说明", "示例勿导入", "样例说明", "样例金额核对", "切换与历史边界", "分摊与舍入说明"))
 CELL_KINDS = {"n": "number", "b": "boolean", "e": "error", "d": "date"}
+ACCOUNT_BATCH_SHA256 = "0ee458a0e210df13e2c6e1aaa73b7fd5648ec37a11e6a91007f78ac5f202f8c1"
+ACCOUNT_HEADERS = {0: "账号名称", 1: "账号编码", 2: "账号类型", 23: "停用"}
 
 
 class XlsxPreflightError(Exception):
@@ -382,8 +387,9 @@ def iter_projected_rows(path: Path, sheet_name: str, columns: tuple[int, ...]):
     the iterator and require its EOF event; partial iteration is never completion.
     This is a raw cell port, not a source-identity or import authority.
     """
-    if Path(path).name == "账号.xlsx" or sheet_name == "账号":
-        reject("XLSX_ACCOUNT_PROJECTION_REQUIRED", "Account workbook requires a reviewed non-secret column projection.")
+    account = Path(path).name == "账号.xlsx" or sheet_name == "账号"
+    if account and (sheet_name != "账号" or not set(columns).issubset(ACCOUNT_HEADERS)):
+        reject("XLSX_ACCOUNT_PROJECTION_REQUIRED", "Account projection must use the approved non-secret columns.")
     if not isinstance(sheet_name, str) or not sheet_name or not columns or len(set(columns)) != len(columns) or any(type(c) is not int or c < 0 or c >= MAX_COLUMNS for c in columns):
         reject("XLSX_PROJECTION_INVALID", "Explicit sheet and unique selected columns are required.")
     path = Path(path)
@@ -392,6 +398,12 @@ def iter_projected_rows(path: Path, sheet_name: str, columns: tuple[int, ...]):
     fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
     with os.fdopen(fd, "rb") as source, zipfile.ZipFile(source) as archive:
         before = os.fstat(source.fileno())
+        if account:
+            source.seek(0); digest = hashlib.sha256()
+            for block in iter(lambda: source.read(1024 * 1024), b""):
+                digest.update(block)
+            if digest.hexdigest() != ACCOUNT_BATCH_SHA256:
+                reject("XLSX_ACCOUNT_BATCH_MISMATCH", "Account workbook differs from the reviewed batch.")
         members, names = archive.infolist(), set()
         if len(members) > MAX_MEMBERS:
             reject("XLSX_MEMBER_LIMIT", "Too many archive members.")
@@ -442,7 +454,7 @@ def iter_projected_rows(path: Path, sheet_name: str, columns: tuple[int, ...]):
                     checked = _CheckedStream(raw_stream)
                     while checked.read(65536):
                         pass
-        selected = set(columns)
+        selected = set(columns) | (set(ACCOUNT_HEADERS) if account else set())
         def scan(strings=None):
             last, count = 0, 0
             with archive.open(part) as stream:
@@ -465,7 +477,10 @@ def iter_projected_rows(path: Path, sheet_name: str, columns: tuple[int, ...]):
                         for cell in element:
                             if cell.tag != f"{{{MAIN}}}c": continue
                             reference = cell.attrib.get("r", "")
-                            col = column_index(reference, last, sheet_name)
+                            try:
+                                col = column_index(reference, last, sheet_name)
+                            except XlsxPreflightError:
+                                reject("XLSX_CELL_LOCATION_INVALID", "Invalid cell location in selected sheet.")
                             if col in seen: reject("XLSX_DUPLICATE_CELL", "Duplicate cell position.")
                             seen.add(col)
                             if col not in selected: continue
@@ -482,38 +497,67 @@ def iter_projected_rows(path: Path, sheet_name: str, columns: tuple[int, ...]):
                         if parent is not None: parent.remove(element)
                 except (ET.ParseError, zipfile.BadZipFile, EOFError):
                     reject("XLSX_INVALID_XML", "Selected worksheet is malformed or truncated.")
-        # Gather only numeric references, never decode unselected cells or SST values.
-        needed = set()
-        for _, refs in scan(): needed.update(refs.values())
-        strings = {}
-        if needed:
-            if "xl/sharedStrings.xml" not in names: reject("XLSX_SHARED_STRING_INVALID", "Selected shared strings are missing.")
-            with archive.open("xl/sharedStrings.xml") as stream:
-                index = 0
-                try:
-                    stack = []
-                    for event, element in ET.iterparse(_CheckedStream(stream), events=("start", "end")):
-                        if event == "start":
-                            stack.append(element); continue
-                        parent = stack[-2] if len(stack) > 1 else None
-                        stack.pop()
-                        if element.tag == f"{{{MAIN}}}si":
-                            if index in needed:
-                                value = visible_string(element)
-                                if len(value) > MAX_TEXT: reject("XLSX_CELL_TEXT_LIMIT", "Selected shared string exceeds limit.")
-                                strings[index] = value
-                            index += 1; element.clear()
-                            if parent is not None: parent.remove(element)
-                except (ET.ParseError, zipfile.BadZipFile, EOFError):
-                    reject("XLSX_INVALID_XML", "Shared strings malformed or truncated.")
-            if set(strings) != needed: reject("XLSX_SHARED_STRING_INVALID", "Selected shared string index missing.")
-        class SelectedStrings:
-            def __len__(self): return max(needed, default=-1) + 1
-            def __getitem__(self, key): return strings[key]
-        count = 0
-        for row_number, cells in scan(SelectedStrings()):
-            count += 1
-            yield {"event": "row", "sheet": sheet_name, "excelRow": row_number, "cells": cells}
+        # A private disk index bounds retained SST memory even when every selected
+        # value is unique. It contains selected columns only, never a whole SST.
+        with tempfile.TemporaryDirectory(prefix="naijue-selected-sst-") as temp_dir:
+            index_path = os.path.join(temp_dir, "selected.sqlite")
+            index_fd = os.open(index_path, os.O_CREAT | os.O_EXCL | os.O_RDWR, 0o600)
+            os.close(index_fd)
+            db = sqlite3.connect(index_path)
+            try:
+                db.execute("PRAGMA cache_size=-2048")
+                db.execute("PRAGMA mmap_size=0")
+                db.execute("PRAGMA temp_store=FILE")
+                db.execute("CREATE TABLE needed(id INTEGER PRIMARY KEY)")
+                db.execute("CREATE TABLE selected(id INTEGER PRIMARY KEY, value TEXT NOT NULL)")
+                for _, refs in scan():
+                    db.executemany("INSERT OR IGNORE INTO needed(id) VALUES(?)", ((v,) for v in refs.values()))
+                needed_count, max_index = db.execute("SELECT count(*),max(id) FROM needed").fetchone()
+                if needed_count:
+                    if "xl/sharedStrings.xml" not in names: reject("XLSX_SHARED_STRING_INVALID", "Selected shared strings are missing.")
+                    wanted = iter(db.execute("SELECT id FROM needed ORDER BY id"))
+                    target = next(wanted, None)
+                    with archive.open("xl/sharedStrings.xml") as stream:
+                        index = 0
+                        try:
+                            stack = []
+                            for event, element in ET.iterparse(_CheckedStream(stream), events=("start", "end")):
+                                if event == "start":
+                                    stack.append(element); continue
+                                parent = stack[-2] if len(stack) > 1 else None
+                                stack.pop()
+                                if element.tag == f"{{{MAIN}}}si":
+                                    if target is not None and index == target[0]:
+                                        value = visible_string(element)
+                                        if len(value) > MAX_TEXT: reject("XLSX_CELL_TEXT_LIMIT", "Selected shared string exceeds limit.")
+                                        db.execute("INSERT INTO selected(id,value) VALUES(?,?)", (index, value))
+                                        target = next(wanted, None)
+                                    index += 1; element.clear()
+                                    if parent is not None: parent.remove(element)
+                        except (ET.ParseError, zipfile.BadZipFile, EOFError):
+                            reject("XLSX_INVALID_XML", "Shared strings malformed or truncated.")
+                    if target is not None or db.execute("SELECT count(*) FROM selected").fetchone()[0] != needed_count:
+                        reject("XLSX_SHARED_STRING_INVALID", "Selected shared string index missing.")
+                class SelectedStrings:
+                    def __len__(self): return (max_index if max_index is not None else -1) + 1
+                    def __getitem__(self, key):
+                        row = db.execute("SELECT value FROM selected WHERE id=?", (key,)).fetchone()
+                        if row is None: reject("XLSX_SHARED_STRING_INVALID", "Selected shared string index missing.")
+                        return row[0]
+                if account:
+                    header_scan = scan(SelectedStrings())
+                    try:
+                        header = next((cells for row_number, cells in header_scan if row_number == 2), None)
+                    finally:
+                        header_scan.close()
+                    if header is None or any(header.get(col, {}).get("kind") != "text" or header[col].get("raw") != name for col, name in ACCOUNT_HEADERS.items()):
+                        reject("XLSX_ACCOUNT_HEADER_MISMATCH", "Account workbook approved headers differ.")
+                count = 0
+                for row_number, cells in scan(SelectedStrings()):
+                    count += 1
+                    yield {"event": "row", "sheet": sheet_name, "excelRow": row_number, "cells": {col: cell for col, cell in cells.items() if col in columns}}
+            finally:
+                db.close()
         after = os.fstat(source.fileno())
         if (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns) != (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns):
             reject("XLSX_SOURCE_CHANGED", "Source changed during streaming read.")
@@ -540,6 +584,10 @@ def main():
 
 
 def stream_main(args):
+    # Node cancellation must unwind the selected-SST private temporary directory.
+    def cancelled(_signum, _frame):
+        raise SystemExit(143)
+    signal.signal(signal.SIGTERM, cancelled)
     if len(args) != 3:
         print(json.dumps({"event": "error", "code": "XLSX_STREAM_ARGUMENTS"}), flush=True)
         return 2
@@ -550,7 +598,7 @@ def stream_main(args):
         for event in iter_projected_rows(Path(path), sheet_name, tuple(map(int, selected.split(',')))):
             print(json.dumps(event, ensure_ascii=False, separators=(",", ":")), flush=True)
         return 0
-    except (XlsxPreflightError, OSError, zipfile.BadZipFile, UnicodeError, RuntimeError):
+    except (XlsxPreflightError, OSError, zipfile.BadZipFile, UnicodeError, RuntimeError, sqlite3.Error):
         # Never echo selected or unselected business values to stderr or errors.
         print(json.dumps({"event": "error", "code": "XLSX_STREAM_FAILED"}), flush=True)
         return 2

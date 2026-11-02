@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """All workbooks are small, explicitly synthetic ZIP/XML fixtures generated in temp dirs."""
 import importlib.util
+import hashlib
 import json
 import os
 import stat
 import sys
 import subprocess
 import tempfile
+import time
+import tracemalloc
 import unittest
 import zipfile
 from pathlib import Path
@@ -116,6 +119,35 @@ class ReadXlsxTests(unittest.TestCase):
         with self.assertRaises(reader.XlsxPreflightError): list(reader.iter_projected_rows(account, "04客户", (0,)))
         with self.assertRaises(reader.XlsxPreflightError): list(reader.iter_projected_rows(self.path, "账号", (0,)))
 
+    def test_account_four_column_projection_checks_hash_header_and_never_selects_secret(self):
+        data = [row(1, cell("A1", "title")), row(2, cell("A2", "账号名称"), cell("B2", "账号编码"), cell("C2", "账号类型"), cell("X2", "停用")),
+                row(3, cell("A3", "SAFE"), cell("B3", "0", "s"), cell("C3", "TYPE"), cell("D3", "1", "s"), cell("X3", "0"))]
+        files = parts(sheet_name="账号", data=data)
+        files["xl/sharedStrings.xml"] = f'<sst xmlns="{S}"><si><t>SAFE-SELECTED</t></si><si><t>SECRET_UNSELECTED</t></si></sst>'
+        self.write(files); account = Path(self.temp.name) / "账号.xlsx"; account.write_bytes(self.path.read_bytes())
+        old = reader.ACCOUNT_BATCH_SHA256; reader.ACCOUNT_BATCH_SHA256 = hashlib.sha256(account.read_bytes()).hexdigest()
+        original = reader.visible_string
+        def checked(node):
+            result = original(node); self.assertNotIn("SECRET_UNSELECTED", result); return result
+        reader.visible_string = checked
+        try:
+            events = list(reader.iter_projected_rows(account, "账号", (0,1,2,23)))
+            self.assertEqual(events[-1]["event"], "eof")
+            self.assertNotIn("SECRET_UNSELECTED", json.dumps(events))
+            self.assertEqual(events[-2]["cells"][1]["raw"], "SAFE-SELECTED")
+            with self.assertRaises(reader.XlsxPreflightError): list(reader.iter_projected_rows(account, "账号", (3,)))
+            with self.assertRaises(reader.XlsxPreflightError): reader.read_workbook(account)
+            reader.ACCOUNT_BATCH_SHA256 = "0" * 64
+            with self.assertRaises(reader.XlsxPreflightError): list(reader.iter_projected_rows(account, "账号", (0,)))
+            files["xl/worksheets/sheet1.xml"] = files["xl/worksheets/sheet1.xml"].replace("账号编码", "错表头")
+            self.write(files); account.write_bytes(self.path.read_bytes()); reader.ACCOUNT_BATCH_SHA256 = hashlib.sha256(account.read_bytes()).hexdigest()
+            with self.assertRaises(reader.XlsxPreflightError): list(reader.iter_projected_rows(account, "账号", (0,)))
+            shifted = parts(sheet_name="账号", data=[row(1, cell("A1", "title")), row(2, cell("A2", "账号编码"), cell("B2", "账号名称"), cell("C2", "账号类型"), cell("X2", "停用"))])
+            self.write(shifted); account.write_bytes(self.path.read_bytes()); reader.ACCOUNT_BATCH_SHA256 = hashlib.sha256(account.read_bytes()).hexdigest()
+            with self.assertRaises(reader.XlsxPreflightError): list(reader.iter_projected_rows(account, "账号", (0,1,2,23)))
+        finally:
+            reader.ACCOUNT_BATCH_SHA256 = old; reader.visible_string = original
+
     def test_stream_cli_emits_rows_then_eof_and_incomplete_error(self):
         node = os.environ.get("PREFLIGHT_TEST_NODE", "node")
         self.write()
@@ -129,6 +161,84 @@ class ReadXlsxTests(unittest.TestCase):
         self.assertNotEqual(bad.returncode, 0)
         self.assertNotIn('"event":"eof"', bad.stdout)
         self.assertEqual(json.loads(bad.stdout.splitlines()[-1])["code"], "XLSX_STREAM_INCOMPLETE")
+
+    def test_incremental_sales_key_census_requires_all_eof_and_preserves_exact_keys(self):
+        node = os.environ.get("PREFLIGHT_TEST_NODE", "node")
+        code = r"""
+import assert from 'node:assert/strict';
+import {createSalesDocumentKeyIndex} from './scripts/import-preflight/run.mjs';
+const index=createSalesDocumentKeyIndex();
+index.add('report','SYN·001');index.add('report',null);index.add('detail','SYN·001');index.add('detail','SYN·001');index.add('settlement','SYN.001');
+index.close('report',{event:'eof',dataRows:2});index.close('detail',{event:'eof',dataRows:2});
+assert.throws(()=>index.finish(),/EOF_REQUIRED/);assert.throws(()=>index.close('settlement',{event:'eof',dataRows:2}),/EOF_REQUIRED/);
+index.close('settlement',{event:'eof',dataRows:1});const result=index.finish();
+assert.equal(result.status,'NONBLANK_KEY_CENSUS_NOT_ROW_CLOSURE');assert.equal(result.detail.repeatedKeyRows,1);assert.equal(result.unresolvedBlankRows,1);assert.equal(result.settlementKeysAbsentFromDetail,1);
+assert.throws(()=>index.add('report','SYN·001'),/STATE/);assert.throws(()=>index.finish(),/EOF_REQUIRED/);
+"""
+        result = subprocess.run([node, "--input-type=module", "-e", code], cwd=HERE.parent.parent, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_selected_unique_sst_memory_is_bounded_and_early_close_cleans_index(self):
+        def measure(count):
+            texts = [f'<si><t>{i:06d}-' + ('x' * 1024) + '</t></si>' for i in range(count)]
+            data = [row(i + 1, cell(f"A{i+1}", str(i), "s")) for i in range(count)]
+            files = parts(data=data); files["xl/sharedStrings.xml"] = f'<sst xmlns="{S}">' + ''.join(texts) + '</sst>'
+            self.write(files)
+            old_tmp = tempfile.tempdir; tempfile.tempdir = self.temp.name
+            try:
+                tracemalloc.start()
+                count_seen = sum(1 for e in reader.iter_projected_rows(self.path, "04客户", (0,)) if e["event"] == "row")
+                _, peak = tracemalloc.get_traced_memory(); tracemalloc.stop()
+                self.assertEqual(count_seen, count)
+                self.assertFalse(list(Path(self.temp.name).glob("naijue-selected-sst-*")))
+                return peak
+            finally:
+                if tracemalloc.is_tracing(): tracemalloc.stop()
+                tempfile.tempdir = old_tmp
+        small = measure(1000); large = measure(10000)
+        self.assertLess(large, small + 4 * 1024 * 1024, (small, large))
+        old_tmp = tempfile.tempdir; tempfile.tempdir = self.temp.name
+        try:
+            iterator = reader.iter_projected_rows(self.path, "04客户", (0,))
+            self.assertEqual(next(iterator)["event"], "row")
+            self.assertTrue(list(Path(self.temp.name).glob("naijue-selected-sst-*")))
+            iterator.close()
+            self.assertFalse(list(Path(self.temp.name).glob("naijue-selected-sst-*")))
+        finally: tempfile.tempdir = old_tmp
+
+    def test_stream_node_sigterm_cleans_own_child_and_private_index(self):
+        node = os.environ.get("PREFLIGHT_TEST_NODE", "node")
+        self.write(parts(data=[row(i, cell(f"A{i}", str(i), "n")) for i in range(1, 30001)]))
+        env = dict(os.environ, TMPDIR=self.temp.name)
+        process = subprocess.Popen([node, str(HERE / "run.mjs"), "--stream", str(self.path), "04客户", "0"],
+                                   stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=env)
+        try:
+            deadline = time.monotonic() + 8
+            while time.monotonic() < deadline and not list(Path(self.temp.name).glob("naijue-selected-sst-*")):
+                self.assertIsNone(process.poll(), "process ended before private index observation")
+                time.sleep(0.01)
+            self.assertTrue(list(Path(self.temp.name).glob("naijue-selected-sst-*")))
+            process.terminate(); process.communicate(timeout=8)
+            self.assertNotEqual(process.returncode, 0)
+            self.assertFalse(list(Path(self.temp.name).glob("naijue-selected-sst-*")))
+        finally:
+            if process.poll() is None: process.kill(); process.communicate(timeout=3)
+
+    def test_closed_output_pipe_reaps_reader_and_private_index(self):
+        node = os.environ.get("PREFLIGHT_TEST_NODE", "node")
+        self.write(parts(data=[row(i, cell(f"A{i}", str(i), "n")) for i in range(1, 30001)]))
+        env = dict(os.environ, TMPDIR=self.temp.name)
+        process = subprocess.Popen([node, str(HERE / "run.mjs"), "--stream", str(self.path), "04客户", "0"],
+                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
+        try:
+            self.assertTrue(process.stdout.readline())
+            process.stdout.close()
+            process.wait(timeout=8)
+            self.assertNotEqual(process.returncode, 0)
+            self.assertFalse(list(Path(self.temp.name).glob("naijue-selected-sst-*")))
+        finally:
+            if process.poll() is None: process.kill(); process.wait(timeout=3)
+            if process.stderr: process.stderr.close()
 
     def test_preserve_shared_inline_strings_decimal_lexemes_formula_and_date_system(self):
         data = [row(1, cell("A1", "*来源编号")), row(2, cell("A2", "0", "s"), cell("B2", "9999999999999999.99", "n"),
