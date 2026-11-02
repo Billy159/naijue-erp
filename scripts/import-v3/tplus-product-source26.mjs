@@ -270,7 +270,7 @@ export async function readTPlusPriorCategoryDecisions26(bytes, trustedSha256) {
   const records=new Map();let header;
   for await (const cells of parseV2Csv((async function*(){yield new TextDecoder('utf-8',{fatal:true}).decode(bytes)})())) {
     if (!header) {
-      header=cells;const required=['code','name','target_id','target_name','decision_status','decision_source','decision_basis','old_category_for_review_only','original_description','original_size_group','original_invoice_name'];
+      header=cells;const required=['code','name','target_id','target_name','target_parent_name','decision_status','decision_source','decision_basis','old_category_for_review_only','original_description','original_size_group','original_invoice_name'];
       if (new Set(header).size!==header.length || required.some(k=>header.filter(x=>x===k).length!==1)) throw Error('TPLUS_CATEGORY_DECISION_HEADER');
       continue;
     }
@@ -300,10 +300,43 @@ export function compareTPlusPriorCategoryDecision26(candidate, decisions) {
     const value=cell?.raw ?? '';
     comparisons.push({field,status:!old && !required?'PRIOR_NOT_RECORDED':old===value?'EQUAL':'DIFFERENT'});
   }
-  const sizeEvidenceRelevant=/尺码|尺码组/.test(record.decision_basis+' '+record.decision_source);
-  const materialChange=comparisons.some(x=>['DIFFERENT','SOURCE_UNREADABLE'].includes(x.status) &&
-    (x.field!=='尺码所属取值组编码' || sizeEvidenceRelevant));
+  const materialChange=comparisons.some(x=>['DIFFERENT','SOURCE_UNREADABLE'].includes(x.status));
   return {status:materialChange?'PENDING_SOURCE_FACTS_CHANGED':'PRIOR_DECISION_MATCHED_REFERENCE_ONLY',
     decisionEvidenceSha256:decisions.sha256,sourceProductCode:p.sourceProductCode,sourceRow:p.excelRow,comparisons,
-    sizeEvidenceRelevant,priorTargetId:record.target_id,priorTargetName:record.target_name,importReady:false};
+    ...(!materialChange ? {priorTargetId:record.target_id,priorTargetName:record.target_name} : {}),importReady:false};
+}
+
+/** Prior reviewed normalized PRODUCT rows supply reference evidence only.
+ * Their identity is pinned separately; no prior business value is imported. */
+export async function readPriorCanonicalProducts26(bytes, trustedSha256) {
+  if (!Buffer.isBuffer(bytes) || !/^[a-f0-9]{64}$/.test(trustedSha256 ?? '') || createHash('sha256').update(bytes).digest('hex')!==trustedSha256)
+    throw Error('TPLUS_PRIOR_PRODUCT_PIN');
+  const columns=IMPORT_V2_TABLES.find(t=>t.entity==='PRODUCT').columns.map(c=>c.name), products=new Map();let header;
+  for await (const cells of parseV2Csv((async function*(){yield new TextDecoder('utf-8',{fatal:true}).decode(bytes)})())) {
+    if (!header) {
+      header=cells;if(header.length!==columns.length || columns.some((name,i)=>header[i]!==name)) throw Error('TPLUS_PRIOR_PRODUCT_HEADER');
+      continue;
+    }
+    if (cells.length!==header.length) throw Error('TPLUS_PRIOR_PRODUCT_WIDTH');
+    const row=Object.fromEntries(header.map((h,i)=>[h,cells[i]])),code=row['款号'];
+    if (!code || products.has(code)) throw Error('TPLUS_PRIOR_PRODUCT_IDENTITY');
+    products.set(code,row);
+  }
+  if (!header) throw Error('TPLUS_PRIOR_PRODUCT_HEADER');
+  return {products,sha256:trustedSha256};
+}
+
+/** Propose a category path only when the same-product decision and the pinned
+ * previously reviewed normalized row agree. This is not native-ID authority. */
+export function proposePriorCategoryCanonical26(candidate, decisions, priorProducts) {
+  const comparison=compareTPlusPriorCategoryDecision26(candidate,decisions),code=candidate?.productSource?.sourceProductCode;
+  if (comparison.status!=='PRIOR_DECISION_MATCHED_REFERENCE_ONLY') return {...comparison,canonicalCategory:null};
+  if (!(priorProducts?.products instanceof Map) || !/^[a-f0-9]{64}$/.test(priorProducts?.sha256 ?? '')) throw Error('TPLUS_PRIOR_PRODUCT_INPUT');
+  const decision=decisions.records.get(code), prior=priorProducts.products.get(code);
+  if (!prior || prior['商品名称']!==decision.name) return {...comparison,status:'PENDING_PRIOR_PRODUCT_MISMATCH',canonicalCategory:null};
+  const path=prior['分类路径'], leaf=decision.target_name, parent=decision.target_parent_name;
+  if (!path || !(path===leaf || (parent && path===parent+'/'+leaf)))
+    return {...comparison,status:'PENDING_CATEGORY_PATH_PROOF',canonicalCategory:null};
+  return {...comparison,status:'PRIOR_CATEGORY_CANONICAL_REFERENCE',canonicalCategory:path,
+    priorProductEvidenceSha256:priorProducts.sha256,importReady:false};
 }

@@ -134,8 +134,8 @@ test('category source tree rejects cycles and keeps third level pending without 
 
 test('pinned prior per-product category evidence never assumes parent-code equivalence',async()=>{
  const {readTPlusPriorCategoryDecisions26,compareTPlusPriorCategoryDecision26}=await import('./tplus-product-source26.mjs');
- const header=['code','name','target_id','target_name','decision_status','decision_source','decision_basis','old_category_for_review_only','original_description','original_size_group','original_invoice_name'];
- const csv=header.join(',')+'\n001,synthetic,target,synthetic,approved,synthetic,synthetic,sourcecat,,G,\n';const bytes=Buffer.from(csv),pin=createHash('sha256').update(bytes).digest('hex');
+ const header=['code','name','target_id','target_name','target_parent_name','decision_status','decision_source','decision_basis','old_category_for_review_only','original_description','original_size_group','original_invoice_name'];
+ const csv=header.join(',')+'\n001,synthetic,target,synthetic,,approved,synthetic,synthetic,sourcecat,,G,\n';const bytes=Buffer.from(csv),pin=createHash('sha256').update(bytes).digest('hex');
  const decisions=await readTPlusPriorCategoryDecisions26(bytes,pin);
  const headers=['存货编码','存货名称','所属类别','存货描述','尺码所属取值组编码','开票名称'];
  const candidate={productSource:{sourceProductCode:'001',excelRow:3,sourceHeaders:headers,sourceCells:{0:text('001'),1:text('synthetic'),2:text('sourcecat'),3:{kind:'blank',raw:null},4:text('G'),5:{kind:'blank',raw:null}}}};
@@ -143,7 +143,11 @@ test('pinned prior per-product category evidence never assumes parent-code equiv
  const changed=structuredClone(candidate);changed.productSource.sourceCells[2]=text('other');
  assert.equal(compareTPlusPriorCategoryDecision26(changed,decisions).status,'PENDING_SOURCE_FACTS_CHANGED');
  const groupOnly=structuredClone(candidate);groupOnly.productSource.sourceCells[4]=text('other');
- assert.equal(compareTPlusPriorCategoryDecision26(groupOnly,decisions).status,'PRIOR_DECISION_MATCHED_REFERENCE_ONLY');
+ assert.equal(compareTPlusPriorCategoryDecision26(groupOnly,decisions).status,'PENDING_SOURCE_FACTS_CHANGED');
+ const formula=structuredClone(candidate);formula.productSource.sourceCells[4]={kind:'formula',raw:null,formula:'1+1'};
+ const formulaResult=compareTPlusPriorCategoryDecision26(formula,decisions);assert.equal(formulaResult.status,'PENDING_SOURCE_FACTS_CHANGED');
+ assert.equal(formulaResult.comparisons.find(x=>x.field==='尺码所属取值组编码').status,'SOURCE_UNREADABLE');
+ assert.equal(Object.hasOwn(formulaResult,'priorTargetId'),false);
  const missing=structuredClone(candidate);missing.productSource.sourceProductCode='002';
  assert.equal(compareTPlusPriorCategoryDecision26(missing,decisions).status,'PENDING_NO_PRIOR_PRODUCT_DECISION');
  await assert.rejects(readTPlusPriorCategoryDecisions26(bytes,'b'.repeat(64)),/PIN/);
@@ -163,4 +167,22 @@ test('unknown price label meanings remain pending in master comparison and draft
  const out=await Array.fromAsync(assembleTPlusProductSource26({master,barcodes:barcode,prices:projectTPlusProductPrices([head('存货价格本',1,ph),price,end('存货价格本',2)],ph)}));
  assert.equal(out[0].priceChecks['五级批发价'],'PENDING');assert.equal(out[0].priceChecks['六级批发价'],'PENDING');assert.equal(out[0].status,'PENDING_SOURCE_FACTS');
  assert.equal(out[0].productSource.sourceHeaders[5],'五级批发价（其他含义）');assert.equal(out[0].productSource.sourceCells[5].raw,'100');
+});
+
+test('prior canonical category requires the exact product, decision and pinned row',async()=>{
+ const {readTPlusPriorCategoryDecisions26,readPriorCanonicalProducts26,proposePriorCategoryCanonical26}=await import('./tplus-product-source26.mjs');
+ const dh=['code','name','target_id','target_name','target_parent_name','decision_status','decision_source','decision_basis','old_category_for_review_only','original_description','original_size_group','original_invoice_name'];
+ const db=Buffer.from(dh.join(',')+'\n001,synthetic,target,leaf,parent,approved,synthetic,synthetic,sourcecat,,G,\n');
+ const decisions=await readTPlusPriorCategoryDecisions26(db,createHash('sha256').update(db).digest('hex'));
+ const cols=IMPORT_V2_TABLES.find(t=>t.entity==='PRODUCT').columns.map(c=>c.name), values=Object.fromEntries(cols.map(x=>[x,'']));
+ Object.assign(values,{'款号':'001','商品名称':'synthetic','分类路径':'parent/leaf'});
+ const pb=Buffer.from(cols.join(',')+'\n'+cols.map(k=>values[k]).join(',')+'\n'),prior=await readPriorCanonicalProducts26(pb,createHash('sha256').update(pb).digest('hex'));
+ const headers=['存货编码','存货名称','所属类别','存货描述','尺码所属取值组编码','开票名称'];
+ const candidate={productSource:{sourceProductCode:'001',excelRow:3,sourceHeaders:headers,sourceCells:{0:text('001'),1:text('synthetic'),2:text('sourcecat'),3:{kind:'blank',raw:null},4:text('G'),5:{kind:'blank',raw:null}}}};
+ const matched=proposePriorCategoryCanonical26(candidate,decisions,prior);assert.equal(matched.canonicalCategory,'parent/leaf');assert.equal(matched.importReady,false);
+ const bad=new Map(prior.products);bad.set('001',{...bad.get('001'),'分类路径':'other/leaf'});
+ assert.equal(proposePriorCategoryCanonical26(candidate,decisions,{...prior,products:bad}).status,'PENDING_CATEGORY_PATH_PROOF');
+ const changed=structuredClone(candidate);changed.productSource.sourceCells[2]=text('different');
+ assert.equal(proposePriorCategoryCanonical26(changed,decisions,prior).status,'PENDING_SOURCE_FACTS_CHANGED');
+ await assert.rejects(readPriorCanonicalProducts26(pb,'0'.repeat(64)),/PIN/);
 });
