@@ -22035,7 +22035,7 @@
       "oldBatchCountsReused": false,
       "adapterStatus": "Lazy transfer source interpretation+EOF digest;2 targeted Node24 PASS,not native consumer or DB"
     },
-    "latestFixedSourceCandidate": "54e8c8257b2904b73c4a968d46e63618bb847c2f",
+    "latestFixedSourceCandidate": "e67170f0138d93e454d1912df6ba876b59667104",
     "cutoff": {
       "value": "2026-11-02T04:00:00Z",
       "basis": "HUMAN_CONFIRMED_BATCH_CUTOFF",
@@ -22044,9 +22044,9 @@
       "preserveOriginalRecordDates": true
     },
     "currentHandoff": {
-      "D1": "Handed back two fixture closure corrections; actual53-source host references under readonly check;no invented CORE",
-      "D3": "Fixed54 header→line original reader/authorize synthetic1/1;handed back test;historical decision mapping +53/22 entry check",
-      "T45": "Actual role/catalog jobcompleted;PG stopped;source/CORE/business remaining",
+      "D1": "CORE FIRST fix fixed e671;prepare valid unapproved source selection/CORE inputs rather than blank template",
+      "D3": "39defaults candidate fixed;next true stock SKU identity mapping with blank/multi-match distinct",
+      "T45": "67 pure synthetic materialization complete;PG stopped;noCORE/source approval or production",
       "C": "Adopt scoped receipts,push fixed increments,collect relevant historical decisions without broad re-scan"
     },
     "currentIncrementalReview": {
@@ -22120,14 +22120,21 @@
         "93118",
         "93119"
       ],
-      "defaultsCustomerUnresolved": 43,
+      "defaultsCustomerUnresolved": 4,
       "nativeIds": "CANDIDATE_REGISTRY_ONLY_NOT_DATABASE_CREATED",
-      "checks": "D3 targeted2/2;actual53source projection",
-      "next": "QB new4leaf scope;read precise prior approved default-customer relations"
+      "checks": "Actual53source projection +synthetic warehouse2/2/default-customer1/1;QB previoussource scope adopted;new default relation retest pending",
+      "next": "QB new4leaf scope;read precise prior approved default-customer relations",
+      "defaultsCustomerResolved": 39,
+      "defaultCustomerUnknownHallCodes": [
+        "10001",
+        "96112",
+        "93118",
+        "93119"
+      ]
     },
     "corePreparationIncrement": {
       "owner": "D1",
-      "status": "SOURCE_DELIVERED_QB_PENDING",
+      "status": "FIRST_READBACK_ORDER_FIXED_QB_RETEST_PENDING",
       "entry": "runRewrite26CorePreparation",
       "modes": [
         "FIRST",
@@ -22135,12 +22142,28 @@
         "INIT_AFTER_READBACK"
       ],
       "unknownCommit": "Original operation key readonly recovery,no automatic write retry",
-      "checks": "earlycontrol1/1+legacyrewrite1/1 only",
+      "checks": "CORE sequence/CORE failure/readback failure/wrong21claims synthetic1/1;realPG unverified",
       "unverified": [
         "full failure chain",
         "real external source/identity/runtime inputs",
         "real PostgreSQL CORE/INIT commit and readback"
-      ]
+      ],
+      "candidate": "e67170f0138d93e454d1912df6ba876b59667104"
+    },
+    "synthetic67Materialization": {
+      "status": "T45_ACTUAL_LOCAL_FILES_WRITTEN_AND_READBACK_NOT_IMPORT",
+      "source": "67d890aeef7ca61176a56741fd249f60dc1931b4",
+      "receiptSha256": "b7ef373ba15dc5df0ade51f8a266e7622da8123a72f02669d29ec9d53d82eb55",
+      "counts": {
+        "originals": 43,
+        "tables": 18,
+        "auxiliary": 7,
+        "identity": 49,
+        "party": 115
+      },
+      "sourceApproval": null,
+      "selection": "UNREVIEWED_NOT_A_SELECTION_SCHEMA",
+      "pending": "D1 formal candidate format then independent content review;noPG/bootstrap or authorization inferred"
     }
   }
 }
