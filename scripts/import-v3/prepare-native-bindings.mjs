@@ -87,7 +87,7 @@ export async function readTPlusFieldMappings26(chunks, inputHashes) {
   for await (const line of lines(chunks)) {
     let item; try { item=JSON.parse(line); } catch { must(false, 'NATIVE_BINDING_MAPPING_JSON'); }
     const partyKey=identityKey(item?.entity,item?.sourceId), isProduct=item?.entity==='PRODUCT';
-    must(item && Object.keys(item).sort().join(',') === 'entity,proof,sha256,sourceId' && ['PRODUCT','CUSTOMER','SUPPLIER'].includes(item.entity) &&
+    must(item && Object.keys(item).sort().join(',') === 'entity,proof,sha256,sourceId' && ['PRODUCT','CUSTOMER','SUPPLIER','STAFF'].includes(item.entity) &&
       typeof item.sourceId === 'string' && item.sourceId && !(isProduct?mapped.has(item.sourceId):partyMappings.has(partyKey)) &&
       /^[a-f0-9]{64}$/.test(item.sha256 ?? '') && item.proof?.version === 'TPLUS_FIELD_MAPPING_EVIDENCE_V1' &&
       item.proof.fields && requestHash(item.proof) === item.sha256, 'NATIVE_BINDING_MAPPING_ROW');
@@ -95,6 +95,20 @@ export async function readTPlusFieldMappings26(chunks, inputHashes) {
       const source=field?.source;
       must(source && typeof source.file === 'string' && inputHashes[source.file] === source.sha256 &&
         /^[a-f0-9]{64}$/.test(source.sha256 ?? ''), 'NATIVE_BINDING_MAPPING_INPUT_HASH');
+    }
+    if(item.entity==='STAFF'){
+      const e=item.proof.identityEvidence,c=e?.currentSource,p=item.proof.currentContactSource,fields=item.proof.fields,prior=fields['来源编号']?.source,name=fields['姓名']?.source,contact=fields['联系方式']?.source;
+      const sameCurrent=x=>x&&x.file===c?.file&&x.sheet===c?.sheet&&x.row===c?.row&&x.sha256===c?.sha256;
+      must(e&&typeof e.decisionFile==='string'&&e.decisionSha256==='a6aab187d4f531715c60bcf32f114d48dcb7cf736576ac5df43463fa43599f2e'&&inputHashes[e.decisionFile]===e.decisionSha256&&Number.isSafeInteger(e.decisionIndex)&&e.decisionIndex>=0&&e.approvedSourceId===item.sourceId&&typeof e.originalCode==='string'&&e.originalCode!==''&&
+       c&&inputHashes[c.file]===c.sha256&&c.sheet==='员工'&&Number.isSafeInteger(c.row)&&c.row>2&&c.column===0&&c.header==='员工编码'&&c.value===e.originalCode&&
+       prior?.value===item.sourceId&&prior.sheet==='08员工'&&prior.column===0&&prior.header==='来源编号'&&sameCurrent(name)&&name.column===1&&name.header==='员工名称'&&sameCurrent(p)&&p.column===23&&p.header==='手机'&&p.cell&&
+       [['角色',2],['所属厅来源编号',3],['任职状态',5]].every(([k,col])=>fields[k]?.source?.file===prior.file&&fields[k]?.source?.sheet===prior.sheet&&fields[k]?.source?.row===prior.row&&fields[k]?.source?.sha256===prior.sha256&&fields[k]?.source?.column===col&&fields[k]?.source?.header===k), 'NATIVE_BINDING_STAFF_IDENTITY');
+      if(Object.hasOwn(e,'historicalAliases')){
+        const aliases=e.historicalAliases;must(Array.isArray(aliases)&&aliases.length>1&&e.originalEmployeeId===item.sourceId&&aliases.every(a=>a&&Object.keys(a).sort().join(',')==='currentRow,originalCode,originalEmployeeId'&&typeof a.originalCode==='string'&&a.originalCode!==''&&typeof a.originalEmployeeId==='string'&&a.originalEmployeeId!==''&&Number.isSafeInteger(a.currentRow)&&a.currentRow>2)&&new Set(aliases.map(a=>a.originalCode)).size===aliases.length&&new Set(aliases.map(a=>a.originalEmployeeId)).size===aliases.length&&aliases.filter(a=>a.originalEmployeeId===item.sourceId&&a.originalCode===e.originalCode&&a.currentRow===c.row).length===1,'NATIVE_BINDING_STAFF_ALIASES');
+      }
+      const blank=(p.cell.kind==='blank'&&p.cell.raw===null)||(p.cell.kind==='text'&&p.cell.raw==='');
+      must(item.proof.contactSelection==='APPROVED_SUPPLEMENT_SOURCE_BLANK'?blank&&contact?.file===prior.file&&contact?.sheet===prior.sheet&&contact?.row===prior.row&&contact?.sha256===prior.sha256&&contact.column===4&&contact.header==='联系方式':
+       item.proof.contactSelection==='CURRENT_SOURCE_EQUAL_APPROVED'&&!blank&&['text','number'].includes(p.cell.kind)&&sameCurrent(contact)&&contact.column===23&&contact.header==='手机'&&contact.value===p.cell.raw,'NATIVE_BINDING_STAFF_CONTACT');
     }
     (isProduct?mapped:partyMappings).set(isProduct?item.sourceId:partyKey,{proof:item.proof,sha256:item.sha256});
     must(mapped.size+partyMappings.size <= 600000, 'NATIVE_BINDING_MAPPING_LIMIT');
@@ -179,7 +193,7 @@ export async function prepareNativeBindings(options) {
           const target = raw.entity === 'PRODUCT' ? productSources : partySources; must(!target.has(key), 'NATIVE_BINDING_DUPLICATE_ORIGINAL');
           const mapping = raw.entity === 'PRODUCT' && tplusMappings ? tplusMappings.get(raw.sourceId) : tplusMappings?.partyMappings.get(key);
           if (raw.entity === 'PRODUCT' && tplusMappings) { must(mapping, 'NATIVE_BINDING_MAPPING_MISSING'); mappedProducts++; }
-          if (partyTypes.has(raw.entity) || (newTPlusBatch && ['CUSTOMER','SUPPLIER'].includes(raw.entity))) { must(mapping, 'NATIVE_BINDING_MAPPING_MISSING'); mappedParties++; }
+          if (partyTypes.has(raw.entity) || (newTPlusBatch && ['CUSTOMER','SUPPLIER','STAFF'].includes(raw.entity))) { must(mapping, 'NATIVE_BINDING_MAPPING_MISSING'); mappedParties++; }
           target.set(key, sourceEvidence(raw, line, normalized, binding, mapping));
         }
         if (tplusMappings) must(mappedProducts === tplusMappings.size && mappedParties === tplusMappings.partyMappings.size, 'NATIVE_BINDING_MAPPING_COVERAGE');

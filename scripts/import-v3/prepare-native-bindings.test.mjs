@@ -98,6 +98,17 @@ test('party source mappings preserve exact identities and source status with ent
  await assert.rejects(readTPlusFieldMappings26(lines(item,item),{'synthetic.xlsx':pin}),/MAPPING_ROW/);
  await assert.rejects(readTPlusFieldMappings26(lines(item),{'synthetic.xlsx':'b'.repeat(64)}),/INPUT_HASH/);
 });
+test('staff mapping binds approved identity and preserves prior contact only for a true source blank',async()=>{
+ const decisionSha='a6aab187d4f531715c60bcf32f114d48dcb7cf736576ac5df43463fa43599f2e',inputs={'plan.csv':pin,'current.xlsx':pin,'identity.json':decisionSha};
+ const loc=(file,sheet,row,column,header,value)=>({file,sheet,row,sha256:pin,column,header,value}),prior=(column,header,value)=>loc('plan.csv','08员工',2,column,header,value),current=(column,header,value)=>loc('current.xlsx','员工',3,column,header,value);
+ const fields={'来源编号':{rule:'COPY',source:prior(0,'来源编号','staff-id')},'姓名':{rule:'COPY',source:current(1,'员工名称','new-name')},'角色':{rule:'COPY',source:prior(2,'角色','营业员')},'所属厅来源编号':{rule:'COPY',source:prior(3,'所属厅来源编号','hall-id')},'联系方式':{rule:'COPY',source:prior(4,'联系方式','prior-contact')},'任职状态':{rule:'COPY',source:prior(5,'任职状态','在职')}};
+ const proof={version:'TPLUS_FIELD_MAPPING_EVIDENCE_V1',fields,identityEvidence:{decisionFile:'identity.json',decisionSha256:decisionSha,decisionIndex:0,originalCode:'001',approvedSourceId:'staff-id',currentSource:current(0,'员工编码','001')},contactSelection:'APPROVED_SUPPLEMENT_SOURCE_BLANK',currentContactSource:{...current(23,'手机',''),cell:{kind:'blank',raw:null}}};delete proof.currentContactSource.value;
+ const item=p=>({entity:'STAFF',sourceId:'staff-id',proof:p,sha256:requestHash(p)}),lines=x=>(async function*(){yield JSON.stringify(x)+'\n'})();
+ const mapped=await readTPlusFieldMappings26(lines(item(proof)),inputs);assert.equal(mapped.partyMappings.size,1);
+ for(const change of [p=>{p.identityEvidence.approvedSourceId='other';},p=>{p.identityEvidence.originalCode='002';},p=>{p.identityEvidence.decisionSha256='b'.repeat(64);},p=>{p.currentContactSource.cell={kind:'formula',raw:null};},p=>{p.currentContactSource.cell={kind:'text',raw:'new-contact'};},p=>{p.fields['角色'].source.column=3;}]){const p=structuredClone(proof);change(p);await assert.rejects(readTPlusFieldMappings26(lines(item(p)),inputs),/STAFF_IDENTITY|STAFF_CONTACT/);}
+ const fromCurrent=structuredClone(proof);fromCurrent.contactSelection='CURRENT_SOURCE_EQUAL_APPROVED';fromCurrent.currentContactSource.cell={kind:'text',raw:'new-contact'};fromCurrent.fields['联系方式'].source=current(23,'手机','new-contact');assert.equal((await readTPlusFieldMappings26(lines(item(fromCurrent)),inputs)).partyMappings.size,1);
+ const aliases=structuredClone(proof);aliases.identityEvidence.originalEmployeeId='staff-id';aliases.identityEvidence.historicalAliases=[{originalCode:'001',originalEmployeeId:'staff-id',currentRow:3},{originalCode:'002',originalEmployeeId:'old-id',currentRow:4}];assert.equal((await readTPlusFieldMappings26(lines(item(aliases)),inputs)).partyMappings.size,1);aliases.identityEvidence.historicalAliases[1].originalEmployeeId='staff-id';await assert.rejects(readTPlusFieldMappings26(lines(item(aliases)),inputs),/STAFF_ALIASES/);
+});
 test('new T+ cutoff requires the field mapping branch and preserves old cutoff',async()=>{
  const binding={version:'C_NATIVE_IMPORT_PREPARATION_BINDING_V1',batchId:id(1),fixedSourceNamespace:'synthetic.party',selectionSha256:pin};
  const options={binding,registrationId:'synthetic',outputParent:'not-absolute'};
