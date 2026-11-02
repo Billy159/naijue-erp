@@ -2,7 +2,7 @@ import {open, lstat} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {isAbsolute, join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {legacyReferenceTables} from './reference-snapshot-reader.mjs';
+import {legacyReferenceTables,legacySourceProofTables,legacyAccountIdentityTables} from './reference-snapshot-reader.mjs';
 import {legacyInventoryEffectTables} from './inventory-effect-snapshot-reader.mjs';
 
 const count = value => typeof value === 'string' && /^(0|[1-9][0-9]*)$/.test(value);
@@ -34,13 +34,19 @@ export async function verifyLegacyCleaningSnapshotFiles({directory, expectedMani
     catch {throw new Error('PRIVATE_SOURCE_MANIFEST_JSON_REFUSED');}
   } finally {await manifestHandle.close();}
   const receipt = manifest.receipt;
+  const includeAccount = manifest.scope === '96_SCOPES_SAFE_ACCOUNT_IDENTITY_PLUS95_SOURCE_PROOF_CLEANING_SCOPES';
+  const includeProof = includeAccount || manifest.scope === '95_SCOPES_ORIGINAL_IMPORT_BATCH_AND_SOURCE_RECORD_PLUS93_CLEANING_SCOPES';
+  const expectedStatus = includeAccount ? 'COMPLETE_SCOPED_LEGACY_CLEANING_WITH_ACCOUNT_IDENTITY_SNAPSHOT'
+    : includeProof ? 'COMPLETE_SCOPED_LEGACY_CLEANING_WITH_SOURCE_PROOF_SNAPSHOT' : 'COMPLETE_SCOPED_LEGACY_CLEANING_SNAPSHOT';
   requireFact(manifest.status === 'COMPLETE_SCOPED_PRIVATE_SNAPSHOT'
-    && manifest.scope === '42_INVENTORY_EFFECT_TABLES_AND_EXACT_SIZE_MAPPING_SETTING_PLUS48_REFERENCES_AND_DOCUMENT_REVISION'
-    && receipt?.status === 'COMPLETE_SCOPED_LEGACY_CLEANING_SNAPSHOT' && receipt.businessWrites === false
+    && (includeProof || manifest.scope === '42_INVENTORY_EFFECT_TABLES_AND_EXACT_SIZE_MAPPING_SETTING_PLUS48_REFERENCES_AND_DOCUMENT_REVISION')
+    && receipt?.status === expectedStatus && receipt.businessWrites === false
     && receipt.identity?.read_only === 'on' && receipt.identity?.isolation === 'repeatable read'
     && receipt.eof?.documents === true && receipt.eof?.revisions === true && receipt.currentPointersVerified === true, 'PRIVATE_SOURCE_SNAPSHOT_COMPLETION_REFUSED');
   const expectedRows = new Map();
-  for (const [specifications, rows] of [[legacyReferenceTables,receipt.references],[legacyInventoryEffectTables,receipt.inventory]]) {
+  for (const [specifications, rows] of [[legacyReferenceTables,receipt.references],[legacyInventoryEffectTables,receipt.inventory],
+    ...(includeProof ? [[legacySourceProofTables,receipt.sourceProof]] : []),
+    ...(includeAccount ? [[legacyAccountIdentityTables,receipt.accountIdentity]] : [])]) {
     requireFact(Array.isArray(rows) && rows.length === specifications.length, 'PRIVATE_SOURCE_TABLE_COVERAGE_REFUSED');
     rows.forEach((row,index) => {
       requireFact(row.table === specifications[index].table && row.keyKind === specifications[index].keyKind
@@ -52,7 +58,7 @@ export async function verifyLegacyCleaningSnapshotFiles({directory, expectedMani
     requireFact(count(receipt.counts?.[kind]), 'PRIVATE_SOURCE_DOCUMENT_COUNT_REFUSED');
     expectedRows.set(`erp_prod_runtime.${kind === 'documents' ? 'document' : 'revision'}`, receipt.counts[kind]);
   }
-  requireFact(Array.isArray(manifest.files) && manifest.files.length === expectedRows.size && expectedRows.size === 93, 'PRIVATE_SOURCE_FILE_COVERAGE_REFUSED');
+  requireFact(Array.isArray(manifest.files) && manifest.files.length === expectedRows.size && expectedRows.size === 93 + (includeProof ? 2 : 0) + (includeAccount ? 1 : 0), 'PRIVATE_SOURCE_FILE_COVERAGE_REFUSED');
   let totalBytes = 0, totalRows = 0n;
   const seen = new Set(), buffer = Buffer.allocUnsafe(65536);
   for (const file of manifest.files) {

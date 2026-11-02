@@ -4,11 +4,11 @@ import {mkdtemp, readFile, appendFile, writeFile, symlink, unlink, chmod} from '
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {captureLegacyCleaningSnapshot} from '../scripts/import-v3/native-cleaning/private-snapshot-files.mjs';
+import {captureLegacyCleaningSnapshot,captureLegacyCleaningWithSourceProofSnapshot,captureLegacyCleaningWithAccountIdentitySnapshot} from '../scripts/import-v3/native-cleaning/private-snapshot-files.mjs';
 import {verifyLegacyCleaningSnapshotFiles} from '../scripts/import-v3/native-cleaning/snapshot-file-verification.mjs';
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 
-async function fixture() {
+async function fixture(capture=captureLegacyCleaningSnapshot) {
   const directory = join(await mkdtemp(join(tmpdir(), 'erp-synthetic-file-review-')), 'snapshot');
   const seen = new Set();
   const pool = {connect:async()=>({release(){},query:async sql=> {
@@ -21,7 +21,7 @@ async function fixture() {
     }
     return {rows:[]};
   }})};
-  const manifest = await captureLegacyCleaningSnapshot(pool,{directory,maxBytes:1024*1024});
+  const manifest = await capture(pool,{directory,maxBytes:1024*1024});
   const manifestBytes = await readFile(join(directory,'SNAPSHOT.json'));
   return {directory,manifest,options:{directory,expectedManifestSha256:sha(manifestBytes),maxBytes:1024*1024,expectedUid:process.getuid()}};
 }
@@ -77,3 +77,23 @@ test('even an explicitly supplied changed manifest cannot claim a partial source
     await assert.rejects(verifyLegacyCleaningSnapshotFiles({...f.options,expectedManifestSha256:sha(bytes)}),kind==='partial'?/TABLE_COMPLETION_REFUSED/:/FILE_ROW_COUNT_MISMATCH/);
   }
 });
+
+for(const [capture,files,receiptKey] of [
+ [captureLegacyCleaningWithSourceProofSnapshot,95,'sourceProof'],
+ [captureLegacyCleaningWithAccountIdentitySnapshot,96,'accountIdentity'],
+]) {
+ test(`fixed ${files} source profile verifies all new receipts and files`,async()=>{
+  const f=await fixture(capture),result=await verifyLegacyCleaningSnapshotFiles(f.options);
+  assert.equal(result.files,files);assert.equal(result.rows,'2');assert.equal(result.databaseConnections,0);
+  assert.equal(result.semanticConversionVerified,false);
+ });
+ test(`fixed ${files} profile cannot promote a missing new EOF or substituted relation`,async()=>{
+  for(const mode of ['missing-eof','wrong-table']){
+   const f=await fixture(capture);
+   if(mode==='missing-eof')f.manifest.receipt[receiptKey][0].eofObserved=false;
+   else f.manifest.files.find(x=>x.table===f.manifest.receipt[receiptKey][0].table).table='erp_prod_auth.employee_session';
+   const bytes=Buffer.from(JSON.stringify(f.manifest));await writeFile(join(f.directory,'SNAPSHOT.json'),bytes);
+   await assert.rejects(verifyLegacyCleaningSnapshotFiles({...f.options,expectedManifestSha256:sha(bytes)}),/TABLE_COMPLETION_REFUSED|FILE_METADATA_REFUSED/);
+  }
+ });
+}
