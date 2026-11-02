@@ -3911,3 +3911,19 @@ D3 three-dictionary full-row increment adopted (receipt SHA256 a2ec6177a23d58335
 Fit crosswalk evidence follow-up completed, receipt SHA256331a01d3064240c1307afc6d8dcbc087d371efe400e90b4ebe1fd099816df5df: bounded approved records do not establish the6 numeric-to-letter fit bindings. Keep unresolved, do not infer from display name. Existing blank-A ruling remains scoped to genuinely blank historical SALES/TRANSFER lines. No new business rule requested or invented.
 
 Stage CLI source dispatch reviewed without execution: validate, plan--offline, inspect-target, initialize/resume-initialize, apply/status/resume/verify/receipt-check exist as client handlers; rehearse, rollback-plan, prepare, dry-run, import, reconcile explicitly return NOT_IMPLEMENTED. Execution scope remains ISOLATED_SET_ROLE_PROOF_ONLY, engine_validated=false/production_login_capability=false. A dispatch branch does not prove executable PG closure. Dot fixed combined source and initialization repair/evidence remain required before actual trial import. No new DB/server action.
+
+
+Package5 candidate normalization completed:43 halls/53 warehouses, existing central provisional IDs reused;96 source keys/order and96 evidence sidecars reread. All53 single-hall and43 default-warehouse candidate relations close within the package;39 default-customer references resolve source candidates across package7,4 stay unknown. Three approved/source status differences preserved. Receipt61a4243e76248169b0da17cd892c59a5555c084a956db31c973806b9f22cf103; v3-02 is authoritative, v3-01 partial from receipt serialization error retained. No READY/target identity/import claim. D3 continues package7 customer/supplier/payment_method; original F2 temporarily handles package6 staff49 in its own private child. Both explicit Terra6.1-medium; registry readonly this round, D3 sole registry owner. No app/SQL/server changes.
+
+
+### 2026-11-03 接收固定1189源码与已交清洗增量
+
+新包 ERP-UNIFIED-STAGE-1189b2f-20261102.zip 的外部 SHA256 642abfd83a3b8ad16b4af2f98b5fcd53c61358024a67182cc81f81bdd12effdc 匹配；包3928/源码3886清单零差异，3886个Git blob校验一致。固定分支 handoff/erp-unified-latest-20261102，提交1189b2fe92fd3c003d3325ffb7d077b543be5277，parent4d21eb6287af494aac81fa928960a8e32610c344。包只含该固定提交，不含source44及其他未提交修复；未核实其远端推送。旧d560与当前4处源码WIP原样保留，未覆盖/合并/安装依赖/执行包脚本或数据库。接收回执位于stage-1189b2f-received-20261102-01/RECEIPT.json。
+
+包内实际回执采用：组合类型检查日志通过；source43安装和CLI初始化COMMITTED/STAGED，真实认证服务登录通过，但仅隔离SET ROLE，非独立普通LOGIN。随后MASTER分类校验因42703 record a has no field parent_id回滚；只读读回保留初始化和会话、失败MASTER无回执/审计写入。此结果替代旧初始化22P02当前阻塞，不代表整包导入或正式可用；1189未重跑整套Web/全部测试。字段合同SHA5fe00695…与上一包完全相同，现有清洗不重复实现；Dot继续分类SQL后继，本地只清洗，T45无新环境作业。
+
+已采用受托来源增量：客户261/供应商222/方式11共494候选；员工49候选仍无当前厅/权限绑定；商品2970候选保留原键与精确价格。此前“49款无裁决”措辞过宽：检查2941旧分类清单找到20条，其中16与本批比较已吻合并采用，4保留具体路径/组差异，29仅表示不在此清单；不伪称全局无历史裁决。单据原号虽可对照投影，但不能代替规范要求的稳定实体/明细身份。以上均来源候选，不是目标ID、READY或导入通过。
+
+账户历史裁决已找到：t14r09/inputs/资金账户更新-20261004/账户更新确认.json SHA8035327d…及原输入a6fc00cf…建立80/80本批原码→原账户ID→保留原方式ID精确桥，冲突0。73账户共985条历史厅推荐关系，7账户无推荐。依据docs/import-payment-account-guidance-v0.3-addendum.md，厅关系是可选历史推荐，不决定权限或账户可选资格，缺少推荐不能阻断正常且方式匹配的账户。19账户历史停用/本批启用两时点保留，不改写旧事实。6个旧方式ID和39个旧厅ID到本批原码的跨命名空间桥尚待定向追溯，不按名称/部门猜；账户今天方式不补历史收退款快照。原D2以实际指定Terra6.1-medium接FOLLOWUP07，主控唯一维护记录，其他已交角色不重复派工。真实行/敏感字段/凭据留私域，不入Git。
+
+原D2 FOLLOWUP07已收口，逐文件核指定旧canonical/native-payment/账户确认及当前中央registry，不含旧方式/厅ID与本批原码同记录桥；新增准确桥0。仅证明已查材料未找到，不扩大为全局不存在或新业务裁决。原D2当前空闲，准确等待6方式/39厅原始ID+原码证据或已批crosswalk；不重复扫描/凑任务，厅推荐可选不阻塞独立工作。
