@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { prepareV3HistoryChunk, stageV3HistoryChunk } from '../packages/application/src/import-v3-history-staging.ts';
+import { prepareV3HistoryChunk, stageV3HistoryChunk, validatePreparedHistoryChunk } from '../packages/application/src/import-v3-history-staging.ts';
 import type { V3HistoryChunk } from '../packages/application/src/import-v3-history-staging.ts';
 import { PostgresV3HistoryStagingStore, PostgresV3HistoryStagingStore26 } from '../adapters/postgres/src/import-v3-history-staging-store.ts';
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from '../adapters/postgres/src/sales-unit-of-work.ts';
@@ -13,6 +13,35 @@ function fixture(): V3HistoryChunk {
       rawFields:{...normalizedFields},normalizedFields,fieldProvenance:{schema_version:1,fields:{quantity:{origin:'ORIGINAL',reason:'literal original signed quantity',raw:'-2'}}}},
       header:{sourceKey:'0002',nativeId:id(3)},sku:{sourceKey:'0003',nativeId:id(4)}}]};
 }
+function blankFitCandidate(): V3HistoryChunk {
+  const value=fixture(), source=value.rows[0]!.source;
+  source.sheet='调拨单';source.normalizedFields['原版型名称']='A';
+  (source.fieldProvenance.fields as Record<string,unknown>)['原版型名称']={origin:'MIGRATION_DERIVED',
+    reason:'APPROVED_EMPTY_HISTORICAL_LINE_FIT',raw:'',evidence_ref:`${'b'.repeat(64)}:${'c'.repeat(64)}`};
+  return value;
+}
+test('blank historical fit is a structural candidate only; external source authorization remains required',async()=>{
+  const value=blankFitCandidate(), original=structuredClone(value), prepared=prepareV3HistoryChunk(value);
+  assert.equal(prepared.rows[0]!.source.rawFields['原版型名称'],'');assert.equal(prepared.rows[0]!.line.fit_name_snapshot,'A');
+  assert.deepEqual(value,original);validatePreparedHistoryChunk(prepared);
+  const pool=new FakePool(),store=new PostgresV3HistoryStagingStore(pool);
+  const dry=await stageV3HistoryChunk(value,{store});assert.equal(dry.mode,'DRY_RUN');assert.equal(pool.connects,0);
+  await assert.rejects(stageV3HistoryChunk(value,{mode:'STAGE',store}),/EXPLICIT_AUTHORIZATION_REQUIRED/);assert.equal(pool.connects,0);
+  await assert.rejects(stageV3HistoryChunk(value,{mode:'STAGE',store,authorize:async()=>{throw Error('SOURCE_PROOF_DENIED');}}),/SOURCE_PROOF_DENIED/);assert.equal(pool.connects,0);
+  const tampered=structuredClone(prepared);tampered.rows[0]!.line.fit_name_snapshot='B';assert.throws(()=>validatePreparedHistoryChunk(tampered),/PREPARED_CHANGED/);
+});
+test('blank fit exception rejects different raw values, targets, sheets or evidence structure',()=>{
+  const changes:Array<(v:V3HistoryChunk)=>void>=[
+    v=>{v.rows[0]!.source.rawFields['原版型名称']='B';},v=>{v.rows[0]!.source.normalizedFields['原版型名称']='B';},
+    v=>{v.rows[0]!.source.sheet='其他';},v=>{v.rows[0]!.source.rawFields['原品名']='changed';},
+    v=>{v.rows[0]!.sku.sourceKey='other';},v=>{v.rows[0]!.source.normalizedFields['原数量']='7';},
+    v=>{const f=(v.rows[0]!.source.fieldProvenance.fields as Record<string,any>)['原版型名称'];f.origin='ORIGINAL';},
+    v=>{const f=(v.rows[0]!.source.fieldProvenance.fields as Record<string,any>)['原版型名称'];f.reason='other';},
+    v=>{const f=(v.rows[0]!.source.fieldProvenance.fields as Record<string,any>)['原版型名称'];f.raw='A';},
+    v=>{const f=(v.rows[0]!.source.fieldProvenance.fields as Record<string,any>)['原版型名称'];f.evidence_ref='unbound';},
+  ];
+  for(const change of changes){const value=blankFitCandidate();change(value);assert.throws(()=>prepareV3HistoryChunk(value));}
+});
 class FakePool implements PgSalesPool {
   lease:PgSalesClient|undefined; schemaLength=26;
   calls:string[]=[]; committed=new Map<string,{source:Record<string,unknown>;line:Record<string,unknown>}>();

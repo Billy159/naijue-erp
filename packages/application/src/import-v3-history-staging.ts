@@ -37,6 +37,20 @@ const reject = (ok: unknown, code: string): void => { if (!ok) throw Error(code)
 const hash = (v: unknown): boolean => typeof v === 'string' && /^[a-f0-9]{64}$/.test(v);
 const uuid = (v: unknown): boolean => typeof v === 'string' && /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(v);
 const text = (v: unknown): v is string => typeof v === 'string' && v.length > 0 && v.length <= 65536 && !v.includes('\0');
+/** Structural candidate only. The original source authorizer must separately
+ * verify the pinned XLSX cell, rule and native SKU before any STAGE. */
+function approvedBlankHistoricalFitCandidate(source: ImportSourceEvidence): boolean {
+  const fields = source.fieldProvenance?.fields;
+  if (!fields || typeof fields !== 'object' || Array.isArray(fields)) return false;
+  const field = (fields as Record<string, unknown>)['原版型名称'];
+  if (!field || typeof field !== 'object' || Array.isArray(field)) return false;
+  const v = field as Record<string, unknown>;
+  return source.sheet === '调拨单' && source.rawFields['原版型名称'] === ''
+    && source.normalizedFields['原版型名称'] === 'A'
+    && Object.keys(v).length === 4 && v.origin === 'MIGRATION_DERIVED'
+    && v.reason === 'APPROVED_EMPTY_HISTORICAL_LINE_FIT' && v.raw === ''
+    && typeof v.evidence_ref === 'string' && /^[a-f0-9]{64}:[a-f0-9]{64}$/.test(v.evidence_ref);
+}
 export function prepareV3HistoryChunk(input: V3HistoryChunk): PreparedHistoryChunk {
   const chunk = structuredClone(input), b = chunk.selection;
   reject(uuid(chunk.batchId) && text(chunk.fixedSourceNamespace), 'HISTORY_STAGING_BATCH');
@@ -56,7 +70,8 @@ export function prepareV3HistoryChunk(input: V3HistoryChunk): PreparedHistoryChu
     reject(Object.keys(n).length === columns.length && columns.every(c => Object.hasOwn(n,c.name) && typeof n[c.name] === 'string'
       && (n[c.name] as string).length <= 65536 && !(n[c.name] as string).includes('\0') && (!c.required || n[c.name] !== '')), 'HISTORY_STAGING_EXACT_COLUMNS');
     reject(columns.every(c => Object.hasOwn(raw,c.name) && typeof raw[c.name] === 'string'
-      && (c.name === 'SKU来源编号' ? text(raw[c.name]) : raw[c.name] === n[c.name])), 'HISTORY_STAGING_RAW_FIELDS_CHANGED_OR_MISSING');
+      && (c.name === 'SKU来源编号' ? text(raw[c.name]) : raw[c.name] === n[c.name]
+        || c.name === '原版型名称' && approvedBlankHistoricalFitCandidate(source))), 'HISTORY_STAGING_RAW_FIELDS_CHANGED_OR_MISSING');
     reject(n['来源编号'] === source.sourceKey && raw['来源编号'] === source.sourceKey
       && raw['绑定范围'] !== 'PRODUCT' && n['绑定范围'] !== 'PRODUCT', 'HISTORY_STAGING_RAW_IDENTITY');
     reject(header && sku && uuid(header.nativeId) && uuid(sku.nativeId)
