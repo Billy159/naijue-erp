@@ -1,3 +1,13 @@
+## 2026-11-02 仓厅与CORE接线合批；真实业务未验
+
+本批合入原D3两叶：原XLSX白名单仓编码/名称/停用读取、T03/T32批准来源及后续单厅证据，43厅53仓候选，区分51旧仓身份参考与93118/93119两独立新增；原registry分配的是候选ID，不是已建档。默认客户43项尚未闭合。开发定向2/2和实际53行投影采用，QB仅本批增量待核。
+
+原D1两叶新增runRewrite26CorePreparation，以原CORE/INIT授权和服务分阶段提交读回，保留原FULL入口。FIRST、READ_ONLY_RECOVERY及INIT_AFTER_READBACK显式调用，未知提交只读原键、不自动重试；原53仓合同不改。开发仅早拒绝与原rewrite路由各1项通过，完整异常链及真实PG未验，尚不给T45执行。真实外部身份/来源/目标审核输入继续准备，不能用合成review替代。
+
+前一固定67d890aeef7ca61176a56741fd249f60dc1931b4已推GitHub并独立GET核实；QB三叶SOURCE/SYNTHETIC CONDITIONAL PASS采纳，完整13reader与业务未验。本批源码/合成、实际隔离角色准备、真实导入、发布分别记录，不混称上线。
+
+历史裁决索引继续沿DECISIONS。T03仓厅建立原批准明确新93118/93119独立，不搬历史期初、不补0；后续单厅覆盖旧共享仓。16来源组小候选已保存，旧14864逐SKU/402精确例外能继续适用到身份吻合项，不按16组名称统一映射、不拿SKU出现集合作完整组。cutoff已由用户确认UTC04:00，旧待确认表述仅历史，物理同快照未证明。
+
 ## 2026-11-02 隔离角色真实验证完成；来源接线固定54e8
 
 GitHub codex/e5c5a762-cleaning-20261102 已非强制推送并独立GET核实54e8c8257b2904b73c4a968d46e63618bb847c2f。cb3 STAFF固定源字节检查已获QB源码/合成PASS；54e8七叶获SOURCE-LEVEL CONDITIONAL PASS，仅所列reader协议范围。D3后继原header→原line reader+authorize定向合成1/1通过，测试叶已交回；D1两fixture补product mapping和条码1+6方案闭包对应，定向1/1自检，尚未独立复核，不能冒实际CORE或完整session。

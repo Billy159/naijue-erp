@@ -21924,7 +21924,7 @@
       "2026 current barcode scheme; five historical; no bulk re-encoding old barcodes",
       "old exact21 barcode conversion/24warehouse-zero approvals are batch-specific, not blanket new-batch facts",
       "historical import does not repost stock or money; old unknown LIVE balances stay unknown",
-      "12:00 directory label not proof of same-T; nonzero inventory filter does not establish missing as zero"
+      "User confirmed batch cutoff2026-11-02T04:00:00Z;physical atomic snapshot not proven;nonzero inventory filter never establishes missing as zero"
     ],
     "mappingDelivery": {
       "status": "QB_SOURCE_MAPPING_PASS_1324_NOT_PROVIDER_OR_IMPORT",
@@ -21979,9 +21979,9 @@
       "independentLimit": "Sidecar self-hash is not independent XLSX cell/semantic proof; raw source approval remains required"
     },
     "currentDependencies": {
-      "sizeGroups": "16 native group codes/names;240 sizes; complete membership not yet found in examined source structures; no guessed group or SKU",
-      "staffIdentity": "45 original approved source codes match current99;4 approved code-less plans preserved; current role/login/credential/bootstrap subject not yet closed",
-      "runtime": "Actual isolated role/catalog preparation completed;97 groups effective;runtime SQLSTATE00000/negative42501;PG stopped. Source review/CORE/bootstrap/full business still pending.",
+      "sizeGroups": "16 group code/name observations saved;old14864 audit/402 exact decisions support per-SKU candidates;complete current source-group to target members still not closed,no blanket group remap",
+      "staffIdentity": "49 actual candidates (45 exact primary +4 approved plan-only),7 original aliases preserved;actual independent source review/bootstrap not completed",
+      "runtime": "Isolated roles/97ACL verified;source-only CORE-stage host delivered for QB review;actual CORE/source/identity proofs and full business execution pending",
       "sourceTime": "Human confirmed cutoff2026-11-02T04:00:00Z;physical atomic snapshot not verified;original dates retained.",
       "stock": "row8 second header identified; true blank totals/fit groups retained pending semantics",
       "sales": "nonblank document key sets match;6 candidate amount differences involve distinct amount headers; no guessed rounding",
@@ -22051,9 +22051,9 @@
     },
     "currentIncrementalReview": {
       "owner": "QB",
-      "candidate": "54e8c8257b2904b73c4a968d46e63618bb847c2f",
-      "status": "SOURCE_LEVEL_CONDITIONAL_PASS",
-      "scope": "7-leaf reader composition; independent synthetic header gzip checks; actual full13-reader/session/PG not passed",
+      "base": "67d890aeef7ca61176a56741fd249f60dc1931b4",
+      "scope": "D3 warehouse/hall candidate +D1 original CORE host4 leaves",
+      "status": "SOURCE_FIXED_PENDING_REVIEW",
       "realPg": false
     },
     "approvedCleanupCompleted": {
@@ -22092,7 +22092,6 @@
       "preserveExistingSkuAndOriginalSourceIdentity": true,
       "syntheticValidationBatchIsDifferent": true
     },
-    "applicableDecisionsAndLimits": [],
     "staffSourceReview": {
       "candidate": "cb3db9971aff1ed1abbdd8b115141ff599259b90",
       "status": "SOURCE_SYNTHETIC_PASS",
@@ -22111,6 +22110,37 @@
       "resultSha256": "5966d2690aa1e104fb2a35849ebf7795361ac23f6d9cfeb8cec786912bbba5dc",
       "businessAcceptance": false,
       "next": "Reuse existing roles;fresh runtime observation and accurate source/CORE reviews before next scoped execution;do not replay completed job."
+    },
+    "warehouseHallPreparation": {
+      "status": "SOURCE_CANDIDATE_DELIVERED_NOT_IMPORT_READY",
+      "sourceRows": 53,
+      "halls": 43,
+      "existingWarehouseIdentityReferences": 51,
+      "approvedNewWarehouseCodes": [
+        "93118",
+        "93119"
+      ],
+      "defaultsCustomerUnresolved": 43,
+      "nativeIds": "CANDIDATE_REGISTRY_ONLY_NOT_DATABASE_CREATED",
+      "checks": "D3 targeted2/2;actual53source projection",
+      "next": "QB new4leaf scope;read precise prior approved default-customer relations"
+    },
+    "corePreparationIncrement": {
+      "owner": "D1",
+      "status": "SOURCE_DELIVERED_QB_PENDING",
+      "entry": "runRewrite26CorePreparation",
+      "modes": [
+        "FIRST",
+        "READ_ONLY_RECOVERY",
+        "INIT_AFTER_READBACK"
+      ],
+      "unknownCommit": "Original operation key readonly recovery,no automatic write retry",
+      "checks": "earlycontrol1/1+legacyrewrite1/1 only",
+      "unverified": [
+        "full failure chain",
+        "real external source/identity/runtime inputs",
+        "real PostgreSQL CORE/INIT commit and readback"
+      ]
     }
   }
 }

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence, readTPlusFieldMappings26, verifyTPlusStaffActualCells26, prepareNativeBindings, prepareFullPayloadData26, prepareFullSourceBindings26, writeFullSourceBindings26 } from './prepare-native-bindings.mjs';
+import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence, readTPlusFieldMappings26, verifyTPlusStaffActualCells26, projectTPlusWarehouseHall26, projectTPlusHall26, prepareTPlusWarehouseHallCandidates26, prepareNativeBindings, prepareFullPayloadData26, prepareFullSourceBindings26, writeFullSourceBindings26 } from './prepare-native-bindings.mjs';
 import {historyClosureProjectionRow26,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
 import {HISTORY_CLOSURE_SOURCE_GROUPS} from '../import-v2/authorized-history-closure-reader.mjs';
 import {HISTORY_COUNT_KEYS} from '../../packages/application/src/history-storage-contract.ts';
@@ -18,6 +18,36 @@ import { prepareNativePartyImportChunk } from '../../packages/application/src/na
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 const id = n => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
 const pin = 'a'.repeat(64), binding = { batchId: id(1), fixedSourceNamespace: 'synthetic:isolated' };
+test('T+ warehouse source uses actual cells and approved single-hall identity, and rejects changed inputs', async () => {
+  const sha=b=>createHash('sha256').update(b).digest('hex'), warehouseBytes=Buffer.from('synthetic workbook'),
+    decisionBytes=Buffer.from(JSON.stringify({approval:true,warehouses:[{code:'W',mappingNeedsSeparateConfirmation:false,proposedHallCodes:['H']}],halls:[{code:'H'}]})),
+    bridgeBytes=Buffer.from(JSON.stringify({records:[{code:'W',hallCodes:['H'],isNew:true,targetId:null,historicalId:null}]}));
+  const opts={warehouseBytes,warehouseSha256:sha(warehouseBytes),decisionBytes,decisionSha256:sha(decisionBytes),bridgeBytes,bridgeSha256:sha(bridgeBytes)};
+  const events=(code='W')=>[{event:'row',sheet:'仓库',excelRow:1,cells:{0:{raw:'仓库编码'},1:{raw:'仓库名称'},8:{raw:'停用'}}},
+    {event:'row',sheet:'仓库',excelRow:2,cells:{0:{kind:'text',raw:code},1:{kind:'text',raw:'source name'},8:{kind:'number',raw:'0'}}},{event:'eof',sheet:'仓库',rows:2}];
+  const result=await projectTPlusWarehouseHall26({...opts,events:events()});
+  assert.deepEqual(result,[{sourceCode:'W',name:'source name',disabled:'0',excelRow:2,approvedHallCode:'H',identityKind:'NEW',originalWarehouseId:null}]);
+  await assert.rejects(projectTPlusWarehouseHall26({...opts,events:events('wrong')}),/TPLUS_WAREHOUSE26_HALL/);
+  await assert.rejects(projectTPlusWarehouseHall26({...opts,decisionBytes:Buffer.from('{}'),events:events()}),/TPLUS_WAREHOUSE26_SOURCE_PIN/);
+  const wrongHall=Buffer.from(JSON.stringify({records:[{code:'W',hallCodes:['OTHER'],isNew:true,targetId:null,historicalId:null}]}));
+  await assert.rejects(projectTPlusWarehouseHall26({...opts,bridgeBytes:wrongHall,bridgeSha256:sha(wrongHall),events:events()}),/TPLUS_WAREHOUSE26_HALL/);
+  const oldDecision=Buffer.from(JSON.stringify({approval:true,warehouses:[{code:'W',mappingNeedsSeparateConfirmation:false,proposedHallCodes:['H','J']}],halls:[{code:'H',name:'Approved hall'},{code:'J',name:'Other hall'}]})),
+    oldBridge=Buffer.from(JSON.stringify({records:[{code:'W',hallCodes:['H','J'],isNew:false,targetId:id(4),historicalId:id(4)}]})),
+    supplement=Buffer.from(JSON.stringify({'本次创建厅及销货版型补充':{creatorHall:{warehouseHallMappings:[{warehouseSourceKey:id(4),hallName:'Approved hall'}]}}}));
+  const oldOpts={...opts,decisionBytes:oldDecision,decisionSha256:sha(oldDecision),bridgeBytes:oldBridge,bridgeSha256:sha(oldBridge),singleHallBytes:supplement,singleHallSha256:sha(supplement)};
+  assert.equal((await projectTPlusWarehouseHall26({...oldOpts,events:events()}))[0].originalWarehouseId,id(4));
+  await assert.rejects(projectTPlusWarehouseHall26({...oldOpts,singleHallBytes:undefined,events:events()}),/TPLUS_WAREHOUSE26_HALL/);
+});
+test('hall and warehouse candidates keep source codes separate, freeze distinct IDs and preserve unknown customer',async()=>{
+ const sha=b=>createHash('sha256').update(b).digest('hex'),hallBytes=Buffer.from('hall workbook'),hallSha256=sha(hallBytes),decisionBytes=Buffer.from(JSON.stringify({approval:true,halls:[{code:'W',name:'Source hall',source:{sha256:hallSha256,sheet:'营业厅',row:2},proposedEnabled:true,defaultWarehouseRuleAuthorized:true,defaultWarehouseAssignmentResolved:true,defaultWarehouseCode:'W'}]}));
+ const opts={hallBytes,hallSha256,decisionBytes,decisionSha256:sha(decisionBytes)},events=[{event:'row',sheet:'营业厅',excelRow:1,cells:{0:{raw:'编码'},1:{raw:'名称'},2:{raw:'停用'}}},{event:'row',sheet:'营业厅',excelRow:2,cells:{0:{kind:'text',raw:'W'},1:{kind:'text',raw:'Source hall'},2:{kind:'number',raw:'0'}}},{event:'eof',sheet:'营业厅',rows:2}];
+ const halls=await projectTPlusHall26({...opts,events}),warehouses=[{sourceCode:'W',approvedHallCode:'W',identityKind:'NEW',originalWarehouseId:null}],r=createNativeIdentityRegistry((()=>{let i=20;return()=>id(i++);})());
+ const c=prepareTPlusWarehouseHallCandidates26({halls,warehouses,registry:r});assert.equal(c.importAuthorized,false);assert.notEqual(c.halls[0].candidateNativeId,c.warehouses[0].candidateNativeId);
+ assert.equal(c.warehouses[0].hallCandidateNativeId,c.halls[0].candidateNativeId);assert.equal(c.halls[0].defaultWarehouseCandidateNativeId,c.warehouses[0].candidateNativeId);
+ assert.equal(c.halls[0].defaultCustomerState,'UNKNOWN_NOT_INFERRED');assert.equal(c.halls[0].defaultCustomerSourceKey,null);
+ await assert.rejects(projectTPlusHall26({...opts,events:events.map(e=>e.excelRow===2?{...e,cells:{...e.cells,0:{kind:'text',raw:'WRONG'}}}:e)}),/TPLUS_HALL26_APPROVAL/);
+ assert.throws(()=>prepareTPlusWarehouseHallCandidates26({halls,warehouses:[{...warehouses[0],approvedHallCode:'WRONG'}]}),/TPLUS_PARTY26_RELATION/);
+});
 test('native IDs are newly allocated and frozen; no source UUID reuse, collision, duplicate or implicit reference', () => {
   const r = createNativeIdentityRegistry(() => id(2), 2);
   assert.equal(r.add('HALL', 'old-hall', {}).nativeId, id(2));

@@ -67,3 +67,12 @@ test('PREPARATION13 entry rejects old V4 review, retains old refusal of new prof
  await assert.rejects(run({...old,runtime26Review:p13}),/EXACT26_RUNTIME_CATALOG_EXPORT_V4/);
  await assert.rejects(run13({...old,authorization:'CONFIRMED_NEW_ISOLATED_PREPARATION_135_PREPARATION13_V1',runtime26Review:p13}),{code:'ENOENT'});
 });
+
+test('CORE stage accepts only explicit live first or read-only recovery controls before IO',async()=>{
+ const {validateRewrite26CorePreparationInput,runRewrite26CorePreparation}=await import('./integration/current-runtime26-preparation-host.ts');
+ const old=unitInput(),blueprint=buildCurrentRuntime26SalesBlueprint({database:CURRENT_REWRITE_SYNTHETIC_TARGET,batchId:CURRENT_REWRITE_SYNTHETIC_BATCH,now:old.blueprint.now,pins:old.blueprint.pins});
+ const target={...(old.bootstrapOptions.binding as any).target,database:blueprint.database,role:'schema_runtime_20261102_01'},short={batchId:blueprint.batchId,fixedSourceNamespace:blueprint.namespace,cutoffAt:blueprint.now,selectionSha256:blueprint.pins.selectionSha256};
+ const command={...old.schemeInitialization.command,actorAccountId:blueprint.refs.importer.nativeAccountId,batchId:blueprint.batchId,schemeInitialization:{...old.schemeInitialization.command.schemeInitialization,target}};
+ const value={...old,authorization:'CONFIRMED_REWRITE26_SYNTHETIC_PREPARATION_V1' as const,blueprint,expectedDatabaseOid:'16387',targetAttestation:{file:'/UNIT_ATTESTATION_MISSING',trustedSha256:H('f')},postgres:{...old.postgres,target:{...old.postgres.target,database:blueprint.database,user:target.role,host:'127.0.0.1',port:18641}},bootstrapOptions:{binding:{...(old.bootstrapOptions.binding as object),...short,actorAccountId:blueprint.refs.importer.nativeAccountId,target}},partySourceOptions:{binding:short},catalogueSourceOptions:{binding:short},schemeSourceOptions:{binding:short},schemeInitialization:{...old.schemeInitialization,command},control:{mode:'READ_ONLY_RECOVERY' as const,deadlineUtc:'2099-01-01T00:00:00Z',signal:new AbortController().signal}};
+ assert.equal(validateRewrite26CorePreparationInput(value),undefined);assert.throws(()=>validateRewrite26CorePreparationInput({...value,control:{...value.control,mode:'RETRY' as never}}));await assert.rejects(runRewrite26CorePreparation(value),{code:'ENOENT'});
+});

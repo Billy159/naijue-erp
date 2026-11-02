@@ -47,6 +47,8 @@ export interface CurrentRuntime26Preparation13Input extends Omit<CurrentRuntime2
 }
 export interface Rewrite26PreparationInput extends Omit<CurrentRuntime26PreparationInput,'authorization'> { readonly authorization:'CONFIRMED_REWRITE26_SYNTHETIC_PREPARATION_V1'; readonly targetAttestation:{readonly file:string;readonly trustedSha256:string}; }
 type PreparationInput=CurrentRuntime26PreparationInput|CurrentRuntime26Preparation13Input|Rewrite26PreparationInput;
+export interface Rewrite26CorePreparationInput extends Omit<Rewrite26PreparationInput,'publication'> { readonly control:{readonly mode:'FIRST'|'READ_ONLY_RECOVERY'|'INIT_AFTER_READBACK';readonly deadlineUtc:string;readonly signal:AbortSignal}; }
+
 export interface CurrentRuntime26PreparedPublicationResult {
  readonly status:'IMPORTED';
  readonly coreResult:Awaited<ReturnType<ReturnType<typeof createCutoffImportService>['execute']>>;
@@ -164,7 +166,7 @@ export function runCurrentRuntime26Preparation13Publication(i:CurrentRuntime26Pr
 
 /** Fixed-target successor. The process/system identity remains independently
  * attested by the T45 host; this route never substitutes that attestation. */
-function validateRewriteInput(i:PreparationInput):void {
+function validateRewriteInput(i:PreparationInput|Rewrite26CorePreparationInput):void {
  assert.equal(i?.authorization,'CONFIRMED_REWRITE26_SYNTHETIC_PREPARATION_V1');
  const attestation=(i as Rewrite26PreparationInput).targetAttestation;assert.ok(attestation&&isAbsolute(attestation.file)&&/^[a-f0-9]{64}$/.test(attestation.trustedSha256));
  const b=i.blueprint; assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.equal(b.batchId,CURRENT_REWRITE_SYNTHETIC_BATCH);assert.equal(b.namespace,CURRENT_REWRITE_SYNTHETIC_NAMESPACE);
@@ -179,7 +181,66 @@ function validateRewriteInput(i:PreparationInput):void {
  const short={batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256};
  for(const options of [i.partySourceOptions,i.catalogueSourceOptions,i.schemeSourceOptions])assert.deepEqual(options.binding,short);
  validateCutoffImportCommand(i.schemeInitialization.command);assert.equal(i.schemeInitialization.command.actorAccountId,b.refs.importer.nativeAccountId);assert.equal(i.schemeInitialization.command.batchId,b.batchId);assert.deepEqual(i.schemeInitialization.command.schemeInitialization.target,binding.target);
- assert.ok(i.publication.signal instanceof AbortSignal&&!i.publication.signal.aborted&&isAbsolute(i.publication.configFile)&&Number.isSafeInteger(i.publication.maxSteps)&&i.publication.maxSteps>0&&i.publication.maxSteps<=1_000_000&&typeof i.publication.append==='function');
+ if ('control' in i) { assert.ok(['FIRST','READ_ONLY_RECOVERY','INIT_AFTER_READBACK'].includes(i.control.mode)&&i.control.signal instanceof AbortSignal&&!i.control.signal.aborted&&typeof i.control.deadlineUtc==='string'&&i.control.deadlineUtc.endsWith('Z')&&Date.parse(i.control.deadlineUtc)>Date.now()); }
+ else assert.ok(i.publication.signal instanceof AbortSignal&&!i.publication.signal.aborted&&isAbsolute(i.publication.configFile)&&Number.isSafeInteger(i.publication.maxSteps)&&i.publication.maxSteps>0&&i.publication.maxSteps<=1_000_000&&typeof i.publication.append==='function');
 }
+export function validateRewrite26CorePreparationInput(i:Rewrite26CorePreparationInput):void {validateRewriteInput(i);}
 export function validateRewrite26PreparationInput(i:Rewrite26PreparationInput):void {validatePreparationInput(i,false,true);}
 export function runRewrite26PreparedPublication(i:Rewrite26PreparationInput):Promise<CurrentRuntime26PreparedPublicationResult>{return runPreparedPublication(i,false,true);}
+
+/** Original reviewed bootstrap and scheme initializer, without opening the FULL
+ * source session. Recovery reads the committed original key only; it never writes. */
+export async function runRewrite26CorePreparation(i:Rewrite26CorePreparationInput){
+ validateRewrite26CorePreparationInput(i);
+ const active=()=>assert.ok(!i.control.signal.aborted&&Date.now()<Date.parse(i.control.deadlineUtc),'CORE preparation expired or cancelled');
+ const targetBytes=await readFile(i.targetAttestation.file);assert.equal(createHash('sha256').update(targetBytes).digest('hex'),i.targetAttestation.trustedSha256);
+ const target=JSON.parse(targetBytes.toString('utf8'));assert.equal(target.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.equal(target.databaseOid,'16387');assert.equal(target.systemIdentifier,'7703341807471058958');assert.equal(target.result,'PASS');
+ const reviewBytes=await readFile(i.runtime26Review.reviewFile);assert.equal(createHash('sha256').update(reviewBytes).digest('hex'),i.runtime26Review.trustedReviewSha256);
+ const review=JSON.parse(reviewBytes.toString('utf8'));assert.equal(review.catalog.format,'EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_SEQUENCE_SYSTEM_V1');assert.equal(review.catalog.patchLevel,'26_hv2_history_draft_sequence_system_acl_from_v1');assert.equal(review.target.database,i.blueprint.database);assert.equal(review.target.databaseOid,i.expectedDatabaseOid);assert.equal(review.target.actingRole,i.postgres.target.user);assert.equal(review.target.sessionUser,i.postgres.target.user);
+ const partyModule=await import(new URL('../../scripts/import-v3/native-party-source26.mjs',import.meta.url).href) as {openReviewedPartySource26(o:Options):Promise<Closable>};
+ const bootstrapModule=await import(new URL('../../scripts/import-v3/native-bootstrap.mjs',import.meta.url).href) as {openNativeImportBootstrap26(o:Options):Promise<Bootstrap>};
+ const sourceModule=await import(new URL('../../scripts/import-v3/native-source-authorizers.mjs',import.meta.url).href) as {openApprovedBarcodeSchemes26(o:Options):Promise<SchemeSource>;openApprovedBarcodeSchemeInitialization26(o:unknown):Promise<BarcodeSchemeInitialization26&Closable>};
+ const owned:Closable[]=[];let pool:BoundedPostgresPool|undefined;let failure:unknown;let result:unknown;
+ try{
+  active();const party=await partyModule.openReviewedPartySource26(i.partySourceOptions);owned.push(party);
+  const bootstrap=await bootstrapModule.openNativeImportBootstrap26({...i.bootstrapOptions,partySource:party});owned.push(bootstrap);
+  const core=bootstrap.command,coreReceiptId=stableImportId('operation',core.actorAccountId,core.requestKey),init=i.schemeInitialization.command;
+  assert.equal(core.action,'IMPORT_CORE_STAGE');assert.equal(bootstrap.now(),i.blueprint.now);assert.equal(coreReceiptId,init.schemeInitialization.coreReceiptId);
+  let initializer:(BarcodeSchemeInitialization26&Closable)|undefined;
+  if(i.control.mode!=='READ_ONLY_RECOVERY'){const schemes=await sourceModule.openApprovedBarcodeSchemes26(i.schemeSourceOptions);owned.push(schemes);initializer=await sourceModule.openApprovedBarcodeSchemeInitialization26({...i.schemeInitialization,source:schemes,initializeSchemes26:initializeNativeBarcodeSchemesOnClient26});owned.push(initializer);}
+  active();pool=new BoundedPostgresPool(i.postgres);const issuer=await createNativeRuntime26Issuer(pool,i.runtime26Review),runtime26=issuer.runtime26;
+  const c=await issuer.pool.connect();
+  try{
+   await runtime26.assertReady(c,'IMPORT_STAGE');
+   const rows=(await c.query(`SELECT current_user role,session_user,(SELECT count(*)::integer FROM pg_proc WHERE pronamespace='naijue_erp'::regnamespace) routines,
+    (SELECT rolcanlogin AND NOT(rolsuper OR rolinherit OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls) FROM pg_roles WHERE rolname=current_user) ordinary,
+    (SELECT pg_get_userbyid(datdba)=current_user FROM pg_database WHERE datname=current_database()) owns_database,
+    EXISTS(SELECT 1 FROM pg_namespace WHERE nspname='naijue_erp' AND pg_get_userbyid(nspowner)=current_user) owns_schema,
+    EXISTS(SELECT 1 FROM pg_class WHERE relnamespace='naijue_erp'::regnamespace AND pg_get_userbyid(relowner)=current_user) owns_relation,
+    EXISTS(SELECT 1 FROM pg_proc WHERE pronamespace='naijue_erp'::regnamespace AND pg_get_userbyid(proowner)=current_user) owns_routine,
+    EXISTS(SELECT 1 FROM pg_auth_members WHERE member=(SELECT oid FROM pg_roles WHERE rolname=current_user)) member`)).rows;
+   assert.equal(rows.length,1);const r=rows[0]!;assert.ok(r.role===i.postgres.target.user&&r.session_user===i.postgres.target.user&&r.routines===137&&r.ordinary===true&&r.owns_database===false&&r.owns_schema===false&&r.owns_relation===false&&r.owns_routine===false&&r.member===false);
+  }finally{c.release();}
+  const readProof=async()=>{active();const client=await issuer.pool.connect();let began=false;let discard:Error|undefined;
+   try{await runtime26.assertReady(client,'IMPORT_STAGE');await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ');began=true;
+    const proof=await readNativeCoreWarehouseCarryForward(client,{batchId:i.blueprint.batchId,coreReceiptId,coreSourceDigest:core.coreInitialization.coreSourceDigest},runtime26);
+    assert.equal(proof.actorAccountId,core.actorAccountId);assert.equal(proof.fixedSourceNamespace,i.blueprint.namespace);assert.equal(proof.selectionSha256,i.blueprint.pins.selectionSha256);
+    await client.query('COMMIT');began=false;return proof;
+   }catch(e){if(began)try{await client.query('ROLLBACK');}catch{discard=Error('CORE readback rollback failed');}else discard=e instanceof Error?e:Error('CORE readback failed');throw e;}finally{client.release(discard);}
+  };
+  const exactInit=(proof:Awaited<ReturnType<typeof readProof>>)=>proof.committedOperations.find(o=>o.action==='IMPORT_INITIALIZE_BARCODE_SCHEMES'&&o.requestKey===init.requestKey&&o.requestHash===requestHash(init));
+  const writeInit=async()=>{active();await createCutoffImportService({now:bootstrap.now.bind(bootstrap),authorization:{assertAllowed:async(actor,command)=>{active();assert.deepEqual(command,init);await initializer!.assertAllowed(actor,init);active();}},store:new PostgresCutoffImportStore(issuer.pool,{runtime26,barcodeSchemeInitialization26:initializer})}).execute(init);};
+  if(i.control.mode==='FIRST'){
+   const coreAuthorization={assertAllowed:async(actor:string,command:CoreStageCommand)=>{active();assert.equal(requestHash(command),requestHash(core));await bootstrap.authorizeStageSourceActor(actor,command);active();}};
+   const coreResult=await createCutoffImportService({now:bootstrap.now.bind(bootstrap),authorization:coreAuthorization,store:new PostgresCutoffImportStore(issuer.pool,{runtime26,coreAuthorization,stageBootstrap26:bootstrap.bootstrap26})}).execute(core);assert.equal(coreResult.status,'STAGED');assert.equal(coreResult.operationId,coreReceiptId);
+   await writeInit();
+  }else if(i.control.mode==='INIT_AFTER_READBACK'){
+   const prior=await readProof();assert.equal(prior.status,'STAGED');
+   if(!exactInit(prior)){assert.equal(prior.committedOperations.length,0,'Unexpected committed chain; do not initialize');assert.equal(jsonObject(prior.checkpoint).sequence,1);await writeInit();}
+  }
+  const proof=await readProof(),committed=exactInit(proof);
+  if(i.control.mode!=='READ_ONLY_RECOVERY')assert.ok(committed,'Committed original INIT receipt required');
+  result={coreReceiptId,coreSourceDigest:core.coreInitialization.coreSourceDigest,initializationCommitted:Boolean(committed),verifiedCurrent:proof,preparationOnly:true as const,fullSourceExecutionAuthorized:false as const};
+ }catch(e){failure=e;}finally{const cleanup:unknown[]=[];for(const owner of owned.reverse())try{await owner.close();}catch(e){cleanup.push(e);}if(pool)try{await pool.dispose();}catch(e){cleanup.push(e);}if(cleanup.length)failure=new AggregateError([...(failure===undefined?[]:[failure]),...cleanup],'CORE preparation cleanup unconfirmed');}
+ if(failure!==undefined)throw failure;return result;
+}

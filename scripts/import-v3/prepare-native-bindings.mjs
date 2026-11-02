@@ -2,7 +2,7 @@
  * this package is a review candidate, never its own authorization or old approval. */
 import { randomUUID, createHash } from 'node:crypto';
 import { lstat, mkdir, chmod, readFile, writeFile, statfs } from 'node:fs/promises';
-import { resolve, join, isAbsolute } from 'node:path';
+import { resolve, join, dirname, isAbsolute } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
@@ -36,6 +36,127 @@ export function createNativeIdentityRegistry(allocate = randomUUID, maximum = 60
     has: (entity, sourceKey) => entries.has(identityKey(entity, sourceKey)),
     values: () => entries.values(), get size() { return entries.size; }
   };
+}
+/** Project the actual T+ warehouse cells through the previously approved
+ * warehouse-to-hall decision. The result is a candidate, not a native ID. */
+export async function projectTPlusWarehouseHall26({warehouseBytes, warehouseSha256, decisionBytes, decisionSha256, bridgeBytes, bridgeSha256, singleHallBytes, singleHallSha256, events}) {
+  must(Buffer.isBuffer(warehouseBytes) && hash(warehouseBytes) === warehouseSha256 && Buffer.isBuffer(decisionBytes)
+    && hash(decisionBytes) === decisionSha256 && Buffer.isBuffer(bridgeBytes) && hash(bridgeBytes) === bridgeSha256, 'TPLUS_WAREHOUSE26_SOURCE_PIN');
+  const decision = JSON.parse(new TextDecoder('utf8', {fatal:true}).decode(decisionBytes));
+  const bridge = JSON.parse(new TextDecoder('utf8', {fatal:true}).decode(bridgeBytes));
+  const supplemental = singleHallBytes === undefined ? [] : (() => {
+    must(Buffer.isBuffer(singleHallBytes) && hash(singleHallBytes) === singleHallSha256, 'TPLUS_WAREHOUSE26_SOURCE_PIN');
+    const doc=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(singleHallBytes));
+    const mappings=doc?.['本次创建厅及销货版型补充']?.creatorHall?.warehouseHallMappings;
+    must(Array.isArray(mappings),'TPLUS_WAREHOUSE26_HALL');return mappings;
+  })();
+  must(decision.approval && Array.isArray(decision.warehouses) && Array.isArray(decision.halls) && Array.isArray(bridge.records), 'TPLUS_WAREHOUSE26_APPROVAL');
+  const warehouses = new Map(), halls = new Map(), originals = new Map();
+  for (const w of decision.warehouses) { must(typeof w.code === 'string' && !warehouses.has(w.code), 'TPLUS_WAREHOUSE26_DUPLICATE'); warehouses.set(w.code,w); }
+  for (const h of decision.halls) { must(typeof h.code === 'string' && !halls.has(h.code), 'TPLUS_WAREHOUSE26_DUPLICATE'); halls.set(h.code,h); }
+  for (const w of bridge.records) { must(typeof w.code === 'string' && !originals.has(w.code), 'TPLUS_WAREHOUSE26_DUPLICATE'); originals.set(w.code,w); }
+  let eof = false, physical = 0, last = 0, header = false; const rows = [], seen = new Set();
+  for await (const event of events) {
+    must(!eof && event?.sheet === '仓库', 'TPLUS_WAREHOUSE26_STREAM');
+    if (event.event === 'eof') { must(event.rows === physical, 'TPLUS_WAREHOUSE26_EOF'); eof = true; continue; }
+    must(event.event === 'row' && Number.isSafeInteger(event.excelRow) && event.excelRow > last && event.cells, 'TPLUS_WAREHOUSE26_STREAM');
+    last = event.excelRow; physical++;
+    if (event.excelRow === 1) { must(event.cells[0]?.raw === '仓库编码' && event.cells[1]?.raw === '仓库名称' && event.cells[8]?.raw === '停用', 'TPLUS_WAREHOUSE26_HEADER'); header = true; continue; }
+    const code = event.cells[0], name = event.cells[1], disabled = event.cells[8];
+    must(code?.kind === 'text' && typeof code.raw === 'string' && code.raw && !seen.has(code.raw)
+      && name?.kind === 'text' && typeof name.raw === 'string' && name.raw && ['text','number'].includes(disabled?.kind)
+      && ['0','1'].includes(disabled.raw), 'TPLUS_WAREHOUSE26_CELL');
+    const approved = warehouses.get(code.raw), original = originals.get(code.raw);
+    must(approved && original && approved.mappingNeedsSeparateConfirmation === false && Array.isArray(approved.proposedHallCodes)
+      && Array.isArray(original.hallCodes), 'TPLUS_WAREHOUSE26_HALL');
+    let hallCode;
+    if (approved.proposedHallCodes.length === 1 && original.hallCodes.length === 1) hallCode=approved.proposedHallCodes[0];
+    else {
+      const chosen=supplemental.filter(r=>r.warehouseSourceKey===original.targetId);
+      must(chosen.length===1, 'TPLUS_WAREHOUSE26_HALL');
+      const matched=[...halls.values()].filter(h=>h.name===chosen[0].hallName && approved.proposedHallCodes.includes(h.code));
+      must(matched.length===1, 'TPLUS_WAREHOUSE26_HALL');hallCode=matched[0].code;
+    }
+    must(halls.has(hallCode) && original.hallCodes.includes(hallCode) && approved.proposedHallCodes.includes(hallCode), 'TPLUS_WAREHOUSE26_HALL');
+    must(original.isNew === true ? original.targetId === null && original.historicalId === null : original.isNew === false && uuid(original.targetId) && original.targetId === original.historicalId, 'TPLUS_WAREHOUSE26_IDENTITY');
+    seen.add(code.raw); rows.push({sourceCode:code.raw, name:name.raw, disabled:disabled.raw, excelRow:event.excelRow,
+      approvedHallCode:hallCode, identityKind:original.isNew ? 'NEW' : 'EXISTING', originalWarehouseId:original.isNew ? null : original.targetId});
+  }
+  must(header && eof && rows.length === warehouses.size && rows.length === originals.size, 'TPLUS_WAREHOUSE26_COVERAGE');
+  return rows;
+}
+/** Read the pinned workbook itself through the existing XLSX reader. */
+export async function readTPlusWarehouseHall26({warehousePath, warehouseSha256, decisionPath, decisionSha256, bridgePath, bridgeSha256, singleHallPath, singleHallSha256}) {
+  const refs=[[warehousePath,warehouseSha256],[decisionPath,decisionSha256],[bridgePath,bridgeSha256],[singleHallPath,singleHallSha256]];
+  const [warehouseBytes,decisionBytes,bridgeBytes,singleHallBytes]=await Promise.all(refs.map(([p,h])=>readPinnedStaffFile(p,h)));
+  const child=spawn('python3',[fileURLToPath(new URL('../import-preflight/read-xlsx.py',import.meta.url)),'--stream',warehousePath,'仓库','0,1,8'],{stdio:['ignore','pipe','ignore']});
+  const done=new Promise(resolve=>{child.once('error',()=>resolve(-1));child.once('close',resolve);});let completed=false;
+  async function* events(){for await(const line of createInterface({input:child.stdout,crlfDelay:Infinity})) yield JSON.parse(line);}
+  try {
+    const rows=await projectTPlusWarehouseHall26({warehouseBytes,warehouseSha256,decisionBytes,decisionSha256,bridgeBytes,bridgeSha256,singleHallBytes,singleHallSha256,events:events()});
+    completed=true;return rows;
+  } finally {
+    if(!completed) child.kill('SIGTERM');
+    must(await done===0,'TPLUS_WAREHOUSE26_STREAM');
+    await Promise.all(refs.map(([p,h])=>readPinnedStaffFile(p,h)));
+  }
+}
+/** Hall source facts and user-approved default warehouse, with unknown customer
+ * reference kept open. This does not treat historical departments as halls. */
+export async function projectTPlusHall26({hallBytes,hallSha256,decisionBytes,decisionSha256,events}) {
+  must(Buffer.isBuffer(hallBytes)&&hash(hallBytes)===hallSha256&&Buffer.isBuffer(decisionBytes)&&hash(decisionBytes)===decisionSha256,'TPLUS_HALL26_SOURCE_PIN');
+  const d=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(decisionBytes));
+  must(d.approval&&Array.isArray(d.halls),'TPLUS_HALL26_APPROVAL');
+  const approved=new Map();for(const h of d.halls){must(typeof h.code==='string'&&!approved.has(h.code),'TPLUS_HALL26_DUPLICATE');approved.set(h.code,h);}
+  let eof=false,physical=0,last=0,header=false;const rows=[],seen=new Set();
+  for await(const event of events){
+    must(!eof&&event?.sheet==='营业厅','TPLUS_HALL26_STREAM');
+    if(event.event==='eof'){must(event.rows===physical,'TPLUS_HALL26_EOF');eof=true;continue;}
+    must(event.event==='row'&&Number.isSafeInteger(event.excelRow)&&event.excelRow>last&&event.cells,'TPLUS_HALL26_STREAM');last=event.excelRow;physical++;
+    if(event.excelRow===1){must(event.cells[0]?.raw==='编码'&&event.cells[1]?.raw==='名称'&&event.cells[2]?.raw==='停用','TPLUS_HALL26_HEADER');header=true;continue;}
+    const code=event.cells[0],name=event.cells[1],disabled=event.cells[2];
+    must(code?.kind==='text'&&typeof code.raw==='string'&&code.raw&&!seen.has(code.raw)&&name?.kind==='text'&&typeof name.raw==='string'&&name.raw
+      &&['text','number'].includes(disabled?.kind)&&['0','1'].includes(disabled.raw),'TPLUS_HALL26_CELL');
+    const h=approved.get(code.raw);
+    must(h&&h.source?.sha256===hallSha256&&h.source?.sheet==='营业厅'&&h.source?.row===event.excelRow&&h.name===name.raw
+      &&typeof h.proposedEnabled==='boolean'&&h.defaultWarehouseRuleAuthorized===true&&h.defaultWarehouseAssignmentResolved===true
+      &&typeof h.defaultWarehouseCode==='string'&&h.defaultWarehouseCode,'TPLUS_HALL26_APPROVAL');
+    seen.add(code.raw);rows.push({sourceCode:code.raw,name:name.raw,sourceDisabled:disabled.raw,approvedEnabled:h.proposedEnabled,
+      excelRow:event.excelRow,defaultWarehouseCode:h.defaultWarehouseCode,defaultCustomerSourceKey:null,defaultCustomerState:'UNKNOWN_NOT_INFERRED'});
+  }
+  must(header&&eof&&rows.length===approved.size,'TPLUS_HALL26_COVERAGE');return rows;
+}
+export async function readTPlusHall26({hallPath,hallSha256,decisionPath,decisionSha256}){
+  const refs=[[hallPath,hallSha256],[decisionPath,decisionSha256]], [hallBytes,decisionBytes]=await Promise.all(refs.map(([p,h])=>readPinnedStaffFile(p,h)));
+  const child=spawn('python3',[fileURLToPath(new URL('../import-preflight/read-xlsx.py',import.meta.url)),'--stream',hallPath,'营业厅','0,1,2'],{stdio:['ignore','pipe','ignore']});
+  const done=new Promise(resolve=>{child.once('error',()=>resolve(-1));child.once('close',resolve);});let completed=false;
+  async function* events(){for await(const line of createInterface({input:child.stdout,crlfDelay:Infinity}))yield JSON.parse(line);}
+  try{const rows=await projectTPlusHall26({hallBytes,hallSha256,decisionBytes,decisionSha256,events:events()});completed=true;return rows;}
+  finally{if(!completed)child.kill('SIGTERM');must(await done===0,'TPLUS_HALL26_STREAM');await Promise.all(refs.map(([p,h])=>readPinnedStaffFile(p,h)));}
+}
+/** A single registry freezes separate hall and warehouse candidate IDs. */
+export function prepareTPlusWarehouseHallCandidates26({halls,warehouses,registry=createNativeIdentityRegistry()}){
+  must(Array.isArray(halls)&&Array.isArray(warehouses),'TPLUS_PARTY26_INPUT');
+  const hallByCode=new Map(),warehouseByCode=new Map();
+  for(const h of halls){must(typeof h.sourceCode==='string'&&!hallByCode.has(h.sourceCode),'TPLUS_PARTY26_DUPLICATE');hallByCode.set(h.sourceCode,h);}
+  for(const w of warehouses){must(typeof w.sourceCode==='string'&&!warehouseByCode.has(w.sourceCode)&&hallByCode.has(w.approvedHallCode),'TPLUS_PARTY26_RELATION');warehouseByCode.set(w.sourceCode,w);}
+  for(const h of halls)must(warehouseByCode.has(h.defaultWarehouseCode)&&warehouseByCode.get(h.defaultWarehouseCode).approvedHallCode===h.sourceCode,'TPLUS_PARTY26_DEFAULT_WAREHOUSE');
+  for(const h of halls)registry.add('HALL',h.sourceCode,h);
+  for(const w of warehouses)registry.add('WAREHOUSE',w.sourceCode,w);
+  return {scope:'SOURCE_REFERENCE_CANDIDATES_ONLY',importAuthorized:false,
+    halls:halls.map(h=>({...h,candidateNativeId:registry.get('HALL',h.sourceCode).nativeId,defaultWarehouseCandidateNativeId:registry.get('WAREHOUSE',h.defaultWarehouseCode).nativeId})),
+    warehouses:warehouses.map(w=>({...w,candidateNativeId:registry.get('WAREHOUSE',w.sourceCode).nativeId,hallCandidateNativeId:registry.get('HALL',w.approvedHallCode).nativeId}))};
+}
+export async function writeTPlusWarehouseHallCandidates26({hallSource,warehouseSource,outputPath,binding}){
+  must(typeof outputPath==='string'&&isAbsolute(outputPath)&&binding&&uuid(binding.batchId)&&typeof binding.fixedSourceNamespace==='string'
+    &&typeof binding.cutoffAt==='string'&&binding.selectionSha256===null,'TPLUS_PARTY26_OUTPUT');
+  const parent=dirname(resolve(outputPath)),repo=fileURLToPath(new URL('../../',import.meta.url)),parentStat=await lstat(parent);
+  must(parentStat.isDirectory()&&!parentStat.isSymbolicLink()&&parent!==repo&&!parent.startsWith(repo+'/')&&!parent.split('/').includes('.git'),'TPLUS_PARTY26_OUTPUT');
+  const halls=await readTPlusHall26(hallSource),warehouses=await readTPlusWarehouseHall26(warehouseSource);
+  const candidate={version:'TPLUS_WAREHOUSE_HALL_CANDIDATES_V1',binding:structuredClone(binding),sources:{hall:structuredClone(hallSource),warehouse:structuredClone(warehouseSource)},
+    ...prepareTPlusWarehouseHallCandidates26({halls,warehouses})};
+  const bytes=Buffer.from(JSON.stringify(candidate)+'\n');await writeFile(outputPath,bytes,{flag:'wx',mode:0o600});
+  return {path:outputPath,bytes:bytes.length,sha256:hash(bytes),halls:halls.length,warehouses:warehouses.length,importAuthorized:false};
 }
 export function sourceEvidence(raw, line, normalizedFields, binding, mappingEvidence) {
   must(raw?.data?.['来源编号'] === raw.sourceId && uuid(binding.batchId) && typeof raw.file === 'string' && typeof raw.sheet === 'string'
