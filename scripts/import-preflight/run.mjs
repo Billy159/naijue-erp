@@ -144,9 +144,13 @@ export async function* projectTPlusInventoryMatrix(events, expectedHeaders) {
     }
     if (!header) throw Error("TPLUS_MATRIX_HEADER");
     const fields = Array.from({length: 7}, (_,i) => raw(i+1));
-    if (fields.some(value => typeof value === "string" && (value.includes("合计") || value.includes("小计")))) {
-      yield {event: "summary", sheet: "第一页", excelRow: event.excelRow, sourceCells: event.cells}; continue;
-    }
+    // The inspected export has a second measure header on row 8. Only skip it
+    // when all dimension cells are genuinely blank and all measures agree.
+    const measure = cell(8);
+    if (event.excelRow === 8 && Array.from({length:7}, (_,i) => cell(i+1)).every(x => !x || (x.kind === "blank" && x.raw === null)) &&
+        measure?.kind === "text" && typeof measure.raw === "string" && measure.raw.includes("现存") && measure.raw.includes("量") &&
+        Array.from({length:totalColumn-7}, (_,i) => cell(i+8)).every(x => x?.kind === "text" && x.raw === measure.raw)) continue;
+    const possibleSummary = fields.some(value => typeof value === "string" && (value.includes("合计") || value.includes("小计")));
     const quantities = [], unresolvedCells = []; let sum = 0n, invalid = false;
     const exactInteger = value => {
       if (typeof value !== "string" || !/^-?\d+(?:\.\d+)?$/.test(value)) return null;
@@ -155,7 +159,7 @@ export async function* projectTPlusInventoryMatrix(events, expectedHeaders) {
     };
     for (let col = 8; col < totalColumn; col++) {
       const entry = cell(col), value = raw(col);
-      if (value === null || value === "") continue;
+      if (!entry || (entry.kind === "blank" && value === null)) continue;
       const integer = exactInteger(value);
       if (!entry || !["number", "text"].includes(entry.kind) || integer === null) { invalid = true; unresolvedCells.push({sourceSize: expectedHeaders[col-1], sourceColumn: col, sourceCell: entry}); continue; }
       sum += integer; quantities.push({sourceSize: expectedHeaders[col-1], rawQuantity: value, sourceColumn: col});
@@ -165,8 +169,9 @@ export async function* projectTPlusInventoryMatrix(events, expectedHeaders) {
     const totalValid = total && ["number", "text"].includes(total.kind) && totalInteger !== null;
     const totalsMatch = Boolean(!invalid && totalValid && sum === totalInteger);
     yield {event: "candidate", sheet: "第一页", excelRow: event.excelRow,
-      warehouse: fields[0], productCode: fields[2], color: fields[5], style: fields[6], quantities, unresolvedCells, sourceTotal: total ?? null,
-      status: totalsMatch && [1, 3, 6, 7].every(i => cell(i)?.kind === "text" && typeof raw(i) === "string" && raw(i) !== "") ? "ROW_ARITHMETIC_ONLY" : "PENDING_SOURCE_FACTS",
+      warehouse: fields[0], classification: fields[1], productCode: fields[2], productName: fields[3], sourceUnit: fields[4], color: fields[5], style: fields[6],
+      sourceDimensions: Array.from({length:7}, (_,i) => cell(i+1) ?? null), quantities, unresolvedCells, sourceTotal: total ?? null, possibleSummary,
+      status: !possibleSummary && totalsMatch && [1, 3, 6, 7].every(i => cell(i)?.kind === "text" && typeof raw(i) === "string" && raw(i) !== "") ? "ROW_ARITHMETIC_ONLY" : "PENDING_SOURCE_FACTS",
       rowTotalMatched: totalsMatch, omittedBlankCellsAreUnknown: true};
   }
   if (!eof) throw Error("TPLUS_MATRIX_EOF");

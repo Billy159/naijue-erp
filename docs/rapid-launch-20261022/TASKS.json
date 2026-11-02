@@ -21910,7 +21910,7 @@
       "12:00 directory label not proof of same-T; nonzero inventory filter does not establish missing as zero"
     ],
     "mappingDelivery": {
-      "status": "SOURCE_FACTS_ONLY_PENDING_QB",
+      "status": "MATRIX_FIX_AND_PRODUCT_SOURCE_DELIVERED_PENDING_QB",
       "exports": [
         "readTPlusDimensionDictionary",
         "projectTPlusInventoryMatrix"
@@ -21923,6 +21923,9 @@
         "isolation import",
         "business operation"
       ]
-    }
+    },
+    "schemaMutationsPermittedForImport": false,
+    "schemaConstraintAuthority": "human 01a19a95-542e-7bd2-8be9-8c6f085f120e",
+    "unitRule": "No business main unit/config/required field; preserve original optional source fact only; no fabricated source unit or schema changes"
   }
 }

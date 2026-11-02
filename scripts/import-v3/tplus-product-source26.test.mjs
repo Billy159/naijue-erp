@@ -1,0 +1,44 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readTPlusProductMaster,readTPlusProductBarcodes,projectTPlusProductPrices,assembleTPlusProductSource26} from './tplus-product-source26.mjs';
+const text=raw=>({kind:'text',raw}),num=raw=>({kind:'number',raw});
+const mh=['存货编码','存货名称','尺码所属取值组编码','采购价','零售价','五级批发价','六级批发价','七级批发价','八级批发价','九级批发价','十级批发价','最低售价'], bh=['存货编码','存货名称','规格型号','条形码','计量单位','是否默认条码'];
+const ph=['条形码','存货编码','采购价','零售价','五级批发价','六级批发价','七级批发价','八级批发价','九级批发价','十级批发价','最低售价'];
+const row=(sheet,excelRow,cells)=>({event:'row',sheet,excelRow,cells});
+const head=(sheet,excelRow,labels)=>row(sheet,excelRow,Object.fromEntries(labels.map((x,i)=>[i,text(x)])));
+const end=(sheet,rows)=>({event:'eof',sheet,rows});
+test('source candidates preserve product code, exact prices, multiple barcodes and incomplete authority',async()=>{
+ const master=await readTPlusProductMaster([head('存货',2,mh),row('存货',3,{0:text('001'),1:text('synthetic'),2:text('group'),3:num('12.30'),4:num('0')}),end('存货',2)],mh);
+ const b=row('存货条形码',2,{0:text('001'),3:text('A'),5:num('1')});
+ const barcodes=await readTPlusProductBarcodes([head('存货条形码',1,bh),b,row('存货条形码',3,{...b.cells,3:text('B'),5:num('0')}),end('存货条形码',3)]);
+ const price=row('存货价格本',2,{1:text('001'),2:num('12.30'),3:num('0')});
+ const prices=projectTPlusProductPrices([head('存货价格本',1,ph),price,end('存货价格本',2)],ph);
+ const out=await Array.fromAsync(assembleTPlusProductSource26({master,barcodes,prices}));
+ assert.equal(out[0].productSource.sourceProductCode,'001');assert.equal(out[0].barcodeRelations.length,2);
+ assert.equal(out[0].prices['采购价'].minorAmount,'1230');assert.equal(out[0].prices['零售价'].minorAmount,'0');
+ assert.equal(out[0].prices['五级批发价'].state,'BLANK_SOURCE');assert.equal(out[0].priceChecks['采购价'],'EXACT_MATCH');assert.equal(out[0].importReady,false);
+ const changed=projectTPlusProductPrices([head('存货价格本',1,ph),{...price,cells:{...price.cells,2:num('12.31')}},end('存货价格本',2)],ph);
+ const mismatch=await Array.fromAsync(assembleTPlusProductSource26({master,barcodes,prices:changed}));
+ assert.equal(mismatch[0].priceChecks['采购价'],'MISMATCH');assert.equal(mismatch[0].status,'PENDING_SOURCE_FACTS');
+ assert.equal(out[1].masterWithoutPrice,0);assert.equal(out[1].priceWithoutMaster,0);assert.equal(out[1].barcodeProductsWithoutPrice,0);
+});
+test('missing EOF, duplicate code, untrusted header, formula and precision are not silently accepted',async()=>{
+ const masterHeader=head('存货',2,mh), m=row('存货',3,{0:text('001'),1:text('n'),2:text('g')});
+ await assert.rejects(readTPlusProductMaster([masterHeader,m],mh),/EOF/);
+ const b=row('存货条形码',2,{0:text('001'),3:text('A'),5:num('1')});
+ await assert.rejects(readTPlusProductBarcodes([head('存货条形码',1,bh),b,{...b,excelRow:3},end('存货条形码',3)]),/DUPLICATE/);
+ await assert.rejects(readTPlusProductMaster([masterHeader,m,{...m,excelRow:4},end('存货',3)],mh),/DUPLICATE/);
+ await assert.rejects(readTPlusProductMaster([{...masterHeader,cells:{...masterHeader.cells,0:text('other')}},m,end('存货',2)],mh),/HEADER/);
+ const h=head('存货价格本',1,ph), bad=row('存货价格本',2,{1:text('001'),2:{kind:'formula',raw:null,formula:'1+1'},3:num('1.234')});
+ const result=await Array.fromAsync(projectTPlusProductPrices([h,bad,end('存货价格本',2)],ph));
+ assert.equal(result[0].status,'PENDING_SOURCE_FACTS');assert.equal(result[0].prices['采购价'].state,'PENDING');assert.equal(result[0].prices['零售价'].state,'PENDING');
+ const error={...bad,cells:{...bad.cells,2:{kind:'error',raw:null}}};
+ assert.equal((await Array.fromAsync(projectTPlusProductPrices([h,error,end('存货价格本',2)],ph)))[0].prices['采购价'].state,'PENDING');
+});
+test('unmatched source codes and missing barcode remain explicit',async()=>{
+ const master=await readTPlusProductMaster([head('存货',2,mh),row('存货',3,{0:text('001')}),end('存货',2)],mh);
+ const prices=projectTPlusProductPrices([head('存货价格本',1,ph),row('存货价格本',2,{1:text('002')}),end('存货价格本',2)],ph);
+ const out=await Array.fromAsync(assembleTPlusProductSource26({master,barcodes:new Map(),prices}));
+ assert.equal(out[0].productSource,null);assert.equal(out[0].status,'PENDING_SOURCE_FACTS');
+ assert.equal(out[1].masterWithoutPrice,1);assert.equal(out[1].priceWithoutMaster,1);
+});

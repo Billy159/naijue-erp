@@ -201,7 +201,7 @@ import {projectTPlusInventoryMatrix as project} from './scripts/import-preflight
 const text=raw=>({kind:'text',raw}),num=raw=>({kind:'number',raw});
 const headers=['仓库','存货分类 (1级)','存货编码','存货','主计量','颜色','版型1','S','M','合计'];
 const header={event:'row',sheet:'第一页',excelRow:7,cells:Object.fromEntries(headers.map((v,i)=>[i+1,text(v)]))};
-const row={event:'row',sheet:'第一页',excelRow:8,cells:{1:text('warehouse'),3:text('001'),6:text('color'),7:text('A'),8:num('-2'),10:num('-2')}};
+const row={event:'row',sheet:'第一页',excelRow:8,cells:{1:text('warehouse'),2:text('category'),3:text('001'),4:text('product'),5:text('unit'),6:text('color'),7:text('A'),8:num('-2'),10:num('-2')}};
 const eof={event:'eof',sheet:'第一页',rows:2};
 const events=await Array.fromAsync(project([header,row,eof],headers));
 assert.deepEqual(events[0].quantities,[{sourceSize:'S',rawQuantity:'-2',sourceColumn:8}]);
@@ -213,7 +213,20 @@ assert.equal((await Array.fromAsync(project([header,missing,eof],headers)))[0].s
 const fraction={...row,cells:{...row.cells,8:num('1.5')}};
 const unresolved=(await Array.fromAsync(project([header,fraction,eof],headers)))[0];
 assert.equal(unresolved.status,'PENDING_SOURCE_FACTS');assert.equal(unresolved.unresolvedCells[0].sourceCell.raw,'1.5');
-assert.equal((await Array.fromAsync(project([header,{...row,cells:{...row.cells,1:text('合计')}},eof],headers)))[0].event,'summary');
+const named={...row,cells:{...row.cells,4:text('合计印花款')}};
+const namedOut=(await Array.fromAsync(project([header,named,eof],headers)))[0];
+assert.equal(namedOut.event,'candidate');assert.equal(namedOut.status,'PENDING_SOURCE_FACTS');assert.equal(namedOut.productName,'合计印花款');
+const formula={...row,cells:{...row.cells,8:{kind:'formula',raw:null,formula:'1+1'},9:num('1'),10:num('1')}};
+const formulaOut=(await Array.fromAsync(project([header,formula,eof],headers)))[0];
+assert.equal(formulaOut.status,'PENDING_SOURCE_FACTS');assert.equal(formulaOut.unresolvedCells[0].sourceCell.kind,'formula');
+const otherUnit={...row,cells:{...row.cells,5:text('box')}};
+assert.notEqual((await Array.fromAsync(project([header,otherUnit,eof],headers)))[0].sourceUnit,events[0].sourceUnit);
+const noUnit={...row,cells:{...row.cells,5:{kind:'blank',raw:null}}};
+assert.equal((await Array.fromAsync(project([header,noUnit,eof],headers)))[0].status,'ROW_ARITHMETIC_ONLY');
+assert.equal(events[0].classification,'category');assert.equal(events[0].productName,'product');
+const subheader={event:'row',sheet:'第一页',excelRow:8,cells:{8:text('现存量 synthetic'),9:text('现存量 synthetic'),10:text('现存量 synthetic')}};
+const later={...row,excelRow:9};
+assert.equal((await Array.fromAsync(project([header,subheader,later,{...eof,rows:3}],headers)))[0].excelRow,9);
 await assert.rejects(Array.fromAsync(project([header,row],headers)),/EOF/);
 await assert.rejects(Array.fromAsync(project([{...header,cells:{...header.cells,1:text('错')}},row,eof],headers)),/HEADER/);
 """

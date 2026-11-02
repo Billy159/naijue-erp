@@ -8686,6 +8686,16 @@
       "sourceWriteEnabled": false,
       "scope": "existing runtime authentication/least ACL/identity interfaces; exact source changes require registered leaf handoff; no server/DB access",
       "reportWrite": "existing D1 report subdirectory only"
-    }
+    },
+    "additionalD3ExactLeaves": [
+      "scripts/import-v3/tplus-product-source26.mjs",
+      "scripts/import-v3/tplus-product-source26.test.mjs",
+      "scripts/import-v3/prepare-native-bindings.mjs",
+      "scripts/import-v3/prepare-native-bindings.test.mjs",
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs"
+    ],
+    "additionalD3Scope": "New-batch normalized package/source mapping and existing provider wiring; preserve old branch; no schema/SQL/permission/root/build changes",
+    "schemaMutationsPermittedForImport": false
   }
 }
