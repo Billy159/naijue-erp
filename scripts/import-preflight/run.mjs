@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /** Offline dev/operator tool. Requires Node 24 + Python 3 stdlib; not a server adapter. */
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { readdirSync, readFileSync, lstatSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { createInterface } from "node:readline";
 import { resolve, extname } from "node:path";
 import { preflightImport } from "../../packages/application/src/import-preflight.ts";
 function run() {
@@ -58,7 +59,31 @@ if (bridge.readerIssues.length) {
 process.stdout.write(JSON.stringify(report, null, 2) + "\n");
 process.exitCode = report.dataStatus === "INVALID" ? 2 : bridge.readerIssues.length ? 3 : 0;
 }
-try { run(); }
+async function stream() {
+  const args = process.argv.slice(3);
+  if (args.length !== 3 || !/^[0-9]+(?:,[0-9]+)*$/.test(args[2])) throw Error("STREAM_ARGUMENTS");
+  const path = resolve(args[0]), info = lstatSync(path);
+  if (!info.isFile() || info.isSymbolicLink()) throw Error("STREAM_SOURCE_INVALID");
+  const child = spawn("python3", [fileURLToPath(new URL("read-xlsx.py", import.meta.url)), "--stream", path, args[1], args[2]], { stdio: ["ignore", "pipe", "ignore"] });
+  const done = new Promise((resolve, reject) => { child.once("error", reject); child.once("close", code => resolve(code)); });
+  let rows = 0, finished = false, failed = false, eofLine;
+  for await (const line of createInterface({ input: child.stdout, crlfDelay: Infinity })) {
+    let event; try { event = JSON.parse(line); } catch { failed = true; break; }
+    if (finished || !event || !["row", "eof", "error"].includes(event.event)) { failed = true; break; }
+    if (event.event === "row") rows++;
+    if (event.event === "eof") { if (event.rows !== rows || event.sheet !== args[1]) { failed = true; break; } finished = true; eofLine = line; continue; }
+    if (event.event === "error") { failed = true; break; }
+    if (!process.stdout.write(line + "\n")) await new Promise(resolve => process.stdout.once("drain", resolve));
+  }
+  if (failed) child.kill();
+  if (await done !== 0 || !finished || failed) {
+    process.stdout.write(JSON.stringify({event:"error",code:"XLSX_STREAM_INCOMPLETE",rows}) + "\n");
+    process.exitCode = 3;
+  } else { process.stdout.write(eofLine + "\n"); }
+}
+if (process.argv[2] === "--stream") {
+  stream().catch(() => { process.stdout.write(JSON.stringify({event:"error",code:"XLSX_STREAM_FAILED"}) + "\n"); process.exitCode = 3; });
+} else try { run(); }
 catch (error) {
   const reason = error instanceof Error ? error.message : String(error);
   const capability = /(?:_LIMIT|MAXBUFFER|ENOBUFS|XLSX_READER_FAILED)/i.test(reason);

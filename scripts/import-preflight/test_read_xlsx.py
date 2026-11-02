@@ -2,6 +2,7 @@
 """All workbooks are small, explicitly synthetic ZIP/XML fixtures generated in temp dirs."""
 import importlib.util
 import json
+import os
 import stat
 import sys
 import subprocess
@@ -70,6 +71,64 @@ class ReadXlsxTests(unittest.TestCase):
             reader.read_workbook(self.path)
         self.assertEqual(context.exception.issue["code"], code)
         return context.exception.issue
+
+    def test_stream_more_than_old_limit_with_exact_values_and_eof(self):
+        files = parts(data=[row(1, cell("A1", "header"))] + [row(i, cell(f"A{i}", str(i), "n")) for i in range(2, 100003)])
+        self.write(files)
+        count = 0
+        for event in reader.iter_projected_rows(self.path, "04客户", (0,)):
+            if event["event"] == "row":
+                count += 1
+                if count == 100002: self.assertEqual(event["cells"][0]["raw"], "100002")
+            else: self.assertEqual((event["rows"], count), (100002, 100002))
+
+    def test_stream_selected_shared_strings_never_decode_secret(self):
+        files = parts(data=[row(1, cell("A1", "0", "s"), cell("B1", "1", "s"))])
+        files["xl/sharedStrings.xml"] = f'<sst xmlns="{S}"><si><t>SAFE</t></si><si><t>SECRET_UNSELECTED</t></si></sst>'
+        self.write(files)
+        original = reader.visible_string
+        def checked(node):
+            result = original(node)
+            self.assertNotIn("SECRET_UNSELECTED", result)
+            return result
+        reader.visible_string = checked
+        try:
+            events = list(reader.iter_projected_rows(self.path, "04客户", (0,)))
+        finally: reader.visible_string = original
+        self.assertEqual(events[0]["cells"], {0: {"kind": "text", "raw": "SAFE"}})
+        self.assertNotIn("SECRET_UNSELECTED", json.dumps(events))
+        self.assertEqual(events[-1]["event"], "eof")
+
+    def test_stream_truncated_xml_never_emits_eof(self):
+        files = parts(data=[row(1, cell("A1", "safe"))])
+        files["xl/worksheets/sheet1.xml"] = files["xl/worksheets/sheet1.xml"].replace("</worksheet>", "")
+        self.write(files)
+        events = []
+        with self.assertRaises(reader.XlsxPreflightError):
+            for event in reader.iter_projected_rows(self.path, "04客户", (0,)): events.append(event)
+        self.assertFalse(any(e["event"] == "eof" for e in events))
+
+    def test_account_workbook_requires_reviewed_projection(self):
+        self.write()
+        account = Path(self.temp.name) / "账号.xlsx"
+        account.write_bytes(self.path.read_bytes())
+        with self.assertRaises(reader.XlsxPreflightError): reader.read_workbook(account)
+        with self.assertRaises(reader.XlsxPreflightError): list(reader.iter_projected_rows(account, "04客户", (0,)))
+        with self.assertRaises(reader.XlsxPreflightError): list(reader.iter_projected_rows(self.path, "账号", (0,)))
+
+    def test_stream_cli_emits_rows_then_eof_and_incomplete_error(self):
+        node = os.environ.get("PREFLIGHT_TEST_NODE", "node")
+        self.write()
+        runner = HERE / "run.mjs"
+        result = subprocess.run([node, str(runner), "--stream", str(self.path), "04客户", "0"], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        events = [json.loads(line) for line in result.stdout.splitlines()]
+        self.assertEqual([e["event"] for e in events], ["row", "row", "eof"])
+        self.assertEqual(events[-1]["rows"], 2)
+        bad = subprocess.run([node, str(runner), "--stream", str(self.path), "MISSING", "0"], capture_output=True, text=True)
+        self.assertNotEqual(bad.returncode, 0)
+        self.assertNotIn('"event":"eof"', bad.stdout)
+        self.assertEqual(json.loads(bad.stdout.splitlines()[-1])["code"], "XLSX_STREAM_INCOMPLETE")
 
     def test_preserve_shared_inline_strings_decimal_lexemes_formula_and_date_system(self):
         data = [row(1, cell("A1", "*来源编号")), row(2, cell("A2", "0", "s"), cell("B2", "9999999999999999.99", "n"),

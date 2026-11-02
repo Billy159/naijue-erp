@@ -176,6 +176,8 @@ def new_batch_budget():
 
 def read_workbook(path: Path, budget=None):
     budget = new_batch_budget() if budget is None else budget
+    if path.name == "账号.xlsx":
+        reject("XLSX_ACCOUNT_PROJECTION_REQUIRED", "Account workbook requires a reviewed non-secret column projection.")
     if path.suffix.lower() != ".xlsx":
         reject("XLSX_EXTENSION_REQUIRED", "Only .xlsx is supported; .xls/.xlsm are not silently accepted.")
     if path.is_symlink() or not path.is_file():
@@ -360,6 +362,164 @@ def read_workbook(path: Path, budget=None):
         return {"fileName": path.name, "sha256": digest, "dateSystem": date_system, "sheets": results, "styleMetadataXml": styles_xml}
 
 
+class _CheckedStream:
+    """Reject XML declarations across read boundaries without buffering the part."""
+    def __init__(self, stream):
+        self.stream, self.tail = stream, b""
+    def read(self, size=-1):
+        data = self.stream.read(size)
+        check = (self.tail + data).replace(b"\x00", b"").upper()
+        if b"<!DOCTYPE" in check or b"<!ENTITY" in check:
+            reject("XLSX_XML_DECLARATION_REJECTED", "DOCTYPE/ENTITY is not accepted in streaming XML.")
+        self.tail = (self.tail + data)[-64:]
+        return data
+
+
+def iter_projected_rows(path: Path, sheet_name: str, columns: tuple[int, ...]):
+    """Yield selected cell values then one EOF receipt. Column indexes are zero-based.
+
+    Only selected SST references are decoded and retained. A consumer must exhaust
+    the iterator and require its EOF event; partial iteration is never completion.
+    This is a raw cell port, not a source-identity or import authority.
+    """
+    if Path(path).name == "账号.xlsx" or sheet_name == "账号":
+        reject("XLSX_ACCOUNT_PROJECTION_REQUIRED", "Account workbook requires a reviewed non-secret column projection.")
+    if not isinstance(sheet_name, str) or not sheet_name or not columns or len(set(columns)) != len(columns) or any(type(c) is not int or c < 0 or c >= MAX_COLUMNS for c in columns):
+        reject("XLSX_PROJECTION_INVALID", "Explicit sheet and unique selected columns are required.")
+    path = Path(path)
+    if path.suffix.lower() != ".xlsx" or path.is_symlink() or not path.is_file():
+        reject("XLSX_SOURCE_NOT_REGULAR_FILE", "An explicit regular XLSX source is required.")
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    with os.fdopen(fd, "rb") as source, zipfile.ZipFile(source) as archive:
+        before = os.fstat(source.fileno())
+        members, names = archive.infolist(), set()
+        if len(members) > MAX_MEMBERS:
+            reject("XLSX_MEMBER_LIMIT", "Too many archive members.")
+        for item in members:
+            name = item.filename
+            if not safe_part(name) or name in names or stat.S_ISLNK((item.external_attr >> 16) & 0xFFFF):
+                reject("XLSX_UNSAFE_ARCHIVE_MEMBER", "Unsafe or duplicate archive member.")
+            names.add(name)
+            if item.flag_bits & 1 or item.compress_type not in (zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED):
+                reject("XLSX_COMPRESSION_UNSUPPORTED", "Unsupported archive encoding.")
+            if any(x in name.lower() for x in ("vbaproject", "xl/externallinks/", "xl/embeddings/", "xl/macrosheets/")):
+                reject("XLSX_ACTIVE_CONTENT_REJECTED", "Active content is not accepted.")
+        for name in names:
+            if name.endswith(".rels"):
+                for rel in xml_part(archive, name):
+                    target, typ = rel.attrib.get("Target", ""), rel.attrib.get("Type", "").lower()
+                    if rel.attrib.get("TargetMode", "Internal").lower() != "internal" or re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", target) or "vbaproject" in typ or "externallink" in typ:
+                        reject("XLSX_EXTERNAL_OR_ACTIVE_RELATIONSHIP", "External relationship rejected.")
+                    owner = name.rsplit("/_rels/", 1)[0] if "/_rels/" in name else ""
+                    normalized = posixpath.normpath(target.lstrip("/") if target.startswith("/") else posixpath.join(owner, target))
+                    if "\\" in target or "\x00" in target or not safe_part(normalized):
+                        reject("XLSX_RELATIONSHIP_TRAVERSAL", "Relationship escapes package.")
+        for item in xml_part(archive, "[Content_Types].xml"):
+            if any(x in item.attrib.get("ContentType", "").lower() for x in ("macroenabled", "vbaproject", "macrosheet")):
+                reject("XLSX_ACTIVE_CONTENT_REJECTED", "Macro-enabled content rejected.")
+        workbook = xml_part(archive, "xl/workbook.xml")
+        props = workbook.find(f"{{{MAIN}}}workbookPr")
+        date = props.attrib.get("date1904", "0") if props is not None else "0"
+        if date not in ("0", "1", "false", "true"):
+            reject("XLSX_DATE_SYSTEM_INVALID", "Unknown date system.")
+        relations = {r.attrib.get("Id"): r for r in xml_part(archive, "xl/_rels/workbook.xml.rels")}
+        sheets = workbook.find(f"{{{MAIN}}}sheets")
+        matches = [] if sheets is None else [s for s in sheets if s.attrib.get("name") == sheet_name]
+        if len(matches) != 1:
+            reject("XLSX_SHEET_NAME_INVALID", "Selected sheet is missing or duplicated.")
+        rel = relations.get(matches[0].attrib.get(f"{{{DOCREL}}}id"))
+        if rel is None or not rel.attrib.get("Type", "").endswith("/worksheet"):
+            reject("XLSX_WORKSHEET_RELATIONSHIP_INVALID", "Selected worksheet relationship missing.")
+        target = rel.attrib.get("Target", "")
+        part = target.lstrip("/") if target.startswith("/") else posixpath.join("xl", target)
+        if not safe_part(part) or not part.startswith("xl/") or part not in names:
+            reject("XLSX_WORKSHEET_PATH_INVALID", "Selected worksheet part invalid.")
+        # Preserve declaration rejection even for unused XML parts without
+        # materializing them (including an SST with unselected secret values).
+        for name in names:
+            if name.endswith(".xml") and name != part:
+                with archive.open(name) as raw_stream:
+                    checked = _CheckedStream(raw_stream)
+                    while checked.read(65536):
+                        pass
+        selected = set(columns)
+        def scan(strings=None):
+            last, count = 0, 0
+            with archive.open(part) as stream:
+                try:
+                    stack = []
+                    for event, element in ET.iterparse(_CheckedStream(stream), events=("start", "end")):
+                        if event == "start":
+                            stack.append(element); continue
+                        if element.tag != f"{{{MAIN}}}row":
+                            stack.pop()
+                            continue
+                        parent = stack[-2] if len(stack) > 1 else None
+                        stack.pop()
+                        if element.tag != f"{{{MAIN}}}row":
+                            continue
+                        raw_index = element.attrib.get("r", "")
+                        if not re.fullmatch(r"[1-9][0-9]{0,6}", raw_index) or int(raw_index) > 1048576 or int(raw_index) <= last:
+                            reject("XLSX_ROW_LOCATION_INVALID", "Rows must have unique increasing Excel positions.")
+                        last = int(raw_index); values = {}; seen = set()
+                        for cell in element:
+                            if cell.tag != f"{{{MAIN}}}c": continue
+                            reference = cell.attrib.get("r", "")
+                            col = column_index(reference, last, sheet_name)
+                            if col in seen: reject("XLSX_DUPLICATE_CELL", "Duplicate cell position.")
+                            seen.add(col)
+                            if col not in selected: continue
+                            if strings is None:
+                                if cell.attrib.get("t") == "s":
+                                    v = cell.find(f"{{{MAIN}}}v"); raw = v.text if v is not None else None
+                                    if raw is None or not re.fullmatch(r"[0-9]{1,9}", raw): reject("XLSX_SHARED_STRING_INVALID", "Selected shared string index invalid.")
+                                    values[col] = int(raw)
+                            else:
+                                values[col] = cell_value(cell, strings, sheet_name, last)
+                        count += 1
+                        yield last, values
+                        element.clear()
+                        if parent is not None: parent.remove(element)
+                except (ET.ParseError, zipfile.BadZipFile, EOFError):
+                    reject("XLSX_INVALID_XML", "Selected worksheet is malformed or truncated.")
+        # Gather only numeric references, never decode unselected cells or SST values.
+        needed = set()
+        for _, refs in scan(): needed.update(refs.values())
+        strings = {}
+        if needed:
+            if "xl/sharedStrings.xml" not in names: reject("XLSX_SHARED_STRING_INVALID", "Selected shared strings are missing.")
+            with archive.open("xl/sharedStrings.xml") as stream:
+                index = 0
+                try:
+                    stack = []
+                    for event, element in ET.iterparse(_CheckedStream(stream), events=("start", "end")):
+                        if event == "start":
+                            stack.append(element); continue
+                        parent = stack[-2] if len(stack) > 1 else None
+                        stack.pop()
+                        if element.tag == f"{{{MAIN}}}si":
+                            if index in needed:
+                                value = visible_string(element)
+                                if len(value) > MAX_TEXT: reject("XLSX_CELL_TEXT_LIMIT", "Selected shared string exceeds limit.")
+                                strings[index] = value
+                            index += 1; element.clear()
+                            if parent is not None: parent.remove(element)
+                except (ET.ParseError, zipfile.BadZipFile, EOFError):
+                    reject("XLSX_INVALID_XML", "Shared strings malformed or truncated.")
+            if set(strings) != needed: reject("XLSX_SHARED_STRING_INVALID", "Selected shared string index missing.")
+        class SelectedStrings:
+            def __len__(self): return max(needed, default=-1) + 1
+            def __getitem__(self, key): return strings[key]
+        count = 0
+        for row_number, cells in scan(SelectedStrings()):
+            count += 1
+            yield {"event": "row", "sheet": sheet_name, "excelRow": row_number, "cells": cells}
+        after = os.fstat(source.fileno())
+        if (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns) != (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns):
+            reject("XLSX_SOURCE_CHANGED", "Source changed during streaming read.")
+        yield {"event": "eof", "sheet": sheet_name, "rows": count, "dateSystem": "1904" if date in ("1", "true") else "1900"}
+
+
 def main():
     files = []
     issues = []
@@ -379,5 +539,21 @@ def main():
     return 2 if issues else 0
 
 
+def stream_main(args):
+    if len(args) != 3:
+        print(json.dumps({"event": "error", "code": "XLSX_STREAM_ARGUMENTS"}), flush=True)
+        return 2
+    path, sheet_name, selected = args
+    try:
+        if not re.fullmatch(r"[0-9]+(?:,[0-9]+)*", selected):
+            reject("XLSX_PROJECTION_INVALID", "Column indexes must be explicit.")
+        for event in iter_projected_rows(Path(path), sheet_name, tuple(map(int, selected.split(',')))):
+            print(json.dumps(event, ensure_ascii=False, separators=(",", ":")), flush=True)
+        return 0
+    except (XlsxPreflightError, OSError, zipfile.BadZipFile, UnicodeError, RuntimeError):
+        # Never echo selected or unselected business values to stderr or errors.
+        print(json.dumps({"event": "error", "code": "XLSX_STREAM_FAILED"}), flush=True)
+        return 2
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(stream_main(sys.argv[2:]) if sys.argv[1:2] == ["--stream"] else main())
