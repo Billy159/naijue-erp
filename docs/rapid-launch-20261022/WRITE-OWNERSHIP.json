@@ -8644,7 +8644,8 @@
     "controllerOwns": [
       "integration",
       "git commits/push",
-      "TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP"
+      "TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP",
+      "docs/rapid-launch-20261022/APPROVED-CATEGORY-TARGET-REFERENCE-20261102.json"
     ],
     "stages": {
       "formatAdaptation": "IN_PROGRESS",
@@ -8683,9 +8684,20 @@
       "owner": "D1",
       "thread": "01a16161-e65d-7742-8471-4b3c786ed314",
       "model": "gpt-6.1-terra/medium",
-      "sourceWriteEnabled": false,
-      "scope": "existing runtime authentication/least ACL/identity interfaces; exact source changes require registered leaf handoff; no server/DB access",
-      "reportWrite": "existing D1 report subdirectory only"
+      "sourceWriteEnabled": true,
+      "scope": "Exact new26 synthetic-only target successor; old target branches and guards retained; no SQL/schema/server/permission changes; extra leaf requires handoff",
+      "reportWrite": "existing D1 report subdirectory only",
+      "exactLeaves": [
+        "tests/integration/current-runtime26-sales-fixture.ts",
+        "tests/integration/current-runtime26-source-provider.mjs",
+        "tests/integration/current-runtime26-preparation-host.ts",
+        "tests/current-runtime26-full-source-fixture.test.ts",
+        "tests/current-runtime26-source-provider.test.mjs",
+        "tests/current-runtime26-preparation-host.test.ts",
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "scripts/import-v3/production-source-host.mjs",
+        "scripts/import-v3/production-source-host.test.mjs"
+      ]
     },
     "additionalD3ExactLeaves": [
       "scripts/import-v3/tplus-product-source26.mjs",
@@ -8701,6 +8713,7 @@
       "scripts/release/boot-entry.py",
       "scripts/release/rollback-candidate.py"
     ],
-    "controllerSourcePinScope": "Adopt exact already independently reviewed9394 capacity helper bytes; old FULL pins unchanged; no environment/production permission"
+    "controllerSourcePinScope": "Adopt exact already independently reviewed9394 capacity helper bytes; old FULL pins unchanged; no environment/production permission",
+    "syntheticTargetPurpose": "rewrite_schema_20261102_01 OID16387/system7703341807471058958: if synthetic fixture is executed, permanently SYNTHETIC_VALIDATION_ONLY; keep data/evidence; never clean/reuse for actual new-data or production import"
   }
 }

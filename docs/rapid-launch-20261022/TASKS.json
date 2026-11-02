@@ -21897,7 +21897,20 @@
       "role": "D1",
       "thread": "01a16161-e65d-7742-8471-4b3c786ed314",
       "modelRequested": "gpt-6.1-terra/medium",
-      "scope": "read-only exact runtime authentication/least ACL/identity interface inputs; source write lease not yet assigned"
+      "scope": "read-only exact runtime authentication/least ACL/identity interface inputs; source write lease not yet assigned",
+      "sourceWriteLease": [
+        "tests/integration/current-runtime26-sales-fixture.ts",
+        "tests/integration/current-runtime26-source-provider.mjs",
+        "tests/integration/current-runtime26-preparation-host.ts",
+        "tests/current-runtime26-full-source-fixture.test.ts",
+        "tests/current-runtime26-source-provider.test.mjs",
+        "tests/current-runtime26-preparation-host.test.ts",
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "scripts/import-v3/production-source-host.mjs",
+        "scripts/import-v3/production-source-host.test.mjs"
+      ],
+      "current": "8 leased leaves delivered; existing issuer unchanged;96 targeted checks and tsc delivered;fixed independent source review next",
+      "next": "Fixed package independent source review, final least ACL and private fixture/role inputs, T45 bounded execution"
     },
     "effectiveDecisionLimits": [
       "product group is hard boundary; existing SKU identity/code/barcodes retained",
@@ -21964,7 +21977,7 @@
     "currentDependencies": {
       "sizeGroups": "16 native group codes/names;240 sizes; complete membership not yet found in examined source structures; no guessed group or SKU",
       "staffIdentity": "45 original approved source codes match current99;4 approved code-less plans preserved; current role/login/credential/bootstrap subject not yet closed",
-      "runtime": "D1 54 grouped ACL candidates, incomplete/not executable; V8+ issuer exact 3 DELETE/23 xmin/2 cmin requirements; remaining dynamic and lock branches need scoped validation",
+      "runtime": "Original fixture targets do not include new26; D1 exact7-leaf successor authorized, no target wildcard or DB mutation; ordinary role/complete least ACL/private identity fixture/review still pending",
       "sourceTime": "actual batch cutoff/non-atomic coverage not proven; directory12:00 not evidence",
       "stock": "row8 second header identified; true blank totals/fit groups retained pending semantics",
       "sales": "nonblank document key sets match;6 candidate amount differences involve distinct amount headers; no guessed rounding"
@@ -21997,6 +22010,16 @@
       "status": "QB_TARGETED_SOURCE_SYNTHETIC_PASS_DDF74",
       "scope": "Exact observed/approved 9-price headers; unknown parenthetical suffix retained pending; no price-rule change",
       "actualSourceDefectProven": false
+    },
+    "syntheticTargetPurpose": "Existing schema-only new26 becomes synthetic-only once populated, never actual/production data target",
+    "approvedCategoryTargetReference": {
+      "file": "APPROVED-CATEGORY-TARGET-REFERENCE-20261102.json",
+      "sha256": "ec2c0687064b00069af18c29d3ab5c7c7a1d855117bd8550dcd6a4c56669e050",
+      "sourceFrozenFileSha256": "2bd2f70869eb1b6e2beb6e4c2949588ad5f1d6ab6c999926bb7503e4199c00ca",
+      "nodes": 49,
+      "existing2941TargetIdNameParentLevelMatches": true,
+      "notRecoveredOriginalTaxonomyHash": true,
+      "notNativeIdentityAuthority": true
     }
   }
 }

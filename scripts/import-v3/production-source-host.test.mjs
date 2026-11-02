@@ -509,6 +509,18 @@ test('V8 source host accepts only exact metadata profile and keeps original FULL
  for(const patchLevel of [live137HostProfile[1],catalog.patchLevel+'_future'])assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...catalog,patchLevel}},b,prefix),/RUNTIME_REVIEW/);
  assert.throws(()=>validateSourceHostRuntimeReview26({...review,realImportExecutionAuthorized:true},b,prefix),/RUNTIME_REVIEW/);
 });
+test('rewrite sequence-system profile remains bound to one target, OID and direct role',()=>{
+ const {b,m}=v20FullRuntimeFixture();
+ const binding={...b,target:{...b.target,database:'rewrite_schema_20261102_01',role:'schema_runtime_20261102_01'}};
+ const review={...m,target:{...m.target,database:binding.target.database,databaseOid:'16387',actingRole:binding.target.role,sessionUser:binding.target.role},
+  catalog:{...m.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_SEQUENCE_SYSTEM_V1',patchLevel:'26_hv2_history_draft_sequence_system_acl_from_v1'}};
+ const prefix={capture(){}};
+ assert.equal(validateSourceHostRuntimeReview26(review,binding,prefix),undefined);
+ assert.throws(()=>validateSourceHostRuntimeReview26({...review,target:{...review.target,databaseOid:'16388'}},binding,prefix));
+ assert.throws(()=>validateSourceHostRuntimeReview26({...review,target:{...review.target,sessionUser:'other'}},binding,prefix));
+ const other={...binding,target:{...binding.target,database:'another_database'}};
+ assert.throws(()=>validateSourceHostRuntimeReview26({...review,target:{...review.target,database:other.target.database}},other,prefix));
+});
 test('V8 source host without original captured prefix closes before activating the database',async t=>{
  const f=await negativeHost26Fixture(t,completeWriteV8HostProfile[0]);
  await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/PREFIX_REQUIRED/);

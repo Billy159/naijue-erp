@@ -9,6 +9,18 @@ import { captureNativeSourceProvider26 } from '../scripts/import-v3/production-s
 import { stableImportId } from '../packages/application/src/inventory-cutoff-import.ts';
 import { historySettlementRequestHash } from '../packages/application/src/import-v3-history-settlement.ts';
 import { buildCurrentRuntime26SalesBlueprint, CURRENT_SALES_QA_TARGET } from './integration/current-runtime26-sales-fixture.ts';
+
+test('rewrite continuation requires its exact batch, namespace, OID and direct reviewed role', async () => {
+ const f=await import('./integration/current-runtime26-sales-fixture.ts');
+ const b={...binding(),phase:'FULL_SOURCE_CONTINUATION_26_V1',batchId:f.CURRENT_REWRITE_SYNTHETIC_BATCH,fixedSourceNamespace:f.CURRENT_REWRITE_SYNTHETIC_NAMESPACE,
+  target:{...binding().target,database:f.CURRENT_REWRITE_SYNTHETIC_TARGET,role:'schema_runtime_20261102_01',postmasterStartedAt:'2026-11-02T00:00:00.000Z'}};
+ const target={database:b.target.database,databaseOid:'16387',actingRole:b.target.role,sessionUser:b.target.role,
+  serverAddress:b.target.serverAddress,serverPort:b.target.serverPort,postmasterStart:b.target.postmasterStartedAt};
+ module.validateQa22Binding(b);module.validateV7R1Target(target,b);
+ assert.throws(()=>module.validateQa22Binding({...b,batchId:f.CURRENT_LIVE_LEDGER_QA_BATCH}));
+ assert.throws(()=>module.validateV7R1Target({...target,databaseOid:'16388'},b));
+ assert.throws(()=>module.validateV7R1Target({...target,sessionUser:'other'},b));
+});
 import { buildCurrentRuntime26FullSourceFixture } from './integration/current-runtime26-full-source-fixture.ts';
 const sha=s=>createHash('sha256').update(s).digest('hex'),H=c=>c.repeat(64),id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
 const binding=()=>({version:'NATIVE_IMPORT_EXECUTION_26_V1',phase:'FULL_SOURCE_CONTINUATION_26_V1',batchId:'e2dfa367-7cda-42d2-9726-f7cc52124cf1',actorAccountId:id(1),fixedSourceNamespace:'synthetic.qa897.sales.20261029',cutoffAt:'2026-10-29T00:00:00.000Z',selectionSha256:H('2'),authorizedPayloadHash:H('3'),coreReceiptId:id(2),coreSourceDigest:H('4'),target:{database:CURRENT_SALES_QA_TARGET,role:'SYNTHETIC_PREPARATION_ROLE',serverAddress:'127.0.0.1',serverPort:5432,postmasterStartedAt:'synthetic'}});

@@ -10,7 +10,23 @@ import {buildCurrentRuntime26SalesBlueprint,CURRENT_LIVE_LEDGER_QA_TARGET,CURREN
 import {nativeBarcodeSchemeInitializationRows26} from '../packages/application/src/native-barcode-import.ts';
 import {validateCurrentRuntime26PreparationInput as validate,runCurrentRuntime26PreparedPublication as run,CURRENT_PREPARATION_ROLE} from './integration/current-runtime26-preparation-host.ts';
 import type {CurrentRuntime26PreparationInput} from './integration/current-runtime26-preparation-host.ts';
+import {validateRewrite26PreparationInput} from './integration/current-runtime26-preparation-host.ts';
+import {CURRENT_REWRITE_SYNTHETIC_TARGET,CURRENT_REWRITE_SYNTHETIC_BATCH} from './integration/current-runtime26-sales-fixture.ts';
 const H=(c:string)=>c.repeat(64);
+test('rewrite route requires its exact synthetic target, OID, role and external attestation reference',()=>{
+ const old=unitInput(); const blueprint=buildCurrentRuntime26SalesBlueprint({database:CURRENT_REWRITE_SYNTHETIC_TARGET,batchId:CURRENT_REWRITE_SYNTHETIC_BATCH,now:old.blueprint.now,pins:old.blueprint.pins});
+ const target={...(old.bootstrapOptions.binding as any).target,database:blueprint.database,role:'schema_runtime_20261102_01'};
+ const short={batchId:blueprint.batchId,fixedSourceNamespace:blueprint.namespace,cutoffAt:blueprint.now,selectionSha256:blueprint.pins.selectionSha256};
+ const command={...old.schemeInitialization.command,actorAccountId:blueprint.refs.importer.nativeAccountId,batchId:blueprint.batchId,schemeInitialization:{...old.schemeInitialization.command.schemeInitialization,target}};
+ const value={...old,authorization:'CONFIRMED_REWRITE26_SYNTHETIC_PREPARATION_V1' as const,blueprint,expectedDatabaseOid:'16387',targetAttestation:{file:'/UNIT_ATTESTATION',trustedSha256:H('f')},
+  postgres:{...old.postgres,target:{...old.postgres.target,database:blueprint.database,user:target.role,host:'127.0.0.1',port:18641}},
+  bootstrapOptions:{binding:{...(old.bootstrapOptions.binding as object),...short,actorAccountId:blueprint.refs.importer.nativeAccountId,target}},
+  partySourceOptions:{binding:short},catalogueSourceOptions:{binding:short},schemeSourceOptions:{binding:short},schemeInitialization:{...old.schemeInitialization,command}};
+ assert.equal(validateRewrite26PreparationInput(value),undefined);
+ assert.throws(()=>validateRewrite26PreparationInput({...value,expectedDatabaseOid:'16388'}));
+ assert.throws(()=>validateRewrite26PreparationInput({...value,postgres:{...value.postgres,target:{...value.postgres.target,user:'owner'}}}));
+ assert.throws(()=>validateRewrite26PreparationInput({...value,targetAttestation:{file:'/UNIT_ATTESTATION',trustedSha256:'bad'}}));
+});
 function unitInput():CurrentRuntime26PreparationInput{
  const blueprint=buildCurrentRuntime26SalesBlueprint({database:CURRENT_LIVE_LEDGER_QA_TARGET,batchId:CURRENT_LIVE_LEDGER_QA_BATCH,now:'2026-10-31T00:00:00.000Z',pins:{baseManifestSha256:H('1'),selectionSha256:H('2'),approvalSha256:H('3'),occurrenceContractSha256:H('4')}});
  const target={database:blueprint.database,role:CURRENT_PREPARATION_ROLE,serverAddress:null,serverPort:null,postmasterStartedAt:'2026-10-31 00:00:00+00'},binding={batchId:blueprint.batchId,fixedSourceNamespace:blueprint.namespace,cutoffAt:blueprint.now,selectionSha256:blueprint.pins.selectionSha256};

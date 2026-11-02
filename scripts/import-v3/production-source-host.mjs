@@ -343,6 +343,7 @@ const sourceHostPrefixFormats26=new Map([
  ['26_hv2_history_set_guards_complete_write_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V6'],
  ['26_hv2_live_ledger_pairs_complete_write_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V7'],
  ['26_hv2_live_pairs_complete_write_acl_v8_from_v7','EXACT26_RUNTIME_CATALOG_EXPORT_V8'],
+ ['26_hv2_history_draft_sequence_system_acl_from_v1','EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_SEQUENCE_SYSTEM_V1'],
 ]);
 export function validateSourceHostRuntimeReview26(metadata,binding,stagedPrefixBinding26) {
   bag(metadata,['version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
@@ -358,6 +359,7 @@ export function validateSourceHostRuntimeReview26(metadata,binding,stagedPrefixB
   must(metadata.version==='C_NATIVE_RUNTIME26_REVIEW_V1'&&metadata.decision==='ACCEPT_EXACT_RUNTIME26_TARGET_METADATA'
     &&metadata.scope==='EXACT_TARGET_METADATA_ONLY'&&metadata.realImportExecutionAuthorized===false&&catalog.format===(prefixFormat??'EXACT26_RUNTIME_CATALOG_EXPORT_V1')&&hash(metadata.catalog?.sha256)&&approvedPatch,'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   if(metadata.catalog?.patchLevel==='26_hv2_history_set_guards_preparation13_xmin_from_v22')must(binding.target.database==='demo_8877_v7_r1_rehearsal_20261031_01'&&binding.target.role==='v7_r1_prepare_20261031_01'&&metadata.target?.sessionUser===binding.target.role,'IMPORT_SOURCE_HOST26_PREPARATION13_TARGET');
+  if(metadata.catalog?.patchLevel==='26_hv2_history_draft_sequence_system_acl_from_v1')must(binding.target.database==='rewrite_schema_20261102_01'&&metadata.target?.databaseOid==='16387'&&binding.target.role==='schema_runtime_20261102_01'&&metadata.target?.sessionUser===binding.target.role,'IMPORT_SOURCE_HOST26_REWRITE_TARGET');
   const target=bag(metadata.target,['database','databaseOid','actingRole','sessionUser','serverAddress','serverPort','postmasterStart'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW'),b=binding.target;
   must(target.database===b.database&&target.actingRole===b.role&&target.serverAddress===b.serverAddress&&target.serverPort===b.serverPort
     &&target.postmasterStart===b.postmasterStartedAt,'IMPORT_SOURCE_HOST26_RUNTIME_TARGET');

@@ -43,7 +43,7 @@ import { openReviewedTransferLineSource26 } from '../../scripts/import-v3/native
 import { selectProductionContinuation26, stagedPrefixStockRow22, stagedPrefixSkuRecord22 } from '../../scripts/import-v3/production-source-provider26.mjs';
 import { validateSourceHostRuntimeReview26, validateExecutableSourceHostJob26 } from '../../scripts/import-v3/production-source-host.mjs';
 
-import {CURRENT_LIVE_LEDGER_QA_TARGET,CURRENT_LIVE_LEDGER_QA_NAMESPACE,CURRENT_LIVE_LEDGER_QA_BATCH} from './current-runtime26-sales-fixture.ts';
+import {CURRENT_LIVE_LEDGER_QA_TARGET,CURRENT_LIVE_LEDGER_QA_NAMESPACE,CURRENT_LIVE_LEDGER_QA_BATCH,CURRENT_REWRITE_SYNTHETIC_TARGET,CURRENT_REWRITE_SYNTHETIC_NAMESPACE,CURRENT_REWRITE_SYNTHETIC_BATCH} from './current-runtime26-sales-fixture.ts';
 
 export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1';
 export const sourceGroups=Object.freeze([...HISTORY_CLOSURE_SOURCE_GROUPS]);
@@ -62,12 +62,14 @@ const revive=(_k,v)=>v&&typeof v==='object'&&Object.keys(v).length===1&&Object.h
 export function validateQa22Binding(binding){
  must(binding?.version==='NATIVE_IMPORT_EXECUTION_26_V1'&&binding.phase==='FULL_SOURCE_CONTINUATION_26_V1','BINDING');
  const old=binding.target?.database===TARGET;
- must(old||binding.target?.database===CURRENT_LIVE_LEDGER_QA_TARGET,'TARGET');
- must(binding.batchId===(old?BATCH:CURRENT_LIVE_LEDGER_QA_BATCH)&&binding.fixedSourceNamespace===(old?NAMESPACE:CURRENT_LIVE_LEDGER_QA_NAMESPACE),'TARGET');
+ const rewrite=binding.target?.database===CURRENT_REWRITE_SYNTHETIC_TARGET;
+ must(old||rewrite||binding.target?.database===CURRENT_LIVE_LEDGER_QA_TARGET,'TARGET');
+ must(binding.batchId===(old?BATCH:rewrite?CURRENT_REWRITE_SYNTHETIC_BATCH:CURRENT_LIVE_LEDGER_QA_BATCH)&&binding.fixedSourceNamespace===(old?NAMESPACE:rewrite?CURRENT_REWRITE_SYNTHETIC_NAMESPACE:CURRENT_LIVE_LEDGER_QA_NAMESPACE),'TARGET');
  must(hash(binding.selectionSha256)&&hash(binding.authorizedPayloadHash)&&hash(binding.coreSourceDigest)&&binding.authorizedPayloadHash!==binding.coreSourceDigest,'FULL_SOURCE_REQUIRED');
  must(typeof binding.coreReceiptId==='string'&&typeof binding.actorAccountId==='string','CORE_BINDING');
 }
-const isV7=b=>b?.target?.database===CURRENT_LIVE_LEDGER_QA_TARGET;
+const isRewrite=b=>b?.target?.database===CURRENT_REWRITE_SYNTHETIC_TARGET;
+const isV7=b=>b?.target?.database===CURRENT_LIVE_LEDGER_QA_TARGET||isRewrite(b);
 /** trustedTarget comes from the independently pinned registered-job runtime
  * review, never from the capture/money/input document it is compared against. */
 export function validateV7R1Target(target,binding){
@@ -75,6 +77,7 @@ export function validateV7R1Target(target,binding){
  bag(target,['database','databaseOid','actingRole','sessionUser','serverAddress','serverPort','postmasterStart'],'V7_R1_EXTERNAL_TARGET_REQUIRED');
  const b=binding.target;
  must(target.database===b.database&&typeof target.databaseOid==='string'&&/^[1-9]\d*$/.test(target.databaseOid)&&target.databaseOid!=='21551'
+  &&(!isRewrite(binding)||(target.databaseOid==='16387'&&target.actingRole==='schema_runtime_20261102_01'&&target.actingRole===target.sessionUser))
   &&target.actingRole===b.role&&typeof target.actingRole==='string'&&target.actingRole.length>0&&typeof target.sessionUser==='string'&&target.sessionUser.length>0
   &&target.serverAddress===b.serverAddress&&target.serverPort===b.serverPort&&target.postmasterStart===b.postmasterStartedAt
   &&typeof target.postmasterStart==='string'&&Number.isFinite(Date.parse(target.postmasterStart)),'V7_R1_TARGET');return target;
@@ -110,7 +113,7 @@ export async function openReviewedQa22Capture(recipe,binding,signal,trustedTarge
  validateQa22Binding(binding);bag(recipe,['mode','review','records','originals','canonicalCsv','nativeBindings']);must(recipe.mode==='QA_CAPTURE','CAPTURE_MODE');
  const files=new Inputs(signal);try{
   const review=await files.json(recipe.review);bag(review,['version','decision','binding','entity','records','originals','canonicalCsv','nativeBindings','independentReview','realImportExecutionAuthorized',...(isV7(binding)?['target']:[])]);
-  must(review.version===(isV7(binding)?'C_V7_R1_CAPTURE_SOURCE26_REVIEW_V1':'C_QA897_CAPTURE_SOURCE26_REVIEW_V1')&&review.decision==='ACCEPT_EXACT_SOURCE_NATIVE_PROJECTIONS'&&review.realImportExecutionAuthorized===false&&equal(review.binding,short(binding))&&['BARCODE','SALES_HEADER'].includes(review.entity),'CAPTURE_REVIEW');
+  must(review.version===(isRewrite(binding)?'C_REWRITE26_CAPTURE_SOURCE26_REVIEW_V1':isV7(binding)?'C_V7_R1_CAPTURE_SOURCE26_REVIEW_V1':'C_QA897_CAPTURE_SOURCE26_REVIEW_V1')&&review.decision==='ACCEPT_EXACT_SOURCE_NATIVE_PROJECTIONS'&&review.realImportExecutionAuthorized===false&&equal(review.binding,short(binding))&&['BARCODE','SALES_HEADER'].includes(review.entity),'CAPTURE_REVIEW');
   if(isV7(binding))must(equal(review.target,trustedTarget),'V7_R1_CAPTURE_TARGET');
   for(const k of ['records','originals','canonicalCsv','nativeBindings'])must(equal(review[k],recipe[k]),'CAPTURE_REVIEW');
   const qb=await files.json(review.independentReview);must(qb.result==='PASS'&&qb.recordsSha256===recipe.records.sha256&&qb.originalsSha256===recipe.originals.sha256&&qb.nativeBindingsSha256===recipe.nativeBindings.sha256,'CAPTURE_QB');
@@ -181,7 +184,7 @@ export async function createQa22SourceSession({inputFile,trustedInputSha256,exec
  try{
   const inputStat=await lstat(inputFile),input=await files.json({path:inputFile,bytes:inputStat.size,sha256:trustedInputSha256});
   bag(input,['version','binding','core','closureScope','warehouses','producers','productEvidence','coreProjection','initialization','preparation','money','executionAuthorization',...(isV7(binding)?['target']:[])]);
-  must(input.version===(isV7(binding)?'V7_R1_FULL_SOURCE_PROVIDER26_INPUT_V1':'QA897_FULL_SOURCE_PROVIDER26_INPUT_V1')&&equal(input.binding,binding),'INPUT_BINDING');bag(input.producers,sourceGroups);must(input.executionAuthorization.sha256===executionAuthorizationSha256,'C_EXECUTION_PIN');
+  must(input.version===(isRewrite(binding)?'REWRITE26_FULL_SOURCE_PROVIDER26_INPUT_V1':isV7(binding)?'V7_R1_FULL_SOURCE_PROVIDER26_INPUT_V1':'QA897_FULL_SOURCE_PROVIDER26_INPUT_V1')&&equal(input.binding,binding),'INPUT_BINDING');bag(input.producers,sourceGroups);must(input.executionAuthorization.sha256===executionAuthorizationSha256,'C_EXECUTION_PIN');
   const {executionAuthorization:_authorization,...data}=input,dataDigest=historySettlementRequestHash(data),grant=await files.json(input.executionAuthorization);
   bag(grant,['version','decision','issuingAuthority','realImportExecutionAuthorized','job','sourceInputDigest','groups','mainCommands']);
   must(grant.version==='C_PRODUCTION_SOURCE_EXECUTION26_AUTHORIZATION_V1'&&grant.decision==='AUTHORIZE_EXACT_REGISTERED_FULL_SOURCE_EXECUTION'&&grant.issuingAuthority==='C'&&grant.realImportExecutionAuthorized===true&&grant.sourceInputDigest===dataDigest&&equal([...grant.groups].sort(),[...sourceGroups].sort()),'C_EXECUTION_SCOPE');
@@ -246,4 +249,4 @@ export async function createQa22SourceSession({inputFile,trustedInputSha256,exec
    },close};
  }catch(error){try{await close();}catch(c){throw new AggregateError([error,c],'QA897 construction/close');}throw error;}
 }
-export async function openSourceSession(context){const v7=isV7(context.binding);return createQa22SourceSession({...context,inputFile:process.env[v7?'NAIJUE_V7_R1_SOURCE_INPUT_FILE':'NAIJUE_QA897_SOURCE_INPUT_FILE'],trustedInputSha256:process.env[v7?'NAIJUE_V7_R1_SOURCE_INPUT_SHA256':'NAIJUE_QA897_SOURCE_INPUT_SHA256'],executionAuthorizationSha256:process.env.NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256});}
+export async function openSourceSession(context){const v7=isV7(context.binding),rewrite=isRewrite(context.binding);return createQa22SourceSession({...context,inputFile:process.env[rewrite?'NAIJUE_REWRITE26_SOURCE_INPUT_FILE':v7?'NAIJUE_V7_R1_SOURCE_INPUT_FILE':'NAIJUE_QA897_SOURCE_INPUT_FILE'],trustedInputSha256:process.env[rewrite?'NAIJUE_REWRITE26_SOURCE_INPUT_SHA256':v7?'NAIJUE_V7_R1_SOURCE_INPUT_SHA256':'NAIJUE_QA897_SOURCE_INPUT_SHA256'],executionAuthorizationSha256:process.env.NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256});}

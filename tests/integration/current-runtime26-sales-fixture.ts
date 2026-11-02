@@ -48,6 +48,9 @@ export const CURRENT_SALES_QA_NAMESPACE = "synthetic.qa897.sales.20261029";
 export const CURRENT_LIVE_LEDGER_QA_TARGET = "demo_8877_v7_r1_rehearsal_20261031_01";
 export const CURRENT_LIVE_LEDGER_QA_NAMESPACE = "synthetic.v7r1.ledger.20261031";
 export const CURRENT_LIVE_LEDGER_QA_BATCH = stableImportId('batch', CURRENT_LIVE_LEDGER_QA_NAMESPACE, 'FULL_SOURCE', 'V1');
+export const CURRENT_REWRITE_SYNTHETIC_TARGET = 'rewrite_schema_20261102_01';
+export const CURRENT_REWRITE_SYNTHETIC_NAMESPACE = 'synthetic.rewrite26.acl.20261102';
+export const CURRENT_REWRITE_SYNTHETIC_BATCH = stableImportId('batch', CURRENT_REWRITE_SYNTHETIC_NAMESPACE, 'FULL_SOURCE', 'V1');
 /** Exactly two test scenes, never arbitrary databases or production targets.
  * QA897 keeps its original data/defaults; the new batch has separate identities.
  */
@@ -55,6 +58,11 @@ export function currentRuntime26SyntheticScope(database: string, batchId?: strin
   if (database === CURRENT_SALES_QA_TARGET) return {isNew:false, database:CURRENT_SALES_QA_TARGET,
     namespace:CURRENT_SALES_QA_NAMESPACE, tag:'QA897', root:'synthetic:qa897',
     version:'SYNTHETIC_QA897_CURRENT_SALES_BLUEPRINT_V1'} as const;
+  if (database === CURRENT_REWRITE_SYNTHETIC_TARGET) {
+    if (batchId !== undefined) assert.equal(batchId, CURRENT_REWRITE_SYNTHETIC_BATCH, 'Exact synthetic batch required');
+    return {isNew:true, database:CURRENT_REWRITE_SYNTHETIC_TARGET, namespace:CURRENT_REWRITE_SYNTHETIC_NAMESPACE,
+      tag:'RW26',root:'synthetic:rewrite26-20261102',version:'SYNTHETIC_REWRITE26_ACL_BLUEPRINT_V1'} as const;
+  }
   assert.equal(database,CURRENT_LIVE_LEDGER_QA_TARGET,'Only the exact new synthetic candidate is supported');
   if(batchId!==undefined)assert.equal(batchId,CURRENT_LIVE_LEDGER_QA_BATCH,'New target cannot borrow old batch identity');
   return {isNew:true,database:CURRENT_LIVE_LEDGER_QA_TARGET,namespace:CURRENT_LIVE_LEDGER_QA_NAMESPACE,
@@ -68,7 +76,7 @@ export interface CurrentSalesSourcePins {
   readonly occurrenceContractSha256: string;
 }
 export interface CurrentSalesBlueprintOptions {
-  readonly database: typeof CURRENT_SALES_QA_TARGET | typeof CURRENT_LIVE_LEDGER_QA_TARGET;
+  readonly database: typeof CURRENT_SALES_QA_TARGET | typeof CURRENT_LIVE_LEDGER_QA_TARGET | typeof CURRENT_REWRITE_SYNTHETIC_TARGET;
   readonly batchId: string;
   readonly now: string;
   /** External real source/review pins; these do not authorize execution alone. */
@@ -212,6 +220,19 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
       "Original scheme initialization command/provider and exact current A01/P02 maintained host; no old schema11/B07 packet"] };
 }
 export type CurrentSalesBlueprint = ReturnType<typeof buildCurrentRuntime26SalesBlueprint>;
+
+/** Non-secret candidate identities only. Private credentials and independent
+ * review remain with the original bootstrap inputs; this is not a factory of
+ * executable account captures or authorization. */
+export function rewrite26SyntheticIdentityCandidates(blueprint: CurrentSalesBlueprint) {
+  assert.equal(blueprint.database, CURRENT_REWRITE_SYNTHETIC_TARGET);
+  assert.equal(blueprint.batchId, CURRENT_REWRITE_SYNTHETIC_BATCH);
+  assert.equal(blueprint.namespace, CURRENT_REWRITE_SYNTHETIC_NAMESPACE);
+  assert.equal(blueprint.accountIdentities.length, 49);
+  return { version: 'REWRITE26_SYNTHETIC_IDENTITY_CANDIDATES_V1' as const,
+    executionAuthorized: false as const, database: blueprint.database, batchId: blueprint.batchId,
+    fixedSourceNamespace: blueprint.namespace, accounts: structuredClone(blueprint.accountIdentities) };
+}
 
 interface OriginalBootstrap26 {
   readonly command: CoreStageCommand;

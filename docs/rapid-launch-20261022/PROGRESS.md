@@ -1,3 +1,17 @@
+### 原D1固定新26合成接缝交付，分类目标证据已找到
+
+D1原租约8叶交付：新合成目标独立namespace/batch、blueprint 49非秘密候选、原provider/review及OID/普通角色绑定、137函数当前profile preparation host和source-host识别。旧issuer源码未改，旧目标/拒绝守卫保留；4套定向96/96及tsc通过为开发自检，固定后交原QB，尚未PG执行或授权。缺49私域source/45+4合法plan/独立review及完整ordinary ACL，D1继续接缝，T45唯一执行者。
+
+主控从冻结b8bcfe3的authority/current/frontend/product-master.js字面树提取49原分类目标（源SHA2bd2f708…00ca），与旧固定2941决策逐行target_id/name/parent/level全部吻合。非业务引用APPROVED-CATEGORY-TARGET-REFERENCE-20261102.json SHAec2c0687…e050已交D3，可按精确目标code补30路径，不能用旧规范商品表推翻更晚裁决。未恢复原taxonomy8d2…文件，不把Demo目标ID当native授权；原Demo只读。
+
+D3两叶继续合批修复QB三项及规则消费，仍WIP未验；不把旧2907等已过期候选当当前结果。所有本批数据库导入/部署/线上业务仍未执行。
+
+### 隔离载体用途与原D1源码接缝已收束
+
+既有新26空结构若用于49合成身份/115往来/22仓及首次发布，将占用唯一CORE批次；主控明确仅作为合成验证载体保留，绝不删除合成资料后冒真实导入库。正式新数据目标另在准确导入/上线清单固定。当前没有执行该夹具或新环境作业。
+
+原fixture只支持旧QA897/V7r1，D1已定位最小后继：主控已核7叶无在途改动，按WRITE-OWNERSHIP交原D1唯一写入，Terra/medium实现固定新26合成目标、原provider/prepare接线与必要定向测试；旧目标/守卫保留，不通配DB、不变更SQL或结构、不据此实际授权。D3继续商品来源及原consumer，源固定/独立审查与T45准确窗口另按实际包推进，不让缺角色材料成为反复报告循环。
+
 ### 已关闭价位误映；分类证据未知保持待核
 
 QB固定ddf74对价位精确语义定向通过，采用不重跑。新发现分类代码用历史说明未含“尺码”判输入无关，此推断不成立。D3现删除关键词排除：原记录字段不同或不可读均PENDING，且不返回目标ID；公式无缓存反例及分类规范化引用定向2项Node24.21通过，待固定独立复验。

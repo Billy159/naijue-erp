@@ -2,6 +2,22 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { buildCurrentRuntime26SalesBlueprint, CURRENT_SALES_QA_TARGET } from './integration/current-runtime26-sales-fixture.ts';
+
+test('dedicated rewrite synthetic scope is fixed and disjoint from the prior batch', async () => {
+ const m = await import('./integration/current-runtime26-sales-fixture.ts');
+ const pins={baseManifestSha256:'1'.repeat(64),selectionSha256:'2'.repeat(64),approvalSha256:'3'.repeat(64),occurrenceContractSha256:'4'.repeat(64)};
+ const b=m.buildCurrentRuntime26SalesBlueprint({database:m.CURRENT_REWRITE_SYNTHETIC_TARGET,batchId:m.CURRENT_REWRITE_SYNTHETIC_BATCH,now:'2026-11-02T00:00:00.000Z',pins});
+ assert.equal(b.accountIdentities.length,49); assert.equal(b.parties.length,115);
+ assert.equal(b.parties.filter(x=>x.source.entityType==='WAREHOUSE').length,22);
+ const candidate=m.rewrite26SyntheticIdentityCandidates(b);
+ assert.equal(candidate.executionAuthorized,false); assert.equal(candidate.accounts.length,49);
+ assert.doesNotMatch(JSON.stringify(candidate),/password|credential|loginName/i);
+ const full=await buildCurrentRuntime26FullSourceFixture(b);
+ assert.equal(full.executionAuthorized,false);assert.equal(full.warehouseScope.length,22);
+ assert.notEqual(b.batchId,m.CURRENT_LIVE_LEDGER_QA_BATCH);
+ assert.throws(()=>m.currentRuntime26SyntheticScope(m.CURRENT_REWRITE_SYNTHETIC_TARGET,m.CURRENT_LIVE_LEDGER_QA_BATCH));
+ assert.throws(()=>m.currentRuntime26SyntheticScope('rewrite_schema_20261102_02'));
+});
 import { buildCurrentRuntime26FullSourceFixture, validateCurrentRuntime26FullSourceFixture, buildCurrentRuntime26FullClosureExpected, prepareCurrentRuntime26MoneyBranch } from './integration/current-runtime26-full-source-fixture.ts';
 import { prepareNativeStockGroup } from '../packages/application/src/native-stock-contributor-import.ts';
 import { prepareV3HistoryChunk } from '../packages/application/src/import-v3-history-staging.ts';
