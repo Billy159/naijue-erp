@@ -198,12 +198,29 @@ export function rewrite26SyntheticSourceByteCandidates(f: CurrentRuntime26FullSo
    ...b.partyArtifacts.map(v=>({entity:v.entity,path:v.fileRef,utf8:v.utf8,bytes:Buffer.byteLength(v.utf8,'utf8'),sha256:v.sha256,
      rows:b.parties.filter(row=>row.source.entityType===v.entity).length}))].sort((a,b)=>a.path.localeCompare(b.path));
  assert.equal(new Set(tables.map(v=>v.path)).size,tables.length);
+ // Derive audit candidates from actual signed contributors and explicit targets.
+ const lines=f.stockInput.contributors.map(c=>c.lineage), stock=f.stockInput.canonicalStock;
+ assert.equal(lines.length,2);assert.ok(lines.every(l=>l.warehouseSourceId===stock.仓库来源编号 && l.canonicalStockRowSourceId===stock.来源编号 && l.canonicalSkuSourceId===stock.SKU来源编号 && l.productSourceId===lines[0]!.productSourceId && l.sourceUnit===lines[0]!.sourceUnit));
+ const input=lines.reduce((sum,l)=>sum+BigInt(l.signedQuantity),0n),output=BigInt(stock.核准库存数量);
+ assert.equal(input,output);assert.equal(f.stockConservation.warehouseUnits.length,1);
+ const unit=f.stockConservation.warehouseUnits[0]!;assert.equal(unit.warehouseSourceKey,stock.仓库来源编号);assert.equal(unit.sourceUnit,lines[0]!.sourceUnit);assert.equal(BigInt(unit.signedQuantity),output);
+ const unitAudit=mappingCsv('audit/independent-verification/warehouse-unit-reconciliation.csv',[{warehouse:unit.warehouseSourceKey,unit:unit.sourceUnit,before:input.toString(),after:unit.signedQuantity,difference:(input-BigInt(unit.signedQuantity)).toString()}]);
+ const productAudit=mappingCsv('audit/warehouse-product-stock-conservation.csv',[{warehouseSourceId:stock.仓库来源编号,productSourceId:lines[0]!.productSourceId,inputSignedQuantity:input.toString(),outputSignedQuantity:output.toString(),exactDifference:(input-output).toString()}]);
+ const warehouseAudit=mappingCsv('audit/independent-verification/all-53-warehouses.csv',f.warehouseScope.map(w=>{
+   const party=b.parties.find(p=>p.source.entityType==='WAREHOUSE' && p.source.sourceKey===w.sourceKey);assert.ok(party);
+   const before=lines.filter(l=>l.warehouseSourceId===w.sourceKey).reduce((sum,l)=>sum+BigInt(l.signedQuantity),0n),after=BigInt(w.signedQuantity);assert.equal(before,after);
+   return {warehouse:w.sourceKey,name:String(party.nativeSnapshot.name),before:before.toString(),after:after.toString(),difference:(before-after).toString()};
+ }));
+ const jsonArtifact=(path:string,value:unknown,rows:number)=>{const utf8=JSON.stringify(value);return {path,utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8),rowCount:rows};};
+ // The only synthetic history customer is present in the normal customer table.
+ assert.ok(b.parties.some(p=>p.source.entityType==='CUSTOMER' && p.source.sourceKey===f.salesHeaderInput.source.normalizedFields['客户来源编号']));
+ const auxiliaryFiles=[jsonArtifact('schema/normalized-business-columns.json',IMPORT_V2_TABLES,IMPORT_V2_TABLES.length),jsonArtifact('dictionaries/historical-customers.json',[],0),f.aliasArtifact,f.lineageArtifact,unitAudit,productAudit,warehouseAudit];
  const catalogue={logicalPath:b.catalogueArtifact.fileRef,utf8:b.catalogueArtifact.utf8,
    bytes:Buffer.byteLength(b.catalogueArtifact.utf8,'utf8'),sha256:b.catalogueArtifact.sha256};
- for(const item of [...originals,...tables,catalogue]) {
+ for(const item of [...originals,...tables,...auxiliaryFiles,catalogue]) {
    assert.equal(item.bytes,Buffer.byteLength(item.utf8,'utf8'));assert.equal(item.sha256,sha(item.utf8));
  }
- const payloadFiles=tables.map(v=>({file:v.path,bytes:v.bytes,sha256:v.sha256}));
+ const payloadFiles=[...tables,...auxiliaryFiles].map(v=>({file:v.path,bytes:v.bytes,sha256:v.sha256}));
  const sourcePins=[...originals.map(v=>[v.logicalPath,v.sha256] as const),
    ...b.partyArtifacts.map(v=>[v.fileRef,v.sha256] as const),[catalogue.logicalPath,catalogue.sha256] as const];
  assert.equal(new Set(sourcePins.map(([path])=>path)).size,sourcePins.length);
@@ -213,7 +230,7 @@ export function rewrite26SyntheticSourceByteCandidates(f: CurrentRuntime26FullSo
  const omitted=IMPORT_V2_TABLES.filter(t=>!tables.some(v=>v.entity===t.entity)).map(t=>({entity:t.entity,path:t.file}));
  return {kind:'UNREVIEWED_SYNTHETIC_BYTE_CANDIDATES_V1' as const,executionAuthorized:false as const,
    database:b.database,batchId:b.batchId,fixedSourceNamespace:b.namespace,syntheticTime:b.now,
-   originals,tables,catalogue,manifestCandidate:{utf8:manifestUtf8,bytes:Buffer.byteLength(manifestUtf8,'utf8'),sha256:sha(manifestUtf8),
+   originals,tables,auxiliaryFiles,catalogue,manifestCandidate:{utf8:manifestUtf8,bytes:Buffer.byteLength(manifestUtf8,'utf8'),sha256:sha(manifestUtf8),
      completeV2Preflight:false as const,omittedBusinessTables:omitted},
    selectionCandidate:{state:'UNREVIEWED_NOT_A_SELECTION_SCHEMA' as const,source:'BASE_V2' as const,
      files:tables.map(v=>({entity:v.entity,path:v.path,bytes:v.bytes,sha256:v.sha256,rows:v.rows})),
