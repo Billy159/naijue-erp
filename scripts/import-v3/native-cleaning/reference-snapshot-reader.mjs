@@ -58,13 +58,26 @@ export function readLegacyReferenceTables(client, options) {
   return readFixedLegacyTableSet(client, legacyReferenceTables, options);
 }
 
+/** Exact missing inputs used by original SALE/TRANSFER currentSourceBinding
+ * consumers. Original source records stay opaque private JSON, not CSV evidence
+ * or automatically authorized historical identities. No authentication tables. */
+export const legacySourceProofTables = Object.freeze([
+  Object.freeze({table:'erp_prod_source.import_batch',keys:Object.freeze(['id']),keyKind:'PRIMARY_KEY'}),
+  Object.freeze({table:'erp_prod_source.source_record',keys:Object.freeze(['id']),keyKind:'PRIMARY_KEY'}),
+]);
+export function readLegacySourceProofTables(client, {pageRows,onSourceProof,signal}) {
+  return readFixedLegacyTableSet(client, legacySourceProofTables, {
+    pageRows,onReferences:onSourceProof,signal,cursorPrefix:'cleaning_source_proof',progressProperty:'sourceProofSnapshotProgress',
+  });
+}
+
 /** Internal reuse for fixed catalogue-derived table lists, inside the caller's RRRO.
  * This does not authorize arbitrary callers or establish target identity/permissions.
  */
 export async function readFixedLegacyTableSet(client, specifications, {pageRows, onReferences, signal, cursorPrefix = 'cleaning_reference', progressProperty = 'referenceSnapshotProgress'}) {
   if (!Number.isSafeInteger(pageRows) || pageRows < 1 || pageRows > 500) throw new Error('INVALID_REFERENCE_PAGE_SIZE');
   if (typeof onReferences !== 'function') throw new Error('REFERENCE_SNAPSHOT_SINK_REQUIRED');
-  if (!['referenceSnapshotProgress', 'inventorySnapshotProgress'].includes(progressProperty)
+  if (!['referenceSnapshotProgress', 'inventorySnapshotProgress', 'sourceProofSnapshotProgress'].includes(progressProperty)
     || !/^[a-z_]+$/.test(cursorPrefix) || !Array.isArray(specifications) || !specifications.length
     || new Set(specifications.map(row => row.table)).size !== specifications.length
     || specifications.some(row => !/^erp_prod_(source|runtime)\.[a-z_]+$/.test(row.table)

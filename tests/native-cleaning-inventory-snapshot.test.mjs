@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {legacyReferenceTables, readFixedLegacyTableSet} from '../scripts/import-v3/native-cleaning/reference-snapshot-reader.mjs';
+import {legacyReferenceTables,legacySourceProofTables, readFixedLegacyTableSet} from '../scripts/import-v3/native-cleaning/reference-snapshot-reader.mjs';
 import {legacyInventoryEffectTables} from '../scripts/import-v3/native-cleaning/inventory-effect-snapshot-reader.mjs';
-import {readLegacyCleaningSnapshot} from '../scripts/import-v3/native-cleaning/document-snapshot-reader.mjs';
+import {readLegacyCleaningSnapshot,readLegacyCleaningWithSourceProofSnapshot} from '../scripts/import-v3/native-cleaning/document-snapshot-reader.mjs';
 
 function database({tables = {}, counts = {}, failSql} = {}) {
   const calls = [], positions = new Map(); let connections = 0;
@@ -18,8 +18,8 @@ function database({tables = {}, counts = {}, failSql} = {}) {
       if (sql.startsWith('FETCH')) {
         const cursor = sql.split(' ').at(-1), size = Number(sql.split(' ')[2]), offset = positions.get(cursor) ?? 0;
         positions.set(cursor, offset + size);
-        const match = /^cleaning_(reference|inventory_effect)_(\d+)$/.exec(cursor);
-        const rows = match ? tables[(match[1] === 'reference' ? legacyReferenceTables : legacyInventoryEffectTables)[Number(match[2])].table] ?? []
+        const match = /^cleaning_(reference|inventory_effect|source_proof)_(\d+)$/.exec(cursor);
+        const rows = match ? tables[({reference:legacyReferenceTables,inventory_effect:legacyInventoryEffectTables,source_proof:legacySourceProofTables})[match[1]][Number(match[2])].table] ?? []
           : [{source_document_id: 'synthetic', source_revision: '2', raw_json: '{"version":3,"active_effect_revision":1}'}];
         return {rows: rows.slice(offset, offset + size)};
       }
@@ -29,6 +29,40 @@ function database({tables = {}, counts = {}, failSql} = {}) {
 }
 const row = (keys, raw_json) => ({source_key_json: JSON.stringify(keys), raw_json});
 const sinks = {pageRows: 1, onInventory: async () => {}, onReferences: async () => {}, onDocuments: async () => {}, onRevisions: async () => {}};
+
+test('new source proof capture shares exactly one RR with all93 scopes, without changing original entry', async () => {
+  const source=row(['proof-row'],'{"raw_value":{"amount":9007199254740993.1234}}'), seen=[];
+  const db=database({tables:{'erp_prod_source.source_record':[source]}});
+  const result=await readLegacyCleaningWithSourceProofSnapshot(db.pool,{...sinks,onSourceProof:async(table,rows)=>seen.push(...rows)});
+  assert.equal(result.status,'COMPLETE_SCOPED_LEGACY_CLEANING_WITH_SOURCE_PROOF_SNAPSHOT');
+  assert.deepEqual(seen,[source]);assert.equal(result.sourceProof.length,2);
+  assert.ok(result.sourceProof.every(x=>x.eofObserved&&x.expected===x.rowsRead));
+  assert.equal(db.connections,1);assert.equal(db.calls.filter(x=>typeof x==='string'&&x.startsWith('BEGIN')).length,1);
+  assert.equal(db.calls.filter(x=>x==='ROLLBACK').length,1);
+  assert.equal(result.references.length+result.inventory.length+result.sourceProof.length+2,95);
+  const old=database();await readLegacyCleaningSnapshot(old.pool,sinks);
+  assert.equal(old.calls.some(x=>typeof x==='string'&&x.includes('source_record')),false);
+});
+
+test('source proof COUNT/duplicate/sink failures stop the whole cohort and never expose raw proof in progress', async () => {
+  const table='erp_prod_source.source_record',source=row(['proof-row'],'{"private":"sentinel"}');
+  for(const config of [{tables:{[table]:[source]},counts:{[table]:'2'}},{tables:{[table]:[source,source]}}]) {
+    const db=database(config);
+    await assert.rejects(readLegacyCleaningWithSourceProofSnapshot(db.pool,{...sinks,onSourceProof:async()=>{}}),e=>{
+      assert.ok(e.sourceProofSnapshotProgress);assert.equal(JSON.stringify(e.sourceProofSnapshotProgress).includes('sentinel'),false);return true;
+    });
+    assert.equal(db.calls.at(-2),'ROLLBACK');
+    assert.equal(db.calls.some(x=>typeof x==='string'&&/DECLARE cleaning_(reference|documents|inventory)/.test(x)),false);
+  }
+  const db=database({tables:{[table]:[source]}});
+  await assert.rejects(readLegacyCleaningWithSourceProofSnapshot(db.pool,{...sinks,onSourceProof:async()=>{throw Error('SINK_FAILED');}}),/SINK_FAILED/);
+  assert.equal(db.calls.at(-2),'ROLLBACK');
+});
+
+test('source proof callback must exist before taking the shared connection', async () => {
+  const db=database();await assert.rejects(readLegacyCleaningWithSourceProofSnapshot(db.pool,sinks),/SOURCE_PROOF_SNAPSHOT_SINK_REQUIRED/);
+  assert.equal(db.connections,0);
+});
 
 test('43 inventory/effect scopes share the reference/document snapshot without posting or deriving zeros', async () => {
   const table = 'erp_prod_runtime.inventory_stock_member';

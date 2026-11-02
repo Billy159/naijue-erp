@@ -1,4 +1,4 @@
-import {readLegacyReferenceTables} from './reference-snapshot-reader.mjs';
+import {readLegacyReferenceTables,readLegacySourceProofTables} from './reference-snapshot-reader.mjs';
 
 /** Read original headers and every revision in one PostgreSQL snapshot.
  * JSON stays text: JS number/date conversion must not change source facts.
@@ -23,9 +23,16 @@ export function readLegacyCleaningSnapshot(pool, options) {
   return readLegacySnapshot(pool, options, true, true);
 }
 
+/** New whole-cohort capture, never an append to a completed earlier snapshot.
+ * Adds original observation/batch proofs in the very same RR transaction.
+ * Still excludes authentication and does not validate or promote display IDs. */
+export function readLegacyCleaningWithSourceProofSnapshot(pool, options) {
+  return readLegacySnapshot(pool, options, true, true, true);
+}
+
 async function readLegacySnapshot(pool, {
-  pageRows = 100, onDocuments, onRevisions, onReferences, onInventory, signal,
-}, includeReferences, includeInventory = false) {
+  pageRows = 100, onDocuments, onRevisions, onReferences, onInventory, onSourceProof, signal,
+}, includeReferences, includeInventory = false, includeSourceProof = false) {
   if (!Number.isSafeInteger(pageRows) || pageRows < 1 || pageRows > 500) {
     throw new Error('INVALID_DOCUMENT_PAGE_SIZE');
   }
@@ -34,6 +41,7 @@ async function readLegacySnapshot(pool, {
   }
   if (includeReferences && typeof onReferences !== 'function') throw new Error('REFERENCE_SNAPSHOT_SINK_REQUIRED');
   if (includeInventory && typeof onInventory !== 'function') throw new Error('INVENTORY_SNAPSHOT_SINK_REQUIRED');
+  if (includeSourceProof && typeof onSourceProof !== 'function') throw new Error('SOURCE_PROOF_SNAPSHOT_SINK_REQUIRED');
   const client = await pool.connect();
   let transaction = false, releaseError;
   const progress = {
@@ -63,6 +71,8 @@ async function readLegacySnapshot(pool, {
     if (identity?.read_only !== 'on' || identity.isolation !== 'repeatable read') {
       throw new Error('DOCUMENT_READONLY_SNAPSHOT_REQUIRED');
     }
+    const sourceProof = includeSourceProof
+      ? await readLegacySourceProofTables(client, {pageRows,onSourceProof,signal}) : undefined;
     // Load this additional fixed scope only for its explicit entry point. Existing
     // document/reference deployments do not acquire an unused module dependency.
     const inventory = includeInventory
@@ -128,13 +138,15 @@ async function readLegacySnapshot(pool, {
     active();
     await client.query('ROLLBACK');
     transaction = false;
-    return { status: includeInventory ? 'COMPLETE_SCOPED_LEGACY_CLEANING_SNAPSHOT'
+    return { status: includeSourceProof ? 'COMPLETE_SCOPED_LEGACY_CLEANING_WITH_SOURCE_PROOF_SNAPSHOT'
+      : includeInventory ? 'COMPLETE_SCOPED_LEGACY_CLEANING_SNAPSHOT'
       : includeReferences ? 'COMPLETE_DOCUMENT_AND_REFERENCE_SNAPSHOT' : 'COMPLETE_DOCUMENT_SNAPSHOT', identity,
       counts: { documents: totals.documents.toString(), revisions: totals.revisions.toString() },
       eof: { documents: true, revisions: true }, currentPointersVerified: true,
       rawJsonUtf8Bytes: Object.fromEntries(Object.entries(jsonBytes).map(([key, value]) => [key, value.toString()])),
       largestRawJsonRowUtf8Bytes: Object.fromEntries(Object.entries(largestRowBytes).map(([key, value]) => [key, value.toString()])),
-      businessWrites: false, ...(includeReferences ? {references} : {}), ...(includeInventory ? {inventory} : {}) };
+      businessWrites: false, ...(includeReferences ? {references} : {}), ...(includeInventory ? {inventory} : {}),
+      ...(includeSourceProof ? {sourceProof} : {}) };
   } catch (error) {
     // Counts only, never source values. Partial output is not a completion receipt.
     if (error instanceof Error && Object.isExtensible(error)) {

@@ -4,7 +4,7 @@ import {mkdtemp, readFile, stat, access} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {captureLegacyDocumentAndReferenceSnapshot, captureLegacyCleaningSnapshot} from '../scripts/import-v3/native-cleaning/private-snapshot-files.mjs';
+import {captureLegacyDocumentAndReferenceSnapshot, captureLegacyCleaningSnapshot,captureLegacyCleaningWithSourceProofSnapshot} from '../scripts/import-v3/native-cleaning/private-snapshot-files.mjs';
 
 function database({failure} = {}) {
   const calls = [], positions = new Map(); let connections = 0;
@@ -19,7 +19,7 @@ function database({failure} = {}) {
       if (sql.startsWith('FETCH')) {
         const cursor = sql.split(' ').at(-1), count = positions.get(cursor) ?? 0;
         positions.set(cursor, count + 1);
-        return {rows: cursor.startsWith('cleaning_reference_') || cursor.startsWith('cleaning_inventory_effect_') || count > 0 ? [] :
+        return {rows: cursor.startsWith('cleaning_reference_') || cursor.startsWith('cleaning_inventory_effect_') || cursor.startsWith('cleaning_source_proof_') || count > 0 ? [] :
           [{source_document_id: 'synthetic-id', source_revision: '1', raw_json: '{"amount":9007199254740993.1234,"note":"衣\\n"}'}]};
       }
       return {rows: []};
@@ -27,6 +27,23 @@ function database({failure} = {}) {
   }}};
 }
 const destination = async () => join(await mkdtemp(join(tmpdir(), 'erp-synthetic-snapshot-')), 'private');
+
+test('95-scope private capture includes source proofs in its own manifest, never appends old files', async () => {
+  const directory=await destination(),db=database();
+  const result=await captureLegacyCleaningWithSourceProofSnapshot(db.pool,{directory,maxBytes:1024*1024});
+  assert.equal(result.files.length,95);assert.equal(result.receipt.sourceProof.length,2);
+  assert.equal(result.files.find(x=>x.table==='erp_prod_source.source_record').rows,'0');
+  assert.ok(result.excludes.includes('credentials'));assert.ok(result.excludes.includes('authentication-identity-projection'));
+  assert.deepEqual(JSON.parse(await readFile(join(directory,'COMPLETE.json'),'utf8')),result);
+  assert.equal(db.connections,1);assert.equal(db.calls.filter(x=>x==='ROLLBACK').length,1);
+});
+
+test('failed proof capture does not create a completion marker or touch other domains', async () => {
+  const directory=await destination(),db=database({failure:'FETCH FORWARD 16 FROM cleaning_source_proof_0'});
+  await assert.rejects(captureLegacyCleaningWithSourceProofSnapshot(db.pool,{directory,maxBytes:1024*1024}),/SYNTHETIC_DATABASE_FAILURE/);
+  await assert.rejects(access(join(directory,'COMPLETE.json')),{code:'ENOENT'});
+  assert.equal(db.calls.some(x=>typeof x==='string'&&x.startsWith('DECLARE cleaning_documents')),false);
+});
 
 test('complete private snapshot preserves raw numbers, hashes actual files and creates empty tables', async () => {
   const directory = await destination(), db = database();

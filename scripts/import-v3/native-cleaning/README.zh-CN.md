@@ -2,6 +2,10 @@
 
 ## 2026-11-02 当前已验证断点
 
+新增显式 `readLegacyCleaningWithSourceProofSnapshot` / `captureLegacyCleaningWithSourceProofSnapshot`：原93项加 `erp_prod_source.import_batch` 与 `erp_prod_source.source_record`，共95项在一个新的同RR只读事务内读取。复用原固定表读取、独立COUNT/空EOF/重复键检查和私域文件生成；原始JSON数字仍为文本。来源证明读取或私域写失败不形成完成标志，不进入后续域；缺回调在连接前拒绝。旧93入口范围、旧产物及已通过证据保留，不向已完成快照追加另一个RR的数据。
+
+本增量42项定向合成测试通过，实际95项采集未执行。它仍不含认证身份投影或凭据，不证明全部额外来源追溯完整，不验证来源批准真实性或分配目标身份。真实权限、容量、新窗口和完整依赖须由原T45按准确清单核定；不能因源码入口已存在而宣布迁移可执行。
+
 原 T45 `t45-document-revision-iterative-files-20261102-01` 已 COMPLETED/exit0/285.830秒，原300秒限制不变。复用 ad4 头检查点4b2ded7d…，修订解析固定7309499e…；44773头及44773当前修订完成原 reader EOF/COUNT/hash及finish，检查点前后不变。SALE28282、TRANSFER14279、OTHER2212；未审核2250、已审核42523。391956明细数量均为整数且在bigint范围，负数11801。旧失败保留，临时Node精确停止移除，无PG或目标写入。
 
 261859行sku_id为空或非字符串只是原字段统计。已配对旧销货/调拨 currentSourceBinding 消费者会核同批来源观察，再构造 CURRENT_DISPLAY_ONLY 投影；不能据此判身份丢失，也不能把显示投影当历史原身份。额外来源证明尚未并入93项快照，转换仍未完成。
