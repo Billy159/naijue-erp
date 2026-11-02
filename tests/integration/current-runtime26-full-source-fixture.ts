@@ -5,10 +5,12 @@
  */
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { isAbsolute, join } from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 import { stableImportId } from '../../packages/application/src/inventory-cutoff-import.ts';
 import { requestHash } from '../../packages/application/src/request-hash.ts';
-import { prepareNativeProductImportChunk26, NATIVE_PRODUCT_IMPORT_VERSION_26, NATIVE_PRODUCT_NULLABLE_POLICY, nativeProductImportEvidence26, nativeProductReferenceDecision26 } from '../../packages/application/src/native-product-import.ts';
+import { prepareNativeProductImportChunk26, NATIVE_PRODUCT_IMPORT_VERSION_26, NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26, NATIVE_PRODUCT_NULLABLE_POLICY, nativeProductImportEvidence26, nativeProductReferenceDecision26 } from '../../packages/application/src/native-product-import.ts';
 import type { NativeProductImportChunk26 } from '../../packages/application/src/native-product-import.ts';
 import { prepareNativeSkuImport26, NATIVE_SKU_IMPORT_VERSION_26, nativeSkuAliasEvidence26 } from '../../packages/application/src/native-sku-import.ts';
 import type { NativeSkuImportInput26 } from '../../packages/application/src/native-sku-import.ts';
@@ -20,6 +22,7 @@ import { prepareNativeBarcode, nativeBarcodeSourceEvidence, nativeBarcodeSchemeI
 import type { NativeBarcodeInput } from '../../packages/application/src/native-barcode-import.ts';
 import { prepareHistorySalesDetailChunk, HISTORY_SALES_DETAIL_VERSION } from '../../packages/application/src/import-v3-history-sales-detail.ts';
 import type { HistorySalesDetailChunk, PreparedHistorySalesDetailChunk } from '../../packages/application/src/import-v3-history-sales-detail.ts';
+import { historySettlementRequestHash } from '../../packages/application/src/import-v3-history-settlement.ts';
 import { prepareHistorySettlementChunk, HISTORY_SETTLEMENT_VERSION } from '../../packages/application/src/import-v3-history-settlement.ts';
 import type { HistorySettlementChunk, PreparedHistorySettlementChunk } from '../../packages/application/src/import-v3-history-settlement.ts';
 import { v2MoneyApprovalSet, v2Cents } from '../../packages/application/src/import-v2.ts';
@@ -236,6 +239,192 @@ export function rewrite26SyntheticSourceByteCandidates(f: CurrentRuntime26FullSo
      files:tables.map(v=>({entity:v.entity,path:v.path,bytes:v.bytes,sha256:v.sha256,rows:v.rows})),
      missingBusinessTables:omitted,externalSelectionAndApprovalRequired:true as const}};
 }
+/** Materializable source-only candidates. Reviews and execution authority remain
+ * externally supplied; paths describe where the caller will write these bytes. */
+export function rewrite26CaptureCandidates(f:CurrentRuntime26FullSourceFixture, directory:string){
+ const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(directory));validateCurrentRuntime26FullSourceFixture(f);
+ const artifact=(name:string,utf8:string)=>({path:join(directory,name),utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)});
+ const ref=(v:{path:string;bytes:number;sha256:string})=>({path:v.path,bytes:v.bytes,sha256:v.sha256});
+ const captures=(['BARCODE','SALES_HEADER'] as const).map(entity=>{
+  const input=entity==='BARCODE'?f.barcodeInput:f.salesHeaderInput, source=input.source;
+  const original=artifact(`${entity}-original.json`,f.sourceFiles[source.fileRef]!.utf8);
+  const records=artifact(`${entity}-records.json`,JSON.stringify([input]));
+  const originals=artifact(`${entity}-originals.json`,JSON.stringify([{rawLine:f.rawArtifacts[`${entity}:${source.sourceKey}`]!.utf8.trimEnd(),sourceFile:{logicalPath:source.fileRef,...ref(original)}}]));
+  const canonicalCsv=artifact(`${entity}-canonical.csv`,f.sources[entity]!.utf8);
+  const references=entity==='BARCODE'?{sku:f.barcodeInput.sku,scheme:f.barcodeInput.scheme}:{bindings:f.salesHeaderInput.bindings,creatorHallOverlay:f.salesHeaderInput.creatorHallOverlay,temporalEvidence:f.salesHeaderInput.temporalEvidence??{}};
+  const nativeId=entity==='BARCODE'?f.barcodeInput.nativeBarcodeId:f.prepared.salesHeaders.rows[0]!.prepared.header.id;
+  const nativeBindings=artifact(`${entity}-native-bindings.json`,JSON.stringify([{sourceKey:source.sourceKey,sourceRowId:source.id,nativeId,references}]));
+  return {entity,artifacts:[original,records,originals,canonicalCsv,nativeBindings],recipeInputs:{records:ref(records),originals:ref(originals),canonicalCsv:ref(canonicalCsv),nativeBindings:ref(nativeBindings)}};
+ });
+ return {executionAuthorized:false as const,captures};
+}
+
+/** Offset source uses the actual raw UTF-8 lines, never fabricated rows. The
+ * resulting base manifest hash must be fed back into the fixture pins before
+ * any component candidate is independently reviewed. */
+export function rewrite26OffsetSourceCandidates(f:CurrentRuntime26FullSourceFixture,directory:string){
+ assert.ok(isAbsolute(directory));const projected=rewrite26SyntheticSourceByteCandidates(f);
+ const entities=['SKU','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','INVENTORY_BASELINE','SALES_LINE','SETTLEMENT','TRANSFER_LINE'];
+ const artifact=(path:string,utf8:string)=>({path,utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)});
+ const rows=Object.values(f.rawArtifacts).map(v=>v.utf8.trimEnd()),snapshot=artifact(join(directory,'snapshots/all-business-source-rows.jsonl'),rows.map(v=>v+'\n').join(''));
+ const base=JSON.parse(projected.manifestCandidate.utf8);base.payloadFiles.push({file:'snapshots/all-business-source-rows.jsonl',bytes:snapshot.bytes,sha256:snapshot.sha256});base.payloadBytes+=snapshot.bytes;
+ const baseManifest=artifact(join(directory,'manifest.json'),JSON.stringify(base));
+ const indexed=new Map(entities.map(e=>[e,[] as Record<string,unknown>[]])),counts=Object.fromEntries(IMPORT_V2_TABLES.map(t=>[t.entity,0]));let offset=0;
+ for(const line of rows){const raw=JSON.parse(line) as {entity:string;sourceId:string;file:string;sheet:string;row:number;sourceSha256:string};assert.ok(Object.hasOwn(counts,raw.entity));counts[raw.entity]++;
+  const length=Buffer.byteLength(line,'utf8');if(indexed.has(raw.entity))indexed.get(raw.entity)!.push({entity:raw.entity,sourceKey:raw.sourceId,sourceLocator:{file:raw.file,sheet:raw.sheet,row:raw.row,sourceSha256:raw.sourceSha256},identityKind:raw.sourceId?'ORIGINAL_SOURCE_KEY_AND_LOCATOR':'ORIGINAL_LOCATOR_ONLY',offset,length,sha256:sha(line)});offset+=length+1;}
+ const indices=entities.map(entity=>{const list=indexed.get(entity)!;assert.ok(list.length>0);return {...artifact(join(directory,'indices',entity+'.jsonl'),list.map(row=>JSON.stringify(row)+'\n').join('')),entity,rows:list.length};});
+ const source={path:snapshot.path,bytes:snapshot.bytes,sha256:snapshot.sha256,rows:rows.length};
+ const indexManifest=artifact(join(directory,'indices/INDEX.json'),JSON.stringify({version:'MATERIALIZED_SOURCE_OFFSET_INDEX_CANDIDATE_V1',status:'COMPLETE_PINNED_SOURCE_INDEX_NOT_NATIVE_AUTHORITY',source,manifest:{path:baseManifest.path,sha256:baseManifest.sha256},indexRows:indices.reduce((n,v)=>n+v.rows,0),indexBytes:indices.reduce((n,v)=>n+v.bytes,0),expectedEntityCounts:counts,observedEntityCounts:{...counts},artifacts:indices.map(({entity,path,rows,bytes,sha256})=>({entity,path,rows,bytes,sha256})),offsetEncoding:'UTF8_BYTE_OFFSET_LENGTH_EXCLUDES_LF_RETAINS_CR_V1',scannedOriginalWorkbooks:false,scannedVerifiedHeaderGzip:false,nativeUUIDsAllocated:0,sql:false,importAuthorized:false}));
+ return {snapshot,baseManifest,indices,indexManifest,executionAuthorized:false as const};
+}
+
+/** Original party reader candidate bytes; independent component review is external. */
+export function rewrite26PartyCandidates(f:CurrentRuntime26FullSourceFixture,directory:string){
+ const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(directory));validateCurrentRuntime26FullSourceFixture(f);
+ const artifact=(name:string,value:unknown)=>{const utf8=JSON.stringify(value);return {path:join(directory,name),utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)};};
+ const component=artifact('party-reference-candidates.json',b.partySourceCandidates);
+ const manifest=artifact('review-candidate-manifest.json',{version:'NATIVE_BINDING_REVIEW_CANDIDATE_V1',batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256,parties:b.partySourceCandidates.length,files:[{name:'party-reference-candidates.json',bytes:component.bytes,sha256:component.sha256}]});
+ return {component,manifest,executionAuthorized:false as const};
+}
+
+/** Catalogue input already comes from the original synthetic blueprint; the
+ * technical review is an externally supplied artifact. */
+export function rewrite26CatalogueCandidate(f:CurrentRuntime26FullSourceFixture,path:string){
+ assert.equal(f.blueprint.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(path));const utf8=JSON.stringify(f.blueprint.catalogueMappingCandidate);
+ return {path,utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8),executionAuthorized:false as const};
+}
+
+/** Source and reference candidates for the original product readers. Mapping
+ * hashes must be the independently selected actual external mapping bytes. */
+export function rewrite26ProductCandidates(f:CurrentRuntime26FullSourceFixture,directory:string,mapping:{catalogue:string;parties:string;season_source:string}){
+ const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(directory));for(const pin of Object.values(mapping))assert.match(pin,/^[a-f0-9]{64}$/);
+ const artifact=(name:string,value:unknown)=>{const utf8=JSON.stringify(value);return {path:join(directory,name),utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)};};
+ const binding={batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256},original=f.productInput.rows[0]!;
+ const row={...original,references:{...original.references,category:{...original.references.category!,mappingSha256:mapping.catalogue},sizeGroup:{...original.references.sizeGroup!,mappingSha256:mapping.catalogue}},seasonSelection:{...original.seasonSelection,mapping_sha256:mapping.season_source}};
+ const component=artifact('product-source-candidates.json',[row.source]),sourceManifest=artifact('review-candidate-manifest.json',{version:'NATIVE_BINDING_REVIEW_CANDIDATE_V1',...binding,products:1,files:[{name:'product-source-candidates.json',sha256:component.sha256,bytes:component.bytes}]});
+ const derived=artifact('product-derived-season.json',{version:'NATIVE_PRODUCT_SEASON_SELECTION_DERIVED_CANDIDATE_V1',batchId:b.batchId,fixedSourceNamespace:b.namespace,selectionSha256:b.pins.selectionSha256,sourceMappingSha256:mapping.season_source,dictionaryMappingSha256:mapping.catalogue,rows:[{sourceKey:row.source.sourceKey,nativeProductId:row.product.nativeId,sourceEvidenceHash:requestHash(row.source),seasonSelection:row.seasonSelection,derivedProofSha256:requestHash(row.seasonSelection)}]});
+ const mappings={...mapping,derived_season_proofs:derived.sha256},references=artifact('product-reference-decisions.json',{schemaVersion:2,validatorVersion:NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26,schemaProfile:'EXACT26',batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:f.productInput.selection,mappingFiles:Object.entries(mappings).map(([name,sha256])=>({name,sha256})),decisions:[nativeProductReferenceDecision26(row)]});
+ return {component,sourceManifest,derived,references,executionAuthorized:false as const};
+}
+
+/** SKU decisions are deterministic source/reference projections. The reviewed
+ * offset and catalogue pins are supplied after their independent adoption. */
+export function rewrite26SkuCandidates(f:CurrentRuntime26FullSourceFixture,directory:string,refs:{indexManifestSha256:string;sourceReview:{path:string;sha256:string};catalogueMappingSha256:string;catalogueReviewSha256:string}){
+ assert.equal(f.blueprint.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(directory)&&isAbsolute(refs.sourceReview.path));for(const pin of [refs.indexManifestSha256,refs.sourceReview.sha256,refs.catalogueMappingSha256,refs.catalogueReviewSha256])assert.match(pin,/^[a-f0-9]{64}$/);
+ const b=f.blueprint,input=f.skuInput,prepared=f.prepared.sku,artifact=(name:string,utf8:string)=>({path:join(directory,name),utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)});
+ const product=artifact('sku-product-snapshots.json',JSON.stringify({rows:[{sourceKey:input.references.product.sourceKey,native:input.references.product.nativeSnapshot}]}));
+ const aliases=input.aliases.map(a=>({sourceKey:a.source.sourceKey,sourceEvidenceHash:requestHash(a.source),rawLineSha256:a.source.rowSha256,completeAliasCsvRowHash:requestHash(a.mapping),consumedMappingHash:requestHash(a.mapping)}));
+ const canonical=input.canonicalSource.normalizedFields;
+ const decision={canonicalSourceKey:input.canonicalSource.sourceKey,nativeSkuId:input.nativeSkuId,canonicalSourceEvidenceHash:requestHash(input.canonicalSource),canonicalCsvRowHash:requestHash(canonical),allocationNormalizedHash:requestHash(canonical),references:Object.fromEntries(Object.entries(input.references).map(([k,r])=>[k,{sourceKey:r.sourceKey,nativeId:r.nativeId,nativeSnapshotHash:requestHash(r.nativeSnapshot)}])),aliases,importRecord:input.importRecord,nativeSku:prepared.nativeSku,preparedFingerprint:prepared.fingerprint};
+ const decisions=artifact('sku-decisions.jsonl',JSON.stringify(decision)+'\n');
+ const manifest=artifact('sku-candidate-manifest.json',JSON.stringify({version:'NATIVE_SKU26_SOURCE_REFERENCE_CANDIDATE_V1',batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256,selection:input.selection,rows:1,oldAliases:aliases.length,collisionGroups:0,collisionMembers:0,allPreparedSha256:sha(requestHash(prepared)+'\n'),artifact:{path:decisions.path,bytes:decisions.bytes,sha256:decisions.sha256,rows:1},sourceIndexManifestSha256:refs.indexManifestSha256,outsideSourceReview:refs.sourceReview,productSnapshotSha256:product.sha256,catalogueMappingSha256:refs.catalogueMappingSha256,catalogueReviewSha256:refs.catalogueReviewSha256,nativeReferenceApproved:false,importAuthorized:false}));
+ return {decisions,manifest,product,executionAuthorized:false as const};
+}
+
+/** Source-only header bytes and decision; an actual independent receipt must
+ * bind the gzip bytes before the reference manifest can be completed. */
+export function rewrite26TransferHeaderCandidates(f:CurrentRuntime26FullSourceFixture,directory:string,refs:{partyReviewSha256:string;receiptFile:string;receiptSha256:string}){
+ const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(directory)&&isAbsolute(refs.receiptFile));assert.match(refs.partyReviewSha256,/^[a-f0-9]{64}$/);assert.match(refs.receiptSha256,/^[a-f0-9]{64}$/);
+ const artifact=(name:string,value:unknown)=>{const utf8=JSON.stringify(value);return {path:join(directory,name),utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)};},record=(x:typeof f.headerInput|typeof f.salesHeaderInput)=>({source:x.source,selection:x.selection,creatorHallOverlay:x.creatorHallOverlay,temporalEvidence:x.temporalEvidence??{}}),transfer=record(f.headerInput),sales=record(f.salesHeaderInput);
+ const rawUtf8=[transfer,sales].map(x=>JSON.stringify(x)+'\n').join(''),gz=gzipSync(Buffer.from(rawUtf8,'utf8'));
+ const spool={path:join(directory,'headers.gz'),base64:gz.toString('base64'),bytes:gz.length,sha256:createHash('sha256').update(gz).digest('hex'),rawBytes:Buffer.byteLength(rawUtf8),rawSha256:sha(rawUtf8)};
+ const prepared=f.prepared.headers.rows[0]!.prepared,header=prepared.header;
+ const references=(['调出仓来源编号','调入仓来源编号'] as const).map(field=>{const sourceKey=String(transfer.source.normalizedFields[field]),party=b.partySourceCandidates.find(p=>p.source.entityType==='WAREHOUSE'&&p.source.sourceKey===sourceKey);assert.ok(party);const native={...party.nativeSnapshot,created_operation_id:null};return {field,entity:'WAREHOUSE',sourceKey,nativeId:String(native.id),nativeSnapshotHash:requestHash(native)};});
+ const decision={entity:'TRANSFER_HEADER',sourceKey:transfer.source.sourceKey,sourceRowId:transfer.source.id,sourceContextHash:requestHash(transfer),normalizedRowHash:requestHash(transfer.source.normalizedFields),historyId:header.id,historyIdRule:'EXISTING_MAPPER_STABLE_IMPORT_ID',bindings:f.headerInput.bindings,references,historicalCustomerBinding:null,header,preparedFingerprint:prepared.fingerprint,fieldProvenanceHash:requestHash(prepared.fieldProvenance),temporalHash:requestHash(prepared.temporal)};
+ const decisions=artifact('header-decisions.jsonl',decision);const decisionUtf8=decisions.utf8+'\n',lines={...decisions,utf8:decisionUtf8,bytes:Buffer.byteLength(decisionUtf8),sha256:sha(decisionUtf8)};
+ const binding={batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256};
+ const manifest=artifact('header-candidate-manifest.json',{version:'NATIVE_TRANSFER_HEADER26_REFERENCE_CANDIDATE_V1',status:'TRANSFER_ONLY_REFERENCE_PENDING_NEW_JOIN_REVIEW',binding,rows:1,counts:{TRANSFER_HEADER:1},artifact:{path:lines.path,bytes:lines.bytes,sha256:lines.sha256,rows:1},preparedFingerprintStreamSha256:sha(prepared.fingerprint+'\n'),sourceContextStreamSha256:sha(requestHash(transfer)+'\n'),historyIdentityRule:'EXISTING_MAPPER_STABLE_IMPORT_ID',partyPartialReviewSha256:refs.partyReviewSha256,originalSourceProof:{receiptFile:refs.receiptFile,receiptSha256:refs.receiptSha256},full42561Passed:false,newNativeUUIDs:0,sql:0,executionAuthorized:false});
+ return {spool,decisions:lines,manifest,executionAuthorized:false as const};
+}
+
+/** Reuse the original transfer-line binding preparer; exact independently
+ * reviewed offset/header/SKU descriptors are provided by the caller. */
+export async function rewrite26TransferLineCandidates(f:CurrentRuntime26FullSourceFixture,directory:string,refs:{originalSource:{path:string;bytes:number;sha256:string;rows:number};sourceIndexReview:{path:string;bytes:number;sha256:string};offsetIndex:{entity:string;path:string;bytes:number;sha256:string;rows:number};baseManifest:{path:string;bytes:number;sha256:string};headerReferenceReview:{path:string;bytes:number;sha256:string};skuReferenceReview:{path:string;bytes:number;sha256:string};headerDecisions:unknown[];skuDecisions:unknown[]}){
+ const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(directory));assert.equal(refs.baseManifest.sha256,b.pins.baseManifestSha256);
+ const module=await import(new URL('../../scripts/import-v3/native-transfer-line-source26.mjs',import.meta.url).href) as {createNativeTransferLine26BindingPreparer(options:unknown):{prepare(options:unknown):{decision:unknown};finish():{headers:number;headerLineCounts:unknown[];preparedFingerprintStreamSha256:string;sourceEvidenceStreamSha256:string;perHeaderLineCountsSha256:string}}};
+ const binding={batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256},selection=f.transferInput.selection;
+ const rawLine=f.rawArtifacts[`TRANSFER_LINE:${f.transferInput.rows[0]!.source.sourceKey}`]!.utf8.trimEnd(),canonical=f.transferInput.rows[0]!.source.normalizedFields;
+ const preparer=module.createNativeTransferLine26BindingPreparer({binding,selection,headers:refs.headerDecisions,skus:refs.skuDecisions,expectedRows:1}),result=preparer.prepare({rawLine,canonical}),complete=preparer.finish();
+ const artifact=(name:string,utf8:string,rows?:number)=>({path:join(directory,name),utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8),...(rows===undefined?{}:{rows})});
+ const rawRows=artifact('transfer-line-original.jsonl',rawLine+'\n',1),canonicalCsv=artifact('transfer-line-canonical.csv',f.sources.TRANSFER_LINE!.utf8,1),decisions=artifact('transfer-line-decisions.jsonl',JSON.stringify(result.decision)+'\n',1),headerLineCounts=artifact('transfer-line-header-counts.jsonl',complete.headerLineCounts.map(v=>JSON.stringify(v)+'\n').join(''),complete.headers);
+ const desc=(v:{path:string;bytes:number;sha256:string;rows?:number})=>({path:v.path,bytes:v.bytes,sha256:v.sha256,rows:v.rows});
+ const manifest=artifact('transfer-line-manifest.json',JSON.stringify({version:'NATIVE_TRANSFER_LINE26_SOURCE_REFERENCE_CANDIDATE_V1',status:'COMPLETE_SOURCE_REFERENCE_PENDING_C_REVIEW',binding,selection,rows:1,headers:complete.headers,originalSource:refs.originalSource,sourceIndexReview:refs.sourceIndexReview,offsetIndex:refs.offsetIndex,baseManifest:refs.baseManifest,rawRows:desc(rawRows),canonicalCsv:desc(canonicalCsv),decisions:desc(decisions),headerLineCounts:desc(headerLineCounts),headerReferenceReview:refs.headerReferenceReview,skuReferenceReview:refs.skuReferenceReview,preparedFingerprintStreamSha256:complete.preparedFingerprintStreamSha256,sourceEvidenceStreamSha256:complete.sourceEvidenceStreamSha256,perHeaderLineCountsSha256:complete.perHeaderLineCountsSha256,newNativeUUIDs:0,sql:0,executionAuthorized:false}));
+ return {rawRows,canonicalCsv,decisions,headerLineCounts,manifest,executionAuthorized:false as const};
+}
+
+/** Stock reference candidate from the existing prepared signed group. The
+ * party/SKU review hashes are independently supplied, not generated here. */
+export function rewrite26StockCandidates(f:CurrentRuntime26FullSourceFixture,directory:string,refs:{partyReviewSha256:string;skuReviewSha256:string}){
+ const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(directory));for(const pin of Object.values(refs))assert.match(pin,/^[a-f0-9]{64}$/);
+ const artifact=(name:string,utf8:string)=>({path:join(directory,name),utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)}),group=f.prepared.stock;
+ const decisions=artifact('stock-decisions.jsonl',JSON.stringify(group)+'\n'),binding={batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256};
+ const manifest=artifact('stock-candidate-manifest.json',JSON.stringify({version:'NATIVE_STOCK26_REFERENCE_CANDIDATE_V1',status:'PENDING_NEW_NATIVE_STOCK_BINDING_REVIEW_NOT_AUTHORITY',binding,selection:f.stockInput.selection,groups:1,contributors:group.contributors.length,signedTotal:group.signedQuantity,negativeOriginal:group.contributors.filter(c=>BigInt(c.lineage.signedQuantity)<0n).length,negativeGroups:BigInt(group.signedQuantity)<0n?1:0,warehouseScope:f.warehouseScope.length,recordedWarehouses:1,approvedZeroWarehouseScope:f.warehouseScope.filter(w=>w.basis==='EXPLICIT_SYNTHETIC_ZERO_TARGET').length,skuReferenceReviewSha256:refs.skuReviewSha256,partyPartialReviewSha256:refs.partyReviewSha256,artifact:{path:decisions.path,bytes:decisions.bytes,sha256:decisions.sha256,groups:1,contributors:group.contributors.length},preparedFingerprintStreamSha256:sha(group.fingerprint+'\n'),newNativeUUIDs:0,sql:0,baselinePosted:false,executionAuthorized:false,sourceNormalization:'EXACT_SYNTHETIC_ORIGINAL_CELLS'}));
+ return {decisions,manifest,executionAuthorized:false as const};
+}
+
+/** Exact existing PAYMENT reader candidate; externally reviewed refs remain
+ * outside this function. The supplied artifact path is the eventual file path. */
+export function rewrite26PaymentCandidate(f:CurrentRuntime26FullSourceFixture, artifactPath:string){
+ const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(artifactPath));validateCurrentRuntime26FullSourceFixture(f);
+ const binding={batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256};
+ const prepared=f.prepared.payments;
+ const sourceLocators=prepared.flatMap(c=>c.rows.map(r=>({entity:r.entity,sourceKey:r.source.sourceKey,originalSourceId:r.entity==='PAYMENT_ACCOUNT_HALL'?'':r.source.sourceKey,sourceLocator:{file:r.source.fileRef,sheet:r.source.sheet,row:Number(r.source.rowNo),sourceSha256:r.source.sourceFileSha256},rawLineSha256:r.source.rowSha256})));
+ const data={version:'NATIVE_PAYMENT_SOURCE_REFERENCE_CANDIDATE_V1',...binding,prepared,sourceLocators,importAuthorized:false,nativeReferenceApproved:false};
+ const utf8=JSON.stringify(data),artifact={path:artifactPath,utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)};
+ const counts=Object.fromEntries(['PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL'].map(k=>[k,sourceLocators.filter(r=>r.entity===k).length]));
+ const manifest={...binding,status:'SYNTHETIC_CANDIDATE_NOT_NATIVE_GRANT',counts,rows:sourceLocators.length,chunks:prepared.length,artifact:{path:artifact.path,bytes:artifact.bytes,sha256:artifact.sha256},nativeReferenceApproved:false,importAuthorized:false};
+ return {artifact,manifest,executionAuthorized:false as const};
+}
+
+/** Captured money artifacts become available only after exact external money
+ * adoption has been applied through prepareCurrentRuntime26MoneyBranch. */
+export function rewrite26MoneyCaptureCandidates(f:CurrentRuntime26FullSourceFixture,directory:string){
+ assert.equal(f.blueprint.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.ok(isAbsolute(directory));assert.ok(f.prepared.money&&f.groups.SALES_DETAILS&&f.groups.SETTLEMENTS,'External money adoption required');
+ const artifact=(name:string,utf8:string)=>({path:join(directory,name),utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)});
+ const ref=(v:{path:string;bytes:number;sha256:string})=>({path:v.path,bytes:v.bytes,sha256:v.sha256});
+ const groups=([['SALES_DETAILS','SALES_LINE'],['SETTLEMENTS','SETTLEMENT']] as const).map(([group,entity])=>{
+  const chunk=entity==='SALES_LINE'?f.prepared.money!.salesDetails:f.prepared.money!.settlements,projection=f.groups[group]!;
+  const originals=chunk.input.rows.map(row=>{const s=row.source,original=artifact(`${entity}-original-${s.rowNo}.json`,f.sourceFiles[s.fileRef]!.utf8);return {original,rawLine:f.rawArtifacts[`${entity}:${s.sourceKey}`]!.utf8.trimEnd(),logicalPath:s.fileRef};});
+  const originalList=artifact(`${entity}-originals.json`,JSON.stringify(originals.map(o=>({rawLine:o.rawLine,sourceFile:{logicalPath:o.logicalPath,...ref(o.original)}}))));
+  const canonicalCsv=artifact(`${entity}-canonical.csv`,f.sources[entity]!.utf8);
+  const sourceRows=artifact(`${entity}-source.jsonl`,ordered(projection.sourceRows).map(r=>JSON.stringify(r)).join('\n')+'\n');
+  const typedRows=artifact(`${entity}-typed.jsonl`,ordered(projection.typedRows).map(r=>JSON.stringify(r)).join('\n')+'\n');
+  const nativeBindings=artifact(`${entity}-native-bindings.json`,JSON.stringify(chunk.input.rows.map(row=>({sourceKey:row.source.sourceKey,rawRowSha256:row.source.rowSha256,bindings:entity==='SALES_LINE'?{header:row.header,sku:(row as NonNullable<typeof f.prepared.money>['salesDetails']['input']['rows'][number]).sku}:{header:row.header,account:(row as NonNullable<typeof f.prepared.money>['settlements']['input']['rows'][number]).account,method:(row as NonNullable<typeof f.prepared.money>['settlements']['input']['rows'][number]).method}}))));
+  const descriptor=(file:typeof sourceRows,actualColumns:number)=>({...ref(file),rows:16,mode:'0600',entity,actualColumns});
+  const manifest=artifact(`${entity}-manifest.json`,JSON.stringify({status:'ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY',referenceOnly:true,nativeBindingsVerified:false,PG:false,MAIN:false,PUBLISH:false,all11:false,actualPayloadHash:null,sourceRows:16,typedRows:16,artifacts:[descriptor(sourceRows,12),descriptor(typedRows,entity==='SALES_LINE'?21:11)]}));
+  return {group,artifacts:[...originals.map(o=>o.original),originalList,canonicalCsv,sourceRows,typedRows,nativeBindings,manifest],recipe:{mode:'CAPTURED_MONEY' as const,manifest:ref(manifest),sourceRows:ref(sourceRows),typedRows:ref(typedRows),originals:ref(originalList),canonicalCsv:ref(canonicalCsv),nativeBindings:ref(nativeBindings),selection:chunk.input.selection}};
+ });
+ return {groups,executionAuthorized:false as const};
+}
+
+/** Wire the existing reader options from externally reviewed artifact refs.
+ * Every path/ref remains caller-owned; this does not construct any review. */
+export function rewrite26OriginalRecipeOptions(f:CurrentRuntime26FullSourceFixture,options:{authorizedPayloadHash:string;party:{directory:string;trustedManifestSha256:string;reviewRecordFile:string;trustedReviewRecordSha256:string};catalogue:{mappingFile:string;trustedMappingSha256:string;reviewApprovalFile:string;trustedReviewApprovalSha256:string};productSource:{directory:string;trustedManifestSha256:string;reviewRecordFile:string;trustedReviewRecordSha256:string};productReference:{referenceDecisionFile:string;trustedReferenceDecisionSha256:string;mappingFiles:Record<string,string>;reviewFile:string;trustedReviewSha256:string};skuReview:{reviewFile:string;trustedReviewSha256:string};skuProductSnapshotFile:string;baseDirectory:string;stockReview:{reviewFile:string;trustedReviewSha256:string};index:{indexManifestFile:string;trustedIndexManifestSha256:string;reviewFile:string;trustedReviewSha256:string};paymentReview:{reviewFile:string;trustedReviewSha256:string};headerReview:{reviewFile:string;trustedReviewSha256:string};headerOriginal:{spoolFile:string;receiptFile:string;trustedReceiptSha256:string};headerCacheParent:string;lineReviews:{sourceReviewFile:string;trustedSourceReviewSha256:string;referenceReviewFile:string;trustedReferenceReviewSha256:string};salesHeaderCapture:unknown;barcodeCapture:unknown;moneyCaptures:ReturnType<typeof rewrite26MoneyCaptureCandidates>}){
+ const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.match(options.authorizedPayloadHash,/^[a-f0-9]{64}$/);
+ const binding={batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256},authorizedPayloadHash=options.authorizedPayloadHash;
+ const sku={...options.skuReview,binding,authorizedPayloadHash,baseDirectory:options.baseDirectory,productSnapshotFile:options.skuProductSnapshotFile,catalogue:options.catalogue};
+ const ordinary={PARTIES:{binding,authorizedPayloadHash,source:options.party,historical:null,chunkRows:100},CATALOGUE:{...options.catalogue,binding},PRODUCTS:{binding,authorizedPayloadHash,source:options.productSource,reference:options.productReference,chunkRows:100},SKUS:sku,STOCK_CONTRIBUTORS:{...options.stockReview,binding,authorizedPayloadHash,source:{...options.index,baseDirectory:options.baseDirectory},references:{parties:options.party,skus:options.skuReview}},PAYMENT:{...options.paymentReview,binding,authorizedPayloadHash},TRANSFER_LINES:{...options.lineReviews,binding,authorizedPayloadHash}};
+ const sales=options.moneyCaptures.groups.find(x=>x.group==='SALES_DETAILS'),settlements=options.moneyCaptures.groups.find(x=>x.group==='SETTLEMENTS');assert.ok(sales&&settlements);
+ return {ordinary,transferHeader:{...options.headerReview,binding,authorizedPayloadHash,originalSource:options.headerOriginal,parties:options.party,cacheParent:options.headerCacheParent},salesHeaderCapture:options.salesHeaderCapture,barcodeCapture:options.barcodeCapture,salesDetails:sales.recipe,settlements:settlements.recipe,productEvidence:{...options.productSource,binding}};
+}
+
+/** Assemble only from supplied reviewed components; dataDigest is the original
+ * provider's digest input for an independently issued execution authorization. */
+export function rewrite26SourceProviderData(f:CurrentRuntime26FullSourceFixture, supplied:{binding:Record<string,unknown>;target:unknown;core:unknown;closureScope:unknown;warehouses:unknown;ordinary:Record<string,unknown>;transferHeader:unknown;salesHeaderCapture:unknown;barcodeCapture:unknown;salesDetails:unknown;settlements:unknown;productEvidence:unknown;coreProjection:unknown;initialization:unknown;preparation:unknown;money:unknown}){
+ const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);validateCurrentRuntime26FullSourceFixture(f);
+ assert.equal(supplied.binding.batchId,b.batchId);assert.equal(supplied.binding.fixedSourceNamespace,b.namespace);assert.equal(supplied.binding.selectionSha256,b.pins.selectionSha256);assert.equal(supplied.binding.cutoffAt,b.now);
+ const groups=['PARTIES','CATALOGUE','PRODUCTS','SKUS','STOCK_CONTRIBUTORS','PAYMENT','TRANSFER_LINES'];
+ assert.deepEqual(Object.keys(supplied.ordinary).sort(),[...groups].sort());
+ for(const v of [supplied.target,supplied.core,supplied.closureScope,supplied.warehouses,supplied.transferHeader,supplied.salesHeaderCapture,supplied.barcodeCapture,supplied.salesDetails,supplied.settlements,supplied.productEvidence,supplied.coreProjection,supplied.initialization,supplied.preparation,supplied.money,...Object.values(supplied.ordinary)])assert.ok(v!==null&&v!==undefined);
+ const producers={...Object.fromEntries(groups.map(g=>[g,{mode:'ORIGINAL',options:supplied.ordinary[g]}])),HEADERS:{mode:'HEADERS',transfer:supplied.transferHeader,sales:supplied.salesHeaderCapture},BARCODES:supplied.barcodeCapture,SALES_DETAILS:supplied.salesDetails,SETTLEMENTS:supplied.settlements};
+ const data={version:'REWRITE26_FULL_SOURCE_PROVIDER26_INPUT_V1',binding:supplied.binding,core:supplied.core,closureScope:supplied.closureScope,warehouses:supplied.warehouses,producers,productEvidence:supplied.productEvidence,coreProjection:supplied.coreProjection,initialization:supplied.initialization,preparation:supplied.preparation,money:supplied.money,target:supplied.target};
+ return {data,sourceInputDigest:historySettlementRequestHash(data)};
+}
+export function rewrite26SourceProviderInput(data:ReturnType<typeof rewrite26SourceProviderData>['data'],executionAuthorization:{path:string;bytes:number;sha256:string}){
+ assert.ok(isAbsolute(executionAuthorization.path)&&Number.isSafeInteger(executionAuthorization.bytes)&&executionAuthorization.bytes>0&&/^[a-f0-9]{64}$/.test(executionAuthorization.sha256));
+ const utf8=JSON.stringify({...data,executionAuthorization});return {utf8,bytes:Buffer.byteLength(utf8,'utf8'),sha256:sha(utf8)};
+}
+
 export function validateCurrentRuntime26FullSourceFixture(f:CurrentRuntime26FullSourceFixture){
  validateNativeStockConservationPlan(f.stockConservation);
  assert.deepEqual(f.stockConservation.warehouses,f.warehouseScope.map(({basis:_basis,...w})=>w));

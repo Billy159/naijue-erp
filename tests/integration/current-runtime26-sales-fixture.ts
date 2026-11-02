@@ -177,6 +177,17 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
     :Array.isArray(value)?value.map(remap):value!==null&&typeof value==='object'
       ?Object.fromEntries(Object.entries(value).map(([k,v])=>[k,remap(v)])):value;
   const template=scope.isNew?remap(originalTemplate) as typeof originalTemplate:originalTemplate;
+  // The original SKU reader indexes dictionary identities by the source code.
+  // Keep this correction scoped to the distinct rewrite26 synthetic fixture.
+  if (scope.database === CURRENT_REWRITE_SYNTHETIC_TARGET) {
+    for (const row of template.rows) if (row.source.entityType === "COLOR" || row.source.entityType === "FIT") {
+      const code = row.source.rawFields.code;
+      assert.equal(typeof code, "string");
+      row.source.sourceKey = code;
+      row.source.rawFields[row.sourceKeyField] = code;
+      row.source.normalizedFields[row.sourceKeyField] = code;
+    }
+  }
   const size = template.rows.find(r => r.source.entityType === "SIZE")!, member = template.rows.find(r => r.source.entityType === "SIZE_GROUP_MEMBER")!;
   const secondSizeId = native("size", 1300), secondSizeKey = `${tag}-SIZE-L`;
   const secondSize = { ...structuredClone(size), nativeId: secondSizeId, source: { ...structuredClone(size.source), sourceKey: secondSizeKey,
