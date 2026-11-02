@@ -8773,7 +8773,7 @@
         "Dot": "Application/schema/install/importer sole owner;1189 fixed package received, category SQL successor pending",
         "D3": "4078 known-master subset and2941 category product refs delivered/idle; sole private registry owner. Original-header identity rule conflict retained; no number-as-ID bypass.",
         "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
-        "D1": "Current source type/compact/customer-warehouse/staff-source slices delivered/idle. Only8 code cells proved absent;23069 per-head codes unconsumed in inspected projection,5817 current facts lack approved identity bridge. No account/alias guessing.",
+        "D1": "Staff original source codes recovered for28886;22656 approved-main-code candidates require historical-validity evidence;6230 unresolved,8 genuinely missing. Delivered idle.",
         "T45": "Sole server executor retained; no new server/database execution in this phase",
         "QB": "No duplicate whole-code acceptance dispatched",
         "D2": "Six raw fit candidates and bounded namespace-bridge followup delivered/idle; no exact original-code/system-letter bridge found in inspected sources. Account trace not repeated.",
@@ -8792,7 +8792,7 @@
       "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
       "trueBlankFitARule": "Historical sales/transfer source lines only with exact original blank and decision provenance; not stock/product/global default",
       "current": "All current original-role slices delivered: known-master4078, product2941 category/1156 supplier refs, source groups16, sales28892 customer/28894 warehouse candidate refs and per-header staff-source classification. Whole package remains DRAFT, no DB job.",
-      "next": "Dot stable original document-key provider or precise contract successor, category SQL42703 and complete bounded-reader successor; exact approved source/canonical fit/group/staff mappings and economics. Preserve29 classification unknowns. User inventory blank-fit/source-effective answers pending only for affected branches; no duplicate scans without new evidence.",
+      "next": "Assess historical validity of44 approved staff-code relationships; Dot stable original document-key seam, category SQL42703, bounded reader and remaining exact mappings. Pending user decisions remain limited to affected branches.",
       "ordinaryDocumentTables": [
         "sales_header",
         "sales_line",
@@ -10268,6 +10268,19 @@
         "outputSha256": "8c8272f0fd93ae2eccbdfba6017fb4bfd871c11d06ffe9d1281ab45e2995c45a",
         "accurateGap": "23069 per-head original staff codes are not retained in the inspected compact/candidate projection, while original ZIP locators remain. This is an unconsumed-source seam, not proof the user failed to provide these codes.5817 current source code facts do not establish approved49 identity/alias validity.",
         "evidenceLimits": "No new original XLSX/detail pass or target PG check; prior source observations and exact current99 receipt inherited. Need source-bound primary-code/alias/time relationship before candidate salesperson FK."
+      },
+      "staffSourceCodeFollowup": {
+        "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-staff-source-codes-D1-01/receipt.json",
+        "sha256": "b0ed6e69e25a9a217bff0b2d57664cf4af40dd1fce177aeabdd1220b438e668e",
+        "bridgeReceiptSha256": "071e18e22c3dcb59114f83b14a0ce067e237db5a8344f8c75301e07aa3e86a41",
+        "headers": 28894,
+        "sourceCodesPresent": 28886,
+        "missing": 8,
+        "approvedMainCodeCandidates": 22656,
+        "approvedMainCodes": 44,
+        "otherPresentUnresolved": 6230,
+        "scope": "Existing ZIP projection only; historical validity and target PG identity unverified; no employee FKs or accounts created",
+        "ready": false
       }
     },
     "previousActiveWriterScopePreservedForHistory": {
@@ -10299,6 +10312,6 @@
     "D2": "6 raw fits plus bounded bridge trace delivered/idle",
     "latestOfflineSource": "1189b2fe92fd3c003d3325ffb7d077b543be5277",
     "localOriginalSourceWipPreserved": true,
-    "D1": "Sales refs and per-head staff-source classification delivered/idle; precise source-to-approved identity seam pending, no additional account/alias grants"
+    "D1": "Staff source-code followup delivered/idle; historical validity unresolved"
   }
 }
