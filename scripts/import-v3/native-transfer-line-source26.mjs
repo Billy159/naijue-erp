@@ -33,6 +33,32 @@ const headerKeys=['entity','sourceKey','sourceRowId','sourceContextHash','normal
 const skuKeys=['canonicalSourceKey','nativeSkuId','canonicalSourceEvidenceHash','canonicalCsvRowHash','allocationNormalizedHash','references','aliases','importRecord','nativeSku','preparedFingerprint'];
 const aliasKeys=['sourceKey','sourceEvidenceHash','rawLineSha256','completeAliasCsvRowHash','consumedMappingHash'];
 const decisionKeys=['sourceKey','sourceRowId','rawLineSha256','sourceEvidenceHash','canonicalRowHash','header','sku','lineId','lineHash','preparedFingerprint'];
+/** Source-only continuation projection: retain every original cell and point
+ * to a preceding header only when the intervening rows are contiguous and the
+ * continuation contains no partial header values. No document is imported. */
+export async function* projectTPlusTransferContinuations26(events,{sourceFileSha256}){
+ must(hash(sourceFileSha256),'TRANSFER_SOURCE26_PIN');
+ const names=['业务类型','单据编号','单据日期','调出仓库','调入仓库','备注','制单人','审核人','审核日期','单据状态','条形码','存货名称','存货编码','规格型号','颜色','尺码','数量','版型'];
+ const blank=c=>!c||c.kind==='blank'&&c.raw===null||c.kind==='text'&&c.raw==='';
+ let header=false,eof=false,physical=0,last=0,context=null,starts=0,continuations=0,unresolved=0;
+ for await(const event of events){
+  must(!eof&&event?.sheet==='调拨单','TRANSFER_SOURCE26_STREAM');
+  if(event.event==='eof'){must(header&&event.rows===physical,'TRANSFER_SOURCE26_EOF');eof=true;continue;}
+  must(event.event==='row'&&Number.isSafeInteger(event.excelRow)&&event.excelRow>last&&event.cells,'TRANSFER_SOURCE26_ROW');
+  if(last&&event.excelRow!==last+1)context=null;last=event.excelRow;physical++;
+  if(!header){must(event.excelRow===1&&names.every((name,i)=>event.cells[i]?.kind==='text'&&event.cells[i]?.raw===name),'TRANSFER_SOURCE26_HEADER');header=true;continue;}
+  const cells=names.map((_,i)=>structuredClone(event.cells[i]??{kind:'blank',raw:null})),number=cells[1];let state;
+  if(number.kind==='text'&&typeof number.raw==='string'&&number.raw){
+   context={sourceRow:event.excelRow,documentNumber:number.raw,headerCells:cells.slice(0,10)};starts++;state='HEADER_ROW';
+  }else if(blank(number)&&context&&cells.slice(0,10).every(blank)&&cells.slice(10).some(c=>!blank(c))){continuations++;state='CONTINUATION_ROW';}
+  else{context=null;unresolved++;state='UNRESOLVED_HEADER';}
+  yield {event:'source-row',sheet:event.sheet,excelRow:event.excelRow,sourceFileSha256,sourceCells:cells,
+   documentReference:context?{documentNumber:context.documentNumber,headerSourceRow:context.sourceRow,headerCells:structuredClone(context.headerCells)}:null,
+   associationStatus:state,quantityCell:structuredClone(cells[16]),importAuthorized:false};
+ }
+ must(eof,'TRANSFER_SOURCE26_EOF');
+ yield {event:'eof',sheet:'调拨单',physicalRows:physical,headerRows:starts,continuationRows:continuations,unresolvedRows:unresolved,importAuthorized:false};
+}
 function binding(value){captureHash(value);must(exact(value,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&uuid(value.batchId)&&text(value.fixedSourceNamespace)&&hash(value.selectionSha256)&&typeof value.cutoffAt==='string'&&/(?:Z|[+-]\d\d:\d\d)$/.test(value.cutoffAt)&&Number.isFinite(Date.parse(value.cutoffAt)),'TRANSFER_LINE26_BINDING');return structuredClone(value);}
 function bindingProfile(b){
  const instant=Date.parse(b.cutoffAt),ns=b.fixedSourceNamespace;

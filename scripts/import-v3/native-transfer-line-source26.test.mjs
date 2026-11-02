@@ -4,7 +4,7 @@ import {mkdtemp,realpath,mkdir,writeFile,readFile,open,rm,rename,symlink} from '
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {createNativeTransferLine26BindingPreparer,openReviewedTransferLineSource26,transferLineSourceEvidence26,capturedTransferLineRows26} from './native-transfer-line-source26.mjs';
+import {createNativeTransferLine26BindingPreparer,openReviewedTransferLineSource26,transferLineSourceEvidence26,capturedTransferLineRows26,projectTPlusTransferContinuations26} from './native-transfer-line-source26.mjs';
 import {stableImportId} from '../../packages/application/src/inventory-cutoff-import.ts';
 import {prepareV3HistoryChunk} from '../../packages/application/src/import-v3-history-staging.ts';
 import {IMPORT_V2_TABLES} from '../../packages/application/src/import-v2-contract.ts';
@@ -13,6 +13,15 @@ import {historyClosureProjectionRow26,buildHistoryTypedClosureExpected26,HISTORY
 import {HISTORY_COUNT_KEYS} from '../../packages/application/src/history-storage-contract.ts';
 
 const H='a'.repeat(64),payload='b'.repeat(64),sha=b=>createHash('sha256').update(b).digest('hex');
+test('transfer continuations retain exact row quantities and never cross uncertain headers or EOF',async()=>{
+ const text=raw=>({kind:'text',raw}),number=raw=>({kind:'number',raw}),row=(excelRow,cells)=>({event:'row',sheet:'调拨单',excelRow,cells});
+ const names=['业务类型','单据编号','单据日期','调出仓库','调入仓库','备注','制单人','审核人','审核日期','单据状态','条形码','存货名称','存货编码','规格型号','颜色','尺码','数量','版型'];
+ const header=row(1,Object.fromEntries(names.map((n,i)=>[i,text(n)]))),start=row(2,{0:text('同价调拨'),1:text('D1'),3:text('from'),4:text('to'),12:text('P'),16:number('2')}),continuation=row(3,{12:text('Q'),16:number('-1')}),partial=row(4,{3:text('unexpected'),12:text('R'),16:number('3')}),after=row(5,{12:text('S'),16:number('4')}),end={event:'eof',sheet:'调拨单',rows:5};
+ const out=await Array.fromAsync(projectTPlusTransferContinuations26([header,start,continuation,partial,after,end],{sourceFileSha256:H}));
+ assert.equal(out[0].associationStatus,'HEADER_ROW');assert.equal(out[1].associationStatus,'CONTINUATION_ROW');assert.equal(out[1].documentReference.documentNumber,'D1');assert.equal(out[1].quantityCell.raw,'-1');assert.equal(out[1].sourceCells[1].kind,'blank');
+ assert.equal(out[2].associationStatus,'UNRESOLVED_HEADER');assert.equal(out[3].documentReference,null);assert.equal(out.at(-1).event,'eof');
+ const seen=[];async function* broken(){yield* [header,start,{event:'eof',sheet:'调拨单',rows:2}];throw Error('LATE_SOURCE_ERROR');}await assert.rejects((async()=>{for await(const x of projectTPlusTransferContinuations26(broken(),{sourceFileSha256:H}))seen.push(x);})(),/LATE_SOURCE_ERROR/);assert.equal(seen.some(x=>x.event==='eof'),false);
+});
 const id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
 const columns=IMPORT_V2_TABLES.find(t=>t.entity==='TRANSFER_LINE').columns.map(c=>c.name);
 const order=(a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key));
