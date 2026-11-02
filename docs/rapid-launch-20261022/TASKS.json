@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-29T02:43:42.597519+00:00",
+  "updatedAt": "2026-11-02T11:17:08.765702+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -21847,7 +21847,7 @@
     "developmentBranch": "codex/e5c5a762-cleaning-20261102",
     "inputDirectory": "T+数据2026年11月2日12：00/ (protected original project directory)",
     "metadataSha256": "c2021a66b4e97448f958615514cc8206a9dbf3cd3da1fdccc4c6bf80f06f292e",
-    "dataAdapterOwner": "D3 / 01a161d2-6712-7691-80af-5d2fa6a30fab",
+    "dataAdapterOwner": "D3 offline only / Dot application and importer",
     "dataAdapterModelRequested": "gpt-6.1-terra/medium",
     "actualModelReported": "gpt-6.1-terra",
     "actualReasoningIndependentlyVerified": false,
@@ -21893,29 +21893,7 @@
     },
     "sourceRelationshipStatus": "Nonblank sales key sets match; six-field candidate multiset has 6 differences per side; row identity/continuations/totals/money UNKNOWN",
     "serverRefresh": "Actual entry node server/main.js; legacy1-15; new26 stopped; 3 RO metadata SELECT succeeded/rollback+close; no mutation",
-    "runtimePreparationOwner": {
-      "role": "D1",
-      "thread": "01a16161-e65d-7742-8471-4b3c786ed314",
-      "modelRequested": "gpt-6.1-terra/medium",
-      "scope": "read-only exact runtime authentication/least ACL/identity interface inputs; source write lease not yet assigned",
-      "sourceWriteLease": [
-        "tests/integration/current-runtime26-sales-fixture.ts",
-        "tests/integration/current-runtime26-source-provider.mjs",
-        "tests/integration/current-runtime26-preparation-host.ts",
-        "tests/current-runtime26-full-source-fixture.test.ts",
-        "tests/current-runtime26-source-provider.test.mjs",
-        "tests/current-runtime26-preparation-host.test.ts",
-        "adapters/postgres/src/native-import-accounting-capability.ts",
-        "scripts/import-v3/production-source-host.mjs",
-        "scripts/import-v3/production-source-host.test.mjs",
-        "tests/integration/rewrite26-synthetic-account-materializer.mjs",
-        "tests/rewrite26-synthetic-account-materializer.test.mjs",
-        "tests/integration/current-runtime26-full-source-fixture.ts"
-      ],
-      "current": "QB817 nonsecret49 source-level PASS adopted;T45 private assembly input preparation;D1 precise full ACL continues",
-      "next": "Independent real target witness/external controller pin; private role/source/plan assembly and review; T45 bounded synthetic execution",
-      "independentReviewBoundary": "Attestation supplied hash/content self-consistency is not proof of T45 origin or actual systemID; no PG or execution authority from source PASS"
-    },
+    "runtimePreparationOwner": "STOPPED_SUPERSEDED_BY_LOCAL_CLEANING_ONLY",
     "effectiveDecisionLimits": [
       "product group is hard boundary; existing SKU identity/code/barcodes retained",
       "v17/v19 new-product group completion does not authorize inventing import SKU identities",
@@ -21978,16 +21956,10 @@
       ],
       "independentLimit": "Sidecar self-hash is not independent XLSX cell/semantic proof; raw source approval remains required"
     },
-    "currentDependencies": {
-      "sizeGroups": "16 group code/name observations saved;old14864 audit/402 exact decisions support per-SKU candidates;complete current source-group to target members still not closed,no blanket group remap",
-      "staffIdentity": "49 actual candidates (45 exact primary +4 approved plan-only),7 original aliases preserved;actual independent source review/bootstrap not completed",
-      "runtime": "Isolated roles/97ACL verified;source-only CORE-stage host delivered for QB review;actual CORE/source/identity proofs and full business execution pending",
-      "sourceTime": "Human confirmed cutoff2026-11-02T04:00:00Z;physical atomic snapshot not verified;original dates retained.",
-      "stock": "EOF and row8 source fix fixed6bc7535e, QB incremental review; true stock fit/SKU source identity not closed; 156 ambiguous identities remain conflicts",
-      "sales": "nonblank document key sets match;6 candidate amount differences involve distinct amount headers; no guessed rounding",
-      "sku": "D3 actual transfer source hash+EOF produced273949 physical occurrences;208 explicit4dimension complete,273741 pending;not valid SKU count or identity binding",
-      "disk": "Exact two authorized exports removed/rechecked;post-cleanup4.88GBfree;no originals/backups/WIP removed."
-    },
+    "currentDependencies": [
+      "Future Dot combined source/contract acceptance",
+      "Source reference and ordinary package mapping, private reconciliation"
+    ],
     "actualProductDraft": {
       "status": "PARTIAL_SOURCE_DRAFT_NOT_CANONICAL_NOT_IMPORT_READY",
       "rows": 2970,
@@ -22035,7 +22007,7 @@
       "oldBatchCountsReused": false,
       "adapterStatus": "Lazy transfer source interpretation+EOF digest;2 targeted Node24 PASS,not native consumer or DB"
     },
-    "latestFixedSourceCandidate": "6bc7535e38198aff64218a64e68c152d5f0d5d5f",
+    "latestFixedSourceCandidate": "413825ca1746e77bb99dd6b8dff4164d34f00699",
     "cutoff": {
       "value": "2026-11-02T04:00:00Z",
       "basis": "HUMAN_CONFIRMED_BATCH_CUTOFF",
@@ -22044,17 +22016,18 @@
       "preserveOriginalRecordDates": true
     },
     "currentHandoff": {
-      "D1": "Actual original party reader115 passed; continue existing CORE private inputs without repeating CSV checks",
-      "D3": "Four stock/SKU fix leaves frozen6bc7535e; continue independent precise source size/reference closure",
-      "T45": "Generate exact private49 synthetic inputs in existing restricted path, no PG yet; existing roles preserved",
-      "C": "Adopt narrow valid evidence; push fixed source; keep actual batch and synthetic phase distinct"
+      "D3": "Offline-only private ordinary package preparation on Terra/medium; original application scripts read-only",
+      "Dot": "Unique code/schema/import-tool writer, awaiting delivered combined source",
+      "D1": "Old queue stopped",
+      "T45": "Old queue stopped; no environment actions",
+      "C": "Control records and prior WIP preservation only"
     },
     "currentIncrementalReview": {
       "owner": "QB",
       "base": "149498dc0ed4fe80c7980fcd59d5a6688d98d8c4",
       "candidate": "6bc7535e38198aff64218a64e68c152d5f0d5d5f",
       "scope": "Stock EOF/row8 and original SKU uniqueness: three previously found defects only",
-      "status": "FIXED_SOURCE_PENDING_TARGETED_REVIEW",
+      "status": "QB_SOURCE_SYNTHETIC_PASS_THREE_FINDINGS_CLOSED",
       "realPg": false
     },
     "approvedCleanupCompleted": {
@@ -22179,13 +22152,144 @@
     },
     "stockMatrixIncrement": {
       "candidate": "6bc7535e38198aff64218a64e68c152d5f0d5d5f",
-      "status": "FIXED_PENDING_TARGETED_QB_REVIEW",
+      "status": "QB_SOURCE_SYNTHETIC_PASS_NOT_REAL_IMPORT",
       "actualSourceChecks": "111 column aggregates matched; total80717; original negatives retained; not valid identity/import proof",
       "fitCandidates": 9,
       "fitConflicts": 156,
       "fitUnknown": 41835,
       "sourceFitPresent": 227,
       "independentActualSkuClosure": false
+    },
+    "sourceSizeGroupPreservation": {
+      "candidate": "413825ca1746e77bb99dd6b8dff4164d34f00699",
+      "status": "QB_SOURCE_LEVEL_PASS",
+      "targetMapping": "PENDING",
+      "actual2940Comparison": "DERIVED_CANDIDATE_NOT_INDEPENDENT_SOURCE_PROOF"
+    }
+  },
+  "currentRoute": {
+    "recordedAt": "2026-11-02T13:15:38.153347+00:00",
+    "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
+    "status": "OFFLINE_DRAFTS_INDEXED_WAITING_SPECIFIC_EVIDENCE_AND_DOT_DELIVERY",
+    "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
+    "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
+    "sourceBaseline": {
+      "repository": "https://github.com/Billy159/naijue-erp",
+      "branch": "codex/e5c5a762-cleaning-20261102",
+      "remoteHeadVerified": "e5b20fe578cd8fdca5ed756a1f248c92e165c588",
+      "localPreservedHead": "b7a237c3d7a5afb4b93f753eb655f2dc213c8eaf",
+      "localWipPreservedFiles": 4,
+      "dotReportedBranch": "handoff/erp-unified-github-20261102",
+      "dotWorkspaceVerifiedLocally": false,
+      "aa10": "ARCHIVE_ONLY_NO_IMPLEMENTATION_OR_RELEASE",
+      "remoteVerifiedAt": "2026-11-02T13:15:38.153347+00:00",
+      "localWipPreservedFileSha256": {
+        "scripts/import-v3/native-transfer-line-source26.mjs": "7edec324a8ae8d9deae15dbe49f714c520fcea122f657dee42a1371ef4b71275",
+        "scripts/import-v3/native-transfer-line-source26.test.mjs": "6f25e945efe9352606ead249822d33b2883a64b6fd64470510cbb66104016781",
+        "scripts/import-v3/tplus-product-source26.mjs": "7833469aa60d0f718cb75354569b729b8c7ea5aab0fc8dea72bbf93982283014",
+        "scripts/import-v3/tplus-product-source26.test.mjs": "b43922ec902338b1f71bd1f04a271e776c7eb7ebd93c42d403a85fc1e7bd04a3"
+      },
+      "wipScope": "4 pre-existing source/test WIP files preserved; record edits counted separately"
+    },
+    "owners": {
+      "Dot": "Application code, schema upgrades, installer and standard-package importer; new complete source and validation pending user delivery",
+      "D3": "Original thread 01a161d2-6712-7691-80af-5d2fa6a30fab; offline parsing, cleaning, mapping, reconciliation only; private root and central registry sole writer",
+      "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
+      "D1": "Old code/runtime preparation queue remains stopped; no duplicate implementation",
+      "T45": "Sole server executor retained; no new server/database execution in this phase",
+      "QB": "No duplicate whole-code acceptance dispatched"
+    },
+    "model": {
+      "D3Requested": "gpt-6.1-terra/medium",
+      "actualToolParametersSpecified": true,
+      "Fast": "UNVERIFIED_NO_SWITCH_EXPOSED"
+    },
+    "privateCleaningRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01",
+    "batchId": "11b111ed-f128-09a0-b6cd-f153ef926fa5",
+    "namespace": "naijue:tplus:20261102",
+    "cutoffAt": "2026-11-02T04:00:00Z",
+    "cutoffAuthority": "Already human-confirmed; do not ask again",
+    "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
+    "trueBlankFitARule": "Historical sales/transfer source lines only with exact original blank and decision provenance; not stock/product/global default",
+    "current": "13-package DRAFT index delivered; original D3 idle after completed bounded work",
+    "next": "Receive specific missing source evidence and user-delivered complete Dot source; resume only affected mapping/binding/integration",
+    "ordinaryDocumentTables": [
+      "sales_header",
+      "sales_line",
+      "sales_settlement",
+      "transfer_header",
+      "transfer_line"
+    ],
+    "forbiddenThisPhase": [
+      "ERP application source modifications",
+      "new aa10-based worktree/branch",
+      "database/SSH/server jobs",
+      "application build/deploy",
+      "production import or permission changes",
+      "resuming old full-source capture/CORE/INIT/synthetic49",
+      "real rows or credentials in Git/chat"
+    ],
+    "importAuthorized": false,
+    "newSchemaInstalled": false,
+    "isolatedImport": "NOT_EXECUTED",
+    "formalImport": "NOT_EXECUTED",
+    "applicationDeployment": "NOT_EXECUTED",
+    "onlineBusinessVerification": "NOT_EXECUTED",
+    "dotReportedFailures": "4 invalid packages wrongly accepted; 3 source-level SQL/coverage risks not PG-reproduced; keep unresolved, not implementation here",
+    "latestOfflineDelivery": {
+      "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+      "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-02/INDEX.json",
+      "indexSha256": "b046e9771795777c5dedc329362ca93246e6d167d7567ee407df620e753a0077",
+      "updatedPackages": [
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "inheritedPackages": [
+        1,
+        2,
+        4
+      ],
+      "counts": {
+        "products": 2970,
+        "halls": 43,
+        "warehouses": 53,
+        "staffCandidates": 49,
+        "customers": 261,
+        "suppliers": 222,
+        "methods": 11,
+        "accountsSafeDraft": 80,
+        "salesHeaders": 28894,
+        "salesLines": 83399,
+        "settlementSourceRows": 26382,
+        "salesQuantity": "74635",
+        "transferHeaders": 14835,
+        "transferLines": 273948,
+        "transferQuantity": "304527",
+        "inventoryObservedCells": 42227,
+        "inventoryObservedQuantity": "80717"
+      },
+      "verificationScope": "Original D3 source/EOF/row-count/arithmetic/readback receipts adopted; controller only verified small index SHA; not target or coverage acceptance",
+      "identity": "3609 provisional IDs and old-namespace references do not prove target identity. Offline normalization does not require target installation.",
+      "unresolved": [
+        "Current full size-group membership and exact SKU identity",
+        "49 product categories; 2 customer/supplier classification conflicts",
+        "Payment account safe source-key/method/hall relationships",
+        "Status/timezone/cutoff coverage; 6 differing line amounts in one document and repeated row identity",
+        "Dot combined source, ordinary-table adapter, schema/installer and validation; actual target binding separate"
+      ],
+      "ready": false,
+      "importAuthorized": false,
+      "D3State": "IDLE_AFTER_COMPLETED_INDEX",
+      "D3Turn": "01a19c5e-0d25-7a21-a1dc-88c59460342b",
+      "nextWorkAssessment": "Bounded small-receipt review found no concrete independent next cleaning item without new evidence; avoid duplicate shards and unchanged polling"
     }
   }
 }

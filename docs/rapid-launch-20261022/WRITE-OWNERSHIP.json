@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-28T20:01:59.759376+00:00",
+  "updatedAt": "2026-11-02T11:17:08.765702+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -8642,19 +8642,17 @@
     "actualReasoningIndependentlyVerified": false,
     "serverOwner": "T45 / 01a100d0-cad5-71c1-8042-dc594311d3be",
     "controllerOwns": [
-      "integration",
-      "git commits/push",
-      "TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP",
-      "docs/rapid-launch-20261022/APPROVED-CATEGORY-TARGET-REFERENCE-20261102.json"
+      "Existing intake/repo TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records",
+      "Scoped nonsecret Git checkpoint; no application implementation"
     ],
     "stages": {
-      "formatAdaptation": "IN_PROGRESS",
+      "formatAdaptation": "PARTIAL_OFFLINE_DRAFTS_INDEXED_NOT_STANDARD_PACKAGE",
       "isolatedImport": "NOT_EXECUTED_THIS_BATCH",
       "formalImport": "NOT_EXECUTED",
       "applicationDeployment": "NOT_EXECUTED",
       "onlineBusinessVerification": "NOT_EXECUTED"
     },
-    "productionRule": "Use existing effective authorization; genuinely uncovered precise production changes require one consolidated confirmation; no cleanup of production by default",
+    "productionRule": "Current human division: await Dot complete source and validation; no new server/database/migration/deployment execution this phase",
     "preserve": [
       "original new export",
       "基础数据导入",
@@ -8666,25 +8664,28 @@
     "noOldSourceFullCaptureOrConversion": true,
     "activeWriterScope": {
       "D3": [
-        "scripts/import-preflight/**",
-        "packages/application/src/import-preflight.ts",
-        "packages/application/src/import-preflight-contract.ts",
-        "tests/import-preflight.test.ts",
-        "tests/import-preflight-*.test.mjs"
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/**"
+      ],
+      "Dot": [
+        "Future delivered combined application code / migration and importer; no local overlapping writer"
       ],
       "C": [
         "docs/rapid-launch-20261022/TASKS.json",
         "docs/rapid-launch-20261022/PROGRESS.md",
         "docs/rapid-launch-20261022/HANDOFF.md",
-        "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json"
+        "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/TASKS.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/PROGRESS.md",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/HANDOFF.md",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/**"
       ]
     },
-    "outsideScope": "D3 requests exact seam before editing SQL/contracts/import-v3; no parallel writer",
+    "outsideScope": "D3 original ERP source leases are closed; only offline private cleaning. No local code/schema/importer implementation while Dot owns it.",
     "runtimePreparation": {
       "owner": "D1",
       "thread": "01a16161-e65d-7742-8471-4b3c786ed314",
       "model": "gpt-6.1-terra/medium",
-      "sourceWriteEnabled": true,
+      "sourceWriteEnabled": false,
       "scope": "Existing exact26 synthetic-only target successor plus finite49 nonsecret identity materializer; no SQL/schema/server/permission changes, credentials or self-approved reviews; old target branches remain; original D1 history staging mapper only precise approved historical true-blank fit A evidence successor, preserve raw value/authorization/revalidation; no general raw-normalized relaxation; original D1 owns precise native transfer header receipt successor for fixed rewrite26 synthetic/new-batch preparation only; preserve old42561 receipt and require genuine source EOF/spool hashes/counts plus independent external review. New synthetic catalogue code/key correction only target-specific.",
       "reportWrite": "existing D1 report subdirectory only",
       "exactLeaves": [
@@ -8704,7 +8705,8 @@
         "tests/import-v3-history-staging.test.ts",
         "scripts/import-v3/native-transfer-header-source26.mjs",
         "scripts/import-v3/native-transfer-header-source26.test.mjs"
-      ]
+      ],
+      "status": "STOPPED_SUPERSEDED_NO_RESUME"
     },
     "additionalD3ExactLeaves": [
       "scripts/import-v3/tplus-product-source26.mjs",
@@ -8716,13 +8718,155 @@
       "scripts/import-v3/native-transfer-line-source26.mjs",
       "scripts/import-v3/native-transfer-line-source26.test.mjs"
     ],
-    "additionalD3Scope": "New-batch normalized package/source mapping and existing provider wiring; preserve old branch; no schema/SQL/permission/root/build changes; exact approved historical blank-fit derived evidence and native transfer consumer; old branches/authorizer retained; no schema",
+    "additionalD3Scope": "HISTORICAL_CLOSED_LEASE: current D3 only private offline cleaning, mapping and reconciliation; preserve pre-existing source WIP",
     "schemaMutationsPermittedForImport": false,
     "controllerSourcePinLeaves": [
       "scripts/release/boot-entry.py",
       "scripts/release/rollback-candidate.py"
     ],
-    "controllerSourcePinScope": "Adopt exact already independently reviewed9394 capacity helper bytes; old FULL pins unchanged; no environment/production permission",
-    "syntheticTargetPurpose": "rewrite_schema_20261102_01 OID16387/system7703341807471058958: if synthetic fixture is executed, permanently SYNTHETIC_VALIDATION_ONLY; keep data/evidence; never clean/reuse for actual new-data or production import"
+    "controllerSourcePinScope": "HISTORICAL_CLOSED_LEASE: no new release/source pin edits",
+    "syntheticTargetPurpose": "rewrite_schema_20261102_01 OID16387/system7703341807471058958: if synthetic fixture is executed, permanently SYNTHETIC_VALIDATION_ONLY; keep data/evidence; never clean/reuse for actual new-data or production import",
+    "currentRoute": {
+      "recordedAt": "2026-11-02T13:15:38.153347+00:00",
+      "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
+      "status": "OFFLINE_DRAFTS_INDEXED_WAITING_SPECIFIC_EVIDENCE_AND_DOT_DELIVERY",
+      "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
+      "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
+      "sourceBaseline": {
+        "repository": "https://github.com/Billy159/naijue-erp",
+        "branch": "codex/e5c5a762-cleaning-20261102",
+        "remoteHeadVerified": "e5b20fe578cd8fdca5ed756a1f248c92e165c588",
+        "localPreservedHead": "b7a237c3d7a5afb4b93f753eb655f2dc213c8eaf",
+        "localWipPreservedFiles": 4,
+        "dotReportedBranch": "handoff/erp-unified-github-20261102",
+        "dotWorkspaceVerifiedLocally": false,
+        "aa10": "ARCHIVE_ONLY_NO_IMPLEMENTATION_OR_RELEASE",
+        "remoteVerifiedAt": "2026-11-02T13:15:38.153347+00:00",
+        "localWipPreservedFileSha256": {
+          "scripts/import-v3/native-transfer-line-source26.mjs": "7edec324a8ae8d9deae15dbe49f714c520fcea122f657dee42a1371ef4b71275",
+          "scripts/import-v3/native-transfer-line-source26.test.mjs": "6f25e945efe9352606ead249822d33b2883a64b6fd64470510cbb66104016781",
+          "scripts/import-v3/tplus-product-source26.mjs": "7833469aa60d0f718cb75354569b729b8c7ea5aab0fc8dea72bbf93982283014",
+          "scripts/import-v3/tplus-product-source26.test.mjs": "b43922ec902338b1f71bd1f04a271e776c7eb7ebd93c42d403a85fc1e7bd04a3"
+        },
+        "wipScope": "4 pre-existing source/test WIP files preserved; record edits counted separately"
+      },
+      "owners": {
+        "Dot": "Application code, schema upgrades, installer and standard-package importer; new complete source and validation pending user delivery",
+        "D3": "Original thread 01a161d2-6712-7691-80af-5d2fa6a30fab; offline parsing, cleaning, mapping, reconciliation only; private root and central registry sole writer",
+        "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
+        "D1": "Old code/runtime preparation queue remains stopped; no duplicate implementation",
+        "T45": "Sole server executor retained; no new server/database execution in this phase",
+        "QB": "No duplicate whole-code acceptance dispatched"
+      },
+      "model": {
+        "D3Requested": "gpt-6.1-terra/medium",
+        "actualToolParametersSpecified": true,
+        "Fast": "UNVERIFIED_NO_SWITCH_EXPOSED"
+      },
+      "privateCleaningRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01",
+      "batchId": "11b111ed-f128-09a0-b6cd-f153ef926fa5",
+      "namespace": "naijue:tplus:20261102",
+      "cutoffAt": "2026-11-02T04:00:00Z",
+      "cutoffAuthority": "Already human-confirmed; do not ask again",
+      "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
+      "trueBlankFitARule": "Historical sales/transfer source lines only with exact original blank and decision provenance; not stock/product/global default",
+      "current": "13-package DRAFT index delivered; original D3 idle after completed bounded work",
+      "next": "Receive specific missing source evidence and user-delivered complete Dot source; resume only affected mapping/binding/integration",
+      "ordinaryDocumentTables": [
+        "sales_header",
+        "sales_line",
+        "sales_settlement",
+        "transfer_header",
+        "transfer_line"
+      ],
+      "forbiddenThisPhase": [
+        "ERP application source modifications",
+        "new aa10-based worktree/branch",
+        "database/SSH/server jobs",
+        "application build/deploy",
+        "production import or permission changes",
+        "resuming old full-source capture/CORE/INIT/synthetic49",
+        "real rows or credentials in Git/chat"
+      ],
+      "importAuthorized": false,
+      "newSchemaInstalled": false,
+      "isolatedImport": "NOT_EXECUTED",
+      "formalImport": "NOT_EXECUTED",
+      "applicationDeployment": "NOT_EXECUTED",
+      "onlineBusinessVerification": "NOT_EXECUTED",
+      "dotReportedFailures": "4 invalid packages wrongly accepted; 3 source-level SQL/coverage risks not PG-reproduced; keep unresolved, not implementation here",
+      "latestOfflineDelivery": {
+        "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+        "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-02/INDEX.json",
+        "indexSha256": "b046e9771795777c5dedc329362ca93246e6d167d7567ee407df620e753a0077",
+        "updatedPackages": [
+          3,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "inheritedPackages": [
+          1,
+          2,
+          4
+        ],
+        "counts": {
+          "products": 2970,
+          "halls": 43,
+          "warehouses": 53,
+          "staffCandidates": 49,
+          "customers": 261,
+          "suppliers": 222,
+          "methods": 11,
+          "accountsSafeDraft": 80,
+          "salesHeaders": 28894,
+          "salesLines": 83399,
+          "settlementSourceRows": 26382,
+          "salesQuantity": "74635",
+          "transferHeaders": 14835,
+          "transferLines": 273948,
+          "transferQuantity": "304527",
+          "inventoryObservedCells": 42227,
+          "inventoryObservedQuantity": "80717"
+        },
+        "verificationScope": "Original D3 source/EOF/row-count/arithmetic/readback receipts adopted; controller only verified small index SHA; not target or coverage acceptance",
+        "identity": "3609 provisional IDs and old-namespace references do not prove target identity. Offline normalization does not require target installation.",
+        "unresolved": [
+          "Current full size-group membership and exact SKU identity",
+          "49 product categories; 2 customer/supplier classification conflicts",
+          "Payment account safe source-key/method/hall relationships",
+          "Status/timezone/cutoff coverage; 6 differing line amounts in one document and repeated row identity",
+          "Dot combined source, ordinary-table adapter, schema/installer and validation; actual target binding separate"
+        ],
+        "ready": false,
+        "importAuthorized": false,
+        "D3State": "IDLE_AFTER_COMPLETED_INDEX",
+        "D3Turn": "01a19c5e-0d25-7a21-a1dc-88c59460342b",
+        "nextWorkAssessment": "Bounded small-receipt review found no concrete independent next cleaning item without new evidence; avoid duplicate shards and unchanged polling"
+      }
+    },
+    "previousActiveWriterScopePreservedForHistory": {
+      "D3": [
+        "scripts/import-preflight/**",
+        "packages/application/src/import-preflight.ts",
+        "packages/application/src/import-preflight-contract.ts",
+        "tests/import-preflight.test.ts",
+        "tests/import-preflight-*.test.mjs"
+      ],
+      "C": [
+        "docs/rapid-launch-20261022/TASKS.json",
+        "docs/rapid-launch-20261022/PROGRESS.md",
+        "docs/rapid-launch-20261022/HANDOFF.md",
+        "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json"
+      ]
+    },
+    "currentRouteSupersedesLegacyLeases": true,
+    "activeBaseline": "e5b20fe578cd8fdca5ed756a1f248c92e165c588; preserved local successor b7a237c3d7a5afb4b93f753eb655f2dc213c8eaf; Dot combined successor pending"
   }
 }
