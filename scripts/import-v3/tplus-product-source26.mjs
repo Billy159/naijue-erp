@@ -404,7 +404,7 @@ export function proposePriorCategoryCanonical26(candidate, decisions, priorProdu
   if (approvedTargets !== undefined) {
     if (!(approvedTargets?.nodes instanceof Map) || !/^[a-f0-9]{64}$/.test(approvedTargets.sha256 ?? '') || approvedTargets.decisionMappingSha256!==decisions.sha256) throw Error('TPLUS_CATEGORY_TARGET_INPUT');
     const record=decisions.records.get(code),target=approvedTargets.nodes.get(record.target_id);
-    if (!target || target.name!==record.target_name || (record.target_parent_name && target.parentName!==record.target_parent_name) ||
+    if (!target || target.name!==record.target_name || (target.parentName ?? '')!==(record.target_parent_name ?? '') ||
         !((record.target_level==='叶子' && target.leaf) || (record.target_level==='父级直挂' && !target.leaf)))
       return {...comparison,status:'PENDING_CATEGORY_TARGET_PROOF',canonicalCategory:null};
     return {...comparison,status:'PRIOR_CATEGORY_CANONICAL_REFERENCE',canonicalCategory:target.canonicalPath,
@@ -448,4 +448,33 @@ export function attachTPlusCanonicalCategory26(draft, reference, sourceFileSha25
     evidence_ref:requestHash(evidence),evidence};
   result.pending=result.pending.filter(x=>x!=='分类路径');
   return result;
+}
+
+/** Preserve exact SKU-dimensional occurrences from the native transfer query.
+ * Blank document or fit cells are never filled, and an observed barcode is not
+ * treated as a SKU identity. These are source occurrences, not import rows. */
+export async function* projectTPlusTransferSkuOccurrences26(events) {
+  const sheet='调拨单', columns=new Map([[10,'条形码'],[12,'存货编码'],[14,'颜色'],[15,'尺码'],[16,'数量'],[17,'版型']]);
+  let header=false,eof=false,rows=0,last=0;
+  for await (const event of events) {
+    if (!event || event.sheet!==sheet || eof) throw Error('TPLUS_TRANSFER_SKU_STREAM');
+    if (event.event==='eof') {
+      if (!header || event.rows!==rows) throw Error('TPLUS_TRANSFER_SKU_EOF');
+      eof=true;yield {event:'eof',sheet,rows,importReady:false};continue;
+    }
+    if (event.event!=='row' || !Number.isSafeInteger(event.excelRow) || event.excelRow<=last || !event.cells) throw Error('TPLUS_TRANSFER_SKU_ROW');
+    rows++;last=event.excelRow;
+    if (!header) {
+      if (event.excelRow!==1 || [...columns].some(([i,name])=>event.cells[i]?.kind!=='text' || event.cells[i]?.raw!==name)) throw Error('TPLUS_TRANSFER_SKU_HEADER');
+      header=true;continue;
+    }
+    const sourceCells=Object.fromEntries([...columns].map(([i,name])=>[name,event.cells[i] ?? {kind:'blank',raw:null}]));
+    const validText=name=>sourceCells[name].kind==='text' && typeof sourceCells[name].raw==='string' && sourceCells[name].raw!=='';
+    const quantity=sourceCells['数量'],raw=quantity.raw;
+    const exactQuantity=['number','text'].includes(quantity.kind) && typeof raw==='string' && /^-?\d+(?:\.0+)?$/.test(raw);
+    const complete=['存货编码','颜色','尺码','版型'].every(validText) && exactQuantity;
+    yield {event:'source-occurrence',sheet,excelRow:event.excelRow,sourceCells,
+      status:complete?'OBSERVED_COMPLETE_DIMENSIONS_NOT_IDENTITY':'PENDING_SOURCE_DIMENSIONS_OR_STRUCTURE',importReady:false};
+  }
+  if (!eof) throw Error('TPLUS_TRANSFER_SKU_EOF');
 }

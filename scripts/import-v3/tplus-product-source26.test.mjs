@@ -249,10 +249,22 @@ test('frozen target reference selects by exact approved code and verifies parent
  ...Array.from({length:47},(_,i)=>({sourceTargetId:'r'+i,name:'root'+i,parentTargetId:null,parentName:null,leaf:false,canonicalPath:'root'+i}))];
  const payload={format:'FROZEN_APPROVED_CATEGORY_TARGET_REFERENCE_V1',frozenCommit:'b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3',sourceFileSha256:'2bd2f70869eb1b6e2beb6e4c2949588ad5f1d6ab6c999926bb7503e4199c00ca',decisionMappingSha256:'a'.repeat(64),comparison:{decisions:2941,allTargetIdsNamesParentsLevelsMatch:true},nativeTargetIdentityOrImportAuthority:false,nodes};
  const bytes=Buffer.from(JSON.stringify(payload)),pin=createHash('sha256').update(bytes).digest('hex'),targets=readApprovedCategoryTargets26(bytes,pin,'a'.repeat(64));
- const record={name:'n',old_category_for_review_only:'c',original_description:'d',original_size_group:'g',original_invoice_name:'i',decision_status:'本轮人工裁决',decision_source:'proof',decision_basis:'proof',target_id:'leaf',target_name:'leaf',target_parent_name:'',target_level:'叶子'};
+ const record={name:'n',old_category_for_review_only:'c',original_description:'d',original_size_group:'g',original_invoice_name:'i',decision_status:'本轮人工裁决',decision_source:'proof',decision_basis:'proof',target_id:'leaf',target_name:'leaf',target_parent_name:'parent',target_level:'叶子'};
  const decisions={sha256:'a'.repeat(64),records:new Map([['001',record]])};const candidate={productSource:{sourceProductCode:'001',excelRow:3,sourceHeaders:['存货名称','所属类别','存货描述','尺码所属取值组编码','开票名称'],sourceCells:{0:text('n'),1:text('c'),2:text('d'),3:text('g'),4:text('i')}}};
  const result=proposePriorCategoryCanonical26(candidate,decisions,undefined,targets);assert.equal(result.canonicalCategory,'parent/leaf');assert.equal(result.targetReferenceSha256,pin);assert.equal(result.importReady,false);
+ const missingParent={...record,target_parent_name:''};decisions.records.set('001',missingParent);assert.equal(proposePriorCategoryCanonical26(candidate,decisions,undefined,targets).status,'PENDING_CATEGORY_TARGET_PROOF');
  const mismatch=structuredClone(record);mismatch.target_id='r0';decisions.records.set('001',mismatch);assert.equal(proposePriorCategoryCanonical26(candidate,decisions,undefined,targets).status,'PENDING_CATEGORY_TARGET_PROOF');
  assert.throws(()=>readApprovedCategoryTargets26(bytes,'f'.repeat(64),'a'.repeat(64)),/PIN/);
  const changed=structuredClone(payload);changed.nodes[1].parentName='wrong';const bad=Buffer.from(JSON.stringify(changed));assert.throws(()=>readApprovedCategoryTargets26(bad,createHash('sha256').update(bad).digest('hex'),'a'.repeat(64)),/PARENT/);
+});
+
+test('transfer SKU occurrences preserve raw dimensions and never infer missing fit or barcode identity',async()=>{
+ const {projectTPlusTransferSkuOccurrences26:project}=await import('./tplus-product-source26.mjs');
+ const headers={10:text('条形码'),12:text('存货编码'),14:text('颜色'),15:text('尺码'),16:text('数量'),17:text('版型')};
+ const h=row('调拨单',1,headers),r=row('调拨单',2,{10:text('0001'),12:text('product'),14:text('color'),15:text('size'),16:num('-1.0'),17:text('fit')});
+ const out=await Array.fromAsync(project([h,r,end('调拨单',2)]));assert.equal(out[0].status,'OBSERVED_COMPLETE_DIMENSIONS_NOT_IDENTITY');assert.equal(out[0].sourceCells['条形码'].raw,'0001');assert.equal(out[0].importReady,false);
+ const missing={...r,cells:{...r.cells,17:{kind:'blank',raw:null}}};assert.equal((await Array.fromAsync(project([h,missing,end('调拨单',2)])))[0].status,'PENDING_SOURCE_DIMENSIONS_OR_STRUCTURE');
+ const formula={...r,cells:{...r.cells,16:{kind:'formula',raw:null,formula:'1+1'}}};assert.equal((await Array.fromAsync(project([h,formula,end('调拨单',2)])))[0].status,'PENDING_SOURCE_DIMENSIONS_OR_STRUCTURE');
+ await assert.rejects(Array.fromAsync(project([h,r])),/EOF/);
+ await assert.rejects(Array.fromAsync(project([{...h,cells:{...h.cells,17:text('wrong')}},r,end('调拨单',2)])),/HEADER/);
 });

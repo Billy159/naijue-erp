@@ -21911,7 +21911,7 @@
         "tests/integration/rewrite26-synthetic-account-materializer.mjs",
         "tests/rewrite26-synthetic-account-materializer.test.mjs"
       ],
-      "current": "2e source conditional PASS;finite49 nonsecret materializer source+3 targeted checks delivered, pending fixed review",
+      "current": "QB817 nonsecret49 source-level PASS adopted;T45 private assembly input preparation;D1 precise full ACL continues",
       "next": "Independent real target witness/external controller pin; private role/source/plan assembly and review; T45 bounded synthetic execution",
       "independentReviewBoundary": "Attestation supplied hash/content self-consistency is not proof of T45 origin or actual systemID; no PG or execution authority from source PASS"
     },
@@ -22005,7 +22005,7 @@
       "sourceDepth3": 2749,
       "privateArtifactSha256": "3c2dfd15909b7a7e6cc4c8a262cea33e4a7bc71f8b7a24bcc061d92bb72fc9fe",
       "receiptSha256": "1c685de98bb887ff4ab0b5e5b5497c946cfe57d8c308edabec99474f703ba15d",
-      "checks": "D3 affected scope5/5 +target reference/merge3/3 Node24.21 delivered;QB021d3 findings addressed pending independent fixed-version retest",
+      "checks": "QB817 scope/merge retained;only target-parent empty mismatch found, now strict normalized equality;D3Node24 targeted2PASS;QB minimal retest pending",
       "approvedMapping": "2941 exact-code existing decisions referenced with original recorded facts;29 uncovered;target validity/provider pending",
       "importReady": false,
       "canonicalReference": "2921 derived path fields;49 pending;v7 private file hash/controller verified;not full canonical/native authority",
@@ -22025,6 +22025,12 @@
       "existing2941TargetIdNameParentLevelMatches": true,
       "notRecoveredOriginalTaxonomyHash": true,
       "notNativeIdentityAuthority": true
+    },
+    "historicalBlankFitRule": {
+      "status": "EXISTING_APPROVED_RULE_ADOPTED_FOR_NEW_HISTORICAL_LINE_INTERPRETATION_ONLY",
+      "evidenceSha256": "a7533b9b67637efc9723ffe73829c30158649db463e3d7ce4cc13b12fa112396",
+      "meaning": "True blank original historical sales/transfer fit interpreted A with raw blank/provenance retained;explicit other fits kept;no SKU invention/reassignment;not matrix/product default",
+      "oldBatchCountsReused": false
     }
   }
 }
