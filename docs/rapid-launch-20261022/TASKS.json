@@ -23720,5 +23720,38 @@
       "finding": "Approved original identities and current source codes match at endpoints; inspected decisions lack validity intervals and code reuse facts. Historical applicability not proven. No FK written.",
       "status": "CANDIDATE_NOT_TEMPORALLY_VERIFIED"
     }
+  },
+  "latestUnifiedSourceIntake": {
+    "commit": "4e98d1365084b153af14180e99cf7db531acd6d4",
+    "branch": "handoff/erp-unified-latest-20261102",
+    "zipSha256": "7385675e64b5cc4557b1dc7d8e84de0281f2bf50abaf977fff7742f3ea6e4083",
+    "integrity": "CRC_AND_4351_MANIFEST_ENTRIES_MATCH",
+    "independentExpectedZipHashProvided": false,
+    "scope": "INDEPENDENT_OFFLINE_SOURCE_SNAPSHOT_ONLY",
+    "applicationMerged": false,
+    "V2DatabaseApplyResume": "NOT_IMPLEMENTED",
+    "candidate48and49": "CODE_ONLY_NOT_INSTALLED"
+  },
+  "fourProductUpperGroupDecision": {
+    "status": "DRAFT_MATERIALIZED_AND_REFERENCES_CHECKED",
+    "decisionSource": "User in this controller chat: 他就是男装上衣尺码",
+    "productsChanged": 4,
+    "totalProductRows": 2970,
+    "otherProductRowsUnchanged": 2966,
+    "registryCandidateRows": 4080,
+    "groupReceiptSha256": "2e53693ead9f44e40c560161141878992cd95f8dc9044d5832e0178c38155e78",
+    "memberReceiptSha256": "f170262662879c273848c53b923f8588206b9b6e4cc88610d59a030e9e29f0a6",
+    "materializedMembers": 11,
+    "standardMembersDefined": 11,
+    "standard900": "INDEPENDENT_KNOWN_STANDARD_SIZE_CANDIDATE_FROM_PINNED_JSON_NODE",
+    "consumerOccurrences": {
+      "sales": 21,
+      "transfer": 208,
+      "stock": 187
+    },
+    "targetPGVerified": false,
+    "imported": false,
+    "completeMemberReceiptSha256": "d23fd2fa746a21557844d41db8143fe5c8ecd2fc32c6da449f77b282b38e2bdf",
+    "controllerChecks": "OUTPUT_HASHES_PRODUCT_DELTA_AND_11_MEMBER_REFERENCE_ORDER_UNIQUENESS_PASS"
   }
 }
