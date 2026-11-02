@@ -1,3 +1,13 @@
+## 2026-11-02 隔离角色真实验证完成；来源接线固定54e8
+
+GitHub codex/e5c5a762-cleaning-20261102 已非强制推送并独立GET核实54e8c8257b2904b73c4a968d46e63618bb847c2f。cb3 STAFF固定源字节检查已获QB源码/合成PASS；54e8七叶获SOURCE-LEVEL CONDITIONAL PASS，仅所列reader协议范围。D3后继原header→原line reader+authorize定向合成1/1通过，测试叶已交回；D1两fixture补product mapping和条码1+6方案闭包对应，定向1/1自检，尚未独立复核，不能冒实际CORE或完整session。
+
+T45唯一job t45-rewrite26-role-catalog-20261102-01于06:55:09–06:55:16UTC实际完成exit0、COMMIT ACK；原隔离PG17.11/OID16387，两个普通受限角色创建并读回，97组最小权限有效，普通SQLSTATE00000/负例42501，PG已停止且cleanupComplete。结果SHA256 5966d2690aa1e104fb2a35849ebf7795361ac23f6d9cfeb8cec786912bbba5dc，原回执在既有server-jobs同job transport/release-receipts。无业务命令、无来源导入、无正式库操作；角色不能重建重放，本次启动epoch不得套下次。
+
+下一步原D3核实际53仓准备入口与合成22仓的边界、接续相关历史裁决；原D1推进13字段真实宿主/CORE前置。不得造31仓、弱化53原合同或用生成候选自证数据库结果。49员工来源候选包含45精确历史主身份及4原人工计划，真实独立来源审核/身份初始化未完成。实际本批selection/target/actor、商品SKU组关系和完整单据金额闭合继续；格式适配进行中，隔离导入/正式导入/部署/线上业务均未完成。
+
+现行截止时间已由用户明确为北京时间2026-11-02 12:00（UTC04:00）；此前“仅目录标签/尚无截止裁决”的段落被本条覆盖，但物理同一快照未验证。历史明细真正空版型A仅按原a753规则解释并保留原值；旧“版型空不默认A”对本分支不适用，不推广至商品/库存或猜SKU。
+
 ## 2026-11-02 真实新批准备身份固定；STAFF接线76eca6e3
 
 主控用原stableImportId从本批metadataSHA固定batch 11b111ed-f128-09a0-b6cd-f153ef926fa5 / namespace naijue:tplus:20261102 / cutoff2026-11-02T04:00:00Z，见NEW-TPLUS-BATCH-REGISTRATION-20261102.json。仅源准备身份，不造实体身份；selection/target/actor仍未齐、不可执行，不与合成52ae批混用。76eca6e3bf8e921d2152e317c39889f3c5680c79固定STAFF逐字段证明parser，开发4targetPASS，QB尚待新增范围核。45主身份来自现源+已批plan，7历史别名保留；4人工补充plan先按原批准source核，不直接称缺用户资料。隔离/正式导入/部署/线上业务仍未执行。
