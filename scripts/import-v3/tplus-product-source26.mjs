@@ -218,8 +218,11 @@ export function draftTPlusProductFields26(candidate) {
     if (value===null || (column.required && value==='')) { pending.push(column.name); continue; }
     fields[column.name]={value,rule:spec[1],sourceColumn:index,sourceHeader:headers[index],sourceCell:cell ?? {kind:'blank',raw:null}};
   }
+  const groupIndex=headers.indexOf('尺码所属取值组编码');
+  const sourceSizeGroup=groupIndex>=0 && headers.lastIndexOf('尺码所属取值组编码')===groupIndex
+    ? {sourceColumn:groupIndex,sourceHeader:headers[groupIndex],sourceCell:structuredClone(product.sourceCells[groupIndex]??{kind:'blank',raw:null})} : null;
   return {sheet:product.sheet,excelRow:product.excelRow,sourceProductCode:product.sourceProductCode,
-    fields,pending,scope:'PARTIAL_SOURCE_DRAFT',importReady:false};
+    fields,pending,sourceSizeGroup,scope:'PARTIAL_SOURCE_DRAFT',importReady:false};
 }
 
 /** Preserve the source category tree. Deeper paths stay pending for an explicit
