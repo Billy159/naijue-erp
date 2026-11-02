@@ -1,7 +1,23 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';import {mkdtemp,realpath,mkdir,writeFile,rm} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';
-import {openReviewedSkuSource26} from './native-sku-source26.mjs';import {sourceEvidence} from './prepare-native-bindings.mjs';import {openReviewedCatalogueSource26} from './native-source-authorizers.mjs';
+import {openReviewedSkuSource26,resolveTPlusStockFitCandidates26,prepareTPlusStockFitCandidates26} from './native-sku-source26.mjs';import {sourceEvidence} from './prepare-native-bindings.mjs';import {openReviewedCatalogueSource26} from './native-source-authorizers.mjs';
 import {IMPORT_V2_TABLES} from '../../packages/application/src/import-v2-contract.ts';import {CATALOGUE_PRICE_KEYS} from '../../packages/application/src/catalogue-price-input.ts';import {prepareNativeSkuImport26,NATIVE_SKU_IMPORT_VERSION_26} from '../../packages/application/src/native-sku-import.ts';import {requestHash} from '../../packages/application/src/request-hash.ts';
 const id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`,H='a'.repeat(64),payload='b'.repeat(64),hash=b=>createHash('sha256').update(b).digest('hex');
+test('blank stock fit requires unique exact source SKU and observed fit, never historical blank default',()=>{
+ const row={event:'row',excelRow:9,dimensions:{productCode:{kind:'text',raw:'P'},color:{kind:'text',raw:'C'},fit:{kind:'text',raw:''}},values:[{column:8,sourceSize:'S'}]};
+ const fact={productCode:'P',colorName:'C',sourceSize:'S',canonicalSkuId:'sku1',sourceSkuId:'old1',fitCode:'B',observedFitCode:'B',evidenceRef:'original:row'};
+ let r=resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[fact]})[0];assert.equal(r.status,'EXACT_SKU_FIT_CANDIDATE');assert.equal(r.candidateFit,'B');assert.equal(r.sourceFit.raw,'');
+ r=resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[fact,{...fact,canonicalSkuId:'sku2',sourceSkuId:'old2',fitCode:'A',observedFitCode:'A'}]})[0];assert.equal(r.status,'CONFLICT');assert.equal(r.candidateFit,null);
+ r=resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[]})[0];assert.equal(r.status,'UNKNOWN');
+ assert.throws(()=>resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[{...fact,fitCode:'A',observedFitCode:''}]}),/TPLUS_STOCK_FIT26_FACT/);
+});
+test('fit preparation verifies pinned original SKU evidence and rejects altered source',async()=>{
+ const row={event:'row',excelRow:9,dimensions:{productCode:{kind:'text',raw:'P'},color:{kind:'text',raw:'C'},fit:{kind:'text',raw:''}},values:[{column:8,sourceSize:'S'}]},stockBytes=Buffer.from(JSON.stringify(row)+'\n');
+ const keys=['oldSourceSkuId','canonicalSourceSkuId','isRepresentative','canonicalMemberCount','productSourceId','newSizeDictionaryId','newSizeGroupId','newSizeGroupName','newSizeCode','newSizeName','colorCodeIdentity','fitCode','canonicalState','oldSkuCode','oldState','sourceFile','sourceSheet','sourceRow','sourceSha256','mappingBasis','oldFitRaw','oldSizeGroup','oldSizeCode','oldSizeName'];
+ const values={oldSourceSkuId:'old',canonicalSourceSkuId:'canonical',colorCodeIdentity:'001',fitCode:'B',oldFitRaw:'B',oldSizeGroup:'G',oldSizeCode:'S1',oldSizeName:'S'},aliasBytes=Buffer.from(keys.join(',')+'\n'+keys.map(k=>values[k]??'').join(',')+'\n');
+ const original={file:'original.xlsx',sheet:'sheet',row:2,sourceSha256:H,data:{'原SKU来源编号':'old','原颜色编码':'001','原颜色名称':'C','旧尺码组':'G','旧尺码编码':'S1','旧尺码名称':'S','旧版型原值':'B','款号':'P'}},snapshotBytes=Buffer.from(JSON.stringify(original)+'\n'),pins={stock:hash(stockBytes),aliases:hash(aliasBytes),snapshots:hash(snapshotBytes)};
+ const result=await prepareTPlusStockFitCandidates26({stockBytes,aliasBytes,snapshotBytes,pins});assert.equal(result.rows[0].candidateFit,'B');assert.equal(result.importAuthorized,false);
+ await assert.rejects(prepareTPlusStockFitCandidates26({stockBytes,aliasBytes,snapshotBytes:Buffer.from('{}'),pins}),/TPLUS_STOCK_FIT26_PIN/);
+});
 const entities=['SKU','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','INVENTORY_BASELINE','SALES_LINE','SETTLEMENT','TRANSFER_LINE'],all=['BARCODE','CUSTOMER','HALL','INVENTORY_BASELINE','ISSUE','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','PAYMENT_METHOD','PRODUCT','SALES_HEADER','SALES_LINE','SETTLEMENT','SKU','STAFF','SUPPLIER','TRANSFER_HEADER','TRANSFER_LINE','WAREHOUSE'];
 const csv=(headers,rows)=>Buffer.from([headers,...rows.map(r=>headers.map(k=>r[k]))].map(c=>c.map(v=>{const s=String(v??'');return /[",\n\r]/.test(s)?'"'+s.replaceAll('"','""')+'"':s;}).join(',')).join('\n')+'\n');
 async function fixture(t){

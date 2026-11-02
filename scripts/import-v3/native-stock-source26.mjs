@@ -7,6 +7,37 @@ import {validatePreparedNativeStockGroup,nativeStockSourceEvidence,nativeStockPu
 const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>{const d=Object.getOwnPropertyDescriptor(v,k);return d?.enumerable&&Object.hasOwn(d,'value');});
 const must=(ok,code)=>{if(!ok)throw Object.assign(Error(code),{code});},hash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v),digest=b=>createHash('sha256').update(b).digest('hex'),same=(a,b)=>['dev','ino','size','mode','mtimeMs','ctimeMs'].every(k=>a[k]===b[k]);
 const canonicalColumns=['来源编号','仓库来源编号','SKU来源编号','核准库存数量','核准依据','合并输入库存行数','来源单位集合快照','库存行来源编号语义'];
+/** Project original inventory matrix cells, retaining signed values, blanks,
+ * row totals and original summary rows. No SKU or warehouse is inferred. */
+export async function* projectTPlusStockMatrix26(events){
+ let header=null,last=0,physical=0,eof=false,rows=0,summaries=0;const columnTotals=new Map(),unverifiedColumns=new Set();
+ for await(const event of events){
+  must(!eof&&event?.sheet==='第一页','TPLUS_STOCK_MATRIX26_STREAM');
+  if(event.event==='eof'){must(event.rows===physical&&header,'TPLUS_STOCK_MATRIX26_EOF');eof=true;
+   yield {event:'eof',physicalRows:physical,dataRows:rows,summaryRows:summaries,columnTotals:header.sizes.map(s=>({column:s.column,sourceSize:s.sourceSize,signedTotal:unverifiedColumns.has(s.column)||!columnTotals.has(s.column)?null:String(columnTotals.get(s.column))})),blankCellsAreUnknown:true,importAuthorized:false};continue;}
+  must(event.event==='row'&&Number.isSafeInteger(event.excelRow)&&event.excelRow>last&&event.cells,'TPLUS_STOCK_MATRIX26_ROW');last=event.excelRow;physical++;
+  if(event.excelRow===7){
+   const c=event.cells;must(c[1]?.raw==='仓库'&&c[3]?.raw==='存货编码'&&c[5]?.raw==='主计量'&&c[6]?.raw==='颜色'&&c[7]?.raw==='版型1','TPLUS_STOCK_MATRIX26_HEADER');
+   const entries=Object.entries(c).map(([k,v])=>[Number(k),v]).filter(([i,v])=>i>=8&&typeof v?.raw==='string'&&v.raw).sort((a,b)=>a[0]-b[0]);
+   must(entries.length>1&&entries.at(-1)[1].raw==='合计','TPLUS_STOCK_MATRIX26_HEADER');header={sizes:entries.slice(0,-1).map(([column,v])=>({column,sourceSize:v.raw})),totalColumn:entries.at(-1)[0]};
+   yield {event:'header',sheet:event.sheet,excelRow:7,...header};continue;
+  }
+  if(event.excelRow<9)continue;
+  must(header,'TPLUS_STOCK_MATRIX26_HEADER');const cells=event.cells,c=i=>cells[i]??{kind:'blank',raw:null};
+  const dimensions={warehouse:c(1),productCode:c(3),productName:c(4),unit:c(5),color:c(6),fit:c(7)}, values=[];
+  for(const s of header.sizes){const v=c(s.column);if(v.kind==='blank'&&v.raw===null)continue;
+   values.push({column:s.column,sourceSize:s.sourceSize,cell:v});}
+  const total=c(header.totalColumn),isData=dimensions.warehouse.kind==='text'&&dimensions.warehouse.raw&&dimensions.productCode.kind==='text'&&dimensions.productCode.raw;
+  if(!isData){summaries++;yield {event:'summary',sheet:event.sheet,excelRow:event.excelRow,dimensions,values,total};continue;}
+  rows++;let sum=0n,verified=true;
+  for(const value of values){const v=value.cell;if(!['number','text'].includes(v.kind)||typeof v.raw!=='string'||!/^[-+]?\d+$/.test(v.raw)){verified=false;unverifiedColumns.add(value.column);continue;}
+   const n=BigInt(v.raw);sum+=n;columnTotals.set(value.column,(columnTotals.get(value.column)??0n)+n);}
+  const rowTotalVerified=verified&&['number','text'].includes(total.kind)&&typeof total.raw==='string'&&/^[-+]?\d+$/.test(total.raw);
+  yield {event:'row',sheet:event.sheet,excelRow:event.excelRow,dimensions,values,total,computedSignedTotal:verified?String(sum):null,
+   rowTotalStatus:rowTotalVerified?(sum===BigInt(total.raw)?'MATCH':'MISMATCH'):'UNKNOWN',blankCellsAreUnknown:true};
+ }
+ must(eof,'TPLUS_STOCK_MATRIX26_EOF');
+}
 const lineageColumns=['oldStockSourceId','canonicalStockRowSourceId','warehouseSourceId','oldSkuSourceId','canonicalSkuSourceId','productSourceId','signedQuantity','sourceUnit','sourceFile','sourceSheet','sourceRow','sourceSha256'];
 const order=(a,b)=>Buffer.compare(Buffer.from(a.key),Buffer.from(b.key));
 const typed=nativeStockPublicationContributor26;

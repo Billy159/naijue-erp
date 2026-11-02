@@ -9,6 +9,54 @@ const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ow
 const must=(ok,code)=>{if(!ok)throw Object.assign(Error(code),{code});},hash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v),digest=b=>createHash('sha256').update(b).digest('hex');
 const same=(a,b)=>['dev','ino','mode','size','mtimeMs','ctimeMs'].every(k=>a[k]===b[k]);
 const mappingKeys=['oldSourceSkuId','canonicalSourceSkuId','isRepresentative','canonicalMemberCount','productSourceId','newSizeDictionaryId','newSizeGroupId','newSizeGroupName','newSizeCode','newSizeName','colorCodeIdentity','fitCode','canonicalState','oldSkuCode','oldState','sourceFile','sourceSheet','sourceRow','sourceSha256','mappingBasis'];
+/** A blank stock fit can only yield a candidate when the exact original
+ * product, color and size observations identify one canonical SKU and fit. */
+export function resolveTPlusStockFitCandidates26({stockRows,skuFacts}){
+ must(Array.isArray(stockRows)&&Array.isArray(skuFacts),'TPLUS_STOCK_FIT26_INPUT');
+ const index=new Map(),key=(product,color,size)=>JSON.stringify([product,color,size]);
+ for(const fact of skuFacts){
+  must(fact&&['productCode','colorName','sourceSize','canonicalSkuId','sourceSkuId','fitCode','observedFitCode','evidenceRef'].every(k=>typeof fact[k]==='string'&&fact[k])
+    &&fact.observedFitCode===fact.fitCode,'TPLUS_STOCK_FIT26_FACT');
+  const k=key(fact.productCode,fact.colorName,fact.sourceSize),group=index.get(k)??[];group.push(fact);index.set(k,group);
+ }
+ return stockRows.map(row=>{
+  must(row?.event==='row'&&Number.isSafeInteger(row.excelRow)&&row.dimensions&&Array.isArray(row.values),'TPLUS_STOCK_FIT26_ROW');
+  const d=row.dimensions,fit=d.fit,blank=fit?.kind==='blank'&&fit.raw===null||fit?.kind==='text'&&fit.raw==='';
+  return row.values.map(v=>{
+   const base={excelRow:row.excelRow,column:v.column,sourceFit:structuredClone(fit),candidateFit:null,canonicalSkuId:null,sourceSkuIds:[],evidenceRefs:[],status:'UNKNOWN'};
+   if(!blank)return {...base,status:'SOURCE_FIT_PRESENT'};
+   if(d.productCode?.kind!=='text'||!d.productCode.raw||d.color?.kind!=='text'||!d.color.raw||typeof v.sourceSize!=='string'||!v.sourceSize)return base;
+   const facts=index.get(key(d.productCode.raw,d.color.raw,v.sourceSize))??[],unique=new Map();
+   for(const f of facts){const k=JSON.stringify([f.canonicalSkuId,f.fitCode]),g=unique.get(k)??new Set();g.add(f.sourceSkuId);unique.set(k,g);}
+   if(unique.size!==1)return {...base,status:unique.size?'CONFLICT':'UNKNOWN'};
+   const [[identity,sourceIds]]=unique,[canonicalSkuId,candidateFit]=JSON.parse(identity);
+   return {...base,canonicalSkuId,candidateFit,sourceSkuIds:[...sourceIds].sort(),evidenceRefs:[...new Set(facts.map(f=>f.evidenceRef))].sort(),status:'EXACT_SKU_FIT_CANDIDATE'};
+  });
+ }).flat();
+}
+/** Construct fit candidates from pinned source observations and existing SKU
+ * alias/snapshot evidence. A historically blank fit is never promoted. */
+export async function prepareTPlusStockFitCandidates26({stockBytes,aliasBytes,snapshotBytes,pins}){
+ for(const [key,b]of Object.entries({stock:stockBytes,aliases:aliasBytes,snapshots:snapshotBytes}))must(Buffer.isBuffer(b)&&digest(b)===pins?.[key],'TPLUS_STOCK_FIT26_PIN');
+ const text=b=>new TextDecoder('utf8',{fatal:true}).decode(b),originals=new Map(),facts=[],stockRows=[];
+ for(const line of text(snapshotBytes).split('\n')){if(!line)continue;const original=JSON.parse(line),id=original.data?.['原SKU来源编号'];
+  must(typeof id==='string'&&id&&!originals.has(id),'TPLUS_STOCK_FIT26_ORIGINAL');originals.set(id,original);}
+ let header;for await(const cells of parseV2Csv((async function*(){yield text(aliasBytes).replace(/^\uFEFF/,'');})())){
+  if(!header){header=cells;must(mappingKeys.every(k=>header.includes(k)),'TPLUS_STOCK_FIT26_HEADER');continue;}
+  must(cells.length===header.length,'TPLUS_STOCK_FIT26_ROW');const m=Object.fromEntries(header.map((k,i)=>[k,cells[i]]));
+  if(!m.oldFitRaw||m.oldFitRaw!==m.fitCode)continue;
+  const original=originals.get(m.oldSourceSkuId),d=original?.data;
+  must(d&&d['原SKU来源编号']===m.oldSourceSkuId&&d['原颜色编码']===m.colorCodeIdentity&&d['旧尺码组']===m.oldSizeGroup
+   &&d['旧尺码编码']===m.oldSizeCode&&d['旧尺码名称']===m.oldSizeName&&d['旧版型原值']===m.oldFitRaw
+   &&typeof original.file==='string'&&typeof original.sheet==='string'&&Number.isSafeInteger(original.row)&&hash(original.sourceSha256),'TPLUS_STOCK_FIT26_ORIGINAL');
+  facts.push({productCode:d['款号'],colorName:d['原颜色名称'],sourceSize:d['旧尺码名称'],canonicalSkuId:m.canonicalSourceSkuId,sourceSkuId:m.oldSourceSkuId,
+   fitCode:m.fitCode,observedFitCode:m.oldFitRaw,evidenceRef:`${original.file}#${original.sheet}:${original.row}@${original.sourceSha256}`});
+ }
+ must(header,'TPLUS_STOCK_FIT26_HEADER');for(const line of text(stockBytes).split('\n')){if(!line)continue;const row=JSON.parse(line);if(row.event==='row')stockRows.push(row);}
+ const rows=resolveTPlusStockFitCandidates26({stockRows,skuFacts:facts}),counts={};for(const row of rows)counts[row.status]=(counts[row.status]??0)+1;
+ return {version:'TPLUS_STOCK_FIT_SOURCE_CANDIDATES_V1',scope:'OBSERVED_FIT_ONLY_NO_BLANK_TO_A_NO_IMPORT',inputPins:structuredClone(pins),
+  explicitObservedSkuFacts:facts.length,counts,rows,importAuthorized:false};
+}
 async function regular(path){must(typeof path==='string'&&isAbsolute(path),'SKU_SOURCE26_PATH');let p=resolve(path),first=true;for(;;){const s=await lstat(p);must(!s.isSymbolicLink()&&(first?s.isFile():s.isDirectory()),'SKU_SOURCE26_REGULAR');first=false;const parent=dirname(p);if(parent===p)return;p=parent;}}
 const order=(a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key));
 export async function openReviewedSkuSource26(options){
