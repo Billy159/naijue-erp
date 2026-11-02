@@ -1,3 +1,7 @@
+## 新数据接续：空间已恢复；来源候选固定c2e33c87
+
+当前分支codex/e5c5a762-cleaning-20261102。已推并回读fb33ea394bc8f1914a74e0e9366a4d1d0bada7cd；后继c2e33c87eaac28bf5b3e139b6319a56623db2bc6固定D1纯合成来源字节候选，QB合并窄审fb33+c2新增。不是完整selection/preflight或执行授权。磁盘由116MiB恢复到约2.29GiB，无主控删除，原两副本清理请求目前不再需要执行。D1历史暂存mapper两叶和D3native-transfer两叶分别唯一writer，修已批空A派生接线，保持raw/外部authorize/身份。T45准备小来源物化，服务器/PG尚不执行。格式适配进行中；隔离导入、正式导入、部署、线上业务均未执行。cutoff见最新DECISIONS已批准统一2026-11-02T04:00:00Z。
+
 ### 历史明细A解释改为惰性来源适配，磁盘限制不扩大到停全队
 
 D3在原调拨occurrence端口保留原cell，仅按固定已批规则a753…解释真正空白历史版型为A；成功EOF才输出状态计数与逻辑摘要，不再另复制140MB全行JSON。Node24.21仅小流受影响2/2通过，原writer/source authorizer尚未接通，旧测试不冒consumer或PG通过。QB50b原父级定修和occurrence源码/合成PASS采用。

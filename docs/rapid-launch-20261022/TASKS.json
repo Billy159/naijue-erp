@@ -21874,7 +21874,7 @@
       "old database/backups"
     ],
     "noOldSourceFullCaptureOrConversion": true,
-    "latestPushedImplementation": "56a6f936248aba4ac9b896d82ccafc9ec32be09b",
+    "latestPushedImplementation": "fb33ea394bc8f1914a74e0e9366a4d1d0bada7cd",
     "readerReview": {
       "status": "NEED_FIX",
       "owner": "QB",
@@ -22034,6 +22034,20 @@
       "meaning": "True blank original historical sales/transfer fit interpreted A with raw blank/provenance retained;explicit other fits kept;no SKU invention/reassignment;not matrix/product default",
       "oldBatchCountsReused": false,
       "adapterStatus": "Lazy transfer source interpretation+EOF digest;2 targeted Node24 PASS,not native consumer or DB"
+    },
+    "latestFixedSourceCandidate": "c2e33c87eaac28bf5b3e139b6319a56623db2bc6",
+    "cutoff": {
+      "value": "2026-11-02T04:00:00Z",
+      "basis": "HUMAN_CONFIRMED_BATCH_CUTOFF",
+      "humanMessage": "01a19ae0-5506-79b0-b156-03e7d10e2e12",
+      "physicalSnapshotVerified": false,
+      "preserveOriginalRecordDates": true
+    },
+    "currentHandoff": {
+      "D1": "history staging exact mapper and test; source candidates fixed and QB reviewing",
+      "D3": "native transfer source reader exact two leaves; genuine cell evidence and new-batch header review",
+      "T45": "small synthetic source preparation after source review; sole server owner, no new DB execution",
+      "disk": "2.29GiB verified; no controller deletion; retain150MiB floor"
     }
   }
 }
