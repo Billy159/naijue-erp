@@ -21910,7 +21910,7 @@
       "12:00 directory label not proof of same-T; nonzero inventory filter does not establish missing as zero"
     ],
     "mappingDelivery": {
-      "status": "MATRIX_FIX_AND_PRODUCT_SOURCE_DELIVERED_PENDING_QB",
+      "status": "QB_SOURCE_MAPPING_PASS_1324_NOT_PROVIDER_OR_IMPORT",
       "exports": [
         "readTPlusDimensionDictionary",
         "projectTPlusInventoryMatrix"
@@ -21926,6 +21926,26 @@
     },
     "schemaMutationsPermittedForImport": false,
     "schemaConstraintAuthority": "human 01a19a95-542e-7bd2-8be9-8c6f085f120e",
-    "unitRule": "No business main unit/config/required field; preserve original optional source fact only; no fabricated source unit or schema changes"
+    "unitRule": "No business main unit/config/required field; preserve original optional source fact only; no fabricated source unit or schema changes",
+    "capacityHelperSourceAdoption": {
+      "status": "CONTROLLER_ADOPTED_EXACT_PREVIOUSLY_REVIEWED_SOURCE_ONLY",
+      "helperSha256": "9394f7d5eb37f0f3c43d37283cf4d0df1b86ed873f73d47c9df92acca93bd79c",
+      "previousCapacityPin": "7dde28550e9f4eaed427c6e1a57929d70cd11dc5c0866e79a87151bc5ebd7ff2",
+      "independentSourceCommit": "8e945625b4521965c0450cfb5b00956c8cf1239d",
+      "qbReceiptSha256": "e0afcdaed7c7f4bb584efabb495ea3ca83d050d9f0a0d43071c312176cb2de50",
+      "independentReceiptSha256": "ff64678f42e4d7705b7aef20b244bfe70fe2279d8f7162dbbfaad58156794a18",
+      "coveredDelta": [
+        "existing historical-draft SQL member/profile",
+        "closed issuer/catalog guard fix"
+      ],
+      "sourceMirrors": [
+        "scripts/release/boot-entry.py",
+        "scripts/release/rollback-candidate.py"
+      ],
+      "productionExecutionAuthorizedByThisAdoption": false,
+      "schemaChangesAuthorizedByThisAdoption": false,
+      "oldApprovalRecordsChanged": false,
+      "limitation": "Runtime target/review, capacity facts, actual environment scope and business checks remain required; old FULL pin unchanged"
+    }
   }
 }

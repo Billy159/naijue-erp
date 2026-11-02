@@ -13,7 +13,7 @@ import types
 
 DEPLOYMENT_FULL_SHA256 = 'a7655f237631015c07c72cfdfce2d597d45da341cb156c588e74c9f28872ead3'
 # Same independently reviewed capacity helper registered by boot-entry; not a live deployment approval.
-DEPLOYMENT_CAPACITY_SHA256 = '7dde28550e9f4eaed427c6e1a57929d70cd11dc5c0866e79a87151bc5ebd7ff2'
+DEPLOYMENT_CAPACITY_SHA256 = '9394f7d5eb37f0f3c43d37283cf4d0df1b86ed873f73d47c9df92acca93bd79c'
 C = None
 
 

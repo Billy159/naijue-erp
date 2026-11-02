@@ -8696,6 +8696,11 @@
       "scripts/import-v3/production-source-provider26.test.mjs"
     ],
     "additionalD3Scope": "New-batch normalized package/source mapping and existing provider wiring; preserve old branch; no schema/SQL/permission/root/build changes",
-    "schemaMutationsPermittedForImport": false
+    "schemaMutationsPermittedForImport": false,
+    "controllerSourcePinLeaves": [
+      "scripts/release/boot-entry.py",
+      "scripts/release/rollback-candidate.py"
+    ],
+    "controllerSourcePinScope": "Adopt exact already independently reviewed9394 capacity helper bytes; old FULL pins unchanged; no environment/production permission"
   }
 }
