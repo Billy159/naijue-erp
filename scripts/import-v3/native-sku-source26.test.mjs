@@ -8,7 +8,8 @@ test('blank stock fit requires unique exact source SKU and observed fit, never h
  let r=resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[fact]})[0];assert.equal(r.status,'EXACT_SKU_FIT_CANDIDATE');assert.equal(r.candidateFit,'B');assert.equal(r.sourceFit.raw,'');
  r=resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[fact,{...fact,canonicalSkuId:'sku2',sourceSkuId:'old2',fitCode:'A',observedFitCode:'A'}]})[0];assert.equal(r.status,'CONFLICT');assert.equal(r.candidateFit,null);
  r=resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[]})[0];assert.equal(r.status,'UNKNOWN');
- assert.throws(()=>resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[{...fact,fitCode:'A',observedFitCode:''}]}),/TPLUS_STOCK_FIT26_FACT/);
+ r=resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[{...fact,fitCode:'A',observedFitCode:''}]})[0];assert.equal(r.status,'UNKNOWN');
+ r=resolveTPlusStockFitCandidates26({stockRows:[row],skuFacts:[fact,{...fact,sourceSkuId:'other-original',observedFitCode:''}]})[0];assert.equal(r.status,'CONFLICT');assert.equal(r.candidateFit,null);
 });
 test('fit preparation verifies pinned original SKU evidence and rejects altered source',async()=>{
  const row={event:'row',excelRow:9,dimensions:{productCode:{kind:'text',raw:'P'},color:{kind:'text',raw:'C'},fit:{kind:'text',raw:''}},values:[{column:8,sourceSize:'S'}]},stockBytes=Buffer.from(JSON.stringify(row)+'\n');

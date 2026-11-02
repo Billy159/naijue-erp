@@ -10,11 +10,10 @@ const canonicalColumns=['来源编号','仓库来源编号','SKU来源编号','�
 /** Project original inventory matrix cells, retaining signed values, blanks,
  * row totals and original summary rows. No SKU or warehouse is inferred. */
 export async function* projectTPlusStockMatrix26(events){
- let header=null,last=0,physical=0,eof=false,rows=0,summaries=0;const columnTotals=new Map(),unverifiedColumns=new Set();
+ let header=null,subheader=false,last=0,physical=0,eof=false,rows=0,summaries=0;const columnTotals=new Map(),unverifiedColumns=new Set();
  for await(const event of events){
   must(!eof&&event?.sheet==='第一页','TPLUS_STOCK_MATRIX26_STREAM');
-  if(event.event==='eof'){must(event.rows===physical&&header,'TPLUS_STOCK_MATRIX26_EOF');eof=true;
-   yield {event:'eof',physicalRows:physical,dataRows:rows,summaryRows:summaries,columnTotals:header.sizes.map(s=>({column:s.column,sourceSize:s.sourceSize,signedTotal:unverifiedColumns.has(s.column)||!columnTotals.has(s.column)?null:String(columnTotals.get(s.column))})),blankCellsAreUnknown:true,importAuthorized:false};continue;}
+  if(event.event==='eof'){must(event.rows===physical&&header&&subheader,'TPLUS_STOCK_MATRIX26_EOF');eof=true;continue;}
   must(event.event==='row'&&Number.isSafeInteger(event.excelRow)&&event.excelRow>last&&event.cells,'TPLUS_STOCK_MATRIX26_ROW');last=event.excelRow;physical++;
   if(event.excelRow===7){
    const c=event.cells;must(c[1]?.raw==='仓库'&&c[3]?.raw==='存货编码'&&c[5]?.raw==='主计量'&&c[6]?.raw==='颜色'&&c[7]?.raw==='版型1','TPLUS_STOCK_MATRIX26_HEADER');
@@ -22,8 +21,10 @@ export async function* projectTPlusStockMatrix26(events){
    must(entries.length>1&&entries.at(-1)[1].raw==='合计','TPLUS_STOCK_MATRIX26_HEADER');header={sizes:entries.slice(0,-1).map(([column,v])=>({column,sourceSize:v.raw})),totalColumn:entries.at(-1)[0]};
    yield {event:'header',sheet:event.sheet,excelRow:7,...header};continue;
   }
-  if(event.excelRow<9)continue;
-  must(header,'TPLUS_STOCK_MATRIX26_HEADER');const cells=event.cells,c=i=>cells[i]??{kind:'blank',raw:null};
+  if(event.excelRow<7)continue;
+  if(event.excelRow===8){must(header&&!subheader&&[...header.sizes.map(s=>s.column),header.totalColumn].every(i=>event.cells[i]?.raw==='现存量(主)')
+    &&[1,3,4,5,6,7].every(i=>!event.cells[i]||event.cells[i].kind==='blank'||event.cells[i].kind==='text'&&event.cells[i].raw===''),'TPLUS_STOCK_MATRIX26_SUBHEADER');subheader=true;continue;}
+  must(header&&subheader,'TPLUS_STOCK_MATRIX26_HEADER');const cells=event.cells,c=i=>cells[i]??{kind:'blank',raw:null};
   const dimensions={warehouse:c(1),productCode:c(3),productName:c(4),unit:c(5),color:c(6),fit:c(7)}, values=[];
   for(const s of header.sizes){const v=c(s.column);if(v.kind==='blank'&&v.raw===null)continue;
    values.push({column:s.column,sourceSize:s.sourceSize,cell:v});}
@@ -37,6 +38,7 @@ export async function* projectTPlusStockMatrix26(events){
    rowTotalStatus:rowTotalVerified?(sum===BigInt(total.raw)?'MATCH':'MISMATCH'):'UNKNOWN',blankCellsAreUnknown:true};
  }
  must(eof,'TPLUS_STOCK_MATRIX26_EOF');
+ yield {event:'eof',physicalRows:physical,dataRows:rows,summaryRows:summaries,columnTotals:header.sizes.map(s=>({column:s.column,sourceSize:s.sourceSize,signedTotal:unverifiedColumns.has(s.column)||!columnTotals.has(s.column)?null:String(columnTotals.get(s.column))})),blankCellsAreUnknown:true,importAuthorized:false};
 }
 const lineageColumns=['oldStockSourceId','canonicalStockRowSourceId','warehouseSourceId','oldSkuSourceId','canonicalSkuSourceId','productSourceId','signedQuantity','sourceUnit','sourceFile','sourceSheet','sourceRow','sourceSha256'];
 const order=(a,b)=>Buffer.compare(Buffer.from(a.key),Buffer.from(b.key));

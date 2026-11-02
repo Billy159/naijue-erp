@@ -3,10 +3,13 @@ import {openReviewedStockSource26,projectTPlusStockMatrix26} from './native-stoc
 test('stock matrix preserves signed cells and totals without filling blank fit or quantities',async()=>{
  const t=raw=>({kind:'text',raw}),n=raw=>({kind:'number',raw}),row=(excelRow,cells)=>({event:'row',sheet:'第一页',excelRow,cells});
  const events=[row(7,{1:t('仓库'),3:t('存货编码'),5:t('主计量'),6:t('颜色'),7:t('版型1'),8:t('S'),9:t('M'),10:t('合计')}),
-  row(9,{1:t('warehouse'),3:t('product'),5:t('件'),6:t('color'),8:n('-2'),9:n('3'),10:n('1')}),row(10,{1:t('合计'),8:n('-2'),9:n('3'),10:n('1')}),{event:'eof',sheet:'第一页',rows:3}];
+  row(8,{8:t('现存量(主)'),9:t('现存量(主)'),10:t('现存量(主)')}),row(9,{1:t('warehouse'),3:t('product'),5:t('件'),6:t('color'),8:n('-2'),9:n('3'),10:n('1')}),row(10,{1:t('合计'),8:n('-2'),9:n('3'),10:n('1')}),{event:'eof',sheet:'第一页',rows:4}];
  const rows=await Array.fromAsync(projectTPlusStockMatrix26(events));assert.equal(rows[1].dimensions.fit.kind,'blank');assert.equal(rows[1].values[0].cell.raw,'-2');assert.equal(rows[1].rowTotalStatus,'MATCH');
  assert.equal(rows[2].event,'summary');assert.equal(rows[3].columnTotals[0].signedTotal,'-2');assert.equal(rows[3].blankCellsAreUnknown,true);assert.equal(rows[3].importAuthorized,false);
  await assert.rejects(Array.fromAsync(projectTPlusStockMatrix26(events.slice(0,-1))),/TPLUS_STOCK_MATRIX26_EOF/);
+ for(const tail of [[row(11,{1:t('late')})],[{event:'eof',sheet:'第一页',rows:4}]]){const emitted=[];await assert.rejects((async()=>{for await(const x of projectTPlusStockMatrix26([...events,...tail]))emitted.push(x);})(),/TPLUS_STOCK_MATRIX26_STREAM/);assert.equal(emitted.some(x=>x.event==='eof'),false);}
+ const emitted=[];async function* broken(){yield* events;throw Error('LATE_SOURCE_FAILURE');}await assert.rejects((async()=>{for await(const x of projectTPlusStockMatrix26(broken()))emitted.push(x);})(),/LATE_SOURCE_FAILURE/);assert.equal(emitted.some(x=>x.event==='eof'),false);
+ const row8Data=[events[0],row(8,{1:t('warehouse'),3:t('product'),8:n('1'),10:n('1')}),...events.slice(2)];await assert.rejects(Array.fromAsync(projectTPlusStockMatrix26(row8Data)),/TPLUS_STOCK_MATRIX26_SUBHEADER/);
 });
 const H='a'.repeat(64),payload='b'.repeat(64),id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`,sha=b=>createHash('sha256').update(b).digest('hex');
 const kinds=['SKU','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','INVENTORY_BASELINE','SALES_LINE','SETTLEMENT','TRANSFER_LINE'],all=['BARCODE','CUSTOMER','HALL','INVENTORY_BASELINE','ISSUE','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','PAYMENT_METHOD','PRODUCT','SALES_HEADER','SALES_LINE','SETTLEMENT','SKU','STAFF','SUPPLIER','TRANSFER_HEADER','TRANSFER_LINE','WAREHOUSE'];
