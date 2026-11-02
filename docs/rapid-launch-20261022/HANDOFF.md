@@ -3896,3 +3896,18 @@ SHA256: b046e9771795777c5dedc329362ca93246e6d167d7567ee407df620e753a0077
 
 
 D2账户共享索引补查已结束：176处中74仅与E账号列共用、101仅与H客户号列共用、1与两列共用；这不证明原业务资料为空或字符串本身一定是凭据。受当前不读取敏感字段值的边界约束，本轮新增可证账户绑定0；历史84账户及990厅关系仅供参考，不能按名称认定本批身份。回执SHA256 2278c3b0888f8083fe7384b741134d4a3c6061ba1aa416f570d7a68a085273d3。未读取敏感值，未写数据库；待独立准确来源或可审查的受控脱敏方式。
+
+
+### 2026-11-02 Stage source intake and dictionary continuation
+
+Stage ZIP d5604d1 external SHA256 matched; package3891/source3871 manifest checks had zero mismatch. Isolated reception only; 81 tracked modifications and90 new files remain WIP. No source overwrite or package script execution. Successor4d21eb62 is user-reported, not confirmed complete remote delivery; no duplicate patch application. D3 contract receipt5a6393448168e45666838e13fd67b9b5219495e4518137a548bd4b2dc5d4c3fb adopted:73 source names match;17 drafts checked first row only. Approved noon cutoff remains; NEW_AFTERNOON_SNAPSHOT is a code constant requiring exact interpretation, not authorization to replace input. Export time, coverage, registry/group membership remain unproved. Column provenance, closed fields and64MiB/file256MiB/package are pending alignment points.
+
+Original D3 explicitly dispatched gpt-6.1-terra/medium for all rows of fit/size/barcode_scheme, exact candidate fields plus exceptions in private data, DRAFT only. Missing lifecycle facts are not guessed null; no new central IDs. Dot owns application/schema/import tools. Package reports isolated schema/ACL PASS and initialization22P02 rollback; full import/readback/recovery and normal-role business chain remain unverified. Controller did not run DB/build/production actions.
+
+
+D3 three-dictionary full-row increment adopted (receipt SHA256 a2ec6177a23d58335398b5be7136cae9d02292cd4896a6234407a3751b3f4eae): fit6/6 shape-blocked by original numeric code vs stage uppercase-letter code, and unproved deleted_at; size240/240 code/name shapes valid, extra enabled retained privately; barcode_scheme6/6 fixed declarations/approved fixed IDs match stage. Actual target identity and READY remain unverified (READY0). Original D3 continues bounded search of existing approved fit mapping, preserving original keys/codes/names; no invented letter/lifecycle fact, no app or SQL changes.
+
+
+Fit crosswalk evidence follow-up completed, receipt SHA256331a01d3064240c1307afc6d8dcbc087d371efe400e90b4ebe1fd099816df5df: bounded approved records do not establish the6 numeric-to-letter fit bindings. Keep unresolved, do not infer from display name. Existing blank-A ruling remains scoped to genuinely blank historical SALES/TRANSFER lines. No new business rule requested or invented.
+
+Stage CLI source dispatch reviewed without execution: validate, plan--offline, inspect-target, initialize/resume-initialize, apply/status/resume/verify/receipt-check exist as client handlers; rehearse, rollback-plan, prepare, dry-run, import, reconcile explicitly return NOT_IMPLEMENTED. Execution scope remains ISOLATED_SET_ROLE_PROOF_ONLY, engine_validated=false/production_login_capability=false. A dispatch branch does not prove executable PG closure. Dot fixed combined source and initialization repair/evidence remain required before actual trial import. No new DB/server action.

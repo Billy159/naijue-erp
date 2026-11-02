@@ -22213,8 +22213,8 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical sales/transfer source lines only with exact original blank and decision provenance; not stock/product/global default",
-    "current": "New size-mapping sidecar delivered and full source-semantics consumption complete; first independent 3-chat wave returned bounded receipts",
-    "next": "Address exact source/semantic gaps and public-business-field reader restriction without secret access; no repeat full scans; Dot complete code delivery remains independent",
+    "current": "Stage intake and three dictionary normalization increments completed; exact gaps preserved",
+    "next": "Consume exact approved identity/fit evidence or Dot fixed successor; do not repeat unchanged scans",
     "ordinaryDocumentTables": [
       "sales_header",
       "sales_line",
@@ -22303,7 +22303,7 @@
     },
     "blockedAudit": {
       "consecutiveImpasseTurns": 0,
-      "resetReason": "New human-provided size crosswalk location and goal resumed; original D3 new evidence task dispatched",
+      "resetReason": "New stage source verified; bounded cleaning continuation dispatched",
       "checkedAt": "2026-11-02T14:15:22.986072+00:00",
       "goalStillActive": true
     },
@@ -22429,6 +22429,96 @@
       },
       "newVerifiedBindings": 0,
       "next": "Independent current source or reviewable controlled redaction; do not infer source is empty"
+    },
+    "stageReception20261102": {
+      "archive": "ERP-UNIFIED-STAGE-d5604d1-20261102-2249.zip",
+      "archiveSha256": "22ccfbab0c571295f3574ec6c73529ec11092dc80edd759fac2753f6a94a9123",
+      "stage": "DEVELOPMENT_WIP_NOT_RELEASE",
+      "branch": "handoff/erp-unified-github-20261102",
+      "declaredCommit": "d5604d154685282901d3390fd8854b59952c6d9e",
+      "packageManifestChecked": 3891,
+      "sourceManifestChecked": 3871,
+      "hashMismatches": 0,
+      "trackedModifications": 81,
+      "newFiles": 90,
+      "sourceContentCaptureSha256": "4f0cfef2bb5ee6b57f16f21eb5e2b142aa67df03ac072773b4093877d27d9b6e",
+      "isolatedPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-d5604d1-received-20261102-01/ERP-UNIFIED-STAGE-d5604d1-20261102-2249",
+      "scriptsExecuted": false,
+      "existingSourceOverwritten": false,
+      "successorCandidateReported": "4d21eb6287af494aac81fa928960a8e32610c344",
+      "successorCompleteRemoteDelivery": "UNVERIFIED",
+      "isolatedSchemaAcl": "DOT_REPORTED_PASS_NOT_CONTROLLER_RERUN",
+      "initialization": "DOT_REPORTED_22P02_ROLLED_BACK",
+      "completeImport": "NOT_VERIFIED",
+      "normalLoginBusinessChain": "NOT_VERIFIED",
+      "productionApproved": false,
+      "contractComparisonReceiptSha256": "5a6393448168e45666838e13fd67b9b5219495e4518137a548bd4b2dc5d4c3fb",
+      "contractComparisonScope": "73 prior source field names plus first row of 17 drafts; not full validation",
+      "nextOfflineWork": {
+        "owner": "D3",
+        "model": "gpt-6.1-terra/medium",
+        "scope": "Existing approved fit-code crosswalk evidence only",
+        "status": "COMPLETED_WITH_UNRESOLVED_SOURCE_IDENTITY_GAPS",
+        "noNewRules": true
+      },
+      "recordedAt": "2026-11-02T15:18:39.455760+00:00",
+      "dictionaryFullRows": {
+        "receiptSha256": "a2ec6177a23d58335398b5be7136cae9d02292cd4896a6234407a3751b3f4eae",
+        "fit": {
+          "rows": 6,
+          "shapeBlocked": 6,
+          "reason": "numeric source code vs single-uppercase target code; deleted_at unproved"
+        },
+        "size": {
+          "rows": 240,
+          "fieldShapeMatches": 240,
+          "enabled": "retained in private source evidence, outside closed target fields"
+        },
+        "barcodeScheme": {
+          "rows": 6,
+          "fixedDeclarationMatches": 6
+        },
+        "readyRows": 0,
+        "targetIdentityVerified": false,
+        "next": "D3 bounded check for existing approved fit code crosswalk; no guessed mapping",
+        "scope": "whole three small drafts only; no PG/CLI/build or global package validation"
+      },
+      "fitCrosswalkReview": {
+        "receiptSha256": "331a01d3064240c1307afc6d8dcbc087d371efe400e90b4ebe1fd099816df5df",
+        "status": "NO_APPROVED_EXACT_SOURCE_TO_TARGET_CODE_MAP_FOUND_IN_BOUNDED_MATERIALS",
+        "unresolved": 6,
+        "noGuessedIdsOrCodes": true,
+        "defaultA": "Approved genuinely blank historical SALES/TRANSFER source lines only; not known nonblank/stock/product blanket default"
+      },
+      "entrypointSourceReview": {
+        "scope": "READ_CODE_ONLY_NOT_EXECUTED",
+        "implementedDispatch": [
+          "validate",
+          "plan --offline",
+          "inspect-target",
+          "initialize",
+          "resume-initialize",
+          "apply",
+          "status",
+          "resume",
+          "verify",
+          "receipt-check",
+          "version",
+          "capability-report",
+          "contract-schema"
+        ],
+        "notImplemented": [
+          "rehearse",
+          "rollback-plan",
+          "prepare",
+          "dry-run",
+          "import",
+          "reconcile"
+        ],
+        "engineValidated": false,
+        "productionLoginCapability": false,
+        "executionScope": "ISOLATED_SET_ROLE_PROOF_ONLY"
+      }
     }
   }
 }

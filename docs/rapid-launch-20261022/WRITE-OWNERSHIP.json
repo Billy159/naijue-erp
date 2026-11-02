@@ -9018,5 +9018,13 @@
     },
     "currentRouteSupersedesLegacyLeases": true,
     "activeBaseline": "e5b20fe578cd8fdca5ed756a1f248c92e165c588; preserved local successor b7a237c3d7a5afb4b93f753eb655f2dc213c8eaf; Dot combined successor pending"
+  },
+  "stageReception20261102": {
+    "controller": "intake and existing coordination records only",
+    "D3": "central private dictionaries/registry; 3-table full-row normalization current",
+    "Dot": "application/schema/install/import tools; local snapshot read-only",
+    "T45": "no new environment execution",
+    "model": "gpt-6.1-terra/medium",
+    "Fast": "UNVERIFIED_NO_TOOL_SWITCH"
   }
 }
