@@ -1,3 +1,9 @@
+## 2026-11-02 原因修复合批64322179；精确清理完成
+
+6432217988b106ea9ef21ba31e890cdf7313e08e固定D3四叶：EOF只是上游声明，必须自然耗尽且无后续行/重复EOF/异常后才发完成摘要；真空历史fitA通过原mapper并保留原值，reader要求本批header/source外审及真实cell/alias证据，不能套旧14279范围。开发定向EOF1/transfer5、mapper16已交，QB本轮仅增量复验，尚未独立通过/真实导入。c2合成字节候选源码PASS采用，T45已从固定c2开始本机小来源候选准备，不代表DB或来源外审通过。
+
+用户call_f152bf96d98b4a03a0ad5c3e41a63d10明确批准仅删intake下execution-export-ffc1d3d4-01与execution-export-1101a4b3-02。主控再次逐文件核各4705项：受控源码对应原固定Git，额外依赖有逐字节副本，release标记等于原commit对象；无symlink/Git工作树/打开文件，两目录已删除并回读不存在。原输入/备份/Git/当前WIP不动。操作后空闲4880789504字节；不将期间全部磁盘增量归因本次114MiB清理。
+
 ## 新数据接续：空间已恢复；来源候选固定c2e33c87
 
 当前分支codex/e5c5a762-cleaning-20261102。已推并回读fb33ea394bc8f1914a74e0e9366a4d1d0bada7cd；后继c2e33c87eaac28bf5b3e139b6319a56623db2bc6固定D1纯合成来源字节候选，QB合并窄审fb33+c2新增。不是完整selection/preflight或执行授权。磁盘由116MiB恢复到约2.29GiB，无主控删除，原两副本清理请求目前不再需要执行。D1历史暂存mapper两叶和D3native-transfer两叶分别唯一writer，修已批空A派生接线，保持raw/外部authorize/身份。T45准备小来源物化，服务器/PG尚不执行。格式适配进行中；隔离导入、正式导入、部署、线上业务均未执行。cutoff见最新DECISIONS已批准统一2026-11-02T04:00:00Z。

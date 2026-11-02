@@ -21874,7 +21874,7 @@
       "old database/backups"
     ],
     "noOldSourceFullCaptureOrConversion": true,
-    "latestPushedImplementation": "fb33ea394bc8f1914a74e0e9366a4d1d0bada7cd",
+    "latestPushedImplementation": "5b0e96db35a895f2364a36e53e0abb91892a5bf4",
     "readerReview": {
       "status": "NEED_FIX",
       "owner": "QB",
@@ -22035,7 +22035,7 @@
       "oldBatchCountsReused": false,
       "adapterStatus": "Lazy transfer source interpretation+EOF digest;2 targeted Node24 PASS,not native consumer or DB"
     },
-    "latestFixedSourceCandidate": "c2e33c87eaac28bf5b3e139b6319a56623db2bc6",
+    "latestFixedSourceCandidate": "6432217988b106ea9ef21ba31e890cdf7313e08e",
     "cutoff": {
       "value": "2026-11-02T04:00:00Z",
       "basis": "HUMAN_CONFIRMED_BATCH_CUTOFF",
@@ -22048,6 +22048,25 @@
       "D3": "native transfer source reader exact two leaves; genuine cell evidence and new-batch header review",
       "T45": "small synthetic source preparation after source review; sole server owner, no new DB execution",
       "disk": "2.29GiB verified; no controller deletion; retain150MiB floor"
+    },
+    "currentIncrementalReview": {
+      "owner": "QB",
+      "candidate": "6432217988b106ea9ef21ba31e890cdf7313e08e",
+      "status": "IN_PROGRESS",
+      "scope": "EOF exhaustion fix + history mapper and native reader evidence; prior synthetic byte candidates source PASS retained",
+      "realPg": false
+    },
+    "approvedCleanupCompleted": {
+      "humanReply": "call_f152bf96d98b4a03a0ad5c3e41a63d10",
+      "directories": [
+        "execution-export-ffc1d3d4-01",
+        "execution-export-1101a4b3-02"
+      ],
+      "parent": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102",
+      "removed": true,
+      "filesEach": 4705,
+      "independentRecoverabilityVerified": true,
+      "postFreeBytes": 4880789504
     }
   }
 }
