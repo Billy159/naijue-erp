@@ -2,7 +2,7 @@
  * The caller supplies the existing reviewed target pool and private sinks. No
  * credentials, pool construction, target write or expectation-derived rows. */
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
-const specs=[
+const stockSpecs=[
  {name:'aliases',sink:'onAliases',key:['old_source_sku_id'],
   from:'naijue_erp.import_sku_alias a LEFT JOIN naijue_erp.sku s ON s.id=a.canonical_sku_id',where:'a.batch_id=$1::uuid',order:'a.old_source_sku_id COLLATE "C"',
   select:'a.old_source_sku_id,a.canonical_sku_id::text,a.source_row_id::text,a.canonical_source_key,a.mapping_basis,s.id::text AS actual_sku_id,s.product_id::text,s.color_id::text,s.fit_id::text,s.size_id::text,s.sku_code,s.enabled,s.version::text'},
@@ -13,16 +13,49 @@ const specs=[
   from:'(SELECT DISTINCT warehouse_id,canonical_sku_id FROM naijue_erp.import_stock_contributor WHERE batch_id=$1::uuid) k LEFT JOIN naijue_erp.inventory_balance b ON b.warehouse_id=k.warehouse_id AND b.sku_id=k.canonical_sku_id',where:'true',order:'k.warehouse_id,k.canonical_sku_id',
   select:'k.warehouse_id::text,k.canonical_sku_id::text AS sku_id,(b.sku_id IS NOT NULL) AS balance_present,b.quantity::text,b.version::text,b.last_operation_id::text'},
 ];
-export async function readTargetImportedStockSnapshot(pool,options){
+// Fixed history relations only: original rows and controlled effective revisions
+// remain separate; duplicate SKU lines retain their own line identity.
+const historySpecs=[
+ ...['history_sales_header','history_transfer_header','history_sales_line','history_transfer_line','history_sales_settlement'].map(table=>({
+  name:table,sink:'onHistory',key:['id'],from:`naijue_erp.${table} r`,where:'r.batch_id=$1::uuid',order:'r.id',select:'r.id::text,to_jsonb(r)::text AS raw_json',rawJson:true,
+ })),
+ ...[
+  ['history_sales_effective','header_id','history_sales_header','id'],
+  ['history_transfer_effective','header_id','history_transfer_header','id'],
+  ['history_sales_line_effective','line_id','history_sales_line','id'],
+  ['history_transfer_line_effective','line_id','history_transfer_line','id'],
+  ['history_sales_settlement_effective','settlement_id','history_sales_settlement','id'],
+ ].map(([table,key,parent,parentKey])=>({
+  name:table,sink:'onHistory',key:['id'],from:`naijue_erp.${table} r`,
+  where:`EXISTS (SELECT 1 FROM naijue_erp.${parent} p WHERE p.${parentKey}=r.${key} AND p.batch_id=$1::uuid)`,
+  order:`r.${key}`,select:`r.${key}::text AS id,to_jsonb(r)::text AS raw_json`,rawJson:true,
+ })),
+ {name:'history_revision',sink:'onHistory',key:['id'],from:'naijue_erp.history_revision r',
+  where:`(EXISTS (SELECT 1 FROM naijue_erp.history_sales_header p WHERE p.id=r.sales_id AND p.batch_id=$1::uuid)
+    OR EXISTS (SELECT 1 FROM naijue_erp.history_transfer_header p WHERE p.id=r.transfer_id AND p.batch_id=$1::uuid))`,
+  order:'r.id',select:'r.id::text,to_jsonb(r)::text AS raw_json',rawJson:true},
+];
+export function readTargetImportedStockSnapshot(pool,options){
+ return readTargetImportedSnapshot(pool,options,stockSpecs,'TARGET_IMPORTED_STOCK_READ_BACK_NOT_RECONCILED','TARGET_STOCK_READBACK_INPUT_REQUIRED');
+}
+/** onHistory(rows, relationName) receives private target facts, not source values.
+ * raw_json must be parsed with the existing exact legacy JSON decoder when needed;
+ * native JSON.parse would round bigint/numeric values. No effective overlay is
+ * silently applied and no revision is dropped. This is not reconciliation. */
+export function readTargetImportedHistorySnapshot(pool,options){
+ return readTargetImportedSnapshot(pool,options,historySpecs,'TARGET_IMPORTED_HISTORY_READ_BACK_NOT_RECONCILED','TARGET_HISTORY_READBACK_INPUT_REQUIRED');
+}
+async function readTargetImportedSnapshot(pool,options,specs,status,inputError){
  const {batchId,expectedSourceHash,pageRows=100,signal}=options;
  if(!uuid.test(batchId)||typeof expectedSourceHash!=='string'||!/^[a-f0-9]{64}$/.test(expectedSourceHash)
   ||!Number.isSafeInteger(pageRows)||pageRows<1||pageRows>500
-  ||specs.some(s=>typeof options[s.sink]!=='function'))throw Error('TARGET_STOCK_READBACK_INPUT_REQUIRED');
+  ||specs.some(s=>typeof options[s.sink]!=='function'))throw Error(inputError);
  signal?.throwIfAborted();
  const client=await pool.connect();let transaction=false,releaseError;
  const active=()=>signal?.throwIfAborted();
  try{
   active();try{await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');transaction=true;}catch(error){releaseError=error;throw error;}
+  if(specs===historySpecs)await client.query("SET LOCAL timezone='UTC'");
   await client.query("SET LOCAL statement_timeout='3s'");
   await client.query("SET LOCAL lock_timeout='1s'");
   await client.query("SET LOCAL idle_in_transaction_session_timeout='5s'");
@@ -49,19 +82,20 @@ export async function readTargetImportedStockSnapshot(pool,options){
     if(!Array.isArray(page)||page.length>pageRows)throw Error('TARGET_READBACK_PAGE_REFUSED');
     if(page.length===0)break;
     for(const row of page){
+     if(spec.rawJson&&typeof row.raw_json!=='string')throw Error('TARGET_READBACK_RAW_JSON_REQUIRED');
      if(spec.key.some(k=>typeof row[k]!=='string'||row[k].length===0))throw Error('TARGET_READBACK_IDENTITY_REFUSED');
      const key=JSON.stringify(spec.key.map(k=>row[k]));if(seen.has(key))throw Error('TARGET_READBACK_DUPLICATE_ROW');seen.add(key);
      read++;if(read>BigInt(count))throw Error('TARGET_READBACK_COUNT_MISMATCH');
     }
     // These are private database facts, never input expectations or source rows.
-    await options[spec.sink](page);
+    await options[spec.sink](page,spec.name);
    }
    await client.query(`CLOSE cleaning_readback_${spec.name}`);
    if(read.toString()!==count)throw Error('TARGET_READBACK_COUNT_MISMATCH');
    tables.push({name:spec.name,rows:count,eofObserved:true});
   }
   active();try{await client.query('ROLLBACK');transaction=false;}catch(error){transaction=false;releaseError=error;throw error;}
-  return {status:'TARGET_IMPORTED_STOCK_READ_BACK_NOT_RECONCILED',identity,batch:batch[0],tables,
+  return {status,identity,batch:batch[0],tables,
    dataCompared:false,sourceCompletenessVerified:false,targetWrites:0};
  }catch(error){
   if(transaction){try{await client.query('ROLLBACK');transaction=false;}catch(rollback){releaseError=rollback;throw new AggregateError([error,rollback],'TARGET_READBACK_AND_ROLLBACK_FAILED');}}

@@ -172,3 +172,18 @@ ad4两阶段的header真实完成44773行，但revision仍在原300秒动作期�
 私有离线消费者支持准确 95/96 清单，仍以各自实际 manifest 固定输入；不能把旧 93 项
 补上另一快照后称为同批。新投影的真实 PostgreSQL 语义、权限、RLS、实际容量和 EOF
 仍由原 T45 在保留隔离副本验证；不新增授权、不连接生产。
+
+
+### 目标单据独立读回（源码/模拟通过，真实PG未运行）
+`target-stock-readback.mjs::readTargetImportedHistorySnapshot` 复用原普通账号、单池单连接
+RR只读事务、批次/source_hash绑定、COUNT/分页/重复键/空EOF/ROLLBACK及释放逻辑。
+独立读取当前目标中的销货/调拨历史头、两类明细、收款、五类有效投影和history_revision，
+共11个固定关系。有效投影通过原头/行所属batch筛选，EXISTS不把多个关联展开成重复行；
+同SKU的不同明细仍逐行保留。原值与有效值分别交`onHistory(rows, relationName)`，
+不合并、不静默选最大版本；后续对账须按已批投影合同应用。
+所有业务正文保留PG生成的raw_json文本（时间区为UTC），避免JS numeric/bigint精度损失，
+用既有exact JSON解析器消费，不能普通JSON.parse再比金额。结果明确NOT_RECONCILED，
+空目标、模拟连接或返回成功均不证明转换、业务、认证、ACL或完整迁移通过。
+本次4项合成正反例+受共享事务重构影响的原12项=16通过；尚无实际迁移批次、普通目标账号
+及真实PG运行。没有授权/创建账号、补权限、SQL写入或生产操作。此入口不包含商品九价、
+完整人员、附件及全部迁移事实，不替代这些独立读回；不重复实现现有业务查询接口。
