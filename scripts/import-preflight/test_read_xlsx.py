@@ -4,6 +4,7 @@ import importlib.util
 import hashlib
 import json
 import os
+import select
 import stat
 import sys
 import subprocess
@@ -245,6 +246,23 @@ assert.throws(()=>index.add('report','SYN·001'),/STATE/);assert.throws(()=>inde
             self.assertFalse(list(Path(self.temp.name).glob("naijue-selected-sst-*")))
         finally:
             if process.poll() is None: process.kill(); process.communicate(timeout=3)
+
+    def test_sigterm_interrupts_backpressure_with_pipe_open_and_unread(self):
+        node = os.environ.get("PREFLIGHT_TEST_NODE", "node")
+        self.write(parts(data=[row(i, cell(f"A{i}", "x" * 1000)) for i in range(1, 30001)]))
+        env = dict(os.environ, TMPDIR=self.temp.name)
+        process = subprocess.Popen([node, str(HERE / "run.mjs"), "--stream", str(self.path), "04客户", "0"],
+                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
+        try:
+            self.assertTrue(select.select([process.stdout], [], [], 8)[0], "reader emitted no output")
+            time.sleep(0.5)  # Keep the pipe open and unread until backpressure builds.
+            self.assertIsNone(process.poll())
+            process.terminate(); process.wait(timeout=5)
+            self.assertNotEqual(process.returncode, 0)
+            self.assertFalse(list(Path(self.temp.name).glob("naijue-selected-sst-*")))
+        finally:
+            if process.poll() is None: process.kill(); process.wait(timeout=3)
+            process.stdout.close(); process.stderr.close()
 
     def test_closed_output_pipe_reaps_reader_and_private_index(self):
         node = os.environ.get("PREFLIGHT_TEST_NODE", "node")

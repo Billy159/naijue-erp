@@ -98,8 +98,10 @@ async function stream() {
   const child = spawn("python3", [fileURLToPath(new URL("read-xlsx.py", import.meta.url)), "--stream", path, args[1], args[2]], { stdio: ["ignore", "pipe", "ignore"] });
   const done = new Promise((resolve, reject) => { child.once("error", reject); child.once("close", code => resolve(code)); });
   let rows = 0, finished = false, failed = false, cancelled = false, eofLine;
-  const cancel = () => { cancelled = true; child.kill("SIGTERM"); };
-  const outputError = () => { failed = true; child.kill("SIGTERM"); };
+  let releaseBackpressure = null, childSignalled = false;
+  const stopChild = () => { if (!childSignalled) { childSignalled = true; child.kill("SIGTERM"); } };
+  const cancel = () => { cancelled = true; stopChild(); releaseBackpressure?.(); process.stdout.destroy(); };
+  const outputError = () => { failed = true; stopChild(); releaseBackpressure?.(); };
   process.once("SIGINT", cancel); process.once("SIGTERM", cancel); process.stdout.on("error", outputError);
   try {
     for await (const line of createInterface({ input: child.stdout, crlfDelay: Infinity })) {
@@ -109,16 +111,19 @@ async function stream() {
       if (event.event === "eof") { if (event.rows !== rows || event.sheet !== args[1]) { failed = true; break; } finished = true; eofLine = line; continue; }
       if (event.event === "error") { failed = true; break; }
       if (!process.stdout.write(line + "\n")) await new Promise(resolve => {
-        const done = () => { process.stdout.off("drain", done); process.stdout.off("error", done); resolve(); };
+        const done = () => { process.stdout.off("drain", done); process.stdout.off("error", done); releaseBackpressure = null; resolve(); };
+        releaseBackpressure = done;
         process.stdout.once("drain", done); process.stdout.once("error", done);
+        if (failed || cancelled) done();
       });
       if (failed || cancelled) break;
     }
   } catch { failed = true; }
   finally {
-    if (failed || cancelled || !finished) child.kill("SIGTERM");
+    if (failed || cancelled || !finished) { stopChild(); child.stdout.resume(); }
     const code = await done;
     process.off("SIGINT", cancel); process.off("SIGTERM", cancel);
+    if (cancelled) process.exit(143); // Child has exited; discard blocked partial output.
     if (code !== 0 || !finished || failed || cancelled) {
       if (!process.stdout.destroyed && !process.stdout.errored) process.stdout.write(JSON.stringify({event:"error",code:"XLSX_STREAM_INCOMPLETE",rows}) + "\n");
       process.exitCode = cancelled ? 143 : 3;
