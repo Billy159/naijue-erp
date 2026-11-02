@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence, readTPlusFieldMappings26, verifyTPlusStaffActualCells26, projectTPlusWarehouseHall26, projectTPlusHall26, prepareTPlusWarehouseHallCandidates26, prepareNativeBindings, prepareFullPayloadData26, prepareFullSourceBindings26, writeFullSourceBindings26 } from './prepare-native-bindings.mjs';
+import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence, readTPlusFieldMappings26, verifyTPlusStaffActualCells26, projectTPlusWarehouseHall26, projectTPlusHall26, prepareTPlusWarehouseHallCandidates26, prepareTPlusHallCustomerCandidates26, prepareNativeBindings, prepareFullPayloadData26, prepareFullSourceBindings26, writeFullSourceBindings26 } from './prepare-native-bindings.mjs';
 import {historyClosureProjectionRow26,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
 import {HISTORY_CLOSURE_SOURCE_GROUPS} from '../import-v2/authorized-history-closure-reader.mjs';
 import {HISTORY_COUNT_KEYS} from '../../packages/application/src/history-storage-contract.ts';
@@ -47,6 +47,17 @@ test('hall and warehouse candidates keep source codes separate, freeze distinct 
  assert.equal(c.halls[0].defaultCustomerState,'UNKNOWN_NOT_INFERRED');assert.equal(c.halls[0].defaultCustomerSourceKey,null);
  await assert.rejects(projectTPlusHall26({...opts,events:events.map(e=>e.excelRow===2?{...e,cells:{...e.cells,0:{kind:'text',raw:'WRONG'}}}:e)}),/TPLUS_HALL26_APPROVAL/);
  assert.throws(()=>prepareTPlusWarehouseHallCandidates26({halls,warehouses:[{...warehouses[0],approvedHallCode:'WRONG'}]}),/TPLUS_PARTY26_RELATION/);
+});
+test('hall customer references require original ID, approved relation, current customer code and capture',async()=>{
+ const sha=b=>createHash('sha256').update(b).digest('hex'),pack=x=>Buffer.from(JSON.stringify(x)),hallCandidate=pack({scope:'SOURCE_REFERENCE_CANDIDATES_ONLY',importAuthorized:false,binding:{selectionSha256:null},halls:[{sourceCode:'H',name:'hall',candidateNativeId:id(1),defaultWarehouseCode:'W',defaultWarehouseCandidateNativeId:id(2)}]}),
+  priorHalls=Buffer.from('来源编号,厅名称,默认客户来源编号,默认销货仓来源编号,状态\nold-h,hall,old-c,old-w,正常\n'),priorCustomers=Buffer.from('来源编号,原编码,名称,状态\nold-c,C,customer,正常\n'),
+  currentCustomers=Buffer.from(JSON.stringify({entity:'CUSTOMER',sourceId:'C',data:{'来源编号':'C','原编码':'C'}})+'\n'),decision=pack({approval:true,halls:[{code:'H',name:'hall',userConfirmedThisProposal:true}]}),relations=pack({customers:[{department:'H',customer:{code:'C'}}]}),
+  priorCapture=pack({rows:[{input:{source:{entityType:'HALL',sourceKey:'old-h'},bindings:{'默认客户来源编号':{sourceKey:'old-c'}}}}]}),all={hallCandidate,priorHalls,priorCustomers,currentCustomers,decision,relations,priorCapture},pins=Object.fromEntries(Object.entries(all).map(([k,v])=>[k,sha(v)]));
+ const args={hallCandidateBytes:hallCandidate,priorHallBytes:priorHalls,priorCustomerBytes:priorCustomers,currentCustomerBytes:currentCustomers,decisionBytes:decision,relationsBytes:relations,priorCaptureBytes:priorCapture,pins};
+ const result=await prepareTPlusHallCustomerCandidates26(args);assert.equal(result.resolvedCount,1);assert.equal(result.rows[0].customerSourceCode,'C');assert.equal(result.executionAuthorized,false);
+ const wrongCapture=pack({rows:[{input:{source:{entityType:'HALL',sourceKey:'old-h'},bindings:{'默认客户来源编号':{sourceKey:'other'}}}}]});
+ const pending=await prepareTPlusHallCustomerCandidates26({...args,priorCaptureBytes:wrongCapture,pins:{...pins,priorCapture:sha(wrongCapture)}});assert.equal(pending.unresolvedCount,1);assert.equal(pending.rows[0].customerSourceCode,null);
+ await assert.rejects(prepareTPlusHallCustomerCandidates26({...args,relationsBytes:Buffer.from('{}')}),/TPLUS_HALL_CUSTOMER26_PIN/);
 });
 test('native IDs are newly allocated and frozen; no source UUID reuse, collision, duplicate or implicit reference', () => {
   const r = createNativeIdentityRegistry(() => id(2), 2);

@@ -188,6 +188,11 @@ export function validateRewrite26CorePreparationInput(i:Rewrite26CorePreparation
 export function validateRewrite26PreparationInput(i:Rewrite26PreparationInput):void {validatePreparationInput(i,false,true);}
 export function runRewrite26PreparedPublication(i:Rewrite26PreparationInput):Promise<CurrentRuntime26PreparedPublicationResult>{return runPreparedPublication(i,false,true);}
 
+/** Sequence the original authorized calls; this helper supplies no authority. */
+export async function runRewrite26FirstCoreSequence(steps:{writeCore:()=>Promise<void>;readCore:()=>Promise<{status:string;coreClaims:readonly unknown[];committedOperations:readonly unknown[];checkpoint:unknown}>;writeInit:()=>Promise<void>}){
+ await steps.writeCore();const proof=await steps.readCore();assert.equal(proof.status,'STAGED');assert.equal(proof.coreClaims.length,22);assert.equal(proof.committedOperations.length,0,'Unexpected committed chain; do not initialize');assert.equal(jsonObject(proof.checkpoint).sequence,1);await steps.writeInit();
+}
+
 /** Original reviewed bootstrap and scheme initializer, without opening the FULL
  * source session. Recovery reads the committed original key only; it never writes. */
 export async function runRewrite26CorePreparation(i:Rewrite26CorePreparationInput){
@@ -232,8 +237,7 @@ export async function runRewrite26CorePreparation(i:Rewrite26CorePreparationInpu
   const writeInit=async()=>{active();await createCutoffImportService({now:bootstrap.now.bind(bootstrap),authorization:{assertAllowed:async(actor,command)=>{active();assert.deepEqual(command,init);await initializer!.assertAllowed(actor,init);active();}},store:new PostgresCutoffImportStore(issuer.pool,{runtime26,barcodeSchemeInitialization26:initializer})}).execute(init);};
   if(i.control.mode==='FIRST'){
    const coreAuthorization={assertAllowed:async(actor:string,command:CoreStageCommand)=>{active();assert.equal(requestHash(command),requestHash(core));await bootstrap.authorizeStageSourceActor(actor,command);active();}};
-   const coreResult=await createCutoffImportService({now:bootstrap.now.bind(bootstrap),authorization:coreAuthorization,store:new PostgresCutoffImportStore(issuer.pool,{runtime26,coreAuthorization,stageBootstrap26:bootstrap.bootstrap26})}).execute(core);assert.equal(coreResult.status,'STAGED');assert.equal(coreResult.operationId,coreReceiptId);
-   await writeInit();
+   await runRewrite26FirstCoreSequence({writeCore:async()=>{const coreResult=await createCutoffImportService({now:bootstrap.now.bind(bootstrap),authorization:coreAuthorization,store:new PostgresCutoffImportStore(issuer.pool,{runtime26,coreAuthorization,stageBootstrap26:bootstrap.bootstrap26})}).execute(core);assert.equal(coreResult.status,'STAGED');assert.equal(coreResult.operationId,coreReceiptId);},readCore:readProof,writeInit});
   }else if(i.control.mode==='INIT_AFTER_READBACK'){
    const prior=await readProof();assert.equal(prior.status,'STAGED');
    if(!exactInit(prior)){assert.equal(prior.committedOperations.length,0,'Unexpected committed chain; do not initialize');assert.equal(jsonObject(prior.checkpoint).sequence,1);await writeInit();}
