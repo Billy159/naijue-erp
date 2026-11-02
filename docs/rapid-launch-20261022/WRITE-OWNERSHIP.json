@@ -8678,6 +8678,14 @@
         "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json"
       ]
     },
-    "outsideScope": "D3 requests exact seam before editing SQL/contracts/import-v3; no parallel writer"
+    "outsideScope": "D3 requests exact seam before editing SQL/contracts/import-v3; no parallel writer",
+    "runtimePreparation": {
+      "owner": "D1",
+      "thread": "01a16161-e65d-7742-8471-4b3c786ed314",
+      "model": "gpt-6.1-terra/medium",
+      "sourceWriteEnabled": false,
+      "scope": "existing runtime authentication/least ACL/identity interfaces; exact source changes require registered leaf handoff; no server/DB access",
+      "reportWrite": "existing D1 report subdirectory only"
+    }
   }
 }

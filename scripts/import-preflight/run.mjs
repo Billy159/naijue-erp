@@ -90,6 +90,88 @@ export function createSalesDocumentKeyIndex() {
   });
 }
 
+/** Read one reviewed T+ dimension dictionary. Raw codes and labels remain
+ * separate; this creates source facts only, not target IDs or import authority. */
+export async function readTPlusDimensionDictionary(events, sheet) {
+  const dimensions = new Set(["颜色", "尺码", "版型"]);
+  if (!dimensions.has(sheet)) throw Error("TPLUS_DICTIONARY_SHEET");
+  const rows = new Map(); let header = false, eof = false, physicalRows = 0, last = 0;
+  for await (const event of events) {
+    if (!event || event.sheet !== sheet || eof) throw Error("TPLUS_DICTIONARY_STREAM");
+    if (event.event === "eof") {
+      if (!header || event.rows !== physicalRows) throw Error("TPLUS_DICTIONARY_EOF");
+      eof = true; continue;
+    }
+    if (event.event !== "row" || !Number.isSafeInteger(event.excelRow) || event.excelRow <= last || !event.cells) throw Error("TPLUS_DICTIONARY_ROW");
+    physicalRows++; last = event.excelRow;
+    const read = col => event.cells[col];
+    if (!header) {
+      if (event.excelRow !== 1 || ["编码", "名称", "停用"].some((name, i) => read(i)?.kind !== "text" || read(i)?.raw !== name)) throw Error("TPLUS_DICTIONARY_HEADER");
+      header = true; continue;
+    }
+    const code = read(0), name = read(1), disabled = read(2);
+    if (!code || code.kind !== "text" || typeof code.raw !== "string" || !code.raw ||
+        !name || name.kind !== "text" || typeof name.raw !== "string" || !name.raw ||
+        !disabled || disabled.kind !== "number" || !["0", "1"].includes(disabled.raw)) throw Error("TPLUS_DICTIONARY_VALUE");
+    if (rows.has(code.raw)) throw Error("TPLUS_DICTIONARY_DUPLICATE_CODE");
+    rows.set(code.raw, Object.freeze({ sourceCode: code.raw, sourceName: name.raw, disabled: disabled.raw === "1", sheet, excelRow: event.excelRow }));
+  }
+  if (!eof) throw Error("TPLUS_DICTIONARY_EOF");
+  return rows;
+}
+
+/** Project observed T+ matrix cells without inventing missing stock or SKU IDs.
+ * Caller supplies the exact already-reviewed row-7 header labels, beginning at B. */
+export async function* projectTPlusInventoryMatrix(events, expectedHeaders) {
+  const prefix = ["仓库", "存货分类 (1级)", "存货编码", "存货", "主计量", "颜色", "版型1"];
+  if (!Array.isArray(expectedHeaders) || expectedHeaders.length < 9 || expectedHeaders.length > 255 ||
+      prefix.some((v, i) => expectedHeaders[i] !== v) || expectedHeaders.at(-1) !== "合计" ||
+      expectedHeaders.some(v => typeof v !== "string" || !v) || new Set(expectedHeaders).size !== expectedHeaders.length) throw Error("TPLUS_MATRIX_HEADER_CONTRACT");
+  const totalColumn = expectedHeaders.length; let header = false, eof = false, physical = 0, last = 0;
+  for await (const event of events) {
+    if (!event || event.sheet !== "第一页" || eof) throw Error("TPLUS_MATRIX_STREAM");
+    if (event.event === "eof") {
+      if (!header || event.rows !== physical) throw Error("TPLUS_MATRIX_EOF");
+      eof = true; yield {event: "eof", sheet: "第一页", rows: physical}; continue;
+    }
+    if (event.event !== "row" || !Number.isSafeInteger(event.excelRow) || event.excelRow <= last || !event.cells) throw Error("TPLUS_MATRIX_ROW");
+    physical++; last = event.excelRow;
+    const cell = col => event.cells[col], raw = col => cell(col)?.raw ?? null;
+    if (event.excelRow < 7) continue;
+    if (event.excelRow === 7) {
+      if (header || expectedHeaders.some((v,i) => cell(i+1)?.kind !== "text" || raw(i+1) !== v)) throw Error("TPLUS_MATRIX_HEADER");
+      header = true; continue;
+    }
+    if (!header) throw Error("TPLUS_MATRIX_HEADER");
+    const fields = Array.from({length: 7}, (_,i) => raw(i+1));
+    if (fields.some(value => typeof value === "string" && (value.includes("合计") || value.includes("小计")))) {
+      yield {event: "summary", sheet: "第一页", excelRow: event.excelRow, sourceCells: event.cells}; continue;
+    }
+    const quantities = [], unresolvedCells = []; let sum = 0n, invalid = false;
+    const exactInteger = value => {
+      if (typeof value !== "string" || !/^-?\d+(?:\.\d+)?$/.test(value)) return null;
+      const [whole, fraction = ""] = value.split(".");
+      return /^0*$/.test(fraction) ? BigInt(whole) : null;
+    };
+    for (let col = 8; col < totalColumn; col++) {
+      const entry = cell(col), value = raw(col);
+      if (value === null || value === "") continue;
+      const integer = exactInteger(value);
+      if (!entry || !["number", "text"].includes(entry.kind) || integer === null) { invalid = true; unresolvedCells.push({sourceSize: expectedHeaders[col-1], sourceColumn: col, sourceCell: entry}); continue; }
+      sum += integer; quantities.push({sourceSize: expectedHeaders[col-1], rawQuantity: value, sourceColumn: col});
+    }
+    const total = cell(totalColumn), value = raw(totalColumn);
+    const totalInteger = exactInteger(value);
+    const totalValid = total && ["number", "text"].includes(total.kind) && totalInteger !== null;
+    const totalsMatch = Boolean(!invalid && totalValid && sum === totalInteger);
+    yield {event: "candidate", sheet: "第一页", excelRow: event.excelRow,
+      warehouse: fields[0], productCode: fields[2], color: fields[5], style: fields[6], quantities, unresolvedCells, sourceTotal: total ?? null,
+      status: totalsMatch && [1, 3, 6, 7].every(i => cell(i)?.kind === "text" && typeof raw(i) === "string" && raw(i) !== "") ? "ROW_ARITHMETIC_ONLY" : "PENDING_SOURCE_FACTS",
+      rowTotalMatched: totalsMatch, omittedBlankCellsAreUnknown: true};
+  }
+  if (!eof) throw Error("TPLUS_MATRIX_EOF");
+}
+
 async function stream() {
   const args = process.argv.slice(3);
   if (args.length !== 3 || !/^[0-9]+(?:,[0-9]+)*$/.test(args[2])) throw Error("STREAM_ARGUMENTS");

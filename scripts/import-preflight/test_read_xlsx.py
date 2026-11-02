@@ -171,6 +171,55 @@ class ReadXlsxTests(unittest.TestCase):
         finally:
             reader.ACCOUNT_BATCH_SHA256 = old; reader.visible_string = original
 
+    def test_tplus_dictionary_projection_validates_header_eof_and_source_identity(self):
+        node = os.environ.get("PREFLIGHT_TEST_NODE", "node")
+        js = """
+import assert from 'node:assert/strict';
+import {readTPlusDimensionDictionary as read} from './scripts/import-preflight/run.mjs';
+const text=raw=>({kind:'text',raw}),num=raw=>({kind:'number',raw});
+const h={event:'row',sheet:'颜色',excelRow:1,cells:{0:text('编码'),1:text('名称'),2:text('停用')}};
+const r={event:'row',sheet:'颜色',excelRow:2,cells:{0:text('001'),1:text('synthetic'),2:num('0')}};
+const eof={event:'eof',sheet:'颜色',rows:2};
+const result=await read([h,r,eof],'颜色');
+assert.equal(result.get('001').sourceCode,'001');assert.equal(result.get('001').disabled,false);
+assert.equal(result.get('001').excelRow,2);
+await assert.rejects(read([h,r],'颜色'),/EOF/);
+await assert.rejects(read([h,r,{...eof,rows:3}],'颜色'),/EOF/);
+await assert.rejects(read([{...h,cells:{...h.cells,0:text('名称')}},r,eof],'颜色'),/HEADER/);
+await assert.rejects(read([h,r,{...r,excelRow:3},{...eof,rows:3}],'颜色'),/DUPLICATE/);
+await assert.rejects(read([h,{...r,cells:{...r.cells,2:{kind:'formula',raw:'0'}}},eof],'颜色'),/VALUE/);
+await assert.rejects(read([h,r,eof],'未批准'),/SHEET/);
+"""
+        result = subprocess.run([node, "--input-type=module", "-e", js], cwd=HERE.parent.parent, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_tplus_inventory_matrix_preserves_signed_cells_and_blocks_unresolved(self):
+        node = os.environ.get("PREFLIGHT_TEST_NODE", "node")
+        js = """
+import assert from 'node:assert/strict';
+import {projectTPlusInventoryMatrix as project} from './scripts/import-preflight/run.mjs';
+const text=raw=>({kind:'text',raw}),num=raw=>({kind:'number',raw});
+const headers=['仓库','存货分类 (1级)','存货编码','存货','主计量','颜色','版型1','S','M','合计'];
+const header={event:'row',sheet:'第一页',excelRow:7,cells:Object.fromEntries(headers.map((v,i)=>[i+1,text(v)]))};
+const row={event:'row',sheet:'第一页',excelRow:8,cells:{1:text('warehouse'),3:text('001'),6:text('color'),7:text('A'),8:num('-2'),10:num('-2')}};
+const eof={event:'eof',sheet:'第一页',rows:2};
+const events=await Array.fromAsync(project([header,row,eof],headers));
+assert.deepEqual(events[0].quantities,[{sourceSize:'S',rawQuantity:'-2',sourceColumn:8}]);
+assert.equal(events[0].status,'ROW_ARITHMETIC_ONLY');assert.equal(events[0].omittedBlankCellsAreUnknown,true);
+const decimal={...row,cells:{...row.cells,8:num('-2.0'),10:num('-2.00')}};
+assert.equal((await Array.fromAsync(project([header,decimal,eof],headers)))[0].status,'ROW_ARITHMETIC_ONLY');
+const missing={...row,cells:{...row.cells,7:{kind:'blank',raw:null}}};
+assert.equal((await Array.fromAsync(project([header,missing,eof],headers)))[0].status,'PENDING_SOURCE_FACTS');
+const fraction={...row,cells:{...row.cells,8:num('1.5')}};
+const unresolved=(await Array.fromAsync(project([header,fraction,eof],headers)))[0];
+assert.equal(unresolved.status,'PENDING_SOURCE_FACTS');assert.equal(unresolved.unresolvedCells[0].sourceCell.raw,'1.5');
+assert.equal((await Array.fromAsync(project([header,{...row,cells:{...row.cells,1:text('合计')}},eof],headers)))[0].event,'summary');
+await assert.rejects(Array.fromAsync(project([header,row],headers)),/EOF/);
+await assert.rejects(Array.fromAsync(project([{...header,cells:{...header.cells,1:text('错')}},row,eof],headers)),/HEADER/);
+"""
+        result = subprocess.run([node, "--input-type=module", "-e", js], cwd=HERE.parent.parent, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_stream_cli_emits_rows_then_eof_and_incomplete_error(self):
         node = os.environ.get("PREFLIGHT_TEST_NODE", "node")
         self.write()

@@ -21874,7 +21874,7 @@
       "old database/backups"
     ],
     "noOldSourceFullCaptureOrConversion": true,
-    "latestPushedImplementation": "cc82a65686977310c66a4f7a4b42be0d8bed4da0",
+    "latestPushedImplementation": "a144cb1e1a71b653e37f7a6abab598821f80ef9c",
     "readerReview": {
       "status": "NEED_FIX",
       "owner": "QB",
@@ -21884,11 +21884,45 @@
         "selected SST memory grows with selected text"
       ],
       "repairOwner": "D3",
-      "repairState": "EVENT_FILTER_DELIVERED_28_SYNTHETIC_PASS_PENDING_FIXED_QB",
+      "repairState": "QB_TARGETED_BACKPRESSURE_PASS",
       "deliveryChecks": "22 synthetic PASS at cc82; no real import",
-      "runtime": "Node24.21.0"
+      "runtime": "Node24.21.0",
+      "fixedCommit": "a144cb1e1a71b653e37f7a6abab598821f80ef9c",
+      "scopeLimit": "P1/P2 mechanisms accepted at db570; cancellation only independently closed a144; not provider/import/PG",
+      "independentEnvironment": "Node25.8.2; implementation checks Node24.21.0 separately retained"
     },
     "sourceRelationshipStatus": "Nonblank sales key sets match; six-field candidate multiset has 6 differences per side; row identity/continuations/totals/money UNKNOWN",
-    "serverRefresh": "Actual entry node server/main.js; legacy1-15; new26 stopped; 3 RO metadata SELECT succeeded/rollback+close; no mutation"
+    "serverRefresh": "Actual entry node server/main.js; legacy1-15; new26 stopped; 3 RO metadata SELECT succeeded/rollback+close; no mutation",
+    "runtimePreparationOwner": {
+      "role": "D1",
+      "thread": "01a16161-e65d-7742-8471-4b3c786ed314",
+      "modelRequested": "gpt-6.1-terra/medium",
+      "scope": "read-only exact runtime authentication/least ACL/identity interface inputs; source write lease not yet assigned"
+    },
+    "effectiveDecisionLimits": [
+      "product group is hard boundary; existing SKU identity/code/barcodes retained",
+      "v17/v19 new-product group completion does not authorize inventing import SKU identities",
+      "season_ids true multi-select; warehouse single hall; payment account halls multi",
+      "system item code manual required; no invented code to repair source blanks",
+      "2026 current barcode scheme; five historical; no bulk re-encoding old barcodes",
+      "old exact21 barcode conversion/24warehouse-zero approvals are batch-specific, not blanket new-batch facts",
+      "historical import does not repost stock or money; old unknown LIVE balances stay unknown",
+      "12:00 directory label not proof of same-T; nonzero inventory filter does not establish missing as zero"
+    ],
+    "mappingDelivery": {
+      "status": "SOURCE_FACTS_ONLY_PENDING_QB",
+      "exports": [
+        "readTPlusDimensionDictionary",
+        "projectTPlusInventoryMatrix"
+      ],
+      "checks": "2 affected synthetic PASS Node24.21.0; actual safe dictionaries/stock stream EOF",
+      "notProven": [
+        "SKU/provider consumption",
+        "column total closure",
+        "document/amount closure",
+        "isolation import",
+        "business operation"
+      ]
+    }
   }
 }
