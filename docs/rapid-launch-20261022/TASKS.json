@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-02T17:48:01.692220+00:00",
+  "updatedAt": "2026-11-02T18:30:08.771212+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22168,9 +22168,9 @@
     }
   },
   "currentRoute": {
-    "recordedAt": "2026-11-02T17:48:01.692220+00:00",
+    "recordedAt": "2026-11-02T18:30:08.771212+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "OFFLINE_MATERIALIZATION_PROGRESS_FIXED1189_NOT_IMPORT_READY",
+    "status": "KNOWN_MASTER4078_AND_PRODUCT2941_MATERIALIZED_DOCUMENT_REFERENCES_PROGRESS_NOT_READY",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22201,13 +22201,13 @@
     },
     "owners": {
       "Dot": "Application/schema/install/importer sole owner;1189 fixed package received, category SQL successor pending",
-      "D3": "All supplier/SIZE/central4031 slices delivered; sole private central-registry owner, no application/SQL writes. Next only justified current-contract identity/format closure.",
+      "D3": "4078 known-master subset and2941 category product refs delivered/idle; sole private registry owner. Original-header identity rule conflict retained; no number-as-ID bypass.",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
-      "D1": "Exact source-type map and money evidence delivered/idle; status/economics wait governing decision or accurate contract. No repeat scan.",
+      "D1": "Current source type/compact/customer-warehouse/staff-source slices delivered/idle. Only8 code cells proved absent;23069 per-head codes unconsumed in inspected projection,5817 current facts lack approved identity bridge. No account/alias guessing.",
       "T45": "Sole server executor retained; no new server/database execution in this phase",
       "QB": "No duplicate whole-code acceptance dispatched",
-      "D2": "80 actual account candidates delivered/idle; next exact6 method/39 hall bridge requires new same-record evidence; no repeated trace",
-      "F2": "Source coverage and15 located size-group definition candidates delivered/idle;16th group source location and actual members still unproved. No repeat whole-table scan."
+      "D2": "Six raw fit candidates and bounded namespace-bridge followup delivered/idle; no exact original-code/system-letter bridge found in inspected sources. Account trace not repeated.",
+      "F2": "All16 source groups located; four-row old consumer gap reconciled against existing enriched product evidence; delivered/idle."
     },
     "model": {
       "D3Requested": "gpt-6.1-terra/medium",
@@ -22221,8 +22221,8 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical sales/transfer source lines only with exact original blank and decision provenance; not stock/product/global default",
-    "current": "Supplier1156 fields materialized in2970 product candidates; SIZE240 and central4031 candidate merge delivered; exact sales source-type map and15 located group definitions captured; raw inventory fit gap quantified. All current worker slices delivered.",
-    "next": "Dot category SQL42703 and bounded transfer reader successor plus canonical taxonomy/economic/identity seams. Await exact inventory blank-fit and source effective-status decisions only for affected branches; retain all unknowns and completed private candidates. No repeated scans or synthetic filler work.",
+    "current": "All current original-role slices delivered: known-master4078, product2941 category/1156 supplier refs, source groups16, sales28892 customer/28894 warehouse candidate refs and per-header staff-source classification. Whole package remains DRAFT, no DB job.",
+    "next": "Dot stable original document-key provider or precise contract successor, category SQL42703 and complete bounded-reader successor; exact approved source/canonical fit/group/staff mappings and economics. Preserve29 classification unknowns. User inventory blank-fit/source-effective answers pending only for affected branches; no duplicate scans without new evidence.",
     "ordinaryDocumentTables": [
       "sales_header",
       "sales_line",
@@ -22311,9 +22311,9 @@
       ],
       "ready": false,
       "importAuthorized": false,
-      "D3State": "DELIVERED_IDLE_EXACT_DEPENDENCIES_RECORDED",
+      "D3State": "DELIVERED_KNOWN_MASTER4078_NOT_WHOLE_PACKAGE",
       "D3Turn": "01a19c5e-0d25-7a21-a1dc-88c59460342b",
-      "nextWorkAssessment": "Current supplier/SIZE/central4031 and source enum/group slices closed; canonical category, remaining group/member/SKU, staff-role, source status/economic and importer capacity dependencies remain accurate waits.",
+      "nextWorkAssessment": "Dot stable original document-key provider or precise contract successor, category SQL42703 and complete bounded-reader successor; exact approved source/canonical fit/group/staff mappings and economics. Preserve29 classification unknowns. User inventory blank-fit/source-effective answers pending only for affected branches; no duplicate scans without new evidence.",
       "increment03Evidence": [
         {
           "packages": [
@@ -22560,6 +22560,123 @@
           },
           "ready": false,
           "verificationScope": "Adopt original owner finite receipt; controller checked receipt SHA only, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_seven",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/central-registry-seven-fields-D3-01/RESULT.json",
+            "sha256": "6ae7dc87cd6ffaaef6e1953b06f45ea2b47a835041a24dca6b5baf8a4ba1d926"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_sources",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/central-registry-source-pins-D3-01/RESULT.json",
+            "sha256": "177369ca4fde9b5ac7e2de3db0869104acd8a4efa576570d96b910ee38c539b0"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_groups",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package04-size-group-source-D3-01/RESULT.json",
+            "sha256": "93deec2134df3b6de4c443466aa71b0282faaf926bf474c6d3b147ad6c6e96be"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_consumer",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/size-group-consumer-gap-F2-01/RESULT.json",
+            "sha256": "c20136a325b3b63e5d3696dbd77e10d95b460b022c71a84ec32fe6af0617b7d7"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_taxonomy",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-approved-taxonomy-registry-D3-01/RESULT.json",
+            "sha256": "16c1a989095d2c92038d5b19996a91061da87f77a0fed756a422b6b053ded2ce"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_category",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-product-category-materialized-D3-01/RESULT.json",
+            "sha256": "0c867672bcbe6159f54d3bb82bb57b8b0e5a93cd7d7ccf215cb483d10fe04c68"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_master",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/central-master-registry-4078-D3-01/RESULT.json",
+            "sha256": "cac7a973ad74983508ef8f0aedbac6653e50858d8601e0beb311d651be778215"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_fit",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/fit-candidates-D2-01/RECEIPT.json",
+            "sha256": "92bb3230830dac02f8963a1bd9b98ef608626e7faeafba6bb8e7ba48f50bfc2b"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_fit_followup",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/fit-candidates-D2-01/FOLLOWUP/RECEIPT.json",
+            "sha256": "2d2ea9a7a9b43d0856aab95cb2cf85672e2a1c29c78b772f3b9b2dcb673ceece"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_compact",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-header-compact-D1-01/receipt.json",
+            "sha256": "d660d2f9d4a017df9a1ec71c6e73bec35af7af20c41a11daa4fab6b6186e644a"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_references",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-header-reference-D1-01/receipt.json",
+            "sha256": "27c8943a67367ef9db0d813bd84e335e35e0a9ce1fe0e6c1e8d19df8cb6079dd"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_header",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package08-10-header-identity-constraint-D3-01/RESULT.json",
+            "sha256": "a390017061eaf6190a9781ff57f4cb9d6e0220547a4aa3b88c4b5a8285b746b9"
+          },
+          "ready": false,
+          "verificationScope": "Controller receipt SHA adoption only; finite checks by original owner, no repeated technical acceptance."
+        },
+        {
+          "kind": "closure_20261103_staff_source",
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-staff-source-D1-01/receipt.json",
+            "sha256": "9970ca6d6ac0773e75bdfafc61941cfb9dd4d96635b48ae5880f606c839de37c"
+          },
+          "ready": false,
+          "verificationScope": "Adopt original finite receipt; root checked receipt hash only."
         }
       ]
     },
@@ -22573,7 +22690,7 @@
     },
     "blockedAudit": {
       "status": "MEANINGFUL_PROGRESS_THIS_TURN",
-      "reason": "Actual supplier1156 materialization,240 size candidates,4031 central candidate merge and15 located group definitions plus exact source enums; no database/server job."
+      "reason": "Seven-key4078 source-bound known master subset,2941 category/1156 supplier actual fields,16 located source groups and28892/28894 sales refs; no database/server work."
     },
     "sizeMappingEvidence20261102": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/尺码映射表-20261013",
@@ -22647,7 +22764,7 @@
           "cursor": "31358d0c-7fe6-45ab-9cd4-473812b715b3:34",
           "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261102/sales-source-D1-01/receipt.json",
           "receiptSha256": "be0e221d2c2e2800a5b83f20b105b83f2927272cdc7db1ffbbb74da0fe172c53",
-          "currentSlice": "D1-SALES-ENUM-MAP-01 delivered"
+          "currentSlice": "Sales staff-source classification9970 delivered; exact primary-code/alias/approved identity bridge pending"
         },
         {
           "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
@@ -22688,7 +22805,7 @@
       "actualRuntimeModelSelfInspection": "UNVERIFIED",
       "Fast": "UNVERIFIED",
       "firstWaveActuallyOverlapped": true,
-      "latestOutcome": "Original D1/F2/D3 slices delivered with explicit Terra/medium tool parameters; no new Chat. Runtime model/Fast self-inspection unavailable."
+      "latestOutcome": "All original-role current slices delivered, no new Chat; exact source/contract/user dependencies recorded. No status polling or fabricated work while inputs unchanged."
     },
     "paymentFollowup": {
       "status": "HISTORICAL80_BRIDGES_VERIFIED_CURRENT_NAMESPACE_BRIDGE_UNRESOLVED",
@@ -23299,9 +23416,13 @@
         "deleted_at"
       ],
       "codeFieldPresent": false,
-      "nextOwner": "Dot supplies existing-contract-compatible stable approved taxonomy node identity/parent/order seam; D3 alone assembles corresponding private references",
+      "nextOwner": "D3 has resolved47 approved node identities/2941 product candidate refs under existing contract;29 without precise decision remain. No needless Dot identity-protocol change for solved taxonomy scope.",
       "notAdditionalBlocker": "Nullable deleted_at can remain unknown null under fixed1189; do not demand invented lifecycle facts or re-ask approved classification choices.",
-      "ready": false
+      "ready": false,
+      "supersededBy": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-product-category-materialized-D3-01/RESULT.json",
+        "sha256": "0c867672bcbe6159f54d3bb82bb57b8b0e5a93cd7d7ccf215cb483d10fe04c68"
+      }
     },
     "sizeSourceAndCentralDelta": {
       "receipt": {
@@ -23392,7 +23513,11 @@
       "candidateSha256": "f3141cb6195c6d708e527aac834025ab12f80c5336d29772dd4c90efb46db1ed",
       "correction": "Prior sixteen-row reference description was inaccurate: reference file has15 rows, while aggregate has16 groups. Unlocated group remains evidence only, not zero or fabricated source_ref.",
       "members": "UNKNOWN_NOT_INFERRED",
-      "ready": false
+      "ready": false,
+      "supersededBy": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package04-size-group-source-D3-01/RESULT.json",
+        "sha256": "93deec2134df3b6de4c443466aa71b0282faaf926bf474c6d3b147ad6c6e96be"
+      }
     },
     "pendingBusinessDecisions20261103": [
       {
@@ -23409,6 +23534,170 @@
         "limit": "Only source status meaning; unknown review time/operator remain unknown; imported approved history must not repost stock.",
         "independentWorkContinues": true
       }
-    ]
+    ],
+    "master4078": {
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/central-master-registry-4078-D3-01/RESULT.json",
+        "sha256": "cac7a973ad74983508ef8f0aedbac6653e50858d8601e0beb311d651be778215"
+      },
+      "registryRows": 4078,
+      "registrySha256": "9ccf3ddf37ab5c0d918d464ab7b9e87b848bf8f48cb0ff44397b5c52d2e2c3ed",
+      "coreRows": 4031,
+      "approvedCategoryRows": 47,
+      "sourcePinRows": 9,
+      "sourcePinsAreMetadataOnly": true,
+      "sourceBusinessTruthAndTargetPGVerified": false,
+      "wholeFinalRegistry": false,
+      "ready": false
+    },
+    "registrySevenFieldClosure": {
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/central-registry-seven-fields-D3-01/RESULT.json",
+        "sha256": "6ae7dc87cd6ffaaef6e1953b06f45ea2b47a835041a24dca6b5baf8a4ba1d926"
+      },
+      "inherited": 4031,
+      "algorithmMatchedOriginalId": 4031,
+      "unresolved": 0,
+      "extraEvidencePreserved": true,
+      "newIdsAllocated": 0,
+      "originalStateNotMarkedExisting": true,
+      "registrySha256": "a2f261e1d7b9978151c3170906048adeafdf42a0ec64d59ac9df216c2548fe19",
+      "supersedes": "Prior 4031 evidence merge format/basis gap is closed by justified deterministic projection; old11-key evidence retained, no receiving contract change needed."
+    },
+    "registrySourcePinClosure": {
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/central-registry-source-pins-D3-01/RESULT.json",
+        "sha256": "177369ca4fde9b5ac7e2de3db0869104acd8a4efa576570d96b910ee38c539b0"
+      },
+      "registryRows": 4031,
+      "sourceRefs": 4031,
+      "uniqueRealSourceFilesHashed": 8,
+      "unknownOrChanged": 0,
+      "limits": "Only this core subset source-hash membership and actual file byte hashes;6 source ranges use cached metadata,2 manual/prior sources not independently row-decoded. No source originals copied to standard package. Taxonomy adds a separate ninth pin."
+    },
+    "approvedTaxonomyAndProductMaterialization": {
+      "taxonomyReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-approved-taxonomy-registry-D3-01/RESULT.json",
+        "sha256": "16c1a989095d2c92038d5b19996a91061da87f77a0fed756a422b6b053ded2ce"
+      },
+      "materializationReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-product-category-materialized-D3-01/RESULT.json",
+        "sha256": "0c867672bcbe6159f54d3bb82bb57b8b0e5a93cd7d7ccf215cb483d10fe04c68"
+      },
+      "knownProducts": 2970,
+      "categoryIdsFilled": 2941,
+      "categoryIdsUnknown": 29,
+      "supplierCandidatesPreserved": 1156,
+      "approvedLabelFullPathsUniquelyMatched": 30,
+      "historicalCodeDecisionsWithRetainedSourceDifferences": 4,
+      "approvedNodes": 47,
+      "sourceKeyRule": "Pinned approved frozen taxonomy SHA plus exact node location, using existing typed stable identity contract. Prototype array keys are aliases in that frozen source, not T+ codes or target EXISTING rows.",
+      "sourceTreeSha256": "9b726c30ffea962c79868ebefe1643885968035cbdc6efa892759c0f5ad2a85e",
+      "productOutputSha256": "d08caad90caeb0f0029915d89ed41f1ff6eda08aadacec951cb544906110fd27",
+      "bytes": 2186247,
+      "ready": false
+    },
+    "sizeGroup16SourceClosure": {
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package04-size-group-source-D3-01/RESULT.json",
+        "sha256": "93deec2134df3b6de4c443466aa71b0282faaf926bf474c6d3b147ad6c6e96be"
+      },
+      "consumerCauseReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/size-group-consumer-gap-F2-01/RESULT.json",
+        "sha256": "c20136a325b3b63e5d3696dbd77e10d95b460b022c71a84ec32fe6af0617b7d7"
+      },
+      "actualSourceGroupsLocated": 16,
+      "additionalOriginalRowsLocated": 4,
+      "priorProducerGap": "barcode_size_source_recover consumed earlier groupLinks and omitted later direct-source correction. Current enriched product evidence already retained four original group facts.",
+      "historicalSourceGroupsWithApprovedConversion": 15,
+      "newSourceGroupWithoutProvedTargetBridge": 1,
+      "targetSizeGroupIdsAllocated": 0,
+      "reason": "Existing approved14864-SKU conversion folds several source groups into standards and includes multiple uses/exceptions; source group must not automatically become a final target group.",
+      "groupOutputSha256": "2d751d033f61f4321ef03b28f6dc38738cdaa62cdf6b51a4ec8e982ba1eecd6f",
+      "membersAndTargetIdentity": "UNVERIFIED",
+      "ready": false
+    },
+    "fitSourceNamespaceMapping": {
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/fit-candidates-D2-01/RECEIPT.json",
+        "sha256": "92bb3230830dac02f8963a1bd9b98ef608626e7faeafba6bb8e7ba48f50bfc2b"
+      },
+      "boundedFollowup": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/fit-candidates-D2-01/FOLLOWUP/RECEIPT.json",
+        "sha256": "2d2ea9a7a9b43d0856aab95cb2cf85672e2a1c29c78b772f3b9b2dcb673ceece"
+      },
+      "sourceRows": 6,
+      "sourceCodePatternConflicts": 6,
+      "accurateMeaning": "T+ original identity code to target system-letter bridge unproved, not evidence target regex is a defect or a new human decision is inherently required.",
+      "boundedSourceBridgeFound": 0,
+      "notGlobalAbsence": true,
+      "forbidden": "No letter inferred from name similarity/truncation, no default A, no target regex change or identity merging.",
+      "ready": false
+    },
+    "salesHeaderCompactAndReferences": {
+      "compactReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-header-compact-D1-01/receipt.json",
+        "sha256": "d660d2f9d4a017df9a1ec71c6e73bec35af7af20c41a11daa4fab6b6186e644a"
+      },
+      "referenceReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-header-reference-D1-01/receipt.json",
+        "sha256": "27c8943a67367ef9db0d813bd84e335e35e0a9ce1fe0e6c1e8d19df8cb6079dd"
+      },
+      "rows": 28894,
+      "nongeneratedSourceFields": 21,
+      "compactBytes": 27447360,
+      "referenceOutputBytes": 29412084,
+      "referenceOutputSha256": "31fd67223dbf7aac8f0b37739b8cd4c31521e6808a2d182f07135c87bc8fd638",
+      "customerCandidateIdsFilled": 28892,
+      "supplierOnlyCustomerConflictsPreserved": 2,
+      "warehouseCandidateIdsFilled": 28894,
+      "staffIdsFilled": 0,
+      "hallAndHeaderKeyUnfilled": true,
+      "identityScope": "Existing same-namespace stable central candidates, not target PG existence or permissions. Per-head number is used with matching full source_refs only to locate current-batch projections, never as entity ID.",
+      "remaining": "Source header key, explicit business hall, state, exact required money; per-head source employee evidence still being consumed rather than presumed missing from user input.",
+      "ready": false
+    },
+    "headerStableKeyConstraint": {
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package08-10-header-identity-constraint-D3-01/RESULT.json",
+        "sha256": "a390017061eaf6190a9781ff57f4cb9d6e0220547a4aa3b88c4b5a8285b746b9"
+      },
+      "salesRows": 28894,
+      "transferRows": 14835,
+      "currentBatchNumbersUnique": true,
+      "idsAllocated": 0,
+      "guide": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/04-普通单据与库存导入文件字段规范.md",
+      "guideSha256": "2a34ad30e785076d45df053819283d2d9747f2d3c3fb98ce98ac5bd5153bb21d",
+      "lines": [
+        51,
+        124,
+        185
+      ],
+      "blockingRule": "source_key is an entity stable original key, not the document number; current batch uniqueness does not establish cross-export stability.",
+      "nextOwner": "Dot supplies contract-permitted original stable-key provider/source bridge or precise governing successor. Local cleaning does not invent UUID from number, row or composite hash to bypass this rule."
+    },
+    "latestDotBranchReadback": {
+      "repository": "Billy159/naijue-erp",
+      "branch": "handoff/erp-unified-latest-20261102",
+      "command": "git ls-remote --heads github exact ref",
+      "result": "SUCCESS_NO_MATCHING_REF",
+      "at": "2026-11-02T18:27:55.646445+00:00",
+      "meaning": "Offline1189 delivery is verified; no remote branch delivery established. Do not create/overwrite Dot branch."
+    },
+    "salesStaffSourceConsumer": {
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-staff-source-D1-01/receipt.json",
+        "sha256": "9970ca6d6ac0773e75bdfafc61941cfb9dd4d96635b48ae5880f606c839de37c"
+      },
+      "rows": 28894,
+      "sourceCodeAndCurrentEmployeeFactsRetained": 5817,
+      "originalCodeMissingInSource": 8,
+      "previouslyObservedCodeButOmittedInCurrentPerHeadProjection": 23069,
+      "newStaffIdsOrFks": 0,
+      "outputBytes": 21187095,
+      "outputSha256": "8c8272f0fd93ae2eccbdfba6017fb4bfd871c11d06ffe9d1281ab45e2995c45a",
+      "accurateGap": "23069 per-head original staff codes are not retained in the inspected compact/candidate projection, while original ZIP locators remain. This is an unconsumed-source seam, not proof the user failed to provide these codes.5817 current source code facts do not establish approved49 identity/alias validity.",
+      "evidenceLimits": "No new original XLSX/detail pass or target PG check; prior source observations and exact current99 receipt inherited. Need source-bound primary-code/alias/time relationship before candidate salesperson FK."
+    }
   }
 }
