@@ -1,3 +1,13 @@
+## 2026-11-02 原115资料reader实际接通；库存三缺陷固定6bc7535e
+
+当前源码6bc7535e38198aff64218a64e68c152d5f0d5d5f。前一149498dc0ed4fe80c7980fcd59d5a6688d98d8c4已推GitHub并独立回读。默认客户39条仅为已批准厅code→客户code关系候选；全部旧厅UUID仍未知，撤回按唯一同名证明身份的旧结论。原QB对149代码关系源码/合成PASS已采用，真实39/4不冒独立通过。
+
+原QB实际核115裸资料与外部source采纳接缝PASS；主控仅按原格式采纳该component，partial pin SHA39c922bfc981130960dcf2492aea7b68dba6c4d8012c9744256c398441b4fb63。D1用Node24真实打开原openReviewedPartySource26，chunks→逐chunk authorize→verify→close完成115（22厅/22仓/49员工/22客户），未重复18CSV；bootstrapAccountsCovered=false/executionAuthorized=false。T45接续原私域49合成凭据/事实准备，不读取或输出秘密、不启PG，尚未身份初始化或CORE。
+
+本次4叶修复已保全并提交：库存EOF须自然耗尽且无后继行/异常才出完成摘要；row8必须精确第二表头才跳过；SKU先数全部独立原身份再判唯一，同canonical不能合并。D3定向stock1与SKU2通过，QB只复3失败点。新小派生结果9候选/156冲突/41835未知/227源有版型，原9未判错，不能将候选当真实SKU/库存记账。
+
+两个获准删除的旧执行副本已清理并回读不存在，约4.3GiB空闲；来源、备份、Git和WIP保留。格式适配进行中；隔离导入、正式导入、应用部署、线上业务验证均未完成。
+
 ## 2026-11-02 固定e67170f0；先读回CORE再初始化
 
 QB指出4a87 FIRST仅用CORE提交ACK就进入INIT，不满足本次独立读回要求。原D1已在e67170f0138d93e454d1912df6ba876b59667104定修为CORE ACK→原新连接readProof核原receipt/digest/22仓链→INIT，失败/未知不自动重写；可执行顺序与失败短路合成1/1通过，QB只复失败点，真实PG异常链仍未测。原FULL不改。

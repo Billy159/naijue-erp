@@ -21983,7 +21983,7 @@
       "staffIdentity": "49 actual candidates (45 exact primary +4 approved plan-only),7 original aliases preserved;actual independent source review/bootstrap not completed",
       "runtime": "Isolated roles/97ACL verified;source-only CORE-stage host delivered for QB review;actual CORE/source/identity proofs and full business execution pending",
       "sourceTime": "Human confirmed cutoff2026-11-02T04:00:00Z;physical atomic snapshot not verified;original dates retained.",
-      "stock": "row8 second header identified; true blank totals/fit groups retained pending semantics",
+      "stock": "EOF and row8 source fix fixed6bc7535e, QB incremental review; true stock fit/SKU source identity not closed; 156 ambiguous identities remain conflicts",
       "sales": "nonblank document key sets match;6 candidate amount differences involve distinct amount headers; no guessed rounding",
       "sku": "D3 actual transfer source hash+EOF produced273949 physical occurrences;208 explicit4dimension complete,273741 pending;not valid SKU count or identity binding",
       "disk": "Exact two authorized exports removed/rechecked;post-cleanup4.88GBfree;no originals/backups/WIP removed."
@@ -22035,7 +22035,7 @@
       "oldBatchCountsReused": false,
       "adapterStatus": "Lazy transfer source interpretation+EOF digest;2 targeted Node24 PASS,not native consumer or DB"
     },
-    "latestFixedSourceCandidate": "e67170f0138d93e454d1912df6ba876b59667104",
+    "latestFixedSourceCandidate": "6bc7535e38198aff64218a64e68c152d5f0d5d5f",
     "cutoff": {
       "value": "2026-11-02T04:00:00Z",
       "basis": "HUMAN_CONFIRMED_BATCH_CUTOFF",
@@ -22044,16 +22044,17 @@
       "preserveOriginalRecordDates": true
     },
     "currentHandoff": {
-      "D1": "CORE FIRST fix fixed e671;prepare valid unapproved source selection/CORE inputs rather than blank template",
-      "D3": "39defaults candidate fixed;next true stock SKU identity mapping with blank/multi-match distinct",
-      "T45": "67 pure synthetic materialization complete;PG stopped;noCORE/source approval or production",
-      "C": "Adopt scoped receipts,push fixed increments,collect relevant historical decisions without broad re-scan"
+      "D1": "Actual original party reader115 passed; continue existing CORE private inputs without repeating CSV checks",
+      "D3": "Four stock/SKU fix leaves frozen6bc7535e; continue independent precise source size/reference closure",
+      "T45": "Generate exact private49 synthetic inputs in existing restricted path, no PG yet; existing roles preserved",
+      "C": "Adopt narrow valid evidence; push fixed source; keep actual batch and synthetic phase distinct"
     },
     "currentIncrementalReview": {
       "owner": "QB",
-      "base": "67d890aeef7ca61176a56741fd249f60dc1931b4",
-      "scope": "D3 warehouse/hall candidate +D1 original CORE host4 leaves",
-      "status": "SOURCE_FIXED_PENDING_REVIEW",
+      "base": "149498dc0ed4fe80c7980fcd59d5a6688d98d8c4",
+      "candidate": "6bc7535e38198aff64218a64e68c152d5f0d5d5f",
+      "scope": "Stock EOF/row8 and original SKU uniqueness: three previously found defects only",
+      "status": "FIXED_SOURCE_PENDING_TARGETED_REVIEW",
       "realPg": false
     },
     "approvedCleanupCompleted": {
@@ -22112,7 +22113,7 @@
       "next": "Reuse existing roles;fresh runtime observation and accurate source/CORE reviews before next scoped execution;do not replay completed job."
     },
     "warehouseHallPreparation": {
-      "status": "SOURCE_CANDIDATE_DELIVERED_NOT_IMPORT_READY",
+      "status": "SOURCE_SYNTHETIC_CODE_RELATION_PASS_NOT_IMPORT_READY",
       "sourceRows": 53,
       "halls": 43,
       "existingWarehouseIdentityReferences": 51,
@@ -22122,19 +22123,20 @@
       ],
       "defaultsCustomerUnresolved": 4,
       "nativeIds": "CANDIDATE_REGISTRY_ONLY_NOT_DATABASE_CREATED",
-      "checks": "Actual53source projection +synthetic warehouse2/2/default-customer1/1;QB previoussource scope adopted;new default relation retest pending",
-      "next": "QB new4leaf scope;read precise prior approved default-customer relations",
+      "checks": "149498 code relationship SOURCE/SYNTHETIC PASS; prior same-name identity claim withdrawn; actual source 39/4 developer candidate only",
+      "next": "Keep 4 optional defaults unknown; do not assert old UUID identity from names",
       "defaultsCustomerResolved": 39,
       "defaultCustomerUnknownHallCodes": [
         "10001",
         "96112",
         "93118",
         "93119"
-      ]
+      ],
+      "historicalHallIdentitiesProven": 0
     },
     "corePreparationIncrement": {
       "owner": "D1",
-      "status": "FIRST_READBACK_ORDER_FIXED_QB_RETEST_PENDING",
+      "status": "QB_SOURCE_FIRST_READBACK_ORDER_PASS_REAL_PG_PENDING",
       "entry": "runRewrite26CorePreparation",
       "modes": [
         "FIRST",
@@ -22161,9 +22163,29 @@
         "identity": 49,
         "party": 115
       },
-      "sourceApproval": null,
-      "selection": "UNREVIEWED_NOT_A_SELECTION_SCHEMA",
-      "pending": "D1 formal candidate format then independent content review;noPG/bootstrap or authorization inferred"
+      "sourceApproval": "2bef29e3500f145c5170afcea296cfc571da4f48347c08cea819d8524febea1c",
+      "selection": "QB_ACTUAL_FINITE_SELECTION_CONTENT_PASS_436C28",
+      "pending": "Private49 identity/facts/decision and independent bootstrap/runtime review; no PG execution"
+    },
+    "syntheticPartyReader": {
+      "status": "ORIGINAL_READER_ACTUAL_115_CHUNKS_AUTHORIZE_VERIFY_CLOSE_PASS",
+      "componentSha256": "6cbf768f29dca257061c00053e1518a7e5c621a946260668b259f78cd5c087b2",
+      "partialReviewSha256": "39c922bfc981130960dcf2492aea7b68dba6c4d8012c9744256c398441b4fb63",
+      "rows": 115,
+      "runtime": "Node24.21.0",
+      "bootstrapAccountsCovered": false,
+      "databaseExecuted": false,
+      "realBatch": false
+    },
+    "stockMatrixIncrement": {
+      "candidate": "6bc7535e38198aff64218a64e68c152d5f0d5d5f",
+      "status": "FIXED_PENDING_TARGETED_QB_REVIEW",
+      "actualSourceChecks": "111 column aggregates matched; total80717; original negatives retained; not valid identity/import proof",
+      "fitCandidates": 9,
+      "fitConflicts": 156,
+      "fitUnknown": 41835,
+      "sourceFitPresent": 227,
+      "independentActualSkuClosure": false
     }
   }
 }
