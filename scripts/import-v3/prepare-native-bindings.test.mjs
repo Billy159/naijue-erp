@@ -50,14 +50,20 @@ test('hall and warehouse candidates keep source codes separate, freeze distinct 
 });
 test('hall customer references require original ID, approved relation, current customer code and capture',async()=>{
  const sha=b=>createHash('sha256').update(b).digest('hex'),pack=x=>Buffer.from(JSON.stringify(x)),hallCandidate=pack({scope:'SOURCE_REFERENCE_CANDIDATES_ONLY',importAuthorized:false,binding:{selectionSha256:null},halls:[{sourceCode:'H',name:'hall',candidateNativeId:id(1),defaultWarehouseCode:'W',defaultWarehouseCandidateNativeId:id(2)}]}),
-  priorHalls=Buffer.from('来源编号,厅名称,默认客户来源编号,默认销货仓来源编号,状态\nold-h,hall,old-c,old-w,正常\n'),priorCustomers=Buffer.from('来源编号,原编码,名称,状态\nold-c,C,customer,正常\n'),
+  priorHalls=Buffer.from(`来源编号,厅名称,默认客户来源编号,默认销货仓来源编号,状态\n${id(3)},hall,old-c,old-w,正常\n`),priorCustomers=Buffer.from('来源编号,原编码,名称,状态\nold-c,C,customer,正常\n'),
   currentCustomers=Buffer.from(JSON.stringify({entity:'CUSTOMER',sourceId:'C',data:{'来源编号':'C','原编码':'C'}})+'\n'),decision=pack({approval:true,halls:[{code:'H',name:'hall',userConfirmedThisProposal:true}]}),relations=pack({customers:[{department:'H',customer:{code:'C'}}]}),
-  priorCapture=pack({rows:[{input:{source:{entityType:'HALL',sourceKey:'old-h'},bindings:{'默认客户来源编号':{sourceKey:'old-c'}}}}]}),all={hallCandidate,priorHalls,priorCustomers,currentCustomers,decision,relations,priorCapture},pins=Object.fromEntries(Object.entries(all).map(([k,v])=>[k,sha(v)]));
- const args={hallCandidateBytes:hallCandidate,priorHallBytes:priorHalls,priorCustomerBytes:priorCustomers,currentCustomerBytes:currentCustomers,decisionBytes:decision,relationsBytes:relations,priorCaptureBytes:priorCapture,pins};
+  priorCapture=pack({rows:[{input:{source:{entityType:'HALL',sourceKey:id(3)},bindings:{'默认客户来源编号':{sourceKey:'old-c'}}}}]}),hallIdentityBridge=pack({records:[{code:'H',targetId:id(3)}]}),all={hallCandidate,priorHalls,priorCustomers,currentCustomers,decision,relations,priorCapture,hallIdentityBridge},pins=Object.fromEntries(Object.entries(all).map(([k,v])=>[k,sha(v)]));
+ const args={hallCandidateBytes:hallCandidate,priorHallBytes:priorHalls,priorCustomerBytes:priorCustomers,currentCustomerBytes:currentCustomers,decisionBytes:decision,relationsBytes:relations,priorCaptureBytes:priorCapture,hallIdentityBridgeBytes:hallIdentityBridge,pins};
  const result=await prepareTPlusHallCustomerCandidates26(args);assert.equal(result.resolvedCount,1);assert.equal(result.rows[0].customerSourceCode,'C');assert.equal(result.executionAuthorized,false);
- const wrongCapture=pack({rows:[{input:{source:{entityType:'HALL',sourceKey:'old-h'},bindings:{'默认客户来源编号':{sourceKey:'other'}}}}]});
+ const wrongCapture=pack({rows:[{input:{source:{entityType:'HALL',sourceKey:id(3)},bindings:{'默认客户来源编号':{sourceKey:'other'}}}}]});
  const pending=await prepareTPlusHallCustomerCandidates26({...args,priorCaptureBytes:wrongCapture,pins:{...pins,priorCapture:sha(wrongCapture)}});assert.equal(pending.unresolvedCount,1);assert.equal(pending.rows[0].customerSourceCode,null);
  await assert.rejects(prepareTPlusHallCustomerCandidates26({...args,relationsBytes:Buffer.from('{}')}),/TPLUS_HALL_CUSTOMER26_PIN/);
+ const sameNameWrongIdentity=pack({records:[{code:'H',targetId:id(99)}]});
+ const noBridge=await prepareTPlusHallCustomerCandidates26({...args,hallIdentityBridgeBytes:sameNameWrongIdentity,pins:{...pins,hallIdentityBridge:sha(sameNameWrongIdentity)}});
+ assert.equal(noBridge.rows[0].priorHallSourceId,null);assert.equal(noBridge.rows[0].relationStatus,'UNRESOLVED');
+ const wrongCode=pack({records:[{code:'OTHER',targetId:id(3)}]});
+ const noCode=await prepareTPlusHallCustomerCandidates26({...args,hallIdentityBridgeBytes:wrongCode,pins:{...pins,hallIdentityBridge:sha(wrongCode)}});
+ assert.equal(noCode.rows[0].priorHallSourceId,null);assert.equal(noCode.unresolvedCount,1);
 });
 test('native IDs are newly allocated and frozen; no source UUID reuse, collision, duplicate or implicit reference', () => {
   const r = createNativeIdentityRegistry(() => id(2), 2);
