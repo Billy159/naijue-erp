@@ -98,6 +98,12 @@ export async function readTPlusFieldMappings26(chunks, inputHashes) {
     }
     if(item.entity==='STAFF'){
       const e=item.proof.identityEvidence,c=e?.currentSource,p=item.proof.currentContactSource,fields=item.proof.fields,prior=fields['来源编号']?.source,name=fields['姓名']?.source,contact=fields['联系方式']?.source;
+      if(e?.kind==='APPROVED_PLAN_NO_PRIOR_HISTORY'){
+        const cols=['来源编号','姓名','角色','所属厅来源编号','联系方式','任职状态'];
+        must(Object.keys(e).sort().join(',')==='approvedSourceId,currentSourceBinding,decisionFile,decisionSha256,kind'&&e.approvedSourceId===item.sourceId&&e.currentSourceBinding==='NOT_ESTABLISHED'&&e.decisionSha256==='a6aab187d4f531715c60bcf32f114d48dcb7cf736576ac5df43463fa43599f2e'&&inputHashes[e.decisionFile]===e.decisionSha256&&
+         prior?.value===item.sourceId&&prior.sheet==='08员工'&&prior.sha256==='ed4aad36329381d07f6dfc5c2e317fb20405ce880b7e07066febee344d97b4f9'&&Number.isSafeInteger(prior.row)&&prior.row>=2&&Object.keys(fields).length===cols.length&&
+         cols.every((k,col)=>fields[k]?.rule==='COPY'&&fields[k]?.source?.file===prior.file&&fields[k]?.source?.sheet===prior.sheet&&fields[k]?.source?.row===prior.row&&fields[k]?.source?.sha256===prior.sha256&&fields[k]?.source?.column===col&&fields[k]?.source?.header===k)&&!Object.hasOwn(item.proof,'currentContactSource')&&!Object.hasOwn(item.proof,'contactSelection'),'NATIVE_BINDING_STAFF_PRIOR_ONLY');
+      }else{
       const sameCurrent=x=>x&&x.file===c?.file&&x.sheet===c?.sheet&&x.row===c?.row&&x.sha256===c?.sha256;
       must(e&&typeof e.decisionFile==='string'&&e.decisionSha256==='a6aab187d4f531715c60bcf32f114d48dcb7cf736576ac5df43463fa43599f2e'&&inputHashes[e.decisionFile]===e.decisionSha256&&Number.isSafeInteger(e.decisionIndex)&&e.decisionIndex>=0&&e.approvedSourceId===item.sourceId&&typeof e.originalCode==='string'&&e.originalCode!==''&&
        c&&inputHashes[c.file]===c.sha256&&c.sheet==='员工'&&Number.isSafeInteger(c.row)&&c.row>2&&c.column===0&&c.header==='员工编码'&&c.value===e.originalCode&&
@@ -109,6 +115,7 @@ export async function readTPlusFieldMappings26(chunks, inputHashes) {
       const blank=(p.cell.kind==='blank'&&p.cell.raw===null)||(p.cell.kind==='text'&&p.cell.raw==='');
       must(item.proof.contactSelection==='APPROVED_SUPPLEMENT_SOURCE_BLANK'?blank&&contact?.file===prior.file&&contact?.sheet===prior.sheet&&contact?.row===prior.row&&contact?.sha256===prior.sha256&&contact.column===4&&contact.header==='联系方式':
        item.proof.contactSelection==='CURRENT_SOURCE_EQUAL_APPROVED'&&!blank&&['text','number'].includes(p.cell.kind)&&sameCurrent(contact)&&contact.column===23&&contact.header==='手机'&&contact.value===p.cell.raw,'NATIVE_BINDING_STAFF_CONTACT');
+      }
     }
     (isProduct?mapped:partyMappings).set(isProduct?item.sourceId:partyKey,{proof:item.proof,sha256:item.sha256});
     must(mapped.size+partyMappings.size <= 600000, 'NATIVE_BINDING_MAPPING_LIMIT');

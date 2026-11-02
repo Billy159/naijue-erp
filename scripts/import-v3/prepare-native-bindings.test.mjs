@@ -109,6 +109,13 @@ test('staff mapping binds approved identity and preserves prior contact only for
  const fromCurrent=structuredClone(proof);fromCurrent.contactSelection='CURRENT_SOURCE_EQUAL_APPROVED';fromCurrent.currentContactSource.cell={kind:'text',raw:'new-contact'};fromCurrent.fields['联系方式'].source=current(23,'手机','new-contact');assert.equal((await readTPlusFieldMappings26(lines(item(fromCurrent)),inputs)).partyMappings.size,1);
  const aliases=structuredClone(proof);aliases.identityEvidence.originalEmployeeId='staff-id';aliases.identityEvidence.historicalAliases=[{originalCode:'001',originalEmployeeId:'staff-id',currentRow:3},{originalCode:'002',originalEmployeeId:'old-id',currentRow:4}];assert.equal((await readTPlusFieldMappings26(lines(item(aliases)),inputs)).partyMappings.size,1);aliases.identityEvidence.historicalAliases[1].originalEmployeeId='staff-id';await assert.rejects(readTPlusFieldMappings26(lines(item(aliases)),inputs),/STAFF_ALIASES/);
 });
+test('approved prior-only staff stays unlinked to current source and retains original fields',async()=>{
+ const planSha='ed4aad36329381d07f6dfc5c2e317fb20405ce880b7e07066febee344d97b4f9',decisionSha='a6aab187d4f531715c60bcf32f114d48dcb7cf736576ac5df43463fa43599f2e',headers=['来源编号','姓名','角色','所属厅来源编号','联系方式','任职状态'],values=['staff-id','prior-name','营业员','hall-id','prior-contact','在职'];
+ const fields=Object.fromEntries(headers.map((name,column)=>[name,{rule:'COPY',source:{file:'plan.csv',sheet:'08员工',row:2,sha256:planSha,column,header:name,value:values[column]}}]));
+ const proof={version:'TPLUS_FIELD_MAPPING_EVIDENCE_V1',fields,identityEvidence:{kind:'APPROVED_PLAN_NO_PRIOR_HISTORY',decisionFile:'identity.json',decisionSha256:decisionSha,approvedSourceId:'staff-id',currentSourceBinding:'NOT_ESTABLISHED'}},item=p=>({entity:'STAFF',sourceId:'staff-id',proof:p,sha256:requestHash(p)}),lines=x=>(async function*(){yield JSON.stringify(x)+'\n'})(),inputs={'plan.csv':planSha,'identity.json':decisionSha};
+ const m=await readTPlusFieldMappings26(lines(item(proof)),inputs);assert.equal(m.partyMappings.size,1);
+ for(const mutate of [p=>{p.identityEvidence.currentSourceBinding='INVENTED';},p=>{p.identityEvidence.currentSource={};},p=>{p.fields['姓名'].source.column=2;},p=>{p.currentContactSource={};},p=>{p.identityEvidence.decisionSha256='b'.repeat(64);}]){const p=structuredClone(proof);mutate(p);await assert.rejects(readTPlusFieldMappings26(lines(item(p)),inputs),/STAFF_PRIOR_ONLY/);}
+});
 test('new T+ cutoff requires the field mapping branch and preserves old cutoff',async()=>{
  const binding={version:'C_NATIVE_IMPORT_PREPARATION_BINDING_V1',batchId:id(1),fixedSourceNamespace:'synthetic.party',selectionSha256:pin};
  const options={binding,registrationId:'synthetic',outputParent:'not-absolute'};
