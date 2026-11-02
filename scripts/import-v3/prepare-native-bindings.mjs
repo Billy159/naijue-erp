@@ -160,12 +160,14 @@ export async function writeTPlusWarehouseHallCandidates26({hallSource,warehouseS
 }
 /** Reconstruct default-customer references from pinned, previously approved
  * party inputs; the new customer source code is not a native customer ID. */
-export async function prepareTPlusHallCustomerCandidates26({hallCandidateBytes,priorHallBytes,priorCustomerBytes,currentCustomerBytes,decisionBytes,relationsBytes,priorCaptureBytes,hallIdentityBridgeBytes,pins}){
-  const sources={hallCandidate:hallCandidateBytes,priorHalls:priorHallBytes,priorCustomers:priorCustomerBytes,currentCustomers:currentCustomerBytes,decision:decisionBytes,relations:relationsBytes,priorCapture:priorCaptureBytes,hallIdentityBridge:hallIdentityBridgeBytes};
+export async function prepareTPlusHallCustomerCandidates26({hallCandidateBytes,priorHallBytes,priorCustomerBytes,currentCustomerBytes,decisionBytes,relationsBytes,priorCaptureBytes,hallIdentityBridgeBytes,businessDecisionsBytes,pins}){
+  const sources={hallCandidate:hallCandidateBytes,priorHalls:priorHallBytes,priorCustomers:priorCustomerBytes,currentCustomers:currentCustomerBytes,decision:decisionBytes,relations:relationsBytes,priorCapture:priorCaptureBytes,hallIdentityBridge:hallIdentityBridgeBytes,businessDecisions:businessDecisionsBytes};
   for(const [key,bytes]of Object.entries(sources))must(Buffer.isBuffer(bytes)&&hash(bytes)===pins?.[key],'TPLUS_HALL_CUSTOMER26_PIN');
   const decode=b=>new TextDecoder('utf8',{fatal:true}).decode(b), candidate=JSON.parse(decode(hallCandidateBytes)),decision=JSON.parse(decode(decisionBytes)),relations=JSON.parse(decode(relationsBytes)),capture=JSON.parse(decode(priorCaptureBytes)),bridge=JSON.parse(decode(hallIdentityBridgeBytes));
   must(candidate.scope==='SOURCE_REFERENCE_CANDIDATES_ONLY'&&candidate.importAuthorized===false&&candidate.binding?.selectionSha256===null&&Array.isArray(candidate.halls)
-    &&decision.approval&&Array.isArray(decision.halls)&&Array.isArray(relations.customers)&&Array.isArray(capture.rows)&&Array.isArray(bridge.records),'TPLUS_HALL_CUSTOMER26_INPUT');
+    &&decision.approval&&Array.isArray(decision.halls)&&Array.isArray(relations.customers)&&Array.isArray(capture.rows)&&Array.isArray(bridge.records)
+    &&decode(businessDecisionsBytes).includes('其余49仓、46厅默认客户采用前轮已明确关系')
+    &&decode(businessDecisionsBytes).includes('91118 庆春银泰ST默认客户')&&decode(businessDecisionsBytes).includes('AC-05-93107'),'TPLUS_HALL_CUSTOMER26_INPUT');
   const parse=async(bytes,header)=>{const rows=[];let n=0;for await(const cells of parseV2Csv((async function*(){yield decode(bytes).replace(/^\uFEFF/,'');})())){
     if(!n++){must(cells.length===header.length&&cells.every((v,i)=>v===header[i]),'TPLUS_HALL_CUSTOMER26_HEADER');continue;}
     must(cells.length===header.length,'TPLUS_HALL_CUSTOMER26_ROW');rows.push(Object.fromEntries(header.map((k,i)=>[k,cells[i]])));}must(n>0,'TPLUS_HALL_CUSTOMER26_HEADER');return rows;};
@@ -184,25 +186,27 @@ export async function prepareTPlusHallCustomerCandidates26({hallCandidateBytes,p
   for(const h of candidate.halls){const a=approved.get(h.sourceCode);must(a&&a.name===h.name&&a.userConfirmedThisProposal===true&&!seen.has(h.sourceCode),'TPLUS_HALL_CUSTOMER26_HALL');seen.add(h.sourceCode);
     const identity=identities.get(h.sourceCode),row={hallSourceCode:h.sourceCode,hallCandidateNativeId:h.candidateNativeId,defaultWarehouseSourceCode:h.defaultWarehouseCode,
       defaultWarehouseCandidateNativeId:h.defaultWarehouseCandidateNativeId,customerSourceCode:null,priorHallSourceId:null,priorCustomerSourceId:null,relationStatus:'UNRESOLVED'};
+    const r=confirmed.get(h.sourceCode)??[];
+    if(r.length===1&&['自动拟采用','用户已确认'].includes(r[0].status)&&typeof r[0].customer?.code==='string'&&currentCustomers.has(r[0].customer.code)
+      &&(h.sourceCode!=='91118'||r[0].customer.code==='AC-05-93107')){row.customerSourceCode=r[0].customer.code;row.relationStatus='APPROVED_CODE_REFERENCE_CANDIDATE';}
     const old=identity&&uuid(identity.targetId)?priorHalls.get(identity.targetId):undefined;
-    if(old){row.priorHallSourceId=old['来源编号'];const oldId=old['默认客户来源编号'],customer=priorCustomers.get(oldId),r=confirmed.get(h.sourceCode)??[],source=captured.get(old['来源编号']);
-      if(oldId&&customer&&currentCustomers.has(customer['原编码'])&&r.length===1&&r[0].customer?.code===customer['原编码']
-        &&source?.bindings?.['默认客户来源编号']?.sourceKey===oldId){row.customerSourceCode=customer['原编码'];row.priorCustomerSourceId=oldId;row.relationStatus='EXACT_REFERENCE_CANDIDATE';}}
+    if(old){row.priorHallSourceId=old['来源编号'];const oldId=old['默认客户来源编号'],customer=priorCustomers.get(oldId),source=captured.get(old['来源编号']);
+      if(oldId&&customer&&row.customerSourceCode===customer['原编码']&&source?.bindings?.['默认客户来源编号']?.sourceKey===oldId)row.priorCustomerSourceId=oldId;}
     rows.push(row);
   }
   must(rows.length===halls.length&&rows.length===approved.size&&rows.length===identities.size,'TPLUS_HALL_CUSTOMER26_COVERAGE');
   return {version:'TPLUS_HALL_DEFAULT_CUSTOMER_REFERENCE_CANDIDATES_V1',scope:'SOURCE_RELATION_CANDIDATES_ONLY',binding:structuredClone(candidate.binding),
-    sourcePins:structuredClone(pins),rows,resolvedCount:rows.filter(x=>x.relationStatus==='EXACT_REFERENCE_CANDIDATE').length,
+    sourcePins:structuredClone(pins),rows,resolvedCount:rows.filter(x=>x.relationStatus==='APPROVED_CODE_REFERENCE_CANDIDATE').length,
     unresolvedCount:rows.filter(x=>x.relationStatus==='UNRESOLVED').length,executionAuthorized:false,nativeCustomerIdsClaimed:false};
 }
 export async function writeTPlusHallCustomerCandidates26({files,pins,outputPath}){
-  const keys=['hallCandidate','priorHalls','priorCustomers','currentCustomers','decision','relations','priorCapture','hallIdentityBridge'];
+  const keys=['hallCandidate','priorHalls','priorCustomers','currentCustomers','decision','relations','priorCapture','hallIdentityBridge','businessDecisions'];
   must(typeof outputPath==='string'&&isAbsolute(outputPath)&&files&&pins&&keys.every(k=>typeof files[k]==='string'&&isAbsolute(files[k])),'TPLUS_HALL_CUSTOMER26_OUTPUT');
   const parent=dirname(resolve(outputPath)),repo=fileURLToPath(new URL('../../',import.meta.url)),s=await lstat(parent);
   must(s.isDirectory()&&!s.isSymbolicLink()&&parent!==repo&&!parent.startsWith(repo+'/')&&!parent.split('/').includes('.git'),'TPLUS_HALL_CUSTOMER26_OUTPUT');
   const b=Object.fromEntries(await Promise.all(keys.map(async k=>[k,await readPinnedStaffFile(files[k],pins[k])])));
   const candidate=await prepareTPlusHallCustomerCandidates26({hallCandidateBytes:b.hallCandidate,priorHallBytes:b.priorHalls,priorCustomerBytes:b.priorCustomers,
-    currentCustomerBytes:b.currentCustomers,decisionBytes:b.decision,relationsBytes:b.relations,priorCaptureBytes:b.priorCapture,hallIdentityBridgeBytes:b.hallIdentityBridge,pins});
+    currentCustomerBytes:b.currentCustomers,decisionBytes:b.decision,relationsBytes:b.relations,priorCaptureBytes:b.priorCapture,hallIdentityBridgeBytes:b.hallIdentityBridge,businessDecisionsBytes:b.businessDecisions,pins});
   await Promise.all(keys.map(k=>readPinnedStaffFile(files[k],pins[k])));
   const bytes=Buffer.from(JSON.stringify({...candidate,sourceReferences:structuredClone(files)})+'\n');await writeFile(outputPath,bytes,{flag:'wx',mode:0o600});
   return {path:outputPath,bytes:bytes.length,sha256:hash(bytes),resolved:candidate.resolvedCount,unresolved:candidate.unresolvedCount,executionAuthorized:false};
