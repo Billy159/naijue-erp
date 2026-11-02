@@ -4,6 +4,8 @@ import { randomUUID, createHash } from 'node:crypto';
 import { lstat, mkdir, chmod, readFile, writeFile, statfs } from 'node:fs/promises';
 import { resolve, join, isAbsolute } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
+import { spawn } from 'node:child_process';
+import { createInterface } from 'node:readline';
 import { preflightV2 } from '../import-v2/run.mjs';
 import { parseV2Csv } from '../../packages/application/src/import-v2.ts';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
@@ -123,6 +125,37 @@ export async function readTPlusFieldMappings26(chunks, inputHashes) {
   Object.defineProperty(mapped,'partyMappings',{value:partyMappings});
   return mapped;
 }
+/** Verify candidate staff mapping against pinned file bytes and the actual
+ * selected workbook stream. This prepares evidence; it is not an approval. */
+export async function verifyTPlusStaffActualCells26(mappings,{approvedPlanBytes,identityDecisionBytes,inputHashes,files,events}){
+  must(mappings instanceof Map&&mappings.partyMappings instanceof Map&&Buffer.isBuffer(approvedPlanBytes)&&Buffer.isBuffer(identityDecisionBytes)&&inputHashes?.[files?.approvedPlanPath]===hash(approvedPlanBytes)&&inputHashes?.[files?.identityDecisionPath]===hash(identityDecisionBytes),'NATIVE_BINDING_STAFF_SOURCE_PIN');
+  const links=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(identityDecisionBytes)).links;must(Array.isArray(links),'NATIVE_BINDING_STAFF_SOURCE_IDENTITY');
+  const headers=['来源编号','姓名','角色','所属厅来源编号','联系方式','任职状态'],plan=new Map();let header,row=0;
+  for await(const cells of parseV2Csv((async function*(){yield new TextDecoder('utf-8',{fatal:true}).decode(approvedPlanBytes).replace(/^\uFEFF/,'');})())){row++;if(!header){must(cells.length===headers.length&&cells.every((v,i)=>v===headers[i]),'NATIVE_BINDING_STAFF_SOURCE_HEADER');header=cells;continue;}must(cells.length===headers.length,'NATIVE_BINDING_STAFF_SOURCE_ROW');plan.set(row,Object.fromEntries(headers.map((k,i)=>[k,cells[i]])));}
+  must(header,'NATIVE_BINDING_STAFF_SOURCE_HEADER');const observed=new Map();let eof=false,physical=0,last=0,headerSeen=false;
+  for await(const event of events){must(event?.sheet==='员工'&&!eof,'NATIVE_BINDING_STAFF_SOURCE_STREAM');if(event.event==='eof'){must(event.rows===physical,'NATIVE_BINDING_STAFF_SOURCE_EOF');eof=true;continue;}must(event.event==='row'&&Number.isSafeInteger(event.excelRow)&&event.excelRow>last&&event.cells,'NATIVE_BINDING_STAFF_SOURCE_ROW');last=event.excelRow;physical++;if(event.excelRow===2){must(event.cells?.[0]?.raw==='员工编码'&&event.cells?.[1]?.raw==='员工名称'&&event.cells?.[23]?.raw==='手机','NATIVE_BINDING_STAFF_SOURCE_HEADER');headerSeen=true;}if(event.excelRow>2)observed.set(event.excelRow,event.cells);}
+  must(eof&&headerSeen,'NATIVE_BINDING_STAFF_SOURCE_EOF');let checked=0;
+  for(const [key,mapping]of mappings.partyMappings){const [entity,sourceId]=JSON.parse(key);if(entity!=='STAFF')continue;const proof=mapping.proof,e=proof.identityEvidence,fields=proof.fields,loc=fields['来源编号'].source,actual=plan.get(loc.row);
+    must(loc.file===files.approvedPlanPath&&e.decisionFile===files.identityDecisionPath&&actual&&actual['来源编号']===sourceId,'NATIVE_BINDING_STAFF_SOURCE_PLAN');
+    for(const [name,field]of Object.entries(fields)){const s=field.source;if(s.file===files.approvedPlanPath)must(s.row===loc.row&&actual[name]===s.value,'NATIVE_BINDING_STAFF_SOURCE_PLAN');}
+    if(e.kind==='APPROVED_PLAN_NO_PRIOR_HISTORY'){must(!links.some(x=>x.plannedCurrentEmployeeId===sourceId),'NATIVE_BINDING_STAFF_SOURCE_PRIOR_LINK');checked++;continue;}
+    const link=links[e.decisionIndex],c=e.currentSource,cells=observed.get(c.row),phone=cells?.[23]??{kind:'blank',raw:null},declared=proof.currentContactSource.cell;
+    must(c.file===files.currentEmployeeXlsxPath&&link&&link.originalCode===e.originalCode&&link.originalEmployeeId===sourceId&&link.plannedCurrentEmployeeId===sourceId&&cells?.[0]?.kind==='text'&&cells[0].raw===e.originalCode&&cells?.[1]?.kind==='text'&&cells[1].raw===fields['姓名'].source.value&&phone.kind===declared.kind&&phone.raw===declared.raw,'NATIVE_BINDING_STAFF_SOURCE_IDENTITY');
+    if(proof.contactSelection==='CURRENT_SOURCE_EQUAL_APPROVED')must(String(phone.raw)===actual['联系方式'],'NATIVE_BINDING_STAFF_SOURCE_CONTACT');
+    if(e.historicalAliases){const expected=links.filter(x=>x.plannedCurrentEmployeeId===sourceId);must(expected.length===e.historicalAliases.length&&e.historicalAliases.every(a=>expected.some(x=>x.originalCode===a.originalCode&&x.originalEmployeeId===a.originalEmployeeId)&&observed.get(a.currentRow)?.[0]?.raw===a.originalCode),'NATIVE_BINDING_STAFF_SOURCE_ALIASES');}
+    checked++;
+  }
+  must(checked>0,'NATIVE_BINDING_STAFF_SOURCE_COVERAGE');return {checked};
+}
+async function* actualStaffWorkbookEvents(path){
+  const child=spawn('python3',[fileURLToPath(new URL('../import-preflight/read-xlsx.py',import.meta.url)),'--stream',path,'员工','0,1,23'],{stdio:['ignore','pipe','ignore']});
+  const done=new Promise(resolve=>{child.once('error',()=>resolve(-1));child.once('close',resolve);});let completed=false;
+  try{for await(const line of createInterface({input:child.stdout,crlfDelay:Infinity})){let event;try{event=JSON.parse(line);}catch{throw Error('NATIVE_BINDING_STAFF_SOURCE_STREAM');}yield event;}completed=true;}
+  finally{if(!completed)child.kill('SIGTERM');const code=await done;must(code===0,'NATIVE_BINDING_STAFF_SOURCE_STREAM');}
+}
+async function readPinnedStaffFile(path,pin){
+  must(typeof path==='string'&&isAbsolute(path)&&/^[a-f0-9]{64}$/.test(pin??''),'NATIVE_BINDING_STAFF_SOURCE_PIN');const before=await lstat(path);must(before.isFile()&&!before.isSymbolicLink()&&before.size>0&&before.size<=16777216,'NATIVE_BINDING_STAFF_SOURCE_FILE');const bytes=await readFile(path),after=await lstat(path);must(hash(bytes)===pin&&before.dev===after.dev&&before.ino===after.ino&&before.size===after.size&&before.mtimeMs===after.mtimeMs,'NATIVE_BINDING_STAFF_SOURCE_PIN');return bytes;
+}
 async function* csv(strings, path) {
   let header; for await (const cells of parseV2Csv(strings(path))) {
     if (!header) { header = cells; must(new Set(header).size === header.length, 'NATIVE_BINDING_CSV_HEADER'); continue; }
@@ -149,7 +182,7 @@ export function reviewedPartyBinding(entity, row, registry, evidenceRef, reviewe
 /** One explicit source preparation invocation. complete preflight validates current bytes;
  * files are private new artifacts and require QB review plus C's OUTSIDE pin. */
 export async function prepareNativeBindings(options) {
-  const { base, v3Amendment, v3Approval, trustedApprovalSha256, approvedMoneyOverlaySha256, binding, outputParent, registrationId, tplusFieldMappingPath } = options;
+  const { base, v3Amendment, v3Approval, trustedApprovalSha256, approvedMoneyOverlaySha256, binding, outputParent, registrationId, tplusFieldMappingPath, staffSourceFiles } = options;
   must(tplusFieldMappingPath === undefined || tplusFieldMappingPath === 'evidence/tplus-field-mapping.jsonl', 'NATIVE_BINDING_MAPPING_PATH');
   must(binding?.version === 'C_NATIVE_IMPORT_PREPARATION_BINDING_V1' && uuid(binding.batchId) && typeof binding.fixedSourceNamespace === 'string'
     && (binding.cutoffAt === '2026-10-04T12:00:00+08:00' || (tplusFieldMappingPath !== undefined && ['2026-11-02T12:00:00+08:00','2026-11-02T04:00:00Z'].includes(binding.cutoffAt))) && /^[a-f0-9]{64}$/.test(binding.selectionSha256), 'NATIVE_BINDING_CONTROLLER_BINDING');
@@ -191,6 +224,12 @@ export async function prepareNativeBindings(options) {
           dictionaryInputs[path] = JSON.parse(s);
         }
         const tplusMappings = tplusFieldMappingPath === undefined ? null : await readTPlusFieldMappings26(strings(tplusFieldMappingPath), inputHashes);
+        if(tplusMappings&&[...tplusMappings.partyMappings.keys()].some(key=>JSON.parse(key)[0]==='STAFF')){
+          must(staffSourceFiles&&Object.keys(staffSourceFiles).sort().join(',')==='approvedPlanPath,currentEmployeeXlsxPath,identityDecisionPath'&&inputHashes[staffSourceFiles.approvedPlanPath]==='ed4aad36329381d07f6dfc5c2e317fb20405ce880b7e07066febee344d97b4f9'&&inputHashes[staffSourceFiles.identityDecisionPath]==='a6aab187d4f531715c60bcf32f114d48dcb7cf736576ac5df43463fa43599f2e'&&inputHashes[staffSourceFiles.currentEmployeeXlsxPath]==='879dc354156b28a8ffee808790936c04920d4be4bd41c8f599487d8b1ba8dafd','NATIVE_BINDING_STAFF_SOURCE_PIN');
+          const [approvedPlanBytes,identityDecisionBytes]=await Promise.all([readPinnedStaffFile(staffSourceFiles.approvedPlanPath,inputHashes[staffSourceFiles.approvedPlanPath]),readPinnedStaffFile(staffSourceFiles.identityDecisionPath,inputHashes[staffSourceFiles.identityDecisionPath]),readPinnedStaffFile(staffSourceFiles.currentEmployeeXlsxPath,inputHashes[staffSourceFiles.currentEmployeeXlsxPath])]);
+          await verifyTPlusStaffActualCells26(tplusMappings,{approvedPlanBytes,identityDecisionBytes,inputHashes,files:staffSourceFiles,events:actualStaffWorkbookEvents(staffSourceFiles.currentEmployeeXlsxPath)});
+          await Promise.all([staffSourceFiles.approvedPlanPath,staffSourceFiles.identityDecisionPath,staffSourceFiles.currentEmployeeXlsxPath].map(p=>readPinnedStaffFile(p,inputHashes[p])));
+        }
         const partyTypes=tplusMappings?new Set([...tplusMappings.partyMappings.keys()].map(key=>JSON.parse(key)[0])):new Set();
         let originalRows = 0, mappedProducts = 0, mappedParties = 0;
         for await (const line of lines(strings('snapshots/all-business-source-rows.jsonl'))) {
