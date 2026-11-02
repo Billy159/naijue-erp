@@ -23753,5 +23753,31 @@
     "imported": false,
     "completeMemberReceiptSha256": "d23fd2fa746a21557844d41db8143fe5c8ecd2fc32c6da449f77b282b38e2bdf",
     "controllerChecks": "OUTPUT_HASHES_PRODUCT_DELTA_AND_11_MEMBER_REFERENCE_ORDER_UNIQUENESS_PASS"
+  },
+  "approvedProductGroupConsumer": {
+    "status": "DRAFT_MATERIALIZED_FROM_APPROVED_PRODUCT_RULES",
+    "newProducts": 68,
+    "priorConfirmedProducts": 4,
+    "totalProductGroupRefs": 72,
+    "totalProducts": 2970,
+    "remainingProductGroupRefs": 2898,
+    "newGroups": {
+      "UPPER": 34,
+      "PANTS": 30,
+      "FREE": 4
+    },
+    "registryCandidates": 4086,
+    "groupCount": 3,
+    "memberCount": 24,
+    "productReceipt": "b1392de872bfceb2ff96791dbb4b518084f64beb908408691986e8c5a72bec7c",
+    "membersReceipt": "aced5f60256c3daf2fbc05c9d49dc61fe2ff07d0d7a80f178f9b5fbf7b51207c",
+    "createdSKUs": 0,
+    "databaseVerified": false
+  },
+  "salesMoneyAdjudication": {
+    "status": "EXACT_PRIVATE_EXAMPLES_AND_SOURCE_LABELS_PREPARED_USER_REPLY_PENDING",
+    "exampleReceiptSHA256": "abfd9a8e3d22d0335d5e78670cf37745219e1f8ce4d9d413b33623f75becb061",
+    "rawDataSentToDot": false,
+    "businessFieldsChanged": false
   }
 }
