@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T00:30:38.197730+00:00",
+  "updatedAt": "2026-11-03T00:33:32.902126+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -23802,7 +23802,21 @@
     "checks": "Original D3 directed checks adopted; controller verified only delivered receipt and consumer file integrity, no duplicate technical acceptance",
     "previousReceiptSHA256": "9e742357abad723267490d20f90eb08c0c961dd642d98622aabf5aaa6744d17e",
     "addedFREE": 2,
-    "remainingEvidenceCheck": "Original D3 bounded followup for395: distinguish absent historical SKU snapshot mapping from existing current-batch approved specification mappings; reuse current evidence, no source rescan"
+    "remainingEvidenceCheck": {
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-batch-spec-gap-D3-03/RESULT.json",
+      "receiptSHA256": "413a461aafff75154a087130ce5b44c8c591d21148c16f06fedea2bd31584cbf",
+      "scope": "Existing38142 current-batch sales/transfer/inventory distinct tuples; no raw source rescan",
+      "newlyGrouped": 0,
+      "remaining": 403,
+      "reasons": {
+        "已消费销货调拨库存三类旁车未见规格；不排除其他来源": 393,
+        "已有辅料或未映射规格例外保持": 8,
+        "本批存在规格，已批映射未形成唯一有效目标组": 2
+      },
+      "remainingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-batch-spec-gap-D3-03/remaining-items-with-batch-review.jsonl",
+      "remainingSHA256": "f187913506ed73952fd4ddaaffaddd1cebdac0e8cd1888cfb46b2bd3913f3af1",
+      "boundary": "393 not observed in these three already-consumed sidecars is not proof absent from all other sources;2 have source specification but no unique effective approved mapping;8 explicit cases retained"
+    }
   },
   "salesMoneyAdjudication": {
     "status": "USER_ROUNDING_AND_BLANK_RULE_ADOPTED_SOURCE_MONEY_DRAFT_MATERIALIZED",
@@ -23896,7 +23910,22 @@
     "targetPGVerified": false,
     "importAuthorized": false,
     "checks": "Original D3 directed checks adopted; controller verified only delivered receipt and consumer file integrity, no duplicate technical acceptance",
-    "next": "Keep403 exact exceptions for bounded existing-authority evidence; do not ask individual approval for newly resolved1393 or repeat completed online reads"
+    "next": "Keep403 exact exceptions for bounded existing-authority evidence; do not ask individual approval for newly resolved1393 or repeat completed online reads",
+    "remainingEvidenceCheck": {
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-batch-spec-gap-D3-03/RESULT.json",
+      "receiptSHA256": "413a461aafff75154a087130ce5b44c8c591d21148c16f06fedea2bd31584cbf",
+      "scope": "Existing38142 current-batch sales/transfer/inventory distinct tuples; no raw source rescan",
+      "newlyGrouped": 0,
+      "remaining": 403,
+      "reasons": {
+        "已消费销货调拨库存三类旁车未见规格；不排除其他来源": 393,
+        "已有辅料或未映射规格例外保持": 8,
+        "本批存在规格，已批映射未形成唯一有效目标组": 2
+      },
+      "remainingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-batch-spec-gap-D3-03/remaining-items-with-batch-review.jsonl",
+      "remainingSHA256": "f187913506ed73952fd4ddaaffaddd1cebdac0e8cd1888cfb46b2bd3913f3af1",
+      "boundary": "393 not observed in these three already-consumed sidecars is not proof absent from all other sources;2 have source specification but no unique effective approved mapping;8 explicit cases retained"
+    }
   },
   "latestProduct16ReadOnlyReceipt": {
     "owner": "original T45",
