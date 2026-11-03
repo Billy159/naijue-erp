@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T02:52:50.159534+00:00",
+  "updatedAt": "2026-11-03T03:28:58.969160+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22196,19 +22196,19 @@
       "localSourceBranchStill": "codex/e5c5a762-cleaning-20261102",
       "localOriginalSourceWipPreserved": true,
       "latestDotRemoteBranchLookup": "GitHub GET exact handoff/erp-unified-latest-20261102 returned404; offline package accepted, remote delivery unconfirmed",
-      "lastControllerCoordinationCommit": "ed4c37b58cf77d041134c2ce296cf8acfc95b8d6",
+      "lastControllerCoordinationCommit": "c38054e81d5d5115c859871cba9193ce916dcfe2",
       "historicalRemoteHeadFieldsAreNotCurrentDotDelivery": true,
       "coordinationRemoteVerifiedAt": "2026-11-03T01:58:45.414057+00:00",
       "latestDotRemoteDelivery": "Not independently confirmed; exact branch lookup returned no remote ref at last check, no push of Dot source claimed"
     },
     "owners": {
-      "Dot": "Application/schema/install/importer sole owner; fixed4e98 offline package, full-batch receiver and V2 apply/resume gaps pending",
-      "D3": "Index12 and immutable38142 dimension consumer delivered; no SKU or target IDs proven",
+      "Dot": "Sole app/schema/install/import owner;offline051 accepted; standard old-table dependency/35-core/full transaction and receiving seams pending.",
+      "D3": "Sole final private candidate/registry/index writer;index18 delivered. Next consume exact user category decisions or Dot receiving contract; do not fabricate work.",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
-      "D1": "Sales22656 staff refs and39 staff-hall refs delivered; all4 runtime hall differences match approved candidates",
-      "T45": "All bounded relationship and single-method readonly jobs terminal; no new server job or production write",
+      "D1": "Employee/name/department evidence delivered;transfer endpoint existing name-only projection confirmed, original-code bridge and document stable-key seam remain.",
+      "T45": "All prior bounded readonly work terminal;no new server/DB job or credentials requested.",
       "QB": "No duplicate whole-code acceptance dispatched",
-      "D2": "Exact color value38142 and FIT74+26256 source references delivered; all2042 transfer signature cases closed, stock untouched",
+      "D2": "7 collar text sources delivered and consumed;29 exact category cases delivered, await one grouped human decision.",
       "F2": "All16 source groups located; four-row old consumer gap reconciled against existing enriched product evidence; delivered/idle."
     },
     "model": {
@@ -22223,13 +22223,14 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical true-blank sales/transfer A rule plus direct human call_88267c72a7204d02940b136fb5218b16 item0 authorizing stock true blanks and exact normal-A alias; preserve all raw values/provenance, no unobserved SKU or barcode.",
-    "current": "Index16 bound offline051; existing2970 product groups,38142 product/color/FIT refs,38113 size/four-dimension refs,29 preserved size exceptions;43hall/53warehouse and80account/19disables retained;199 excluded-current-hall historical hint relations preserved;one approved online staff-name change. DRAFT only.",
+    "current": "Index18 bound051;7 collar source texts consumed,2963 empty preserved;29 category decisions pending,2961 scheme references unclosed; all prior consumers retained. DRAFT,not PG/import.",
     "next": [
-      "Dot sole code owner: explicit standard-only party/publication proof dispatch retaining transaction/actor/row-intent/receipt/audit validation; eliminate real old-table reads in standard path without editing frozen47/48 sources or deleting tables.",
-      "Then deliver whole-package single-transaction DML+publication and affected failure/idempotency/unknown-result tests; chunk visibility is not equivalent.",
-      "Before physical retirement, exact35-core list and each21 legacy incoming dependency/7 FK replacement/archive/restore plan; no DROP/CASCADE by local cleaning.",
-      "Dot must provide valid install/profile/V2 PG acceptance; current47+48 is not admitted47+49 or47+48+49. Preserve current source normalization; no production or true-data apply.",
-      "Preserve known field seams: original historical department vs current hall/non-null samehall, FIT canonical code, observed SKU/barcode identity, four approved new-person stable keys, monetary/status exceptions."
+      "Dot standard path must remove actual old-table dependencies while retaining actor/row-intent/receipt/audit and atomicity;35-core retirement and reviewed install not complete.",
+      "Dot full standard package single-transaction DML+publication and actual V2 PG/normal runtime acceptance remain unverified.",
+      "User grouped decision:29 product categories in linked private six-group list; only this field branch waits.",
+      "Dot precise stable document keys and original endpoint-code receiving bridge; no document-number source-key invention or name-based warehouse ID fill.",
+      "Six retained scheme IDs need receiving registry/initialization closure;9 product scheme source-code bridges remain unproven.",
+      "Other retained seams: historical department/current hall, FIT canonical code, true SKU/barcode identity,4 already-approved new-person stable keys,66 monetary exceptions and state/cutoff handling."
     ],
     "ordinaryDocumentTables": [
       "sales_header",
@@ -22256,8 +22257,8 @@
     "dotReportedFailures": "4 invalid packages wrongly accepted; 3 source-level SQL/coverage risks not PG-reproduced; keep unresolved, not implementation here",
     "latestOfflineDelivery": {
       "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
-      "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-16/INDEX.json",
-      "indexSha256": "c0839d0d5dfbf0957e6313275d2942acd02ff694c5a3aefda74054fe04d634e1",
+      "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-18/INDEX.json",
+      "indexSha256": "4892d9f8b8050d1f26f00b3e1a1301feaa14034bb1178d3fa2078642c7584706",
       "updatedPackages": [
         3,
         4,
@@ -22312,7 +22313,12 @@
         "colorReferences": 38142,
         "sizeReferences": 38113,
         "fitReferences": 38142,
-        "fourDimensionCandidateIntersection": 38113
+        "fourDimensionCandidateIntersection": 38113,
+        "productsCollarText": 7,
+        "productsCollarSourceBlank": 2963,
+        "productsCategoryUnresolved": 29,
+        "schemeSourceBridgeCandidates": 2961,
+        "schemeUnresolvedIdentity": 9
       },
       "verificationScope": "Original D3 source/EOF/row-count/arithmetic/readback receipts adopted; controller only verified small index SHA; not target or coverage acceptance",
       "identity": "4185 provisional typed identities; target existence/ACL not verified; no invented SKU or original identity.",
@@ -24172,6 +24178,51 @@
       },
       "targetPGOrImportPassed": false,
       "productionWrites": 0
+    },
+    "latestOfflineClosures20261103Index18": {
+      "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+      "fixedDotSourceCommit": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
+      "index": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-18/INDEX.json",
+        "sha256": "4892d9f8b8050d1f26f00b3e1a1301feaa14034bb1178d3fa2078642c7584706",
+        "ready": false
+      },
+      "products": {
+        "rows": 2970,
+        "knownCategoryRefs": 2941,
+        "categoryPendingHuman": 29,
+        "knownGroupRefs": 2970,
+        "collarTextConsumed": 7,
+        "collarSourceBlankRetained": 2963,
+        "productCandidateSha256": "6ed1629bedd46dc0f308feaa6218fd7917c8b26b664b52bf914bf26e3247b81f",
+        "sourceSchemeBridgeCandidates": 2961,
+        "schemeIdentityBridgeMissing": 9,
+        "schemeRegistryEntries": 0,
+        "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-collar-text-consumer-D3-08/RESULT.json",
+        "receiptSha256": "9264258e466f2ad125c889e7d345ac6e1d3404d41efd08ea62af2d9db9ee8fed"
+      },
+      "categoryDecision": {
+        "groups": 6,
+        "products": 29,
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/category-decision-cases-D2-01/商品分类集中核对.md",
+        "sha256": "85223e0e4563f30b3ac88db0286eeb197e8747a1c22d00ac8f741f7d95a5714c",
+        "question": "request_user_input_async: grouped product-specific category decision pending; proposed labels not applied",
+        "prior2941DecisionsPreserved": true,
+        "receiptSha256": "8d6df17a84bf966914164526e5d52db493175bf69a21bebfdb788ce6c2aaf933"
+      },
+      "transferWarehouse": {
+        "headers": 14835,
+        "endpoints": 29670,
+        "actualSource": "Warehouse text fields, no separate code in reviewed export; existing source projection reused, not rescanned",
+        "idsNotWrittenFromNameAlone": true,
+        "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/transfer-warehouse-consumer-D1-01/receipt.json",
+        "receiptSha256": "1d53ae3b5a8d37937da8d90f207dfdbe1c35115059be61193c45672385d3f6f7"
+      },
+      "documentStableKey": "Existing field norm explicitly excludes using original document number as source_key. Unique numbers are observations, not a new identity permission; Dot receiving seam remains open.",
+      "barcodeRegistrySeam": "051 unified-import-contract.ts:1340-1344 uses existing-verified or typed stable IDs;1394-1396 requires exactly six retained fixed scheme IDs. Preserve fixed IDs and configurations. Dot must supply accurate initialization/registry proof; local cleaning does not claim an existing target or replace original IDs.",
+      "targetPGVerified": false,
+      "importAuthorized": false,
+      "productionWrites": 0
     }
   },
   "latestUnifiedSourceIntake": {
@@ -24585,9 +24636,12 @@
     }
   },
   "currentWaitingConditions": [
-    "Dot fixed successor with actual full-batch V2 import/resume and bounded reader; do not fake trial with V1 500",
-    "Exact document identity/status, fit/SKU/payment namespace and existing business exceptions; independent cleaning continues",
-    "Actual isolated schema/ACL/init/full readback/ordinary-account business chain not yet executed"
+    "Dot standard path must remove actual old-table dependencies while retaining actor/row-intent/receipt/audit and atomicity;35-core retirement and reviewed install not complete.",
+    "Dot full standard package single-transaction DML+publication and actual V2 PG/normal runtime acceptance remain unverified.",
+    "User grouped decision:29 product categories in linked private six-group list; only this field branch waits.",
+    "Dot precise stable document keys and original endpoint-code receiving bridge; no document-number source-key invention or name-based warehouse ID fill.",
+    "Six retained scheme IDs need receiving registry/initialization closure;9 product scheme source-code bridges remain unproven.",
+    "Other retained seams: historical department/current hall, FIT canonical code, true SKU/barcode identity,4 already-approved new-person stable keys,66 monetary exceptions and state/cutoff handling."
   ],
   "salesStaffMapping": {
     "status": "DRAFT_MATERIALIZED_22656_KNOWN_ORIGINAL_IDENTITIES",
@@ -25049,5 +25103,50 @@
     "applicationMerged": false,
     "V2DatabaseApplyResume": "NOT_IMPLEMENTED",
     "candidate48and49": "CODE_ONLY_NOT_INSTALLED"
+  },
+  "latestOfflineClosures20261103Index18": {
+    "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+    "fixedDotSourceCommit": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
+    "index": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-18/INDEX.json",
+      "sha256": "4892d9f8b8050d1f26f00b3e1a1301feaa14034bb1178d3fa2078642c7584706",
+      "ready": false
+    },
+    "products": {
+      "rows": 2970,
+      "knownCategoryRefs": 2941,
+      "categoryPendingHuman": 29,
+      "knownGroupRefs": 2970,
+      "collarTextConsumed": 7,
+      "collarSourceBlankRetained": 2963,
+      "productCandidateSha256": "6ed1629bedd46dc0f308feaa6218fd7917c8b26b664b52bf914bf26e3247b81f",
+      "sourceSchemeBridgeCandidates": 2961,
+      "schemeIdentityBridgeMissing": 9,
+      "schemeRegistryEntries": 0,
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-collar-text-consumer-D3-08/RESULT.json",
+      "receiptSha256": "9264258e466f2ad125c889e7d345ac6e1d3404d41efd08ea62af2d9db9ee8fed"
+    },
+    "categoryDecision": {
+      "groups": 6,
+      "products": 29,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/category-decision-cases-D2-01/商品分类集中核对.md",
+      "sha256": "85223e0e4563f30b3ac88db0286eeb197e8747a1c22d00ac8f741f7d95a5714c",
+      "question": "request_user_input_async: grouped product-specific category decision pending; proposed labels not applied",
+      "prior2941DecisionsPreserved": true,
+      "receiptSha256": "8d6df17a84bf966914164526e5d52db493175bf69a21bebfdb788ce6c2aaf933"
+    },
+    "transferWarehouse": {
+      "headers": 14835,
+      "endpoints": 29670,
+      "actualSource": "Warehouse text fields, no separate code in reviewed export; existing source projection reused, not rescanned",
+      "idsNotWrittenFromNameAlone": true,
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/transfer-warehouse-consumer-D1-01/receipt.json",
+      "receiptSha256": "1d53ae3b5a8d37937da8d90f207dfdbe1c35115059be61193c45672385d3f6f7"
+    },
+    "documentStableKey": "Existing field norm explicitly excludes using original document number as source_key. Unique numbers are observations, not a new identity permission; Dot receiving seam remains open.",
+    "barcodeRegistrySeam": "051 unified-import-contract.ts:1340-1344 uses existing-verified or typed stable IDs;1394-1396 requires exactly six retained fixed scheme IDs. Preserve fixed IDs and configurations. Dot must supply accurate initialization/registry proof; local cleaning does not claim an existing target or replace original IDs.",
+    "targetPGVerified": false,
+    "importAuthorized": false,
+    "productionWrites": 0
   }
 }

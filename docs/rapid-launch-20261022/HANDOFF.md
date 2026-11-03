@@ -1,3 +1,15 @@
+### 2026-11-03 最新增量：index18，商品来源字段补接与精确待决
+
+固定源码仍为离线已校验的051bbe14a4cba4e1849b8547665f13df85dd8fe0；本地未覆盖代码或执行包内脚本。13包字段合同不变，原四处源码WIP保留。当前唯一私域索引draft-work-package-index-18/INDEX.json，SHA256 4892d9f8b8050d1f26f00b3e1a1301feaa14034bb1178d3fa2078642c7584706，继承index17/16及全部已交成果，仍DRAFT/ready=false/importAuthorized=false。
+
+原D2找到7条领型/裤型来源原文本，主控窄核051候选读取器以同一原文本作id/name，原D3只补这7字段，2963真实空白保留null，2970商品其余字段和来源不变；回执9264258e466f2ad125c889e7d345ac6e1d3404d41efd08ea62af2d9db9ee8fed，产品6ed1629bedd46dc0f308feaa6218fd7917c8b26b664b52bf914bf26e3247b81f。无需新增编码/名称裁决。2961商品条码方案引用已有四组准确来源桥，但六固定方案尚未进入中央registry，仍为未闭合引用；另9项来源方案桥不明，不默认2026。
+
+原D2将准确29款未分类商品按6来源路径整理为本地私域“商品分类集中核对.md”，SHA85223e0e4563f30b3ac88db0286eeb197e8747a1c22d00ac8f741f7d95a5714c；逐码未命中已有2941批准决定。主控已集中请求用户选择，仅分类分支等待，建议未自动应用。真实款号、名称及原行均不入Git或发Dot。原2941分类/2970完整尺码组不重做。
+
+更正对调拨头两端“漏接”的初步怀疑：原D1找到已有后继仓库来源投影，14835头两端29670项是EXACT_NAME_ONLY_CANDIDATE；本批调拨导出字段只有名称，无独立端点编码，故不能按名直接填ID。采用已有EOF证据，不重新读大表。现行普通单据规范还明确source_key不是单号，单号唯一并不授权升格原身份。回执1d53ae3b5a8d37937da8d90f207dfdbe1c35115059be61193c45672385d3f6f7，准确接缝交Dot，不误称用户没有仓库资料。
+
+Dot下一步：先标准party/publication显式分派并解除旧表实际读取依赖；再整包普通表DML+发布单事务；按准确35核心/21旧表/7FK依赖、归档恢复及安装证明收口，不通过OR短路、改指纹或DROP/CASCADE放行。同时补六固定方案ID的初始化/registry证明（051合同1340-1344与1394-1396须配套）、原单稳定键和历史厅等接收接缝。清洗方不改SQL、字段或业务规则；T45无新环境任务。包内SQL48/ADMIN合成10次提交等证据沿原范围复用，49/V2整包PG、正常登录业务及生产仍未验证。
+
 ### 2026-11-03 最新：051bbe1 完整验收阶段包与 index16
 
 接收ZIP SHA256 `938a404f618b4cc2973cbd1635a32bfaebc141d5509547114e023b5c1bb1e400` 一致。包内固定提交 `051bbe14a4cba4e1849b8547665f13df85dd8fe0`，声明分支 `handoff/erp-unified-latest-20261102`；3948源码、4523清单项目/4525总文件的bytes/SHA/Git blob及ZIP执行位完整匹配。独立接收回执SHA `f49cf41c6e7af2ceb7e23d456b1950ebb5758893c7239d5bce4681cc395889f2`。未把源码覆盖进当前工作树，未执行包内脚本；远端交付未独立确认。字段合同、表定义和13工作包与4e98逐值相同，本地洗数方法不改，不重复清洗。
@@ -22,11 +34,10 @@
 
 
 <!-- CURRENT-LOCAL-CLEANING-BEGIN -->
-Current effective breakpoint (2026-11-03): fixed Dot1189 offline only; local source/WIP preserved.
-Known-master4078 subset, product2941 category/1156 supplier refs and sales28892 customer/28894 warehouse refs materialized.16 original size groups located; approved conversion preserved.
-Whole package DRAFT. Required document original-key rule, category SQL42703, bounded transfer reader, remaining source/canonical bridges, economics/status/cutoff and actual ordinary LOGIN/PG import remain open.
-User inventory-blank-fit/source-effective questions pending. All current original-role slices delivered; source-staff identity bridge remains unverified; no production/server job or app/SQL changes.
-Authoritative details: TASKS.json currentRoute; actual private source candidates remain local, do not upload rows or credentials.
+当前有效断点（2026-11-03）：Dot051离线完整包已校验，未覆盖当前源码；私域唯一index18，SHA4892d9f8b8050d1f26f00b3e1a1301feaa14034bb1178d3fa2078642c7584706。
+商品2970；完整组2970；已批分类2941/29待本次集中裁决；7领型原文已接、2963原空。38142组合产品/颜色/FIT已接，SIZE及四维38113/29历史例外保留。
+43厅/53仓/80账户与准确19停用沿现行消费者；原199账户旧厅提示只保历史，不当当前权限。49已批人员含4已批新人员，缺稳定键而非人员未批。
+整包DRAFT。Dot负责35核心/旧表依赖/整包事务、精确原身份及所列接收接缝；本地只清洗映射对账，T45无新作业。未做目标PG/生产导入或上线，不把阶段或合成证据记全系统通过。
 <!-- CURRENT-LOCAL-CLEANING-END -->
 
 ## 2026-11-02 库存三缺陷关闭；商品组源字段不再丢失
