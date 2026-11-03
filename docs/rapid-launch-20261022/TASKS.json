@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T23:12:47.262739+08:00",
+  "updatedAt": "2026-11-03T23:40:36.114427+08:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22170,7 +22170,7 @@
   "currentRoute": {
     "recordedAt": "2026-11-03T02:52:50.159534+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "INDEX23_RETIRED_ROLE_CONSUMED_HALL_BLOCK_PRESERVED_DRAFT",
+    "status": "INDEX24_TWO_SUPPLIER_BUYERS_CUSTOMER_REFERENCES_CONSUMED_DRAFT",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22203,12 +22203,12 @@
     },
     "owners": {
       "Dot": "Sole app/schema/install/import owner;new22:06 WIP snapshot received; six-scheme successor and formal receiver/integration proofs pending.",
-      "D3": "Index23 staff role successor delivered; no same-scope task queued. Exact54 missing halls listed privately; no guessed linkage.",
+      "D3": "Customer consumer index24 fixed and accepted. Next existing work: exact SKU/approved barcode decision bridge consumer; no duplicate supplier-buyer task.",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
       "D1": "Fixed54 retirement/history producer delivered and consumed;no duplicate source read or server task.",
       "T45": "Actual public employee route/list and narrow server read-chain completed;readonly rollback/close;no new duplicate environment job.",
       "QB": "No duplicate whole-code acceptance dispatched",
-      "D2": "7 collar text sources delivered and consumed;29 exact category cases delivered, await one grouped human decision.",
+      "D2": "Original two-customer cases consumed; latest approved barcode decision private producer delivered, no central writes.",
       "F2": "All16 source groups located; four-row old consumer gap reconciled against existing enriched product evidence; delivered/idle."
     },
     "model": {
@@ -22223,8 +22223,9 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical true-blank sales/transfer A rule plus direct human call_88267c72a7204d02940b136fb5218b16 item0 authorizing stock true blanks and exact normal-A alias; preserve all raw values/provenance, no unobserved SKU or barcode.",
-    "current": "Index23 consumes54 historical retired missing roles as SALESPERSON;54hall remainnull,49current staff/4239registry/28894sales unchanged;8unknown identity staynull. Received22:06 source snapshot remains separate WIP, not merged or deployed.",
+    "current": "Index24: customers261+2=263, suppliers222 unchanged, registry4241;28894sales only2customer refs changed. Index23 staff54retired SALESPERSON/hallsnull and8null identities preserved. Received22:06 source remains independent WIP, not merged/deployed.",
     "next": [
+      "D3 consume existing human-confirmed barcode values using source-proven SKU bridges;449 no-code products retained and12 ambiguous codes ignored without scanner binding; do not ask same business decisions again.",
       "54 retired historical staff roles now SALESPERSON; obtain source-proven hall mapping before standardstaff receipt; date-only evidence remains sidecar, no account creation.",
       "Dot standard path must remove actual old-table dependencies while retaining actor/row-intent/receipt/audit and atomicity;35-core retirement and reviewed install not complete.",
       "Dot full standard package single-transaction DML+publication and actual V2 PG/normal runtime acceptance remain unverified.",
@@ -24243,6 +24244,12 @@
       "sha256": "cab5b426fe91645e02246d1c350fb29455acfe65a3d35bb847204cb1fd79a86c",
       "ready": false,
       "importAuthorized": false
+    },
+    "currentCleaningIndex": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-24/INDEX.json",
+      "sha256": "b24e528d6530dd49c829f14bc28c42c6b15edc8e178f67ffdfeca6e2418633ea",
+      "ready": false,
+      "importAuthorized": false
     }
   },
   "latestUnifiedSourceIntake": {
@@ -24658,7 +24665,6 @@
   "currentWaitingConditions": [
     "Dot standard path must remove actual old-table dependencies while retaining actor/row-intent/receipt/audit and atomicity;35-core retirement and reviewed install not complete.",
     "Dot full standard package single-transaction DML+publication and actual V2 PG/normal runtime acceptance remain unverified.",
-    "User grouped decision:29 product categories in linked private six-group list; only this field branch waits.",
     "Dot precise stable document keys and original endpoint-code receiving bridge; no document-number source-key invention or name-based warehouse ID fill.",
     "Six retained scheme IDs need receiving registry/initialization closure;9 product scheme source-code bridges remain unproven.",
     "Other retained seams: historical department/current hall, FIT canonical code, true SKU/barcode identity,4 already-approved new-person stable keys,66 monetary exceptions and state/cutoff handling."
@@ -25340,7 +25346,7 @@
       "centralApplied": false
     },
     "missingNameAndCodeDocuments": 8,
-    "customerIdentityConflicts": "2 user-confirmed supplier buyers; receiving role contract unresolved",
+    "customerIdentityConflicts": "Two user-confirmed supplier buyers now map to separate stable customer candidates in index24; original suppliers retained, no targetPG proof.",
     "owner": "Original T45 actual-list read; original D1/D3 downstream cleaning only after valid evidence",
     "next": "Obtain reliable hall links for exact54 IDs; do not infer by name/department/document hall. Preserve8 null source identities, retired status/date sidecar and no-account rule. No new server read or source recapture dispatched.",
     "databaseWrites": 0,
@@ -25437,7 +25443,7 @@
     "databaseWrites": 0
   },
   "supplierBuyerDecision20261103": {
-    "status": "BUSINESS_FACT_CONFIRMED_RECEIVER_SEAM_PENDING_DOT",
+    "status": "INDEX24_TWO_CUSTOMER_ROLES_MATERIALIZED_OFFLINE_CUSTOMER_REFERENCE_CLOSED",
     "sourceThreadId": "01a19fd0-bfeb-77d3-9f79-90a2f958f88d",
     "userMessageId": "01a1a005-56f4-7e63-8dfd-39aa28f3f789",
     "controllerReadOriginal": true,
@@ -25449,7 +25455,15 @@
       "adapters/postgres/src/sales-query-reader.ts:207 JOIN customer"
     ],
     "noNewBusinessRuleOrSchemaApplied": true,
-    "importAuthorized": false
+    "importAuthorized": false,
+    "latestConsumer": {
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package07-supplier-buyer-customer-D3-01/RESULT.json",
+      "sha256": "2c06a24eeb2d7f21b74af621b9adb0f696fca88f70904582364b8f73bb15d205",
+      "customerRolesAdded": 2,
+      "customerReferenceChanges": 2,
+      "databaseVerified": false
+    },
+    "receiverSeam": "Closed for these two cases by user-authorized separate customer roles in existing customer fields; no app/schema/transaction changes required for this cleaning direction."
   },
   "latestOfflineClosures20261103Index22": {
     "status": "DRAFT_NOT_READY_NOT_IMPORTED",
@@ -25575,6 +25589,63 @@
     "dateBoundary": "2026-11-03 是用户裁决的上海日粒度旁车，不是原始历史离职日期；不写不存在的目标字段。",
     "database": "NOT_EXECUTED_NOT_VERIFIED",
     "standardPackage": "NOT_READY_54_HALLS_UNRESOLVED",
-    "personDetailsToDot": false
+    "personDetailsToDot": false,
+    "checkpoint": {
+      "branch": "codex/e5c5a762-cleaning-20261102",
+      "localCommit": "d3627b54f0a8444d1b6157605665fc43f61698aa",
+      "pushStatus": "FAILED_SSL_CONNECTION_TIMEOUT",
+      "remoteReadback": "TIMED_OUT_AFTER_20S",
+      "lastVerifiedRemoteCommit": "5d83d7fce5376615fbf5a795b9d888b2f45ceca2",
+      "sourceWipPreserved": 4
+    }
+  },
+  "twoSupplierBuyerCustomerConsumer20261103": {
+    "status": "TWO_SUPPLIER_BUYERS_CUSTOMER_ROLES_CONSUMED_INDEX24_NOT_IMPORTED",
+    "authority": {
+      "threadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "source": "Current direct human five-point instruction: two confirmed supplier buyers may receive customer roles locally; preserve suppliers and all sales facts."
+    },
+    "recordedAtShanghai": "2026-11-03T23:40:36.114427+08:00",
+    "owner": "Original D3; actual gpt-6.1-terra/medium; Fast UNVERIFIED_NO_SWITCH",
+    "counts": {
+      "customers_before": 261,
+      "customers_added": 2,
+      "customers_after": 263,
+      "suppliers_unchanged": 222,
+      "registry_before": 4239,
+      "registry_added": 2,
+      "registry_after": 4241,
+      "sales_headers": 28894,
+      "sales_changed_customer_reference_only": 2,
+      "sales_other_unchanged": 28892,
+      "natural_code_conflicts": 0,
+      "identity_collisions": 0,
+      "unexpected_differences": 0
+    },
+    "matching": "Exact source document, source code and unique supplier, no existing verified customer bridge and no occupied customer code; two typed stable customer IDs derived using original identity algorithm, not row numbers or fuzzy names.",
+    "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-24/INDEX.json",
+    "indexSHA256": "b24e528d6530dd49c829f14bc28c42c6b15edc8e178f67ffdfeca6e2418633ea",
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package07-supplier-buyer-customer-D3-01/RESULT.json",
+    "receiptSHA256": "2c06a24eeb2d7f21b74af621b9adb0f696fca88f70904582364b8f73bb15d205",
+    "canonicalWorkPackages": [
+      7,
+      10
+    ],
+    "privateReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package07-supplier-buyer-customer-D3-01/两单处理及核对报告.md",
+    "privateBridge": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package07-supplier-buyer-customer-D3-01/supplier-customer-bridge.private.jsonl",
+    "businessUnchanged": [
+      "Original supplier records",
+      "All original document types, number, dates and statuses",
+      "All lines, quantities, amounts and settlements",
+      "All unrelated documents",
+      "Index23 staff retirement/role/date sidecar and8 null identities"
+    ],
+    "unverified": [
+      "Target PG import/readback and actual business",
+      "Whole standard package and deployment"
+    ],
+    "ready": false,
+    "importAuthorized": false,
+    "realDataSentToDot": false
   }
 }
