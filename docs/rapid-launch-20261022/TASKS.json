@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T01:28:57.507767+00:00",
+  "updatedAt": "2026-11-03T01:56:04.466825+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22168,9 +22168,9 @@
     }
   },
   "currentRoute": {
-    "recordedAt": "2026-11-03T01:28:57.507767+00:00",
+    "recordedAt": "2026-11-03T01:56:04.466825+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "INDEX08_PRODUCT_GROUPS_COMPLETE_AND_APPROVED_43_ACCOUNT_METHOD_LINKS_CONSUMED_DRAFT",
+    "status": "INDEX12_COMPLETE_DIMENSION_REFERENCE_CONSUMER_DRAFT_NOT_SKU_OR_IMPORT",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22201,12 +22201,12 @@
     },
     "owners": {
       "Dot": "Application/schema/install/importer sole owner; fixed4e98 offline package, full-batch receiver and V2 apply/resume gaps pending",
-      "D3": "Index08 delivered;2970 product groups,12 methods/4099 registry; size/SKU/barcode mapping remains",
+      "D3": "Index12 and immutable38142 dimension consumer delivered; no SKU or target IDs proven",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
       "D1": "Sales22656 staff refs and39 staff-hall refs delivered; all4 runtime hall differences match approved candidates",
       "T45": "All bounded relationship and single-method readonly jobs terminal; no new server job or production write",
       "QB": "No duplicate whole-code acceptance dispatched",
-      "D2": "80 account-method candidates consumed:37 original+43 approved independent cashier;985 hall recommendations and19 status differences preserved",
+      "D2": "Exact color value38142 and FIT74+26256 source references delivered; all2042 transfer signature cases closed, stock untouched",
       "F2": "All16 source groups located; four-row old consumer gap reconciled against existing enriched product evidence; delivered/idle."
     },
     "model": {
@@ -22221,8 +22221,8 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical sales/transfer source lines only with exact original blank and decision provenance; not stock/product/global default",
-    "current": "Index08:2970 product group refs,12 methods/4099 registry,80 account method candidates; sales28828 monetary/22656 staff; staff39 hall refs. Not READY.",
-    "next": "Original D3 next ready work is bounded size/SKU mapping against final2970 group authority and existing38142 tuples; Dot supplies V2 database apply/resume and full-batch receiver. No new server or production job.",
+    "current": "Index12:2970 product groups;38142 product/color refs,38113 size refs plus29 preserved exceptions;26330 fit refs,26318 four-dimension candidate intersections;4105 registry. DRAFT only.",
+    "next": "Original owner consumers complete for currently established references; await exact receiving source-key/SKU-code and six FIT-code namespace contract resolution. Stock blank-fit scope, retained historical exceptions, and original SKU/barcode binding remain explicit.",
     "ordinaryDocumentTables": [
       "sales_header",
       "sales_line",
@@ -22248,8 +22248,8 @@
     "dotReportedFailures": "4 invalid packages wrongly accepted; 3 source-level SQL/coverage risks not PG-reproduced; keep unresolved, not implementation here",
     "latestOfflineDelivery": {
       "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
-      "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-08/INDEX.json",
-      "indexSha256": "182b431422549a3d7ce30a2ba138b655ad9a578caf9df2e53d9d3f361c4b74db",
+      "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-12/INDEX.json",
+      "indexSha256": "726ed42deb672feca037cfcda7d40b87400656ab349fcd1ef0e14d7379d815f1",
       "updatedPackages": [
         3,
         4,
@@ -22296,10 +22296,15 @@
         "fullSourceCategoryNodes": 324,
         "additionalUnreferencedSourceCategoryNodes": 51,
         "accountsKnownNames": 80,
-        "registryCandidates": 4099,
+        "registryCandidates": 4105,
         "productsKnownGroupReferences": 2970,
         "productGroupUnresolved": 0,
-        "accountMethodReferences": 80
+        "accountMethodReferences": 80,
+        "sourceDimensionTuples": 38142,
+        "colorReferences": 38142,
+        "sizeReferences": 38113,
+        "fitReferences": 26330,
+        "fourDimensionCandidateIntersection": 26318
       },
       "verificationScope": "Original D3 source/EOF/row-count/arithmetic/readback receipts adopted; controller only verified small index SHA; not target or coverage acceptance",
       "identity": "3609 provisional IDs and old-namespace references do not prove target identity. Offline normalization does not require target installation.",
@@ -22312,7 +22317,7 @@
       ],
       "ready": false,
       "importAuthorized": false,
-      "D3State": "INDEX08_DELIVERED_NOT_READY",
+      "D3State": "INDEX12_DELIVERED_NOT_READY",
       "D3Turn": "01a19f03-76f3-7bf0-b711-b49177e2f7bf",
       "nextWorkAssessment": "Original D3 next ready work is bounded size/SKU mapping against final2970 group authority and existing38142 tuples; Dot supplies V2 database apply/resume and full-batch receiver. No new server or production job.",
       "increment03Evidence": [
@@ -22680,8 +22685,8 @@
           "verificationScope": "Adopt original finite receipt; root checked receipt hash only."
         }
       ],
-      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-08/INDEX.json",
-      "sha256": "182b431422549a3d7ce30a2ba138b655ad9a578caf9df2e53d9d3f361c4b74db",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-12/INDEX.json",
+      "sha256": "726ed42deb672feca037cfcda7d40b87400656ab349fcd1ef0e14d7379d815f1",
       "historicalIndex03Unresolved": [
         "Fixed1189 MASTER apply category SQL42703 fails; Dot successor and real isolated readback required",
         "Complete transfer_line known-field lower measure112514655 bytes exceeds67108864 per-file cap; duplicate table files rejected. Dot bounded reader adaptation required without truncation",
@@ -23988,8 +23993,8 @@
     "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
     "fixedDotSourceCommit": "4e98d1365084b153af14180e99cf7db531acd6d4",
     "index": {
-      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-08/INDEX.json",
-      "sha256": "182b431422549a3d7ce30a2ba138b655ad9a578caf9df2e53d9d3f361c4b74db",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-12/INDEX.json",
+      "sha256": "726ed42deb672feca037cfcda7d40b87400656ab349fcd1ef0e14d7379d815f1",
       "ready": false
     },
     "salesHeader": {
@@ -24034,7 +24039,7 @@
       "V1 total MASTER500 and64MiB per-file/256MiB package with one-file-per-table cannot carry batch",
       "Stable document-key contract, source effective-status semantics, fit/SKU identity remain unresolved"
     ],
-    "next": "Original D3 next ready work is bounded size/SKU mapping against final2970 group authority and existing38142 tuples; Dot supplies V2 database apply/resume and full-batch receiver. No new server or production job.",
+    "next": "Original owner consumers complete for currently established references; await exact receiving source-key/SKU-code and six FIT-code namespace contract resolution. Stock blank-fit scope, retained historical exceptions, and original SKU/barcode binding remain explicit.",
     "payment": {
       "status": "USER_APPROVED_INDEPENDENT_METHOD_AND_43_ACCOUNT_RELATIONS_CONSUMED_DRAFT",
       "authority": "Direct human call_aa8f9f65b8c2475987466317dfcba775 item0",
@@ -24070,6 +24075,50 @@
       "importAuthorized": false,
       "productionWrites": 0,
       "next": "Dot receiving path must distinguish source-declared state and deployed-reader default; no automatic source enabled rewrite or extra permission inferred"
+    },
+    "dimensions": {
+      "state": "DIMENSION_REFERENCE_CANDIDATES_MATERIALIZED_NOT_SKU_OR_IMPORT",
+      "inputTuples": 38142,
+      "productReferences": 38142,
+      "colorReferences": 38142,
+      "sizeReferences": 38113,
+      "retainedHistoricalSizeExceptions": 29,
+      "sizeBusinessDecisionPending": 0,
+      "fitNonblankReferences": 74,
+      "fitProvenBlankAReferences": 26256,
+      "fitProvenBlankASales": 11379,
+      "fitProvenBlankATransfer": 14877,
+      "fitTransferCoarseSignaturePending": 0,
+      "fitStockBlankNotDefaulted": 11734,
+      "fitStockNonemptyNoExactMatch": 78,
+      "registryCandidates": 4105,
+      "newFitIdentities": 6,
+      "fitCodeContract": "Six exact original numeric codes still conflict with target one-letter fit.code; no source code rewritten",
+      "originalSKUIdentity": "Unresolved; standard sku fields do not themselves require an original_sku column. Exact source-key/SKU-code and business-dimension identity rules still need an executable receiving contract. Do not call known dimension values missing source data.",
+      "index": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-12/INDEX.json",
+        "sha256": "726ed42deb672feca037cfcda7d40b87400656ab349fcd1ef0e14d7379d815f1",
+        "ready": false
+      },
+      "productColorSizeReceiptSHA256": "f68716bd751b9e54c5abedd63e54577724d95b6bdd4d8816a74dfaf953daff18",
+      "fitIdentitiesAndSizeDecisionReceiptSHA256": "71e1765dbae7ff357836dd8ffcdd7d74f2347917da0bea5f3f732f2929eab90b",
+      "registrySHA256": "dc4b446a91f40a925eda428f1ac58ff76115f3c8f5f68197e0ee65a2844d2676",
+      "colorReceiptSHA256": "9433c4ac2ddf2422e524a9749fadd70f77539ed2bd33997e5336b71bb4549af9",
+      "blankTypeReceiptSHA256": "18cfd69b3afaba91ab646b1a19680c0c75e290382fda8ad8123701b651ae20a2",
+      "blankAConsumerReceiptSHA256": "138259baefc4ac6a3b117852624c30309c90c3e3fc1aab0c8b1eb1d7145aeda8",
+      "productionWrites": 0,
+      "targetPGVerified": false,
+      "importAuthorized": false,
+      "next": "Original owner consumers complete for currently established references; await exact receiving source-key/SKU-code and six FIT-code namespace contract resolution. Stock blank-fit scope, retained historical exceptions, and original SKU/barcode binding remain explicit.",
+      "unifiedConsumer": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package04-complete-dimension-consumer-D3-04/complete-dimension-consumer.jsonl.gz",
+        "sha256": "1d019af530808e8ebc151be3cc20e427b9ab150f3ec5d1ca78290979f097a344",
+        "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package04-complete-dimension-consumer-D3-04/RESULT.json",
+        "receiptSHA256": "033cd29d0feddad53ff228fd45beb9f242e9278b15b298fc8c70c37bc51f49ae"
+      },
+      "fitReferences": 26330,
+      "fourDimensionCandidateIntersection": 26318,
+      "fitTransferRefinementReceiptSHA256": "758719b6bc410eb0991610d0011846b60f525b641481021e79e8e144c3ce1f5d"
     }
   },
   "currentWaitingConditions": [
@@ -24251,6 +24300,78 @@
       "65 mixed-signed SALE monetary receiver conflicts and1 tax-scope source conflict retained",
       "Dot full-batch bounded reader and V2 database apply/resume",
       "Target identity/ACL, full isolated import, reconciliation, recovery and ordinary business chain not verified"
+    ]
+  },
+  "cleaningDimensionProgress20261103": {
+    "state": "DIMENSION_REFERENCE_CANDIDATES_MATERIALIZED_NOT_SKU_OR_IMPORT",
+    "inputTuples": 38142,
+    "productReferences": 38142,
+    "colorReferences": 38142,
+    "sizeReferences": 38113,
+    "retainedHistoricalSizeExceptions": 29,
+    "sizeBusinessDecisionPending": 0,
+    "fitNonblankReferences": 74,
+    "fitProvenBlankAReferences": 26256,
+    "fitProvenBlankASales": 11379,
+    "fitProvenBlankATransfer": 14877,
+    "fitTransferCoarseSignaturePending": 0,
+    "fitStockBlankNotDefaulted": 11734,
+    "fitStockNonemptyNoExactMatch": 78,
+    "registryCandidates": 4105,
+    "newFitIdentities": 6,
+    "fitCodeContract": "Six exact original numeric codes still conflict with target one-letter fit.code; no source code rewritten",
+    "originalSKUIdentity": "Unresolved; standard sku fields do not themselves require an original_sku column. Exact source-key/SKU-code and business-dimension identity rules still need an executable receiving contract. Do not call known dimension values missing source data.",
+    "index": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-12/INDEX.json",
+      "sha256": "726ed42deb672feca037cfcda7d40b87400656ab349fcd1ef0e14d7379d815f1",
+      "ready": false
+    },
+    "productColorSizeReceiptSHA256": "f68716bd751b9e54c5abedd63e54577724d95b6bdd4d8816a74dfaf953daff18",
+    "fitIdentitiesAndSizeDecisionReceiptSHA256": "71e1765dbae7ff357836dd8ffcdd7d74f2347917da0bea5f3f732f2929eab90b",
+    "registrySHA256": "dc4b446a91f40a925eda428f1ac58ff76115f3c8f5f68197e0ee65a2844d2676",
+    "colorReceiptSHA256": "9433c4ac2ddf2422e524a9749fadd70f77539ed2bd33997e5336b71bb4549af9",
+    "blankTypeReceiptSHA256": "18cfd69b3afaba91ab646b1a19680c0c75e290382fda8ad8123701b651ae20a2",
+    "blankAConsumerReceiptSHA256": "138259baefc4ac6a3b117852624c30309c90c3e3fc1aab0c8b1eb1d7145aeda8",
+    "productionWrites": 0,
+    "targetPGVerified": false,
+    "importAuthorized": false,
+    "next": "Original owner consumers complete for currently established references; await exact receiving source-key/SKU-code and six FIT-code namespace contract resolution. Stock blank-fit scope, retained historical exceptions, and original SKU/barcode binding remain explicit.",
+    "unifiedConsumer": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package04-complete-dimension-consumer-D3-04/complete-dimension-consumer.jsonl.gz",
+      "sha256": "1d019af530808e8ebc151be3cc20e427b9ab150f3ec5d1ca78290979f097a344",
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package04-complete-dimension-consumer-D3-04/RESULT.json",
+      "receiptSHA256": "033cd29d0feddad53ff228fd45beb9f242e9278b15b298fc8c70c37bc51f49ae"
+    },
+    "fitReferences": 26330,
+    "fourDimensionCandidateIntersection": 26318,
+    "fitTransferRefinementReceiptSHA256": "758719b6bc410eb0991610d0011846b60f525b641481021e79e8e144c3ce1f5d"
+  },
+  "leatherTagSizeDecision20261103": {
+    "authority": "Direct human answer call_2cd694f3d3764fd8b999f14a7d133649 item0",
+    "answer": "均码",
+    "scope": "Only exact one original accessory stock specification; current product group already approved,29 old size exceptions unchanged",
+    "state": "OFFLINE_SINGLE_SPEC_DELTA_MATERIALIZED",
+    "receiptSHA256": "71e1765dbae7ff357836dd8ffcdd7d74f2347917da0bea5f3f732f2929eab90b",
+    "deltaSHA256": "00198249767c5b5364d33787f16cb3e9b09e8d5ae9532fcede285dc95552efbd",
+    "originalFactsAndQuantityPreserved": true,
+    "newSKU": 0,
+    "productionWrites": 0
+  },
+  "currentWaitingConditions20261103Index12": {
+    "resolved": [
+      "All2970 product groups",
+      "Independent cashier43 account links",
+      "Single accessory old-size mapping",
+      "Source dictionary color candidates38142",
+      "Full source-type evidence for26256 historical blank-fit tuples"
+    ],
+    "remaining": [
+      "Six original numeric FIT codes versus target one-letter code field; target normalization rule not silently invented",
+      "Stock11734 blank-fit tuples and78 nonempty unmatched values; no A default expanded",
+      "Exact source-key/SKU-code identity and barcodes; four-dimension candidates are not confirmed original SKU",
+      "Stable source document keys/effective-status/66 monetary receiver cases and other retained field exceptions",
+      "Dot V2 database apply/resume and full-batch bounded reader",
+      "Target PG, full isolated import, reconciliation, rollback/recovery and ordinary account business chain not verified"
     ]
   }
 }
