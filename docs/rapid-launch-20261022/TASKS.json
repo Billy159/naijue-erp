@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-04T00:54:05.412420+08:00",
+  "updatedAt": "2026-11-04T01:07:26.199366+08:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -25730,8 +25730,8 @@
     "frozenDemo": "Read-only; approved differences remain"
   },
   "latestCleaningIndex": {
-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-30/INDEX.json",
-    "sha256": "3b00c92a7e1c33cf35d5efc68a5f0654514f3273e7ae06b464d59e7870b7a4a1",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-31/INDEX.json",
+    "sha256": "b605b6901a3f71a00a3a8a70f19fe22379a14081e2caead76041322ddeb1144c",
     "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
     "ready": false,
     "databaseVerified": false
@@ -25777,12 +25777,12 @@
   },
   "currentCleaningOwnerQueue20261104": {
     "D3": {
-      "current": "Index30 retired hall delta adopted; latest central index30",
-      "next": "Await precise original D2 barcode-origin evidence before affected binding update; no unchanged recheck"
+      "current": "Index31 completed; current process terminal",
+      "next": "Await actual human allocation514, precise new source or fixed Dot receiver; no unchanged rechecks"
     },
     "D2": {
-      "current": "514 barcode conflict rows exact selected-transfer origin/fit/SKU evidence in progress",
-      "next": "Only precise usable delta to original D3; no binding reassignment without evidence/authority"
+      "current": "514 origin and149 gaps completed;12 bridges adopted",
+      "next": "Actual new source/role-state facts or human decision; no active job claimed"
     },
     "D1": {
       "current": "SKU row references and30 staff halls delivered/adopted;24-human-decision local list finished",
@@ -25888,6 +25888,52 @@
     "lastIndependentlyVerifiedRemoteCommit": "5d83d7fce5376615fbf5a795b9d888b2f45ceca2",
     "previousPush": "Timeout; current document checkpoint push pending bounded attempt",
     "applicationWipPreserved": 4,
-    "thisCommitScope": "Controller aggregate docs only; no real rows, application code, SQL or credentials"
+    "thisCommitScope": "Controller aggregate docs only; no real rows, application code, SQL or credentials",
+    "localCommit": "1a04d6a5513e40a6033080fd872febe5524f7e4f",
+    "pushStatus": "TIMED_OUT_AFTER_30S_REMOTE_NOT_CONFIRMED",
+    "pushPending": true,
+    "realDataIncluded": false
+  },
+  "newBarcodeAllocationQuestion20261104": {
+    "scope": "514 additional cross-SKU selected barcode cases; not previous12 ignored codes",
+    "state": "HUMAN_QUESTION_PENDING_RELATED_BRANCH_ONLY",
+    "sourceEvidenceReceiptSHA256": "3293adf8b0a91eb796d440d23cafb6e463f91aaf19ac5609996e85f2c42d40cd",
+    "exactOriginalRows": 584,
+    "candidateDimensionDifferenceCountsNotAdditive": {
+      "product": 1,
+      "color": 113,
+      "fit": 0,
+      "size": 425,
+      "allDimensionsSame": 0
+    },
+    "privateReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/barcode-selected-origin-D2-03/跨SKU条码绑定待处理说明.md",
+    "valuesNotReasked": true,
+    "noBindingReassignmentExecuted": true,
+    "otherCleaningContinues": true
+  },
+  "barcodeOriginBridge20261104": {
+    "index": 31,
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package04-barcode-origin-consumer-D3-03/RESULT.json",
+    "receiptSHA256": "694a3048ce90472ad8a1c1f289cdbd44124ce4467b3261a504bf408fc061f71e",
+    "bridgesAdded": 12,
+    "newBindingCandidates": 0,
+    "existingBindingCandidates": 13140,
+    "remaining": {
+      "roleOrStateUnproven": 67,
+      "noSKU": 32,
+      "unresolvedSourceSupport": 105,
+      "multipleSKUWaitingHuman": 514
+    },
+    "originalAndSelectedCodesPreserved": true
+  },
+  "trialReadiness20261104": {
+    "sourceIntake": "Received and hash verified051 base plus snapshot WIP, not a final release",
+    "offlineEvidence": "13 packages have source drafts and incremental mappings; index31 is not a complete executable standard package",
+    "realPackageImport": "NOT_READY synthetic-only client; compatible real-data isolated target/role/install/identity invocation still needed",
+    "currentBatchPGInitialization": "NOT_RUN",
+    "completePGImportReconciliationRecovery": "NOT_RUN",
+    "ordinaryAccountReviewUnreviewRereview": "NOT_RUN",
+    "production": "NOT_RUN_NOT_AUTHORIZED",
+    "noShortcut": "Do not relabel real data synthetic, remove guards or replay expired jobs"
   }
 }
