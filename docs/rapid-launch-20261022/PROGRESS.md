@@ -1,3 +1,11 @@
+### 2026-11-03 历史离职员工缺角色裁决已消费：index23
+
+按本主控用户最新六条规则，原D3以Terra6.1-medium生成后继清洗候选：54名历史离职员工的role从空改为SALESPERSON，缺角色54→0；人员状态全部保持离职。稳定身份、来源、日粒度离职证据、49现有员工、4239 registry和28894销货归属不变，原姓名及编号均空的8条单据仍null，定向对比无意外差异。未创建账号或启用登录，不代表线上账号状态已复验；未改应用、SQL、权限或数据库。
+
+已批准员工厅旁车按原人员ID精确交集为0，54条营业厅仍未知，未按姓名相似、部门、单据厅或行号猜填；逐条待处理清单仅私域。22:06源码快照staff角色必填且SALESPERSON缺厅会触发STAFF_HALL_REQUIRED（unified-import-contract.ts:1476）；此守卫保留，因此只是本地清洗方向完成，不能记标准包可导入、PG通过或上线。日期保留原有裁决/来源日粒度：已有2026-11-03是用户裁决日期，不伪称原始历史离职日期，不以导入时间替换；目标暂无独立日期字段。
+
+唯一后继索引draft-work-package-index-23/INDEX.json，SHA256 `cab5b426fe91645e02246d1c350fb29455acfe65a3d35bb847204cb1fd79a86c`；D3回执SHA256 `9d9a34e5db21c6b9d2fb0f3df4247fcf180030cd59c8c86391ce057ed70cd0d5`。其他12包及原包未变部分继承index22，仍DRAFT/ready=false/importAuthorized=false。只向Dot交汇总规则和缺口，不发送真实人员清单。新源码快照继续独立保全；四处本地源码WIP均是相对HEAD的独有改动，而新快照四文件与HEAD及此前051包相同，未发生新快照对此四文件的新增修改，未覆盖或合并。
+
 ### 2026-11-03 22:06:42 完整工作区源码快照已独立接收（非上线包）
 
 新包ZIP SHA256 `543b9410bb7c2537daa08a6ece41ac63d1d2da5cb6f39452b0d31aff65d82876` 一致。快照基于051bbe14a4cba4e1849b8547665f13df85dd8fe0，但含未提交修改，唯一字节身份须同时绑定ZIP及SNAPSHOT-MANIFEST（SHA `539ea75ef4581b9308e6241ac97238fab060ea4b312cfb240a5834d2a3a926b4`），不能说051已提交全部内容。独立目录stage-20261103T140642Z-received-01/erp-unified-source；2305源码逐bytes/SHA、2307校验项及2308落盘文件一致。接收回执SHA `8cfb239a3dab07a4aeb77eeb09daa1d5147f7fe10b0cbec71b2ee36fa09b670f`。

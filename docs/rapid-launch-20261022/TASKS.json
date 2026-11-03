@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T22:24:15.722883+08:00",
+  "updatedAt": "2026-11-03T23:12:47.262739+08:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22170,7 +22170,7 @@
   "currentRoute": {
     "recordedAt": "2026-11-03T02:52:50.159534+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "INDEX22_STAFF_AND_HISTORY_IDENTITY_CANDIDATES_CONSUMED_FIXED051_DRAFT",
+    "status": "INDEX23_RETIRED_ROLE_CONSUMED_HALL_BLOCK_PRESERVED_DRAFT",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22203,7 +22203,7 @@
     },
     "owners": {
       "Dot": "Sole app/schema/install/import owner;new22:06 WIP snapshot received; six-scheme successor and formal receiver/integration proofs pending.",
-      "D3": "Central increment index22 delivered;no same-scope task queued. Await exact Dot receiving contract;do not fabricate filler work.",
+      "D3": "Index23 staff role successor delivered; no same-scope task queued. Exact54 missing halls listed privately; no guessed linkage.",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
       "D1": "Fixed54 retirement/history producer delivered and consumed;no duplicate source read or server task.",
       "T45": "Actual public employee route/list and narrow server read-chain completed;readonly rollback/close;no new duplicate environment job.",
@@ -22223,8 +22223,9 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical true-blank sales/transfer A rule plus direct human call_88267c72a7204d02940b136fb5218b16 item0 authorizing stock true blanks and exact normal-A alias; preserve all raw values/provenance, no unobserved SKU or barcode.",
-    "current": "index22 has2970 resolved product categories and14 new thickness decisions;staff54 retired identity candidates and6230 sales refs consumed,8 missing identity staynull;role/date receiver seams remain.",
+    "current": "Index23 consumes54 historical retired missing roles as SALESPERSON;54hall remainnull,49current staff/4239registry/28894sales unchanged;8unknown identity staynull. Received22:06 source snapshot remains separate WIP, not merged or deployed.",
     "next": [
+      "54 retired historical staff roles now SALESPERSON; obtain source-proven hall mapping before standardstaff receipt; date-only evidence remains sidecar, no account creation.",
       "Dot standard path must remove actual old-table dependencies while retaining actor/row-intent/receipt/audit and atomicity;35-core retirement and reviewed install not complete.",
       "Dot full standard package single-transaction DML+publication and actual V2 PG/normal runtime acceptance remain unverified.",
       "Dot precise stable document keys and original endpoint-code receiving bridge; no document-number source-key invention or name-based warehouse ID fill.",
@@ -24236,6 +24237,12 @@
       "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-20261103T140642Z-received-01/erp-unified-source",
       "sourceMerged": false,
       "acceptedForDeployment": false
+    },
+    "currentStaffCleaningIndex": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-23/INDEX.json",
+      "sha256": "cab5b426fe91645e02246d1c350fb29455acfe65a3d35bb847204cb1fd79a86c",
+      "ready": false,
+      "importAuthorized": false
     }
   },
   "latestUnifiedSourceIntake": {
@@ -25287,7 +25294,7 @@
     ]
   },
   "actualEmployeeRosterDecision20261103": {
-    "status": "INDEX22_OFFLINE_IDENTITIES_CONSUMED_54_REQUIRED_ROLES_UNRESOLVED",
+    "status": "INDEX23_54_RETIRED_MISSING_ROLES_RESOLVED_HALLS_UNRESOLVED",
     "authority": {
       "threadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "userMessageId": "01a19fe4-adec-7931-8cb1-df2dc81e075d",
@@ -25335,7 +25342,7 @@
     "missingNameAndCodeDocuments": 8,
     "customerIdentityConflicts": "2 user-confirmed supplier buyers; receiving role contract unresolved",
     "owner": "Original T45 actual-list read; original D1/D3 downstream cleaning only after valid evidence",
-    "next": "Dot exact legacy retired-role/date representation and receiver;8 originally absent identities stayunknown. No new source capture, account or DB changes.",
+    "next": "Obtain reliable hall links for exact54 IDs; do not infer by name/department/document hall. Preserve8 null source identities, retired status/date sidecar and no-account rule. No new server read or source recapture dispatched.",
     "databaseWrites": 0,
     "permissionsChanged": false,
     "importAuthorized": false,
@@ -25356,7 +25363,7 @@
       "preserveCurrent49": true,
       "status": "CONSUMED_IN_OFFLINE_LEGACY_CANDIDATES_DATE_SIDECAR_ONLY"
     },
-    "sourceContractGap": "54 legacy candidates have unknown required role;hall/contact nullable remainunknown. Date-only retirement decision has no fixed051 staff import column.",
+    "sourceContractGap": "Role direction resolved:54 SALESPERSON. All54 lack an approved hall keyed by their stable historical ID; current contract STAFF_HALL_REQUIRED still blocks standard receipt. Date-only evidence has no target column and is preserved separately.",
     "offlineProducer": {
       "owner": "original D1 gpt-6.1-terra/medium",
       "status": "DELIVERED_AND_CONSUMED_INDEX22",
@@ -25527,6 +25534,47 @@
     "testsExecuted": false,
     "databaseChanges": false,
     "deployment": false,
-    "next": "Use exact archive+manifest as received WIP source reference, retain index22 and all original WIP;wait Dot six-scheme fixed successor and precise receiver/install evidence;no duplicate implementation."
+    "next": "Use exact archive+manifest as received WIP source reference, retain latest cleaning index23 and all original WIP; await Dot six-scheme fixed successor and receiver/install evidence; no duplicate implementation."
+  },
+  "retiredStaffRoleDecision20261103": {
+    "status": "LOCAL_CLEANING_CONSUMED_INDEX23_HALLS_BLOCK_STANDARD_IMPORT",
+    "authority": {
+      "threadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "source": "Current direct human six-point retired-staff instruction",
+      "rules": [
+        "Only missing roles of historical retired staff become SALESPERSON; employment remains 离职.",
+        "Keep stable source identities and document attribution; no new name similarity or temporary-row identity matching.",
+        "No login accounts created or enabled.",
+        "Unknown hall stays null; existing SALESPERSON hall guard retained.",
+        "Eight original missing-name-and-code documents remain null.",
+        "Preserve date-only retirement evidence separately; no target date column or import-time substitution."
+      ]
+    },
+    "recordedAtShanghai": "2026-11-03T23:12:47.262739+08:00",
+    "owner": "Original D3; actual send parameters gpt-6.1-terra/medium; Fast UNVERIFIED_NO_SWITCH",
+    "inputIndex": 22,
+    "outputIndex": 23,
+    "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-23/INDEX.json",
+    "indexSHA256": "cab5b426fe91645e02246d1c350fb29455acfe65a3d35bb847204cb1fd79a86c",
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package06-staff-retired-role-D3-01/RESULT.json",
+    "receiptSHA256": "9d9a34e5db21c6b9d2fb0f3df4247fcf180030cd59c8c86391ce057ed70cd0d5",
+    "counts": {
+      "retired_candidates": 54,
+      "missing_role_before": 54,
+      "roles_changed_to_salesperson": 54,
+      "missing_hall_before": 54,
+      "exact_id_matches_in_approved_hall_sidecar": 0,
+      "missing_hall_after": 54,
+      "existing_current_staff_unchanged": 49,
+      "registry_unchanged": 4239,
+      "sales_unchanged": 28894,
+      "original_empty_identity_sales_null": 8,
+      "unexpected_differences": 0
+    },
+    "privatePendingHallList": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package06-staff-retired-role-D3-01/营业厅待处理清单.md",
+    "dateBoundary": "2026-11-03 是用户裁决的上海日粒度旁车，不是原始历史离职日期；不写不存在的目标字段。",
+    "database": "NOT_EXECUTED_NOT_VERIFIED",
+    "standardPackage": "NOT_READY_54_HALLS_UNRESOLVED",
+    "personDetailsToDot": false
   }
 }
