@@ -24663,13 +24663,13 @@
     }
   },
   "currentWaitingConditions": [
-    "Latest received source is051 base plus pinned WIP, not an approved release; Dot must deliver final fixed compatible source and real-data isolated target/role/install/identity invocation. Current unified client accepts SYNTHETIC only.",
-    "Index29 now includes14640 SKU,6 fixed schemes,13140 barcode bindings and transfer273216/sales83275/stock41709 row SKU references.1374 source rows still have unresolved SKU; parent/line/warehouse closure and full standard assembly remain.",
-    "Five product scheme source2 component/description conflicts remain; six scheme dictionary is no longer entirely missing. New six-scheme generation-rule successor still belongs to Dot.",
-    "Index30 has30 retired staff halls derived uniquely, including23 disabled historical halls without enabling them. Remaining11 multiple halls and13 no-attributed-sales need accurate source/ruling;8 empty staff identities remain null. TargetPG/permission behavior unverified.",
-    "Current source ordinary SALE negative-quantity/gross rule conflicts with65 source documents/176 lines; no type/quantity/amount relabelling.",
-    "Other original document identity/hall/warehouse and historical time/state receiver gaps require exact current consumer evidence; old prior waiting notes are historical, not proof of current missing data.",
-    "Target PG complete import, independent reconciliation, idempotency/failure recovery, backup restore and ordinary-account full review/unreview/rereview chain remain unverified; no production activity."
+    "Latest received source remains051 base plus pinned WIP, not release. Fixed unified execution client accepts SYNTHETIC only; Dot must deliver exact compatible real-data isolated target/role/install/identity commands.",
+    "Index32 includes14640SKU,6schemes,13140barcode bindings; sales83399/transfer273948 line_no source coverage complete.1374 source row SKU references remain unresolved; persistent header/line identities and complete standard assembly still open.",
+    "Five product source-scheme2 references await exact original-code to fixed-ID bridge; generation descriptions are a separate issue. New six-scheme generator successor belongs to Dot.",
+    "30 retired staff uniquely mapped halls retained including23 disabled historical halls.11 multiple-hall and13 no-sales staff remain null pending evidence;8 source-identity-empty documents remain null.",
+    "Latest source review found2571 mixed ordinary SALE headers plus1 nonmixed ordinary negative line. No safe split performed; preserve original quantities, amounts, settlements and conditional split ruling. Earlier65 economic subset must not be reported as complete affected scope.",
+    "514 multi-SKU barcode allocation still awaiting actual pending user answer.67 single-SKU corrected-code role/state,32 no-SKU and105 source-support cases retain accurate separate causes.",
+    "TargetPG complete import, independent reconciliation, idempotency/recovery, backup restore and ordinary-account review/unreview/rereview remain unverified. No production action."
   ],
   "salesStaffMapping": {
     "status": "INDEX22_DRAFT_IDENTITY_REFERENCES_NOT_COMPLETE_STANDARD_STAFF",
@@ -25730,8 +25730,8 @@
     "frozenDemo": "Read-only; approved differences remain"
   },
   "latestCleaningIndex": {
-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-31/INDEX.json",
-    "sha256": "b605b6901a3f71a00a3a8a70f19fe22379a14081e2caead76041322ddeb1144c",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-32/INDEX.json",
+    "sha256": "5cc14caf4ae04b06363042ea068242bca88206d2e8fdbc3cc933b4945a0aad5b",
     "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
     "ready": false,
     "databaseVerified": false
@@ -25777,20 +25777,20 @@
   },
   "currentCleaningOwnerQueue20261104": {
     "D3": {
-      "current": "Index31 completed; current process terminal",
-      "next": "Await actual human allocation514, precise new source or fixed Dot receiver; no unchanged rechecks"
-    },
-    "D2": {
-      "current": "514 origin and149 gaps completed;12 bridges adopted",
-      "next": "Actual new source/role-state facts or human decision; no active job claimed"
+      "current": "Index32 line-order consumer completed; idle",
+      "next": "Await actual user barcode allocation decision, exact scheme identity evidence or fixed compatible Dot receiver; do not repeat unchanged checks"
     },
     "D1": {
-      "current": "SKU row references and30 staff halls delivered/adopted;24-human-decision local list finished",
-      "next": "No independent unblocked source mutation currently assigned; exact new ruling or source needed"
+      "current": "Sales83399 and transfer273948 line order delivered/adopted; retired staff24-person local list finished; idle",
+      "next": "Actual new source or approved rule only"
+    },
+    "D2": {
+      "current": "514 original barcode sources and149 gaps completed; idle",
+      "next": "Actual new source/role-state ruling only"
     },
     "T45": {
-      "current": "No new live server or database job",
-      "wait": "Exact fixed compatible source/tool, complete standard package and approved isolated execution scope"
+      "current": "No new live server/database job",
+      "wait": "Fixed compatible real-data receiver, complete standard package and approved isolated execution scope"
     }
   },
   "barcodeSKUReferences20261104": {
@@ -25935,5 +25935,55 @@
     "ordinaryAccountReviewUnreviewRereview": "NOT_RUN",
     "production": "NOT_RUN_NOT_AUTHORIZED",
     "noShortcut": "Do not relabel real data synthetic, remove guards or replay expired jobs"
+  },
+  "ordinaryLineOrder20261104": {
+    "status": "LOCAL_OVERLAYS_ADOPTED",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package09-11-line-order-consumer-D3-01/RESULT.json",
+    "receiptSHA256": "57739fdd239d42adf5c52a1b8bd13a66e0bb7e82459fca8a0c2e9d218c0cc66b",
+    "salesHeaders": 28894,
+    "salesLines": 83399,
+    "transferHeaders": 14835,
+    "transferLines": 273948,
+    "unmatched": 0,
+    "duplicateSourceReferences": 0,
+    "method": "Verified source header boundaries and original line order; per-parent line_no frozen under existing guide section2. Overlay original facts, existing SKU reference then line_no; preserve duplicate business lines.",
+    "identityBoundary": "line_no and parent_source_locator are not persistent entity identity. Header/line IDs and stable source_key remain unresolved.",
+    "databaseVerified": false
+  },
+  "schemeIdentityGap20261104": {
+    "status": "EXACT_IDENTITY_BRIDGE_NOT_VERIFIED",
+    "products": 5,
+    "sourceSchemeCode": "2",
+    "candidateSchemeSourceKey": "2021fit",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-scheme-source2-identity-review-D3-01/RESULT.json",
+    "receiptSHA256": "3edd9813e82bff36c0a3c4e06a3fc5a99c2f9ee9e7f995a6abc0ec8716b32323",
+    "changed": 0,
+    "clarification": "Component length description differences alone do not disprove scheme identity. Missing exact original-code to fixed-ID bridge is separate from generation-rule adaptation. Do not keep claiming six schemes absent."
+  },
+  "mixedSalesSplitReview20261104": {
+    "status": "SOURCE_REVIEW_COMPLETE_NO_SPLITS_CREATED",
+    "authority": {
+      "threadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "turnId": "01a1a249-326d-7810-87f0-1fc9494bdc76",
+      "userMessageId": "01a1a249-32a9-7563-b3d8-f8e0993ef334"
+    },
+    "privateReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/sales-mixed-split-review-01a19f9f-01/reconciliation.json",
+    "ordinaryMixedHeaders": 2571,
+    "mixedLines": 10773,
+    "mixedNegativeLines": 3620,
+    "otherOrdinaryNegativeLines": 1,
+    "actualSplitHeaders": 0,
+    "preservedOriginals": true,
+    "nonzeroOrderRoundingHeaders": 1,
+    "sourceKnownZeroRoundingHeaders": 2570,
+    "blockers": [
+      "Return nature must be established, not inferred from negative quantity alone",
+      "Actual original net settlement does not prove separate gross receive/refund movements",
+      "Original header and split lineage/key/number contract still required",
+      "One nonzero rounding allocation remains unproven; no proportional default"
+    ],
+    "sourceBoundary": "Same28894 sales /83399 lines. Earlier65 economic subset is not the full count affected by SALE negative-line rejection. Current code unified-import-contract.ts:1496 rejects SALE negative quantity.",
+    "formalPreflight": "NOT_RUN",
+    "databaseVerified": false
   }
 }
