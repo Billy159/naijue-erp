@@ -24663,13 +24663,13 @@
     }
   },
   "currentWaitingConditions": [
-    "Latest received source remains051 base plus pinned WIP, not release. Fixed unified execution client accepts SYNTHETIC only; Dot must deliver exact compatible real-data isolated target/role/install/identity commands.",
-    "Index32 includes14640SKU,6schemes,13140barcode bindings; sales83399/transfer273948 line_no source coverage complete.1374 source row SKU references remain unresolved; persistent header/line identities and complete standard assembly still open.",
-    "Five product source-scheme2 references await exact original-code to fixed-ID bridge; generation descriptions are a separate issue. New six-scheme generator successor belongs to Dot.",
-    "30 retired staff uniquely mapped halls retained including23 disabled historical halls.11 multiple-hall and13 no-sales staff remain null pending evidence;8 source-identity-empty documents remain null.",
-    "Latest source review found2571 mixed ordinary SALE headers plus1 nonmixed ordinary negative line. No safe split performed; preserve original quantities, amounts, settlements and conditional split ruling. Earlier65 economic subset must not be reported as complete affected scope.",
-    "514 multi-SKU barcode allocation still awaiting actual pending user answer.67 single-SKU corrected-code role/state,32 no-SKU and105 source-support cases retain accurate separate causes.",
-    "TargetPG complete import, independent reconciliation, idempotency/recovery, backup restore and ordinary-account review/unreview/rereview remain unverified. No production action."
+    "Received source remains051 base plus pinned WIP. Dot must deliver fixed compatible real-data isolated target/role/install/identity and actual execution commands; unified client currently SYNTHETIC only.",
+    "index34:14640SKU and13647barcode binding candidates; sales83399/transfer273948 line_no covered;81 source-unreviewed head states DRAFT.1374 row SKU references, persistent header/line identities and complete standard assembly remain unresolved.",
+    "514 barcode allocation question resolved;7 additional role/state gaps plus67 prior =74 precise role/state choices now pending user answer.32 no-SKU and105 source-support cases remain. No repeated allocation question.",
+    "Source effective status43648 has audit name/date evidence but APPROVED mapping is pending user confirmation; no inference or historical stock/fund replay.",
+    "Five product source-scheme2 references still lack exact fixed-ID bridge; new six-scheme generation-rule successor remains Dot scope.",
+    "Retired staff24 hall cases remain11 multiple/13 no-sales;8 identity-empty source documents stay null. Current source mixed SALE negative-line and split settlement/key rules remain open under user's conditional split requirement.",
+    "Complete targetPG import/readback/reconciliation, idempotency/failure recovery, backup restore and ordinary-account review/unreview/rereview are unverified. No production activity."
   ],
   "salesStaffMapping": {
     "status": "INDEX22_DRAFT_IDENTITY_REFERENCES_NOT_COMPLETE_STANDARD_STAFF",
@@ -25730,8 +25730,8 @@
     "frozenDemo": "Read-only; approved differences remain"
   },
   "latestCleaningIndex": {
-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-32/INDEX.json",
-    "sha256": "5cc14caf4ae04b06363042ea068242bca88206d2e8fdbc3cc933b4945a0aad5b",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-34/INDEX.json",
+    "sha256": "ea645d89336009fe9c73e187ec5623b2b1e569cecdf71a16ec5619535cdaabde",
     "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
     "ready": false,
     "databaseVerified": false
@@ -25777,16 +25777,16 @@
   },
   "currentCleaningOwnerQueue20261104": {
     "D3": {
-      "current": "Index32 line-order consumer completed; idle",
-      "next": "Await actual user barcode allocation decision, exact scheme identity evidence or fixed compatible Dot receiver; do not repeat unchanged checks"
+      "current": "index34 completed;507 additional barcode bindings and81 DRAFT head overlays consumed; idle",
+      "next": "Actual pending user answers, exact identity evidence or fixed compatible Dot receiver only"
     },
     "D1": {
-      "current": "Sales83399 and transfer273948 line order delivered/adopted; retired staff24-person local list finished; idle",
-      "next": "Actual new source or approved rule only"
+      "current": "Direct unreviewed status81 and effective-state43648 audit-presence evidence delivered; idle",
+      "next": "Actual status ruling or new source; no repeated full checks"
     },
     "D2": {
-      "current": "514 original barcode sources and149 gaps completed; idle",
-      "next": "Actual new source/role-state ruling only"
+      "current": "74 role/state cases grouped with exact old-code relationships; idle",
+      "next": "Actual user role/state ruling; no independent central edits"
     },
     "T45": {
       "current": "No new live server/database job",
@@ -25884,32 +25884,22 @@
   },
   "latestGitHubCleaningCheckpoint": {
     "branch": "codex/e5c5a762-cleaning-20261102",
-    "beforeThisCommit": "bd1714a667c082b64ee723f2f90d99b8406abec1",
-    "lastIndependentlyVerifiedRemoteCommit": "5d83d7fce5376615fbf5a795b9d888b2f45ceca2",
-    "previousPush": "Timeout; current document checkpoint push pending bounded attempt",
-    "applicationWipPreserved": 4,
-    "thisCommitScope": "Controller aggregate docs only; no real rows, application code, SQL or credentials",
-    "localCommit": "1a04d6a5513e40a6033080fd872febe5524f7e4f",
-    "pushStatus": "TIMED_OUT_AFTER_30S_REMOTE_NOT_CONFIRMED",
-    "pushPending": true,
-    "realDataIncluded": false
+    "localCommit": "bea12085730ce1cbe2fc9519fe24b8c001a0e25e",
+    "remoteCommit": "bea12085730ce1cbe2fc9519fe24b8c001a0e25e",
+    "status": "PRIOR_CHECKPOINT_REMOTE_VERIFIED_BEFORE_INDEX34_RECORD_COMMIT",
+    "databaseExecuted": false
   },
   "newBarcodeAllocationQuestion20261104": {
-    "scope": "514 additional cross-SKU selected barcode cases; not previous12 ignored codes",
-    "state": "HUMAN_QUESTION_PENDING_RELATED_BRANCH_ONLY",
-    "sourceEvidenceReceiptSHA256": "3293adf8b0a91eb796d440d23cafb6e463f91aaf19ac5609996e85f2c42d40cd",
-    "exactOriginalRows": 584,
-    "candidateDimensionDifferenceCountsNotAdditive": {
-      "product": 1,
-      "color": 113,
-      "fit": 0,
-      "size": 425,
-      "allDimensionsSame": 0
-    },
-    "privateReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/barcode-selected-origin-D2-03/跨SKU条码绑定待处理说明.md",
-    "valuesNotReasked": true,
-    "noBindingReassignmentExecuted": true,
-    "otherCleaningContinues": true
+    "status": "USER_ANSWERED_AND_LOCAL_CONSUMER_ADOPTED",
+    "source": "Main Chat send_user_message_question_reply for call_b4fc96e3e65b4bc69ca3d12cce0b5925",
+    "answer": "只绑定到已选调拨原行的SKU，其他规格仅保留历史原码记录（推荐）",
+    "allocated": 514,
+    "bindingCandidatesAdded": 507,
+    "roleStatePending": 7,
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package04-barcode-selected-consumer-D3-04/RESULT.json",
+    "receiptSHA256": "1ea2559cb3083bddd00ab4d7ef88c47c34baba9ffed25be890288a610a630372",
+    "historicalOtherObservationsPreserved": 594,
+    "databaseVerified": false
   },
   "barcodeOriginBridge20261104": {
     "index": 31,
@@ -25985,5 +25975,61 @@
     "sourceBoundary": "Same28894 sales /83399 lines. Earlier65 economic subset is not the full count affected by SALE negative-line rejection. Current code unified-import-contract.ts:1496 rejects SALE negative quantity.",
     "formalPreflight": "NOT_RUN",
     "databaseVerified": false
+  },
+  "barcodeSelectedConsumer20261104": {
+    "index": 33,
+    "newMainCandidates": 507,
+    "totalCandidates": 13647,
+    "totalMain": 13636,
+    "totalConfirmedOld": 11,
+    "registry": 32534,
+    "codeTargetConflicts": 0,
+    "enabledMainConflicts": 0,
+    "selectedRows": 514,
+    "selectedOriginRows": 584,
+    "otherOriginObservationsPreserved": 594,
+    "roleStatePendingTotal": 74,
+    "noSKUPending": 32,
+    "sourceSupportPending": 105,
+    "ignoredRows": 30,
+    "ignoredCodes": 12,
+    "missingProductsNotSupplyingCodes": 449
+  },
+  "documentStatusConsumer20261104": {
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package08-10-draft-status-consumer-D3-01/RESULT.json",
+    "receiptSHA256": "9bd1bf7c4636da1937b0a5ef7d2dde655ac823c8ab9414fe0a10ab533a80242d",
+    "directMapping": "未审 -> DRAFT",
+    "sales": 1,
+    "transfer": 80,
+    "matched": 81,
+    "unexpectedOtherFieldChanges": 0,
+    "effectiveStatusStillUnmapped": 43648,
+    "effectiveSales": 28893,
+    "effectiveTransfer": 14755,
+    "importAuthorized": false,
+    "databaseVerified": false
+  },
+  "pendingExactQuestions20261104": {
+    "barcodeRoles": {
+      "rows": 74,
+      "sourceBreakdown": {
+        "prior": 67,
+        "newFrom514": 7
+      },
+      "historicalNormalMainSKUs": 60,
+      "currentCandidateOtherEnabledMain": 0,
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/barcode-role-state-D2-05/条码角色与状态待处理.md",
+      "receiptSHA256": "d660361067caaad17b529bba4be5be9532040e0b36bdcb1ad533f75d248f20ca",
+      "question": "Choose selected code MAIN/enabled or CONFIRMED_OLD/enabled; preserve raw and stopped old codes; normal historical main relationship must be explicit",
+      "status": "USER_QUESTION_PENDING"
+    },
+    "effectiveDocumentStatus": {
+      "rows": 43648,
+      "auditorAndDatePresent": 43648,
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/document-status-D1-01/状态证据说明.md",
+      "receiptSHA256": "cf83e43961f468ac638e0445b9c4a22619916aec1aeb02d75e784a79799e0c33",
+      "question": "Does source 生效 map to APPROVED? Do not infer from presence of audit fields; no replay of stock/funds.",
+      "status": "USER_QUESTION_PENDING"
+    }
   }
 }
