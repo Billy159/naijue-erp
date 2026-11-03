@@ -23806,8 +23806,10 @@
       "readOnly": true,
       "rollbackAndClientCloseConfirmed": true,
       "businessWrites": 0,
-      "receiptSHA256": "adc05b5436282417dcfd249b9d0aa3202064506db4cdb2bd472c2aed7e8cfc91",
-      "boundary": "No online row/tax or amount precedence conclusion; old paused private49 tasks not resumed"
+      "receiptSHA256": "4b255e0f38f08abd4c64b66c3c2627d7a684989f1ca8197c73ef65a670a94107",
+      "boundary": "No online row/tax or amount precedence conclusion; old paused private49 tasks not resumed",
+      "previousReceiptSHA256": "adc05b5436282417dcfd249b9d0aa3202064506db4cdb2bd472c2aed7e8cfc91",
+      "visibilityQualification": "Both exact objects are base tables, RLS inactive, no policies or view filtering; direct exact-number SQL has no identity/hall condition. Zero matches is valid within this checked database, not all original TPlus systems."
     },
     "next": "Dot must align the fixed source-type/signed-line contract with verified 65 source facts; controller must check existing approved business mapping before asking a new ruling. One tax-scope document still lacks live source confirmation; no source recoding or balancing.",
     "rawDataSentToDot": false,
