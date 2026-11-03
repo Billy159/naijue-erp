@@ -22170,7 +22170,7 @@
   "currentRoute": {
     "recordedAt": "2026-11-03T02:52:50.159534+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "INDEX16_FIXED051_SOURCE_BOUND_CLEANING_UNCHANGED_NOT_IMPORT_READY",
+    "status": "INDEX19_USER_REFUND_CONSUMED_FIXED051_NOT_IMPORT_READY",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22223,7 +22223,7 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical true-blank sales/transfer A rule plus direct human call_88267c72a7204d02940b136fb5218b16 item0 authorizing stock true blanks and exact normal-A alias; preserve all raw values/provenance, no unobserved SKU or barcode.",
-    "current": "Index18 bound051;7 collar source texts consumed,2963 empty preserved;29 category decisions pending,2961 scheme references unclosed; all prior consumers retained. DRAFT,not PG/import.",
+    "current": "534 refund direction decision consumed; category/identity and Dot source receiving conflicts remain",
     "next": [
       "Dot standard path must remove actual old-table dependencies while retaining actor/row-intent/receipt/audit and atomicity;35-core retirement and reviewed install not complete.",
       "Dot full standard package single-transaction DML+publication and actual V2 PG/normal runtime acceptance remain unverified.",
@@ -24223,6 +24223,11 @@
       "targetPGVerified": false,
       "importAuthorized": false,
       "productionWrites": 0
+    },
+    "latestOfflineIndex": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-19/INDEX.json",
+      "sha256": "973c9d24daec24fceacca695426c03b3593c806f90aaf08734ac9df3c7bbb54a",
+      "ready": false
     }
   },
   "latestUnifiedSourceIntake": {
@@ -25148,5 +25153,56 @@
     "targetPGVerified": false,
     "importAuthorized": false,
     "productionWrites": 0
+  },
+  "negativeSettlementRefundDecision20261103": {
+    "status": "USER_REFUND_DECISION_CONSUMED_INDEX19_DRAFT",
+    "authority": {
+      "threadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "userMessageId": "01a19fbe-62e2-7bf1-becc-9010392b5f79",
+      "quote": "我觉得你可以直接选退款了 我裁决为退款",
+      "controllerReadOriginalUserMessage": true
+    },
+    "decisionPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/负现结退款用户裁决-20261103/DECISION.json",
+    "decisionSHA256": "2752635d75c72bc7ecbb09b60cab167d8c4bb34527f7cdc64289d49fbb0b4788",
+    "inputNegativeEvidenceSHA256": "0a9769477cddb22a75a0986bcb6b22025f19becd971dd90780aeea86810aa3cc",
+    "counts": {
+      "negativeRows": 534,
+      "sourceReturn": 468,
+      "sourceOrdinarySale": 66,
+      "allSettlementCandidates": 26382,
+      "unchangedRows": 25848,
+      "changedRows": 534
+    },
+    "producer": "original D1 offline cleaning, gpt-6.1-terra/medium",
+    "composer": "original D3, after fixed producer receipt only",
+    "preserve": [
+      "original signed amount",
+      "original document type",
+      "source row identity",
+      "provenance"
+    ],
+    "notProved": [
+      "actual cash transfer",
+      "original refund voucher",
+      "original reversal association"
+    ],
+    "unaffectedBlockers": [
+      "051 ordinary SALE mixed negative quantity and negative gross receiving contract",
+      "remaining category and identity mappings",
+      "complete isolated import and independent readback"
+    ],
+    "importAuthorized": false,
+    "targetPGVerified": false,
+    "producerReceiptSHA256": "200c6772dfb6fc405f3997a98ba7de7659541a8fadb50323d4eb61b10e99ac83",
+    "consumerReceiptSHA256": "359a5965d87e8967fdfa805b3320e4abeb83e489eb8730ffffacc34450f078c2",
+    "currentIndex": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-19/INDEX.json",
+      "sha256": "973c9d24daec24fceacca695426c03b3593c806f90aaf08734ac9df3c7bbb54a",
+      "ready": false
+    },
+    "checks": [
+      "D1 exact source refs and signed amount inverse readback",
+      "D3 original source fields preserved; other 25848 rows copied byte for byte; three output shards read back"
+    ]
   }
 }
