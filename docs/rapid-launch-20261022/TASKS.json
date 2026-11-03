@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T00:56:11.072694+00:00",
+  "updatedAt": "2026-11-03T01:28:57.507767+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22168,9 +22168,9 @@
     }
   },
   "currentRoute": {
-    "recordedAt": "2026-11-02T18:30:08.771212+00:00",
+    "recordedAt": "2026-11-03T01:28:57.507767+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "KNOWN_MASTER4078_AND_PRODUCT2941_MATERIALIZED_DOCUMENT_REFERENCES_PROGRESS_NOT_READY",
+    "status": "INDEX08_PRODUCT_GROUPS_COMPLETE_AND_APPROVED_43_ACCOUNT_METHOD_LINKS_CONSUMED_DRAFT",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22196,17 +22196,17 @@
       "localSourceBranchStill": "codex/e5c5a762-cleaning-20261102",
       "localOriginalSourceWipPreserved": true,
       "latestDotRemoteBranchLookup": "GitHub GET exact handoff/erp-unified-latest-20261102 returned404; offline package accepted, remote delivery unconfirmed",
-      "lastControllerCoordinationCommit": "8303783041927eab4d93ad850cc48db2ca4be2b1",
+      "lastControllerCoordinationCommit": "f06d195283a068a4192666e3c50082c176603f59",
       "historicalRemoteHeadFieldsAreNotCurrentDotDelivery": true
     },
     "owners": {
-      "Dot": "Application/schema/install/importer sole owner;1189 fixed package received, category SQL successor pending",
-      "D3": "Index05 and49-staff hall consumer delivered;registry4098 unchanged",
+      "Dot": "Application/schema/install/importer sole owner; fixed4e98 offline package, full-batch receiver and V2 apply/resume gaps pending",
+      "D3": "Index08 delivered;2970 product groups,12 methods/4099 registry; size/SKU/barcode mapping remains",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
-      "D1": "Delivered22656 salesperson and39 explicit hall-code relations;4 current-person bridges unknown",
-      "T45": "Prior product16 terminal; new exact6method+39hall readonly scope sent, no production write",
+      "D1": "Sales22656 staff refs and39 staff-hall refs delivered; all4 runtime hall differences match approved candidates",
+      "T45": "All bounded relationship and single-method readonly jobs terminal; no new server job or production write",
       "QB": "No duplicate whole-code acceptance dispatched",
-      "D2": "Six raw fit candidates and bounded namespace-bridge followup delivered/idle; no exact original-code/system-letter bridge found in inspected sources. Account trace not repeated.",
+      "D2": "80 account-method candidates consumed:37 original+43 approved independent cashier;985 hall recommendations and19 status differences preserved",
       "F2": "All16 source groups located; four-row old consumer gap reconciled against existing enriched product evidence; delivered/idle."
     },
     "model": {
@@ -22221,8 +22221,8 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical sales/transfer source lines only with exact original blank and decision provenance; not stock/product/global default",
-    "current": "Index05:product2567/2970 groups,sales28828 monetary/22656 salesperson,staff39 hall references; offline DRAFT",
-    "next": "Original T45 narrow45 dictionary-ID read pending under existing user online-example authority; no business writes, privilege changes or old job replay",
+    "current": "Index08:2970 product group refs,12 methods/4099 registry,80 account method candidates; sales28828 monetary/22656 staff; staff39 hall refs. Not READY.",
+    "next": "Original D3 next ready work is bounded size/SKU mapping against final2970 group authority and existing38142 tuples; Dot supplies V2 database apply/resume and full-batch receiver. No new server or production job.",
     "ordinaryDocumentTables": [
       "sales_header",
       "sales_line",
@@ -22248,8 +22248,8 @@
     "dotReportedFailures": "4 invalid packages wrongly accepted; 3 source-level SQL/coverage risks not PG-reproduced; keep unresolved, not implementation here",
     "latestOfflineDelivery": {
       "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
-      "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-03/INDEX.json",
-      "indexSha256": "7b74ee3ba39457931c4c430b5a9577ebabe404fbb4b87c477ae9aa92ca39c870",
+      "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-08/INDEX.json",
+      "indexSha256": "182b431422549a3d7ce30a2ba138b655ad9a578caf9df2e53d9d3f361c4b74db",
       "updatedPackages": [
         3,
         4,
@@ -22274,7 +22274,7 @@
         "staffCandidates": 49,
         "customers": 261,
         "suppliers": 222,
-        "methods": 11,
+        "methods": 12,
         "accountsSafeDraft": 80,
         "salesHeaders": 28894,
         "salesLines": 83399,
@@ -22295,25 +22295,26 @@
         "colorStableIdCandidates": 182,
         "fullSourceCategoryNodes": 324,
         "additionalUnreferencedSourceCategoryNodes": 51,
-        "accountsKnownNames": 80
+        "accountsKnownNames": 80,
+        "registryCandidates": 4099,
+        "productsKnownGroupReferences": 2970,
+        "productGroupUnresolved": 0,
+        "accountMethodReferences": 80
       },
       "verificationScope": "Original D3 source/EOF/row-count/arithmetic/readback receipts adopted; controller only verified small index SHA; not target or coverage acceptance",
       "identity": "3609 provisional IDs and old-namespace references do not prove target identity. Offline normalization does not require target installation.",
       "unresolved": [
-        "Fixed1189 MASTER apply category SQL42703 fails; Dot successor and real isolated readback required",
-        "Complete transfer_line known-field lower measure112514655 bytes exceeds67108864 per-file cap; duplicate table files rejected. Dot bounded reader adaptation required without truncation",
-        "Five nonblank supplier refs conflict with approved party classification/exclusion;1809 actual original blanks remain distinct; target IDs unverified",
-        "Full99 staff source resolves5817 prior missing-source sales-header codes, but8 lack original staff code; source facts do not grant roles/halls/accounts or target identities",
-        "Current staff contract requires a system role; source salesperson/disabled flags are not approved role/employment mappings",
-        "Four historical scheme ID pairs cover2961 current source identifiers;2/5 cover9 products and lack exact approved identity bridge; complete rule equivalence and target identities remain unverified",
-        "Six old payment method IDs and39 old hall IDs lack current-code bridge in checked materials; optional hall recommendations are not qualification or permission blockers",
-        "Current size-group full membership, stable product/SKU/line identity, category target IDs, six amount differences, effective-state semantics and cutoff/coverage remain unresolved"
+        "SKU and barcode unique identity and exact fit mapping",
+        "Stable document source-key and effective status semantics",
+        "65 mixed-signed SALE monetary receiver conflicts and1 tax-scope source conflict retained",
+        "Dot full-batch bounded reader and V2 database apply/resume",
+        "Target identity/ACL, full isolated import, reconciliation, recovery and ordinary business chain not verified"
       ],
       "ready": false,
       "importAuthorized": false,
-      "D3State": "DELIVERED_KNOWN_MASTER4078_NOT_WHOLE_PACKAGE",
-      "D3Turn": "01a19c5e-0d25-7a21-a1dc-88c59460342b",
-      "nextWorkAssessment": "Dot stable original document-key provider or precise contract successor, category SQL42703 and complete bounded-reader successor; exact approved source/canonical fit/group/staff mappings and economics. Preserve29 classification unknowns. User inventory blank-fit/source-effective answers pending only for affected branches; no duplicate scans without new evidence.",
+      "D3State": "INDEX08_DELIVERED_NOT_READY",
+      "D3Turn": "01a19f03-76f3-7bf0-b711-b49177e2f7bf",
+      "nextWorkAssessment": "Original D3 next ready work is bounded size/SKU mapping against final2970 group authority and existing38142 tuples; Dot supplies V2 database apply/resume and full-batch receiver. No new server or production job.",
       "increment03Evidence": [
         {
           "packages": [
@@ -22678,7 +22679,20 @@
           "ready": false,
           "verificationScope": "Adopt original finite receipt; root checked receipt hash only."
         }
-      ]
+      ],
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-08/INDEX.json",
+      "sha256": "182b431422549a3d7ce30a2ba138b655ad9a578caf9df2e53d9d3f361c4b74db",
+      "historicalIndex03Unresolved": [
+        "Fixed1189 MASTER apply category SQL42703 fails; Dot successor and real isolated readback required",
+        "Complete transfer_line known-field lower measure112514655 bytes exceeds67108864 per-file cap; duplicate table files rejected. Dot bounded reader adaptation required without truncation",
+        "Five nonblank supplier refs conflict with approved party classification/exclusion;1809 actual original blanks remain distinct; target IDs unverified",
+        "Full99 staff source resolves5817 prior missing-source sales-header codes, but8 lack original staff code; source facts do not grant roles/halls/accounts or target identities",
+        "Current staff contract requires a system role; source salesperson/disabled flags are not approved role/employment mappings",
+        "Four historical scheme ID pairs cover2961 current source identifiers;2/5 cover9 products and lack exact approved identity bridge; complete rule equivalence and target identities remain unverified",
+        "Six old payment method IDs and39 old hall IDs lack current-code bridge in checked materials; optional hall recommendations are not qualification or permission blockers",
+        "Current size-group full membership, stable product/SKU/line identity, category target IDs, six amount differences, effective-state semantics and cutoff/coverage remain unresolved"
+      ],
+      "historicalEvidenceNote": "increment03Evidence/postIndexIncrements and old identity assessment retained as historical evidence; latest actual consumers are pinned by index08 and cleaningConsumerProgress20261103"
     },
     "checkpoint": {
       "repository": "https://github.com/Billy159/naijue-erp",
@@ -23758,68 +23772,97 @@
     "controllerChecks": "OUTPUT_HASHES_PRODUCT_DELTA_AND_11_MEMBER_REFERENCE_ORDER_UNIQUENESS_PASS"
   },
   "approvedProductGroupConsumer": {
-    "state": "DRAFT_MATERIALIZED_BY_LATEST_SINGLE_STANDARD_GROUP_RULE",
+    "state": "ALL_PRODUCT_GROUP_CANDIDATES_MATERIALIZED_NOT_SKU_OR_IMPORT_PASS",
     "productRows": 2970,
-    "knownGroupReferences": 2567,
-    "added": 1393,
-    "addedUPPER": 1063,
-    "addedPANTS": 328,
-    "unresolved": 403,
-    "unresolvedGeneralMultiTarget": null,
-    "specialPANTS": null,
-    "specialUPPER": null,
-    "WOMENPendingKnownDictionaryMaterialization": 0,
-    "registryCandidates": 4098,
-    "receiptSHA256": "1a592c4550d84adab8bec64a7d6229cd812f800af58917de4a83186e6064146f",
-    "productSHA256": "9d23e7e94342a76477bf88900bec471d5179a9a843864417ac0ec72714e2dc8c",
+    "knownGroupReferences": 2970,
+    "unresolved": 0,
     "newSKU": 0,
-    "next": "Keep403 exact exceptions for bounded existing-authority evidence; do not ask individual approval for newly resolved1393 or repeat completed online reads",
+    "newBarcode": 0,
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-user-final-groups-D3-06/RESULT.json",
+    "receiptSHA256": "887d12023638e552aad11de1bd8be258a6f1d1b62404d63237f805737f6b98a3",
+    "productCandidatePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-user-final-groups-D3-06/product-candidates.jsonl",
+    "productSHA256": "0bd97d4c8794d8ecfcf716354a7535018071dde66ca9473ae0a3e80ec9e97d95",
+    "latestAuthority": {
+      "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
+      "turnId": "01a19ef5-31f8-7371-8447-08786487b72e",
+      "humanMessageId": "01a19ef5-3213-7d82-81f5-5acea6367fcb",
+      "verifiedBy": "Direct human read_thread, preserving earlier378 explicit classified assignments"
+    },
+    "history": "1174+1393 single-target+378 clothing decision+25 final decision; old snapshots preserved",
+    "scope": "Only product.size_group_id changed; historical specifications, SKU/barcode/stock and explicit exceptions retained",
     "targetPGVerified": false,
     "importAuthorized": false,
-    "womenProductsAdded": 4,
+    "next": "Final product group consumer now pinned through index08; SKU/barcode identity remains separate unfinished scope",
     "completeStandardGroups": 4,
     "completeStandardMembers": 35,
-    "womenReceiptSHA256": "693ee825d203ec9ec25b569e234c12d47c1e0ac3abd87662895987c41df505d3",
-    "registrySHA256": "9daa41cc2a57a81c008be847b0a963580e2056bd5ff4d7e47575f2ed68922e97",
-    "status": "USER_APPROVED_AND_OFFLINE_CLEANING_MATERIALIZED",
-    "authority": "Direct human message in controller 2026-11-03: 同商品全部已有旧规格经有效映射归一标准组即采用完整该组；明确商品级及SKU级例外优先",
-    "rule": "All existing historical specifications must have effective approved mappings to one standard group; adopt its complete existing members without per-product approval. Do not ignore unmapped specifications or override explicit exceptions.",
-    "scope": "Cleaning product group assignment only; not new historical SKU/barcode/stock or schema change",
-    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-common-group-single-target-D3-02/RESULT.json",
-    "previousGrouped": 1174,
-    "addedByGroup": {
-      "UPPER": 1063,
-      "FREE": 2,
-      "PANTS": 328
-    },
-    "remainingByReason": {
-      "无历史规格映射依据": 395,
-      "旧规格存在未映射或已保留的辅料例外": 8
-    },
-    "historySpecificationsUsed": 6430,
-    "productCandidatePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-common-group-single-target-D3-02/product-candidates.jsonl",
-    "remainingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-common-group-single-target-D3-02/remaining-items.jsonl",
-    "remainingSHA256": "6944c1724aa575ff41f605683686b4c4c579da306939965cd02e05078c7457aa",
-    "humanReviewPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-common-group-single-target-D3-02/待核商品及规格.md",
-    "newBarcode": 0,
-    "checks": "Original D3 directed checks adopted; controller verified only delivered receipt and consumer file integrity, no duplicate technical acceptance",
-    "previousReceiptSHA256": "9e742357abad723267490d20f90eb08c0c961dd642d98622aabf5aaa6744d17e",
-    "addedFREE": 2,
-    "remainingEvidenceCheck": {
-      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-batch-spec-gap-D3-03/RESULT.json",
-      "receiptSHA256": "413a461aafff75154a087130ce5b44c8c591d21148c16f06fedea2bd31584cbf",
-      "scope": "Existing38142 current-batch sales/transfer/inventory distinct tuples; no raw source rescan",
-      "newlyGrouped": 0,
-      "remaining": 403,
-      "reasons": {
-        "已消费销货调拨库存三类旁车未见规格；不排除其他来源": 393,
-        "已有辅料或未映射规格例外保持": 8,
-        "本批存在规格，已批映射未形成唯一有效目标组": 2
+    "checks": "Original owner directed comparison adopted; controller artifact integrity only",
+    "historicalSingleTargetSlice": {
+      "state": "DRAFT_MATERIALIZED_BY_LATEST_SINGLE_STANDARD_GROUP_RULE",
+      "productRows": 2970,
+      "knownGroupReferences": 2567,
+      "added": 1393,
+      "addedUPPER": 1063,
+      "addedPANTS": 328,
+      "unresolved": 403,
+      "unresolvedGeneralMultiTarget": null,
+      "specialPANTS": null,
+      "specialUPPER": null,
+      "WOMENPendingKnownDictionaryMaterialization": 0,
+      "registryCandidates": 4098,
+      "receiptSHA256": "1a592c4550d84adab8bec64a7d6229cd812f800af58917de4a83186e6064146f",
+      "productSHA256": "9d23e7e94342a76477bf88900bec471d5179a9a843864417ac0ec72714e2dc8c",
+      "newSKU": 0,
+      "next": "Keep403 exact exceptions for bounded existing-authority evidence; do not ask individual approval for newly resolved1393 or repeat completed online reads",
+      "targetPGVerified": false,
+      "importAuthorized": false,
+      "womenProductsAdded": 4,
+      "completeStandardGroups": 4,
+      "completeStandardMembers": 35,
+      "womenReceiptSHA256": "693ee825d203ec9ec25b569e234c12d47c1e0ac3abd87662895987c41df505d3",
+      "registrySHA256": "9daa41cc2a57a81c008be847b0a963580e2056bd5ff4d7e47575f2ed68922e97",
+      "status": "USER_APPROVED_AND_OFFLINE_CLEANING_MATERIALIZED",
+      "authority": "Direct human message in controller 2026-11-03: 同商品全部已有旧规格经有效映射归一标准组即采用完整该组；明确商品级及SKU级例外优先",
+      "rule": "All existing historical specifications must have effective approved mappings to one standard group; adopt its complete existing members without per-product approval. Do not ignore unmapped specifications or override explicit exceptions.",
+      "scope": "Cleaning product group assignment only; not new historical SKU/barcode/stock or schema change",
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-common-group-single-target-D3-02/RESULT.json",
+      "previousGrouped": 1174,
+      "addedByGroup": {
+        "UPPER": 1063,
+        "FREE": 2,
+        "PANTS": 328
       },
-      "remainingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-batch-spec-gap-D3-03/remaining-items-with-batch-review.jsonl",
-      "remainingSHA256": "f187913506ed73952fd4ddaaffaddd1cebdac0e8cd1888cfb46b2bd3913f3af1",
-      "boundary": "393 not observed in these three already-consumed sidecars is not proof absent from all other sources;2 have source specification but no unique effective approved mapping;8 explicit cases retained"
-    }
+      "remainingByReason": {
+        "无历史规格映射依据": 395,
+        "旧规格存在未映射或已保留的辅料例外": 8
+      },
+      "historySpecificationsUsed": 6430,
+      "productCandidatePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-common-group-single-target-D3-02/product-candidates.jsonl",
+      "remainingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-common-group-single-target-D3-02/remaining-items.jsonl",
+      "remainingSHA256": "6944c1724aa575ff41f605683686b4c4c579da306939965cd02e05078c7457aa",
+      "humanReviewPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-common-group-single-target-D3-02/待核商品及规格.md",
+      "newBarcode": 0,
+      "checks": "Original D3 directed checks adopted; controller verified only delivered receipt and consumer file integrity, no duplicate technical acceptance",
+      "previousReceiptSHA256": "9e742357abad723267490d20f90eb08c0c961dd642d98622aabf5aaa6744d17e",
+      "addedFREE": 2,
+      "remainingEvidenceCheck": {
+        "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-batch-spec-gap-D3-03/RESULT.json",
+        "receiptSHA256": "413a461aafff75154a087130ce5b44c8c591d21148c16f06fedea2bd31584cbf",
+        "scope": "Existing38142 current-batch sales/transfer/inventory distinct tuples; no raw source rescan",
+        "newlyGrouped": 0,
+        "remaining": 403,
+        "reasons": {
+          "已消费销货调拨库存三类旁车未见规格；不排除其他来源": 393,
+          "已有辅料或未映射规格例外保持": 8,
+          "本批存在规格，已批映射未形成唯一有效目标组": 2
+        },
+        "remainingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-batch-spec-gap-D3-03/remaining-items-with-batch-review.jsonl",
+        "remainingSHA256": "f187913506ed73952fd4ddaaffaddd1cebdac0e8cd1888cfb46b2bd3913f3af1",
+        "boundary": "393 not observed in these three already-consumed sidecars is not proof absent from all other sources;2 have source specification but no unique effective approved mapping;8 explicit cases retained"
+      },
+      "scopeNote": "Historical single-target slice only:403 pending at that point, superseded by current0. Files/receipts retained, not a current pending decision."
+    },
+    "authority": "Direct human message in controller 2026-11-03: 同商品全部已有旧规格经有效映射归一标准组即采用完整该组；明确商品级及SKU级例外优先",
+    "rule": "All existing historical specifications must have effective approved mappings to one standard group; adopt its complete existing members without per-product approval. Do not ignore unmapped specifications or override explicit exceptions."
   },
   "salesMoneyAdjudication": {
     "status": "USER_ROUNDING_AND_BLANK_RULE_ADOPTED_SOURCE_MONEY_DRAFT_MATERIALIZED",
@@ -23945,8 +23988,8 @@
     "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
     "fixedDotSourceCommit": "4e98d1365084b153af14180e99cf7db531acd6d4",
     "index": {
-      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-05/INDEX.json",
-      "sha256": "1576ab1bcfcd732788cc271e3b2b7299448559bd5627cae89ba624d350c8f354",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-08/INDEX.json",
+      "sha256": "182b431422549a3d7ce30a2ba138b655ad9a578caf9df2e53d9d3f361c4b74db",
       "ready": false
     },
     "salesHeader": {
@@ -23973,10 +24016,12 @@
     },
     "product": {
       "rows": 2970,
-      "knownCompleteGroupReferences": 2567,
-      "unresolved": 403,
+      "knownCompleteGroupReferences": 2970,
+      "unresolved": 0,
       "newSKU": 0,
-      "newBarcode": 0
+      "newBarcode": 0,
+      "consumerSHA256": "0bd97d4c8794d8ecfcf716354a7535018071dde66ca9473ae0a3e80ec9e97d95",
+      "indexUpdate": "Final2970 product consumer inherited by index08 via index06/07"
     },
     "checks": "Original D1/D3 targeted comparisons and reread adopted; controller file integrity only",
     "targetPGVerified": false,
@@ -23989,7 +24034,43 @@
       "V1 total MASTER500 and64MiB per-file/256MiB package with one-file-per-table cannot carry batch",
       "Stable document-key contract, source effective-status semantics, fit/SKU identity remain unresolved"
     ],
-    "next": "Original T45 narrow45 dictionary-ID read pending under existing user online-example authority; no business writes, privilege changes or old job replay"
+    "next": "Original D3 next ready work is bounded size/SKU mapping against final2970 group authority and existing38142 tuples; Dot supplies V2 database apply/resume and full-batch receiver. No new server or production job.",
+    "payment": {
+      "status": "USER_APPROVED_INDEPENDENT_METHOD_AND_43_ACCOUNT_RELATIONS_CONSUMED_DRAFT",
+      "authority": "Direct human call_aa8f9f65b8c2475987466317dfcba775 item0",
+      "decision": "Retain independent cashier payment method and original43 account links; do not fold into cash, bank transfer or other",
+      "methodCandidates": 12,
+      "registryCandidates": 4099,
+      "accounts": 80,
+      "accountMethodCandidateKnown": 80,
+      "accountMethodUnbound": 0,
+      "prior37Unchanged": true,
+      "newApprovedRelations": 43,
+      "knownHallBridges": 39,
+      "historicalRecommendationHallRelationCandidates": 985,
+      "candidateIsNotPermission": true,
+      "enabledDifferencesRetained": 19,
+      "registrySHA256": "04e7d2e6fd4cf5b45b564ce8ccd16446add81cd0e78cb5ed1007b1a611ea9be5",
+      "methodSHA256": "d4c44a398e8fa77c189152a9d86fedfe59d32d8330c306e84719c939d696264c",
+      "methodReceiptSHA256": "74e2115b15d844715ad1c54fea69e54f832497f3ab1654f0fbad4ef0ca137965",
+      "accountConsumerPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/payment-dictionary-bridge-D2-01/APPROVED-INDEPENDENT-METHOD/CONSUMED-43/account-reference-candidates-80.jsonl",
+      "accountConsumerSHA256": "6226ae16e71e551b5916897b083cb5c82a9ef0c587e035c40c95afc536e353bc",
+      "receiptSHA256": "2388ecd13e172d8ab7c275b1e259a5d0a0848c073944d2af3ef312e29f1f372d",
+      "singleMethodState": {
+        "receiptSHA256": "10a3c5ebdc6444836fc1304590677e1f6f4db4a518e6fb0ac283ff598d5cc79e",
+        "sourceDeclared": "UNKNOWN_NOT_PRESENT",
+        "candidateEnabled": null,
+        "runtimeSameIdOverrides": 0,
+        "deployedReaderEffective": true,
+        "effectiveBasis": "DEFAULT_FROM_DEPLOYED_READER_RULE",
+        "actualHTTPExecuted": false,
+        "userEnableDecision": false
+      },
+      "targetPGVerified": false,
+      "importAuthorized": false,
+      "productionWrites": 0,
+      "next": "Dot receiving path must distinguish source-declared state and deployed-reader default; no automatic source enabled rewrite or extra permission inferred"
+    }
   },
   "currentWaitingConditions": [
     "Dot fixed successor with actual full-batch V2 import/resume and bounded reader; do not fake trial with V1 500",
@@ -24002,5 +24083,174 @@
     "unknown": 6238,
     "receiptSHA256": "b1df7725372f959aa48946d919ac8951e9c5a935726b0d96d4068ad93e3a148b",
     "supersedes": "Absent daily-validity intervals do not invalidate already approved unique original identity relationships; real conflicts still excluded"
+  },
+  "barcodeUniqueSKUDecision20261103": {
+    "status": "USER_RULE_CONFIRMED_ORIGINAL_D3_CLEANING_IN_PROGRESS",
+    "authority": {
+      "threadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+      "turnId": "01a19ee8-d0e8-7d83-8fbf-d422559b284d",
+      "humanMessageId": "01a19ee8-d103-7b71-8b2e-64b2b2707a64",
+      "verifiedBy": "Direct read_thread of human message, not agent assertion"
+    },
+    "rule": "Every barcode used in the new system must identify exactly one SKU with product/color/fit/size. Product-only extraction is not completion. Reuse approved exact historic barcode/SKU evidence; preserve exceptions, raw codes, leading zeros and letters; do not guess/copy one code to many SKUs or regenerate approved codes.",
+    "sourceExtractedProductLevelRows": 2972,
+    "oldRule": "Product-level-only retention as sufficient output superseded; old evidence preserved",
+    "cleaningScope": "Source binding, unique target SKU candidate and actual PG scan are separate stages; no schema or production changes",
+    "owner": "Original D3, gpt-6.1-terra/medium, own private package04 successor only; application remains Dot",
+    "exactBoundSKUs": "PENDING_CURRENT_OWNER_RESULT",
+    "importAuthorized": false,
+    "sourceEvidenceStatus": "CURRENT_TWO_BATCH_EXACT_SCAN_COMPLETE_NOT_FINAL_SKU_BINDING",
+    "knownDistinctCodesInTwoBatches": 17990,
+    "historicalExactSourceSKUReferences": 15018,
+    "newBatchCodes": 2972,
+    "newBatchExactOldCodeIntersection": 0,
+    "newBatchConfirmedCurrentSKU": 0,
+    "newBatchObservedUsage": {
+      "multipleSpecificationCodes": 63,
+      "crossProductConflictCodes": 1,
+      "singleObservedTupleNotProvenSKU": 40,
+      "withoutObservedTuple": 2868
+    },
+    "exactSourceEvidenceReceiptSHA256": "f978ba3afb069e8ad2d7c868893f268488d23b0513820c10dfcdaf92f8ec37f5",
+    "historicalNativeSKUIsCurrentTargetBinding": false,
+    "actualPGScanVerified": false
+  },
+  "latestOnlineRelationshipReadAuthorization": {
+    "authority": "Direct human current controller message requests inspecting online hall and payment-method relationships",
+    "scope": "Same original T45 live45 dictionary lookup plus necessary catalog/FK relationships; only bounded IDs/codes/source bindings and aggregates, no account secrets or business writes",
+    "status": "READONLY_COMPLETE_AND_ROUTING_ADOPTED",
+    "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
+    "turnId": "01a19ee6-1e46-7d00-af11-99819d408a7c"
+  },
+  "latestProductGroupClosure20261103": {
+    "state": "ALL_PRODUCT_GROUP_CANDIDATES_MATERIALIZED_NOT_SKU_OR_IMPORT_PASS",
+    "productRows": 2970,
+    "knownGroupReferences": 2970,
+    "unresolved": 0,
+    "newSKU": 0,
+    "newBarcode": 0,
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-user-final-groups-D3-06/RESULT.json",
+    "receiptSHA256": "887d12023638e552aad11de1bd8be258a6f1d1b62404d63237f805737f6b98a3",
+    "productCandidatePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package03-user-final-groups-D3-06/product-candidates.jsonl",
+    "productSHA256": "0bd97d4c8794d8ecfcf716354a7535018071dde66ca9473ae0a3e80ec9e97d95",
+    "latestAuthority": {
+      "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
+      "turnId": "01a19ef5-31f8-7371-8447-08786487b72e",
+      "humanMessageId": "01a19ef5-3213-7d82-81f5-5acea6367fcb",
+      "verifiedBy": "Direct human read_thread, preserving earlier378 explicit classified assignments"
+    },
+    "history": "1174+1393 single-target+378 clothing decision+25 final decision; old snapshots preserved",
+    "scope": "Only product.size_group_id changed; historical specifications, SKU/barcode/stock and explicit exceptions retained",
+    "targetPGVerified": false,
+    "importAuthorized": false,
+    "next": "Final product group consumer now pinned through index08; SKU/barcode identity remains separate unfinished scope"
+  },
+  "onlineRelationshipRead20261103": {
+    "status": "BOUNDED_LIVE_READONLY_COMPLETED_WITH_LIMITS",
+    "owner": "original T45",
+    "sourceDictionaryReceiptSHA256": "afa669b57e437a3f0e235c4eec804b3a772fa717a7d9a15ec8e2089569e87857",
+    "runtimeIncrementReceiptSHA256": "1417c845665df225c39fea5ee72220a54d075e9670adb00ebff1f2f499eb97bc",
+    "liveAppVersion": "0.0.1",
+    "liveMainSHA256": "bad63ea7092692ad93794ac7922c8899e4f5f0242671512bbd9182bc748fedc6",
+    "sourceBatch": "TPLUS-20260922-A2",
+    "appReadLogic": "Latest committed source same-ID projections overlaid by runtime.master_data_entity; employee auth same-ID overlays, display hallId, actor storeId",
+    "paymentMethodHall": "No direct method hall relation; fund account stores primary method and hall list. Recommendations use approved historical sales pairs then explicit hallIds; recommendations are not account permission restrictions. No history documents queried here.",
+    "warehouse": {
+      "checkedHalls": 39,
+      "referencedWarehouses": 43,
+      "runtimeOverrides": 27,
+      "remainingMultiHallWarehouse": 1,
+      "orphanHallReferences": 0,
+      "singleHallDefaultWarehouses": 39,
+      "singleHallPolicyCompleted": false
+    },
+    "fundAccounts": {
+      "boundedAccounts": 80,
+      "multipleHallAccounts": 24,
+      "orphanMethodOrHallReferences": 0,
+      "emptyMethodOrHallReferences": 0,
+      "currentEnabledAndFinalApprovedPatchProjection": "NOT_VERIFIED"
+    },
+    "staff": {
+      "sourceStaffInCheckedHallDomain": 83,
+      "sameIdAuthRecords": 39,
+      "currentHallDifferentFromOldSource": 4,
+      "orphanHallReferences": 0,
+      "interpretation": "All4 current-vs-source differences match existing approved local candidates; not defects and do not restore old hall values",
+      "approvedLocalCandidateMatches": 4,
+      "comparisonReceiptSHA256": "c6d5a23abe9f55ad3ca4b94ba420181af8a8b488e84263f12814df8bc2cd2fb2"
+    },
+    "dictBridge": {
+      "knownHallCodes": 39,
+      "knownMethodCodes": 5,
+      "missingMethodCode": 1,
+      "ambiguousRecordIDs": 0
+    },
+    "checks": "READ ONLY repeatable-read, all SQLSTATE00000, rollback and close; existing first3 jobs not replayed",
+    "unverified": [
+      "Runtime-only new entities outside source-derived bounds",
+      "Final approved fund-account overlay, enabled state, full permissions/login and HTTP business chain"
+    ],
+    "productionWrites": 0,
+    "permissionsChanged": false,
+    "private49": "PAUSED_UNCHANGED",
+    "singleMethodState": {
+      "receiptSHA256": "10a3c5ebdc6444836fc1304590677e1f6f4db4a518e6fb0ac283ff598d5cc79e",
+      "sourceDeclared": "UNKNOWN_NOT_PRESENT",
+      "candidateEnabled": null,
+      "runtimeSameIdOverrides": 0,
+      "deployedReaderEffective": true,
+      "effectiveBasis": "DEFAULT_FROM_DEPLOYED_READER_RULE",
+      "actualHTTPExecuted": false,
+      "userEnableDecision": false
+    }
+  },
+  "paymentDictionaryBridge20261103": {
+    "status": "USER_APPROVED_INDEPENDENT_METHOD_AND_43_ACCOUNT_RELATIONS_CONSUMED_DRAFT",
+    "authority": "Direct human call_aa8f9f65b8c2475987466317dfcba775 item0",
+    "decision": "Retain independent cashier payment method and original43 account links; do not fold into cash, bank transfer or other",
+    "methodCandidates": 12,
+    "registryCandidates": 4099,
+    "accounts": 80,
+    "accountMethodCandidateKnown": 80,
+    "accountMethodUnbound": 0,
+    "prior37Unchanged": true,
+    "newApprovedRelations": 43,
+    "knownHallBridges": 39,
+    "historicalRecommendationHallRelationCandidates": 985,
+    "candidateIsNotPermission": true,
+    "enabledDifferencesRetained": 19,
+    "registrySHA256": "04e7d2e6fd4cf5b45b564ce8ccd16446add81cd0e78cb5ed1007b1a611ea9be5",
+    "methodSHA256": "d4c44a398e8fa77c189152a9d86fedfe59d32d8330c306e84719c939d696264c",
+    "methodReceiptSHA256": "74e2115b15d844715ad1c54fea69e54f832497f3ab1654f0fbad4ef0ca137965",
+    "accountConsumerPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/payment-dictionary-bridge-D2-01/APPROVED-INDEPENDENT-METHOD/CONSUMED-43/account-reference-candidates-80.jsonl",
+    "accountConsumerSHA256": "6226ae16e71e551b5916897b083cb5c82a9ef0c587e035c40c95afc536e353bc",
+    "receiptSHA256": "2388ecd13e172d8ab7c275b1e259a5d0a0848c073944d2af3ef312e29f1f372d",
+    "singleMethodState": {
+      "receiptSHA256": "10a3c5ebdc6444836fc1304590677e1f6f4db4a518e6fb0ac283ff598d5cc79e",
+      "sourceDeclared": "UNKNOWN_NOT_PRESENT",
+      "candidateEnabled": null,
+      "runtimeSameIdOverrides": 0,
+      "deployedReaderEffective": true,
+      "effectiveBasis": "DEFAULT_FROM_DEPLOYED_READER_RULE",
+      "actualHTTPExecuted": false,
+      "userEnableDecision": false
+    },
+    "targetPGVerified": false,
+    "importAuthorized": false,
+    "productionWrites": 0,
+    "next": "Dot receiving path must distinguish source-declared state and deployed-reader default; no automatic source enabled rewrite or extra permission inferred"
+  },
+  "currentWaitingConditions20261103Index08": {
+    "groupAssignment": "CLOSED_ALL2970",
+    "cashierIndependentDecision": "APPROVED_AND_CONSUMED",
+    "cashierSourceDeclaredEnabled": "UNKNOWN_NOT_PRESENT_READER_DEFAULT_TRUE_SEPARATELY",
+    "remaining": [
+      "SKU and barcode unique identity and exact fit mapping",
+      "Stable document source-key and effective status semantics",
+      "65 mixed-signed SALE monetary receiver conflicts and1 tax-scope source conflict retained",
+      "Dot full-batch bounded reader and V2 database apply/resume",
+      "Target identity/ACL, full isolated import, reconciliation, recovery and ordinary business chain not verified"
+    ]
   }
 }
