@@ -4017,3 +4017,18 @@ Original D3 WOMEN successor has now delivered: four more product references,1,17
 Negative-SALE bounded source followup now delivered: all65 original normal-sale headers have mixed signed rows (176rows:85positive/91negative per export), originalZIP type15/text and outer totals agree; original supplement flag says NORMAL. This is a proved source fact conflicting with current unified-import-contract.ts SALE-positive and discount/gross guards, not proof of corrupt user data or authorization to relabel RETURN/EXCHANGE. Current effective revision/void semantics remain unverified. Dot must reconcile receiving semantics against existing approved decisions; preserve original values and source identity. Receipt8697b84c9e013152fe4db64a4f0522931cbb4184d1f679ca15878e76ded1c60c; no new online read or app/SQL/database change.
 
 T45 visibility supplement closes the zero-match interpretation gap: both exact objects are real base tables, RLS disabled/inactive, no policies/view definitions, ordinary-role SELECT allowed, and direct SQL contains only exact-number predicate. Thus zero match is confirmed in these two tables in this current formal database; it is not RLS/hall filtering and does not establish absence in the original TPlus system. Metadata-only check completed, rollback/client close true, no repeated business query or writes. Updated cumulative receipt SHA2564b255e0f38f08abd4c64b66c3c2627d7a684989f1ca8197c73ef65a670a94107; earlier receipt hash above is historical.
+
+
+### 2026-11-03 用户补充：全部已有规格映射单一标准组即可采用完整组
+
+最新用户裁决已替代此前“只有历史SKU子集就一律不能确认商品完整组”的额外限制。原D3实际指定 gpt-6.1-terra/medium，接续原清洗范围实施；有效商品级、SKU级例外优先，未映射规格不得被忽略。
+
+本次新增1,393款（男装上衣1,063、男裤328、无尺码/配饰标准组2），共采用6,430条已有规格映射；总归组2,567/2,970，剩403（395无历史规格映射依据，8含未映射或已保留辅料例外）。只改新增商品的size_group_id，复用4,098条登记及完整标准成员；其余商品字段、原规格、条码和数量保留，新增SKU/条码0。此前1,173/1,797及1,174/1,796为历史断点，当前以本段为准。
+
+私域完整商品候选：`package03-common-group-single-target-D3-02/product-candidates.jsonl`，SHA256 `9d23e7e94342a76477bf88900bec471d5179a9a843864417ac0ec72714e2dc8c`；回执SHA256 `1a592c4550d84adab8bec64a7d6229cd812f800af58917de4a83186e6064146f`。剩余清单同目录`待核商品及规格.md`/`remaining-items.jsonl`。原D3已完成逐规格及只改所属组的定向校验，主控采用有效结论，只核交付文件完整性。仍是离线清洗候选，未写数据库或通过导入验收。
+
+T45原16商品精确只读已结束：16命中，3个旧来源组均无成员记录，旧A2批不证明本批标准组。回执SHA256 `a1d5709218cfca4bc3d1702e1368a6ecb1c895942d3ad092ad470d45f28ea65c`；事务回滚、连接释放，无业务或权限变更，不重复查询。
+
+并行原D1已把28,828组可证金额接回完整28,894销货头，66组保留未知；客户、仓库及来源身份未改变。私域回执SHA256 `225c4f314989acac66982c3260e1503bf5f4553b468dbc1c237db80e2418b968`，完整头SHA256 `1c0267cf8c06334ad4e81dd85f502123d0f5135d0935de17c5414dd404f745ed`。仍为DRAFT，不代表保存、导入或PG通过。
+
+后继只核剩余准确缺口；已明确归一的1,393款不再逐款申请裁决。不改应用、SQL、数据库结构或生产。真实行只留私域，不提交Git或传Dot。
