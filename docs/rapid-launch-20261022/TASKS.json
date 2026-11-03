@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T13:45:25.252486+08:00",
+  "updatedAt": "2026-11-03T14:34:52.925273+08:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22170,7 +22170,7 @@
   "currentRoute": {
     "recordedAt": "2026-11-03T02:52:50.159534+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "INDEX20_ALL_PRODUCT_CATEGORY_REFS_CLOSED_FEATURES_CONSUMED_FIXED051_DRAFT",
+    "status": "INDEX21_THICKNESS_CONSUMED_STAFF_DECISION_INCREMENT_IN_PROGRESS_FIXED051_DRAFT",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22203,10 +22203,10 @@
     },
     "owners": {
       "Dot": "Sole app/schema/install/import owner;offline051 accepted; standard old-table dependency/35-core/full transaction and receiving seams pending.",
-      "D3": "Sole final private candidate/registry/index writer;index18 delivered. Next consume exact user category decisions or Dot receiving contract; do not fabricate work.",
+      "D3": "Sole central writer;consuming fixed employee increment into successor index22 from21;no overlapping owner.",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
-      "D1": "Employee/name/department evidence delivered;transfer endpoint existing name-only projection confirmed, original-code bridge and document stable-key seam remain.",
-      "T45": "Actual authenticated public employee roster blocked by disabled local browser and401 anonymous endpoints; all prior jobs terminal;no new duplicate server task.",
+      "D1": "Employee increment delivered with4 fixed hashes;original private outputs retained, no central or DB changes.",
+      "T45": "Actual public employee route/list and narrow server read-chain completed;readonly rollback/close;no new duplicate environment job.",
       "QB": "No duplicate whole-code acceptance dispatched",
       "D2": "7 collar text sources delivered and consumed;29 exact category cases delivered, await one grouped human decision.",
       "F2": "All16 source groups located; four-row old consumer gap reconciled against existing enriched product evidence; delivered/idle."
@@ -24224,8 +24224,8 @@
       "productionWrites": 0
     },
     "latestOfflineIndex": {
-      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-20/INDEX.json",
-      "sha256": "e09e7ee393bb855dfc0a8577315afddfaed9be7b391217aef2bdc93ad62e9ed4",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-21/INDEX.json",
+      "sha256": "a2002f3bc9e27a71cc727263f81d7074a77d16ffb4eb5dd8017c3a53e4d59aa7",
       "ready": false
     }
   },
@@ -25273,7 +25273,7 @@
     ]
   },
   "actualEmployeeRosterDecision20261103": {
-    "status": "ACTUAL_ROSTER_NOT_ACQUIRED_OLD103_WITHDRAWN_NO_CENTRAL_CONSUMPTION",
+    "status": "ACTUAL_PUBLIC103_OBSERVED_EXACT54_RETIRED_USER_DECISION_D1_PREPARING",
     "authority": {
       "threadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "userMessageId": "01a19fe4-adec-7931-8cb1-df2dc81e075d",
@@ -25298,10 +25298,19 @@
         401,
         401
       ],
-      "authenticatedEmployeeRosterObtained": false,
+      "authenticatedEmployeeRosterObtained": true,
       "old103Roster": "WITHDRAWN_NOT_CURRENT_ROSTER",
       "cannotComputeCurrentCountBySubtracting54": true,
-      "browserError": "Local browser use is disabled in Work settings"
+      "browserError": "Local browser use is disabled in Work settings",
+      "actualDisplayedRecords": 103,
+      "actualPages": [
+        100,
+        3
+      ],
+      "eofVerified": true,
+      "actualBusinessProjectionSha256": "43f4859c587745262e5d6531eab24b1dc1ae33b257a616e70c9762efaa3c4e8d",
+      "actualDisplayDoesNotProveTrueEmployment": true,
+      "browserErrorHistoricalOnly": true
     },
     "explicitDecisionRows": {
       "sourceGroups": 3,
@@ -25310,12 +25319,85 @@
       "centralApplied": false
     },
     "missingNameAndCodeDocuments": 8,
-    "customerIdentityConflicts": 2,
+    "customerIdentityConflicts": "2 user-confirmed supplier buyers; receiving role contract unresolved",
     "owner": "Original T45 actual-list read; original D1/D3 downstream cleaning only after valid evidence",
-    "next": "Existing originating chat already requested browser enablement and authenticated public session; do not duplicate that request or route around disabled browser. Preserve exact cases; no new server job.",
+    "next": "Original D3 consumes fixed D1 increment into index22, checks exact existing source/registry bridges, lists unsupported target fields; no repeat user decision or online read.",
     "databaseWrites": 0,
     "permissionsChanged": false,
     "importAuthorized": false,
-    "updatedAtShanghai": "2026-11-03T13:45:25.252486+08:00"
+    "updatedAtShanghai": "2026-11-03T14:34:52.925273+08:00",
+    "priorStatusHistorical": "ACTUAL_ROSTER_NOT_ACQUIRED_OLD103_WITHDRAWN_NO_CENTRAL_CONSUMPTION",
+    "latestServerReceipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261103-employee-server-read-chain-readonly-01/RESULT.json",
+      "sha256": "d17c101eae8d531f8559114a656476a28375a67361b88a005c1f58ca57957540"
+    },
+    "retirementDecision": {
+      "userMessageId": "01a1a017-9821-7850-ba07-346211ce777b",
+      "controllerReadOriginal": true,
+      "exactRecords": 54,
+      "sha256": "263ec76462913f0ccb24bdad3cb8169be51c824106897745e4d0f9c4fc6ee0e4",
+      "date": "2026-11-03",
+      "timezone": "Asia/Shanghai",
+      "precision": "DATE_ONLY",
+      "preserveCurrent49": true,
+      "status": "OFFLINE_INCREMENT_IN_PREPARATION_NOT_CENTRALLY_CONSUMED"
+    },
+    "sourceContractGap": "staff employment_status exists; departure date is not in fixed051 import fields, retain decision sidecar pending Dot receiver.",
+    "offlineProducer": {
+      "owner": "original D1 gpt-6.1-terra/medium",
+      "status": "DELIVERED_D3_CONSUMPTION_IN_PROGRESS",
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/staff-identity-retirement-D1-20261103-01",
+      "files": {
+        "identity-crosswalk.jsonl": "286baf60446b823d3b41aac390823abed43f4285780293f8ff403937bf6f2043",
+        "retirement-54.jsonl": "e549d3d8b8305ae32fb5d09976c2b5cf072954f992518cacef1035463ca3d830",
+        "sales-attribution-delta-6238.jsonl": "2745410bd0a6e99f0b9bdf24f96623caab16c6a6cfa2dd9cda02050d74abf575",
+        "unresolved.json": "d43627501156ca7383bc5e2e77f3ebcccd99938b76c57e659200fa5478a5ccb0"
+      },
+      "counts": {
+        "affectedDocuments": 6238,
+        "identityMatchedOnly": 6194,
+        "explicitPriorRetiredIdentityDocuments": 36,
+        "missingNamesAndCodes": 8,
+        "selectedOldIdInExact54RetirementDecision": 5067,
+        "retiredRecords": 54,
+        "existingIdsFor4ApprovedNewPeople": 4
+      },
+      "labelsAreNotEmploymentStatus": true,
+      "targetRegistryOrPGVerified": false
+    }
+  },
+  "thicknessNormalizationDecision20261103": {
+    "status": "CONSUMED_INDEX21_DRAFT",
+    "sourceThreadId": "01a19fd0-bfeb-77d3-9f79-90a2f958f88d",
+    "userMessageId": "01a1a004-c7e8-70c1-b1ac-e8e110c051cc",
+    "controllerReadOriginal": true,
+    "decisionSha256": "aaaf8e1edfaef1e9fdab0c4b328a144eb7b13e4296095e3fca0aa990dbdcac44",
+    "changedProducts": 14,
+    "thin": 10,
+    "thick": 4,
+    "priorThickPreserved": 1,
+    "remainingUnknownIn29": 14,
+    "receiptSha256": "984bb24a2c07bc4a4a923b023e23dd01bb73449ef474a4e8b1f25b56219e1542",
+    "index": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-21/INDEX.json",
+      "sha256": "a2002f3bc9e27a71cc727263f81d7074a77d16ffb4eb5dd8017c3a53e4d59aa7",
+      "ready": false
+    },
+    "databaseWrites": 0
+  },
+  "supplierBuyerDecision20261103": {
+    "status": "BUSINESS_FACT_CONFIRMED_RECEIVER_SEAM_PENDING_DOT",
+    "sourceThreadId": "01a19fd0-bfeb-77d3-9f79-90a2f958f88d",
+    "userMessageId": "01a1a005-56f4-7e63-8dfd-39aa28f3f789",
+    "controllerReadOriginal": true,
+    "decisionSha256": "87707d4f834c9ffa7a369d3f5ce6ffbeaad08d274532602f5f2b83bef346eab2",
+    "documents": 2,
+    "originalSupplierAndTransactionsPreserved": true,
+    "fixed051References": [
+      "packages/application/src/unified-import-contract.ts:777 customer_id->customer",
+      "adapters/postgres/src/sales-query-reader.ts:207 JOIN customer"
+    ],
+    "noNewBusinessRuleOrSchemaApplied": true,
+    "importAuthorized": false
   }
 }
