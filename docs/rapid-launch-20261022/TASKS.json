@@ -25730,8 +25730,8 @@
     "frozenDemo": "Read-only; approved differences remain"
   },
   "latestCleaningIndex": {
-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-34/INDEX.json",
-    "sha256": "ea645d89336009fe9c73e187ec5623b2b1e569cecdf71a16ec5619535cdaabde",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-37/INDEX.json",
+    "sha256": "661138b2304d42de7b1f2e9d6386e4c305cacedb27c81a2052516dacf8345bbd",
     "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
     "ready": false,
     "databaseVerified": false
@@ -25777,16 +25777,16 @@
   },
   "currentCleaningOwnerQueue20261104": {
     "D3": {
-      "current": "index34 completed;507 additional barcode bindings and81 DRAFT head overlays consumed; idle",
-      "next": "Actual pending user answers, exact identity evidence or fixed compatible Dot receiver only"
+      "current": "index37 settlement line and method candidate increment completed",
+      "next": "Actual user answers, exact account identity receipt or fixed compatible Dot receiver only"
     },
     "D1": {
-      "current": "Direct unreviewed status81 and effective-state43648 audit-presence evidence delivered; idle",
-      "next": "Actual status ruling or new source; no repeated full checks"
+      "current": "26382 settlement line-order receipt delivered; idle",
+      "next": "Actual new ruling/evidence only, no full repeat audit"
     },
     "D2": {
-      "current": "74 role/state cases grouped with exact old-code relationships; idle",
-      "next": "Actual user role/state ruling; no independent central edits"
+      "current": "Method and account original header narrow followups delivered; idle",
+      "next": "Actual 51-account identity or role/state ruling; no repeats or central edits"
     },
     "T45": {
       "current": "No new live server/database job",
@@ -25884,9 +25884,11 @@
   },
   "latestGitHubCleaningCheckpoint": {
     "branch": "codex/e5c5a762-cleaning-20261102",
-    "localCommit": "bea12085730ce1cbe2fc9519fe24b8c001a0e25e",
-    "remoteCommit": "bea12085730ce1cbe2fc9519fe24b8c001a0e25e",
-    "status": "PRIOR_CHECKPOINT_REMOTE_VERIFIED_BEFORE_INDEX34_RECORD_COMMIT",
+    "localCommit": "b147692a13bc0fb240bd5f8dab3905e27572e938",
+    "remoteCommit": "b147692a13bc0fb240bd5f8dab3905e27572e938",
+    "status": "PUSH_SUCCEEDED_AND_REMOTE_REF_VERIFIED",
+    "transport": "HTTPS HTTP/1.1",
+    "included": "Existing controller records index34 only; private business rows excluded; four source WIP preserved",
     "databaseExecuted": false
   },
   "newBarcodeAllocationQuestion20261104": {
@@ -25918,7 +25920,7 @@
   },
   "trialReadiness20261104": {
     "sourceIntake": "Received and hash verified051 base plus snapshot WIP, not a final release",
-    "offlineEvidence": "13 packages have source drafts and incremental mappings; index31 is not a complete executable standard package",
+    "offlineEvidence": "13 package source drafts and candidate increments at index37; not complete executable standard package",
     "realPackageImport": "NOT_READY synthetic-only client; compatible real-data isolated target/role/install/identity invocation still needed",
     "currentBatchPGInitialization": "NOT_RUN",
     "completePGImportReconciliationRecovery": "NOT_RUN",
@@ -26031,5 +26033,39 @@
       "question": "Does source 生效 map to APPROVED? Do not infer from presence of audit fields; no replay of stock/funds.",
       "status": "USER_QUESTION_PENDING"
     }
+  },
+  "settlementConsumer20261104": {
+    "rows": 26382,
+    "lineOrderMapped": 26382,
+    "sourceParentLocators": 25854,
+    "methodSnapshotCandidateMapped": 26382,
+    "methodCodes": 6,
+    "refundPreserved": 534,
+    "accountUnresolved": 26382,
+    "positiveDirectionUnresolved": 25826,
+    "zeroDirectionUnresolved": 22,
+    "lineOrderReceiptSHA256": "1b12f07ab258f19d5421551300e60ea2cc6cdb5dc69a7b984d94d3daf3939eb1",
+    "methodHeaderFollowupSHA256": "ae9874857fbce3dd4d268cc4e289198030e0e8e6f5c3e4aee4d4a4f935368760",
+    "consumerReceiptSHA256": "427cb603923977431648be700ec4431cccaa8457449dcfaa7da0300f21163a77",
+    "correction": "index35 method assertion withdrawn in36; actual original header proof closes relation and37 supersedes only method pause. All historical results retained.",
+    "limits": "Candidate only, no PG; line number/source locator not persistent entity ID; no amount/direction/account inference."
+  },
+  "settlementAccountGap20261104": {
+    "receiptSHA256": "e309ab61f2bed10f73ab180bae03bda019f977e759fb1946a8e077942037c1a7",
+    "sourceField": "现结!D1 *账号名称",
+    "distinctValues": 51,
+    "exactNameSingleCandidates": 51,
+    "sourceKeyBridgesProven": 0,
+    "rows": 26382,
+    "status": "USER_IDENTITY_CONFIRMATION_PENDING",
+    "privateEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/settlement-method-account-D2-06/account-display-gaps.private.jsonl",
+    "limits": "Do not infer identity from same name or strip prefixes; raw values present, missing stable foreign-key relation."
+  },
+  "settlementDirectionQuestion20261104": {
+    "positive": 25826,
+    "zero": 22,
+    "refundAlreadyApproved": 534,
+    "status": "USER_QUESTION_PENDING",
+    "question": "Positive RECEIVE; zero keep row and amount0 with RECEIVE/no funds effect, or leave zero unknown. No assignment until actual answer."
   }
 }
