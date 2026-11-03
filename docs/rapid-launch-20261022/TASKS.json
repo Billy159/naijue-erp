@@ -22170,7 +22170,7 @@
   "currentRoute": {
     "recordedAt": "2026-11-03T02:52:50.159534+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "INDEX19_USER_REFUND_CONSUMED_FIXED051_NOT_IMPORT_READY",
+    "status": "INDEX20_ALL_PRODUCT_CATEGORY_REFS_CLOSED_FEATURES_CONSUMED_FIXED051_DRAFT",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22223,7 +22223,7 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical true-blank sales/transfer A rule plus direct human call_88267c72a7204d02940b136fb5218b16 item0 authorizing stock true blanks and exact normal-A alias; preserve all raw values/provenance, no unobserved SKU or barcode.",
-    "current": "534 refund direction decision consumed; category/identity and Dot source receiving conflicts remain",
+    "current": "All 2970 product category references resolved in cleaning candidates; exact feature increment and index19 refund inherited; scheme/staff/document identity and Dot source contract dependencies remain",
     "next": [
       "Dot standard path must remove actual old-table dependencies while retaining actor/row-intent/receipt/audit and atomicity;35-core retirement and reviewed install not complete.",
       "Dot full standard package single-transaction DML+publication and actual V2 PG/normal runtime acceptance remain unverified.",
@@ -24225,8 +24225,8 @@
       "productionWrites": 0
     },
     "latestOfflineIndex": {
-      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-19/INDEX.json",
-      "sha256": "973c9d24daec24fceacca695426c03b3593c806f90aaf08734ac9df3c7bbb54a",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-20/INDEX.json",
+      "sha256": "e09e7ee393bb855dfc0a8577315afddfaed9be7b391217aef2bdc93ad62e9ed4",
       "ready": false
     }
   },
@@ -25203,6 +25203,74 @@
     "checks": [
       "D1 exact source refs and signed amount inverse readback",
       "D3 original source fields preserved; other 25848 rows copied byte for byte; three output shards read back"
+    ]
+  },
+  "categoryAndFeatureDecision20261103": {
+    "status": "USER_APPROVED_CATEGORIES_AND_EXACT_FEATURES_CONSUMED_INDEX20_DRAFT",
+    "authority": {
+      "threadId": "01a19fd0-bfeb-77d3-9f79-90a2f958f88d",
+      "primaryUserMessageId": "01a19fdb-9ca0-7c33-8093-59cc938305e7",
+      "remaining25UserMessageId": "01a19fdd-45a7-7261-ab9e-275ad7981554",
+      "controllerReadOriginalMessages": true
+    },
+    "input": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/category-decision-and-features-20261103-01a19fd0/DECISION-AND-FEATURES.private.json",
+      "sha256": "9588226680e6c1c366b9999890f8ae276be62beaf802bfe5c0e74b266e21d616"
+    },
+    "approvedCategories": {
+      "products": 29,
+      "单西": 4,
+      "西裤": 4,
+      "长袖衬衫": 1,
+      "羽绒服": 16,
+      "棉服": 1,
+      "夹克": 1,
+      "牛仔裤": 1,
+      "松紧裤": 1
+    },
+    "approvedCategoryAlias": {
+      "oldName": "其他辅料",
+      "currentName": "辅料及其他",
+      "currentCandidateAffectedProducts": 33,
+      "previous30SummarySuperseded": true,
+      "onlineIdentityMergeExecuted": false
+    },
+    "sourceFeatures": {
+      "year2026": 29,
+      "clearCollar": 13,
+      "hatFeaturesSeparate": 7,
+      "thicknessUnresolvedConflict": 1,
+      "rule": "Only exact approved source-to-contract semantics; unknowns preserved; do not infer thickness from season or year from barcode scheme",
+      "status": "EXACT_FIELDS_CONSUMED_OTHER_SOURCE_EVIDENCE_PRESERVED"
+    },
+    "owner": "original D3 gpt-6.1-terra/medium, new private successor and index20 only",
+    "importAuthorized": false,
+    "targetPGVerified": false,
+    "consumerReceiptSHA256": "f6cdbe8c8a7868456b019c8ebd979b7cb2c96926567f4258efa3c2ffc94d6cc0",
+    "consumedCounts": {
+      "products": 2970,
+      "categoryReferences": 2970,
+      "categoryPending": 0,
+      "newCategoryAssignments": 29,
+      "renamedCategoryNodes": 1,
+      "retainedCategoryProductReferences": 33,
+      "year": 29,
+      "collarText": 13,
+      "thicknessExact": 1,
+      "hatSidecarOnly": 7,
+      "thicknessNoExactTargetBridge": 13,
+      "thicknessSourceConflict": 1
+    },
+    "currentIndex": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-20/INDEX.json",
+      "sha256": "e09e7ee393bb855dfc0a8577315afddfaed9be7b391217aef2bdc93ad62e9ed4",
+      "ready": false
+    },
+    "limitations": [
+      "No online identity merge or database writes",
+      "Receipt check prose says nine paths; approved counts and input define eight distinct category paths, no ninth path adopted",
+      "Source thickness synonyms need exact semantics; source conflict pending in originating user chat",
+      "Complete standard package and PG import unverified"
     ]
   }
 }
