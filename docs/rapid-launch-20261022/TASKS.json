@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T03:28:58.969160+00:00",
+  "updatedAt": "2026-11-03T13:45:25.252486+08:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22206,7 +22206,7 @@
       "D3": "Sole final private candidate/registry/index writer;index18 delivered. Next consume exact user category decisions or Dot receiving contract; do not fabricate work.",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
       "D1": "Employee/name/department evidence delivered;transfer endpoint existing name-only projection confirmed, original-code bridge and document stable-key seam remain.",
-      "T45": "All prior bounded readonly work terminal;no new server/DB job or credentials requested.",
+      "T45": "Actual authenticated public employee roster blocked by disabled local browser and401 anonymous endpoints; all prior jobs terminal;no new duplicate server task.",
       "QB": "No duplicate whole-code acceptance dispatched",
       "D2": "7 collar text sources delivered and consumed;29 exact category cases delivered, await one grouped human decision.",
       "F2": "All16 source groups located; four-row old consumer gap reconciled against existing enriched product evidence; delivered/idle."
@@ -22227,7 +22227,6 @@
     "next": [
       "Dot standard path must remove actual old-table dependencies while retaining actor/row-intent/receipt/audit and atomicity;35-core retirement and reviewed install not complete.",
       "Dot full standard package single-transaction DML+publication and actual V2 PG/normal runtime acceptance remain unverified.",
-      "User grouped decision:29 product categories in linked private six-group list; only this field branch waits.",
       "Dot precise stable document keys and original endpoint-code receiving bridge; no document-number source-key invention or name-based warehouse ID fill.",
       "Six retained scheme IDs need receiving registry/initialization closure;9 product scheme source-code bridges remain unproven.",
       "Other retained seams: historical department/current hall, FIT canonical code, true SKU/barcode identity,4 already-approved new-person stable keys,66 monetary exceptions and state/cutoff handling."
@@ -25272,5 +25271,51 @@
       "Source thickness synonyms need exact semantics; source conflict pending in originating user chat",
       "Complete standard package and PG import unverified"
     ]
+  },
+  "actualEmployeeRosterDecision20261103": {
+    "status": "ACTUAL_ROSTER_NOT_ACQUIRED_OLD103_WITHDRAWN_NO_CENTRAL_CONSUMPTION",
+    "authority": {
+      "threadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "userMessageId": "01a19fe4-adec-7931-8cb1-df2dc81e075d",
+      "environmentReplyMessageId": "01a19fe7-3aa3-72d2-ba99-a5e1f84a6d20",
+      "controllerReadOriginalMessages": true
+    },
+    "target": "https://1n5635n614.goho.co/",
+    "rules": [
+      "Current employee roster must equal actual authenticated public page/API, not source-plus-overlay reconstruction.",
+      "Human-approved unique historical name contains/near match may map same person; preserve source name/code and evidence.",
+      "Historical staff absent from verified actual roster retain individual identities marked retired; no anonymous collapse or account creation.",
+      "Ambiguous people or absent name/code remain unresolved."
+    ],
+    "receipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261103-employee-actual-web-route-readonly-01/RESULT.json",
+      "sha256": "262569b8c6e497e18f02d8be188fed6b0e6c63759712816b8618c0cee58fdf34",
+      "observedAtShanghai": "2026-11-03T13:37:28.631350+08:00"
+    },
+    "observations": {
+      "publicHtmlMatchesServer": true,
+      "anonymousEmployeeEndpointsStatus": [
+        401,
+        401
+      ],
+      "authenticatedEmployeeRosterObtained": false,
+      "old103Roster": "WITHDRAWN_NOT_CURRENT_ROSTER",
+      "cannotComputeCurrentCountBySubtracting54": true,
+      "browserError": "Local browser use is disabled in Work settings"
+    },
+    "explicitDecisionRows": {
+      "sourceGroups": 3,
+      "documents": 164,
+      "currentIdBindingsVerified": false,
+      "centralApplied": false
+    },
+    "missingNameAndCodeDocuments": 8,
+    "customerIdentityConflicts": 2,
+    "owner": "Original T45 actual-list read; original D1/D3 downstream cleaning only after valid evidence",
+    "next": "Existing originating chat already requested browser enablement and authenticated public session; do not duplicate that request or route around disabled browser. Preserve exact cases; no new server job.",
+    "databaseWrites": 0,
+    "permissionsChanged": false,
+    "importAuthorized": false,
+    "updatedAtShanghai": "2026-11-03T13:45:25.252486+08:00"
   }
 }
