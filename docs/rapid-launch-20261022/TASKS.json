@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T14:34:52.925273+08:00",
+  "updatedAt": "2026-11-03T14:44:08.877486+08:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22170,7 +22170,7 @@
   "currentRoute": {
     "recordedAt": "2026-11-03T02:52:50.159534+00:00",
     "authority": "Current human latest division of work plus pasted GitHub source/plan adjustment 998c73ba-9845-46c9-b701-6c7e44bd8aa7",
-    "status": "INDEX21_THICKNESS_CONSUMED_STAFF_DECISION_INCREMENT_IN_PROGRESS_FIXED051_DRAFT",
+    "status": "INDEX22_STAFF_AND_HISTORY_IDENTITY_CANDIDATES_CONSUMED_FIXED051_DRAFT",
     "sourcePackage": "NAIJUE-ERP-UNIFIED-PLAN-AND-SOURCE-20261102-v2",
     "archiveReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/unified-plan-v2-intake-20261102-01/RECEIPT.json",
     "sourceBaseline": {
@@ -22203,9 +22203,9 @@
     },
     "owners": {
       "Dot": "Sole app/schema/install/import owner;offline051 accepted; standard old-table dependency/35-core/full transaction and receiving seams pending.",
-      "D3": "Sole central writer;consuming fixed employee increment into successor index22 from21;no overlapping owner.",
+      "D3": "Central increment index22 delivered;no same-scope task queued. Await exact Dot receiving contract;do not fabricate filler work.",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
-      "D1": "Employee increment delivered with4 fixed hashes;original private outputs retained, no central or DB changes.",
+      "D1": "Fixed54 retirement/history producer delivered and consumed;no duplicate source read or server task.",
       "T45": "Actual public employee route/list and narrow server read-chain completed;readonly rollback/close;no new duplicate environment job.",
       "QB": "No duplicate whole-code acceptance dispatched",
       "D2": "7 collar text sources delivered and consumed;29 exact category cases delivered, await one grouped human decision.",
@@ -22223,7 +22223,7 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical true-blank sales/transfer A rule plus direct human call_88267c72a7204d02940b136fb5218b16 item0 authorizing stock true blanks and exact normal-A alias; preserve all raw values/provenance, no unobserved SKU or barcode.",
-    "current": "All 2970 product category references resolved in cleaning candidates; exact feature increment and index19 refund inherited; scheme/staff/document identity and Dot source contract dependencies remain",
+    "current": "index22 has2970 resolved product categories and14 new thickness decisions;staff54 retired identity candidates and6230 sales refs consumed,8 missing identity staynull;role/date receiver seams remain.",
     "next": [
       "Dot standard path must remove actual old-table dependencies while retaining actor/row-intent/receipt/audit and atomicity;35-core retirement and reviewed install not complete.",
       "Dot full standard package single-transaction DML+publication and actual V2 PG/normal runtime acceptance remain unverified.",
@@ -24224,8 +24224,8 @@
       "productionWrites": 0
     },
     "latestOfflineIndex": {
-      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-21/INDEX.json",
-      "sha256": "a2002f3bc9e27a71cc727263f81d7074a77d16ffb4eb5dd8017c3a53e4d59aa7",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-22/INDEX.json",
+      "sha256": "3b066826e655016e96b1ad766e84b55fdae6f5b7ebcc12a2f6cb882fe39e95e0",
       "ready": false
     }
   },
@@ -24648,11 +24648,16 @@
     "Other retained seams: historical department/current hall, FIT canonical code, true SKU/barcode identity,4 already-approved new-person stable keys,66 monetary exceptions and state/cutoff handling."
   ],
   "salesStaffMapping": {
-    "status": "DRAFT_MATERIALIZED_22656_KNOWN_ORIGINAL_IDENTITIES",
-    "known": 22656,
-    "unknown": 6238,
-    "receiptSHA256": "b1df7725372f959aa48946d919ac8951e9c5a935726b0d96d4068ad93e3a148b",
-    "supersedes": "Absent daily-validity intervals do not invalidate already approved unique original identity relationships; real conflicts still excluded"
+    "status": "INDEX22_DRAFT_IDENTITY_REFERENCES_NOT_COMPLETE_STANDARD_STAFF",
+    "priorLinkedUnchanged": 22656,
+    "newLinked": 6230,
+    "candidateReferencesTotal": 28886,
+    "unknown": 8,
+    "totalHeaders": 28894,
+    "selectedRetiredLegacyReferences": 5067,
+    "requiredLegacyRoleUnknown": 54,
+    "consumerReceiptSHA256": "494c3b520b9c2059ab9240b962e102e4f1f3938988ea434f93316a18bbac5618",
+    "targetPGVerified": false
   },
   "barcodeUniqueSKUDecision20261103": {
     "status": "USER_RULE_CONFIRMED_ORIGINAL_D3_CLEANING_IN_PROGRESS",
@@ -25273,7 +25278,7 @@
     ]
   },
   "actualEmployeeRosterDecision20261103": {
-    "status": "ACTUAL_PUBLIC103_OBSERVED_EXACT54_RETIRED_USER_DECISION_D1_PREPARING",
+    "status": "INDEX22_OFFLINE_IDENTITIES_CONSUMED_54_REQUIRED_ROLES_UNRESOLVED",
     "authority": {
       "threadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "userMessageId": "01a19fe4-adec-7931-8cb1-df2dc81e075d",
@@ -25321,7 +25326,7 @@
     "missingNameAndCodeDocuments": 8,
     "customerIdentityConflicts": "2 user-confirmed supplier buyers; receiving role contract unresolved",
     "owner": "Original T45 actual-list read; original D1/D3 downstream cleaning only after valid evidence",
-    "next": "Original D3 consumes fixed D1 increment into index22, checks exact existing source/registry bridges, lists unsupported target fields; no repeat user decision or online read.",
+    "next": "Dot exact legacy retired-role/date representation and receiver;8 originally absent identities stayunknown. No new source capture, account or DB changes.",
     "databaseWrites": 0,
     "permissionsChanged": false,
     "importAuthorized": false,
@@ -25340,12 +25345,12 @@
       "timezone": "Asia/Shanghai",
       "precision": "DATE_ONLY",
       "preserveCurrent49": true,
-      "status": "OFFLINE_INCREMENT_IN_PREPARATION_NOT_CENTRALLY_CONSUMED"
+      "status": "CONSUMED_IN_OFFLINE_LEGACY_CANDIDATES_DATE_SIDECAR_ONLY"
     },
-    "sourceContractGap": "staff employment_status exists; departure date is not in fixed051 import fields, retain decision sidecar pending Dot receiver.",
+    "sourceContractGap": "54 legacy candidates have unknown required role;hall/contact nullable remainunknown. Date-only retirement decision has no fixed051 staff import column.",
     "offlineProducer": {
       "owner": "original D1 gpt-6.1-terra/medium",
-      "status": "DELIVERED_D3_CONSUMPTION_IN_PROGRESS",
+      "status": "DELIVERED_AND_CONSUMED_INDEX22",
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/staff-identity-retirement-D1-20261103-01",
       "files": {
         "identity-crosswalk.jsonl": "286baf60446b823d3b41aac390823abed43f4285780293f8ff403937bf6f2043",
@@ -25364,6 +25369,36 @@
       },
       "labelsAreNotEmploymentStatus": true,
       "targetRegistryOrPGVerified": false
+    },
+    "consumer": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package06-staff-retirement-attribution-D3-01/RESULT.json",
+      "sha256": "494c3b520b9c2059ab9240b962e102e4f1f3938988ea434f93316a18bbac5618",
+      "counts": {
+        "existing_staff_rows": 49,
+        "new_approved_people_hall_linked": 4,
+        "legacy_retired_staff_candidates": 54,
+        "legacy_missing_role": 54,
+        "legacy_hall_unverified": 54,
+        "prior_registry": 4185,
+        "registry": 4239,
+        "sales_rows": 28894,
+        "unaffected_sales_rows": 22656,
+        "unresolved_empty_identity": 8,
+        "sales_attribution_added": 6230,
+        "retired_old_id_linked": 5067
+      },
+      "index": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-22/INDEX.json",
+        "sha256": "3b066826e655016e96b1ad766e84b55fdae6f5b7ebcc12a2f6cb882fe39e95e0",
+        "ready": false
+      },
+      "targetPGVerified": false,
+      "standardStaffReady": false,
+      "limitations": [
+        "54 legacy staff role, hall and contact remain unknown; candidate staff references not full ready and role must not be guessed.",
+        "Target PG identity, privileges and real business behavior not verified.",
+        "No employee accounts, permissions, passwords, app, SQL or DB changed."
+      ]
     }
   },
   "thicknessNormalizationDecision20261103": {
@@ -25399,5 +25434,22 @@
     ],
     "noNewBusinessRuleOrSchemaApplied": true,
     "importAuthorized": false
+  },
+  "latestOfflineClosures20261103Index22": {
+    "status": "DRAFT_NOT_READY_NOT_IMPORTED",
+    "indexPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-22/INDEX.json",
+    "indexSHA256": "3b066826e655016e96b1ad766e84b55fdae6f5b7ebcc12a2f6cb882fe39e95e0",
+    "registryRows": 4239,
+    "retiredLegacyCandidates": 54,
+    "currentStaffPreserved": 49,
+    "approvedNewPeopleHallLinked": 4,
+    "candidateSalesStaffReferences": 28886,
+    "unknownSourceIdentity": 8,
+    "trueBusinessAndTargetPG": "NOT_VERIFIED",
+    "dotNext": [
+      "Exact historical staff role and date receiver, no fabricated permissions",
+      "Two confirmed supplier-buyer sales receiving role seam",
+      "Previously recorded35-core/standard import/scheme/SKU/document monetary and identity receiver gaps remain"
+    ]
   }
 }
