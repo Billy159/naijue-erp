@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-03T00:33:32.902126+00:00",
+  "updatedAt": "2026-11-03T00:56:11.072694+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -22191,7 +22191,7 @@
       },
       "wipScope": "4 pre-existing source/test WIP files preserved; record edits counted separately",
       "latestDotDeliveredBranch": "handoff/erp-unified-latest-20261102",
-      "latestDotDeliveredCommit": "1189b2fe92fd3c003d3325ffb7d077b543be5277",
+      "latestDotDeliveredCommit": "4e98d1365084b153af14180e99cf7db531acd6d4",
       "deliveryMode": "VERIFIED_OFFLINE_PACKAGE_NOT_LOCAL_OR_REMOTE_BRANCH_SWITCH",
       "localSourceBranchStill": "codex/e5c5a762-cleaning-20261102",
       "localOriginalSourceWipPreserved": true,
@@ -22201,10 +22201,10 @@
     },
     "owners": {
       "Dot": "Application/schema/install/importer sole owner;1189 fixed package received, category SQL successor pending",
-      "D3": "Sole private registry and group-cleaning owner; latest single-group rule delivered,2567 grouped/403 pending; no application or SQL changes.",
+      "D3": "Index05 and49-staff hall consumer delivered;registry4098 unchanged",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
-      "D1": "Staff original source codes recovered for28886;22656 approved-main-code candidates require historical-validity evidence;6230 unresolved,8 genuinely missing. Delivered idle.",
-      "T45": "Sole server executor retained; no new server/database execution in this phase",
+      "D1": "Delivered22656 salesperson and39 explicit hall-code relations;4 current-person bridges unknown",
+      "T45": "Prior product16 terminal; new exact6method+39hall readonly scope sent, no production write",
       "QB": "No duplicate whole-code acceptance dispatched",
       "D2": "Six raw fit candidates and bounded namespace-bridge followup delivered/idle; no exact original-code/system-letter bridge found in inspected sources. Account trace not repeated.",
       "F2": "All16 source groups located; four-row old consumer gap reconciled against existing enriched product evidence; delivered/idle."
@@ -22221,8 +22221,8 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical sales/transfer source lines only with exact original blank and decision provenance; not stock/product/global default",
-    "current": "D3 new user-approved single-standard-group rule materialized:2567/2970 grouped,403 unresolved; D1 full28894 sales-header monetary consumer preserves references; offline DRAFT only.",
-    "next": "Resolve only remaining403 actual group gaps and existing other mapping dependencies; Dot V2 executable importer/format consumers pending, no new DB execution.",
+    "current": "Index05:product2567/2970 groups,sales28828 monetary/22656 salesperson,staff39 hall references; offline DRAFT",
+    "next": "Original T45 narrow45 dictionary-ID read pending under existing user online-example authority; no business writes, privilege changes or old job replay",
     "ordinaryDocumentTables": [
       "sales_header",
       "sales_line",
@@ -23719,6 +23719,9 @@
       "salesHeaders": 22656,
       "finding": "Approved original identities and current source codes match at endpoints; inspected decisions lack validity intervals and code reuse facts. Historical applicability not proven. No FK written.",
       "status": "CANDIDATE_NOT_TEMPORALLY_VERIFIED"
+    },
+    "scopeExceptions": {
+      "restrictedDictionaryRead": "Only6 exact method IDs+39 exact hall IDs and necessary source bindings, readonly; old paused jobs stay paused"
     }
   },
   "latestUnifiedSourceIntake": {
@@ -23937,5 +23940,67 @@
     "readOnly": true,
     "rolledBackAndClosed": true,
     "authorityBoundary": "No whole-batch group conclusion from old source group or SKU subset alone; latest user cleaning rule is group assignment authority"
+  },
+  "cleaningConsumerProgress20261103": {
+    "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+    "fixedDotSourceCommit": "4e98d1365084b153af14180e99cf7db531acd6d4",
+    "index": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-05/INDEX.json",
+      "sha256": "1576ab1bcfcd732788cc271e3b2b7299448559bd5627cae89ba624d350c8f354",
+      "ready": false
+    },
+    "salesHeader": {
+      "rows": 28894,
+      "knownSalespersonReferences": 22656,
+      "salespersonUnresolved": 6238,
+      "knownMoney": 28828,
+      "unknownMoney": 66,
+      "consumerPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-header-staff-D1-01/sales-header-staff.draft.jsonl",
+      "sha256": "e3f492306470b78ceb650ed0103d6c515217472e477b402b54bb7a3d1717824c",
+      "receiptSHA256": "b1df7725372f959aa48946d919ac8951e9c5a935726b0d96d4068ad93e3a148b",
+      "scope": "Approved original staff IDs and unique source main codes, no invented daily-validity prerequisite; creators/reviewers/accounts/roles unchanged"
+    },
+    "staff": {
+      "rows": 49,
+      "knownHallReferences": 39,
+      "approvedNoHall": 6,
+      "currentPersonIdentityBridgeMissing": 4,
+      "hallCodeKnownForAll43Assignments": true,
+      "consumerPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package06-staff-hall-consumer-D3-01/staff-candidates.jsonl",
+      "sha256": "f33a5bddd221c17689aa231ec3cbee70deec39ab05d97d138c16a29fafd9fb54",
+      "receiptSHA256": "7bf2203ba5ea5c1e54e9c8b86b7e6cf333252ab84f8ab09a445349bf0360a4d0",
+      "scope": "Only39 hall_id changes via exact approved employee identity+hallCode;6 approved null and4 unbound preserved, no accounts/permissions/historical heads changed"
+    },
+    "product": {
+      "rows": 2970,
+      "knownCompleteGroupReferences": 2567,
+      "unresolved": 403,
+      "newSKU": 0,
+      "newBarcode": 0
+    },
+    "checks": "Original D1/D3 targeted comparisons and reread adopted; controller file integrity only",
+    "targetPGVerified": false,
+    "isolatedImport": "NOT_EXECUTED",
+    "ordinaryBusinessChain": "NOT_VERIFIED",
+    "formalImport": "NOT_EXECUTED",
+    "productionDeployment": "NOT_EXECUTED",
+    "remainingReceiverGaps": [
+      "V2 database apply/resume not implemented in fixed source; offline plan is not execution",
+      "V1 total MASTER500 and64MiB per-file/256MiB package with one-file-per-table cannot carry batch",
+      "Stable document-key contract, source effective-status semantics, fit/SKU identity remain unresolved"
+    ],
+    "next": "Original T45 narrow45 dictionary-ID read pending under existing user online-example authority; no business writes, privilege changes or old job replay"
+  },
+  "currentWaitingConditions": [
+    "Dot fixed successor with actual full-batch V2 import/resume and bounded reader; do not fake trial with V1 500",
+    "Exact document identity/status, fit/SKU/payment namespace and existing business exceptions; independent cleaning continues",
+    "Actual isolated schema/ACL/init/full readback/ordinary-account business chain not yet executed"
+  ],
+  "salesStaffMapping": {
+    "status": "DRAFT_MATERIALIZED_22656_KNOWN_ORIGINAL_IDENTITIES",
+    "known": 22656,
+    "unknown": 6238,
+    "receiptSHA256": "b1df7725372f959aa48946d919ac8951e9c5a935726b0d96d4068ad93e3a148b",
+    "supersedes": "Absent daily-validity intervals do not invalidate already approved unique original identity relationships; real conflicts still excluded"
   }
 }
