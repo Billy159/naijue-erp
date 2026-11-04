@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-04T15:57:11+08:00",
+  "updatedAt": "2026-11-04T09:59:44.289967+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "7b7372aa99fe2c472c5e6cbb0ea2bf394566f96d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -24663,12 +24663,11 @@
     }
   },
   "currentWaitingConditions": [
-    "index43 DRAFT only:43648 APPROVED +81 DRAFT,51 exact account mappings/26382 refs,74 chosen barcode candidates,22 zero original records/0 fund actions and52 staff hall candidates/2 permitted null consumed. These business directions are confirmed, no repeated human ruling required.",
-    "Dot receiver gaps: retain22 zero-amount sources without financial actions; accept2 retired staff user-permitted null halls while preserving no-login and historical identity. No target DB retention/behavior proof yet.",
-    "1374 row SKU references:287 tuples including131 distinct no-source-SKU combinations and29 approved size-exception tuples; Dot must provide exact shared identity/code/enabled receiver contract. Do not invent historical SKU IDs or reactivate stopped records.",
-    "Persistent header/line business identity receiver and complete13-package executable assembly remain unresolved. Source row position and current uniqueness are not permanent entity identity.",
-    "13:31 source typecheck/build/dependencies passed per original acceptance. Three SQL successors still need final installer/record/pins/permissions combination; legitimate execution gates closed. Dot owns code, no local bypass.",
-    "Full target PostgreSQL install/import, independent readback/reconciliation, idempotency/failure recovery, backup restore and ordinary-account save/review/unreview/rereview plus browser remain unverified. No production activity."
+    "index46 is DRAFT only: all confirmed status/account/barcode/zero/staff/warehouse directions and single-product A/B exception consumed. No repeated ruling required.",
+    "Actual inventory-source coverage/zero semantics and one tax-scope document remain human facts pending. Retain unknowns; do not reuse old-batch24-warehouse zero approval.",
+    "Original1374 unresolved document/stock rows remain unchanged after five already-known historical B SKUs materialized. Dot shared source_key/code/enabled receiver gap and approved size exceptions remain; no invented historical SKU or activation.",
+    "Dot code gaps:22 zero-amount source retention with no financial actions,2 retired no-login salesperson null halls as approved,permanent header/line identities,13-package executable assembly and final SQL installer/pins/ACL/profile.",
+    "13:31 source dependencies/typecheck/build accepted; current real PG install/import,independent readback/reconciliation,idempotency/recovery,backup restore and ordinary business/browser validation NOT_RUN. No server/production activity."
   ],
   "salesStaffMapping": {
     "status": "INDEX22_DRAFT_IDENTITY_REFERENCES_NOT_COMPLETE_STANDARD_STAFF",
@@ -25729,11 +25728,18 @@
     "frozenDemo": "Read-only; approved differences remain"
   },
   "latestCleaningIndex": {
-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-43/INDEX.json",
-    "sha256": "90ffa3c7949c486d4515e8f6233963ccf4b275c362fbf4e01851099af9ef8ab8",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-46/INDEX.json",
+    "sha256": "81e58284d42660bb27efdffb61044b1af76f45bea32bf7720d5c0943d90d7590",
     "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
     "ready": false,
-    "databaseVerified": false
+    "databaseVerified": false,
+    "previousIndex": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-43/INDEX.json",
+      "sha256": "90ffa3c7949c486d4515e8f6233963ccf4b275c362fbf4e01851099af9ef8ab8",
+      "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+      "ready": false,
+      "databaseVerified": false
+    }
   },
   "skuMaterialization20261104": {
     "owner": "Original D3",
@@ -25779,32 +25785,34 @@
   },
   "currentCleaningOwnerQueue20261104": {
     "D3": {
-      "current": "index43 fixed and delivered; current increments consumed",
-      "next": "Only integrate actual compatible receiver/new evidence, no empty task",
+      "current": "inventory-jacket-ab-consumer-D3-01 completed; index46 fixed; no active job",
+      "next": "Consume exact forthcoming business decision or Dot compatible receiver; preserve UNKNOWN until then",
       "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
-      "turnId": "01a1a58d-8cfd-7fa2-b97c-f836f78797be",
+      "turnId": "01a1a5ab-1635-7c10-99ff-5f06771f53fb",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
-      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH"
+      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+      "writeScope": "Original sole central index and own private consumer directories"
     },
     "D1": {
-      "current": "D1-05 andD1-06 delivered; both consumedindex43",
-      "next": "Await actual new source or fixed Dot receiver; do not repeat staff hall ruling/scan",
+      "current": "D1-08 warehouse bridge and D1-03 signed money/tax evidence delivered; no active job",
+      "next": "Only an actual tax decision/source supplement or accurate shared receiver delta; do not rerun prior checks",
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
       "turnId": "01a1a584-4ca7-78a3-a658-8d7330bf72db",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
-      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH"
+      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+      "writeScope": "Existing D1 private scopes only; no application/SQL/central writes"
     },
     "D2": {
-      "current": "D2-11 delivered22 zero originals/no actions, consumedindex42",
+      "current": "D2-13 approved A/B exception delivered and consumed index46; no active job",
       "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
       "turnId": "01a1a582-80ce-7bc1-896e-93a765c7d786",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-      "writeScope": "parallel-cleaning-20261104/zero-settlement-no-action-D2-11 only",
-      "next": "Await exact Dot zero-source/SKU receiver; no duplicate ruling task"
+      "writeScope": "Existing D2 private scopes only",
+      "next": "Only a concrete independent cleaning input or exact Dot receiver delta; do not duplicate A/B or barcode decisions"
     },
     "T45": {
       "current": "No new live server/database job",
@@ -25938,23 +25946,11 @@
   },
   "latestGitHubCleaningCheckpoint": {
     "branch": "codex/e5c5a762-cleaning-20261102",
-    "localCommit": "7b7372aa99fe2c472c5e6cbb0ea2bf394566f96d",
-    "remoteCommit": "7b7372aa99fe2c472c5e6cbb0ea2bf394566f96d",
-    "status": "PUSHED_REMOTE_EXACT_REF_VERIFIED",
-    "included": "Only existing three controller records; private data and four source WIP excluded",
+    "localCommitBeforeThisCheckpoint": "1ddff6ed3d0dd6aea4cf5a1460a34083c99f04a7",
+    "lastVerifiedRemoteCommit": "7b7372aa99fe2c472c5e6cbb0ea2bf394566f96d",
+    "status": "NEW_INDEX46_DOC_CHECKPOINT_PENDING_PUSH; previous attempts failed transport",
     "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/.latest-github-checkpoint-result.json",
-    "earlierFailurePreserved": {
-      "branch": "codex/e5c5a762-cleaning-20261102",
-      "localCommit": "08eba717598fe5ff5a7e04e4a0770b7fefe78f1e",
-      "remoteCommit": "d74239b446b9b51812d557cd68ee7bc4c0c5a90d",
-      "status": "LOCAL_INDEX38_SAVED_PUSH_FAILED_LAST_VERIFIED_REMOTE_INDEX37",
-      "included": "Only existing three controller records; private data and four source WIP excluded",
-      "pushFailures": [
-        "HTTP1.1 low-speed timeout; API independently confirmed old remote",
-        "One changed HTTP2 transport attempt failed connect; no more retries"
-      ],
-      "databaseExecuted": false
-    },
+    "included": "Only three controller continuity records; private data and four source WIP excluded",
     "databaseExecuted": false
   },
   "newBarcodeAllocationQuestion20261104": {
@@ -25986,7 +25982,7 @@
   },
   "trialReadiness20261104": {
     "sourceIntake": "13:31 WIP snapshot accepted by original source acceptance; typecheck/build pass, not release",
-    "offlineEvidence": "index43 local candidates; all above rulings consumed, full13-package standard assembly and real import still NOT_READY",
+    "offlineEvidence": "index46 DRAFT; exact51 warehouse references,65 signed money heads,5 historical B SKU candidates and5 stock relinks consumed. Full13-package assembly remains NOT_READY.",
     "realPackageImport": "NOT_READY: legal install/pins/ACL/execution profile integration and complete standard package await Dot; real PG not run",
     "currentBatchPGInitialization": "NOT_RUN",
     "completePGImportReconciliationRecovery": "NOT_RUN",
@@ -26419,16 +26415,169 @@
     "controllerRetest": false
   },
   "currentHumanDecisionQueue20261104": {
-    "status": "NO_PENDING_QUESTION_FOR_ALREADY_CONFIRMED_ITEMS",
+    "status": "TWO_CONCRETE_BUSINESS_FACTS_PENDING",
     "closed": [
       "43648 effective -> APPROVED",
       "51 exact account names",
       "74 chosen barcodes authoritative",
       "22 zero originals retained/no financial actions",
       "staff latest-sale halls plus historical roster fallback;2 remain null as permitted",
-      "five product scheme references already resolved by approved rule"
+      "five product scheme references already resolved by approved rule",
+      "51 exact warehouse name-to-source-code references, inventory27 subset; current fixed batch only",
+      "single-product jacket A/B kept separately; five duplicate stock keys resolved, index46",
+      "65 signed mixed-sale original money projections retained, index45"
     ],
     "technicalOwner": "Dot: SKU/header/line stable receiver identities,zero-source retention,retired null-hall reception,legal combined SQL install and ordinary business validation",
-    "askOnly": "Actual new business conflict with concrete source examples; do not reopen completed rulings"
+    "askOnly": "Actual new business conflict with concrete source examples; do not reopen completed rulings",
+    "pending": {
+      "questionRequest": "Latest main Chat two-item async question; actual answers required",
+      "inventoryCoverage": "Confirm current fixed inventory file coverage and whether unlisted confirmed warehouse/SKU is exactly zero at approved cutoff; no inference while pending",
+      "oneSalesTaxScope": "One sales document has outer/ZIP tax-scope mismatch; online not found, actual settlement unknown; exact amounts and identity only in private review",
+      "privateReview": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/controller-warehouse-reference-review-20261104/库存覆盖与单张税口径待核.md",
+      "privateReviewSHA256": "a0f1026589bea4df697bb427f43906f1687e86d2492c7ad47335bbb02fb41d65"
+    }
+  },
+  "sourceContractEquivalence1331": {
+    "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/complete-local-validation-1331-20261104-01/reprovided-received/source",
+    "comparedAgainst": "12:38 fixed source",
+    "files": {
+      "docs/unified-business-20261102/standard-import-protocol.md": "483388906d6c96daf444404b8f9dcf76929c99a10f84ec103727b3fa22a13797",
+      "packages/application/src/unified-import-contract.ts": "855c571f0b6024383a1535c16a13bb3e4f3a9774a99d591467848556aec339b7",
+      "packages/application/src/unified-import-execution.ts": "d1546813240f88df619dcf9c472b32714e5e288672d61d99be3f55b686c5584b",
+      "packages/application/src/unified-import-whole-package-profile.ts": "a3cc8803b53adcf7d378f26e38226e2b5c8549e34dd64d61eba11a52c843f795",
+      "tools/unified-import/stream-plan.mjs": "ffcc557570b634e5a581d418926cbfb9894c97a21a17d764ee32288aa6ca9463"
+    },
+    "allFiveByteIdentical": true,
+    "effect": "Reuse exact earlier file checks; 13:31 compiler success does not close receiver or execution profile gaps",
+    "newExactStaffEvidence": "unified-import-contract.ts:1490 unconditionally rejects SALESPERSON/null hall, including2 retired user-permitted nulls",
+    "newCoverageCheckTriggeredBy": "43648 effective -> APPROVED now allows actual endpoint coverage classification against protocol:39"
+  },
+  "inventoryApprovedEndpointCoverage20261104": {
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/inventory-jacket-ab-consumer-D3-01/RESULT.json",
+    "sha256": "36781e84874607481ca55c0fb3526be91ad17e29580c54abb89a8de3d62cbcf0",
+    "version": "index46; 13:31 source contract unchanged",
+    "status": "EXACT_WAREHOUSE_BRIDGE_AND_AB_FIXED_ABSENT_INVENTORY_UNKNOWN",
+    "counts": {
+      "sales_approved_nonzero_endpoints": 83394,
+      "sales_covered_unique": 25536,
+      "sales_unlisted_unknown": 57734,
+      "sales_warehouse_or_sku_unmapped": 124,
+      "transfer_approved_nonzero_endpoints": 544566,
+      "transfer_covered_unique": 269339,
+      "transfer_unlisted_unknown": 274345,
+      "transfer_warehouse_or_sku_unmapped": 882,
+      "stock_numeric_cells": 42227,
+      "stock_warehouses": 27,
+      "stock_distinct_mapped_keys": 41709,
+      "duplicate_stock_key_groups": 0,
+      "stock_source_signed_quantity": "80717",
+      "stock_quantity_changed": 0
+    },
+    "unknownGroupingReceipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package05-10-13-warehouse-approved-consumer-D3-01/unknown-coverage-summary.json",
+      "sha256": "f28834e01393c6081694668b9babb39ba4678d69a79d2bce3d9c9315703feb55",
+      "note": "Grouped unknown counts remain applicable; old duplicate counts superseded by index46"
+    },
+    "priorEvidence": {
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/inventory-approved-endpoint-coverage-D3-01/RESULT.json",
+      "sha256": "5020bd9f98fcdf07125b77aecb3ca00eca92bfce2cd926f1e45316b74c9c2675",
+      "version": "13:31 protocol unchanged; index43 source candidates",
+      "status": "BLOCKED_WAREHOUSE_SOURCE_IDENTITY_NOT_ZERO_INVENTORY",
+      "counts": {
+        "sales_approved_nonzero_rows": 83394,
+        "sales_endpoints": 83394,
+        "sales_endpoint_mapped_but_stock_warehouse_unresolved": 83270,
+        "sales_endpoint_warehouse_or_sku_unresolved": 124,
+        "sales_draft_rows": 5,
+        "transfer_approved_nonzero_rows": 272283,
+        "transfer_endpoints": 544566,
+        "transfer_endpoint_warehouse_or_sku_unresolved": 544566,
+        "transfer_draft_rows": 1665,
+        "stock_numeric_cells": 42227,
+        "stock_warehouse_id_missing": 42227,
+        "confirmed_stock_warehouse_sku_keys": 0,
+        "mapped_document_endpoint_distinct_keys": 46016
+      },
+      "scope": "All approved nonzero rows/endpoints; DRAFT separate; use current mapped SKUs without netting repeated rows",
+      "warehouseNullMayBeUnconsumedMapping": true,
+      "next": "Original D1-07 checking existing exact master/export references and prior approved bridges; no source/schema/production changes",
+      "PG": "NOT_RUN",
+      "noZeroInference": true,
+      "noHistoricalStockReplay": true
+    },
+    "PG": "NOT_RUN",
+    "noZeroInference": true,
+    "noHistoricalStockReplay": true
+  },
+  "warehouseReferenceDecision20261104": {
+    "status": "USER_ALL51_CONFIRMED_CONSUMED_INDEX44",
+    "authority": {
+      "chat": "Current main controller",
+      "questionCall": "call_79dd249352364e93a19b6c6a6429b115",
+      "answer": "按清单全部对应",
+      "directHuman": true
+    },
+    "reviewList": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/controller-warehouse-reference-review-20261104/本批51组仓库对应核对.md",
+    "reviewListSHA256": "51b50fa9b439dd8d33706d59b870fa255aed85779f965c334972149d1bf82d83",
+    "scope": {
+      "unionNames": 51,
+      "inventorySubsetNames": 27,
+      "transferOnlyNames": 24,
+      "inventoryNumericCells": 42227,
+      "transferHeaderEndpoints": 29670,
+      "candidateCodeConflicts": 0
+    },
+    "rule": "Use the exact listed source warehouse name -> existing warehouse master source code in this fixed batch; preserve raw provenance, current name/enabled/hall unchanged; no absent inventory zero or cross-batch fuzzy identity inference",
+    "databaseChanged": false,
+    "producerReceipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/warehouse-approved-reference-D1-08/RESULT.json",
+      "sha256": "90c62cd2348c1b6004c8cf3e1dbda7f8b7d29d3ee6954f54e45140f578309cef"
+    },
+    "consumerReceipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package05-10-13-warehouse-approved-consumer-D3-01/RESULT.json",
+      "sha256": "b283323e259149512bf626ff887d73d91f153374112443a40b14e11b6bae947f"
+    }
+  },
+  "jacketABException20261104": {
+    "authority": {
+      "chat": "Current main controller",
+      "questionCall": "call_8f0b6cf5b2cb40aaa3eda12ead38839b",
+      "answer": "这款按A/B分别保留",
+      "directHuman": true
+    },
+    "status": "CONSUMED_INDEX46",
+    "scope": "Only approved single-product A/B exception; other blank-fit default A unchanged",
+    "producer": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/inventory-jacket-ab-exception-D2-13/RESULT.json",
+      "sha256": "8406445386851486a11e6e2428be0537903f991a03382a51d80c07a44dc484b7"
+    },
+    "consumer": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/inventory-jacket-ab-consumer-D3-01/RESULT.json",
+      "sha256": "36781e84874607481ca55c0fb3526be91ad17e29580c54abb89a8de3d62cbcf0"
+    },
+    "counts": {
+      "existing_historical_B_SKUs_materialized": 5,
+      "stock_cells_relinked": 5,
+      "original_cells_preserved": 10,
+      "duplicate_stock_key_groups_after": 0,
+      "quantity_changes": 0,
+      "barcode_bindings_added": 0,
+      "unresolved_document_stock_rows_before": 1374,
+      "unresolved_document_stock_rows_after": 1374
+    },
+    "databaseVerified": false
+  },
+  "signedSaleMoneyConsumer20261104": {
+    "status": "CONSUMED_INDEX45",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/package08-signed-sale-money-consumer-D3-01/RESULT.json",
+    "sha256": "0cc033fea6e854e6a712be139ca2731d2c924d49e80ef51474bf67f233f6d5dc",
+    "counts": {
+      "signed_original_money_heads_added": 65,
+      "sales_heads": 28894,
+      "complete_money_candidates": 28893,
+      "tax_scope_pending": 1
+    },
+    "rule": "Retain original SALE, signed/duplicate lines and original discount; no repricing; no settlement inference",
+    "databaseVerified": false
   }
 }
