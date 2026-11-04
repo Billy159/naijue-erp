@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-04T14:15:15.221953+08:00",
+  "updatedAt": "2026-11-04T06:34:14.370680+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
+  "lastVerifiedRemoteCommit": "dcea1b0a8eb0710656e965832096a1ef78d5300f",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -25785,14 +25785,14 @@
       "next": "Actual new ruling/evidence; no repeated header uniqueness or positive-sign checks"
     },
     "D2": {
-      "current": "D2-07 terminal delivered;4 inputs and287-row output SHA/size/count adopted; no new mapping",
+      "current": "D2-08 terminal delivered; 74-row private readable list SHA adopted",
       "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
-      "turnId": "01a1a528-bef8-75d2-9ed6-52dbb3ddfaaf",
+      "turnId": "01a1a540-e157-76e2-a11a-280ab2de62b7",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-      "writeScope": "parallel-cleaning-20261104/sku-receiver-gap-D2-07 only; no central/app/SQL writes",
-      "next": "Wait exact shared SKU source_key/sku_code/enabled contract or new actual size evidence; no repeat review"
+      "writeScope": "parallel-cleaning-20261104/barcode-role-state-D2-08 only; no central/app/SQL writes",
+      "next": "Actual user role/status decision or fixed Dot SKU receiver contract; no duplicate queue"
     },
     "T45": {
       "current": "No new live server/database job",
@@ -25890,14 +25890,23 @@
   },
   "latestGitHubCleaningCheckpoint": {
     "branch": "codex/e5c5a762-cleaning-20261102",
-    "localCommit": "08eba717598fe5ff5a7e04e4a0770b7fefe78f1e",
-    "remoteCommit": "d74239b446b9b51812d557cd68ee7bc4c0c5a90d",
-    "status": "LOCAL_INDEX38_SAVED_PUSH_FAILED_LAST_VERIFIED_REMOTE_INDEX37",
+    "localCommit": "dcea1b0a8eb0710656e965832096a1ef78d5300f",
+    "remoteCommit": "dcea1b0a8eb0710656e965832096a1ef78d5300f",
+    "status": "PUSHED_REMOTE_EXACT_REF_VERIFIED",
     "included": "Only existing three controller records; private data and four source WIP excluded",
-    "pushFailures": [
-      "HTTP1.1 low-speed timeout; API independently confirmed old remote",
-      "One changed HTTP2 transport attempt failed connect; no more retries"
-    ],
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/.latest-github-checkpoint-result.json",
+    "earlierFailurePreserved": {
+      "branch": "codex/e5c5a762-cleaning-20261102",
+      "localCommit": "08eba717598fe5ff5a7e04e4a0770b7fefe78f1e",
+      "remoteCommit": "d74239b446b9b51812d557cd68ee7bc4c0c5a90d",
+      "status": "LOCAL_INDEX38_SAVED_PUSH_FAILED_LAST_VERIFIED_REMOTE_INDEX37",
+      "included": "Only existing three controller records; private data and four source WIP excluded",
+      "pushFailures": [
+        "HTTP1.1 low-speed timeout; API independently confirmed old remote",
+        "One changed HTTP2 transport attempt failed connect; no more retries"
+      ],
+      "databaseExecuted": false
+    },
     "databaseExecuted": false
   },
   "newBarcodeAllocationQuestion20261104": {
@@ -25962,7 +25971,7 @@
     "clarification": "Component length description differences alone do not disprove scheme identity. Missing exact original-code to fixed-ID bridge is separate from generation-rule adaptation. Do not keep claiming six schemes absent."
   },
   "mixedSalesSplitReview20261104": {
-    "status": "SOURCE_REVIEW_COMPLETE_NO_SPLITS_CREATED",
+    "status": "HISTORICAL_REVIEW_SUPERSEDED_NO_SPLIT_PREREQUISITE",
     "authority": {
       "threadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "turnId": "01a1a249-326d-7810-87f0-1fc9494bdc76",
@@ -25977,15 +25986,16 @@
     "preservedOriginals": true,
     "nonzeroOrderRoundingHeaders": 1,
     "sourceKnownZeroRoundingHeaders": 2570,
-    "blockers": [
+    "formalPreflight": "NOT_RUN",
+    "databaseVerified": false,
+    "historicalBlockers": [
       "Return nature must be established, not inferred from negative quantity alone",
       "Actual original net settlement does not prove separate gross receive/refund movements",
       "Original header and split lineage/key/number contract still required",
       "One nonzero rounding allocation remains unproven; no proportional default"
     ],
-    "sourceBoundary": "Same28894 sales /83399 lines. Earlier65 economic subset is not the full count affected by SALE negative-line rejection. Current code unified-import-contract.ts:1496 rejects SALE negative quantity.",
-    "formalPreflight": "NOT_RUN",
-    "databaseVerified": false
+    "supersededBy": "mixedSalesPreservation20261104",
+    "historicalSourceBoundary": "Same28894 sales /83399 lines. Earlier65 economic subset is not the full count affected by SALE negative-line rejection. Current code unified-import-contract.ts:1496 rejects SALE negative quantity."
   },
   "barcodeSelectedConsumer20261104": {
     "index": 33,
@@ -26032,7 +26042,9 @@
       "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/barcode-role-state-D2-05/条码角色与状态待处理.md",
       "receiptSHA256": "d660361067caaad17b529bba4be5be9532040e0b36bdcb1ad533f75d248f20ca",
       "question": "Choose selected code MAIN/enabled or CONFIRMED_OLD/enabled; preserve raw and stopped old codes; normal historical main relationship must be explicit",
-      "status": "USER_QUESTION_PENDING"
+      "status": "USER_QUESTION_PENDING",
+      "readableList": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/barcode-role-state-D2-08/74条条码角色状态裁决清单.md",
+      "readableListSHA256": "6658b01a0f53d1126eb750dba0977a4bddc41fefd5507022dd998d8a103b1ea1"
     },
     "effectiveDocumentStatus": {
       "rows": 43648,
@@ -26167,5 +26179,62 @@
     "centralIndexUnchanged": 38,
     "noPGOrCodeChange": true,
     "privateRowsNotForDotOrGit": true
+  },
+  "mixedSalesPreservation20261104": {
+    "status": "HUMAN_RULE_CONFIRMED_RECEIVER_AND_REAL_PG_VALIDATION_NOT_COMPLETE",
+    "authority": {
+      "threadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "threadTitle": "奈爵 ERP｜通俗解读与进度跟进",
+      "scopeTurnId": "01a1a48c-11a2-7510-86a7-2e85929289ac",
+      "humanReplyIds": [
+        "01a1a492-39be-7112-9c60-f5292db153a9",
+        "01a1a494-3c22-7020-9d2b-212b14c6ea09",
+        "01a1a495-5fde-7ca3-85ec-088d632fdb4f"
+      ],
+      "implementationAcceptanceTurnId": "01a1a49b-eef5-70f2-8c13-7791f8fdad0f",
+      "implementationAcceptanceHumanMessageId": "01a1a49b-ef1f-7a91-92b0-85816e8c5557",
+      "implementationAcceptanceText": "ok 补充成提示词告诉dot去修改吧"
+    },
+    "rules": [
+      "Keep original historical mixed SALE document identity, type, signed and duplicate lines; no forced split prerequisite",
+      "Support historical and new signed-line business; UI remains only 销货 and 退货/换货",
+      "New mixed documents use no order-level discount; original historical rounding/discount remains original, not cleared or allocated by guess",
+      "Preserve actual net receive/refund observations, never fabricate gross receive/refund",
+      "Keep cutoff inventory basis and no import stock replay; ordinary-account unapprove/edit/reapprove needs isolated proof"
+    ],
+    "affectedHistoricalHeaders": 2571,
+    "affectedHistoricalLines": 10773,
+    "newSplitHeaders": 0,
+    "notNewHumanApproval": "Latest helper suggestion about the detailed historical-discount edit treatment is a proposal only; no subsequent human acceptance found in the inspected latest turns",
+    "remaining": [
+      "Shared stable document/SKU identity receiving contracts",
+      "Actual missing monetary and settlement facts remain missing",
+      "Fixed compatible code plus real PG import/readback/lifecycle validation"
+    ],
+    "dataUnchanged": true,
+    "centralIndexUnchanged": 38,
+    "productionExecuted": false
+  },
+  "barcodeRoleDecisionList20261104": {
+    "taskId": "D2-08",
+    "status": "READABLE_LIST_DELIVERED_BUSINESS_DECISION_PENDING",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/barcode-role-state-D2-08/74条条码角色状态裁决清单.md",
+    "sha256": "6658b01a0f53d1126eb750dba0977a4bddc41fefd5507022dd998d8a103b1ea1",
+    "bytes": 19084,
+    "rows": 74,
+    "groupCounts": {
+      "sameCodeOtherHistoricalMain": 48,
+      "sameCodeNoHistoricalMainObserved": 14,
+      "changedCode": 12
+    },
+    "ownerThreadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
+    "ownerTurnId": "01a1a540-e157-76e2-a11a-280ab2de62b7",
+    "model": "gpt-6.1-terra",
+    "reasoningEffort": "medium",
+    "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+    "scope": "Existing evidence formatted with accurate ID joins, no fresh raw-sheet scan or repeated technical review",
+    "bindingsChanged": 0,
+    "privateOnly": true,
+    "PGOrScanningVerified": false
   }
 }
