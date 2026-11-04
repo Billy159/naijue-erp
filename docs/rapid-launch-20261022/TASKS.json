@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-04T18:41:50.253611+00:00",
+  "updatedAt": "2026-11-04T18:54:30.728220+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "2276fdfb3928b2b5fa4af72b3883bbd478dd672d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -24727,11 +24727,12 @@
   "currentWaitingConditions": [
     "Existing invoice six stock cells88 and19AB questions remain pending. Belt112 and29size and199removed-hall decisions already consumed; never reask.",
     "Historical sales hall unknown remains rejected by V5; parent/registry failures may cascade. Dot bounded receiver/schema/readback/permission alignment needed.",
-    "Actual first fixed CLEANED stream preflight failed ISSUE_LIMIT, not exhaustive; no repeat full run until material blockers change. D3-23 caller flags/coverage recipe prepared, reports and table-scope counts still partial.",
+    "Fixed26table D3-25 successor exists. First D3-22 stream failed ISSUE_LIMIT, incomplete; second not run. Source-count evidence17/26table scopes assembled,9 precise unit/coverage cases remain. No false full reconciliation.",
     "Actual exported_at and independent CURRENT_EFFECTIVE cutoff alignment unverified; user confirmed cutoff is not actual export time. One factual stop-write/cross-file consistency question pending.",
     "Six original price/amount discrepancies in6documents verified over all83399current lines for the exactV5equation; original monetary facts preserved. Dot bounded historical receiver proposal needed.",
     "D2 verified9nested workbook container directories, no media/drawings/externalLink entries. Prior season candidate claim unsubstantiated; current identified authorized image/season inputs0 candidates only, product assignments unknown, old media not imported by default.",
-    "Latest full build/typecheck/trusted install/launcher and complete isolated PG import/reconciliation/dedup/recovery/ordinary-account lifecycle not verified. No production action."
+    "Latest full build/typecheck/trusted install/launcher and complete isolated PG import/reconciliation/dedup/recovery/ordinary-account lifecycle not verified. No production action.",
+    "Existing reconciliation source/retained/rejected fields need precise scope for approved many-to-one mappings,22zero settlement archives,199historical relations and approvedzero stock keys; Dot exact clarification first, no new business ruling or data rewrite."
   ],
   "salesStaffMapping": {
     "status": "INDEX22_DRAFT_IDENTITY_REFERENCES_NOT_COMPLETE_STANDARD_STAFF",
@@ -25792,64 +25793,72 @@
     "frozenDemo": "Read-only; approved differences remain"
   },
   "latestCleaningIndex": {
-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-73/INDEX.json",
-    "sha256": "2d57d1b7e321a3dc0c652757cc1e55002b899988b792383c91e4893132302745",
-    "stage": "DRAFT_INDEX_NOT_IMPORT_READY",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-78/INDEX.json",
+    "sha256": "72e7b4c1739132d9be75b49284b95b1d041ea8c38d763d1262067c858b9ec0ee",
+    "stage": "DRAFT_NOT_IMPORT_READY",
     "ready": false,
     "databaseVerified": false,
-    "sourceBinding": "D3-25 fixed26table successor,truthful28901BLOCK exceptions; reconciliation/source time and receiver semantics unresolved",
+    "sourceBinding": "Fixed D3-25 manifest and17/26 source-count scopes evidenced;9 exact count-unit or coverage gaps",
     "previousIndex": {
-      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-71/INDEX.json",
-      "sha256": "34d1782acca0f3dc6ff95444a9a84a6521c142653450feaaeb9943de68de8fec",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-73/INDEX.json",
+      "sha256": "2d57d1b7e321a3dc0c652757cc1e55002b899988b792383c91e4893132302745",
       "stage": "DRAFT_INDEX_NOT_IMPORT_READY",
       "ready": false,
       "databaseVerified": false,
-      "sourceBinding": "V5 fixed CLEANED manifest first stream preflight failed ISSUE_LIMIT; D3-23 preserves explicit blockers and corrected caller recipe",
+      "sourceBinding": "D3-25 fixed26table successor,truthful28901BLOCK exceptions; reconciliation/source time and receiver semantics unresolved",
       "previousIndex": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-69/INDEX.json",
-        "sha256": "28a8988e63b20f0f2a3af6d79a3a63561e257f809a37684c7442356926119107",
-        "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-71/INDEX.json",
+        "sha256": "34d1782acca0f3dc6ff95444a9a84a6521c142653450feaaeb9943de68de8fec",
+        "stage": "DRAFT_INDEX_NOT_IMPORT_READY",
         "ready": false,
         "databaseVerified": false,
-        "sourceBinding": "Current V5 profiles, CLEANED master successors and33metadata source inventory, actual CLEANED package assembly pending",
+        "sourceBinding": "V5 fixed CLEANED manifest first stream preflight failed ISSUE_LIMIT; D3-23 preserves explicit blockers and corrected caller recipe",
         "previousIndex": {
-          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-67/INDEX.json",
-          "sha256": "4ea43b0a892aeb679cb916a899119065c6f613c4d34fb29ec079f43fa30ff880",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-69/INDEX.json",
+          "sha256": "28a8988e63b20f0f2a3af6d79a3a63561e257f809a37684c7442356926119107",
           "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
           "ready": false,
           "databaseVerified": false,
-          "sourceBinding": "V5 historical source profile,105492 zero candidates,26360 settlements,985 account-hall StandardRecord candidates;199 adjudicated historical links retained; not complete manifest",
+          "sourceBinding": "Current V5 profiles, CLEANED master successors and33metadata source inventory, actual CLEANED package assembly pending",
           "previousIndex": {
-            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-66/INDEX.json",
-            "sha256": "f0f0754a0cfdb67d732da5181a702a29fe1e29fbb1ee048d39eafa5ad921f410",
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-67/INDEX.json",
+            "sha256": "4ea43b0a892aeb679cb916a899119065c6f613c4d34fb29ec079f43fa30ff880",
             "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
             "ready": false,
             "databaseVerified": false,
-            "sourceBinding": "V5 candidates,985 observed account-hall relations indexed but standard source locator under precise contract review",
+            "sourceBinding": "V5 historical source profile,105492 zero candidates,26360 settlements,985 account-hall StandardRecord candidates;199 adjudicated historical links retained; not complete manifest",
             "previousIndex": {
-              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-65/INDEX.json",
-              "sha256": "4f62b4c5de998adc488252109ace7b546117746added2b2d903decb8ab2adba4",
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-66/INDEX.json",
+              "sha256": "f0f0754a0cfdb67d732da5181a702a29fe1e29fbb1ee048d39eafa5ad921f410",
               "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
               "ready": false,
               "databaseVerified": false,
-              "sourceBinding": "V5 historical-sales-source candidate profile selected, zero-source and settlement received; not a complete manifest",
+              "sourceBinding": "V5 candidates,985 observed account-hall relations indexed but standard source locator under precise contract review",
               "previousIndex": {
-                "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-63/INDEX.json",
-                "sha256": "94befbd584d95fb4abd3ab33fc80aececb9d937393253e5a0fa82097f83141a2",
+                "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-65/INDEX.json",
+                "sha256": "4f62b4c5de998adc488252109ace7b546117746added2b2d903decb8ab2adba4",
                 "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
                 "ready": false,
                 "databaseVerified": false,
-                "sourceBinding": "Core prior v4 contract plus explicitly pinned v5 zero-source consumer; not a complete v5 manifest",
+                "sourceBinding": "V5 historical-sales-source candidate profile selected, zero-source and settlement received; not a complete manifest",
                 "previousIndex": {
-                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-56/INDEX.json",
-                  "sha256": "d9a686364045001b0bc8bc677eb0caba65956a262e22a2f32bae527d8dd8c6c2",
-                  "stage": "DRAFT_MATERIALIZED_PARTIAL_NOT_STANDARD_PACKAGE",
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-63/INDEX.json",
+                  "sha256": "94befbd584d95fb4abd3ab33fc80aececb9d937393253e5a0fa82097f83141a2",
+                  "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
                   "ready": false,
                   "databaseVerified": false,
-                  "latestSourceManifestSHA256": "15230a057834cb716e9dd6a90783781d20e6ce5db42b07c993afa40bacc73560",
+                  "sourceBinding": "Core prior v4 contract plus explicitly pinned v5 zero-source consumer; not a complete v5 manifest",
                   "previousIndex": {
-                    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-55/INDEX.json",
-                    "sha256": "e05e3b73ab0fe640587c709ee13200aac3597447e1ce1e220edaa63511e73376"
+                    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-56/INDEX.json",
+                    "sha256": "d9a686364045001b0bc8bc677eb0caba65956a262e22a2f32bae527d8dd8c6c2",
+                    "stage": "DRAFT_MATERIALIZED_PARTIAL_NOT_STANDARD_PACKAGE",
+                    "ready": false,
+                    "databaseVerified": false,
+                    "latestSourceManifestSHA256": "15230a057834cb716e9dd6a90783781d20e6ce5db42b07c993afa40bacc73560",
+                    "previousIndex": {
+                      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-55/INDEX.json",
+                      "sha256": "e05e3b73ab0fe640587c709ee13200aac3597447e1ce1e220edaa63511e73376"
+                    }
                   }
                 }
               }
@@ -25903,38 +25912,38 @@
   },
   "currentCleaningOwnerQueue20261104": {
     "D3": {
-      "current": "D3-25 fixed26table candidate delivered; only original source-count evidence and table reconciliation continuation",
-      "next": "Complete provable rows from existing original-owner receipts, exact unavailable evidence only; no whole preflight or PG",
+      "current": "Fixed26table successor plus17proven source-count scopes;9 exact unit/coverage gaps identified",
+      "next": "Dot receiving/count-unit clarification or pending original human source facts; no repeat full preflight while blockers unchanged",
       "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
       "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-core-D3-07 plus sole central index/final manifest",
-      "task": "D3-25-source-reconciliation-continuation",
+      "task": "D3-30-combined-counts",
       "dispatchAccepted": true,
-      "status": "IN_PROGRESS"
+      "status": "DELIVERED_WAITING_EXACT_INPUT"
     },
     "D1": {
-      "current": "D1-18 whole fixed-line exact equation scope:6/83399 discrepancies, original facts preserved",
-      "next": "Only actual receiver/decision changes, no repeat price scan",
+      "current": "5document source-count scopes delivered;6economic discrepancies retained",
+      "next": "Actual business decision or bounded receiving clarification; no repeated source scan",
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
       "writeScope": "Original private D1 versioned outputs only, no central/source/SQL",
-      "task": "D1-18-economic-scope",
+      "task": "D1-19-source-counts",
       "dispatchAccepted": true,
-      "status": "DELIVERED_WAITING_DOT_RECEIVER"
+      "status": "DELIVERED_WAITING_EXACT_INPUT"
     },
     "D2": {
-      "current": "D2-27 completed remaining9archive directories and corrected unproven season-candidate claim",
+      "current": "8master/relationship source-count scopes delivered,199historical relations preserved",
       "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
       "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-masters-D2-18 only; old inputs read-only; no central writes",
-      "next": "Only new approved source/decision, no repeated whole scan",
-      "task": "D2-27-scope-followup",
+      "next": "Actual new source/decision or exact receiving count semantics only",
+      "task": "D2-28-source-counts",
       "dispatchAccepted": true,
       "status": "DELIVERED_WAITING_EXACT_INPUT"
     },
@@ -26084,8 +26093,8 @@
   },
   "latestGitHubCleaningCheckpoint": {
     "branch": "codex/e5c5a762-cleaning-20261102",
-    "previousVerifiedRemoteCommit": "2276fdfb3928b2b5fa4af72b3883bbd478dd672d",
-    "currentStage": "Index73,fixed26table successor,failed first stream preflight preserved,6economic source differences,scoped0image/season input; source reconciliation in progress",
+    "previousVerifiedRemoteCommit": "33990d54fa9b56910072b972667d476949fbb47f",
+    "currentStage": "Index78/fixed26tablecandidate/17sourcecountscopes/9exactcount-unitgaps; all business/import acceptance still incomplete",
     "status": "EXACT_CURRENT_STAGE_GIT_RESULT_IN_EXTERNAL_RECEIPT",
     "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/.latest-github-checkpoint-result.json",
     "included": "Only3 controller records; no real rows, occurrence ledgers,V5 application snapshot or4original source WIP",
@@ -27490,7 +27499,7 @@
   },
   "currentDotReceiverDelta20261105": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/CONTROLLER-DOT-RECEIVER-DELTA.zh-CN.md",
-    "sha256": "56ecb26c402c73ca4a3300fb8e8862206ab9d5d6033987571783385b8202f4a4",
+    "sha256": "30514f4af737d205144c6e5655f70aab782cc3253a8931966cc94dd64f392f6e",
     "containsPrivateBusinessRows": false,
     "supersedesOldV4MissingGeneratorAndZeroSourceClaims": true
   },
@@ -27510,7 +27519,7 @@
   },
   "goalContinuation20261105FormatClosure": {
     "previousGoalTurn": "PROGRESS: index67actual candidates,985 relations,adjudicated199 historical links,Git remote2276fdfb verified",
-    "currentTurn": "PROGRESS: actual26table fixed successor,index73,6economic differences scoped83399rows,existing source scope closed for zero inputs; independent source-count reconciliation in progress",
+    "currentTurn": "PROGRESS: fixed26table candidate,index78,actual first preflight failure,6economic differences,17/26source-count scopes; remaining9exactunit/coverage gaps preserved",
     "scope": "Same originalD3 localdata ownership, no application/SQL/newserver/production changes"
   },
   "v5FieldCoverage20261105": {
@@ -27640,5 +27649,43 @@
     "fullPreflightRun": false,
     "reconciliation": "Not created; original independent source-count evidence being gathered; no fabricated source totals",
     "PGExecuted": false
+  },
+  "v5ReconciliationEvidence20261105": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v5-reconciliation-combined-D3-30/RESULT.json",
+    "sha256": "0acc6f6603786035d122e383f567acc1e987fa1f2bfe9fd2731c3a36f06ff517",
+    "combinedCounts": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v5-reconciliation-combined-D3-30/table-source-counts.private.json",
+      "sha256": "c9da0024079f5bf471c1a72f4ed8f9b968bd6dfd136624dd2e8c187eef6a8519"
+    },
+    "closedTableCountScopes": 17,
+    "totalTables": 26,
+    "notClosedTables": [
+      "inventory_baseline",
+      "payment_account_hall",
+      "product_category",
+      "sales_settlement",
+      "size",
+      "size_group",
+      "size_group_member",
+      "sku",
+      "sku_barcode"
+    ],
+    "completeReconciliationReport": false,
+    "evidenceNotBusinessPass": true,
+    "ownerReceipts": {
+      "D1": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/document-source-counts-D1-19/five-table-source-count-evidence.json",
+        "sha256": "c9a6ad8010b21a50cefb1ef4d4d9d972cc35939c6c5dddad9b89efb1cf411eb4"
+      },
+      "D2": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-masters-D2-18/source-counts-D2-28/eight-table-counts.private.json",
+        "sha256": "4c036a8308ef7f74a63a92c22741a4af248eb6ea3c3eb6f140f9f276e5333fd1"
+      },
+      "D3": {
+        "sha256": "a2377f39af134f4aefdcc36b9c9522b3dc10cb5e68b35062047afe98a7a0e8d5",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v5-reconciliation-core-D3-27/core-count-evidence.private.json"
+      }
+    },
+    "limits": "No original-source rescan, second whole preflight or PG; defined authorized-source scope only, not global absence; counts for approved archive/merge/zero relations need exact semantics"
   }
 }
