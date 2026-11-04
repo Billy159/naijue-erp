@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-04T01:07:26.199366+08:00",
+  "updatedAt": "2026-11-04T14:15:15.221953+08:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -25785,8 +25785,14 @@
       "next": "Actual new ruling/evidence; no repeated header uniqueness or positive-sign checks"
     },
     "D2": {
-      "current": "Method/header and account identity evidence delivered; idle",
-      "next": "Actual51-account identity/74-role ruling, no repeated same-name comparison"
+      "current": "D2-07 terminal delivered;4 inputs and287-row output SHA/size/count adopted; no new mapping",
+      "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
+      "turnId": "01a1a528-bef8-75d2-9ed6-52dbb3ddfaaf",
+      "model": "gpt-6.1-terra",
+      "reasoningEffort": "medium",
+      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+      "writeScope": "parallel-cleaning-20261104/sku-receiver-gap-D2-07 only; no central/app/SQL writes",
+      "next": "Wait exact shared SKU source_key/sku_code/enabled contract or new actual size evidence; no repeat review"
     },
     "T45": {
       "current": "No new live server/database job",
@@ -25884,11 +25890,14 @@
   },
   "latestGitHubCleaningCheckpoint": {
     "branch": "codex/e5c5a762-cleaning-20261102",
-    "localCommit": "d74239b446b9b51812d557cd68ee7bc4c0c5a90d",
+    "localCommit": "08eba717598fe5ff5a7e04e4a0770b7fefe78f1e",
     "remoteCommit": "d74239b446b9b51812d557cd68ee7bc4c0c5a90d",
-    "status": "PUSH_SUCCEEDED_AND_GITHUB_API_REF_VERIFIED",
-    "transport": "Push HTTPS HTTP/1.1; independent GitHub API ref readback",
-    "included": "Existing controller records index37 only; private business rows and four source WIP excluded",
+    "status": "LOCAL_INDEX38_SAVED_PUSH_FAILED_LAST_VERIFIED_REMOTE_INDEX37",
+    "included": "Only existing three controller records; private data and four source WIP excluded",
+    "pushFailures": [
+      "HTTP1.1 low-speed timeout; API independently confirmed old remote",
+      "One changed HTTP2 transport attempt failed connect; no more retries"
+    ],
     "databaseExecuted": false
   },
   "newBarcodeAllocationQuestion20261104": {
@@ -25921,7 +25930,7 @@
   "trialReadiness20261104": {
     "sourceIntake": "Received and hash verified051 base plus snapshot WIP, not a final release",
     "offlineEvidence": "13 package drafts and candidate increments at index38; not complete executable standard package",
-    "realPackageImport": "NOT_READY synthetic-only client; compatible real-data isolated target/role/install/identity invocation still needed",
+    "realPackageImport": "NOT_READY: new1238 contains real local install/prepare/import paths; old synthetic-only absence claim superseded. Three historical SQL candidates require integrated install/pins/permissions; execution gates closed. Full real standard package remains draft.",
     "currentBatchPGInitialization": "NOT_RUN",
     "completePGImportReconciliationRecovery": "NOT_RUN",
     "ordinaryAccountReviewUnreviewRereview": "NOT_RUN",
@@ -26060,7 +26069,8 @@
     "rows": 26382,
     "status": "USER_IDENTITY_CONFIRMATION_PENDING",
     "privateEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/settlement-method-account-D2-06/account-display-gaps.private.jsonl",
-    "limits": "Do not infer identity from same name or strip prefixes; raw values present, missing stable foreign-key relation."
+    "limits": "Do not infer identity from same name or strip prefixes; raw values present, missing stable foreign-key relation.",
+    "userReviewList": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/settlement-method-account-D2-06/51项账户对应关系-用户裁决清单-20261104.txt"
   },
   "settlementDirectionQuestion20261104": {
     "positive": 25826,
@@ -26083,5 +26093,79 @@
     "accountsUnresolved": 26382,
     "importAuthorized": false,
     "databaseVerified": false
+  },
+  "latestAcceptedExternalValidation20261104": {
+    "ownerThreadId": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
+    "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/complete-local-validation-1238-20261104-01/REPORT-1238.txt",
+    "baseCommit": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
+    "branch": "handoff/erp-unified-latest-20261102",
+    "checkpoint": "2026-11-04 12:38 old WIP snapshot, not later fixes",
+    "zipSHA256": "68ae3d2536d1e84d83613268371233cea07fb338d5e01d20b67e27dfbce00d15",
+    "inventorySHA256": "d516b79006229b955e50c4efff0a03d227b6101553002bab62c139041a0cda01",
+    "sourceFiles": 2798,
+    "modified": 153,
+    "untracked": 269,
+    "typecheckExitCode": 2,
+    "buildExitCode": 2,
+    "inventoryLifecycle": {
+      "pass": 9,
+      "fail": 13,
+      "qualification": "Includes provenance and fixture mismatch; not13 proven product bugs"
+    },
+    "candidateSQLs": "Three exact candidates lack final integrated install/pins/permissions; gates remain closed",
+    "actualPG": "NOT_RUN",
+    "actualBrowser": "NOT_RUN",
+    "sourceEditsByAcceptance": 0,
+    "controllerRetest": false
+  },
+  "taskCacheCleanup20261104": {
+    "userApproval": "Explicit reply to call_23667cc457874a7a9ffecb05de146b68",
+    "deletedOnly": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/complete-source-20261103-typecheck-20261104-01/npm-cache",
+    "logicalBytes": 43797652,
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/complete-source-20261103-typecheck-20261104-01/logs/approved-npm-cache-cleanup-20261104-01.json",
+    "debugLogsPreserved": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/complete-source-20261103-typecheck-20261104-01/logs/npm-cache-debug-preserved-20261104-01",
+    "availableDiskObservedApproxMiB": 733,
+    "APFSQualification": "Logical deletion not asserted equal to physical free-space growth; no other deletion"
+  },
+  "skuGapGrouping20261104": {
+    "rows": 1374,
+    "distinctTuples": 287,
+    "noHistoricalCanonical": {
+      "rows": 1268,
+      "tuples": 258
+    },
+    "missingSize": {
+      "rows": 106,
+      "tuples": 29
+    },
+    "newMappings": 0,
+    "historicalExceptionsPreserved": true,
+    "distinctFourDimensionalCandidates": 131
+  },
+  "skuReceiverContractGap20261104": {
+    "taskId": "SKU-RECEIVER-GAP-D2-07",
+    "status": "RECEIVER_CONTRACT_GAP_NOT_READY",
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/sku-receiver-gap-D2-07/RESULT.json",
+    "receiptSHA256": "6657740f5af439ccd4afeda9e71b0898d3ba652831df110ee580194cb6ab410c",
+    "sidecarSHA256": "d8ba12471ef9eb86d5fcdc1dfe8a5e7fb0111a8fe4c3f9aa1ad1ef97d95dbf72",
+    "sidecarRows": 287,
+    "sidecarBytes": 474251,
+    "sourceContractSHA256": "855c571f0b6024383a1535c16a13bb3e4f3a9774a99d591467848556aec339b7",
+    "protocolSHA256": "483388906d6c96daf444404b8f9dcf76929c99a10f84ec103727b3fa22a13797",
+    "newEvidence": "12:38 protocol supports stable technical IDs; not equivalent to business source key, SKU code or enabled fact",
+    "requiredDotSeam": [
+      "Reuse or define exact approved source_key contract for actual observed four-dimensional SKU without original SKU ID",
+      "Provide sku_code rule preserving old codes and source identity",
+      "Specify enabled source/unknown receiving rule without silently enabling stopped or unknown facts"
+    ],
+    "exactFiles": [
+      "packages/application/src/unified-import-contract.ts:550",
+      "packages/application/src/unified-import-contract.ts:1215",
+      "docs/unified-business-20261102/standard-import-protocol.md:37"
+    ],
+    "newMappings": 0,
+    "centralIndexUnchanged": 38,
+    "noPGOrCodeChange": true,
+    "privateRowsNotForDotOrGit": true
   }
 }
