@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-04T13:58:12.370153+00:00",
+  "updatedAt": "2026-11-04T14:48:22.633014+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "7b7372aa99fe2c472c5e6cbb0ea2bf394566f96d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -24723,11 +24723,11 @@
     }
   },
   "currentWaitingConditions": [
-    "Index51 DRAFT:112 approved current enabled SKUs closed1249 original unresolved rows;1374→125. Original enabled UNKNOWN; original43,729 headers/357,347 lines and persisted UUIDs preserved.",
-    "Dot exact unchanged technical seams:26382 settlement occurrence identities lack shared settlement codec/parser;105486 explicit-zero keys lack truthful whole-file source expression because SourceRef.row must positive int32. No fake row or settlement-as-line.",
-    "19 A/B identity cases remain pending.29 historical size tuples affecting106 source rows now have exact deduplicated decision material:7 clothing have global mapping but no proven current code/member bridge;22 accessories need real size meaning. Both questions sent, no guessed mapping or extra enablement. Remaining approved endpoints sales84/transfer12.",
-    "Two retired null-hall inputs already follow shared format; final manifest source/evidence membership still to bind.22 zero settlements need actual dedicated trace readback and0 fund actions, not merely local archive candidate.",
-    "v4 integrity and3-file route source review complete; actual Mac launcher/root issuer/trusted installation records/roles/target and new guard PG not verified. Latest build/typecheck,complete import/independent reconciliation/idempotency/recovery,ordinary business/browser and production NOT_RUN. No new T45/PG job."
+    "v4 fixed source received/3-file source review only. Latest index55 enumerates key13-package candidates but is NOT complete standard package. Original D1/D2/D3 now independently materialize actual standard records and integrate overlays; this work does not wait for the size answers.",
+    "112 approved current enabled SKUs closed1249 source rows;125 source rows remain unresolved (sales84,transfer6,stock35), all retained. 19 A/B cases plus29 historical size tuples remain pending precise human replies. No identity guessing or line removal.",
+    "26382 settlement occurrences have existing generic ordinary/stream/SQL consumers; Dot must specify absent-ID canonical generation.105486 explicit zero candidates need truthful approved whole-file source expression under SourceRef.row. Do not invent protocol or fake source rows.",
+    "29 source pins cover limited explicitly enumerated consumers; nested complete source/decision/media/dimension dependencies and final manifest still being assembled. Two retired null-hall inputs passed local v4 pure validators; actual target trace of22 zero archives/no funds remains unverified.",
+    "Mac launcher/root issuer/trusted installation/actual roles and new guard PG, latest build/typecheck, complete import/independent reconciliation/idempotency/recovery and ordinary business/browser/production NOT_RUN. No new T45/PG job."
   ],
   "salesStaffMapping": {
     "status": "INDEX22_DRAFT_IDENTITY_REFERENCES_NOT_COMPLETE_STANDARD_STAFF",
@@ -25788,46 +25788,15 @@
     "frozenDemo": "Read-only; approved differences remain"
   },
   "latestCleaningIndex": {
-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-51/INDEX.json",
-    "sha256": "043622446d3ef7e6db928eb353d59e2ba524558882bdf47afbbc630c739837fc",
-    "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-55/INDEX.json",
+    "sha256": "e05e3b73ab0fe640587c709ee13200aac3597447e1ce1e220edaa63511e73376",
+    "stage": "DRAFT_PARTIAL_CONSUMER_INVENTORY_NOT_STANDARD_PACKAGE",
     "ready": false,
     "databaseVerified": false,
     "latestSourceManifestSHA256": "15230a057834cb716e9dd6a90783781d20e6ce5db42b07c993afa40bacc73560",
     "previousIndex": {
-      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-50/INDEX.json",
-      "sha256": "b0222339c9923704d71c3fd7a468abfe286f19dfbee133c5d7b83c2c5f90d70b",
-      "previousIndex": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-49/INDEX.json",
-        "sha256": "65a5491204e0af1d95f5e496be3b9f798acba7e1f26336cffb7e4ffcda5466ab",
-        "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
-        "ready": false,
-        "databaseVerified": false,
-        "previousIndex": {
-          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-48/INDEX.json",
-          "sha256": "4f99bc0c776afa2bb7593fcade47aa5382f6755a682fac574fc03804e1a3d655",
-          "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
-          "ready": false,
-          "databaseVerified": false,
-          "previousIndex": {
-            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-46/INDEX.json",
-            "sha256": "81e58284d42660bb27efdffb61044b1af76f45bea32bf7720d5c0943d90d7590",
-            "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
-            "ready": false,
-            "databaseVerified": false,
-            "previousIndex": {
-              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-43/INDEX.json",
-              "sha256": "90ffa3c7949c486d4515e8f6233963ccf4b275c362fbf4e01851099af9ef8ab8",
-              "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
-              "ready": false,
-              "databaseVerified": false
-            }
-          },
-          "compatibilityWithLatestV3": "RECEIVER_REVIEW_IN_PROGRESS_NOT_PG_VERIFIED"
-        },
-        "latestSourceManifestSHA256": "9e13185b9009b68814e9fed1e0dd9ccba8f5a900454e1317b58ab840c6dda3a3",
-        "compatibilityWithLatestV4": "Source shared cleaning contracts byte-identical to v3; index49 itself retained as original v3 consumer evidence, not relabelled as v4 PG validation"
-      }
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-54/INDEX.json",
+      "sha256": "1b2d24ea30d9bd0457f2f628b0f5ad8f1cc05547dcbd2d3d8465e8ded2f95be4"
     }
   },
   "skuMaterialization20261104": {
@@ -25874,34 +25843,40 @@
   },
   "currentCleaningOwnerQueue20261104": {
     "D3": {
-      "current": "D3-03/04 delivered index50/51;112 SKU,1249 refs and affected stock coverage consumed; no active job",
-      "next": "Only consume actual19/29 decisions or Dot shared settlement/zero-source successor; no duplicate scan or task filler",
+      "current": "1–4 decisions/source pins/product/dimensions/barcodes actual assembly plus sole central registry",
+      "next": "13 inventory observed records and approved absent-zero evidence, then integrate D1/D2 outputs",
       "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
-      "turnId": "01a1a6c6-96ff-7ac0-80a2-2d117cc735cf",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-      "writeScope": "Original sole central index and own private consumer directories"
+      "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-core-D3-07 plus sole central index/final manifest",
+      "task": "D3-07",
+      "dispatchAccepted": true,
+      "status": "CONTINUING_AFTER_FIRST_PARTIAL_ARTIFACTS"
     },
     "D1": {
-      "current": "D1-10 persistent occurrence ledger delivered and consumed index49; no active job",
-      "next": "Exact Dot settlement identity support or subsequent fixed receiver delta; never redraw persisted UUIDs",
+      "current": "8–11 document headers/lines actual standard-record assembly",
+      "next": "12 settlement business fields and persisted occurrences; canonical awaits exact Dot specification",
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-      "turnId": "01a1a584-4ca7-78a3-a658-8d7330bf72db",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-      "writeScope": "Existing D1 private scopes only; no application/SQL/central writes"
+      "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-documents-D1-11 only; old inputs read-only; no central writes",
+      "task": "D1-11",
+      "dispatchAccepted": true,
+      "status": "CONTINUING_AFTER_FIRST_PARTIAL_ARTIFACTS"
     },
     "D2": {
-      "current": "D2-17 and7-clothing correction delivered; no active job",
+      "current": "5–7 halls/warehouses/staff/parties/payment and relation actual standard-record assembly",
       "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
-      "turnId": "01a1a582-80ce-7bc1-896e-93a765c7d786",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-      "writeScope": "Original private D2 directories only; no central/application/SQL writes",
-      "next": "Consume actual precise human size/A-B replies with only impacted evidence; do not repeat131/48 review or infer enablement"
+      "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-masters-D2-18 only; old inputs read-only; no central writes",
+      "next": "Only affected identity/relation closure; existing size questions remain independent pending",
+      "task": "D2-18",
+      "dispatchAccepted": true,
+      "status": "CONTINUING_AFTER_FIRST_PARTIAL_ARTIFACTS"
     },
     "T45": {
       "current": "No new live server/database job",
@@ -25909,13 +25884,13 @@
     },
     "sourceAcceptance": {
       "threadId": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
-      "current": "V4 exact3-file read-only review complete; no active job",
+      "current": "Settlement scope clarification completed; no active job",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
       "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/owner-review",
       "sourceReadOnly": true,
-      "next": "Actual CLI/Mac/PG must wait compatible tooling, target and finite authorized execution; no source-only result relabelled as runtime"
+      "next": "Only new fixed Dot spec/code delta or actually ready lawful isolation; no repeated source review"
     }
   },
   "barcodeSKUReferences20261104": {
@@ -26045,8 +26020,8 @@
   },
   "latestGitHubCleaningCheckpoint": {
     "branch": "codex/e5c5a762-cleaning-20261102",
-    "previousVerifiedRemoteCommit": "a02c1a11909ce08209a1a5505b3bf0c279b37fee",
-    "currentStage": "V4 source reception,index50/51 and112 approval; final commit/push/readback are bound in receipt below",
+    "previousVerifiedRemoteCommit": "ac25d8af8f4bb79db895b5031b87138fa6f5d824",
+    "currentStage": "V4 source intake52–55, limited source/spec clarification and first actual standard files in progress; exact commit/push/readback in external receipt",
     "status": "EXACT_CURRENT_STAGE_GIT_RESULT_IN_EXTERNAL_RECEIPT",
     "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/.latest-github-checkpoint-result.json",
     "included": "Only3 controller records; no real rows,UUID ledgers,v4 app source or original4WIP",
@@ -26807,7 +26782,8 @@
           39,
           47
         ],
-        "issue": "Line/helper/parser/binding omit SALES_SETTLEMENT;26382 occurrence ledger entries lack reviewed shared canonical path"
+        "issue": "Line/helper/parser/binding omit SALES_SETTLEMENT;26382 occurrence ledger entries lack reviewed shared canonical path",
+        "scopeClarification": "See v4SettlementIdentityScopeCorrection20261104: generic settlement consumer exists; canonical generation specification gap, not proof mandatory code change"
       },
       "approvedZeroSourceScope": {
         "files": [
@@ -26924,7 +26900,7 @@
     "testLimit": "Test source only asserts denial output, no independent connection/write observer; old V2 branch not separately covered in new subprocess case; no tests executed",
     "nonBlockingPresentationNote": "Capability common offline/implemented legacy wording may confuse, not a proven business defect or grounds to remove guards",
     "dotReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/CONTROLLER-DOT-RECEIVER-DELTA.zh-CN.md",
-    "dotReportSHA256": "2d2794ad4890c44b2f588233bebddff9cc5c29b2375b6f0dd1b12a4dfd8fb298",
+    "dotReportSHA256": "cec607c485ca57247ba1715140f9a24082517890051902036c88facba8d6fd69",
     "applicationOrDatabaseExecuted": false
   },
   "remainingSizeExceptions20261104": {
@@ -26951,5 +26927,128 @@
     "humanQuestions": "Two specific questions now asked in main Chat:7 clothing exact size bridge/current enablement policy;22 accessory tuples real size meaning.19 A/B question remains separately pending. No repeated product-group direction question.",
     "privateDetailsSharedWithDotOrGit": false,
     "databaseVerified": false
+  },
+  "v4SettlementIdentityScopeCorrection20261104": {
+    "status": "SOURCE_ONLY_CLASS2_GENERATION_SPEC_GAP_NOT_PROVEN_MISSING_CONSUMER",
+    "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/owner-review/V4-SETTLEMENT-IDENTITY-CONTRACT-SCOPE-02.md",
+    "sha256": "14a62c5afdc0a2911f2659dc12ef295735796053251c1226ffb7ff05523f8325",
+    "existingSourcePaths": [
+      "SALES_SETTLEMENT TABLE_SCHEMAS and allowed entity registry",
+      "registryTargetId validates STABLE_IMPORT_ID_V1",
+      "ordinary/stream settlement row-id/source-key and sales_id binding",
+      "whole SQL DOCUMENTS entity and request aggregation"
+    ],
+    "missing": "Explicit canonical generation specification for absent original settlement ID; persisted occurrence UUID,nonreserved key grammar,parent/source/reorder/recovery semantics must be confirmed by Dot",
+    "supersedes": "Prior implication that missing Line helper literal itself proves mandatory code/interface change; not an actual rejected PG/import result",
+    "noSelfInventedProtocol": true,
+    "runtimeOrDatabaseVerified": false
+  },
+  "v4StaffSourcePins20261104": {
+    "task": "D3-05",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-source-files-staff-approval-D3-05/RESULT.json",
+    "sha256": "4c467047c7e2627f709da21d909d47279fc53d44b7da3ed2c89708ac8bee8b03",
+    "sourcePins": 4,
+    "alreadyInPriorList": 1,
+    "pinsPendingMerge": 0,
+    "actualV4PureValidators": "approval reader,MatchesSource and exact2 staff identity/source match PASS",
+    "retired": 54,
+    "withHall": 52,
+    "approvedNullHall": 2,
+    "missingStaffDocumentsUnchanged": 8,
+    "newAccountsCreated": 0,
+    "finalManifestSealed": false,
+    "databaseVerified": false,
+    "next": "Whole13 current consumer enumeration and final manifest assembly still pending",
+    "mergedIntoSourceList": 29,
+    "membershipInEnumeratedSourceList": true
+  },
+  "v4SourceFilesAssembly20261104": {
+    "task": "D3-06",
+    "initialReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-source-files-assembly-D3-06/RESULT.json",
+    "initialReceiptSHA256": "99a46c54283e5148f6295bac4f9e51726e1410943e1bf1a376fd4a0f8c564ba2",
+    "locatorReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-source-files-assembly-D3-06/locator-followup-01/RESULT.json",
+    "locatorReceiptSHA256": "de50adb1b0b8c99231caced3bc8d94bb49f88e101a850e325fb1eaa5ad2f0800",
+    "sourcePins": 29,
+    "sourceListSHA256": "2a80a96e76bb7d9f155e6d7d342161675389393962bb3643878b6fb9ed2c4c59",
+    "coverageScope": "12 explicitly enumerated candidate/registry files plus staff approval source requirements",
+    "referencedSourceHashes": 28,
+    "coveredSourceHashes": 28,
+    "unresolvedInEnumeratedScope": 0,
+    "priorUnlocatedResolved": 4,
+    "privateOriginalsCopied": false,
+    "sensitiveAccountSource": "Existing SOURCE-METADATA bytes/hash/path only, not workbook secret cells or copying",
+    "whole13PackagesEnumerated": "KEY_INPUTS_AND_OVERLAYS_ONLY_NESTED_ASSEMBLY_INCOMPLETE",
+    "completeManifestSealed": false,
+    "next": "Original D1/D2/D3 now materialize nonoverlapping actual standard files, not another inventory-only followup",
+    "databaseVerified": false,
+    "consolidatedReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-source-files-assembly-D3-06/consolidated-followup/RESULT.json",
+    "consolidatedReceiptSHA256": "c328da11ecc34fbe3d41aa00cdd0ebafb887e8baacc41bad8e67b9c62c224edf",
+    "current13ConsumerInventory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-source-files-assembly-D3-06/consolidated-followup/work-package-consumers.private.json",
+    "current13ConsumerInventorySHA256": "ff47e055540a005d04a1d6e9013d4d28347bb33e34daac137c712aa387884834"
+  },
+  "v4StandardMaterialization20261104": {
+    "status": "FIRST_ACTUAL_ARTIFACTS_PARTIAL_ORIGINAL_OWNERS_CONTINUING",
+    "source": "v4 exact shared fields/profile; preserve existing persistent identities and evidence",
+    "dedup": "D1/D2 were idle; D3 index55 completed; no new Chats or mirrored team",
+    "rawRowsSharedWithDotOrGit": false,
+    "applicationOrSQLChanged": false,
+    "serverJobSubmitted": false,
+    "needActualArtifactsNotJustPlans": true,
+    "unresolvedRowsPreserved": 125,
+    "knownPending": [
+      "19 A/B and 29 size tuples exact human replies",
+      "Dot absent-ID settlement canonical generation specification; generic consumer exists",
+      "Dot truthful approved missing-zero SourceRef expression",
+      "Exact install/ordinary full import/independent readback and real business tests not run"
+    ],
+    "D1": {
+      "scope": "8–11",
+      "observedCounts": {
+        "sales_header": 28894,
+        "transfer_header": 14835,
+        "sales_line": 83399,
+        "transfer_line": 273948
+      },
+      "notCompleted": "Actual selected profile/generated fields, historical sales hall mapping,292 sale prices,84sales+6transfer SKU refs, full quantity/money and registry closure,12settlement assembly",
+      "artifactsMutableWIP": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-documents-D1-11",
+      "acceptedAsReady": false
+    },
+    "D2": {
+      "scope": "5–7",
+      "observedCounts": {
+        "hall": 43,
+        "warehouse": 53,
+        "staff": 103,
+        "customer": 263,
+        "supplier": 222,
+        "payment_method": 11,
+        "payment_account": 80,
+        "payment_account_hall": 0
+      },
+      "notCompleted": "Independent cashier source enabled null versus deployed-reader effective true;43account-method refs; existing runtime actual hallIds must be distinguished from985historical recommendation pairs",
+      "artifactsMutableWIP": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-masters-D2-18",
+      "acceptedAsReady": false
+    },
+    "D3": {
+      "scope": "1–4 and13",
+      "observedCounts": {
+        "product_category": 47,
+        "product": 2970,
+        "color": 182,
+        "fit": 6,
+        "size": 256,
+        "size_group": 4,
+        "size_group_member": 35,
+        "sku": 14757,
+        "barcode_scheme": 6,
+        "sku_barcode": 13721,
+        "registry": 433801,
+        "mappedObservedStockCandidates": 42192
+      },
+      "notCompleted": "Season/image/decisions/source consumer closure, true StandardRecord inventory, pending source-zero contract and other original-owner output integration",
+      "artifactsMutableWIP": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-core-D3-07",
+      "acceptedAsReady": false
+    },
+    "limits": "First materialization counts do not prove whole package readiness or exact selected profile; owners continuing with same directories, receipts are not fixed final handoff"
   }
 }
