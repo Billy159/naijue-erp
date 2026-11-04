@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-04T15:11:06.617339+00:00",
+  "updatedAt": "2026-11-04T15:28:04.688277+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "7b7372aa99fe2c472c5e6cbb0ea2bf394566f96d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -24725,10 +24725,10 @@
   "currentWaitingConditions": [
     "Fixed v4 received; actual partial standard artifacts assembled through index56.13-package full manifest and complete actual preflight are NOT_READY, not simply a source inventory anymore.",
     "User19 A/B and29 size tuple replies still needed for125 preserved unresolved source rows(sales84,transfer6,stock35);112 previously approved SKUs already consumed. No new guessing or omission.",
-    "Sales business-hall actual bridge/profile required; simplified department candidate26303 plus2591 unknown is not factual proof of document hall;196 differ from warehouse hall. Current286 missing prices RESOLVED by direct raw source field and consumed, do not keep old price blocker.",
+    "Sales business-hall actual bridge unresolved:26303code candidates include196different fromwarehouse;2590outside+1blank. V4 four schemas rejectnull(8pure checks false), ordinary/stream samehall guard and baseSQL/read consumers have no historical unknown path. Accurate Dot successor required; data not guessed. Current286 prices remain resolved.",
     "12 payment methods and43 account-method references CLOSED using existing deployed-reader current effective rule; original cashier explicit enabled UNKNOWN. Account-hall finalapproved eligibility and199 source-hall bridges NOT_PROVEN;1184 source links/985 recommendations not auto current permissions.",
     "26382 settlement occurrences generic consumer exists but absent-ID canonical generation specification remains Dot input;26360 business candidates+22zero archives retained.105486 approved absent-zero keys still need truthful source representation;42192 observed stock StandardRecords now exist,35unresolved stock cells retained.",
-    "Media114 old records/67files have not been proven to current product/role/color identities;season source mapping and complete rule/asset closure remain pending; no fake empty-table completion.",
+    "Media114 old records/67files now preserved as explicit historical ID/role/color/path sidecar;102oldSKU product-code candidates do not prove crossbatch product/color identity. Product original header has no season field; no season dictionary, neither proves business has no seasons. Need actual bridge/source, no fake empty-table completion.",
     "Mac launcher/root issuer/trusted install, newguardPG/latest fullbuild/typecheck,complete import/independent readback/dedup/failure recovery,ordinary business/browser and production not run. No new T45/PG or production job."
   ],
   "salesStaffMapping": {
@@ -25857,26 +25857,26 @@
       "status": "CURRENT_SCOPE_DELIVERED_WAIT_EXACT_INPUT"
     },
     "D1": {
-      "current": "D1-11 actual4 tables/settlement andD1-12 direct price delta delivered and consumed",
-      "next": "Existing exact sales business-hall bridge/profile facts or human19/29 identities; no repeated286 price work",
+      "current": "Existing complete department/hall evidence reused; no new approved business hall bridge",
+      "next": "Actual explicit hall business mapping or Dot truthful historical-unknown receiving contract; no repeated department review",
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
       "writeScope": "Original private D1-11 frozen outputs and completed D1-12 only; no central/source/SQL",
-      "task": "D1-11",
+      "task": "D1-13",
       "dispatchAccepted": true,
       "status": "CURRENT_SCOPE_DELIVERED_WAIT_EXACT_INPUT"
     },
     "D2": {
-      "current": "D2-18 actual masters incl12methods/43account-method refs and reproducible local assembler delivered",
+      "current": "114 historical media ID/role/color/path records preserved; current product/color bridge still unproven; product header has no season field",
       "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
       "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-masters-D2-18 only; old inputs read-only; no central writes",
-      "next": "Actual final account-hall eligibility/current same-ID membership plus199 old-hall bridge; do not promote recommendations to permissions",
-      "task": "D2-18",
+      "next": "Exact product/color/role bridge or new source facts; preserve existing data, no repeated114/67 counting",
+      "task": "D2-19",
       "dispatchAccepted": true,
       "status": "CURRENT_SCOPE_DELIVERED_WAIT_EXACT_INPUT"
     },
@@ -25886,13 +25886,15 @@
     },
     "sourceAcceptance": {
       "threadId": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
-      "current": "Settlement scope clarification completed; no active job",
+      "current": "V4 historical sale hall gap delivered; four-profile nullable and two consumer guards plus source SQL/read path verified",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
       "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/owner-review",
       "sourceReadOnly": true,
-      "next": "Only new fixed Dot spec/code delta or actually ready lawful isolation; no repeated source review"
+      "next": "Dot exact successor receiving contract/code or actual specific hall mapping; no repeated source checks",
+      "status": "CURRENT_SCOPE_DELIVERED_WAIT_EXACT_INPUT",
+      "turnId": "01a1a728-0c3d-7690-9f54-d6ecae922e7f"
     }
   },
   "barcodeSKUReferences20261104": {
@@ -26022,8 +26024,8 @@
   },
   "latestGitHubCleaningCheckpoint": {
     "branch": "codex/e5c5a762-cleaning-20261102",
-    "previousVerifiedRemoteCommit": "057f420062a0897855a2e79b681f3ad1da3f7775",
-    "currentStage": "Index56 actual partial standard artifacts; fixed original owner receipts,current prices/method refs resolved; exact checkpoint in external receipt",
+    "previousVerifiedRemoteCommit": "695eb9f371ae65224f845a87e6da7372cc04055a",
+    "currentStage": "Exact historical hall receiver gap and private114media evidence, index56 unchanged; current checkpoint via external receipt",
     "status": "EXACT_CURRENT_STAGE_GIT_RESULT_IN_EXTERNAL_RECEIPT",
     "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/.latest-github-checkpoint-result.json",
     "included": "Only3 controller records; no real rows,UUID ledgers,v4 source or original4WIP",
@@ -26902,7 +26904,7 @@
     "testLimit": "Test source only asserts denial output, no independent connection/write observer; old V2 branch not separately covered in new subprocess case; no tests executed",
     "nonBlockingPresentationNote": "Capability common offline/implemented legacy wording may confuse, not a proven business defect or grounds to remove guards",
     "dotReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/CONTROLLER-DOT-RECEIVER-DELTA.zh-CN.md",
-    "dotReportSHA256": "3e4fe677883eded3799de9f7a4fbd5e0a0b8194161c424c7c8b505b5128de97e",
+    "dotReportSHA256": "a64a879b12ada534a29ba9fc9f5bee937d0de288d0677ed7abdf02081c67a35a",
     "applicationOrDatabaseExecuted": false
   },
   "remainingSizeExceptions20261104": {
@@ -27097,5 +27099,77 @@
       "D3PriceConsumedSHA256": "8b1d885a2d79e1aecfc477716f522e37a75d12b1d4314acb837e4b612b099af3",
       "databaseVerified": false
     }
+  },
+  "v4ResidualEvidence20261104": {
+    "status": "ORIGINAL_OWNERS_SCOPED_EVIDENCE_COMPLETE_WAIT_EXTERNAL_INPUT",
+    "previousGoalTurn": "PROGRESS: actual materialization,index56,286prices and43method references",
+    "D1": {
+      "task": "D1-13",
+      "status": "EXACT_PREEXISTING_EVIDENCE_REUSED_NO_NEW_BRIDGE",
+      "departmentRows": 59,
+      "headerDepartmentKnown": 28893,
+      "headerDepartmentBlank": 1,
+      "sameCodeHallCandidates": 26303,
+      "candidateDiffersFromWarehouseHall": 196,
+      "outsideCurrentHallDomainHeaders": 2590,
+      "outsideCurrentHallDomainCodes": 13,
+      "existingExamples": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261103/sales-department-hall-D1-01/semantics-clarification/semantics-review.private.json",
+      "existingExamplesSHA256": "1728d7976397b2c37dc1d3dd409ec60aba3da8ae7969e88123cdffbe0433b20b",
+      "noInventedMapping": true
+    },
+    "D2": {
+      "task": "D2-19",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-media-identity-bridge-D2-19/RESULT.json",
+      "receiptSHA256": "a903d6f6556e5f5a93d922f87bcedb85825a52fdd729c412b08921e25f0874a6",
+      "historicalMediaRowsPreserved": 114,
+      "historicalFileReferences": 67,
+      "actualImageBytesRead": false,
+      "currentProductCodeCandidateCount": 1,
+      "historicalSkuCodeCandidateRows": 102,
+      "productImageBridgeProven": false,
+      "currentProductHeaderContainsSeasonField": false,
+      "businessHasNoSeasonsProven": false,
+      "scope": "Existing source metadata and T13/T32/projections only; no original XLSX,media bytes or production queries"
+    },
+    "sourceAcceptance": {
+      "task": "V4-HISTORY-SALES-HALL-RECEIVER-SCOPE-03",
+      "status": "SOURCE_AND_LOCAL_PURE_FUNCTION_EVIDENCE_DELIVERED",
+      "threadId": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
+      "turnId": "01a1a728-0c3d-7690-9f54-d6ecae922e7f",
+      "cursor": "e52d077e-0de3-4474-9655-1bfba8e06f39:16",
+      "model": "gpt-6.1-terra",
+      "reasoningEffort": "medium",
+      "scope": "New exact historical sales hall null/cross-hall consumer delta only; no repeat prior v4 routes or settlement review",
+      "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/owner-review/V4-HISTORY-SALES-HALL-RECEIVER-SCOPE-03.md",
+      "reportSHA256": "070ef8f8afc29e5f680465fe254e5b360c118bc1c96e079fc2ee5adbe68e5d5c",
+      "fourProfilesHallNullRejected": true,
+      "pureFieldChecks": 8,
+      "pureChecksReturnedFalse": 8,
+      "pureCheckProcessExitCode": 0,
+      "ordinaryAndStreamCrossHallGuardNotHistoricalAware": true,
+      "baseDatabaseColumnNOTNULLObservedInSource": true,
+      "readersInnerJoinHallAndRequireID": true,
+      "actualPGOrCLI": false,
+      "factsQualification": "196 are department-code candidates different from warehouse hall, NOT independently proven cross-hall business facts; no new hall business mapping approved"
+    },
+    "databaseExecuted": false,
+    "centralIndexChanged": false
+  },
+  "v4HistoricalHallReceiverGap20261104": {
+    "status": "CONFIRMED_SOURCE_CONTRACT_GAP_NOT_PG_TEST",
+    "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/owner-review/V4-HISTORY-SALES-HALL-RECEIVER-SCOPE-03.md",
+    "reportSHA256": "070ef8f8afc29e5f680465fe254e5b360c118bc1c96e079fc2ee5adbe68e5d5c",
+    "sourceField": "sales_header.hall_id",
+    "currentContract": "uuid nonnullable across four existing schema profiles",
+    "dataBoundary": "Keep true unknown and original historical department; do not replace by warehouse hall or interpret matching display/code as approved hall bridge",
+    "ordinaryGuard": "unified-import-contract.ts:1552 SALES_WAREHOUSE_HALL_CONFLICT",
+    "streamGuard": "stream-relations.mjs:60",
+    "databaseSource": "0001_runtime_sales.sql:85-88 NOT NULL; examined successor does not relax hall_id",
+    "readConsumers": "sales-query-reader.ts hall INNER JOIN/nonnullableID; sales-native-facts.ts samehall requirement; ordinary hall permissions",
+    "requiredDotScope": "Bounded historical null/cross-hall truth receiving semantics, physical schema, ordinary+stream validator, trusted import, query/detail/permissions and actual affected save/review consumers; preserve LIVE rules; provide exact proposed delta before application",
+    "legacyApprovalScope": "Old v5/old2471 is not current batch approval; no implicit new SQL/permission approval",
+    "businessCrossHallAlreadyProven": false,
+    "schemaOrApplicationChanged": false,
+    "productionOrPGExecuted": false
   }
 }
