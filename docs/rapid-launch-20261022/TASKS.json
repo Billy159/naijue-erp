@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-04T13:16:13.828935+00:00",
+  "updatedAt": "2026-11-04T13:58:12.370153+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "7b7372aa99fe2c472c5e6cbb0ea2bf394566f96d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -24253,70 +24253,106 @@
     }
   },
   "latestUnifiedSourceIntake": {
-    "status": "V3_COMPLETE_STAGE_ACCEPTED_HASH_CRC_AND_ALL_MANIFESTS_VERIFIED",
-    "archive": "/Users/billy/Downloads/ERP-STAGE-WIP-20261104-1204-v3-COMPLETE.zip",
-    "archiveSHA256": "e75baa70b7d28230b67436087f9283f7d58ac98f7ab640f3b35d250b29d99196",
-    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v3-received-20261104-01",
-    "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v3-received-20261104-01/source",
+    "status": "V4_COMPLETE_STAGE_ACCEPTED_HASH_CRC_AND_ALL_MANIFESTS_VERIFIED",
+    "archive": "/Users/billy/Downloads/ERP-STAGE-WIP-20261104-1258-v4-COMPLETE.zip",
+    "archiveSHA256": "ea1b293a384475ae9c3c728989d9e0c64bb12d789b9ec455220f29dc08268865",
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01",
+    "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/source",
     "repository": "https://github.com/Billy159/naijue-erp",
     "baselineCommit": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
     "branch": "NOT_INDEPENDENTLY_PINNED_IN_THIS_WIP_ARCHIVE; prior reported handoff/erp-unified-latest-20261102 retained as historical",
     "snapshot": "TRACKED_AND_UNTRACKED_WIP_NOT_PURE_COMMIT",
-    "sourceManifestSHA256": "9e13185b9009b68814e9fed1e0dd9ccba8f5a900454e1317b58ab840c6dda3a3",
+    "sourceManifestSHA256": "15230a057834cb716e9dd6a90783781d20e6ce5db42b07c993afa40bacc73560",
     "sourceFiles": 3284,
     "changedOrNewFilesFromBaseline": 571,
     "unwiredExternalCandidateFiles": 376,
-    "packagedChecksumsVerified": 3672,
-    "node": "24.21.0 required; current v3 execution NOT_RUN",
+    "packagedChecksumsVerified": 3673,
+    "node": "24.21.0 required; current v4 execution NOT_RUN",
     "npm": "11.9.0 required",
     "lockSHA256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
-    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v3-received-20261104-01/CONTROLLER-INTAKE-RECEIPT.json",
-    "receiptSHA256": "6feb67fc00504a9a8bf1ccd4a70dddc6cb5c55448dbebb49af8a702ab23ed7ce",
-    "newSourceTestsBuildPGInstall": "NOT_RUN; previous13:31 and function-level synthetic PG do not transfer",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/CONTROLLER-INTAKE-RECEIPT.json",
+    "receiptSHA256": "c63cd889d8661ac8b308e731c860cf0f4ba80c26b365e394ca73a08833908409",
+    "newSourceTestsBuildPGInstall": "NOT_RUN; prior SQL-level results do not transfer",
     "noOverwrite": true,
     "productionAuthorized": false,
     "previousIntakePreserved": {
-      "state": "FULL_FIXED_SOURCE_AND_PACKAGE_INTEGRITY_VERIFIED_NOT_RELEASE",
-      "archive": "/Users/billy/Downloads/ERP-UNIFIED-STAGE-051bbe1-ACCEPTANCE-20261103.zip",
-      "zipSha256": "938a404f618b4cc2973cbd1635a32bfaebc141d5509547114e023b5c1bb1e400",
-      "declaredBranch": "handoff/erp-unified-latest-20261102",
-      "declaredCommit": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
-      "extractedRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-051bbe1-acceptance-received-20261103-01/ERP-UNIFIED-STAGE-051bbe1-ACCEPTANCE-20261103",
-      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-051bbe1-acceptance-received-20261103-01/RECEIPT.json",
-      "receiptSha256": "f49cf41c6e7af2ceb7e23d456b1950ebb5758893c7239d5bce4681cc395889f2",
-      "sourceFilesVerified": 3948,
-      "packageManifestEntriesVerified": 4523,
-      "allPackageFiles": 4525,
-      "extraSourceFiles": 0,
-      "gitBlobsAndExecutableModesMatchManifest": true,
-      "remoteCommitIndependentlyVerified": false,
-      "currentWorkingBranchChanged": false,
-      "sourceCopiedIntoCurrentCheckout": false,
-      "formatSchemaTablesWorkPackagesIdenticalTo4e98": true,
-      "contractExportSha256": "a3fc21a0e08adf9a7da425f42031b6b482d3efc763cf9d5803df028d314003d6",
-      "localPackageScriptExecutions": 0,
-      "localDatabaseConnectionsForIntake": 0,
-      "codeOwner": "Dot",
-      "cleaningMethodChanged": false,
-      "commit": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
-      "branch": "handoff/erp-unified-latest-20261102",
-      "integrity": {
-        "zipSha256MatchesHumanPin": true,
-        "sourceFilesAndGitBlobs": 3948,
-        "packageEntries": 4523,
+      "status": "V3_COMPLETE_STAGE_ACCEPTED_HASH_CRC_AND_ALL_MANIFESTS_VERIFIED",
+      "archive": "/Users/billy/Downloads/ERP-STAGE-WIP-20261104-1204-v3-COMPLETE.zip",
+      "archiveSHA256": "e75baa70b7d28230b67436087f9283f7d58ac98f7ab640f3b35d250b29d99196",
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v3-received-20261104-01",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v3-received-20261104-01/source",
+      "repository": "https://github.com/Billy159/naijue-erp",
+      "baselineCommit": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
+      "branch": "NOT_INDEPENDENTLY_PINNED_IN_THIS_WIP_ARCHIVE; prior reported handoff/erp-unified-latest-20261102 retained as historical",
+      "snapshot": "TRACKED_AND_UNTRACKED_WIP_NOT_PURE_COMMIT",
+      "sourceManifestSHA256": "9e13185b9009b68814e9fed1e0dd9ccba8f5a900454e1317b58ab840c6dda3a3",
+      "sourceFiles": 3284,
+      "changedOrNewFilesFromBaseline": 571,
+      "unwiredExternalCandidateFiles": 376,
+      "packagedChecksumsVerified": 3672,
+      "node": "24.21.0 required; current v3 execution NOT_RUN",
+      "npm": "11.9.0 required",
+      "lockSHA256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v3-received-20261104-01/CONTROLLER-INTAKE-RECEIPT.json",
+      "receiptSHA256": "6feb67fc00504a9a8bf1ccd4a70dddc6cb5c55448dbebb49af8a702ab23ed7ce",
+      "newSourceTestsBuildPGInstall": "NOT_RUN; previous13:31 and function-level synthetic PG do not transfer",
+      "noOverwrite": true,
+      "productionAuthorized": false,
+      "previousIntakePreserved": {
+        "state": "FULL_FIXED_SOURCE_AND_PACKAGE_INTEGRITY_VERIFIED_NOT_RELEASE",
+        "archive": "/Users/billy/Downloads/ERP-UNIFIED-STAGE-051bbe1-ACCEPTANCE-20261103.zip",
+        "zipSha256": "938a404f618b4cc2973cbd1635a32bfaebc141d5509547114e023b5c1bb1e400",
+        "declaredBranch": "handoff/erp-unified-latest-20261102",
+        "declaredCommit": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
+        "extractedRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-051bbe1-acceptance-received-20261103-01/ERP-UNIFIED-STAGE-051bbe1-ACCEPTANCE-20261103",
+        "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-051bbe1-acceptance-received-20261103-01/RECEIPT.json",
+        "receiptSha256": "f49cf41c6e7af2ceb7e23d456b1950ebb5758893c7239d5bce4681cc395889f2",
+        "sourceFilesVerified": 3948,
+        "packageManifestEntriesVerified": 4523,
+        "allPackageFiles": 4525,
         "extraSourceFiles": 0,
-        "zipExecutableModesMatch": true,
-        "receiptSha256": "f49cf41c6e7af2ceb7e23d456b1950ebb5758893c7239d5bce4681cc395889f2"
-      },
-      "independentExpectedZipHashProvided": true,
-      "scope": "Verified offline selected source/package contents and packaged public acceptance integrity only; no code execution or DB access",
-      "applicationMerged": false,
-      "V2DatabaseApplyResume": "Conditional source49 client implemented; no valid installed49 target or V2 PG acceptance",
-      "candidate48and49": {
-        "source48": "INSTALLED_OBSERVED_IN_DOT_SYNTHETIC_EVIDENCE",
-        "source49": "CODE_ONLY_NOT_INSTALLED",
-        "combined47_48_49": "NOT_ADMITTED"
+        "gitBlobsAndExecutableModesMatchManifest": true,
+        "remoteCommitIndependentlyVerified": false,
+        "currentWorkingBranchChanged": false,
+        "sourceCopiedIntoCurrentCheckout": false,
+        "formatSchemaTablesWorkPackagesIdenticalTo4e98": true,
+        "contractExportSha256": "a3fc21a0e08adf9a7da425f42031b6b482d3efc763cf9d5803df028d314003d6",
+        "localPackageScriptExecutions": 0,
+        "localDatabaseConnectionsForIntake": 0,
+        "codeOwner": "Dot",
+        "cleaningMethodChanged": false,
+        "commit": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
+        "branch": "handoff/erp-unified-latest-20261102",
+        "integrity": {
+          "zipSha256MatchesHumanPin": true,
+          "sourceFilesAndGitBlobs": 3948,
+          "packageEntries": 4523,
+          "extraSourceFiles": 0,
+          "zipExecutableModesMatch": true,
+          "receiptSha256": "f49cf41c6e7af2ceb7e23d456b1950ebb5758893c7239d5bce4681cc395889f2"
+        },
+        "independentExpectedZipHashProvided": true,
+        "scope": "Verified offline selected source/package contents and packaged public acceptance integrity only; no code execution or DB access",
+        "applicationMerged": false,
+        "V2DatabaseApplyResume": "Conditional source49 client implemented; no valid installed49 target or V2 PG acceptance",
+        "candidate48and49": {
+          "source48": "INSTALLED_OBSERVED_IN_DOT_SYNTHETIC_EVIDENCE",
+          "source49": "CODE_ONLY_NOT_INSTALLED",
+          "combined47_48_49": "NOT_ADMITTED"
+        }
       }
+    },
+    "sourceChangesFromV3": [
+      "scripts/release/unified-install/WHOLE_SALES_LOCAL_OPERATOR_HANDOFF.md",
+      "tests/historical-sales-execution-admission-path.test.mjs",
+      "tools/unified-import/cli.ts"
+    ],
+    "sharedCleaningContractsUnchangedFromV3": true,
+    "wholePackageRoutes": {
+      "ordinaryHistory": "whole-import",
+      "largeHistory": "stream-import",
+      "legacyInitializeApply": "Not allowed for whole history; source-only route delta review in progress",
+      "actualCLIOrMacVerified": false
     }
   },
   "fourProductUpperGroupDecision": {
@@ -24687,12 +24723,11 @@
     }
   },
   "currentWaitingConditions": [
-    "Index49 DRAFT:43729 headers+357347 lines now use actual v3 shared identities with persisted UUIDs; old whole-class header/line-identity missing claim is superseded.",
-    "Dot exact technical gaps:26382 settlement occurrence identities not supported by shared Line codec/parser;105433 approved explicit-zero keys lack truthful whole-file source expression because row must be positive int32. No fake Excel row, settlement-as-line or second protocol.",
-    "D2-15 fixed131 distinct observed combinations/258 observations:112 lack direct SKU enabled facts and await current activation policy;19 have A/B identity conflict requiring precise batch exception. Two questions already asked; no dependent materialization before reply.29 size exceptions and1374 source references remain separately tracked.",
-    "Two retired null-hall inputs already follow v3 format; final manifest source/evidence hash membership still to bind, not a repeated personnel decision.22 zero sources need reviewed settlement/archive identity and actual dedicated trace readback/no fund actions.",
-    "v3 ZIP/manifests accepted, but Mac trusted install path/records/actor/target preconditions and new guard real PG remain not established. Only necessary candidates need exact integration/pins; unrelated376 candidates/performance are not blanket prerequisites.",
-    "Current v3 build/typecheck/install/import/independent reconciliation/idempotency/recovery/ordinary account/browser and production NOT_RUN. No PG/production task submitted."
+    "Index51 DRAFT:112 approved current enabled SKUs closed1249 original unresolved rows;1374→125. Original enabled UNKNOWN; original43,729 headers/357,347 lines and persisted UUIDs preserved.",
+    "Dot exact unchanged technical seams:26382 settlement occurrence identities lack shared settlement codec/parser;105486 explicit-zero keys lack truthful whole-file source expression because SourceRef.row must positive int32. No fake row or settlement-as-line.",
+    "19 A/B identity cases remain pending.29 historical size tuples affecting106 source rows now have exact deduplicated decision material:7 clothing have global mapping but no proven current code/member bridge;22 accessories need real size meaning. Both questions sent, no guessed mapping or extra enablement. Remaining approved endpoints sales84/transfer12.",
+    "Two retired null-hall inputs already follow shared format; final manifest source/evidence membership still to bind.22 zero settlements need actual dedicated trace readback and0 fund actions, not merely local archive candidate.",
+    "v4 integrity and3-file route source review complete; actual Mac launcher/root issuer/trusted installation records/roles/target and new guard PG not verified. Latest build/typecheck,complete import/independent reconciliation/idempotency/recovery,ordinary business/browser and production NOT_RUN. No new T45/PG job."
   ],
   "salesStaffMapping": {
     "status": "INDEX22_DRAFT_IDENTITY_REFERENCES_NOT_COMPLETE_STANDARD_STAFF",
@@ -25753,34 +25788,47 @@
     "frozenDemo": "Read-only; approved differences remain"
   },
   "latestCleaningIndex": {
-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-49/INDEX.json",
-    "sha256": "65a5491204e0af1d95f5e496be3b9f798acba7e1f26336cffb7e4ffcda5466ab",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-51/INDEX.json",
+    "sha256": "043622446d3ef7e6db928eb353d59e2ba524558882bdf47afbbc630c739837fc",
     "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
     "ready": false,
     "databaseVerified": false,
+    "latestSourceManifestSHA256": "15230a057834cb716e9dd6a90783781d20e6ce5db42b07c993afa40bacc73560",
     "previousIndex": {
-      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-48/INDEX.json",
-      "sha256": "4f99bc0c776afa2bb7593fcade47aa5382f6755a682fac574fc03804e1a3d655",
-      "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
-      "ready": false,
-      "databaseVerified": false,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-50/INDEX.json",
+      "sha256": "b0222339c9923704d71c3fd7a468abfe286f19dfbee133c5d7b83c2c5f90d70b",
       "previousIndex": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-46/INDEX.json",
-        "sha256": "81e58284d42660bb27efdffb61044b1af76f45bea32bf7720d5c0943d90d7590",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-49/INDEX.json",
+        "sha256": "65a5491204e0af1d95f5e496be3b9f798acba7e1f26336cffb7e4ffcda5466ab",
         "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
         "ready": false,
         "databaseVerified": false,
         "previousIndex": {
-          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-43/INDEX.json",
-          "sha256": "90ffa3c7949c486d4515e8f6233963ccf4b275c362fbf4e01851099af9ef8ab8",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-48/INDEX.json",
+          "sha256": "4f99bc0c776afa2bb7593fcade47aa5382f6755a682fac574fc03804e1a3d655",
           "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
           "ready": false,
-          "databaseVerified": false
-        }
-      },
-      "compatibilityWithLatestV3": "RECEIVER_REVIEW_IN_PROGRESS_NOT_PG_VERIFIED"
-    },
-    "latestSourceManifestSHA256": "9e13185b9009b68814e9fed1e0dd9ccba8f5a900454e1317b58ab840c6dda3a3"
+          "databaseVerified": false,
+          "previousIndex": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-46/INDEX.json",
+            "sha256": "81e58284d42660bb27efdffb61044b1af76f45bea32bf7720d5c0943d90d7590",
+            "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+            "ready": false,
+            "databaseVerified": false,
+            "previousIndex": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/draft-work-package-index-43/INDEX.json",
+              "sha256": "90ffa3c7949c486d4515e8f6233963ccf4b275c362fbf4e01851099af9ef8ab8",
+              "stage": "DRAFT_INDEX_NOT_STANDARD_PACKAGE",
+              "ready": false,
+              "databaseVerified": false
+            }
+          },
+          "compatibilityWithLatestV3": "RECEIVER_REVIEW_IN_PROGRESS_NOT_PG_VERIFIED"
+        },
+        "latestSourceManifestSHA256": "9e13185b9009b68814e9fed1e0dd9ccba8f5a900454e1317b58ab840c6dda3a3",
+        "compatibilityWithLatestV4": "Source shared cleaning contracts byte-identical to v3; index49 itself retained as original v3 consumer evidence, not relabelled as v4 PG validation"
+      }
+    }
   },
   "skuMaterialization20261104": {
     "owner": "Original D3",
@@ -25826,10 +25874,10 @@
   },
   "currentCleaningOwnerQueue20261104": {
     "D3": {
-      "current": "Index49 actual v3 header/line helper consumer delivered; no active job",
-      "next": "Consume exact settlement/approved-zero receiver successor and actual D2 activation facts; standard package still incomplete",
+      "current": "D3-03/04 delivered index50/51;112 SKU,1249 refs and affected stock coverage consumed; no active job",
+      "next": "Only consume actual19/29 decisions or Dot shared settlement/zero-source successor; no duplicate scan or task filler",
       "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
-      "turnId": "01a1a5ab-1635-7c10-99ff-5f06771f53fb",
+      "turnId": "01a1a6c6-96ff-7ac0-80a2-2d117cc735cf",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
@@ -25846,14 +25894,14 @@
       "writeScope": "Existing D1 private scopes only; no application/SQL/central writes"
     },
     "D2": {
-      "current": "D2-15 classification delivered:112 activation-policy cases and19 A/B identity-conflict cases; no active job",
+      "current": "D2-17 and7-clothing correction delivered; no active job",
       "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
       "turnId": "01a1a582-80ce-7bc1-896e-93a765c7d786",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-      "writeScope": "parallel-cleaning-20261104/sku-activation-facts-v3-D2-15 only",
-      "next": "Await the two exact pending human answers; consume only approved scope, then deliver original D3; do not redo48 accepted checks or131 extraction"
+      "writeScope": "Original private D2 directories only; no central/application/SQL writes",
+      "next": "Consume actual precise human size/A-B replies with only impacted evidence; do not repeat131/48 review or infer enablement"
     },
     "T45": {
       "current": "No new live server/database job",
@@ -25861,12 +25909,13 @@
     },
     "sourceAcceptance": {
       "threadId": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
-      "current": "V3 read-only review completed with exact settlement and source-ref limitations; no active job",
+      "current": "V4 exact3-file read-only review complete; no active job",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-      "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v3-received-20261104-01/owner-review",
-      "sourceReadOnly": true
+      "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/owner-review",
+      "sourceReadOnly": true,
+      "next": "Actual CLI/Mac/PG must wait compatible tooling, target and finite authorized execution; no source-only result relabelled as runtime"
     }
   },
   "barcodeSKUReferences20261104": {
@@ -25996,11 +26045,11 @@
   },
   "latestGitHubCleaningCheckpoint": {
     "branch": "codex/e5c5a762-cleaning-20261102",
-    "localCommitBeforeThisCheckpoint": "6653bf3884bd09cf069b25ef3b00f1c45cd1130b",
-    "lastVerifiedRemoteCommit": "7b7372aa99fe2c472c5e6cbb0ea2bf394566f96d",
-    "status": "V3_AND_INDEX49_CONTINUITY_CHECKPOINT_PENDING; prior GitHub push500 retained",
+    "previousVerifiedRemoteCommit": "a02c1a11909ce08209a1a5505b3bf0c279b37fee",
+    "currentStage": "V4 source reception,index50/51 and112 approval; final commit/push/readback are bound in receipt below",
+    "status": "EXACT_CURRENT_STAGE_GIT_RESULT_IN_EXTERNAL_RECEIPT",
     "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/.latest-github-checkpoint-result.json",
-    "included": "Only3 controller records; no real rows,UUID ledgers,v3 app source or original4WIP",
+    "included": "Only3 controller records; no real rows,UUID ledgers,v4 app source or original4WIP",
     "databaseExecuted": false
   },
   "newBarcodeAllocationQuestion20261104": {
@@ -26465,7 +26514,7 @@
     "controllerRetest": false
   },
   "currentHumanDecisionQueue20261104": {
-    "status": "ZERO_AND_MONEY_CLOSED; TWO_EXACT_SKU_QUESTIONS_PENDING_ACTUAL_REPLY",
+    "status": "112_CONSUMED_INDEX50_51;19_AB_AND_7_CLOTHING_22_ACCESSORY_EXACT_QUESTIONS_PENDING",
     "closed": [
       "43648 effective -> APPROVED",
       "51 exact account names",
@@ -26477,7 +26526,8 @@
       "single-product jacket A/B kept separately; five duplicate stock keys resolved, index46",
       "65 signed mixed-sale original money projections retained, index45",
       "Current-batch unlisted confirmed warehouse/SKU stock is zero, exact105433 candidate keys, index47",
-      "One sales amount/cost interpretation confirmed against new runtime read-only evidence, index48"
+      "One sales amount/cost interpretation confirmed against new runtime read-only evidence, index48",
+      "112 observed combinations may become current enabled SKU only after final identity/group checks; raw enabled remains unknown; no stopped old SKU reactivation or additional barcode/stock"
     ],
     "technicalOwner": "Dot supplies latest shared receiver/install code; local original source owner reviews v3 exact seams, cleaners consume only actual accepted shared rules.",
     "askOnly": "Actual new business conflict with concrete source examples; do not reopen completed rulings",
@@ -26492,11 +26542,21 @@
       {
         "scope": "112 actual observed combinations without matched historical canonical or direct enabled facts",
         "question": "Permit current enabled policy only after final four-dimensional identity and group checks; original enabled remains unknown; no reactivation of old stopped SKU",
-        "status": "ASKED_PENDING_ACTUAL_HUMAN_REPLY"
+        "status": "CLOSED_APPROVAL_CONSUMED_INDEX50_51_NOT_PG"
       },
       {
         "scope": "19 combinations across4 products with historical B versus current blank-default-A conflict",
         "question": "Confirm current-batch precise B mapping exception or preserve pending; enabled policy alone cannot resolve identity",
+        "status": "ASKED_PENDING_ACTUAL_HUMAN_REPLY"
+      },
+      {
+        "scope": "7 clothing source tuples within29 size exceptions",
+        "question": "Confirm exact3 source-to-standard size pairs and whether missingSKU may follow112 current-enabled policy; source identity/status retained",
+        "status": "ASKED_PENDING_ACTUAL_HUMAN_REPLY"
+      },
+      {
+        "scope": "22 accessory source tuples within29 size exceptions",
+        "question": "Specify real size meaning per product; preserve rawSKU/rows/stock identity, no silent merging even if standardized size collapses",
         "status": "ASKED_PENDING_ACTUAL_HUMAN_REPLY"
       }
     ]
@@ -26775,8 +26835,121 @@
     },
     "reusedEvidence": "Prior D2-07/D3-04 and48 accepted checks; no repeated Excel scan",
     "directEnabledFact": "UNKNOWN",
-    "humanReply": "Two questions already sent in this main Chat; no answer yet",
+    "humanReply": "112 current-enabled policy now approved;19 A/B precise batch identity question still pending",
     "databaseExecuted": false,
     "realRowsSharedWithDotOrGit": false
+  },
+  "sku112ActivationApproval20261104": {
+    "authority": "Direct human in this main Chat, answer to call_3e401c2bec204ef3be80d79c2572bba3",
+    "answer": "按上述范围建立并启用",
+    "scope": 112,
+    "conditionalOn": [
+      "final verified product/color/fit/size identity",
+      "membership of actual product size group",
+      "no reactivation or duplicate of stopped old SKU"
+    ],
+    "currentEnabledPolicy": true,
+    "originalEnabledFact": "UNKNOWN_PRESERVED",
+    "extraBarcodeOrStockGeneration": false,
+    "producer": "D2-16",
+    "centralConsumer": "Original D3 only",
+    "status": "CONSUMED_INDEX50_STOCK_COVERAGE_INDEX51_NOT_PG",
+    "AB19NotCovered": true,
+    "sizeExceptions29NotCovered": true,
+    "databaseVerified": false,
+    "producerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/sku-approved-112-v4-D2-16/RESULT.json",
+    "producerReceiptSHA256": "67698cf7a108700668b3077c341612db27e2bee4603db66fe493e47ecde745f9",
+    "consumerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-approved-112-sku-consumer-D3-03/RESULT.json",
+    "consumerReceiptSHA256": "79874d4fa4f66265e999d6cd6457a036ff99585e3af7fd004701945c902f3a1d",
+    "counts": {
+      "newSKU": 112,
+      "resolvedTupleObservations": 239,
+      "resolvedSourceRows": 1249,
+      "salesRows": 40,
+      "transferRows": 726,
+      "stockRows": 483,
+      "remainingSourceRows": 125,
+      "remainingSalesRows": 84,
+      "remainingTransferRows": 6,
+      "remainingStockRows": 35
+    }
+  },
+  "v4AffectedStockCoverage20261104": {
+    "task": "D3-04",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-approved-112-stock-coverage-D3-04/RESULT.json",
+    "sha256": "a6023a23bbb1fc7b75b3ebc110a379e13acd5e0f73c35ae63bcb112c6e086d56",
+    "newObservedStockKeys": 483,
+    "totalObservedUniqueStockKeys": 42192,
+    "duplicateKeyGroups": 0,
+    "originalNumericCells": 42227,
+    "originalNetQuantity": "80717",
+    "newStockSignedQuantity": "1879",
+    "newStockSigns": {
+      "positive": 481,
+      "negative": 2
+    },
+    "priorExplicitZeroKeys": 105433,
+    "newExplicitZeroKeys": 53,
+    "replacedExplicitZeroKeys": 0,
+    "totalExplicitZeroKeys": 105486,
+    "affectedApprovedSales": {
+      "rows": 40,
+      "stockCovered": 34,
+      "zeroEndpoints": 6
+    },
+    "affectedApprovedTransfer": {
+      "rows": 435,
+      "fromStockCovered": 391,
+      "toStockCovered": 387,
+      "fromZeroEndpoints": 44,
+      "toZeroEndpoints": 48
+    },
+    "affectedDraftTransferRows": 291,
+    "remainingApprovedUnmappedEndpoints": {
+      "sales": 84,
+      "transfer": 12
+    },
+    "historicalLedgerBalances": "UNKNOWN_PRESERVED",
+    "newLedgerActions": 0,
+    "databaseVerified": false,
+    "sourceRefTechnicalGap": "Positive-row-only source contract still cannot truthfully represent approved file-level absence zeros"
+  },
+  "v4ReceiverReview20261104": {
+    "task": "V4-CLI-ROUTE-DELTA-01",
+    "status": "SOURCE_ONLY_NOT_RUNTIME_VERIFIED",
+    "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/owner-review/V4-CLI-ROUTE-DELTA-01.md",
+    "sha256": "a7968ceda806bb09603abe8ad6b894dd13ea377ae77c2349a74fdc91bb05c457",
+    "scope": "Only3 changed files and necessary route context; shared v3 evidence reused",
+    "finding": "Old initialize/apply historical profile refuses at shared plan check before client/journal/business writes; no auto conversion to whole-import. Local readonly inputs may already be read. Whole/stream dispatch unchanged.",
+    "testLimit": "Test source only asserts denial output, no independent connection/write observer; old V2 branch not separately covered in new subprocess case; no tests executed",
+    "nonBlockingPresentationNote": "Capability common offline/implemented legacy wording may confuse, not a proven business defect or grounds to remove guards",
+    "dotReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/CONTROLLER-DOT-RECEIVER-DELTA.zh-CN.md",
+    "dotReportSHA256": "2d2794ad4890c44b2f588233bebddff9cc5c29b2375b6f0dd1b12a4dfd8fb298",
+    "applicationOrDatabaseExecuted": false
+  },
+  "remainingSizeExceptions20261104": {
+    "task": "D2-17",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/size-exception-decision-D2-17/RESULT.json",
+    "sha256": "dc92f081f73377076f0fb036972abaeec2481072bcb019242da0f709115d2c1a",
+    "readable": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/size-exception-decision-D2-17/29项历史尺码例外待核.md",
+    "readableSHA256": "1c9509a5a3f4384ebff6ffac343338a15f1287ca9a8523cbfadbba90abfe59f4",
+    "counts": {
+      "sourceTuples": 29,
+      "sourceRows": 106,
+      "salesRows": 83,
+      "transferRows": 6,
+      "stockRows": 17,
+      "clothingTuples": 7,
+      "accessoryTuples": 22,
+      "directlyConsumable": 0
+    },
+    "targetedClothingCorrection": {
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261104/size-exception-decision-D2-17/7服装尺码规则补核-RESULT.json",
+      "sha256": "a0094079674d66edcae6d44a39343591951ac5b582364f08763c7a1fc16a7e73",
+      "conclusion": "Global A dictionary mappings cover all7 clothing tuples; inherited accessories label alone is invalid reasoning. Actual independent source code/group membership bridge or authoritative exact current-batch exception decision still missing; did not convert unapplied evidence into approval."
+    },
+    "humanQuestions": "Two specific questions now asked in main Chat:7 clothing exact size bridge/current enablement policy;22 accessory tuples real size meaning.19 A/B question remains separately pending. No repeated product-group direction question.",
+    "privateDetailsSharedWithDotOrGit": false,
+    "databaseVerified": false
   }
 }
