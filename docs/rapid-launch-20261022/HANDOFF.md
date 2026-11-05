@@ -1386,3 +1386,11 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - T45离线镜像实际load退出0，原digest/平台/DiffID inspect退出0；但BuildKit的FROM元数据仍联网，连接reset，build退出1/总15.561秒，回执437bd333。APT签名/84锁包/ldd及PG均未至。原T45正在原工具后继实现唯一准确local OCI context，无重复load/上传或全局网络改动；源码冻结及QB增量通过后沿同类授权做一次有界验证。
 - D3离线存储两叶固定05579a94，完整文本比较仍保留，代表规模315944960→152154112字节；作者回执5800fb6a，原QB仅验语义/资源增量。真实包仍为SQLite写满失败，不凭合成省空间声称全源对账通过。
 - 已批准25原状态/差额分支由原D1继续收口，准确options类型及CLI模型载体接缝纳入同任务；普通保存审核不放宽。现有真实数据、WIP和旧失败全部保留。
+
+
+### 25合同固定及新完整构建、运维放行真实后继
+- 25已批准原状态与差额接收22叶逐hash匹配cde4c8de后固定a10d8daa06988abe63de28108473098adf19fff7，212pins/b362b870。52受影响检查、typecheck/build通过；原QB正在仅验本增量，PG未验。独立构建整根7393a6881bf2b1c02063e0f04c20bf3437969c7f已推GitHub并回读，原WIP未覆盖。
+- 原D2在7393实际完整ERP build0/10.352秒、pack0/8.490秒，1689实际输入、454产物/451归档成员，一次解包回读一致，212pins逐字匹配。回执d0319bf9、包d895d63f/3300968字节。只称完整构建通过、待QB合同验收；应用/PG/业务未执行。
+- 原QB storage055定向PASS4d44548d已采用；原D3实查临时卷2.824GiB低于保守2.876GiB且额外开销未知，未启动真实核账。32文件355623字节固定闭包就绪，资源回执b6b7a6bc，无数据复制或删除。不能据合成空间改善称全量通过。
+- 运维localOCI两叶91b08259原QB定向PASS8d4e96c1，C据原真人同类隔离预授权在执行端外绑定新六键a661d95e/期限1793886377837，原T45已一次提交新op local-oci-context-20261105-01。原load成功和失败现场保留，无重放load/pull/上传，PG20分钟未启，实际结果待回。
+- PhaseB旧5b26输入与当前212pins不能混称；原D1只读列准确source/archive/fixture接缝，仍由原T45唯一执行。真实25原件不传服务器，只使用对应合成正反例。

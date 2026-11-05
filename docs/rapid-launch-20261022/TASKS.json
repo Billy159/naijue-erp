@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T13:06:35.876845+00:00",
+  "updatedAt": "2026-11-05T13:20:19.274889+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
-  "lastVerifiedRemoteCommit": "2276fdfb3928b2b5fa4af72b3883bbd478dd672d",
+  "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28471,11 +28471,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Approved25 exact source/stream/SQL/readback closing; options seam accepted; fixed receipt pending",
-      "D2": "Full actual ERP build/pack/readback 2bbc PASS adopted, final25 not included; next fixed successor build after25 QB",
-      "D3": "Storage two-leaf05579a94 fixed, QB increment running; actual whole-source reconciliation failed and not repeated yet",
-      "T45": "Named OCI load actually PASS, original FROM metadata actual reset; implementing exact local OCI context successor, no PG window",
-      "QB": "Storage05579a94 only affected review; release d30/2ff valid PASS adopted"
+      "D1": "Approved25 fixed a10d8daa; prepares precise current-source PhaseB input/fixture seams read-only,22 leaves frozen",
+      "D2": "7393 exact212 full build/pack/readback PASS pending QB25; no actual runtime/PG",
+      "D3": "Storage source QA PASS adopted; actualsource run held for insufficient assured scratch; minimal32 fixed modules ready",
+      "T45": "Exact localOCI actual operation submitted once under newa661 plan; no PG window",
+      "QB": "91b localOCI PASS8d4e96c1 adopted; current a10 approved25 contract-only incremental review"
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28662,7 +28662,14 @@
       "offlineBuildExitCode": 1,
       "offlineElapsedSeconds": 15.561,
       "nextMethodReceiptSHA256": "796e27607efa827dc1732dd3f226a4a6e190cfceb9b87dcd27c56788a62003e9",
-      "next": "Original T45 exact local OCI build-context successor; source/model then original QB increment before bounded real operation. No load replay/new upload/daemon or network change."
+      "next": "Original T45 exact local OCI build-context successor; source/model then original QB increment before bounded real operation. No load replay/new upload/daemon or network change.",
+      "localContextCommit": "91b08259dab3d51e511954a5992f90626568dfcc",
+      "localContextReviewSHA256": "8d4e96c154eea85abf8835373a8c177997332a69fa2050d326abf13b15cd4b53",
+      "localContextPlanSHA256": "a661d95e58f607a04135bfa01724e79736042fcd4a7b8f63fdd04edeab8e13ec",
+      "localContextIssuanceSHA256": "2ed066cfba1f7c886fb1802af18e07886685d0fb450e4743550936a366527922",
+      "localContextOperationId": "t45-f35-5b26-local-oci-context-20261105-01",
+      "localContextExpiresAt": 1793886377837,
+      "localContextState": "ONCE_SUBMITTED_ACTUAL_RESULT_PENDING"
     },
     "packagingDecisions": {
       "owner": "D2",
@@ -28714,13 +28721,13 @@
     },
     "completeApplicationBuild": {
       "owner": "D2",
-      "integrationCommit": "2ff76009c845490611fcad6d6c91edccf99c723c",
+      "integrationCommit": "a10d8daa06988abe63de28108473098adf19fff7",
       "buildRootBranch": "codex/erp-0448z-build-root-20261105",
-      "buildRootCommit": "2bbc27152e96cfd903f0ea17455153806be05f02",
-      "buildRootTree": "484734913028559056ead3b6a9af8420c2fa4d65",
+      "buildRootCommit": "7393a6881bf2b1c02063e0f04c20bf3437969c7f",
+      "buildRootTree": "69f4a2b4d936bedd3c1fbc005e8aba48122bf3eb",
       "previousRootCommit": "aca775575a9533ff0325495572099a10f9794ea8",
       "rootBoundary": "Exact candidate0448 committed tree exported as application root; integration WIP checkout unchanged",
-      "state": "PASS_ACTUAL_FULL_BUILD_PACK_EXTRACTED_READBACK_ONLY",
+      "state": "PASS_ACTUAL_COMPLETE_BUILD_PACK_READBACK_PENDING_QB25_NON_RELEASE",
       "firstActualExitCode": 1,
       "firstActualSeconds": 2.5413116249999996,
       "boundaryFixReceiptSHA256": "94215c124c4c40618f04c9131e991c7515a05c54d492e4248695df1768b3b490",
@@ -28733,22 +28740,24 @@
         "legacy B07 historyRevision"
       ],
       "production": false,
-      "receiptSHA256": "75ed7f33fdc9626d591e2ac88b1c437ff93132e58a504e06aa207aa033f5119a",
+      "receiptSHA256": "d0319bf9be5a427e7fc28a43c8718ac4c9ac242c1059bb2aa5dec34017b9b272",
       "buildExitCode": 0,
-      "buildSeconds": 9.164387792,
+      "buildSeconds": 10.352341958,
       "packExitCode": 0,
-      "packSeconds": 6.383900417,
-      "sourceInputs": 1685,
-      "buildFiles": 450,
-      "archiveMembers": 447,
-      "archiveSHA256": "341c14b80ebc1427a4b98617a1343d1dda124605bbbf5c635c7c7329db246bec",
-      "archiveBytes": 3286347,
-      "containsApproved25Successor": false,
+      "packSeconds": 8.490015458,
+      "sourceInputs": 1689,
+      "buildFiles": 454,
+      "archiveMembers": 451,
+      "archiveSHA256": "d895d63f271136c254f1e4d591830419775578a4dc11ce0c0f982307643b1225",
+      "archiveBytes": 3300968,
+      "containsApproved25Successor": true,
       "runtimeStarted": false,
       "realPG": false,
       "browser": false,
       "boundaryReviewSHA256": "114e4f4c50da42af7313b36ad3e8b553c075c49960134891dfe4f07805a9ab18",
-      "sharedCssReviewSHA256": "a9d327fe56391ab230e6db74c9df0044b3bd1f559627ddf07a8aa95a56ef5011"
+      "sharedCssReviewSHA256": "a9d327fe56391ab230e6db74c9df0044b3bd1f559627ddf07a8aa95a56ef5011",
+      "nativeSourcePins": 212,
+      "nativeSourceSetSHA256": "b362b87084e45e3f6fee2855ac3fa2f50cfad0d0817218c4dfc5bde76b89681e"
     },
     "sourceReconciliationActual": {
       "owner": "D3",
@@ -28760,18 +28769,42 @@
       "occurrencesRegistered": 503457,
       "registryAndTargetRead": false,
       "error": "SQLite storage write full while neededIdentityKeys; actual OS cause unknown. Runtime free space fell to400MiB; post-cleanup3.9GiB cannot prove failure-time free space. No low per-db code quota found.",
-      "next": "D3 exact storage internal repeated text reuse plus direct representative synthetic comparison; no real rerun before fixed source/review",
+      "next": "Resource condition held; no real ledger/target reread; other branches continue",
       "files": [
         "tools/unified-import/source-occurrence-storage.mjs",
         "tests/source-occurrence-storage.test.mjs"
       ],
       "production": false,
       "storageSuccessorCommit": "05579a94e6f656b71a0665d7a6d6d48466696c71",
-      "storageSuccessorState": "QB_AFFECTED_SOURCE_REVIEW_RUNNING_NOT_REAL_PACKAGE_PASS",
+      "storageSuccessorState": "QB_PASS_SEMANTICS_ONLY_REAL_RUN_RESOURCE_HELD",
       "storageAuthorReceiptSHA256": "5800fb6aba491c2585d5665697ca6fef46f08770d8f26e1ff5cc2978581d7e06",
       "representativeStorageBeforeBytes": 315944960,
       "representativeStorageAfterBytes": 152154112,
-      "realWholeRunRepeated": false
+      "realWholeRunRepeated": false,
+      "storageReviewSHA256": "4d44548d5aaef5092b58cc9a013af27626c14fbff3bf6ca71d343fd5125ec1e1",
+      "resourceReceiptSHA256": "b6b7a6b53d1d1362e49efd18a21e0e4ca9d2a88e7cc9a0d1b78ba0c50c7e823b",
+      "availableBytesAtCheck": 3032293376,
+      "conservativeTargetExtrapolationBytes": 3088302442,
+      "additionalOverheadUnknown": true,
+      "fixedDependencyFiles": 32,
+      "fixedDependencyBytes": 355623
+    },
+    "settlement25AcceptedImplementation": {
+      "commit": "a10d8daa06988abe63de28108473098adf19fff7",
+      "receiptSHA256": "cde4c8de2f63cfe16510cc39785a9e3e86f7a03ccc8cfa10c3f8e146a7877599",
+      "sourceSetSHA256": "b362b87084e45e3f6fee2855ac3fa2f50cfad0d0817218c4dfc5bde76b89681e",
+      "pins": 212,
+      "sourceLeaves": 22,
+      "checks": {
+        "passed": 52,
+        "failed": 0,
+        "skipped": 0,
+        "typecheck": 0,
+        "build": 0
+      },
+      "state": "SOURCE_FIXED_PENDING_QB_NO_PG",
+      "businessScope": "Only original25 headers/27 complete settlements as approved human call4adb item0; no ordinary SAVE/APPROVE or source batch change",
+      "realPG": false
     }
   }
 }
