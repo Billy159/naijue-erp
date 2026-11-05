@@ -3230,3 +3230,24 @@ test('production35 V2 cannot substitute an arbitrary capacity provider for the a
  await assert.rejects(createProductionRuntime35ApplicationApi(input,()=>({async connect(){connected++;throw Error('must not connect');},async end(){ended++;},on(){return this;}} as never),null,capacity),/original owned-pool capacity target/);
  assert.equal(connected,0);assert.ok(ended<=1);
 });
+
+test('synthetic35 explicit factory refuses production profile and missing real capacity before PG',async()=>{
+ const {createSyntheticRuntime35ApplicationApi}=await import('./production-provider-composition.ts');let connected=0;
+ const driver=()=>({async connect(){connected++;throw Error('must not connect');},async end(){},on(){return this;}} as never);
+ const input={...config(),profile:'source-confirmed-native-exact35-production-v2',productMedia:{root:'/private/synthetic35',rootKey:'synthetic35'}};
+ await assert.rejects(createSyntheticRuntime35ApplicationApi(input,driver,null,syntheticCapacity(),{} as never),/Explicit isolated/);
+ await assert.rejects(createSyntheticRuntime35ApplicationApi({...input,profile:'source-confirmed-native-exact35-v1'},driver,null,undefined as never,{} as never),/Explicit isolated/);
+ assert.equal(connected,0);
+});
+test('synthetic35 factory requires original owned-pool capacity binder rather than arbitrary admission',async()=>{
+ const {createSyntheticRuntime35ApplicationApi}=await import('./production-provider-composition.ts');let connected=0;
+ const input={...config(),profile:'source-confirmed-native-exact35-v1',productMedia:{root:'/private/synthetic35',rootKey:'synthetic35'}};
+ await assert.rejects(createSyntheticRuntime35ApplicationApi(input,()=>({async connect(){connected++;throw Error('must not connect');},async end(){},on(){return this;}} as never),null,syntheticCapacity(),{} as never),/original owned-pool capacity target/);
+ assert.equal(connected,0);
+});
+
+test('synthetic35 selected account setup rejects missing credential providers before pool construction',async()=>{
+ const {createSyntheticRuntime35ApplicationApi}=await import('./production-provider-composition.ts');let constructed=0;
+ const input={...config(),profile:'source-confirmed-native-exact35-v1',staffMaintenance:true,productMedia:{root:'/private/synthetic35',rootKey:'synthetic35'}};
+ await assert.rejects(createSyntheticRuntime35ApplicationApi(input,()=>{constructed++;throw Error('must not construct');},null,syntheticCapacity(),{} as never),/real credential providers/);assert.equal(constructed,0);
+});

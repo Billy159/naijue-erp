@@ -6,17 +6,20 @@ import {readFile,writeFile,mkdir,mkdtemp,rm} from 'node:fs/promises';import {tmp
 import * as real from '../tools/unified-import/fresh35-host-session.mjs';
 const original=await readFile(new URL('../tools/unified-import/fresh35-host-session.mjs',import.meta.url),'utf8');
 const role='erp_unified27_runtime_2393dbc6db9581c2';
-async function model(){
- const root=await mkdtemp(join(tmpdir(),'ordinary35-model-')),reference=join(root,'references');
+async function model({synthetic=false}={}){
+ const root=await mkdtemp(join(tmpdir(),'ordinary35-model-')),reference=join(root,synthetic?'reference-inputs':'references');
  const paths={baselineDirectory:join(reference,'baseline'),modelPath:join(reference,'model.json'),functionsPath:join(reference,'functions.json')};
  const recordPath=join(root,'record.json'),hostPath='tools/unified-import/fresh35-host-session.mjs',recordModulePath='scripts/release/unified-install/fresh35-combined-record-v1.mjs';
  for(const path of [join(root,hostPath),join(root,recordModulePath),paths.modelPath,paths.functionsPath,join(reference,'INDEX.json'),join(paths.baselineDirectory,'source.json')]){await mkdir(join(path,'..'),{recursive:true});await writeFile(path,'SYNTHETIC MODEL ONLY');}
  const t={purpose:'PRODUCTION_NEW_EMPTY_EXACT35',proposal:{database:'synthetic_model',runtime:'model_login'},physical:{systemIdentifier:'123',databaseOid:'42',serverVersionNum:'170011'},ordinary:{connectHost:'postgres',connectPort:5432,serverAddress:'172.20.0.4',serverPort:5432,runtimeLoginValidUntil:null,referenceDirectory:reference}};
- const record={binding:{sourceSetSha256:'b'.repeat(64)},synthetic_only:true};await writeFile(recordPath,JSON.stringify(record)+'\n');
- const catalogStub='data:text/javascript;base64,'+Buffer.from("export function fresh35CombinedOrdinaryCatalogSql(){return {guardSql:'MODEL_GUARDS',observationSql:'MODEL_OBSERVATION'}};export function validateFresh35CombinedOrdinaryCatalogObservation(raw){if(raw!=='SYNTHETIC_ONLY')throw Error('MODEL_CATALOG_REJECTED')}").toString('base64');
+ const now=Date.now(),expiry=now+300000;
+ if(synthetic){delete t.purpose;t.format='FRESH35_COMBINED_TARGET_BINDING_V1';t.startsAt=now-1000;t.expiresAt=expiry;t.proposal={database:'synthetic_fresh35_20261105_r9',runtime:'fresh35_runtime_20261105_r9',host:'127.0.0.1',port:57639};t.physical.postmasterStart='2026-11-05 03:00:00+00';t.ordinary={connectHost:'127.0.0.1',connectPort:57639,serverAddress:'127.0.0.1',serverPort:57639,runtimeLoginValidUntil:null,referenceDirectory:reference};}
+ const record={binding:{sourceSetSha256:'b'.repeat(64)},synthetic_only:true,...(synthetic?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',target:t}:{})};await writeFile(recordPath,JSON.stringify(record)+'\n');
+ const catalogStub='data:text/javascript;base64,'+Buffer.from("export function fresh35CombinedOrdinaryCatalogSql(){return {guardSql:'MODEL_GUARDS',observationSql:'MODEL_OBSERVATION'}};export function validateFresh35CombinedOrdinaryCatalogObservation(raw){if(raw!=='SYNTHETIC_ONLY')throw Error('MODEL_CATALOG_REJECTED')};export const fresh35CombinedSyntheticOrdinaryCatalogSql=fresh35CombinedOrdinaryCatalogSql;export const validateFresh35CombinedSyntheticOrdinaryCatalogObservation=validateFresh35CombinedOrdinaryCatalogObservation").toString('base64');
  const prefix=`import {lstat,readFile} from 'node:fs/promises';import {watch as nativeWatch,writeFileSync,renameSync,unlinkSync} from 'node:fs';import {resolve,dirname} from 'node:path';import {createHash} from 'node:crypto';
  const moduleRoot=${JSON.stringify(root)},FRESH35_COMBINED_RECORD_PATH=${JSON.stringify(recordPath)},loadedHostSha256='a'.repeat(64),FRESH35_COMBINED_RECORD_MODULE_SHA256='c'.repeat(64),t=${JSON.stringify(t)},record=${JSON.stringify(record)};
  const hash=x=>createHash('sha256').update(x).digest('hex'),need=(ok,code)=>{if(!ok)throw Error('FRESH35_HOST_'+code)},ack=(r,tag)=>need(r?.command===tag,'ACK_INVALID');
+ let clock=${now};const Date={now:()=>clock,parse:globalThis.Date.parse};export function expire(){clock=${expiry+1}};export function setTime(value){clock=value};function bindFresh35CombinedTarget(){return {}};
  const snapshots=new WeakMap(),watchers=new Set();let swap;
  export function setSwap(value){swap=value}export function activeWatchers(){return watchers.size}
  function watch(path,callback){const w=nativeWatch(path,callback);watchers.add(w);const close=w.close.bind(w);w.close=()=>{watchers.delete(w);return close()};return w}
@@ -33,9 +36,10 @@ async function model(){
  const tail=original.slice(original.indexOf('const ordinaryAdmissions=')).replace("'../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs'",JSON.stringify(catalogStub));
  const api=await import('data:text/javascript;base64,'+Buffer.from(prefix+tail).toString('base64'));
  const row={systemIdentifier:'123',databaseOid:'42',database:'synthetic_model',currentUser:'model_login',sessionUser:'model_login',serverAddress:'172.20.0.4',serverPort:5432,postmasterStart:'NEW_ACTUAL_START_NOT_INSTALL_TIME',backendPid:42,serverVersionNum:'170011',rowSecurity:'on',replicationRole:'origin',recovery:false,ordinaryAttributes:true,lifetimeMatches:true,memberships:[[role,false,false,true]]};
+ if(synthetic)Object.assign(row,{database:t.proposal.database,currentUser:t.proposal.runtime,sessionUser:t.proposal.runtime,serverAddress:t.proposal.host,serverPort:t.proposal.port,postmasterStart:t.physical.postmasterStart,observedLoginValidUntil:new Date(expiry-1000).toISOString()});
  const calls=[],clients=[];let failure;
  function client(){let status='I',switched=false,released=false;const c={getTransactionStatus:()=>status,release(error){released=error===true;api.modelRelease()},get released(){return released},async query(sql){calls.push(sql);if(sql.includes('pg_control_system')){assert.equal(switched,false,'direct LOGIN permission must precede SET ROLE');if(failure==='identity')throw Error('MODEL_IDENTITY_ERROR');return {command:'SELECT',rows:[structuredClone(row)]};}if(sql.startsWith('BEGIN')){status='T';return {command:'BEGIN'}}if(sql==='ROLLBACK'){status='I';switched=false;return {command:'ROLLBACK'}}if(sql.startsWith('SET LOCAL ROLE')){switched=true;return {command:'SET'}}if(sql==='MODEL_GUARDS'){if(failure==='catalog')throw Error('MODEL_CATALOG_ERROR');return [{command:'DO'},{command:'DO'}]}if(sql==='MODEL_OBSERVATION')return {command:'SELECT',rows:[{catalog_json:'SYNTHETIC_ONLY'}]};throw Error('UNEXPECTED_MODEL_QUERY')}};clients.push(c);return c;}
- const pool={async connect(){return client()}},connection={host:'postgres',port:5432,database:'synthetic_model',user:'model_login'};
+ const pool={async connect(){return client()}},connection=synthetic?{host:t.proposal.host,port:t.proposal.port,database:t.proposal.database,user:t.proposal.runtime}:{host:'postgres',port:5432,database:'synthetic_model',user:'model_login'};
  return {api,root,recordPath,hostPath:join(root,hostPath),pool,connection,row,calls,clients,client,fail:x=>failure=x,dispose:()=>rm(root,{recursive:true,force:true})};
 }
 test('ordinary startup uses one pool/lease and direct LOGIN identity before interface catalog; business checks do not repeat static scans',async()=>{
@@ -71,5 +75,41 @@ test('unprotected JSON capability is rejected by real ordinary entrypoints witho
 test('F01: loader-verified bytes cannot acquire a later record baseline; startup replacements and cleanup races never return a capability',async()=>{
  for(const stage of ['validate-replace','validate-overwrite','validate-delete','after-watch-replace','release-replace','release-error']){
   const m=await model();try{m.api.setSwap(stage);await assert.rejects(()=>m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection),/PROTECTED_RECORD_|ENOENT|ORDINARY_|MODEL_RELEASE_ERROR/);assert.equal(m.api.activeWatchers(),0,stage+' releases every watcher');if(stage.startsWith('release-'))assert.equal(m.clients[0].released,true);else assert.equal(m.clients.length,0,stage+' rejected before connection acquisition');}finally{await m.dispose();}
+ }
+});
+
+
+test('synthetic V1 admission uses same real-body pool capability with exact endpoint, finite lifetime and original window',async()=>{
+ const m=await model({synthetic:true});let cap;
+ try{cap=await m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection);const d=m.api.describeFresh35OrdinaryAdmissionV2(cap);assert.equal(d.purpose,'SYNTHETIC_ISOLATED_ORDINARY_V1');assert.equal(d.database,m.connection.database);assert.equal(m.clients.length,1);assert(m.calls[0].includes('observedLoginValidUntil'));assert(!m.calls.some(s=>/GRANT|COMMIT/.test(s)));assert.equal(m.clients[0].released,true);
+ await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client());await assert.rejects(()=>m.api.assertFresh35OrdinaryLeaseV2(cap,{},m.client()),/SAME_POOL/);
+ assert.throws(()=>real.describeFresh35OrdinaryAdmissionV2(cap),/ACTIVE_ADMISSION/);m.api.expire();await assert.rejects(()=>m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/WINDOW_EXPIRED/);assert.equal(m.api.activeWatchers(),0);
+ }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+});
+test('synthetic ordinary rejects non-V1 record, bad real identity/lifetime/membership, missing pg_control access and record races',async()=>{
+ const prod=await model();try{await assert.rejects(()=>prod.api.admitFresh35SyntheticOrdinaryPoolV1(prod.pool,prod.connection),/SYNTHETIC_V1_RECORD_REQUIRED/);assert.equal(prod.clients.length,0)}finally{await prod.dispose()}
+ for(const delta of [{postmasterStart:'RESTARTED'},{serverAddress:'172.20.0.4'},{serverPort:5432},{sessionUser:'owner'},{memberships:[[role,false,true,true]]},{lifetimeMatches:false},{observedLoginValidUntil:'infinity'},{observedLoginValidUntil:'2100-01-01T00:00:00Z'}]){
+  const m=await model({synthetic:true});try{Object.assign(m.row,delta);await assert.rejects(()=>m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection),/PHYSICAL_OR_LOGIN_DIFFERS/);assert.equal(m.api.activeWatchers(),0);assert(m.clients.every(c=>c.released))}finally{await m.dispose()}
+ }
+ for(const failure of ['identity','catalog']){const m=await model({synthetic:true});try{m.fail(failure);await assert.rejects(()=>m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection),/MODEL_/);assert.equal(m.api.activeWatchers(),0);assert(m.clients.every(c=>c.released))}finally{await m.dispose()}}
+ for(const stage of ['validate-replace','after-watch-replace','release-replace','release-error']){const m=await model({synthetic:true});try{m.api.setSwap(stage);await assert.rejects(()=>m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection),/PROTECTED_RECORD_|ORDINARY_|MODEL_RELEASE_ERROR/);assert.equal(m.api.activeWatchers(),0)}finally{await m.dispose()}}
+});
+
+
+test('synthetic capability expires at observed LOGIN cutoff even during an already borrowed transaction',async()=>{
+ for(const [check,offset] of ['current','describe','lease'].flatMap(check=>[0,1].map(offset=>[check,offset]))){
+  const m=await model({synthetic:true});let cap;const lease=m.client();
+  try{
+   cap=await m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection);
+   await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,lease);await lease.query('BEGIN ISOLATION LEVEL READ COMMITTED');
+   const cutoff=Date.parse(m.row.observedLoginValidUntil),d=m.api.describeFresh35OrdinaryAdmissionV2(cap);
+   m.api.setTime(cutoff-1);await m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool);
+   m.api.setTime(cutoff+offset);assert.equal(lease.getTransactionStatus(),'T');
+   if(check==='describe')assert.throws(()=>m.api.describeFresh35OrdinaryAdmissionV2(cap),/WINDOW_EXPIRED/);
+   else if(check==='lease'){await lease.query('ROLLBACK');await assert.rejects(()=>m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,lease),/WINDOW_EXPIRED/);}
+   else await assert.rejects(()=>m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/WINDOW_EXPIRED/);
+   assert.equal(m.api.activeWatchers(),0);assert.throws(()=>m.api.describeFresh35OrdinaryAdmissionV2(cap),/ACTIVE_ADMISSION/);
+   assert.equal(d.expiresAt,cutoff,'Public synthetic expiry is the effective earlier deadline');
+  }finally{await lease.query('ROLLBACK');if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);lease.release(true);await m.dispose();}
  }
 });

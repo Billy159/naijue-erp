@@ -75,3 +75,15 @@ test('production ordinary catalog reuses the complete model and observes after r
  assert.equal(validateFresh35CombinedAuthorization(authorization,program).decision,authorization.decision);
  assert.throws(()=>validateFresh35CombinedAuthorization({...authorization,decision:'AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY'},program),/EXACT_INSTALL_AUTHORIZATION/);
 });
+
+
+test('synthetic ordinary catalog is closed to true V1 target/birth/window and preserves production purpose guard',async()=>{
+ const {fresh35CombinedSyntheticOrdinaryCatalogSql,validateFresh35CombinedSyntheticOrdinaryCatalogObservation,fresh35CombinedOrdinaryCatalogSql}=await import('../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs');
+ const {source,catalog}=await bundle(),p=describeFresh35CombinedTarget(target),sql=fresh35CombinedSyntheticOrdinaryCatalogSql(catalog,source,target,p.physical);
+ for(const token of ['ROUTINE_SOURCE_OR_ACL_DIFFERS','RELATIONS_DIFFER','COLUMNACLS_DIFFER','POLICIES_DIFFER','EXACT_LINEAGE_DIFFERS'])assert(sql.guardSql.includes(token));
+ assert(sql.guardSql.includes("session_user='"+p.proposal.runtime+"'"));assert(sql.guardSql.includes("current_user='erp_unified27_runtime_2393dbc6db9581c2'"));assert(sql.guardSql.includes(String(p.expiresAt)));assert(sql.guardSql.includes(p.physical.postmasterStart));assert(!sql.guardSql.includes('BUSINESS_TABLE_NOT_EMPTY'));assert(!sql.observationSql.includes('pg_control_system()'));
+ assert.throws(()=>fresh35CombinedOrdinaryCatalogSql(catalog,source,target,p.physical),/ORDINARY_PHYSICAL_BINDING_REQUIRED/);
+ assert.throws(()=>fresh35CombinedSyntheticOrdinaryCatalogSql(catalog,source,target,{...p.physical,postmasterStart:'RESTARTED'}),/SYNTHETIC_ORDINARY_PHYSICAL_BINDING_REQUIRED/);
+ assert.throws(()=>fresh35CombinedSyntheticOrdinaryCatalogSql({...catalog},source,target,p.physical),/GENUINE_CATALOG_REQUIRED/);
+ assert.throws(()=>validateFresh35CombinedSyntheticOrdinaryCatalogObservation('{}',catalog,source,target),/ACTUAL_PHYSICAL_IDENTITY_DIFFERS/);
+});

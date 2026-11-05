@@ -31,6 +31,22 @@ INSTALL_AUTH = ETC / 'fresh35-combined-execution-v1.json'
 INTERFACES = ('erp_unified27_initializer_2393dbc6db9581c2', 'erp_unified27_importer_2393dbc6db9581c2', 'erp_unified27_runtime_2393dbc6db9581c2')
 TOOL_PINS = {'postgres':'6468a969338215cb3912cf9c0b894bdbbd37b9a709926db078e9a5bf8bdc3e16','initdb':'a0363354125bc00f25075bb47fc32a2838fa7668c008326227f5bc04d628ca1d','psql':'3c94c29652ea7ff8803ab1ca35e48c38a39c8a94a8c8eeadbb1d87c68494506c','pg_controldata':'b54c1bdeeab0953598b8447127b2230b1748ea1989dd972e6ee02455f256f180'}
 NODE_SHA = '7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c'
+APPLICATION_SCRYPT_NAME = 'synthetic-application-scrypt.txt'
+ORDINARY_SCENARIO_NAME = 'fresh35-ordinary-scenario.json'
+ORDINARY_CREDENTIAL_KEY_NAME = 'staff-credential-request-key.bin'
+CAPACITY_REVIEW_SHA = 'de1de45ff4256a8f58c760e5f30af75d1e487fe5777ea2e44f9f1beb2b34226a'
+CAPACITY_COLLECTOR_SHA = '1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338'
+CAPACITY_PROFILE = Path('/run/naijue-rewrite/capacity/owner-profile.json')
+ORDINARY_CONFIGURATION = DEPLOY/'runtime/fresh35-ordinary-runtime-v1.json'
+# The retained cohort from fresh35-retirement-plan, not a caller-supplied list.
+SNAPSHOT_TABLES = ('audit_change','auth_session','barcode_scheme','color','customer','fit','hall','import_batch','import_record','inventory_balance','inventory_ledger','operation_receipt','payment_account','payment_account_hall','payment_method','product','product_category','product_image','runtime_document_number_allocation','sales_header','sales_line','sales_settlement','schema_migration','season','size','size_group','size_group_member','sku','sku_barcode','staff','supplier','transfer_header','transfer_line','user_account','warehouse')
+
+# Frozen D1 finite readback templates; no credentials or caller-selected SQL.
+SCENE_PUBLICATION_SQL = 'WITH init AS (\n SELECT r.id AS root_operation,r.actor_account_id,r.target_id AS baseline_id,\n        a.after_values->\'request\' AS request\n FROM naijue_erp.operation_receipt r\n JOIN naijue_erp.audit_change a ON a.operation_id=r.id\n WHERE r.target_type=\'IMPORT\' AND r.action=\'IMPORT_INITIALIZE_CURRENT_ADMIN\'\n   AND r.status=\'COMMITTED\' AND a.object_type=\'IMPORT\'\n   AND a.object_id=r.target_id AND a.actor_account_id=r.actor_account_id\n   AND a.action=r.action AND a.occurred_at=r.completed_at\n   AND a.after_values->>\'phase\'=\'INITIALIZE\'\n   AND a.after_values->\'whole_package_v2\'->>\'root_operation\'=r.id::text\n   AND a.after_values->\'request\'->>\'namespace\'=\'synthetic.unified.v1\'\n   AND a.after_values->\'request\'->>\'package_manifest_sha256\'=$1::text\n   AND a.after_values->\'request\'->>\'plan_sha256\'=$2::text\n   AND a.after_values->\'request\'->\'payload\'->\'admin\'->>\'login_name\'=\'synthetic-fresh35-admin\'\n), published AS (\n SELECT b.id,b.source_name,b.source_hash,b.history_payload_hash,b.inventory_mode,\n        b.checkpoint,b.completed_at,r.id AS publication_operation,a.after_values\n FROM naijue_erp.import_batch b\n JOIN naijue_erp.operation_receipt r ON r.target_type=\'IMPORT\' AND r.target_id=b.id\n JOIN naijue_erp.audit_change a ON a.operation_id=r.id\n WHERE b.status=\'IMPORTED\' AND b.completed_at IS NOT NULL\n   AND b.source_name=\'synthetic.unified.v1\' AND b.source_hash=$1::text\n   AND r.action=\'IMPORT_PUBLISH\' AND r.status=\'COMMITTED\'\n   AND r.result_data->>\'profile\'=\'STANDARD_IMPORT_SQL_V1\'\n   AND r.result_data->>\'planSha256\'=$2::text\n   AND r.result_data->>\'packageManifestSha256\'=$1::text\n   AND r.result_data->>\'status\'=\'IMPORTED\'\n   AND a.object_type=\'IMPORT\' AND a.object_id=b.id AND a.action=r.action\n   AND a.actor_account_id=r.actor_account_id AND a.occurred_at=r.completed_at\n   AND b.completed_at=r.completed_at AND a.after_values->\'checkpoint\'=b.checkpoint\n   AND b.checkpoint->\'counts\'=b.checkpoint->\'expected\'\n)\nSELECT i.root_operation::text AS "initializerOperationId",base.id::text AS "baselineBatchId",\n       docs.id::text AS "documentBatchId",docs.source_hash AS "sourceHash",\n       docs.history_payload_hash AS "historyPayloadHash",\n       base.publication_operation::text AS "baselinePublicationOperationId",\n       docs.publication_operation::text AS "documentPublicationOperationId",\n       u.id::text AS "accountId",u.login_name AS "loginName",u.login_enabled AS "loginEnabled",\n       st.id::text AS "adminStaffId",st.role AS "adminRole",st.employment_status AS "adminEmployment"\nFROM init i\nJOIN published base ON base.id=i.baseline_id AND base.inventory_mode=\'CUTOFF_STOCK_BASELINE\'\n AND base.after_values->>\'phase\'=\'BASELINE_SEAL\'\n AND base.after_values->\'whole_package_v2\'->>\'root_operation\'=i.root_operation::text\nJOIN published docs ON docs.id=(i.request->\'payload\'->>\'document_batch_id\')::uuid\n AND docs.inventory_mode=\'DOCUMENT_CONVERSION\' AND docs.after_values->>\'phase\'=\'DOCUMENT_PUBLISH\'\n AND docs.after_values->\'whole_package_v2\'->>\'root_operation\'=i.root_operation::text\nJOIN naijue_erp.user_account u ON u.id=i.actor_account_id\n AND u.id=(i.request->\'payload\'->\'admin\'->>\'account_id\')::uuid\nJOIN naijue_erp.staff st ON st.id=u.staff_id\n AND st.id=(i.request->\'payload\'->\'admin\'->>\'staff_id\')::uuid'
+
+SCENE_REFERENCES_SQL = "WITH refs AS (\n SELECT target_type,target_id FROM naijue_erp.import_record\n WHERE import_batch_id=$1::uuid AND source_system='synthetic.unified.v1' AND status='IMPORTED'\n AND (target_type,source_key) IN (\n ('HALL','hall:01'),('HALL','hall:02'),('WAREHOUSE','warehouse:01'),('WAREHOUSE','warehouse:02'),\n ('CUSTOMER','customer:01'),('STAFF','staff:01'),('PRODUCT','product:01'),('SKU','sku:01'),\n ('SKU_BARCODE','sku_barcode:01'),('PAYMENT_ACCOUNT','payment_account:01'),('PAYMENT_METHOD','payment_method:01'))\n)\nSELECT 'HALL' AS kind,jsonb_build_object('id',h.id,'enabled',h.enabled,'version',h.version,\n 'defaultCustomerId',h.default_customer_id,'defaultWarehouseId',h.default_sales_warehouse_id) AS value\n FROM naijue_erp.hall h JOIN refs r ON r.target_type='HALL' AND r.target_id=h.id\nUNION ALL SELECT 'WAREHOUSE',jsonb_build_object('id',w.id,'hallId',w.hall_id,'enabled',w.enabled,'version',w.version)\n FROM naijue_erp.warehouse w JOIN refs r ON r.target_type='WAREHOUSE' AND r.target_id=w.id\nUNION ALL SELECT 'CUSTOMER',jsonb_build_object('id',c.id,'enabled',c.enabled,'version',c.version)\n FROM naijue_erp.customer c JOIN refs r ON r.target_type='CUSTOMER' AND r.target_id=c.id\nUNION ALL SELECT 'STAFF',jsonb_build_object('id',s.id,'hallId',s.hall_id,'role',s.role,'employmentStatus',s.employment_status,'version',s.version)\n FROM naijue_erp.staff s JOIN refs r ON r.target_type='STAFF' AND r.target_id=s.id\nUNION ALL SELECT 'PRODUCT',jsonb_build_object('id',p.id,'enabled',p.enabled,'deletedAt',p.deleted_at,'version',p.version,\n 'sizeGroupId',p.size_group_id,'retailPrice',p.retail_price::text,'minimumPrice',p.minimum_price::text)\n FROM naijue_erp.product p JOIN refs r ON r.target_type='PRODUCT' AND r.target_id=p.id\nUNION ALL SELECT 'SKU',jsonb_build_object('id',s.id,'productId',s.product_id,'colorId',s.color_id,'fitId',s.fit_id,'sizeId',s.size_id,'enabled',s.enabled,'version',s.version)\n FROM naijue_erp.sku s JOIN refs r ON r.target_type='SKU' AND r.target_id=s.id\nUNION ALL SELECT 'SKU_BARCODE',jsonb_build_object('id',b.id,'skuId',b.sku_id,'barcode',b.barcode,'kind',b.barcode_kind,'enabled',b.enabled)\n FROM naijue_erp.sku_barcode b JOIN refs r ON r.target_type='SKU_BARCODE' AND r.target_id=b.id\nUNION ALL SELECT 'PAYMENT_ACCOUNT',jsonb_build_object('id',p.id,'methodId',p.payment_method_id,'enabled',p.enabled,'version',p.version)\n FROM naijue_erp.payment_account p JOIN refs r ON r.target_type='PAYMENT_ACCOUNT' AND r.target_id=p.id\nUNION ALL SELECT 'PAYMENT_METHOD',jsonb_build_object('id',p.id,'enabled',p.enabled,'version',p.version)\n FROM naijue_erp.payment_method p JOIN refs r ON r.target_type='PAYMENT_METHOD' AND r.target_id=p.id"
+
+SCENE_BALANCES_SQL = 'WITH refs AS (\n SELECT target_type,target_id FROM naijue_erp.import_record\n WHERE import_batch_id=$1::uuid AND source_system=\'synthetic.unified.v1\' AND status=\'IMPORTED\'\n AND ((target_type=\'WAREHOUSE\' AND source_key IN(\'warehouse:01\',\'warehouse:02\'))\n   OR (target_type=\'SKU\' AND source_key=\'sku:01\'))\n), wanted AS (\n SELECT w.target_id warehouse_id,s.target_id sku_id FROM refs w CROSS JOIN refs s\n WHERE w.target_type=\'WAREHOUSE\' AND s.target_type=\'SKU\'\n)\nSELECT k.warehouse_id::text AS "warehouseId",k.sku_id::text AS "skuId",\n       b.quantity::text AS quantity,b.version,b.last_operation_id::text AS "lastOperationId",\n       b.updated_at::text AS "updatedAt",b.warehouse_id IS NOT NULL AS present\nFROM wanted k LEFT JOIN naijue_erp.inventory_balance b\n ON b.warehouse_id=k.warehouse_id AND b.sku_id=k.sku_id\nORDER BY k.warehouse_id,k.sku_id'
 
 def need(value, code):
     if not value:
@@ -115,12 +131,14 @@ def verify_deployment(a):
     trusted('/usr/lib/x86_64-linux-gnu/libpq.so.5.17')
     need(Path('/lib/x86_64-linux-gnu/libpq.so.5').resolve() == Path('/usr/lib/x86_64-linux-gnu/libpq.so.5.17') and digest('/usr/lib/x86_64-linux-gnu/libpq.so.5.17') == 'f64dcec14657e4123621448442cd3d0795744d238e588774f5c864f592f4860d', 'LIBPQ_PIN')
 
-def write_new(path, data, mode=0o400):
+def write_new(path, data, mode=0o400, owner=None):
     fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY | os.O_NOFOLLOW, mode)
     try:
         with os.fdopen(fd, 'wb', closefd=False) as file:
             file.write(data)
             file.flush()
+            if owner is not None:os.fchown(fd,*owner)
+            os.fchmod(fd,mode)
             os.fsync(fd)
     finally:
         os.close(fd)
@@ -139,8 +157,250 @@ def clean_env(root, role=None):
         out.update(PGPASSFILE=str(root/'credentials'/(role+'.pgpass')),PGCONNECT_TIMEOUT='5',PGOPTIONS='-c search_path=pg_catalog -c lock_timeout=5000 -c statement_timeout=15000 -c TimeZone=UTC')
     return out
 
+def load_linux_runtime_dependencies(root):
+    # A real load of the locked Linux artifacts, with no application/PG startup.
+    # createRequire is anchored at the protected package, never the eval cwd.
+    script=("import {createRequire} from 'node:module';const require=createRequire('"+(DEPLOY/'package.json').as_uri()+"');"
+            "if(process.platform!=='linux'||process.arch!=='x64')throw Error('LINUX_X64_RUNTIME_REQUIRED');"
+            "const fastify=require('fastify'),pg=require('pg'),sharp=require('sharp');"
+            "const versions={fastify:require('fastify/package.json').version,pg:require('pg/package.json').version,sharp:sharp.versions?.sharp};"
+            "if(versions.fastify!=='5.12.5'||versions.pg!=='8.23.1'||versions.sharp!=='0.35.5'||typeof fastify!=='function'||typeof pg.Client!=='function'||typeof sharp!=='function'||typeof sharp.versions?.vips!=='string')throw Error('LOCKED_RUNTIME_LOAD_FAILED');"
+            "process.stdout.write(JSON.stringify({platform:process.platform,arch:process.arch,...versions,libvips:sharp.versions.vips})+'\\n');")
+    r=subprocess.run([str(NODE),'--no-global-search-paths','--input-type=module','--eval',script],capture_output=True,env=clean_env(root),timeout=20)
+    need(r.returncode==0 and len(r.stdout)<=4096,'LINUX_RUNTIME_DEPENDENCY_LOAD_FAILED')
+    result=strict_json(r.stdout);exact_keys(result,['platform','arch','fastify','pg','sharp','libvips'])
+    need(all(result[k]==v for k,v in [('platform','linux'),('arch','x64'),('fastify','5.12.5'),('pg','8.23.1'),('sharp','0.35.5')]) and type(result['libvips']) is str and re.fullmatch('[0-9][A-Za-z0-9.+-]{0,63}',result['libvips']),'LINUX_RUNTIME_DEPENDENCY_LOAD_DIFFERS')
+    return result
+
+def create_synthetic_application_credential(root, watch, seconds):
+    # Independent application credential, never a DB role password. Only the
+    # retained Node codec consumes its plaintext via stdin; neither argv, env,
+    # receipts nor public fixture requests receive password/hash material.
+    import secrets
+    password=secrets.token_urlsafe(32)
+    script=("import {readFileSync} from 'node:fs';"
+            "import {createNodeScryptPasswords,isNodeScryptPasswordHash,NODE_SCRYPT_DUMMY_HASH} from '"+
+            (DEPLOY/'packages/authentication/src/passwords.ts').as_uri()+"';"
+            "const password=readFileSync(0,'utf8'),codec=createNodeScryptPasswords();"
+            "const encoded=await codec.hash(password);"
+            "if(!isNodeScryptPasswordHash(encoded)||encoded===NODE_SCRYPT_DUMMY_HASH||!await codec.verify(password,encoded))throw Error('PRIVATE_CREDENTIAL_GENERATION_FAILED');"
+            "process.stdout.write(encoded+'\\n');")
+    need(seconds>0 and watch.poll() is None,'APPLICATION_CREDENTIAL_WINDOW_OR_GUARDIAN')
+    r=subprocess.run([str(NODE),'--no-global-search-paths','--input-type=module','--eval',script],input=password.encode(),capture_output=True,env=clean_env(root),timeout=min(20,seconds))
+    need(r.returncode==0 and len(r.stdout)<512 and re.fullmatch(rb'naijue:scrypt:1:32768:8:1:[0-9a-f]{32}:[0-9a-f]{128}\n',r.stdout) is not None,'APPLICATION_CREDENTIAL_GENERATION_FAILED')
+    need(watch.poll() is None,'GUARDIAN_LOST_BEFORE_APPLICATION_CREDENTIAL_WRITE')
+    write_new(root/'credentials'/APPLICATION_SCRYPT_NAME,r.stdout,0o600)
+    return password
+
+def write_ordinary_scenario(a, root, scenario, watch):
+    # Supplied only after actual PUBLISH/ref/balance readback. This bounded
+    # writer does not create accounts, proposals, inventory facts or keys.
+    need(type(scenario) is dict and scenario.get('syntheticOnly') is True,'ORDINARY_ACTUAL_SCENARIO_REQUIRED')
+    exact_keys(scenario,['syntheticOnly','login','salesPositive','salesMixed','transfer','initialInventory','keys','forbidden'])
+    login=scenario['login'];forbidden=scenario['forbidden']
+    need(type(login) is dict and type(forbidden) is dict,'ORDINARY_PRIVATE_LOGIN_REQUIRED')
+    exact_keys(login,['accountId','loginName','password'])
+    exact_keys(forbidden,['staffId','loginName','password','setupRequestKey','sales','requestKey'])
+    for values in [login,forbidden]:
+        need(type(values.get('loginName')) is str and values['loginName'] and type(values.get('password')) is str and 0<len(values['password'].encode())<=1024,'ORDINARY_PRIVATE_LOGIN_REQUIRED')
+    data=(json.dumps(scenario,sort_keys=True)+'\n').encode()
+    need(0<len(data)<=262144,'ORDINARY_PRIVATE_SCENARIO_BOUND')
+    need(watch.poll() is None,'GUARDIAN_LOST_BEFORE_ORDINARY_SCENARIO_WRITE')
+    need(type(a['postgresUid']) is int and a['postgresUid']>0 and type(a['postgresGid']) is int and a['postgresGid']>0,'ORDINARY_NONROOT_SCENARIO_OWNER')
+    private=root/'ordinary-private';private.mkdir(mode=0o700)
+    os.chown(private,a['postgresUid'],a['postgresGid'],follow_symlinks=False)
+    path=private/ORDINARY_SCENARIO_NAME
+    write_new(path,data,0o600,owner=(a['postgresUid'],a['postgresGid']))
+    import secrets
+    write_new(private/ORDINARY_CREDENTIAL_KEY_NAME,secrets.token_bytes(32),0o600,owner=(a['postgresUid'],a['postgresGid']))
+    return path
+
+def build_ordinary_scenario(scene,application_password):
+    # IDs, enablement, relations, price and stock come from the finite actual
+    # readback. Only NEW synthetic business proposals/password/keys are chosen.
+    r=scene['references'];pub=scene['publication']
+    staff=r['STAFF'][0];product=r['PRODUCT'][0];sku=r['SKU'][0];barcode=r['SKU_BARCODE'][0];customer=r['CUSTOMER'][0];account=r['PAYMENT_ACCOUNT'][0];method=r['PAYMENT_METHOD'][0]
+    need(staff.get('role')=='SALESPERSON' and staff.get('employmentStatus')=='在职','ORDINARY_ACTIVE_SALESPERSON_REQUIRED')
+    for kind in ['HALL','WAREHOUSE','CUSTOMER','PRODUCT','SKU','SKU_BARCODE','PAYMENT_ACCOUNT','PAYMENT_METHOD']:
+        need(all(v.get('enabled') is True for v in r[kind]),'ORDINARY_ENABLED_REFERENCES_REQUIRED')
+    halls=[h for h in r['HALL'] if h['id']==staff.get('hallId')];need(len(halls)==1,'ORDINARY_STAFF_HALL_REQUIRED');hall=halls[0]
+    warehouses=[w for w in r['WAREHOUSE'] if w.get('hallId')==hall['id']];need(len(warehouses)==1,'ORDINARY_STAFF_WAREHOUSE_REQUIRED');warehouse=warehouses[0]
+    other=[w for w in r['WAREHOUSE'] if w['id']!=warehouse['id'] and w.get('hallId')!=hall['id'] and any(h['id']==w.get('hallId') for h in r['HALL'])];need(len(other)==1,'ORDINARY_SECOND_HALL_WAREHOUSE_REQUIRED');other=other[0]
+    need(hall.get('defaultCustomerId')==customer['id'] and hall.get('defaultWarehouseId')==warehouse['id'] and sku.get('productId')==product['id'] and product.get('deletedAt') is None and barcode.get('skuId')==sku['id'] and barcode.get('kind')=='MAIN' and account.get('methodId')==method['id'],'ORDINARY_ACTUAL_REFERENCE_RELATION_DIFFERS')
+    price=product.get('retailPrice');minimum=product.get('minimumPrice');money=r'(?:0|[1-9][0-9]*)\.[0-9]{2}'
+    need(type(price) is str and re.fullmatch(money,price) and type(minimum) is str and re.fullmatch(money,minimum),'ORDINARY_ACTUAL_PRICE_REQUIRED')
+    cents=lambda value:int(value.replace('.',''))
+    need(cents(price)>0 and cents(price)>=cents(minimum),'ORDINARY_PRICE_OR_MINIMUM_DIFFERS')
+    need(type(application_password) is str and application_password,'ORDINARY_APPLICATION_PASSWORD_REQUIRED')
+    date=datetime.now(timezone.utc).date().isoformat()
+    line={'skuId':sku['id'],'existingLineId':None,'quantity':'1','dealPrice':price,'pricingRule':'UNIT_PRICE','discountTenths':None,'isGift':False,'zeroConfirmed':False}
+    sale={'salesId':None,'businessType':'SALE','businessDate':date,'note':None,'hallId':hall['id'],'customerId':customer['id'],'salespersonId':staff['id'],'warehouseId':warehouse['id'],'orderDiscount':'0.00','lines':[dict(line)],'settlements':[{'existingSettlementId':None,'paymentAccountId':account['id'],'paymentMethodId':method['id'],'direction':'RECEIVE','amount':price}]}
+    mixed={**sale,'lines':[{**line,'quantity':'2'},{**line,'quantity':'-1'}]}
+    transfer={'transferId':None,'businessDate':date,'note':None,'fromWarehouseId':warehouse['id'],'toWarehouseId':other['id'],'lines':[{'skuId':sku['id'],'existingLineId':None,'quantity':'1'}]}
+    import secrets
+    prefix='fresh35-ordinary:'+secrets.token_hex(12);password=secrets.token_urlsafe(32)
+    need(password!=application_password,'ORDINARY_INDEPENDENT_PASSWORD_REQUIRED')
+    keys={family:{action:prefix+':'+family+':'+action for action in ['save','approve','unapprove','reopen','reapprove','rollback','unknownCommit']} for family in ['salesPositive','salesMixed','transfer']}
+    forbidden={**sale,'hallId':other['hallId'],'warehouseId':other['id']}
+    return {'syntheticOnly':True,'login':{'accountId':pub['accountId'],'loginName':pub['loginName'],'password':application_password},'salesPositive':sale,'salesMixed':mixed,'transfer':transfer,'initialInventory':[{k:b[k] for k in ['warehouseId','skuId','quantity','version']} for b in scene['balances']],'keys':keys,'forbidden':{'staffId':staff['id'],'loginName':'synthetic-fresh35-salesperson','password':password,'setupRequestKey':prefix+':staff:setup','sales':forbidden,'requestKey':prefix+':staff:deny'}}
+
+def read_ordinary_configuration(a):
+    # The release owner fills build only in this manifest-bound, nonsecret
+    # issuance copy. A null source template must never reach target creation.
+    trusted(ORDINARY_CONFIGURATION);fd=os.open(ORDINARY_CONFIGURATION,os.O_RDONLY|os.O_NOFOLLOW)
+    try:
+        before=os.fstat(fd);need(stat.S_ISREG(before.st_mode) and before.st_uid==0 and before.st_nlink==1 and not before.st_mode&0o022 and 0<before.st_size<=65536,'ORDINARY_CONFIGURATION_BOUND')
+        raw=os.read(fd,65537);after=os.fstat(fd)
+        need(len(raw)==before.st_size and (before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns,before.st_ctime_ns)==(after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_ctime_ns),'ORDINARY_CONFIGURATION_CHANGED')
+    finally:os.close(fd)
+    config=strict_json(raw);p=a['proposal']
+    need(type(config) is dict and type(config.get('build')) is dict and type(config['build'].get('sourceCommit')) is str and re.fullmatch('[a-f0-9]{40}',config['build']['sourceCommit']) and type(config['build'].get('buildId')) is str and 0<len(config['build']['buildId'])<=100,'ORDINARY_ISSUANCE_BUILD_NOT_FIXED')
+    t=config.get('postgres',{}).get('target',{})
+    need(set(t)=={'host','port','database','user','password','ssl'} and t.get('password') is None and t.get('ssl') is False and all(t.get(k)==v for k,v in [('host',p['host']),('port',p['port']),('database',p['database']),('user',p['runtime'])]),'ORDINARY_TEMPLATE_TARGET_OR_SECRET_DIFFERS')
+    need(config.get('publicOrigin')=='https://1n5635n614.goho.co' and config.get('profile')=='source-confirmed-native-exact35-v1' and config.get('documentCommands')=='NATIVE_RUNTIME' and config.get('staffMaintenance') is True and config.get('productMedia')=={'root':str(Path(p['workspaceDirectory'])/'media'),'rootKey':'fresh35-synthetic-r1'} and config.get('staffCredentialRequestKeyFile')==str(Path(p['workspaceDirectory'])/'ordinary-private'/ORDINARY_CREDENTIAL_KEY_NAME),'ORDINARY_TEMPLATE_FIXED_SCOPE_DIFFERS')
+    need(config.get('assets')=={'root':str(DEPLOY/'web'),'entry':'index.html'} and (DEPLOY/'web/index.html').is_file(),'ORDINARY_EXACT_WEB_ARTIFACT_REQUIRED')
+    return config
+
+def hydrate_ordinary_configuration(a,configuration):
+    p=a['proposal'];raw=read_private(Path(p['workspaceDirectory'])/'credentials'/(p['runtime']+'.pgpass'))
+    prefix=f"127.0.0.1:{p['port']}:*:{p['runtime']}:".encode()
+    need(raw.startswith(prefix) and re.fullmatch(rb'[a-f0-9]{64}\n',raw[len(prefix):]),'ORDINARY_EXACT_RUNTIME_PASSFILE_REQUIRED')
+    config=strict_json(json.dumps(configuration));config['postgres']['target']['password']=raw[len(prefix):-1].decode()
+    return config
+
+def ordinary_child_process(proc):
+    # This is the actual owned Node child, never the Python controller/PID 1.
+    need(proc.poll() is None and proc.pid!=os.getpid(),'ORDINARY_NODE_CHILD_NOT_LIVE')
+    identity=process_identity(proc.pid)
+    fields=(Path('/proc')/str(proc.pid)/'stat').read_text().rsplit(')',1)[1].split()
+    boot=Path('/proc/sys/kernel/random/boot_id').read_text().strip()
+    need(identity['exe']==str(NODE) and fields[0] not in ['Z','X'] and fields[1]==str(os.getpid()) and fields[19]==identity['starttime'] and re.fullmatch('[a-f0-9-]{36}',boot),'ORDINARY_NODE_CHILD_IDENTITY_DIFFERS')
+    return {'pid':proc.pid,'linuxStartTicks':identity['starttime'],'linuxBootId':boot}
+
+def ordinary_runner_arguments(a, root):
+    # Fixed dormant call seam. No CLI runner/path/callback and no alternate
+    # capacity admission. A complete original private context must be supplied
+    # on stdin after the real child and reviewed collector/profile are bound.
+    runner=(DEPLOY/'tests/integration/live-ledger-balance-pairs.integration.test.ts').as_uri()
+    script=("import {readFileSync} from 'node:fs';"
+            "try{if(process.getuid?.()!=="+str(a['postgresUid'])+"||process.geteuid?.()!=="+str(a['postgresUid'])+"||process.getgid?.()!=="+str(a['postgresGid'])+")throw Error('ORDINARY_OS_UID_REQUIRED');"
+            "const c=JSON.parse(readFileSync(0,'utf8'));"
+            "if(!c||Object.keys(c).sort().join(',')!=='capacityLaunch,configuration,privateScenarioFile,publication,staffCredentialRequestTag'||c.staffCredentialRequestTag!==null||c.configuration?.staffMaintenance!==true)throw Error('PRIVATE_CONTEXT_UNAVAILABLE');"
+            "if(c.privateScenarioFile!=="+json.dumps(str(root/'ordinary-private'/ORDINARY_SCENARIO_NAME))+")throw Error('FIXED_PRIVATE_SCENARIO_REQUIRED');"
+            "if(c.configuration.staffCredentialRequestKeyFile!=="+json.dumps(str(root/'ordinary-private'/ORDINARY_CREDENTIAL_KEY_NAME))+")throw Error('FIXED_CREDENTIAL_REQUEST_KEY_REQUIRED');"
+            "const stat=readFileSync('/proc/self/stat','utf8'),ticks=stat.slice(stat.lastIndexOf(')')+2).split(/\\s+/)[19],boot=readFileSync('/proc/sys/kernel/random/boot_id','utf8').trim(),p=c.capacityLaunch?.process;"
+            "if(!p||p.pid!==process.pid||p.linuxStartTicks!==ticks||p.linuxBootId!==boot||c.capacityLaunch?.window?.binding?.processInstanceId!==`${boot}:${process.pid}:${ticks}`)throw Error('REAL_CHILD_CAPACITY_BINDING_REQUIRED');"
+            "const {readProductionStaffCredentialRequestTag}=await import('"+(DEPLOY/'apps/api/src/production-main.ts').as_uri()+"');"
+            "const tag=await readProductionStaffCredentialRequestTag(c.configuration);if(typeof tag!=='function')throw Error('REAL_CREDENTIAL_REQUEST_TAG_REQUIRED');"
+            "const {runFresh35OrdinaryIntegration}=await import('"+runner+"');"
+            "await runFresh35OrdinaryIntegration({...c,staffCredentialRequestTag:tag});"
+            "process.stdout.write(JSON.stringify({state:'FRESH35_ORDINARY_RUNNER_COMPLETED',connectionCleanup:'CLOSED',browserVerified:false,networkVerified:false,productionVerified:false})+'\\n');"
+            "}catch{process.stdout.write(JSON.stringify({state:'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN',automaticRetry:false})+'\\n');process.exitCode=1;}")
+    return [str(NODE),'--no-global-search-paths','--input-type=module','--eval',script]
+
+def ordinary_runner_launch(a,root):
+    return {'args':ordinary_runner_arguments(a,root),'stdin':subprocess.PIPE,'stdout':subprocess.PIPE,'stderr':subprocess.PIPE,'env':{**clean_env(root),'TMPDIR':str(root/'ordinary-system')},'user':a['postgresUid'],'group':a['postgresGid'],'extra_groups':[],'start_new_session':True,'cwd':str(root)}
+
+def prepare_ordinary_directories(a,root):
+    for name in ['ordinary-backup','media','ordinary-system']:
+        path=root/name;path.mkdir(mode=0o700)
+        os.chown(path,a['postgresUid'],a['postgresGid'],follow_symlinks=False)
+
+def collect_ordinary_capacity_facts(a,root,child,seconds):
+    identity=ordinary_child_process(child)
+    paths={'postgres':str(root/'data'),'wal':str(root/'data/pg_wal'),'backup':str(root/'ordinary-backup'),'system':str(root/'ordinary-system'),'media':str(root/'media')}
+    script=("import {readFileSync,readlinkSync,realpathSync,statSync,statfsSync} from 'node:fs';import {tmpdir} from 'node:os';"
+            "const i=JSON.parse(readFileSync(0,'utf8'));if(tmpdir()!==i.paths.system)throw Error('ACTUAL_TMP_DIRECTORY_REQUIRED');"
+            "const ns='linux:'+readlinkSync('/proc/self/ns/mnt');if(ns!=='linux:'+readlinkSync('/proc/'+i.process.pid+'/ns/mnt'))throw Error('CHILD_NAMESPACE_DIFFERS');"
+            "const stat=readFileSync('/proc/'+i.process.pid+'/stat','utf8'),ticks=stat.slice(stat.lastIndexOf(')')+2).split(/\\s+/)[19],boot=readFileSync('/proc/sys/kernel/random/boot_id','utf8').trim();"
+            "if(ticks!==i.process.linuxStartTicks||boot!==i.process.linuxBootId)throw Error('CHILD_PROCESS_CHANGED');"
+            "const volumes={};for(const k of ['postgres','wal','backup','system','media']){const path=realpathSync(i.paths[k]);if((k!=='wal'&&path!==i.paths[k])||!path.startsWith(i.root+'/'))throw Error('CURRENT_SCOPE_CANONICAL_PATH_REQUIRED');"
+            "const s=statSync(path,{bigint:true}),f=statfsSync(path,{bigint:true});if(!s.isDirectory())throw Error('DIRECTORY_REQUIRED');volumes[k]={path,namespace:ns,device:String(s.dev),filesystemType:String(f.type)};}"
+            "process.stdout.write(JSON.stringify({namespace:ns,process:i.process,volumes})+'\\n');")
+    need(seconds>0,'ORDINARY_CAPACITY_WINDOW_EXPIRED')
+    r=subprocess.run([str(NODE),'--no-global-search-paths','--input-type=module','--eval',script],input=json.dumps({'root':str(root),'paths':paths,'process':identity}).encode(),capture_output=True,env={**clean_env(root),'TMPDIR':paths['system']},timeout=min(15,seconds))
+    need(r.returncode==0 and len(r.stdout)<=65536,'ORDINARY_CAPACITY_FACTS_FAILED')
+    facts=strict_json(r.stdout);exact_keys(facts,['namespace','process','volumes'])
+    need(facts['process']==identity==ordinary_child_process(child) and type(facts['namespace']) is str and facts['namespace'].startswith('linux:mnt:['),'ORDINARY_CAPACITY_PROCESS_OR_NAMESPACE_DIFFERS')
+    exact_keys(facts['volumes'],list(paths))
+    for key,value in facts['volumes'].items():
+        exact_keys(value,['path','namespace','device','filesystemType'])
+        need(value['namespace']==facts['namespace'] and type(value['path']) is str and str(Path(value['path']))==value['path'] and value['path'].startswith(str(root)+'/') and (key=='wal' or value['path']==paths[key]) and all(type(value[k]) is str and re.fullmatch('[0-9]+',value[k]) for k in ['device','filesystemType']),'ORDINARY_CAPACITY_VOLUME_DIFFERS')
+    return facts
+
+def prepare_ordinary_capacity(a,target,descriptor,root,child,facts,scene,configuration):
+    # C explicitly selected this original schema/budget template. Facts and
+    # process identity are measured; no availableBytes is cached or supplied.
+    need(type(configuration) is dict and type(configuration.get('build')) is dict and re.fullmatch('[0-9a-f]{40}',configuration['build'].get('sourceCommit','')),'ORDINARY_RUNTIME_CONFIGURATION_NOT_FIXED')
+    need(configuration.get('postgres',{}).get('max')==1 and configuration.get('productMedia',{}).get('root')==str(root/'media') and 'inventoryOutputSpool' not in configuration,'ORDINARY_RUNTIME_TOPOLOGY_OR_MEDIA_DIFFERS')
+    process=ordinary_child_process(child);need(facts['process']==process,'ORDINARY_CAPACITY_CHILD_CHANGED')
+    p=a['proposal'];t={'host':p['host'],'port':p['port'],'database':p['database'],'role':p['runtime'],'databaseOid':target['physical']['databaseOid'],'postmasterStart':target['physical']['postmasterStart']}
+    configured=configuration.get('postgres',{}).get('target',{})
+    need(all(configured.get(k)==v for k,v in [('host',t['host']),('port',t['port']),('database',t['database']),('user',t['role'])]),'ORDINARY_RUNTIME_TARGET_DIFFERS')
+    encode=lambda value:json.dumps(value,sort_keys=True,separators=(',',':')).encode()
+    fingerprint=lambda value:hashlib.sha256(encode(value)).hexdigest()
+    volumes={}
+    for key,value in facts['volumes'].items():
+        volumes[key]={**value,'physicalVolume':value['namespace']+':'+value['device']+':'+value['filesystemType']}
+    binding={'candidateFingerprint':configuration['build']['sourceCommit'],'targetFingerprint':fingerprint({'target':t,'physical':target['physical']}),'writerTopologyFingerprint':fingerprint({'poolMax':1,'observerMax':1,'adminCleanupReserved':1,'runtimeRole':p['runtime'],'sourceSetSha256':descriptor['sourceSetSha256']}),'inventoryFingerprint':fingerprint({'publication':scene['publication'],'balances':scene['balances']}),'processInstanceId':process['linuxBootId']+':'+str(process['pid'])+':'+process['linuxStartTicks'],'restartGeneration':0,'writerCount':1,'physicalVolumes':{k:v['physicalVolume'] for k,v in volumes.items()}}
+    starts=int(time.time()*1000);observed=scene['observedAtMillis'];expires=a['expiresAt']
+    need(a['startsAt']<=observed<=starts<expires-60000,'ORDINARY_ORIGINAL_WINDOW_OR_OBSERVATION_EXPIRED')
+    # Nonsecret per-child window identity, bound to the existing external scope;
+    # this is not a newly issued action/native/install authorization.
+    token=fingerprint({'externalAuthorization':a['authorizationReference'],'startsAt':a['startsAt'],'expiresAt':expires,'process':process,'target':t})
+    profile={'schemaVersion':1,'profile':'OWNER_FIXED_STATFS_V1','reviewSha256':CAPACITY_REVIEW_SHA,'target':t,'binding':binding,'windowToken':token,'startsAt':starts,'expiresAt':expires,'maxAgeMillis':15000,'namespace':facts['namespace'],'volumes':volumes}
+    data=encode(profile)+b'\n';need(len(data)<=65536,'ORDINARY_CAPACITY_PROFILE_BOUND')
+    path=PARENT/'capacity/owner-profile.json';trusted(path)
+    fd=os.open(path,os.O_WRONLY|os.O_NOFOLLOW)
+    try:
+        info=os.fstat(fd);alias=CAPACITY_PROFILE.stat()
+        need(stat.S_ISREG(info.st_mode) and info.st_uid==0 and info.st_nlink==1 and stat.S_IMODE(info.st_mode)==0o644 and info.st_size==0 and (info.st_dev,info.st_ino)==(alias.st_dev,alias.st_ino) and os.statvfs(CAPACITY_PROFILE).f_flag&os.ST_RDONLY,'ORDINARY_FIXED_EMPTY_PROFILE_ALIAS_REQUIRED')
+        with os.fdopen(fd,'wb',closefd=False) as file:file.write(data);file.flush();os.fsync(fd)
+    finally:os.close(fd)
+    worst={k:'1048576' if k in ['postgres','wal'] else '65536' for k in volumes}
+    return {'schemaVersion':1,'profile':'OWNER_REVIEWED_CAPACITY_EXEC_V1','target':t,'window':{'approved':True,'token':token,'inventoryObservedAt':observed,'startsAt':starts,'expiresAt':expires,'binding':binding},'process':process,'budgets':{'session':{'maxAdmissions':64,'maxInFlight':1,'worstCaseBytes':dict(worst)},'upload':{'maxAdmissions':1,'maxInFlight':1,'worstCaseBytes':dict(worst)}},'minimumFreeBytes':{k:'67108864' for k in volumes},'safetyBytes':{k:'8388608' for k in volumes},'probeTtlMillis':30000,'probeTimeoutMillis':20000,'maxProbeWaiters':1,'retryAfterSeconds':1,'producer':{'executable':str(DEPLOY/'scripts/ops/capacity-live-statfs.mjs'),'sha256':CAPACITY_COLLECTOR_SHA,'args':['--profile='+hashlib.sha256(data).hexdigest()],'timeoutMillis':15000,'maxOutputBytes':65536,'reviewSha256':CAPACITY_REVIEW_SHA,'volumes':{k:{n:v[n] for n in ['path','physicalVolume','namespace']} for k,v in volumes.items()}}}
+
+def run_ordinary_business(a,target,descriptor,root,scene,configuration,application_password,watch,deadline):
+    child=None;identity=None;phase='PRIVATE_SCENARIO';result=None;reaped=False
+    def remaining():
+        need(watch.poll() is None and time.monotonic()<deadline-90,'ORDINARY_ORIGINAL_WINDOW_OR_GUARDIAN_LOST')
+        return deadline-time.monotonic()-90
+    try:
+        remaining();scenario=build_ordinary_scenario(scene,application_password)
+        path=write_ordinary_scenario(a,root,scenario,watch);scenario=None
+        prepare_ordinary_directories(a,root)
+        phase='PRIVATE_CONFIGURATION';configuration=hydrate_ordinary_configuration(a,configuration)
+        phase='ORDINARY_CHILD';remaining();child=subprocess.Popen(**ordinary_runner_launch(a,root))
+        process=ordinary_child_process(child);identity={'pid':process['pid'],'starttime':process['linuxStartTicks'],'exe':str(NODE)}
+        phase='ACTUAL_CAPACITY_FACTS';facts=collect_ordinary_capacity_facts(a,root,child,remaining())
+        capacity=prepare_ordinary_capacity(a,target,descriptor,root,child,facts,scene,configuration)
+        publication=scene['publication']
+        context={'configuration':configuration,'capacityLaunch':capacity,'staffCredentialRequestTag':None,'publication':{'batchId':publication['documentBatchId'],'sourceHash':publication['sourceHash'],'historyPayloadHash':publication['historyPayloadHash'],'planSha256':scene['planSha256']},'privateScenarioFile':str(path)}
+        phase='REAL_PG_AND_MIDDLEWARE';wire=json.dumps(context).encode();need(len(wire)<=262144,'ORDINARY_PRIVATE_CONTEXT_BOUND')
+        stdout,stderr=child.communicate(input=wire,timeout=remaining());wire=None;context=None;configuration=None
+        need(len(stdout)<=4096,'ORDINARY_PUBLIC_RESULT_BOUND')
+        returned=strict_json(stdout)
+        need(child.returncode==0 and returned=={'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False},'ORDINARY_FAILED_OR_OUTCOME_UNKNOWN')
+        result={**returned,'sourceSetSha256':descriptor['sourceSetSha256'],'programSha256':descriptor['programSha256'],'targetSha256':descriptor['targetSha256'],'sourceCommit':capacity['window']['binding']['candidateFingerprint'],'capacityProfileSha256':capacity['producer']['args'][0].removeprefix('--profile='),'capacityReviewSha256':CAPACITY_REVIEW_SHA,'childProcess':process,'syntheticOnly':True}
+    except Exception as error:
+        json_new(root/'ordinary-failure.json',{'state':'FAILED_OR_OUTCOME_UNKNOWN','phase':phase,'code':str(error) if re.fullmatch('FRESH35_[A-Z0-9_]+',str(error)) else type(error).__name__,'automaticRetry':False,'commitOutcome':'CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY'})
+        raise
+    finally:
+        if child is not None:
+            if child.poll() is None and identity is not None and same_process(identity):
+                child.send_signal(signal.SIGTERM)
+                try:child.wait(timeout=3)
+                except subprocess.TimeoutExpired:
+                    if same_process(identity):child.kill();child.wait(timeout=3)
+            if child.poll() is not None:child.wait();reaped=True
+        else:reaped=True
+        json_new(root/'ordinary-child-cleanup.json',{'childReaped':reaped,'pid':child.pid if child else None,'businessOutcomeInferredFromCleanup':False})
+        need(reaped,'ORDINARY_NODE_CLEANUP_UNCONFIRMED')
+    need(result is not None,'ORDINARY_RESULT_NOT_CONFIRMED')
+    return result
+
 def hba_text(p):
-    return f"local all all reject\nhost postgres,{p['database']} {p['admin']} 127.0.0.1/32 scram-sha-256\nhost {p['database']} {p['owner']} 127.0.0.1/32 scram-sha-256\nhost {p['database']} {p['controller']} 127.0.0.1/32 scram-sha-256\nhost all all 0.0.0.0/0 reject\nhost all all ::/0 reject\n"
+    return f"local all all reject\nhost postgres,{p['database']} {p['admin']} 127.0.0.1/32 scram-sha-256\nhost {p['database']} {p['owner']} 127.0.0.1/32 scram-sha-256\nhost {p['database']} {p['controller']} 127.0.0.1/32 scram-sha-256\nhost {p['database']} {p['runtime']} 127.0.0.1/32 scram-sha-256\nhost all all 0.0.0.0/0 reject\nhost all all ::/0 reject\n"
 
 def server_args(p):
     return [str(BIN/'postgres'),'-D',str(Path(p['workspaceDirectory'])/'data'),'-h','127.0.0.1','-p',str(p['port']),'-k','', *sum((['-c',s] for s in ['max_connections=8','shared_buffers=32MB','work_mem=4MB','max_parallel_workers=0','fsync=on','synchronous_commit=on','password_encryption=scram-sha-256','log_statement=none','log_min_error_statement=panic','log_min_duration_statement=-1','log_duration=off','log_connections=off','log_disconnections=off','log_min_messages=warning']), [])]
@@ -158,7 +418,7 @@ def bootstrap_sql(a, passwords):
     for r, member in [(INTERFACES[0],p['controller']),(INTERFACES[1],p['controller']),(INTERFACES[2],p['runtime'])]:
         roles += f'GRANT {r} TO {member} WITH ADMIN FALSE, INHERIT FALSE, SET TRUE;\n'
     database = f"CREATE DATABASE {p['database']} OWNER {p['owner']};\n"
-    acl = f"REVOKE ALL ON DATABASE {p['database']} FROM PUBLIC; GRANT CONNECT ON DATABASE {p['database']} TO {p['controller']},{p['runtime']};\nGRANT EXECUTE ON FUNCTION pg_catalog.pg_control_system() TO {p['owner']},{p['controller']};\n"
+    acl = f"REVOKE ALL ON DATABASE {p['database']} FROM PUBLIC; GRANT CONNECT ON DATABASE {p['database']} TO {p['controller']},{p['runtime']};\nGRANT EXECUTE ON FUNCTION pg_catalog.pg_control_system() TO {p['owner']},{p['controller']},{p['runtime']};\n"
     return roles, database, acl
 
 def process_identity(pid):
@@ -189,15 +449,166 @@ def owned_listener(identity, port):
 
 def psql(a, role, database, sql, timeout=20):
     p=a['proposal']; root=Path(p['workspaceDirectory'])
-    r = subprocess.run([str(BIN/'psql'),'-X','-qAt','--no-password','--host','127.0.0.1','--port',str(p['port']),'--dbname',database,'--username',role,'--set','ON_ERROR_STOP=1'],input=sql.encode(),capture_output=True,env=clean_env(root,role),timeout=timeout)
+    r = subprocess.run([str(BIN/'psql'),'-X','-qAt','--no-password','--host','127.0.0.1','--port',str(p['port']),'--dbname',database,'--username',role,'--set','ON_ERROR_STOP=1','--set','VERBOSITY=sqlstate'],input=sql.encode(),capture_output=True,env=clean_env(root,role),timeout=timeout)
     # Never persist SQL, stderr or passwords; detailed nonsensitive observations
     # are returned only after a successful fixed query.
-    need(r.returncode == 0, 'PSQL_FAILED')
+    if r.returncode != 0:
+        codes = re.findall(rb'(?:ERROR|FATAL):\s+([0-9A-Z]{5})(?:\s|$)', r.stderr)
+        need(False, 'PSQL_SQLSTATE_'+codes[-1].decode() if codes else 'PSQL_FAILED')
     return r.stdout.decode()
 
-def clear_credentials(root, p):
+def snapshot_sql():
+    # One private psql connection, one read-only RR transaction. Only bounded
+    # counts/digests and catalog/identity metadata leave it; no table rows.
+    sql = r"""BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;
+SET LOCAL row_security=off;
+SET LOCAL idle_in_transaction_session_timeout='15s';
+SELECT json_build_object('kind','context','actor',current_user,'sessionActor',session_user,
+ 'database',current_database(),'databaseOid',(SELECT oid::text FROM pg_database WHERE datname=current_database()),
+ 'systemIdentifier',(SELECT system_identifier::text FROM pg_control_system()),
+ 'postmasterStart',pg_postmaster_start_time()::text,'serverVersionNum',current_setting('server_version_num'),
+ 'address',inet_server_addr()::text,'port',inet_server_port(),'dataDirectory',current_setting('data_directory'),
+ 'readOnly',current_setting('transaction_read_only'),'isolation',current_setting('transaction_isolation'),
+ 'superuser',(SELECT rolsuper FROM pg_roles WHERE rolname=current_user),
+ 'bypassRls',(SELECT rolbypassrls FROM pg_roles WHERE rolname=current_user),
+ 'tables',(SELECT coalesce(json_agg(json_build_object('name',relname,'kind',relkind,
+ 'selectAllowed',has_table_privilege(oid,'SELECT'),'rlsActive',row_security_active(oid),
+ 'rlsEnabled',relrowsecurity,'rlsForced',relforcerowsecurity) ORDER BY relname),'[]'::json)
+ FROM pg_class WHERE relnamespace='naijue_erp'::regnamespace AND relkind IN ('r','p')),
+ 'sequences',(SELECT coalesce(json_agg(relname ORDER BY relname),'[]'::json) FROM pg_class
+ WHERE relnamespace='naijue_erp'::regnamespace AND relkind='S'))::text;
+"""
+    for name in SNAPSHOT_TABLES:
+        sql += ("SELECT json_build_object('kind','table','name','"+name+"','count',count(*)::text,"
+                "'sha256',encode(sha256(convert_to(coalesce(string_agg(to_jsonb(t)::text,E'\\n' ORDER BY to_jsonb(t)::text),''),'UTF8')),'hex'))::text "
+                'FROM (SELECT * FROM naijue_erp."'+name+'" LIMIT 10001) t;\n')
+    # Names originate only from this schema's actual sequence catalog. format
+    # quotes both identifier and JSON label; no external SQL or path parameter.
+    sql += r"""SELECT format('SELECT json_build_object(''kind'',''sequence'',''name'',%L,''value'',last_value::text,''called'',is_called)::text FROM naijue_erp.%I;',relname,relname)
+FROM pg_class WHERE relnamespace='naijue_erp'::regnamespace AND relkind='S'
+ AND relname ~ '^[a-z_][a-z_0-9]*$'
+ AND (SELECT count(*) FROM pg_class WHERE relnamespace='naijue_erp'::regnamespace AND relkind='S')<=50
+ORDER BY relname
+\gexec
+ROLLBACK;
+"""
+    return sql
+
+def validate_snapshot(raw, a, target):
+    need(len(raw.encode()) <= 128*1024, 'SNAPSHOT_OUTPUT_BOUND')
+    rows=[strict_json(line) for line in raw.splitlines() if line.strip()]
+    need(rows and type(rows[0]) is dict and rows[0].get('kind')=='context', 'SNAPSHOT_CONTEXT_REQUIRED')
+    c=rows[0];p=a['proposal'];physical=target['physical']
+    need(c.get('actor')==p['admin'] and c.get('sessionActor')==p['admin'] and (c.get('superuser') is True or c.get('bypassRls') is True), 'SNAPSHOT_FULL_VISIBILITY_ROLE')
+    need(c.get('database')==p['database'] and c.get('address')=='127.0.0.1' and c.get('port')==p['port'] and c.get('dataDirectory')==str(Path(p['workspaceDirectory'])/'data') and all(c.get(k)==physical[k] for k in ['databaseOid','systemIdentifier','serverVersionNum','postmasterStart']), 'SNAPSHOT_PHYSICAL_TARGET_DIFFERS')
+    need(c.get('readOnly')=='on' and c.get('isolation')=='repeatable read', 'SNAPSHOT_READONLY_RR_REQUIRED')
+    tables=c.get('tables');seqs=c.get('sequences')
+    need(type(tables) is list and [t.get('name') for t in tables]==list(SNAPSHOT_TABLES) and all(t.get('kind')=='r' and t.get('selectAllowed') is True and t.get('rlsActive') is False for t in tables), 'SNAPSHOT_EXACT35_OR_RLS_DIFFERS')
+    need(type(seqs) is list and len(seqs)<=50 and all(type(n) is str and re.fullmatch('[a-z_][a-z_0-9]*',n) for n in seqs) and seqs==sorted(set(seqs)), 'SNAPSHOT_SEQUENCE_COHORT')
+    values={'tables':{},'sequences':{}}
+    need(len(rows)==1+35+len(seqs), 'SNAPSHOT_ROW_COHORT')
+    for row in rows[1:]:
+        need(type(row) is dict, 'SNAPSHOT_ROW')
+        if row.get('kind')=='table':
+            exact_keys(row,['kind','name','count','sha256']);name=row['name']
+            need(name in SNAPSHOT_TABLES and name not in values['tables'] and type(row['count']) is str and re.fullmatch('[0-9]+',row['count']) and int(row['count'])<=10000 and type(row['sha256']) is str and re.fullmatch('[a-f0-9]{64}',row['sha256']), 'SNAPSHOT_TABLE_BOUND_OR_DIGEST')
+            values['tables'][name]={k:row[k] for k in ['count','sha256']}
+        else:
+            exact_keys(row,['kind','name','value','called']);name=row['name']
+            need(row['kind']=='sequence' and name in seqs and name not in values['sequences'] and type(row['value']) is str and re.fullmatch('[0-9]+',row['value']) and type(row['called']) is bool, 'SNAPSHOT_SEQUENCE_VALUE')
+            values['sequences'][name]={k:row[k] for k in ['value','called']}
+    need(set(values['tables'])==set(SNAPSHOT_TABLES) and set(values['sequences'])==set(seqs), 'SNAPSHOT_INCOMPLETE')
+    return {'context':c,'snapshot':values,'transaction':'ROLLED_BACK','connectionCleanup':'CLOSED','sqlstate':None}
+
+def observe_snapshot(a, target, seconds):
+    need(seconds>0, 'SNAPSHOT_WINDOW_EXPIRED')
+    raw=psql(a,a['proposal']['admin'],a['proposal']['database'],snapshot_sql(),min(20,seconds))
+    return validate_snapshot(raw,a,target)
+
+def scene_readback_sql(binding):
+    for key in ['manifestSha256','planSha256']:
+        need(type(binding.get(key)) is str and re.fullmatch('[a-f0-9]{64}',binding[key]),'SCENE_EXACT_BATCH_BINDING_REQUIRED')
+    publication=SCENE_PUBLICATION_SQL.replace('$1::text',"'"+binding['manifestSha256']+"'::text").replace('$2::text',"'"+binding['planSha256']+"'::text")
+    queries=[('publication',publication)]
+    for kind,query in [('references',SCENE_REFERENCES_SQL),('balances',SCENE_BALANCES_SQL)]:
+        # Re-derive the exactly-one baseline inside this SAME RR snapshot. A
+        # missing/ambiguous publication never becomes first-row/default data.
+        selected='WITH scene_published AS (\n'+publication+'\n), '
+        query=selected+query[len('WITH '):]
+        query=query.replace('$1::uuid','(SELECT "baselineBatchId"::uuid FROM scene_published)')
+        queries.append((kind,query))
+    sql=snapshot_sql().split("SELECT json_build_object('kind','table'",1)[0]
+    for kind,query in queries:
+        sql+="SELECT json_build_object('kind','"+kind+"','rows',coalesce(json_agg(q),'[]'::json))::text FROM (\n"+query+'\n) q;\n'
+    return sql+'ROLLBACK;\n'
+
+def observe_scene(a,target,binding,seconds):
+    need(seconds>0,'SCENE_WINDOW_EXPIRED')
+    raw=psql(a,a['proposal']['admin'],a['proposal']['database'],scene_readback_sql(binding),min(20,seconds))
+    need(len(raw.encode())<=262144,'SCENE_OUTPUT_BOUND')
+    rows=[strict_json(line) for line in raw.splitlines() if line.strip()]
+    need(len(rows)==4 and [r.get('kind') for r in rows]==['context','publication','references','balances'],'SCENE_ROW_COHORT')
+    c=rows[0];p=a['proposal'];physical=target['physical']
+    need(c.get('actor')==p['admin'] and c.get('sessionActor')==p['admin'] and (c.get('superuser') is True or c.get('bypassRls') is True),'SCENE_FULL_VISIBILITY_ROLE')
+    need(c.get('database')==p['database'] and c.get('address')=='127.0.0.1' and c.get('port')==p['port'] and c.get('dataDirectory')==str(Path(p['workspaceDirectory'])/'data') and all(c.get(k)==physical[k] for k in ['databaseOid','systemIdentifier','serverVersionNum','postmasterStart']),'SCENE_PHYSICAL_TARGET_DIFFERS')
+    need(c.get('readOnly')=='on' and c.get('isolation')=='repeatable read' and type(c.get('tables')) is list and [t.get('name') for t in c['tables']]==list(SNAPSHOT_TABLES) and all(t.get('selectAllowed') is True and t.get('rlsActive') is False for t in c['tables']),'SCENE_READONLY_FULL35_REQUIRED')
+    publication=rows[1].get('rows');refs=rows[2].get('rows');balances=rows[3].get('rows')
+    need(type(publication) is list and len(publication)==1 and type(publication[0]) is dict,'SCENE_EXACT_PUBLICATION_REQUIRED')
+    publication=publication[0]
+    need(publication.get('sourceHash')==binding['manifestSha256'] and (publication.get('historyPayloadHash') is None or type(publication['historyPayloadHash']) is str and re.fullmatch('[a-f0-9]{64}',publication['historyPayloadHash'])),'SCENE_PUBLICATION_HASH_DIFFERS')
+    need(publication.get('loginName')=='synthetic-fresh35-admin' and publication.get('loginEnabled') is True and publication.get('adminRole')=='ADMIN' and publication.get('adminEmployment')=='在职','SCENE_REAL_ADMIN_REQUIRED')
+    uuid='[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+    for key in ['initializerOperationId','baselineBatchId','documentBatchId','baselinePublicationOperationId','documentPublicationOperationId','accountId','adminStaffId']:
+        need(type(publication.get(key)) is str and re.fullmatch(uuid,publication[key]),'SCENE_PUBLICATION_ID_REQUIRED')
+    expected={'HALL':2,'WAREHOUSE':2,'CUSTOMER':1,'STAFF':1,'PRODUCT':1,'SKU':1,'SKU_BARCODE':1,'PAYMENT_ACCOUNT':1,'PAYMENT_METHOD':1}
+    need(type(refs) is list and len(refs)==sum(expected.values()),'SCENE_REFERENCE_COHORT')
+    grouped={kind:[] for kind in expected}
+    for ref in refs:
+        need(type(ref) is dict and set(ref)=={'kind','value'} and ref['kind'] in grouped and type(ref['value']) is dict,'SCENE_REFERENCE_ROW')
+        value=ref['value'];need(type(value.get('id')) is str and re.fullmatch(uuid,value['id']),'SCENE_REFERENCE_ID')
+        grouped[ref['kind']].append(value)
+    need(all(len(grouped[k])==count and len({r['id'] for r in grouped[k]})==count for k,count in expected.items()),'SCENE_REFERENCE_MISSING_OR_DUPLICATE')
+    wh={w['id'] for w in grouped['WAREHOUSE']};sku=grouped['SKU'][0]['id']
+    need(type(balances) is list and len(balances)==2 and {(v.get('warehouseId'),v.get('skuId')) for v in balances}=={(w,sku) for w in wh},'SCENE_BALANCE_COHORT')
+    for value in balances:
+        need(value.get('present') is True and type(value.get('quantity')) is str and re.fullmatch('-?(?:0|[1-9][0-9]*)',value['quantity']) and type(value.get('version')) is int and value['version']>0,'SCENE_MISSING_BALANCE_OR_VERSION')
+    # Kept only in private caller memory for scene construction, never a public
+    # report or install/host receipt. NULL history payload remains actual NULL.
+    return {'publication':publication,'references':grouped,'balances':balances,'planSha256':binding['planSha256'],'observedAtMillis':int(time.time()*1000)}
+
+def validate_stage_binding(result, descriptor, previous=None):
+    b=result.get('fixtureBinding');exact_keys(b,['format','sourceSetSha256','installProgramSha256','targetSha256','manifestSha256','planSha256','initializerSha256','stepsSha256'])
+    need(b['format']=='FRESH35_SYNTHETIC_RETENTION25_STAGE_BINDING_V1' and all(type(v) is str and re.fullmatch('[a-f0-9]{64}',v) for k,v in b.items() if k!='format'), 'STAGE_BINDING_SHAPE')
+    need(b['sourceSetSha256']==descriptor['sourceSetSha256'] and b['installProgramSha256']==descriptor['programSha256'] and b['targetSha256']==descriptor['targetSha256'], 'STAGE_PROGRAM_SOURCE_TARGET_DIFFERS')
+    # Same canonicalRequestValue encoding as requestHash, limited to this
+    # closed string-only binding, not a second general request implementation.
+    canonical='{'+','.join(json.dumps(k)+':s'+json.dumps(b[k]) for k in sorted(b))+'}'
+    need(result.get('fixtureBindingSha256')==hashlib.sha256(canonical.encode()).hexdigest(), 'STAGE_BINDING_HASH_DIFFERS')
+    if previous is not None:
+        need(b==previous['fixtureBinding'] and result['fixtureBindingSha256']==previous['fixtureBindingSha256'], 'STAGE_FIXTURE_CHANGED')
+    return result['fixtureBindingSha256']
+
+def verify_synthetic_stages(a, target, descriptor, root, child, observer):
+    # Production closures supplied below retain the original guardian/listener
+    # and deadline checks. The direct model tests supply no PG or subprocess.
+    before=observer();json_new(root/'snapshot-after-install.json',before)
+    rollback=child('--verify-host-rollback')
+    binding=validate_stage_binding(rollback,descriptor)
+    need(rollback.get('state')=='FRESH35_SYNTHETIC_ROLLBACK_VERIFIED' and rollback.get('stage')=='rollback' and rollback.get('rollbackVerified') is True and rollback.get('originalBatchAbsent') is True and rollback.get('connectionCleanup')=='CLOSED' and rollback.get('syntheticImportVerified') is False and rollback.get('businessVerified') is False, 'ROLLBACK_STAGE_RESULT_REQUIRED')
+    json_new(root/'rollback-host-result.json',rollback)
+    after_rollback=observer();json_new(root/'snapshot-after-rollback.json',after_rollback)
+    need(before['snapshot']==after_rollback['snapshot'], 'ROLLBACK_SNAPSHOT_CHANGED')
+    committed=child('--verify-host-commit',binding)
+    validate_stage_binding(committed,descriptor,rollback)
+    need(committed.get('state')=='FRESH35_CONTROLLER_HOST_VERIFIED' and committed.get('stage')=='commit' and committed.get('ordinaryUid')==a['postgresUid'] and committed.get('connectionCleanup')=='CLOSED' and committed.get('syntheticImportVerified') is True and committed.get('businessVerified') is False and committed.get('importState')=='COMMITTED' and committed.get('replayState')=='ALREADY_COMMITTED' and committed.get('readbackState')=='VERIFIED' and committed.get('settlementRetentionVerified') is True and type(committed.get('retainedHeaders')) is int and committed['retainedHeaders']==25 and type(committed.get('retainedSettlements')) is int and committed['retainedSettlements']==27, 'COMMIT_STAGE_RESULT_REQUIRED')
+    json_new(root/'host-result.json',committed)
+    after_commit=observer();json_new(root/'snapshot-after-commit.json',after_commit)
+    need(after_commit['context']==after_rollback['context'] and set(after_commit['snapshot']['sequences'])==set(before['snapshot']['sequences']), 'POST_COMMIT_OBSERVER_COHORT_DIFFERS')
+    return committed
+
+def clear_credentials(root, p, postgres_uid):
     errors=[]
-    for name in [p[k]+'.pgpass' for k in ['admin','owner','controller','runtime']]:
+    for name in [p[k]+'.pgpass' for k in ['admin','owner','controller','runtime']]+[APPLICATION_SCRYPT_NAME]:
         path=root/'credentials'/name
         try:
             s=path.lstat(); need(stat.S_ISREG(s.st_mode) and s.st_uid==0 and s.st_nlink==1,'CREDENTIAL_FILE_IDENTITY'); path.unlink()
@@ -212,7 +623,18 @@ def clear_credentials(root, p):
         pass
     except Exception as e:
         errors.append(type(e).__name__)
-    return not errors and not any((root/'credentials').iterdir()) and not path.exists()
+    ordinary=root/'ordinary-private'
+    try:
+        s=ordinary.lstat();need(stat.S_ISDIR(s.st_mode) and not stat.S_ISLNK(s.st_mode) and s.st_uid in [0,postgres_uid] and stat.S_IMODE(s.st_mode)==0o700,'ORDINARY_PRIVATE_DIRECTORY_IDENTITY')
+        for name in [ORDINARY_SCENARIO_NAME,ORDINARY_CREDENTIAL_KEY_NAME]:
+            scenario=ordinary/name
+            try:
+                s=scenario.lstat();need(stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_uid in [0,postgres_uid] and stat.S_IMODE(s.st_mode)==0o600,'ORDINARY_PRIVATE_SCENARIO_IDENTITY');scenario.unlink()
+            except FileNotFoundError:pass
+        ordinary.rmdir()
+    except FileNotFoundError:pass
+    except Exception as e:errors.append(type(e).__name__)
+    return not errors and not any((root/'credentials').iterdir()) and not path.exists() and not ordinary.exists() and not ordinary.is_symlink()
 
 def cleanup_owned_server(a, proc, identity, system_id, deadline):
     """Only this Popen child, with PID/starttime/exe/listener rechecks. No restart.
@@ -241,7 +663,7 @@ def cleanup_owned_server(a, proc, identity, system_id, deadline):
     except Exception as e:
         errors.append({'phase':'stop','type':type(e).__name__})
     finally:
-        try:result['credentialsRemoved']=clear_credentials(root,p)
+        try:result['credentialsRemoved']=clear_credentials(root,p,a['postgresUid'])
         except Exception as e:errors.append({'phase':'credentials','type':type(e).__name__})
         try:
             result['ownedPidAbsent']=proc is None or proc.poll() is not None
@@ -454,6 +876,7 @@ def main():
         need(read_private(Path(str(AUTH)+'.consumed')).decode()==hashlib.sha256(raw).hexdigest()+'\n','PROVISION_CONSUMPTION_DIFFERS')
         json_new(root/'guardian-started.json',{'controller':parent,'authorizationSha256':hashlib.sha256(raw).hexdigest(),'restartAllowed':False})
         return supervise(a)
+    configuration=read_ordinary_configuration(a)
     need(not root.exists() and not root.is_symlink() and port_absent(p['port']),'NEW_UNUSED_TARGET')
     need(not INSTALL_AUTH.exists() and not Path(str(INSTALL_AUTH)+'.consumed').exists(),'NO_STALE_INSTALL_AUTHORIZATION')
     # Dedicated service account must already exist and have no running process.
@@ -463,23 +886,26 @@ def main():
         if path.name.isdecimal():
             try:need(path.stat().st_uid!=a['postgresUid'],'SERVICE_ACCOUNT_ALREADY_ACTIVE')
             except FileNotFoundError:pass
+    runtime_dependencies=load_linux_runtime_dependencies(root)
     if sys.argv[1]=='--preflight-only':
-        print(json.dumps({'state':'READ_ONLY_PREFLIGHT_PASSED','noCredentialsCreated':True,'noServicesStarted':True}));return 0
+        print(json.dumps({'state':'READ_ONLY_PREFLIGHT_PASSED','noCredentialsCreated':True,'noServicesStarted':True,'runtimeDependencies':runtime_dependencies}));return 0
     # Single-use external authorization; no replacement, unlink, repair or retry.
     write_new(str(AUTH)+'.consumed',(hashlib.sha256(raw).hexdigest()+'\n').encode())
     os.umask(0o077);root.mkdir(mode=0o700);os.chmod(root,0o711)
     (root/'credentials').mkdir(mode=0o700);(root/'pg-private').mkdir(mode=0o700)
     os.chown(root/'pg-private',a['postgresUid'],a['postgresGid'])
-    watch=None;success=False;record_published=None;host_verified=False;synthetic_import_verified=False;passwords={};deadline=time.monotonic()+max(0,a['expiresAt']/1000-time.time())
+    watch=None;success=False;record_published=None;host_verified=False;synthetic_import_verified=False;snapshots_verified=False;ordinary_verified=False;passwords={};application_password=None;deadline=time.monotonic()+max(0,a['expiresAt']/1000-time.time())
     def remaining():
         need(time.monotonic()<deadline-60,'CLEANUP_RESERVE');return max(1,min(60,deadline-time.monotonic()-45))
     def interrupted(*_):raise RuntimeError('FRESH35_ISOLATED_PARENT_STOP')
     for s in [signal.SIGTERM,signal.SIGINT,signal.SIGHUP]:signal.signal(s,interrupted)
     try:
         json_new(root/'controller-process.json',process_identity(os.getpid()))
+        json_new(root/'runtime-dependencies.json',runtime_dependencies)
         watch=subprocess.Popen([sys.executable,'-I','-S',str(SELF),'--supervise-owned-child'],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,env=clean_env(root),start_new_session=True)
         sel=selectors.DefaultSelector();sel.register(watch.stdout,selectors.EVENT_READ)
         need(sel.select(8) and watch.stdout.readline()=='GUARDIAN_READY\n','GUARDIAN_READY')
+        application_password=create_synthetic_application_credential(root,watch,remaining())
         import secrets
         passwords={p[k]:secrets.token_hex(32) for k in ['admin','owner','controller','runtime']}
         for role,pw in passwords.items():
@@ -513,7 +939,7 @@ def main():
         obs=strict_json(psql(a,p['admin'],p['database'],identity_sql));need(obs['systemIdentifier']==sid and obs['dataDirectory']==str(root/'data'),'POST_BOOTSTRAP_IDENTITY')
         need((root/'data/pg_hba.conf').read_text()==hba,'HBA_BYTES_CHANGED')
         hba_rows=strict_json(psql(a,p['admin'],p['database'],"SELECT coalesce(json_agg(json_build_object('type',type,'database',database,'user_name',user_name,'address',address,'auth_method',auth_method,'error',error) ORDER BY rule_number),'[]'::json)::text FROM pg_catalog.pg_hba_file_rules;"))
-        need(len(hba_rows)==6 and all(row['error'] is None for row in hba_rows),'HBA_PARSE_DIFFERS')
+        need(len(hba_rows)==7 and all(row['error'] is None for row in hba_rows),'HBA_PARSE_DIFFERS')
         json_new(root/'hba-observation.json',hba_rows)
         target={'proposal':p,'physical':{k:obs[k] for k in ['systemIdentifier','databaseOid','serverVersionNum','postmasterStart']},'startsAt':a['startsAt'],'expiresAt':a['expiresAt']}
         json_new(root/'target-binding.json',target)
@@ -530,14 +956,39 @@ def main():
         read_private(INSTALL_AUTH);verify_deployment(a);need(owned_listener(owned,p['port']),'PRE_INSTALL_LISTENER')
         r=subprocess.run(argv+['--execute'],capture_output=True,env=clean_env(root),timeout=max(1,deadline-time.monotonic()-45));need(r.returncode==0,'INSTALL_FAILED_OR_OUTCOME_UNKNOWN')
         result=strict_json(r.stdout);need(result.get('state')=='RECORD_DURABLY_PUBLISHED' and result.get('recordPublished') is True and result.get('sourceSetSha256')==a['sourceSetSha256'],'INSTALL_COMPLETION_REQUIRED');json_new(root/'installation-result.json',result);record_published=True
-        remaining();need(watch.poll() is None and owned_listener(owned,p['port']),'PRE_HOST_TARGET_LOST')
-        r=subprocess.run(argv+['--verify-host'],capture_output=True,env=clean_env(root),timeout=max(1,deadline-time.monotonic()-45));need(r.returncode==0,'CONTROLLER_HOST_FAILED')
-        host_result=strict_json(r.stdout);need(host_result.get('state')=='FRESH35_CONTROLLER_HOST_VERIFIED' and host_result.get('ordinaryUid')==a['postgresUid'] and host_result.get('businessVerified') is False and host_result.get('syntheticImportVerified') is True and host_result.get('importState')=='COMMITTED' and host_result.get('replayState')=='ALREADY_COMMITTED' and host_result.get('readbackState')=='VERIFIED','CONTROLLER_HOST_RESULT_REQUIRED')
-        json_new(root/'host-result.json',host_result);host_verified=True;synthetic_import_verified=True;success=True
+        def host_window():
+            remaining();need(watch.poll() is None and owned_listener(owned,p['port']),'PRE_HOST_TARGET_LOST')
+            return max(1,deadline-time.monotonic()-45)
+        def stage_child(*flags):
+            stage='rollback' if flags[0]=='--verify-host-rollback' else 'commit'
+            try:
+                r=subprocess.run(argv+list(flags),capture_output=True,env=clean_env(root),timeout=host_window())
+            except subprocess.TimeoutExpired:
+                json_new(root/(stage+'-child-failure.json'),{'state':'OUTCOME_UNKNOWN_NO_REPLAY','stage':stage,'timedOut':True,'automaticRetry':False})
+                raise
+            if r.returncode!=0:
+                diagnostic={'state':'OUTCOME_UNKNOWN_NO_REPLAY','stage':stage,'exitCode':r.returncode,'automaticRetry':False}
+                if len(r.stderr)<=16384:
+                    try:
+                        reported=strict_json(r.stderr)
+                        if type(reported) is dict:
+                            code=reported.get('validationCode')
+                            diagnostic['validationStage']=reported.get('validationStage') if reported.get('validationStage') in ['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'] else None
+                            diagnostic['validationCode']=code if type(code) is str and re.fullmatch('[A-Z][A-Z0-9_]{0,80}',code) else None
+                    except (ValueError,RuntimeError):pass
+                json_new(root/(stage+'-child-failure.json'),diagnostic)
+            need(r.returncode==0,'CONTROLLER_HOST_FAILED_OR_OUTCOME_UNKNOWN')
+            return strict_json(r.stdout)
+        host_result=verify_synthetic_stages(a,target,descriptor,root,stage_child,lambda:observe_snapshot(a,target,host_window()))
+        host_verified=True;synthetic_import_verified=True;snapshots_verified=True
+        scene=observe_scene(a,target,host_result['fixtureBinding'],host_window())
+        ordinary_result=run_ordinary_business(a,target,descriptor,root,scene,configuration,application_password,watch,deadline)
+        json_new(root/'ordinary-result.json',ordinary_result);ordinary_verified=True;scene=None;success=True
     except Exception as error:
         json_new(root/'failure.json',{'code':str(error) if re.fullmatch('FRESH35_[A-Z0-9_]+',str(error)) else type(error).__name__,'automaticRetry':False,'commitOutcome':'CONSULT_APPLICATION_JOURNAL_NOT_INFERRED'})
     finally:
         passwords.clear()
+        application_password=None
         for s in [signal.SIGTERM,signal.SIGINT,signal.SIGHUP]:signal.signal(s,signal.SIG_IGN)
         if watch:
             try:watch.stdin.close()
@@ -545,11 +996,11 @@ def main():
             try:watch.wait(timeout=max(1,min(40,deadline-time.monotonic())))
             except subprocess.TimeoutExpired:success=False
         # File cleanup is retried locally only; never retry SQL or restart PG.
-        files_clear=retry_parent_credential_cleanup(watch,lambda:clear_credentials(root,p))
+        files_clear=retry_parent_credential_cleanup(watch,lambda:clear_credentials(root,p,a['postgresUid']))
         cleanup=strict_json((root/'cleanup.json').read_bytes()) if (root/'cleanup.json').is_file() else {'cleanupComplete':False}
         success=success and files_clear and cleanup.get('cleanupComplete') is True
-        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'hostEnabled':False,'businessVerified':False})
-        print(json.dumps({'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'businessVerified':False,'workspace':str(root)}))
+        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'independentSnapshotsVerified':snapshots_verified,'ordinaryBusinessVerified':ordinary_verified,'hostEnabled':False,'businessVerified':False,'productionVerified':False})
+        print(json.dumps({'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'independentSnapshotsVerified':snapshots_verified,'ordinaryBusinessVerified':ordinary_verified,'businessVerified':False,'productionVerified':False,'workspace':str(root)}))
     return 0 if success else 1
 
 if __name__=='__main__':
