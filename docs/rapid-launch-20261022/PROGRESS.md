@@ -1113,3 +1113,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 唯一原root只读export job退出0/0.118秒，原image-receipt root0600/e475f85c已回读；actual Engine imageID6de44f43（manifest index）、amd64 manifest c926c0b7、config5aba3fb1，linux/amd64，RepoDigests空，按实际ID消费不造registry digest。新script d3279106、原lock0aaf/5项版本及iid一致；旧失败全部保留。
 - 原目标container实际不存在、start/container receipt未建、PG20分钟未启动；服务器/srv余量18,295,119,872字节，内存事实已回。镜像仍绑定原5b环境source0e6b和旧b91归档，不能改写为当前S_test业务通过。
 - 下一沿原D1四叶固定/原QB增量与T45唯一应用source/环境proof分绑、普通transfer及两阶段只读observer接缝推进35表安装与真实合成验证。不重建环境、不扩大帐号权限或另起平台。全源本地核账仍等待准确3旧导出清理确认，未执行。
+
+
+### 用户决定保留3旧构建副本，容量分支继续等待
+- 真人call_06cfa0afedd741fc8cb642a9e97cf8ac item0明确回复“保留，我另行释放空间”。source-aca775575a95、source-cd3372b05d85、source-2bbc27152e96全部保留，未删除，不改派其他清理清单；此前待批状态已结束为保留决定。
+- 原D3已同步，055固定全源核账与a10 stream预检保留断点，实际容量足够前不执行、不将未验记通过、不重复无变化盘点。D1四叶合成入口及T45当前应用/环境分绑准备继续，不受本地容量等待阻塞。
+- 原D1 turn虽已终结，末回复为无关历史人员清洗，未作为四叶交付证据。主控已要求原owner沿现有WIP收口准确四叶hash和检查回执，不重复派工、不覆盖或提交未交回WIP。

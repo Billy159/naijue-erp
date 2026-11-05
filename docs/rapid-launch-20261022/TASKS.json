@@ -28821,7 +28821,8 @@
       "proposedStartBudgetBytes": 3831725571,
       "scratchBudgetBytes": 3294854658,
       "controllerAcceptedStopFreeBytes": 536870912,
-      "budgetIsMeasuredPeak": false
+      "budgetIsMeasuredPeak": false,
+      "capacityDecision": "Human explicitly retained all3 old exports; resource-dependent source reconciliation/preflight remain not run. D1/T45 independent work continues."
     },
     "settlement25AcceptedImplementation": {
       "commit": "a10d8daa06988abe63de28108473098adf19fff7",
@@ -28860,7 +28861,7 @@
       "controllerTableSelectAdded": false
     },
     "capacityCleanupCandidate": {
-      "state": "EXACT_THREE_OLD_BUILD_EXPORTS_AWAITING_HUMAN_CONFIRMATION",
+      "state": "HUMAN_DECIDED_RETAIN_ALL_THREE_NO_DELETION",
       "owner": "C; original D2 prepared readonly verification",
       "reportSHA256": "9133117af69ada025f5e7665c1e94c3f5f03b5d4ebe9b772f1ae89a42f3d8276",
       "candidateRootNames": [
@@ -28873,7 +28874,10 @@
       "reportedNonsharedCandidateAllocatedBytes": 573202432,
       "actualReclaimableBytes": null,
       "sameRiskIsolationApprovalDoesNotExpandToLocalDeletion": true,
-      "approvalRequiredBy": "/Users/billy/Desktop/Workspace/agents.md:63"
+      "approvalRequiredBy": "/Users/billy/Desktop/Workspace/agents.md:63",
+      "humanDecision": "保留，我另行释放空间",
+      "humanSource": "call_06cfa0afedd741fc8cb642a9e97cf8ac item0",
+      "next": "User releases space separately; original D3 retains fixed code and inputs, resumes bounded run only after actual sufficient capacity. No substitute deletion list or repeated unchanged polling."
     }
   }
 }
