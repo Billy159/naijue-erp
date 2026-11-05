@@ -1318,3 +1318,7 @@ None返回修订独立QB9117ca04通过（保留真实guard体，4组必要复验
 
 
 - 新r3 start实际exit0/28.131s，回执178b4794；真实SID7704784775886311471/OID16393/PG170011/birth20:20:02.728553UTC，准确program08baf5a6/target2512aa92。原只读网络proof实回13字段及原bytesSHA bfc4bf2b（观察aea4f9b4），与program完全同绑，C核文件摘要后签原9键外叶29ee0236。T45原install在途，沿原窗口至1793911108915，不续窗不移用旧批准。真实ordinary业务、导入/重放/回滚及probe仍未通过；无正式操作。
+
+
+### 2026-11-06 04:31｜新r3实际安装失败，安全诊断已可用
+原install exit2/13.907633s，回执594b5ddd；初始stage STEP/physical-empty-target/SQLSTATE55000，具体谓词尚未知，不能沿用前轮GUC或None根因。事务状态ROLLBACK_UNCONFIRMED，回滚次生码EXCLUSIVE_IDLE_NATIVE_CLIENT_REQUIRED；不得把资源清理等同事务回滚。原CID8f24已停，cleanShutdown/cleanupComplete/凭据/登录/进程/端口与子进程清理全true/errors空；recordPublished空，host/import/独立读回/ordinary业务及UIDprobe均未通过。T45只读本次停止日志有限静态错误，D1仅原SQL谓词定位；不重放或重起PG、不猜改/正式操作。

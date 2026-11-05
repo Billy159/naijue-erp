@@ -29393,7 +29393,7 @@
       "state": "ACTIVE"
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R3_ACTUAL_TARGET_AND_NETWORKPROOF_VERIFIED_INSTALL_AUTHORIZED",
+      "state": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29577,13 +29577,34 @@
         "startsAt": 1793909908915,
         "expiresAt": 1793911108915,
         "sourceSetSHA256": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394",
-        "state": "START_PASS_REAL_TARGET_INSTALL_AUTHORITY_ISSUED_NOT_INSTALL_PASS",
+        "state": "TERMINAL_FAILED_PRESERVED_NO_REPLAY",
         "installAuthorityIssued": true,
         "startReceiptSHA256": "178b479444d5417e76c2ca9892d105b699d8e790aeb545a651fc7029375e8587",
         "proofObserveReceiptSHA256": "aea4f9b4e5a1abad5aaa2a119fb505d05f74b4a1d0756938669c00652f1416d1",
         "programSHA256": "08baf5a65e6e00b1b0613c5b52c99b8537262ebf780573cd18492c876dc75592",
         "targetSHA256": "2512aa92bafd56f74ab60f3491dfb0f98c389400d506ec94bec9ff270fc9c40c",
         "installAuthoritySHA256": "29ee0236f365695502791189b55061f2d0d2f0ce92fe08d732aa1db9a69537d8"
+      },
+      "actualR3Failure": {
+        "job": "t45-f35-877a32-install-20261106-01",
+        "exitCode": 2,
+        "elapsedSeconds": 13.907633,
+        "receiptSHA256": "594b5ddd3a5a081ec07f67a84f671d3dd82a8f222921acd91d3eaa4ba3a90e4b",
+        "stage": "STEP",
+        "step": "physical-empty-target",
+        "originalSQLSTATE": "55000",
+        "originalInternalCode": null,
+        "installState": "ROLLBACK_UNCONFIRMED",
+        "rollbackInternalCode": "FRESH35_COMBINED_EXCLUSIVE_IDLE_NATIVE_CLIENT_REQUIRED",
+        "cleanupComplete": true,
+        "cleanShutdown": true,
+        "containerStopped": true,
+        "recordPublished": null,
+        "hostVerified": false,
+        "syntheticImportVerified": false,
+        "ordinaryBusinessVerified": false,
+        "uidProbeExecuted": false,
+        "next": "T45 bounded stopped r3 log only; D1 exact original step predicates. Do not infer root from prior GUC or secondary rollback code. No repeated job/PG or production."
       }
     },
     "productionReleaseCompatibilityContinuation": {
