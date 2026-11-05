@@ -1371,3 +1371,18 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - D2 runtime7+发行6共13叶逐hash核bb440d32后固定fffe6a7546838c96da6d5b278f695e241443f4f3，已交原QB一次组合增量验收。实际小构建/打包/解包/helper成员读取及负例通过，非完整正式应用；部署重新审核marker保留。
 - T45本机已核固定amd64 OCI manifest/config/layer/DiffID，离线tar29870080字节/47788a24，回执54642e2e；未上传/load，RepoDigest及实际构建未验。原T45补存储后端最小只读事实并准备原工具离线后继，沿同类授权不再人工重批。
 - 210历史RETURN无款系既有0..N合同consumer遗漏，原D1已接预检/SQL及准确声明修复；25有款差额准确提案885f7a7f不擅自实施，原事实保持。其余真实导入、权限业务及生产仍未通过。
+
+
+### 25实际批准、210采用、完整构建真实失败修复及离线实际接续
+- 真人call_4adb0a8e95e14f649a12cdbf668f2ccb item0已确认仅25张按原状态和差额迁入。D1接准确源/stream/SQL/读回闭包；D3草案033d9bcb含25头/27款，原D2独立事实f45898c4通过，C在清洗端外绑定442b7bad。证明不进入raw source_files，原批次不变；不放宽新SAVE/APPROVE/再审。
+- QB fffe运行发行13叶PASS50b17895、b649 210八叶PASS2b5cee9f、3331 offline两叶PASS19196d09已采用；均限定源码/模型/工具归档，PG或正式运行未验。
+- 完整ERP首次aca77557真实build退出1，非tiny模型。已定位proof物理模块身份混入bundle，原D2六叶准确外置后继固定d30a81d9，派原QB；新构建整根cd3372b0/tree2614c985来自准确committed candidate子树，WIP未覆盖。目标public配置7f85bd14仅构建展示输入，不证明权限或Ready能力。
+- D3来源ledger728141242字节读至EOF并注册503457发生项，但SQLite neededIdentityKeys写满，registry/target未读取，不能称对账通过。实际峰值scratch2.9G、余量曾400MiB，清理后3.9GiB；无代码低配额证据，确切OS原因未证。原D3只改离线storage重复文本复用及直接合成对照，不截数据/单纯扩限/再跑原失败。
+- T45原containerd事实已实读。C采用同类隔离授权签发新artifact a24505c9/plan17b30535，准确期限1793884588020，交原T45一次新key上传named OCI后load/原digest平台DiffID读回/原APT锁包构建；旧04ef和71MiB READY、失败意图保留。实际结果待回，PG20分钟未启，不称安装或导入通过。
+
+
+### 完整应用实际构建通过、基础镜像加载通过及两个精确后继
+- 完整ERP固定整根2bbc27152e96cfd903f0ea17455153806be05f02（整合2ff76009）build退出0/9.164秒、pack退出0/6.384秒；1685输入、450产物、447归档成员及一次解包回读一致。回执75ed7f33，包341c14b8/3286347字节。原d30和2ff增量QB结论114e4f4c/a9d327fe采用，不重跑旧39项。未启动应用、PG、浏览器或部署；25差额新WIP不在该构建中。
+- T45离线镜像实际load退出0，原digest/平台/DiffID inspect退出0；但BuildKit的FROM元数据仍联网，连接reset，build退出1/总15.561秒，回执437bd333。APT签名/84锁包/ldd及PG均未至。原T45正在原工具后继实现唯一准确local OCI context，无重复load/上传或全局网络改动；源码冻结及QB增量通过后沿同类授权做一次有界验证。
+- D3离线存储两叶固定05579a94，完整文本比较仍保留，代表规模315944960→152154112字节；作者回执5800fb6a，原QB仅验语义/资源增量。真实包仍为SQLite写满失败，不凭合成省空间声称全源对账通过。
+- 已批准25原状态/差额分支由原D1继续收口，准确options类型及CLI模型载体接缝纳入同任务；普通保存审核不放宽。现有真实数据、WIP和旧失败全部保留。

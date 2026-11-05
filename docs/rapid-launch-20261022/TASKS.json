@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T12:26:56.293143+00:00",
+  "updatedAt": "2026-11-05T13:06:35.876845+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "2276fdfb3928b2b5fa4af72b3883bbd478dd672d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T12:26:56.293143+00:00",
+    "at": "2026-11-05T12:52:27.290385+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28363,11 +28363,11 @@
     },
     "github": {
       "branch": "codex/erp-0448z-integration-20261105",
-      "commit": "fffe6a7546838c96da6d5b278f695e241443f4f3",
-      "remoteVerified": true,
-      "status": "F01 QB source PASS; runtime and exact release closure13 fixed pending QB; no PG or release",
-      "remotePriorVerifiedCommit": "68a4d4021e580fc3a20db017a262fb05e69512a5",
-      "localHead": "fffe6a7546838c96da6d5b278f695e241443f4f3",
+      "commit": "d30a81d90ca03f984b139f540b64dc3b6879eea2",
+      "remoteVerified": false,
+      "status": "Native boundary six-leaf fixed; latest push in progress. Not release",
+      "remotePriorVerifiedCommit": "3331fb76a3b114257f1d73e20a40f6db3958332c",
+      "localHead": "d30a81d90ca03f984b139f540b64dc3b6879eea2",
       "pushRoute": "existing system HTTP proxy, command scoped; direct connection timed out"
     },
     "cleanInstall": {
@@ -28471,11 +28471,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "210 historical zero-settlement consumer+SQL successor in progress;25 known differences accurate write proposal pending",
-      "D2": "13 fixed leaves handed QB; no concurrent writes; wait concrete findings or new D1 closure",
-      "D3": "r3 payload layout fixed; original235 settlement facts preserved, wait exact historical receiving contract",
-      "T45": "Fixed original OCI base complete locally; store readonly fact/offline successor in progress, no load or PG",
-      "QB": "fffe6a75 runtime/release13 affected review; priorF01 source PASS adopted"
+      "D1": "Approved25 exact source/stream/SQL/readback closing; options seam accepted; fixed receipt pending",
+      "D2": "Full actual ERP build/pack/readback 2bbc PASS adopted, final25 not included; next fixed successor build after25 QB",
+      "D3": "Storage two-leaf05579a94 fixed, QB increment running; actual whole-source reconciliation failed and not repeated yet",
+      "T45": "Named OCI load actually PASS, original FROM metadata actual reset; implementing exact local OCI context successor, no PG window",
+      "QB": "Storage05579a94 only affected review; release d30/2ff valid PASS adopted"
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28600,7 +28600,7 @@
       "versionConstraintsChecked": 201,
       "metadataUnsatisfiedConstraints": 0,
       "signedReleaseVerified": false,
-      "state": "ONE_RESUME_FAILED_REGISTRY_CONNECTION_TIMEOUT_OFFLINE_METHOD_PREPARATION",
+      "state": "FIXED_BASE_LOAD_PASS_BUILD_FROM_REGISTRY_FAILED_NEW_LOCAL_OCI_SOURCE_IN_PROGRESS",
       "scope": "Original T45 provision successor only in its original fresh35-preparation output directory; no S application edits or server calls",
       "actualImagePullBuildOrContainerCreated": false,
       "actualTransmission": true,
@@ -28626,7 +28626,7 @@
       "phaseAJob": "t45-f35-5b26-prepare-20261105-01",
       "phaseAExitCode": 2,
       "phaseAElapsedSeconds": 192.548220189,
-      "error": "Actual docker pull manifest HEAD connection timeout. Host IPv4 and IPv6 readonly probes also timed out; resolution/route cause UNKNOWN. No signature/build/lock/ldd reached. No original job replay or third pull.",
+      "error": "BuildKit still HEAD fixed registry FROM metadata, connection reset; no APT/signature/ldd reached. Exact fixed base is loaded and RepoDigest/platform/DiffID verified.",
       "resumeSourceCommit": "cca4a82d443de7e5d5a7197e711a167b670c8be1",
       "resumeSourceSHA256": "c82803153b9ebe5d24ded0f0e96baa12f11f4e38539fbe97ab2befc481a308e3",
       "affectedAuthorTestsPass": 11,
@@ -28639,13 +28639,30 @@
       "actualImagePullAttempted": true,
       "actualImageBuildOrContainerCreated": false,
       "offlineBase": {
-        "state": "LOCAL_BYTES_AND_CLOSURE_VERIFIED_NOT_DOCKER_LOADED",
+        "state": "ACTUAL_LOADED_REPODIGEST_PLATFORM_DIFFID_VERIFIED_BUILD_NOT_PASSED",
         "receiptSHA256": "54642e2e781a669bb7f1a6c3568dc0ab785efade1e3f23d21d6485bfa77836fe",
-        "archiveSHA256": "47788a2408f611723ee051ca16ed8ec61f1ac6643fdfce6b3969bd4d7de222c4",
+        "archiveSHA256": "19739f1489ea6a3a4bb8ce7a8529e422235c306b6593904ce56f54aa4d200342",
         "archiveBytes": 29870080,
-        "loadRepoDigestAndBuildkit": "UNVERIFIED",
+        "loadRepoDigestAndBuildkit": "LOAD_AND_INSPECT_PASS_BUILD_FROM_METADATA_FAILED",
         "next": "T45 exact store fact then minimal original offline successor; QB new increment; same-risk authority reused"
-      }
+      },
+      "offlineOpsCommit": "3331fb76a3b114257f1d73e20a40f6db3958332c",
+      "offlineReviewSHA256": "19196d093151309016601703a37ef944c3dda621251f1eff196ee4ed4282cd8b",
+      "offlineArtifactAuthoritySHA256": "a24505c9670723303c24dbd9ccf39da9a152ef8f3a92a1226a0ae85c4a83025a",
+      "offlinePlanSHA256": "17b30535594fce7f3931877e3ef67f1792a0a647a60ccd4e6af310a7bd9e890c",
+      "offlineIssuanceSHA256": "192768be007caa8970b7e1bd75343effb82af92151d5668dc689f9592d65df9e",
+      "offlineExpiresAt": 1793884588020,
+      "offlineArtifactKey": "t45-f35-fixed-base-offline-20261105-01",
+      "offlineJob": "t45-f35-5b26-offline-load-image-20261105-01",
+      "offlineArchiveSHA256": "19739f1489ea6a3a4bb8ce7a8529e422235c306b6593904ce56f54aa4d200342",
+      "actualOfflineLoad": "PENDING_ACTUAL_RECEIPT",
+      "offlineActualResultSHA256": "437bd333c1aa781b2065a5bdc494f3669fd058bb306280189e2cd12ddf68fe7a",
+      "offlineLoadExitCode": 0,
+      "offlineOriginalBaseInspectExitCode": 0,
+      "offlineBuildExitCode": 1,
+      "offlineElapsedSeconds": 15.561,
+      "nextMethodReceiptSHA256": "796e27607efa827dc1732dd3f226a4a6e190cfceb9b87dcd27c56788a62003e9",
+      "next": "Original T45 exact local OCI build-context successor; source/model then original QB increment before bounded real operation. No load replay/new upload/daemon or network change."
     },
     "packagingDecisions": {
       "owner": "D2",
@@ -28659,11 +28676,102 @@
     },
     "productionRuntimeAndPackaging": {
       "owner": "D2",
-      "state": "FIXED_13_LEAVES_QB_PENDING_NOT_PG_NOT_DEPLOYMENT",
+      "state": "QB_PASS_13_SOURCE_AND_TOOL_ARCHIVE_ONLY_NOT_COMPLETE_ERP",
       "commit": "fffe6a7546838c96da6d5b278f695e241443f4f3",
       "receiptSHA256": "bb440d32a156ba7e0535e970fc26ffa22d7422216c40f557727c0ff94d0b58c4",
       "scope": "runtime7 + packaging6; exact native35 members, one shared pool, original helper approval gate retained",
-      "checks": "author7 runtime models,39 prior build/pack reused, actual native small build/pack/extraction/helper readback and7 negatives; not actual full application startup"
+      "checks": "author7 runtime models,39 prior build/pack reused, actual native small build/pack/extraction/helper readback and7 negatives; not actual full application startup",
+      "reviewSHA256": "50b1789522445dee8f9045a241f0cf9ef4fd6083861b9233e7677f0436d880f8",
+      "new208ClosureConsumerSHA256": "d88e2fd45b4382d4784320dc39730b17e33f806bed7e7466f2e26f5b710050e9"
+    },
+    "historicalSettlement210": {
+      "state": "QB_PASS_FIXED_SOURCE_AND_MODELS_NOT_PG",
+      "commit": "b64934ceb5c758e8e9c7f90feae3f1e0ea97c68b",
+      "receiptSHA256": "0b6614744ecb21e34017621a1ad484d21dfe7c514c74f98cfb41cf6029b55d4e",
+      "reviewSHA256": "2b5cee9f7b02955ffdb6d0f3367719a26411ac5802c153a007cd82b1c53e4ad8",
+      "authorTests": 43,
+      "sourceSetSHA256": "052206804e0fe4e063792040147e7b18aa9d2e4f6535e27da0823a0b544cb7c0",
+      "sourcePinCount": 208,
+      "realPG": false
+    },
+    "historicalSettlement25": {
+      "owner": "D1 source / D3 private inputs / D2 independent facts / C exact binding",
+      "state": "HUMAN_APPROVED_SOURCE_IMPLEMENTATION_IN_PROGRESS",
+      "actualHumanApproval": {
+        "questionCall": "call_4adb0a8e95e14f649a12cdbf668f2ccb",
+        "item": 0,
+        "answer": "确认仅这25张按原状态和差额迁入"
+      },
+      "proposalSHA256": "885f7a7f31ed7cdfe1427ec0d915f32ec2ca65084fc9752014040a3fa3772dea",
+      "documents": 25,
+      "settlements": 27,
+      "evidenceExistingSourceSHA256": "d43799d0174c7d493016f4eabbfebc9b448ab0f5f385a821528fc3977633c0a0",
+      "privateDraftSHA256": "033d9bcb38e0bfe1a27691283fcca7858ea372d46323a0abaab3a000a206ddf0",
+      "independentSourceReviewSHA256": "f45898c4ee0d3ad11be88b2d66beebd80e456ea82986016ab9859053127f18c0",
+      "controllerExternalBindingSHA256": "442b7badaeee29e09125d61d5a5e556e10dada3c30b6f033a1aece897034a340",
+      "scope": "Exact original approved25 headers and complete27 settlements; no change to money, status, source hashes/batch; no new SAVE/APPROVE/restoration exemption",
+      "realPG": false
+    },
+    "completeApplicationBuild": {
+      "owner": "D2",
+      "integrationCommit": "2ff76009c845490611fcad6d6c91edccf99c723c",
+      "buildRootBranch": "codex/erp-0448z-build-root-20261105",
+      "buildRootCommit": "2bbc27152e96cfd903f0ea17455153806be05f02",
+      "buildRootTree": "484734913028559056ead3b6a9af8420c2fa4d65",
+      "previousRootCommit": "aca775575a9533ff0325495572099a10f9794ea8",
+      "rootBoundary": "Exact candidate0448 committed tree exported as application root; integration WIP checkout unchanged",
+      "state": "PASS_ACTUAL_FULL_BUILD_PACK_EXTRACTED_READBACK_ONLY",
+      "firstActualExitCode": 1,
+      "firstActualSeconds": 2.5413116249999996,
+      "boundaryFixReceiptSHA256": "94215c124c4c40618f04c9131e991c7515a05c54d492e4248695df1768b3b490",
+      "publicTargetConfigurationSHA256": "7f85bd1436681300e2d591eaf5810cf41dc95b128cb7432618b2039b20b578a8",
+      "notProofOfCapabilities": true,
+      "readinessFlagsNotEnabled": [
+        "productMediaReady",
+        "documentResponsibleReady",
+        "categoryOrderReady",
+        "legacy B07 historyRevision"
+      ],
+      "production": false,
+      "receiptSHA256": "75ed7f33fdc9626d591e2ac88b1c437ff93132e58a504e06aa207aa033f5119a",
+      "buildExitCode": 0,
+      "buildSeconds": 9.164387792,
+      "packExitCode": 0,
+      "packSeconds": 6.383900417,
+      "sourceInputs": 1685,
+      "buildFiles": 450,
+      "archiveMembers": 447,
+      "archiveSHA256": "341c14b80ebc1427a4b98617a1343d1dda124605bbbf5c635c7c7329db246bec",
+      "archiveBytes": 3286347,
+      "containsApproved25Successor": false,
+      "runtimeStarted": false,
+      "realPG": false,
+      "browser": false,
+      "boundaryReviewSHA256": "114e4f4c50da42af7313b36ad3e8b553c075c49960134891dfe4f07805a9ab18",
+      "sharedCssReviewSHA256": "a9d327fe56391ab230e6db74c9df0044b3bd1f559627ddf07a8aa95a56ef5011"
+    },
+    "sourceReconciliationActual": {
+      "owner": "D3",
+      "state": "FAILED_SQLITE_STORAGE_WRITE_NOT_RECONCILED",
+      "resultSHA256": "985b5c5114a9e8acd4aa91d4d924c3dc0102d449e575d031655e329480da00d5",
+      "diagnosisSHA256": "1ed8ecbcd915704bf956ff8d2f4366a0073b3492b2cd140c6cb9b190241d9efc",
+      "ledgerBytes": 728141242,
+      "ledgerEOFVerified": true,
+      "occurrencesRegistered": 503457,
+      "registryAndTargetRead": false,
+      "error": "SQLite storage write full while neededIdentityKeys; actual OS cause unknown. Runtime free space fell to400MiB; post-cleanup3.9GiB cannot prove failure-time free space. No low per-db code quota found.",
+      "next": "D3 exact storage internal repeated text reuse plus direct representative synthetic comparison; no real rerun before fixed source/review",
+      "files": [
+        "tools/unified-import/source-occurrence-storage.mjs",
+        "tests/source-occurrence-storage.test.mjs"
+      ],
+      "production": false,
+      "storageSuccessorCommit": "05579a94e6f656b71a0665d7a6d6d48466696c71",
+      "storageSuccessorState": "QB_AFFECTED_SOURCE_REVIEW_RUNNING_NOT_REAL_PACKAGE_PASS",
+      "storageAuthorReceiptSHA256": "5800fb6aba491c2585d5665697ca6fef46f08770d8f26e1ff5cc2978581d7e06",
+      "representativeStorageBeforeBytes": 315944960,
+      "representativeStorageAfterBytes": 152154112,
+      "realWholeRunRepeated": false
     }
   }
 }
