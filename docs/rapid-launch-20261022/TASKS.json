@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T13:20:19.274889+00:00",
+  "updatedAt": "2026-11-05T13:26:07.594062+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28471,11 +28471,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Approved25 fixed a10d8daa; prepares precise current-source PhaseB input/fixture seams read-only,22 leaves frozen",
-      "D2": "7393 exact212 full build/pack/readback PASS pending QB25; no actual runtime/PG",
-      "D3": "Storage source QA PASS adopted; actualsource run held for insufficient assured scratch; minimal32 fixed modules ready",
-      "T45": "Exact localOCI actual operation submitted once under newa661 plan; no PG window",
-      "QB": "91b localOCI PASS8d4e96c1 adopted; current a10 approved25 contract-only incremental review"
+      "D1": "25 frozen accepted; precise current-source PhaseB/25 synthetic fixture seams handoff in progress",
+      "D2": "7393/212 actual full build+pack/readback PASS adopted with25 source QA; idle pending next necessary fixed input",
+      "D3": "Full source-reconcile capacity held; prepares affected r3 preflight exact212 proof options and checks prior resource before actualrun",
+      "T45": "Actual OCI context PASS, locked apt exact5 downgrade rejected; prepares minimal method successor no retry/PG",
+      "QB": "25 a10 PASS adopted; next exact T45 dependency increment or synthetic fixture only when fixed"
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28662,14 +28662,20 @@
       "offlineBuildExitCode": 1,
       "offlineElapsedSeconds": 15.561,
       "nextMethodReceiptSHA256": "796e27607efa827dc1732dd3f226a4a6e190cfceb9b87dcd27c56788a62003e9",
-      "next": "Original T45 exact local OCI build-context successor; source/model then original QB increment before bounded real operation. No load replay/new upload/daemon or network change.",
+      "next": "Original T45 prepare precise5 downgrade method successor; preserve84 versions/base and oldrecipe; QB increment then accurate new isolated plan, no automatic replay",
       "localContextCommit": "91b08259dab3d51e511954a5992f90626568dfcc",
       "localContextReviewSHA256": "8d4e96c154eea85abf8835373a8c177997332a69fa2050d326abf13b15cd4b53",
       "localContextPlanSHA256": "a661d95e58f607a04135bfa01724e79736042fcd4a7b8f63fdd04edeab8e13ec",
       "localContextIssuanceSHA256": "2ed066cfba1f7c886fb1802af18e07886685d0fb450e4743550936a366527922",
       "localContextOperationId": "t45-f35-5b26-local-oci-context-20261105-01",
       "localContextExpiresAt": 1793886377837,
-      "localContextState": "ONCE_SUBMITTED_ACTUAL_RESULT_PENDING"
+      "localContextState": "ACTUAL_LOCAL_OCI_RESOLVED_BUILD_REACHED_APT_FAILED_EXACT5_DOWNGRADE",
+      "localContextResultSHA256": "f3b602024c069ef8ba5e81f5b165d58ce6883335445c4f54465f4ed7a846e786",
+      "localContextExitCode": 2,
+      "localContextElapsedSeconds": 42.444889809936285,
+      "FROMMetadataBlockerResolvedOnThisPath": true,
+      "APTLockedDependenciesAndLddPassed": false,
+      "derivedImageReceiptCreated": false
     },
     "packagingDecisions": {
       "owner": "D2",
@@ -28727,7 +28733,7 @@
       "buildRootTree": "69f4a2b4d936bedd3c1fbc005e8aba48122bf3eb",
       "previousRootCommit": "aca775575a9533ff0325495572099a10f9794ea8",
       "rootBoundary": "Exact candidate0448 committed tree exported as application root; integration WIP checkout unchanged",
-      "state": "PASS_ACTUAL_COMPLETE_BUILD_PACK_READBACK_PENDING_QB25_NON_RELEASE",
+      "state": "PASS_ACTUAL_COMPLETE_BUILD_PACK_READBACK_SOURCE_QB_ADOPTED_NOT_RUNTIME_OR_RELEASE",
       "firstActualExitCode": 1,
       "firstActualSeconds": 2.5413116249999996,
       "boundaryFixReceiptSHA256": "94215c124c4c40618f04c9131e991c7515a05c54d492e4248695df1768b3b490",
@@ -28761,7 +28767,7 @@
     },
     "sourceReconciliationActual": {
       "owner": "D3",
-      "state": "FAILED_SQLITE_STORAGE_WRITE_NOT_RECONCILED",
+      "state": "REAL_RECONCILIATION_INCOMPLETE_CAPACITY_HELD",
       "resultSHA256": "985b5c5114a9e8acd4aa91d4d924c3dc0102d449e575d031655e329480da00d5",
       "diagnosisSHA256": "1ed8ecbcd915704bf956ff8d2f4366a0073b3492b2cd140c6cb9b190241d9efc",
       "ledgerBytes": 728141242,
@@ -28769,7 +28775,7 @@
       "occurrencesRegistered": 503457,
       "registryAndTargetRead": false,
       "error": "SQLite storage write full while neededIdentityKeys; actual OS cause unknown. Runtime free space fell to400MiB; post-cleanup3.9GiB cannot prove failure-time free space. No low per-db code quota found.",
-      "next": "Resource condition held; no real ledger/target reread; other branches continue",
+      "next": "Await sufficient space for existing one bounded fixed055 full-source run; current a10 stream preflight resource/readiness may independently proceed only if verified adequate",
       "files": [
         "tools/unified-import/source-occurrence-storage.mjs",
         "tests/source-occurrence-storage.test.mjs"
@@ -28787,7 +28793,11 @@
       "conservativeTargetExtrapolationBytes": 3088302442,
       "additionalOverheadUnknown": true,
       "fixedDependencyFiles": 32,
-      "fixedDependencyBytes": 355623
+      "fixedDependencyBytes": 355623,
+      "proposedStartBudgetBytes": 3831725571,
+      "scratchBudgetBytes": 3294854658,
+      "controllerAcceptedStopFreeBytes": 536870912,
+      "budgetIsMeasuredPeak": false
     },
     "settlement25AcceptedImplementation": {
       "commit": "a10d8daa06988abe63de28108473098adf19fff7",
@@ -28802,9 +28812,10 @@
         "typecheck": 0,
         "build": 0
       },
-      "state": "SOURCE_FIXED_PENDING_QB_NO_PG",
+      "state": "QB_PASS_FIXED_SOURCE_AND_TARGETED_MODELS_ONLY_NOT_PG",
       "businessScope": "Only original25 headers/27 complete settlements as approved human call4adb item0; no ordinary SAVE/APPROVE or source batch change",
-      "realPG": false
+      "realPG": false,
+      "reviewSHA256": "1e3e6f471863babf3abf2144adc9c7c3d2e229c556d14e9b31041ecb0ddbddf1"
     }
   }
 }

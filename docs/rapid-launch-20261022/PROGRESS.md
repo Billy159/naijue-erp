@@ -1086,3 +1086,10 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 原QB storage055定向PASS4d44548d已采用；原D3实查临时卷2.824GiB低于保守2.876GiB且额外开销未知，未启动真实核账。32文件355623字节固定闭包就绪，资源回执b6b7a6bc，无数据复制或删除。不能据合成空间改善称全量通过。
 - 运维localOCI两叶91b08259原QB定向PASS8d4e96c1，C据原真人同类隔离预授权在执行端外绑定新六键a661d95e/期限1793886377837，原T45已一次提交新op local-oci-context-20261105-01。原load成功和失败现场保留，无重放load/pull/上传，PG20分钟未启，实际结果待回。
 - PhaseB旧5b26输入与当前212pins不能混称；原D1只读列准确source/archive/fixture接缝，仍由原T45唯一执行。真实25原件不传服务器，只使用对应合成正反例。
+
+
+### 25独立源码验收通过、隔离构建实际推进至锁包降级拒绝
+- 原QB对a10d8daa的25合同增量PASS，回执1e3e6f47；22叶/212pins及完整目录四routine差异匹配，其余ACL和普通SAVE/APPROVE/恢复规则保持。C直接采用，不重复技术验收。7393完整构建产物现可称源码验收+实际build/pack通过，仍非PG/业务/上线。
+- 原T45 localOCI实际42.445秒终态exit2，回执f3b60202。准确本地镜像context已实际resolve/extract，原远程FROM阻塞在该路径解决；进入原install-locked.sh和APT更新，随后5项base版本高于原锁导致降级保护拒绝（lzma、pcre、ssl/provider、tzdata）。不把APT update正常接受当独立gpg或完整安装通过；原84deb下载/安装/ldd尚未通过，无派生镜像完成凭证或PG。
+- 原T45按C准确选择准备仅这5项base→原锁的受限方法后继，锁版本/base不变，原recipe/intent/日志保留；源码固定+原QB增量后沿同类预授权另绑新操作，不改flag重放旧key。
+- 全源核账当前仍待容量。C采用3,831,725,571字节排程预算及512MiB停止余量，它是保守预留并非实测峰值或虚构通过门槛。D3只对已就绪的r3受影响预检准备准确212/25外部参数并核资源，不能把来源核账未完成写成通过。
