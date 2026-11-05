@@ -1,0 +1,150 @@
+{
+  "status": "PASS_SCOPED_SOURCE_DIRECT_TESTS_AND_READONLY_EXISTING_PREFIX_NOT_WRITE_EXECUTION",
+  "recordedAtUTC": "2026-11-05T17:18:45.573163+00:00",
+  "parentWrapperSHA256": "7b239be925bd29783f264a4bf903770cb07505011209af13724fa12125862a78",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-ordinary-r4/fresh35-container-successor.py",
+      "sha256": "3940464664de13f7627ce822c9618bf05b6fafc43890544324a87914ade62067",
+      "bytes": 33123
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-ordinary-r4/test_fresh35_container_successor.py",
+      "sha256": "0e5efe95ff92130162840414ab37f839ebcc7a605014de58a0c2078e276df372",
+      "bytes": 27028
+    }
+  ],
+  "changedExistingFunctions": [
+    "verify_materialized_application",
+    "main"
+  ],
+  "newFunctions": [
+    "read_application_member",
+    "materialize_remaining",
+    "materialize_remaining_application"
+  ],
+  "privatePositiveReadFileUnchanged": true,
+  "originalFreshMaterializeUnchanged": true,
+  "allConstantsAndTargetRootsUnchanged": true,
+  "tests": {
+    "red": "Registered zero-byte member final verification failed original BOUNDED_REGULAR_FILE_REQUIRED before fix",
+    "greenTests": 11,
+    "exitCode": 0,
+    "elapsedSeconds": 0.094,
+    "scope": [
+      "Registered0B final verification consumes exact new reader",
+      "Nonzero masquerade/wrongmode/hardlink/symlink/path replacement/unregistered/private refusal",
+      "Missing-only continuation preserves existing inode/bytes and marker, final verifier consumed",
+      "Content/mode/hardlink/extra file/extra directory/wrong marker reject before any write",
+      "Exact authority and empty capacity inode reused; used profile refused",
+      "Missing-file race remains O_EXCL and unknown bytes never overwritten",
+      "Expired preparation refuses before external command"
+    ]
+  },
+  "readonlyProof": {
+    "jobId": "t45-f35-5d70-partial-emptyfix-readonly-20261106-01",
+    "checkedAtUTC": "2026-11-05T17:14:20.383373+00:00",
+    "writesToApplication": 0,
+    "hashesRead": 3878,
+    "timingsSeconds": {
+      "fixedInputValidation": 0.107761,
+      "enumerationAndStat": 0.425031,
+      "protectedReadAndSHA256": 1.226292
+    },
+    "expectedDeployFiles": 7292,
+    "expectedDeployBytes": 236505291,
+    "unexpectedCount": 0,
+    "unexpectedFirst": [],
+    "specialCount": 0,
+    "specialFirst": [],
+    "lastFileByMtime": {
+      "path": "node_modules/@fastify/ajv-compiler/node_modules/ajv/node_modules/fast-uri/package.json",
+      "actualBytes": 1983,
+      "expectedBytes": 1983,
+      "actualSHA256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+      "expectedSHA256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+      "actualMode": "0o644",
+      "expectedMode": "0o644",
+      "uid": 0,
+      "nlink": 1,
+      "matched": true
+    },
+    "matchedFiles": 3878,
+    "matchedBytes": 190151231,
+    "mismatchCount": 0,
+    "mismatchFirst": [],
+    "missingDeployFiles": 3414,
+    "missingDeployBytes": 46354060,
+    "existingRegularFiles": 3878,
+    "existingFileMtimeRangeNs": {
+      "min": 1793898014465087445,
+      "max": 1793898192076270099
+    },
+    "fsyncSyscallTimingEvidence": false,
+    "metadataRemaining": [
+      "metadata/deployment-manifest.json",
+      "metadata/source-descriptor.json",
+      "metadata/base-image-registry-result.json",
+      "metadata/debian-runtime-dependency-lock.json"
+    ],
+    "status": "EXACT_EXISTING_PREFIX_CONTENT_MODE_CONFIRMED_MISSING_REPORTED_ONLY",
+    "elapsedSeconds": 1.764773
+  },
+  "readonlyJob": {
+    "jobId": "t45-f35-5d70-partial-emptyfix-readonly-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-441821801d36",
+    "atUTC": "2026-11-05T17:14:20.332902+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 1.820741642266512,
+    "exports": [
+      "partial-closure-readonly.json"
+    ],
+    "finishedAtUTC": "2026-11-05T17:14:22.172988+00:00"
+  },
+  "remaining": {
+    "deployFiles": 3414,
+    "deployBytes": 46354060,
+    "archiveMetadataFiles": 4,
+    "fixedAuthorityAndProfileFiles": 2,
+    "remainingFileCreates": 3420,
+    "requiredFixedDirectories": [
+      "authority0711",
+      "state0755",
+      "state/capacity0700"
+    ]
+  },
+  "timeEstimate": {
+    "label": "ESTIMATED_NOT_MEASURED_REMAINING_WRITE",
+    "observedExisting3878MtimeSpanSeconds": 177.611182654,
+    "pointEstimateFor3414MissingDeploySeconds": 156.4,
+    "includesFinalizationOrVariability": false,
+    "fsyncSyscallMeasured": false,
+    "originalRemainingPreparationDeadlineMs": 1793899386630,
+    "cannotExtendOldWindow": true,
+    "nextExactJobTimeout": "C must bind to actual remaining valid window and allow measured per-file-write variation; no old180s replay"
+  },
+  "newPhase": "materialize-remaining",
+  "scope": "Same ROOT/receipt/full archive; validate all current file content/mode/link/path and dirs before any write; missing only original new_file O_EXCL+fsync; exact authority/profile only; final original verifier uses new ordinary member reader; new phase rejects unknown start state without invoking existing container recovery/stop paths.",
+  "remoteWriteContinuationExecuted": false,
+  "PGActions": 0,
+  "productionOrRealDataOperations": 0,
+  "oldFailedJobsPreserved": true,
+  "stagedArchiveReused": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+  "sourceSet": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+  "requestedModelEffort": "gpt-6.1-sol/high",
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "QBIncrementScope": [
+    "Two r4 leaves vs retained r3 wrapper/r2 directtests; use reader-only snapshot4a96 for actual readonly receipt",
+    "Exact0B path/fd/owner/nlink/mode and unchanged private reader",
+    "Entire existing partial tree refuses unknown/mismatched state before missing O_EXCL writes",
+    "Missing-only phase cannot enter Docker/PG recovery/stop on refusal; expiry and original final verifier retained",
+    "No complete app build/sourceSet/native/PG/production revalidation required or claimed"
+  ]
+}

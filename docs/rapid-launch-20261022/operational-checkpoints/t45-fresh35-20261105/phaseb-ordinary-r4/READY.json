@@ -1,0 +1,19 @@
+{
+  "status": "READY_FOR_C_FREEZE_AND_ORIGINAL_QB_SCOPED_REVIEW_NOT_EXECUTION",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-ordinary-r4/fresh35-container-successor.py",
+      "sha256": "3940464664de13f7627ce822c9618bf05b6fafc43890544324a87914ade62067",
+      "bytes": 33123
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-ordinary-r4/test_fresh35_container_successor.py",
+      "sha256": "0e5efe95ff92130162840414ab37f839ebcc7a605014de58a0c2078e276df372",
+      "bytes": 27028
+    }
+  ],
+  "resultSHA256": "27e0e960b85fb3798291f3e5e163441dad30f511ce063093614c307335b86376",
+  "parentRevision": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-ordinary-binding-01",
+  "noExternalCPlanOrApprovalCreated": true,
+  "sourceOnlyWriteContinuation": true
+}
