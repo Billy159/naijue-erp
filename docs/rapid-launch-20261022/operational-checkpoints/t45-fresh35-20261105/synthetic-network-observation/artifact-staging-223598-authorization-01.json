@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-223598-ordinary-20261106-01",
+  "sourceSetSha256": "b3d8e62ca216a710855145082e9ea69263823e1161dcbf3387a685a4219bd951",
+  "archiveSha256": "f3126f335c8d2afcd9d7975460357c3e3b790724d80c0fe2436dcaf30e52ed56",
+  "archiveBytes": 83663631,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-223598-ordinary-20261106-01",
+  "startsAt": 1793905184717,
+  "expiresAt": 1793906984717,
+  "decisionReference": "C 01a161ca-f5d5-7de1-a8ad-1cdd43c96915 exact technical decision under direct human ERP delegation until 2026-11-06T12:00:00+08:00 and original same-kind synthetic authorization. Transfer/preparation of fixed223598 ordinary artifact only, new r2 root/container; retain old authorization bytes and failure scenes via original CAS. Original 40s transfer unchanged; preparation bounded30min, single materialization900s; no PG start/install/import/REAL/production by this leaf. QB source review remains separate.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

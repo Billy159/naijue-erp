@@ -1,0 +1,83 @@
+{
+  "status": "ORDINARY_ALL_MEMBER_BYTES_HASH_MODES_STREAM_READBACK_PASS_PENDING_C_QB_T45_NEW_WINDOW",
+  "sourceCommit": "223598cb91a18f48ef0fdfe88eee879bdcaf2173",
+  "buildId": "erp-223598cb91a1-full-20261106",
+  "sourceSetSha256": "b3d8e62ca216a710855145082e9ea69263823e1161dcbf3387a685a4219bd951",
+  "currentSourcePins": 212,
+  "archive": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-223598cb/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83663631,
+    "sha256": "f3126f335c8d2afcd9d7975460357c3e3b790724d80c0fe2436dcaf30e52ed56",
+    "regularMembers": 7296,
+    "deployMembers": 7292,
+    "metadataMembers": 4
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-223598cb/ordinary/DEPLOYMENT-MANIFEST.json",
+    "bytes": 1084127,
+    "sha256": "9fbe885be22279772a377bcd4ff1f50edd0e2f05c611e8bfb82a6a1233462e5d",
+    "format": "FRESH35_ISOLATED_DEPLOYMENT_V1",
+    "selfExcluded": true
+  },
+  "inventory": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-223598cb/ordinary/DEPLOYMENT-INVENTORY.json",
+    "sha256": "58cefa27cb3ecd76787072b7dc84d55235238986eee71635131f6683a1b45ab5"
+  },
+  "sourceDescriptorSha256": "0a35755a604bad1c8541ca743a3b407a39a30b657a052c8d0dab8df22fd27469",
+  "runtimeIssuance": {
+    "member": "deploy/runtime/fresh35-ordinary-runtime-v1.json",
+    "sha256": "847ee1d376b87101d23a117e2ed3ac58cd1f60f98eec4cfb2115f6ad067a87e3",
+    "onlyBuildFieldsFilled": true,
+    "postgresPassword": null,
+    "targetRemainsOriginalSynthetic": true
+  },
+  "knownSizeReadback": {
+    "node": {
+      "path": "runtime/node/bin/node",
+      "bytes": 126595440,
+      "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+      "mode": 493
+    },
+    "knownPriorManifestBytes": 1084128,
+    "currentManifestBytes": 1084127,
+    "withinPriorManifestSize": true,
+    "zeroByteMembers": 8,
+    "zeroBytePaths": [
+      "node_modules/@fastify/ajv-compiler/test/.gitkeep",
+      "node_modules/fast-json-stringify/test/fixtures/.keep",
+      "node_modules/fastify/test/logger/tap-parallel-not-ok",
+      "node_modules/pino/.nojekyll",
+      "runtime/npm/node_modules/node-gyp/gyp/pylib/gyp/generator/__init__.py",
+      "runtime/npm/node_modules/node-gyp/gyp/pylib/packaging/py.typed",
+      "runtime/npm/node_modules/smart-buffer/docs/ROADMAP.md",
+      "web/chunks/chunk-DA7LQDMN.js"
+    ],
+    "existingBoundaryTestsReusedNotRepeated": true,
+    "separateT45WrapperExactBindingRequired": true
+  },
+  "collector": {
+    "path": "scripts/ops/capacity-live-statfs.mjs",
+    "bytes": 13339,
+    "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+    "mode": 493
+  },
+  "reusedCarrier": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-768dd6a5/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83659664,
+    "sha256": "7a1509290999d959c5d1029a67596436db0807771f273c9278d385bf6e0ed717",
+    "wholeCarrierHashAndAllSelectedMemberHashesModesVerified": true,
+    "scope": "Only6668 original tools/refs/Linux files and2 immutable metadata; new raw source/web/runtime/descriptor/manifest not copied"
+  },
+  "fullMemberBytesAndModesVerified": true,
+  "elapsedSeconds": 17.122407,
+  "noSourceWipServerDockerPgInstallOrSecrets": true,
+  "unverified": [
+    "Original QB independent incremental acceptance, not repeated by D2",
+    "T45 exact operational wrapper and fresh window binding",
+    "Actual Linux runtime loading and OS mounts/permissions/capacity/authentication",
+    "Any PG install/import/business operations and readback",
+    "REAL exact target/record/service lease/credentials/batch authority",
+    "Production deployment"
+  ],
+  "notes": "223598 fixed source only; all old packages and failure scenes retained. Separate production release passed original build/pack; this archive uses original deploy/+exact4metadata format. No synthetic or PG acceptance implied."
+}

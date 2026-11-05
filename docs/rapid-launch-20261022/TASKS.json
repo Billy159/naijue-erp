@@ -29389,7 +29389,7 @@
       "state": "ACTIVE"
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "STABLE_ELEVEN_SOURCE_LEAVES_FROZEN_PENDING_QB_AND_REAL_UID_PG",
+      "state": "FIXED_SOURCE_BUILDING_QB_NEXT_NO_NEW_PG_YET",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29428,10 +29428,27 @@
         "sha256": "9c33aca96400144f496e066fb04d9ae7bff9b8aa22b93e2ffc855a2ef1d46888",
         "constantsBound": false,
         "modelOnly": true
-      }
+      },
+      "integrationCommit": "216b8f2b48ff1fa03a915a618eb71d3c302ecc45",
+      "buildRootCommit": "223598cb91a18f48ef0fdfe88eee879bdcaf2173",
+      "buildRootTree": "18451114459b40fdd88efca706bc6e2fc0c258ba",
+      "githubRemoteReadback": true,
+      "build": "COMPLETE_FULL_BUILD_PACK_AND_7296_MEMBER_READBACK_PASS_NOT_PG",
+      "buildResultSHA256": "6c74c69e50f1f4c859c7a48965a4f35b835a7b205814644032a31ed3565044bd",
+      "sourceSetSHA256": "b3d8e62ca216a710855145082e9ea69263823e1161dcbf3387a685a4219bd951",
+      "archiveSHA256": "f3126f335c8d2afcd9d7975460357c3e3b790724d80c0fe2436dcaf30e52ed56",
+      "archiveBytes": 83663631,
+      "manifestSHA256": "9fbe885be22279772a377bcd4ff1f50edd0e2f05c611e8bfb82a6a1233462e5d",
+      "stageAuthorization": {
+        "sha256": "3b921698595de56d9efd0a93268cee0433ec01884e1596642eb532958a693349",
+        "startsAt": 1793905184717,
+        "expiresAt": 1793906984717,
+        "scope": "Exact223598 transfer/prep only; original CAS/40s channel; newr2 ROOT;900s materialization/30min; noPG"
+      },
+      "actualUidProbe": "Original T45 bounded actualUID read/watch, native catalog proof epoch and metadata change rejection; no extraPG/grant/real data. Same cap invalidation not implied."
     },
     "productionReleaseCompatibilityContinuation": {
-      "state": "C_SOURCE_CONTRACT_APPROVED_IMPLEMENTING_NOT_DEPLOYMENT",
+      "state": "QB_IDENTIFIED_EXACT_V2_RUNTIME_RECORD_REFERENCE_MOUNTS_MISSING_T45_REPAIRING",
       "owner": "T45",
       "soleWriterFiles": [
         "candidate0448/scripts/release/deploy-candidate.py",
@@ -29448,7 +29465,12 @@
         "No production target/service/permissions changed",
         "No manual approval marker/fingerprint bypass",
         "No parallel writer or hot replacement of5d/f87/768"
-      ]
+      ],
+      "originalFrozenHelperSHA256": "bc713a0bbabd43d1c404ab56c9d71f5c7760461ce95886bd2c582e02ffffc9ed",
+      "mountRepairDecision": "C under direct human noon delegation: readonly fixed record plus INDEX and nine original hash-bound reference single leaves only; no generic directory/plan fields/DB grants; final helper review then original caller pin procedure",
+      "actualProductionExecuted": false,
+      "QBReceiptSHA256": "8809ed34320dbfe7fac4b82aba3b64950f23ff14425006402e7c6663015e4b05",
+      "QBState": "NEED_FIX_ONE_P1_MISSING_NATIVE_RECORD_REFERENCE_MOUNTS_OTHER10_GROUPS_PASS_SOURCE_ONLY"
     },
     "writerTransferHistory": [
       {

@@ -1,0 +1,214 @@
+{
+  "task_id": "QB-PRODUCTION-V2-RELEASE-ADAPTATION-20261106",
+  "verdict": "NEED_FIX",
+  "snapshot_manifest_sha256": "74f9e74ecc5bf5634163261441ed26ad2a8cfd0116c2358fed256cb2f409aba7",
+  "ready_sha256": "4e62d93ebc819e1d3ebe1ddd00b62fdf3837a30f616ad4f35d41d6e3bbac617a",
+  "owner_result_sha256": "b8c9d1e11d58d19225805f2cf01436492de7fdcce3c43a3f3dee5e7f1ba21524",
+  "status": "FIXED_HASH_SNAPSHOT_NOT_COMMITTED_OR_MERGED",
+  "baseHead": "f5c0824664778d1b5c5e30b1ba68156c6420c90c",
+  "source_pins": [
+    {
+      "path": "config/release-contract.json",
+      "bytes": 7371,
+      "sha256": "bea9c9c79025f0f9def215fd72c9c71d6003ea4165ead1a9ecebf8c8bb289871",
+      "parentSha256": "dadc2c376c70ff4ce8d950d1537c542fde8b58910af9f6921a68d2667de1b6d0",
+      "changed": true
+    },
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "bytes": 185794,
+      "sha256": "bc713a0bbabd43d1c404ab56c9d71f5c7760461ce95886bd2c582e02ffffc9ed",
+      "parentSha256": "74dfe67407ad6159118de573c82e4fb3e30caf8798312aa5eb4585a73aed4ae4",
+      "changed": true
+    },
+    {
+      "path": "scripts/release/generate-release-contract.mjs",
+      "bytes": 11120,
+      "sha256": "56c56bc77d7d8b3f560aa0ff3affac53864345e31b75cca7b37a035b488dde32",
+      "parentSha256": "d57dabddbc5b3adb6121d222743f36a780facf01ab45831ba0f339a215fc2553",
+      "changed": true
+    },
+    {
+      "path": "scripts/release/test_capacity_launch_wiring.py",
+      "bytes": 79301,
+      "sha256": "e49fa69e5878875701a61d13acbe2785e559378f95fb381a246caa24742af3cb",
+      "parentSha256": "770f76770cf0990dc32650f98fc675605059ad5b3c944093a3191340120490a2",
+      "changed": true
+    },
+    {
+      "path": "scripts/release/release-file-contract.test.mjs",
+      "bytes": 6305,
+      "sha256": "989258ecaedfafdd799fe3f6aa587db93a484953fc25b643cc65fc66673e72cc",
+      "parentSha256": "e5032622b1963f5e11b45b6efeced9f79460a37e8c12db667e2f893988915da1",
+      "changed": true
+    },
+    {
+      "path": "scripts/release/boot-entry.py",
+      "bytes": 49678,
+      "sha256": "ad6c207d5320fb20f925d1cef98979b2024d317d3e67fc6fc5e0a9ed17a37d14",
+      "parentSha256": "ad6c207d5320fb20f925d1cef98979b2024d317d3e67fc6fc5e0a9ed17a37d14",
+      "changed": false
+    },
+    {
+      "path": "scripts/release/rollback-candidate.py",
+      "bytes": 7665,
+      "sha256": "9f03ce1d1b2b9820e7aaa21d57dae4bf83d7b406324e9bad649007cb102a7872",
+      "parentSha256": "9f03ce1d1b2b9820e7aaa21d57dae4bf83d7b406324e9bad649007cb102a7872",
+      "changed": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "F01",
+      "priority": "P1",
+      "title": "Production V2 is accepted without carrying mandatory protected record/reference tree into app container",
+      "path": "scripts/release/deploy-candidate.py",
+      "line": 740,
+      "related_lines": [
+        1228,
+        1370
+      ],
+      "trigger": "A fully accepted production V2 record with ordinary.referenceDirectory outside /app and an ordinary runtime image without installation-specific files.",
+      "evidence": "Actual original create_capacity_gate_app/runtime_mount_arguments emits payload/runtime/capacity/media/spool/gate bind mounts only. Neither fixed /etc/naijue-erp/fresh35-combined-installation-v1.json nor bound ordinary.referenceDirectory is visible through any mount; no image binding requires them. See visibility-results.json.",
+      "consumer_requirement": "Approved native ordinary admission calls loadFresh35CombinedRecordEnvelope before DB connect and then assertTrustedRootTree/resolveFresh35ReferenceInputPaths on target.ordinary.referenceDirectory. Host-side runtime35_record validation does not place either artifact into the container.",
+      "impact": "The newly allowed V2 production path cannot start on a normal clean runtime image; it fails protected record/source admission before business. Existing runtime fixture patches host record reading and does not cover this boundary.",
+      "minimal_fix": "Original T45 owner adds exact protected record single-leaf read-only bind and target-bound INDEX/nine whitelisted reference single-leaf read-only binds. Preserve root/identity/hash/trusted-parent/ordinary-UID readability guards; no blanket-directory mount, extra generic plan field, loader relaxation, permission change or credentials in public payload.",
+      "minimal_recheck": "Only changed carrier/validator leaves and necessary direct tests; actual create argv includes exact readonly mounts, substitutions/symlink/writable/UID visibility rejected, V1 and approval gate still refused. No server/PG/build needed for source recheck."
+    }
+  ],
+  "independent_checks": {
+    "passed_groups": 10,
+    "confirmed_findings": 1,
+    "python": [
+      {
+        "name": "historical exact V2 descriptor accepted without opening installation authority",
+        "state": "PASS"
+      },
+      {
+        "name": "twenty self-rebound semantic substitutions and mixed record-target versions refused",
+        "state": "PASS"
+      },
+      {
+        "name": "ordinary endpoint positive; eight profile/endpoint/physical/capacity/media substitutions refused",
+        "state": "PASS"
+      },
+      {
+        "name": "self-consistent synthetic V1 still refuses production bridge after all other runtime checks",
+        "state": "PASS"
+      },
+      {
+        "name": "ten freshly rehashed backup/current-config/media/restore bindings remain mandatory",
+        "state": "PASS"
+      },
+      {
+        "name": "installed catalog keeps original install identity; source/program/catalog/receipt substitution refused",
+        "state": "PASS"
+      },
+      {
+        "name": "schema19-only numeric parsing fix retains native SQL closure rejection",
+        "state": "PASS"
+      }
+    ],
+    "generator": [
+      {
+        "name": "Exact snapshot generated block and original JSON byte/hash anchor match",
+        "state": "PASS"
+      },
+      {
+        "name": "Five missing/aliased/substituted production profile and invented approval variants refused",
+        "state": "PASS"
+      },
+      {
+        "name": "Actual fixed generator --check refuses unregistered helper; both old callers keep exact approval pin and no writes",
+        "state": "PASS"
+      }
+    ],
+    "visibility": {
+      "state": "CONFIRMED_MISSING_RUNTIME_BIND_MOUNTS",
+      "required_native_loader_paths": [
+        "/etc/naijue-erp/fresh35-combined-installation-v1.json",
+        "/srv/naijue-erp/new35-references"
+      ],
+      "actual_mounts": [
+        {
+          "type": "bind",
+          "src": "/private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/tmpkatrykpm/payload",
+          "dst": "/app"
+        },
+        {
+          "type": "bind",
+          "src": "/private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/tmpkatrykpm/runtime.json",
+          "dst": "/run/naijue-rewrite/runtime.json"
+        },
+        {
+          "type": "bind",
+          "src": "/private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/tmpkatrykpm/collector.mjs",
+          "dst": "/run/naijue-rewrite/capacity/capacity-live-statfs.mjs"
+        },
+        {
+          "type": "bind",
+          "src": "/private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/tmpkatrykpm/profile.json",
+          "dst": "/run/naijue-rewrite/capacity/owner-profile.json"
+        },
+        {
+          "type": "bind",
+          "src": "/private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/tmpkatrykpm/media",
+          "dst": "/run/naijue-rewrite/media/images"
+        },
+        {
+          "type": "bind",
+          "src": "/private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/tmpkatrykpm/spool",
+          "dst": "/private/inventory-exports"
+        },
+        {
+          "type": "bind",
+          "src": "/private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/tmpkatrykpm/gate.fifo",
+          "dst": "/run/naijue-rewrite/capacity-gate"
+        }
+      ],
+      "missing_paths": [
+        "/etc/naijue-erp/fresh35-combined-installation-v1.json",
+        "/srv/naijue-erp/new35-references"
+      ],
+      "scope": "Actual fixed create_capacity_gate_app and runtime_mount_arguments with fake Docker recorder, existing test fixture. No Docker/PG/server. Image/labels/gate identity modeled; no alternative mounted root covers either required path.",
+      "native_loader_source": "base f5c0824664778d1b5c5e30b1ba68156c6420c90c tools/unified-import/fresh35-host-session.mjs:231-245 and scripts/release/unified-install/fresh35-combined-record-v1.mjs:12"
+    },
+    "scope": "Fixed snapshot only. Existing explicit fixture constructors reused with independent assertions; local reference/capacity files and fake Docker argument recorder. No server/Docker/PG."
+  },
+  "native_consumer_reference": [
+    {
+      "commit": "f5c0824664778d1b5c5e30b1ba68156c6420c90c",
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "efab525579d44c593cf3b9f74e4654f9f15494c958543eaacef829e413506890"
+    },
+    {
+      "commit": "f5c0824664778d1b5c5e30b1ba68156c6420c90c",
+      "path": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "sha256": "afcd0af1beafecd35a6eb6d8dd6a7689a7733d857ca80819023d38c84d20e7b6"
+    }
+  ],
+  "preserved": [
+    "Exact V2 record/target/purpose/ordinary/profile pairing; self-rebound invalid identity/physical/window/endpoint/lifetime rejected.",
+    "Historical descriptor is provenance only and does not reopen install/import authority.",
+    "Old self-consistent synthetic V1 still refuses production bridge.",
+    "Ordinary endpoint selected for runtime/capacity while committed catalog stays original install endpoint; physical OID/postmaster/capacity/source/program/catalog/media/restore bindings retained.",
+    "Schema19 numeric parsing confined to legacy branch while native SQL closure remains checked.",
+    "Config and generated block exactly match; five invented/aliased production facts refused. Both boot and rollback byte-identical to parent and retain9394f7 approval. Actual snapshot generator --check exits1 DEPLOYMENT_HELPER_REAPPROVAL_REQUIRED without writes."
+  ],
+  "owner_tests": "Adopt pinned owner RESULT17Python+5Node scoped PASS receipts. No raw owner logs included here; QB did not rerun those suites.",
+  "harness_note": "Independent catalog mutation initially replaced metadata reference without updating required newDatabaseReceipt alias, causing earlier correct refusal. Harness alias corrected, initial log retained; first5 passing groups reused, remaining2 completed. No source edit.",
+  "unverified": [
+    "Actual protected record/reference mounts and ordinary UID read/watch capability; missing carrier is F01.",
+    "Real PG/server/deployment/build/full closure, actual ordinary startup/business/capacity/restore.",
+    "No final helper registration/reapproval; generator intentionally remains blocked.",
+    "No commit/merge of this snapshot claimed."
+  ],
+  "model_requested": "gpt-6.1-sol/high",
+  "actual_model": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "source_changed": false,
+  "server_access": false,
+  "release_approval_changed": false,
+  "next": "Return F01 to C/T45 and recheck only exact affected successor. Continue independent next ready network source packet separately; do not mix this release snapshot into synthetic candidate.",
+  "coordination_confirmation": "C/T45 independently confirmed same-source lack of hidden mounts; C assigned precise record+INDEX/nine-reference leaf-only successor. Original five leaves retained; QB next reviews only affected successor mount/argv."
+}
