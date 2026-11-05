@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T11:48:06.648155+00:00",
+    "at": "2026-11-05T11:52:49.262246+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28468,20 +28468,20 @@
     "currentParallelQueue": {
       "D1": "Alignment five leaves frozen24a454; production V2 original modules implementation continues",
       "D2": "Final five-document source equivalence review completed and adopted; runtime seam awaits D1 frozen API",
-      "D3": "External alignment binding delivered; continue final manifest/reconciliation/ledger and actual offline preflight",
-      "T45": "Consume C external existing-schema staging authority/plan through original root path; upload/prepare exact image; real results pending",
+      "D3": "Preserve actual preflight process; locate source_files physical boundary and settlement mismatches, no source/amount relaxation",
+      "T45": "Original key actual READY; unique phaseA job live, DB window not started",
       "QB": "Fixed operations2 PASS adopted, no repeated review"
     },
     "actualExecution": {
       "newClusterCreated": false,
       "newDatabaseInstalled": false,
       "realDataImported": false,
-      "artifactTransferred": false,
+      "artifactTransferred": true,
       "productionChanged": false
     },
     "privateReadyRows": {
       "owner": "D3",
-      "state": "D3_51_FINAL_MANIFEST_LEDGER_PREFLIGHT_IN_PROGRESS",
+      "state": "ACTUAL_OFFLINE_PREFLIGHT_IN_PROGRESS_FAILURES_FOUND",
       "receiptSHA256": "0279ded0e682ba295f2ef7b21bb3b2f771dba965aec54d5ec2866a76bfbdbd28",
       "tables": 26,
       "rows": 608916,
@@ -28503,7 +28503,12 @@
       "sourcePins": 36,
       "manifestFinal": false,
       "alignmentIndependentReviewSHA256": "4123fe0b1a362a479b57d6ac4de54197702934b3870284ba4fd7a6e67aa20639",
-      "alignmentExternalBindingSHA256": "d74cfae83d8349e27be9e74dccf379a50c61fd3aa08b7813f529c9634eb23d0f"
+      "alignmentExternalBindingSHA256": "d74cfae83d8349e27be9e74dccf379a50c61fd3aa08b7813f529c9634eb23d0f",
+      "preflightPassed": false,
+      "knownFailures": {
+        "UNDECLARED_PACKAGE_FILE": 36,
+        "SETTLEMENT_MISMATCH": "at least235 heads, final dedup count pending; not covered by six approved line-amount cases"
+      }
     },
     "productionInstallProofProposal": {
       "owner": "D1",
@@ -28565,10 +28570,10 @@
       "versionConstraintsChecked": 201,
       "metadataUnsatisfiedConstraints": 0,
       "signedReleaseVerified": false,
-      "state": "ACTUAL_ROOT_PREFLIGHT_PASS_EXTERNAL_STAGING_AUTHORITY_ISSUED",
+      "state": "ACTUAL_ARTIFACT_READY_PHASE_A_RUNNING",
       "scope": "Original T45 provision successor only in its original fresh35-preparation output directory; no S application edits or server calls",
       "actualImagePullBuildOrContainerCreated": false,
-      "actualTransmission": false,
+      "actualTransmission": true,
       "actualPG": false,
       "authorOfflineTestsPass": 17,
       "operationsCommit": "1d42a167e8f329df8f1ee13bbeb7c15e267f49dc",
@@ -28585,7 +28590,10 @@
       "stagingAuthoritySHA256": "04ef37b35ffc358cf7fbea564fd3cc31dca2ab971cf211b9bc2e3db0f8038bec",
       "operationsPlanSHA256": "1df94c171bc0153dcc7fba01f03b8c0426a69a6b97936e26b351411cc389b0c2",
       "controllerIssuanceReceiptSHA256": "220d2dadd249a008d9c62958497319d37e30348f91e145e15e2d64c7a789591c",
-      "databaseWindowStarted": false
+      "databaseWindowStarted": false,
+      "artifactKey": "t45-f35-5b26-ordinary-20261105-01",
+      "artifactStatus": "READY",
+      "phaseAJob": "t45-f35-5b26-prepare-20261105-01"
     }
   }
 }

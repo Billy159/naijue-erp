@@ -1338,3 +1338,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - T45原通道实际root只读job t45-fresh35-preflight-20261105-01退出0：新root不存在、同名容器为空、固定镜像尚未存在；旧任务保留不重放，本批无结果未知请求。尚无upload/pull/build/PG，不能称环境已通过。
 - C依据实际human本批批准，在执行客户端外按原T45_ORDINARY_ARTIFACT_STAGING_V1生成准确传输载体04ef37b3及原六键plan1df94c17，实际当前时间起30分钟，发原T45经既有有权root通道安装/回读/消费；数据库原20分钟尚未开启。私有准确载体不入Git，公开记录仅摘要。
 - D1生产V2模块与D3最终manifest/台账/预检继续原在途任务；不因载体准备冒称正式启动或导入完成。
+
+
+### 首次真实传输READY及真实包预检发现
+- T45首次artifact-stage在上传前status读root0400公开授权失败；原受控后继最终root:root0444同字节只读修正，秘密保持。异步0440/0444消息交叉收据均保留，不再切模式。原key先ABSENT/无attempt后一次上传成功，70967936字节/b91bf14e/sourceSet0e6b01ec/authority04ef37b3为READY，40秒不变。
+- 唯一PhaseA作业t45-f35-5b26-prepare-20261105-01已提交，受原30分钟准确期限；实际签名/锁包/ldd结果待回，数据库20分钟未启。
+- D3真实offline预检尚在处理，已发现36 UNDECLARED_PACKAGE_FILE（source_files实际声明/物理边界待核）及至少235头SETTLEMENT_MISMATCH，最终去重数待终态。未标PASS，不补款/改金额/扩大六例批准；原D3分支定位，不重复清洗或放宽守卫。
