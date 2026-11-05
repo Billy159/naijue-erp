@@ -959,3 +959,23 @@ GitHub接续记录检查点：`codex/e5c5a762-cleaning-20261102` @ `c38054e81d5d
 Human C approval call_66e02fc29e8e45e6bef014891af81ec0 item0 received. Original D1 owns the approved intent/SQL/audit/readback increment and sales-historical-hall-projection.ts; D3 owns its existing preflight/relations/reconciliation consumers. No database/table/permission expansion. Actual environment execution remains separately T45-bound.
 
 Official Linux artifacts acquired in the independent local artifact directory, not installed/executed. Original three Debian PG17.11 archive hashes match; Node and libpq binary pins match. Four original PG pins have no independent provenance, so successor4176d19f pins the actual official package members; QB independently accepted only this source/archive-byte increment (receipt50226b21...). Remote4176d19f verified. T45 prepares original artifacts/transport; final deployment pins wait for reviewed C integration. Current target ABI, actual PG/import/cleanup and production remain untested.
+
+
+## Approved C frozen; release and original transport source checkpoints
+
+- C 23-leaf complete source increment:634467e36d827c0272983a2a4381cf10c517bc4f; D1/D3/C frozen pins matched, original QB reviewing this fixed increment once. Targeted author checks passed; real PostgreSQL has not run.
+- D2 release/boot/rollback9:de03dcc4f9ed6b48c1fd925b6a4b8e5781ce7006, partial WIP. Targeted14+17 source checks passed; production target/long-lived record absent and reviewed helper pins intentionally unchanged, generator reapproval gate remains.
+- T45 original SSH-client staging2:5b26eea5260f4804c84843ad2e1369c457375026, offline18 passed, source WIP queued for QB. Original operational client/run limits/CONTENT-APPROVAL/40s unchanged. No upload, authority minting, protected installation or database operation.
+- All three checkpoints pushed to existing GitHub branch and remote5b26eea5 verified. Current unreviewed source is not a release.
+- Warehouse51 READY slice is not the full package; remaining generated-field policies and real target capture remain separate. Source0/dual halls, original identities and real input are preserved.
+- Next: close exact QB findings; freeze one final candidate; bind authorized artifact/host ABI/target/window once. Formal target contract and production approval pins must not be inferred from a20min synthetic proof.
+
+
+## 2026-11-05 C修订源码收口与下一执行条件
+
+- C23叶固定634467e36d827c0272983a2a4381cf10c517bc4f，QB源码增量PASS（a506a84c...）；用户确认call_66e02fc29e8e45e6bef014891af81ec0 item0，实际事务采集及新连接读回未测。
+- 发布接线de03dcc4f9ed6b48c1fd925b6a4b8e5781ce7006，QB限定源码接线PASS（e7950419...）；正式目标/长期安装证明及发布helper审核仍缺，批准指纹未改。
+- 原SSH传输5b26eea5260f4804c84843ad2e1369c457375026，QB源码及本地模型PASS（9bfe70be...）；未实际传输或安装，Linux吞吐未测。源码远端断点5b26eea5已回读，本节为后继记录，不是上线结论。
+- T45只读确认Ubuntu24.04宿主与所选Debian13 PG17.11依赖不配套，固定libpq路径缺失；未执行二进制，属于前置不满足。原T45准备兼容Docker隔离承载准确提案，不升级生产宿主系统库，不在源码授权下创建新环境。
+- D3-48私有26表608916行候选：460188行只补缺失技术标量，148728行不变，引用/非生成字段原值保持、registry未命中0。仍非完整可导入包；2954条已有价格须等值规范格式，28894历史销货头待已批厅证据/V2意图接线。最终来源集、批次、外部授权及真实目标采集未封。
+- D3继续上述私有清洗；T45完成兼容隔离清单；D1正式目标/长期record差异仅提案。原QB有效结论直接采用，不重验同范围。实际数据库安装、真实导入、部署与线上业务均未验证。

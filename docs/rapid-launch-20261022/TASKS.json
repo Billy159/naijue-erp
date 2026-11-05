@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T09:55:04.116344+00:00",
+    "at": "2026-11-05T10:42:38.943552+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28150,7 +28150,8 @@
         "package/lock and shared CLI seam integration"
       ],
       "T45": [
-        "existing server execution outputs and private factual evidence only"
+        "existing server execution outputs and private factual evidence only",
+        "candidate0448/scripts/release/ssh-control.py typed artifact staging and tests/test_ssh_artifact_staging.py only; original operational client unchanged"
       ],
       "D3": [
         "packages/application/src/unified-import-source-reconciliation.ts",
@@ -28161,7 +28162,8 @@
         "tests/unified-import-stream-preflight.test.mjs",
         "new tools/unified-import/source-occurrence-* helpers and focused tests",
         "tools/unified-import/stream-relations.mjs V2 hall consumption",
-        "private complete ledger and central cleaned package; no fabricated source values"
+        "private complete ledger and central cleaned package; no fabricated source values",
+        "packages/application/src/unified-import-stable-identity.ts WAREHOUSE-only planned initialization and direct tests"
       ],
       "D1": [
         "packages/application/src/unified-historical-line-amount-evidence.ts",
@@ -28196,7 +28198,12 @@
         "private source facts/maps only; no central package writes",
         "adapters/postgres/src/runtime27-command-issuer.ts",
         "apps/api/src/postgres-read-api.ts",
-        "adapters/postgres/src/catalogue-settings-read-reader.ts and direct tests (frozen9 accepted)"
+        "adapters/postgres/src/catalogue-settings-read-reader.ts and direct tests (frozen9 accepted)",
+        "scripts/release/deploy-candidate.py (explicit release seam handoff; no server execution)",
+        "config/release-contract.json (explicit release seam handoff)",
+        "scripts/release/generate-release-contract.mjs and original direct tests",
+        "scripts/release/boot-entry.py functional branches and direct tests; approval marker unchanged",
+        "scripts/release/rollback-candidate.py functional branches and direct tests; approval marker unchanged"
       ]
     },
     "preservedWIP": "Original cleaning repo four files untouched",
@@ -28275,10 +28282,14 @@
         "effort": "high",
         "state": "QB_PASS_FIXED_RUNTIME35_SOURCE_INCREMENT_ONLY_NOT_PG",
         "scope": "production-main/provider and necessary focused tests; extra files require explicit owner handoff",
-        "next": "T45 exact isolated install then ordinary runtime SQL/business under separately bound scope",
+        "next": "Frozen source; exact production target and record proposal before new contract implementation",
         "commit": "0a3f763539a941407a69a56e59d9cfae2ac1b954",
         "receiptSHA256": "e2ec338513bc5469d25a7d8e06de4e250f8685a599853efe7fa9e171500e1ff1",
-        "checks": "39 affected synthetic PASS, reused110 provider/capacity+12 issuer; launch typecheck PASS"
+        "checks": "39 affected synthetic PASS, reused110 provider/capacity+12 issuer; launch typecheck PASS",
+        "releaseSeamCommit": "de03dcc4f9ed6b48c1fd925b6a4b8e5781ce7006",
+        "releaseSeamState": "QB_PASS_NARROW_PARTIAL_SOURCE_ONLY_PRODUCTION_GATES_REMAIN",
+        "releaseSeamReceiptSHA256": "9642f86b19c34661180bfaa7e7c91e88b515b2bfbceae883dd75a1550f8d4ffc",
+        "releaseSeamReviewSHA256": "e795041989f49b088b73046d7f91f61c0b7a087d6bc31861adaedc25a3039a9b"
       },
       "C-0448-REVIEW-01": {
         "owner": "QB",
@@ -28304,10 +28315,10 @@
         "owner": "D1",
         "model": "gpt-6.1-sol",
         "effort": "high",
-        "state": "FROZEN_INTEGRATED_SYNTHETIC_PASS_NOT_PG",
+        "state": "C_NULL_FIXTURE_INTEGRATED_NOT_PG",
         "scope": "tests/fixtures/unified-import/whole-package-synthetic.ts and direct tests only",
-        "next": "T45 original host callback consumes fixture on fixed candidate",
-        "commit": "a55022ce",
+        "next": "Actual entry explicitly passes targetCapturedAt:null; verify same-transaction capture only under final authorized environment",
+        "commit": "634467e36d827c0272983a2a4381cf10c517bc4f",
         "checks": "original6+new3 tests PASS; typecheck PASS; real PG not run"
       },
       "C-0448-HELD-BRIDGES-06": {
@@ -28324,19 +28335,24 @@
         "owner": "D1 proposal; C contract coordination; D3 original private consumers",
         "model": "gpt-6.1-sol",
         "effort": "high",
-        "state": "HUMAN_APPROVED_IMPLEMENTING_ORIGINAL_D1_D3",
+        "state": "QB_PASS_FIXED_C_SOURCE_INCREMENT_ONLY_NOT_PG",
         "scope": "Null input intent separately bound to exact MASTER source member; actual same-transaction capture audited without altering original source hash; completed V2 readback only",
-        "next": "D1 final API to D3; freeze integrated complete C increment then QB affected review; no environment execution",
-        "approval": "call_66e02fc29e8e45e6bef014891af81ec0 item0: human explicit consent"
+        "next": "T45 separately bound compatible isolated target for actual transaction capture and readback",
+        "approval": "call_66e02fc29e8e45e6bef014891af81ec0 item0: human explicit consent",
+        "consumerState": "All23 source leaves frozen and accepted; no PG",
+        "commit": "634467e36d827c0272983a2a4381cf10c517bc4f",
+        "receiptSHA256": "093242376c68bf9a54ba039a4c679dbde95328a8595cca03b9d1374c779a1571",
+        "checks": "D1 affected56 + existing client3; D3 consumer77 + stable identity23; C null CLI4; author full typecheck/build exit0; no PG",
+        "reviewSHA256": "a506a84c5c7a4273e8152dee3eefcf3905f17afbd4b49371d1357f75e588f341"
       }
     },
     "github": {
       "branch": "codex/erp-0448z-integration-20261105",
-      "commit": "4176d19f0ed9045358e28fd582558412eb381313",
+      "commit": "5b26eea5260f4804c84843ad2e1369c457375026",
       "remoteVerified": true,
-      "status": "SOURCE_INCREMENT_PUSHED_REMOTE_READBACK_VERIFIED_NOT_PG_NOT_RELEASE",
+      "status": "C_RELEASE_TRANSPORT_SCOPED_SOURCE_REVIEWS_ACCEPTED_NOT_PG_NOT_RELEASE",
       "remotePriorVerifiedCommit": "eb22fd211e5f07ffc78d9ce6b7ec7a8749f13025",
-      "localHead": "4176d19f0ed9045358e28fd582558412eb381313",
+      "localHead": "5b26eea5260f4804c84843ad2e1369c457375026",
       "pushRoute": "existing system HTTP proxy, command scoped; direct connection timed out"
     },
     "cleanInstall": {
@@ -28348,10 +28364,9 @@
       "lockUnchanged": true
     },
     "sourceFactGaps": [
-      "C exact target intent/transaction audit/readback approved and implementing; actual PG verification pending",
-      "653 held source trace reception boundary and seven current color-owner discrepancies unresolved; no fabricated aliases",
-      "Actual fresh35 install/record/three-connection import/cleanup and ordinary runtime business untested",
-      "Deployment selector still exact26-only; exact35 ordinary CLI is source-level only, not deployment ready"
+      "Actual compatible isolated PG install/record/capture/rollback/replay/readback/cleanup untested",
+      "Final private source_files/V2 authority and batch unsealed; 653 held rows/seven color-owner discrepancies retained",
+      "Production target/long-lived install proof proposal only; release helper approval unchanged"
     ],
     "portableReferences": {
       "resolver": "resolveFresh35ReferenceInputPaths(directory)",
@@ -28396,8 +28411,75 @@
       "reason": "Original four pins lack independent provenance; fixed original official Debian archive hashes match, actual executable member hashes independently verified",
       "localArtifacts": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/0448-linux-tool-artifacts-20261105-01",
       "binaryExecuted": false,
-      "hostCompatibilityVerified": false
+      "hostCompatibilityVerified": false,
+      "hostCompatibilityObservation": "Ubuntu24.04/OpenSSL3.0.13; Debian13 PG1711 closure needs newer OpenSSL and absent libicu76/libllvm19/libpq5; fixed libpq path absent. Prerequisites unmet, binaries not executed.",
+      "hostObservationReceiptSHA256": "812acf8710438c0f78864866cb54899639926260f8cae8a8358f335d26f32f7e"
     },
-    "serverPreparation": "T45 finishes existing artifact/transport candidate only; final deployment/sourceSet must bind C successor after QB to avoid redundant isolated environments"
+    "serverPreparation": "T45 preparing compatible Docker isolated-environment proposal using existing mechanisms only; no host library upgrade, image pull/build, container creation, transfer or database action under source A/B/C approval",
+    "warehousePlannedInitialization": {
+      "authority": "C approved intent/MASTER target plan; concrete technical initial choice by C",
+      "scope": "This fresh target only: id exact existing registry; planned version1; created_operation_id null if profile requires; captured_at remains null",
+      "notSourceFact": true,
+      "originalSource0Preserved": true,
+      "owner": "D3 original private READY materializer",
+      "state": "SINGLE_ROW_HELPER_FROZEN_51_PRIVATE_READY_SLICE_ONLY",
+      "noGenericPipelineRewrite": true,
+      "sourceCommit": "634467e36d827c0272983a2a4381cf10c517bc4f",
+      "receiptSHA256": "c3912f2b03225583039baceaa0abeda1ae262e127e732abf8a814a9c00d31499"
+    },
+    "transportPreparation": {
+      "owner": "T45",
+      "state": "QB_PASS_FIXED_TWO_FILE_SOURCE_AND_LOCAL_MODEL_ONLY_NO_TRANSFER",
+      "inventoryFiles": 3714,
+      "inventoryBytes": 193060274,
+      "runLimitsUnchanged": "128 flat text files,4MiB/file,32MiB/total",
+      "noWorkaround": true,
+      "sourceProposal": "Original ssh-control.py one typed artifact staging action; exact source/archive/bytes/path external authority, separate ready receipt; no extraction or root trust",
+      "actualTransfer": false,
+      "next": "Exact compatible target/archive/external authority binding; Linux transfer and throughput untested",
+      "commit": "5b26eea5260f4804c84843ad2e1369c457375026",
+      "checks": "18 offline PASS; no server or upload;40s unchanged",
+      "reviewSHA256": "9bfe70be86da1fd138f6ec8c370088bb43885da3b7e98b0c85d161e2b1b49845"
+    },
+    "productionInstallProofGap": "Current fresh35 record/target only synthetic_fresh35 loopback20min. No approved production/long-lived ordinary proof API. D2 must not use it for production bridge or change target contract silently.",
+    "currentParallelQueue": {
+      "QB": "C23/release9/transport2 scoped source reviews delivered; no repeated review",
+      "D1": "C frozen accepted; production target/record proposal delivered only",
+      "D3": "C frozen; private price normalization and approved hall/V2 join underway",
+      "D2": "Release frozen; only concrete new findings if any",
+      "T45": "Compatible isolated environment accurate proposal; no create/pull/start/transmission"
+    },
+    "actualExecution": {
+      "newClusterCreated": false,
+      "newDatabaseInstalled": false,
+      "realDataImported": false,
+      "artifactTransferred": false,
+      "productionChanged": false
+    },
+    "privateReadyRows": {
+      "owner": "D3",
+      "state": "PROVISIONAL_READY_ROW_CANDIDATES_ONLY_NOT_IMPORT_READY",
+      "receiptSHA256": "0279ded0e682ba295f2ef7b21bb3b2f771dba965aec54d5ec2866a76bfbdbd28",
+      "tables": 26,
+      "rows": 608916,
+      "generatedChanges": 460188,
+      "unchangedRows": 148728,
+      "registryMisses": 0,
+      "nonGeneratedChanges": 0,
+      "refsChanges": 0,
+      "remainingFieldIssues": {
+        "product.retail_price_exact_scale2": 2954,
+        "sales_header.hall_id_approved_evidence_join": 28894
+      },
+      "batchFinal": false,
+      "next": "Existing exact price formatting and approved hall/V2 intent private join; no fabricated capture or authority"
+    },
+    "productionInstallProofProposal": {
+      "owner": "D1",
+      "state": "PROPOSAL_ONLY_NOT_IMPLEMENTED",
+      "path": "D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-TARGET-CONTRACT-DELTA.md",
+      "sha256": "9b11eabac1880c5515d0f40e73203fa9cd27cbb5b134aa9d0394311858a390a8",
+      "scope": "Versioned existing target/record and ordinary startup identity/source/catalog revalidation; operation window separate from service lease; actual target values/permissions unapproved"
+    }
   }
 }
