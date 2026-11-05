@@ -58,3 +58,26 @@ test('Fresh35 shared wire owns one cleanup and refuses commit after its original
  },()=>proof,'FRESH35_RETIRED152_V1',{fresh35ExpiresAt:Date.now()+20}),/WINDOW_EXPIRED|CONNECTION_UNAVAILABLE/);
  assert.equal(c.closed,1);assert.equal(c.calls.includes('COMMIT'),false);
 });
+
+test('F01 protected loader retains its original byte hash and nanosecond identity, never a replacement baseline (private OS model)',async()=>{
+ const fs=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path');const dir=await fs.mkdtemp(join(tmpdir(),'record-snapshot-model-')),path=join(dir,'record.json');
+ const value={format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',installedAt:'2026-11-05T00:00:00Z',binding:{},target:{format:'FRESH35_COMBINED_TARGET_BINDING_V1'},transactionReceipt:{},programSha256:'a'.repeat(64),catalogSpecSha256:'b'.repeat(64),catalogSha256:'c'.repeat(64),authorizationSha256:'d'.repeat(64),state:'COMMITTED_AND_CATALOG_CHECKED'};
+ const bytes=Buffer.from(JSON.stringify(value)+'\n');await fs.writeFile(path,bytes);
+ const source=await fs.readFile(new URL('../scripts/release/unified-install/fresh35-combined-record-v1.mjs',import.meta.url),'utf8'),tail=source.slice(source.indexOf('export async function loadFresh35CombinedRecordEnvelope'));
+ const prefix=`import * as fs from 'node:fs/promises';import {constants} from 'node:fs';import {createHash} from 'node:crypto';import {parseStrictJson} from ${JSON.stringify(new URL('../packages/application/src/unified-import-contract.ts',import.meta.url).href)};
+ const process={getuid:()=>501,geteuid:()=>501},FRESH35_COMBINED_RECORD_PATH=${JSON.stringify(path)},protectedEnvelopes=new WeakMap();
+ const need=(ok,code)=>{if(!ok)throw Error('MODEL_'+code)},hash=b=>createHash('sha256').update(b).digest('hex'),closed=(o,keys)=>need(o&&Object.keys(o).sort().join(',')===[...keys].sort().join(','),'CLOSED');
+ async function assertTrustedRootPath(){}const normalized=s=>Object.create(s,{uid:{value:0n},mode:{value:s.mode&~0o022n}});
+ async function lstat(p,options){return normalized(await fs.lstat(p,options))}async function open(p,flags){const f=await fs.open(p,flags);return {stat:async options=>normalized(await f.stat(options)),readFile:(...args)=>f.readFile(...args),close:()=>f.close()}}const readFile=(...args)=>fs.readFile(...args);
+ `;
+ try{
+  const api=await import('data:text/javascript;base64,'+Buffer.from(prefix+tail).toString('base64'));
+  const envelope=await api.loadFresh35CombinedRecordEnvelope(),snapshot=api.describeFresh35ProtectedRecordSnapshot(envelope),{createHash}=await import('node:crypto');
+  assert.equal(snapshot.sha256,createHash('sha256').update(bytes).digest('hex'));assert(Object.isFrozen(snapshot));await api.assertFresh35ProtectedRecordSnapshotCurrent(envelope,true);
+  const realRecord=await import('../scripts/release/unified-install/fresh35-combined-record-v1.mjs');assert.throws(()=>realRecord.describeFresh35ProtectedRecordSnapshot(envelope),/FIXED_PROTECTED_ENVELOPE/);
+  assert.throws(()=>api.describeFresh35ProtectedRecordSnapshot(structuredClone(envelope)),/FIXED_PROTECTED_ENVELOPE/);
+  await fs.writeFile(path+'.new',bytes);await fs.rename(path+'.new',path);await assert.rejects(()=>api.assertFresh35ProtectedRecordSnapshotCurrent(envelope),/GENERATION_CHANGED/);assert.equal(api.describeFresh35ProtectedRecordSnapshot(envelope),snapshot);
+  const second=await api.loadFresh35CombinedRecordEnvelope();await fs.writeFile(path,'CHANGED');await assert.rejects(()=>api.assertFresh35ProtectedRecordSnapshotCurrent(second,true),/GENERATION_CHANGED|BYTES_CHANGED/);
+  await fs.writeFile(path,bytes);const third=await api.loadFresh35CombinedRecordEnvelope();await fs.rm(path);await assert.rejects(()=>api.assertFresh35ProtectedRecordSnapshotCurrent(third),/ENOENT/);
+ }finally{await fs.rm(dir,{recursive:true,force:true});}
+});

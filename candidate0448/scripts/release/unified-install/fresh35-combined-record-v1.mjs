@@ -10,7 +10,7 @@ import {combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_RECORD_'+code)};
 const etc=process.platform==='darwin'?'/private/etc':'/etc';
 export const FRESH35_COMBINED_RECORD_PATH=etc+'/naijue-erp/fresh35-combined-installation-v1.json';
-const issued=new WeakSet(),protectedEnvelopes=new WeakSet();
+const issued=new WeakSet(),protectedEnvelopes=new WeakMap();
 const loadedModuleSha256=hash(await readFile(new URL(import.meta.url)));
 export const FRESH35_COMBINED_RECORD_MODULE_SHA256=loadedModuleSha256;
 function closed(object,keys){need(object&&Object.getPrototypeOf(object)===Object.prototype,'CLOSED_DATA_REQUIRED');const d=Object.getOwnPropertyDescriptors(object);need(Reflect.ownKeys(d).length===keys.length&&keys.every(k=>d[k]?.enumerable&&Object.hasOwn(d[k],'value')),'CLOSED_DATA_REQUIRED')}
@@ -46,17 +46,17 @@ export async function loadFresh35CombinedRecordEnvelope(){
  try{await assertTrustedRootPath(FRESH35_COMBINED_RECORD_PATH)}catch{throw Error('FRESH35_PROTECTED_RECORD_REQUIRED')}
  const f=await open(FRESH35_COMBINED_RECORD_PATH,constants.O_RDONLY|constants.O_NOFOLLOW);
  try{
-  const before=await f.stat();
-  need(before.isFile()&&before.uid===0&&before.nlink===1&&(before.mode&0o022)===0&&before.size>0&&before.size<=65536,'OS_PROTECTED_RECORD_REQUIRED');
-  const bytes=await f.readFile(),after=await f.stat(),pathStat=await lstat(FRESH35_COMBINED_RECORD_PATH);
-  need(bytes.length===before.size&&after.size===before.size&&after.mtimeMs===before.mtimeMs&&after.ctimeMs===before.ctimeMs&&pathStat.dev===before.dev&&pathStat.ino===before.ino,'RECORD_CHANGED');
+  const before=await f.stat({bigint:true});
+  need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o022n)===0n&&before.size>0n&&before.size<=65536n,'OS_PROTECTED_RECORD_REQUIRED');
+  const bytes=await f.readFile(),after=await f.stat({bigint:true}),pathStat=await lstat(FRESH35_COMBINED_RECORD_PATH,{bigint:true});
+  need(BigInt(bytes.length)===before.size&&recordIdentity(after)===recordIdentity(before)&&recordIdentity(pathStat)===recordIdentity(before),'RECORD_CHANGED');
   const value=parseStrictJson(bytes.toString('utf8'));
   closed(value,['format','installedAt','binding','target','transactionReceipt','programSha256','catalogSpecSha256','catalogSha256','authorizationSha256','state']);
   need((value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V1'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V1'||value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V2'&&value.target?.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')&&value.state==='COMMITTED_AND_CATALOG_CHECKED','FORMAT_REQUIRED');
   // This protected envelope is only input to exact program reconstruction.
   // No execution capability is issued by loading or validating JSON.
   const freeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x)}return x};
-  protectedEnvelopes.add(value);return freeze(value);
+  protectedEnvelopes.set(value,Object.freeze({sha256:hash(bytes),identity:recordIdentity(before)}));return freeze(value);
  }finally{await f.close()}
 }
 export async function loadFresh35CombinedRecord(program){
@@ -65,3 +65,15 @@ export async function loadFresh35CombinedRecord(program){
 }
 
 export function assertFresh35ProtectedRecordEnvelope(value){need(protectedEnvelopes.has(value),'FIXED_PROTECTED_ENVELOPE_REQUIRED');return value;}
+
+function recordIdentity(stat){return [stat.dev,stat.ino,stat.uid,stat.mode,stat.nlink,stat.size,stat.mtimeNs,stat.ctimeNs].map(String).join(':')}
+export function describeFresh35ProtectedRecordSnapshot(envelope){assertFresh35ProtectedRecordEnvelope(envelope);return protectedEnvelopes.get(envelope)}
+/** Startup may recheck bytes once; normal use only checks this loader's exact
+ * nanosecond file identity. A later file can never supply a new baseline. */
+export async function assertFresh35ProtectedRecordSnapshotCurrent(envelope,checkBytes=false){
+ const snapshot=describeFresh35ProtectedRecordSnapshot(envelope);
+ const before=await lstat(FRESH35_COMBINED_RECORD_PATH,{bigint:true});
+ need(before.isFile()&&!before.isSymbolicLink()&&recordIdentity(before)===snapshot.identity,'PROTECTED_RECORD_GENERATION_CHANGED');
+ if(checkBytes){const bytes=await readFile(FRESH35_COMBINED_RECORD_PATH),after=await lstat(FRESH35_COMBINED_RECORD_PATH,{bigint:true});need(recordIdentity(after)===snapshot.identity&&hash(bytes)===snapshot.sha256,'PROTECTED_RECORD_BYTES_CHANGED');}
+ return snapshot;
+}
