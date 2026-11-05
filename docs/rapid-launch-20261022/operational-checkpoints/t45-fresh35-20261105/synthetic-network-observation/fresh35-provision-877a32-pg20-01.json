@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "eb5bcdc5c3b06c0f5181df3562bfd7749253a6b10f1f26c8c415f31593157f72",
+  "sourceSetSha256": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793909908915,
+  "expiresAt": 1793911108915,
+  "independentSafetyReviewSha256": "9117ca04887d5b0ba2988be348891b9aecbdaa6642075c5265a355b3d8a6569a",
+  "authorizationReference": "C01a161ca under direct human delegation until2026-11-06 noon. Exact877a/source46120, newr3 ROOT/container only; actual materialization265f79ef and resource28b9c657. Fixed wrapperfd9945be/probeee229; original20min isolation/budget/cleanup plus bounded actualUID read/watch/epoch evidence; native samepool revocation untested. No REAL/production/old targets. Separate original install leaf requires actual new program/target."
+}

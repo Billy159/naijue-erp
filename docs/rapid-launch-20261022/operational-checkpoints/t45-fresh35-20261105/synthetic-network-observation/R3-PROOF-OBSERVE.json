@@ -1,0 +1,42 @@
+{
+  "cid": "8f24aa781898a4dca78c98d9499b798c8abfe985054bb05637689712b0f125f1",
+  "containerStopped": false,
+  "evidence": {
+    "bootstrap-network-observation.json": {
+      "adminActor": "fresh35_admin_20261105_r1",
+      "databaseOid": "16393",
+      "expiresAt": 1793911108915,
+      "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+      "host": "127.0.0.1",
+      "listenAddresses": "127.0.0.1",
+      "port": 18651,
+      "postmasterStart": "2026-11-05 20:20:02.728553+00",
+      "serverVersionNum": "170011",
+      "sourceSetSha256": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394",
+      "startsAt": 1793909908915,
+      "systemIdentifier": "7704784775886311471",
+      "unixSocketDirectories": ""
+    },
+    "runtime-dependencies.json": {
+      "arch": "x64",
+      "fastify": "5.12.5",
+      "libvips": "8.18.7",
+      "pg": "8.23.1",
+      "platform": "linux",
+      "sharp": "0.35.5"
+    }
+  },
+  "evidenceSha256": {
+    "bootstrap-network-observation.json": "bfc4bf2b0f0aef7706cda97c65f46a7c15a00bc385e98a5b72a12feaca0dc05d"
+  },
+  "forcedStopIsNotCleanShutdownProof": true,
+  "launcherExitCode": null,
+  "ordinaryProofEvidence": {},
+  "sourceResult": {
+    "cleanup": {
+      "cleanupComplete": false
+    },
+    "state": "UNKNOWN"
+  },
+  "status": "WAITING_ORIGINAL_LAUNCHER"
+}

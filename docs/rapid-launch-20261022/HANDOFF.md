@@ -1616,3 +1616,13 @@ None返回修订独立QB9117ca04通过（保留真实guard体，4组必要复验
 
 
 - 877a准确tail原receiver实际READY，回执a12153bf；最终一次性源0bfaf9cb独立QB1ffaae49窄审4组通过，仅源码/小模型。C采用，不重复技术验收；T45按745→2cbd原CAS、一次私有组装、原UID1000原接收器生成完整READY，之后原r3材料化。总窗deadline不延，900s为上限，起材料化须至少有前次365.58s+120s余量。真实组装、PG及业务仍待实际回执。
+
+
+### 2026-11-06 04:08｜实际传输闭环解除阻塞
+原T45一次性组装job exit0/2.674240s，实际旧base完整hash/稳定身份、准确tail、完整83,663,911B/SHA6b57均匹配；原UID1000接收器ad0afee实际发布local02完整READY（authority2cbd/source46120），收据e4a63231。旧base及失败partial未改。原r3材料化新键已提交，余548.356s，执行cap428s保留120s收尾且不延原deadline；尚未完成材料化、尚未启动PG。应用仍固定877a，原source模型和实际通道验证分别登记，不把本步记为安装/导入或正式通过。
+
+
+- 原r3材料化实际exit0/368.838504s，回执265f79ef；C逐字节核资源回执28b9c657（04:16实际无旧CID/4启动工件，17.03GB磁盘/14.35GB可用内存），并核完整组装e4a63231。签本次独立原11键provision536ce080，1793909908915..1793911108915；877a/source46120/manifesteb5b、原固定wrapper/probe、独立QB9117。T45新start在途，真实program/target返回后才发原9键install；未安装、未导入、未正式操作。原stage窗未续。
+
+
+- 新r3 start实际exit0/28.131s，回执178b4794；真实SID7704784775886311471/OID16393/PG170011/birth20:20:02.728553UTC，准确program08baf5a6/target2512aa92。原只读网络proof实回13字段及原bytesSHA bfc4bf2b（观察aea4f9b4），与program完全同绑，C核文件摘要后签原9键外叶29ee0236。T45原install在途，沿原窗口至1793911108915，不续窗不移用旧批准。真实ordinary业务、导入/重放/回滚及probe仍未通过；无正式操作。

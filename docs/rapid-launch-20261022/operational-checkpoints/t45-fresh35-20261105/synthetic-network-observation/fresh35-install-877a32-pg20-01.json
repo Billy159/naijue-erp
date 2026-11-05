@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "08baf5a65e6e00b1b0613c5b52c99b8537262ebf780573cd18492c876dc75592",
+  "sourceSetSha256": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394",
+  "targetSha256": "2512aa92bafd56f74ab60f3491dfb0f98c389400d506ec94bec9ff270fc9c40c",
+  "startsAt": 1793909908915,
+  "expiresAt": 1793911108915,
+  "independentSafetyReviewSha256": "9117ca04887d5b0ba2988be348891b9aecbdaa6642075c5265a355b3d8a6569a",
+  "authorizationReference": "C under direct human delegation until2026-11-06 noon. Exact newr3 program08baf5a6/target2512aa92 verified from actual start178b4794 and actual same13-field networkproof aea4f9b4/bfc4bf2b. QB9117 adopting parentb099 source review. Original synthetic install/import and ordinary synthetic business only; same20min deadline/guardian/cleanup, no REAL/production/old target or broader permissions."
+}

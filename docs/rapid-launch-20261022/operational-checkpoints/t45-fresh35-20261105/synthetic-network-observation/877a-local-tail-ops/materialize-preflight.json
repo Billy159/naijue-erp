@@ -1,0 +1,68 @@
+{
+  "jobId": "t45-f35-877a32-local-start-preflight-20261106-01",
+  "checkedAtUTC": "2026-11-05T20:16:02.803987+00:00",
+  "mutations": 0,
+  "targetParent": {
+    "uid": 0,
+    "mode": "0o700",
+    "symlink": false
+  },
+  "applicationRoot": {
+    "exists": true,
+    "uid": 0,
+    "mode": "0o700",
+    "symlink": false
+  },
+  "resources": {
+    "cpuCount": 4,
+    "loadAverage": [
+      0.89794921875,
+      1.27392578125,
+      0.728515625
+    ],
+    "memoryBytes": {
+      "MemTotal": 16731348992,
+      "MemAvailable": 14354325504,
+      "SwapTotal": 4294963200,
+      "SwapFree": 4203982848
+    },
+    "disk": {
+      "freeBytes": 17033506816,
+      "totalBytes": 489861931008,
+      "device": 66304
+    }
+  },
+  "image": {
+    "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "os": "linux",
+    "arch": "amd64"
+  },
+  "materializeOriginalKey": {
+    "jobId": "t45-f35-877a32-local-materialize-20261106-01",
+    "requestPresent": true,
+    "resultPresent": true,
+    "status": "COMPLETED",
+    "exitCode": 0
+  },
+  "CASOriginalKey": {
+    "jobId": "t45-f35-877a32-final-staging-policy-20261106-01",
+    "status": "COMPLETED",
+    "exitCode": 0
+  },
+  "matchingContainerIDs": [],
+  "currentApplication": {
+    "archiveSHA256": "6b57c96e5931ee4dc8c61b0f9c4d3d0e254b3c1eaeb6fbdfd3dc7f6088cb44ea",
+    "deploymentManifestSha256": "eb5bcdc5c3b06c0f5181df3562bfd7749253a6b10f1f26c8c415f31593157f72",
+    "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "operationId": "t45-f35-877a32-application-20261106-01",
+    "sourceSet": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394"
+  },
+  "startArtifactsPresent": {
+    "start-intent.json": false,
+    "container-receipt.json": false,
+    "authority/fresh35-isolated-provision-v1.json": false,
+    "authority/fresh35-combined-execution-v1.json": false
+  },
+  "status": "READONLY_FACTS_COLLECTED"
+}
