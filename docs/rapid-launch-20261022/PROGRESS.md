@@ -952,3 +952,10 @@ GitHub接续记录检查点：`codex/e5c5a762-cleaning-20261102` @ `c38054e81d5d
 - D1 fixture integrated; D3 source hall capture51 and heads28894 preserved. Actual fresh target snapshot cannot be invented before initialization: precise input-intent/audit/readback supplement C pending; only this real-data branch waits.
 - D2 held-source classification and D3 private1045-trace/1031-SKU slice accepted as partial;653 source rows retained. Two belt lines reuse prior approval, seven current color-owner discrepancies remain trace-only.
 - Next: exact supplement C confirmation; T45 final runnable scope; isolated install/record/rollback/commit/replay/readback/cleanup evidence, then separately bound ordinary business validation. Production release selector exact26 limitation still open.
+
+
+## 0448Z C approval and official tool successor
+
+Human C approval call_66e02fc29e8e45e6bef014891af81ec0 item0 received. Original D1 owns the approved intent/SQL/audit/readback increment and sales-historical-hall-projection.ts; D3 owns its existing preflight/relations/reconciliation consumers. No database/table/permission expansion. Actual environment execution remains separately T45-bound.
+
+Official Linux artifacts acquired in the independent local artifact directory, not installed/executed. Original three Debian PG17.11 archive hashes match; Node and libpq binary pins match. Four original PG pins have no independent provenance, so successor4176d19f pins the actual official package members; QB independently accepted only this source/archive-byte increment (receipt50226b21...). Remote4176d19f verified. T45 prepares original artifacts/transport; final deployment pins wait for reviewed C integration. Current target ABI, actual PG/import/cleanup and production remain untested.
