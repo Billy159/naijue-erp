@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "9fbe885be22279772a377bcd4ff1f50edd0e2f05c611e8bfb82a6a1233462e5d",
+  "sourceSetSha256": "b3d8e62ca216a710855145082e9ea69263823e1161dcbf3387a685a4219bd951",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793906067691,
+  "expiresAt": 1793907267691,
+  "independentSafetyReviewSha256": "b099a24289d881aa996874284b23f7bb8afe685208b4a793258b1ff0b2343480",
+  "authorizationReference": "C 01a161ca executes direct human delegation through2026-11-06 noon. Exact223598 source and ordinary archive, newr2 ROOT/container only; materialization940f37f3 verified. Fixed wrapper234473b6/probe de660075, bounded actualUID read/watch/epoch and post-business metadata-only one-touch; native samepool revocation untested. Original isolation/budget/guardian/cleanup, no REAL/production/old targets. Actual program/target require separate original external install leaf."
+}

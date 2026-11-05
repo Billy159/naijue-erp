@@ -1,0 +1,15 @@
+{
+  "application": {
+    "archiveSHA256": "f3126f335c8d2afcd9d7975460357c3e3b790724d80c0fe2436dcaf30e52ed56",
+    "deploymentManifestSha256": "9fbe885be22279772a377bcd4ff1f50edd0e2f05c611e8bfb82a6a1233462e5d",
+    "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "operationId": "t45-f35-223598-application-20261106-01",
+    "sourceSet": "b3d8e62ca216a710855145082e9ea69263823e1161dcbf3387a685a4219bd951"
+  },
+  "environmentReceiptUnchanged": true,
+  "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+  "imageBuilt": false,
+  "postgresStarted": false,
+  "status": "CURRENT_APPLICATION_MATERIALIZED_NO_DB_WINDOW"
+}

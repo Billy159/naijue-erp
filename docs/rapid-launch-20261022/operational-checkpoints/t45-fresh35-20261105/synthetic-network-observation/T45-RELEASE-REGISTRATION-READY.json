@@ -1,0 +1,50 @@
+{
+  "state": "C_REVIEWED_HELPER_REGISTERED_IN_ORIGINAL_TWO_CALLERS_SOURCE_ONLY",
+  "resultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/RESULT.json",
+  "resultSha256": "65baf677472431adca70356dc0672da2bd1205f582970b4918985939b43dbdd7",
+  "originalSevenPins": [
+    {
+      "path": "config/release-contract.json",
+      "bytes": 7371,
+      "sha256": "bea9c9c79025f0f9def215fd72c9c71d6003ea4165ead1a9ecebf8c8bb289871"
+    },
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "bytes": 189938,
+      "sha256": "6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45"
+    },
+    {
+      "path": "scripts/release/generate-release-contract.mjs",
+      "bytes": 11120,
+      "sha256": "56c56bc77d7d8b3f560aa0ff3affac53864345e31b75cca7b37a035b488dde32"
+    },
+    {
+      "path": "scripts/release/test_capacity_launch_wiring.py",
+      "bytes": 84752,
+      "sha256": "bccd978780369afbbcf3e909ab6921520f7e1453d039a526be002089caaae61c"
+    },
+    {
+      "path": "scripts/release/release-file-contract.test.mjs",
+      "bytes": 6305,
+      "sha256": "989258ecaedfafdd799fe3f6aa587db93a484953fc25b643cc65fc66673e72cc"
+    },
+    {
+      "path": "scripts/release/boot-entry.py",
+      "bytes": 49678,
+      "sha256": "b89f416918a4634ebc23bc1ea1bd87ccd0977d6a2f3741a9ed9cf56384a22b7b"
+    },
+    {
+      "path": "scripts/release/rollback-candidate.py",
+      "bytes": 7665,
+      "sha256": "3b14e8b259e3974236e60a1fcbd1442d6e2cb950d25e068362ebf4323fe3bf63"
+    }
+  ],
+  "additionalNecessaryDirectTest": {
+    "path": "scripts/release/test_rollback_helper_alignment.py",
+    "bytes": 8766,
+    "sha256": "bd46ed520d2549927c1506c5ca73ad64496d0053372a52db54419d99c8d2a790",
+    "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source/scripts/release/test_rollback_helper_alignment.py",
+    "role": "necessary-direct-caller-test"
+  },
+  "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source"
+}

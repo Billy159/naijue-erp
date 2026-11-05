@@ -64,7 +64,7 @@ class Exact35RollbackIncrement(unittest.TestCase):
   return p,record,activation,boundary
  def test_exact35_never_loads_unreviewed_helper_or_falls_back_to_noncapacity(self):
   with patch.object(pathlib.Path,'read_bytes',side_effect=AssertionError('must refuse before read')),self.assertRaisesRegex(ValueError,'EXACT35_REQUIRES_EXISTING_CAPACITY'):R.deployment_implementation('exact35')
-  with self.assertRaisesRegex(ValueError,'CAPACITY_REVIEWED_DEPLOYMENT_HELPER_REQUIRED'):R.deployment_implementation('exact35',capacity=True)
+  with patch.object(pathlib.Path,'read_bytes',return_value=b"raise AssertionError('UNREVIEWED_HELPER_MUST_NOT_EXECUTE')\n"),self.assertRaisesRegex(ValueError,'CAPACITY_REVIEWED_DEPLOYMENT_HELPER_REQUIRED'):R.deployment_implementation('exact35',capacity=True)
  def run_case(self,mode,*,running=True,activation_change=None):
   from unittest.mock import Mock,mock_open
   D=self.D;p,record,activation,boundary=self.fixture()

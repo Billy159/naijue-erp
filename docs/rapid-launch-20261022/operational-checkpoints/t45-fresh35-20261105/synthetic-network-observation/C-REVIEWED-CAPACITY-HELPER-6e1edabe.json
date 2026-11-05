@@ -1,0 +1,20 @@
+{
+  "decision": "C_ACCEPT_EXACT_REVIEWED_CAPACITY_HELPER_SOURCE_AND_REGISTER_EXISTING_CALLER_PINS",
+  "authority": "Direct human delegation in controller chat until 2026-11-06T12:00:00+08:00; C technical judgment, not separately claimed human exact-hash review",
+  "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+  "helper": "scripts/release/deploy-candidate.py",
+  "sha256": "6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45",
+  "independentReviewSha256": "f3d7b3674d5e0c6395527fc640843613659f428559b3d3cdd6b8c341442f2fda",
+  "adoptedPriorReviewSha256": "8809ed34320dbfe7fac4b82aba3b64950f23ff14425006402e7c6663015e4b05",
+  "exactConsumers": [
+    "scripts/release/boot-entry.py:DEPLOYMENT_CAPACITY_SHA256",
+    "scripts/release/rollback-candidate.py:DEPLOYMENT_CAPACITY_SHA256"
+  ],
+  "scope": "Replace old reviewed-capacity digest with this exact independently reviewed helper in original two caller declarations; original hash comparison remains. Run existing generator --check and directly affected caller assertion. No new approval mechanism.",
+  "notVerified": [
+    "Actual production container mounts and startup",
+    "Actual production target, DB/config/backup compatibility",
+    "Production deployment and business acceptance"
+  ],
+  "productionExecutedOrReleasedByThisDecision": false
+}

@@ -165,7 +165,8 @@
   "exact35": {
     "profile": "source-confirmed-native-exact35-v1",
     "migrationCount": 27,
-    "installationRecord": "/etc/naijue-erp/fresh35-combined-installation-v1.json"
+    "installationRecord": "/etc/naijue-erp/fresh35-combined-installation-v1.json",
+    "productionProfile": "source-confirmed-native-exact35-production-v2"
   },
   "native35": {
     "root": "backend/native35-source",

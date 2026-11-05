@@ -1,0 +1,134 @@
+{
+  "task_id": "QB-PRODUCTION-V2-F01-READONLY-MOUNTS-6e1edabe-20261106",
+  "verdict": "PASS_SCOPED_SOURCE_AND_MODELS_NOT_ACTUAL_CONTAINER_OR_UID",
+  "recorded_at": "2026-11-06T03:11:47.952284+08:00",
+  "snapshot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-v2-readonly-mounts-01",
+  "status": "FIXED_HASH_SUCCESSOR_NOT_COMMITTED_OR_MERGED",
+  "helper_sha256": "6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45",
+  "prior_helper_sha256": "bc713a0bbabd43d1c404ab56c9d71f5c7760461ce95886bd2c582e02ffffc9ed",
+  "ready_sha256": "840bec33ab41c7bb662497d8c8ee3dc25720662b0db23a54aca61596a9fa430c",
+  "owner_result_sha256": "4b6d4227fbb5e67b21cd7574833bf47a7ffeb3af5181ec88af571d22868fa9f9",
+  "closed_findings": [
+    {
+      "id": "F01",
+      "state": "CLOSED_SOURCE_SCOPE",
+      "original_result_sha256": "8809ed34320dbfe7fac4b82aba3b64950f23ff14425006402e7c6663015e4b05",
+      "resolution": "Actual original container argv builder now consumes fixed protected record plus INDEX/nine exact native reference leaf binds at identical absolute paths, all readonly; no whole directory/credential/new plan fields."
+    }
+  ],
+  "remaining_findings": [],
+  "source_pins": [
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "sha256": "6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45",
+      "bytes": 189938,
+      "priorSha256": "bc713a0bbabd43d1c404ab56c9d71f5c7760461ce95886bd2c582e02ffffc9ed",
+      "changedFromPrior": true
+    },
+    {
+      "path": "scripts/release/test_capacity_launch_wiring.py",
+      "sha256": "bccd978780369afbbcf3e909ab6921520f7e1453d039a526be002089caaae61c",
+      "bytes": 84752,
+      "priorSha256": "e49fa69e5878875701a61d13acbe2785e559378f95fb381a246caa24742af3cb",
+      "changedFromPrior": true
+    },
+    {
+      "path": "config/release-contract.json",
+      "sha256": "bea9c9c79025f0f9def215fd72c9c71d6003ea4165ead1a9ecebf8c8bb289871",
+      "bytes": 7371,
+      "priorSha256": "bea9c9c79025f0f9def215fd72c9c71d6003ea4165ead1a9ecebf8c8bb289871",
+      "changedFromPrior": false
+    },
+    {
+      "path": "scripts/release/generate-release-contract.mjs",
+      "sha256": "56c56bc77d7d8b3f560aa0ff3affac53864345e31b75cca7b37a035b488dde32",
+      "bytes": 11120,
+      "priorSha256": "56c56bc77d7d8b3f560aa0ff3affac53864345e31b75cca7b37a035b488dde32",
+      "changedFromPrior": false
+    },
+    {
+      "path": "scripts/release/release-file-contract.test.mjs",
+      "sha256": "989258ecaedfafdd799fe3f6aa587db93a484953fc25b643cc65fc66673e72cc",
+      "bytes": 6305,
+      "priorSha256": "989258ecaedfafdd799fe3f6aa587db93a484953fc25b643cc65fc66673e72cc",
+      "changedFromPrior": false
+    },
+    {
+      "path": "scripts/release/boot-entry.py",
+      "sha256": "ad6c207d5320fb20f925d1cef98979b2024d317d3e67fc6fc5e0a9ed17a37d14",
+      "bytes": 49678,
+      "priorSha256": "ad6c207d5320fb20f925d1cef98979b2024d317d3e67fc6fc5e0a9ed17a37d14",
+      "changedFromPrior": false
+    },
+    {
+      "path": "scripts/release/rollback-candidate.py",
+      "sha256": "9f03ce1d1b2b9820e7aaa21d57dae4bf83d7b406324e9bad649007cb102a7872",
+      "bytes": 7665,
+      "priorSha256": "9f03ce1d1b2b9820e7aaa21d57dae4bf83d7b406324e9bad649007cb102a7872",
+      "changedFromPrior": false
+    }
+  ],
+  "reused_prior_checks": {
+    "passed_groups": 10,
+    "result_path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/C-0448-PRODUCTION-V2-RELEASE-ADAPTATION-20261106/RESULT.json",
+    "original_verdict": "NEED_FIX preserved; only F01 changed in this successor",
+    "note": "Five other frozen files identical; deploy existing functions only runtime_mount_arguments changed, adds finite helper/dictionary. No full packet re-review."
+  },
+  "independent_recheck": {
+    "passed_groups": 5,
+    "mount_checks": [
+      {
+        "name": "actual create argv carries exact11 readonly single leaves; old mounts and synthetic V1 behavior unchanged",
+        "state": "PASS"
+      },
+      {
+        "name": "six source/index/raw-byte/credential-path/duplicate/target substitutions refuse before argv",
+        "state": "PASS"
+      },
+      {
+        "name": "four root/path/permission/singlelink guard branches remain enforced under metadata model",
+        "state": "PASS"
+      },
+      {
+        "name": "exact nine native resolver path/hash pins reused with no expanded reference set",
+        "state": "PASS"
+      }
+    ],
+    "approval_gate": {
+      "state": "PASS_GATE_PRESERVED",
+      "checks": [
+        {
+          "caller": "boot-entry.py",
+          "state": "REAPPROVAL_REQUIRED"
+        },
+        {
+          "caller": "rollback-candidate.py",
+          "state": "REAPPROVAL_REQUIRED"
+        }
+      ],
+      "scope": "Pure original API with exact new helper/unchanged caller bytes, no source write, deployment or new approval",
+      "harness_note": "Initial one-line harness referenced an undefined variable before invoking the gate; corrected only the harness."
+    },
+    "method": "Only F01 carrier increment, fixed snapshot functions with explicit root stat/record/capacity identity models, real pinned reference bytes read-only and local tiny fixtures. No copied reference tree, Docker/PG/server or actual ordinary UID verification."
+  },
+  "owner_tests": "Adopt fixed RESULT two direct cases exit0 receipt; not whole-suite or actual-container proof.",
+  "preserved": [
+    "Protected root/hash-bound installation record selects V2; V1 adds no production mounts and prior validation refusal remains.",
+    "Target/source/program and build manifest native35.sourceSet/referenceIndex bind before exposing exact finite eleven files. INDEX rows cannot request unlisted/credential/duplicate paths; bytes/sizes/hashes enforced against original9 native pins.",
+    "Root/nonwritable/canonical/no-symlink/singlelink guards retained; all new files passed as individual readonly binds. Existing capacity/credential/media/spool argv unchanged.",
+    "boot/rollback byte-identical and9394f7 approval pins unchanged; original generator approval API rejects6e helper for both callers as DEPLOYMENT_HELPER_REAPPROVAL_REQUIRED. No auto hash rewrite or release permission."
+  ],
+  "unverified": [
+    "Actual Docker mounts, generated parent permissions, ordinary UID read/watch and native loader startup on final exact carrier.",
+    "Actual PG/business/restore/capacity or deployment, full release closure/build.",
+    "Original helper registration/caller-pin update still belongs to C original exact approval mechanism; QB did not perform it.",
+    "No commit/merge of this snapshot claimed; synthetic216b/2235 package untouched."
+  ],
+  "harness_note": "Initial one-line harness referenced an undefined variable before invoking the gate; corrected only the harness.",
+  "actual_model": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "source_modified": false,
+  "server_or_pg": false,
+  "approval_modified": false,
+  "next": "C may adopt exact6e source-only F01 closure and perform original reviewed helper registration with final callers as separate exact binding. Actual UID/container/PG scope remains T45-only next controlled carrier."
+}

@@ -1,0 +1,87 @@
+{
+  "state": "C_REVIEWED_HELPER_REGISTERED_IN_ORIGINAL_TWO_CALLERS_SOURCE_ONLY",
+  "atUtc": "2026-11-05T19:15:00.673876+00:00",
+  "decisionSha256": "b1ff303dd4152a99c4ba347720a9ffd49f551a3fafd4db1d5aa6f41d28a8e20a",
+  "independentReviewSha256": "f3d7b3674d5e0c6395527fc640843613659f428559b3d3cdd6b8c341442f2fda",
+  "previousCapacityPin": "9394f7d5eb37f0f3c43d37283cf4d0df1b86ed873f73d47c9df92acca93bd79c",
+  "newCapacityPin": "6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45",
+  "helperBytesChanged": false,
+  "fullPinChanged": false,
+  "files": [
+    {
+      "path": "config/release-contract.json",
+      "bytes": 7371,
+      "sha256": "bea9c9c79025f0f9def215fd72c9c71d6003ea4165ead1a9ecebf8c8bb289871",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source/config/release-contract.json",
+      "role": "original-seven"
+    },
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "bytes": 189938,
+      "sha256": "6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source/scripts/release/deploy-candidate.py",
+      "role": "original-seven"
+    },
+    {
+      "path": "scripts/release/generate-release-contract.mjs",
+      "bytes": 11120,
+      "sha256": "56c56bc77d7d8b3f560aa0ff3affac53864345e31b75cca7b37a035b488dde32",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source/scripts/release/generate-release-contract.mjs",
+      "role": "original-seven"
+    },
+    {
+      "path": "scripts/release/test_capacity_launch_wiring.py",
+      "bytes": 84752,
+      "sha256": "bccd978780369afbbcf3e909ab6921520f7e1453d039a526be002089caaae61c",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source/scripts/release/test_capacity_launch_wiring.py",
+      "role": "original-seven"
+    },
+    {
+      "path": "scripts/release/release-file-contract.test.mjs",
+      "bytes": 6305,
+      "sha256": "989258ecaedfafdd799fe3f6aa587db93a484953fc25b643cc65fc66673e72cc",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source/scripts/release/release-file-contract.test.mjs",
+      "role": "original-seven"
+    },
+    {
+      "path": "scripts/release/boot-entry.py",
+      "bytes": 49678,
+      "sha256": "b89f416918a4634ebc23bc1ea1bd87ccd0977d6a2f3741a9ed9cf56384a22b7b",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source/scripts/release/boot-entry.py",
+      "role": "original-seven"
+    },
+    {
+      "path": "scripts/release/rollback-candidate.py",
+      "bytes": 7665,
+      "sha256": "3b14e8b259e3974236e60a1fcbd1442d6e2cb950d25e068362ebf4323fe3bf63",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source/scripts/release/rollback-candidate.py",
+      "role": "original-seven"
+    },
+    {
+      "path": "scripts/release/test_rollback_helper_alignment.py",
+      "bytes": 8766,
+      "sha256": "bd46ed520d2549927c1506c5ca73ad64496d0053372a52db54419d99c8d2a790",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-reviewed-capacity-helper-registration-01/source/scripts/release/test_rollback_helper_alignment.py",
+      "role": "necessary-direct-caller-test"
+    }
+  ],
+  "checks": [
+    {
+      "command": "node24.21 scripts/release/generate-release-contract.mjs --check",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 -B -m unittest selected boot/rollback caller positive and rejection cases",
+      "tests": 6,
+      "exitCode": 0
+    }
+  ],
+  "necessaryExtraTest": "Existing Exact35RollbackIncrement actual-current-helper rejection assumed helper was still unreviewed. Now tests intentionally changed/unreviewed bytes refusal instead; genuine current reviewed helper positive is checked by original RollbackHelper case. Test-only eighth leaf, one line.",
+  "notClaimed": [
+    "Actual production container mounts/startup",
+    "Production DB/config/backup compatibility",
+    "Production deployment or business acceptance"
+  ],
+  "currentSynthetic223598PackageChanged": false,
+  "productionOperations": 0
+}

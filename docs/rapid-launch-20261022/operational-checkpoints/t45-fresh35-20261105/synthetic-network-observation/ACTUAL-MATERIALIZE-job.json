@@ -1,0 +1,17 @@
+{
+  "jobId": "t45-f35-223598-materialize-20261106-01",
+  "taskId": "T45",
+  "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+  "status": "COMPLETED",
+  "unit": "naijue-erp-op-5cc58239-8d1da8e696ce",
+  "atUTC": "2026-11-05T19:04:27.149193+00:00",
+  "grantId": "5cc58239751e4e2a",
+  "privateLogsExported": false,
+  "businessAcceptanceClaimed": false,
+  "exitCode": 0,
+  "elapsedSeconds": 365.5825378121808,
+  "exports": [
+    "fresh35-materialize-app-result.json"
+  ],
+  "finishedAtUTC": "2026-11-05T19:10:32.755556+00:00"
+}

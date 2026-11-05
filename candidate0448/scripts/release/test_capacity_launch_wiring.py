@@ -242,13 +242,13 @@ class Exact35ReleaseIncrement(unittest.TestCase):
                 p,r=self.fixture(root)
                 self.assertEqual(D.runtime_entry_arguments(p),['--exact35','/run/naijue-rewrite/runtime.json'])
                 self.assertFalse(D.exact26_selected(p));self.assertEqual(D.runtime_references(p),p['runtime35']['references'])
-                args=D.runtime_mount_arguments(p)
+                with patch.object(D,'runtime35_record',return_value=self.descriptors()[0]):args=D.runtime_mount_arguments(p)
                 self.assertTrue(any('dst=/run/naijue-rewrite/media/images' in a and not a.endswith(',readonly') for a in args))
                 self.assertTrue(any('dst=/private/inventory-exports' in a and not a.endswith(',readonly') for a in args))
                 self.assertFalse(any('runtime26/' in a for a in args))
                 key=root/'credential.key';key.write_bytes(b'Z'*32);key.chmod(0o600)
                 p['runtime35']['credentialRequestKey']=dict(hostFile=str(key),containerFile='/run/naijue-rewrite/credential-request.key')
-                with patch.object(pathlib.Path,'read_bytes',side_effect=AssertionError('private key must not be read')):
+                with patch.object(D,'runtime35_record',return_value=self.descriptors()[0]),patch.object(pathlib.Path,'read_bytes',side_effect=AssertionError('private key must not be read')):
                     self.assertTrue(any('dst=/run/naijue-rewrite/credential-request.key,readonly' in a for a in D.runtime_mount_arguments(p)))
                 self.assertEqual(D.runtime_entry_arguments({}),['/run/naijue-rewrite/runtime.json'])
                 r1=copy.deepcopy(p);del r1['runtime35'];r1['runtimeSelector']='exact26-r1'
@@ -300,53 +300,57 @@ class Exact35ReleaseIncrement(unittest.TestCase):
                     if key=='metadata':bad['newDatabaseReceipt']=bad['runtime35']['references'][key]
                     self.assertNotEqual(before,D.runtime_binding(bad),key)
 
+    def complete_runtime_fixture(self, root, values):
+        p,r=self.fixture(root);record,source,program=values;refs=p['runtime35']['references']
+        def write(name,value):
+            data=json.dumps(value,separators=(',',':')).encode();file=root/(name+'.json');file.write_bytes(data)
+            refs[name]=dict(path=str(file),sha256=hashlib.sha256(data).hexdigest());return refs[name]
+        paths=[D.RELEASE_CONTRACT['entrypoints']['backend']['source'],'apps/api/src/production-provider-composition.ts',
+               'apps/api/src/production-application-host.ts','apps/api/src/postgres-read-api.ts','adapters/postgres/src/bounded-pool.ts',
+               'adapters/postgres/src/native-import-accounting-capability.ts','adapters/postgres/src/runtime27-command-issuer.ts',
+               'apps/api/src/production-capacity-launch.ts','apps/api/src/capacity-runtime-probe.ts']
+        inputs=[dict(path=name,bytes=1,sha256='a'*64) for name in paths]
+        sql={**{'adapters/postgres/migrations/%04d_example.sql'%i:'migrations/%04d_example.sql'%i for i in range(1,28)},**D.APPROVED_SQL_PATCHES}
+        sql_sources=[dict(path=name,bytes=1,sha256='a'*64) for name in sql]
+        source['currentSourcePins']=[dict(path=row['path'],sha256=row['sha256']) for row in sql_sources]
+        keys=('format','baseArtifacts','capturedSourcePins','currentSourcePins','currentSourceDelta','patches')
+        source['sourceSetSha256']=self.native_hash({k:source[k] for k in keys});program['sourceSetSha256']=source['sourceSetSha256']
+        program['programSha256']=self.native_hash({k:v for k,v in program.items() if k!='programSha256'})
+        record['binding']['sourceSetSha256']=source['sourceSetSha256'];record['programSha256']=program['programSha256']
+        proposal,physical=record['target']['proposal'],record['target']['physical']
+        identity=dict(systemIdentifier=physical['systemIdentifier'],databaseOid=physical['databaseOid'],database=proposal['database'],
+                      owner=proposal['owner'],actor=proposal['owner'],serverVersionNum=physical['serverVersionNum'],host=proposal['host'],port=proposal['port'])
+        write('metadata',dict(format='FRESH35_COMBINED_ACTUAL_CATALOG_V1',sourceSetSha256=source['sourceSetSha256'],identity=identity,lineage=[dict(version=i) for i in range(1,28)]))
+        record['catalogSha256']=refs['metadata']['sha256'];p['newDatabaseReceipt']=refs['metadata']
+        write('sourceSet',source);write('program',program)
+        common=dict(sourceCommit=p['sourceCommit'],buildId=p['buildId'])
+        write('sourceManifest',dict(format='naijue-release-source-v1',files=inputs+sql_sources+[D.RELEASE_CONTRACT_SOURCE],**common))
+        component=dict(entrySource=paths[0],entryOutput=D.RELEASE_CONTRACT['entrypoints']['backend']['member'],inputs=inputs)
+        output=dict(member=component['entryOutput'],role='backend',bytes=1,sha256='a'*64)
+        write('buildManifest',dict(format='naijue-release-build-v1',components=dict(backend=component),files=[output],**common))
+        write('buildReceipt',dict(format='naijue-production-build-receipt-v1',status='REAL_BUILD_AND_PACK_CONTRACT_VALIDATED',
+              sourceManifestSha256=refs['sourceManifest']['sha256'],buildManifestSha256=refs['buildManifest']['sha256'],node=D.RELEASE_CONTRACT['node'],**common))
+        manifest=dict(sourceManifestSha256=refs['sourceManifest']['sha256'],buildManifestSha256=refs['buildManifest']['sha256'],
+                      entrypoints=dict(backend=output['member']),graphs=dict(backend=dict(**component,outputs=[output['member']])),
+                      members=[dict(path=output['member'],bytes=1,sha256='a'*64)]+[dict(path=member,sourcePath=name,role='migration',bytes=1,sha256='a'*64) for name,member in sql.items()])
+        write('backupCoverage',dict(database=proposal['database'],target=record['target'],schemaVersions=p['schemaVersions'],catalogSha256=record['catalogSha256'],
+              backupReceiptSha256=p['backupReceipt']['sha256'],runtimeIdentity=p['runtimeConfiguration']['identity'],media=p['runtime35']['media'],r1Protected=True,
+              isolatedRestore=dict(currentAppLoginRepresentativeRead='PASS'),**common))
+        target=dict(host=proposal['host'],port=proposal['port'],database=proposal['database'],user=proposal['runtime'],ssl=False)
+        r=dict(schemaVersion=1,profile=D.RELEASE_CONTRACT['exact35']['profile'],documentCommands='NATIVE_RUNTIME',publicOrigin=D.ORIGIN,
+               http=dict(host='0.0.0.0',port=3000,acceptedHosts=[D.HOST]),assets=dict(root='/app/web',entry='index.html'),build=common,
+               postgres=dict(target=target),authentication={},productMedia=dict(root=p['runtime35']['media']['containerRoot'],rootKey='images'),
+               inventoryOutputSpool=dict(directory='/private/inventory-exports',maxBytes=536870912,maxConcurrent=1,maxDurationMs=120000),
+               capacityLaunch=dict(target=dict(host=target['host'],port=target['port'],database=target['database'],role=target['user'],databaseOid=physical['databaseOid'],postmasterStart=physical['postmasterStart'])))
+        return p,r,record,manifest,write
+
     def test_closed_runtime_rejects_mismatch_and_even_consistent_synthetic_record_cannot_enter_bridge(self):
         # Only the OS-record read and previously accepted capacity validator are
         # doubled. Actual release/build/source/member validation runs below.
         with tempfile.TemporaryDirectory() as tmp:
             root=pathlib.Path(tmp).resolve();root.chmod(0o700)
             with patch.object(D,'ROOT',root):
-                p,r=self.fixture(root);record,source,program=self.descriptors();refs=p['runtime35']['references']
-                def write(name,value):
-                    data=json.dumps(value,separators=(',',':')).encode();file=root/(name+'.json');file.write_bytes(data)
-                    refs[name]=dict(path=str(file),sha256=hashlib.sha256(data).hexdigest());return refs[name]
-                paths=[D.RELEASE_CONTRACT['entrypoints']['backend']['source'],'apps/api/src/production-provider-composition.ts',
-                       'apps/api/src/production-application-host.ts','apps/api/src/postgres-read-api.ts','adapters/postgres/src/bounded-pool.ts',
-                       'adapters/postgres/src/native-import-accounting-capability.ts','adapters/postgres/src/runtime27-command-issuer.ts',
-                       'apps/api/src/production-capacity-launch.ts','apps/api/src/capacity-runtime-probe.ts']
-                inputs=[dict(path=name,bytes=1,sha256='a'*64) for name in paths]
-                sql={**{'adapters/postgres/migrations/%04d_example.sql'%i:'migrations/%04d_example.sql'%i for i in range(1,28)},**D.APPROVED_SQL_PATCHES}
-                sql_sources=[dict(path=name,bytes=1,sha256='a'*64) for name in sql]
-                source['currentSourcePins']=[dict(path=row['path'],sha256=row['sha256']) for row in sql_sources]
-                keys=('format','baseArtifacts','capturedSourcePins','currentSourcePins','currentSourceDelta','patches')
-                source['sourceSetSha256']=self.native_hash({k:source[k] for k in keys});program['sourceSetSha256']=source['sourceSetSha256']
-                program['programSha256']=self.native_hash({k:v for k,v in program.items() if k!='programSha256'})
-                record['binding']['sourceSetSha256']=source['sourceSetSha256'];record['programSha256']=program['programSha256']
-                proposal,physical=record['target']['proposal'],record['target']['physical']
-                identity=dict(systemIdentifier=physical['systemIdentifier'],databaseOid=physical['databaseOid'],database=proposal['database'],
-                              owner=proposal['owner'],actor=proposal['owner'],serverVersionNum=physical['serverVersionNum'],host=proposal['host'],port=proposal['port'])
-                write('metadata',dict(format='FRESH35_COMBINED_ACTUAL_CATALOG_V1',sourceSetSha256=source['sourceSetSha256'],identity=identity,lineage=[dict(version=i) for i in range(1,28)]))
-                record['catalogSha256']=refs['metadata']['sha256'];p['newDatabaseReceipt']=refs['metadata']
-                write('sourceSet',source);write('program',program)
-                common=dict(sourceCommit=p['sourceCommit'],buildId=p['buildId'])
-                write('sourceManifest',dict(format='naijue-release-source-v1',files=inputs+sql_sources+[D.RELEASE_CONTRACT_SOURCE],**common))
-                component=dict(entrySource=paths[0],entryOutput=D.RELEASE_CONTRACT['entrypoints']['backend']['member'],inputs=inputs)
-                output=dict(member=component['entryOutput'],role='backend',bytes=1,sha256='a'*64)
-                write('buildManifest',dict(format='naijue-release-build-v1',components=dict(backend=component),files=[output],**common))
-                write('buildReceipt',dict(format='naijue-production-build-receipt-v1',status='REAL_BUILD_AND_PACK_CONTRACT_VALIDATED',
-                      sourceManifestSha256=refs['sourceManifest']['sha256'],buildManifestSha256=refs['buildManifest']['sha256'],node=D.RELEASE_CONTRACT['node'],**common))
-                manifest=dict(sourceManifestSha256=refs['sourceManifest']['sha256'],buildManifestSha256=refs['buildManifest']['sha256'],
-                              entrypoints=dict(backend=output['member']),graphs=dict(backend=dict(**component,outputs=[output['member']])),
-                              members=[dict(path=output['member'],bytes=1,sha256='a'*64)]+[dict(path=member,sourcePath=name,role='migration',bytes=1,sha256='a'*64) for name,member in sql.items()])
-                write('backupCoverage',dict(database=proposal['database'],target=record['target'],schemaVersions=p['schemaVersions'],catalogSha256=record['catalogSha256'],
-                      backupReceiptSha256=p['backupReceipt']['sha256'],runtimeIdentity=p['runtimeConfiguration']['identity'],media=p['runtime35']['media'],r1Protected=True,
-                      isolatedRestore=dict(currentAppLoginRepresentativeRead='PASS'),**common))
-                target=dict(host=proposal['host'],port=proposal['port'],database=proposal['database'],user=proposal['runtime'],ssl=False)
-                r=dict(schemaVersion=1,profile=D.RELEASE_CONTRACT['exact35']['profile'],documentCommands='NATIVE_RUNTIME',publicOrigin=D.ORIGIN,
-                       http=dict(host='0.0.0.0',port=3000,acceptedHosts=[D.HOST]),assets=dict(root='/app/web',entry='index.html'),build=common,
-                       postgres=dict(target=target),authentication={},productMedia=dict(root=p['runtime35']['media']['containerRoot'],rootKey='images'),
-                       inventoryOutputSpool=dict(directory='/private/inventory-exports',maxBytes=536870912,maxConcurrent=1,maxDurationMs=120000),
-                       capacityLaunch=dict(target=dict(host=target['host'],port=target['port'],database=target['database'],role=target['user'],databaseOid=physical['databaseOid'],postmasterStart=physical['postmasterStart'])))
+                p,r,record,manifest,_=self.complete_runtime_fixture(root,self.descriptors())
                 with patch.object(D,'runtime35_record',return_value=record),patch.object(D,'capacity_runtime_configuration',side_effect=lambda p,r,pending:{k:v for k,v in r.items() if k!='capacityLaunch'}):
                     with self.assertRaisesRegex(D.Refused,'LOOPBACK_INSTALL_RECORD_NOT_A_BRIDGE_PRODUCTION_TARGET'):D.validate_runtime35(p,manifest,r)
                     for change,code in [(lambda q:q.update(runtime26Review={}), 'CLOSED_EXACT35_RUNTIME'),
@@ -767,5 +771,141 @@ class CapacityQaObserverIncrement(unittest.TestCase):
 
     def test_helper_boot_pin_matches_exact_successor(self):
         self.assertEqual(hashlib.sha256((HERE/'deploy-candidate.py').read_bytes()).hexdigest(),B.DEPLOYMENT_CAPACITY_SHA256)
+
+class Exact35ProductionV2Increment(Exact35ReleaseIncrement):
+    def production_descriptors(self):
+        record,source,program=self.descriptors();t=record['target'];t.update(format='FRESH35_COMBINED_TARGET_BINDING_V2',purpose='PRODUCTION_NEW_EMPTY_EXACT35',startsAt=1793836800000,expiresAt=1793838000000)
+        t['proposal'].update(database='production_new35',owner='new35_owner',controller='new35_controller',runtime='new35_runtime',admin='new35_admin',host='127.0.0.1',port=18651,workspaceDirectory='/srv/naijue-erp/new35-install')
+        t['ordinary']=dict(connectHost='new35-db',connectPort=5432,serverAddress='172.30.0.4',serverPort=5432,runtimeLoginValidUntil=None,referenceDirectory='/srv/naijue-erp/new35-references')
+        record.update(format='FRESH35_COMBINED_INSTALLATION_RECORD_V2');record['transactionReceipt'].update(database=t['proposal']['database'],actor=t['proposal']['owner']);self.rebind(record,program)
+        return record,source,program
+    def rebind(self,record,program):
+        target_sha=self.native_hash(record['target']);record['binding']['targetSha256']=program['targetSha256']=target_sha;program['programSha256']=self.native_hash({k:v for k,v in program.items() if k!='programSha256'});record['programSha256']=program['programSha256']
+    def test_v2_exact_native_production_record_and_historical_window_are_accepted(self):
+        values=self.production_descriptors();self.assertEqual(D.validate_exact35_installation_data(*values),values[0]['target'])
+    def test_v2_no_format_only_or_semantic_target_substitution(self):
+        mutations=[lambda t:t.update(purpose='SYNTHETIC'),lambda t:t['proposal'].update(database='synthetic_disguised'),lambda t:t['proposal'].update(runtime=t['proposal']['owner']),lambda t:t['ordinary'].update(connectHost='host bad'),lambda t:t['ordinary'].update(referenceDirectory='/'),lambda t:t['ordinary'].update(runtimeLoginValidUntil='bad'),lambda t:t['physical'].update(databaseOid='0'),lambda t:t['physical'].update(systemIdentifier='7701337335828107278'),lambda t:t['physical'].update(systemIdentifier='18446744073709551616'),lambda t:t['physical'].update(postmasterStart='invalid'),lambda t:t.update(expiresAt=t['startsAt']+1200001)]
+        for mutate in mutations:
+            with self.subTest(mutate=mutate):
+                record,source,program=self.production_descriptors();mutate(record['target']);self.rebind(record,program)
+                with self.assertRaises(D.Refused):D.validate_exact35_installation_data(record,source,program)
+    def test_v2_full_runtime_keeps_source_catalog_capacity_and_restore_bindings(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp).resolve();root.chmod(0o700)
+            with patch.object(D,'ROOT',root):
+                p,r,record,manifest,write=self.complete_runtime_fixture(root,self.production_descriptors())
+                ordinary=record['target']['ordinary'];target=r['postgres']['target']
+                target.update(host=ordinary['connectHost'],port=ordinary['connectPort'])
+                r['profile']=D.RELEASE_CONTRACT['exact35']['productionProfile']
+                # Reuse the real finite capacity validator, with an exact ordinary
+                # endpoint rather than the temporary install endpoint.
+                (root/'capacity').mkdir()
+                cp,cap=CapacityWiring().fixture(root/'capacity')
+                r['capacityLaunch']=cap['capacityLaunch']
+                c=r['capacityLaunch'];c['target']=dict(host=target['host'],port=target['port'],database=target['database'],role=target['user'],databaseOid=record['target']['physical']['databaseOid'],postmasterStart=record['target']['physical']['postmasterStart'])
+                # Bind the existing finite capacity fixture files.
+                p['capacityHost']=cp['capacityHost']
+                profile_path=pathlib.Path(p['capacityHost']['profile']['hostFile'])
+                profile=json.loads(profile_path.read_text());profile.update(target=c['target'],binding=c['window']['binding'],startsAt=c['window']['startsAt'],expiresAt=c['window']['expiresAt'])
+                c['producer']['volumes']['media']['path']=r['productMedia']['root'];profile['volumes']['media']['path']=r['productMedia']['root']
+                profile_path.write_text(json.dumps(profile));p['capacityHost']['profile']['sha256']=hashlib.sha256(profile_path.read_bytes()).hexdigest()
+                c['producer']['args']=['--profile='+p['capacityHost']['profile']['sha256']]
+                with patch.object(D,'runtime35_record',return_value=record):
+                    D.validate_runtime35(p,manifest,r)
+                    p.update(packReceipt={'path':'pack'},archive={},manifest={},beforeCAS={'services':{}},backupMaxAgeSeconds=60)
+                    original_reference=D.reference
+                    def entry_reference(ref,*args):
+                        if ref is p['packReceipt']:
+                            return dict(status='PACKED_AND_EXTRACTED_READBACK_MATCH',archiveExtractions=1,buildId=p['buildId'],sourceCommit=p['sourceCommit'],archive={'sha256':'pack'},manifestSha256='manifest',members=1)
+                        if ref is p['backupReceipt']:
+                            return dict(status='PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED',physicalVerifiedOnce=True,mediaAndConfigurationShapesStable=True,databaseFiles=1,walRanges=['synthetic'],finishedAtUtc=D.now())
+                        return original_reference(ref,*args)
+                    p['archive']['sha256']='pack';p['manifest']['sha256']='manifest'
+                    with patch.object(D,'verified_archive',return_value=(manifest,[{}])),patch.object(D,'reference',side_effect=entry_reference),patch.object(D,'file_identity',return_value=p['runtimeConfiguration']['identity']),patch.object(D,'json_file',return_value=r),patch.object(D,'validate_runtime35',side_effect=RuntimeError('EXACT_RECORD_VALIDATOR_REACHED')) as validator:
+                        with self.assertRaisesRegex(RuntimeError,'EXACT_RECORD_VALIDATOR_REACHED'):D.validate_references(p)
+                        validator.assert_called_once_with(p,manifest,r,False)
+                    for change,code in [
+                        (lambda q:q.update(profile=D.RELEASE_CONTRACT['exact35']['profile']),'CLOSED_EXACT35_RUNTIME'),
+                        (lambda q:q['postgres']['target'].update(host=record['target']['proposal']['host']),'CAPACITY_RUNTIME_TARGET_MISMATCH'),
+                        (lambda q:q['capacityLaunch']['target'].update(databaseOid='999'),'SAME_PHYSICAL_CAPACITY_TARGET'),
+                        (lambda q:q['capacityLaunch']['window'].update(approved=False),'FRESH_APPROVED_CAPACITY_WINDOW'),
+                        (lambda q:q['productMedia'].update(root='/other'),'CAPACITY_MEDIA_ROOT_MISMATCH')]:
+                        bad=copy.deepcopy(r);change(bad)
+                        with self.subTest(code=code),self.assertRaisesRegex(D.Refused,code):D.validate_runtime35(p,manifest,bad)
+                    bad=copy.deepcopy(manifest);bad['graphs']['backend']['inputs']=[]
+                    with self.assertRaisesRegex(D.Refused,'BACKEND_GRAPH'):D.validate_runtime35(p,bad,r)
+                    coverage=D.reference(p['runtime35']['references']['backupCoverage']);coverage['isolatedRestore']={};write('backupCoverage',coverage)
+                    with self.assertRaisesRegex(D.Refused,'RESTORE_COVERAGE'):D.validate_runtime35(p,manifest,r)
+
+    def test_v2_source_program_and_committed_catalog_cannot_be_substituted(self):
+        changes=[lambda a:a[0]['binding'].update(sourceSetSha256='0'*64),
+                 lambda a:a[1]['currentSourcePins'][0].update(sha256='0'*64),
+                 lambda a:a[2]['statements'].append('changed'),
+                 lambda a:a[0].update(catalogSpecSha256='0'*64),
+                 lambda a:a[0]['transactionReceipt'].update(actor='postgres')]
+        for change in changes:
+            values=self.production_descriptors();change(values)
+            with self.subTest(change=change),self.assertRaises(D.Refused):D.validate_exact35_installation_data(*values)
+
+    def test_v2_mounts_only_exact_record_and_ten_pinned_reference_files_readonly(self):
+        import os
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp).resolve();root.chmod(0o700)
+            with patch.object(D,'ROOT',root):
+                p,_=self.fixture(root);record,source,program=self.production_descriptors()
+                reference_root=HERE.parents[2]/'reference-inputs'
+                # Files are copied only into this synthetic test directory so
+                # mutation negatives never alter immutable shared references.
+                destination=root/'references';destination.mkdir()
+                for name in ['INDEX.json',*D.EXACT35_REFERENCE_INPUTS]:
+                    file=destination/name;file.parent.mkdir(parents=True,exist_ok=True);file.write_bytes((reference_root/name).read_bytes())
+                record['target']['ordinary']['referenceDirectory']=str(destination);self.rebind(record,program)
+                refs=p['runtime35']['references']
+                def save(ref,value):
+                    data=json.dumps(value).encode();pathlib.Path(ref['path']).write_bytes(data);ref['sha256']=hashlib.sha256(data).hexdigest()
+                save(refs['sourceSet'],source);save(refs['program'],program)
+                manifest=dict(native35=dict(sourceSetSha256=source['sourceSetSha256'],referenceIndexSha256=hashlib.sha256((destination/'INDEX.json').read_bytes()).hexdigest()))
+                p['manifest']=dict(path=str(root/'manifest.json'),sha256='a'*64);save(p['manifest'],manifest)
+                original_stat=pathlib.Path.stat
+                def root_stat(path,*args,**kwargs):
+                    st=original_stat(path,*args,**kwargs)
+                    if str(path) in [p['capacityHost']['collector']['hostFile'],p['capacityHost']['profile']['hostFile']]:return st
+                    items=list(st);items[4]=0;return os.stat_result(items)
+                with patch.object(D,'runtime35_record',return_value=record),patch.object(pathlib.Path,'stat',root_stat):
+                    args=D.runtime_mount_arguments(p)
+                    values=[args[i+1] for i,x in enumerate(args) if x=='--mount']
+                    expected=[D.RELEASE_CONTRACT['exact35']['installationRecord'],*[str(destination/n) for n in ['INDEX.json',*sorted(D.EXACT35_REFERENCE_INPUTS)]]]
+                    for name in expected:self.assertEqual(values.count('type=bind,src='+name+',dst='+name+',readonly'),1)
+                    self.assertEqual(len([v for v in values if 'dst='+str(destination) in v]),10)
+                    self.assertNotIn('type=bind,src='+str(destination)+',dst='+str(destination)+',readonly',values)
+                    # Exercise the actual container argv builder, no Docker call.
+                    p.update(names={'app':'app'},networks={'front':{'id':'front'},'data':{'id':'data'}},releaseDirectory=str(root/'release'))
+                    class Docker:
+                        def __init__(self):self.calls=[]
+                        def run(self,args):self.calls.append(args);return ('f'*64).encode()
+                    docker=Docker()
+                    with patch.object(D,'capacity_gate_binding',return_value={'hostFifo':'/private/fifo'}),patch.object(D,'limits_args',return_value=[]),patch.object(D,'labels',return_value=[]),patch.object(D,'capacity_gate_arguments',return_value=['image','fixed']):D.create_capacity_gate_app(p,docker)
+                    for name in expected:self.assertIn('type=bind,src='+name+',dst='+name+',readonly',docker.calls[0])
+                    bad=copy.deepcopy(manifest);bad['native35']['sourceSetSha256']='0'*64;save(p['manifest'],bad)
+                    with self.assertRaisesRegex(D.Refused,'REFERENCE_BUILD_BINDING'):D.runtime_mount_arguments(p)
+                    save(p['manifest'],manifest)
+                    file=destination/next(iter(D.EXACT35_REFERENCE_INPUTS));old=file.read_bytes();file.write_bytes(old+b'changed')
+                    with self.assertRaisesRegex(D.Refused,'REFERENCE_INPUT_CHANGED'):D.runtime_mount_arguments(p)
+                    file.write_bytes(old)
+                    index=destination/'INDEX.json';old=index.read_bytes();index.write_bytes(old+b' ')
+                    with self.assertRaisesRegex(D.Refused,'REFERENCE_INDEX_CHANGED'):D.runtime_mount_arguments(p)
+                    index.write_bytes(old)
+                    bad_index=json.loads(old);bad_index[0]['package_path']='delivery/reference-inputs/credentials/secret.json'
+                    index.write_text(json.dumps(bad_index));bad=copy.deepcopy(manifest);bad['native35']['referenceIndexSha256']=hashlib.sha256(index.read_bytes()).hexdigest();save(p['manifest'],bad)
+                    with self.assertRaisesRegex(D.Refused,'REFERENCE_INDEX_REQUIRED'):D.runtime_mount_arguments(p)
+                    index.write_bytes(old);save(p['manifest'],manifest)
+                    bad_record=copy.deepcopy(record);bad_record['target']['ordinary']['referenceDirectory']='/arbitrary'
+                    with patch.object(D,'runtime35_record',return_value=bad_record),self.assertRaisesRegex(D.Refused,'INSTALLED_TARGET_CHANGED'):D.runtime_mount_arguments(p)
+                    file.chmod(0o666)
+                    with self.assertRaises(D.Refused):D.runtime_mount_arguments(p)
+
+    def test_v2_does_not_pair_v1_record_with_v2_target(self):
+        values=self.production_descriptors();values[0]['format']='FRESH35_COMBINED_INSTALLATION_RECORD_V1'
+        with self.assertRaises(D.Refused):D.validate_exact35_installation_data(*values)
 
 if __name__=='__main__':unittest.main()

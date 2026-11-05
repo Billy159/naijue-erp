@@ -29447,10 +29447,27 @@
       },
       "actualUidProbe": "Original T45 bounded actualUID read/watch, native catalog proof epoch and metadata change rejection; no extraPG/grant/real data. Same cap invalidation not implied.",
       "QBReceiptSHA256": "b099a24289d881aa996874284b23f7bb8afe685208b4a793258b1ff0b2343480",
-      "oldRootCauseActualAccepted": false
+      "oldRootCauseActualAccepted": false,
+      "materialization": {
+        "job": "t45-f35-223598-materialize-20261106-01",
+        "exitCode": 0,
+        "seconds": 365.5825378121808,
+        "resultSHA256": "940f37f32923bd843ab6a7c52c2a27bead70ff73c80e103136dda4a079e1de73",
+        "postgresStarted": false
+      },
+      "pg20Provision": {
+        "sha256": "7e9181269dfabba6e5d4489ede64f72c05d42d68e2f00964d136c4e16fc41c4b",
+        "startsAt": 1793906067691,
+        "expiresAt": 1793907267691,
+        "wrapperSHA256": "234473b6f148976bfa331a378a30b79f7fac5e6951e11c12487845e4ca68119a",
+        "probeSHA256": "de6600758975733d4e45c38e873f159aafad82aa951df18224ae86a892037c58",
+        "resourcePreflightSHA256": "68e9a3916eabcf5966d1f306b3e3adbf61cbd183d6b07d80a832efc7bd6c9973",
+        "actualProgramInstallAuthority": "PENDING_ACTUAL_DESCRIPTOR",
+        "state": "START_PARAMETER_ERROR_ORIGINAL_KEY_COLLECTING_NOT_PG_PASS"
+      }
     },
     "productionReleaseCompatibilityContinuation": {
-      "state": "QB_IDENTIFIED_EXACT_V2_RUNTIME_RECORD_REFERENCE_MOUNTS_MISSING_T45_REPAIRING",
+      "state": "SOURCE_QB_F01_CLOSED_ORIGINAL_CALLER_PINS_REGISTERED_NOT_ACTUAL_DEPLOYMENT",
       "owner": "T45",
       "soleWriterFiles": [
         "candidate0448/scripts/release/deploy-candidate.py",
@@ -29472,7 +29489,14 @@
       "mountRepairDecision": "C under direct human noon delegation: readonly fixed record plus INDEX and nine original hash-bound reference single leaves only; no generic directory/plan fields/DB grants; final helper review then original caller pin procedure",
       "actualProductionExecuted": false,
       "QBReceiptSHA256": "8809ed34320dbfe7fac4b82aba3b64950f23ff14425006402e7c6663015e4b05",
-      "QBState": "NEED_FIX_ONE_P1_MISSING_NATIVE_RECORD_REFERENCE_MOUNTS_OTHER10_GROUPS_PASS_SOURCE_ONLY"
+      "QBState": "NEED_FIX_ONE_P1_MISSING_NATIVE_RECORD_REFERENCE_MOUNTS_OTHER10_GROUPS_PASS_SOURCE_ONLY",
+      "helperSHA256": "6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45",
+      "QBFinalReceiptSHA256": "f3d7b3674d5e0c6395527fc640843613659f428559b3d3cdd6b8c341442f2fda",
+      "controllerExactDecisionSHA256": "b1ff303dd4152a99c4ba347720a9ffd49f551a3fafd4db1d5aa6f41d28a8e20a",
+      "registrationResultSHA256": "65baf677472431adca70356dc0672da2bd1205f582970b4918985939b43dbdd7",
+      "generatorCheckExitCode": 0,
+      "callerChecksPassed": 6,
+      "actualContainerVerified": false
     },
     "writerTransferHistory": [
       {
