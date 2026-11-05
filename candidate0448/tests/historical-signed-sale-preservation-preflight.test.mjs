@@ -91,3 +91,14 @@ test('source-only profile cannot produce a SQL program before versioned engine s
   await assert.rejects(prepareStreamPlan(join(report,'index.sqlite'),streaming,manifestBytes,options),/STREAM_SOURCE_PROFILE_OFFLINE_ONLY/);
  });
 });
+
+// Historical 0..N settlement intake is common to sales, returns and exchanges;
+// signed SALE quantity/discount exceptions above keep their narrower boundary.
+function settlementDocumentType(p,type){const h=p.records.sales_header[0].fields;Object.assign(h,{business_type:type,order_discount:'0.00',net_due:h.gross_amount});return p;}
+for(const type of ['RETURN','EXCHANGE']){
+ test(`READY historical ${type} retains absent settlement evidence without changing source facts`,async()=>both(settlementDocumentType(fixture({missing:true}),type),true));
+ test(`explicit CLEANED historical ${type} retains absent settlements`,async()=>both(settlementDocumentType(await cleanedHistoryProfile({missing:true}),type),true));
+ test(`runtime ${type} cannot borrow absent historical settlement intake`,async()=>{const p=settlementDocumentType(fixture({missing:true}),type);p.records.sales_header[0].fields.stock_basis='RUNTIME_LEDGER';await both(p,false,'SETTLEMENT_MISMATCH');});
+ test(`historical ${type} existing contradictory settlement still blocks`,async()=>both(settlementDocumentType(fixture({receive:'699.00'}),type),false,'SETTLEMENT_MISMATCH'));
+}
+test('historical RETURN missing settlement intake still requires pinned source references',async()=>{const p=settlementDocumentType(fixture({missing:true}),'RETURN');p.records.sales_header[0].source_refs=[];await both(p,false,'SOURCE_REFS_REQUIRED');});

@@ -1,0 +1,45 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {loadFresh35HistoricalSettlementCandidate} from '../scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs';
+import {loadFresh35HistoricalAmountCandidate} from '../scripts/release/unified-install/fresh35-historical-amount-candidate.mjs';
+import {applyRetirementSourceReplacement} from '../scripts/release/unified-install/fresh35-retirement-source.mjs';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const hash=x=>createHash('sha256').update(x).digest('hex');
+let pending;const candidate=()=>pending??=loadFresh35HistoricalSettlementCandidate(root);
+test('missing-settlement candidate follows the exact final amount body and changes only two historical type boundaries',async()=>{
+ const c=await candidate(),spec=c.specs[0],before=c.predecessorBodies[0].body,after=c.changedBodies[0].body;
+ assert.equal(hash(before),'4d4c05554603d473a24f3281cf285916d3eeaf8ff6d5547914b6574973e7ee7e');
+ assert.equal(hash(after),'6264718f906a4d90a12547bbdf2c7aee91b49374beee2b1372147af2f13af953');
+ assert.equal(spec.replacements.length,2);
+ assert.equal(after,before.replace("h.business_type='SALE' AND h.stock_basis='CUTOFF_HISTORY' AND settlement_count=0","h.business_type IN ('SALE','RETURN','EXCHANGE') AND h.stock_basis='CUTOFF_HISTORY' AND settlement_count=0").replace("origin_header->>'business_type' IS DISTINCT FROM 'SALE'","coalesce(origin_header->>'business_type','') NOT IN ('SALE','RETURN','EXCHANGE')"));
+ assert.throws(()=>applyRetirementSourceReplacement(before+' ',spec),/PREDECESSOR/);
+ assert.throws(()=>applyRetirementSourceReplacement(before,{...spec,replacements:[{before:'not-an-anchor',after:''}]}),/ANCHOR/);
+ assert.throws(()=>applyRetirementSourceReplacement(before,{...spec,successor_sha256:'0'.repeat(64)}),/SUCCESSOR/);
+});
+test('source proof, exact origin restoration and ordinary mismatch rejection survive byte-for-byte outside the type correction',async()=>{
+ const c=await candidate(),body=c.changedBodies[0].body;
+ for(const marker of ["IF evidence.action='MIGRATE_DOCUMENT' THEN\n  PERFORM naijue_erp.assert_document_migration(r.id);","AND evidence.after_values->'settlements'='[]'::jsonb", "OR origin_snapshot->'settlements' IS DISTINCT FROM '[]'::jsonb", "current_snapshot->'settlements' IS DISTINCT FROM '[]'::jsonb", "((current_snapshot->'header') - mutable_header) IS DISTINCT FROM (origin_header - mutable_header)",'RESTORATION_SOURCE_EXTENSION_DIFFERS','RESTORATION_ORIGIN_INVALID','RESTORATION_KNOWN_ECONOMICS_DIFFER','RESTORATION_EFFECTS_INVALID','RESTORATION_CHAIN_INCOMPLETE','HISTORICAL_LINE_AMOUNT_NEW_ACTION_REQUIRES_FORMULA',"IF h.status='APPROVED' AND preserve_missing_original IS NOT TRUE AND total IS DISTINCT FROM h.net_due THEN"])assert.ok(body.includes(marker),marker);
+ const original=c.predecessorBodies[0].body;
+ const suffix="IF h.status='APPROVED' AND preserve_missing_original IS NOT TRUE AND total IS DISTINCT FROM h.net_due THEN";
+ assert.equal(body.slice(body.indexOf(suffix)),original.slice(original.indexOf(suffix)));
+ assert.deepEqual(c.manifest.missingSettlementTypes,['SALE','RETURN','EXCHANGE']);
+ assert.equal(c.manifest.nonemptyMismatch,'REJECT');
+});
+test('successor preserves all other151 routine pins and table/column/permission metadata',async()=>{
+ const c=await candidate(),amount=await loadFresh35HistoricalAmountCandidate(root);
+ const unaffected=rows=>rows.filter(r=>!r.signature.includes('.validate_sales_settlement('));
+ assert.deepEqual(unaffected(c.manifest.successorRoutinePins),unaffected(amount.manifest.successorRoutinePins));
+ assert.equal(c.manifest.successorRoutinePins.length,152);assert.equal(c.manifest.routineChanges.length,1);
+ assert.equal(c.manifest.tableCount,35);assert.equal(c.manifest.newTables,0);assert.equal(c.manifest.newColumns,0);assert.equal(c.manifest.newRoutines,0);assert.equal(c.manifest.permissionsChanged,false);assert.deepEqual(c.manifest.columnChanges,[]);
+ assert.equal(c.manifest.engineVerified,false);assert.equal(c.manifest.installationReady,false);assert.equal(c.manifest.targetAdmitted,false);
+ for(const pin of c.manifest.sourcePins)assert.equal(hash(await readFile(new URL('../'+pin.path,import.meta.url))),pin.sha256,pin.path);
+ assert.ok(c.patchSql.includes('before_meta IS DISTINCT FROM after_meta'));
+ assert.ok(c.patchSql.includes("before_meta->'prosecdef' IS DISTINCT FROM spec->'security_definer'"));
+ assert.ok(c.patchSql.includes('search_path=pg_catalog, naijue_erp, pg_temp'));
+ assert.doesNotMatch(c.patchSql.replace(/^--.*$/gm,''),/\b(?:CREATE TABLE|ALTER TABLE|CREATE ROLE|GRANT |REVOKE |DISABLE TRIGGER|TRUNCATE |DELETE FROM)\b/i);
+ assert.equal((c.patchSql.match(/^BEGIN;$/gm)||[]).length,1);assert.equal((c.patchSql.match(/^COMMIT;$/gm)||[]).length,1);
+ assert.ok(c.reviewSql.includes("RAISE EXCEPTION 'FRESH35_HISTORICAL_SETTLEMENT_REVIEW_ONLY'"));
+});

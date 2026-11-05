@@ -15,12 +15,12 @@ test('current source closure separately records old180 and the later application
  const {source}=await bundle(),d=describeFresh35CombinedSource(source);assert.equal(d.capturedSourcePins.length,180);assert.ok(d.currentSourcePins.length>=198);assert.equal(d.capturedEvidenceAppliesToCurrentChanges,false);
  for(const path of ['unified-historical-sales-hall-evidence.ts','unified-import-source-reconciliation.ts','unified-current-effective-alignment.ts','unified-historical-line-amount-evidence.ts','historical-sales-hall-evidence.ts'])assert.ok(d.currentSourcePins.some(p=>p.path==='packages/application/src/'+path),path);
  for(const p of d.currentSourceDelta)if(p.predecessorSha256!==null)assert.notEqual(p.predecessorSha256,p.currentSha256);
- const schema=renderFresh35CombinedSchema(source,describeFresh35CombinedTarget(target).proposal);assert.match(schema.schemaSql,/fresh35_owner_20261105_r9/);assert.doesNotMatch(schema.schemaSql,/fresh35_owner_20261105_r1/);assert.equal((schema.schemaSql.match(/^CREATE TABLE /gm)||[]).length,35);assert.doesNotMatch(schema.schemaSql,/CREATE TABLE "naijue_erp"\."history_sales_header"/);assert.equal(schema.patchBodies.length,2);
+ const schema=renderFresh35CombinedSchema(source,describeFresh35CombinedTarget(target).proposal);assert.match(schema.schemaSql,/fresh35_owner_20261105_r9/);assert.doesNotMatch(schema.schemaSql,/fresh35_owner_20261105_r1/);assert.equal((schema.schemaSql.match(/^CREATE TABLE /gm)||[]).length,35);assert.doesNotMatch(schema.schemaSql,/CREATE TABLE "naijue_erp"\."history_sales_header"/);assert.equal(schema.patchBodies.length,3);
 });
 test('full successor model changes the adopted seven routine bodies and sales hall nullability',async()=>{
  const {source,catalog}=await bundle(),d=describeFresh35CombinedCatalog(catalog),sql=fresh35CombinedCatalogSql(catalog,source,target);
  const model=JSON.parse(sql.guardSql.split('$combined_model$')[1]),before=JSON.parse(await readFile(modelPath,'utf8'));
- assert.equal(d.changes.length,9);assert.equal(new Set(d.changes.map(r=>r.signature)).size,7);assert.equal(model.routines.length,152);
+ assert.equal(d.changes.length,10);assert.equal(new Set(d.changes.map(r=>r.signature)).size,7);assert.equal(d.changes.at(-1).patch,'historical-missing-settlement-types');assert.equal(d.changes.at(-1).after,'6264718f906a4d90a12547bbdf2c7aee91b49374beee2b1372147af2f13af953');assert.equal(model.routines.length,152);
  assert.equal(model.routines.filter(r=>r.definitionSha256!==before.routines.find(b=>b.signature===r.signature).definitionSha256).length,7);
  const columns=model.columns.map(c=>({...c}));for(const c of columns){const old=before.columns.find(o=>o.table===c.table&&o.name===c.name);if(c.table==='sales_header'&&c.name==='hall_id'){assert.equal(old.notNull,true);assert.equal(c.notNull,false);assert.equal(c.metadata.attnotnull,false)}else assert.deepEqual(c,old)}
  for(const key of ['constraints','indexes','triggers','policies'])assert.deepEqual(model[key],before[key],key);
@@ -34,7 +34,7 @@ test('new catalog guards every category plus raw type templates and real depende
  assert.doesNotMatch(guardSql,/FRESH35_V2_GUARD_REVIEW_NOT_AUTHORIZED/);assert.match(await readFile(root+'scripts/release/unified-install/fresh35-catalog-v2-guard-review.mjs','utf8'),/RAISE EXCEPTION 'FRESH35_V2_GUARD_REVIEW_NOT_AUTHORIZED'/);
 });
 test('program is one atomic application transaction and contains no provisioning or legacy tables',async()=>{
- const {program}=await bundle(),d=describeFresh35CombinedProgram(program);assert.equal(d.applicationTransactions,1);assert.deepEqual(d.statements.map(s=>s.name),['physical-empty-target','direct-35-schema','migration-lineage','controller-lineage-column-read','historical-sales-hall','historical-line-amount','complete-successor-catalog','same-physical-target']);
+ const {program}=await bundle(),d=describeFresh35CombinedProgram(program);assert.equal(d.applicationTransactions,1);assert.deepEqual(d.statements.map(s=>s.name),['physical-empty-target','direct-35-schema','migration-lineage','controller-lineage-column-read','historical-sales-hall','historical-line-amount','historical-missing-settlement-types','complete-successor-catalog','same-physical-target']);
  for(const flag of ['createsCluster','createsRoles','createsCredentials','oldTablesRemoved','hostEnabled'])assert.equal(d[flag],false);
 });
 test('valid authorization data cannot issue a trusted execution token',async()=>{

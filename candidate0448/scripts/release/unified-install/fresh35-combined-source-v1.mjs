@@ -83,12 +83,16 @@ export async function loadFresh35CombinedSource(root,{baselineDirectory}){
  const oldPins=JSON.parse(artifacts['candidate-source-pins.json']);need(oldPins.length===180&&new Set(oldPins.map(p=>p.path)).size===180,'EXACT_BASE_SOURCE_PINS_REQUIRED');
  const hallPath='scripts/release/unified-install/fresh35-sales-hall-candidate.mjs';
  const amountPath='scripts/release/unified-install/fresh35-historical-amount-candidate.mjs';
+ const settlementPath='scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs';
  const hallModule=await import(pathToFileURL(resolve(root,hallPath)).href),amountModule=await import(pathToFileURL(resolve(root,amountPath)).href);
  need(typeof hallModule.loadFresh35SalesHallCandidate==='function'&&typeof amountModule.loadFresh35HistoricalAmountCandidate==='function','CURRENT_SUCCESSOR_MODULES_REQUIRED');
  const hall=await hallModule.loadFresh35SalesHallCandidate(root),amount=await amountModule.loadFresh35HistoricalAmountCandidate(root);
- const patches=[{name:'historical-sales-hall',...hall},{name:'historical-line-amount',...amount}];
+ const settlementModule=await import(pathToFileURL(resolve(root,settlementPath)).href);
+ need(typeof settlementModule.loadFresh35HistoricalSettlementCandidate==='function','CURRENT_SETTLEMENT_SUCCESSOR_REQUIRED');
+ const settlement=await settlementModule.loadFresh35HistoricalSettlementCandidate(root);
+ const patches=[{name:'historical-sales-hall',...hall},{name:'historical-line-amount',...amount},{name:'historical-missing-settlement-types',...settlement}];
  for(const patch of patches)need(typeof patch.patchSql==='string'&&Array.isArray(patch.manifest?.sourcePins)&&Array.isArray(patch.manifest?.routineChanges),'EXACT_SUCCESSOR_DESCRIPTOR_REQUIRED');
- const entryPaths=[ownPath,hallPath,amountPath,'package.json','package-lock.json','scripts/release/unified-install/launch-fresh35-isolated-v1.py','scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',...['target','lifecycle','record','catalog'].map(n=>'scripts/release/unified-install/fresh35-combined-'+n+'-v1.mjs')];
+ const entryPaths=[ownPath,hallPath,amountPath,settlementPath,'package.json','package-lock.json','scripts/release/unified-install/launch-fresh35-isolated-v1.py','scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',...['target','lifecycle','record','catalog'].map(n=>'scripts/release/unified-install/fresh35-combined-'+n+'-v1.mjs')];
  const pins=await importClosure(root,[...oldPins.map(p=>p.path),...entryPaths,...patches.flatMap(p=>p.manifest.sourcePins.map(pin=>pin.path))]);
  for(const patch of patches)for(const pin of patch.manifest.sourcePins)need(pins.some(p=>p.path===pin.path&&p.sha256===pin.sha256),'SUCCESSOR_SOURCE_PIN_DIFFERS:'+pin.path);
  const oldMap=new Map(oldPins.map(p=>[p.path,p.sha256]));
