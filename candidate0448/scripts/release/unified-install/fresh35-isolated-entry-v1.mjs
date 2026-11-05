@@ -58,6 +58,7 @@ export async function main(){
    assertWholeSalesAdmissionV1(admission,standardTarget,client);
    return {state:'FRESH35_CONTROLLER_HOST_VERIFIED',businessVerified:false};
   },{referenceDirectory:root+'/reference-inputs'});
+  need(verification.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
   process.stdout.write(JSON.stringify({state:'FRESH35_CONTROLLER_HOST_VERIFIED',hostVerification:verification.host_verification,ordinaryUid:process.getuid(),businessVerified:false})+'\n');return;
  }
  const authorization=await loadFresh35CombinedAuthorization(program);
