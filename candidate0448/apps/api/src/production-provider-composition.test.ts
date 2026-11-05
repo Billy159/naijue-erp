@@ -3214,3 +3214,19 @@ test('HISTORY draft successor API requires new exact capability before borrow; o
  try{const api=await createProductionRuntime26HistoryRevisionApplicationApi(fresh.configuration,history,q.factory,null,syntheticCapacity());try{assert.equal(q.calls[0]?.sql,draftHistoryProbe);assert.ok(api.app.hasRoute({method:'POST',url:'/imported-history/transfers/revise'}));assert.equal(api.app.hasRoute({method:'POST',url:'/transfers/commands'}),false);}finally{await api.close();}}finally{fresh.cleanup();}
  const normal=newLivePairFixture(),r=exact26Driver(normal.observation);try{const api=await createProductionRuntime26ApplicationApi(normal.configuration,r.factory,null,syntheticCapacity());try{assert.equal(r.calls[0]?.sql,newLivePairProbe);assert.equal(api.app.hasRoute({method:'POST',url:'/imported-history/transfers/revise'}),false);}finally{await api.close();}}finally{normal.cleanup();}
 });
+
+
+test('production35 V2 profile selects the existing closed configuration without caller proof or endpoint overrides',()=>{
+ const input={...config(),profile:'source-confirmed-native-exact35-production-v2',productMedia:{root:'/private/production35',rootKey:'production35'}};
+ const parsed=parseProductionRuntime35Configuration(input);
+ assert.equal(parsed.profile,input.profile);assert.deepEqual(parsed.postgres,input.postgres);
+ assert.deepEqual(productionRuntime35HostConfiguration(parsed),config());
+ for(const extra of [{ordinaryAdmission:{}},{recordFile:'/tmp/copy.json'},{referenceDirectory:'/tmp/source'},{target:{serverPort:5432}},{productionV2:true}])
+  assert.throws(()=>parseProductionRuntime35Configuration({...input,...extra}),TypeError);
+});
+test('production35 V2 cannot substitute an arbitrary capacity provider for the actual owned pool before connecting',async()=>{
+ const {createProductionRuntime35ApplicationApi}=await import('./production-provider-composition.ts');let connected=0,ended=0;
+ const capacity=syntheticCapacity(), input={...config(),profile:'source-confirmed-native-exact35-production-v2',productMedia:{root:'/private/production35',rootKey:'production35'}};
+ await assert.rejects(createProductionRuntime35ApplicationApi(input,()=>({async connect(){connected++;throw Error('must not connect');},async end(){ended++;},on(){return this;}} as never),null,capacity),/original owned-pool capacity target/);
+ assert.equal(connected,0);assert.ok(ended<=1);
+});

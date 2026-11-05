@@ -11,7 +11,7 @@ const begin = '# BEGIN GENERATED RELEASE CONTRACT';
 const end = '# END GENERATED RELEASE CONTRACT';
 
 export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify(contract, null, 2) + '\n')) {
-  const keys = ['format', 'migrationCount', 'fontLicense', 'runtimeSqlPatches', 'full', 'node', 'requestBodyBudgets', 'entrypoints', 'exact35'];
+  const keys = ['format', 'migrationCount', 'fontLicense', 'runtimeSqlPatches', 'full', 'node', 'requestBodyBudgets', 'entrypoints', 'exact35', 'native35'];
   if (!contract || Object.keys(contract).sort().join() !== keys.sort().join()
       || contract.format !== 'naijue-release-contract-v1' || contract.migrationCount !== 26
       || !Array.isArray(contract.runtimeSqlPatches) || !Array.isArray(contract.requestBodyBudgets)
@@ -26,6 +26,10 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
       || typeof contract.full.patchLevel !== 'string' || !/^26_[A-Za-z0-9_]+$/.test(contract.full.patchLevel)) {
     throw Error('INVALID_RELEASE_CONTRACT');
   }
+  if (!exactKeys(contract.native35,['root','entry','external','fixturePins']) || contract.native35.root !== 'backend/native35-source'
+      || contract.native35.entry !== 'tools/unified-import/fresh35-host-session.mjs'
+      || contract.native35.external !== './native35-source/tools/unified-import/fresh35-host-session.mjs') throw Error('INVALID_RELEASE_NATIVE35');
+  if (JSON.stringify(contract.native35.fixturePins) !== JSON.stringify([{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"9ca6ddbfd2c3255801a928e6f1ae661608ab7c1aec9d72d7901ccbb759a7f5c7"}])) throw Error('INVALID_RELEASE_NATIVE35_FIXTURE_PINS');
   const native35 = {profile:'source-confirmed-native-exact35-v1', migrationCount:27,
     installationRecord:'/etc/naijue-erp/fresh35-combined-installation-v1.json'};
   if (!exactKeys(contract.exact35, Object.keys(native35))

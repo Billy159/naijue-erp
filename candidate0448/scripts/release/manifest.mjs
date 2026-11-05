@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { lstat, open, readdir, realpath } from 'node:fs/promises';
 import { constants, readFileSync } from 'node:fs';
 import path from 'node:path';
+import {pathToFileURL} from 'node:url';
 import { builtinModules } from 'node:module';
 import releaseContract from '../../config/release-contract.json' with { type: 'json' };
 
@@ -11,6 +12,31 @@ export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const releaseContractBytes = readFileSync(new URL('../../config/release-contract.json', import.meta.url));
 export const releaseContractSource = Object.freeze({ path: 'config/release-contract.json',
   bytes: releaseContractBytes.length, sha256: sha256(releaseContractBytes) });
+
+// Exact native module identity boundary; no arbitrary external or copied JS.
+export const native35Contract = releaseContract.native35;
+export function native35SourceName(name) {
+  relativeName(name);
+  if(native35Contract.fixturePins.some(p=>p.path===name))return name;
+  requireRelease(!/(?:^|\/)(?:node_modules|tests?|fixtures?|secrets?|credentials?)(?:\/|$)/i.test(name)
+    && !/(?:product-media|\.env)/i.test(name)
+    && /^(?:packages\/|adapters\/postgres\/|scripts\/release\/unified-install\/|tools\/unified-import\/|package(?:-lock)?\.json$)/.test(name)
+    && /\.(?:ts|mjs|json|sql|psql|py)$/.test(name), 'NATIVE35_PROHIBITED_SOURCE:'+name);
+  return name;
+}
+export async function native35Closure(sourceRoot,referenceDirectory) {
+  requireRelease(typeof referenceDirectory==='string' && path.isAbsolute(referenceDirectory), 'NATIVE35_EXPLICIT_REFERENCE_INPUTS_REQUIRED');
+  await canonicalAbsolute(referenceDirectory,'directory');
+  const module=await import(pathToFileURL(path.join(sourceRoot,'scripts/release/unified-install/fresh35-combined-source-v1.mjs')).href);
+  const references=await module.resolveFresh35ReferenceInputPaths(referenceDirectory);
+  const descriptor=module.describeFresh35CombinedSource(await module.loadFresh35CombinedSource(sourceRoot,references));
+  requireRelease(descriptor.format==='FRESH35_COMBINED_CURRENT_SOURCE_V1' && descriptor.capturedSourcePins.length===180
+    && Array.isArray(descriptor.currentSourcePins) && descriptor.currentSourcePins.some(p=>p.path===native35Contract.entry), 'NATIVE35_COMPLETE_SOURCE_SET_REQUIRED');
+  for(const pin of descriptor.currentSourcePins){native35SourceName(pin.path);requireRelease(/^[a-f0-9]{64}$/.test(pin.sha256),'NATIVE35_SOURCE_PIN_REQUIRED');
+    const fixture=native35Contract.fixturePins.find(p=>p.path===pin.path);if(fixture)requireRelease(fixture.sha256===pin.sha256,'NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED');}
+  return {sourceSetSha256:descriptor.sourceSetSha256,pins:descriptor.currentSourcePins,referenceIndexSha256:sha256(await boundedFile(referenceDirectory,'INDEX.json'))};
+}
+
 export class ReleaseError extends Error {
   constructor(code) { super(code); this.name = 'ReleaseError'; this.code = code; }
 }
@@ -48,6 +74,7 @@ const roleExtensions = {
   frontend: new Set(['.html', '.js', '.mjs', '.css', '.json', '.svg', '.woff', '.woff2']),
   backend: new Set(['.js', '.mjs', '.cjs', '.json']),
   migration: new Set(['.sql']),
+  native35: new Set(['.ts','.mjs','.json','.sql','.psql','.py']),
   metadata: new Set(['.json']),
   evidence: new Set(['.json']),
 };
@@ -76,6 +103,7 @@ function allowedSource(value) {
 }
 export function allowedMember(value, role) {
   relativeName(value);
+  if(role==='native35'){requireRelease(value.startsWith(native35Contract.root+'/'),'NATIVE35_EXACT_MEMBER_ROOT_REQUIRED');native35SourceName(value.slice(native35Contract.root.length+1));return;}
   if (role === 'migration' && (reviewedMigrationMembers.has(value) || [...runtimeSqlPatches.values()].includes(value))) return;
   const runtimeMedia = reviewedRuntimeMember(value, role), segments = value.split('/');
   requireRelease(Object.hasOwn(roleExtensions, role) && (roleExtensions[role].has(path.posix.extname(value))||role==='frontend'&&value===copiedFontLicenseMember)
@@ -268,7 +296,7 @@ function exactEmbeddedCssSvg(kind, owner, item, bytes) {
 
 /** Verify actual on-disk graph inputs and outputs. No production:true flag is accepted as provenance. */
 async function verifyGraph(kind, component, context) {
-  const { sourceRoot, buildRoot, sources, sourceBytes, files, fileBytes, packageJson, lock } = context;
+  const { sourceRoot, buildRoot, sources, sourceBytes, files, fileBytes, packageJson, lock, native35 } = context;
   requireRelease(component && typeof component === 'object' && !Array.isArray(component), 'EXPLICIT_COMPONENT_GRAPH_REQUIRED');
   relativeName(component.workingDirectory, true); allowedSource(component.entrySource);
   requireRelease(component.entrySource === releaseContract.entrypoints[kind].source, 'PRODUCTION_ENTRY_SOURCE_REQUIRED');
@@ -281,7 +309,7 @@ async function verifyGraph(kind, component, context) {
   requireRelease(graph && typeof graph.inputs === 'object' && !Array.isArray(graph.inputs)
     && typeof graph.outputs === 'object' && !Array.isArray(graph.outputs)
     && Object.keys(graph.inputs).length > 0 && Object.keys(graph.outputs).length > 0, 'ACTUAL_METAFILE_REQUIRED');
-  const inputs = new Set();
+  const inputs = new Set();let nativeInputCount=0,nativeOutputCount=0;
   for (const [key, details] of Object.entries(graph.inputs)) {
     const relative = graphPath(sourceRoot, component.workingDirectory, key); allowedSource(relative);
     const record = sources.get(relative);
@@ -298,13 +326,19 @@ async function verifyGraph(kind, component, context) {
         const imported = graphPath(sourceRoot, component.workingDirectory, item.path);
         allowedSource(imported);
         requireRelease(Object.hasOwn(graph.inputs, item.path) || Object.keys(graph.inputs).some(candidate => graphPath(sourceRoot, component.workingDirectory, candidate) === imported), 'UNRESOLVED_GRAPH_INPUT');
-      } else requireRelease((kind==='frontend' && relative==='node_modules/jszip/dist/jszip.min.js' && item.external===true && item.kind==='import-statement' && item.path==='<runtime>')
+      } else {
+        if(kind==='backend' && native35 && item.path===native35Contract.external)nativeInputCount++;
+        requireRelease((kind==='frontend' && relative==='node_modules/jszip/dist/jszip.min.js' && item.external===true && item.kind==='import-statement' && item.path==='<runtime>')
         || (inlineDocumentCssSources.has(relative)
         && exactEmbeddedCssSvg(kind, relative, item, sourceBytes.get(relative)))
+        || (kind==='backend' && native35 && item.kind==='import-statement' && item.path===native35Contract.external
+          && ['apps/api/src/postgres-read-api.ts','adapters/postgres/src/runtime27-command-issuer.ts'].includes(relative))
         || (kind === 'backend' && (nodeBuiltins.has(item.path)
         || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path)))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
+      }
     }
   }
+  if(kind==='backend' && native35)requireRelease(nativeInputCount>0,'NATIVE35_BOUNDARY_INPUT_REQUIRED');
   requireRelease(inputs.has(component.entrySource), 'ENTRY_MISSING_FROM_ACTUAL_GRAPH');
   const explicitInputs = indexRecords(component.inputs);
   requireRelease(sameSet([...explicitInputs.keys()], [...inputs]), 'ACTUAL_INPUT_SET_MISMATCH');
@@ -337,10 +371,12 @@ async function verifyGraph(kind, component, context) {
   for (const [name, details] of outputs) {
     for (const item of details.imports) {
       requireRelease(item && typeof item.path === 'string', 'INVALID_OUTPUT_IMPORT');
+      if(item.external && kind==='backend' && native35 && item.path===native35Contract.external)nativeOutputCount++;
       if (item.external) requireRelease((kind === 'frontend'
         && Object.entries(details.inputs).some(([input, contribution]) => Number.isSafeInteger(contribution?.bytesInOutput)
           && contribution.bytesInOutput > 0 && inlineDocumentCssSources.has(graphPath(sourceRoot, component.workingDirectory, input)))
         && exactEmbeddedCssSvg(kind, name, item, fileBytes.get(name)))
+        || (kind==='backend' && native35 && name===component.entryOutput && item.kind==='import-statement' && item.path===native35Contract.external)
         || (kind === 'backend' && (nodeBuiltins.has(item.path)
         || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path)))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
       else {
@@ -354,6 +390,7 @@ async function verifyGraph(kind, component, context) {
       requireRelease(outputs.has(css), 'CSS_OUTPUT_OUTSIDE_RELEASE');
     }
   }
+  if(kind==='backend' && native35)requireRelease(nativeOutputCount>0,'NATIVE35_BOUNDARY_OUTPUT_REQUIRED');
   // esbuild may put a lazy entry's implementation into a shared static chunk.
   // Require the exact frozen source in this entry's static output closure;
   // an unrelated output or a future dynamic import cannot satisfy the guard.
@@ -400,9 +437,13 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
   await canonicalAbsolute(buildRoot, 'directory');
   const sources = indexRecords(source.files), files = indexRecords(build.files);
   requireRelease(sources.has('package.json') && sources.has('package-lock.json'), 'LOCKED_PACKAGE_SOURCES_REQUIRED');
+  let native35;
+  if(build.native35){native35=await native35Closure(sourceRoot,build.native35.referenceDirectory);
+    requireRelease(JSON.stringify(native35)===JSON.stringify(build.native35.closure),'NATIVE35_SOURCE_SET_CHANGED');}
+  const nativePins=new Map((native35?.pins??[]).map(p=>[p.path,p]));
   let total = 0; const sourceBytes = new Map();
   for (const [name, record] of sources) {
-    allowedSource(name); const bytes = await boundedFile(sourceRoot, name); matches(bytes, record); sourceBytes.set(name, bytes);
+    if(nativePins.has(name))native35SourceName(name);else allowedSource(name); const bytes = await boundedFile(sourceRoot, name); matches(bytes, record); sourceBytes.set(name, bytes);
     total += bytes.length; requireRelease(total <= 512 * 1024 * 1024, 'SOURCE_SIZE_LIMIT');
   }
   requireRelease(sources.has(releaseContractSource.path), 'RELEASE_CONTRACT_SOURCE_REQUIRED');
@@ -422,9 +463,12 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
       requireRelease(record.member === name, 'MEMBER_RELOCATION_FORBIDDEN');
       requireRelease(!members.has(record.member) && record.member !== 'release-manifest.json', 'DUPLICATE_PACKAGE_MEMBER'); members.add(record.member);
     }
-    if (record.sourcePath) { allowedSource(record.sourcePath); requireRelease(sources.has(record.sourcePath), 'MEMBER_SOURCE_NOT_FROZEN'); }
+    if (record.sourcePath) { if(record.role==='native35')native35SourceName(record.sourcePath);else allowedSource(record.sourcePath); requireRelease(sources.has(record.sourcePath), 'MEMBER_SOURCE_NOT_FROZEN'); }
     const bytes = await boundedFile(buildRoot, name); matches(bytes, record);
-    if (record.role !== 'evidence') scanPublicBytes(bytes, record.member);
+    if(record.role==='native35'){const pin=nativePins.get(record.sourcePath);requireRelease(pin && record.member===native35Contract.root+'/'+record.sourcePath
+      && pin.sha256===record.sha256 && sources.get(record.sourcePath)?.sha256===pin.sha256
+      && record.native35Kind===(/\.(?:py|psql|sql|json)$/.test(record.sourcePath)?'proof-read':'module'),'NATIVE35_EXACT_MEMBER_PROVENANCE_REQUIRED');matches(bytes,sources.get(record.sourcePath));}
+    else if (record.role !== 'evidence') scanPublicBytes(bytes, record.member);
     fileBytes.set(name, bytes); total += bytes.length; requireRelease(total <= 256 * 1024 * 1024, 'BUILD_SIZE_LIMIT');
     if (record.role === 'metadata' || record.role === 'migration') {
       requireRelease(record.sourcePath && (record.role !== 'metadata' || record.sourcePath === record.member), 'DIRECT_SOURCE_PROVENANCE_REQUIRED');
@@ -434,9 +478,10 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
       matches(bytes, sources.get(record.sourcePath));
     }
   }
+  requireRelease(sameSet([...nativePins.keys()],[...files.values()].filter(r=>r.role==='native35').map(r=>r.sourcePath)),'NATIVE35_MEMBER_SET_INCOMPLETE');
   requireRelease(sameSet(await walkFiles(buildRoot), [...files.keys()]), 'UNLISTED_BUILD_MEMBERS');
   requireRelease(members.has('package.json') && members.has('package-lock.json'), 'RUNTIME_PACKAGE_AND_LOCK_REQUIRED');
-  const sourceMigrations = [...sources.keys()].filter(name => name.startsWith('adapters/postgres/migrations/') || runtimeSqlPatches.has(name));
+  const sourceMigrations = [...sources.keys()].filter(name => (name.startsWith('adapters/postgres/migrations/') || runtimeSqlPatches.has(name)));
   requireRelease(sourceMigrations.length > 0 && sameSet(sourceMigrations, [...files.values()].filter(row => row.role === 'migration').map(row => row.sourcePath)), 'MIGRATION_SET_INCOMPLETE');
   const diskMigrations = (await walkFiles(path.join(sourceRoot, 'adapters/postgres/migrations'))).map(name => 'adapters/postgres/migrations/' + name);
   const diskPatches = [];
@@ -445,7 +490,18 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
     catch (error) { if (error.code !== 'ENOENT') throw error; }
   }
   requireRelease(sameSet(sourceMigrations, [...diskMigrations, ...diskPatches]), 'SOURCE_MIGRATION_DIRECTORY_INCOMPLETE');
-  const context = { sourceRoot, buildRoot, sources, sourceBytes, files, fileBytes, packageJson, lock };
+  // Raw native imports remain within the exact pin set or original locked packages.
+  for(const [name] of nativePins){
+    if(!/\.(?:ts|mjs)$/.test(name))continue;
+    const text=sourceBytes.get(name).toString('utf8');
+    for(const match of text.matchAll(/(?:\b(?:import|export)\s+(?:[^;\n]*?\s+from\s*)?|\bimport\s*\()\s*['"]([^'"]+)['"]/g)){
+      const target=match[1];
+      if(target.startsWith('.')){const resolved=path.posix.normalize(path.posix.join(path.posix.dirname(name),target));
+        requireRelease(nativePins.has(resolved),'NATIVE35_IMPORT_OUTSIDE_CLOSURE');}
+      else requireRelease(nodeBuiltins.has(target)||Object.hasOwn(packageJson.dependencies??{},dependencyName(target)),'NATIVE35_UNDECLARED_DEPENDENCY');
+    }
+  }
+  const context = { sourceRoot, buildRoot, sources, sourceBytes, files, fileBytes, packageJson, lock, native35 };
   const frontend = await verifyGraph('frontend', build.components?.frontend, context);
   const backend = await verifyGraph('backend', build.components?.backend, context);
   const htmlRecord = [...files.values()].find(row => row.member === 'web/index.html' && row.role === 'frontend');
@@ -473,7 +529,8 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
   requireRelease(frontendScriptSeen, 'PRODUCTION_SCRIPT_NOT_REFERENCED');
   return { sourceRoot, files, fileBytes, manifest: { format: 'naijue-release-v1', buildId: source.buildId, sourceCommit: source.sourceCommit,
     sourceManifestSha256: sourceRead.sha256, buildManifestSha256: buildRead.sha256, publicOrigin: 'https://1n5635n614.goho.co', apiPrefix: '/api',
+    ...(native35?{native35}:{}),
     entrypoints: { frontend: 'web/index.html', frontendModule: frontendMember, backend: backendMember }, graphs: { frontend, backend },
     members: [...files.values()].filter(row => row.role !== 'evidence').map(row => ({ path: row.member, bytes: row.bytes, sha256: row.sha256, role: row.role,
-      ...(row.sourcePath ? { sourcePath: row.sourcePath } : {}) })).sort((a, b) => a.path.localeCompare(b.path)) } };
+      ...(row.sourcePath ? { sourcePath: row.sourcePath } : {}),...(row.role==='native35'?{native35Kind:row.native35Kind}:{}) })).sort((a, b) => a.path.localeCompare(b.path)) } };
 }

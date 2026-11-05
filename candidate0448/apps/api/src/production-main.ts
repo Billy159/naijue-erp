@@ -1,5 +1,6 @@
+import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
 import type { CapacityAdmission } from "./capacity-admission.ts";
-import { createProductionCapacityLaunch } from "./production-capacity-launch.ts";
+import { createProductionCapacityLaunch, parseProductionCapacityLaunch } from "./production-capacity-launch.ts";
 import { readProductionCredentialRequestKey } from "./production-credential-key.ts";
 import { createNodeCredentialRequestTag } from "../../../packages/authentication/src/passwords.ts";
 import { lstat, readFile, realpath } from "node:fs/promises";
@@ -22,16 +23,16 @@ type Configuration = ProductionRuntimeConfiguration | ProductionRuntime26Configu
  * obtains functions, environment options or an override provider from JSON. */
 export interface ProductionMainDependencies {
   readonly createCapacity: typeof createProductionCapacityLaunch;
-  readonly createApi: (mode: Mode, config: Configuration, capacity: CapacityAdmission, tag: ((password:string)=>string)|null) => Promise<PostgresApplicationApi>;
+  readonly createApi: (mode: Mode, config: Configuration, capacity: CapacityAdmission, tag: ((password:string)=>string)|null, capacityTarget?:CapacityRuntimeTarget) => Promise<PostgresApplicationApi>;
   readonly startHost: (mode: Mode, api: PostgresApplicationApi, config: Configuration) => Promise<ProductionApplicationHost>;
   readonly writeStarted: (line:string) => void;
 }
 const actualDependencies: ProductionMainDependencies = {
   createCapacity: createProductionCapacityLaunch,
-  async createApi(mode,c,capacity,tag) {
+  async createApi(mode,c,capacity,tag,capacityTarget) {
     if(mode==='legacy')return createProductionApplicationApi(c,undefined,capacity);
     if(mode==='r27')return createProductionRuntime27ApplicationApi(c,undefined,capacity);
-    if(mode==='r35')return createProductionRuntime35ApplicationApi(c,undefined,tag,capacity);
+    if(mode==='r35')return createProductionRuntime35ApplicationApi(c,undefined,tag,capacity,capacityTarget);
     if(mode==='r1')return createProductionRuntime26ApplicationApi(c,undefined,null,capacity);
     if(mode==='r2')return createProductionRuntime26R2ApplicationApi(c,undefined,null,undefined,capacity);
     if(mode==='full')return createProductionRuntime26FullApplicationApi(c,undefined,tag,capacity);
@@ -83,7 +84,9 @@ async function launch(mode:Mode,args:readonly string[],injected?:CapacityAdmissi
     if(!capacity || typeof capacity.acquire!=='function' || typeof capacity.close!=='function')throw new TypeError('Explicit capacity resource required');
     process.once('SIGTERM',stop);process.once('SIGINT',stop);
     const tag=mode==='r3'||mode==='full'||mode==='r35'?await readProductionStaffCredentialRequestTag(c as ProductionRuntime26R3Configuration | ProductionRuntime35Configuration):null;
-    api=await dependencies.createApi(mode,c,capacity,tag);
+    const capacityTarget=mode==='r35' && c.profile==='source-confirmed-native-exact35-production-v2'
+      ? parseProductionCapacityLaunch(capacityLaunch).target : undefined;
+    api=await dependencies.createApi(mode,c,capacity,tag,capacityTarget);
     if(stopping)throw new Error('Production startup was cancelled');
     if(!injected){
       const prepared=capacity as Awaited<ReturnType<typeof createProductionCapacityLaunch>>;

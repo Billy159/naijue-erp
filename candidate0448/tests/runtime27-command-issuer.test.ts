@@ -81,3 +81,48 @@ for(const bad of [{guards:false,triggers:true,columns:true},{guards:true,trigger
   assert.ok(f.calls.includes('ROLLBACK'));assert.ok(!f.calls.includes('COMMIT'));
   assert.deepEqual(f.counts(),{connects:1,discarded:1});
  });
+
+
+// Explicit private dependency model for the actual issuer body; its cap is NOT
+// accepted by the real D1 module and cannot authorize an app or a database.
+async function productionIssuerModel(){
+ const {readFile}=await import('node:fs/promises');const ts=await import('typescript');
+ const url=new URL('../adapters/postgres/src/runtime27-command-issuer.ts',import.meta.url);
+ const proofUrl='data:text/javascript,'+encodeURIComponent(`
+ export const cap={profile:'MODEL_ONLY_NOT_REAL_CAP'};export const events=[];let active=true;
+ export const revoke=()=>{active=false;};export let expectedPool;
+ export const bind=p=>{expectedPool=p;};
+ export function describeFresh35OrdinaryAdmissionV2(c){if(c!==cap)throw Error('model cap');return {database:'synthetic_test',user:'runtime',connectPort:15432,serverPort:5432};}
+ export async function assertFresh35OrdinaryLeaseV2(c,p,raw){events.push('lease-before-role');if(c!==cap||p!==expectedPool||raw.getTransactionStatus()!=='I'||!active)throw Error('model lease denied');}
+ export async function assertFresh35OrdinaryAdmissionCurrentV2(c,p){events.push('current');if(c!==cap||p!==expectedPool||!active)throw Error('model revoked');}
+ `)+'#'+Math.random();
+ const source=ts.transpileModule(await readFile(url,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ESNext,module:ts.ModuleKind.ESNext}}).outputText
+  .replace(/from (['"])(\.\.?\/[^'"]+)\1/g,(_m,q,spec)=>'from '+JSON.stringify(spec.endsWith('fresh35-host-session.mjs')?proofUrl:new URL(spec,url).href));
+ const module=await import('data:text/javascript,'+encodeURIComponent(source));const proof=await import(proofUrl);
+ const calls:string[]=[];let discarded=false;
+ const raw=statusful({async query(sql:string){calls.push(sql);if(sql.startsWith('SET'))return {rows:[],rowCount:0,command:'SET'};
+  if(sql.startsWith('BEGIN')||sql==='ROLLBACK'||sql==='COMMIT')return {rows:[],rowCount:0,command:sql.split(' ')[0]};
+  return {rows:[{database:'synthetic_test',role:'erp_unified27_runtime_2393dbc6db9581c2',session_user:'runtime',server_port:5432,row_security:'on',search_path:'pg_catalog',replication_role:'origin',superuser:false,bypass:false,session_superuser:false,session_bypass:false,runtime_inherit:false,runtime_membership:false,can_create:false,version_ok:true,gate_ok:true,policies_ok:true,read_only:'off',isolation:'read committed'}],rowCount:1,command:'SELECT'};
+ },release(){discarded=true;}});
+ const pool={async connect(){return raw;}};proof.bind(pool);
+ return {proof,calls,raw,pool,module,discarded:()=>discarded};
+}
+test('production35 model verifies same raw idle lease before role switch and uses actual server port',async()=>{
+ const m=await productionIssuerModel();const issuer=m.module.createRuntime27CommandIssuer(m.pool,{database:'synthetic_test',user:'runtime',port:15432},'WHOLE_V2',m.proof.cap);
+ const c=await issuer.pool.connect();assert.equal(m.proof.events[0],'lease-before-role');assert.ok(m.calls[0]!.startsWith('SET ROLE'));
+ await c.query('BEGIN ISOLATION LEVEL READ COMMITTED');await issuer.runtime27.assertReady(c,'DOCUMENT_COMMAND');assert.ok(m.proof.events.includes('current'));
+ c.release();assert.equal(m.discarded(),true);
+});
+test('production35 model revocation prevents queries and commit while original rollback/discard remain available',async()=>{
+ const m=await productionIssuerModel();const issuer=m.module.createRuntime27CommandIssuer(m.pool,{database:'synthetic_test',user:'runtime',port:15432},'WHOLE_V2',m.proof.cap);
+ const c=await issuer.pool.connect();await c.query('BEGIN ISOLATION LEVEL READ COMMITTED');m.proof.revoke();const before=m.calls.length;
+ await assert.rejects(c.query('COMMIT'),/model revoked/);assert.equal(m.calls.length,before);
+ await c.query('ROLLBACK');c.release();assert.equal(m.calls.at(-1),'ROLLBACK');assert.equal(m.discarded(),true);
+ await assert.rejects(issuer.pool.connect(),/model lease denied/);
+});
+test('real issuer rejects JSON admission and model capability before pool access',async()=>{
+ let connects=0;const pool={async connect(){connects++;throw Error('must not connect');}};const m=await productionIssuerModel();
+ for(const cap of [{profile:'FRESH35_ORDINARY_POOL_ADMISSION_V2'},m.proof.cap])
+  assert.throws(()=>createRuntime27CommandIssuer(pool,{database:'synthetic_test',user:'runtime',port:15432},'WHOLE_V2',cap as never),/ACTIVE_ADMISSION/);
+ assert.equal(connects,0);
+});

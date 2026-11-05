@@ -46,8 +46,8 @@ RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CU
 FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
 # BEGIN GENERATED RELEASE CONTRACT
 # Generated from config/release-contract.json; edit that source, then regenerate.
-RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}},"exact35":{"profile":"source-confirmed-native-exact35-v1","migrationCount":27,"installationRecord":"/etc/naijue-erp/fresh35-combined-installation-v1.json"}}''')
-RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":6002,"sha256":"2aa7eec386ec58c51323c8c05772050352e2ad300285436e38d41de02d852d3d"}''')
+RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}},"exact35":{"profile":"source-confirmed-native-exact35-v1","migrationCount":27,"installationRecord":"/etc/naijue-erp/fresh35-combined-installation-v1.json"},"native35":{"root":"backend/native35-source","entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","fixturePins":[{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"9ca6ddbfd2c3255801a928e6f1ae661608ab7c1aec9d72d7901ccbb759a7f5c7"}]}}''')
+RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":6583,"sha256":"964a4e61c4d0b5352fbd5dd8f7dc12fa58497952c40a5cd92b7548af44d7f7aa"}''')
 # END GENERATED RELEASE CONTRACT
 FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
 FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
@@ -205,8 +205,52 @@ def validate_sql_members(manifest, source, approvedPatchMap, migration_count=Non
     return {'migrationCount': migration_count, 'patchCount': len(approvedPatchMap)}
 
 
-def member_allowed(name, approvedPatchMap=None):
+def native35_member_map(manifest, source=None):
+    native = manifest.get('native35')
+    rows = [r for r in manifest.get('members', []) if r.get('role') == 'native35' or
+            str(r.get('path', '')).startswith(RELEASE_CONTRACT['native35']['root'] + '/')]
+    if native is None:
+        need(not rows, 'NATIVE35_DESCRIPTOR_REQUIRED')
+        return {}
+    need(isinstance(source, dict) and source.get('format') == 'FRESH35_COMBINED_CURRENT_SOURCE_V1', 'NATIVE35_PINNED_SOURCE_SET_REQUIRED')
+    keys = ('format', 'baseArtifacts', 'capturedSourcePins', 'currentSourcePins', 'currentSourceDelta', 'patches')
+    need(all(k in source for k in keys), 'NATIVE35_SOURCE_DESCRIPTOR_REQUIRED')
+    actual = digest(json.dumps({k: source[k] for k in keys}, ensure_ascii=False, separators=(',', ':')).encode())
+    need(isinstance(native, dict) and set(native) == {'sourceSetSha256', 'pins', 'referenceIndexSha256'} and
+         actual == source.get('sourceSetSha256') == native['sourceSetSha256'] and HASH.fullmatch(native.get('referenceIndexSha256', '')) and
+         native.get('pins') == source['currentSourcePins'], 'NATIVE35_EXACT_SOURCE_SET_REQUIRED')
+    pins = {}
+    fixtures = {r['path']: r['sha256'] for r in RELEASE_CONTRACT['native35']['fixturePins']}
+    for pin in native['pins']:
+        need(isinstance(pin, dict) and set(pin) == {'path', 'sha256'} and HASH.fullmatch(pin.get('sha256', '')), 'NATIVE35_EXACT_SOURCE_PIN_REQUIRED')
+        name = relative(pin['path'])
+        need(name not in pins and (name in fixtures or
+             not re.search(r'(?:^|/)(?:node_modules|tests?|fixtures?|secrets?|credentials?)(?:/|$)', name, re.I) and
+             not re.search(r'product-media|\.env', name, re.I) and
+             re.match(r'^(?:packages/|adapters/postgres/|scripts/release/unified-install/|tools/unified-import/|package(?:-lock)?\.json$)', name) and
+             re.search(r'\.(?:ts|mjs|json|sql|psql|py)$', name)), 'NATIVE35_UNREGISTERED_SOURCE_REQUIRED')
+        if name in fixtures:
+            need(pin['sha256'] == fixtures[name], 'NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED')
+        pins[name] = pin['sha256']
+    need(RELEASE_CONTRACT['native35']['entry'] in pins and set(fixtures) <= set(pins), 'NATIVE35_ENTRY_AND_REGISTERED_FIXTURES_REQUIRED')
+    result = {}
+    for row in rows:
+        source_path = row.get('sourcePath')
+        need(source_path in pins and row.get('role') == 'native35' and
+             row.get('path') == RELEASE_CONTRACT['native35']['root'] + '/' + source_path and
+             row.get('sha256') == pins[source_path] and
+             row.get('native35Kind') == ('proof-read' if re.search(r'\.(?:py|psql|sql|json)$', source_path) else 'module') and
+             row['path'] not in result, 'NATIVE35_EXACT_MEMBER_BINDING_REQUIRED')
+        result[row['path']] = row
+    need(len(result) == len(pins), 'NATIVE35_EXACT_MEMBER_SET_REQUIRED')
+    return result
+
+
+def member_allowed(name, approvedPatchMap=None, nativeMembers=None):
     relative(name)
+    if name.startswith(RELEASE_CONTRACT['native35']['root'] + '/'):
+        need(nativeMembers is not None and name in nativeMembers, 'NATIVE35_EXACT_MEMBER_REQUIRED')
+        return
     # Exact approved migration, not product-media data; archive/hash checks still apply.
     if name == 'migrations/0022_product_media_retained_delete.sql':
         return
@@ -219,18 +263,19 @@ def member_allowed(name, approvedPatchMap=None):
          bool(re.fullmatch(r'migrations/[0-9]{4}_[A-Za-z0-9_-]+\.sql', name)), 'NON_RUNTIME_ARCHIVE_MEMBER')
 
 
-def verified_archive(archive_ref, manifest_ref, build_id, source_commit):
+def verified_archive(archive_ref, manifest_ref, build_id, source_commit, native_source=None):
     """Read and validate before any destination/daemon action; no tarfile.extract(all)."""
     manifest_bytes = bytes_file(manifest_ref.get('path'), 16 * 1024 * 1024)
     need(digest(manifest_bytes) == manifest_ref.get('sha256'), 'RELEASE_MANIFEST_SHA256_MISMATCH')
     manifest = json.loads(manifest_bytes)
     need(manifest.get('format') == 'naijue-release-v1' and manifest.get('buildId') == build_id and
          manifest.get('sourceCommit') == source_commit and manifest.get('publicOrigin') == ORIGIN and manifest.get('apiPrefix') == '/api', 'RELEASE_IDENTITY_MISMATCH')
+    native_members = native35_member_map(manifest, native_source)
     records = manifest.get('members')
     need(isinstance(records, list) and 1 <= len(records) < 10000, 'FINITE_ARCHIVE_MEMBER_MANIFEST_REQUIRED')
     expected = {}
     for row in records:
-        member_allowed(row.get('path'))
+        member_allowed(row.get('path'), nativeMembers=native_members)
         need(row['path'] != 'release-manifest.json' and row['path'] not in expected and
              HASH.fullmatch(row.get('sha256', '')) and isinstance(row.get('bytes'), int) and 0 <= row['bytes'] <= 64 * 1024 * 1024, 'INVALID_ARCHIVE_MEMBER_RECORD')
         expected[row['path']] = row
@@ -255,7 +300,7 @@ def verified_archive(archive_ref, manifest_ref, build_id, source_commit):
                 need(name not in directories, 'DUPLICATE_ARCHIVE_DIRECTORY')
                 directories.add(name)
                 continue
-            member_allowed(name)
+            member_allowed(name, nativeMembers=native_members)
             need(item.isfile() and not item.issparse() and not item.linkname and name in expected and name not in entries,
                  'ARCHIVE_LINK_EXTRA_OR_DUPLICATE_MEMBER')
             need(item.size == expected[name]['bytes'], 'ARCHIVE_MEMBER_SIZE_MISMATCH')
@@ -516,6 +561,12 @@ def validate_runtime_build(p, manifest, refs):
          graph.get('entryOutput') == component.get('entryOutput') == RELEASE_CONTRACT['entrypoints']['backend']['member'] and
          inputs and inputs == component.get('inputs') and required <= {row['path'] for row in inputs} and
          all(row == source_inputs.get(row['path']) for row in inputs), 'EXACT26_NATIVE_BACKEND_GRAPH_REQUIRED')
+    if manifest.get('native35') is not None:
+        need(exact35_selected(p), 'NATIVE35_EXPLICIT_RUNTIME_REQUIRED')
+        native_source = reference(refs['sourceSet'], 16 * 1024 * 1024)
+        for row in native35_member_map(manifest, native_source).values():
+            original = source_inputs.get(row['sourcePath'])
+            need(original is not None and all(original.get(k) == row.get(k) for k in ('bytes', 'sha256')), 'NATIVE35_SAME_BUILD_SOURCE_REQUIRED')
     build_outputs = {row.get('member'): row for row in build.get('files', []) if row.get('role') == 'backend'}
     need(graph.get('outputs') and all(name in build_outputs and any(row['path'] == name and row['sha256'] == build_outputs[name]['sha256'] and
          row['bytes'] == build_outputs[name]['bytes'] for row in manifest['members']) for name in graph['outputs']), 'EXACT26_NATIVE_OUTPUT_BINDING_REQUIRED')
@@ -987,7 +1038,8 @@ def file_hash(filename):
 
 
 def validate_references(p, capacity_pending=False):
-    manifest, entries = verified_archive(p['archive'], p['manifest'], p['buildId'], p['sourceCommit'])
+    native_source = reference(p['runtime35']['references']['sourceSet'], 16 * 1024 * 1024) if exact35_selected(p) else None
+    manifest, entries = verified_archive(p['archive'], p['manifest'], p['buildId'], p['sourceCommit'], native_source)
     pack = reference(p['packReceipt'])
     need(pack.get('status') == 'PACKED_AND_EXTRACTED_READBACK_MATCH' and pack.get('archiveExtractions') == 1 and
          pack.get('buildId') == p['buildId'] and pack.get('sourceCommit') == p['sourceCommit'] and

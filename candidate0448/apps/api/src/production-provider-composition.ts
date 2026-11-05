@@ -1,3 +1,4 @@
+import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { PostgresImportedCatalogueCompletenessVerifier } from "../../../adapters/postgres/src/catalogue-completeness.ts";
@@ -137,7 +138,7 @@ export async function createProductionRuntime27ApplicationApi(input:unknown,driv
  * database capability is supplied by the fresh35 assembly, never an exact27
  * profile substitution or an exact26 metadata review. */
 export interface ProductionRuntime35Configuration extends Omit<ProductionRuntimeConfiguration, 'profile' | 'documentCommands'>, MaintenanceSelection {
-  readonly profile: 'source-confirmed-native-exact35-v1';
+  readonly profile: 'source-confirmed-native-exact35-v1' | 'source-confirmed-native-exact35-production-v2';
   readonly documentCommands: 'NATIVE_RUNTIME';
   readonly productMedia: ProductionRuntime26R3Configuration['productMedia'];
   readonly staffCredentialRequestKeyFile?: string;
@@ -146,7 +147,7 @@ export function parseProductionRuntime35Configuration(input: unknown): Productio
   const optional = ['organizationMaintenance', 'catalogueMaintenance', 'paymentMaintenance', 'partyMaintenance', 'staffMaintenance', 'productMaintenance', 'staffCredentialRequestKeyFile', 'inventoryOutputSpool'];
   const c = bag(input, ['schemaVersion', 'profile', 'documentCommands', 'publicOrigin', 'http', 'assets', 'build', 'postgres', 'authentication', 'productMedia',
     ...(input !== null && typeof input === 'object' ? optional.filter(key => Object.hasOwn(input, key)) : [])]);
-  if (c.profile !== 'source-confirmed-native-exact35-v1' || c.documentCommands !== 'NATIVE_RUNTIME')
+  if (!['source-confirmed-native-exact35-v1','source-confirmed-native-exact35-production-v2'].includes(c.profile as string) || c.documentCommands !== 'NATIVE_RUNTIME')
     throw new TypeError('Explicit fresh35 native runtime profile required');
   const media = bag(c.productMedia, ['root', 'rootKey']);
   if (!text(media.root) || !path.isAbsolute(media.root) || path.resolve(media.root) !== media.root
@@ -164,7 +165,7 @@ export function parseProductionRuntime35Configuration(input: unknown): Productio
     catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, staffMaintenance: _staff,
     productMaintenance: _product, ...base } = c;
   const checked = parseProductionRuntimeConfiguration({ ...base, profile: 'source-confirmed-native-v1' });
-  return { ...checked, profile: 'source-confirmed-native-exact35-v1', documentCommands: 'NATIVE_RUNTIME', ...maintenance,
+  return { ...checked, profile: c.profile as ProductionRuntime35Configuration['profile'], documentCommands: 'NATIVE_RUNTIME', ...maintenance,
     productMedia: { root: media.root, rootKey: media.rootKey },
     ...(Object.hasOwn(c, 'staffCredentialRequestKeyFile') ? { staffCredentialRequestKeyFile: c.staffCredentialRequestKeyFile as string } : {}) };
 }
@@ -175,12 +176,13 @@ export function productionRuntime35HostConfiguration(input: unknown): Production
   return parseProductionRuntimeConfiguration({ ...base, profile: 'source-confirmed-native-v1' });
 }
 export async function createProductionRuntime35ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
-  staffCredentialRequestTag: CredentialRequestTag | null = null, capacityAdmission?: CapacityAdmission): Promise<PostgresApplicationApi> {
+  staffCredentialRequestTag: CredentialRequestTag | null = null, capacityAdmission?: CapacityAdmission, capacityTarget?: CapacityRuntimeTarget): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime35Configuration(input);
   const options = productionApplicationOptions(productionRuntime35HostConfiguration(config), capacityAdmission);
   const { catalogueCompleteness: _legacy, ...commands } = options.documentCommands!;
   return createPostgresRuntime35ApplicationApi({ ...options, ...maintenanceOptions(config, staffCredentialRequestTag), documentCommands: commands },
-    driver, { ...config.productMedia, publicRoots: [config.assets.root] });
+    driver, { ...config.productMedia, publicRoots: [config.assets.root] },
+    config.profile === 'source-confirmed-native-exact35-production-v2' ? {...(capacityTarget?{capacityTarget}:{})} : undefined);
 }
 
 /** A single owned bounded pool is constructed inside the existing application

@@ -119,3 +119,76 @@ test('dedicated candidate prefix survives a real production build and other pref
   await writeFile(other.publicConfig, JSON.stringify(candidate));
   await assert.rejects(buildProduction(other.options), error => error.code === 'EXPLICIT_PRODUCTION_PUBLIC_CONFIGURATION_REQUIRED');
 });
+
+
+test('native35 exact original source closure survives one real build and pack with mixed member/external negatives',async()=>{
+ const {native35Closure,validateRelease}=await import('./manifest.mjs');const {packRelease}=await import('./pack.mjs');
+ const repository=path.resolve(fileURLToPath(new URL('../../',import.meta.url)));
+ // Explicit local reference input to this tool test, never a production default.
+ const reference=path.resolve(fileURLToPath(new URL('../../../reference-inputs/',import.meta.url)));
+ const closure=await native35Closure(repository,reference);
+ const f=await fixture('native35-closure',true);
+ for(const pin of closure.pins)await put(f.sourceRoot,pin.path,await readFile(path.join(repository,pin.path)));
+ await put(f.sourceRoot,'apps/api/src/production-main.ts','export {describe} from "./postgres-read-api.ts";');
+ await put(f.sourceRoot,'apps/api/src/postgres-read-api.ts','import {describeFresh35OrdinaryAdmissionV2} from "../../../tools/unified-import/fresh35-host-session.mjs"; export const describe=describeFresh35OrdinaryAdmissionV2;');
+ f.options.sourceCommit=await commitFixtureTree(f.sourceRoot);f.options.native35ReferenceDirectory=reference;
+ const receipt=await buildProduction(f.options);assert.equal(receipt.status,'REAL_BUILD_AND_PACK_CONTRACT_VALIDATED');
+ const opts={sourceManifest:path.join(f.options.manifestDirectory,'source-manifest.json'),buildManifest:path.join(f.options.manifestDirectory,'build-manifest.json'),buildRoot:f.options.buildRoot};
+ const build=JSON.parse(await readFile(opts.buildManifest)),backend=await readFile(path.join(opts.buildRoot,'backend/production-main.js'),'utf8');
+ assert.ok(backend.includes('./native35-source/tools/unified-import/fresh35-host-session.mjs'));
+ const native=build.files.filter(r=>r.role==='native35');assert.equal(native.length,closure.pins.length);
+ for(const row of native){const original=await readFile(path.join(repository,row.sourcePath));assert.equal(row.sha256,createHash('sha256').update(original).digest('hex'));assert.deepEqual(await readFile(path.join(opts.buildRoot,row.path)),original);}
+ const nativeRoot=path.join(opts.buildRoot,'backend/native35-source');
+ const {pathToFileURL}=await import('node:url');
+ const copiedProducer=await import(pathToFileURL(path.join(nativeRoot,'scripts/release/unified-install/fresh35-combined-source-v1.mjs')).href);
+ const referencePaths=await copiedProducer.resolveFresh35ReferenceInputPaths(reference);
+ const copiedDescriptor=copiedProducer.describeFresh35CombinedSource(await copiedProducer.loadFresh35CombinedSource(nativeRoot,referencePaths));
+ assert.equal(copiedDescriptor.sourceSetSha256,build.native35.closure.sourceSetSha256,'relocated raw modules reconstruct the exact original source set');
+ const copiedHost=await import(pathToFileURL(path.join(nativeRoot,'tools/unified-import/fresh35-host-session.mjs')).href);
+ assert.throws(()=>copiedHost.describeFresh35OrdinaryAdmissionV2({}),/ACTIVE_ADMISSION/);
+ const pack=await packRelease({...opts,out:path.join(f.root,'packed')});assert.equal(pack.status,'PACKED_AND_EXTRACTED_READBACK_MATCH');
+ const {spawnSync}=await import('node:child_process');
+ const python=`import json,sys,runpy,copy,hashlib
+D=runpy.run_path('scripts/release/deploy-candidate.py');v=json.load(sys.stdin);source=v['source'];manifest=v['manifest'];m=D['native35_member_map'](manifest,source)
+assert len(m)==len(source['currentSourcePins'])
+try:D['member_allowed'](next(iter(m)))
+except D['Refused']:pass
+else:raise AssertionError('missing native binding accepted')
+for n in m:D['member_allowed'](n,nativeMembers=m)
+a,b=D['verified_archive'](v['archive'],v['manifestRef'],v['buildId'],v['commit'],source)
+assert len(b)==len(manifest['members'])+1
+for edit in ['missing','bytes','extra','escape','role','readkind']:
+ bad=copy.deepcopy(manifest);row=next(x for x in bad['members'] if x.get('role')=='native35')
+ if edit=='missing':bad['members'].remove(row)
+ if edit=='bytes':row['sha256']='0'*64
+ if edit=='extra':x=copy.deepcopy(row);x['path']+='extra';x['sourcePath']='tools/unified-import/extra.mjs';bad['members'].append(x)
+ if edit=='escape':row['path']='backend/native35-source/../escape.ts'
+ if edit=='role':row['role']='backend'
+ if edit=='readkind':row=next(x for x in bad['members'] if x.get('native35Kind')=='proof-read');row['native35Kind']='module'
+ try:D['native35_member_map'](bad,source)
+ except D['Refused']:pass
+ else:raise AssertionError(edit)
+# An internally rehashed descriptor cannot widen the exact two fixture exception.
+bad=copy.deepcopy(manifest);s=copy.deepcopy(source);s['currentSourcePins'].append({'path':'tests/fixtures/unified-import/extra.ts','sha256':'0'*64});keys=('format','baseArtifacts','capturedSourcePins','currentSourcePins','currentSourceDelta','patches');s['sourceSetSha256']=hashlib.sha256(json.dumps({k:s[k] for k in keys},ensure_ascii=False,separators=(',',':')).encode()).hexdigest();bad['native35']['sourceSetSha256']=s['sourceSetSha256'];bad['native35']['pins']=s['currentSourcePins']
+try:D['native35_member_map'](bad,s)
+except D['Refused']:pass
+else:raise AssertionError('additional fixture accepted')
+print('ACTUAL_HELPER_ARCHIVE_AND_CLOSED_NATIVE_MEMBERS_PASS')`;
+ const release=JSON.parse(await readFile(path.join(f.root,'packed/release-manifest.json')));
+ const checked=spawnSync('python3',['-B','-c',python],{cwd:repository,encoding:'utf8',input:JSON.stringify({source:copiedDescriptor,manifest:release,archive:{path:path.join(f.root,'packed/release.tar.gz'),sha256:pack.archive.sha256,bytes:pack.archive.bytes},manifestRef:{path:path.join(f.root,'packed/release-manifest.json'),sha256:pack.manifestSha256},buildId:release.buildId,commit:release.sourceCommit})});
+ assert.equal(checked.status,0,checked.stderr);assert.match(checked.stdout,/ACTUAL_HELPER_ARCHIVE_AND_CLOSED_NATIVE_MEMBERS_PASS/);
+
+ const base=JSON.stringify(build);const save=async value=>writeFile(opts.buildManifest,JSON.stringify(value));
+ const missing=JSON.parse(base);missing.files=missing.files.filter(r=>r.path!==native[0].path);await save(missing);await assert.rejects(validateRelease(opts));await save(build);
+ const row=native.find(r=>r.sourcePath==='tools/unified-import/fresh35-host-session.mjs'),member=path.join(opts.buildRoot,row.path),original=await readFile(member);
+ await writeFile(member,Buffer.concat([original,Buffer.from('\n// changed')]));await assert.rejects(validateRelease(opts));await writeFile(member,original);
+ const {rename,unlink}=await import('node:fs/promises');await rename(member,member+'.original');await symlink(member+'.original',member);
+ await assert.rejects(validateRelease(opts));await unlink(member);await rename(member+'.original',member);
+ for(const sourcePath of ['../escape.ts','tests/fixtures/unified-import/extra.ts']){const bad=JSON.parse(base);bad.files.find(r=>r.path===row.path).sourcePath=sourcePath;await save(bad);await assert.rejects(validateRelease(opts));}await save(build);
+ const graphRow=build.files.find(r=>r.path==='backend/metafile.json'),graphPath=path.join(opts.buildRoot,graphRow.path),graphBytes=await readFile(graphPath);const graph=JSON.parse(graphBytes);
+ for(const output of Object.values(graph.outputs))for(const item of output.imports)if(item.external&&item.path.startsWith('./native35-source/'))item.path='./arbitrary.mjs';
+ const changed=Buffer.from(JSON.stringify(graph));await writeFile(graphPath,changed);const bad=JSON.parse(base);Object.assign(bad.files.find(r=>r.path===graphRow.path),{bytes:changed.length,sha256:createHash('sha256').update(changed).digest('hex')});await save(bad);await assert.rejects(validateRelease(opts));await writeFile(graphPath,graphBytes);await save(build);
+ const fixturePin=closure.pins.find(p=>p.path==='tests/fixtures/unified-import/synthetic-package.ts');
+ const fixturePath=path.join(f.sourceRoot,fixturePin.path),fixtureBytes=await readFile(fixturePath);await writeFile(fixturePath,Buffer.concat([fixtureBytes,Buffer.from('\n// mixed version')]));
+ await assert.rejects(native35Closure(f.sourceRoot,reference),/FIXTURE_BYTES/);await writeFile(fixturePath,fixtureBytes);
+});

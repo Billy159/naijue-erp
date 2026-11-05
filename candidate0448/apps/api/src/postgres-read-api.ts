@@ -1,3 +1,6 @@
+import {admitFresh35OrdinaryPoolV2,describeFresh35OrdinaryAdmissionV2,closeFresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+import type {Fresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
 import { Ordinary27ProductWarehouseStockReader } from '../../../adapters/postgres/src/ordinary27-product-warehouse-stock-reader.ts';
 import { createOrdinary27ProductCapacityFactory } from '../../../adapters/postgres/src/ordinary27-product-capacity.ts';
 import { PostgresOrdinaryDocumentListReader } from '../../../adapters/postgres/src/ordinary-document-list-reader.ts';
@@ -605,19 +608,19 @@ export async function createPostgresRuntime27DocumentApplicationApi(options: Pos
 /** The fresh35 native tables retain migration chain 1..27 and its ordinary
  * runtime role. Reuse that issuer and its pool-bound ordinary readers. */
 export async function createPostgresRuntime35ApplicationApi(options: PostgresApplicationApiOptions,
-  createDriver?: PostgresPoolDriverFactory, media?: Runtime26ProductMediaConfiguration): Promise<PostgresApplicationApi> {
+  createDriver?: PostgresPoolDriverFactory, media?: Runtime26ProductMediaConfiguration, productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}): Promise<PostgresApplicationApi> {
   if (!options || typeof options !== 'object' || !('documentCommands' in options) || !('currentForms' in options))
     throw new TypeError('Fresh35 native document commands and current forms required');
   const capabilities = checkedApplicationCapabilities(options, true);
   if (!capabilities.commands || capabilities.coreInitializationRead)
     throw new TypeError('Fresh35 ordinary native application required');
   return await composePostgresApi(options, createDriver, capabilities, undefined,
-    Object.freeze({ sales: true, transfers: true }), media, undefined, true, true) as PostgresApplicationApi;
+    Object.freeze({ sales: true, transfers: true }), media, undefined, true, true, productionV2) as PostgresApplicationApi;
 }
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
   capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
   runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
-  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization, ordinary27 = false, ordinaryMaintenance = false): Promise<PostgresReadApi | PostgresApplicationApi> {
+  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization, ordinary27 = false, ordinaryMaintenance = false, productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
   if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || (capabilities?.productMaintenance && !ordinary27)) && runtime26Review === undefined && !ordinaryMaintenance) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   // Every non-CORE graph below mounts the new stored-pair ledger reader; command
@@ -630,13 +633,24 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver, observeRequestStage);
   let app: FastifyInstance | undefined;
   let closing = false;
+  let admission35: Fresh35OrdinaryAdmissionV2 | undefined;
+  const revoke35=():void=>{if(admission35)closeFresh35OrdinaryAdmissionV2(admission35,ownedPool);};
   try {
     host.capacityRuntimePoolBinder?.(ownedPool, options.postgres.target);
     const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, {
       ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1",
       ...(runtime26HistoryAuthorization !== undefined ? { requiredObservation: "HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8" as const } : requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8" as const } : {})
     });
-    const issuer27 = ordinary27 ? createRuntime27CommandIssuer(ownedPool, {database:options.postgres.target.database,user:options.postgres.target.user,port:options.postgres.target.port}, 'WHOLE_V2') : null;
+    if(productionV2){
+      if(!ordinaryMaintenance || !host.capacityRuntimePoolBinder || !productionV2.capacityTarget)throw new TypeError('Production V2 requires original owned-pool capacity target');
+      const {host:connectHost,port,database,user}=options.postgres.target;
+      admission35=await admitFresh35OrdinaryPoolV2(ownedPool,{host:connectHost,port,database,user});
+      const actual=describeFresh35OrdinaryAdmissionV2(admission35), expected=productionV2.capacityTarget;
+      if(actual.connectHost!==expected.host || actual.connectPort!==expected.port || actual.database!==expected.database || actual.user!==expected.role
+        || actual.databaseOid!==expected.databaseOid || actual.postmasterStart!==expected.postmasterStart)
+        throw new TypeError('Production V2 admission and current capacity physical target differ');
+    }
+    const issuer27 = ordinary27 ? createRuntime27CommandIssuer(ownedPool, {database:options.postgres.target.database,user:options.postgres.target.user,port:options.postgres.target.port}, 'WHOLE_V2', admission35) : null;
     const pool = issuer27?.pool ?? (issuer === null ? ownedPool : issuer.pool);
     const ordinaryMaintenanceProof = ordinaryMaintenance && issuer27 ? createRuntime27MaintenanceCapabilities(pool, issuer27.runtime27) : null;
     const checkAdmission = async (signal?: AbortSignal): Promise<boolean> => {
@@ -684,7 +698,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const extensions = capabilities?.nativeReadExtensions ? createSourceConfirmedApplicationReadAuthorization(pool) : null;
     app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536, genReqId: request => requestDiagnostic(request)?.requestId ?? randomUUID() });
     installRequestDiagnostics(app);
-    app.addHook("onClose", async () => { closing = true; try { host.capacityAdmission.close(); } finally { await ownedPool.dispose(); } });
+    app.addHook("onClose", async () => { closing = true; try { revoke35(); } finally { try { host.capacityAdmission.close(); } finally { await ownedPool.dispose(); } } });
     const migrated = host.credentialCompatibility === 'legacy-pbkdf2-v1';
     const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool), now: host.now, policy: host.policy,
       sessionAdmission: {acquire: signal => host.capacityAdmission.acquire('session', signal)},
@@ -784,7 +798,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       if (capabilities.coreReadModules.includes("catalogue")) app.register(createCatalogueSettingsReadHttpPlugin({ authenticate,
         dependencies: { authorization: core.catalogueAuthorization, reader: new PostgresCatalogueSettingsReadReader(pool, null, core.catalogueCapability) } }));
       await app.ready(); const readyApp = app;
-      return Object.freeze({ app: readyApp, readiness, close: () => { closing = true; return readyApp.close(); }, trustedOrigin: host.trustedOrigin,
+      return Object.freeze({ app: readyApp, readiness, close: () => { closing = true; revoke35(); return readyApp.close(); }, trustedOrigin: host.trustedOrigin,
         get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; } });
     }
     const productReader = issuer27 ? new PostgresProductQueryReader(pool, null, null, issuer27.ordinaryRead) : new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null);
@@ -906,6 +920,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     // Even failed registration owns its pool. Both operations are idempotent; explicitly
     // dispose as a fallback if Fastify fails before reaching the close hook.
     const failures: unknown[] = [error];
+    try { revoke35(); } catch (closeError) { failures.push(closeError); }
     try { host.capacityAdmission.close(); } catch (closeError) { failures.push(closeError); }
     try { await app?.close(); } catch (closeError) { failures.push(closeError); }
     try { await ownedPool.dispose(); } catch (disposeError) { if (!failures.includes(disposeError)) failures.push(disposeError); }

@@ -189,3 +189,21 @@ test('A02 executable production-main dispatch rejects missing capacity for every
     assert.equal(result.code,1);assert.equal(result.stdout,'');assert.equal(result.stderr,'Production startup refused or failed; inspect private operational diagnostics\n');
   }
 });
+
+test('production35 CLI carries the same parsed capacity target through API then preflight before listen',async t=>{
+ const f=await fixture(t),h=scriptedHost(),filename=path.join(f.root,'production35.json');
+ const raw={...f.base,profile:'source-confirmed-native-exact35-production-v2',documentCommands:'NATIVE_RUNTIME',productMedia:{root:f.root,rootKey:'synthetic35'},capacityLaunch:f.capacity};
+ await writeFile(filename,JSON.stringify(raw),{mode:0o600});let calls=0;
+ const deps={...h.deps,async createApi(...args:Parameters<ProductionMainDependencies['createApi']>){calls++;assert.equal(args[0],'r35');assert.equal(args[1].profile,raw.profile);assert.deepEqual(args[4],f.capacity.target);return h.deps.createApi(...args);}};
+ await runProductionCli(['--exact35',filename],deps);assert.equal(calls,1);assert.equal(h.counts().created,1);assert.equal(h.counts().starts,1);
+ process.emit('SIGTERM');await wait(1);assert.equal(h.resource.snapshot().closed,true);assert.equal(h.counts().closed,1);
+});
+test('production35 actual provider refuses absent protected record before PG and CLI closes original capacity without listen',async t=>{
+ const {createProductionRuntime35ApplicationApi}=await import('./production-provider-composition.ts');
+ const f=await fixture(t),h=scriptedHost(),filename=path.join(f.root,'production35-denied.json');let connections=0;
+ await writeFile(filename,JSON.stringify({...f.base,profile:'source-confirmed-native-exact35-production-v2',documentCommands:'NATIVE_RUNTIME',productMedia:{root:f.root,rootKey:'synthetic35'},capacityLaunch:f.capacity}),{mode:0o600});
+ const deps={...h.deps,async createApi(mode:Parameters<ProductionMainDependencies['createApi']>[0],c:Parameters<ProductionMainDependencies['createApi']>[1],capacity:Parameters<ProductionMainDependencies['createApi']>[2],tag:Parameters<ProductionMainDependencies['createApi']>[3],target:Parameters<ProductionMainDependencies['createApi']>[4]){
+  return createProductionRuntime35ApplicationApi(c,()=>({async connect(){connections++;throw Error('must not connect');},async end(){},on(){return this;}} as never),tag,capacity,target);
+ }};
+ await assert.rejects(runProductionCli(['--exact35',filename],deps),/startup refused/);assert.equal(connections,0);assert.equal(h.counts().starts,0);assert.equal(h.resource.snapshot().closed,true);
+});
