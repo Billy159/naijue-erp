@@ -1,0 +1,52 @@
+{
+  "status": "PASS_SCOPED_SINGLE_FIXED_NODE_CONSUMER_BOUND_AND_ACTUAL_READONLY_CHECK",
+  "parentWrapperSHA256": "3940464664de13f7627ce822c9618bf05b6fafc43890544324a87914ade62067",
+  "wrapperSHA256": "1be390f665386dd1a447694d38fdc694a5962b692b79cd5da4f035e6591a330c",
+  "change": "Exactly one start_target Node read_file bound64*1024*1024 ->126595440. All guards and all other functions/targets/constants unchanged.",
+  "actualCheck": {
+    "jobId": "t45-f35-5d70-node-bound-readonly-20261106-01",
+    "checkedAtUTC": "2026-11-05T17:35:53.021615+00:00",
+    "writes": 0,
+    "NodeExecuted": false,
+    "PGStarted": false,
+    "actualFile": {
+      "bytes": 126595440,
+      "uid": 0,
+      "mode": "0o755",
+      "nlink": 1
+    },
+    "old64MiB": "BOUNDED_REGULAR_FILE_REQUIRED",
+    "newExactBound": {
+      "bytes": 126595440,
+      "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c"
+    },
+    "status": "PASS_ACTUAL_FIXED_NODE_OLD_REFUSAL_NEW_EXACT_READ_ONLY",
+    "elapsedSeconds": 0.355034
+  },
+  "job": {
+    "jobId": "t45-f35-5d70-node-bound-readonly-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-27346cdf3521",
+    "atUTC": "2026-11-05T17:35:52.967847+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.4181398060172796,
+    "exports": [
+      "node-bound-readonly.json"
+    ],
+    "finishedAtUTC": "2026-11-05T17:35:53.410124+00:00"
+  },
+  "preserved": "r4 two leaves, all old failures and complete materialized5d70 app unchanged",
+  "newAppWrites": 0,
+  "NodeExecution": false,
+  "PGOrContainerStarts": 0,
+  "buildsOrUploads": 0,
+  "requestedModelEffort": "gpt-6.1-sol/high",
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "next": "C fixed source and original QB scoped consumer review before separate exact20minutePG binding. No materialization rerun needed."
+}
