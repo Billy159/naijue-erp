@@ -1,0 +1,37 @@
+{
+  "status": "EXACT_R5_CONSTANTS_BOUND_PREPARATION_ONLY",
+  "pins": {
+    "SOURCE": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
+    "ARCHIVE_SHA": "035081fa42e686e4b687ed3ace0d2ab99e2b02f1e18a09ca8a4585b0bc9528fe",
+    "ARCHIVE_BYTES": 83672636,
+    "FILE_COUNT": 7292,
+    "MANIFEST_SHA": "d5d1857ee3358e68ab7109161f1914390dfd153247624a5f136b2c03e49fcca5",
+    "KEY": "f35-3de75b-ordinary-local-20261106-01",
+    "PROOF_EVIDENCE_SOURCE_SHA": "b9d2a1edc61373d135601c7dd33b4120ec3c6239643b72270dce9cde2efe9443"
+  },
+  "functionsAstSame": true,
+  "receiver": "ORIGINAL_ORDINARY_AD0_UNCHANGED_NOT_PRIVATE_8841",
+  "files": {
+    "ordinary-proof-evidence.py": {
+      "bytes": 10262,
+      "sha256": "b9d2a1edc61373d135601c7dd33b4120ec3c6239643b72270dce9cde2efe9443"
+    },
+    "artifact-receiver.original.py": {
+      "bytes": 6230,
+      "sha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653"
+    },
+    "fresh35-container-successor.py": {
+      "bytes": 36922,
+      "sha256": "6c323d4f1adf2361375bd624e72de96d03307905839e4757aed64429add15fd3"
+    },
+    "assemble_original_receiver.py": {
+      "bytes": 9632,
+      "sha256": "aad3c27c71663db95494a57daf133952d84efa0a873f37f8a0649cd6f06cc495"
+    }
+  },
+  "tailReadback": true,
+  "fullClosureOrBuildRepeated": false,
+  "serverActions": 0,
+  "PG": false,
+  "deadline": 1793917733463
+}

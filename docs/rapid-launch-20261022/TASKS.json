@@ -29322,6 +29322,16 @@
         "releaseSHA256": "9065463bea5743c518fb8409b8330d9a6ba3fc5247551ff51d9f686a2e63605a",
         "runtimeConfiguration": "Still frozen synthetic target/password null; NOT REAL-ready config",
         "PGExecuted": false
+      },
+      "minimalProductionConsumer": {
+        "state": "C_APPROVED_SOURCE_CONTRACT_IMPLEMENTATION_NOT_EXECUTED",
+        "D1": "Existing production JS API consumer glue/precise input/external authority only",
+        "T45": "Original sole bootstrap/Python/actual environment owner exact production target and cleanup glue",
+        "preserved": "Synthetic V1 strict refusal, existing V2 binding/compile/run/publish/REALstream and ordinary proof, original single Client/pool/keys/window and service lease separation",
+        "authority": "C under human full decision delegation before2026-11-06T12:00+08",
+        "reason": "Actual production bootstrap/ownerClient CLI consumer missing; not solved by reusing synthetic CLI",
+        "noActualTargetCreated": true,
+        "sourceOnly": true
       }
     },
     "releaseFixturePinSynchronization": {
@@ -29730,7 +29740,7 @@
       },
       "r4ExclusiveBackendFollowup": {
         "owner": "D1",
-        "state": "EXACT_EIGHT_LEAVES_AUTHOR_CHECKS_PASS_READY_INTEGRATION_QB_NOT_PG",
+        "state": "QB_PASS_SOURCE_AND_SCOPED_OFFLINE_MODELS_NOT_PG",
         "authority": "C under direct human decision delegation until2026-11-06T12:00+08",
         "reason": "PG17.11 hides backend_type for unrelated roles; logical launcher can retain bootstrap user and hit original usename OR. Plain predicate exclusion would leak real other clients/walsenders under NULL. Specific r4 extra backend still unknown.",
         "scope": "Existing bootstrap/catalog/ACL exact minimal fixed no-arg bool observer, fixed search_path/PUBLIC revoke/caller and target binding, no full stats grant or raw identities. Clients/walsender/workers/unknown refused, only exact native launcher and mandatory native auxiliaries allowed. Preserve original target, budget and runtime guards.",
@@ -29791,10 +29801,11 @@
         "sourceSetSHA256": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
         "buildState": "BUILD_PACK_AND_ALL_MEMBERS_READBACK_PASS_NOT_PG",
         "D2ReceiptSHA256": "deb82189ba427bf23435be968ca291e35a2e407bca2c0c8b7133cf31a2260324",
-        "remoteReadback": true
+        "remoteReadback": true,
+        "QBReceiptSHA256": "78eedd77493ab7107d7d37811470ced02f979ae60e5352bfce49ec9705cffa11"
       },
       "r5Preparation": {
-        "state": "NEW_FIXED_OBSERVER_ROOT_PREPARATION_AUTHORIZED_QB_PENDING_NO_PG",
+        "state": "ACTUAL_FULL_READY_MATERIALIZING_QB_SOURCE_PASS",
         "buildRoot": "3de75b77f8be7fdb1be3f889e5b9521ff1d57b55",
         "sourceSetSHA256": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
         "manifestSHA256": "d5d1857ee3358e68ab7109161f1914390dfd153247624a5f136b2c03e49fcca5",
@@ -29810,7 +29821,23 @@
         "expiresAt": 1793917733463,
         "oldGateExpectedSHA256": "54cd7700ae7ee5d25be5fe566c5f1019f2a4cd2e3895a294c608f9a6d43001ba",
         "actualPG": false,
-        "scope": "Same reviewed ordinary receiver and one-shot constants, original40s/900s; no duplicate ops review; fresh r5 directory only, no old replay or private data changed"
+        "scope": "Same reviewed ordinary receiver and one-shot constants, original40s/900s; no duplicate ops review; fresh r5 directory only, no old replay or private data changed",
+        "wrapperSHA256": "6c323d4f1adf2361375bd624e72de96d03307905839e4757aed64429add15fd3",
+        "probeSHA256": "b9d2a1edc61373d135601c7dd33b4120ec3c6239643b72270dce9cde2efe9443",
+        "assemblerSHA256": "aad3c27c71663db95494a57daf133952d84efa0a873f37f8a0649cd6f06cc495",
+        "opsReadySHA256": "4824c2f166cddd8a56a02c5a2b53d38934f7ac3ecb2123dfa0d973499811dcfa",
+        "actualAssemblySeconds": 2.726890148,
+        "fullFileIdentity": [
+          66304,
+          393593,
+          83672636,
+          1793916258069598787,
+          1793916258904599826
+        ],
+        "materializationJob": "t45-f35-3de75b-local-materialize-20261106-01",
+        "materializationPlanSHA256": "ca11a4b30a312e66e3e055a2b8241fed80045b25f438070baf874ca846c3d78d",
+        "materializationSubmitRemainingSeconds": 1429.26,
+        "QBReceiptSHA256": "78eedd77493ab7107d7d37811470ced02f979ae60e5352bfce49ec9705cffa11"
       }
     },
     "productionReleaseCompatibilityContinuation": {

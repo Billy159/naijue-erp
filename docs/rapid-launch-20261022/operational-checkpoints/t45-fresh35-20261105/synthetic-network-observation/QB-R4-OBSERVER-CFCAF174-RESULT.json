@@ -1,0 +1,230 @@
+{
+  "task": "C-0448-R4-RESTRICTED-OBSERVER-8-LEAF",
+  "atUtc": "2026-11-05T22:01:53.861799+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODELS",
+  "findings": [],
+  "pins": {
+    "buildRoot": "3de75b77f8be7fdb1be3f889e5b9521ff1d57b55",
+    "sourceCommit": "cfcaf1747aae9689a8a9bebed17b09dfda6f8b3b",
+    "tree": "4d9d7fdbab1a09684000e804ab9197da215a63c2",
+    "files": [
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+        "bytes": 31184,
+        "sha256": "7ebb0c07a78c2d294022900fb44653413c611dcdcf9e0cba17788fc5a5505376"
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "bytes": 35782,
+        "sha256": "967f282300966592e72e61e1fcda0aef11a051c2e0a133b9ba7e6df6a7103aca"
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+        "bytes": 18702,
+        "sha256": "3de6ac1d3eb20c17b605466b33dc4050c3e0ba4a401dcf10fd8625c14d504b22"
+      },
+      {
+        "path": "tests/fresh35-combined-target.test.mjs",
+        "bytes": 29491,
+        "sha256": "4c953da9c1d92a04b49fcc4ad835ee1e05d3489f2c9377a8f1256f3c9d4e2eb6"
+      },
+      {
+        "path": "tests/fresh35-combined-catalog.test.mjs",
+        "bytes": 15948,
+        "sha256": "35d77809c51fcd64d32ebf4d80a8c5776b3b51441aa415fb4a65f3e0a664cd37"
+      },
+      {
+        "path": "tests/fresh35-isolated-entry.test.mjs",
+        "bytes": 17238,
+        "sha256": "b4570a1271d298d76e04c675ad6e3bc884a08af15dbf2b8b472ba119547abd08"
+      },
+      {
+        "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+        "bytes": 96070,
+        "sha256": "8ada342e9b511d9b44dcb641ba81085ae689ff1505cf83c1b51fe9430fa5da1f"
+      },
+      {
+        "path": "tests/test_fresh35_isolated_launcher.py",
+        "bytes": 74425,
+        "sha256": "82df6d8303f5e838679e2743c10a223bff02c534487dc44072d2bb7615115bbc"
+      }
+    ]
+  },
+  "parentBuildRoot": "4d0589ca80934318850dab637b32535fc642e266",
+  "sourceAndBuild8LeavesMatch": true,
+  "authorEvidenceAdopted": [
+    {
+      "scope": "D1 targeted source/SQLite/model",
+      "passedReported": 13,
+      "sha256": "5939aaf5cc0396d57154007be3db612577bd88fbf46978c1477094dea477663f",
+      "rerun": false
+    },
+    {
+      "scope": "T45 targeted launcher model",
+      "passedReported": 7,
+      "sha256": "7797bb7cdf6dbcc2aef0b5ff9a0f1593dd52e596f1d2f0ca244e19aa7550ad61",
+      "rerun": false
+    }
+  ],
+  "independentChecks": [
+    {
+      "id": "EXACT_EIGHT_SOURCE_BUILD_SHA_AND_TREE",
+      "result": "PASS",
+      "recordModuleUnchanged": true
+    },
+    {
+      "id": "EXTRA_NATIVE_PID_AND_ACTUAL_PG17_WORKER_LABELS",
+      "result": "PASS",
+      "denials": 13,
+      "engine": "SQLite truth semantics only; not PG"
+    },
+    {
+      "id": "BOTH_ORDINARY_PRODUCERS_METADATA_ONLY_AND_RECORD_CATALOG_JOIN",
+      "result": "PASS",
+      "existingCatalogAndPhysicalProviders": "MODELED",
+      "observerSourceGuard": "ORIGINAL_BODY"
+    },
+    {
+      "id": "ORIGINAL_LAUNCHER_GUARDS_AND_FUNCTION_DIFF",
+      "result": "PASS",
+      "onlyChanged": [
+        "main",
+        "cleanup_owned_server"
+      ],
+      "onlyAdded": "bootstrap_exclusive_observer"
+    },
+    {
+      "id": "FIXED_D1_SQL_RENDERER_TO_ORIGINAL_T45_BOOTSTRAP_CONSUMER",
+      "result": "PASS",
+      "sqlBytes": 6669,
+      "adminTargetCalls": 1,
+      "processAndPsql": "STUBBED_NO_PG",
+      "budgetRechecked": true
+    },
+    {
+      "id": "ORIGINAL_PROTECTED_BINDING_READ_TO_CLEANUP_AND_ERROR_PROPAGATION",
+      "result": "PASS",
+      "cases": [
+        {
+          "mode": "present",
+          "result": "PASS",
+          "sqlCalls": 1,
+          "sqlDatabases": [
+            "synthetic_fresh35_20261105_r9"
+          ],
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "childStopped": true,
+          "originalPrivateReadAndTrustedBodies": true
+        },
+        {
+          "mode": "absent",
+          "result": "PASS",
+          "sqlCalls": 1,
+          "sqlDatabases": [
+            "postgres"
+          ],
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "childStopped": true,
+          "originalPrivateReadAndTrustedBodies": true
+        },
+        {
+          "mode": "malformed-array",
+          "result": "PASS",
+          "sqlCalls": 0,
+          "sqlDatabases": [],
+          "cleanupComplete": false,
+          "credentialsRemoved": true,
+          "childStopped": true,
+          "originalPrivateReadAndTrustedBodies": true
+        },
+        {
+          "mode": "duplicate-json",
+          "result": "PASS",
+          "sqlCalls": 0,
+          "sqlDatabases": [],
+          "cleanupComplete": false,
+          "credentialsRemoved": true,
+          "childStopped": true,
+          "originalPrivateReadAndTrustedBodies": true
+        },
+        {
+          "mode": "readable",
+          "result": "PASS",
+          "sqlCalls": 0,
+          "sqlDatabases": [],
+          "cleanupComplete": false,
+          "credentialsRemoved": true,
+          "childStopped": true,
+          "originalPrivateReadAndTrustedBodies": true
+        },
+        {
+          "mode": "broken-symlink",
+          "result": "PASS",
+          "sqlCalls": 0,
+          "sqlDatabases": [],
+          "cleanupComplete": false,
+          "credentialsRemoved": true,
+          "childStopped": true,
+          "originalPrivateReadAndTrustedBodies": true
+        },
+        {
+          "mode": "revoke-error",
+          "result": "PASS",
+          "sqlCalls": 1,
+          "sqlDatabases": [
+            "synthetic_fresh35_20261105_r9"
+          ],
+          "cleanupComplete": false,
+          "credentialsRemoved": true,
+          "childStopped": true,
+          "originalPrivateReadAndTrustedBodies": true
+        }
+      ],
+      "rootAclProcessPsqlBoundaries": "MODELED_NOT_PG"
+    }
+  ],
+  "reviewedContracts": {
+    "observer": "Zero arguments; boolean only; SECURITY DEFINER; exact admin OID10; fixed pg_catalog,pg_temp search_path; volatile/parallel unsafe. Atomic CREATE/revoke PUBLIC/grant only owner and controller. Exact signature/attributes/source/ACL checked before use. No runtime/interface EXECUTE, pg_read_all_stats or app superuser grant.",
+    "target": "SID/database OID/name/PG170011/postmaster UTC birth/endpoint/admin OID/name/superuser/original window; exact owner-controller session and role; origin and nonrecovery. Explicit database-less background cohort only. Unknown/masked/client/replication/worker types denied.",
+    "catalogRecord": "Separate complete bootstrapObserver pg_proc/definition/pg_depend/pg_shdepend in original raw catalog digest/record. Original 35 business tables,152 routines,permissions unchanged. Both ordinary producers inspect metadata without executing observer.",
+    "launcher": "Original target binding and verify_deployment precede fixed entry SQL render. Bounded UTF8 stdout forwarded once by admin psql to exact target database with remaining budget rechecked. Protected binding chooses targetDB helper revoke; absent binding preserves original postgres global-role path. Errors retained, no crossDB retry, stopping and credential clearing continue."
+  },
+  "primaryReferences": {
+    "stats": "https://www.postgresql.org/docs/17/monitoring-stats.html",
+    "securityDefiner": "https://www.postgresql.org/docs/17/sql-createfunction.html",
+    "maskedActivity": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/utils/adt/pgstatfuncs.c",
+    "nativeLauncher": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/replication/logical/launcher.c",
+    "backendIdentity": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/utils/activity/backend_status.c",
+    "backgroundInit": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/utils/init/postinit.c"
+  },
+  "oldR4BackendIdentity": "UNKNOWN; normal native launcher counterexample and mask semantics are not retrospective proof",
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "ERPServerCalls": 0,
+    "PostgresConnections": 0,
+    "PostgresStarted": false,
+    "actualPostgresParsing": false,
+    "actualSecurityDefinerAcl": false,
+    "actualObserverClassification": false,
+    "rootUidAclProcess": "MODELED",
+    "psql": "STUBBED",
+    "businessFullRegressionRun": false,
+    "releaseOrImportApproval": false
+  },
+  "reusedNotRepeated": [
+    "6707 rollback-physical",
+    "09707 private transport",
+    "old author13 plus QB8",
+    "current D1 author13",
+    "current T45 author7",
+    "business full suites"
+  ],
+  "remaining": "T45 alone performs newly signed exact-target actual PG/ACL/classifier/install/rollback/ordinary business checks under separate exact authority. No old r4 replay."
+}
