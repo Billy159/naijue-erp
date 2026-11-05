@@ -7,7 +7,7 @@ interface DocumentPin {readonly table:string;readonly relative_path:string;reado
  * The caller obtains trustedSha256 from the authorized reviewer outside the package.
  * Hash verification binds that review to these bytes; it cannot establish source truth. */
 export interface CurrentEffectiveAlignmentEvidence {
- readonly format_version:'CURRENT_EFFECTIVE_ALIGNMENT_V1';
+ readonly format_version:'CURRENT_EFFECTIVE_ALIGNMENT_V1'|'CURRENT_EFFECTIVE_ALIGNMENT_V2';
  readonly scope:'CURRENT_EFFECTIVE';
  readonly source_namespace:string;
  readonly inventory_file_sha256:string;
@@ -36,7 +36,7 @@ export function readCurrentEffectiveAlignmentEvidence(input:{bytes:Uint8Array;tr
  const bytes=Buffer.from(input.bytes);
  if(!hash(input.trustedSha256)||createHash('sha256').update(bytes).digest('hex')!==input.trustedSha256)throw Error('CURRENT_EFFECTIVE_ALIGNMENT_HASH');
  const value=parseStrictJson(decodeUtf8(bytes));
- if(!closed(value,['format_version','scope','source_namespace','inventory_file_sha256','inventory_exported_at','cutoff_at','registry_sha256','document_files','reviewed_by','review_reference','alignment_basis','decision'])||value.format_version!=='CURRENT_EFFECTIVE_ALIGNMENT_V1'||value.scope!=='CURRENT_EFFECTIVE'||!text(value.source_namespace)||!hash(value.inventory_file_sha256)||value.inventory_file_sha256===input.trustedSha256||value.inventory_exported_at!==null||!validateOffsetInstant(value.cutoff_at)||!hash(value.registry_sha256)||!pins(value.document_files)||!text(value.reviewed_by)||!text(value.review_reference)||!text(value.alignment_basis)||value.decision!=='CURRENT_EFFECTIVE_DOCUMENTS_MATCH_INVENTORY_CUTOFF'||findCredentialPath(value))throw Error('CURRENT_EFFECTIVE_ALIGNMENT_FACT');
+ if(!closed(value,['format_version','scope','source_namespace','inventory_file_sha256','inventory_exported_at','cutoff_at','registry_sha256','document_files','reviewed_by','review_reference','alignment_basis','decision'])||!['CURRENT_EFFECTIVE_ALIGNMENT_V1','CURRENT_EFFECTIVE_ALIGNMENT_V2'].includes(value.format_version as string)||value.scope!=='CURRENT_EFFECTIVE'||!text(value.source_namespace)||!hash(value.inventory_file_sha256)||value.inventory_file_sha256===input.trustedSha256||value.inventory_exported_at!==null||!validateOffsetInstant(value.cutoff_at)||!hash(value.registry_sha256)||!pins(value.document_files)||!text(value.reviewed_by)||!text(value.review_reference)||!text(value.alignment_basis)||value.decision!=='CURRENT_EFFECTIVE_DOCUMENTS_MATCH_INVENTORY_CUTOFF'||findCredentialPath(value))throw Error('CURRENT_EFFECTIVE_ALIGNMENT_FACT');
  for(const pin of value.document_files)Object.freeze(pin);Object.freeze(value.document_files);Object.freeze(value);
  verified.set(value,{sha256:input.trustedSha256,bytes:bytes.byteLength});return value as unknown as CurrentEffectiveAlignmentEvidence;
 }
@@ -48,7 +48,11 @@ export function currentEffectiveAlignmentMatchesManifest(evidence:unknown,manife
  const inv=manifest.inventory_source,alignment=manifest.document_cutoff_alignment,registry=manifest.identity_registry;
  if(!object(inv)||!object(alignment)||!object(registry)||!Array.isArray(manifest.source_files)||!Array.isArray(manifest.files)||manifest.snapshot_mode!=='CURRENT_EFFECTIVE'||manifest.source_namespace!==e.source_namespace||inv.source_file_sha256!==e.inventory_file_sha256||inv.exported_at!==e.inventory_exported_at||inv.cutoff_at!==e.cutoff_at||registry.sha256!==e.registry_sha256||alignment.scope!==e.scope||alignment.evidence_sha256!==proof.sha256)return false;
  const source=manifest.source_files.filter(p=>object(p)&&p.sha256===proof.sha256);
- if(source.length!==1||!object(source[0])||source[0].bytes!==proof.bytes||!safePackagePath(source[0].relative_path))return false;
+ // V2 is a derived external proof, not an input to source/batch identity.
+ // V1 keeps its original independently pinned source membership rule.
+ if(e.format_version==='CURRENT_EFFECTIVE_ALIGNMENT_V2'){
+  if(source.length!==0||!manifest.source_files.some(p=>object(p)&&p.sha256===e.inventory_file_sha256))return false;
+ }else if(source.length!==1||!object(source[0])||source[0].bytes!==proof.bytes||!safePackagePath(source[0].relative_path))return false;
  const selected=manifest.files.filter(p=>object(p)&&documents.includes(p.table as typeof documents[number]));
  return selected.length===documents.length&&e.document_files.every(pin=>selected.filter(p=>object(p)&&p.table===pin.table&&p.relative_path===pin.relative_path&&p.bytes===pin.bytes&&p.sha256===pin.sha256&&p.row_count===pin.row_count).length===1);
 }

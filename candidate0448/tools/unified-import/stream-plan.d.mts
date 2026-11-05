@@ -6,7 +6,7 @@ import type {MasterChunkPlanV2, MasterChunkV2} from '../../packages/application/
 import type {StreamPreflightSummary} from './stream-preflight.mjs';
 
 export interface PrepareStreamPlanOptions extends Pick<BuildUnifiedImportPlanInput,
-  'allowSynthetic' | 'historicalSalesAdmission' | 'explicitZeroApproval' | 'historicalStaffHallApproval' | 'registration'> {
+  'currentEffectiveAlignmentEvidence' | 'allowSynthetic' | 'historicalSalesAdmission' | 'explicitZeroApproval' | 'historicalStaffHallApproval' | 'registration'> {
   historicalSalesHallApproval?: HistoricalSalesHallApproval;
   historicalLineAmountEvidence?: HistoricalLineAmountEvidence;
   target: StandardImportTarget;

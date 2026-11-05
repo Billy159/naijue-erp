@@ -9,6 +9,7 @@ import {sha256,validateUnifiedPackage} from '../packages/application/src/unified
 import type {UnifiedPackage} from '../packages/application/src/unified-import-contract.ts';
 import {readCurrentEffectiveAlignmentEvidence,currentEffectiveAlignmentMatchesManifest,currentEffectiveAlignmentDescriptor} from '../packages/application/src/unified-current-effective-alignment.ts';
 import {readExplicitZeroApproval,compileExplicitZeroRecords} from '../packages/application/src/unified-explicit-zero-approval.ts';
+import {deriveStandardSourceRegistration} from '../packages/application/src/unified-source-registration.ts';
 import {compileStandardWholePackageProfile} from '../packages/application/src/unified-import-whole-package-profile.ts';
 import {readPinnedPackageForExecution} from '../tools/unified-import/execution-plan.ts';
 // @ts-ignore Offline JS tools are intentionally exercised with synthetic files only.
@@ -23,11 +24,12 @@ import {readCurrentEffectiveAlignmentCliEvidence} from '../tools/unified-import/
 const docTables=['sales_header','sales_line','sales_settlement','transfer_header','transfer_line'];
 const admin={staff_id:'10000000-0000-0000-0000-000000000001',account_id:'20000000-0000-0000-0000-000000000001',login_name:'synthetic-admin',staff_name:'SYNTHETIC admin'};
 const target={protocol:'STANDARD_IMPORT_SQL_V1' as const,system_identifier:'123456789',database_oid:'42',database_name:'synthetic_time',catalog_sha256:'a'.repeat(64)};
-function fixture(p=createSyntheticPackage()) {
+function fixture(p=createSyntheticPackage(),version:'CURRENT_EFFECTIVE_ALIGNMENT_V1'|'CURRENT_EFFECTIVE_ALIGNMENT_V2'='CURRENT_EFFECTIVE_ALIGNMENT_V1') {
+ if(version==='CURRENT_EFFECTIVE_ALIGNMENT_V2'){const r=deriveStandardSourceRegistration({source_namespace:p.manifest.source_namespace,source_files:p.manifest.source_files,cutoff_at:p.manifest.inventory_source.cutoff_at});for(const table of ['sales_header','transfer_header'])for(const h of p.records[table]!)h.fields.import_batch_id=r.batch_id;repinSyntheticPackage(p);}
  p.manifest.inventory_source.exported_at=null;
- const fact={format_version:'CURRENT_EFFECTIVE_ALIGNMENT_V1',scope:'CURRENT_EFFECTIVE',source_namespace:p.manifest.source_namespace,inventory_file_sha256:p.manifest.inventory_source.source_file_sha256,inventory_exported_at:null,cutoff_at:p.manifest.inventory_source.cutoff_at,registry_sha256:p.manifest.identity_registry.sha256,document_files:docTables.map(table=>{const {relative_path,bytes,sha256,row_count}=p.manifest.files.find(f=>f.table===table)!;return{table,relative_path,bytes,sha256,row_count};}),reviewed_by:'SYNTHETIC independent reviewer',review_reference:'SYNTHETIC review record 1',alignment_basis:'SYNTHETIC fixture explicitly models all effective documents at the independently reviewed inventory cutoff; export time is unknown.',decision:'CURRENT_EFFECTIVE_DOCUMENTS_MATCH_INVENTORY_CUTOFF'};
+ const fact={format_version:version,scope:'CURRENT_EFFECTIVE',source_namespace:p.manifest.source_namespace,inventory_file_sha256:p.manifest.inventory_source.source_file_sha256,inventory_exported_at:null,cutoff_at:p.manifest.inventory_source.cutoff_at,registry_sha256:p.manifest.identity_registry.sha256,document_files:docTables.map(table=>{const {relative_path,bytes,sha256,row_count}=p.manifest.files.find(f=>f.table===table)!;return{table,relative_path,bytes,sha256,row_count};}),reviewed_by:'SYNTHETIC independent reviewer',review_reference:'SYNTHETIC review record 1',alignment_basis:'SYNTHETIC fixture explicitly models all effective documents at the independently reviewed inventory cutoff; export time is unknown.',decision:'CURRENT_EFFECTIVE_DOCUMENTS_MATCH_INVENTORY_CUTOFF'};
  const bytes=Buffer.from(JSON.stringify(fact)+'\n'),pin=sha256(bytes),evidence=readCurrentEffectiveAlignmentEvidence({bytes,trustedSha256:pin});
- p.manifest.source_files.push({relative_path:'SYNTHETIC-current-effective-review.json',bytes:bytes.length,sha256:pin});
+ if(version==='CURRENT_EFFECTIVE_ALIGNMENT_V1')p.manifest.source_files.push({relative_path:'SYNTHETIC-current-effective-review.json',bytes:bytes.length,sha256:pin});
  p.manifest.document_cutoff_alignment.evidence_sha256=pin;
  return{p,fact,bytes,pin,evidence};
 }
@@ -116,5 +118,50 @@ test('actual offline CLI accepts externally pinned synthetic alignment and rejec
   const targetFile=join(root,'target.json'),adminFile=join(root,'admin.json');await writeFile(targetFile,JSON.stringify(target));await writeFile(adminFile,JSON.stringify(admin));
   const prepared=spawnSync(process.execPath,['tools/unified-import/cli.mjs','stream-prepare','--package',dir,'--report',join(root,'cli-prepared'),'--manifest-sha256',sha256(manifestBytes),'--allow-synthetic','--target',targetFile,'--admin',adminFile,'--current-effective-alignment',evidenceFile,'--current-effective-alignment-sha256',pin],{encoding:'utf8'});
   process.stdout.write('SYNTHETIC offline stream-prepare CLI raw stdout: '+prepared.stdout);process.stderr.write(prepared.stderr);assert.equal(prepared.status,0,prepared.stdout+prepared.stderr);assert.equal(JSON.parse(prepared.stdout).state,'OFFLINE_PREPARED');assert.equal(JSON.parse(prepared.stdout).business_database_writes,false);
+ }finally{await rm(root,{recursive:true,force:true});}
+});
+
+test('V2 derived proof stays outside source identity; ordinary and stream original requests close on the same derived batch',async()=>{
+ const{p,evidence,bytes,pin}=fixture(createSyntheticPackage(),'CURRENT_EFFECTIVE_ALIGNMENT_V2');
+ const declaration=()=>deriveStandardSourceRegistration({source_namespace:p.manifest.source_namespace,source_files:p.manifest.source_files,cutoff_at:p.manifest.inventory_source.cutoff_at});
+ const registration=declaration(),root=await mkdtemp(join(tmpdir(),'alignment-v2-'));
+ assert.equal(p.manifest.source_files.some(x=>x.sha256===pin),false);assert.equal(currentEffectiveAlignmentMatchesManifest(evidence,p.manifest),true);assert.deepEqual(codes(p,evidence),[]);
+ for(const table of ['sales_header','transfer_header'])assert.equal(p.records[table]![0]!.fields.import_batch_id,registration.batch_id);
+ try{
+  const dir=join(root,'package'),manifestBytes=await writePackage(p,dir),file=join(root,'review.json');await writeFile(file,bytes);
+  const approved=await readCurrentEffectiveAlignmentCliEvidence(dir,p.manifest,file,pin);
+  const options={allowSynthetic:true,currentEffectiveAlignmentEvidence:approved,registration,expectedManifestSha256:sha256(manifestBytes)};
+  const summary=await streamPreflight(dir,join(root,'report'),options);assert.equal(summary.checks_passed,true,await readFile(join(root,'report','issues.jsonl'),'utf8'));
+  const loaded=await readPinnedPackageForExecution(dir,options),program=compileStandardWholePackageProfile({...loaded,registration,initialization_identity:admin,target});
+  const plan=await prepareStreamPlan(join(root,'report','index.sqlite'),summary,manifestBytes,{...options,target,initialization_identity:admin});
+  try{assert.equal(plan.planHash,program.plan_sha256);const stream=await buildStreamProgram(plan,join(root,'report','index.sqlite'),summary,admin);assert.deepEqual(stream.initialize,program.initialize);const steps=[];for await(const s of stream.steps)steps.push(s);assert.deepEqual(steps,program.steps);assert.equal(stream.identity.documentBatchId,registration.batch_id);}finally{await plan.dispose();}
+  assert.deepEqual(declaration(),registration);assert.equal(p.manifest.inventory_source.exported_at,null);
+  const inside=join(dir,'review.json');await writeFile(inside,bytes);await assert.rejects(()=>readCurrentEffectiveAlignmentCliEvidence(dir,p.manifest,inside,pin),/OUTSIDE_PACKAGE_REQUIRED/);
+  await assert.rejects(()=>readCurrentEffectiveAlignmentCliEvidence(dir,p.manifest,file,'0'.repeat(64)),/ALIGNMENT_HASH/);
+ }finally{await rm(root,{recursive:true,force:true});}
+});
+test('V2 external exception cannot waive membership, independent authority, registry/cutoff or any of the five exact file pins',()=>{
+ const{p,evidence,pin,bytes}=fixture(createSyntheticPackage(),'CURRENT_EFFECTIVE_ALIGNMENT_V2');
+ for(const proof of [undefined,structuredClone(evidence)]){assert.equal(currentEffectiveAlignmentMatchesManifest(proof,p.manifest),false);assert.ok(codes(p,proof).includes('BASELINE_DOCUMENT_ALIGNMENT_UNPROVEN'));}
+ const mutations:Array<(p:UnifiedPackage)=>void>=[
+  x=>{x.manifest.source_files.push({relative_path:'derived-review.json',bytes:bytes.length,sha256:pin});},
+  x=>{x.manifest.source_files=x.manifest.source_files.filter(f=>f.sha256!==x.manifest.inventory_source.source_file_sha256);},
+  x=>{x.manifest.identity_registry.sha256='f'.repeat(64);},x=>{x.manifest.inventory_source.cutoff_at='2026-11-03T16:00:00+08:00';},
+  x=>{x.manifest.source_namespace+='-other';},x=>{x.manifest.document_cutoff_alignment.evidence_sha256='f'.repeat(64);},
+ ];
+ for(const table of docTables)for(const field of ['relative_path','bytes','sha256','row_count'])mutations.push(x=>{const pin=x.manifest.files.find(p=>p.table===table)!;if(field==='relative_path')pin.relative_path='different-'+table+'.jsonl';if(field==='bytes')pin.bytes++;if(field==='row_count')pin.row_count++;if(field==='sha256')pin.sha256='e'.repeat(64);});
+ for(const change of mutations){const x=structuredClone(p);change(x);assert.equal(currentEffectiveAlignmentMatchesManifest(evidence,x.manifest),false);assert.ok(codes(x,evidence).includes('BASELINE_DOCUMENT_ALIGNMENT_UNPROVEN'));}
+ const{fact}=fixture();const b=Buffer.from(JSON.stringify(fact));const legacy=readCurrentEffectiveAlignmentEvidence({bytes:b,trustedSha256:sha256(b)}),x=createSyntheticPackage();x.manifest.inventory_source.exported_at=null;x.manifest.document_cutoff_alignment.evidence_sha256=sha256(b);assert.equal(currentEffectiveAlignmentMatchesManifest(legacy,x.manifest),false,'V1 cannot use the new external exception');
+});
+test('stream V2 metadata refuses missing or cloned authority and a proof reintroduced into source_files',async()=>{
+ const{p,evidence,bytes,pin}=fixture(createSyntheticPackage(),'CURRENT_EFFECTIVE_ALIGNMENT_V2'),root=await mkdtemp(join(tmpdir(),'alignment-v2-reject-'));
+ try{
+  for(const [i,kind]of ['missing','clone','source-member'].entries()){
+   const x=structuredClone(p);if(kind==='source-member')x.manifest.source_files.push({relative_path:'derived-review.json',bytes:bytes.length,sha256:pin});
+   const dir=join(root,'package-'+i),manifest=await writePackage(x,dir),report=join(root,'report-'+i);
+   const proof=kind==='missing'?{}:{currentEffectiveAlignmentEvidence:kind==='clone'?structuredClone(evidence):evidence};
+   if(kind==='clone'){await assert.rejects(()=>streamPreflight(dir,report,{allowSynthetic:true,expectedManifestSha256:sha256(manifest),...proof}),/CURRENT_EFFECTIVE_ALIGNMENT_UNVERIFIED/);continue;}
+   const s=await streamPreflight(dir,report,{allowSynthetic:true,expectedManifestSha256:sha256(manifest),...proof});assert.equal(s.checks_passed,false);assert.match(await readFile(join(report,'issues.jsonl'),'utf8'),/BASELINE_DOCUMENT_ALIGNMENT_UNPROVEN/);
+  }
  }finally{await rm(root,{recursive:true,force:true});}
 });
