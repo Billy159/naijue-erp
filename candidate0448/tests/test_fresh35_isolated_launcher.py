@@ -5,6 +5,9 @@ import unittest
 from unittest.mock import patch
 import json
 import io
+import copy
+import hashlib
+from types import SimpleNamespace
 
 PATH=Path(__file__).resolve().parents[1]/'scripts/release/unified-install/launch-fresh35-isolated-v1.py'
 spec=importlib.util.spec_from_file_location('fresh35_launcher',PATH)
@@ -209,5 +212,101 @@ class InitializationAdapterTests(unittest.TestCase):
         source=PATH.read_text();main=source.split('def main():',1)[1]
         self.assertNotIn("str(BIN/'initdb')",main)
         self.assertIn("watch.stdin.write('INITIALIZE\\n')",main)
+
+class SnapshotAndStageTests(unittest.TestCase):
+    def setUp(self):
+        self.a=authority();p=self.a['proposal']
+        self.physical={'databaseOid':'12345','systemIdentifier':'777','serverVersionNum':'170011','postmasterStart':'2026-11-05 00:00:00+00'}
+        self.target={'physical':self.physical}
+        self.context={'kind':'context','actor':p['admin'],'sessionActor':p['admin'],'database':p['database'],'address':'127.0.0.1','port':p['port'],'dataDirectory':str(Path(p['workspaceDirectory'])/'data'),**self.physical,'readOnly':'on','isolation':'repeatable read','superuser':True,'bypassRls':True,'tables':[{'name':n,'kind':'r','selectAllowed':True,'rlsActive':False,'rlsEnabled':True,'rlsForced':True} for n in m.SNAPSHOT_TABLES],'sequences':['fixture_sequence']}
+        self.rows=[self.context]+[{'kind':'table','name':n,'count':'0','sha256':hashlib.sha256(b'').hexdigest()} for n in m.SNAPSHOT_TABLES]+[{'kind':'sequence','name':'fixture_sequence','value':'1','called':False}]
+        self.descriptor={'sourceSetSha256':'a'*64,'programSha256':'b'*64,'targetSha256':'c'*64}
+        b={'format':'FRESH35_SYNTHETIC_RETENTION25_STAGE_BINDING_V1','sourceSetSha256':'a'*64,'installProgramSha256':'b'*64,'targetSha256':'c'*64,'manifestSha256':'d'*64,'planSha256':'e'*64,'initializerSha256':'f'*64,'stepsSha256':'0'*64}
+        encoded='{'+','.join(json.dumps(k)+':s'+json.dumps(b[k]) for k in sorted(b))+'}'
+        common={'fixtureBinding':b,'fixtureBindingSha256':hashlib.sha256(encoded.encode()).hexdigest(),'connectionCleanup':'CLOSED','businessVerified':False}
+        self.rollback={**common,'state':'FRESH35_SYNTHETIC_ROLLBACK_VERIFIED','stage':'rollback','rollbackVerified':True,'originalBatchAbsent':True,'syntheticImportVerified':False}
+        self.commit={**common,'state':'FRESH35_CONTROLLER_HOST_VERIFIED','stage':'commit','ordinaryUid':self.a['postgresUid'],'syntheticImportVerified':True,'importState':'COMMITTED','replayState':'ALREADY_COMMITTED','readbackState':'VERIFIED','settlementRetentionVerified':True,'retainedHeaders':25,'retainedSettlements':27}
+    def raw(self,rows=None):return '\n'.join(json.dumps(r) for r in (self.rows if rows is None else rows))+'\n'
+    def snapshot(self):return m.validate_snapshot(self.raw(),self.a,self.target)
+    def drive(self,rollback=None,commit=None,snapshots=None):
+        events=[];writes={};responses=[self.rollback if rollback is None else rollback,self.commit if commit is None else commit];observations=list(snapshots or [self.snapshot()]*3)
+        def observer():events.append('observe');return observations.pop(0)
+        def child(*flags):events.append(flags);return responses.pop(0)
+        with patch.object(m,'json_new',side_effect=lambda path,value:writes.update({path.name:value})):
+            result=m.verify_synthetic_stages(self.a,self.target,self.descriptor,Path('/model'),child,observer)
+        return result,events,writes
+    def test_full_visibility_includes_forced_rls(self):
+        r=self.snapshot();self.assertEqual(len(r['snapshot']['tables']),35);self.assertEqual(r['transaction'],'ROLLED_BACK');self.assertEqual(r['connectionCleanup'],'CLOSED');self.assertIsNone(r['sqlstate'])
+    def test_wrong_actor_target_readonly_isolation_and_filtered_results_refused(self):
+        cases=[('actor','owner'),('sessionActor','other'),('database','production'),('databaseOid','888'),('systemIdentifier','888'),('postmasterStart','later'),('readOnly','off'),('isolation','read committed')]
+        for key,value in cases:
+            rows=copy.deepcopy(self.rows);rows[0][key]=value
+            with self.subTest(key=key),self.assertRaises(RuntimeError):m.validate_snapshot(self.raw(rows),self.a,self.target)
+        for change in [lambda c:c.update(superuser=False,bypassRls=False),lambda c:c['tables'][0].update(rlsActive=True),lambda c:c['tables'][0].update(selectAllowed=False),lambda c:c['tables'].pop(),lambda c:c['tables'].append(dict(c['tables'][0])),lambda c:c['tables'][0].update(kind='p')]:
+            rows=copy.deepcopy(self.rows);change(rows[0])
+            with self.assertRaises(RuntimeError):m.validate_snapshot(self.raw(rows),self.a,self.target)
+    def test_missing_duplicate_oversized_or_raw_row_refused(self):
+        for change in [lambda r:r.pop(),lambda r:r.append(r[1]),lambda r:r[1].update(count='10001'),lambda r:r[1].update(sha256='invalid'),lambda r:r[1].update(raw={'secret':'DO_NOT_EXPORT'}),lambda r:r[-1].update(called=1),lambda r:r[-1].update(value='-1')]:
+            rows=copy.deepcopy(self.rows);change(rows)
+            with self.assertRaises(RuntimeError):m.validate_snapshot(self.raw(rows),self.a,self.target)
+        with self.assertRaises(RuntimeError):m.validate_snapshot(' '*131073,self.a,self.target)
+    def test_observer_uses_only_original_admin_passfile_and_bounded_psql(self):
+        response=SimpleNamespace(returncode=0,stdout=self.raw().encode(),stderr=b'')
+        with patch.object(m.subprocess,'run',return_value=response) as call:
+            m.observe_snapshot(self.a,self.target,12)
+        args=call.call_args;argv=args.args[0];self.assertEqual(argv[0],str(m.BIN/'psql'));self.assertIn('--no-password',argv);self.assertEqual(argv[argv.index('--username')+1],self.a['proposal']['admin']);self.assertEqual(args.kwargs['timeout'],12)
+        env=args.kwargs['env'];self.assertNotIn('PGPASSWORD',env);self.assertTrue(env['PGPASSFILE'].endswith(self.a['proposal']['admin']+'.pgpass'))
+        sql=args.kwargs['input'].decode();self.assertIn('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;',sql);self.assertIn('SET LOCAL row_security=off;',sql);self.assertTrue(sql.endswith('ROLLBACK;\n'));self.assertEqual(sql.count('LIMIT 10001'),35);self.assertNotIn('SET ROLE',sql);self.assertNotIn('CREATE ',sql);self.assertNotIn('nextval(',sql);self.assertNotIn('setval(',sql)
+    def test_sqlstate_only_no_stderr_or_sql_export(self):
+        response=SimpleNamespace(returncode=3,stdout=b'',stderr=b'ERROR:  42501\nDO_NOT_EXPORT_password_query')
+        with patch.object(m.subprocess,'run',return_value=response),self.assertRaisesRegex(RuntimeError,'PSQL_SQLSTATE_42501') as raised:
+            m.observe_snapshot(self.a,self.target,12)
+        self.assertNotIn('DO_NOT_EXPORT',str(raised.exception))
+    def test_timeout_propagates_without_retry(self):
+        with patch.object(m.subprocess,'run',side_effect=m.subprocess.TimeoutExpired(['psql'],2)) as call,self.assertRaises(m.subprocess.TimeoutExpired):m.observe_snapshot(self.a,self.target,2)
+        self.assertEqual(call.call_count,1)
+    def test_three_observations_serial_and_two_children_once(self):
+        result,events,writes=self.drive()
+        self.assertIs(result,self.commit);self.assertEqual(events,['observe',('--verify-host-rollback',),'observe',('--verify-host-commit',self.rollback['fixtureBindingSha256']),'observe']);self.assertEqual(set(writes),{'snapshot-after-install.json','rollback-host-result.json','snapshot-after-rollback.json','host-result.json','snapshot-after-commit.json'})
+    def test_changed_table_or_sequence_after_rollback_stops_before_commit(self):
+        for change in [lambda s:s['snapshot']['tables']['product'].update(count='1'),lambda s:s['snapshot']['sequences']['fixture_sequence'].update(called=True)]:
+            baseline=self.snapshot();after=copy.deepcopy(baseline);change(after);children=[]
+            with patch.object(m,'json_new'),self.assertRaisesRegex(RuntimeError,'ROLLBACK_SNAPSHOT_CHANGED'):
+                observations=iter([baseline,after]);m.verify_synthetic_stages(self.a,self.target,self.descriptor,Path('/model'),lambda *flags:children.append(flags) or self.rollback,lambda:next(observations))
+            self.assertEqual(children,[('--verify-host-rollback',)])
+    def test_rollback_cleanup_unknown_flags_and_binding_stop_commit(self):
+        for change in [dict(connectionCleanup='UNKNOWN'),dict(state='ROLLED_BACK'),dict(originalBatchAbsent=False),dict(businessVerified=True),dict(fixtureBindingSha256='0'*64)]:
+            bad={**self.rollback,**change};children=[]
+            with patch.object(m,'json_new'),self.assertRaises(RuntimeError):m.verify_synthetic_stages(self.a,self.target,self.descriptor,Path('/model'),lambda *f:children.append(f) or bad,self.snapshot)
+            self.assertEqual(children,[('--verify-host-rollback',)])
+    def test_commit_unknown_wrong_count_or_missing_cleanup_never_pass(self):
+        for change in [dict(importState='UNKNOWN'),dict(replayState='COMMITTED'),dict(readbackState='UNKNOWN'),dict(connectionCleanup=None),dict(retainedHeaders=26),dict(retainedSettlements=28),dict(ordinaryUid=0),dict(businessVerified=True)]:
+            with self.subTest(change=change),self.assertRaises(RuntimeError):self.drive(commit={**self.commit,**change})
+    def test_binding_all_pins_and_recomputed_digest(self):
+        for key in ['sourceSetSha256','installProgramSha256','targetSha256','manifestSha256','planSha256','initializerSha256','stepsSha256']:
+            bad=copy.deepcopy(self.commit);bad['fixtureBinding'][key]='9'*64
+            with self.subTest(key=key),self.assertRaises(RuntimeError):self.drive(commit=bad)
+        bad=copy.deepcopy(self.commit);bad['fixtureBinding']['extra']='9'*64
+        with self.assertRaises(RuntimeError):self.drive(commit=bad)
+    def test_failed_child_or_observer_never_replayed(self):
+        for phase in ['child','observer']:
+            calls=[]
+            def child(*args):calls.append(args);raise RuntimeError('OUTCOME_UNKNOWN')
+            def observer():raise RuntimeError('SNAPSHOT_FAILED')
+            with patch.object(m,'json_new'),self.assertRaises(RuntimeError):m.verify_synthetic_stages(self.a,self.target,self.descriptor,Path('/model'),child,observer if phase=='observer' else self.snapshot)
+            self.assertEqual(len(calls),0 if phase=='observer' else 1)
+    def test_final_observer_failure_preserves_committed_receipt_without_replay(self):
+        calls=[];written={};number=0
+        def observer():
+            nonlocal number
+            number+=1
+            if number==3:raise RuntimeError('FINAL_OBSERVER_FAILED')
+            return self.snapshot()
+        def child(*flags):
+            calls.append(flags)
+            return self.rollback if len(calls)==1 else self.commit
+        with patch.object(m,'json_new',side_effect=lambda path,value:written.update({path.name:value})),self.assertRaisesRegex(RuntimeError,'FINAL_OBSERVER_FAILED'):
+            m.verify_synthetic_stages(self.a,self.target,self.descriptor,Path('/model'),child,observer)
+        self.assertEqual(len(calls),2);self.assertEqual(written['host-result.json']['importState'],'COMMITTED');self.assertNotIn('snapshot-after-commit.json',written)
 
 if __name__=='__main__':unittest.main()

@@ -31,6 +31,8 @@ INSTALL_AUTH = ETC / 'fresh35-combined-execution-v1.json'
 INTERFACES = ('erp_unified27_initializer_2393dbc6db9581c2', 'erp_unified27_importer_2393dbc6db9581c2', 'erp_unified27_runtime_2393dbc6db9581c2')
 TOOL_PINS = {'postgres':'6468a969338215cb3912cf9c0b894bdbbd37b9a709926db078e9a5bf8bdc3e16','initdb':'a0363354125bc00f25075bb47fc32a2838fa7668c008326227f5bc04d628ca1d','psql':'3c94c29652ea7ff8803ab1ca35e48c38a39c8a94a8c8eeadbb1d87c68494506c','pg_controldata':'b54c1bdeeab0953598b8447127b2230b1748ea1989dd972e6ee02455f256f180'}
 NODE_SHA = '7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c'
+# The retained cohort from fresh35-retirement-plan, not a caller-supplied list.
+SNAPSHOT_TABLES = ('audit_change','auth_session','barcode_scheme','color','customer','fit','hall','import_batch','import_record','inventory_balance','inventory_ledger','operation_receipt','payment_account','payment_account_hall','payment_method','product','product_category','product_image','runtime_document_number_allocation','sales_header','sales_line','sales_settlement','schema_migration','season','size','size_group','size_group_member','sku','sku_barcode','staff','supplier','transfer_header','transfer_line','user_account','warehouse')
 
 def need(value, code):
     if not value:
@@ -189,11 +191,111 @@ def owned_listener(identity, port):
 
 def psql(a, role, database, sql, timeout=20):
     p=a['proposal']; root=Path(p['workspaceDirectory'])
-    r = subprocess.run([str(BIN/'psql'),'-X','-qAt','--no-password','--host','127.0.0.1','--port',str(p['port']),'--dbname',database,'--username',role,'--set','ON_ERROR_STOP=1'],input=sql.encode(),capture_output=True,env=clean_env(root,role),timeout=timeout)
+    r = subprocess.run([str(BIN/'psql'),'-X','-qAt','--no-password','--host','127.0.0.1','--port',str(p['port']),'--dbname',database,'--username',role,'--set','ON_ERROR_STOP=1','--set','VERBOSITY=sqlstate'],input=sql.encode(),capture_output=True,env=clean_env(root,role),timeout=timeout)
     # Never persist SQL, stderr or passwords; detailed nonsensitive observations
     # are returned only after a successful fixed query.
-    need(r.returncode == 0, 'PSQL_FAILED')
+    if r.returncode != 0:
+        codes = re.findall(rb'(?:ERROR|FATAL):\s+([0-9A-Z]{5})(?:\s|$)', r.stderr)
+        need(False, 'PSQL_SQLSTATE_'+codes[-1].decode() if codes else 'PSQL_FAILED')
     return r.stdout.decode()
+
+def snapshot_sql():
+    # One private psql connection, one read-only RR transaction. Only bounded
+    # counts/digests and catalog/identity metadata leave it; no table rows.
+    sql = r"""BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;
+SET LOCAL row_security=off;
+SET LOCAL idle_in_transaction_session_timeout='15s';
+SELECT json_build_object('kind','context','actor',current_user,'sessionActor',session_user,
+ 'database',current_database(),'databaseOid',(SELECT oid::text FROM pg_database WHERE datname=current_database()),
+ 'systemIdentifier',(SELECT system_identifier::text FROM pg_control_system()),
+ 'postmasterStart',pg_postmaster_start_time()::text,'serverVersionNum',current_setting('server_version_num'),
+ 'address',inet_server_addr()::text,'port',inet_server_port(),'dataDirectory',current_setting('data_directory'),
+ 'readOnly',current_setting('transaction_read_only'),'isolation',current_setting('transaction_isolation'),
+ 'superuser',(SELECT rolsuper FROM pg_roles WHERE rolname=current_user),
+ 'bypassRls',(SELECT rolbypassrls FROM pg_roles WHERE rolname=current_user),
+ 'tables',(SELECT coalesce(json_agg(json_build_object('name',relname,'kind',relkind,
+ 'selectAllowed',has_table_privilege(oid,'SELECT'),'rlsActive',row_security_active(oid),
+ 'rlsEnabled',relrowsecurity,'rlsForced',relforcerowsecurity) ORDER BY relname),'[]'::json)
+ FROM pg_class WHERE relnamespace='naijue_erp'::regnamespace AND relkind IN ('r','p')),
+ 'sequences',(SELECT coalesce(json_agg(relname ORDER BY relname),'[]'::json) FROM pg_class
+ WHERE relnamespace='naijue_erp'::regnamespace AND relkind='S'))::text;
+"""
+    for name in SNAPSHOT_TABLES:
+        sql += ("SELECT json_build_object('kind','table','name','"+name+"','count',count(*)::text,"
+                "'sha256',encode(sha256(convert_to(coalesce(string_agg(to_jsonb(t)::text,E'\\n' ORDER BY to_jsonb(t)::text),''),'UTF8')),'hex'))::text "
+                'FROM (SELECT * FROM naijue_erp."'+name+'" LIMIT 10001) t;\n')
+    # Names originate only from this schema's actual sequence catalog. format
+    # quotes both identifier and JSON label; no external SQL or path parameter.
+    sql += r"""SELECT format('SELECT json_build_object(''kind'',''sequence'',''name'',%L,''value'',last_value::text,''called'',is_called)::text FROM naijue_erp.%I;',relname,relname)
+FROM pg_class WHERE relnamespace='naijue_erp'::regnamespace AND relkind='S'
+ AND relname ~ '^[a-z_][a-z_0-9]*$'
+ AND (SELECT count(*) FROM pg_class WHERE relnamespace='naijue_erp'::regnamespace AND relkind='S')<=50
+ORDER BY relname
+\gexec
+ROLLBACK;
+"""
+    return sql
+
+def validate_snapshot(raw, a, target):
+    need(len(raw.encode()) <= 128*1024, 'SNAPSHOT_OUTPUT_BOUND')
+    rows=[strict_json(line) for line in raw.splitlines() if line.strip()]
+    need(rows and type(rows[0]) is dict and rows[0].get('kind')=='context', 'SNAPSHOT_CONTEXT_REQUIRED')
+    c=rows[0];p=a['proposal'];physical=target['physical']
+    need(c.get('actor')==p['admin'] and c.get('sessionActor')==p['admin'] and (c.get('superuser') is True or c.get('bypassRls') is True), 'SNAPSHOT_FULL_VISIBILITY_ROLE')
+    need(c.get('database')==p['database'] and c.get('address')=='127.0.0.1' and c.get('port')==p['port'] and c.get('dataDirectory')==str(Path(p['workspaceDirectory'])/'data') and all(c.get(k)==physical[k] for k in ['databaseOid','systemIdentifier','serverVersionNum','postmasterStart']), 'SNAPSHOT_PHYSICAL_TARGET_DIFFERS')
+    need(c.get('readOnly')=='on' and c.get('isolation')=='repeatable read', 'SNAPSHOT_READONLY_RR_REQUIRED')
+    tables=c.get('tables');seqs=c.get('sequences')
+    need(type(tables) is list and [t.get('name') for t in tables]==list(SNAPSHOT_TABLES) and all(t.get('kind')=='r' and t.get('selectAllowed') is True and t.get('rlsActive') is False for t in tables), 'SNAPSHOT_EXACT35_OR_RLS_DIFFERS')
+    need(type(seqs) is list and len(seqs)<=50 and all(type(n) is str and re.fullmatch('[a-z_][a-z_0-9]*',n) for n in seqs) and seqs==sorted(set(seqs)), 'SNAPSHOT_SEQUENCE_COHORT')
+    values={'tables':{},'sequences':{}}
+    need(len(rows)==1+35+len(seqs), 'SNAPSHOT_ROW_COHORT')
+    for row in rows[1:]:
+        need(type(row) is dict, 'SNAPSHOT_ROW')
+        if row.get('kind')=='table':
+            exact_keys(row,['kind','name','count','sha256']);name=row['name']
+            need(name in SNAPSHOT_TABLES and name not in values['tables'] and type(row['count']) is str and re.fullmatch('[0-9]+',row['count']) and int(row['count'])<=10000 and type(row['sha256']) is str and re.fullmatch('[a-f0-9]{64}',row['sha256']), 'SNAPSHOT_TABLE_BOUND_OR_DIGEST')
+            values['tables'][name]={k:row[k] for k in ['count','sha256']}
+        else:
+            exact_keys(row,['kind','name','value','called']);name=row['name']
+            need(row['kind']=='sequence' and name in seqs and name not in values['sequences'] and type(row['value']) is str and re.fullmatch('[0-9]+',row['value']) and type(row['called']) is bool, 'SNAPSHOT_SEQUENCE_VALUE')
+            values['sequences'][name]={k:row[k] for k in ['value','called']}
+    need(set(values['tables'])==set(SNAPSHOT_TABLES) and set(values['sequences'])==set(seqs), 'SNAPSHOT_INCOMPLETE')
+    return {'context':c,'snapshot':values,'transaction':'ROLLED_BACK','connectionCleanup':'CLOSED','sqlstate':None}
+
+def observe_snapshot(a, target, seconds):
+    need(seconds>0, 'SNAPSHOT_WINDOW_EXPIRED')
+    raw=psql(a,a['proposal']['admin'],a['proposal']['database'],snapshot_sql(),min(20,seconds))
+    return validate_snapshot(raw,a,target)
+
+def validate_stage_binding(result, descriptor, previous=None):
+    b=result.get('fixtureBinding');exact_keys(b,['format','sourceSetSha256','installProgramSha256','targetSha256','manifestSha256','planSha256','initializerSha256','stepsSha256'])
+    need(b['format']=='FRESH35_SYNTHETIC_RETENTION25_STAGE_BINDING_V1' and all(type(v) is str and re.fullmatch('[a-f0-9]{64}',v) for k,v in b.items() if k!='format'), 'STAGE_BINDING_SHAPE')
+    need(b['sourceSetSha256']==descriptor['sourceSetSha256'] and b['installProgramSha256']==descriptor['programSha256'] and b['targetSha256']==descriptor['targetSha256'], 'STAGE_PROGRAM_SOURCE_TARGET_DIFFERS')
+    # Same canonicalRequestValue encoding as requestHash, limited to this
+    # closed string-only binding, not a second general request implementation.
+    canonical='{'+','.join(json.dumps(k)+':s'+json.dumps(b[k]) for k in sorted(b))+'}'
+    need(result.get('fixtureBindingSha256')==hashlib.sha256(canonical.encode()).hexdigest(), 'STAGE_BINDING_HASH_DIFFERS')
+    if previous is not None:
+        need(b==previous['fixtureBinding'] and result['fixtureBindingSha256']==previous['fixtureBindingSha256'], 'STAGE_FIXTURE_CHANGED')
+    return result['fixtureBindingSha256']
+
+def verify_synthetic_stages(a, target, descriptor, root, child, observer):
+    # Production closures supplied below retain the original guardian/listener
+    # and deadline checks. The direct model tests supply no PG or subprocess.
+    before=observer();json_new(root/'snapshot-after-install.json',before)
+    rollback=child('--verify-host-rollback')
+    binding=validate_stage_binding(rollback,descriptor)
+    need(rollback.get('state')=='FRESH35_SYNTHETIC_ROLLBACK_VERIFIED' and rollback.get('stage')=='rollback' and rollback.get('rollbackVerified') is True and rollback.get('originalBatchAbsent') is True and rollback.get('connectionCleanup')=='CLOSED' and rollback.get('syntheticImportVerified') is False and rollback.get('businessVerified') is False, 'ROLLBACK_STAGE_RESULT_REQUIRED')
+    json_new(root/'rollback-host-result.json',rollback)
+    after_rollback=observer();json_new(root/'snapshot-after-rollback.json',after_rollback)
+    need(before['snapshot']==after_rollback['snapshot'], 'ROLLBACK_SNAPSHOT_CHANGED')
+    committed=child('--verify-host-commit',binding)
+    validate_stage_binding(committed,descriptor,rollback)
+    need(committed.get('state')=='FRESH35_CONTROLLER_HOST_VERIFIED' and committed.get('stage')=='commit' and committed.get('ordinaryUid')==a['postgresUid'] and committed.get('connectionCleanup')=='CLOSED' and committed.get('syntheticImportVerified') is True and committed.get('businessVerified') is False and committed.get('importState')=='COMMITTED' and committed.get('replayState')=='ALREADY_COMMITTED' and committed.get('readbackState')=='VERIFIED' and committed.get('settlementRetentionVerified') is True and type(committed.get('retainedHeaders')) is int and committed['retainedHeaders']==25 and type(committed.get('retainedSettlements')) is int and committed['retainedSettlements']==27, 'COMMIT_STAGE_RESULT_REQUIRED')
+    json_new(root/'host-result.json',committed)
+    after_commit=observer();json_new(root/'snapshot-after-commit.json',after_commit)
+    need(after_commit['context']==after_rollback['context'] and set(after_commit['snapshot']['sequences'])==set(before['snapshot']['sequences']), 'POST_COMMIT_OBSERVER_COHORT_DIFFERS')
+    return committed
 
 def clear_credentials(root, p):
     errors=[]
@@ -470,7 +572,7 @@ def main():
     os.umask(0o077);root.mkdir(mode=0o700);os.chmod(root,0o711)
     (root/'credentials').mkdir(mode=0o700);(root/'pg-private').mkdir(mode=0o700)
     os.chown(root/'pg-private',a['postgresUid'],a['postgresGid'])
-    watch=None;success=False;record_published=None;host_verified=False;synthetic_import_verified=False;passwords={};deadline=time.monotonic()+max(0,a['expiresAt']/1000-time.time())
+    watch=None;success=False;record_published=None;host_verified=False;synthetic_import_verified=False;snapshots_verified=False;passwords={};deadline=time.monotonic()+max(0,a['expiresAt']/1000-time.time())
     def remaining():
         need(time.monotonic()<deadline-60,'CLEANUP_RESERVE');return max(1,min(60,deadline-time.monotonic()-45))
     def interrupted(*_):raise RuntimeError('FRESH35_ISOLATED_PARENT_STOP')
@@ -530,10 +632,31 @@ def main():
         read_private(INSTALL_AUTH);verify_deployment(a);need(owned_listener(owned,p['port']),'PRE_INSTALL_LISTENER')
         r=subprocess.run(argv+['--execute'],capture_output=True,env=clean_env(root),timeout=max(1,deadline-time.monotonic()-45));need(r.returncode==0,'INSTALL_FAILED_OR_OUTCOME_UNKNOWN')
         result=strict_json(r.stdout);need(result.get('state')=='RECORD_DURABLY_PUBLISHED' and result.get('recordPublished') is True and result.get('sourceSetSha256')==a['sourceSetSha256'],'INSTALL_COMPLETION_REQUIRED');json_new(root/'installation-result.json',result);record_published=True
-        remaining();need(watch.poll() is None and owned_listener(owned,p['port']),'PRE_HOST_TARGET_LOST')
-        r=subprocess.run(argv+['--verify-host'],capture_output=True,env=clean_env(root),timeout=max(1,deadline-time.monotonic()-45));need(r.returncode==0,'CONTROLLER_HOST_FAILED')
-        host_result=strict_json(r.stdout);need(host_result.get('state')=='FRESH35_CONTROLLER_HOST_VERIFIED' and host_result.get('ordinaryUid')==a['postgresUid'] and host_result.get('businessVerified') is False and host_result.get('syntheticImportVerified') is True and host_result.get('importState')=='COMMITTED' and host_result.get('replayState')=='ALREADY_COMMITTED' and host_result.get('readbackState')=='VERIFIED','CONTROLLER_HOST_RESULT_REQUIRED')
-        json_new(root/'host-result.json',host_result);host_verified=True;synthetic_import_verified=True;success=True
+        def host_window():
+            remaining();need(watch.poll() is None and owned_listener(owned,p['port']),'PRE_HOST_TARGET_LOST')
+            return max(1,deadline-time.monotonic()-45)
+        def stage_child(*flags):
+            stage='rollback' if flags[0]=='--verify-host-rollback' else 'commit'
+            try:
+                r=subprocess.run(argv+list(flags),capture_output=True,env=clean_env(root),timeout=host_window())
+            except subprocess.TimeoutExpired:
+                json_new(root/(stage+'-child-failure.json'),{'state':'OUTCOME_UNKNOWN_NO_REPLAY','stage':stage,'timedOut':True,'automaticRetry':False})
+                raise
+            if r.returncode!=0:
+                diagnostic={'state':'OUTCOME_UNKNOWN_NO_REPLAY','stage':stage,'exitCode':r.returncode,'automaticRetry':False}
+                if len(r.stderr)<=16384:
+                    try:
+                        reported=strict_json(r.stderr)
+                        if type(reported) is dict:
+                            code=reported.get('validationCode')
+                            diagnostic['validationStage']=reported.get('validationStage') if reported.get('validationStage') in ['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'] else None
+                            diagnostic['validationCode']=code if type(code) is str and re.fullmatch('[A-Z][A-Z0-9_]{0,80}',code) else None
+                    except (ValueError,RuntimeError):pass
+                json_new(root/(stage+'-child-failure.json'),diagnostic)
+            need(r.returncode==0,'CONTROLLER_HOST_FAILED_OR_OUTCOME_UNKNOWN')
+            return strict_json(r.stdout)
+        host_result=verify_synthetic_stages(a,target,descriptor,root,stage_child,lambda:observe_snapshot(a,target,host_window()))
+        host_verified=True;synthetic_import_verified=True;snapshots_verified=True;success=True
     except Exception as error:
         json_new(root/'failure.json',{'code':str(error) if re.fullmatch('FRESH35_[A-Z0-9_]+',str(error)) else type(error).__name__,'automaticRetry':False,'commitOutcome':'CONSULT_APPLICATION_JOURNAL_NOT_INFERRED'})
     finally:
@@ -548,8 +671,8 @@ def main():
         files_clear=retry_parent_credential_cleanup(watch,lambda:clear_credentials(root,p))
         cleanup=strict_json((root/'cleanup.json').read_bytes()) if (root/'cleanup.json').is_file() else {'cleanupComplete':False}
         success=success and files_clear and cleanup.get('cleanupComplete') is True
-        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'hostEnabled':False,'businessVerified':False})
-        print(json.dumps({'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'businessVerified':False,'workspace':str(root)}))
+        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'independentSnapshotsVerified':snapshots_verified,'hostEnabled':False,'businessVerified':False})
+        print(json.dumps({'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'independentSnapshotsVerified':snapshots_verified,'businessVerified':False,'workspace':str(root)}))
     return 0 if success else 1
 
 if __name__=='__main__':

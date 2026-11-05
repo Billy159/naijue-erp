@@ -1,0 +1,132 @@
+"""Offline model only. No Docker/HTTP/SSH/PG or privileged filesystem action."""
+import importlib.util,io,json,hashlib,os,stat,subprocess,tempfile,time,unittest
+from pathlib import Path
+from unittest.mock import patch
+
+FILE=Path(__file__).with_name('fresh35-container-successor.py')
+class Tests(unittest.TestCase):
+ def setUp(self):
+  sp=importlib.util.spec_from_file_location('successor',FILE);self.m=importlib.util.module_from_spec(sp);sp.loader.exec_module(self.m);self.m.SOURCE='a'*64;self.m.KEY='synthetic-model-app';self.m.ARCHIVE_SHA='b'*64;self.m.ARCHIVE_BYTES=10;self.m.FILE_COUNT=2;self.m.MANIFEST_SHA='d'*64
+  self.t=tempfile.TemporaryDirectory();self.addCleanup(self.t.cleanup);self.tmp=Path(self.t.name).resolve();self.m.ROOT=self.tmp/'new-root';self.plan={'operationId':'synthetic-model','imagePreparationExpiresAt':int(time.time()*1000)+120000,'stagingAuthoritySha256':'c'*64}
+  self.block=patch.object(self.m,'run',side_effect=AssertionError('EXTERNAL_COMMAND_FORBIDDEN'));self.block.start();self.addCleanup(self.block.stop)
+ def setup_root(self):
+  self.m.ROOT.mkdir();return self.m.ROOT
+ def info(self):
+  m=self.m
+  return {'id':'d'*64,'name':'/'+m.NAME,'image':self.m.ENV_IMAGE,'running':True,'labels':{'t45.operation':self.plan['operationId'],'t45.source':m.SOURCE},'network':'none','ports':{},'user':'0:0','readonly':True,'pidMode':'','ipcMode':'private','usernsMode':'','memory':3*1024**3,'swap':3*1024**3,'cpu':2000000000,'pids':256,'caps':['CHOWN','DAC_OVERRIDE','SETUID','SETGID','KILL','SYS_PTRACE'],'capDrop':['ALL'],'security':['no-new-privileges'],'privileged':False,'devices':[],'restart':'no','shm':64*1024**2,'tmpfs':{'/tmp':'rw,noexec,nosuid,nodev,size=64m'},'mounts':[{'Type':'bind','Source':str(m.ROOT/n),'Destination':dst,'RW':rw} for n,dst,rw in [('deploy',m.DEPLOY,False),('authority','/etc/naijue-erp',True),('state',m.STATE,True)]]}
+ def receipt(self):return {'cid':'d'*64,'image':self.m.ENV_IMAGE,'operationId':self.plan['operationId'],'expiresAt':int(time.time()*1000)+120000}
+ def test_import_inert_and_command_scope(self):
+  a=self.m.common(self.m.ENV_IMAGE,100,self.plan['operationId']);self.assertIn('--network',a);self.assertIn('none',a);self.assertNotIn('--privileged',a);self.assertNotIn('--init',a);self.assertNotIn('--rm',a);self.assertNotIn('--publish',a);self.assertEqual(a[-5:],['--signal=TERM','--kill-after=3s','100','/usr/bin/sleep','infinity'])
+  with self.assertRaisesRegex(ValueError,'WINDOW_TOO_SHORT'):self.m.common(self.m.ENV_IMAGE,90,'op')
+ def test_owned_exact_and_mutated_cases(self):
+  good=self.info();self.m.owned(good,self.receipt(),self.plan)
+  for field,bad in [('id','x'),('image','sha256:x'),('network','host'),('ports',{'5432/tcp':[]}),('user','999:999'),('memory',1),('pidMode','host'),('caps',['ALL']),('privileged',True),('tmpfs',{}),('security',['seccomp=unconfined'])]:
+   with self.subTest(field=field),self.assertRaises(ValueError):self.m.owned({**good,field:bad},self.receipt(),self.plan)
+ def test_configuration_not_generated_and_missing_execute_refuses(self):
+  with patch('sys.argv',['successor','--phase','materialize-app','--plan','/no-plan','--plan-sha256','a'*64]),self.assertRaisesRegex(ValueError,'EXECUTION_NOT_REQUESTED'):self.m.main()
+ def test_external_inputs_only_original_job_bundle(self):
+  with patch.dict(os.environ,{'ERP_SHARED_JOB_DIR':str(self.tmp/'job')}):
+   self.assertEqual(self.m.job_input(self.tmp/'job/bundle/provision.json'),self.tmp/'job/bundle/provision.json')
+   for p in [self.tmp/'outside.json',Path('/etc/shadow')]:
+    with self.assertRaisesRegex(ValueError,'EXACT_JOB_INPUT'):self.m.job_input(p)
+ def test_materialization_regular_files_and_traversable_authority(self):
+  files={'deploy/code.py':b'public','metadata/deployment-manifest.json':b'{}'};modes={x:0o644 for x in files}
+  with patch.object(self.m,'archive_files',return_value=(files,modes,{'packages':[]})),patch.object(self.m,'trusted',side_effect=lambda p,*a:Path(p)):
+   self.m.materialize(self.plan,b'model')
+  self.assertEqual((self.m.ROOT/'deploy/code.py').read_bytes(),b'public');self.assertEqual(stat.S_IMODE((self.m.ROOT/'authority').stat().st_mode),0o711);self.assertEqual(stat.S_IMODE((self.m.ROOT/'authority/fresh35-isolated-deployment-v1.json').stat().st_mode),0o400)
+  with patch.object(self.m,'archive_files',return_value=(files,modes,{})),patch.object(self.m,'trusted',side_effect=lambda p,*a:Path(p)),self.assertRaises(FileExistsError):self.m.materialize(self.plan,b'model')
+ def test_new_file_exclusive_and_modes_survive_umask(self):
+  old=os.umask(0o077)
+  try:self.m.new_file(self.tmp/'public',b'x',0o644)
+  finally:os.umask(old)
+  self.assertEqual(stat.S_IMODE((self.tmp/'public').stat().st_mode),0o644)
+  with self.assertRaises(FileExistsError):self.m.new_file(self.tmp/'public',b'y')
+  self.assertEqual((self.tmp/'public').read_bytes(),b'x')
+ def fake_state(self,source_result=None):
+  root=self.setup_root();(root/'state'/self.m.WORK).mkdir(parents=True);r=self.receipt();(root/'container-receipt.json').write_text(json.dumps(r))
+  if source_result is not None:(root/'state'/self.m.WORK/'result.json').write_text(json.dumps(source_result))
+  return r
+ def read_local(self,p,*a,**k):return Path(p).read_bytes()
+ def test_live_pending_observe_no_stop_or_pass(self):
+  self.fake_state()
+  with patch.object(self.m,'read_file',side_effect=self.read_local),patch.object(self.m,'inspect',return_value=self.info()):r=self.m.observation(self.plan,wait=False)
+  self.assertEqual(r['status'],'WAITING_ORIGINAL_LAUNCHER');self.assertFalse(r['containerStopped'])
+ def test_failed_result_owned_stop_does_not_mean_clean(self):
+  self.fake_state({'state':'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':{'cleanupComplete':False}});info=self.info()
+  with patch.object(self.m,'read_file',side_effect=self.read_local),patch.object(self.m,'inspect',side_effect=[info,{**info,'running':False}]),patch.object(self.m,'run',return_value=b'') as call:r=self.m.observation(self.plan,wait=False)
+  self.assertEqual(call.call_args.args[0],['docker','stop','--time','3','d'*64]);self.assertEqual(r['status'],'FAILED_OR_UNKNOWN_PRESERVED_NO_REPLAY');self.assertTrue(r['containerStopped']);self.assertFalse(r['sourceResult']['cleanup']['cleanupComplete'])
+ def test_wrong_owned_cid_never_stopped(self):
+  self.fake_state({'state':'UNKNOWN'});info={**self.info(),'id':'wrong'}
+  with patch.object(self.m,'read_file',side_effect=self.read_local),patch.object(self.m,'inspect',return_value=info),self.assertRaisesRegex(ValueError,'OWNERSHIP_DIFFERS'):self.m.observation(self.plan,wait=False)
+ def test_actual_source_success_and_stopped_required_for_scoped_pass(self):
+  self.fake_state({'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED','syntheticImportVerified':True,'independentSnapshotsVerified':True,'recordPublished':True,'businessVerified':False,'cleanup':{'cleanupComplete':True}})
+  with patch.object(self.m,'read_file',side_effect=self.read_local),patch.object(self.m,'inspect',return_value={**self.info(),'running':False}):r=self.m.observation(self.plan,wait=False)
+  self.assertEqual(r['status'],'PASS_SCOPED_SYNTHETIC_AND_CLEANUP')
+ def test_provision_wrong_target_and_expired_rejected(self):
+  now=int(time.time()*1000);good={'format':'FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1','decision':'AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT','proposal':self.m.PROPOSAL,'sourceSetSha256':self.m.SOURCE,'deploymentManifestSha256':self.m.MANIFEST_SHA,'postgresUid':61035,'postgresGid':61035,'independentSafetyReviewSha256':'a'*64,'authorizationReference':'offline fixture','startsAt':now-1000,'expiresAt':now+600000}
+  for change in [{'proposal':{'database':'erp_prod'}},{'postgresUid':0},{'expiresAt':now-1},{'expiresAt':now+1200001}]:
+   b=json.dumps({**good,**change}).encode()
+   with patch.object(self.m,'job_input',side_effect=lambda p:p),patch.object(self.m,'read_file',return_value=b),self.assertRaises(ValueError):self.m.provision_input('fixture',hashlib.sha256(b).hexdigest())
+ def fixture_archive(self,mutate=None):
+  import tarfile
+  m=self.m;files={'deploy/code.py':b'public','deploy/extra.txt':b'text'};manifest={'format':'FRESH35_ISOLATED_DEPLOYMENT_V1','files':[{'path':k.removeprefix('deploy/'),'sha256':hashlib.sha256(v).hexdigest()} for k,v in files.items()]};raw=json.dumps(manifest).encode();lock=b'{"packages":[]}'
+  files.update({'metadata/deployment-manifest.json':raw,'metadata/source-descriptor.json':json.dumps({'sourceSetSha256':m.SOURCE}).encode(),'metadata/base-image-registry-result.json':json.dumps({'immutableBase':m.BASE}).encode(),'metadata/debian-runtime-dependency-lock.json':lock});m.MANIFEST_SHA=hashlib.sha256(raw).hexdigest();m.LOCK_SHA=hashlib.sha256(lock).hexdigest();m.FILE_COUNT=2
+  stream=io.BytesIO()
+  with tarfile.open(fileobj=stream,mode='w:gz') as t:
+   for k,v in files.items():
+    x=tarfile.TarInfo(k);x.size=len(v);x.mode=0o644
+    if mutate:mutate(x)
+    t.addfile(x,io.BytesIO(v))
+  return stream.getvalue(),files
+
+ def environment_fixture(self):
+  m=self.m;receipt={'image':m.ENV_IMAGE,'base':m.BASE,'operationId':m.ENV_OPERATION,'sourceSet':m.ENV_SOURCE,'archive':m.ENV_ARCHIVE_SHA,'standardAPTAndLddBuildExitZero':True,'offlineArchive':'19739f1489ea6a3a4bb8ce7a8529e422235c306b6593904ce56f54aa4d200342','localOCIContext':True,'exactFiveDowngrades':True}
+  raw=json.dumps(receipt).encode();recipe=b'synthetic exact-five recipe';m.ENV_RECEIPT_SHA=hashlib.sha256(raw).hexdigest();m.ENV_RECIPE_SHA=hashlib.sha256(recipe).hexdigest()
+  def read(path,*args,**kwargs):return raw if path.name=='image-receipt.json' else recipe
+  return receipt,read
+ def test_environment_receipt_keeps_old_source_but_app_uses_current(self):
+  m=self.m;receipt,read=self.environment_fixture()
+  self.assertNotEqual(m.ENV_SOURCE,m.SOURCE);self.assertNotEqual(m.ENV_OPERATION,self.plan['operationId'])
+  actual={'id':m.ENV_IMAGE,'os':'linux','arch':'amd64'}
+  with patch.object(m,'read_file',side_effect=read),patch.object(m,'run',return_value=json.dumps(actual).encode()) as run:
+   self.assertEqual(m.environment_image(),receipt)
+  self.assertEqual(run.call_count,1);self.assertEqual(run.call_args.args[0][:3],['docker','image','inspect']);self.assertEqual(run.call_args.args[0][-1],m.ENV_IMAGE)
+  self.assertEqual(m.application_receipt(self.plan)['sourceSet'],m.SOURCE);self.assertEqual(m.application_receipt(self.plan)['environmentImage'],m.ENV_IMAGE)
+ def test_wrong_environment_receipt_recipe_or_actual_image_refused(self):
+  m=self.m;receipt,read=self.environment_fixture()
+  with patch.object(m,'read_file',return_value=b'changed'),self.assertRaisesRegex(ValueError,'ENVIRONMENT_RECEIPT_DIFFERS'):m.environment_image()
+  with patch.object(m,'read_file',side_effect=lambda p,*a,**k:read(p) if p.name=='image-receipt.json' else b'changed'),self.assertRaisesRegex(ValueError,'ENVIRONMENT_RECIPE_DIFFERS'):m.environment_image()
+  for actual in [{'id':'sha256:'+'f'*64,'os':'linux','arch':'amd64'},{'id':m.ENV_IMAGE,'os':'linux','arch':'arm64'}]:
+   with patch.object(m,'read_file',side_effect=read),patch.object(m,'run',return_value=json.dumps(actual).encode()),self.assertRaisesRegex(ValueError,'ACTUAL_ENVIRONMENT_IMAGE_DIFFERS'):m.environment_image()
+ def test_unfrozen_final_app_refuses_before_root_or_command(self):
+  for name in ['SOURCE','ARCHIVE_SHA','MANIFEST_SHA','ARCHIVE_BYTES','FILE_COUNT','KEY']:
+   with patch.object(self.m,name,None),self.assertRaisesRegex(ValueError,'FINAL_APPLICATION_NOT_FROZEN'):self.m.materialize_application(self.plan)
+  self.assertFalse(self.m.ROOT.exists())
+ def test_readonly_mount_new_app_path_and_no_image_build_or_load_commands(self):
+  m=self.m;a=m.common(m.ENV_IMAGE,100,self.plan['operationId']);joined=' '.join(a)
+  self.assertIn('src='+str(m.ROOT/'deploy')+',dst='+m.DEPLOY+',readonly',joined);self.assertIn('t45.source='+m.SOURCE,joined)
+  self.assertNotIn(str(m.ENV_ROOT/'deploy'),joined);self.assertNotIn('node_modules',joined)
+  with self.assertRaisesRegex(ValueError,'ENVIRONMENT_IMAGE_DIFFERS'):m.common('sha256:'+'e'*64,100,self.plan['operationId'])
+  self.assertFalse(hasattr(m,'prepare_image'));self.assertFalse(hasattr(m,'offline_load_image'));self.assertFalse(hasattr(m,'build_exact_five_downgrades'))
+ def test_materialize_preserves_env_and_rejects_modified_current_closure(self):
+  m=self.m;archive,files=self.fixture_archive()
+  m.ARCHIVE_SHA=hashlib.sha256(archive).hexdigest();m.ARCHIVE_BYTES=len(archive)
+  with patch.object(m,'trusted',side_effect=lambda p,*args:Path(p)),patch.object(m,'read_file',side_effect=self.read_local):
+   m.materialize(self.plan,archive);m.verify_materialized_application(self.plan)
+   self.assertEqual(json.loads((m.ROOT/'prepare-started.json').read_text()),m.application_receipt(self.plan))
+   (m.ROOT/'deploy/code.py').write_bytes(b'modified')
+   with self.assertRaisesRegex(ValueError,'CURRENT_APPLICATION_CLOSURE_DIFFERS'):m.verify_materialized_application(self.plan)
+  self.assertFalse((m.ROOT/'image-context').exists());self.assertFalse((m.ROOT/'image-receipt.json').exists())
+ def test_archive_links_and_cohort_rejected(self):
+  m=self.m
+  archive,files=self.fixture_archive();self.assertEqual(set(m.archive_files(archive)[0]),set(files))
+  import tarfile
+  for mutate in [lambda member:setattr(member,'type',tarfile.SYMTYPE),lambda member:setattr(member,'name','../escape')]:
+   archive,_=self.fixture_archive(mutate)
+   with self.assertRaises(ValueError):m.archive_files(archive)
+ def test_old_pass_without_independent_snapshots_cannot_pass(self):
+  self.fake_state({'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED','syntheticImportVerified':True,'recordPublished':True,'businessVerified':False,'cleanup':{'cleanupComplete':True}})
+  with patch.object(self.m,'read_file',side_effect=self.read_local),patch.object(self.m,'inspect',return_value={**self.info(),'running':False}):r=self.m.observation(self.plan,wait=False)
+  self.assertEqual(r['status'],'FAILED_OR_UNKNOWN_PRESERVED_NO_REPLAY')
+
+if __name__=='__main__':unittest.main()
