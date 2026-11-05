@@ -76,7 +76,7 @@ def exact_keys(value, names):
 
 def validate_authorization(a, now_ms):
     exact_keys(a, ['format','decision','deploymentManifestSha256','sourceSetSha256','proposal','postgresUid','postgresGid','startsAt','expiresAt','independentSafetyReviewSha256','authorizationReference'])
-    need(a['format'] == 'FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1' and a['decision'] == 'AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_CONTROLLER_HOST', 'PROVISION_AUTHORITY_REQUIRED')
+    need(a['format'] == 'FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1' and a['decision'] == 'AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT', 'PROVISION_AUTHORITY_REQUIRED')
     for key in ['deploymentManifestSha256','sourceSetSha256','independentSafetyReviewSha256']:
         need(type(a[key]) is str and re.fullmatch('[a-f0-9]{64}', a[key]), 'AUTHORITY_HASH')
     need(type(a['authorizationReference']) is str and 0 < len(a['authorizationReference']) <= 512, 'AUTHORITY_REFERENCE')
@@ -470,7 +470,7 @@ def main():
     os.umask(0o077);root.mkdir(mode=0o700);os.chmod(root,0o711)
     (root/'credentials').mkdir(mode=0o700);(root/'pg-private').mkdir(mode=0o700)
     os.chown(root/'pg-private',a['postgresUid'],a['postgresGid'])
-    watch=None;success=False;record_published=None;host_verified=False;passwords={};deadline=time.monotonic()+max(0,a['expiresAt']/1000-time.time())
+    watch=None;success=False;record_published=None;host_verified=False;synthetic_import_verified=False;passwords={};deadline=time.monotonic()+max(0,a['expiresAt']/1000-time.time())
     def remaining():
         need(time.monotonic()<deadline-60,'CLEANUP_RESERVE');return max(1,min(60,deadline-time.monotonic()-45))
     def interrupted(*_):raise RuntimeError('FRESH35_ISOLATED_PARENT_STOP')
@@ -532,8 +532,8 @@ def main():
         result=strict_json(r.stdout);need(result.get('state')=='RECORD_DURABLY_PUBLISHED' and result.get('recordPublished') is True and result.get('sourceSetSha256')==a['sourceSetSha256'],'INSTALL_COMPLETION_REQUIRED');json_new(root/'installation-result.json',result);record_published=True
         remaining();need(watch.poll() is None and owned_listener(owned,p['port']),'PRE_HOST_TARGET_LOST')
         r=subprocess.run(argv+['--verify-host'],capture_output=True,env=clean_env(root),timeout=max(1,deadline-time.monotonic()-45));need(r.returncode==0,'CONTROLLER_HOST_FAILED')
-        host_result=strict_json(r.stdout);need(host_result.get('state')=='FRESH35_CONTROLLER_HOST_VERIFIED' and host_result.get('ordinaryUid')==a['postgresUid'] and host_result.get('businessVerified') is False,'CONTROLLER_HOST_RESULT_REQUIRED')
-        json_new(root/'host-result.json',host_result);host_verified=True;success=True
+        host_result=strict_json(r.stdout);need(host_result.get('state')=='FRESH35_CONTROLLER_HOST_VERIFIED' and host_result.get('ordinaryUid')==a['postgresUid'] and host_result.get('businessVerified') is False and host_result.get('syntheticImportVerified') is True and host_result.get('importState')=='COMMITTED' and host_result.get('replayState')=='ALREADY_COMMITTED' and host_result.get('readbackState')=='VERIFIED','CONTROLLER_HOST_RESULT_REQUIRED')
+        json_new(root/'host-result.json',host_result);host_verified=True;synthetic_import_verified=True;success=True
     except Exception as error:
         json_new(root/'failure.json',{'code':str(error) if re.fullmatch('FRESH35_[A-Z0-9_]+',str(error)) else type(error).__name__,'automaticRetry':False,'commitOutcome':'CONSULT_APPLICATION_JOURNAL_NOT_INFERRED'})
     finally:
@@ -548,8 +548,8 @@ def main():
         files_clear=retry_parent_credential_cleanup(watch,lambda:clear_credentials(root,p))
         cleanup=strict_json((root/'cleanup.json').read_bytes()) if (root/'cleanup.json').is_file() else {'cleanupComplete':False}
         success=success and files_clear and cleanup.get('cleanupComplete') is True
-        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_AND_HOST_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':record_published,'hostVerified':host_verified,'hostEnabled':False,'businessVerified':False})
-        print(json.dumps({'state':'ISOLATED_INSTALL_AND_HOST_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':record_published,'hostVerified':host_verified,'businessVerified':False,'workspace':str(root)}))
+        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'hostEnabled':False,'businessVerified':False})
+        print(json.dumps({'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'businessVerified':False,'workspace':str(root)}))
     return 0 if success else 1
 
 if __name__=='__main__':

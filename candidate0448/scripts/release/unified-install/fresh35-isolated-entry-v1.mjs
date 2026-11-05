@@ -30,7 +30,7 @@ export async function main(){
  need(!Object.keys(process.env).some(k=>k==='NODE_OPTIONS'||k==='NODE_PATH'||k==='DATABASE_URL'||k.startsWith('PG')||k.startsWith('LD_')||k.startsWith('DYLD_')),'CLEAN_ENV_REQUIRED');
  await assertTrustedRootTree(root);await assertTrustedRootPath(process.execPath);
  const a=parseStrictJson(await privateText(authority));
- need(a.format==='FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1'&&a.decision==='AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_CONTROLLER_HOST','EXTERNAL_PROVISION_AUTHORITY_REQUIRED');
+ need(a.format==='FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1'&&a.decision==='AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT','EXTERNAL_PROVISION_AUTHORITY_REQUIRED');
  const workspace=a.proposal.workspaceDirectory;
  need(/^\/var\/lib\/naijue-erp\/fresh35-isolated\/cloud-pg-fresh35-[0-9]{8}-r[1-9][0-9]{0,3}$/.test(workspace),'FIXED_WORKSPACE_REQUIRED');
  const input=parseStrictJson(await privateText(join(workspace,'target-binding.json')));
@@ -52,14 +52,52 @@ export async function main(){
   need(process.getuid()===a.postgresUid&&process.geteuid()===a.postgresUid,'ORDINARY_HOST_UID_REQUIRED');
   const {loadFresh35HostContext,fresh35HostContext,openReviewedFresh35Host}=await import('../../../tools/unified-import/fresh35-host-session.mjs');
   const {assertWholeSalesAdmissionV1}=await import('./whole-sales-admission-v1.mjs');
+  const {HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256}=await import('../../../packages/application/src/unified-import-contract.ts');
+  const {buildSyntheticFresh35WholePackageFixture}=await import('../../../tests/fixtures/unified-import/whole-package-synthetic.ts');
+  const {NODE_SCRYPT_DUMMY_HASH}=await import('../../../packages/authentication/src/passwords.ts');
+  const {executeWholePackage}=await import('../../../tools/unified-import/whole-package-client.ts');
+  const {inspectWholePackage}=await import('../../../tools/unified-import/whole-package-inspect.ts');
+  const {createWholePackageSqlKernel}=await import('../../../tools/unified-import/whole-package-sql-kernel.ts');
+  const {reconcileWholePackage}=await import('../../../tools/unified-import/whole-package-reconcile.mjs');
   const context=fresh35HostContext(await loadFresh35HostContext(root,root+'/reference-inputs'));
   const standardTarget={protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:input.physical.systemIdentifier,database_oid:input.physical.databaseOid,database_name:input.proposal.database,catalog_sha256:context.record.catalogSha256};
-  const verification=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
-   assertWholeSalesAdmissionV1(admission,standardTarget,client);
-   return {state:'FRESH35_CONTROLLER_HOST_VERIFIED',businessVerified:false};
-  },{referenceDirectory:root+'/reference-inputs'});
-  need(verification.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
-  process.stdout.write(JSON.stringify({state:'FRESH35_CONTROLLER_HOST_VERIFIED',hostVerification:verification.host_verification,ordinaryUid:process.getuid(),businessVerified:false})+'\n');return;
+  const options={referenceDirectory:root+'/reference-inputs',sourceProfileSha256:HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256};
+  let fixture;
+  try{
+   // This one small, explicit synthetic fixture is separate from the real
+   // cleaning package. Its planned warehouse binding is checked by SQL in the
+   // same transaction; it is not an observation of a real imported warehouse.
+   const failed=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
+    assertWholeSalesAdmissionV1(admission,standardTarget,client);
+    fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,NODE_SCRYPT_DUMMY_HASH,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:new Date().toISOString()});
+    let reachedFinalPublish=false;
+    const badSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='publish'&&step.request.payload.phase==='DOCUMENTS'){reachedFinalPublish=true;step.request.payload.expected_sequence=Number(step.request.payload.expected_sequence)+1;}yield step;}}};
+    const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,badSteps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    need(reachedFinalPublish&&result.state==='ROLLED_BACK','SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED');
+    return {state:result.state,reachedFinalPublish};
+   },options);
+   need(failed.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
+   const imported=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
+    assertWholeSalesAdmissionV1(admission,standardTarget,client);
+    const before=await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    need(before.state==='ABSENT','SYNTHETIC_FAILED_BATCH_ABSENCE_REQUIRED');
+    const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,fixture.program.steps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    need(result.state==='COMMITTED','SYNTHETIC_IMPORT_COMMIT_REQUIRED');
+    return {state:result.state};
+   },options);
+   need(imported.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
+   const verification=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
+    assertWholeSalesAdmissionV1(admission,standardTarget,client);
+    const replay=await executeWholePackage(client,fixture.identity,fixture.program.initialize,fixture.program.steps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    need(replay.state==='ALREADY_COMMITTED','SYNTHETIC_ORIGINAL_KEY_REPLAY_REQUIRED');
+    const readback=await reconcileWholePackage(client,fixture.program.initialize,NODE_SCRYPT_DUMMY_HASH,fixture.expectedCounts,fixture.totals);
+    need(readback.state==='VERIFIED','SYNTHETIC_NEW_CONNECTION_READBACK_REQUIRED');
+    return {state:'FRESH35_CONTROLLER_HOST_VERIFIED',importState:imported.result.state,replayState:replay.state,readbackState:readback.state,syntheticImportVerified:true,businessVerified:false};
+   },options);
+   await fixture.dispose();
+   need(verification.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
+   process.stdout.write(JSON.stringify({state:'FRESH35_CONTROLLER_HOST_VERIFIED',hostVerification:verification.host_verification,ordinaryUid:process.getuid(),syntheticImportVerified:true,failedAttempt:failed.result,importState:verification.result.importState,replayState:verification.result.replayState,readbackState:verification.result.readbackState,businessVerified:false})+'\n');return;
+  }finally{await fixture?.dispose()}
  }
  const authorization=await loadFresh35CombinedAuthorization(program);
  const raw=await privateText(join(workspace,'credentials',a.proposal.owner+'.pgpass'));

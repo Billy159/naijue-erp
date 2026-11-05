@@ -14,7 +14,7 @@ NOW=1793851200000
 def authority():
     p={'database':'synthetic_fresh35_20261105_r91','host':'127.0.0.1','port':57639,'workspaceDirectory':str(m.PARENT/'cloud-pg-fresh35-20261105-r91')}
     p.update({role:'fresh35_'+role+'_20261105_r91' for role in ['admin','owner','controller','runtime']})
-    return {'format':'FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1','decision':'AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_CONTROLLER_HOST','deploymentManifestSha256':'a'*64,'sourceSetSha256':'b'*64,'proposal':p,'postgresUid':992,'postgresGid':992,'startsAt':NOW,'expiresAt':NOW+1200000,'independentSafetyReviewSha256':'c'*64,'authorizationReference':'OFFLINE_FIXTURE_NOT_PERMISSION'}
+    return {'format':'FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1','decision':'AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT','deploymentManifestSha256':'a'*64,'sourceSetSha256':'b'*64,'proposal':p,'postgresUid':992,'postgresGid':992,'startsAt':NOW,'expiresAt':NOW+1200000,'independentSafetyReviewSha256':'c'*64,'authorizationReference':'OFFLINE_FIXTURE_NOT_PERMISSION'}
 
 class Tests(unittest.TestCase):
     def test_input_is_consistency_only(self):
