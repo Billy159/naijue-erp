@@ -1,0 +1,55 @@
+{
+  "status": "ORDINARY_ARCHIVE_ALL_FILE_BYTES_MODES_STREAM_READBACK_PASS_PENDING_SEPARATE_WRAPPER_PAIRING_AND_C_T45_REAL_TARGET_PREPARATION",
+  "sourceCommit": "f87c5e9589af7b04d1c27b1ef013cd7ffe2ed211",
+  "buildId": "erp-f87c5e9589af-full-20261106",
+  "sourceSetSha256": "a02e6453603299e2093b87e2baeda2f3df04403c72a13f6cb486fc81c313721d",
+  "currentSourcePins": 212,
+  "archive": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-f87c5e95/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83659955,
+    "sha256": "6932b145ca3281653e14bd349af31de5c803e0d1ff038309d57b597e23b83cfb",
+    "regularMembers": 7296,
+    "deployMembers": 7292,
+    "metadataMembers": 4
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-f87c5e95/ordinary/DEPLOYMENT-MANIFEST.json",
+    "bytes": 1084127,
+    "sha256": "f1d8bd71dbea9677f1372be86d3765bd48e9d03fe919bd0b732f85dd55c4d0de",
+    "format": "FRESH35_ISOLATED_DEPLOYMENT_V1",
+    "selfExcluded": true
+  },
+  "inventory": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-f87c5e95/ordinary/DEPLOYMENT-INVENTORY.json",
+    "sha256": "e07b54205f3f14bccaeb57d5d0db8e5da18a2f2fe3160bdbc12750eff766c9a1"
+  },
+  "sourceDescriptorSha256": "3462a0cbb84a6c69216edf42011fc153c3090f965ea0b1483edbc5da5e61081f",
+  "runtimeIssuance": {
+    "member": "deploy/runtime/fresh35-ordinary-runtime-v1.json",
+    "sha256": "8c17017a88054c8960350326e3a2c1b5657059f3781a538d3f02667bed918191",
+    "onlyBuildFieldsFilled": true,
+    "postgresPassword": null,
+    "noDoubleDeployPath": true,
+    "targetRemainsFrozenSyntheticTemplate": true,
+    "notRealTargetExecutionConfiguration": true
+  },
+  "collector": {
+    "member": "deploy/scripts/ops/capacity-live-statfs.mjs",
+    "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+    "bytes": 13339,
+    "archiveMode": "0755"
+  },
+  "fullMemberBytesAndModesVerified": true,
+  "elapsedSeconds": 17.039144125,
+  "originalToolsReferencesAndLinuxArchiveHashesVerified": true,
+  "noSourceWipOrServerOrDockerPgOrInstalls": true,
+  "unverified": [
+    "Separate T45 wrapper must bind new archive/manifest/sourceSet with bounded reader; no compatibility/execution assertion",
+    "Later REAL precise target/configuration binding and user authorization remain separate",
+    "Linux Node24 Fastify/pg/Sharp actual load for this new version",
+    "OS ownership/mount/capacity/private scenario/authentication for this new version",
+    "All realPG role/business commands, imports and readback",
+    "Production/deployment"
+  ],
+  "notes": "Production release independently passed full build/pack. Distinct isolated deploy/ + exact4metadata format; not production release relabelled. All old artifacts retained."
+}

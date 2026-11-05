@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T16:59:20.475376+00:00",
+  "updatedAt": "2026-11-05T17:06:42.563244+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -29100,6 +29100,14 @@
         "rootGateReadback": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c",
         "oldGatePreserved": true,
         "PGExecuted": false
+      },
+      "materialization": {
+        "job": "t45-f35-5d70-materialize-20261106-01",
+        "state": "FAILED_124_AT_JOB_180_SECONDS_NOT_MATERIALIZED_PASS",
+        "elapsedSeconds": 180.1178,
+        "serverOwner": "T45",
+        "currentAction": "One bounded readonly failure-state diagnosis; no replay/deletion/PG",
+        "receipt": "Owner reported; exact diagnostic receipt pending"
       }
     },
     "productionRealImportContinuation": {
@@ -29137,7 +29145,16 @@
         "parentSyntheticRoot": "5d70b3ee9038b4d0fe66328e2a172b688c07d9c9",
         "remoteVerified": true,
         "owner": "D2",
-        "state": "BUILDING_FIXED_ACCEPTED_REAL_SOURCE_NOT_DEPLOYMENT"
+        "state": "FULL_BUILD_PACK_AND_ORDINARY_ARCHIVE_READBACK_PASS_PREPARATION_ONLY",
+        "buildId": "erp-f87c5e9589af-full-20261106",
+        "sourceSetSHA256": "a02e6453603299e2093b87e2baeda2f3df04403c72a13f6cb486fc81c313721d",
+        "receiptSHA256": "f7f5f5c6701eac1a7a2a30d01789643bc6b426434608cc6c242ce826bc66589c",
+        "archiveSHA256": "6932b145ca3281653e14bd349af31de5c803e0d1ff038309d57b597e23b83cfb",
+        "archiveBytes": 83659955,
+        "manifestSHA256": "f1d8bd71dbea9677f1372be86d3765bd48e9d03fe919bd0b732f85dd55c4d0de",
+        "releaseSHA256": "9065463bea5743c518fb8409b8330d9a6ba3fc5247551ff51d9f686a2e63605a",
+        "runtimeConfiguration": "Still frozen synthetic target/password null; NOT REAL-ready config",
+        "PGExecuted": false
       }
     },
     "releaseFixturePinSynchronization": {
