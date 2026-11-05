@@ -1500,3 +1500,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 原D1已核清安装授权/合成provision/来源登记均不覆盖正式REAL批执行，拟案b3bb8fb9实际读取。用户call_bcc0d925 item0明确批准“本项源码与合同修订”，原D1/high在原host/session/stream入口及必要直接测试实施；不增表列/权限，不删除原V1拒V2、不把安装记录当导入许可、不新建控制平台。实际生产执行不由这次源码批准放行。
 - T45唯一launcher/wrapper继续当前普通账号业务主流程收尾；当前28个launcher及9个wrapper定向模型输出已见，尚未最终交付/独立验收，更不是PG结果。新合成候选只从固定Git导出，不纳D1可变WIP，不因REAL接线等候；随后REAL候选再纳固定完整交付。
 - 原三旧构建副本按用户要求保留，未删除。当前卷已有约14GiB可用事实，不需要重开清理审批。D3完整核账和预检结果复用，不再重跑，真实PG/生产仍未执行。
+
+
+### T45 ordinary main frozen; original QB and full build running in parallel
+- C verified READY2fcc452b/RESULT4cf94092 and all four leaf pins. Fixed integration d0bd2c35f461ee385857e57fd0363c0c4f395ed8 pushed and remote verified. Original operational snapshot retained. 28+9 offline models and 4 Node25 syntax checks are source evidence only, not actual Linux24/PG/browser/production. QB reviews only this increment.
+- Existing build-root ref now c30d4642077c18467a45c902ea09c6af68666fca, tree65e15fb6f7fc1d81156e37122646b1d05f7d252f, pushed and remote verified. Original D2 builds the fixed full web/backend/native35 and ordinary archive, reusing tools/refs/Linux73; no mutable D1 REAL work included and no old7393 build relabeled.
+- T45 source returned readonly; while awaiting the final package, only necessary existing production/app/DB/backup metadata may be read. No repeated backup/restore or production change. D1 implements the user-approved REAL source seam; source approval does not authorize actual production execution.
