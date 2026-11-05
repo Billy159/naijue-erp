@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-4d0589-ordinary-local-20261106-01",
+  "sourceSetSha256": "5fbcb11970c41c706e4a6b2ce83a88dc8a85d988f2259228d2bcd31d99e22fb7",
+  "archiveSha256": "72a3c84524b822ceb741dfe80f4ae7681c649f3a62f5fd5d7fc858c52ca77eb2",
+  "archiveBytes": 83664442,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-4d0589-ordinary-local-20261106-01",
+  "startsAt": 1793912385232,
+  "expiresAt": 1793914185232,
+  "decisionReference": "C under direct human delegation through2026-11-06 noon. Fixed4d0589/root398359 carrier D2da386ae3/tail58b8e023; original QB1ffaae49 ops bodies adopted. Same original reviewed receiver and one-shot function bodies, exact changed bindings only. Full original877a hash/identity plus81194870 prefix and exact tail must match this fullhash; actual UID1000 original receiver alone creates READY. No manual READY/PG/REAL/production.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

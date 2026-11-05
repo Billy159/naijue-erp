@@ -1,0 +1,30 @@
+{
+  "status": "EXACT_C_STAGE_LEAVES_AND_CONSTANTS_BOUND_NO_UPLOAD_YET",
+  "functionsAstSame": true,
+  "receiverBytesSame": true,
+  "files": {
+    "fresh35-container-successor.py": {
+      "bytes": 36922,
+      "sha256": "11bda9e42a6db64c5017af2c016cda181b1c941882c4676fc581b63ec4ce5d46"
+    },
+    "ordinary-proof-evidence.py": {
+      "bytes": 10262,
+      "sha256": "1e7a5b8c1a29cc70a33082f555225f17ae5e4e563e8233c66eb97a43f837fab5"
+    },
+    "assemble_original_receiver.py": {
+      "bytes": 9632,
+      "sha256": "b2980e62e88730eecbadb45d6497ac96cb7296f3d1e118c66955b01a3eb63194"
+    },
+    "artifact-receiver.original.py": {
+      "bytes": 6230,
+      "sha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653"
+    }
+  },
+  "CStageKeys": [
+    "f35-4d0589-tail-20261106-01",
+    "f35-4d0589-ordinary-local-20261106-01"
+  ],
+  "externalPreparationExpiresAt": 1793914185232,
+  "serverNewExecution": false,
+  "PG": false
+}

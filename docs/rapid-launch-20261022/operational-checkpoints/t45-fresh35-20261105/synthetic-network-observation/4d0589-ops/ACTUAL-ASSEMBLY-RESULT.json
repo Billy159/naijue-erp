@@ -1,0 +1,39 @@
+{
+  "assembledBytes": 83664442,
+  "assembledSha256": "72a3c84524b822ceb741dfe80f4ae7681c649f3a62f5fd5d7fc858c52ca77eb2",
+  "baseIdentity": [
+    66304,
+    393392,
+    83663911,
+    1793909265679139639,
+    1793909266551146479
+  ],
+  "baseSha256": "6b57c96e5931ee4dc8c61b0f9c4d3d0e254b3c1eaeb6fbdfd3dc7f6088cb44ea",
+  "oldBaseAndPartialChanged": false,
+  "originalReceiver": {
+    "receipt": {
+      "archiveBytes": 83664442,
+      "archiveSha256": "72a3c84524b822ceb741dfe80f4ae7681c649f3a62f5fd5d7fc858c52ca77eb2",
+      "artifactKey": "f35-4d0589-ordinary-local-20261106-01",
+      "authoritySha256": "4d5a2af34066ffa7cc0af062193599bbfed1848867e1404f52163ac5fd37c862",
+      "fileIdentity": [
+        66304,
+        393400,
+        83664442,
+        1793912679573395275,
+        1793912680356424283
+      ],
+      "sourceSetSha256": "5fbcb11970c41c706e4a6b2ce83a88dc8a85d988f2259228d2bcd31d99e22fb7",
+      "status": "READY"
+    },
+    "status": "READY"
+  },
+  "originalReceiverSha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653",
+  "pgStarted": false,
+  "prefixBytes": 81194870,
+  "receiverUid": 1000,
+  "rootAuthorityCreated": false,
+  "status": "ORIGINAL_RECEIVER_READY_FROM_EXACT_LOCAL_BYTES",
+  "tailBytes": 2469572,
+  "tailSha256": "f7ed47755d97ae8b37f3f2d7e7ee537bc6bb89faa46019ae4f7885f079a3948c"
+}

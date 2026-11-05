@@ -29616,7 +29616,7 @@
         "owner": "D1",
         "model": "gpt-6.1-sol",
         "thinking": "high",
-        "state": "FOUR_LEAVES_FIXED_AUTHOR13_AFFECTED_SOURCE_MODEL_CASES_PASS_NOT_PG",
+        "state": "QB_PASS_8_SCOPED_GROUPS_SOURCE_AND_NATIVE_MODEL_NOT_PG",
         "scope": [
           "Original physical guard finite static failed-component diagnosis; same predicates and55000 refusal, safe originalInternalCode path",
           "Original same native client bounded actual ReadyForQuery drain after SQL failure, then unchanged rollback protocol guard; close/error/deadline fail closed"
@@ -29654,7 +29654,38 @@
         ],
         "authorUniqueChecks": 13,
         "typesExit": 0,
-        "buildExit": 0
+        "buildExit": 0,
+        "integrationCommit": "3983598059c487b2ab1736ed05a30681eee05e7a",
+        "buildRootCommit": "4d0589ca80934318850dab637b32535fc642e266",
+        "buildTree": "cfa2e91adc69dbb6a494b4aeaee5d47ceb1be4f7",
+        "buildState": "FULL_BUILD_PACK_AND_7296_MEMBER_READBACK_PASS_NOT_PG",
+        "QBReceiptSHA256": "6707ee9abcdcd9b1143c5726cea182d3f5cb4241c2cd2af37b2acf40ec79d410"
+      },
+      "r4Preparation": {
+        "state": "ACTUAL_FULL_READY_MATERIALIZING_QB_SOURCE_PASS",
+        "root": "4d0589ca80934318850dab637b32535fc642e266",
+        "integration": "3983598059c487b2ab1736ed05a30681eee05e7a",
+        "sourceSetSHA256": "5fbcb11970c41c706e4a6b2ce83a88dc8a85d988f2259228d2bcd31d99e22fb7",
+        "archiveBytes": 83664442,
+        "archiveSHA256": "72a3c84524b822ceb741dfe80f4ae7681c649f3a62f5fd5d7fc858c52ca77eb2",
+        "manifestSHA256": "0fbb6d97c76cb80877b988283ca6a8dc55f7032356aa9beb45f77503ea189336",
+        "D2ReceiptSHA256": "da386ae38d4b8d77d81b4c8fbecf8d64316d93bed7fab2e372a16c30ec3bf138",
+        "base": "Original877a local02 READY, full6b57 and stable identity required",
+        "prefixBytes": 81194870,
+        "tailBytes": 2469572,
+        "tailSHA256": "f7ed47755d97ae8b37f3f2d7e7ee537bc6bb89faa46019ae4f7885f079a3948c",
+        "tailAuthoritySHA256": "dd77abaa837c7fe4b3acfb17eaf8467c76dbaf9345e71d59b39fb246de4a5096",
+        "fullAuthoritySHA256": "4d5a2af34066ffa7cc0af062193599bbfed1848867e1404f52163ac5fd37c862",
+        "startsAt": 1793912385232,
+        "expiresAt": 1793914185232,
+        "scope": "Unchanged original reviewed receiver/one-shot bodies; accurate pin-only successor, no duplicate ops review; newr4 preparation only, freshPG depends on actual readiness and QB source result",
+        "pgStarted": false,
+        "actualAssemblySHA256": "4368f921cfd975a8eb2044f6be6f06b42d3cdbc663e3b00e2471f8171ef0a89a",
+        "actualAssemblySeconds": 3.025088727,
+        "wrapperSHA256": "11bda9e42a6db64c5017af2c016cda181b1c941882c4676fc581b63ec4ce5d46",
+        "probeSHA256": "1e7a5b8c1a29cc70a33082f555225f17ae5e4e563e8233c66eb97a43f837fab5",
+        "materializationJob": "t45-f35-4d0589-local-materialize-20261106-01",
+        "materializationPlanSHA256": "9c06071fdcbb36d8e8c334ed6c0fcea73a62a275532fa289d882b1b31344503a"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -29717,6 +29748,21 @@
         "reason": "D2 completed readonly preparation and no source writes; C delegates exact V2 deploy compatibility, preserve current synthetic root excluding WIP",
         "authority": "C under latest direct human ERP decision delegation until noon"
       }
-    ]
+    ],
+    "privateStandardPackageTransport": {
+      "owner": "D3",
+      "state": "EXACT31_MEMBER_LOCAL_ARCHIVE_COMPLETE_NOT_TRANSFERRED_NOT_IMPORTED",
+      "manifestSHA256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+      "archivePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v0448-transport-20261106-r3-01/r3-standard-package-1e1e495a.tar.gz",
+      "archiveBytes": 93508914,
+      "archiveSHA256": "fc831c282f982ca22c840906aae96bf69acf23e785a42c199655e0ccf297365e",
+      "privateReceiptSHA256": "b5ff13800ec8b0af9f1b83542465e063fe0cb8fb1c9223b9e03997ad3213b610",
+      "members": 31,
+      "sourceMemberBytes": 1008361447,
+      "mode": "0600, parent0700",
+      "sourceBusinessChecksReused": true,
+      "noDataInGitOrDot": true,
+      "next": "T45 existing private transport capability/preparation only; C exact transfer binding after immutable source readiness."
+    }
   }
 }

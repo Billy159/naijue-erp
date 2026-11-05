@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-4d0589-tail-20261106-01",
+  "sourceSetSha256": "5fbcb11970c41c706e4a6b2ce83a88dc8a85d988f2259228d2bcd31d99e22fb7",
+  "archiveSha256": "f7ed47755d97ae8b37f3f2d7e7ee537bc6bb89faa46019ae4f7885f079a3948c",
+  "archiveBytes": 2469572,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-4d0589-tail-20261106-01",
+  "startsAt": 1793912385232,
+  "expiresAt": 1793914185232,
+  "decisionReference": "C under direct human delegation through2026-11-06 noon. Fixed4d0589/root398359 carrier D2da386ae3/tail58b8e023; original QB1ffaae49 ops bodies adopted. Exact ordinary source/tools compressed-byte tail only, not full app. Keep40s, old877a full and partial unchanged; no PG/REAL/production.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

@@ -1,0 +1,41 @@
+{
+  "status": "EXACT_NEW_TARGET_BASE_PREFIX_PLUS_ORIGINAL_TAIL_STREAM_PROVED",
+  "base": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-877a32ed/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83663911,
+    "sha256": "6b57c96e5931ee4dc8c61b0f9c4d3d0e254b3c1eaeb6fbdfd3dc7f6088cb44ea",
+    "wholeHashVerified": true
+  },
+  "target": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-4d0589ca/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83664442,
+    "sha256": "72a3c84524b822ceb741dfe80f4ae7681c649f3a62f5fd5d7fc858c52ca77eb2",
+    "regularMembers": 7296,
+    "deployMembers": 7292,
+    "metadataMembers": 4
+  },
+  "prefix": {
+    "bytes": 81194870,
+    "sha256": "221ea00efdf4ee37984ab05dbb6d30bcf19e662c9b1707d3f911d0c9cdafa861",
+    "byteForByteCompared": true
+  },
+  "tail": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-4d0589ca/ordinary/recovery-tail-r4-01/ordinary-transfer.tail-offset-81194870.bin",
+    "bytes": 2469572,
+    "sha256": "f7ed47755d97ae8b37f3f2d7e7ee537bc6bb89faa46019ae4f7885f079a3948c",
+    "offsetStartInclusive": 81194870,
+    "offsetEndExclusive": 83664442,
+    "mode": "0600",
+    "readbackHashVerified": true
+  },
+  "streamReconstruction": {
+    "bytes": 83664442,
+    "sha256": "72a3c84524b822ceb741dfe80f4ae7681c649f3a62f5fd5d7fc858c52ca77eb2",
+    "matchesOriginalTarget": true,
+    "fullCopyWritten": false,
+    "recompressed": false
+  },
+  "transportClaim": "Actual bytes only; no claim original40s channel has been tested or will succeed",
+  "oldArchivesAndFailuresPreserved": true,
+  "noSourceChangesOrServerActions": true
+}

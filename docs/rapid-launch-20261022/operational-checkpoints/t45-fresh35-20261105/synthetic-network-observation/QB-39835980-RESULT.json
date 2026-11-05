@@ -1,0 +1,103 @@
+{
+  "task_id": "QB-R3-ROLLBACK-PHYSICAL-39835980-20261106",
+  "verdict": "PASS_SCOPED_SOURCE_AND_NATIVE_NO_NETWORK_MODELS_NOT_PG",
+  "findings": [],
+  "integration": "3983598059c487b2ab1736ed05a30681eee05e7a",
+  "parent": "ce9b7b701a041454afbe58297d1bc1b2ccd409b1",
+  "build_root": "4d0589ca80934318850dab637b32535fc642e266",
+  "build_tree": "cfa2e91adc69dbb6a494b4aeaee5d47ceb1be4f7",
+  "prior_build_root": "877a32edb9fef422d76496ae388b0732208f8fc5",
+  "owner_receipt_sha256": "7c1e70eff9a6c4bc32ac82e6cece3ebfe8ab3fdba0a338850af0870f180a3e2a",
+  "source_pins": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "bytes": 21957,
+      "sha256": "7b4f48001367c65fcb717009a4b00d803ba855e4bea91b03339ac75c712feff9"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "bytes": 22693,
+      "sha256": "ea5ffe9bc2ac665ab0e48723d18126ba3e33bb45729a23a7cb9eff7f8511eb43"
+    },
+    {
+      "path": "tests/fresh35-combined-lifecycle.test.mjs",
+      "bytes": 17806,
+      "sha256": "c02b086a53af242a4fa010ec258bbab5d04997f6871d23634ac49bfdf68e84d7"
+    },
+    {
+      "path": "tests/fresh35-combined-target.test.mjs",
+      "bytes": 21819,
+      "sha256": "7d0f550f80e4f745836dac0a109f0fd8a1eb39677512cf2965d3f7d6c0ac5c97"
+    }
+  ],
+  "independent_checks": {
+    "passed_groups": 8,
+    "native_and_physical": [
+      {
+        "name": "actual native delayed/same-packet Ready returns original single rollback and removes all temporary listeners",
+        "state": "PASS"
+      },
+      {
+        "name": "native end/error/wrong transaction and non-DatabaseError refuse rollback with no retry",
+        "state": "PASS"
+      },
+      {
+        "name": "wait timeout uses original remaining deadline and clears listeners without state repair",
+        "state": "PASS"
+      },
+      {
+        "name": "original rollback ACK/idle checks reject wrong ACK or non-idle Ready after the drain",
+        "state": "PASS"
+      },
+      {
+        "name": "COMMIT unknown still quarantines without wait/rollback or subsequent sends",
+        "state": "PASS"
+      },
+      {
+        "name": "exact native55000 finite tags only pass original flat12 renderer, forged/non55000 values remain closed",
+        "state": "PASS"
+      },
+      {
+        "name": "all synthetic25/production23 atoms match exact877a source for installer/controller, false/null rejection and finite labels retained",
+        "state": "PASS"
+      }
+    ],
+    "original_flat12_consumer": {
+      "state": "PASS",
+      "exact_static_codes": 26,
+      "negative_payloads": 3,
+      "scope": "Original fixed unchanged flat12 Python consumer accepts all exact native-produced labels and preserves closed-shape/refusal guards. This consumer has lexical code validation; exact enum/native55000 admission is enforced by original producer, independently tested."
+    },
+    "method": "Fixed Git code in memory; actual native pg Client/Connection handlers with synthetic events/no network, explicit adapter exposure; actual prior/current guard bodies with descriptor seeds/static truth analysis. No genuine target/program/authorization or SQL parser/PG/server execution.",
+    "source_preservation": "Protocol and drive byte-identical; post-physical public/empty/role/membership/ACL and production constructor source suffix byte-identical to prior."
+  },
+  "reviewed": [
+    "Wait entered only after actual native DatabaseError instance from original Client.prototype.query adapter. No runtime driver-state assignment, new connection/pool, fabricated event or SQL replay. Captures original connection event source.",
+    "Wait deadline exactly min(now+5000, original expiresAt-45000), actual Ready must pass original protocol and txT/E and match message status. Initial/already-ready path uses same checks. Original remaining/protocol/ROLLBACK/ACK/idle path retained.",
+    "Native end/error/wrong tx/non-DatabaseError refuse without rollback; timeout clears temporary listeners. Wrong rollback ACK or nonidle Ready remain unconfirmed; COMMIT unknown remains quarantine/no rollback/no later sends.",
+    "Exact old877a physical atoms compare unchanged for synthetic25/production23 across installer and controller modes. Only boolean array/static label diagnostics changed, false/null refuse by IS DISTINCT FROM true. No SQL parser/server execution claimed.",
+    "Only native DatabaseError+55000+exact frozen finite message list registers public internal label. Fake label, plain Error and non55000 never expose internal tag; private SQL/detail/hint/message not serialized.",
+    "26 old/new finite codes pass actual unchanged flat12 Python consumer with original compiled-step membership/closed JSON controls. Consumer retains lexical validation; exact enum admission belongs to producer."
+  ],
+  "adopted_owner_evidence": {
+    "unique_affected_tests": 13,
+    "native4": true,
+    "target5": true,
+    "catalog4": true,
+    "predicate_final_case": "Final frozen-text dedicated case adopted, not an extra unique test",
+    "types_build": "Owner exit0 receipt and empty final logs adopted, not rerun",
+    "logs": "Read owner listed logs, recorded their hashes and summaries; receipt supplies paths rather than previous log hashes."
+  },
+  "harness_note": "Initial Git virtual-read adapter required fixed filesystem injection; fixed only harness. Physical text splitter initially used wrong hardcoded marker offset; corrected to marker length, retained initial logs and reused six successful native groups, ran only remaining comparison. No product source changed.",
+  "unverified": [
+    "Actual PostgreSQL socket Ready/rollback acceptance, SQL parse/execute and original physical predicate cause.",
+    "Old stoppedr3 initial aggregate PHYSICAL_TARGET_DIFFERS specific atom remains unknown; old ROLLBACK_UNCONFIRMED untouched. This diagnoses next target and fixes secondary drain only.",
+    "No newr4/window authorization/PG/server/provision/deploy/business action by QB."
+  ],
+  "reuse": "No original27/REAL64/network/receiver/full typesbuild replay. Other source/release conclusions adopted as directed.",
+  "actual_model": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "source_modified": false,
+  "server_or_pg": false,
+  "next": "C may adopt exact four-leaf/buildroot source-only result; original T45 sole owner may validate a separately bound newr4/window. No old key or root replay; no claim initial root cause repaired."
+}
