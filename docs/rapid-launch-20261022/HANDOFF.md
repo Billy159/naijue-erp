@@ -1350,3 +1350,10 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - D1生产V2的12叶固定57842e5838643c0b51199a9efd2e7adad7f666b0已推远端回读，回执54c4f7bb匹配；42项模型/tsc/build0，原QB仅审本增量。D2接原4运行叶；发行bundle模块身份闭包仍需准确接缝，源码不代表可安装。
 - D3预检自然终态，命令exit0但checks_passed=false，271=36原raw源包内布局+235结算不符。235为210历史RETURN无款、22SALE有款差、3RETURN有款差；不与已批6行金额混同。source reconcile/plan未运行。原失败保留，下一独立payload不含raw源且不删除旧副本；25款差追溯原头金额，历史合同consumer由D1定位。
 - T45 PhaseA原job FAILED/exit2/192.548220189秒，仅COMMAND_FAILED_1，因原run未留失败输出尚未知具体子命令及根因。原唯一只读诊断在途，无重放pull/build，DB20分钟未启，0PG/生产。最小日志/方法修订待实际诊断后固定验证。
+
+
+### F01拒收、r3布局修正和镜像失败后继
+- 原QB57842正式NEED_FIX，回执98f92378，已复现启动record校验与后取stamp/hash空窗可换记录；原D1优先同快照绑定修复，不扩大热路径扫描。D2 runtime实际7叶WIP保留，未标最终组合通过。
+- D3 r3仅31标准物理成员，APFS独立clone，原r2/36来源副本原地保留；布局回执47544dd3。25头有款差异实录cash与现27结算逐项一致，非漏款或已证明税口径，不造款、不将折扣标量猜金额；210RETURN无款及25差异待准确历史接收合同，未重跑预检。
+- T45精确诊断旧pull终态失败，build/签名/锁包/ldd均未至。后继日志+一次精确resume两叶固定cca4a82d443de7e5d5a7197e711a167b670c8be1已推远端，11作者模型通过，QB仅受影响范围验收中，未实际重试。
+- C交原D2唯一修改builder/manifest/releasecontract/generator及必要原测试；精确206源码pin闭包原字节，限定两强制fixture只读成员，其他测试/任意JS拒绝；deploy仅生成块同步，原功能及批准marker不动。未授权生产切换。

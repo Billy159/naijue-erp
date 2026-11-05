@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T11:57:49.633988+00:00",
+    "at": "2026-11-05T12:07:40.238932+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28213,7 +28213,12 @@
         "config/release-contract.json (explicit release seam handoff)",
         "scripts/release/generate-release-contract.mjs and original direct tests",
         "scripts/release/boot-entry.py functional branches and direct tests; approval marker unchanged",
-        "scripts/release/rollback-candidate.py functional branches and direct tests; approval marker unchanged"
+        "scripts/release/rollback-candidate.py functional branches and direct tests; approval marker unchanged",
+        "scripts/release/build-production.mjs native35 exact closure only",
+        "scripts/release/manifest.mjs exact native35 member validation only",
+        "config/release-contract.json native35 exact source members",
+        "scripts/release/generate-release-contract.mjs and direct tests",
+        "scripts/release/deploy-candidate.py GENERATED RELEASE CONTRACT block only; function/approval marker frozen"
       ]
     },
     "preservedWIP": "Original cleaning repo four files untouched",
@@ -28466,11 +28471,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Fixed57842 source under QB; diagnose exact historical settlement consumer contract plus build carrier seam without changing frozen leaves",
-      "D2": "Implement fixed production V2 runtime seam in original four files",
-      "D3": "Prepare separate standard payload r3 preserving raw sources; trace25 actual settlement differences; no full preflight repeat until fixed",
-      "T45": "PhaseA failed terminal; original readonly diagnostic only, no replay; proposed targeted failure-output fix",
-      "QB": "Review fixed57842 production-proof12 only"
+      "D1": "Priority F01 startup same-snapshot fix, then historical settlement consumer contract",
+      "D2": "Runtime7 preserved; exact native35 build/manifest/rootcontract/generator package implementation",
+      "D3": "r3 layout fixed;25 original settlement trace delivered, wait exact historic receiving contract before new preflight",
+      "T45": "Old failure preserved; fixed resume/log successor pending QB then new exact C plan, no actual retry",
+      "QB": "Fixedcca4 ops affected review;57842 remains NEED_FIX F01"
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28517,11 +28522,15 @@
       "manifestCandidateSHA256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
       "ledgerCandidateSHA256": "499c9bec0a8e65899d42fc934c6edd37f7c921fb7e23d0943842ab96e0712c80",
       "sourceReconciliationRun": false,
-      "planRun": false
+      "planRun": false,
+      "standardPayloadLayoutFixed": true,
+      "layoutReceiptSHA256": "47544dd381cc6cee7b9d77e7aee9ece414a96e1e2e456364c1864c778f5509a2",
+      "settlement25TraceSHA256": "26514c71aa72620953b8da88afab7b89666ee81c259003f7184227918db02413",
+      "preflightRepeated": false
     },
     "productionInstallProofProposal": {
       "owner": "D1",
-      "state": "FIXED_12_LEAF_SOURCE_QB_REVIEW_IN_PROGRESS_D2_RUNTIME_CONSUMPTION",
+      "state": "QB_NEED_FIX_F01_STARTUP_RECORD_SNAPSHOT_RACE",
       "path": "D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-TARGET-CONTRACT-DELTA.md",
       "sha256": "9b11eabac1880c5515d0f40e73203fa9cd27cbb5b134aa9d0394311858a390a8",
       "scope": "Versioned existing target/record and ordinary startup identity/source/catalog revalidation; operation window separate from service lease; actual target values/permissions unapproved",
@@ -28529,7 +28538,11 @@
       "actualPermissionApplied": false,
       "commit": "57842e5838643c0b51199a9efd2e7adad7f666b0",
       "implementationReceiptSHA256": "54c4f7bbe83e9d0c80f1e0e49a5d4ad0dfec2115538fa819483cbb79d723c10a",
-      "checks": "42 affected models PASS/typecheck0/build0; no PG or bundle verification"
+      "checks": "42 affected models PASS/typecheck0/build0; no PG or bundle verification",
+      "reviewSHA256": "98f923789d740fa16235b1ea6164d637801bc9958b404a7fd7ecc0eeec628c06",
+      "findings": [
+        "F01/P2 verified envelope vs later record stamp/hash permits startup-time replacement; original D1 fixing"
+      ]
     },
     "privateHallSourceReview": {
       "candidateSHA256": "8e1b71640f2c7172a15ad0be32c8aab029d28a1ee07afc3a41a8b5467ae98d53",
@@ -28582,7 +28595,7 @@
       "versionConstraintsChecked": 201,
       "metadataUnsatisfiedConstraints": 0,
       "signedReleaseVerified": false,
-      "state": "ACTUAL_PHASE_A_FAILED_READONLY_DIAGNOSTIC_IN_PROGRESS",
+      "state": "FIXED_PULL_DIAGNOSTIC_RESUME_SUCCESSOR_QB_REVIEW_PENDING",
       "scope": "Original T45 provision successor only in its original fresh35-preparation output directory; no S application edits or server calls",
       "actualImagePullBuildOrContainerCreated": false,
       "actualTransmission": true,
@@ -28608,7 +28621,19 @@
       "phaseAJob": "t45-f35-5b26-prepare-20261105-01",
       "phaseAExitCode": 2,
       "phaseAElapsedSeconds": 192.548220189,
-      "error": "COMMAND_FAILED_1; actual subcommand stdout/stderr discarded; root cause unknown; no replay"
+      "error": "COMMAND_FAILED_1; actual subcommand stdout/stderr discarded; root cause unknown; no replay",
+      "resumeSourceCommit": "cca4a82d443de7e5d5a7197e711a167b670c8be1",
+      "resumeSourceSHA256": "c82803153b9ebe5d24ded0f0e96baa12f11f4e38539fbe97ab2befc481a308e3",
+      "affectedAuthorTestsPass": 11
+    },
+    "packagingDecisions": {
+      "owner": "D2",
+      "exactFixtureReadOnlyMembers": [
+        "tests/fixtures/unified-import/synthetic-package.ts",
+        "tests/fixtures/unified-import/whole-package-synthetic.ts"
+      ],
+      "boundary": "Original forced206 proof source pins only at backend/native35-source original byte/path; no web/ordinary bundle or arbitrary fixture exemption; no implicit fixture execution/DB grants",
+      "releaseHelperApprovalMarkerChanged": false
     }
   }
 }
