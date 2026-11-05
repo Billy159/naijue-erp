@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T14:00:50.071425+00:00",
+  "updatedAt": "2026-11-05T15:18:47.866070+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T12:52:27.290385+00:00",
+    "at": "2026-11-05T15:18:47.866070+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28480,7 +28480,8 @@
       "T45": "Actual image ready22479274 and root receipt e475 verified; prepare existing new-app/environment binding and readonly observer seams, no PG",
       "QB": "Exact5 fixed source PASS adopted plus actual T45 image outcome; next D1 four-leaf only when fixed",
       "phaseBCurrent25": "Fixed22699eb4/5e8b75bd four-leaf QB increment; T45 same target app/environment successor preparation; D1 next native35 business route read-only. Capacity-dependent D3 remains held; exact3 old exports retained.",
-      "native35BusinessGap": "D1 read-only verified synthetic V1 record / production V2 / importhost mismatch; original D2 high checking exact existing consumer seam, no source/permissions changes yet. Import smoke is not ordinary business PASS."
+      "native35BusinessGap": "D1 read-only verified synthetic V1 record / production V2 / importhost mismatch; original D2 high checking exact existing consumer seam, no source/permissions changes yet. Import smoke is not ordinary business PASS.",
+      "handoffResponsibility": "Local C and original D1/D2/D3/T45 continue implementation; no Dot reply or user report transfer prerequisite."
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28796,7 +28797,7 @@
     },
     "sourceReconciliationActual": {
       "owner": "D3",
-      "state": "REAL_RECONCILIATION_INCOMPLETE_CAPACITY_HELD",
+      "state": "DECLARED_LEDGER_AND_STANDARD_PREFLIGHT_PASSED_NO_IMPORT",
       "resultSHA256": "985b5c5114a9e8acd4aa91d4d924c3dc0102d449e575d031655e329480da00d5",
       "diagnosisSHA256": "1ed8ecbcd915704bf956ff8d2f4366a0073b3492b2cd140c6cb9b190241d9efc",
       "ledgerBytes": 728141242,
@@ -28834,9 +28835,25 @@
       "actualTempVolumeFreeBytesAtStart": 11306754048,
       "actualSourceEOFThisRun": true,
       "actualOccurrencesThisRun": 503457,
-      "currentStageReported": "Sales headers28894, transfer headers14835 and sales lines83399 EOF; transfer lines in progress. Final source/target reconciliation unproven.",
+      "currentStageReported": "Five documents tables EOF: sales_header28894, transfer_header14835, sales_line83399, transfer_line273948, sales_settlement26360. Last inventory_baseline and explicit-zero processing; no final pass yet.",
       "reportedScratchBytesApprox": 1730000000,
-      "reportedVolumeFreeBytesApprox": 9580000000
+      "reportedVolumeFreeBytesApprox": 9580000000,
+      "reportedScratchBytes": 2821895688,
+      "reportedAllocatedScratchBytes": 2831699968,
+      "finalReceiptSHA256": "61d7d8cfafc4516ec72f165f787ce52dbe146da0713c307da7ae8e71f6c2c164",
+      "sourceReceiptSHA256": "b8b819eccc8aa12293d766c75bf9acbbab0c84a2a028991f7d52504117b7b255",
+      "preflightSummarySHA256": "bdf1129435419225346c70cd3381584f7a484157b3974773f64c1da009e22831",
+      "sourceOccurrences": 503457,
+      "targetRows": 608916,
+      "registryRows": 460188,
+      "all26TablesEOF": true,
+      "sourceExitCode": 0,
+      "preflightExitCode": 0,
+      "preflightIssues": 0,
+      "sourceTruthVerified": false,
+      "importEligible": false,
+      "sourceTruthHandoffSHA256": "40efd0bc6e959ae1f103b6b8437948cf07c389fe7d2b5e1744299b9da5b71e46",
+      "remaining": "Independent raw-source universe/value closure, targeted seven color-owner/four inventory identity evidence; PG independent readback. No full scan/repeated preflight dispatched."
     },
     "settlement25AcceptedImplementation": {
       "commit": "a10d8daa06988abe63de28108473098adf19fff7",
@@ -28896,10 +28913,20 @@
       "finalOrdinaryArchiveReady": false,
       "fixReviewReceiptSHA256": "eba00e1953393eec635f5af1107f742375eb3188f23cf7cbb81f015325f2a1b1",
       "fixReviewScope": "18 directed runtime-stage vectors only; source/model PASS, no PG",
-      "fixedIssue": "QB-SYNTHETIC25-SPLIT-F01"
+      "fixedIssue": "QB-SYNTHETIC25-SPLIT-F01",
+      "parentObserver": {
+        "commit": "229cf052cdac7375ff71d074698570a5fad77c2d",
+        "owner": "Original T45",
+        "readinessSHA256": "8b9b21c60defd2717c046fed4c4b1c6b668e1dbfce6ef2c4c3446fd7b7a3c034",
+        "resultSHA256": "2e8e95ead2545640c1315257a2d14b3f55fd1046505403a77dc457283093202d",
+        "QBReceiptSHA256": "a47cd188d3b48a6aa4422a3be362e0b86619b52132407b13481972249d59a463",
+        "state": "PASS_SOURCE_PREPARATION_AND_TARGETED_MODELS_ONLY_FINAL_INPUTS_NOT_EXECUTABLE",
+        "finalApplicationFrozen": false,
+        "actualPG": false
+      }
     },
     "capacityCleanupCandidate": {
-      "state": "HUMAN_DECIDED_RETAIN_ALL_THREE_NO_DELETION",
+      "state": "HUMAN_DECIDED_RETAIN_NO_DELETION",
       "owner": "C; original D2 prepared readonly verification",
       "reportSHA256": "9133117af69ada025f5e7665c1e94c3f5f03b5d4ebe9b772f1ae89a42f3d8276",
       "candidateRootNames": [
@@ -28915,10 +28942,12 @@
       "approvalRequiredBy": "/Users/billy/Desktop/Workspace/agents.md:63",
       "humanDecision": "保留，我另行释放空间",
       "humanSource": "call_06cfa0afedd741fc8cb642a9e97cf8ac item0",
-      "next": "User releases space separately; original D3 retains fixed code and inputs, resumes bounded run only after actual sufficient capacity. No substitute deletion list or repeated unchanged polling."
+      "next": "User releases space separately; original D3 retains fixed code and inputs, resumes bounded run only after actual sufficient capacity. No substitute deletion list or repeated unchanged polling.",
+      "humanReply": "保留，我另行释放空间",
+      "deleted": false
     },
     "native35SyntheticOrdinaryContinuation": {
-      "state": "D1_MINIMUM_SOURCE_IMPLEMENTATION_ACTIVE_D2_FACTORY_AND_RUNNER_INTERFACE_WAIT",
+      "state": "D1_PROOF_BOOTSTRAP_AND_D2_FACTORIES_RUNNER_IMPLEMENTING_T45_MINIMUM_LAUNCHER_FOLLOWUP",
       "authority": "Current full user goal requires genuine synthetic35 ordinary business; source-only existing module adaptation, no production or new permission execution",
       "D1": [
         "tools/unified-import/fresh35-host-session.mjs",
@@ -28939,7 +28968,30 @@
         "Actual login and SALE/mixed SALE/TRANSFER are not satisfied by import smoke"
       ],
       "readOnlySeamReceiptSHA256": "38892c19c0ad4c303edbfbbe95c75c795048664cc8e7d9638f1c53019aacb7f9",
-      "PGExecuted": false
+      "PGExecuted": false,
+      "interface": "admitFresh35SyntheticOrdinaryPoolV1(pool,connection) returns existing Fresh35OrdinaryAdmissionV2; same WeakMap lease path, separate synthetic purpose/expiry only",
+      "privateBootstrap": "Fixed credentials/synthetic-application-scrypt.txt root0600, original Node codec; same encoded secret across2stages included only in private initializer fingerprint, never public request/log/Git",
+      "T45MinimumSourceDelta": {
+        "state": "CONTROLLER_REGISTERED_WITHIN_EXISTING_SAME_KIND_SYNTHETIC_AUTHORIZATION_NOT_EXECUTED",
+        "scope": [
+          "Only original runtime LOGIN EXECUTE pg_catalog.pg_control_system() added to existing bootstrap grant",
+          "Only original proposal.database/runtime/127.0.0.1/32/scram-sha-256 HBA one row, total7; all reject kept",
+          "Original private synthetic application hash and fixed business scenario cleanup added to success/failure/guardian"
+        ],
+        "basis": "Current human goal requires normal-account synthetic business; human same-kind isolation preauthorization. No production, new roles/pool, table rights or unbounded connectivity. Actual execution still exact final source/window/authority and QB."
+      },
+      "D1ImplementationCommit": "64c2cadb30c9161e881d463290f8a7d71204b710",
+      "D2ImplementationCommit": "735ebfd2a4f2d0f3f60256f9def06220f46d7236",
+      "D1ReviewSHA256": "e8451e7ae32b45332c8a6deba6b2e703e1c3059338a486f18724de32e1f5e95e",
+      "D1ReviewState": "ONE_LOGIN_EXPIRY_FINDING_FIXED_AWAIT_SCOPED_QB_RECHECK",
+      "D1ExpiryFixCommit": "1149f17ee350dded91e88423d5b20b6586d23c2e",
+      "D1ExpiryFixReceiptSHA256": "b0f66472ca730e49974bd5debc4b28fc22958f67003229f80cabcb5b03100470",
+      "D2Next": "Same owner/API file: synthetic account command route + real ADMIN account setup, private61035 runner; nullable standard publication and actual readback; directed tests then fixed delivery/QB",
+      "T45Next": "Original launcher/wrapper: secret/scenario cleanup, original runtime ACL/HBA, actual process/target facts, fixed capacity profile and Linux dependency closure; no PG before final candidate and valid window",
+      "sourceOwnerSceneHandoffSHA256": "3c7bec4ee55c661942f44749e58d2c6ad6878cc593346798c8f07b26ebbf2f08",
+      "capacityTemplateReviewSHA256": "de1de45ff4256a8f58c760e5f30af75d1e487fe5777ea2e44f9f1beb2b34226a",
+      "linuxDependencyInputSHA256": "cbcb3ff8485957959a773e76cfc9bdb733ac6932636750c928f67c6f6e028dd6",
+      "linuxDependencyStatus": "LOCAL_SHARP_DARWIN_NOT_LINUX_ARTIFACT; exact locked Linux closure still required"
     }
   }
 }

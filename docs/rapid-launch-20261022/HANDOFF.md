@@ -1454,3 +1454,19 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 原D2准确只读接缝38892c19采用。C登记原D1在host/.d.mts/catalog及直接测试实施封闭合成ordinary证明消费，原D2两factory及原integration runner有限fresh35分支唯一owner等待接口；生产V2/禁synthetic保护和原V1 record字节不变，无新角色/池/表或实际权限/环境动作。真正必要持久/权限差异先准确回C，不借接口制造批准。
 - T45原launcher+直接测试本地44模型、wrapper+直接测试18模型通过，仍在交回固定版本；最终app pins/归档/authorities未填且执行拒绝，不启动PG或重建镜像。
 - 本地全源核账已到调拨明细，销货头28894、调拨头14835及销货明细83399均EOF；临时约2.0GiB未触停止线。整批完整核账仍未出终态，stream预检尚未启动。
+
+
+### 原父观察增量采用、普通业务并行落地、五类单据EOF
+- T45四叶逐pin固定229cf052cdac7375ff71d074698570a5fad77c2d并已推远端；原QB五项增量/跨语言requestHash定向PASS，回执a47cd188采用。45+18作者模型复用，仅源准备通过；最终app参数仍未冻结且入口拒绝执行，PG未启。
+- D1已固定synthetic ordinary最小API，D2两factory及原integration runner三业务分支并行实施；首次bootstrap复用原Node密码codec/privateText、固定root0600应用hash文件，两个stage同值进入私有initializer指纹。密码和hash本体不出public request/stdout/Git，不借DB口令、不SQL改密。
+- C依现目标及用户同类隔离预授权，登记T45仅原runtime单函数pg_control_system执行权与原DB/runtime/loopback/scram一行HBA必要源码后继，末all reject保持，原private文件和scenario同列cleanup。不是新角色/池/表或生产变更，实际仍等最终源、QB和准确新窗口。
+- D3同一次真实核账五类单据均EOF：28894/14835/83399/273948/26360；仅库存基线/批准零最后一表与结果总数未闭。scratch2821895688字节低于原3294854658预算，未重跑或截行，预检仍未启动。
+- 所有成果直接回本地主控推进，不要求用户转给Dot或以Dot回复作前置。三个旧构建副本仍保留，无生产/真实导入执行。
+
+
+### 保留旧副本；完整声明核账与标准包预检实际收口，原生业务接线仍在途
+- 用户明确“保留，我另行释放空间”：三旧构建副本全部保留、未删除。容量恢复后原D3仅各运行一次：055固定核账退出0，503457声明来源、460188身份登记及608916目标全部EOF；a10标准包预检退出0、26表、问题0。终态61d7d8cf、核账b8b819ec、预检bdf11294已实际逐SHA回读。25张/27笔差额及6条历史金额差沿批准保留。
+- 以上只是声明台账与标准包对应，source_truth_verified=false/import_eligible=false保持；不等同原始来源全域真值、金额库存独立守恒、PG或线上通过。原D3只读范围附录40efd0bc采用，复用已有原表EOF/聚合/截止裁决；剩余7条颜色身份与4库存格来源精确证据交原owner定向核，不重扫全本、不重跑已过核账。
+- D1八叶固定64c2cadb、D2四叶固定735ebfd2。QB e8451e7a仅发现LOGIN早于目标窗到期时借出事务未撤销；原D1两叶修复逐pin固定1149f17ee350dded91e88423d5b20b6586d23c2e，红1→绿8，报告b0f66472，已交原QB只复验该失败，其他有效结论直接复用。不能称实际PG通过。
+- 原D2沿同文件后继补真实ADMIN账户建立/重置和第二登录、隔离分支缺失accounts/commands挂载、61035私有场景路径；不重派其他writer。原T45继续原父launcher/wrapper的应用secret、场景、最小ACL/HBA和真实容量接线；D1已提供有限RO场景SQL(3c7bec4e)，标准导入historyPayloadHash可NULL，禁止伪造旧V8字段。
+- 容量只选择D2原模板de1de45f预算，实时设备/空间/target/子PID必须出生后实采；原成功镜像不重建。本机Sharp是Darwin不能冒充Linux依赖，cbcb3ff8仅准确依赖输入；最终Linux闭包、统一候选、QB及有效执行窗口仍未齐，PG未启动，无生产写入/导入/部署。所有真实数据和秘密留私域，不入Git。
