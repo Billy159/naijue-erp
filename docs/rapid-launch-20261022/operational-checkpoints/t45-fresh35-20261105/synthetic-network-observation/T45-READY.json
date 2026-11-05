@@ -1,0 +1,21 @@
+{
+  "status": "READY_TWO_LEAF_PRODUCER_FOR_C_D1_FIXED_INTEGRATION_AND_QB",
+  "files": [
+    {
+      "role": "application-launcher",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-observation-producer-01/launch-fresh35-isolated-v1.py",
+      "sha256": "3d4bda9b21584d1aea4b4263f294555d5ada06a6504ad5ed284a27ce2fbe2548",
+      "bytes": 94653
+    },
+    {
+      "role": "direct-test",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-observation-producer-01/test_fresh35_isolated_launcher.py",
+      "sha256": "1ce5f6d25abf0d3a08c41eb26b65725eaed5ef649a43adee23d6170970836aae",
+      "bytes": 68851
+    }
+  ],
+  "resultSHA256": "3078b75880b6376d79103fe8b403e5e86de88c2ac11a4bc520d53f5ff443bc23",
+  "serverActions": 0
+}

@@ -29407,7 +29407,34 @@
         "Proof root0444 single link/parent chain; actual ordinary UID can read but not replace; missing/mutated fact refuses",
         "Source/contract approval is C decision under direct human delegation; actual new execution requires separate exact C binding"
       ],
-      "noEnvironmentExecutionYet": true
+      "noEnvironmentExecutionYet": true,
+      "T45Producer": {
+        "state": "STABLE_TWO_LEAVES",
+        "receiptSHA256": "3078b75880b6376d79103fe8b403e5e86de88c2ac11a4bc520d53f5ff443bc23",
+        "launcherSHA256": "3d4bda9b21584d1aea4b4263f294555d5ada06a6504ad5ed284a27ce2fbe2548",
+        "proof": "Fixed flat13 fields including mandatory sourceSet, root0444/parent711; actual admin obs, no extra SQL or DB grant",
+        "D1Consumer": "IMPLEMENTING_TARGET_CATALOG_PROGRAM_BINDING"
+      }
+    },
+    "productionReleaseCompatibilityContinuation": {
+      "state": "C_SOURCE_CONTRACT_APPROVED_IMPLEMENTING_NOT_DEPLOYMENT",
+      "owner": "T45",
+      "soleWriterFiles": [
+        "candidate0448/scripts/release/deploy-candidate.py",
+        "candidate0448/scripts/release/rollback-candidate.py",
+        "candidate0448/scripts/release/boot-entry.py",
+        "candidate0448/config/release-contract.json",
+        "candidate0448/scripts/release/generate-release-contract.mjs",
+        "necessary original direct tests"
+      ],
+      "exactDelta": "Preserve old synthetic exact35 profile; explicit productionProfile source-confirmed-native-exact35-production-v2 and corresponding exact RECORD/TARGET_V2 branch; final helper independently reviewed before original caller registration",
+      "excludeFromSyntheticRootUntilStable": true,
+      "authorization": "C technical source/contract decision under direct human delegation until2026-11-06T12:00+08",
+      "noActions": [
+        "No production target/service/permissions changed",
+        "No manual approval marker/fingerprint bypass",
+        "No parallel writer or hot replacement of5d/f87/768"
+      ]
     }
   }
 }

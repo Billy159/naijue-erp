@@ -1,0 +1,68 @@
+{
+  "status": "PASS_SCOPED_ADMIN_NETWORK_OBSERVATION_PRODUCER_SOURCE_AND_MODELS_ONLY",
+  "recordedAtUTC": "2026-11-05T18:32:45.101824+00:00",
+  "files": [
+    {
+      "role": "application-launcher",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-observation-producer-01/launch-fresh35-isolated-v1.py",
+      "sha256": "3d4bda9b21584d1aea4b4263f294555d5ada06a6504ad5ed284a27ce2fbe2548",
+      "bytes": 94653
+    },
+    {
+      "role": "direct-test",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-observation-producer-01/test_fresh35_isolated_launcher.py",
+      "sha256": "1ce5f6d25abf0d3a08c41eb26b65725eaed5ef649a43adee23d6170970836aae",
+      "bytes": 68851
+    }
+  ],
+  "agreedFields": [
+    "format",
+    "systemIdentifier",
+    "databaseOid",
+    "serverVersionNum",
+    "postmasterStart",
+    "host",
+    "port",
+    "listenAddresses",
+    "unixSocketDirectories",
+    "adminActor",
+    "startsAt",
+    "expiresAt",
+    "sourceSetSha256"
+  ],
+  "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+  "path": "originalworkspace/bootstrap-network-observation.json",
+  "producer": "Original post-bootstrap identity_sql obs only; exact expected network/address/port/admin/version/sid/data/hba and positiveOID/nonemptybirth assertions before original target binding. sourceSet/window from original validated provision.",
+  "fileContract": "Original root-owned trusted workspace0711 (already existing); original json_new/write_new O_EXCL/no-follow/fsync, explicit0444, after-write trusted regular/nlink1/mode0444. Private directories/files and targetbinding/V1record shape unchanged.",
+  "jsonNewChange": "Optional mode argument default0400 preserves all existing callers; only new proof requests0444.",
+  "changedExistingFunctions": [
+    "json_new",
+    "main"
+  ],
+  "newPSQLCalls": 0,
+  "tests": {
+    "tests": 4,
+    "exitCode": 0,
+    "elapsedSeconds": 0.006,
+    "cases": [
+      "closed13 fields and ignored extra obs not copied,0444 despite restrictive umask",
+      "private credentials directory/file modes remain unchanged",
+      "11 wrong actualphysical/network/data/hba/actor cases produce no file",
+      "same fixed path exclusive with oldinode/bytes retained",
+      "parent0700 refused and original json_new default0400 retained"
+    ],
+    "identityLimit": "Local model replaces trusted owner validation for user-owned temp paths only; actual root/ordinaryUID read not executed this task."
+  },
+  "D1ConsumerFields": "D1 separately binds fixed proofSHA into synthetic catalog/program descriptions; no consumer/source edits by T45.",
+  "serverActions": 0,
+  "PGConnections": 0,
+  "roleGrantOrMembershipChanges": 0,
+  "newSchemaObjects": 0,
+  "buildOrDeploy": 0,
+  "old5dAnd768ArtifactsUntouched": true,
+  "requestedModelEffort": "gpt-6.1-sol/high",
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}
