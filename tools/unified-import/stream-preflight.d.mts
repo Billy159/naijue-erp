@@ -1,3 +1,4 @@
+import type {HistoricalSettlementRetentionApproval} from '../../packages/application/src/unified-historical-settlement-retention.ts';
 import type {HistoricalSalesHallApproval,historicalSalesHallApprovalWire} from '../../packages/application/src/unified-historical-sales-hall-evidence.ts';
 import type {HistoricalLineAmountEvidence} from '../../packages/application/src/unified-historical-line-amount-evidence.ts';
 import type {CurrentEffectiveAlignmentEvidence,currentEffectiveAlignmentDescriptor} from '../../packages/application/src/unified-current-effective-alignment.ts';
@@ -5,7 +6,7 @@ import type {SourceOccurrenceEvidence,reconcileSourceOccurrenceEvidence} from '.
 import type {ExplicitZeroApproval, explicitZeroApprovalDescriptor} from '../../packages/application/src/unified-explicit-zero-approval.ts';
 import type {HistoricalStaffHallApproval, historicalStaffHallApprovalWire} from '../../packages/application/src/unified-historical-staff-hall-approval.ts';
 
-export interface StreamPreflightOptions {
+export interface StreamPreflightOptions { historicalSettlementRetentionApproval?:HistoricalSettlementRetentionApproval;
   expectedManifestSha256?: string;
   allowSynthetic?: boolean;
   historicalSalesHallApproval?:HistoricalSalesHallApproval;
@@ -18,7 +19,7 @@ export interface StreamPreflightOptions {
 }
 
 /** Completed offline validation, not target admission or permission to import. */
-export interface StreamPreflightSummary {
+export interface StreamPreflightSummary { historical_settlement_retention_approval?:{utf8:string;sha256:string};
   historical_hall_approval?:ReturnType<typeof historicalSalesHallApprovalWire>;
   current_effective_alignment?:ReturnType<typeof currentEffectiveAlignmentDescriptor>;
   historical_line_amount_differences?:number;

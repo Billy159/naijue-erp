@@ -46,6 +46,7 @@ function freeze<T>(v:T):T{if(v!==null&&typeof v==='object'){for(const x of Objec
  * spreadsheet bytes. The pre-existing full package validator remains mandatory. */
 export function compileStandardWholePackageProfile(input:BuildUnifiedImportPlanInputV2){
  const owned=snapshot(input);
+ if(input.historicalSettlementRetentionApproval)owned.historicalSettlementRetentionApproval=input.historicalSettlementRetentionApproval;
  // Keep the verified, deeply frozen approval capability; snapshot copies cannot authorize.
  if(input.historicalSalesHallApproval)owned.historicalSalesHallApproval=input.historicalSalesHallApproval;
  if(input.currentEffectiveAlignmentEvidence)owned.currentEffectiveAlignmentEvidence=input.currentEffectiveAlignmentEvidence;
