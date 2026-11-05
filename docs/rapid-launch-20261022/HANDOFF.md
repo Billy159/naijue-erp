@@ -1682,3 +1682,8 @@ Integration cfcaf174 / build-root3de75b77 (tree4d9d7fdb) remote readback verifie
 
 ### 2026-11-06 06:06 | Observer review accepted and next production seam
 QB78eedd77 exact8 leaves source/6 independent scoped model groups PASS, no findings; author13+7 and prior evidence reused, noPG. r5 tail original40s actualREADY and original UID1000ad0 fullREADY83,672,636B/035081fa; one-shot2.727s, oldbase/private data unchanged. Materialization original key submitted with1429s remaining under same30min cap, noPG yet. Separately D1 current API check found V2 production bind/compile/run/publish/REALstream exists but actual production bootstrap/ownerClient CLI consumer is missing; synthetic V1 cannot substitute. C noon-delegated decision assigns D1 JS minimal glue and T45 sole Python/environment consumer with exact external authority, original pool/transaction/keys/deadline, no new platform/ordinary permission expansion. Source preparation only, no production target or actual import authorized by this entry.
+
+
+### 2026-11-06 06:16 | r5材料化完成并进入准确新PG窗口
+真实材料化0/373.855s（a256ae31），当前资源79fe41b4证明新r5无旧CID/启动工件，磁盘15.77GB、可用内存14.34GB。C亲核回执并依据用户今日12:00前直接委托签原11键provision b46a2068，1793916921905..1793918121905，仅固定3de75/source19604/manifestd5d/newr5/原预算；实际program/target仍需真实生成后原9键绑定。准备、源码及运输通过不等于实库安装通过。
+并行生产consumer最小源合同已决定：创建前由C精确外叶绑定新target意图，真实身份生成后再独立entry/install；有限serviceLease和20min安装窗分开，成功须真实持久V2record才保留到明确截止，失败/未知停止本次target保全数据，不动旧服务。D1唯一JS/loader，T45唯一新Python；不改r5，不自制授权，不在收尾改变已固定catalog使证明失效。本次只源码准备，不放行实际生产。

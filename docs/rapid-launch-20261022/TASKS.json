@@ -28476,12 +28476,15 @@
       "historicalPreparationState": "QB_PASS_FIXED_TWO_FILE_SOURCE_AND_LOCAL_MODEL_ONLY_NO_TRANSFER",
       "currentReceiptSHA256": "e4a63231c60928b41124ca1dcfa55f2f18896c0a7e15edd369f4dcf5af7f9c71"
     },
-    "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
+    "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "D1 correlated minimal physical-guard diagnosis/native-ready rollback source pack; QB scoped delta when stable; C fixed successor then D2 build; T45 original stopped r3 waits exact new source/window, no replay.",
+      "critical": "T45 actual immutable3de75/source19604 newr5 PG20 start, then C actualprogram/target bound install, synthetic business and cleanup; no old replay.",
       "independentPreparation": {
-        "D2": "REAL/app config/release seams: actual helper/profile mismatch identified, T45 unique owner follows; no fake production config",
-        "D3": "Original r3 byte transport preparation only: reuse existing archive or stream-wrap exact manifest+31 members privately; no source rescan or business recomputation; still waits actual REAL target/results for independent readback."
+        "D1": "Production JS entry+source loader/strict V1 refusal, fixed source handoff and necessary scoped checks.",
+        "T45": "Production Python consumer source only in independent new files, creation authority then actualfacts/entry/install; finite serviceLease separates installation. r5 actual run priority.",
+        "D2": "Completed3de75 build/pack/tail readback adopted; wait next frozen source, do not rebuild same.",
+        "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
+        "QB": "Observer8 and private transport source PASS adopted; next only productionconsumer increment when fixed."
       },
       "noFiller": true
     },
@@ -29805,7 +29808,7 @@
         "QBReceiptSHA256": "78eedd77493ab7107d7d37811470ced02f979ae60e5352bfce49ec9705cffa11"
       },
       "r5Preparation": {
-        "state": "ACTUAL_FULL_READY_MATERIALIZING_QB_SOURCE_PASS",
+        "state": "ACTUAL_MATERIALIZATION_PASS_NEW_PG20_AUTHORIZED_START_PENDING",
         "buildRoot": "3de75b77f8be7fdb1be3f889e5b9521ff1d57b55",
         "sourceSetSHA256": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
         "manifestSHA256": "d5d1857ee3358e68ab7109161f1914390dfd153247624a5f136b2c03e49fcca5",
@@ -29837,7 +29840,17 @@
         "materializationJob": "t45-f35-3de75b-local-materialize-20261106-01",
         "materializationPlanSHA256": "ca11a4b30a312e66e3e055a2b8241fed80045b25f438070baf874ca846c3d78d",
         "materializationSubmitRemainingSeconds": 1429.26,
-        "QBReceiptSHA256": "78eedd77493ab7107d7d37811470ced02f979ae60e5352bfce49ec9705cffa11"
+        "QBReceiptSHA256": "78eedd77493ab7107d7d37811470ced02f979ae60e5352bfce49ec9705cffa11",
+        "materializationExitCode": 0,
+        "materializationSeconds": 373.854996721,
+        "materializationReceiptSHA256": "a256ae313d641bb8ee7c4f786c6f889f73fb9a8dc45d187ff3ed7fd299a5de0c",
+        "resourcePreflightSHA256": "79fe41b4bd196d03db0c3c72c3f7a0134f059a4a27ff072e8416d3217e71fbb8",
+        "provision": {
+          "sha256": "b46a2068dd908ec48d438e4017b77758ffc9b0e6a5f04f34a2b51670fb617f5a",
+          "startsAt": 1793916921905,
+          "expiresAt": 1793918121905,
+          "actualProgramAndTargetPending": true
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -29978,6 +29991,34 @@
         "unknownOrPartial": 0,
         "retry": 0
       }
+    },
+    "productionBootstrapConsumerSourceDecision": {
+      "authority": "C under direct human decision delegation until2026-11-06T12:00+08",
+      "state": "SOURCE_ONLY_IMPLEMENTING_NOT_PRODUCTION_EXECUTION",
+      "writers": {
+        "D1": "production JS entry/source loader/strict V1 refusal/direct tests",
+        "T45": "new production Python bootstrap/direct tests"
+      },
+      "provisionFormat": "FRESH35_PRODUCTION_PROVISION_AUTHORIZATION_V2",
+      "provisionDecision": "AUTHORIZE_EXACT_NEW_EMPTY_PRODUCTION_TARGET_ONLY",
+      "shape": "Original11keys + purpose/ordinary/serviceLease; binds exact newtarget intent before physicalfacts exist; C independent entry6 and program9 after actual physicalfacts.",
+      "serviceLease": {
+        "keys": [
+          "expiresAt",
+          "onSuccess",
+          "onFailure"
+        ],
+        "expiresAt": "Explicit finiteepoch after installation deadline, <=non-null runtimeLoginValidUntil; no implicit extension.",
+        "onSuccess": "RETAIN_EXACT_TARGET_UNTIL_SERVICE_DEADLINE",
+        "onFailure": "STOP_EXACT_TARGET_PRESERVE_DATA"
+      },
+      "guards": [
+        "r5 fixed source unchanged",
+        "Actual durable V2record required to retain",
+        "Finalize required catalog/ACL before record; do not invalidate it during success cleanup",
+        "No client selfapproval or fabricated installation facts",
+        "No actual production creation/data/import/deployment in this source decision"
+      ]
     }
   }
 }
