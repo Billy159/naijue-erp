@@ -28475,14 +28475,12 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Approved REAL7-module consumer/dispatcher seam implementing and directly testing; no source fixed or DB yet.",
-      "D2": "Fixed5d70 full build/pack exit0,451-member readback; ordinary7292-file manifest1084128B assembled, archive ongoing; no PG.",
-      "D3": "Real declared-source reconciliation055 and standard preflighta10 each passed once; exact7color/4stock closure05eab0d4 adopted; no repeat scan or import.",
-      "T45": "Current formal readonly facts5c6567f5 adopted; original owner adapting only two wrapper manifest reads to finite2MiB, no application change; then bounded post-cutoff activity aggregate.",
-      "QB": "T45 d0bd four-leaf + bd99 fixture synchronization accepted 8becc8c5; next only wrapper manifest reader r2 after fixed delivery.",
-      "phaseBCurrent25": "Fixed22699eb4/5e8b75bd four-leaf QB increment; T45 same target app/environment successor preparation; D1 next native35 business route read-only. Capacity-dependent D3 remains held; exact3 old exports retained.",
-      "native35BusinessGap": "D1 read-only verified synthetic V1 record / production V2 / importhost mismatch; original D2 high checking exact existing consumer seam, no source/permissions changes yet. Import smoke is not ordinary business PASS.",
-      "handoffResponsibility": "Local C and original D1/D2/D3/T45 continue implementation; no Dot reply or user report transfer prerequisite."
+      "critical": "D1/T45 actual install root cause; QB adopted source pass; D2 builds fixed768dd closure",
+      "independentPreparation": {
+        "D2": "REAL/app config/release seams: actual helper/profile mismatch identified, T45 unique owner follows; no fake production config",
+        "D3": "Independent actual post-import expected inputs ready08404372; no missing cleaning fields, no source rescan; awaits real target/plan/result"
+      },
+      "noFiller": true
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -29251,13 +29249,18 @@
         }
       },
       "safeInstallDiagnostics": {
-        "state": "ORIGINAL_OWNERS_STABLE_SOURCE_DELIVERY_QB_PENDING_NOT_ROOT_CAUSE_FIXED",
+        "state": "QB_PASS_SCOPED_DIAGNOSTIC_SOURCE_NOT_ROOT_CAUSE",
         "D1ReceiptSHA256": "e5b17f089463e73941a7f4870b0462f33b7be13aa2cb86158173a50ec8c2ff45",
         "T45ReceiptSHA256": "6efc926b08141b854756e181e8fa03418b8352ad51eaea1c422c8b067e818a83",
         "scope": "D1 lifecycle/entry+2tests, T45 launcher+test/wrapper+test; flat12 producer-consumer only; no SQL/ACL/protocol/state-machine change",
-        "next": "Fixed combined candidate to original QB once; distinct full build and actual scoped PG followup, original stopped scene preserved",
+        "next": "D2 final fixed closure; original T45 exact new root/name/pins; actual minimum isolated install with safe diagnosis",
         "actualRootCause": "UNKNOWN; no-network native pg timing is possible path only",
-        "PGExecuted": false
+        "PGExecuted": false,
+        "commit": "67f095a294f129541ea5192988dd499c0a78fd3a",
+        "QBReviewSHA256": "1ef31d8310662fabcc3caab85b45f680a935e6a264034b4ac5aeda686c71aa87",
+        "closedFinding": "F01 producer-compatible existing pre-install state enum",
+        "buildRoot": "768dd6a555737bb917e2c2989d1ebe1af56be49b",
+        "buildTree": "e96384a3e978be3e1ccdb64aba0dc26adf90a888"
       }
     },
     "productionRealImportContinuation": {
@@ -29364,6 +29367,19 @@
         ],
         "boundary": "No inference about untimed projections or all production business; no mutation."
       }
+    },
+    "controllerDecisionDelegation": {
+      "source": "Direct human message this chat: 到今天12:00前都别让我决策...我把决策权给你...做你觉得对的事情",
+      "effectiveObservedAt": "2026-11-06T02:14:48+08:00",
+      "expiresAt": "2026-11-06T12:00:00+08:00",
+      "expiresAtMs": 1793937600000,
+      "scope": "Current ERP task necessary technical/source/contract/environment decisions and execution; C independently binds exact inputs, T45 sole server executor; no user questions or computer handoff before expiry",
+      "invariants": [
+        "Do not fabricate approval or test success; do not bypass actual target/permission/capacity checks",
+        "Retain originals, explicit retained files, backups, stopped failure scenes and recovery path; preserve unknown business facts",
+        "Reuse completed evidence and original roles; minimal necessary changes and affected verification"
+      ],
+      "state": "ACTIVE"
     }
   }
 }

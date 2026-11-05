@@ -1,0 +1,90 @@
+{
+  "task_id": "QB-INSTALL-SAFE-DIAGNOSTICS-F01-ENUM-67f095a2-20261106",
+  "verdict": "PASS_SCOPED_SOURCE_AND_MODELS_NOT_ACTUAL_PG",
+  "commit": "67f095a294f129541ea5192988dd499c0a78fd3a",
+  "parent": "1e1ae4c6963dfbab358d977dda8b8d684a99ced3",
+  "closed_findings": [
+    {
+      "id": "F01",
+      "state": "CLOSED",
+      "original_result_sha256": "c68baf605b799e6007fbf3817150dbcbb267670b560227fc726925cae7ac3c9a",
+      "reproduction": "Original pre-drive model payload dropped under1e1ae4c6; accepted under67f with all exact twelve fields and no automaticRetry/commitOutcome inference."
+    }
+  ],
+  "launcher_sha256": "dd5cc937d97534641c7b1714d8f79f722c7f428789eb55ed69d25725d8b1b5a2",
+  "direct_test_sha256": "4df4c9de87365e3486045d4cea3b2d5ff0007b35183d11937aba86e018bd394a",
+  "ready_sha256": "407bfc063a9b6827a2aea6f3d8341327204d005861e6e992a933631d3798b745",
+  "owner_result_sha256": "ff834d1b6b0c507b117727ffe259c4d79b3df5fa9f061ea581269604859d8dd5",
+  "checks": [
+    {
+      "name": "Only one existing finite-state addition; one original test method added; other six diagnostic leaves identical",
+      "state": "PASS"
+    },
+    {
+      "name": "Original actual pre-drive model twelve-field payload now preserved without outcome inference/retry",
+      "state": "PASS"
+    },
+    {
+      "name": "Affected no-result CLOSE branch preserves CLIENT_CLOSE_TIMEOUT safely",
+      "state": "PASS"
+    },
+    {
+      "name": "Five necessary affected forged/extra/retry/step/code controls remain rejected",
+      "state": "PASS"
+    }
+  ],
+  "unchanged_six_leaves": [
+    "candidate0448/scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+    "candidate0448/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+    "candidate0448/tests/fresh35-combined-lifecycle.test.mjs",
+    "candidate0448/tests/fresh35-isolated-entry.test.mjs",
+    "docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/install-safe-diagnostics-01/fresh35-container-successor.py",
+    "docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/install-safe-diagnostics-01/test_fresh35_container_successor.py"
+  ],
+  "reused_original_checks": {
+    "result_path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/C-0448-INSTALL-SAFE-DIAGNOSTICS-1e1ae4c6-20261106/RESULT.json",
+    "passed_groups": 12,
+    "note": "Only F01 and affected receive branches rechecked; no other source/models/tests repeated."
+  },
+  "owner_one_test": "ADOPTED_EXIT0_RECEIPT",
+  "producer_payload_received": {
+    "state": "INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+    "exitCode": 1,
+    "automaticRetry": false,
+    "diagnosticUnavailable": false,
+    "installState": "FAILED_NO_INSTALLED_RESULT",
+    "code": "FRESH35_ISOLATED_ENTRY_FAILED",
+    "stage": "BOUND",
+    "step": null,
+    "originalSQLSTATE": null,
+    "originalInternalCode": "FRESH35_COMBINED_JOURNAL_MUST_MATCH_AUTHORIZED_TARGET_WORKSPACE",
+    "rollbackSQLSTATE": null,
+    "rollbackInternalCode": null,
+    "validationStage": null,
+    "validationCode": null
+  },
+  "close_variant_received": {
+    "state": "INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+    "exitCode": 1,
+    "automaticRetry": false,
+    "diagnosticUnavailable": false,
+    "installState": "FAILED_NO_INSTALLED_RESULT",
+    "code": "FRESH35_ISOLATED_ENTRY_FAILED",
+    "stage": "CLOSE",
+    "step": null,
+    "originalSQLSTATE": null,
+    "originalInternalCode": "CLIENT_CLOSE_TIMEOUT",
+    "rollbackSQLSTATE": null,
+    "rollbackInternalCode": null,
+    "validationStage": null,
+    "validationCode": null
+  },
+  "unverified": [
+    "Actual original installation SQLSTATE/rollback cause remains unknown. This repairs information capture, not the installation root cause.",
+    "No PG/server/network/native execution/deployment or actual new candidate/window operation."
+  ],
+  "actual_model_effort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "source_changed": false,
+  "server_or_pg": false
+}

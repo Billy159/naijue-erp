@@ -1,0 +1,83 @@
+{
+  "status": "ORDINARY_ARCHIVE_ALL_FILE_BYTES_MODES_STREAM_READBACK_PASS_PENDING_C_QB_AND_T45_EXACT_WINDOW_BINDING",
+  "sourceCommit": "768dd6a555737bb917e2c2989d1ebe1af56be49b",
+  "buildId": "erp-768dd6a55573-full-20261106",
+  "sourceSetSha256": "f97466b0e59cb7d0f626b3ddc8613ab8c6ca25bc789e23cc1a2b68129fefa4e1",
+  "currentSourcePins": 212,
+  "archive": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-768dd6a5/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83659664,
+    "sha256": "7a1509290999d959c5d1029a67596436db0807771f273c9278d385bf6e0ed717",
+    "regularMembers": 7296,
+    "deployMembers": 7292,
+    "metadataMembers": 4
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-768dd6a5/ordinary/DEPLOYMENT-MANIFEST.json",
+    "bytes": 1084127,
+    "sha256": "5faa47849c5ec5f31d1f239c3cdf536b810fa5216f42e590c6ea9f08c1f32018",
+    "format": "FRESH35_ISOLATED_DEPLOYMENT_V1",
+    "selfExcluded": true
+  },
+  "inventory": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-768dd6a5/ordinary/DEPLOYMENT-INVENTORY.json",
+    "sha256": "1432fadcb97497112ebc0a62c1adebae1d8433db2fe7a2660899912f0de9b180"
+  },
+  "sourceDescriptorSha256": "d840f391788c332687476152f58841832bd455a61dc165fd6bc342482741de8a",
+  "runtimeIssuance": {
+    "member": "deploy/runtime/fresh35-ordinary-runtime-v1.json",
+    "sha256": "7a6ea0f7899c07541e084c4d59e551bd1f6a11eb36191ae01a7b6ae2085f83f3",
+    "onlyBuildFieldsFilled": true,
+    "postgresPassword": null,
+    "noDoubleDeployPath": true,
+    "targetRemainsFrozenSyntheticTemplate": true,
+    "notRealTargetExecutionConfiguration": true
+  },
+  "collector": {
+    "member": "deploy/scripts/ops/capacity-live-statfs.mjs",
+    "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+    "bytes": 13339,
+    "archiveMode": "0755"
+  },
+  "knownSizeAndEmptyMemberEvidenceReused": {
+    "node": {
+      "path": "runtime/node/bin/node",
+      "bytes": 126595440,
+      "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+      "mode": 493
+    },
+    "nodeBytesMatchPreviouslyAccepted126595440": true,
+    "previouslyAcceptedManifestBoundaryBytes": 1084128,
+    "currentManifestBytes": 1084127,
+    "currentManifestDoesNotExceedPriorSize": true,
+    "zeroByteOrdinaryMembers": 8,
+    "zeroBytePaths": [
+      "node_modules/@fastify/ajv-compiler/test/.gitkeep",
+      "node_modules/fast-json-stringify/test/fixtures/.keep",
+      "node_modules/fastify/test/logger/tap-parallel-not-ok",
+      "node_modules/pino/.nojekyll",
+      "runtime/npm/node_modules/node-gyp/gyp/pylib/gyp/generator/__init__.py",
+      "runtime/npm/node_modules/node-gyp/gyp/pylib/packaging/py.typed",
+      "runtime/npm/node_modules/smart-buffer/docs/ROADMAP.md",
+      "web/chunks/chunk-DA7LQDMN.js"
+    ],
+    "allEightZeroByteFilesIncludedAndReadBack": true,
+    "oldOneMiBManifestReaderNotUsable": true,
+    "separateT45BoundedWrapperPairingRemainsRequired": true,
+    "previousTestsNotRepeated": true
+  },
+  "fullMemberBytesAndModesVerified": true,
+  "elapsedSeconds": 17.2043775,
+  "originalToolsReferencesAndLinuxArchiveHashesVerified": true,
+  "noSourceWipOrServerOrDockerPgOrInstalls": true,
+  "unverified": [
+    "C/QB F01 successor acceptance is separate and not rerun by D2",
+    "T45 exact operational wrapper and fresh window binding",
+    "Linux Node24 Fastify/pg/Sharp actual load for this version",
+    "OS ownership/mount/capacity/private scenario/authentication for this version",
+    "Any actual PG install/import/business operations and readback",
+    "REAL exact target/configuration/record/service lease and separate batch authority",
+    "Production/deployment"
+  ],
+  "notes": "New768dd6 fixed Git source only. Production release independently passed full build/pack; ordinary is distinct deploy/+4metadata format. Synthetic config unchanged except build. All prior sources/packages and failed installation scene retained."
+}

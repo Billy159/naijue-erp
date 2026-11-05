@@ -1247,3 +1247,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 
 
 - Original owners delivered one correlated safe-diagnostic increment: D1 lifecycle/entry and2tests e5b17f08; T45 launcher/test and original wrapper/test6efc926b. C verified exact bytes and original logs, no duplicate technical QA. Flat12 fields separate initial stage/step and original/rollback SQLSTATE/static internal codes; no raw error/SQL/secret output, success/transaction/protocol/cleanup unchanged. Native pg timing reproduced without network is only a possible cause, not actual root cause. Combine once for original QB and full candidate, then actual bounded PG; no model-count substitution for install/import closure.
+
+
+### 2026-11-06 02:14 - Human delegates ERP decisions until12:00
+- Direct latest user delegates current ERP technical/execution decisions to C until2026-11-06T12:00+08; no user decision or computer-action requests before expiry. C issues exact external bindings, original T45 sole executor; real validations/data protection/backup/rollback remain, no blanket PASS.
+- Original QB final1ef31d83 accepts fixed67f095a2 safe diagnostic increment, F01 closed,12 prior groups reused and4 affected rechecks only. Does not establish installation root cause. Fixed fullroot768dd6a5/treee96384a3 being packed by D2; prior incomplete8d ordinary not generated, original failure scenes retained.
+- Independent D3 readback inputs ready08404372 (26counts608916 and6 exact source totals), no missing cleaning fields/no PG/no source rescan. D2 actual production deploy profile/helper pin incompatibilities passed to uniqueT45 owner; preparation does not wait for install and does not bypass release review.
