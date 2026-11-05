@@ -103,9 +103,9 @@ function guardSql(model,lineage,{requireEmpty=true}={}){
  END $fresh35_combined_catalog$;`;
 }
 const raw=(expression,from,where)=>`(SELECT coalesce(jsonb_agg(${expression}),'[]'::jsonb) FROM ${from} WHERE ${where})`;
-function observationSql(source,{runtime=false}={}){return `WITH objects AS (${owned}) SELECT jsonb_build_object(
+function observationSql(source,{runtime=false,systemIdentifierExpression='(SELECT system_identifier::text FROM pg_catalog.pg_control_system())'}={}){return `WITH objects AS (${owned}) SELECT jsonb_build_object(
  'format','FRESH35_COMBINED_ACTUAL_CATALOG_V1','sourceSetSha256',${q(source.sourceSetSha256)},
- 'identity',jsonb_build_object('systemIdentifier',(SELECT system_identifier::text FROM pg_catalog.pg_control_system()),'databaseOid',(SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()),'database',current_database(),'owner',${runtime?'(SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname=current_database())':'current_user'},'actor',session_user,'serverVersionNum',current_setting('server_version_num'),'host',host(inet_server_addr()),'port',inet_server_port()),
+ 'identity',jsonb_build_object('systemIdentifier',${systemIdentifierExpression},'databaseOid',(SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()),'database',current_database(),'owner',${runtime?'(SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname=current_database())':'current_user'},'actor',session_user,'serverVersionNum',current_setting('server_version_num'),'host',host(inet_server_addr()),'port',inet_server_port()),
  'catalog',jsonb_build_object(
  'relations',${raw('to_jsonb(r)','pg_catalog.pg_class r',"r.relnamespace='naijue_erp'::regnamespace")},
  'columns',${raw('to_jsonb(a)','pg_catalog.pg_attribute a JOIN pg_catalog.pg_class r ON r.oid=a.attrelid',"r.relnamespace='naijue_erp'::regnamespace")},
@@ -183,10 +183,10 @@ export function validateFresh35CombinedRuntimeCatalogObservation(raw,catalog,sou
 export function validateFresh35CombinedCatalogObservation(raw,catalog,source,target){
  return validateCatalogObservation(raw,catalog,source,target,false);
 }
-function validateCatalogObservation(raw,catalog,source,target,runtime){
+function validateCatalogObservation(raw,catalog,source,target,runtime,ordinary=false){
  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),s=describeFresh35CombinedSource(source),t=describeFresh35CombinedTarget(target);
  need(typeof raw==='string'&&Buffer.byteLength(raw)<=16*1024*1024,'BOUNDED_RAW_OBSERVATION_REQUIRED');const packet=parseStrictJson(raw),i=packet.identity;
- need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===s.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===(runtime?t.proposal.controller:t.proposal.owner)&&i.host===t.proposal.host&&i.port===t.proposal.port,'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
+ need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===s.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===(ordinary?t.proposal.runtime:runtime?t.proposal.controller:t.proposal.owner)&&i.host===(ordinary?t.ordinary.serverAddress:t.proposal.host)&&i.port===(ordinary?t.ordinary.serverPort:t.proposal.port),'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
  const expectedKeys=['relations','columns','routines','types','constraints','indexes','triggers','sequences','policies','defaultAcl','dependencies','sharedDependencies','schema','database','roles','membership'];
  need(packet.catalog&&Object.keys(packet.catalog).sort().join(',')===expectedKeys.sort().join(',')&&expectedKeys.every(k=>Array.isArray(packet.catalog[k])),'FULL_RAW_CATALOG_REQUIRED');
  need(packet.catalog.types.length===70&&packet.catalog.routines.length===152&&packet.catalog.relations.filter(r=>r.relkind==='r').length===35,'RAW_OBJECT_COHORT_DIFFERS');
@@ -194,3 +194,15 @@ function validateCatalogObservation(raw,catalog,source,target,runtime){
  need(isDeepStrictEqual(packet.lineage,c.lineage.map(({version,description})=>({version,description}))),'RAW_LINEAGE_DIFFERS');
  return Object.freeze({catalogSha256:hash(raw),physicalIdentityMatched:true,metadataGuardSource:c.descriptor.catalogSpecSha256,engineBusinessVerified:false});
 }
+
+/** Same complete catalog model on the ordinary interface role. The physical
+ * system ID was read on this same transaction BEFORE SET LOCAL ROLE by the host;
+ * no function grant is assumed on the interface role. This builder grants nothing. */
+export function fresh35CombinedOrdinaryCatalogSql(catalog,source,target,physical){
+ fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),t=describeFresh35CombinedTarget(target);
+ need(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'&&physical?.systemIdentifier===t.physical.systemIdentifier&&physical.databaseOid===t.physical.databaseOid,'ORDINARY_PHYSICAL_BINDING_REQUIRED');
+ const role='erp_unified27_runtime_2393dbc6db9581c2';
+ const identity=`DO $ordinary35_identity$ BEGIN IF (current_database()=${q(t.proposal.database)} AND session_user=${q(t.proposal.runtime)} AND current_user=${q(role)} AND current_setting('row_security')='on' AND current_setting('session_replication_role')='origin' AND NOT pg_is_in_recovery() AND current_setting('transaction_isolation')='repeatable read' AND current_setting('transaction_read_only')='on' AND host(inet_server_addr())=${q(t.ordinary.serverAddress)} AND inet_server_port()=${t.ordinary.serverPort}) IS DISTINCT FROM true THEN RAISE EXCEPTION 'FRESH35_ORDINARY_IDENTITY_DIFFERS'; END IF; END $ordinary35_identity$;`;
+ return Object.freeze({guardSql:identity+'\n'+guardSql(c.model,c.lineage,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true,systemIdentifierExpression:q(physical.systemIdentifier)})});
+}
+export function validateFresh35CombinedOrdinaryCatalogObservation(raw,catalog,source,target){return validateCatalogObservation(raw,catalog,source,target,true,true)}

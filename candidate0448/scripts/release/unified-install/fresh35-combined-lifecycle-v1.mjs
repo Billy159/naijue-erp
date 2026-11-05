@@ -8,7 +8,7 @@ import {randomBytes} from 'node:crypto';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
 import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
 import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,renderFresh35CombinedSchema,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
-import {describeFresh35CombinedTarget,fresh35CombinedTargetGuard,FRESH35_COMBINED_TARGET_MODULE_SHA256} from './fresh35-combined-target-v1.mjs';
+import {describeFresh35CombinedTarget,assertFresh35InstallationTargetCurrent,fresh35CombinedTargetGuard,FRESH35_COMBINED_TARGET_MODULE_SHA256} from './fresh35-combined-target-v1.mjs';
 const programs=new WeakMap(),approvals=new WeakMap(),completions=new WeakMap(),used=new WeakSet();
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_'+code)};
 const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value)}return value};
@@ -24,7 +24,7 @@ export async function compileFresh35CombinedProgram({source,target,catalog}){
  const c=module.describeFresh35CombinedCatalog(catalog),sql=module.fresh35CombinedCatalogSql(catalog,source,target);
  need(c.sourceSetSha256===s.sourceSetSha256&&c.completeMetadataGuard===true,'COMPLETE_CURRENT_CATALOG_GUARD_REQUIRED');
  need(typeof sql.guardSql==='string'&&typeof sql.observationSql==='string'&&typeof module.validateFresh35CombinedCatalogObservation==='function','CATALOG_GUARD_AND_OBSERVATION_REQUIRED');
- const schema=renderFresh35CombinedSchema(source,t.proposal);
+ const schema=renderFresh35CombinedSchema(source,t.proposal,...(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'?[{profile:t.purpose}]:[]));
  const statements=[
   {name:'physical-empty-target',sql:fresh35CombinedTargetGuard(target,{requireEmpty:true})},
   {name:'direct-35-schema',sql:schema.schemaSql},
@@ -45,7 +45,7 @@ export function describeFresh35CombinedProgram(program){need(programs.has(progra
 export function validateFresh35CombinedAuthorization(value,program){
  const d=describeFresh35CombinedProgram(program),t=describeFresh35CombinedTarget(programs.get(program).target);
  const a=ownData(value,['format','decision','programSha256','sourceSetSha256','targetSha256','startsAt','expiresAt','independentSafetyReviewSha256','authorizationReference']);
- need(a.format==='FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1'&&a.decision==='AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY','EXACT_INSTALL_AUTHORIZATION_REQUIRED');
+ need(a.format==='FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1'&&a.decision===(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'?'AUTHORIZE_EXACT_NEW35_PRODUCTION_INSTALL_ONLY':'AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY'),'EXACT_INSTALL_AUTHORIZATION_REQUIRED');
  for(const k of ['programSha256','sourceSetSha256','targetSha256'])need(a[k]===d[k],'AUTHORIZATION_BINDING_DIFFERS');
  need(a.startsAt===t.startsAt&&a.expiresAt===t.expiresAt&&typeof a.independentSafetyReviewSha256==='string'&&/^[a-f0-9]{64}$/.test(a.independentSafetyReviewSha256)&&typeof a.authorizationReference==='string'&&a.authorizationReference.length>0&&a.authorizationReference.length<=512,'AUTHORIZATION_REVIEW_REFERENCE_REQUIRED');
  return freeze(a);
@@ -106,6 +106,7 @@ export async function modelFresh35CombinedTransactionForTests(steps,operations){
 export async function runFresh35CombinedInstall({program,authorization,client,journalDirectory}){
  const descriptor=describeFresh35CombinedProgram(program),p=programs.get(program),authorizationState=approvals.get(authorization),t=describeFresh35CombinedTarget(p.target);
  need(authorizationState?.program===program&&!used.has(authorization),'GENUINE_UNUSED_TRUSTED_AUTHORIZATION_REQUIRED');
+ assertFresh35InstallationTargetCurrent(p.target);
  need(process.version==='v24.21.0'&&!Object.keys(process.env).some(k=>k==='DATABASE_URL'||k.startsWith('PG')||k==='NODE_OPTIONS'||k==='NODE_PATH'||k.startsWith('LD_')||k.startsWith('DYLD_')),'PINNED_CLEAN_RUNTIME_REQUIRED');
  const {Client}=await import('pg'),pgPackage=await import('pg/package.json',{with:{type:'json'}});need(pgPackage.default.version==='8.23.1','PINNED_NATIVE_PG_REQUIRED');need(client instanceof Client&&Object.getPrototypeOf(client)===Client.prototype&&client.query===Client.prototype.query&&client._connected===true,'ORIGINAL_CONNECTED_NATIVE_PG_CLIENT_REQUIRED');
  protocol(client,true);const c=client.connectionParameters;

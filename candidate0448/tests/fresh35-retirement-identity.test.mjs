@@ -18,3 +18,18 @@ test('mapping cannot overlap, reuse the old role, touch a protected role or omit
  const sql=fixture('BEGIN RETURN; END;');
  for(const change of [{...mapping,owner:{...mapping.owner,target:mapping.owner.source}},{...mapping,owner:{...mapping.owner,target:'erp_unified27_runtime_2393dbc6db9581c2'}},{...mapping,controller:{...mapping.controller,source:'missing_controller'}}])assert.throws(()=>mapFresh35RetirementIdentities(sql,change),/IDENTITY_MAPPING|IDENTITY_SOURCE/);
 });
+
+test('production V2 maps only the fixed predecessor owner/controller in outer role positions; synthetic rules stay narrow',async()=>{
+ const {mapFresh35ProductionIdentitiesV2}=await import('../scripts/release/unified-install/fresh35-retirement-identity.mjs');
+ const sql=`-- Name: probe(); Type: FUNCTION; Schema: naijue_erp; Owner: fresh35_owner_20261105_r1
+CREATE FUNCTION "naijue_erp"."probe"() RETURNS void LANGUAGE plpgsql AS $function$BEGIN RETURN; END;$function$;
+ALTER FUNCTION "naijue_erp"."probe"() OWNER TO "fresh35_owner_20261105_r1";
+GRANT USAGE ON SCHEMA "naijue_erp" TO "fresh35_controller_20261105_r1";
+`;
+ const mapping={owner:{source:'fresh35_owner_20261105_r1',target:'actual_owner'},controller:{source:'fresh35_controller_20261105_r1',target:'actual_controller'}};
+ const result=mapFresh35ProductionIdentitiesV2(sql,mapping);assert.equal(result.format,'FRESH35_EXPLICIT_PRODUCTION_IDENTITY_MAPPING_V2');assert.deepEqual(result.bodyHashesAfter,result.bodyHashesBefore);assert.match(result.sql,/OWNER TO "actual_owner"/);assert.match(result.sql,/TO "actual_controller"/);assert.equal(result.privilegeKindsAndGrantOptionsChanged,false);
+ assert.throws(()=>mapFresh35RetirementIdentities(sql,mapping),/MAPPING_INVALID/);
+ for(const bad of [{...mapping,owner:{...mapping.owner,source:'another_source'}},{...mapping,owner:{...mapping.owner,target:'pg_monitor'}},{...mapping,owner:{...mapping.owner,target:mapping.controller.source}},{...mapping,extra:true}])assert.throws(()=>mapFresh35ProductionIdentitiesV2(sql,bad),/MAPPING/);
+ assert.throws(()=>mapFresh35ProductionIdentitiesV2(sql.replace('BEGIN RETURN;',"BEGIN PERFORM 'fresh35_owner_20261105_r1';"),mapping),/EMBEDDED_IDENTITY/);
+ assert.throws(()=>mapFresh35ProductionIdentitiesV2('CREATE SCHEMA "fresh35_owner_20261105_r1";\n'+sql,mapping),/NON_ROLE_IDENTITY/);
+});

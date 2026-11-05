@@ -3,13 +3,13 @@
 import{createHash}from'node:crypto';
 const hash=value=>createHash('sha256').update(value).digest('hex');const need=(ok,code)=>{if(!ok)throw Error(code);};
 const bodies=sql=>[...sql.matchAll(/\bAS\s+(\$(?:[A-Za-z_][A-Za-z0-9_]*)?\$)([\s\S]*?)\1/g)].map(match=>hash(match[2]));
-export function mapFresh35RetirementIdentities(sql,mapping){
+function mapIdentities(sql,mapping,production=false){
  need(typeof sql==='string'&&mapping&&Object.getPrototypeOf(mapping)===Object.prototype&&Object.keys(mapping).sort().join(',')==='controller,owner','FRESH35_EXPLICIT_IDENTITY_MAPPING_REQUIRED');
  const pairs=Object.entries(mapping).map(([kind,pair])=>{
-  need(pair&&Object.keys(pair).sort().join(',')==='source,target'&&typeof pair.source==='string'&&typeof pair.target==='string'&&/^[a-z_][a-z0-9_]{0,62}$/.test(pair.source)&&new RegExp('^(?:schema35|fresh35)_'+kind+'_[a-z0-9_]+$').test(pair.target)&&pair.target.length<=63&&!pair.source.startsWith('erp_unified27_')&&pair.source!==pair.target,'FRESH35_IDENTITY_MAPPING_INVALID');
+  need(pair&&Object.keys(pair).sort().join(',')==='source,target'&&typeof pair.source==='string'&&typeof pair.target==='string'&&/^[a-z_][a-z0-9_]{0,62}$/.test(pair.source)&&(production?/^[a-z][a-z0-9_]{0,62}$/.test(pair.target)&&!pair.target.startsWith('pg_')&&!pair.target.startsWith('erp_unified27_')&&pair.source==='fresh35_'+kind+'_20261105_r1':new RegExp('^(?:schema35|fresh35)_'+kind+'_[a-z0-9_]+$').test(pair.target))&&pair.target.length<=63&&!pair.source.startsWith('erp_unified27_')&&(production||pair.source!==pair.target),'FRESH35_IDENTITY_MAPPING_INVALID');
   return {kind,...pair};
  });
- need(new Set(pairs.flatMap(pair=>[pair.source,pair.target])).size===4,'FRESH35_IDENTITY_MAPPING_OVERLAP');
+ need(production?(new Set(pairs.map(p=>p.target)).size===2&&pairs.every(p=>!pairs.some(other=>other.kind!==p.kind&&other.source===p.target))):new Set(pairs.flatMap(pair=>[pair.source,pair.target])).size===4,'FRESH35_IDENTITY_MAPPING_OVERLAP');
  const bySource=new Map(pairs.map(pair=>[pair.source,pair])),changes=[];
  let i=0,last=0,result='',previous=[];
  const append=(start,end,text)=>{result+=sql.slice(last,start)+text;last=end;};
@@ -50,8 +50,11 @@ export function mapFresh35RetirementIdentities(sql,mapping){
   if(sql[i]===';')previous=[];else if(!/\s/.test(sql[i]))previous.push(sql[i]);i++;
  }
  result+=sql.slice(last);
- for(const pair of pairs){need(changes.some(change=>change.source===pair.source&&change.kind==='OUTER_ROLE_IDENTIFIER'),'FRESH35_IDENTITY_SOURCE_NOT_FOUND');need(!new RegExp('\\b'+pair.source+'\\b').test(result),'FRESH35_UNKNOWN_SOURCE_IDENTITY_REMAINS');}
+ for(const pair of pairs){need(changes.some(change=>change.source===pair.source&&change.kind==='OUTER_ROLE_IDENTIFIER'),'FRESH35_IDENTITY_SOURCE_NOT_FOUND');need(production&&pair.source===pair.target||!new RegExp('\\b'+pair.source+'\\b').test(result),'FRESH35_UNKNOWN_SOURCE_IDENTITY_REMAINS');}
  const bodyHashesBefore=bodies(sql),bodyHashesAfter=bodies(result);need(JSON.stringify(bodyHashesBefore)===JSON.stringify(bodyHashesAfter),'FRESH35_IDENTITY_MAPPING_CHANGED_FUNCTION_BODY');
- return {format:'FRESH35_EXPLICIT_SYNTHETIC_IDENTITY_MAPPING_V1',sql:result,sourceSha256:hash(sql),sha256:hash(result),mapping:structuredClone(mapping),changes,
-  bodyHashesBefore,bodyHashesAfter,privilegeKindsAndGrantOptionsChanged:false,identityRecipientsChanged:true,rolesCreated:false,connectionsOpened:0,installationReady:false};
+ return {format:production?'FRESH35_EXPLICIT_PRODUCTION_IDENTITY_MAPPING_V2':'FRESH35_EXPLICIT_SYNTHETIC_IDENTITY_MAPPING_V1',sql:result,sourceSha256:hash(sql),sha256:hash(result),mapping:structuredClone(mapping),changes,
+  bodyHashesBefore,bodyHashesAfter,privilegeKindsAndGrantOptionsChanged:false,identityRecipientsChanged:pairs.some(p=>p.source!==p.target),rolesCreated:false,connectionsOpened:0,installationReady:false};
 }
+
+export function mapFresh35RetirementIdentities(sql,mapping){return mapIdentities(sql,mapping)}
+export function mapFresh35ProductionIdentitiesV2(sql,mapping){return mapIdentities(sql,mapping,true)}

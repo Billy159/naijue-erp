@@ -10,14 +10,14 @@ import {combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_RECORD_'+code)};
 const etc=process.platform==='darwin'?'/private/etc':'/etc';
 export const FRESH35_COMBINED_RECORD_PATH=etc+'/naijue-erp/fresh35-combined-installation-v1.json';
-const issued=new WeakSet();
+const issued=new WeakSet(),protectedEnvelopes=new WeakSet();
 const loadedModuleSha256=hash(await readFile(new URL(import.meta.url)));
 export const FRESH35_COMBINED_RECORD_MODULE_SHA256=loadedModuleSha256;
 function closed(object,keys){need(object&&Object.getPrototypeOf(object)===Object.prototype,'CLOSED_DATA_REQUIRED');const d=Object.getOwnPropertyDescriptors(object);need(Reflect.ownKeys(d).length===keys.length&&keys.every(k=>d[k]?.enumerable&&Object.hasOwn(d[k],'value')),'CLOSED_DATA_REQUIRED')}
 export function validateFresh35CombinedRecord(value,program){
  const expected=describeFresh35CombinedProgram(program);
  closed(value,['format','installedAt','binding','target','transactionReceipt','programSha256','catalogSpecSha256','catalogSha256','authorizationSha256','state']);
- need(value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V1'&&value.state==='COMMITTED_AND_CATALOG_CHECKED'&&typeof value.installedAt==='string'&&Number.isFinite(Date.parse(value.installedAt)),'FORMAT_REQUIRED');
+ need((value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V1'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V1'||value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V2'&&value.target?.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')&&value.state==='COMMITTED_AND_CATALOG_CHECKED'&&typeof value.installedAt==='string'&&Number.isFinite(Date.parse(value.installedAt)),'FORMAT_REQUIRED');
  closed(value.binding,['sourceSetSha256','targetSha256']);
  need(value.binding.sourceSetSha256===expected.sourceSetSha256&&value.binding.targetSha256===expected.targetSha256&&value.programSha256===expected.programSha256&&value.catalogSpecSha256===expected.catalogSha256,'EXACT_PROGRAM_BINDING_REQUIRED');
  need(hash(JSON.stringify(value.target))===expected.targetSha256,'PHYSICAL_TARGET_BINDING_REQUIRED');
@@ -34,7 +34,7 @@ export async function publishFresh35CombinedRecord(completion){
  need(process.getuid?.()===0&&process.geteuid?.()===0,'TRUSTED_PUBLISHER_REQUIRED');
  await assertTrustedRootPath(process.execPath);await assertTrustedRootTree(c.sourceRoot);await assertTrustedRootPath(etc+'/naijue-erp');
  try{await lstat(FRESH35_COMBINED_RECORD_PATH);throw Error('FRESH35_COMBINED_RECORD_ALREADY_EXISTS')}catch(e){if(e.code!=='ENOENT')throw e}
- const record={format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',installedAt:c.installedAt,binding:{sourceSetSha256:c.program.sourceSetSha256,targetSha256:c.program.targetSha256},target:c.target,transactionReceipt:c.transactionReceipt,programSha256:c.program.programSha256,catalogSpecSha256:c.program.catalogSha256,catalogSha256:c.catalogSha256,authorizationSha256:c.authorizationSha256,state:'COMMITTED_AND_CATALOG_CHECKED'};
+ const record={format:c.target.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'?'FRESH35_COMBINED_INSTALLATION_RECORD_V2':'FRESH35_COMBINED_INSTALLATION_RECORD_V1',installedAt:c.installedAt,binding:{sourceSetSha256:c.program.sourceSetSha256,targetSha256:c.program.targetSha256},target:c.target,transactionReceipt:c.transactionReceipt,programSha256:c.program.programSha256,catalogSpecSha256:c.program.catalogSha256,catalogSha256:c.catalogSha256,authorizationSha256:c.authorizationSha256,state:'COMMITTED_AND_CATALOG_CHECKED'};
  issued.add(completion);const bytes=JSON.stringify(record)+'\n';
  try{await publishInstallationRecord(FRESH35_COMBINED_RECORD_PATH,bytes)}catch(error){error.installState=error.message==='INSTALL_RECORD_PUBLISHED_DURABILITY_UNKNOWN'?'PUBLISHED_DURABILITY_UNKNOWN':'COMMITTED_UNPUBLISHED';throw error}
  return Object.freeze({format:'FRESH35_COMBINED_PUBLICATION_RECEIPT_V1',state:'RECORD_DURABLY_PUBLISHED',recordPath:FRESH35_COMBINED_RECORD_PATH,recordSha256:hash(bytes),programSha256:c.program.programSha256,credentialsRevoked:c.credentialsRevoked,clusterStopped:c.clusterStopped,hostEnabled:false,businessImportVerified:false});
@@ -52,14 +52,16 @@ export async function loadFresh35CombinedRecordEnvelope(){
   need(bytes.length===before.size&&after.size===before.size&&after.mtimeMs===before.mtimeMs&&after.ctimeMs===before.ctimeMs&&pathStat.dev===before.dev&&pathStat.ino===before.ino,'RECORD_CHANGED');
   const value=parseStrictJson(bytes.toString('utf8'));
   closed(value,['format','installedAt','binding','target','transactionReceipt','programSha256','catalogSpecSha256','catalogSha256','authorizationSha256','state']);
-  need(value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V1'&&value.state==='COMMITTED_AND_CATALOG_CHECKED','FORMAT_REQUIRED');
+  need((value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V1'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V1'||value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V2'&&value.target?.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')&&value.state==='COMMITTED_AND_CATALOG_CHECKED','FORMAT_REQUIRED');
   // This protected envelope is only input to exact program reconstruction.
   // No execution capability is issued by loading or validating JSON.
   const freeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x)}return x};
-  return freeze(value);
+  protectedEnvelopes.add(value);return freeze(value);
  }finally{await f.close()}
 }
 export async function loadFresh35CombinedRecord(program){
  describeFresh35CombinedProgram(program);
  return validateFresh35CombinedRecord(await loadFresh35CombinedRecordEnvelope(),program);
 }
+
+export function assertFresh35ProtectedRecordEnvelope(value){need(protectedEnvelopes.has(value),'FIXED_PROTECTED_ENVELOPE_REQUIRED');return value;}

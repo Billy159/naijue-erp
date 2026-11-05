@@ -17,11 +17,11 @@ test('current source closure separately records old180 and the later application
  for(const p of d.currentSourceDelta)if(p.predecessorSha256!==null)assert.notEqual(p.predecessorSha256,p.currentSha256);
  const schema=renderFresh35CombinedSchema(source,describeFresh35CombinedTarget(target).proposal);assert.match(schema.schemaSql,/fresh35_owner_20261105_r9/);assert.doesNotMatch(schema.schemaSql,/fresh35_owner_20261105_r1/);assert.equal((schema.schemaSql.match(/^CREATE TABLE /gm)||[]).length,35);assert.doesNotMatch(schema.schemaSql,/CREATE TABLE "naijue_erp"\."history_sales_header"/);assert.equal(schema.patchBodies.length,2);
 });
-test('full successor model changes only five routine bodies and sales hall nullability',async()=>{
+test('full successor model changes the adopted seven routine bodies and sales hall nullability',async()=>{
  const {source,catalog}=await bundle(),d=describeFresh35CombinedCatalog(catalog),sql=fresh35CombinedCatalogSql(catalog,source,target);
  const model=JSON.parse(sql.guardSql.split('$combined_model$')[1]),before=JSON.parse(await readFile(modelPath,'utf8'));
- assert.equal(d.changes.length,6);assert.equal(new Set(d.changes.map(r=>r.signature)).size,5);assert.equal(model.routines.length,152);
- assert.equal(model.routines.filter(r=>r.definitionSha256!==before.routines.find(b=>b.signature===r.signature).definitionSha256).length,5);
+ assert.equal(d.changes.length,9);assert.equal(new Set(d.changes.map(r=>r.signature)).size,7);assert.equal(model.routines.length,152);
+ assert.equal(model.routines.filter(r=>r.definitionSha256!==before.routines.find(b=>b.signature===r.signature).definitionSha256).length,7);
  const columns=model.columns.map(c=>({...c}));for(const c of columns){const old=before.columns.find(o=>o.table===c.table&&o.name===c.name);if(c.table==='sales_header'&&c.name==='hall_id'){assert.equal(old.notNull,true);assert.equal(c.notNull,false);assert.equal(c.metadata.attnotnull,false)}else assert.deepEqual(c,old)}
  for(const key of ['constraints','indexes','triggers','policies'])assert.deepEqual(model[key],before[key],key);
  assert.deepEqual(model.columnAcls,before.columnAcls.map(row=>({...row,acl:row.relation==='schema_migration'&&['version','description'].includes(row.column)?['fresh35_controller_20261105_r9=r/fresh35_owner_20261105_r9']:row.acl?.map(acl=>acl.replace('/fresh35_owner_20261105_r1','/fresh35_owner_20261105_r9'))??null})),'only approved two-column controller read differs; all other ACLs stay exact');
@@ -58,4 +58,20 @@ test('runtime keeps complete metadata inspection without reading populated busin
  const d=describeFresh35CombinedTarget(target),identity={...d.physical,database:d.proposal.database,owner:d.proposal.owner,actor:d.proposal.owner,host:d.proposal.host,port:d.proposal.port};
  assert.throws(()=>validateFresh35CombinedRuntimeCatalogObservation(JSON.stringify({format:'FRESH35_COMBINED_ACTUAL_CATALOG_V1',sourceSetSha256:describeFresh35CombinedSource(source).sourceSetSha256,identity}),catalog,source,target),/ACTUAL_PHYSICAL_IDENTITY_DIFFERS/);
  assert.throws(()=>fresh35CombinedRuntimeCatalogSql({...catalog},source,target),/GENUINE_CATALOG/);
+});
+
+test('production ordinary catalog reuses the complete model and observes after role without assuming interface pg_control permission',async()=>{
+ const {bindFresh35CombinedProductionTargetV2}=await import('../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
+ const {fresh35CombinedOrdinaryCatalogSql,validateFresh35CombinedOrdinaryCatalogObservation}=await import('../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs');
+ const {source}=await bundle(),p=describeFresh35CombinedTarget(target),prod=bindFresh35CombinedProductionTargetV2({proposal:{database:'new_prod_erp',owner:'new_owner',controller:'new_controller',runtime:'new_runtime',admin:'new_admin',host:'10.0.0.3',port:5432,workspaceDirectory:'/private/new-install'},physical:p.physical,startsAt,expiresAt:startsAt+1200000,purpose:'PRODUCTION_NEW_EMPTY_EXACT35',ordinary:{connectHost:'postgres',connectPort:5432,serverAddress:'172.20.0.4',serverPort:5432,runtimeLoginValidUntil:null,referenceDirectory:'/private/references'}},startsAt+1);
+ const catalog=await buildFresh35CombinedCatalog(source,prod,{modelPath,functionsPath}),program=await compileFresh35CombinedProgram({source,target:prod,catalog});
+ const sql=fresh35CombinedOrdinaryCatalogSql(catalog,source,prod,p.physical);
+ for(const token of ['ROUTINE_SOURCE_OR_ACL_DIFFERS','RELATIONS_DIFFER','COLUMNACLS_DIFFER','POLICIES_DIFFER','EXACT_LINEAGE_DIFFERS'])assert(sql.guardSql.includes(token),token);
+ assert(sql.guardSql.includes("session_user='new_runtime'"));assert(sql.guardSql.includes("current_user='erp_unified27_runtime_2393dbc6db9581c2'"));assert(!sql.guardSql.includes('BUSINESS_TABLE_NOT_EMPTY'));assert(!sql.guardSql.includes('pg_stat_activity'));
+ assert(!sql.observationSql.includes('pg_control_system()'));assert(sql.observationSql.includes("'systemIdentifier','"+p.physical.systemIdentifier+"'"));
+ assert.throws(()=>fresh35CombinedOrdinaryCatalogSql(catalog,source,prod,{...p.physical,systemIdentifier:'99'}),/PHYSICAL_BINDING/);
+ assert.throws(()=>validateFresh35CombinedOrdinaryCatalogObservation('{}',catalog,source,prod),/PHYSICAL_IDENTITY/);
+ const d=describeFresh35CombinedProgram(program),authorization={format:'FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1',decision:'AUTHORIZE_EXACT_NEW35_PRODUCTION_INSTALL_ONLY',programSha256:d.programSha256,sourceSetSha256:d.sourceSetSha256,targetSha256:d.targetSha256,startsAt,expiresAt:startsAt+1200000,independentSafetyReviewSha256:'a'.repeat(64),authorizationReference:'SYNTHETIC MODEL ONLY'};
+ assert.equal(validateFresh35CombinedAuthorization(authorization,program).decision,authorization.decision);
+ assert.throws(()=>validateFresh35CombinedAuthorization({...authorization,decision:'AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY'},program),/EXACT_INSTALL_AUTHORIZATION/);
 });

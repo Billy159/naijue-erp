@@ -40,3 +40,15 @@ test('controller inspection has its own read-only repeatable snapshot and keeps 
  for(const check of ['PHYSICAL_TARGET_DIFFERS','PUBLIC_SCHEMA_BOUNDARY_DIFFERS','ROLE_ATTRIBUTES_DIFFER','EXACT_MEMBERSHIP_REQUIRED','DATABASE_ACL_DIFFERS','pg_control_system','pg_postmaster_start_time','pg_stat_activity'])assert.ok(runtime.includes(check),check);
  assert.doesNotMatch(runtime,/EMPTY_DATABASE_REQUIRED|\b(?:CREATE|GRANT|DROP)\s/);
 });
+
+function production(){const p=input();p.proposal={database:'approved_new_erp',owner:'approved_owner',controller:'approved_controller',runtime:'approved_runtime',admin:'approved_admin',host:'10.0.0.4',port:5432,workspaceDirectory:'/private/approved-new-install'};return {...p,purpose:'PRODUCTION_NEW_EMPTY_EXACT35',ordinary:{connectHost:'postgres',connectPort:5432,serverAddress:'172.20.0.3',serverPort:5432,runtimeLoginValidUntil:null,referenceDirectory:'/private/reviewed-references'}};}
+test('production V2 target is explicit, closed and separates install window/endpoint from ordinary service facts',async()=>{
+ const {bindFresh35CombinedProductionTargetV2,assertFresh35InstallationTargetCurrent,reconstructFresh35InstalledProductionTargetV2}=await import('../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
+ const p=production(),token=bindFresh35CombinedTarget(p,startsAt+1),d=describeFresh35CombinedTarget(token);
+ assert.equal(d.format,'FRESH35_COMBINED_TARGET_BINDING_V2');assert.equal(d.ordinary.connectHost,'postgres');assert.equal(d.proposal.host,'10.0.0.4');assert.equal(d.ordinary.runtimeLoginValidUntil,null);assert(Object.isFrozen(d.ordinary));
+ assert.equal(assertFresh35InstallationTargetCurrent(token,startsAt+1),d);assert.throws(()=>assertFresh35InstallationTargetCurrent(token,p.expiresAt),/CURRENT_INSTALL_TARGET_REQUIRED/);
+ const sql=fresh35CombinedTargetGuard(token,{requireEmpty:true});for(const x of ["current_user='approved_owner'","host(pg_catalog.inet_server_addr())='10.0.0.4'","rolname='approved_runtime'",'EMPTY_DATABASE_REQUIRED','EXACT_MEMBERSHIP_REQUIRED','DATABASE_ACL_DIFFERS',"rolvaliduntil='infinity'"])assert(sql.includes(x),x);
+ assert.doesNotMatch(sql,/\bCREATE\s+(ROLE|DATABASE)|\bGRANT\b/);
+ await assert.rejects(()=>reconstructFresh35InstalledProductionTargetV2({format:'FRESH35_COMBINED_INSTALLATION_RECORD_V2',target:d}),/FIXED_PROTECTED_ENVELOPE_REQUIRED/);
+ for(const mutate of [x=>delete x.purpose,x=>x.ordinary.extra=true,x=>delete x.ordinary.runtimeLoginValidUntil,x=>x.proposal.runtime=x.proposal.owner,x=>x.proposal.database='synthetic_fresh35_20261105_r9',x=>x.ordinary.connectHost="postgres';select",x=>x.ordinary.runtimeLoginValidUntil='2026-02-30T00:00:00Z',x=>x.expiresAt++,x=>x.physical.serverVersionNum='170012']){const x=production();mutate(x);assert.throws(()=>bindFresh35CombinedProductionTargetV2(x,startsAt+1));}
+});

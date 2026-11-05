@@ -5,7 +5,7 @@ import {readFile,lstat,realpath} from 'node:fs/promises';
 import {resolve,dirname,relative,sep} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
-import {mapFresh35RetirementIdentities} from './fresh35-retirement-identity.mjs';
+import {mapFresh35RetirementIdentities,mapFresh35ProductionIdentitiesV2} from './fresh35-retirement-identity.mjs';
 const sources=new WeakMap();
 export const combinedSha256=value=>createHash('sha256').update(value).digest('hex');
 const hash=combinedSha256,need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_'+code)};
@@ -109,9 +109,10 @@ export async function assertFresh35CombinedSourcesCurrent(token){
  for(const [name,sha] of Object.entries(FRESH35_COMBINED_BASE_ARTIFACTS))need(hash(await regularFile(s.baselineDirectory,name))===sha,'IMMUTABLE_BASE_ARTIFACT_DIFFERS:'+name);
  return descriptor;
 }
-export function renderFresh35CombinedSchema(token,target){
+export function renderFresh35CombinedSchema(token,target,options){
+ need(options===undefined||options&&Object.keys(options).join(',')==='profile'&&options.profile==='PRODUCTION_NEW_EMPTY_EXACT35','EXPLICIT_PRODUCTION_MAPPING_PROFILE_REQUIRED');
  const s=fresh35CombinedSourceData(token);need(target&&typeof target.owner==='string'&&typeof target.controller==='string','EXPLICIT_TARGET_ROLES_REQUIRED');
  const unchanged=target.owner==='fresh35_owner_20261105_r1'&&target.controller==='fresh35_controller_20261105_r1';
- const mapped=unchanged?{sql:s.schema,sha256:hash(s.schema),mapping:{owner:{source:target.owner,target:target.owner},controller:{source:target.controller,target:target.controller}}}:mapFresh35RetirementIdentities(s.schema,{owner:{source:'fresh35_owner_20261105_r1',target:target.owner},controller:{source:'fresh35_controller_20261105_r1',target:target.controller}});
+ const mapped=unchanged?{sql:s.schema,sha256:hash(s.schema),mapping:{owner:{source:target.owner,target:target.owner},controller:{source:target.controller,target:target.controller}}}:(options?.profile==='PRODUCTION_NEW_EMPTY_EXACT35'?mapFresh35ProductionIdentitiesV2:mapFresh35RetirementIdentities)(s.schema,{owner:{source:'fresh35_owner_20261105_r1',target:target.owner},controller:{source:'fresh35_controller_20261105_r1',target:target.controller}});
  return freeze({schemaSql:fresh35DumpSqlForNativeClient(mapped.sql),lineageSql:s.lineageSql,patchBodies:s.patches.map(p=>({name:p.name,sql:fresh35PatchTransactionBody(p.patchSql)})),identityMapping:mapped.mapping,schemaSha256:mapped.sha256});
 }

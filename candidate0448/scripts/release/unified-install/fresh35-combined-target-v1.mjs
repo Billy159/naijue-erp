@@ -3,6 +3,7 @@
 import {resolve} from 'node:path';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
+import {validateOffsetInstant} from '../../../packages/application/src/unified-import-contract.ts';
 export const FRESH35_COMBINED_TARGET_MODULE_SHA256=createHash('sha256').update(await readFile(new URL(import.meta.url))).digest('hex');
 const targets=new WeakMap();
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_'+code)};
@@ -24,6 +25,7 @@ export const FRESH35_COMBINED_INTERFACE_ROLES=Object.freeze({
 /** Observations are binding data, not evidence that this function connected to PG.
  * The native installer independently compares every field on its owned client. */
 export function bindFresh35CombinedTarget(input,now=Date.now()){
+ if(input&&typeof input==='object'&&Object.getOwnPropertyDescriptor(input,'purpose')?.value==='PRODUCTION_NEW_EMPTY_EXACT35')return bindFresh35CombinedProductionTargetV2(input,now);
  const a=snapshot(input,['proposal','physical','startsAt','expiresAt']);
  const p=snapshot(a.proposal,['database','owner','controller','runtime','admin','host','port','workspaceDirectory']);
  const m=typeof p.database==='string'&&p.database.match(/^synthetic_fresh35_([0-9]{8})_(r[1-9][0-9]{0,3})$/);
@@ -53,8 +55,8 @@ export function fresh35CombinedRuntimeTargetGuard(target){
  return targetGuard(target,{requireEmpty:false,runtime:true});
 }
 function targetGuard(target,{requireEmpty,runtime}){
- const {proposal:p,physical:b,startsAt,expiresAt}=describeFresh35CombinedTarget(target),q=quote;
- const interfaces=Object.values(FRESH35_COMBINED_INTERFACE_ROLES),logins=[p.owner,p.controller,p.runtime],roles=[p.admin,...logins,...interfaces];
+ const binding=describeFresh35CombinedTarget(target),{proposal:p,physical:b,startsAt,expiresAt}=binding,q=quote,production=binding.purpose==='PRODUCTION_NEW_EMPTY_EXACT35';
+ const interfaces=Object.values(FRESH35_COMBINED_INTERFACE_ROLES),logins=production?[p.owner,p.controller]:[p.owner,p.controller,p.runtime],roles=[p.admin,p.owner,p.controller,p.runtime,...interfaces];
  const members=[[p.controller,FRESH35_COMBINED_INTERFACE_ROLES.initializer],[p.controller,FRESH35_COMBINED_INTERFACE_ROLES.importer],[p.runtime,FRESH35_COMBINED_INTERFACE_ROLES.runtime]];
  const empty=requireEmpty?`
  IF EXISTS(SELECT 1 FROM pg_catalog.pg_namespace WHERE nspname NOT IN('public','pg_catalog','information_schema','pg_toast'))
@@ -72,8 +74,8 @@ BEGIN
  AND (SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(b.systemIdentifier)}
  AND pg_catalog.current_setting('server_version_num')=${q(b.serverVersionNum)}
  AND pg_catalog.pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(b.postmasterStart.replace(/\+00$/,''))}
- AND pg_catalog.host(pg_catalog.inet_server_addr())='127.0.0.1' AND pg_catalog.inet_server_port()=${p.port}
- AND pg_catalog.current_setting('listen_addresses')='127.0.0.1' AND pg_catalog.current_setting('unix_socket_directories')=''
+ AND pg_catalog.host(pg_catalog.inet_server_addr())=${q(p.host)} AND pg_catalog.inet_server_port()=${p.port}
+ ${production?'':"AND pg_catalog.current_setting('listen_addresses')='127.0.0.1' AND pg_catalog.current_setting('unix_socket_directories')=''"}
  AND pg_catalog.current_setting('session_replication_role')='origin' AND NOT pg_catalog.pg_is_in_recovery()
  AND pg_catalog.current_setting('transaction_isolation')=${q(runtime?'repeatable read':'read committed')} AND pg_catalog.current_setting('transaction_read_only')=${q(runtime?'on':'off')}
  AND extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt} AND extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}
@@ -97,7 +99,8 @@ BEGIN
  OR EXISTS(SELECT 1 FROM pg_catalog.pg_opclass WHERE opcnamespace='public'::regnamespace)
  OR EXISTS(SELECT 1 FROM pg_catalog.pg_opfamily WHERE opfnamespace='public'::regnamespace)
  THEN RAISE EXCEPTION 'FRESH35_COMBINED_PUBLIC_SCHEMA_BOUNDARY_DIFFERS' USING ERRCODE='42501'; END IF;
- IF (SELECT count(*) FROM pg_catalog.pg_roles WHERE rolname IN(${logins.map(q).join(',')}) AND rolcanlogin AND NOT rolsuper AND NOT rolinherit AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=2 AND rolvaliduntil>pg_catalog.clock_timestamp() AND extract(epoch FROM rolvaliduntil)*1000<=${expiresAt})<>3
+ IF (SELECT count(*) FROM pg_catalog.pg_roles WHERE rolname IN(${logins.map(q).join(',')}) AND rolcanlogin AND NOT rolsuper AND NOT rolinherit AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=2 AND rolvaliduntil>pg_catalog.clock_timestamp() AND extract(epoch FROM rolvaliduntil)*1000<=${expiresAt})<>${logins.length}
+ ${production?`OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname=${q(p.runtime)} AND rolcanlogin AND NOT rolsuper AND NOT rolinherit AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=2 AND ${binding.ordinary.runtimeLoginValidUntil===null?"(rolvaliduntil IS NULL OR rolvaliduntil='infinity'::timestamptz)":'rolvaliduntil='+q(binding.ordinary.runtimeLoginValidUntil)+'::timestamptz AND rolvaliduntil>clock_timestamp()'})`:''}
  OR (SELECT count(*) FROM pg_catalog.pg_roles WHERE rolname IN(${interfaces.map(q).join(',')}) AND NOT rolcanlogin AND NOT rolsuper AND NOT rolinherit AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=0)<>3
  OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname=${q(p.admin)} AND rolcanlogin AND rolsuper AND rolvaliduntil>pg_catalog.clock_timestamp() AND extract(epoch FROM rolvaliduntil)*1000<=${expiresAt})
  THEN RAISE EXCEPTION 'FRESH35_COMBINED_ROLE_ATTRIBUTES_DIFFER' USING ERRCODE='42501'; END IF;
@@ -109,4 +112,42 @@ BEGIN
  THEN RAISE EXCEPTION 'FRESH35_COMBINED_DATABASE_ACL_DIFFERS' USING ERRCODE='42501'; END IF;
  ${empty}
 END $fresh35_combined_target$;`;
+}
+
+const reconstructedProductionTargets=new WeakSet();
+const identifier=value=>typeof value==='string'&&/^[a-z][a-z0-9_]{0,62}$/.test(value)&&!value.startsWith('pg_');
+const endpoint=value=>typeof value==='string'&&value.length>0&&value.length<=253&&!/[\s\u0000-\u001f\u007f'"\\]/.test(value);
+const port=value=>Number.isInteger(value)&&value>=1&&value<=65535;
+function productionTarget(input,now,installed=false){
+ const a=snapshot(input,['proposal','physical','startsAt','expiresAt','purpose','ordinary']);
+ need(a.purpose==='PRODUCTION_NEW_EMPTY_EXACT35','PRODUCTION_PURPOSE_REQUIRED');
+ const p=snapshot(a.proposal,['database','owner','controller','runtime','admin','host','port','workspaceDirectory']);
+ need(['database','owner','controller','runtime','admin'].every(k=>identifier(p[k]))&&!p.database.startsWith('synthetic_')&&new Set([p.owner,p.controller,p.runtime,p.admin,...Object.values(FRESH35_COMBINED_INTERFACE_ROLES)]).size===7,'EXACT_PRODUCTION_IDENTITIES_REQUIRED');
+ need(endpoint(p.host)&&port(p.port)&&typeof p.workspaceDirectory==='string'&&resolve(p.workspaceDirectory)===p.workspaceDirectory&&p.workspaceDirectory!=='/','EXACT_PRODUCTION_ENDPOINT_REQUIRED');
+ const b=snapshot(a.physical,['systemIdentifier','databaseOid','serverVersionNum','postmasterStart']);
+ need(decimal(b.systemIdentifier,18446744073709551615n)&&!stoppedSystemIds.has(b.systemIdentifier)&&decimal(b.databaseOid,4294967295n)&&b.serverVersionNum==='170011','CANONICAL_NEW_PHYSICAL_ID_REQUIRED');
+ need(typeof b.postmasterStart==='string'&&/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+00$/.test(b.postmasterStart),'PG17_11_UTC_BIRTH_REQUIRED');
+ const birth=Date.parse(b.postmasterStart.replace(' ','T').replace(/\+00$/,'Z'));
+ need(Number.isFinite(birth)&&new Date(birth).toISOString().slice(0,19)===b.postmasterStart.slice(0,19).replace(' ','T'),'CANONICAL_UTC_BIRTH_REQUIRED');
+ need([a.startsAt,a.expiresAt].every(Number.isSafeInteger)&&a.startsAt<a.expiresAt&&a.expiresAt-a.startsAt<=1200000&&birth>=a.startsAt&&birth<a.expiresAt,'ORIGINAL_TWENTY_MINUTE_WINDOW_REQUIRED');
+ if(!installed)need(Number.isSafeInteger(now)&&now>=a.startsAt&&now<a.expiresAt,'ORIGINAL_TWENTY_MINUTE_WINDOW_REQUIRED');
+ const o=snapshot(a.ordinary,['connectHost','connectPort','serverAddress','serverPort','runtimeLoginValidUntil','referenceDirectory']);
+ need(endpoint(o.connectHost)&&port(o.connectPort)&&endpoint(o.serverAddress)&&port(o.serverPort)&&typeof o.referenceDirectory==='string'&&resolve(o.referenceDirectory)===o.referenceDirectory&&o.referenceDirectory!=='/','EXACT_ORDINARY_ENDPOINT_REQUIRED');
+ need(o.runtimeLoginValidUntil===null||typeof o.runtimeLoginValidUntil==='string'&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/.test(o.runtimeLoginValidUntil)&&validateOffsetInstant(o.runtimeLoginValidUntil),'EXPLICIT_RUNTIME_LOGIN_LIFETIME_REQUIRED');
+ const token=Object.freeze({profile:'FRESH35_COMBINED_TARGET_V2'});
+ targets.set(token,freeze({format:'FRESH35_COMBINED_TARGET_BINDING_V2',proposal:p,physical:b,startsAt:a.startsAt,expiresAt:a.expiresAt,authority:'BINDING_ONLY_NOT_CREATION_OR_EXECUTION_PERMISSION',purpose:a.purpose,ordinary:o}));
+ if(installed)reconstructedProductionTargets.add(token);return token;
+}
+export function bindFresh35CombinedProductionTargetV2(input,now=Date.now()){return productionTarget(input,now)}
+/** Only a fixed-path protected envelope may reconstruct historical installation
+ * provenance after its execution window. This never authorizes reinstall/import. */
+export async function reconstructFresh35InstalledProductionTargetV2(envelope){
+ const {assertFresh35ProtectedRecordEnvelope}=await import('./fresh35-combined-record-v1.mjs');assertFresh35ProtectedRecordEnvelope(envelope);
+ need(envelope.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2'&&envelope.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V2','PRODUCTION_INSTALLED_RECORD_REQUIRED');
+ const {proposal,physical,startsAt,expiresAt,purpose,ordinary}=envelope.target;
+ const target=productionTarget({proposal,physical,startsAt,expiresAt,purpose,ordinary},undefined,true);
+ need(JSON.stringify(describeFresh35CombinedTarget(target))===JSON.stringify(envelope.target),'INSTALLED_TARGET_RECONSTRUCTION_DIFFERS');return target;
+}
+export function assertFresh35InstallationTargetCurrent(target,now=Date.now()){
+ const t=describeFresh35CombinedTarget(target);need(!reconstructedProductionTargets.has(target)&&Number.isSafeInteger(now)&&now>=t.startsAt&&now<t.expiresAt,'CURRENT_INSTALL_TARGET_REQUIRED');return t;
 }
