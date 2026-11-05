@@ -1,0 +1,53 @@
+{
+  "status": "WAITING_EXTERNAL_INSTALL_AUTHORITY",
+  "job": {
+    "jobId": "t45-f35-5d70-start-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-7a02eb76196b",
+    "atUTC": "2026-11-05T17:42:38.900883+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 27.335950108710676,
+    "exports": [
+      "fresh35-start-target-result.json"
+    ],
+    "finishedAtUTC": "2026-11-05T17:43:06.268079+00:00"
+  },
+  "cid": "1a3c2aafedec0e0dae4dcd59945229bdb41525ab6dca44afb668c4ba77aac7e3",
+  "program": {
+    "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+    "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+    "programSha256": "fe37b2246041116ccabd503798118ca2af1bf3c8facf30db81dd700c601d5a29",
+    "targetSha256": "81f7c51802fd92d378fc85fca4512efa68a9f1404305e37d45b1610c46de3ccf"
+  },
+  "target": {
+    "expiresAt": 1793901632043,
+    "physical": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-05 17:42:55.317508+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7704744287653146671"
+    },
+    "proposal": {
+      "admin": "fresh35_admin_20261105_r1",
+      "controller": "fresh35_controller_20261105_r1",
+      "database": "synthetic_fresh35_20261105_r1",
+      "host": "127.0.0.1",
+      "owner": "fresh35_owner_20261105_r1",
+      "port": 18651,
+      "runtime": "fresh35_runtime_20261105_r1",
+      "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+    },
+    "startsAt": 1793900432043
+  },
+  "serverDescriptionRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r1/state/cloud-pg-fresh35-20261105-r1",
+  "originalExportPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-start-20261106-01/transport/release-receipts/t45-f35-5d70-start-20261106-01/fresh35-start-target-result.json",
+  "originalExportSHA256": "120dd5fca037e2c4eb2be10ba47cd638c7d37645bb51d037a498c6c84385d07a",
+  "installAuthorityCreatedOrDelivered": false,
+  "deadlineMs": 1793901632043,
+  "secretsExported": false
+}

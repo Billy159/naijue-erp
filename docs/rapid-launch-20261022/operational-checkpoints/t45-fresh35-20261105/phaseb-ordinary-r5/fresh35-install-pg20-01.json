@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "fe37b2246041116ccabd503798118ca2af1bf3c8facf30db81dd700c601d5a29",
+  "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+  "targetSha256": "81f7c51802fd92d378fc85fca4512efa68a9f1404305e37d45b1610c46de3ccf",
+  "startsAt": 1793900432043,
+  "expiresAt": 1793901632043,
+  "independentSafetyReviewSha256": "8becc8c5fbae37042f30618fa8490bb3f78b8bbc56fd36ed177e735db8acfdab",
+  "authorizationReference": "Controller C implements human call_e4aeea80dafb49ef8648ab7f180fc68f and subsequent same-kind synthetic execution authorization; exact PG20 target/program verified from START-SAFE-DESCRIPTION; main QB 8becc, r4 257d, r5 b4d6 adopted. Synthetic install/import and ordinary synthetic business only; original deadline/guardian unchanged; no REAL or production."
+}

@@ -1234,3 +1234,6 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 
 - Original T45 proved actual fixed Node read rejection with64MiB and exact126595440B read/SHA success, job0/0.418s. Single-line r5 fixed9844dd09/wrapper1be390f6; original QBb4d6d2ae accepts exact byte replacement and original small actual-read evidence, all other guards unchanged. No Node execution claim.
 - C binds separate exact20min synthetic PG scope1793900432043..1793901632043 incl original cleanup, provisioncc1f6bc6/plan2cd72933, unchanged5d70/source190de/image6de/target/UID61035 and finite resources. Original T45 alone prechecks/start-target once; actual program/target hashes must return before independent C install leaf. No production or REAL authorization; no deadline renewal or fake installed record.
+
+
+- PG20 actual original start completed0/27.335950s; safe actual target/source/window matched provision: OID16393/system7704744287653146671/PG170011, programfe37b224/target81f7c518/source190de. C issued original9key synthetic-only external install authoritycae44535 and delivered it to original T45 route for once install job. Original deadline1793901632043 remains; no client-issued approval, no REAL/production. Installation, import and ordinary business still await actual receipts.

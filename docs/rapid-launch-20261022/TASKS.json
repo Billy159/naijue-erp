@@ -29170,10 +29170,24 @@
         "provisionSHA256": "cc1f6bc6021e313b44db1148cc4bfb125294ede87eda2fafbb41e07da109144e",
         "planSHA256": "2cd729331e78a74e655b5f5153f261eb082ba843cf830cdcffbe73f08c0d56b8",
         "wrapperSHA256": "1be390f665386dd1a447694d38fdc694a5962b692b79cd5da4f035e6591a330c",
-        "state": "SCOPE_BOUND_ORIGINAL_T45_PRECHECK_START_PENDING_NOT_INSTALL_PASS",
-        "installerAuthority": "Not issued until actual target/program descriptor",
+        "state": "ACTUAL_TARGET_STARTED_EXTERNAL_INSTALL_ISSUED_DELIVERY_PENDING",
+        "installerAuthority": "C-issued original exact9key external install bytes; original deadline unchanged",
         "humanAuthorization": "call_e4aeea80 plus explicit same-kind future isolation preauthorization/current goal",
-        "productionOrRealAuthorized": false
+        "productionOrRealAuthorized": false,
+        "startJob": "t45-f35-5d70-start-20261106-01",
+        "startExitCode": 0,
+        "startElapsedSeconds": 27.335950108710676,
+        "programSHA256": "fe37b2246041116ccabd503798118ca2af1bf3c8facf30db81dd700c601d5a29",
+        "targetSHA256": "81f7c51802fd92d378fc85fca4512efa68a9f1404305e37d45b1610c46de3ccf",
+        "installAuthoritySHA256": "cae445353d5adea0dceff799612ac3af369cfe50453fca2a543e4a7c2726ee6f",
+        "actualPhysicalTarget": {
+          "databaseOid": "16393",
+          "systemIdentifier": "7704744287653146671",
+          "serverVersionNum": "170011",
+          "postmasterStart": "2026-11-05 17:42:55.317508+00"
+        },
+        "PGInstallPassed": false,
+        "ordinaryBusinessPassed": false
       }
     },
     "productionRealImportContinuation": {
