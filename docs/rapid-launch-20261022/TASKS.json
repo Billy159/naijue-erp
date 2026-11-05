@@ -29604,7 +29604,28 @@
         "syntheticImportVerified": false,
         "ordinaryBusinessVerified": false,
         "uidProbeExecuted": false,
-        "next": "T45 bounded stopped r3 log only; D1 exact original step predicates. Do not infer root from prior GUC or secondary rollback code. No repeated job/PG or production."
+        "next": "T45 bounded stopped r3 log only; D1 exact original step predicates. Do not infer root from prior GUC or secondary rollback code. No repeated job/PG or production.",
+        "initialStaticIdentifier": "FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS",
+        "initialLogReceiptSHA256": "c55fa7e29c77baa678c1f1c62cef02ee6ddbf7c089520805b4cf74559aeabe53",
+        "journalReceiptSHA256": "fa9404d7ef58415ba416d86a89a29f0e18f6b1a29e9759cc4a54dd13e41757e9"
+      },
+      "currentFollowup": {
+        "owner": "D1",
+        "model": "gpt-6.1-sol",
+        "thinking": "high",
+        "state": "IMPLEMENTING_TWO_CORRELATED_MINIMAL_SOURCE_DELTAS",
+        "scope": [
+          "Original physical guard finite static failed-component diagnosis; same predicates and55000 refusal, safe originalInternalCode path",
+          "Original same native client bounded actual ReadyForQuery drain after SQL failure, then unchanged rollback protocol guard; close/error/deadline fail closed"
+        ],
+        "prohibited": [
+          "No new DB object/permission or guard relaxation",
+          "No old r3 replay or restart",
+          "No production operations",
+          "No fake native ready flags or replacement connection"
+        ],
+        "actualPhysicalSubpredicate": "UNKNOWN_NOT_LOGGED",
+        "controllerAuthority": "Direct human decision delegation until2026-11-06T12:00+08"
       }
     },
     "productionReleaseCompatibilityContinuation": {

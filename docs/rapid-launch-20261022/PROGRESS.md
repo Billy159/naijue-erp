@@ -1322,3 +1322,6 @@ None返回修订独立QB9117ca04通过（保留真实guard体，4组必要复验
 
 ### 2026-11-06 04:31｜新r3实际安装失败，安全诊断已可用
 原install exit2/13.907633s，回执594b5ddd；初始stage STEP/physical-empty-target/SQLSTATE55000，具体谓词尚未知，不能沿用前轮GUC或None根因。事务状态ROLLBACK_UNCONFIRMED，回滚次生码EXCLUSIVE_IDLE_NATIVE_CLIENT_REQUIRED；不得把资源清理等同事务回滚。原CID8f24已停，cleanShutdown/cleanupComplete/凭据/登录/进程/端口与子进程清理全true/errors空；recordPublished空，host/import/独立读回/ordinary业务及UIDprobe均未通过。T45只读本次停止日志有限静态错误，D1仅原SQL谓词定位；不重放或重起PG、不猜改/正式操作。
+
+
+- T45本次停止日志只读c55fa7e2/日记fa9404d7已核，初始04:27:31.128+08明确PHYSICAL_TARGET_DIFFERS（不是EMPTY）；原日志不含布尔分量，故具体根因仍UNKNOWN。D1只读证实正常安装前调用顺序不刻意保留并行client，但无服务端会话消失事实；不据此猜并发根因。C按今日委托批准同原源两项合批最小后继：原guard有限静态分量诊断贯通既有安全字段、原native错误后只等待有界真实Ready再原rollback，所有target/ACL/排他/窗口检查保留，失败未知仍拒绝。原r3停止保留，未重启或重放；后继固定源码/必要独立复验/一次新候选后再真实执行。

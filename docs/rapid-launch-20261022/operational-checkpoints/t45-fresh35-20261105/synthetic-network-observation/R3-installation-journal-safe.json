@@ -1,0 +1,54 @@
+{
+  "status": "EXISTING_CURRENT_JOURNAL_SAFE_FIELDS_ONLY",
+  "root": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r3/state/cloud-pg-fresh35-20261105-r1/installation-journal",
+  "writes": 0,
+  "PGConnections": 0,
+  "rawExported": false,
+  "entries": [
+    {
+      "file": "000001.json",
+      "sha256": "992ca2976d25bdc18eaa91f4fbcaa086d3dcf0cede86a7e9ec22f5ac8527e156",
+      "index": 1,
+      "event": {
+        "state": "BOUND"
+      }
+    },
+    {
+      "file": "000002.json",
+      "sha256": "87c3cd1ff30f10e26caee3d62f2a0d9b7b77a6ef69266cc525b0438ad4b26c81",
+      "index": 2,
+      "event": {
+        "state": "INSTALL_PENDING"
+      }
+    },
+    {
+      "file": "000003.json",
+      "sha256": "1ec60f1e563d606aa77fa8565bd5c9611b74f7cc90d9d3670bc59067d69f4187",
+      "index": 3,
+      "event": {
+        "state": "STEP_PENDING"
+      }
+    },
+    {
+      "file": "000004.json",
+      "sha256": "e0b746726fe07d1f37b5274a8637cd85be01ef02ecb7150e63410fe9ef67269f",
+      "index": 4,
+      "event": {
+        "state": "ROLLBACK_UNCONFIRMED",
+        "stage": "STEP",
+        "rollbackInternalCode": "FRESH35_COMBINED_EXCLUSIVE_IDLE_NATIVE_CLIENT_REQUIRED",
+        "step": "physical-empty-target"
+      }
+    },
+    {
+      "file": "000005.json",
+      "sha256": "b5a0d7ba327a7e566c688209ffc200c4d3819ad53fb45c66e098a4254726fdae",
+      "index": 5,
+      "event": {
+        "state": "CLIENT_CLOSED",
+        "confirmed": true
+      }
+    }
+  ],
+  "directoryExists": true
+}

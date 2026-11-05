@@ -1,0 +1,69 @@
+{
+  "status": "FIRST_FIXED_STATIC_TARGET_GUARD_IDENTIFIER_IN_INSTALL_WINDOW",
+  "checkedAtUTC": "2026-11-05T20:34:09.412925+00:00",
+  "stoppedCID": "8f24aa781898a4dca78c98d9499b798c8abfe985054bb05637689712b0f125f1",
+  "sourceRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r3",
+  "originalInstallKey": "t45-f35-877a32-install-20261106-01",
+  "installWindow": {
+    "start": "2026-11-05T20:27:19.991592+00:00",
+    "end": "2026-11-05T20:27:33.930552+00:00"
+  },
+  "log": {
+    "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r3/state/cloud-pg-fresh35-20261105-r1/server-private.log",
+    "bytes": 1803,
+    "sha256": "aeb4094948debe9f78ea46cb9640dd435f9385c1dc364111480a7a1b899f776d"
+  },
+  "writes": 0,
+  "PGConnections": 0,
+  "rawExported": false,
+  "sameAttemptErrors": [
+    {
+      "timeUTC": "2026-11-05 20:27:31.128 UTC",
+      "backendPid": 118,
+      "severity": "ERROR",
+      "observedLogSQLSTATE": [],
+      "staticIdentifiers": [
+        "FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS"
+      ],
+      "contexts": [
+        {
+          "language": "PL/pgSQL",
+          "function": "inline_code_block",
+          "line": 21,
+          "operation": "RAISE"
+        }
+      ]
+    }
+  ],
+  "actualBooleanSubpredicate": "UNKNOWN_LOG_DOES_NOT_PROVE_BOOLEAN_VALUES",
+  "firstMappedError": {
+    "timeUTC": "2026-11-05 20:27:31.128 UTC",
+    "backendPid": 118,
+    "severity": "ERROR",
+    "observedLogSQLSTATE": [],
+    "staticIdentifiers": [
+      "FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS"
+    ],
+    "contexts": [
+      {
+        "language": "PL/pgSQL",
+        "function": "inline_code_block",
+        "line": 21,
+        "operation": "RAISE"
+      }
+    ]
+  },
+  "safeFailure": {
+    "state": "INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+    "stage": "STEP",
+    "step": "physical-empty-target",
+    "installState": "ROLLBACK_UNCONFIRMED",
+    "originalSQLSTATE": "55000",
+    "originalInternalCode": null,
+    "rollbackSQLSTATE": null,
+    "rollbackInternalCode": "FRESH35_COMBINED_EXCLUSIVE_IDLE_NATIVE_CLIENT_REQUIRED",
+    "automaticRetry": false,
+    "diagnosticUnavailable": false
+  },
+  "SQLSTATEAssociation": "55000 observed in original safe child diagnostic. Log code recorded separately; no source ERRCODE substituted as logged SQLSTATE."
+}
