@@ -1648,3 +1648,10 @@ D1回执7c1e70ef四叶逐文件SHA已核；native错误后真实Ready有界排�
 
 ### 2026-11-06 05:19｜r4准备完成，接续新的实际PG窗口
 原材料化真实exit0/358.618s（4688e40e），05:12资源只读b570e78d确认新r4无CID和旧启动工件，16.55GB磁盘/14.36GB可用内存。C按今日12:00前用户明确委托签原11键独立provision497c2a1e，1793913509614..1793914709614，仅4d0589/source5fbc/新r4/原镜像和预算；T45一次start取得真实program/target后再C原9键install。旧r3不重放，准备成功不算PG或业务通过。同时原T45私域独立副本已完成显式private kind与45片精确绑定源码及28定向模型，原QB仅接新增运维差异；实际590通道不热换、数据未上传、不进Git。
+
+
+- r4原start真实exit0/27.881s（d1319814），新SID7704800254868660271/OID16393/birth21:20:06.872852UTC；programc3e6b437/target4540e301与本次13字段网络证明91e002d8准确同绑（实际只读73628827）。C签原9键install64bbb5b0，同窗截止1793914709614不延；T45新原键安装接续，业务/导入/回滚/UIDprobe未通过，无正式操作。
+
+
+### 2026-11-06 05:26｜r4真实拒绝条件和事务结果明确
+原install FAILED/2/15.753s，实际回执43692c21；原12字段准确回STEP/physical-empty-target/55000/PHYSICAL_TARGET_DIFFERS_EXCLUSIVE_BACKENDS。本次原生事务已ROLLED_BACK，次生回滚错误为空；与资源cleanup/cleanShutdown/凭据/登录/进程/端口及容器停止均真分开登记。record空、host/import/普通业务/UIDprobe未验，生产未动。具体额外backend来源未记录仍UNKNOWN；D1定向只读原predicate/调用链，T45只核本次停止日志现有事实；旧r3结论不改，不重起或重放。

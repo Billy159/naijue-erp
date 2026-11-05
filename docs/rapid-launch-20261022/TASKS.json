@@ -29662,7 +29662,7 @@
         "QBReceiptSHA256": "6707ee9abcdcd9b1143c5726cea182d3f5cb4241c2cd2af37b2acf40ec79d410"
       },
       "r4Preparation": {
-        "state": "MATERIALIZATION_COMPLETE_NEW_R4_PG20_START_IN_PROGRESS",
+        "state": "TERMINAL_INSTALL_FAILED_EXCLUSIVE_BACKENDS_ROLLED_BACK_AND_CLEANED_NO_REPLAY",
         "root": "4d0589ca80934318850dab637b32535fc642e266",
         "integration": "3983598059c487b2ab1736ed05a30681eee05e7a",
         "sourceSetSHA256": "5fbcb11970c41c706e4a6b2ce83a88dc8a85d988f2259228d2bcd31d99e22fb7",
@@ -29679,7 +29679,7 @@
         "startsAt": 1793912385232,
         "expiresAt": 1793914185232,
         "scope": "Unchanged original reviewed receiver/one-shot bodies; accurate pin-only successor, no duplicate ops review; newr4 preparation only, freshPG depends on actual readiness and QB source result",
-        "pgStarted": false,
+        "pgStarted": true,
         "actualAssemblySHA256": "4368f921cfd975a8eb2044f6be6f06b42d3cdbc663e3b00e2471f8171ef0a89a",
         "actualAssemblySeconds": 3.025088727,
         "wrapperSHA256": "11bda9e42a6db64c5017af2c016cda181b1c941882c4676fc581b63ec4ce5d46",
@@ -29695,6 +29695,36 @@
           "startsAt": 1793913509614,
           "expiresAt": 1793914709614,
           "actualProgramAndTargetPending": true
+        },
+        "startReceiptSHA256": "d1319814f6e4b8b95048dacf50941740ccdb6d7b7e502fc94c13d5630d5222a4",
+        "proofReceiptSHA256": "736288277e4a7cd60bd54c6e17026fb2a3cb88d3c08f889abe43c23270492d08",
+        "programSHA256": "c3e6b43775793ba4a00f0c40a8f3be070f6883f921799870b0021cf232741a28",
+        "targetSHA256": "4540e301334b1f33421510164d96e2539d5e0f92c81a73a383df370aa9231397",
+        "installAuthoritySHA256": "64bbb5b03e3dac3d13b10ee20626947bb97902131468529cd979ed5059a757f8",
+        "actualPhysical": {
+          "systemIdentifier": "7704800254868660271",
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-05 21:20:06.872852+00",
+          "serverVersionNum": "170011"
+        },
+        "businessAccepted": false,
+        "actualInstall": {
+          "job": "t45-f35-4d0589-install-20261106-01",
+          "exitCode": 2,
+          "seconds": 15.753199541,
+          "receiptSHA256": "43692c21f6510f4bdc9c2fab09028bc2a43a5350a114c662e5a848141c62bb5a",
+          "originalSQLSTATE": "55000",
+          "originalInternalCode": "FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_EXCLUSIVE_BACKENDS",
+          "installState": "ROLLED_BACK",
+          "cleanupComplete": true,
+          "cleanShutdown": true,
+          "containerStopped": true,
+          "recordPublished": null,
+          "hostVerified": false,
+          "ordinaryBusinessVerified": false,
+          "uidProbeExecuted": false,
+          "specificExtraBackendOrigin": "UNKNOWN_NOT_RECORDED",
+          "next": "D1 source predicate/call-chain readonly, T45 stopped logs only; no identical retry or weakened exclusive guard"
         }
       }
     },

@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "c3e6b43775793ba4a00f0c40a8f3be070f6883f921799870b0021cf232741a28",
+  "sourceSetSha256": "5fbcb11970c41c706e4a6b2ce83a88dc8a85d988f2259228d2bcd31d99e22fb7",
+  "targetSha256": "4540e301334b1f33421510164d96e2539d5e0f92c81a73a383df370aa9231397",
+  "startsAt": 1793913509614,
+  "expiresAt": 1793914709614,
+  "independentSafetyReviewSha256": "6707ee9abcdcd9b1143c5726cea182d3f5cb4241c2cd2af37b2acf40ec79d410",
+  "authorizationReference": "C under direct human decision delegation until2026-11-06 noon. Exact newr4 programc3e6b437/target4540e301 from actual startd1319814 and actual same13-field networkproof73628827/91e002d8. QB6707 scoped new source, prior valid evidence reused. Original synthetic install/import and ordinary synthetic business only; original20min deadline/guardian/cleanup. No REAL/production/old targets or broader permissions. Unknown outcomes original-key recovery, never replay."
+}
