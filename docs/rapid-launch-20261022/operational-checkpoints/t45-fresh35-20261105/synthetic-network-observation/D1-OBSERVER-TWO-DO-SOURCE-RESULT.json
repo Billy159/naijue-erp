@@ -1,0 +1,53 @@
+{
+  "task": "OBSERVER_NATIVE_TWO_DO_CONSUMER_SUCCESSOR",
+  "state": "SOURCE_NARROW_CHECKS_PASS_NOT_ACTUAL_PG",
+  "atUtc": "2026-11-05T22:23:33.078162+00:00",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "sha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b",
+      "bytes": 31452
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "a0bbffa392210fb456059f320f618599e2428fc1d638b6a1b2c126e03196caa8",
+      "bytes": 35732
+    },
+    {
+      "path": "tests/fresh35-combined-target.test.mjs",
+      "sha256": "5f51366f54e484ddc94f0e808d61d330c27af76e9eb0a8fb094e3afa20fb0659",
+      "bytes": 29654
+    },
+    {
+      "path": "tests/fresh35-combined-catalog.test.mjs",
+      "sha256": "c428074f2e32ec6fb13729e8b6dbb7b9b72f95763384bda46231c8c6f04f628e",
+      "bytes": 19996
+    }
+  ],
+  "preservation": "before-original-r5 contains exactly the original eight fixed leaves, BASELINE.json records their original hashes. Current materialized r5 carrier untouched.",
+  "change": "Identical strict observer catalog IF body embeds inside original physical and catalog DO. Bootstrap alone keeps its standalone DO. Existing runtime target+catalog and ordinary identity+catalog each remain two native command results. No host length guard widened.",
+  "checks": {
+    "pass": 3,
+    "fail": 0,
+    "skip": 0,
+    "newRegression": "Real pinned pg8.23.1 Client result accumulator receives synthetic CommandComplete/ReadyForQuery frames; actual unmodified runtime and ordinary consumer blocks execute against it. Four profiles (V1 runtime+ordinary,V2 runtime+ordinary) reject the prior three DO results and accept exactly two DO results, reject incorrect command tags. This is native driver transport/consumer semantics, not a PG server or SQL parser.",
+    "affected": [
+      "catalog observer/source/ACL/raw closure across all consumers",
+      "all original physical predicates except the explicitly replaced exclusive atom remain unchanged and once-only"
+    ],
+    "nodeSyntax": "PASS both mjs",
+    "diffWhitespace": "PASS",
+    "repeatedOld13_7_private_REAL64": false,
+    "actualPG": false,
+    "serverActions": 0,
+    "realInputsRead": false
+  },
+  "unchanged": [
+    "observer function body and allowed/denied backend classification",
+    "observer owner/source/attributes/ACL/dependencies guard",
+    "35 business tables/152 business routines",
+    "host-session exact two-result checks",
+    "transaction/authorization/once-only keys/records/finite failures"
+  ],
+  "next": "Combine with frozen production-entry five leaves, then D1 source-loader one-line successor only after T45 actual production Python exists. One new candidate/QB source increment; no r5 replay."
+}

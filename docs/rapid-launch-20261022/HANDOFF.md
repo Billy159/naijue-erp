@@ -1691,3 +1691,7 @@ QB78eedd77 exact8 leaves source/6 independent scoped model groups PASS, no findi
 
 ### 2026-11-06 06:20 | 安装前截住确定的消费者缺陷
 D1发现新增observer独立DO使原host的严格两结果合同变成三结果，会在真实host阶段拒绝；这是新代码接缝缺陷，既有源码/模型PASS不等于真实链PASS。C采用有效结论，原D1将同一严格observer IF嵌入原target/catalog DO，保持原两结果及host校验，不放宽检查。r5若已提交启动，仅收原键终态后原guardian清理；C不签已知必失败的install，准确登记未执行，不冒称实测失败或通过。新生产consumer及该最小修复合成下一固定候选，只验受影响范围，避免重复构建及整套后台回归。
+
+
+### 2026-11-06 06:24 | r5启动事实与未安装收口分开
+原start0/35.400s真实取得SID7704814814886170671/OID16393/program1ac040a4/target5fda968c/proof4df13d62（941f115f）。确定消费缺陷下不签install，实际install authority/child/result均不存在，0安装/导入。T45精确核本次parent后一次SIGTERM走原guardian，原stop0/4.931s，回读8473a001确认cleanup/cleanShutdown/登录凭据/进程端口及容器停止，保全target；原PARENT_STOP通用failure结果原样留存，不能把它改写为安装失败或安装通过。C亲核两原回执及汇总58b74f7f。新生产JS五叶951de47d已GitHub推送并远端核实；下一固定候选仍待D1两DO修复+T45生产Python，3de75不是完整生产入口版本。

@@ -1,0 +1,98 @@
+{
+  "installAcceptance": "NOT_EXECUTED",
+  "installSubmitted": false,
+  "oldTargetsChanged": false,
+  "productionChanged": false,
+  "readback": {
+    "cid": "812799160c67e848baa2249712de8789163afd2d0ebaaf47e1bf591b9aab411e",
+    "containerStopped": true,
+    "evidence": {
+      "bootstrap-network-observation.json": {
+        "adminActor": "fresh35_admin_20261105_r1",
+        "databaseOid": "16393",
+        "expiresAt": 1793918121905,
+        "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+        "host": "127.0.0.1",
+        "listenAddresses": "127.0.0.1",
+        "port": 18651,
+        "postmasterStart": "2026-11-05 22:16:36.520304+00",
+        "serverVersionNum": "170011",
+        "sourceSetSha256": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
+        "startsAt": 1793916921905,
+        "systemIdentifier": "7704814814886170671",
+        "unixSocketDirectories": ""
+      },
+      "cleanup.json": {
+        "cleanShutdown": true,
+        "cleanupComplete": true,
+        "credentialsRemoved": true,
+        "errors": [],
+        "initialization": {
+          "descendantsReaped": true,
+          "errors": [],
+          "initialized": true,
+          "initializerReaped": true,
+          "stopReason": "INITIALIZER_EXITED"
+        },
+        "loginsRevoked": true,
+        "ownedPidAbsent": true,
+        "portAbsent": true
+      },
+      "failure.json": {
+        "automaticRetry": false,
+        "code": "FRESH35_ISOLATED_PARENT_STOP",
+        "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+      },
+      "runtime-dependencies.json": {
+        "arch": "x64",
+        "fastify": "5.12.5",
+        "libvips": "8.18.7",
+        "pg": "8.23.1",
+        "platform": "linux",
+        "sharp": "0.35.5"
+      }
+    },
+    "evidenceSha256": {
+      "bootstrap-network-observation.json": "4df13d62ef064305e68b7882ee3a5619c6cf86af5b1c0b004ec157b48671d054"
+    },
+    "forcedStopIsNotCleanShutdownProof": true,
+    "launcherExitCode": 1,
+    "ordinaryProofEvidence": {},
+    "sourceResult": {
+      "businessVerified": false,
+      "cleanup": {
+        "cleanShutdown": true,
+        "cleanupComplete": true,
+        "credentialsRemoved": true,
+        "errors": [],
+        "initialization": {
+          "descendantsReaped": true,
+          "errors": [],
+          "initialized": true,
+          "initializerReaped": true,
+          "stopReason": "INITIALIZER_EXITED"
+        },
+        "loginsRevoked": true,
+        "ownedPidAbsent": true,
+        "portAbsent": true
+      },
+      "hostEnabled": false,
+      "hostVerified": false,
+      "independentSnapshotsVerified": false,
+      "ordinaryBusinessVerified": false,
+      "productionVerified": false,
+      "recordPublished": null,
+      "state": "FAILED_OR_CLEANUP_UNCONFIRMED",
+      "syntheticImportVerified": false
+    },
+    "status": "FAILED_OR_UNKNOWN_PRESERVED_NO_REPLAY"
+  },
+  "status": "START_FACTS_ONLY_INSTALL_NOT_SUBMITTED_KNOWN_SOURCE_DEFECT",
+  "stop": {
+    "automaticRetry": false,
+    "handler": "ORIGINAL_PARENT_STOP_AND_GUARDIAN_CLEANUP",
+    "installAuthorityAbsent": true,
+    "parentIdentityVerified": true,
+    "status": "ORIGINAL_PARENT_SIGTERM_REQUESTED_ONCE"
+  }
+}

@@ -28373,7 +28373,10 @@
       "latestTailRecoveryCheckpoint": {
         "commit": "d3a60a846d96f5cb2ead0d309a2ccbea170c1126",
         "remoteVerified": true
-      }
+      },
+      "remoteReadbackAt": "2026-11-06T06:22:45+08:00",
+      "verifiedIntegration": "951de47dfcb3526b8d374b78f00167671bae9c67",
+      "verifiedBuildRoot": "3de75b77f8be7fdb1be3f889e5b9521ff1d57b55"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -29816,7 +29819,7 @@
         }
       },
       "r5Preparation": {
-        "state": "START_IF_ALREADY_SUBMITTED_COLLECT_AND_CLEAN_INSTALL_WITHHELD_KNOWN_HOST_GUARD_RESULT_COUNT",
+        "state": "R5_STARTED_FACTS_ONLY_INSTALL_NOT_EXECUTED_KNOWN_SOURCE_CONSUMER_DEFECT_CLEANUP_CONFIRMED",
         "buildRoot": "3de75b77f8be7fdb1be3f889e5b9521ff1d57b55",
         "sourceSetSHA256": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
         "manifestSHA256": "d5d1857ee3358e68ab7109161f1914390dfd153247624a5f136b2c03e49fcca5",
@@ -29831,7 +29834,7 @@
         "startsAt": 1793915933463,
         "expiresAt": 1793917733463,
         "oldGateExpectedSHA256": "54cd7700ae7ee5d25be5fe566c5f1019f2a4cd2e3895a294c608f9a6d43001ba",
-        "actualPG": false,
+        "actualPG": true,
         "scope": "Same reviewed ordinary receiver and one-shot constants, original40s/900s; no duplicate ops review; fresh r5 directory only, no old replay or private data changed",
         "wrapperSHA256": "6c323d4f1adf2361375bd624e72de96d03307905839e4757aed64429add15fd3",
         "probeSHA256": "b9d2a1edc61373d135601c7dd33b4120ec3c6239643b72270dce9cde2efe9443",
@@ -29858,7 +29861,38 @@
           "startsAt": 1793916921905,
           "expiresAt": 1793918121905,
           "actualProgramAndTargetPending": true
-        }
+        },
+        "installSubmitted": false,
+        "installAssessment": "NOT_EXECUTED_NOT_INSTALL_PASS_OR_FAIL",
+        "startReceiptSHA256": "941f115f6780e284e475a2ac5f626623068a616f013600320f45aaf7154c14d3",
+        "stopReceiptSHA256": "8473a0014fe2044a689a745dd38ce1145f6af20df43a83fdd4bd684d3fad74f4",
+        "terminalReceiptSHA256": "58b74f7f38408e69b91be92423ed22e17722e46fbb94504e6d3bbb0a7285e597",
+        "actualPhysical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-05 22:16:36.520304+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7704814814886170671"
+        },
+        "programSHA256": "1ac040a4e0b1c5ac5aaf865414e3795c124528c014dcb336a6b6eee8d881602b",
+        "targetSHA256": "5fda968c7ad6b2fc86fc902491dfa7091d4472d00ae41c7db44ceefda660c2cf",
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          },
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true
+        },
+        "containerStopped": true,
+        "businessAccepted": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30026,7 +30060,8 @@
         "Finalize required catalog/ACL before record; do not invalidate it during success cleanup",
         "No client selfapproval or fabricated installation facts",
         "No actual production creation/data/import/deployment in this source decision"
-      ]
+      ],
+      "successCatalogLifetimeResolution": "D1 actualV2 dependency adopted: bootstrap fixes temporaryrole validuntil<=install window and exacthelperACL; success does not mutate recordedDBfacts. Preserve controller private input through REAL/readback or originalwindow; runtime independent lifetime. No hook/newpool."
     }
   }
 }

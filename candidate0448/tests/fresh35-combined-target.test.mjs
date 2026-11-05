@@ -213,7 +213,8 @@ test('physical predicate diagnostic preserves every original synthetic/productio
    const currentAtoms=split(array,',').map(atom=>atom.slice(1,-1));
    const exclusiveIndex=originalAtoms.findIndex(atom=>atom.includes('pg_catalog.pg_stat_activity'));
    assert.equal(currentAtoms[exclusiveIndex],'pg_catalog.fresh35_exclusive_backends()');
-   assert(current.startsWith('DO $fresh35_observer_catalog$'));
+   assert(current.startsWith('DO $fresh35_combined_target$'));
+   assert(current.indexOf('f.prosrc=')<current.indexOf('physical_checks := ARRAY['),'observer source/ACL is checked before its only call without adding a result');
    assert.deepEqual(currentAtoms.filter((_,i)=>i!==exclusiveIndex),originalAtoms.filter((_,i)=>i!==exclusiveIndex),'all physical conditions except the explicitly replaced exclusive predicate remain unchanged and once-only');
    const tags=current.slice(current.indexOf('physical_failure_codes CONSTANT text[] := ARRAY['),current.indexOf(']; physical_index integer')).match(/FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_[A-Z_]+/g);
    assert.equal(tags.length,originalAtoms.length);assert.equal(new Set(tags).size,tags.length);for(const tag of tags){assert(m.api.FRESH35_COMBINED_PHYSICAL_FAILURE_CODES.includes(tag));assert(tag.length<=81)}

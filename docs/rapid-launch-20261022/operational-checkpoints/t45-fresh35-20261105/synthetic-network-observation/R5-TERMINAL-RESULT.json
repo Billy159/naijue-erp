@@ -1,0 +1,126 @@
+{
+  "status": "R5_STARTED_FACTS_ONLY_INSTALL_NOT_EXECUTED_KNOWN_SOURCE_CONSUMER_DEFECT_CLEANUP_CONFIRMED",
+  "checkedAtUTC": "2026-11-05T22:23:25.862658+00:00",
+  "source": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
+  "cid": "812799160c67e848baa2249712de8789163afd2d0ebaaf47e1bf591b9aab411e",
+  "target": {
+    "expiresAt": 1793918121905,
+    "physical": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-05 22:16:36.520304+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7704814814886170671"
+    },
+    "proposal": {
+      "admin": "fresh35_admin_20261105_r1",
+      "controller": "fresh35_controller_20261105_r1",
+      "database": "synthetic_fresh35_20261105_r1",
+      "host": "127.0.0.1",
+      "owner": "fresh35_owner_20261105_r1",
+      "port": 18651,
+      "runtime": "fresh35_runtime_20261105_r1",
+      "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+    },
+    "startsAt": 1793916921905
+  },
+  "program": {
+    "applicationTransactions": 1,
+    "bootstrapNetworkObservationSha256": "4df13d62ef064305e68b7882ee3a5619c6cf86af5b1c0b004ec157b48671d054",
+    "catalogSha256": "5179037ef27824fd75093f16435608fba10e61b5455861845981bb7145fd3d7b",
+    "createsCluster": false,
+    "createsCredentials": false,
+    "createsRoles": false,
+    "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+    "hostEnabled": false,
+    "observationSqlSha256": "c8a7a6b091f59bfad327a93e203087c041ed0199075df6b44bf0e4c1a5f8d206",
+    "oldTablesRemoved": false,
+    "programSha256": "1ac040a4e0b1c5ac5aaf865414e3795c124528c014dcb336a6b6eee8d881602b",
+    "sourceSetSha256": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
+    "targetSha256": "5fda968c7ad6b2fc86fc902491dfa7091d4472d00ae41c7db44ceefda660c2cf"
+  },
+  "statementCount": 10,
+  "networkProof": {
+    "adminActor": "fresh35_admin_20261105_r1",
+    "databaseOid": "16393",
+    "expiresAt": 1793918121905,
+    "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+    "host": "127.0.0.1",
+    "listenAddresses": "127.0.0.1",
+    "port": 18651,
+    "postmasterStart": "2026-11-05 22:16:36.520304+00",
+    "serverVersionNum": "170011",
+    "sourceSetSha256": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
+    "startsAt": 1793916921905,
+    "systemIdentifier": "7704814814886170671",
+    "unixSocketDirectories": ""
+  },
+  "networkProofSha256": "4df13d62ef064305e68b7882ee3a5619c6cf86af5b1c0b004ec157b48671d054",
+  "installSubmitted": false,
+  "installAssessment": "NOT_EXECUTED_NOT_INSTALL_PASS_OR_FAIL",
+  "reason": "C adopted D1 deterministic host guard ACK count mismatch; observer must remain within original twoDO consumer contract; no known-failing install chain run",
+  "startReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-3de75b-start-20261106-01/transport/release-receipts/t45-f35-3de75b-start-20261106-01/fresh35-start-target-result.json",
+    "sha256": "941f115f6780e284e475a2ac5f626623068a616f013600320f45aaf7154c14d3"
+  },
+  "stopReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-3de75b-stop-before-install-20261106-01/transport/release-receipts/t45-f35-3de75b-stop-before-install-20261106-01/stop-before-install-result.json",
+    "sha256": "8473a0014fe2044a689a745dd38ce1145f6af20df43a83fdd4bd684d3fad74f4"
+  },
+  "originalStop": {
+    "automaticRetry": false,
+    "handler": "ORIGINAL_PARENT_STOP_AND_GUARDIAN_CLEANUP",
+    "installAuthorityAbsent": true,
+    "parentIdentityVerified": true,
+    "status": "ORIGINAL_PARENT_SIGTERM_REQUESTED_ONCE"
+  },
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    },
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "originalSourceResult": {
+    "businessVerified": false,
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "errors": [],
+      "initialization": {
+        "descendantsReaped": true,
+        "errors": [],
+        "initialized": true,
+        "initializerReaped": true,
+        "stopReason": "INITIALIZER_EXITED"
+      },
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "hostEnabled": false,
+    "hostVerified": false,
+    "independentSnapshotsVerified": false,
+    "ordinaryBusinessVerified": false,
+    "productionVerified": false,
+    "recordPublished": null,
+    "state": "FAILED_OR_CLEANUP_UNCONFIRMED",
+    "syntheticImportVerified": false
+  },
+  "containerStopped": true,
+  "businessAccepted": false,
+  "productionChanged": false,
+  "privateDataChanged": false,
+  "actualModel": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "next": "Stopped target retained. New corrected candidate and C exact scope only; no r5 replay. Production source continues separately, no actual production target authorized."
+}
