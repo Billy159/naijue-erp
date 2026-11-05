@@ -128,6 +128,9 @@ test('native35 exact original source closure survives one real build and pack wi
  const reference=path.resolve(fileURLToPath(new URL('../../../reference-inputs/',import.meta.url)));
  const closure=await native35Closure(repository,reference);
  const f=await fixture('native35-closure',true);
+ const sharedCss='apps/web/demo-replica/frontend/styles/shared/surface-controls.css';
+ await put(f.sourceRoot,sharedCss,await readFile(path.join(repository,sharedCss)));
+ await put(f.sourceRoot,'apps/web/demo-replica/frontend/production-bootstrap.ts','import "./styles/shared/surface-controls.css"; export const tiny=1;');
  for(const pin of closure.pins)await put(f.sourceRoot,pin.path,await readFile(path.join(repository,pin.path)));
  await put(f.sourceRoot,'apps/api/src/production-main.ts','export {describe} from "./postgres-read-api.ts"; export * as execution from "../../../packages/application/src/unified-import-execution.ts"; export * as profile from "../../../packages/application/src/unified-import-whole-package-profile.ts";');
  await put(f.sourceRoot,'apps/api/src/postgres-read-api.ts','import {describeFresh35OrdinaryAdmissionV2} from "../../../tools/unified-import/fresh35-host-session.mjs"; export const describe=describeFresh35OrdinaryAdmissionV2;');
@@ -140,6 +143,8 @@ test('native35 exact original source closure survives one real build and pack wi
  const backendGraph=JSON.parse(await readFile(path.join(opts.buildRoot,'backend/metafile.json')));
  for(const name of ['packages/application/src/unified-import-execution.ts','packages/application/src/unified-import-whole-package-profile.ts'])assert.ok(Object.hasOwn(backendGraph.inputs,name),'actual production application consumer participates');
  for(const name of ['scripts/release/unified-install/whole-sales-admission-v1.mjs','tools/unified-import/whole-host-session.mjs','tools/unified-import/fresh35-host-session.mjs'])assert.ok(!Object.hasOwn(backendGraph.inputs,name),'physical proof module must retain the original native URL');
+ const webGraph=JSON.parse(await readFile(path.join(opts.buildRoot,'web/metafile.json')));
+ assert.ok(Object.hasOwn(webGraph.inputs,sharedCss),'actual shared CSS consumer carries the existing exact icon');
  const native=build.files.filter(r=>r.role==='native35');assert.equal(native.length,closure.pins.length);
  for(const row of native){const original=await readFile(path.join(repository,row.sourcePath));assert.equal(row.sha256,createHash('sha256').update(original).digest('hex'));assert.deepEqual(await readFile(path.join(opts.buildRoot,row.path)),original);}
  const nativeRoot=path.join(opts.buildRoot,'backend/native35-source');
