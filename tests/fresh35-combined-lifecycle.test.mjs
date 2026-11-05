@@ -16,3 +16,42 @@ test('caller objects cannot become a program, completion, authorization or recor
  await assert.rejects(()=>runFresh35CombinedInstall({program:{},authorization:{},client:{},journalDirectory:'/tmp/no-install'}),/GENUINE_PROGRAM/);
  await assert.rejects(()=>publishFresh35CombinedRecord({state:'COMMITTED_UNPUBLISHED'}),/GENUINE_COMMITTED/);
 });
+
+test('safe installation diagnostic retains original and rollback codes before AggregateError without private text',async()=>{
+ const {io}=fixture(),events=[];io.emit=async e=>events.push(e);
+ io.query=async sql=>{if(sql==='SELECT 1')throw Object.assign(Error('PRIVATE SQL PARAMETER'),{code:'42501',detail:'PRIVATE DETAIL'});return{command:'BEGIN'}};
+ io.rollback=async()=>{throw Object.assign(Error('PRIVATE ROLLBACK'),{code:'08006'})};
+ const {describeFresh35CombinedInstallFailure:describe}=await import('../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs');
+ await assert.rejects(modelFresh35CombinedTransactionForTests(steps,io),error=>{
+  assert.equal(error.installState,'ROLLBACK_UNCONFIRMED');assert.deepEqual(describe(error),{stage:'STEP',step:'base35',originalSQLSTATE:'42501',originalInternalCode:null,rollbackSQLSTATE:'08006',rollbackInternalCode:null});return true;
+ });
+ const event=events.at(-1);assert.equal(event.stage,'STEP');assert.equal(event.originalSQLSTATE,'42501');assert.equal(event.rollbackSQLSTATE,'08006');assert.doesNotMatch(JSON.stringify(events),/PRIVATE|PARAMETER|DETAIL/);
+});
+test('safe installation diagnostic retains unknown commit outcome and filters arbitrary metadata',async()=>{
+ const {io,log}=fixture();io.commit=async()=>{throw Object.assign(Error('PRIVATE COMMIT'),{code:'08006'})};
+ const {describeFresh35CombinedInstallFailure:describe}=await import('../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs');
+ await assert.rejects(modelFresh35CombinedTransactionForTests(steps,io),e=>{assert.equal(e.installState,'COMMIT_OUTCOME_UNKNOWN');assert.deepEqual(describe(e),{stage:'COMMIT',step:null,originalSQLSTATE:'08006',originalInternalCode:null,rollbackSQLSTATE:null,rollbackInternalCode:null});return true});assert(!log.includes('ROLLBACK'));
+ assert.deepEqual(describe({installDiagnostic:{stage:'SECRET',step:'PRIVATE',originalSQLSTATE:'private SQL',originalInternalCode:'private SQL',rollbackSQLSTATE:null,rollbackInternalCode:null,detail:'PRIVATE'}}),{stage:'UNKNOWN',step:null,originalSQLSTATE:null,originalInternalCode:null,rollbackSQLSTATE:null,rollbackInternalCode:null});
+});
+test('native pg 8.23.1 protocol fields match healthy ReadyForQuery and reject pre-ready error-response timing without a server',async()=>{
+ const {readFile}=await import('node:fs/promises'),{Client}=await import('pg'),s=await readFile(new URL('../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs',import.meta.url),'utf8');
+ const body=s.slice(s.indexOf('function protocol('),s.indexOf('export function validateFresh35CombinedJournalPath'));
+ const check=new Function('client','idle','need',body+';protocol(client,idle)');const need=(ok,code)=>{if(!ok)throw Error(code)},c=new Client({pipeline:false});
+ c._handleReadyForQuery({status:'I'});check(c,true,need);c._handleReadyForQuery({status:'T'});check(c,false,need);
+ let reject;const promise=new Promise((_r,j)=>reject=j);c.readyForQuery=false;c._activeQuery={handleError:error=>reject(error)};
+ c._handleErrorMessage(Object.assign(Error('SYNTHETIC ERROR RESPONSE'),{code:'42501'}));await assert.rejects(promise,/SYNTHETIC/);assert.throws(()=>check(c,false,need),/EXCLUSIVE_IDLE_NATIVE_CLIENT_REQUIRED/);
+ c._handleReadyForQuery({status:'E'});check(c,false,need);assert.equal(c.getTransactionStatus(),'E');
+});
+test('safe installation diagnostic publishes only module-constructed internal codes and exact failed step',async()=>{
+ const {describeFresh35CombinedInstallFailure:describe}=await import('../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs');
+ const {io}=fixture();io.query=async()=>({command:'WRONG'});
+ await assert.rejects(modelFresh35CombinedTransactionForTests(steps,io),e=>{assert.equal(describe(e).stage,'BEGIN');assert.equal(describe(e).originalInternalCode,'FRESH35_COMBINED_NATIVE_BEGIN_ACK_REQUIRED');return true});
+ const events=[],f=fixture().io;f.emit=async e=>events.push(e);f.query=async sql=>{if(sql==='SELECT 1')throw Object.assign(Error('PRIVATE'),{code:'FRESH35_COMBINED_FAKE_PUBLIC_CODE'});return{command:'BEGIN'}};
+ await assert.rejects(modelFresh35CombinedTransactionForTests(steps,f),e=>{assert.equal(describe(e).step,steps[0].name);assert.equal(describe(e).originalInternalCode,null);return true});assert.equal(events.at(-1).errorCode,'INSTALL_ERROR');assert.doesNotMatch(JSON.stringify(events),/FAKE_PUBLIC_CODE|PRIVATE/);
+});
+test('safe installation diagnostic survives rollback acknowledgement and failure-journal wrappers',async()=>{
+ const {describeFresh35CombinedInstallFailure:describe}=await import('../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs'),{io}=fixture();
+ io.query=async sql=>{if(sql==='SELECT 1')throw Object.assign(Error('PRIVATE FIRST FAILURE'),{code:'42501'});return{command:'BEGIN'}};
+ io.rollback=async()=>({command:'OTHER'});io.emit=async e=>{if(e.originalSQLSTATE)throw Error('PRIVATE JOURNAL FAILURE')};
+ await assert.rejects(modelFresh35CombinedTransactionForTests(steps,io),e=>{assert(e instanceof AggregateError);assert.equal(e.installState,'ROLLBACK_UNCONFIRMED');const d=describe(e);assert.equal(d.stage,'STEP');assert.equal(d.step,'base35');assert.equal(d.originalSQLSTATE,'42501');assert.equal(d.rollbackInternalCode,'FRESH35_COMBINED_NATIVE_ROLLBACK_ACK_REQUIRED');assert.doesNotMatch(JSON.stringify(d),/PRIVATE|message|stack/);return true});
+});

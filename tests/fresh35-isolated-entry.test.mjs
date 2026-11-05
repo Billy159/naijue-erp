@@ -78,3 +78,13 @@ test('isolated application bootstrap reads one original private hash before drop
  assert.equal(await run(async path=>{assert.equal(path,'/owned/credentials/synthetic-application-scrypt.txt');return modelHash+'\n'},(...x)=>x.join('/'),'/owned',isNodeScryptPasswordHash,NODE_SCRYPT_DUMMY_HASH,need),modelHash);
  const {requestHash}=await import('../packages/application/src/request-hash.ts');assert.notEqual(requestHash({initialize:{},encodedScrypt:modelHash}),requestHash({initialize:{},encodedScrypt:NODE_SCRYPT_DUMMY_HASH}));
 });
+
+test('safe installation diagnostic stderr exposes only closed fields and no original private exception data',async()=>{
+ const s=await readFile(new URL('../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',import.meta.url),'utf8');
+ const start=s.lastIndexOf('process.stderr.write('),end=s.indexOf('process.exitCode=1;',start)+'process.exitCode=1;'.length;
+ const {describeFresh35CombinedInstallFailure,modelFresh35CombinedTransactionForTests}=await import('../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs');
+ const render=new Function('error','process','describeFresh35CombinedInstallFailure',s.slice(start,end)),lines=[],p={stderr:{write:s=>lines.push(s)},exitCode:0};
+ let failure;try{await modelFresh35CombinedTransactionForTests([{name:'physical-empty-target',sql:'SYNTHETIC'}],{current:async()=>{},emit:async()=>{},query:async sql=>{if(sql.startsWith('BEGIN'))return{command:'BEGIN'};throw Object.assign(Error('PRIVATE SQL'),{code:'42501',detail:'PRIVATE DETAIL'})},rollback:async()=>{throw Object.assign(Error('PRIVATE ROLLBACK'),{code:'08006'})}})}catch(error){failure=error}render(failure,p,describeFresh35CombinedInstallFailure);
+ const out=JSON.parse(lines[0]);assert.equal(p.exitCode,1);assert.equal(out.stage,'STEP');assert.equal(out.step,'physical-empty-target');assert.equal(out.originalSQLSTATE,'42501');assert.equal(out.rollbackSQLSTATE,'08006');assert.equal(out.automaticRetry,false);assert.equal(Object.keys(out).length,12);assert.doesNotMatch(lines[0],/PRIVATE|DETAIL|message|stack/);
+ lines.length=0;render({installState:'PRIVATE',installDiagnostic:{stage:'PRIVATE',step:'PRIVATE',originalSQLSTATE:'PRIVATE'}},p,describeFresh35CombinedInstallFailure);assert.equal(JSON.parse(lines[0]).installState,null);assert.equal(JSON.parse(lines[0]).stage,'UNKNOWN');
+});

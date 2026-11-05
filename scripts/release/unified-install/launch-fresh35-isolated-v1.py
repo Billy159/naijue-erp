@@ -65,6 +65,28 @@ def strict_json(raw):
         return out
     return json.loads(raw, object_pairs_hook=pairs, parse_constant=lambda _: need(False, 'NONFINITE_JSON'))
 
+def persist_install_child_failure(root, result, descriptor):
+    diagnostic={'state':'OUTCOME_UNKNOWN_NO_REPLAY','exitCode':result.returncode,'automaticRetry':False,'diagnosticUnavailable':True}
+    raw=result.stderr
+    if type(raw) is bytes and 0<len(raw)<=16384:
+        try:
+            v=strict_json(raw.decode('utf-8'))
+            keys={'state','installState','code','validationStage','validationCode','automaticRetry','stage','step','originalSQLSTATE','originalInternalCode','rollbackSQLSTATE','rollbackInternalCode'}
+            need(type(v) is dict and set(v)==keys,'INSTALL_DIAGNOSTIC_FIELDS')
+            need(v['state']=='INSTALL_FAILED_OR_OUTCOME_UNKNOWN' and v['code']=='FRESH35_ISOLATED_ENTRY_FAILED' and v['automaticRetry'] is False,'INSTALL_DIAGNOSTIC_STATE')
+            need(v['installState'] in [None,'NOT_STARTED','IN_TRANSACTION','ROLLED_BACK','ROLLBACK_UNCONFIRMED','COMMIT_OUTCOME_UNKNOWN','COMMITTED_UNPUBLISHED'],'INSTALL_DIAGNOSTIC_INSTALL_STATE')
+            need(v['stage'] in ['BOUND','BEGIN','STEP','OBSERVE','COMMIT','ROLLBACK','CLOSE','UNKNOWN'],'INSTALL_DIAGNOSTIC_STAGE')
+            need((v['stage']=='STEP' and type(v['step']) is str and re.fullmatch('[A-Za-z0-9_./:-]{1,160}',v['step']) and v['step'] in {step['name'] for step in descriptor['statements']}) or (v['stage']!='STEP' and v['step'] is None),'INSTALL_DIAGNOSTIC_STEP')
+            need(v['validationStage'] in [None,'BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'],'INSTALL_DIAGNOSTIC_VALIDATION_STAGE')
+            for key in ['validationCode','originalSQLSTATE','rollbackSQLSTATE','originalInternalCode','rollbackInternalCode']:
+                value=v[key]
+                if value is None:continue
+                pattern='[A-Z0-9]{5}' if key.endswith('SQLSTATE') else '[A-Z][A-Z0-9_]{0,80}' if key=='validationCode' else '(?:FRESH35_COMBINED_[A-Z0-9_]{1,63}|CLIENT_CLOSE_TIMEOUT)'
+                need(type(value) is str and re.fullmatch(pattern,value),'INSTALL_DIAGNOSTIC_CODE')
+            diagnostic.update(v);diagnostic['diagnosticUnavailable']=False
+        except (ValueError,RuntimeError,UnicodeError,TypeError):pass
+    json_new(root/'installation-child-failure.json',diagnostic)
+
 def trusted(path, tree=False):
     path = Path(path)
     need(path.is_absolute() and str(path) == os.path.normpath(path), 'CANONICAL_PATH')
@@ -954,7 +976,9 @@ def main():
         while not INSTALL_AUTH.exists():
             remaining();need(watch.poll() is None and owned_listener(owned,p['port']),'GUARDIAN_OR_TARGET_LOST');time.sleep(.25)
         read_private(INSTALL_AUTH);verify_deployment(a);need(owned_listener(owned,p['port']),'PRE_INSTALL_LISTENER')
-        r=subprocess.run(argv+['--execute'],capture_output=True,env=clean_env(root),timeout=max(1,deadline-time.monotonic()-45));need(r.returncode==0,'INSTALL_FAILED_OR_OUTCOME_UNKNOWN')
+        r=subprocess.run(argv+['--execute'],capture_output=True,env=clean_env(root),timeout=max(1,deadline-time.monotonic()-45))
+        if r.returncode!=0:persist_install_child_failure(root,r,descriptor)
+        need(r.returncode==0,'INSTALL_FAILED_OR_OUTCOME_UNKNOWN')
         result=strict_json(r.stdout);need(result.get('state')=='RECORD_DURABLY_PUBLISHED' and result.get('recordPublished') is True and result.get('sourceSetSha256')==a['sourceSetSha256'],'INSTALL_COMPLETION_REQUIRED');json_new(root/'installation-result.json',result);record_published=True
         def host_window():
             remaining();need(watch.poll() is None and owned_listener(owned,p['port']),'PRE_HOST_TARGET_LOST')

@@ -10,7 +10,12 @@ import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-pat
 import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,renderFresh35CombinedSchema,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
 import {describeFresh35CombinedTarget,assertFresh35InstallationTargetCurrent,fresh35CombinedTargetGuard,FRESH35_COMBINED_TARGET_MODULE_SHA256} from './fresh35-combined-target-v1.mjs';
 const programs=new WeakMap(),approvals=new WeakMap(),completions=new WeakMap(),used=new WeakSet();
-const need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_'+code)};
+const failureDiagnostics=new WeakMap(),internalFailureCodes=new WeakMap();
+const need=(ok,code)=>{if(!ok){const publicCode='FRESH35_COMBINED_'+code,error=Error(publicCode);if(/^[A-Z][A-Z0-9_]{0,80}$/.test(publicCode))internalFailureCodes.set(error,publicCode);throw error}};
+const failureCode=error=>{const code=error&&Object.getOwnPropertyDescriptor(error,'code')?.value;return{sqlState:typeof code==='string'&&/^[A-Z0-9]{5}$/.test(code)?code:null,internalCode:internalFailureCodes.get(error)??null}};
+function installationFailure(stage,step,original,rollback){const a=failureCode(original),b=failureCode(rollback);return Object.freeze({stage,step,originalSQLSTATE:a.sqlState,originalInternalCode:a.internalCode,rollbackSQLSTATE:b.sqlState,rollbackInternalCode:b.internalCode})}
+/** Closed diagnostic from this lifecycle only; never serializes an exception. */
+export function describeFresh35CombinedInstallFailure(error){return failureDiagnostics.get(error)??installationFailure('UNKNOWN',null,error,null)}
 const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value)}return value};
 const etc=process.platform==='darwin'?'/private/etc':'/etc';
 const modulePath='scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs',loadedModuleSha256=hash(await readFile(new URL(import.meta.url)));
@@ -83,21 +88,23 @@ async function journalAt(directory,sourceRoot,target){
 /** The common transaction state machine is separately testable. Its model export
  * can never mint an installed record, physical client or authorization. */
 async function drive(steps,io){
- let state='NOT_STARTED',transaction=false,commitAttempted=false,committed=false,observation;
+ let state='NOT_STARTED',transaction=false,commitAttempted=false,committed=false,observation,stage='BOUND',stepName=null;
  try{
   await io.current();await io.emit({state:'INSTALL_PENDING'});
-  ack(await io.query('BEGIN ISOLATION LEVEL READ COMMITTED'),'BEGIN');transaction=true;state='IN_TRANSACTION';
-  for(const step of steps){await io.current();await io.emit({state:'STEP_PENDING',name:step.name,sqlSha256:hash(step.sql)});await io.query(step.sql);await io.emit({state:'STEP_ACKNOWLEDGED',name:step.name});}
-  observation=await io.observe();await io.current();await io.emit({state:'COMMIT_PENDING'});
+  stage='BEGIN';ack(await io.query('BEGIN ISOLATION LEVEL READ COMMITTED'),'BEGIN');transaction=true;state='IN_TRANSACTION';
+  for(const step of steps){stage='STEP';stepName=typeof step.name==='string'&&/^[A-Za-z0-9_./:-]{1,160}$/.test(step.name)?step.name:null;await io.current();await io.emit({state:'STEP_PENDING',name:step.name,sqlSha256:hash(step.sql)});await io.query(step.sql);await io.emit({state:'STEP_ACKNOWLEDGED',name:step.name});}
+  stage='OBSERVE';stepName=null;observation=await io.observe();stage='COMMIT';await io.current();await io.emit({state:'COMMIT_PENDING'});
   state='COMMIT_OUTCOME_UNKNOWN';commitAttempted=true;
   ack(await io.commit(),'COMMIT');committed=true;transaction=false;state='COMMITTED_UNPUBLISHED';
   await io.emit({state});return {state,observation};
  }catch(error){
+  const original=error;let rollbackFailure;
   if(transaction&&!commitAttempted){
-   try{ack(await io.rollback(),'ROLLBACK');state='ROLLED_BACK';transaction=false}catch(rollback){state='ROLLBACK_UNCONFIRMED';error=new AggregateError([error,rollback],'FRESH35_COMBINED_INSTALL_AND_ROLLBACK_FAILED')}
+   try{ack(await io.rollback(),'ROLLBACK');state='ROLLED_BACK';transaction=false}catch(rollback){rollbackFailure=rollback;state='ROLLBACK_UNCONFIRMED';error=new AggregateError([error,rollback],'FRESH35_COMBINED_INSTALL_AND_ROLLBACK_FAILED')}
   }else if(commitAttempted&&!committed){state='COMMIT_OUTCOME_UNKNOWN';io.quarantine()}
-  try{await io.emit({state,errorCode:typeof error?.code==='string'?error.code:'INSTALL_ERROR'})}catch(journal){error=new AggregateError([error,journal],'FRESH35_COMBINED_INSTALL_AND_JOURNAL_FAILED')}
-  error.installState=state;throw error;
+  const diagnostic=installationFailure(stage,stepName,original,rollbackFailure);
+  try{await io.emit({state,...diagnostic,errorCode:diagnostic.originalSQLSTATE??diagnostic.originalInternalCode??'INSTALL_ERROR'})}catch(journal){error=new AggregateError([error,journal],'FRESH35_COMBINED_INSTALL_AND_JOURNAL_FAILED')}
+  failureDiagnostics.set(error,diagnostic);error.installState=state;throw error;
  }
 }
 export async function modelFresh35CombinedTransactionForTests(steps,operations){
@@ -111,7 +118,7 @@ export async function runFresh35CombinedInstall({program,authorization,client,jo
  const {Client}=await import('pg'),pgPackage=await import('pg/package.json',{with:{type:'json'}});need(pgPackage.default.version==='8.23.1','PINNED_NATIVE_PG_REQUIRED');need(client instanceof Client&&Object.getPrototypeOf(client)===Client.prototype&&client.query===Client.prototype.query&&client._connected===true,'ORIGINAL_CONNECTED_NATIVE_PG_CLIENT_REQUIRED');
  protocol(client,true);const c=client.connectionParameters;
  need(c.host===t.proposal.host&&Number(c.port)===t.proposal.port&&c.database===t.proposal.database&&c.user===t.proposal.owner&&!c.ssl,'NATIVE_CONNECTION_TARGET_DIFFERS');
- used.add(authorization);let emit,quarantined=false,primary,result,closed=false,failureState;
+ used.add(authorization);let emit,quarantined=false,primary,result,closed=false,failureState,primaryDiagnostic;
  const originalQuery=Client.prototype.query,originalEnd=Client.prototype.end;
  const remaining=()=>{const now=Date.now();need(now>=t.startsAt&&now<t.expiresAt-45000,'INSTALL_WINDOW_OR_CLEANUP_RESERVE_EXPIRED');return Math.min(45000,t.expiresAt-45000-now)};
  const query=async(sql,cleanup=false)=>{need(!quarantined,'NO_SEND_AFTER_UNKNOWN_COMMIT');protocol(client);try{return await Reflect.apply(originalQuery,client,[{text:sql,query_timeout:cleanup?5000:remaining()}])}catch(e){if(e?.message==='Query read timeout')client.connection?.stream?.destroy();throw e}};
@@ -137,12 +144,12 @@ export async function runFresh35CombinedInstall({program,authorization,client,jo
    },
    commit:async()=>{const result=await query('COMMIT');protocol(client,true);return result},rollback:async()=>{const result=await query('ROLLBACK',true);protocol(client,true);return result},quarantine:()=>{quarantined=true},
   });
- }catch(error){primary=error;failureState=error.installState}
+ }catch(error){primary=error;failureState=error.installState;primaryDiagnostic=failureDiagnostics.get(error)??installationFailure('BOUND',null,error,null)}
  finally{
-  let timer;try{await Promise.race([Reflect.apply(originalEnd,client,[]),new Promise((_,reject)=>{timer=setTimeout(()=>{try{client.connection?.stream?.destroy()}catch{}reject(Error('CLIENT_CLOSE_TIMEOUT'))},5000);timer.unref?.()})]);closed=true}catch(error){primary=primary?new AggregateError([primary,error],'FRESH35_COMBINED_INSTALL_AND_CLOSE_FAILED'):error}finally{clearTimeout(timer)}
-  if(emit)try{await emit({state:'CLIENT_CLOSED',confirmed:closed,credentialsRevoked:false,clusterStopped:false})}catch(error){primary=primary?new AggregateError([primary,error],'FRESH35_COMBINED_CLOSE_JOURNAL_FAILED'):error}
+  let timer;try{await Promise.race([Reflect.apply(originalEnd,client,[]),new Promise((_,reject)=>{timer=setTimeout(()=>{try{client.connection?.stream?.destroy()}catch{}const error=Error('CLIENT_CLOSE_TIMEOUT');internalFailureCodes.set(error,'CLIENT_CLOSE_TIMEOUT');reject(error)},5000);timer.unref?.()})]);closed=true}catch(error){primaryDiagnostic??=installationFailure('CLOSE',null,error,null);primary=primary?new AggregateError([primary,error],'FRESH35_COMBINED_INSTALL_AND_CLOSE_FAILED'):error}finally{clearTimeout(timer)}
+  if(emit)try{await emit({state:'CLIENT_CLOSED',confirmed:closed,credentialsRevoked:false,clusterStopped:false})}catch(error){primaryDiagnostic??=installationFailure('CLOSE',null,error,null);primary=primary?new AggregateError([primary,error],'FRESH35_COMBINED_CLOSE_JOURNAL_FAILED'):error}
  }
- if(primary){if(!primary.installState)primary.installState=failureState??result?.state??'FAILED_NO_INSTALLED_RESULT';throw primary}
+ if(primary){failureDiagnostics.set(primary,primaryDiagnostic??installationFailure('UNKNOWN',null,primary,null));if(!primary.installState)primary.installState=failureState??result?.state??'FAILED_NO_INSTALLED_RESULT';throw primary}
  need(closed&&result?.state==='COMMITTED_UNPUBLISHED','COMMIT_AND_CLOSE_REQUIRED');
  const completion=Object.freeze({profile:'FRESH35_COMBINED_COMMITTED_RESULT_V1'});
  completions.set(completion,freeze({format:'FRESH35_COMBINED_INSTALL_COMPLETION_V1',state:'COMMITTED_UNPUBLISHED',program:descriptor,target:t,installedAt:new Date().toISOString(),catalogSha256:result.observation.sha256,catalogJson:result.observation.raw,journalDirectory,
