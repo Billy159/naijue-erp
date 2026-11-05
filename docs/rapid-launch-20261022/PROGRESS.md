@@ -1093,3 +1093,10 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 原T45 localOCI实际42.445秒终态exit2，回执f3b60202。准确本地镜像context已实际resolve/extract，原远程FROM阻塞在该路径解决；进入原install-locked.sh和APT更新，随后5项base版本高于原锁导致降级保护拒绝（lzma、pcre、ssl/provider、tzdata）。不把APT update正常接受当独立gpg或完整安装通过；原84deb下载/安装/ldd尚未通过，无派生镜像完成凭证或PG。
 - 原T45按C准确选择准备仅这5项base→原锁的受限方法后继，锁版本/base不变，原recipe/intent/日志保留；源码固定+原QB增量后沿同类预授权另绑新操作，不改flag重放旧key。
 - 全源核账当前仍待容量。C采用3,831,725,571字节排程预算及512MiB停止余量，它是保守预留并非实测峰值或虚构通过门槛。D3只对已就绪的r3受影响预检准备准确212/25外部参数并核资源，不能把来源核账未完成写成通过。
+
+
+### 精确5包后继固定、原合成演练接线与容量清理待批
+- 原T45精确5包后继两叶匹配b752e47f固定f2f0be08c4dbced9553aa67db6047aaece38ab48，原QB仅验新增降级guard及旧context/期限。原84锁/base不变；生成脚本先标准dpkg和完整solver精确匹配已核5项，才对原download-only/no-download命令加命令级许可，原SHA/最终版本/ldd不放宽。作者10本机模型通过，真实Debian/服务器未执行。
+- 原D1已接既有fixture/entry及两直接测试四叶唯一归属，补纯合成25/27并沿原rollback/replay/新连接readback。原a10业务22叶冻结；fixture也在source pins内，最终PG须重新绑定后继真实sourceSet，不能把旧5b26或b362冒记为新演练。
+- 原D3新stream预检准备1536ae74完成，仅42文件435324字节固定a10闭包，无ledger/目标重读；旧索引末态2,667,474,944字节、全部约2,725,170,079字节，运行峰值未知，仍等容量，不从旧271失败索引造plan。
+- 原D2仅只读核本轮3旧构建导出源码+依赖，精确Git导出/当前锁依赖/9引用可恢复，无独有改动或可见占用；回执9133117a。账面约0.534GiB可能回收，APFS实际回收未知。按全局agents.md:63已向真人提交仅3目录清单，当前7393/源码/Git/原件/备份/所有日志与包保留；未批前不删除。隔离同类授权不扩大为本地任意清理。

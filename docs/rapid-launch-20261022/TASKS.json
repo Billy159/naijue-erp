@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T13:26:07.594062+00:00",
+  "updatedAt": "2026-11-05T13:39:32.542921+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28471,11 +28471,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "25 frozen accepted; precise current-source PhaseB/25 synthetic fixture seams handoff in progress",
-      "D2": "7393/212 actual full build+pack/readback PASS adopted with25 source QA; idle pending next necessary fixed input",
-      "D3": "Full source-reconcile capacity held; prepares affected r3 preflight exact212 proof options and checks prior resource before actualrun",
-      "T45": "Actual OCI context PASS, locked apt exact5 downgrade rejected; prepares minimal method successor no retry/PG",
-      "QB": "25 a10 PASS adopted; next exact T45 dependency increment or synthetic fixture only when fixed"
+      "D1": "Implementing exact four-leaf original fixture/entry synthetic25 variant; a10 business22 frozen",
+      "D2": "Exact3 full old-build exports readonly cleanup candidate9133117a complete; no deletion, current7393 retained",
+      "D3": "Fixed a10 streampreflight preparation1536ae74 done; both actual source reconciliation and preflight held for safe capacity",
+      "T45": "Exact5 downgrade original successor two leaves f2f0be08 fixed, QB increment running; no actual next build or PG",
+      "QB": "Exact5 f2f0be08 bounded guard increment active; original25 PASS retained"
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28662,7 +28662,7 @@
       "offlineBuildExitCode": 1,
       "offlineElapsedSeconds": 15.561,
       "nextMethodReceiptSHA256": "796e27607efa827dc1732dd3f226a4a6e190cfceb9b87dcd27c56788a62003e9",
-      "next": "Original T45 prepare precise5 downgrade method successor; preserve84 versions/base and oldrecipe; QB increment then accurate new isolated plan, no automatic replay",
+      "next": "QB exact5 guard and original contexts/deadlines; C exact new plan then T45 one bounded image build; no production/PG",
       "localContextCommit": "91b08259dab3d51e511954a5992f90626568dfcc",
       "localContextReviewSHA256": "8d4e96c154eea85abf8835373a8c177997332a69fa2050d326abf13b15cd4b53",
       "localContextPlanSHA256": "a661d95e58f607a04135bfa01724e79736042fcd4a7b8f63fdd04edeab8e13ec",
@@ -28675,7 +28675,13 @@
       "localContextElapsedSeconds": 42.444889809936285,
       "FROMMetadataBlockerResolvedOnThisPath": true,
       "APTLockedDependenciesAndLddPassed": false,
-      "derivedImageReceiptCreated": false
+      "derivedImageReceiptCreated": false,
+      "exactFiveOpsCommit": "f2f0be08c4dbced9553aa67db6047aaece38ab48",
+      "exactFiveOpsSHA256": "3d9a53d6712df7e508842f5a8399897aa50174800404a487ef8a4d4e5fdc1a4b",
+      "exactFiveReadySHA256": "b752e47f0a8614b29dbb85399a0a6dcce4ab78cb7df057ad84d97393469ec330",
+      "exactFiveRecipeSHA256": "d3279106d2281925dc3c628f1183fe85a5e6ad5175ae12503ecb9a99074436e6",
+      "exactFiveState": "FIXED_TWO_LEAVES_PENDING_ORIGINAL_QB_INCREMENT_NO_SERVER_RUN",
+      "exactFiveChecks": "10 affected local shell/awk models; dpkg supplied by test fixture, not actual Debian validation"
     },
     "packagingDecisions": {
       "owner": "D2",
@@ -28816,6 +28822,36 @@
       "businessScope": "Only original25 headers/27 complete settlements as approved human call4adb item0; no ordinary SAVE/APPROVE or source batch change",
       "realPG": false,
       "reviewSHA256": "1e3e6f471863babf3abf2144adc9c7c3d2e229c556d14e9b31041ecb0ddbddf1"
+    },
+    "phaseBCurrent25SyntheticContinuation": {
+      "owner": "D1",
+      "state": "IMPLEMENTING_FOUR_EXACT_LEAVES",
+      "files": [
+        "tests/fixtures/unified-import/whole-package-synthetic.ts",
+        "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+        "tests/fresh35-isolated-entry.test.mjs",
+        "tests/fixtures/unified-import/whole-package-fresh35-synthetic.test.mjs"
+      ],
+      "purpose": "Same original isolated fixture/entry synthetic25 headers27 payments plus original normal1/1, rollback/replay/new connection readback; no real data, new PG or testing platform",
+      "requiresNewFinalSourceSet": true,
+      "old212NotFinalTestAuthority": true,
+      "actualPG": false
+    },
+    "capacityCleanupCandidate": {
+      "state": "EXACT_THREE_OLD_BUILD_EXPORTS_AWAITING_HUMAN_CONFIRMATION",
+      "owner": "C; original D2 prepared readonly verification",
+      "reportSHA256": "9133117af69ada025f5e7665c1e94c3f5f03b5d4ebe9b772f1ae89a42f3d8276",
+      "candidateRootNames": [
+        "source-aca775575a95",
+        "source-cd3372b05d85",
+        "source-2bbc27152e96"
+      ],
+      "scope": "Only original D2 full-erp-build exact3 old exports; current source-7393, Git objects,reference inputs, all logs/manifests/packed,real data/backups retained",
+      "deletePerformed": false,
+      "reportedNonsharedCandidateAllocatedBytes": 573202432,
+      "actualReclaimableBytes": null,
+      "sameRiskIsolationApprovalDoesNotExpandToLocalDeletion": true,
+      "approvalRequiredBy": "/Users/billy/Desktop/Workspace/agents.md:63"
     }
   }
 }
