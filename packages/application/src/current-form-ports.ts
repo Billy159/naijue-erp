@@ -17,7 +17,8 @@ export type CurrentSalesReferenceQuery = CurrentFormSearch & (
   { readonly kind: "hall"; readonly hallId: null }
   /** Explicit null selects shared in-job staff references without inventing a sales hall. */
   | { readonly kind: "salesperson"; readonly hallId: EntityId<"hall"> | null }
-  | { readonly kind: "customer" | "warehouse" | "paymentMethod"; readonly hallId: EntityId<"hall"> }
+  | { readonly kind: "customer" | "warehouse"; readonly hallId: EntityId<"hall"> }
+  | { readonly kind: "paymentMethod"; readonly hallId: EntityId<"hall"> | null }
   | { readonly kind: "paymentAccount"; readonly hallId: EntityId<"hall">; readonly paymentMethodId: EntityId<"paymentMethod"> }
 );
 export interface CurrentSalesReferenceItem {

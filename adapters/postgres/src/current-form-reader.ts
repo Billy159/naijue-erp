@@ -1,3 +1,6 @@
+import { checkedOrdinaryDocumentListOptions, type OrdinaryDocumentRuntime27Capability } from './ordinary-document-list-reader.ts';
+import { assertStandard27CreatedBarcodeAggregate, assertStandard27ImportedBarcodeAggregate } from './standard27-created-barcode-proof.ts';
+import { standardRootProofSql } from "./standard-catalogue-completeness27.ts";
 import { historicalCustomerExclusionEnabled } from "./party-read-reader.ts";
 import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import { readCurrentRecentAccount } from "./current-account-recommendations.ts";
@@ -52,6 +55,51 @@ function assertExact26BarcodeSchema(value: unknown): void {
       return descriptor?.enumerable && Object.hasOwn(descriptor, "value") && descriptor.value === i + 1;
     }).every(Boolean), "CURRENT_FORM_READ_UNAVAILABLE", "Exact complete independently reviewed barcode schema26 required");
 }
+/** Host verification seam only. No issuer is provided: the host must prove the exact
+ * target, 27 schema, SELECT/RLS, immutable source/receipt/audit guards and source
+ * bodies on this very connection. The branch accepts unchanged imported roots only. */
+export interface CurrentFormBarcode27Capability {
+  readonly profile: "EXACT27"; readonly contract: "STANDARD_BARCODE_READ27_V1";
+  readonly assertReady: (client: object, purpose: "BARCODE_READ") => Promise<void>;
+}
+function checkedBarcode27(value: CurrentFormBarcode27Capability | undefined): CurrentFormBarcode27Capability | undefined {
+  if (value === undefined) return undefined;
+  if (!value || typeof value !== "object" || Object.getPrototypeOf(value)!==Object.prototype || Reflect.ownKeys(value).length!==3) throw new TypeError("Explicit barcode27 host capability required");
+  const profile=Object.getOwnPropertyDescriptor(value,"profile"), contract=Object.getOwnPropertyDescriptor(value,"contract"), verify=Object.getOwnPropertyDescriptor(value,"assertReady");
+  if (!profile?.enumerable || !("value" in profile) || profile.value!=="EXACT27" || !contract?.enumerable || !("value" in contract) || contract.value!=="STANDARD_BARCODE_READ27_V1" || !verify?.enumerable || !("value" in verify) || typeof verify.value!=="function") throw new TypeError("Closed barcode27 host capability required");
+  return Object.freeze({profile:"EXACT27",contract:"STANDARD_BARCODE_READ27_V1",async assertReady(client:object,purpose:"BARCODE_READ") { const result:unknown=await verify.value(client,purpose); if(result!==undefined)throw new TypeError("Barcode27 host verification must throw on failure"); }});
+}
+/** Independent host contract for aggregate fallback, never manufactured from
+ * the basic barcode capability. The same snapshot must see the full published
+ * source, receipt/audit, product, SKU, barcode and image sets with verified
+ * immutable guards, unfiltered RLS, schema and role. No issuer is supplied. */
+export interface CurrentFormBarcodeAggregate27Capability {
+ readonly profile:"EXACT27";readonly contract:"STANDARD_BARCODE_AGGREGATE_READ27_V1";
+ readonly assertReady:(client:object,purpose:"BARCODE_AGGREGATE_READ")=>Promise<void>;
+}
+function checkedBarcodeAggregate27(value:CurrentFormBarcodeAggregate27Capability|undefined):CurrentFormBarcodeAggregate27Capability|undefined {
+ if(value===undefined)return undefined;
+ if(!value||typeof value!=="object"||Object.getPrototypeOf(value)!==Object.prototype||Reflect.ownKeys(value).length!==3)throw new TypeError("Explicit barcode aggregate host capability required");
+ const p=Object.getOwnPropertyDescriptor(value,"profile"),c=Object.getOwnPropertyDescriptor(value,"contract"),v=Object.getOwnPropertyDescriptor(value,"assertReady");
+ if(!p?.enumerable||!("value" in p)||p.value!=="EXACT27"||!c?.enumerable||!("value" in c)||c.value!=="STANDARD_BARCODE_AGGREGATE_READ27_V1"||!v?.enumerable||!("value" in v)||typeof v.value!=="function")throw new TypeError("Closed barcode aggregate host capability required");
+ return Object.freeze({profile:"EXACT27",contract:"STANDARD_BARCODE_AGGREGATE_READ27_V1",async assertReady(client:object,purpose:"BARCODE_AGGREGATE_READ"){const result:unknown=await v.value(client,purpose);if(result!==undefined)throw new TypeError("Aggregate host verification must throw on failure");}});
+}
+/** Derive only fixed literal SQL variants from the existing reviewed V1 source
+ * reconstruction. READ ONLY forbids the transaction proof's FOR SHARE. */
+function barcode27ProofSql(kind:"PRODUCT"|"SKU"|"SKU_BARCODE"):string {
+  let sql=standardRootProofSql(kind==="SKU_BARCODE"?"SKU":kind);
+  const replaceOnce=(source:string, oldValue:string, nextValue:string):string=>{
+    if(source.split(oldValue).length!==2) throw new TypeError("Barcode27 source proof template changed");
+    return source.replace(oldValue,nextValue);
+  };
+  sql=replaceOnce(sql," FOR SHARE OF p","");
+  if(kind==="SKU_BARCODE") {
+    if(sql.split("naijue_erp.sku").length!==3 || sql.split("'SKU'").length!==4) throw new TypeError("Barcode27 SKU proof template changed");
+    sql=sql.replaceAll("naijue_erp.sku", "naijue_erp.sku_barcode").replaceAll("'SKU'", "'SKU_BARCODE'");
+    sql=replaceOnce(sql,"p.id AS sku_id, p.product_id,", "p.id AS barcode_id, p.sku_id,");
+  }
+  return replaceOnce(sql,"/* standard-catalogue27:exact-imported-", "/* current-form:barcode27-proof standard-catalogue27:exact-imported-");
+}
 function hallPredicate(column: string, grant: CurrentFormReadGrant, values: unknown[]): string {
   if (grant.kind === "all") return "TRUE";
   values.push([...grant.hallIds]); return `${column} = ANY($${values.length}::uuid[])`;
@@ -61,6 +109,12 @@ const SKU_JOINS = `FROM naijue_erp.sku s JOIN naijue_erp.product p ON p.id = s.p
   JOIN naijue_erp.size sz ON sz.id = s.size_id
   JOIN naijue_erp.size_group_member m ON m.size_group_id = p.size_group_id AND m.size_id = s.size_id`;
 const SKU_ENABLED = "s.enabled AND p.enabled AND c.enabled AND f.enabled";
+// Retained deletions are specific to the verified ordinary27 runtime. Earlier
+// schema profiles keep their existing enabled-only publication semantics.
+const PRODUCT_RETAINED27 = `p.deleted_at IS NULL AND NOT EXISTS (SELECT 1 FROM naijue_erp.product_category pc_retained
+  WHERE pc_retained.id=p.category_id AND pc_retained.deleted_at IS NOT NULL)`;
+const SKU_RETAINED27 = `${PRODUCT_RETAINED27} AND c.deleted_at IS NULL AND f.deleted_at IS NULL`;
+
 const SKU_COLUMNS = `s.id, s.sku_code, s.product_id, p.product_code, p.name AS product_name,
   s.color_id, c.name AS color_name, s.fit_id, f.name AS fit_name, s.size_id, sz.name AS size_name,
   p.size_group_id, m.size_id AS member_size_id, s.enabled AS sku_enabled, p.enabled AS product_enabled,
@@ -87,13 +141,22 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
   private readonly recommendationTimeoutMillis: number;
   private readonly excludeHistoricalCustomers: boolean;
   private readonly runtime26: NativeRuntime26Capability | undefined;
-  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization, options?: { readonly recommendationTimeoutMillis?: number; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability }) {
+  private readonly runtime27Ordinary: OrdinaryDocumentRuntime27Capability | undefined;
+  private readonly runtime27Barcode: CurrentFormBarcode27Capability | undefined;
+  private readonly runtime27BarcodeAggregate: CurrentFormBarcodeAggregate27Capability | undefined;
+  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization, options?: { readonly recommendationTimeoutMillis?: number; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability; readonly runtime27Barcode?: CurrentFormBarcode27Capability; readonly runtime27BarcodeAggregate?: CurrentFormBarcodeAggregate27Capability; readonly runtime27Ordinary?: OrdinaryDocumentRuntime27Capability }) {
     if (typeof pool?.connect !== "function" || typeof authorization?.authorize !== "function")
       throw new TypeError("Current forms require an explicit PostgreSQL pool and trusted form authorization provider");
     const timeout = options?.recommendationTimeoutMillis ?? 250;
     if (!Number.isInteger(timeout) || timeout < 1 || timeout > 1000) throw new TypeError("Optional account recommendation timeout must be an integer from 1 through 1000 milliseconds");
     this.excludeHistoricalCustomers = historicalCustomerExclusionEnabled(pool, options?.historicalCustomerExclusion ?? null);
     this.runtime26 = checkedNativeRuntime26Capability(options?.runtime26);
+    this.runtime27Ordinary = options?.runtime27Ordinary ? checkedOrdinaryDocumentListOptions({profile: "source-confirmed-unified-native-v1", runtime27: options.runtime27Ordinary}).runtime27 : undefined;
+    if (this.runtime26 && this.runtime27Ordinary) throw new TypeError("Conflicting current form runtime profiles");
+    this.runtime27Barcode = checkedBarcode27(options?.runtime27Barcode);
+    this.runtime27BarcodeAggregate = checkedBarcodeAggregate27(options?.runtime27BarcodeAggregate);
+    if(this.runtime27BarcodeAggregate && !this.runtime27Barcode) throw new TypeError("Barcode aggregate proof requires its barcode27 host capability");
+    if(this.runtime26 && this.runtime27Barcode) throw new TypeError("Conflicting current form runtime profiles");
     this.pool = pool; this.authorize = authorization.authorize.bind(authorization); this.recommendationTimeoutMillis = timeout;
   }
   private async identity(query: Query, actor: ActorContext): Promise<CurrentFormIdentity> {
@@ -117,9 +180,14 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
     const query: Query = async (sql, values = []) => { activeCurrentFormRead(signal); const result = await client.query(sql, values); activeCurrentFormRead(signal); return result; };
     try {
       if (this.runtime26) await this.runtime26.assertReady(client, "CURRENT_FORM_READ");
+      if (this.runtime27Barcode && intent.kind === "barcode") await this.runtime27Barcode.assertReady(client, "BARCODE_READ");
+      if (this.runtime27BarcodeAggregate && intent.kind === "barcode") await this.runtime27BarcodeAggregate.assertReady(client, "BARCODE_AGGREGATE_READ");
       // Mark acknowledged transaction state before checking a cancellation after BEGIN.
       activeCurrentFormRead(signal); await client.query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true; activeCurrentFormRead(signal);
+      if (this.runtime27Ordinary && (intent.kind === "products" || intent.kind === "saved-edit-sku-batch" || intent.kind === "product-skus" || intent.kind === "sku-batch" || intent.kind === "barcode")) await this.runtime27Ordinary.assertReady(client, "ORDINARY_DOCUMENT_READ");
       if (this.runtime26) await this.runtime26.assertReady(client, "CURRENT_FORM_READ");
+      if (this.runtime27Barcode && intent.kind === "barcode") await this.runtime27Barcode.assertReady(client, "BARCODE_READ");
+      if (this.runtime27BarcodeAggregate && intent.kind === "barcode") await this.runtime27BarcodeAggregate.assertReady(client, "BARCODE_AGGREGATE_READ");
       const identity = await this.identity(query, trusted);
       const grant = checkedCurrentFormGrant(await this.authorize(Object.freeze({ actor: trusted, identity }), Object.freeze(intent), signal));
       activeCurrentFormRead(signal); const result = await work(query, identity, grant); activeCurrentFormRead(signal); committing = true;
@@ -297,18 +365,20 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
         JOIN naijue_erp.size sz ON sz.id=s.size_id
         JOIN naijue_erp.size_group_member sm ON sm.size_group_id=p.size_group_id AND sm.size_id=s.size_id
         WHERE s.product_id=p.id AND s.enabled AND sc.enabled AND sf.enabled
-          AND NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+          ${this.runtime27Ordinary ? "AND sc.deleted_at IS NULL AND sf.deleted_at IS NULL" : ""}
+          ${this.runtime27Ordinary ? '' : `AND NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
             WHERE ib.status<>'IMPORTED' AND src.entity_type='SKU'
-              AND src.field_provenance->'native_sku_import'->>'native_sku_id'=s.id::text)
+              AND src.field_provenance->'native_sku_import'->>'native_sku_id'=s.id::text)`}
           AND (strpos(lower(s.sku_code), lower($1::text)) > 0 OR EXISTS (
             SELECT 1 FROM naijue_erp.sku_barcode b WHERE b.sku_id=s.id AND b.enabled AND b.barcode_kind IN ('MAIN','CONFIRMED_OLD')
               AND strpos(lower(b.barcode), lower($1::text)) > 0
-              AND NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+              ${this.runtime27Ordinary ? '' : `AND NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
                 WHERE ib.status<>'IMPORTED' AND src.entity_type='BARCODE'
-                  AND src.field_provenance->>'native_sku_id'=s.id::text AND src.field_provenance->>'native_barcode'=b.barcode))))`;
+                  AND src.field_provenance->>'native_sku_id'=s.id::text AND src.field_provenance->>'native_barcode'=b.barcode)`})))`;
       return this.page(query, parameters, "FROM naijue_erp.product p LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id", `p.enabled AND
-        NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
-          WHERE ib.status<>'IMPORTED' AND src.entity_type='PRODUCT' AND src.field_provenance->>'native_product_id'=p.id::text) AND
+        ${this.runtime27Ordinary ? `${PRODUCT_RETAINED27} AND` : ""}
+        ${this.runtime27Ordinary ? 'TRUE' : `NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+          WHERE ib.status<>'IMPORTED' AND src.entity_type='PRODUCT' AND src.field_provenance->>'native_product_id'=p.id::text)`} AND
         (strpos(lower(p.product_code), lower($1::text)) > 0 OR strpos(lower(p.name), lower($1::text)) > 0${codes})`,
         "p.id, p.product_code, p.name, p.retail_price::text, p.enabled, p.size_group_id, p.category_id, pc.name AS category_name", `p.product_code COLLATE "C", p.id`, [parameters.search], product);
     });
@@ -317,7 +387,7 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
     const parameters = parseCurrentFormProductSkuQuery(input);
     return this.snapshot(actor, { kind: "product-skus", parameters }, signal, async (query, identity, grant) => {
       await this.formContext(query, identity, grant, parameters.context);
-      return this.page(query, parameters, SKU_JOINS, `${SKU_ENABLED} AND s.product_id = $1::uuid`, SKU_COLUMNS, SKU_ORDER, [parameters.productId], row => {
+      return this.page(query, parameters, SKU_JOINS, `${SKU_ENABLED}${this.runtime27Ordinary ? ` AND ${SKU_RETAINED27}` : ""} AND s.product_id = $1::uuid`, SKU_COLUMNS, SKU_ORDER, [parameters.productId], row => {
         const result = sku(row); requireDomain(result.productId === parameters.productId, "INVALID_DATABASE_VALUE", "SKU does not match target product"); return result;
       });
     });
@@ -331,7 +401,7 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
   }
   private async skuBatchFacts(query: Query, parameters: CurrentFormSkuBatchQuery): Promise<readonly CurrentFormSku[]> {
     const rows = (await query(`/* current-form:sku-batch */ SELECT ${SKU_COLUMNS} ${SKU_JOINS}
-        WHERE ${SKU_ENABLED} AND s.id = ANY($1::uuid[]) ORDER BY s.id LIMIT $2`, [[...parameters.skuIds].sort(), parameters.skuIds.length + 1])).rows;
+        WHERE ${SKU_ENABLED}${this.runtime27Ordinary ? ` AND ${SKU_RETAINED27}` : ""} AND s.id = ANY($1::uuid[]) ORDER BY s.id LIMIT $2`, [[...parameters.skuIds].sort(), parameters.skuIds.length + 1])).rows;
     // Deliberately do not disclose which requested SKU was disabled/missing.
     requireDomain(rows.length === parameters.skuIds.length, "SKU_UNAVAILABLE", "Requested current SKU facts are unavailable");
     const items = rows.map(sku); const byId = new Map(items.map(row => [row.id, row]));
@@ -352,8 +422,9 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
         p.retail_price::text, p.enabled, p.size_group_id, p.category_id, pc.name AS category_name
         FROM naijue_erp.product p LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id
         WHERE p.id = ANY($1::uuid[]) AND p.enabled AND
-        NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
-          WHERE ib.status<>'IMPORTED' AND src.entity_type='PRODUCT' AND src.field_provenance->>'native_product_id'=p.id::text)
+        ${this.runtime27Ordinary ? `${PRODUCT_RETAINED27} AND` : ""}
+        ${this.runtime27Ordinary ? 'TRUE' : `NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+          WHERE ib.status<>'IMPORTED' AND src.entity_type='PRODUCT' AND src.field_provenance->>'native_product_id'=p.id::text)`}
         ORDER BY p.id LIMIT $2`, [[...productIds].sort(), productIds.length + 1])).rows;
       const admitted = new Map<EntityId<"product">, CurrentFormProduct>();
       for (const row of rows) {
@@ -377,7 +448,8 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
       requireDomain(schema.length === 1, "CURRENT_FORM_READ_UNAVAILABLE", "Reviewed exact barcode source schema required");
       // The default remains exact19. Only an explicit same-client runtime26
       // proof admits exact1..26; neither path exposes unpublished bindings.
-      if (this.runtime26) assertExact26BarcodeSchema(schema[0]!.versions);
+      if (this.runtime27Barcode || this.runtime27Ordinary) { const v=schema[0]!.versions; requireDomain(Array.isArray(v) && Object.getPrototypeOf(v)===Array.prototype && Reflect.ownKeys(v).length===28 && v.length===27 && Array.from({length:27},(_,i)=>{const d=Object.getOwnPropertyDescriptor(v,String(i));return !!d?.enumerable && "value" in d && d.value===i+1;}).every(Boolean), "CURRENT_FORM_READ_UNAVAILABLE", "Exact complete independently reviewed barcode schema27 required"); }
+      else if (this.runtime26) assertExact26BarcodeSchema(schema[0]!.versions);
       else assertHistoryPublicationSchema19(schema[0]!.versions);
       const context = parameters.context;
       if (context.kind === "SALES") await this.salesHall(query, identity, grant, context.hallId);
@@ -399,9 +471,9 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
       const rows = (await query(`/* current-form:barcode */ SELECT b.id binding_id,b.barcode,b.barcode_kind,b.enabled binding_enabled,
         ${SKU_COLUMNS}, (to_jsonb(p)->>'deleted_at' IS NULL AND to_jsonb(c)->>'deleted_at' IS NULL AND to_jsonb(f)->>'deleted_at' IS NULL
           AND NOT EXISTS(SELECT 1 FROM naijue_erp.product_category pc WHERE pc.id=p.category_id AND to_jsonb(pc)->>'deleted_at' IS NOT NULL)) references_retained,
-        NOT EXISTS(SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+        ${this.runtime27Barcode || this.runtime27Ordinary ? "NULL::boolean" : `NOT EXISTS(SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
           WHERE ib.status<>'IMPORTED' AND ((src.entity_type='SKU' AND src.field_provenance->'native_sku_import'->>'native_sku_id'=s.id::text)
-            OR (src.entity_type='BARCODE' AND src.field_provenance->>'native_sku_id'=s.id::text AND src.field_provenance->>'native_barcode'=b.barcode))) source_published
+            OR (src.entity_type='BARCODE' AND src.field_provenance->>'native_sku_id'=s.id::text AND src.field_provenance->>'native_barcode'=b.barcode)))`} source_published
         ${SKU_JOINS.replace("JOIN naijue_erp.size_group_member", "LEFT JOIN naijue_erp.size_group_member")}
         JOIN naijue_erp.sku_barcode b ON b.sku_id=s.id
         WHERE b.barcode COLLATE "C"=$1::text COLLATE "C" LIMIT 2`, [parameters.barcode])).rows;
@@ -411,8 +483,28 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
       const bindingId = id("barcode", row.binding_id);
       requireDomain(row.barcode === parameters.barcode && (row.barcode_kind === "MAIN" || row.barcode_kind === "CONFIRMED_OLD"),
         "INVALID_DATABASE_VALUE", "Exact retained barcode identity changed");
+      if (this.runtime27Barcode) {
+        let baselineValid=true;
+        for (const [kind, target] of [["SKU_BARCODE",bindingId],["SKU",row.id],["PRODUCT",row.product_id]] as const) {
+          const proof=(await query(barcode27ProofSql(kind),[[target],2,[]])).rows;
+          if(proof.length!==1 || proof[0]!.root_id!==target || proof[0]!.proof_valid!==true) { baselineValid=false; break; }
+        }
+        if(!baselineValid) {
+          if(!this.runtime27BarcodeAggregate) return empty("UNAVAILABLE");
+          const productId=id("product",row.product_id), skuId=id("sku",row.id);
+          const counts=(await query("/* barcode27-aggregate:source-mode */ SELECT count(*)::text AS source_count FROM naijue_erp.import_record WHERE target_type='PRODUCT' AND target_id=$1::uuid",[productId])).rows;
+          if(counts.length!==1 || (counts[0]!.source_count!=="0" && counts[0]!.source_count!=="1")) return empty("UNAVAILABLE");
+          try {
+            if(counts[0]!.source_count==="1") await assertStandard27ImportedBarcodeAggregate(query,productId,bindingId,skuId);
+            else await assertStandard27CreatedBarcodeAggregate(query,productId,bindingId,skuId);
+          } catch(error) {
+            if(error instanceof DomainError && error.code==="CURRENT_FORM_READ_UNAVAILABLE") return empty("UNAVAILABLE");
+            throw error;
+          }
+        }
+      }
       if (!booleanValue(row.binding_enabled) || !booleanValue(row.sku_enabled) || !booleanValue(row.product_enabled)
-        || !booleanValue(row.color_enabled) || !booleanValue(row.fit_enabled) || !booleanValue(row.references_retained) || !booleanValue(row.source_published)
+        || !booleanValue(row.color_enabled) || !booleanValue(row.fit_enabled) || !booleanValue(row.references_retained) || (!this.runtime27Barcode && !this.runtime27Ordinary && !booleanValue(row.source_published))
         || row.member_size_id !== row.size_id) return empty("UNAVAILABLE");
       return Object.freeze({ state: "FOUND", barcode: parameters.barcode, binding: Object.freeze({ id: bindingId, kind: row.barcode_kind }), sku: sku(row) });
     });

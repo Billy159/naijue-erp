@@ -19,9 +19,20 @@ const forbidden = (name: string): boolean => name.startsWith(".")
 const mime: Readonly<Record<string, string>> = Object.freeze({ ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg", ".webp": "image/webp", ".gif": "image/gif", ".ico": "image/x-icon", ".woff": "font/woff", ".woff2": "font/woff2" });
-function safeRelative(value: string): boolean {
-  return value.length > 0 && value.length < 2048 && !/[\\\u0000-\u001f\u007f]/.test(value)
-    && value.split("/").every(segment => segment.length > 0 && segment !== "." && segment !== ".." && !forbidden(segment));
+function safeRelative(value: string, directory = false): boolean {
+  const segments = value.split("/");
+  // This emitted public directory is not a source tree. Permit only traversal
+  // of that exact root directory and its direct compiled CSS files.
+  const compiledStyles = segments[0] === "source-styles" && (directory ? segments.length === 1
+    : segments.length === 2 && path.extname(segments[1]!) === ".css");
+  // The trusted emitted graph also has this compiled helper chunk. Keep the
+  // exception to its exact two-segment esbuild hashed JS shape; source trees,
+  // other source-prefixed names and source maps remain forbidden.
+  const compiledSourceHelper = !directory && segments.length === 2 && segments[0] === "chunks"
+    && /^source-helpers-[A-Z0-9]{8}\.js$/.test(segments[1]!);
+  return value.length > 0 && value.length < 2048 && !/[\\\x00-\x1f\x7f]/.test(value)
+    && segments.every((segment, index) => segment.length > 0 && segment !== "." && segment !== ".."
+      && (!forbidden(segment) || index === 0 && compiledStyles || index === 1 && compiledSourceHelper));
 }
 /** Capture only bounded emitted public asset bytes before listening. No request-time filesystem reads. */
 async function captureBuild(root: string, entry: string): Promise<ReadonlyMap<string, { readonly bytes: Buffer; readonly type: string }>> {
@@ -40,7 +51,7 @@ async function captureBuild(root: string, entry: string): Promise<ReadonlyMap<st
       const absolute = path.join(directory, item.name), relative = prefix + item.name;
       const stat = await lstat(absolute);
       if (stat.isSymbolicLink()) throw new TypeError("Build output may not contain symbolic links");
-      if (!safeRelative(relative)) continue; // Never read/serve source, provenance, incoming, key or dot entries.
+      if (!safeRelative(relative, stat.isDirectory())) continue; // Never read/serve source, provenance, incoming, key or dot entries.
       if (stat.isDirectory()) { await walk(absolute, relative + "/"); continue; }
       const type = mime[path.extname(relative).toLowerCase()];
       if (!stat.isFile() || !type) continue; // In particular no TS/TSX/maps/CSV/archives/certificates.

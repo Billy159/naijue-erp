@@ -83,6 +83,6 @@ test('scheme positioning does not replace historical facts with Demo placeholder
  assert.ok(scheme.includes('{scheme.ruleDescription}'));
  assert.ok(scheme.includes("{scheme.codeLength === null ? '未知' : `${scheme.codeLength} 位`}"));
  assert.ok(scheme.includes("{scheme.applicability ?? '未知'}"));
- assert.ok(scheme.includes('历史商品使用已确认的条码记录，商品段采用 T+ 存货默认条码完整原值。历史数据已定稿，不自动重新生成条码。2026 方案用于新增商品。'));
+ assert.ok(scheme.includes('历史方案使用已确认的来源条码与对应映射；仅为本次指定且资料完整的规格生成，不重编已有条码。2026 方案使用数字版型码和手工系统货号。'));
  assert.ok(scheme.includes("'结构未提供；保留原说明，不按当前规则推断或重建历史条码。'"));
 });

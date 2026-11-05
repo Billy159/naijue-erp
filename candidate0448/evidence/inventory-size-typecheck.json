@@ -1,8 +1,0 @@
-{
-  "extends": "../tsconfig.json",
-  "files": [
-    "../packages/application/src/inventory-query-response.ts",
-    "../tests/inventory-query.test.ts"
-  ],
-  "include": []
-}

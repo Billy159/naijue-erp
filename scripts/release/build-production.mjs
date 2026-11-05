@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, releaseContract, releaseContractSource, ReleaseError } from './manifest.mjs';
+import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, releaseContract, releaseContractSource, ReleaseError, native35Closure, native35Contract } from './manifest.mjs';
 
 const FRONTEND_BUILDER = 'apps/web/demo-replica/build-production-host.mjs';
 const FRONTEND_ENTRY = releaseContract.entrypoints.frontend.source;
@@ -134,8 +134,8 @@ export async function buildProduction(options) {
   requireRelease(!within(buildRoot, publicConfig) && !within(manifestDirectory, publicConfig), 'PUBLIC_CONFIGURATION_OUTPUT_OVERLAP');
   const dependencies = await lockedDependencies(sourceRoot);
   const selected = new Map();
-  async function select(name, expected) {
-    assertGraphName(name); const bytes = await boundedFile(sourceRoot, name);
+  async function select(name, expected, native=false) {
+    if(!native)assertGraphName(name); const bytes = await boundedFile(sourceRoot, name);
     const record = { path: name, bytes: bytes.length, sha256: sha256(bytes) };
     if (expected) { checkedRecord(expected); matches(bytes, expected); }
     if (name.startsWith('node_modules/')) await dependencies.checkInput(name);
@@ -159,10 +159,16 @@ export async function buildProduction(options) {
   for (const record of webManifest.outputs) { checkedRecord(record); matches(await boundedFile(buildRoot, 'web/' + record.path), record); }
   const esbuild = await import(pathToFileURL(path.join(sourceRoot, 'node_modules/esbuild/lib/main.js')).href);
   await mkdir(path.join(buildRoot, 'backend'));
+  let native35Needed=false;
   const result = await esbuild.build({ absWorkingDir: sourceRoot, entryPoints: [BACKEND_ENTRY],
     outfile: path.join(buildRoot, releaseContract.entrypoints.backend.member), bundle: true, packages: 'external', platform: 'node', target: 'node24',
     format: 'esm', metafile: true, sourcemap: false, logLevel: 'silent',
     plugins: [{ name: 'frozen-backend-inputs', setup(build) {
+      build.onResolve({filter:/fresh35-host-session\.mjs$/},args=>{
+        const relative=path.relative(sourceRoot,path.resolve(args.resolveDir,args.path)).split(path.sep).join('/');
+        requireRelease(relative===native35Contract.entry && ['apps/api/src/postgres-read-api.ts','adapters/postgres/src/runtime27-command-issuer.ts'].includes(path.relative(sourceRoot,args.importer).split(path.sep).join('/')), 'NATIVE35_EXACT_BOUNDARY_REQUIRED');
+        native35Needed=true;return {path:native35Contract.external,external:true};
+      });
       build.onLoad({ filter: /\.(?:[cm]?js|tsx?|json)$/ }, async args => {
         const name = path.relative(sourceRoot, args.path).split(path.sep).join('/');
         await select(name); const contents = await boundedFile(sourceRoot, name);
@@ -170,6 +176,14 @@ export async function buildProduction(options) {
         return { contents, loader: ['mjs', 'cjs'].includes(extension) ? 'js' : extension };
       });
     } }] });
+  let native35;
+  if(native35Needed){
+    const closure=await native35Closure(sourceRoot,options.native35ReferenceDirectory);
+    native35={referenceDirectory:options.native35ReferenceDirectory,closure};
+    for(const pin of closure.pins){const original=frozen.records.get(pin.path);requireRelease(original && original.sha256===pin.sha256,'NATIVE35_FROZEN_SOURCE_REQUIRED');
+      await select(pin.path,undefined,true);const member=native35Contract.root+'/'+pin.path;
+      await mkdir(path.dirname(path.join(buildRoot,member)),{recursive:true});await writeFile(path.join(buildRoot,member),await boundedFile(sourceRoot,pin.path),{flag:'wx'});}
+  }
   await writeFile(path.join(buildRoot, 'backend/metafile.json'), jsonBytes(result.metafile), { flag: 'wx' });
   const graphs = {}, graphOutputs = new Set();
   for (const [kind, workingDirectory, metafile, entrySource, entryOutput] of [
@@ -196,9 +210,10 @@ export async function buildProduction(options) {
   const files = [];
   for (const name of await walkFiles(buildRoot)) {
     const bytes = await boundedFile(buildRoot, name);
-    const role = ['web/metafile.json', 'web/metafile-raw.json', 'web/production-build.json', 'backend/metafile.json'].includes(name) ? 'evidence'
+    const role = name.startsWith(native35Contract.root+'/') ? 'native35' : ['web/metafile.json', 'web/metafile-raw.json', 'web/production-build.json', 'backend/metafile.json'].includes(name) ? 'evidence'
       : name.startsWith('web/') ? 'frontend' : name.startsWith('backend/') ? 'backend' : name.startsWith('migrations/') || [...runtimeSqlPatches.values()].includes(name) ? 'migration' : 'metadata';
     const record = { path: name, bytes: bytes.length, sha256: sha256(bytes), role, member: role === 'evidence' ? null : name };
+    if(role==='native35'){record.sourcePath=name.slice(native35Contract.root.length+1);record.native35Kind=/\.(?:py|psql|sql|json)$/.test(record.sourcePath)?'proof-read':'module';}
     if (role === 'metadata') record.sourcePath = name;
     if (role === 'migration') record.sourcePath = [...runtimeSqlPatches].find(([, member]) => member === name)?.[0]
       ?? 'adapters/postgres/migrations/' + path.basename(name);
@@ -216,7 +231,7 @@ export async function buildProduction(options) {
   requireRelease(sha256(await readFile(publicConfig)) === publicRead.sha256, 'PUBLIC_CONFIGURATION_CHANGED_DURING_BUILD');
   const source = { format: 'naijue-release-source-v1', buildId, sourceCommit, sourceRoot,
     files: [...selected.values()].sort((a, b) => a.path.localeCompare(b.path)) };
-  const build = { format: 'naijue-release-build-v1', buildId, sourceCommit, publicConfigurationSha256: publicRead.sha256, components: graphs, files };
+  const build = { ...(native35?{native35}:{}), format: 'naijue-release-build-v1', buildId, sourceCommit, publicConfigurationSha256: publicRead.sha256, components: graphs, files };
   const sourceManifest = path.join(manifestDirectory, 'source-manifest.json'), buildManifest = path.join(manifestDirectory, 'build-manifest.json');
   await writeFile(sourceManifest, jsonBytes(source), { flag: 'wx', mode: 0o600 });
   await writeFile(buildManifest, jsonBytes(build), { flag: 'wx', mode: 0o600 });
@@ -234,8 +249,8 @@ export async function buildProduction(options) {
 
 export async function main(args) {
   const names = new Map([['--source-root', 'sourceRoot'], ['--source-commit', 'sourceCommit'], ['--build-id', 'buildId'],
-    ['--public-config', 'publicConfig'], ['--build-root', 'buildRoot'], ['--manifest-dir', 'manifestDirectory']]);
-  requireRelease(args.length === 12, 'BUILD_USAGE'); const options = {};
+    ['--native35-reference-inputs', 'native35ReferenceDirectory'], ['--public-config', 'publicConfig'], ['--build-root', 'buildRoot'], ['--manifest-dir', 'manifestDirectory']]);
+  requireRelease(args.length === 12 || args.length === 14, 'BUILD_USAGE'); const options = {};
   for (let index = 0; index < args.length; index += 2) {
     const key = names.get(args[index]); requireRelease(key && !Object.hasOwn(options, key) && typeof args[index + 1] === 'string', 'BUILD_USAGE'); options[key] = args[index + 1];
   }

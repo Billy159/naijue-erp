@@ -60,7 +60,7 @@ export function parseCatalogueMaintenanceCommand(kindInput: CatalogueMaintenance
     if (typeof values.displayOrder !== "number" || !Number.isInteger(values.displayOrder) || values.displayOrder < -2147483648 || values.displayOrder > 2147483647) invalid();
     parsed = { name, parentId: values.parentId === null ? null : id(values.parentId), displayOrder: values.displayOrder };
   } else {
-    const code = text(values.code, 12); if (typeof values.enabled !== "boolean" || kind === "FIT" && !/^[A-Z]$/.test(code)) invalid(); parsed = { name, code, enabled: values.enabled };
+    const code = text(values.code, 12); if (typeof values.enabled !== "boolean" || kind === "FIT" && !/^[A-Z356789]$/.test(code)) invalid(); parsed = { name, code, enabled: values.enabled };
   }
   return action === "CREATE" ? { action, requestKey, values: parsed } : { action, requestKey, id: target!, expectedVersion: version as number, values: parsed };
 }

@@ -130,11 +130,11 @@ test("SYNTHETIC HTTP: proposed reference scope is checked by injected server aut
   const f = await setup(t); const value = draft(); value.settlements[0]!.paymentAccountId = sid("paymentAccount", 999);
   assert.equal((await f.post(save(value))).statusCode, 403); assert.equal(f.store.snapshot().headers.size, 0);
 });
-test("SYNTHETIC HTTP: historical cutoff modifications remain explicitly unsupported", async t => {
+test("SYNTHETIC HTTP: imported approved missing posting/anchor evidence stays an explicit conflict", async t => {
   const f = await setup(t); await f.post(save());
   f.store.seedCutoffHistory({ ...f.document(), header: { ...f.document().header, status: "APPROVED" } });
   const before = f.store.snapshot(); const response = await f.command("UNAPPROVE", 1);
-  assert.equal(response.statusCode, 409); assert.equal(response.json().error.code, "HISTORICAL_POSTING_NOT_IMPLEMENTED"); assert.deepEqual(f.store.snapshot(), before);
+  assert.equal(response.statusCode, 409); assert.equal(response.json().error.code, "MISSING_POSTING_PROVENANCE"); assert.deepEqual(f.store.snapshot(), before);
 });
 test("SYNTHETIC HTTP: saved-draft VOID changes no inventory; approved edits stay rejected", async t => {
   const f = await setup(t); await f.post(save()); assert.equal((await f.command("VOID", 1)).statusCode, 200); assert.equal(f.balance(), 0n);
@@ -312,4 +312,47 @@ test("A01 sales HTTP carries exact capacity errors and keeps rejected SAVE atomi
     assert.doesNotMatch(response.body, /PRIVATE_CAPACITY_FACTS/);
     assert.deepEqual(f.store.snapshot(), before);
   }
+});
+
+test('SIGNED settlement diagnostics preserve exact difference and definitive historical rejections without leaking messages', async t => {
+  for (const code of ['HISTORICAL_SETTLEMENT_FACTS_MISSING', 'HISTORICAL_SALE_TYPE_CHANGED', 'HISTORICAL_DISCOUNT_CHANGED', 'UNKNOWN_SETTLEMENT_FACTS']) {
+    const f = await setup(t, { authorize: async () => { throw new DomainError(code, 'private SQL password'); } });
+    const response = await f.post(save());
+    assert.equal(response.statusCode, 409); assert.equal(response.json().error.code, code);
+    assert.doesNotMatch(response.body, /private|SQL|password/);
+  }
+});
+
+test('SIGNED settlement real service mismatch returns exact minor amounts', async t => {
+  const f = await setup(t); const value = draft(); value.settlements[0]!.amount = '1';
+  assert.equal((await f.post(save(value))).statusCode, 200);
+  const response = await f.command('APPROVE', 1);
+  assert.equal(response.statusCode, 422);
+  const due = f.document().header.netDue;
+  assert.deepEqual(response.json().error.settlement, { netDue: String(due), settled: '1', difference: String(due - 1n) });
+  assert.equal(f.document().header.status, 'DRAFT'); assert.equal(f.balance(), 0n);
+});
+
+test('SIGNED settlement generic provider messages cannot masquerade as typed financial diagnostics', async t => {
+  const f = await setup(t, { authorize: async () => { const error = new DomainError('SETTLEMENT_MISMATCH', 'private SQL difference 1000'); Object.assign(error, { netDue: 1000n, settled: 0n, difference: 1000n }); throw error; } });
+  const response = await f.post(save()); assert.equal(response.statusCode, 422);
+  assert.deepEqual(response.json(), { error: { code: 'SETTLEMENT_MISMATCH', message: 'Sales request rejected' } });
+});
+
+test('new mixed SALE whole discount returns 422 and correction retries without duplicate document',async t=>{
+ const productId=sid('product',999),rules=createCandidateSalesBusinessRules({
+  sku:id=>[ids.sku,ids.sku2].includes(id)?{id,productId,enabled:true}:undefined,
+  productPricing:id=>id===productId?{id,enabled:true,referencePrice:minorAmount('125'),minimumPrice:null}:undefined,
+  assertDocumentReferences(){}
+ });
+ const f=await setup(t,{rules});
+ const value=JSON.parse(exactJson(syntheticDraft('SALE',['2','-1']))) as WireDraft;
+ const invalid=structuredClone(value);invalid.header.orderDiscount='1';invalid.header.netDue='124';
+ const before=f.store.snapshot(),response=await f.post(save(invalid,'mixed-discount'));
+ assert.equal(response.statusCode,422,response.body);assert.equal(response.json().error.code,'MIXED_SALES_ORDER_DISCOUNT');
+ assert.deepEqual(f.store.snapshot(),before);
+ const saved=await f.post(save(value,'mixed-discount'));assert.equal(saved.statusCode,200,saved.body);
+ assert.equal((await f.post(save(value,'mixed-discount'))).statusCode,200);
+ assert.equal(f.store.snapshot().headers.size,1);assert.equal(f.store.snapshot().receipts.size,1);
+ assert.deepEqual(f.document().lines.map(l=>l.quantity),[2n,-1n]);assert.equal(f.app.server.listening,false);
 });

@@ -1,3 +1,5 @@
+import type { HistoricalSalesHallEvidence } from './historical-sales-hall-evidence.ts';
+import type { OrdinaryDocumentPage, OrdinarySalesSummary, OrdinarySalesTotalsQuery, OrdinaryDocumentTotals, OrdinarySalesTotals } from './ordinary-document-query-ports.ts';
 import type { ActorContext, SalesAction } from "./ports.ts";
 import type { DocumentStatus, SalesBusinessType, SalesDocument, SalesHeaderRow } from "../../domain/src/documents.ts";
 import type { BusinessDate, EntityId, MinorAmount, Version } from "../../domain/src/values.ts";
@@ -51,10 +53,13 @@ export interface SalesScopedRead<P> { readonly actor: ActorContext; readonly sco
  * one bigint persistence row. Incoming/outgoing are independent absolute totals;
  * quantity = outgoingQuantity - incomingQuantity, not an inferred business type. */
 export interface SalesSummaryQuantities {
-  readonly quantity: bigint; readonly incomingQuantity: bigint; readonly outgoingQuantity: bigint;
+  readonly quantity: bigint | null; readonly incomingQuantity: bigint | null; readonly outgoingQuantity: bigint | null;
 }
 export type SalesSummary = Pick<SalesHeaderRow, "id" | "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status" | "version" | "grossAmount" | "orderDiscount" | "netDue" | "updatedAt" | "responsibleStaffId"> & SalesSummaryQuantities & {
-  readonly hallName: string; readonly warehouseName: string; readonly customerName: string; readonly salespersonName: string | null; readonly responsibleName: string | null; readonly createdByName: string;
+  /** Immutable migration observation for display, never command authority. */
+  readonly historicalHallEvidence?: HistoricalSalesHallEvidence;
+  readonly historicalHallDiffersFromCurrent?: boolean;
+  readonly hallName: string | null; readonly warehouseName: string; readonly customerName: string; readonly salespersonName: string | null; readonly responsibleName: string | null; readonly createdByName: string | null;
 };
 // Current classification is an explicit read projection, never a historical snapshot.
 /** Exact bigint counts serialize as decimal strings at the HTTP boundary, never unsafe JS numbers. */
@@ -96,11 +101,19 @@ export interface SalesUnifiedListPage {
 export interface SalesSettlementNames {
   readonly settlementId: EntityId<"settlement">; readonly paymentAccountId: EntityId<"paymentAccount">;
   /** Authoritative historical display, captured by the document write, not refreshed from master names. */
-  readonly accountNameSnapshot: string; readonly methodNameSnapshot: string;
+  readonly accountNameSnapshot: string | null; readonly methodNameSnapshot: string | null;
   /** Current master names in the same snapshot, explicitly not historical display facts. */
   readonly currentAccountName: string; readonly currentMethodName: string;
 }
+export interface SalesHistoricalOrigin {
+  readonly kind:'SIGNED_SALE'; readonly originalOrderDiscount:MinorAmount;
+}
 export interface SalesDetail {
+  readonly historicalHallEvidence?: HistoricalSalesHallEvidence;
+  readonly historicalHallDiffersFromCurrent?: boolean;
+  /** Read-only presentation provenance, derived from native v1 plus verified audit.
+   * Never accepted as command authority. Absence grants no historical exception. */
+  readonly historicalSaleOrigin?:SalesHistoricalOrigin;
   /** Opt-in current identity summaries; historical classification remains unknown. */
   readonly productSummary?: DocumentProductSummary; readonly categorySummary?: DocumentCategorySummary;
   /** Current actual lines only. Inactive provenance remains in persistence, not the editable detail. */
@@ -127,12 +140,15 @@ export interface SalesSettlementStatistics {
  * No eager product catalog, document hydration loop, per-document queries or implicit global role.
  * Signal checks bound callback work; they do not assert the driver cancels an already-running SQL query. */
 export interface TrustedSalesSnapshotReader {
+  /** Separate ordinary totals; absence fails closed after existing LIST authorization. */
+  readTotals?(read: SalesScopedRead<OrdinarySalesTotalsQuery>): Promise<OrdinaryDocumentTotals<OrdinarySalesTotals>>;
   /** Reuses current LIST authorization with a neutral bounded query. No new role/hall grants or
    * master-catalog permissions. Scope precedes count, search, DISTINCT and pagination. */
   readReferences(read: SalesScopedRead<SalesFilterReferenceQuery>): Promise<SalesFilterReferencePage>;
-  readList(read: SalesScopedRead<SalesListQuery>): Promise<SalesListPage | SalesUnifiedListPage>;
+  readList(read: SalesScopedRead<SalesListQuery>): Promise<SalesListPage | SalesUnifiedListPage | OrdinaryDocumentPage<OrdinarySalesSummary>>;
   readDetail(read: SalesScopedRead<SalesDetailQuery>): Promise<SalesDetail>;
-  readHistory(read: SalesScopedRead<SalesHistoryQuery>): Promise<SalesHistoryPage>;
+  /** Ordinary providers need not implement the independent legacy history query. */
+  readHistory?(read: SalesScopedRead<SalesHistoryQuery>): Promise<SalesHistoryPage>;
   readSettlementStatistics(read: SalesScopedRead<SalesListQuery>): Promise<SalesSettlementStatistics>;
 }
 export interface SalesQueryDependencies { readonly authorization: SalesQueryAuthorization; readonly reader: TrustedSalesSnapshotReader }

@@ -1,3 +1,4 @@
+import { validateCalendarDate } from "./calendar-date.ts";
 import { DomainError, requireDomain } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
 import type { OrganizationListQuery, OrganizationReadListQuery, StaffRoleFilter, StaffLoginStatusFilter, OrganizationMaintenanceKind, OrganizationMaintenanceRecord, OrganizationReference, OrganizationWriteKind, OrganizationWriteCommand, HallWriteValues, WarehouseWriteValues } from "./organization-maintenance-ports.ts";
@@ -74,8 +75,10 @@ export function projectOrganizationRecord(input: unknown, kind: OrganizationMain
     case "WAREHOUSE": return { ...base, kind, name: text(r.name), enabled: bool(r.enabled), hall: ref(r.hall) };
     case "STAFF": {
       const a = r.account === null ? null : bag(r.account);
+      const departureDate = r.departureDate === undefined ? null : r.departureDate;
+      requireDomain(departureDate === null || validateCalendarDate(departureDate), "INVALID_DATABASE_VALUE", "Invalid staff departure date");
       requireDomain(r.contact === null || typeof r.contact === "string", "INVALID_DATABASE_VALUE", "Invalid staff contact");
-      return { ...base, kind, name: text(r.name), hall: r.hall === null ? null : ref(r.hall), role: text(r.role), contact: r.contact as string | null, employmentStatus: text(r.employmentStatus),
+      return { ...base, kind, name: text(r.name), hall: r.hall === null ? null : ref(r.hall), role: text(r.role), contact: r.contact as string | null, employmentStatus: text(r.employmentStatus), ...(Object.hasOwn(r,"departureDate") ? {departureDate: departureDate as string | null} : {}),
         account: a === null ? null : { id: uuid(a.id), loginName: text(a.loginName), loginEnabled: bool(a.loginEnabled), authVersion: version(a.authVersion), version: version(a.version) } };
     }
     case "ACCOUNT": {

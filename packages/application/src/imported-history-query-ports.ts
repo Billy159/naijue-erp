@@ -1,3 +1,4 @@
+import type { HistoricalSalesHallEvidence } from './historical-sales-hall-evidence.ts';
 import type { ActorContext } from './ports.ts';
 
 export const importedHistoryPageSizes = [20, 50, 100, 200] as const;
@@ -58,8 +59,10 @@ interface ImportedHistoryHeaderBase {
   readonly createdInstant: string | null; readonly updatedInstant: string | null; readonly approvedInstant: string | null;
 }
 export interface ImportedHistorySalesHeader extends ImportedHistoryHeaderBase {
+  readonly historicalHallEvidence?: HistoricalSalesHallEvidence;
+  readonly historicalHallDiffersFromCurrent?: boolean;
   readonly kind: 'sales'; readonly businessType: 'SALE' | 'RETURN' | 'EXCHANGE';
-  readonly hallId: string; readonly customerId: string; readonly warehouseId: string; readonly salespersonId: string | null;
+  readonly hallId: string | null; readonly customerId: string; readonly warehouseId: string; readonly salespersonId: string | null;
   readonly grossAmount: string; readonly orderDiscount: string; readonly netDue: string;
 }
 export interface ImportedHistoryTransferHeader extends ImportedHistoryHeaderBase {

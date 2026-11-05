@@ -12,7 +12,7 @@ const a: CurrentFormSku = { ...y, id: entityId('sku', uid(7)), skuCode: 'SYN-BLU
 const wh = (n: number): CurrentTransferWarehouse => ({ id: entityId('warehouse', uid(n)), name: 'SYN warehouse', hallId: entityId('hall', uid(12)), hallName: 'SYN hall', enabled: true, hallEnabled: true, hasNonzeroInventory: false });
 const page = <T>(items: readonly T[]): CurrentFormPage<T> => ({ page: 1, pageSize: 20, exactTotal: BigInt(items.length), items });
 const fitPage = (items: readonly CatalogueSettingsEntry[]): CatalogueSettingsPage<CatalogueSettingsEntry> => ({ page: 1, pageSize: 20, total: items.length, items });
-const canonicalA: CatalogueSettingsEntry = { id: a.fitId, code: 'A', name: '非A显示名', enabled: true, version: 1 };
+const canonicalA: CatalogueSettingsEntry = { id: a.fitId, code: '5', name: '非A显示名', enabled: true, version: 1 };
 type FitsReader = (query: CatalogueSettingsListQuery, signal: AbortSignal) => Promise<CatalogueSettingsPage<CatalogueSettingsEntry>>;
 function setup(readFits?: FitsReader) {
   const context = new ReadContext({ accountId: uid(99), sessionRevision: 'test', permissionRevision: 'test' }), scope = context.createScope('transfer-edit');
@@ -56,7 +56,7 @@ test('fit is selectable before color; selecting color never clears an explicit f
   assert.equal(session.getSnapshot().draft.lines.length, 0, 'independent selections create no draft line'); session.dispose();
 });
 test('default A uses confirmed dictionary code and current product SKU ID, not fit label or SKU order', async () => {
-  const { session } = setup(async q => { assert.equal(q.search, 'A'); return fitPage([{ id: y.fitId, code: 'Y', name: 'A版（不是A代码）', enabled: true, version: 1 }, canonicalA]); });
+  const { session } = setup(async q => { assert.equal(q.search, '5'); return fitPage([{ id: y.fitId, code: 'Y', name: 'A版（不是A代码）', enabled: true, version: 1 }, canonicalA]); });
   await selectProduct(session); assert.equal(session.getSnapshot().pending.fit?.id, a.fitId); assert.equal(session.getSnapshot().pending.color === null, true);
   assert.equal(session.selectPendingSpec('color', a.colorId), true); assert.equal(session.getSnapshot().pending.fit?.id, a.fitId); assert.equal(session.setPendingQuantity(a.id, '2'), true); session.dispose();
 });

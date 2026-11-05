@@ -1,7 +1,7 @@
 import type { SalesDocument, SalesLineRow, SalesSettlementRow } from "../../domain/src/documents.ts";
 import type { SalesAuditValues } from "./ports.ts";
 
-const headerFields = ["responsibleStaffId", "number", "businessType", "businessDate", "hallId", "salespersonId", "customerId", "warehouseId", "status",
+const headerFields = ["createdByStaffId", "approvedByStaffId", "responsibleStaffId", "number", "businessType", "businessDate", "hallId", "salespersonId", "customerId", "warehouseId", "status",
   "grossAmount", "orderDiscount", "netDue", "note", "updatedAt", "approvedByAccountId", "approvedAt"] as const;
 const lineFields = ["id", "salesId", "lineNo", "skuId", "quantity", "referencePrice", "dealPrice", "pricingRule", "discountTenths",
   "zeroConfirmed", "lineAmount", "allocatedDiscount", "isGift", "isCurrent"] as const;
@@ -12,6 +12,10 @@ const settlementFields = ["id", "salesId", "lineNo", "paymentAccountId", "paymen
 export function sameSalesLine(left: SalesLineRow, right: SalesLineRow): boolean {
   return lineFields.every(field => left[field] === right[field])
     && snapshotFields.every(field => left.snapshot[field] === right.snapshot[field]);
+}
+/** Reordering is still audited by sameSalesSettlement; it is not a new payment fact. */
+export function sameSalesSettlementFacts(left: SalesSettlementRow, right: SalesSettlementRow): boolean {
+  return settlementFields.every(field => field === "lineNo" || left[field] === right[field]);
 }
 export function sameSalesSettlement(left: SalesSettlementRow, right: SalesSettlementRow): boolean {
   return settlementFields.every(field => left[field] === right[field]);

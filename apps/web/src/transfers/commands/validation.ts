@@ -11,7 +11,13 @@ const version = (value: unknown): value is number => typeof value === 'number' &
 function text(value: unknown): asserts value is string { if (typeof value !== 'string') invalid(); }
 function id(value: unknown): asserts value is string { if (!validTransferId(value)) invalid(); }
 function array(value: unknown, maximum: number): readonly unknown[] { if (!Array.isArray(value) || value.length > maximum) invalid(); return value; }
-export function validateTransferDraft(value: unknown): TransferDraftDto {
+export interface TransferDraftValidationContext {
+  readonly previous?: TransferDraftDto;
+  /** Existing CAS wire shape only; the locked server predecessor owns authority. */
+  readonly existingWire?: true;
+}
+const snapshotFields = ['productCode', 'productName', 'colorName', 'fitName', 'sizeName', 'barcode'] as const;
+export function validateTransferDraft(value: unknown, context: TransferDraftValidationContext = {}): TransferDraftDto {
   const copy: unknown = structuredClone(value), root = object(copy, ['header', 'lines']);
   const h = object(root.header, ['id', 'number', 'businessDate', 'fromWarehouseId', 'toWarehouseId', 'note', ...(typeof root.header === 'object' && root.header !== null && Object.hasOwn(root.header, 'responsibleStaffId') ? ['responsibleStaffId'] : [])]);
   if (Object.hasOwn(h, 'responsibleStaffId') && h.responsibleStaffId !== null) id(h.responsibleStaffId);
@@ -22,7 +28,13 @@ export function validateTransferDraft(value: unknown): TransferDraftDto {
     const row = object(value, ['id', 'transferId', 'lineNo', 'skuId', 'quantity', 'snapshot', 'isCurrent']); id(row.id); id(row.skuId);
     text(row.quantity); if (!/^[1-9]\d*$/.test(row.quantity) || row.quantity.length > 19 || quantity(row.quantity) <= 0n) invalid();
     if (row.transferId !== h.id || row.isCurrent !== true || seen.has(row.id) || !version(row.lineNo) || positions.has(row.lineNo)) invalid(); seen.add(row.id); positions.add(row.lineNo);
-    const s = object(row.snapshot, ['productCode', 'productName', 'colorName', 'fitName', 'sizeName', 'barcode']); [s.productCode, s.productName, s.colorName, s.fitName, s.sizeName].forEach(text); if (s.barcode !== null) text(s.barcode);
+    const s = object(row.snapshot, snapshotFields);
+    const old = context.previous?.lines.find(line => line.id === row.id && line.skuId === row.skuId);
+    for (const key of snapshotFields) {
+      if (s[key] !== null) text(s[key]);
+      else if (key !== 'barcode' && !context.existingWire && (!old || old.snapshot[key] !== null)) invalid();
+    }
+    if (old && snapshotFields.some(key => old.snapshot[key] !== s[key])) invalid();
   }
   return frozenSnapshot(copy as TransferDraftDto);
 }
@@ -34,7 +46,7 @@ export function validateTransferCommand(value: unknown): TransferCommandDto {
   if (action === 'SAVE') {
     if (row.expectedVersion !== null && !version(row.expectedVersion)) invalid();
     if (proposal) { const parsed = parseNativeTransferSaveProposal(row.proposal); if ((parsed.transferId === null) !== (row.expectedVersion === null)) invalid(); row.proposal = parsed; }
-    else row.draft = validateTransferDraft(row.draft);
+    else row.draft = validateTransferDraft(row.draft, row.expectedVersion === null ? {} : { existingWire: true });
   }
   else { if (!version(row.expectedVersion)) invalid(); id(row.transferId); } return frozenSnapshot(copy as TransferCommandDto);
 }
@@ -51,10 +63,10 @@ export function validateTransferReceipt(value: unknown, command: TransferCommand
   if (row.requestKey !== command.requestKey || row.action !== command.action || row.status !== 'COMMITTED' || typeof row.completedAt !== 'string' || !/(?:Z|[+-]\d{2}:\d{2})$/.test(row.completedAt) || !Number.isFinite(Date.parse(row.completedAt))) invalid();
   return frozenSnapshot({ requestKey: command.requestKey, action: command.action, status: 'COMMITTED', completedAt: row.completedAt, result: validateTransferResult(row.result, command) });
 }
-export function draftFromTransferDetail(detail: TransferDetailDto): TransferDraftDto { const h = detail.document.header; return validateTransferDraft({ header: { id: h.id, number: h.number, businessDate: h.businessDate, fromWarehouseId: h.fromWarehouseId, toWarehouseId: h.toWarehouseId, note: h.note }, lines: detail.document.lines }); }
+export function draftFromTransferDetail(detail: TransferDetailDto): TransferDraftDto { const h = detail.document.header; return validateTransferDraft({ header: { id: h.id, number: h.number, businessDate: h.businessDate, fromWarehouseId: h.fromWarehouseId, toWarehouseId: h.toWarehouseId, note: h.note }, lines: detail.document.lines }, { existingWire: true }); }
 export function inputFromTransferDraft(draft: TransferDraftDto): TransferFormInput { return frozenSnapshot({ businessDate: draft.header.businessDate, note: draft.header.note ?? '', quantities: Object.fromEntries(draft.lines.map(line => [line.id, line.quantity])) }); }
 /** Narrow existing-line edit: never mutates endpoints, SKU identities or snapshots. */
 export function draftFromTransferInput(base: TransferDraftDto, input: TransferFormInput): TransferDraftDto {
   const row = object(input, ['businessDate', 'note', 'quantities']); text(row.businessDate); text(row.note); const quantities = object(row.quantities, base.lines.map(line => line.id));
-  return validateTransferDraft({ header: { ...base.header, businessDate: row.businessDate, note: row.note === '' && base.header.note === null ? null : row.note }, lines: base.lines.map(line => ({ ...line, quantity: quantities[line.id] })) });
+  return validateTransferDraft({ header: { ...base.header, businessDate: row.businessDate, note: row.note === '' && base.header.note === null ? null : row.note }, lines: base.lines.map(line => ({ ...line, quantity: quantities[line.id] })) }, { previous: base });
 }

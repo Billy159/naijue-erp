@@ -14,6 +14,7 @@ interface SyntheticTables {
   audit: SalesAuditRow[];
   receipts: Map<string, OperationReceiptRow>;
   stockBasis: Map<EntityId<"sales">, StoredSales["stockBasis"]>;
+  migrationOrigins: Map<EntityId<"sales">, SalesDocument>;
 }
 export const balanceKey = (warehouseId: string, skuId: string): string => JSON.stringify([warehouseId, skuId]);
 const receiptKey = (actorId: string, key: string): string => JSON.stringify([actorId, key]);
@@ -35,7 +36,7 @@ export class SharedSyntheticInventory {
 }
 /** Synthetic-only serialized copy-on-write reference adapter. NOT a database or evidence of SQL isolation. */
 export class SyntheticStore implements SalesUnitOfWork {
-  private tables: SyntheticTables = { identities: new Map(), headers: new Map(), lines: new Map(), settlements: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), stockBasis: new Map() };
+  private tables: SyntheticTables = { identities: new Map(), headers: new Map(), lines: new Map(), settlements: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), stockBasis: new Map(), migrationOrigins:new Map() };
   private tail: Promise<unknown> = Promise.resolve();
   // Keep shared fixtures executable by the pinned Node native type stripper.
   private readonly sharedInventory: SharedSyntheticInventory | undefined;
@@ -49,6 +50,8 @@ export class SyntheticStore implements SalesUnitOfWork {
     for (const row of document.lines) this.tables.lines.set(row.id, structuredClone(row));
     for (const row of document.settlements) this.tables.settlements.set(row.id, structuredClone(row));
     this.tables.stockBasis.set(document.header.id, "CUTOFF_HISTORY");
+    // TEST ONLY immutable import fixture, not fabricated runtime events or SQL proof.
+    this.tables.migrationOrigins.set(document.header.id, structuredClone(document));
   }
   transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> {
     const run = async (inventory?: SharedSyntheticInventoryTables): Promise<T> => {
@@ -73,6 +76,16 @@ export class SyntheticStore implements SalesUnitOfWork {
           const header = draft.headers.get(id); if (!header) return undefined;
           return structuredClone({ document: { header, lines: [...draft.lines.values()].filter(row => row.salesId === id), settlements: [...draft.settlements.values()].filter(row => row.salesId === id) }, stockBasis: draft.stockBasis.get(id) ?? "RUNTIME_LEDGER" });
         },
+        async getRetainedSalesApprovalHistory(id, expectedVersion) {
+          const assertCurrent=():void=>{check(); requireDomain(receiptActor !== undefined && target === id && draft.headers.get(id)?.version === expectedVersion, "TRANSACTION_SCOPE", "Retained history needs bound actor, target and exact version");};assertCurrent();
+          const audits = draft.audit.filter(a=>a.salesId===id && a.after.header.version<=expectedVersion);
+          const events = structuredClone(audits.filter(a=>a.after.header.version>=2).sort((a,b)=>a.after.header.version-b.after.header.version).map(a=>({
+            audit:{...JSON.parse(JSON.stringify(a,(_key,value)=>typeof value==='bigint'?value.toString():value)),oldVersion:a.before?.header.version ?? 0,newVersion:a.after.header.version},
+            receipt:[...draft.receipts.values()].find(r=>r.id===a.operationId) ?? null
+          })));
+          const origin=draft.migrationOrigins.get(id);
+          return {events,...(origin?{migrationOrigin:structuredClone(origin)}:{}),assertCurrent};
+        },
         async putRuntimeSales(document) {
           point("document");
           draft.headers.set(document.header.id, structuredClone(document.header));
@@ -85,7 +98,7 @@ export class SyntheticStore implements SalesUnitOfWork {
             requireDomain(!draft.settlements.has(row.id), "FOREIGN_SETTLEMENT_ID", "Settlement identities cannot belong to multiple documents");
             draft.settlements.set(row.id, structuredClone(row));
           }
-          draft.stockBasis.set(document.header.id, "RUNTIME_LEDGER");
+          draft.stockBasis.set(document.header.id, draft.stockBasis.get(document.header.id) ?? "RUNTIME_LEDGER");
         },
         async getReceipt(actorId, key) { check(); receiptActor = actorId; return structuredClone(draft.receipts.get(receiptKey(actorId, key))); },
         async insertReceipt(row) {

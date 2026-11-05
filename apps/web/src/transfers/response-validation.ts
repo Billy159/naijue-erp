@@ -21,6 +21,7 @@ function consistent(facts: Map<string, string>, key: string, values: readonly un
 }
 function choice(value: unknown, allowed: readonly unknown[]) { if (!allowed.includes(value)) invalid(); }
 function array(value: unknown, maximum: number): readonly unknown[] { if (!Array.isArray(value) || value.length > maximum) invalid(); return value; }
+function nullableStamp(value: unknown) { if (value !== null) stamp(value); }
 function stamp(value: unknown) {
   text(value);
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/.test(value) || Number.isNaN(Date.parse(value)) || new Date(value).toISOString().slice(0, 19) !== value.slice(0, 19)) invalid();
@@ -32,7 +33,7 @@ function header(row: Record<string, unknown>) {
   id('warehouse', row.fromWarehouseId); id('warehouse', row.toWarehouseId); if (row.fromWarehouseId === row.toWarehouseId) invalid();
   choice(row.status, ['DRAFT', 'APPROVED', 'VOID']); integer(row.version); nullableId('staff', row.responsibleStaffId);
 }
-function references(row: Record<string, unknown>) { ['fromWarehouseName', 'toWarehouseName', 'fromHallName', 'toHallName', 'createdByName'].forEach(field => named(row[field])); nullableText(row.approvedByName); nullableText(row.responsibleName); }
+function references(row: Record<string, unknown>) { ['fromWarehouseName', 'toWarehouseName', 'fromHallName', 'toHallName'].forEach(field => named(row[field])); nullableText(row.createdByName); nullableText(row.approvedByName); nullableText(row.responsibleName); }
 function page(row: Record<string, unknown>, parameters: { readonly page: number; readonly pageSize: number }, items: readonly unknown[]) {
   integer(row.page); integer(row.pageSize); exact(row.exactTotal);
   if (row.page !== parameters.page || row.pageSize !== parameters.pageSize) invalid();
@@ -45,7 +46,7 @@ export function transferListResponse(value: unknown, parameters: Readonly<Transf
   const seen = new Set<string>();
   for (const value of items) {
     const row = record(value, [...baseFields, 'createdByAccountId', 'createdAt', ...referenceFields, 'updatedAt', 'totalQuantity']); header(row); references(row);
-    id('account', row.createdByAccountId); stamp(row.createdAt); stamp(row.updatedAt); exact(row.totalQuantity);
+    nullableId('account', row.createdByAccountId); nullableStamp(row.createdAt); nullableStamp(row.updatedAt); exact(row.totalQuantity);
     const f = parameters.filter;
     if ((f.startDate !== null && (row.businessDate as string) < f.startDate) || (f.endDate !== null && (row.businessDate as string) > f.endDate)
       || (f.number !== null && !(row.number as string).toLowerCase().includes(f.number.toLowerCase()))
@@ -76,11 +77,13 @@ export function transferDetailResponse(value: unknown, parameters: Readonly<Tran
     }
   }
   const document = record(result.document, ['header', 'lines']);
-  const h = record(document.header, [...baseFields, 'note', 'createdByAccountId', 'createdHallId', 'createdRole', 'createdAt', 'updatedAt', 'approvedByAccountId', 'approvedAt']); header(h);
-  if (h.id !== parameters.transferId) invalid(); nullableText(h.note); id('account', h.createdByAccountId); nullableId('hall', h.createdHallId);
-  choice(h.createdRole, ['ADMIN', 'WAREHOUSE', 'SALESPERSON']); stamp(h.createdAt); stamp(h.updatedAt); nullableId('account', h.approvedByAccountId); if (h.approvedAt !== null) stamp(h.approvedAt);
+  const optionalStaffFields = ['createdByStaffId', 'approvedByStaffId'].filter(key => document.header && typeof document.header === 'object' && Object.hasOwn(document.header, key));
+  const h = record(document.header, [...baseFields, 'note', 'createdByAccountId', 'createdHallId', 'createdRole', 'createdAt', 'updatedAt', 'approvedByAccountId', 'approvedAt', ...optionalStaffFields]); header(h);
+  for (const key of optionalStaffFields) nullableId('staff', h[key]);
+  if (h.id !== parameters.transferId) invalid(); nullableText(h.note); nullableId('account', h.createdByAccountId); nullableId('hall', h.createdHallId);
+  choice(h.createdRole, [null, 'ADMIN', 'WAREHOUSE', 'SALESPERSON']); nullableStamp(h.createdAt); nullableStamp(h.updatedAt); nullableId('account', h.approvedByAccountId); if (h.approvedAt !== null) stamp(h.approvedAt);
   const names = record(result.references, referenceFields); references(names);
-  if ((h.approvedByAccountId === null) !== (names.approvedByName === null)) invalid();
+  if (h.approvedByAccountId === null && h.approvedByStaffId == null && names.approvedByName !== null) invalid();
   const lines = array(document.lines, 2000); const lineIds = new Set<string>(); const lineNos = new Set<number>(); const lineSkus = new Set<string>(); let previousLine = 0;
   for (const value of lines) {
     const row = record(value, ['id', 'transferId', 'lineNo', 'skuId', 'quantity', 'snapshot', 'isCurrent']);
@@ -88,7 +91,7 @@ export function transferDetailResponse(value: unknown, parameters: Readonly<Tran
     if (row.transferId !== parameters.transferId || row.isCurrent !== true || row.quantity === '0' || lineIds.has(row.id) || lineNos.has(row.lineNo) || row.lineNo < previousLine) invalid();
     lineIds.add(row.id); lineNos.add(row.lineNo); lineSkus.add(row.skuId); previousLine = row.lineNo;
     const snapshot = record(row.snapshot, ['productCode', 'productName', 'colorName', 'fitName', 'sizeName', 'barcode']);
-    [snapshot.productCode, snapshot.productName, snapshot.colorName, snapshot.fitName, snapshot.sizeName].forEach(text); nullableText(snapshot.barcode);
+    [snapshot.productCode, snapshot.productName, snapshot.colorName, snapshot.fitName, snapshot.sizeName].forEach(nullableText); nullableText(snapshot.barcode);
   }
   const catalog = record(result.catalog, ['skus', 'sizeGroups']); const groups = new Map<string, Set<string>>();
   let memberCount = 0; const sizeFacts = new Map<string, string>();

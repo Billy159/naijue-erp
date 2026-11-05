@@ -1,3 +1,5 @@
+import { ORDINARY_DOCUMENT_PUBLICATION_SQL, checkedOrdinaryDocumentListOptions, type OrdinaryDocumentListOptions, type NativeOrdinaryDocumentListOptions } from './ordinary-document-list-reader.ts';
+import { sourceConfirmedReadIdentityOn } from './source-confirmed-read-authorization.ts';
 import { authorizedEffectiveDocumentIdentity, nullableEffectiveDocumentQuantity as normalNullableQuantity } from '../../../packages/application/src/authorized-effective-documents.ts';
 import { normalDocumentReferenceScopeOn, assertNormalReferenceHistoryOn, normalDocumentListOn, documentProductSummary, documentCategorySummary, type NativeDocumentListOptions } from "./sales-query-reader.ts";
 import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
@@ -33,41 +35,44 @@ const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC',
 const SUMMARY_COLUMNS = `h.id, h.number, to_char(h.business_date, 'YYYY-MM-DD') AS business_date,
   h.responsible_staff_id, h.from_warehouse_id, h.to_warehouse_id, h.status, h.version, h.created_by_account_id, ${stamp("h.created_at")} AS created_at, ${stamp("h.updated_at")} AS updated_at`;
 const HEADER_COLUMNS = `${SUMMARY_COLUMNS}, h.note, h.created_hall_id, h.created_role,
-  h.approved_by_account_id, ${stamp("h.approved_at")} AS approved_at, h.stock_basis`;
+  h.approved_by_account_id, ${stamp("h.approved_at")} AS approved_at, h.stock_basis,
+  to_jsonb(h) ? 'created_by_staff_id' AS unified_staff_columns,
+  to_jsonb(h)->>'created_by_staff_id' AS created_by_staff_id, to_jsonb(h)->>'approved_by_staff_id' AS approved_by_staff_id`;
 const REFERENCES = `fw.name AS from_warehouse_name, tw.name AS to_warehouse_name, fh.name AS from_hall_name, th.name AS to_hall_name,
   responsible.name AS responsible_name, creator.name AS created_by_name, approver.name AS approved_by_name`;
 /** Count and page use the SAME native relation joins; a missing reference is not a fabricated display label. */
 const RELATIONS = `FROM naijue_erp.transfer_header h
   JOIN naijue_erp.warehouse fw ON fw.id = h.from_warehouse_id JOIN naijue_erp.warehouse tw ON tw.id = h.to_warehouse_id
   JOIN naijue_erp.hall fh ON fh.id = fw.hall_id JOIN naijue_erp.hall th ON th.id = tw.hall_id
-  JOIN naijue_erp.user_account ca ON ca.id = h.created_by_account_id JOIN naijue_erp.staff creator ON creator.id = ca.staff_id
+  LEFT JOIN naijue_erp.user_account ca ON ca.id = h.created_by_account_id LEFT JOIN naijue_erp.staff creator ON creator.id = CASE WHEN to_jsonb(h) ? 'created_by_staff_id' THEN (to_jsonb(h)->>'created_by_staff_id')::uuid ELSE ca.staff_id END
   LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id
-  LEFT JOIN naijue_erp.user_account aa ON aa.id = h.approved_by_account_id LEFT JOIN naijue_erp.staff approver ON approver.id = aa.staff_id`;
+  LEFT JOIN naijue_erp.user_account aa ON aa.id = h.approved_by_account_id LEFT JOIN naijue_erp.staff approver ON approver.id = CASE WHEN to_jsonb(h) ? 'approved_by_staff_id' THEN (to_jsonb(h)->>'approved_by_staff_id')::uuid ELSE aa.staff_id END`;
 function decodeReferences(row: Record<string, unknown>): TransferReferenceNames {
   return { responsibleName: nullableString(row.responsible_name), fromWarehouseName: stringValue(row.from_warehouse_name), toWarehouseName: stringValue(row.to_warehouse_name),
-    fromHallName: stringValue(row.from_hall_name), toHallName: stringValue(row.to_hall_name), createdByName: stringValue(row.created_by_name), approvedByName: nullableString(row.approved_by_name) };
+    fromHallName: stringValue(row.from_hall_name), toHallName: stringValue(row.to_hall_name), createdByName: nullableString(row.created_by_name), approvedByName: nullableString(row.approved_by_name) };
 }
 function decodeSummary(row: Record<string, unknown>, totalQuantity: bigint): TransferSummary {
   return { id: id("transfer", row.id), number: stringValue(row.number), businessDate: businessDate(stringValue(row.business_date)),
     fromWarehouseId: id("warehouse", row.from_warehouse_id), toWarehouseId: id("warehouse", row.to_warehouse_id),
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version),
-    responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at), totalQuantity, ...decodeReferences(row) };
+    responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: nullableId("account", row.created_by_account_id), createdAt: nullableString(row.created_at), updatedAt: nullableString(row.updated_at), totalQuantity, ...decodeReferences(row) };
 }
 function decodeHeader(row: Record<string, unknown>): RuntimeTransferHeader {
   const fromWarehouseId = id("warehouse", row.from_warehouse_id); const toWarehouseId = id("warehouse", row.to_warehouse_id);
   requireDomain(fromWarehouseId !== toWarehouseId, "INVALID_DATABASE_VALUE", "Persisted transfer warehouses must differ");
   return { id: id("transfer", row.id), number: stringValue(row.number), businessDate: businessDate(stringValue(row.business_date)), fromWarehouseId, toWarehouseId,
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version), note: nullableString(row.note),
-    responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
-    createdRole: choice(row.created_role, ["ADMIN", "WAREHOUSE", "SALESPERSON"]), createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at),
-    approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at) };
+    responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: nullableId("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
+    createdRole: row.created_role === null ? null : choice(row.created_role, ["ADMIN", "WAREHOUSE", "SALESPERSON"] as const), createdAt: nullableString(row.created_at), updatedAt: nullableString(row.updated_at),
+    approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at),
+    ...(row.unified_staff_columns === true ? { createdByStaffId: nullableId("staff", row.created_by_staff_id), approvedByStaffId: nullableId("staff", row.approved_by_staff_id) } : {}) };
 }
 function decodeLine(row: Record<string, unknown>): TransferLineRow {
   const quantity = quantityFromSql(row.quantity); const lineNo = integerValue(row.line_no); const isCurrent = booleanValue(row.is_current);
   requireDomain(quantity > 0n && lineNo > 0 && isCurrent, "INVALID_DATABASE_VALUE", "Expected positive current actual transfer line");
   return { id: id("transferLine", row.id), transferId: id("transfer", row.transfer_id), lineNo, skuId: id("sku", row.sku_id), quantity, isCurrent,
-    snapshot: { productCode: stringValue(row.product_code_snapshot), productName: stringValue(row.product_name_snapshot), colorName: stringValue(row.color_name_snapshot),
-      fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
+    snapshot: { productCode: nullableString(row.product_code_snapshot), productName: nullableString(row.product_name_snapshot), colorName: nullableString(row.color_name_snapshot),
+      fitName: nullableString(row.fit_name_snapshot), sizeName: nullableString(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
 }
 /** Only internal static columns enter SQL. All policy/filter/target/pagination values are parameters. */
 class Predicate {
@@ -170,7 +175,11 @@ async function readCatalog(query: ReadQuery, lines: readonly TransferLineRow[], 
 export class PostgresTransferQueryReader implements TrustedTransferSnapshotReader {
   private readonly pool: PgTransferQueryPool;
   private readonly normalLists: NativeDocumentListOptions | undefined;
-  constructor(pool: PgTransferQueryPool, normalLists?: NativeDocumentListOptions) {
+  private readonly ordinaryDetail: OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions | undefined;
+  constructor(pool: PgTransferQueryPool, options?: NativeDocumentListOptions | OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions) {
+    const ordinary = options?.profile === 'source-confirmed-ordinary-documents-v1' || options?.profile === 'source-confirmed-unified-native-v1';
+    const normalLists = ordinary ? undefined : options as NativeDocumentListOptions | undefined;
+    if (ordinary && options) this.ordinaryDetail = checkedOrdinaryDocumentListOptions(options as OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions);
     if (normalLists !== undefined) {
       const runtime26 = checkedNativeRuntime26Capability(normalLists.runtime26);
       if (normalLists.profile !== "source-confirmed-normal-document-lists-v1" || runtime26 === undefined) throw new TypeError("Explicit original runtime and normal-list historical policy required");
@@ -198,6 +207,7 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
     } finally { client.release(discard); }
   }
   async readList(read: TransferScopedRead<TransferListQuery>): Promise<TransferListPage | TransferUnifiedListPage> {
+    requireDomain(this.ordinaryDetail === undefined, 'ORDINARY_DOCUMENTS_NOT_READY', 'Explicit ordinary provider required for this operation');
     const parameters = parseTransferListQuery(read.parameters); const p = new Predicate(checkedTransferReadScope(read.scope));
     if (this.normalLists !== undefined) return this.snapshot(read.signal, async (_query, client) => {
       const result = await normalDocumentListOn(client, this.normalLists!, "transfers", { ...read, parameters }, { from: RELATIONS.replace(/^FROM /, ""), columns: `${SUMMARY_COLUMNS},${REFERENCES}`, scope: p.where(), values: p.values });
@@ -238,6 +248,7 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
     });
   }
   async readWarehouses(read: TransferScopedRead<TransferWarehouseQuery>): Promise<TransferWarehousePage> {
+    requireDomain(this.ordinaryDetail === undefined || this.ordinaryDetail.profile === 'source-confirmed-unified-native-v1', 'ORDINARY_DOCUMENTS_NOT_READY', 'Explicit ordinary provider required for this operation');
     const parameters = parseTransferWarehouseQuery(read.parameters); const scope = checkedTransferReadScope(read.scope); const p = new Predicate(scope);
     // Broad warehouse-catalog visibility is explicit only for all scope. Restricted scopes use complete authorized document relations.
     const authorized = scope.kind === "all" ? "TRUE" : `EXISTS (SELECT 1 ${RELATIONS} WHERE (${p.where()}) AND (h.from_warehouse_id = w.id OR h.to_warehouse_id = w.id))`;
@@ -245,6 +256,15 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
     if (parameters.search) { const search = p.parameter(parameters.search); restrictions.push(`(strpos(w.name, ${search}) > 0 OR strpos(wh.name, ${search}) > 0)`); }
     if (parameters.selectedIds.length) restrictions.push(`w.id = ANY(${p.parameter([...parameters.selectedIds])}::uuid[])`);
     return this.snapshot(read.signal, async (query,client) => {
+      if (this.ordinaryDetail?.profile === 'source-confirmed-unified-native-v1') {
+        await this.ordinaryDetail.runtime27.assertReady(client, 'ORDINARY_DOCUMENT_READ');
+        const identity = await sourceConfirmedReadIdentityOn({query}, read.actor, read.signal);
+        if (identity.role === 'SALESPERSON') {
+          requireDomain(identity.hallId !== null, 'FORBIDDEN', 'Current salesperson hall required');
+          const hall=`${p.parameter(identity.hallId)}::uuid`;
+          restrictions[0]=`(${restrictions[0]}) AND EXISTS (SELECT 1 ${RELATIONS} WHERE (h.from_warehouse_id=w.id OR h.to_warehouse_id=w.id) AND (fw.hall_id=${hall} OR tw.hall_id=${hall} OR (h.created_hall_id=${hall} AND h.created_role='SALESPERSON'))) `;
+        }
+      }
       if(scope.kind!=="all"&&this.normalLists!==undefined){
         const scoped=await normalDocumentReferenceScopeOn(client,this.normalLists,'transfers',read,{scope:p.where(),values:p.values});
         await assertNormalReferenceHistoryOn(scoped);
@@ -267,6 +287,7 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
     });
   }
   async readHistory(read: TransferScopedRead<TransferHistoryQuery>): Promise<TransferHistoryPage> {
+    requireDomain(this.ordinaryDetail === undefined, 'ORDINARY_DOCUMENTS_NOT_READY', 'Explicit ordinary provider required for this operation');
     const parameters = parseTransferHistoryQuery(read.parameters);
     const p = new Predicate(checkedTransferReadScope(read.scope)); p.target(parameters.transferId);
     return this.snapshot(read.signal, async query => {
@@ -290,7 +311,20 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
   }
   async readDetail(read: TransferScopedRead<TransferDetailQuery>): Promise<TransferDetail> {
     const parameters = parseTransferDetailQuery(read.parameters); const p = new Predicate(checkedTransferReadScope(read.scope)); p.target(parameters.transferId);
-    return this.snapshot(read.signal, async query => {
+    return this.snapshot(read.signal, async (query, client) => {
+      if (this.ordinaryDetail) {
+        await this.ordinaryDetail.runtime27.assertReady(client, 'ORDINARY_DOCUMENT_READ'); activeTransferRead(read.signal);
+        const identity = await sourceConfirmedReadIdentityOn({query}, read.actor, read.signal);
+        const ready = one(await query('/* ordinary-detail:ready */ SELECT naijue_erp.standard_business_ready() AS business_ready'));
+        requireDomain(typeof ready.business_ready === 'boolean', 'INVALID_DATABASE_VALUE', 'Explicit ordinary publication state required');
+        requireDomain(ready.business_ready, 'ORDINARY_DOCUMENTS_NOT_READY', 'Ordinary documents are not published');
+        p.parts.push(this.ordinaryDetail.profile === 'source-confirmed-unified-native-v1' ? 'naijue_erp.standard_business_ready()' : ORDINARY_DOCUMENT_PUBLICATION_SQL);
+        if (identity.role === 'SALESPERSON') {
+          requireDomain(identity.hallId !== null, 'FORBIDDEN', 'Current salesperson hall required');
+          const hall = `${p.parameter(identity.hallId)}::uuid`;
+          p.parts.push(`(fw.hall_id=${hall} OR tw.hall_id=${hall} OR (h.created_hall_id=${hall} AND h.created_role='SALESPERSON'))`);
+        }
+      }
       const result = await query(`SELECT ${HEADER_COLUMNS}, ${REFERENCES} ${RELATIONS} WHERE ${p.where()}`, p.values);
       requireDomain(result.rows.length > 0, "DOCUMENT_NOT_FOUND", "Transfer document is unavailable");
       const row = one(result); const header = decodeHeader(row);

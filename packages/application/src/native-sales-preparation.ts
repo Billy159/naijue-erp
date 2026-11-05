@@ -1,7 +1,9 @@
+import { loadHistoricalSaleOrigin, isHistoricalSignedSale } from './sales-retained-approval.ts';
+import { preservesHistoricalSignedSale, allocateCurrentSalesDiscount, sameSalesLinePricingFacts } from "./sales-business-rules.ts";
 import { SALES_PREPARE_MAX_REQUEST_BYTES, SALES_PREPARE_MAX_LINES, SALES_PREPARE_MAX_NOTE_LENGTH, salesJsonByteLength, salesPreparedDraftFitsSaveBudget } from "./sales-payload-budget.ts";
 import type { SalesDraft, SalesLineRow } from "../../domain/src/documents.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
-import { allocateSalesDiscount, discountUnitPrice } from "../../domain/src/sales-money.ts";
+import { discountUnitPrice } from "../../domain/src/sales-money.ts";
 import { businessDate, decimalToMinor, entityId, minorAmount, multiplyMoney, quantity } from "../../domain/src/values.ts";
 import type { ActorContext, SalesDependencies, SalesBusinessRules, SalesTransaction } from "./ports.ts";
 import { createNativeTransactionSalesBusinessRules } from "./sales-native-facts.ts";
@@ -25,14 +27,14 @@ export interface NativeSalesCreateProposal {
   readonly settlements: readonly { readonly paymentAccountId: string; readonly paymentMethodId: string;
     readonly direction: "RECEIVE" | "REFUND"; readonly amount: string }[];
 }
-export interface NativeSalesExistingProposal extends Omit<NativeSalesCreateProposal, "lines" | "settlements"> {
-  readonly salesId: string; readonly expectedVersion: number;
-  readonly lines: readonly (NativeSalesCreateProposal["lines"][number] & { readonly existingLineId: string | null })[];
-  readonly settlements: readonly (NativeSalesCreateProposal["settlements"][number] & { readonly existingSettlementId: string | null })[];
+export interface NativeSalesExistingProposal extends Omit<NativeSalesCreateProposal, "lines" | "settlements" | "hallId"> {
+  readonly hallId: string | null; readonly salesId: string; readonly expectedVersion: number;
+  readonly lines: readonly (Omit<NativeSalesCreateProposal["lines"][number],"pricingRule"|"isGift"|"zeroConfirmed"> & { readonly existingLineId: string | null; readonly pricingRule:"UNIT_PRICE"|"DISCOUNT"|null; readonly isGift:boolean|null; readonly zeroConfirmed:boolean|null })[];
+  readonly settlements: readonly (Omit<NativeSalesCreateProposal["settlements"][number], "paymentMethodId"> & { readonly existingSettlementId: string | null; readonly paymentMethodId: string | null })[];
 }
 export interface NativeSalesExistingPrepared { readonly expectedVersion: number; readonly draft: SalesDraft }
-export interface NativeSalesSaveProposal extends Omit<NativeSalesCreateProposal,'lines'|'settlements'> {
-  readonly salesId:string|null;
+export interface NativeSalesSaveProposal extends Omit<NativeSalesCreateProposal,'lines'|'settlements'|'hallId'> {
+  readonly hallId: string | null; readonly salesId:string|null;
   readonly lines:readonly (DocumentSkuSelection & Omit<NativeSalesExistingProposal['lines'][number],'skuId'>)[];
   readonly settlements:NativeSalesExistingProposal['settlements'];
 }
@@ -47,8 +49,8 @@ function money(value: unknown) {
 export function createNativeManualSalesBusinessRules(): SalesBusinessRules {
   const native = createNativeTransactionSalesBusinessRules();
   return Object.freeze({
-    async assertDraftChange(previous, draft, tx) {
-      await native.assertDraftChange(previous, draft, tx);
+    async assertDraftChange(previous, draft, tx, stockBasis) {
+      await native.assertDraftChange(previous, draft, tx, stockBasis);
       const prior = new Map((previous?.lines ?? []).map(row => [row.id, row]));
       const keys = ["productCode", "productName", "colorName", "fitName", "sizeName", "barcode"] as const;
       const changed = draft.lines.filter(row => row.isCurrent && !(prior.get(row.id)?.skuId === row.skuId
@@ -82,7 +84,7 @@ export function createNativeSalesPreparation(dependencies: SalesDependencies) {
     requireDomain(proposal && typeof proposal === "object" && (proposal.businessType === "SALE" || proposal.businessType === "RETURN" || proposal.businessType === "EXCHANGE")
       && (proposal.note === null || typeof proposal.note === "string" && proposal.note.length <= SALES_PREPARE_MAX_NOTE_LENGTH)
       && Array.isArray(proposal.lines) && proposal.lines.length > 0 && proposal.lines.length <= NATIVE_SALES_PREPARE_MAX_LINES
-      && Array.isArray(proposal.settlements) && proposal.settlements.length <= 3, "INVALID_HTTP_INPUT", "Bounded native sales proposal required");
+      && Array.isArray(proposal.settlements) && proposal.settlements.length <= SALES_PREPARE_MAX_LINES, "INVALID_HTTP_INPUT", "Bounded native sales proposal required");
     requireDomain(salesJsonByteLength(proposal) <= SALES_PREPARE_MAX_REQUEST_BYTES, "SALES_PAYLOAD_TOO_LARGE", "Preparation exceeds request budget");
     const used = new Set<string>();
     const nextId: SalesDependencies["newId"] = kind => {
@@ -91,7 +93,7 @@ export function createNativeSalesPreparation(dependencies: SalesDependencies) {
     };
     const id = nextId("sales"), zero = minorAmount("0");
     const header = { id, number: sourceConfirmedCreateDocumentNumber("SALE", id), businessType: proposal.businessType,
-      businessDate: businessDate(proposal.businessDate), hallId: entityId("hall", proposal.hallId), customerId: entityId("customer", proposal.customerId),
+      businessDate: businessDate(proposal.businessDate), hallId: proposal.hallId===null?null:entityId("hall", proposal.hallId), customerId: entityId("customer", proposal.customerId),
       salespersonId: proposal.salespersonId === null ? null : entityId("staff", proposal.salespersonId), warehouseId: entityId("warehouse", proposal.warehouseId),
       note: proposal.note, orderDiscount: money(proposal.orderDiscount), grossAmount: zero, netDue: zero };
     requireDomain(header.businessType === "SALE" || header.orderDiscount === 0n, "INDEPENDENT_RETURN_DISCOUNT",
@@ -102,7 +104,7 @@ export function createNativeSalesPreparation(dependencies: SalesDependencies) {
       requireDomain(line.pricingRule === "UNIT_PRICE" ? line.discountTenths === null && (line.isGift || line.dealPrice !== null)
         : line.dealPrice === null && Number.isInteger(line.discountTenths) && line.discountTenths! >= 0 && line.discountTenths! <= 100,
       "INVALID_LINE_DISCOUNT", "Direct price and discount intent must be unambiguous");
-      const count = quantity(line.quantity); requireDomain(count !== 0n && (header.businessType !== "SALE" || count > 0n), "INVALID_SALES_QUANTITY", "SALE requires positive quantity; independent return/exchange accepts nonzero signed quantity");
+      const count = quantity(line.quantity); requireDomain(count !== 0n, "INVALID_SALES_QUANTITY", "Sales quantities must be nonzero");
       return { id: nextId("salesLine"), salesId: id, lineNo: index + 1, skuId: entityId("sku", line.skuId), quantity: count,
         referencePrice: null, dealPrice: line.dealPrice === null ? zero : money(line.dealPrice), pricingRule: line.pricingRule,
         discountTenths: line.discountTenths, zeroConfirmed: line.zeroConfirmed, lineAmount: zero, allocatedDiscount: zero,
@@ -141,7 +143,7 @@ export function createNativeSalesPreparation(dependencies: SalesDependencies) {
         return { ...row, referencePrice: product.referencePrice, dealPrice, lineAmount: multiplyMoney(dealPrice, row.quantity) };
       });
       const allocations = header.businessType === "SALE"
-        ? allocateSalesDiscount(priced.map(row => row.lineAmount), header.orderDiscount) : priced.map(() => zero);
+        ? allocateCurrentSalesDiscount(priced, header.orderDiscount) : priced.map(() => zero);
       const grossAmount = minorAmount(priced.reduce((sum, row) => sum + row.lineAmount, 0n).toString());
       requireDomain(grossAmount >= -999999999999999999n && grossAmount <= 999999999999999999n
         && priced.every(row => row.lineAmount >= -999999999999999999n && row.lineAmount <= 999999999999999999n),
@@ -188,26 +190,28 @@ export function parseNativeSalesExistingProposal(input: unknown): NativeSalesExi
   requireDomain(note === null || note.length <= SALES_PREPARE_MAX_NOTE_LENGTH, "INVALID_HTTP_INPUT", "Bounded note required");
   const lines = existingArray(p.lines, 1, SALES_PREPARE_MAX_LINES).map((value): NativeSalesExistingProposal["lines"][number] => {
     const line = existingData(value, ["existingLineId", "skuId", "quantity", "dealPrice", "pricingRule", "discountTenths", "isGift", "zeroConfirmed"]);
-    requireDomain((line.pricingRule === "UNIT_PRICE" || line.pricingRule === "DISCOUNT") && typeof line.isGift === "boolean" && typeof line.zeroConfirmed === "boolean",
+    const retainedUnknown=typeof line.dealPrice==='string' && (line.pricingRule===null||line.isGift===null||line.zeroConfirmed===null);
+    requireDomain(retainedUnknown || (line.pricingRule === "UNIT_PRICE" || line.pricingRule === "DISCOUNT") && typeof line.isGift === "boolean" && typeof line.zeroConfirmed === "boolean",
       "INVALID_HTTP_INPUT", "Explicit pricing and confirmation intent required");
-    requireDomain(line.pricingRule === "UNIT_PRICE" ? line.discountTenths === null && (line.isGift || line.dealPrice !== null)
-      : line.dealPrice === null && typeof line.discountTenths === "number" && Number.isInteger(line.discountTenths) && line.discountTenths >= 0 && line.discountTenths <= 100,
+    requireDomain(retainedUnknown || (line.pricingRule === "UNIT_PRICE" ? line.discountTenths === null && (line.isGift || line.dealPrice !== null)
+      : line.dealPrice === null && typeof line.discountTenths === "number" && Number.isInteger(line.discountTenths) && line.discountTenths >= 0 && line.discountTenths <= 100),
     "INVALID_LINE_DISCOUNT", "Unambiguous explicit pricing intent required");
+    requireDomain((line.pricingRule===null||line.pricingRule==='UNIT_PRICE'||line.pricingRule==='DISCOUNT')&&(line.isGift===null||typeof line.isGift==='boolean')&&(line.zeroConfirmed===null||typeof line.zeroConfirmed==='boolean')&&(line.discountTenths===null||typeof line.discountTenths==='number'&&Number.isInteger(line.discountTenths)&&line.discountTenths>=0&&line.discountTenths<=100),'INVALID_HTTP_INPUT','Exact retained pricing scalars required');
     const q = text(line.quantity), price = line.dealPrice === null ? null : text(line.dealPrice);
-    requireDomain(quantity(q) !== 0n && (p.businessType !== "SALE" || quantity(q) > 0n), "INVALID_SALES_QUANTITY", "Actual nonzero signed quantity required");
+    requireDomain(quantity(q) !== 0n, "INVALID_SALES_QUANTITY", "Actual nonzero signed quantity required");
     if (price !== null) money(price);
     return { existingLineId: pointer(line.existingLineId, "salesLine"), skuId: entityId("sku", text(line.skuId)), quantity: q, dealPrice: price,
       pricingRule: line.pricingRule, discountTenths: line.discountTenths as number | null, isGift: line.isGift, zeroConfirmed: line.zeroConfirmed };
   });
-  const settlements = existingArray(p.settlements, 0, 3).map((value): NativeSalesExistingProposal["settlements"][number] => {
+  const settlements = existingArray(p.settlements, 0, SALES_PREPARE_MAX_LINES).map((value): NativeSalesExistingProposal["settlements"][number] => {
     const row = existingData(value, ["existingSettlementId", "paymentAccountId", "paymentMethodId", "direction", "amount"]);
     requireDomain(row.direction === "RECEIVE" || row.direction === "REFUND", "INVALID_HTTP_INPUT", "Explicit settlement direction required");
     const amount = text(row.amount); money(amount);
     return { existingSettlementId: pointer(row.existingSettlementId, "settlement"), paymentAccountId: entityId("paymentAccount", text(row.paymentAccountId)),
-      paymentMethodId: entityId("paymentMethod", text(row.paymentMethodId)), direction: row.direction, amount };
+      paymentMethodId: row.paymentMethodId===null && row.existingSettlementId!==null ? null : entityId("paymentMethod", text(row.paymentMethodId)), direction: row.direction, amount };
   });
   const proposal: NativeSalesExistingProposal = { salesId: entityId("sales", text(p.salesId)), expectedVersion: p.expectedVersion, businessType: p.businessType,
-    businessDate: businessDate(text(p.businessDate)), note, hallId: entityId("hall", text(p.hallId)), customerId: entityId("customer", text(p.customerId)),
+    businessDate: businessDate(text(p.businessDate)), note, hallId: p.hallId === null ? null : entityId("hall", text(p.hallId)), customerId: entityId("customer", text(p.customerId)),
     salespersonId: p.salespersonId === null ? null : entityId("staff", text(p.salespersonId)), warehouseId: entityId("warehouse", text(p.warehouseId)), orderDiscount: text(p.orderDiscount), lines, settlements };
   money(proposal.orderDiscount);
   requireDomain(proposal.businessType === "SALE" || money(proposal.orderDiscount) === 0n, "INDEPENDENT_RETURN_DISCOUNT", "Independent return/exchange whole discount must be zero");
@@ -223,26 +227,44 @@ export function parseNativeSalesSaveProposal(input:unknown):NativeSalesSavePropo
     requireDomain(value!==null&&typeof value==='object','INVALID_HTTP_INPUT','Actual line required');
     const which=Object.hasOwn(value,'skuId')?'skuId':'spec';
     const l=existingData(value,['existingLineId',which,'quantity','dealPrice','pricingRule','discountTenths','isGift','zeroConfirmed']);
-    requireDomain(typeof l.quantity==='string'&&quantity(l.quantity)!==0n&&(p.businessType!=='SALE'||quantity(l.quantity)>0n),'INVALID_SALES_QUANTITY','Actual signed quantity required');
-    requireDomain(typeof l.isGift==='boolean'&&typeof l.zeroConfirmed==='boolean','UNKNOWN_PRICING_FACTS','Actual pricing intent required');
-    requireDomain(l.pricingRule==='UNIT_PRICE'?l.discountTenths===null&&(l.isGift||typeof l.dealPrice==='string'):
-      l.pricingRule==='DISCOUNT'&&(l.dealPrice===null||typeof l.dealPrice==='string')&&typeof l.discountTenths==='number'&&Number.isInteger(l.discountTenths)&&l.discountTenths>=0&&l.discountTenths<=100,'INVALID_LINE_DISCOUNT','Unambiguous pricing intent required');
+    requireDomain(typeof l.quantity==='string'&&quantity(l.quantity)!==0n,'INVALID_SALES_QUANTITY','Actual signed quantity required');
+    const retainedUnknown=typeof l.dealPrice==='string'&&(l.pricingRule===null||l.isGift===null||l.zeroConfirmed===null);
+    requireDomain(retainedUnknown || typeof l.isGift==='boolean'&&typeof l.zeroConfirmed==='boolean','UNKNOWN_PRICING_FACTS','Actual pricing intent required');
+    requireDomain(retainedUnknown || (l.pricingRule==='UNIT_PRICE'?l.discountTenths===null&&(l.isGift||typeof l.dealPrice==='string'):
+      l.pricingRule==='DISCOUNT'&&(l.dealPrice===null||typeof l.dealPrice==='string')&&typeof l.discountTenths==='number'&&Number.isInteger(l.discountTenths)&&l.discountTenths>=0&&l.discountTenths<=100),'INVALID_LINE_DISCOUNT','Unambiguous pricing intent required');
+    requireDomain((l.pricingRule===null||l.pricingRule==='UNIT_PRICE'||l.pricingRule==='DISCOUNT')&&(l.isGift===null||typeof l.isGift==='boolean')&&(l.zeroConfirmed===null||typeof l.zeroConfirmed==='boolean')&&(l.discountTenths===null||typeof l.discountTenths==='number'&&Number.isInteger(l.discountTenths)&&l.discountTenths>=0&&l.discountTenths<=100),'INVALID_HTTP_INPUT','Exact retained pricing scalars required');
     if(l.dealPrice!==null)money(l.dealPrice);
     return {...parseDocumentSkuSelection({[which]:l[which]}),existingLineId:l.existingLineId===null?null:entityId('salesLine',l.existingLineId as string),
-      quantity:l.quantity,dealPrice:l.dealPrice as string|null,pricingRule:l.pricingRule as 'UNIT_PRICE'|'DISCOUNT',discountTenths:l.discountTenths as number|null,isGift:l.isGift,zeroConfirmed:l.zeroConfirmed};
+      quantity:l.quantity,dealPrice:l.dealPrice as string|null,pricingRule:l.pricingRule as 'UNIT_PRICE'|'DISCOUNT'|null,discountTenths:l.discountTenths as number|null,isGift:l.isGift as boolean|null,zeroConfirmed:l.zeroConfirmed as boolean|null};
   });
-  const settlements=existingArray(p.settlements,0,3).map(value=>{
+  const settlements=existingArray(p.settlements,0,SALES_PREPARE_MAX_LINES).map(value=>{
     const s=existingData(value,['existingSettlementId','paymentAccountId','paymentMethodId','direction','amount']);
     requireDomain(s.direction==='RECEIVE'||s.direction==='REFUND','INVALID_SETTLEMENT','Actual settlement direction required');
     return {existingSettlementId:s.existingSettlementId===null?null:entityId('settlement',s.existingSettlementId as string),paymentAccountId:entityId('paymentAccount',s.paymentAccountId as string),
-      paymentMethodId:entityId('paymentMethod',s.paymentMethodId as string),direction:s.direction as 'RECEIVE'|'REFUND',amount:(money(s.amount),s.amount as string)};
+      paymentMethodId:s.paymentMethodId===null && s.existingSettlementId!==null && p.salesId!==null?null:entityId('paymentMethod',s.paymentMethodId as string),direction:s.direction as 'RECEIVE'|'REFUND',amount:(money(s.amount),s.amount as string)};
   });
   const proposal:NativeSalesSaveProposal={salesId:p.salesId===null?null:entityId('sales',p.salesId as string),businessType:p.businessType,businessDate:businessDate(p.businessDate as string),
-    note:p.note as string|null,hallId:entityId('hall',p.hallId as string),customerId:entityId('customer',p.customerId as string),salespersonId:p.salespersonId===null?null:entityId('staff',p.salespersonId as string),
+    note:p.note as string|null,hallId:p.hallId===null&&p.salesId!==null?null:entityId('hall',p.hallId as string),customerId:entityId('customer',p.customerId as string),salespersonId:p.salespersonId===null?null:entityId('staff',p.salespersonId as string),
     warehouseId:entityId('warehouse',p.warehouseId as string),orderDiscount:(money(p.orderDiscount),p.orderDiscount as string),lines,settlements};
   requireDomain(proposal.salesId!==null||lines.every(l=>l.existingLineId===null)&&settlements.every(s=>s.existingSettlementId===null),'INVALID_HTTP_INPUT','New document cannot adopt old rows');
   requireDomain(proposal.businessType==='SALE'||money(proposal.orderDiscount)===0n,'INDEPENDENT_RETURN_DISCOUNT','Independent return/exchange whole discount must be zero');
   requireDomain(salesJsonByteLength(proposal)<=SALES_PREPARE_MAX_REQUEST_BYTES,'SALES_PAYLOAD_TOO_LARGE','Bounded proposal required');return proposal;
+}
+
+// SKU/spec identity is resolved and checked by the caller; compare only shared row facts.
+function unchangedProposalLine(row: Omit<NativeSalesExistingProposal['lines'][number], 'skuId'>, old: SalesLineRow): boolean {
+ return row.existingLineId===old.id && quantity(row.quantity)===old.quantity && row.dealPrice!==null && money(row.dealPrice)===old.dealPrice && row.pricingRule===old.pricingRule && row.discountTenths===old.discountTenths && row.zeroConfirmed===old.zeroConfirmed && row.isGift===old.isGift;
+}
+
+function retainedHistoricalProposal(proposal:NativeSalesSaveProposal|NativeSalesExistingProposal,stored:StoredSales|undefined,skuIds:readonly string[]):SalesDraft|undefined {
+ const previous=stored?.document;
+ if(stored?.stockBasis!=='CUTOFF_HISTORY'||!previous||previous.header.businessType!=='SALE'||!previous.lines.some(l=>l.isCurrent&&l.quantity<0n))return undefined;
+ const old=previous.lines.filter(l=>l.isCurrent);
+ if(proposal.lines.length!==old.length||proposal.settlements.length!==previous.settlements.length)return undefined;
+ if(!proposal.lines.every((r,i)=>{const l=old[i]!;return r.existingLineId===l.id&&skuIds[i]===l.skuId&&quantity(r.quantity)===l.quantity&&r.dealPrice!==null&&money(r.dealPrice)===l.dealPrice&&r.pricingRule===l.pricingRule&&r.discountTenths===l.discountTenths&&r.isGift===l.isGift&&r.zeroConfirmed===l.zeroConfirmed;}))return undefined;
+ if(!proposal.settlements.every((r,i)=>{const l=previous.settlements[i]!;return r.existingSettlementId===l.id&&r.paymentAccountId===l.paymentAccountId&&r.paymentMethodId===l.paymentMethodId&&r.direction===l.direction&&money(r.amount)===l.amount;}))return undefined;
+ const draft:SalesDraft={header:{id:previous.header.id,number:previous.header.number,grossAmount:previous.header.grossAmount,netDue:previous.header.netDue,businessType:proposal.businessType,businessDate:businessDate(proposal.businessDate),note:proposal.note,hallId:proposal.hallId===null?null:entityId('hall',proposal.hallId),customerId:entityId('customer',proposal.customerId),salespersonId:proposal.salespersonId===null?null:entityId('staff',proposal.salespersonId),warehouseId:entityId('warehouse',proposal.warehouseId),orderDiscount:money(proposal.orderDiscount)},lines:structuredClone(old),settlements:structuredClone(previous.settlements)};
+ return preservesHistoricalSignedSale(previous,draft,stored.stockBasis)?draft:undefined;
 }
 
 /** Original pure money rules/current facts on the already-bound outer SAVE transaction. */
@@ -255,8 +277,11 @@ export async function prepareNativeSalesOnTransaction(dependencies:SalesDependen
     'SALES_PRICE_QUOTE_REQUIRED','Confirm the displayed discounted price before a new SAVE');
   requireDomain(!previous||previous.header.status==='DRAFT','INVALID_STATE','Only actual drafts can be edited');
   requireDomain(skuIds.length===proposal.lines.length,'INVALID_LINES','Resolved selections must retain current rows');
+  if(stored)await loadHistoricalSaleOrigin(stored.document,stored.stockBasis,tx);
+  const preserved=retainedHistoricalProposal(proposal,stored,skuIds);
+  if(preserved){requireDomain(salesPreparedDraftFitsSaveBudget(preserved),'SALES_PAYLOAD_TOO_LARGE','Retained draft exceeds SAVE budget');await createNativeManualSalesBusinessRules().assertDraftChange(previous,preserved,tx,stored?.stockBasis);await dependencies.rules.assertDraftChange(previous,preserved,tx,stored?.stockBasis);return preserved;}
   const header={id:entityId('sales',documentId),number:previous?.header.number??sourceConfirmedCreateDocumentNumber('SALE',entityId('sales',documentId)),
-    businessType:proposal.businessType,businessDate:businessDate(proposal.businessDate),hallId:entityId('hall',proposal.hallId),customerId:entityId('customer',proposal.customerId),
+    businessType:proposal.businessType,businessDate:businessDate(proposal.businessDate),hallId:proposal.hallId===null?null:entityId('hall',proposal.hallId),customerId:entityId('customer',proposal.customerId),
     salespersonId:proposal.salespersonId===null?null:entityId('staff',proposal.salespersonId),warehouseId:entityId('warehouse',proposal.warehouseId),note:proposal.note,orderDiscount:money(proposal.orderDiscount),grossAmount:zero,netDue:zero};
   const used=new Set<string>([documentId,...(previous?.lines.map(l=>l.id)??[]),...(previous?.settlements.map(s=>s.id)??[])]),pointers=new Set<string>(),fresh=new Set<string>();
   const nextId=<K extends 'salesLine'|'settlement'>(kind:K):EntityId<K>=>{const id=entityId(kind,dependencies.newId(kind));requireDomain(!used.has(id),'INVALID_ID','Distinct generated row identity required');used.add(id);return id;};
@@ -265,6 +290,7 @@ export async function prepareNativeSalesOnTransaction(dependencies:SalesDependen
     requireDomain(row.existingLineId===null||old?.isCurrent&&!pointers.has(row.existingLineId),'INVALID_HTTP_INPUT','Unique current owned line pointer required');
     if(row.existingLineId!==null)pointers.add(row.existingLineId);
     const skuId=entityId('sku',skuIds[i]!),retain=old?.skuId===skuId,id=retain?old.id:nextId('salesLine');if(!retain)fresh.add(id);
+    if (old && retain && unchangedProposalLine(row, old)) return {...structuredClone(old),lineNo:i+1};
     return {id,salesId:header.id,lineNo:i+1,skuId,quantity:quantity(row.quantity),referencePrice:retain?old.referencePrice:null,
       dealPrice:row.dealPrice===null?zero:money(row.dealPrice),pricingRule:row.pricingRule,discountTenths:row.discountTenths,zeroConfirmed:row.zeroConfirmed,isGift:row.isGift,
       lineAmount:zero,allocatedDiscount:zero,isCurrent:true,snapshot:retain?{...old.snapshot}:{productCode:'',productName:'',colorName:'',fitName:'',sizeName:'',barcode:null}};
@@ -276,6 +302,7 @@ export async function prepareNativeSalesOnTransaction(dependencies:SalesDependen
     if(row.existingSettlementId!==null)pointers.add(row.existingSettlementId);
     const retain=old?.paymentAccountId===row.paymentAccountId;
     if(retain)requireDomain(old.paymentMethodId===row.paymentMethodId,'IMMUTABLE_SETTLEMENT_METHOD','Retained method cannot change');
+    if(row.paymentMethodId===null){requireDomain(retain && old.paymentMethodId===null && old.direction===row.direction && old.amount===money(row.amount), 'UNKNOWN_SETTLEMENT_FACTS', 'Only the exact unchanged historical settlement may retain an unknown method');return {...structuredClone(old),lineNo:i+1};}
     return {id:retain?old.id:nextId('settlement'),salesId:header.id,lineNo:i+1,paymentAccountId:entityId('paymentAccount',row.paymentAccountId),paymentMethodId:entityId('paymentMethod',row.paymentMethodId),direction:row.direction,amount:money(row.amount)};
   });
   requireDomain(tx.getCurrentSalesSnapshots&&tx.getCurrentSalesReferenceFacts,'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Original current native facts required');
@@ -283,6 +310,7 @@ export async function prepareNativeSalesOnTransaction(dependencies:SalesDependen
   const selected:SalesDraft={header,settlements,lines:lines.map(l=>{if(!fresh.has(l.id))return l;const snapshot=snapshots.get(l.skuId);requireDomain(snapshot,'SKU_UNAVAILABLE','Actual native snapshot required');return {...l,snapshot:{...snapshot}};})};
   const facts=await tx.getCurrentSalesReferenceFacts(selected);
   const priced=selected.lines.map(l=>{
+    if(previous?.lines.some(old=>sameSalesLinePricingFacts(old,l))) return l;
     const sku=facts.skus.find(s=>s.id===l.skuId),product=sku&&facts.products.find(p=>p.id===sku.productId);
     requireDomain(product&&product.referencePrice!==undefined,'PRODUCT_PRICING_UNAVAILABLE','Complete current pricing required');
     const referencePrice=fresh.has(l.id)?product.referencePrice:l.referencePrice;let dealPrice=l.dealPrice;
@@ -294,11 +322,11 @@ export async function prepareNativeSalesOnTransaction(dependencies:SalesDependen
     }
     return {...l,referencePrice,dealPrice,lineAmount:multiplyMoney(dealPrice,l.quantity)};
   });
-  const allocations=header.businessType==='SALE'?allocateSalesDiscount(priced.map(l=>l.lineAmount),header.orderDiscount):priced.map(()=>zero);
+  const allocations=header.businessType==='SALE'&&!(isHistoricalSignedSale(previous,stored?.stockBasis,tx))?allocateCurrentSalesDiscount(priced,header.orderDiscount):priced.map(()=>zero);
   const grossAmount=minorAmount(priced.reduce((s,l)=>s+l.lineAmount,0n).toString());
   requireDomain(grossAmount>=-999999999999999999n&&grossAmount<=999999999999999999n&&priced.every(l=>l.lineAmount>=-999999999999999999n&&l.lineAmount<=999999999999999999n),'MONEY_STORAGE_OVERFLOW','Actual amounts must fit storage');
-  const draft:SalesDraft={header:{...header,grossAmount,netDue:minorAmount((grossAmount-header.orderDiscount).toString())},settlements,lines:priced.map((l,i)=>({...l,allocatedDiscount:allocations[i]!}))};
-  await createNativeManualSalesBusinessRules().assertDraftChange(previous,draft,tx);await dependencies.rules.assertDraftChange(previous,draft,tx);
+  const draft:SalesDraft={header:{...header,grossAmount,netDue:minorAmount((grossAmount-header.orderDiscount).toString())},settlements,lines:priced.map((l,i)=>({...l,allocatedDiscount:previous && isHistoricalSignedSale(previous,stored?.stockBasis,tx)?(previous.lines.find(old=>old.id===l.id)?.allocatedDiscount??(previous.lines.some(old=>old.id===l.id&&old.allocatedDiscount===null)?null:zero)):allocations[i]!}))};
+  await createNativeManualSalesBusinessRules().assertDraftChange(previous,draft,tx,stored?.stockBasis);await dependencies.rules.assertDraftChange(previous,draft,tx,stored?.stockBasis);
   const result=!previous&&tx.reserveRuntimeDocumentNumber?{...draft,header:{...draft.header,number:await tx.reserveRuntimeDocumentNumber({kind:'SALES',documentId:header.id,actorAccountId:actor.accountId})}}:draft;
   requireDomain(salesPreparedDraftFitsSaveBudget(result),'SALES_PAYLOAD_TOO_LARGE','Prepared SAVE exceeds original budget');return result;
 }
@@ -310,6 +338,7 @@ function existingReadTransaction(original: SalesTransaction) {
   const check = () => requireDomain(active, "TRANSACTION_CLOSED", "Preparation context closed");
   const denied = (): never => { attemptedWrite = true; throw Error("Existing sales preparation is read-only"); };
   const tx: SalesTransaction = Object.freeze({
+    getRetainedSalesApprovalHistory: (id:EntityId<"sales">, v:import("../../domain/src/values.ts").Version, requireMigrationOrigin?:boolean) => { check(); requireDomain(original.getRetainedSalesApprovalHistory,'UNKNOWN_PRICING_FACTS','Bound historical audit required'); return original.getRetainedSalesApprovalHistory(id,v,requireMigrationOrigin); },
     getCurrentSalesIdentity: (id: Parameters<SalesTransaction["getCurrentSalesIdentity"]>[0]) => { check(); return original.getCurrentSalesIdentity(id); },
     getSales: (id: Parameters<SalesTransaction["getSales"]>[0]) => { check(); return original.getSales(id); },
     getReceipt: (...args: Parameters<SalesTransaction["getReceipt"]>) => { check(); return original.getReceipt(...args); },
@@ -341,20 +370,23 @@ export function createNativeSalesExistingPreparation(dependencies: SalesDependen
         const stored = await tx.getSales(salesId); requireDomain(stored, "DOCUMENT_NOT_FOUND", "Existing sales document unavailable");
         const previous = stored.document;
         await dependencies.authorization.assertAllowed(actor, "SAVE", previous, tx);
-        requireDomain(stored.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED", "Historical projections remain read-only history");
         requireDomain(previous.header.status === "DRAFT", "INVALID_STATE", "Only an existing draft may be prepared for SAVE");
         requireDomain(previous.header.version === proposal.expectedVersion, "VERSION_CONFLICT", "Existing document version changed");
+        await loadHistoricalSaleOrigin(previous,stored.stockBasis,tx);
+        const preserved=retainedHistoricalProposal(proposal,stored,proposal.lines.map(l=>l.skuId));
+        if(preserved){requireDomain(salesPreparedDraftFitsSaveBudget(preserved),'SALES_PAYLOAD_TOO_LARGE','Retained draft exceeds SAVE budget');await dependencies.authorization.assertAllowed(actor,'SAVE',preserved,tx);await nativeRules.assertDraftChange(previous,preserved,tx,stored.stockBasis);await dependencies.rules.assertDraftChange(previous,preserved,tx,stored.stockBasis);scope.finish();return {expectedVersion:previous.header.version,draft:preserved};}
         for (const row of [...previous.lines, ...previous.settlements]) used.add(row.id);
         const oldLines = new Map(previous.lines.map(row => [row.id as string, row])), oldSettlements = new Map(previous.settlements.map(row => [row.id as string, row]));
         const linePointers = new Set<string>(), settlementPointers = new Set<string>(), fresh = new Set<string>();
         const header = { id: salesId, number: previous.header.number, businessType: proposal.businessType, businessDate: businessDate(proposal.businessDate),
-          hallId: entityId("hall", proposal.hallId), customerId: entityId("customer", proposal.customerId), salespersonId: proposal.salespersonId === null ? null : entityId("staff", proposal.salespersonId),
+          hallId: proposal.hallId===null?null:entityId("hall", proposal.hallId), customerId: entityId("customer", proposal.customerId), salespersonId: proposal.salespersonId === null ? null : entityId("staff", proposal.salespersonId),
           warehouseId: entityId("warehouse", proposal.warehouseId), note: proposal.note, orderDiscount: money(proposal.orderDiscount), grossAmount: zero, netDue: zero };
         const lines: SalesLineRow[] = proposal.lines.map((row, index) => {
           const old = row.existingLineId === null ? undefined : oldLines.get(row.existingLineId);
           requireDomain(row.existingLineId === null || old?.salesId === salesId && old.isCurrent && !linePointers.has(row.existingLineId), "INVALID_HTTP_INPUT", "Existing line pointer must be unique, current and owned by this document");
           if (row.existingLineId !== null) linePointers.add(row.existingLineId);
           const retain = old?.skuId === row.skuId, id = retain ? old.id : nextId("salesLine"); if (!retain) fresh.add(id);
+          if (old && retain && unchangedProposalLine(row, old)) return {...structuredClone(old),lineNo:index+1};
           return { id, salesId, lineNo: index + 1, skuId: entityId("sku", row.skuId), quantity: quantity(row.quantity),
             referencePrice: retain ? old.referencePrice : null, dealPrice: row.dealPrice === null ? zero : money(row.dealPrice), pricingRule: row.pricingRule,
             discountTenths: row.discountTenths, zeroConfirmed: row.zeroConfirmed, isGift: row.isGift, isCurrent: true,
@@ -365,7 +397,8 @@ export function createNativeSalesExistingPreparation(dependencies: SalesDependen
           requireDomain(row.existingSettlementId === null || old?.salesId === salesId && !settlementPointers.has(row.existingSettlementId), "INVALID_HTTP_INPUT", "Existing settlement pointer must be unique and owned by this document");
           if (row.existingSettlementId !== null) settlementPointers.add(row.existingSettlementId);
           const retain = old?.paymentAccountId === row.paymentAccountId;
-          if (retain) requireDomain(old.paymentMethodId !== null && old.paymentMethodId === row.paymentMethodId, "IMMUTABLE_SETTLEMENT_METHOD", "Retained same-account method cannot be replaced or inferred");
+          if (retain) requireDomain(old.paymentMethodId === row.paymentMethodId, "IMMUTABLE_SETTLEMENT_METHOD", "Retained same-account method cannot be replaced or inferred");
+          if(row.paymentMethodId===null){requireDomain(retain && old.paymentMethodId===null && old.direction===row.direction && old.amount===money(row.amount), 'UNKNOWN_SETTLEMENT_FACTS', 'Only the exact unchanged historical settlement may retain an unknown method');return {...structuredClone(old),lineNo:index+1};}
           return { id: retain ? old.id : nextId("settlement"), salesId, lineNo: index + 1, paymentAccountId: entityId("paymentAccount", row.paymentAccountId),
             paymentMethodId: entityId("paymentMethod", row.paymentMethodId), direction: row.direction, amount: money(row.amount) };
         });
@@ -379,6 +412,7 @@ export function createNativeSalesExistingPreparation(dependencies: SalesDependen
         }) };
         const facts = await tx.getCurrentSalesReferenceFacts!(selected), skus = new Map(facts.skus.map(row => [row.id, row])), products = new Map(facts.products.map(row => [row.id, row]));
         const priced = selected.lines.map(row => {
+          if(previous.lines.some(old=>sameSalesLinePricingFacts(old,row))) return row;
           const sku = skus.get(row.skuId), product = sku && products.get(sku.productId);
           requireDomain(product && product.referencePrice !== undefined, "PRODUCT_PRICING_UNAVAILABLE", "Current complete pricing facts required");
           const referencePrice = fresh.has(row.id) ? product.referencePrice : row.referencePrice; let dealPrice = row.dealPrice;
@@ -386,12 +420,12 @@ export function createNativeSalesExistingPreparation(dependencies: SalesDependen
           else if (row.pricingRule === "DISCOUNT") { requireDomain(referencePrice !== null, "PRODUCT_PRICING_UNAVAILABLE", "Discount requires actual reference snapshot"); dealPrice = discountUnitPrice(referencePrice, row.discountTenths!); }
           return { ...row, referencePrice, dealPrice, lineAmount: multiplyMoney(dealPrice, row.quantity) };
         });
-        const allocations = header.businessType === "SALE" ? allocateSalesDiscount(priced.map(row => row.lineAmount), header.orderDiscount) : priced.map(() => zero);
+        const allocations = header.businessType === "SALE" && !(isHistoricalSignedSale(previous,stored.stockBasis,tx)) ? allocateCurrentSalesDiscount(priced, header.orderDiscount) : priced.map(() => zero);
         const grossAmount = minorAmount(priced.reduce((sum, row) => sum + row.lineAmount, 0n).toString());
         requireDomain(grossAmount >= -999999999999999999n && grossAmount <= 999999999999999999n
           && priced.every(row => row.lineAmount >= -999999999999999999n && row.lineAmount <= 999999999999999999n), "MONEY_STORAGE_OVERFLOW", "Calculated amounts must fit existing decimal storage");
-        const draft: SalesDraft = { header: { ...header, grossAmount, netDue: minorAmount((grossAmount - header.orderDiscount).toString()) }, lines: priced.map((row, index) => ({ ...row, allocatedDiscount: allocations[index]! })), settlements };
-        await nativeRules.assertDraftChange(previous, draft, tx); await dependencies.rules.assertDraftChange(previous, draft, tx);
+        const draft: SalesDraft = { header: { ...header, grossAmount, netDue: minorAmount((grossAmount - header.orderDiscount).toString()) }, lines: priced.map((row, index) => ({ ...row, allocatedDiscount: isHistoricalSignedSale(previous,stored.stockBasis,tx)?(previous.lines.find(old=>old.id===row.id)?.allocatedDiscount??(previous.lines.some(old=>old.id===row.id&&old.allocatedDiscount===null)?null:zero)):allocations[index]! })), settlements };
+        await nativeRules.assertDraftChange(previous, draft, tx, stored.stockBasis); await dependencies.rules.assertDraftChange(previous, draft, tx, stored.stockBasis);
         requireDomain(salesPreparedDraftFitsSaveBudget(draft), "SALES_PAYLOAD_TOO_LARGE", "Prepared existing draft exceeds SAVE budget"); scope.finish();
         return structuredClone({ expectedVersion: previous.header.version, draft });
       } finally { scope.close(); }

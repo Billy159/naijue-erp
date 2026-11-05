@@ -405,3 +405,30 @@ test("LIVE layer4B abort: successful stored-pair decode never bypasses existing 
   await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters(),controller.signal)),code("INVENTORY_READ_ABORTED"));
   assert.equal(stages(pool).at(-1),"COMMIT");assert.deepEqual(pool.releases,[undefined]);
 });
+
+test('SCRIPTED current 27 ledger reads ordinary business facts without source/history rows and preserves unknown transitions', async () => {
+  const pool = new ScriptedPool(); pool.entries = [ledgerDisplayEntry()];
+  pool.transform = (stage, rows) => stage === 'publication' ? [{ id: ledgerBatchId, ready: true }] : rows;
+  let checks = 0;
+  const runtime = { profile: 'EXACT27' as const, contract: 'UNIFIED_ORDINARY_RUNTIME27_V1' as const,
+    async assertReady(client: object, purpose: 'ORDINARY_DOCUMENT_READ') { assert.equal(client, pool); assert.equal(purpose, 'ORDINARY_DOCUMENT_READ'); checks++; } };
+  const reader = new PostgresInventoryLedgerQueryReader(pool, undefined, runtime);
+  const result = await reader.readLedger(ledgerRead(ledgerNumberedParameters()));
+  assert.equal(result.data.entries[0]!.display!.balanceTransition.state, 'UNKNOWN');
+  assert.equal(result.data.entries[0]!.quantityDelta, pool.entries[0]!.quantityDelta);
+  assert.ok(checks >= 1);
+  const sql = pool.calls.map(c => c.sql).join('\n');
+  assert.doesNotMatch(sql, /naijue_erp\.(?:import_record|import_source_row|history_(?:revision|sales|transfer))/i);
+  assert.doesNotMatch(sql, /standard_inventory_key_proof|inventory_key_admission/i);
+  assert.match(sql, /standard_business_ready\(\)/);
+  assert.equal(stages(pool).at(-1), 'COMMIT');
+});
+
+test('SCRIPTED current 27 ledger fails closed on unpublished and malformed evidence', async () => {
+  for (const rows of [[], [{id: ledgerBatchId, ready: false}], [{id: ledgerBatchId, ready: true}, {id: ledgerBatchId, ready: true}]]) {
+    const pool = new ScriptedPool(); pool.transform = (stage, original) => stage === 'publication' ? rows : original;
+    const runtime = { profile: 'EXACT27' as const, contract: 'UNIFIED_ORDINARY_RUNTIME27_V1' as const, async assertReady() {} };
+    await assert.rejects(new PostgresInventoryLedgerQueryReader(pool, undefined, runtime).readLedger(ledgerRead()));
+    assert.equal(stages(pool).at(-1), 'ROLLBACK');
+  }
+});

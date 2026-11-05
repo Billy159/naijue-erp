@@ -769,3 +769,67 @@ test("retained active missing/deleted/deep parent remains an integrity rejection
   assert.equal(stages(pool).at(-1),'ROLLBACK');assert.equal(stages(pool).includes('COMMIT'),false);
  }
 });
+
+test('SCRIPTED current 27 inventory keeps missing balance unknown and existing zero exact without reading source rows', async () => {
+ const pool = new ScriptedPool(); pool.transform = (stage, rows) => stage === 'publication' ? [{id:batchId,ready:true}] : stage === 'catalog-status' ? rows.map(r => ({...r,unknown_count:'1'})) : rows;
+ const runtime = {profile:'EXACT27' as const,contract:'UNIFIED_ORDINARY_RUNTIME27_V1' as const,async assertReady(client:object,purpose:'ORDINARY_DOCUMENT_READ'){assert.equal(client,pool);assert.equal(purpose,'ORDINARY_DOCUMENT_READ');}};
+ const result = await new PostgresInventoryQueryReader(pool,null,undefined,null,runtime).readInventory(read(pool));
+ const cells = result.data.products[0]!.colorFits[0]!.rows[0]!.cells;
+ assert.deepEqual(cells[sizes[1]!.id], {state:'known',skuId:skuId(0,1),quantity:'0'});
+ assert.deepEqual(cells[sizes[2]!.id], {state:'unknown',skuId:skuId(0,2)});
+ assert.deepEqual(result.data.allMatchesTotal,{knownQuantity:'-2',unknownCells:1,completeness:'incomplete'});
+ const sql = pool.calls.map(c=>c.sql).join('\n');
+ assert.doesNotMatch(sql,/naijue_erp\.(?:import_record|import_source_row)|standard_inventory_key_proof|inventory_key_admission/i);
+ assert.match(sql,/standard_business_ready\(\)/);
+});
+
+test('SCRIPTED current 27 candidates and complete output use native facts without source row queries', async () => {
+ for (const mode of ['candidates','output'] as const) {
+  const pool=new ScriptedPool(); pool.transform=(stage, rows)=>stage==='publication'?[{id:batchId,ready:true}]:stage==='catalog-status'?rows.map(r=>({...r,unknown_count:'1'})):rows;
+  const runtime={profile:'EXACT27' as const,contract:'UNIFIED_ORDINARY_RUNTIME27_V1' as const,async assertReady(client:object){assert.equal(client,pool);}};
+  const reader=new PostgresInventoryQueryReader(pool,null,undefined,null,runtime);
+  if(mode==='candidates') assert.equal((await reader.readCandidates(candidate(pool))).data.items.length,1);
+  else {const frames=[];for await (const frame of reader.readInventoryOutput(read(pool))) frames.push(frame); const last=frames.at(-1);assert.equal(last?.kind,'complete');if(!last||last.kind!=='complete')throw new Error('Complete output required');assert.deepEqual(last.allMatchesTotal,{knownQuantity:'-2',unknownCells:1,completeness:'incomplete'});}
+  assert.doesNotMatch(pool.calls.map(c=>c.sql).join('\n'),/naijue_erp\.(?:import_record|import_source_row)|standard_inventory_key_proof|inventory_key_admission/i);
+ }
+});
+
+test('SCRIPTED current 27 inventory rejects invalid readiness and contradictory full-scope unknown counts', async () => {
+ const runtime={profile:'EXACT27' as const,contract:'UNIFIED_ORDINARY_RUNTIME27_V1' as const,async assertReady(){}};
+ for (const change of ['unpublished','bad-count'] as const) {
+  const pool=new ScriptedPool(); pool.transform=(stage,rows)=>stage==='publication'?[{id:batchId,ready:change!=='unpublished'}]:stage==='catalog-status'?rows.map(r=>({...r,unknown_count:'-1'})):rows;
+  await assert.rejects(new PostgresInventoryQueryReader(pool,null,undefined,null,runtime).readInventory(read(pool)));
+  assert.equal(stages(pool).at(-1),'ROLLBACK');
+ }
+});
+
+test('SCRIPTED current 27 carries unknown counts across authorized warehouses while preserving known negative and zero', async()=>{
+ const pool=new ScriptedPool(); pool.scope={hallIds:inventoryScope.hallIds,warehouses:[...inventoryScope.warehouses,{id:inventoryId('warehouse',4),hallId:inventoryScope.hallIds[0]!,label:'SYNTHETIC SECOND'}]};
+ pool.transform=(stage,rows)=>stage==='publication'?[{id:batchId,ready:true}]:stage==='catalog-status'?rows.map(r=>({...r,unknown_count:'4'})):rows;
+ const runtime={profile:'EXACT27' as const,contract:'UNIFIED_ORDINARY_RUNTIME27_V1' as const,async assertReady(){}};
+ const result=await new PostgresInventoryQueryReader(pool,null,undefined,null,runtime).readInventory(read(pool));
+ const group=result.data.products[0]!.colorFits[0]!;
+ assert.deepEqual(group.rows[0]!.total,{knownQuantity:'-2',unknownCells:1,completeness:'incomplete'});
+ assert.deepEqual(group.rows[1]!.total,{knownQuantity:'0',unknownCells:3,completeness:'incomplete'});
+ assert.deepEqual(group.sizeTotals[sizes[1]!.id],{knownQuantity:'0',unknownCells:1,completeness:'incomplete'});
+ assert.deepEqual(result.data.allMatchesTotal,{knownQuantity:'-2',unknownCells:4,completeness:'incomplete'});
+});
+
+test('SCRIPTED end-to-end V27 unknown passes backend DTO, web response, stream, workbook and print without becoming zero', async()=>{
+ const {inventoryResponse}=await import('../apps/web/src/transport/response-validation.ts');
+ const {emptyInventoryFilter}=await import('../apps/web/src/inventory/contracts.ts');
+ const {createInventoryOutputReader,inventoryWorkbookRows,createInventoryPrintHtml}=await import('../apps/web/src/inventory/output-adapter.ts');
+ const pool=new ScriptedPool();pool.transform=(stage,rows)=>stage==='publication'?[{id:batchId,ready:true}]:stage==='catalog-status'?rows.map(r=>({...r,unknown_count:'1'})):rows;
+ const runtime={profile:'EXACT27' as const,contract:'UNIFIED_ORDINARY_RUNTIME27_V1' as const,async assertReady(){}};
+ const reader=new PostgresInventoryQueryReader(pool,null,undefined,null,runtime), filter=emptyInventoryFilter();
+ const page=await reader.readInventory(read(pool));const web=inventoryResponse(page.data,{filter,page:1,pageSize:100});
+ assert.deepEqual(web.products[0]!.colorFits[0]!.rows[0]!.cells[sizes[2]!.id],{state:'unknown',skuId:skuId(0,2)});
+ const frames=[];for await(const frame of reader.readInventoryOutput(read(pool)))frames.push(frame);
+ const bytes=new TextEncoder().encode(frames.map(v=>JSON.stringify(v)).join('\n')+'\n');
+ const output=createInventoryOutputReader({origin:'https://synthetic.invalid',basePath:'/api',fetch:async()=>new Response(bytes,{headers:{'content-type':'application/x-ndjson'}})});
+ const data=await output.readOutput({parameters:filter,signal:new AbortController().signal,identity:{accountId:inventoryActor.accountId,sessionRevision:'1',permissionRevision:'1'},routeInstanceId:'synthetic',entityId:null});
+ assert.deepEqual(data.allMatchesTotal,{knownQuantity:'-2',unknownCells:1,completeness:'incomplete'});
+ const settings={category:true,supplier:false,fit:false,sizeGroup:true,season:false,subtotal:true,total:true,sizeDescription:true};
+ const rows=inventoryWorkbookRows(data,filter,settings),html=createInventoryPrintHtml(data,filter,settings);
+ assert.ok(rows.some(row=>row.some(cell=>cell.includes('未知'))));assert.ok(html.includes('未知'));assert.ok(rows.some(row=>row.includes('0')));
+});

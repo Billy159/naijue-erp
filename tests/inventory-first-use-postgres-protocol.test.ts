@@ -45,6 +45,12 @@ function locks(keys: readonly { warehouseId: string; skuId: string }[], balances
   return [...unique.map<Step>(([, row]) => ({ sql: /^SELECT naijue_erp.inventory_key_lock/, inspect(values) { assert.deepEqual(values, [row.warehouseId, row.skuId]); } })),
     { sql: /ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b/, rows: balances, inspect(values) { assert.deepEqual(values, [unique.map(([, row]) => row.warehouseId), unique.map(([, row]) => row.skuId)]); } }];
 }
+function actionIdentity(kind: 'sales' | 'transfer'): Step[] {
+  const current = kind === 'sales' ? actor : transferActor;
+  return [{ sql: new RegExp(`${kind}-authorization:identity`), rows: [{ account_id: current.accountId, staff_id: sid('staff', kind === 'sales' ? 16 : 210), login_enabled: true,
+    role: kind === 'sales' ? 'ADMIN' : transferActor.role, employment_status: '在职', hall_id: current.hallId }], inspect(values) { assert.deepEqual(values, [current.accountId]); } },
+    { sql: new RegExp(`${kind}-authorization:hall`), rows: [{ id: current.hallId, enabled: true }], inspect(values) { assert.deepEqual(values, [current.hallId]); } }];
+}
 const firstInsert = (amount: string): Step => ({ sql: /^INSERT INTO naijue_erp.inventory_balance/, inspect(values, sql) { assert.equal(values[2], amount); assert.equal(values[3], 1); assert.equal(values[5], time); assert.match(sql, /ON CONFLICT \(warehouse_id, sku_id\) DO NOTHING/); assert.doesNotMatch(sql, /DO UPDATE/); } });
 const update = (amount: string): Step => ({ sql: /^UPDATE naijue_erp.inventory_balance/, inspect(values) { assert.equal(values[2], amount); assert.equal(values[3], 2); assert.equal(values[6], 1); } });
 const ledger: Step = { sql: /^INSERT INTO naijue_erp.inventory_ledger/ };
@@ -59,11 +65,11 @@ function salesScenario(): { read: Step[]; proof: Step[]; writes: Step[]; execute
     status: "DRAFT", version: 1, gross_amount: moneyToSql(h.grossAmount), order_discount: moneyToSql(h.orderDiscount), net_due: moneyToSql(h.netDue), note: h.note, responsible_staff_id: null, created_by_account_id: actor.accountId,
     created_hall_id: actor.hallId, created_at: time, updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER" };
   const lines = draft.lines.map(l => ({ id: l.id, sales_id: l.salesId, line_no: l.lineNo, sku_id: l.skuId, quantity: l.quantity.toString(), reference_price: l.referencePrice === null ? null : moneyToSql(l.referencePrice), deal_price: moneyToSql(l.dealPrice),
-    line_amount: moneyToSql(l.lineAmount), allocated_discount: moneyToSql(l.allocatedDiscount), is_gift: l.isGift, pricing_rule: l.pricingRule, discount_tenths: l.discountTenths, zero_confirmed: l.zeroConfirmed,
+    line_amount: moneyToSql(l.lineAmount), allocated_discount: l.allocatedDiscount === null ? null : moneyToSql(l.allocatedDiscount), is_gift: l.isGift, pricing_rule: l.pricingRule, discount_tenths: l.discountTenths, zero_confirmed: l.zeroConfirmed,
     product_code_snapshot: l.snapshot.productCode, product_name_snapshot: l.snapshot.productName, color_name_snapshot: l.snapshot.colorName, fit_name_snapshot: l.snapshot.fitName, size_name_snapshot: l.snapshot.sizeName, barcode_snapshot: l.snapshot.barcode, is_current: true }));
   return { read: [{ sql: /sales:current-schema/, rows: [{ current_sales_schema_ready: true }] }, { sql: /^SELECT pg_advisory_xact_lock/ }, { sql: /FROM naijue_erp.operation_receipt/, rows: [] }, { sql: /^SELECT pg_advisory_xact_lock/ }, { sql: /FROM naijue_erp.sales_header/, rows: [header] },
     { sql: /FROM naijue_erp.sales_line/, rows: lines }, { sql: /FROM naijue_erp.sales_settlement/, rows: draft.settlements.map(r => ({ id: r.id, sales_id: r.salesId, line_no: r.lineNo, payment_account_id: r.paymentAccountId, payment_method_id_snapshot: r.paymentMethodId, direction: r.direction, amount: moneyToSql(r.amount) })) },
-    ...locks([{ warehouseId: ids.warehouse, skuId: ids.sku }])], proof: [...publication(), zero()], writes: [ledger, firstInsert("-2"), ledger, update("-5"), ...finals("sales")],
+    ...actionIdentity('sales'), { sql: /FROM naijue_erp.inventory_ledger/, rows: [] }, ...locks([{ warehouseId: ids.warehouse, skuId: ids.sku }])], proof: [...publication(), zero()], writes: [ledger, firstInsert("-2"), ledger, update("-5"), ...finals("sales")],
     execute(client) { let n = 10_000; return createSalesService({ unitOfWork: new PostgresSalesUnitOfWork({ async connect() { return client; } }), authorization: { async assertAllowed() {} }, rules: SYNTHETIC_RULES, now: () => time, newId: kind => sid(kind, n++) })
       .execute({ action: "APPROVE", actor, salesId: ids.sales, expectedVersion: version(1), requestKey: "first-actual-approval" }); } };
 }
@@ -74,7 +80,7 @@ function transferScenario(): ReturnType<typeof salesScenario> {
       note: h.note, responsible_staff_id: null, created_by_account_id: transferActor.accountId, created_hall_id: transferActor.hallId, created_role: "SALESPERSON", created_at: time, updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER" }] },
     { sql: /FROM naijue_erp.transfer_line/, rows: draft.lines.map(l => ({ id: l.id, transfer_id: l.transferId, line_no: l.lineNo, sku_id: l.skuId, quantity: l.quantity.toString(), is_current: true,
       product_code_snapshot: l.snapshot.productCode, product_name_snapshot: l.snapshot.productName, color_name_snapshot: l.snapshot.colorName, fit_name_snapshot: l.snapshot.fitName, size_name_snapshot: l.snapshot.sizeName, barcode_snapshot: l.snapshot.barcode })) },
-    ...locks([{ warehouseId: h.toWarehouseId, skuId: transferIds.sku }, { warehouseId: h.fromWarehouseId, skuId: transferIds.sku }])],
+    ...actionIdentity('transfer'), { sql: /FROM naijue_erp.inventory_ledger/, rows: [] }, ...locks([{ warehouseId: h.toWarehouseId, skuId: transferIds.sku }, { warehouseId: h.fromWarehouseId, skuId: transferIds.sku }])],
     proof: [...publication(), zero(h.fromWarehouseId, transferIds.sku), zero(h.toWarehouseId, transferIds.sku)],
     writes: [ledger, firstInsert("-2"), ledger, firstInsert("2"), ledger, update("-5"), ledger, update("5"), ...finals("transfer")],
     execute(client) { let n = 11_000; return createTransferService({ unitOfWork: new PostgresTransferUnitOfWork({ async connect() { return client; } }), authorization: { async assertAllowed() {} }, references: { async assertValid() {} }, now: () => time, newId: kind => sid(kind, n++) })
@@ -87,8 +93,8 @@ for (const [kind, scenario] of [["SALES", salesScenario], ["TRANSFER", transferS
       assert.ok(headerIndex >= 0); const selected = s.read[headerIndex]!;
       const reads = [...s.read]; reads[headerIndex] = { ...selected, rows: selected.rows!.map(row => ({ ...row, responsible_staff_id: responsibleStaffId })),
         inspect(values, sql) { selected.inspect?.(values, sql); assert.match(sql, /\bresponsible_staff_id\b/); } };
-      // Sales getSales locks its posting keys while loading; transfer getTransfer only reads header/lines.
-      const client = new Client([begin, ...(kind === "SALES" ? reads : reads.slice(0, headerIndex + 2)), commit]);
+      // Plain saved reads do not acquire action identity or posting-key locks.
+      const client = new Client([begin, ...reads.slice(0, headerIndex + (kind === "SALES" ? 3 : 2)), commit]);
       const pool = { async connect() { return client; } };
       if (kind === "SALES") await new PostgresSalesUnitOfWork(pool).transaction(async tx => {
         await tx.getReceipt(actor.accountId, "read-selected-staff"); const stored = await tx.getSales(ids.sales);

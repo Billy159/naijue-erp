@@ -163,3 +163,25 @@ test('native money storage and precision validation are definitive rejections', 
     await assert.rejects(() => client.execute(save(), signal()), failure('invalid-request', 'rejected', code, 422));
   }
 });
+
+test('SIGNED settlement diagnostics: historical rejections are definite; only bounded exact arithmetic survives', async () => {
+  for (const code of ['HISTORICAL_SETTLEMENT_FACTS_MISSING', 'HISTORICAL_SALE_TYPE_CHANGED', 'HISTORICAL_DISCOUNT_CHANGED', 'UNKNOWN_SETTLEMENT_FACTS']) {
+    const client = createSalesCommandHttpClient(options(async () => json({ error: { code, message: 'private SQL' } }, 409)));
+    await assert.rejects(client.execute(stateCommand(), signal()), failure('conflict', 'rejected', code, 409));
+  }
+  const settlement = { netDue: '70000', settled: '65000', difference: '5000' };
+  for (const candidate of [settlement, { ...settlement, difference: '1' }, { ...settlement, netDue: 'private SQL' }, { ...settlement, difference: '9'.repeat(10000) }]) {
+    const client = createSalesCommandHttpClient(options(async () => json({ error: { code: 'SETTLEMENT_MISMATCH', message: 'private SQL', settlement: candidate } }, 422)));
+    await assert.rejects(client.execute(stateCommand(), signal()), error => {
+      assert.ok(error instanceof SalesCommandError); assert.equal(error.outcome, 'rejected');
+      assert.deepEqual(error.settlement, candidate === settlement ? settlement : null);
+      assert.doesNotMatch(JSON.stringify(error), /private|SQL/); return true;
+    });
+  }
+});
+
+
+test('mixed SALE discount rejection is definitive and does not expose backend text',async()=>{
+ const client=createSalesCommandHttpClient(options(async()=>json({error:{code:'MIXED_SALES_ORDER_DISCOUNT',message:'private SQL token secret'}},422)));
+ await assert.rejects(client.execute(save(),signal()),failure('invalid-request','rejected','MIXED_SALES_ORDER_DISCOUNT',422));
+});

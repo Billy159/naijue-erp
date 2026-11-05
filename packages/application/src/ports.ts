@@ -1,3 +1,4 @@
+import type { RetainedSalesApproval, SalesRetainedApprovalHistory } from './sales-retained-approval.ts';
 import type { NativeSalesReferenceFacts } from "./sales-native-facts.ts";
 import type { InventoryPostingTransaction } from "./inventory-posting.ts";
 import type { RuntimeDocumentNumberTransaction } from "./runtime-document-number.ts";
@@ -30,7 +31,7 @@ export interface SalesAuditValues {
   /** Native old/new versions are always present; all other header values are actual changes only. */
   readonly header: Pick<SalesDocument["header"], "version"> & Partial<Pick<SalesDocument["header"],
     "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status"
-    | "responsibleStaffId" | "grossAmount" | "orderDiscount" | "netDue" | "note" | "updatedAt" | "approvedByAccountId" | "approvedAt">>;
+    | "createdByStaffId" | "approvedByStaffId" | "responsibleStaffId" | "grossAmount" | "orderDiscount" | "netDue" | "note" | "updatedAt" | "approvedByAccountId" | "approvedAt">>;
   /** Complete before/after values of changed rows only, never copies of unchanged retained detail. */
   readonly lines: readonly Pick<SalesLineRow, "id" | "lineNo" | "skuId" | "quantity" | "referencePrice" | "dealPrice" | "pricingRule" | "discountTenths" | "zeroConfirmed" | "lineAmount" | "allocatedDiscount" | "isGift" | "snapshot" | "isCurrent">[];
   readonly settlements: SalesDocument["settlements"];
@@ -40,7 +41,7 @@ export interface SalesAuditRow {
   readonly salesId: EntityId<"sales">; readonly action: SalesAction; readonly occurredAt: string;
   readonly before: SalesAuditValues | null; readonly after: SalesAuditValues;
 }
-/** Adapter metadata, not a chosen historical import schema. Cutoff history must never be reversed as runtime postings. */
+/** Accounting origin only; common ordinary commands validate actual ledger or baseline-anchor evidence. */
 export interface StoredSales { readonly document: SalesDocument; readonly stockBasis: "RUNTIME_LEDGER" | "CUTOFF_HISTORY" }
 /** Current, non-secret native facts, read and held inside the command transaction.
  * Unknown roles/statuses remain explicit facts for the action policy to reject. */
@@ -50,6 +51,8 @@ export interface SalesCurrentIdentity {
   readonly hallId: EntityId<"hall"> | null; readonly hallEnabled: boolean | null;
 }
 export interface SalesTransaction extends InventoryPostingTransaction, RuntimeDocumentNumberTransaction {
+  /** Lock the whole sorted posting set, including zero-net keys, before any write. */
+  lockBalances?(keys: readonly { readonly warehouseId: EntityId<"warehouse">; readonly skuId: EntityId<"sku"> }[]): Promise<void>;
   resolveDocumentSkus?(input: DocumentSpecificationResolution): Promise<readonly EntityId<'sku'>[]>;
   /** Requires the receipt actor/key and single sales target to have been bound first.
    * Implementations must not open another transaction or expose credentials/session material. */
@@ -60,6 +63,8 @@ export interface SalesTransaction extends InventoryPostingTransaction, RuntimeDo
   getCurrentSalesReferenceFacts?(document: SalesDraft | SalesDocument): Promise<NativeSalesReferenceFacts>;
   /** Manual creation only: exact enabled MAIN barcode and native labels, on the bound transaction. */
   getCurrentSalesSnapshots?(skuIds: readonly EntityId<"sku">[]): Promise<ReadonlyMap<EntityId<"sku">, SalesLineRow["snapshot"]>>;
+  /** Immutable contiguous prior-unapproval evidence on this original locked command transaction. */
+  getRetainedSalesApprovalHistory?(salesId: EntityId<"sales">, expectedVersion: Version, requireMigrationOrigin?: boolean): Promise<SalesRetainedApprovalHistory>;
   getSales(id: EntityId<"sales">): Promise<StoredSales | undefined>;
   putRuntimeSales(document: SalesDocument): Promise<void>;
   getReceipt(actorId: EntityId<"account">, requestKey: string): Promise<OperationReceiptRow | undefined>;
@@ -76,8 +81,8 @@ export interface SalesUnitOfWork { transaction<T>(work: (tx: SalesTransaction) =
 /** Required trusted server-side policy, never an implicit default. A candidate-source adapter
  * is available in sales-business-rules.ts and still requires verified catalogue/reference facts. */
 export interface SalesBusinessRules {
-  assertDraftChange(previous: SalesDocument | undefined, draft: SalesDraft, tx?: SalesTransaction): void | Promise<void>;
-  assertReferencesAndEconomics(document: SalesDocument, tx?: SalesTransaction): void | Promise<void>;
+  assertDraftChange(previous: SalesDocument | undefined, draft: SalesDraft, tx?: SalesTransaction, stockBasis?: StoredSales["stockBasis"]): void | Promise<void>;
+  assertReferencesAndEconomics(document: SalesDocument, tx?: SalesTransaction, retained?: RetainedSalesApproval, stockBasis?: StoredSales["stockBasis"]): void | Promise<void>;
   inventoryDelta(document: SalesDocument, line: SalesLineRow): Quantity;
 }
 export interface SalesAuthorization {

@@ -105,7 +105,7 @@ function fixture() {
 }
 test("catalogue write: three native families, original-key replay, sparse edit and retained irreversible deletion", async () => {
   for (const kind of ["CATEGORY", "COLOR", "FIT"] as const) {
-    const f = fixture(), values = kind === "CATEGORY" ? { name: "SOURCE", parentId: null, displayOrder: -1 } : { name: "SOURCE", code: kind === "FIT" ? "A" : "001", enabled: true }, c = { action: "CREATE", requestKey: "create", values };
+    const f = fixture(), values = kind === "CATEGORY" ? { name: "SOURCE", parentId: null, displayOrder: -1 } : { name: "SOURCE", code: kind === "FIT" ? "5" : "001", enabled: true }, c = { action: "CREATE", requestKey: "create", values };
     const saved = await f.service.execute(actor, kind, c); assert.deepEqual(await f.service.execute(actor, kind, c), saved); assert.equal(f.audit.length, 1);
     await f.service.execute(actor, kind, { action: "EDIT", requestKey: "edit", id: saved.targetId, expectedVersion: 1, values: { ...values, name: "RENAMED" } }); assert.deepEqual(Object.keys(f.audit[1]!.afterValues).sort(), ["name", "version"]);
     const deleted = await f.service.execute(actor, kind, { action: "DELETE", requestKey: "delete", id: saved.targetId, expectedVersion: 2 }); assert.equal(deleted.version, 3); assert.equal(f.rows.get(saved.targetId)!.deletedAt, "2026-10-22T08:00:00Z"); assert.equal(f.rows.size, 1);
@@ -127,11 +127,31 @@ test("catalogue write: category has no invented enabled/code fields; fit require
 });
 test("catalogue write: color/fit disabling and restoring preserve exact code, reject repeated state and keep sparse audit", async () => {
   for (const kind of ["COLOR", "FIT"] as const) {
-    const f = fixture(), values = { name: "SOURCE", code: kind === "FIT" ? "A" : "001", enabled: true }, saved = await f.service.execute(actor, kind, { action: "CREATE", requestKey: "create", values });
+    const f = fixture(), values = { name: "SOURCE", code: kind === "FIT" ? "5" : "001", enabled: true }, saved = await f.service.execute(actor, kind, { action: "CREATE", requestKey: "create", values });
     await f.service.execute(actor, kind, { action: "DISABLE", requestKey: "disable", id: saved.targetId, expectedVersion: 1 });
     assert.deepEqual(f.audit[1]!.afterValues, { version: 2, enabled: false });
     await assert.rejects(f.service.execute(actor, kind, { action: "DISABLE", requestKey: "again", id: saved.targetId, expectedVersion: 2 }), { code: "INVALID_CATALOGUE_STATE" });
     await f.service.execute(actor, kind, { action: "RESTORE", requestKey: "restore", id: saved.targetId, expectedVersion: 2 });
     assert.deepEqual(f.audit[2]!.afterValues, { version: 3, enabled: true }); assert.equal((f.rows.get(saved.targetId)! as Extract<CatalogueWriteRecord, { kind: "COLOR" | "FIT" }>).code, values.code);
   }
+});
+
+
+test("FIT create uses numeric business codes while existing legacy letter may remain, never change to another letter", async () => {
+  const f=fixture();
+  await assert.rejects(f.service.execute(actor,"FIT",{action:"CREATE",requestKey:"new-letter",values:{name:"A版",code:"A",enabled:true}}),{code:"INVALID_CATALOGUE_COMMAND"});
+  for(const code of ["3","5","6","7","8","9"]) { const out=await f.service.execute(actor,"FIT",{action:"CREATE",requestKey:`new-${code}`,values:{name:`Fit ${code}`,code,enabled:true}}); assert.equal((f.rows.get(out.targetId) as {code:string}).code,code); }
+  const old=sid("fit",999); f.rows.set(old,{id:old,kind:"FIT",name:"Old",code:"A",enabled:true,version:1,deletedAt:null});
+  const saved=await f.service.execute(actor,"FIT",{action:"EDIT",id:old,expectedVersion:1,requestKey:"keep-letter",values:{name:"Old renamed",code:"A",enabled:true}});
+  assert.equal(saved.targetId,old);assert.equal((f.rows.get(old) as {code:string}).code,"A");
+  await assert.rejects(f.service.execute(actor,"FIT",{action:"EDIT",id:old,expectedVersion:2,requestKey:"change-letter",values:{name:"Old renamed",code:"B",enabled:true}}),{code:"INVALID_CATALOGUE_COMMAND"});
+  const changed=await f.service.execute(actor,"FIT",{action:"EDIT",id:old,expectedVersion:2,requestKey:"digit",values:{name:"Old renamed",code:"5",enabled:true}}); assert.equal(changed.targetId,old);
+});
+
+test('legacy FIT CREATE receipt replays before new numeric-only creation guard', async () => {
+  const f=fixture(), {requestHash}=await import('../packages/application/src/request-hash.ts');
+  const command={action:'CREATE' as const,requestKey:'old-letter-receipt',values:{name:'Old A',code:'A',enabled:true}};
+  const existing={operationId:sid('operation',991),kind:'FIT' as const,targetId:sid('fit',992),version:1};
+  f.receipts.set(command.requestKey,{requestHash:requestHash({actorAccountId:actor.accountId,kind:'FIT',command}),action:'CREATE',completedAt:'2026-10-22T08:00:00Z',result:existing});
+  assert.deepEqual(await f.service.execute(actor,'FIT',command),existing);assert.equal(f.rows.size,0);assert.equal(f.audit.length,0);
 });

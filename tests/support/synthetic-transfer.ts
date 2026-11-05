@@ -55,10 +55,10 @@ export class SyntheticTransferStore implements TransferUnitOfWork {
         async getCurrentTransferIdentity(accountId) { point("identity"); requireDomain(receiptActor===accountId && loaded!==undefined,"TRANSACTION_SCOPE","Bind receipt actor and target first"); return structuredClone(tables.identities.get(accountId)); },
         async getTransfer(id) { point("read"); requireDomain(loaded===undefined,"TRANSACTION_SCOPE","Load once"); loaded=id; return structuredClone(tables.transfers.get(id)); },
         async putRuntimeTransfer(document) { point("document"); requireDomain(loaded===document.header.id,"TRANSACTION_SCOPE","Wrong target");
-          const previous=tables.transfers.get(loaded); requireDomain(!previous || previous.stockBasis==="RUNTIME_LEDGER","HISTORICAL_POSTING_NOT_IMPLEMENTED","Not runtime");
+          const previous=tables.transfers.get(loaded);
           requireDomain(document.header.version===(previous ? previous.document.header.version+1:1),"VERSION_CONFLICT","CAS failed");
           for(const l of document.lines) for(const old of tables.transfers.values()) requireDomain(!old.document.lines.some(other=>other.id===l.id && other.transferId!==l.transferId),"FOREIGN_LINE_ID","Wrong line owner");
-          tables.transfers.set(loaded,structuredClone({ document,stockBasis:"RUNTIME_LEDGER" })); },
+          tables.transfers.set(loaded,structuredClone({ document,stockBasis:previous?.stockBasis??"RUNTIME_LEDGER" })); },
         async getReceipt(account,key) { point("receiptRead"); receiptActor=account; return structuredClone(tables.receipts.get(receiptKey(account,key))); },
         async insertReceipt(row) { point("receipt"); const identity=receiptKey(row.actorAccountId,row.requestKey); requireDomain(!tables.receipts.has(identity),"RECEIPT_UNIQUE","Duplicate original key"); tables.receipts.set(identity,structuredClone(row)); },
         async getWarehouseFact(id) { point("warehouse"); return structuredClone(tables.warehouses.get(id)); },

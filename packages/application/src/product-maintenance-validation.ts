@@ -14,6 +14,13 @@ function id(input: unknown, nullable = false): string | null {
 function text(input: unknown, nullable = false): string | null {
   if (nullable && input === null) return null; try { return partyName(input); } catch { return invalid(); }
 }
+/** Barcode source is stored as supplied; empty/blank means no generated barcode,
+ * not a reason to reject the product or silently normalize an existing code. */
+function barcodeSource(input: unknown): string | null {
+  if (input === null) return null;
+  if (typeof input !== "string" || input.includes("\0") ) invalid();
+  return input;
+}
 export function productMaintenanceVersion(input: unknown): number {
   if (typeof input !== "number" || !Number.isInteger(input) || input < 1 || input > 2147483647) invalid(); return input;
 }
@@ -37,7 +44,7 @@ function values(input: unknown, version: 1 | 2): ProductWriteValues | ProductWri
   const r = bag(input, ["productCode", "name", "categoryId", "supplierId", version === 2 ? "seasonIds" : "seasonId", "sizeGroupId", "year", "systemItemCode", "thickness", "collarPantsType", "defaultBarcodeSchemeId", "enabled", "prices"]);
   if (r.year !== null && (typeof r.year !== "number" || !Number.isInteger(r.year) || r.year < -2147483648 || r.year > 2147483647)) invalid();
   return Object.freeze({ productCode: text(r.productCode)!, name: text(r.name)!, categoryId: id(r.categoryId)!, supplierId: id(r.supplierId, true),
-    ...(version === 2 ? { seasonIds: parseProductSeasonIds(r.seasonIds) } : { seasonId: id(r.seasonId, true) }), sizeGroupId: id(r.sizeGroupId)!, year: r.year as number | null, systemItemCode: text(r.systemItemCode, true),
+    ...(version === 2 ? { seasonIds: parseProductSeasonIds(r.seasonIds) } : { seasonId: id(r.seasonId, true) }), sizeGroupId: id(r.sizeGroupId)!, year: r.year as number | null, systemItemCode: barcodeSource(r.systemItemCode),
     thickness: text(r.thickness, true), collarPantsType: text(r.collarPantsType, true), defaultBarcodeSchemeId: id(r.defaultBarcodeSchemeId, true),
     enabled: bool(r.enabled), prices: validateCompleteCataloguePrices(r.prices) });
 }
@@ -46,14 +53,15 @@ function parseCommand(input: unknown, version: 1 | 2): ProductMaintenanceCommand
   if (!["CREATE", "EDIT", "DISABLE", "RESTORE", "DELETE"].includes(action as string)) invalid();
   const full = action === "CREATE" || action === "EDIT";
   const selected = version === 2 && full && Object.hasOwn(input, "skuSelection");
-  const keys = ["action", "requestKey", ...(action === "CREATE" ? [] : ["id", "expectedVersion"]), ...(full ? ["values", "skus", "barcodes"] : []), ...(selected ? ["skuSelection"] : [])];
+  const refill = version === 2 && action === "EDIT" && Object.hasOwn(input, "generateBarcodeSkuIds");
+  const keys = ["action", "requestKey", ...(action === "CREATE" ? [] : ["id", "expectedVersion"]), ...(full ? ["values", "skus", "barcodes"] : []), ...(selected ? ["skuSelection"] : []), ...(refill ? ["generateBarcodeSkuIds"] : [])];
   const r = bag(input, keys), requestKey = partyRequestKey(r.requestKey);
   if (!full) return { action: action as "DISABLE" | "RESTORE" | "DELETE", requestKey, id: id(r.id)!, expectedVersion: productMaintenanceVersion(r.expectedVersion) };
   const data = values(r.values, version);
+  requireDomain(action !== "CREATE" || typeof data.systemItemCode === "string" && data.systemItemCode.trim().length > 0, "PRODUCT_SYSTEM_ITEM_CODE_REQUIRED", "新商品需要手工填写系统货号");
   requireDomain(action !== "CREATE" || !("seasonIds" in data) || data.seasonIds !== null, "INVALID_PRODUCT_MAINTENANCE", "CREATE requires an explicit season array");
-  requireDomain(action !== "CREATE" || data.defaultBarcodeSchemeId !== null, "PRODUCT_SCHEME_REQUIRED", "New product requires an explicit real default scheme");
   requireDomain(action !== "CREATE" || (/^[A-Za-z0-9_-]+$/.test(data.productCode) && data.supplierId !== null && ("seasonIds" in data || data.seasonId !== null)
-    && data.year !== null && data.systemItemCode !== null), "PRODUCT_REQUIRED_FIELDS", "New product requires the frozen Demo's code, supplier, year, season and system code");
+    && data.year !== null), "PRODUCT_REQUIRED_FIELDS", "New product requires code, supplier, year and season");
   if (!Array.isArray(r.skus) || !Array.isArray(r.barcodes)) invalid();
   requireDomain(r.skus.length <= PRODUCT_MAINTENANCE_MAX_SKUS && r.barcodes.length <= PRODUCT_MAINTENANCE_MAX_BARCODES,
     "PRODUCT_MAINTENANCE_TOO_LARGE", "Product command exceeds technical bound");
@@ -75,17 +83,24 @@ function parseCommand(input: unknown, version: 1 | 2): ProductMaintenanceCommand
     };
     skuSelection = { colorIds: ids(selection.colorIds), fitIds: ids(selection.fitIds) };
   }
-  requireDomain(action !== "CREATE" || skus.length > 0 || (skuSelection && skuSelection.colorIds.length > 0 && skuSelection.fitIds.length > 0), "PRODUCT_SPEC_REQUIRED", "New product requires actual or selected specifications");
   const raw = new Set<string>(), barcodeIds = new Set<string>();
   const barcodes: ProductBarcodeInput[] = r.barcodes.map(value => {
     const b = bag(value, ["id", "barcode", "colorId", "fitId", "sizeId", "kind", "schemeId", "enabled"]), barcodeId = id(b.id, true);
     if (typeof b.barcode !== "string" || b.barcode.length === 0 || b.barcode.includes("\0") || !["MAIN", "CONFIRMED_OLD"].includes(b.kind as string)) invalid();
+    // New bindings must be scannable. Existing identities remain readable and unchanged.
+    if (barcodeId === null && (b.barcode.length > 512 || /[\x00-\x1f\x7f]/.test(b.barcode))) invalid();
     requireDomain(!raw.has(b.barcode) && (barcodeId === null || !barcodeIds.has(barcodeId)), "BARCODE_CONFLICT", "Repeated raw barcode identity");
     raw.add(b.barcode); if (barcodeId !== null) barcodeIds.add(barcodeId);
     return { id: barcodeId, barcode: b.barcode, colorId: id(b.colorId)!, fitId: id(b.fitId)!, sizeId: id(b.sizeId)!, kind: b.kind as "MAIN" | "CONFIRMED_OLD", schemeId: id(b.schemeId, true), enabled: bool(b.enabled) };
   });
   if (action === "CREATE") return { action, requestKey, values: data, skus, barcodes, ...(skuSelection === undefined ? {} : { skuSelection }) } as ProductMaintenanceCommand | ProductMaintenanceCommandV2;
-  return { action: "EDIT", requestKey, id: id(r.id)!, expectedVersion: productMaintenanceVersion(r.expectedVersion), values: data, skus, barcodes, ...(skuSelection === undefined ? {} : { skuSelection }) } as ProductMaintenanceCommand | ProductMaintenanceCommandV2;
+  let generateBarcodeSkuIds: readonly string[] | undefined;
+  if (refill) {
+    if (!Array.isArray(r.generateBarcodeSkuIds) || r.generateBarcodeSkuIds.length === 0 || r.generateBarcodeSkuIds.length > PRODUCT_MAINTENANCE_MAX_SKUS || Object.keys(r.generateBarcodeSkuIds).length !== r.generateBarcodeSkuIds.length) invalid();
+    const parsed = r.generateBarcodeSkuIds.map(v => id(v)!); if (new Set(parsed).size !== parsed.length) invalid();
+    generateBarcodeSkuIds = Object.freeze(parsed.sort());
+  }
+  return { action: "EDIT", requestKey, id: id(r.id)!, expectedVersion: productMaintenanceVersion(r.expectedVersion), values: data, skus, barcodes, ...(skuSelection === undefined ? {} : { skuSelection }), ...(generateBarcodeSkuIds === undefined ? {} : { generateBarcodeSkuIds }) } as ProductMaintenanceCommand | ProductMaintenanceCommandV2;
 }
 
 export function parseProductMaintenanceCommand(input: unknown): ProductMaintenanceCommand { return parseCommand(input, 1) as ProductMaintenanceCommand; }
@@ -97,7 +112,7 @@ export function parseProductMaintenanceMediaCommandV2(input: unknown): ProductMa
     if (!input || typeof input !== "object" || Array.isArray(input)) invalid();
     const r = input as Record<string, unknown>;
     if (r.action !== "CREATE" && r.action !== "EDIT") invalid();
-    bag(r, ["action", "requestKey", ...(r.action === "EDIT" ? ["id", "expectedVersion"] : []), "values", "skus", "barcodes", "imageChanges", ...(Object.hasOwn(r, "skuSelection") ? ["skuSelection"] : [])]);
+    bag(r, ["action", "requestKey", ...(r.action === "EDIT" ? ["id", "expectedVersion"] : []), "values", "skus", "barcodes", "imageChanges", ...(Object.hasOwn(r, "skuSelection") ? ["skuSelection"] : []), ...(r.action === "EDIT" && Object.hasOwn(r, "generateBarcodeSkuIds") ? ["generateBarcodeSkuIds"] : [])]);
     const { imageChanges, ...old } = r, legacy = parseProductMaintenanceCommandV2(old);
     if (legacy.action !== "CREATE" && legacy.action !== "EDIT") invalid();
     if (!Array.isArray(imageChanges) || imageChanges.length > 1000 || Object.keys(imageChanges).length !== imageChanges.length) invalid();

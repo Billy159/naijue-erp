@@ -10,6 +10,7 @@ import type { ProductMaintenanceImageSnapshot } from "../packages/application/sr
 import type { ControlledProductMedia } from "../packages/application/src/product-query-ports.ts";
 import { parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, orderProductImageWrites, planProductImageWrites } from "../packages/application/src/product-maintenance-validation.ts";
 import { requestHash } from "../packages/application/src/request-hash.ts";
+import { BARCODE_SCHEMES } from "../packages/application/src/barcode-generation.ts";
 import type { DocumentProductSkuAppendInput, ProductImageChange, ProductMaintenanceImageMetadata, ProductMaintenanceMediaCommandV2 } from "../packages/application/src/product-maintenance-ports.ts";
 const gid = (n: number) => sid("product", n);
 function imageService(snapshot: ProductMaintenanceImageSnapshot | null, media: ControlledProductMedia | null = null, denied = false, failed = false, missing = false) {
@@ -45,14 +46,15 @@ test("W15 richer images distinguish real empty, unavailable snapshot, failure, f
 });
 function values(): ProductWriteValues {
   return { productCode: "ORIGINAL_00001", name: "SYNTHETIC PRODUCT", categoryId: gid(801), supplierId: gid(802), seasonId: gid(803), sizeGroupId: gid(804),
-    year: 2026, systemItemCode: "0000123", thickness: null, collarPantsType: null, defaultBarcodeSchemeId: gid(805), enabled: true,
+    year: 2026, systemItemCode: "0000123", thickness: null, collarPantsType: null, defaultBarcodeSchemeId: BARCODE_SCHEMES.y2026, enabled: true,
     prices: Object.fromEntries(CATALOGUE_PRICE_KEYS.map(key => [key, key === "retail_price" ? "0.00" : null])) as ProductWriteValues["prices"] };
 }
 function sku(colorId = gid(806)): ProductSkuInput { return { id: null, expectedVersion: null, skuCode: `SKU-${colorId}`, colorId, fitId: gid(807), sizeId: gid(808), enabled: true }; }
 function barcode(item: ProductSkuInput, raw = "000012345 "): ProductBarcodeInput { return { id: null, barcode: raw, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId, kind: "MAIN", schemeId: gid(805), enabled: true }; }
 function command(key = "create") { const s = sku(); return { action: "CREATE" as const, requestKey: key, values: values(), skus: [s], barcodes: [barcode(s)] }; }
-function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false, groupSizes?: readonly string[], barcodeMode?: "ready" | "invalid" | "nullsize") {
-  let capacity = true;
+function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false, groupSizes?: readonly string[] | null, barcodeMode: "ready" | "invalid" | "nullsize" | "sample2026" | "missing" | "nullfit" = "ready", historical?: { productSegment: string; colorCode: string; sizeCode: string }) {
+  let capacity = true, globalBarcodes: string[] = [], defaultHistoricalFit: string | null = null;
+  let barcodeWriteFault: "conflict" | "other" | null = null;
   let selectionReads = 0, barcodeReads = 0;
   let sequence = 900, product: ProductAggregate | undefined, allow = true, failComplete = false, references = true, deletable = true;
   const receipts = new Map<string, NonNullable<Awaited<ReturnType<ProductMaintenanceEvidence["getReceipt"]>>>>();
@@ -73,14 +75,16 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
         }
       };
       const tx: ProductMaintenanceTransaction = { evidence,
+        async readDefaultHistoricalFit() { return defaultHistoricalFit; },
+        async readExistingBarcodeValues(values) { return globalBarcodes.filter(x => values.includes(x)); },
         async assertPendingCapacity() { requireDomain(capacity, "PRODUCT_EVIDENCE_CAPACITY_EXCEEDED", "SYNTHETIC CAPACITY"); },
-        ...(barcodeMode === undefined ? {} : { async readBarcodeGenerationReferences(productId: string, schemeId: string, skus: readonly ProductSkuRecord[]) {
+        ...(barcodeMode === "missing" ? {} : { async readBarcodeGenerationReferences(productId: string, schemeId: string, skus: readonly ProductSkuRecord[]) {
           barcodeReads++; assert.equal(productId, skus[0]!.productId);
           const refs = (key: "colorId" | "fitId" | "sizeId", code: (id: string, i: number) => string | null) => [...new Set(skus.map(s => s[key]))].sort().map((id, i) => ({ id, code: code(id, i) }));
-          return { scheme: { id: schemeId, status: "CURRENT", codeLength: 15 }, colors: refs("colorId", (_id, i) => barcodeMode === "invalid" ? "X1" : String(101 + i)).map(r => ({ ...r, code: r.code! })),
-            fits: refs("fitId", (_id, i) => "AB"[i]!).map(r => ({ ...r, code: r.code! })), sizes: refs("sizeId", (_id, i) => barcodeMode === "nullsize" && i === 0 ? null : String(202 + i)) };
+          return { scheme: { id: schemeId, status: schemeId === BARCODE_SCHEMES.y2026 ? "CURRENT" : "HISTORICAL", codeLength: schemeId === BARCODE_SCHEMES.y2026 ? 15 : null }, ...(historical ? { historical: skus.map(s => ({ skuId: s.id, schemeId, ...historical, evidenceRef: "synthetic-reviewed-source" })) } : {}), colors: refs("colorId", (_id, i) => barcodeMode === "invalid" ? "X1" : barcodeMode === "sample2026" ? "504" : String(101 + i)).map(r => ({ ...r, code: r.code! })),
+            fits: refs("fitId", (_id, i) => barcodeMode === "nullfit" ? null : "56"[i]!), sizes: refs("sizeId", (id, i) => barcodeMode === "nullsize" && id === gid(808) ? null : barcodeMode === "sample2026" ? "207" : id === gid(808) ? "202" : id === gid(809) ? "203" : id === gid(810) ? "204" : String(202 + i)) };
         } }),
-        ...(groupSizes === undefined ? {} : { async readSkuSelectionSizes(_productId: string, groupId: string) { selectionReads++; assert.equal(groupId, gid(804)); return groupSizes!; } }),
+        ...(groupSizes === null ? {} : { async readSkuSelectionSizes(_productId: string, groupId: string) { selectionReads++; assert.equal(groupId, gid(804)); return groupSizes ?? [gid(808)]; } }),
         async load(id) { return product?.product.id === id ? structuredClone(product) : undefined; },
         async readReferences(p) { return { ...(Object.hasOwn(p, "seasonIds") ? { seasons: (p.seasonIds ?? []).map(id => ({ id, name: `SYNTHETIC ${id}` })) } : {}), categoryPath: [{ id: p.categoryId, name: "SYNTHETIC CATEGORY" }], sizeGroup: { id: p.sizeGroupId, name: "SYNTHETIC GROUP" },
           supplier: p.supplierId === null ? null : { id: p.supplierId, name: "SYNTHETIC SUPPLIER", enabled: true }, season: p.seasonId === null ? null : { id: p.seasonId, name: "SYNTHETIC SEASON" },
@@ -90,13 +94,13 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
         async assertCanDelete() { requireDomain(deletable, "PRODUCT_DELETE_NOT_READY", "SYNTHETIC UNKNOWN STOCK"); },
         async putProduct(next, previous) { assert.ok(prepared, "audit must precede business mutation"); requireDomain(!previous || product?.product.version === previous.version, "VERSION_CONFLICT", "fixture CAS"); writes++; product = { product: structuredClone(next), skus: product?.skus ?? [], barcodes: product?.barcodes ?? [] }; },
         async putSku(next) { writes++; if (!product) throw Error("Missing root"); product = { ...product, skus: [...product.skus.filter(s => s.id !== next.id), structuredClone(next)] }; },
-        async putBarcode(next) { writes++; if (!product) throw Error("Missing root"); product = { ...product, barcodes: [...product.barcodes.filter(b => b.id !== next.id), structuredClone(next)] }; }
+        async putBarcode(next) { if (barcodeWriteFault === "conflict") requireDomain(false, "BARCODE_CONFLICT", "SYNTHETIC UNIQUE CONFLICT"); if (barcodeWriteFault === "other") throw Error("SYNTHETIC UNRELATED FAILURE"); writes++; if (!product) throw Error("Missing root"); product = { ...product, barcodes: [...product.barcodes.filter(b => b.id !== next.id), structuredClone(next)] }; }
       };
       try { return await work(tx); } catch (error) { product = before; receipts.clear(); for (const [k, v] of receiptBefore) receipts.set(k, v); audit.length = auditLength; writes = writeCount; throw error; }
     }
   } };
   return { dependencies, service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes, selectionReads: () => selectionReads, barcodeReads: () => barcodeReads,
-    fullCapacity: () => { capacity = false; }, activate: () => Object.defineProperty(dependencies.unitOfWork, "seasonContract", { value: "product-season-array-v1" }), seed: (value: ProductAggregate) => { product = structuredClone(value); }, revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
+    setBarcodeWriteFault: (value: "conflict" | "other") => { barcodeWriteFault = value; }, setDefaultHistoricalFit: (id: string | null) => { defaultHistoricalFit = id; }, setGlobalBarcodes: (values: string[]) => { globalBarcodes = values; }, fullCapacity: () => { capacity = false; }, activate: () => Object.defineProperty(dependencies.unitOfWork, "seasonContract", { value: "product-season-array-v1" }), seed: (value: ProductAggregate) => { product = structuredClone(value); }, revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
 }
 test("prepared product: root and SKU/barcode writes require prepared exact evidence; missing/failing capability writes nothing", async () => {
   for (const mode of ["missing", "fail"] as const) { const f = fixture(mode); await assert.rejects(f.service.execute(actor, command()), mode === "missing" ? { code: "MAINTENANCE_PREPARE_NOT_READY" } : /SYNTHETIC PREPARE FAILURE/); assert.equal(f.writes(), 0); assert.equal(f.state(), undefined); assert.equal(f.receipts.size, 0); }
@@ -148,7 +152,7 @@ test("compatible old code: exact retained SKU append preserves main and disabled
 test("product write: invalid explicit price/identity inputs fail before persistence", async () => {
   for (const c of [
     { ...command(), actor }, { ...command(), values: { ...values(), prices: { retail_price: "0.00" } } },
-    { ...command(), values: { ...values(), defaultBarcodeSchemeId: null } }, { ...command(), skus: [] },
+    { ...command(), skus: [] },
     { ...command(), skus: [sku(), sku()] }, { ...command(), values: { ...values(), prices: { ...values().prices, retail_price: "0.001" } } }
   ]) { const f = fixture(); await assert.rejects(f.service.execute(actor, c)); assert.equal(f.state(), undefined); assert.equal(f.receipts.size, 0); }
 });
@@ -174,6 +178,36 @@ function commandV2(key = "v2", seasons: readonly string[] | null = [gid(850), gi
   const { seasonId: _scalar, ...data } = values(); return { ...command(key), values: { ...data, seasonIds: seasons } };
 }
 const scheme2026 = "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef";
+test("2026 confirmed synthetic sample flows through service into one bound SKU", async () => {
+  const f=fixture("ready",true,[gid(808)],"sample2026"), c={...commandV2("sample-2026"),values:{...commandV2().values,defaultBarcodeSchemeId:scheme2026,systemItemCode:"5395661"},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};
+  const saved=await f.service.executeV2(actor,c), state=f.state()!; assert.equal(state.barcodes[0]!.barcode,"555395661504207"); assert.equal(state.barcodes[0]!.skuId,state.skus[0]!.id);
+  assert.deepEqual(await f.service.executeV2(actor,c),saved); assert.equal(f.state()!.barcodes.length,1);
+});
+test("selected five schemes generate from product default and current reference codes", async () => {
+  for (const [schemeId,prefix] of [[BARCODE_SCHEMES.y2018,"8"],[BARCODE_SCHEMES.y2020,"0"],[BARCODE_SCHEMES.y2021,"6"],[BARCODE_SCHEMES.y2021fit,"2"],[BARCODE_SCHEMES.y2023,"9"]] as const) {
+    const f=fixture("ready",true,[gid(808)],"ready",{productSegment:"WRONG-OLD",colorCode:"0",sizeCode:"07"});
+    const c={...commandV2(`scheme-${schemeId}`),values:{...commandV2().values,defaultBarcodeSchemeId:schemeId,systemItemCode:"00ABC"},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};
+    const result=await f.service.executeV2(actor,c), state=f.state()!;assert.equal(state.skus.length,1);assert.equal(state.barcodes[0]!.barcode,`${prefix}00ABC101202`);assert.equal(state.barcodes[0]!.skuId,state.skus[0]!.id);assert.deepEqual(await f.service.executeV2(actor,c),result);
+  }
+});
+test("historical missing item code permits new SKU empty on ordinary edit",async()=>{const f=fixture("ready",true,[gid(808)]),c=commandV2("old-code-seed"),saved=await f.service.executeV2(actor,c),old=f.state()!;f.seed({...old,product:{...old.product,systemItemCode:null}});await f.service.executeV2(actor,{action:"EDIT",id:saved.targetId,expectedVersion:1,requestKey:"missing-history-default",values:{...c.values,systemItemCode:null},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806),gid(899)],fitIds:[gid(807)]}});assert.equal(f.state()!.skus.length,2);assert.equal(f.state()!.barcodes.length,1);assert.equal(f.receipts.size,2)});
+test("2026 literal numeric fit and missing size skip only incomplete SKU", async()=>{const f=fixture("ready",true,[gid(808),gid(809)],"nullsize"),c={...commandV2("fit-numeric"),values:{...commandV2().values,defaultBarcodeSchemeId:scheme2026},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};await f.service.executeV2(actor,c);assert.equal(f.state()!.skus.length,2);assert.deepEqual(f.state()!.barcodes.map(b=>b.barcode),["550000123101203"])});
+
+test("explicit existing SKU barcode fill is opt-in, scoped, replay-safe and cannot revive disabled rows", async () => {
+  const f=fixture("ready",true,[gid(808)],"sample2026"), c={...commandV2("retain-for-fill"),values:{...commandV2().values,defaultBarcodeSchemeId:scheme2026,systemItemCode:"5395661"},skus:[sku()],barcodes:[barcode(sku(),"old-source-code")]};
+  const created=await f.service.executeV2(actor,c), original=f.state()!, old=original.skus[0]!;
+  f.seed({...original,barcodes:[]});
+  const common={action:"EDIT" as const,id:created.targetId,expectedVersion:1,values:c.values,skus:[],barcodes:[],skuSelection:{colorIds:[old.colorId],fitIds:[old.fitId]}};
+  await f.service.executeV2(actor,{...common,requestKey:"ordinary-save",values:{...c.values,name:"edited"}}); assert.equal(f.state()!.barcodes.length,0);
+  const fill={...common,requestKey:"explicit-fill",expectedVersion:2,values:{...c.values,name:"edited"},generateBarcodeSkuIds:[old.id]};
+  const result=await f.service.executeV2(actor,fill), next=f.state()!; assert.deepEqual(next.skus[0],old); assert.equal(next.barcodes.length,1); assert.equal(next.barcodes[0]!.skuId,old.id); assert.equal(next.barcodes[0]!.barcode,"555395661504207");
+  assert.deepEqual(await f.service.executeV2(actor,fill),result); assert.deepEqual(f.state(),next);
+  const disabled={...next,skus:[{...old,enabled:false}],barcodes:[]}; f.seed(disabled);
+  await assert.rejects(f.service.executeV2(actor,{...fill,requestKey:"disabled-fill",expectedVersion:3}),{code:"PRODUCT_BARCODE_SKU_NOT_AVAILABLE"}); assert.deepEqual(f.state(),disabled);
+  f.seed({...next,barcodes:[{...next.barcodes[0]!,enabled:false}]}); const retained=f.state();
+  await f.service.executeV2(actor,{...fill,requestKey:"disabled-main",expectedVersion:3}); assert.deepEqual(f.state()!.barcodes,retained!.barcodes); assert.equal(f.state()!.barcodes[0]!.enabled,false);
+  const afterSkip=f.state(); await assert.rejects(f.service.executeV2(actor,{...fill,requestKey:"unknown-sku",expectedVersion:4,generateBarcodeSkuIds:[gid(99999)]}),{code:"PRODUCT_BARCODE_SKU_NOT_AVAILABLE"}); assert.deepEqual(f.state(),afterSkip);
+});
 test("v19 SAVE auto-generates exact 2026 MAINs for complete-group new color x fits and preserves old disabled SKU/main/compatible facts", async () => {
   const sizes = [gid(808), gid(809), gid(810)], f = fixture("ready", true, sizes, "ready");
   const originalCommand = commandV2("v19-existing"), created = await f.service.executeV2(actor, originalCommand), old = f.state()!;
@@ -188,23 +222,14 @@ test("v19 SAVE auto-generates exact 2026 MAINs for complete-group new color x fi
   for (const code of retained.barcodes) assert.deepEqual(next.barcodes.find(b => b.id === code.id), code);
   assert.equal(next.barcodes.filter(b => b.skuId === retained.skus[0]!.id).length, 2);
   const actual = next.barcodes.filter(b => !retained.barcodes.some(old => old.id === b.id));
-  assert.equal(actual.length, 11); assert.ok(actual.every(b => /^5[AB]000012310[12]20[234]$/.test(b.barcode) && b.kind === "MAIN" && b.schemeId === scheme2026 && b.enabled));
-  for (const sku of next.skus.filter(s => s.id !== retained.skus[0]!.id)) assert.equal(actual.filter(b => b.skuId === sku.id).length, 1);
+  assert.equal(actual.length, 12 - retained.skus.length); assert.ok(actual.every(b => /^5[56]000012310[12]20[234]$/.test(b.barcode) && b.kind === "MAIN" && b.schemeId === scheme2026 && b.enabled));
+  for (const sku of next.skus.filter(s => !retained.skus.some(old => old.id === s.id))) assert.equal(actual.filter(b => b.skuId === sku.id).length, 1);
   const writes = f.writes(), reads = f.barcodeReads();
   assert.deepEqual(await f.service.executeV2(actor, edit), saved); assert.equal(f.writes(), writes); assert.equal(f.barcodeReads(), reads);
-  assert.equal(f.audit[1]!.after.system_item_code, undefined); assert.equal((f.audit[1]!.after.barcodes as unknown[]).length, 11);
+  assert.equal(f.audit[1]!.after.system_item_code, undefined); assert.equal((f.audit[1]!.after.barcodes as unknown[]).length, 12 - retained.skus.length);
 });
-test("v19 CREATE uses manual system code without allocation; invalid nonblank item/dictionary code saves real SKUs without fake MAIN and blank EDIT rejects", async () => {
-  for (const [manual, mode, count] of [["0000123", "ready", 2], ["ERP-X9", "ready", 0], ["0000123", "invalid", 0]] as const) {
-    const f = fixture("ready", true, [gid(808), gid(809)], mode), c = { ...commandV2(`v19-${manual}-${mode}`),
-      values: { ...commandV2().values, systemItemCode: manual, defaultBarcodeSchemeId: scheme2026 }, skus: [], barcodes: [], skuSelection: { colorIds: [gid(806)], fitIds: [gid(807)] } };
-    assert.equal(f.state(), undefined); assert.equal(f.barcodeReads(), 0);
-    const created = await f.service.executeV2(actor, c), state = f.state()!;
-    assert.equal(state.product.systemItemCode, manual); assert.equal(state.skus.length, 2); assert.equal(state.barcodes.length, count);
-    await assert.rejects(f.service.executeV2(actor, { action: "EDIT", requestKey: "v19-blank", id: created.targetId, expectedVersion: 1,
-      values: { ...c.values, systemItemCode: null }, skus: [], barcodes: [] }), { code: "PRODUCT_REQUIRED_FIELDS" }); assert.deepEqual(f.state(), state);
-  }
-});
+test("2026 preserves alphanumeric product and color codes at original length", async()=>{const f=fixture("ready",true,[gid(808),gid(809)],"invalid"), c={...commandV2("variable-codes"),values:{...commandV2().values,systemItemCode:"ERP-X9",defaultBarcodeSchemeId:scheme2026},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};await f.service.executeV2(actor,c);assert.deepEqual(f.state()!.barcodes.map(b=>b.barcode),["55ERP-X9X1202","55ERP-X9X1203"])});
+
 test("v19 new SKU with an explicit disabled MAIN is never replaced or re-enabled by automatic generation", async () => {
   const f = fixture("ready", true, undefined, "ready"), c = commandV2("v19-explicit-disabled-main");
   const saved = await f.service.executeV2(actor, { ...c, values: { ...c.values, defaultBarcodeSchemeId: scheme2026 },
@@ -213,34 +238,25 @@ test("v19 new SKU with an explicit disabled MAIN is never replaced or re-enabled
   assert.equal(state.barcodes[0]!.enabled, false); assert.equal(state.barcodes[0]!.schemeId, c.barcodes[0]!.schemeId); assert.equal(f.barcodeReads(), 0);
   assert.equal(saved.version, 1);
 });
-test("v19 NULL size code retains both real new SKUs and generates only the actually coded size MAIN", async () => {
-  const f = fixture("ready", true, [gid(808), gid(809)], "nullsize"), c = { ...commandV2("v19-null-size"),
-    values: { ...commandV2().values, defaultBarcodeSchemeId: scheme2026 }, skus: [], barcodes: [], skuSelection: { colorIds: [gid(806)], fitIds: [gid(807)] } };
-  const saved = await f.service.executeV2(actor, c), state = f.state()!;
-  assert.equal(saved.version, 1); assert.equal(state.skus.length, 2); assert.equal(state.barcodes.length, 1);
-  assert.equal(state.barcodes[0]!.barcode, "5A0000123101203");
-  const {nativeBarcodeSchemeInitializationRows26}=await import('../packages/application/src/native-barcode-import.ts'),{withSchemeGenerationMetadata}=await import('../packages/application/src/dictionary-scheme-detail.ts');const n=nativeBarcodeSchemeInitializationRows26().find(x=>x.sourceSchemeKey==='2026')!.native;const metadata=withSchemeGenerationMetadata({id:n.id,name:n.name,barcodeType:n.barcode_type,ruleDescription:n.rule_description,codeLength:n.code_length,ruleVersion:n.rule_version,status:n.status,applicability:null});let offset=0;assert.deepEqual(metadata.generationRule!.segments.map(segment=>{const part=state.barcodes[0]!.barcode.slice(offset,offset+segment.length);offset+=segment.length;return part;}),['5','A','0000123','101','203']);assert.equal(offset,state.barcodes[0]!.barcode.length);
-  assert.equal(state.barcodes[0]!.skuId, state.skus.find(s => s.sizeId === gid(809))!.id);
-  assert.equal(state.barcodes.some(b => b.skuId === state.skus.find(s => s.sizeId === gid(808))!.id), false);
-  assert.equal((f.audit[0]!.after.skus as unknown[]).length, 2); assert.equal((f.audit[0]!.after.barcodes as unknown[]).length, 1);
-});
+test("missing size code leaves only that specification without barcode",async()=>{const f=fixture("ready",true,[gid(808),gid(809)],"nullsize"),c={...commandV2("null-size"),values:{...commandV2().values,defaultBarcodeSchemeId:scheme2026},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};await f.service.executeV2(actor,c);assert.equal(f.state()!.skus.length,2);assert.equal(f.state()!.barcodes.length,1);assert.equal(f.state()!.barcodes[0]!.barcode,"550000123101203")});
+
 test("v19 generated MAINs use original collision and completion rollback and missing reference provider refuses rather than fake generation", async () => {
   const create = { ...commandV2("v19-fault"), values: { ...commandV2().values, defaultBarcodeSchemeId: scheme2026 }, barcodes: [] };
-  const absent = fixture("ready", true);
+  const absent = fixture("ready", true, undefined, "missing");
   await assert.rejects(absent.service.executeV2(actor, create), { code: "PRODUCT_SPEC_GENERATION_NOT_READY" }); assert.equal(absent.state(), undefined);
   const f = fixture("ready", true, undefined, "ready"); f.fault(true);
   await assert.rejects(f.service.executeV2(actor, create), /SYNTHETIC RECEIPT FAULT/); assert.equal(f.state(), undefined); assert.equal(f.receipts.size, 0);
   f.fault(false); const initial = await f.service.executeV2(actor, commandV2("v19-seed")), state = f.state()!;
-  const collision = { ...state, barcodes: [...state.barcodes, { ...state.barcodes[0]!, id: gid(19002), barcode: "5A0000123101202", kind: "CONFIRMED_OLD" as const, enabled: false }] }; f.seed(collision);
-  await assert.rejects(f.service.executeV2(actor, { action: "EDIT", requestKey: "v19-collision", id: initial.targetId, expectedVersion: 1,
-    values: create.values, skus: [{ ...sku(gid(812)), sizeId: gid(808) }], barcodes: [] }), { code: "BARCODE_CONFLICT" }); assert.deepEqual(f.state(), collision);
+  const collision = { ...state, barcodes: [...state.barcodes, { ...state.barcodes[0]!, id: gid(19002), barcode: "550000123101202", kind: "CONFIRMED_OLD" as const, enabled: false }] }; f.seed(collision);
+  await f.service.executeV2(actor, { action: "EDIT", requestKey: "v19-collision", id: initial.targetId, expectedVersion: 1,
+    values: create.values, skus: [{ ...sku(gid(812)), sizeId: gid(808) }], barcodes: [] }); assert.equal(f.state()!.skus.length,2);assert.deepEqual(f.state()!.barcodes,collision.barcodes);
 });
 test("v17 selection creates only saved full-group tuples with new-system codes and canonical original-key replay", async () => {
   const f = fixture("ready", true, [gid(808), gid(809), gid(810)]);
   const c = { ...commandV2("v17-create"), skus: [], barcodes: [], skuSelection: { colorIds: [gid(812), gid(806)], fitIds: [gid(813), gid(807)] } };
   assert.equal(f.selectionReads(), 0); assert.equal(f.state(), undefined);
   const saved = await f.service.executeV2(actor, c), state = f.state()!;
-  assert.equal(state.skus.length, 12); assert.equal(state.product.version, 1); assert.equal(state.barcodes.length, 0);
+  assert.equal(state.skus.length, 12); assert.equal(state.product.version, 1); assert.equal(state.barcodes.length, 12); assert.ok(state.barcodes.every(b => /^5[56]000012310[12]20[234]$/.test(b.barcode)));
   assert.equal(f.audit.length, 1); assert.equal(f.selectionReads(), 1);
   for (const sku of state.skus) { assert.equal(sku.skuCode, `NJNEW-${sku.id.replaceAll("-", "")}`); assert.equal(sku.skuCode.length, 38); assert.equal(sku.version, 1); assert.equal(sku.createdOperationId, saved.operationId); }
   const writes = f.writes();
@@ -251,11 +267,11 @@ test("v17 selection creates only saved full-group tuples with new-system codes a
 });
 test("v17 editing fills missing only and preserves retained IDs codes disabled states and shrinking selections", async () => {
   const f = fixture("ready", true, [gid(808), gid(809), gid(810)]), first = await f.service.executeV2(actor, commandV2("v17-explicit-old"));
-  const original = f.state()!, old = { ...original, skus: [{ ...original.skus[0]!, enabled: false }] }; f.seed(old);
+  const original = f.state()!, old = { ...original, skus: [{ ...original.skus[0]!, enabled: false }], barcodes: original.barcodes.filter(b => b.skuId === original.skus[0]!.id) }; f.seed(old);
   const c = { action: "EDIT" as const, requestKey: "v17-append", id: first.targetId, expectedVersion: 1, values: commandV2().values,
     skus: [], barcodes: [], skuSelection: { colorIds: [gid(806)], fitIds: [gid(807)] } };
   await f.service.executeV2(actor, c); const next = f.state()!;
-  assert.equal(next.skus.length, 3); assert.deepEqual(next.skus.find(s => s.id === old.skus[0]!.id), old.skus[0]); assert.deepEqual(next.barcodes, old.barcodes);
+  assert.equal(next.skus.length, 3); assert.deepEqual(next.skus.find(s => s.id === old.skus[0]!.id), old.skus[0]); assert.deepEqual(next.barcodes.filter(b => old.barcodes.some(prior => prior.id === b.id)), old.barcodes); assert.equal(next.barcodes.length, old.barcodes.length + 2);
   assert.equal(next.product.version, 2); assert.equal((f.audit[1]!.after.skus as unknown[]).length, 2);
   const reads = f.selectionReads();
   await f.service.executeV2(actor, { ...c, requestKey: "v17-shrink", expectedVersion: 2, values: { ...c.values, name: "Changed label" }, skuSelection: { colorIds: [], fitIds: [] } });
@@ -267,8 +283,8 @@ test("v17 malformed input overlap complete-group bounds and missing original rea
   for (const skuSelection of [null, true, { colorIds: [gid(806)], fitIds: [] , extra: true }, { colorIds: [gid(806), gid(806)], fitIds: [gid(807)] }, { colorIds: ["bad"], fitIds: [gid(807)] }])
     assert.throws(() => parseProductMaintenanceCommandV2({ ...c, skuSelection }), { code: "INVALID_PRODUCT_MAINTENANCE" });
   const overlap = fixture("ready", true, [gid(808)]);
-  await assert.rejects(overlap.service.executeV2(actor, { ...c, skus: [sku()] }), { code: "PRODUCT_SPEC_CONFLICT" }); assert.equal(overlap.writes(), 0);
-  const missing = fixture("ready", true);
+  await overlap.service.executeV2(actor, { ...c, skus: [sku()] }); assert.equal(overlap.state()!.skus.length, 1);
+  const missing = fixture("ready", true, null);
   await assert.rejects(missing.service.executeV2(actor, c), { code: "PRODUCT_SPEC_GENERATION_NOT_READY" }); assert.equal(missing.writes(), 0);
   const empty = fixture("ready", true, []); await assert.rejects(empty.service.executeV2(actor, c), { code: "PRODUCT_SPEC_REQUIRED" }); assert.equal(empty.writes(), 0);
   const huge = fixture("ready", true, Array.from({ length: 2501 }, (_, n) => gid(30000 + n)));
@@ -282,6 +298,8 @@ test("v17 generated writes roll back with original failed completion and valid l
   assert.equal(f.state(), undefined); assert.equal(f.writes(), 0); assert.equal(f.audit.length, 0); assert.equal(f.receipts.size, 0);
   const old = parseProductMaintenanceCommandV2(commandV2()); assert.ok(!Object.hasOwn(old, "skuSelection"));
   assert.deepEqual(parseProductMaintenanceMediaCommandV2({ ...c, imageChanges: [] }).skuSelection, c.skuSelection);
+  const editWithRefill = { ...c, action: "EDIT", id: gid(22), expectedVersion: 1, generateBarcodeSkuIds: [gid(23)], imageChanges: [] };
+  assert.deepEqual((parseProductMaintenanceMediaCommandV2(editWithRefill) as { generateBarcodeSkuIds?: readonly string[] }).generateBarcodeSkuIds, [gid(23)]);
 });
 function appendInput(): DocumentProductSkuAppendInput {
   const operationId = gid(42000), productId = gid(41000), skuId = gid(42001);
@@ -335,10 +353,10 @@ test("all-size seam: existing V2 EDIT appends an absent size, preserves imported
   const c = commandV2("unused", []), added = { ...sku(), skuCode: "SYNTHETIC-NEW-SIZE-170", sizeId: gid(810) };
   const edit = { action: "EDIT", requestKey: "all-size-append", id: productId, expectedVersion: 7, values: c.values, skus: [added], barcodes: [] };
   const saved = await f.service.executeV2(actor, edit), state = f.state()!;
-  assert.equal(saved.version, 8); assert.deepEqual(state.skus.find(s => s.id === oldSku.id), oldSku); assert.deepEqual(state.barcodes, [oldBarcode]);
+  assert.equal(saved.version, 8); assert.deepEqual(state.skus.find(s => s.id === oldSku.id), oldSku); assert.deepEqual(state.barcodes.find(b => b.id === oldBarcode.id), oldBarcode); assert.equal(state.barcodes.length, 2);
   const fresh = state.skus.find(s => s.sizeId === added.sizeId)!;
   assert.notEqual(fresh.id, oldSku.id); assert.equal(fresh.version, 1); assert.equal(fresh.createdOperationId, saved.operationId);
-  assert.deepEqual(f.audit[0]!.before!.skus, []); assert.equal((f.audit[0]!.after.skus as unknown[]).length, 1); assert.ok(!Object.hasOwn(f.audit[0]!.after, "barcodes"));
+  assert.deepEqual(f.audit[0]!.before!.skus, []); assert.equal((f.audit[0]!.after.skus as unknown[]).length, 1); assert.equal((f.audit[0]!.after.barcodes as unknown[]).length, 1);
   const reopened = await f.service.detailV2(actor, { productId });
   assert.equal(reopened.version, 8); assert.equal(reopened.skus.find(s => s.id === oldSku.id)!.expectedVersion, 3);
   assert.equal(reopened.skus.find(s => s.id === fresh.id)!.expectedVersion, 1);
@@ -514,4 +532,71 @@ test('A01 every new product completion admits capacity before any prepared write
  const g=fixture();const saved=await g.service.execute(actor,c);g.fullCapacity();assert.deepEqual(await g.service.execute(actor,c),saved);
  await assert.rejects(g.service.execute(actor,{action:'EDIT',id:saved.targetId,expectedVersion:1,requestKey:'A01newkey',values:{...values(),name:'Changed'},skus:[],barcodes:[]}),{code:'PRODUCT_EVIDENCE_CAPACITY_EXCEEDED'});
  assert.equal(g.audit.length,1);
+});
+test("new manual barcode bindings are scannable without restricting retained historical strings", () => {
+  const c = commandV2(), one = sku();
+  const body = { ...c, skus: [one], barcodes: [barcode(one, "0".repeat(512))] };
+  assert.equal((parseProductMaintenanceCommandV2(body) as { barcodes: readonly { barcode: string }[] }).barcodes[0]!.barcode.length, 512);
+  for (const raw of ["0".repeat(513), "a\nb", "a\x7fb"]) assert.throws(() => parseProductMaintenanceCommandV2({ ...body, barcodes: [barcode(one, raw)] }), { code: "INVALID_PRODUCT_MAINTENANCE" });
+  const historical = { ...barcode(one, "0".repeat(513)), id: gid(77887) };
+  assert.equal((parseProductMaintenanceCommandV2({ ...body, barcodes: [historical] }) as { barcodes: readonly { barcode: string }[] }).barcodes[0]!.barcode, historical.barcode);
+});
+test("new SKU without selected scheme saves with barcode empty",async()=>{const f=fixture("ready",true,[gid(808)],"ready"),c=commandV2("old-product-with-scheme"),created=await f.service.executeV2(actor,c),old=f.state()!;f.seed({...old,product:{...old.product,defaultBarcodeSchemeId:null}});await f.service.executeV2(actor,{action:"EDIT",requestKey:"new-color-no-scheme",id:created.targetId,expectedVersion:1,values:{...c.values,defaultBarcodeSchemeId:null},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806),gid(899)],fitIds:[gid(807)]}});assert.equal(f.state()!.skus.length,2);assert.deepEqual(f.state()!.barcodes,old.barcodes)});
+
+test("barcode dispatch follows product scheme ID regardless of product year or current date", async () => {
+  const f2026=fixture("ready",true,[gid(808)],"sample2026"), c2026={...commandV2("cross-year-2026"),values:{...commandV2().values,year:2018,defaultBarcodeSchemeId:BARCODE_SCHEMES.y2026,systemItemCode:"5395661"},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};
+  await f2026.service.executeV2(actor,c2026);assert.equal(f2026.state()!.barcodes[0]!.barcode,"555395661504207");assert.equal(f2026.state()!.barcodes[0]!.schemeId,BARCODE_SCHEMES.y2026);
+  const f2020=fixture("ready",true,[gid(808)],"ready",{productSegment:"5122301721",colorCode:"0",sizeCode:"07"}), c2020={...commandV2("cross-year-history"),values:{...commandV2().values,year:2026,defaultBarcodeSchemeId:BARCODE_SCHEMES.y2020,systemItemCode:"5122301721"},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};
+  await f2020.service.executeV2(actor,c2020);assert.equal(f2020.state()!.barcodes[0]!.barcode,"05122301721101202");assert.equal(f2020.state()!.barcodes[0]!.schemeId,BARCODE_SCHEMES.y2020);
+});
+
+test("five fitless schemes leave truly ambiguous multiple-fit codes empty",async()=>{for(const scheme of [BARCODE_SCHEMES.y2018,BARCODE_SCHEMES.y2020,BARCODE_SCHEMES.y2021,BARCODE_SCHEMES.y2021fit,BARCODE_SCHEMES.y2023]){const f=fixture("ready",true,[gid(808)]),c={...commandV2("fitless-collision"),values:{...commandV2().values,defaultBarcodeSchemeId:scheme,systemItemCode:"00X"},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807),gid(813)]}};await f.service.executeV2(actor,c);assert.equal(f.state()!.skus.length,2);assert.deepEqual(f.state()!.barcodes,[])}});
+test("existing global barcode collision leaves new spec empty, existing unchanged",async()=>{const f=fixture("ready",true,[gid(808)],"sample2026");f.setGlobalBarcodes(["555395661504207"]);const c={...commandV2("global-collision"),values:{...commandV2().values,systemItemCode:"5395661"},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};await f.service.executeV2(actor,c);assert.equal(f.state()!.skus.length,1);assert.deepEqual(f.state()!.barcodes,[])});
+test("unseen or concurrent barcode collision and unrelated write failure roll back the whole aggregate", async () => {
+  for (const fault of ["conflict", "other"] as const) {
+    const f = fixture("ready", true, [gid(808)], "sample2026");
+    // No visible collision during lookup: a hidden row or concurrent writer can still conflict at INSERT.
+    f.setBarcodeWriteFault(fault);
+    const c = { ...commandV2(`late-${fault}`), values: { ...commandV2().values, systemItemCode: "5395661" }, skus: [], barcodes: [], skuSelection: { colorIds: [gid(806)], fitIds: [gid(807)] } };
+    await assert.rejects(f.service.executeV2(actor, c), fault === "conflict" ? { code: "BARCODE_CONFLICT" } : /SYNTHETIC UNRELATED FAILURE/);
+    assert.equal(f.state(), undefined);
+    assert.equal(f.writes(), 0);
+    assert.equal(f.audit.length, 0);
+    assert.equal(f.receipts.size, 0);
+  }
+});
+test("449 incomplete specifications save without barcode creation",async()=>{const sizes=Array.from({length:449},(_,i)=>gid(20000+i)),f=fixture("ready",true,sizes,"nullfit"),c={...commandV2("449-incomplete"),skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};await f.service.executeV2(actor,c);assert.equal(f.state()!.skus.length,449);assert.equal(f.state()!.barcodes.length,0);assert.equal(f.receipts.size,1)});
+test("new empty or blank system item code is rejected without substitution",async()=>{for(const value of ["","  "]){const f=fixture("ready",true,[gid(808)]),c={...commandV2(`blank-${value.length}`),values:{...commandV2().values,systemItemCode:value},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};await assert.rejects(f.service.executeV2(actor,c),{code:"PRODUCT_SYSTEM_ITEM_CODE_REQUIRED"});assert.equal(f.state(),undefined)}});
+test("bulk supplement fills only requested missing SKUs after source data completed",async()=>{const f=fixture("ready",true,[gid(808),gid(809)]),c={...commandV2("bulk-seed"),skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}},created=await f.service.executeV2(actor,c),made=f.state()!;f.seed({...made,product:{...made.product,systemItemCode:null},barcodes:[]});const original=f.state()!,ids=original.skus.map(x=>x.id);const edit={action:"EDIT" as const,id:created.targetId,expectedVersion:1,requestKey:"bulk-fill",values:{...c.values,systemItemCode:"0000X"},skus:[],barcodes:[],generateBarcodeSkuIds:ids};const saved=await f.service.executeV2(actor,edit),next=f.state()!;assert.deepEqual(next.skus,original.skus);assert.deepEqual(next.barcodes.map(b=>b.barcode),["550000X101202","550000X101203"]);assert.deepEqual(await f.service.executeV2(actor,edit),saved);assert.equal(f.state()!.barcodes.length,2)});
+test("explicit refill with no scheme still saves other edits and leaves missing barcode",async()=>{const f=fixture("ready",true,[gid(808)]),c={...commandV2("unconfigured-seed"),values:{...commandV2().values,defaultBarcodeSchemeId:null},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}},created=await f.service.executeV2(actor,c),sku=f.state()!.skus[0]!;await f.service.executeV2(actor,{action:"EDIT",requestKey:"unconfigured-fill",id:created.targetId,expectedVersion:1,values:{...c.values,name:"RENAMED"},skus:[],barcodes:[],generateBarcodeSkuIds:[sku.id]});assert.equal(f.state()!.product.name,"RENAMED");assert.deepEqual(f.state()!.barcodes,[])});
+
+test("historical selection without fit uses verified unique A only",async()=>{const f=fixture("ready",true,[gid(808)]);f.setDefaultHistoricalFit(gid(807));const c={...commandV2("default-a"),values:{...commandV2().values,defaultBarcodeSchemeId:BARCODE_SCHEMES.y2020,systemItemCode:"001"},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[]}};await f.service.executeV2(actor,c);assert.equal(f.state()!.skus.length,1);assert.equal(f.state()!.skus[0]!.fitId,gid(807));assert.equal(f.state()!.barcodes[0]!.barcode,"0001101202")});
+test("missing or ambiguous default A saves product without invented SKU",async()=>{for(const scheme of [BARCODE_SCHEMES.y2020,BARCODE_SCHEMES.y2026]){const f=fixture("ready",true,[gid(808)]),c={...commandV2("no-fit"),values:{...commandV2().values,defaultBarcodeSchemeId:scheme},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[]}};const saved=await f.service.executeV2(actor,c);assert.equal(f.state()!.skus.length,0);assert.equal(f.state()!.barcodes.length,0);assert.equal(f.receipts.size,1);const detail=await f.service.detailV2(actor,{productId:saved.targetId});assert.deepEqual(detail.skus,[]);assert.deepEqual(detail.barcodes,[])}});
+test("mixed bulk refill skips retained disabled main and fills only missing idempotently",async()=>{const f=fixture("ready",true,[gid(808),gid(809)]),c={...commandV2("mixed-bulk-create"),skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}},created=await f.service.executeV2(actor,c),all=f.state()!,first={...all.barcodes[0]!,enabled:false};f.seed({...all,barcodes:[first]});const edit={action:"EDIT" as const,id:created.targetId,expectedVersion:1,requestKey:"mixed-bulk-fill",values:c.values,skus:[],barcodes:[],generateBarcodeSkuIds:all.skus.map(s=>s.id)},saved=await f.service.executeV2(actor,edit),next=f.state()!;assert.deepEqual(next.barcodes[0],first);assert.equal(next.barcodes.length,2);assert.equal(next.barcodes[1]!.skuId,all.skus[1]!.id);assert.deepEqual(await f.service.executeV2(actor,edit),saved);assert.deepEqual(f.state(),next)});
+test("overlong default barcode is stored intact while SKU barcode remains empty",async()=>{const f=fixture("ready",true,[gid(808)]),raw="0".repeat(4096),c={...commandV2("long-default"),values:{...commandV2().values,systemItemCode:raw},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};await f.service.executeV2(actor,c);assert.equal(f.state()!.product.systemItemCode,raw);assert.equal(f.state()!.skus.length,1);assert.deepEqual(f.state()!.barcodes,[])});
+
+test("explicit single non-A fit under historical scheme can generate without altering fit",async()=>{const f=fixture("ready",true,[gid(808)]),c={...commandV2("explicit-non-a"),values:{...commandV2().values,defaultBarcodeSchemeId:BARCODE_SCHEMES.y2023,systemItemCode:"00X"},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(813)]}};await f.service.executeV2(actor,c);assert.equal(f.state()!.skus[0]!.fitId,gid(813));assert.equal(f.state()!.barcodes[0]!.barcode,"900X101202");assert.equal(f.state()!.barcodes[0]!.skuId,f.state()!.skus[0]!.id)});
+test("new product requires manual system item code regardless of scheme",async()=>{for(const scheme of [null,BARCODE_SCHEMES.y2020,BARCODE_SCHEMES.y2026]){const f=fixture("ready",true,[gid(808)]),c={...commandV2(`manual-required-${scheme}`),values:{...commandV2().values,defaultBarcodeSchemeId:scheme,systemItemCode:null},skus:[],barcodes:[],skuSelection:{colorIds:[gid(806)],fitIds:[gid(807)]}};await assert.rejects(f.service.executeV2(actor,c),{code:'PRODUCT_SYSTEM_ITEM_CODE_REQUIRED'});assert.equal(f.state(),undefined)}});
+test("historical missing item code survives unrelated edit; changing code to empty is refused",async()=>{const f=fixture("ready",true,[gid(808)]),c=commandV2('old-empty-seed'),saved=await f.service.executeV2(actor,c),old=f.state()!;f.seed({...old,product:{...old.product,systemItemCode:null}});const edit={action:'EDIT' as const,id:saved.targetId,expectedVersion:1,requestKey:'keep-old-empty',values:{...c.values,systemItemCode:null,name:'UPDATED'},skus:[],barcodes:[]};await f.service.executeV2(actor,edit);assert.equal(f.state()!.product.systemItemCode,null);const completed=await f.service.executeV2(actor,{...edit,expectedVersion:2,requestKey:'supply-code',values:{...edit.values,systemItemCode:'001'}});assert.equal(completed.version,3);await assert.rejects(f.service.executeV2(actor,{...edit,expectedVersion:3,requestKey:'clear-code',values:{...edit.values,systemItemCode:null}}),{code:'PRODUCT_SYSTEM_ITEM_CODE_REQUIRED'});assert.equal(f.state()!.product.systemItemCode,'001')});
+test("legacy blank item-code text is preserved only when unchanged",async()=>{for(const prior of ['', '  ']){const f=fixture('ready',true,[gid(808)]),c=commandV2(`legacy-space-${prior.length}`),saved=await f.service.executeV2(actor,c),old=f.state()!;f.seed({...old,product:{...old.product,systemItemCode:prior}});const edit={action:'EDIT' as const,id:saved.targetId,expectedVersion:1,requestKey:`preserve-space-${prior.length}`,values:{...c.values,systemItemCode:prior,name:'UPDATED'},skus:[],barcodes:[]};await f.service.executeV2(actor,edit);assert.equal(f.state()!.product.systemItemCode,prior);await assert.rejects(f.service.executeV2(actor,{...edit,expectedVersion:2,requestKey:`change-space-${prior.length}`,values:{...edit.values,systemItemCode:prior===''?' ':''}}),{code:'PRODUCT_SYSTEM_ITEM_CODE_REQUIRED'})}});
+test("explicit new specification expands only its actual color-fit pair across the complete group",async()=>{const f=fixture("ready",true,[gid(808),gid(809),gid(810)]),c={...commandV2("explicit-full-group"),skus:[sku(gid(806))],barcodes:[]};await f.service.executeV2(actor,c);const x=f.state()!;assert.equal(x.skus.length,3);assert.deepEqual(new Set(x.skus.map(s=>s.sizeId)),new Set([gid(808),gid(809),gid(810)]));assert.ok(x.skus.every(s=>s.colorId===gid(806)&&s.fitId===gid(807)));assert.equal(x.barcodes.length,3)});
+test("distinct explicitly selected color-fit pairs expand without inventing cross pairs", async () => {
+  const f = fixture("ready", true, [gid(808), gid(809)]);
+  const first = sku(gid(806)), second = { ...sku(gid(899)), fitId: gid(813) };
+  await f.service.executeV2(actor, { ...commandV2("two-explicit-pairs"), skus: [first, second], barcodes: [] });
+  const specs = f.state()!.skus;
+  assert.equal(specs.length, 4);
+  assert.deepEqual(new Set(specs.map(s => `${s.colorId}/${s.fitId}`)), new Set([`${gid(806)}/${gid(807)}`, `${gid(899)}/${gid(813)}`]));
+  for (const color of [gid(806), gid(899)]) assert.deepEqual(new Set(specs.filter(s => s.colorId === color).map(s => s.sizeId)), new Set([gid(808), gid(809)]));
+});
+test("document append generates a missing SKU barcode in the original transaction without changing retained bindings", async () => {
+  const f = appendFixture();
+  const result = await f.dependencies.unitOfWork.transaction(tx => appendProductSkusInTransaction(tx, f.input, { newBarcodeId: () => gid(42002), assertSkuWriteReady: async () => {}, assertBarcodeWriteReady: async () => {} }));
+  const saved = f.state()!;
+  assert.deepEqual(saved.barcodes[0], f.prior.barcodes[0]);
+  assert.equal(saved.barcodes.length, 2);
+  assert.equal(saved.barcodes[1]!.skuId, f.input.skus[0]!.id);
+  assert.equal(saved.barcodes[1]!.barcode, "550000123101204");
+  assert.equal(result.result.operationId, f.input.operationId);
+  assert.equal((f.audit[0]!.after.barcodes as unknown[]).length, 1);
 });

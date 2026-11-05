@@ -66,7 +66,7 @@ test('CURRENT form HTTP: bounded payment-method selection uses the existing auth
  assert.equal(response.json().exactTotal, '9007199254740993'); assert.equal(response.headers['cache-control'], 'no-store');
  assert.equal(f.calls.length, 1); assert.deepEqual(f.calls[0]!.body, query); assert.ok(Object.isFrozen(f.calls[0]!.body));
  assert.deepEqual(f.calls[0]!.actor, actor); assert.equal(f.app.server.listening, false);
- for (const invalid of [{ ...query, hallId: null }, { ...query, hallId: 'fake' }, { ...query, paymentMethodId: id },
+ for (const invalid of [{ ...query, hallId: 'fake' }, { ...query, paymentMethodId: id },
   { ...query, paymentAccountId: id }, { ...query, pageSize: 200 }, { ...query, page: '2' }, { ...query, search: ' trim ' }, { ...query, search: 'x'.repeat(201) }])
   assert.equal((await f.post(url, invalid)).statusCode, 400);
  assert.equal(f.calls.length, 1);
@@ -142,4 +142,12 @@ test('default warehouse read: warehouse-v1 negotiates hints and strict legacy cl
  for(const version of [undefined,'customer-v1','unknown','warehouse-v1']){
   const response=await app.inject({method:'POST',url:'/current-form/sales-references/query',headers:{'content-type':'application/json',...(version?{'x-naijue-current-form-recommendation':version}:{})},payload:{kind:'warehouse',hallId:id,search:'',page:1,pageSize:20}});assert.equal(response.statusCode,200);const body=response.json();assert.equal(Object.hasOwn(body,'recommendationAvailability'),version==='warehouse-v1');assert.equal(Object.hasOwn(body.items[0],'isRecommended'),version==='warehouse-v1');assert.equal(body.items[0].id,id);
  }
+});
+
+test('REBUILT prehall method keeps authentication, trusted actor and no-store; account still requires hall', async t => {
+ const f=await setup(t),url=routes[0][0],query={kind:'paymentMethod',hallId:null,search:'',page:1,pageSize:20};
+ const response=await f.post(url,query);assert.equal(response.statusCode,200);assert.equal(response.headers['cache-control'],'no-store');assert.deepEqual(f.calls[0]!.body,query);assert.deepEqual(f.calls[0]!.actor,actor);
+ const unauthenticated=await setup(t,{authenticate:async()=>null});assert.equal((await unauthenticated.post(url,query)).statusCode,401);assert.equal(unauthenticated.calls.length,0);
+ const denied=await setup(t,{failure:new DomainError('FORBIDDEN','PRIVATE')});const no=await denied.post(url,query);assert.equal(no.statusCode,403);assert.ok(!no.body.includes('PRIVATE'));
+ assert.equal((await f.post(url,{...query,kind:'paymentAccount',paymentMethodId:id})).statusCode,400);assert.equal(f.calls.length,1);
 });

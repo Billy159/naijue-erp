@@ -24,10 +24,14 @@ const origin = "https://127.0.0.1:55601";
 test('A01 current concrete factory wires both standalone product providers; borrowed native SAVE keeps parent capacity proof',()=>{
   const source=ts.createSourceFile('postgres-read-api.ts',readFileSync(new URL('./postgres-read-api.ts',import.meta.url),'utf8'),ts.ScriptTarget.Latest,true);
   const constructions:ts.NewExpression[]=[];const walk=(node:ts.Node)=>{if(ts.isNewExpression(node)&&node.expression.getText(source)==='PostgresProductMaintenanceUnitOfWork')constructions.push(node);ts.forEachChild(node,walk);};walk(source);
-  assert.equal(constructions.length,2,'Both original ordinary and media-capable product providers remain covered');
+  assert.equal(constructions.length,3,'Two legacy providers and the ordinary27 provider remain covered');
+  let legacy=0, ordinary27=0;
   for(const node of constructions){const options=node.arguments?.[1];assert.ok(options&&ts.isObjectLiteralExpression(options));
-    const capacity=options.properties.find(property=>ts.isPropertyAssignment(property)&&property.name.getText(source)==='capacity');assert.ok(capacity&&ts.isPropertyAssignment(capacity));
+    const ordinary=options.properties.find(property=>ts.isPropertyAssignment(property)&&property.name.getText(source)==='ordinary27Capacity');
+    if(ordinary){assert.ok(ts.isPropertyAssignment(ordinary));assert.equal(ordinary.initializer.getText(source),'capacity');ordinary27++;continue;}
+    legacy++;const capacity=options.properties.find(property=>ts.isPropertyAssignment(property)&&property.name.getText(source)==='capacity');assert.ok(capacity&&ts.isPropertyAssignment(capacity));
     assert.equal(capacity.initializer.getText(source),'createSourceConfirmedProductCapacityFactory(pool, issuer.runtime26)');}
+  assert.equal(legacy,2);assert.equal(ordinary27,1);assert.match(source.text,/createOrdinary27ProductCapacityFactory\(pool, issuer27\.runtime27\)/);
   // This is source wiring evidence only. Existing independent D2 same-client protocol tests exercise the borrowed seam itself.
   const borrowed=readFileSync(new URL('../../../adapters/postgres/src/native-document-specification.ts',import.meta.url),'utf8');
   assert.match(borrowed,/assertPendingCapacity\s*:\s*[^\n]*context\.catalogue\.assertPendingCapacity/);
@@ -337,5 +341,5 @@ test("old explicit party read graph now refuses before allocation; malformed par
 test('inventory reader receives the same issuer retained-delete capability',()=>{
  const sf=ts.createSourceFile('postgres-read-api.ts',readFileSync(new URL('./postgres-read-api.ts',import.meta.url),'utf8'),ts.ScriptTarget.Latest,true);
  const nodes:ts.NewExpression[]=[];const walk=(n:ts.Node)=>{if(ts.isNewExpression(n)&&n.expression.getText(sf)==='PostgresInventoryQueryReader')nodes.push(n);ts.forEachChild(n,walk);};walk(sf);
- assert.equal(nodes.length,1);for(const n of nodes)assert.equal(n.arguments?.[3]?.getText(sf),'issuer?.catalogueRetainedDelete ?? null');
+ assert.equal(nodes.length,2);const ordinary=nodes.filter(n=>n.arguments?.[4]?.getText(sf)==='issuer27.ordinaryRead');assert.equal(ordinary.length,1);assert.deepEqual(ordinary[0]!.arguments?.slice(1,4).map(a=>a.getText(sf)),['null','undefined','null']);const legacy=nodes.filter(n=>n!==ordinary[0]);assert.equal(legacy[0]!.arguments?.[3]?.getText(sf),'issuer?.catalogueRetainedDelete ?? null');
 });

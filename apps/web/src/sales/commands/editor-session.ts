@@ -7,6 +7,7 @@ import type { SalesCommandDto, SalesCommandSnapshot, SalesCommandWorkspaceOption
 import { SalesCommandError } from './contracts.ts';
 import { SalesCommandWorkspace } from './controller.ts';
 import { compileSalesForm, salesFormInput, type SalesFormInput } from './form-model.ts';
+import type { CurrentSalesReferenceItem } from '../../../../../packages/application/src/current-form-ports.ts';
 import { frozenSnapshot } from './validation.ts';
 import type { DocumentResponsibleStaffCapability } from '../../application/contracts.ts';
 
@@ -66,7 +67,15 @@ export class SalesEditorSession {
   get canUseExistingProposal(): boolean {
     const state = this.#state.command, editor = state.editor;
     return !this.#state.viewOnly && !!this.#options.existingPreparation && !!this.#options.existingReader && !state.disposed && editor?.mode === 'EXISTING' && !!editor.detail && !!editor.draft && !!this.#state.input
-      && editor.detail.stockBasis === 'RUNTIME_LEDGER' && editor.detail.document.header.status === 'DRAFT';
+      && this.commands.allowsDocumentBasis(editor.detail) && editor.detail.document.header.status === 'DRAFT' && editor.detail.document.header.hallId !== null;
+  }
+  get historicalHallReferenceReader() { return this.#state.command.editor?.detail?.stockBasis === 'CUTOFF_HISTORY' ? this.#options.existingReader : undefined; }
+  /** Explicit user selection only. The server must authorize the new same-hall pair;
+   * immutable historical evidence never travels with this command. */
+  applyHistoricalHallWarehouse(hall: CurrentSalesReferenceItem, warehouse: CurrentSalesReferenceItem): boolean {
+    const editor = this.#state.command.editor;
+    if (!this.editable || editor?.mode !== 'EXISTING' || editor.detail?.stockBasis !== 'CUTOFF_HISTORY' || !editor.draft || hall.hallId !== hall.id || warehouse.hallId !== hall.id) return false;
+    return this.commands.replaceDraft({ ...editor.draft, header: { ...editor.draft.header, hallId: hall.id, warehouseId: warehouse.id } });
   }
   get existingDocument(): SalesExistingDocumentSession | null { return this.#existing; }
   prepareExistingDocument(): SalesExistingDocumentSession | null {

@@ -38,6 +38,8 @@ export class SalesCommandWorkspace {
   }
   readonly getSnapshot = (): SalesCommandSnapshot => this.#state;
   readonly subscribe = (listener: () => void): (() => void) => { if (this.#state.disposed) return () => {}; this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
+  get ordinaryDocuments(): boolean { return this.#options.documentListProfile === 'source-confirmed-ordinary-documents-v1'; }
+  allowsDocumentBasis(detail: SalesDetailDto): boolean { return this.ordinaryDocuments || detail.stockBasis === 'RUNTIME_LEDGER'; }
   get hasUnresolvedWrite(): boolean { return unresolved(this.#state.write); }
   get hasDirtyDraft(): boolean {
     const editor = this.#state.editor;
@@ -61,8 +63,8 @@ export class SalesCommandWorkspace {
   replaceDraft(value: SalesDraftDto): boolean {
     const editor = this.#state.editor;
     if (!this.#active() || !editor || editor.phase !== 'ready' || this.hasUnresolvedWrite || this.#state.write.phase === 'committed' || editor.current
-      || editor.detail && (editor.detail.stockBasis !== 'RUNTIME_LEDGER' || editor.detail.document.header.status !== 'DRAFT')) return false;
-    let draft: SalesDraftDto; try { draft = validateSalesDraft(value); } catch { this.#notice('草稿不符合现有合同，输入未提交。'); return false; }
+      || editor.detail && (!this.allowsDocumentBasis(editor.detail) || editor.detail.document.header.status !== 'DRAFT')) return false;
+    let draft: SalesDraftDto; try { draft = validateSalesDraft(value, editor.detail ? { previous: draftFromSalesDetail(editor.detail) } : {}); } catch { this.#notice('草稿不符合现有合同，输入未提交。'); return false; }
     if (draft.header.id !== editor.salesId) return false;
     const previousSettlements = new Map<string, SalesDetailDto['document']['settlements'][number]>(editor.detail?.document.settlements.map(row => [row.id, row]));
     if (draft.settlements.some(row => {
@@ -79,7 +81,7 @@ export class SalesCommandWorkspace {
     let proposal: NativeSalesSaveProposal;
     try { proposal = parseNativeSalesSaveProposal(value); }
     catch { this.#notice('规格及保存资料未通过校验，输入已保留，未发送请求。'); return Promise.resolve(false); }
-    if (proposal.salesId === null ? editor !== null : !editor || editor.mode !== 'EXISTING' || proposal.salesId !== editor.salesId || !header || header.status !== 'DRAFT' || editor.detail?.stockBasis !== 'RUNTIME_LEDGER' || header.version >= Number.MAX_SAFE_INTEGER) return Promise.resolve(false);
+    if (proposal.salesId === null ? editor !== null : !editor || editor.mode !== 'EXISTING' || proposal.salesId !== editor.salesId || !header || header.status !== 'DRAFT' || !editor.detail || !this.allowsDocumentBasis(editor.detail) || header.version >= Number.MAX_SAFE_INTEGER) return Promise.resolve(false);
     let command: SalesCommandDto;
     try {
       const requestKey = this.#options.newRequestKey();
@@ -96,7 +98,7 @@ export class SalesCommandWorkspace {
     const editor = this.#state.editor;
     if (!this.#active() || !editor || editor.phase !== 'ready' || this.hasUnresolvedWrite || this.#state.write.phase === 'committed' || editor.current || this.#state.stale) return false;
     const detail = editor.detail, header = detail?.document.header;
-    if (detail?.stockBasis === 'CUTOFF_HISTORY') { this.#notice('历史单据尚未开放基线感知写入，未发送请求。'); return false; }
+    if (detail && !this.allowsDocumentBasis(detail)) { this.#notice('历史单据尚未开放基线感知写入，未发送请求。'); return false; }
     if (header && header.version >= Number.MAX_SAFE_INTEGER) return false;
     if (action === 'SAVE') {
       if (!editor.draft || header && header.status !== 'DRAFT' || editor.mode === 'EXISTING' && !header || editor.mode === 'EXISTING' && !this.hasDirtyDraft) return false;
@@ -105,8 +107,18 @@ export class SalesCommandWorkspace {
       // Mutations must apply to the persisted document, never silently save edits.
       if (this.hasDirtyDraft) { this.#notice('请先保存草稿并重新读取，再执行状态操作。'); return false; }
       if (action === 'APPROVE') {
-        let persisted: SalesDraftDto; try { persisted = draftFromSalesDetail(detail!); } catch { this.#notice('已保存单据缺少明确价格事实或原付款方式编号，无法审核。'); return false; }
-        if (!settlementBalanced(persisted)) { this.#notice('审核要求收款减退款与应结金额精确配平。'); return false; }
+        // Ordinary metadata is not approval authority. The server alone proves any
+        // retained prior approval; send no proof hints or reconstructed pricing.
+        let persisted: SalesDraftDto; try { persisted = draftFromSalesDetail(detail!, !this.ordinaryDocuments); } catch { this.#notice('已保存单据缺少明确价格事实或原付款方式编号，无法审核。'); return false; }
+        // An empty historical list is missing evidence, not a known zero. Only
+        // the server can prove an exact original restoration or reject missing facts.
+        const historicalMissing = this.ordinaryDocuments && detail!.stockBasis === 'CUTOFF_HISTORY' && persisted.settlements.length === 0;
+        if (!historicalMissing && !settlementBalanced(persisted)) {
+          const settled = persisted.settlements.reduce((sum, row) => sum + (row.direction === 'RECEIVE' ? BigInt(row.amount) : -BigInt(row.amount)), 0n);
+          this.#notice(settlementNotice(new SalesCommandError('invalid-request', 'SETTLEMENT_MISMATCH', 'not-sent', null,
+            { netDue: persisted.header.netDue, settled: settled.toString(), difference: (BigInt(persisted.header.netDue) - settled).toString() })));
+          return false;
+        }
       }
     }
     let command: SalesCommandDto;
@@ -205,7 +217,7 @@ export class SalesCommandWorkspace {
       this.#knownDocument = Object.freeze({ version: header.version, status: header.status });
       const draft = preserve ? editor.draft : this.#editableDraft(detail);
       if (!preserve) this.#baseline = draft ? JSON.stringify(draft) : null;
-      this.#publish({ ...this.#state, editor: Object.freeze({ ...editor, phase: 'ready', detail: preserve ? editor.detail : detail, draft, current: preserve ? detail : null, readError: null }), notice: preserve ? '已读取当前单据；请明确采用后再操作，原请求未改变。' : detail.stockBasis === 'CUTOFF_HISTORY' ? '历史单据尚未开放写入。' : null }); return true;
+      this.#publish({ ...this.#state, editor: Object.freeze({ ...editor, phase: 'ready', detail: preserve ? editor.detail : detail, draft, current: preserve ? detail : null, readError: null }), notice: preserve ? '已读取当前单据；请明确采用后再操作，原请求未改变。' : !this.allowsDocumentBasis(detail) ? '历史单据尚未开放写入。' : null }); return true;
     } catch (error) {
       if (!this.#current(generation, request, 'read')) return false;
       const safe = safeReadError(error); this.#access(safe); if (!this.#active()) return false;
@@ -232,6 +244,14 @@ export class SalesCommandWorkspace {
       this.#publish({ ...this.#state, write: Object.freeze({ ...this.#state.write, phase: uncertain ? 'uncertain' : 'rejected', error: safe }),
         notice: uncertain ? '提交结果不确定。原操作身份、版本和内容已保留，请先核实。' : safe.code === 'VERSION_CONFLICT' ? '版本冲突，草稿已保留。请读取当前单据并明确重新准备，不能强制覆盖。'
           : safe.code === 'SETTLEMENT_METHOD_MISMATCH' ? '当前收退账户与原选付款方式不再匹配，已保留原选择；请重新准备有效收退资料，不能自动换方式。'
+            : safe.code === 'UNKNOWN_SETTLEMENT_FACTS' ? '本次变更的收退款缺少明确付款方式等必要事实，原未知方式只能在原明细未变时保留。请核实真实资料，不能自动补齐。'
+            : safe.code === 'HISTORICAL_SETTLEMENT_FACTS_MISSING' ? '历史收退款资料缺失，不能按零或已结清审核。草稿已保留，请核实并补录真实发生的收退款。'
+            : safe.code === 'HISTORICAL_SALE_TYPE_CHANGED' ? '历史销货单必须保留原业务类型，草稿已保留。'
+            : safe.code === 'LINE_AMOUNT_MISMATCH' ? '服务端未接受本次修改：明细金额与数量、成交单价不一致。原金额、数量、单价及厅仓选择均已保留，未自动重算；请核实实际资料。'
+            : safe.code === 'UNKNOWN_PRICING_FACTS' ? '服务端未接受本次修改：历史价格、赠品或优惠分摊依据尚未完整确认。原事实与厅仓选择已保留，不能自动补价或重算。'
+            : safe.code === 'HISTORICAL_DISCOUNT_CHANGED' ? '历史原优惠／抹零须保留原金额，不能改成新优惠；草稿已保留。'
+            : safe.code === 'MIXED_SALES_ORDER_DISCOUNT' ? '正负明细混合单不使用整单优惠／抹零，请清除整单优惠后重试；草稿及明细已保留。'
+            : safe.code === 'SETTLEMENT_MISMATCH' ? settlementNotice(safe)
             : safe.code === 'IMMUTABLE_SETTLEMENT_METHOD' ? '保留原收退账户及明细时，不能替换原付款方式编号；草稿已保留。' : '请求已拒绝，草稿已保留。' }); return false;
     } finally { if (this.#write === request) this.#write = null; }
   }
@@ -244,7 +264,7 @@ export class SalesCommandWorkspace {
     this.#publish({ ...this.#state, editor, write: Object.freeze({ phase: 'committed', command, result, receipt, recovery: receipt ? 'found' : 'unqueried', error: null }), stale: true,
       notice: '原操作已确认；显示内容不是最新单据，请重新读取并明确采用后继续。' });
   }
-  #editableDraft(detail: SalesDetailDto): SalesDraftDto | null { if (detail.stockBasis !== 'RUNTIME_LEDGER' || detail.document.header.status !== 'DRAFT') return null; try { return draftFromSalesDetail(detail); } catch { return null; } }
+  #editableDraft(detail: SalesDetailDto): SalesDraftDto | null { if (!this.allowsDocumentBasis(detail) || detail.document.header.status !== 'DRAFT') return null; try { return draftFromSalesDetail(detail); } catch { return null; } }
   #canReplace(): boolean { return this.#active() && !this.hasUnresolvedWrite && !this.hasDirtyDraft; }
   #active(): boolean { return this.#options.scope.active && !this.#state.disposed; }
   #current(generation: number, request: AbortController, kind: 'read' | 'write'): boolean { return this.#active() && generation === this.#generation && !request.signal.aborted && (kind === 'read' ? this.#read : this.#write) === request; }
@@ -255,4 +275,11 @@ export class SalesCommandWorkspace {
   }
   #notice(notice: string): void { if (this.#active()) this.#publish({ ...this.#state, notice }); }
   #publish(state: SalesCommandSnapshot): void { this.#state = Object.freeze(state); for (const listener of [...this.#listeners]) { try { listener(); } catch { /* Consumer failure cannot prevent cleanup. */ } } }
+}
+
+function settlementNotice(error: SalesCommandError): string {
+  const facts = error.settlement;
+  if (!facts) return '实际收款减退款与应结净额不一致，不能审核。草稿已保留，请核实真实收退款。';
+  const money = (value: string): string => { const amount = BigInt(value); const abs = amount < 0n ? -amount : amount; return `${amount < 0n ? '-' : ''}${abs / 100n}.${String(abs % 100n).padStart(2, '0')}`; };
+  return `应结净额 ${money(facts.netDue)} 元，实际收款减退款 ${money(facts.settled)} 元，差额（应结减实收）${money(facts.difference)} 元，尚未配平，不能审核。草稿已保留，请核实输入或补录真实收退款，不会自动生成收退款。`;
 }

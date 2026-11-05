@@ -41,10 +41,11 @@ export function parseCurrentSalesReferenceQuery(value: unknown): CurrentSalesRef
     return Object.freeze({ ...search(row), kind: "hall", hallId: null });
   }
   if (row.kind === "salesperson") return Object.freeze({ ...search(row), kind: "salesperson", hallId: row.hallId === null ? null : id("hall", row.hallId) });
+  if (row.kind === "paymentMethod") return Object.freeze({ ...search(row), kind: "paymentMethod", hallId: row.hallId === null ? null : id("hall", row.hallId) });
   const hallId = id("hall", row.hallId);
   if (row.kind === "paymentAccount") return Object.freeze({ ...search(row), kind: "paymentAccount", hallId,
     paymentMethodId: id("paymentMethod", row.paymentMethodId) });
-  if (row.kind !== "customer" && row.kind !== "warehouse" && row.kind !== "paymentMethod") invalid();
+  if (row.kind !== "customer" && row.kind !== "warehouse") invalid();
   return Object.freeze({ ...search(row), kind: row.kind, hallId });
 }
 export function parseCurrentTransferWarehouseQuery(value: unknown): CurrentTransferWarehouseQuery {

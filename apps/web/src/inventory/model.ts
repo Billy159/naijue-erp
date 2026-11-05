@@ -9,29 +9,37 @@ export function assertQuantity(value: string): void {
   }
 }
 export function totalOf(cells: readonly StockCell[]): StockTotal {
-  let known = 0n;
+  let known = 0n, unknownCells = 0;
   for (const cell of cells) {
     if (cell?.state === 'known') { assertQuantity(cell.quantity); known += BigInt(cell.quantity); }
+    else if (cell?.state === 'unknown') { if (Object.keys(cell).sort().join(',') !== 'skuId,state') throw new TypeError('库存数据未完整核实，不能按零发布。'); if (!cell.skuId?.trim()) throw new TypeError('库存来源 SKU 身份缺失。'); unknownCells++; }
     else if (cell?.state !== 'not-applicable') throw new TypeError('库存数据未完整核实，不能按零发布。');
   }
-  return { knownQuantity: String(known), completeness: 'complete', unknownCells: 0 };
+  return { knownQuantity: String(known), completeness: unknownCells ? 'incomplete' : 'complete', unknownCells };
 }
 export function formatQuantity(value: string): string {
   assertQuantity(value);
   return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
+export function cellLabel(cell: { readonly state: 'known'; readonly quantity: string } | { readonly state: 'not-applicable' } | { readonly state: 'unknown'; readonly skuId: string } | { readonly state: 'unknown'; readonly knownQuantity: string; readonly unknownCells: number }): string {
+  if (cell.state === 'known') return formatQuantity(cell.quantity);
+  if (cell.state === 'not-applicable') return '—';
+  return 'knownQuantity' in cell ? totalLabel({ knownQuantity: cell.knownQuantity, unknownCells: cell.unknownCells, completeness: 'incomplete' }) : '未知';
+}
 export function totalLabel(total: StockTotal): string {
   assertTotal(total);
-  return formatQuantity(total.knownQuantity);
+  return total.completeness === 'complete' ? formatQuantity(total.knownQuantity) : `已知 ${formatQuantity(total.knownQuantity)}（${total.unknownCells}格未知）`;
 }
 function assertTotal(total: StockTotal): void {
-  if (!total || total.completeness !== 'complete' || total.unknownCells !== 0) throw new TypeError('库存汇总完整性未核实，不能发布部分结果。');
+  if (!total || !Number.isSafeInteger(total.unknownCells) || total.unknownCells < 0 || (total.unknownCells === 0 ? total.completeness !== 'complete' : total.completeness !== 'incomplete')) throw new TypeError('库存汇总完整性未核实，不能发布部分结果。');
   assertQuantity(total.knownQuantity);
 }
 
-function sumTotals(totals: readonly StockTotal[]): StockTotal {
+export function sumTotals(totals: readonly StockTotal[]): StockTotal {
   for (const total of totals) assertTotal(total);
-  return { knownQuantity: String(totals.reduce((sum, total) => sum + BigInt(total.knownQuantity), 0n)), unknownCells: 0, completeness: 'complete' };
+  const unknownCells = totals.reduce((sum, total) => sum + total.unknownCells, 0);
+  if (!Number.isSafeInteger(unknownCells)) throw new TypeError('库存未知格数超出范围。');
+  return { knownQuantity: String(totals.reduce((sum, total) => sum + BigInt(total.knownQuantity), 0n)), unknownCells, completeness: unknownCells ? 'incomplete' : 'complete' };
 }
 
 function sameTotal(actual: StockTotal, expected: StockTotal): void {
@@ -71,7 +79,7 @@ export function assertInventoryPage(data: InventoryPage, parameters: Readonly<In
         if (Object.keys(row.cells).length !== product.sizes.length) throw new TypeError('库存格数量与已核实尺码列不一致。');
         for (const size of product.sizes) {
           const cell = row.cells[size.id];
-          if (!cell || !['known', 'not-applicable'].includes(cell.state)) throw new TypeError('库存格缺少明确状态，不能当作零库存。');
+          if (!cell || !['known', 'unknown', 'not-applicable'].includes(cell.state) || Object.keys(cell).sort().join(',') !== (cell.state === 'known' ? 'quantity,skuId,state' : cell.state === 'unknown' ? 'skuId,state' : 'state')) throw new TypeError('库存格缺少明确状态，不能当作零库存。');
           if (cell.state !== 'not-applicable') {
             nonempty(cell.skuId);
             const coordinate = JSON.stringify([group.color.id, group.fit.id, size.id]);

@@ -61,7 +61,8 @@ export function salesSignedYuanMinor(raw: string): string | null {
   const minor = BigInt(whole!) * 100n + BigInt(fraction.padEnd(2, '0'));
   return (negative ? -minor : minor).toString();
 }
-export function salesRawLinePrice(referenceMinor: string | null, raw: { readonly isGift: boolean; readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT'; readonly discount: string; readonly dealPrice: string }): string | null {
+export function salesRawLinePrice(referenceMinor: string | null, raw: { readonly isGift: boolean | null; readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT' | null; readonly discount: string; readonly dealPrice: string }): string | null {
+  if (raw.isGift === null || raw.pricingRule === null) return null;
   if (raw.isGift) return '0';
   try {
     if (raw.pricingRule === 'UNIT_PRICE') { const value = salesSignedYuanMinor(raw.dealPrice); return value !== null && BigInt(value) >= 0n ? value : null; }
@@ -92,10 +93,10 @@ export function salesPaymentKind(netDueMinor: string | null, settledMinor: strin
   } catch { return ''; }
 }
 interface SummaryLine {
-  readonly quantity: string; readonly isGift: boolean;
+  readonly quantity: string; readonly isGift: boolean | null;
   /** Canonical product ID when supplied; saved snapshots otherwise use their
    * original product code for a labelled snapshot-code count only. */
-  readonly styleKey: string;
+  readonly styleKey: string | null;
   readonly category?: { readonly id: string; readonly label: string | null };
 }
 export function SalesDocumentSummary({ businessType, lines, grossMinor, discountMinor, netDueMinor, snapshotCodes = false, extra }: {
@@ -105,20 +106,21 @@ export function SalesDocumentSummary({ businessType, lines, grossMinor, discount
 }) {
   const money = (value: string | null) => value === null ? '待填写' : salesInputMoney(value);
   const units = (rows: readonly SummaryLine[]) => { const value = salesExactQuantity(rows); return value === null ? '待校验' : `${value}件`; };
+  const giftKnown = lines.every(line => line.isGift !== null);
   if (businessType !== 'SALE') {
-    const incoming = lines.filter(row => !row.isGift && row.quantity.startsWith('-')), outgoing = lines.filter(row => !row.isGift && !row.quantity.startsWith('-'));
-    return <footer className="tc-foot tc-gold-footer sale-summary"><div className="sale-summary-primary" data-sales-quantity-summary><strong>退回 {salesExactQuantity(incoming, true) ?? '待校验'}</strong><strong>换出 {salesExactQuantity(outgoing, true) ?? '待校验'}</strong><strong>{netDueMinor === '0' ? '差额' : netDueMinor?.startsWith('-') ? '应退' : '应收'} ¥{money(netDueMinor?.replace(/^-/, '') ?? null)}</strong>{extra}</div></footer>;
+    const incoming = lines.filter(row => row.isGift === false && row.quantity.startsWith('-')), outgoing = lines.filter(row => row.isGift === false && !row.quantity.startsWith('-'));
+    return <footer className="tc-foot tc-gold-footer sale-summary"><div className="sale-summary-primary" data-sales-quantity-summary><strong>退回 {giftKnown ? salesExactQuantity(incoming, true) ?? '待校验' : '未记录'}</strong><strong>换出 {giftKnown ? salesExactQuantity(outgoing, true) ?? '待校验' : '未记录'}</strong><strong>{netDueMinor === '0' ? '差额' : netDueMinor?.startsWith('-') ? '应退' : '应收'} ¥{money(netDueMinor?.replace(/^-/, '') ?? null)}</strong>{extra}</div></footer>;
   }
   const gifts = lines.filter(row => row.isGift), categories = new Map<string, { label: string; rows: SummaryLine[] }>();
   for (const line of lines) {
     // A current terminal-category label is explicitly optional. Never create a
     // hierarchy/name from an ID, or bind historical rows to today's category.
-    if (line.isGift) continue;
+    if (line.isGift !== false) continue;
     const key = line.category?.id ?? 'unknown', label = line.category?.label ?? '未知分类', current = categories.get(key) ?? { label, rows: [] };
     if (current.label !== label) current.label = '未知分类';
     current.rows.push(line); categories.set(key, current);
   }
-  return <footer className="tc-foot tc-gold-footer sale-summary"><div className="sale-summary-detail"><strong data-sales-quantity-summary>{new Set(lines.map(row => row.styleKey)).size}{snapshotCodes ? '款号' : '款'} {units(lines)}</strong>{gifts.length > 0 && <span>其中赠品{units(gifts)}</span>}{[...categories].map(([id, category]) => <span className="tc-product-tag" key={id}>{category.label}{salesExactQuantity(category.rows) ?? '待校验'}</span>)}{extra}</div><div className="sale-summary-primary"><strong>销售金额 ¥{money(grossMinor)}</strong><strong>优惠 ¥{money(discountMinor)}</strong><strong>应结 ¥{money(netDueMinor)}</strong></div></footer>;
+  return <footer className="tc-foot tc-gold-footer sale-summary"><div className="sale-summary-detail"><strong data-sales-quantity-summary>{lines.some(row => row.styleKey === null) ? '未记录' : new Set(lines.map(row => row.styleKey)).size}{snapshotCodes ? '款号' : '款'} {units(lines)}</strong>{!giftKnown && <span>赠品数量未记录</span>}{giftKnown && gifts.length > 0 && <span>其中赠品{units(gifts)}</span>}{giftKnown && [...categories].map(([id, category]) => <span className="tc-product-tag" key={id}>{category.label}{salesExactQuantity(category.rows) ?? '待校验'}</span>)}{extra}</div><div className="sale-summary-primary"><strong>销售金额 ¥{money(grossMinor)}</strong><strong>优惠 ¥{money(discountMinor)}</strong><strong>应结 ¥{money(netDueMinor)}</strong></div></footer>;
 }
 
 /** Ephemeral document owner, never a Products-list return context or DTO. */

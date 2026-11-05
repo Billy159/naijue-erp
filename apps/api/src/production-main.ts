@@ -1,33 +1,38 @@
+import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
 import type { CapacityAdmission } from "./capacity-admission.ts";
-import { createProductionCapacityLaunch } from "./production-capacity-launch.ts";
+import { createProductionCapacityLaunch, parseProductionCapacityLaunch } from "./production-capacity-launch.ts";
 import { readProductionCredentialRequestKey } from "./production-credential-key.ts";
 import { createNodeCredentialRequestTag } from "../../../packages/authentication/src/passwords.ts";
 import { lstat, readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { createProductionRuntime26FullApplicationApi, createProductionApplicationApi, parseProductionRuntimeConfiguration,
-  createProductionRuntime26ApplicationApi, parseProductionRuntime26Configuration, createProductionRuntime26R3ApplicationApi,
-  parseProductionRuntime26R3Configuration, createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
-import type {ProductionRuntimeConfiguration, ProductionRuntime26Configuration, ProductionRuntime26R2Configuration, ProductionRuntime26R3Configuration} from "./production-provider-composition.ts";
+  createProductionRuntime26ApplicationApi, parseProductionRuntime26Configuration, createProductionRuntime27ApplicationApi, parseProductionRuntime27Configuration, productionRuntime27HostConfiguration, createProductionRuntime26R3ApplicationApi,
+  parseProductionRuntime26R3Configuration, createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration,
+  createProductionRuntime35ApplicationApi, parseProductionRuntime35Configuration, productionRuntime35HostConfiguration } from "./production-provider-composition.ts";
+import type {ProductionRuntimeConfiguration, ProductionRuntime26Configuration, ProductionRuntime26R2Configuration, ProductionRuntime26R3Configuration, ProductionRuntime27Configuration} from "./production-provider-composition.ts";
+import type { ProductionRuntime35Configuration } from './production-provider-composition.ts';
 import { startProductionApplicationHost, startProductionRuntime26ApplicationHost, startProductionRuntime26R3ApplicationHost,
   startProductionRuntime26R2ApplicationHost } from "./production-application-host.ts";
 import type {ProductionApplicationHost} from "./production-application-host.ts";
 import type {PostgresApplicationApi} from "./postgres-read-api.ts";
 
-type Mode = 'legacy' | 'r1' | 'r2' | 'r3' | 'full';
-type Configuration = ProductionRuntimeConfiguration | ProductionRuntime26Configuration | ProductionRuntime26R2Configuration | ProductionRuntime26R3Configuration;
+type Mode = 'legacy' | 'r1' | 'r2' | 'r3' | 'full' | 'r27' | 'r35';
+type Configuration = ProductionRuntimeConfiguration | ProductionRuntime26Configuration | ProductionRuntime26R2Configuration | ProductionRuntime26R3Configuration | ProductionRuntime27Configuration | ProductionRuntime35Configuration;
 /** Explicit in-process test/owner launch ports only. The executable CLI never
  * obtains functions, environment options or an override provider from JSON. */
 export interface ProductionMainDependencies {
   readonly createCapacity: typeof createProductionCapacityLaunch;
-  readonly createApi: (mode: Mode, config: Configuration, capacity: CapacityAdmission, tag: ((password:string)=>string)|null) => Promise<PostgresApplicationApi>;
+  readonly createApi: (mode: Mode, config: Configuration, capacity: CapacityAdmission, tag: ((password:string)=>string)|null, capacityTarget?:CapacityRuntimeTarget) => Promise<PostgresApplicationApi>;
   readonly startHost: (mode: Mode, api: PostgresApplicationApi, config: Configuration) => Promise<ProductionApplicationHost>;
   readonly writeStarted: (line:string) => void;
 }
 const actualDependencies: ProductionMainDependencies = {
   createCapacity: createProductionCapacityLaunch,
-  async createApi(mode,c,capacity,tag) {
+  async createApi(mode,c,capacity,tag,capacityTarget) {
     if(mode==='legacy')return createProductionApplicationApi(c,undefined,capacity);
+    if(mode==='r27')return createProductionRuntime27ApplicationApi(c,undefined,capacity);
+    if(mode==='r35')return createProductionRuntime35ApplicationApi(c,undefined,tag,capacity,capacityTarget);
     if(mode==='r1')return createProductionRuntime26ApplicationApi(c,undefined,null,capacity);
     if(mode==='r2')return createProductionRuntime26R2ApplicationApi(c,undefined,null,undefined,capacity);
     if(mode==='full')return createProductionRuntime26FullApplicationApi(c,undefined,tag,capacity);
@@ -35,6 +40,8 @@ const actualDependencies: ProductionMainDependencies = {
   },
   async startHost(mode,api,c) {
     if(mode==='legacy')return startProductionApplicationHost({api,configuration:c as ProductionRuntimeConfiguration});
+    if(mode==='r27')return startProductionApplicationHost({api,configuration:productionRuntime27HostConfiguration(c)});
+    if(mode==='r35')return startProductionApplicationHost({api,configuration:productionRuntime35HostConfiguration(c)});
     if(mode==='r1')return startProductionRuntime26ApplicationHost({api,configuration:c as ProductionRuntime26Configuration});
     if(mode==='r2')return startProductionRuntime26R2ApplicationHost({api,configuration:c as ProductionRuntime26R2Configuration});
     return startProductionRuntime26R3ApplicationHost({api,configuration:c as ProductionRuntime26R3Configuration});
@@ -42,7 +49,7 @@ const actualDependencies: ProductionMainDependencies = {
   writeStarted:line=>{process.stdout.write(line);},
 };
 /** Only selected R3/Full reads the original authorized stable32 private key. */
-export async function readProductionStaffCredentialRequestTag(config: ProductionRuntime26R3Configuration): Promise<((password: string) => string) | null> {
+export async function readProductionStaffCredentialRequestTag(config: Pick<ProductionRuntime26R3Configuration, 'staffMaintenance' | 'staffCredentialRequestKeyFile'>): Promise<((password: string) => string) | null> {
   if (config.staffMaintenance !== true) return null;
   if (config.staffCredentialRequestKeyFile === undefined) throw new TypeError("Selected staff credentials require a stable private request key");
   const key=await readProductionCredentialRequestKey(config.staffCredentialRequestKeyFile);
@@ -61,7 +68,7 @@ async function launch(mode:Mode,args:readonly string[],injected?:CapacityAdmissi
   if(!raw || typeof raw!=='object' || Array.isArray(raw))throw new TypeError('Private runtime object required');
   const {capacityLaunch,...runtime}=raw;
   if(injected!==undefined && Object.hasOwn(raw,'capacityLaunch'))throw new TypeError('Only one explicit capacity source is allowed');
-  const c:Configuration=mode==='legacy'?parseProductionRuntimeConfiguration(runtime):mode==='r1'?parseProductionRuntime26Configuration(runtime)
+  const c:Configuration=mode==='legacy'?parseProductionRuntimeConfiguration(runtime):mode==='r35'?parseProductionRuntime35Configuration(runtime):mode==='r27'?parseProductionRuntime27Configuration(runtime):mode==='r1'?parseProductionRuntime26Configuration(runtime)
     :mode==='r2'?parseProductionRuntime26R2Configuration(runtime):parseProductionRuntime26R3Configuration(runtime);
   let capacity:CapacityAdmission|undefined=injected,api:PostgresApplicationApi|undefined,host:ProductionApplicationHost|undefined;
   let stopping=false;
@@ -76,8 +83,10 @@ async function launch(mode:Mode,args:readonly string[],injected?:CapacityAdmissi
     if(!capacity)capacity=await dependencies.createCapacity(capacityLaunch,c);
     if(!capacity || typeof capacity.acquire!=='function' || typeof capacity.close!=='function')throw new TypeError('Explicit capacity resource required');
     process.once('SIGTERM',stop);process.once('SIGINT',stop);
-    const tag=mode==='r3'||mode==='full'?await readProductionStaffCredentialRequestTag(c as ProductionRuntime26R3Configuration):null;
-    api=await dependencies.createApi(mode,c,capacity,tag);
+    const tag=mode==='r3'||mode==='full'||mode==='r35'?await readProductionStaffCredentialRequestTag(c as ProductionRuntime26R3Configuration | ProductionRuntime35Configuration):null;
+    const capacityTarget=mode==='r35' && c.profile==='source-confirmed-native-exact35-production-v2'
+      ? parseProductionCapacityLaunch(capacityLaunch).target : undefined;
+    api=await dependencies.createApi(mode,c,capacity,tag,capacityTarget);
     if(stopping)throw new Error('Production startup was cancelled');
     if(!injected){
       const prepared=capacity as Awaited<ReturnType<typeof createProductionCapacityLaunch>>;
@@ -87,7 +96,7 @@ async function launch(mode:Mode,args:readonly string[],injected?:CapacityAdmissi
     if(stopping)throw new Error('Production startup was cancelled');
     host=await dependencies.startHost(mode,api,c);
     if(stopping)throw new Error('Production startup was cancelled');
-    dependencies.writeStarted(JSON.stringify({event:mode==='legacy'?'PRODUCTION_HOST_STARTED':`PRODUCTION_EXACT26_${mode.toUpperCase()}_HOST_STARTED`,publicOrigin:host.publicOrigin,...c.build})+'\n');
+    dependencies.writeStarted(JSON.stringify({event:mode==='legacy'?'PRODUCTION_HOST_STARTED':mode==='r35'?'PRODUCTION_EXACT35_HOST_STARTED':mode==='r27'?'PRODUCTION_EXACT27_HOST_STARTED':`PRODUCTION_EXACT26_${mode.toUpperCase()}_HOST_STARTED`,publicOrigin:host.publicOrigin,...c.build})+'\n');
   }catch{
     process.off('SIGTERM',stop);process.off('SIGINT',stop);
     const failures:unknown[]=[];
@@ -98,13 +107,15 @@ async function launch(mode:Mode,args:readonly string[],injected?:CapacityAdmissi
   }
 }
 export async function runProductionMain(args:readonly string[],capacity?:CapacityAdmission,dependencies?:ProductionMainDependencies):Promise<void>{return launch('legacy',args,capacity,dependencies);}
+export async function runProductionRuntime27Main(args:readonly string[],capacity?:CapacityAdmission,dependencies?:ProductionMainDependencies):Promise<void>{return launch('r27',args,capacity,dependencies);}
+export async function runProductionRuntime35Main(args:readonly string[],capacity?:CapacityAdmission,dependencies?:ProductionMainDependencies):Promise<void>{return launch('r35',args,capacity,dependencies);}
 export async function runProductionRuntime26Main(args:readonly string[],capacity?:CapacityAdmission,dependencies?:ProductionMainDependencies):Promise<void>{return launch('r1',args,capacity,dependencies);}
 export async function runProductionRuntime26R2Main(args:readonly string[],capacity?:CapacityAdmission,dependencies?:ProductionMainDependencies):Promise<void>{return launch('r2',args,capacity,dependencies);}
 export async function runProductionRuntime26R3Main(args:readonly string[],capacity?:CapacityAdmission,dependencies?:ProductionMainDependencies):Promise<void>{return launch('r3',args,capacity,dependencies);}
 export async function runProductionRuntime26FullMain(args:readonly string[],capacity?:CapacityAdmission,dependencies?:ProductionMainDependencies):Promise<void>{return launch('full',args,capacity,dependencies);}
 /** The executable and tests use the SAME exact dispatch. Unknown flags reject. */
 export async function runProductionCli(args:readonly string[],dependencies?:ProductionMainDependencies):Promise<void>{
-  const selectors={'--exact26-r1':'r1','--exact26-r2':'r2','--exact26-r3':'r3','--exact26-full':'full'} as const;
+  const selectors={'--exact35':'r35','--exact27':'r27','--exact26-r1':'r1','--exact26-r2':'r2','--exact26-r3':'r3','--exact26-full':'full'} as const;
   if(args[0]?.startsWith('--')){const mode=selectors[args[0] as keyof typeof selectors];if(!mode)throw new TypeError('Explicit production selector required');return launch(mode,args.slice(1),undefined,dependencies);}
   return launch('legacy',args,undefined,dependencies);
 }

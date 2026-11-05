@@ -12,7 +12,7 @@ import { minorAmount, version } from "../../../packages/domain/src/values.ts";
 import { actor, ids, sid, syntheticDraft } from "../../../tests/support/synthetic-fixtures.ts";
 
 const input = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null }, page: 1, pageSize: 20 });
-async function setup(t: TestContext, options: { authenticate?: SalesQueryHttpOptions["authenticate"]; authorize?: SalesQueryAuthorization["authorize"]; failure?: Error } = {}) {
+async function setup(t: TestContext, options: { authenticate?: SalesQueryHttpOptions["authenticate"]; authorize?: SalesQueryAuthorization["authorize"]; failure?: Error; ordinaryHistory?:boolean } = {}) {
   let policyCalls = 0; let readCalls = 0; let currentActor: ActorContext | null = actor; const intents: SalesReadIntent[] = [];
   const check = () => { readCalls++; if (options.failure) throw options.failure; };
   const reader: TrustedSalesSnapshotReader = {
@@ -29,7 +29,7 @@ async function setup(t: TestContext, options: { authenticate?: SalesQueryHttpOpt
     async readSettlementStatistics(read) { check(); return { page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotalAccounts: 1n, exactApprovedDocuments: 2n,
       received: minorAmount("9007199254740993"), refunded: minorAmount("125"), accounts: [{ paymentAccountId: ids.payment, received: minorAmount("9007199254740993"), refunded: minorAmount("125") }] }; }
   };
-  const app = Fastify({ logger: false }); app.register(createSalesQueryHttpPlugin({ authenticate: options.authenticate ?? (async () => currentActor), dependencies: {
+  const app = Fastify({ logger: false }); app.register(createSalesQueryHttpPlugin({ authenticate: options.authenticate ?? (async () => currentActor), ...(options.ordinaryHistory ? {listProfile:'ordinary-v1' as const,ordinaryHistory:true as const} : {}), dependencies: {
     authorization: { async authorize(context, intent, signal) { policyCalls++; intents.push(intent); assert.deepEqual(context, actor); assert.ok(signal instanceof AbortSignal);
       return options.authorize ? options.authorize(context, intent, signal) : { kind: "restricted", clauses: [{ hallId: ids.hall }] }; } }, reader
   } }));
@@ -226,3 +226,10 @@ test('normal sales HTTP: original POST preserves HISTORY composite identity null
 });
 
 test('sales detail HTTP retains exact v2 summaries only for explicit opt-in',async t=>{const f=await setup(t);for(const value of [undefined,'category-v1','unknown','category-v2']){const reply=await f.app.inject({method:'POST',url:'/sales/detail/query',payload:{salesId:ids.sales},headers:{...(value?{'x-naijue-document-summary':value}:{})}});assert.equal(reply.statusCode,200);const data=reply.json();assert.equal(Object.hasOwn(data,'productSummary'),value==='category-v2');assert.equal(Object.hasOwn(data,'categorySummary'),value==='category-v2');if(value==='category-v2')assert.equal(data.categorySummary.items[0].value,'2');}});
+
+test('ordinary runtime exposes authorized business history when explicitly installed',async t=>{const f=await setup(t,{ordinaryHistory:true});const r=await f.post('/sales/history/query',{salesId:ids.sales,page:1,pageSize:20});assert.equal(r.statusCode,200,r.body);assert.equal(r.json().exactTotal,'1')});
+
+test('historical origin is read-only output and cannot be supplied to grant detail read authority',async t=>{
+ const f=await setup(t);const response=await f.post('/sales/detail/query',{salesId:ids.sales,historicalSaleOrigin:{kind:'SIGNED_SALE',originalOrderDiscount:'25'}});
+ assert.equal(response.statusCode,400);assert.deepEqual(f.counts(),{policyCalls:0,readCalls:0});
+});

@@ -24,23 +24,24 @@ function choice<const T extends string>(value: unknown, values: readonly T[]): T
   if (typeof value !== "string" || !values.includes(value as T)) invalid();
   return value as T;
 }
-function snapshot(value: unknown): SkuSnapshot {
+function snapshot(value: unknown, retainUnknown: boolean): SkuSnapshot {
   const row = object(value, ["productCode", "productName", "colorName", "fitName", "sizeName", "barcode"]);
-  return { productCode: string(row.productCode), productName: string(row.productName), colorName: string(row.colorName),
-    fitName: string(row.fitName), sizeName: string(row.sizeName), barcode: nullableString(row.barcode) };
+  const label = retainUnknown ? nullableString : string;
+  return { productCode: label(row.productCode), productName: label(row.productName), colorName: label(row.colorName),
+    fitName: label(row.fitName), sizeName: label(row.sizeName), barcode: nullableString(row.barcode) };
 }
-function line(value: unknown): TransferLineRow {
+function line(value: unknown, retainUnknown: boolean): TransferLineRow {
   const row = object(value, ["id", "transferId", "lineNo", "skuId", "quantity", "snapshot", "isCurrent"]);
   if (row.isCurrent !== true) invalid();
   return { id: id("transferLine", row.id), transferId: id("transfer", row.transferId), lineNo: integer(row.lineNo),
-    skuId: id("sku", row.skuId), quantity: quantity(string(row.quantity)), snapshot: snapshot(row.snapshot), isCurrent: true };
+    skuId: id("sku", row.skuId), quantity: quantity(string(row.quantity)), snapshot: snapshot(row.snapshot, retainUnknown), isCurrent: true };
 }
-function draft(value: unknown): TransferDraft {
+function draft(value: unknown, retainUnknown: boolean): TransferDraft {
   const row = object(value, ["header", "lines"]);
   const header = object(row.header, ["id", "number", "businessDate", "fromWarehouseId", "toWarehouseId", "note", ...(row.header && typeof row.header === "object" && Object.hasOwn(row.header, "responsibleStaffId") ? ["responsibleStaffId"] : [])]);
   return { header: { id: id("transfer", header.id), number: string(header.number), businessDate: businessDate(string(header.businessDate)),
     fromWarehouseId: id("warehouse", header.fromWarehouseId), toWarehouseId: id("warehouse", header.toWarehouseId), note: nullableString(header.note), ...(Object.hasOwn(header, "responsibleStaffId") ? { responsibleStaffId: header.responsibleStaffId === null ? null : id("staff", header.responsibleStaffId) } : {}) },
-    lines: array(row.lines).map(line) };
+    lines: array(row.lines).map(value => line(value, retainUnknown)) };
 }
 export function parseTransferCommand(body: unknown, actor: TransferActor): TransferCommand {
   // Select the complete key set first. No caller-provided actor, creation facts, defaults or coercion.
@@ -54,6 +55,11 @@ export function parseTransferCommand(body: unknown, actor: TransferActor): Trans
   }
   const row = object(body, ["action", "requestKey", "expectedVersion", action === "SAVE" ? "draft" : "transferId"]);
   const requestKey = parseRequestKey(row.requestKey);
-  if (action === "SAVE") return { actor, action, requestKey, expectedVersion: row.expectedVersion === null ? null : version(integer(row.expectedVersion)), draft: draft(row.draft) };
+  if (action === "SAVE") {
+    const expectedVersion = row.expectedVersion === null ? null : version(integer(row.expectedVersion));
+    // Existing-row structural compatibility is not authority to invent unknowns:
+    // the locked ordinary service verifies stable line/SKU and exact prior labels.
+    return { actor, action, requestKey, expectedVersion, draft: draft(row.draft, expectedVersion !== null) };
+  }
   return { actor, action, requestKey, expectedVersion: version(integer(row.expectedVersion)), transferId: id("transfer", row.transferId) };
 }

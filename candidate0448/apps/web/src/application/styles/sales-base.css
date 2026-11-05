@@ -1,4 +1,0 @@
-/* The unaccepted inventory-derived sales scaffold was removed.
- * Sales route geometry now lives in ../../sales/sales.css and is explicitly
- * adapted from the frozen Demo sources. This inert import preserves the host's
- * existing lazy stylesheet graph; it adds no controls or unrelated route CSS. */

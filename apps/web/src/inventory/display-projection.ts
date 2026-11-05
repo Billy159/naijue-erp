@@ -1,7 +1,7 @@
 import type { InventoryColorFit, InventoryProduct, InventoryRow, InventorySize, Selection, StockCell, StockTotal } from './contracts.ts';
-import { assertQuantity, totalOf } from './model.ts';
+import { sumTotals, totalOf } from './model.ts';
 
-/** A display source is a real, complete warehouse/SKU fact, never a writable group identity. */
+/** A display source retains a real coordinate and its explicit known/unknown state. */
 export interface InventoryDisplaySource {
   readonly productId: string;
   readonly color: Selection;
@@ -12,6 +12,7 @@ export interface InventoryDisplaySource {
 }
 export type InventoryDisplayCell =
   | { readonly state: 'known'; readonly quantity: string; readonly sources: readonly InventoryDisplaySource[] }
+  | { readonly state: 'unknown'; readonly knownQuantity: string; readonly unknownCells: number; readonly sources: readonly InventoryDisplaySource[] }
   | { readonly state: 'not-applicable'; readonly sources: readonly InventoryDisplaySource[] };
 export interface InventoryDisplayRow {
   readonly warehouse: Selection;
@@ -29,6 +30,8 @@ export interface InventoryDisplayColor {
   readonly sources: readonly InventoryColorFit[];
 }
 export type InventoryKnownDisplaySource = InventoryDisplaySource & { readonly cell: Extract<StockCell, { state: 'known' }> };
+export type InventoryIdentifiedDisplaySource = InventoryDisplaySource & { readonly cell: Extract<StockCell, { state: 'known' | 'unknown' }> };
+export function identifiedDisplaySources(cell: InventoryDisplayCell): readonly InventoryIdentifiedDisplaySource[] { return cell.sources.filter((source): source is InventoryIdentifiedDisplaySource => source.cell.state !== 'not-applicable'); }
 export function knownDisplaySources(cell: InventoryDisplayCell): readonly InventoryKnownDisplaySource[] {
   return cell.sources.filter((source): source is InventoryKnownDisplaySource => source.cell.state === 'known');
 }
@@ -36,8 +39,8 @@ export function knownDisplaySources(cell: InventoryDisplayCell): readonly Invent
 /**
  * Project ONE canonical product identity across FIT for display only. Never group
  * products by matching names/codes, alter paging, manufacture SKUs or cross-join
- * warehouses. All source cells, including explicit non-applicable states, remain
- * available; a missing/unknown source is rejected, not converted to zero.
+ * warehouses. All source cells, including unknown and non-applicable states, remain
+ * available; unknown quantities are never converted to zero.
  */
 export function projectInventoryColors(product: InventoryProduct): readonly InventoryDisplayColor[] {
   const colors = new Map<string, InventoryColorFit[]>();
@@ -52,14 +55,7 @@ export function projectInventoryColors(product: InventoryProduct): readonly Inve
       if (parts) parts.push({ group, row }); else warehouses.set(row.warehouse.id, [{ group, row }]);
     }
     const sizes = new Map(product.sizes.map(size => [size.id, size]));
-    const sum = (totals: readonly StockTotal[]): StockTotal => {
-      let quantity = 0n;
-      for (const total of totals) {
-        if (total.completeness !== 'complete' || total.unknownCells !== 0) throw new TypeError('库存数据未完整核实，不能按零发布。');
-        assertQuantity(total.knownQuantity); quantity += BigInt(total.knownQuantity);
-      }
-      return { knownQuantity: String(quantity), completeness: 'complete', unknownCells: 0 };
-    };
+    const sum = sumTotals;
     // The canonical page has already validated its totals. Keep row references,
     // not a second warehouse×size matrix or retained per-cell source arrays.
     const rows: InventoryDisplayRow[] = [...warehouses.values()].map(parts => {
@@ -67,9 +63,9 @@ export function projectInventoryColors(product: InventoryProduct): readonly Inve
         const size = sizes.get(id); if (!size) return undefined;
         const cells = parts.map(({ row }) => row.cells[id]!);
         const total = totalOf(cells);
-        for (const cell of cells) if (cell.state === 'known' && !cell.skuId?.trim()) throw new TypeError('库存来源 SKU 身份缺失。');
+        for (const cell of cells) if (cell.state !== 'not-applicable' && !cell.skuId?.trim()) throw new TypeError('库存来源 SKU 身份缺失。');
         const sources = () => parts.map(({ group, row }): InventoryDisplaySource => ({ productId: product.id, color: group.color, fit: group.fit, warehouse: row.warehouse, size, cell: row.cells[id]! }));
-        return cells.some(cell => cell.state === 'known')
+        return total.unknownCells ? { state: 'unknown', knownQuantity: total.knownQuantity, unknownCells: total.unknownCells, get sources() { return sources(); } } : cells.some(cell => cell.state === 'known')
           ? { state: 'known', quantity: total.knownQuantity, get sources() { return sources(); } }
           : { state: 'not-applicable', get sources() { return sources(); } };
       };

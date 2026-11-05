@@ -1,3 +1,0 @@
-/* One shared frame source plus the existing body/tab stylesheet, action-only. */
-@import '../../inventory/product-drawer-frame.css';
-@import '../../inventory/product-drawer.css';

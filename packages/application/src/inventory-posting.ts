@@ -1,6 +1,7 @@
 import { requireDomain } from "../../domain/src/errors.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../domain/src/inventory.ts";
 import { addQuantity, checkedQuantity, nextVersion, version } from "../../domain/src/values.ts";
+import type { DocumentInventoryAnchor } from "../../domain/src/document-inventory-effects.ts";
 import type { EntityId } from "../../domain/src/values.ts";
 
 /** C01-v1 / 0024 same-transaction HISTORY delta seam. D3 owns source/effective
@@ -32,6 +33,10 @@ export interface HistoryRevisionPostingPort<TransactionClient> {
 
 /** An explicit trusted transaction capability, never a client flag or an absent-row default. */
 export interface InventoryPostingTransaction {
+  /** Same bound transaction and ordinary target; bounded unique MIGRATE_DOCUMENT
+   * receipt+audit lookup. The adapter verifies SQL/archive digests before mapping
+   * the exact original inventory snapshot. Never accept this object from a client. */
+  getDocumentInventoryAnchor?(kind: "SALES" | "TRANSFER", documentId: EntityId<"sales"> | EntityId<"transfer">): Promise<DocumentInventoryAnchor | undefined>;
   getBalance(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<InventoryBalanceRow | undefined>;
   /** Must hold the exact key lock and prove complete immutable publication + native membership + no prior ledger in THIS transaction.
    * Omission deliberately keeps older/unproven adapters closed. Must not write a balance or a zero ledger. */
@@ -40,13 +45,27 @@ export interface InventoryPostingTransaction {
   putBalance(row: InventoryBalanceRow): Promise<void>;
 }
 async function proveFirstUse(tx: InventoryPostingTransaction, entry: InventoryLedgerRow): Promise<void> {
-  requireDomain(entry.eventKind === "APPROVE" && entry.reversesEntryId === null && tx.assertAbsentBalanceIsPublishedZero,
-    "INVENTORY_NOT_READY", "Missing balance requires an explicit published-zero proof for first runtime approval");
+  const firstApproval = entry.eventKind === "APPROVE" && entry.reversesEntryId === null && (entry.baselineAnchorOperationId ?? null) === null;
+  const firstAnchoredReversal = entry.eventKind === "UNAPPROVE" && entry.reversesEntryId === null && (entry.baselineAnchorOperationId ?? null) !== null;
+  requireDomain((firstApproval || firstAnchoredReversal) && tx.assertAbsentBalanceIsPublishedZero,
+    "INVENTORY_NOT_READY", "Missing balance requires explicit published-zero proof for the first approval or verified anchor reversal");
   await tx.assertAbsentBalanceIsPublishedZero(entry.warehouseId, entry.skuId);
 }
 /** Validate the whole locked posting set before the first effect. Repeated actual lines remain distinct. */
 export async function assertPostingCoverage(tx: InventoryPostingTransaction, entries: readonly InventoryLedgerRow[]): Promise<void> {
-  for (const entry of entries) if (await tx.getBalance(entry.warehouseId, entry.skuId) === undefined) await proveFirstUse(tx, entry);
+  // Preflight ALL actual line/endpoint events, including zero-net keys, and the
+  // exact per-row balance/version sequence before the first append. Net-only
+  // aggregation must not hide unknown coverage or intermediate bigint overflow.
+  const balances = new Map<string, InventoryBalanceRow | undefined>();
+  for (const entry of entries) {
+    const key = JSON.stringify([entry.warehouseId, entry.skuId]);
+    if (!balances.has(key)) balances.set(key, await tx.getBalance(entry.warehouseId, entry.skuId));
+    const balance = balances.get(key);
+    if (balance === undefined) await proveFirstUse(tx, entry);
+    const quantity = checkedQuantity((balance === undefined ? 0n : checkedQuantity(balance.quantity)) + checkedQuantity(entry.quantityDelta));
+    balances.set(key, { warehouseId: entry.warehouseId, skuId: entry.skuId, quantity,
+      version: balance ? nextVersion(balance.version) : version(1), lastOperationId: entry.operationId, updatedAt: entry.postedAt });
+  }
 }
 export async function applyInventoryEntry(tx: InventoryPostingTransaction, entry: InventoryLedgerRow): Promise<void> {
   const balance = await tx.getBalance(entry.warehouseId, entry.skuId);

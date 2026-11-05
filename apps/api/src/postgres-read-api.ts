@@ -1,3 +1,13 @@
+import {admitFresh35OrdinaryPoolV2,describeFresh35OrdinaryAdmissionV2,closeFresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+import type {Fresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
+import { Ordinary27ProductWarehouseStockReader } from '../../../adapters/postgres/src/ordinary27-product-warehouse-stock-reader.ts';
+import { createOrdinary27ProductCapacityFactory } from '../../../adapters/postgres/src/ordinary27-product-capacity.ts';
+import { PostgresOrdinaryDocumentListReader } from '../../../adapters/postgres/src/ordinary-document-list-reader.ts';
+import { createRuntime27CommandIssuer, createRuntime27MaintenanceCapabilities } from '../../../adapters/postgres/src/runtime27-command-issuer.ts';
+import { createStandard27BarcodeReadHost } from '../../../adapters/postgres/src/standard27-barcode-read-host.ts';
+import type { Barcode27ReviewedHostPins } from '../../../adapters/postgres/src/standard27-barcode-read-host.ts';
+import type { CurrentFormHttpOptions } from './current-form-http.ts';
 import { installRequestDiagnostics, observeRequestStage, requestDiagnostic } from './request-diagnostics.ts';
 import { assertStaffCreateReadPermissionAdmission } from './staff-create-read-permission-admission.ts';
 import { acquireReadClient, awaitRead } from '../../../packages/application/src/read-resource.ts';
@@ -174,7 +184,7 @@ export interface PostgresApplicationApi extends PostgresReadApi { readonly trust
 export interface PostgresDocumentCommandsCapability {
   readonly sales: Omit<SalesDependencies, "unitOfWork" | "now">;
   readonly transfers: Omit<TransferDependencies, "unitOfWork" | "now">;
-  readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier;
+  readonly catalogueCompleteness?: NativeCatalogueCompletenessVerifier;
   readonly nativeManualSalesPreparation: true;
   readonly nativeManualTransferPreparation: true;
 }
@@ -248,7 +258,7 @@ function method<T extends (...args: never[]) => unknown>(value: unknown, name: s
   }
   throw new TypeError("Complete application provider methods required");
 }
-function checkedApplicationCapabilities(options: PostgresApplicationApiOptions): ApplicationCapabilities {
+function checkedApplicationCapabilities(options: PostgresApplicationApiOptions, ordinary27 = false): ApplicationCapabilities {
   const organizationMaintenance = "organizationMaintenance" in options;
   if (organizationMaintenance && ownData(options, "organizationMaintenance") !== true) throw new TypeError("Explicit organization maintenance selection required");
   const catalogueMaintenance = "catalogueMaintenance" in options;
@@ -289,7 +299,7 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
     catalogueSettings: CatalogueSettingsReadAuthorization | null = null, dictionary: DictionaryReadAuthorization | null = null,
     party: PartyReadAuthorization | null = null, importedHistory: ImportedHistoryReadAuthorization | null = null;
   if ("documentCommands" in options) {
-    const bag = exactBag(ownData(options, "documentCommands"), ["sales", "transfers", "catalogueCompleteness", "nativeManualSalesPreparation", "nativeManualTransferPreparation"]);
+    const bag = exactBag(ownData(options, "documentCommands"), ordinary27 ? ["sales", "transfers", "nativeManualSalesPreparation", "nativeManualTransferPreparation"] : ["sales", "transfers", "catalogueCompleteness", "nativeManualSalesPreparation", "nativeManualTransferPreparation"]);
     if (bag.nativeManualSalesPreparation !== true || bag.nativeManualTransferPreparation !== true)
       throw new TypeError("Application commands require explicit native preparation for both document types");
     const sales = exactBag(bag.sales, ["rules", "authorization", "newId"]), transfers = exactBag(bag.transfers, ["references", "authorization", "newId"]);
@@ -304,7 +314,7 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
       transfers: Object.freeze({ references: Object.freeze({ assertValid: method<TransferDependencies["references"]["assertValid"]>(transfers.references, "assertValid") }),
         authorization: Object.freeze({ assertAllowed: method<TransferDependencies["authorization"]["assertAllowed"]>(transfers.authorization, "assertAllowed") }),
         newId: method<TransferDependencies["newId"]>(bag.transfers, "newId") }),
-      catalogueCompleteness: Object.freeze({ assertComplete: method<NativeCatalogueCompletenessVerifier["assertComplete"]>(bag.catalogueCompleteness, "assertComplete") }),
+      ...(ordinary27 ? {} : { catalogueCompleteness: Object.freeze({ assertComplete: method<NativeCatalogueCompletenessVerifier["assertComplete"]>(bag.catalogueCompleteness, "assertComplete") }) }),
       nativeManualSalesPreparation: true, nativeManualTransferPreparation: true });
   }
   if ("storeSettingsRead" in options) {
@@ -583,32 +593,76 @@ async function composeRuntime26DocumentApplicationApi(options: PostgresApplicati
     Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 }),
     Object.freeze({ sales: preparation.sales, transfers: preparation.transfers }), media, historyAuthorization) as PostgresApplicationApi;
 }
+/** Explicit ordinary runtime27 document assembly. Existing exact26 routes are unchanged. */
+export async function createPostgresRuntime27DocumentApplicationApi(options: PostgresApplicationApiOptions,
+  existingPreparation: Runtime26ExistingPreparation, createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  if (!options || typeof options !== 'object' || !('documentCommands' in options) || !('currentForms' in options)) throw new TypeError('Explicit runtime27 document commands and current forms required');
+  const selected=exactBag(existingPreparation,['sales','transfers']);
+  if(typeof selected.sales!=='boolean'||typeof selected.transfers!=='boolean')throw new TypeError('Explicit independent existing document selectors required');
+  const capabilities=checkedApplicationCapabilities(options,true);
+  if(!capabilities.commands || capabilities.organizationMaintenance || capabilities.catalogueMaintenance || capabilities.paymentMaintenance || capabilities.partyMaintenance || capabilities.staffMaintenance)
+    throw new TypeError('Runtime27 document assembly does not grant unrelated maintenance routes');
+  return await composePostgresApi(options,createDriver,capabilities,undefined,
+    Object.freeze({sales:selected.sales,transfers:selected.transfers}),undefined,undefined,true) as PostgresApplicationApi;
+}
+/** The fresh35 native tables retain migration chain 1..27 and its ordinary
+ * runtime role. Reuse that issuer and its pool-bound ordinary readers. */
+export async function createPostgresRuntime35ApplicationApi(options: PostgresApplicationApiOptions,
+  createDriver?: PostgresPoolDriverFactory, media?: Runtime26ProductMediaConfiguration, productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}): Promise<PostgresApplicationApi> {
+  if (!options || typeof options !== 'object' || !('documentCommands' in options) || !('currentForms' in options))
+    throw new TypeError('Fresh35 native document commands and current forms required');
+  const capabilities = checkedApplicationCapabilities(options, true);
+  if (!capabilities.commands || capabilities.coreInitializationRead)
+    throw new TypeError('Fresh35 ordinary native application required');
+  return await composePostgresApi(options, createDriver, capabilities, undefined,
+    Object.freeze({ sales: true, transfers: true }), media, undefined, true, true, productionV2) as PostgresApplicationApi;
+}
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
   capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
   runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
-  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization): Promise<PostgresReadApi | PostgresApplicationApi> {
+  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization, ordinary27 = false, ordinaryMaintenance = false, productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
-  if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
+  if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || (capabilities?.productMaintenance && !ordinary27)) && runtime26Review === undefined && !ordinaryMaintenance) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   // Every non-CORE graph below mounts the new stored-pair ledger reader; command
   // graphs also construct the new pair writers. Generic EXACT26 is insufficient.
   // V8 additionally proves the two original category cmin reads and three
   // exact child-row DELETE actions. This is not a JSON opt-in or new authority.
   const requiresRecordedLivePairs = capabilities?.coreInitializationRead == null;
-  if (requiresRecordedLivePairs && runtime26Review === undefined)
+  if (requiresRecordedLivePairs && runtime26Review === undefined && !ordinary27)
     throw new TypeError("Recorded live ledger pairs require the independently reviewed V8 complete-write runtime");
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver, observeRequestStage);
   let app: FastifyInstance | undefined;
   let closing = false;
+  let admission35: Fresh35OrdinaryAdmissionV2 | undefined;
+  const revoke35=():void=>{if(admission35)closeFresh35OrdinaryAdmissionV2(admission35,ownedPool);};
   try {
     host.capacityRuntimePoolBinder?.(ownedPool, options.postgres.target);
     const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, {
       ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1",
       ...(runtime26HistoryAuthorization !== undefined ? { requiredObservation: "HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8" as const } : requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8" as const } : {})
     });
-    const pool = issuer === null ? ownedPool : issuer.pool;
+    if(productionV2){
+      if(!ordinaryMaintenance || !host.capacityRuntimePoolBinder || !productionV2.capacityTarget)throw new TypeError('Production V2 requires original owned-pool capacity target');
+      const {host:connectHost,port,database,user}=options.postgres.target;
+      admission35=await admitFresh35OrdinaryPoolV2(ownedPool,{host:connectHost,port,database,user});
+      const actual=describeFresh35OrdinaryAdmissionV2(admission35), expected=productionV2.capacityTarget;
+      if(actual.connectHost!==expected.host || actual.connectPort!==expected.port || actual.database!==expected.database || actual.user!==expected.role
+        || actual.databaseOid!==expected.databaseOid || actual.postmasterStart!==expected.postmasterStart)
+        throw new TypeError('Production V2 admission and current capacity physical target differ');
+    }
+    const issuer27 = ordinary27 ? createRuntime27CommandIssuer(ownedPool, {database:options.postgres.target.database,user:options.postgres.target.user,port:options.postgres.target.port}, 'WHOLE_V2', admission35) : null;
+    const pool = issuer27?.pool ?? (issuer === null ? ownedPool : issuer.pool);
+    const ordinaryMaintenanceProof = ordinaryMaintenance && issuer27 ? createRuntime27MaintenanceCapabilities(pool, issuer27.runtime27) : null;
     const checkAdmission = async (signal?: AbortSignal): Promise<boolean> => {
-      if (closing || signal?.aborted || issuer === null) return false;
+      if (closing || signal?.aborted || (issuer === null && issuer27 === null)) return false;
       const admission = await pool.connect();
+      if (issuer27 !== null) {
+        let began=false,rollbackAttempted=false;
+        try { await admission.query('BEGIN ISOLATION LEVEL READ COMMITTED'); began=true; await issuer27.runtime27.assertReady(admission,'DOCUMENT_COMMAND');
+          rollbackAttempted=true; await admission.query('ROLLBACK'); began=false; return !closing && !signal?.aborted;
+        } finally { try { if(began&&!rollbackAttempted) { rollbackAttempted=true; await admission.query('ROLLBACK'); } } finally { admission.release(true); } }
+      }
+      if (issuer === null) { admission.release(); return false; }
       try {
         // Do not retire a lease during issuer verification: that would revoke
         // the issuer. Cancellation stops subsequent checks and rejects late success.
@@ -637,14 +691,14 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       } finally { admission.release(); }
     };
     const readiness = async (signal?: AbortSignal): Promise<boolean> => { try { return await checkAdmission(signal); } catch { return false; } };
-    if (issuer !== null) await checkAdmission();
+    if (issuer !== null || issuer27 !== null) await checkAdmission();
     const policies = host.authorization.kind === "source-confirmed-native"
       ? Object.freeze({ ...createSourceConfirmedPostgresReadAuthorization(pool), transfers: createSourceConfirmedTransferQueryAuthorization() })
       : host.authorization.providers;
     const extensions = capabilities?.nativeReadExtensions ? createSourceConfirmedApplicationReadAuthorization(pool) : null;
     app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536, genReqId: request => requestDiagnostic(request)?.requestId ?? randomUUID() });
     installRequestDiagnostics(app);
-    app.addHook("onClose", async () => { closing = true; try { host.capacityAdmission.close(); } finally { await ownedPool.dispose(); } });
+    app.addHook("onClose", async () => { closing = true; try { revoke35(); } finally { try { host.capacityAdmission.close(); } finally { await ownedPool.dispose(); } } });
     const migrated = host.credentialCompatibility === 'legacy-pbkdf2-v1';
     const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool), now: host.now, policy: host.policy,
       sessionAdmission: {acquire: signal => host.capacityAdmission.acquire('session', signal)},
@@ -653,7 +707,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin, loginAdmission: host.authenticationWork.loginAdmission });
     const authenticate = createSalesSessionAuthenticator(authentication);
     const authenticateTransfer = createTransferSessionAuthenticator(authentication);
-    if (issuer && (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || issuer.categoryOrderWrite)) {
+    if ((issuer || (ordinaryMaintenance && issuer27)) && (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || issuer?.categoryOrderWrite)) {
       const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
       // Explicit full maintenance checks the reviewed purpose on the original
       // borrowed context, including immediately before its outer COMMIT.
@@ -662,20 +716,23 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
         // Preserve the original registered driver identity for issuer-bound providers.
         const transaction = driver.transaction.bind(driver);
         driver.transaction = <T>(run: Parameters<typeof driver.transaction<T>>[0]) => transaction(async context => {
-          await issuer.runtime26.assertReady(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
+          const client = maintenanceContextClient(context, pool);
+          if (issuer27) await issuer27.runtime27.assertReady(client, 'DOCUMENT_COMMAND');
+          else await issuer!.runtime26.assertReady(client, "PRODUCT_MAINTENANCE");
           const result = await run(context);
-          await issuer.runtime26.assertReady(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
+          if (issuer27) await issuer27.runtime27.assertReady(client, 'DOCUMENT_COMMAND');
+          else await issuer!.runtime26.assertReady(client, "PRODUCT_MAINTENANCE");
           return result;
         });
       }
       if (capabilities?.organizationMaintenance) {
         app.register(createOrganizationMaintenanceHttpPlugin({ authenticate, dependencies: {
-          unitOfWork: new PostgresOrganizationMaintenanceUnitOfWork(work, issuer.historicalCustomerExclusion), now: host.now, newId: () => randomUUID() } }));
+          unitOfWork: new PostgresOrganizationMaintenanceUnitOfWork(work, issuer?.historicalCustomerExclusion ?? null), now: host.now, newId: () => randomUUID() } }));
         if (capabilities.coreInitializationRead || extensions === null) app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate,
           kinds: ["HALL", "WAREHOUSE"], unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(work) }));
       }
-      if (capabilities?.catalogueMaintenance || issuer.categoryOrderWrite) app.register(createCatalogueMaintenanceHttpPlugin({ authenticate, ...(capabilities?.catalogueMaintenance ? {} : { categoryOnly: true as const }),
-        dependencies: { unitOfWork: new PostgresCatalogueMaintenanceUnitOfWork(work, issuer.categoryOrderWrite),
+      if (capabilities?.catalogueMaintenance || issuer?.categoryOrderWrite) app.register(createCatalogueMaintenanceHttpPlugin({ authenticate, ...(capabilities?.catalogueMaintenance ? {} : { categoryOnly: true as const }),
+        dependencies: { unitOfWork: new PostgresCatalogueMaintenanceUnitOfWork(work, ordinaryMaintenanceProof?.categoryOrderWrite ?? issuer?.categoryOrderWrite),
           now: host.now, newId: () => randomUUID() } }));
       if (capabilities?.staffMaintenance) {
         const tag = capabilities.staffMaintenance.credentialRequestTag;
@@ -693,6 +750,13 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
           unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(work) }));
       }
     }
+    if (issuer27 && capabilities?.productMaintenance && runtime26ProductMedia === undefined) {
+      const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
+      const capacity = createOrdinary27ProductCapacityFactory(pool, issuer27.runtime27);
+      app.register(createProductMaintenanceHttpPlugin({ authenticate, dependencies: {
+        unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { ordinary27Capacity: capacity, deletionGuard: null }),
+        now: host.now, newId: () => randomUUID(), media: host.media } }));
+    }
     if (issuer && capabilities?.productMaintenance && runtime26ProductMedia === undefined) {
       // Original base provider is independent of a private media stage. Its
       // normal imageChanges contract still rejects absent media capabilities.
@@ -705,10 +769,10 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
         dependencies: { authorization: createSourceConfirmedApplicationReadAuthorization(pool).productManagement,
           reader: new PostgresProductManagementQueryReader(pool, issuer.catalogueRetainedDelete, issuer.productSeasonArray, issuer.runtime26) } }));
     }
-    if (issuer && capabilities?.partyMaintenance) {
+    if ((issuer || (ordinaryMaintenance && issuer27)) && capabilities?.partyMaintenance) {
       app.register(createPartyMaintenanceHttpPlugin({
         authenticate: createPartySessionAuthenticator(authentication), includeReadRoutes: false,
-        dependencies: { unitOfWork: new PostgresPartyUnitOfWork(pool, issuer.historicalCustomerExclusion),
+        dependencies: { unitOfWork: new PostgresPartyUnitOfWork(pool, issuer?.historicalCustomerExclusion ?? null),
           authorization: createSourcePartyAuthorization(), codes: createApprovedPartyCodeAllocator(), now: host.now,
           newId: kind => entityId(kind, randomUUID()) } }));
       // The explicit maintenance deployment reads newly saved native parties at
@@ -716,7 +780,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       if (capabilities.coreInitializationRead || extensions === null) app.register(createPartyReadHttpPlugin({
         authenticate: createPartySessionAuthenticator(authentication),
         dependencies: { authorization: createSourceConfirmedApplicationReadAuthorization(pool).party,
-          reader: new PostgresPartyReadReader(pool, issuer.historicalCustomerExclusion) } }));
+          reader: new PostgresPartyReadReader(pool, issuer?.historicalCustomerExclusion ?? null) } }));
     }
     if (capabilities?.coreInitializationRead) {
       if (!issuer) throw new TypeError("CORE settings require the original independently reviewed issuer");
@@ -734,17 +798,19 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       if (capabilities.coreReadModules.includes("catalogue")) app.register(createCatalogueSettingsReadHttpPlugin({ authenticate,
         dependencies: { authorization: core.catalogueAuthorization, reader: new PostgresCatalogueSettingsReadReader(pool, null, core.catalogueCapability) } }));
       await app.ready(); const readyApp = app;
-      return Object.freeze({ app: readyApp, readiness, close: () => { closing = true; return readyApp.close(); }, trustedOrigin: host.trustedOrigin,
+      return Object.freeze({ app: readyApp, readiness, close: () => { closing = true; revoke35(); return readyApp.close(); }, trustedOrigin: host.trustedOrigin,
         get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; } });
     }
-    const productReader = new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null);
+    const productReader = issuer27 ? new PostgresProductQueryReader(pool, null, null, issuer27.ordinaryRead) : new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null);
     let productMedia = host.media;
     if (runtime26ProductMedia !== undefined) {
-      if (issuer === null) throw new TypeError("R3 requires the original exact26 issuer");
+      if (issuer === null && ordinaryMaintenanceProof === null) throw new TypeError("Private media requires the original native maintenance issuer");
       const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
-      const originalWork = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null,
-        seasonCapability: issuer.productSeasonArray, mediaWriteCapability: issuer.productMediaWrite, imageColorSwapCapability: issuer.imageColorSwap,
-        capacity: createSourceConfirmedProductCapacityFactory(pool, issuer.runtime26) });
+      const originalWork = new PostgresProductMaintenanceUnitOfWork(driver, issuer27 && ordinaryMaintenanceProof
+        ? { deletionGuard: null, ordinary27Capacity: createOrdinary27ProductCapacityFactory(pool, issuer27.runtime27),
+          mediaWriteCapability: ordinaryMaintenanceProof.productMediaWrite, imageColorSwapCapability: ordinaryMaintenanceProof.imageColorSwap }
+        : { deletionGuard: null, seasonCapability: issuer!.productSeasonArray, mediaWriteCapability: issuer!.productMediaWrite, imageColorSwapCapability: issuer!.imageColorSwap,
+          capacity: createSourceConfirmedProductCapacityFactory(pool, issuer!.runtime26) });
       // consume runs within the original product transaction. It must not acquire
       // a second lease (including when the configured pool has just one slot).
       const currentWork = new AsyncLocalStorage<{ tx: ProductMaintenanceTransaction; active: boolean }>();
@@ -781,31 +847,43 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     // Each register call deliberately preserves the existing plugin's Fastify encapsulation:
     // independent error handlers, per-request identity and independent abort controllers.
     app.register(createAuthenticationHttpPlugin(authentication));
-    app.register(createInventoryHttpPlugin({ authenticate, ...(host.inventoryOutputSpool === undefined ? {} : { outputSpool: host.inventoryOutputSpool }), dependencies: { authorization: policies.inventory, reader: new PostgresInventoryQueryReader(pool, issuer?.productSeasonArray ?? null, issuer?.runtime26, issuer?.catalogueRetainedDelete ?? null) } }));
-    app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: new PostgresInventoryLedgerQueryReader(pool, issuer?.runtime26) } }));
+    app.register(createInventoryHttpPlugin({ authenticate, ...(host.inventoryOutputSpool === undefined ? {} : { outputSpool: host.inventoryOutputSpool }), dependencies: { authorization: policies.inventory, reader: issuer27 ? new PostgresInventoryQueryReader(pool, null, undefined, null, issuer27.ordinaryRead) : new PostgresInventoryQueryReader(pool, issuer?.productSeasonArray ?? null, issuer?.runtime26, issuer?.catalogueRetainedDelete ?? null) } }));
+    app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: issuer27 ? new PostgresInventoryLedgerQueryReader(pool, undefined, issuer27.ordinaryRead) : new PostgresInventoryLedgerQueryReader(pool, issuer?.runtime26) } }));
     // A separately explicit source-confirmed historical list policy; CORE already returned above.
     const normalDocumentLists = issuer !== null && host.authorization.kind === "source-confirmed-native" && capabilities?.nativeReadExtensions
       ? { profile: "source-confirmed-normal-document-lists-v1" as const, runtime26: issuer.runtime26 } : undefined;
-    app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.sales, reader: new PostgresSalesQueryReader(pool, normalDocumentLists) } }));
-    app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: policies.transfers, reader: new PostgresTransferQueryReader(pool, normalDocumentLists) } }));
+    if (issuer27) {
+      const ordinary = { profile:'source-confirmed-unified-native-v1' as const, runtime27:issuer27.ordinaryRead };
+      const lists = new PostgresOrdinaryDocumentListReader(pool,ordinary), sales = new PostgresSalesQueryReader(pool,ordinary), transfers = new PostgresTransferQueryReader(pool,ordinary);
+      app.register(createSalesQueryHttpPlugin({ authenticate, listProfile:'ordinary-v1', ordinaryHistory:true, dependencies:{authorization:policies.sales,reader:{
+        readList:lists.readSalesList.bind(lists),readTotals:lists.readSalesTotals.bind(lists),readDetail:sales.readDetail.bind(sales),readReferences:sales.readReferences.bind(sales),readHistory:sales.readHistory.bind(sales),readSettlementStatistics:sales.readSettlementStatistics.bind(sales)}}}));
+      app.register(createTransferQueryHttpPlugin({ authenticate:authenticateTransfer,listProfile:'ordinary-v1',dependencies:{authorization:policies.transfers,reader:{
+        readList:lists.readTransferList.bind(lists),readTotals:lists.readTransferTotals.bind(lists),readDetail:transfers.readDetail.bind(transfers),readWarehouses:transfers.readWarehouses.bind(transfers)}}}));
+    } else {
+      app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.sales, reader: new PostgresSalesQueryReader(pool, normalDocumentLists) } }));
+      app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: policies.transfers, reader: new PostgresTransferQueryReader(pool, normalDocumentLists) } }));
+    }
     app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.products, reader: productReader, media: productMedia } }));
     if (host.currentForms !== null) app.register(createCurrentFormHttpPlugin({ authenticate,
-      reader: new PostgresCurrentFormReader(pool, host.currentForms, issuer === null ? undefined : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion }) }));
+      reader: new PostgresCurrentFormReader(pool, host.currentForms, issuer27 ? { runtime27Ordinary: issuer27.ordinaryRead } : issuer === null ? undefined : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion }) }));
     if (extensions) {
       app.register(createStoreSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.settings, reader: new PostgresStoreSettingsReadReader(pool) } }));
-      app.register(createProductManagementQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productManagement, reader: new PostgresProductManagementQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null, issuer?.runtime26) } }));
-      app.register(createCatalogueSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.catalogueSettings, reader: new PostgresCatalogueSettingsReadReader(pool) } }));
+      app.register(createProductManagementQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productManagement, reader: issuer27 ? new PostgresProductManagementQueryReader(pool, null, null, undefined, issuer27.ordinaryRead) : new PostgresProductManagementQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null, issuer?.runtime26) } }));
+      app.register(createCatalogueSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.catalogueSettings,
+        reader: new PostgresCatalogueSettingsReadReader(pool, null, null, ordinaryMaintenance ? issuer27?.ordinaryRead : undefined) } }));
       app.register(createDictionaryReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.dictionary, reader: new PostgresDictionaryReadReader(pool) } }));
       app.register(createPartyReadHttpPlugin({ authenticate: createPartySessionAuthenticator(authentication), dependencies: { authorization: extensions.party, reader: new PostgresPartyReadReader(pool, issuer?.historicalCustomerExclusion ?? null) } }));
-      app.register(createImportedHistoryQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.importedHistory, reader: new PostgresImportedHistoryQueryReader(pool, issuer === null ? undefined : { runtime26: issuer.runtime26 }) } }));
-      app.register(createProductDetailsQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productDetails, reader: new PostgresProductDetailsQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.runtime26), stockReader: new PostgresProductWarehouseStockReader(pool, policies.inventory, null, issuer?.runtime26) } }));
+      // Fresh35 history is native sales/transfer history above. This separate
+      // retired-rowtype reader remains available only to its original graph.
+      if (!ordinaryMaintenance) app.register(createImportedHistoryQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.importedHistory, reader: new PostgresImportedHistoryQueryReader(pool, issuer === null ? undefined : { runtime26: issuer.runtime26 }) } }));
+      app.register(createProductDetailsQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productDetails, reader: issuer27 ? new PostgresProductDetailsQueryReader(pool, null, undefined, issuer27.ordinaryRead) : new PostgresProductDetailsQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.runtime26), stockReader: issuer27 ? new Ordinary27ProductWarehouseStockReader(pool, policies.inventory, issuer27.ordinaryRead) : new PostgresProductWarehouseStockReader(pool, policies.inventory, null, issuer?.runtime26) } }));
       app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate, unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool)) }));
       app.register(createSettingsAuditHttpPlugin({ authenticate, reader: new PostgresSettingsAuditUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool)) }));
     }
     if (capabilities?.settings) app.register(createStoreSettingsReadHttpPlugin({ authenticate,
       dependencies: { authorization: capabilities.settings, reader: new PostgresStoreSettingsReadReader(pool) } }));
     if (capabilities?.productManagement) app.register(createProductManagementQueryHttpPlugin({ authenticate,
-      dependencies: { authorization: capabilities.productManagement, reader: new PostgresProductManagementQueryReader(pool) } }));
+      dependencies: { authorization: capabilities.productManagement, reader: issuer27 ? new PostgresProductManagementQueryReader(pool, null, null, undefined, issuer27.ordinaryRead) : new PostgresProductManagementQueryReader(pool) } }));
     if (capabilities?.catalogueSettings) app.register(createCatalogueSettingsReadHttpPlugin({ authenticate,
       dependencies: { authorization: capabilities.catalogueSettings, reader: new PostgresCatalogueSettingsReadReader(pool) } }));
     if (capabilities?.dictionary) app.register(createDictionaryReadHttpPlugin({ authenticate,
@@ -826,10 +904,10 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       const c = capabilities.commands;
       if (issuer !== null && runtime26ExistingPreparation === undefined) throw new TypeError("Exact26 commands require the independent R2 selector");
       app.register(createAuthenticatedDocumentCommandsPlugin({ authentication,
-        sales: { ...c.sales, now: host.now, unitOfWork: new PostgresSalesUnitOfWork(pool, { catalogueCompleteness: c.catalogueCompleteness,
+        sales: { ...c.sales, now: host.now, unitOfWork: new PostgresSalesUnitOfWork(pool, issuer27 ? {runtime27:issuer27.runtime27} : { catalogueCompleteness: c.catalogueCompleteness!,
           ...(issuer === null ? {} : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion,
             catalogueReadProof: { profile: "MAINTAINED_CATALOGUE26_V1" as const } }) }) },
-        transfers: { ...c.transfers, now: host.now, unitOfWork: new PostgresTransferUnitOfWork(pool, issuer === null ? undefined : { runtime26: issuer.runtime26 }) },
+        transfers: { ...c.transfers, now: host.now, unitOfWork: new PostgresTransferUnitOfWork(pool, issuer27 ? {runtime27:issuer27.runtime27} : issuer === null ? undefined : { runtime26: issuer.runtime26 }) },
         nativeManualSalesPreparation: true, nativeManualTransferPreparation: true,
         ...(runtime26ExistingPreparation?.sales === true ? { nativeExistingSalesPreparation: true } : {}),
         ...(runtime26ExistingPreparation?.transfers === true ? { nativeExistingTransferPreparation: true } : {}) }));
@@ -842,6 +920,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     // Even failed registration owns its pool. Both operations are idempotent; explicitly
     // dispose as a fallback if Fastify fails before reaching the close hook.
     const failures: unknown[] = [error];
+    try { revoke35(); } catch (closeError) { failures.push(closeError); }
     try { host.capacityAdmission.close(); } catch (closeError) { failures.push(closeError); }
     try { await app?.close(); } catch (closeError) { failures.push(closeError); }
     try { await ownedPool.dispose(); } catch (disposeError) { if (!failures.includes(disposeError)) failures.push(disposeError); }
@@ -961,4 +1040,21 @@ export function createCommittedCoreSettingsRead(pool: PgSalesPool, runtime26: Na
       return Object.freeze({ hallIds: actual.hallIds, warehouseIds: actual.warehouseIds });
     } })
   });
+}
+
+/** Separate trusted registration entry, never selected by request data and never
+ * mixed into the exact26 API graph. The real host remains hard-disabled pending
+ * independent target/ACL/RLS/guard review. No issuer override or pool acquisition
+ * is supplied here; this returns only a plugin, never a server or listener. */
+export function createStandard27BarcodeHttpPlugin(options: {
+  readonly pool: PgSalesPool;
+  readonly pins: Barcode27ReviewedHostPins;
+  readonly authorization: CurrentFormAuthorization;
+  readonly authenticate: CurrentFormHttpOptions["authenticate"];
+}) {
+  const host = createStandard27BarcodeReadHost(options.pool, options.pins);
+  const reader = new PostgresCurrentFormReader(host.pool, options.authorization, {
+    runtime27Barcode: host.barcode, runtime27BarcodeAggregate: host.aggregate,
+  });
+  return createCurrentFormHttpPlugin({ authenticate: options.authenticate, reader, routeScope: "BARCODE_ONLY" });
 }

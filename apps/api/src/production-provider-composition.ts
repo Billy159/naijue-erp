@@ -1,3 +1,4 @@
+import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { PostgresImportedCatalogueCompletenessVerifier } from "../../../adapters/postgres/src/catalogue-completeness.ts";
@@ -11,6 +12,7 @@ import { createPasswordWorkGate } from "../../../packages/authentication/src/pas
 import { createLoginAdmission } from "./login-admission.ts";
 import type { LoginRateBudget } from "./login-admission.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
+import { createPostgresRuntime27DocumentApplicationApi, createPostgresRuntime35ApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26MediaApplicationApi, createPostgresRuntime26DocumentApplicationApi } from "./postgres-read-api.ts";
@@ -110,6 +112,79 @@ export function productionApplicationOptions(input: unknown, capacityAdmission?:
     } })
   };
 }
+/** Explicit standard runtime27 selector. The same host settings and resource
+ * gates are used; no legacy catalogue-source verifier is required. */
+export interface ProductionRuntime27Configuration extends Omit<ProductionRuntimeConfiguration,'profile'> {
+ readonly profile:'source-confirmed-native-exact27-v1';
+}
+export function parseProductionRuntime27Configuration(input:unknown):ProductionRuntime27Configuration {
+ if(!input||typeof input!=='object'||Array.isArray(input)||Object.getPrototypeOf(input)!==Object.prototype
+   ||Object.getOwnPropertyDescriptor(input,'profile')?.value!=='source-confirmed-native-exact27-v1')throw new TypeError('Explicit runtime27 profile required');
+ const checked=parseProductionRuntimeConfiguration({...input,profile:'source-confirmed-native-v1'});
+ if(checked.documentCommands!=='NATIVE_RUNTIME')throw new TypeError('Runtime27 document commands must be selected');
+ return {...checked,profile:'source-confirmed-native-exact27-v1'};
+}
+export function productionRuntime27HostConfiguration(input:unknown):ProductionRuntimeConfiguration {
+ const c=parseProductionRuntime27Configuration(input);return {...c,profile:'source-confirmed-native-v1'};
+}
+export async function createProductionRuntime27ApplicationApi(input:unknown,driver?:PostgresPoolDriverFactory,capacityAdmission?:CapacityAdmission):Promise<PostgresApplicationApi>{
+ const options=productionApplicationOptions(productionRuntime27HostConfiguration(input),capacityAdmission);
+ if(!options.documentCommands)throw new TypeError('Runtime27 document commands required');
+ const {catalogueCompleteness:_unused,...commands}=options.documentCommands;
+ return createPostgresRuntime27DocumentApplicationApi({...options,productMaintenance:true,documentCommands:commands},{sales:true,transfers:true},driver);
+}
+
+/** Fresh35 uses the existing host, budgets and private media settings. Its
+ * database capability is supplied by the fresh35 assembly, never an exact27
+ * profile substitution or an exact26 metadata review. */
+export interface ProductionRuntime35Configuration extends Omit<ProductionRuntimeConfiguration, 'profile' | 'documentCommands'>, MaintenanceSelection {
+  readonly profile: 'source-confirmed-native-exact35-v1' | 'source-confirmed-native-exact35-production-v2';
+  readonly documentCommands: 'NATIVE_RUNTIME';
+  readonly productMedia: ProductionRuntime26R3Configuration['productMedia'];
+  readonly staffCredentialRequestKeyFile?: string;
+}
+export function parseProductionRuntime35Configuration(input: unknown): ProductionRuntime35Configuration {
+  const optional = ['organizationMaintenance', 'catalogueMaintenance', 'paymentMaintenance', 'partyMaintenance', 'staffMaintenance', 'productMaintenance', 'staffCredentialRequestKeyFile', 'inventoryOutputSpool'];
+  const c = bag(input, ['schemaVersion', 'profile', 'documentCommands', 'publicOrigin', 'http', 'assets', 'build', 'postgres', 'authentication', 'productMedia',
+    ...(input !== null && typeof input === 'object' ? optional.filter(key => Object.hasOwn(input, key)) : [])]);
+  if (!['source-confirmed-native-exact35-v1','source-confirmed-native-exact35-production-v2'].includes(c.profile as string) || c.documentCommands !== 'NATIVE_RUNTIME')
+    throw new TypeError('Explicit fresh35 native runtime profile required');
+  const media = bag(c.productMedia, ['root', 'rootKey']);
+  if (!text(media.root) || !path.isAbsolute(media.root) || path.resolve(media.root) !== media.root
+    || typeof media.rootKey !== 'string' || !/^[A-Za-z0-9_-]{1,100}$/.test(media.rootKey))
+    throw new TypeError('Explicit fresh35 private product media root and key required');
+  const maintenance: Record<string, true> = {};
+  for (const key of optional.slice(0, 6)) if (Object.hasOwn(c, key)) {
+    if (c[key] !== true) throw new TypeError('Explicit fresh35 maintenance selection required');
+    maintenance[key] = true;
+  }
+  if (Object.hasOwn(c, 'staffCredentialRequestKeyFile') && (c.staffMaintenance !== true || !text(c.staffCredentialRequestKeyFile)
+    || !path.isAbsolute(c.staffCredentialRequestKeyFile) || path.resolve(c.staffCredentialRequestKeyFile) !== c.staffCredentialRequestKeyFile))
+    throw new TypeError('Explicit staff-selected canonical private credential file required');
+  const { productMedia: _media, staffCredentialRequestKeyFile: _credential, organizationMaintenance: _organization,
+    catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, staffMaintenance: _staff,
+    productMaintenance: _product, ...base } = c;
+  const checked = parseProductionRuntimeConfiguration({ ...base, profile: 'source-confirmed-native-v1' });
+  return { ...checked, profile: c.profile as ProductionRuntime35Configuration['profile'], documentCommands: 'NATIVE_RUNTIME', ...maintenance,
+    productMedia: { root: media.root, rootKey: media.rootKey },
+    ...(Object.hasOwn(c, 'staffCredentialRequestKeyFile') ? { staffCredentialRequestKeyFile: c.staffCredentialRequestKeyFile as string } : {}) };
+}
+export function productionRuntime35HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
+  const { productMedia: _media, staffCredentialRequestKeyFile: _credential, organizationMaintenance: _organization,
+    catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, staffMaintenance: _staff,
+    productMaintenance: _product, ...base } = parseProductionRuntime35Configuration(input);
+  return parseProductionRuntimeConfiguration({ ...base, profile: 'source-confirmed-native-v1' });
+}
+export async function createProductionRuntime35ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
+  staffCredentialRequestTag: CredentialRequestTag | null = null, capacityAdmission?: CapacityAdmission, capacityTarget?: CapacityRuntimeTarget): Promise<PostgresApplicationApi> {
+  const config = parseProductionRuntime35Configuration(input);
+  const options = productionApplicationOptions(productionRuntime35HostConfiguration(config), capacityAdmission);
+  const { catalogueCompleteness: _legacy, ...commands } = options.documentCommands!;
+  return createPostgresRuntime35ApplicationApi({ ...options, ...maintenanceOptions(config, staffCredentialRequestTag), documentCommands: commands },
+    driver, { ...config.productMedia, publicRoots: [config.assets.root] },
+    config.profile === 'source-confirmed-native-exact35-production-v2' ? {...(capacityTarget?{capacityTarget}:{})} : undefined);
+}
+
 /** A single owned bounded pool is constructed inside the existing application
  * factory. All native facts/completeness checks run on the original command tx.
  * No fixtures, migrations, seeds, fake authentication or retry loop are composed. */

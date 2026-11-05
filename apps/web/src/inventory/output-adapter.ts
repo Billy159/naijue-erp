@@ -1,7 +1,7 @@
 import { InventoryOutputBudget } from './output-budget.ts';
-import type { InventoryFilter, InventoryOutputData, InventoryOutputReader, InventoryOutputChunk, InventoryProduct, StockTotal } from './contracts.ts';
+import type { InventoryFilter, InventoryOutputData, InventoryOutputReader, InventoryOutputChunk, InventoryProduct, StockTotal, StockCell } from './contracts.ts';
 import type { InventoryDisplaySettings } from './inventory-matrix.tsx';
-import { projectInventoryColors } from './display-projection.ts';
+import { projectInventoryColors, type InventoryDisplayCell } from './display-projection.ts';
 import { assertQuantity } from './model.ts';
 import { inventoryProductResponse } from '../transport/response-validation.ts';
 import { HttpQueryError, type HttpQueryOptions } from '../transport/http-query.ts';
@@ -18,7 +18,7 @@ function record(value: unknown, keys: readonly string[]): Record<string, unknown
 function count(value: unknown): number { if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < 0) return invalid(); return value; }
 function total(value: unknown): StockTotal {
   const row = record(value, ['knownQuantity', 'completeness', 'unknownCells']);
-  if (typeof row.knownQuantity !== 'string' || row.knownQuantity.length > 100 || row.completeness !== 'complete' || row.unknownCells !== 0) return invalid();
+  if (typeof row.knownQuantity !== 'string' || row.knownQuantity.length > 100 || !Number.isSafeInteger(row.unknownCells) || (row.unknownCells as number) < 0 || (row.unknownCells === 0 ? row.completeness !== 'complete' : row.completeness !== 'incomplete')) return invalid();
   try { assertQuantity(row.knownQuantity); } catch { return invalid(); }
   return row as unknown as StockTotal;
 }
@@ -79,7 +79,7 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
       }
       if (response.headers.get('content-type')?.split(';')[0]?.trim().toLowerCase() !== 'application/x-ndjson' || !response.body) { void response.body?.cancel().catch(() => {}); return invalid(); }
       reader = response.body.getReader();
-      let summary: Omit<InventoryOutputData, 'products'> | null = null, complete = false, sum = 0n;
+      let summary: Omit<InventoryOutputData, 'products'> | null = null, complete = false, sum = 0n, unknownCells = 0;
       let emittedProducts=0;const ids = new Set<string>(), skus = new Set<string>();
       release=()=>{ids.clear();skus.clear();};
       let warehouseIds: readonly string[] | null = null;
@@ -108,14 +108,14 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
             const groupWarehouses = group.rows.map(row => row.warehouse.id);
             if (!warehouseIds) warehouseIds = groupWarehouses;
             if (groupWarehouses.some((id, index) => warehouseIds![index] !== id)) return invalid();
-            for (const row of group.rows) for (const cell of Object.values(row.cells)) if (cell.state === 'known') productSkus.add(cell.skuId);
+            for (const row of group.rows) for (const cell of Object.values(row.cells)) if (cell.state !== 'not-applicable') productSkus.add(cell.skuId);
           }
           for (const sku of productSkus) { if (skus.has(sku)) return invalid(); skus.add(sku); }
-          ids.add(product.id); emittedProducts++; sum += BigInt(product.total.knownQuantity); return {kind:'product',product};
+          ids.add(product.id); emittedProducts++; sum += BigInt(product.total.knownQuantity); unknownCells += product.total.unknownCells; if (!Number.isSafeInteger(unknownCells)) return invalid(); return {kind:'product',product};
         }
         const row = record(value, ['kind', 'readReference', 'exactTotalProducts', 'emittedProducts', 'allMatchesTotal']);
         if (kind !== 'complete' || row.readReference !== summary.readReference || count(row.exactTotalProducts) !== summary.exactTotalProducts || count(row.emittedProducts) !== emittedProducts || emittedProducts !== summary.exactTotalProducts
-          || total(row.allMatchesTotal).knownQuantity !== summary.allMatchesTotal.knownQuantity || sum.toString() !== summary.allMatchesTotal.knownQuantity) return invalid();
+          || total(row.allMatchesTotal).knownQuantity !== summary.allMatchesTotal.knownQuantity || total(row.allMatchesTotal).unknownCells !== summary.allMatchesTotal.unknownCells || total(row.allMatchesTotal).completeness !== summary.allMatchesTotal.completeness || sum.toString() !== summary.allMatchesTotal.knownQuantity || unknownCells !== summary.allMatchesTotal.unknownCells) return invalid();
         complete = true;
       };
       let parts: Uint8Array[] = [], bytes = 0;
@@ -164,6 +164,8 @@ function sections(data: InventoryOutputData): readonly (readonly InventoryProduc
   return [...groups.values()];
 }
 const colors = (product: InventoryProduct, settings: InventoryDisplaySettings) => settings.fit ? product.colorFits : projectInventoryColors(product);
+const outputTotal = (t: StockTotal) => t.completeness === 'complete' ? t.knownQuantity : `已知 ${t.knownQuantity}（${t.unknownCells}格未知）`;
+const outputCell = (c: StockCell | InventoryDisplayCell) => c.state === 'known' ? c.quantity : c.state === 'not-applicable' ? '—' : 'knownQuantity' in c ? outputTotal({knownQuantity:c.knownQuantity,unknownCells:c.unknownCells,completeness:'incomplete'}) : '未知';
 
 /** Frozen inventory-matrix-experiment.js report(): native full-scope rows, not a DOM/page export. */
 function* workbookRows(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings):Generator<readonly string[]>{
@@ -173,7 +175,7 @@ function* workbookRows(data:InventoryOutputData,filter:InventoryFilter,settings:
     yield [first.sizeGroup.label];yield ['货号', '商品名称', ...(settings.fit ? ['版型'] : []), '颜色', '仓库', ...first.sizes.map(size => size.label)];
     for (const product of products) for (const group of colors(product, settings)) for (const row of group.rows) {
       yield [product.code, product.name, ...(settings.fit ? [group.fit?.label ?? ''] : []), group.color.label, row.warehouse.label,
-        ...product.sizes.map(size => { const cell = row.cells[size.id]!; return cell.state === 'known' ? cell.quantity : '—'; })];
+        ...product.sizes.map(size => { const cell = row.cells[size.id]!; return outputCell(cell); })];
     }
   }
 }
@@ -228,13 +230,13 @@ function* printTables(data:InventoryOutputData,settings:InventoryDisplaySettings
   let detailRows = 0;
   for(const products of sections(data)){
     const first = products[0]!;
-    const aggregate = (product: InventoryProduct, label: string, kind: string, totals: Readonly<Record<string, StockTotal>>, total: StockTotal) => `<tr class="mx-${kind}"><td class="mx-product">${escape(label)}</td><td class="mx-color"></td><td class="mx-warehouse"></td>${product.sizes.map(size => `<td>${escape(totals[size.id]!.knownQuantity)}</td>`).join('')}<td class="mx-total-cell">${escape(total.knownQuantity)}</td></tr>`;
+    const aggregate = (product: InventoryProduct, label: string, kind: string, totals: Readonly<Record<string, StockTotal>>, total: StockTotal) => `<tr class="mx-${kind}"><td class="mx-product">${escape(label)}</td><td class="mx-color"></td><td class="mx-warehouse"></td>${product.sizes.map(size => `<td>${escape(outputTotal(totals[size.id]!))}</td>`).join('')}<td class="mx-total-cell">${escape(outputTotal(total))}</td></tr>`;
     yield `<section class="mx-section" data-size-system="${escape(first.sizeGroup.id)}"><h3${settings.sizeDescription ? '' : ' hidden'}>${escape(first.sizeGroup.label)} <small>${first.sizes.map(size => escape(size.label)).join(' / ')}</small></h3><table class="mx-table"><colgroup><col style="width:19%"><col style="width:8%"><col style="width:10%">${first.sizes.map(() => `<col style="width:${57 / first.sizes.length}%">`).join('')}<col style="width:6%"></colgroup><thead><tr><th class="mx-product">款号／商品名称</th><th class="mx-color">颜色</th><th class="mx-warehouse">仓库</th>${first.sizes.map(size => `<th data-size-id="${escape(size.id)}">${escape(size.label)}</th>`).join('')}<th class="mx-total-cell">合计</th></tr></thead><tbody>`;
     for (const product of products) {
       for (const group of colors(product, settings)) {
         for (const row of group.rows) {
           detailRows++;
-          yield `<tr data-inventory-product="${escape(product.id)}"><td class="mx-product"><div class="mx-product-identity"><strong>${escape(product.code)}</strong><span title="${escape(product.name)}">${escape(product.name)}</span></div></td><td class="mx-color"><div class="mx-indent"><span class="mx-fold-spacer"></span>${escape(group.color.label)}</div></td><td class="mx-warehouse"><div class="mx-indent"><span class="mx-fold-spacer"></span>${escape(row.warehouse.label)}</div></td>${product.sizes.map(size => { const cell = row.cells[size.id]!; const value = cell.state === 'known' ? cell.quantity : '—'; return `<td class="${value === '0' ? 'mx-zero' : value.startsWith('-') ? 'minus' : ''}">${escape(value)}</td>`; }).join('')}<td class="mx-total-cell">${escape(row.total.knownQuantity)}</td></tr>`;
+          yield `<tr data-inventory-product="${escape(product.id)}"><td class="mx-product"><div class="mx-product-identity"><strong>${escape(product.code)}</strong><span title="${escape(product.name)}">${escape(product.name)}</span></div></td><td class="mx-color"><div class="mx-indent"><span class="mx-fold-spacer"></span>${escape(group.color.label)}</div></td><td class="mx-warehouse"><div class="mx-indent"><span class="mx-fold-spacer"></span>${escape(row.warehouse.label)}</div></td>${product.sizes.map(size => { const cell = row.cells[size.id]!; const value = outputCell(cell); return `<td class="${value === '0' ? 'mx-zero' : value.startsWith('-') ? 'minus' : ''}">${escape(value)}</td>`; }).join('')}<td class="mx-total-cell">${escape(outputTotal(row.total))}</td></tr>`;
         }
         if (settings.subtotal) yield aggregate(product, '颜色小计', 'subtotal', group.sizeTotals, group.total);
       }
@@ -246,7 +248,7 @@ function* printTables(data:InventoryOutputData,settings:InventoryDisplaySettings
   return detailRows;
 }
 function printDocument(data:Omit<InventoryOutputData,'products'>,filter:InventoryFilter,detailRows:number,tables:string):string{
-  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>库存状况打印</title><style>@page{size:A4 landscape;margin:9mm}body{font:11px Arial,"PingFang SC",sans-serif;color:#263440}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:4px;overflow-wrap:break-word;border:1px solid #dce1e5;text-align:right}th{background:#f3f5f7}thead{display:table-header-group}tr{break-inside:avoid}.mx-product,.mx-color,.mx-warehouse,.mx-sum-label{text-align:left}.mx-product strong{white-space:nowrap}.mx-product span{display:block}.mx-color,.mx-warehouse{word-break:keep-all}.mx-meta{display:block;color:#52616f}.mx-section h3{font-size:12px}.mx-section{break-inside:auto;margin-bottom:12px}.mx-subtotal,.mx-total{background:#f3f5f7}small{font-weight:normal}</style></head><body><h1>库存状况</h1><p>${escape(inventoryOutputScope(filter, data))}</p><p>共 ${detailRows} 条数据行 · 全量库存 ${escape(data.allMatchesTotal.knownQuantity)}。遵循颜色小计、商品合计及尺码组说明设置；打印全部展开。</p>${tables}</body></html>`;
+  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>库存状况打印</title><style>@page{size:A4 landscape;margin:9mm}body{font:11px Arial,"PingFang SC",sans-serif;color:#263440}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:4px;overflow-wrap:break-word;border:1px solid #dce1e5;text-align:right}th{background:#f3f5f7}thead{display:table-header-group}tr{break-inside:avoid}.mx-product,.mx-color,.mx-warehouse,.mx-sum-label{text-align:left}.mx-product strong{white-space:nowrap}.mx-product span{display:block}.mx-color,.mx-warehouse{word-break:keep-all}.mx-meta{display:block;color:#52616f}.mx-section h3{font-size:12px}.mx-section{break-inside:auto;margin-bottom:12px}.mx-subtotal,.mx-total{background:#f3f5f7}small{font-weight:normal}</style></head><body><h1>库存状况</h1><p>${escape(inventoryOutputScope(filter, data))}</p><p>共 ${detailRows} 条数据行 · 全量库存 ${escape(outputTotal(data.allMatchesTotal))}。遵循颜色小计、商品合计及尺码组说明设置；打印全部展开。</p>${tables}</body></html>`;
 }
 
 export function createInventoryPrintHtml(data: InventoryOutputData, filter: InventoryFilter, settings: InventoryDisplaySettings): string {

@@ -20,7 +20,7 @@ export function createSalesFixture(report: ReportRead): { reader: SalesReader; r
       await syntheticRead(read.signal, report, 'salesList'); const f = read.parameters.filter;
       const items = [summary(0), summary(1)].filter(row => (!f.startDate || row.businessDate >= f.startDate) && (!f.endDate || row.businessDate <= f.endDate)
         && (f.statuses.length === 0 || f.statuses.includes(row.status)) && (f.businessTypes.length === 0 || f.businessTypes.includes(row.businessType))
-        && (f.hallIds.length === 0 || f.hallIds.includes(row.hallId))
+        && (f.hallIds.length === 0 || (row.hallId !== null && f.hallIds.includes(row.hallId)))
         && (f.salespersonIds.length === 0 || (row.salespersonId !== null && f.salespersonIds.includes(row.salespersonId)))
         && (f.customerIds.length === 0 || f.customerIds.includes(row.customerId)) && (f.warehouseIds.length === 0 || f.warehouseIds.includes(row.warehouseId))
         && (!f.number || row.number.toLowerCase().includes(f.number.toLowerCase())));

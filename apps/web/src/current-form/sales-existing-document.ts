@@ -38,9 +38,10 @@ export class SalesExistingDocumentSession {
   async initialize(): Promise<void> {
     if (this.#state.disposed || this.#state.phase !== 'idle') return;
     const input = this.#initialInput; if (!input || !this.#original) return; const document = this.#original.document;
-    if (this.#original!.stockBasis !== 'RUNTIME_LEDGER' || document.header.status !== 'DRAFT' || document.lines.length > 200 || !input.lines.length || input.lines.length > 200 || input.settlements.length > 3) { this.#unavailable(); return; }
+    if (document.header.hallId === null) { this.#unavailable(); return; }
+    if (!(this.owner.commands.ordinaryDocuments || this.#original!.stockBasis === 'RUNTIME_LEDGER') || document.header.status !== 'DRAFT' || document.lines.length > 200 || !input.lines.length || input.lines.length > 200 || input.settlements.length > 2000) { this.#unavailable(); return; }
     const originals = new Map<string, SalesDetailDto['document']['lines'][number]>(document.lines.map(line => [line.id, line])), settlements = new Map<string, SalesDetailDto['document']['settlements'][number]>(document.settlements.map(row => [row.id, row]));
-    if (new Set(input.lines.map(line => line.id)).size !== input.lines.length || input.lines.some(line => !originals.has(line.id)) || input.settlements.some(row => !settlements.has(row.id) || settlements.get(row.id)!.paymentMethodId === null)) { this.#unavailable(); return; }
+    if (new Set(input.lines.map(line => line.id)).size !== input.lines.length || input.lines.some(line => !originals.has(line.id)) || input.settlements.some(row => !settlements.has(row.id))) { this.#unavailable(); return; }
     const request = new AbortController(), sequence = ++this.#sequence; this.#request = request; this.#publish({ phase: 'loading' });
     try {
       const ids = [...new Set(input.lines.map(line => originals.get(line.id)!.skuId))];
@@ -53,15 +54,16 @@ export class SalesExistingDocumentSession {
       if (this.owner.getSnapshot().input !== this.#inputReference) { this.#unavailable(); return; }
 
       const reference = (id: string, name: string | null, patch: Partial<CurrentSalesReferenceItem> = {}): CurrentSalesReferenceItem => ({ id, name: name ?? '未提供', code: null, hallId: null, hallName: null, paymentMethodId: null, paymentMethodName: null, ...patch });
-      const draft: SalesProposal = { businessType: h.businessType, businessDate: input.businessDate, note: input.note, orderDiscount: input.orderDiscount,
-        hall: reference(h.hallId, names.hallName, { hallId: h.hallId, hallName: names.hallName }), customer: reference(h.customerId, names.customerName), salesperson: h.salespersonId ? reference(h.salespersonId, names.salespersonName) : null, warehouse: reference(h.warehouseId, names.warehouseName),
+      const draft: SalesProposal = { ...(this.#original.historicalSaleOrigin ? { historicalSaleOrigin: this.#original.historicalSaleOrigin } : {}), settlementFactsMissing: this.#original.stockBasis === 'CUTOFF_HISTORY' && document.settlements.length === 0, businessType: h.businessType, businessDate: input.businessDate, note: input.note, orderDiscount: input.orderDiscount,
+        hall: reference(document.header.hallId, names.hallName, { hallId: document.header.hallId, hallName: names.hallName }), customer: reference(h.customerId, names.customerName), salesperson: h.salespersonId ? reference(h.salespersonId, names.salespersonName) : null, warehouse: reference(h.warehouseId, names.warehouseName),
         lines: input.lines.map(raw => {
           const original = originals.get(raw.id)!, sku = byId.get(original.skuId); if (!sku) throw new TypeError('Missing actual saved SKU.');
+          if (original.isCurrent !== true) throw new TypeError('Only current original rows can enter the saved editor.');
           const sizeGroupId = groups.get(sku.productId);
           const product: CurrentFormProduct = { ...(sizeGroupId ? { sizeGroupId } : {}), id: sku.productId, code: sku.productCode, name: sku.productName, retailPrice: original.referencePrice === null ? null : salesInputMoney(original.referencePrice), minimumPriceAvailability: 'UNAVAILABLE' };
-          return { key: raw.id, sku, product, sourceSnapshot: original.snapshot, quantity: raw.quantity, dealPrice: raw.dealPrice, pricingRule: raw.pricingRule, discount: raw.discount, isGift: raw.isGift, zeroConfirmed: raw.zeroConfirmed };
+          return { key: raw.id, sku, product, sourceLine: { ...original, isCurrent: true as const }, sourceSnapshot: original.snapshot, quantity: raw.quantity, dealPrice: raw.dealPrice, pricingRule: raw.pricingRule, discount: raw.discount, isGift: raw.isGift, zeroConfirmed: raw.zeroConfirmed };
         }),
-        settlements: input.settlements.map(raw => { const original = settlements.get(raw.id)!, names = this.#original!.settlementNames.find(row => row.settlementId === original.id), methodId = entityId('paymentMethod', original.paymentMethodId!); return { key: raw.id, method: reference(methodId, names?.methodNameSnapshot ?? names?.currentMethodName ?? null), account: reference(original.paymentAccountId, names?.accountNameSnapshot ?? names?.currentAccountName ?? null, { paymentMethodId: methodId, paymentMethodName: names?.methodNameSnapshot ?? names?.currentMethodName ?? null }), direction: raw.direction, amount: raw.amount }; }) };
+        settlements: input.settlements.map(raw => { const original = settlements.get(raw.id)!, names = this.#original!.settlementNames.find(row => row.settlementId === original.id), methodId = original.paymentMethodId === null ? null : entityId('paymentMethod', original.paymentMethodId); return { key: raw.id, method: methodId === null ? null : reference(methodId, names?.methodNameSnapshot ?? names?.currentMethodName ?? null), account: reference(original.paymentAccountId, names?.accountNameSnapshot ?? names?.currentAccountName ?? null, { paymentMethodId: methodId, paymentMethodName: names?.methodNameSnapshot ?? names?.currentMethodName ?? null }), direction: raw.direction, amount: raw.amount }; }) };
       const proposal = new SalesProposalSession(this.#scope, this.#reader, error => { if (error.kind === 'unauthenticated') this.owner.expireExistingIdentity(); });
       if (!proposal.initializeFromSaved(draft, this.#initialDirty)) throw new TypeError('Saved proposal initialization failed.');
       let previous = proposal.getSnapshot();
@@ -77,7 +79,7 @@ export class SalesExistingDocumentSession {
     const proposal = this.#state.proposal;
     if (this.#state.disposed || this.#state.phase !== 'ready' || this.#state.preparing || !proposal || !this.owner.editable) return false;
     if (!this.hasDirtyDraft && !this.owner.commands.hasDirtyDraft) { this.#publish({ notice: '内容未改变，无需保存。' }); return false; }
-    if (proposal.hasSpecificationInputs && this.#original) {
+    if (this.#original && (proposal.hasSpecificationInputs || this.#original.stockBasis === 'CUTOFF_HISTORY')) {
       const intent = proposal.saveProposal(this.#original.document.header.id, new Set(this.#original.document.lines.map(row => row.id as string)), new Set(this.#original.document.settlements.map(row => row.id as string))); if (!intent) return false;
       const captured = proposal.getSnapshot(), ownerInput = this.owner.getSnapshot().input, request = new AbortController(), sequence = ++this.#sequence; this.#request = request;
       this.#publish({ preparing: true, notice: null });

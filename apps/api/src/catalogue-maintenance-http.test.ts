@@ -118,11 +118,13 @@ test("catalogue HTTP: exact three families, current denial, original receipt and
     async load() { return undefined; }, async validateChange() {}, async assertUnreferenced() {}, async put() {}
   }); } } };
   const app = Fastify({ logger: false }); t.after(() => app.close()); app.register(createCatalogueMaintenanceHttpPlugin({ authenticate: async () => loggedIn ? actor : null, dependencies })); await app.ready();
-  for (const [prefix, values, kind] of [["categories", { name: "C", parentId: null, displayOrder: 0 }, "CATEGORY"], ["colors", { name: "C", code: "001", enabled: true }, "COLOR"], ["fits", { name: "F", code: "A", enabled: true }, "FIT"]] as const) {
+  for (const [prefix, values, kind] of [["categories", { name: "C", parentId: null, displayOrder: 0 }, "CATEGORY"], ["colors", { name: "C", code: "001", enabled: true }, "COLOR"], ["fits", { name: "F", code: "5", enabled: true }, "FIT"]] as const) {
     const response = await app.inject({ method: "POST", url: `/catalogue/${prefix}/commands`, payload: { action: "CREATE", requestKey: `create-${prefix}`, values } }); assert.equal(response.statusCode, 200, response.body); assert.equal(response.json().kind, kind); assert.equal(response.headers["cache-control"], "no-store"); assert.equal((await app.inject({ method: "GET", url: `/catalogue/${prefix}/receipts/missing` })).statusCode, 404);
   }
+  const legacyCreate = await app.inject({ method: "POST", url: "/catalogue/fits/commands", payload: { action: "CREATE", requestKey: "reject-new-letter-fit", values: { name: "F", code: "A", enabled: true } } });
+  assert.equal(legacyCreate.statusCode, 400); assert.equal(legacyCreate.json().error.code, "INVALID_CATALOGUE_COMMAND");
   assert.equal((await app.inject({ method: "POST", url: "/catalogue/seasons/commands", payload: {} })).statusCode, 404);
-  const payload = { action: "CREATE", requestKey: "create", values: { name: "F", code: "A", enabled: true } };
+  const payload = { action: "CREATE", requestKey: "create", values: { name: "F", code: "5", enabled: true } };
   assert.equal((await app.inject({ method: "POST", url: "/catalogue/fits/commands", payload: { ...payload, actor } })).statusCode, 400);
   allow = false; assert.equal((await app.inject({ method: "POST", url: "/catalogue/fits/commands", payload })).statusCode, 403); loggedIn = false; assert.equal((await app.inject({ method: "POST", url: "/catalogue/fits/commands", payload })).statusCode, 401); assert.equal(app.server.listening, false);
 });

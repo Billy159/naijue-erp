@@ -9,9 +9,10 @@ import { SalesEditorSession } from '../sales/commands/editor-session.ts';
 import { SalesCommandError, type SalesCommandDto, type SalesDraftDto } from '../sales/commands/contracts.ts';
 import { draft as fixtureDraft, detail, result, receipt, uuid, deferred } from '../sales/commands/fixtures.test-support.ts';
 import { SalesProposalSession } from './sales-proposal.ts';
+import {createSalesExistingPreparationHttpClient} from './existing-document-preparation.ts';
 import { SalesNewDocumentSession, createSalesPreparationHttpClient, salesPreparationIntent, type SalesCreatePreparation } from './sales-create.ts';
 const original = fixtureDraft();
-const native: SalesDraftDto = { header: { ...original.header, salespersonId: uuid(950), businessType: 'SALE', grossAmount: '1000', netDue: '1000', orderDiscount: '0' },
+const native: SalesDraftDto & { readonly header: SalesDraftDto['header'] & { readonly hallId: string } } = { header: { ...original.header, salespersonId: uuid(950), businessType: 'SALE', grossAmount: '1000', netDue: '1000', orderDiscount: '0' },
   lines: [{ ...original.lines[0]!, quantity: '1', referencePrice: '1005', dealPrice: '1000', lineAmount: '1000', allocatedDiscount: '0' }],
   settlements: [{ ...original.settlements[0]!, direction: 'RECEIVE', amount: '1000' }] };
 const product: CurrentFormProduct = { id: entityId('product', uuid(50)), code: 'TEST', name: 'TEST product', sizeGroupId: entityId('sizeGroup', uuid(8)), retailPrice: '10.05', minimumPriceAvailability: 'UNAVAILABLE' };
@@ -26,6 +27,7 @@ async function setup(preparation?: SalesCreatePreparation, uncertain = false, ex
   const proposal = new SalesProposalSession(scope, {
     async readSalesReferences(query) {
       const h = native.header, s = native.settlements[0]!;
+      assert.ok(s.paymentMethodId, 'Synthetic NEW preparation declares a method');
       if (query.kind === 'hall') return page([ref(h.hallId, { hallId: h.hallId, hallName: 'TEST hall' })]);
       if (query.kind === 'salesperson') return page([ref(h.salespersonId!)]);
       if (query.kind === 'customer') return page([ref(h.customerId, { code: 'TEST-C' })]);
@@ -42,7 +44,8 @@ async function setup(preparation?: SalesCreatePreparation, uncertain = false, ex
   proposal.setHeader({ businessDate: native.header.businessDate, note: native.header.note! });
   for (const [kind, id] of [['hall', native.header.hallId], ['salesperson', native.header.salespersonId!], ['customer', native.header.customerId], ['warehouse', native.header.warehouseId]] as const) { await proposal.openPicker(kind); await proposal.select(id); }
   await proposal.openPicker('product'); await proposal.select(product.id); await proposal.select(sku.id); proposal.closePicker(); proposal.updateLine(sku.id, { dealPrice: '10.00' });
-  await proposal.openPicker('paymentMethod'); await proposal.select(native.settlements[0]!.paymentMethodId); await proposal.select(native.settlements[0]!.paymentAccountId);
+  const methodId = native.settlements[0]!.paymentMethodId; assert.ok(methodId, 'Synthetic NEW preparation declares a method');
+  await proposal.openPicker('paymentMethod'); await proposal.select(methodId); await proposal.select(native.settlements[0]!.paymentAccountId);
   proposal.updateSettlement(proposal.getSnapshot().draft.settlements[0]!.key, { amount: '10' });
   return { session, proposal, editor, context, scope, commands, intents, get access() { return access; } };
 }
@@ -99,6 +102,7 @@ test('shared SALE UTF8 budgets accept 200 rows/escaped note and retain exact nat
   const { SALES_PREPARE_MAX_REQUEST_BYTES, SALES_COMMAND_MAX_REQUEST_BYTES, SALES_PREPARED_RESPONSE_MAX_BYTES } = await import('../../../../packages/application/src/sales-payload-budget.ts');
   const { createSalesCommandHttpClient } = await import('../sales/commands/http-client.ts');
   const large: SalesDraftDto = { header: { ...native.header, note: '\u0001'.repeat(10000), grossAmount: '200000', netDue: '200000' }, lines: Array.from({ length: 200 }, (_, index) => ({ ...native.lines[0]!, id: uuid(1000 + index), skuId: uuid(2000 + index), lineNo: index + 1, snapshot: { ...native.lines[0]!.snapshot, productName: '合成商品'.repeat(30) } })), settlements: [] };
+  assert.ok(large.header.hallId !== null, 'Synthetic NEW fixture explicitly declares its hall');
   const intent: NativeSalesCreateProposal = { businessType: 'SALE', businessDate: large.header.businessDate, note: large.header.note, hallId: large.header.hallId, customerId: large.header.customerId, salespersonId: large.header.salespersonId, warehouseId: large.header.warehouseId, orderDiscount: '0.00', lines: large.lines.map(row => ({ skuId: row.skuId, quantity: '1', dealPrice: '10.00', pricingRule: 'UNIT_PRICE', discountTenths: null, isGift: false, zeroConfirmed: false })), settlements: [] };
   const bytes = (value: unknown) => new TextEncoder().encode(JSON.stringify(value)).byteLength;
   assert.ok(bytes(intent) > 65536 && bytes(intent) < SALES_PREPARE_MAX_REQUEST_BYTES); assert.ok(bytes(large) < SALES_PREPARED_RESPONSE_MAX_BYTES);
@@ -166,4 +170,28 @@ test('discount SAVE quotes round-trip exactly; legacy null and original keys rem
    assert.equal(command.requestKey,'TEST.original-discount-key');assert.equal(command.proposal.lines[0]!.dealPrice,quote);
   }
  }
+});
+test('legacy read-only create preparation rejects nullable intent explicitly without coercing unknown facts',async()=>{
+ const h=await setup(),original=h.proposal.getSnapshot().draft;
+ for(const field of ['pricingRule','isGift','zeroConfirmed'] as const){
+  const draft={...original,lines:original.lines.map(row=>({...row,[field]:null}))};
+  assert.throws(()=>salesPreparationIntent(draft),/Read-only create preparation requires explicit pricing facts/);
+  assert.equal(draft.lines[0]![field],null);
+ }
+ h.session.dispose();
+});
+
+
+test('mixed SALE create and existing read preparations retain signs and zero discount',async()=>{
+ const prepared:SalesDraftDto={...native,header:{...native.header,grossAmount:'0',netDue:'0'},lines:[native.lines[0]!,{...native.lines[0]!,id:uuid(996),lineNo:2,quantity:'-1',lineAmount:'-1000'}]};
+ const h=await setup({async prepareCreate(intent){assert.deepEqual(intent.lines.map(row=>row.quantity),['1','-1']);return prepared;}});
+ try{
+  await h.proposal.openPicker('product');await h.proposal.select(product.id);assert.equal(await h.proposal.select(sku.id,'-1'),true);h.proposal.closePicker();h.proposal.updateLine(h.proposal.getSnapshot().draft.lines.at(-1)!.key,{dealPrice:'10.00'});
+  const value=h.proposal.validate();assert.ok(value);const intent=salesPreparationIntent(value);assert.deepEqual(intent.lines.map(row=>row.quantity),['1','-1']);
+  let calls=0;const client=createSalesExistingPreparationHttpClient({origin:'https://synthetic.test',basePath:'/api',fetch:async(_url,init)=>{calls++;assert.deepEqual(JSON.parse(init.body as string).lines.map((row:{quantity:string})=>row.quantity),['1','-1']);return new Response(JSON.stringify({expectedVersion:2,draft:prepared}),{status:200,headers:{'content-type':'application/json'}});}});
+  const existing={...intent,salesId:prepared.header.id,expectedVersion:2,lines:intent.lines.map((row,index)=>({...row,existingLineId:prepared.lines[index]!.id})),settlements:intent.settlements.map((row,index)=>({...row,existingSettlementId:prepared.settlements[index]!.id}))};
+  assert.deepEqual((await client.prepareExisting(existing,new AbortController().signal)).draft.lines.map(row=>row.quantity),['1','-1']);assert.equal(calls,1);
+  assert.throws(()=>client.prepareExisting({...existing,orderDiscount:'0.01'},new AbortController().signal));assert.equal(calls,1);
+  assert.equal(await h.session.save(),true);assert.equal(h.commands.length,1);const command=h.commands[0]!;assert.ok(command.action==='SAVE'&&'draft'in command);assert.deepEqual(command.draft.lines.map(row=>row.quantity),['1','-1']);
+ }finally{h.context.clear();}
 });

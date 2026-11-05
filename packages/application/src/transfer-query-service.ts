@@ -1,3 +1,4 @@
+import { parseOrdinaryTransferTotalsQuery } from "./ordinary-document-query-validation.ts";
 import { entityId } from "../../domain/src/values.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import type { TransferActor } from "./transfer-ports.ts";
@@ -31,6 +32,14 @@ export function createTransferQueryService(dependencies: TransferQueryDependenci
     const result = await work(Object.freeze({ actor: trustedActor, scope, parameters, signal })); activeTransferRead(signal); return result;
   }
   return Object.freeze({
+    readTotals(actor: TransferActor, input: unknown, signal: AbortSignal) {
+      const parameters = parseOrdinaryTransferTotalsQuery(input);
+      const list = parseTransferListQuery({ filter: parameters.filter, page: 1, pageSize: 20 });
+      return read(actor, parameters, { kind: "list", parameters: list }, signal, scoped => {
+        requireDomain(typeof reader.readTotals === "function", "ORDINARY_DOCUMENTS_NOT_READY", "Ordinary totals reader required");
+        return reader.readTotals(scoped);
+      });
+    },
     readList(actor: TransferActor, input: unknown, signal: AbortSignal) {
       const parameters = parseTransferListQuery(input); return read(actor, parameters, { kind: "list", parameters }, signal, reader.readList.bind(reader));
     },

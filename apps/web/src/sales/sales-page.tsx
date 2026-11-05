@@ -1,3 +1,4 @@
+import { salesHallLabel } from './historical-hall.ts';
 import type { SalesProductCapability } from './document-presentation.tsx';
 import { SalesStatusTag } from './sales-status-tag.tsx';
 import { UIButton, UIDate } from '../components/standard-controls.tsx';
@@ -22,7 +23,8 @@ const refLabels: Readonly<Record<SalesReferenceKind, string>> = { hall: '营业�
 // Frozen sales-current.js:7–8. Native timestamps remain authoritative; format
 // only for display, with no locale-dependent parsing of business dates.
 const updatedClock = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
-function updatedMinute(timestamp: string): string {
+function updatedMinute(timestamp: string | null): string {
+  if (timestamp === null) return '未记录';
   const parts = Object.fromEntries(updatedClock.formatToParts(new Date(timestamp)).map(({ type, value }) => [type, value]));
   return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}`;
 }
@@ -112,10 +114,10 @@ export function SalesPageView({ controller, references, loadDetailStyles, write,
       {data ? <><table className="sales-table sales-list" aria-label="销货单列表"><thead><tr>{listColumns.map(title => <th key={title} scope="col" className={title === '操作' ? 'ui-action-cell' : undefined}>{title}</th>)}</tr></thead><tbody>{data.items.map(row => <tr key={row.id}>
         <td>{row.businessDate}</td><td><button type="button" className="btn tc-link sales-number" title={detailAvailable ? row.number : '详情样式尚未配置，暂不可查看'} disabled={!detailAvailable} onClick={() => open(row)}>{row.number}</button></td>
         <td><SalesStatusTag status={row.status} className="tc-state-tag" /></td><td>{salesTypeGroupLabels[row.businessType === 'SALE' ? 'SALE' : 'RETURN_EXCHANGE']}</td>
-        <td title={row.hallName}>{row.hallName}</td><td title={row.salespersonName ?? '未指定'}>{row.salespersonName ?? '未指定'}</td>
+        <td title={salesHallLabel(row.hallName,row.hallId,row.historicalHallEvidence,false,row.historicalHallDiffersFromCurrent)}>{salesHallLabel(row.hallName,row.hallId,row.historicalHallEvidence,false,row.historicalHallDiffersFromCurrent)}</td><td title={row.salespersonName ?? '未指定'}>{row.salespersonName ?? '未指定'}</td>
         <td><span className="sales-unavailable" title="当前原生单据未保存历史商品分类快照，不根据现商品资料推断">历史分类未提供</span></td>
-        <td className="sales-numeric">{row.businessType === 'SALE' ? row.quantity : `退${row.incomingQuantity} · 换${row.outgoingQuantity}`}</td><td className="sales-numeric">{salesMoney(row.netDue)}</td>
-        <td title={row.updatedAt}>{updatedMinute(row.updatedAt)}</td><td className="ui-action-cell"><button type="button" className="btn tc-link sales-view" disabled={!detailAvailable} title={detailAvailable ? undefined : '详情样式尚未配置，暂不可查看'} onClick={() => open(row)}>查看</button></td>
+        <td className="sales-numeric">{row.quantity === null ? '未记录' : row.businessType === 'SALE' ? row.quantity : `退${row.incomingQuantity} · 换${row.outgoingQuantity}`}</td><td className="sales-numeric">{salesMoney(row.netDue)}</td>
+        <td title={row.updatedAt ?? undefined}>{updatedMinute(row.updatedAt)}</td><td className="ui-action-cell"><button type="button" className="btn tc-link sales-view" disabled={!detailAvailable} title={detailAvailable ? undefined : '详情样式尚未配置，暂不可查看'} onClick={() => open(row)}>查看</button></td>
       </tr>)}</tbody></table>{data.items.length === 0 && <div className="tc-empty">没有符合条件的销货单</div>}</> : snapshot.phase === 'error' ? <div className="tc-empty">查询未完成</div> : busy ? <div className="iw-loading" role="status"><span className="iw-spinner" aria-hidden="true" /><strong>正在查询销货单</strong><UIButton type="button" className="iw-link" onClick={() => query.cancel()}>取消本次读取</UIButton></div> : <div className="tc-empty" role="status"><strong>尚未读取销货单</strong><p>点击“查询”读取当前条件。</p></div>}
     </div>
     <SalesPagination scope={scope} active={!detailActive} page={data?.page ?? 1} pageSize={size} total={data?.exactTotal ?? null} busy={busy} onPage={page => { if (success) run({ ...success.parameters, page }); }} onPageSize={pageSize => { if (success) run({ ...success.parameters, page: 1, pageSize }); else setInitialSize(pageSize); }} />

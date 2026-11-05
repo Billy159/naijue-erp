@@ -39,7 +39,7 @@ export function checkedLedgerPage(value: unknown, parameters: InventoryLedgerQue
     text(sku.code); selection(sku.color); selection(sku.sizeGroup);
     const product = object(sku.product, ['id', 'code', 'name']); uuid(product.id); text(product.code); text(product.name);
     const fit = object(sku.fit, ['id', 'code', 'label']); uuid(fit.id); text(fit.label);
-    if (typeof fit.code !== 'string' || !/^[A-Z]$/.test(fit.code)) return invalid();
+    if (typeof fit.code !== 'string' || !/^(?:[A-Z]|[356789])$/.test(fit.code)) return invalid();
     const size = object(sku.size, ['id', 'code', 'label']); uuid(size.id); text(size.label);
     if (size.code !== null && (typeof size.code !== 'string' || size.code.length > 1000 || /[\u0000-\u001f\u007f]/.test(size.code))) return invalid();
     if (!Array.isArray(row.entries) || row.entries.length > parameters.pageSize) return invalid();

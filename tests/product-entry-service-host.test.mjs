@@ -11,11 +11,11 @@ import {createProductHttpReader} from '../apps/web/src/transport/product-http-re
 import {ProductEditorController} from '../apps/web/src/products/product-editor-state.ts';
 import {ReadContext} from '../apps/web/src/loading/read-scope.ts';
 import {parseProductionHostConfiguration} from '../apps/web/src/production-host/configuration.ts';
-const command=(key,colorId=REF.color)=>({action:'CREATE',requestKey:key,values:structuredClone(VALUES),skus:[],barcodes:[],skuSelection:{colorIds:[colorId],fitIds:[REF.fit]}});
+const command=(key,colorId=REF.color,fitId=REF.fit)=>({action:'CREATE',requestKey:key,values:structuredClone(VALUES),skus:[],barcodes:[],skuSelection:{colorIds:[colorId],fitIds:[fitId]}});
 const setup=async(t,options)=>{const host=await createProductEntryServiceHost({syntheticOnly:true,...options});t.after(()=>host.close());const context=new ReadContext({accountId:REF.account,sessionRevision:'1',permissionRevision:'1'}),scope=context.createScope('product-entry-host');t.after(()=>{scope.dispose();context.clear();});return {host,scope,read:parameters=>({parameters,identity:scope.identity,routeInstanceId:scope.routeInstanceId,entityId:scope.entityId,signal:scope.signal})};};
 
 test('whole finite service host: actual COLOR create -> readback -> PRODUCT selection SAVE -> receipt/detail/reopen all11 real SKUs',async t=>{
- const {host,scope,read}=await setup(t,{productWrite:true,colorWrite:true,mediaStage:false});
+ const {host,scope,read}=await setup(t,{productWrite:true,colorWrite:true,mediaStage:false,numericFit:true});
  const config=parseProductionHostConfiguration({kind:'naijue-erp-production-host',http:{origin:ORIGIN,basePath:'/api'},assets:{basePath:'/assets/synthetic0053/'},session:{verifyOnMount:true},routes:host.frontendRoutes});
  assert.equal(config.routes.maintenance.products,true);assert.equal(config.routes.maintenance.colors,true);assert.equal(config.routes.maintenance.fits,undefined);assert.equal(config.routes.maintenance.categories,undefined);assert.equal(config.routes.productMediaReady,undefined);
  assert.equal(host.app.server.listening,false);assert.equal(host.app.hasRoute({method:'POST',url:'/products/media/uploads'}),false);
@@ -23,17 +23,18 @@ test('whole finite service host: actual COLOR create -> readback -> PRODUCT sele
  const colorCommand={action:'CREATE',requestKey:'SYN-COLOR-0053',values:{name:'SYNTHETIC 新增青色',code:'002',enabled:true}};
  const color=await colors.execute(colorCommand,scope.signal);assert.equal(color.kind,'COLOR');assert.equal(color.version,1);assert.equal(host.snapshot().state.products.size,0,'catalogue create does not save a product');
  const candidate=await reader.readCandidates(read({kind:'colors',search:'002',page:1,pageSize:100}));assert.equal(candidate.total,1);assert.equal(candidate.items[0].id,color.targetId);assert.equal(candidate.items[0].name,'SYNTHETIC 新增青色');
- const input=command('SYN-PRODUCT-0053',color.targetId),before=structuredClone(input),result=await products.execute(input,scope.signal);assert.deepEqual(input,before,'service cannot rewrite UI draft payload');assert.equal(result.version,1);
+ const input=command('SYN-PRODUCT-0053',color.targetId,REF.numericFit),before=structuredClone(input),result=await products.execute(input,scope.signal);assert.deepEqual(input,before,'service cannot rewrite UI draft payload');assert.equal(result.version,1);
  const after=host.snapshot();assert.equal(after.state.products.size,1);assert.equal(after.state.receipts.size,2);assert.equal(after.state.audits.filter(row=>row.kind==='PRODUCT').length,1);assert.ok(after.events.indexOf('PREPARE:PRODUCT')<after.events.indexOf('PUT_PRODUCT'));
  const aggregate=after.state.products.get(result.targetId);assert.equal(aggregate.skus.length,11);assert.equal(aggregate.barcodes.length,11);assert.ok(aggregate.skus.every(sku=>sku.id&&sku.skuCode&&sku.colorId===color.targetId&&sku.createdOperationId===result.operationId));assert.ok(aggregate.barcodes.every(row=>row.id&&row.kind==='MAIN'));
+ assert.ok(aggregate.skus.every(sku=>sku.fitId===REF.numericFit));assert.deepEqual(aggregate.barcodes.map(row=>row.barcode).sort(),host.group.sizes.map((_size,i)=>`559000053002${String(i+1).padStart(3,'0')}`).sort(),'2026 uses the selected numeric fit and original product/color/size codes');assert.equal(after.state.fits.get(REF.fit).code,'A','legacy fit remains separate and unchanged');
  const full=createProductFullPageHttpReader(host.http,['barcodes','prices','stock']),dictionary=createDictionaryHttpReader(host.http);const actualGroup=await dictionary.readSizeGroups(read({search:'',page:1,pageSize:100}));assert.equal(actualGroup.items[0].sizes.length,11);const skuPage=await full.barcodes.read(read({productId:result.targetId,view:'SKU',page:1,pageSize:50}));assert.equal(skuPage.totalSkus,11);assert.ok(skuPage.items.every(row=>row.main&&row.main.barcode));assert.equal((await full.prices.read(read({productId:result.targetId}))).prices.retail_price,'568.00');await assert.rejects(full.stock.read(read({productId:result.targetId,page:1,pageSize:20})),error=>error.kind==='unavailable','unimplemented stock is unavailable, never manufactured zero');
  const receipt=await products.receipt(input,scope.signal);assert.deepEqual(receipt.result,result);const detail=await reader.readDetail(read({productId:result.targetId}));assert.equal(detail.version,1);assert.equal(detail.skus.length,11);assert.equal(detail.barcodes.length,11);assert.deepEqual(detail.values.seasonIds,[REF.season]);assert.equal(detail.values.prices.retail_price,'568.00');
- const specs=await peek.readProductSpecifications(read({productId:result.targetId}));assert.equal(specs.colors.length,1);assert.equal(specs.colors[0].id,color.targetId);assert.equal(specs.fits[0].label,'A版（标准）');assert.equal(specs.sizes.length,11);
+ const specs=await peek.readProductSpecifications(read({productId:result.targetId}));assert.equal(specs.colors.length,1);assert.equal(specs.colors[0].id,color.targetId);assert.equal(specs.fits[0].id,REF.numericFit);assert.equal(specs.fits[0].label,'SYNTHETIC numeric fit 5');assert.equal(specs.sizes.length,11);
  const writes=after.state.writes;assert.deepEqual(await products.execute(input,scope.signal),result);assert.equal(host.snapshot().state.writes,writes,'same-key replay reads original receipt, not a second aggregate');
 });
 
 test('actual original private stage:5role uploads prepare files only; one SAVE consumes on product transaction; metadata + controlled bytes reopen',async t=>{
- const {host,scope,read}=await setup(t,{productWrite:true,colorWrite:false,mediaStage:true});
+ const {host,scope,read}=await setup(t,{productWrite:true,colorWrite:false,mediaStage:true,numericFit:true});
  const cfg=parseProductionHostConfiguration({kind:'naijue-erp-production-host',http:{origin:ORIGIN,basePath:'/api'},assets:{basePath:'/assets/synthetic0053/'},session:{verifyOnMount:true},routes:host.frontendRoutes});assert.equal(cfg.routes.productMediaReady,true);assert.equal(cfg.routes.maintenance.colors,undefined);
  const upload=createProductMediaUploadHttpClient(host.http),client=createProductMaintenanceHttpClientV2(host.http),reader=createProductMaintenanceHttpReaderV2(host.http),media=createProductEditorMediaHttpReader(host.http),peek=createProductHttpReader(host.http);
  const bytes=await sharp({create:{width:8,height:4,channels:3,background:'#123456'}}).png().toBuffer(),imageChanges=[];
@@ -42,7 +43,7 @@ test('actual original private stage:5role uploads prepare files only; one SAVE c
   imageChanges.push({action:'ADD',uploadId:staged.uploadId,role,colorId:role==='COLOR'?REF.color:null,displayOrder:i});
   const before=host.snapshot().state;assert.equal(before.products.size,0);assert.equal(before.images.size,0);assert.equal(before.receipts.size,0);assert.equal(before.writes,0,'stage cannot write product/native images before SAVE');
  }
- const input={...command('SYN-PRODUCT-MEDIA-0053'),imageChanges},saved=await client.execute(input,scope.signal),state=host.snapshot();assert.equal(state.state.products.size,1);assert.equal(state.state.images.get(saved.targetId).length,5);assert.equal(state.events.filter(x=>x==='STAGE_CONSUME_ON_PRODUCT_TX').length,5);assert.equal(state.inFlight,0);
+ const input={...command('SYN-PRODUCT-MEDIA-0053',REF.color,REF.numericFit),imageChanges},saved=await client.execute(input,scope.signal),state=host.snapshot();assert.equal(state.state.products.size,1);assert.equal(state.state.images.get(saved.targetId).length,5);assert.equal(state.events.filter(x=>x==='STAGE_CONSUME_ON_PRODUCT_TX').length,5);assert.equal(state.inFlight,0);
  const detail=await reader.readDetail(read({productId:saved.targetId}));assert.equal(detail.skus.length,11);assert.equal(detail.barcodes.length,11);
  const metadata=await media.readImages(read({productId:saved.targetId}));assert.equal(metadata.version,saved.version);assert.equal(metadata.images.length,5);assert.deepEqual(new Set(metadata.images.map(image=>image.role)),new Set(['MAIN','WHITE_BACKGROUND','HANG_TAG','DETAIL','COLOR']));assert.ok(metadata.images.every(image=>image.thumbnailState==='READY'&&image.thumbnailUrl));assert.equal(metadata.images.find(image=>image.role==='COLOR').colorId,REF.color);
  const photos=await peek.readProductImages(read({productId:saved.targetId}));assert.equal(photos.images.length,5);const thumbnail=await host.http.fetch(photos.images[0].thumbnailUrl,{credentials:'include',signal:scope.signal});assert.equal(thumbnail.status,200);assert.match(thumbnail.headers.get('content-type'),/image\/webp/);assert.ok((await thumbnail.arrayBuffer()).byteLength>0);
@@ -135,9 +136,29 @@ test('synthetic stock current inventory denial and source faults remain HTTP fai
 
 test('explicit finite FIT writer uses original service receipt/readback and preserves referenced identities',async t=>{
  const {host,scope,read}=await setup(t,{productWrite:true,colorWrite:false,fitWrite:true,mediaStage:false});
- const client=createCatalogueMaintenanceHttpClient(host.http,'FIT'),input={action:'CREATE',requestKey:'SYN-REAL-FIT-B',values:{name:'SYNTHETIC B fit',code:'B',enabled:true}},created=await client.execute(input,scope.signal);
+ const client=createCatalogueMaintenanceHttpClient(host.http,'FIT'),input={action:'CREATE',requestKey:'SYN-REAL-FIT-5',values:{name:'SYNTHETIC numeric fit 5',code:'5',enabled:true}},created=await client.execute(input,scope.signal);
  assert.deepEqual(await client.execute(input,scope.signal),created);assert.equal(host.frontendRoutes.maintenance.fits,true);
- const body=await(await host.http.fetch(ORIGIN+'/api/catalogue-settings-read/fits/query',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({search:'SYNTHETIC B fit',page:1,pageSize:20}),signal:scope.signal})).json();assert.equal(body.items[0].id,created.targetId);
- const saved=await createProductMaintenanceHttpClientV2(host.http).execute({...command('SYN-WITH-FIT-B'),skuSelection:{colorIds:[REF.color],fitIds:[created.targetId]}},scope.signal);assert.equal((await createProductHttpReader(host.http).readProductSpecifications(read({productId:saved.targetId}))).fits[0].id,created.targetId);
- await assert.rejects(client.execute({action:'DELETE',requestKey:'SYN-DELETE-REFERENCED-FIT',id:created.targetId,expectedVersion:1},scope.signal));assert.equal(host.snapshot().state.fits.get(created.targetId).deletedAt,null);
+ const body=await(await host.http.fetch(ORIGIN+'/api/catalogue-settings-read/fits/query',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({search:'SYNTHETIC numeric fit 5',page:1,pageSize:20}),signal:scope.signal})).json();assert.equal(body.items[0].id,created.targetId);assert.equal(body.items[0].code,'5');assert.equal(host.snapshot().state.fits.get(REF.fit).code,'A');
+ const saved=await createProductMaintenanceHttpClientV2(host.http).execute({...command('SYN-WITH-FIT-5'),skuSelection:{colorIds:[REF.color],fitIds:[created.targetId]}},scope.signal);assert.equal((await createProductHttpReader(host.http).readProductSpecifications(read({productId:saved.targetId}))).fits[0].id,created.targetId);
+ const detail=await createProductMaintenanceHttpReaderV2(host.http).readDetail(read({productId:saved.targetId}));assert.equal(detail.skus.length,11);assert.equal(detail.barcodes.length,11);assert.ok(detail.skus.every(sku=>sku.fitId===created.targetId));
+ await assert.rejects(client.execute({action:'DELETE',requestKey:'SYN-DELETE-REFERENCED-FIT',id:created.targetId,expectedVersion:1},scope.signal),{code:'CATALOGUE_IN_USE'});assert.equal(host.snapshot().state.fits.get(created.targetId).deletedAt,null);
+});
+
+
+test('retained legacy A stays readable and editable without numeric substitution; new letter FIT writes reject atomically',async t=>{
+ const {host,scope,read}=await setup(t,{productWrite:true,colorWrite:false,fitWrite:true,mediaStage:false});
+ const client=createCatalogueMaintenanceHttpClient(host.http,'FIT'),reader=createProductMaintenanceHttpReaderV2(host.http),peek=createProductHttpReader(host.http);
+ const original=host.snapshot().state.fits.get(REF.fit);
+ const saved=await createProductMaintenanceHttpClientV2(host.http).execute(command('SYN-RETAINED-FIT-A'),scope.signal);
+ const detail=await reader.readDetail(read({productId:saved.targetId}));assert.equal(detail.skus.length,11);assert.ok(detail.skus.every(sku=>sku.fitId===REF.fit));assert.deepEqual(detail.barcodes,[],'2026 never invents a numeric mapping for retained A');
+ const specs=await peek.readProductSpecifications(read({productId:saved.targetId}));assert.deepEqual(specs.fits,[{id:REF.fit,label:'A版（标准）'}]);assert.deepEqual(host.snapshot().state.fits.get(REF.fit),original);
+ const edit={action:'EDIT',requestKey:'SYN-RENAME-RETAINED-FIT-A',id:REF.fit,expectedVersion:1,values:{name:'SYNTHETIC retained A renamed',code:'A',enabled:true}},edited=await client.execute(edit,scope.signal);
+ assert.equal(edited.targetId,REF.fit);assert.equal(edited.version,2);assert.deepEqual(await client.execute(edit,scope.signal),edited);assert.equal(host.snapshot().state.fits.get(REF.fit).code,'A');
+ assert.deepEqual((await peek.readProductSpecifications(read({productId:saved.targetId}))).fits,[{id:REF.fit,label:edit.values.name}]);
+ const before=host.snapshot().state;
+ for(const input of [
+  {action:'CREATE',requestKey:'SYN-REJECT-NEW-FIT-B',values:{name:'SYNTHETIC rejected B',code:'B',enabled:true}},
+  {...edit,requestKey:'SYN-REJECT-REMAP-FIT-A-B',expectedVersion:2,values:{...edit.values,code:'B'}}
+ ])await assert.rejects(client.execute(input,scope.signal),{code:'INVALID_CATALOGUE_COMMAND',status:400,outcome:'rejected'});
+ assert.deepEqual(host.snapshot().state,before,'rejected letter writes cannot mutate identities, products, audits or receipts');
 });

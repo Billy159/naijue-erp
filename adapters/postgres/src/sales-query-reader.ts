@@ -1,3 +1,7 @@
+import {HISTORICAL_SALES_HALL_PROJECTION_SQL,decodeHistoricalSalesHallProjection,decodeLegacySalesHallProjection} from './sales-historical-hall-projection.ts';
+import { historicalSaleOriginProjection } from '../../../packages/application/src/sales-retained-approval.ts';
+import { readSalesRetainedApprovalEvidence } from './sales-retained-approval-reader.ts';
+import { ORDINARY_DOCUMENT_PUBLICATION_SQL, checkedOrdinaryDocumentListOptions, type OrdinaryDocumentListOptions, type NativeOrdinaryDocumentListOptions } from './ordinary-document-list-reader.ts';
 import { authorizedEffectiveDocumentIdentity, assertEffectiveDocumentPage, nullableEffectiveDocumentQuantity as normalNullableQuantity, nullableEffectiveDocumentMoney as normalNullableMoney } from '../../../packages/application/src/authorized-effective-documents.ts';
 import { importedHistoryReadSql, importedHistoryTransferSingleHallScopeSql } from "./imported-history-query-reader.ts";
 import { sourceConfirmedReadIdentityOn } from "./source-confirmed-read-authorization.ts";
@@ -25,6 +29,7 @@ const pgPoolCompatibility: PgPoolCompatibility = true;
 void pgPoolCompatibility;
 /** Technical response bound, not a business maximum; oversized native detail fails, never truncates. */
 export const SALES_DETAIL_MAX_CURRENT_LINES = 2000;
+export const SALES_DETAIL_MAX_SETTLEMENTS = 2000;
 const id = <K extends EntityKind>(kind: K, value: unknown): EntityId<K> => entityId(kind, stringValue(value));
 const nullableId = <K extends EntityKind>(kind: K, value: unknown): EntityId<K> | null => value === null ? null : id(kind, value);
 function choice<T extends string>(value: unknown, choices: readonly T[]): T {
@@ -34,6 +39,10 @@ function count(value: unknown): bigint {
   requireDomain(typeof value === "string" && /^(0|[1-9]\d*)$/.test(value), "INVALID_DATABASE_VALUE", "An exact nonnegative SQL count is required"); return BigInt(value);
 }
 function summaryQuantities(row: Record<string, unknown>): SalesSummaryQuantities {
+  if (row.quantity === null || row.incoming_quantity === null || row.outgoing_quantity === null) {
+    requireDomain(row.quantity === null && row.incoming_quantity === null && row.outgoing_quantity === null, "INVALID_DATABASE_VALUE", "Unknown gift classification must preserve all non-gift quantity unknowns");
+    return { quantity: null, incomingQuantity: null, outgoingQuantity: null };
+  }
   requireDomain(typeof row.quantity === "string" && /^(0|[1-9]\d*|-[1-9]\d*)$/.test(row.quantity), "INVALID_DATABASE_VALUE", "An exact signed SQL quantity sum is required");
   const quantity = BigInt(row.quantity); const incomingQuantity = count(row.incoming_quantity); const outgoingQuantity = count(row.outgoing_quantity);
   requireDomain(quantity === outgoingQuantity - incomingQuantity, "INVALID_DATABASE_VALUE", "Sales quantity totals disagree");
@@ -47,31 +56,34 @@ const SUMMARY_COLUMNS = `h.id, h.number, h.business_type, to_char(h.business_dat
   h.responsible_staff_id, responsible.name AS responsible_name, creator.name AS created_by_name, h.gross_amount::text, h.order_discount::text, h.net_due::text, ${stamp("h.updated_at")} AS updated_at`;
 const HEADER_COLUMNS = `${SUMMARY_COLUMNS}, h.note, h.created_by_account_id, h.created_hall_id,
   ${stamp("h.created_at")} AS created_at,
-  h.approved_by_account_id, ${stamp("h.approved_at")} AS approved_at, h.stock_basis`;
+  h.approved_by_account_id, ${stamp("h.approved_at")} AS approved_at, h.stock_basis,
+  to_jsonb(h) ? 'created_by_staff_id' AS unified_staff_columns,
+  to_jsonb(h)->>'created_by_staff_id' AS created_by_staff_id, to_jsonb(h)->>'approved_by_staff_id' AS approved_by_staff_id`;
 function decodeSummary(row: Record<string, unknown>, quantities: SalesSummaryQuantities): SalesSummary {
   return { id: id("sales", row.id), number: stringValue(row.number), businessType: choice(row.business_type, ["SALE", "RETURN", "EXCHANGE"]),
-    businessDate: businessDate(stringValue(row.business_date)), hallId: id("hall", row.hall_id), customerId: id("customer", row.customer_id),
+    businessDate: businessDate(stringValue(row.business_date)), hallId: nullableId("hall", row.hall_id), customerId: id("customer", row.customer_id),
     salespersonId: nullableId("staff", row.salesperson_id), warehouseId: id("warehouse", row.warehouse_id),
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version),
-    grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due), updatedAt: stringValue(row.updated_at), ...quantities, responsibleStaffId: nullableId("staff", row.responsible_staff_id), responsibleName: nullableString(row.responsible_name), createdByName: stringValue(row.created_by_name),
-    hallName: stringValue(row.hall_name), warehouseName: stringValue(row.warehouse_name), customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name) };
+    grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due), updatedAt: nullableString(row.updated_at), ...quantities, responsibleStaffId: nullableId("staff", row.responsible_staff_id), responsibleName: nullableString(row.responsible_name), createdByName: nullableString(row.created_by_name),
+    hallName: nullableString(row.hall_name), warehouseName: stringValue(row.warehouse_name), customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name) };
 }
 function decodeHeader(row: Record<string, unknown>): SalesHeaderRow {
   return { id: id("sales", row.id), number: stringValue(row.number), businessType: choice(row.business_type, ["SALE", "RETURN", "EXCHANGE"]),
-    businessDate: businessDate(stringValue(row.business_date)), hallId: id("hall", row.hall_id), customerId: id("customer", row.customer_id),
+    businessDate: businessDate(stringValue(row.business_date)), hallId: nullableId("hall", row.hall_id), customerId: id("customer", row.customer_id),
     salespersonId: nullableId("staff", row.salesperson_id), warehouseId: id("warehouse", row.warehouse_id), status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]),
     version: versionFromSql(row.version), grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due),
-    note: nullableString(row.note), responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
-    createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at), approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at) };
+    note: nullableString(row.note), responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: nullableId("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
+    createdAt: nullableString(row.created_at), updatedAt: nullableString(row.updated_at), approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at),
+    ...(row.unified_staff_columns === true ? { createdByStaffId: nullableId("staff", row.created_by_staff_id), approvedByStaffId: nullableId("staff", row.approved_by_staff_id) } : {}) };
 }
 function decodeLine(row: Record<string, unknown>): SalesLineRow {
   return { id: id("salesLine", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), skuId: id("sku", row.sku_id),
     quantity: quantityFromSql(row.quantity), referencePrice: row.reference_price === null ? null : moneyFromSql(row.reference_price), dealPrice: moneyFromSql(row.deal_price),
     pricingRule: row.pricing_rule === null ? null : choice(row.pricing_rule, ["UNIT_PRICE", "DISCOUNT"] as const), discountTenths: row.discount_tenths === null ? null : integerValue(row.discount_tenths),
     zeroConfirmed: row.zero_confirmed === null ? null : booleanValue(row.zero_confirmed), lineAmount: moneyFromSql(row.line_amount),
-    allocatedDiscount: moneyFromSql(row.allocated_discount), isGift: booleanValue(row.is_gift), isCurrent: booleanValue(row.is_current),
-    snapshot: { productCode: stringValue(row.product_code_snapshot), productName: stringValue(row.product_name_snapshot), colorName: stringValue(row.color_name_snapshot),
-      fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
+    allocatedDiscount: row.allocated_discount === null ? null : moneyFromSql(row.allocated_discount), isGift: row.is_gift === null ? null : booleanValue(row.is_gift), isCurrent: booleanValue(row.is_current),
+    snapshot: { productCode: nullableString(row.product_code_snapshot), productName: nullableString(row.product_name_snapshot), colorName: nullableString(row.color_name_snapshot),
+      fitName: nullableString(row.fit_name_snapshot), sizeName: nullableString(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
 }
 function decodeSettlement(row: Record<string, unknown>): SalesSettlementRow {
   return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id), paymentMethodId: nullableId("paymentMethod", row.payment_method_id_snapshot),
@@ -121,7 +133,11 @@ function rowOf(result: PgSalesQueryResult): Record<string, unknown> {
 export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
   private readonly pool: PgSalesQueryPool;
   private readonly normalLists: NativeDocumentListOptions | undefined;
-  constructor(pool: PgSalesQueryPool, normalLists?: NativeDocumentListOptions) {
+  private readonly ordinaryDetail: OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions | undefined;
+  constructor(pool: PgSalesQueryPool, options?: NativeDocumentListOptions | OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions) {
+    const ordinary = options?.profile === 'source-confirmed-ordinary-documents-v1' || options?.profile === 'source-confirmed-unified-native-v1';
+    const normalLists = ordinary ? undefined : options as NativeDocumentListOptions | undefined;
+    if (ordinary && options) this.ordinaryDetail = checkedOrdinaryDocumentListOptions(options as OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions);
     if (normalLists !== undefined) {
       const runtime26 = checkedNativeRuntime26Capability(normalLists.runtime26);
       if (normalLists.profile !== "source-confirmed-normal-document-lists-v1" || runtime26 === undefined) throw new TypeError("Explicit original runtime and normal-list historical policy required");
@@ -151,17 +167,22 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
     } finally { client.release(discard); }
   }
   async readReferences(read: SalesScopedRead<SalesFilterReferenceQuery>): Promise<SalesFilterReferencePage> {
+    requireDomain(this.ordinaryDetail === undefined || this.ordinaryDetail.profile === 'source-confirmed-unified-native-v1', 'ORDINARY_DOCUMENTS_NOT_READY', 'Explicit ordinary provider required for this operation');
     const parameters = parseSalesFilterReferenceQuery(read.parameters); const p = new Predicate(checkedSalesReadScope(read.scope));
     // Closed internal table/column map. EXISTS yields one row per native master PK, irrespective of
     // document count, and retains old disabled references without exposing unused catalog records.
     const references = { hall: ["hall", "hall_id", "hall"], salesperson: ["staff", "salesperson_id", "staff"],
       customer: ["customer", "customer_id", "customer"], warehouse: ["warehouse", "warehouse_id", "warehouse"] } as const;
     const [table, column, kind] = references[parameters.kind];
-    const authorized = `EXISTS (SELECT 1 FROM naijue_erp.sales_header h WHERE ${p.where()} AND h.${column} = r.id)`;
     const search = p.parameter(parameters.search);
     const searched = parameters.kind === "customer" ? `(strpos(r.name, ${search}) > 0 OR strpos(r.code, ${search}) > 0)` : `strpos(r.name, ${search}) > 0`;
     return this.snapshot(read.signal, async (query,client) => {
-      let candidates=authorized;
+      if (this.ordinaryDetail?.profile === 'source-confirmed-unified-native-v1') {
+        await this.ordinaryDetail.runtime27.assertReady(client, 'ORDINARY_DOCUMENT_READ');
+        const identity = await sourceConfirmedReadIdentityOn({query}, read.actor, read.signal);
+        if (identity.role === 'SALESPERSON') { requireDomain(identity.hallId !== null, 'FORBIDDEN', 'Current salesperson hall required'); p.parts.push(`h.hall_id=${p.parameter(identity.hallId)}::uuid`); }
+      }
+      let candidates=`EXISTS (SELECT 1 FROM naijue_erp.sales_header h WHERE ${p.where()} AND h.${column} = r.id)`;
       if(this.normalLists!==undefined){
         const scoped=await normalDocumentReferenceScopeOn(client,this.normalLists,'sales',read,{scope:p.where(),values:p.values});
         await assertNormalReferenceHistoryOn(scoped);
@@ -186,13 +207,14 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
     });
   }
   async readList(read: SalesScopedRead<SalesListQuery>): Promise<SalesListPage | SalesUnifiedListPage> {
+    requireDomain(this.ordinaryDetail === undefined, 'ORDINARY_DOCUMENTS_NOT_READY', 'Explicit ordinary provider required for this operation');
     const parameters = parseSalesListQuery(read.parameters); const p = new Predicate(checkedSalesReadScope(read.scope));
     if (this.normalLists !== undefined) return this.snapshot(read.signal, async (_query, client) => {
       const result = await normalDocumentListOn(client, this.normalLists!, "sales", { ...read, parameters }, {
-        from: `naijue_erp.sales_header h JOIN naijue_erp.hall hall ON hall.id=h.hall_id JOIN naijue_erp.warehouse wh ON wh.id=h.warehouse_id
+        from: `naijue_erp.sales_header h LEFT JOIN naijue_erp.hall hall ON hall.id=h.hall_id JOIN naijue_erp.warehouse wh ON wh.id=h.warehouse_id
           JOIN naijue_erp.customer c ON c.id=h.customer_id LEFT JOIN naijue_erp.staff sp ON sp.id=h.salesperson_id
-          LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id
-          JOIN naijue_erp.staff creator ON creator.id=creator_account.staff_id`,
+          LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id LEFT JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id
+          LEFT JOIN naijue_erp.staff creator ON creator.id=CASE WHEN to_jsonb(h) ? 'created_by_staff_id' THEN (to_jsonb(h)->>'created_by_staff_id')::uuid ELSE creator_account.staff_id END`,
         columns: `${SUMMARY_COLUMNS},hall.name AS hall_name,wh.name AS warehouse_name,c.name AS customer_name,sp.name AS salesperson_name`, scope: p.where(), values: p.values });
       const items: SalesUnifiedSummary[] = result.rows.map(row => {
         const identity = authorizedEffectiveDocumentIdentity(row.dataset, row.batch_id, row.id, row.version);
@@ -201,9 +223,9 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
           return { ...decodeSummary(row, summaryQuantities(row)), dataset: "LIVE", batchId: null, documentId, effectiveVersion, productSummary, categorySummary: documentCategorySummary(row, "QUANTITY") }; }
         const quantity = normalNullableQuantity(row.quantity), incomingQuantity = normalNullableQuantity(row.incoming_quantity), outgoingQuantity = normalNullableQuantity(row.outgoing_quantity);
         requireDomain(quantity === null && incomingQuantity === null && outgoingQuantity === null || quantity !== null && incomingQuantity !== null && outgoingQuantity !== null && quantity === outgoingQuantity - incomingQuantity, "INVALID_DATABASE_VALUE", "Historical signed quantity totals disagree");
-        return { dataset: "HISTORY", batchId: id("operation", identity.batchId), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary, categorySummary: documentCategorySummary(row, "QUANTITY"),
+        return { ...decodeLegacySalesHallProjection(row),dataset: "HISTORY", batchId: id("operation", identity.batchId), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary, categorySummary: documentCategorySummary(row, "QUANTITY"),
           number: stringValue(row.number), businessType: choice(row.business_type, ["SALE", "RETURN", "EXCHANGE"]), businessDate: row.business_date === null ? null : businessDate(stringValue(row.business_date)),
-          status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), hallId: id("hall", row.hall_id), warehouseId: id("warehouse", row.warehouse_id), customerId: id("customer", row.customer_id),
+          status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), hallId: nullableId("hall", row.hall_id), warehouseId: id("warehouse", row.warehouse_id), customerId: id("customer", row.customer_id),
           salespersonId: nullableId("staff", row.salesperson_id), responsibleStaffId: nullableId("staff", row.responsible_staff_id), responsibleName: nullableString(row.responsible_name), createdByName: nullableString(row.created_by_name),
           hallName: nullableString(row.hall_name), warehouseName: nullableString(row.warehouse_name), customerName: nullableString(row.customer_name), salespersonName: nullableString(row.salesperson_name),
           updatedAt: nullableString(row.updated_at), createdLocalAt: nullableString(row.created_local_at), updatedLocalAt: nullableString(row.updated_local_at),
@@ -219,9 +241,9 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
       const exactTotal = count(rowOf(await query(`SELECT COUNT(*)::text AS exact_total FROM naijue_erp.sales_header h WHERE ${p.where()}`, [...p.values])).exact_total);
       const paging = p.page(parameters.page, parameters.pageSize);
       const rows = (await query(`SELECT ${SUMMARY_COLUMNS}, hall.name AS hall_name, wh.name AS warehouse_name, c.name AS customer_name, sp.name AS salesperson_name
-        FROM naijue_erp.sales_header h JOIN naijue_erp.hall hall ON hall.id = h.hall_id
+        FROM naijue_erp.sales_header h LEFT JOIN naijue_erp.hall hall ON hall.id = h.hall_id
         JOIN naijue_erp.warehouse wh ON wh.id = h.warehouse_id JOIN naijue_erp.customer c ON c.id = h.customer_id
-        LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id JOIN naijue_erp.staff creator ON creator.id=creator_account.staff_id WHERE ${p.where()}
+        LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id LEFT JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id LEFT JOIN naijue_erp.staff creator ON creator.id=CASE WHEN to_jsonb(h) ? 'created_by_staff_id' THEN (to_jsonb(h)->>'created_by_staff_id')::uuid ELSE creator_account.staff_id END WHERE ${p.where()}
         ORDER BY h.created_at DESC, h.number COLLATE "C" ASC, h.id ASC ${paging}`, p.values)).rows;
       requireDomain(rows.length <= parameters.pageSize && BigInt(rows.length) <= exactTotal, "INVALID_DATABASE_VALUE", "Sales page exceeds exact scope");
       // Only authorized, already-paged native IDs enter this one bounded batch.
@@ -231,11 +253,11 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
       const pageIds = rows.map(row => id("sales", row.id)); const pageIdSet = new Set(pageIds);
       requireDomain(pageIdSet.size === pageIds.length, "INVALID_DATABASE_VALUE", "Duplicate sales page identity");
       const aggregateRows = pageIds.length === 0 ? [] : (await query(`SELECT page.id AS sales_id,
-        COALESCE(SUM(l.quantity::numeric), 0)::text AS quantity,
-        COALESCE(SUM(CASE WHEN l.quantity < 0 THEN -(l.quantity::numeric) ELSE 0 END), 0)::text AS incoming_quantity,
-        COALESCE(SUM(CASE WHEN l.quantity > 0 THEN l.quantity::numeric ELSE 0 END), 0)::text AS outgoing_quantity
+        CASE WHEN count(l.id) FILTER (WHERE l.is_gift IS NULL)>0 THEN NULL ELSE COALESCE(SUM(CASE WHEN l.is_gift IS FALSE THEN l.quantity::numeric ELSE 0 END), 0) END::text AS quantity,
+        CASE WHEN count(l.id) FILTER (WHERE l.is_gift IS NULL)>0 THEN NULL ELSE COALESCE(SUM(CASE WHEN l.is_gift IS FALSE AND l.quantity < 0 THEN -(l.quantity::numeric) ELSE 0 END), 0) END::text AS incoming_quantity,
+        CASE WHEN count(l.id) FILTER (WHERE l.is_gift IS NULL)>0 THEN NULL ELSE COALESCE(SUM(CASE WHEN l.is_gift IS FALSE AND l.quantity > 0 THEN l.quantity::numeric ELSE 0 END), 0) END::text AS outgoing_quantity
         FROM unnest($1::uuid[]) AS page(id) LEFT JOIN naijue_erp.sales_line l
-          ON l.sales_id = page.id AND l.is_current AND NOT l.is_gift GROUP BY page.id`, [pageIds])).rows;
+          ON l.sales_id = page.id AND l.is_current GROUP BY page.id`, [pageIds])).rows;
       requireDomain(aggregateRows.length === pageIds.length, "INVALID_DATABASE_VALUE", "Sales quantity batch does not match page");
       const quantities = new Map<string, SalesSummaryQuantities>();
       for (const row of aggregateRows) {
@@ -248,11 +270,23 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
   }
   async readDetail(read: SalesScopedRead<SalesDetailQuery>): Promise<SalesDetail> {
     const parameters = parseSalesDetailQuery(read.parameters); const p = new Predicate(checkedSalesReadScope(read.scope)); p.target(parameters.salesId);
-    return this.snapshot(read.signal, async query => {
-      const rows = (await query(`SELECT ${HEADER_COLUMNS}, hall.name AS hall_name, wh.name AS warehouse_name, c.name AS customer_name, sp.name AS salesperson_name
-        FROM naijue_erp.sales_header h JOIN naijue_erp.hall hall ON hall.id = h.hall_id
+    return this.snapshot(read.signal, async (query, client) => {
+      if (this.ordinaryDetail) {
+        await this.ordinaryDetail.runtime27.assertReady(client, 'ORDINARY_DOCUMENT_READ'); activeSalesRead(read.signal);
+        const identity = await sourceConfirmedReadIdentityOn({query}, read.actor, read.signal);
+        const ready = rowOf(await query('/* ordinary-detail:ready */ SELECT naijue_erp.standard_business_ready() AS business_ready'));
+        requireDomain(typeof ready.business_ready === 'boolean', 'INVALID_DATABASE_VALUE', 'Explicit ordinary publication state required');
+        requireDomain(ready.business_ready, 'ORDINARY_DOCUMENTS_NOT_READY', 'Ordinary documents are not published');
+        p.parts.push(this.ordinaryDetail.profile === 'source-confirmed-unified-native-v1' ? 'naijue_erp.standard_business_ready()' : ORDINARY_DOCUMENT_PUBLICATION_SQL);
+        if (identity.role === 'SALESPERSON') {
+          requireDomain(identity.hallId !== null, 'FORBIDDEN', 'Current salesperson hall required');
+          p.parts.push(`h.hall_id=${p.parameter(identity.hallId)}::uuid`);
+        }
+      }
+      const rows = (await query(`SELECT ${HEADER_COLUMNS}, ${this.ordinaryDetail?HISTORICAL_SALES_HALL_PROJECTION_SQL+',':''} hall.name AS hall_name, wh.name AS warehouse_name, c.name AS customer_name, sp.name AS salesperson_name
+        FROM naijue_erp.sales_header h LEFT JOIN naijue_erp.hall hall ON hall.id = h.hall_id
         JOIN naijue_erp.warehouse wh ON wh.id = h.warehouse_id JOIN naijue_erp.customer c ON c.id = h.customer_id
-        LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id JOIN naijue_erp.staff creator ON creator.id=creator_account.staff_id WHERE ${p.where()}`, p.values)).rows;
+        LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id LEFT JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id LEFT JOIN naijue_erp.staff creator ON creator.id=CASE WHEN to_jsonb(h) ? 'created_by_staff_id' THEN (to_jsonb(h)->>'created_by_staff_id')::uuid ELSE creator_account.staff_id END WHERE ${p.where()}`, p.values)).rows;
       requireDomain(rows.length > 0, "DOCUMENT_NOT_FOUND", "Sales document is unavailable");
       const row = rowOf({ rows, rowCount: rows.length }); const header = decodeHeader(row);
       const lineRows = (await query(`SELECT l.id, l.sales_id, l.line_no, l.sku_id, l.quantity::text, l.reference_price::text, l.deal_price::text, l.line_amount::text,
@@ -267,22 +301,50 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         s.account_name_snapshot, s.method_name_snapshot, pa.name AS current_account_name, pm.name AS current_method_name
         FROM naijue_erp.sales_settlement s JOIN naijue_erp.payment_account pa ON pa.id = s.payment_account_id
         JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id
-        WHERE s.sales_id = $1 ORDER BY s.line_no, s.id LIMIT 4`, [header.id])).rows;
-      requireDomain(settlementRows.length <= 3, "INVALID_DATABASE_VALUE", "Sales detail exceeds approved settlement count");
+        WHERE s.sales_id = $1 ORDER BY s.line_no, s.id LIMIT ${this.ordinaryDetail ? '$2' : '4'}`, this.ordinaryDetail ? [header.id, SALES_DETAIL_MAX_SETTLEMENTS + 1] : [header.id])).rows;
+      requireDomain(settlementRows.length <= (this.ordinaryDetail ? SALES_DETAIL_MAX_SETTLEMENTS : 3), this.ordinaryDetail ? "SALES_READ_TOO_LARGE" : "INVALID_DATABASE_VALUE", "Sales detail exceeds bounded settlement response");
       const document: SalesDocument = { header, lines: lineRows.map(decodeLine), settlements: settlementRows.map(decodeSettlement) };
-      return { document, ...salesDetailIdentitySummary(lineRows, row.stock_basis), stockBasis: choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]),
-        referenceNames: { responsibleName: nullableString(row.responsible_name), createdByName: stringValue(row.created_by_name), hallName: stringValue(row.hall_name), warehouseName: stringValue(row.warehouse_name),
+      const stockBasis=choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]);
+      let historicalSaleOrigin:SalesDetail['historicalSaleOrigin'];
+      if(stockBasis==='CUTOFF_HISTORY'&&header.businessType==='SALE'){
+        // Only after the scoped header was authorized. Inactive rows are needed
+        // to verify removal history, but never enter the editable detail DTO.
+        try {
+          const inactive=header.version===1?[]:(await query(`/* sales-origin:inactive-lines */ SELECT l.id, l.sales_id, l.line_no, l.sku_id, l.quantity::text,
+            l.reference_price::text, l.deal_price::text, l.line_amount::text, l.allocated_discount::text, l.is_gift, l.pricing_rule,
+            l.discount_tenths, l.zero_confirmed, l.product_code_snapshot, l.product_name_snapshot, l.color_name_snapshot,
+            l.fit_name_snapshot, l.size_name_snapshot, l.barcode_snapshot, l.is_current FROM naijue_erp.sales_line l
+            WHERE l.sales_id=$1::uuid AND NOT l.is_current ORDER BY l.line_no,l.id LIMIT $2`,[header.id,SALES_DETAIL_MAX_CURRENT_LINES+1])).rows;
+          if(inactive.length<=SALES_DETAIL_MAX_CURRENT_LINES){
+            const evidence=header.version===1?{events:[]}:await readSalesRetainedApprovalEvidence(query,header.id,header.version,this.ordinaryDetail!==undefined);
+            historicalSaleOrigin=historicalSaleOriginProjection({...document,lines:[...document.lines,...inactive.map(decodeLine)]},stockBasis,{...evidence,assertCurrent(){activeSalesRead(read.signal);}});
+          }
+        } catch(error) {
+          // Incomplete origin is not an editable exemption; viewing the actual
+          // document is still useful. SQL/permission/codec failures are not hidden.
+          if(!(error instanceof DomainError)||!['UNKNOWN_PRICING_FACTS','HISTORICAL_DISCOUNT_CHANGED'].includes(error.code))throw error;
+        }
+      }
+      return { document, ...decodeHistoricalSalesHallProjection(row), ...(historicalSaleOrigin?{historicalSaleOrigin}:{}), ...salesDetailIdentitySummary(lineRows, row.stock_basis), stockBasis,
+        referenceNames: { responsibleName: nullableString(row.responsible_name), createdByName: nullableString(row.created_by_name), hallName: nullableString(row.hall_name), warehouseName: stringValue(row.warehouse_name),
           customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name) },
         settlementNames: settlementRows.map(settlement => ({ settlementId: id("settlement", settlement.id), paymentAccountId: id("paymentAccount", settlement.payment_account_id),
-          accountNameSnapshot: stringValue(settlement.account_name_snapshot), methodNameSnapshot: stringValue(settlement.method_name_snapshot),
+          accountNameSnapshot: nullableString(settlement.account_name_snapshot), methodNameSnapshot: nullableString(settlement.method_name_snapshot),
           currentAccountName: stringValue(settlement.current_account_name), currentMethodName: stringValue(settlement.current_method_name) })) };
     });
   }
   async readHistory(read: SalesScopedRead<SalesHistoryQuery>): Promise<SalesHistoryPage> {
+    requireDomain(this.ordinaryDetail === undefined || this.ordinaryDetail.profile === 'source-confirmed-unified-native-v1', 'ORDINARY_DOCUMENTS_NOT_READY', 'Explicit ordinary provider required for this operation');
     const parameters = parseSalesHistoryQuery(read.parameters); const p = new Predicate(checkedSalesReadScope(read.scope)); p.target(parameters.salesId);
-    return this.snapshot(read.signal, async query => {
+    return this.snapshot(read.signal, async (query, client) => {
+      if (this.ordinaryDetail?.profile === 'source-confirmed-unified-native-v1') {
+        await this.ordinaryDetail.runtime27.assertReady(client, 'ORDINARY_DOCUMENT_READ');
+        const identity = await sourceConfirmedReadIdentityOn({query}, read.actor, read.signal);
+        if (identity.role === 'SALESPERSON') { requireDomain(identity.hallId !== null, 'FORBIDDEN', 'Current salesperson hall required'); p.parts.push(`h.hall_id=${p.parameter(identity.hallId)}::uuid`); }
+      }
       requireDomain((await query(`SELECT h.id FROM naijue_erp.sales_header h WHERE ${p.where()}`, [...p.values])).rows.length === 1, "DOCUMENT_NOT_FOUND", "Sales document is unavailable");
-      const source = `FROM naijue_erp.audit_change a JOIN naijue_erp.sales_header h ON h.id = a.object_id WHERE a.object_type = 'SALES' AND ${p.where()}`;
+      const businessActions = this.ordinaryDetail?.profile === 'source-confirmed-unified-native-v1' ? " AND a.action IN ('SAVE','APPROVE','UNAPPROVE','VOID')" : '';
+      const source = `FROM naijue_erp.audit_change a JOIN naijue_erp.sales_header h ON h.id = a.object_id WHERE a.object_type = 'SALES'${businessActions} AND ${p.where()}`;
       const exactTotal = count(rowOf(await query(`SELECT COUNT(*)::text AS exact_total ${source}`, [...p.values])).exact_total);
       const paging = p.page(parameters.page, parameters.pageSize);
       const rows = (await query(`SELECT a.id, a.operation_id, a.actor_account_id, a.action, ${stamp("a.occurred_at")} AS occurred_at,
@@ -296,6 +358,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
   /** Existing LIVE APPROVED account statistics; historical settlements are not
    * part of this endpoint or the unified document totals. */
   async readSettlementStatistics(read: SalesScopedRead<SalesListQuery>): Promise<SalesSettlementStatistics> {
+    requireDomain(this.ordinaryDetail === undefined, 'ORDINARY_DOCUMENTS_NOT_READY', 'Explicit ordinary provider required for this operation');
     const parameters = parseSalesListQuery(read.parameters); const p = new Predicate(checkedSalesReadScope(read.scope)); p.filter(parameters); p.parts.push("h.status = 'APPROVED'");
     const approved = `SELECT h.id FROM naijue_erp.sales_header h WHERE ${p.where()}`;
     return this.snapshot(read.signal, async query => {
@@ -373,10 +436,10 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
     ? 'LEFT JOIN naijue_erp.hall hn ON hn.id=hb.hall_id LEFT JOIN naijue_erp.warehouse wn ON wn.id=hb.warehouse_id LEFT JOIN naijue_erp.customer cn ON cn.id=hb.customer_id LEFT JOIN naijue_erp.staff spn ON spn.id=hb.salesperson_id'
     : 'LEFT JOIN naijue_erp.warehouse fw ON fw.id=hb.from_warehouse_id LEFT JOIN naijue_erp.warehouse tw ON tw.id=hb.to_warehouse_id LEFT JOIN naijue_erp.hall fh ON fh.id=fw.hall_id LEFT JOIN naijue_erp.hall th ON th.id=tw.hall_id';
   const columns = kind === 'sales'
-    ? 'id,number,business_type,business_date,hall_id,customer_id,salesperson_id,warehouse_id,status,version,gross_amount,order_discount,net_due,updated_at,responsible_staff_id,responsible_name,created_by_name,hall_name,warehouse_name,customer_name,salesperson_name,created_local_at,updated_local_at'
+    ? 'id,number,business_type,business_date,hall_id,customer_id,salesperson_id,warehouse_id,status,version,gross_amount,order_discount,net_due,updated_at,responsible_staff_id,responsible_name,created_by_name,hall_name,warehouse_name,customer_name,salesperson_name,created_local_at,updated_local_at,historical_hall_evidence'
     : 'id,number,business_date,from_warehouse_id,to_warehouse_id,status,version,created_by_account_id,created_at,updated_at,responsible_staff_id,responsible_name,from_warehouse_name,to_warehouse_name,from_hall_name,to_hall_name,created_by_name,approved_by_name,created_local_at,updated_local_at';
   const historyColumns = kind === 'sales'
-    ? 'hb.id,hb.number,hb.business_type,hb.business_date,hb.hall_id,hb.customer_id,hb.salesperson_id,hb.warehouse_id,hb.source_status AS status,hb.version,hb.gross_amount,hb.order_discount,hb.net_due,hb.updated_instant AS updated_at,hb.responsible_staff_id,hb.responsible_name,creator.name AS created_by_name,' + names + ',hb.created_local_at,hb.updated_local_at'
+    ? 'hb.id,hb.number,hb.business_type,hb.business_date,hb.hall_id,hb.customer_id,hb.salesperson_id,hb.warehouse_id,hb.source_status AS status,hb.version,hb.gross_amount,hb.order_discount,hb.net_due,hb.updated_instant AS updated_at,hb.responsible_staff_id,hb.responsible_name,creator.name AS created_by_name,' + names + ',hb.created_local_at,hb.updated_local_at,hb.historical_hall_evidence'
     : 'hb.id,hb.number,hb.business_date,hb.from_warehouse_id,hb.to_warehouse_id,hb.source_status AS status,hb.version,NULL::uuid AS created_by_account_id,hb.created_instant AS created_at,hb.updated_instant AS updated_at,hb.responsible_staff_id,hb.responsible_name,' + names + ',creator.name AS created_by_name,approver.name AS approved_by_name,hb.created_local_at,hb.updated_local_at';
   // Bind each filter once and apply the same predicate inside both branches,
   // before their materialization and historical display/reference projections.
@@ -404,7 +467,7 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
   }
   // Creation order is independent from the business date or later edits. This
   // internal key never expands the strict list wire; unknown history stays NULL.
-  const candidates = `live_candidates AS MATERIALIZED (SELECT 'LIVE'::text AS dataset,NULL::uuid AS batch_id,${native.columns},h.created_at AS sort_created_at,NULL::text AS created_local_at,NULL::text AS updated_local_at FROM ${native.from} WHERE (${liveScope}) AND (${liveFilters.join(' AND ') || 'TRUE'})),
+  const candidates = `live_candidates AS MATERIALIZED (SELECT 'LIVE'::text AS dataset,NULL::uuid AS batch_id,${native.columns},h.created_at AS sort_created_at,NULL::text AS created_local_at,NULL::text AS updated_local_at${kind==='sales'?',NULL::jsonb AS historical_hall_evidence':''} FROM ${native.from} WHERE (${liveScope}) AND (${liveFilters.join(' AND ') || 'TRUE'})),
     history_base AS MATERIALIZED (SELECT ${history.headerColumns},h.created_instant AS sort_created_at
       FROM ${history.headerFrom} WHERE ${history.publishedPredicate} AND (${historyScope}) AND (${historyFilters.join(' AND ') || 'TRUE'})),
     history_candidates AS MATERIALIZED (SELECT 'HISTORY'::text AS dataset,hb.batch_id,${historyColumns},hb.sort_created_at
@@ -442,7 +505,7 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
     FROM matched h LEFT JOIN total_metrics q ON ${metricJoin}),
     page_headers AS MATERIALIZED (
       SELECT * FROM matched ORDER BY sort_created_at DESC NULLS LAST,id ASC,dataset ASC,batch_id ASC NULLS FIRST LIMIT $${values.length + 1} OFFSET $${values.length + 2}::bigint),
-    page_lines AS MATERIALIZED (${lines('page_headers', true)}),page_metrics AS (${metrics('page_lines')}),
+    page_lines AS MATERIALIZED (${lines('page_headers', true)}),
     category_groups AS (SELECT dataset,batch_id,document_id,category_id,category_name,min(line_no) AS first_line,
       ${kind === 'sales' ? 'sum(quantity)' : 'CASE WHEN bool_or(product_id IS NULL) THEN NULL ELSE count(DISTINCT product_id) END'} AS value
       FROM page_lines WHERE dataset='LIVE' AND ${kind === 'sales' ? 'is_gift IS FALSE' : 'quantity>0'}
@@ -460,7 +523,7 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
       count(*)>3 AS product_has_more FROM previews GROUP BY dataset,batch_id,document_id),
     page_rows AS (    SELECT h.*,${['quantity','incoming_quantity','outgoing_quantity'].map(c => `${metricValue(c)}::text AS ${c}`).join(',')},
       CASE WHEN ps.document_id IS NULL THEN '0' ELSE ps.product_count END AS product_count,coalesce(ps.product_items,'[]'::jsonb) AS product_items,coalesce(ps.product_has_more,false) AS product_has_more,coalesce(cs.category_items,'[]'::jsonb) AS category_items,coalesce(cs.category_has_more,false) AS category_has_more,coalesce(cs.category_count,'0') AS category_count
-    FROM page_headers h LEFT JOIN page_metrics q ON ${metricJoin}
+    FROM page_headers h LEFT JOIN total_metrics q ON ${metricJoin}
       LEFT JOIN product_summaries ps ON ps.dataset=h.dataset AND ps.batch_id IS NOT DISTINCT FROM h.batch_id AND ps.document_id=h.id
       LEFT JOIN category_summaries cs ON cs.dataset=h.dataset AND cs.batch_id IS NOT DISTINCT FROM h.batch_id AND cs.document_id=h.id
     ORDER BY h.sort_created_at DESC NULLS LAST,h.id ASC,h.dataset ASC,h.batch_id ASC NULLS FIRST)
@@ -485,7 +548,7 @@ export function documentProductSummary(row: Record<string, unknown>): DocumentPr
 export { normalNullableQuantity, normalNullableMoney };
 
 export function documentCategorySummary(row: Record<string, unknown>, metric: DocumentCategorySummary['metric']): DocumentCategorySummary {
-  if(row.dataset==='HISTORY')return {basis:'UNKNOWN',metric,items:[],hasMore:false,categoryCount:null};
+  if(row.dataset==='HISTORY'||metric==='QUANTITY'&&row.quantity===null)return {basis:'UNKNOWN',metric,items:[],hasMore:false,categoryCount:null};
   requireDomain(Array.isArray(row.category_items)&&row.category_items.length<=3&&typeof row.category_has_more==='boolean','INVALID_DATABASE_VALUE','Bounded current category projection required');
   const seen=new Set<string|null>();
   const items=row.category_items.map((entry:unknown)=>{
@@ -508,10 +571,10 @@ export function salesDetailIdentitySummary(rows:readonly Record<string,unknown>[
  for(const row of rows){const productId=id('product',row.product_id),categoryId=nullableId('category',row.category_id),categoryName=nullableString(row.category_name);
   requireDomain((categoryId===null)===(categoryName===null),'INVALID_DATABASE_VALUE','Current category identity required');
   if(!products.has(productId))products.set(productId,{productId,productCodeSnapshot:nullableString(row.product_code_snapshot),productNameSnapshot:nullableString(row.product_name_snapshot)});
-  if(booleanValue(row.is_gift))continue;const value=quantityFromSql(row.quantity),previous=categories.get(categoryId);
+  if(row.is_gift===null||booleanValue(row.is_gift))continue;const value=quantityFromSql(row.quantity),previous=categories.get(categoryId);
   requireDomain(!previous||previous.categoryName===categoryName,'INVALID_DATABASE_VALUE','Category identity must be consistent');
   categories.set(categoryId,{categoryId,categoryName,value:(previous?.value??0n)+value});
  }
  const items=[...categories.values()].filter(item=>item.value!==0n);
- return {productSummary:{productCount:BigInt(products.size),items:[...products.values()].slice(0,3),hasMore:products.size>3},categorySummary:{basis:'CURRENT',metric:'QUANTITY',categoryCount:BigInt(items.length),items,hasMore:false}};
+ return {productSummary:{productCount:BigInt(products.size),items:[...products.values()].slice(0,3),hasMore:products.size>3},categorySummary:rows.some(row=>row.is_gift===null)?{basis:'UNKNOWN',metric:'QUANTITY',categoryCount:null,items:[],hasMore:false}:{basis:'CURRENT',metric:'QUANTITY',categoryCount:BigInt(items.length),items,hasMore:false}};
 }

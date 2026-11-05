@@ -214,7 +214,7 @@ test('rewrite capture candidates feed the original reviewed reader',async t=>{
  }
  const offset=rewrite26OffsetSourceCandidates(f,dir),fs=await import('node:fs/promises');await fs.mkdir(join(dir,'snapshots'));await fs.mkdir(join(dir,'indices'));for(const a of [offset.snapshot,offset.baseManifest,...offset.indices,offset.indexManifest])await writeFile(a.path,a.utf8);
  const qb=await save('offset-unit-qb.json',{result:'PASS'}),indexReview=await save('offset-unit-review.json',{version:'C_MATERIALIZED_SOURCE_OFFSET_INDEX_REVIEW_V1',decision:'ACCEPT_EXACT_SOURCE_OFFSET_BINDINGS',binding:short,indexManifest:{path:offset.indexManifest.path,bytes:offset.indexManifest.bytes,sha256:offset.indexManifest.sha256},source:{path:offset.snapshot.path,bytes:offset.snapshot.bytes,sha256:offset.snapshot.sha256,rows:43},scope:'OFFSET_ROWS_ONLY',independentReview:{path:qb.path,sha256:qb.sha256,result:'PASS'},realImportExecutionAuthorized:false});
- const offsetModule=await import('../scripts/import-v3/verified-offset-source.mjs'),offsetReader=await offsetModule.openReviewedMaterializedSource({indexManifestFile:offset.indexManifest.path,trustedIndexManifestSha256:offset.indexManifest.sha256,reviewFile:indexReview.path,trustedReviewSha256:indexReview.sha256,binding:short,entities:['SKU','INVENTORY_BASELINE']});let sourceCount=0;for(const entity of ['SKU','INVENTORY_BASELINE'])for await(const chunk of offsetReader.chunks(entity,100))sourceCount+=chunk.length;assert.equal(sourceCount,3);await offsetReader.close();
+ const offsetModule=await import('../scripts/import-v3/verified-offset-source.mjs'),offsetReader=await offsetModule.openReviewedMaterializedSource({indexManifestFile:offset.indexManifest.path,trustedIndexManifestSha256:offset.indexManifest.sha256,reviewFile:indexReview.path,trustedReviewSha256:indexReview.sha256,binding:short,entities:['SKU','INVENTORY_BASELINE']});let sourceCount=0;for(const entity of ['SKU','INVENTORY_BASELINE'] as const)for await(const chunk of offsetReader.chunks(entity,100))sourceCount+=chunk.length;assert.equal(sourceCount,3);await offsetReader.close();
  const b2=m.buildCurrentRuntime26SalesBlueprint({database:b.database,batchId:b.batchId,now:b.now,pins:{...pins,baseManifestSha256:offset.baseManifest.sha256}}),f2=await buildCurrentRuntime26FullSourceFixture(b2);assert.equal(rewrite26OffsetSourceCandidates(f2,dir).baseManifest.sha256,offset.baseManifest.sha256);
  const catalogue=rewrite26CatalogueCandidate(f2,join(dir,'catalogue.json'));await writeFile(catalogue.path,catalogue.utf8);const catalogueReview=await save('catalogue-unit-review.json',{version:'NATIVE_CATALOGUE_TECHNICAL_REVIEW_V1',...short,mappingSha256:catalogue.sha256});
  const catalogueOptions={mappingFile:catalogue.path,trustedMappingSha256:catalogue.sha256,reviewApprovalFile:catalogueReview.path,trustedReviewApprovalSha256:catalogueReview.sha256};
@@ -244,4 +244,16 @@ test('rewrite capture candidates feed the original reviewed reader',async t=>{
  const payment=rewrite26PaymentCandidate(f2,join(dir,'payment.json'));assert.equal(payment.executionAuthorized,false);assert.equal(payment.manifest.rows,3);assert.equal(payment.manifest.importAuthorized,false);await writeFile(payment.artifact.path,payment.artifact.utf8);const paymentManifest=await save('payment-manifest.json',payment.manifest);
  const paymentReview=await save('payment-unit-review.json',{version:'C_NATIVE_PAYMENT_REFERENCE_REVIEW_V1',decision:'ACCEPT_EXACT_PREPARED_PAYMENT_REFERENCE_BINDINGS',binding:short,manifest:{...paymentManifest,rows:3,counts:payment.manifest.counts},decisions:{path:payment.artifact.path,bytes:payment.artifact.bytes,sha256:payment.artifact.sha256,rows:3},scope:'PAYMENT_REFERENCE_DECISIONS_ONLY',independentReview:{path:qb.path,sha256:qb.sha256,result:'PASS'},realImportExecutionAuthorized:false});
  const paymentModule=await import('../scripts/import-v3/native-payment-source26.mjs'),paymentReader=await paymentModule.openReviewedPaymentSource26({reviewFile:paymentReview.path,trustedReviewSha256:paymentReview.sha256,binding:short,authorizedPayloadHash:null});let payments=0;for await(const c of paymentReader.chunks()){await paymentReader.authorize(c);payments+=c.rows.length;}assert.equal(payments,3);await paymentReader.close();
+});
+
+test('synthetic source fixture uses actual reader exports, including captured money API', async () => {
+ const money=await import('../scripts/import-v2/authorized-sales-detail-reader.mjs');
+ assert.equal(typeof money.openAuthorizedSalesDetailReader,'function');
+ assert.equal(typeof money.openCapturedSalesSettlementSource,'function');
+ const provider=await import('./integration/current-runtime26-source-provider.mjs');
+ assert.equal(typeof provider.openReviewedQa22Capture,'function');
+ const offset=await import('../scripts/import-v3/verified-offset-source.mjs');
+ assert.equal(typeof offset.openReviewedMaterializedSource,'function');
+ const catalogue=await import('../scripts/import-v3/native-source-authorizers.mjs');
+ assert.equal(typeof catalogue.openReviewedCatalogueSource26,'function');
 });

@@ -14,7 +14,10 @@ test('P03 single materialized candidate/proof returns summary even for an empty 
  const f=fixture(),r=await f.read();assert.ok('totals'in r);assert.equal(r.totals.quantity,9007199254740993n);assert.equal(r.totals.netDue,null);assert.deepEqual(r.items,[]);
  const queries=f.calls.filter(c=>c.sql.includes('normal-document-list:'));assert.equal(queries.length,1);const sql=queries[0]!.sql;
  assert.equal((sql.match(/matched AS MATERIALIZED/g)??[]).length,1);assert.equal((sql.match(/history_validity AS/g)??[]).length,1);
- assert.match(sql,/total_metrics/);assert.match(sql,/page_metrics/);assert.match(sql,/FROM summary/);assert.match(sql,/coalesce\(\(SELECT jsonb_agg/);
+ assert.equal((sql.match(/total_metrics AS \(/g)??[]).length,1);assert.doesNotMatch(sql,/page_metrics/);
+ assert.match(sql,/FROM matched h LEFT JOIN total_metrics q ON q\.dataset=h\.dataset AND q\.batch_id IS NOT DISTINCT FROM h\.batch_id AND q\.document_id=h\.id/);
+ assert.match(sql,/FROM page_headers h LEFT JOIN total_metrics q ON q\.dataset=h\.dataset AND q\.batch_id IS NOT DISTINCT FROM h\.batch_id AND q\.document_id=h\.id/);
+ assert.match(sql,/page_lines AS MATERIALIZED/);assert.match(sql,/FROM summary/);assert.match(sql,/coalesce\(\(SELECT jsonb_agg/);
  const proof=sql.slice(sql.indexOf('history_validity AS'),sql.indexOf('all_lines AS'));assert.doesNotMatch(proof,/strpos|LIMIT|OFFSET/);
  assert.deepEqual(queries[0]!.values.slice(-2),[20,'20']);
 });

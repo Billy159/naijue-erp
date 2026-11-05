@@ -35,7 +35,7 @@ export function inventoryCatalogStatusSql(source: string, seasonArray = false): 
     }
     ts.forEachChild(node,visit);
   };visit(sf);
-  if(catalogues!==1||statuses!==1||!catalogue||!status||!ts.isTemplateExpression(catalogue)||catalogue.templateSpans.length!==1||!ts.isTemplateExpression(status)||status.templateSpans.length!==2)throw new Error('Expected the reviewed finite inventory catalogue and status query');
+  if(catalogues!==1||statuses!==1||!catalogue||!status||!ts.isTemplateExpression(catalogue)||catalogue.templateSpans.length!==1||!ts.isTemplateExpression(status)||status.templateSpans.length!==4)throw new Error('Expected the reviewed finite inventory catalogue and status query');
   const span=catalogue.templateSpans[0]!,condition=span.expression;
   if(!ts.isConditionalExpression(condition)||!ts.isIdentifier(condition.condition)||condition.condition.text!=='seasonArray'
     ||!ts.isStringLiteral(condition.whenTrue)||condition.whenTrue.text!=='p.season_ids && $7::uuid[]'
@@ -46,7 +46,11 @@ export function inventoryCatalogStatusSql(source: string, seasonArray = false): 
   const treeSpan=status.templateSpans[1]!,tree=treeSpan.expression;
   if(!ts.isConditionalExpression(tree)||tree.condition.getText(sf)!=='retainedDelete'||!ts.isNoSubstitutionTemplateLiteral(tree.whenTrue)||!ts.isNoSubstitutionTemplateLiteral(tree.whenFalse))throw new Error('Unreviewed retained category tree interpolation');
   // This proof retains the exact legacy branch; retained SQL has separate protocol coverage.
-  const sql=status.head.text+catalogSql+statusSpan.literal.text+tree.whenFalse.text+treeSpan.literal.text;
+  const uncoveredSpan=status.templateSpans[2]!,uncovered=uncoveredSpan.expression;
+  if(!ts.isConditionalExpression(uncovered)||uncovered.condition.getText(sf)!=='runtime27'||!ts.isStringLiteral(uncovered.whenTrue)||uncovered.whenTrue.text!=='false'||!ts.isNoSubstitutionTemplateLiteral(uncovered.whenFalse))throw new Error('Unreviewed runtime27 membership interpolation');
+  const unknownSpan=status.templateSpans[3]!,unknown=unknownSpan.expression;
+  if(!ts.isConditionalExpression(unknown)||unknown.condition.getText(sf)!=='runtime27'||!ts.isNoSubstitutionTemplateLiteral(unknown.whenTrue)||!ts.isStringLiteral(unknown.whenFalse)||unknown.whenFalse.text!=="'0'::text")throw new Error('Unreviewed runtime27 unknown-count interpolation');
+  const sql=status.head.text+catalogSql+statusSpan.literal.text+tree.whenFalse.text+treeSpan.literal.text+uncovered.whenFalse.text+uncoveredSpan.literal.text+unknown.whenFalse.text+unknownSpan.literal.text;
   if(sql.includes('${'))throw new Error('Unresolved query interpolation is not accepted');
   return sql;
 }

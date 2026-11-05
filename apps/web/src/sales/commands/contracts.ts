@@ -7,13 +7,13 @@ import type { ReadScope } from '../../loading/read-scope.ts';
 /** Wire counterparts of the existing native contracts. No actor, role or scope is sent. */
 type Wire<T> = T extends bigint ? string : T extends string ? string : T extends number ? number
   : T extends readonly (infer Item)[] ? readonly Wire<Item>[] : T extends object ? { readonly [K in keyof T]: Wire<T[K]> } : T;
-export type SalesDraftDto = Omit<Wire<SalesDraft>, 'lines' | 'settlements'> & { readonly lines: readonly (Omit<Wire<SalesDraft['lines'][number]>, 'pricingRule' | 'zeroConfirmed' | 'isCurrent'> & {
-  readonly pricingRule: SalesPricingRule; readonly zeroConfirmed: boolean; readonly isCurrent: true;
-})[];
-  /** Runtime commands require the user's intended method/account pair. Never
-   * fill an unknown original method from a label or the account's current method. */
-  readonly settlements: readonly (Omit<Wire<SalesDraft['settlements'][number]>, 'paymentMethodId'> & { readonly paymentMethodId: string })[];
-};
+/** Nullable saved facts remain facts in the ordinary editor. CREATE and changed
+ * economics still pass the strict validator; existing SAVE is compared to its
+ * locked prior document on the server, never authorized by this wire type. */
+export type SalesDraftDto = Omit<Wire<SalesDraft>, 'lines'> & { readonly lines: readonly (Omit<Wire<SalesDraft['lines'][number]>, 'isCurrent' | 'pricingRule'> & {
+  readonly isCurrent: true; readonly pricingRule: SalesPricingRule | null;
+})[] };
+
 export type SalesCommandDto = { readonly action: 'SAVE'; readonly requestKey: string; readonly expectedVersion: number | null; readonly draft: SalesDraftDto }
   | { readonly action: 'SAVE'; readonly requestKey: string; readonly expectedVersion: number | null; readonly proposal: NativeSalesSaveProposal }
   | { readonly action: Exclude<SalesAction, 'SAVE'>; readonly requestKey: string; readonly expectedVersion: number; readonly salesId: string };
@@ -28,13 +28,24 @@ export interface SalesCommandClient {
 }
 export type SalesCommandErrorKind = 'invalid-request' | 'unauthenticated' | 'forbidden' | 'not-found' | 'conflict' | 'network' | 'timeout' | 'aborted' | 'malformed-response' | 'server';
 export type SalesCommandOutcome = 'not-sent' | 'rejected' | 'uncertain' | 'read';
-/** Safe constants only; never retains response messages, URLs, credentials or causes. */
+export interface SalesSettlementDiagnostic { readonly netDue: string; readonly settled: string; readonly difference: string }
+/** Only canonical bounded integer facts with consistent arithmetic are retained. */
+export function validatedSettlementDiagnostic(value: unknown): SalesSettlementDiagnostic | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const row = value as Record<string, unknown>;
+  const keys = ['netDue', 'settled', 'difference'] as const;
+  if (Object.keys(row).length !== 3 || !keys.every(key => Object.hasOwn(row, key) && typeof row[key] === 'string' && /^-?(0|[1-9][0-9]{0,39})$/.test(row[key] as string) && row[key] !== '-0')) return null;
+  const netDue = row.netDue as string, settled = row.settled as string, difference = row.difference as string;
+  if (BigInt(netDue) - BigInt(settled) !== BigInt(difference) || difference === '0') return null;
+  return Object.freeze({ netDue, settled, difference });
+}
+/** Safe constants and validated arithmetic only; no response messages, URLs, credentials or causes. */
 export class SalesCommandError extends Error {
-  readonly kind: SalesCommandErrorKind; readonly code: string; readonly outcome: SalesCommandOutcome; readonly status: number | null;
-  constructor(kind: SalesCommandErrorKind, code: string, outcome: SalesCommandOutcome, status: number | null = null) {
+  readonly kind: SalesCommandErrorKind; readonly code: string; readonly outcome: SalesCommandOutcome; readonly status: number | null; readonly settlement: SalesSettlementDiagnostic | null;
+  constructor(kind: SalesCommandErrorKind, code: string, outcome: SalesCommandOutcome, status: number | null = null, settlement: unknown = null) {
     super(({ 'invalid-request': '销货请求未通过校验。', unauthenticated: '登录已失效。', forbidden: '无权执行当前操作。', 'not-found': '未找到单据或操作回执。', conflict: '单据版本或状态已改变。', network: '连接中断。', timeout: '请求超时。', aborted: '已停止等待请求。', 'malformed-response': '服务器返回无效。', server: '服务器暂未完成请求。' } as const)[kind]);
     this.name = kind === 'aborted' ? 'AbortError' : 'SalesCommandError';
-    this.kind = kind; this.code = code; this.outcome = outcome; this.status = status;
+    this.kind = kind; this.code = code; this.outcome = outcome; this.status = status; this.settlement = code === 'SETTLEMENT_MISMATCH' ? validatedSettlementDiagnostic(settlement) : null;
   }
 }
 /** Future host integration only. Implementations must use actual authorized current
@@ -48,6 +59,8 @@ export interface SalesFormPreparationProvider {
  * opt-in existing-document editor does not turn missing providers into facts. */
 export const salesCommandUiActivation = Object.freeze({ available: false, reason: 'NATIVE_FORM_PROVIDERS_UNAVAILABLE' } as const);
 export interface SalesCommandWorkspaceOptions {
+  /** Host-selected ordinary document workflow; inventory basis is not provenance. */
+  readonly documentListProfile?: 'source-confirmed-ordinary-documents-v1';
   /** Session-owned scope, retained across route detach. Identity changes dispose it. */
   readonly scope: ReadScope;
   readonly client: SalesCommandClient;

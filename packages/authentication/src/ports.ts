@@ -35,6 +35,12 @@ export interface AuthenticationPasswordChangeSnapshot {
   readonly account: AuthenticationAccount;
   readonly session: AuthenticationSession;
 }
+/** One current statement snapshot for query authentication. No password material,
+ * session mutation or command authorization/serialization authority. */
+export interface AuthenticationSessionSnapshot {
+  readonly account: Omit<AuthenticationAccount, 'passwordHash'>;
+  readonly session: AuthenticationSession;
+}
 export interface AuthenticationTransaction {
   /** Account reads must serialize login/password changes against the same account and its staff/hall status. */
   findAccountByLogin(loginName: string): Promise<AuthenticationAccount | undefined>;
@@ -50,11 +56,56 @@ export interface AuthenticationTransaction {
 }
 /** MUST commit or roll back all callback writes together. No default in-memory or real database is selected. */
 export interface AuthenticationStore {
+  /** Optional explicit query-only lane; never fall back to transaction resolution. */
+  readSessionSnapshot?(tokenHash: string): Promise<AuthenticationSessionSnapshot | undefined>;
   /** One unlocked statement; its lease MUST be released before this promise resolves or rejects. */
   readLoginSnapshot(loginName: string): Promise<AuthenticationLoginSnapshot | undefined>;
   /** One unlocked statement joining the session/current account/qualification; no transaction or locks. */
   readPasswordChangeSnapshot(tokenHash: string): Promise<AuthenticationPasswordChangeSnapshot | undefined>;
   transaction<T>(work: (tx: AuthenticationTransaction) => Promise<T>): Promise<T>;
+}
+export interface AuthenticationReadOnlyStore extends AuthenticationStore {
+  /** Single unlocked joined statement; release its lease before settling. */
+  readSessionSnapshot(tokenHash: string): Promise<AuthenticationSessionSnapshot | undefined>;
+}
+/** Only the existing locked login operations. No password/session maintenance lane. */
+export type AuthenticationLoginTransaction = Pick<AuthenticationTransaction, 'getAccount' | 'insertSession'>;
+/** Explicit borrowed contract, NOT AuthenticationStore. The outer owner retains
+ * the one connection/transaction and must roll back on any failure. No operation
+ * below may borrow/release a lease or issue transaction-control SQL. */
+export interface BorrowedAuthenticationLoginOperations {
+  readLoginSnapshot(loginName: string): Promise<AuthenticationLoginSnapshot | undefined>;
+  withLockedAccount<T>(work: (tx: AuthenticationLoginTransaction) => Promise<T>): Promise<T>;
+}
+export interface BorrowedAuthenticationLoginStore {
+  /** One-shot lifetime. Must await unawaited in-flight work and preserve failures
+   * even when a callback catches them. Escaped handles must fail after closing. */
+  runInCurrentTransaction(work: (operations: BorrowedAuthenticationLoginOperations) => Promise<void>): Promise<void>;
+}
+export type BorrowedAuthenticationIssuance =
+  /** Acquired and retained by the parent until the physical outer outcome. */
+  { readonly kind: 'PARENT_HELD_CAPACITY'; readonly assertValid: () => void }
+  /** Deliberate isolated host policy, never an implicit production fallback. */
+  | { readonly kind: 'ISOLATED_SYNTHETIC_NO_CAPACITY_POLICY' };
+export interface BorrowedAuthenticationDependencies {
+  readonly store: BorrowedAuthenticationLoginStore;
+  readonly now: () => string;
+  readonly policy: AuthenticationPolicy;
+  readonly passwords: AuthenticationPasswordWork;
+  readonly issuance: BorrowedAuthenticationIssuance;
+}
+/** Exact current account provisioned by NEW_EMPTY INIT, not a package account. */
+export interface BorrowedAuthenticationCredentials {
+  readonly loginName: string;
+  readonly password: string;
+  readonly accountId: EntityId<'account'>;
+  readonly staffId: EntityId<'staff'>;
+}
+export interface ProvisionalAuthenticationSession {
+  readonly state: 'PROVISIONAL_CURRENT_TRANSACTION';
+  readonly token: string;
+  readonly principal: AuthenticationPrincipal;
+  readonly expiresAt: string;
 }
 export interface PasswordCodec {
   hash(password: string): Promise<string>;

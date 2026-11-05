@@ -25,8 +25,8 @@ function totalsBySize(value: unknown, sizeIds: readonly string[], sizeIdSet: Rea
   const row = sizeRecord(value, sizeIds, sizeIdSet);
   return Object.freeze(Object.fromEntries(sizeIds.map(id => [id, stockTotal(row[id])])));
 }
-function checkedTotal(total: InventoryStockTotal, sum: bigint): InventoryStockTotal {
-  equalTotal(total, Object.freeze({ knownQuantity: sum.toString(), unknownCells: 0, completeness: "complete" }));
+function checkedTotal(total: InventoryStockTotal, sum: bigint, unknownCells = 0): InventoryStockTotal {
+  equalTotal(total, Object.freeze({ knownQuantity: sum.toString(), unknownCells, completeness: unknownCells === 0 ? "complete" : "incomplete" }));
   return total;
 }
 function cell(value: unknown): InventoryStockCell {
@@ -35,6 +35,10 @@ function cell(value: unknown): InventoryStockCell {
     const row = record(value, ["state", "skuId", "quantity"], [], reject);
     exactInteger(row.quantity, true);
     return Object.freeze({ state, skuId: idValue("sku", row.skuId, reject), quantity: row.quantity as string });
+  }
+  if (state === "unknown") {
+    const row = record(value, ["state", "skuId"], [], reject);
+    return Object.freeze({ state, skuId: idValue("sku", row.skuId, reject) });
   }
   if (state !== "not-applicable") reject();
   record(value, ["state"], [], reject);
@@ -56,7 +60,7 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
   if (sizes.length === 0) reject();
   spend(budget, sizes.length);
   const sizeIds = sizes.map(size => size.id), sizeIdSet = new Set(sizeIds);
-  const productSizeSums = sizeIds.map(() => 0n); let productSum = 0n;
+  const productSizeSums = sizeIds.map(() => 0n), productSizeUnknown = sizeIds.map(() => 0); let productSum = 0n, productUnknown = 0;
   const variants = new Set<string>();
   const colorFits = list(row.colorFits, INVENTORY_PRODUCT_MAX_VARIANTS).map(item => {
     spend(budget, 1);
@@ -69,14 +73,14 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
     if (warehouses.length !== scope.warehouses.length) reject();
     // Same coordinate must be either a nonexistent SKU in every warehouse, or the identical actual SKU.
     const coordinates = new Map<string, string>();
-    const variantSizeSums = sizeIds.map(() => 0n); let variantSum = 0n;
+    const variantSizeSums = sizeIds.map(() => 0n), variantSizeUnknown = sizeIds.map(() => 0); let variantSum = 0n, variantUnknown = 0;
     const rows = warehouses.map((item, index): InventoryQueryRow => {
       const row = record(item, ["warehouse", "cells", "total"], [], reject);
       const warehouse = selection("warehouse", row.warehouse); const authorized = scope.warehouses[index];
       if (!authorized || warehouse.id !== authorized.id || warehouse.label !== authorized.label) reject();
       const rawCells = sizeRecord(row.cells, sizeIds, sizeIdSet);
       spend(budget, 1 + sizes.length);
-      const cells: Record<string, InventoryStockCell> = {}; let rowSum = 0n;
+      const cells: Record<string, InventoryStockCell> = {}; let rowSum = 0n, rowUnknown = 0;
       for (let sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) {
         const size = sizes[sizeIndex]!;
         const value = cell(rawCells[size.id]); const identity = value.state === "not-applicable" ? "absent" : value.skuId;
@@ -87,24 +91,25 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
           const previous = budget.skuCoordinates.get(value.skuId);
           if (previous !== undefined && previous !== coordinate) reject();
           budget.skuCoordinates.set(value.skuId, coordinate);
-          const exact = BigInt(value.quantity); rowSum += exact; variantSizeSums[sizeIndex] = variantSizeSums[sizeIndex]! + exact;
+          if (value.state === "unknown") { rowUnknown++; variantSizeUnknown[sizeIndex] = variantSizeUnknown[sizeIndex]! + 1; }
+          else { const exact = BigInt(value.quantity); rowSum += exact; variantSizeSums[sizeIndex] = variantSizeSums[sizeIndex]! + exact; }
         }
         cells[size.id] = value;
       }
-      const total = checkedTotal(stockTotal(row.total), rowSum); variantSum += rowSum;
+      const total = checkedTotal(stockTotal(row.total), rowSum, rowUnknown); variantSum += rowSum; variantUnknown += rowUnknown;
       return Object.freeze({ warehouse, cells: Object.freeze(cells), total });
     });
     const sizeTotals = totalsBySize(group.sizeTotals, sizeIds, sizeIdSet);
     for (const [index, sizeId] of sizeIds.entries()) {
-      checkedTotal(sizeTotals[sizeId]!, variantSizeSums[index]!);
-      productSizeSums[index] = productSizeSums[index]! + variantSizeSums[index]!;
+      checkedTotal(sizeTotals[sizeId]!, variantSizeSums[index]!, variantSizeUnknown[index]!);
+      productSizeSums[index] = productSizeSums[index]! + variantSizeSums[index]!; productSizeUnknown[index] = productSizeUnknown[index]! + variantSizeUnknown[index]!;
     }
-    const total = checkedTotal(stockTotal(group.total), variantSum); productSum += variantSum;
+    const total = checkedTotal(stockTotal(group.total), variantSum, variantUnknown); productSum += variantSum; productUnknown += variantUnknown;
     return Object.freeze({ color, fit, rows: Object.freeze(rows), sizeTotals, total }) satisfies InventoryQueryColorFit;
   });
   const sizeTotals = totalsBySize(row.sizeTotals, sizeIds, sizeIdSet);
-  for (const [index, sizeId] of sizeIds.entries()) checkedTotal(sizeTotals[sizeId]!, productSizeSums[index]!);
-  const total = checkedTotal(stockTotal(row.total), productSum);
+  for (const [index, sizeId] of sizeIds.entries()) checkedTotal(sizeTotals[sizeId]!, productSizeSums[index]!, productSizeUnknown[index]!);
+  const total = checkedTotal(stockTotal(row.total), productSum, productUnknown);
   return Object.freeze({ id, code: textValue(row.code, reject), name: textValue(row.name, reject),
     categoryLabel: textValue(row.categoryLabel, reject, true), supplierLabel: textValue(row.supplierLabel, reject, true),
     seasonLabel: textValue(row.seasonLabel, reject, true), sizeGroup: selection("sizeGroup", row.sizeGroup), sizes,
@@ -143,7 +148,7 @@ export function checkedInventorySnapshot(value: unknown, query: InventoryQuery, 
   return Object.freeze({ readReference, readiness, data });
 }
 export async function* checkedInventoryOutputFrames(values: AsyncIterable<unknown>, query: InventoryQuery, scope: InventoryReadScope): AsyncIterable<InventoryOutputFrame> {
-  let summary: InventoryOutputSummary | undefined, completion: Extract<InventoryOutputFrame, { kind: "complete" }> | undefined, completed = false, count = 0, sum = 0n, previous: InventoryQueryProduct | undefined;
+  let summary: InventoryOutputSummary | undefined, completion: Extract<InventoryOutputFrame, { kind: "complete" }> | undefined, completed = false, count = 0, sum = 0n, unknown = 0, previous: InventoryQueryProduct | undefined;
   const ids = new Set<string>(), budget: MatrixBudget = { units: 0, skuCoordinates: new Map() };
   for await (const value of values) {
     if (completed) reject();
@@ -162,11 +167,11 @@ export async function* checkedInventoryOutputFrames(values: AsyncIterable<unknow
       const current = product(row.product, scope, query, budget);
       if (ids.has(current.id) || ++count > summary.exactTotalProducts) reject(); ids.add(current.id);
       if (previous) { const order = Buffer.compare(Buffer.from(previous.code), Buffer.from(current.code)); if (order > 0 || order === 0 && previous.id >= current.id) reject(); }
-      previous = current; sum += BigInt(current.total.knownQuantity); yield Object.freeze({ kind: "product", product: current }); continue;
+      previous = current; sum += BigInt(current.total.knownQuantity); unknown += current.total.unknownCells; if (!Number.isSafeInteger(unknown)) reject(); yield Object.freeze({ kind: "product", product: current }); continue;
     }
     const row = record(value, ["kind", "readReference", "exactTotalProducts", "emittedProducts", "allMatchesTotal"], [], reject);
     if (kind !== "complete" || row.readReference !== summary.readReference || row.exactTotalProducts !== summary.exactTotalProducts
-      || row.emittedProducts !== count || count !== summary.exactTotalProducts || sum.toString() !== summary.allMatchesTotal.knownQuantity) reject();
+      || row.emittedProducts !== count || count !== summary.exactTotalProducts || sum.toString() !== summary.allMatchesTotal.knownQuantity || unknown !== summary.allMatchesTotal.unknownCells) reject();
     equalTotal(stockTotal(row.allMatchesTotal), summary.allMatchesTotal); completed = true;
     completion = Object.freeze({ kind: "complete", readReference: summary.readReference, exactTotalProducts: count, emittedProducts: count, allMatchesTotal: summary.allMatchesTotal });
   }

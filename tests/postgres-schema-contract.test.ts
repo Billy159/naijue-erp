@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 const ddl = await readFile(new URL("../adapters/postgres/migrations/0001_runtime_sales.sql", import.meta.url), "utf8");
 const adapter = await readFile(new URL("../adapters/postgres/src/sales-unit-of-work.ts", import.meta.url), "utf8");
 const postingBalances = await readFile(new URL("../adapters/postgres/src/inventory-posting-balances.ts", import.meta.url), "utf8");
+const anchorReader = await readFile(new URL("../adapters/postgres/src/document-inventory-anchor-reader.ts", import.meta.url), "utf8");
 function table(name: string): string {
   const start = ddl.indexOf(`CREATE TABLE naijue_erp.${name} (`); assert.ok(start >= 0, `Missing native table ${name}`);
   const end = ddl.indexOf("\n);", start); assert.ok(end > start);
@@ -58,12 +59,39 @@ test("pg SQL-text contract: source, reversal, receipt/audit uniqueness and defer
   assert.match(ddl, /original.quantity_delta::numeric \+ NEW.quantity_delta::numeric <> 0/);
   assert.match(ddl, /b.last_operation_id IS DISTINCT FROM NEW.id/);
 });
-test("pg SQL-text contract: historical branch stays closed, settlement equality uses final approved state", () => {
-  assert.match(adapter, /loaded.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED"/);
+// Frozen 0001 describes its original runtime-only and three-row rules, not the
+// unified successor's current document admission or settlement cardinality.
+test("pg SQL-text contract: frozen 0001 retains original historical gate and final-approved settlement equality", () => {
   assert.match(ddl, /h.stock_basis <> 'RUNTIME_LEDGER'/);
   assert.match(ddl, /count_rows > 3 OR \(h.status = 'APPROVED' AND total <> h.net_due\)/);
   assert.match(ddl, /WHERE status = 'APPROVED'/);
   assert.doesNotMatch(ddl, /CREATE TABLE[^;]+(?:inventory_correction|fund_balance|debt|transfer_header|import_batch|import_record)/i);
+});
+
+// Current admission is provenance-aware rather than a blanket source ban.
+// Functional positive/negative coverage lives in unified-ordinary-uow.test.ts
+// and postgres-protocol.test.ts; these assertions are source-only complements.
+test("pg SQL-text contract: current ordinary writer requires verified migration provenance without excluding converted drafts", () => {
+  assert.doesNotMatch(adapter, /HISTORICAL_POSTING_NOT_IMPLEMENTED/);
+  const writeStart = adapter.indexOf("  async putRuntimeSales(");
+  const anchorStart = adapter.indexOf("  async getDocumentInventoryAnchor(");
+  const originStart = adapter.indexOf("  private async assertOrdinaryOrigin(");
+  const lockStart = adapter.indexOf("  async lockBalances(");
+  assert.ok(writeStart >= 0 && anchorStart > writeStart && originStart > anchorStart && lockStart > originStart);
+  const write = adapter.slice(writeStart, anchorStart);
+  const anchorAccess = adapter.slice(anchorStart, originStart);
+  const origin = adapter.slice(originStart, lockStart);
+  assert.match(write, /await this\.assertOrdinaryOrigin\(\);/);
+  assert.match(write, /h\.version === \(loaded\.version === null \? 1 : loaded\.version \+ 1\)/);
+  assert.match(write, /stock_basis = '\$\{loaded\.stockBasis\}'/);
+  assert.match(origin, /if \(this\.sales\.stockBasis === 'CUTOFF_HISTORY'\) requireDomain\(await this\.getDocumentInventoryAnchor\('SALES', this\.sales\.id\),\s*'MISSING_POSTING_PROVENANCE'/);
+  assert.match(anchorAccess, /this\.active && kind === 'SALES' && this\.sales\?\.id === documentId/);
+  assert.match(anchorAccess, /\(this\.runtime27 \? readPublishedDocumentInventoryAnchor : readDocumentInventoryAnchor\)\(\(sql, values\) => this\.query\(sql, values\), kind, documentId\)/);
+  assert.match(anchorReader, /row\.schema_ready === true && row\.anchor_valid === true/);
+  assert.match(anchorReader, /r\.target_type=\$1::text AND r\.target_id=\$2::uuid AND r\.action='MIGRATE_DOCUMENT'/);
+  assert.match(anchorReader, /r\.current_header->>'import_batch_id'=b\.id::text/);
+  assert.match(anchorReader, /r\.coverage->>'baselineManifestSha256'=baseline\.source_hash/);
+  assert.match(anchorReader, /r\.result_data->>'exposureDigest'=encode\(sha256\(convert_to\(r\.snapshot::text,'UTF8'\)\),'hex'\)/);
 });
 
 test("pg SQL-text contract: ISO business dates do not depend on session DateStyle", () => {

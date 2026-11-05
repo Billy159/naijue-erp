@@ -101,7 +101,7 @@ test('independent RETURN/EXCHANGE retain signed rows, exact net and zero-only or
  session.setBusinessType('EXCHANGE'); await session.openPicker('product');await session.select(product.id);await session.select(second.id);session.closePicker();session.updateLine(second.id,{dealPrice:'5.00',quantity:'3'});
  assert.ok(session.validate()); assert.equal(session.getSnapshot().totals?.netDueMinor,'-500');
  assert.deepEqual(session.getSnapshot().draft.lines.map(row=>row.quantity),['-2','3']);
- session.setBusinessType('SALE');assert.equal(session.validate(),null);assert.equal(session.getSnapshot().draft.lines[0]!.quantity,'-2');
+ session.setBusinessType('SALE');assert.ok(session.validate());assert.equal(session.getSnapshot().draft.lines[0]!.quantity,'-2');
  session.setBusinessType('RETURN');session.updateLine(sku.id,{quantity:'0'});assert.equal(session.validate(),null);
  session.updateLine(sku.id,{quantity:'2'});assert.ok(session.validate()); // RETURN is not negative-only.
 });
@@ -323,4 +323,39 @@ test('normal scanner cancellation: explicit dispose settles a sales read and ign
  let release:((value:Awaited<ReturnType<NonNullable<SalesProposalReader['readBarcode']>>>)=>void)|undefined,signal:AbortSignal|undefined;
  const h=setup({readBarcode(_query,readSignal){signal=readSignal;return new Promise(resolve=>{release=resolve;});}});const scanner=h.session.createScanner('OUT');
  try{await fill(h.session);const before=h.session.getSnapshot().draft,pending=scanner.scan('CANCEL');await new Promise(resolve=>setImmediate(resolve));scanner.dispose();assert.equal(await pending,false);assert.equal(signal?.aborted,true);release!({state:'FOUND',barcode:'CANCEL',binding:{id:uuid(81),kind:'MAIN'},sku});await new Promise(resolve=>setImmediate(resolve));assert.equal(h.session.getSnapshot().draft,before);}finally{scanner.dispose();h.context.clear();}
+});
+
+test('saved ordinary proposal retains sixteen settlement identities and keeps frozen three-row new-entry control',async()=>{
+ const source=setup();await fill(source.session);source.session.updateLine(sku.id,{dealPrice:'2.35',quantity:'2'});const base=source.session.getSnapshot().draft;
+ const rows=Array.from({length:16},(_,n)=>({key:uuid(600+n),method:ref(12),account:ref(13,{paymentMethodId:entityId('paymentMethod',uuid(12))}),direction:n%2?'REFUND' as const:'RECEIVE' as const,amount:'90071992547409.93'}));
+ const saved=setup();assert.equal(saved.session.initializeFromSaved({...base,settlements:rows}),true);assert.deepEqual(saved.session.getSnapshot().draft.settlements,rows);assert.equal(saved.session.addSettlement(),false);saved.session.setHeader({note:'memo'});assert.deepEqual(saved.session.validate()?.settlements,rows);
+ const oversized=setup();assert.equal(oversized.session.initializeFromSaved({...base,settlements:Array.from({length:2001},(_,n)=>({...rows[0]!,key:uuid(10000+n)}))}),false);
+ source.session.dispose();saved.session.dispose();oversized.session.dispose();
+});
+
+
+test('new mixed SALE retains exact signs and one document with zero order discount', async () => {
+ const {session,context}=setup(); try {
+  await fill(session); const first=session.getSnapshot().draft.lines[0]!.key;
+  session.updateLine(first,{quantity:'2',dealPrice:'10.00'});
+  await session.openPicker('product'); await session.select(product.id); assert.equal(await session.select(sku.id,'-1'),true); session.closePicker();
+  const second=session.getSnapshot().draft.lines.at(-1)!.key; session.updateLine(second,{dealPrice:'10.00'});
+  assert.ok(session.validate()); assert.equal(session.getSnapshot().totals?.netDueMinor,'1000');
+  const saved=session.saveProposal(null); assert.ok(saved); assert.equal(saved.businessType,'SALE'); assert.deepEqual(saved.lines.map(row=>row.quantity),['2','-1']); assert.equal(saved.orderDiscount,'0.00');
+  session.setHeader({orderDiscount:'0.01'}); assert.equal(session.saveProposal(null),null); assert.match(session.getSnapshot().errors.join(' '),/正负明细.*整单优惠/); assert.equal(session.getSnapshot().draft.orderDiscount,'0.01'); assert.equal(pricing.salesProposalMoney(session.getSnapshot().draft),null);
+  session.setHeader({orderDiscount:'0.00'}); session.updateLine(first,{isGift:true,quantity:'1'}); assert.ok(session.validate(),'positive gift is still a positive-quantity line'); assert.equal(session.getSnapshot().totals?.netDueMinor,'-1000'); assert.ok(session.saveProposal(null));
+  session.removeLine(first); assert.equal(session.saveProposal(null),null,'pure-negative new SALE still requires return/exchange type');
+ } finally {context.clear();}
+});
+test('SALE pending entries may carry a negative quantity before final mixed validation',async()=>{
+ const {session,context}=setup(); try {
+  await fill(session);session.updateLine(sku.id,{dealPrice:'10.00'});
+  const key=session.getSnapshot().entries.OUT[0]!.key;await session.openEntryPicker('OUT','product',key);assert.equal(await session.select(product.id),true);
+  await session.openEntryPicker('OUT','sku',key);assert.equal(session.selectSpec('color',sku.colorId),true);
+  await session.openEntryPicker('OUT','sku',key);assert.equal(session.selectSpec('fit',sku.fitId),true);
+  await session.openEntryPicker('OUT','sku',key);assert.equal(session.selectSpec('size',sku.id),true);
+  session.updateEntry('OUT',{quantity:'-1',dealPrice:'10.00'},key);
+  const pending=session.saveProposal(null);assert.ok(pending);assert.deepEqual(pending.lines.map(row=>row.quantity),['1','-1']);
+  assert.equal(session.appendEntry('OUT',key),true);assert.ok(session.validate());assert.equal(session.getSnapshot().draft.businessType,'SALE');
+ } finally {context.clear();}
 });

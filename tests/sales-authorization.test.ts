@@ -118,7 +118,7 @@ test("sales transaction authorization: replay remains recoverable after approval
   await assert.rejects(() => f.service.execute(command), { code: "FORBIDDEN" });
 });
 
-test("sales transaction authorization: cross-hall administrative actions preserve existing state/economics/history guards", async () => {
+test("sales transaction authorization: cross-hall administrative actions preserve state/economics and ordinary imported-draft void flow", async () => {
   for (const role of ["ADMIN", "WAREHOUSE"]) {
     const f = actionFixture(syntheticSalesIdentity({ role })); const draft = syntheticDraft();
     const crossHall = { ...draft, header: { ...draft.header, hallId: sid("hall", 99) } };
@@ -127,7 +127,8 @@ test("sales transaction authorization: cross-hall administrative actions preserv
     await f.service.execute({ action: "UNAPPROVE", actor, requestKey: "unapprove", expectedVersion: approved.version, salesId: ids.sales });
     assert.equal(f.balance(), 0n);
     f.store.seedCutoffHistory(f.document());
-    await assert.rejects(() => f.service.execute({ action: "VOID", actor, requestKey: "historical", expectedVersion: version(3), salesId: ids.sales }), { code: "HISTORICAL_POSTING_NOT_IMPLEMENTED" });
+    const voided = await f.service.execute({ action: "VOID", actor, requestKey: "ordinary-import-void", expectedVersion: version(3), salesId: ids.sales });
+    assert.equal(voided.status, "VOID"); assert.equal(f.balance(), 0n); assert.equal(f.store.snapshot().ledger.length, 2);
   }
 });
 
@@ -135,4 +136,9 @@ test("sales transaction authorization: stable account fingerprint permits author
   const f = actionFixture(syntheticSalesIdentity({ role: "ADMIN" })); const command = save(); const original = await f.service.execute(command);
   const currentActor = { ...actor, hallId: sid("hall", 99) }; f.store.seedIdentity(syntheticSalesIdentity({ role: "ADMIN", hallId: currentActor.hallId }));
   const before = f.store.snapshot(); assert.deepEqual(await f.service.execute({ ...command, actor: currentActor }), original); assert.deepEqual(f.store.snapshot(), before);
+});
+
+test('unknown source sales hall grants no salesperson action through warehouse ownership',()=>{
+ const document={...syntheticDraft(),header:{...syntheticDraft().header,hallId:null}};
+ for(const action of ['SAVE','APPROVE','UNAPPROVE','VOID'] as const) assert.throws(()=>assertSalesActionAllowed(actor,action,document,syntheticSalesIdentity()),{code:'FORBIDDEN'});
 });

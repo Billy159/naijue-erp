@@ -12,6 +12,20 @@ const result = { operationId: id(3), kind: 'PRODUCT' as const, targetId: id(2), 
 const receipt = () => ({ requestKey: 'product-key-1', action: 'DISABLE', status: 'COMMITTED', completedAt: '2026-10-22T06:00:00Z', result });
 const json = (value: unknown, status = 200) => new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json' } });
 
+test('barcode generation rejections retain their precise reason and definite HTTP outcome', async () => {
+  const cases: readonly [string, RegExp][] = [
+    ['PRODUCT_BARCODE_ITEM_CODE_REQUIRED', /系统货号/], ['PRODUCT_BARCODE_FIT_CODE_REQUIRED', /版型/],
+    ['PRODUCT_BARCODE_COLOR_CODE_REQUIRED', /颜色/], ['PRODUCT_BARCODE_SIZE_CODE_REQUIRED', /尺码/],
+    ['PRODUCT_BARCODE_HISTORICAL_MAPPING_REQUIRED', /来源映射/], ['PRODUCT_BARCODE_SOURCE_PRODUCT_REQUIRED', /来源默认条码/],
+    ['PRODUCT_BARCODE_HISTORICAL_COLOR_REQUIRED', /历史方案的颜色/], ['PRODUCT_BARCODE_HISTORICAL_SIZE_REQUIRED', /历史方案的尺码/],
+    ['PRODUCT_BARCODE_SCHEME_NOT_READY', /条码方案/], ['PRODUCT_BARCODE_SKU_NOT_AVAILABLE', /规格不存在或已停用/], ['PRODUCT_BARCODE_MAIN_EXISTS', /已有主条码/], ['BARCODE_CONFLICT', /绑定冲突/],
+  ];
+  for (const [code, message] of cases) {
+    const client = createProductMaintenanceHttpClient({ origin: 'https://erp.example', basePath: '/api', fetch: async () => json({ error: { code, message: 'synthetic' } }, 409) });
+    await assert.rejects(client.execute(command(), new AbortController().signal), (error: unknown) => error instanceof ProductMaintenanceError && error.code === code && error.outcome === 'rejected' && message.test(error.message));
+  }
+});
+
 test('V1 CREATE and EDIT under V2 restore the old uncertain command and retry its identical V1 route/body/key',async()=>{
  const {createProductMaintenanceHttpClientV2}=await import('./product-maintenance-http-client.ts');
  for(const action of ['CREATE','EDIT']as const){

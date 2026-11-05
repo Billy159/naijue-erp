@@ -18,6 +18,7 @@ import { productSeasonArrayEnabled, productSeasonLabelJoin, type ProductSeasonAr
 import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { readInventoryKeyAdmissions } from "./inventory-key-admission-reader.ts";
+import { checkedOrdinaryDocumentListOptions, type OrdinaryDocumentRuntime27Capability } from "./ordinary-document-list-reader.ts";
 
 export interface PgInventoryQueryResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
 export interface PgInventoryQueryClient {
@@ -60,7 +61,7 @@ function one(result: PgInventoryQueryResult): Row { integrity(result.rows.length
 function bounded(rows: { readonly length: number }, maximum: number): void {
   requireDomain(rows.length <= maximum, "INVENTORY_READ_TOO_LARGE", "Inventory page exceeds a technical response bound");
 }
-function total(value: bigint): InventoryStockTotal { return { knownQuantity: value.toString(), completeness: "complete", unknownCells: 0 }; }
+function total(value: bigint, unknownCells = 0): InventoryStockTotal { return { knownQuantity: value.toString(), completeness: unknownCells === 0 ? "complete" : "incomplete", unknownCells }; }
 function checkedParameters(value: InventoryQuery): InventoryQuery {
   // Reuse the public parser's ID, uniqueness, pagination and selection bounds without accepting labels as facts.
   const input = record(value, ["filter", "page", "pageSize"]);
@@ -78,7 +79,14 @@ function inventoryScope(scope: InventoryReadScope, parameters: InventoryQuery): 
     warehouses: checked.warehouses.filter(warehouse => parameters.filter.warehouseIds.includes(warehouse.id)) });
 }
 
-async function publishedBatch(query: Query): Promise<string> {
+async function publishedBatch(query: Query, runtime27 = false): Promise<string> {
+  if (runtime27) {
+    const rows = (await query(`/* inventory:publication */ SELECT id, naijue_erp.standard_business_ready() AS ready
+      FROM naijue_erp.import_batch WHERE status='IMPORTED' AND inventory_mode='CUTOFF_STOCK_BASELINE'
+      AND mapping_version='STANDARD_INITIAL_EXPLICIT_KEYS_V1' AND completed_at IS NOT NULL ORDER BY id LIMIT 2`)).rows;
+    requireDomain(rows.length === 1 && rows[0]!.ready === true, "INVENTORY_NOT_READY", "One completely published standard baseline is required");
+    return id("operation", rows[0]!.id);
+  }
   // Publication did the one full source/balance reconciliation. The immutable final receipt below is
   // constant-size evidence; do NOT materialize all W+SKU members or re-count source history per page.
   const rows = (await query(`/* inventory:publication */ SELECT b.id, b.checkpoint, b.completed_at IS NOT NULL AS completed,
@@ -97,10 +105,10 @@ async function publishedBatch(query: Query): Promise<string> {
   integrity(booleanValue(one(await query(GUARD_CAPABILITY)).integrity_guards_present), "Native sparse inventory guards are unavailable");
   return batchId;
 }
-async function verifyWarehouses(query: Query, scope: InventoryReadScope, batchId: string, runtime26?: NativeRuntime26Capability): Promise<void> {
+async function verifyWarehouses(query: Query, scope: InventoryReadScope, batchId: string, runtime26?: NativeRuntime26Capability, runtime27 = false): Promise<void> {
   const rows = (await query(`/* inventory:warehouses */ SELECT w.id, w.hall_id, w.name,
-    EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id = $3::uuid AND r.status = 'IMPORTED'
-      AND r.target_type = 'WAREHOUSE' AND r.target_id = w.id) AS published
+    ${runtime27 ? '$3::uuid IS NOT NULL' : `EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id = $3::uuid AND r.status = 'IMPORTED'
+      AND r.target_type = 'WAREHOUSE' AND r.target_id = w.id)`} AS published
     FROM naijue_erp.warehouse w JOIN naijue_erp.hall h ON h.id = w.hall_id
     WHERE w.id = ANY($1::uuid[]) AND w.hall_id = ANY($2::uuid[]) ORDER BY w.id LIMIT 1001`,
   [scope.warehouses.map(row => row.id), scope.hallIds, batchId])).rows;
@@ -181,7 +189,7 @@ async function verifyAdditionalSkus(query: Query, prefix: string, values: unknow
   requireDomain(booleanValue(row.all_admitted), "INVENTORY_NOT_READY", "New SKU creation is not qualified for the complete requested scope");
 }
 
-async function catalogStatus(query: Query, values: unknown[], seasonArray: boolean, runtime26?: NativeRuntime26Capability, retainedDelete = false): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
+async function catalogStatus(query: Query, values: unknown[], seasonArray: boolean, runtime26?: NativeRuntime26Capability, retainedDelete = false, runtime27 = false): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
   const row = one(await query(`/* inventory:catalog-status */ ${catalog(seasonArray)}
     SELECT (SELECT count(*)::text FROM matched_products) AS exact_total,
     ${retainedDelete ? `EXISTS (SELECT 1 FROM naijue_erp.product_category child LEFT JOIN naijue_erp.product_category parent ON parent.id = child.parent_id
@@ -189,12 +197,15 @@ async function catalogStatus(query: Query, values: unknown[], seasonArray: boole
         AND (parent.id IS NULL OR parent.deleted_at IS NOT NULL OR parent.parent_id IS NOT NULL)) AS invalid_category_tree` : `EXISTS (SELECT 1 FROM naijue_erp.product_category child JOIN naijue_erp.product_category parent ON parent.id = child.parent_id
       WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree`},
     EXISTS (SELECT 1 FROM matched_products p WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = p.size_group_id)) AS missing_sizes,
-    EXISTS (SELECT 1 FROM filtered_skus s WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r
-      WHERE r.import_batch_id = $8::uuid AND r.status = 'IMPORTED' AND r.target_type = 'SKU' AND r.target_id = s.id)) AS uncovered_sku,
+    ${runtime27 ? 'false' : `EXISTS (SELECT 1 FROM filtered_skus s WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r
+      WHERE r.import_batch_id = $8::uuid AND r.status = 'IMPORTED' AND r.target_type = 'SKU' AND r.target_id = s.id))`} AS uncovered_sku,
     EXISTS (SELECT 1 FROM filtered_skus s WHERE NOT EXISTS (
       SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = s.size_group_id AND m.size_id = s.size_id)) AS invalid_sku_size,
     EXISTS (SELECT 1 FROM naijue_erp.inventory_balance b JOIN filtered_skus s ON s.id = b.sku_id
       JOIN authorized_warehouses w ON w.id = b.warehouse_id WHERE b.version <= 0 OR b.last_operation_id IS NULL) AS invalid_balance,
+    ${runtime27 ? `((SELECT count(*)::numeric FROM authorized_warehouses) * (SELECT count(*)::numeric FROM filtered_skus)
+      - (SELECT count(*)::numeric FROM naijue_erp.inventory_balance b JOIN filtered_skus s ON s.id=b.sku_id
+         JOIN authorized_warehouses w ON w.id=b.warehouse_id))::text` : "'0'::text"} AS unknown_count,
     (SELECT coalesce(sum(b.quantity), 0)::text FROM naijue_erp.inventory_balance b
       JOIN filtered_skus s ON s.id = b.sku_id JOIN authorized_warehouses w ON w.id = b.warehouse_id) AS quantity`, values));
   // This is over the WHOLE requested filter, never just the visible product IDs.
@@ -203,11 +214,11 @@ async function catalogStatus(query: Query, values: unknown[], seasonArray: boole
     await verifyAdditionalSkus(query, catalog(seasonArray), values, "filtered_skus");
   }
   integrity(!booleanValue(row.invalid_category_tree) && !booleanValue(row.missing_sizes) && !booleanValue(row.invalid_sku_size) && !booleanValue(row.invalid_balance), "Filtered native inventory facts are inconsistent");
-  return { exactTotal: count(row.exact_total), allMatchesTotal: total(aggregate(row.quantity)) };
+  return { exactTotal: count(row.exact_total), allMatchesTotal: total(aggregate(row.quantity), runtime27 ? count(row.unknown_count) : 0) };
 }
 /** Candidate options do not return stock or infer any absent balance. Validate only the returned
  * native IDs and the catalogue relationships they denote, never broad off-search stock readiness. */
-async function verifyCandidateMembership(query: Query, values: unknown[], kind: InventoryCandidateQuery["kind"], ids: readonly string[], seasonArray: boolean, runtime26?: NativeRuntime26Capability): Promise<void> {
+async function verifyCandidateMembership(query: Query, values: unknown[], kind: InventoryCandidateQuery["kind"], ids: readonly string[], seasonArray: boolean, runtime26?: NativeRuntime26Capability, runtime27 = false): Promise<void> {
   if (ids.length === 0 || kind === "warehouse" || kind === "category") return;
   const target = { product: "p.id = ANY($9::uuid[])",
     supplier: "native.supplier_id = ANY($9::uuid[])", season: seasonArray ? "native.season_ids && $9::uuid[]" : "native.season_id = ANY($9::uuid[])",
@@ -224,8 +235,8 @@ async function verifyCandidateMembership(query: Query, values: unknown[], kind: 
     EXISTS (SELECT 1 FROM candidate_products p JOIN naijue_erp.product native ON native.id = p.id
       JOIN naijue_erp.product_category child ON child.id = native.category_id
       JOIN naijue_erp.product_category parent ON parent.id = child.parent_id WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree,
-    EXISTS (SELECT 1 FROM candidate_skus s WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r
-      WHERE r.import_batch_id = $8::uuid AND r.status = 'IMPORTED' AND r.target_type = 'SKU' AND r.target_id = s.id)) AS uncovered_sku,
+    ${runtime27 ? 'false' : `EXISTS (SELECT 1 FROM candidate_skus s WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r
+      WHERE r.import_batch_id = $8::uuid AND r.status = 'IMPORTED' AND r.target_type = 'SKU' AND r.target_id = s.id))`} AS uncovered_sku,
     EXISTS (SELECT 1 FROM candidate_skus s JOIN candidate_products p ON p.id = s.product_id WHERE NOT EXISTS (
       SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = p.size_group_id AND m.size_id = s.size_id)) AS invalid_sku_size`, [...values, ids]));
   if (booleanValue(row.uncovered_sku)) {
@@ -237,7 +248,7 @@ async function verifyCandidateMembership(query: Query, values: unknown[], kind: 
 
 interface ProductFacts { readonly row: Row; readonly id: string; readonly groupId: string; readonly sizes: InventorySelection[]; readonly sizeIds: Set<string>; readonly skus: SkuFacts[] }
 interface SkuFacts { readonly id: string; readonly color: InventorySelection; readonly fit: InventorySelection; readonly sizeId: string }
-function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], skuRows: readonly Row[], balanceRows: readonly Row[], scope: InventoryReadScope): InventoryQueryProduct[] {
+function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], skuRows: readonly Row[], balanceRows: readonly Row[], scope: InventoryReadScope, runtime27 = false): InventoryQueryProduct[] {
   const products = new Map<string, ProductFacts>();
   for (const row of productRows) {
     const productId = id("product", row.id); integrity(!products.has(productId), "Repeated native product identity");
@@ -277,35 +288,36 @@ function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], sku
     bounded([...variants.keys()], INVENTORY_PRODUCT_MAX_VARIANTS);
     units += 1 + product.sizes.length + variants.size * (1 + scope.warehouses.length * (1 + product.sizes.length));
     bounded({ length: units }, INVENTORY_READ_MAX_MATRIX_UNITS);
-    const productSizeSums = product.sizes.map(() => 0n); let productSum = 0n;
+    const productSizeSums = product.sizes.map(() => 0n), productSizeUnknown = product.sizes.map(() => 0); let productSum = 0n, productUnknown = 0;
     const colorFits: InventoryQueryColorFit[] = [...variants.values()].map(variant => {
-      const variantSizeSums = product.sizes.map(() => 0n); let variantSum = 0n;
+      const variantSizeSums = product.sizes.map(() => 0n), variantSizeUnknown = product.sizes.map(() => 0); let variantSum = 0n, variantUnknown = 0;
       const rows = scope.warehouses.map(warehouse => {
-        const cells: Record<string, InventoryStockCell> = {}; let sum = 0n;
+        const cells: Record<string, InventoryStockCell> = {}; let sum = 0n, unknown = 0;
         for (let sizeIndex = 0; sizeIndex < product.sizes.length; sizeIndex++) {
           const size = product.sizes[sizeIndex]!; const skuId = variant.skus.get(size.id);
           if (skuId === undefined) cells[size.id] = { state: "not-applicable" };
           else {
-            // Only catalogStatus + immutable publication + verified warehouse scope make this absence exact zero.
-            const quantity = balances.get(`${warehouse.id}:${skuId}`) ?? "0";
-            cells[size.id] = { state: "known", skuId, quantity };
-            const exact = BigInt(quantity); sum += exact; variantSizeSums[sizeIndex] = variantSizeSums[sizeIndex]! + exact;
+            // Legacy complete-scope publication proves absence is zero. Runtime 27 has explicit keys only, so a missing current balance remains unknown.
+            const stored = balances.get(`${warehouse.id}:${skuId}`);
+            if (runtime27 && stored === undefined) { cells[size.id] = { state: "unknown", skuId }; unknown++; variantSizeUnknown[sizeIndex] = variantSizeUnknown[sizeIndex]! + 1; }
+            else { const quantity = stored ?? "0"; cells[size.id] = { state: "known", skuId, quantity };
+              const exact = BigInt(quantity); sum += exact; variantSizeSums[sizeIndex] = variantSizeSums[sizeIndex]! + exact; }
           }
         }
-        variantSum += sum;
-        return { warehouse: { id: warehouse.id, label: warehouse.label }, cells, total: total(sum) };
+        variantSum += sum; variantUnknown += unknown;
+        return { warehouse: { id: warehouse.id, label: warehouse.label }, cells, total: total(sum, unknown) };
       });
       const sizeTotals = Object.fromEntries(product.sizes.map((size, index) => {
-        const sum = variantSizeSums[index]!; productSizeSums[index] = productSizeSums[index]! + sum;
-        return [size.id, total(sum)];
+        const sum = variantSizeSums[index]!, unknown = variantSizeUnknown[index]!; productSizeSums[index] = productSizeSums[index]! + sum; productSizeUnknown[index] = productSizeUnknown[index]! + unknown;
+        return [size.id, total(sum, unknown)];
       }));
-      productSum += variantSum;
-      return { color: variant.color, fit: variant.fit, rows, sizeTotals, total: total(variantSum) };
+      productSum += variantSum; productUnknown += variantUnknown;
+      return { color: variant.color, fit: variant.fit, rows, sizeTotals, total: total(variantSum, variantUnknown) };
     });
     return { id: product.id, code: label(product.row.product_code), name: label(product.row.name), categoryLabel: label(product.row.category_name),
       supplierLabel: product.row.supplier_name === null ? "" : label(product.row.supplier_name), seasonLabel: product.row.season_name === null ? "" : label(product.row.season_name),
       sizeGroup: { id: product.groupId, label: label(product.row.size_group_name) }, sizes: product.sizes, colorFits,
-      sizeTotals: Object.fromEntries(product.sizes.map((size, index) => [size.id, total(productSizeSums[index]!)])), total: total(productSum) };
+      sizeTotals: Object.fromEntries(product.sizes.map((size, index) => [size.id, total(productSizeSums[index]!, productSizeUnknown[index]!)])), total: total(productSum, productUnknown) };
   });
 }
 
@@ -313,7 +325,7 @@ const productSelection = (seasonArray: boolean) => `SELECT p.id, p.product_code,
           su.name AS supplier_name, se.name AS season_name FROM matched_products mp JOIN naijue_erp.product p ON p.id = mp.id
         JOIN naijue_erp.product_category c ON c.id = p.category_id JOIN naijue_erp.size_group g ON g.id = p.size_group_id
         LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id ${productSeasonLabelJoin(seasonArray)}`;
-async function productMatrices(query: Query, products: Row[], input: InventoryQuery, scope: InventoryReadScope): Promise<InventoryQueryProduct[]> {
+async function productMatrices(query: Query, products: Row[], input: InventoryQuery, scope: InventoryReadScope, runtime27 = false): Promise<InventoryQueryProduct[]> {
   bounded(products, input.pageSize); const pageIds = products.map(row => id("product", row.id));
   let sizes: Row[] = []; let skus: Row[] = []; let balances: Row[] = [];
   if (pageIds.length) {
@@ -329,8 +341,7 @@ async function productMatrices(query: Query, products: Row[], input: InventoryQu
       ORDER BY p.id, c.code COLLATE "C", c.id, f.code COLLATE "C", f.id, m.display_order, s.size_id, s.id LIMIT $3`,
     [pageIds, input.filter.fitIds, INVENTORY_READ_MAX_PAGE_SKUS + 1])).rows;
     bounded(skus, INVENTORY_READ_MAX_PAGE_SKUS);
-    // The complete filter/admission proof and these exact page SKU identities
-    // already belong to this RR snapshot. Do not repeat the catalogue scan for
+    // Filter integrity and exact page SKU identities already belong to this RR snapshot. Do not repeat the catalogue scan for
     // sparse balances; retain the authorized warehouse/hall intersection in SQL.
     balances = (await query(`/* inventory:balances */
       SELECT b.warehouse_id, b.sku_id, b.quantity::text, b.version, b.last_operation_id FROM naijue_erp.inventory_balance b
@@ -340,7 +351,7 @@ async function productMatrices(query: Query, products: Row[], input: InventoryQu
     [scope.warehouses.map(warehouse => warehouse.id), scope.hallIds, skus.map(row => id("sku", row.id)), INVENTORY_READ_MAX_PAGE_BALANCES + 1])).rows;
     bounded(balances, INVENTORY_READ_MAX_PAGE_BALANCES);
   }
-  return pageProducts(products, sizes, skus, balances, scope);
+  return pageProducts(products, sizes, skus, balances, scope, runtime27);
 }
 
 /** Injected native PostgreSQL protocol reader. No Pool construction, legacy projection, source-file read,
@@ -351,8 +362,11 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
   private readonly seasonArray: boolean;
   private readonly retainedDelete: boolean;
   private readonly runtime26: NativeRuntime26Capability | undefined;
-  constructor(pool: PgInventoryQueryPool, seasonArray: ProductSeasonArrayCapability | null = null, runtime26?: NativeRuntime26Capability, retainedDelete: CatalogueRetainedDeleteCapability | null = null) {
+  private readonly runtime27: OrdinaryDocumentRuntime27Capability | undefined;
+  constructor(pool: PgInventoryQueryPool, seasonArray: ProductSeasonArrayCapability | null = null, runtime26?: NativeRuntime26Capability, retainedDelete: CatalogueRetainedDeleteCapability | null = null, runtime27?: OrdinaryDocumentRuntime27Capability) {
     if (typeof pool?.connect !== "function") throw new TypeError("Inventory query reader requires an explicit PostgreSQL pool");
+    if (runtime26 && runtime27) throw new TypeError("Conflicting inventory runtime profiles");
+    this.runtime27 = runtime27 ? checkedOrdinaryDocumentListOptions({profile:"source-confirmed-unified-native-v1",runtime27}).runtime27 : undefined;
     this.retainedDelete = catalogueRetainedDeleteEnabled(pool, retainedDelete);
     this.pool = pool; this.seasonArray = productSeasonArrayEnabled(pool, seasonArray); this.runtime26 = checkedNativeRuntime26Capability(runtime26);
   }
@@ -362,6 +376,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
     try {
       active(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
       if (this.runtime26) { await this.runtime26.assertReady(client, "INVENTORY_ADMISSION"); active(signal); }
+      if (this.runtime27) { await this.runtime27.assertReady(client, "ORDINARY_DOCUMENT_READ"); active(signal); }
       const result = await work(query); active(signal); committing = true; await query("COMMIT"); committed = true; active(signal); return result;
     } catch (error) {
       if (!committed && (!began || committing)) discard = error instanceof Error ? error : new Error("Inventory snapshot failed");
@@ -381,6 +396,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
     try {
       active(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
       if (this.runtime26) { await this.runtime26.assertReady(client, "INVENTORY_ADMISSION"); active(signal); }
+      if (this.runtime27) { await this.runtime27.assertReady(client, "ORDINARY_DOCUMENT_READ"); active(signal); }
       for await (const frame of work(query)) { active(signal); yield frame; active(signal); }
       active(signal); committing = true; await query("COMMIT"); committed = true; active(signal);
     } catch (error) {
@@ -395,27 +411,27 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
   }
   async *readInventoryOutput(read: InventoryScopedRead<InventoryQuery>): AsyncIterable<InventoryOutputFrame> {
     checkedInventoryActor(read.actor); const input = { ...checkedParameters(read.parameters), page: 1, pageSize: 100 as const }, scope = inventoryScope(read.scope, input), seasonArray = this.seasonArray;
-    let completion: Extract<InventoryOutputFrame, { kind: "complete" }> | undefined; const runtime26 = this.runtime26, retainedDelete = this.retainedDelete;
+    let completion: Extract<InventoryOutputFrame, { kind: "complete" }> | undefined; const runtime26 = this.runtime26, retainedDelete = this.retainedDelete, runtime27 = !!this.runtime27;
     yield* this.streamSnapshot<InventoryOutputFrame>(read.signal, async function* (query) {
-      const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId, runtime26);
-      const values = parameters(scope, input.filter, batchId), status = await catalogStatus(query, values, seasonArray, runtime26, retainedDelete), readReference = `inventory:${randomUUID()}`;
+      const batchId = await publishedBatch(query, runtime27); await verifyWarehouses(query, scope, batchId, runtime26, runtime27);
+      const values = parameters(scope, input.filter, batchId), status = await catalogStatus(query, values, seasonArray, runtime26, retainedDelete, runtime27), readReference = `inventory:${randomUUID()}`;
       const warehouseLabels = scope.warehouses.map(w => w.label);
       yield { kind: "summary", readReference, exactTotalProducts: status.exactTotal, warehouseLabels, allMatchesTotal: status.allMatchesTotal };
-      let count = 0, sum = 0n, lastCode: string | null = null, lastId: string | null = null;
+      let count = 0, sum = 0n, unknown = 0, lastCode: string | null = null, lastId: string | null = null;
       while (count < status.exactTotal) {
         const products = (await query(`/* inventory:output-products */ ${catalog(seasonArray)} ${productSelection(seasonArray)}
           WHERE ($9::text IS NULL OR (p.product_code COLLATE "C",p.id) > ($9::text COLLATE "C",$10::uuid))
           ORDER BY p.product_code COLLATE "C",p.id LIMIT $11`, [...values, lastCode, lastId, 100])).rows;
-        const pageInput = { ...input, page: count / 100 + 1 }, matrices = await productMatrices(query, products, input, scope);
+        const pageInput = { ...input, page: count / 100 + 1 }, matrices = await productMatrices(query, products, input, scope, runtime27);
         const page = checkedInventorySnapshot({ readReference, readiness: "ready", data: { page: pageInput.page, pageSize: 100, exactTotalProducts: status.exactTotal,
           products: matrices, warehouseLabels, allMatchesTotal: status.allMatchesTotal, readReference } }, pageInput, scope).data;
         for (const product of page.products) {
           if (lastCode !== null) { const order = Buffer.compare(Buffer.from(lastCode), Buffer.from(product.code)); integrity(order < 0 || order === 0 && lastId! < product.id, "Inventory output keyset did not advance"); }
-          lastCode = product.code; lastId = product.id; count++; sum += BigInt(product.total.knownQuantity);
+          lastCode = product.code; lastId = product.id; count++; sum += BigInt(product.total.knownQuantity); unknown += product.total.unknownCells;
           yield { kind: "product", product };
         }
       }
-      integrity(count === status.exactTotal && sum.toString() === status.allMatchesTotal.knownQuantity, "Complete inventory output differs from full-filter summary");
+      integrity(count === status.exactTotal && sum.toString() === status.allMatchesTotal.knownQuantity && unknown === status.allMatchesTotal.unknownCells, "Complete inventory output differs from full-filter summary");
       completion = { kind: "complete", readReference, exactTotalProducts: count, emittedProducts: count, allMatchesTotal: status.allMatchesTotal };
     });
     // The transaction generator returns normally only after confirmed COMMIT.
@@ -424,12 +440,12 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
   async readInventory(read: InventoryScopedRead<InventoryQuery>): Promise<InventoryReadSnapshot<InventoryQueryPage>> {
     checkedInventoryActor(read.actor); const input = checkedParameters(read.parameters); const scope = inventoryScope(read.scope, input);
     return this.snapshot(read.signal, async query => {
-      const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId, this.runtime26);
-      const values = parameters(scope, input.filter, batchId); const status = await catalogStatus(query, values, this.seasonArray, this.runtime26, this.retainedDelete);
+      const batchId = await publishedBatch(query, !!this.runtime27); await verifyWarehouses(query, scope, batchId, this.runtime26, !!this.runtime27);
+      const values = parameters(scope, input.filter, batchId); const status = await catalogStatus(query, values, this.seasonArray, this.runtime26, this.retainedDelete, !!this.runtime27);
       const products = (await query(`/* inventory:products */ ${catalog(this.seasonArray)}
         ${productSelection(this.seasonArray)}
         ORDER BY p.product_code COLLATE "C", p.id LIMIT $9 OFFSET $10::bigint`, [...values, input.pageSize, String((input.page - 1) * input.pageSize)])).rows;
-      const matrices = await productMatrices(query, products, input, scope);
+      const matrices = await productMatrices(query, products, input, scope, !!this.runtime27);
       const readReference = `inventory:${randomUUID()}`;
       return checkedInventorySnapshot({ readReference, readiness: "ready", data: { page: input.page, pageSize: input.pageSize, exactTotalProducts: status.exactTotal,
         products: matrices, warehouseLabels: scope.warehouses.map(row => row.label), allMatchesTotal: status.allMatchesTotal, readReference } }, input, scope);
@@ -439,7 +455,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
     checkedInventoryActor(read.actor); const input = parseInventoryCandidateQuery(read.parameters); const scope = checkedInventoryScope(read.scope);
     if (input.kind === "warehouse") requireDomain(input.selectedIds.every(id => scope.warehouses.some(warehouse => warehouse.id === id)), "FORBIDDEN", "Selected warehouse is outside authorized inventory scope");
     return this.snapshot(read.signal, async query => {
-      const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId, this.runtime26);
+      const batchId = await publishedBatch(query, !!this.runtime27); await verifyWarehouses(query, scope, batchId, this.runtime26, !!this.runtime27);
       const filter: InventoryQuery["filter"] = { productIds: [], categoryIds: input.kind === "category" || input.kind === "warehouse" ? [] : input.categoryIds,
         warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] };
       const values = parameters(scope, filter, batchId);
@@ -455,7 +471,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
         ...(row.depth === undefined ? {} : { depth: integerValue(row.depth) as 0 | 1 }),
         ...(input.kind === "product" ? { code: label(row.code), name: label(row.name) } : {}),
         ...(input.kind === "category" ? { parentId: row.parent_id === null ? null : id("category", row.parent_id) } : {}) }));
-      await verifyCandidateMembership(query, values.slice(0, 8), input.kind, items.map(item => item.id), this.seasonArray, this.runtime26);
+      await verifyCandidateMembership(query, values.slice(0, 8), input.kind, items.map(item => item.id), this.seasonArray, this.runtime26, !!this.runtime27);
       return checkedCandidateSnapshot({ readReference: `inventory:${randomUUID()}`, readiness: "ready", data: { items, exactTotal, page: input.page } }, input, scope);
     });
   }

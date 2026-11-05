@@ -1,45 +1,56 @@
-import { requireDomain } from "../../domain/src/errors.ts";
+import { DomainError, requireDomain } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
 import { checkedProductActor, parseProductQuery, activeProductRead } from "./product-query-validation.ts";
 import { partyName, partyRequestKey } from "./party-maintenance-validation.ts";
 import { parseProductMaintenanceCandidates, parseProductMaintenanceCommand, parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, planProductImageWrites, productMaintenanceVersion, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "./product-maintenance-validation.ts";
 import { authorizeProductMaintenance } from "./product-maintenance-authorization.ts";
 import { requestHash } from "./request-hash.ts";
+import { BARCODE_SCHEMES, generateSkuBarcode } from "./barcode-generation.ts";
 import type { ActorContext } from "./ports.ts";
 import type { ProductAggregate, ProductAuditObject, ProductBarcodeRecord, ProductMaintenanceAction, ProductMaintenanceDependencies, ProductMaintenanceDetail, ProductMaintenanceDetailV2, ProductMaintenanceResult, ProductSkuRecord, ProductStoredRecord, ProductMaintenanceImagesDto } from "./product-maintenance-ports.ts";
 import type { DocumentProductSkuAppendInput, ProductSkuInput, ProductMaintenanceMediaCommandV2, ProductMaintenanceTransaction, ProductMaintenanceImageMetadata } from "./product-maintenance-ports.ts";
 
-// Exact approved native 2026 scheme identity; descriptive CURRENT rows are not executable rules.
-const BARCODE_2026_SCHEME_ID = "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef";
 async function generateNewSkuMainBarcodes(tx: ProductMaintenanceTransaction, product: ProductStoredRecord,
   added: readonly ProductSkuRecord[], barcodes: Map<string, ProductBarcodeRecord>, newId: ProductMaintenanceDependencies["newId"]): Promise<void> {
-  if (product.defaultBarcodeSchemeId !== BARCODE_2026_SCHEME_ID || !/^\d{7}$/.test(product.systemItemCode ?? "")) return;
   const retainedMain = new Set([...barcodes.values()].filter(b => b.kind === "MAIN").map(b => b.skuId));
   const targets = added.filter(s => s.enabled && !retainedMain.has(s.id));
-  if (!targets.length) return;
+  if (!targets.length || product.defaultBarcodeSchemeId === null || product.systemItemCode === null) return;
   requireDomain(typeof tx.readBarcodeGenerationReferences === "function", "PRODUCT_SPEC_GENERATION_NOT_READY", "Original transaction barcode reference reader required");
-  const refs = await tx.readBarcodeGenerationReferences(product.id, BARCODE_2026_SCHEME_ID, targets);
-  requireDomain(refs.scheme.id === BARCODE_2026_SCHEME_ID && refs.scheme.status === "CURRENT" && refs.scheme.codeLength === 15,
-    "PRODUCT_REFERENCE_UNAVAILABLE", "Exact current 2026 scheme required");
+  const selectedScheme = product.defaultBarcodeSchemeId;
+  const refs = await tx.readBarcodeGenerationReferences(product.id, selectedScheme, targets);
+  requireDomain(refs.scheme.id === selectedScheme, "PRODUCT_REFERENCE_UNAVAILABLE", "所选条码方案不存在");
   const index = (rows: readonly { readonly id: string; readonly code: string | null }[], ids: readonly string[]) => {
     const expected = new Set(ids), found = new Map(rows.map(row => [row.id, row.code]));
-    requireDomain(rows.length === found.size && found.size === expected.size && rows.every(row => expected.has(row.id) && (row.code === null || typeof row.code === "string")),
-      "INVALID_DATABASE_VALUE", "Complete actual barcode reference codes required"); return found;
+    requireDomain(rows.length === found.size && rows.every(row => expected.has(row.id) && (row.code === null || typeof row.code === "string")),
+      "INVALID_DATABASE_VALUE", "Barcode reference identities must be exact and unique"); return found;
   };
   const colors = index(refs.colors, targets.map(s => s.colorId)), fits = index(refs.fits, targets.map(s => s.fitId)), sizes = index(refs.sizes, targets.map(s => s.sizeId));
-  const used = new Set([...barcodes.values()].map(b => b.barcode)), pending: { sku: ProductSkuRecord; raw: string }[] = [];
+  const pending: { sku: ProductSkuRecord; raw: string }[] = [];
+  const unable = new Set(["PRODUCT_BARCODE_SCHEME_NOT_READY", "PRODUCT_BARCODE_ITEM_CODE_REQUIRED", "PRODUCT_BARCODE_COLOR_CODE_REQUIRED", "PRODUCT_BARCODE_SIZE_CODE_REQUIRED", "PRODUCT_BARCODE_FIT_CODE_REQUIRED", "PRODUCT_BARCODE_TOO_LONG"]);
   for (const sku of targets) {
-    const color = colors.get(sku.colorId)!, fit = fits.get(sku.fitId)!, size = sizes.get(sku.sizeId)!;
-    // Incomplete nonblank manual codes keep the saved SKU without a fabricated MAIN.
-    if (fit === null || color === null || size === null || !/^[YABCDE]$/.test(fit) || !/^\d{3}$/.test(color) || !/^\d{3}$/.test(size)) continue;
-    const raw = `5${fit}${product.systemItemCode}${color}${size}`;
-    requireDomain(!used.has(raw), "BARCODE_CONFLICT", "Generated barcode collides with a retained raw identity");
-    used.add(raw); pending.push({ sku, raw });
+    // The five historical formats omit a fit segment. Explicit non-A SKUs
+    // are valid; duplicate results are rejected as a group below.
+    const fit = fits.get(sku.fitId) ?? null;
+    try {
+      const raw = generateSkuBarcode({ schemeId: selectedScheme, productSegment: product.systemItemCode, fitCode: fit, colorCode: colors.get(sku.colorId) ?? null, sizeCode: sizes.get(sku.sizeId) ?? null });
+      pending.push({ sku, raw });
+    } catch (error) {
+      if (!(error instanceof DomainError) || !unable.has(error.code)) throw error;
+    }
   }
-  requireDomain(barcodes.size + pending.length <= PRODUCT_MAINTENANCE_MAX_BARCODES, "PRODUCT_MAINTENANCE_TOO_LARGE", "Generated barcode bound exceeded");
-  for (const { sku, raw } of pending) {
+  if (!pending.length) return;
+  requireDomain(typeof tx.readExistingBarcodeValues === "function", "PRODUCT_SPEC_GENERATION_NOT_READY", "Original transaction barcode conflict reader required");
+  const counts = new Map<string, number>(); for (const item of pending) counts.set(item.raw, (counts.get(item.raw) ?? 0) + 1);
+  const retained = new Set([...barcodes.values()].map(b => b.barcode));
+  const candidates = [...new Set(pending.filter(item => counts.get(item.raw) === 1 && !retained.has(item.raw)).map(item => item.raw))];
+  if (!candidates.length) return;
+  const existing = await tx.readExistingBarcodeValues(candidates), requestedValues = new Set(candidates);
+  requireDomain(Array.isArray(existing) && new Set(existing).size === existing.length && existing.every(value => requestedValues.has(value)), "INVALID_DATABASE_VALUE", "Barcode conflict lookup must return only exact requested values");
+  const conflicts = new Set(existing), admitted = pending.filter(item => counts.get(item.raw) === 1 && !retained.has(item.raw) && !conflicts.has(item.raw));
+  requireDomain(barcodes.size + admitted.length <= PRODUCT_MAINTENANCE_MAX_BARCODES, "PRODUCT_MAINTENANCE_TOO_LARGE", "Generated barcode bound exceeded");
+  for (const { sku, raw } of admitted) {
     const id = entityId("barcode", newId("barcode")); requireDomain(!barcodes.has(id), "BARCODE_CONFLICT", "Generated barcode id already exists");
-    barcodes.set(id, { id, barcode: raw, skuId: sku.id, kind: "MAIN", schemeId: BARCODE_2026_SCHEME_ID, enabled: true });
+    barcodes.set(id, { id, barcode: raw, skuId: sku.id, kind: "MAIN", schemeId: selectedScheme, enabled: true });
   }
 }
 const coordinate = (row: { readonly colorId: string; readonly fitId: string; readonly sizeId: string }) => JSON.stringify([row.colorId, row.fitId, row.sizeId]);
@@ -74,7 +85,7 @@ function result(value: { readonly operationId: string; readonly kind: string; re
 }
 /** Borrowed original transaction only: no new authority, IDs, pool or commit.
  * D1's current parent-SAVE evidence must authorize this exact append purpose. */
-export async function appendProductSkusInTransaction(tx: ProductMaintenanceTransaction, original: DocumentProductSkuAppendInput): Promise<{
+export async function appendProductSkusInTransaction(tx: ProductMaintenanceTransaction, original: DocumentProductSkuAppendInput, options?: { readonly newBarcodeId: () => string; readonly assertSkuWriteReady: () => Promise<void>; readonly assertBarcodeWriteReady: () => Promise<void> }): Promise<{
   readonly result: ProductMaintenanceResult; readonly addedSkus: readonly ProductSkuRecord[];
 }> {
   const input = structuredClone(original), actor = checkedProductActor(input.actor), productId = entityId("product", input.productId);
@@ -107,11 +118,20 @@ export async function appendProductSkusInTransaction(tx: ProductMaintenanceTrans
   requireDomain(previous.product.enabled, "PRODUCT_REFERENCE_UNAVAILABLE", "Document specification requires an enabled product");
   requireDomain(expectedVersion < 2147483647, "VERSION_STORAGE_OVERFLOW", "Product version exhausted");
   requireDomain(previous.skus.every(s => !ids.has(s.id) && !coordinates.has(coordinate(s)) && !codes.has(s.skuCode)), "PRODUCT_SPEC_CONFLICT", "Retained SKU identity, code or coordinate cannot be recreated or restored");
-  const next: ProductAggregate = { product: { ...previous.product, version: expectedVersion + 1 }, skus: [...previous.skus, ...skus], barcodes: previous.barcodes };
+  const barcodeMap = new Map(previous.barcodes.map(b => [b.id, b]));
+  if (options) await generateNewSkuMainBarcodes(tx, previous.product, skus, barcodeMap, kind => {
+    requireDomain(kind === "barcode", "TRANSACTION_SCOPE", "Only barcode identities may be allocated here");
+    return options.newBarcodeId();
+  });
+  const addedBarcodes = [...barcodeMap.values()].filter(b => !previous.barcodes.some(old => old.id === b.id));
+  if (options) await options.assertSkuWriteReady();
+  if (addedBarcodes.length) { requireDomain(options !== undefined && typeof options.assertBarcodeWriteReady === "function", "DOCUMENT_BARCODE_SCHEMA_NOT_READY", "Actual document barcode authority required"); await options.assertBarcodeWriteReady(); }
+  const next: ProductAggregate = { product: { ...previous.product, version: expectedVersion + 1 }, skus: [...previous.skus, ...skus], barcodes: [...barcodeMap.values()] };
   requireDomain(next.skus.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_MAINTENANCE_TOO_LARGE", "Saved aggregate would exceed readable SKU bound");
   await tx.validateReferences(previous, next);
   const { before, after } = productRootDelta(previous.product, next.product);
   before.skus = []; after.skus = skus.map(skuFacts);
+  if (addedBarcodes.length) { before.barcodes = []; after.barcodes = addedBarcodes.map(barcodeFacts); }
   const completion = { operationId, actorAccountId: actor.accountId, requestKey, requestHash: hash, kind: "PRODUCT" as const, action: "EDIT" as const,
     targetId: productId, oldVersion: expectedVersion, newVersion: next.product.version, beforeValues: before, afterValues: after, completedAt: input.completedAt };
   requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");
@@ -119,6 +139,7 @@ export async function appendProductSkusInTransaction(tx: ProductMaintenanceTrans
   await tx.assertPendingCapacity(completion);
   await tx.evidence.prepare(completion); await tx.putProduct(next.product, previous.product);
   for (const sku of skus) await tx.putSku(sku, undefined);
+  for (const barcode of addedBarcodes) await tx.putBarcode(barcode, undefined);
   const saved = result(await tx.evidence.complete(completion));
   requireDomain(saved.operationId === operationId && saved.targetId === productId && saved.version === next.product.version, "INVALID_DATABASE_VALUE", "Product evidence differs from saved append");
   return { result: saved, addedSkus: skus };
@@ -232,7 +253,11 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
       let nextProduct: ProductStoredRecord;
       const skus = new Map((previous?.skus ?? []).map(s => [s.id, { ...s }])), barcodes = new Map((previous?.barcodes ?? []).map(b => [b.id, { ...b }]));
       if (command.action === "CREATE" || command.action === "EDIT") {
-        requireDomain(command.values.systemItemCode !== null && command.values.systemItemCode.trim().length > 0, "PRODUCT_REQUIRED_FIELDS", "Manual system item code is required; never allocated");
+        if (command.action === "EDIT") {
+          const code = command.values.systemItemCode, original = previous!.product.systemItemCode;
+          requireDomain(typeof code === "string" && code.trim().length > 0 || code === original,
+            "PRODUCT_SYSTEM_ITEM_CODE_REQUIRED", "修改系统货号时不能留空");
+        }
         requireDomain(!previous || previous.product.productCode === command.values.productCode, "IMMUTABLE_PRODUCT_CODE", "Existing product code is read-only");
         if ("seasonIds" in command.values) {
           requireDomain(!previous || Object.hasOwn(previous.product, "seasonIds"), "INVALID_DATABASE_VALUE", "Actual season array is unavailable");
@@ -243,7 +268,15 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
         } else nextProduct = { ...command.values, id, version: (previous?.product.version ?? 0) + 1, deletedAt: null };
         const generated: { colorId: string; fitId: string; sizeId: string }[] = [];
         if ("skuSelection" in command && command.skuSelection !== undefined) {
-          const selection = command.skuSelection;
+          let selection = command.skuSelection;
+          // A fit is a default only for the five historical schemes, and only
+          // when the original transaction can identify one actual A record.
+          if (selection.colorIds.length && !selection.fitIds.length && nextProduct.defaultBarcodeSchemeId !== null
+            && nextProduct.defaultBarcodeSchemeId !== BARCODE_SCHEMES.y2026
+            && Object.values(BARCODE_SCHEMES).includes(nextProduct.defaultBarcodeSchemeId as typeof BARCODE_SCHEMES[keyof typeof BARCODE_SCHEMES])) {
+            const actual = typeof tx.readDefaultHistoricalFit === "function" ? await tx.readDefaultHistoricalFit() : null;
+            if (actual !== null) selection = { ...selection, fitIds: [entityId("fit", actual)] };
+          }
           requireDomain(!previous || previous.product.sizeGroupId === nextProduct.sizeGroupId, "PRODUCT_SIZE_GROUP_MISMATCH", "Selection generation cannot migrate an existing product group");
           if (selection.colorIds.length && selection.fitIds.length) {
             requireDomain(typeof tx.readSkuSelectionSizes === "function", "PRODUCT_SPEC_GENERATION_NOT_READY", "Original transaction selection reader required");
@@ -256,11 +289,29 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
             const existing = new Set([...skus.values()].map(coordinate));
             for (const colorId of selection.colorIds) for (const fitId of selection.fitIds) for (const sizeId of sizes) {
               const spec = { colorId, fitId, sizeId }, key = coordinate(spec);
-              requireDomain(!explicitNew.has(key), "PRODUCT_SPEC_CONFLICT", "Explicit and selected new specifications overlap");
-              if (!existing.has(key)) generated.push(spec);
+              if (!existing.has(key) && !explicitNew.has(key)) generated.push(spec);
             }
             requireDomain(skus.size + command.skus.filter(s => s.id === null).length + generated.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_MAINTENANCE_TOO_LARGE", "Saved aggregate would exceed the existing SKU bound");
           }
+        }
+        // Directly supplied new coordinates are also a product configuration,
+        // not permission to generate only the size seen on a document/UI row.
+        // Expand each explicit color/fit pair over the actual complete group.
+        const explicitSpecs = command.skus.filter(item => item.id === null);
+        if (explicitSpecs.length) {
+          requireDomain(typeof tx.readSkuSelectionSizes === "function", "PRODUCT_SPEC_GENERATION_NOT_READY", "Original transaction selection reader required");
+          const pairs = new Map(explicitSpecs.map(item => [JSON.stringify([item.colorId, item.fitId]), { colorId: item.colorId, fitId: item.fitId }]));
+          const selection = { colorIds: [...new Set(explicitSpecs.map(item => item.colorId))], fitIds: [...new Set(explicitSpecs.map(item => item.fitId))] };
+          const rawSizes = await tx.readSkuSelectionSizes(id, nextProduct.sizeGroupId, selection);
+          requireDomain(Array.isArray(rawSizes) && rawSizes.length > 0 && rawSizes.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_SPEC_REQUIRED", "Complete nonempty product size group required");
+          const sizes = rawSizes.map(size => entityId("size", size));
+          requireDomain(new Set(sizes).size === sizes.length, "INVALID_DATABASE_VALUE", "Repeated group member identity");
+          const occupied = new Set([...skus.values(), ...generated, ...explicitSpecs].map(coordinate));
+          for (const pair of pairs.values()) for (const sizeId of sizes) {
+            const spec = { ...pair, sizeId }, key = coordinate(spec);
+            if (!occupied.has(key)) { generated.push(spec); occupied.add(key); }
+          }
+          requireDomain(skus.size + explicitSpecs.length + generated.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_MAINTENANCE_TOO_LARGE", "Selected specifications exceed the existing SKU bound");
         }
         for (const item of command.skus) {
           if (item.id === null) {
@@ -279,7 +330,6 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
           requireDomain(!skus.has(skuId), "PRODUCT_SPEC_CONFLICT", "New SKU id already exists");
           skus.set(skuId, newSkuRecord({ ...spec, skuCode: `NJNEW-${skuId.replaceAll("-", "")}`, enabled: true }, skuId, id, operationId));
         }
-        requireDomain(command.action !== "CREATE" || skus.size > 0, "PRODUCT_SPEC_REQUIRED", "New product requires a real SKU");
         const byCoordinate = new Map([...skus.values()].map(s => [coordinate(s), s]));
         for (const item of command.barcodes) {
           const sku = byCoordinate.get(coordinate(item)); requireDomain(sku, "PRODUCT_SPEC_NOT_FOUND", "Barcode needs a real retained SKU");
@@ -294,10 +344,13 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
             barcodes.set(old.id, { ...old, enabled: item.enabled });
           }
         }
-        if (contractVersion === 2) {
-          const oldIds = new Set(previous?.skus.map(s => s.id) ?? []);
-          await generateNewSkuMainBarcodes(tx, nextProduct, [...skus.values()].filter(s => !oldIds.has(s.id)), barcodes, dependencies.newId);
+        const oldIds = new Set(previous?.skus.map(s => s.id) ?? []);
+        const refill = new Set(contractVersion === 2 && "generateBarcodeSkuIds" in command ? command.generateBarcodeSkuIds : []);
+        for (const requestedId of refill) {
+          const requested = skus.get(requestedId);
+          requireDomain(requested && oldIds.has(requestedId) && requested.enabled, "PRODUCT_BARCODE_SKU_NOT_AVAILABLE", "指定SKU不存在或已停用");
         }
+        await generateNewSkuMainBarcodes(tx, nextProduct, [...skus.values()].filter(s => !oldIds.has(s.id) || refill.has(s.id)), barcodes, dependencies.newId);
         const main = new Set<string>();
         for (const b of barcodes.values()) if (b.enabled && b.kind === "MAIN") {
           requireDomain(!main.has(b.skuId), "BARCODE_CONFLICT", "Only one enabled main barcode per SKU"); main.add(b.skuId);
@@ -319,7 +372,7 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
       const changedSkus = next.skus.filter(s => !oldSkus.has(s.id) || different(s, oldSkus.get(s.id)!));
       const changedBarcodes = next.barcodes.filter(b => !oldBarcodes.has(b.id) || different(b, oldBarcodes.get(b.id)!));
       const { before, after } = productRootDelta(previous?.product, nextProduct);
-      requireDomain(previous === undefined || Object.keys(after).some(key => key !== "version") || changedSkus.length > 0 || changedBarcodes.length > 0 || imagePlan !== null && (imagePlan.before.length > 0 || imagePlan.after.length > 0),
+      requireDomain(previous === undefined || Object.keys(after).some(key => key !== "version") || changedSkus.length > 0 || changedBarcodes.length > 0 || ("generateBarcodeSkuIds" in command && (command.generateBarcodeSkuIds?.length ?? 0) > 0) || imagePlan !== null && (imagePlan.before.length > 0 || imagePlan.after.length > 0),
         "NO_PRODUCT_CHANGE", "No actual product changes supplied");
       if (changedSkus.length) { after.skus = changedSkus.map(skuFacts); before.skus = changedSkus.flatMap(s => oldSkus.has(s.id) ? [skuFacts(oldSkus.get(s.id)!)] : []); }
       if (changedBarcodes.length) { after.barcodes = changedBarcodes.map(barcodeFacts); before.barcodes = changedBarcodes.flatMap(b => oldBarcodes.has(b.id) ? [barcodeFacts(oldBarcodes.get(b.id)!)] : []); }

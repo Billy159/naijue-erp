@@ -28,6 +28,13 @@
 #page .sale-editor .sale-lines-table th,#page .sale-editor .sale-lines-table td{box-sizing:border-box;min-width:0;height:36px;padding:4px 7px;border-bottom:1px solid var(--ca-line);font-size:12px;line-height:18px}
 #page .sale-editor .sale-lines-table th{position:sticky;top:0;z-index:4;background:var(--ca-table-head);color:var(--ca-ink-2);font-weight:600}
 #page .sale-editor .sale-lines-table td{background:#fff;font-size:13px}
+/* Saved labels stay within their columns. Buttons also reveal full text for keyboard and touch users. */
+#page .sale-editor .sale-lines-table .sale-read-spec-value{display:block;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#page .sale-editor .sale-lines-table button.sale-read-spec-value{box-sizing:border-box;width:100%;min-height:24px;margin:0;padding:0;border:0;border-radius:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+#page .sale-editor .sale-lines-table button.sale-read-spec-value:hover{text-decoration:underline}
+#page .sale-editor .sale-lines-table button.sale-read-spec-value:focus-visible{outline:2px solid var(--ca-control-focus-border);outline-offset:2px}
+#sale-dialog.sale-read-spec-dialog{width:420px}
+#sale-dialog.sale-read-spec-dialog .sale-read-spec-full-value{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;text-overflow:clip}
 #page .sale-editor .sale-lines-table .sale-entry-row td{height:48px;background:#fff}
 #page .sale-editor .sale-lines-table .sale-row-actions{align-items:center;justify-content:center;gap:4px}
 #page .sale-editor .sale-lines-table .sale-row-actions .btn{min-height:26px;height:26px;padding:0 4px}

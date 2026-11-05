@@ -33,19 +33,26 @@ export { DictionaryPagination } from '../../product-settings/size-groups/paginat
   const props = { scope: context.createScope('pagination'), page: 1, pageSize: 20, total: 205, busy: false, onPage: page => requested.push(page), onPageSize: size => sizes.push(size) };
   const render = async (name, extra = {}) => { await act(async () => root.render(createElement(StrictMode, null, createElement(modules[name], { ...props, pageSize: name === 'InventoryPagination' ? 100 : 20, ...extra })))); await settle(); };
   const click = async element => { assert.ok(element, 'Pager target exists'); await act(async () => element.dispatchEvent(new MouseEvent('click', { bubbles: true }))); await settle(); };
+  // Frozen settings use numbered HTML buttons; document wrappers hide jump UI.
+  // Preserve each native contract instead of imposing one implementation.
   for (const name of ['InventoryPagination', 'SalesPagination', 'TransferPagination', 'PartyPagination', 'StoreSettingsPagination', 'CataloguePagination', 'DictionaryPagination']) {
     const total = /Sales|Transfer/.test(name) ? '205' : 205;
     await render(name, { total });
-    assert.ok(host.querySelector('.arco-pagination'), `${name}: known safe total must use actual shared Arco Pagination`);
+    assert.ok(host.querySelector(name === 'CataloguePagination' ? '.pc-settings-pagination .actions' : '.arco-pagination'), `${name}: current native pagination exists`);
     assert.equal(requested.length, 0, 'Construction/render must not request a page');
+    if (/Sales|Transfer/.test(name)) { assert.equal(host.querySelector('input[aria-label="目标页码"]'), null, name + ': frozen compact pager has no jump field'); assert.equal(host.querySelector('.iw-jump-go'), null, name + ': frozen compact pager has no jump button'); }
+    if (name === 'CataloguePagination') { assert.equal(host.querySelector('.arco-pagination'), null, 'Catalogue retains frozen numbered buttons'); assert.ok(host.querySelector('button.iw-page-number[aria-current="page"]')); }
     await click(host.querySelector('[aria-label="下一页"]')); assert.equal(requested.pop(), 2, `${name}: next page uses the domain callback`);
-    assert.equal(host.querySelector('.arco-pagination-item-active')?.textContent.trim(), '1', 'Requested page is not shown as executed before parent response');
+    assert.equal(host.querySelector(name === 'CataloguePagination' ? '[aria-current=page]' : '.arco-pagination-item-active')?.textContent.trim(), '1', 'Requested page is not shown as executed before parent response');
     await render(name, { total, page: 2 });
-    assert.equal(host.querySelector('.arco-pagination-item-active')?.textContent.trim(), '2');
+    assert.equal(host.querySelector(name === 'CataloguePagination' ? '[aria-current=page]' : '.arco-pagination-item-active')?.textContent.trim(), '2');
     await render(name, { total, busy: true }); await click(host.querySelector('[aria-label="下一页"]')); assert.equal(requested.length, 0, 'Busy cannot request another page');
     await render(name, { total: null }); assert.ok(host.querySelector('.arco-pagination') === null, 'Unknown total is not converted into zero/estimated Arco total');
+    assert.equal(host.querySelector('[aria-label="下一页"]'), null, name + ': unknown total has no next page');
+    assert.equal(host.querySelector('[aria-current="page"]'), null, name + ': unknown total has no invented current numbered page');
+    if (name === 'CataloguePagination') { assert.equal(host.querySelector('.pc-settings-pagination .actions'), null); assert.match(host.textContent, /尚未读取/); }
   }
-  console.log('PASS Pagination 1: all seven real consumers use actual Arco for known safe totals, controlled executed page, busy and honest null.');
+  console.log('PASS Pagination 1: all seven real consumers use current native pagination (catalogue frozen buttons; six Arco) for known safe totals, controlled executed page, busy and honest null.');
   await render('InventoryPagination');
   const keyboardNext = host.querySelector('[aria-label="下一页"]');
   assert.equal(keyboardNext.tabIndex, 0);
@@ -61,7 +68,8 @@ export { DictionaryPagination } from '../../product-settings/size-groups/paginat
     assert.ok(last?.disabled, 'Page beyond exact safe domain offset/end stays unavailable');
   }
   console.log('PASS Pagination 2: large exact totals retain original string/BigInt path and prohibit unsafe last-page offsets.');
-  await render('SalesPagination', { total: '205' });
+  // Jump is opt-in on the shared control, not exposed by sales/transfer wrappers.
+  await render('StandardPagination', { total: '205', label: 'shared jump', disabled: false, showJump: true });
   const jump = host.querySelector('input[aria-label="目标页码"]'), setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
   const typeJump = async text => { await act(async () => { setter.call(jump, text); jump.dispatchEvent(new Event('input', { bubbles: true })); }); await settle(); };
   await typeJump('3'); await act(async () => jump.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }))); await settle(); assert.equal(requested.pop(), 3);

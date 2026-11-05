@@ -86,7 +86,7 @@ export interface ProductMaintenanceDetailV2 extends Omit<ProductMaintenanceDetai
 export interface ProductSkuSelection { readonly colorIds: readonly string[]; readonly fitIds: readonly string[] }
 export type ProductMaintenanceCommandV2 = { readonly requestKey: string } & (
   { readonly action: "CREATE"; readonly values: ProductWriteValuesV2 & { readonly seasonIds: readonly string[] }; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[]; readonly skuSelection?: ProductSkuSelection }
-  | { readonly action: "EDIT"; readonly id: string; readonly expectedVersion: number; readonly values: ProductWriteValuesV2; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[]; readonly skuSelection?: ProductSkuSelection }
+  | { readonly action: "EDIT"; readonly id: string; readonly expectedVersion: number; readonly values: ProductWriteValuesV2; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[]; readonly skuSelection?: ProductSkuSelection; readonly generateBarcodeSkuIds?: readonly string[] }
   | { readonly action: "DISABLE" | "RESTORE" | "DELETE"; readonly id: string; readonly expectedVersion: number }
 );
 export interface ProductMaintenanceResult { readonly operationId: string; readonly kind: "PRODUCT"; readonly targetId: string; readonly version: number }
@@ -116,9 +116,12 @@ export interface ProductMaintenanceEvidence {
 /** Actual codes from the original locked transaction; code text is never normalized. */
 export interface ProductBarcodeGenerationReferences {
   readonly scheme: { readonly id: string; readonly status: string; readonly codeLength: number | null };
-  readonly colors: readonly { readonly id: string; readonly code: string }[];
-  readonly fits: readonly { readonly id: string; readonly code: string }[];
+  readonly colors: readonly { readonly id: string; readonly code: string | null }[];
+  readonly fits: readonly { readonly id: string; readonly code: string | null }[];
   readonly sizes: readonly { readonly id: string; readonly code: string | null }[];
+  /** Exact per-SKU, per-scheme source facts from a trusted retained mapping reader.
+   * Missing facts are not inferred from the current dictionaries. */
+  readonly historical?: readonly { readonly skuId: string; readonly schemeId: string; readonly productSegment: string; readonly colorCode: string; readonly sizeCode: string; readonly evidenceRef: string }[];
 }
 export interface ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence;
@@ -136,6 +139,8 @@ export interface ProductMaintenanceTransaction {
   readCandidates(query: ProductMaintenanceCandidateQuery): Promise<ProductMaintenanceCandidatePage>;
   /** v17: lock selected enabled color/fit references and every real member of this exact group in the original product transaction. */
   readBarcodeGenerationReferences?(productId: string, schemeId: string, skus: readonly ProductSkuRecord[]): Promise<ProductBarcodeGenerationReferences>;
+  readDefaultHistoricalFit?(): Promise<string | null>;
+  readExistingBarcodeValues?(values: readonly string[]): Promise<readonly string[]>;
   readSkuSelectionSizes?(productId: string, sizeGroupId: string, selection: ProductSkuSelection): Promise<readonly string[]>;
   /** Same-transaction reference locks, size-group membership and enabled/new-selection rules. */
   validateReferences(previous: ProductAggregate | undefined, next: ProductAggregate): Promise<void>;

@@ -46,8 +46,8 @@ RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CU
 FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
 # BEGIN GENERATED RELEASE CONTRACT
 # Generated from config/release-contract.json; edit that source, then regenerate.
-RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}}}''')
-RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":5821,"sha256":"d4d6e1faa58eb0b7d400e9f88753c4ee7966a16da3cf88cbfc07eeb3a132f4bc"}''')
+RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}},"exact35":{"profile":"source-confirmed-native-exact35-v1","migrationCount":27,"installationRecord":"/etc/naijue-erp/fresh35-combined-installation-v1.json"},"native35":{"root":"backend/native35-source","entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","fixturePins":[{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"9ca6ddbfd2c3255801a928e6f1ae661608ab7c1aec9d72d7901ccbb759a7f5c7"}]}}''')
+RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":6583,"sha256":"964a4e61c4d0b5352fbd5dd8f7dc12fa58497952c40a5cd92b7548af44d7f7aa"}''')
 # END GENERATED RELEASE CONTRACT
 FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
 FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
@@ -176,7 +176,8 @@ def file_identity(filename):
 APPROVED_SQL_PATCHES = {row['source']: row['member'] for row in RELEASE_CONTRACT['runtimeSqlPatches']}
 
 
-def validate_sql_members(manifest, source, approvedPatchMap):
+def validate_sql_members(manifest, source, approvedPatchMap, migration_count=None):
+    migration_count = RELEASE_CONTRACT['migrationCount'] if migration_count is None else migration_count
     expected = {}
     migrations = []
     for row in source.get('files', []):
@@ -185,7 +186,7 @@ def validate_sql_members(manifest, source, approvedPatchMap):
             need(name not in expected, 'DUPLICATE_SQL_SOURCE')
             expected[name] = row
             migrations.append(name)
-    need(len(migrations) == RELEASE_CONTRACT['migrationCount'] and {int(PurePosixPath(n).name.split('_', 1)[0]) for n in migrations} == set(range(1, RELEASE_CONTRACT['migrationCount'] + 1)), 'FULL_SAME_MIGRATION_SOURCES_REQUIRED')
+    need(len(migrations) == migration_count and {int(PurePosixPath(n).name.split('_', 1)[0]) for n in migrations} == set(range(1, migration_count + 1)), 'FULL_SAME_MIGRATION_SOURCES_REQUIRED')
     sources = {r['path']: r for r in source.get('files', [])}
     mapping = {name: name.removeprefix('adapters/postgres/') for name in migrations}
     for name, member in approvedPatchMap.items():
@@ -201,11 +202,55 @@ def validate_sql_members(manifest, source, approvedPatchMap):
              all(row.get(k) == expected[name].get(k) for k in ('bytes', 'sha256')), 'EXACT_SQL_SOURCE_BINDING_REQUIRED')
         seen.add(name)
     need(seen == set(mapping), 'EXACT_SQL_MEMBER_SET_REQUIRED')
-    return {'migrationCount': RELEASE_CONTRACT['migrationCount'], 'patchCount': len(approvedPatchMap)}
+    return {'migrationCount': migration_count, 'patchCount': len(approvedPatchMap)}
 
 
-def member_allowed(name, approvedPatchMap=None):
+def native35_member_map(manifest, source=None):
+    native = manifest.get('native35')
+    rows = [r for r in manifest.get('members', []) if r.get('role') == 'native35' or
+            str(r.get('path', '')).startswith(RELEASE_CONTRACT['native35']['root'] + '/')]
+    if native is None:
+        need(not rows, 'NATIVE35_DESCRIPTOR_REQUIRED')
+        return {}
+    need(isinstance(source, dict) and source.get('format') == 'FRESH35_COMBINED_CURRENT_SOURCE_V1', 'NATIVE35_PINNED_SOURCE_SET_REQUIRED')
+    keys = ('format', 'baseArtifacts', 'capturedSourcePins', 'currentSourcePins', 'currentSourceDelta', 'patches')
+    need(all(k in source for k in keys), 'NATIVE35_SOURCE_DESCRIPTOR_REQUIRED')
+    actual = digest(json.dumps({k: source[k] for k in keys}, ensure_ascii=False, separators=(',', ':')).encode())
+    need(isinstance(native, dict) and set(native) == {'sourceSetSha256', 'pins', 'referenceIndexSha256'} and
+         actual == source.get('sourceSetSha256') == native['sourceSetSha256'] and HASH.fullmatch(native.get('referenceIndexSha256', '')) and
+         native.get('pins') == source['currentSourcePins'], 'NATIVE35_EXACT_SOURCE_SET_REQUIRED')
+    pins = {}
+    fixtures = {r['path']: r['sha256'] for r in RELEASE_CONTRACT['native35']['fixturePins']}
+    for pin in native['pins']:
+        need(isinstance(pin, dict) and set(pin) == {'path', 'sha256'} and HASH.fullmatch(pin.get('sha256', '')), 'NATIVE35_EXACT_SOURCE_PIN_REQUIRED')
+        name = relative(pin['path'])
+        need(name not in pins and (name in fixtures or
+             not re.search(r'(?:^|/)(?:node_modules|tests?|fixtures?|secrets?|credentials?)(?:/|$)', name, re.I) and
+             not re.search(r'product-media|\.env', name, re.I) and
+             re.match(r'^(?:packages/|adapters/postgres/|scripts/release/unified-install/|tools/unified-import/|package(?:-lock)?\.json$)', name) and
+             re.search(r'\.(?:ts|mjs|json|sql|psql|py)$', name)), 'NATIVE35_UNREGISTERED_SOURCE_REQUIRED')
+        if name in fixtures:
+            need(pin['sha256'] == fixtures[name], 'NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED')
+        pins[name] = pin['sha256']
+    need(RELEASE_CONTRACT['native35']['entry'] in pins and set(fixtures) <= set(pins), 'NATIVE35_ENTRY_AND_REGISTERED_FIXTURES_REQUIRED')
+    result = {}
+    for row in rows:
+        source_path = row.get('sourcePath')
+        need(source_path in pins and row.get('role') == 'native35' and
+             row.get('path') == RELEASE_CONTRACT['native35']['root'] + '/' + source_path and
+             row.get('sha256') == pins[source_path] and
+             row.get('native35Kind') == ('proof-read' if re.search(r'\.(?:py|psql|sql|json)$', source_path) else 'module') and
+             row['path'] not in result, 'NATIVE35_EXACT_MEMBER_BINDING_REQUIRED')
+        result[row['path']] = row
+    need(len(result) == len(pins), 'NATIVE35_EXACT_MEMBER_SET_REQUIRED')
+    return result
+
+
+def member_allowed(name, approvedPatchMap=None, nativeMembers=None):
     relative(name)
+    if name.startswith(RELEASE_CONTRACT['native35']['root'] + '/'):
+        need(nativeMembers is not None and name in nativeMembers, 'NATIVE35_EXACT_MEMBER_REQUIRED')
+        return
     # Exact approved migration, not product-media data; archive/hash checks still apply.
     if name == 'migrations/0022_product_media_retained_delete.sql':
         return
@@ -218,18 +263,19 @@ def member_allowed(name, approvedPatchMap=None):
          bool(re.fullmatch(r'migrations/[0-9]{4}_[A-Za-z0-9_-]+\.sql', name)), 'NON_RUNTIME_ARCHIVE_MEMBER')
 
 
-def verified_archive(archive_ref, manifest_ref, build_id, source_commit):
+def verified_archive(archive_ref, manifest_ref, build_id, source_commit, native_source=None):
     """Read and validate before any destination/daemon action; no tarfile.extract(all)."""
     manifest_bytes = bytes_file(manifest_ref.get('path'), 16 * 1024 * 1024)
     need(digest(manifest_bytes) == manifest_ref.get('sha256'), 'RELEASE_MANIFEST_SHA256_MISMATCH')
     manifest = json.loads(manifest_bytes)
     need(manifest.get('format') == 'naijue-release-v1' and manifest.get('buildId') == build_id and
          manifest.get('sourceCommit') == source_commit and manifest.get('publicOrigin') == ORIGIN and manifest.get('apiPrefix') == '/api', 'RELEASE_IDENTITY_MISMATCH')
+    native_members = native35_member_map(manifest, native_source)
     records = manifest.get('members')
     need(isinstance(records, list) and 1 <= len(records) < 10000, 'FINITE_ARCHIVE_MEMBER_MANIFEST_REQUIRED')
     expected = {}
     for row in records:
-        member_allowed(row.get('path'))
+        member_allowed(row.get('path'), nativeMembers=native_members)
         need(row['path'] != 'release-manifest.json' and row['path'] not in expected and
              HASH.fullmatch(row.get('sha256', '')) and isinstance(row.get('bytes'), int) and 0 <= row['bytes'] <= 64 * 1024 * 1024, 'INVALID_ARCHIVE_MEMBER_RECORD')
         expected[row['path']] = row
@@ -254,7 +300,7 @@ def verified_archive(archive_ref, manifest_ref, build_id, source_commit):
                 need(name not in directories, 'DUPLICATE_ARCHIVE_DIRECTORY')
                 directories.add(name)
                 continue
-            member_allowed(name)
+            member_allowed(name, nativeMembers=native_members)
             need(item.isfile() and not item.issparse() and not item.linkname and name in expected and name not in entries,
                  'ARCHIVE_LINK_EXTRA_OR_DUPLICATE_MEMBER')
             need(item.size == expected[name]['bytes'], 'ARCHIVE_MEMBER_SIZE_MISMATCH')
@@ -329,17 +375,72 @@ def exact26_r1(p):
     return True
 
 
+def exact35_selected(p):
+    if p.get('runtimeSelector') != 'exact35':
+        need('runtime35' not in p, 'EXACT35_INPUTS_REQUIRE_EXPLICIT_SELECTOR')
+        return False
+    need('runtime26' not in p and 'runtime26Full' not in p, 'EXACT35_MUST_NOT_BORROW_EXACT26_REFERENCES')
+    native = p.get('runtime35')
+    need(isinstance(native, dict) and {'references', 'media'} <= set(native) <=
+         {'references', 'media', 'inventorySpool', 'credentialRequestKey'}, 'CLOSED_EXACT35_INPUTS_REQUIRED')
+    refs = native['references']
+    need(isinstance(refs, dict) and set(refs) == {'installationRecord', 'sourceSet', 'program', 'metadata',
+         'buildReceipt', 'sourceManifest', 'buildManifest', 'backupCoverage'}, 'CLOSED_EXACT35_REFERENCES_REQUIRED')
+    for key, ref in refs.items():
+        need(isinstance(ref, dict) and set(ref) == {'path', 'sha256'} and HASH.fullmatch(ref.get('sha256', '')),
+             'PINNED_EXACT35_REFERENCE_REQUIRED')
+        path = Path(ref.get('path', ''))
+        need(path.is_absolute() and str(path) == os.path.normpath(str(path)) and
+             (str(path) == RELEASE_CONTRACT['exact35']['installationRecord'] if key == 'installationRecord'
+              else path != ROOT and path.is_relative_to(ROOT)), 'EXACT35_FIXED_RECORD_OR_OWNED_REFERENCE_REQUIRED')
+    need(len({r['path'] for r in refs.values()}) == len(refs) and p.get('newDatabaseReceipt') == refs['metadata'],
+         'EXACT35_DISTINCT_CURRENT_REFERENCES_REQUIRED')
+    validate_private_runtime_resources(p)
+    return True
+
+
+def writable_runtime(p):
+    return p['runtime35'] if p.get('runtimeSelector') == 'exact35' else p['runtime26Full']
+
+
+def validate_private_runtime_resources(p):
+    native = writable_runtime(p)
+    media = native['media']
+    need(isinstance(media, dict) and set(media) == {'hostRoot', 'containerRoot', 'rootKey', 'writable'} and
+         media['writable'] is True, 'PRIVATE_WRITABLE_MEDIA_REQUIRED')
+    for key in ('hostRoot', 'containerRoot'):
+        path = Path(media.get(key, ''))
+        need(path.is_absolute() and str(path) == os.path.normpath(str(path)) and
+             not re.search(r'[\s,:\\\x00-\x1f]', str(path)), 'EXACT_PRIVATE_MEDIA_PATH_REQUIRED')
+    need(Path(media['hostRoot']) != ROOT and Path(media['hostRoot']).is_relative_to(ROOT) and
+         not Path(media['hostRoot']).is_relative_to(ROOT / 'releases') and
+         media['containerRoot'].startswith('/run/naijue-rewrite/media/') and
+         re.fullmatch(r'[A-Za-z0-9_-]{1,100}', media.get('rootKey', '')), 'PRIVATE_MEDIA_ROOT_REQUIRED')
+    if 'inventorySpool' in native:
+        spool = native['inventorySpool']
+        need(isinstance(spool, dict) and set(spool) == {'hostRoot', 'containerRoot'} and
+             spool['containerRoot'] == '/private/inventory-exports', 'PRIVATE_SPOOL_REQUIRED')
+        path = Path(spool.get('hostRoot', ''))
+        need(path.is_absolute() and str(path) == os.path.normpath(str(path)) and path != ROOT and path.is_relative_to(ROOT) and
+             not path.is_relative_to(ROOT / 'releases') and not re.search(r'[\s,:\\\x00-\x1f]', str(path)) and
+             not path.is_relative_to(Path(media['hostRoot'])) and not Path(media['hostRoot']).is_relative_to(path),
+             'SEPARATE_PRIVATE_SPOOL_REQUIRED')
+    if 'credentialRequestKey' in native:
+        credential_key_binding(p)
+
+
 def credential_key_binding(p):
     """Private file stat identity only. Never read/hash credential bytes."""
-    key = p['runtime26Full']['credentialRequestKey']
+    native = writable_runtime(p)
+    key = native['credentialRequestKey']
     need(isinstance(key, dict) and set(key) == {'hostFile', 'containerFile'}, 'CLOSED_CREDENTIAL_KEY_REFERENCE_REQUIRED')
     need(key.get('containerFile') == '/run/naijue-rewrite/credential-request.key', 'EXACT_PRIVATE_CREDENTIAL_CONTAINER_FILE_REQUIRED')
     host = key.get('hostFile')
     need(isinstance(host, str) and not re.search(r'[\s,:\\\x00-\x1f]', host), 'EXACT_PRIVATE_CREDENTIAL_HOST_FILE_REQUIRED')
     filename = canonical(host, private=True, root=ROOT)
-    need(not filename.is_relative_to(ROOT / 'releases') and not filename.is_relative_to(Path(p['runtime26Full']['media']['hostRoot'])), 'SEPARATE_PRIVATE_CREDENTIAL_FILE_REQUIRED')
-    if 'inventorySpool' in p['runtime26Full']:
-        need(not filename.is_relative_to(Path(p['runtime26Full']['inventorySpool']['hostRoot'])), 'SEPARATE_PRIVATE_CREDENTIAL_FILE_REQUIRED')
+    need(not filename.is_relative_to(ROOT / 'releases') and not filename.is_relative_to(Path(native['media']['hostRoot'])), 'SEPARATE_PRIVATE_CREDENTIAL_FILE_REQUIRED')
+    if 'inventorySpool' in native:
+        need(not filename.is_relative_to(Path(native['inventorySpool']['hostRoot'])), 'SEPARATE_PRIVATE_CREDENTIAL_FILE_REQUIRED')
     identity = file_identity(filename)
     need(identity['bytes'] == 32 and identity['mode'] == 0o600 and identity['uid'] == int(p['limits']['app']['user'].split(':')[0]), 'EXACT_PRIVATE_CREDENTIAL_FILE_IDENTITY_REQUIRED')
     need(not filename.parent.stat().st_mode & 0o022, 'PRIVATE_CREDENTIAL_PARENT_REQUIRED')
@@ -348,7 +449,7 @@ def credential_key_binding(p):
 
 def validate_full_credential(p, runtime):
     selected = runtime.get('staffMaintenance') is True
-    present = 'credentialRequestKey' in p['runtime26Full']
+    present = 'credentialRequestKey' in writable_runtime(p)
     need(selected == present and selected == ('staffCredentialRequestKeyFile' in runtime), 'STAFF_PRIVATE_CREDENTIAL_SELECTION_MISMATCH')
     if selected:
         key = credential_key_binding(p)
@@ -390,6 +491,8 @@ def exact26_full(p):
 
 
 def exact26_selected(p):
+    if exact35_selected(p):
+        return False
     if exact26_full(p):
         return True
     need('runtime26Full' not in p, 'FULL_REFERENCES_REQUIRE_EXPLICIT_SELECTOR')
@@ -397,11 +500,24 @@ def exact26_selected(p):
 
 
 def runtime_references(p):
+    if exact35_selected(p):
+        return p['runtime35']['references']
     return p['runtime26Full']['references'] if exact26_full(p) else p['runtime26']
 
 
 def runtime_binding(p):
     # Public reference/stat binding only; never hash the private runtime bytes.
+    if exact35_selected(p):
+        native = p['runtime35']
+        value = {'selector': 'exact35', 'references': native['references'], 'runtimeFile': p['runtimeConfiguration'],
+                 'capacityHost': p.get('capacityHost'), 'capacityGate': p.get('capacityGate'),
+                 'capacityFinalInput': p.get('capacityFinalInput'), 'media': native['media'],
+                 'inventorySpool': native.get('inventorySpool')}
+        if 'capacityQaObserver' in p:
+            value['capacityQaObserver'] = p['capacityQaObserver']
+        if 'credentialRequestKey' in native:
+            value['credentialRequestKey'] = credential_key_binding(p)
+        return digest(encoded(value))
     if not exact26_selected(p):
         return None
     value = {'selector': p['runtimeSelector'], 'references': runtime_references(p), 'runtimeFile': p['runtimeConfiguration'],
@@ -432,7 +548,10 @@ def validate_runtime_build(p, manifest, refs):
     inputs = graph.get('inputs', [])
     required = {RELEASE_CONTRACT['entrypoints']['backend']['source'], 'apps/api/src/production-provider-composition.ts', 'apps/api/src/production-application-host.ts',
                 'apps/api/src/postgres-read-api.ts', 'adapters/postgres/src/bounded-pool.ts', 'adapters/postgres/src/native-import-accounting-capability.ts'}
-    if exact26_full(p):
+    if exact35_selected(p):
+        required.update({'adapters/postgres/src/runtime27-command-issuer.ts', 'apps/api/src/production-capacity-launch.ts',
+                         'apps/api/src/capacity-runtime-probe.ts'})
+    elif exact26_full(p):
         required.add('adapters/postgres/src/history-revision-store.ts')
     source_inputs = {row['path']: row for row in source.get('files', [])}
     need(source_inputs.get(RELEASE_CONTRACT_SOURCE['path']) == RELEASE_CONTRACT_SOURCE,
@@ -442,10 +561,147 @@ def validate_runtime_build(p, manifest, refs):
          graph.get('entryOutput') == component.get('entryOutput') == RELEASE_CONTRACT['entrypoints']['backend']['member'] and
          inputs and inputs == component.get('inputs') and required <= {row['path'] for row in inputs} and
          all(row == source_inputs.get(row['path']) for row in inputs), 'EXACT26_NATIVE_BACKEND_GRAPH_REQUIRED')
+    if manifest.get('native35') is not None:
+        need(exact35_selected(p), 'NATIVE35_EXPLICIT_RUNTIME_REQUIRED')
+        native_source = reference(refs['sourceSet'], 16 * 1024 * 1024)
+        for row in native35_member_map(manifest, native_source).values():
+            original = source_inputs.get(row['sourcePath'])
+            need(original is not None and all(original.get(k) == row.get(k) for k in ('bytes', 'sha256')), 'NATIVE35_SAME_BUILD_SOURCE_REQUIRED')
     build_outputs = {row.get('member'): row for row in build.get('files', []) if row.get('role') == 'backend'}
     need(graph.get('outputs') and all(name in build_outputs and any(row['path'] == name and row['sha256'] == build_outputs[name]['sha256'] and
          row['bytes'] == build_outputs[name]['bytes'] for row in manifest['members']) for name in graph['outputs']), 'EXACT26_NATIVE_OUTPUT_BINDING_REQUIRED')
 
+
+
+def runtime_binding_field(p):
+    return 'runtime35BindingSha256' if exact35_selected(p) else 'runtime26BindingSha256'
+
+
+def runtime35_record(p):
+    """Read the existing fixed record by reference; no replacement record or capability."""
+    need(exact35_selected(p), 'EXACT35_SELECTION_REQUIRED')
+    ref = p['runtime35']['references']['installationRecord']
+    filename = canonical(ref['path'])
+    need(all(q.stat().st_uid == 0 and not q.stat().st_mode & 0o022 for q in [*filename.parents, filename]),
+         'EXACT35_OS_PROTECTED_RECORD_REQUIRED')
+    record = reference(ref, 65536)
+    need(isinstance(record, dict) and set(record) == {'format', 'installedAt', 'binding', 'target', 'transactionReceipt',
+         'programSha256', 'catalogSpecSha256', 'catalogSha256', 'authorizationSha256', 'state'} and
+         record.get('format') == 'FRESH35_COMBINED_INSTALLATION_RECORD_V1' and
+         record.get('state') == 'COMMITTED_AND_CATALOG_CHECKED', 'EXACT35_INSTALLED_RECORD_REQUIRED')
+    return record
+
+
+def validate_exact35_installation_data(record, source, program):
+    """Descriptor consistency only; the native consumer remains authoritative."""
+    native_hash = lambda value: digest(json.dumps(value, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode())
+    binding = record.get('binding')
+    need(isinstance(binding, dict) and set(binding) == {'sourceSetSha256', 'targetSha256'} and
+         all(HASH.fullmatch(binding.get(k, '')) for k in binding) and
+         all(HASH.fullmatch(record.get(k, '')) for k in ('programSha256', 'catalogSpecSha256', 'catalogSha256', 'authorizationSha256')),
+         'EXACT35_RECORD_BINDING_REQUIRED')
+    source_keys = ('format', 'baseArtifacts', 'capturedSourcePins', 'currentSourcePins', 'currentSourceDelta', 'patches')
+    need(isinstance(source, dict) and set(source) == set(source_keys) | {'sourceSetSha256', 'capturedEvidenceAppliesToCurrentChanges',
+         'engineVerified', 'installationReady'} and source.get('format') == 'FRESH35_COMBINED_CURRENT_SOURCE_V1' and
+         all(source.get(k) is False for k in ('capturedEvidenceAppliesToCurrentChanges', 'engineVerified', 'installationReady')),
+         'EXACT35_SOURCE_DESCRIPTOR_REQUIRED')
+    need(native_hash({k: source[k] for k in source_keys}) == source['sourceSetSha256'] == binding['sourceSetSha256'],
+         'EXACT35_SOURCE_SET_CHANGED')
+    target = record.get('target')
+    need(isinstance(target, dict) and set(target) == {'format', 'proposal', 'physical', 'startsAt', 'expiresAt', 'authority'} and
+         target.get('format') == 'FRESH35_COMBINED_TARGET_BINDING_V1' and
+         target.get('authority') == 'BINDING_ONLY_NOT_CREATION_OR_EXECUTION_PERMISSION' and
+         native_hash(target) == binding['targetSha256'], 'EXACT35_INSTALLED_TARGET_CHANGED')
+    proposal, physical = target['proposal'], target['physical']
+    need(isinstance(proposal, dict) and set(proposal) == {'database', 'owner', 'controller', 'runtime', 'admin', 'host', 'port', 'workspaceDirectory'} and
+         isinstance(physical, dict) and set(physical) == {'systemIdentifier', 'databaseOid', 'serverVersionNum', 'postmasterStart'},
+         'EXACT35_CLOSED_INSTALLED_TARGET_REQUIRED')
+    match = re.fullmatch(r'synthetic_fresh35_([0-9]{8})_(r[1-9][0-9]{0,3})', proposal.get('database', ''))
+    need(match and all(proposal[k] == 'fresh35_' + k + '_' + match[1] + '_' + match[2] for k in ('owner', 'controller', 'runtime', 'admin')) and
+         proposal['host'] == '127.0.0.1' and type(proposal['port']) is int and 1024 < proposal['port'] < 65536 and
+         proposal['port'] not in (5432, 55437, 55438, 55439) and
+         all(isinstance(physical[k], str) and re.fullmatch(r'[1-9][0-9]*', physical[k]) for k in ('systemIdentifier', 'databaseOid')) and
+         physical['serverVersionNum'] == '170011' and isinstance(physical['postmasterStart'], str) and
+         type(target['startsAt']) is int and type(target['expiresAt']) is int and
+         0 < target['expiresAt'] - target['startsAt'] <= 1200000, 'EXACT35_EXISTING_SYNTHETIC_TARGET_ONLY')
+    receipt = record.get('transactionReceipt')
+    need(isinstance(receipt, dict) and set(receipt) == {'nonce', 'database', 'actor', 'transactionId', 'backendPid'} and
+         re.fullmatch(r'[a-f0-9]{48}', receipt.get('nonce', '')) and receipt['database'] == proposal['database'] and
+         receipt['actor'] == proposal['owner'] and re.fullmatch(r'[1-9][0-9]*', receipt.get('transactionId', '')) and
+         type(receipt.get('backendPid')) is int and receipt['backendPid'] > 0, 'EXACT35_COMMITTED_TRANSACTION_REQUIRED')
+    program_keys = ('format', 'sourceSetSha256', 'targetSha256', 'catalogSha256', 'statements', 'observationSqlSha256',
+                    'applicationTransactions', 'createsCluster', 'createsRoles', 'createsCredentials', 'oldTablesRemoved', 'hostEnabled')
+    need(isinstance(program, dict) and set(program) == set(program_keys) | {'programSha256'} and
+         program.get('format') == 'FRESH35_COMBINED_ATOMIC_PROGRAM_V1' and
+         native_hash({k: program[k] for k in program_keys}) == program['programSha256'] == record['programSha256'] and
+         program['sourceSetSha256'] == source['sourceSetSha256'] and program['targetSha256'] == binding['targetSha256'] and
+         program['catalogSha256'] == record['catalogSpecSha256'] and program['applicationTransactions'] == 1 and
+         all(program[k] is False for k in ('createsCluster', 'createsRoles', 'createsCredentials', 'oldTablesRemoved', 'hostEnabled')),
+         'EXACT35_ATOMIC_PROGRAM_CHANGED')
+    return target
+
+
+def runtime_database(p):
+    return runtime35_record(p)['target']['proposal']['database'] if exact35_selected(p) else DATABASE
+
+
+def validate_runtime35(p, manifest, runtime, capacity_pending=False):
+    native, refs = p['runtime35'], p['runtime35']['references']
+    record = runtime35_record(p)
+    target = validate_exact35_installation_data(record, reference(refs['sourceSet'], 16 * 1024 * 1024),
+                                               reference(refs['program'], 16 * 1024 * 1024))
+    proposal, physical = target['proposal'], target['physical']
+    expected = {'host': proposal['host'], 'port': proposal['port'], 'database': proposal['database'], 'role': proposal['runtime'],
+                'databaseOid': physical['databaseOid'], 'postmasterStart': physical['postmasterStart']}
+    need(runtime.get('capacityLaunch', {}).get('target') == expected, 'EXACT35_SAME_PHYSICAL_CAPACITY_TARGET_REQUIRED')
+    runtime = capacity_runtime_configuration(p, runtime, capacity_pending)
+    required = {'schemaVersion', 'profile', 'documentCommands', 'publicOrigin', 'http', 'assets', 'build', 'postgres', 'authentication', 'productMedia'}
+    maintenance = {'organizationMaintenance', 'catalogueMaintenance', 'paymentMaintenance', 'partyMaintenance', 'staffMaintenance', 'productMaintenance'}
+    optional = maintenance | {'inventoryOutputSpool', 'staffCredentialRequestKeyFile'}
+    need(required <= set(runtime) <= required | optional and runtime['schemaVersion'] == 1 and
+         runtime['profile'] == RELEASE_CONTRACT['exact35']['profile'] and runtime['documentCommands'] == 'NATIVE_RUNTIME' and
+         all(runtime[k] is True for k in maintenance if k in runtime), 'CLOSED_EXACT35_RUNTIME_REQUIRED')
+    config_target = runtime.get('postgres', {}).get('target', {})
+    need(all(config_target.get(k) == v for k, v in {'host': proposal['host'], 'port': proposal['port'], 'database': proposal['database'],
+         'user': proposal['runtime'], 'ssl': False}.items()), 'EXACT35_ORDINARY_LOGIN_TARGET_REQUIRED')
+    need(runtime['productMedia'] == {'root': native['media']['containerRoot'], 'rootKey': native['media']['rootKey']}, 'EXACT35_MEDIA_BINDING_CHANGED')
+    validate_full_credential(p, runtime)
+    need(('inventoryOutputSpool' in runtime) == ('inventorySpool' in native), 'EXACT35_SPOOL_SELECTION_CHANGED')
+    if 'inventoryOutputSpool' in runtime:
+        need(runtime['inventoryOutputSpool'] == {'directory': '/private/inventory-exports', 'maxBytes': 536870912, 'maxConcurrent': 1, 'maxDurationMs': 120000},
+             'EXACT35_OUTPUT_SPOOL_REQUIRED')
+    validate_runtime_build(p, manifest, refs)
+    build_source = reference(refs['sourceManifest'], 16 * 1024 * 1024)
+    install_source = reference(refs['sourceSet'], 16 * 1024 * 1024)
+    pins = install_source['currentSourcePins']
+    need(isinstance(pins, list) and pins and all(isinstance(row, dict) and set(row) == {'path', 'sha256'} and
+         HASH.fullmatch(row.get('sha256', '')) for row in pins) and len({row['path'] for row in pins}) == len(pins), 'EXACT35_SOURCE_PINS_REQUIRED')
+    source_pins = {relative(row['path']): row['sha256'] for row in pins}
+    need(all(row['sha256'] == source_pins[row['path']] for row in build_source['files'] if row['path'] in source_pins), 'EXACT35_BUILD_INSTALL_SOURCE_CHANGED')
+    validate_sql_members(manifest, build_source, APPROVED_SQL_PATCHES, RELEASE_CONTRACT['exact35']['migrationCount'])
+    metadata = reference(refs['metadata'], 16 * 1024 * 1024)
+    need(refs['metadata']['sha256'] == record['catalogSha256'] and metadata.get('format') == 'FRESH35_COMBINED_ACTUAL_CATALOG_V1' and
+         metadata.get('sourceSetSha256') == install_source['sourceSetSha256'] and
+         [row.get('version') for row in metadata.get('lineage', [])] == list(range(1, 28)), 'EXACT35_INSTALLED_CATALOG_REQUIRED')
+    need(metadata.get('identity') == {'systemIdentifier': physical['systemIdentifier'], 'databaseOid': physical['databaseOid'],
+         'database': proposal['database'], 'owner': proposal['owner'], 'actor': proposal['owner'], 'serverVersionNum': physical['serverVersionNum'],
+         'host': proposal['host'], 'port': proposal['port']}, 'EXACT35_CATALOG_PHYSICAL_TARGET_CHANGED')
+    coverage = reference(refs['backupCoverage'])
+    need(coverage.get('database') == proposal['database'] and coverage.get('target') == target and
+         coverage.get('buildId') == p['buildId'] and coverage.get('sourceCommit') == p['sourceCommit'] and
+         coverage.get('schemaVersions') == p['schemaVersions'] and coverage.get('catalogSha256') == record['catalogSha256'] and
+         coverage.get('backupReceiptSha256') == p['backupReceipt']['sha256'] and
+         coverage.get('runtimeIdentity') == p['runtimeConfiguration']['identity'] and coverage.get('media') == native['media'] and
+         coverage.get('r1Protected') is True and coverage.get('isolatedRestore', {}).get('currentAppLoginRepresentativeRead') == 'PASS',
+         'EXACT35_CURRENT_CONFIG_MEDIA_RESTORE_COVERAGE_REQUIRED')
+    media = canonical(native['media']['hostRoot'], kind='directory', root=ROOT)
+    need(media.stat().st_uid == int(p['limits']['app']['user'].split(':')[0]), 'EXACT35_PRIVATE_MEDIA_APP_OWNER_REQUIRED')
+    if 'inventorySpool' in native:
+        need(canonical(native['inventorySpool']['hostRoot'], kind='directory', root=ROOT).stat().st_uid == media.stat().st_uid,
+             'EXACT35_PRIVATE_SPOOL_APP_OWNER_REQUIRED')
+    # No current producer can attest a production bridge target. Preserve this
+    # refusal until its original owners supply and review the missing contract.
+    need(proposal['host'] != '127.0.0.1', 'EXACT35_LOOPBACK_INSTALL_RECORD_NOT_A_BRIDGE_PRODUCTION_TARGET')
 
 
 CAPACITY_VOLUMES = ('postgres', 'wal', 'backup', 'system', 'media')
@@ -739,7 +995,7 @@ def read_plan(filename):
     need(isinstance(p, dict) and required <= set(p) and p['format'] == 'naijue-candidate-deployment-v1', 'EXPLICIT_DEPLOYMENT_PLAN_REQUIRED')
     need(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,70}', p['operationId']) and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', p['buildId']) and
          re.fullmatch(r'[a-f0-9]{40}', p['sourceCommit']) and p['publicOrigin'] == ORIGIN, 'EXACT_BUILD_AND_OPERATION_IDENTITY_REQUIRED')
-    need(p['schemaVersions'] == list(range(1, 27) if exact26_selected(p) else range(1, 20)), 'EXACT_SELECTED_SCHEMA_REQUIRED')
+    need(p['schemaVersions'] == list(range(1, RELEASE_CONTRACT['exact35']['migrationCount'] + 1) if exact35_selected(p) else range(1, 27) if exact26_selected(p) else range(1, 20)), 'EXACT_SELECTED_SCHEMA_REQUIRED')
     need(isinstance(p['backupMaxAgeSeconds'], int) and 1 <= p['backupMaxAgeSeconds'] <= 86400, 'EXPLICIT_BACKUP_MAX_AGE_REQUIRED')
     release = Path(p['releaseDirectory'])
     need(release.parent == ROOT / 'releases' and release.name == p['buildId'], 'EXACT_NEW_RELEASE_DIRECTORY_REQUIRED')
@@ -782,7 +1038,8 @@ def file_hash(filename):
 
 
 def validate_references(p, capacity_pending=False):
-    manifest, entries = verified_archive(p['archive'], p['manifest'], p['buildId'], p['sourceCommit'])
+    native_source = reference(p['runtime35']['references']['sourceSet'], 16 * 1024 * 1024) if exact35_selected(p) else None
+    manifest, entries = verified_archive(p['archive'], p['manifest'], p['buildId'], p['sourceCommit'], native_source)
     pack = reference(p['packReceipt'])
     need(pack.get('status') == 'PACKED_AND_EXTRACTED_READBACK_MATCH' and pack.get('archiveExtractions') == 1 and
          pack.get('buildId') == p['buildId'] and pack.get('sourceCommit') == p['sourceCommit'] and
@@ -796,25 +1053,28 @@ def validate_references(p, capacity_pending=False):
         b = backup.get('services', {}).get(name, {})
         need(b.get('imageId') == before.get('imageId') and b.get('startedAt') == before.get('startedAt'), 'BACKUP_OLD_RUNTIME_CAS_MISMATCH')
     db = reference(p['newDatabaseReceipt'])
-    if not exact26_full(p):
+    if not exact35_selected(p) and not exact26_full(p):
         need(db.get('status') == 'PASS_NEW_DATABASE_SCHEMA19_ONLY_NOT_IMPORT_NOT_AUTH' and db.get('actual', {}).get('database') == DATABASE and
              db['actual'].get('versions') == (list(range(1, 20)) if exact26_selected(p) else p['schemaVersions']) and db['actual'].get('tables') == 50, 'EXACT_NEW_DATABASE_SCHEMA_RECEIPT_REQUIRED')
     migrations = {int(PurePosixPath(row['path']).name.split('_', 1)[0]): row['sha256'] for row in manifest['members'] if row.get('role') == 'migration'}
-    if not exact26_selected(p):
+    if not exact35_selected(p) and not exact26_selected(p):
         need(migrations == {row['version']: row['sha256'] for row in db.get('appliedMigrations', [])} and set(migrations) == set(range(1, 20)), 'RELEASE_SCHEMA_MIGRATION_HASH_MISMATCH')
     need(file_identity(p['runtimeConfiguration']['path']) == p['runtimeConfiguration']['identity'], 'PRIVATE_RUNTIME_FILE_IDENTITY_CHANGED')
     runtime = json_file(p['runtimeConfiguration']['path'], private=True)
     need(runtime.get('build') == {'buildId': p['buildId'], 'sourceCommit': p['sourceCommit']} and runtime.get('publicOrigin') == ORIGIN and
-         runtime.get('documentCommands') == ('NATIVE_RUNTIME' if exact26_full(p) else 'DISABLED') and runtime.get('http') == {'host': '0.0.0.0', 'port': 3000, 'acceptedHosts': [HOST]} and
+         runtime.get('documentCommands') == ('NATIVE_RUNTIME' if exact35_selected(p) or exact26_full(p) else 'DISABLED') and runtime.get('http') == {'host': '0.0.0.0', 'port': 3000, 'acceptedHosts': [HOST]} and
          runtime.get('assets') == {'root': '/app/web', 'entry': 'index.html'} and
-         runtime.get('profile') == (FULL_PROFILE if exact26_full(p) else RUNTIME26_PROFILE if exact26_selected(p) else 'source-confirmed-native-v1'), 'R1_RUNTIME_CONFIGURATION_MISMATCH')
-    if exact26_selected(p):
+         runtime.get('profile') == (RELEASE_CONTRACT['exact35']['profile'] if exact35_selected(p) else FULL_PROFILE if exact26_full(p) else RUNTIME26_PROFILE if exact26_selected(p) else 'source-confirmed-native-v1'), 'R1_RUNTIME_CONFIGURATION_MISMATCH')
+    if exact35_selected(p):
+        validate_runtime35(p, manifest, runtime, capacity_pending)
+    elif exact26_selected(p):
         validate_runtime26(p, manifest, db, runtime, capacity_pending)
     else:
         capacity_runtime_configuration(p, runtime, capacity_pending)
     target = runtime.get('postgres', {}).get('target', {})
-    need(target.get('database') == DATABASE and target.get('user') == ROLE and target.get('host') == 'naijue-prod-db-1' and target.get('port') == 5432,
-         'OLD_OR_WRONG_DATABASE_CONFIGURATION_REFUSED')
+    if not exact35_selected(p):
+        need(target.get('database') == DATABASE and target.get('user') == ROLE and target.get('host') == 'naijue-prod-db-1' and target.get('port') == 5432,
+             'OLD_OR_WRONG_DATABASE_CONFIGURATION_REFUSED')
     need(bool(target.get('password')) and file_identity(p['runtimeConfiguration']['path'])['uid'] == int(p['limits']['app']['user'].split(':')[0]),
          'APPLICATION_PRIVATE_RUNTIME_OWNER_REQUIRED')
     nginx = p['nginxConfiguration']
@@ -928,23 +1188,26 @@ def mount(source, target, readonly=True):
 def runtime_mount_arguments(p):
     host = capacity_host_binding(p)
     args = [*mount(host['collector']['hostFile'], CAPACITY_COLLECTOR), *mount(host['profile']['hostFile'], CAPACITY_PROFILE)]
-    if exact26_selected(p):
+    native35 = exact35_selected(p)
+    if not native35 and exact26_selected(p):
         refs = runtime_references(p)
         args += [*mount(refs['review']['path'], RUNTIME26_REVIEW), *mount(refs['independentReview']['path'], RUNTIME26_INDEPENDENT)]
-    if exact26_full(p):
-        if 'credentialRequestKey' in p['runtime26Full']:
+    if native35 or exact26_full(p):
+        native = writable_runtime(p)
+        if 'credentialRequestKey' in native:
             key = credential_key_binding(p)
             args += mount(key['hostFile'], key['containerFile'], True)
-        media = p['runtime26Full']['media']
+        media = native['media']
         args += mount(media['hostRoot'], media['containerRoot'], False)
-        if 'inventorySpool' in p['runtime26Full']:
-            spool = p['runtime26Full']['inventorySpool']
+        if 'inventorySpool' in native:
+            spool = native['inventorySpool']
             args += mount(spool['hostRoot'], spool['containerRoot'], False)
     return args
 
 
 def runtime_entry_arguments(p):
-    return (['--exact26-full'] if exact26_full(p) else ['--exact26-r1'] if exact26_selected(p) else []) + ['/run/naijue-rewrite/runtime.json']
+    return (['--exact35'] if exact35_selected(p) else ['--exact26-full'] if exact26_full(p) else
+            ['--exact26-r1'] if exact26_selected(p) else []) + ['/run/naijue-rewrite/runtime.json']
 
 
 
@@ -1920,8 +2183,14 @@ def install_linux_dependencies(p, docker, release, manifest):
 
 def full_write_boundary(p, restore_old=False, docker=None):
     value = reference(p.get('writeBoundary'))
-    review = reference(runtime_references(p)['review'], 65536)
-    need(value.get('format') == 'naijue-rewrite-write-boundary-v1' and value.get('database') == DATABASE and
+    if exact35_selected(p):
+        record = runtime35_record(p)
+        review = {'target': record['target'], 'catalog': {'sha256': record['catalogSha256']}}
+        database = record['target']['proposal']['database']
+    else:
+        review = reference(runtime_references(p)['review'], 65536)
+        database = DATABASE
+    need(value.get('format') == 'naijue-rewrite-write-boundary-v1' and value.get('database') == database and
          value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and
          value.get('writeAdmission') in ('CLOSED', 'CONTROLLED_PRIVATE') and type(value.get('newBusinessWrites')) is int and
          value['newBusinessWrites'] >= 0 and value.get('outcome') == 'KNOWN' and value.get('checkedBy') and value.get('target') == review['target'] and
@@ -1933,7 +2202,7 @@ def full_write_boundary(p, restore_old=False, docker=None):
     # A recent JSON alone cannot prove zero writes. Every writer must still be
     # physically stopped after the registered drain/snapshot and compatible-old proof.
     fence = reference(p.get('writeFence'))
-    need(value['newBusinessWrites'] == 0 and fence.get('database') == DATABASE and fence.get('target') == review['target'] and fence.get('buildId') == p['buildId'] and
+    need(value['newBusinessWrites'] == 0 and fence.get('database') == database and fence.get('target') == review['target'] and fence.get('buildId') == p['buildId'] and
          fence.get('sourceCommit') == p['sourceCommit'] and fence.get('allWriteEntrypointsClosed') is True and
          type(fence.get('inFlightTransactions')) is int and fence['inFlightTransactions'] == 0 and
          type(fence.get('snapshot', {}).get('newBusinessWrites')) is int and fence['snapshot']['newBusinessWrites'] == 0 and
@@ -1969,7 +2238,7 @@ def full_write_boundary(p, restore_old=False, docker=None):
 
 
 def write_boundary(p, restore_old=False, docker=None):
-    if exact26_full(p):
+    if exact35_selected(p) or exact26_full(p):
         return full_write_boundary(p, restore_old, docker)
     value = reference(p.get('writeBoundary'))
     need(value.get('format') == 'naijue-rewrite-write-boundary-v1' and value.get('database') == DATABASE and
@@ -1986,8 +2255,8 @@ def acceptance(p):
          value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and
          value.get('archiveSha256') == p['archive']['sha256'] and value.get('schemaVersions') == p['schemaVersions'] and
          value.get('dataReady') is True, 'EXACT_REAL_CANDIDATE_ACCEPTANCE_REQUIRED')
-    if exact26_selected(p):
-        need(value.get('runtime26BindingSha256') == runtime_binding(p), 'EXACT26_CANDIDATE_ACCEPTANCE_BINDING_REQUIRED')
+    if exact35_selected(p) or exact26_selected(p):
+        need(value.get(runtime_binding_field(p)) == runtime_binding(p), 'EXACT_SELECTED_CANDIDATE_ACCEPTANCE_BINDING_REQUIRED')
     fresh_time(value.get('checkedAtUtc'), 86400)
     for owner in ('QF', 'QB'):
         source = reference(value.get('evidence', {}).get(owner))
@@ -2040,7 +2309,7 @@ def current_stage(p, docker, manifest):
     need(stage.get('status') == 'CANDIDATE_STAGED_HEALTH_ONLY_NOT_BUSINESS' and stage.get('buildId') == p['buildId'] and
          stage.get('sourceCommit') == p['sourceCommit'] and stage.get('archiveSha256') == p['archive']['sha256'] and
          stage.get('manifestSha256') == p['manifest']['sha256'] and stage.get('releaseDirectory') == p['releaseDirectory'], 'EXACT_STAGED_CANDIDATE_REQUIRED')
-    need(stage.get('schemaVersions') == p['schemaVersions'] and stage.get('runtime26BindingSha256') == runtime_binding(p), 'STAGED_RUNTIME_SELECTION_OR_REVIEW_CHANGED')
+    need(stage.get('schemaVersions') == p['schemaVersions'] and stage.get(runtime_binding_field(p)) == runtime_binding(p), 'STAGED_RUNTIME_SELECTION_OR_REVIEW_CHANGED')
     need(payload_identity(Path(p['releaseDirectory']) / 'payload', manifest, True) == stage.get('installedPayloadSha256'), 'STAGED_PAYLOAD_OR_DEPENDENCIES_CHANGED')
     need(file_hash(Path(p['releaseDirectory']) / 'payload/release-manifest.json') == p['manifest']['sha256'], 'STAGED_RELEASE_MANIFEST_CHANGED')
     for role in ('app', 'stageWeb'):
@@ -2086,10 +2355,10 @@ def stage(p, docker, journal, manifest, entries):
              'capacityFinalPlan': final_ref, 'capacityFinalRuntimeIdentity': p['runtimeConfiguration']['identity'],
              'capacityProducer': p['capacityHost'],
              'releaseDirectory': str(release), 'installedPayloadSha256': installed, 'containers': containers,
-             'health': {'app': app_health, 'proxy': web_health}, 'schemaVersions': p['schemaVersions'], 'database': DATABASE,
+             'health': {'app': app_health, 'proxy': web_health}, 'schemaVersions': p['schemaVersions'], 'database': runtime_database(p),
              'databaseQueriedByDeploymentTool': False, 'productionEntryChanged': False, 'businessAcceptance': False, 'finishedAtUtc': now()}
-    if exact26_selected(p):
-        value['runtime26BindingSha256'] = runtime_binding(p)
+    if exact35_selected(p) or exact26_selected(p):
+        value[runtime_binding_field(p)] = runtime_binding(p)
     new_json(release / 'stage-receipt.json', value)
     return value
 
@@ -2116,7 +2385,7 @@ def restore_old_entry(p, docker, journal, public_id=None):
 
 
 def stop_full_app(p, docker, journal):
-    need(exact26_full(p), 'EXPLICIT_FULL_STOP_REQUIRED')
+    need(exact35_selected(p) or exact26_full(p), 'EXPLICIT_FULL_STOP_REQUIRED')
     stage = reference(p.get('stageReceipt'))
     expected = stage['containers']['app']
     info = docker.inspect(expected['id'])
@@ -2156,11 +2425,11 @@ def activate(p, docker, journal, manifest):
                   'buildId': p['buildId'], 'sourceCommit': p['sourceCommit'], 'archiveSha256': p['archive']['sha256'],
                   'publicContainer': {'id': public_id, 'specSha256': own_container_fingerprint(info)}, 'oldWebId': p['beforeCAS']['services'][OLD_NAMES[1]]['id'],
                   'health': observed, 'stageReceiptSha256': p['stageReceipt']['sha256'], 'candidateAcceptanceSha256': p['candidateAcceptance']['sha256'],
-                  'backupReceiptSha256': p['backupReceipt']['sha256'], 'database': DATABASE, 'oldAppAndDatabaseUnchanged': True,
+                  'backupReceiptSha256': p['backupReceipt']['sha256'], 'database': runtime_database(p), 'oldAppAndDatabaseUnchanged': True,
                   'databaseRestorePerformed': False, 'publicHttpsReadbackPerformed': False, 'bootPersistenceVerified': False,
                   'businessAcceptanceCreatedByDeployment': False, 'finishedAtUtc': now()}
-        if exact26_selected(p):
-            result['runtime26BindingSha256'] = runtime_binding(p)
+        if exact35_selected(p) or exact26_selected(p):
+            result[runtime_binding_field(p)] = runtime_binding(p)
         new_json(Path(p['releaseDirectory']) / 'activation-receipt.json', result)
         return result
     except Exception:
@@ -2222,7 +2491,7 @@ def main():
     if not args.execute:
         validate_references(p)
         print(json.dumps({'status': 'PLAN_ONLY_NOT_EXECUTED', 'phase': args.phase, 'buildId': p['buildId'], 'sourceCommit': p['sourceCommit'],
-                          'schemaVersions': p['schemaVersions'], 'releaseDirectory': p['releaseDirectory'], 'database': DATABASE,
+                          'schemaVersions': p['schemaVersions'], 'releaseDirectory': p['releaseDirectory'], 'database': runtime_database(p),
                           'publicBinding': '127.0.0.1:18080', 'requiredWhenActivating': ['stageReceipt', 'candidateAcceptance', 'writeBoundary'],
                           'databaseRestoreAllowed': False, 'deploymentExecuted': False}))
     else:

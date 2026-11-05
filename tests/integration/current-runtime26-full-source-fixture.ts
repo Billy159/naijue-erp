@@ -28,6 +28,7 @@ import type { HistorySettlementChunk, PreparedHistorySettlementChunk } from '../
 import { v2MoneyApprovalSet, v2Cents } from '../../packages/application/src/import-v2.ts';
 import type { MoneyApproval } from '../../packages/application/src/import-v2.ts';
 import { prepareNativeStockGroup, nativeStockSourceEvidence, nativeStockPublicationContributor26 } from '../../packages/application/src/native-stock-contributor-import.ts';
+import type { PreparedNativePartyImportChunk } from '../../packages/application/src/native-party-import.ts';
 import type { NativeStockGroupInput } from '../../packages/application/src/native-stock-contributor-import.ts';
 import { prepareV3HistoryHeaderChunk } from '../../packages/application/src/import-v3-history-header-staging.ts';
 import type { HistoryHeaderInput } from '../../packages/application/src/import-v3-history-header.ts';
@@ -204,11 +205,12 @@ export function rewrite26SyntheticSourceByteCandidates(f: CurrentRuntime26FullSo
  // Derive audit candidates from actual signed contributors and explicit targets.
  const lines=f.stockInput.contributors.map(c=>c.lineage), stock=f.stockInput.canonicalStock;
  assert.equal(lines.length,2);assert.ok(lines.every(l=>l.warehouseSourceId===stock.仓库来源编号 && l.canonicalStockRowSourceId===stock.来源编号 && l.canonicalSkuSourceId===stock.SKU来源编号 && l.productSourceId===lines[0]!.productSourceId && l.sourceUnit===lines[0]!.sourceUnit));
- const input=lines.reduce((sum,l)=>sum+BigInt(l.signedQuantity),0n),output=BigInt(stock.核准库存数量);
+ const stockQuantity=stock.核准库存数量,stockWarehouse=stock.仓库来源编号;assert.ok(typeof stockQuantity==='string');assert.ok(typeof stockWarehouse==='string');
+ const input=lines.reduce((sum,l)=>sum+BigInt(l.signedQuantity),0n),output=BigInt(stockQuantity);
  assert.equal(input,output);assert.equal(f.stockConservation.warehouseUnits.length,1);
  const unit=f.stockConservation.warehouseUnits[0]!;assert.equal(unit.warehouseSourceKey,stock.仓库来源编号);assert.equal(unit.sourceUnit,lines[0]!.sourceUnit);assert.equal(BigInt(unit.signedQuantity),output);
  const unitAudit=mappingCsv('audit/independent-verification/warehouse-unit-reconciliation.csv',[{warehouse:unit.warehouseSourceKey,unit:unit.sourceUnit,before:input.toString(),after:unit.signedQuantity,difference:(input-BigInt(unit.signedQuantity)).toString()}]);
- const productAudit=mappingCsv('audit/warehouse-product-stock-conservation.csv',[{warehouseSourceId:stock.仓库来源编号,productSourceId:lines[0]!.productSourceId,inputSignedQuantity:input.toString(),outputSignedQuantity:output.toString(),exactDifference:(input-output).toString()}]);
+ const productAudit=mappingCsv('audit/warehouse-product-stock-conservation.csv',[{warehouseSourceId:stockWarehouse,productSourceId:lines[0]!.productSourceId,inputSignedQuantity:input.toString(),outputSignedQuantity:output.toString(),exactDifference:(input-output).toString()}]);
  const warehouseAudit=mappingCsv('audit/independent-verification/all-53-warehouses.csv',f.warehouseScope.map(w=>{
    const party=b.parties.find(p=>p.source.entityType==='WAREHOUSE' && p.source.sourceKey===w.sourceKey);assert.ok(party);
    const before=lines.filter(l=>l.warehouseSourceId===w.sourceKey).reduce((sum,l)=>sum+BigInt(l.signedQuantity),0n),after=BigInt(w.signedQuantity);assert.equal(before,after);
@@ -270,7 +272,7 @@ export function rewrite26OffsetSourceCandidates(f:CurrentRuntime26FullSourceFixt
  const base=JSON.parse(projected.manifestCandidate.utf8);base.payloadFiles.push({file:'snapshots/all-business-source-rows.jsonl',bytes:snapshot.bytes,sha256:snapshot.sha256});base.payloadBytes+=snapshot.bytes;
  const baseManifest=artifact(join(directory,'manifest.json'),JSON.stringify(base));
  const indexed=new Map(entities.map(e=>[e,[] as Record<string,unknown>[]])),counts=Object.fromEntries(IMPORT_V2_TABLES.map(t=>[t.entity,0]));let offset=0;
- for(const line of rows){const raw=JSON.parse(line) as {entity:string;sourceId:string;file:string;sheet:string;row:number;sourceSha256:string};assert.ok(Object.hasOwn(counts,raw.entity));counts[raw.entity]++;
+ for(const line of rows){const raw=JSON.parse(line) as {entity:string;sourceId:string;file:string;sheet:string;row:number;sourceSha256:string};assert.ok(Object.hasOwn(counts,raw.entity));const priorCount=counts[raw.entity];assert.ok(typeof priorCount==='number');counts[raw.entity]=priorCount+1;
   const length=Buffer.byteLength(line,'utf8');if(indexed.has(raw.entity))indexed.get(raw.entity)!.push({entity:raw.entity,sourceKey:raw.sourceId,sourceLocator:{file:raw.file,sheet:raw.sheet,row:raw.row,sourceSha256:raw.sourceSha256},identityKind:raw.sourceId?'ORIGINAL_SOURCE_KEY_AND_LOCATOR':'ORIGINAL_LOCATOR_ONLY',offset,length,sha256:sha(line)});offset+=length+1;}
  const indices=entities.map(entity=>{const list=indexed.get(entity)!;assert.ok(list.length>0);return {...artifact(join(directory,'indices',entity+'.jsonl'),list.map(row=>JSON.stringify(row)+'\n').join('')),entity,rows:list.length};});
  const source={path:snapshot.path,bytes:snapshot.bytes,sha256:snapshot.sha256,rows:rows.length};
@@ -338,7 +340,7 @@ export function rewrite26TransferHeaderCandidates(f:CurrentRuntime26FullSourceFi
  const rawUtf8=[transfer,sales].map(x=>JSON.stringify(x)+'\n').join(''),gz=gzipSync(Buffer.from(rawUtf8,'utf8'));
  const spool={path:join(directory,'headers.gz'),base64:gz.toString('base64'),bytes:gz.length,sha256:createHash('sha256').update(gz).digest('hex'),rawBytes:Buffer.byteLength(rawUtf8),rawSha256:sha(rawUtf8)};
  const prepared=f.prepared.headers.rows[0]!.prepared,header=prepared.header;
- const references=(['调出仓来源编号','调入仓来源编号'] as const).map(field=>{const sourceKey=String(transfer.source.normalizedFields[field]),party=b.partySourceCandidates.find(p=>p.source.entityType==='WAREHOUSE'&&p.source.sourceKey===sourceKey);assert.ok(party);const native={...party.nativeSnapshot,created_operation_id:null};return {field,entity:'WAREHOUSE',sourceKey,nativeId:String(native.id),nativeSnapshotHash:requestHash(native)};});
+ const references=(['调出仓来源编号','调入仓来源编号'] as const).map(field=>{const sourceKey=String(transfer.source.normalizedFields[field]),party=b.partySourceCandidates.find(p=>p.source.entityType==='WAREHOUSE'&&p.source.sourceKey===sourceKey);assert.ok(party);const nativeId=party.nativeSnapshot.id;assert.ok(typeof nativeId==='string');const native={...party.nativeSnapshot,created_operation_id:null};return {field,entity:'WAREHOUSE',sourceKey,nativeId,nativeSnapshotHash:requestHash(native)};});
  const decision={entity:'TRANSFER_HEADER',sourceKey:transfer.source.sourceKey,sourceRowId:transfer.source.id,sourceContextHash:requestHash(transfer),normalizedRowHash:requestHash(transfer.source.normalizedFields),historyId:header.id,historyIdRule:'EXISTING_MAPPER_STABLE_IMPORT_ID',bindings:f.headerInput.bindings,references,historicalCustomerBinding:null,header,preparedFingerprint:prepared.fingerprint,fieldProvenanceHash:requestHash(prepared.fieldProvenance),temporalHash:requestHash(prepared.temporal)};
  const decisions=artifact('header-decisions.jsonl',decision);const decisionUtf8=decisions.utf8+'\n',lines={...decisions,utf8:decisionUtf8,bytes:Buffer.byteLength(decisionUtf8),sha256:sha(decisionUtf8)};
  const binding={batchId:b.batchId,fixedSourceNamespace:b.namespace,cutoffAt:b.now,selectionSha256:b.pins.selectionSha256};
@@ -420,13 +422,13 @@ export function rewrite26OriginalRecipeOptions(f:CurrentRuntime26FullSourceFixtu
 /** Read the original bootstrap-bound party factory to build a pre-CORE
  * continuation candidate. Its warehouse items are the original CORE command;
  * the live reader still requires committed CORE readback before continuation. */
-export async function rewrite26CoreProjectionCandidate(f:CurrentRuntime26FullSourceFixture,party:{report:{bootstrapAccountsCovered?:boolean};verify():Promise<void>;authorize(chunk:unknown):Promise<void>;chunks():AsyncIterable<{rows:readonly {entity:string;input:{source:{id:string;sourceKey:string;fieldProvenance:{fields:Record<string,unknown>}};nativeSnapshot:Record<string,unknown>}}[]}>},coreCommand:{action:string;batchId:string;actorAccountId:string;requestKey:string;sourceHash:string;coreInitialization:{coreSourceDigest:string};items:readonly unknown[]}){
+export async function rewrite26CoreProjectionCandidate(f:CurrentRuntime26FullSourceFixture,party:{report:{bootstrapAccountsCovered?:boolean};verify():Promise<void>;authorize(chunk:PreparedNativePartyImportChunk):Promise<void>;chunks():AsyncIterable<PreparedNativePartyImportChunk>},coreCommand:{action:string;batchId:string;actorAccountId:string;requestKey:string;sourceHash:string;coreInitialization:{coreSourceDigest:string};items:readonly unknown[]}){
  const b=f.blueprint;assert.equal(b.database,CURRENT_REWRITE_SYNTHETIC_TARGET);assert.equal(party.report.bootstrapAccountsCovered,true,'Original bootstrap-bound party source required');
  assert.equal(coreCommand.action,'IMPORT_CORE_STAGE');assert.equal(coreCommand.batchId,b.batchId);assert.equal(coreCommand.actorAccountId,b.refs.importer.nativeAccountId);assert.equal(coreCommand.sourceHash,b.pins.selectionSha256);assert.match(coreCommand.coreInitialization.coreSourceDigest,/^[a-f0-9]{64}$/);assert.equal(coreCommand.items.length,22);
  const coreMembers:{sourceRowId:string;entity:string;sourceKey:string;nativeId:unknown}[]=[],staffProofs:{sourceRowId:string;bootstrapAccounts:unknown}[]=[],members:{sourceRowId:string;entity:string;sourceKey:string;nativeId:unknown;version:unknown;nativeSnapshot:Record<string,unknown>;operations:never[]}[]=[];
  await party.verify();for await(const chunk of party.chunks()){await party.authorize(chunk);for(const row of chunk.rows){const input=row.input,sourceRowId=input.source.id,entity=row.entity,sourceKey=input.source.sourceKey,nativeSnapshot=structuredClone(input.nativeSnapshot),nativeId=nativeSnapshot.id;assert.equal(nativeSnapshot.version,1);
   coreMembers.push({sourceRowId,entity,sourceKey,nativeId});members.push({sourceRowId,entity,sourceKey,nativeId,version:1,nativeSnapshot,operations:[]});
-  if(entity==='STAFF'){const proof=input.source.fieldProvenance.fields.bootstrap_accounts;assert.ok(proof,'Original bound account proof required');staffProofs.push({sourceRowId,bootstrapAccounts:structuredClone(proof)});}
+  if(entity==='STAFF'){const fields=input.source.fieldProvenance.fields;assert.ok(fields!==null&&typeof fields==='object'&&!Array.isArray(fields),'Original staff field provenance required');const proof=fields.bootstrap_accounts;assert.ok(proof,'Original bound account proof required');staffProofs.push({sourceRowId,bootstrapAccounts:structuredClone(proof)});}
  }}await party.verify();assert.equal(coreMembers.length,115);assert.equal(staffProofs.length,49);
  coreMembers.sort((a,c)=>a.sourceRowId.localeCompare(c.sourceRowId));members.sort((a,c)=>a.sourceRowId.localeCompare(c.sourceRowId));staffProofs.sort((a,c)=>a.sourceRowId.localeCompare(c.sourceRowId));
  return {core:{receiptId:stableImportId('operation',coreCommand.actorAccountId,coreCommand.requestKey),coreSourceDigest:coreCommand.coreInitialization.coreSourceDigest},warehouses:structuredClone(coreCommand.items),coreProjection:{coreMembers,staffProofs,coreMaintenanceBinding:{version:'CORE_MAINTENANCE_BINDING_V1',members}},executionAuthorized:false as const};

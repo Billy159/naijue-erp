@@ -16,7 +16,7 @@ export function createProductManagementQueryService(dependencies: ProductManagem
       let result;
       try { result = checkedProductManagementListPage(value); } catch { throw new Error("Invalid trusted product management response"); }
       if (result.page !== parameters.page || result.pageSize !== parameters.pageSize || result.items.some(item => grant.kind === "products" && !grant.productIds.includes(item.id))
-        || result.items.some(item => grant.totalStock === "unavailable" ? item.totalStock !== null : item.totalStock === null)) throw new Error("Mismatched trusted product management response");
+        || result.items.some(item => grant.totalStock === "unavailable" && item.totalStock !== null)) throw new Error("Mismatched trusted product management response");
       return result;
     },
     async readCandidates(actor: ActorContext, input: unknown, signal: AbortSignal) {

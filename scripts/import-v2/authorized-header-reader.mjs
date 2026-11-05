@@ -235,7 +235,9 @@ export async function openAuthorizedV3HeaderReader(options){
         if(requestHash(input.selection)!==requestHash(selections.get(input.source.entityType))||requestHash(approvalEntries(input.moneyApprovals))!==requestHash(approvalEntries(approvedSet)))fail('HEADER_READER_CONTEXT_NOT_AUTHORIZED');
         const bindings=await resolveNativeBinding(structuredClone({entity:input.source.entityType,sourceKey:input.source.sourceKey,rawFields:input.source.rawFields,normalizedFields:input.source.normalizedFields}));assertOpen();checkRecord(record);
         if(requestHash(bindings)!==requestHash(input.bindings))fail('HEADER_READER_NATIVE_BINDING_MISMATCH');
-        const expected=prepareV3HistoryHeader({...record,batchId,fixedSourceNamespace,bindings,moneyApprovals:approvedSet});
+        const historicalHallEvidence=input.source.entityType==='SALES_HEADER'&&typeof options.resolveHistoricalHallEvidence==='function'?await options.resolveHistoricalHallEvidence(structuredClone({source:input.source,selection:input.selection,bindings})):undefined;assertOpen();
+        if(requestHash(historicalHallEvidence??null)!==requestHash(input.historicalHallEvidence??null))fail('HEADER_READER_HALL_EVIDENCE_NOT_AUTHORIZED');
+        const expected=prepareV3HistoryHeader({...record,batchId,fixedSourceNamespace,bindings,moneyApprovals:approvedSet,...(historicalHallEvidence?{historicalHallEvidence}:{})});
         if(requestHash(expected)!==requestHash(row.prepared))fail('HEADER_READER_PREPARED_NOT_AUTHORIZED');
       }
       assertOpen();

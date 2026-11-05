@@ -79,9 +79,10 @@ test("SYNTHETIC transfer: missing or corrupted original endpoint provenance prev
     const before=f.store.snapshot(); await assert.rejects(f.service.execute(action("UNAPPROVE",2)),{code:"MISSING_POSTING_PROVENANCE"}); assert.deepEqual(f.store.snapshot(),before);
   }
 });
-test("SYNTHETIC transfer: cutoff history is never reversed as runtime ledger",async()=>{
+test("SYNTHETIC transfer: imported ordinary draft uses the same approval and retains origin metadata",async()=>{
   const f=fixture(); await f.service.execute(save()); f.store.seedDocument(f.document(),"CUTOFF_HISTORY"); const before=f.store.snapshot();
-  await assert.rejects(f.service.execute(action("APPROVE",1)),{code:"HISTORICAL_POSTING_NOT_IMPLEMENTED"}); assert.deepEqual(f.store.snapshot(),before);
+  await f.service.execute(action("APPROVE",1)); assert.equal(f.balance(ids.fromWarehouse),-2n); assert.equal(f.balance(ids.toWarehouse),2n);
+  assert.equal(f.store.snapshot().transfers.get(ids.transfer)?.stockBasis,"CUTOFF_HISTORY"); assert.equal(before.ledger.length,0);
 });
 test("SYNTHETIC transfer policy: salesperson may approve and unapprove a visible transfer made by another salesperson",async()=>{
   const f=fixture(); await f.service.execute(save()); const other={...actor,accountId:sid("account",240)};

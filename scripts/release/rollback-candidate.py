@@ -18,10 +18,12 @@ C = None
 
 
 def deployment_implementation(selector, *, capacity=False):
-    if not isinstance(selector, str) or selector not in ('schema19', 'exact26-r1', 'exact26-full'):
+    if not isinstance(selector, str) or selector not in ('schema19', 'exact26-r1', 'exact26-full', 'exact35'):
         raise ValueError('UNKNOWN_RUNTIME_SELECTOR')
     if type(capacity) is not bool:
         raise ValueError('EXPLICIT_CAPACITY_SELECTION_REQUIRED')
+    if selector == 'exact35' and not capacity:
+        raise ValueError('EXACT35_REQUIRES_EXISTING_CAPACITY_HELPER')
     path = Path(__file__).with_name('deploy-candidate.py')
     source = path.read_bytes()
     if capacity and hashlib.sha256(source).hexdigest() != DEPLOYMENT_CAPACITY_SHA256:
@@ -45,13 +47,17 @@ def rollback(p, mode, implementation=None):
             activation = C.reference(p.get('activationReceipt'))
             C.need(activation.get('status') == 'ENTRY_ACTIVATED_INTERNAL_HEALTH_ONLY_PENDING_PUBLIC_READBACK' and
                    activation.get('buildId') == p['buildId'] and activation.get('sourceCommit') == p['sourceCommit'] and
-                   activation.get('archiveSha256') == p['archive']['sha256'] and activation.get('database') == C.DATABASE and
+                   activation.get('archiveSha256') == p['archive']['sha256'] and activation.get('database') == C.runtime_database(p) and
                    activation.get('oldWebId') == p['beforeCAS']['services'][C.OLD_NAMES[1]]['id'], 'EXACT_ACTIVATION_RECEIPT_REQUIRED')
+            native35 = C.exact35_selected(p)
+            full = native35 or C.exact26_full(p)
+            if native35:
+                C.need(activation.get('runtime35BindingSha256') == C.runtime_binding(p), 'EXACT35_ACTIVATION_BINDING_CHANGED')
             C.check_old(p, docker, web_running=False)
             public = activation['publicContainer']
             info = docker.inspect(public['id'])
             C.assert_own(info, p, 'web', True)
-            stopped_full_entry = C.exact26_full(p) and mode == 'stop-entry' and info['State']['Running'] is False
+            stopped_full_entry = full and mode == 'stop-entry' and info['State']['Running'] is False
             C.need(C.own_container_fingerprint(info) == public['specSha256'] and
                    (info['State']['Running'] is True or stopped_full_entry), 'ACTIVE_CANDIDATE_ENTRY_CHANGED')
             # Only restore-old-entry needs a still-closed write boundary. stop-entry is allowed after writes and retains both DBs.
@@ -66,16 +72,18 @@ def rollback(p, mode, implementation=None):
                 restored = C.restore_old_entry(p, docker, journal)
                 status = 'OLD_ENTRY_RESTORED_PRE_BUSINESS_WRITES_NO_DATABASE_RESTORE'
             else:
-                if C.exact26_full(p):
+                if full:
                     full_app_stop = C.stop_full_app(p, docker, journal)
                 C.check_old(p, docker, web_running=False)
                 restored = None
                 status = 'NEW_ENTRY_STOPPED_NO_HTTP_MAINTENANCE_RESPONSE'
             value = {'format': 'naijue-entry-rollback-v1', 'status': status, 'mode': mode, 'buildId': p['buildId'],
                      'sourceCommit': p['sourceCommit'], 'archiveSha256': p['archive']['sha256'], 'oldWeb': restored,
-                     'newWebId': public['id'], 'fullAppStop': full_app_stop, 'database': C.DATABASE, 'newDatabaseAndReceiptsPreserved': True,
+                     'newWebId': public['id'], 'fullAppStop': full_app_stop, 'database': C.runtime_database(p), 'newDatabaseAndReceiptsPreserved': True,
                      'oldAppAndDatabaseUnchanged': True, 'databaseRestoredOrDowngraded': False,
                      'publicHttpsReadbackPerformed': False, 'finishedAtUtc': C.now()}
+            if native35:
+                value['runtime35BindingSha256'] = C.runtime_binding(p)
             journal.finish(status, dockerCommands=docker.commands)
             C.new_json(job / 'results' / 'candidate-rollback.json', value)
             return value
@@ -109,7 +117,7 @@ def main():
     if not args.execute:
         C.reference(p.get('activationReceipt'))
         print(json.dumps({'status': 'PLAN_ONLY_NOT_EXECUTED', 'mode': args.mode, 'buildId': p['buildId'],
-                          'database': C.DATABASE, 'databaseRestoreAllowed': False,
+                          'database': C.runtime_database(p), 'databaseRestoreAllowed': False,
                           'oldEntryRequiresZeroNewBusinessWritesAndClosedAdmission': True, 'deploymentExecuted': False}))
     else:
         value = rollback(p, args.mode, C)

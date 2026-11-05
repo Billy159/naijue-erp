@@ -5,6 +5,7 @@ import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import type { EntityKind } from "../../../packages/domain/src/values.ts";
 import { integerValue, nullableString, stringValue } from "./codec.ts";
+import { checkedOrdinaryDocumentListOptions, type OrdinaryDocumentRuntime27Capability } from "./ordinary-document-list-reader.ts";
 
 export interface PgProductQueryResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
 export interface PgProductQueryClient {
@@ -108,9 +109,11 @@ const IMAGE_COLUMNS = "i.id, i.product_id, i.file_ref, i.mime, i.byte_size::text
 export class PostgresProductQueryReader implements TrustedProductSnapshotReader {
   private readonly pool: PgProductQueryPool;
   private readonly retainedDelete: boolean; private readonly seasonArray: boolean;
-  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, seasonCapability: ProductSeasonArrayCapability | null = null) {
+  private readonly runtime27: OrdinaryDocumentRuntime27Capability | undefined;
+  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, seasonCapability: ProductSeasonArrayCapability | null = null, runtime27?: OrdinaryDocumentRuntime27Capability) {
     if (typeof pool?.connect !== "function") throw new TypeError("Product query reader requires an explicit PostgreSQL pool");
-    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability); this.seasonArray = productSeasonArrayEnabled(pool, seasonCapability);
+    this.pool = pool; this.runtime27 = runtime27 ? checkedOrdinaryDocumentListOptions({profile:"source-confirmed-unified-native-v1",runtime27}).runtime27 : undefined;
+    this.retainedDelete = this.runtime27 ? true : catalogueRetainedDeleteEnabled(pool, capability); this.seasonArray = this.runtime27 ? true : productSeasonArrayEnabled(pool, seasonCapability);
   }
   private validate<P extends ProductQuery>(read: ProductScopedRead<P>, parameters: P): void {
     checkedProductActor(read.actor); checkedProductGrant(read.grant, parameters); activeProductRead(read.signal);
@@ -121,6 +124,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
     const query: Query = (sql, values = []) => { activeProductRead(signal); return client.query(sql, values); };
     try {
       activeProductRead(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
+      if (this.runtime27) { await this.runtime27.assertReady(client, "ORDINARY_DOCUMENT_READ"); activeProductRead(signal); }
       const result = await work(query); activeProductRead(signal); committing = true; await query("COMMIT"); return result;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error("Product snapshot failed");

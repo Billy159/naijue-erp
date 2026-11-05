@@ -131,7 +131,7 @@ function ProductBarcodeSchemeDetail(p:BarcodeSchemePreviewProps&{readonly query:
  const run=()=>{if(p.scope.active)void p.query.run({schemeId:p.schemeId});};
  return <StandardOverlay presentation="catalogue" title="查看条码方案" closeLabel="关闭查看条码方案" className="pc-arco-modal product-source-modal product-source-ui product-barcode-scheme-modal" width={640} close={p.close} onReady={()=>{if(p.initialRead&&p.query.getSnapshot().phase==='idle')run();}} footer={close=><div className="pc-modal-foot"><button type="button" className="btn" onClick={close}>关闭</button></div>}>
   <ProductReadState phase={snapshot.phase} retry={run} cancel={()=>p.query.cancel()} cancelled={snapshot.phase==='idle'} empty={snapshot.phase==='success'&&data===null}>
-   {data&&<dl className="pc-rule"><dt>方案名称</dt><dd>{data.name}</dd><dt>条码类型</dt><dd>{data.barcodeType}</dd><dt>编码规则</dt><dd>{data.ruleDescription}</dd><dt>总长度</dt><dd>{data.codeLength===null?'未提供':`${data.codeLength} 位`}</dd></dl>}
+   {data&&<><p className="hint">按商品绑定的方案ID生成；各段使用原编码实际长度，不补位、不截断。已有条码不覆盖。</p><dl className="pc-rule"><dt>方案名称</dt><dd>{data.name}</dd><dt>条码类型</dt><dd>{data.barcodeType}</dd><dt>原方案说明</dt><dd>{data.ruleDescription}</dd><dt>原标注长度（非生成限制）</dt><dd>{data.codeLength===null?'未提供':`${data.codeLength} 位`}</dd></dl></>}
   </ProductReadState>
  </StandardOverlay>;
 }

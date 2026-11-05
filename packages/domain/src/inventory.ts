@@ -15,6 +15,8 @@ export interface InventoryLedgerRow {
   readonly id: EntityId<"ledger">; readonly operationId: EntityId<"operation">; readonly eventKind: "APPROVE" | "UNAPPROVE";
   readonly warehouseId: EntityId<"warehouse">; readonly skuId: EntityId<"sku">; readonly quantityDelta: Quantity;
   readonly source: InventorySource; readonly sourceDocumentVersion: Version; readonly reversesEntryId: EntityId<"ledger"> | null;
+  /** Real migration receipt anchor, never a fake original ledger ID. Omitted legacy values mean null. */
+  readonly baselineAnchorOperationId?: EntityId<"operation"> | null;
   readonly businessDate: BusinessDate; readonly postedAt: string;
 }
 export interface TransferEffect { readonly warehouseId: EntityId<"warehouse">; readonly skuId: EntityId<"sku">; readonly quantityDelta: Quantity; readonly source: Extract<InventorySource, { kind: "TRANSFER" }> }

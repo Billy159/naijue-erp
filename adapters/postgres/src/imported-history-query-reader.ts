@@ -86,7 +86,8 @@ function headerColumns(kind: ImportedHistoryKind, effective = false): string {
    (SELECT e.native_staff_id FROM naijue_erp.import_header_native_reference e WHERE e.batch_id=h.batch_id AND e.entity_type='STAFF' AND e.source_key=h.created_by_source_key) created_by_staff_id,
    (SELECT e.native_staff_id FROM naijue_erp.import_header_native_reference e WHERE e.batch_id=h.batch_id AND e.entity_type='STAFF' AND e.source_key=h.approved_by_source_key) approved_by_staff_id,
    ${['created', 'updated', 'approved'].flatMap(k => [`${dateSql(`h.${k}_local_at`)} ${k}_local_at`, `${dateSql(`h.${k}_instant`, true)} ${k}_instant`]).join(',')},
-   ${kind === 'sales' ? `h.business_type,h.hall_id,h.customer_id,h.warehouse_id,h.salesperson_id,${amounts}` : warehouseColumns}${effective ? `,
+   ${kind === 'sales' ? `h.business_type,h.hall_id,h.customer_id,h.warehouse_id,h.salesperson_id,${amounts},
+   (SELECT source.field_provenance->'historical_hall_evidence' FROM naijue_erp.import_source_row source WHERE source.id=h.source_row_id AND source.batch_id=h.batch_id AND source.entity_type='SALES_HEADER') AS historical_hall_evidence` : warehouseColumns}${effective ? `,
    ${headerValidity(kind)} AS effective_valid` : ''}`;
 }
 function lineEffectiveJoins(kind: ImportedHistoryKind): string {
@@ -318,7 +319,7 @@ function header(row: Record<string, unknown>, kind: ImportedHistoryKind, grant: 
     responsibleStaffId: effective ? row.responsible_staff_id : null, responsibleName: effective ? row.responsible_name : null,
     createdLocalAt: row.created_local_at, updatedLocalAt: row.updated_local_at, approvedLocalAt: row.approved_local_at,
     createdInstant: row.created_instant, updatedInstant: row.updated_instant, approvedInstant: row.approved_instant,
-    ...(kind === 'sales' ? { businessType: row.business_type, hallId: row.hall_id, customerId: row.customer_id, warehouseId: row.warehouse_id, salespersonId: row.salesperson_id, grossAmount: row.gross_amount, orderDiscount: row.order_discount, netDue: row.net_due } : { fromWarehouseId: row.from_warehouse_id, toWarehouseId: row.to_warehouse_id }) }, kind, grant);
+    ...(kind === 'sales' ? { ...(row.historical_hall_evidence==null?{}:{historicalHallEvidence:row.historical_hall_evidence,historicalHallDiffersFromCurrent:(row.historical_hall_evidence as Record<string,unknown>).selected_hall_id!==row.hall_id||(row.historical_hall_evidence as Record<string,unknown>).warehouse_id!==row.warehouse_id}), businessType: row.business_type, hallId: row.hall_id, customerId: row.customer_id, warehouseId: row.warehouse_id, salespersonId: row.salesperson_id, grossAmount: row.gross_amount, orderDiscount: row.order_discount, netDue: row.net_due } : { fromWarehouseId: row.from_warehouse_id, toWarehouseId: row.to_warehouse_id }) }, kind, grant);
 }
 function line(row: Record<string, unknown>, kind: ImportedHistoryKind, effective = false): ImportedHistoryLine | ImportedHistorySalesLine {
   if (effective) requireDomain(row.effective_valid === true, 'INVALID_DATABASE_VALUE', 'Historical effective line revision differs from its current document');

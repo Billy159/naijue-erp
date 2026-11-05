@@ -7,6 +7,7 @@ import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import { checkedCategoryOrderEvidence, checkedCategoryOrderResult } from "../../../packages/application/src/catalogue-maintenance-validation.ts";
 import type { CategoryOrderResult } from "../../../packages/application/src/catalogue-maintenance-ports.ts";
 import type { DocumentSpecificationSaveScope } from "../../../packages/application/src/document-specification.ts";
+import type { Runtime27CommandCapability } from '../../../packages/application/src/runtime27-command-capability.ts';
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
 
@@ -19,7 +20,7 @@ type Query = MaintenancePgContext["client"]["query"];
 // Only this constructor/transaction can register a driver or active context.
 // Structural copies, caller booleans and a public prepare method are not proof.
 const ownedDrivers = new WeakMap<object, PgSalesPool>();
-const ownedContexts = new WeakMap<object, { pool: PgSalesPool; client: PgSalesClient; evidence: Evidence; assertActive: () => void; categoryOrderGuard?: () => Promise<void> }>();
+const ownedContexts = new WeakMap<object, { pool: PgSalesPool; client: PgSalesClient; evidence: Evidence; assertActive: () => void; managedProductPrecommit: boolean; categoryOrderGuard?: () => Promise<void>; productGuard?: () => Promise<void> }>();
 interface DocumentAppendScope { readonly parent: DocumentSpecificationSaveScope; readonly productId: string; readonly operationId: string; readonly requestKey: string; readonly expectedVersion: number; readonly skuFacts: readonly Record<string, string | number | boolean>[] }
 /** Identity-bearing token, issued only after this borrowed context completed its
  * exact append. A shape-compatible object or an arbitrary current xid is not proof. */
@@ -44,6 +45,24 @@ export function bindMaintenanceCategoryOrderGuard(context: object, pool: PgSales
   requireDomain(typeof guard === "function", "NATIVE_RUNTIME26_NOT_READY", "Actual category order runtime recheck required");
   const owned = ownedContexts.get(context)!;
   owned.categoryOrderGuard ??= guard; owned.evidence.enableCategoryOrder();
+}
+/** Only this unit of work executes productGuard before its outer COMMIT.
+ * Borrowed document contexts have a different completion protocol. */
+export function assertMaintenanceManagedProductContext(context: object, pool: PgSalesPool): void {
+  maintenanceContextClient(context, pool);
+  requireDomain(ownedContexts.get(context)!.managedProductPrecommit === true,
+    'TRANSACTION_SCOPE', 'Managed product precommit lifecycle required; borrowed document context rejected');
+}
+/** Register a recheck on this managed transaction, never on a detached client. */
+export function bindMaintenanceProductGuard(context: object, pool: PgSalesPool, guard: () => Promise<void>): void {
+  maintenanceContextClient(context, pool);
+  const owned = ownedContexts.get(context)!;
+  requireDomain(typeof guard === "function" && !owned.productGuard, "TRANSACTION_SCOPE", "One original product guard required");
+  owned.productGuard = guard;
+}
+export function assertMaintenanceProductCompletion(context: object, pool: PgSalesPool, fingerprint: string): void {
+  maintenanceContextClient(context, pool);
+  ownedContexts.get(context)!.evidence.assertProductCompletion(fingerprint);
 }
 export function assertMaintenanceProductImagesPrepared(context: object, pool: PgSalesPool, completion: MaintenanceCompletion): void {
   maintenanceContextClient(context, pool);
@@ -133,6 +152,11 @@ class Evidence implements MaintenanceEvidenceSession {
   private categoryOrderReady = false;
   constructor(query: Query, assertActive: () => void, document?: DocumentAppendScope) { this.query = query; this.assertActive = assertActive; this.document = document; }
   enableCategoryOrder(): void { this.assertActive(); this.categoryOrderReady = true; }
+  assertProductCompletion(fingerprint: string): void {
+    this.assertActive();
+    requireDomain(this.completed && this.completion?.kind === "PRODUCT" && requestHash(this.completion) === fingerprint,
+      "PRODUCT_EVIDENCE_CAPACITY_NOT_READY", "Exact admitted product completion required before commit");
+  }
   hasCategoryOrderCompletion(): boolean { return this.completion !== undefined && categoryOrder(this.completion.kind, this.completion.action); }
   documentCompletion(): MaintenanceCompletion {
     this.assertActive(); requireDomain(this.document && this.completed && this.completion, 'TRANSACTION_SCOPE', 'Actual exact document append must complete');
@@ -220,11 +244,28 @@ class Evidence implements MaintenanceEvidenceSession {
       : checkedResult({ operationId: value.operationId, kind: value.kind, targetId: value.targetId, version: value.newVersion }, value.kind, value.action);
     if (this.document) {
       const d = this.document;
+      const barcodes = value.afterValues.barcodes;
+      const hasBarcodes = Object.hasOwn(value.afterValues, 'barcodes');
+      if (hasBarcodes) {
+        requireDomain(Array.isArray(barcodes) && barcodes.length > 0 && barcodes.length <= d.skuFacts.length,
+          'TRANSACTION_SCOPE', 'Only new document SKU barcodes are allowed');
+        const usedSkus = new Set<string>(), usedIds = new Set<string>(), usedCodes = new Set<string>();
+        for (const raw of barcodes) {
+          requireDomain(raw !== null && typeof raw === 'object' && !Array.isArray(raw), 'TRANSACTION_SCOPE', 'Exact barcode facts required');
+          const b = raw as Record<string, unknown>;
+          requireDomain(Object.keys(b).sort().join(',') === 'barcode,barcode_kind,enabled,id,scheme_id,sku_id'
+            && typeof b.id === 'string' && typeof b.sku_id === 'string' && typeof b.scheme_id === 'string' && typeof b.barcode === 'string'
+            && b.barcode.length > 0 && b.barcode.length <= 512 && b.barcode_kind === 'MAIN' && b.enabled === true
+            && d.skuFacts.some(s => s.id === b.sku_id) && !usedSkus.has(b.sku_id) && !usedIds.has(b.id) && !usedCodes.has(b.barcode),
+          'TRANSACTION_SCOPE', 'Only unique MAIN bindings for this append are allowed');
+          uuid(b.id); uuid(b.sku_id); uuid(b.scheme_id); usedSkus.add(b.sku_id); usedIds.add(b.id); usedCodes.add(b.barcode);
+        }
+      }
       requireDomain(value.kind === 'PRODUCT' && value.action === 'EDIT' && value.targetId === d.productId && value.operationId === d.operationId
         && value.actorAccountId === d.parent.actor.accountId && value.requestKey === d.requestKey && value.completedAt === d.parent.completedAt
         && value.oldVersion === d.expectedVersion && value.newVersion === d.expectedVersion + 1
-        && requestHash(value.beforeValues) === requestHash({ version: d.expectedVersion, skus: [] })
-        && requestHash(value.afterValues) === requestHash({ version: d.expectedVersion + 1, skus: d.skuFacts }),
+        && requestHash(value.beforeValues) === requestHash({ version: d.expectedVersion, skus: [], ...(hasBarcodes ? { barcodes: [] } : {}) })
+        && requestHash(value.afterValues) === requestHash({ version: d.expectedVersion + 1, skus: d.skuFacts, ...(hasBarcodes ? { barcodes } : {}) }),
       'TRANSACTION_SCOPE', 'Document append cannot mutate retained root, SKU, barcode or image facts');
     }
     return { value, result };
@@ -273,23 +314,24 @@ class Evidence implements MaintenanceEvidenceSession {
  * releases or acquires a connection. The exact parent is closed by the deferred
  * database constraint before the outer SAVE may commit. */
 export async function withDocumentSpecificationMaintenanceContext<T>(input: {
-  readonly pool: PgSalesPool; readonly client: PgSalesClient; readonly runtime: NativeRuntime26Capability;
+  readonly pool: PgSalesPool; readonly client: PgSalesClient; readonly runtime: NativeRuntime26Capability | Runtime27CommandCapability;
   readonly assertBound: () => void; readonly append: DocumentAppendScope;
 }, work: (context: MaintenancePgContext) => Promise<T>): Promise<Readonly<{ value: T; proof: DocumentAppendEvidence }>> {
   const append = structuredClone(input.append); input.assertBound();
   uuid(append.productId); uuid(append.operationId); uuid(append.parent.documentId); uuid(append.parent.operationId); key(append.requestKey);
   requireDomain(append.operationId !== append.parent.operationId && append.requestKey === `doc-spec:${append.parent.operationId}:${append.productId}`
     && integer(append.expectedVersion) && append.skuFacts.length > 0, 'TRANSACTION_SCOPE', 'Exact original document append scope required');
-  await input.runtime.assertReady(input.client, 'PRODUCT_MAINTENANCE'); input.assertBound();
+  const checkRuntime = async () => { if (input.runtime.profile === 'EXACT27') { await input.runtime.assertReady(input.client, 'DOCUMENT_COMMAND'); await input.runtime.assertReady(input.client, 'CATALOGUE_READ'); } else await input.runtime.assertReady(input.client, 'PRODUCT_MAINTENANCE'); input.assertBound(); };
+  await checkRuntime();
   let open = true;
   const active = () => { requireDomain(open, 'TRANSACTION_CLOSED', 'Borrowed append context is closed'); input.assertBound(); };
   const query: Query = async (sql, values = []) => { active(); const r = await input.client.query(sql, values); active(); return r; };
   const evidence = new Evidence(query, active, append);
   const context = Object.freeze({ client: Object.freeze({ query }), evidence });
-  ownedContexts.set(context, { pool: input.pool, client: input.client, evidence, assertActive: active });
+  ownedContexts.set(context, { pool: input.pool, client: input.client, evidence, assertActive: active, managedProductPrecommit: false });
   try {
     const value = await work(context), completion = evidence.documentCompletion();
-    await input.runtime.assertReady(input.client, 'PRODUCT_MAINTENANCE'); input.assertBound();
+    await checkRuntime();
     const proof: DocumentAppendEvidence = Object.freeze({ purpose: 'DOCUMENT_SKU_APPEND_V1' });
     documentAppends.set(proof, { client: input.client, completion, parent: append.parent, active: input.assertBound });
     return Object.freeze({ value, proof });
@@ -309,7 +351,7 @@ export class PostgresMaintenanceCommandUnitOfWork implements MaintenancePgUnitOf
     const assertActive = () => requireDomain(active, "TRANSACTION_CLOSED", "Maintenance context cannot escape its callback");
     const evidence = new Evidence(query, assertActive);
     const context = Object.freeze({ client: Object.freeze({ query }), evidence });
-    ownedContexts.set(context, { pool: this.pool, client, evidence, assertActive });
+    ownedContexts.set(context, { pool: this.pool, client, evidence, assertActive, managedProductPrecommit: true });
     try {
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
       const result = await work(context);
@@ -318,6 +360,8 @@ export class PostgresMaintenanceCommandUnitOfWork implements MaintenancePgUnitOf
         requireDomain(guard, "CATALOGUE_ORDER_NOT_READY", "Category aggregate requires the original v15 precommit guard");
         await guard(); assertActive();
       }
+      const productGuard = ownedContexts.get(context)?.productGuard;
+      if (productGuard) { await productGuard(); assertActive(); }
       active = false; commitAttempted = true; await client.query("COMMIT"); return result;
     } catch (error) {
       active = false; if (!began || commitAttempted) discard = error instanceof Error ? error : Error("Maintenance transaction outcome unknown");

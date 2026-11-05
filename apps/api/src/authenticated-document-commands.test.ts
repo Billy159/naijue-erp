@@ -220,12 +220,13 @@ test("SYNTHETIC existing transfer HTTP rejects forged pointers/authority, unknow
   const getter = { ...input }; Object.defineProperty(getter, "transferId", { enumerable: true, get() { throw Error("GETTER_MUST_NOT_RUN"); } });
   assert.throws(() => parseNativeTransferExistingProposal(getter), { code: "INVALID_HTTP_INPUT" }); assert.deepEqual(h.f.store.snapshot(), before);
 });
-test("SYNTHETIC existing transfer HTTP preserves actual version/state/history/ref conflicts and returns no partial draft", async t => {
+test("SYNTHETIC existing transfer HTTP preserves actual version/state/ref conflicts, ordinary imported preparation and no partial failed draft", async t => {
   const h = await existingTransferHttp(t), input = h.input(), doc = h.f.store.snapshot().transfers.get(h.original.header.id)!.document;
   assert.equal((await h.post({ ...input, expectedVersion: 2 })).statusCode, 409);
   assert.equal((await h.post({ ...input, toWarehouseId: input.fromWarehouseId })).statusCode, 422);
   h.f.store.seedDocument({ ...doc, header: { ...doc.header, status: "APPROVED" } }); assert.equal((await h.post(input)).statusCode, 409);
-  h.f.store.seedDocument(doc, "CUTOFF_HISTORY"); assert.equal((await h.post(input)).statusCode, 409);
+  h.f.store.seedDocument(doc, "CUTOFF_HISTORY"); const importedBefore = h.f.store.snapshot();
+  assert.equal((await h.post(input)).statusCode, 200); assert.deepEqual(h.f.store.snapshot(), importedBefore);
   h.f.store.seedDocument(doc); h.f.revokeAccess(); const denied = await h.post(input); assert.equal(denied.statusCode, 403); assert.ok(!Object.hasOwn(denied.json(), "draft"));
   for (const code of ["NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE", "TRANSFER_SNAPSHOT_MISMATCH", "WAREHOUSE_UNAVAILABLE"] as const) {
     const x = await existingTransferHttp(t, true, { async prepareExisting() { throw new DomainError(code, "PRIVATE_PROVIDER_DETAIL"); } });

@@ -1,3 +1,4 @@
+import { assertOrdinary27ProductDriver, assertOrdinary27ProductContext } from './ordinary27-product-capacity.ts';
 import type { MaintenanceCompletion } from "../../../packages/application/src/maintenance-commit-ports.ts";
 import { COMPLETE_SCOPE_DECISION } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
@@ -24,6 +25,27 @@ export interface ProductMediaWriteCapability {
   readonly assertVerified: (driver: object) => void;
   readonly assertReady: (context: PgProductMaintenanceContext) => Promise<void>;
   readonly assertPrepared: (context: PgProductMaintenanceContext, completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]) => Promise<void>;
+}
+/** @deprecated Retained as a source-compatible option; new generation does not use V2 evidence. */
+export interface HistoricalBarcodeReadCapability {
+  readonly profile: "historical-barcode-local-declaration-v2";
+  readonly assertVerified: (driver: object) => void;
+  readonly assertReady: (context: PgProductMaintenanceContext) => Promise<void>;
+}
+/** Trusted host verifies complete FIT visibility and same-client policy/ACL state.
+ * No general issuer is provided here; absence leaves default selection empty. */
+export interface ProductFitVisibilityCapability {
+ readonly profile: "product-fit-complete-visibility-v1";
+ readonly assertVerified: (driver: object) => void;
+ readonly assertReady: (context: PgProductMaintenanceContext) => Promise<void>;
+}
+function fitVisibility(driver: object, proof: ProductFitVisibilityCapability | null): ProductFitVisibilityCapability | null {
+ if (proof === null) return null;
+ if (typeof proof !== "object" || Array.isArray(proof) || Object.getPrototypeOf(proof) !== Object.prototype || Reflect.ownKeys(proof).length !== 3) throw TypeError("Explicit FIT visibility proof required");
+ for (const key of ["profile", "assertVerified", "assertReady"]) if (!Object.getOwnPropertyDescriptor(proof,key) || !("value" in Object.getOwnPropertyDescriptor(proof,key)!)) throw TypeError("FIT visibility proof requires own data");
+ if (proof.profile !== "product-fit-complete-visibility-v1" || typeof proof.assertVerified !== "function" || typeof proof.assertReady !== "function" || Object.prototype.toString.call(proof.assertVerified) === "[object AsyncFunction]") throw TypeError("Verified FIT visibility required");
+ const result: unknown = proof.assertVerified(driver); if (result !== undefined) { if (result instanceof Promise) void result.catch(()=>{}); throw TypeError("FIT visibility startup proof must already be verified"); }
+ return Object.freeze({profile:proof.profile,assertVerified:proof.assertVerified,assertReady:proof.assertReady});
 }
 /** Independent v4 approval/actual guard proof. An ordinary image/schema capability cannot enable it. */
 export interface ProductImageColorSwapCapability {
@@ -150,21 +172,30 @@ export type ProductCapacityFactory = (context: PgProductMaintenanceContext) => (
 export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceUnitOfWork {
   readonly seasonContract?: "product-season-array-v1";
   private readonly capacity: ProductCapacityFactory | undefined;
+  private readonly ordinaryBusiness: boolean;
   private readonly driver: PgProductMaintenanceDriver; private readonly deletion: ProductDeletionGuard | null;
   private readonly imageCapability: ProductMediaWriteCapability | null;
   private readonly swapCapability: ProductImageColorSwapCapability | null;
-  constructor(driver: PgProductMaintenanceDriver, options: { readonly capacity?: ProductCapacityFactory; readonly deletionGuard: ProductDeletionGuard | null; readonly seasonCapability?: ProductSeasonArrayCapability | null; readonly mediaWriteCapability?: ProductMediaWriteCapability | null; readonly imageColorSwapCapability?: ProductImageColorSwapCapability | null }) {
+  private readonly defaultFitVisibility: ProductFitVisibilityCapability | null;
+  constructor(driver: PgProductMaintenanceDriver, options: { readonly capacity?: ProductCapacityFactory; readonly ordinary27Capacity?: ProductCapacityFactory; readonly deletionGuard: ProductDeletionGuard | null; readonly seasonCapability?: ProductSeasonArrayCapability | null; readonly mediaWriteCapability?: ProductMediaWriteCapability | null; readonly imageColorSwapCapability?: ProductImageColorSwapCapability | null; readonly historicalBarcodeReadCapability?: HistoricalBarcodeReadCapability | null; readonly defaultFitVisibility?: ProductFitVisibilityCapability | null }) {
     if (typeof driver?.transaction !== "function" || !options || !Object.hasOwn(options, "deletionGuard")
       || (options.deletionGuard !== null && typeof options.deletionGuard?.assertCanDelete !== "function")) throw new TypeError("Product maintenance requires D1 driver and explicit deletion guard availability");
-    this.capacity = options.capacity;
+    if (options.ordinary27Capacity) {
+      requireDomain(!options.capacity, "NATIVE_RUNTIME27_NOT_READY", "Choose one product capacity factory");
+      assertOrdinary27ProductDriver(driver, options.ordinary27Capacity);
+    }
+    this.ordinaryBusiness = options.ordinary27Capacity !== undefined;
+    this.capacity = options.ordinary27Capacity ?? options.capacity;
     this.driver = driver; this.deletion = options.deletionGuard;
     this.imageCapability = mediaCapability(driver, options.mediaWriteCapability ?? null);
     this.swapCapability = colorSwapCapability(driver, options.imageColorSwapCapability ?? null);
-    if (productSeasonArrayEnabled(driver, options.seasonCapability ?? null)) this.seasonContract = "product-season-array-v1";
+    this.defaultFitVisibility = fitVisibility(driver, options.defaultFitVisibility ?? null);
+    if (this.ordinaryBusiness || productSeasonArrayEnabled(driver, options.seasonCapability ?? null)) this.seasonContract = "product-season-array-v1";
   }
   transaction<T>(work: (tx: ProductMaintenanceTransaction) => Promise<T>): Promise<T> {
     return this.driver.transaction(async context => {
-      const tx = new ProductTransaction(context, this.deletion, this.seasonContract !== undefined, this.imageCapability, this.swapCapability, this.capacity?.(context));
+      if (this.ordinaryBusiness) await assertOrdinary27ProductContext(this.capacity!, context);
+      const tx = new ProductTransaction(context, this.deletion, this.seasonContract !== undefined, this.imageCapability, this.swapCapability, this.capacity?.(context), this.defaultFitVisibility, this.ordinaryBusiness, this.ordinaryBusiness);
       try { return await work(tx); } finally { tx.close(); }
     });
   }
@@ -172,14 +203,17 @@ export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceU
 /** Internal borrowed scope. The caller owns actual runtime/evidence authority and
  * the surrounding transaction; closing this leaf never releases or commits it. */
 export async function withProductMaintenanceTransaction<T>(context: PgProductMaintenanceContext,
-  work: (tx: ProductMaintenanceTransaction) => Promise<T>, options: { readonly seasonArray: boolean; readonly assertPendingCapacity?: (completion: MaintenanceCompletion) => Promise<void> }): Promise<T> {
+  work: (tx: ProductMaintenanceTransaction) => Promise<T>, options: { readonly seasonArray: boolean; readonly assertPendingCapacity?: (completion: MaintenanceCompletion) => Promise<void>; readonly ordinaryBusiness?: boolean }): Promise<T> {
   if (typeof context?.client?.query !== "function" || typeof context?.evidence?.assertAllowed !== "function"
     || typeof work !== "function" || typeof options?.seasonArray !== "boolean") throw new TypeError("Original borrowed product context and explicit season contract required");
-  const tx = new ProductTransaction(context, null, options.seasonArray, null, null, options.assertPendingCapacity);
+  const tx = new ProductTransaction(context, null, options.seasonArray, null, null, options.assertPendingCapacity, null, options.ordinaryBusiness === true);
   try { return await work(tx); } finally { tx.close(); }
 }
 class ProductTransaction implements ProductMaintenanceTransaction {
-  readonly evidence: ProductMaintenanceEvidence; private active = true; private loadedId: string | undefined;
+  readonly evidence: ProductMaintenanceEvidence; private active = true; private loadedId: string | undefined; private loadedAggregateHash: string | undefined;
+  private ordinaryDeleteRootHash: string | undefined;
+  private ordinaryDeleteSnapshotChanged = false;
+  private ordinaryDeleteStarted = false;
   private readonly seasonArray: boolean;
   private readonly context: PgProductMaintenanceContext; private readonly deletion: ProductDeletionGuard | null;
   private readonly imageCapability: ProductMediaWriteCapability | null; private imagesReady = false;
@@ -189,7 +223,10 @@ class ProductTransaction implements ProductMaintenanceTransaction {
   private preparedImagesHash: string | undefined; private swapReady = false;
   private readonly swapCapability: ProductImageColorSwapCapability | null;
   private readonly capacity: ((completion: MaintenanceCompletion) => Promise<void>) | undefined;
-  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean, imageCapability: ProductMediaWriteCapability | null, swapCapability: ProductImageColorSwapCapability | null, capacity?: (completion: MaintenanceCompletion) => Promise<void>) { this.capacity = capacity; this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; this.imageCapability = imageCapability; this.swapCapability = swapCapability; }
+  private readonly defaultFitVisibility: ProductFitVisibilityCapability | null;
+  private readonly ordinaryBusiness: boolean;
+  private readonly privateOrdinaryDelete: boolean;
+  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean, imageCapability: ProductMediaWriteCapability | null, swapCapability: ProductImageColorSwapCapability | null, capacity?: (completion: MaintenanceCompletion) => Promise<void>, defaultFitVisibility: ProductFitVisibilityCapability | null = null, ordinaryBusiness = false, privateOrdinaryDelete = false) { this.privateOrdinaryDelete = privateOrdinaryDelete; this.ordinaryBusiness = ordinaryBusiness; this.defaultFitVisibility = defaultFitVisibility; this.capacity = capacity; this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; this.imageCapability = imageCapability; this.swapCapability = swapCapability; }
   async assertPendingCapacity(completion: MaintenanceCompletion): Promise<void> {
     requireDomain(this.active && this.loadedId===completion.targetId && typeof this.capacity==="function", "PRODUCT_EVIDENCE_CAPACITY_NOT_READY", "Original locked transaction capacity proof required");
     await this.capacity(completion); requireDomain(this.active,"TRANSACTION_CLOSED","Product transaction closed");
@@ -353,15 +390,15 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Product identity is not unique"); if (!rows[0]) return undefined;
     const p = productRow(rows[0], this.seasonArray); requireDomain(p.id === id, "INVALID_DATABASE_VALUE", "Mismatched product");
     const s = (await this.query(`SELECT id, product_id, sku_code, color_id, fit_id, size_id, enabled, version, created_operation_id
-      FROM naijue_erp.sku WHERE product_id=$1::uuid AND ${visibleSku} ORDER BY id LIMIT $2 FOR UPDATE`, [id, PRODUCT_MAINTENANCE_MAX_SKUS + 1, COMPLETE_SCOPE_DECISION])).rows;
+      FROM naijue_erp.sku WHERE product_id=$1::uuid AND ${this.ordinaryBusiness ? "/* ordinary-business-skus */ $3::text IS NOT NULL" : visibleSku} ORDER BY id LIMIT $2 FOR UPDATE`, [id, PRODUCT_MAINTENANCE_MAX_SKUS + 1, COMPLETE_SCOPE_DECISION])).rows;
     requireDomain(s.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_MAINTENANCE_TOO_LARGE", "SKU edit bound exceeded");
     const b = (await this.query(`SELECT bc.id,bc.barcode,bc.sku_id,bc.barcode_kind,bc.scheme_id,bc.enabled FROM naijue_erp.sku_barcode bc
-      WHERE bc.sku_id=ANY($4::uuid[]) AND ${visibleBarcode} ORDER BY bc.id LIMIT $2 FOR UPDATE OF bc`,
+      WHERE bc.sku_id=ANY($4::uuid[]) AND ${this.ordinaryBusiness ? "/* ordinary-business-barcodes */ $1::uuid IS NOT NULL AND $3::text IS NOT NULL" : visibleBarcode} ORDER BY bc.id LIMIT $2 FOR UPDATE OF bc`,
     [id, PRODUCT_MAINTENANCE_MAX_BARCODES + 1, COMPLETE_SCOPE_DECISION, s.map(row => uuid(row.id))])).rows;
     requireDomain(b.length <= PRODUCT_MAINTENANCE_MAX_BARCODES, "PRODUCT_MAINTENANCE_TOO_LARGE", "Barcode edit bound exceeded");
     const skus = s.map(skuRow), barcodes = b.map(barcodeRow), ids = new Set(skus.map(row => row.id));
     requireDomain(ids.size === skus.length && skus.every(row => row.productId === id) && barcodes.every(row => ids.has(row.skuId)), "INVALID_DATABASE_VALUE", "Invalid aggregate child identity");
-    return { product: p, skus, barcodes };
+    const aggregate = { product: p, skus, barcodes }; this.loadedAggregateHash = requestHash(aggregate); return aggregate;
   }
   async readBarcodeGenerationReferences(productId: string, schemeId: string, skus: readonly ProductSkuRecord[]) {
     requireDomain(productId === this.loadedId && skus.length > 0 && skus.length <= PRODUCT_MAINTENANCE_MAX_SKUS
@@ -376,9 +413,42 @@ class ProductTransaction implements ProductMaintenanceTransaction {
       return rows.map(row => ({ id: uuid(row.id), code: row.code }));
     };
     return { scheme: { id: uuid(rows[0]!.id), status: stringValue(rows[0]!.status), codeLength: rows[0]!.code_length === null ? null : integerValue(rows[0]!.code_length) },
-      colors: (await codes("color", skus.map(s => s.colorId))).map(row => ({ ...row, code: stringValue(row.code) })),
-      fits: (await codes("fit", skus.map(s => s.fitId))).map(row => ({ ...row, code: stringValue(row.code) })),
+      colors: (await codes("color", skus.map(s => s.colorId))).map(row => ({ ...row, code: nullableString(row.code) })),
+      fits: (await codes("fit", skus.map(s => s.fitId))).map(row => ({ ...row, code: nullableString(row.code) })),
       sizes: (await codes("size", skus.map(s => s.sizeId))).map(row => ({ ...row, code: nullableString(row.code) })) };
+  }
+  /** Only unambiguous A/5 within the role's visible, active retained FIT rows.
+   * The runtime host must establish complete FIT RLS visibility. */
+  async readDefaultHistoricalFit(): Promise<string | null> {
+    requireDomain(this.active && this.loadedId !== undefined, "TRANSACTION_SCOPE", "Read default fit in the original product transaction");
+    if (!this.ordinaryBusiness) {
+      if (this.defaultFitVisibility === null) return null;
+      const proof: unknown = this.defaultFitVisibility.assertReady(this.context);
+      requireDomain(proof instanceof Promise, "PRODUCT_REFERENCE_UNAVAILABLE", "Same-client FIT visibility proof required");
+      const ready: unknown = await proof;
+      requireDomain(this.active && ready === undefined, "PRODUCT_REFERENCE_UNAVAILABLE", "FIT visibility proof unavailable");
+    }
+    // Catalogue CREATE/EDIT uses the same transaction advisory lock.
+    await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", ["naijue:catalogue-maintenance"]);
+    const rows = (await this.query(`/* product-barcode:default-fit */ SELECT id,code FROM naijue_erp.fit WHERE code COLLATE "C" IN ('A','5') AND enabled=true AND deleted_at IS NULL ORDER BY id LIMIT 2 FOR SHARE`)).rows;
+    requireDomain(this.active, "TRANSACTION_CLOSED", "Product transaction closed");
+    requireDomain(rows.length <= 2 && rows.every(row => row.code === "A" || row.code === "5") && new Set(rows.map(row => uuid(row.id))).size === rows.length, "INVALID_DATABASE_VALUE", "Invalid default fit result");
+    return rows.length === 1 ? uuid(rows[0]!.id) : null;
+  }
+  /** Same-client exact lookup of bindings visible to the current role. The host must
+   * prove full relevant RLS visibility; unique constraints remain the final guard
+   * against concurrent writers and invisible existing bindings. */
+  async readExistingBarcodeValues(values: readonly string[]): Promise<readonly string[]> {
+    requireDomain(this.active && this.loadedId !== undefined, "TRANSACTION_SCOPE", "Read barcode collisions in the original product transaction");
+    requireDomain(Array.isArray(values) && values.length <= PRODUCT_MAINTENANCE_MAX_SKUS && values.every(v => typeof v === "string" && v.length > 0), "INVALID_PRODUCT_MAINTENANCE", "Exact barcode strings required");
+    const selected = [...new Set(values)];
+    if (selected.length === 0) return [];
+    const result = await this.query('/* product-barcode:existing-values */ SELECT barcode FROM naijue_erp.sku_barcode WHERE barcode = ANY($1::text[]) ORDER BY barcode COLLATE "C"', [selected]);
+    requireDomain(this.active, "TRANSACTION_CLOSED", "Product transaction closed");
+    const found = result.rows.map(row => stringValue(row.barcode));
+    const expected = new Set(selected);
+    requireDomain(found.length <= selected.length && new Set(found).size === found.length && found.every(value => expected.has(value)), "INVALID_DATABASE_VALUE", "Barcode lookup returned unexpected bindings");
+    return found;
   }
   async readSkuSelectionSizes(productId: string, sizeGroupId: string, selection: ProductSkuSelection): Promise<readonly string[]> {
     requireDomain(productId === this.loadedId, "TRANSACTION_SCOPE", "Selection must use the original locked product");
@@ -439,6 +509,15 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     }
   }
   async assertCanDelete(previous: ProductAggregate): Promise<void> {
+    if (this.privateOrdinaryDelete) {
+      this.ordinaryDeleteRootHash = undefined;
+      requireDomain(this.active && !this.ordinaryDeleteSnapshotChanged && previous.product.id === this.loadedId && this.loadedAggregateHash === requestHash(previous), "TRANSACTION_SCOPE", "Original locked aggregate required");
+      // No SKU implies there is no SKU-keyed inventory or document reference.
+      // Existing SKU balances may be unknown, so do not infer safety from absence.
+      requireDomain(previous.skus.length === 0, "PRODUCT_DELETE_NOT_READY", "Existing SKU stock and reference completeness cannot be inferred");
+      this.ordinaryDeleteRootHash = requestHash(previous.product);
+      return;
+    }
     requireDomain(this.deletion !== null, "PRODUCT_DELETE_NOT_READY", "Trusted product deletion proof is unavailable");
     const rows = (await this.query(`SELECT EXISTS(SELECT 1 FROM naijue_erp.sku s WHERE s.product_id=$1::uuid AND (
       EXISTS(SELECT 1 FROM naijue_erp.sales_line l WHERE l.sku_id=s.id) OR EXISTS(SELECT 1 FROM naijue_erp.transfer_line l WHERE l.sku_id=s.id)
@@ -447,8 +526,18 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     await this.deletion.assertCanDelete(this.context, previous);
   }
   async putProduct(next: ProductStoredRecord, previous: ProductStoredRecord | undefined): Promise<void> {
+    if (this.privateOrdinaryDelete && next.deletedAt !== null) {
+      requireDomain(this.active && previous !== undefined && previous.deletedAt === null
+        && this.ordinaryDeleteRootHash !== undefined && this.ordinaryDeleteRootHash === requestHash(previous),
+      "PRODUCT_DELETE_NOT_READY", "Successful original deletion check required before soft deletion");
+    }
     requireDomain(!this.imagesReady || this.imagesPrepared, "PRODUCT_MEDIA_NOT_READY", "Actual same-client prepared image proof required before root mutation");
     requireDomain(next.id === this.loadedId && next.version === (previous?.version ?? 0) + 1, "TRANSACTION_SCOPE", "Write one locked product version");
+    // Consume before mutation, including failed writes. A previous check cannot
+    // authorize another root write or survive an intervening SKU mutation.
+    this.ordinaryDeleteRootHash = undefined;
+    this.ordinaryDeleteSnapshotChanged = true;
+    if (this.privateOrdinaryDelete && next.deletedAt !== null) this.ordinaryDeleteStarted = true;
     let columns: readonly string[] = ROOT_COLUMNS, parameters = rootValues(next);
     if (this.seasonArray) {
       requireDomain(Object.hasOwn(next, "seasonIds") && (!previous || next.seasonId === previous.seasonId) && (previous !== undefined || next.seasonId === null), "INVALID_DATABASE_VALUE", "Array contract preserves legacy season provenance");
@@ -464,6 +553,11 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     } catch (error) { if ((error as { code?: string }).code === "23505") requireDomain(false, "PRODUCT_CODE_CONFLICT", "Product code already exists"); throw error; }
   }
   async putSku(next: ProductSkuRecord, previous: ProductSkuRecord | undefined): Promise<void> {
+    // Protect the reverse interleaving as well: once deletion starts, an append
+    // cannot reach (and poison) the lease or rely on database rejection later.
+    requireDomain(!this.ordinaryDeleteStarted, "PRODUCT_DELETED", "Cannot write SKUs after product deletion starts");
+    this.ordinaryDeleteRootHash = undefined;
+    this.ordinaryDeleteSnapshotChanged = true;
     requireDomain(next.productId === this.loadedId, "TRANSACTION_SCOPE", "SKU belongs to locked product");
     const parameters = [next.id, next.productId, next.skuCode, next.colorId, next.fitId, next.sizeId, next.enabled, next.version, next.createdOperationId];
     try {

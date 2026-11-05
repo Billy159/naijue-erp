@@ -150,7 +150,7 @@ test("SYNTHETIC existing transfer keeps trusted creation-hall visibility for pro
   h.store.seedDocument({ ...doc, header: { ...doc.header, fromWarehouseId: otherA, toWarehouseId: otherB, createdRole: "ADMIN", createdHallId: null } });
   await assert.rejects(h.existing.prepareExisting(actor, { ...h.input(), fromWarehouseId: otherA, toWarehouseId: otherB }), code("FORBIDDEN"));
 });
-test("SYNTHETIC existing transfer rejects foreign/noncurrent/duplicate pointers, stale/state/history and revoked access before snapshots", async () => {
+test("SYNTHETIC existing transfer rejects foreign/noncurrent/duplicate pointers, stale/state and revoked access before snapshots; imported draft shares ordinary preparation", async () => {
   const h = await existingSetup(), input = h.input(), before = h.store.snapshot();
   for (const change of [{ ...input, lines: [{ ...input.lines[0]!, existingLineId: sid("transferLine", 999) }] }, { ...input, lines: [input.lines[0]!, input.lines[0]!] }])
     await assert.rejects(h.existing.prepareExisting(actor, change), code("INVALID_HTTP_INPUT"));
@@ -159,7 +159,8 @@ test("SYNTHETIC existing transfer rejects foreign/noncurrent/duplicate pointers,
   const doc = h.document(); h.store.seedDocument({ ...doc, lines: doc.lines.map(l => ({ ...l, isCurrent: false })) });
   await assert.rejects(h.existing.prepareExisting(actor, input), code("INVALID_HTTP_INPUT"));
   h.store.seedDocument({ ...doc, header: { ...doc.header, status: "APPROVED" } }); await assert.rejects(h.existing.prepareExisting(actor, input), code("INVALID_STATE"));
-  h.store.seedDocument(doc, "CUTOFF_HISTORY"); await assert.rejects(h.existing.prepareExisting(actor, input), code("HISTORICAL_POSTING_NOT_IMPLEMENTED"));
+  h.store.seedDocument(doc, "CUTOFF_HISTORY"); const importedPrepared = await h.existing.prepareExisting(actor, input);
+  assert.equal(importedPrepared.draft.header.id, doc.header.id);
   h.store.seedDocument(doc); h.revokeAccess(); await assert.rejects(h.existing.prepareExisting(actor, input), code("FORBIDDEN"));
   assert.ok(!h.trace.some(v => v.startsWith("WRITE:")));
 });

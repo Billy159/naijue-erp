@@ -16,6 +16,7 @@ import type { NativeRuntime26Capability } from "../../../packages/application/sr
 import { decodeInventoryLedgerBalancePair } from "../../../packages/application/src/inventory-ledger-balance-transition.ts";
 import type { InventoryLedgerBalanceTransition } from "../../../packages/application/src/inventory-ledger-balance-transition.ts";
 import { readInventoryKeyAdmissions } from "./inventory-key-admission-reader.ts";
+import { checkedOrdinaryDocumentListOptions, type OrdinaryDocumentRuntime27Capability } from "./ordinary-document-list-reader.ts";
 
 export interface PgInventoryLedgerQueryResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
 export interface PgInventoryLedgerQueryClient { query(text: string, values?: unknown[]): Promise<PgInventoryLedgerQueryResult>; release(error?: Error | boolean): void }
@@ -106,8 +107,12 @@ function displayEntry(row: Row, balanceTransition: InventoryLedgerBalanceTransit
 export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedgerSnapshotReader {
   private readonly pool: PgInventoryLedgerQueryPool;
   private readonly runtime26: NativeRuntime26Capability | undefined;
-  constructor(pool: PgInventoryLedgerQueryPool, runtime26?: NativeRuntime26Capability) {
-    if (typeof pool?.connect !== "function") throw new TypeError("Inventory ledger reader requires an explicit PostgreSQL pool"); this.pool = pool; this.runtime26 = checkedNativeRuntime26Capability(runtime26);
+  private readonly runtime27: OrdinaryDocumentRuntime27Capability | undefined;
+  constructor(pool: PgInventoryLedgerQueryPool, runtime26?: NativeRuntime26Capability, runtime27?: OrdinaryDocumentRuntime27Capability) {
+    if (typeof pool?.connect !== "function") throw new TypeError("Inventory ledger reader requires an explicit PostgreSQL pool");
+    if (runtime26 && runtime27) throw new TypeError("Conflicting inventory ledger runtime profiles");
+    this.pool = pool; this.runtime26 = checkedNativeRuntime26Capability(runtime26);
+    this.runtime27 = runtime27 ? checkedOrdinaryDocumentListOptions({profile:'source-confirmed-unified-native-v1',runtime27}).runtime27 : undefined;
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query, client: PgInventoryLedgerQueryClient) => Promise<T>): Promise<T> {
     activeInventoryLedgerRead(signal); const client = await this.pool.connect(); let began = false; let committing = false; let committed = false; let discard: Error | undefined;
@@ -136,6 +141,7 @@ export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedge
     const scope = checkedInventoryScope({ hallIds: [warehouse.hallId], warehouses: [warehouse] });
     return this.snapshot(read.signal, async (query, client) => {
       if (this.runtime26) { await this.runtime26.assertReady(client, "INVENTORY_ADMISSION"); activeInventoryLedgerRead(read.signal); }
+      if (this.runtime27) { await this.runtime27.assertReady(client, "ORDINARY_DOCUMENT_READ"); activeInventoryLedgerRead(read.signal); }
       const warehouses = await query(`/* inventory-ledger:warehouse */ SELECT w.id, w.hall_id, w.name FROM naijue_erp.warehouse w
         JOIN naijue_erp.hall h ON h.id = w.hall_id WHERE w.id = $1::uuid AND w.hall_id = $2::uuid LIMIT 2`, [parameters.warehouseId, warehouse.hallId]);
       requireDomain(warehouses.rows.length > 0, "FORBIDDEN", "Authorized inventory warehouse is unavailable");
@@ -150,24 +156,34 @@ export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedge
         WHERE s.id = $1::uuid LIMIT 2`, [parameters.skuId]);
       requireDomain(skus.rows.length > 0, "SKU_NOT_FOUND", "Exact inventory SKU is unavailable");
       const s = one(skus); integrity(s.id === parameters.skuId && booleanValue(s.size_member), "Invalid canonical SKU/size-group identity");
-      const batchId = await publishedKey(query, parameters.warehouseId, parameters.skuId, this.runtime26);
+      let batchId: string;
+      if (this.runtime27) {
+        const publication = (await query(`/* inventory-ledger:publication */ SELECT id, naijue_erp.standard_business_ready() AS ready
+          FROM naijue_erp.import_batch WHERE status='IMPORTED' AND inventory_mode='CUTOFF_STOCK_BASELINE'
+          AND mapping_version='STANDARD_INITIAL_EXPLICIT_KEYS_V1' AND completed_at IS NOT NULL ORDER BY id LIMIT 2`)).rows;
+        requireDomain(publication.length === 1 && publication[0]!.ready === true, "INVENTORY_NOT_READY", "One completely published standard baseline is required");
+        batchId = id("operation", publication[0]!.id);
+      } else batchId = await publishedKey(query, parameters.warehouseId, parameters.skuId, this.runtime26);
       const columns = `l.id, l.operation_id, l.event_kind, l.warehouse_id, l.sku_id,
         l.quantity_delta::text AS quantity_delta, l.quantity_before::text AS quantity_before, l.quantity_after::text AS quantity_after, l.source_sales_line_id, sl.sales_id AS source_sales_id,
         l.source_transfer_line_id, tl.transfer_id AS source_transfer_id, l.source_import_batch_id, l.endpoint,
         l.source_history_revision_id, l.source_history_sales_line_id, l.source_history_transfer_line_id,
+        ${this.runtime27 ? `NULL::uuid AS history_revision_id, NULL::text AS history_document_kind, NULL::uuid AS history_revision_operation_id,
+        NULL::integer AS history_revision_version, NULL::uuid AS history_revision_sales_id, NULL::uuid AS history_revision_transfer_id,
+        NULL::uuid AS history_sales_id, NULL::uuid AS history_sales_batch_id, NULL::uuid AS history_transfer_id, NULL::uuid AS history_transfer_batch_id` : `
         hr.id AS history_revision_id, hr.document_kind AS history_document_kind, hr.operation_id AS history_revision_operation_id,
         hr.to_version AS history_revision_version, hr.sales_id AS history_revision_sales_id, hr.transfer_id AS history_revision_transfer_id,
         hsl.header_id AS history_sales_id, hsh.batch_id AS history_sales_batch_id,
-        htl.header_id AS history_transfer_id, hth.batch_id AS history_transfer_batch_id,
+        htl.header_id AS history_transfer_id, hth.batch_id AS history_transfer_batch_id`},
         l.source_document_version, l.reverses_entry_id, to_char(l.business_date, 'YYYY-MM-DD') AS business_date, ${stamp("l.posted_at")} AS posted_at`;
       const source = `FROM naijue_erp.inventory_ledger l JOIN naijue_erp.warehouse w ON w.id = l.warehouse_id
         LEFT JOIN naijue_erp.sales_line sl ON sl.id = l.source_sales_line_id
         LEFT JOIN naijue_erp.transfer_line tl ON tl.id = l.source_transfer_line_id
-        LEFT JOIN naijue_erp.history_revision hr ON hr.id = l.source_history_revision_id
+        ${this.runtime27 ? "" : `LEFT JOIN naijue_erp.history_revision hr ON hr.id = l.source_history_revision_id
         LEFT JOIN naijue_erp.history_sales_line hsl ON hsl.id = l.source_history_sales_line_id
         LEFT JOIN naijue_erp.history_sales_header hsh ON hsh.id = hsl.header_id
         LEFT JOIN naijue_erp.history_transfer_line htl ON htl.id = l.source_history_transfer_line_id
-        LEFT JOIN naijue_erp.history_transfer_header hth ON hth.id = htl.header_id`;
+        LEFT JOIN naijue_erp.history_transfer_header hth ON hth.id = htl.header_id`}`;
       const exactKey = "l.warehouse_id = $1::uuid AND w.hall_id = $2::uuid AND l.sku_id = $3::uuid";
       let rows: Row[], filteredTotal: string | undefined;
       if (parameters.page !== undefined) {
@@ -178,12 +194,11 @@ export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedge
           CASE WHEN l.event_kind='CUTOFF_BASELINE' THEN to_char(l.business_date,'YYYY-MM-DD')
             ELSE to_char(l.posted_at AT TIME ZONE 'Asia/Shanghai','YYYY-MM-DD') END AS display_date,
           CASE WHEN l.event_kind='CUTOFF_BASELINE' THEN 'BASELINE'
-            WHEN (tl.id IS NOT NULL OR htl.id IS NOT NULL) AND l.endpoint='TO' THEN 'TRANSFER_IN'
-            WHEN (tl.id IS NOT NULL OR htl.id IS NOT NULL) AND l.endpoint='FROM' THEN 'TRANSFER_OUT'
-            WHEN coalesce(sh.business_type,hsh.business_type) IN ('SALE','RETURN','EXCHANGE') THEN coalesce(sh.business_type,hsh.business_type)
+            WHEN (tl.id IS NOT NULL ${this.runtime27 ? '' : 'OR htl.id IS NOT NULL'}) AND l.endpoint='TO' THEN 'TRANSFER_IN'
+            WHEN (tl.id IS NOT NULL ${this.runtime27 ? '' : 'OR htl.id IS NOT NULL'}) AND l.endpoint='FROM' THEN 'TRANSFER_OUT'
+            WHEN ${this.runtime27 ? 'sh.business_type' : 'coalesce(sh.business_type,hsh.business_type)'} IN ('SALE','RETURN','EXCHANGE') THEN ${this.runtime27 ? 'sh.business_type' : 'coalesce(sh.business_type,hsh.business_type)'}
             ELSE 'UNKNOWN' END AS display_business_type,
-          CASE WHEN l.event_kind='HISTORY_REVISION' THEN coalesce(hsh.number,hth.number)
-            ELSE coalesce(sh.number,th.number) END AS display_source_number,
+          ${this.runtime27 ? 'coalesce(sh.number,th.number)' : "CASE WHEN l.event_kind='HISTORY_REVISION' THEN coalesce(hsh.number,hth.number) ELSE coalesce(sh.number,th.number) END"} AS display_source_number,
           receipt.actor_account_id AS display_operator_account_id, operator_staff.name AS display_operator_name
           ${source}
           LEFT JOIN naijue_erp.sales_header sh ON sh.id=sl.sales_id

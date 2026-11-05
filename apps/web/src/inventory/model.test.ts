@@ -57,7 +57,7 @@ test('missing cell, malformed integer and pagination mismatch fail instead of ze
   assert.throws(() => assertInventoryPage(missing as unknown as InventoryPage, parameters()), /缺少明确状态|库存格数量/);
   const falseComplete = structuredClone(data);
   Object.assign(falseComplete.allMatchesTotal, { completeness: 'incomplete', unknownCells: 1 });
-  assert.throws(() => assertInventoryPage(falseComplete, parameters()), /完整性未核实/);
+  assert.throws(() => assertInventoryPage(falseComplete, parameters()), /完整性未核实|不一致/);
   assert.throws(() => assertInventoryPage({ ...data, page: 2 }, parameters()), /分页/);
   assert.throws(() => assertInventoryPage({ ...data, exactTotalProducts: 4 }, parameters()), /条数/);
   s.context.clear();

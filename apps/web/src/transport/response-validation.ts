@@ -24,7 +24,7 @@ function selection(value: unknown): void { const row = record(value, ['id', 'lab
 function total(value: unknown): void {
   const row = record(value, ['knownQuantity', 'completeness', 'unknownCells']);
   integerText(row.knownQuantity); number(row.unknownCells, 0);
-  if (row.completeness !== 'complete' || row.unknownCells !== 0) reject();
+  if (row.unknownCells === 0 ? row.completeness !== 'complete' : row.completeness !== 'incomplete') reject();
 }
 function sizeTotals(value: unknown, sizeIds: readonly string[]): void {
   const row = record(value, sizeIds);
@@ -33,6 +33,7 @@ function sizeTotals(value: unknown, sizeIds: readonly string[]): void {
 function cell(value: unknown): void {
   const row = record(value, ['state'], ['skuId', 'quantity']);
   if (row.state === 'known') { record(value, ['state', 'skuId', 'quantity']); text(row.skuId); integerText(row.quantity); quantity(row.quantity); }
+  else if (row.state === 'unknown') { record(value, ['state', 'skuId']); text(row.skuId); }
   else if (row.state === 'not-applicable') record(value, ['state']);
   else reject();
 }

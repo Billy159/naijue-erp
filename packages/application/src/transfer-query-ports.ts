@@ -1,3 +1,4 @@
+import type { OrdinaryDocumentPage, OrdinaryTransferSummary, OrdinaryTransferTotalsQuery, OrdinaryDocumentTotals } from './ordinary-document-query-ports.ts';
 import type { DocumentListIdentity, DocumentHistoryCoverage } from "./sales-query-ports.ts";
 import type { DocumentStatus } from "../../domain/src/documents.ts";
 import type { BusinessDate, EntityId, Version } from "../../domain/src/values.ts";
@@ -45,7 +46,7 @@ export interface TransferReferenceNames {
   readonly fromWarehouseName: string; readonly toWarehouseName: string;
   readonly fromHallName: string; readonly toHallName: string;
   readonly responsibleName: string | null;
-  readonly createdByName: string; readonly approvedByName: string | null;
+  readonly createdByName: string | null; readonly approvedByName: string | null;
 }
 export type TransferSummary = Pick<RuntimeTransferHeader, "id" | "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "status" | "version" | "createdByAccountId" | "createdAt" | "updatedAt" | "responsibleStaffId"> & TransferReferenceNames & { readonly totalQuantity: bigint };
 /** Exact count is serialized as a decimal string, not an unsafe JS number. */
@@ -87,9 +88,11 @@ export interface TransferDetail {
  * Fixed-count native relation queries only: no legacy projections, eager catalog, N+1 or write commands.
  * Abort checks stop subsequent work, not an already-running driver query. */
 export interface TrustedTransferSnapshotReader {
+  /** Separate ordinary totals; absence fails closed after existing LIST authorization. */
+  readTotals?(read: TransferScopedRead<OrdinaryTransferTotalsQuery>): Promise<OrdinaryDocumentTotals<{ readonly totalQuantity: bigint }>>;
   /** Older independent readers remain structurally valid; history fails closed when absent. */
   readHistory?(read: TransferScopedRead<TransferHistoryQuery>): Promise<TransferHistoryPage>;
-  readList(read: TransferScopedRead<TransferListQuery>): Promise<TransferListPage | TransferUnifiedListPage>;
+  readList(read: TransferScopedRead<TransferListQuery>): Promise<TransferListPage | TransferUnifiedListPage | OrdinaryDocumentPage<OrdinaryTransferSummary>>;
   readDetail(read: TransferScopedRead<TransferDetailQuery>): Promise<TransferDetail>;
   readWarehouses(read: TransferScopedRead<TransferWarehouseQuery>): Promise<TransferWarehousePage>;
 }

@@ -1,3 +1,4 @@
+import { BARCODE_SCHEMES } from "../../../packages/application/src/barcode-generation.ts";
 import fsPromises from "node:fs/promises";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { createNodeCredentialRequestTag } from "../../../packages/authentication/src/passwords.ts";
@@ -28,6 +29,7 @@ import { createPostgresApplicationApi, createPostgresRuntime26ApplicationApi, cr
 import {CapacityAdmissionRejected} from './capacity-admission.ts';
 import type {CapacityAdmission} from './capacity-admission.ts';
 import type {ProductionMainDependencies} from './production-main.ts';
+import { parseProductionRuntime35Configuration, productionRuntime35HostConfiguration } from './production-provider-composition.ts';
 // Explicit protocol-test resource only, not a real capacity window/probe or production approval.
 // A fresh instance is passed at each legacy composition call; A02 missing-resource negatives stay unmodified.
 function syntheticCapacity(): CapacityAdmission {
@@ -53,6 +55,28 @@ function config(): ProductionRuntimeConfiguration {
       lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000 } };
 }
 const account = entityId("account", "00000000-0000-4000-8000-000000000001"), hall = entityId("hall", "00000000-0000-4000-8000-000000000002");
+test('fresh35 configuration preserves host pool budgets and explicit maintenance without an exact26 review', () => {
+  const base = config();
+  const input = { ...base, profile: 'source-confirmed-native-exact35-v1', productMedia: { root: '/private/product-media', rootKey: 'private35' },
+    organizationMaintenance: true, catalogueMaintenance: true, paymentMaintenance: true, partyMaintenance: true,
+    productMaintenance: true, staffMaintenance: true, staffCredentialRequestKeyFile: '/private/staff-request-key' };
+  const parsed = parseProductionRuntime35Configuration(input);
+  assert.equal(parsed.profile, 'source-confirmed-native-exact35-v1');
+  assert.deepEqual(parsed.postgres, base.postgres);
+  assert.deepEqual(parsed.authentication, base.authentication);
+  assert.equal(parsed.staffCredentialRequestKeyFile, '/private/staff-request-key');
+  assert.equal(parsed.organizationMaintenance, true);
+  assert.equal(parsed.partyMaintenance, true);
+  assert.deepEqual(productionRuntime35HostConfiguration(input), base);
+  assert.throws(() => parseProductionRuntimeConfiguration(input), TypeError);
+  for (const extra of [{ runtime26Review: {} }, { capacityAdmission: {} }, { existingPreparation: { sales: true, transfers: true } }])
+    assert.throws(() => parseProductionRuntime35Configuration({ ...input, ...extra }), TypeError);
+  assert.throws(() => parseProductionRuntime35Configuration({ ...input, documentCommands: 'DISABLED' }), TypeError);
+  assert.throws(() => parseProductionRuntime35Configuration({ ...input, profile: 'source-confirmed-native-exact27-v1' }), TypeError);
+  assert.throws(() => parseProductionRuntime35Configuration({ ...input, staffMaintenance: false }), TypeError);
+  const { staffMaintenance: _staff, ...withoutStaff } = input;
+  assert.throws(() => parseProductionRuntime35Configuration(withoutStaff), TypeError);
+});
 test('A02 composition carries the original trusted singleton separately while all JSON parsers stay closed',()=>{
   const capacity:CapacityAdmission={async acquire(){throw new CapacityAdmissionRejected('SYNTHETIC_UNKNOWN',2);},close(){}};
   const c=config(),r1={...c,profile:'source-confirmed-native-exact26-r1-v1' as const,documentCommands:'DISABLED' as const,
@@ -653,6 +677,7 @@ test("production R3 media: real private stage, original prepared transaction, ri
   const purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION", "PRODUCT_MAINTENANCE"];
   const f = newLivePairFixture(purposes), root = mkdtempSync(join(realpathSync(tmpdir()), "d1-r3-media-synthetic-"));
   let image: Record<string, unknown> | undefined, productId: string | undefined, audit: unknown[] | undefined, receipt: Record<string, unknown> | undefined;
+  let savedBarcode: readonly unknown[] | undefined;
   let denied = false, capacityChecks = 0; let loadedProductId: string | undefined;
   const p = exact26Driver(f.observation, (sql, values) => {
     if (sql.includes("maintenance:identity") && denied) return [];
@@ -663,7 +688,12 @@ test("production R3 media: real private stage, original prepared transaction, ri
       assert.equal(values[0], loadedProductId); assert.equal(productId, undefined); assert.equal(audit, undefined);
       capacityChecks++; return [{ occupied: false }]; // Same absent identity already observed by this scripted transaction.
     }
+    if (sql.includes("product-barcode:scheme")) { assert.equal(values[0], BARCODE_SCHEMES.y2026); return [{ id: values[0], status: "CURRENT", code_length: 15 }]; }
+    if (sql.includes("product-barcode:codes")) { const code = sql.includes("naijue_erp.color") ? "504" : sql.includes("naijue_erp.fit") ? "5" : "207"; return (values[0] as string[]).map(id => ({ id, code })); }
+    if (sql.includes("product-barcode:existing-values")) { assert.deepEqual(values, [["550000001504207"]]); return []; }
+    if (sql.startsWith("INSERT INTO naijue_erp.sku_barcode(")) { savedBarcode = [...values]; return [{}]; }
     if (sql.includes("FROM naijue_erp.product_category") || sql.includes("FROM naijue_erp.size_group WHERE")) return [{ id: values[0] }];
+    if (sql.includes("product-selection:members")) { assert.deepEqual(values, ["00000000-0000-4000-8000-000000000092", 5001]); return [{ size_id: "00000000-0000-4000-8000-000000000095" }]; }
     if (sql.includes("FROM naijue_erp.size_group_member")) return (values[1] as string[]).map(size_id => ({ size_id }));
     if (sql.includes("FROM naijue_erp.supplier")) return [{ id: values[0], enabled: true }];
     if (sql.includes("FROM naijue_erp.barcode_scheme")) return (values[0] as string[]).map(id => ({ id }));
@@ -703,12 +733,13 @@ test("production R3 media: real private stage, original prepared transaction, ri
       const missingTarget = await api.app.inject({ method: "POST", url: "/products/media/uploads", headers: { ...uploadHeaders, "x-product-id": id(999) }, payload: bytes });
       assert.equal(missingTarget.statusCode, 404, missingTarget.body);
       const command = { action: "CREATE", requestKey: commandKey, values: { productCode: "R3-SYNTHETIC", name: "Synthetic only", categoryId: id(91), supplierId: id(96), seasonIds: [], sizeGroupId: id(92),
-        year: 2026, systemItemCode: "00001", thickness: null, collarPantsType: null, defaultBarcodeSchemeId: id(97), enabled: true,
+        year: 2026, systemItemCode: "0000001", thickness: null, collarPantsType: null, defaultBarcodeSchemeId: BARCODE_SCHEMES.y2026, enabled: true,
         prices: Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === "retail_price" ? "1.00" : null])) },
         skus: [{ id: null, expectedVersion: null, skuCode: "R3-SYNTHETIC-SKU", colorId: id(93), fitId: id(94), sizeId: id(95), enabled: true }], barcodes: [],
         imageChanges: [{ action: "ADD", uploadId: staged.json().uploadId, role: "MAIN", colorId: null, displayOrder: 0 }] };
       const send = () => api.app.inject({ method: "POST", url: "/products/v2/commands", headers, payload: command });
       const saved = await send(); assert.equal(saved.statusCode, 200, saved.body); assert.ok(audit && image && receipt); assert.equal(capacityChecks, 1);
+      assert.ok(savedBarcode); assert.equal(savedBarcode[1], "550000001504207"); assert.equal(savedBarcode[3], "MAIN"); assert.equal(savedBarcode[4], BARCODE_SCHEMES.y2026);
       const writeCount = p.calls.filter(c => /^(?:\/\* maintenance:(?:audit|complete) \*\/ )?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)).length;
       assert.deepEqual((await send()).json(), saved.json());
       assert.equal(p.calls.filter(c => /^(?:\/\* maintenance:(?:audit|complete) \*\/ )?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)).length, writeCount);
@@ -3182,4 +3213,20 @@ test('HISTORY draft successor API requires new exact capability before borrow; o
  const fresh=newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','HISTORY_REVISION'],true),q=exact26Driver(fresh.observation);
  try{const api=await createProductionRuntime26HistoryRevisionApplicationApi(fresh.configuration,history,q.factory,null,syntheticCapacity());try{assert.equal(q.calls[0]?.sql,draftHistoryProbe);assert.ok(api.app.hasRoute({method:'POST',url:'/imported-history/transfers/revise'}));assert.equal(api.app.hasRoute({method:'POST',url:'/transfers/commands'}),false);}finally{await api.close();}}finally{fresh.cleanup();}
  const normal=newLivePairFixture(),r=exact26Driver(normal.observation);try{const api=await createProductionRuntime26ApplicationApi(normal.configuration,r.factory,null,syntheticCapacity());try{assert.equal(r.calls[0]?.sql,newLivePairProbe);assert.equal(api.app.hasRoute({method:'POST',url:'/imported-history/transfers/revise'}),false);}finally{await api.close();}}finally{normal.cleanup();}
+});
+
+
+test('production35 V2 profile selects the existing closed configuration without caller proof or endpoint overrides',()=>{
+ const input={...config(),profile:'source-confirmed-native-exact35-production-v2',productMedia:{root:'/private/production35',rootKey:'production35'}};
+ const parsed=parseProductionRuntime35Configuration(input);
+ assert.equal(parsed.profile,input.profile);assert.deepEqual(parsed.postgres,input.postgres);
+ assert.deepEqual(productionRuntime35HostConfiguration(parsed),config());
+ for(const extra of [{ordinaryAdmission:{}},{recordFile:'/tmp/copy.json'},{referenceDirectory:'/tmp/source'},{target:{serverPort:5432}},{productionV2:true}])
+  assert.throws(()=>parseProductionRuntime35Configuration({...input,...extra}),TypeError);
+});
+test('production35 V2 cannot substitute an arbitrary capacity provider for the actual owned pool before connecting',async()=>{
+ const {createProductionRuntime35ApplicationApi}=await import('./production-provider-composition.ts');let connected=0,ended=0;
+ const capacity=syntheticCapacity(), input={...config(),profile:'source-confirmed-native-exact35-production-v2',productMedia:{root:'/private/production35',rootKey:'production35'}};
+ await assert.rejects(createProductionRuntime35ApplicationApi(input,()=>({async connect(){connected++;throw Error('must not connect');},async end(){ended++;},on(){return this;}} as never),null,capacity),/original owned-pool capacity target/);
+ assert.equal(connected,0);assert.ok(ended<=1);
 });

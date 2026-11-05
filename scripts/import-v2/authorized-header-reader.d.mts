@@ -24,5 +24,6 @@ export function openAuthorizedV3HeaderReader(options:{
   /** Logical raw JSONL bound above stays unchanged; only owned selected-file storage is compressed. */
   spoolStorage?:{format:'gzip-v1';maxStoredBytes:number};
   resolveNativeReferenceBinding?:(query:{entity:HistoryHeaderNativeReferenceEntity;sourceKey:string;rawFields:ImportSourceEvidence['rawFields'];normalizedFields:ImportSourceEvidence['normalizedFields']})=>Promise<Pick<HistoryHeaderNativeReferenceInput,'nativeSnapshot'|'bindings'|'enumMappings'>>;
+  resolveHistoricalHallEvidence?:(query:Pick<HistoryHeaderInput,'source'|'selection'|'bindings'>)=>Promise<import('../../packages/application/src/historical-sales-hall-evidence.ts').HistoricalSalesHallEvidence|undefined>;
   resolveNativeBinding?:(query:{entity:HistoryHeaderEntity;sourceKey:string;rawFields:ImportSourceEvidence['rawFields'];normalizedFields:ImportSourceEvidence['normalizedFields']})=>Promise<Readonly<Record<string,HeaderNativeBinding|undefined>>>;
 }):Promise<AuthorizedV3HeaderReader>;

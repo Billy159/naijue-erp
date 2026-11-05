@@ -71,7 +71,7 @@ test("v19 HTTP original V2 keeps required manual code400 and missing actual barc
   const unavailable = await app.inject({ method: "POST", url: "/products/v2/commands", payload: body });
   assert.equal(unavailable.statusCode, 503, unavailable.body); assert.equal(unavailable.json().error.code, "PRODUCT_SPEC_GENERATION_NOT_READY");
   const blank = await app.inject({ method: "POST", url: "/products/v2/commands", payload: { ...body, values: { ...body.values, systemItemCode: null } } });
-  assert.equal(blank.statusCode, 400, blank.body); assert.equal(blank.json().error.code, "PRODUCT_REQUIRED_FIELDS"); assert.equal(mutations, 0);
+  assert.equal(blank.statusCode, 400, blank.body); assert.equal(blank.json().error.code, "PRODUCT_SYSTEM_ITEM_CODE_REQUIRED"); assert.equal(mutations, 0);
 });
 test("W17 media extended V2 is closed before mutation without actual stage/driver capability and malformed changes stay 400", async t => {
   let touched = 0; const unexpected = async (): Promise<never> => { touched++; throw Error("UNEXPECTED_MUTATION"); };
@@ -100,6 +100,8 @@ test("product maintenance HTTP: save/replay/original receipt traverses the actua
       defaultBarcodeScheme: root.defaultBarcodeSchemeId === null ? null : { id: root.defaultBarcodeSchemeId, name: "SYNTHETIC SCHEME", ruleVersion: "1", status: "CURRENT" as const } }; },
     async readCandidates(q) { return { kind: q.kind, page: q.page, pageSize: q.pageSize, total: 0, items: [] }; },
     async validateReferences() {}, async assertCanDelete() {},
+    async readSkuSelectionSizes() { return [id(8)]; },
+    async readBarcodeGenerationReferences(_productId, schemeId, skus) { return { scheme: { id: schemeId, status: "CURRENT", codeLength: null }, colors: [...new Set(skus.map(s => s.colorId))].map(id => ({ id, code: null })), fits: [...new Set(skus.map(s => s.fitId))].map(id => ({ id, code: null })), sizes: [...new Set(skus.map(s => s.sizeId))].map(id => ({ id, code: null })) }; },
     async putProduct(product) { writes++; p = { product, skus: [], barcodes: [] }; }, async putSku(s) { writes++; p = { ...p!, skus: [...p!.skus, s] }; }, async putBarcode() {} }); }
   } };
   const app = Fastify({ logger: false }); t.after(() => app.close());
@@ -153,5 +155,14 @@ test("A01 product HTTP carries exact capacity rejection without exposing private
     const response: LightMyRequestResponse = await app.inject({ method: "POST", url: "/products/commands", payload: command });
     assert.equal(response.statusCode, status, response.body); assert.equal(response.json().error.code, code);
     assert.doesNotMatch(response.body, /PRIVATE_CAPACITY_FACTS/);
+  }
+});
+
+test("barcode generation validation returns definite 409 without leaking source evidence", async t => {
+  for (const code of ["PRODUCT_BARCODE_ITEM_CODE_REQUIRED", "PRODUCT_BARCODE_FIT_CODE_REQUIRED", "PRODUCT_BARCODE_COLOR_CODE_REQUIRED", "PRODUCT_BARCODE_SIZE_CODE_REQUIRED", "PRODUCT_BARCODE_HISTORICAL_MAPPING_REQUIRED", "PRODUCT_BARCODE_SOURCE_PRODUCT_REQUIRED", "PRODUCT_BARCODE_HISTORICAL_COLOR_REQUIRED", "PRODUCT_BARCODE_HISTORICAL_SIZE_REQUIRED", "PRODUCT_BARCODE_SCHEME_NOT_READY", "PRODUCT_BARCODE_SKU_NOT_AVAILABLE", "PRODUCT_BARCODE_MAIN_EXISTS", "BARCODE_CONFLICT"]) {
+    const app=Fastify({logger:false}); t.after(()=>app.close());
+    app.register(createProductMaintenanceHttpPlugin({authenticate:async()=>actor,dependencies:{now:()=>"2026-10-29T00:00:00Z",newId:kind=>sid(kind,18100),unitOfWork:{async transaction(){throw new DomainError(code,"PRIVATE_SOURCE_EVIDENCE");}}}}));
+    const response: LightMyRequestResponse = await app.inject({method:"POST",url:"/products/commands",payload:command});
+    assert.equal(response.statusCode,409,response.body); assert.equal(response.json().error.code,code); assert.doesNotMatch(response.body,/PRIVATE_SOURCE_EVIDENCE/);
   }
 });

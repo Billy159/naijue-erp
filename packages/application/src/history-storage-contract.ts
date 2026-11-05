@@ -22,7 +22,7 @@ export interface HistoryHeader extends HistorySourceLink {
   createdInstant: string | null; updatedInstant: string | null; approvedInstant: string | null;
 }
 export interface HistorySalesHeader extends HistoryHeader {
-  businessType: "SALE" | "RETURN" | "EXCHANGE"; hallId: string; customerId: string;
+  businessType: "SALE" | "RETURN" | "EXCHANGE"; hallId: string | null; customerId: string;
   warehouseId: string; salespersonId: string | null;
   grossAmount: string; orderDiscount: string; netDue: string;
 }

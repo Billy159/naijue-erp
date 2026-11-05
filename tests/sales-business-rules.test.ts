@@ -96,7 +96,10 @@ test("candidate adapter / synthetic: ordinary zero requires confirmation and sti
 });
 test("candidate adapter / synthetic: explicit pricing metadata is not inferred from ratios or old zero prices", () => {
   for (const changes of [{ pricingRule: null }, { zeroConfirmed: null }]) {
-    assert.throws(() => check(draft("SALE", [line(0, "1", 100, changes)])), { code: "UNKNOWN_PRICING_FACTS" });
+    const incomplete=draft("SALE", [line(0, "1", 100, changes)]);
+    // Draft incompleteness is now expressly allowed; the same missing-fact assertion belongs at approval.
+    assert.doesNotThrow(()=>check(incomplete));
+    assert.throws(()=>rules().assertReferencesAndEconomics({...incomplete,header:{...incomplete.header,status:'DRAFT',version:version(1),createdByAccountId:null,createdHallId:null,createdAt:null,updatedAt:null,approvedByAccountId:null,approvedAt:null,responsibleStaffId:null}}),{code:'UNKNOWN_PRICING_FACTS'});
   }
   assert.throws(() => check(draft("SALE", [line(0, "1", 100, { discountTenths: 50 })])), { code: "INVALID_LINE_DISCOUNT" });
   for (const changes of [{ referencePrice: null }, { dealPrice: money(99) }]) {
@@ -186,4 +189,33 @@ test("candidate adapter / synthetic: retained inactive unknown pricing is proven
   } }));
   const document = { ...value, header: { ...value.header, ...fixtureDocumentHeader() }, lines: [retained, ...value.lines] };
   assert.doesNotThrow(() => policy.assertReferencesAndEconomics(document));
+});
+
+test('historical zero-discount signed SALE retains exact lines/refunds only with trusted stored basis',()=>{
+ const base=draft('RETURN',[line(0,'-2',100)]);const value={...base,header:{...base.header,businessType:'SALE' as const}};
+ const previous={...value,header:{...value.header,...fixtureDocumentHeader()}};
+ const edited={...value,header:{...value.header,note:'metadata edit'}};
+ assert.doesNotThrow(()=>rules().assertDraftChange(previous,edited,undefined,'CUTOFF_HISTORY'));
+ assert.throws(()=>rules().assertDraftChange(previous,edited,undefined,'RUNTIME_LEDGER'));
+ assert.throws(()=>rules().assertDraftChange(undefined,edited,undefined,'CUTOFF_HISTORY'));
+ // A draft may now have explicitly edited settlements and remain unbalanced until APPROVE.
+ assert.doesNotThrow(()=>rules().assertDraftChange(previous,{...edited,settlements:edited.settlements.map(s=>({...s,direction:'RECEIVE' as const}))},undefined,'CUTOFF_HISTORY'));
+ for(const change of [
+  {...edited,lines:edited.lines.map(l=>({...l,quantity:quantity('-3')}))},
+  {...edited,header:{...edited.header,customerId:sid('customer',919)}}
+ ])assert.throws(()=>rules().assertDraftChange(previous,change,undefined,'CUTOFF_HISTORY'));
+});
+
+test('new mixed SALE keeps signed rows in one document and prohibits whole discount, including zero-price negative rows', async () => {
+ for (const quantities of [['3','-1'],['1','-3'],['1','-1']]) {
+  const base=draft('RETURN',quantities.map((q,i)=>line(i,q,100)));
+  const value={...base,header:{...base.header,businessType:'SALE' as const}};
+  assert.doesNotThrow(()=>check(value));
+  const f=fixture({rules:rules()});await f.service.execute(save(value));await f.service.execute(approve());
+  assert.equal(f.document().header.businessType,'SALE');assert.equal(f.document().lines.length,2);
+  assert.deepEqual(f.document().lines.map(l=>l.quantity),quantities.map(BigInt));
+  assert.throws(()=>check({...value,header:{...value.header,orderDiscount:money(1),netDue:money(value.header.netDue-1n)}}),{code:'MIXED_SALES_ORDER_DISCOUNT'});
+ }
+ const gift=draft('RETURN',[line(0,'2',100),line(1,'-1',0,{isGift:true})]);
+ assert.throws(()=>check({...gift,header:{...gift.header,businessType:'SALE',orderDiscount:money(1),netDue:money(199)}}),{code:'MIXED_SALES_ORDER_DISCOUNT'});
 });

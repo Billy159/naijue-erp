@@ -1,3 +1,8 @@
+import { readPublishedDocumentInventoryAnchor } from './published-document-inventory-anchor-reader.ts';
+import { checkedRuntime27CommandCapability, type Runtime27CommandCapability } from '../../../packages/application/src/runtime27-command-capability.ts';
+import { createStandardCatalogue27TransactionProof } from './standard-catalogue-completeness27.ts';
+import { readDocumentInventoryAnchor } from './document-inventory-anchor-reader.ts';
+import type { DocumentInventoryAnchor } from '../../../packages/domain/src/document-inventory-effects.ts';
 import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
 import { loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
 import { createMaintainedCatalogue26TransactionProof } from './catalogue-completeness.ts';
@@ -30,15 +35,16 @@ function header(row: Record<string, unknown>): RuntimeTransferHeader {
   return { id: id("transfer", row.id), number: stringValue(row.number), businessDate: businessDate(stringValue(row.business_date)),
     fromWarehouseId: id("warehouse", row.from_warehouse_id), toWarehouseId: id("warehouse", row.to_warehouse_id),
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version), note: nullableString(row.note),
-    responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
-    createdRole: choice(row.created_role, ["ADMIN", "WAREHOUSE", "SALESPERSON"]), createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at),
-    approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at) };
+    responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: nullableId("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
+    createdRole: row.created_role === null ? null : choice(row.created_role, ["ADMIN", "WAREHOUSE", "SALESPERSON"] as const), createdAt: nullableString(row.created_at), updatedAt: nullableString(row.updated_at),
+    approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at),
+    ...(row.unified_staff_columns === true ? { createdByStaffId: nullableId("staff", row.created_by_staff_id), approvedByStaffId: nullableId("staff", row.approved_by_staff_id) } : {}) };
 }
 function line(row: Record<string, unknown>): TransferLineRow {
   return { id: id("transferLine", row.id), transferId: id("transfer", row.transfer_id), lineNo: integerValue(row.line_no), skuId: id("sku", row.sku_id),
     quantity: quantityFromSql(row.quantity), isCurrent: booleanValue(row.is_current), snapshot: {
-      productCode: stringValue(row.product_code_snapshot), productName: stringValue(row.product_name_snapshot), colorName: stringValue(row.color_name_snapshot),
-      fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
+      productCode: nullableString(row.product_code_snapshot), productName: nullableString(row.product_name_snapshot), colorName: nullableString(row.color_name_snapshot),
+      fitName: nullableString(row.fit_name_snapshot), sizeName: nullableString(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
 }
 
 function result(value: unknown): TransferResult {
@@ -51,9 +57,14 @@ function result(value: unknown): TransferResult {
 export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
   private readonly pool: PgSalesPool;
   private readonly runtime26: NativeRuntime26Capability | undefined;
-  constructor(pool: PgSalesPool, options?: { readonly runtime26: NativeRuntime26Capability }) {
+  private readonly runtime27: Runtime27CommandCapability | undefined;
+  constructor(pool: PgSalesPool, options?: { readonly runtime26: NativeRuntime26Capability; readonly runtime27?: never } | { readonly runtime27: Runtime27CommandCapability; readonly runtime26?: never }) {
     this.pool = pool;
-    if (options !== undefined) {
+    if(options && 'runtime27' in options){
+      const descriptor=Object.getOwnPropertyDescriptor(options,'runtime27');
+      if(Object.getPrototypeOf(options)!==Object.prototype||Reflect.ownKeys(options).length!==1||!descriptor?.enumerable||!('value' in descriptor))throw new TypeError('Own exclusive runtime27 capability required');
+      this.runtime27=checkedRuntime27CommandCapability(descriptor.value);
+    } else if (options !== undefined) {
       const descriptor = options && Object.getOwnPropertyDescriptor(options, "runtime26");
       if (!options || Object.getPrototypeOf(options) !== Object.prototype || Reflect.ownKeys(options).length !== 1
         || !descriptor?.enumerable || !("value" in descriptor) || descriptor.value === undefined)
@@ -65,14 +76,16 @@ export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
     const client = await this.pool.connect(); let tx: PostgresTransferTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
-      tx = new PostgresTransferTransaction(client, this.runtime26, this.pool);
+      tx = new PostgresTransferTransaction(client, this.runtime26, this.pool, this.runtime27);
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
+      if(this.runtime27)await this.runtime27.assertReady(client,"DOCUMENT_COMMAND");
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       const value = await work(tx);
       tx.assertPostingComplete();
       tx.close();
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
+      if(this.runtime27)await this.runtime27.assertReady(client,"DOCUMENT_COMMAND");
       commitAttempted = true; await client.query("COMMIT"); return value;
     } catch (error) {
       tx?.close();
@@ -90,10 +103,13 @@ export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
 class PostgresTransferTransaction implements TransferTransaction {
   async getCurrentTransferSnapshots(skuIds: readonly EntityId<"sku">[]) {
     requireDomain(this.loaded !== undefined, "TRANSACTION_SCOPE", "Load the target document before snapshot facts");
+    if(this.standardCatalogue)await this.standardCatalogue.assertExistingSkus(skuIds);
     return loadNativeTransferSnapshots((sql, values) => this.query(sql, values), skuIds);
   }
   private active = true;
-  private loaded: { readonly id: EntityId<"transfer">; readonly version: Version | null; readonly stockBasis: StoredTransfer["stockBasis"] } | undefined;
+  private loaded: { readonly id: EntityId<"transfer">; readonly version: Version | null; readonly stockBasis: StoredTransfer["stockBasis"]; readonly creation?: Pick<RuntimeTransferHeader, "createdByAccountId" | "createdByStaffId" | "createdHallId" | "createdRole" | "createdAt"> } | undefined;
+  private anchorRead = false;
+  private anchor: DocumentInventoryAnchor | undefined;
   private receiptKey: string | undefined;
   private receiptActor: EntityId<"account"> | undefined;
   private identityLoaded = false;
@@ -104,21 +120,30 @@ class PostgresTransferTransaction implements TransferTransaction {
   private readonly warehouseFacts = new Map<string, TransferWarehouseFact | undefined>();
   private readonly skuFacts = new Map<string, TransferSkuFact | undefined>();
   private readonly client: PgSalesClient;
+  private readonly standardCatalogue: ReturnType<typeof createStandardCatalogue27TransactionProof> | undefined;
   private readonly specificationCatalogue: MaintainedCatalogue26TransactionProof | undefined;
-  private readonly specificationRuntime: NativeRuntime26Capability | undefined;
+  private readonly specificationRuntime: NativeRuntime26Capability | Runtime27CommandCapability | undefined;
   private readonly specificationPool: PgSalesPool | undefined;
-  constructor(client: PgSalesClient, runtime26?: NativeRuntime26Capability, pool?: PgSalesPool) {
-    this.client = client; this.balances = runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
+  constructor(client: PgSalesClient, runtime26?: NativeRuntime26Capability, pool?: PgSalesPool, runtime27?: Runtime27CommandCapability) {
+    this.runtime27 = runtime27;
+    this.standardCatalogue=runtime27?createStandardCatalogue27TransactionProof(client,runtime27,()=>requireDomain(this.active,'TRANSACTION_CLOSED','Runtime27 catalogue cannot outlive original transaction')):undefined;
+    this.client = client; this.balances = runtime27 ? PostgresPostingBalances.forRuntime27(client,runtime27,()=>requireDomain(this.active,'TRANSACTION_CLOSED','Runtime27 posting cannot outlive original transaction')) : runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
       : PostgresPostingBalances.forRuntime26(client, runtime26, () => requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes"));
-    this.specificationRuntime=runtime26;this.specificationPool=pool;
-    this.specificationCatalogue=runtime26?createMaintainedCatalogue26TransactionProof(client,runtime26,
-      ()=>requireDomain(this.active,'TRANSACTION_CLOSED','Catalogue proof must remain on its original transfer transaction')):undefined;
+    this.specificationRuntime=runtime27 ?? runtime26;this.specificationPool=pool;
+    this.specificationCatalogue=this.standardCatalogue ?? (runtime26?createMaintainedCatalogue26TransactionProof(client,runtime26,
+      ()=>requireDomain(this.active,'TRANSACTION_CLOSED','Catalogue proof must remain on its original transfer transaction')):undefined);
   }
   async resolveDocumentSkus(input: DocumentSpecificationResolution): Promise<readonly EntityId<'sku'>[]> {
+    await this.assertOrdinaryOrigin();
     const bound = () => requireDomain(this.active && input.scope.kind === 'TRANSFER' && input.scope.actor.accountId === this.receiptActor
-      && input.scope.documentId === this.loaded?.id && (this.loaded.version === null || this.loaded.stockBasis === 'RUNTIME_LEDGER'),
+      && input.scope.documentId === this.loaded?.id,
       'TRANSACTION_SCOPE','Specification append requires the original bound transfer SAVE');
     bound();await this.getCurrentTransferIdentity(input.scope.actor.accountId);
+    if(this.standardCatalogue && input.selections.every(selection=>typeof selection.skuId==='string'&&selection.spec===undefined)){
+      requireDomain(input.selections.length>0&&input.selections.length<=20000, 'INVALID_LINES', 'Bounded SKU selections required');
+      const ids=input.selections.map(selection=>entityId('sku',selection.skuId!));
+      await this.standardCatalogue.assertExistingSkus(ids);bound();return ids;
+    }
     requireDomain(this.specificationRuntime && this.specificationPool && this.specificationCatalogue,
       'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Reviewed exact26 catalogue authority required');
     return resolveNativeDocumentSpecifications({pool:this.specificationPool,client:this.client,runtime:this.specificationRuntime,
@@ -200,10 +225,12 @@ class PostgresTransferTransaction implements TransferTransaction {
     await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:transfer:${transferId}`]);
     const row = (await this.query(`SELECT id, number, to_char(business_date, 'YYYY-MM-DD') AS business_date, from_warehouse_id, to_warehouse_id, status, version, note, responsible_staff_id,
       created_by_account_id, created_hall_id, created_role, ${stamp("created_at")} AS created_at, ${stamp("updated_at")} AS updated_at,
-      approved_by_account_id, ${stamp("approved_at")} AS approved_at, stock_basis FROM naijue_erp.transfer_header WHERE id = $1 FOR UPDATE`, [transferId])).rows[0];
+      approved_by_account_id, ${stamp("approved_at")} AS approved_at, stock_basis,
+      to_jsonb(transfer_header) ? 'created_by_staff_id' AS unified_staff_columns,
+      to_jsonb(transfer_header)->>'created_by_staff_id' AS created_by_staff_id, to_jsonb(transfer_header)->>'approved_by_staff_id' AS approved_by_staff_id FROM naijue_erp.transfer_header WHERE id = $1 FOR UPDATE`, [transferId])).rows[0];
     if (!row) { this.loaded = { id: transferId, version: null, stockBasis: "RUNTIME_LEDGER" }; return undefined; }
     const h = header(row); const stockBasis = choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]);
-    this.loaded = { id: transferId, version: h.version, stockBasis };
+    this.loaded = { id: transferId, version: h.version, stockBasis, creation: { createdByAccountId: h.createdByAccountId, ...(h.createdByStaffId === undefined ? {} : { createdByStaffId: h.createdByStaffId }), createdHallId: h.createdHallId, createdRole: h.createdRole, createdAt: h.createdAt } };
     const lines = (await this.query(`SELECT id, transfer_id, line_no, sku_id, quantity::text, product_code_snapshot, product_name_snapshot,
       color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current FROM naijue_erp.transfer_line WHERE transfer_id = $1 ORDER BY line_no, id`, [transferId])).rows.map(line);
     for (const value of lines) this.previousLines.set(value.id, structuredClone(value));
@@ -221,6 +248,7 @@ class PostgresTransferTransaction implements TransferTransaction {
   }
   async getSkuFact(skuId: EntityId<"sku">): Promise<TransferSkuFact | undefined> {
     requireDomain(this.active && this.loaded, "TRANSACTION_SCOPE", "Load the transfer before reference facts");
+    if(this.standardCatalogue)await this.standardCatalogue.assertExistingSkus([skuId]);
     if (this.skuFacts.has(skuId)) return structuredClone(this.skuFacts.get(skuId));
     const row = (await this.query(`SELECT s.id, (s.enabled AND p.enabled AND c.enabled AND f.enabled
       AND EXISTS (SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = p.size_group_id AND m.size_id = s.size_id)) AS enabled
@@ -229,9 +257,25 @@ class PostgresTransferTransaction implements TransferTransaction {
     const fact = row ? { id: id("sku", row.id), enabled: booleanValue(row.enabled) } : undefined;
     this.skuFacts.set(skuId, fact); return structuredClone(fact);
   }
+  private readonly runtime27: Runtime27CommandCapability | undefined;
+  async getDocumentInventoryAnchor(kind: 'SALES' | 'TRANSFER', documentId: EntityId<'sales'> | EntityId<'transfer'>): Promise<DocumentInventoryAnchor | undefined> {
+    requireDomain(this.active && kind === 'TRANSFER' && this.loaded?.id === documentId, 'TRANSACTION_SCOPE', 'Anchor must belong to the loaded ordinary transfer');
+    if (!this.anchorRead) {
+      const anchor = await (this.runtime27 ? readPublishedDocumentInventoryAnchor : readDocumentInventoryAnchor)((sql, values) => this.query(sql, values), kind, documentId);
+      requireDomain(this.active, 'TRANSACTION_CLOSED', 'Anchor read must remain on its original transaction');
+      this.anchor = anchor; this.anchorRead = true;
+    }
+    return structuredClone(this.anchor);
+  }
+  private async assertOrdinaryOrigin(): Promise<void> {
+    requireDomain(this.active && this.loaded, 'TRANSACTION_SCOPE', 'Load the ordinary transfer first');
+    if (this.loaded.stockBasis === 'CUTOFF_HISTORY') requireDomain(await this.getDocumentInventoryAnchor('TRANSFER', this.loaded.id),
+      'MISSING_POSTING_PROVENANCE', 'Converted ordinary transfers require their real sealed migration anchor and reviewed schema support');
+  }
   async lockBalances(keys: readonly { readonly warehouseId: EntityId<"warehouse">; readonly skuId: EntityId<"sku"> }[]): Promise<void> {
     requireDomain(this.loaded && !this.balancesLocked && keys.length > 0, "TRANSACTION_SCOPE", "Lock the complete posting set exactly once");
     this.balancesLocked = true;
+    await this.assertOrdinaryOrigin();
     await this.balances.lock(keys);
   }
   async getBalance(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<InventoryBalanceRow | undefined> {
@@ -239,38 +283,48 @@ class PostgresTransferTransaction implements TransferTransaction {
     return this.balances.get(warehouseId, skuId);
   }
   async assertAbsentBalanceIsPublishedZero(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<void> {
-    requireDomain(this.active && this.loaded?.stockBasis === "RUNTIME_LEDGER" && this.balancesLocked,
+    requireDomain(this.active && this.loaded && this.balancesLocked,
       "TRANSACTION_SCOPE", "Only the loaded runtime transfer may prove first use");
+    await this.assertOrdinaryOrigin();
     await this.balances.assertZero(warehouseId, skuId);
   }
   async putBalance(row: InventoryBalanceRow): Promise<void> { await this.balances.put(row); }
   async listTransferLedger(transferId: EntityId<"transfer">): Promise<readonly InventoryLedgerRow[]> {
     requireDomain(this.loaded?.id === transferId, "TRANSACTION_SCOPE", "Ledger must match loaded transfer");
     return (await this.query(`SELECT l.id, l.operation_id, l.event_kind, l.warehouse_id, l.sku_id, l.quantity_delta::text, tl.transfer_id, l.source_transfer_line_id,
-      l.endpoint, l.source_document_version, l.reverses_entry_id, to_char(l.business_date, 'YYYY-MM-DD') AS business_date, ${stamp("l.posted_at")} AS posted_at
+      l.endpoint, l.source_document_version, l.reverses_entry_id, to_jsonb(l)->>'baseline_anchor_operation_id' AS baseline_anchor_operation_id, to_char(l.business_date, 'YYYY-MM-DD') AS business_date, ${stamp("l.posted_at")} AS posted_at
       FROM naijue_erp.inventory_ledger l JOIN naijue_erp.transfer_line tl ON tl.id = l.source_transfer_line_id
       WHERE tl.transfer_id = $1 ORDER BY l.source_document_version, l.id`, [transferId])).rows.map(row => ({
         id: id("ledger", row.id), operationId: id("operation", row.operation_id), eventKind: choice(row.event_kind, ["APPROVE", "UNAPPROVE"]),
         warehouseId: id("warehouse", row.warehouse_id), skuId: id("sku", row.sku_id), quantityDelta: quantityFromSql(row.quantity_delta),
         source: { kind: "TRANSFER", transferId: id("transfer", row.transfer_id), transferLineId: id("transferLine", row.source_transfer_line_id), endpoint: choice(row.endpoint, ["FROM", "TO"]) },
-        sourceDocumentVersion: versionFromSql(row.source_document_version), reversesEntryId: nullableId("ledger", row.reverses_entry_id), businessDate: businessDate(stringValue(row.business_date)), postedAt: stringValue(row.posted_at) }));
+        sourceDocumentVersion: versionFromSql(row.source_document_version), reversesEntryId: nullableId("ledger", row.reverses_entry_id),
+        ...(row.baseline_anchor_operation_id === undefined ? {} : { baselineAnchorOperationId: nullableId("operation", row.baseline_anchor_operation_id) }), businessDate: businessDate(stringValue(row.business_date)), postedAt: stringValue(row.posted_at) }));
   }
   async appendLedger(input: InventoryLedgerRow): Promise<void> {
     const row: InventoryLedgerRow = structuredClone(input);
-    requireDomain(row.source.kind === "TRANSFER" && row.source.transferId === this.loaded?.id && this.loaded?.stockBasis === "RUNTIME_LEDGER", "TRANSACTION_SCOPE", "Only the loaded runtime transfer may post");
+    requireDomain(row.source.kind === "TRANSFER" && row.source.transferId === this.loaded?.id, "TRANSACTION_SCOPE", "Only the loaded runtime transfer may post");
+    await this.assertOrdinaryOrigin();
+    if (row.baselineAnchorOperationId != null) requireDomain(this.anchor?.receipt.id === row.baselineAnchorOperationId,
+      'INVALID_BASELINE_ANCHOR', 'First reversal must reference this ordinary document migration anchor');
     const transition = this.balances.prepareLiveAppend(row);
     const written = await this.query(`INSERT INTO naijue_erp.inventory_ledger (id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta,
-      source_transfer_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at, quantity_before, quantity_after)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::bigint,$14::bigint)`,
+      source_transfer_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at, quantity_before, quantity_after${row.baselineAnchorOperationId == null ? '' : ', baseline_anchor_operation_id'})
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::bigint,$14::bigint${row.baselineAnchorOperationId == null ? '' : ',$15::uuid'})`,
       [row.id, row.operationId, row.eventKind, row.warehouseId, row.skuId, row.quantityDelta.toString(), row.source.transferLineId, row.source.endpoint,
-        versionToSql(row.sourceDocumentVersion), row.reversesEntryId, row.businessDate, row.postedAt, transition.quantityBefore.toString(), transition.quantityAfter.toString()]);
+        versionToSql(row.sourceDocumentVersion), row.reversesEntryId, row.businessDate, row.postedAt, transition.quantityBefore.toString(), transition.quantityAfter.toString(), ...(row.baselineAnchorOperationId == null ? [] : [row.baselineAnchorOperationId])]);
     requireDomain(written.rowCount === 1, "INVENTORY_INTEGRITY_FAILED", "Exact native inventory effect was not appended");
     this.balances.didAppendLive(transition);
   }
   async putRuntimeTransfer(document: TransferDocument): Promise<void> {
     const h = document.header; const loaded = this.loaded;
     requireDomain(loaded?.id === h.id, "TRANSACTION_SCOPE", "Transfer must be read before writing");
-    requireDomain(loaded.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED", "Cutoff history is not a runtime posting");
+    await this.assertOrdinaryOrigin();
+    requireDomain(loaded.creation ? h.createdByAccountId === loaded.creation.createdByAccountId
+      && (h.createdByStaffId ?? null) === (loaded.creation.createdByStaffId ?? null)
+      && h.createdHallId === loaded.creation.createdHallId && h.createdRole === loaded.creation.createdRole && h.createdAt === loaded.creation.createdAt
+      : this.receiptActor !== undefined && h.createdByAccountId === this.receiptActor,
+    'IMMUTABLE_CREATION_FACTS', 'Transfer creation facts must preserve the loaded header; new creator must match receipt actor');
     requireDomain(h.version === (loaded.version === null ? 1 : loaded.version + 1), "VERSION_CONFLICT", "Transfer version must advance exactly once");
     if (h.responsibleStaffId !== null) {
       const responsible = await this.query("/* document:responsible-staff */ SELECT id FROM naijue_erp.staff WHERE id=$1::uuid FOR SHARE", [h.responsibleStaffId]);
@@ -280,7 +334,7 @@ class PostgresTransferTransaction implements TransferTransaction {
     const columns = "id, number, business_date, from_warehouse_id, to_warehouse_id, status, version, note, created_by_account_id, created_hall_id, created_role, created_at, updated_at, approved_by_account_id, approved_at, responsible_staff_id";
     const written = loaded.version === null
       ? await this.query(`INSERT INTO naijue_erp.transfer_header (${columns}, stock_basis) VALUES (${values.map((_v,i) => `$${i+1}`).join(",")}, 'RUNTIME_LEDGER') ON CONFLICT (id) DO NOTHING`, values)
-      : await this.query(`UPDATE naijue_erp.transfer_header SET ${columns.split(", ").slice(1).map((field,i) => `${field} = $${i+2}`).join(", ")} WHERE id = $1 AND version = $17 AND stock_basis = 'RUNTIME_LEDGER'`, [...values,versionToSql(loaded.version)]);
+      : await this.query(`UPDATE naijue_erp.transfer_header SET ${columns.split(", ").slice(1).map((field,i) => `${field} = $${i+2}`).join(", ")} WHERE id = $1 AND version = $17 AND stock_basis = '${loaded.stockBasis}'`, [...values,versionToSql(loaded.version)]);
     requireDomain(written.rowCount === 1, "VERSION_CONFLICT", "Transfer compare-and-swap failed");
     // Sparse audit reflects actual row transitions. Deferred current-position uniqueness
     // permits swaps without transient deactivate-all/rewrite-all mutations.

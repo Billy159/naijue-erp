@@ -51,7 +51,7 @@ try{
   await click(button('收起筛选 ▴'));const first=latest('list');assert.equal(count('list'),1);
   assert.deepEqual(Object.keys(first.read.parameters.filter),['productIds','categoryIds','years','seasonIds','supplierIds','fitIds','thicknesses','shapeCodes']);
   const initial=list(first,['NULL FACTS','ZERO FACTS']);initial.items[1]={...initial.items[1],retailPrice:'0.00',totalStock:'-5'};
-  await resolve(first,initial);const rows=[...host.querySelectorAll('tbody tr')];assert.equal(rows.length,2);assert.equal(rows[0].children[7].textContent,'');assert.equal(rows[0].children[8].textContent,'未提供');assert.equal(rows[1].children[7].textContent,'0.00');assert.equal(rows[1].children[8].textContent,'-5');assert.equal(button('查看').disabled,true);assert.equal(products.length,0);
+  await resolve(first,initial);const rows=[...host.querySelectorAll('tbody tr')];assert.equal(rows.length,2);assert.equal(rows[0].children[7].textContent,'');assert.equal(rows[0].children[8].textContent,'未知');assert.equal(rows[1].children[7].textContent,'0.00');assert.equal(rows[1].children[8].textContent,'-5');assert.equal(button('查看').disabled,true);assert.equal(products.length,0);
   console.log('PASS source contract: 10 original columns, 4+4 filter order, no construction-time I/O, read-only actions, null price/unknown stock never zero.');
 
   // Single current query owns results; cancelled/late transports intentionally ignore AbortSignal.

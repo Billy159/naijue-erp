@@ -44,7 +44,7 @@ test("native sales rules: unknown minimum is not known absent; exact minimum rem
 });
 test("native sales rules: enabled same-hall refs and actual method are required; staff role/hall and account hall are not invented", async () => {
   const draft = liveDraft(); const base = nativeFacts();
-  for (const facts of [{ ...base, hall: { ...base.hall, enabled: false } }, { ...base, warehouse: { ...base.warehouse, hallId: sid("hall", 99) } },
+  for (const facts of [{ ...base, hall: { ...base.hall!, enabled: false } }, { ...base, warehouse: { ...base.warehouse, hallId: sid("hall", 99) } },
     { ...base, customer: { ...base.customer, enabled: false } }, { ...base, paymentAccounts: [{ ...base.paymentAccounts[0]!, methodEnabled: false }] }])
     await assert.rejects(async () => rules.assertDraftChange(undefined, draft, txFacts(facts)), { code: "SALES_REFERENCE_UNAVAILABLE" });
   const staff = sid("staff", 100); const staffed = { ...draft, header: { ...draft.header, salespersonId: staff } };
@@ -270,10 +270,10 @@ test("exact2 sales UoW: renewed object proof failure releases borrowed client be
   assert.equal(connects, 1); assert.equal(released, 1); assert.equal(queried, 0); assert.equal(entered, false);
 });
 
-test("approved LIVE SAVE requires actual in-job salesperson; legacy NULL approval and committed-key recovery stay separate", async () => {
+test("ordinary SAVE requires staff on new creation; untouched original NULL survives edits and committed-key reauthorization", async () => {
   const legacy = syntheticDraft(), current = nativeFacts(legacy);
   await assert.rejects(async () => rules.assertDraftChange(undefined, legacy, txFacts(current)), { code: "SALES_REFERENCE_UNAVAILABLE" });
-  await assert.rejects(async () => rules.assertDraftChange({ ...legacy, header: { ...legacy.header, status: "DRAFT", responsibleStaffId: null, version: version(1), createdByAccountId: actor.accountId, createdHallId: actor.hallId, createdAt: "2026-10-21T00:00:00Z", updatedAt: "2026-10-21T00:00:00Z", approvedByAccountId: null, approvedAt: null } }, legacy, txFacts(current)), { code: "SALES_REFERENCE_UNAVAILABLE" });
+  await rules.assertDraftChange({ ...legacy, header: { ...legacy.header, status: "DRAFT", responsibleStaffId: null, version: version(1), createdByAccountId: actor.accountId, createdHallId: actor.hallId, createdAt: "2026-10-21T00:00:00Z", updatedAt: "2026-10-21T00:00:00Z", approvedByAccountId: null, approvedAt: null } }, legacy, txFacts(current));
   // Original APPROVE reference/economics policy remains nullable, no new action restriction.
   await rules.assertReferencesAndEconomics({ ...legacy, header: { ...legacy.header, status: "DRAFT", responsibleStaffId: null, version: version(1), createdByAccountId: actor.accountId, createdHallId: actor.hallId, createdAt: "2026-10-21T00:00:00Z", updatedAt: "2026-10-21T00:00:00Z", approvedByAccountId: null, approvedAt: null } }, txFacts(current));
   const store = new SyntheticStore(); let sequence = 15000, authorized = true;
@@ -284,10 +284,11 @@ test("approved LIVE SAVE requires actual in-job salesperson; legacy NULL approva
     return store.transaction(tx => work({ ...tx, async getCurrentSalesReferenceFacts(document) { return nativeFacts(document); } }));
   } } });
   await assert.rejects(() => upgraded.execute({ ...command, requestKey: "new-null-create", draft: { ...legacy, header: { ...legacy.header, id: sid("sales", 16000) }, lines: legacy.lines.map(line => ({ ...line, salesId: sid("sales", 16000) })), settlements: legacy.settlements.map(row => ({ ...row, salesId: sid("sales", 16000) })) } }), { code: "SALES_REFERENCE_UNAVAILABLE" });
-  await assert.rejects(() => upgraded.execute({ ...command, requestKey: "new-null-edit", expectedVersion: version(1) }), { code: "SALES_REFERENCE_UNAVAILABLE" });
   assert.deepEqual(store.snapshot(), before);
-  assert.deepEqual(await upgraded.execute(command), prior); assert.deepEqual(store.snapshot(), before);
-  authorized = false; await assert.rejects(() => upgraded.execute(command), {code:'FORBIDDEN'}); assert.deepEqual(store.snapshot(), before);
+  await upgraded.execute({ ...command, requestKey: "retained-null-edit", expectedVersion: version(1) });
+  const afterEdit = store.snapshot(); assert.equal(afterEdit.headers.get(legacy.header.id)?.salespersonId, null);
+  assert.deepEqual(await upgraded.execute(command), prior); assert.deepEqual(store.snapshot(), afterEdit);
+  authorized = false; await assert.rejects(() => upgraded.execute(command), {code:'FORBIDDEN'}); assert.deepEqual(store.snapshot(), afterEdit);
 });
 
 // Regression: product maintenance locks product before SKU; sales must agree.
@@ -309,4 +310,33 @@ test("native sales association changed between discovery and locking fails close
  };
  const reader=new PostgresNativeSalesFacts(query,()=>{},()=>[],{async assertComplete(){throw Error('must reject before completeness');}});
  await assert.rejects(()=>reader.load(f.draft),{code:'SALES_REFERENCE_UNAVAILABLE'});
+});
+
+test('historical null and source-confirmed cross-hall references survive unchanged SAVE and APPROVE, but new or changed references stay strict', async () => {
+ for(const hallId of [null,ids.hall]){
+  const draft={...liveDraft(),header:{...liveDraft().header,hallId}};
+  const previous={...draft,header:{...draft.header,responsibleStaffId:null,status:'DRAFT' as const,version:version(1),createdByAccountId:null,createdHallId:null,createdAt:null,updatedAt:null,approvedByAccountId:null,approvedAt:null}};
+  const facts={...nativeFacts(draft),hall:hallId===null?null:{id:hallId,enabled:true},warehouse:{id:ids.warehouse,hallId:sid('hall',99),enabled:true}};
+  const tx={...txFacts(facts),async getRetainedSalesApprovalHistory(){return {events:[],migrationOrigin:structuredClone(previous),assertCurrent(){}};}};
+  await rules.assertDraftChange(previous,draft,tx,'CUTOFF_HISTORY');
+  await rules.assertReferencesAndEconomics(previous,tx,undefined,'CUTOFF_HISTORY');
+  await assert.rejects(async()=>rules.assertDraftChange(previous,draft,txFacts(facts),'CUTOFF_HISTORY'),{code:'HISTORICAL_HALL_PROVENANCE_REQUIRED'});
+  await assert.rejects(async()=>rules.assertDraftChange(previous,draft,{...tx,async getRetainedSalesApprovalHistory(){return {events:[],migrationOrigin:{...previous,header:{...previous.header,hallId:sid('hall',88)}},assertCurrent(){}};}},'CUTOFF_HISTORY'),{code:'HISTORICAL_HALL_PROVENANCE_REQUIRED'});
+  await assert.rejects(async()=>rules.assertDraftChange(undefined,draft,txFacts(facts),'CUTOFF_HISTORY'),{code:'SALES_REFERENCE_UNAVAILABLE'});
+  await assert.rejects(async()=>rules.assertDraftChange(previous,draft,txFacts(facts),'RUNTIME_LEDGER'),{code:'SALES_REFERENCE_UNAVAILABLE'});
+  await assert.rejects(async()=>rules.assertReferencesAndEconomics(previous,txFacts(facts),undefined,'RUNTIME_LEDGER'),{code:'SALES_REFERENCE_UNAVAILABLE'});
+  const changed={...draft,header:{...draft.header,warehouseId:sid('warehouse',99)}};
+  await assert.rejects(async()=>rules.assertDraftChange(previous,changed,txFacts({...facts,warehouse:{...facts.warehouse,id:changed.header.warehouseId}}),'CUTOFF_HISTORY'),{code:'SALES_REFERENCE_UNAVAILABLE'});
+ }
+});
+
+test('historical current hall/warehouse may change under normal same-hall rules without altering the original observation',async()=>{
+ const source={...liveDraft(),header:{...liveDraft().header,hallId:null}};
+ const previous={...source,header:{...source.header,responsibleStaffId:null,status:'DRAFT' as const,version:version(1),createdByAccountId:null,createdHallId:null,createdAt:null,updatedAt:null,approvedByAccountId:null,approvedAt:null}};
+ const changed={...source,header:{...source.header,hallId:ids.hall,warehouseId:ids.warehouse}};
+ // Normal current reference validation, not the exceptional historical lease.
+ await rules.assertDraftChange(previous,changed,txFacts(nativeFacts(changed)),'CUTOFF_HISTORY');
+ assert.equal(previous.header.hallId,null);
+ const wrong={...nativeFacts(changed),warehouse:{id:ids.warehouse,hallId:sid('hall',99),enabled:true}};
+ await assert.rejects(async()=>rules.assertDraftChange(previous,changed,txFacts(wrong),'CUTOFF_HISTORY'),{code:'SALES_REFERENCE_UNAVAILABLE'});
 });

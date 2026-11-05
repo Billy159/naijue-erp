@@ -223,3 +223,38 @@ test('CORE catalogue protocol: maintained IDs constrain count/page/tree and prod
   const c = new Client([begin(), rollback()]), r = new PostgresCatalogueSettingsReadReader({ async connect() { return c; } }, null, { profile: 'COMMITTED_CORE_SETTINGS_V14', async assertReady() { return []; } });
   await assert.rejects(r.readCategories(read('categories', 'ALL')), { code: 'CATALOGUE_SETTINGS_FORBIDDEN' }); c.done();
 });
+
+import type { OrdinaryDocumentRuntime27Capability } from '../adapters/postgres/src/ordinary-document-list-reader.ts';
+for (const kind of ['categories','colors','fits'] as const) test(`fresh35 catalogue ${kind} verifies ordinary authority on its original readonly snapshot and filters retained rows`,async()=>{
+ const steps=kind==='categories'?[begin(),count(3),categoryStep(),{sql:/^SELECT category_id, count\(\*\)::text AS product_count FROM naijue_erp.product WHERE deleted_at IS NULL GROUP BY category_id$/,rows:[{category_id:id,product_count:'2'}]},commit()]
+  :[begin(),count(1),{sql:new RegExp(`^SELECT id, code, name, enabled, version FROM naijue_erp.${kind==='colors'?'color':'fit'} WHERE deleted_at IS NULL AND `),rows:[nativeEntry]},commit()];
+ const client=new Client(steps);let verified=0,acquired=0;
+ const capability:OrdinaryDocumentRuntime27Capability={profile:'EXACT27',contract:'UNIFIED_ORDINARY_RUNTIME27_V1',async assertReady(actual,purpose){
+  assert.equal(actual,client);assert.equal(purpose,'ORDINARY_DOCUMENT_READ');assert.deepEqual(client.calls.map(x=>x.sql),['BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY']);verified++;
+ }};
+ const r=new PostgresCatalogueSettingsReadReader({async connect(){acquired++;return client;}},null,null,capability);
+ const result=kind==='categories'?await r.readCategories(read(kind,'ALL')):kind==='colors'?await r.readColors(read(kind)):await r.readFits(read(kind));
+ assert.equal(verified,1);assert.equal(acquired,1);
+ if(kind==='categories'){const item=result.items[0]!;assert.ok('productCount' in item);assert.equal(item.productCount,2);}else {const item=result.items[0]!;assert.ok('enabled' in item);assert.equal(item.enabled,false);}
+ for(const call of client.calls.filter(x=>x.sql.startsWith('SELECT')))assert.match(call.sql,/deleted_at IS NULL/);
+ client.done();
+});
+test('fresh35 catalogue denied or cancelled ordinary proof rolls back before directory reads',async()=>{
+ for(const reason of ['DENIED','CANCELLED','BOOLEAN'] as const){
+  const controller=new AbortController(),client=new Client([begin(),rollback()]);
+  const proof:OrdinaryDocumentRuntime27Capability={profile:'EXACT27',contract:'UNIFIED_ORDINARY_RUNTIME27_V1',async assertReady(){
+   if(reason==='DENIED')throw Error('Actual ordinary lease denied');
+   if(reason==='CANCELLED')controller.abort();
+   if(reason==='BOOLEAN')return true as never;
+  }};
+  const r=new PostgresCatalogueSettingsReadReader({async connect(){return client;}},null,null,proof);
+  await assert.rejects(r.readColors(read('colors','NONE',controller.signal)));
+  assert.deepEqual(client.calls.map(x=>x.sql),['BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY','ROLLBACK']);client.done();
+ }
+});
+test('fresh35 catalogue refuses malformed or conflicting capabilities without acquiring a lease',()=>{
+ let acquired=0;const pool={async connect():Promise<never>{acquired++;throw Error('No acquisition');}};
+ assert.throws(()=>new PostgresCatalogueSettingsReadReader(pool,null,null,{profile:'EXACT26',contract:'UNIFIED_ORDINARY_RUNTIME27_V1',async assertReady(){}} as never));
+ assert.throws(()=>new PostgresCatalogueSettingsReadReader(pool,null,{profile:'COMMITTED_CORE_SETTINGS_V14',async assertReady(){return[];}},{profile:'EXACT27',contract:'UNIFIED_ORDINARY_RUNTIME27_V1',async assertReady(){}}));
+ assert.equal(acquired,0);
+});

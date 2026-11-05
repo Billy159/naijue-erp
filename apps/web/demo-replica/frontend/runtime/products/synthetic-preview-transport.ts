@@ -100,7 +100,7 @@ export function createSyntheticProductPreviewTransport(options:SyntheticProductP
    if(inventory.exactTotalProducts!==1||!matrix||matrix.id!==query.productId)return unavailable();
    const actual=new Map(specs.skus.map(sku=>[sku.id,sku])),warehouses=new Map<string,string>(),keys=new Set<string>(),items:ProductWarehouseStockItem[]=[];
    for(const group of matrix.colorFits)for(const row of group.rows){warehouses.set(row.warehouse.id,row.warehouse.label);for(const [sizeId,cell] of Object.entries(row.cells)){
-    if(cell.state==='not-applicable')continue;const sku=actual.get(cell.skuId),key=JSON.stringify([row.warehouse.id,cell.skuId]);
+    if(cell.state==='not-applicable')continue;if(cell.state==='unknown')return unavailable();const sku=actual.get(cell.skuId),key=JSON.stringify([row.warehouse.id,cell.skuId]);
     if(!sku||sku.colorId!==group.color.id||sku.fitId!==group.fit?.id||sku.sizeId!==sizeId||keys.has(key))return unavailable();keys.add(key);
     items.push({warehouseId:row.warehouse.id,warehouseName:row.warehouse.label,skuId:cell.skuId,state:'KNOWN',quantity:cell.quantity});
    }}

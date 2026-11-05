@@ -20,6 +20,8 @@ export interface CurrentFormAuthenticationInput {
   readonly headers: Readonly<IncomingHttpHeaders>; readonly ip: string; readonly method: string; readonly url: string;
 }
 export interface CurrentFormHttpOptions {
+  /** Trusted assembly-only selector. Absence preserves every existing route. */
+  readonly routeScope?: "BARCODE_ONLY";
   /** Required current trusted session/identity provider. Client actor/roles/scope are never accepted. */
   readonly authenticate: (input: CurrentFormAuthenticationInput) => Promise<ActorContext | null>;
   /** Mandatory trusted proposal reader; it must recheck current identity and form authorization.
@@ -51,6 +53,10 @@ export function encodeCurrentFormSavedEditSkuBatchWireV2(value: CurrentFormSaved
 /** Read-only POST routes accept structured bounded filters, not commands. No server/listener or pool is created. */
 export function createCurrentFormHttpPlugin(options: CurrentFormHttpOptions): FastifyPluginAsync {
   if (typeof options?.authenticate !== "function") throw new TypeError("Current form HTTP requires explicit trusted authentication");
+  const scope = Object.getOwnPropertyDescriptor(options, "routeScope");
+  if (("routeScope" in options) && (!scope?.enumerable || !("value" in scope) || scope.value !== "BARCODE_ONLY"))
+    throw new TypeError("Explicit barcode-only route selector required");
+  const barcodeOnly = scope?.value === "BARCODE_ONLY";
   const authenticate = options.authenticate;
   const reader = options.reader;
   if (!reader || [reader.readSalesReferences, reader.readTransferWarehouses, reader.readProducts,
@@ -107,6 +113,7 @@ export function createCurrentFormHttpPlugin(options: CurrentFormHttpOptions): Fa
       return reply.code(500).send({ error: { code: "INTERNAL_ERROR", message: "The current form read could not be completed" } });
     });
     for (const [url, read] of routes) {
+      if (barcodeOnly && url !== "/current-form/barcode/query") continue;
       app.post(url, { bodyLimit: 65_536 }, async (request, reply) => {
         if (!request.query || typeof request.query !== "object" || Array.isArray(request.query) || Object.keys(request.query).length) throw new DomainError("INVALID_CURRENT_FORM_QUERY", "Unexpected query parameters");
         if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") {

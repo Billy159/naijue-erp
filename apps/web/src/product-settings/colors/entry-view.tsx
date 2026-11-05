@@ -36,7 +36,7 @@ function EntryEditorForm(props:EditorProps&{readonly controller:CatalogueEditorC
     else if(props.entry&&action==='EDIT')await props.controller.submit({action,id:props.entry.id,expectedVersion:props.entry.version,values:{name,code,enabled:props.entry.enabled}});
     else if(props.entry)await props.controller.submit({action:action as 'DISABLE'|'RESTORE'|'DELETE',id:props.entry.id,expectedVersion:props.entry.version});
     finish();
-  }catch{setError(props.label==='版型'?'请填写名称（最多40字）和一个大写英文字母代码。':'请填写名称（最多40字）和代码（最多12字）。');}};
+  }catch{setError(props.label==='版型'?'请填写名称（最多40字）和有效数字版型代码（3、5、6、7、8或9）。':'请填写名称（最多40字）和代码（最多12字）。');}};
   if(!props.scope.active||state.phase==='disposed')return null;
   return <StandardOverlay presentation="catalogue" title={`${props.entry?'编辑':'新增'}${props.label}`} closeLabel={`关闭${props.entry?'编辑':'新增'}${props.label}`} close={()=>close()} className="catalogue-entry-modal pc-arco-modal" width={480}
     footer={dismiss=><div className="pc-modal-foot">{props.entry&&allowed('DELETE')&&<button type="button" className="btn ghost pc-danger pc-delete-left" disabled={pending||committed} onClick={()=>setDeleting(true)}>删除</button>}{props.entry&&allowed(props.entry.enabled?'DISABLE':'RESTORE')&&<button type="button" className="btn" disabled={pending||committed||dirty} onClick={()=>void submit(props.entry!.enabled?'DISABLE':'RESTORE')}>{props.entry.enabled?'停用':'恢复启用'}</button>}<button type="button" className="btn" disabled={pending} onClick={dismiss}>取消</button><button type="submit" form="pc-dict-form" className="btn primary" disabled={pending||committed||!allowed(writeAction)||!!props.entry&&!dirty}>确定</button></div>}>

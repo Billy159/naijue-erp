@@ -92,6 +92,13 @@ export function createCatalogueMaintenanceService(dependencies: CatalogueMainten
         const previous = await tx.load(kind, id);
         requireDomain(command.action === "CREATE" ? previous === undefined : previous !== undefined, command.action === "CREATE" ? "VERSION_CONFLICT" : "CATALOGUE_NOT_FOUND", "Native catalogue identity unavailable");
         if (command.action !== "CREATE") requireDomain(previous!.kind === kind && previous!.version === command.expectedVersion, "VERSION_CONFLICT", "Catalogue entry changed");
+        // Preserve replay above and retained legacy letters, but never mint a
+        // new letter business code or change one legacy letter into another.
+        if (kind === "FIT" && (command.action === "CREATE" || command.action === "EDIT")) {
+          const nextCode = (command.values as CatalogueEntryWriteValues).code;
+          requireDomain(/^[356789]$/.test(nextCode) || (command.action === "EDIT" && previous?.kind === "FIT" && previous.code === nextCode && /^[A-Z]$/.test(nextCode)),
+            "INVALID_CATALOGUE_COMMAND", "New FIT business code must be one of 3, 5, 6, 7, 8 or 9; existing legacy codes may remain unchanged");
+        }
         requireDomain(!previous || previous.deletedAt === null, "CATALOGUE_DELETED", "Deleted identity cannot be restored or modified"); requireDomain(!previous || previous.version < 2147483647, "VERSION_STORAGE_OVERFLOW", "Version exhausted");
         const timestamp = dependencies.now(), operationId = entityId("operation", dependencies.newId("operation")); requireDomain(Number.isFinite(Date.parse(timestamp)) && /(?:Z|[+-]\d{2}:\d{2})$/.test(timestamp), "INVALID_ACTION_TIME", "Trusted completion time required");
         let next: CatalogueWriteRecord;

@@ -239,12 +239,13 @@ test("SYNTHETIC inventory application: whole-scope incomplete imports reject eve
   } });
   await assert.rejects(candidates.readCandidates(inventoryActor, candidateParameters(), signal()), hasCode("INVENTORY_NOT_READY"));
 });
-test("SYNTHETIC inventory application: incomplete off-page full-filter summary cannot publish a complete-looking page", async () => {
+test("SYNTHETIC inventory application: incomplete off-page full-filter summary remains explicit beside a complete-looking page", async () => {
   const s = service({ async readInventory(read) {
     const snapshot = structuredClone(syntheticInventorySnapshot(read, 103));
     Object.assign(snapshot.data.allMatchesTotal, { completeness: "incomplete", unknownCells: 1 }); return snapshot;
   }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } });
-  await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVALID_INVENTORY_RESPONSE"));
+  const page = await s.readInventory(inventoryActor, inventoryParameters(), signal());
+  assert.deepEqual(page.data.allMatchesTotal, {knownQuantity:"-206",completeness:"incomplete",unknownCells:1});
 });
 
 test("inventory categories: bounded positive arrays capture immutable IDs before authorization and preserve OR selection context", async () => {

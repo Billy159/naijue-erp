@@ -17,6 +17,9 @@ import {PRODUCTION_PUBLIC_ORIGIN} from './production-provider-composition.ts';
 import {CAPACITY_VOLUMES} from './capacity-admission.ts';
 import type {TestContext} from 'node:test';
 import {execFile} from 'node:child_process';
+import type {ChildProcess} from 'node:child_process';
+import {channel, tracingChannel} from 'node:diagnostics_channel';
+import {getEventListeners} from 'node:events';
 import {fileURLToPath} from 'node:url';
 
 const amounts=(n:string)=>Object.fromEntries(CAPACITY_VOLUMES.map(v=>[v,n]));
@@ -25,7 +28,7 @@ async function fixture(t:TestContext){
   const executable=path.join(root,'producer'),source=`#!${process.execPath}
 import fs from 'node:fs/promises';
 let input='';for await(const chunk of process.stdin)input+=chunk;const r=JSON.parse(input),flag=process.argv[2]?.slice('--profile='.length);
-if(flag==='hang'){setInterval(()=>{},1000);}else{
+if(flag==='hang'){process.stdout.write('SYNTHETIC_HANG_READY\\n');setInterval(()=>{},1000);}else{
  const started=Date.now(),volumes={};
  for(const [k,v]of Object.entries(r.volumes)){const s=await fs.statfs(v.path,{bigint:true});volumes[k]={...v,availableBytes:(s.bavail*s.bsize).toString()};}
  const body={format:'CAPACITY_LIVE_RESULT_V1',challenge:r.challenge,target:r.target,windowToken:r.windowToken,binding:r.binding,
@@ -135,8 +138,46 @@ test('A02 live producer refuses changed executable and unsafe permissions',async
 test('A02 live producer abort rejects only after its native child closes; no second worker or listener',async t=>{
   const f=await fixture(t);f.capacity.producer.args=['--profile=hang']as never[];
   const c=parseProductionCapacityLaunch(f.capacity),controller=new AbortController();
-  const work=createCapacityExecProducer(c)({window:c.window,signal:controller.signal}),rejected=assert.rejects(work);
-  await wait(30);controller.abort();await rejected;
+  const before=[process.listenerCount('SIGTERM'),process.listenerCount('SIGINT')],events:string[]=[],children:ChildProcess[]=[];
+  let workers=0,listeners=0,closeResult:{code:number|null;signal:NodeJS.Signals|null}|undefined;
+  let ready!:()=>void;const nativeReady=new Promise<void>(resolve=>{ready=resolve;});
+  const childChannel=channel('child_process'),workerChannel=channel('worker_threads'),listenChannel=tracingChannel('net.server.listen').start;
+  const observeChild=(message:unknown)=>{
+    const child=(message as {process:ChildProcess}).process;children.push(child);
+    child.once('close',(code,signal)=>{closeResult={code,signal};events.push('close');});
+    child.once('spawn',()=>{
+      let output='';const observeReady=(chunk:Buffer)=>{
+        output+=chunk.toString('utf8');
+        if(output.includes('SYNTHETIC_HANG_READY\n')){child.stdout!.off('data',observeReady);events.push('ready');ready();}
+      };
+      child.stdout!.on('data',observeReady);
+    });
+  };
+  const observeWorker=()=>{workers++;},observeListen=()=>{listeners++;};
+  childChannel.subscribe(observeChild);workerChannel.subscribe(observeWorker);listenChannel.subscribe(observeListen);
+  const work=createCapacityExecProducer(c)({window:c.window,signal:controller.signal});
+  const settled=work.then(value=>{events.push('resolved');return{status:'resolved',value};},error=>{events.push('rejected');return{status:'rejected',error};});
+  t.after(async()=>{
+    controller.abort();await settled;
+    childChannel.unsubscribe(observeChild);workerChannel.unsubscribe(observeWorker);listenChannel.unsubscribe(observeListen);
+  });
+  // A fixed sleep can abort during executable validation, before any child
+  // exists; that deliberately returns UNKNOWN rather than rejecting. Wait for
+  // the real native fixture to confirm its hang branch, within the unchanged
+  // producer timeout, and fail explicitly if work settles before readiness.
+  assert.equal(await Promise.race([nativeReady.then(()=>'ready'),settled]),'ready');
+  assert.equal(children.length,1);const child=children[0]!;
+  assert.deepEqual(child.spawnargs,[c.producer.executable,'--profile=hang']);
+  assert.equal(closeResult,undefined);assert.deepEqual(events,['ready']);
+  assert.equal(getEventListeners(controller.signal,'abort').length,1);
+  events.push('abort');controller.abort();
+  await assert.rejects(work,{message:'Capacity producer unavailable'});await settled;
+  assert.deepEqual(events,['ready','abort','close','rejected']);
+  assert.deepEqual(closeResult,{code:null,signal:'SIGKILL'});
+  assert.equal(child.stdin!.destroyed,true);assert.equal(child.stdout!.destroyed,true);assert.equal(child.stderr!.destroyed,true);
+  assert.equal(children.length,1);assert.equal(workers,0);assert.equal(listeners,0);
+  assert.equal(getEventListeners(controller.signal,'abort').length,0);
+  assert.deepEqual([process.listenerCount('SIGTERM'),process.listenerCount('SIGINT')],before);
 });
 test('A02 executable production-main dispatch rejects missing capacity for every mode before API/PG/listen',async t=>{
   const f=await fixture(t),main=fileURLToPath(new URL('./production-main.ts',import.meta.url));
@@ -147,4 +188,22 @@ test('A02 executable production-main dispatch rejects missing capacity for every
         resolve({code:error && typeof error.code==='number'?error.code:error?null:0,stdout,stderr});});});
     assert.equal(result.code,1);assert.equal(result.stdout,'');assert.equal(result.stderr,'Production startup refused or failed; inspect private operational diagnostics\n');
   }
+});
+
+test('production35 CLI carries the same parsed capacity target through API then preflight before listen',async t=>{
+ const f=await fixture(t),h=scriptedHost(),filename=path.join(f.root,'production35.json');
+ const raw={...f.base,profile:'source-confirmed-native-exact35-production-v2',documentCommands:'NATIVE_RUNTIME',productMedia:{root:f.root,rootKey:'synthetic35'},capacityLaunch:f.capacity};
+ await writeFile(filename,JSON.stringify(raw),{mode:0o600});let calls=0;
+ const deps={...h.deps,async createApi(...args:Parameters<ProductionMainDependencies['createApi']>){calls++;assert.equal(args[0],'r35');assert.equal(args[1].profile,raw.profile);assert.deepEqual(args[4],f.capacity.target);return h.deps.createApi(...args);}};
+ await runProductionCli(['--exact35',filename],deps);assert.equal(calls,1);assert.equal(h.counts().created,1);assert.equal(h.counts().starts,1);
+ process.emit('SIGTERM');await wait(1);assert.equal(h.resource.snapshot().closed,true);assert.equal(h.counts().closed,1);
+});
+test('production35 actual provider refuses absent protected record before PG and CLI closes original capacity without listen',async t=>{
+ const {createProductionRuntime35ApplicationApi}=await import('./production-provider-composition.ts');
+ const f=await fixture(t),h=scriptedHost(),filename=path.join(f.root,'production35-denied.json');let connections=0;
+ await writeFile(filename,JSON.stringify({...f.base,profile:'source-confirmed-native-exact35-production-v2',documentCommands:'NATIVE_RUNTIME',productMedia:{root:f.root,rootKey:'synthetic35'},capacityLaunch:f.capacity}),{mode:0o600});
+ const deps={...h.deps,async createApi(mode:Parameters<ProductionMainDependencies['createApi']>[0],c:Parameters<ProductionMainDependencies['createApi']>[1],capacity:Parameters<ProductionMainDependencies['createApi']>[2],tag:Parameters<ProductionMainDependencies['createApi']>[3],target:Parameters<ProductionMainDependencies['createApi']>[4]){
+  return createProductionRuntime35ApplicationApi(c,()=>({async connect(){connections++;throw Error('must not connect');},async end(){},on(){return this;}} as never),tag,capacity,target);
+ }};
+ await assert.rejects(runProductionCli(['--exact35',filename],deps),/startup refused/);assert.equal(connections,0);assert.equal(h.counts().starts,0);assert.equal(h.resource.snapshot().closed,true);
 });

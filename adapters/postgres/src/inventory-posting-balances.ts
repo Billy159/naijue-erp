@@ -1,3 +1,4 @@
+import { checkedRuntime27CommandCapability, type Runtime27CommandCapability } from '../../../packages/application/src/runtime27-command-capability.ts';
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../../packages/domain/src/inventory.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
@@ -15,7 +16,7 @@ import { checkedNativeRuntime26Capability } from "../../../packages/application/
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 
 type Query = (sql: string, values?: unknown[]) => Promise<PgSalesResult>;
-type PostingProof = Pick<InventoryLedgerRow, "warehouseId" | "skuId" | "quantityDelta" | "operationId" | "postedAt" | "reversesEntryId">
+type PostingProof = Pick<InventoryLedgerRow, "warehouseId" | "skuId" | "quantityDelta" | "operationId" | "postedAt" | "reversesEntryId" | "baselineAnchorOperationId">
   & { readonly eventKind: InventoryLedgerRow["eventKind"] | "HISTORY_REVISION" };
 interface Key { readonly warehouseId: EntityId<"warehouse">; readonly skuId: EntityId<"sku"> }
 /** Inert prepared facts, not a database capability. The issuing manager owns the
@@ -37,6 +38,14 @@ const GUARDS = `/* posting:guards */ SELECT
   AND EXISTS (SELECT 1 FROM pg_catalog.pg_constraint WHERE conrelid = 'naijue_erp.inventory_ledger'::regclass
     AND confrelid = 'naijue_erp.inventory_balance'::regclass AND conname = 'ledger_retains_balance'
     AND contype = 'f' AND convalidated AND condeferrable AND confdeltype = 'a')
+  AND (NOT EXISTS(SELECT 1 FROM naijue_erp.schema_migration WHERE version=27) OR NOT EXISTS(
+    SELECT 1 FROM (VALUES ('sales_header','sales_cutoff_freeze','guard_unified_document'),
+      ('transfer_header','transfer_header_provenance','guard_unified_document'),
+      ('inventory_ledger','baseline_reversal_source','validate_unified_baseline_reversal'),
+      ('operation_receipt','unified_ordinary_operation_consistency','validate_unified_ordinary_operation')) required(table_name,trigger_name,function_name)
+    WHERE NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger t JOIN pg_catalog.pg_proc p ON p.oid=t.tgfoid
+      JOIN pg_catalog.pg_namespace n ON n.oid=p.pronamespace WHERE t.tgrelid=to_regclass('naijue_erp.'||required.table_name)
+        AND t.tgname=required.trigger_name AND t.tgenabled='O' AND n.nspname='naijue_erp' AND p.proname=required.function_name)))
   AND NOT EXISTS (SELECT 1 FROM (VALUES
     ('inventory_ledger', 'immutable_ledger'), ('import_record', 'immutable_import_record'),
     ('audit_change', 'immutable_audit'), ('operation_receipt', 'immutable_receipt'),
@@ -56,7 +65,9 @@ const GUARDS = `/* posting:guards */ SELECT
     SELECT 1 FROM pg_catalog.pg_trigger t JOIN pg_catalog.pg_class c ON c.oid = t.tgrelid
     JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace WHERE n.nspname = 'naijue_erp'
       AND c.relname = required.table_name AND t.tgname = required.trigger_name AND t.tgenabled = 'O'))
-  AND NOT EXISTS (SELECT 1 FROM (VALUES ('import_batch', 'import_one_published_cutoff'), ('import_record', 'import_scope_target_once'))
+  AND NOT EXISTS (SELECT 1 FROM (VALUES ('import_batch', 'import_one_published_cutoff'), ('import_record',
+    CASE WHEN EXISTS(SELECT 1 FROM naijue_erp.schema_migration WHERE version=27)
+      THEN 'import_document_target_once' ELSE 'import_scope_target_once' END))
     AS required(table_name, index_name) WHERE NOT EXISTS (SELECT 1 FROM pg_catalog.pg_index i
       JOIN pg_catalog.pg_class c ON c.oid = i.indrelid JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
       JOIN pg_catalog.pg_class x ON x.oid = i.indexrelid WHERE n.nspname = 'naijue_erp' AND c.relname = required.table_name
@@ -74,6 +85,7 @@ export class PostgresPostingBalances {
   private liveWriteFailed = false;
   private batchId: string | undefined;
   private readonly admissionRuntime: InventoryAdmissionRuntime | null;
+  private runtime27: { readonly client: PgSalesClient; readonly capability: Runtime27CommandCapability } | undefined;
   private runtime26: { readonly client: PgSalesClient; readonly capability: NativeRuntime26Capability } | undefined;
   constructor(query: Query, admissionRuntime: InventoryAdmissionRuntime | null = null) {
     this.query = query; this.admissionRuntime = admissionRuntime;
@@ -89,12 +101,24 @@ export class PostgresPostingBalances {
     });
     balances.runtime26 = Object.freeze({ client, capability: checked }); return balances;
   }
+  static forRuntime27(client: PgSalesClient, capability: Runtime27CommandCapability, assertActive: () => void): PostgresPostingBalances {
+    const checked=checkedRuntime27CommandCapability(capability);
+    if(typeof client?.query!=='function'||typeof assertActive!=='function')throw new TypeError('Original active runtime27 client required');
+    const active=()=>{const result:unknown=assertActive();if(result!==undefined)throw new TypeError('Active transaction guard cannot return a substitute');};
+    const balances=new PostgresPostingBalances(async(sql,values)=>{active();const result=await client.query(sql,values);active();return result;});
+    balances.runtime27=Object.freeze({client,capability:checked});return balances;
+  }
   async lock(keys: readonly Key[]): Promise<void> {
     requireDomain(this.locked === undefined, "TRANSACTION_SCOPE", "Lock the complete posting set exactly once");
-    if (this.runtime26) await this.runtime26.capability.assertReady(this.runtime26.client, "INVENTORY_ADMISSION");
+    // Validate and capture primitive tuples BEFORE the first asynchronous boundary,
+    // including runtime admission. Readonly types do not detach caller row aliases.
     // IDENTICAL binary JSON tuple order and SQL lock namespace to the cutoff importer.
-    const unique = [...new Map(keys.map(row => [key(row.warehouseId, row.skuId), row])).entries()]
-      .sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0);
+    const unique = [...new Map(keys.map(row => {
+      const warehouseId = entityId("warehouse", row.warehouseId), skuId = entityId("sku", row.skuId);
+      return [key(warehouseId, skuId), { warehouseId, skuId }] as const;
+    })).entries()].sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0);
+    if (this.runtime27) await this.runtime27.capability.assertReady(this.runtime27.client, "INVENTORY_ADMISSION");
+    if (this.runtime26) await this.runtime26.capability.assertReady(this.runtime26.client, "INVENTORY_ADMISSION");
     this.locked = new Set(unique.map(([identity]) => identity));
     // Separate awaited calls make evaluation order explicit, independent of a SQL planner's target-list evaluation.
     for (const [, row] of unique) await this.query("SELECT naijue_erp.inventory_key_lock($1::uuid, $2::uuid)", [row.warehouseId, row.skuId]);
@@ -117,6 +141,14 @@ export class PostgresPostingBalances {
   }
   private async publication(): Promise<string> {
     if (this.batchId !== undefined) return this.batchId;
+    if(this.runtime27){
+      await this.runtime27.capability.assertReady(this.runtime27.client,'INVENTORY_ADMISSION');
+      const rows=(await this.query(`/* runtime27:publication */ SELECT id, naijue_erp.standard_business_ready() AS ready
+        FROM naijue_erp.import_batch WHERE status='IMPORTED' AND inventory_mode='CUTOFF_STOCK_BASELINE'
+        AND mapping_version='STANDARD_INITIAL_EXPLICIT_KEYS_V1' AND completed_at IS NOT NULL ORDER BY id LIMIT 2`)).rows;
+      requireDomain(rows.length===1&&rows[0]!.ready===true,'INVENTORY_NOT_READY','One completely published standard baseline and document publication required');
+      this.batchId=entityId('operation',stringValue(rows[0]!.id));return this.batchId;
+    }
     const rows = (await this.query(`/* posting:publication */ SELECT b.id, b.checkpoint, b.completed_at IS NOT NULL AS completed,
       EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id = b.id AND r.status = 'IMPORTED'
         AND r.target_type = 'IMPORT_BATCH' AND r.target_id = b.id AND r.source_entity_type = 'INVENTORY_SCOPE_APPROVAL'
@@ -163,6 +195,12 @@ export class PostgresPostingBalances {
     const identity = key(warehouseId, skuId);
     requireDomain(this.locked?.has(identity) && !this.balances.has(identity), "TRANSACTION_SCOPE", "Only an absent locked posting key can acquire a zero proof");
     if (this.provenZero.has(identity)) return;
+    if (this.runtime27) {
+      // Runtime 27 stores explicit imported zero as an ordinary balance. A missing
+      // balance is UNKNOWN; never recover it from source records or infer a zero.
+      await this.runtime27.capability.assertReady(this.runtime27.client, 'INVENTORY_ADMISSION');
+      requireDomain(false, "INVENTORY_NOT_READY", "Missing current stock is unknown and cannot be posted");
+    }
     const batchId = await this.publication();
     if (this.runtime26 !== undefined || this.admissionRuntime !== null) {
       if (this.runtime26) await this.runtime26.capability.assertReady(this.runtime26.client, "INVENTORY_ADMISSION");
@@ -200,8 +238,8 @@ export class PostgresPostingBalances {
     const identity = key(row.warehouseId, row.skuId);
     requireDomain(this.locked?.has(identity), "TRANSACTION_SCOPE", "Ledger key must belong to the complete locked posting set");
     requireDomain(this.balances.has(identity) || (this.provenZero.has(identity)
-      && (row.eventKind === "APPROVE" || (row.eventKind === "HISTORY_REVISION" && this.admissionRuntime?.profile === "EXACT24")) && row.reversesEntryId === null),
-      "INVENTORY_NOT_READY", "Ledger requires an existing balance or explicit first-approval zero proof");
+      && (row.eventKind === "APPROVE" || (row.eventKind === "UNAPPROVE" && row.baselineAnchorOperationId != null) || (row.eventKind === "HISTORY_REVISION" && this.admissionRuntime?.profile === "EXACT24")) && row.reversesEntryId === null),
+      "INVENTORY_NOT_READY", "Ledger requires an existing balance or explicit published-zero first approval/baseline reversal proof");
     requireDomain(!this.firstEffects.has(identity), "TRANSACTION_SCOPE", "Persist the first actual balance before another same-key effect");
     requireDomain(!this.liveByKey.has(identity), "TRANSACTION_SCOPE", "Persist the prepared live effect before another same-key append");
   }
@@ -213,8 +251,13 @@ export class PostgresPostingBalances {
     requireDomain(this.admissionRuntime?.profile !== "EXACT24"
       && (row.eventKind === "APPROVE" || row.eventKind === "UNAPPROVE")
       && (row.source.kind === "SALES" || row.source.kind === "TRANSFER")
-      && ((row.eventKind === "UNAPPROVE") === (row.reversesEntryId !== null))
+      && ((row.eventKind === "UNAPPROVE" && ((row.reversesEntryId !== null) !== (row.baselineAnchorOperationId != null)))
+        || (row.eventKind === "APPROVE" && row.reversesEntryId === null && row.baselineAnchorOperationId == null))
       && row.quantityDelta !== 0n, "TRANSACTION_SCOPE", "Only exact native live effects may prepare recorded balances");
+    // A zero-net aggregate still has real line events. No first append may
+    // precede readiness of another key in the complete caller-locked set.
+    requireDomain(this.locked && [...this.locked].every(identity => this.balances.has(identity) || this.provenZero.has(identity)),
+      "INVENTORY_NOT_READY", "Every locked ordinary posting key requires known stock or its own explicit published-zero proof before any append");
     this.assertCanAppend(row);
     requireDomain(!this.liveWriteFailed, "TRANSACTION_SCOPE", "A failed live write requires transaction abandonment");
     const previous = this.get(row.warehouseId, row.skuId);
@@ -269,7 +312,7 @@ export class PostgresPostingBalances {
         const first = this.firstEffects.get(identity);
         requireDomain(this.provenZero.has(identity) && first && row.version === 1 && row.quantity === first.quantityDelta
           && row.lastOperationId === first.operationId && row.updatedAt === first.postedAt,
-          "INVENTORY_NOT_READY", "First balance must be the exact appended runtime approval, never a zero placeholder");
+          "INVENTORY_NOT_READY", "First balance must be the exact appended ordinary event, never a zero placeholder");
         attempted = true;
         result = await this.query(`INSERT INTO naijue_erp.inventory_balance (warehouse_id, sku_id, quantity, version, last_operation_id, updated_at)
           VALUES ($1, $2, $3::bigint, $4, $5, $6::timestamptz) ON CONFLICT (warehouse_id, sku_id) DO NOTHING`,

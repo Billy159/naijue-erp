@@ -19,8 +19,10 @@ test('wire contracts exactly preserve native SAVE, command and receipt shape wit
 test('draft projection excludes server managed/name facts and never invents missing old pricing intent', () => {
   const value = detail(); assert.deepEqual(draftFromSalesDetail(value), draft());
   assert.equal('version' in draft().header, false); assert.equal('referenceNames' in draft(), false);
-  assert.throws(() => draftFromSalesDetail({ ...value, document: { ...value.document, lines: value.document.lines.map(line => ({ ...line, pricingRule: null })) } }));
-  assert.throws(() => draftFromSalesDetail({ ...value, document: { ...value.document, lines: value.document.lines.map(line => ({ ...line, zeroConfirmed: null })) } }));
+  const unknownPrice = { ...value, document: { ...value.document, lines: value.document.lines.map(line => ({ ...line, pricingRule: null })) } };
+  assert.equal(draftFromSalesDetail(unknownPrice).lines[0]?.pricingRule, null); assert.throws(() => draftFromSalesDetail(unknownPrice, true)); assert.throws(() => validateSalesDraft(draftFromSalesDetail(unknownPrice)));
+  const unknownZero = { ...value, document: { ...value.document, lines: value.document.lines.map(line => ({ ...line, zeroConfirmed: null })) } };
+  assert.equal(draftFromSalesDetail(unknownZero).lines[0]?.zeroConfirmed, null); assert.throws(() => draftFromSalesDetail(unknownZero, true));
 });
 test('runtime settlements require an explicit canonical intended method and reject old or unknown request shapes', () => {
   const value = draft(), original = value.settlements[0]!;
@@ -35,7 +37,8 @@ test('runtime settlements require an explicit canonical intended method and reje
   const native = detail();
   const renamed = { ...native, settlementNames: native.settlementNames.map(row => ({ ...row, methodNameSnapshot: 'TEST 历史显示名', currentMethodName: 'TEST 当前改名' })) };
   assert.equal(draftFromSalesDetail(renamed).settlements[0]?.paymentMethodId, uuid(25));
-  assert.throws(() => draftFromSalesDetail({ ...renamed, document: { ...renamed.document, settlements: renamed.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } }));
+  const unknownMethod = { ...renamed, document: { ...renamed.document, settlements: renamed.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } };
+  assert.equal(draftFromSalesDetail(unknownMethod).settlements[0]?.paymentMethodId, null); assert.throws(() => draftFromSalesDetail(unknownMethod, true));
 });
 test('strict native command parser rejects extensions, missing fields, actor, coerced CAS and alternate route fields', () => {
   const command = save();

@@ -96,7 +96,7 @@ function validateSnapshot(entity: NativeCatalogueEntity, n: JsonObject, successo
     else if (key === "code" && entity === "SIZE" && value === null) continue;
     else requireDomain(text(value), "NATIVE_CATALOGUE_VALUE", `Missing nonblank native ${entity}.${key}; no code/name is invented`);
   }
-  if (entity === "FIT") requireDomain(typeof n.code === "string" && /^[A-Z]$/.test(n.code), "NATIVE_CATALOGUE_FIT_CODE", "Existing native one-letter uppercase FIT constraint is unchanged");
+  if (entity === "FIT") requireDomain(typeof n.code === "string" && /^[A-Z356789]$/.test(n.code), "NATIVE_CATALOGUE_FIT_CODE", "FIT code must be a supported numeric business code or retained uppercase source code");
 }
 export function prepareNativeCatalogueImportChunk(input: NativeCatalogueImportChunk): PreparedNativeCatalogueImportChunk {
   requireDomain(!Object.hasOwn(input, "schemaProfile") && !Object.hasOwn(input, "validatorVersion"), "NATIVE_CATALOGUE_SUCCESSOR_EXPLICIT", "Successor requires its explicit preparer");

@@ -188,7 +188,7 @@ async function resolveDraftLineSet(query: Query, before: HistoryRevisionCurrent,
     let origin:HistoryRevisionLineOrigin,lineId:string;
     if(old?.skuId===row.skuId){lineId=old.lineId;origin=structuredClone(old.origin??{kind:'SOURCE',sourceLineId:old.lineId});}
     else {lineId=uuid(newId('transferLine'));must(!used.has(lineId));used.add(lineId);const fact=bySku.get(row.skuId)!,snap=snapshots.get(entityId('sku',row.skuId))!;
-      origin={kind:'REVISION',createdRevisionId:revisionId,identity:{productId:uuid(fact.product_id),colorId:uuid(fact.color_id),fitId:uuid(fact.fit_id),sizeId:uuid(fact.size_id)},groupId:uuid(fact.size_group_id),snapshot:{productCodeSnapshot:snap.productCode,productNameSnapshot:snap.productName,colorNameSnapshot:snap.colorName,fitNameSnapshot:snap.fitName,sizeNameSnapshot:snap.sizeName,barcodeSnapshot:snap.barcode}};
+      origin={kind:'REVISION',createdRevisionId:revisionId,identity:{productId:uuid(fact.product_id),colorId:uuid(fact.color_id),fitId:uuid(fact.fit_id),sizeId:uuid(fact.size_id)},groupId:uuid(fact.size_group_id),snapshot:{productCodeSnapshot:text(snap.productCode),productNameSnapshot:text(snap.productName),colorNameSnapshot:text(snap.colorName),fitNameSnapshot:text(snap.fitName),sizeNameSnapshot:text(snap.sizeName),barcodeSnapshot:snap.barcode}};
     }
     return {lineId,skuId:row.skuId,quantity:row.quantity,origin};
   });

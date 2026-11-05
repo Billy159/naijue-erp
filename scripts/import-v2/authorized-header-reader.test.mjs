@@ -105,12 +105,12 @@ with zipfile.ZipFile(sys.argv[2],'w',compression=zipfile.ZIP_DEFLATED) as z:
  for name,value in parts.items(): z.writestr(name,value)
 `,dataFile,path]);await rm(dataFile);
 }
-export async function headerReaderFixture(t) {
+export async function headerReaderFixture(t,{originalHall='hall'}={}) {
   const sourceRoot=await mkdtemp(join(tmpdir(),'synthetic-header-original-'));t.after(()=>rm(sourceRoot,{recursive:true,force:true}));
   const saleFile='历史销货.synthetic.xlsx',transferFile='历史调拨.synthetic.xlsx', productFile='catalogue.json';
   const originals=[],canonical=[];
   for(let i=0;i<32;i++) {
-    const row=makeRow('SALES_HEADER',{'来源编号':`synthetic-sale-${i}`,'原单号':`000${i}`,'所属厅来源编号':'hall','客户来源编号':'historical-customer','仓库来源编号':'warehouse','营业员来源编号':'',
+    const row=makeRow('SALES_HEADER',{'来源编号':`synthetic-sale-${i}`,'原单号':`000${i}`,'所属厅来源编号':originalHall,'客户来源编号':'historical-customer','仓库来源编号':'warehouse','营业员来源编号':'',
       '单据类型':'销售','原审核状态':'未审核','业务日期':'45614','原创建时间':'45614.5','原修改时间':'','原审核时间':'',
       '优惠前金额':'1.00','整单优惠':'0','应结金额':'1.00','原创建厅编号':'','创建厅归属来源':'UNKNOWN','创建厅归属原因':'UNKNOWN_NO_SALESPERSON_ID'});
     canonical.push(row);originals.push({...row,'优惠前金额':'1.00000000000001','原创建厅编号':'uploaded-old-hall'});
@@ -333,4 +333,28 @@ test('gzip storage options capture own data before await and reject unknown form
   assert.equal(getters,0);assert.deepEqual(await readdir(options.spoolParent),[]);
   const storage={format:'gzip-v1',maxStoredBytes:1024*1024},pending=openAuthorizedV3HeaderReader({...options,spoolStorage:storage});storage.maxStoredBytes=1;
   const reader=await pending;try{assert.equal(reader.report.selectedRows,33);assert.equal(reader.report.spoolStorage.maxStoredBytes,1024*1024);}finally{await reader.close();}
+});
+
+test('historical hall observation is a separate trusted resolver, never package self-attestation or a source rewrite',async t=>{
+ const {openAuthorizedV3HeaderReader}=await import('./authorized-header-reader.mjs'),{prepareV3HistoryHeaderChunk}=await import('../../packages/application/src/import-v3-history-header-staging.ts'),{buildHistoricalSalesHallEvidence}=await import('../../packages/application/src/historical-sales-hall-evidence.ts');
+ const options=await headerReaderFixture(t),evidence=buildHistoricalSalesHallEvidence({originalHallId:headerId(2),warehouseId:headerId(4),warehouseHallId:headerId(12),warehouseVersion:1,capturedAt:'2026-11-05T03:00:00Z'});
+ let calls=0;const configuration={...options,resolveNativeBinding:async q=>bindingsFor(q),resolveHistoricalHallEvidence:async q=>{calls++;assert.equal(q.source.rawFields['所属厅来源编号'],'hall');assert.equal(q.bindings['所属厅来源编号'].nativeId,evidence.original_hall_id);return evidence;}};
+ const trusted=await openAuthorizedV3HeaderReader(configuration),untrusted=await openAuthorizedV3HeaderReader({...options,resolveNativeBinding:async q=>bindingsFor(q)});t.after(()=>Promise.all([trusted.close(),untrusted.close()]));
+ // The caller cannot swap in a new resolver after the reader captured its options.
+ configuration.resolveHistoricalHallEvidence=async()=>{throw Error('mutated callback must not run');};
+ const record=await (async()=>{for await(const record of trusted.rows('SALES_HEADER'))return record;})(),input={batchId:options.batchId,fixedSourceNamespace:options.fixedSourceNamespace,...record,bindings:bindingsFor({entity:'SALES_HEADER'}),historicalHallEvidence:evidence};
+ const chunk=prepareV3HistoryHeaderChunk([input]);await trusted.authorize(chunk);assert.equal(calls,1);assert.equal(chunk.rows[0].prepared.header.hallId,headerId(2));assert.equal(chunk.rows[0].prepared.fieldProvenance.historical_hall_evidence.has_difference,true);assert.deepEqual(input.source,record.source);
+ await assert.rejects(untrusted.authorize(chunk),/HEADER_READER_HALL_EVIDENCE_NOT_AUTHORIZED/);
+ const changed=structuredClone(input);changed.historicalHallEvidence={...evidence,warehouse_hall_id_at_capture:headerId(13)};
+ await assert.rejects(trusted.authorize(prepareV3HistoryHeaderChunk([changed])),/HEADER_READER_HALL_EVIDENCE_NOT_AUTHORIZED/);
+});
+
+
+test('authenticated blank original sales hall reaches derived typed field while both original source copies remain blank',async t=>{
+ const {openAuthorizedV3HeaderReader}=await import('./authorized-header-reader.mjs'),{prepareV3HistoryHeaderChunk}=await import('../../packages/application/src/import-v3-history-header-staging.ts'),{buildHistoricalSalesHallEvidence}=await import('../../packages/application/src/historical-sales-hall-evidence.ts');
+ const options=await headerReaderFixture(t,{originalHall:''}),evidence=buildHistoricalSalesHallEvidence({originalHallId:null,warehouseId:headerId(4),warehouseHallId:headerId(2),warehouseVersion:1,capturedAt:'2026-11-05T03:00:00Z'});
+ const resolveNativeBinding=async q=>{const bindings=bindingsFor(q);if(q.entity==='SALES_HEADER')delete bindings['所属厅来源编号'];return bindings;};
+ const reader=await openAuthorizedV3HeaderReader({...options,resolveNativeBinding,resolveHistoricalHallEvidence:async q=>{assert.equal(q.source.rawFields['所属厅来源编号'],'');assert.equal(q.source.normalizedFields['所属厅来源编号'],'');return evidence;}});t.after(()=>reader.close());
+ const record=await (async()=>{for await(const record of reader.rows('SALES_HEADER'))return record;})(),bindings=await resolveNativeBinding({entity:'SALES_HEADER'}),input={batchId:options.batchId,fixedSourceNamespace:options.fixedSourceNamespace,...record,bindings,historicalHallEvidence:evidence},chunk=prepareV3HistoryHeaderChunk([input]);
+ await reader.authorize(chunk);const prepared=chunk.rows[0].prepared;assert.equal(prepared.header.hallId,headerId(2));assert.equal(prepared.source.rawFields['所属厅来源编号'],'');assert.equal(prepared.source.normalizedFields['所属厅来源编号'],'');assert.equal(prepared.fieldProvenance.historical_hall_evidence.original_hall_id,null);assert.equal(prepared.fieldProvenance.historical_hall_evidence.basis,'MIGRATION_DERIVED');assert.deepEqual(prepared.source,input.source);
 });

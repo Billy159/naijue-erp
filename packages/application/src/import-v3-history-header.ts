@@ -1,3 +1,5 @@
+import {parseHistoricalSalesHallEvidence} from './historical-sales-hall-evidence.ts';
+import type {HistoricalSalesHallEvidence} from './historical-sales-hall-evidence.ts';
 import { IMPORT_V2_TABLES } from './import-v2-contract.ts';
 import { HISTORY_MAPPING_VERSION } from './history-storage-contract.ts';
 import type { HistorySalesHeader, HistoryTransferHeader, ImportSourceEvidence, JsonObject } from './history-storage-contract.ts';
@@ -37,6 +39,8 @@ export interface HistoryHeaderInput {
   /** Only the independently authenticated exact 32-cell approval set, not a blanket rounding flag. */
   moneyApprovals?:ReadonlyMap<string,MoneyApproval>;
   businessHallOverlay?:HistoryBusinessHallOverlay;
+  /** Exact separately authorized captured warehouse observation, not a replacement raw cell. */
+  historicalHallEvidence?:HistoricalSalesHallEvidence;
 }
 export interface PreparedHistoryHeader {
   batchId:string; fixedSourceNamespace:string; mappingVersion:typeof HISTORY_MAPPING_VERSION;
@@ -52,27 +56,10 @@ const uuid=(v:unknown):boolean=>typeof v==='string'&&/^[a-f0-9]{8}(?:-[a-f0-9]{4
 const hash=(v:unknown):boolean=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 const nonempty=(v:unknown):v is string=>typeof v==='string'&&v.length>0&&!v.includes('\0');
 const centsText=(n:bigint):string=>`${n<0n?'-':''}${(n<0n?-n:n)/100n}.${((n<0n?-n:n)%100n).toString().padStart(2,'0')}`;
-function checkBusinessHallOverlay(s:ImportSourceEvidence,selection:HistoryHeaderSelection,namespace:string,o:HistoryBusinessHallOverlay):void {
-  fail(o?.version==='USER_CONFIRMED_HISTORY_BUSINESS_HALL_OVERLAY_1'&&o.provenance==='MIGRATION_DERIVED'
-    &&o.reason==='USER_CONFIRMED_WAREHOUSE_TO_BUSINESS_HALL'&&s.entityType==='SALES_HEADER'&&selection.entity==='SALES_HEADER'
-    &&o.batchId===s.batchId&&o.fixedSourceNamespace===namespace&&o.selectionSha256===selection.selectionSha256
-    &&o.sourceKey===s.sourceKey&&s.rawFields['来源编号']===s.sourceKey&&s.normalizedFields['来源编号']===s.sourceKey
-    &&o.originalBusinessHall===''&&s.rawFields['所属厅来源编号']===''
-    &&o.warehouseSourceKey===s.rawFields['仓库来源编号']&&o.warehouseSourceKey===s.normalizedFields['仓库来源编号']
-    &&o.sourceFileRef===s.fileRef&&o.sourceFileSha256===s.sourceFileSha256&&o.sheet===s.sheet&&o.rowNo===s.rowNo
-    &&nonempty(o.targetHallSourceKey)&&uuid(o.targetHallNativeId)&&nonempty(o.evidenceRef)
-    &&nonempty(o.decisionSource?.threadId)&&nonempty(o.decisionSource?.humanMessageId)&&nonempty(o.decisionSource?.continueMessageId)
-    &&o.decisionSource.adoptionOwner==='C'&&o.decisionSource.scope==='ALL2471_WAREHOUSE_TO_BUSINESS_HALL_MAPPING_USER_CONFIRMED'
-    &&o.decisionSource.originalBlankNotClaimedHistoricalFact===true
-    &&o.evidenceRef==='USER_DECISION:'+o.decisionSource.threadId+':'+o.decisionSource.humanMessageId+'#'+s.sourceKey,
-    'HISTORY_HEADER_BUSINESS_HALL_OVERLAY');
-}
-/** New selected projection only. The canonical/raw cells and original IDs/hashes
- * stay unchanged; neither current warehouse hall nor creator is consulted. */
+/** The retired overlay mutated normalized source fields. Retain a rejecting
+ * entry point so a captured old recipe cannot be silently reinterpreted. */
 export function deriveApprovedBusinessHallSource(source:ImportSourceEvidence,selection:HistoryHeaderSelection,namespace:string,overlay:HistoryBusinessHallOverlay):ImportSourceEvidence {
-  checkBusinessHallOverlay(source,selection,namespace,overlay);
-  fail(source.normalizedFields['所属厅来源编号']==='','HISTORY_HEADER_BUSINESS_HALL_ALREADY_KNOWN');
-  const derived=structuredClone(source);derived.normalizedFields['所属厅来源编号']=overlay.targetHallSourceKey;return derived;
+  throw Error('HISTORY_HEADER_BUSINESS_HALL_OVERLAY_RETIRED');
 }
 /** Pure mapper only. It does not authenticate files, resolve identities, write SQL or publish. */
 export function prepareV3HistoryHeader(input:HistoryHeaderInput):PreparedHistoryHeader {
@@ -84,21 +71,18 @@ export function prepareV3HistoryHeader(input:HistoryHeaderInput):PreparedHistory
     &&hash(s.sourceFileSha256)&&hash(s.rowSha256)&&nonempty(s.fileRef)&&nonempty(s.sheet)&&typeof s.rowNo==='string'&&/^[1-9]\d*$/.test(s.rowNo)
     &&BigInt(s.rowNo)<=9223372036854775807n,'HISTORY_HEADER_SOURCE');
   fail(Object.keys(n).length===table!.columns.length&&table!.columns.every(c=>Object.hasOwn(n,c.name)&&typeof n[c.name]==='string'
-    &&(n[c.name] as string).length<=65536&&!(n[c.name] as string).includes('\0')&&(!c.required||c.logicalType==='DATE'||n[c.name]!=='')),'HISTORY_HEADER_COLUMNS');
+    &&(n[c.name] as string).length<=65536&&!(n[c.name] as string).includes('\0')&&(!c.required||c.logicalType==='DATE'||entity==='SALES_HEADER'&&c.name==='所属厅来源编号'||n[c.name]!=='')),'HISTORY_HEADER_COLUMNS');
   fail(n['来源编号']===s.sourceKey&&raw['来源编号']===s.sourceKey,'HISTORY_HEADER_ORIGINAL_ID');
   const businessHallOverlay=input.businessHallOverlay;
-  if(businessHallOverlay){checkBusinessHallOverlay(s,selection,fixedSourceNamespace,businessHallOverlay);
-    fail(n['所属厅来源编号']===businessHallOverlay.targetHallSourceKey,'HISTORY_HEADER_BUSINESS_HALL_DERIVATION');}
+  fail(businessHallOverlay===undefined,'HISTORY_HEADER_BUSINESS_HALL_OVERLAY_RETIRED');
   const value=(field:string):string=>n[field] as string, nullable=(field:string):string|null=>value(field)===''?null:value(field);
   fail(s.fieldProvenance.schema_version===1&&s.fieldProvenance.fields&&typeof s.fieldProvenance.fields==='object'&&!Array.isArray(s.fieldProvenance.fields),'HISTORY_HEADER_PROVENANCE');
   const fields:JsonObject={};
   for(const c of table!.columns) {
     if(['创建厅归属来源','创建厅归属原因','原创建厅编号'].includes(c.name))continue;
     const original=raw[c.name];
-    if(c.logicalType!=='MONEY')fail(original===n[c.name]||(!Object.hasOwn(raw,c.name)&&(!c.required||c.logicalType==='DATE')&&n[c.name]==='')
-      ||(c.name==='所属厅来源编号'&&businessHallOverlay!==undefined&&original===''&&n[c.name]===businessHallOverlay.targetHallSourceKey),'HISTORY_HEADER_RAW_CHANGED');
+    if(c.logicalType!=='MONEY')fail(original===n[c.name]||(!Object.hasOwn(raw,c.name)&&(!c.required||c.logicalType==='DATE')&&n[c.name]===''),'HISTORY_HEADER_RAW_CHANGED');
     fields[c.name]={origin:original===undefined||original===''?'UNKNOWN':'ORIGINAL',reason:original===undefined?'ORIGINAL_KEY_ABSENT':original===''?'SOURCE_EMPTY':'SOURCE_PRESERVED',raw:original??null};
-    if(c.name==='所属厅来源编号'&&businessHallOverlay)fields[c.name]={origin:'MIGRATION_DERIVED',reason:businessHallOverlay.reason,raw:'',evidence_ref:businessHallOverlay.evidenceRef,parsed:businessHallOverlay.targetHallSourceKey};
   }
   const binding=(field:string,optional=false):string|null=>{
     const key=value(field), b=input.bindings[field];
@@ -149,14 +133,19 @@ export function prepareV3HistoryHeader(input:HistoryHeaderInput):PreparedHistory
   if(entity==='SALES_HEADER') {
     const businessTypes={'销售':'SALE','退货':'RETURN','换货':'EXCHANGE'} as const;fail(Object.hasOwn(businessTypes,value('单据类型')),'HISTORY_HEADER_BUSINESS_TYPE');
     const businessType=businessTypes[value('单据类型') as keyof typeof businessTypes];
-    header={...common,businessType,hallId:binding('所属厅来源编号')!,customerId:binding('客户来源编号')!,warehouseId:binding('仓库来源编号')!,salespersonId:binding('营业员来源编号',true),grossAmount:money('优惠前金额'),orderDiscount:money('整单优惠'),netDue:money('应结金额')};
-    if(businessHallOverlay)fail(header.hallId===businessHallOverlay.targetHallNativeId,'HISTORY_HEADER_BUSINESS_HALL_NATIVE_BINDING');
+    header={...common,businessType,hallId:binding('所属厅来源编号',true),customerId:binding('客户来源编号')!,warehouseId:binding('仓库来源编号')!,salespersonId:binding('营业员来源编号',true),grossAmount:money('优惠前金额'),orderDiscount:money('整单优惠'),netDue:money('应结金额')};
+    if(input.historicalHallEvidence){
+      const evidence=parseHistoricalSalesHallEvidence(input.historicalHallEvidence);
+      fail(evidence.original_hall_id===header.hallId&&evidence.warehouse_id===header.warehouseId,'HISTORY_HEADER_HALL_EVIDENCE_SOURCE');
+      header={...header,hallId:evidence.selected_hall_id};
+      fields['所属厅来源编号']={origin:evidence.basis==='MIGRATION_DERIVED'?'MIGRATION_DERIVED':evidence.basis==='PENDING_REVIEW'?'UNKNOWN':'ORIGINAL',reason:evidence.has_difference?'ORIGINAL_WAREHOUSE_HALL_DIFFERENCE':evidence.basis==='MIGRATION_DERIVED'?'CURRENT_WAREHOUSE_HALL_INFERENCE':evidence.basis==='PENDING_REVIEW'?'WAREHOUSE_HALL_PENDING_REVIEW':'SOURCE_PRESERVED',raw:raw['所属厅来源编号']??null,evidence_ref:'historical_hall_evidence',parsed:evidence.selected_hall_id};
+    }
   }else {
     const from=binding('调出仓来源编号')!,to=binding('调入仓来源编号')!;fail(from!==to,'HISTORY_HEADER_CONTRADICTORY_WAREHOUSE');
     header={...common,fromWarehouseId:from,toWarehouseId:to,createdRoleSource:nullable('原制单角色')};
   }
   const fieldProvenance:JsonObject={...s.fieldProvenance,schema_version:1,fields:{...(s.fieldProvenance.fields as JsonObject|undefined),...fields},history_header_mapping:{validator_version:'V3_HISTORY_HEADER_1',selection:selection as unknown as JsonObject},
-    ...(businessHallOverlay?{business_hall_overlay:structuredClone(businessHallOverlay) as unknown as JsonObject}:{})};
+    ...(input.historicalHallEvidence?{historical_hall_evidence:structuredClone(input.historicalHallEvidence) as unknown as JsonObject}:{})};
   const source=s;
   return {batchId,fixedSourceNamespace,mappingVersion:HISTORY_MAPPING_VERSION,selection,source,entity,header,fieldProvenance,temporal,businessDateResolved:header.businessDate!==null,
     fingerprint:requestHash({selection,source,header,fieldProvenance,temporal}),importReady:false,published:false};

@@ -9,10 +9,11 @@ import { deferred, detail, draft, flush, receipt, result, uuid } from './fixture
 
 function setup(options: { readonly client?: Partial<SalesCommandClient>; readonly principal?: Partial<AuthenticationPrincipal>; readonly preparation?: SalesFormPreparationProvider } = {}) {
   const first = detail(), accountId = first.document.header.createdByAccountId;
+  assert.ok(accountId, 'Synthetic editor fixture declares its creator');
   const principal: AuthenticationPrincipal = { accountId, staffId: first.document.header.salespersonId!, hallId: first.document.header.hallId,
     loginName: 'TEST-EDITOR', role: 'ADMIN', authVersion: 1, ...options.principal };
   const context = new ReadContext({ accountId: principal.accountId, sessionRevision: '1', permissionRevision: '1' }), scope = context.createScope('TEST-SALES-EDITOR');
-  const commands: SalesCommandDto[] = []; let current = first, reads = 0, keys = 0;
+  const commands: SalesCommandDto[] = []; let current: SalesDetailDto = first; let reads = 0, keys = 0;
   const session = new SalesEditorSession({ scope, principal, reader: { readDetail: async () => { reads++; return current; } }, newRequestKey: () => `TEST.editor:${++keys}`, onAccessFailure: () => {},
     client: { execute: async command => { commands.push(command); return result(command); }, receipt: async command => receipt(command), ...options.client },
     ...(options.preparation ? { preparation: options.preparation } : {}) });
@@ -74,6 +75,7 @@ test('salesperson affordances allow own-hall save/void and own creator approval 
 });
 test('superseded open completion cannot reset newer raw input to the last valid native draft', async () => {
   const native = detail(), header = native.document.header;
+  assert.ok(header.createdByAccountId, 'Synthetic editor fixture declares its creator');
   const context = new ReadContext({ accountId: header.createdByAccountId, sessionRevision: '1', permissionRevision: '1' }), reads: ReturnType<typeof deferred<SalesDetailDto>>[] = [];
   const session = new SalesEditorSession({ scope: context.createScope('TEST-RAW-OPEN-RACE'), principal: { accountId: header.createdByAccountId, staffId: uuid(14) as AuthenticationPrincipal['staffId'], hallId: header.hallId, loginName: 'TEST', role: 'ADMIN', authVersion: 1 },
     reader: { readDetail: async () => { const pending = deferred<SalesDetailDto>(); reads.push(pending); return pending.promise; } },
@@ -82,13 +84,16 @@ test('superseded open completion cannot reset newer raw input to the last valid 
   reads[1]!.resolve(native); assert.equal(await second, true); session.updateInput({ ...session.getSnapshot().input!, note: 'TEST 新输入必须保留' });
   reads[0]!.resolve(native); assert.equal(await first, false); assert.equal(session.getSnapshot().input?.note, 'TEST 新输入必须保留'); assert.equal(session.hasDirtyDraft, true); session.dispose();
 });
-test('unknown original payment method remains readable but cannot become an editable or approvable runtime draft', async () => {
+test('unknown original payment method survives an ordinary note SAVE but cannot authorize approval', async () => {
   const h = setup(), native = detail();
   h.setCurrent({ ...native, document: { ...native.document, settlements: native.document.settlements.map(row => ({ ...row, paymentMethodId: null })) },
     settlementNames: native.settlementNames.map(row => ({ ...row, methodNameSnapshot: 'TEST 名称不能补ID', currentMethodName: 'TEST 当前账户方式也不能补ID' })) });
-  assert.equal(await h.session.openExisting(uuid(1)), true); assert.equal(h.session.getSnapshot().input, null); assert.equal(h.session.editable, false);
+  assert.equal(await h.session.openExisting(uuid(1)), true); assert.ok(h.session.getSnapshot().input); assert.equal(h.session.editable, true);
   assert.equal(h.session.getSnapshot().command.editor?.detail?.document.settlements[0]?.paymentMethodId, null);
-  assert.equal(await h.session.save(), false); assert.equal(await h.session.submit('APPROVE'), false); assert.equal(h.keys, 0); assert.equal(h.commands.length, 0); h.session.dispose();
+  assert.equal(await h.session.save(), false); assert.equal(await h.session.submit('APPROVE'), false); assert.equal(h.keys, 0); assert.equal(h.commands.length, 0);
+  h.session.updateInput({ ...h.session.getSnapshot().input!, note: 'TEST 只改备注' });
+  assert.equal(await h.session.save(), true); assert.equal(h.keys, 1);
+  const saved = h.commands[0]!; assert.ok(saved.action === 'SAVE' && 'draft' in saved); assert.equal(saved.draft.settlements[0]?.paymentMethodId, null); h.session.dispose();
   const history = setup(); history.setCurrent({ ...native, stockBasis: 'CUTOFF_HISTORY', document: { ...native.document,
     settlements: native.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } });
   assert.equal(await history.session.openExisting(uuid(1)), true); assert.equal(history.session.editable, false);

@@ -202,14 +202,14 @@ test("SYNTHETIC transfer HTTP: semantic transfer/reference failures use explicit
     assert.equal(response.json().error.code, field === "skuId" ? "SKU_UNAVAILABLE" : "WAREHOUSE_UNAVAILABLE"); assert.deepEqual(f.store.snapshot(), before);
   }
 });
-test("SYNTHETIC transfer HTTP: missing inventory and historical posting basis are explicit conflicts, never manufactured stock", async t => {
+test("SYNTHETIC transfer HTTP: missing inventory and missing original effect evidence are explicit conflicts, never manufactured stock", async t => {
   const f = await setup(t); await f.post(save()); f.store.removeBalance(ids.toWarehouse, ids.sku); const before = f.store.snapshot();
   const missing = await f.command("APPROVE", 1); assert.equal(missing.statusCode, 409); assert.equal(missing.json().error.code, "INVENTORY_NOT_READY");
   assert.deepEqual(f.store.snapshot(), before);
   const g = await setup(t); await g.post(save());
   g.store.seedDocument({ ...g.document(), header: { ...g.document().header, status: "APPROVED" } }, "CUTOFF_HISTORY");
   const history = g.store.snapshot(); const response = await g.command("UNAPPROVE", 1);
-  assert.equal(response.statusCode, 409); assert.equal(response.json().error.code, "HISTORICAL_POSTING_NOT_IMPLEMENTED"); assert.deepEqual(g.store.snapshot(), history);
+  assert.equal(response.statusCode, 409); assert.equal(response.json().error.code, "MISSING_POSTING_PROVENANCE"); assert.deepEqual(g.store.snapshot(), history);
 });
 test("SYNTHETIC transfer HTTP: receipt failure rolls back and preserves the same original key for caller-directed retry", async t => {
   const f = await setup(t); const before = f.store.snapshot(); f.store.failNextAt = "receipt";

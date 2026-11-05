@@ -7,7 +7,7 @@ import { SalesCommandWorkspace } from './controller.ts';
 import { createSalesCommandHttpClient } from './http-client.ts';
 import { deferred, detail, draft, flush, receipt, result, uuid } from './fixtures.test-support.ts';
 
-function setup(overrides: Partial<SalesCommandClient> = {}, first = detail()) {
+function setup(overrides: Partial<SalesCommandClient> = {}, first: SalesDetailDto = detail()) {
   const context = new ReadContext({ accountId: 'TEST', sessionRevision: '1', permissionRevision: '1' }), scope = context.createScope('TEST-SALES-WORKSPACE');
   const commands: SalesCommandDto[] = [], receipts: SalesCommandDto[] = []; let reads = 0, keys = 0, access = 0; let current = first;
   const client: SalesCommandClient = { execute: async command => { commands.push(command); return result(command); }, receipt: async command => { receipts.push(command); return receipt(command); }, ...overrides };
@@ -143,9 +143,10 @@ test('duplicate generated request key is refused across resolved/discarded opera
   controller.openCreate(draft()); assert.equal(await controller.submit('SAVE'), true); assert.equal(controller.discardEditor(), true);
   controller.openCreate(draft()); assert.equal(await controller.submit('SAVE'), false); assert.equal(calls, 1); controller.dispose();
 });
-test('unknown legacy price facts never become inferred SAVE or APPROVE intent', async () => {
+test('unknown saved price facts retain exact ordinary draft intent without authorizing approval', async () => {
   const saved = detail(); const h = setup({}, { ...saved, document: { ...saved.document, lines: saved.document.lines.map(line => ({ ...line, pricingRule: null, zeroConfirmed: null })) } });
-  assert.equal(await h.controller.openExisting(uuid(1)), true); assert.equal(h.controller.getSnapshot().editor?.draft, null);
+  assert.equal(await h.controller.openExisting(uuid(1)), true); assert.equal(h.controller.getSnapshot().editor?.draft?.lines[0]?.pricingRule, null);
+  assert.equal(h.controller.getSnapshot().editor?.draft?.lines[0]?.zeroConfirmed, null);
   assert.equal(await h.controller.submit('SAVE'), false); assert.equal(await h.controller.submit('APPROVE'), false); assert.equal(h.commands.length, 0);
   assert.equal(await h.controller.submit('VOID'), true); h.controller.dispose();
 });
@@ -177,7 +178,7 @@ test('unknown runtime method does not block legitimate status-only VOID or UNAPP
     const native = detail(action === 'UNAPPROVE' ? 'APPROVED' : 'DRAFT');
     const unknown = { ...native, document: { ...native.document, settlements: native.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } };
     const h = setup({}, unknown); assert.equal(await h.controller.openExisting(uuid(1)), true);
-    assert.equal(h.controller.getSnapshot().editor?.draft, null); assert.equal(await h.controller.submit(action), true);
+    assert.equal(h.controller.getSnapshot().editor?.draft === null, action === 'UNAPPROVE'); assert.equal(await h.controller.submit(action), true);
     assert.equal(h.commands[0]?.action, action); assert.deepEqual(Object.keys(h.commands[0]!).sort(), ['action', 'expectedVersion', 'requestKey', 'salesId']);
     assert.equal(h.controller.getSnapshot().editor?.detail?.document.settlements[0]?.paymentMethodId, null); h.controller.dispose();
   }
@@ -226,4 +227,56 @@ test('observed auth headers clear workspace immediately even when response JSON 
     assert.equal(h.scope.active, false); assert.equal(h.access, 1); assert.equal(h.controller.getSnapshot().editor, null);
     assert.equal(h.controller.getSnapshot().write.command, null); assert.equal(cancelled, 1);
   }
+});
+
+test('SIGNED settlement rejection shows exact difference without receipt or replay recovery', async () => {
+  const client = createSalesCommandHttpClient({ origin: 'https://synthetic.test', basePath: '', fetch: async () => new Response(JSON.stringify({ error: { code: 'SETTLEMENT_MISMATCH', message: 'Sales request rejected', settlement: { netDue: '70000', settled: '65000', difference: '5000' } } }), { status: 422, headers: { 'content-type': 'application/json' } }) });
+  const h = setup(client); await h.controller.openExisting(uuid(1));
+  assert.equal(await h.controller.submit('APPROVE'), false);
+  assert.equal(h.controller.getSnapshot().write.phase, 'rejected');
+  assert.match(h.controller.getSnapshot().notice!, /700\.00/); assert.match(h.controller.getSnapshot().notice!, /650\.00/); assert.match(h.controller.getSnapshot().notice!, /50\.00/);
+  assert.equal(await h.controller.replayOriginal(), false); assert.equal(h.receipts.length, 0); h.controller.dispose();
+});
+
+test('SIGNED settlement negative and huge exact differences remain strings; missing facts are never zero', async () => {
+  for (const [code, settlement, expected] of [
+    ['SETTLEMENT_MISMATCH', { netDue: '-30000', settled: '-20000', difference: '-10000' }, /差额（应结减实收）-100\.00 元/],
+    ['SETTLEMENT_MISMATCH', { netDue: '900719925474099300', settled: '1', difference: '900719925474099299' }, /9007199254740992\.99/],
+    ['HISTORICAL_SETTLEMENT_FACTS_MISSING', null, /资料缺失.*不能按零/],
+  ] as const) {
+    const h = setup({ execute: async () => { throw new SalesCommandError('conflict', code, 'rejected', 409, settlement); } });
+    await h.controller.openExisting(uuid(1)); assert.equal(await h.controller.submit('APPROVE'), false);
+    assert.equal(h.controller.getSnapshot().write.phase, 'rejected'); assert.match(h.controller.getSnapshot().notice!, expected);
+    assert.equal(await h.controller.replayOriginal(), false); h.controller.dispose();
+  }
+});
+
+test('SIGNED local persisted approval guard displays positive negative and large exact differences without dispatch', async () => {
+  for (const [netDue, settled, expected] of [['70000','65000','50.00'],['-30000','-20000','-100.00'],['900719925474099300','1','9007199254740992.99']] as const) {
+    const base = detail(); const source = { ...base, document: { ...base.document, header: { ...base.document.header, netDue, grossAmount: netDue, orderDiscount: '0' }, lines: base.document.lines.map(row => ({ ...row, quantity: netDue.startsWith('-') ? '-1' : '1', dealPrice: netDue.replace('-', ''), lineAmount: netDue, allocatedDiscount: '0', zeroConfirmed: true, isGift: false })), settlements: [{ ...base.document.settlements[0]!, direction: settled.startsWith('-') ? 'REFUND' as const : 'RECEIVE' as const, amount: settled.replace('-', '') }] } };
+    const h = setup({}, source); await h.controller.openExisting(uuid(1));
+    assert.equal(await h.controller.submit('APPROVE'), false); assert.equal(h.commands.length, 0); assert.equal(h.keys, 0);
+    assert.ok(h.controller.getSnapshot().notice!.includes(`差额（应结减实收）${expected} 元`));
+    assert.equal(await h.controller.replayOriginal(), false); h.controller.dispose();
+  }
+});
+
+test('SIGNED local historical missing payments defer restoration proof to server without treating absence as zero', async () => {
+  for (const netDue of ['70000', '0']) {
+    const base = detail(); const source = { ...base, stockBasis: 'CUTOFF_HISTORY' as const, document: { ...base.document, header: { ...base.document.header, netDue, grossAmount: netDue, orderDiscount: '0' }, lines: base.document.lines.map(row => ({ ...row, quantity: netDue.startsWith('-') ? '-1' : '1', dealPrice: netDue.replace('-', ''), lineAmount: netDue, allocatedDiscount: '0', zeroConfirmed: true, isGift: false })), settlements: [] }, settlementNames: [] };
+    const context = new ReadContext({ accountId: 'TEST', sessionRevision: '1', permissionRevision: '1' });
+    const sent: SalesCommandDto[] = [];
+    const controller = new SalesCommandWorkspace({ scope: context.createScope('missing-history'), documentListProfile: 'source-confirmed-ordinary-documents-v1', reader: { readDetail: async () => source }, newRequestKey: () => 'missing-history:1', onAccessFailure: () => {}, client: { execute: async command => { sent.push(command); throw new SalesCommandError('conflict', 'HISTORICAL_SETTLEMENT_FACTS_MISSING', 'rejected', 409); }, receipt: async command => receipt(command) } });
+    const before = structuredClone(source); await controller.openExisting(uuid(1)); assert.equal(await controller.submit('APPROVE'), false);
+    assert.deepEqual(sent, [{ action: 'APPROVE', requestKey: 'missing-history:1', expectedVersion: 2, salesId: uuid(1) }]);
+    assert.match(controller.getSnapshot().notice!, /资料缺失.*不能按零/); assert.equal(controller.getSnapshot().write.phase, 'rejected');
+    assert.deepEqual(source, before); assert.equal(await controller.replayOriginal(), false); controller.dispose();
+  }
+});
+
+
+test('mixed SALE discount rejection explains the remedy and retains the draft',async()=>{
+ const h=setup({execute:async()=>{throw new SalesCommandError('invalid-request','MIXED_SALES_ORDER_DISCOUNT','rejected',422);}});
+ assert.equal(h.controller.openCreate(draft()),true);assert.equal(await h.controller.submit('SAVE'),false);
+ assert.equal(h.controller.getSnapshot().write.phase,'rejected');assert.match(h.controller.getSnapshot().notice??'',/正负明细.*整单优惠/);assert.ok(h.controller.getSnapshot().editor?.draft);h.context.clear();
 });

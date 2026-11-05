@@ -1,6 +1,7 @@
 // DOM/classes and modal options from frozen product-current.js and product-arco.jsx.
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
-import { Input, Modal } from '@arco-design/web-react';
+import Input from '@arco-design/web-react/es/Input';
+import Modal from '@arco-design/web-react/es/Modal';
 import { LatestQuery, type QueryRead } from '../../../../src/loading/latest-query.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { CatalogueEditorController, type CatalogueEditorDraft } from '../../../../src/product-settings/catalogue-maintenance-state.ts';
@@ -112,7 +113,7 @@ export function EntryEditor({ options, capability, entry, resumeCommand, close, 
   const submit = async (deleting = false) => {
     if (!controller || busy) return;
     if (!deleting && (!name.trim() || !code.trim())) { setError('请填写必填资料'); return; }
-    if (!deleting && !entry && capability.kind === 'FIT' && !/^[A-Z]$/.test(code.trim())) { setError('版型编码请填写一个大写英文字母'); return; }
+    if (!deleting && capability.kind === 'FIT' && (!entry || code.trim() !== entry.code) && !/^[356789]$/.test(code.trim())) { setError('版型编码请填写 3、5、6、7、8 或 9。'); return; }
     const target = entry ?? (resumeCommand && 'id' in resumeCommand ? { id: resumeCommand.id, version: resumeCommand.expectedVersion } : null);
     const action = deleting ? 'DELETE' : entry ? 'EDIT' : 'CREATE';
     if (!capability.allowedActions.includes(action)) return;

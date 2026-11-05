@@ -558,3 +558,9 @@ test('draft SOURCE lines keep original snapshots while revision snapshots never 
  assert.equal(r.lineCatalog!.items[0]!.origin.kind,'SOURCE');assert.equal(r.lineCatalog!.items[0]!.currentGroup.state,'UNKNOWN');assert.equal(r.lineCatalog!.items[1]!.origin.kind,'REVISION');
  assert.equal(p.calls.filter(c=>c.tag==='imported-history:draft-source-lines').length,1);
 });
+
+test('historical source hall NULL stays unknown in ALL reads and never fits a hall-specific grant',()=>{
+ const h={...header('sales'),hallId:null},g=grant(intent());
+ assert.equal((validateImportedHistoryHeader(h,'sales',{...g,scope:{kind:'ALL'}}) as {hallId:string|null}).hallId,null);
+ assert.throws(()=>validateImportedHistoryHeader(h,'sales',{...g,scope:{kind:'HALL_IDS',hallIds:[id(2)]}}),{code:'IMPORTED_HISTORY_INVALID_RESPONSE'});
+});

@@ -1,3 +1,4 @@
+import { SalesSettlementMismatchError } from '../../../packages/domain/src/sales-settlement-error.ts';
 import { SALES_PREPARE_MAX_REQUEST_BYTES, SALES_COMMAND_MAX_REQUEST_BYTES, salesPreparedDraftFitsSaveBudget } from "../../../packages/application/src/sales-payload-budget.ts";
 import type { NativeSalesCreateProposal, NativeSalesExistingProposal, NativeSalesExistingPrepared } from "../../../packages/application/src/native-sales-preparation.ts";
 import type { SalesDraft } from "../../../packages/domain/src/documents.ts";
@@ -24,7 +25,7 @@ export interface SalesHttpOptions {
 const statuses: Readonly<Record<string, number>> = {
   RESPONSIBLE_STAFF_UNAVAILABLE: 409, PRODUCT_REFERENCE_UNAVAILABLE: 409, PRODUCT_SIZE_GROUP_MISMATCH: 409, PRODUCT_SPEC_CONFLICT: 409,
   PRODUCT_DELETED: 409, PRODUCT_NOT_FOUND: 404, PRODUCT_MAINTENANCE_TOO_LARGE: 413, VERSION_STORAGE_OVERFLOW: 422,
-  PRODUCT_EVIDENCE_CAPACITY_EXCEEDED: 409, PRODUCT_EVIDENCE_CAPACITY_NOT_READY: 503,
+  PRODUCT_EVIDENCE_CAPACITY_EXCEEDED: 409, PRODUCT_EVIDENCE_CAPACITY_NOT_READY: 503, DOCUMENT_BARCODE_SCHEMA_NOT_READY: 503,
   SALES_PAYLOAD_TOO_LARGE: 413, NATIVE_CATALOGUE_FACTS_UNAVAILABLE: 409, SALES_REFERENCE_UNAVAILABLE: 409,
   SALES_PRICE_QUOTE_REQUIRED: 409, SALES_DISPLAYED_PRICE_CHANGED: 409,
   SALES_SNAPSHOT_MISMATCH: 409, BARCODE_UNAVAILABLE: 409, NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE: 409,
@@ -32,15 +33,17 @@ const statuses: Readonly<Record<string, number>> = {
   INVALID_MONEY: 400, MONEY_OVERFLOW: 422, MONEY_PRECISION: 422, MONEY_STORAGE_OVERFLOW: 422, INVALID_VERSION: 400, INVALID_BUSINESS_DATE: 400,
   FORBIDDEN: 403, DESTINATION_SCOPE_FORBIDDEN: 403, DOCUMENT_NOT_FOUND: 404, RECEIPT_NOT_FOUND: 404,
   VERSION_CONFLICT: 409, IDEMPOTENCY_CONFLICT: 409, INVALID_STATE: 409,
+  UNKNOWN_SETTLEMENT_FACTS: 409, HISTORICAL_SETTLEMENT_FACTS_MISSING: 409, HISTORICAL_SALE_TYPE_CHANGED: 409, HISTORICAL_DISCOUNT_CHANGED: 409,
   SETTLEMENT_METHOD_MISMATCH: 409, IMMUTABLE_SETTLEMENT_METHOD: 409,
   HISTORICAL_POSTING_NOT_IMPLEMENTED: 409, INVENTORY_NOT_READY: 409, MISSING_POSTING_PROVENANCE: 409,
+  UNKNOWN_SNAPSHOT_FACTS: 409, BASELINE_COVERAGE_UNKNOWN: 409,
   INVALID_NUMBER: 422, INVALID_BUSINESS_TYPE: 422, INVALID_DISCOUNT: 422, INVALID_LINES: 422,
   INVALID_LINE: 422, INVALID_PRICE: 422, SETTLEMENT_LIMIT: 422, INVALID_SETTLEMENT: 422,
   SETTLEMENT_MISMATCH: 422, INVALID_STOCK_EFFECT: 422, UNKNOWN_PRICING_FACTS: 409,
   PRODUCT_PRICING_UNAVAILABLE: 409, SKU_UNAVAILABLE: 409, INVALID_SALES_QUANTITY: 422,
   INVALID_LINE_DISCOUNT: 422, INVALID_ORDER_DISCOUNT: 422, DISCOUNT_PRICE_MISMATCH: 422,
   INVALID_GIFT_PRICE: 422, ZERO_PRICE_NOT_CONFIRMED: 422, BELOW_MINIMUM_PRICE: 422,
-  LINE_AMOUNT_MISMATCH: 422, INVALID_ALLOCATION_ORDER: 422, INDEPENDENT_RETURN_DISCOUNT: 422,
+  LINE_AMOUNT_MISMATCH: 422, INVALID_ALLOCATION_ORDER: 422, INDEPENDENT_RETURN_DISCOUNT: 422, MIXED_SALES_ORDER_DISCOUNT: 422,
   DISCOUNT_ALLOCATION_MISMATCH: 422, DOCUMENT_AMOUNT_MISMATCH: 422
 };
 /** Never coerce bigint to a JS number. Current command/receipt responses contain no amounts. */
@@ -84,7 +87,7 @@ export function createSalesHttpPlugin(options: SalesHttpOptions): FastifyPluginA
     app.setErrorHandler((error, _request, reply) => {
       const code = error instanceof DomainError ? error.code : undefined;
       const status = code !== undefined && Object.hasOwn(statuses, code) ? statuses[code] : undefined;
-      if (status !== undefined) return reply.code(status).type("application/json").send(exactJson({ error: { code, message: status === 403 ? "Access denied" : "Sales request rejected" } }));
+      if (status !== undefined) return reply.code(status).type("application/json").send(exactJson({ error: { code, message: status === 403 ? "Access denied" : "Sales request rejected", ...(error instanceof SalesSettlementMismatchError ? { settlement: { netDue: error.netDue.toString(), settled: error.settled.toString(), difference: error.difference.toString() } } : {}) } }));
       // Parser/transport failures use only allowlisted codes. Never return provider/SQL errors or credentials.
       const transport = error as { code?: string };
       if (transport.code === "FST_ERR_CTP_BODY_TOO_LARGE") return reply.code(413).send({ error: { code: "BODY_TOO_LARGE", message: "Request body is too large" } });

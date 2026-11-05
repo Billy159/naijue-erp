@@ -36,7 +36,7 @@
 ```
 
 请求选项、筛选ID、浏览器角色均不授予读权限。目录grant与库存grant分离，**授权仓库子集的和绝不能标为“总库存”**。
-`totalStock:'unavailable'` 不执行库存SQL，DTO返回`null`，UI为“未提供”；不是0。
+`totalStock:'unavailable'` 不执行库存 SQL，DTO 返回 `null`；全仓授权模式下，若任一规格与仓库的余额缺失也返回 `null`。UI 均显示“未知”，不按 0 展示。
 只有明确全仓权限且同一RR READ ONLY快照验证既有完整cutoff publication、最终receipt/checkpoint、完整性guards、全部原生仓库和全部匹配SKU覆盖后，才允许汇总native balances与把已证实缺balance视为0；缺证明拒绝503，负量保真。
 
 列表与候选在授权范围约束后才count/page/汇总；固定set queries无N+1。候选只由授权商品关联原生事实产生，不把商品列表权限扩大为全局字典管理。供应商/版型候选排除native disabled；无season enabled字段不造状态。
@@ -48,7 +48,7 @@
 2. native `collar_pants_type`只有存储text，没有已确认的旧code→中文标签映射；候选显示真实存值，不补造中文。
 3. native版型关系来自实际SKU，单个`season_id`；不能假设旧Demo多季节、未有SKU的声明版型已经持久化。列表fits仅报告当前实际SKU的版型。
 4. 候选限定授权商品关联事实，非全部未使用字典；没有字典全局授权就不扩大枚举。
-5. `null`价格/可选文字不造空事实或0。UI空单元格跟随原列呈现；库存未知明确显示“未提供”。
+5. `null`价格/可选文字不造空事实或0。UI空单元格跟随原列呈现；库存未知明确显示“未知”。
 6. 新增/编辑维护、全六Tab详情不在本次范围。不能把查看成功标为PR-02–09通过。
 
 ## 交给统一composition owner

@@ -1,8 +1,8 @@
 import type { QueryRead } from '../loading/latest-query.ts';
 import type { HttpQueryError } from '../transport/http-query.ts';
 
-/** Complete published read DTO only. Readiness is established by the trusted server reader, never inferred here.
- * Existing SKU + no stock in that complete scope is server-supplied zero; holes/errors are rejected.
+/** Published read DTO. The server supplies explicit known, unknown and inapplicable facts.
+ * A completed transport is distinct from a source-unknown quantity; no client zero is inferred.
  * Read DTO only. No URL, authentication token, mutable cache, write or stock adjustment. */
 export type InventoryPageSize = 100 | 200 | 500;
 export type CandidateKind = 'product' | 'category' | 'warehouse' | 'supplier' | 'fit' | 'season';
@@ -45,11 +45,12 @@ export interface CandidatePage {
 }
 export type StockCell =
   | { readonly state: 'known'; readonly skuId: string; readonly quantity: string }
+  | { readonly state: 'unknown'; readonly skuId: string }
   | { readonly state: 'not-applicable' };
 export interface StockTotal {
   readonly knownQuantity: string;
-  readonly completeness: 'complete';
-  readonly unknownCells: 0;
+  readonly completeness: 'complete' | 'incomplete';
+  readonly unknownCells: number;
 }
 export interface InventorySize extends Selection {}
 export interface InventoryRow {

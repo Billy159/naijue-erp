@@ -31,29 +31,10 @@ function businessHall(input:HistoryHeaderInput):HistoryBusinessHallOverlay {
     decisionSource:{threadId:'synthetic-human-thread',humanMessageId:'synthetic-decision',continueMessageId:'synthetic-continue',adoptionOwner:'C',scope:'ALL2471_WAREHOUSE_TO_BUSINESS_HALL_MAPPING_USER_CONFIRMED',originalBlankNotClaimedHistoricalFact:true},
     evidenceRef:'USER_DECISION:synthetic-human-thread:synthetic-decision#'+s.sourceKey};
 }
-test('approved business hall overlay derives normalized hall only, preserves raw identity/unknown creator, and survives original chunk revalidation',()=>{
-  const input=fixture('SALES_HEADER');replace(input,'所属厅来源编号','');const original=structuredClone(input),overlay=businessHall(input);
-  input.source=deriveApprovedBusinessHallSource(input.source,input.selection,input.fixedSourceNamespace,overlay);input.businessHallOverlay=overlay;
-  const result=prepareV3HistoryHeader(input);assert.ok('hallId' in result.header);assert.equal(result.header.hallId,id(10));
-  assert.equal(result.source.rawFields['所属厅来源编号'],'');assert.equal(result.source.normalizedFields['所属厅来源编号'],'old-hall');
-  assert.equal(original.source.normalizedFields['所属厅来源编号'],'');assert.equal(result.source.id,original.source.id);assert.equal(result.source.rowSha256,original.source.rowSha256);
-  assert.equal(result.header.createdHallId,null);assert.equal(result.header.createdBySourceKey,null);assert.equal(result.header.createdInstant,null);
-  const fields=result.fieldProvenance.fields as Record<string,unknown>;assert.deepEqual(fields['所属厅来源编号'],{origin:'MIGRATION_DERIVED',reason:overlay.reason,raw:'',evidence_ref:overlay.evidenceRef,parsed:'old-hall'});
-  const chunk=prepareV3HistoryHeaderChunk([input]);validatePreparedHistoryHeaderChunk(chunk);assert.equal(chunk.rows[0]!.prepared.fingerprint,result.fingerprint);
-  assert.deepEqual(chunk.rows[0]!.input.businessHallOverlay,overlay);
-});
-test('approved business hall overlay refuses wrong source/warehouse/file position/UUID, known-hall overwrite and unrelated raw rewrites',()=>{
-  for(const change of [(o:HistoryBusinessHallOverlay)=>o.sourceKey='OTHER',(o:HistoryBusinessHallOverlay)=>o.warehouseSourceKey='OTHER',
-    (o:HistoryBusinessHallOverlay)=>o.rowNo='3',(o:HistoryBusinessHallOverlay)=>o.sourceFileSha256='b'.repeat(64),
-    (o:HistoryBusinessHallOverlay)=>o.selectionSha256='b'.repeat(64)]){
-    const input=fixture('SALES_HEADER');replace(input,'所属厅来源编号','');const o=businessHall(input);change(o);
-    assert.throws(()=>deriveApprovedBusinessHallSource(input.source,input.selection,input.fixedSourceNamespace,o),/BUSINESS_HALL_OVERLAY/);
-  }
-  const known=fixture('SALES_HEADER');assert.throws(()=>deriveApprovedBusinessHallSource(known.source,known.selection,known.fixedSourceNamespace,businessHall(known)),/BUSINESS_HALL_OVERLAY/);
-  const input=fixture('SALES_HEADER');replace(input,'所属厅来源编号','');const o=businessHall(input);input.source=deriveApprovedBusinessHallSource(input.source,input.selection,input.fixedSourceNamespace,o);input.businessHallOverlay=o;
-  const missing=structuredClone(input);delete missing.businessHallOverlay;assert.throws(()=>prepareV3HistoryHeader(missing),/RAW_CHANGED/);
-  const wrong=structuredClone(input);wrong.businessHallOverlay!.targetHallNativeId=id(999);assert.throws(()=>prepareV3HistoryHeader(wrong),/NATIVE_BINDING/);
-  input.source.normalizedFields['备注']='UNAPPROVED';assert.throws(()=>prepareV3HistoryHeader(input),/RAW_CHANGED/);
+test('warehouse-derived business hall overlay is retired even with old decision metadata',()=>{
+ const input=fixture('SALES_HEADER');replace(input,'所属厅来源编号','');const overlay=businessHall(input);
+ assert.throws(()=>deriveApprovedBusinessHallSource(input.source,input.selection,input.fixedSourceNamespace,overlay),/OVERLAY_RETIRED/);
+ input.businessHallOverlay=overlay;assert.throws(()=>prepareV3HistoryHeader(input),/OVERLAY_RETIRED/);
 });
 test('calendar dates validate leap days and never infer midnight for DATETIME',()=>{
   assert.equal(mapHistoryTemporal('2024-02-29','DATE').date,'2024-02-29');

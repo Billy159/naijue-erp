@@ -282,5 +282,55 @@ class V6BootValidation(unittest.TestCase):
         self.assertEqual(B.DEPLOYMENT_CAPACITY_SHA256, hashlib.sha256(DEPLOY_SOURCE).hexdigest())
 
 
+
+
+class Exact35BootIncrement(unittest.TestCase):
+    def fixture(self):
+        dp=deployment('schema19');dp['runtimeSelector']='exact35';dp['schemaVersions']=list(range(1,28))
+        refs={name:ref(name) for name in ('installationRecord','sourceSet','program','metadata','buildReceipt','sourceManifest','buildManifest','backupCoverage')}
+        refs['installationRecord']['path']='/etc/naijue-erp/fresh35-combined-installation-v1.json'
+        dp['runtime35']={'references':refs,'media':{'hostRoot':str(B.ROOT/'media'),'containerRoot':'/run/naijue-rewrite/media/images','rootKey':'images','writable':True}}
+        dp['newDatabaseReceipt']=refs['metadata'];return dp
+
+    def test_exact35_shape_is_distinct_and_old_shapes_remain(self):
+        import copy
+        with synthetic_files():
+            dp=self.fixture();B.deployment_binding(dp)
+            for selector in ('schema19','exact26-r1','exact26-full'):B.deployment_binding(deployment(selector))
+            changes=[lambda p:p.update(schemaVersions=list(range(1,36))),lambda p:p.update(runtime26={}),
+                     lambda p:p['runtime35'].update(approved=True),lambda p:p['runtime35']['references'].pop('program'),
+                     lambda p:p['runtime35']['references']['installationRecord'].update(path=str(B.ROOT/'copied-record.json'))]
+            for change in changes:
+                bad=copy.deepcopy(dp);change(bad)
+                with self.subTest(change=change),self.assertRaises(B.Refused):B.deployment_binding(bad)
+
+    def test_new_helper_stays_rejected_until_original_pin_owner_acts(self):
+        with synthetic_files():
+            dp=self.fixture();p,rows=boot_fixture(dp)
+            stage=rows[p['stageReceipt']['path']];stage['runtime35BindingSha256']=stage.pop('runtime26BindingSha256')
+            with patch.object(B,'read',return_value=B.encode(p)),patch.object(B,'reference',side_effect=lambda row,*args:rows[row['path']]):
+                with self.assertRaisesRegex(B.Refused,'REVIEWED_DEPLOYMENT_HELPER_REQUIRED'):B.load_plan('/synthetic/boot-plan.json')
+
+    def test_boot_artifacts_consumes_35_field_and_original_validator_without_26_fallback(self):
+        from unittest.mock import Mock
+        dp=self.fixture();stage={'runtime35BindingSha256':'pin','installedPayloadSha256':'payload'}
+        helper=types.SimpleNamespace(reference=Mock(return_value={}),payload_identity=Mock(return_value='payload'),
+                file_identity=Mock(return_value=dp['runtimeConfiguration']['identity']),file_hash=Mock(return_value=H),runtime_binding=Mock(return_value='pin'),
+                json_file=Mock(return_value={'private':'synthetic'}),validate_runtime35=Mock(side_effect=ValueError('native35-target-refused')),
+                validate_runtime26=Mock(side_effect=AssertionError('must not fall back to 26')))
+        with patch.object(B,'capacity_stage_binding'):
+            with self.assertRaisesRegex(ValueError,'native35-target-refused'):B.artifacts({},helper,dp,stage)
+            helper.validate_runtime35.assert_called_once();helper.validate_runtime26.assert_not_called()
+            stage['runtime35BindingSha256']='wrong'
+            with self.assertRaisesRegex(B.Refused,'PERSISTED_RUNTIME_BINDING_CHANGED'):B.artifacts({},helper,dp,stage)
+
+    def test_35_restore_demands_full_closed_drain_fence(self):
+        from unittest.mock import Mock
+        helper=types.SimpleNamespace(write_boundary=Mock(side_effect=ValueError('full-fence-required')))
+        dp=self.fixture()
+        with self.assertRaisesRegex(ValueError,'full-fence-required'):B.restore_boundary(helper,dp)
+        helper.write_boundary.assert_called_once_with(dp,restore_old=True)
+
+
 if __name__ == '__main__':
     unittest.main()

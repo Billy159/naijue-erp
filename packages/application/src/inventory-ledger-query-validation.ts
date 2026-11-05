@@ -127,7 +127,7 @@ export function checkedInventoryLedgerSnapshot(value: unknown, parameters: Inven
   const s = record(row.sku, ["id", "code", "product", "color", "fit", "sizeGroup", "size"], reject);
   const product = record(s.product, ["id", "code", "name"], reject); const fit = record(s.fit, ["id", "code", "label"], reject);
   const size = record(s.size, ["id", "code", "label"], reject);
-  const fitCode = text(fit.code, reject); if (!/^[A-Z]$/.test(fitCode)) reject();
+  const fitCode = text(fit.code, reject); if (!/^[A-Z356789]$/.test(fitCode)) reject();
   const sku = Object.freeze({ id: id("sku", s.id, reject), code: text(s.code, reject),
     product: Object.freeze({ id: id("product", product.id, reject), code: text(product.code, reject), name: text(product.name, reject) }),
     color: selection("color", s.color), fit: Object.freeze({ id: id("fit", fit.id, reject), code: fitCode, label: text(fit.label, reject) }),

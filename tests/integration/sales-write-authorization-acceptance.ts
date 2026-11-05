@@ -92,7 +92,7 @@ function dependencies(pool: PgSalesPool): SalesDependencies {
       await native.assertAllowed(actor, action, document, tx);
       const h = document.header;
       ok(allowedDocuments.has(h.id) && [salesperson.accountId, foreign.accountId, admin.accountId, warehouse.accountId].includes(actor.accountId)
-        && [ids.hall, ids.otherHall].includes(h.hallId) && h.warehouseId === (h.hallId === ids.hall ? ids.warehouse : ids.toWarehouse)
+        && h.hallId !== null && [ids.hall, ids.otherHall].includes(h.hallId) && h.warehouseId === (h.hallId === ids.hall ? ids.warehouse : ids.toWarehouse)
         && h.customerId === ids.customer && document.lines.every(line => line.skuId === ids.sku)
         && document.settlements.every(row => row.paymentAccountId === ids.payment && row.paymentMethodId === ids.method), "exact synthetic reference/economics scope, separate from native action grant");
     } } };

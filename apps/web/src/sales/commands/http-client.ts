@@ -8,9 +8,9 @@ const MAX_RESPONSE_CHUNKS = 65_536;
 const commandCodes: Readonly<Record<number, readonly string[]>> = {
   400: ['INVALID_HTTP_INPUT', 'INVALID_ID', 'INVALID_QUANTITY', 'INVALID_MONEY', 'INVALID_VERSION', 'INVALID_BUSINESS_DATE', 'INVALID_JSON'],
   401: ['UNAUTHENTICATED'], 403: ['FORBIDDEN', 'DESTINATION_SCOPE_FORBIDDEN'], 404: ['DOCUMENT_NOT_FOUND', 'PRODUCT_NOT_FOUND'],
-  409: ['SALES_DISPLAYED_PRICE_CHANGED', 'SALES_PRICE_QUOTE_REQUIRED', 'PRODUCT_REFERENCE_UNAVAILABLE', 'PRODUCT_SIZE_GROUP_MISMATCH', 'PRODUCT_SPEC_CONFLICT', 'PRODUCT_DELETED', 'VERSION_CONFLICT', 'IDEMPOTENCY_CONFLICT', 'INVALID_STATE', 'HISTORICAL_POSTING_NOT_IMPLEMENTED', 'INVENTORY_NOT_READY', 'MISSING_POSTING_PROVENANCE', 'UNKNOWN_PRICING_FACTS', 'PRODUCT_PRICING_UNAVAILABLE', 'SKU_UNAVAILABLE', 'SETTLEMENT_METHOD_MISMATCH', 'IMMUTABLE_SETTLEMENT_METHOD', 'NATIVE_CATALOGUE_FACTS_UNAVAILABLE', 'SALES_REFERENCE_UNAVAILABLE', 'SALES_SNAPSHOT_MISMATCH', 'BARCODE_UNAVAILABLE', 'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE'],
+  409: ['UNKNOWN_SETTLEMENT_FACTS', 'HISTORICAL_SETTLEMENT_FACTS_MISSING', 'HISTORICAL_SALE_TYPE_CHANGED', 'HISTORICAL_DISCOUNT_CHANGED', 'SALES_DISPLAYED_PRICE_CHANGED', 'SALES_PRICE_QUOTE_REQUIRED', 'PRODUCT_REFERENCE_UNAVAILABLE', 'PRODUCT_SIZE_GROUP_MISMATCH', 'PRODUCT_SPEC_CONFLICT', 'PRODUCT_DELETED', 'VERSION_CONFLICT', 'IDEMPOTENCY_CONFLICT', 'INVALID_STATE', 'HISTORICAL_POSTING_NOT_IMPLEMENTED', 'INVENTORY_NOT_READY', 'MISSING_POSTING_PROVENANCE', 'UNKNOWN_PRICING_FACTS', 'PRODUCT_PRICING_UNAVAILABLE', 'SKU_UNAVAILABLE', 'SETTLEMENT_METHOD_MISMATCH', 'IMMUTABLE_SETTLEMENT_METHOD', 'NATIVE_CATALOGUE_FACTS_UNAVAILABLE', 'SALES_REFERENCE_UNAVAILABLE', 'SALES_SNAPSHOT_MISMATCH', 'BARCODE_UNAVAILABLE', 'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE'],
   413: ['BODY_TOO_LARGE', 'SALES_PAYLOAD_TOO_LARGE', 'PRODUCT_MAINTENANCE_TOO_LARGE'], 415: ['UNSUPPORTED_MEDIA_TYPE'],
-  422: ['VERSION_STORAGE_OVERFLOW', 'MONEY_STORAGE_OVERFLOW', 'MONEY_OVERFLOW', 'MONEY_PRECISION', 'QUANTITY_OVERFLOW', 'INVALID_NUMBER', 'INVALID_BUSINESS_TYPE', 'INVALID_DISCOUNT', 'INVALID_LINES', 'INVALID_LINE', 'INVALID_PRICE', 'SETTLEMENT_LIMIT', 'INVALID_SETTLEMENT', 'SETTLEMENT_MISMATCH', 'INVALID_STOCK_EFFECT', 'INVALID_SALES_QUANTITY', 'INVALID_LINE_DISCOUNT', 'INVALID_ORDER_DISCOUNT', 'DISCOUNT_PRICE_MISMATCH', 'INVALID_GIFT_PRICE', 'ZERO_PRICE_NOT_CONFIRMED', 'BELOW_MINIMUM_PRICE', 'LINE_AMOUNT_MISMATCH', 'INVALID_ALLOCATION_ORDER', 'INDEPENDENT_RETURN_DISCOUNT', 'DISCOUNT_ALLOCATION_MISMATCH', 'DOCUMENT_AMOUNT_MISMATCH'],
+  422: ['VERSION_STORAGE_OVERFLOW', 'MONEY_STORAGE_OVERFLOW', 'MONEY_OVERFLOW', 'MONEY_PRECISION', 'QUANTITY_OVERFLOW', 'INVALID_NUMBER', 'INVALID_BUSINESS_TYPE', 'INVALID_DISCOUNT', 'INVALID_LINES', 'INVALID_LINE', 'INVALID_PRICE', 'SETTLEMENT_LIMIT', 'INVALID_SETTLEMENT', 'SETTLEMENT_MISMATCH', 'INVALID_STOCK_EFFECT', 'INVALID_SALES_QUANTITY', 'INVALID_LINE_DISCOUNT', 'INVALID_ORDER_DISCOUNT', 'MIXED_SALES_ORDER_DISCOUNT', 'DISCOUNT_PRICE_MISMATCH', 'INVALID_GIFT_PRICE', 'ZERO_PRICE_NOT_CONFIRMED', 'BELOW_MINIMUM_PRICE', 'LINE_AMOUNT_MISMATCH', 'INVALID_ALLOCATION_ORDER', 'INDEPENDENT_RETURN_DISCOUNT', 'DISCOUNT_ALLOCATION_MISMATCH', 'DOCUMENT_AMOUNT_MISMATCH'],
   500: ['INTERNAL_ERROR'],
 };
 /** GET receipt absence is not a possible native POST command rejection. */
@@ -49,7 +49,7 @@ function waitFor<T>(pending: Promise<T>, signal: AbortSignal, interrupted: () =>
 function knownError(status: number, value: unknown, write: boolean): string | undefined {
   if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).length !== 1 || !Object.hasOwn(value, 'error')) return;
   const error = (value as { error: unknown }).error;
-  if (!error || typeof error !== 'object' || Array.isArray(error) || Object.keys(error).length !== 2
+  if (!error || typeof error !== 'object' || Array.isArray(error) || (Object.keys(error).length !== 2 && !(Object.keys(error).length === 3 && Object.hasOwn(error, 'settlement') && (error as { code?: unknown }).code === 'SETTLEMENT_MISMATCH' && write))
     || !Object.hasOwn(error, 'code') || !Object.hasOwn(error, 'message')) return;
   const row = error as { code: unknown; message: unknown };
   if (typeof row.code === 'string' && typeof row.message === 'string' && (write ? commandCodes : receiptCodes)[status]?.includes(row.code)) return row.code;
@@ -163,8 +163,8 @@ export function createSalesCommandHttpClient(options: HttpQueryOptions): SalesCo
         cancelBody(response); throw fail('malformed-response', 'UNEXPECTED_REDIRECT');
       }
       if (!response.ok) {
-        let code: string | undefined;
-        try { code = knownError(response.status, await json(response, Math.min(limit, 16_384)), write); }
+        let code: string | undefined; let errorBody: unknown;
+        try { errorBody = await json(response, Math.min(limit, 16_384)); code = knownError(response.status, errorBody, write); }
         catch { checkpoint(); }
         checkpoint();
         if (!code) {
@@ -175,7 +175,7 @@ export function createSalesCommandHttpClient(options: HttpQueryOptions): SalesCo
         }
         // Codes are route-specific. A receipt absence is always only a read outcome.
         const rejected = response.status >= 400 && response.status < 500;
-        throw new SalesCommandError(statusKind(response.status), code, write ? (rejected ? 'rejected' : 'uncertain') : 'read', response.status);
+        throw new SalesCommandError(statusKind(response.status), code, write ? (rejected ? 'rejected' : 'uncertain') : 'read', response.status, (errorBody as { error?: { settlement?: unknown } })?.error?.settlement);
       }
       if (response.status !== 200) { cancelBody(response); throw fail('malformed-response', 'INVALID_RESPONSE'); }
       const data = await json(response, limit);

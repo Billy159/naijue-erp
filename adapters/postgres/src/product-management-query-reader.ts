@@ -14,6 +14,7 @@ import { decodeImportCheckpoint } from "./inventory-cutoff-import-store.ts";
 import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
 import type { PgProductQueryClient, PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
 import { catalogueRetainedDeleteEnabled, productSeasonArrayEnabled, productSeasonLabelJoin, type ProductSeasonArrayCapability, type CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
+import { checkedOrdinaryDocumentListOptions, type OrdinaryDocumentRuntime27Capability } from "./ordinary-document-list-reader.ts";
 
 export type PgProductManagementQueryPool = PgProductQueryPool;
 type Query = (sql: string, values?: unknown[]) => Promise<PgProductQueryResult>;
@@ -71,6 +72,17 @@ async function stockReadiness(query: Query, values: unknown[], matchedSql: strin
     requireDomain(runtime26 !== undefined, "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "Requested all-warehouse stock is outside the complete published scope");
     await stockAdditions(query, values, matchedSql, batchId, additionalWarehouses, additionalSkus);
   }
+  integrity(!booleanValue(row.invalid_size) && !booleanValue(row.missing_sizes) && !booleanValue(row.invalid_balance), "Native inventory facts are inconsistent");
+}
+/** Ordinary V27 treats absent balance rows as unknown, never as zero. Check
+ * native relation consistency independently of imported source artifacts. */
+async function ordinaryStockIntegrity(query: Query, values: unknown[], matchedSql: string): Promise<void> {
+  const row = one((await query(`/* product-management:ordinary-stock-coverage */ ${matchedSql}
+    SELECT EXISTS (SELECT 1 FROM naijue_erp.sku s JOIN matched_products p ON p.id=s.product_id WHERE NOT EXISTS (
+      SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id=p.size_group_id AND m.size_id=s.size_id)) AS invalid_size,
+    EXISTS (SELECT 1 FROM matched_products p WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id=p.size_group_id)) AS missing_sizes,
+    EXISTS (SELECT 1 FROM naijue_erp.inventory_balance b JOIN naijue_erp.sku s ON s.id=b.sku_id JOIN matched_products p ON p.id=s.product_id
+      WHERE b.version <= 0 OR b.last_operation_id IS NULL) AS invalid_balance`, values)).rows);
   integrity(!booleanValue(row.invalid_size) && !booleanValue(row.missing_sizes) && !booleanValue(row.invalid_balance), "Native inventory facts are inconsistent");
 }
 /** SQL return columns are typed UUID/boolean/text. Preserve the original admission DTO's
@@ -154,9 +166,12 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
   private readonly pool: PgProductManagementQueryPool;
   private readonly retainedDelete: boolean; private readonly seasonArray: boolean;
   private readonly runtime26: NativeRuntime26Capability | undefined;
-  constructor(pool: PgProductManagementQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, seasonCapability: ProductSeasonArrayCapability | null = null, runtime26?: NativeRuntime26Capability) {
+  private readonly runtime27: OrdinaryDocumentRuntime27Capability | undefined;
+  constructor(pool: PgProductManagementQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, seasonCapability: ProductSeasonArrayCapability | null = null, runtime26?: NativeRuntime26Capability, runtime27?: OrdinaryDocumentRuntime27Capability) {
+    if (runtime26 && runtime27) throw new TypeError("Conflicting product management runtime profiles");
     if (typeof pool?.connect !== "function") throw new TypeError("Product management reader requires an explicit PostgreSQL pool");
-    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability); this.seasonArray = productSeasonArrayEnabled(pool, seasonCapability);
+    this.pool = pool; this.runtime27 = runtime27 ? checkedOrdinaryDocumentListOptions({profile:"source-confirmed-unified-native-v1",runtime27}).runtime27 : undefined;
+    this.retainedDelete = this.runtime27 ? true : catalogueRetainedDeleteEnabled(pool, capability); this.seasonArray = this.runtime27 ? true : productSeasonArrayEnabled(pool, seasonCapability);
     this.runtime26 = checkedNativeRuntime26Capability(runtime26);
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query, client: PgProductQueryClient) => Promise<T>): Promise<T> {
@@ -170,6 +185,7 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
     };
     try {
       activeProductManagementRead(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
+      if (this.runtime27) { await this.runtime27.assertReady(client, "ORDINARY_DOCUMENT_READ"); activeProductManagementRead(signal); }
       const result = await work(query, client); activeProductManagementRead(signal); committing = true; await query("COMMIT"); began = false;
       activeProductManagementRead(signal); return result;
     } catch (error) {
@@ -192,7 +208,10 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
           JOIN naijue_erp.product_category parent ON parent.id = c.parent_id WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree FROM matched_products`, values)).rows);
       integrity(!booleanValue(status.invalid_category_tree), "Native categories exceed the two-level contract");
       const total = count(status.exact_total);
-      if (grant.totalStock === "all-warehouses") await stockReadiness(query, values, matchedSql, this.runtime26);
+      if (grant.totalStock === "all-warehouses") {
+        if (this.runtime27) await ordinaryStockIntegrity(query, values, matchedSql);
+        else await stockReadiness(query, values, matchedSql, this.runtime26);
+      }
       const rows = (await query(`/* product-management:page */ ${matchedSql}
         SELECT p.id, p.product_code, p.name, c.name AS category_name, p.year, se.name AS season_name, su.name AS supplier_name,
           p.thickness, p.retail_price::text FROM matched_products p JOIN naijue_erp.product_category c ON c.id = p.category_id
@@ -211,11 +230,18 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
         const productFits = fits.get(productId) ?? []; integrity(!productFits.some(value => value.id === fit.id), "Repeated product fit");
         productFits.push(fit); fits.set(productId, productFits);
       }
-      const stockRows = grant.totalStock === "all-warehouses" && ids.length ? (await query(`/* product-management:stock */ SELECT p.id,
+      const stockSql = this.runtime27 ? `/* product-management:stock */ SELECT p.id,
+        CASE WHEN (SELECT count(*)::numeric FROM naijue_erp.warehouse) * count(DISTINCT s.id)::numeric = count(w.id)::numeric
+          THEN coalesce(sum(b.quantity) FILTER (WHERE w.id IS NOT NULL),0)::text ELSE NULL END AS quantity
+        FROM naijue_erp.product p LEFT JOIN naijue_erp.sku s ON s.product_id=p.id
+        LEFT JOIN naijue_erp.inventory_balance b ON b.sku_id=s.id LEFT JOIN naijue_erp.warehouse w ON w.id=b.warehouse_id
+        WHERE p.id=ANY($1::uuid[]) GROUP BY p.id ORDER BY p.id` : `/* product-management:stock */ SELECT p.id,
         coalesce(sum(b.quantity), 0)::text AS quantity FROM naijue_erp.product p LEFT JOIN naijue_erp.sku s ON s.product_id = p.id
-        LEFT JOIN naijue_erp.inventory_balance b ON b.sku_id = s.id WHERE p.id = ANY($1::uuid[]) GROUP BY p.id ORDER BY p.id`, [ids])).rows : [];
-      const totals = new Map<string, string>();
-      for (const row of stockRows) { const id = entityId("product", stringValue(row.id)); integrity(ids.includes(id) && !totals.has(id), "Mismatched total stock target"); totals.set(id, stringValue(row.quantity)); }
+        LEFT JOIN naijue_erp.inventory_balance b ON b.sku_id = s.id WHERE p.id = ANY($1::uuid[]) GROUP BY p.id ORDER BY p.id`;
+      const stockRows = grant.totalStock === "all-warehouses" && ids.length ? (await query(stockSql, [ids])).rows : [];
+      const totals = new Map<string, string | null>();
+      for (const row of stockRows) { const id = entityId("product", stringValue(row.id)); integrity(ids.includes(id) && !totals.has(id), "Mismatched total stock target");
+        integrity(this.runtime27 !== undefined || row.quantity !== null, "Legacy stock requires complete totals"); totals.set(id, nullableString(row.quantity)); }
       integrity(grant.totalStock !== "all-warehouses" || totals.size === ids.length, "Missing exact all-warehouse stock result");
       const result = { page: parameters.page, pageSize: parameters.pageSize, exactTotal: total, items: rows.map(row => {
         const id = entityId("product", stringValue(row.id));

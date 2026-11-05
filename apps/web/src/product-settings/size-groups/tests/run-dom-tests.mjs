@@ -36,7 +36,7 @@ try {
   const succeed = async (request, total, name) => resolve(request, page(request, total, name));
   const type = async (input, value) => act(async () => { Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, value); input.dispatchEvent(new Event('input', { bubbles: true })); });
 
-  for (const [View, kind, headers] of [[SizeGroupsPage, 'groups', ['尺码组', '包含尺码']], [SeasonsPage, 'seasons', ['季节']], [BarcodeSchemesPage, 'schemes', ['方案名称', '条码类型', '编码规则', '总长度', '状态', '适用范围', '操作']]]) {
+  for (const [View, kind, headers] of [[SizeGroupsPage, 'groups', ['尺码组', '包含尺码']], [SeasonsPage, 'seasons', ['季节']], [BarcodeSchemesPage, 'schemes', ['方案名称', '条码类型', '编码规则', '原标注长度', '状态', '适用范围', '操作']]]) {
     const before = count(kind); await render(View); assert.equal(count(kind), before + 1, `${kind}: only live StrictMode activation dispatches`); assert.match(host.textContent, /正在读取资料/); assert.deepEqual([...host.querySelectorAll('th')].map(node => node.textContent), headers);
     assert.ok(![...host.querySelectorAll('button')].some(node => /新增|保存|编辑|删除/.test(node.textContent)), 'read-only means no write controls');
     const startup = latest(kind); await click(button('取消本次读取')); assert.equal(startup.read.signal.aborted, true); assert.match(host.textContent, /尚未读取/); assert.doesNotMatch(host.textContent, /正在读取/); await succeed(startup, 1, 'LATE CANCELLED STARTUP'); assert.doesNotMatch(host.textContent, /LATE CANCELLED STARTUP/); await click(button('读取'));

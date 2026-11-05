@@ -1,3 +1,10 @@
+import { readPublishedDocumentInventoryAnchor } from './published-document-inventory-anchor-reader.ts';
+import { readSalesRetainedApprovalEvidence } from './sales-retained-approval-reader.ts';
+import type { SalesRetainedApprovalHistory } from '../../../packages/application/src/sales-retained-approval.ts';
+import { checkedRuntime27CommandCapability, type Runtime27CommandCapability } from '../../../packages/application/src/runtime27-command-capability.ts';
+import { createStandardCatalogue27TransactionProof } from './standard-catalogue-completeness27.ts';
+import { readDocumentInventoryAnchor } from './document-inventory-anchor-reader.ts';
+import type { DocumentInventoryAnchor } from '../../../packages/domain/src/document-inventory-effects.ts';
 import { historicalCustomerExclusionEnabled } from "./party-read-reader.ts";
 import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import { NATIVE_TRANSFER_SNAPSHOT_LIMIT, loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
@@ -45,7 +52,9 @@ const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC',
 const HEADER_SELECT = `SELECT id, number, business_type, to_char(business_date, 'YYYY-MM-DD') AS business_date, hall_id, customer_id, salesperson_id, warehouse_id,
   responsible_staff_id, status, version, gross_amount::text, order_discount::text, net_due::text, note, created_by_account_id, created_hall_id,
   ${stamp("created_at")} AS created_at, ${stamp("updated_at")} AS updated_at,
-  approved_by_account_id, ${stamp("approved_at")} AS approved_at, stock_basis
+  approved_by_account_id, ${stamp("approved_at")} AS approved_at, stock_basis,
+  to_jsonb(sales_header) ? 'created_by_staff_id' AS unified_staff_columns,
+  to_jsonb(sales_header)->>'created_by_staff_id' AS created_by_staff_id, to_jsonb(sales_header)->>'approved_by_staff_id' AS approved_by_staff_id
   FROM naijue_erp.sales_header WHERE id = $1 FOR UPDATE`;
 const LINE_SELECT = `SELECT id, sales_id, line_no, sku_id, quantity::text, reference_price::text, deal_price::text,
   line_amount::text, allocated_discount::text, is_gift, pricing_rule, discount_tenths, zero_confirmed, product_code_snapshot, product_name_snapshot,
@@ -57,11 +66,12 @@ const SETTLEMENT_SELECT = `SELECT id, sales_id, line_no, payment_account_id, pay
 
 function decodeHeader(row: Record<string, unknown>): SalesHeaderRow {
   return { id: id("sales", row.id), number: stringValue(row.number), businessType: choice(row.business_type, ["SALE", "RETURN", "EXCHANGE"]),
-    businessDate: businessDate(stringValue(row.business_date)), hallId: id("hall", row.hall_id), customerId: id("customer", row.customer_id),
+    businessDate: businessDate(stringValue(row.business_date)), hallId: nullableId("hall", row.hall_id), customerId: id("customer", row.customer_id),
     salespersonId: nullableId("staff", row.salesperson_id), warehouseId: id("warehouse", row.warehouse_id), status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]),
     version: versionFromSql(row.version), grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due),
-    note: nullableString(row.note), responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
-    createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at), approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at) };
+    note: nullableString(row.note), responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: nullableId("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
+    createdAt: nullableString(row.created_at), updatedAt: nullableString(row.updated_at), approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at),
+    ...(row.unified_staff_columns === true ? { createdByStaffId: nullableId("staff", row.created_by_staff_id), approvedByStaffId: nullableId("staff", row.approved_by_staff_id) } : {}) };
 }
 function decodeLine(row: Record<string, unknown>): SalesLineRow {
   return { id: id("salesLine", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), skuId: id("sku", row.sku_id),
@@ -69,9 +79,9 @@ function decodeLine(row: Record<string, unknown>): SalesLineRow {
     pricingRule: row.pricing_rule === null ? null : choice(row.pricing_rule, ["UNIT_PRICE", "DISCOUNT"] as const),
     discountTenths: row.discount_tenths === null ? null : integerValue(row.discount_tenths),
     zeroConfirmed: row.zero_confirmed === null ? null : booleanValue(row.zero_confirmed),
-    lineAmount: moneyFromSql(row.line_amount), allocatedDiscount: moneyFromSql(row.allocated_discount), isGift: booleanValue(row.is_gift), isCurrent: booleanValue(row.is_current),
-    snapshot: { productCode: stringValue(row.product_code_snapshot), productName: stringValue(row.product_name_snapshot), colorName: stringValue(row.color_name_snapshot),
-      fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
+    lineAmount: moneyFromSql(row.line_amount), allocatedDiscount: row.allocated_discount === null ? null : moneyFromSql(row.allocated_discount), isGift: row.is_gift === null ? null : booleanValue(row.is_gift), isCurrent: booleanValue(row.is_current),
+    snapshot: { productCode: nullableString(row.product_code_snapshot), productName: nullableString(row.product_name_snapshot), colorName: nullableString(row.color_name_snapshot),
+      fitName: nullableString(row.fit_name_snapshot), sizeName: nullableString(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
 }
 function decodeSettlement(row: Record<string, unknown>): SalesSettlementRow {
   return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id), paymentMethodId: nullableId("paymentMethod", row.payment_method_id_snapshot),
@@ -91,11 +101,18 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
   private readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier | undefined;
   private readonly historicalCustomers: NativeSalesHistoricalCustomers | undefined;
   private readonly runtime26: NativeRuntime26Capability | undefined;
+  private readonly runtime27: Runtime27CommandCapability | undefined;
   private readonly maintainedCatalogue: boolean;
-  constructor(pool: PgSalesPool, options?: { readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability; readonly catalogueReadProof?: { readonly profile: "MAINTAINED_CATALOGUE26_V1" } }) {
+  constructor(pool: PgSalesPool, options?: { readonly runtime27: Runtime27CommandCapability; readonly catalogueCompleteness?: never; readonly historicalCustomerExclusion?: never; readonly runtime26?: never; readonly catalogueReadProof?: never } | { readonly runtime27?: never; readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability; readonly catalogueReadProof?: { readonly profile: "MAINTAINED_CATALOGUE26_V1" } }) {
     this.pool = pool;
-    if (options !== undefined && typeof options.catalogueCompleteness?.assertComplete !== "function")
+    if (options !== undefined && !("runtime27" in options) && typeof options.catalogueCompleteness?.assertComplete !== "function")
       throw new TypeError("Native catalogue facts require an explicit real completeness verifier");
+    if(options && 'runtime27' in options){
+      if(Object.getPrototypeOf(options)!==Object.prototype||Reflect.ownKeys(options).length!==1||Reflect.ownKeys(options).some(key=>key!=='runtime27'))throw new TypeError('Runtime27 options cannot mix legacy authorities');
+      const descriptor=Object.getOwnPropertyDescriptor(options,'runtime27');
+      if(!descriptor?.enumerable||!('value' in descriptor))throw new TypeError('Own runtime27 capability required');
+      this.runtime27=checkedRuntime27CommandCapability(descriptor.value);
+    }
     const capability = options?.historicalCustomerExclusion;
     this.historicalCustomers = historicalCustomerExclusionEnabled(pool, capability ?? null) && capability !== undefined
       ? Object.freeze({ target: pool, capability: Object.freeze({ profile: capability.profile, assertVerified: capability.assertVerified.bind(capability) }) }) : undefined;
@@ -122,11 +139,12 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
     let tx: PostgresSalesTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
-      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26, this.maintainedCatalogue, this.pool);
+      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26, this.maintainedCatalogue, this.pool, this.runtime27);
       // The first explicit runtime check is on this same client inside BEGIN,
       // before schema/current-actor/business work; the pre-COMMIT check remains.
       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
+      if(this.runtime27)await this.runtime27.assertReady(client,"DOCUMENT_COMMAND");
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       const schema = await client.query(`/* sales:current-schema */ SELECT EXISTS (
         SELECT 1 FROM naijue_erp.schema_migration WHERE version = 10) AS current_sales_schema_ready`);
@@ -136,6 +154,7 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
       tx.assertPostingComplete();
       tx.close();
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
+      if(this.runtime27)await this.runtime27.assertReady(client,"DOCUMENT_COMMAND");
       commitAttempted = true; await client.query("COMMIT");
       return result;
     } catch (error) {
@@ -157,8 +176,12 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
 
 class PostgresSalesTransaction implements SalesTransaction {
   private active = true;
+  private retainedApprovalGeneration = 0;
   private sales: { readonly id: EntityId<"sales">; readonly version: Version | null; readonly stockBasis: StoredSales["stockBasis"];
-    readonly creation?: Pick<SalesHeaderRow, "createdByAccountId" | "createdHallId" | "createdAt"> } | undefined;
+    readonly creation?: Pick<SalesHeaderRow, "createdByAccountId" | "createdByStaffId" | "createdHallId" | "createdAt"> } | undefined;
+  private balancesLocked = false;
+  private anchorRead = false;
+  private anchor: DocumentInventoryAnchor | undefined;
   private receiptActor: EntityId<"account"> | undefined;
   private identityLoaded = false;
   private identity: SalesCurrentIdentity | undefined;
@@ -185,24 +208,27 @@ class PostgresSalesTransaction implements SalesTransaction {
   close(): void { this.active = false; this.invalidateReferenceReads(); }
   private readonly client: PgSalesClient;
   private readonly nativeFacts: PostgresNativeSalesFacts;
+  private readonly standardCatalogue: ReturnType<typeof createStandardCatalogue27TransactionProof> | undefined;
   private readonly specificationCatalogue: MaintainedCatalogue26TransactionProof | undefined;
-  private readonly specificationRuntime: NativeRuntime26Capability | undefined;
+  private readonly specificationRuntime: NativeRuntime26Capability | Runtime27CommandCapability | undefined;
   private readonly specificationPool: PgSalesPool | undefined;
   private readonly specificationNativeFacts: PostgresNativeSalesFacts | undefined;
   private specificationResolved = false;
   private specificationResolving = false;
-  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability, maintainedCatalogue = false, pool?: PgSalesPool) {
-    this.client = client; this.balances = runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
+  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability, maintainedCatalogue = false, pool?: PgSalesPool, runtime27?: Runtime27CommandCapability) {
+    this.runtime27 = runtime27;
+    this.standardCatalogue=runtime27?createStandardCatalogue27TransactionProof(client,runtime27,()=>requireDomain(this.active,'TRANSACTION_CLOSED','Runtime27 catalogue cannot outlive original transaction')):undefined;
+    this.client = client; this.balances = runtime27 ? PostgresPostingBalances.forRuntime27(client,runtime27,()=>requireDomain(this.active,'TRANSACTION_CLOSED','Runtime27 posting cannot outlive original transaction')) : runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
       : PostgresPostingBalances.forRuntime26(client, runtime26, () => requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes"));
     const pair = maintainedCatalogue && runtime26 ? createMaintainedCatalogue26TransactionProof(client, runtime26,
       () => requireDomain(this.active, "TRANSACTION_CLOSED", "Catalogue proof cannot outlive its original sales callback")) : undefined;
-    this.specificationCatalogue = pair ?? (runtime26 ? createMaintainedCatalogue26TransactionProof(client,runtime26,
+    this.specificationCatalogue = this.standardCatalogue ?? pair ?? (runtime26 ? createMaintainedCatalogue26TransactionProof(client,runtime26,
       ()=>requireDomain(this.active,'TRANSACTION_CLOSED','Document specification proof cannot escape its original SAVE')) : undefined);
-    this.specificationRuntime = runtime26; this.specificationPool = pool;
-    this.nativeFacts = new PostgresNativeSalesFacts(pair?.query ?? ((sql, values) => this.query(sql, values)), salesId => {
+    this.specificationRuntime = runtime27 ?? runtime26; this.specificationPool = pool;
+    this.nativeFacts = new PostgresNativeSalesFacts(this.standardCatalogue?.query ?? pair?.query ?? ((sql, values) => this.query(sql, values)), salesId => {
       requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === salesId,
         "TRANSACTION_SCOPE", "Native facts require the original bound sales actor and target in an active transaction");
-    }, () => [...this.previousLines.values()].filter(line => line.isCurrent).map(line => ({ id: line.id, skuId: line.skuId, snapshot: line.snapshot })), pair?.verifier ?? verifier, historicalCustomers);
+    }, () => [...this.previousLines.values()].filter(line => line.isCurrent).map(line => ({ id: line.id, skuId: line.skuId, snapshot: line.snapshot })), this.standardCatalogue?.verifier ?? pair?.verifier ?? verifier, historicalCustomers);
     const specificationPair=this.specificationCatalogue;
     this.specificationNativeFacts=specificationPair?new PostgresNativeSalesFacts(specificationPair.query,salesId=>{
       requireDomain(this.active && this.specificationResolved && this.receiptActor!==undefined && this.sales?.id===salesId,
@@ -210,10 +236,16 @@ class PostgresSalesTransaction implements SalesTransaction {
     },()=>[...this.previousLines.values()].filter(l=>l.isCurrent).map(l=>({id:l.id,skuId:l.skuId,snapshot:l.snapshot})),specificationPair.verifier,historicalCustomers):undefined;
   }
   async resolveDocumentSkus(input: DocumentSpecificationResolution): Promise<readonly EntityId<'sku'>[]> {
+    await this.assertOrdinaryOrigin();
     const bound = () => requireDomain(this.active && input.scope.kind === 'SALES' && input.scope.actor.accountId === this.receiptActor
-      && input.scope.documentId === this.sales?.id && (this.sales.version === null || this.sales.stockBasis === 'RUNTIME_LEDGER'),
+      && input.scope.documentId === this.sales?.id,
       'TRANSACTION_SCOPE','Specification append requires the original bound sales SAVE');
     bound(); await this.getCurrentSalesIdentity(input.scope.actor.accountId);
+    if(this.standardCatalogue && input.selections.every(selection=>typeof selection.skuId==='string'&&selection.spec===undefined)){
+      requireDomain(input.selections.length>0&&input.selections.length<=20000, 'INVALID_LINES', 'Bounded SKU selections required');
+      const ids=input.selections.map(selection=>entityId('sku',selection.skuId!));
+      await this.standardCatalogue.assertExistingSkus(ids);bound();return ids;
+    }
     requireDomain(this.specificationRuntime && this.specificationPool && this.specificationCatalogue,
       'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Reviewed exact26 maintained catalogue authority required');
     requireDomain(!this.specificationResolving, "TRANSACTION_SCOPE", "One original specification resolution at a time");
@@ -247,6 +279,7 @@ class PostgresSalesTransaction implements SalesTransaction {
     check(input.header.id);
     const { document, referenceKey } = checkedNativeSalesFactInput(input);
     await this.getCurrentSalesIdentity(this.receiptActor!); check(document.header.id);
+    if(this.standardCatalogue)await this.standardCatalogue.assertExistingSkus(document.lines.filter(line=>line.isCurrent).map(line=>line.skuId));
     const scope = this.referenceScopeKey(), key = JSON.stringify([scope, referenceKey]);
     if (this.factsCache?.key === key) return this.factsCache.value;
     const value = await (this.specificationResolved ? this.specificationNativeFacts! : this.nativeFacts).load(document);
@@ -261,6 +294,7 @@ class PostgresSalesTransaction implements SalesTransaction {
     const ids = [...new Set(skuIds.map(value => entityId("sku", value)))].sort();
     requireDomain(ids.length > 0 && ids.length <= NATIVE_TRANSFER_SNAPSHOT_LIMIT, "INVALID_LINES", "Bounded SKU selection required");
     await this.getCurrentSalesIdentity(this.receiptActor!); check();
+    if(this.standardCatalogue)await this.standardCatalogue.assertExistingSkus(ids);
     const scope = this.referenceScopeKey(), key = JSON.stringify([scope, ids]);
     if (this.snapshotsCache?.key === key) return new Map(this.snapshotsCache.value);
     const value = await loadNativeTransferSnapshots((sql, values) => this.query(sql, values), ids);
@@ -328,24 +362,24 @@ class PostgresSalesTransaction implements SalesTransaction {
     const header = decodeHeader(row);
     const stockBasis = choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]);
     this.sales = { id: salesId, version: header.version, stockBasis,
-      creation: { createdByAccountId: header.createdByAccountId, createdHallId: header.createdHallId, createdAt: header.createdAt } };
+      creation: { createdByAccountId: header.createdByAccountId, ...(header.createdByStaffId === undefined ? {} : { createdByStaffId: header.createdByStaffId }), createdHallId: header.createdHallId, createdAt: header.createdAt } };
     const lines = (await this.query(LINE_SELECT, [salesId])).rows.map(decodeLine);
     const settlements = (await this.query(SETTLEMENT_SELECT, [salesId])).rows.map(decodeSettlement);
     for (const line of lines) this.previousLines.set(line.id, structuredClone(line));
     for (const row of settlements) this.previousSettlements.set(row.id, structuredClone(row));
-    // Existing AND absent keys share the importer's canonical advisory-lock order before row locks.
-    // Loading a document never materializes a sparse zero balance.
-    if (stockBasis === "RUNTIME_LEDGER") await this.balances.lock(lines.filter(line => line.isCurrent)
-      .map(line => ({ warehouseId: header.warehouseId, skuId: line.skuId })));
+    // Inventory keys are locked explicitly from the complete transition plan,
+    // never guessed from a read or restricted to nonzero aggregate deltas.
     return { document: { header, lines, settlements }, stockBasis };
   }
   async putRuntimeSales(document: SalesDocument): Promise<void> {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes");
     const h = document.header; const loaded = this.sales;
     requireDomain(loaded?.id === h.id, "TRANSACTION_SCOPE", "Document must be read before it is written");
-    requireDomain(loaded.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED", "Cutoff history is not a runtime posting");
+    this.retainedApprovalGeneration++;
+    await this.assertOrdinaryOrigin();
     requireDomain(h.version === (loaded.version === null ? 1 : loaded.version + 1), "VERSION_CONFLICT", "Document write must advance the loaded version exactly once");
     requireDomain(loaded.creation ? h.createdByAccountId === loaded.creation.createdByAccountId
+      && (h.createdByStaffId ?? null) === (loaded.creation.createdByStaffId ?? null)
       && h.createdHallId === loaded.creation.createdHallId && h.createdAt === loaded.creation.createdAt
       : this.receiptActor !== undefined && h.createdByAccountId === this.receiptActor,
     "IMMUTABLE_CREATION_FACTS", "Sales creation facts must preserve the loaded header, and new creators must match the receipt actor");
@@ -362,7 +396,7 @@ class PostgresSalesTransaction implements SalesTransaction {
       result = await this.query(`INSERT INTO naijue_erp.sales_header (${columns}, stock_basis) VALUES (${values.map((_value, index) => `$${index + 1}`).join(", ")}, 'RUNTIME_LEDGER') ON CONFLICT (id) DO NOTHING`, values);
     } else {
       const fields = columns.split(", ");
-      result = await this.query(`UPDATE naijue_erp.sales_header SET ${fields.slice(1).map((field, index) => `${field} = $${index + 2}`).join(", ")} WHERE id = $1 AND version = $22 AND stock_basis = 'RUNTIME_LEDGER'`, [...values, versionToSql(loaded.version)]);
+      result = await this.query(`UPDATE naijue_erp.sales_header SET ${fields.slice(1).map((field, index) => `${field} = $${index + 2}`).join(", ")} WHERE id = $1 AND version = $22 AND stock_basis = '${loaded.stockBasis}'`, [...values, versionToSql(loaded.version)]);
     }
     requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Document compare-and-swap failed");
     const changedLines = document.lines.filter(line => {
@@ -379,7 +413,7 @@ class PostgresSalesTransaction implements SalesTransaction {
       requireDomain(line.salesId === h.id, "FOREIGN_LINE_ID", "Line must belong to this sales document");
       const s = line.snapshot;
       const lineValues = [line.id, line.salesId, line.lineNo, line.skuId, line.quantity.toString(), line.referencePrice === null ? null : moneyToSql(line.referencePrice), moneyToSql(line.dealPrice),
-        moneyToSql(line.lineAmount), moneyToSql(line.allocatedDiscount), line.isGift, s.productCode, s.productName, s.colorName, s.fitName, s.sizeName, s.barcode, line.isCurrent, line.pricingRule, line.discountTenths, line.zeroConfirmed];
+        moneyToSql(line.lineAmount), line.allocatedDiscount === null ? null : moneyToSql(line.allocatedDiscount), line.isGift, s.productCode, s.productName, s.colorName, s.fitName, s.sizeName, s.barcode, line.isCurrent, line.pricingRule, line.discountTenths, line.zeroConfirmed];
       const lineColumns = ["id", "sales_id", "line_no", "sku_id", "quantity", "reference_price", "deal_price", "line_amount", "allocated_discount", "is_gift", "product_code_snapshot", "product_name_snapshot", "color_name_snapshot", "fit_name_snapshot", "size_name_snapshot", "barcode_snapshot", "is_current", "pricing_rule", "discount_tenths", "zero_confirmed"];
       const written = await this.query(`INSERT INTO naijue_erp.sales_line (${lineColumns.join(", ")}) VALUES (${lineValues.map((_value, index) => `$${index + 1}`).join(", ")})
         ON CONFLICT (id) DO UPDATE SET ${lineColumns.slice(2).map(column => `${column} = EXCLUDED.${column}`).join(", ")} WHERE sales_line.sales_id = EXCLUDED.sales_id`, lineValues);
@@ -409,34 +443,73 @@ class PostgresSalesTransaction implements SalesTransaction {
       requireDomain(written.rowCount === 1, "INVALID_SETTLEMENT_REFERENCE", "Settlement identity or payment account reference is invalid");
     }
   }
+  private readonly runtime27: Runtime27CommandCapability | undefined;
+  async getDocumentInventoryAnchor(kind: 'SALES' | 'TRANSFER', documentId: EntityId<'sales'> | EntityId<'transfer'>): Promise<DocumentInventoryAnchor | undefined> {
+    requireDomain(this.active && kind === 'SALES' && this.sales?.id === documentId, 'TRANSACTION_SCOPE', 'Anchor must belong to the loaded ordinary sales document');
+    if (!this.anchorRead) {
+      const anchor = await (this.runtime27 ? readPublishedDocumentInventoryAnchor : readDocumentInventoryAnchor)((sql, values) => this.query(sql, values), kind, documentId);
+      requireDomain(this.active, 'TRANSACTION_CLOSED', 'Anchor read must remain on its original transaction');
+      this.anchor = anchor; this.anchorRead = true;
+    }
+    return structuredClone(this.anchor);
+  }
+  private async assertOrdinaryOrigin(): Promise<void> {
+    requireDomain(this.active && this.sales, 'TRANSACTION_SCOPE', 'Load the ordinary sales document first');
+    if (this.sales.stockBasis === 'CUTOFF_HISTORY') requireDomain(await this.getDocumentInventoryAnchor('SALES', this.sales.id),
+      'MISSING_POSTING_PROVENANCE', 'Converted ordinary sales require their real sealed migration anchor and reviewed schema support');
+  }
+  async lockBalances(keys: readonly { readonly warehouseId: EntityId<'warehouse'>; readonly skuId: EntityId<'sku'> }[]): Promise<void> {
+    requireDomain(this.active && this.sales && !this.balancesLocked && keys.length > 0, 'TRANSACTION_SCOPE', 'Lock the complete ordinary sales posting set exactly once');
+    this.balancesLocked = true;
+    await this.assertOrdinaryOrigin();
+    await this.balances.lock(keys);
+  }
   async getBalance(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<InventoryBalanceRow | undefined> {
-    requireDomain(this.active && this.sales, "TRANSACTION_SCOPE", "Read the sales target before posting");
+    requireDomain(this.active && this.sales && this.balancesLocked, "TRANSACTION_SCOPE", "Lock the complete sales posting set before reading balances");
     return this.balances.get(warehouseId, skuId);
   }
   async assertAbsentBalanceIsPublishedZero(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<void> {
-    requireDomain(this.active && this.sales?.stockBasis === "RUNTIME_LEDGER", "TRANSACTION_SCOPE", "Only the loaded runtime sales document may prove first use");
+    requireDomain(this.active && this.sales && this.balancesLocked, "TRANSACTION_SCOPE", "Only the loaded locked ordinary sales may prove first use");
+    await this.assertOrdinaryOrigin();
     await this.balances.assertZero(warehouseId, skuId);
   }
   async putBalance(row: InventoryBalanceRow): Promise<void> { await this.balances.put(row); }
+  async getRetainedSalesApprovalHistory(salesId: EntityId<"sales">, expectedVersion: Version, requireMigrationOrigin=false): Promise<SalesRetainedApprovalHistory> {
+    const generation = this.retainedApprovalGeneration;
+    const check = (): void => {
+      requireDomain(this.active, "TRANSACTION_CLOSED", "Retained approval cannot outlive its original command transaction");
+      requireDomain(this.receiptActor !== undefined && this.receiptKey !== undefined && this.sales?.id === salesId && this.sales.version === expectedVersion && generation === this.retainedApprovalGeneration,
+        "TRANSACTION_SCOPE", "Retained approval needs the bound receipt actor, locked target and exact original version");
+    };
+    check();
+    const history = await readSalesRetainedApprovalEvidence((sql, values) => this.query(sql, values), salesId, expectedVersion, this.runtime27!==undefined, requireMigrationOrigin);
+    check();
+    if(history.inventoryAnchor){this.anchor=history.inventoryAnchor;this.anchorRead=true;}
+    return Object.freeze({events:history.events,...(history.migrationOrigin?{migrationOrigin:history.migrationOrigin}:{}),assertCurrent:check});
+  }
   async listSalesLedger(salesId: EntityId<"sales">): Promise<readonly InventoryLedgerRow[]> {
     requireDomain(this.sales?.id === salesId, "TRANSACTION_SCOPE", "Ledger must belong to the loaded document");
     return (await this.query(`SELECT l.id, l.operation_id, l.event_kind, l.warehouse_id, l.sku_id, l.quantity_delta::text, sl.sales_id, l.source_sales_line_id AS sales_line_id,
-      l.source_document_version, l.reverses_entry_id, to_char(l.business_date, 'YYYY-MM-DD') AS business_date, ${stamp("l.posted_at")} AS posted_at
+      l.source_document_version, l.reverses_entry_id, to_jsonb(l)->>'baseline_anchor_operation_id' AS baseline_anchor_operation_id, to_char(l.business_date, 'YYYY-MM-DD') AS business_date, ${stamp("l.posted_at")} AS posted_at
       FROM naijue_erp.inventory_ledger l JOIN naijue_erp.sales_line sl ON sl.id = l.source_sales_line_id
       WHERE sl.sales_id = $1 ORDER BY l.source_document_version, l.id`, [salesId])).rows.map(row => ({
         id: id("ledger", row.id), operationId: id("operation", row.operation_id), eventKind: choice(row.event_kind, ["APPROVE", "UNAPPROVE"]), warehouseId: id("warehouse", row.warehouse_id),
         skuId: id("sku", row.sku_id), quantityDelta: quantityFromSql(row.quantity_delta), source: { kind: "SALES", salesId: id("sales", row.sales_id), salesLineId: id("salesLine", row.sales_line_id), endpoint: "SALES_WAREHOUSE" },
-        sourceDocumentVersion: versionFromSql(row.source_document_version), reversesEntryId: nullableId("ledger", row.reverses_entry_id), businessDate: businessDate(stringValue(row.business_date)), postedAt: stringValue(row.posted_at) }));
+        sourceDocumentVersion: versionFromSql(row.source_document_version), reversesEntryId: nullableId("ledger", row.reverses_entry_id),
+        ...(row.baseline_anchor_operation_id === undefined ? {} : { baselineAnchorOperationId: nullableId("operation", row.baseline_anchor_operation_id) }), businessDate: businessDate(stringValue(row.business_date)), postedAt: stringValue(row.posted_at) }));
   }
   async appendLedger(input: InventoryLedgerRow): Promise<void> {
     const row: InventoryLedgerRow = structuredClone(input);
-    requireDomain(row.source.kind === "SALES" && row.source.salesId === this.sales?.id && this.sales?.stockBasis === "RUNTIME_LEDGER", "TRANSACTION_SCOPE", "This adapter persists only runtime sales effects, not transfer commands");
+    requireDomain(row.source.kind === "SALES" && row.source.salesId === this.sales?.id, "TRANSACTION_SCOPE", "This adapter persists only runtime sales effects, not transfer commands");
+    await this.assertOrdinaryOrigin();
+    if (row.baselineAnchorOperationId != null) requireDomain(this.anchor?.receipt.id === row.baselineAnchorOperationId,
+      'INVALID_BASELINE_ANCHOR', 'First reversal must reference this ordinary document migration anchor');
     const transition = this.balances.prepareLiveAppend(row);
     const written = await this.query(`INSERT INTO naijue_erp.inventory_ledger (id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta,
-      source_sales_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at, quantity_before, quantity_after)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, 'SALES_WAREHOUSE', $8, $9, $10, $11, $12::bigint, $13::bigint)`,
+      source_sales_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at, quantity_before, quantity_after${row.baselineAnchorOperationId == null ? '' : ', baseline_anchor_operation_id'})
+      VALUES ($1, $2, $3, $4, $5, $6, $7, 'SALES_WAREHOUSE', $8, $9, $10, $11, $12::bigint, $13::bigint${row.baselineAnchorOperationId == null ? '' : ', $14::uuid'})`,
       [row.id, row.operationId, row.eventKind, row.warehouseId, row.skuId, row.quantityDelta.toString(), row.source.salesLineId, versionToSql(row.sourceDocumentVersion), row.reversesEntryId, row.businessDate, row.postedAt,
-        transition.quantityBefore.toString(), transition.quantityAfter.toString()]);
+        transition.quantityBefore.toString(), transition.quantityAfter.toString(), ...(row.baselineAnchorOperationId == null ? [] : [row.baselineAnchorOperationId])]);
     requireDomain(written.rowCount === 1, "INVENTORY_INTEGRITY_FAILED", "Exact native inventory effect was not appended");
     this.balances.didAppendLive(transition);
   }

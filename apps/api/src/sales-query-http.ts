@@ -1,4 +1,4 @@
-import { documentListWire, salesDetailWire } from './document-list-wire.ts';
+import { documentListWire, ordinaryDocumentTotalsWire, requireOrdinaryDocumentProfile, salesDetailWire } from './document-list-wire.ts';
 import type { IncomingHttpHeaders } from "node:http";
 import type { FastifyPluginAsync } from "fastify";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
@@ -14,6 +14,9 @@ export interface SalesQueryAuthenticationInput {
 export interface SalesQueryHttpOptions {
   /** Required current trusted session/identity provider. Client actor/roles/scope are never accepted. */
   readonly authenticate: (input: SalesQueryAuthenticationInput) => Promise<ActorContext | null>;
+  /** Host-selected ordinary runtime; client negotiation never selects a data source. */
+  readonly listProfile?: "ordinary-v1";
+  readonly ordinaryHistory?: true;
   readonly dependencies: SalesQueryDependencies;
 }
 /** Read-only POST routes accept structured bounded filters, not commands. No server/listener or pool is created. */
@@ -39,7 +42,7 @@ export function createSalesQueryHttpPlugin(options: SalesQueryHttpOptions): Fast
     app.addHook("onResponse", async request => { reads.get(request)?.cleanup(); reads.delete(request); actors.delete(request); });
     app.setErrorHandler((error, _request, reply) => {
       if (error instanceof DomainError) {
-        const statuses: Readonly<Record<string, number>> = { INVALID_SALES_QUERY: 400, FORBIDDEN: 403, DOCUMENT_NOT_FOUND: 404, SALES_READ_TOO_LARGE: 413, SALES_READ_ABORTED: 408 };
+        const statuses: Readonly<Record<string, number>> = { SALES_HISTORY_UNAVAILABLE: 503, ORDINARY_DOCUMENTS_NOT_READY: 503, ORDINARY_READ_CHANGED: 409, DOCUMENT_READ_CHANGED: 409, INVALID_DOCUMENT_LIST_PROFILE: 400, INVALID_SALES_QUERY: 400, FORBIDDEN: 403, DOCUMENT_NOT_FOUND: 404, SALES_READ_TOO_LARGE: 413, SALES_READ_ABORTED: 408 };
         const status = Object.hasOwn(statuses, error.code) ? statuses[error.code] : undefined;
         if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied" : "Sales read rejected" } });
       }
@@ -50,8 +53,10 @@ export function createSalesQueryHttpPlugin(options: SalesQueryHttpOptions): Fast
       // Malformed trusted facts, unknown SQL failures and provider details never become successful empty pages or leaked errors.
       return reply.code(500).send({ error: { code: "INTERNAL_ERROR", message: "The sales read could not be completed" } });
     });
-    for (const [url, read] of [["/sales/query", service.readList], ["/sales/references/query", service.readReferences], ["/sales/detail/query", service.readDetail],
+    for (const [url, read] of [["/sales/totals/query", service.readTotals], ["/sales/query", service.readList], ["/sales/references/query", service.readReferences], ["/sales/detail/query", service.readDetail],
       ["/sales/history/query", service.readHistory], ["/sales/settlement-statistics/query", service.readSettlementStatistics]] as const) {
+      // Unified ordinary runtime has no second history query path. Legacy oracle retains its route.
+      if (options.listProfile === 'ordinary-v1' && options.ordinaryHistory !== true && url === '/sales/history/query') continue;
       app.post(url, { bodyLimit: 65_536 }, async (request, reply) => {
         if (!request.query || typeof request.query !== "object" || Array.isArray(request.query) || Object.keys(request.query).length) invalidSalesQuery();
         if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") {
@@ -59,8 +64,9 @@ export function createSalesQueryHttpPlugin(options: SalesQueryHttpOptions): Fast
         }
         const actor = actors.get(request); const state = reads.get(request);
         if (!actor || !state) throw new Error("Missing trusted sales query context");
+        if (options.listProfile === 'ordinary-v1' && (url === '/sales/query' || url === '/sales/totals/query')) requireOrdinaryDocumentProfile(request.headers['x-naijue-document-list']);
         const result=await read(actor, request.body, state.controller.signal);
-        return reply.type("application/json").send(exactJson(url==='/sales/query'?documentListWire(result,request.headers['x-naijue-document-summary']):url==='/sales/detail/query'?salesDetailWire(result,request.headers['x-naijue-document-summary']):result));
+        return reply.type("application/json").send(exactJson(url==='/sales/query'?documentListWire(result,request.headers['x-naijue-document-summary'],options.listProfile,request.headers['x-naijue-document-list']):url==='/sales/totals/query'?ordinaryDocumentTotalsWire(result):url==='/sales/detail/query'?salesDetailWire(result,request.headers['x-naijue-document-summary']):result));
       });
     }
   };

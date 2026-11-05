@@ -17,8 +17,9 @@ export type SalesProposalPicker = CurrentSalesReferenceQuery['kind'] | 'product'
 interface SalesProposalLineFields {
   readonly key: string;
   readonly product: CurrentFormProduct; readonly quantity: string; readonly dealPrice: string;
+  readonly sourceLine?: SalesDraftDto['lines'][number];
   readonly sourceSnapshot?: SalesDraftDto['lines'][number]['snapshot'];
-  readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT'; readonly discount: string; readonly isGift: boolean; readonly zeroConfirmed: boolean;
+  readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT' | null; readonly discount: string; readonly isGift: boolean | null; readonly zeroConfirmed: boolean | null;
 }
 export interface SalesProposalSpecification {
   readonly color: SalesSpecChoice; readonly fit: SalesSpecChoice; readonly size: SalesSpecChoice; readonly sizeGroup: SalesSpecChoice;
@@ -39,6 +40,9 @@ const emptyEntry = (direction: 'IN' | 'OUT', key: string): SalesProposalEntry =>
 const emptyEntries = () => ({ IN: [emptyEntry('IN', 'entry-IN-0')], OUT: [emptyEntry('OUT', 'entry-OUT-0')] });
 export interface SalesProposal {
   readonly responsible?: { readonly id: string; readonly name: string };
+  readonly settlementFactsMissing?: boolean;
+  /** Authenticated detail projection only; omitted from every SAVE request. */
+  readonly historicalSaleOrigin?: { readonly kind: 'SIGNED_SALE'; readonly originalOrderDiscount: string };
   readonly businessType: 'SALE' | 'RETURN' | 'EXCHANGE'; readonly businessDate: string; readonly note: string; readonly orderDiscount: string;
   readonly hall: CurrentSalesReferenceItem | null; readonly customer: CurrentSalesReferenceItem | null;
   readonly salesperson: CurrentSalesReferenceItem | null; readonly warehouse: CurrentSalesReferenceItem | null;
@@ -69,16 +73,31 @@ function amount(raw: string): bigint {
 export function salesProposalMoneyInputDisplay(raw:string):string {
  try {const value=amount(raw);return `${value===0n?'':'-'}${value/100n}.${(value%100n).toString().padStart(2,'0')}`;}catch{return raw;}
 }
+/** Exact untouched imported row, used only for presentation/transport; server rechecks owned facts. */
+export function salesUnchangedSourceLine(row: SalesProposalPricingLine): SalesDraftDto['lines'][number] | null {
+ const old = row.sourceLine;
+ if (!old || row.quantity !== old.quantity || row.dealPrice !== `${BigInt(old.dealPrice)/100n}.${(BigInt(old.dealPrice)%100n).toString().padStart(2,'0')}` || row.pricingRule !== old.pricingRule || row.isGift !== old.isGift || row.zeroConfirmed !== old.zeroConfirmed || row.discount !== (old.discountTenths === null ? '' : `${Math.trunc(old.discountTenths/10)}.${old.discountTenths%10}`)) return null;
+ if ('sku' in row && (!row.sku || (row.sku as CurrentFormSku).id !== old.skuId)) return null;
+ return old;
+}
+/** Quantity signs, including zero-priced gifts, define a mixed document. */
+export function salesProposalHasMixedQuantities(lines: readonly { readonly quantity: string }[]): boolean {
+  let incoming = false, outgoing = false;
+  for (const row of lines) { try { const value = quantity(row.quantity); incoming ||= value < 0n; outgoing ||= value > 0n; } catch { /* Invalid input remains invalid at SAVE. */ } }
+  return incoming && outgoing;
+}
+export const mixedSalesDiscountNotice = '正负明细混合单不使用整单优惠／抹零，明细保持同一单据。';
 /** Display projection only. Missing/invalid input stays unknown, never a saved
  * zero, price authority or an approval decision. Uses the same integer money rules. */
 export function salesProposalMoney(draft: Omit<SalesProposal, 'lines'> & { readonly lines: readonly SalesProposalPricingLine[] }): { readonly grossMinor: string; readonly netDueMinor: string; readonly orderDiscountMinor: string;
   readonly settledMinor: string | null; readonly differenceMinor: string | null; readonly balanced: boolean } | null {
   try {
     const amounts = draft.lines.map(row => {
-      if (!/^-?[1-9]\d{0,18}$/.test(row.quantity) || draft.businessType === 'SALE' && row.quantity.startsWith('-')) throw Error();
+      if (!/^-?[1-9]\d{0,18}$/.test(row.quantity)) throw Error();
+      const original = salesUnchangedSourceLine(row); if (original) return BigInt(original.lineAmount);
       let price = 0n;
       if (!row.isGift) {
-        if (row.pricingRule === 'UNIT_PRICE') price = amount(row.dealPrice);
+        if (row.pricingRule === 'UNIT_PRICE' || row.pricingRule === null) price = amount(row.dealPrice);
         else {
           if (row.product.retailPrice === null || !/^\d{1,2}(?:\.\d)?$/.test(row.discount.trim())) throw Error();
           const [whole, fraction = '0'] = row.discount.trim().split('.');
@@ -88,8 +107,9 @@ export function salesProposalMoney(draft: Omit<SalesProposal, 'lines'> & { reado
       return BigInt(row.quantity) * price;
     });
     const discount = amount(draft.orderDiscount);
-    if (draft.businessType === 'SALE') allocateSalesDiscount(amounts.map(value => minorAmount(value.toString())), minorAmount(discount.toString()));
-    else if (discount !== 0n) throw Error();
+    if (!draft.historicalSaleOrigin && salesProposalHasMixedQuantities(draft.lines) && discount !== 0n) throw Error();
+    if (draft.businessType === 'SALE' && !draft.historicalSaleOrigin && !draft.lines.some(row => row.quantity.startsWith('-'))) allocateSalesDiscount(amounts.map(value => minorAmount(value.toString())), minorAmount(discount.toString()));
+    else if (discount !== 0n && draft.businessType !== 'SALE') throw Error();
     const gross = amounts.reduce((sum, value) => sum + value, 0n), net = gross - discount;
     let settled: bigint | null;
     try { settled = draft.settlements.reduce((sum, row) => {
@@ -97,7 +117,7 @@ export function salesProposalMoney(draft: Omit<SalesProposal, 'lines'> & { reado
       if (!row.method && !row.account && row.amount.trim() === '' && row.direction === 'RECEIVE') return sum;
       if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id || row.direction !== 'RECEIVE' && row.direction !== 'REFUND') throw Error();
       return sum + (row.direction === 'RECEIVE' ? 1n : -1n) * amount(row.amount);
-    }, 0n); } catch { settled = null; }
+    }, 0n); if (draft.settlementFactsMissing && !draft.settlements.length) settled = null; } catch { settled = null; }
     return { grossMinor: gross.toString(), netDueMinor: net.toString(), orderDiscountMinor: discount.toString(), settledMinor: settled?.toString() ?? null,
       differenceMinor: settled === null ? null : (net - settled).toString(), balanced: settled !== null && net === settled };
   } catch { return null; }
@@ -129,6 +149,9 @@ export class SalesProposalSession {
   readonly #skuPool=new BoundedReadPool();
   readonly #scope: ReadScope; readonly #reader: SalesProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined; readonly #listeners = new Set<() => void>();
   #seeded = false;
+  #savedSignedSale = false;
+  #savedDiscount: string | null = null;
+  get preservesHistoricalSale(): boolean { return this.#savedSignedSale; }
   #salespersonDefaultClosed = false;
   readonly #specSkus = new Map<string, readonly CurrentFormSku[]>();
   readonly #dictionaryGroups = new Map<string, DictionarySizeGroup>();
@@ -167,10 +190,13 @@ export class SalesProposalSession {
     let draft: SalesProposal;
     try {
       draft = structuredClone(value);
-      if (!['SALE', 'RETURN', 'EXCHANGE'].includes(draft.businessType) || !Array.isArray(draft.lines) || !draft.lines.length || draft.lines.length > 200 || new Set(draft.lines.map(line => line.key)).size !== draft.lines.length || !Array.isArray(draft.settlements) || draft.settlements.length > 3 || new Set(draft.settlements.map(row => row.key)).size !== draft.settlements.length) return false;
+      if (!['SALE', 'RETURN', 'EXCHANGE'].includes(draft.businessType) || !Array.isArray(draft.lines) || !draft.lines.length || draft.lines.length > 200 || new Set(draft.lines.map(line => line.key)).size !== draft.lines.length || !Array.isArray(draft.settlements) || draft.settlements.length > 2000 || new Set(draft.settlements.map(row => row.key)).size !== draft.settlements.length) return false;
       if (typeof draft.businessDate !== 'string' || typeof draft.note !== 'string' || typeof draft.orderDiscount !== 'string' || draft.lines.some(line => !line.key || !line.sku || line.sku.productId !== line.product.id || typeof line.quantity !== 'string' || typeof line.dealPrice !== 'string')) return false;
     } catch { return false; }
     for (const line of draft.lines) if (line.sku && line.sourceSnapshot) this.#savedLines.set(line.key, Object.freeze({ skuId: line.sku.id, snapshot: line.sourceSnapshot, product: line.product }));
+    if (draft.historicalSaleOrigin && (draft.businessType !== 'SALE' || draft.historicalSaleOrigin.kind !== 'SIGNED_SALE' || !/^(?:0|[1-9]\d*)$/.test(draft.historicalSaleOrigin.originalOrderDiscount) || BigInt(draft.historicalSaleOrigin.originalOrderDiscount) !== amount(draft.orderDiscount))) return false;
+    this.#savedSignedSale = draft.businessType === 'SALE' && draft.historicalSaleOrigin?.kind === 'SIGNED_SALE';
+    this.#savedDiscount = this.#savedSignedSale ? draft.orderDiscount : null;
     this.#seeded = true; this.#savedWarehouse = draft.hall && draft.warehouse ? { hallId: draft.hall.id, warehouseId: draft.warehouse.id } : null; this.#revision++;
     this.#publish({ draft, dirty, entries: emptyEntries(), lineEdit: null, errors: [], notice: null, totals: null }); return true;
   }
@@ -183,7 +209,7 @@ export class SalesProposalSession {
   #edit(draft: SalesProposal): boolean {
     if (this.#state.disposed) return false;
     this.#revision++;
-    const businessType = salesBusinessType(salesBusinessMode(draft.businessType), draft.lines.map(row => row.quantity));
+    const businessType = this.#savedSignedSale ? 'SALE' : salesBusinessType(salesBusinessMode(draft.businessType), draft.lines.map(row => row.quantity));
     this.#publish({ draft: { ...draft, businessType }, dirty: true, errors: [], notice: null, totals: null }); return true;
   }
   setHeader(patch: Pick<Partial<SalesProposal>, 'businessDate' | 'note' | 'orderDiscount'>): boolean { return this.#edit({ ...this.#state.draft, ...patch }); }
@@ -192,7 +218,7 @@ export class SalesProposalSession {
     return this.#edit({ ...this.#state.draft, responsible: { id: value.id, name: value.name } });
   }
   setBusinessType(businessType: SalesProposal['businessType']): boolean {
-    if (!['SALE', 'RETURN', 'EXCHANGE'].includes(businessType)) return false;
+    if (!['SALE', 'RETURN', 'EXCHANGE'].includes(businessType) || this.#savedSignedSale && businessType !== 'SALE') return false;
     // SALE has no incoming-entry section. Keep its unfinished input visible in
     // the combined mode until the user completes or explicitly clears it.
     const incoming = this.#state.entries.IN;
@@ -204,7 +230,7 @@ export class SalesProposalSession {
     return this.#edit({ ...this.#state.draft, businessType, orderDiscount: '0.00' });
   }
   setBusinessMode(mode: SalesBusinessMode): boolean {
-    if (this.#state.disposed || this.#state.lineEdit || mode !== 'SALE' && mode !== 'RETURN_EXCHANGE') return false;
+    if (this.#state.disposed || this.#state.lineEdit || mode !== 'SALE' && mode !== 'RETURN_EXCHANGE' || this.#savedSignedSale && mode !== 'SALE') return false;
     if (mode === salesBusinessMode(this.#state.draft.businessType)) return true;
     // Frozen sales-current.js changeType applies only after the page confirms:
     // default row directions, no order adjustment/funds, and fresh blank rows.
@@ -267,13 +293,13 @@ export class SalesProposalSession {
     if (draft.lines.find(row => row.key === edit.key) !== edit.original) { this.#publish({ notice: '原行已变化，请取消改选后重新选择。' }); return false; }
     const changed = this.#edit({ ...draft, lines: draft.lines.map(row => {
       if (row.key !== edit.key) return row;
-      const { sourceSnapshot, sku: _oldSku, specification: _oldSpecification, ...retained } = row, original = this.#savedLines.get(row.key), restored = !!identity.sku && original?.skuId === identity.sku.id;
+      const { sourceSnapshot, sourceLine, sku: _oldSku, specification: _oldSpecification, ...retained } = row, original = this.#savedLines.get(row.key), restored = !!identity.sku && original?.skuId === identity.sku.id;
       const { category: _currentCategory, ...currentProduct } = edit.product;
       // A stored reference belongs to the original SKU. A size-only change has
       // no current price read; do not relabel the old reference as a new fact.
       const product = restored ? { ...currentProduct, retailPrice: original.product.retailPrice, ...(original.product.category ? { category: original.product.category } : {}) }
         : sourceSnapshot && edit.product === row.product ? { ...edit.product, retailPrice: null } : edit.product;
-      return { ...retained, quantity: edit.quantity, dealPrice: edit.dealPrice, pricingRule: edit.pricingRule, discount: edit.discount, isGift: edit.isGift, zeroConfirmed: edit.zeroConfirmed, ...(restored ? { sourceSnapshot: original!.snapshot } : {}), product, ...identity };
+      return { ...retained, quantity: edit.quantity, dealPrice: edit.dealPrice, pricingRule: edit.pricingRule, discount: edit.discount, isGift: edit.isGift, zeroConfirmed: edit.zeroConfirmed, ...(restored ? { sourceSnapshot: original!.snapshot, ...(sourceLine ? { sourceLine } : {}) } : {}), product, ...identity };
     }) });
     if (changed) this.#publish({ lineEdit: null, ...(this.#state.draft.lines.find(row => row.key === edit.key)?.product.retailPrice === null ? { notice: '新规格参考价尚未读到。可重新选择商品核对参考价，或明确填写成交单价；未确认价格不会保存。' } : {}) });
     return changed;
@@ -317,7 +343,7 @@ export class SalesProposalSession {
   }
   async openEntryPicker(direction: 'IN' | 'OUT', kind: 'product' | 'sku', key?: string): Promise<void> {
     const entry = this.#entry(direction, key);
-    if (this.#state.disposed || !entry || this.#state.lineEdit || direction === 'IN' && this.#state.draft.businessType === 'SALE' || kind === 'sku' && !entry.product) return;
+    if (this.#state.disposed || !entry || this.#state.lineEdit || kind === 'sku' && !entry.product) return;
     if (!this.#state.draft.hall) { this.closePicker(); this.#publish({ notice: '请先选择营业厅，再查询商品；已输入的搜索内容已保留。' }); return; }
     this.#entryTarget = { direction, key: entry.key }; this.#settlementTarget = null; this.#inlineSettlement = false;
     await this.#read(kind, kind === 'product' ? entry.query : '', kind === 'sku' ? entry.skuPage : 1, kind === 'sku' ? entry.product : null, null);
@@ -365,7 +391,7 @@ export class SalesProposalSession {
     if (this.#state.disposed || this.#state.lineEdit || !entry?.product || entry.query !== entry.product.code || !identity) {
       this.#publish({ notice: entry?.size && !entry.sku ? `所选 ${entry.product?.code ?? ''} / ${entry.color?.name ?? ''} / ${entry.fit?.name ?? ''} / ${entry.size.name} 尚无真实 SKU；数量、价格及尺码输入已保留。` : '请选择款号、颜色、版型及尺码后完成录入。' }); return false;
     }
-    if (draft.lines.length >= 200 || !/^-?[1-9]\d{0,18}$/.test(entry.quantity) || entry.quantity.startsWith('-') !== (direction === 'IN') || direction === 'IN' && draft.businessType === 'SALE') {
+    if (draft.lines.length >= 200 || !/^-?[1-9]\d{0,18}$/.test(entry.quantity) || draft.businessType !== 'SALE' && entry.quantity.startsWith('-') !== (direction === 'IN')) {
       this.#publish({ notice: '请核对当前分区的数量方向及 200 行上限；输入已保留。' }); return false;
     }
     try { quantity(entry.quantity); } catch { this.#publish({ notice: '数量超出可用范围，输入已保留。' }); return false; }
@@ -390,7 +416,7 @@ export class SalesProposalSession {
   }
   async openPaymentPicker(key: string | null, kind: 'paymentMethod' | 'paymentAccount'): Promise<void> {
     const row = this.#state.draft.settlements.find(row => row.key === key);
-    if (this.#state.disposed || !this.#state.draft.hall || this.#state.lineEdit || key !== null && !row || kind === 'paymentAccount' && !row?.method) return;
+    if (this.#state.disposed || this.#state.lineEdit || key !== null && !row || kind === 'paymentAccount' && (!this.#state.draft.hall || !row?.method)) return;
     this.#entryTarget = null; this.#settlementTarget = key; this.#inlineSettlement = true;
     await this.#read(kind, '', 1, null, kind === 'paymentAccount' ? row!.method : null);
   }
@@ -426,7 +452,7 @@ export class SalesProposalSession {
     return new DocumentScanController({ timeoutMs: 3_000, scope: this.#scope, ...(this.#onAccessFailure ? { onAccessFailure: this.#onAccessFailure } : {}),
       target: () => {
         const { hall, warehouse, businessType } = this.#state.draft;
-        return this.canScan && !this.#state.lineEdit && hall && warehouse && !(direction === 'IN' && businessType === 'SALE')
+        return this.canScan && !this.#state.lineEdit && hall && warehouse && !(direction === 'IN' && businessType === 'SALE' && !this.#savedSignedSale)
           ? { key: `${this.#revision}:${direction}`, context: { kind: 'SALES', hallId: entityId('hall', hall.id), warehouseId: entityId('warehouse', warehouse.id) } } : null;
       },
       resolve: (query, signal) => this.#reader.readBarcode!(query, signal),
@@ -516,7 +542,7 @@ export class SalesProposalSession {
       }
       else {
         const query: CurrentSalesReferenceQuery = kind === 'hall' ? { kind, hallId: null, search, page, pageSize: 20 }
-          : kind === 'salesperson' ? { kind, hallId, search, page, pageSize: 20 }
+          : kind === 'salesperson' || kind === 'paymentMethod' ? { kind, hallId, search, page, pageSize: 20 }
           : kind === 'paymentAccount' ? { kind, hallId: hallId!, paymentMethodId: entityId('paymentMethod', method!.id), search, page, pageSize: 20 }
           : { kind, hallId: hallId!, search, page, pageSize: 20 };
         result = await this.#reader.readSalesReferences(query, signal);
@@ -583,7 +609,7 @@ export class SalesProposalSession {
         this.#publish({ lineEdit: { ...this.#state.lineEdit, product: p.product!, sku: item as CurrentFormSku, color: { id: (item as CurrentFormSku).colorId, name: (item as CurrentFormSku).colorName }, fit: { id: (item as CurrentFormSku).fitId, name: (item as CurrentFormSku).fitName }, size: { id: (item as CurrentFormSku).sizeId, name: (item as CurrentFormSku).sizeName }, sizeGroup: null } });
         this.closePicker(); return true;
       }
-      if (initialQuantity !== '1' && initialQuantity !== '-1' || initialQuantity === '-1' && draft.businessType === 'SALE') return false;
+      if (initialQuantity !== '1' && initialQuantity !== '-1') return false;
       if (draft.lines.length >= 200) { this.#publish({ notice: '已达 200 行上限。请修改现有行。' }); return false; }
       return this.#edit({ ...draft, lines: [...draft.lines, { key: `local-line-${++this.#nextLine}`, sku: item as CurrentFormSku, product: p.product!, quantity: initialQuantity, dealPrice: '', pricingRule: 'UNIT_PRICE', discount: '', isGift: false, zeroConfirmed: false }] });
     }
@@ -622,8 +648,9 @@ export class SalesProposalSession {
     const { draft, lineEdit, entries } = this.#state;
     if (this.#state.disposed || !this.#scope.active) return null;
     try {
-      if (!draft.salesperson) { this.#publish({ errors: ['请选择在职营业员。'], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
+      if (!draft.salesperson && !this.#seeded) { this.#publish({ errors: ['请选择在职营业员。'], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
       if (!draft.hall || !draft.customer || !draft.warehouse || draft.warehouse.hallId !== draft.hall.id && !(this.#savedWarehouse?.hallId === draft.hall.id && this.#savedWarehouse.warehouseId === draft.warehouse.id)) throw Error();
+      if (this.#savedSignedSale && amount(draft.orderDiscount) !== amount(this.#savedDiscount!)) throw Error();
       const pricing = this.pricingLines; if (!pricing) throw Error();
       const yuan = (raw: string) => { const value = amount(raw); return `${value / 100n}.${(value % 100n).toString().padStart(2, '0')}`; };
       const tenths = (raw: string) => { if (!/^\d{1,2}(?:\.\d)?$/.test(raw.trim())) throw Error(); const [whole, fraction = '0'] = raw.trim().split('.'), value = Number(whole) * 10 + Number(fraction); if (value > 100) throw Error(); return value; };
@@ -632,6 +659,15 @@ export class SalesProposalSession {
         return identity.sku ? { skuId: identity.sku.id } : { spec: { productId: row.product.id, colorId: identity.specification.color.id, fitId: identity.specification.fit.id, sizeId: identity.specification.size.id } };
       };
       const price = (row: SalesProposalPricingLine) => {
+        const old = salesUnchangedSourceLine(row);
+        if (old) return { quantity: old.quantity, dealPrice: yuan(row.dealPrice), pricingRule: old.pricingRule, discountTenths: old.discountTenths, isGift: old.isGift, zeroConfirmed: old.zeroConfirmed };
+        if (row.pricingRule === null || row.isGift === null || row.zeroConfirmed === null) {
+          // Explicit price is a draft fact, not an inferred pricing/gift intent.
+          // The server requires the missing facts before approving changed rows.
+          const value = amount(row.dealPrice);
+          return { quantity: row.quantity, dealPrice: `${value / 100n}.${(value % 100n).toString().padStart(2, '0')}`, pricingRule: row.pricingRule,
+            discountTenths: row.pricingRule === 'DISCOUNT' ? tenths(row.discount) : null, isGift: row.isGift, zeroConfirmed: row.zeroConfirmed };
+        }
         const value = row.isGift ? 0n : row.pricingRule === 'UNIT_PRICE' ? amount(row.dealPrice) : row.product.retailPrice === null ? null : discountUnitPrice(minorAmount(amount(row.product.retailPrice).toString()), tenths(row.discount));
         if (value === null || value === 0n && !row.isGift && !row.zeroConfirmed) throw Error();
         return { quantity: row.quantity, dealPrice: row.isGift ? row.pricingRule === 'DISCOUNT' ? null : '0.00' : `${value / 100n}.${(value % 100n).toString().padStart(2, '0')}`, pricingRule: row.pricingRule,
@@ -643,15 +679,17 @@ export class SalesProposalSession {
         return { existingLineId: originalLines.has(row.key) ? row.key : null, ...(edited ? selection(edited) : row.sku ? { skuId: row.sku.id } : selection({ product: row.product, sku: null, ...row.specification })), ...price(edited ?? row) };
       });
       for (const direction of ['IN', 'OUT'] as const) for (const entry of entries[direction]) if (entry.product || entry.query.trim()) {
-        if (!entry.product || entry.query !== entry.product.code || entry.quantity.startsWith('-') !== (direction === 'IN')) throw Error();
+        if (!entry.product || entry.query !== entry.product.code || draft.businessType !== 'SALE' && entry.quantity.startsWith('-') !== (direction === 'IN')) throw Error();
         lines.push({ existingLineId: null, ...selection({ ...entry, product: entry.product }), ...price({ ...entry, product: entry.product }) });
       }
       const businessType = salesBusinessType(salesBusinessMode(draft.businessType), lines.map(row => row.quantity));
+      if (businessType === 'SALE' && !this.#savedSignedSale && lines.every(row => row.quantity.startsWith('-'))) { this.#publish({ errors: ['仅有负数明细时请选择退货／换货类型。'], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
+      if (!this.#savedSignedSale && salesProposalHasMixedQuantities(lines) && amount(draft.orderDiscount) !== 0n) { this.#publish({ errors: [mixedSalesDiscountNotice + '请清除整单优惠后保存。'], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
       if (!salesProposalMoney({ ...draft, businessType, lines: pricing })) throw Error();
       const proposal = parseNativeSalesSaveProposal({ salesId, businessType, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note,
         hallId: draft.hall.id, customerId: draft.customer.id, salespersonId: draft.salesperson?.id ?? null, warehouseId: draft.warehouse.id, orderDiscount: yuan(draft.orderDiscount), lines,
-        settlements: draft.settlements.map(row => { if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id) throw Error(); return { existingSettlementId: originalSettlements.has(row.key) ? row.key : null,
-          paymentAccountId: row.account.id, paymentMethodId: row.method.id, direction: row.direction, amount: yuan(row.amount) }; }) });
+        settlements: draft.settlements.map(row => { if (!row.account || (!row.method && !originalSettlements.has(row.key)) || row.account.paymentMethodId !== (row.method?.id ?? null)) throw Error(); return { existingSettlementId: originalSettlements.has(row.key) ? row.key : null,
+          paymentAccountId: row.account.id, paymentMethodId: row.method?.id ?? null, direction: row.direction, amount: yuan(row.amount) }; }) });
       this.#publish({ errors: [], notice: null }); return freeze(proposal);
     } catch { this.#publish({ errors: ['请完成当前商品组内的规格、数量、价格及收退款资料；普通零价须确认。'], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
   }
@@ -668,7 +706,7 @@ export class SalesProposalSession {
     if (!draft.lines.length) errors.push('请至少添加一个实际规格。');
     for (const row of draft.lines) {
       try {
-        if (!(draft.businessType === 'SALE' ? /^[1-9]\d{0,18}$/ : /^-?[1-9]\d{0,18}$/).test(row.quantity)) throw Error(); const q = quantity(row.quantity); let price: bigint;
+        if (!/^-?[1-9]\d{0,18}$/.test(row.quantity)) throw Error(); const q = quantity(row.quantity); let price: bigint;
         if (row.isGift) price = 0n;
         else if (row.pricingRule === 'UNIT_PRICE') price = amount(row.dealPrice);
         else {
@@ -677,11 +715,13 @@ export class SalesProposalSession {
           price = discountUnitPrice(minorAmount(amount(row.product.retailPrice).toString()), Number(whole) * 10 + Number(fraction));
         }
         if (price === 0n && !row.isGift && !row.zeroConfirmed) throw Error(); gross.push(q * price);
-      } catch { errors.push(`${row.sku?.skuCode ?? row.product.code}：请核对${draft.businessType === 'SALE' ? '正整数' : '非零带符号整数'}数量、非负两位单价或有明确参考价的 0～10 折；普通零价须确认。`); }
+      } catch { errors.push(`${row.sku?.skuCode ?? row.product.code}：请核对非零带符号整数数量、非负两位单价或有明确参考价的 0～10 折；普通零价须确认。`); }
     }
+    const mixed = salesProposalHasMixedQuantities(draft.lines);
+    if (draft.businessType === 'SALE' && !this.#savedSignedSale && draft.lines.length && draft.lines.every(row => row.quantity.startsWith('-'))) errors.push('仅有负数明细时请选择退货／换货类型。');
     let discount = 0n, settled = 0n;
-    try { discount = amount(draft.orderDiscount); if (draft.businessType !== 'SALE') { if (discount !== 0n) throw Error(); } else if (gross.length === draft.lines.length) allocateSalesDiscount(gross.map(value => minorAmount(value.toString())), minorAmount(discount.toString())); }
-    catch { errors.push(draft.businessType === 'SALE' ? '整单优惠须为非负两位金额，且不超过商品金额。' : '独立退货／换货整单优惠必须为零。'); }
+    try { discount = amount(draft.orderDiscount); if (this.#savedSignedSale) { if (discount !== amount(this.#savedDiscount!)) throw Error(); } else if (mixed || draft.businessType !== 'SALE') { if (discount !== 0n) throw Error(); } else if (gross.length === draft.lines.length) allocateSalesDiscount(gross.map(value => minorAmount(value.toString())), minorAmount(discount.toString())); }
+    catch { errors.push(mixed && !this.#savedSignedSale ? mixedSalesDiscountNotice + '请清除整单优惠后保存。' : draft.businessType === 'SALE' ? '整单优惠须为非负两位金额，且不超过商品金额。' : '独立退货／换货整单优惠必须为零。'); }
     for (const row of draft.settlements) {
       try {
         if (!row.method || !row.account || !['RECEIVE', 'REFUND'].includes(row.direction) || row.account.paymentMethodId !== row.method.id) throw Error();

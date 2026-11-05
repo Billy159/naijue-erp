@@ -46,7 +46,7 @@ test('list number membership uses deterministic lowercase literal inclusion with
   assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'test-sales', statuses: ['APPROVED'] } }));
   assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'test-sales', customerIds: [summary(999).id as never] } }));
 });
-test('list requires exact non-gift quantity aggregates and a non-null native updated timestamp, without line bigint bounds', () => {
+test('list requires exact known non-gift aggregates and explicit nullable update time, without line bigint bounds', () => {
   const p = parameters();
   const valid = [
     { ...summary(), businessType: 'SALE', quantity: '18446744073709551616', incomingQuantity: '0', outgoingQuantity: '18446744073709551616' },
@@ -55,12 +55,13 @@ test('list requires exact non-gift quantity aggregates and a non-null native upd
     { ...summary(), quantity: '0', incomingQuantity: '0', outgoingQuantity: '0' }
   ];
   for (const row of valid) { const result = { page: 1, pageSize: 20, exactTotal: '1', items: [row] }; assert.equal(salesListResponse(result, p), result); }
+  assert.doesNotThrow(() => salesListResponse({ page: 1, pageSize: 20, exactTotal: '1', items: [{ ...summary(), updatedAt: null }] }, p));
   for (const field of ['quantity', 'incomingQuantity', 'outgoingQuantity', 'updatedAt']) {
     const row: Record<string, unknown> = { ...summary() }; delete row[field];
     assert.throws(() => salesListResponse({ page: 1, pageSize: 20, exactTotal: '1', items: [row] }, p));
   }
   for (const patch of [{ quantity: -1 }, { quantity: '-0' }, { quantity: '-01' }, { quantity: '1.1' }, { incomingQuantity: '-1' },
-    { outgoingQuantity: '1e3' }, { quantity: '0' }, { updatedAt: null }, { updatedAt: '2026-02-30T00:00:00Z' }, { updatedAt: '2026-10-20T08:00:00+08:00' },
+    { outgoingQuantity: '1e3' }, { quantity: '0' }, { updatedAt: '2026-02-30T00:00:00Z' }, { updatedAt: '2026-10-20T08:00:00+08:00' },
     { categorySummary: 'Not a native snapshot' }, { unit: '件' }]) {
     assert.throws(() => salesListResponse({ page: 1, pageSize: 20, exactTotal: '1', items: [{ ...summary(), ...patch }] }, p));
   }
@@ -127,9 +128,10 @@ test('named detail is required and nullable current salesperson matches its refe
 });
 test('settlement name records map one-to-one to exact settlement/account identities with historical and current facts distinct', () => {
   const data = detail(); const names = data.settlementNames[0]!;
-  for (const invalid of [[], [names, names], [{ ...names, settlementId: uuid(999) }], [{ ...names, paymentAccountId: uuid(999) }], [{ ...names, accountNameSnapshot: null }], [{ ...names, currentMethodName: 17 }], [{ ...names, extra: true }]]) {
+  for (const invalid of [[], [names, names], [{ ...names, settlementId: uuid(999) }], [{ ...names, paymentAccountId: uuid(999) }], [{ ...names, currentMethodName: 17 }], [{ ...names, extra: true }]]) {
     assert.throws(() => salesDetailResponse({ ...data, settlementNames: invalid }, salesTarget(uuid(1))));
   }
+  assert.doesNotThrow(() => salesDetailResponse({ ...data, settlementNames: [{ ...names, accountNameSnapshot: null, methodNameSnapshot: null }] }, salesTarget(uuid(1))));
   const empty = { ...data, document: { ...data.document, settlements: [] }, settlementNames: [] };
   assert.equal(salesDetailResponse(empty, salesTarget(uuid(1))), empty);
   assert.notEqual(names.accountNameSnapshot, names.currentAccountName); assert.notEqual(names.methodNameSnapshot, names.currentMethodName);
@@ -212,7 +214,7 @@ test('active core-pages sales fixture uses every plural dimension with matching 
   const all = await controller.list.run(parameters()); assert.equal(all.status, 'success');
   if (all.status !== 'success') throw new Error('Expected explicit synthetic fixture list.');
   assert.equal(all.data.exactTotal, '2'); assert.deepEqual(all.data.items.map(row => row.businessType), ['SALE', 'RETURN']);
-  const row = all.data.items[1]!; assert.ok(row.salespersonId !== null);
+  const row = all.data.items[1]!; assert.ok(row.salespersonId !== null); assert.ok(row.hallId !== null);
   const query: SalesListQuery = { ...parameters(), filter: { ...parameters().filter,
     startDate: row.businessDate, endDate: row.businessDate, number: 'sYnTh', statuses: ['VOID', 'APPROVED'], businessTypes: ['EXCHANGE', 'RETURN'],
     hallIds: [entityId('hall', uuid(99)), row.hallId], salespersonIds: [entityId('staff', uuid(99)), row.salespersonId],

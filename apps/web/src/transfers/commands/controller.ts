@@ -50,6 +50,8 @@ export class TransferCommandWorkspace {
     const owner = this.#options.scope.identity, target = scope.identity;
     return this.#active() && scope.active && owner.accountId === target.accountId && owner.sessionRevision === target.sessionRevision && owner.permissionRevision === target.permissionRevision;
   }
+  get ordinaryDocuments(): boolean { return this.#options.documentListProfile === 'source-confirmed-ordinary-documents-v1'; }
+  allowsDocumentBasis(detail: TransferDetailDto): boolean { return this.ordinaryDocuments || detail.stockBasis === 'RUNTIME_LEDGER'; }
   get hasUnresolvedWrite(): boolean { return unresolved(this.#state.write); }
   get #nativeDirty(): boolean {
     const editor = this.#state.editor;
@@ -57,8 +59,8 @@ export class TransferCommandWorkspace {
   }
   get hasDirtyDraft(): boolean { return this.#nativeDirty || this.#existing?.hasDirtyDraft === true; }
   canLeave(): boolean { return !this.hasUnresolvedWrite && !this.hasDirtyDraft && this.#existing?.canLeave() !== false; }
-  get canUseExistingProposal(): boolean { const editor = this.#state.editor; return !!this.#options.existingPreparation && !!this.#options.existingReader && this.#active() && editor?.mode === 'EXISTING' && !!editor.detail && !!editor.draft && !!editor.input && editor.detail.stockBasis === 'RUNTIME_LEDGER' && editor.detail.document.header.status === 'DRAFT'; }
-  get editableExistingProposal(): boolean { const { editor, write, stale } = this.#state; return this.#active() && !!editor?.draft && !!editor.input && editor.phase === 'ready' && !editor.current && !stale && !unresolved(write) && write.phase !== 'committed' && editor.detail?.stockBasis === 'RUNTIME_LEDGER' && editor.detail.document.header.status === 'DRAFT'; }
+  get canUseExistingProposal(): boolean { const editor = this.#state.editor; return !!this.#options.existingPreparation && !!this.#options.existingReader && this.#active() && editor?.mode === 'EXISTING' && !!editor.detail && !!editor.draft && !!editor.input && this.allowsDocumentBasis(editor.detail) && editor.detail.document.header.status === 'DRAFT'; }
+  get editableExistingProposal(): boolean { const { editor, write, stale } = this.#state; return this.#active() && !!editor?.draft && !!editor.input && editor.phase === 'ready' && !editor.current && !stale && !unresolved(write) && write.phase !== 'committed' && !!editor.detail && this.allowsDocumentBasis(editor.detail) && editor.detail.document.header.status === 'DRAFT'; }
   get existingDocument(): TransferExistingDocumentSession | null { return this.#existing; }
   prepareExistingDocument(): TransferExistingDocumentSession | null {
     const editor = this.#state.editor;
@@ -93,8 +95,8 @@ export class TransferCommandWorkspace {
   replaceDraft(value: TransferDraftDto): boolean {
     const editor = this.#state.editor;
     if (!this.#active() || !editor || editor.phase !== 'ready' || this.hasUnresolvedWrite || this.#state.write.phase === 'committed' || editor.current
-      || editor.detail && (editor.detail.stockBasis !== 'RUNTIME_LEDGER' || editor.detail.document.header.status !== 'DRAFT')) return false;
-    let draft: TransferDraftDto; try { draft = validateTransferDraft(value); } catch { this.#notice('草稿不符合现有合同，输入未提交。'); return false; }
+      || editor.detail && (!this.allowsDocumentBasis(editor.detail) || editor.detail.document.header.status !== 'DRAFT')) return false;
+    let draft: TransferDraftDto; try { draft = validateTransferDraft(value, editor.detail ? { previous: draftFromTransferDetail(editor.detail) } : {}); } catch { this.#notice('草稿不符合现有合同，输入未提交。'); return false; }
     if (draft.header.id !== editor.transferId) return false;
     this.#publish({ ...this.#state, editor: Object.freeze({ ...editor, draft, input: inputFromTransferDraft(draft), inputError: false }), notice: null }); return true;
   }
@@ -114,7 +116,7 @@ export class TransferCommandWorkspace {
     let proposal: NativeTransferSaveProposal;
     try { proposal = parseNativeTransferSaveProposal(value); }
     catch { this.#notice('规格及保存资料未通过校验，输入已保留，未发送请求。'); return Promise.resolve(false); }
-    if (proposal.transferId === null ? editor !== null : !editor || editor.mode !== 'EXISTING' || proposal.transferId !== editor.transferId || !header || header.status !== 'DRAFT' || editor.detail?.stockBasis !== 'RUNTIME_LEDGER' || header.version >= Number.MAX_SAFE_INTEGER) return Promise.resolve(false);
+    if (proposal.transferId === null ? editor !== null : !editor || editor.mode !== 'EXISTING' || proposal.transferId !== editor.transferId || !header || header.status !== 'DRAFT' || !editor.detail || !this.allowsDocumentBasis(editor.detail) || header.version >= Number.MAX_SAFE_INTEGER) return Promise.resolve(false);
     let command: TransferCommandDto;
     try {
       const requestKey = this.#options.newRequestKey();
@@ -128,7 +130,7 @@ export class TransferCommandWorkspace {
     const editor = this.#state.editor;
     if (!this.#active() || !editor || editor.phase !== 'ready' || this.hasUnresolvedWrite || this.#state.write.phase === 'committed' || editor.current || this.#state.stale) return false;
     const detail = editor.detail, header = detail?.document.header;
-    if (detail?.stockBasis === 'CUTOFF_HISTORY') { this.#notice('历史单据尚未开放基线感知写入，未发送请求。'); return false; }
+    if (detail && !this.allowsDocumentBasis(detail)) { this.#notice('历史单据尚未开放基线感知写入，未发送请求。'); return false; }
     if (header && header.version >= Number.MAX_SAFE_INTEGER) return false;
     if (action === 'SAVE') {
       if (!editor.draft || editor.inputError || header && header.status !== 'DRAFT' || editor.mode === 'EXISTING' && !header || editor.mode === 'EXISTING' && !this.hasDirtyDraft) return false;
@@ -237,7 +239,7 @@ export class TransferCommandWorkspace {
       this.#knownDocument = Object.freeze({ version: header.version, status: header.status });
       const draft = preserve ? editor.draft : this.#editableDraft(detail);
       if (!preserve) { this.#baseline = draft ? JSON.stringify(draft) : null; this.#inputBaseline = draft ? JSON.stringify(inputFromTransferDraft(draft)) : null; }
-      this.#publish({ ...this.#state, editor: Object.freeze({ ...editor, phase: 'ready', detail: preserve ? editor.detail : detail, draft, input: preserve ? editor.input : draft ? inputFromTransferDraft(draft) : null, inputError: preserve ? editor.inputError : false, current: preserve ? detail : null, readError: null }), notice: preserve ? '已读取当前单据；请明确采用后再操作，原请求未改变。' : detail.stockBasis === 'CUTOFF_HISTORY' ? '历史单据尚未开放写入。' : null }); return true;
+      this.#publish({ ...this.#state, editor: Object.freeze({ ...editor, phase: 'ready', detail: preserve ? editor.detail : detail, draft, input: preserve ? editor.input : draft ? inputFromTransferDraft(draft) : null, inputError: preserve ? editor.inputError : false, current: preserve ? detail : null, readError: null }), notice: preserve ? '已读取当前单据；请明确采用后再操作，原请求未改变。' : !this.allowsDocumentBasis(detail) ? '历史单据尚未开放写入。' : null }); return true;
     } catch (error) {
       if (!this.#current(generation, request, 'read')) return false;
       const safe = safeReadError(error); this.#access(safe); if (!this.#active()) return false;
@@ -275,7 +277,7 @@ export class TransferCommandWorkspace {
     this.#publish({ ...this.#state, editor, write: Object.freeze({ phase: 'committed', command, result, receipt, recovery: receipt ? 'found' : 'unqueried', error: null }), stale: true,
       notice: '原操作已确认；显示内容不是最新单据，请重新读取并明确采用后继续。' });
   }
-  #editableDraft(detail: TransferDetailDto): TransferDraftDto | null { if (detail.stockBasis !== 'RUNTIME_LEDGER' || detail.document.header.status !== 'DRAFT') return null; try { return draftFromTransferDetail(detail); } catch { return null; } }
+  #editableDraft(detail: TransferDetailDto): TransferDraftDto | null { if (!this.allowsDocumentBasis(detail) || detail.document.header.status !== 'DRAFT') return null; try { return draftFromTransferDetail(detail); } catch { return null; } }
   #clearExisting(): void { const model = this.#existing; this.#existing = null; this.#existingUnsubscribe?.(); this.#existingUnsubscribe = null; model?.dispose(); }
   #canReplace(): boolean { return this.#active() && !this.hasUnresolvedWrite && !this.hasDirtyDraft; }
   #active(): boolean { return this.#options.scope.active && !this.#state.disposed; }

@@ -166,11 +166,11 @@ test("current forms: selected sales hall must exist and be enabled in this same 
     await assert.rejects(() => reader(client).readSalesReferences(actor, reference("customer"), signal()), { code: "FORBIDDEN" }); client.done();
   }
 });
-test("current forms: payment-method selector has a strict native hall-context contract, never selected-method/account authority", async () => {
+test("current forms: payment-method selector has a strict explicit nullable hall-context contract, never selected-method/account authority", async () => {
   const query = reference("paymentMethod"); const parsed = parseCurrentSalesReferenceQuery(query);
   assert.deepEqual(parsed, query); assert.ok(Object.isFrozen(parsed));
   let connections = 0; const r = new PostgresCurrentFormReader({ async connect() { connections++; throw new Error("must not connect"); } }, allow);
-  for (const input of [{ ...query, hallId: null }, { ...query, hallId: "fake" }, { ...query, paymentMethodId: selectedMethod },
+  for (const input of [{ ...query, hallId: undefined }, { ...query, hallId: "fake" }, { ...query, paymentMethodId: selectedMethod },
     { ...query, accountId: sid("paymentAccount", 1010) }, { ...query, enabled: true }, { ...query, pageSize: 1 },
     { ...query, page: "1" }, { ...query, search: " padded " }, { ...query, search: "x".repeat(201) }]) {
     await assert.rejects(async () => r.readSalesReferences(actor, input as never, signal()), { code: "INVALID_CURRENT_FORM_QUERY" });
@@ -634,4 +634,160 @@ test('default warehouse read: wrong hall grant or unknown recommendation cannot 
  for(const is_recommended of [null,'true',undefined]){
   const client=new Client([begin(),identity(),selectedHall(),total(),page([item({id:sid('warehouse',3111),is_recommended})]),rollback()]);await assert.rejects(reader(client).readSalesReferences(actor,reference('warehouse'),signal()),{code:'INVALID_DATABASE_VALUE'});client.done();readonly(client);
  }
+});
+
+test("REBUILT prehall method uses trusted identity and explicit authorization without inventing hall scope",async()=>{
+ const query={...search,kind:"paymentMethod" as const,hallId:null};
+ const client=new Client([begin(),identity(),total("1"),page([item({id:selectedMethod,method_enabled:true,hall_id:null,hall_name:null})]),commit()]);
+ let authorized=0;
+ const result=await reader(client,{async authorize(facts,intent){authorized++;assert.equal(facts.actor.accountId,actor.accountId);assert.deepEqual(intent,{kind:"sales-references",parameters:query});return {kind:"halls",hallIds:[hall]};}}).readSalesReferences(actor,query,signal());
+ assert.equal(authorized,1);assert.equal(result.items[0]!.id,selectedMethod);client.done();readonly(client);assert.ok(!client.calls.some(c=>c.sql.includes("current-form:sales-hall")));
+ const revoked=new Client([begin(),identity({login_enabled:false}),rollback()]);await assert.rejects(()=>reader(revoked).readSalesReferences(actor,query,signal()),{code:"FORBIDDEN"});revoked.done();
+ const denied=new Client([begin(),identity(),rollback()]);await assert.rejects(()=>reader(denied,{async authorize(){throw new DomainError("FORBIDDEN","SYNTHETIC");}}).readSalesReferences(actor,query,signal()),{code:"FORBIDDEN"});denied.done();
+});
+
+test("current forms exact27: saved barcode uses same-snapshot published native proofs, never old history", async () => {
+  const warehouseId = sid("warehouse", 1201), bindingId = sid("barcode", 1202);
+  const input = { context: { ...context, warehouseId }, barcode: "05122301721007" };
+  const client = new Client([begin(), identity(), { sql: /barcode-schema/, rows: [{ versions: Array.from({length:27},(_,i)=>i+1) }] }, selectedHall(),
+    { sql: /barcode-warehouses/, rows: [{ id: warehouseId, hall_id: hall, native_hall_id: hall, enabled: true, has_nonzero_inventory: false }] },
+    { sql: /current-form:barcode \*\//, rows: [{...sku(), binding_id: bindingId, barcode: input.barcode, barcode_kind:"CONFIRMED_OLD",binding_enabled:true,references_retained:true,source_published:true}], inspect(values,sql) { assert.deepEqual(values,[input.barcode]); assert.doesNotMatch(sql,/import_source_row/); } },
+    ...([[bindingId,"sku_barcode","SKU_BARCODE"],[skuId,"sku","SKU"],[productId,"product","PRODUCT"]] as const).map(([value,table,kind])=>({sql:/current-form:barcode27-proof/,rows:[{root_id:value,proof_valid:true}],inspect(values:unknown[],sql:string){assert.deepEqual(values,[[value],2,[]]); assert.doesNotMatch(sql,/FOR SHARE|import_source_row/); assert.ok(sql.includes(`FROM naijue_erp.${table} p`)); assert.ok(sql.includes(`s.target_type='${kind}'`)); assert.ok(sql.includes(`NULL::naijue_erp.${table}`)); assert.match(sql,/standard_business_ready|to_jsonb\(jsonb_populate_record/);}})),commit()]);
+  const checks:number[]=[]; const runtime27Barcode={profile:"EXACT27" as const,contract:"STANDARD_BARCODE_READ27_V1" as const,async assertReady(target:object,purpose:string){assert.equal(target,client);assert.equal(purpose,"BARCODE_READ");checks.push(client.calls.length);}};
+  const r = new PostgresCurrentFormReader({async connect(){return client;}},allow,{runtime27Barcode} as never);
+  const result=await r.readBarcode(actor,input,signal()); assert.equal(result.state,"FOUND");assert.equal(result.sku?.id,skuId);assert.equal(result.binding?.id,bindingId);assert.deepEqual(checks,[0,1]);readonly(client);client.done();
+});
+
+test("current forms exact27: absent, false, ambiguous evidence and duplicate bindings fail closed", async () => {
+  const warehouseId=sid("warehouse",1201),bindingId=sid("barcode",1202),input={context:{...context,warehouseId},barcode:"8ABC006"};
+  const native={...sku(),binding_id:bindingId,barcode:input.barcode,barcode_kind:"CONFIRMED_OLD",binding_enabled:true,references_retained:true,source_published:true};
+  for(const proofRows of [[],[{root_id:bindingId,proof_valid:false}],[{root_id:bindingId,proof_valid:true},{root_id:bindingId,proof_valid:true}]]) {
+    const client=new Client([begin(),identity(),{sql:/barcode-schema/,rows:[{versions:Array.from({length:27},(_,i)=>i+1)}]},selectedHall(),{sql:/barcode-warehouses/,rows:[{id:warehouseId,hall_id:hall,native_hall_id:hall,enabled:true,has_nonzero_inventory:false}]},{sql:/current-form:barcode \*\//,rows:[native]},{sql:/current-form:barcode27-proof/,rows:proofRows},commit()]);
+    const runtime27Barcode={profile:"EXACT27" as const,contract:"STANDARD_BARCODE_READ27_V1" as const,async assertReady(){}};
+    const r=new PostgresCurrentFormReader({async connect(){return client;}},allow,{runtime27Barcode});
+    assert.equal((await r.readBarcode(actor,input,signal())).state,"UNAVAILABLE"); readonly(client);client.done();
+  }
+  const client=new Client([begin(),identity(),{sql:/barcode-schema/,rows:[{versions:Array.from({length:27},(_,i)=>i+1)}]},selectedHall(),{sql:/barcode-warehouses/,rows:[{id:warehouseId,hall_id:hall,native_hall_id:hall,enabled:true,has_nonzero_inventory:false}]},{sql:/current-form:barcode \*\//,rows:[native,native]},rollback()]);
+  const runtime27Barcode={profile:"EXACT27" as const,contract:"STANDARD_BARCODE_READ27_V1" as const,async assertReady(){}};
+  await assert.rejects(new PostgresCurrentFormReader({async connect(){return client;}},allow,{runtime27Barcode}).readBarcode(actor,input,signal()),{code:"INVALID_DATABASE_VALUE"});readonly(client);client.done();
+});
+
+test("barcode27 capability requires exact explicit closed shape and cannot return a substitute", async()=>{
+  const pool={async connect(){throw new Error("not connected");}};
+  for(const cap of [null,{profile:"EXACT27",contract:"STANDARD_BARCODE_READ27_V1",async assertReady(){},extra:true},{profile:"EXACT27",contract:"STANDARD_BARCODE_READ27_V1",assertReady:true}])
+    assert.throws(()=>new PostgresCurrentFormReader(pool,allow,{runtime27Barcode:cap as never}),/barcode27/i);
+  const client=new Client([]);const r=new PostgresCurrentFormReader({async connect(){return client;}},allow,{runtime27Barcode:{profile:"EXACT27",contract:"STANDARD_BARCODE_READ27_V1",async assertReady(){return true as never;}}});
+  await assert.rejects(r.readBarcode(actor,{context:{...context,warehouseId:sid("warehouse",1201)},barcode:"0001"},signal()),/must throw/);client.done();
+});
+
+test('current forms exact27: created barcode uses separately authorized same-client aggregate fallback',async()=>{
+ const warehouseId=sid('warehouse',1201),bindingId=sid('barcode',1202),operation=sid('operation',1203),input={context:{...context,warehouseId},barcode:'000CREATE'};
+ const base={id:productId,version:1,enabled:true,deleted_at:null},nativeSku={id:skuId,product_id:productId,version:1,created_operation_id:operation};
+ const nativeBarcode={id:bindingId,sku_id:skuId,barcode:input.barcode,barcode_kind:'MAIN',scheme_id:null,enabled:true};const after=JSON.stringify({...base,skus:[nativeSku],barcodes:[nativeBarcode],images:[]}),t='2026-11-03T00:00:00.000000Z';
+ const record={audit_id:operation,operation_id:operation,object_type:'PRODUCT',object_id:productId,action:'CREATE',old_version:null,new_version:1,actor_account_id:actor.accountId,occurred_at:t,receipt_id:operation,status:'COMMITTED',target_type:'PRODUCT',target_id:productId,receipt_action:'CREATE',receipt_actor:actor.accountId,request_hash:'a'.repeat(64),completed_at:t,total_rows:'1',total_bytes:String(Buffer.byteLength(after)),before_values:null,after_values:after};
+ const client=new Client([begin(),identity(),{sql:/barcode-schema/,rows:[{versions:Array.from({length:27},(_,i)=>i+1)}]},selectedHall(),{sql:/barcode-warehouses/,rows:[{id:warehouseId,hall_id:hall,native_hall_id:hall,enabled:true,has_nonzero_inventory:false}]},
+  {sql:/current-form:barcode \*\//,rows:[{...sku(),binding_id:bindingId,barcode:input.barcode,barcode_kind:'MAIN',binding_enabled:true,references_retained:true,source_published:null}]},
+  {sql:/barcode27-proof/,rows:[]},{sql:/barcode27-aggregate:source-mode/,rows:[{source_count:'0'}]},
+  {sql:/barcode27-created:root/,rows:[{...base,has_season_ids:false,season_ids:null}]},{sql:/barcode27-created:skus/,rows:[nativeSku]},
+  {sql:/barcode27-created:barcodes/,rows:[nativeBarcode]},{sql:/barcode27-created:images/,rows:[]},{sql:/barcode27-created:audit/,rows:[record]},commit()]);
+ const checks:number[]=[];const runtime27Barcode={profile:'EXACT27' as const,contract:'STANDARD_BARCODE_READ27_V1' as const,async assertReady(c:object){assert.equal(c,client);}},runtime27BarcodeAggregate={profile:'EXACT27' as const,contract:'STANDARD_BARCODE_AGGREGATE_READ27_V1' as const,async assertReady(c:object,purpose:string){assert.equal(c,client);assert.equal(purpose,'BARCODE_AGGREGATE_READ');checks.push(client.calls.length);}};
+ const r=new PostgresCurrentFormReader({async connect(){return client;}},allow,{runtime27Barcode,runtime27BarcodeAggregate});const result=await r.readBarcode(actor,input,signal());assert.equal(result.state,'FOUND');assert.equal(result.sku?.id,skuId);assert.deepEqual(checks,[0,1]);readonly(client);client.done();
+});
+
+test("exact27 current form products and saved edits use published ordinary rows in a verified snapshot", async () => {
+  const productRow = { id: productId, product_code: "SYNTHETIC ORIGINAL PRODUCT", name: "SYNTHETIC 完整商品名", retail_price: null, enabled: true,
+    size_group_id: sid("sizeGroup", 997), category_id: sid("category", 1801), category_name: null };
+  for (const longSearch of [false, true]) {
+    let proofs = 0;
+    const client = new Client([begin(), identity(), total("21", (values, sql) => {
+      assert.deepEqual(values, [longSearch ? "SYNTHETIC" : "a"]); assert.doesNotMatch(sql, /import_source_row|import_batch/);
+      if (longSearch) assert.match(sql, /sku_barcode/); else assert.doesNotMatch(sql, /sku_barcode/);
+    }), page([productRow], (values, sql) => {
+      assert.deepEqual(values, [longSearch ? "SYNTHETIC" : "a", 20, 20]); assert.doesNotMatch(sql, /import_source_row|import_batch/);
+      assert.match(sql, /ORDER BY p.product_code COLLATE "C", p.id/);
+    }), commit()]);
+    const cap = {profile:"EXACT27" as const, contract:"UNIFIED_ORDINARY_RUNTIME27_V1" as const, async assertReady(c:object,purpose:"ORDINARY_DOCUMENT_READ") { assert.equal(c, client); assert.equal(purpose,"ORDINARY_DOCUMENT_READ"); assert.equal(client.calls.at(-1)!.sql,"BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); proofs++; }};
+    const r = new PostgresCurrentFormReader({async connect(){return client;}}, allow, {runtime27Ordinary:cap});
+    const result = await r.readProducts(actor,{search:longSearch ? "SYNTHETIC" : "a",page:2,pageSize:20,context:transferContext},signal());
+    assert.equal(proofs,1);assert.equal(result.exactTotal,21n);assert.equal(result.items[0]!.retailPrice,null);assert.ok(result.items[0]!.category);assert.equal(result.items[0]!.category.label,null);client.done();
+  }
+  let proofs=0; const client = new Client([begin(), identity(), {sql:/current-form:sku-batch/, rows:[sku()]},
+    {sql:/current-form:saved-edit-products/, rows:[productRow], inspect(values,sql){assert.deepEqual(values,[[productId],2]);assert.doesNotMatch(sql,/import_source_row|import_batch/);}}, commit()]);
+  const cap={profile:"EXACT27" as const,contract:"UNIFIED_ORDINARY_RUNTIME27_V1" as const,async assertReady(c:object){assert.equal(c,client);proofs++;}};
+  const result=await new PostgresCurrentFormReader({async connect(){return client;}},allow,{runtime27Ordinary:cap}).readSavedEditSkuBatch(actor,{context:transferContext,skuIds:[skuId]},signal());
+  assert.equal(proofs,1);assert.equal(result.skus[0]!.id,skuId);assert.equal(result.skus[0]!.barcodeAvailability,"UNAVAILABLE");assert.equal(result.products[0]!.state,"ELIGIBLE");client.done();
+});
+
+test("exact27 current form proof failure rolls back before identity; legacy keeps source admission", async () => {
+  const failure=new Error("SYNTHETIC proof failure");
+  const deniedClient=new Client([begin(),rollback()]);
+  const cap={profile:"EXACT27" as const,contract:"UNIFIED_ORDINARY_RUNTIME27_V1" as const,async assertReady(){throw failure;}};
+  const deniedReader=new PostgresCurrentFormReader({async connect(){return deniedClient;}},allow,{runtime27Ordinary:cap});
+  await assert.rejects(deniedReader.readProducts(actor,{...search,context:transferContext},signal()),failure);deniedClient.done();
+  const legacy=new Client([begin(),identity(),total("0",(_values,sql)=>assert.match(sql,/import_source_row/)),page([]),commit()]);
+  await reader(legacy).readProducts(actor,{...search,search:"SYNTHETIC",context:transferContext},signal());legacy.done();
+});
+
+test("exact27 ordinary barcode lookup uses same verified read lease and published business bindings", async () => {
+  const warehouseId=sid("warehouse",1201),bindingId=sid("barcode",1202),input={context:{...context,warehouseId},barcode:"SYNTHETIC-BARCODE"};
+  const row={...sku(),binding_id:bindingId,barcode:input.barcode,barcode_kind:"MAIN",binding_enabled:true,references_retained:true,source_published:null};
+  for (const [rows,expected] of [[[row],"FOUND"],[[],"NOT_FOUND"],[[{...row,binding_enabled:false}],"UNAVAILABLE"]] as const) {
+    let proofs=0;const client=new Client([begin(),identity(),{sql:/barcode-schema/,rows:[{versions:Array.from({length:27},(_,i)=>i+1)}]},selectedHall(),
+      {sql:/barcode-warehouses/,rows:[{id:warehouseId,hall_id:hall,native_hall_id:hall,enabled:true,has_nonzero_inventory:false}]},
+      {sql:/current-form:barcode \*\//,rows:[...rows],inspect(values,sql){assert.deepEqual(values,[input.barcode]);assert.doesNotMatch(sql,/import_source_row|import_record|import_batch/);assert.match(sql,/b.barcode COLLATE "C"=\$1::text COLLATE "C" LIMIT 2/);}},commit()]);
+    const runtime27Ordinary={profile:"EXACT27" as const,contract:"UNIFIED_ORDINARY_RUNTIME27_V1" as const,async assertReady(c:object,purpose:"ORDINARY_DOCUMENT_READ"){assert.equal(c,client);assert.equal(purpose,"ORDINARY_DOCUMENT_READ");assert.equal(client.calls.at(-1)!.sql,"BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");proofs++;}};
+    const result=await new PostgresCurrentFormReader({async connect(){return client;}},allow,{runtime27Ordinary}).readBarcode(actor,input,signal());
+    assert.equal(proofs,1);assert.equal(result.state,expected);assert.equal(result.sku?.id,expected==="FOUND"?skuId:undefined);assert.equal(result.binding?.id,expected==="FOUND"?bindingId:undefined);client.done();
+  }
+});
+
+test("exact27 ordinary barcode rejects proof failure, incomplete schema and duplicate identities", async () => {
+  const warehouseId=sid("warehouse",1201),bindingId=sid("barcode",1202),input={context:{...context,warehouseId},barcode:"SYNTHETIC-BARCODE"};
+  const row={...sku(),binding_id:bindingId,barcode:input.barcode,barcode_kind:"MAIN",binding_enabled:true,references_retained:true,source_published:null};
+  const failed=new Client([begin(),rollback()]);
+  const denied={profile:"EXACT27" as const,contract:"UNIFIED_ORDINARY_RUNTIME27_V1" as const,async assertReady(){throw Error("SYNTHETIC proof failed");}};
+  await assert.rejects(new PostgresCurrentFormReader({async connect(){return failed;}},allow,{runtime27Ordinary:denied}).readBarcode(actor,input,signal()),/proof failed/);failed.done();
+  const cap={profile:"EXACT27" as const,contract:"UNIFIED_ORDINARY_RUNTIME27_V1" as const,async assertReady(){}};
+  const schema=new Client([begin(),identity(),{sql:/barcode-schema/,rows:[{versions:Array.from({length:26},(_,i)=>i+1)}]},rollback()]);
+  await assert.rejects(new PostgresCurrentFormReader({async connect(){return schema;}},allow,{runtime27Ordinary:cap}).readBarcode(actor,input,signal()),{code:"CURRENT_FORM_READ_UNAVAILABLE"});schema.done();
+  const duplicate=new Client([begin(),identity(),{sql:/barcode-schema/,rows:[{versions:Array.from({length:27},(_,i)=>i+1)}]},selectedHall(),
+    {sql:/barcode-warehouses/,rows:[{id:warehouseId,hall_id:hall,native_hall_id:hall,enabled:true,has_nonzero_inventory:false}]},{sql:/current-form:barcode \*\//,rows:[row,row]},rollback()]);
+  await assert.rejects(new PostgresCurrentFormReader({async connect(){return duplicate;}},allow,{runtime27Ordinary:cap}).readBarcode(actor,input,signal()),{code:"INVALID_DATABASE_VALUE"});duplicate.done();
+});
+
+test("exact27 current forms exclude retained-deleted products and SKU references in the verified snapshot", async () => {
+  const assertProductRetained=(sql:string)=>{assert.match(sql,/p\.deleted_at IS NULL/);assert.match(sql,/product_category\s+\w+[\s\S]*?\.deleted_at IS NOT NULL/);};
+  const assertSkuRetained=(sql:string)=>{assertProductRetained(sql);assert.match(sql,/c\.deleted_at IS NULL/);assert.match(sql,/f\.deleted_at IS NULL/);};
+  let proofs=0;let expectedClient:Client;const cap={profile:"EXACT27" as const,contract:"UNIFIED_ORDINARY_RUNTIME27_V1" as const,async assertReady(client:object){assert.equal(client,expectedClient);assert.equal(expectedClient.calls.at(-1)!.sql,"BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");proofs++;}};
+  const products=new Client([begin(),identity(),total("0",(_v,sql)=>{assertProductRetained(sql);assert.match(sql,/sc\.deleted_at IS NULL/);assert.match(sql,/sf\.deleted_at IS NULL/);}),page([]),commit()]);
+  expectedClient=products;const r1=new PostgresCurrentFormReader({async connect(){return products;}},allow,{runtime27Ordinary:cap});
+  assert.equal((await r1.readProducts(actor,{...search,search:"SYNTHETIC",context:transferContext},signal())).items.length,0);products.done();
+  const skus=new Client([begin(),identity(),total("0",(_v,sql)=>assertSkuRetained(sql)),page([]),commit()]);
+  expectedClient=skus;const r2=new PostgresCurrentFormReader({async connect(){return skus;}},allow,{runtime27Ordinary:cap});
+  assert.equal((await r2.readProductSkus(actor,{context:transferContext,productId,page:1,pageSize:20},signal())).items.length,0);skus.done();
+  const batch=new Client([begin(),identity(),{sql:/current-form:sku-batch/,rows:[],inspect(_v,sql){assertSkuRetained(sql);}},rollback()]);
+  expectedClient=batch;const r3=new PostgresCurrentFormReader({async connect(){return batch;}},allow,{runtime27Ordinary:cap});
+  await assert.rejects(r3.readSkuBatch(actor,{context:transferContext,skuIds:[skuId]},signal()),{code:"SKU_UNAVAILABLE"});batch.done();
+  const saved=new Client([begin(),identity(),{sql:/current-form:sku-batch/,rows:[sku()],inspect(_v,sql){assertSkuRetained(sql);}},
+    {sql:/current-form:saved-edit-products/,rows:[],inspect(_v,sql){assertProductRetained(sql);}},commit()]);
+  expectedClient=saved;const r4=new PostgresCurrentFormReader({async connect(){return saved;}},allow,{runtime27Ordinary:cap});
+  assert.equal((await r4.readSavedEditSkuBatch(actor,{context:transferContext,skuIds:[skuId]},signal())).products[0]!.state,"UNAVAILABLE");saved.done();
+  assert.equal(proofs,4);
+});
+
+test("exact27 enabled SKUs with retained-deleted dependencies are unavailable", async () => {
+  const cases = [
+    ["product", /p\.deleted_at IS NULL/], ["category", /pc_retained\.deleted_at IS NOT NULL/],
+    ["color", /c\.deleted_at IS NULL/], ["fit", /f\.deleted_at IS NULL/]
+  ] as const;
+  for (const [deleted, predicate] of cases) {
+    // Scripted result models an otherwise enabled but retained-deleted tuple.
+    // SQL assertions check the guard; this is not database execution.
+    const enabledTuple = sku(); const client = new Client([begin(),identity(),{sql:/current-form:sku-batch/,rows:[],inspect(_values,sql){
+      assert.equal(enabledTuple.sku_enabled,true);assert.equal(enabledTuple.product_enabled,true);assert.equal(enabledTuple.color_enabled,true);assert.equal(enabledTuple.fit_enabled,true);
+      assert.match(sql,predicate,`missing guard for synthetic deleted ${deleted}`);
+    }},rollback()]);
+    const runtime27Ordinary={profile:"EXACT27" as const,contract:"UNIFIED_ORDINARY_RUNTIME27_V1" as const,async assertReady(c:object){assert.equal(c,client);}};
+    await assert.rejects(new PostgresCurrentFormReader({async connect(){return client;}},allow,{runtime27Ordinary}).readSkuBatch(actor,{context:transferContext,skuIds:[skuId]},signal()),{code:"SKU_UNAVAILABLE"});client.done();
+  }
 });

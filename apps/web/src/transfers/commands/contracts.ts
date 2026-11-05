@@ -31,6 +31,7 @@ export interface TransferCommandCapability { readonly workspace: import('./contr
   readonly manualCreate?: { readonly open: () => Promise<import('../../current-form/transfer-create.ts').TransferNewDocumentSession>; readonly canLeave: () => boolean };
 }
 export interface TransferCommandWorkspaceOptions {
+  readonly documentListProfile?: 'source-confirmed-ordinary-documents-v1';
   readonly responsibleStaff?: import('../../application/contracts.ts').DocumentResponsibleStaffCapability;
   readonly scope: ReadScope; readonly client: TransferCommandClient; readonly reader: Pick<TransferReader, 'readDetail'>;
   readonly newRequestKey: () => string; readonly onAccessFailure: (error: TransferCommandError) => void;

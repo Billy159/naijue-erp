@@ -42,7 +42,10 @@ export function checkedNativeSalesFactInput(input: SalesDraft | SalesDocument): 
   if ("version" in h) version(h.version);
   for (const line of document.lines) requireDomain(typeof line.isCurrent === "boolean", "INVALID_LINE", "Explicit current line flag required");
   const current = document.lines.filter(line => line.isCurrent);
-  requireDomain(current.length > 0 && current.length <= SALES_NATIVE_FACT_MAX_LINES && document.settlements.length <= 3,
+  // Fact hydration is bounded independently of the demo's three editable payment
+  // slots. Imported ordinary documents retain every original occurrence; shared
+  // account/method references are deduplicated and locked in bounded batches.
+  requireDomain(current.length > 0 && current.length <= SALES_NATIVE_FACT_MAX_LINES && document.settlements.length <= SALES_NATIVE_FACT_MAX_LINES,
     "NATIVE_SALES_FACTS_TOO_LARGE", "Native fact request exceeds the technical current-document bound");
   id("sales", h.id); id("hall", h.hallId); id("warehouse", h.warehouseId); id("customer", h.customerId);
   if (h.salespersonId !== null) id("staff", h.salespersonId);
@@ -97,7 +100,7 @@ export class PostgresNativeSalesFacts {
     const current = document.lines.filter(line => line.isCurrent);
     const schema = one((await this.query("/* native-sales-facts:schema */ SELECT EXISTS (SELECT 1 FROM naijue_erp.schema_migration WHERE version = 10) AS installed")).rows);
     requireDomain(schema.installed === true, "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "Current native sales schema including the original-method snapshot has not been installed");
-    const hall = one((await this.query("/* native-sales-facts:hall */ SELECT id, enabled FROM naijue_erp.hall WHERE id = $1::uuid FOR SHARE", [h.hallId])).rows);
+    const hall = h.hallId === null ? null : one((await this.query("/* native-sales-facts:hall */ SELECT id, enabled FROM naijue_erp.hall WHERE id = $1::uuid FOR SHARE", [h.hallId])).rows);
     const warehouse = one((await this.query("/* native-sales-facts:warehouse */ SELECT id, hall_id, enabled FROM naijue_erp.warehouse WHERE id = $1::uuid FOR SHARE", [h.warehouseId])).rows);
     const customer = one((await this.query(`/* native-sales-facts:customer */ SELECT id, enabled FROM naijue_erp.customer WHERE id = $1::uuid${this.excludeHistoricalCustomers ? " AND NOT naijue_erp.is_exact_historical_customer_only(customer.id)" : ""} FOR SHARE`, [h.customerId])).rows);
     let salesperson: NativeSalesReferenceFacts["salesperson"] = null;
@@ -167,10 +170,10 @@ export class PostgresNativeSalesFacts {
         barcodes.push(Object.freeze({ raw, skuId: id("sku", row.sku_id), enabled: booleanValue(row.enabled) })); }
     }
     this.checkScope(h.id);
-    requireDomain(hall.id === h.hallId && warehouse.id === h.warehouseId && customer.id === h.customerId,
+    requireDomain((hall?.id ?? null) === h.hallId && warehouse.id === h.warehouseId && customer.id === h.customerId,
       "INVALID_DATABASE_VALUE", "Mismatched native header reference targets");
     return Object.freeze({ salesId: h.id,
-      hall: Object.freeze({ id: id("hall", hall.id), enabled: booleanValue(hall.enabled) }),
+      hall: hall === null ? null : Object.freeze({ id: id("hall", hall.id), enabled: booleanValue(hall.enabled) }),
       warehouse: Object.freeze({ id: id("warehouse", warehouse.id), hallId: id("hall", warehouse.hall_id), enabled: booleanValue(warehouse.enabled) }),
       customer: Object.freeze({ id: id("customer", customer.id), enabled: booleanValue(customer.enabled) }), salesperson,
       paymentAccounts: Object.freeze([...accountRows].map(([accountId, row]) => { const methodId = id("paymentMethod", row.payment_method_id); return Object.freeze({ id: accountId,

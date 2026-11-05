@@ -12,19 +12,8 @@ function fixture(entity='SALES_HEADER'){
  const record={source:{id:id(100),batchId:b.batchId,entityType:entity,sourceKey:'SYN-DOC',fileRef:'SYNTHETIC.xlsx',sheet:'HEADER',rowNo:'2',sourceFileSha256:H,rowSha256:H,rawFields:raw,normalizedFields:n,fieldProvenance:{schema_version:1,fields:{}}},selection:{entity,source:'BASE_V2',path:table.file,baseManifestSha256:H,selectionSha256:H,approvalSha256:H,csvSha256:H},creatorHallOverlay:{evidenceRef:'SYNTHETIC-approved-creator.csv#2',file:'SYNTHETIC.xlsx',sheet:'HEADER',row:'2',sourceId:'SYN-DOC',documentNumber:n.原单号,personField:entity==='SALES_HEADER'?'营业员来源编号':'原制单账号编号',personId:'',uploadedWarehouseDerivedHall:'UPLOADED_WAREHOUSE_HALL',candidateCreatorHall:'',provenance:'UNKNOWN',reason:n.创建厅归属原因},temporalEvidence:{}};
  return {options:{binding:b,parties,historicalCustomers,moneyApprovals,expected:{SALES_HEADER:entity==='SALES_HEADER'?1:0,TRANSFER_HEADER:entity==='TRANSFER_HEADER'?1:0,historicalReferences:0}},record};
 }
-test('approved business hall whitelist uses exact source/warehouse/position and original HALL reference while leaving original record and creator untouched',()=>{
- const f=fixture();f.record.source.rawFields.所属厅来源编号=f.record.source.normalizedFields.所属厅来源编号='';
- const s=f.record.source,overlay={version:'USER_CONFIRMED_HISTORY_BUSINESS_HALL_OVERLAY_1',batchId:s.batchId,fixedSourceNamespace:f.options.binding.fixedSourceNamespace,selectionSha256:H,sourceKey:s.sourceKey,warehouseSourceKey:'WH1',targetHallSourceKey:'HALL1',targetHallNativeId:id(10),
-  sourceFileRef:s.fileRef,sourceFileSha256:s.sourceFileSha256,sheet:s.sheet,rowNo:s.rowNo,originalBusinessHall:'',provenance:'MIGRATION_DERIVED',reason:'USER_CONFIRMED_WAREHOUSE_TO_BUSINESS_HALL',
-  decisionSource:{threadId:'synthetic-human-thread',humanMessageId:'synthetic-decision',continueMessageId:'synthetic-continue',adoptionOwner:'C',scope:'ALL2471_WAREHOUSE_TO_BUSINESS_HALL_MAPPING_USER_CONFIRMED',originalBlankNotClaimedHistoricalFact:true},
-  evidenceRef:'USER_DECISION:synthetic-human-thread:synthetic-decision#'+s.sourceKey};
- const before=structuredClone(f.record),options={...f.options,businessHallOverlays:new Map([[s.sourceKey,overlay]])},p=createNativeHeader26BindingPreparer(options),v=p.prepare(f.record);
- assert.equal(v.prepared.header.hallId,id(10));assert.equal(v.prepared.source.rawFields.所属厅来源编号,'');assert.equal(v.prepared.source.normalizedFields.所属厅来源编号,'HALL1');assert.equal(v.prepared.header.createdHallId,null);
- assert.deepEqual(v.input.businessHallOverlay,overlay);assert.deepEqual(f.record,before);assert.equal(options.businessHallOverlays.size,1);p.finish();
- assert.equal(options.businessHallOverlays.size,1);
- const bad=createNativeHeader26BindingPreparer({...f.options,businessHallOverlays:new Map([[s.sourceKey,{...overlay,targetHallNativeId:id(999)}]])});assert.throws(()=>bad.prepare(f.record),/NATIVE_BINDING/);
- const missing=createNativeHeader26BindingPreparer(f.options);assert.throws(()=>missing.prepare(f.record),/REFERENCE_REQUIRED/);
- const unmapped=createNativeHeader26BindingPreparer({...f.options,businessHallOverlays:new Map([['OTHER',{...overlay,sourceKey:'OTHER'}]])});assert.throws(()=>unmapped.prepare(f.record),/REFERENCE_REQUIRED/);
+test('legacy warehouse-derived hall overlays are rejected rather than re-adopted',()=>{
+ const f=fixture();assert.throws(()=>createNativeHeader26BindingPreparer({...f.options,businessHallOverlays:new Map()}),/OVERLAY_RETIRED/);
 });
 test('sales header source identity: exact six fields match existing mapper IDs independently of blank hall and allocation UUID',()=>{
  const f=fixture(),before=structuredClone(f),p=createNativeHeader26BindingPreparer(f.options),full=p.prepare(f.record);p.finish();const identity=prepareSalesHeaderSourceIdentity26(f.options.binding,f.record);assert.deepEqual(identity,{sourceKey:f.record.source.sourceKey,nativeId:full.prepared.header.id,sourceRowId:full.prepared.source.id,sourceFileSha256:full.prepared.source.sourceFileSha256,rowSha256:full.prepared.source.rowSha256,version:1});assert.equal(Object.keys(identity).length,6);assert.deepEqual(f,before);
@@ -52,6 +41,22 @@ test('header26 carries the exact supplied32-cell approval, captures source/ref o
  const h=fixture();let gets=0;const accessor={...h.options};Object.defineProperty(accessor,'parties',{enumerable:true,get(){gets++;return h.options.parties;}});assert.throws(()=>createNativeHeader26BindingPreparer(accessor),/OPTIONS/);assert.equal(gets,0);
  const source=createNativeHeader26BindingPreparer(h.options);Object.defineProperty(h.record.source,'normalizedFields',{enumerable:true,get(){gets++;return {};}});assert.throws(()=>source.prepare(h.record));assert.equal(gets,0);
 });
-test('header26 known source-contract gap: blank original sales hall remains rejected rather than deriving it from warehouse or salesperson',()=>{
- const f=fixture();f.record.source.rawFields.所属厅来源编号=f.record.source.normalizedFields.所属厅来源编号='';const p=createNativeHeader26BindingPreparer(f.options);assert.throws(()=>p.prepare(f.record),/REFERENCE_REQUIRED/);assert.equal(f.record.source.rawFields.所属厅来源编号,'');assert.equal(f.record.source.normalizedFields.原创建厅编号,'');assert.throws(()=>p.finish(),/CLOSED/);
+test('historical source hall stays unknown with exact source fields and warehouse untouched',()=>{
+ const f=fixture();f.record.source.rawFields.所属厅来源编号=f.record.source.normalizedFields.所属厅来源编号='';const before=structuredClone(f.record);
+ const p=createNativeHeader26BindingPreparer(f.options),v=p.prepare(f.record);assert.equal(v.prepared.header.hallId,null);assert.equal(v.prepared.header.warehouseId,id(20));assert.deepEqual(v.prepared.source,f.record.source);assert.deepEqual(f.record,before);assert.equal(v.decision.references.some(r=>r.field==='所属厅来源编号'),false);assert.equal(p.finish().rows,1);
+});
+test('reliable literal historical sale hall survives cross-hall warehouse without name or code inference',()=>{
+ const f=fixture();f.options.parties.find(r=>r.entity==='WAREHOUSE').nativeSnapshot.hall_id=id(90);const p=createNativeHeader26BindingPreparer(f.options),v=p.prepare(f.record);assert.equal(v.prepared.header.hallId,id(10));assert.equal(v.prepared.header.warehouseId,id(20));p.finish();
+ const g=fixture();g.record.source.rawFields.所属厅来源编号=g.record.source.normalizedFields.所属厅来源编号='SYN HALL';assert.throws(()=>createNativeHeader26BindingPreparer(g.options).prepare(g.record),/REFERENCE_MISSING/);
+});
+test('current-batch approved warehouse inference preserves raw and normalized unknown source while marking migration-derived capture',()=>{
+ const f=fixture();f.record.source.rawFields.所属厅来源编号=f.record.source.normalizedFields.所属厅来源编号='';const before=structuredClone(f.record);
+ const options={...f.options,businessHallInference:{batchId:f.options.binding.batchId,fixedSourceNamespace:f.options.binding.fixedSourceNamespace,selectionSha256:H,capturedAt:'2026-11-05T03:00:00Z',evidenceRef:'SYNTHETIC-reviewed-capture'}};
+ const p=createNativeHeader26BindingPreparer(options),v=p.prepare(f.record),e=v.prepared.fieldProvenance.historical_hall_evidence;
+ assert.equal(v.prepared.header.hallId,id(10));assert.deepEqual(v.prepared.source,f.record.source);assert.deepEqual(f.record,before);assert.equal(e.basis,'MIGRATION_DERIVED');assert.equal(e.original_hall_id,null);assert.equal(e.warehouse_id,id(20));assert.equal(e.warehouse_hall_id_at_capture,id(10));assert.equal(e.warehouse_version,1);assert.equal(e.captured_at,options.businessHallInference.capturedAt);p.finish();
+});
+test('approved inference preserves reliable different source hall and records difference, never overwrites it',()=>{
+ const f=fixture();f.options.parties.push({entity:'HALL',sourceKey:'HALL2',nativeSnapshot:{...f.options.parties[0].nativeSnapshot,id:id(90)}});f.options.parties.find(r=>r.entity==='WAREHOUSE').nativeSnapshot.hall_id=id(90);
+ const p=createNativeHeader26BindingPreparer({...f.options,businessHallInference:{batchId:f.options.binding.batchId,fixedSourceNamespace:f.options.binding.fixedSourceNamespace,selectionSha256:H,capturedAt:'2026-11-05T03:00:00Z',evidenceRef:'SYNTHETIC-reviewed-capture'}});
+ const v=p.prepare(f.record),e=v.prepared.fieldProvenance.historical_hall_evidence;assert.equal(v.prepared.header.hallId,id(10));assert.equal(e.warehouse_hall_id_at_capture,id(90));assert.equal(e.has_difference,true);assert.equal(e.review_required,true);p.finish();
 });

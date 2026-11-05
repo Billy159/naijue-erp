@@ -11,10 +11,10 @@ type SavedLine = TransferDetailDto['document']['lines'][number];
 /** Domain-owned read-only columns. Saved snapshots are not current catalogue
  * values, and line.id remains the row identity even for repeated SKU records. */
 const columns: readonly StandardReadColumn<SavedLine>[] = [
-  { title: '款号／商品名称', render: (_, line) => transferReadProduct(line.snapshot.productCode, line.snapshot.productName) },
-  { title: '颜色', render: (_, line) => transferReadText(line.snapshot.colorName) },
-  { title: '版型', render: (_, line) => transferReadText(line.snapshot.fitName) },
-  { title: '尺码', render: (_, line) => transferReadText(line.snapshot.sizeName) },
+  { title: '款号／商品名称', render: (_, line) => transferReadProduct(line.snapshot.productCode ?? '未记录', line.snapshot.productName ?? '未记录') },
+  { title: '颜色', render: (_, line) => transferReadText(line.snapshot.colorName ?? '未记录') },
+  { title: '版型', render: (_, line) => transferReadText(line.snapshot.fitName ?? '未记录') },
+  { title: '尺码', render: (_, line) => transferReadText(line.snapshot.sizeName ?? '未记录') },
   { title: '数量', render: (_, line) => transferReadQuantity(line.quantity) },
   { title: '条码', render: (_, line) => transferReadText(line.snapshot.barcode ?? '未记录') },
 ];
@@ -35,7 +35,7 @@ function SavedDocumentRecords({ data }: { readonly data: TransferDetailDto }) {
       {lines.length === 0 && <p role="status">本单没有保存明细。</p>}
       <StandardPagination label="保存记录分页" page={current} pageSize={PAGE_SIZE} total={lines.length} disabled={false}
         hideOnSinglePage={false} showJump={false} simple stepText onPage={setPage} />
-      <p>最后更新：<time dateTime={header.updatedAt} title={header.updatedAt}>{transferUpdatedMinute(header.updatedAt)}</time> · 审核：{data.references.approvedByName ?? '未记录'}{data.stockBasis === 'CUTOFF_HISTORY' && ' · 历史截止导入记录，不代表本系统运行期库存过账。'}</p>
+      <p>最后更新：<time dateTime={header.updatedAt ?? undefined} title={header.updatedAt ?? undefined}>{header.updatedAt === null ? '未记录' : transferUpdatedMinute(header.updatedAt)}</time> · 审核：{data.references.approvedByName ?? '未记录'}{data.stockBasis === 'CUTOFF_HISTORY' && ' · 历史截止导入记录，不代表本系统运行期库存过账。'}</p>
     </div>}
   </section>;
 }

@@ -70,7 +70,7 @@ test("product management refuses truncated pages, pagination mismatches and off-
   assert.throws(() => checkedProductManagementCandidatePage({ ...candidates, exactTotal: 2 }, "product"));
   assert.throws(() => checkedProductManagementCandidatePage({ ...candidates, items: [{ id: productId, label: "缺失code/name" }] }, "product"));
   const incomplete = fixture({ grant: { kind: "all", totalStock: "all-warehouses" } });
-  await assert.rejects(() => incomplete.service.readList(actor, input, signal()), /Mismatched trusted/);
+  assert.equal((await incomplete.service.readList(actor, input, signal())).items[0]!.totalStock, null);
 });
 test("product management policy revocation is checked on every list and candidate call before storage", async () => {
   let allowed = true;

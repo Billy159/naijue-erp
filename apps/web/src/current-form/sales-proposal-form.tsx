@@ -12,7 +12,7 @@ import { DocumentScan } from '../components/document-scan.tsx';
 import type { DocumentScanController } from '../components/document-scan-controller.ts';
 import { UIDate } from '../components/standard-controls.tsx';
 import { forwardRef, useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore, type ButtonHTMLAttributes, type ReactNode } from 'react';
-import { SalesProposalSession, salesProposalMoney, salesProposalLineSelection, type SalesProposalEntry, type SalesProposalLine, type SalesProposalPicker, type SalesProposalSnapshot } from './sales-proposal.ts';
+import { SalesProposalSession, salesProposalMoney, salesProposalHasMixedQuantities, mixedSalesDiscountNotice, salesProposalMoneyInputDisplay, salesProposalLineSelection, type SalesProposalEntry, type SalesProposalLine, type SalesProposalPicker, type SalesProposalSnapshot } from './sales-proposal.ts';
 import { salesInputMoney } from '../sales/commands/form-model.ts';
 import { discountUnitPrice } from '../../../../packages/domain/src/sales-money.ts';
 import { minorAmount } from '../../../../packages/domain/src/values.ts';
@@ -125,6 +125,24 @@ function SalesReferenceField({ session, picker, visible, label, value, selected,
   readonly disabled: boolean; readonly open: () => void; readonly close: () => void; readonly clear?: () => void; account?: boolean;
 }) {
   const host = useRef<HTMLDivElement>(null), [popupWidth, setPopupWidth] = useState(300);
+  // Local Source reference only: Arco blurs its input in the close effect.
+  // Restore an Escape/retry-owned input after commit, never after a new focus,
+  // picker, identity disposal or unmount. No document-wide persistent handler.
+  const escapeFocus = useRef<{ input: HTMLElement; owner: HTMLDivElement; expected: SalesProposalSnapshot['picker']; cancel: () => void } | null>(null);
+  useEffect(() => () => escapeFocus.current?.cancel(), []);
+  useEffect(() => {
+    if (!escapeFocus.current || visible && escapeFocus.current.expected === null) return;
+    const pending = escapeFocus.current;
+    queueMicrotask(() => {
+      if (escapeFocus.current !== pending) return;
+      const { input, owner } = pending, doc = owner.ownerDocument;
+      const eligible = !disabled && owner.isConnected && input.isConnected &&
+        !session.getSnapshot().disposed && session.getSnapshot().picker === pending.expected && doc.activeElement === doc.body;
+      pending.cancel();
+      if (eligible) input.focus();
+    });
+  }, [visible, picker, disabled, session]);
+
   useLayoutEffect(() => {
     const element = host.current, view = element?.ownerDocument.defaultView;
     if (!element || !view || !visible) return;
@@ -141,16 +159,32 @@ function SalesReferenceField({ session, picker, visible, label, value, selected,
     }
   }
   if (selected && !options.some(option => option.value === selected.id)) options.unshift({ value: selected.id, label: account && selected.code && !selected.name.trimStart().startsWith(selected.code) ? `${selected.code} ${selected.name}` : selected.name, disabled: true });
-  return <div ref={host} className="sale-reference-field"><DemoSingleSelectAction presentation="flat" label={label} placeholder={value} value={selected?.id ?? ''} options={options} disabled={disabled} open={visible} popupWidth={popupWidth} {...(clear ? { allowClear: true, onClear: clear } : {})}
+  const rememberFocus = () => {
+    const owner = host.current, doc = owner?.ownerDocument, input = owner?.querySelector<HTMLElement>('input');
+    if (!owner || !doc || !input || disabled || !owner.contains(doc.activeElement)) return null;
+    escapeFocus.current?.cancel();
+    const onFocus = (next: FocusEvent) => { if (next.target !== input) pending.cancel(); };
+    const pending = { input, owner, expected: null as SalesProposalSnapshot['picker'], cancel: () => {
+      doc.removeEventListener('focusin', onFocus, true);
+      if (escapeFocus.current === pending) escapeFocus.current = null;
+    } };
+    escapeFocus.current = pending;
+    doc.addEventListener('focusin', onFocus, true);
+    return pending;
+  };
+  return <div ref={host} className="sale-reference-field" onKeyDownCapture={event => {
+    if (!visible || disabled || event.key !== 'Escape' || event.nativeEvent.isComposing || event.keyCode === 229) return;
+    rememberFocus();
+  }}><DemoSingleSelectAction presentation="flat" label={label} placeholder={value} value={selected?.id ?? ''} options={options} disabled={disabled} open={visible} popupWidth={popupWidth} {...(clear ? { allowClear: true, onClear: clear } : {})}
     loading={visible && picker?.phase === 'loading'} onSearch={text => { if (visible && session.getSnapshot().picker === picker) void session.search(text); }}
     onOpenChange={next => {
-      if (next) { if (!visible) open(); return; }
+      if (next) { if (!visible) { escapeFocus.current?.cancel(); open(); } return; }
       // The source Select notifies close before onChange. Let the native
       // selection consume this exact candidate snapshot before dismissing it.
       const current = picker; queueMicrotask(() => { if (current && !session.getSnapshot().disposed && session.getSnapshot().picker === current) close(); });
     }}
     onChange={id => { if (visible && session.getSnapshot().picker === picker) void session.select(id); }}
-    dropdownRender={menu => <>{picker?.phase === 'error' ? <div className="sale-reference-state" role="alert">读取失败。<button type="button" className="btn" onClick={() => { void session.retry(); }}>重试</button></div> : menu}
+    dropdownRender={menu => <>{picker?.phase === 'error' ? <div className="sale-reference-state" role="alert">读取失败。<button type="button" className="btn" onClick={() => { const pending = rememberFocus(); void session.retry(); if (pending) pending.expected = session.getSnapshot().picker; }}>重试</button></div> : menu}
       {visible && picker?.phase === 'ready' && picker.result && picker.result.exactTotal > 20n && <div className="sale-reference-pages"><span>第 {picker.page} 页</span><button type="button" className="btn" disabled={picker.page <= 1} onClick={() => { void session.page(picker.page - 1); }}>上一页</button><button type="button" className="btn" disabled={BigInt(picker.page) * 20n >= picker.result.exactTotal} onClick={() => { void session.page(picker.page + 1); }}>下一页</button></div>}</>} /></div>;
 }
 /** One anchored Arco popup for native paged candidates. No second modal picker,
@@ -288,6 +322,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   const pendingRows = (['IN', 'OUT'] as const).flatMap(direction => state.entries[direction].filter(entry => entry.product || entry.query.trim()).map(entry => ({ direction, entry }))).sort((a, b) => a.entry.order! - b.entry.order!);
   const entryRows: { readonly direction: 'IN' | 'OUT'; readonly entry: SalesProposalEntry }[] = [...pendingRows, { direction: entryDirection, entry: state.entries[entryDirection].find(entry => !entry.product && !entry.query.trim())! }];
   const paymentRows = draft.settlements.length ? draft.settlements : [{ key: null, method: null, account: null, direction: 'RECEIVE' as const, amount: '' }];
+  const mixedDiscountBlocked = !session.preservesHistoricalSale && salesProposalHasMixedQuantities(displayedLines);
   const zero = pricingLines?.find(row => row.key === zeroLine);
   const confirmZero = () => {
     if (!zero) return;
@@ -311,13 +346,13 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       {(['hall', 'salesperson', 'customer', 'warehouse'] as const).map(kind => <div className="tc-gold-field" key={kind}><span className="sale-field-label">{labels[kind]}{kind !== 'salesperson' && <span className="ui-required"> *</span>}</span>{reference(kind, `选择${labels[kind]}`, `请选择${labels[kind]}`, draft[kind], () => { void session.openPicker(kind); }, !!state.lineEdit || kind !== 'hall' && !draft.hall, kind === 'salesperson' && draft.salesperson ? () => session.clearSalesperson() : undefined)}</div>)}
       <label className="tc-gold-field tc-gold-meta sale-number-field"><span className="sale-field-label">单号</span><strong className="sale-number-value">{saved?.number ?? '保存后生成'}</strong></label>
       <DocumentResponsibilityFields {...(scope ? { scope } : {})} saved={!!saved} {...(identity?.creatorName !== undefined ? { creatorName: identity.creatorName } : {})} value={draft.responsible ?? identity?.responsible ?? null} {...(identity?.capability ? { capability: identity.capability } : {})} readOnly={preparation?.disabled === true || preparation?.preparing === true} valueClassName="sale-read-value" onChange={value => session.selectResponsibleStaff(value)} {...(identity?.onAccessFailure ? { onAccessFailure: identity.onAccessFailure } : {})} />
-      <label className="tc-gold-field sale-discount-field"><span className="sale-field-label">整单优惠 / 抹零</span>{combined ? <span className="sale-read-value" /> : <input data-document-adjustment aria-label="整单优惠" inputMode="decimal" value={draft.orderDiscount} onChange={event => { const value = event.currentTarget.value; return session.setHeader({ orderDiscount: value }); }} />}</label>
+      <label className="tc-gold-field sale-discount-field"><span className="sale-field-label">整单优惠 / 抹零</span>{combined || session.preservesHistoricalSale ? <span className="sale-read-value">{session.preservesHistoricalSale ? salesProposalMoneyInputDisplay(draft.orderDiscount) : null}</span> : <input data-document-adjustment aria-label="整单优惠" disabled={mixedDiscountBlocked} inputMode="decimal" value={draft.orderDiscount} onChange={event => { const value = event.currentTarget.value; return session.setHeader({ orderDiscount: value }); }} />}{mixedDiscountBlocked && <small role="status">{mixedSalesDiscountNotice}{salesProposalMoneyInputDisplay(draft.orderDiscount) !== '0.00' && <button type="button" className="btn sale-link" onClick={() => session.setHeader({ orderDiscount: '0.00' })}>清除整单优惠</button>}</small>}</label>
       <label className="tc-gold-field sale-due-field"><span className="sale-field-label">应结金额</span><strong className="sale-due-value" data-sale-due>{totals ? `${totals.netDueMinor.startsWith('-') ? '-¥' : '¥'}${salesInputMoney(totals.netDueMinor.replace(/^-/, ''))}` : '待填写'}</strong></label>
       <div className="tc-gold-field sale-payment-field" data-funds-field aria-label="本单收退明细"><span className="sale-field-label">收款</span><div className="sale-payment-rows">
         {paymentRows.map((row, index) => <div className="sale-payment-row" data-funds-row={index} key={index === 0 ? 'source-first-funds-row' : row.key!}>
-          {reference(`method-${index}`, `付款方式 ${index + 1}`, '支付方式', row.method, () => { void session.openPaymentPicker(row.key, 'paymentMethod'); }, !draft.hall || !!state.lineEdit, row.key && paymentRows.length === 1 ? () => { dismissPicker(); session.removeSettlement(row.key!); } : undefined)}
-          {reference(`account-${index}`, `资金账户 ${index + 1}`, '资金账户', row.account, () => { void session.openPaymentPicker(row.key, 'paymentAccount'); }, !row.method || !!state.lineEdit)}
-          <input data-rf="amount" aria-label={`第${index + 1}笔收款金额`} inputMode="decimal" placeholder="金额" disabled={!draft.hall} value={row.key === null ? salesInputMoney(totals?.netDueMinor ?? '0') : focusedPayment === index ? (row.direction === 'REFUND' ? '-' : '') + row.amount : paymentAmount(row.amount, row.direction)} onFocus={() => setFocusedPayment(index)} onBlur={() => setFocusedPayment(null)} onChange={event => { const value = event.currentTarget.value; return session.updateSignedSettlement(row.key, value); }} />
+          {reference(`method-${index}`, `付款方式 ${index + 1}`, '支付方式', row.method, () => { void session.openPaymentPicker(row.key, 'paymentMethod'); }, !!state.lineEdit, row.key && paymentRows.length === 1 ? () => { dismissPicker(); session.removeSettlement(row.key!); } : undefined)}
+          {reference(`account-${index}`, `资金账户 ${index + 1}`, '资金账户', row.account, () => { void session.openPaymentPicker(row.key, 'paymentAccount'); }, !draft.hall || !row.method || !!state.lineEdit)}
+          <input data-rf="amount" aria-label={`第${index + 1}笔收款金额`} inputMode="decimal" placeholder="金额" value={row.key === null ? salesInputMoney(totals?.netDueMinor ?? '0') : focusedPayment === index ? (row.direction === 'REFUND' ? '-' : '') + row.amount : paymentAmount(row.amount, row.direction)} onFocus={() => setFocusedPayment(index)} onBlur={() => setFocusedPayment(null)} onChange={event => { const value = event.currentTarget.value; return session.updateSignedSettlement(row.key, value); }} />
           <span className="sale-payment-actions">{index === paymentRows.length - 1 && paymentRows.length < 3 && <button type="button" className="btn sale-link" data-rf-add disabled={!draft.hall || !row.method || !row.account || !/^\d+(?:\.\d{1,2})?$/.test(row.amount)} onClick={() => session.addSettlement()}>添加</button>}{row.key && paymentRows.length > 1 && <button type="button" className="btn sale-link" data-rf-remove={index} aria-label={`删除收退 ${index + 1}`} onClick={() => session.removeSettlement(row.key!)}>删除</button>}</span>
         </div>)}
       </div><small data-funds-balance className={`sale-payment-balance ${salesPaymentKind(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, displayedLines.length)}`}>{salesPaymentBalance(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, displayedLines.length)}</small></div>
@@ -347,7 +382,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
           <td>{combined && <SalesRowDirection label={`退回或换出 ${rowLabel}`} quantity={editing?.quantity ?? row.quantity} disabled={false} change={value => { const patch = { quantity: signedQuantity(editing?.quantity ?? row.quantity, value) }; if (editing) session.updateLineEdit(patch); else session.updateLine(row.key, patch); }} />}<input data-proposal-quantity={row.key} aria-label={`${rowLabel} 数量`} className={(editing?.quantity ?? row.quantity).startsWith('-') ? 'negative' : ''} inputMode="numeric" value={editing?.quantity ?? row.quantity} onChange={event => { const patch = { quantity: event.currentTarget.value }; if (editing) session.updateLineEdit(patch); else session.updateLine(row.key, patch); }} /></td>
           <td className="sale-num sale-muted">{product.retailPrice ?? '未记录'}</td>
           <td>{product.retailPrice !== null && !row.isGift && (active ? <span className="sale-discount-control"><input aria-label={`${rowLabel} 折扣`} inputMode="decimal" value={displayedDiscount(editablePrice)} placeholder="折扣" disabled={!active} onChange={event => { const patch = { pricingRule: 'DISCOUNT' as const, discount: event.currentTarget.value, zeroConfirmed: false }; if (editing) session.updateLineEdit(patch); else session.updateLine(row.key, patch); }} /><span>折</span></span> : displayedDiscount(row) ? `${displayedDiscount(row)}折` : '')}</td>
-          <td>{active ? <input aria-label={`${rowLabel} 单价`} placeholder="待填写" inputMode="decimal" value={rawPrice} disabled={!active || editablePrice.isGift} onChange={event => { const patch = { pricingRule: 'UNIT_PRICE' as const, dealPrice: event.currentTarget.value, zeroConfirmed: false }; if (editing) session.updateLineEdit(patch); else session.updateLine(row.key, patch); }} onBlur={() => { if (!editing && !row.isGift && !row.zeroConfirmed && linePrice(row) === '0.00') setZeroLine(row.key); }} /> : linePrice(row) ?? '待填写'}</td>
+          <td>{active ? <input aria-label={`${rowLabel} 单价`} placeholder="待填写" inputMode="decimal" value={rawPrice} disabled={!active || editablePrice.isGift === true} onChange={event => { const patch = { pricingRule: 'UNIT_PRICE' as const, dealPrice: event.currentTarget.value, zeroConfirmed: false }; if (editing) session.updateLineEdit(patch); else session.updateLine(row.key, patch); }} onBlur={() => { if (!editing && !row.isGift && !row.zeroConfirmed && linePrice(row) === '0.00') setZeroLine(row.key); }} /> : linePrice(row) ?? '待填写'}</td>
           <td className="sale-num">{previewAmount(editablePrice)}</td><td className="ui-action-cell"><div className="sale-row-actions">{editing ? <><button type="button" className="btn sale-link" disabled={!session.canConfirmLineEdit || !!picker} onClick={() => finishIdentity(row.key, true)}>确认</button><button type="button" className="btn sale-link" onClick={() => finishIdentity(row.key, false)}>取消</button></> : <><button type="button" className="btn sale-link" disabled={!openProduct || !draft.hall} title={openProduct ? undefined : '商品只读页尚未接入'} onClick={() => { if (draft.hall) openProduct?.(row.sku?.id ?? null, draft.hall.id, { id: row.product.id, label: `${row.product.code} · ${row.product.name}` }); }}>查看</button>{active && <><button type="button" className="btn sale-link" onClick={() => session.updateLine(row.key, { isGift: !row.isGift })}>{row.isGift ? '取消赠品' : '赠品'}</button><button type="button" className="btn sale-link sale-remove-line" aria-label={`删除 ${rowLabel}`} onClick={() => session.removeLine(row.key)}>删除</button></>}</>}</div></td>
         </tr>;
       })}

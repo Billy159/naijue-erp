@@ -8,7 +8,7 @@ import { frozenSnapshot, validateSalesDraft } from './validation.ts';
 export interface SalesFormInput {
   readonly businessDate: string; readonly note: string; readonly orderDiscount: string;
   readonly lines: readonly { readonly id: string; readonly quantity: string; readonly dealPrice: string;
-    readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT'; readonly discount: string; readonly isGift: boolean; readonly zeroConfirmed: boolean }[];
+    readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT' | null; readonly discount: string; readonly isGift: boolean | null; readonly zeroConfirmed: boolean | null }[];
   readonly settlements: readonly { readonly id: string; readonly direction: 'RECEIVE' | 'REFUND'; readonly amount: string }[];
 }
 export type SalesFormResult = { readonly ok: true; readonly draft: SalesDraftDto }
@@ -19,7 +19,7 @@ export function salesInputMoney(value: string): string {
   return `${signed < 0n ? '-' : ''}${magnitude / 100n}.${(magnitude % 100n).toString().padStart(2, '0')}`;
 }
 export function salesFormInput(draft: SalesDraftDto): SalesFormInput {
-  draft = validateSalesDraft(draft);
+  draft = validateSalesDraft(draft, { previous: draft });
   return frozenSnapshot({ businessDate: draft.header.businessDate, note: draft.header.note ?? '', orderDiscount: salesInputMoney(draft.header.orderDiscount),
     lines: draft.lines.map(line => ({ id: line.id, quantity: line.quantity, dealPrice: salesInputMoney(line.dealPrice), pricingRule: line.pricingRule,
       discount: line.discountTenths === null ? '' : `${Math.trunc(line.discountTenths / 10)}.${line.discountTenths % 10}`, isGift: line.isGift, zeroConfirmed: line.zeroConfirmed })),
@@ -53,17 +53,32 @@ export function compileSalesForm(base: SalesDraftDto, input: SalesFormInput): Sa
   if (!retainedLines || !retainedSettlements)
     return { ok: false, errors: Object.freeze({ form: '原行身份或顺序无效，请重新读取；不能合并、替换或伪造原行。' }) };
   if (!retainedLines.length) return { ok: false, errors: Object.freeze({ form: '请至少保留一条实际商品明细。' }) };
-  let orderDiscount = '0';
-  try { orderDiscount = amount(input.orderDiscount); if (base.header.businessType !== 'SALE' && orderDiscount !== '0') throw new Error(); }
+  const originalInput = salesFormInput(base);
+  if (base.header.hallId === null && (input.orderDiscount !== originalInput.orderDiscount || JSON.stringify(input.lines) !== JSON.stringify(originalInput.lines) || JSON.stringify(input.settlements) !== JSON.stringify(originalInput.settlements)))
+    return { ok: false, errors: Object.freeze({ form: '营业厅归属待核；当前仅可修改备注和日期，原仓库、商品、数量、价格及收退款须保持不变。' }) };
+  const signedSale = base.header.businessType === 'SALE' && base.lines.some(line => line.quantity.startsWith('-'));
+  const incompleteEconomics = signedSale || base.lines.some(line => line.pricingRule === null || line.zeroConfirmed === null || line.isGift === null || line.allocatedDiscount === null);
+  const unchangedEconomics = incompleteEconomics && input.orderDiscount === originalInput.orderDiscount
+    && input.lines.length === originalInput.lines.length && input.lines.every((raw, index) => {
+      const old = originalInput.lines[index]; return old !== undefined && (['id', 'quantity', 'dealPrice', 'pricingRule', 'discount', 'isGift', 'zeroConfirmed'] as const).every(key => raw[key] === old[key]);
+    });
+  let orderDiscount = base.header.orderDiscount;
+  try { orderDiscount = amount(input.orderDiscount); if (signedSale && orderDiscount !== base.header.orderDiscount) throw new Error(); if (base.header.businessType !== 'SALE' && orderDiscount !== '0') throw new Error(); }
   catch { errors.orderDiscount = base.header.businessType === 'SALE' ? '请输入非负金额，最多两位小数。' : '独立退货 / 换货不能使用整单优惠。'; }
   const lines = retainedLines.map((line, index) => {
-    const raw = input.lines[index]!; let q = line.quantity, price = line.dealPrice, tenths: number | null = null;
+    const raw = input.lines[index]!;
+    const oldRaw = originalInput.lines.find(row => row.id === raw.id);
+    if (oldRaw && (['id', 'quantity', 'dealPrice', 'pricingRule', 'discount', 'isGift', 'zeroConfirmed'] as const).every(key => raw[key] === oldRaw[key])) return line;
+    if (typeof raw.isGift !== 'boolean') errors[`line:${line.id}:isGift`] = '请明确选择赠品或普通商品；未知状态不能当作普通商品。';
+    if (typeof raw.zeroConfirmed !== 'boolean') errors[`line:${line.id}:zeroConfirmed`] = '请明确确认普通商品的零价意图；原未知事实不会自动补为否。';
+    let q = line.quantity, price = line.dealPrice, tenths: number | null = null;
     try {
       if (raw.quantity.length > 21 || !/^-?\d+$/.test(raw.quantity.trim())) throw new Error();
       q = quantity(BigInt(raw.quantity.trim()).toString()).toString();
-      if (q === '0' || base.header.businessType === 'SALE' && BigInt(q) < 0n) throw new Error();
-    } catch { errors[`line:${line.id}:quantity`] = base.header.businessType === 'SALE' ? '销售数量必须是正整数。' : '退回用负整数，换出用正整数，数量不能为零。'; }
+      if (q === '0') throw new Error();
+    } catch { errors[`line:${line.id}:quantity`] = '退回用负整数，售出用正整数，数量不能为零。'; }
     try {
+      if (typeof raw.isGift !== 'boolean' || typeof raw.zeroConfirmed !== 'boolean') throw new Error();
       if (raw.pricingRule !== 'UNIT_PRICE' && raw.pricingRule !== 'DISCOUNT') throw new Error();
       if (raw.pricingRule === 'DISCOUNT') {
         tenths = discount(raw.discount);
@@ -76,19 +91,25 @@ export function compileSalesForm(base: SalesDraftDto, input: SalesFormInput): Sa
     return { ...line, quantity: q, dealPrice: price, pricingRule: raw.pricingRule, discountTenths: tenths,
       zeroConfirmed: raw.zeroConfirmed, isGift: raw.isGift, lineAmount: (BigInt(q) * BigInt(price)).toString() };
   });
+  const nextSignedSale = base.header.businessType === 'SALE' && lines.some(line => line.quantity.startsWith('-'));
+  if (nextSignedSale && !signedSale) {
+    if (!lines.some(line => BigInt(line.quantity) > 0n)) errors.form = '仅有负数明细时请选择退货／换货类型。';
+    else if (orderDiscount !== '0') errors.orderDiscount = '正负明细混合单不使用整单优惠／抹零，请清除整单优惠。';
+  }
   const settlements = retainedSettlements.map((row, index) => {
     const raw = input.settlements[index]!; let value = row.amount;
     try { value = amount(raw.amount); if (!['RECEIVE', 'REFUND'].includes(raw.direction)) throw new Error(); }
     catch { errors[`settlement:${row.id}`] = '请输入非负收退金额，最多两位小数。'; }
+    if (row.paymentMethodId === null && (raw.direction !== row.direction || value !== row.amount)) errors[`settlement:${row.id}`] = '原付款方式未知；修改收退明细前须明确实际付款方式。';
     return { ...row, direction: raw.direction, amount: value };
   });
   if (Object.keys(errors).length) return { ok: false, errors: Object.freeze(errors) };
   try {
-    const gross = lines.reduce((sum, line) => sum + BigInt(line.lineAmount), 0n);
-    const shares = base.header.businessType === 'SALE'
+    const gross = unchangedEconomics ? BigInt(base.header.grossAmount) : lines.reduce((sum, line) => sum + BigInt(line.lineAmount), 0n);
+    const shares = unchangedEconomics || signedSale && orderDiscount !== '0' ? null : base.header.businessType === 'SALE' && !nextSignedSale
       ? allocateSalesDiscount(lines.map(line => minorAmount(line.lineAmount)), minorAmount(orderDiscount)) : lines.map(() => 0n);
     return { ok: true, draft: validateSalesDraft({ header: { ...base.header, businessDate: input.businessDate, note: input.note === '' ? null : input.note,
-      orderDiscount, grossAmount: gross.toString(), netDue: (gross - BigInt(orderDiscount)).toString() },
-    lines: lines.map((line, index) => ({ ...line, allocatedDiscount: shares[index]!.toString() })), settlements }) };
+      orderDiscount, grossAmount: gross.toString(), netDue: unchangedEconomics ? base.header.netDue : (gross - BigInt(orderDiscount)).toString() },
+    lines: shares === null ? lines : lines.map((line, index) => retainedLines.includes(line) && line.allocatedDiscount === null ? line : ({ ...line, allocatedDiscount: shares[index]!.toString() })), settlements }, { previous: base }) };
   } catch { return { ok: false, errors: Object.freeze({ form: '请检查有效日期、整单优惠不超过销售金额，以及当前明细金额。' }) }; }
 }

@@ -16,7 +16,7 @@ export interface DocumentSpecificationSaveScope {
 export interface DocumentSpecificationResolution {
   readonly scope: DocumentSpecificationSaveScope;
   readonly selections: readonly DocumentSkuSelection[];
-  readonly newId: (kind: 'sku' | 'operation') => string;
+  readonly newId: (kind: 'sku' | 'operation' | 'barcode') => string;
 }
 export function parseDocumentSkuSelection(input: unknown): DocumentSkuSelection {
   requireDomain(input !== null && typeof input === 'object' && Object.getPrototypeOf(input) === Object.prototype,

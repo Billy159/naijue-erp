@@ -32,6 +32,10 @@ test('release generator rejects duplicate SQL, unsafe members and ambiguous rout
   c=>{c.entrypoints.backend.member='../production-main.js';},
   c=>{c.entrypoints.backend.extra=true;},
   c=>{c.entrypoints.frontend.source='apps/web/src/old.ts';},
+  c=>{c.exact35.migrationCount=35;},
+  c=>{c.exact35.profile='source-confirmed-native-exact26-r3-v1';},
+  c=>{c.exact35.installationRecord='/srv/copied-record.json';},
+  c=>{c.exact35.approved=true;},
  ]) {
   const c=structuredClone(releaseContract);change(c);
   assert.throws(()=>contractBlock(c),/INVALID_RELEASE/);

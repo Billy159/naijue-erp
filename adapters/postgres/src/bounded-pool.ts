@@ -28,6 +28,7 @@ export interface BoundedPostgresResult { readonly rows: Record<string, unknown>[
 /** The same query/release subset consumed by the existing read and transaction adapters. */
 export interface BoundedPostgresClient {
   query(text: string, values?: unknown[]): Promise<BoundedPostgresResult>;
+  getTransactionStatus?(): string | null;
   release(error?: Error | boolean): void;
 }
 export interface PostgresDriverClient extends BoundedPostgresClient {
@@ -256,6 +257,12 @@ export class BoundedPostgresPool {
               reject(safe);
             });
           });
+        },
+        getTransactionStatus: () => {
+          if (closed || rejectQuery !== undefined) return null;
+          const source = raw as PostgresDriverClient & { readyForQuery?: unknown; getTransactionStatus?: () => unknown };
+          if (source.readyForQuery !== true || typeof source.getTransactionStatus !== 'function') return null;
+          const status = source.getTransactionStatus(); return status === 'I' || status === 'T' || status === 'E' ? status : null;
         },
         release: (error?: Error | boolean) => lease.close(error),
       },

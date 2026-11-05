@@ -22,7 +22,7 @@ export type OrganizationMaintenanceRecord =
     readonly defaultSalesWarehouse: (OrganizationReference & { readonly hallId: string }) | null })
   | (Base & { readonly kind: "WAREHOUSE"; readonly name: string; readonly enabled: boolean; readonly hall: OrganizationReference })
   | (Base & { readonly kind: "STAFF"; readonly name: string; readonly hall: OrganizationReference | null; readonly role: string; readonly contact: string | null;
-    readonly employmentStatus: string; readonly account: { readonly id: string; readonly loginName: string; readonly loginEnabled: boolean; readonly authVersion: number; readonly version: number } | null })
+    readonly employmentStatus: string; readonly departureDate?: string | null; readonly account: { readonly id: string; readonly loginName: string; readonly loginEnabled: boolean; readonly authVersion: number; readonly version: number } | null })
   | (Base & { readonly kind: "ACCOUNT"; readonly loginName: string; readonly loginEnabled: boolean; readonly authVersion: number;
     readonly staff: { readonly id: string; readonly name: string; readonly role: string; readonly employmentStatus: string; readonly hallId: string | null } })
   | (Base & { readonly kind: "PAYMENT_METHOD"; readonly name: string; readonly enabled: boolean })

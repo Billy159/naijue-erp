@@ -96,9 +96,9 @@ function specification(kind: OrganizationMaintenanceKind): Specification {
     };
     case "STAFF": return {
       from: "naijue_erp.staff m LEFT JOIN naijue_erp.hall h ON h.id=m.hall_id LEFT JOIN naijue_erp.user_account a ON a.staff_id=m.id",
-      columns: `${common},m.name,m.hall_id,m.role,m.contact,m.employment_status,h.name AS hall_name,h.enabled AS hall_enabled,a.id AS account_id,a.login_name AS account_login_name,a.login_enabled AS account_login_enabled,a.auth_version AS account_auth_version,a.version AS account_version`,
+      columns: `${common},m.name,m.hall_id,m.role,m.contact,m.employment_status,to_jsonb(m)->>'departure_date' AS departure_date,h.name AS hall_name,h.enabled AS hall_enabled,a.id AS account_id,a.login_name AS account_login_name,a.login_enabled AS account_login_enabled,a.auth_version AS account_auth_version,a.version AS account_version`,
       display: "m.name", normal: "m.employment_status='在职'", disabled: "m.employment_status='离职'", hallFilter: "m.hall_id=$3::uuid",
-      record: object({ ...base, name: "m.name", role: "m.role", contact: "m.contact", employmentStatus: "m.employment_status",
+      record: object({ ...base, name: "m.name", role: "m.role", contact: "m.contact", employmentStatus: "m.employment_status", departureDate: "m.departure_date",
         hall: `CASE WHEN m.hall_id IS NULL THEN NULL ELSE ${reference("m.hall_id", "m.hall_name", "m.hall_enabled")} END`,
         account: `CASE WHEN m.account_id IS NULL THEN NULL ELSE ${object({ id: "m.account_id", loginName: "m.account_login_name", loginEnabled: "m.account_login_enabled", authVersion: "m.account_auth_version", version: "m.account_version" })} END` })
     };

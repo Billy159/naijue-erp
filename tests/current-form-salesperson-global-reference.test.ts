@@ -39,12 +39,13 @@ test("staff reference parser accepts explicit null or existing nonnull hall and 
   for (const input of [missing, { ...query, hallId: undefined }, { ...query, hallId: "" }])
     assert.throws(() => parseCurrentSalesReferenceQuery(input), { code: "INVALID_CURRENT_FORM_QUERY" });
 });
-test("other reference kinds keep their original hall rules", () => {
-  for (const kind of ["customer", "warehouse", "paymentMethod", "paymentAccount"] as const) {
+test("hall-dependent reference kinds keep their hall rules; shared payment method permits explicit null", () => {
+  for (const kind of ["customer", "warehouse", "paymentAccount"] as const) {
     const extra = kind === "paymentAccount" ? { paymentMethodId: methodId } : {};
     assert.throws(() => parseCurrentSalesReferenceQuery({ ...query, kind, ...extra }), { code: "INVALID_CURRENT_FORM_QUERY" });
     assert.deepEqual(parseCurrentSalesReferenceQuery({ ...query, kind, hallId, ...extra }), { ...query, kind, hallId, ...extra });
   }
+  for (const selectedHall of [null,hallId]) assert.deepEqual(parseCurrentSalesReferenceQuery({ ...query, kind: "paymentMethod", hallId:selectedHall }),{ ...query, kind:"paymentMethod", hallId:selectedHall });
   assert.deepEqual(parseCurrentSalesReferenceQuery({ ...query, kind: "hall" }), { ...query, kind: "hall" });
   assert.throws(() => parseCurrentSalesReferenceQuery({ ...query, kind: "hall", hallId }), { code: "INVALID_CURRENT_FORM_QUERY" });
 });

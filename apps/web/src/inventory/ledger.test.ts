@@ -13,6 +13,17 @@ const page = () => ({ pageSize: 1, labelBasis: 'CURRENT_REFERENCE', warehouse: {
   entries: [{ id: id(10), operationId: id(11), eventKind: 'APPROVE', quantityDelta: '-9007199254740993', source: { kind: 'TRANSFER', transferId: id(12), transferLineId: id(13), endpoint: 'FROM' }, sourceDocumentVersion: 1, reversesEntryId: null, businessDate: '2026-10-22', postedAt: '2026-10-22T01:02:03.123456Z' }],
   nextCursor: { postedAt: '2026-10-22T01:02:03.123456Z', entryId: id(10) } });
 
+test('ledger accepts six numeric fit codes and retained legacy letters without accepting malformed codes', () => {
+  for (const code of ['3', '5', '6', '7', '8', '9', 'A', 'Y']) {
+    const value = page(); value.sku.fit.code = code;
+    assert.equal(checkedLedgerPage(value, parameters()).sku.fit.code, code);
+  }
+  for (const code of ['0', '4', '10', 'a']) {
+    const value = page(); value.sku.fit.code = code;
+    assert.throws(() => checkedLedgerPage(value, parameters()));
+  }
+});
+
 test('ledger preserves a signed integer beyond Number precision and a six-digit cursor', () => {
   const result = checkedLedgerPage(page(), parameters());
   assert.equal(result.entries[0]!.quantityDelta, '-9007199254740993');

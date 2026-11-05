@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from "node:crypto";
 import { entityId } from "../../domain/src/values.ts";
-import type { AuthenticationAccount, AuthenticationDependencies, AuthenticationLoginSnapshot, AuthenticationPrincipal, AuthenticationSession, AuthenticationTransaction } from "./ports.ts";
+import type { AuthenticationAccount, AuthenticationReadOnlyStore, AuthenticationDependencies, AuthenticationLoginSnapshot, AuthenticationPrincipal, AuthenticationSession, AuthenticationTransaction, AuthenticationLoginTransaction, BorrowedAuthenticationDependencies, BorrowedAuthenticationCredentials, ProvisionalAuthenticationSession } from "./ports.ts";
 import { assertAuthenticationActive } from './password-work-gate.ts';
 
 export class AuthenticationError extends Error {
@@ -32,10 +32,100 @@ export interface AuthenticationService {
   changeOwnPassword(token: string, currentPassword: string, newPassword: string, signal?: AbortSignal): Promise<void>;
 }
 /** No account seed, listener, environment lookup, credential file, or permissive policy is constructed here. */
+export interface ReadOnlyAuthenticationResolver {
+  /** Current statement snapshot only. Never use for commands/login/password changes. */
+  resolveReadOnly(token: string): Promise<AuthenticationPrincipal | null>;
+}
 export function createAuthenticationService(dependencies: AuthenticationDependencies): AuthenticationService {
+  const service=buildAuthenticationService(dependencies);
+  return Object.freeze({login:service.login,resolve:service.resolve,logout:service.logout,changeOwnPassword:service.changeOwnPassword});
+}
+/** Explicit separate query composition. No dummy principal, cache or fallback to
+ * locked resolve. The host must keep command authentication on the old service. */
+export function createReadOnlyAuthenticationResolver(dependencies: AuthenticationDependencies & {readonly store: AuthenticationReadOnlyStore}): ReadOnlyAuthenticationResolver {
+  if(typeof dependencies?.store?.readSessionSnapshot!=='function')throw new TypeError('Explicit read-only authentication snapshot store required');
+  const service=buildAuthenticationService(dependencies);
+  return Object.freeze({resolveReadOnly:service.resolveReadOnly});
+}
+type LoginResult = { readonly token: string; readonly principal: AuthenticationPrincipal; readonly expiresAt: string };
+interface LoginPorts {
+  readSnapshot(loginName: string): Promise<AuthenticationLoginSnapshot | undefined>;
+  locked<T>(work: (tx: AuthenticationLoginTransaction) => Promise<T>): Promise<T>;
+  admitted(work: (assertValid: () => void) => Promise<LoginResult>, signal?: AbortSignal): Promise<LoginResult>;
+  expected?(principal: AuthenticationPrincipal, account: AuthenticationAccount): boolean;
+}
+async function loginWithPorts(dependencies: Pick<AuthenticationDependencies,'passwords'>, rules: ReturnType<typeof authenticationRules>,
+  ports: LoginPorts, loginName: string, password: string, signal?: AbortSignal): Promise<LoginResult> {
+  if (typeof loginName !== "string" || !loginName || Buffer.byteLength(loginName, "utf8") > 256) throw new AuthenticationError("INVALID_AUTH_INPUT");
+  passwordInput(password);
+  assertAuthenticationActive(signal);
+  const snapshot=await ports.readSnapshot(loginName);
+  assertAuthenticationActive(signal);
+  const verified=await dependencies.passwords.verify(password,snapshot?.passwordHash,'login',signal);
+  if (!snapshot || snapshot.loginName!==loginName || !verified) throw new AuthenticationError('INVALID_CREDENTIALS');
+  assertAuthenticationActive(signal);
+  return ports.admitted(async assertValid=>{
+    assertAuthenticationActive(signal);assertValid();
+    return ports.locked(async tx=>{
+      assertAuthenticationActive(signal);
+      const account=await tx.getAccount(snapshot.accountId);
+      const identity=account&&account.loginName===loginName?rules.principal(account):null;
+      if (!account || !identity || !rules.sameCredential(account,snapshot) || ports.expected&&!ports.expected(identity,account)) throw new AuthenticationError("INVALID_CREDENTIALS");
+      assertAuthenticationActive(signal);
+      const time=rules.clock(),expiresAt=new Date(time.milliseconds+rules.ttlMilliseconds).toISOString();
+      const token=randomBytes(32).toString("base64url");
+      const row:AuthenticationSession={tokenHash:sessionTokenHash(token)!,accountId:identity.accountId,authVersion:identity.authVersion,
+        createdAt:time.text,expiresAt,revokedAt:null};
+      assertValid();await tx.insertSession(row);assertAuthenticationActive(signal);assertValid();
+      return {token,principal:identity,expiresAt};
+    });
+  },signal);
+}
+/** One genuine NEW_EMPTY login in the original transaction. Not a committed login
+ * or target-admission capability. Parent owns transaction/connection and capacity
+ * permit until its final outcome. Callback must not retain/log/publish the token.
+ * Return values are deliberately ignored. Any failure requires outer rollback;
+ * unknown outer COMMIT must quarantine, never retry issuance or claim absence. */
+export function withAuthenticationInCurrentTransaction(dependencies: BorrowedAuthenticationDependencies,
+  credentials: BorrowedAuthenticationCredentials, useSession: (session: ProvisionalAuthenticationSession) => Promise<void>, signal?: AbortSignal): Promise<void> {
+  const pending=(async()=>{
+  if (typeof dependencies?.store?.runInCurrentTransaction!=='function' || typeof useSession!=='function') throw new TypeError('Explicit borrowed authentication scope required');
+  const rules=authenticationRules(dependencies);
+  const accountId=entityId('account',credentials?.accountId),staffId=entityId('staff',credentials?.staffId);
+  const loginName=credentials?.loginName;let password=credentials?.password;
+  const passwords=dependencies.passwords;
+  const issuance=dependencies.issuance;
+  if (issuance?.kind!=='ISOLATED_SYNTHETIC_NO_CAPACITY_POLICY' && (issuance?.kind!=='PARENT_HELD_CAPACITY'||typeof issuance.assertValid!=='function')) throw new TypeError('Explicit parent-owned issuance policy required');
+  const permit=issuance.kind==='PARENT_HELD_CAPACITY'?issuance.assertValid.bind(issuance):undefined;
+  const assertValid=()=>{
+    const returned:unknown=permit?.();
+    if(returned!==undefined) {
+      if(returned&&typeof (returned as {then?:unknown}).then==='function')void Promise.resolve(returned).catch(()=>{});
+      throw new TypeError('Synchronous parent-held capacity assertion required');
+    }
+  };
+  try {
+    await dependencies.store.runInCurrentTransaction(async operations=>{
+      const issued=await loginWithPorts({passwords},rules,{
+        readSnapshot:name=>operations.readLoginSnapshot(name),locked:work=>operations.withLockedAccount(work),
+        admitted:work=>work(assertValid),
+        expected:(principal,account)=>principal.accountId===accountId&&principal.staffId===staffId&&principal.loginName===loginName
+          &&principal.role==='ADMIN'&&principal.hallId===null&&principal.authVersion===1&&account.employmentStatus==='在职'
+      },loginName,password,signal);
+      assertAuthenticationActive(signal);assertValid();
+      await useSession(Object.freeze({state:'PROVISIONAL_CURRENT_TRANSACTION',...issued}));
+      assertAuthenticationActive(signal);assertValid();
+    });
+  } finally {password='';}
+  })();
+  // The adapter tracks/drains this whole operation if its caller forgot await.
+  // Observe this wrapper's separate Promise too, preserving rejection for any
+  // caller that does await it without creating an unhandled rejection.
+  void pending.catch(()=>{});return pending;
+}
+function authenticationRules(dependencies: Pick<AuthenticationDependencies, "now" | "policy" | "passwords">) {
   const policy = dependencies?.policy;
-  if (typeof dependencies?.store?.transaction !== "function" || typeof dependencies?.store?.readLoginSnapshot !== 'function'
-    || typeof dependencies?.store?.readPasswordChangeSnapshot !== 'function' || typeof dependencies?.now !== "function"
+  if (typeof dependencies?.now !== "function"
     || typeof dependencies?.passwords?.hash !== "function" || typeof dependencies?.passwords?.verify !== "function"
     || typeof policy?.assertNewPassword !== "function" || !Number.isSafeInteger(policy?.sessionTtlSeconds) || policy.sessionTtlSeconds <= 0
     || !Array.isArray(policy.activeEmploymentStatuses) || policy.activeEmploymentStatuses.length === 0
@@ -44,26 +134,23 @@ export function createAuthenticationService(dependencies: AuthenticationDependen
     || Object.entries(policy.roleHallScopes).some(([role, scope]) => !role || !["OPTIONAL_HALL", "REQUIRED_HALL"].includes(scope))) {
     throw new TypeError("Authentication requires explicit trusted storage, clock, password codec, and complete policy");
   }
-  const { store, now, passwords } = dependencies;
-  const admission = dependencies.sessionAdmission;
-  if (admission !== undefined && typeof admission.acquire !== 'function') throw new TypeError('Explicit session capacity admission required');
-  const sessionAdmission = admission === undefined ? undefined : {acquire: admission.acquire.bind(admission)};
   // Snapshot mutable host configuration so later accidental mutation cannot widen access.
   const employmentStatuses = new Set(policy.activeEmploymentStatuses);
   const roleHallScopes = new Map(Object.entries(policy.roleHallScopes));
   const ttlMilliseconds = policy.sessionTtlSeconds * 1000;
   if (!Number.isSafeInteger(ttlMilliseconds)) throw new TypeError("Authentication session lifetime is invalid");
   const assertNewPassword = policy.assertNewPassword;
+  const {now} = dependencies;
   const clock = (): { text: string; milliseconds: number } => { const text = now(); return { text, milliseconds: timestamp(text) }; };
   const sameCredential = (current: AuthenticationAccount, snapshot: AuthenticationLoginSnapshot): boolean => current.accountId === snapshot.accountId
     && current.loginName === snapshot.loginName && current.passwordHash === snapshot.passwordHash && current.authVersion === snapshot.authVersion;
-  const sessionCurrent = (session: AuthenticationSession, account: AuthenticationAccount, hash: string): boolean => {
+  const sessionCurrent = (session: AuthenticationSession, account: Pick<AuthenticationAccount, "accountId" | "authVersion">, hash: string): boolean => {
     const {milliseconds} = clock();
     return session.tokenHash === hash && session.accountId === account.accountId && session.revokedAt === null
       && session.authVersion === account.authVersion && timestamp(session.createdAt) <= milliseconds
       && timestamp(session.expiresAt) > milliseconds && timestamp(session.expiresAt) > timestamp(session.createdAt);
   };
-  function principal(account: AuthenticationAccount): AuthenticationPrincipal | null {
+  function principal(account: Omit<AuthenticationAccount, 'passwordHash'>): AuthenticationPrincipal | null {
     if (account.loginEnabled !== true || !employmentStatuses.has(account.employmentStatus) || !Number.isSafeInteger(account.authVersion) || account.authVersion < 1) return null;
     const scope = roleHallScopes.get(account.role);
     if (!scope || (scope === "REQUIRED_HALL" && account.hallId === null)
@@ -78,6 +165,18 @@ export function createAuthenticationService(dependencies: AuthenticationDependen
         ...(hasStaffName && typeof staffName === "string" ? { staffName } : {}) });
     } catch { return null; }
   }
+  return {clock,sameCredential,sessionCurrent,principal,assertNewPassword,ttlMilliseconds};
+}
+function buildAuthenticationService(dependencies: AuthenticationDependencies): AuthenticationService & ReadOnlyAuthenticationResolver {
+  if (typeof dependencies?.store?.transaction !== "function" || typeof dependencies?.store?.readLoginSnapshot !== 'function'
+    || typeof dependencies?.store?.readPasswordChangeSnapshot !== 'function') throw new TypeError("Authentication requires explicit trusted storage, clock, password codec, and complete policy");
+  const rules=authenticationRules(dependencies);
+  const {clock,sameCredential,sessionCurrent,principal,assertNewPassword}=rules;
+  const {store,passwords}=dependencies;
+  const readSessionSnapshot=store.readSessionSnapshot?.bind(store);
+  const admission=dependencies.sessionAdmission;
+  if (admission !== undefined && typeof admission.acquire !== 'function') throw new TypeError('Explicit session capacity admission required');
+  const sessionAdmission=admission===undefined?undefined:{acquire:admission.acquire.bind(admission)};
   async function sessionAccount(tx: AuthenticationTransaction, hash: string): Promise<{ account: AuthenticationAccount; principal: AuthenticationPrincipal } | null> {
     const initial = await tx.getSession(hash);
     if (!initial || initial.tokenHash !== hash || initial.revokedAt !== null) return null;
@@ -95,37 +194,25 @@ export function createAuthenticationService(dependencies: AuthenticationDependen
     return identity ? { account, principal: identity } : null;
   }
   return Object.freeze({
-    async login(loginName: string, password: string, signal?: AbortSignal) {
-      if (typeof loginName !== "string" || !loginName || Buffer.byteLength(loginName, "utf8") > 256) throw new AuthenticationError("INVALID_AUTH_INPUT");
-      passwordInput(password);
-      assertAuthenticationActive(signal);
-      const snapshot = await store.readLoginSnapshot(loginName);
-      assertAuthenticationActive(signal);
-      const verified = await passwords.verify(password, snapshot?.passwordHash, 'login', signal);
-      if (!snapshot || snapshot.loginName !== loginName || !verified) throw new AuthenticationError('INVALID_CREDENTIALS');
-      assertAuthenticationActive(signal);
-      const capacity = await sessionAdmission?.acquire(signal).catch(error => { assertAuthenticationActive(signal); throw error; });
-      try {
-        assertAuthenticationActive(signal);
-        capacity?.assertValid();
-        return await store.transaction(async tx => {
-          assertAuthenticationActive(signal);
-          const account = await tx.getAccount(snapshot.accountId);
-          const identity = account && account.loginName === loginName ? principal(account) : null;
-          if (!account || !identity || !sameCredential(account, snapshot)) throw new AuthenticationError("INVALID_CREDENTIALS");
-          assertAuthenticationActive(signal);
-          const time = clock();
-          const expiresAt = new Date(time.milliseconds + ttlMilliseconds).toISOString();
-          const token = randomBytes(32).toString("base64url");
-          const row: AuthenticationSession = { tokenHash: sessionTokenHash(token)!, accountId: identity.accountId, authVersion: identity.authVersion,
-            createdAt: time.text, expiresAt, revokedAt: null };
-          capacity?.assertValid();
-          await tx.insertSession(row);
-          assertAuthenticationActive(signal);
-          capacity?.assertValid();
-          return { token, principal: identity, expiresAt };
-        });
-      } finally { capacity?.release(); }
+    login(loginName: string, password: string, signal?: AbortSignal) {
+      return loginWithPorts({passwords},rules,{
+        readSnapshot: name=>store.readLoginSnapshot(name),
+        locked: work=>store.transaction(work),
+        async admitted(work,signal) {
+          const capacity=await sessionAdmission?.acquire(signal).catch(error=>{assertAuthenticationActive(signal);throw error;});
+          try {return await work(()=>capacity?.assertValid());} finally {capacity?.release();}
+        }
+      },loginName,password,signal);
+    },
+    async resolveReadOnly(token: string) {
+      const hash=sessionTokenHash(token);
+      if(!hash)return null;
+      if(!readSessionSnapshot)throw new TypeError('Read-only authentication snapshot capability unavailable');
+      const snapshot=await readSessionSnapshot(hash);
+      // Time is checked after the one-statement read and released lease. This
+      // confers no serialization against a later revocation or command write.
+      if(!snapshot||!sessionCurrent(snapshot.session,snapshot.account,hash))return null;
+      return principal(snapshot.account);
     },
     async resolve(token: string) {
       const hash = sessionTokenHash(token);

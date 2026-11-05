@@ -33,7 +33,7 @@ export class TransferExistingDocumentSession {
   async initialize(): Promise<void> {
     if (this.#state.disposed || this.#state.phase !== 'idle' || !this.#input || !this.#original) return;
     const document = this.#original.document, input = this.#input;
-    if (this.#original.stockBasis !== 'RUNTIME_LEDGER' || document.header.status !== 'DRAFT' || !document.lines.length || document.lines.length > 200 || new Set(document.lines.map(row => row.skuId)).size !== document.lines.length || Object.keys(input.quantities).length !== document.lines.length || document.lines.some(row => typeof input.quantities[row.id] !== 'string')) { this.#unavailable(); return; }
+    if (!(this.owner.ordinaryDocuments || this.#original.stockBasis === 'RUNTIME_LEDGER') || document.header.status !== 'DRAFT' || !document.lines.length || document.lines.length > 200 || new Set(document.lines.map(row => row.skuId)).size !== document.lines.length || Object.keys(input.quantities).length !== document.lines.length || document.lines.some(row => typeof input.quantities[row.id] !== 'string')) { this.#unavailable(); return; }
     const request = new AbortController(), sequence = ++this.#sequence; this.#request = request; this.#publish({ phase: 'loading' });
     try {
       const ids = document.lines.map(row => row.skuId), batch = await this.#reader.readSavedEditSkuBatch({ context: { kind: 'TRANSFER' }, skuIds: ids }, AbortSignal.any([request.signal, this.#scope.signal])), rows = batch.skus;

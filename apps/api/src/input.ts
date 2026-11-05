@@ -35,33 +35,34 @@ export function parseRequestKey(value: unknown): string {
   if (!/^[A-Za-z0-9._:-]{1,200}$/.test(key)) invalid();
   return key;
 }
-function snapshot(value: unknown): SkuSnapshot {
+function snapshot(value: unknown, retainUnknown: boolean): SkuSnapshot {
   const row = object(value, ["productCode", "productName", "colorName", "fitName", "sizeName", "barcode"]);
-  return { productCode: string(row.productCode), productName: string(row.productName), colorName: string(row.colorName),
-    fitName: string(row.fitName), sizeName: string(row.sizeName), barcode: nullableString(row.barcode) };
+  const label = retainUnknown ? nullableString : string;
+  return { productCode: label(row.productCode), productName: label(row.productName), colorName: label(row.colorName),
+    fitName: label(row.fitName), sizeName: label(row.sizeName), barcode: nullableString(row.barcode) };
 }
-function line(value: unknown): SalesLineRow {
+function line(value: unknown, retainUnknown: boolean): SalesLineRow {
   const row = object(value, ["id", "salesId", "lineNo", "skuId", "quantity", "referencePrice", "dealPrice", "pricingRule", "discountTenths", "zeroConfirmed", "lineAmount", "allocatedDiscount", "isGift", "snapshot", "isCurrent"]);
   if (row.isCurrent !== true) invalid();
   return { id: id("salesLine", row.id), salesId: id("sales", row.salesId), lineNo: integer(row.lineNo), skuId: id("sku", row.skuId),
     quantity: quantity(string(row.quantity)), referencePrice: row.referencePrice === null ? null : minorAmount(string(row.referencePrice)),
-    dealPrice: minorAmount(string(row.dealPrice)), pricingRule: choice(row.pricingRule, ["UNIT_PRICE", "DISCOUNT"]),
-    discountTenths: discountTenths(row.discountTenths), zeroConfirmed: boolean(row.zeroConfirmed), lineAmount: minorAmount(string(row.lineAmount)), allocatedDiscount: minorAmount(string(row.allocatedDiscount)),
-    isGift: boolean(row.isGift), snapshot: snapshot(row.snapshot), isCurrent: true };
+    dealPrice: minorAmount(string(row.dealPrice)), pricingRule: retainUnknown && row.pricingRule === null ? null : choice(row.pricingRule, ["UNIT_PRICE", "DISCOUNT"]),
+    discountTenths: discountTenths(row.discountTenths), zeroConfirmed: retainUnknown && row.zeroConfirmed === null ? null : boolean(row.zeroConfirmed), lineAmount: minorAmount(string(row.lineAmount)), allocatedDiscount: retainUnknown && row.allocatedDiscount === null ? null : minorAmount(string(row.allocatedDiscount)),
+    isGift: retainUnknown && row.isGift === null ? null : boolean(row.isGift), snapshot: snapshot(row.snapshot, retainUnknown), isCurrent: true };
 }
-function settlement(value: unknown): SalesSettlementRow {
+function settlement(value: unknown, retainUnknown: boolean): SalesSettlementRow {
   const row = object(value, ["id", "salesId", "lineNo", "paymentAccountId", "paymentMethodId", "direction", "amount"]);
   return { id: id("settlement", row.id), salesId: id("sales", row.salesId), lineNo: integer(row.lineNo),
-    paymentAccountId: id("paymentAccount", row.paymentAccountId), paymentMethodId: id("paymentMethod", row.paymentMethodId), direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: minorAmount(string(row.amount)) };
+    paymentAccountId: id("paymentAccount", row.paymentAccountId), paymentMethodId: retainUnknown && row.paymentMethodId === null ? null : id("paymentMethod", row.paymentMethodId), direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: minorAmount(string(row.amount)) };
 }
-function draft(value: unknown): SalesDraft {
+function draft(value: unknown, retainUnknown: boolean): SalesDraft {
   const row = object(value, ["header", "lines", "settlements"]);
   const header = object(row.header, ["id", "number", "businessType", "businessDate", "hallId", "customerId", "salespersonId", "warehouseId", "grossAmount", "orderDiscount", "netDue", "note"]);
   return { header: { id: id("sales", header.id), number: string(header.number), businessType: choice(header.businessType, ["SALE", "RETURN", "EXCHANGE"]),
-    businessDate: businessDate(string(header.businessDate)), hallId: id("hall", header.hallId), customerId: id("customer", header.customerId),
+    businessDate: businessDate(string(header.businessDate)), hallId: header.hallId === null ? null : id("hall", header.hallId), customerId: id("customer", header.customerId),
     salespersonId: header.salespersonId === null ? null : id("staff", header.salespersonId), warehouseId: id("warehouse", header.warehouseId),
     grossAmount: minorAmount(string(header.grossAmount)), orderDiscount: minorAmount(string(header.orderDiscount)), netDue: minorAmount(string(header.netDue)), note: nullableString(header.note) },
-    lines: array(row.lines).map(line), settlements: array(row.settlements).map(settlement) };
+    lines: array(row.lines).map(value => line(value, retainUnknown)), settlements: array(row.settlements).map(value => settlement(value, retainUnknown)) };
 }
 export function parseSalesCommand(body: unknown, actor: ActorContext): SalesCommand {
   // Select the exact key set before constructing any trusted command. No stripping/coercion/defaults.
@@ -75,7 +76,13 @@ export function parseSalesCommand(body: unknown, actor: ActorContext): SalesComm
   }
   const row = object(body, ["action", "requestKey", "expectedVersion", action === "SAVE" ? "draft" : "salesId"]);
   const requestKey = parseRequestKey(row.requestKey);
-  if (action === "SAVE") return { actor, action, requestKey, expectedVersion: row.expectedVersion === null ? null : version(integer(row.expectedVersion)), draft: draft(row.draft) };
+  if (action === "SAVE") {
+    const expectedVersion = row.expectedVersion === null ? null : version(integer(row.expectedVersion));
+    // Structural compatibility only: the locked ordinary service compares each
+    // nullable retained fact with its actual prior row. A nonnull version is NOT
+    // authority to invent nulls on new/changed rows or bypass economics.
+    return { actor, action, requestKey, expectedVersion, draft: draft(row.draft, expectedVersion !== null) };
+  }
   return { actor, action, requestKey, expectedVersion: version(integer(row.expectedVersion)), salesId: id("sales", row.salesId) };
 }
 export function assertNoQuery(query: unknown): void {

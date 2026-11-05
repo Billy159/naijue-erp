@@ -47,7 +47,7 @@ assert.ok(final.includes('[data-document-status=pending]{background:var(--ca-war
 assert.ok(enhancer.includes("heads[idx].classList.add('ui-action-cell')"));
 assert.doesNotMatch(detail, /sales-line-record|sales-record-metadata|selectedLine|setSelectedLine/);
 assert.match(detail, /<SalesProductPresentation scope=\{scope\} \{\.\.\.\(product \? \{ capability: product \} : \{\}\)\}/);
-assert.match(detail, /disabled=\{!openProduct\}/, 'Product action remains fail-closed when capability is absent');
+assert.match(detail, /disabled=\{!openProduct \|\| header\.hallId === null\}/, 'Product action remains fail-closed when capability is absent or the historical hall is unknown');
 assert.match(detail, /openProduct\?\.\(line\.skuId, header\.hallId\)/, 'Only the selected SKU/hall is passed to the delegated product action');
 assert.match(header, /output \?\? \['导出', '打印'\]\.map.*disabled title=/, 'Unwired output actions retain disabled fallback');
 assert.match(header, /<SalesHistoryAction \{\.\.\.\(history \? \{ capability: history \} : \{\}\)\}/, 'History is delegated through the optional explicit capability');

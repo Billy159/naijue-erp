@@ -4,13 +4,13 @@ import type { SalesCommandDto, SalesCommandReceiptDto, SalesCommandResultDto, Sa
 import { draftFromSalesDetail } from './validation.ts';
 export { uuid };
 /** Explicit synthetic fixtures. No production entry point imports this file. */
-export function detail(status: 'DRAFT' | 'APPROVED' | 'VOID' = 'DRAFT', version = 2): SalesDetailDto {
+export function detail(status: 'DRAFT' | 'APPROVED' | 'VOID' = 'DRAFT', version = 2): SalesDetailDto & { readonly document: SalesDetailDto['document'] & { readonly header: SalesDetailDto['document']['header'] & { readonly hallId: NonNullable<SalesDetailDto['document']['header']['hallId']> } } } {
   const value = savedDetail();
   return { ...value, stockBasis: 'RUNTIME_LEDGER', document: { ...value.document, header: { ...value.document.header, status, version: version as SalesDetailDto['document']['header']['version'],
     approvedAt: status === 'APPROVED' ? '2026-10-20T00:00:00.000Z' : null, approvedByAccountId: status === 'APPROVED' ? value.document.header.createdByAccountId : null },
   lines: value.document.lines.map(line => ({ ...line, pricingRule: 'UNIT_PRICE', zeroConfirmed: false })) } };
 }
-export function draft(): SalesDraftDto { return draftFromSalesDetail(detail()); }
+export function draft(): SalesDraftDto & { readonly header: SalesDraftDto['header'] & { readonly hallId: string } } { const value = draftFromSalesDetail(detail()); if (value.header.hallId === null) throw new TypeError('Synthetic NEW fixture needs an explicit hall.'); return { ...value, header: { ...value.header, hallId: value.header.hallId } }; }
 export function save(expectedVersion: number | null = null): Extract<SalesCommandDto, { readonly draft: SalesDraftDto }> { return { action: 'SAVE', requestKey: 'TEST.sales:original', expectedVersion, draft: draft() }; }
 export function stateCommand(action: 'APPROVE' | 'UNAPPROVE' | 'VOID' = 'APPROVE', expectedVersion = 2): SalesCommandDto { return { action, requestKey: `TEST.sales:${action}`, expectedVersion, salesId: uuid(1) }; }
 export function result(command: SalesCommandDto): SalesCommandResultDto {

@@ -300,9 +300,9 @@ export class TransferProposalSession {
     const found = new Set<string>();
     try {
       for (let page = 1; page <= 50; page++) {
-        const result = await read({ search: 'A', page, pageSize: 20 }, signal);
+        const result = await read({ search: '5', page, pageSize: 20 }, signal);
         if (!current()) return;
-        for (const fit of result.items) if (fit.enabled && fit.code === 'A') found.add(fit.id);
+        for (const fit of result.items) if (fit.enabled && fit.code === '5') found.add(fit.id);
         if (page * 20 < result.total) continue;
         const choices = [...new Map(this.#state.pending.skus.filter(sku => found.has(sku.fitId))
           .map(sku => [sku.fitId, { id: sku.fitId, name: sku.fitName }])).values()];

@@ -8,7 +8,7 @@ import { SalesEditorSession } from '../sales/commands/editor-session.ts';
 import type { SalesDraftDto } from '../sales/commands/contracts.ts';
 import { validateSalesDraft, frozenSnapshot } from '../sales/commands/validation.ts';
 import { salesInputMoney } from '../sales/commands/form-model.ts';
-import { SalesProposalSession, type SalesProposal } from './sales-proposal.ts';
+import { SalesProposalSession, salesProposalHasMixedQuantities, type SalesProposal } from './sales-proposal.ts';
 export interface SalesCreatePreparation { prepareCreate(proposal: NativeSalesCreateProposal, signal: AbortSignal): Promise<SalesDraftDto> }
 function moneyMinor(raw: string): string {
   if (typeof raw !== 'string' || raw.length > 102 || !/^\d+(?:\.\d{1,2})?$/.test(raw.trim())) throw new TypeError('Invalid explicit yuan amount.');
@@ -25,7 +25,7 @@ export function salesPreparationIntent(proposal: SalesProposal): NativeSalesCrea
   if (!proposal.hall || !proposal.customer || !proposal.warehouse || !proposal.salesperson) throw new TypeError('Required current references missing.');
   return checkedIntent({ businessType: proposal.businessType, businessDate: proposal.businessDate, note: proposal.note === '' ? null : proposal.note,
     hallId: proposal.hall.id, customerId: proposal.customer.id, salespersonId: proposal.salesperson.id, warehouseId: proposal.warehouse.id,
-    orderDiscount: yuan(proposal.orderDiscount), lines: proposal.lines.map(row => { if (!row.sku) throw new TypeError('Local specifications use the original SAVE proposal, never read-only preparation.'); return ({ skuId: row.sku.id, quantity: row.quantity,
+    orderDiscount: yuan(proposal.orderDiscount), lines: proposal.lines.map(row => { if (row.pricingRule === null || row.isGift === null || row.zeroConfirmed === null) throw new TypeError('Read-only create preparation requires explicit pricing facts; incomplete drafts use native SAVE.'); if (!row.sku) throw new TypeError('Local specifications use the original SAVE proposal, never read-only preparation.'); return ({ skuId: row.sku.id, quantity: row.quantity,
       dealPrice: row.pricingRule === 'DISCOUNT' ? null : row.isGift ? '0.00' : yuan(row.dealPrice), pricingRule: row.pricingRule,
       discountTenths: row.pricingRule === 'DISCOUNT' ? tenths(row.discount) : null, isGift: row.isGift, zeroConfirmed: row.zeroConfirmed }); }),
     settlements: proposal.settlements.map(row => { if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id) throw new TypeError('Incomplete settlement selection.'); return { paymentAccountId: row.account.id, paymentMethodId: row.method.id, direction: row.direction, amount: yuan(row.amount) }; }) });
@@ -41,10 +41,11 @@ function checkedIntent(input: NativeSalesCreateProposal): NativeSalesCreatePropo
   if (value.businessType !== 'SALE' && moneyMinor(value.orderDiscount) !== '0' || yuan(value.orderDiscount) !== value.orderDiscount || !Array.isArray(value.lines) || !value.lines.length || value.lines.length > SALES_PREPARE_MAX_LINES || !Array.isArray(value.settlements) || value.settlements.length > 3) throw new TypeError('Invalid bounded sales intent.');
   for (const row of value.lines) {
     keys(row, ['skuId', 'quantity', 'dealPrice', 'pricingRule', 'discountTenths', 'isGift', 'zeroConfirmed']); entityId('sku', row.skuId);
-    if (!(value.businessType === 'SALE' ? /^[1-9]\d{0,18}$/ : /^-?[1-9]\d{0,18}$/).test(row.quantity) || quantity(row.quantity) === 0n || typeof row.isGift !== 'boolean' || typeof row.zeroConfirmed !== 'boolean') throw new TypeError('Invalid sales line.');
+    if (!/^-?[1-9]\d{0,18}$/.test(row.quantity) || quantity(row.quantity) === 0n || typeof row.isGift !== 'boolean' || typeof row.zeroConfirmed !== 'boolean') throw new TypeError('Invalid sales line.');
     if (row.pricingRule === 'UNIT_PRICE') { if (row.discountTenths !== null || row.dealPrice === null || yuan(row.dealPrice) !== row.dealPrice || row.isGift && row.dealPrice !== '0.00') throw new TypeError('Ambiguous direct price.'); }
     else if (row.pricingRule !== 'DISCOUNT' || row.dealPrice !== null || !Number.isInteger(row.discountTenths) || row.discountTenths! < 0 || row.discountTenths! > 100) throw new TypeError('Ambiguous discount intent.');
   }
+  if (value.businessType === 'SALE' && value.lines.every(row => row.quantity.startsWith('-')) || salesProposalHasMixedQuantities(value.lines) && moneyMinor(value.orderDiscount) !== '0') throw new TypeError('Mixed sales require zero order discount; pure negative lines require return/exchange.');
   for (const row of value.settlements) {
     keys(row, ['paymentAccountId', 'paymentMethodId', 'direction', 'amount']); entityId('paymentAccount', row.paymentAccountId); entityId('paymentMethod', row.paymentMethodId);
     if (!['RECEIVE', 'REFUND'].includes(row.direction) || yuan(row.amount) !== row.amount) throw new TypeError('Invalid settlement intent.');

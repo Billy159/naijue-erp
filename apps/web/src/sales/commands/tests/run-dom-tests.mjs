@@ -29,13 +29,13 @@ try {
     assert.ok(node); await act(async () => { const proto = node.tagName === 'TEXTAREA' ? dom.window.HTMLTextAreaElement.prototype : dom.window.HTMLInputElement.prototype;
       Object.getOwnPropertyDescriptor(proto, 'value').set.call(node, value); node.dispatchEvent(new Event('input', { bubbles: true })); }); await settle();
   };
-  function setup({ uncertain = false, preparation } = {}) {
+  function setup({ uncertain = false, preparation, ordinary = false } = {}) {
     let current = detail(), reads = 0, listReads = 0, keys = 0; const commands = [];
     const header = current.document.header;
     const context = new ReadContext({ accountId: header.createdByAccountId, sessionRevision: '1', permissionRevision: '1' });
     const scope = context.createScope('TEST-COMMAND-SESSION'), routeScope = context.createScope('TEST-COMMAND-ROUTE');
     const reader = { readDetail: async () => { reads++; return current; }, readList: async () => { listReads++; return { page: 1, pageSize: 20, exactTotal: '1', items: [summary()] }; }, readHistory: async () => { throw new Error('Unexpected history'); }, readSettlementStatistics: async () => { throw new Error('Unexpected statistics'); } };
-    const session = new SalesEditorSession({ scope, principal: { accountId: header.createdByAccountId, staffId: header.salespersonId, hallId: header.hallId, loginName: 'TEST', role: 'ADMIN', authVersion: 1 }, reader,
+    const session = new SalesEditorSession({ scope, ...(ordinary ? { documentListProfile: 'source-confirmed-ordinary-documents-v1' } : {}), principal: { accountId: header.createdByAccountId, staffId: header.salespersonId, hallId: header.hallId, loginName: 'TEST', role: 'ADMIN', authVersion: 1 }, reader,
       client: { execute: async command => { commands.push(command); if (uncertain) throw new SalesCommandError('network', 'NETWORK_ERROR', 'uncertain'); return result(command); }, receipt: async command => receipt(command) },
       newRequestKey: () => `TEST.dom:${++keys}`, onAccessFailure: () => {}, ...(preparation ? { preparation } : {}) });
     return { session, context, scope, routeScope, reader, commands, setCurrent: next => { current = next; }, get reads() { return reads; }, get listReads() { return listReads; }, get keys() { return keys; } };
@@ -74,10 +74,29 @@ try {
     settlements: methodDetail.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } });
   await unknownMethod.session.openExisting(uuid(1)); await act(async () => root.render(createElement(SalesCommandForm, { session: unknownMethod.session, close: () => {} }))); await settle();
   assert.match(host.textContent, /原价格或付款方式资料不完整/); assert.equal(unknownMethod.session.getSnapshot().command.editor.detail.document.settlements[0].paymentMethodId, null); assert.match(host.textContent, /TEST 保存方式/);
-  assert.equal(button('保存'), undefined); assert.equal(button('审核').disabled, true); assert.equal(host.querySelectorAll('input:not(:disabled),textarea:not(:disabled)').length, 0);
+  assert.ok(button('保存')); assert.equal(button('保存').disabled, true); assert.equal(button('审核').disabled, true); assert.ok(host.querySelector('input[aria-label="备注"]:not(:disabled)'));
   await click(button('审核')); assert.equal(unknownMethod.commands.length, 0); assert.equal(unknownMethod.keys, 0);
+  await input(host.querySelector('input[aria-label="备注"]'), 'TEST 保留未知付款方式只改备注');
+  unknownMethod.setCurrent({ ...methodDetail, document: { ...methodDetail.document, header: { ...methodDetail.document.header, version: methodDetail.document.header.version + 1, note: 'TEST 保留未知付款方式只改备注' }, settlements: methodDetail.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } });
+  await click(button('保存'));
+  assert.equal(unknownMethod.commands.length, 1); assert.equal(unknownMethod.commands[0].draft.settlements[0].paymentMethodId, null); assert.equal(unknownMethod.commands[0].expectedVersion, methodDetail.document.header.version);
+  assert.equal(unknownMethod.commands[0].draft.header.note, 'TEST 保留未知付款方式只改备注');
+  assert.ok(unknownMethod.reads >= 2, 'Confirmed metadata SAVE rereads the same saved document');
+  assert.equal(unknownMethod.session.getSnapshot().command.editor.current.document.settlements[0].paymentMethodId, null);
+  assert.equal(button('审核').disabled, true);
   await act(async () => unknownMethod.session.dispose());
-  console.log('PASS SALES METHOD DOM: explicit nullable original method stays readable without inferring current/name facts; unknown method never enables runtime editing or approval.');
+  console.log('PASS SALES METHOD DOM: unknown original method remains exact through note-only SAVE and readback, while approval stays blocked; no name/current method infers an ID.');
+  const ordinaryUnknown=setup({ordinary:true}), originalUnknown=detail();
+  const ordinaryFacts={...originalUnknown,stockBasis:'CUTOFF_HISTORY',document:{...originalUnknown.document,lines:originalUnknown.document.lines.map(row=>({...row,pricingRule:null,zeroConfirmed:null,isGift:null,allocatedDiscount:null})),settlements:Array.from({length:16},(_,index)=>({...originalUnknown.document.settlements[0],id:uuid(800+index),lineNo:index+1,paymentMethodId:null,amount:index===15?originalUnknown.document.settlements[0].amount:'0'}))},settlementNames:Array.from({length:16},(_,index)=>({...originalUnknown.settlementNames[0],settlementId:uuid(800+index)}))};
+  ordinaryUnknown.setCurrent(ordinaryFacts);await ordinaryUnknown.session.openExisting(uuid(1));
+  await act(async()=>root.render(createElement(SalesCommandForm,{session:ordinaryUnknown.session,close:()=>{}})));await settle();
+  assert.equal(button('审核').disabled,false,'ordinary unknown facts must reach independent server approval validation');
+  await click(button('审核'));await click(button('确认审核'));
+  assert.deepEqual(ordinaryUnknown.commands[0],{action:'APPROVE',requestKey:'TEST.dom:1',expectedVersion:2,salesId:uuid(1)});
+  assert.deepEqual(ordinaryUnknown.session.getSnapshot().command.editor.detail.document,ordinaryFacts.document);
+  await act(async()=>ordinaryUnknown.session.dispose());
+  console.log('PASS ORDINARY APPROVAL DOM: unknown16 preserved facts use unchanged confirmation and formal APPROVE without proof hints.');
+
 
   const page = setup(); const references = { readReferences: async () => { throw new Error('Unexpected filter candidate read'); } };
   await act(async () => root.render(createElement(SalesCommandPageHost, { scope: page.routeScope, reader: page.reader, references, session: page.session, loadDetailStyles: async () => {} }))); await settle();

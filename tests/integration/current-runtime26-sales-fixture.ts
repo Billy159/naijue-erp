@@ -182,7 +182,7 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
   if (scope.database === CURRENT_REWRITE_SYNTHETIC_TARGET) {
     for (const row of template.rows) if (row.source.entityType === "COLOR" || row.source.entityType === "FIT") {
       const code = row.source.rawFields.code;
-      assert.equal(typeof code, "string");
+      assert.ok(typeof code === "string");
       row.source.sourceKey = code;
       row.source.rawFields[row.sourceKeyField] = code;
       row.source.normalizedFields[row.sourceKeyField] = code;

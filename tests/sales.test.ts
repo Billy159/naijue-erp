@@ -145,10 +145,10 @@ test("SYNTHETIC: authorization is mandatory on writes and idempotent result reco
   await assert.rejects(f.service.execute({ action: "APPROVE", actor, requestKey: "a", expectedVersion: version(1), salesId: ids.sales }), { code: "FORBIDDEN" });
   assert.deepEqual(f.store.snapshot(), before);
 });
-test("SYNTHETIC: imported cutoff history never falls through runtime reversal/edit logic", async () => {
+test("SYNTHETIC: imported approved document without actual ledger or anchor fails on missing effect evidence, not origin", async () => {
   const f = fixture(); await f.service.execute({ action: "SAVE", actor, requestKey: "s", expectedVersion: null, draft: syntheticDraft() });
   const historical = { ...f.document(), header: { ...f.document().header, status: "APPROVED" as const } }; f.store.seedCutoffHistory(historical); const before = f.store.snapshot();
-  await assert.rejects(f.service.execute({ action: "UNAPPROVE", actor, requestKey: "u", expectedVersion: version(1), salesId: ids.sales }), { code: "HISTORICAL_POSTING_NOT_IMPLEMENTED" });
+  await assert.rejects(f.service.execute({ action: "UNAPPROVE", actor, requestKey: "u", expectedVersion: version(1), salesId: ids.sales }), { code: "MISSING_POSTING_PROVENANCE" });
   assert.deepEqual(f.store.snapshot(), before);
 });
 test("SYNTHETIC: only approved documents enter settlement statistics; unapprove exits, reapprove reenters once", async () => {
@@ -168,7 +168,7 @@ test("SYNTHETIC: true null creating-hall snapshot remains null after a different
 });
 test("SYNTHETIC: existing SAVE checks both source and proposed destination scopes before any mutation", async () => {
   for (const deniedReference of ["hall", "warehouse", "customer", "paymentAccount"] as const) {
-    const observed: string[] = [];
+    const observed: (string | null)[] = [];
     const f = fixture({ authorize: async (_context, _action, document) => {
       observed.push(document.header.hallId);
       requireDomain(document.header.hallId === ids.hall && document.header.warehouseId === ids.warehouse
@@ -231,12 +231,12 @@ test("SYNTHETIC: operation keys are scoped by authenticated actor, not globally 
   await f.service.execute({ action: "APPROVE", actor: otherActor, requestKey: "same-key", expectedVersion: version(1), salesId: ids.sales });
   assert.equal(f.store.snapshot().receipts.size, 2); assert.equal(f.balance(), -2n);
 });
-test("SYNTHETIC: duplicate/foreign lines and more than three settlement rows fail before persistence", async () => {
+test("SYNTHETIC: duplicate/foreign lines and duplicate settlement identities fail before persistence", async () => {
   const draft = syntheticDraft();
   const cases = [
     { ...draft, lines: [draft.lines[0]!, draft.lines[0]!] },
     { ...draft, lines: draft.lines.map(line => ({ ...line, salesId: sid("sales", 997) })) },
-    { ...draft, settlements: Array.from({ length: 4 }, (_, index) => ({ ...draft.settlements[0]!, id: sid("settlement", 998 + index), lineNo: index + 1 })) }
+    { ...draft, settlements: Array.from({ length: 4 }, (_, index) => ({ ...draft.settlements[0]!, id: sid("settlement", 998), lineNo: index + 1 })) }
   ];
   for (const invalid of cases) {
     const f = fixture();

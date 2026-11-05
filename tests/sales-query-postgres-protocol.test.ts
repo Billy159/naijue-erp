@@ -36,7 +36,7 @@ const begin = (): Step => ({ sql: /^BEGIN ISOLATION LEVEL REPEATABLE READ READ O
 const commit = (): Step => ({ sql: /^COMMIT$/ }); const rollback = (): Step => ({ sql: /^ROLLBACK$/ });
 const parameters = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null }, page: 1, pageSize: 20 });
 const scope: SalesReadScope = { kind: "restricted", clauses: [{ hallId: ids.hall, warehouseId: ids.warehouse }, { createdByAccountId: ids.account }] };
-const read = <P>(parameters: P, granted = scope, signal = new AbortController().signal) => ({ actor, scope: granted, parameters, signal });
+const read = <P>(parameters: P, granted: SalesReadScope = scope, signal = new AbortController().signal) => ({ actor, scope: granted, parameters, signal });
 const reader = (client: ProtocolClient) => new PostgresSalesQueryReader({ async connect() { return client; } });
 const time = "2026-10-20T12:00:00.000000Z";
 const header = () => ({ responsible_staff_id: null, responsible_name: null, created_by_name: "SYNTHETIC CREATOR", id: ids.sales, number: "SYNTHETIC-ONLY", business_type: "SALE", business_date: "2026-10-20", hall_id: ids.hall,
@@ -72,13 +72,27 @@ test("sales query pg protocol: exact count, relational page and one page-batched
     assert.ok(!/sales_line|sales_settlement|naijue_erp.product|FOR UPDATE/.test(sql));
   } }, { sql: /^SELECT page.id AS sales_id/, rows: [quantities()], inspect(values, sql) {
     assert.deepEqual(values, [[ids.sales]]); assert.match(sql, /FROM unnest\(\$1::uuid\[\]\) AS page\(id\) LEFT JOIN naijue_erp.sales_line l/);
-    assert.match(sql, /ON l.sales_id = page.id AND l.is_current AND NOT l.is_gift GROUP BY page.id$/);
-    assert.match(sql, /SUM\(l.quantity::numeric\)/); assert.match(sql, /WHEN l.quantity < 0 THEN -\(l.quantity::numeric\)/);
-    assert.match(sql, /WHEN l.quantity > 0 THEN l.quantity::numeric/); assert.ok(!/product|sku|line_amount|LIMIT|OFFSET/.test(sql));
+    assert.match(sql, /ON l.sales_id = page.id AND l.is_current GROUP BY page.id$/);
+    assert.match(sql, /SUM\(CASE WHEN l.is_gift IS FALSE THEN l.quantity::numeric/); assert.match(sql, /WHEN l.is_gift IS FALSE AND l.quantity < 0 THEN -\(l.quantity::numeric\)/);
+    assert.match(sql, /WHEN l.is_gift IS FALSE AND l.quantity > 0 THEN l.quantity::numeric/); assert.ok(!/product|sku|line_amount|LIMIT|OFFSET/.test(sql));
   } }, commit()]);
   const result = await reader(client).readList(read(input)); assert.equal(result.exactTotal, 9007199254740993n); assert.equal(result.items[0]!.netDue, 9007199254740993n);
   assert.equal(result.items[0]!.quantity, 9007199254740993n); assert.equal(result.items[0]!.incomingQuantity, 0n); assert.equal(result.items[0]!.outgoingQuantity, 9007199254740993n);
   assert.equal(result.items[0]!.updatedAt, time); assert.equal(client.calls.length, 5); assert.equal(client.calls.filter(call=>/^SELECT/.test(call.sql)).length, 3); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|pg_advisory/.test(call.sql))); client.done();
+});
+test('ordinary native list preserves null creator/time and unknown non-gift aggregates without dropping actual rows', async () => {
+  const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: '1' }] },
+    { sql: /^SELECT h.id/, rows: [{ ...summary(), created_by_name: null, updated_at: null }], inspect(_values, sql) {
+      assert.match(sql, /LEFT JOIN naijue_erp.user_account creator_account/);
+    } },
+    { sql: /^SELECT page.id AS sales_id/, rows: [{ sales_id: ids.sales, quantity: null, incoming_quantity: null, outgoing_quantity: null }], inspect(_values, sql) {
+      assert.match(sql, /count\(l.id\) FILTER \(WHERE l.is_gift IS NULL\)>0 THEN NULL/);
+      assert.match(sql, /ON l.sales_id = page.id AND l.is_current GROUP BY page.id$/);
+      assert.doesNotMatch(sql, /AND NOT l.is_gift/);
+    } }, commit()]);
+  const result = await reader(client).readList(read(parameters()));
+  assert.equal(result.items[0]?.quantity, null); assert.equal(result.items[0]?.incomingQuantity, null); assert.equal(result.items[0]?.outgoingQuantity, null);
+  assert.equal(result.items[0]?.createdByName, null); assert.equal(result.items[0]?.updatedAt, null); client.done();
 });
 test("sales query pg protocol: count and page use case-insensitive literal number inclusion with original bound text, never LIKE wildcards", async () => {
   for (const number of ["synthetic", "SyNtHeTiC_%\\", "%'_\\ OR TRUE"]) {
@@ -143,6 +157,17 @@ test("sales query pg protocol: detail reads authorized native header/current sna
     { sql: /FROM naijue_erp.sales_settlement/, rows: [], inspect(_values, sql) { assert.match(sql, /LIMIT 4$/); } }, commit()]);
   const result = await reader(client).readDetail(read({ salesId: ids.sales })); assert.equal(result.document.lines[0]!.quantity, 9007199254740993n); assert.equal(result.document.lines[0]!.pricingRule, null);
   assert.equal(result.document.lines[0]!.zeroConfirmed, null); assert.equal(result.stockBasis, "RUNTIME_LEDGER"); assert.equal(client.calls.length, 5); assert.equal(client.calls.filter(call=>/^SELECT/.test(call.sql)).length, 3); client.done();
+});
+test('ordinary sales creator projection uses explicit stored staff before any current account mapping', async () => {
+  for (const [accountId, staffId, creatorName] of [[null, sid('staff', 905), 'SYNTHETIC ORIGINAL STAFF'], [null, null, null], [ids.account, sid('staff', 905), 'SYNTHETIC ORIGINAL STAFF']] as const) {
+    const client = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [{ ...header(), created_by_account_id: accountId,
+      unified_staff_columns: true, created_by_staff_id: staffId, approved_by_staff_id: null, created_by_name: creatorName }], inspect(_values, sql) {
+      assert.match(sql, /creator.id=CASE WHEN to_jsonb\(h\) \? 'created_by_staff_id' THEN \(to_jsonb\(h\)->>'created_by_staff_id'\)::uuid ELSE creator_account.staff_id END/);
+    } }, { sql: /FROM naijue_erp.sales_line/, rows: [] }, { sql: /FROM naijue_erp.sales_settlement/, rows: [] }, commit()]);
+    const result = await reader(client).readDetail(read({ salesId: ids.sales }));
+    assert.equal(result.document.header.createdByAccountId, accountId); assert.equal(result.document.header.createdByStaffId, staffId);
+    assert.equal(result.referenceNames.createdByName, creatorName); client.done();
+  }
 });
 test("sales query pg protocol: hidden/missing detail and history rollback without reading child facts", async () => {
   for (const kind of ["readDetail", "readHistory"] as const) {
@@ -431,4 +456,14 @@ test('sales full detail summary excludes cancelling category totals and rejects 
  for(const patch of [{product_id:null},{category_id:null},{category_name:null}])assert.throws(()=>project([{...a,...patch}],'RUNTIME_LEDGER'));
  assert.equal(project([{...a,product_id:null}],'CUTOFF_HISTORY').categorySummary?.basis,'UNKNOWN');
  const many=Array.from({length:4},(_,i)=>({...a,product_id:sid('product',800+i),category_id:sid('category',800+i)}));const result=project(many,'RUNTIME_LEDGER');assert.equal(result.categorySummary?.items.length,4);assert.equal(result.productSummary?.items.length,3);assert.equal(result.productSummary?.hasMore,true);
+});
+
+test('historical null business hall is read back without being lost to a hall inner join or inferred from warehouse',async()=>{
+ const unknown={...header(),stock_basis:'CUTOFF_HISTORY',hall_id:null,hall_name:null};
+ const client=new ProtocolClient([begin(),{sql:/^SELECT h.id/,rows:[unknown],inspect(_values,sql){assert.match(sql,/LEFT JOIN naijue_erp.hall hall ON hall.id = h.hall_id/);assert.doesNotMatch(sql,/coalesce\(h.hall_id|wh.hall_id/i);}}, {sql:/FROM naijue_erp.sales_line/,rows:[]},{sql:/FROM naijue_erp.sales_settlement/,rows:[]},commit()]);
+ const result=await reader(client).readDetail(read({salesId:ids.sales},{kind:'all'}));assert.equal(result.document.header.hallId,null);assert.equal(result.referenceNames.hallName,null);assert.equal(result.document.header.warehouseId,ids.warehouse);client.done();
+});
+test('hall restricted historical read keeps exact business hall predicate with no null or warehouse fallback',async()=>{
+ const client=new ProtocolClient([begin(),{sql:/^SELECT h.id/,rows:[],inspect(values,sql){assert.deepEqual(values,[ids.hall,ids.sales]);assert.match(sql,/h.hall_id = \$1::uuid/);assert.doesNotMatch(sql,/h.hall_id IS NULL|wh.hall_id|coalesce\(h.hall_id/i);}},rollback()]);
+ await assert.rejects(reader(client).readDetail(read({salesId:ids.sales},{kind:'restricted',clauses:[{hallId:ids.hall}]})),{code:'DOCUMENT_NOT_FOUND'});client.done();
 });

@@ -19,3 +19,7 @@ test('draft category display uses actual product/category identity, not equal la
  assert.equal(salesDraftCategories([{...rows[0],quantity:'1.'}]),undefined);
  assert.deepEqual(salesDraftCategories([{product:{id:'p3'},quantity:'1',isGift:false}]).items,[{categoryId:null,categoryName:null,value:'1'}]);
 });
+test('historical signed flow shows both directions even with unknown gifts and net-zero same SKU',async()=>{
+ const {salesSignedFlowSummary}=await import('./sales-detail-summary.ts');assert.equal(typeof salesSignedFlowSummary,'function');
+ assert.deepEqual(salesSignedFlowSummary([{quantity:'3',isGift:null},{quantity:'-3',isGift:null}]),{sold:'3',returned:'3',net:'0'});
+});

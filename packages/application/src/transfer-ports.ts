@@ -14,8 +14,9 @@ export interface TransferActor extends ActorContext { readonly role: TransferRol
 export interface RuntimeTransferHeader extends TransferHeaderRow {
   readonly responsibleStaffId: EntityId<"staff"> | null;
   readonly note: string | null;
-  readonly createdByAccountId: EntityId<"account">; readonly createdHallId: EntityId<"hall"> | null;
-  readonly createdRole: TransferRole; readonly createdAt: string; readonly updatedAt: string;
+  readonly createdByAccountId: EntityId<"account"> | null;
+  readonly createdByStaffId?: EntityId<"staff"> | null; readonly approvedByStaffId?: EntityId<"staff"> | null; readonly createdHallId: EntityId<"hall"> | null;
+  readonly createdRole: TransferRole | null; readonly createdAt: string | null; readonly updatedAt: string | null;
   readonly approvedByAccountId: EntityId<"account"> | null; readonly approvedAt: string | null;
 }
 export interface TransferDocument { readonly header: RuntimeTransferHeader; readonly lines: readonly TransferLineRow[] }
@@ -37,7 +38,8 @@ export interface TransferReceiptRow {
   readonly status: "COMMITTED"; readonly result: TransferResult; readonly completedAt: string;
 }
 export interface TransferAuditValues {
-  readonly header: Pick<RuntimeTransferHeader, "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "status" | "version" | "note" | "responsibleStaffId">;
+  readonly header: Pick<RuntimeTransferHeader, "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "status" | "version" | "note" | "responsibleStaffId">
+    & Partial<Pick<RuntimeTransferHeader, "createdByStaffId" | "approvedByStaffId">>;
   /** Sparse actual changed rows only; unchanged/retained rows are not copied. Posting-only actions have an empty array. */
   readonly lines: readonly Omit<TransferLineRow, "transferId">[];
 }
@@ -46,7 +48,7 @@ export interface TransferAuditRow {
   readonly transferId: EntityId<"transfer">; readonly action: TransferAction; readonly occurredAt: string;
   readonly before: TransferAuditValues | null; readonly after: TransferAuditValues;
 }
-/** CUTOFF_HISTORY remains an explicit fail-closed marker. It is not runtime posting provenance. */
+/** Accounting origin only, never command routing or an edit prohibition. Prior effect proof is checked by the common kernel. */
 export interface StoredTransfer { readonly document: TransferDocument; readonly stockBasis: "RUNTIME_LEDGER" | "CUTOFF_HISTORY" }
 export interface TransferWarehouseFact {
   readonly id: EntityId<"warehouse">; readonly hallId: EntityId<"hall">; readonly enabled: boolean;

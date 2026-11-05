@@ -5,13 +5,15 @@ import { SalesProposalSession } from '../../../../src/current-form/sales-proposa
 import { SalesNewDocumentSession, createSalesPreparationHttpClient } from '../../../../src/current-form/sales-create.ts';
 import { createSalesHttpReader } from '../../../../src/sales/http-reader.ts';
 import { LatestQuery } from '../../../../src/loading/latest-query.ts';
-import { createNormalListReader } from './normal-list-reader.ts';
+import { createNormalListReader, createOrdinaryListReader, type OrdinarySalesPage, type NormalSalesPage } from './normal-list-reader.ts';
 import { createSalesCommandHttpClient } from '../../../../src/sales/commands/http-client.ts';
 import { SalesEditorSession } from '../../../../src/sales/commands/editor-session.ts';
 import type { HistoryTarget } from './history-reader.ts';
 import type { HistoryRevisionOwner } from './history-revision.ts';
 import type { NormalSalesRow } from './normal-list-reader.ts';
 import { documentRowKey } from './normal-list-reader.ts';
+import {OrdinaryListTotals} from './ordinary-list-totals.ts';
+import type {SalesListQuery} from '../../../../src/sales/contracts.ts';
 import type { ReplicaSession } from '../common/session.ts';
 
 /** One session per actual Demo document workspace; retain it when its DOM is detached.
@@ -20,9 +22,11 @@ import type { ReplicaSession } from '../common/session.ts';
  */
 export function createReplicaSalesSession(runtime: ReplicaSession, options: {
   readonly instanceId: string;
+  readonly documentListProfile?: 'source-confirmed-ordinary-documents-v1';
   readonly newRequestKey: () => string;
   readonly responsibleStaff?: DocumentResponsibleStaffCapability;readonly responsibleReady?:boolean;
 }) {
+ if(options.documentListProfile!==undefined&&options.documentListProfile!=='source-confirmed-ordinary-documents-v1')throw new TypeError('Unsupported document list profile.');
   const historyOwners=new Map<string,{scope:import('../../../../src/loading/read-scope.ts').ReadScope;owner:HistoryRevisionOwner}>();
   const selection:{row:NormalSalesRow|null}={row:null};
   const presentation:{businessChoice:'SALE'|'RETURN_EXCHANGE'|null;salespersonDefault:{attempted:boolean;touched:boolean;notice:string|null}}={businessChoice:null,salespersonDefault:{attempted:false,touched:false,notice:null}};
@@ -31,25 +35,31 @@ export function createReplicaSalesSession(runtime: ReplicaSession, options: {
   const scope = runtime.reads.createScope(options.instanceId);
   const reader = createSalesHttpReader(runtime.http);
   const current = createCurrentFormHttpReader(runtime.http);
-  const normalReader=createNormalListReader(runtime.http);
-  const listQuery=new LatestQuery({scope,execute:normalReader.readSales});
+  const ordinary=options.documentListProfile==='source-confirmed-ordinary-documents-v1';
+  const normalReader=createNormalListReader(runtime.http),ordinaryReader=createOrdinaryListReader(runtime.http);
+  const totals=new OrdinaryListTotals({scope,execute:ordinaryReader.readSalesTotals});
+  const listQuery=new LatestQuery<SalesListQuery,NormalSalesPage|OrdinarySalesPage>({scope,execute:read=>ordinary?ordinaryReader.readSales(read):normalReader.readSales(read)});
+  let acceptedSequence=0,filterKey:string|null=null,needsListRefresh=false;
+  const stopList=listQuery.subscribe(()=>{if(!ordinary)return;const state=listQuery.getSnapshot();if(state.phase==='loading'){const next=JSON.stringify(state.request?.parameters.filter);if(filterKey!==null&&next!==filterKey)totals.invalidate();filterKey=next;}if(state.phase==='success'&&state.success&&state.success.sequence!==acceptedSequence&&'readRevision' in state.success.data){acceptedSequence=state.success.sequence;needsListRefresh=false;void totals.load(state.success.parameters.filter,state.success.data.readRevision);}});
   const list=Object.freeze({list:listQuery,dispose:()=>listQuery.dispose()});
   const proposal = new SalesProposalSession(scope, current, runtime.onAccessFailure);
   const editor = new SalesEditorSession({
-    scope, principal, reader,
+    scope, principal, reader, ...(ordinary ? {documentListProfile: options.documentListProfile} : {}),
     client: createSalesCommandHttpClient(runtime.http),
     newRequestKey: options.newRequestKey,
     onAccessFailure: runtime.onAccessFailure,
     existingPreparation: createSalesExistingPreparationHttpClient(runtime.http),
     existingReader: current,
   });
+  let commitRevision=editor.getSnapshot().commitRevision;
+  const stopCommands=editor.subscribe(()=>{const revision=editor.getSnapshot().commitRevision;if(ordinary&&revision!==commitRevision){commitRevision=revision;needsListRefresh=true;listQuery.cancel();totals.invalidate();}});
   const create = new SalesNewDocumentSession({ scope, proposal, editor,
     preparation: createSalesPreparationHttpClient(runtime.http),
     onAccessFailure: runtime.onAccessFailure,
   });
-  return Object.freeze({ scope, reader, current, list, proposal, editor, create, selection, historyOwners, presentation, currentEmployee:{id:principal.staffId,name:principal.staffName??null},
-    async historyOwner(target:HistoryTarget){const key=documentRowKey({dataset:'HISTORY',...target});const existing=historyOwners.get(key);if(existing?.scope.active)return existing.owner;const {HistoryRevisionOwner}=await import('./history-revision.ts');if(!scope.active)throw new Error('登录身份已改变。');const cached=historyOwners.get(key);if(cached?.scope.active)return cached.owner;const child=runtime.reads.createScope('replica-history:'+key),owner=new HistoryRevisionOwner({scope:child,target,http:runtime.http,denied:runtime.onAccessFailure});historyOwners.set(key,{scope:child,owner});return owner;},
-    dispose(): void { for(const entry of historyOwners.values()){entry.owner.dispose();entry.scope.dispose();}historyOwners.clear();selection.row=null;scope.dispose(); create.dispose(); proposal.dispose(); editor.dispose(); list.dispose(); },
+  return Object.freeze({ ordinary, totals, get needsListRefresh(){return needsListRefresh;}, scope, reader, current, list, proposal, editor, create, selection, historyOwners, presentation, currentEmployee:{id:principal.staffId,name:principal.staffName??null},
+    async historyOwner(target:HistoryTarget){if(ordinary)throw new Error('当前普通单据入口不提供历史资料。');const key=documentRowKey({dataset:'HISTORY',...target});const existing=historyOwners.get(key);if(existing?.scope.active)return existing.owner;const {HistoryRevisionOwner}=await import('./history-revision.ts');if(!scope.active)throw new Error('登录身份已改变。');const cached=historyOwners.get(key);if(cached?.scope.active)return cached.owner;const child=runtime.reads.createScope('replica-history:'+key),owner=new HistoryRevisionOwner({scope:child,target,http:runtime.http,denied:runtime.onAccessFailure});historyOwners.set(key,{scope:child,owner});return owner;},
+    dispose(): void { stopList();stopCommands();totals.dispose();for(const entry of historyOwners.values()){entry.owner.dispose();entry.scope.dispose();}historyOwners.clear();selection.row=null;scope.dispose(); create.dispose(); proposal.dispose(); editor.dispose(); list.dispose(); },
   });
 }
 

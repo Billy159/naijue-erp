@@ -6,7 +6,7 @@ import {qaHalls,qaCustomers,qaWarehouses,qaSkus,qaStaff,qaMethods,qaPaymentAccou
 const call=async(h,path,body,method='POST')=>{const r=await h.request({url:h.origin+'/api'+path,method,headers:{'content-type':'application/json'},...(body===undefined?{}:{body:JSON.stringify(body)})});return {status:r.status,body:JSON.parse(r.body)};};
 const transfer=(sku=qaSkus[0].id)=>({transferId:null,businessDate:'2026-10-31',note:'unified transfer',fromWarehouseId:qaWarehouses[3].id,toWarehouseId:qaWarehouses[2].id,lines:[{existingLineId:null,skuId:sku,quantity:'2'}]});
 const sale=(sku=qaSkus[0].id,account=qaPaymentAccounts[0].id,method=qaMethods[0].id,price='239.00')=>({salesId:null,businessType:'SALE',businessDate:'2026-10-31',note:'unified sales',hallId:qaHalls[0].id,customerId:qaCustomers[0].id,salespersonId:qaStaff[2].id,warehouseId:qaWarehouses[3].id,orderDiscount:'0.00',lines:[{existingLineId:null,skuId:sku,quantity:'1',dealPrice:price,pricingRule:'UNIT_PRICE',discountTenths:null,isGift:false,zeroConfirmed:false}],settlements:[{existingSettlementId:null,paymentAccountId:account,paymentMethodId:method,direction:'RECEIVE',amount:price}]});
-const createProduct=(fit=REF.fit)=>({action:'CREATE',requestKey:'unified-product',values:structuredClone(VALUES),skus:[],barcodes:[],skuSelection:{colorIds:[REF.color],fitIds:[fit]}});
+const createProduct=(fit=REF.numericFit)=>({action:'CREATE',requestKey:'unified-product',values:structuredClone(VALUES),skus:[],barcodes:[],skuSelection:{colorIds:[REF.color],fitIds:[fit]}});
 
 test('same inventory owner: transfer and sales posting, inverse, receipt replay and rollback share exact balances/ledger',async t=>{
  const h=await createUnifiedServiceFixture();t.after(()=>h.close());const k=JSON.stringify([qaWarehouses[3].id,qaSkus[0].id]),initial=h.inventory.snapshot(),before=initial.balances.get(k).quantity;
@@ -23,7 +23,7 @@ test('same inventory owner: transfer and sales posting, inverse, receipt replay 
 });
 
 test('real product FIT CREATE feeds current proposals/scan, payment and staff changes feed new and existing documents; new stock stays unknown',async t=>{
- const h=await createUnifiedServiceFixture();t.after(()=>h.close());const fit=await call(h,'/catalogue/fits/commands',{action:'CREATE',requestKey:'unified-fit',values:{name:'SYNTHETIC unified B',code:'B',enabled:true}});assert.equal(fit.status,200,JSON.stringify(fit));
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());const fit=await call(h,'/catalogue/fits/commands',{action:'CREATE',requestKey:'unified-fit',values:{name:'SYNTHETIC unified numeric 6',code:'6',enabled:true}});assert.equal(fit.status,200,JSON.stringify(fit));
  const saved=await call(h,'/products/v2/commands',createProduct(fit.body.targetId));assert.equal(saved.status,200,JSON.stringify(saved));const state=h.product.snapshot().state,row=state.products.get(saved.body.targetId),sku=row.skus[0],barcode=row.barcodes.find(b=>b.skuId===sku.id&&b.kind==='MAIN');assert.ok(barcode);
  const context={kind:'SALES',hallId:qaHalls[0].id};const search=await call(h,'/current-form/products/query',{context,search:VALUES.productCode,page:1,pageSize:20});assert.equal(search.status,200);assert.equal(search.body.items[0].id,saved.body.targetId);
  const scan=await call(h,'/current-form/barcode/query',{context:{...context,warehouseId:qaWarehouses[3].id},barcode:barcode.barcode});assert.equal(scan.status,200,JSON.stringify(scan));assert.equal(scan.body.sku.id,sku.id);assert.equal(scan.body.binding.id,barcode.id);

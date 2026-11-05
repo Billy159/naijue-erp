@@ -1,3 +1,4 @@
+import { parseHistoricalSalesHallEvidence } from './historical-sales-hall-evidence.ts';
 import { DomainError } from '../../domain/src/errors.ts';
 import { entityId } from '../../domain/src/values.ts';
 import { isExactHistoryMoney, isHistoryQuantity } from './history-storage-contract.ts';
@@ -122,7 +123,8 @@ function person(value: unknown): ImportedHistoryPerson {
 }
 const headerKeys = ['dataset', 'kind', 'batchId', 'documentId', 'version', 'number', 'businessDate', 'sourceStatus', 'note', 'createdBy', 'approvedBy', 'responsibleStaffId', 'responsibleName', 'createdHallId', 'createdHallProvenance', 'createdLocalAt', 'updatedLocalAt', 'approvedLocalAt', 'createdInstant', 'updatedInstant', 'approvedInstant'];
 export function validateImportedHistoryHeader(value: unknown, kind: ImportedHistoryKind, grant: ImportedHistoryReadGrant): ImportedHistoryHeader {
-  const r = bag(value, [...headerKeys, ...(kind === 'sales' ? ['businessType', 'hallId', 'customerId', 'warehouseId', 'salespersonId', 'grossAmount', 'orderDiscount', 'netDue'] : ['fromWarehouseId', 'toWarehouseId'])], invalidResponse);
+  const evidenceKey=kind==='sales'&&value!==null&&typeof value==='object'&&Object.hasOwn(value,'historicalHallEvidence')?['historicalHallEvidence','historicalHallDiffersFromCurrent']:[];
+  const r = bag(value, [...headerKeys,...evidenceKey, ...(kind === 'sales' ? ['businessType', 'hallId', 'customerId', 'warehouseId', 'salespersonId', 'grossAmount', 'orderDiscount', 'netDue'] : ['fromWarehouseId', 'toWarehouseId'])], invalidResponse);
   if (r.dataset !== 'HISTORY' || r.kind !== kind) invalidResponse();
   const createdHallId = nullableId(r.createdHallId, invalidResponse), createdHallProvenance = enumValue(r.createdHallProvenance, ['ORIGINAL', 'MIGRATION_DERIVED', 'UNKNOWN'], invalidResponse);
   if ((createdHallProvenance === 'UNKNOWN') !== (createdHallId === null)) invalidResponse();
@@ -132,9 +134,12 @@ export function validateImportedHistoryHeader(value: unknown, kind: ImportedHist
   const responsible = { responsibleStaffId, responsibleName };
   if (grant.targetId !== null && base.documentId !== grant.targetId) invalidResponse();
   if (kind === 'sales') {
-    const hallId = id(r.hallId, invalidResponse);
-    if (grant.scope.kind === 'TRANSFER_HALL_IDS' || grant.scope.kind === 'HALL_IDS' && !grant.scope.hallIds.includes(hallId)) invalidResponse();
-    return Object.freeze({ ...base, ...responsible, kind, hallId, businessType: enumValue(r.businessType, ['SALE', 'RETURN', 'EXCHANGE'], invalidResponse), customerId: id(r.customerId, invalidResponse), warehouseId: id(r.warehouseId, invalidResponse), salespersonId: nullableId(r.salespersonId, invalidResponse), grossAmount: money(r.grossAmount), orderDiscount: money(r.orderDiscount), netDue: money(r.netDue) });
+    const hallId = nullableId(r.hallId, invalidResponse), warehouseId=id(r.warehouseId,invalidResponse);
+    let historicalHallEvidence;
+    if(evidenceKey.length){try{historicalHallEvidence=parseHistoricalSalesHallEvidence(r.historicalHallEvidence);}catch{invalidResponse();}
+      if(r.historicalHallDiffersFromCurrent!==(historicalHallEvidence.selected_hall_id!==hallId||historicalHallEvidence.warehouse_id!==warehouseId))invalidResponse();}
+    if (grant.scope.kind === 'TRANSFER_HALL_IDS' || grant.scope.kind === 'HALL_IDS' && (hallId === null || !grant.scope.hallIds.includes(hallId))) invalidResponse();
+    return Object.freeze({ ...base, ...responsible, kind, hallId, ...(historicalHallEvidence?{historicalHallEvidence,historicalHallDiffersFromCurrent:r.historicalHallDiffersFromCurrent as boolean}:{}), businessType: enumValue(r.businessType, ['SALE', 'RETURN', 'EXCHANGE'], invalidResponse), customerId: id(r.customerId, invalidResponse), warehouseId: id(r.warehouseId, invalidResponse), salespersonId: nullableId(r.salespersonId, invalidResponse), grossAmount: money(r.grossAmount), orderDiscount: money(r.orderDiscount), netDue: money(r.netDue) });
   }
   const fromWarehouseId = id(r.fromWarehouseId, invalidResponse), toWarehouseId = id(r.toWarehouseId, invalidResponse);
   // Source/warehouse membership is checked by the explicit reader grant on its

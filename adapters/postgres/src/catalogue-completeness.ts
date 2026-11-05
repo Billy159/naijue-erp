@@ -367,7 +367,11 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
       }
       complete(sameChildren(sets.skus, children("skus", actualSkus.map(r => r.facts), productId)), "Complete current SKU set differs from replay");
       const barcodes = (await query(`/* maintained-catalogue26:barcodes */ SELECT to_jsonb(b) AS facts,${committedBefore("b")} AS committed_before FROM naijue_erp.sku_barcode b JOIN naijue_erp.sku s ON s.id=b.sku_id WHERE s.product_id=$1::uuid ORDER BY b.id LIMIT $2 FOR SHARE OF b`, [productId, BARCODE_LIMIT + 1])).rows;
-      complete(barcodes.length <= BARCODE_LIMIT && barcodes.every(r => r.committed_before === true), "Full committed bounded barcode set required");
+      complete(barcodes.length <= BARCODE_LIMIT && barcodes.every(r => {
+        if (r.committed_before === true) return true;
+        const append = appends.get(productId), expected = append?.afterValues.barcodes;
+        return !capturing && append !== undefined && Array.isArray(expected) && expected.some(b => equal(b, r.facts));
+      }), "Full committed or exact same-transaction append barcode set required");
       complete(sameChildren(sets.barcodes, children("barcodes", barcodes.map(r => r.facts), productId)), "Complete current barcode set differs from replay");
       const images = (await query(`/* maintained-catalogue26:images */ SELECT jsonb_build_object(${MAINTAINED_IMAGE.map(k => `'${k}',${k === "byte_size" ? "i.byte_size::text" : k === "created_at" ? `to_char(i.created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"')` : `i.${k}`}`).join(",")}) AS facts,${committedBefore("i")} AS committed_before FROM naijue_erp.product_image i WHERE i.product_id=$1::uuid ORDER BY i.id LIMIT $2 FOR SHARE`, [productId, IMAGE_LIMIT + 1])).rows;
       complete(images.length <= IMAGE_LIMIT && images.every(r => r.committed_before === true) && sameChildren(sets.images, children("images", images.map(r => r.facts), productId)), "Image metadata differs from continuous audit; no file validation is implied");

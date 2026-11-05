@@ -236,13 +236,18 @@ const command: Extract<ProductMaintenanceCommand, { action: "CREATE" }> = { acti
   prices: Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === "retail_price" ? "0.00" : null])) as Extract<ProductMaintenanceCommand, { action: "CREATE" }>["values"]["prices"]
 }, skus: [{ id: null, expectedVersion: null, skuCode: "0001-A", colorId: id(6), fitId: id(7), sizeId: id(8), enabled: true }],
 barcodes: [{ id: null, barcode: "000012345 ", colorId: id(6), fitId: id(7), sizeId: id(8), kind: "MAIN", schemeId: id(5), enabled: true }] };
-function setup(options: { badSize?: boolean; barcodeCollision?: boolean; seasonArray?: boolean; retained?: boolean; selectedGroup?: string; members?: readonly string[]; capacity?: "missing" | "full" } = {}) {
+function setup(options: { badSize?: boolean; barcodeCollision?: boolean; seasonArray?: boolean; retained?: boolean; selectedGroup?: string; members?: readonly string[]; capacity?: "missing" | "full"; barcode2026?: boolean } = {}) {
   const calls: { sql: string; values: unknown[] }[] = [], prepared: unknown[] = []; let completed = 0, seq = 900;
   const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: {
     async assertAllowed() {}, async getReceipt() { return undefined; }, async prepare(c) { prepared.push(structuredClone(c)); }, async complete(c) { completed++; return { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; }
   }, client: { async query(sql, values = []) {
     calls.push({ sql, values: structuredClone(values) }); let rows: Record<string, unknown>[] = [];
-    if (options.retained && sql.includes("FROM naijue_erp.product WHERE")) { const v = command.values; rows = [{ id: id(20), product_code: v.productCode, name: v.name,
+    if (sql.includes("product-selection:group")) rows = [{ id: options.selectedGroup ?? id(3) }];
+    else if (sql.includes("product-selection:references")) rows = (values[0] as string[]).map(id => ({ id, enabled: true, retained: true }));
+    else if (sql.includes("product-selection:members")) rows = (options.badSize ? [id(9)] : (options.members ?? [id(8)])).map(size_id => ({ size_id }));
+    else if (sql.includes("product-barcode:scheme")) rows = [{ id: values[0], status: options.barcode2026 ? "CURRENT" : "HISTORICAL", code_length: options.barcode2026 ? 15 : null }];
+    else if (sql.includes("product-barcode:codes")) rows = (values[0] as string[]).map(codeId => ({id:codeId,code: sql.includes("naijue_erp.color") ? "504" : sql.includes("naijue_erp.fit") ? "5" : "207"}));
+    else if (options.retained && sql.includes("FROM naijue_erp.product WHERE")) { const v = command.values; rows = [{ id: id(20), product_code: v.productCode, name: v.name,
       category_id: v.categoryId, supplier_id: v.supplierId, season_id: v.seasonId, season_ids: [], size_group_id: v.sizeGroupId, year: v.year,
       system_item_code: v.systemItemCode, thickness: v.thickness, collar_pants_type: v.collarPantsType, default_barcode_scheme_id: v.defaultBarcodeSchemeId,
       enabled: true, version: 7, deleted_at: null, ...v.prices }]; }
@@ -252,7 +257,7 @@ function setup(options: { badSize?: boolean; barcodeCollision?: boolean; seasonA
     else if (sql.includes("FROM naijue_erp.size_group_member")) rows = options.badSize ? [] : (options.members ?? [id(8)]).filter(size => (values[1] as string[]).includes(size)).map(size_id => ({ size_id }));
     else if (sql.includes("FROM naijue_erp.size_group")) rows = [{ id: options.selectedGroup ?? id(3) }];
     else if (sql.includes("FROM naijue_erp.season")) rows = [{ id: id(4) }];
-    else if (sql.includes("FROM naijue_erp.barcode_scheme")) rows = [{ id: id(5) }];
+    else if (sql.includes("FROM naijue_erp.barcode_scheme")) rows = options.barcode2026 && Array.isArray(values[0]) ? (values[0] as string[]).map(id => ({id})) : [{ id: id(5) }];
     else if (sql.includes("FROM naijue_erp.color")) rows = [{ id: id(6), enabled: true, retained: true }];
     else if (sql.includes("FROM naijue_erp.fit")) rows = [{ id: id(7), enabled: true, retained: true }];
     if (options.barcodeCollision && sql.startsWith("INSERT INTO naijue_erp.sku_barcode")) throw Object.assign(Error("PRIVATE UNIQUE DETAIL"), { code: "23505" });
@@ -277,7 +282,7 @@ test("v11 borrowed product append PG: original leased context writes root/SKU on
   const writes = f.calls.filter(c => /^(INSERT|UPDATE)/.test(c.sql)); assert.equal(writes.length, 2);
   assert.match(writes[0]!.sql, /^UPDATE naijue_erp.product/); assert.match(writes[0]!.sql, /version=\$\d+/);
   assert.match(writes[1]!.sql, /^INSERT INTO naijue_erp.sku/); assert.equal(writes[1]!.values[5], id(9)); assert.equal(writes[1]!.values[8], borrowedAppendInput().operationId);
-  assert.deepEqual(f.calls.find(c => c.sql.includes("FROM naijue_erp.size_group_member"))!.values, [id(3), [id(8), id(9)]]);
+  assert.deepEqual(f.calls.find(c => c.sql.includes("FROM naijue_erp.size_group_member") && !c.sql.includes("product-selection:members"))!.values, [id(3), [id(8), id(9)]]);
   assert.ok(f.calls.every(c => !/^(BEGIN|COMMIT|ROLLBACK)|INSERT INTO naijue_erp\.(?:audit_change|operation_receipt|sku_barcode|inventory_)/.test(c.sql)));
   const count = f.calls.length;
   await assert.rejects(escaped.readCandidates({ kind: "years", search: "", page: 1, pageSize: 20 }), { code: "TRANSACTION_CLOSED" }); assert.equal(f.calls.length, count);
@@ -300,29 +305,29 @@ test("product leaf PG: actual root/SKU/raw-barcode inserts stay in injected D1 c
   assert.ok(writes[0]!.values.includes("0.00")); assert.ok(writes[0]!.values.includes(null));
   assert.equal(writes[1]!.values.at(-1), result.operationId); assert.equal(writes[2]!.values[1], "000012345 ");
   assert.ok(f.calls.every(c => !/^(BEGIN|COMMIT|ROLLBACK)/.test(c.sql))); assert.ok(f.calls.every(c => !/INSERT INTO naijue_erp.(operation_receipt|audit_change|inventory_)/.test(c.sql)));
-  const member = f.calls.find(c => c.sql.includes("FROM naijue_erp.size_group_member"))!; assert.deepEqual(member.values, [id(3), [id(8)]]);
+  const member = f.calls.find(c => c.sql.includes("FROM naijue_erp.size_group_member") && !c.sql.includes("product-selection:members"))!; assert.deepEqual(member.values, [id(3), [id(8)]]);
 });
 test("product leaf PG: missing membership blocks all native writes; raw-code collision maps safely before evidence completion", async () => {
   const f = setup({ badSize: true }); await assert.rejects(f.service.execute(actor, command), { code: "PRODUCT_SIZE_GROUP_MISMATCH" });
   assert.equal(f.calls.filter(c => c.sql.startsWith("INSERT")).length, 0); assert.equal(f.completed(), 0);
   const g = setup({ barcodeCollision: true }); await assert.rejects(g.service.execute(actor, command), { code: "BARCODE_CONFLICT" }); assert.equal(g.completed(), 0);
 });
-test("all-size seam PG: original EDIT appends a dictionary size without MAIN; retained group membership still blocks an incompatible no-size switch", async () => {
-  const { seasonId: _legacy, ...v } = command.values, values = { ...v, seasonIds: [] };
+test("all-size seam PG protocol: original EDIT appends a dictionary size and a bound 2026 MAIN; incompatible group remains blocked", async () => {
+  const { seasonId: _legacy, ...v } = command.values, values = { ...v, seasonIds: [], defaultBarcodeSchemeId: "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef" };
   const added = { ...command.skus[0]!, skuCode: "EXPLICIT-SYNTHETIC-NEW-SIZE", sizeId: id(9) };
   const edit = { action: "EDIT", requestKey: "same-group-new-size", id: id(20), expectedVersion: 7, values, skus: [added], barcodes: [] };
-  const f = setup({ seasonArray: true, retained: true, members: [id(8), id(9)] }), saved = await f.service.executeV2(actor, edit);
+  const f = setup({ seasonArray: true, retained: true, members: [id(8), id(9)], barcode2026: true }), saved = await f.service.executeV2(actor, edit);
   assert.equal(saved.version, 8); const writes = f.calls.filter(c => /^(INSERT|UPDATE)/.test(c.sql));
-  assert.equal(writes.length, 2); assert.match(writes[0]!.sql, /^UPDATE naijue_erp.product/); assert.match(writes[1]!.sql, /^INSERT INTO naijue_erp.sku/);
+  assert.equal(writes.length, 3); assert.match(writes[0]!.sql, /^UPDATE naijue_erp.product/); assert.match(writes[1]!.sql, /^INSERT INTO naijue_erp.sku/);
   assert.equal(writes[1]!.values[5], id(9)); assert.equal(writes[1]!.values[8], saved.operationId);
-  assert.ok(!f.calls.some(c => /^(INSERT|UPDATE).*sku_barcode/.test(c.sql)));
-  assert.deepEqual(f.calls.find(c => c.sql.includes("FROM naijue_erp.size_group_member"))!.values, [id(3), [id(8), id(9)]]);
+  assert.match(writes[2]!.sql, /^INSERT INTO naijue_erp.sku_barcode/); assert.equal(writes[2]!.values[1], "550000123504207"); assert.equal(writes[2]!.values[2], writes[1]!.values[0]);
+  assert.deepEqual(f.calls.find(c => c.sql.includes("FROM naijue_erp.size_group_member") && !c.sql.includes("product-selection:members"))!.values, [id(3), [id(8), id(9)]]);
   // Both dictionary groups exist. The original imported size remains retained,
   // and is not a member of the explicit synthetic no-size group.
-  const noSizeGroup = id(30), noSize = id(31), g = setup({ seasonArray: true, retained: true, selectedGroup: noSizeGroup, members: [noSize] });
+  const noSizeGroup = id(30), noSize = id(31), g = setup({ seasonArray: true, retained: true, selectedGroup: noSizeGroup, members: [noSize], barcode2026: true });
   await assert.rejects(g.service.executeV2(actor, { ...edit, requestKey: "cross-to-no-size", values: { ...values, sizeGroupId: noSizeGroup }, skus: [{ ...added, sizeId: noSize }] }), { code: "PRODUCT_SIZE_GROUP_MISMATCH" });
   assert.equal(g.calls.filter(c => /^(INSERT|UPDATE)/.test(c.sql)).length, 0); assert.equal(g.completed(), 0);
-  assert.deepEqual(g.calls.find(c => c.sql.includes("FROM naijue_erp.size_group_member"))!.values, [noSizeGroup, [id(8), noSize]]);
+  assert.deepEqual(g.calls.find(c => c.sql.includes("FROM naijue_erp.size_group_member") && !c.sql.includes("product-selection:members"))!.values, [noSizeGroup, [id(8), noSize]]);
 });
 test("product leaf PG: complete editable snapshot uses real IDs/versions/path; nullable product default never follows a barcode binding", async () => {
   for (const selected of [id(5), null]) {
@@ -438,3 +443,29 @@ test("season v2 PG: missing dictionary, malformed stored array and mismatched pr
 test("A01 PG leaf missing/full capacity rejects before prepared evidence or root/child writes",async()=>{
  for(const capacity of ["missing","full"] as const){const f=setup({capacity});await assert.rejects(f.service.execute(actor,command),{code:capacity==="missing"?"PRODUCT_EVIDENCE_CAPACITY_NOT_READY":"PRODUCT_EVIDENCE_CAPACITY_EXCEEDED"});assert.equal(f.prepared.length,0);assert.equal(f.completed(),0);assert.ok(f.calls.every(c=>!/^(INSERT|UPDATE|DELETE)/.test(c.sql)));}
 });
+test('historical generation reads actual dictionary codes without invoking old V2 attestation', async () => {
+ const product=id(20001),sku={id:id(20002),productId:product,skuCode:'new',colorId:id(20003),fitId:id(20004),sizeId:id(20005),enabled:true,version:1,createdOperationId:id(20006)},scheme='48c4fe44-7521-44c1-a0e3-c547a1691028';let proof=0,reads=0;
+ const driver:PgProductMaintenanceDriver={async transaction(work){return work({evidence:{async assertAllowed(){},async getReceipt(){return undefined},async complete(){throw Error('UNEXPECTED')}},client:{async query(sql,values=[]){let rows:Record<string,unknown>[]=[];if(sql.includes('product-barcode:scheme'))rows=[{id:scheme,status:'HISTORICAL',code_length:14}];else if(sql.includes('product-barcode:codes'))rows=(values[0] as string[]).map(id=>({id,code:sql.includes('naijue_erp.size')?null:'0501'}));else if(sql.includes('product-barcode:declared-v2'))reads++;return{rows,rowCount:rows.length}}}})}};
+ const uow=new PostgresProductMaintenanceUnitOfWork(driver,{deletionGuard:null,historicalBarcodeReadCapability:{profile:'historical-barcode-local-declaration-v2',assertVerified(){throw Error('must not be called')},async assertReady(){proof++;throw Error('must not be called')}}});
+ const refs=await uow.transaction(async tx=>{await tx.load(product);return tx.readBarcodeGenerationReferences!(product,scheme,[sku])});assert.equal(refs.colors[0]!.code,'0501');assert.equal(refs.sizes[0]!.code,null);assert.equal(refs.historical,undefined);assert.equal(proof,0);assert.equal(reads,0);
+});
+
+test('new barcode conflict lookup reads exact saved codes on the same transaction without V2 declaration dependency',async()=>{
+ const product=id(21001),seen:{sql:string,values:unknown[]}[]=[];const driver:PgProductMaintenanceDriver={async transaction(work){return work({evidence:{async assertAllowed(){},async getReceipt(){return undefined},async complete(){throw Error('UNEXPECTED')}},client:{async query(sql,values=[]){seen.push({sql,values});const rows=sql.includes('product-barcode:existing-values')?[{barcode:'0001'}]:[];return{rows,rowCount:rows.length}}}})}};
+ const uow=new PostgresProductMaintenanceUnitOfWork(driver,{deletionGuard:null});await uow.transaction(async tx=>{await assert.rejects(tx.readExistingBarcodeValues!(['0001']),{code:'TRANSACTION_SCOPE'});await tx.load(product);assert.deepEqual(await tx.readExistingBarcodeValues!(['0001','ABC02']),['0001']);assert.deepEqual(await tx.readExistingBarcodeValues!([]),[])});
+ const found=seen.filter(x=>x.sql.includes('product-barcode:existing-values'));assert.equal(found.length,1);assert.deepEqual(found[0]!.values,[['0001','ABC02']]);assert.ok(seen.every(x=>!x.sql.includes('product-barcode:declared-v2')));
+});
+
+test('barcode collision lookup rejects malformed results and propagates database failures',async()=>{
+ const product=id(21002);let mode:'unexpected'|'duplicate'|'denied'='unexpected';const driver:PgProductMaintenanceDriver={async transaction(work){return work({evidence:{async assertAllowed(){},async getReceipt(){return undefined},async complete(){throw Error('UNEXPECTED')}},client:{async query(sql){if(sql.includes('product-barcode:existing-values')){if(mode==='denied')throw Error('permission denied');const rows=mode==='duplicate'?[{barcode:'0001'},{barcode:'0001'}]:[{barcode:'other'}];return{rows,rowCount:rows.length}}return{rows:[],rowCount:0}}}})}};
+ const uow=new PostgresProductMaintenanceUnitOfWork(driver,{deletionGuard:null});for(const scenario of ['unexpected','duplicate','denied'] as const){mode=scenario;await assert.rejects(uow.transaction(async tx=>{await tx.load(product);await tx.readExistingBarcodeValues!(['0001'])}),scenario==='denied'?/permission denied/:{code:'INVALID_DATABASE_VALUE'})}
+});
+
+test('historical default fit requires exactly one visible active retained A or 5',async()=>{
+ const product=id(22000),calls:string[]=[];let rows:Record<string,unknown>[]=[{id:id(22001),code:'A'}];const driver:PgProductMaintenanceDriver={async transaction(work){return work({evidence:{async assertAllowed(){},async getReceipt(){return undefined},async complete(){throw Error('UNEXPECTED')}},client:{async query(sql){calls.push(sql);if(sql.includes('product-barcode:default-fit'))return{rows,rowCount:rows.length};return{rows:[],rowCount:0}}}})}};
+ const uow=new PostgresProductMaintenanceUnitOfWork(driver,{deletionGuard:null,defaultFitVisibility:{profile:'product-fit-complete-visibility-v1',assertVerified(d){assert.equal(d,driver)},async assertReady(){}}});await uow.transaction(async tx=>{await assert.rejects(tx.readDefaultHistoricalFit!(),{code:'TRANSACTION_SCOPE'});await tx.load(product);assert.equal(await tx.readDefaultHistoricalFit!(),id(22001));rows=[{id:id(22001),code:'A'},{id:id(22002),code:'5'}];assert.equal(await tx.readDefaultHistoricalFit!(),null);rows=[];assert.equal(await tx.readDefaultHistoricalFit!(),null)});assert.ok(calls.some(s=>s.includes('product-barcode:default-fit')&&s.includes('FOR SHARE')));assert.ok(calls.some(s=>s.includes('pg_advisory_xact_lock')));
+});
+
+test('default historical fit never guesses without host visibility proof',async()=>{let queried=false;const driver:PgProductMaintenanceDriver={async transaction(work){return work({evidence:{async assertAllowed(){},async getReceipt(){return undefined},async complete(){throw Error('UNEXPECTED')}},client:{async query(sql){if(sql.includes('product-barcode:default-fit'))queried=true;return{rows:[],rowCount:0}}}})}};await new PostgresProductMaintenanceUnitOfWork(driver,{deletionGuard:null}).transaction(async tx=>{await tx.load(id(22100));assert.equal(await tx.readDefaultHistoricalFit!(),null)});assert.equal(queried,false)});
+
+test('default fit requires same-client visibility proof and propagates proof failures',async()=>{const driver:PgProductMaintenanceDriver={async transaction(work){return work({evidence:{async assertAllowed(){},async getReceipt(){return undefined},async complete(){throw Error('UNEXPECTED')}},client:{async query(){return{rows:[],rowCount:0}}}})}};const uow=new PostgresProductMaintenanceUnitOfWork(driver,{deletionGuard:null,defaultFitVisibility:{profile:'product-fit-complete-visibility-v1',assertVerified(){},async assertReady(){throw Error('visibility proof failed')}}});await assert.rejects(uow.transaction(async tx=>{await tx.load(id(22200));return tx.readDefaultHistoricalFit!()}),/visibility proof failed/)});

@@ -226,7 +226,6 @@ export function createNativeTransferExistingPreparation(dependencies: TransferDe
         const stored = await tx.getTransfer(transferId); requireDomain(stored, "DOCUMENT_NOT_FOUND", "Existing transfer unavailable");
         const previous = stored.document;
         await dependencies.authorization.assertAllowed(actor, "SAVE", previous, undefined, tx);
-        requireDomain(stored.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED", "Cutoff history cannot become runtime transfer editing");
         requireDomain(previous.header.status === "DRAFT", "INVALID_STATE", "Only an actual draft transfer may be prepared");
         requireDomain(previous.header.version === proposal.expectedVersion, "VERSION_CONFLICT", "Existing transfer version changed");
         for (const row of previous.lines) used.add(row.id);

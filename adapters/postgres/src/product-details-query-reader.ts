@@ -10,6 +10,7 @@ import { booleanValue, nullableString, stringValue, versionFromSql } from "./cod
 import type { PgProductQueryClient, PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
 import { catalogueRetainedDeleteEnabled, type CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
 import { checkedNativeRuntime26Capability, type NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { checkedOrdinaryDocumentListOptions, type OrdinaryDocumentRuntime27Capability } from "./ordinary-document-list-reader.ts";
 
 type Query = (sql: string, values?: unknown[]) => Promise<PgProductQueryResult>;
 function count(value: unknown): number {
@@ -32,9 +33,12 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
   private readonly pool: PgProductQueryPool;
   private readonly retainedDelete: boolean;
   private readonly runtime26: NativeRuntime26Capability | undefined;
-  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, runtime26?: NativeRuntime26Capability) {
+  private readonly runtime27: OrdinaryDocumentRuntime27Capability | undefined;
+  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, runtime26?: NativeRuntime26Capability, runtime27?: OrdinaryDocumentRuntime27Capability) {
+    if (runtime26 && runtime27) throw new TypeError("Conflicting product details runtime profiles");
     if (typeof pool?.connect !== "function") throw new TypeError("Product details require an explicit PostgreSQL pool");
-    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
+    this.pool = pool; this.runtime27 = runtime27 ? checkedOrdinaryDocumentListOptions({profile:"source-confirmed-unified-native-v1",runtime27}).runtime27 : undefined;
+    this.retainedDelete = this.runtime27 ? true : catalogueRetainedDeleteEnabled(pool, capability);
     this.runtime26 = checkedNativeRuntime26Capability(runtime26);
     if (this.runtime26 !== undefined && !this.retainedDelete) throw new TypeError("Native product details require the original retained catalogue capability");
   }
@@ -43,6 +47,7 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
     const query: Query = (sql, values = []) => { activeProductRead(signal); return client.query(sql, values); };
     try {
       await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
+      if (this.runtime27) { await this.runtime27.assertReady(client, "ORDINARY_DOCUMENT_READ"); activeProductRead(signal); }
       const result = await work(query, client); activeProductRead(signal); committing = true; await client.query("COMMIT"); return result;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error("Product details snapshot failed");
@@ -117,10 +122,11 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
     const p = read.parameters;
     return this.snapshot(read.signal, async (query, client) => {
       if (this.runtime26 !== undefined) await this.runtime26.assertReady(client, "PRODUCT_SEASONS_READ");
-      const targets = (await query(`SELECT p.id, p.version${this.runtime26 === undefined ? "" : ", p.default_barcode_scheme_id"} FROM naijue_erp.product p WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [p.productId])).rows;
+      const hasScheme = this.runtime26 !== undefined || this.runtime27 !== undefined;
+      const targets = (await query(`SELECT p.id, p.version${hasScheme ? ", p.default_barcode_scheme_id" : ""} FROM naijue_erp.product p WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [p.productId])).rows;
       const target = product(targets, p.productId);
       if (target === null) return null;
-      const defaultScheme: ProductDefaultScheme = this.runtime26 === undefined
+      const defaultScheme: ProductDefaultScheme = !hasScheme
         ? { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" }
         : targets[0]!.default_barcode_scheme_id === null ? { state: "NOT_SET" }
         : { state: "AVAILABLE", schemeId: entityId("product", stringValue(targets[0]!.default_barcode_scheme_id)) };

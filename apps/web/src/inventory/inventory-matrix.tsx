@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useId, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode, type RefObject } from 'react';
 import type { InventoryActions, InventoryCellTarget, InventoryColorFit, InventoryPage, InventoryProduct, InventoryRow, InventorySize, StockTotal } from './contracts.ts';
-import { formatQuantity, totalLabel } from './model.ts';
-import { knownDisplaySources, projectInventoryColors, type InventoryDisplayColor, type InventoryDisplayRow, type InventoryKnownDisplaySource } from './display-projection.ts';
+import { cellLabel, totalLabel } from './model.ts';
+import { identifiedDisplaySources, projectInventoryColors, type InventoryDisplayColor, type InventoryDisplayRow, type InventoryIdentifiedDisplaySource } from './display-projection.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { InventoryWindowModel, type InventoryLogicalCell, type InventoryWindowLayout, type InventoryWindowRow, type InventoryWindowViewport } from './windowing/model.ts';
 import { createInventoryRenderPlan, inventoryDOMScrollTop, inventoryModelViewport, type InventoryColumnPart } from './windowing/render-plan.ts';
@@ -160,7 +160,7 @@ type RowWindow = {
     readonly onFocus: () => void;
     readonly onKeyDown: (event: KeyboardEvent<HTMLSpanElement>) => void;
   };
-  readonly projectedFocus?:(sources:readonly InventoryKnownDisplaySource[])=>InventoryLogicalCell|null;
+  readonly projectedFocus?:(sources:readonly InventoryIdentifiedDisplaySource[])=>InventoryLogicalCell|null;
 };
 function ColumnCells(props: { readonly product: InventoryProduct; readonly window?: RowWindow; readonly render: (size: InventorySize, index: number) => ReactNode }) {
   if (!props.window) return <>{props.product.sizes.map((size, index) => props.render(size, index))}</>;
@@ -179,7 +179,7 @@ function WarehouseRow(props: MatrixProps & { readonly product: InventoryProduct;
     <ColumnCells product={product} {...(props.window ? { window: props.window } : {})} render={(size, index) => {
       const cell = row.cells[size.id]!;
       if (cell.state === 'not-applicable') return <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined}><span className="mx-absent" aria-label="不存在此规格">—</span></td>;
-      const sources = 'sources' in cell ? knownDisplaySources(cell) : null;
+      const sources = 'sources' in cell ? identifiedDisplaySources(cell) : null;
       const source = sources?.length === 1 ? sources[0]! : null;
       const focusSource=sources?.[0];
       const address = props.window ? group.fit ? { productId: product.id, colorId: group.color.id, fitId: group.fit.id, warehouseId: row.warehouse.id, sizeId: size.id } : props.window.projectedFocus?.(sources??[])??(focusSource ? {productId:focusSource.productId,colorId:focusSource.color.id,fitId:focusSource.fit.id,warehouseId:focusSource.warehouse.id,sizeId:focusSource.size.id}:null) : null;
@@ -191,8 +191,9 @@ function WarehouseRow(props: MatrixProps & { readonly product: InventoryProduct;
       const explanation=multipleSources?'选择要查看的版型资料':available?`查看该仓库 / SKU 库存流水${target?` · ${target.fit.label}`:''}`:'库存流水尚未接入';
       const open=(trigger:HTMLSpanElement)=>{if(!available)return;if(multipleSources){props.chooseSources?.(sources!.map(source=>({productId:source.productId,productLabel:`${product.code} ${product.name}`,color:source.color,fit:source.fit,size:source.size,warehouse:source.warehouse,skuId:source.cell.skuId,readReference:props.data.readReference})),trigger);}else if(target)props.actions.onOpenCell?.(target);};
       const binding=address?props.window?.bindCell(address):undefined;
-      return <td key={size.id} data-mx-stock="" data-product={product.id} data-color={group.color.id} data-size={size.id} data-warehouse={row.warehouse.id} className={`mx-number${cell.quantity.startsWith('-')?' minus':cell.quantity==='0'?' mx-zero':''}`} aria-colindex={props.window?index+4:undefined}>
-       <span className={`iw-number mx-stock${cell.quantity.startsWith('-')?' mx-negative':''}`} role="button" tabIndex={available?0:-1} {...(binding?{ref:binding.ref,onFocus:binding.onFocus}:{})} data-stock-address={props.window?JSON.stringify(address):undefined} data-inventory-source-count={sources?.length??1} aria-disabled={!available} title={explanation} aria-label={`${product.code} ${group.color.label} ${fitLabel} ${row.warehouse.label} ${size.label} 库存${cell.quantity}${multipleSources?`，${explanation}`:''}`} onClick={event=>open(event.currentTarget)} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){if(available){event.preventDefault();open(event.currentTarget);}}else binding?.onKeyDown(event);}}>{formatQuantity(cell.quantity)}</span>
+      const value=cellLabel(cell), negative=cell.state==='known'&&cell.quantity.startsWith('-'), zero=cell.state==='known'&&cell.quantity==='0';
+      return <td key={size.id} data-mx-stock="" data-product={product.id} data-color={group.color.id} data-size={size.id} data-warehouse={row.warehouse.id} className={`mx-number${negative?' minus':zero?' mx-zero':cell.state==='unknown'?' mx-unknown':''}`} aria-colindex={props.window?index+4:undefined}>
+       <span className={`iw-number mx-stock${negative?' mx-negative':''}`} role="button" tabIndex={available?0:-1} {...(binding?{ref:binding.ref,onFocus:binding.onFocus}:{})} data-stock-address={props.window?JSON.stringify(address):undefined} data-inventory-source-count={sources?.length??1} aria-disabled={!available} title={explanation} aria-label={`${product.code} ${group.color.label} ${fitLabel} ${row.warehouse.label} ${size.label} 库存${value}${multipleSources?`，${explanation}`:''}`} onClick={event=>open(event.currentTarget)} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){if(available){event.preventDefault();open(event.currentTarget);}}else binding?.onKeyDown(event);}}>{value}</span>
       </td>;
     }} /><td className="mx-total-cell" aria-colindex={props.window ? product.sizes.length + 4 : undefined} title={totalLabel(row.total)}>{totalLabel(row.total)}</td><td className="ui-action-cell" aria-colindex={props.window ? product.sizes.length + 5 : undefined}><ViewProduct product={product} actions={props.actions} /></td>
   </tr>;
@@ -200,7 +201,7 @@ function WarehouseRow(props: MatrixProps & { readonly product: InventoryProduct;
 function TotalRow(props: MatrixProps & { readonly product: InventoryProduct; readonly label?: string; readonly fit?: string; readonly color?: ReactNode; readonly warehouse?: ReactNode; readonly totals: Readonly<Record<string, StockTotal>>; readonly total: StockTotal; readonly kind: 'product' | 'color'; readonly folded?: boolean; readonly first?: boolean; readonly identity?: boolean; readonly window?: RowWindow }) {
   return <tr {...rowAttributes(props.window)} data-inventory-product={props.product.id} className={`mx-${props.kind === 'product' ? 'total mx-product-total' : 'subtotal mx-color-total'}${props.folded ? ' mx-folded' : ''}${props.first ? ' mx-product-row' : ''}`}>
     <td className="mx-product">{props.identity ? <ProductIdentity product={props.product} settings={props.settings} showMeta={!!props.first || props.settings.fit} {...(props.fit ? { fit: props.fit } : {})} /> : props.label}{props.fit && <span className="sr-only">{props.fit}</span>}</td><td className="mx-color">{props.color}</td><td className="mx-warehouse">{props.warehouse}</td>
-    <ColumnCells product={props.product} {...(props.window ? { window: props.window } : {})} render={(size, index) => <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined} title={totalLabel(props.totals[size.id]!)}>{formatQuantity(props.totals[size.id]!.knownQuantity)}</td>} /><td className="mx-total-cell" title={totalLabel(props.total)}>{totalLabel(props.total)}</td><td className="mx-summary-operation ui-action-cell">{props.identity && <ViewProduct product={props.product} actions={props.actions} />}</td>
+    <ColumnCells product={props.product} {...(props.window ? { window: props.window } : {})} render={(size, index) => <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined} title={totalLabel(props.totals[size.id]!)}>{totalLabel(props.totals[size.id]!)}</td>} /><td className="mx-total-cell" title={totalLabel(props.total)}>{totalLabel(props.total)}</td><td className="mx-summary-operation ui-action-cell">{props.identity && <ViewProduct product={props.product} actions={props.actions} />}</td>
   </tr>;
 }
 /** Geometry only: equal metadata text at the same native column width can share
@@ -358,7 +359,7 @@ function WindowedInventoryMatrix(props: MatrixProps & { readonly windowing: Inve
       windowing.onScrollRequest(position);
     },
   });
-  const projectedFocus=(sources:readonly InventoryKnownDisplaySource[]):InventoryLogicalCell|null=>{
+  const projectedFocus=(sources:readonly InventoryIdentifiedDisplaySource[]):InventoryLogicalCell|null=>{
     const address=focus?.data===props.data&&focus.signal===windowing.scope.signal?focus.address:null;
     const source=address?sources.find(source=>source.productId===address.productId&&source.color.id===address.colorId&&source.fit.id===address.fitId&&source.warehouse.id===address.warehouseId&&source.size.id===address.sizeId)??sources[0]:sources[0];
     return source?{productId:source.productId,colorId:source.color.id,fitId:source.fit.id,warehouseId:source.warehouse.id,sizeId:source.size.id}:null;

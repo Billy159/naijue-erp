@@ -1,3 +1,5 @@
+import { requireDomain } from "../../domain/src/errors.ts";
+import { parseOrdinarySalesTotalsQuery } from "./ordinary-document-query-validation.ts";
 import type { ActorContext } from "./ports.ts";
 import type { SalesQueryDependencies, SalesReadIntent, SalesScopedRead } from "./sales-query-ports.ts";
 import { entityId } from "../../domain/src/values.ts";
@@ -12,7 +14,7 @@ function checkedActor(actor: ActorContext): ActorContext {
 }
 export function createSalesQueryService(dependencies: SalesQueryDependencies) {
   if (typeof dependencies?.authorization?.authorize !== "function" || typeof dependencies?.reader?.readList !== "function"
-    || typeof dependencies?.reader?.readDetail !== "function" || typeof dependencies?.reader?.readHistory !== "function"
+    || typeof dependencies?.reader?.readDetail !== "function"
     || typeof dependencies?.reader?.readSettlementStatistics !== "function" || typeof dependencies?.reader?.readReferences !== "function") throw new TypeError("Sales queries require explicit trusted authorization and snapshot reader providers");
   const authorize = dependencies.authorization.authorize.bind(dependencies.authorization);
   const reader = dependencies.reader;
@@ -25,6 +27,14 @@ export function createSalesQueryService(dependencies: SalesQueryDependencies) {
     activeSalesRead(signal); return result;
   }
   return Object.freeze({
+    readTotals(actor: ActorContext, input: unknown, signal: AbortSignal) {
+      const parameters = parseOrdinarySalesTotalsQuery(input);
+      const list = parseSalesListQuery({ filter: parameters.filter, page: 1, pageSize: 20 });
+      return read(actor, parameters, { kind: "list", parameters: list }, signal, scoped => {
+        requireDomain(typeof reader.readTotals === "function", "ORDINARY_DOCUMENTS_NOT_READY", "Ordinary totals reader required");
+        return reader.readTotals(scoped);
+      });
+    },
     readReferences(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const parameters = parseSalesFilterReferenceQuery(input);
       // A filter-candidate read is a projection of readable sales, not permission to enumerate
@@ -43,7 +53,10 @@ export function createSalesQueryService(dependencies: SalesQueryDependencies) {
     },
     readHistory(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const parameters = parseSalesHistoryQuery(input);
-      return read(actor, parameters, { kind: "history", parameters }, signal, reader.readHistory.bind(reader));
+      return read(actor, parameters, { kind: "history", parameters }, signal, scoped => {
+        requireDomain(typeof reader.readHistory === "function", "SALES_HISTORY_UNAVAILABLE", "Explicit operation history reader required");
+        return reader.readHistory(scoped);
+      });
     },
     readSettlementStatistics(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const parameters = parseSalesListQuery(input);

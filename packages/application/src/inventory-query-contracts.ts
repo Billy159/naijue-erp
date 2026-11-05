@@ -7,11 +7,12 @@ export type InventoryCandidateKind = "product" | "category" | "warehouse" | "sup
 export interface InventorySelection { readonly id: string; readonly label: string }
 export type InventoryStockCell =
   | { readonly state: "known"; readonly skuId: string; readonly quantity: string }
+  | { readonly state: "unknown"; readonly skuId: string }
   | { readonly state: "not-applicable" };
 export interface InventoryStockTotal {
   readonly knownQuantity: string;
-  readonly completeness: "complete";
-  readonly unknownCells: 0;
+  readonly completeness: "complete" | "incomplete";
+  readonly unknownCells: number;
 }
 export interface InventoryQueryRow {
   readonly warehouse: InventorySelection;
