@@ -460,6 +460,183 @@ def capacity_final(cfg, args):
     print(json.dumps(value, ensure_ascii=False))
 
 
+# Ordinary binary staging is separate from run/capacity. The authority is issued
+# externally and also installed root-owned beside the existing dispatcher.
+ARTIFACT_KEYS = {'format','decision','taskId','grantId','artifactKey','sourceSetSha256',
+                 'archiveSha256','archiveBytes','targetDirectory','startsAt','expiresAt','decisionReference','kind'}
+
+def artifact_authority(raw, cfg, allow_expired=False):
+    def pairs(items):
+        d={}
+        for k,v in items:
+            if k in d:raise ValueError('ARTIFACT_DUPLICATE_AUTHORITY_KEY')
+            d[k]=v
+        return d
+    a=json.loads(raw,object_pairs_hook=pairs)
+    if type(a) is not dict or set(a)!=ARTIFACT_KEYS:raise ValueError('ARTIFACT_EXACT_AUTHORITY_REQUIRED')
+    if (a['format']!='T45_ORDINARY_ARTIFACT_STAGING_V1' or a['decision']!='AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING'
+        or a['taskId']!='T45' or a['grantId']!=cfg['grantId'] or a['kind']!='ORDINARY_SOURCE_AND_TOOLS'):
+        raise ValueError('ARTIFACT_AUTHORITY_SCOPE_REFUSED')
+    ident(a['artifactKey'])
+    for key in ('archiveSha256','sourceSetSha256'):
+        if type(a[key]) is not str or not re.fullmatch('[a-f0-9]{64}',a[key]):raise ValueError('ARTIFACT_HASH_REQUIRED')
+    if type(a['archiveBytes']) is not int or not 0<a['archiveBytes']<2**53:raise ValueError('ARTIFACT_EXACT_BYTES_REQUIRED')
+    if a['targetDirectory']!=cfg['control']+'/artifacts/'+a['artifactKey']:raise ValueError('ARTIFACT_NAMESPACE_REFUSED')
+    if (type(a['startsAt']) is not int or type(a['expiresAt']) is not int or not a['startsAt']<a['expiresAt']
+        or type(a['decisionReference']) is not str or not 0<len(a['decisionReference'])<=512):
+        raise ValueError('ARTIFACT_EXTERNAL_DECISION_REQUIRED')
+    if cfg.get('scope')!='ERP_EXISTING_TASKS_THROUGH_T51' or a['expiresAt']>cfg.get('expiresAtEpoch',0)*1000:raise ValueError('ARTIFACT_EXISTING_GRANT_BOUNDARY_REFUSED')
+    now=int(time.time()*1000)
+    if not allow_expired and not a['startsAt']<=now<a['expiresAt']:raise ValueError('ARTIFACT_AUTHORITY_WINDOW_REFUSED')
+    return a
+
+ARTIFACT_REMOTE = r'''
+import os,sys,json,stat,hashlib,time,re
+from pathlib import Path
+context=CONTEXT_LITERAL
+
+def need(v,k):
+ if not v:raise ValueError(k)
+def canonical(p):
+ need(p.is_absolute() and str(p)==os.path.normpath(str(p)),'ARTIFACT_CANONICAL_PATH_REQUIRED')
+ for q in [*reversed(p.parents),p]:
+  s=q.lstat();need(not stat.S_ISLNK(s.st_mode),'ARTIFACT_SYMLINK_REFUSED')
+ return p
+def read_regular(p,limit,root=False):
+ canonical(p);fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW)
+ try:
+  s=os.fstat(fd);need(stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_size<=limit,'ARTIFACT_REGULAR_INPUT_REQUIRED')
+  if root:need(s.st_uid==0 and s.st_mode&0o022==0,'ARTIFACT_ROOT_AUTHORITY_REQUIRED')
+  b=os.read(fd,limit+1);z=os.fstat(fd)
+  need(len(b)==s.st_size and (s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns)==(z.st_ino,z.st_size,z.st_mtime_ns,z.st_ctime_ns),'ARTIFACT_INPUT_CHANGED')
+  return b
+ finally:os.close(fd)
+def authority():
+ g=context['grantId'];need(re.fullmatch('[a-f0-9]{16}',g),'ARTIFACT_GRANT_REFUSED')
+ control='/home/naijue/erp-release-20261006-01-control/grant-'+g
+ need(context['control']==control,'ARTIFACT_CONTROL_REFUSED')
+ p=Path('/usr/local/lib/naijue-erp-night/grant-'+g+'/artifact-staging-authorization.json')
+ for q in [*reversed(p.parents),p]:
+  s=q.lstat();need(s.st_uid==0 and s.st_mode&0o022==0 and not stat.S_ISLNK(s.st_mode),'ARTIFACT_ROOT_AUTHORITY_REQUIRED')
+ raw=read_regular(p,65536,True);need(hashlib.sha256(raw).hexdigest()==context['authoritySha256'],'ARTIFACT_EXTERNAL_AUTHORITY_DIFFERS')
+ a=json.loads(raw);need(a==context['authority'],'ARTIFACT_AUTHORITY_BINDING_DIFFERS')
+ need(set(a)=={'format','decision','taskId','grantId','artifactKey','sourceSetSha256','archiveSha256','archiveBytes','targetDirectory','startsAt','expiresAt','decisionReference','kind'},'ARTIFACT_EXACT_AUTHORITY_REQUIRED')
+ need(a['format']=='T45_ORDINARY_ARTIFACT_STAGING_V1' and a['decision']=='AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING' and a['taskId']=='T45' and a['grantId']==g and a['kind']=='ORDINARY_SOURCE_AND_TOOLS','ARTIFACT_AUTHORITY_SCOPE_REFUSED')
+ need(type(a['artifactKey']) is str and re.fullmatch('[A-Za-z0-9][A-Za-z0-9_-]{0,70}',a['artifactKey']),'ARTIFACT_KEY_REFUSED')
+ need(all(type(a[k]) is str and re.fullmatch('[a-f0-9]{64}',a[k]) for k in ['sourceSetSha256','archiveSha256']),'ARTIFACT_HASH_REQUIRED')
+ need(type(a['archiveBytes']) is int and 0<a['archiveBytes']<2**53 and type(a['startsAt']) is int and type(a['expiresAt']) is int and a['startsAt']<a['expiresAt'],'ARTIFACT_BYTES_OR_WINDOW_REQUIRED')
+ need(a['targetDirectory']==control+'/artifacts/'+a['artifactKey'],'ARTIFACT_NAMESPACE_REFUSED')
+ return a
+
+def syncdir(p):
+ fd=os.open(p,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+ try:os.fsync(fd)
+ finally:os.close(fd)
+def own_directory(p):
+ canonical(p);s=p.lstat();need(stat.S_ISDIR(s.st_mode) and s.st_uid==os.getuid() and s.st_mode&0o022==0,'ARTIFACT_OWNED_DIRECTORY_REQUIRED')
+def identity(s):return [s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns]
+def snapshot(a):
+ parent=Path(a['targetDirectory']).parent
+ try:own_directory(parent)
+ except FileNotFoundError:return {'status':'ABSENT'}
+ target=Path(a['targetDirectory'])
+ try:own_directory(target)
+ except FileNotFoundError:return {'status':'ABSENT'}
+ try:
+  r=json.loads(read_regular(target/'ready.json',65536));need(r['authoritySha256']==context['authoritySha256'] and r['archiveSha256']==a['archiveSha256'] and r['archiveBytes']==a['archiveBytes'],'ARTIFACT_RECEIPT_DIFFERS')
+  p=target/'archive.bin';canonical(p);s=p.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid==os.getuid() and s.st_nlink==1 and s.st_mode&0o077==0 and identity(s)==r['fileIdentity'],'ARTIFACT_STORED_FILE_CHANGED')
+  return {'status':'READY','receipt':r}
+ except (OSError,ValueError,KeyError,TypeError,json.JSONDecodeError):return {'status':'PARTIAL_OR_UNKNOWN_NO_REPLAY'}
+
+def new_file(p,b):
+ fd=os.open(p,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+ try:
+  with os.fdopen(fd,'wb',closefd=False) as f:f.write(b);f.flush();os.fsync(fd)
+ finally:os.close(fd)
+def upload(a,stream):
+ need(a['startsAt']<=int(time.time()*1000)<a['expiresAt'],'ARTIFACT_AUTHORITY_EXPIRED')
+ parent=Path(a['targetDirectory']).parent;own_directory(parent.parent)
+ try:parent.mkdir(mode=0o700)
+ except FileExistsError:pass
+ own_directory(parent);target=Path(a['targetDirectory']);target.mkdir(mode=0o700);syncdir(parent)
+ # Exclusive target creation is the once-only marker. Partial directories remain.
+ new_file(target/'binding.json',json.dumps({'authoritySha256':context['authoritySha256'],'authority':a},sort_keys=True).encode());syncdir(target)
+ part=target/'archive.part';fd=os.open(part,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600);h=hashlib.sha256();left=a['archiveBytes']
+ try:
+  with os.fdopen(fd,'wb',closefd=False) as f:
+   while left:
+    need(int(time.time()*1000)<a['expiresAt'],'ARTIFACT_AUTHORITY_EXPIRED')
+    b=stream.read(min(left,1024*1024));need(bool(b),'ARTIFACT_SHORT_STREAM');f.write(b);h.update(b);left-=len(b)
+   need(stream.read(1)==b'','ARTIFACT_EXTRA_STREAM_BYTES');f.flush();os.fsync(fd)
+ finally:os.close(fd)
+ need(h.hexdigest()==a['archiveSha256'],'ARTIFACT_STREAM_HASH_DIFFERS');need(int(time.time()*1000)<a['expiresAt'],'ARTIFACT_AUTHORITY_EXPIRED')
+ final=target/'archive.bin';os.link(part,final,follow_symlinks=False);os.unlink(part);syncdir(target)
+ s=final.lstat();r={'status':'READY','artifactKey':a['artifactKey'],'sourceSetSha256':a['sourceSetSha256'],'archiveSha256':a['archiveSha256'],'archiveBytes':a['archiveBytes'],'authoritySha256':context['authoritySha256'],'fileIdentity':identity(s)}
+ temp=target/'ready.tmp';new_file(temp,json.dumps(r,sort_keys=True).encode());os.link(temp,target/'ready.json',follow_symlinks=False);os.unlink(temp);syncdir(target)
+ return {'status':'READY','receipt':r}
+
+def main():
+ a=authority()
+ if context['action']=='status':return snapshot(a)
+ need(context['action']=='upload','ARTIFACT_ACTION_REFUSED')
+ return upload(a,sys.stdin.buffer)
+if __name__=='__main__':
+ try:print(json.dumps(main()))
+ except (OSError,ValueError,KeyError,TypeError) as e:
+  print(json.dumps({'status':'STOP_OR_UNKNOWN_NO_REPLAY','errorCode':str(e) if isinstance(e,ValueError) else type(e).__name__}));sys.exit(2)
+'''
+
+def artifact_channel(cfg,a,authority_sha,action,data=None):
+    context={'grantId':cfg['grantId'],'control':cfg['control'],'authoritySha256':authority_sha,'authority':a,'action':action}
+    code=ARTIFACT_REMOTE.replace('CONTEXT_LITERAL',repr(context),1)
+    return json.loads(remote(cfg,'python3 -c '+shlex.quote(code),data))
+
+def artifact_input(args,cfg):
+    p=Path(args.authorization_file)
+    if (not p.is_absolute() or p.resolve()!=p or any(x.is_symlink() for x in [p,*p.parents])):raise ValueError('ARTIFACT_CANONICAL_AUTHORITY_REQUIRED')
+    fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW)
+    try:
+        s=os.fstat(fd)
+        if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1 or not 0<s.st_size<=65536:raise ValueError('ARTIFACT_BOUNDED_AUTHORITY_REQUIRED')
+        raw=os.read(fd,65537)
+    finally:os.close(fd)
+    if not re.fullmatch('[a-f0-9]{64}',args.authorization_sha256) or hashlib.sha256(raw).hexdigest()!=args.authorization_sha256:raise ValueError('ARTIFACT_AUTHORITY_HASH_DIFFERS')
+    return artifact_authority(raw,cfg,allow_expired=args.action=='artifact-status')
+
+def artifact_stage(cfg,args):
+    a=artifact_input(args,cfg)
+    if args.action=='artifact-status':
+        print(json.dumps(artifact_channel(cfg,a,args.authorization_sha256,'status')));return
+    # Validate and read the one exact ordinary file before any upload attempt.
+    p=Path(args.archive)
+    if not p.is_absolute() or p.resolve()!=p or any(x.is_symlink() for x in [p,*p.parents]):raise ValueError('ARTIFACT_CANONICAL_ARCHIVE_REQUIRED')
+    fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW)
+    try:
+        s=os.fstat(fd)
+        if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1 or s.st_size!=a['archiveBytes']:raise ValueError('ARTIFACT_LOCAL_BYTES_DIFFERS')
+        with os.fdopen(fd,'rb',closefd=False) as f:data=f.read(a['archiveBytes']+1)
+        z=os.fstat(fd)
+        if len(data)!=a['archiveBytes'] or hashlib.sha256(data).hexdigest()!=a['archiveSha256'] or (s.st_size,s.st_mtime_ns,s.st_ctime_ns)!=(z.st_size,z.st_mtime_ns,z.st_ctime_ns):raise ValueError('ARTIFACT_LOCAL_HASH_OR_IDENTITY_DIFFERS')
+    finally:os.close(fd)
+    if dispatch(cfg,'status').get('status')!='READY':raise ValueError('ARTIFACT_EXISTING_GRANT_NOT_READY')
+    observed=artifact_channel(cfg,a,args.authorization_sha256,'status')
+    attempt=HERE/('artifact-staging-attempt-'+a['artifactKey']+'.json')
+    if observed.get('status')!='ABSENT' or attempt.exists() or attempt.is_symlink():
+        print(json.dumps({'status':'READ_ORIGINAL_STATUS_NO_REPLAY','observed':observed,'localAttemptRecorded':attempt.exists()}));return
+    # Created before remote upload, including a timeout before remote mkdir.
+    fd=os.open(attempt,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+    try:
+        with os.fdopen(fd,'w',closefd=False) as f:
+            json.dump({'artifactKey':a['artifactKey'],'authoritySha256':args.authorization_sha256,'archiveSha256':a['archiveSha256'],'archiveBytes':a['archiveBytes']},f);f.flush();os.fsync(fd)
+    finally:os.close(fd)
+    directory_fd=os.open(HERE,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+    try:os.fsync(directory_fd)
+    finally:os.close(directory_fd)
+    # Recheck time after hashing/status. Never widen remote()'s original40s.
+    artifact_authority(json.dumps(a).encode(),cfg)
+    print(json.dumps(artifact_channel(cfg,a,args.authorization_sha256,'upload',data)))
+
+
 def main():
     global CONTROL_PATH
     parser=argparse.ArgumentParser();sub=parser.add_subparsers(dest='action',required=True);sub.add_parser('status');end=sub.add_parser('end');end.add_argument('--force',action='store_true');end.add_argument('--reason',choices=['T51_COMPLETE','USER_STOP'],default='USER_STOP')
@@ -469,6 +646,9 @@ def main():
         command=sub.add_parser(name);command.add_argument('--task',choices=['T45'],required=True);command.add_argument('--job-id',required=True);command.add_argument('--binding',required=True)
         if name=='capacity-final-deliver':
             command.add_argument('--phase',choices=['CONTENT','APPROVAL'],required=True);command.add_argument('--input',required=True)
+    for name in ('artifact-stage','artifact-status'):
+        command=sub.add_parser(name);command.add_argument('--authorization-file',required=True);command.add_argument('--authorization-sha256',required=True)
+        if name=='artifact-stage':command.add_argument('--archive',required=True)
     args=parser.parse_args();cfg=state()
     with tempfile.TemporaryDirectory(prefix='erp-ssh-',dir='/tmp') as channel:
         CONTROL_PATH=str(Path(channel)/'control')
@@ -476,6 +656,7 @@ def main():
             if args.action=='status':print(json.dumps({'status':'CLOSED','grantId':cfg['grantId'],'reason':cfg.get('revokedReason')} if cfg.get('installed')=='REVOKED' else dispatch(cfg,'status'),ensure_ascii=False))
             elif args.action=='end':print(json.dumps(end_grant(cfg,args.force,args.reason),ensure_ascii=False))
             elif args.action=='collect':collect(cfg,args)
+            elif args.action in {'artifact-stage','artifact-status'}:artifact_stage(cfg,args)
             elif args.action in {'capacity-final-status','capacity-final-deliver'}:capacity_final(cfg,args)
             else:
                 with (HERE/'release-client.lock').open('a+') as lock:fcntl.flock(lock,fcntl.LOCK_EX);submit(cfg,args)
