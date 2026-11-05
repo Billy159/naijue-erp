@@ -45,6 +45,14 @@ export function bindFresh35CombinedTarget(input,now=Date.now()){
 export function describeFresh35CombinedTarget(target){need(targets.has(target),'GENUINE_TARGET_REQUIRED');return targets.get(target)}
 export function fresh35CombinedTargetGuard(target,{requireEmpty}={requireEmpty:false}){
  need(typeof requireEmpty==='boolean','EXPLICIT_EMPTY_TARGET_FLAG_REQUIRED');
+ return targetGuard(target,{requireEmpty,runtime:false});
+}
+/** Import inspection runs as the controller on its own read-only snapshot.
+ * Installation still uses the original owner-only, writable guard. */
+export function fresh35CombinedRuntimeTargetGuard(target){
+ return targetGuard(target,{requireEmpty:false,runtime:true});
+}
+function targetGuard(target,{requireEmpty,runtime}){
  const {proposal:p,physical:b,startsAt,expiresAt}=describeFresh35CombinedTarget(target),q=quote;
  const interfaces=Object.values(FRESH35_COMBINED_INTERFACE_ROLES),logins=[p.owner,p.controller,p.runtime],roles=[p.admin,...logins,...interfaces];
  const members=[[p.controller,FRESH35_COMBINED_INTERFACE_ROLES.initializer],[p.controller,FRESH35_COMBINED_INTERFACE_ROLES.importer],[p.runtime,FRESH35_COMBINED_INTERFACE_ROLES.runtime]];
@@ -59,7 +67,7 @@ export function fresh35CombinedTargetGuard(target,{requireEmpty}={requireEmpty:f
  THEN RAISE EXCEPTION 'FRESH35_COMBINED_EMPTY_DATABASE_REQUIRED' USING ERRCODE='55000'; END IF;`:'';
  return `DO $fresh35_combined_target$
 BEGIN
- IF (current_database()=${q(p.database)} AND current_user=${q(p.owner)} AND session_user=${q(p.owner)}
+ IF (current_database()=${q(p.database)} AND current_user=${q(runtime?p.controller:p.owner)} AND session_user=${q(runtime?p.controller:p.owner)}
  AND (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database())=${q(b.databaseOid)}
  AND (SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(b.systemIdentifier)}
  AND pg_catalog.current_setting('server_version_num')=${q(b.serverVersionNum)}
@@ -67,7 +75,7 @@ BEGIN
  AND pg_catalog.host(pg_catalog.inet_server_addr())='127.0.0.1' AND pg_catalog.inet_server_port()=${p.port}
  AND pg_catalog.current_setting('listen_addresses')='127.0.0.1' AND pg_catalog.current_setting('unix_socket_directories')=''
  AND pg_catalog.current_setting('session_replication_role')='origin' AND NOT pg_catalog.pg_is_in_recovery()
- AND pg_catalog.current_setting('transaction_isolation')='read committed' AND pg_catalog.current_setting('transaction_read_only')='off'
+ AND pg_catalog.current_setting('transaction_isolation')=${q(runtime?'repeatable read':'read committed')} AND pg_catalog.current_setting('transaction_read_only')=${q(runtime?'on':'off')}
  AND extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt} AND extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}
  AND (SELECT pg_catalog.pg_get_userbyid(datdba) FROM pg_catalog.pg_database WHERE datname=current_database())=${q(p.owner)}
  AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_stat_activity WHERE (backend_type='client backend' OR usename IS NOT NULL) AND pid<>pg_catalog.pg_backend_pid())

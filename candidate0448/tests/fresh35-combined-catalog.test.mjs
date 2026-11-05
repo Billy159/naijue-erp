@@ -2,12 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
-import {loadFresh35CombinedSource,describeFresh35CombinedSource,renderFresh35CombinedSchema} from '../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
+import {loadFresh35CombinedSource,describeFresh35CombinedSource,renderFresh35CombinedSchema,resolveFresh35ReferenceInputPaths} from '../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
 import {bindFresh35CombinedTarget,describeFresh35CombinedTarget} from '../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
-import {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation} from '../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
+import {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation,fresh35CombinedRuntimeCatalogSql,validateFresh35CombinedRuntimeCatalogObservation} from '../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
 import {compileFresh35CombinedProgram,describeFresh35CombinedProgram,validateFresh35CombinedAuthorization,runFresh35CombinedInstall} from '../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
-const root=fileURLToPath(new URL('../',import.meta.url)),base='/workspace/shared/fresh35-install-review-plan-20261105-r2';
-const modelPath='/workspace/shared/fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json',functionsPath='/workspace/scratch/f6bee04e937b/cloud-pg-schema178v2-20261105-r2/evidence/functions.json';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const {baselineDirectory:base,modelPath,functionsPath}=await resolveFresh35ReferenceInputPaths(fileURLToPath(new URL('../../reference-inputs',import.meta.url)));
 const startsAt=Date.parse('2026-11-05T03:00:00Z');
 const target=bindFresh35CombinedTarget({proposal:{database:'synthetic_fresh35_20261105_r9',owner:'fresh35_owner_20261105_r9',controller:'fresh35_controller_20261105_r9',runtime:'fresh35_runtime_20261105_r9',admin:'fresh35_admin_20261105_r9',host:'127.0.0.1',port:57639,workspaceDirectory:'/tmp/cloud-pg-fresh35-20261105-r9'},physical:{systemIdentifier:'7703999999999999999',databaseOid:'16384',serverVersionNum:'170011',postmasterStart:'2026-11-05 03:00:00.123456+00'},startsAt,expiresAt:startsAt+1200000},startsAt);
 let cached;const bundle=()=>cached??=(async()=>{const source=await loadFresh35CombinedSource(root,{baselineDirectory:base}),catalog=await buildFresh35CombinedCatalog(source,target,{modelPath,functionsPath}),program=await compileFresh35CombinedProgram({source,target,catalog});return {source,catalog,program}})();
@@ -45,4 +45,17 @@ test('valid authorization data cannot issue a trusted execution token',async()=>
 });
 test('cloned catalog and invented actual observations cannot open the record or host',async()=>{
  const {source,catalog}=await bundle();assert.throws(()=>fresh35CombinedCatalogSql({...catalog},source,target),/GENUINE_CATALOG/);assert.throws(()=>validateFresh35CombinedCatalogObservation('{}',catalog,source,target),/PHYSICAL_IDENTITY/);
+});
+
+test('runtime keeps complete metadata inspection without reading populated business tables as controller',async()=>{
+ const {source,catalog}=await bundle(),runtime=fresh35CombinedRuntimeCatalogSql(catalog,source,target),install=fresh35CombinedCatalogSql(catalog,source,target);
+ for(const token of ['ROUTINE_SOURCE_OR_ACL_DIFFERS','SCHEMA_ACL_DIFFERS','RELATIONS_DIFFER','COLUMNACLS_DIFFER','CONSTRAINTS_DIFFER','INDEXES_DIFFER','TRIGGERS_DIFFER','EXACT_LINEAGE_DIFFERS'])assert.ok(runtime.guardSql.includes(token),token);
+ assert.match(runtime.guardSql,/current_user='fresh35_controller_20261105_r9'/);
+ assert.doesNotMatch(runtime.guardSql,/BUSINESS_TABLE_NOT_EMPTY|SELECT EXISTS\(SELECT 1 FROM naijue_erp\.%I\)/);
+ assert.match(install.guardSql,/BUSINESS_TABLE_NOT_EMPTY/);
+ assert.match(runtime.observationSql,/'owner',\(SELECT pg_get_userbyid\(datdba\)/);
+ assert.match(install.observationSql,/'owner',current_user/);
+ const d=describeFresh35CombinedTarget(target),identity={...d.physical,database:d.proposal.database,owner:d.proposal.owner,actor:d.proposal.owner,host:d.proposal.host,port:d.proposal.port};
+ assert.throws(()=>validateFresh35CombinedRuntimeCatalogObservation(JSON.stringify({format:'FRESH35_COMBINED_ACTUAL_CATALOG_V1',sourceSetSha256:describeFresh35CombinedSource(source).sourceSetSha256,identity}),catalog,source,target),/ACTUAL_PHYSICAL_IDENTITY_DIFFERS/);
+ assert.throws(()=>fresh35CombinedRuntimeCatalogSql({...catalog},source,target),/GENUINE_CATALOG/);
 });

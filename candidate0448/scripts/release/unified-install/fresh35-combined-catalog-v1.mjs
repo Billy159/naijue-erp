@@ -5,7 +5,7 @@ import {readFile,realpath} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {isDeepStrictEqual} from 'node:util';
 import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
-import {describeFresh35CombinedTarget} from './fresh35-combined-target-v1.mjs';
+import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard} from './fresh35-combined-target-v1.mjs';
 import {parseFresh35DumpSections} from './fresh35-retirement-schema.mjs';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
 const catalogs=new WeakMap(),need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_CATALOG_'+code)};
@@ -67,7 +67,7 @@ function compare([label,expression,from,where,quoted]){return `PERFORM pg_catalo
  SELECT coalesce(jsonb_agg(v ORDER BY v::text COLLATE "C"),'[]'::jsonb) INTO actual FROM (SELECT ${expression} AS v FROM ${from} WHERE ${where}) observed;
  SELECT coalesce(jsonb_agg(v ORDER BY v::text COLLATE "C"),'[]'::jsonb) INTO expected FROM jsonb_array_elements(model->${q(label)}) AS declared(v);
  IF actual IS DISTINCT FROM expected THEN RAISE EXCEPTION 'FRESH35_COMBINED_${label.toUpperCase()}_DIFFER' USING ERRCODE='55000'; END IF;`}
-function guardSql(model,lineage){
+function guardSql(model,lineage,{requireEmpty=true}={}){
  const json=JSON.stringify(model),rows=JSON.stringify(lineage.map(({version,description})=>({version,description})));
  need(!json.includes('$combined_model$'),'MODEL_DELIMITER_COLLISION');
  return `DO $fresh35_combined_catalog$
@@ -95,17 +95,17 @@ function guardSql(model,lineage){
  IF EXISTS(WITH objects AS (${owned}) SELECT 1 FROM pg_catalog.pg_depend d JOIN objects o ON o.classid=d.classid AND o.objid=d.objid CROSS JOIN LATERAL pg_catalog.pg_identify_object(d.refclassid,d.refobjid,d.refobjsubid) ref WHERE (ref.schema IS NOT NULL AND ref.schema NOT IN('pg_catalog','naijue_erp','pg_toast')) OR (d.refclassid='pg_catalog.pg_namespace'::regclass AND d.refobjid NOT IN('pg_catalog'::regnamespace,'naijue_erp'::regnamespace,'pg_toast'::regnamespace))) THEN RAISE EXCEPTION 'FRESH35_COMBINED_EXTERNAL_DEPENDENCY'; END IF;
  SELECT jsonb_agg(jsonb_build_object('version',version,'description',description) ORDER BY version) INTO actual FROM naijue_erp.schema_migration;
  IF actual IS DISTINCT FROM ${q(rows)}::jsonb THEN RAISE EXCEPTION 'FRESH35_COMBINED_EXACT_LINEAGE_DIFFERS'; END IF;
- FOR relation IN SELECT relname FROM pg_catalog.pg_class WHERE relnamespace='naijue_erp'::regnamespace AND relkind='r' AND relname<>'schema_migration' LOOP
+ ${requireEmpty?` FOR relation IN SELECT relname FROM pg_catalog.pg_class WHERE relnamespace='naijue_erp'::regnamespace AND relkind='r' AND relname<>'schema_migration' LOOP
   EXECUTE format('SELECT EXISTS(SELECT 1 FROM naijue_erp.%I)',relation.relname) INTO populated;
   IF populated THEN RAISE EXCEPTION 'FRESH35_COMBINED_BUSINESS_TABLE_NOT_EMPTY'; END IF;
- END LOOP;
+ END LOOP;`:''}
  PERFORM pg_catalog.set_config('quote_all_identifiers','off',true);
  END $fresh35_combined_catalog$;`;
 }
 const raw=(expression,from,where)=>`(SELECT coalesce(jsonb_agg(${expression}),'[]'::jsonb) FROM ${from} WHERE ${where})`;
-function observationSql(source){return `WITH objects AS (${owned}) SELECT jsonb_build_object(
+function observationSql(source,{runtime=false}={}){return `WITH objects AS (${owned}) SELECT jsonb_build_object(
  'format','FRESH35_COMBINED_ACTUAL_CATALOG_V1','sourceSetSha256',${q(source.sourceSetSha256)},
- 'identity',jsonb_build_object('systemIdentifier',(SELECT system_identifier::text FROM pg_catalog.pg_control_system()),'databaseOid',(SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()),'database',current_database(),'owner',current_user,'actor',session_user,'serverVersionNum',current_setting('server_version_num'),'host',host(inet_server_addr()),'port',inet_server_port()),
+ 'identity',jsonb_build_object('systemIdentifier',(SELECT system_identifier::text FROM pg_catalog.pg_control_system()),'databaseOid',(SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()),'database',current_database(),'owner',${runtime?'(SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname=current_database())':'current_user'},'actor',session_user,'serverVersionNum',current_setting('server_version_num'),'host',host(inet_server_addr()),'port',inet_server_port()),
  'catalog',jsonb_build_object(
  'relations',${raw('to_jsonb(r)','pg_catalog.pg_class r',"r.relnamespace='naijue_erp'::regnamespace")},
  'columns',${raw('to_jsonb(a)','pg_catalog.pg_attribute a JOIN pg_catalog.pg_class r ON r.oid=a.attrelid',"r.relnamespace='naijue_erp'::regnamespace")},
@@ -165,10 +165,20 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
 export function describeFresh35CombinedCatalog(catalog){need(catalogs.has(catalog),'GENUINE_CATALOG_REQUIRED');return catalogs.get(catalog).descriptor}
 export function fresh35CombinedCatalogSql(catalog,source,target){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);need(c.source===source&&c.target===target,'SAME_SOURCE_AND_TARGET_REQUIRED');return Object.freeze({guardSql:c.sql,observationSql:c.observation})}
 export async function assertFresh35CombinedCatalogCurrent(catalog){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);await assertFresh35CombinedSourcesCurrent(c.source);await pinned(c.modelPath,MODEL_SHA);await pinned(c.functionsPath,FUNCTIONS_SHA);return true}
+export function fresh35CombinedRuntimeCatalogSql(catalog,source,target){
+ fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog);
+ return Object.freeze({guardSql:fresh35CombinedRuntimeTargetGuard(target)+'\n'+guardSql(c.model,c.lineage,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true})});
+}
+export function validateFresh35CombinedRuntimeCatalogObservation(raw,catalog,source,target){
+ return validateCatalogObservation(raw,catalog,source,target,true);
+}
 export function validateFresh35CombinedCatalogObservation(raw,catalog,source,target){
+ return validateCatalogObservation(raw,catalog,source,target,false);
+}
+function validateCatalogObservation(raw,catalog,source,target,runtime){
  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),s=describeFresh35CombinedSource(source),t=describeFresh35CombinedTarget(target);
  need(typeof raw==='string'&&Buffer.byteLength(raw)<=16*1024*1024,'BOUNDED_RAW_OBSERVATION_REQUIRED');const packet=parseStrictJson(raw),i=packet.identity;
- need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===s.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===t.proposal.owner&&i.host===t.proposal.host&&i.port===t.proposal.port,'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
+ need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===s.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===(runtime?t.proposal.controller:t.proposal.owner)&&i.host===t.proposal.host&&i.port===t.proposal.port,'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
  const expectedKeys=['relations','columns','routines','types','constraints','indexes','triggers','sequences','policies','defaultAcl','dependencies','sharedDependencies','schema','database','roles','membership'];
  need(packet.catalog&&Object.keys(packet.catalog).sort().join(',')===expectedKeys.sort().join(',')&&expectedKeys.every(k=>Array.isArray(packet.catalog[k])),'FULL_RAW_CATALOG_REQUIRED');
  need(packet.catalog.types.length===70&&packet.catalog.routines.length===152&&packet.catalog.relations.filter(r=>r.relkind==='r').length===35,'RAW_OBJECT_COHORT_DIFFERS');

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {bindFresh35CombinedTarget,describeFresh35CombinedTarget,fresh35CombinedTargetGuard} from '../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
+import {bindFresh35CombinedTarget,describeFresh35CombinedTarget,fresh35CombinedTargetGuard,fresh35CombinedRuntimeTargetGuard} from '../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
 import {validateFresh35CombinedJournalPath} from '../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
 const startsAt=Date.parse('2026-11-05T03:00:00Z');
 const input=()=>({proposal:{database:'synthetic_fresh35_20261105_r9',owner:'fresh35_owner_20261105_r9',controller:'fresh35_controller_20261105_r9',runtime:'fresh35_runtime_20261105_r9',admin:'fresh35_admin_20261105_r9',host:'127.0.0.1',port:57639,workspaceDirectory:'/tmp/cloud-pg-fresh35-20261105-r9'},physical:{systemIdentifier:'7703999999999999999',databaseOid:'16384',serverVersionNum:'170011',postmasterStart:'2026-11-05 03:00:00.123456+00'},startsAt,expiresAt:startsAt+1200000});
@@ -27,4 +27,16 @@ test('journal path cannot write outside the target workspace already bound into 
  const target=bindFresh35CombinedTarget(input(),startsAt);
  assert.equal(validateFresh35CombinedJournalPath(target,'/tmp/cloud-pg-fresh35-20261105-r9/installation-journal'),'/tmp/cloud-pg-fresh35-20261105-r9/installation-journal');
  for(const path of ['/etc/naijue-erp/records','/tmp/arbitrary-journal','/tmp/cloud-pg-fresh35-20261105-r9/../installation-journal'])assert.throws(()=>validateFresh35CombinedJournalPath(target,path),/AUTHORIZED_TARGET_WORKSPACE/);
+});
+
+test('controller inspection has its own read-only repeatable snapshot and keeps all physical and ACL checks',()=>{
+ const target=bindFresh35CombinedTarget(input(),startsAt),runtime=fresh35CombinedRuntimeTargetGuard(target),install=fresh35CombinedTargetGuard(target,{requireEmpty:false});
+ assert.match(runtime,/current_user='fresh35_controller_20261105_r9' AND session_user='fresh35_controller_20261105_r9'/);
+ assert.match(runtime,/transaction_isolation'\)='repeatable read'/);
+ assert.match(runtime,/transaction_read_only'\)='on'/);
+ assert.match(install,/current_user='fresh35_owner_20261105_r9'/);
+ assert.match(install,/transaction_isolation'\)='read committed'/);
+ assert.match(install,/transaction_read_only'\)='off'/);
+ for(const check of ['PHYSICAL_TARGET_DIFFERS','PUBLIC_SCHEMA_BOUNDARY_DIFFERS','ROLE_ATTRIBUTES_DIFFER','EXACT_MEMBERSHIP_REQUIRED','DATABASE_ACL_DIFFERS','pg_control_system','pg_postmaster_start_time','pg_stat_activity'])assert.ok(runtime.includes(check),check);
+ assert.doesNotMatch(runtime,/EMPTY_DATABASE_REQUIRED|\b(?:CREATE|GRANT|DROP)\s/);
 });
