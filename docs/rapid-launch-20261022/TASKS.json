@@ -29801,7 +29801,7 @@
     ],
     "privateStandardPackageTransport": {
       "owner": "D3",
-      "state": "EXACT31_MEMBER_LOCAL_ARCHIVE_COMPLETE_NOT_TRANSFERRED_NOT_IMPORTED",
+      "state": "ACTUAL_PRIVATE_FULL_TRANSPORT_READY_NO_EXTRACTION_NO_IMPORT",
       "manifestSHA256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
       "archivePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v0448-transport-20261106-r3-01/r3-standard-package-1e1e495a.tar.gz",
       "archiveBytes": 93508914,
@@ -29853,6 +29853,28 @@
         "PGAuthorized": false,
         "productionAuthorized": false,
         "authority": "C under direct human decision delegation before2026-11-06T12:00+08"
+      },
+      "actual": {
+        "assemblyReceiptSHA256": "daf4995db4637185871f761494fa90801df0aedd596a4122ed8fdb93867f16d0",
+        "finalStatusSHA256": "060a4b5717ef5e049fae4130eb2bd23d08b5f3ee669f8e98e2985f55ea5cf548",
+        "privateProgressSHA256": "87adea63a9f6dbaa818c19f0eb9f2fcf29eb0470efaf1539fc739cfca1f269a0",
+        "partsReady": 45,
+        "CASCompleted": 46,
+        "rootAssemblyJob": "t45-real-r3-assemble-20261106-01",
+        "receiverUid": 1000,
+        "fileIdentity": [
+          66304,
+          393585,
+          93508914,
+          1793915257822987699,
+          1793915258790984345
+        ],
+        "archiveExtracted": false,
+        "PGConnections": 0,
+        "dataImported": false,
+        "productionChanged": false,
+        "unknownOrPartial": 0,
+        "retry": 0
       }
     }
   }

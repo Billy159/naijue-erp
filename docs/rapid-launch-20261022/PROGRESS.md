@@ -1358,3 +1358,7 @@ D1核PG17.11官方源码：logical replication launcher会有bootstrap用户，�
 
 ### 2026-11-06 05:41 | Exact finite private staging scope
 T45 verified canonical candidate artifact client7af; old root678 manager unchanged. C issued46 external leaves/index232114b5 for45 parts plus fullfc831c/93508914/manifest1e1e, starts1793914815706..expires1793917515706 (06:25:15.706 hard deadline). Same original40s, exact CAS/once upload/one assembly and original UID1000 trueREADY. Unknown stops original-key recovery; no unpack/PG/production, no new platform. Authority derives from human delegation before noon. Actual transfer evidence pending; approved source alone is not transfer PASS.
+
+
+### 2026-11-06 05:50 | Actual private full transport completed
+T45 original46 CAS jobs COMPLETED/0 and45 fragments READY; original one-shot assembly returned real UID1000 receiver fullREADY. C read actual assembly daf4995d and final original-key status060a4b57:93,508,914B/fc831c/manifest1e1e/full authority54cd all exact, final file identity recorded. No partial/unknown/retry; original40s and hard deadline unchanged. Safe metadata only copied to Git; real archive/raw parts/private progress stay local/private. No archive extraction, PG connection, import or production change. Next actual data step depends on new exact35 install/ordinary business validation and separately bound REAL target/import scope, not repeated source collection.
