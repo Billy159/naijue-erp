@@ -1332,3 +1332,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 真人call_e4aeea80dafb49ef8648ab7f180fc68f item0明确批准清单031a2572，本批运维1d42/合成5b26；PhaseA最多30分钟、PhaseB原20分钟含清理、限制和准确新目标不变。原T45已接实际执行，不重派。实际结果尚未产生，不标安装/导入通过。
 - 用户补充后续类似隔离执行直接通过，不再逐项审批。只适用同类同风险且不扩大边界的隔离验证；准确登记、原权限/授权载体/期限/资源校验仍执行，不能自签伪造；不扩大为生产或真实数据处置。
 - D1生产V2编译身份mapper/source最小接缝已从C交D1唯一writer，保持原合成/SQL和sourcepin；D3最终封包/预检继续。
+
+
+### 实际执行通道预检与外部准确载体递交
+- T45原通道实际root只读job t45-fresh35-preflight-20261105-01退出0：新root不存在、同名容器为空、固定镜像尚未存在；旧任务保留不重放，本批无结果未知请求。尚无upload/pull/build/PG，不能称环境已通过。
+- C依据实际human本批批准，在执行客户端外按原T45_ORDINARY_ARTIFACT_STAGING_V1生成准确传输载体04ef37b3及原六键plan1df94c17，实际当前时间起30分钟，发原T45经既有有权root通道安装/回读/消费；数据库原20分钟尚未开启。私有准确载体不入Git，公开记录仅摘要。
+- D1生产V2模块与D3最终manifest/台账/预检继续原在途任务；不因载体准备冒称正式启动或导入完成。

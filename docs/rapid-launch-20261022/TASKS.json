@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T11:41:54.485450+00:00",
+    "at": "2026-11-05T11:48:06.648155+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28469,7 +28469,7 @@
       "D1": "Alignment five leaves frozen24a454; production V2 original modules implementation continues",
       "D2": "Final five-document source equivalence review completed and adopted; runtime seam awaits D1 frozen API",
       "D3": "External alignment binding delivered; continue final manifest/reconciliation/ledger and actual offline preflight",
-      "T45": "Execute approved exact isolated scope via original dispatcher; actual facts/results pending, no duplicate approval requests",
+      "T45": "Consume C external existing-schema staging authority/plan through original root path; upload/prepare exact image; real results pending",
       "QB": "Fixed operations2 PASS adopted, no repeated review"
     },
     "actualExecution": {
@@ -28565,7 +28565,7 @@
       "versionConstraintsChecked": 201,
       "metadataUnsatisfiedConstraints": 0,
       "signedReleaseVerified": false,
-      "state": "HUMAN_APPROVED_T45_ACTUAL_EXECUTION_DISPATCHED",
+      "state": "ACTUAL_ROOT_PREFLIGHT_PASS_EXTERNAL_STAGING_AUTHORITY_ISSUED",
       "scope": "Original T45 provision successor only in its original fresh35-preparation output directory; no S application edits or server calls",
       "actualImagePullBuildOrContainerCreated": false,
       "actualTransmission": false,
@@ -28579,7 +28579,13 @@
       "environmentApproved": true,
       "approval": "actual human call_e4aeea80dafb49ef8648ab7f180fc68f item0",
       "preparationMaxMinutes": 30,
-      "databaseWindowMaxMinutes": 20
+      "databaseWindowMaxMinutes": 20,
+      "rootPreflightJob": "t45-fresh35-preflight-20261105-01",
+      "rootPreflightExitCode": 0,
+      "stagingAuthoritySHA256": "04ef37b35ffc358cf7fbea564fd3cc31dca2ab971cf211b9bc2e3db0f8038bec",
+      "operationsPlanSHA256": "1df94c171bc0153dcc7fba01f03b8c0426a69a6b97936e26b351411cc389b0c2",
+      "controllerIssuanceReceiptSHA256": "220d2dadd249a008d9c62958497319d37e30348f91e145e15e2d64c7a789591c",
+      "databaseWindowStarted": false
     }
   }
 }
