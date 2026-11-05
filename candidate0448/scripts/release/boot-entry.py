@@ -163,8 +163,26 @@ def binding(p):
 def deployment_binding(dp):
     """Pure plan shape checks; actual server artifacts are verified only on execution."""
     selector = dp.get('runtimeSelector', 'schema19')
-    need(selector in ('schema19', 'exact26-r1', 'exact26-full'), 'UNKNOWN_DEPLOYMENT_RUNTIME_SELECTOR')
-    if selector in ('exact26-r1', 'exact26-full'):
+    need(selector in ('schema19', 'exact26-r1', 'exact26-full', 'exact35'), 'UNKNOWN_DEPLOYMENT_RUNTIME_SELECTOR')
+    if selector != 'exact35':
+        need('runtime35' not in dp, 'EXACT35_REFERENCES_REQUIRE_EXPLICIT_SELECTOR')
+    if selector == 'exact35':
+        native = dp.get('runtime35')
+        need(isinstance(native, dict) and {'references', 'media'} <= set(native) <=
+             {'references', 'media', 'inventorySpool', 'credentialRequestKey'} and
+             'runtime26' not in dp and 'runtime26Full' not in dp, 'CLOSED_EXACT35_INPUTS_REQUIRED')
+        refs = native['references']
+        expected = {'installationRecord', 'sourceSet', 'program', 'metadata', 'buildReceipt', 'sourceManifest', 'buildManifest', 'backupCoverage'}
+        need(isinstance(refs, dict) and set(refs) == expected and dp.get('newDatabaseReceipt') == refs['metadata'],
+             'CLOSED_EXACT35_REFERENCES_REQUIRED')
+        for key, ref in refs.items():
+            need(isinstance(ref, dict) and set(ref) == {'path', 'sha256'} and HASH.fullmatch(ref.get('sha256', '')),
+                 'PINNED_EXACT35_REFERENCE_REQUIRED')
+            safe(ref['path'], exists=False)
+            need(ref['path'] == '/etc/naijue-erp/fresh35-combined-installation-v1.json' if key == 'installationRecord'
+                 else Path(ref['path']) != ROOT and Path(ref['path']).is_relative_to(ROOT), 'FIXED_EXACT35_RECORD_OR_OWNED_REFERENCE_REQUIRED')
+        need(len({row['path'] for row in refs.values()}) == len(expected), 'DISTINCT_EXACT35_REFERENCES_REQUIRED')
+    elif selector in ('exact26-r1', 'exact26-full'):
         if selector == 'exact26-full':
             full = dp.get('runtime26Full', {})
             need(isinstance(full, dict) and {'references', 'media'} <= set(full) <= {'references', 'media', 'inventorySpool', 'credentialRequestKey', 'catalogProfile'} and 'runtime26' not in dp, 'CLOSED_FULL_REFERENCES_REQUIRED')
@@ -191,7 +209,7 @@ def deployment_binding(dp):
          re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', dp.get('buildId', '')) and
          re.fullmatch(r'[a-f0-9]{40}', dp.get('sourceCommit', '')) and
          dp.get('publicOrigin') == 'https://1n5635n614.goho.co' and
-         dp.get('schemaVersions') == list(range(1, 27) if selector in ('exact26-r1', 'exact26-full') else range(1, 20)),
+         dp.get('schemaVersions') == list(range(1, 28) if selector == 'exact35' else range(1, 27) if selector in ('exact26-r1', 'exact26-full') else range(1, 20)),
          'EXACT_DEPLOYMENT_IDENTITY_REQUIRED')
     need(dp.get('releaseDirectory') == str(ROOT / 'releases' / dp['buildId']) and
          HASH.fullmatch(dp.get('archive', {}).get('sha256', '')), 'EXACT_RELEASE_DIRECTORY_AND_ARCHIVE_REQUIRED')
@@ -286,8 +304,9 @@ def load_plan(filename):
          stage.get('archiveSha256') == dp['archive']['sha256'] and
          stage.get('manifestSha256') == dp['manifest']['sha256'] and
          HASH.fullmatch(stage.get('installedPayloadSha256', '')), 'EXACT_STAGE_RECEIPT_REQUIRED')
-    runtime_pin = d.runtime_binding(dp) if dp.get('runtimeSelector') in ('exact26-r1', 'exact26-full') else None
-    need(stage.get('schemaVersions') == dp['schemaVersions'] and stage.get('runtime26BindingSha256') == runtime_pin,
+    runtime_pin = d.runtime_binding(dp) if dp.get('runtimeSelector') in ('exact26-r1', 'exact26-full', 'exact35') else None
+    runtime_field = 'runtime35BindingSha256' if dp.get('runtimeSelector') == 'exact35' else 'runtime26BindingSha256'
+    need(stage.get('schemaVersions') == dp['schemaVersions'] and stage.get(runtime_field) == runtime_pin,
          'STAGED_RUNTIME_SELECTION_OR_REVIEW_CHANGED')
     for role in ('app', 'stageWeb'):
         need(HASH.fullmatch(stage.get('containers', {}).get(role, {}).get('id', '')) and
@@ -317,7 +336,7 @@ def load_plan(filename):
              a.get('oldWebId') == dp['beforeCAS']['services'][OLD[1]]['id'] and
              HASH.fullmatch(a.get('publicContainer', {}).get('id', '')) and
              HASH.fullmatch(a['publicContainer'].get('specSha256', '')), 'EXACT_ACTIVATION_RECEIPT_REQUIRED')
-        need(a.get('runtime26BindingSha256') == runtime_pin, 'ACTIVATED_RUNTIME_SELECTION_OR_REVIEW_CHANGED')
+        need(a.get(runtime_field) == runtime_pin, 'ACTIVATED_RUNTIME_SELECTION_OR_REVIEW_CHANGED')
     return p, d, dp, stage
 
 
@@ -426,10 +445,14 @@ def artifacts(p, d, dp, stage):
          'PERSISTED_PAYLOAD_OR_DEPENDENCY_CHANGED')
     need(d.file_identity(dp['runtimeConfiguration']['path']) == dp['runtimeConfiguration']['identity'], 'PRIVATE_RUNTIME_IDENTITY_CHANGED')
     need(d.file_hash(dp['nginxConfiguration']['path']) == dp['nginxConfiguration']['sha256'], 'PROXY_CONFIGURATION_CHANGED')
-    if dp.get('runtimeSelector') in ('exact26-r1', 'exact26-full'):
-        need(stage.get('runtime26BindingSha256') == d.runtime_binding(dp), 'EXACT26_PERSISTED_RUNTIME_BINDING_CHANGED')
+    if dp.get('runtimeSelector') in ('exact26-r1', 'exact26-full', 'exact35'):
+        need(stage.get('runtime35BindingSha256' if dp.get('runtimeSelector') == 'exact35' else 'runtime26BindingSha256') == d.runtime_binding(dp), 'EXACT26_PERSISTED_RUNTIME_BINDING_CHANGED')
         # Reuse the pinned C90 metadata/source/build gate, without archive/backup replay or PG traffic.
-        d.validate_runtime26(dp, manifest, d.reference(dp['newDatabaseReceipt']), d.json_file(dp['runtimeConfiguration']['path'], private=True))
+        runtime = d.json_file(dp['runtimeConfiguration']['path'], private=True)
+        if dp.get('runtimeSelector') == 'exact35':
+            d.validate_runtime35(dp, manifest, runtime)
+        else:
+            d.validate_runtime26(dp, manifest, d.reference(dp['newDatabaseReceipt']), runtime)
         need(d.file_identity(dp['runtimeConfiguration']['path']) == dp['runtimeConfiguration']['identity'], 'PRIVATE_RUNTIME_CHANGED_DURING_METADATA_VALIDATION')
 
 
@@ -442,9 +465,12 @@ def persistent_references(p, dp):
              'PERMANENT_PREEXISTING_BOOT_AUDIT_REQUIRED')
     need(Path(dp['runtimeConfiguration']['path']).is_relative_to(ROOT) and
          Path(dp['nginxConfiguration']['path']).is_relative_to(ROOT), 'PERMANENT_RUNTIME_CONFIG_REFERENCE_REQUIRED')
-    if dp.get('runtimeSelector') in ('exact26-r1', 'exact26-full'):
-        refs = dp['runtime26Full']['references'] if dp.get('runtimeSelector') == 'exact26-full' else dp['runtime26']
+    if dp.get('runtimeSelector') in ('exact26-r1', 'exact26-full', 'exact35'):
+        refs = dp['runtime35']['references'] if dp.get('runtimeSelector') == 'exact35' else dp['runtime26Full']['references'] if dp.get('runtimeSelector') == 'exact26-full' else dp['runtime26']
         for ref in [*refs.values(), dp['newDatabaseReceipt']]:
+            if dp.get('runtimeSelector') == 'exact35' and ref == refs['installationRecord']:
+                need(ref['path'] == '/etc/naijue-erp/fresh35-combined-installation-v1.json', 'FIXED_EXACT35_INSTALL_RECORD_REQUIRED')
+                continue
             need(Path(ref['path']).is_relative_to(ROOT) and not Path(ref['path']).is_relative_to(owner_root(p)),
                  'PREEXISTING_PERMANENT_EXACT26_REFERENCE_REQUIRED')
 
@@ -506,7 +532,7 @@ def fence(p, d, dp, stage, journal):
     d.check_old(dp, docker)
     old_identity(p, d, dp, docker)
     candidate(p, d, dp, stage, docker)
-    if dp.get('runtimeSelector') in ('exact26-r1', 'exact26-full'):
+    if dp.get('runtimeSelector') in ('exact26-r1', 'exact26-full', 'exact35'):
         artifacts(p, d, dp, stage)  # Refuse changed metadata before writing any legacy fence.
     state = observe(p, d, dp, stage)
     need(state['publicCandidateByName'] is None, 'PUBLIC_CANDIDATE_EXISTS_BEFORE_FENCE')
@@ -617,7 +643,7 @@ def disarm(p, d, dp, stage, journal):
         if info['State']['Running']:
             journal.action('STOP_EXACT_NEW_WEB_PRESERVE_DATA', lambda: docker.run(['stop', '--time', '15', info['Id']], 30))
         need(not docker.inspect(info['Id'])['State']['Running'], 'NEW_ENTRY_STOP_UNCONFIRMED')
-        if dp.get('runtimeSelector') == 'exact26-full':
+        if dp.get('runtimeSelector') in ('exact26-full', 'exact35'):
             state['fullAppStop'] = d.stop_full_app(dp, docker, journal)
     else:
         need(state['ownerUnit']['sha256'] is None, 'ACTIVATION_ID_REQUIRED_FOR_INSTALLED_OWNER')
@@ -634,14 +660,14 @@ def stop_entry(p, d, dp, stage, journal):
 
 
 def restore_boundary(d, dp):
-    if dp.get('runtimeSelector') == 'exact26-full':
+    if dp.get('runtimeSelector') in ('exact26-full', 'exact35'):
         return d.write_boundary(dp, restore_old=True)
     return d.write_boundary(dp)
 
 
 def restore_legacy(p, d, dp, stage, journal):
     dp['writeBoundary'] = p.get('writeBoundary')
-    if dp.get('runtimeSelector') == 'exact26-full':
+    if dp.get('runtimeSelector') in ('exact26-full', 'exact35'):
         dp['writeFence'] = p.get('writeFence')
     restore_boundary(d, dp)  # Unknown is not zero, including during partial-operation recovery.
     old_identity(p, d, dp, d.Docker())

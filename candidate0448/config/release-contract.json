@@ -161,5 +161,10 @@
       "source": "apps/api/src/production-main.ts",
       "member": "backend/production-main.js"
     }
+  },
+  "exact35": {
+    "profile": "source-confirmed-native-exact35-v1",
+    "migrationCount": 27,
+    "installationRecord": "/etc/naijue-erp/fresh35-combined-installation-v1.json"
   }
 }

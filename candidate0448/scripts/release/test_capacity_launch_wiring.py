@@ -194,6 +194,191 @@ class CapacityWiring(unittest.TestCase):
         self.assertEqual(B.DEPLOYMENT_CAPACITY_SHA256,digest)
 
 
+# Exact35 source seam only. These descriptors are synthetic data, never native
+# installation records, OS authority, a PG lease, or deployment acceptance.
+class Exact35ReleaseIncrement(unittest.TestCase):
+    def native_hash(self, value):
+        return hashlib.sha256(json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+
+    def descriptors(self):
+        source=dict(format='FRESH35_COMBINED_CURRENT_SOURCE_V1',baseArtifacts={},capturedSourcePins=[],
+                    currentSourcePins=[dict(path='packages/application/src/example.ts',sha256='a'*64)],currentSourceDelta=[],patches=[])
+        source['sourceSetSha256']=self.native_hash(source)
+        source.update(capturedEvidenceAppliesToCurrentChanges=False,engineVerified=False,installationReady=False)
+        proposal=dict(database='synthetic_fresh35_20261105_r9',owner='fresh35_owner_20261105_r9',controller='fresh35_controller_20261105_r9',
+                      runtime='fresh35_runtime_20261105_r9',admin='fresh35_admin_20261105_r9',host='127.0.0.1',port=57639,
+                      workspaceDirectory='/tmp/cloud-pg-fresh35-20261105-r9')
+        target=dict(format='FRESH35_COMBINED_TARGET_BINDING_V1',proposal=proposal,
+                    physical=dict(systemIdentifier='7703999999999999999',databaseOid='16384',serverVersionNum='170011',postmasterStart='2026-11-05 00:00:00+00'),
+                    startsAt=1000,expiresAt=1201000,authority='BINDING_ONLY_NOT_CREATION_OR_EXECUTION_PERMISSION')
+        program=dict(format='FRESH35_COMBINED_ATOMIC_PROGRAM_V1',sourceSetSha256=source['sourceSetSha256'],targetSha256=self.native_hash(target),
+                     catalogSha256='b'*64,statements=[],observationSqlSha256='c'*64,applicationTransactions=1,createsCluster=False,
+                     createsRoles=False,createsCredentials=False,oldTablesRemoved=False,hostEnabled=False)
+        program['programSha256']=self.native_hash(program)
+        record=dict(format='FRESH35_COMBINED_INSTALLATION_RECORD_V1',installedAt='2026-11-05T00:00:01Z',
+                    binding=dict(sourceSetSha256=source['sourceSetSha256'],targetSha256=program['targetSha256']),target=target,
+                    transactionReceipt=dict(nonce='d'*48,database=proposal['database'],actor=proposal['owner'],transactionId='123',backendPid=1234),
+                    programSha256=program['programSha256'],catalogSpecSha256=program['catalogSha256'],catalogSha256='e'*64,
+                    authorizationSha256='f'*64,state='COMMITTED_AND_CATALOG_CHECKED')
+        return record,source,program
+
+    def fixture(self, root):
+        p,r=CapacityWiring().fixture(root)
+        refs={key:dict(path=str(root/(key+'.json')),sha256='a'*64) for key in
+              ('installationRecord','sourceSet','program','metadata','buildReceipt','sourceManifest','buildManifest','backupCoverage')}
+        refs['installationRecord']['path']=D.RELEASE_CONTRACT['exact35']['installationRecord']
+        (root/'media').mkdir();(root/'spool').mkdir()
+        p.update(runtimeSelector='exact35',runtime35=dict(references=refs,media=dict(hostRoot=str(root/'media'),containerRoot='/run/naijue-rewrite/media/images',rootKey='images',writable=True),
+                 inventorySpool=dict(hostRoot=str(root/'spool'),containerRoot='/private/inventory-exports')),
+                 newDatabaseReceipt=refs['metadata'],runtimeConfiguration=dict(path=str(root/'runtime.json'),identity=dict(inode=1)),
+                 buildId='synthetic',schemaVersions=list(range(1,28)),backupReceipt=dict(sha256='b'*64))
+        return p,r
+
+    def test_exact_dispatch_and_real_mounts_keep_old_selectors(self):
+        import os
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp).resolve();root.chmod(0o700)
+            with patch.object(D,'ROOT',root):
+                p,r=self.fixture(root)
+                self.assertEqual(D.runtime_entry_arguments(p),['--exact35','/run/naijue-rewrite/runtime.json'])
+                self.assertFalse(D.exact26_selected(p));self.assertEqual(D.runtime_references(p),p['runtime35']['references'])
+                args=D.runtime_mount_arguments(p)
+                self.assertTrue(any('dst=/run/naijue-rewrite/media/images' in a and not a.endswith(',readonly') for a in args))
+                self.assertTrue(any('dst=/private/inventory-exports' in a and not a.endswith(',readonly') for a in args))
+                self.assertFalse(any('runtime26/' in a for a in args))
+                key=root/'credential.key';key.write_bytes(b'Z'*32);key.chmod(0o600)
+                p['runtime35']['credentialRequestKey']=dict(hostFile=str(key),containerFile='/run/naijue-rewrite/credential-request.key')
+                with patch.object(pathlib.Path,'read_bytes',side_effect=AssertionError('private key must not be read')):
+                    self.assertTrue(any('dst=/run/naijue-rewrite/credential-request.key,readonly' in a for a in D.runtime_mount_arguments(p)))
+                self.assertEqual(D.runtime_entry_arguments({}),['/run/naijue-rewrite/runtime.json'])
+                r1=copy.deepcopy(p);del r1['runtime35'];r1['runtimeSelector']='exact26-r1'
+                r1['runtime26']={k:dict(path=str(root/(k+'.json')),sha256='a'*64) for k in ('upgradeReceipt','review','independentReview','buildReceipt','sourceManifest','buildManifest')}
+                for ref in r1['runtime26'].values():pathlib.Path(ref['path']).write_text('{}')
+                self.assertEqual(D.runtime_entry_arguments(r1),['--exact26-r1','/run/naijue-rewrite/runtime.json'])
+                full=copy.deepcopy(p);full['runtimeSelector']='exact26-full';full['runtime26Full']=full.pop('runtime35')
+                full['runtime26Full']['references']={k:dict(path=str(root/(k+'.json')),sha256='a'*64) for k in D.FULL_REFERENCES}
+                full['newDatabaseReceipt']=full['runtime26Full']['references']['metadata']
+                self.assertEqual(D.runtime_entry_arguments(full),['--exact26-full','/run/naijue-rewrite/runtime.json'])
+                with self.assertRaises(D.Refused):D.runtime_entry_arguments(dict(runtimeSelector='exact36'))
+
+    def test_closed_selection_never_borrows_old_review_or_copied_record(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp).resolve()
+            with patch.object(D,'ROOT',root):
+                p,_=self.fixture(root)
+                changes=[lambda q:q.update(runtimeSelector='schema19'),lambda q:q.update(runtime26={}),
+                         lambda q:q['runtime35'].update(approved=True),lambda q:q['runtime35']['references'].pop('sourceSet'),
+                         lambda q:q['runtime35']['references']['installationRecord'].update(path=str(root/'copied-record.json')),
+                         lambda q:q['runtime35']['references']['program'].update(sha256='bad'),
+                         lambda q:q['runtime35']['media'].update(writable=False)]
+                for change in changes:
+                    q=copy.deepcopy(p);change(q)
+                    with self.subTest(change=change),self.assertRaises(D.Refused):D.runtime_entry_arguments(q)
+                # A valid-looking caller JSON in an owned directory is not the fixed protected record.
+                p['runtime35']['references']['installationRecord']['path']=str(root/'record.json')
+                with self.assertRaisesRegex(D.Refused,'FIXED_RECORD'):D.runtime35_record(p)
+
+    def test_record_source_program_and_physical_identity_cannot_be_swapped(self):
+        values=self.descriptors();self.assertEqual(D.validate_exact35_installation_data(*values),values[0]['target'])
+        changes=[lambda a:a[0]['binding'].update(sourceSetSha256='0'*64),lambda a:a[0]['target']['physical'].update(databaseOid='999'),
+                 lambda a:a[0]['target']['proposal'].update(runtime='owner'),lambda a:a[0]['transactionReceipt'].update(actor='postgres'),
+                 lambda a:a[1]['currentSourcePins'][0].update(sha256='0'*64),lambda a:a[1].update(engineVerified=True),
+                 lambda a:a[2].update(programSha256='0'*64),lambda a:a[0].update(programSha256='0'*64)]
+        for change in changes:
+            bad=copy.deepcopy(values);change(bad)
+            with self.subTest(change=change),self.assertRaises(D.Refused):D.validate_exact35_installation_data(*bad)
+
+    def test_exact35_binding_field_and_each_original_reference_are_distinct(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp).resolve()
+            with patch.object(D,'ROOT',root):
+                p,_=self.fixture(root);before=D.runtime_binding(p)
+                self.assertEqual(D.runtime_binding_field(p),'runtime35BindingSha256')
+                self.assertEqual(D.runtime_binding_field({}),'runtime26BindingSha256')
+                for key in p['runtime35']['references']:
+                    bad=copy.deepcopy(p);bad['runtime35']['references'][key]['sha256']='b'*64
+                    if key=='metadata':bad['newDatabaseReceipt']=bad['runtime35']['references'][key]
+                    self.assertNotEqual(before,D.runtime_binding(bad),key)
+
+    def test_closed_runtime_rejects_mismatch_and_even_consistent_synthetic_record_cannot_enter_bridge(self):
+        # Only the OS-record read and previously accepted capacity validator are
+        # doubled. Actual release/build/source/member validation runs below.
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp).resolve();root.chmod(0o700)
+            with patch.object(D,'ROOT',root):
+                p,r=self.fixture(root);record,source,program=self.descriptors();refs=p['runtime35']['references']
+                def write(name,value):
+                    data=json.dumps(value,separators=(',',':')).encode();file=root/(name+'.json');file.write_bytes(data)
+                    refs[name]=dict(path=str(file),sha256=hashlib.sha256(data).hexdigest());return refs[name]
+                paths=[D.RELEASE_CONTRACT['entrypoints']['backend']['source'],'apps/api/src/production-provider-composition.ts',
+                       'apps/api/src/production-application-host.ts','apps/api/src/postgres-read-api.ts','adapters/postgres/src/bounded-pool.ts',
+                       'adapters/postgres/src/native-import-accounting-capability.ts','adapters/postgres/src/runtime27-command-issuer.ts',
+                       'apps/api/src/production-capacity-launch.ts','apps/api/src/capacity-runtime-probe.ts']
+                inputs=[dict(path=name,bytes=1,sha256='a'*64) for name in paths]
+                sql={**{'adapters/postgres/migrations/%04d_example.sql'%i:'migrations/%04d_example.sql'%i for i in range(1,28)},**D.APPROVED_SQL_PATCHES}
+                sql_sources=[dict(path=name,bytes=1,sha256='a'*64) for name in sql]
+                source['currentSourcePins']=[dict(path=row['path'],sha256=row['sha256']) for row in sql_sources]
+                keys=('format','baseArtifacts','capturedSourcePins','currentSourcePins','currentSourceDelta','patches')
+                source['sourceSetSha256']=self.native_hash({k:source[k] for k in keys});program['sourceSetSha256']=source['sourceSetSha256']
+                program['programSha256']=self.native_hash({k:v for k,v in program.items() if k!='programSha256'})
+                record['binding']['sourceSetSha256']=source['sourceSetSha256'];record['programSha256']=program['programSha256']
+                proposal,physical=record['target']['proposal'],record['target']['physical']
+                identity=dict(systemIdentifier=physical['systemIdentifier'],databaseOid=physical['databaseOid'],database=proposal['database'],
+                              owner=proposal['owner'],actor=proposal['owner'],serverVersionNum=physical['serverVersionNum'],host=proposal['host'],port=proposal['port'])
+                write('metadata',dict(format='FRESH35_COMBINED_ACTUAL_CATALOG_V1',sourceSetSha256=source['sourceSetSha256'],identity=identity,lineage=[dict(version=i) for i in range(1,28)]))
+                record['catalogSha256']=refs['metadata']['sha256'];p['newDatabaseReceipt']=refs['metadata']
+                write('sourceSet',source);write('program',program)
+                common=dict(sourceCommit=p['sourceCommit'],buildId=p['buildId'])
+                write('sourceManifest',dict(format='naijue-release-source-v1',files=inputs+sql_sources+[D.RELEASE_CONTRACT_SOURCE],**common))
+                component=dict(entrySource=paths[0],entryOutput=D.RELEASE_CONTRACT['entrypoints']['backend']['member'],inputs=inputs)
+                output=dict(member=component['entryOutput'],role='backend',bytes=1,sha256='a'*64)
+                write('buildManifest',dict(format='naijue-release-build-v1',components=dict(backend=component),files=[output],**common))
+                write('buildReceipt',dict(format='naijue-production-build-receipt-v1',status='REAL_BUILD_AND_PACK_CONTRACT_VALIDATED',
+                      sourceManifestSha256=refs['sourceManifest']['sha256'],buildManifestSha256=refs['buildManifest']['sha256'],node=D.RELEASE_CONTRACT['node'],**common))
+                manifest=dict(sourceManifestSha256=refs['sourceManifest']['sha256'],buildManifestSha256=refs['buildManifest']['sha256'],
+                              entrypoints=dict(backend=output['member']),graphs=dict(backend=dict(**component,outputs=[output['member']])),
+                              members=[dict(path=output['member'],bytes=1,sha256='a'*64)]+[dict(path=member,sourcePath=name,role='migration',bytes=1,sha256='a'*64) for name,member in sql.items()])
+                write('backupCoverage',dict(database=proposal['database'],target=record['target'],schemaVersions=p['schemaVersions'],catalogSha256=record['catalogSha256'],
+                      backupReceiptSha256=p['backupReceipt']['sha256'],runtimeIdentity=p['runtimeConfiguration']['identity'],media=p['runtime35']['media'],r1Protected=True,
+                      isolatedRestore=dict(currentAppLoginRepresentativeRead='PASS'),**common))
+                target=dict(host=proposal['host'],port=proposal['port'],database=proposal['database'],user=proposal['runtime'],ssl=False)
+                r=dict(schemaVersion=1,profile=D.RELEASE_CONTRACT['exact35']['profile'],documentCommands='NATIVE_RUNTIME',publicOrigin=D.ORIGIN,
+                       http=dict(host='0.0.0.0',port=3000,acceptedHosts=[D.HOST]),assets=dict(root='/app/web',entry='index.html'),build=common,
+                       postgres=dict(target=target),authentication={},productMedia=dict(root=p['runtime35']['media']['containerRoot'],rootKey='images'),
+                       inventoryOutputSpool=dict(directory='/private/inventory-exports',maxBytes=536870912,maxConcurrent=1,maxDurationMs=120000),
+                       capacityLaunch=dict(target=dict(host=target['host'],port=target['port'],database=target['database'],role=target['user'],databaseOid=physical['databaseOid'],postmasterStart=physical['postmasterStart'])))
+                with patch.object(D,'runtime35_record',return_value=record),patch.object(D,'capacity_runtime_configuration',side_effect=lambda p,r,pending:{k:v for k,v in r.items() if k!='capacityLaunch'}):
+                    with self.assertRaisesRegex(D.Refused,'LOOPBACK_INSTALL_RECORD_NOT_A_BRIDGE_PRODUCTION_TARGET'):D.validate_runtime35(p,manifest,r)
+                    for change,code in [(lambda q:q.update(runtime26Review={}), 'CLOSED_EXACT35_RUNTIME'),
+                                        (lambda q:q['postgres']['target'].update(user='postgres'),'ORDINARY_LOGIN_TARGET'),
+                                        (lambda q:q['capacityLaunch']['target'].update(databaseOid='999'),'SAME_PHYSICAL_CAPACITY_TARGET'),
+                                        (lambda q:q.update(staffMaintenance=True),'STAFF_PRIVATE_CREDENTIAL_SELECTION')]:
+                        bad=copy.deepcopy(r);change(bad)
+                        with self.subTest(code=code),self.assertRaisesRegex(D.Refused,code):D.validate_runtime35(p,manifest,bad)
+                    bad=copy.deepcopy(manifest);bad['graphs']['backend']['inputs']=[]
+                    with self.assertRaisesRegex(D.Refused,'BACKEND_GRAPH'):D.validate_runtime35(p,bad,r)
+
+    def test_full_fence_and_stop_remain_required_for_exact35(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp).resolve()
+            with patch.object(D,'ROOT',root):
+                p,_=self.fixture(root);record,_,_=self.descriptors()
+                boundary=dict(format='naijue-rewrite-write-boundary-v1',database=record['target']['proposal']['database'],buildId=p['buildId'],
+                              sourceCommit=p['sourceCommit'],writeAdmission='CLOSED',newBusinessWrites=0,outcome='KNOWN',checkedBy='synthetic',
+                              target=record['target'],firstBusinessWriteAtUtc=None,checkedAtUtc=D.now())
+                p['writeBoundary']={}
+                with patch.object(D,'runtime35_record',return_value=record),patch.object(D,'reference',return_value=boundary):
+                    self.assertEqual(D.write_boundary(p),boundary)
+                    with self.assertRaises(D.Refused):D.write_boundary(p,restore_old=True,docker=object())
+                    for value in [1,None,False]:
+                        boundary['newBusinessWrites']=value
+                        with self.assertRaises(D.Refused):D.write_boundary(p,restore_old=True,docker=object())
+                class Docker:
+                    def inspect(self,cid):return dict(Id=cid,State=dict(Running=False))
+                with patch.object(D,'reference',return_value=dict(containers=dict(app=dict(id='owned',specSha256='pin')))),patch.object(D,'assert_own'),patch.object(D,'own_container_fingerprint',return_value='pin'):
+                    self.assertTrue(D.stop_full_app(p,Docker(),object())['stopped'])
+
+
 # SOURCE943 transport/F01 increment only. Running this class does not replay the
 # previously accepted FIFO or collector cases and never reads the real connection.
 class CapacityTransportIncrement(unittest.TestCase):

@@ -11,7 +11,7 @@ const begin = '# BEGIN GENERATED RELEASE CONTRACT';
 const end = '# END GENERATED RELEASE CONTRACT';
 
 export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify(contract, null, 2) + '\n')) {
-  const keys = ['format', 'migrationCount', 'fontLicense', 'runtimeSqlPatches', 'full', 'node', 'requestBodyBudgets', 'entrypoints'];
+  const keys = ['format', 'migrationCount', 'fontLicense', 'runtimeSqlPatches', 'full', 'node', 'requestBodyBudgets', 'entrypoints', 'exact35'];
   if (!contract || Object.keys(contract).sort().join() !== keys.sort().join()
       || contract.format !== 'naijue-release-contract-v1' || contract.migrationCount !== 26
       || !Array.isArray(contract.runtimeSqlPatches) || !Array.isArray(contract.requestBodyBudgets)
@@ -26,6 +26,10 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
       || typeof contract.full.patchLevel !== 'string' || !/^26_[A-Za-z0-9_]+$/.test(contract.full.patchLevel)) {
     throw Error('INVALID_RELEASE_CONTRACT');
   }
+  const native35 = {profile:'source-confirmed-native-exact35-v1', migrationCount:27,
+    installationRecord:'/etc/naijue-erp/fresh35-combined-installation-v1.json'};
+  if (!exactKeys(contract.exact35, Object.keys(native35))
+      || Object.entries(native35).some(([key,value]) => contract.exact35[key] !== value)) throw Error('INVALID_RELEASE_EXACT35');
   // Registered profile semantics are finite, not caller-selectable ACL relaxations.
   const profiles = {
     'legacy-v1': {format: 'EXACT26_RUNTIME_CATALOG_EXPORT_V1', patchLevel: '26_hv2_history_set_guards_from_v22', aclProofField: null},
