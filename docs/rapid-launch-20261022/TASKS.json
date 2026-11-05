@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T15:50:53.217166+00:00",
+    "at": "2026-11-05T16:11:01.789686+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28383,9 +28383,9 @@
       "lockUnchanged": true
     },
     "sourceFactGaps": [
-      "Actual compatible isolated PG install/record/capture/rollback/replay/readback/cleanup untested",
-      "Final private source_files/V2 authority and batch unsealed; 653 held rows/seven color-owner discrepancies retained",
-      "Approved alignment V2 and production V2 source implementation underway; actual production target and release approval still pending"
+      "Real PostgreSQL install/import/rollback/replay/ordinary business and independent readback remain NOT_RUN.",
+      "Real production target/identity/configuration and exact REAL-batch execution binding not yet established.",
+      "Raw full-universe source_truth_verified remains false by scope; declared full EOF/preflight passed, narrow7color/4stock issues closed with original approvals."
     ],
     "portableReferences": {
       "resolver": "resolveFresh35ReferenceInputPaths(directory)",
@@ -28475,11 +28475,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Four-leaf synthetic25 two-stage model checks underway; a10 business22 frozen",
-      "D2": "Exact3 full old-build exports readonly cleanup candidate9133117a complete; no deletion, current7393 retained",
-      "D3": "Fixed a10 streampreflight preparation1536ae74 done; both actual source reconciliation and preflight held for safe capacity",
-      "T45": "Actual image ready22479274 and root receipt e475 verified; prepare existing new-app/environment binding and readonly observer seams, no PG",
-      "QB": "Exact5 fixed source PASS adopted plus actual T45 image outcome; next D1 four-leaf only when fixed",
+      "D1": "User call_bcc0d925 item0 approved REAL import source/dependent contract only; original D1 implementing original host/session/stream seam and directed tests, no environment execution.",
+      "D2": "Fixed Linux runtime73 packages delivered c3694ee0; source readonly; final integrated build follows fixed T45 delivery, no current build on mutable WIP.",
+      "D3": "Real declared-source reconciliation055 and standard preflighta10 each passed once; exact7color/4stock closure05eab0d4 adopted; no repeat scan or import.",
+      "T45": "Original launcher/wrapper actual ordinary flow implemented; directed models/source finalization in progress; image6de44 reused. No PG yet.",
+      "QB": "D1LOGIN1149 and D2ordinary95aba source/models passed and adopted; next only fixed T45 ordinary main delta.",
       "phaseBCurrent25": "Fixed22699eb4/5e8b75bd four-leaf QB increment; T45 same target app/environment successor preparation; D1 next native35 business route read-only. Capacity-dependent D3 remains held; exact3 old exports retained.",
       "native35BusinessGap": "D1 read-only verified synthetic V1 record / production V2 / importhost mismatch; original D2 high checking exact existing consumer seam, no source/permissions changes yet. Import smoke is not ordinary business PASS.",
       "handoffResponsibility": "Local C and original D1/D2/D3/T45 continue implementation; no Dot reply or user report transfer prerequisite."
@@ -28949,7 +28949,7 @@
       "deleted": false
     },
     "native35SyntheticOrdinaryContinuation": {
-      "state": "D1_PROOF_BOOTSTRAP_AND_D2_FACTORIES_RUNNER_IMPLEMENTING_T45_MINIMUM_LAUNCHER_FOLLOWUP",
+      "state": "D1_D2_SOURCE_FIXED_QB_ACCEPTED_T45_FINALIZING_SOURCE_NOT_PG",
       "authority": "Current full user goal requires genuine synthetic35 ordinary business; source-only existing module adaptation, no production or new permission execution",
       "D1": [
         "tools/unified-import/fresh35-host-session.mjs",
@@ -29022,6 +29022,29 @@
         "bytes": 10798748
       },
       "D1Next": "Read-only original production35 target/record/CLI and identity preparation seam; no server/PG/credentials. Exact missing production input only, no new platform or regression."
+    },
+    "productionRealImportContinuation": {
+      "owner": "D1",
+      "model": "gpt-6.1-sol",
+      "thinking": "high",
+      "proposalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/SYNTHETIC25-SPLIT-HANDOFF.md",
+      "proposalSHA256": "b3bb8fb9d4ad57bf48b93d8cf9bb3f48459893114b7bf9319daf1b38ceeef107",
+      "approval": "Human call_bcc0d925fe484649ad0daba1d55bf889 item0: 确认本项源码与合同修订",
+      "state": "SOURCE_IMPLEMENTING_ONLY_ENVIRONMENT_NOT_AUTHORIZED_BY_THIS_APPROVAL",
+      "files": [
+        "tools/unified-import/fresh35-host-session.mjs",
+        "tools/unified-import/fresh35-host-session.d.mts",
+        "tools/unified-import/whole-host-session.mjs",
+        "tools/unified-import/stream-import-cli.mjs",
+        "fresh35-receiver-diagnostics if actually necessary",
+        "existing directly affected tests"
+      ],
+      "invariants": [
+        "No DB table/column/GRANT or ordinary business change",
+        "Original V1 refusal of V2 retained; installation record is not import authority",
+        "Existing controller external exact batch binding and original Client, transaction, keys, deadline, unknown recovery; no new control platform",
+        "Synthetic fixed candidate exports Git only and does not wait for REAL WIP"
+      ]
     }
   }
 }

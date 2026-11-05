@@ -1186,3 +1186,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 原D2从既有Linux载体复用，不新ci/下载/执行脚本。主控实际核回执c3694ee0、归档a6b53765(10798748字节)、manifest990b0a03；73包3285文件逐锁version/resolved/integrity/SRI及原tarball全文件校对，归档3288成员流式读回通过。fastify5.12.5/pg8.23.1/sharp0.35.5及Linux x64 glibc原生制品齐；ELF/静态核不代替Linux实际load。
 - 本机默认npm实际11.19.0差异保留，未拿来替代11.9.0安装；原载体准确npm11.9工具和原成功offline receipt已定位并复用，未改全局或旧依赖。制品只含runner三root运行闭包，不宣称六前端生产依赖全部安装。
 - D2该包交回只读，下一统一构建等待T45四叶最终交付及固定集成源，避免再出不含最新父入口的旧包。D1并行只读正式35 record/CLI/登录身份接缝，原QB先前两包PASS采用。T45已收到有限运行模板和上述准确Linux制品，继续原main真正接线，不重建成功环境、不另起控制平台；PG/正式库及应用仍未执行。
+
+
+### 正式REAL最小接线已获源码批准；合成候选与在途修改分离
+- 原D1已核清安装授权/合成provision/来源登记均不覆盖正式REAL批执行，拟案b3bb8fb9实际读取。用户call_bcc0d925 item0明确批准“本项源码与合同修订”，原D1/high在原host/session/stream入口及必要直接测试实施；不增表列/权限，不删除原V1拒V2、不把安装记录当导入许可、不新建控制平台。实际生产执行不由这次源码批准放行。
+- T45唯一launcher/wrapper继续当前普通账号业务主流程收尾；当前28个launcher及9个wrapper定向模型输出已见，尚未最终交付/独立验收，更不是PG结果。新合成候选只从固定Git导出，不纳D1可变WIP，不因REAL接线等候；随后REAL候选再纳固定完整交付。
+- 原三旧构建副本按用户要求保留，未删除。当前卷已有约14GiB可用事实，不需要重开清理审批。D3完整核账和预检结果复用，不再重跑，真实PG/生产仍未执行。
