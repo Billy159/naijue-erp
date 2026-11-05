@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T11:40:10.146075+00:00",
+    "at": "2026-11-05T11:41:54.485450+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28197,7 +28197,9 @@
         "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
         "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
         "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
-        "corresponding declarations and affected existing direct tests only"
+        "corresponding declarations and affected existing direct tests only",
+        "scripts/release/unified-install/fresh35-retirement-identity.mjs production-profile identity mapping seam only",
+        "scripts/release/unified-install/fresh35-combined-source-v1.mjs production-profile pass-through only"
       ],
       "D2": [
         "apps/api/src/production-main.ts",
@@ -28394,6 +28396,10 @@
           "确认此项源码与合同修订"
         ],
         "scope": "Source and contract only; no environment execution, actual grants, database creation, import or deployment"
+      },
+      "similarIsolatedExecutionAuthorization": {
+        "source": "actual human current controller message: 后续类似这样的都直接通过了 不需要我审批",
+        "scope": "Similar non-expanded isolated synthetic execution; exact targets/resources/source/actions still recorded; no self-issued authority or guard bypass; production/real data/new business rules not inferred"
       }
     },
     "currentEffectiveAlignmentHumanFact": {
@@ -28463,7 +28469,7 @@
       "D1": "Alignment five leaves frozen24a454; production V2 original modules implementation continues",
       "D2": "Final five-document source equivalence review completed and adopted; runtime seam awaits D1 frozen API",
       "D3": "External alignment binding delivered; continue final manifest/reconciliation/ledger and actual offline preflight",
-      "T45": "Accurate scope approved-source review adopted; exact environment question pending actual human reply",
+      "T45": "Execute approved exact isolated scope via original dispatcher; actual facts/results pending, no duplicate approval requests",
       "QB": "Fixed operations2 PASS adopted, no repeated review"
     },
     "actualExecution": {
@@ -28559,7 +28565,7 @@
       "versionConstraintsChecked": 201,
       "metadataUnsatisfiedConstraints": 0,
       "signedReleaseVerified": false,
-      "state": "QB_PASS_FIXED_OPS_SOURCE_ONLY_EXACT_ENVIRONMENT_APPROVAL_PENDING",
+      "state": "HUMAN_APPROVED_T45_ACTUAL_EXECUTION_DISPATCHED",
       "scope": "Original T45 provision successor only in its original fresh35-preparation output directory; no S application edits or server calls",
       "actualImagePullBuildOrContainerCreated": false,
       "actualTransmission": false,
@@ -28570,7 +28576,10 @@
       "testsSHA256": "a5f1a58c05b73fd36500693dc2b174b0ec385f70a3f3126ecbe70e253aaaaabe",
       "reviewSHA256": "e3629f29ed010035102ff27bb6c93b32b3b9c1fa4d50380de5c52cccba3f143c",
       "exactScopeSHA256": "031a2572712a72fa4dd9e2dc7186b5acce7f188da89cbedb99838ab369b5d769",
-      "environmentApproved": false
+      "environmentApproved": true,
+      "approval": "actual human call_e4aeea80dafb49ef8648ab7f180fc68f item0",
+      "preparationMaxMinutes": 30,
+      "databaseWindowMaxMinutes": 20
     }
   }
 }
