@@ -1,0 +1,52 @@
+{
+  "status": "EXACT_ORIGINAL_TAIL_EXTRACTED_AND_BASE_PREFIX_PLUS_TAIL_STREAM_HASH_PROVED",
+  "sourceCommit": "877a32edb9fef422d76496ae388b0732208f8fc5",
+  "base": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-223598cb/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83663631,
+    "sha256": "f3126f335c8d2afcd9d7975460357c3e3b790724d80c0fe2436dcaf30e52ed56",
+    "wholeFileHashVerified": true
+  },
+  "target": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-877a32ed/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83663911,
+    "sha256": "6b57c96e5931ee4dc8c61b0f9c4d3d0e254b3c1eaeb6fbdfd3dc7f6088cb44ea",
+    "wholeFileHashVerified": true
+  },
+  "prefix": {
+    "offsetStartInclusive": 0,
+    "bytes": 80902017,
+    "offsetEndExclusive": 80902017,
+    "sha256": "f1a431cf97457bb53eea2af090565ba5358f3046158c928e517c7cedd1657283",
+    "baseAndTargetComparedByteForByte": true
+  },
+  "tail": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-877a32ed/ordinary/recovery-tail-r3-01/ordinary-transfer.tail-offset-80902017.bin",
+    "offsetStartInclusive": 80902017,
+    "offsetEndExclusive": 83663911,
+    "bytes": 2761894,
+    "sha256": "64942ecadf87c012f9302fbb4bf34f8727801b8d9002a1773f6c356bc5ece48f",
+    "mode": "0o600",
+    "copiedFromOriginalTargetBytes": true,
+    "readbackHashVerified": true
+  },
+  "streamReconstruction": {
+    "inputs": [
+      "base bytes[0:80902017]",
+      "tail entire2761894bytes"
+    ],
+    "bytes": 83663911,
+    "sha256": "6b57c96e5931ee4dc8c61b0f9c4d3d0e254b3c1eaeb6fbdfd3dc7f6088cb44ea",
+    "matchesExactOriginal877aArchive": true,
+    "fullReconstructedFileWritten": false,
+    "recompressionPerformed": false
+  },
+  "boundaries": {
+    "originalArchivesUnchanged": true,
+    "sourceOrBuildChanged": false,
+    "deletions": false,
+    "serverOrTransferExecuted": false,
+    "newCliOrInterfaceCreated": false
+  },
+  "nextStep": "Original T45 owner transfers only this exact tail with a new authorized channel operation; validates base and tail, assembles new file without altering old base/partial, verifies complete target bytes/SHA before original receiver. D2 performed local fixed-byte preparation only."
+}

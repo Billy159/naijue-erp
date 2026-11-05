@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-877a32-tail-20261106-01",
+  "sourceSetSha256": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394",
+  "archiveSha256": "64942ecadf87c012f9302fbb4bf34f8727801b8d9002a1773f6c356bc5ece48f",
+  "archiveBytes": 2761894,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-877a32-tail-20261106-01",
+  "startsAt": 1793908073786,
+  "expiresAt": 1793909873786,
+  "decisionReference": "C human ERP delegation until2026-11-06 noon: transfer only exact raw compressed source/tools tail bytes[80902017:83663911] of877a, NOT complete application. D2 proof33f797f7; original40s channel, new tail key only. Old partial retained. After exact final verification, separate complete archive authority and original receiver required; no PG/REAL/production.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

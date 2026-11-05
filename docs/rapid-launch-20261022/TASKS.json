@@ -29389,7 +29389,7 @@
       "state": "ACTIVE"
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "NEW877_SOURCE_QB_PASS_FULL_CARRIER_READY_R3_PREPARATION_AUTHORIZED",
+      "state": "877A_TRANSFER_TIMEOUT_PRESERVED_EXACT_TAIL_RECOVERY_IN_PROGRESS",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29404,7 +29404,7 @@
         "Proof root0444 single link/parent chain; actual ordinary UID can read but not replace; missing/mutated fact refuses",
         "Source/contract approval is C decision under direct human delegation; actual new execution requires separate exact C binding"
       ],
-      "noEnvironmentExecutionYet": true,
+      "noEnvironmentExecutionYet": false,
       "T45Producer": {
         "state": "STABLE_TWO_LEAVES",
         "receiptSHA256": "3078b75880b6376d79103fe8b403e5e86de88c2ac11a4bc520d53f5ff443bc23",
@@ -29481,7 +29481,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "T45 unique producer one-line fix + original4 None-return red/green; QB only two-leaf delta; fixed new r3 carrier/window, no replay or mutation of r2.",
+      "next": "T45 original tail transfer and fixed one-off source; QB only new ops delta; full original receiver READY then r3 materialization and fresh PG window. Do not rebuild877a or replay old jobs.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -29509,7 +29509,36 @@
         "expiresAt": 1793908905547,
         "scope": "Exact877a newr3 stage/prep only; same900s/30min; noPG"
       },
-      "r3ProbeSHA256": "ee229ff8f96b5bf19514d1d9b25737605b73af2d21bb15ac73acb9886e66247b"
+      "r3ProbeSHA256": "ee229ff8f96b5bf19514d1d9b25737605b73af2d21bb15ac73acb9886e66247b",
+      "r3TransferRecovery": {
+        "state": "C_EXACT_LEAVES_ISSUED_T45_PREPARING_QB_NEW_OPS_DELTA",
+        "failedKey": "f35-877a32-ordinary-20261106-01",
+        "failure": "LEASED_CHANNEL_TIMEOUT_DO_NOT_REPLAY",
+        "partialBytes": 5038592,
+        "partialDisposition": "Retained; stable metadata and no open holder at bounded checks; not READY",
+        "baseKey": "f35-223598-ordinary-20261106-01",
+        "prefixBytes": 80902017,
+        "tailBytes": 2761894,
+        "tailSHA256": "64942ecadf87c012f9302fbb4bf34f8727801b8d9002a1773f6c356bc5ece48f",
+        "D2ReceiptSHA256": "33f797f73a23faa54fc542f4d4342d0ddee935a33e6de3e40ccf9ae3f6452322",
+        "authorities": {
+          "artifact-staging-877a32-tail-authorization-01.json": {
+            "sha256": "745383ce47b03314675a6f30d60a0232a392e3e622f7d9f08abbf323067fbb14",
+            "artifactKey": "f35-877a32-tail-20261106-01",
+            "startsAt": 1793908073786,
+            "expiresAt": 1793909873786
+          },
+          "artifact-staging-877a32-local-complete-authorization-01.json": {
+            "sha256": "2cbd2a5119f71f9eedf6826e8dfeeecbf35e68fee0bcba3039c88fc7ded19d24",
+            "artifactKey": "f35-877a32-ordinary-local-20261106-02",
+            "startsAt": 1793908073786,
+            "expiresAt": 1793909873786
+          }
+        },
+        "method": "New exact tail original channel; verify retained full base and tail; O_EXCL private assembly; original unmodified receiver as UID1000 consumes exact assembled bytes and alone publishes READY under separate C leaf; no resume platform or original key replay",
+        "actualFullREADY": false,
+        "actualR3PG": false
+      }
     },
     "productionReleaseCompatibilityContinuation": {
       "state": "SOURCE_QB_F01_CLOSED_ORIGINAL_CALLER_PINS_REGISTERED_NOT_ACTUAL_DEPLOYMENT",

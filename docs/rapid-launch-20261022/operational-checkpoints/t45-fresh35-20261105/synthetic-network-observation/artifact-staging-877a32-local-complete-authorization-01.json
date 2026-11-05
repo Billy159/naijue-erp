@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-877a32-ordinary-local-20261106-02",
+  "sourceSetSha256": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394",
+  "archiveSha256": "6b57c96e5931ee4dc8c61b0f9c4d3d0e254b3c1eaeb6fbdfd3dc7f6088cb44ea",
+  "archiveBytes": 83663911,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-877a32-ordinary-local-20261106-02",
+  "startsAt": 1793908073786,
+  "expiresAt": 1793909873786,
+  "decisionReference": "C human ERP delegation until2026-11-06 noon: exact877a complete archive only, consume via ORIGINAL unmodified receiver from validated local file after fixed223598 prefix80902017+exact tail64942eca, whole6b57 length/hash required. New key02; retain old base and failed key01. Fixed source-reviewed one-off job only, original UID/authority/EOF/O_EXCL/finalization; no custom READY, PG/REAL/production or timeout extension.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}
