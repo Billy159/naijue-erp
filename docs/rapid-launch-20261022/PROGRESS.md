@@ -995,3 +995,8 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - D1沿原任务先交对齐V2最小源码及普通/流式注册闭包、错误输入拒绝的必要验证；原V1、注册算法和真实数据不改。交付固定版本后立即交原QB增量验收，并解除D3最终组包的该依赖。
 - 正式V2 target/lifecycle/record/catalog/host原模块由D1唯一修改；普通运行API/issuer及实际入口仍D2唯一修改，精确接缝交接，原launcher不抢写。全部显式gpt-6.1-sol/high或medium，Fast开关未核验。
 - T45原运维后继回合已有实际命令输出，继续离线落源码，不重复派工或改成新控制平台。当前未新建数据库、未导入真实数据、未改生产。两项“已批准”不是“已实施/已验收”。
+
+
+### 对齐V2源码阶段已固定24a454a6（独立验收中）
+- 固定提交24a454a618ddb055318c0e69240839a920049a61，5叶与原D1回执027aa4d2逐项hash匹配；原作者45/45受影响合成、完整类型检查及后端构建退出0。已推GitHub同分支并ls-remote精确回读；不表示真实包或数据库通过。
+- QB按唯一固定增量独立验收中；D3已接V2组装接缝，未运行最终writer、不自签alignment。D1继续独立正式证明模块，D2已交端点与SET ROLE前后权限接缝并等待实际API；原运维T45仍在途。
