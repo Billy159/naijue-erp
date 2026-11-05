@@ -1,0 +1,44 @@
+{
+  "status": "EXACT_ORIGINAL_PG_PERMISSION_OBJECT_IDENTIFIED_READONLY",
+  "observed": {
+    "checkedAtUTC": "2026-11-05T18:24:19.960099+00:00",
+    "writes": 0,
+    "PGConnections": 0,
+    "rawExported": false,
+    "technicalErrors": [
+      {
+        "category": "PERMISSION_DENIED_TO_EXAMINE_SETTING",
+        "time": "2026-11-05 17:50:48.762 UTC",
+        "objectType": "setting",
+        "objectIdentifier": "unix_socket_directories"
+      }
+    ],
+    "file": {
+      "bytes": 4172,
+      "sha256": "85dc3f35662809a5ff48095f8c4000e3e0bc229eea01663f8783817acab449c7"
+    },
+    "status": "EXACT_TECHNICAL_OBJECT_EXTRACTED"
+  },
+  "job": {
+    "jobId": "t45-f35-5d70-pgerror-object-readonly-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-dc0565806af9",
+    "atUTC": "2026-11-05T18:24:19.899187+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.06746323686093092,
+    "exports": [
+      "pgerror-object.json"
+    ],
+    "finishedAtUTC": "2026-11-05T18:24:19.991620+00:00"
+  },
+  "boundary": "Actual original PG ERROR denies examination of unix_socket_directories at physical-empty-target failure time; not a guessed targetGuard RAISE. No transaction outcome inferred.",
+  "next": "Stop log reads. Original source owner D1/C chooses minimal exact configuration-attestation/privilege-contract repair without broad role escalation or bypass; any actual execution needs new accurate C binding.",
+  "applicationOrPermissionWrites": 0,
+  "PGRestartOrConnection": 0,
+  "rawOrSecretsExported": false
+}

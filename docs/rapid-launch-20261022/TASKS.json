@@ -29246,6 +29246,16 @@
           "SQLSTATE": "NOT_RECORDED",
           "mutations": 0,
           "PGConnections": 0
+        },
+        "actualRootCause": {
+          "status": "EXACT_SERVER_ERROR_OBJECT_AND_MATCHING_SOURCE_CONFIRMED",
+          "category": "PERMISSION_DENIED_TO_EXAMINE_SETTING",
+          "object": "unix_socket_directories",
+          "atUTC": "2026-11-05T17:50:48.762Z",
+          "receiptSHA256": "dba374177c395e940c1ded5a2799524983f88d487b9c0838acc84dad5b88f55d",
+          "source": "fresh35-combined-target-v1.mjs synthetic current_setting predicate; ordinary owner lacks restricted GUC show privilege",
+          "rollbackOutcome": "UNCHANGED_ROLLBACK_UNCONFIRMED",
+          "noMoreOldLogReads": true
         }
       },
       "safeInstallDiagnostics": {
@@ -29380,6 +29390,24 @@
         "Reuse completed evidence and original roles; minimal necessary changes and affected verification"
       ],
       "state": "ACTIVE"
+    },
+    "syntheticNetworkObservationContinuation": {
+      "state": "C_APPROVED_MINIMAL_SOURCE_CONTRACT_UNDER_HUMAN_NOON_DELEGATION_IMPLEMENTING",
+      "owners": {
+        "D1": "target/catalog/lifecycle and necessary direct tests",
+        "T45": "existing launcher bootstrap and direct tests"
+      },
+      "decision": "Use existing actual admin network observation, root-owned fixed readonly proof bound to same physical target/postmaster birth/window/program; ordinary owner/controller never read restricted GUC",
+      "fields": "closed format/physical4/host/port/listenAddresses/unixSocketDirectories/adminActor/startsAt/expiresAt; optional exact provision sourceSet by owner seam agreement",
+      "invariants": [
+        "No new table/column/routine/GRANT/membership",
+        "No pg_read_all_settings/super/pg_monitor",
+        "Existing V1 target/record shape and production branch unchanged",
+        "Original network/physical checks retained via actual admin fact plus same immutable birth SQL checks",
+        "Proof root0444 single link/parent chain; actual ordinary UID can read but not replace; missing/mutated fact refuses",
+        "Source/contract approval is C decision under direct human delegation; actual new execution requires separate exact C binding"
+      ],
+      "noEnvironmentExecutionYet": true
     }
   }
 }
