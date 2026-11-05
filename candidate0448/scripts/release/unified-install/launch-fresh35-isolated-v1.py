@@ -29,7 +29,7 @@ AUTH = ETC / 'fresh35-isolated-provision-v1.json'
 MANIFEST = ETC / 'fresh35-isolated-deployment-v1.json'
 INSTALL_AUTH = ETC / 'fresh35-combined-execution-v1.json'
 INTERFACES = ('erp_unified27_initializer_2393dbc6db9581c2', 'erp_unified27_importer_2393dbc6db9581c2', 'erp_unified27_runtime_2393dbc6db9581c2')
-TOOL_PINS = {'postgres':'5fa5f4cb92953e720a6814653888183abd7988d31a505125dec3a12bd51f29be','initdb':'120d1e6044d50b74e4325c751b1ecbf87c7e84c60b24e38b790b011761cb7847','psql':'292a3063f4712a759ec558e2f7f050b3f8a64d83d04404c9521202c299b5830a','pg_controldata':'9433d00692ced76322993d8ff831c091e1910ae94ff0f9150a170c86777be670'}
+TOOL_PINS = {'postgres':'6468a969338215cb3912cf9c0b894bdbbd37b9a709926db078e9a5bf8bdc3e16','initdb':'a0363354125bc00f25075bb47fc32a2838fa7668c008326227f5bc04d628ca1d','psql':'3c94c29652ea7ff8803ab1ca35e48c38a39c8a94a8c8eeadbb1d87c68494506c','pg_controldata':'b54c1bdeeab0953598b8447127b2230b1748ea1989dd972e6ee02455f256f180'}
 NODE_SHA = '7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c'
 
 def need(value, code):
