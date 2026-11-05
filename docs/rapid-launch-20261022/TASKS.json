@@ -28478,7 +28478,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "T45 actual immutable3de75/source19604 newr5 PG20 start, then C actualprogram/target bound install, synthetic business and cleanup; no old replay.",
+      "critical": "D1 fixed2DO consumer successor + productionJS, T45 productionPython; combine exactsource candidate then scopedQB/build. r5originalstart collect/cleanup only, installation withheld known deterministic consumer refusal.",
       "independentPreparation": {
         "D1": "Production JS entry+source loader/strict V1 refusal, fixed source handoff and necessary scoped checks.",
         "T45": "Production Python consumer source only in independent new files, creation authority then actualfacts/entry/install; finite serviceLease separates installation. r5 actual run priority.",
@@ -29805,10 +29805,18 @@
         "buildState": "BUILD_PACK_AND_ALL_MEMBERS_READBACK_PASS_NOT_PG",
         "D2ReceiptSHA256": "deb82189ba427bf23435be968ca291e35a2e407bca2c0c8b7133cf31a2260324",
         "remoteReadback": true,
-        "QBReceiptSHA256": "78eedd77493ab7107d7d37811470ced02f979ae60e5352bfce49ec9705cffa11"
+        "QBReceiptSHA256": "78eedd77493ab7107d7d37811470ced02f979ae60e5352bfce49ec9705cffa11",
+        "newConsumerDefect": {
+          "state": "CONFIRMED_SOURCE_CONSUMER_CONTRACT_MISMATCH_NOT_ACTUAL_PG_FAILURE",
+          "reportedBy": "D1",
+          "details": "Existing fresh35-host-session native guard requires2 result acknowledgements; added separate observer DO causes3. Preserve original2DO contract and strict length, embed observerIF inside original target/catalogDO.",
+          "owner": "D1",
+          "scope": "Originaltarget/catalog and direct affected result-cardinality tests only; bootstrap may remain separateDO.",
+          "r5": "No install leaf issued; ifstart submitted collect original terminal and clean exacttarget; no replay."
+        }
       },
       "r5Preparation": {
-        "state": "ACTUAL_MATERIALIZATION_PASS_NEW_PG20_AUTHORIZED_START_PENDING",
+        "state": "START_IF_ALREADY_SUBMITTED_COLLECT_AND_CLEAN_INSTALL_WITHHELD_KNOWN_HOST_GUARD_RESULT_COUNT",
         "buildRoot": "3de75b77f8be7fdb1be3f889e5b9521ff1d57b55",
         "sourceSetSHA256": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
         "manifestSHA256": "d5d1857ee3358e68ab7109161f1914390dfd153247624a5f136b2c03e49fcca5",

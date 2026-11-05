@@ -1687,3 +1687,7 @@ QB78eedd77 exact8 leaves source/6 independent scoped model groups PASS, no findi
 ### 2026-11-06 06:16 | r5材料化完成并进入准确新PG窗口
 真实材料化0/373.855s（a256ae31），当前资源79fe41b4证明新r5无旧CID/启动工件，磁盘15.77GB、可用内存14.34GB。C亲核回执并依据用户今日12:00前直接委托签原11键provision b46a2068，1793916921905..1793918121905，仅固定3de75/source19604/manifestd5d/newr5/原预算；实际program/target仍需真实生成后原9键绑定。准备、源码及运输通过不等于实库安装通过。
 并行生产consumer最小源合同已决定：创建前由C精确外叶绑定新target意图，真实身份生成后再独立entry/install；有限serviceLease和20min安装窗分开，成功须真实持久V2record才保留到明确截止，失败/未知停止本次target保全数据，不动旧服务。D1唯一JS/loader，T45唯一新Python；不改r5，不自制授权，不在收尾改变已固定catalog使证明失效。本次只源码准备，不放行实际生产。
+
+
+### 2026-11-06 06:20 | 安装前截住确定的消费者缺陷
+D1发现新增observer独立DO使原host的严格两结果合同变成三结果，会在真实host阶段拒绝；这是新代码接缝缺陷，既有源码/模型PASS不等于真实链PASS。C采用有效结论，原D1将同一严格observer IF嵌入原target/catalog DO，保持原两结果及host校验，不放宽检查。r5若已提交启动，仅收原键终态后原guardian清理；C不签已知必失败的install，准确登记未执行，不冒称实测失败或通过。新生产consumer及该最小修复合成下一固定候选，只验受影响范围，避免重复构建及整套后台回归。

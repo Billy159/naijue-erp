@@ -1,0 +1,96 @@
+{
+  "task": "PRODUCTION_NEW35_FIXED_ENTRY_V2_SOURCE_ONLY",
+  "state": "D1_FIVE_LEAVES_FROZEN_SOURCE_CHECKS_PASS_PENDING_T45_PYTHON_CLOSURE_AND_OBSERVER_ACK_SUCCESSOR",
+  "atUtc": "2026-11-05T22:19:27.340229+00:00",
+  "head": "9dc753504be38168e8132ed137b1a9668916e7f7",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-production-entry-v2.mjs",
+      "sha256": "1b6537637317337c93afae2ae3f70c6fafe0a16bab90d184eeaf07face907d62",
+      "bytes": 9726
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "sha256": "ed178a922209646b024c5ca7afa609ca009d37adb62d198508094d2f97816d60",
+      "bytes": 12599
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "sha256": "faaaa49c810c60e0500eab4ac3bc5ee216b13cfe468cbe15bf5b6ce0bdd4abc2",
+      "bytes": 18818
+    },
+    {
+      "path": "tests/fresh35-production-entry.test.mjs",
+      "sha256": "217bec0d0546dc14cb3b30630f14ec4f3bf10a8986105b0f80822244afa59322",
+      "bytes": 16852
+    },
+    {
+      "path": "tests/fresh35-isolated-entry.test.mjs",
+      "sha256": "f2b169eca5181e909f7005134c522dbfbe3e8112519ba0954c05092cbd2c04ec",
+      "bytes": 18076
+    }
+  ],
+  "newFilesIncludedAsActualSourceCopies": [
+    "scripts/release/unified-install/fresh35-production-entry-v2.mjs",
+    "tests/fresh35-production-entry.test.mjs"
+  ],
+  "trackedPatchDoesNotContainUntrackedFiles": true,
+  "externalEntryAuthority": {
+    "path": "/etc/naijue-erp/fresh35-production-entry-v2.json",
+    "format": "FRESH35_PRODUCTION_ENTRY_AUTHORIZATION_V2",
+    "decision": "AUTHORIZE_EXACT_NEW35_PRODUCTION_INSTALL_AND_RECORD",
+    "keys": [
+      "format",
+      "decision",
+      "sourceSetSha256",
+      "target",
+      "independentSafetyReviewSha256",
+      "authorizationReference"
+    ],
+    "target": "Existing production V2 closed input; no new target fields. ordinary.referenceDirectory must use fixed deployed root/reference-inputs.",
+    "protection": "root0600 regular single-link file; trusted canonical parents; NOFOLLOW; <=64KiB and bounded +1byte EOF probe, stable full file identity, strict UTF8"
+  },
+  "entry": {
+    "path": "scripts/release/unified-install/fresh35-production-entry-v2.mjs",
+    "flags": [
+      "--bootstrap-observer",
+      "--describe",
+      "--execute"
+    ],
+    "fixedRoot": "/opt/naijue-erp/fresh35-combined-v1",
+    "ownerConnection": "<target.workspaceDirectory>/credentials/owner-connection.json; exactly host/port/database/user/password, exact owner/proposal match; no environment or CLI secret",
+    "authorization": "execute additionally consumes original protected combined execution authorization and original once-only journal marker; entry never issues authority or manufactures record",
+    "operations": "original V2 bind/buildCatalog/compile/describe/runInstall/publish genuine completion; sole native Client, original lifecycle closes; wrapper bounded close only for untouched early/connect failure",
+    "serviceLifetime": "ordinary runtime lifetime separate from original <=20min operation window and45s cleanup reserve",
+    "exit": "0 only durable V2 publication,1 known setup/rollback failure,2 unknown rollback/commit or confirmed commit without durable record; automaticRetry=false,12-field safe stderr",
+    "notIncluded": [
+      "PG provision/start/stop",
+      "REAL import",
+      "new pool",
+      "ordinary capability issuance",
+      "lease controller",
+      "business/schema/ACL changes"
+    ]
+  },
+  "checks": {
+    "uniqueNewAndAffectedPass": 8,
+    "fail": 0,
+    "skip": 0,
+    "source": "Genuine current source loader includes new JS and old isolated/source modules by their exact actual bytes; no PG",
+    "model": "seven new test functions in fresh35-production-entry.test.mjs, OS/native-client/lifecycle mocks except actual pure inputs/diagnostics and source loader. Models cannot mint native authority. One old-isolated-entry direct rejection test.",
+    "incrementalReruns": "Only affected authorization/publication/main-mode groups rerun after specific local edits. Prior SOURCE/REAL64,observer13,T45seven,private suites not rerun.",
+    "nodeSyntax": "PASS",
+    "diffWhitespace": "PASS",
+    "PG": false,
+    "rawRealInputRead": false,
+    "build": false,
+    "commitOrIndex": false
+  },
+  "pending": [
+    "T45 new production Python actual file then one source-entryPaths successor, no placeholder or missing-file bypass",
+    "C-approved observer IF-in-original-DO successor to preserve original two-result consumers, independent of this entry",
+    "single combined new candidate andQB; no r5 frozen carrier modification",
+    "new exact physical production target/authority and actualPG byT45 only"
+  ],
+  "statusNotDeployment": true
+}

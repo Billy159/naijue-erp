@@ -37,6 +37,7 @@ export async function main(){
  const workspace=a.proposal.workspaceDirectory;
  need(/^\/var\/lib\/naijue-erp\/fresh35-isolated\/cloud-pg-fresh35-[0-9]{8}-r[1-9][0-9]{0,3}$/.test(workspace),'FIXED_WORKSPACE_REQUIRED');
  const input=parseStrictJson(await privateText(join(workspace,'target-binding.json')));
+ need(Object.keys(input).sort().join(',')==='expiresAt,physical,proposal,startsAt','SYNTHETIC_V1_TARGET_REQUIRED');
  need(Object.keys(input.proposal).length===Object.keys(a.proposal).length&&Object.keys(a.proposal).every(k=>Object.hasOwn(input.proposal,k)&&input.proposal[k]===a.proposal[k])&&input.startsAt===a.startsAt&&input.expiresAt===a.expiresAt,'TARGET_PROVISION_BINDING_DIFFERS');
  const paths=await resolveFresh35ReferenceInputPaths(root+'/reference-inputs');
  const source=await loadFresh35CombinedSource(root,{baselineDirectory:paths.baselineDirectory});
