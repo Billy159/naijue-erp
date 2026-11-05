@@ -1168,3 +1168,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 实际核QB回执2e0d07ab9cab03fd387c5daf3bab00c889d228cb83bef20b091bada81bb5716c，采用其1149f17e定向5向量PASS，关闭QB-SYNTHETIC-ORDINARY-F01；借出事务/describe/新lease/startup finally均沿实际LOGIN与target较早截止撤销，资源清理模型通过，正式PG尚未验。主控未重复技术验收。
 - 原D2三叶后继逐hash匹配7d1ea76f后固定95aba3b0c3bdf850feee826c452e487f14d74431；只合成staffMaintenance接原账户HTTP/UOW、真实ADMIN建/重置账号与第二员工登录、固定61035私域场景、真实STANDARD发布读回（historyPayloadHash可空）。作者定向7/type0/244输入编译0，仅模型/源码。与原735四叶组成同版4叶交原QB独立验收，不重复D1已过范围、不改旧V8或生产路由。
 - 新ordinary闭包11b3a1a0对旧7393准确新增两账户模块及原runner，动态raw record模块亦须绑定；T45继续原父入口/场景/容量/正确Linux依赖，最终候选及执行授权尚未生成。保留全部在途修改和三旧导出，无PG/生产/真实写入。Git远端已核28706d12；本段新checkpoint推送单独核验，未把旧build-root d77当新版本。
+
+
+### 原生业务源增量独立通过；固定运行配置与Linux依赖接续
+- 主控实际核QB 0a6d6976，采用95aba3b0四叶组合源码及定向模型PASS，无阻断发现；D1已过证明/LOGIN范围不重验。普通账号实际PG及三组业务仍NOT_RUN，未以模型代替实测。
+- C唯一新增deploy/runtime/fresh35-ordinary-runtime-v1.json，SHA f23a49050542089cdbdef3de09ab8690e2f2eeb697e318be20477d297b9b1832：明确单池/认证/有限超时及六maintenance选择，build及password为null显式未就绪。固定Node24.21原解析器实际拒原模板、仅内存补准确形式后接受，退出0，无连接/进程。最终发行副本填真实最终源码SHA/buildId并纳deployment manifest，T45仅按原proposal与私有凭据接线，不制造自指源码或假口令。
+- 原D2源码已交还，接同包独立本机Linux x64 glibc锁依赖准备，保持原package/lock/依赖/全局配置不变、无安装脚本；Mac原生库不能代替Linux，真实加载待T45原目标。T45继续原main三处观察、实际普通UID子进程、单池容量事实及清理，不新建控制层、不重建成功镜像。PG/正式导入/线上尚未执行。

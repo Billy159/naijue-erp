@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T15:25:22.826410+00:00",
+  "updatedAt": "2026-11-05T15:40:36.782953+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T15:25:22.826410+00:00",
+    "at": "2026-11-05T15:40:36.782953+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28987,8 +28987,8 @@
       "D1ReviewState": "QB_F01_CLOSED_SOURCE_AND_TARGETED_MODELS_ONLY",
       "D1ExpiryFixCommit": "1149f17ee350dded91e88423d5b20b6586d23c2e",
       "D1ExpiryFixReceiptSHA256": "b0f66472ca730e49974bd5debc4b28fc22958f67003229f80cabcb5b03100470",
-      "D2Next": "Source returned read-only; original QB validates combined API/provider/runner increment; T45 actual fixed source/secret/scene/capacity/Linux prerequisites remain",
-      "T45Next": "Original launcher/wrapper: secret/scenario cleanup, original runtime ACL/HBA, actual process/target facts, fixed capacity profile and Linux dependency closure; no PG before final candidate and valid window",
+      "D2Next": "Same original packaging owner prepares isolated local Linux x64 glibc locked production dependencies; no source edits or server execution",
+      "T45Next": "Finish original main actual serial RO scene/ordinary child/profile/cleanup wiring using explicit C runtime template; wait final source/locked Linux closure/QB and exact valid window",
       "sourceOwnerSceneHandoffSHA256": "3c7bec4ee55c661942f44749e58d2c6ad6878cc593346798c8f07b26ebbf2f08",
       "capacityTemplateReviewSHA256": "de1de45ff4256a8f58c760e5f30af75d1e487fe5777ea2e44f9f1beb2b34226a",
       "linuxDependencyInputSHA256": "cbcb3ff8485957959a773e76cfc9bdb733ac6932636750c928f67c6f6e028dd6",
@@ -28996,10 +28996,21 @@
       "D1ExpiryFixReviewSHA256": "2e0d07ab9cab03fd387c5daf3bab00c889d228cb83bef20b091bada81bb5716c",
       "D2SetupSuccessorCommit": "95aba3b0c3bdf850feee826c452e487f14d74431",
       "D2SetupSuccessorReceiptSHA256": "7d1ea76f7c4c151f20f3086a3df14041fd1ce1664451bd1449277ec22dbd1e36",
-      "D2CombinedReviewState": "ORIGINAL_QB_ACTIVE_FIXED_FOUR_LEAF_COMBINATION_NO_PG",
+      "D2CombinedReviewState": "QB_PASS_SOURCE_AND_TARGETED_MODELS_ONLY_NOT_PG",
       "D2ClosureSHA256": "11b3a1a079fe9dcd3af30da6518087cf54c4451d77f0d0022a830290382ba25b",
       "D2ClosureInputs": 244,
-      "D2PrivateScenario": "61035 ordinary-private fixed path; forbidden {staffId,loginName,password,setupRequestKey,sales,requestKey};23unique keys; actual STANDARD publication adds planSha256 and nullable historyPayloadHash"
+      "D2PrivateScenario": "61035 ordinary-private fixed path; forbidden {staffId,loginName,password,setupRequestKey,sales,requestKey};23unique keys; actual STANDARD publication adds planSha256 and nullable historyPayloadHash",
+      "D2CombinedReviewSHA256": "0a6d6976085ce2dddf405bcc8b783fbe85dec5c180ec344b562aa2533369bcc6",
+      "runtimeConfigurationTemplate": {
+        "owner": "C",
+        "path": "candidate0448/deploy/runtime/fresh35-ordinary-runtime-v1.json",
+        "sha256": "f23a49050542089cdbdef3de09ab8690e2f2eeb697e318be20477d297b9b1832",
+        "state": "EXPLICIT_NONEXECUTABLE_TEMPLATE_BUILD_AND_PASSWORD_NULL; original parser refused raw and accepted memory-only hydration, exit0",
+        "remaining": "C final packaging inserts actual final sourceCommit/buildId into copy then deployment-manifest binds copy; T45 only fixed private target/secret wiring, no arbitrary overrides",
+        "pgMax": 1,
+        "sessionSeconds": 900,
+        "noPoolOrPGStarted": true
+      }
     }
   }
 }

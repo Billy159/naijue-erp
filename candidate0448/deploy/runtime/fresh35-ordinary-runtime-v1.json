@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "profile": "source-confirmed-native-exact35-v1",
+  "documentCommands": "NATIVE_RUNTIME",
+  "publicOrigin": "https://1n5635n614.goho.co",
+  "http": {
+    "host": "0.0.0.0",
+    "port": 3000,
+    "acceptedHosts": [
+      "1n5635n614.goho.co"
+    ]
+  },
+  "assets": {
+    "root": "/opt/naijue-erp/fresh35-combined-v1/web",
+    "entry": "index.html"
+  },
+  "build": {
+    "sourceCommit": null,
+    "buildId": null
+  },
+  "postgres": {
+    "target": {
+      "host": "127.0.0.1",
+      "port": 18651,
+      "database": "synthetic_fresh35_20261105_r1",
+      "user": "fresh35_runtime_20261105_r1",
+      "password": null,
+      "ssl": false
+    },
+    "max": 1,
+    "maxPendingAcquisitions": 1,
+    "connectionTimeoutMillis": 2000,
+    "acquisitionTimeoutMillis": 2000,
+    "queryTimeoutMillis": 2500,
+    "statementTimeoutMillis": 2000,
+    "lockTimeoutMillis": 1000,
+    "idleInTransactionTimeoutMillis": 5000,
+    "idlePoolTimeoutMillis": 5000,
+    "disposeGraceMillis": 500,
+    "disposeTimeoutMillis": 3000
+  },
+  "authentication": {
+    "sessionTtlSeconds": 900,
+    "policy": "source-confirmed-v1",
+    "passwordWork": {
+      "maxConcurrent": 1,
+      "maxAnonymous": 1,
+      "retryAfterSeconds": 1
+    },
+    "loginAdmission": {
+      "global": {
+        "burst": 32,
+        "tokens": 32,
+        "intervalMillis": 1000
+      },
+      "source": {
+        "burst": 16,
+        "tokens": 16,
+        "intervalMillis": 1000
+      },
+      "sourceAccount": {
+        "burst": 4,
+        "tokens": 4,
+        "intervalMillis": 1000
+      },
+      "entryTtlMillis": 60000,
+      "maxEntries": 128,
+      "maxRetryAfterSeconds": 1
+    }
+  },
+  "productMedia": {
+    "root": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1/media",
+    "rootKey": "fresh35-synthetic-r1"
+  },
+  "organizationMaintenance": true,
+  "catalogueMaintenance": true,
+  "paymentMaintenance": true,
+  "partyMaintenance": true,
+  "productMaintenance": true,
+  "staffMaintenance": true,
+  "staffCredentialRequestKeyFile": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1/ordinary-private/staff-credential-request-key.bin"
+}
