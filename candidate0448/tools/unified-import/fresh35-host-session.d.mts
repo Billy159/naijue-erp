@@ -4,8 +4,9 @@ export interface Fresh35OrdinaryAdmissionV2 {readonly profile:'FRESH35_ORDINARY_
 export interface Fresh35OrdinaryClient {query(sql:string,values?:unknown[]):Promise<unknown>;getTransactionStatus?():string|null;release(error?:Error|boolean):void}
 export interface Fresh35OrdinaryPool {connect():Promise<Fresh35OrdinaryClient>}
 export interface Fresh35OrdinaryConnection {readonly host:string;readonly port:number;readonly database:string;readonly user:string}
-export interface Fresh35OrdinaryDescription {readonly systemIdentifier:string;readonly databaseOid:string;readonly database:string;readonly user:string;readonly connectHost:string;readonly connectPort:number;readonly serverAddress:string;readonly serverPort:number;readonly postmasterStart:string;readonly recordSha256:string;readonly sourceSetSha256:string}
+export interface Fresh35OrdinaryDescription {readonly purpose?:'SYNTHETIC_ISOLATED_ORDINARY_V1';readonly expiresAt?:number;readonly systemIdentifier:string;readonly databaseOid:string;readonly database:string;readonly user:string;readonly connectHost:string;readonly connectPort:number;readonly serverAddress:string;readonly serverPort:number;readonly postmasterStart:string;readonly recordSha256:string;readonly sourceSetSha256:string}
 export function admitFresh35OrdinaryPoolV2(pool:Fresh35OrdinaryPool,connection:Fresh35OrdinaryConnection):Promise<Fresh35OrdinaryAdmissionV2>;
+export function admitFresh35SyntheticOrdinaryPoolV1(pool:Fresh35OrdinaryPool,connection:Fresh35OrdinaryConnection):Promise<Fresh35OrdinaryAdmissionV2>;
 export function describeFresh35OrdinaryAdmissionV2(cap:Fresh35OrdinaryAdmissionV2):Readonly<Fresh35OrdinaryDescription>;
 export function assertFresh35OrdinaryLeaseV2(cap:Fresh35OrdinaryAdmissionV2,pool:Fresh35OrdinaryPool,client:Fresh35OrdinaryClient):Promise<void>;
 export function assertFresh35OrdinaryAdmissionCurrentV2(cap:Fresh35OrdinaryAdmissionV2,pool:Fresh35OrdinaryPool):Promise<void>;

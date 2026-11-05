@@ -1,3 +1,4 @@
+import {isNodeScryptPasswordHash,NODE_SCRYPT_DUMMY_HASH} from '../../../packages/authentication/src/passwords.ts';
 import {requestHash} from '../../../packages/application/src/request-hash.ts';
 import {historicalSettlementRetentionWire} from '../../../packages/application/src/unified-historical-settlement-retention.ts';
 /** Root-deployed bridge for one disposable validation instance. It uses the
@@ -49,6 +50,9 @@ export async function main(){
   const prefix=`127.0.0.1:${a.proposal.port}:*:${a.proposal.controller}:`;
   need(raw.startsWith(prefix)&&/^[a-f0-9]{64}\n$/.test(raw.slice(prefix.length)),'EXACT_CONTROLLER_CREDENTIAL_REQUIRED');
   need(Number.isSafeInteger(a.postgresUid)&&a.postgresUid>0&&Number.isSafeInteger(a.postgresGid)&&a.postgresGid>0,'ORDINARY_HOST_UID_REQUIRED');
+  const applicationInput=await privateText(join(workspace,'credentials','synthetic-application-scrypt.txt'));
+  const encodedScrypt=applicationInput.slice(0,-1);
+  need(applicationInput.endsWith('\n')&&isNodeScryptPasswordHash(encodedScrypt)&&encodedScrypt!==NODE_SCRYPT_DUMMY_HASH,'SYNTHETIC_APPLICATION_CREDENTIAL_REQUIRED');
   const config={host:a.proposal.host,port:a.proposal.port,database:a.proposal.database,user:a.proposal.controller,password:raw.slice(prefix.length,-1)};
   process.setgroups([]);process.setgid(a.postgresGid);process.setuid(a.postgresUid);
   need(process.getuid()===a.postgresUid&&process.geteuid()===a.postgresUid,'ORDINARY_HOST_UID_REQUIRED');
@@ -56,7 +60,6 @@ export async function main(){
   const {assertWholeSalesAdmissionV1}=await import('./whole-sales-admission-v1.mjs');
   const {HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256}=await import('../../../packages/application/src/unified-import-contract.ts');
   const {buildSyntheticFresh35WholePackageFixture}=await import('../../../tests/fixtures/unified-import/whole-package-synthetic.ts');
-  const {NODE_SCRYPT_DUMMY_HASH}=await import('../../../packages/authentication/src/passwords.ts');
   const {executeWholePackage}=await import('../../../tools/unified-import/whole-package-client.ts');
   const {inspectWholePackage}=await import('../../../tools/unified-import/whole-package-inspect.ts');
   const {createWholePackageSqlKernel}=await import('../../../tools/unified-import/whole-package-sql-kernel.ts');
@@ -72,9 +75,9 @@ export async function main(){
    // same transaction; it is not an observation of a real imported warehouse.
    const failed=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
     assertWholeSalesAdmissionV1(admission,standardTarget,client);
-    fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,NODE_SCRYPT_DUMMY_HASH,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:null,variant:'settlement-retention25'});
+    fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,encodedScrypt,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:null,variant:'settlement-retention25'});
     const f=fixture.fixtureBinding;
-    need(f&&Object.keys(f).sort().join(',')==='initializerSha256,manifestSha256,planSha256,stepsSha256'&&Object.values(f).every(v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v))&&f.manifestSha256===fixture.program.initialize.package_manifest_sha256&&f.planSha256===fixture.program.initialize.plan_sha256&&f.initializerSha256===requestHash(fixture.program.initialize),'SYNTHETIC_RETENTION_FIXTURE_BINDING_REQUIRED');
+    need(f&&Object.keys(f).sort().join(',')==='initializerSha256,manifestSha256,planSha256,stepsSha256'&&Object.values(f).every(v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v))&&f.manifestSha256===fixture.program.initialize.package_manifest_sha256&&f.planSha256===fixture.program.initialize.plan_sha256&&f.initializerSha256===requestHash({initialize:fixture.program.initialize,encodedScrypt}),'SYNTHETIC_RETENTION_FIXTURE_BINDING_REQUIRED');
     const installed=describeFresh35CombinedProgram(program);
     fixtureBinding={format:'FRESH35_SYNTHETIC_RETENTION25_STAGE_BINDING_V1',sourceSetSha256:installed.sourceSetSha256,installProgramSha256:installed.programSha256,targetSha256:installed.targetSha256,...fixture.fixtureBinding};
     fixtureBindingSha256=requestHash(fixtureBinding);
@@ -87,19 +90,19 @@ export async function main(){
     // These changes cannot supply an alternative approval or a physical target.
     const badApproval=structuredClone(fixture.program.initialize);
     badApproval.payload.historical_settlement_retention_approval.sha256='0'.repeat(64);
-    const badApprovalResult=await executeWholePackage(client,fixture.identity,badApproval,fixture.program.steps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    const badApprovalResult=await executeWholePackage(client,fixture.identity,badApproval,fixture.program.steps,createWholePackageSqlKernel(encodedScrypt));
     if(!(badApprovalResult.state==='ROLLED_BACK'&&badApprovalResult.code==='HISTORICAL_SETTLEMENT_APPROVAL_HASH'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ROLLBACK_REQUIRED'),{validationStage:'BAD_APPROVAL',validationCode:badApprovalResult.code});
-    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH))).state==='ABSENT','SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED');
+    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt))).state==='ABSENT','SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED');
     let removedSettlement=0;
     const missingSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='documentChunk'&&step.request.payload.mode==='CHUNK')step.request.payload.rows=step.request.payload.rows.filter(row=>{if(removedSettlement===0&&row.entity_type==='SALES_SETTLEMENT'&&row.fields.sales_id===fixture.retainedSalesIds[0]){removedSettlement++;return false;}return true;});yield step;}}};
-    const missingResult=await executeWholePackage(client,fixture.identity,fixture.program.initialize,missingSteps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    const missingResult=await executeWholePackage(client,fixture.identity,fixture.program.initialize,missingSteps,createWholePackageSqlKernel(encodedScrypt));
     if(!(removedSettlement===1&&missingResult.state==='ROLLED_BACK'&&['HISTORICAL_SETTLEMENT_MIGRATION_SOURCE_DIFFERS','HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED','STANDARD_PUBLICATION_INCOMPLETE'].includes(missingResult.code)))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_MISSING_SETTLEMENT_ROLLBACK_REQUIRED'),{validationStage:'MISSING_SETTLEMENT',validationCode:missingResult.code});
-    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH))).state==='ABSENT','SYNTHETIC_MISSING_SETTLEMENT_ABSENCE_REQUIRED');
+    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt))).state==='ABSENT','SYNTHETIC_MISSING_SETTLEMENT_ABSENCE_REQUIRED');
     let reachedFinalPublish=false;
     const badSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='publish'&&step.request.payload.phase==='DOCUMENTS'){reachedFinalPublish=true;step.request.payload.expected_sequence=Number(step.request.payload.expected_sequence)+1;}yield step;}}};
-    const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,badSteps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,badSteps,createWholePackageSqlKernel(encodedScrypt));
     if(!(reachedFinalPublish&&result.state==='ROLLED_BACK'&&result.code==='STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED'),{validationStage:'FINAL_PUBLISH',validationCode:result.code});
-    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH))).state==='ABSENT','SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED');
+    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt))).state==='ABSENT','SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED');
     return {state:result.state,reachedFinalPublish,finalFailureStage:'FINAL_PUBLISH',finalFailureCode:result.code,badApprovalRollback:true,badApprovalCode:badApprovalResult.code,missingSettlementRollback:true,missingSettlementCode:missingResult.code,originalBatchAbsent:true};
    },options);
    need(failed.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
@@ -109,18 +112,18 @@ export async function main(){
    }
    const imported=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
     assertWholeSalesAdmissionV1(admission,standardTarget,client);
-    const before=await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    const before=await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt));
     need(before.state==='ABSENT','SYNTHETIC_FAILED_BATCH_ABSENCE_REQUIRED');
-    const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,fixture.program.steps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,fixture.program.steps,createWholePackageSqlKernel(encodedScrypt));
     need(result.state==='COMMITTED','SYNTHETIC_IMPORT_COMMIT_REQUIRED');
     return {state:result.state};
    },options);
    need(imported.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
    const verification=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
     assertWholeSalesAdmissionV1(admission,standardTarget,client);
-    const replay=await executeWholePackage(client,fixture.identity,fixture.program.initialize,fixture.program.steps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    const replay=await executeWholePackage(client,fixture.identity,fixture.program.initialize,fixture.program.steps,createWholePackageSqlKernel(encodedScrypt));
     need(replay.state==='ALREADY_COMMITTED','SYNTHETIC_ORIGINAL_KEY_REPLAY_REQUIRED');
-    const readback=await reconcileWholePackage(client,fixture.program.initialize,NODE_SCRYPT_DUMMY_HASH,fixture.expectedCounts,fixture.totals);
+    const readback=await reconcileWholePackage(client,fixture.program.initialize,encodedScrypt,fixture.expectedCounts,fixture.totals);
     need(readback.state==='VERIFIED','SYNTHETIC_NEW_CONNECTION_READBACK_REQUIRED');
     return {state:'FRESH35_CONTROLLER_HOST_VERIFIED',importState:imported.result.state,replayState:replay.state,readbackState:readback.state,syntheticImportVerified:true,settlementRetentionVerified:true,retainedHeaders:25,retainedSettlements:27,businessVerified:false};
    },options);
