@@ -1,0 +1,126 @@
+{
+  "format": "T45_FRESH35_ORDINARY_MAIN_SOURCE_HANDOFF_V1",
+  "checkedAt": "2026-11-06T00:15:54.810758+08:00",
+  "status": "FOUR_LEAF_MAIN_SOURCE_COMPLETE_FOR_ORIGINAL_QB_INCREMENT",
+  "mainWired": true,
+  "requestedModel": "gpt-6.1-sol/high",
+  "actualModelAttestation": "NOT_RECHECKED_THIS_SOURCE_ONLY_TURN",
+  "fast": "UNVERIFIED",
+  "files": [
+    {
+      "role": "application-launcher",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/launch-fresh35-isolated-v1.py",
+      "sha256": "4f1353839356214c95772bdf2569ff8783b6b688e34b65fde92a2b03d73e9fd0",
+      "bytes": 90863
+    },
+    {
+      "role": "application-direct-test",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/test_fresh35_isolated_launcher.py",
+      "sha256": "d6a4797e41ffdd16146b6e3ee37f08c9a00848e5c983802bd952c3a821ddea01",
+      "bytes": 61814
+    },
+    {
+      "role": "private-wrapper",
+      "workingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/fresh35-container-successor.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/fresh35-container-successor.py",
+      "sha256": "ff4f315bcd7372208399d36712f6ac48b033634f378997ff25d8451e1a380a3f",
+      "bytes": 28214
+    },
+    {
+      "role": "wrapper-direct-test",
+      "workingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/test_fresh35_container_successor.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/test_fresh35_container_successor.py",
+      "sha256": "5b8356947323a8a42b5e87dc9462feae9a9c02542dbadefa401f849cf506cb93",
+      "bytes": 18024
+    }
+  ],
+  "inputs": {
+    "D1FiniteSceneHandoffSHA256": "3c7bec4ee55c661942f44749e58d2c6ad6878cc593346798c8f07b26ebbf2f08",
+    "D2SetupSuccessorResultSHA256": "7d1ea76f7c4c151f20f3086a3df14041fd1ce1664451bd1449277ec22dbd1e36",
+    "D2SetupClosureInputSHA256": "11b3a1a079fe9dcd3af30da6518087cf54c4451d77f0d0022a830290382ba25b",
+    "D2RuntimeSourceGraphMembers": 244,
+    "CCapacityTemplateReviewSHA256": "de1de45ff4256a8f58c760e5f30af75d1e487fe5777ea2e44f9f1beb2b34226a",
+    "CNonsecretSourceRuntimeTemplatePath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/deploy/runtime/fresh35-ordinary-runtime-v1.json",
+    "CNonsecretSourceRuntimeTemplateSHA256": "f23a49050542089cdbdef3de09ab8690e2f2eeb697e318be20477d297b9b1832"
+  },
+  "orderedMain": [
+    "Protected deployment + C issuance runtime template: null build/secret-in-public-template/wrong target or missing web refuses before target consumption/birth. Real Node24 locked Linux fastify/pg/sharp load check is coded before PG; NOT RUN.",
+    "Original admin/owner/controller/runtime bootstrap, only explicitly authorized runtime pg_control_system EXECUTE and exact loopback/db runtime HBA row; root application scrypt generated via original codec once.",
+    "Original install/record and two synthetic stages + three independent RO RR 35-table/sequence observations retained.",
+    "After committed/reconciled/CLOSED, one private admin RO RR finite D1 readback of exact batch publication/refs/stock. Missing/duplicate/wrong role/target/RLS or missing stock refuses; actual NULL historyPayloadHash retained.",
+    "Build three NEW synthetic proposals and 23 distinct keys from actual refs/price/stock; second account setup performed only by original D2 ADMIN API for actual existing staff. Keys absence asserted by D2 before mutation.",
+    "Write only fixed ordinary-private scenario and original 32raw staff credential key, UID/GID61035 and modes0700/0600; root credentials/hash unchanged.",
+    "Spawn original fixed runner Node child with original nonroot UID/GID/no extra groups and stdin pipe; parent measures actual child /proc identity and same namespace/canonical volume device/statfs facts.",
+    "C-selected original capacity schema/budgets; same fixed empty inode filled once through STATE alias, readonly alias checked; original live collector/preflight retained. No availableBytes cache/fake cap.",
+    "Original private runtime passfile only fills private child context; original credential-key reader constructs real tag function. Fixed D2 app.inject runner executes, closes; child reaped, original guardian revokes roles/clears exact secrets/stops PG. Unknown results never retried."
+  ],
+  "checks": {
+    "launcherAffectedModels": {
+      "passed": 28,
+      "failed": 0,
+      "kind": "LOCAL_OFFLINE_MODELS_ONLY"
+    },
+    "wrapperAffectedModels": {
+      "passed": 9,
+      "failed": 0,
+      "kind": "LOCAL_OFFLINE_MODELS_ONLY"
+    },
+    "fixedJavascriptSnippets": {
+      "count": 4,
+      "syntaxExitCode": 0,
+      "checker": "macOS Node v25.8.2 --input-type=module --check",
+      "moduleExecution": false,
+      "linux24LoadVerified": false
+    },
+    "applicationTwoLeafDiffCheckExitCode": 0,
+    "prior63FullSuiteReplayed": false
+  },
+  "preserved": [
+    "Original229cf/6372/0746 four-leaf snapshot, credential91cf/4cd9 snapshot, old wrapper498a/8d74 parents and all old revisions.",
+    "Original image6de44f43 and e475f85c receipt/source provenance; no new image build/load or modification.",
+    "D1/D2 source, C runtime source template, root plans, SQL files, authorities and actual registry unchanged by T45."
+  ],
+  "wrapperChanges": [
+    "Exactly existing Node binary readonly bind to /usr/local/bin/node and fixed readonly capacity profile bind; exact mount map still rejects extras/wrong/RW mappings.",
+    "Only empty root0644 profile inode reservation, not an approved/usable profile; original collector rejects until actual one-shot fill.",
+    "Ordinary PASS requires matching source/program/target completion+CLOSED and reaped child; import-only or wrong-version evidence cannot pass.",
+    "Bounded launcher exit-code receipt handles pre-controller rejection without exposing private logs; a potentially live guardian is not stopped from exit code alone."
+  ],
+  "packagingRequirements": [
+    "C fixed Git export only; exclude in-progress REAL host/session WIP.",
+    "Map C issuance copy of candidate/deploy/runtime/fresh35-ordinary-runtime-v1.json to deployment-relative runtime/fresh35-ordinary-runtime-v1.json. Fill genuine final integration commit/buildId only by C; source template keeps null.",
+    "Actual final web/index.html and explicit D2 fixed244 graph + dynamic raw record loader pins; currentSourceSet is real original loader scope, not asserted whole-repo coverage.",
+    "Use C verified Linux73-package archivea6b53765/manifest990b0a03 and original trusted tools/reference bytes; no Darwin Sharp or old171 installed-lock claim.",
+    "Original collector byte SHA1c34a9c8,13339B is source mode0644; archive must deliver it0755 for original executable guard, bytes unchanged.",
+    "No independent reusable ordinary pack CLI identified in retained T45 revision: old ordinary was assembled in original inline workflow. Reuse original tar/inventory/tool/ref bytes; do not invent a command or substitute production tar into isolated parser."
+  ],
+  "remainingBindings": {
+    "SOURCE": null,
+    "ARCHIVE_SHA": null,
+    "ARCHIVE_BYTES": null,
+    "FILE_COUNT": null,
+    "MANIFEST_SHA": null,
+    "KEY": null,
+    "reason": "C integrates source, actual loader descriptor and new ordinary archive/manifest first; final wrapper binds exact resulting values in its controlled successor. Current wrapper refuses all execution while unfrozen."
+  },
+  "execution": {
+    "serverCommands": 0,
+    "serverJobsSubmitted": 0,
+    "serverQueueLiveChecked": false,
+    "postgresConnections": 0,
+    "postgresWrites": 0,
+    "nativeExecute": 0,
+    "imageBuildsOrLoads": 0,
+    "dependencyInstallsOrDownloads": 0,
+    "builds": 0,
+    "deployments": 0,
+    "actualCapacityProfileCreated": false,
+    "actualLinuxRuntimeLoad": false,
+    "realPgBusinessVerified": false,
+    "browserOrNetworkVerified": false,
+    "productionVerified": false
+  },
+  "handoff": "Four exact leaves frozen and returned read-only to C/original QB; T45 stops source expansion here. Next only C exact final source/archive+QB/authority/window; no server work from this receipt."
+}

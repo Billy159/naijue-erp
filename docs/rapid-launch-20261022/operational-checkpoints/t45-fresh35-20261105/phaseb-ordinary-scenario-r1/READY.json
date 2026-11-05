@@ -1,0 +1,41 @@
+{
+  "status": "FOUR_LEAF_MAIN_SOURCE_COMPLETE_FOR_ORIGINAL_QB_INCREMENT",
+  "checkedAt": "2026-11-06T00:15:54.810758+08:00",
+  "mainWired": true,
+  "resultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/RESULT.json",
+  "resultSha256": "4cf94092bc5f723c5435c32f051761f4c8f5a2a1dd834df567bd5505240e20d1",
+  "files": [
+    {
+      "role": "application-launcher",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/launch-fresh35-isolated-v1.py",
+      "sha256": "4f1353839356214c95772bdf2569ff8783b6b688e34b65fde92a2b03d73e9fd0",
+      "bytes": 90863
+    },
+    {
+      "role": "application-direct-test",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/test_fresh35_isolated_launcher.py",
+      "sha256": "d6a4797e41ffdd16146b6e3ee37f08c9a00848e5c983802bd952c3a821ddea01",
+      "bytes": 61814
+    },
+    {
+      "role": "private-wrapper",
+      "workingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/fresh35-container-successor.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/fresh35-container-successor.py",
+      "sha256": "ff4f315bcd7372208399d36712f6ac48b033634f378997ff25d8451e1a380a3f",
+      "bytes": 28214
+    },
+    {
+      "role": "wrapper-direct-test",
+      "workingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/test_fresh35_container_successor.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1/test_fresh35_container_successor.py",
+      "sha256": "5b8356947323a8a42b5e87dc9462feae9a9c02542dbadefa401f849cf506cb93",
+      "bytes": 18024
+    }
+  ],
+  "sourceOnly": true,
+  "executorReady": false,
+  "actualServerOrPgExecuted": false,
+  "next": "C exact integration + original QB + final ordinary closure and actual new window; no REAL WIP/no replay."
+}
