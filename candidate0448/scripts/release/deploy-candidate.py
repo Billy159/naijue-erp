@@ -1526,7 +1526,7 @@ def check_production_shared_namespace(p, docker, app_id=None):
             continue
         peer = docker.inspect(peer_id, 3)
         aliases = peer['NetworkSettings']['Networks'].get(front['name'], {}).get('Aliases') or []
-        need(peer['Name'] != '/' + alias and alias not in aliases, 'EXACT35_APP_ALIAS_CONFLICT')
+        need(peer['Name'].lower() != '/' + alias.lower() and alias.lower() not in [v.lower() for v in aliases], 'EXACT35_APP_ALIAS_CONFLICT')
     if app_id is not None:
         app = docker.inspect(app_id, 3); assert_own(app, p, 'app')
         need(app['Id'] == app_id and app['State']['Running'] and

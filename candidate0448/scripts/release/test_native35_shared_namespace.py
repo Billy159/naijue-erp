@@ -87,6 +87,12 @@ class SharedNamespace(unittest.TestCase):
         d.infos[peer]={'Name':'/other-app','NetworkSettings':{'Networks':{'naijue-prod-front':{'Aliases':[p['names']['app']]}}}}
         with patch.object(D,'runtime35_record',return_value=r),patch.object(D,'process_network_namespace',side_effect=self.proc),self.assertRaisesRegex(D.Refused,'ALIAS_CONFLICT'):D.check_production_shared_namespace(p,d)
         self.assertTrue(all(args[:2]==['network','inspect'] for args in d.calls))
+    def test_dns_case_equivalent_alias_and_container_name_are_both_conflicts(self):
+        for by_name in [False,True]:
+            p,r,d,c,a=self.fixture();peer='9'*64;d.network['Containers'][peer]={'EndpointID':'8'*64}
+            d.infos[peer]={'Name':'/'+p['names']['app'].upper() if by_name else '/other-app','NetworkSettings':{'Networks':{'naijue-prod-front':{'Aliases':[] if by_name else [p['names']['app'].upper()]}}}}
+            with self.subTest(by_name=by_name),patch.object(D,'runtime35_record',return_value=r),patch.object(D,'process_network_namespace',side_effect=self.proc),self.assertRaisesRegex(D.Refused,'ALIAS_CONFLICT'):D.check_production_shared_namespace(p,d)
+            self.assertTrue(all(args[:2]==['network','inspect'] for args in d.calls))
     def test_api_different_actual_namespace_refused_even_with_correct_docker_mode(self):
         p,r,d,c,a=self.fixture()
         def different(pid):return {**self.proc(pid),'networkNamespace':{'device':4,'inode':1000 if pid==789 else 999}}

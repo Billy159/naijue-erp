@@ -29901,7 +29901,7 @@
         "businessAccepted": false
       },
       "r6Preparation": {
-        "state": "C_EXACT_STAGING_AUTHORIZED_T45_BINDING_AND_MATERIALIZATION",
+        "state": "ACTUAL_ORIGINAL_RECEIVER_READY_MATERIALIZATION_IN_PROGRESS",
         "buildRoot": "19b2232649ab07a7cd43a75596f43221333d7cdd",
         "integration": "1e7aaa130ab1eef576f262a7f78ea7623d95e2ae",
         "sourceSetSHA256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
@@ -29923,7 +29923,10 @@
         "tailAuthoritySHA256": "74acb16281bb7e38437d73e7861141e33f97b8e0ff2181781a193a18752456f6",
         "fullAuthoritySHA256": "3bde7166622bb3395a8d3cc568837b8a4d1aef2942ad698efd466a4019c09264",
         "stagingStartsAt": 1793920134994,
-        "stagingExpiresAt": 1793921934994
+        "stagingExpiresAt": 1793921934994,
+        "receiverReceiptSHA256": "1f89a2e9f588de983346454c5305a420eb6cc4dc439d7425c5af6af2a62f8e8c",
+        "materializationJob": "t45-f35-19b223-local-materialize-20261106-01",
+        "materializationDeadline": 1793921337914
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30175,7 +30178,7 @@
       ]
     },
     "productionNetworkNamespaceContinuation": {
-      "state": "T45_FIXED_SEVEN_LEAF_SOURCE_DELIVERED_PENDING_QB_INCREMENT",
+      "state": "QB_F01_CASE_INSENSITIVE_DNS_COLLISION_DIRECTED_TO_T45",
       "reportSHA256": "fcbc70aea32fb0acd8e95754447dc1850dbee483784f3af0fb258f3ce9ecd4b2",
       "reportCandidate": "47f1c4b0af84c2d8cf1cd2cf816d380f05e9adf0:candidate0448",
       "facts": "Formal API usesfront then data;127meansAPIownnamespace. ExistingsharedPGnetns branch isQAexact26only andcannotclaimformalV2support.",
@@ -30185,7 +30188,10 @@
       "actualServerExecuted": false,
       "current19b": "Retain as fixednew35synthetic candidate; build/pack/r6preparation continue, notformalnetworkPASS.",
       "readySHA256": "3cec625efe21a711c0824a62a0332352936c014a0043f44f29e7714a2ac7fa95",
-      "runtimeOrProductionVerified": false
+      "runtimeOrProductionVerified": false,
+      "finding": "SHARED-NAMESPACE-F01",
+      "fixedCandidate": "6b0f9a41bf12e8a710fb849007c69090e4d577a4",
+      "scope": "Only peer Name/Aliases DNS case equivalence; exact expected alias bytes remain; unaffected review reused."
     }
   }
 }

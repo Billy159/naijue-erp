@@ -1,0 +1,206 @@
+{
+  "task": "C-0448-NATIVE35-SHARED-PG-NAMESPACE-SEVEN-LEAF",
+  "atUtc": "2026-11-05T23:17:44.025457+00:00",
+  "conclusion": "NEED_FIX",
+  "pins": {
+    "sourceCommit": "6b0f9a41bf12e8a710fb849007c69090e4d577a4",
+    "parent": "1e7aaa130ab1eef576f262a7f78ea7623d95e2ae",
+    "readySha256": "3cec625efe21a711c0824a62a0332352936c014a0043f44f29e7714a2ac7fa95",
+    "files": [
+      {
+        "path": "scripts/release/deploy-candidate.py",
+        "bytes": 198960,
+        "sha256": "2aae0a2bc9a6225430adf7c4f9a3053b66405670e65794a04d6640464fd98d9e"
+      },
+      {
+        "path": "config/release-contract.json",
+        "bytes": 7438,
+        "sha256": "e0759cab44451af3e20c94a2b87ff6142be3a222f4bdca78721ee56d38120a72"
+      },
+      {
+        "path": "scripts/release/generate-release-contract.mjs",
+        "bytes": 11180,
+        "sha256": "9a11628e2bd048fe50f7555504536014fd437d66984f2eb2328275f8b842b02e"
+      },
+      {
+        "path": "scripts/release/boot-entry.py",
+        "bytes": 49869,
+        "sha256": "92e0ccb60d962abe20f877e2cd39bc74fd897a36e685b98402beb176fc335722"
+      },
+      {
+        "path": "scripts/release/rollback-candidate.py",
+        "bytes": 7665,
+        "sha256": "28fce7227cdd10e032ec7b2c2832aafac545e9430a7ab6ab76cc7fb3c41ab7fd"
+      },
+      {
+        "path": "scripts/release/release-file-contract.test.mjs",
+        "bytes": 6713,
+        "sha256": "77fd611a1b36ef17c275b25117edf30524d1ee5a11290cf3a86b0ad093fa676b"
+      },
+      {
+        "path": "scripts/release/test_native35_shared_namespace.py",
+        "bytes": 11191,
+        "sha256": "afd5e69233b72262b74e53ceef4fd9f44585e76061f3e629369bac03e5936a97"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "SHARED-NAMESPACE-F01",
+      "priority": "P2",
+      "status": "OPEN",
+      "file": "candidate0448/scripts/release/deploy-candidate.py",
+      "lines": [
+        1524,
+        1527
+      ],
+      "title": "Check future app DNS uniqueness using case-insensitive names",
+      "trigger": "A selected front peer has an uppercase or mixed-case alias/container name equal to the lowercase future app_name under Docker DNS rules.",
+      "actual": "The new checker compares peer Name and Aliases case-sensitively, so these peers pass. Moby lowercases DNS service keys and queries, so future app_name is not unique and proxy DNS can select a different endpoint.",
+      "evidence": [
+        {
+          "case": "same-case-alias",
+          "actualOutcome": "EXACT35_APP_ALIAS_CONFLICT",
+          "expectedForDnsUnique": "EXACT35_APP_ALIAS_CONFLICT",
+          "futureAlias": "naijue-rewrite-offline-app",
+          "peerName": "/other-app",
+          "peerAliases": [
+            "naijue-rewrite-offline-app"
+          ],
+          "mutations": 0
+        },
+        {
+          "case": "uppercase-alias",
+          "actualOutcome": "ACCEPTED",
+          "expectedForDnsUnique": "EXACT35_APP_ALIAS_CONFLICT",
+          "futureAlias": "naijue-rewrite-offline-app",
+          "peerName": "/other-app",
+          "peerAliases": [
+            "NAIJUE-REWRITE-OFFLINE-APP"
+          ],
+          "mutations": 0
+        },
+        {
+          "case": "uppercase-container-name",
+          "actualOutcome": "ACCEPTED",
+          "expectedForDnsUnique": "EXACT35_APP_ALIAS_CONFLICT",
+          "futureAlias": "naijue-rewrite-offline-app",
+          "peerName": "/NAIJUE-REWRITE-OFFLINE-APP",
+          "peerAliases": [],
+          "mutations": 0
+        }
+      ],
+      "primarySource": "https://raw.githubusercontent.com/moby/moby/v28.5.2/libnetwork/network.go",
+      "minimumCorrection": "Normalize only peer conflict comparisons consistently with Docker DNS lowercase semantics, for Name and Aliases. Keep the exact complete raw PG alias-set comparison, immutable PG identity/namespace/lease/source/record bindings and read-only network behavior. Change original helper/test and required consumer hash registrations only; no network mutation or scope expansion.",
+      "limits": "Local original-function Docker/proc/record model and upstream Moby source, not actual Docker/DNS traffic or measured production conflict."
+    }
+  ],
+  "authorEvidenceAdopted": {
+    "readySha256": "3cec625efe21a711c0824a62a0332352936c014a0043f44f29e7714a2ac7fa95",
+    "newPythonGroupsReported": 9,
+    "normalBridgeReported": 1,
+    "NodeGroupsReported": 2,
+    "rerun": false
+  },
+  "independentEvidence": [
+    {
+      "id": "ALL_SEVEN_EXACT_FROZEN_LEAF_HASHES",
+      "result": "PASS"
+    },
+    {
+      "id": "DEFAULT_CAPACITY_CREATE_TO_ACTUAL_SHARED_CHECKER_AND_OWNERSHIP",
+      "result": "PASS",
+      "originalSharedCheckerAndAssertOwn": true,
+      "networkMode": "container:exactCid",
+      "networkConnectAliasPublishCalls": 0,
+      "pgAndEndpointUnchanged": true,
+      "expiredLeaseCleanup": "only exact API stop; existing cleanup invoked, no new background service watchdog claimed",
+      "rootDockerProcRecordCapacityInputs": "MODELED"
+    },
+    {
+      "id": "DEFAULT_STAGE_CALL_ROUTE_CHECK_SITES_CONTRACT_AND_BOOT_ROLLBACK_HELPER_PINS",
+      "result": "PASS",
+      "helperSha256": "2aae0a2bc9a6225430adf7c4f9a3053b66405670e65794a04d6640464fd98d9e",
+      "checkSites": [
+        "release_capacity_fifo",
+        "capacity_process_tuple",
+        "health",
+        "current_stage"
+      ],
+      "configAndEmbeddedContractMatch": true
+    },
+    {
+      "id": "DNS_CASE_EQUIVALENT_FOREIGN_PEERS",
+      "result": "REPRODUCED_DEFECT",
+      "cases": [
+        {
+          "case": "same-case-alias",
+          "actualOutcome": "EXACT35_APP_ALIAS_CONFLICT",
+          "expectedForDnsUnique": "EXACT35_APP_ALIAS_CONFLICT",
+          "futureAlias": "naijue-rewrite-offline-app",
+          "peerName": "/other-app",
+          "peerAliases": [
+            "naijue-rewrite-offline-app"
+          ],
+          "mutations": 0
+        },
+        {
+          "case": "uppercase-alias",
+          "actualOutcome": "ACCEPTED",
+          "expectedForDnsUnique": "EXACT35_APP_ALIAS_CONFLICT",
+          "futureAlias": "naijue-rewrite-offline-app",
+          "peerName": "/other-app",
+          "peerAliases": [
+            "NAIJUE-REWRITE-OFFLINE-APP"
+          ],
+          "mutations": 0
+        },
+        {
+          "case": "uppercase-container-name",
+          "actualOutcome": "ACCEPTED",
+          "expectedForDnsUnique": "EXACT35_APP_ALIAS_CONFLICT",
+          "futureAlias": "naijue-rewrite-offline-app",
+          "peerName": "/NAIJUE-REWRITE-OFFLINE-APP",
+          "peerAliases": [],
+          "mutations": 0
+        }
+      ]
+    }
+  ],
+  "reusablePassedScope": {
+    "binding": "Closed7 production shared namespace binding; strict container/namespace/front endpoint subshapes; native35 V2 only; source/target/record hashes; exact creator labels, CID/name/image/birth/PID/startticks and finite lease/login bound.",
+    "namespace": "API create uses network container:exactCID, no alias/data attachment. Original checker compares actual modeled API/PG namespace and process birth at creation/capacity tuple/final FIFO/health/current-stage/boot. Original healthz/readyz/reverse-web checks remain.",
+    "network": "Existing selected internal front endpoint and full raw PG alias set required. No helper PG/network/alias mutation, port publication or new pool. Foreign peer DNS uniqueness is the one open issue.",
+    "callers": "Default stage calls capacity controller then new create path. Original assert_own retained in independent create/app-check/expired-cleanup seam. Runtime binding hashes new namespace object. Embedded release contract/config agree; boot92e0 and rollback28fc both pin helper2aae. Native35 boot selects new PG checker, ordinary old PG health branch remains.",
+    "cleanup": "Existing capacity_gate_stop remains usable after lease expiry and stops only exact labeled API, retaining modeled PG/endpoint unchanged. Lease checks refuse at guard points; this increment does not add a background post-release API lease watchdog. Actual C-owned lifecycle remains separate."
+  },
+  "references": {
+    "dockerContainerMode": "https://docs.docker.com/engine/network/#container-networks",
+    "mobyDnsCaseRules": "https://raw.githubusercontent.com/moby/moby/v28.5.2/libnetwork/network.go"
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actual": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "serverCalls": 0,
+    "DockerOrNetworkCreated": false,
+    "PGConnections": 0,
+    "PGStarted": false,
+    "realInputRead": false,
+    "liveDnsQueried": false,
+    "actualNetworkNamespaceObserved": false,
+    "DockerProcRecordCapacity": "MODELED_ONLY",
+    "buildPerformed": false
+  },
+  "notRepeated": [
+    "3f351 three-leaf source QA",
+    "552b nine-leaf scope",
+    "17eb F01",
+    "old release8",
+    "author9+1+2 full checks"
+  ],
+  "next": "Original T45 fixes only F01 helper/test and unavoidable helper hash registrations in a fixed successor. Reuse other passed seven-leaf scope and prior QA. Do not apply this new seven-leaf conclusion to19b/r6; actual Docker/PG/network/frontend/namespace/lease facts remain untested."
+}

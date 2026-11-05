@@ -1,0 +1,63 @@
+{
+  "status": "F01_SOURCE_LOCAL_RED_TO_GREEN_PENDING_QB_ONLY",
+  "recordedAtUTC": "2026-11-05T23:18:38.890671+00:00",
+  "finding": "SHARED-NAMESPACE-F01/P2",
+  "parentCCommit": "6b0f9a41bf12e8a710fb849007c69090e4d577a4",
+  "files": [
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/deploy-candidate.py",
+      "bytes": 199005,
+      "sha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+      "parentSha256": "2aae0a2bc9a6225430adf7c4f9a3053b66405670e65794a04d6640464fd98d9e",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-f01-01/source/scripts/release/deploy-candidate.py"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/boot-entry.py",
+      "bytes": 49869,
+      "sha256": "0b2df14b92ae591e959c115e8920b4c00338f1cdf56b8a8bb6d7f9ef25cf28bb",
+      "parentSha256": "92e0ccb60d962abe20f877e2cd39bc74fd897a36e685b98402beb176fc335722",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-f01-01/source/scripts/release/boot-entry.py"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/rollback-candidate.py",
+      "bytes": 7665,
+      "sha256": "6e87f6ba93719f1d219a24741e810385a4525654f75ea4c553b198785bd0af5e",
+      "parentSha256": "28fce7227cdd10e032ec7b2c2832aafac545e9430a7ab6ab76cc7fb3c41ab7fd",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-f01-01/source/scripts/release/rollback-candidate.py"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/test_native35_shared_namespace.py",
+      "bytes": 11960,
+      "sha256": "95a863df26f969c2ff63a79d80ec7cb62f180fcaafe8340cbd32c230a879f29c",
+      "parentSha256": "afd5e69233b72262b74e53ceef4fd9f44585e76061f3e629369bac03e5936a97",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-f01-01/source/scripts/release/test_native35_shared_namespace.py"
+    }
+  ],
+  "patch": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-f01-01/f01-case-equivalent-alias-only.patch",
+    "sha256": "05e761c8aa693e98b3349b000db7d1a97a650451398c362f346875af17e6de0c"
+  },
+  "change": "Only peer Name and peer Aliases collision comparisons use lowercase DNS equivalence. Expected endpoint aliases retain exact original byte comparison. No other guard or network action changed.",
+  "checks": {
+    "red": "1 new method / 2 uppercase alias and Name subcases failed on original helper: Refused not raised",
+    "green": "Same new method passed after one-line correction",
+    "mechanicalPins": "One directly affected existing pin-binding method passed; boot/rollback function AST unchanged",
+    "generator": "Existing Node24.21 generator --check PASS; contract/generated facts unchanged",
+    "syntaxAndWhitespace": "PASS",
+    "old9GroupsRerun": false,
+    "initialHarnessIssue": "First attempt used an absent relative output directory and test method was not added; corrected absolute output path before real RED. No source mutation on that failed attempt."
+  },
+  "noChangeTo": [
+    "Exact expected alias byte set",
+    "PG CID/image/PID/startticks/netns/target/source/record/lease guards",
+    "Original r6 frozen source/materialize job",
+    "Frontend, SQL, HBA, networks or PG container"
+  ],
+  "productionCarrierSourceNotYetWritten": true,
+  "serverActionsForFix": 0,
+  "builds": 0,
+  "PGConnections": 0,
+  "commitsOrPushes": 0,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}
