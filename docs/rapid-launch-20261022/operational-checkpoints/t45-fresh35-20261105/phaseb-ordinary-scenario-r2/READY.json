@@ -1,0 +1,23 @@
+{
+  "status": "READY_SCOPED_TWO_LEAF_MANIFEST_LIMIT_SUCCESSOR_FOR_C_QB",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r2/fresh35-container-successor.py",
+      "sha256": "f539ac73ddc8f34b806b31fb5aa114e266a2fb26a1c01da95aab179cda8cdb87",
+      "bytes": 28218,
+      "parentSHA256": "ff4f315bcd7372208399d36712f6ac48b033634f378997ff25d8451e1a380a3f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r2/test_fresh35_container_successor.py",
+      "sha256": "101693b665975ecb9f619b032bfad1fa0918d8450b3321d89b624d550d24a91b",
+      "bytes": 20328,
+      "parentSHA256": "5b8356947323a8a42b5e87dc9462feae9a9c02542dbadefa401f849cf506cb93"
+    }
+  ],
+  "resultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r2/RESULT.json",
+  "resultSHA256": "377d39b9c717ec35508aef7ca6c2bab2689f308966546c6389b351d5c1ba15e2",
+  "parentFourLeafReadySHA256": "2fcc452b3ff205b91a1f1af845ff1e7adab98deb2d223ab9acb5167c2c7880ce",
+  "parentRevision": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1",
+  "mutationScope": "Exactly two manifest read_file limits 1MiB -> 2MiB inside verify_materialized_application. No other wrapper changes.",
+  "noRuntimeAuthorizationCreated": true
+}

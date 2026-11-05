@@ -1,0 +1,59 @@
+{
+  "status": "PASS_SCOPED_SOURCE_AND_DIRECT_MODEL_TESTS_ONLY",
+  "recordedAtUTC": "2026-11-05T16:34:16.613770+00:00",
+  "parentRevision": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r1",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r2/fresh35-container-successor.py",
+      "sha256": "f539ac73ddc8f34b806b31fb5aa114e266a2fb26a1c01da95aab179cda8cdb87",
+      "bytes": 28218,
+      "parentSHA256": "ff4f315bcd7372208399d36712f6ac48b033634f378997ff25d8451e1a380a3f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/fresh35-preparation/phaseb-ordinary-scenario-r2/test_fresh35_container_successor.py",
+      "sha256": "101693b665975ecb9f619b032bfad1fa0918d8450b3321d89b624d550d24a91b",
+      "bytes": 20328,
+      "parentSHA256": "5b8356947323a8a42b5e87dc9462feae9a9c02542dbadefa401f849cf506cb93"
+    }
+  ],
+  "implementationScope": "Exactly two manifest read_file limits 1MiB -> 2MiB inside verify_materialized_application. No other wrapper changes.",
+  "tests": {
+    "command": "python3 -B test_fresh35_container_successor.py Tests.test_manifest_current_size_and_two_mib_boundary Tests.test_manifest_over_two_mib_rejected_for_both_copies Tests.test_large_manifest_digest_mismatch_still_rejected Tests.test_large_manifest_format_mismatch_still_rejected Tests.test_materialize_preserves_env_and_rejects_modified_current_closure",
+    "exitCode": 0,
+    "tests": 5,
+    "elapsedSeconds": 0.107,
+    "cases": [
+      "1,084,128-byte valid synthetic manifest accepted through original reader for metadata and private authority copies",
+      "2MiB exact size accepted for both copies",
+      "2MiB+1 byte rejected independently for each copy",
+      "Large manifest digest mismatch rejected",
+      "Large manifest format mismatch rejected after digest is rebound in fixture",
+      "Existing closure content modification rejection preserved"
+    ],
+    "boundaryFixtures": "Synthetic padded JSON and two-file closure. No claim of reading or validating actual 7292-file deployment archive. Original read_file executed; only synthetic path trust owner check mocked; all external run calls blocked by existing tests."
+  },
+  "originalR1FourLeavesPreserved": true,
+  "applicationLauncherChanged": false,
+  "otherInputLimitsChanged": false,
+  "constantsStillUnresolved": [
+    "SOURCE",
+    "ARCHIVE_SHA",
+    "ARCHIVE_BYTES",
+    "FILE_COUNT",
+    "MANIFEST_SHA",
+    "KEY"
+  ],
+  "serverRequests": 0,
+  "PGConnections": 0,
+  "newBuilds": 0,
+  "originalMainFiveChecksRerun": false,
+  "requestedModelEffort": "gpt-6.1-sol/high",
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "notTested": [
+    "Actual Linux environment or actual7292 deployment materialization",
+    "Real PostgreSQL",
+    "Business acceptance",
+    "Deployment or production behavior"
+  ]
+}
