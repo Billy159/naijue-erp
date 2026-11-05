@@ -1,6 +1,13 @@
 /** Fixed Fresh35 host. A record, a parsed catalog, or a supplied client alone
  * cannot mint execution authority. Only the owned physical session can do so. */
-import {readFile} from 'node:fs/promises';
+import {readFile,open,lstat} from 'node:fs/promises';
+import {constants} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {canonicalRequestValue} from '../../packages/application/src/canonical-request-value.ts';
+import {requestHash} from '../../packages/application/src/request-hash.ts';
+import {validateStandardImportRequest} from '../../packages/application/src/unified-import-execution.ts';
+import {isNodeScryptPasswordHash} from '../../packages/authentication/src/passwords.ts';
+import {streamTypedHash,typedHashArray} from './stream-typed-hash.mjs';
 import {watch} from 'node:fs';
 import {assertTrustedRootPath,assertTrustedRootTree} from '../../scripts/release/unified-install/trusted-install-path.mjs';
 import {resolve,dirname} from 'node:path';
@@ -11,7 +18,7 @@ import {resolveFresh35ReferenceInputPaths,loadFresh35CombinedSource,describeFres
 import {bindFresh35CombinedTarget,describeFresh35CombinedTarget,reconstructFresh35InstalledProductionTargetV2} from '../../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
 import {buildFresh35CombinedCatalog,assertFresh35CombinedCatalogCurrent} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
 import {compileFresh35CombinedProgram} from '../../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
-import {HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,isHistoricalSalesHallSourceProfile} from '../../packages/application/src/unified-import-contract.ts';
+import {parseStrictJson,HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,isHistoricalSalesHallSourceProfile} from '../../packages/application/src/unified-import-contract.ts';
 import {sameActiveWholeHostSession} from './whole-host-session.mjs';
 const loadedHostSha256=hash(await readFile(new URL(import.meta.url)));
 const moduleRoot=resolve(fileURLToPath(new URL('../../',import.meta.url)));
@@ -44,6 +51,7 @@ export async function loadFresh35HostContext(sourceRoot,referenceDirectory){
 export function fresh35HostContext(token){need(contexts.has(token),'GENUINE_FIXED_CONTEXT_REQUIRED');return contexts.get(token)}
 export async function assertFresh35HostCurrent(token){
  const c=fresh35HostContext(token),t=describeFresh35CombinedTarget(c.target);
+ if(c.productionImport)await assertFresh35ProtectedRecordSnapshotCurrent(c.envelope);
  need(Date.now()>=t.startsAt&&Date.now()<t.expiresAt,'WINDOW_EXPIRED');
  await assertFresh35CombinedSourcesCurrent(c.source);await assertFresh35CombinedCatalogCurrent(c.catalog);
  const current=validateFresh35CombinedRecord(await loadFresh35CombinedRecordEnvelope(),c.program);
@@ -79,6 +87,105 @@ export function consumeFresh35VerificationV1(verified,client){
 export async function openReviewedFresh35Host(config,sourceRoot,target,work,options={}){
  const {openReviewedFresh35PhysicalHost}=await import('./whole-host-session.mjs');
  return openReviewedFresh35PhysicalHost(config,sourceRoot,target,work,options);
+}
+
+
+// Independent REAL-batch authority. Installation, source registration and an
+// ordinary-runtime capability never authorize this fixed production entry.
+export const FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH=(process.platform==='darwin'?'/private/etc':'/etc')+'/naijue-erp/fresh35-production-import-v1.json';
+const productionImportAuthorities=new WeakMap(),productionImportBindings=new WeakMap();
+const importFileIdentity=s=>[s.dev,s.ino,s.uid,s.mode,s.nlink,s.size,s.mtimeNs,s.ctimeNs].map(String).join(':');
+const exactImportKeys=(x,keys)=>x&&Object.getPrototypeOf(x)===Object.prototype&&Reflect.ownKeys(x).length===keys.length&&keys.every(k=>{const d=Object.getOwnPropertyDescriptor(x,k);return d?.enumerable&&Object.hasOwn(d,'value')});
+export async function loadFresh35ProductionImportContext(sourceRoot,referenceDirectory){
+ need(typeof sourceRoot==='string'&&resolve(sourceRoot)===moduleRoot,'RUNNING_SOURCE_ROOT_REQUIRED');
+ const envelope=await loadFresh35CombinedRecordEnvelope();
+ need(envelope.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2','PRODUCTION_V2_RECORD_REQUIRED');
+ const target=await reconstructFresh35InstalledProductionTargetV2(envelope),t=describeFresh35CombinedTarget(target);
+ need(referenceDirectory===t.ordinary.referenceDirectory,'PRODUCTION_REFERENCE_DIRECTORY_DIFFERS');
+ // The first REAL import retains the original installation birth and window.
+ // Historical production reconstruction alone cannot open a new write window.
+ need(Date.now()>=t.startsAt&&Date.now()<t.expiresAt,'WINDOW_EXPIRED');
+ await assertTrustedRootPath(process.execPath);await assertTrustedRootPath(moduleRoot);await assertTrustedRootTree(referenceDirectory);
+ const paths=await resolveFresh35ReferenceInputPaths(referenceDirectory),source=await loadFresh35CombinedSource(sourceRoot,{baselineDirectory:paths.baselineDirectory});
+ const pins=describeFresh35CombinedSource(source).currentSourcePins;
+ for(const pin of pins)await assertTrustedRootPath(resolve(sourceRoot,pin.path));
+ for(const [path,digest]of [['tools/unified-import/fresh35-host-session.mjs',loadedHostSha256],['scripts/release/unified-install/fresh35-combined-record-v1.mjs',FRESH35_COMBINED_RECORD_MODULE_SHA256]])need(pins.some(p=>p.path===path&&p.sha256===digest),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
+ const catalog=await buildFresh35CombinedCatalog(source,target,paths),program=await compileFresh35CombinedProgram({source,target,catalog});
+ const record=validateFresh35CombinedRecord(envelope,program),snapshot=describeFresh35ProtectedRecordSnapshot(envelope);
+ await assertFresh35ProtectedRecordSnapshotCurrent(envelope,true);
+ const token=Object.freeze({profile:'FRESH35_PRODUCTION_IMPORT_CONTEXT_V1'});
+ contexts.set(token,Object.freeze({productionImport:true,envelope,source,target,catalog,program,record,recordSha256:hash(JSON.stringify(record)),recordFileSha256:snapshot.sha256}));
+ await assertFresh35HostCurrent(token);return token;
+}
+export async function describeFresh35ProductionImportBinding(context,prepared){
+ const c=fresh35HostContext(context);need(c.productionImport===true,'PRODUCTION_IMPORT_CONTEXT_REQUIRED');
+ need(prepared?.packageKind==='REAL'&&isNodeScryptPasswordHash(prepared.encodedScrypt)&&prepared.steps&&typeof prepared.steps[Symbol.asyncIterator]==='function','REAL_PREPARED_PROGRAM_REQUIRED');
+ const init=prepared.initialize,id=prepared.identity;validateStandardImportRequest(init);
+ need(init.payload.document_batch_id===id?.documentBatchId&&init.batch_id===id?.batchId&&init.package_manifest_sha256===id?.packageSha256&&init.plan_sha256===id?.planSha256&&init.namespace===id?.namespace&&init.cutoff_at===id?.cutoffAt,'REAL_PROGRAM_IDENTITY_DIFFERS');
+ let count=0;
+ const checked={async *[Symbol.asyncIterator](){for await(const incoming of prepared.steps){const step=structuredClone(incoming);validateStandardImportRequest(step?.request);const r=step.request;need(exactImportKeys(step,['method','request'])&&['masterChunk','baselineKeys','documentChunk','publish'].includes(step.method)&&r.package_manifest_sha256===id.packageSha256&&r.plan_sha256===id.planSha256&&r.namespace===id.namespace&&r.cutoff_at===id.cutoffAt&&[id.batchId,id.documentBatchId].includes(r.batch_id),'REAL_STEP_BINDING_DIFFERS');count++;need(Number.isSafeInteger(count),'REAL_STEP_COUNT_INVALID');yield step}}};
+ const stepsSha256=await streamTypedHash(typedHashArray(checked));need(count>0,'REAL_STEPS_REQUIRED');
+ await assertFresh35HostCurrent(context);
+ const binding=Object.freeze({format:'FRESH35_PRODUCTION_REAL_IMPORT_BINDING_V1',installationRecordSha256:c.recordFileSha256,installProgramSha256:c.record.programSha256,sourceSetSha256:c.record.binding.sourceSetSha256,targetSha256:c.record.binding.targetSha256,catalogSha256:c.record.catalogSha256,manifestSha256:id.packageSha256,planSha256:id.planSha256,initializerSha256:requestHash({initialize:init,encodedScrypt:prepared.encodedScrypt}),stepsSha256,stepCount:count,sourceNamespace:id.namespace,cutoffAt:id.cutoffAt,baselineBatchId:id.batchId,documentBatchId:id.documentBatchId,initializerOperationId:init.operation_id,initializerRequestKey:init.request_key});
+ productionImportBindings.set(binding,{context,prepared});return binding;
+}
+export async function loadFresh35ProductionImportAuthorization(context,binding){
+ const c=fresh35HostContext(context);need(c.productionImport===true&&productionImportBindings.get(binding)?.context===context,'GENUINE_PRODUCTION_IMPORT_BINDING_REQUIRED');await assertFresh35HostCurrent(context);
+ let file;try{await assertTrustedRootPath(FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH);
+ file=await open(FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH,constants.O_RDONLY|constants.O_NOFOLLOW)}catch{throw Error('FRESH35_HOST_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED')}
+ try{
+  const before=await file.stat({bigint:true});need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o022n)===0n&&before.size>0n&&before.size<=65536n,'PRODUCTION_BATCH_PROTECTED_AUTHORIZATION_REQUIRED');
+  const bytes=await file.readFile(),after=await file.stat({bigint:true}),pathStat=await lstat(FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH,{bigint:true});
+  need(BigInt(bytes.length)===before.size&&importFileIdentity(before)===importFileIdentity(after)&&importFileIdentity(before)===importFileIdentity(pathStat),'PRODUCTION_BATCH_AUTHORIZATION_CHANGED');
+  const value=parseStrictJson(bytes.toString('utf8')),t=describeFresh35CombinedTarget(c.target);
+  need(exactImportKeys(value,['format','decision','binding','startsAt','expiresAt','independentSafetyReviewSha256','authorizationReference'])&&value.format==='FRESH35_PRODUCTION_REAL_IMPORT_AUTHORIZATION_V1'&&value.decision==='AUTHORIZE_EXACT_REAL_BATCH_IMPORT_AND_READBACK','PRODUCTION_BATCH_AUTHORIZATION_FORMAT_REQUIRED');
+  need(exactImportKeys(value.binding,Object.keys(binding))&&requestHash(value.binding)===requestHash(binding),'PRODUCTION_BATCH_AUTHORIZATION_BINDING_DIFFERS');
+  need(Number.isSafeInteger(value.startsAt)&&Number.isSafeInteger(value.expiresAt)&&value.startsAt>=t.startsAt&&value.expiresAt<=t.expiresAt&&value.startsAt<value.expiresAt&&Date.now()>=value.startsAt&&Date.now()<value.expiresAt,'PRODUCTION_BATCH_AUTHORIZATION_WINDOW_EXPIRED');
+  need(typeof value.independentSafetyReviewSha256==='string'&&/^[a-f0-9]{64}$/.test(value.independentSafetyReviewSha256)&&typeof value.authorizationReference==='string'&&value.authorizationReference.trim().length>0&&value.authorizationReference.length<=512,'PRODUCTION_BATCH_AUTHORIZATION_REFERENCE_REQUIRED');
+  const token=Object.freeze({profile:'FRESH35_PRODUCTION_REAL_IMPORT_AUTHORIZATION_V1'});
+  productionImportAuthorities.set(token,{context,bindingOriginal:binding,binding:Object.freeze(structuredClone(binding)),startsAt:value.startsAt,expiresAt:value.expiresAt,identity:importFileIdentity(before),sha256:hash(bytes)});return token;
+ }finally{await file.close()}
+}
+async function currentProductionImportAuthority(context,authorization){
+ const a=productionImportAuthorities.get(authorization),c=fresh35HostContext(context);
+ need(c.productionImport===true&&a?.context===context,'GENUINE_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');
+ need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'PRODUCTION_BATCH_AUTHORIZATION_WINDOW_EXPIRED');
+ await assertFresh35ProtectedRecordSnapshotCurrent(c.envelope);
+ need(importFileIdentity(await lstat(FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH,{bigint:true}))===a.identity,'PRODUCTION_BATCH_AUTHORIZATION_CHANGED');
+ need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'PRODUCTION_BATCH_AUTHORIZATION_WINDOW_EXPIRED');return a;
+}
+/** Request checks are added to the original controlled client, not a second
+ * writer or SQL interface. Cleanup stays available when the authority expires. */
+export function fresh35ProductionImportQueryGuard(context,authorization,prepared){
+ const c=fresh35HostContext(context),a=productionImportAuthorities.get(authorization);
+ need(c.productionImport===true&&a?.context===context&&productionImportBindings.get(a.bindingOriginal)?.prepared===prepared,'GENUINE_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');
+ let iterator,streamHash,ordinal=0,initialized=false,finished=false;
+ const close=async()=>{try{if(iterator?.return)await iterator.return()}finally{iterator=undefined}};
+ const check=async(sql,values)=>{
+  if(sql==='ROLLBACK'){await close();return;}
+  await currentProductionImportAuthority(context,authorization);
+  if(sql.startsWith('BEGIN')){await close();ordinal=0;initialized=false;finished=false;return;}
+  if(/^SELECT naijue_erp\.standard_whole_package_(inspect|prepare|verify)_v2\(/.test(sql)){
+   need(requestHash({initialize:parseStrictJson(values?.[0]),encodedScrypt:values?.[1]})===a.binding.initializerSha256,'PRODUCTION_INITIALIZER_BINDING_DIFFERS');
+   if(sql.includes('_prepare_v2(')){need(!initialized,'PRODUCTION_ORIGINAL_STEP_REQUIRED');initialized=true;streamHash=createHash('sha256').update('[')}return;
+  }
+  if(sql==='SELECT naijue_erp.standard_whole_package_step_v2($1::uuid,$2::integer,$3::text,$4::jsonb)::text AS result_json'){
+   need(initialized&&values?.[0]===a.binding.initializerOperationId&&values?.[1]===ordinal+1,'PRODUCTION_ORIGINAL_STEP_REQUIRED');
+   iterator??=prepared.steps[Symbol.asyncIterator]();const next=await iterator.next();
+   const step=next.value,phase=step?.method==='masterChunk'?'MASTER':step?.method==='baselineKeys'?'KEYS':step?.method==='documentChunk'?'DOCUMENTS':step?.method==='publish'?'PUBLISH':null;
+   need(!next.done&&phase===values[2]&&requestHash(parseStrictJson(values[3]))===requestHash(step.request),'PRODUCTION_ORIGINAL_STEP_REQUIRED');if(ordinal)streamHash.update(',');streamHash.update(canonicalRequestValue(step));ordinal++;return;
+  }
+  if(sql==='SELECT naijue_erp.standard_whole_package_finish_v2($1::uuid)::text AS result_json'){
+   need(initialized&&values?.[0]===a.binding.initializerOperationId&&ordinal===a.binding.stepCount&&iterator&&(await iterator.next()).done,'PRODUCTION_COMPLETE_ORIGINAL_STEPS_REQUIRED');need(streamHash.update(']').digest('hex')===a.binding.stepsSha256,'PRODUCTION_ORIGINAL_STEP_REQUIRED');finished=true;await close();return;
+  }
+  if(sql==='COMMIT'||sql==='SET CONSTRAINTS ALL IMMEDIATE'){need(!initialized||finished,'PRODUCTION_COMPLETE_ORIGINAL_STEPS_REQUIRED');if(sql==='COMMIT')await close();return;}
+  need(sql==='SET LOCAL ROLE erp_unified27_initializer_2393dbc6db9581c2'||sql==='SET LOCAL ROLE erp_unified27_importer_2393dbc6db9581c2','PRODUCTION_SQL_NOT_ALLOWED');
+ };
+ return Object.freeze({check,close,expiresAt:a.expiresAt,authorizationSha256:a.sha256});
+}
+export async function openReviewedFresh35ProductionHost(config,sourceRoot,target,prepare,work,options={}){
+ const {openReviewedFresh35ProductionPhysicalHost}=await import('./whole-host-session.mjs');
+ return openReviewedFresh35ProductionPhysicalHost(config,sourceRoot,target,prepare,work,options);
 }
 
 const ordinaryAdmissions=new WeakMap(),ordinaryPendingPools=new WeakSet(),ordinaryUsedPools=new WeakSet();

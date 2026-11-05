@@ -90,3 +90,16 @@ test('direct entries reject Fresh35 without credentials while unchanged and unkn
   await assert.rejects(entry.runWholeImport(['--target-profile', FRESH35_RECEIVER_TARGET_PROFILE, '--coalesce']), /OPTION_INVALID/);
   await assert.rejects(entry.runStreamVerify(['--target-profile', FRESH35_RECEIVER_TARGET_PROFILE, '--inspect-only']), /OPTION_INVALID/);
 });
+
+test('production REAL selector and preparation retain protected-record refusal with no historical fallback',async()=>{
+ const {FRESH35_PRODUCTION_REAL_IMPORT_PROFILE:profile,FRESH35_PRODUCTION_REAL_IMPORT_CAPABILITY:capability}=await import('../tools/unified-import/fresh35-receiver-diagnostics.ts');
+ for(const command of ['stream-import','stream-verify']){
+  const result=run([command,'--target-profile',profile]);assert.equal(result.status,1);assert.deepEqual(result.value,fresh35ReceiverBlocked(profile));assert.equal(result.value.target_profile,profile);
+ }
+ const prepared=run(['stream-import','--target-profile',profile,'--prepare-only']);assert.equal(prepared.status,1);assert.equal(prepared.value.connection_attempted,false);
+ assert.equal(capability.requires_external_exact_batch_authorization,true);assert.equal(capability.production_execution_validated,false);
+ const entry=await import(new URL('../tools/unified-import/stream-import-cli.mjs',import.meta.url).href);
+ for(const argv of [['--target-profile',profile,'--allow-synthetic'],['--prepare-only'],['--target-profile',FRESH35_RECEIVER_TARGET_PROFILE,'--prepare-only']])await assert.rejects(entry.runStreamImport(argv),/OPTION_INVALID/);
+ await assert.rejects(entry.runWholeImport(['--target-profile',profile]),/OPTION_INVALID/);
+ await assert.rejects(entry.runStreamVerify(['--target-profile',profile,'--prepare-only']),/OPTION_INVALID/);
+});
