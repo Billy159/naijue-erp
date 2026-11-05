@@ -106,3 +106,9 @@ test('HISTORY draft metadata helper keeps V8 exact envelopes without changing ap
  assert.equal(result.error, undefined, String(result.error));
  assert.equal(result.status, 0, result.stdout + result.stderr);
 });
+
+test('native35 shared namespace mode is exact and cannot borrow a legacy network selector',()=>{
+ for(const change of [c=>{delete c.exact35.productionNetworkMode;},c=>{c.exact35.productionNetworkMode='front-data';},c=>{c.exact35.productionNetworkMode='container:caller-selected';}]){
+  const c=structuredClone(releaseContract);change(c);assert.throws(()=>contractBlock(c),/INVALID_RELEASE_EXACT35/);
+ }
+});

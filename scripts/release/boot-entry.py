@@ -29,7 +29,7 @@ NO = {'Name': 'no', 'MaximumRetryCount': 0}
 DEPLOYMENT_SHA256 = 'a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a'
 # Explicit exact26-r1 only; adoption depends on C90's independent source review.
 DEPLOYMENT26_SHA256 = '3e9a642f82a5355b797135fc13e5012b502e8b0bd08fbd6481e1f93b82de596d'
-DEPLOYMENT_CAPACITY_SHA256 = '6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45'
+DEPLOYMENT_CAPACITY_SHA256 = '0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970'
 DEPLOYMENT_FULL_SHA256 = 'a2c149cd7543b82c76b249c975d01d6961d22a3fd0bb2ec26b3797e077bbe578'
 
 
@@ -169,7 +169,7 @@ def deployment_binding(dp):
     if selector == 'exact35':
         native = dp.get('runtime35')
         need(isinstance(native, dict) and {'references', 'media'} <= set(native) <=
-             {'references', 'media', 'inventorySpool', 'credentialRequestKey'} and
+             {'references', 'media', 'inventorySpool', 'credentialRequestKey', 'sharedPostgresNamespace'} and
              'runtime26' not in dp and 'runtime26Full' not in dp, 'CLOSED_EXACT35_INPUTS_REQUIRED')
         refs = native['references']
         expected = {'installationRecord', 'sourceSet', 'program', 'metadata', 'buildReceipt', 'sourceManifest', 'buildManifest', 'backupCoverage'}
@@ -722,13 +722,15 @@ def boot_start(p, d, dp, stage, journal):
     need(docker.inspect(dp['beforeCAS']['services'][OLD[1]]['id'])['HostConfig']['RestartPolicy'] == NO, 'OLD_WEB_RESTART_NOT_DISABLED')
     artifacts(p, d, dp, stage)
     d.check_images_networks(dp, docker)
-    for _ in range(30):
-        db = docker.inspect(dp['beforeCAS']['services'][OLD[2]]['id'])
-        if db['State']['Running'] and db['State'].get('Health', {}).get('Status') == 'healthy':
-            break
-        time.sleep(1)
-    else:
-        raise Refused('EXISTING_SHARED_PG_NOT_HEALTHY_NO_START_OR_RECREATE')
+    shared = d.check_production_shared_namespace(dp, docker) if dp.get('runtimeSelector') == 'exact35' else None
+    if shared is None:
+        for _ in range(30):
+            db = docker.inspect(dp['beforeCAS']['services'][OLD[2]]['id'])
+            if db['State']['Running'] and db['State'].get('Health', {}).get('Status') == 'healthy':
+                break
+            time.sleep(1)
+        else:
+            raise Refused('EXISTING_SHARED_PG_NOT_HEALTHY_NO_START_OR_RECREATE')
     app = candidate(p, d, dp, stage, docker)
     web = candidate(p, d, dp, stage, docker, True)
     need(not web['State']['Running'], 'BOOT_ENTRY_ALREADY_RUNNING_REQUIRES_OPERATOR')
