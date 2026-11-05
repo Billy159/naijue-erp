@@ -22,10 +22,12 @@ test('Fresh35 diagnostic identifies the actual refusing host without creating ad
   const host = await import(new URL('../tools/unified-import/fresh35-host-session.mjs', import.meta.url).href);
   assert.equal(FRESH35_RECEIVER_TARGET_PROFILE, contract.FRESH35_CATALOG_PROFILE);
   let touched = false;
-  await assert.rejects(host.openReviewedFresh35Host(new Proxy({}, { get() { touched = true; throw Error('must not read'); } })), { message: FRESH35_RECEIVER_BLOCK_CODE });
+  await assert.rejects(host.openReviewedFresh35Host(new Proxy({}, { get() { touched = true; throw Error('must not read'); } }), root), { message: FRESH35_RECEIVER_BLOCK_CODE });
   assert.equal(touched, false);
-  assert.equal(FRESH35_RECEIVER_CAPABILITY.state, 'NOT_WIRED');
-  for (const key of ['installation_ready', 'target_admitted', 'host_wired', 'fixed_installation_record_implemented', 'public_cli_end_to_end_validated', 'automatic_fallback'] as const) assert.equal(FRESH35_RECEIVER_CAPABILITY[key], false, key);
+  assert.equal(FRESH35_RECEIVER_CAPABILITY.state, 'HOST_IMPLEMENTED_REQUIRES_PROTECTED_RECORD');
+  assert.equal(FRESH35_RECEIVER_CAPABILITY.host_wired,true);
+  assert.equal(FRESH35_RECEIVER_CAPABILITY.fixed_installation_record_implemented,true);
+  for (const key of ['installation_ready', 'target_admitted', 'public_cli_end_to_end_validated', 'automatic_fallback'] as const) assert.equal(FRESH35_RECEIVER_CAPABILITY[key], false, key);
   assert.ok(Object.isFrozen(FRESH35_RECEIVER_CAPABILITY));
   const blocked = fresh35ReceiverBlocked(FRESH35_RECEIVER_TARGET_PROFILE);
   assert.ok(Object.isFrozen(blocked));

@@ -50,7 +50,7 @@ test('actual stream-import must reach installation admission for historical sour
  const hostUrl='data:text/javascript;base64,'+Buffer.from("export const attempts=[];export async function openReviewedWholeSalesHost(config,root,target,work){attempts.push(target);throw Error('WHOLE_INSTALLATION_RECORD_UNTRUSTED')}").toString('base64');
  let moduleSource=await readFile('tools/unified-import/stream-import-cli.mjs','utf8');
  moduleSource=moduleSource.replace("const root=fileURLToPath(new URL('../../',import.meta.url));",`const root=${JSON.stringify(resolve('.'))};`);
- moduleSource=moduleSource.replace(/from(['"])(\.[^'"]+)\1/g,(_all,quote,path)=>'from'+quote+(path==='./whole-sales-host.mjs'?hostUrl:pathToFileURL(resolve('tools/unified-import',path)).href)+quote);
+ moduleSource=moduleSource.replace(/from\s*(['"])(\.[^'"]+)\1/g,(_all,quote,path)=>'from'+quote+(path==='./whole-sales-host.mjs'?hostUrl:pathToFileURL(resolve('tools/unified-import',path)).href)+quote);
  const handler=await import('data:text/javascript;base64,'+Buffer.from(moduleSource).toString('base64'));
  const host=await import(hostUrl);
  for(const [name,value]of [['target',JSON.stringify(target)],['admin',JSON.stringify(admin)],['connection',JSON.stringify({host:'127.0.0.1',port:5432,database:target.database_name,user:'synthetic',password:'synthetic-only'})],['scrypt','naijue:scrypt:1:32768:8:1:'+'c'.repeat(32)+':'+'d'.repeat(128)]])await writeFile(join(dir,name),value,{mode:0o600});
@@ -68,7 +68,7 @@ test('non-streaming whole-import runs real reader and both compilers before lega
  const hostUrl='data:text/javascript;base64,'+Buffer.from("export let attempts=0;export async function openReviewedWholeHost(){attempts++;throw Error('WHOLE_INSTALLATION_RECORD_UNTRUSTED')}").toString('base64');
  let text=await readFile('tools/unified-import/stream-import-cli.mjs','utf8');
  text=text.replace("const root=fileURLToPath(new URL('../../',import.meta.url));",`const root=${JSON.stringify(resolve('.'))};`);
- text=text.replace(/from(['"])(\.[^'"]+)\1/g,(_all,q,path)=>'from'+q+(path==='./whole-package-host.mjs'?hostUrl:pathToFileURL(resolve('tools/unified-import',path)).href)+q);
+ text=text.replace(/from\s*(['"])(\.[^'"]+)\1/g,(_all,q,path)=>'from'+q+(path==='./whole-package-host.mjs'?hostUrl:pathToFileURL(resolve('tools/unified-import',path)).href)+q);
  text=text.replace(/import\((['"])(\.[^'"]+)\1\)/g,(_all,q,path)=>'import('+q+pathToFileURL(resolve('tools/unified-import',path)).href+q+')');
  const handler=await import('data:text/javascript;base64,'+Buffer.from(text).toString('base64'));
  for(const [name,value]of [['target',JSON.stringify(target)],['admin',JSON.stringify(admin)],['connection',JSON.stringify({host:'127.0.0.1',port:5432,database:target.database_name,user:'synthetic',password:'synthetic-only'})],['scrypt','naijue:scrypt:1:32768:8:1:'+'c'.repeat(32)+':'+'d'.repeat(128)]])await writeFile(join(dir,name),value,{mode:0o600});

@@ -12,6 +12,7 @@ const etc=process.platform==='darwin'?'/private/etc':'/etc';
 export const FRESH35_COMBINED_RECORD_PATH=etc+'/naijue-erp/fresh35-combined-installation-v1.json';
 const issued=new WeakSet();
 const loadedModuleSha256=hash(await readFile(new URL(import.meta.url)));
+export const FRESH35_COMBINED_RECORD_MODULE_SHA256=loadedModuleSha256;
 function closed(object,keys){need(object&&Object.getPrototypeOf(object)===Object.prototype,'CLOSED_DATA_REQUIRED');const d=Object.getOwnPropertyDescriptors(object);need(Reflect.ownKeys(d).length===keys.length&&keys.every(k=>d[k]?.enumerable&&Object.hasOwn(d[k],'value')),'CLOSED_DATA_REQUIRED')}
 export function validateFresh35CombinedRecord(value,program){
  const expected=describeFresh35CombinedProgram(program);
@@ -40,8 +41,25 @@ export async function publishFresh35CombinedRecord(completion){
 }
 /** Read-only fixed-path loading. Source/current-client verification and a distinct
  * runtime capability remain mandatory before any future import-host admission. */
+export async function loadFresh35CombinedRecordEnvelope(){
+ need(Number.isInteger(process.getuid?.())&&process.getuid()!==0&&process.geteuid?.()!==0,'ORDINARY_RUNTIME_REQUIRED');
+ try{await assertTrustedRootPath(FRESH35_COMBINED_RECORD_PATH)}catch{throw Error('FRESH35_PROTECTED_RECORD_REQUIRED')}
+ const f=await open(FRESH35_COMBINED_RECORD_PATH,constants.O_RDONLY|constants.O_NOFOLLOW);
+ try{
+  const before=await f.stat();
+  need(before.isFile()&&before.uid===0&&before.nlink===1&&(before.mode&0o022)===0&&before.size>0&&before.size<=65536,'OS_PROTECTED_RECORD_REQUIRED');
+  const bytes=await f.readFile(),after=await f.stat(),pathStat=await lstat(FRESH35_COMBINED_RECORD_PATH);
+  need(bytes.length===before.size&&after.size===before.size&&after.mtimeMs===before.mtimeMs&&after.ctimeMs===before.ctimeMs&&pathStat.dev===before.dev&&pathStat.ino===before.ino,'RECORD_CHANGED');
+  const value=parseStrictJson(bytes.toString('utf8'));
+  closed(value,['format','installedAt','binding','target','transactionReceipt','programSha256','catalogSpecSha256','catalogSha256','authorizationSha256','state']);
+  need(value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V1'&&value.state==='COMMITTED_AND_CATALOG_CHECKED','FORMAT_REQUIRED');
+  // This protected envelope is only input to exact program reconstruction.
+  // No execution capability is issued by loading or validating JSON.
+  const freeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x)}return x};
+  return freeze(value);
+ }finally{await f.close()}
+}
 export async function loadFresh35CombinedRecord(program){
- describeFresh35CombinedProgram(program);need(Number.isInteger(process.getuid?.())&&process.getuid()!==0,'ORDINARY_RUNTIME_REQUIRED');
- await assertTrustedRootPath(FRESH35_COMBINED_RECORD_PATH);const f=await open(FRESH35_COMBINED_RECORD_PATH,constants.O_RDONLY|constants.O_NOFOLLOW);
- try{const s=await f.stat();need(s.isFile()&&s.uid===0&&s.nlink===1&&(s.mode&0o022)===0&&s.size>0&&s.size<=65536,'OS_PROTECTED_RECORD_REQUIRED');return validateFresh35CombinedRecord(parseStrictJson(await f.readFile('utf8')),program)}finally{await f.close()}
+ describeFresh35CombinedProgram(program);
+ return validateFresh35CombinedRecord(await loadFresh35CombinedRecordEnvelope(),program);
 }

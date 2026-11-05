@@ -138,10 +138,9 @@ test('execution planner rejects an evidence-bearing package outside the SQL succ
   await assert.rejects(prepareStreamPlan(join(report,'index.sqlite'),streaming,Buffer.from(manifest),options),/HISTORICAL_LINE_AMOUNT_PROFILE_REQUIRED/);
  });
 });
-test('derived hall and exact amount evidence reach requests while pending hall stays blocked',async()=>{for(const pending of [false,true]){
+test('derived or pending hall plus exact amount evidence cannot replace a physical host admission',async()=>{for(const pending of [false,true]){
  const {HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256}=await import('../packages/application/src/unified-import-contract.ts');
  const {buildHistoricalSalesHallEvidence,readHistoricalSalesHallApproval}=await import('../packages/application/src/unified-historical-sales-hall-evidence.ts');
- const {buildStreamProgram}=await import('../tools/unified-import/stream-program.mjs');
  const {p,evidence}=fixture(),h=p.records.sales_header[0],w=p.records.warehouse[0];
  p.manifest.schema_contract.source_declarations_sha256=HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256;for(const s of p.records.staff)s.fields.departure_date=null;
  h.historical_hall_evidence=buildHistoricalSalesHallEvidence({originalHallId:null,warehouseId:w.fields.id,warehouseHallId:pending?null:w.fields.hall_id,warehouseVersion:pending?null:w.fields.version,capturedAt:pending?null:'2026-11-05T03:00:00Z'});
@@ -153,8 +152,7 @@ test('derived hall and exact amount evidence reach requests while pending hall s
   const options={historicalSalesHallApproval:approval,historicalLineAmountEvidence:evidence,allowSynthetic:true,target:{protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:'123456789',database_oid:'42',database_name:'synthetic_discrepancy',catalog_sha256:'a'.repeat(64)},initialization_identity:admin};
   await assert.rejects(prepareStreamPlan(join(report,'index.sqlite'),streaming,Buffer.from(manifest),{...options,historicalSalesHallApproval:undefined}),/HISTORICAL_HALL_APPROVAL_BINDING_INVALID/);
   await assert.rejects(prepareStreamPlan(join(report,'index.sqlite'),streaming,Buffer.from(manifest),{...options,historicalSalesHallApproval:structuredClone(approval)}),/HISTORICAL_HALL_APPROVAL_UNVERIFIED/);
-  if(pending){await assert.rejects(prepareStreamPlan(join(report,'index.sqlite'),streaming,Buffer.from(manifest),options),/HISTORICAL_HALL_DERIVED_REQUIRED/);return;}
-  const plan=await prepareStreamPlan(join(report,'index.sqlite'),streaming,Buffer.from(manifest),options);
-  try{const program=await buildStreamProgram(plan,join(report,'index.sqlite'),streaming,admin);assert(program.initialize.payload.historical_line_amount_approval);assert(program.initialize.payload.historical_hall_approval);let documents=0;for await(const step of program.steps){if(step.method==='documentChunk')documents++;}assert(documents>0);}finally{await plan.dispose();}
+  await assert.rejects(prepareStreamPlan(join(report,'index.sqlite'),streaming,Buffer.from(manifest),options),/WHOLE_SALES_ADMISSION_REQUIRED/);
+  await assert.rejects(prepareStreamPlan(join(report,'index.sqlite'),streaming,Buffer.from(manifest),{...options,historicalSalesAdmission:{profile:'FRESH35_EXECUTION_ADMISSION_V1'}}),/WHOLE_SALES_ADMISSION_REQUIRED/);
  },approval);
 }});

@@ -1,24 +1,24 @@
-/** Public refusal diagnostics only. This module cannot admit a target, read an
+/** Public host diagnostics only. This module cannot admit a target, read an
  * installation record, load a package, or choose a historical host fallback. */
 export const FRESH35_RECEIVER_TARGET_PROFILE = 'FRESH35_RETIRED152_V1';
-export const FRESH35_RECEIVER_BLOCK_CODE = 'FRESH35_FIXED_RECORD_INSTALLER_AND_HOST_NOT_WIRED';
+export const FRESH35_RECEIVER_BLOCK_CODE = 'FRESH35_PROTECTED_RECORD_REQUIRED';
 
 export const FRESH35_RECEIVER_CAPABILITY = Object.freeze({
   diagnostic_version: 'FRESH35_RECEIVER_DIAGNOSTIC_V1',
   target_profile: FRESH35_RECEIVER_TARGET_PROFILE,
   selection_option: '--target-profile',
-  state: 'NOT_WIRED',
+  state: 'HOST_IMPLEMENTED_REQUIRES_PROTECTED_RECORD',
   code: FRESH35_RECEIVER_BLOCK_CODE,
   installation_ready: false,
   target_admitted: false,
-  host_wired: false,
-  fixed_installation_record_implemented: false,
+  host_wired: true,
+  fixed_installation_record_implemented: true,
   public_cli_end_to_end_validated: false,
   automatic_fallback: false,
-  message: 'Fresh35 has source-only preparation, but no reviewed fixed installation record or connected import host. Selecting it stops before reading package or private inputs. It never falls back to a historical177/178 host.',
+  message: 'The Fresh35 host requires its exact OS-protected combined installation record, explicit reference inputs and live same-client catalog verification. Implementation does not establish installation or PostgreSQL acceptance. No historical177/178 fallback is permitted.',
 });
 
-/** Exact explicit selection is diagnostic, never execution authorization. */
+/** Missing protected record diagnostics, never execution authorization. */
 export function fresh35ReceiverBlocked(profile: string) {
   if (profile !== FRESH35_RECEIVER_TARGET_PROFILE) throw new Error('OPTION_INVALID');
   return Object.freeze({
