@@ -14,7 +14,7 @@ import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-pat
 import {loadFresh35CombinedSource,describeFresh35CombinedSource,resolveFresh35ReferenceInputPaths} from './fresh35-combined-source-v1.mjs';
 import {bindFresh35CombinedTarget} from './fresh35-combined-target-v1.mjs';
 import {buildFresh35CombinedCatalog} from './fresh35-combined-catalog-v1.mjs';
-import {compileFresh35CombinedProgram,describeFresh35CombinedProgram,loadFresh35CombinedAuthorization,runFresh35CombinedInstall,describeFresh35CombinedCompletion} from './fresh35-combined-lifecycle-v1.mjs';
+import {compileFresh35CombinedProgram,describeFresh35CombinedProgram,loadFresh35CombinedAuthorization,runFresh35CombinedInstall,describeFresh35CombinedCompletion,describeFresh35CombinedInstallFailure} from './fresh35-combined-lifecycle-v1.mjs';
 import {publishFresh35CombinedRecord} from './fresh35-combined-record-v1.mjs';
 const root='/opt/naijue-erp/fresh35-combined-v1';
 const authority='/etc/naijue-erp/fresh35-isolated-provision-v1.json';
@@ -152,5 +152,5 @@ export async function main(){
  }
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
- try{await main()}catch(error){process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:typeof error?.installState==='string'?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',validationStage:['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'].includes(error?.validationStage)?error.validationStage:null,validationCode:typeof error?.validationCode==='string'&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.validationCode)?error.validationCode:null,automaticRetry:false})+'\n');process.exitCode=1;}
+ try{await main()}catch(error){process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:['NOT_STARTED','IN_TRANSACTION','ROLLED_BACK','ROLLBACK_UNCONFIRMED','COMMIT_OUTCOME_UNKNOWN','COMMITTED_UNPUBLISHED','FAILED_NO_INSTALLED_RESULT'].includes(error?.installState)?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',...describeFresh35CombinedInstallFailure(error),validationStage:['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'].includes(error?.validationStage)?error.validationStage:null,validationCode:typeof error?.validationCode==='string'&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.validationCode)?error.validationCode:null,automaticRetry:false})+'\n');process.exitCode=1;}
 }

@@ -1,0 +1,128 @@
+{
+  "task_id": "D1-FRESH35-INSTALL-SAFE-DIAGNOSTICS-20261106-01",
+  "state": "SOURCE_DIAGNOSTIC_FIX_VERIFIED_NOT_ACTUAL_INSTALL_ROOT_CAUSE",
+  "recorded_at": "2026-11-06T02:03:22.920853+08:00",
+  "workspace": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "head_observed": "a70e5e42936b82fbffc5e8b399548e5afbc4e951",
+  "delivery": "FOUR_STABLE_UNCOMMITTED_LEAVES_FOR_C_FREEZE",
+  "leaves": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "bytes": 19709,
+      "sha256": "156ad80a3e2a0fbdd46f75bbc5d46ecd99d85522e26df0c0805044f01eb08f75"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "bytes": 18522,
+      "sha256": "2822b0cdef321705b34d411d59297716381e6c777728433f77d3356858ff5483"
+    },
+    {
+      "path": "tests/fresh35-combined-lifecycle.test.mjs",
+      "bytes": 10097,
+      "sha256": "976308829c9daae93ebe86cbbed2b0dcd0dbc927d4075ae7141b1c2d6c8487f4"
+    },
+    {
+      "path": "tests/fresh35-isolated-entry.test.mjs",
+      "bytes": 15829,
+      "sha256": "9bf88b86e6a40e5a801ffaecce2b358224897d4fd9d30b9134cb7f8abd56038b"
+    }
+  ],
+  "input": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-pg20-execution-01/DIAGNOSTIC-RESULT.json",
+    "sha256": "7cc188b89eb0c7fba8500cf27754ecf26d0c637a3a430f0c45cf58b1e2e0f4b8",
+    "actual_read": true,
+    "safe_actual_boundary": "BOUND -> INSTALL_PENDING -> STEP_PENDING physical-empty-target -> ROLLBACK_UNCONFIRMED INSTALL_ERROR -> CLIENT_CLOSED confirmed. No STEP_ACKNOWLEDGED, COMMIT_PENDING or ROLLED_BACK.",
+    "candidate": "5d70b3ee9038b4d0fe66328e2a172b688c07d9c9 entry/lifecycle/launcher bytes compared equal to read-only baseline before modification"
+  },
+  "closed_entry_fields": [
+    "state",
+    "installState",
+    "code",
+    "validationStage",
+    "validationCode",
+    "automaticRetry",
+    "stage",
+    "step",
+    "originalSQLSTATE",
+    "originalInternalCode",
+    "rollbackSQLSTATE",
+    "rollbackInternalCode"
+  ],
+  "stages": [
+    "BOUND",
+    "BEGIN",
+    "STEP",
+    "OBSERVE",
+    "COMMIT",
+    "ROLLBACK",
+    "CLOSE",
+    "UNKNOWN"
+  ],
+  "behavior": [
+    "Original failure stage and exact original program step are retained before rollback; rollback failure does not overwrite original stage.",
+    "Only original SQLSTATE 5 uppercase alphanumeric characters and this module-constructed public internal code are recorded. External arbitrary FRESH35-like code, message/detail/hint/SQL/params/stack and caller-forged diagnostic object are not serialized.",
+    "Diagnostic retained in module-private WeakMap before AggregateError wraps rollback/journal/close failures; entry receives one flat six-field addition, not a second nested payload.",
+    "STEP name comes directly from current drive statement in genuine compiled program, not an exception string; consumer additionally checks actual trusted descriptor statement membership. Other stages have null step.",
+    "Original journal errorCode is now limited to retained original SQLSTATE/internal public code or fixed INSTALL_ERROR, never arbitrary exception.code.",
+    "Existing transaction state machine, SQL, protocol guards, commit/quarantine/rollback decisions and close/cleanup behavior unchanged. Original entry failure state/exit and automaticRetry=false retained; installState restricted to original finite statuses."
+  ],
+  "native_pg_findings": {
+    "version": "8.23.1",
+    "healthy_ready_for_query_fields": "Confirmed via native constructor and handlers in no-network test; pipeline/active/queues/transaction fields match original guard.",
+    "error_response_timing": "Reproduced using actual native handlers without network: ErrorResponse rejects original query while readyForQuery is false; original protocol guard rejects immediate next call; subsequent ReadyForQuery status E restores allowed physical state.",
+    "interpretation": "This establishes a possible rollback-guard timing path only. Actual original SQL error and actual rollback error are absent in old journal; no claim this is the 5d70 root cause. No waiting/guard relaxation included."
+  },
+  "verification": {
+    "initial_red": {
+      "tests": 4,
+      "passed": 1,
+      "failed": 3,
+      "exit": 1
+    },
+    "final_direct": {
+      "command": "Node 24.21.0 --test tests/fresh35-combined-lifecycle.test.mjs tests/fresh35-isolated-entry.test.mjs",
+      "tests": 21,
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0
+    },
+    "types": {
+      "command": "tsc --noEmit -p tsconfig.json",
+      "exit": 0
+    },
+    "build": {
+      "command": "tsc -p tsconfig.build.json",
+      "exit": 0
+    },
+    "diff_check": 0,
+    "logs": {
+      "red": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/INSTALL-SAFE-DIAGNOSTICS-red.log",
+        "sha256": "5d042d649c478d126033c08b9100fbc78ac63c0c330f353e5a3bbf0ff1f83eb1"
+      },
+      "green": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/INSTALL-SAFE-DIAGNOSTICS-green.log",
+        "sha256": "c60cc958cef8f1c9a09d3d28c08f7a2431c2389ef45bd0d8b382b88a594a2e6d"
+      },
+      "types": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/INSTALL-SAFE-DIAGNOSTICS-types.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "build": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/INSTALL-SAFE-DIAGNOSTICS-build.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "ownership": [
+    "D1 only these four leaves. No launcher/test/wrapper writes.",
+    "T45 owns launcher/tests and fixed wrapper evidence list. Pairing uses agreed flat twelve entry fields.",
+    "Prior REAL 6ed source leaves unchanged/read-only. No REAL64 or full suite rerun. No commit/index changes."
+  ],
+  "unverified": [
+    "No actual PG/server/connect/install replay or deployment. Original 5d70 stopped scene not modified.",
+    "Underlying original installation SQLSTATE and rollback cause remain unknown from old safe journal; next exact candidate/window must be coordinated by C/T45."
+  ],
+  "next": "C freeze D1 four leaves with T45 producer-consumer companion changes, coordinate only affected QB check. No new actual execution permission supplied."
+}

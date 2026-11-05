@@ -1552,3 +1552,6 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 
 
 - Bounded original stopped-state journal read actually passed0/.067s,5 events/3027B: BOUND→INSTALL_PENDING→STEP_PENDING physical-empty-target→ROLLBACK_UNCONFIRMED/INSTALL_ERROR→CLIENT_CLOSED(true). No ACK/COMMIT_PENDING/ROLLED_BACK; SQLSTATE absent. This is not proof of commit or rollback. Original D1/T45 split minimal safe error propagation by existing file ownership, and inspect exact locked pg protocol before any claimed root cause. No PG restart/connections or environment change.
+
+
+- Original owners delivered one correlated safe-diagnostic increment: D1 lifecycle/entry and2tests e5b17f08; T45 launcher/test and original wrapper/test6efc926b. C verified exact bytes and original logs, no duplicate technical QA. Flat12 fields separate initial stage/step and original/rollback SQLSTATE/static internal codes; no raw error/SQL/secret output, success/transaction/protocol/cleanup unchanged. Native pg timing reproduced without network is only a possible cause, not actual root cause. Combine once for original QB and full candidate, then actual bounded PG; no model-count substitution for install/import closure.

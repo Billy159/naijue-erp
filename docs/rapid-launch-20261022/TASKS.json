@@ -29249,6 +29249,15 @@
           "mutations": 0,
           "PGConnections": 0
         }
+      },
+      "safeInstallDiagnostics": {
+        "state": "ORIGINAL_OWNERS_STABLE_SOURCE_DELIVERY_QB_PENDING_NOT_ROOT_CAUSE_FIXED",
+        "D1ReceiptSHA256": "e5b17f089463e73941a7f4870b0462f33b7be13aa2cb86158173a50ec8c2ff45",
+        "T45ReceiptSHA256": "6efc926b08141b854756e181e8fa03418b8352ad51eaea1c422c8b067e818a83",
+        "scope": "D1 lifecycle/entry+2tests, T45 launcher+test/wrapper+test; flat12 producer-consumer only; no SQL/ACL/protocol/state-machine change",
+        "next": "Fixed combined candidate to original QB once; distinct full build and actual scoped PG followup, original stopped scene preserved",
+        "actualRootCause": "UNKNOWN; no-network native pg timing is possible path only",
+        "PGExecuted": false
       }
     },
     "productionRealImportContinuation": {

@@ -1,0 +1,35 @@
+{
+  "status": "READY_T45_SAFE_DIAGNOSTIC_FOUR_LEAVES_FOR_C_D1_INTEGRATION",
+  "files": [
+    {
+      "role": "application-launcher",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/launch-fresh35-isolated-v1.py",
+      "sha256": "d9c2750a4c5af5f067f7628de0a393b7cefc77fb6597afabf6f4d0bb962771e4",
+      "bytes": 93145
+    },
+    {
+      "role": "application-direct-test",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/test_fresh35_isolated_launcher.py",
+      "sha256": "30d67045b58273cf1782b19a2fcbd4e68f9f9a79bee8240825a215e9f2ccf77a",
+      "bytes": 64639
+    },
+    {
+      "role": "private-wrapper",
+      "workingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/fresh35-container-successor.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/fresh35-container-successor.py",
+      "sha256": "ad9cf2bc69e8df69beb8e02932546105070c9b26869bd22cfd0874f94ff39c82",
+      "bytes": 33154
+    },
+    {
+      "role": "wrapper-direct-test",
+      "workingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/test_fresh35_container_successor.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/test_fresh35_container_successor.py",
+      "sha256": "7dc39a3659fe628597eb599c78ffd5149c9a2d823f1878f6b20dc280a238b8e9",
+      "bytes": 27767
+    }
+  ],
+  "resultSHA256": "6efc926b08141b854756e181e8fa03418b8352ad51eaea1c422c8b067e818a83",
+  "serverActions": 0
+}

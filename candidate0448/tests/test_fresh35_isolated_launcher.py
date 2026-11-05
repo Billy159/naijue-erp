@@ -613,4 +613,26 @@ class LinuxRuntimeLoadTests(unittest.TestCase):
         with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=1,stdout=b'',stderr=b'PRIVATE_BODY_MUST_NOT_EXPORT')),self.assertRaisesRegex(RuntimeError,'LINUX_RUNTIME_DEPENDENCY_LOAD_FAILED') as error:m.load_linux_runtime_dependencies(Path('/model'))
         self.assertNotIn('PRIVATE_BODY',str(error.exception))
 
+class InstallChildDiagnosticTests(unittest.TestCase):
+    def payload(self):
+        return {'state':'INSTALL_FAILED_OR_OUTCOME_UNKNOWN','code':'FRESH35_ISOLATED_ENTRY_FAILED','installState':'ROLLBACK_UNCONFIRMED','validationStage':None,'validationCode':None,'automaticRetry':False,'stage':'STEP','step':'physical-empty-target','originalSQLSTATE':'42601','originalInternalCode':None,'rollbackSQLSTATE':None,'rollbackInternalCode':'FRESH35_COMBINED_PROTOCOL_NOT_READY'}
+    def capture(self,raw):
+        saved={}
+        with patch.object(m,'json_new',side_effect=lambda p,v:saved.update({p.name:v})):
+            m.persist_install_child_failure(Path('/fixed'),SimpleNamespace(returncode=1,stderr=raw,stdout=b'SECRET_SENTINEL'),{'statements':[{'name':'physical-empty-target'}]})
+        return saved['installation-child-failure.json']
+    def test_closed_diagnostic_preserves_separate_errors_without_raw(self):
+        v=self.payload();r=self.capture(json.dumps(v).encode());self.assertFalse(r['diagnosticUnavailable']);self.assertEqual({k:r[k] for k in v},v);self.assertEqual(r['exitCode'],1);self.assertNotIn('SECRET_SENTINEL',json.dumps(r))
+    def test_invalid_or_sensitive_payload_is_not_persisted(self):
+        cases=[{**self.payload(),'message':'SECRET_SENTINEL'},{**self.payload(),'stage':'SQL select'},{**self.payload(),'originalSQLSTATE':'SECRET_SENTINEL'},{**self.payload(),'rollbackInternalCode':'PASSWORD_SECRET'},{**self.payload(),'step':'select * from users'},{**self.payload(),'step':'valid-looking-but-not-compiled'},{**self.payload(),'automaticRetry':True},{**self.payload(),'installState':{}},{**self.payload(),'validationCode':'unsafe detail'}]
+        for v in cases:
+            with self.subTest(v=v):
+                r=self.capture(json.dumps(v).encode());self.assertTrue(r['diagnosticUnavailable']);self.assertEqual(set(r),{'state','exitCode','automaticRetry','diagnosticUnavailable'});self.assertNotIn('SECRET_SENTINEL',json.dumps(r))
+    def test_duplicate_malformed_and_size_boundary(self):
+        raw=json.dumps(self.payload()).encode();exact=raw+b' '*(16384-len(raw));self.assertFalse(self.capture(exact)['diagnosticUnavailable'])
+        for raw in [exact+b' ',b'not JSON SECRET_SENTINEL',b'{"state":1,"state":2}',b'\xff',b'',b'[]']:
+            with self.subTest(bytes=len(raw)):self.assertTrue(self.capture(raw)['diagnosticUnavailable'])
+    def test_source_failure_capture_precedes_original_failure_and_no_retry(self):
+        source=PATH.read_text();start=source.index("r=subprocess.run(argv+['--execute']");end=source.index("result=strict_json(r.stdout)",start);part=source[start:end];self.assertLess(part.index('persist_install_child_failure(root,r,descriptor)'),part.index("need(r.returncode==0,'INSTALL_FAILED_OR_OUTCOME_UNKNOWN')"));self.assertEqual(part.count('subprocess.run'),1)
+
 if __name__=='__main__':unittest.main()

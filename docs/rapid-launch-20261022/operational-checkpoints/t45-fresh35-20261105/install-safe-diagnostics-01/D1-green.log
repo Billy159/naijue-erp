@@ -1,0 +1,29 @@
+✔ model runs base then hall then amount and full guard within one transaction (1.265875ms)
+✔ ordinary schema failure acknowledges exactly one rollback and never commits (0.413041ms)
+✔ rollback failure remains distinct from a confirmed rollback (0.397709ms)
+✔ unknown COMMIT quarantines without rollback, replay or further SQL (0.504625ms)
+✔ malformed COMMIT acknowledgement is unknown, never success (1.077417ms)
+✔ post-commit journal failure is committed/unpublished, never rollback (0.579791ms)
+✔ failure writing COMMIT_PENDING rolls back before any commit submission (0.311916ms)
+✔ source drift before beginning sends no SQL (0.29725ms)
+✔ caller objects cannot become a program, completion, authorization or record (5.623291ms)
+✔ safe installation diagnostic retains original and rollback codes before AggregateError without private text (2.258333ms)
+✔ safe installation diagnostic retains unknown commit outcome and filters arbitrary metadata (0.71425ms)
+✔ native pg 8.23.1 protocol fields match healthy ReadyForQuery and reject pre-ready error-response timing without a server (23.46675ms)
+✔ safe installation diagnostic publishes only module-constructed internal codes and exact failed step (0.39325ms)
+✔ safe installation diagnostic survives rollback acknowledgement and failure-journal wrappers (0.162625ms)
+✔ isolated native client has an explicit owner TCP target and no inherited PG configuration (0.913917ms)
+✔ isolated bridge publishes only genuine completion and separates ordinary host verification (4.968ms)
+✔ host output refuses a successful callback when physical connection cleanup failed (1.132042ms)
+✔ fixed synthetic CLI stages retain original keys, stop uncertain outcomes and require every connection to close (3.488458ms)
+✔ split commit mode accepts only the original fixed entry and one64hex expected rollback binding (1.284833ms)
+✔ isolated application bootstrap reads one original private hash before dropping UID and never defaults to dummy (0.842625ms)
+✔ safe installation diagnostic stderr exposes only closed fields and no original private exception data (0.911166ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 235.22525

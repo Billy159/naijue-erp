@@ -1,0 +1,77 @@
+{
+  "status": "PASS_SCOPED_SAFE_EXECUTE_FAILURE_CAPTURE_SOURCE_AND_MODELS_ONLY",
+  "recordedAtUTC": "2026-11-05T18:01:54.193796+00:00",
+  "files": [
+    {
+      "role": "application-launcher",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/launch-fresh35-isolated-v1.py",
+      "sha256": "d9c2750a4c5af5f067f7628de0a393b7cefc77fb6597afabf6f4d0bb962771e4",
+      "bytes": 93145
+    },
+    {
+      "role": "application-direct-test",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/test_fresh35_isolated_launcher.py",
+      "sha256": "30d67045b58273cf1782b19a2fcbd4e68f9f9a79bee8240825a215e9f2ccf77a",
+      "bytes": 64639
+    },
+    {
+      "role": "private-wrapper",
+      "workingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/fresh35-container-successor.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/fresh35-container-successor.py",
+      "sha256": "ad9cf2bc69e8df69beb8e02932546105070c9b26869bd22cfd0874f94ff39c82",
+      "bytes": 33154
+    },
+    {
+      "role": "wrapper-direct-test",
+      "workingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/test_fresh35_container_successor.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-install-safe-diagnostics-01/test_fresh35_container_successor.py",
+      "sha256": "7dc39a3659fe628597eb599c78ffd5149c9a2d823f1878f6b20dc280a238b8e9",
+      "bytes": 27767
+    }
+  ],
+  "ownerScope": "T45 only launcher+directtests and privatewrapper evidence list. D1 entry/lifecycle untouched.",
+  "agreedFlatPayloadKeys": [
+    "state",
+    "installState",
+    "code",
+    "validationStage",
+    "validationCode",
+    "automaticRetry",
+    "stage",
+    "step",
+    "originalSQLSTATE",
+    "originalInternalCode",
+    "rollbackSQLSTATE",
+    "rollbackInternalCode"
+  ],
+  "capture": "Execute failure only, stderr bytes<=16KiB, strict JSON closed12keys, duplicate/nonfinite/UTF8 invalid rejected, source descriptor compiled step names only, separate safe original/rollback codes, no raw message/SQL/args/env/stdout. New fixed installation-child-failure.json persisted before existing generic failure.",
+  "failureSemantics": "Generic failure.json and commitOutcome unchanged, no retry, original cleanup flow unchanged; invalid/unavailablepayload stores only fixed state/exitCode/automaticRetry=false/diagnosticUnavailable=true.",
+  "wrapperChange": "Only add fixed installation-child-failure.json to original evidence names.",
+  "models": {
+    "launcherTests": 4,
+    "launcherExitCode": 0,
+    "launcherSeconds": 0.002,
+    "wrapperTests": 1,
+    "wrapperExitCode": 0,
+    "wrapperSeconds": 0.011,
+    "scope": [
+      "valid separate original/rollback diagnostics",
+      "extra sensitive fields and invalid installState/stage/SQLSTATE/internalcode rejected",
+      "uncompiled step name refused",
+      "strict JSON duplicate/malformed/UTF8/16KiB+1 refusal and exact16KiB accepted",
+      "capture before original need failure and one subprocess only",
+      "original wrapper evidence consumes safe diagnostic while failure remains failure"
+    ]
+  },
+  "serverActions": 0,
+  "PGConnections": 0,
+  "buildsOrDeploys": 0,
+  "fixed5d70SceneChanged": false,
+  "D1ImplementationNotAssumedComplete": true,
+  "requestedModelEffort": "gpt-6.1-sol/high",
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "next": "C integrate exact T45/D1 leaves and QB review only correlated diagnostic increment. No original failed PG replay; actual new frozen candidate and scope need C binding."
+}
