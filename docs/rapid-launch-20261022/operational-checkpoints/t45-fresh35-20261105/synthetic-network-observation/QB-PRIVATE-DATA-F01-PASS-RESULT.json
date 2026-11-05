@@ -1,0 +1,136 @@
+{
+  "task": "C-0448-PRIVATE-STANDARD-DATA-STAGING",
+  "scope": "PRIVATE-DATA-F01 only, fixed source plus bounded small synthetic models",
+  "createdAt": "2026-11-05T21:35:09.009584+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "finding": {
+    "id": "PRIVATE-DATA-F01",
+    "status": "CLOSED_FOR_EXACT_SUCCESSOR",
+    "oldConclusion": "NEED_FIX retained for cd590f2e",
+    "closure": "Bounded remaining-byte reads, one-byte EOF probe rejecting growth before writing extra, original expiresAt checks before each payload read/write and final flush/fsync; verified growth, expiry and necessary positive/no-replay cases."
+  },
+  "parentResult": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/C-0448-PRIVATE-STANDARD-DATA-STAGING-20261106/RESULT.json",
+    "sha256": "0c3dfd3fed5f01f7bb36beceeecd352b37e53a66ff9732fc9f8ab0161de88d4c",
+    "passedScopeReused": true,
+    "oldFindingReproducedAgain": false
+  },
+  "successorReadySha256": "e6a87e1a05a49c27b97c386626b10fa4ef4cd30aa34b5a0ff616c9965f24761d",
+  "reviewedFiles": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/t45-private-data-staging-f01-20261106-01/assemble_standard_data.py",
+      "bytes": 13185,
+      "sha256": "e9b69bf4f2d90f29a7fc3a9780f074b881f9c23690b7c657b0ad4c937d3ed03f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/t45-private-data-staging-f01-20261106-01/candidate0448/tests/test_ssh_artifact_staging.py",
+      "bytes": 22981,
+      "sha256": "141d64add6441dd821bd25ca741bac079aae1a5d28fe5d92eecf3be662f2d8f1"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/t45-private-data-staging-f01-20261106-01/F01-only.patch",
+      "bytes": 4063,
+      "sha256": "8946505cf8b7295e250aabb1a8b85dedb69084195cd717477308222bca36f545"
+    }
+  ],
+  "unchangedClientSha256": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085",
+  "unchangedReceiverSha256": "8841f413eed7580ad232ecaf1ec2d12644fe51be0a71a8a780195be2afb42fff",
+  "checks": [
+    {
+      "id": "EXACT_F01_BINDING_AND_MAIN_ONLY_DIFF",
+      "result": "PASS",
+      "unchanged": [
+        "client7af30384",
+        "receiver8841f413",
+        "otherAssemblerFunctions",
+        "allExternalBindings",
+        "existingTestMethods"
+      ]
+    },
+    {
+      "mode": "growth",
+      "result": "PASS",
+      "writtenBytes": 4,
+      "receiverCalls": 0,
+      "payloadReadCalls": 2,
+      "firstReads": [
+        {
+          "requested": 4,
+          "returned": 4
+        },
+        {
+          "requested": 1,
+          "returned": 1
+        }
+      ],
+      "refusal": "EXACT_FRAGMENT_EXTRA_STREAM",
+      "rootUidExternalGate": "MODELED",
+      "receiver": "STUBBED_NOT_ACTUAL",
+      "noReplayRetained": "not retried"
+    },
+    {
+      "mode": "expiry",
+      "result": "PASS",
+      "writtenBytes": 0,
+      "receiverCalls": 0,
+      "payloadReadCalls": 1,
+      "firstReads": [
+        {
+          "requested": 4,
+          "returned": 4
+        }
+      ],
+      "refusal": "PRIVATE_STANDARD_DATA_ASSEMBLY_DEADLINE_EXPIRED",
+      "rootUidExternalGate": "MODELED",
+      "receiver": "STUBBED_NOT_ACTUAL",
+      "noReplayRetained": "not retried"
+    },
+    {
+      "mode": "valid",
+      "result": "PASS",
+      "writtenBytes": 180,
+      "receiverCalls": 1,
+      "payloadReadCalls": 90,
+      "firstReads": [
+        {
+          "requested": 4,
+          "returned": 4
+        },
+        {
+          "requested": 1,
+          "returned": 0
+        }
+      ],
+      "refusal": null,
+      "rootUidExternalGate": "MODELED",
+      "receiver": "STUBBED_NOT_ACTUAL",
+      "noReplayRetained": true
+    }
+  ],
+  "reusedNotRerun": [
+    "owner28",
+    "prior360HelperNegatives",
+    "prior45MetadataChecks",
+    "6707",
+    "otherSourcePassedScope"
+  ],
+  "authorNewTwoCases": "Reviewed definitions and fixed READY red/green report, not rerun; independent original-body three-case model executed",
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actual": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "realDataRead": false,
+    "dataTransferred": false,
+    "authorityCreated": false,
+    "rootUidExternalGate": "MODELED_ONLY",
+    "receiverLaunch": "STUBBED_ONLY",
+    "actualServerAcceptance": false,
+    "actualClientApplied": false
+  },
+  "remaining": "No open source finding in this scoped successor. Actual integration, external exact C authority/budget and transport/server/PG acceptance remain separate."
+}

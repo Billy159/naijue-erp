@@ -29724,8 +29724,18 @@
           "ordinaryBusinessVerified": false,
           "uidProbeExecuted": false,
           "specificExtraBackendOrigin": "UNKNOWN_NOT_RECORDED",
-          "next": "D1 source predicate/call-chain readonly, T45 stopped logs only; no identical retry or weakened exclusive guard"
+          "next": "D1 source predicate/call-chain readonly, T45 stopped logs only; no identical retry or weakened exclusive guard",
+          "stoppedLogReceiptSHA256": "499a167b14f65a7ace2ade32fca61fb8353b65213140196cacede8f2c466c55b"
         }
+      },
+      "r4ExclusiveBackendFollowup": {
+        "owner": "D1",
+        "state": "C_APPROVED_MINIMAL_PRIVILEGED_BOOLEAN_OBSERVER_SOURCE_CONTRACT_IMPLEMENTATION",
+        "authority": "C under direct human decision delegation until2026-11-06T12:00+08",
+        "reason": "PG17.11 hides backend_type for unrelated roles; logical launcher can retain bootstrap user and hit original usename OR. Plain predicate exclusion would leak real other clients/walsenders under NULL. Specific r4 extra backend still unknown.",
+        "scope": "Existing bootstrap/catalog/ACL exact minimal fixed no-arg bool observer, fixed search_path/PUBLIC revoke/caller and target binding, no full stats grant or raw identities. Clients/walsender/workers/unknown refused, only exact native launcher and mandatory native auxiliaries allowed. Preserve original target, budget and runtime guards.",
+        "dbExecuted": false,
+        "noNewTablesOrFields": true
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -29805,7 +29815,7 @@
       "next": "T45 existing private transport capability/preparation only; C exact transfer binding after immutable source readiness.",
       "sourceSuccessor": {
         "owner": "T45",
-        "state": "FIXED_INDEPENDENT_COPY_QB_NEW_OPS_DELTA_IN_PROGRESS_NOT_ACTUAL_TRANSFER",
+        "state": "QB_F01_CLOSED_SOURCE_INTEGRATED_NOT_SERVER_TRANSFER",
         "readySHA256": "aeae087ba1f5be52fa5b825df9ec808f839b398a8edeac95bcf07d9c199091cf",
         "clientSHA256": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085",
         "actualClientUnchanged": true,
@@ -29813,7 +29823,14 @@
         "fragmentBytes": 2097152,
         "lastFragmentBytes": 1234226,
         "scope": "Two explicit private data kinds in existing typed channel, original40s/external authority/once-only; exact one-shot ordered fragments to original UID1000 receiver; no unpack/PG",
-        "actualServerTransfer": false
+        "actualServerTransfer": false,
+        "QBInitialReceiptSHA256": "0c3dfd3fed5f01f7bb36beceeecd352b37e53a66ff9732fc9f8ab0161de88d4c",
+        "finding": "PRIVATE-DATA-F01 assembly output growth and per-chunk deadline",
+        "fixedReadySHA256": "e6a87e1a05a49c27b97c386626b10fa4ef4cd30aa34b5a0ff616c9965f24761d",
+        "fixedAssemblerSHA256": "e9b69bf4f2d90f29a7fc3a9780f074b881f9c23690b7c657b0ad4c937d3ed03f",
+        "QBFinalReceiptSHA256": "09707e947826c09c13b65e48d03796870cb5841313f6880ecbc8d563777d8542",
+        "testSHA256": "141d64add6441dd821bd25ca741bac079aae1a5d28fe5d92eecf3be662f2d8f1",
+        "sourceIntegration": "candidate0448 exact client590 predecessor; worktree root678c client untouched"
       }
     }
   }

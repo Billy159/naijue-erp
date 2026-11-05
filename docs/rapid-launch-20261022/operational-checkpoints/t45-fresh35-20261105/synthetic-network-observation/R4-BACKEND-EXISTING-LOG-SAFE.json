@@ -1,0 +1,77 @@
+{
+  "status": "EXISTING_STOPPED_R4_LOG_SAFE_EVENTS_ONLY",
+  "checkedAtUTC": "2026-11-05T21:28:46.270410+00:00",
+  "cid": "e689c5679b03a457ae787f79081304550ee75f5f6c80536ed2e835df9eab8cb8",
+  "containerStopped": true,
+  "sourceRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r4",
+  "originalInstallKey": "t45-f35-4d0589-install-20261106-01",
+  "installWindow": {
+    "start": "2026-11-05T21:24:33.727406+00:00",
+    "end": "2026-11-05T21:24:49.487265+00:00"
+  },
+  "log": {
+    "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r4/state/cloud-pg-fresh35-20261105-r1/server-private.log",
+    "bytes": 1468,
+    "sha256": "1642976f1bd38dcd5e2a708b7f6de51e0d129d6e91f412b2eff08055556f816f"
+  },
+  "events": [
+    {
+      "timeUTC": "2026-11-05 21:20:07.008 UTC",
+      "backendPid": 53,
+      "severity": "LOG",
+      "withinInstallAttempt": false,
+      "code": "DATABASE_READY"
+    },
+    {
+      "timeUTC": "2026-11-05 21:24:44.843 UTC",
+      "backendPid": 109,
+      "severity": "ERROR",
+      "withinInstallAttempt": true,
+      "code": "FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_EXCLUSIVE_BACKENDS"
+    },
+    {
+      "timeUTC": "2026-11-05 21:24:45.132 UTC",
+      "backendPid": 53,
+      "severity": "LOG",
+      "withinInstallAttempt": true,
+      "code": "FAST_SHUTDOWN_REQUESTED"
+    },
+    {
+      "timeUTC": "2026-11-05 21:24:45.166 UTC",
+      "backendPid": 53,
+      "severity": "LOG",
+      "withinInstallAttempt": true,
+      "code": "ACTIVE_TRANSACTIONS_ABORT_REQUESTED"
+    },
+    {
+      "timeUTC": "2026-11-05 21:24:45.168 UTC",
+      "backendPid": 55,
+      "severity": "LOG",
+      "withinInstallAttempt": true,
+      "code": "SHUTTING_DOWN"
+    },
+    {
+      "timeUTC": "2026-11-05 21:24:45.208 UTC",
+      "backendPid": 55,
+      "severity": "LOG",
+      "withinInstallAttempt": true,
+      "code": "SHUTDOWN_CHECKPOINT"
+    },
+    {
+      "timeUTC": "2026-11-05 21:24:47.084 UTC",
+      "backendPid": 53,
+      "severity": "LOG",
+      "withinInstallAttempt": true,
+      "code": "DATABASE_SHUT_DOWN"
+    }
+  ],
+  "connectionMetadata": [],
+  "extraBackendSource": "UNKNOWN_EXISTING_LOG_DOES_NOT_IDENTIFY",
+  "PGConnections": 0,
+  "restarts": 0,
+  "sourceOrTargetWrites": 0,
+  "rawLogOrSQLExported": false,
+  "connectionMetadataRecords": 0,
+  "noConnectionLogIsNotProofOfNoConnections": true,
+  "interpretation": "Initial tag proves exclusive-backend predicate refused, not identity of other backend. Only pre-existing connection records could identify known roles; no new SQL or PG start."
+}

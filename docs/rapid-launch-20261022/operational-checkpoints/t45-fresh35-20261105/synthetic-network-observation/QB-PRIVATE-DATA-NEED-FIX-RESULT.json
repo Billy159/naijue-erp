@@ -1,0 +1,140 @@
+{
+  "task": "C-0448-PRIVATE-STANDARD-DATA-STAGING",
+  "createdAt": "2026-11-05T21:26:54.205821+00:00",
+  "conclusion": "NEED_FIX",
+  "scope": "Independent frozen-source delta review and small synthetic no-network models only",
+  "readySha256": "aeae087ba1f5be52fa5b825df9ec808f839b398a8edeac95bcf07d9c199091cf",
+  "baseClientSha256": "590be0a4b24841764c96a759dc17ce04f0b90f29251d4cf22efd64f5732618d6",
+  "reviewedFiles": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/t45-private-data-staging-source-20261106-01/candidate0448/scripts/release/ssh-control.py",
+      "bytes": 64867,
+      "sha256": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/t45-private-data-staging-source-20261106-01/candidate0448/tests/test_ssh_artifact_staging.py",
+      "bytes": 21379,
+      "sha256": "8e9b0a06e9e4669dd494b3b31b697cfc073afda1ca45cb7f4f25541e58a5733c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/t45-private-data-staging-source-20261106-01/artifact-receiver.private-candidate.py",
+      "bytes": 13211,
+      "sha256": "8841f413eed7580ad232ecaf1ec2d12644fe51be0a71a8a780195be2afb42fff"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/t45-private-data-staging-source-20261106-01/assemble_standard_data.py",
+      "bytes": 12479,
+      "sha256": "cd590f2e40dcfff16f2ec946d3017e96f8d8cfa97ef3876efa6d7e0d688bf122"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/t45-private-data-staging-source-20261106-01/source-only.patch",
+      "bytes": 33312,
+      "sha256": "fbffb194354f9e6126d489c79062180f9a813fac8ae30f7736e0ec5a085eb29c"
+    }
+  ],
+  "structure": {
+    "baseReconstructedInMemorySha256": "590be0a4b24841764c96a759dc17ce04f0b90f29251d4cf22efd64f5732618d6",
+    "clientChangedFunctions": [
+      "artifact_authority",
+      "artifact_stage"
+    ],
+    "clientAddedFunctions": [
+      "private_standard_data_authority"
+    ],
+    "otherExistingFunctionsIncludingMainAndRemoteUnchanged": true,
+    "receiverChangedFunctions": [
+      "authority",
+      "snapshot",
+      "upload"
+    ],
+    "otherExistingReceiverFunctionsUnchanged": true,
+    "standaloneReceiverEqualsEmbedded": true,
+    "privateHelpersAstEqual": true,
+    "sourceOnlyPatchReadOnly": true
+  },
+  "independentChecks": [
+    {
+      "id": "FROZEN_5_HASHES",
+      "result": "PASS"
+    },
+    {
+      "id": "UNBOUND_BEFORE_IO",
+      "result": "PASS"
+    },
+    {
+      "id": "45_METADATA_SHARED_AND_360_NEGATIVE_HELPER_CALLS",
+      "result": "PASS"
+    },
+    {
+      "id": "GROWTH_AFTER_ORIGINAL_VALIDATION_RESOURCE_COUNTEREXAMPLE",
+      "result": "REPRODUCED_DEFECT",
+      "evidence": {
+        "expectedPartBytes": 4,
+        "fixedWholeBytes": 180,
+        "appendedAfterOriginalPartValidation": 65536,
+        "writtenBeforeRejection": 65540,
+        "refusal": "EXACT_FRAGMENT_BYTES_DIFFER",
+        "reads": 2,
+        "bytesRead": 65540,
+        "receiverCalls": 0,
+        "postExpiryReads": 1,
+        "reachedReceiver": false,
+        "readAfterExpiry": true
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "PRIVATE-DATA-F01",
+      "priority": "P2",
+      "title": "Bound each fragment read/write and recheck the deadline inside the assembler loop",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/t45-private-data-staging-source-20261106-01/assemble_standard_data.py",
+      "lines": [
+        90,
+        94
+      ],
+      "status": "OPEN",
+      "trigger": "A UID1000-owned validated regular fragment grows after part_input returns. The opened inode remains writable by its owner.",
+      "actual": "The while True loop reads through EOF and writes every block before checking count==size. There is no per-block authority deadline check; the 40s subprocess timeout starts only after reconstruction. Therefore the root output can exceed the fixed fragment and full-archive bounds, and copying can continue after expiry until EOF.",
+      "evidence": {
+        "expectedPartBytes": 4,
+        "fixedWholeBytes": 180,
+        "appendedAfterOriginalPartValidation": 65536,
+        "writtenBeforeRejection": 65540,
+        "refusal": "EXACT_FRAGMENT_BYTES_DIFFER",
+        "reads": 2,
+        "bytesRead": 65540,
+        "receiverCalls": 0,
+        "postExpiryReads": 1,
+        "reachedReceiver": false,
+        "readAfterExpiry": true
+      },
+      "integrityBoundary": "Observed excess data is eventually refused when EOF is reached. Original receiver was never called, no READY was published, and this is not a demonstrated wrong-data import. Continuous growth need not reach EOF, so post-read rejection is insufficient as a resource bound.",
+      "minimumCorrection": "Use remaining exact bytes plus a bounded EOF probe, reject excess before writing it, and check the effective deadline before each read/write. Preserve O_EXCL partial marker, full hash checks, original receiver, UID1000 and no replay. Only recheck this affected loop and the new growth/expiry cases."
+    }
+  ],
+  "authorEvidenceAdopted": {
+    "count": 28,
+    "passedReported": 28,
+    "rerunByQB": false,
+    "source": "Fixed READY.json and frozen test definitions; owner models retained as author evidence, not independent server evidence"
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "actualClientApplied": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "realDataRead": false,
+    "dataTransport": false,
+    "externalAuthorityCreated": false,
+    "reviewed6707Again": false,
+    "rootUidAndExternalGate": "MODELED_ONLY",
+    "actualServerAcceptance": false
+  },
+  "next": "C/T45 fix only PRIVATE-DATA-F01 in a new frozen successor; this fixed READY is not transport acceptance."
+}
