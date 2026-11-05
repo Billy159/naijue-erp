@@ -29662,7 +29662,7 @@
         "QBReceiptSHA256": "6707ee9abcdcd9b1143c5726cea182d3f5cb4241c2cd2af37b2acf40ec79d410"
       },
       "r4Preparation": {
-        "state": "ACTUAL_FULL_READY_MATERIALIZING_QB_SOURCE_PASS",
+        "state": "MATERIALIZATION_COMPLETE_NEW_R4_PG20_START_IN_PROGRESS",
         "root": "4d0589ca80934318850dab637b32535fc642e266",
         "integration": "3983598059c487b2ab1736ed05a30681eee05e7a",
         "sourceSetSHA256": "5fbcb11970c41c706e4a6b2ce83a88dc8a85d988f2259228d2bcd31d99e22fb7",
@@ -29685,7 +29685,17 @@
         "wrapperSHA256": "11bda9e42a6db64c5017af2c016cda181b1c941882c4676fc581b63ec4ce5d46",
         "probeSHA256": "1e7a5b8c1a29cc70a33082f555225f17ae5e4e563e8233c66eb97a43f837fab5",
         "materializationJob": "t45-f35-4d0589-local-materialize-20261106-01",
-        "materializationPlanSHA256": "9c06071fdcbb36d8e8c334ed6c0fcea73a62a275532fa289d882b1b31344503a"
+        "materializationPlanSHA256": "9c06071fdcbb36d8e8c334ed6c0fcea73a62a275532fa289d882b1b31344503a",
+        "materializationExitCode": 0,
+        "materializationSeconds": 358.618111837,
+        "materializationReceiptSHA256": "4688e40e5021ac353dc36fef3dffcde36b35928224277e37102f86bab1ea40d3",
+        "resourcePreflightSHA256": "b570e78d4b7c9343cfd0d54ae7ade6a6dce3f12ae6261b381b244b04d635f66b",
+        "provision": {
+          "sha256": "497c2a1e00c07a4e88450d0a7ca0db42ff2200d4a6285bf7b5042048284eab65",
+          "startsAt": 1793913509614,
+          "expiresAt": 1793914709614,
+          "actualProgramAndTargetPending": true
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -29762,7 +29772,19 @@
       "mode": "0600, parent0700",
       "sourceBusinessChecksReused": true,
       "noDataInGitOrDot": true,
-      "next": "T45 existing private transport capability/preparation only; C exact transfer binding after immutable source readiness."
+      "next": "T45 existing private transport capability/preparation only; C exact transfer binding after immutable source readiness.",
+      "sourceSuccessor": {
+        "owner": "T45",
+        "state": "FIXED_INDEPENDENT_COPY_QB_NEW_OPS_DELTA_IN_PROGRESS_NOT_ACTUAL_TRANSFER",
+        "readySHA256": "aeae087ba1f5be52fa5b825df9ec808f839b398a8edeac95bcf07d9c199091cf",
+        "clientSHA256": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085",
+        "actualClientUnchanged": true,
+        "fragmentCount": 45,
+        "fragmentBytes": 2097152,
+        "lastFragmentBytes": 1234226,
+        "scope": "Two explicit private data kinds in existing typed channel, original40s/external authority/once-only; exact one-shot ordered fragments to original UID1000 receiver; no unpack/PG",
+        "actualServerTransfer": false
+      }
     }
   }
 }

@@ -1,0 +1,68 @@
+{
+  "jobId": "t45-f35-4d0589-local-start-preflight-20261106-01",
+  "checkedAtUTC": "2026-11-05T21:12:39.073747+00:00",
+  "mutations": 0,
+  "targetParent": {
+    "uid": 0,
+    "mode": "0o700",
+    "symlink": false
+  },
+  "applicationRoot": {
+    "exists": true,
+    "uid": 0,
+    "mode": "0o700",
+    "symlink": false
+  },
+  "resources": {
+    "cpuCount": 4,
+    "loadAverage": [
+      0.943359375,
+      1.2919921875,
+      0.74609375
+    ],
+    "memoryBytes": {
+      "MemTotal": 16731348992,
+      "MemAvailable": 14361993216,
+      "SwapTotal": 4294963200,
+      "SwapFree": 4203982848
+    },
+    "disk": {
+      "freeBytes": 16550191104,
+      "totalBytes": 489861931008,
+      "device": 66304
+    }
+  },
+  "image": {
+    "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "os": "linux",
+    "arch": "amd64"
+  },
+  "materializeOriginalKey": {
+    "jobId": "t45-f35-4d0589-local-materialize-20261106-01",
+    "requestPresent": true,
+    "resultPresent": true,
+    "status": "COMPLETED",
+    "exitCode": 0
+  },
+  "CASOriginalKey": {
+    "jobId": "t45-f35-4d0589-final-staging-policy-20261106-01",
+    "status": "COMPLETED",
+    "exitCode": 0
+  },
+  "matchingContainerIDs": [],
+  "currentApplication": {
+    "archiveSHA256": "72a3c84524b822ceb741dfe80f4ae7681c649f3a62f5fd5d7fc858c52ca77eb2",
+    "deploymentManifestSha256": "0fbb6d97c76cb80877b988283ca6a8dc55f7032356aa9beb45f77503ea189336",
+    "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "operationId": "t45-f35-4d0589-application-20261106-01",
+    "sourceSet": "5fbcb11970c41c706e4a6b2ce83a88dc8a85d988f2259228d2bcd31d99e22fb7"
+  },
+  "startArtifactsPresent": {
+    "start-intent.json": false,
+    "container-receipt.json": false,
+    "authority/fresh35-isolated-provision-v1.json": false,
+    "authority/fresh35-combined-execution-v1.json": false
+  },
+  "status": "READONLY_FACTS_COLLECTED"
+}
