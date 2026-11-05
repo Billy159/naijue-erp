@@ -63,8 +63,22 @@ test('fixed synthetic CLI stages retain original keys, stop uncertain outcomes a
 test('split commit mode accepts only the original fixed entry and one64hex expected rollback binding',async()=>{
  const s=await readFile(new URL('../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',import.meta.url),'utf8'),line=s.split('\n').find(l=>l.includes("'--verify-host-commit'].includes(process.argv[2])"));assert(line);
  const check=new Function('process','root','need',line),root='/fixed',entry=root+'/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',need=(ok,c)=>{if(!ok)throw Error(c)};
- for(const argv of [['node',entry,'--verify-host'],['node',entry,'--verify-host-rollback'],['node',entry,'--verify-host-commit','a'.repeat(64)]])assert.doesNotThrow(()=>check({argv},root,need));
- for(const argv of [['node',entry,'--verify-host-commit'],['node',entry,'--verify-host-commit','bad'],['node',entry,'--verify-host-rollback','a'.repeat(64)],['node','/other','--verify-host'],['node',entry,'--verify-host-commit','a'.repeat(64),'extra']])assert.throws(()=>check({argv},root,need),/FIXED_ENTRY_REQUIRED/);
+ for(const argv of [['node',entry,'--bootstrap-observer'],['node',entry,'--verify-host'],['node',entry,'--verify-host-rollback'],['node',entry,'--verify-host-commit','a'.repeat(64)]])assert.doesNotThrow(()=>check({argv},root,need));
+ for(const argv of [['node',entry,'--bootstrap-observer','extra'],['node',entry,'--verify-host-commit'],['node',entry,'--verify-host-commit','bad'],['node',entry,'--verify-host-rollback','a'.repeat(64)],['node','/other','--verify-host'],['node',entry,'--verify-host-commit','a'.repeat(64),'extra']])assert.throws(()=>check({argv},root,need),/FIXED_ENTRY_REQUIRED/);
+});
+
+test('bootstrap observer CLI emits only bound bootstrap SQL after source/target validation and before any catalog/client/record path',async()=>{
+ const s=await readFile(new URL('../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',import.meta.url),'utf8');
+ const marker=" if(process.argv[2]==='--bootstrap-observer')",start=s.indexOf(marker),end=s.indexOf('\n',start),lines=[];
+ assert(start>s.indexOf('const target=bindFresh35CombinedTarget(input)'));
+ assert(start>s.indexOf('SOURCE_SET_DIFFERS'));assert(start<s.indexOf('const catalog=await buildFresh35CombinedCatalog'));
+ assert(start<s.indexOf('new Client('));
+ const render=new Function('process','fresh35CombinedBootstrapObserverSql','target',s.slice(start,end)+'throw Error("MUST_RETURN");');
+ const target=Object.freeze({test:'already-bound-token'});
+ render({argv:['node','fixed','--bootstrap-observer'],stdout:{write:x=>lines.push(x)}},actual=>{assert.equal(actual,target);return 'BEGIN; SYNTHETIC ONLY; COMMIT;\n'},target);
+ assert.deepEqual(lines,['BEGIN; SYNTHETIC ONLY; COMMIT;\n']);
+ assert.throws(()=>render({argv:['node','fixed','--bootstrap-observer'],stdout:{write:x=>lines.push(x)}},()=>{throw Error('SOURCE_REFUSED')},target),/SOURCE_REFUSED/);
+ assert.equal(lines.length,1,'failure never emits partial SQL or an execution record');
 });
 
 

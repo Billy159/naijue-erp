@@ -29730,12 +29730,61 @@
       },
       "r4ExclusiveBackendFollowup": {
         "owner": "D1",
-        "state": "C_APPROVED_MINIMAL_PRIVILEGED_BOOLEAN_OBSERVER_SOURCE_CONTRACT_IMPLEMENTATION",
+        "state": "EXACT_EIGHT_LEAVES_AUTHOR_CHECKS_PASS_READY_INTEGRATION_QB_NOT_PG",
         "authority": "C under direct human decision delegation until2026-11-06T12:00+08",
         "reason": "PG17.11 hides backend_type for unrelated roles; logical launcher can retain bootstrap user and hit original usename OR. Plain predicate exclusion would leak real other clients/walsenders under NULL. Specific r4 extra backend still unknown.",
         "scope": "Existing bootstrap/catalog/ACL exact minimal fixed no-arg bool observer, fixed search_path/PUBLIC revoke/caller and target binding, no full stats grant or raw identities. Clients/walsender/workers/unknown refused, only exact native launcher and mandatory native auxiliaries allowed. Preserve original target, budget and runtime guards.",
         "dbExecuted": false,
-        "noNewTablesOrFields": true
+        "noNewTablesOrFields": true,
+        "D1ReceiptSHA256": "5939aaf5cc0396d57154007be3db612577bd88fbf46978c1477094dea477663f",
+        "T45ReceiptSHA256": "7797bb7cdf6dbcc2aef0b5ff9a0f1593dd52e596f1d2f0ca244e19aa7550ad61",
+        "files": [
+          {
+            "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+            "bytes": 31184,
+            "sha256": "7ebb0c07a78c2d294022900fb44653413c611dcdcf9e0cba17788fc5a5505376"
+          },
+          {
+            "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+            "bytes": 35782,
+            "sha256": "967f282300966592e72e61e1fcda0aef11a051c2e0a133b9ba7e6df6a7103aca"
+          },
+          {
+            "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+            "bytes": 18702,
+            "sha256": "3de6ac1d3eb20c17b605466b33dc4050c3e0ba4a401dcf10fd8625c14d504b22"
+          },
+          {
+            "path": "tests/fresh35-combined-target.test.mjs",
+            "bytes": 29491,
+            "sha256": "4c953da9c1d92a04b49fcc4ad835ee1e05d3489f2c9377a8f1256f3c9d4e2eb6"
+          },
+          {
+            "path": "tests/fresh35-combined-catalog.test.mjs",
+            "bytes": 15948,
+            "sha256": "35d77809c51fcd64d32ebf4d80a8c5776b3b51441aa415fb4a65f3e0a664cd37"
+          },
+          {
+            "path": "tests/fresh35-isolated-entry.test.mjs",
+            "bytes": 17238,
+            "sha256": "b4570a1271d298d76e04c675ad6e3bc884a08af15dbf2b8b472ba119547abd08"
+          },
+          {
+            "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+            "bytes": 96070,
+            "sha256": "8ada342e9b511d9b44dcb641ba81085ae689ff1505cf83c1b51fe9430fa5da1f"
+          },
+          {
+            "path": "tests/test_fresh35_isolated_launcher.py",
+            "bytes": 74425,
+            "sha256": "82df6d8303f5e838679e2743c10a223bff02c534487dc44072d2bb7615115bbc"
+          }
+        ],
+        "authorChecks": {
+          "D1": 13,
+          "T45": 7,
+          "scope": "SQL truth/classification models and launcher mocks only; no actualPG"
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {

@@ -1,0 +1,53 @@
+{
+  "status": "SOURCE_LOCAL7_PASS_EXACT_OBSERVER_LAUNCHER_CONSUMER_AWAIT_C_INTEGRATION_QB",
+  "baseLauncherSha256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
+  "files": [
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "bytes": 96070,
+      "sha256": "8ada342e9b511d9b44dcb641ba81085ae689ff1505cf83c1b51fe9430fa5da1f",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-bootstrap-observer-launcher-01/launch-fresh35-isolated-v1.py"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "bytes": 74425,
+      "sha256": "82df6d8303f5e838679e2743c10a223bff02c534487dc44072d2bb7615115bbc",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-bootstrap-observer-launcher-01/test_fresh35_isolated_launcher.py"
+    }
+  ],
+  "patch": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-bootstrap-observer-launcher-01/observer-launcher-only.patch",
+    "sha256": "c72b670e391ed03f2c5330a3509e6df5a02ce0123cb3c0aec065f61176757893"
+  },
+  "changedExistingFunctions": [
+    "cleanup_owned_server",
+    "main"
+  ],
+  "addedFunction": "bootstrap_exclusive_observer",
+  "allOtherFunctionsAstUnchanged": true,
+  "D1FrozenEntrySha256": "3de6ac1d3eb20c17b605466b33dc4050c3e0ba4a401dcf10fd8625c14d504b22",
+  "interface": "After original target-binding and deployment verification, fixed entry --bootstrap-observer run once with original clean env/remaining deadline; exit0 and1..262144 stdout bytes required, decoded UTF8 SQL forwarded once only through original admin psql in exact proposal database. SQL not duplicated or written to public output. Original describe follows.",
+  "cleanup": "Protected read_private target-binding checks original proposal/window/SID; present uses exact targetDB original single sameSID DO revoke helper owner/controller then original roles; absent uses original postgres roles only. Any binding/target/revoke error retained and cleanupComplete false, still stop/credential clearing; no crossDB retry.",
+  "checks": {
+    "command": "PYTHONPATH=tests python3 -B -m unittest test_fresh35_isolated_launcher.BootstrapObserverLauncherTests -v",
+    "groups": 7,
+    "result": "PASS",
+    "noNetworkRootOrPG": true,
+    "existingPassedSuitesRerun": false,
+    "covers": [
+      "fixed flag/SQL one-shot/admin target/clean env",
+      "failed empty over262144 or invalidUTF8 generator refuses SQL",
+      "original cleanup reserve before psql",
+      "protected binding targetDB exact helper two roles",
+      "no binding original postgres globalroles",
+      "target revoke failure no fallback false cleanup",
+      "mismatched binding no SQL still stop"
+    ]
+  },
+  "serverActionsForThisSourceChange": 0,
+  "builds": 0,
+  "PG": false,
+  "committed": false,
+  "D1SixLeavesModifiedByT45": false,
+  "next": "C combine D1 six exact leaves and these two once; scopedQB and one D2 build as authorized. No oldr4 replay or PG before new scope."
+}

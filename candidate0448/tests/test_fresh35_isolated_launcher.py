@@ -668,4 +668,46 @@ class BootstrapNetworkObservationTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'NETWORK_OBSERVATION_PARENT_MODE'):m.persist_bootstrap_network_observation(a,obs,obs['systemIdentifier'])
             m.json_new(root/'original-private.json',{'fixed':True});self.assertEqual(stat.S_IMODE((root/'original-private.json').stat().st_mode),0o400)
 
+
+class BootstrapObserverLauncherTests(unittest.TestCase):
+    def test_fixed_generator_stdout_executes_once_as_admin_in_target(self):
+        a=authority();argv=[str(m.NODE),'--no-global-search-paths',str(m.ENTRY)];sql=b'BEGIN; -- offline synthetic observer fixture\nCOMMIT;';remaining=unittest.mock.Mock(side_effect=[37,16])
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout=sql,stderr=b'')) as generate,patch.object(m,'psql') as execute:
+            m.bootstrap_exclusive_observer(a,argv,remaining)
+        generate.assert_called_once();self.assertEqual(generate.call_args.args[0],argv+['--bootstrap-observer']);self.assertTrue(generate.call_args.kwargs['capture_output']);self.assertEqual(generate.call_args.kwargs['timeout'],37);self.assertEqual(set(generate.call_args.kwargs['env']),{'PATH','LC_ALL','HOME','TZ'});execute.assert_called_once_with(a,a['proposal']['admin'],a['proposal']['database'],sql.decode(),timeout=16)
+    def test_failed_empty_oversized_or_invalid_utf8_generator_never_executes_sql(self):
+        for status,stdout in [(1,b'fixture'),(0,b''),(0,b'x'*262145),(0,'unexpected text'),(0,b'\xff')]:
+            with self.subTest(status=status,kind=type(stdout).__name__),patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=status,stdout=stdout,stderr=b'NOT_EXPORTED')),patch.object(m,'psql') as execute:
+                with self.assertRaises((RuntimeError,UnicodeDecodeError)):m.bootstrap_exclusive_observer(authority(),['fixed-node','fixed-entry'],lambda:30)
+                execute.assert_not_called()
+    def test_cleanup_reserve_after_generator_prevents_admin_sql(self):
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout=b'fixture',stderr=b'')),patch.object(m,'psql') as execute:
+            with self.assertRaisesRegex(RuntimeError,'CLEANUP_RESERVE'):m.bootstrap_exclusive_observer(authority(),['fixed-node','fixed-entry'],unittest.mock.Mock(side_effect=[30,RuntimeError('CLEANUP_RESERVE')]))
+            execute.assert_not_called()
+    def cleanup_fixture(self,binding,denied=False):
+        temp=tempfile.TemporaryDirectory();self.addCleanup(temp.cleanup);root=Path(temp.name);a=authority();a['proposal']['workspaceDirectory']=str(root);p=a['proposal'];calls=[];signals=[]
+        target={'proposal':p,'physical':{'systemIdentifier':'other' if binding=='wrong' else '999'},'startsAt':a['startsAt'],'expiresAt':a['expiresAt']}
+        if binding!='absent':(root/'target-binding.json').write_text(json.dumps(target))
+        class Child:
+            done=False
+            def poll(self):return 0 if self.done else None
+            def send_signal(self,s):signals.append(s);self.done=True
+            def wait(self,timeout):return 0
+        child=Child()
+        def execute(a,role,database,sql,timeout):
+            calls.append({'role':role,'database':database,'sql':sql})
+            if denied:raise RuntimeError('OFFLINE_REVOKE_DENIED')
+            return ''
+        with patch.object(m,'read_private',return_value=json.dumps(target).encode()) as protected,patch.object(m,'owned_listener',return_value=True),patch.object(m,'same_process',return_value=True),patch.object(m,'psql',side_effect=execute),patch.object(m,'clear_credentials',return_value=True),patch.object(m,'port_absent',return_value=True),patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout=b'Database system identifier: 999\nDatabase cluster state: shut down\n')):
+            result=m.cleanup_owned_server(a,child,{'pid':999},'999',m.time.monotonic()+30)
+        return a,result,calls,signals,protected
+    def test_cleanup_target_binding_uses_target_database_and_exact_helper_revoke(self):
+        a,r,calls,signals,protected=self.cleanup_fixture('present');p=a['proposal'];self.assertEqual(len(calls),1);self.assertEqual(calls[0]['database'],p['database']);self.assertEqual(calls[0]['role'],p['admin']);protected.assert_called_once();sql=calls[0]['sql'];start=sql.index("IF pg_catalog.to_regprocedure('pg_catalog.fresh35_exclusive_backends()')");revoke=sql[start:sql.index('END IF;',start)];self.assertIn('REVOKE ALL ON FUNCTION pg_catalog.fresh35_exclusive_backends() FROM '+p['owner']+','+p['controller'],revoke);self.assertNotIn(p['runtime'],revoke);self.assertNotIn('PUBLIC',revoke);self.assertNotIn('DROP',sql);self.assertNotIn('GRANT',sql);self.assertIn("<> '999'",sql);self.assertTrue(r['cleanupComplete']);self.assertTrue(signals)
+    def test_cleanup_without_binding_keeps_postgres_global_role_path(self):
+        a,r,calls,signals,protected=self.cleanup_fixture('absent');self.assertEqual(len(calls),1);self.assertEqual(calls[0]['database'],'postgres');self.assertNotIn('fresh35_exclusive_backends',calls[0]['sql']);self.assertIn('ALTER ROLE',calls[0]['sql']);protected.assert_not_called();self.assertTrue(r['cleanupComplete']);self.assertTrue(signals)
+    def test_target_revoke_failure_never_falls_back_or_reports_cleanup_success(self):
+        a,r,calls,signals,_=self.cleanup_fixture('present',True);self.assertEqual([x['database'] for x in calls],[a['proposal']['database']]);self.assertFalse(r['cleanupComplete']);self.assertFalse(r['loginsRevoked']);self.assertTrue(r['credentialsRemoved']);self.assertTrue(signals);self.assertEqual(r['errors'][0]['phase'],'revoke')
+    def test_wrong_binding_never_executes_sql_but_still_stops(self):
+        _,r,calls,signals,protected=self.cleanup_fixture('wrong');self.assertEqual(calls,[]);self.assertFalse(r['cleanupComplete']);self.assertTrue(r['credentialsRemoved']);self.assertTrue(signals);protected.assert_called_once()
+
 if __name__=='__main__':unittest.main()

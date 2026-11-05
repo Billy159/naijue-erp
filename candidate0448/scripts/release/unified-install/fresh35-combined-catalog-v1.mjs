@@ -5,7 +5,7 @@ import {readFile,realpath} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {isDeepStrictEqual} from 'node:util';
 import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
-import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard,loadFresh35SyntheticBootstrapNetwork,assertFresh35SyntheticBootstrapNetworkCurrent} from './fresh35-combined-target-v1.mjs';
+import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard,loadFresh35SyntheticBootstrapNetwork,assertFresh35SyntheticBootstrapNetworkCurrent,fresh35CombinedObserverGuard,fresh35CombinedObserverObservationSql,validateFresh35CombinedObserverObservation} from './fresh35-combined-target-v1.mjs';
 import {parseFresh35DumpSections} from './fresh35-retirement-schema.mjs';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
 const catalogs=new WeakMap(),need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_CATALOG_'+code)};
@@ -122,7 +122,8 @@ function observationSql(source,{runtime=false,systemIdentifierExpression='(SELEC
  'schema',${raw('to_jsonb(n)','pg_catalog.pg_namespace n',"n.nspname='naijue_erp'")},
  'database',${raw('to_jsonb(d)','pg_catalog.pg_database d','d.datname=current_database()')},
  'roles',${raw("to_jsonb(r)-'rolpassword'",'pg_catalog.pg_roles r',"left(r.rolname,3)<>'pg_'")},
- 'membership',${raw('to_jsonb(a)','pg_catalog.pg_auth_members a JOIN pg_catalog.pg_roles r ON r.oid=a.member',"left(r.rolname,3)<>'pg_'")}),
+ 'membership',${raw('to_jsonb(a)','pg_catalog.pg_auth_members a JOIN pg_catalog.pg_roles r ON r.oid=a.member',"left(r.rolname,3)<>'pg_'")},
+ 'bootstrapObserver',${fresh35CombinedObserverObservationSql}),
  'lineage',(SELECT jsonb_agg(jsonb_build_object('version',version,'description',description) ORDER BY version) FROM naijue_erp.schema_migration))::text AS catalog_json;`}
 
 export async function buildFresh35CombinedCatalog(source,target,{modelPath,functionsPath}){
@@ -165,7 +166,7 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
  }
 
  const lineage=Array.isArray(data.lineage)?data.lineage:data.lineage.rows;need(Array.isArray(lineage)&&lineage.length===27,'EXACT27_LINEAGE_REQUIRED');
- const sql=guardSql(mapped,lineage),observation=observationSql(s),descriptor=freeze({format:'FRESH35_COMBINED_CATALOG_SPEC_V1',...(bootstrapNetworkObservationSha256?{bootstrapNetworkObservationSha256}:{}),sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),modelSha256:hash(JSON.stringify(mapped)),evidencePins:{model:MODEL_SHA,functions:FUNCTIONS_SHA},changes,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation),completeMetadataGuard:true,controllerLineageReadColumns:['version','description'],
+ const sql=fresh35CombinedObserverGuard(target)+'\n'+guardSql(mapped,lineage),observation=observationSql(s),descriptor=freeze({format:'FRESH35_COMBINED_CATALOG_SPEC_V1',...(bootstrapNetworkObservationSha256?{bootstrapNetworkObservationSha256}:{}),sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),modelSha256:hash(JSON.stringify(mapped)),evidencePins:{model:MODEL_SHA,functions:FUNCTIONS_SHA},changes,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation),completeMetadataGuard:true,controllerLineageReadColumns:['version','description'],
   rawRowtypeComparison:'ALL_NONIDENTITY_FIELDS_AGAINST_NATIVE_PG17_11_TABLE_AND_ARRAY_TEMPLATES_PLUS_EXACT70_IDENTITIES',dependencyValidation:'PHYSICAL_DEPENDENCY_SCHEMA_BOUNDARY_NOT_DYNAMIC_BUSINESS_EXECUTION',captureMissingEvidencePreserved:original.missingEvidence,independentSafetyReviewComplete:false,sqlParsedByPostgres:false,engineVerified:false,hostEnabled:false});
  const token=Object.freeze({profile:'FRESH35_COMBINED_CATALOG_SPEC_V1'});
  catalogs.set(token,{source,target,model:mapped,lineage,sql,observation,modelPath,functionsPath,descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});
@@ -188,9 +189,10 @@ function validateCatalogObservation(raw,catalog,source,target,runtime,ordinary=f
  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),s=describeFresh35CombinedSource(source),t=describeFresh35CombinedTarget(target);
  need(typeof raw==='string'&&Buffer.byteLength(raw)<=16*1024*1024,'BOUNDED_RAW_OBSERVATION_REQUIRED');const packet=parseStrictJson(raw),i=packet.identity;
  need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===s.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===(ordinary?t.proposal.runtime:runtime?t.proposal.controller:t.proposal.owner)&&i.host===(ordinary===true?t.ordinary.serverAddress:t.proposal.host)&&i.port===(ordinary===true?t.ordinary.serverPort:t.proposal.port),'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
- const expectedKeys=['relations','columns','routines','types','constraints','indexes','triggers','sequences','policies','defaultAcl','dependencies','sharedDependencies','schema','database','roles','membership'];
+ const expectedKeys=['relations','columns','routines','types','constraints','indexes','triggers','sequences','policies','defaultAcl','dependencies','sharedDependencies','schema','database','roles','membership','bootstrapObserver'];
  need(packet.catalog&&Object.keys(packet.catalog).sort().join(',')===expectedKeys.sort().join(',')&&expectedKeys.every(k=>Array.isArray(packet.catalog[k])),'FULL_RAW_CATALOG_REQUIRED');
  need(packet.catalog.types.length===70&&packet.catalog.routines.length===152&&packet.catalog.relations.filter(r=>r.relkind==='r').length===35,'RAW_OBJECT_COHORT_DIFFERS');
+ validateFresh35CombinedObserverObservation(packet.catalog.bootstrapObserver,target);
  for(const routine of packet.catalog.routines){const expected=c.model.routines.find(r=>name(r.signature)===routine.catalog?.proname);need(expected&&hash(routine.catalog.prosrc)===expected.bodySha256&&hash(routine.definition)===expected.definitionSha256,'RAW_ROUTINE_DIFFERS')}
  need(isDeepStrictEqual(packet.lineage,c.lineage.map(({version,description})=>({version,description}))),'RAW_LINEAGE_DIFFERS');
  return Object.freeze({catalogSha256:hash(raw),physicalIdentityMatched:true,metadataGuardSource:c.descriptor.catalogSpecSha256,engineBusinessVerified:false});
@@ -204,7 +206,7 @@ export function fresh35CombinedOrdinaryCatalogSql(catalog,source,target,physical
  need(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'&&physical?.systemIdentifier===t.physical.systemIdentifier&&physical.databaseOid===t.physical.databaseOid,'ORDINARY_PHYSICAL_BINDING_REQUIRED');
  const role='erp_unified27_runtime_2393dbc6db9581c2';
  const identity=`DO $ordinary35_identity$ BEGIN IF (current_database()=${q(t.proposal.database)} AND session_user=${q(t.proposal.runtime)} AND current_user=${q(role)} AND current_setting('row_security')='on' AND current_setting('session_replication_role')='origin' AND NOT pg_is_in_recovery() AND current_setting('transaction_isolation')='repeatable read' AND current_setting('transaction_read_only')='on' AND host(inet_server_addr())=${q(t.ordinary.serverAddress)} AND inet_server_port()=${t.ordinary.serverPort}) IS DISTINCT FROM true THEN RAISE EXCEPTION 'FRESH35_ORDINARY_IDENTITY_DIFFERS'; END IF; END $ordinary35_identity$;`;
- return Object.freeze({guardSql:identity+'\n'+guardSql(c.model,c.lineage,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true,systemIdentifierExpression:q(physical.systemIdentifier)})});
+ return Object.freeze({guardSql:identity+'\n'+fresh35CombinedObserverGuard(target)+'\n'+guardSql(c.model,c.lineage,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true,systemIdentifierExpression:q(physical.systemIdentifier)})});
 }
 export function validateFresh35CombinedOrdinaryCatalogObservation(raw,catalog,source,target){return validateCatalogObservation(raw,catalog,source,target,true,true)}
 
@@ -213,7 +215,7 @@ export function fresh35CombinedSyntheticOrdinaryCatalogSql(catalog,source,target
  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),t=describeFresh35CombinedTarget(target);
  need(t.format==='FRESH35_COMBINED_TARGET_BINDING_V1'&&!t.purpose&&/^synthetic_fresh35_[0-9]{8}_r[1-9][0-9]{0,3}$/.test(t.proposal.database)&&t.proposal.host==='127.0.0.1'&&physical?.systemIdentifier===t.physical.systemIdentifier&&physical.databaseOid===t.physical.databaseOid&&physical.postmasterStart===t.physical.postmasterStart,'SYNTHETIC_ORDINARY_PHYSICAL_BINDING_REQUIRED');
  const identity=`DO $synthetic35_identity$ BEGIN IF (current_database()=${q(t.proposal.database)} AND session_user=${q(t.proposal.runtime)} AND current_user='erp_unified27_runtime_2393dbc6db9581c2' AND current_setting('row_security')='on' AND current_setting('session_replication_role')='origin' AND NOT pg_is_in_recovery() AND current_setting('transaction_isolation')='repeatable read' AND current_setting('transaction_read_only')='on' AND host(inet_server_addr())=${q(t.proposal.host)} AND inet_server_port()=${t.proposal.port} AND pg_postmaster_start_time()::text=${q(t.physical.postmasterStart)} AND extract(epoch FROM clock_timestamp())*1000>=${t.startsAt} AND extract(epoch FROM clock_timestamp())*1000<${t.expiresAt}) IS DISTINCT FROM true THEN RAISE EXCEPTION 'FRESH35_SYNTHETIC_ORDINARY_IDENTITY_DIFFERS'; END IF; END $synthetic35_identity$;`;
- return Object.freeze({guardSql:identity+'\n'+guardSql(c.model,c.lineage,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true,systemIdentifierExpression:q(physical.systemIdentifier)})});
+ return Object.freeze({guardSql:identity+'\n'+fresh35CombinedObserverGuard(target)+'\n'+guardSql(c.model,c.lineage,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true,systemIdentifierExpression:q(physical.systemIdentifier)})});
 }
 export function validateFresh35CombinedSyntheticOrdinaryCatalogObservation(raw,catalog,source,target){
  const t=describeFresh35CombinedTarget(target);need(t.format==='FRESH35_COMBINED_TARGET_BINDING_V1'&&!t.purpose,'SYNTHETIC_V1_TARGET_REQUIRED');return validateCatalogObservation(raw,catalog,source,target,true,'synthetic');

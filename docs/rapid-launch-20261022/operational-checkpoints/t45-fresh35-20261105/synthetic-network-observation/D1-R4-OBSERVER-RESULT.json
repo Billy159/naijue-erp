@@ -1,0 +1,140 @@
+{
+  "task": "R4_EXCLUSIVE_BACKENDS_RESTRICTED_OBSERVER_SOURCE_SUCCESSOR_V1",
+  "atUtc": "2026-11-05T21:46:18.391388+00:00",
+  "state": "SOURCE_TARGETED_CHECKS_PASS_NOT_ACTUAL_POSTGRES",
+  "parentHeadAtFreeze": "c5ae731cc59816451aa5d2068273f4a322f255af",
+  "root": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "writer": "D1 only these six leaves; T45 owns launcher and launcher test separately",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "bytes": 31184,
+      "sha256": "7ebb0c07a78c2d294022900fb44653413c611dcdcf9e0cba17788fc5a5505376"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "bytes": 35782,
+      "sha256": "967f282300966592e72e61e1fcda0aef11a051c2e0a133b9ba7e6df6a7103aca"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "bytes": 18702,
+      "sha256": "3de6ac1d3eb20c17b605466b33dc4050c3e0ba4a401dcf10fd8625c14d504b22"
+    },
+    {
+      "path": "tests/fresh35-combined-target.test.mjs",
+      "bytes": 29491,
+      "sha256": "4c953da9c1d92a04b49fcc4ad835ee1e05d3489f2c9377a8f1256f3c9d4e2eb6"
+    },
+    {
+      "path": "tests/fresh35-combined-catalog.test.mjs",
+      "bytes": 15948,
+      "sha256": "35d77809c51fcd64d32ebf4d80a8c5776b3b51441aa415fb4a65f3e0a664cd37"
+    },
+    {
+      "path": "tests/fresh35-isolated-entry.test.mjs",
+      "bytes": 17238,
+      "sha256": "b4570a1271d298d76e04c675ad6e3bc884a08af15dbf2b8b472ba119547abd08"
+    }
+  ],
+  "patchSha256": "3c79bedff2ef423fa5af03ca912c42823be3f9280c96956fc6cfa7cc8513bf77",
+  "scope": {
+    "businessTables": 35,
+    "businessRoutines": 152,
+    "extraBootstrapRoutines": 1,
+    "bootstrapRoutine": "pg_catalog.fresh35_exclusive_backends()",
+    "returns": "boolean only; no parameters; no activity data output",
+    "owner": "existing target admin, expected bootstrap OID10",
+    "executeGrantees": [
+      "exact target owner",
+      "exact target controller"
+    ],
+    "notGranted": [
+      "PUBLIC",
+      "runtime login",
+      "ordinary interface roles",
+      "pg_read_all_stats",
+      "superuser"
+    ],
+    "physicalAndCallerBinding": [
+      "system identifier",
+      "database OID/name",
+      "PG170011",
+      "postmaster UTC birth",
+      "server endpoint",
+      "admin OID/name/superuser",
+      "owner/controller session",
+      "original role setting",
+      "original bounded window",
+      "origin/nonrecovery"
+    ],
+    "allowedOtherBackends": [
+      "logical replication launcher: native type, positive PID, database NULL, userid10",
+      "checkpointer/background writer/walwriter/autovacuum launcher: exact type, positive PID, database NULL, userid NULL"
+    ],
+    "deniedOtherBackends": [
+      "all client backend including other DB and idle",
+      "physical/logical walsender including datid NULL",
+      "logical replication worker",
+      "parallel worker",
+      "autovacuum worker",
+      "unknown type",
+      "NULL/masked type",
+      "mismatched native identity"
+    ],
+    "observation": "full pg_proc/definition/dependencies/sharedDependencies as explicit bootstrapObserver category in existing catalog JSON; existing record catalog hash binds it",
+    "ordinaryConsumer": "V1/V2 read source metadata and raw catalog only, no observer execution or extra grants",
+    "preserved": [
+      "all other physical predicates and finite failure tags",
+      "original source closure/authorization/journal/record mechanisms",
+      "original 35/152 app model and business permissions",
+      "old r4 receipts and actual-source UNKNOWN"
+    ]
+  },
+  "checks": {
+    "newAndAffected": {
+      "pass": 13,
+      "fail": 0,
+      "skip": 0,
+      "groups": [
+        {
+          "files": [
+            "tests/fresh35-combined-target.test.mjs",
+            "tests/fresh35-isolated-entry.test.mjs"
+          ],
+          "pattern": "observer|finite.*physical|diagnostic|split commit mode",
+          "pass": 7
+        },
+        {
+          "files": [
+            "tests/fresh35-combined-catalog.test.mjs"
+          ],
+          "pattern": "bootstrap observer|new catalog guards|program is one|runtime keeps|production ordinary|synthetic ordinary",
+          "pass": 6
+        }
+      ]
+    },
+    "syntax": "node --check all three changed mjs PASS",
+    "diffWhitespace": "git diff --check PASS",
+    "classificationEngine": "Node24.21 built-in SQLite in-memory executes the actual generated predicate SQL after removing only pg_catalog qualification. SQLite SQL truth semantics only, NOT PostgreSQL SQL/ACL execution. Positive normal cohort + old-predicate false positive, 16 denial rows, missing PID, masked client.",
+    "nativeCaptureShapes": "helper raw-catalog validator model uses OID/oidvector JSON shapes from existing pinned PG17.11 capture. Shape/model only, NOT helper PG execution.",
+    "actualPostgresConnections": 0,
+    "postgresStarted": false,
+    "sqlExecutedAgainstPG": false,
+    "oldAuthor13OrQB8Repeated": false,
+    "unrelatedFullSuiteRepeated": false,
+    "commands": [
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node --test --test-name-pattern='observer|finite.*physical|diagnostic|split commit mode' tests/fresh35-combined-target.test.mjs tests/fresh35-isolated-entry.test.mjs",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node --test --test-name-pattern='bootstrap observer|new catalog guards|program is one|runtime keeps|production ordinary|synthetic ordinary' tests/fresh35-combined-catalog.test.mjs"
+    ]
+  },
+  "notVerified": [
+    "PostgreSQL parsing and actual security-definer privileges",
+    "real physical helper/classifier results",
+    "T45 new launcher bootstrap/DB-local cleanup wiring pending separate freeze",
+    "whole successor candidate QB review",
+    "new target install/import/rollback/ordinary UID business"
+  ],
+  "r4ActualExtraBackend": "UNKNOWN; source counterexample is not retrospective proof of r4 backend identity",
+  "next": "C integrates exactly six D1 leaves plus T45 two; QB targeted observer/source/ACL closure. T45 alone may run a newly signed target after C binds exact new root/authority; do not replay r4 or weaken guard."
+}

@@ -10,6 +10,71 @@ test('new35 target is an immutable binding, not a database or authority',()=>{
  assert.equal(d.proposal.port,57639);assert.equal(d.authority,'BINDING_ONLY_NOT_CREATION_OR_EXECUTION_PERMISSION');assert.ok(Object.isFrozen(d.physical));
  assert.throws(()=>describeFresh35CombinedTarget({...target}),/GENUINE_TARGET/);
 });
+
+test('observer SQL permits only the exact native no-database cohort and rejects real client/walsender/worker/unknown rows (SQLite SQL truth semantics, not PG)',async()=>{
+ const {DatabaseSync}=await import('node:sqlite');
+ const {fresh35CombinedBootstrapObserverSql}=await import('../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
+ const target=bindFresh35CombinedTarget(production(),startsAt+1),sql=fresh35CombinedBootstrapObserverSql(target);
+ const body=sql.split('AS $fresh35_observer$')[1].split('$fresh35_observer$;')[0];
+ const predicate=body.match(/RETURN (NOT EXISTS[\s\S]*?);/)[1].replaceAll('pg_catalog.','');
+ const db=new DatabaseSync(':memory:');
+ try{
+  db.function('pg_backend_pid',()=>99);
+  db.exec('CREATE TABLE pg_stat_activity(pid INTEGER,backend_type TEXT,datid INTEGER,usesysid INTEGER,usename TEXT)');
+  const put=db.prepare('INSERT INTO pg_stat_activity VALUES(?,?,?,?,?)'),query=db.prepare('SELECT '+predicate+' AS exclusive');
+  const self=[99,'client backend',16384,16385,'owner'];
+  const allowed=[[1,'checkpointer',null,null,null],[2,'background writer',null,null,null],[3,'walwriter',null,null,null],[4,'autovacuum launcher',null,null,null],[5,'logical replication launcher',null,10,'bootstrap']];
+  const reset=()=>{db.exec('DELETE FROM pg_stat_activity');put.run(...self);for(const row of allowed)put.run(...row)};
+  reset();assert.equal(query.get().exclusive,1);
+  const original=db.prepare("SELECT NOT EXISTS(SELECT 1 FROM pg_stat_activity WHERE (backend_type='client backend' OR usename IS NOT NULL) AND pid<>pg_backend_pid()) AS exclusive");
+  assert.equal(original.get().exclusive,0,'actual original predicate rejects the normal launcher counterexample');
+  const denied=[
+   ['client backend',16384,16385,'owner'],['client backend',42,16386,'controller'],['client backend',null,10,'bootstrap'],
+   ['walsender',null,10,'bootstrap'],['walsender',16384,16386,'controller'],
+   ['logical replication worker',16384,10,'bootstrap'],['parallel worker',16384,10,'bootstrap'],['autovacuum worker',16384,null,null],
+   ['unknown worker',null,null,null],[null,null,null,null],[null,null,10,'bootstrap'],
+   ['logical replication launcher',16384,10,'bootstrap'],['logical replication launcher',null,16385,'owner'],['logical replication launcher',null,null,null],
+   ['checkpointer',16384,null,null],['checkpointer',null,10,'bootstrap']
+  ];
+  for(const row of denied){reset();put.run(100,...row);assert.equal(query.get().exclusive,0,JSON.stringify(row))}
+  reset();put.run(null,'logical replication launcher',null,10,'bootstrap');assert.equal(query.get().exclusive,0,'missing PID must not become an allowed native row');
+  reset();put.run(101,'client backend',16384,16385,'owner');db.exec("UPDATE pg_stat_activity SET backend_type=NULL WHERE pid=101");assert.equal(query.get().exclusive,0,'masked client classification refuses rather than silently allowing');
+ }finally{db.close()}
+});
+
+test('observer bootstrap is atomic, zero-argument and physical/session-bound with no public/runtime/interface or broad grant',async()=>{
+ const api=await import('../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
+ for(const arg of [input(),production()]){
+  const target=bindFresh35CombinedTarget(arg,startsAt+1),sql=api.fresh35CombinedBootstrapObserverSql(target),body=sql.split('AS $fresh35_observer$')[1].split('$fresh35_observer$;')[0],p=arg.proposal;
+  assert(sql.startsWith('BEGIN;'));assert(sql.endsWith('COMMIT;\n'));
+  assert.match(sql,/CREATE FUNCTION pg_catalog\.fresh35_exclusive_backends\(\) RETURNS pg_catalog\.bool/);
+  assert.match(sql,/LANGUAGE plpgsql VOLATILE PARALLEL UNSAFE SECURITY DEFINER\s+SET search_path = pg_catalog, pg_temp/);
+  assert.match(sql,/REVOKE ALL ON FUNCTION pg_catalog\.fresh35_exclusive_backends\(\) FROM PUBLIC;/);
+  assert.equal(sql.match(/^GRANT .*$/gm).join('\n'),`GRANT EXECUTE ON FUNCTION pg_catalog.fresh35_exclusive_backends() TO ${p.owner},${p.controller};`);
+  for(const value of [p.database,p.admin,p.owner,p.controller,arg.physical.systemIdentifier,arg.physical.databaseOid,arg.physical.postmasterStart.replace(/\+00$/,''),String(arg.startsAt),String(arg.expiresAt)])assert(body.includes(value),value);
+  assert.match(body,/pg_stat_clear_snapshot\(\)/);assert.match(body,/session_user IN\(/);assert.match(body,/current_setting\('role'\) IN\('none',session_user::text\)/);
+  assert.doesNotMatch(sql,/CREATE OR REPLACE|pg_read_all_stats|pg_monitor|CREATE (?:TABLE|ROLE)|EXECUTE format|RETURN QUERY|RETURNS TABLE/);
+  assert.doesNotMatch(body,/usename|query|client_addr/);
+  assert.throws(()=>api.fresh35CombinedBootstrapObserverSql({...target}),/GENUINE_TARGET/);
+  const guard=api.fresh35CombinedObserverGuard(target);
+  for(const text of ['f.proowner=10','f.pronargs=0','f.prosecdef','f.provolatile=\'v\'','f.proparallel=\'u\'','f.prosrc=','f.proacl','pg_extension','count(*)'])assert(guard.includes(text),text);
+ }
+});
+
+test('observer raw catalog validates source, signature, owner and ACL while preserving separate complete dependency evidence',async()=>{
+ const api=await import('../scripts/release/unified-install/fresh35-combined-target-v1.mjs'),target=bindFresh35CombinedTarget(production(),startsAt+1),p=production().proposal;
+ const sql=api.fresh35CombinedBootstrapObserverSql(target),body=sql.split('AS $fresh35_observer$')[1].split('$fresh35_observer$;')[0];
+ // OID/oidvector JSON shapes are taken from the pinned PG17.11 native capture.
+ const {readFile}=await import('node:fs/promises'),captures=JSON.parse(await readFile(new URL('../../reference-inputs/cloud-pg-schema178v2-20261105-r2/evidence/functions.json',import.meta.url),'utf8'));
+ const f={...captures[0].catalog,proname:'fresh35_exclusive_backends',pronamespace:'11',proowner:'10',prokind:'f',pronargs:0,pronargdefaults:0,proargtypes:[],prorettype:'16',proretset:false,prosecdef:true,proleakproof:false,proisstrict:false,provolatile:'v',proparallel:'u',procost:100,prorows:0,prosupport:'-',proallargtypes:null,proargmodes:null,proargnames:null,proargdefaults:null,protrftypes:null,probin:null,prosqlbody:null,proconfig:['search_path=pg_catalog, pg_temp'],prosrc:body,proacl:[p.admin,p.owner,p.controller].map(r=>r+'=X/'+p.admin)};
+ const rows=[{catalog:f,owner:p.admin,language:'plpgsql',definition:'PINNED-SHAPE-FIXTURE-NOT-PG-EXECUTION',dependencies:[],sharedDependencies:[]}];
+ assert.doesNotThrow(()=>api.validateFresh35CombinedObserverObservation(rows,target));
+ for(const update of [r=>r.push(r[0]),r=>r[0].catalog.prosrc+='RETURN true;',r=>r[0].catalog.prosecdef=false,r=>r[0].catalog.pronargs=1,r=>r[0].catalog.prorettype='25',r=>r[0].catalog.proowner='16384',r=>r[0].catalog.proconfig=['search_path=public'],r=>r[0].catalog.proacl.push('=X/'+p.admin),r=>r[0].catalog.proacl.push(p.runtime+'=X/'+p.admin),r=>r[0].language='sql',r=>r[0].owner=p.owner,r=>delete r[0].dependencies,r=>delete r[0].sharedDependencies]){
+  const changed=structuredClone(rows);update(changed);assert.throws(()=>api.validateFresh35CombinedObserverObservation(changed,target),/OBSERVER_RAW/);
+ }
+ for(const text of ['pg_depend','pg_shdepend','pg_get_functiondef','to_jsonb(f)'])assert(api.fresh35CombinedObserverObservationSql.includes(text));
+ assert.doesNotMatch(api.fresh35CombinedObserverObservationSql,/pg_stat_activity/);
+});
 test('target rejects unknown fields, getters, nonlocal endpoints and privilege-shaped names',()=>{
  let reads=0;const x=input();Object.defineProperty(x.proposal,'port',{enumerable:true,get(){reads++;return 57639}});assert.throws(()=>bindFresh35CombinedTarget(x,startsAt),/OWN|CLOSED/);assert.equal(reads,0);
  for(const update of [x=>x.approved=true,x=>x.proposal.host='localhost',x=>x.proposal.host='::1',x=>x.proposal.port=5432,x=>x.proposal.owner='postgres',x=>x.proposal.workspaceDirectory='/real/database',x=>x.physical.databaseOid='01',x=>x.physical.systemIdentifier='18446744073709551616',x=>x.physical.systemIdentifier='7704494445995372557',x=>x.physical.serverVersionNum='170010',x=>x.physical.postmasterStart='2026-02-30 03:00:00+00',x=>x.physical.postmasterStart='2026-11-05 02:59:59+00']){const x=input();update(x);assert.throws(()=>bindFresh35CombinedTarget(x,startsAt));}
@@ -145,7 +210,11 @@ test('physical predicate diagnostic preserves every original synthetic/productio
    const previous=(' IF ('+originalCondition+") IS DISTINCT FROM true THEN RAISE EXCEPTION 'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS'").replace(/\s+/g,' '),current=m.api.fresh35CombinedTargetGuard(after,{requireEmpty:true}).replace(/\s+/g,' ');
    const originalAtoms=split(previous.slice(previous.indexOf(' IF (')+5,previous.indexOf(") IS DISTINCT FROM true THEN RAISE EXCEPTION 'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS'")),' AND ');
    const array=current.slice(current.indexOf('physical_checks := ARRAY[')+'physical_checks := ARRAY['.length,current.indexOf(']; IF (true = ALL(physical_checks))'));
-   const currentAtoms=split(array,',').map(atom=>atom.slice(1,-1));assert.deepEqual(currentAtoms,originalAtoms,'no condition is removed, weakened or evaluated twice');
+   const currentAtoms=split(array,',').map(atom=>atom.slice(1,-1));
+   const exclusiveIndex=originalAtoms.findIndex(atom=>atom.includes('pg_catalog.pg_stat_activity'));
+   assert.equal(currentAtoms[exclusiveIndex],'pg_catalog.fresh35_exclusive_backends()');
+   assert(current.startsWith('DO $fresh35_observer_catalog$'));
+   assert.deepEqual(currentAtoms.filter((_,i)=>i!==exclusiveIndex),originalAtoms.filter((_,i)=>i!==exclusiveIndex),'all physical conditions except the explicitly replaced exclusive predicate remain unchanged and once-only');
    const tags=current.slice(current.indexOf('physical_failure_codes CONSTANT text[] := ARRAY['),current.indexOf(']; physical_index integer')).match(/FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_[A-Z_]+/g);
    assert.equal(tags.length,originalAtoms.length);assert.equal(new Set(tags).size,tags.length);for(const tag of tags){assert(m.api.FRESH35_COMBINED_PHYSICAL_FAILURE_CODES.includes(tag));assert(tag.length<=81)}
    assert.match(current,/IF \(true = ALL\(physical_checks\)\) IS DISTINCT FROM true/);assert.match(current,/IF physical_checks\[physical_index\] IS DISTINCT FROM true/);assert.match(current,/RAISE EXCEPTION '%',physical_failure_codes\[physical_index\] USING ERRCODE='55000'/);

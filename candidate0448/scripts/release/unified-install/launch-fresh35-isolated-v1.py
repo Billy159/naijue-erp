@@ -489,6 +489,15 @@ def psql(a, role, database, sql, timeout=20):
         need(False, 'PSQL_SQLSTATE_'+codes[-1].decode() if codes else 'PSQL_FAILED')
     return r.stdout.decode()
 
+def bootstrap_exclusive_observer(a, argv, remaining):
+    # SQL is generated only by the fixed, source-verified original entry.
+    root=Path(a['proposal']['workspaceDirectory'])
+    result=subprocess.run(argv+['--bootstrap-observer'],capture_output=True,env=clean_env(root),timeout=remaining())
+    need(result.returncode==0,'BOOTSTRAP_OBSERVER_DESCRIPTION_FAILED')
+    need(isinstance(result.stdout,bytes) and 0<len(result.stdout)<=262144,'BOOTSTRAP_OBSERVER_SQL_BOUND')
+    sql=result.stdout.decode('utf-8')
+    p=a['proposal'];psql(a,p['admin'],p['database'],sql,timeout=min(20,remaining()))
+
 def snapshot_sql():
     # One private psql connection, one read-only RR transaction. Only bounded
     # counts/digests and catalog/identity metadata leave it; no table rows.
@@ -677,9 +686,15 @@ def cleanup_owned_server(a, proc, identity, system_id, deadline):
     try:
         if proc and proc.poll() is None and identity and owned_listener(identity,p['port']) and system_id and time.monotonic()<deadline-5:
             names=[p[k] for k in ['owner','controller','runtime','admin']]
-            sql="DO $revoke$ BEGIN IF (SELECT system_identifier::text FROM pg_catalog.pg_control_system()) <> '"+system_id+"' THEN RAISE EXCEPTION 'PHYSICAL_TARGET_DIFFERS'; END IF; "+''.join("IF EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname='"+r+"') THEN ALTER ROLE "+r+" NOLOGIN PASSWORD NULL VALID UNTIL '-infinity'; END IF; " for r in names)+"END $revoke$;"
             try:
-                psql(a,p['admin'],'postgres',sql,timeout=min(8,max(1,deadline-time.monotonic()-3)));result['loginsRevoked']=True
+                database='postgres';observer_revoke='';binding=root/'target-binding.json'
+                if binding.exists() or binding.is_symlink():
+                    target=strict_json(read_private(binding))
+                    need(target.get('proposal')==p and target.get('startsAt')==a['startsAt'] and target.get('expiresAt')==a['expiresAt'] and target.get('physical',{}).get('systemIdentifier')==system_id,'CLEANUP_OBSERVER_TARGET_BINDING_DIFFERS')
+                    database=p['database']
+                    observer_revoke="IF pg_catalog.to_regprocedure('pg_catalog.fresh35_exclusive_backends()') IS NOT NULL THEN REVOKE ALL ON FUNCTION pg_catalog.fresh35_exclusive_backends() FROM "+p['owner']+","+p['controller']+"; END IF; "
+                sql="DO $revoke$ BEGIN IF (SELECT system_identifier::text FROM pg_catalog.pg_control_system()) <> '"+system_id+"' THEN RAISE EXCEPTION 'PHYSICAL_TARGET_DIFFERS'; END IF; "+observer_revoke+''.join("IF EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname='"+r+"') THEN ALTER ROLE "+r+" NOLOGIN PASSWORD NULL VALID UNTIL '-infinity'; END IF; " for r in names)+"END $revoke$;"
+                psql(a,p['admin'],database,sql,timeout=min(8,max(1,deadline-time.monotonic()-3)));result['loginsRevoked']=True
             except Exception as e:
                 errors.append({'phase':'revoke','type':type(e).__name__})
         if proc:
@@ -976,8 +991,9 @@ def main():
         target={'proposal':p,'physical':{k:obs[k] for k in ['systemIdentifier','databaseOid','serverVersionNum','postmasterStart']},'startsAt':a['startsAt'],'expiresAt':a['expiresAt']}
         json_new(root/'target-binding.json',target)
         verify_deployment(a)
-        # Describe runs real current program compilation but no SQL/connection.
         argv=[str(NODE),'--no-global-search-paths',str(ENTRY)]
+        bootstrap_exclusive_observer(a,argv,remaining)
+        # Describe runs real current program compilation but no SQL/connection.
         r=subprocess.run(argv+['--describe'],capture_output=True,env=clean_env(root),timeout=remaining());need(r.returncode==0,'PROGRAM_DESCRIPTION_FAILED')
         descriptor=strict_json(r.stdout);need(descriptor['sourceSetSha256']==a['sourceSetSha256'],'CURRENT_SOURCE_SET_DIFFERS');json_new(root/'program-description.json',descriptor)
         # External authority must review this physical target/program and supply
