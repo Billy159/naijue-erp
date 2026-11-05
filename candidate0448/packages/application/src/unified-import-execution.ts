@@ -1,4 +1,4 @@
-import {HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256} from './unified-import-contract.ts';
+import {isHistoricalSalesHallSourceProfile} from './unified-import-contract.ts';
 import {historicalSalesHallApprovalWire} from "./unified-historical-sales-hall-evidence.ts";
 import type {HistoricalSalesHallApproval} from "./unified-historical-sales-hall-evidence.ts";
 import type {CurrentEffectiveAlignmentEvidence} from "./unified-current-effective-alignment.ts";
@@ -77,7 +77,7 @@ function buildSourcePlan(input:BuildUnifiedImportPlanInput,resolveRegistration:(
   requireInput(digest(input.expectedManifestSha256)&&sha256(input.manifestBytes)===input.expectedManifestSha256,'MANIFEST_HASH_MISMATCH');
   let manifest:unknown;try{manifest=parseStrictJson(decodeUtf8(input.manifestBytes));}catch{throw new UnifiedImportExecutionError('MANIFEST_INVALID');}
   requireInput(requestHash(manifest)===requestHash(input.pkg.manifest),'MANIFEST_OBJECT_MISMATCH');
-  requireInput(input.pkg.manifest.schema_contract.source_declarations_sha256!==HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,'HISTORICAL_HALL_PROFILE_OFFLINE_ONLY');
+  requireInput(!isHistoricalSalesHallSourceProfile(input.pkg.manifest.schema_contract.source_declarations_sha256),'HISTORICAL_HALL_PROFILE_OFFLINE_ONLY');
   const validation=validateUnifiedPackage(input.pkg,{allowSynthetic:input.allowSynthetic===true,...(input.historicalSalesHallApproval!==undefined?{historicalSalesHallApproval:input.historicalSalesHallApproval}:{}),...(input.currentEffectiveAlignmentEvidence!==undefined?{currentEffectiveAlignmentEvidence:input.currentEffectiveAlignmentEvidence}:{}),...(input.historicalStaffHallApproval!==undefined?{historicalStaffHallApproval:input.historicalStaffHallApproval}:{}),...(input.explicitZeroApproval!==undefined?{explicitZeroApproval:input.explicitZeroApproval}:{})});
   requireInput(validation.valid&&input.pkg.manifest.stage==='READY','PREFLIGHT_REJECTED');
   if(input.pkg.manifest.schema_contract.source_declarations_sha256===HISTORICAL_SALES_SOURCE_SCHEMA_DECLARATIONS_SHA256){

@@ -71,7 +71,7 @@ export async function openReviewedFresh35PhysicalHost(config,sourceRoot,target,w
  const {loadFresh35HostContext,fresh35HostContext,verifyFresh35InstalledV1,assertFresh35HostCurrent}=await import('./fresh35-host-session.mjs');
  const {describeFresh35CombinedTarget}=await import('../../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
  const {withVerifiedFresh35AdmissionV1,WHOLE_SALES_ADMISSION_MODULE_SHA256}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
- if(!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory'].includes(k)))throw Error('FRESH35_HOST_OPTIONS_INVALID');
+ if(!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256'].includes(k)))throw Error('FRESH35_HOST_OPTIONS_INVALID');
  if(options.explicitZeroApproval)explicitZeroApprovalDescriptor(options.explicitZeroApproval);
  const context=await loadFresh35HostContext(sourceRoot,options.referenceDirectory),c=fresh35HostContext(context),t=describeFresh35CombinedTarget(c.target);
  const {describeFresh35CombinedSource}=await import('../../scripts/release/unified-install/fresh35-combined-source-v1.mjs');
@@ -94,6 +94,6 @@ export async function openReviewedFresh35PhysicalHost(config,sourceRoot,target,w
   await assertFresh35HostCurrent(context);
   hostVerification=Object.freeze({profile:'FRESH35_SAME_CLIENT_CATALOG_VERIFICATION_V1',program_sha256:c.record.programSha256,catalog_spec_sha256:c.record.catalogSpecSha256,installation_catalog_sha256:c.record.catalogSha256,live_catalog_sha256:verified.live_catalog_sha256,source_profile_sha256:verified.source_profile_sha256});
   return withVerifiedFresh35AdmissionV1(verified,gateClient,controlled,target,admission=>work(controlled,admission));
- },async gate=>{gateClient=gate;return verifyFresh35InstalledV1(gate,context)},'FRESH35_RETIRED152_V1',true,{explicitZeroApproval:options.explicitZeroApproval,fresh35ExpiresAt:t.expiresAt});
+ },async gate=>{gateClient=gate;return verifyFresh35InstalledV1(gate,context,options.sourceProfileSha256)},'FRESH35_RETIRED152_V1',true,{explicitZeroApproval:options.explicitZeroApproval,fresh35ExpiresAt:t.expiresAt});
  return {...result,host_verification:hostVerification};
 }

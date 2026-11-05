@@ -11,6 +11,7 @@ const root=resolve(import.meta.dirname,'..'),hash=v=>createHash('sha256').update
 const [plan,patch]=await Promise.all([loadFresh35RetirementPlan(root),readFile(resolve(root,FRESH35_SALES_HALL_SQL_PIN.path),'utf8')]);
 const c=compileFresh35SalesHallCandidate(plan,patch),ordinary=c.changedBodies.find(r=>r.signature==='naijue_erp.guard_unified_document()').body;
 const command=c.changedBodies.find(r=>r.signature.startsWith('naijue_erp.standard_whole_package_command_v2(')).body;
+const v2='b460db7ded610e6afe0fc8d506fedb8eda9d947819571211a25ecc5b52a39c0b';
 const profile='f5d4e26d8cfae8cc96d42a43b01c6c49217a9927d1b0dc42af0c1b4c3ce29b66';
 test('fresh35 delta has only two exact retained routine changes, one nullable column and no legacy dependencies',()=>{
  assert.equal(c.manifest.tableCount,35);assert.equal(c.manifest.routineCount,152);
@@ -40,13 +41,13 @@ test('source drift and caller-constructed plans fail without changing any old lo
 });
 test('new profile is explicit and requires separately pinned complete approval coverage; old profile cannot carry new evidence',()=>{
  assert.equal(HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,profile);
- assert(command.includes(`IF payload->>'schema_declarations_sha256'='${profile}' AND NOT(payload ? 'historical_hall_approval')`));
- assert(command.includes(`IF payload->>'schema_declarations_sha256' IS DISTINCT FROM '${profile}'`));
+ assert(command.includes(`IF payload->>'schema_declarations_sha256' IN ('${profile}','${v2}') AND NOT(payload ? 'historical_hall_approval')`));
+ assert(command.includes(`IF coalesce(payload->>'schema_declarations_sha256','') NOT IN ('${profile}','${v2}')`));
  assert(command.includes("jsonb_array_length(hall_approval->'records')::numeric IS DISTINCT FROM (payload->'expected_documents'->>'SALES_HEADER')::numeric"));
  assert(command.includes("kind='SALES_HEADER' AND cfg ? 'historical_hall_approval' AND NOT(entry ? 'historical_hall_evidence')"));
  assert(command.includes("hall_approved:=hall_approvals->(entry->>'target_id')"));
  assert(command.includes('HISTORICAL_HALL_APPROVAL_MEMBERSHIP'));
- assert(ordinary.includes(`->>'schema_declarations_sha256'='${profile}'`));
+ assert(ordinary.includes(`->>'schema_declarations_sha256' IN ('${profile}','${v2}')`));
  assert(!ordinary.includes('89117aebb5064a3f42065aaab077ffd0e90ec0fee07898e5416ee3c1ff18130e'));
 });
 test('new profile inherits only the existing exact source declaration cohorts, not permissions or runtime exemptions',()=>{

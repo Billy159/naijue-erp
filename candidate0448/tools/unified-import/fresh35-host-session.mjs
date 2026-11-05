@@ -9,7 +9,7 @@ import {resolveFresh35ReferenceInputPaths,loadFresh35CombinedSource,describeFres
 import {bindFresh35CombinedTarget,describeFresh35CombinedTarget} from '../../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
 import {buildFresh35CombinedCatalog,assertFresh35CombinedCatalogCurrent} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
 import {compileFresh35CombinedProgram} from '../../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
-import {HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256} from '../../packages/application/src/unified-import-contract.ts';
+import {HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,isHistoricalSalesHallSourceProfile} from '../../packages/application/src/unified-import-contract.ts';
 import {sameActiveWholeHostSession} from './whole-host-session.mjs';
 const loadedHostSha256=hash(await readFile(new URL(import.meta.url)));
 const moduleRoot=resolve(fileURLToPath(new URL('../../',import.meta.url)));
@@ -48,8 +48,9 @@ export async function assertFresh35HostCurrent(token){
 }
 /** The generic/model wire helper never registers a trusted gate, even if given
  * a real-looking catalog and a callback. It therefore cannot reach this issuer. */
-export async function verifyFresh35InstalledV1(client,context){
+export async function verifyFresh35InstalledV1(client,context,sourceProfile=HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256){
  need(sameActiveWholeHostSession(client,client),'PHYSICAL_SESSION_REQUIRED');
+ need(isHistoricalSalesHallSourceProfile(sourceProfile),'SOURCE_PROFILE_REQUIRED');
  const c=await assertFresh35HostCurrent(context);
  const module=await import('../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs');
  need(typeof module.fresh35CombinedRuntimeCatalogSql==='function'&&typeof module.validateFresh35CombinedRuntimeCatalogObservation==='function','RUNTIME_CATALOG_NOT_WIRED');
@@ -62,7 +63,7 @@ export async function verifyFresh35InstalledV1(client,context){
  const actual=module.validateFresh35CombinedRuntimeCatalogObservation(result.rows[0].catalog_json,c.catalog,c.source,c.target);
  await assertFresh35HostCurrent(context);
  const t=describeFresh35CombinedTarget(c.target);
- const verified=Object.freeze({profile:'FRESH35_COMBINED_INSTALLED_INSTANCE_MATCH',system_identifier:t.physical.systemIdentifier,database_oid:t.physical.databaseOid,database_name:t.proposal.database,catalog_sha256:c.record.catalogSha256,source_profile_sha256:HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,live_catalog_sha256:actual.catalogSha256,expires_at:t.expiresAt,starts_at:t.startsAt});
+ const verified=Object.freeze({profile:'FRESH35_COMBINED_INSTALLED_INSTANCE_MATCH',system_identifier:t.physical.systemIdentifier,database_oid:t.physical.databaseOid,database_name:t.proposal.database,catalog_sha256:c.record.catalogSha256,source_profile_sha256:sourceProfile,live_catalog_sha256:actual.catalogSha256,expires_at:t.expiresAt,starts_at:t.startsAt});
  verifications.set(verified,client);return verified;
 }
 export function consumeFresh35VerificationV1(verified,client){

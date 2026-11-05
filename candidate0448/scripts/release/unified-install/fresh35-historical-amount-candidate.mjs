@@ -10,7 +10,7 @@ const hash=x=>createHash('sha256').update(x).digest('hex');
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_HISTORICAL_AMOUNT_'+code);};
 const modulePath='scripts/release/unified-install/fresh35-historical-amount-candidate.mjs';
 const loadedModuleSha256=hash(await readFile(new URL(import.meta.url)));
-export const FRESH35_HISTORICAL_AMOUNT_SQL_PIN=Object.freeze({path:'adapters/postgres/patches/0035_historical_line_amount_successor.sql',sha256:'862a5ae663356e3478bbc49a429c1552033d38be2a057f7c0d436590c0d0c067'});
+export const FRESH35_HISTORICAL_AMOUNT_SQL_PIN=Object.freeze({path:'adapters/postgres/patches/0035_historical_line_amount_successor.sql',sha256:'e6950fda20ee1695e55c9398491c0ac18685212d5910b155b4982e38b2d6e6a6'});
 const expectedNames=['standard_whole_package_command_v2','assert_document_migration','validate_sales_settlement','standard_whole_package_verify_v2'];
 const normalized=normalizeRetirementSignature;
 export function applyHistoricalAmountReplacement(before,spec){
@@ -51,7 +51,7 @@ export async function loadFresh35HistoricalAmountCandidate(root){
   sourcePins,sourceSetSha256:hash(JSON.stringify(sourcePins)),predecessorHallSourceSetSha256:hall.manifest.sourceSetSha256,
   routineChanges:specs.map(s=>({signature:predecessorBodies.find(r=>normalized(r.signature)===normalized(s.signature)).signature,before:s.predecessor_sha256,after:s.successor_sha256})),
   successorRoutinePins,columnChanges:[],tableCount:35,routineCount:152,newTables:0,newColumns:0,newRoutines:0,permissionsChanged:false,
-  requiredSourceProfileSha256:hall.manifest.requiredSourceProfileSha256,
+  requiredSourceProfileSha256:hall.manifest.requiredSourceProfileSha256,supportedSourceProfileSha256:hall.manifest.supportedSourceProfileSha256,
   evidence:{format:'HISTORICAL_LINE_AMOUNT_EVIDENCE_V1',maxBytes:4194304,maxLines:10000,authority:'TRUSTED_HOST_EXTERNAL_SHA_NOT_SQL_SELF_APPROVAL',persistence:'SOURCE_HASH_AND_IMMUTABLE_IMPORT_AUDIT',exactSetAtPublication:true,originalValuesNeverRecalculated:true},
   readback:{entry:'standard_whole_package_verify_v2',existingCredentialsAndLocksPreserved:true,originalAndCurrentSeparate:true,calculatedAndDifferenceDiagnosticOnly:true},
   editBoundary:'NO_NEW_METADATA_SAVE_EXCEPTION; SAVE_AND_APPROVE_REQUIRE_ORDINARY_FORMULA',

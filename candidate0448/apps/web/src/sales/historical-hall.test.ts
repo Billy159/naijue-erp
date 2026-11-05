@@ -1,7 +1,7 @@
 import test from 'node:test';
 import { entityId } from '../../../../packages/domain/src/values.ts';
 import assert from 'node:assert/strict';
-import { buildHistoricalSalesHallEvidence } from '../../../../packages/application/src/historical-sales-hall-evidence.ts';
+import { buildHistoricalSalesHallEvidence, buildHistoricalSalesHallEvidenceV2 } from '../../../../packages/application/src/historical-sales-hall-evidence.ts';
 import { salesHallLabel, historicalHallFacts, validateHistoricalHall } from './historical-hall.ts';
 import { salesDetailResponse, salesListResponse } from './response-validation.ts';
 import { salesDocumentOutput } from '../components/document-output-contracts.ts';
@@ -56,4 +56,14 @@ test('server economic rejections keep explicit hall/warehouse selection and ever
   assert.equal(session.applyHistoricalHallWarehouse(hall,warehouse),true);session.updateInput({...session.getSnapshot().input!,note:'保留输入'});const before=structuredClone(session.getSnapshot().input);
   assert.equal(await session.save(),false);assert.equal(sent.length,1);assert.equal(session.getSnapshot().command.write.phase,'rejected');assert.equal(session.getSnapshot().command.write.error?.code,code);assert.match(session.getSnapshot().command.notice!,/保留/);assert.deepEqual(session.getSnapshot().input,before);assert.deepEqual(session.getSnapshot().command.editor?.draft?.lines,d.document.lines);assert.equal(session.getSnapshot().command.editor?.draft?.header.hallId,hall.id);assert.equal(session.getSnapshot().command.editor?.draft?.header.warehouseId,warehouse.id);session.dispose();
  }
+});
+
+test('V2 readback displays original zero and dual halls separately from target positive version',()=>{
+ const capture={capture_evidence_sha256:'a'.repeat(64),source_namespace:'qa:hall-v2',warehouse_source_key:'warehouse:1',runtime_warehouse_id:uuid(50),source_native_version:0,effective_version:0,runtime_hall_ids:[uuid(51),uuid(52)],captured_at:'2026-11-05T03:00:00Z',transaction_snapshot:'1:2:',relation_basis:'VERIFIED_SOURCE_CAPTURE'};
+ const v=buildHistoricalSalesHallEvidenceV2({basis:'MIGRATION_DERIVED',original_hall_id:null,selected_hall_id:uuid(11),warehouse_id:uuid(13),target_snapshot:{warehouse_id:uuid(13),hall_id:uuid(11),version:1,captured_at:'2026-11-05T04:00:00Z'},source_capture:capture,identity_bridge:{evidence_sha256:'b'.repeat(64),record_key:'bridge:1'},resolution:{evidence_sha256:'c'.repeat(64),record_key:'resolution:1'},has_difference:true,review_required:false});
+ const facts=historicalHallFacts(v),get=(key:string)=>facts.find(([label])=>label===key)?.[1];
+ assert.equal(get('原单营业厅编号'),null);assert.equal(get('来源原生版本'),'0');assert.equal(get('来源有效版本'),'0');assert.equal(get('目标仓库版本'),'1');assert.equal(get('来源仓库所属厅编号'),capture.runtime_hall_ids.join('、'));
+ assert.match(salesHallLabel('采用厅',uuid(11),v),/已确认.*推定/);assert.doesNotMatch(salesHallLabel('采用厅',uuid(11),v),/保留原厅|待核/);
+ assert.match(get('营业厅差异')!,/来源存在多厅/);assert.match(get('营业厅复核状态')!,/已有明确/);
+ assert.equal(validateHistoricalHall(v,uuid(11),uuid(13),false).format_version,'HISTORICAL_SALES_HALL_EVIDENCE_V2');
 });

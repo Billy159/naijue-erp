@@ -1,4 +1,4 @@
-import {HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256} from './unified-import-contract.ts';
+import {isHistoricalSalesHallSourceProfile} from './unified-import-contract.ts';
 import { assertWholeSalesAdmissionV1 } from '../../../scripts/release/unified-install/whole-sales-admission-v1.mjs';
 import {types} from 'node:util';
 import {requestHash} from './request-hash.ts';
@@ -53,7 +53,7 @@ export function compileStandardWholePackageProfile(input:BuildUnifiedImportPlanI
  if(input.historicalStaffHallApproval)owned.historicalStaffHallApproval=input.historicalStaffHallApproval;
  if(input.historicalSalesAdmission)owned.historicalSalesAdmission=input.historicalSalesAdmission;
  const schema=owned.pkg.manifest.schema_contract.source_declarations_sha256;
- if(schema===HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256)fail('HISTORICAL_HALL_PROFILE_OFFLINE_ONLY');
+ if(isHistoricalSalesHallSourceProfile(schema))fail('HISTORICAL_HALL_PROFILE_OFFLINE_ONLY');
  if(schema===HISTORICAL_SALES_SOURCE_SCHEMA_DECLARATIONS_SHA256){if(!owned.historicalSalesAdmission||!owned.target)fail('SOURCE_ONLY');assertWholeSalesAdmissionV1(owned.historicalSalesAdmission,owned.target)}
  if(![SCHEMA_DECLARATIONS_SHA256,NUMERIC_FIT_SCHEMA_DECLARATIONS_SHA256,STAFF_DEPARTURE_SCHEMA_DECLARATIONS_SHA256,HISTORICAL_SALES_SOURCE_SCHEMA_DECLARATIONS_SHA256].includes(schema))fail('SCHEMA_UNKNOWN');
  const source=buildWholePackageSourcePlanV2(owned);assertUnifiedImportPlanV2(source);

@@ -41,8 +41,8 @@ test('amount successor composes after the hall change without replacing the hall
 });
 test('new evidence is restricted to the explicit new profile and cannot be self-issued by a detail entry',async()=>{
  const c=await (await load()).loadFresh35HistoricalAmountCandidate(root),command=c.changedBodies.find(r=>r.signature.includes('.standard_whole_package_command_v2(')).body;
- assert.ok(command.includes(`payload->>'schema_declarations_sha256' IS DISTINCT FROM '${c.manifest.requiredSourceProfileSha256}'`));
- assert.ok(command.includes(`cfg->>'schema_declarations_sha256' IS DISTINCT FROM '${c.manifest.requiredSourceProfileSha256}'`));
+ assert.ok(command.includes(`coalesce(payload->>'schema_declarations_sha256','') NOT IN ('${c.manifest.supportedSourceProfileSha256.join("','")}')`));
+ assert.ok(command.includes(`coalesce(cfg->>'schema_declarations_sha256','') NOT IN ('${c.manifest.supportedSourceProfileSha256.join("','")}')`));
  const typed=command.slice(command.indexOf("IF entry-ARRAY['record_id','entity_type'"),command.indexOf("THEN RAISE EXCEPTION 'STANDARD_TYPED_ROW_SHAPE_INVALID'"));
  assert.ok(typed.length>0);assert.ok(!typed.includes('historical_line_amount_evidence'));assert.ok(!typed.includes('historical_line_amount_approval'));
  assert.ok(command.includes("amount_fact:=amount_facts_by_id->target::text"));
@@ -83,7 +83,7 @@ test('new-profile empty-settlement restoration hashes original hall/archive/zero
  const withHall={...original,historical_hall_evidence:{format_version:'HISTORICAL_SALES_HALL_EVIDENCE_V1',basis:'PENDING_REVIEW'}};
  assert.notEqual(hash(JSON.stringify(original)),hash(JSON.stringify(withHall)),'Adding the original capture changes the immutable hash input');
  assert.ok(body.includes(`restoration_source_fields:=${base};`));
- assert.ok(body.includes(`IF restoration_profile='${c.manifest.requiredSourceProfileSha256}' THEN`));
+ assert.ok(body.includes(`IF restoration_profile IN ('${c.manifest.supportedSourceProfileSha256.join("','")}') THEN`));
  assert.ok(body.includes("FOREACH restoration_extension IN ARRAY ARRAY['explicit_zero_evidence','zero_amount_archive','historical_hall_evidence'] LOOP"));
  assert.ok(body.includes("(source_item ? restoration_extension) IS DISTINCT FROM (source_entry ? restoration_extension)"));
  assert.ok(body.includes("source_item->restoration_extension IS DISTINCT FROM source_entry->restoration_extension"));
@@ -102,7 +102,7 @@ test('restoration extension projection rejects omitted, changed and cross-kind e
  const profile=c.manifest.requiredSourceProfileSha256,base={source_key:'SYNTHETIC',fields:{quantity:'0'},source_refs:[{file_sha256:'1'.repeat(64),sheet:null,row:1}]};
  const project=(selected,kind,item,entry)=>{
   const out={source_key:item.source_key,fields:item.fields,source_refs:item.source_refs};
-  if(selected===profile){
+  if(c.manifest.supportedSourceProfileSha256.includes(selected)){
    if(kind==='SALES_HEADER'&&!Object.hasOwn(item,'historical_hall_evidence')||Object.hasOwn(item,'historical_line_amount_evidence'))throw Error('invalid extension');
    for(const k of keys){
     if(Object.hasOwn(item,k)!==Object.hasOwn(entry,k)||JSON.stringify(item[k])!==JSON.stringify(entry[k]))throw Error('evidence differs');
@@ -131,7 +131,7 @@ test('old zero/archive restoration omission is source-reachable but remains unmo
   const b={source_key:'SYNTHETIC-OLD',fields:{quantity:'0'},source_refs:[]};assert.notEqual(hash(JSON.stringify(b)),hash(JSON.stringify({...b,[key]:{synthetic:true}})));
  }
  assert.ok(command.includes('89117aebb5064a3f42065aaab077ffd0e90ec0fee07898e5416ee3c1ff18130e'));
- const gate=body.slice(body.indexOf("   IF restoration_profile="),body.indexOf("   IF source_record.source_system"));
+ const gate=body.slice(body.indexOf("   IF restoration_profile IN"),body.indexOf("   IF source_record.source_system"));
  assert.ok(!gate.includes('89117aebb5064a3f42065aaab077ffd0e90ec0fee07898e5416ee3c1ff18130e'));
- assert.equal((gate.match(/restoration_profile=/g)||[]).length,1);
+ assert.equal((gate.match(/restoration_profile IN/g)||[]).length,1);
 });
