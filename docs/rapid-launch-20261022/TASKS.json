@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T16:22:29.221919+00:00",
+    "at": "2026-11-05T16:33:34.148046+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28475,11 +28475,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Approved REAL seam implementing original host/session/stream and tests only; mutable WIP excluded from c30d synthetic candidate.",
-      "D2": "Original build owner building fixed c30d4642077c18467a45c902ea09c6af68666fca; prior builder/tool/ref/Linux73 reused, no new install.",
+      "D1": "Approved REAL7-module consumer/dispatcher seam implementing and directly testing; no source fixed or DB yet.",
+      "D2": "Fixed5d70 full build/pack exit0,451-member readback; ordinary7292-file manifest1084128B assembled, archive ongoing; no PG.",
       "D3": "Real declared-source reconciliation055 and standard preflighta10 each passed once; exact7color/4stock closure05eab0d4 adopted; no repeat scan or import.",
-      "T45": "Ordinary main frozen d0bd2c35 and returned readonly; minimal current production/app/DB/backup facts read only while package pending; no PG writes.",
-      "QB": "Original QB reviewing T45 d0bd2c35 increment only; D1LOGIN/D2ordinary and original parent scopes reused.",
+      "T45": "Current formal readonly facts5c6567f5 adopted; original owner adapting only two wrapper manifest reads to finite2MiB, no application change; then bounded post-cutoff activity aggregate.",
+      "QB": "T45 d0bd four-leaf + bd99 fixture synchronization accepted 8becc8c5; next only wrapper manifest reader r2 after fixed delivery.",
       "phaseBCurrent25": "Fixed22699eb4/5e8b75bd four-leaf QB increment; T45 same target app/environment successor preparation; D1 next native35 business route read-only. Capacity-dependent D3 remains held; exact3 old exports retained.",
       "native35BusinessGap": "D1 read-only verified synthetic V1 record / production V2 / importhost mismatch; original D2 high checking exact existing consumer seam, no source/permissions changes yet. Import smoke is not ordinary business PASS.",
       "handoffResponsibility": "Local C and original D1/D2/D3/T45 continue implementation; no Dot reply or user report transfer prerequisite."
@@ -28797,14 +28797,23 @@
       "nativeSourceSetSHA256": "b362b87084e45e3f6fee2855ac3fa2f50cfad0d0817218c4dfc5bde76b89681e",
       "nextFixedCandidate": {
         "owner": "D2",
-        "integrationCommit": "d0bd2c35f461ee385857e57fd0363c0c4f395ed8",
-        "sourceCommit": "c30d4642077c18467a45c902ea09c6af68666fca",
-        "sourceTree": "65e15fb6f7fc1d81156e37122646b1d05f7d252f",
+        "integrationCommit": "bd99c1012643c7bc32cd2f9df6e90f5385ecd956",
+        "sourceCommit": "5d70b3ee9038b4d0fe66328e2a172b688c07d9c9",
+        "sourceTree": "5e7bc71f66f0033ebcace398d432ec12a2d43fd7",
         "branch": "codex/erp-0448z-build-root-20261105",
         "remoteVerified": true,
-        "state": "BUILD_AND_ORDINARY_PACKAGING_DISPATCHED_NOT_RESULT",
+        "state": "ACTUAL_FULL_BUILD_AND_RELEASE_PACK_PASSED_ORDINARY_ARCHIVE_IN_PROGRESS",
         "excludeMutableRealWIP": true,
-        "old7393ResultRetainedNotNew": true
+        "old7393ResultRetainedNotNew": true,
+        "buildExitCode": 0,
+        "packExitCode": 0,
+        "buildId": "erp-5d70b3ee9038-full-20261106",
+        "archiveSHA256": "4ccb0862835d7697190e104c2f0d1a0ed7241d1bb2c551cbe51d6056f42ca37b",
+        "archiveBytes": 3317791,
+        "releaseManifestSHA256": "aee18264a9354c6d67b8ad75972c88595063b9fdcdd73a68da83c7509437ea72",
+        "packMembers": 451,
+        "businessVerified": false,
+        "productionVerified": false
       }
     },
     "sourceReconciliationActual": {
@@ -29037,7 +29046,7 @@
         "commit": "d0bd2c35f461ee385857e57fd0363c0c4f395ed8",
         "readySHA256": "2fcc452b3ff205b91a1f1af845ff1e7adab98deb2d223ab9acb5167c2c7880ce",
         "receiptSHA256": "4cf94092bc5f723c5435c32f051761f4c8f5a2a1dd834df567bd5505240e20d1",
-        "state": "SOURCE_FROZEN_QB_INCREMENT_IN_PROGRESS_NOT_LINUX_OR_PG",
+        "state": "QB_PASS_SOURCE_AND_TARGETED_MODELS_ONLY_NOT_LINUX_OR_PG",
         "models": {
           "launcher": 28,
           "wrapper": 9,
@@ -29046,7 +29055,18 @@
         },
         "sourceMainWired": true,
         "PGExecuted": false,
-        "sourceSnapshot": "docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/phaseb-ordinary-scenario-r1"
+        "sourceSnapshot": "docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/phaseb-ordinary-scenario-r1",
+        "reviewSHA256": "8becc8c5fbae37042f30618fa8490bb3f78b8bbc56fd36ed177e735db8acfdab"
+      },
+      "manifestReaderCompatibility": {
+        "actualManifestBytes": 1084128,
+        "oldWrapperMaximumBytes": 1048576,
+        "excessBytes": 35552,
+        "deployFiles": 7292,
+        "manifestSHA256": "4954bb15a5800071ad0d633574e29f80bd62fd724ef02f4ee6066617d518ca92",
+        "owner": "T45",
+        "next": "Only two private-wrapper manifest reads finite2MiB and directed boundary check in preserved r2; original launcher4MiB unchanged",
+        "state": "IMPLEMENTING_NOT_READY_FOR_EXECUTION"
       }
     },
     "productionRealImportContinuation": {
@@ -29063,7 +29083,9 @@
         "tools/unified-import/whole-host-session.mjs",
         "tools/unified-import/stream-import-cli.mjs",
         "fresh35-receiver-diagnostics if actually necessary",
-        "existing directly affected tests"
+        "existing directly affected tests",
+        "tools/unified-import/cli.mjs exact new prepared-state exit branch",
+        "existing direct CLI test"
       ],
       "invariants": [
         "No DB table/column/GRANT or ordinary business change",
@@ -29071,6 +29093,40 @@
         "Existing controller external exact batch binding and original Client, transaction, keys, deadline, unknown recovery; no new control platform",
         "Synthetic fixed candidate exports Git only and does not wait for REAL WIP"
       ]
+    },
+    "releaseFixturePinSynchronization": {
+      "commit": "bd99c1012643c7bc32cd2f9df6e90f5385ecd956",
+      "priorBuildRootFailure": "c30d4642077c18467a45c902ea09c6af68666fca: NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED; retained",
+      "path": "tests/fixtures/unified-import/whole-package-synthetic.ts",
+      "oldSHA256": "9ca6ddbfd2c3255801a928e6f1ae661608ab7c1aec9d72d7901ccbb759a7f5c7",
+      "newSHA256": "9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702",
+      "scope": "Existing approved fixture bytes in config/generator/generated helper only; no fixture source/path/allowance expansion",
+      "directTests": 5,
+      "fullGeneratorExitCode": 1,
+      "fullGeneratorError": "DEPLOYMENT_HELPER_REAPPROVAL_REQUIRED",
+      "approvalMarkersChanged": false,
+      "reviewSHA256": "8becc8c5fbae37042f30618fa8490bb3f78b8bbc56fd36ed177e735db8acfdab"
+    },
+    "formalCurrentReadonlyFacts": {
+      "owner": "T45",
+      "receiptSHA256": "5c6567f5306a83b89d6ff52eb69c642f31cd57a2aabcaff57ffd649f17e7d2f6",
+      "checkedAtShanghai": "2026-11-06 00:28:44-47",
+      "job": "t45-formal-current-contract-readonly-20261106-01",
+      "exitCode": 0,
+      "elapsedSeconds": 2.876,
+      "applicationPackage": "0.0.1",
+      "sourceCommitAndBuildId": "UNKNOWN",
+      "databaseFamily": "Old four-schema family with15 legacy migrations, not exact35",
+      "nonempty": true,
+      "backup": "Original Nov1 set retained; historical SEAMS restore15 migrations/6 identity keys/114 media passed; current copy stopped later, internal unchanged not proven",
+      "notVerified": [
+        "Current cross-resource atomic snapshot",
+        "Same-snapshot counts",
+        "Old app/login/browser/media by application UID",
+        "Post-Nov2-cutoff activity; only aggregate followup requested"
+      ],
+      "mutations": 0,
+      "productionDeployment": false
     }
   }
 }
