@@ -26,6 +26,7 @@ export async function compileFresh35CombinedProgram({source,target,catalog}){
  const s=describeFresh35CombinedSource(source),t=describeFresh35CombinedTarget(target);
  for(const [path,sha] of [[modulePath,loadedModuleSha256],['scripts/release/unified-install/fresh35-combined-target-v1.mjs',FRESH35_COMBINED_TARGET_MODULE_SHA256]])need(s.currentSourcePins.some(p=>p.path===path&&p.sha256===sha),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS:'+path);
  const module=await import('./fresh35-combined-catalog-v1.mjs');
+ await module.assertFresh35CombinedCatalogCurrent(catalog);
  const c=module.describeFresh35CombinedCatalog(catalog),sql=module.fresh35CombinedCatalogSql(catalog,source,target);
  need(c.sourceSetSha256===s.sourceSetSha256&&c.completeMetadataGuard===true,'COMPLETE_CURRENT_CATALOG_GUARD_REQUIRED');
  need(typeof sql.guardSql==='string'&&typeof sql.observationSql==='string'&&typeof module.validateFresh35CombinedCatalogObservation==='function','CATALOG_GUARD_AND_OBSERVATION_REQUIRED');
@@ -39,7 +40,7 @@ export async function compileFresh35CombinedProgram({source,target,catalog}){
   {name:'complete-successor-catalog',sql:sql.guardSql},
   {name:'same-physical-target',sql:fresh35CombinedTargetGuard(target,{requireEmpty:false})},
  ];
- const descriptor=freeze({format:'FRESH35_COMBINED_ATOMIC_PROGRAM_V1',sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),catalogSha256:c.catalogSpecSha256,
+ const descriptor=freeze({format:'FRESH35_COMBINED_ATOMIC_PROGRAM_V1',...(c.bootstrapNetworkObservationSha256?{bootstrapNetworkObservationSha256:c.bootstrapNetworkObservationSha256}:{}),sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),catalogSha256:c.catalogSpecSha256,
   statements:statements.map(step=>({name:step.name,sha256:hash(step.sql)})),observationSqlSha256:hash(sql.observationSql),applicationTransactions:1,createsCluster:false,createsRoles:false,createsCredentials:false,oldTablesRemoved:false,hostEnabled:false});
  const token=Object.freeze({profile:'FRESH35_COMBINED_ATOMIC_PROGRAM_V1'});
  programs.set(token,{source,target,catalog,catalogModule:module,statements,observationSql:sql.observationSql,descriptor:freeze({...descriptor,programSha256:hash(JSON.stringify(descriptor))})});

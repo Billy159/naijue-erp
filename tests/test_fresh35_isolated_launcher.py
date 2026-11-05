@@ -637,4 +637,35 @@ class InstallChildDiagnosticTests(unittest.TestCase):
     def test_source_failure_capture_precedes_original_failure_and_no_retry(self):
         source=PATH.read_text();start=source.index("r=subprocess.run(argv+['--execute']");end=source.index("result=strict_json(r.stdout)",start);part=source[start:end];self.assertLess(part.index('persist_install_child_failure(root,r,descriptor)'),part.index("need(r.returncode==0,'INSTALL_FAILED_OR_OUTCOME_UNKNOWN')"));self.assertEqual(part.count('subprocess.run'),1)
 
+class BootstrapNetworkObservationTests(unittest.TestCase):
+    def fixture(self,root):
+        a=authority();a['proposal']['workspaceDirectory']=str(root);root.chmod(0o711)
+        p=a['proposal'];obs={'systemIdentifier':'7700000000000000001','databaseOid':'16393','serverVersionNum':'170011','postmasterStart':'2026-11-06 00:00:00+00','address':'127.0.0.1','port':p['port'],'actor':p['admin'],'listenAddresses':'127.0.0.1','unixSocketDirectories':'','dataDirectory':str(root/'data'),'hbaFile':str(root/'data/pg_hba.conf')}
+        return a,obs
+    def test_actual_proof_is_closed_readonly_and_private_modes_unchanged(self):
+        import os,stat
+        with tempfile.TemporaryDirectory() as d,patch.object(m,'trusted',side_effect=lambda p:Path(p)):
+            root=Path(d);a,obs=self.fixture(root);(root/'credentials').mkdir(mode=0o700);m.write_new(root/'credentials/admin.pgpass',b'synthetic-private',0o400);old=os.umask(0o077)
+            try:proof=m.persist_bootstrap_network_observation(a,{**obs,'ignoredSecret':'NEVER_COPY'},obs['systemIdentifier'])
+            finally:os.umask(old)
+            p=root/'bootstrap-network-observation.json';saved=json.loads(p.read_text());self.assertEqual(saved,proof);self.assertEqual(len(saved),13);self.assertNotIn('ignoredSecret',saved);self.assertEqual(saved['sourceSetSha256'],a['sourceSetSha256']);self.assertEqual(saved['unixSocketDirectories'],'');self.assertEqual(stat.S_IMODE(p.stat().st_mode),0o444);self.assertEqual(p.stat().st_nlink,1);self.assertEqual(stat.S_IMODE(root.stat().st_mode),0o711);self.assertEqual(stat.S_IMODE((root/'credentials').stat().st_mode),0o700);self.assertEqual(stat.S_IMODE((root/'credentials/admin.pgpass').stat().st_mode),0o400)
+    def test_wrong_actual_tuple_or_network_never_creates_proof(self):
+        changes=[{'systemIdentifier':'7700000000000000002'},{'databaseOid':'0'},{'serverVersionNum':'160000'},{'postmasterStart':''},{'address':'0.0.0.0'},{'port':1},{'actor':'wrong-admin'},{'listenAddresses':'*'},{'unixSocketDirectories':'/tmp'},{'dataDirectory':'/other'},{'hbaFile':'/other'}]
+        for change in changes:
+            with self.subTest(change=change),tempfile.TemporaryDirectory() as d,patch.object(m,'trusted',side_effect=lambda p:Path(p)):
+                root=Path(d);a,obs=self.fixture(root)
+                with self.assertRaises(RuntimeError):m.persist_bootstrap_network_observation(a,{**obs,**change},obs['systemIdentifier'])
+                self.assertFalse((root/'bootstrap-network-observation.json').exists())
+    def test_same_path_is_exclusive_and_existing_proof_not_rewritten(self):
+        with tempfile.TemporaryDirectory() as d,patch.object(m,'trusted',side_effect=lambda p:Path(p)):
+            root=Path(d);a,obs=self.fixture(root);m.persist_bootstrap_network_observation(a,obs,obs['systemIdentifier']);p=root/'bootstrap-network-observation.json';before=(p.stat().st_ino,p.read_bytes())
+            with self.assertRaises(FileExistsError):m.persist_bootstrap_network_observation(a,obs,obs['systemIdentifier'])
+            self.assertEqual(before,(p.stat().st_ino,p.read_bytes()))
+    def test_parent_traversal_and_original_json_default_mode_remain_exact(self):
+        import stat
+        with tempfile.TemporaryDirectory() as d,patch.object(m,'trusted',side_effect=lambda p:Path(p)):
+            root=Path(d);a,obs=self.fixture(root);root.chmod(0o700)
+            with self.assertRaisesRegex(RuntimeError,'NETWORK_OBSERVATION_PARENT_MODE'):m.persist_bootstrap_network_observation(a,obs,obs['systemIdentifier'])
+            m.json_new(root/'original-private.json',{'fixed':True});self.assertEqual(stat.S_IMODE((root/'original-private.json').stat().st_mode),0o400)
+
 if __name__=='__main__':unittest.main()

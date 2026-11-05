@@ -1,16 +1,19 @@
+import {createFresh35BootstrapNetworkModel,prepareFresh35CatalogProgramModel} from './fixtures/fresh35-bootstrap-network-model.mjs';
+import {after} from 'node:test';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {loadFresh35CombinedSource,describeFresh35CombinedSource,renderFresh35CombinedSchema,resolveFresh35ReferenceInputPaths} from '../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
-import {bindFresh35CombinedTarget,describeFresh35CombinedTarget} from '../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
-import {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation,fresh35CombinedRuntimeCatalogSql,validateFresh35CombinedRuntimeCatalogObservation} from '../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
-import {compileFresh35CombinedProgram,describeFresh35CombinedProgram,validateFresh35CombinedAuthorization,runFresh35CombinedInstall} from '../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const {baselineDirectory:base,modelPath,functionsPath}=await resolveFresh35ReferenceInputPaths(fileURLToPath(new URL('../../reference-inputs',import.meta.url)));
-const startsAt=Date.parse('2026-11-05T03:00:00Z');
-const target=bindFresh35CombinedTarget({proposal:{database:'synthetic_fresh35_20261105_r9',owner:'fresh35_owner_20261105_r9',controller:'fresh35_controller_20261105_r9',runtime:'fresh35_runtime_20261105_r9',admin:'fresh35_admin_20261105_r9',host:'127.0.0.1',port:57639,workspaceDirectory:'/tmp/cloud-pg-fresh35-20261105-r9'},physical:{systemIdentifier:'7703999999999999999',databaseOid:'16384',serverVersionNum:'170011',postmasterStart:'2026-11-05 03:00:00.123456+00'},startsAt,expiresAt:startsAt+1200000},startsAt);
-let cached;const bundle=()=>cached??=(async()=>{const source=await loadFresh35CombinedSource(root,{baselineDirectory:base}),catalog=await buildFresh35CombinedCatalog(source,target,{modelPath,functionsPath}),program=await compileFresh35CombinedProgram({source,target,catalog});return {source,catalog,program}})();
+const networkModel=await createFresh35BootstrapNetworkModel({proposalDate:'20261105'});after(()=>networkModel.close());
+const startsAt=networkModel.arg.startsAt,target=networkModel.target;
+const {bindFresh35CombinedTarget,describeFresh35CombinedTarget}=networkModel.api;
+const source=await loadFresh35CombinedSource(root,{baselineDirectory:base}),graph=await prepareFresh35CatalogProgramModel(networkModel,source,{modelPath,functionsPath});
+const {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation,fresh35CombinedRuntimeCatalogSql,validateFresh35CombinedRuntimeCatalogObservation}=graph.catalogAPI;
+const {compileFresh35CombinedProgram,describeFresh35CombinedProgram,validateFresh35CombinedAuthorization,runFresh35CombinedInstall}=graph.lifecycleAPI;
+const bundle=async()=>({source,catalog:graph.catalog,program:graph.program});
 test('current source closure separately records old180 and the later application/installer changes',async()=>{
  const {source}=await bundle(),d=describeFresh35CombinedSource(source);assert.equal(d.capturedSourcePins.length,180);assert.ok(d.currentSourcePins.length>=198);assert.equal(d.capturedEvidenceAppliesToCurrentChanges,false);
  for(const path of ['unified-historical-sales-hall-evidence.ts','unified-import-source-reconciliation.ts','unified-current-effective-alignment.ts','unified-historical-line-amount-evidence.ts','historical-sales-hall-evidence.ts'])assert.ok(d.currentSourcePins.some(p=>p.path==='packages/application/src/'+path),path);
@@ -38,7 +41,7 @@ test('program is one atomic application transaction and contains no provisioning
  for(const flag of ['createsCluster','createsRoles','createsCredentials','oldTablesRemoved','hostEnabled'])assert.equal(d[flag],false);
 });
 test('valid authorization data cannot issue a trusted execution token',async()=>{
- const {program}=await bundle(),d=describeFresh35CombinedProgram(program),value={format:'FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1',decision:'AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY',programSha256:d.programSha256,sourceSetSha256:d.sourceSetSha256,targetSha256:d.targetSha256,startsAt,expiresAt:startsAt+1200000,independentSafetyReviewSha256:'a'.repeat(64),authorizationReference:'TEST DATA ONLY; NOT AN ACTUAL AUTHORIZATION'};
+ const {program}=await bundle(),d=describeFresh35CombinedProgram(program),value={format:'FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1',decision:'AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY',programSha256:d.programSha256,sourceSetSha256:d.sourceSetSha256,targetSha256:d.targetSha256,startsAt,expiresAt:networkModel.arg.expiresAt,independentSafetyReviewSha256:'a'.repeat(64),authorizationReference:'TEST DATA ONLY; NOT AN ACTUAL AUTHORIZATION'};
  const parsed=validateFresh35CombinedAuthorization(value,program);await assert.rejects(()=>runFresh35CombinedInstall({program,authorization:parsed,client:{},journalDirectory:'/tmp/never-created'}),/GENUINE_UNUSED_TRUSTED_AUTHORIZATION/);
  assert.throws(()=>validateFresh35CombinedAuthorization({...value,programSha256:'b'.repeat(64)},program),/BINDING/);
  assert.throws(()=>validateFresh35CombinedAuthorization({...value,approved:true},program),/OWN_DATA/);
@@ -61,8 +64,8 @@ test('runtime keeps complete metadata inspection without reading populated busin
 });
 
 test('production ordinary catalog reuses the complete model and observes after role without assuming interface pg_control permission',async()=>{
- const {bindFresh35CombinedProductionTargetV2}=await import('../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
- const {fresh35CombinedOrdinaryCatalogSql,validateFresh35CombinedOrdinaryCatalogObservation}=await import('../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs');
+ const {bindFresh35CombinedProductionTargetV2}=networkModel.api;
+ const {fresh35CombinedOrdinaryCatalogSql,validateFresh35CombinedOrdinaryCatalogObservation}=graph.catalogAPI;
  const {source}=await bundle(),p=describeFresh35CombinedTarget(target),prod=bindFresh35CombinedProductionTargetV2({proposal:{database:'new_prod_erp',owner:'new_owner',controller:'new_controller',runtime:'new_runtime',admin:'new_admin',host:'10.0.0.3',port:5432,workspaceDirectory:'/private/new-install'},physical:p.physical,startsAt,expiresAt:startsAt+1200000,purpose:'PRODUCTION_NEW_EMPTY_EXACT35',ordinary:{connectHost:'postgres',connectPort:5432,serverAddress:'172.20.0.4',serverPort:5432,runtimeLoginValidUntil:null,referenceDirectory:'/private/references'}},startsAt+1);
  const catalog=await buildFresh35CombinedCatalog(source,prod,{modelPath,functionsPath}),program=await compileFresh35CombinedProgram({source,target:prod,catalog});
  const sql=fresh35CombinedOrdinaryCatalogSql(catalog,source,prod,p.physical);
@@ -78,7 +81,7 @@ test('production ordinary catalog reuses the complete model and observes after r
 
 
 test('synthetic ordinary catalog is closed to true V1 target/birth/window and preserves production purpose guard',async()=>{
- const {fresh35CombinedSyntheticOrdinaryCatalogSql,validateFresh35CombinedSyntheticOrdinaryCatalogObservation,fresh35CombinedOrdinaryCatalogSql}=await import('../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs');
+ const {fresh35CombinedSyntheticOrdinaryCatalogSql,validateFresh35CombinedSyntheticOrdinaryCatalogObservation,fresh35CombinedOrdinaryCatalogSql}=graph.catalogAPI;
  const {source,catalog}=await bundle(),p=describeFresh35CombinedTarget(target),sql=fresh35CombinedSyntheticOrdinaryCatalogSql(catalog,source,target,p.physical);
  for(const token of ['ROUTINE_SOURCE_OR_ACL_DIFFERS','RELATIONS_DIFFER','COLUMNACLS_DIFFER','POLICIES_DIFFER','EXACT_LINEAGE_DIFFERS'])assert(sql.guardSql.includes(token));
  assert(sql.guardSql.includes("session_user='"+p.proposal.runtime+"'"));assert(sql.guardSql.includes("current_user='erp_unified27_runtime_2393dbc6db9581c2'"));assert(sql.guardSql.includes(String(p.expiresAt)));assert(sql.guardSql.includes(p.physical.postmasterStart));assert(!sql.guardSql.includes('BUSINESS_TABLE_NOT_EMPTY'));assert(!sql.observationSql.includes('pg_control_system()'));

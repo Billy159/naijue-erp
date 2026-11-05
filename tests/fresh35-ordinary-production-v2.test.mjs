@@ -2,27 +2,29 @@
  * Fixed-record/source/catalog I/O are explicitly synthetic stubs in a private
  * data-URL module; these tests cannot issue a capability in the real module. */
 import test from 'node:test';import assert from 'node:assert/strict';
-import {readFile,writeFile,mkdir,mkdtemp,rm} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';
+import {readFile,writeFile,mkdir,mkdtemp,rm,rename} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';
 import * as real from '../tools/unified-import/fresh35-host-session.mjs';
 const original=await readFile(new URL('../tools/unified-import/fresh35-host-session.mjs',import.meta.url),'utf8');
 const role='erp_unified27_runtime_2393dbc6db9581c2';
 async function model({synthetic=false}={}){
  const root=await mkdtemp(join(tmpdir(),'ordinary35-model-')),reference=join(root,synthetic?'reference-inputs':'references');
  const paths={baselineDirectory:join(reference,'baseline'),modelPath:join(reference,'model.json'),functionsPath:join(reference,'functions.json')};
+ const networkWorkspace=join(root,'network-workspace'),networkPath=join(networkWorkspace,'bootstrap-network-observation.json');
+ if(synthetic){await mkdir(networkWorkspace,{mode:0o711});await writeFile(networkPath,'SYNTHETIC MODEL NETWORK OBSERVATION',{mode:0o444})}
  const recordPath=join(root,'record.json'),hostPath='tools/unified-import/fresh35-host-session.mjs',recordModulePath='scripts/release/unified-install/fresh35-combined-record-v1.mjs';
  for(const path of [join(root,hostPath),join(root,recordModulePath),paths.modelPath,paths.functionsPath,join(reference,'INDEX.json'),join(paths.baselineDirectory,'source.json')]){await mkdir(join(path,'..'),{recursive:true});await writeFile(path,'SYNTHETIC MODEL ONLY');}
  const t={purpose:'PRODUCTION_NEW_EMPTY_EXACT35',proposal:{database:'synthetic_model',runtime:'model_login'},physical:{systemIdentifier:'123',databaseOid:'42',serverVersionNum:'170011'},ordinary:{connectHost:'postgres',connectPort:5432,serverAddress:'172.20.0.4',serverPort:5432,runtimeLoginValidUntil:null,referenceDirectory:reference}};
  const now=Date.now(),expiry=now+300000;
- if(synthetic){delete t.purpose;t.format='FRESH35_COMBINED_TARGET_BINDING_V1';t.startsAt=now-1000;t.expiresAt=expiry;t.proposal={database:'synthetic_fresh35_20261105_r9',runtime:'fresh35_runtime_20261105_r9',host:'127.0.0.1',port:57639};t.physical.postmasterStart='2026-11-05 03:00:00+00';t.ordinary={connectHost:'127.0.0.1',connectPort:57639,serverAddress:'127.0.0.1',serverPort:57639,runtimeLoginValidUntil:null,referenceDirectory:reference};}
+ if(synthetic){delete t.purpose;t.format='FRESH35_COMBINED_TARGET_BINDING_V1';t.startsAt=now-1000;t.expiresAt=expiry;t.proposal={database:'synthetic_fresh35_20261105_r9',runtime:'fresh35_runtime_20261105_r9',host:'127.0.0.1',port:57639,workspaceDirectory:networkWorkspace};t.physical.postmasterStart='2026-11-05 03:00:00+00';t.ordinary={connectHost:'127.0.0.1',connectPort:57639,serverAddress:'127.0.0.1',serverPort:57639,runtimeLoginValidUntil:null,referenceDirectory:reference};}
  const record={binding:{sourceSetSha256:'b'.repeat(64)},synthetic_only:true,...(synthetic?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',target:t}:{})};await writeFile(recordPath,JSON.stringify(record)+'\n');
  const catalogStub='data:text/javascript;base64,'+Buffer.from("export function fresh35CombinedOrdinaryCatalogSql(){return {guardSql:'MODEL_GUARDS',observationSql:'MODEL_OBSERVATION'}};export function validateFresh35CombinedOrdinaryCatalogObservation(raw){if(raw!=='SYNTHETIC_ONLY')throw Error('MODEL_CATALOG_REJECTED')};export const fresh35CombinedSyntheticOrdinaryCatalogSql=fresh35CombinedOrdinaryCatalogSql;export const validateFresh35CombinedSyntheticOrdinaryCatalogObservation=validateFresh35CombinedOrdinaryCatalogObservation").toString('base64');
  const prefix=`import {lstat,readFile} from 'node:fs/promises';import {watch as nativeWatch,writeFileSync,renameSync,unlinkSync} from 'node:fs';import {resolve,dirname} from 'node:path';import {createHash} from 'node:crypto';
  const moduleRoot=${JSON.stringify(root)},FRESH35_COMBINED_RECORD_PATH=${JSON.stringify(recordPath)},loadedHostSha256='a'.repeat(64),FRESH35_COMBINED_RECORD_MODULE_SHA256='c'.repeat(64),t=${JSON.stringify(t)},record=${JSON.stringify(record)};
  const hash=x=>createHash('sha256').update(x).digest('hex'),need=(ok,code)=>{if(!ok)throw Error('FRESH35_HOST_'+code)},ack=(r,tag)=>need(r?.command===tag,'ACK_INVALID');
  let clock=${now};const Date={now:()=>clock,parse:globalThis.Date.parse};export function expire(){clock=${expiry+1}};export function setTime(value){clock=value};function bindFresh35CombinedTarget(){return {}};
- const snapshots=new WeakMap(),watchers=new Set();let swap;
- export function setSwap(value){swap=value}export function activeWatchers(){return watchers.size}
- function watch(path,callback){const w=nativeWatch(path,callback);watchers.add(w);const close=w.close.bind(w);w.close=()=>{watchers.delete(w);return close()};return w}
+ const snapshots=new WeakMap(),watchers=new Set(),watchedPaths=[];let swap;
+ export function setSwap(value){swap=value}export function activeWatchers(){return watchers.size}export function modelWatchedPaths(){return [...watchedPaths]}
+ function watch(path,callback){watchedPaths.push(path);const w=nativeWatch(path,callback);watchers.add(w);const close=w.close.bind(w);w.close=()=>{watchers.delete(w);return close()};return w}
  const identity=s=>[s.dev,s.ino,s.uid,s.mode,s.nlink,s.size,s.mtimeNs,s.ctimeNs].map(String).join(':');
  function changeRecord(stage){if(swap!==stage)return;if(stage.endsWith('delete'))unlinkSync(FRESH35_COMBINED_RECORD_PATH);else if(stage.endsWith('replace')){writeFileSync(FRESH35_COMBINED_RECORD_PATH+'.new','CHANGED GENERATION');renameSync(FRESH35_COMBINED_RECORD_PATH+'.new',FRESH35_COMBINED_RECORD_PATH)}else writeFileSync(FRESH35_COMBINED_RECORD_PATH,'CHANGED SAME INODE')}
  export function modelRelease(){changeRecord('release-replace');if(swap==='release-error')throw Error('MODEL_RELEASE_ERROR')}
@@ -40,7 +42,7 @@ async function model({synthetic=false}={}){
  const calls=[],clients=[];let failure;
  function client(){let status='I',switched=false,released=false;const c={getTransactionStatus:()=>status,release(error){released=error===true;api.modelRelease()},get released(){return released},async query(sql){calls.push(sql);if(sql.includes('pg_control_system')){assert.equal(switched,false,'direct LOGIN permission must precede SET ROLE');if(failure==='identity')throw Error('MODEL_IDENTITY_ERROR');return {command:'SELECT',rows:[structuredClone(row)]};}if(sql.startsWith('BEGIN')){status='T';return {command:'BEGIN'}}if(sql==='ROLLBACK'){status='I';switched=false;return {command:'ROLLBACK'}}if(sql.startsWith('SET LOCAL ROLE')){switched=true;return {command:'SET'}}if(sql==='MODEL_GUARDS'){if(failure==='catalog')throw Error('MODEL_CATALOG_ERROR');return [{command:'DO'},{command:'DO'}]}if(sql==='MODEL_OBSERVATION')return {command:'SELECT',rows:[{catalog_json:'SYNTHETIC_ONLY'}]};throw Error('UNEXPECTED_MODEL_QUERY')}};clients.push(c);return c;}
  const pool={async connect(){return client()}},connection=synthetic?{host:t.proposal.host,port:t.proposal.port,database:t.proposal.database,user:t.proposal.runtime}:{host:'postgres',port:5432,database:'synthetic_model',user:'model_login'};
- return {api,root,recordPath,hostPath:join(root,hostPath),pool,connection,row,calls,clients,client,fail:x=>failure=x,dispose:()=>rm(root,{recursive:true,force:true})};
+ return {api,root,recordPath,networkPath,networkWorkspace,hostPath:join(root,hostPath),pool,connection,row,calls,clients,client,fail:x=>failure=x,dispose:()=>rm(root,{recursive:true,force:true})};
 }
 test('ordinary startup uses one pool/lease and direct LOGIN identity before interface catalog; business checks do not repeat static scans',async()=>{
  const m=await model();let cap;
@@ -112,4 +114,15 @@ test('synthetic capability expires at observed LOGIN cutoff even during an alrea
    assert.equal(d.expiresAt,cutoff,'Public synthetic expiry is the effective earlier deadline');
   }finally{await lease.query('ROLLBACK');if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);lease.release(true);await m.dispose();}
  }
+});
+
+test('synthetic ordinary watches fixed readable network proof inode without watching its root0711 parent and revokes on replace (OS/watch model)',async()=>{
+ const missing=await model({synthetic:true});try{await rm(missing.networkPath);await assert.rejects(()=>missing.api.admitFresh35SyntheticOrdinaryPoolV1(missing.pool,missing.connection),/ENOENT/);assert.equal(missing.clients.length,0);assert.equal(missing.api.activeWatchers(),0)}finally{await missing.dispose()}
+ const m=await model({synthetic:true});let cap;
+ try{
+  cap=await m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection);
+  const watched=m.api.modelWatchedPaths();assert(watched.includes(m.networkPath));assert(!watched.includes(m.networkWorkspace),'root0711 parent is traversable but must not be opened as a directory watcher');
+  await writeFile(m.networkPath+'.new','SYNTHETIC REPLACEMENT',{mode:0o444});await rename(m.networkPath+'.new',m.networkPath);await new Promise(r=>setTimeout(r,35));
+  await assert.rejects(()=>m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/ACTIVE_SAME_POOL/);assert.equal(m.api.activeWatchers(),0);
+ }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
 });
