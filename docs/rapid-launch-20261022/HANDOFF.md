@@ -1408,3 +1408,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 原D1已接既有fixture/entry及两直接测试四叶唯一归属，补纯合成25/27并沿原rollback/replay/新连接readback。原a10业务22叶冻结；fixture也在source pins内，最终PG须重新绑定后继真实sourceSet，不能把旧5b26或b362冒记为新演练。
 - 原D3新stream预检准备1536ae74完成，仅42文件435324字节固定a10闭包，无ledger/目标重读；旧索引末态2,667,474,944字节、全部约2,725,170,079字节，运行峰值未知，仍等容量，不从旧271失败索引造plan。
 - 原D2仅只读核本轮3旧构建导出源码+依赖，精确Git导出/当前锁依赖/9引用可恢复，无独有改动或可见占用；回执9133117a。账面约0.534GiB可能回收，APFS实际回收未知。按全局agents.md:63已向真人提交仅3目录清单，当前7393/源码/Git/原件/备份/所有日志与包保留；未批前不删除。隔离同类授权不扩大为本地任意清理。
+
+
+### 精确5包源码验收采用及真实作业RUNNING
+- 原QB对f2f0be08两叶增量PASS，回执2dea06aa；原脚本可逆/五base版本/guard及期限、错误HEAD与上下文负例采用，实际dpkg/APT未由模型代替。C据已有效同类隔离授权在执行端外生成新六键71ae03e6，截止1793888034541；原T45一次提交t45-f35-5b26-exact-five-downgrades-20261105-01，最新原键实际RUNNING。未有终态收据，不能写84安装/ldd或派生image通过，不重复提交。PG20分钟仍未启。
+- 独立回滚快照的真实缺口已明确：原controller无35表SELECT，旧verify-host内rollback/commit/replay没有中间观察点。原D1在已批四叶内补两阶段且同fixture指纹，原T45后续在既有admin/私有psql边界做受控只读观察；无新权限/帐号/连接池，业务写仍原controller，whole_verify不冒称独立全表snapshot。
+- 仅三个旧构建导出删除仍待真人准确清单确认，未删；原件/当前7393/Git/日志/构建包均保留。容量相关全源核账与预检未重跑，不记通过。

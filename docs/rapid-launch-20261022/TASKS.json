@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T13:39:32.542921+00:00",
+  "updatedAt": "2026-11-05T13:51:41.555590+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28471,11 +28471,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Implementing exact four-leaf original fixture/entry synthetic25 variant; a10 business22 frozen",
+      "D1": "Four-leaf synthetic25 variant plus two-phase observer checkpoint in progress,22 business leaves frozen",
       "D2": "Exact3 full old-build exports readonly cleanup candidate9133117a complete; no deletion, current7393 retained",
       "D3": "Fixed a10 streampreflight preparation1536ae74 done; both actual source reconciliation and preflight held for safe capacity",
-      "T45": "Exact5 downgrade original successor two leaves f2f0be08 fixed, QB increment running; no actual next build or PG",
-      "QB": "Exact5 f2f0be08 bounded guard increment active; original25 PASS retained"
+      "T45": "Exact5 f2/QB2dea adopted, new71ae plan once job RUNNING; same key only, PG not started",
+      "QB": "Exact5 PASS adopted; waiting next fixed four-leaf synthetic25 entry increment, no repeat suites"
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28662,7 +28662,7 @@
       "offlineBuildExitCode": 1,
       "offlineElapsedSeconds": 15.561,
       "nextMethodReceiptSHA256": "796e27607efa827dc1732dd3f226a4a6e190cfceb9b87dcd27c56788a62003e9",
-      "next": "QB exact5 guard and original contexts/deadlines; C exact new plan then T45 one bounded image build; no production/PG",
+      "next": "Original T45 same key final readback, no restart; actual84 install/ldd not yet proven, PG window not started",
       "localContextCommit": "91b08259dab3d51e511954a5992f90626568dfcc",
       "localContextReviewSHA256": "8d4e96c154eea85abf8835373a8c177997332a69fa2050d326abf13b15cd4b53",
       "localContextPlanSHA256": "a661d95e58f607a04135bfa01724e79736042fcd4a7b8f63fdd04edeab8e13ec",
@@ -28680,8 +28680,13 @@
       "exactFiveOpsSHA256": "3d9a53d6712df7e508842f5a8399897aa50174800404a487ef8a4d4e5fdc1a4b",
       "exactFiveReadySHA256": "b752e47f0a8614b29dbb85399a0a6dcce4ab78cb7df057ad84d97393469ec330",
       "exactFiveRecipeSHA256": "d3279106d2281925dc3c628f1183fe85a5e6ad5175ae12503ecb9a99074436e6",
-      "exactFiveState": "FIXED_TWO_LEAVES_PENDING_ORIGINAL_QB_INCREMENT_NO_SERVER_RUN",
-      "exactFiveChecks": "10 affected local shell/awk models; dpkg supplied by test fixture, not actual Debian validation"
+      "exactFiveState": "QB_PASS_ONCE_ACTUAL_JOB_RUNNING_NO_FINAL_RECEIPT",
+      "exactFiveChecks": "10 affected local shell/awk models; dpkg supplied by test fixture, not actual Debian validation",
+      "exactFiveReviewSHA256": "2dea06aa97ab1276f55554dd74888c4da27ec213259d7ef6d9601ae3cf37269b",
+      "exactFivePlanSHA256": "71ae03e6d60366d3206c39d3339a3bd9ff00a4be46b09097dd972603b9c366a5",
+      "exactFiveIssuanceSHA256": "e7b36ba79c37cb846685496c6d7622071003c2bbf2005e6cf6eda06fe35ae9e7",
+      "exactFiveOperationId": "t45-f35-5b26-exact-five-downgrades-20261105-01",
+      "exactFiveExpiresAt": 1793888034541
     },
     "packagingDecisions": {
       "owner": "D2",
@@ -28835,7 +28840,11 @@
       "purpose": "Same original isolated fixture/entry synthetic25 headers27 payments plus original normal1/1, rollback/replay/new connection readback; no real data, new PG or testing platform",
       "requiresNewFinalSourceSet": true,
       "old212NotFinalTestAuthority": true,
-      "actualPG": false
+      "actualPG": false,
+      "twoPhaseCheckpoint": "Existing entry rollback/rejection/ABSENT then separate same-fixture commit/replay/new-connection reconcile; default all preserved, exact target/source/program/requestKey/initializer fingerprint cross-stage binding required",
+      "independentObserverState": "Original T45 admin passfile/private psql transport exists but is not yet a controlled snapshot endpoint; D1/T45 original writer seams, no new grants/roles/pool",
+      "independent35TableSnapshotVerified": false,
+      "controllerTableSelectAdded": false
     },
     "capacityCleanupCandidate": {
       "state": "EXACT_THREE_OLD_BUILD_EXPORTS_AWAITING_HUMAN_CONFIRMATION",
