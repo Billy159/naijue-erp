@@ -24722,7 +24722,7 @@
   },
   "currentWaitingConditions": [
     "D3-40 fixed26tablemanifest fee27bf4...; 19B plus D1 exact1salesSKU and approved stock aggregates consumed; all42227stockcells/net80717,zero105493. No local identity/stock decision remains for these completed items.",
-    "Dot:28894historicalsales hallunknown receiver/schema/query/permission alignment;196candidate differences not proven actualcrosshall.",
+    "Historicalhall userdirection and exact28894sourcewarehouse-currenthall mapping resolved byD1-21; formal derived-marker/originalfact/provenance receiving/readback remains Dot-owned; currentD340 untouched.",
     "Dot:6original price/amount differences retained; bounded history receiver needed, no global tolerance/altered values.",
     "Source factual question:oldT+ stopwrite and crossfile samecutoffstate unanswered; actualexported_at and independentCURRENT_EFFECTIVE alignment unknown.12:00cutoff approval is notexporttime.",
     "Dot:8table countunit/expression gaps for approved many-to-one/zero settlements/historyhallrelations/approvedzerostock; unchanged18scopes reused; no complete reconciliation.",
@@ -25946,16 +25946,16 @@
       "status": "DELIVERED_WAITING_EXTERNAL_INPUT"
     },
     "D1": {
-      "current": "D1-20 delivered:83399lines, exact1SKU changed, no nullSKU, otherfields unchanged",
-      "next": "Wait exactnew code/receiver or sourcefact; no repeated fullscan",
+      "current": "D1-21 all28894warehouse-currenthall derivation candidates and original-basis sidecar delivered",
+      "next": "Wait Dot accurate derivedprovenance receiving; no repeated28894scan",
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
       "writeScope": "Original private D1 versioned outputs only, no central/source/SQL",
-      "task": "D1-exact-one-sales-SKU-reference",
+      "task": "D1-history-hall-derived-candidate",
       "dispatchAccepted": true,
-      "status": "DELIVERED"
+      "status": "DELIVERED_WAITING_EXACT_NEW_INPUT"
     },
     "D2": {
       "current": "D2-30 exact19historicalB identities/status/originalcode facts delivered, central materialization adopted byD3",
@@ -27529,7 +27529,7 @@
   },
   "currentDotReceiverDelta20261105": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/CONTROLLER-DOT-RECEIVER-DELTA.zh-CN.md",
-    "sha256": "19e5da5bd5b80be353b99d769a85a06dde54bc6a40049b7c1c8287ddedf49fa8",
+    "sha256": "a6872033f1d4a0e73575786828ca3612d6e010d236d01538bdb9e1dca7141e02",
     "containsPrivateBusinessRows": false,
     "supersedesOldV4MissingGeneratorAndZeroSourceClaims": true
   },
@@ -27973,7 +27973,7 @@
   },
   "goalContinuation0236ZEntryAudit": {
     "previousTurn": "PROGRESS:received verifiedsnapshot and exactreceiver review",
-    "currentTurn": "PROGRESS:newactualhuman clarification verified and receivinghandoff corrected to exclude canceled department feature; no new source package",
+    "currentTurn": "PROGRESS:newdirecthuman historicalhall derivedrule verified; originalD1 exactconsumer dispatched after idle check",
     "consecutiveNoProgressGoalTurns": 0,
     "next": "Only accurate Dot receiver/installation successor or actual target-bound restore prerequisites, no unchanged fullpreflight rerun",
     "goalComplete": false
@@ -27989,5 +27989,32 @@
     "businessDataChanged": false,
     "sourceSQLChanged": false,
     "correctedReviewSHA256": "0dc4724f36e1b246550682924165378810d3439f752b874ae5d82b29389b8d67"
+  },
+  "historicalSalesHallDerivationDecision20261105": {
+    "authority": {
+      "thread": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
+      "turn": "01a1a9aa-0431-7002-aeab-5d54d3e313c7",
+      "humanMessage": "01a1a9aa-0451-7201-8f62-62eb0a31037f",
+      "quote": "把仓库当前所属厅作为历史销售厅的推定值 就这么弄",
+      "directlyRead": true
+    },
+    "scope": "Thisbatch historical sales hall derived from exactsourcewarehouse current confirmed hall; preserve rawunknown and basis; not a true historical fact, no department feature",
+    "notGranted": [
+      "Fabricated warehouse/hall mapping",
+      "Runtime derived label by ad-hoc field",
+      "Application/SQL/production changes"
+    ],
+    "owner": "OriginalD1",
+    "status": "D1_21_LOCAL_CANDIDATE_DELIVERED_ALL28894_CURRENT_HALL_REFERENCES_CLOSED_NOT_RUNTIME_FACT",
+    "next": "Dot accurate persistent derived/source/readback contract; retain D340 BLOCKs until actual binding implemented; do not force newtable/schema",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v5-sales-warehouse-hall-derived-D1-21/RESULT.json",
+    "receiptSHA256": "9506d9ff3c2e53984786ae81b174076a1cac81dda3eef73561cea1d9ea7d5b60",
+    "derivedHeaders": 28894,
+    "missingWarehouse": 0,
+    "missingHall": 0,
+    "existingValueConflicts": 0,
+    "changedField": "hall_id only; all other fields preserved",
+    "runtimeDerivedProvenance": "NOT_WIRED_IN_0236Z;private sidecar not runtimeproof",
+    "fixedD340Changed": false
   }
 }
