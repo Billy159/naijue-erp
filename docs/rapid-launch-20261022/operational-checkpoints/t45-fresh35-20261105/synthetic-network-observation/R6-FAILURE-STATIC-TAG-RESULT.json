@@ -1,0 +1,35 @@
+{
+  "status": "EXACT_STOPPED_R6_STATIC_TAG_MATCH",
+  "checkedAtUTC": "2026-11-05T23:37:59.262510+00:00",
+  "targetStoppedVerified": true,
+  "cid": "2788c02b95d4d5f096715fa8b4441c3b60782fe173526f4020bd6f47c397e97b",
+  "sourceSetSha256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+  "actualGuardSourceSha256": "a0bbffa392210fb456059f320f618599e2428fc1d638b6a1b2c126e03196caa8",
+  "boundedLogSample": {
+    "fileBytes": 2021,
+    "sampleOffset": 0,
+    "sampleBytes": 2021,
+    "sampleSha256": "e4dfdb1e20efdcad375fbaad320624429c2ecbe3558ea3c820fcad8a2edb2e41"
+  },
+  "failureWindowUTC": {
+    "starts": "2026-11-05T23:30:55.547150+00:00",
+    "ends": "2026-11-05T23:31:16.342217+00:00"
+  },
+  "matches": [
+    {
+      "tag": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS",
+      "severity": "ERROR",
+      "inlineRaiseLine": 43,
+      "contextType": "INLINE_CODE_BLOCK_RAISE"
+    }
+  ],
+  "matchCount": 1,
+  "SQLSTATE": "P0001",
+  "SQLSTATEEvidence": "Original install receipt f9df462a; not claimed separately recorded in log",
+  "rawLogExported": false,
+  "backendPIDExported": false,
+  "SQLOrContextBodyExported": false,
+  "PGConnections": 0,
+  "mutations": 0,
+  "scopeExpandedIfUnknown": false
+}

@@ -28377,9 +28377,10 @@
         "remoteVerified": true
       },
       "remoteReadbackAt": "2026-11-06T06:22:45+08:00",
-      "verifiedIntegration": "951de47dfcb3526b8d374b78f00167671bae9c67",
-      "verifiedBuildRoot": "3de75b77f8be7fdb1be3f889e5b9521ff1d57b55",
-      "pendingLocalCheckpoint": "1517d619 plus current r6 failure receipts; GitHub commit_refs_rules server rejection twice; rulesets API empty; no force/bypass; last successful integration6ff2/root19b"
+      "verifiedIntegration": "b58b9b8b0c89e18f0a09f9d097843378a3df2584",
+      "verifiedBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
+      "pendingLocalCheckpoint": null,
+      "pushRecovery": "Separate integration and root pushes succeeded after transient commit_refs_rules; exactremote readback2026-11-06 07:44"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -29944,7 +29945,9 @@
         "containerStopped": true,
         "syntheticImportPassed": false,
         "ordinaryBusinessPassed": false,
-        "exactCause": "UNKNOWN_PENDING_D1_STATIC_RAISE_AND_T45_BOUNDED_STOPPED_LOG_READ"
+        "exactCause": "COMBINED_ROUTINE_SOURCE_OR_ACL_BRANCH_ONLY; exact predicate pendingD1; noPGrestart",
+        "exactFailureTag": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS",
+        "tagReceiptSHA256": "9f9858fa85d7821cdad93d9c81aa5b74e6d7cb3fbb9b702bcfb3ed44ee3b4d1b"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30213,10 +30216,12 @@
       "qbF01SHA256": "e07a2c22210927557d8feb5da87af2a2c1cceb7cb93cf06e08e9bc488c343acb",
       "nextBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
       "productionCarrierSource": {
-        "state": "FIXED_TWO_LEAF_AUTHOR_LOCAL6_PASS_QB_IN_PROGRESS_NOT_EXECUTED",
-        "readySHA256": "5aa4cd30b6ad90611791e3523fc58b3332814bc3e1839cdcc41b40b7fc006c19",
-        "sourceSHA256": "10f1cd5003e6d5a35a711ec9fae323f83e4ab31b76281ed945ddc930a15c3bae",
-        "unbound": true
+        "state": "QB_SOURCE_MODELS_PASS_AFTER_CLEANUP_F01_NOT_EXECUTED",
+        "readySHA256": "7d77383a2d1d7fb822358aa7824c99b514b24af535058187371a587129143547",
+        "sourceSHA256": "62e41a7bb7711af97685dba62907c259c2b535304dd1b1bbe1a10e4153aa61bd",
+        "unbound": true,
+        "qbOriginalSHA256": "276c202ef0a5afa03e452fbe73826b7eecba229a55bb5e413a5b2ee00d1571a9",
+        "qbF01SHA256": "b00b8ec3af43041e5ee8218dfc74d71faf908ad900a16d1f2fdcc7a781c1239d"
       },
       "build6c3439": {
         "state": "BUILD_PACK_INDEPENDENT_READBACK_PASS_NOT_RUNTIME",

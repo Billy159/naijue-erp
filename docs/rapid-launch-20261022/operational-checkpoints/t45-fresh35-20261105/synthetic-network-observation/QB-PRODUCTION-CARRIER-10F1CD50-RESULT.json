@@ -1,0 +1,157 @@
+{
+  "task": "C-0448-PRODUCTION-CARRIER-OPS-TWO-SOURCE-LEAF",
+  "atUtc": "2026-11-05T23:38:32.940634+00:00",
+  "conclusion": "NEED_FIX",
+  "findings": [
+    {
+      "id": "CARRIER-CLEANUP-F01",
+      "priority": "P2",
+      "status": "OPEN_FOR_10F1CD50",
+      "file": "fresh35-container-successor.py",
+      "line": 490,
+      "title": "Round service duration up before adding the original30s cleanup reserve",
+      "problem": "Floor conversion from remaining milliseconds to seconds can remove up to999ms of the original30s cleanup reserve passed to outer carrier timeout. Service deadline remains independently enforced by original production guardian, but outer timeout can end before the full original caller cleanup wait.",
+      "evidence": {
+        "finding": "CARRIER-CLEANUP-F01",
+        "result": "REPRODUCED_BUDGET_SHORTFALL",
+        "sourceLine": 490,
+        "nowMs": 1000000,
+        "serviceLeaseExpiresAtMs": 4600999,
+        "serviceTimeLeftSeconds": 3600.999,
+        "actualOriginalTimeoutSeconds": 3630,
+        "cleanupLeftAtZeroStartLatencySeconds": 29.001,
+        "cleanupLeftAt100msStartLatencySeconds": 29.101,
+        "requiredOriginalCleanupReserveSeconds": 30,
+        "sourceExpression": "remaining=(a['serviceLease']['expiresAt']-int(time.time()*1000))//1000+30",
+        "outerTimeout": "original common /usr/bin/timeout --signal=TERM --kill-after=3s ... /usr/bin/sleep infinity",
+        "scope": "Original assignment and original production_common executed with modeled clock only; no timer, Docker, PG or signal",
+        "limits": "No forced termination or unclean PG shutdown demonstrated; bounded reserve contract is shortened by floor"
+      },
+      "minimumCorrection": "Only use integer ceiling for remaining service milliseconds before adding unchanged30 seconds; retain service deadline, kill-after, guardian, authority and all other original functions.",
+      "notClaimed": "No actual forced kill, lost data or unclean PG shutdown observed."
+    }
+  ],
+  "pins": {
+    "readySha256": "5aa4cd30b6ad90611791e3523fc58b3332814bc3e1839cdcc41b40b7fc006c19",
+    "files": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-source-01/fresh35-container-successor.py",
+        "bytes": 51381,
+        "sha256": "10f1cd5003e6d5a35a711ec9fae323f83e4ab31b76281ed945ddc930a15c3bae"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-source-01/test_production_carrier.py",
+        "bytes": 9373,
+        "sha256": "820d3c296c3bac5028b2e399923a12ac0c108f98bdcc52d701d45cc901b1af86"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-source-01/production-carrier-only.patch",
+        "bytes": 18426,
+        "sha256": "ad67a607b3adfb6661984530dd198d612f2d3f8129ea9b6ff9a0c143576ee67f"
+      }
+    ],
+    "parentSha256": "3110fa97e86a4669c698346658a739d379c3d077b77ed9c46d8724ab5576ed31",
+    "oldFunctionsOnlyMainChanged": true,
+    "newFunctions": [
+      "load_production_plan",
+      "owned_production",
+      "production_authority",
+      "production_common",
+      "production_factory",
+      "production_facts",
+      "production_front",
+      "production_info",
+      "production_process_namespace",
+      "production_start",
+      "recover_production_carrier"
+    ]
+  },
+  "authorEvidenceAdopted": {
+    "localGroupsReported": 6,
+    "readySha256": "5aa4cd30b6ad90611791e3523fc58b3332814bc3e1839cdcc41b40b7fc006c19",
+    "rerun": false
+  },
+  "independentChecks": [
+    {
+      "id": "TWO_SOURCE_LEAVES_PATCH_PARENT_HASH_AND_OLD_AST",
+      "result": "PASS",
+      "onlyExistingFunctionChanged": "main",
+      "allOtherOldFunctionsUnchanged": true
+    },
+    {
+      "id": "ORIGINAL_FACTORY_C14_AND_NATIVE_PUBLISHER_BYTES_TO_OPS_AND_SHARED_HELPER",
+      "result": "PASS",
+      "creationFactsBeforeC6C9": "raw facts only; no binding and no C6C9 files issued",
+      "retainedBindingAcceptedBy": "original accepted0f2a35cf helper",
+      "rawRecordBytes": 1705,
+      "originalFactoryAndAuthorityAndRetentionOwnedFrontFactsBodies": true,
+      "actualDeploymentManifest": "small model manifest with exact retained Python bytes",
+      "sourceUidRootProcDocker": "explicit models, no server"
+    },
+    {
+      "id": "PG_METADATA_FAILURE_BLOCKS_FACTS_AND_UNKNOWN_CREATE_RECOVERY_NEVER_RECREATES",
+      "result": "PASS",
+      "PGMismatchRefused": true,
+      "recovery": "original intent/name/owned receipt; only Docker inspect calls",
+      "createRunOrNetworkMutation": false
+    },
+    {
+      "id": "DEFAULT_ORIGINAL_COMMON_TO_PRODUCTION_ARGUMENTS",
+      "result": "PASS",
+      "frontAndAlias": "one initial selected network/alias",
+      "originalBudget": "3GiB and original caps/mounts/lifetime shape",
+      "productionStateMount": true,
+      "PGPublish": false
+    },
+    {
+      "id": "ORIGINAL_TIMEOUT_ARGUMENT_FLOOR_COUNTEREXAMPLE",
+      "result": "REPRODUCED_DEFECT",
+      "evidenceFile": "cleanup-budget-counterexample.json"
+    }
+  ],
+  "reviewedSource": {
+    "planAndPhases": "Original six-key plan remains strict for original phases. New production phases alone allow closed productionCarrier{format,front{id,name},futureAppName}. Independent production ROOT/NAME required; copied r6 defaults refuse production plan. No fabricated CID/PID/namespace.",
+    "authority": "Pinned original C14 validator and retention checker loaded from exact deployment-manifest Python leaves; external C14 source/deployment/UID bound. C6/C9 are not issued here. Raw creation facts can precede those separate C delivery steps; no shared binding before durable retained state.",
+    "carrier": "Original environment image, resource/capability/mount budget and finite timeout reused, with initial existing internal front plus exact unique future app alias and production-state mount. DNS case-equivalent conflicts refused, old front endpoints compared before/after. No PG publish/data attach/new bridge/pool or old alias change.",
+    "facts": "Original durable V2 result/record exact bytes, service-retained exact receipt, live same PG metadata and same carrier birth/namespace plus finite current service lease precede shared binding. Existing accepted shared helper consumes the emitted shape. Facts are not deployment approval.",
+    "failureAndLifetime": "Original intent/name/ownership recovery only, never second create. No force stop inferred from unknown native state. Original production guardian owns PG stop/reap at explicit service deadline; carrier timeout includes original30s cleanup wait, no renewal. Original files/data preserved for C original-key recovery."
+  },
+  "reusedNotRepeated": [
+    "e07a2c shared namespace F01 and seven-leaf passed scope",
+    "3f351 producer consumer",
+    "552b nine-leaf source",
+    "17eb publication F01",
+    "old synthetic ops functions",
+    "current author6 groups"
+  ],
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "ERPServerCalls": 0,
+    "DockerActions": 0,
+    "PGConnections": 0,
+    "PGStarted": false,
+    "networkCreatedOrMutated": false,
+    "realInputsRead": false,
+    "buildPerformed": false,
+    "productionCreated": false,
+    "factoryAuthorityRetentionOwnedFrontBodies": "ORIGINAL",
+    "rootSourceUidProcDocker": "MODELED",
+    "recordBytes": "prior original-JS local synthetic1705B record; not production"
+  },
+  "bindingStatus": "SOURCE_PREPARATION_ONLY_NOT_EXECUTABLE_PRODUCTION_BINDING",
+  "remaining": [
+    "Original T45 fixes only cleanup duration ceil in frozen successor; scopedQB only this counterexample and necessary exact-second positive, retain other passed scope.",
+    "C freezes exact independent production ROOT/NAME, final app package SOURCE/archive/manifest/count/key constants and ops SHA",
+    "C actual existing front/unique future app preflight",
+    "Independent actual C14/6/9 and physical target/deadlines",
+    "Actual creation/front/DNS/PG/namespace/native install/lease/recovery remain untested"
+  ],
+  "noCrossVersionAttribution": "Do not attach this source result to actual19b/r6 execution or new6ff release/network/PG acceptance.",
+  "otherSourceScopePassReusable": true,
+  "supersededUnfinalizedDraftSha256": "f2be1567f50268e0d8a9e4c508bd1b1501371e360721e8571e8c2a8c8e1062b7"
+}

@@ -1,0 +1,41 @@
+{
+  "status": "SOURCE_CLEANUP_ROUNDING_SUCCESSOR_LOCAL_RED_GREEN_PENDING_QB_NOT_EXECUTED",
+  "recordedAtUTC": "2026-11-05T23:39:42.026594+00:00",
+  "parentCarrierSha256": "10f1cd5003e6d5a35a711ec9fae323f83e4ab31b76281ed945ddc930a15c3bae",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-cleanup-rounding-01/fresh35-container-successor.py",
+      "bytes": 51385,
+      "sha256": "62e41a7bb7711af97685dba62907c259c2b535304dd1b1bbe1a10e4153aa61bd"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-cleanup-rounding-01/test_production_carrier.py",
+      "bytes": 11133,
+      "sha256": "90c65c804c34c904086cb1507afc838d20fff1905832c53c66abe46e917dc28b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-cleanup-rounding-01/cleanup-rounding-only.patch",
+      "bytes": 3973,
+      "sha256": "97c1081dd6bdba7f32df339b1a8cbf56d04c74bf80727491563665add7f767a2"
+    }
+  ],
+  "change": "Ceil remaining carrier seconds before adding original caller30s cleanup wait, instead of flooring away a fractional second. Original PG serviceLease.expiresAt and original guardian service deadline remain byte-identical and authoritative. Carrier rounding may reserve under1 additional idle second; no service deadline extension.",
+  "onlyChangedFunction": "production_start",
+  "allOtherFunctionAstUnchanged": true,
+  "checks": {
+    "red": "One new start-carrier boundary case: expires-now100499ms requested131s but original emitted130s",
+    "green": "Same exact one case now PASS; original serviceLease.expiresAt unchanged",
+    "old6GroupsRerun": false,
+    "syntaxAndWhitespace": "PASS"
+  },
+  "original10f1FrozenPreserved": true,
+  "originalR6FrozenUnchanged": true,
+  "productionConstantsStillUnbound": true,
+  "serverActions": 0,
+  "PGConnections": 0,
+  "networkMutations": 0,
+  "builds": 0,
+  "productionCreated": false,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}

@@ -1,0 +1,86 @@
+{
+  "task": "C-0448-CARRIER-CLEANUP-F01-ROUNDING-SUCCESSOR",
+  "atUtc": "2026-11-05T23:42:16.429560+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "finding": {
+    "id": "CARRIER-CLEANUP-F01",
+    "status": "CLOSED_FOR_EXACT_62E41A7B",
+    "old10f1NeedFixPreserved": true
+  },
+  "pins": {
+    "readySha256": "7d77383a2d1d7fb822358aa7824c99b514b24af535058187371a587129143547",
+    "parentSha256": "10f1cd5003e6d5a35a711ec9fae323f83e4ab31b76281ed945ddc930a15c3bae",
+    "files": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-cleanup-rounding-01/fresh35-container-successor.py",
+        "bytes": 51385,
+        "sha256": "62e41a7bb7711af97685dba62907c259c2b535304dd1b1bbe1a10e4153aa61bd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-cleanup-rounding-01/test_production_carrier.py",
+        "bytes": 11133,
+        "sha256": "90c65c804c34c904086cb1507afc838d20fff1905832c53c66abe46e917dc28b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-cleanup-rounding-01/cleanup-rounding-only.patch",
+        "bytes": 3973,
+        "sha256": "97c1081dd6bdba7f32df339b1a8cbf56d04c74bf80727491563665add7f767a2"
+      }
+    ],
+    "wholeSourceOnlyOneExpressionChanged": true
+  },
+  "parentResult": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/C-0448-PRODUCTION-CARRIER-10F1CD50-20261106/RESULT.json",
+    "sha256": "276c202ef0a5afa03e452fbe73826b7eecba229a55bb5e413a5b2ee00d1571a9",
+    "otherPassedScopeReused": true
+  },
+  "independentChecks": {
+    "result": "PASS_EXACT_ROUNDING_SUCCESSOR",
+    "sourceLine": 490,
+    "cases": [
+      {
+        "remainingServiceMs": 100499,
+        "actualTimeoutArgumentSeconds": 131,
+        "cleanupReserveMs": 30501,
+        "absoluteServiceLeaseChanged": false,
+        "result": "PASS"
+      },
+      {
+        "remainingServiceMs": 3600999,
+        "actualTimeoutArgumentSeconds": 3631,
+        "cleanupReserveMs": 30001,
+        "absoluteServiceLeaseChanged": false,
+        "result": "PASS"
+      },
+      {
+        "remainingServiceMs": 3600000,
+        "actualTimeoutArgumentSeconds": 3630,
+        "cleanupReserveMs": 30000,
+        "absoluteServiceLeaseChanged": false,
+        "result": "PASS"
+      }
+    ],
+    "consumer": "Original production_start assignment and original production_common -> /usr/bin/timeout argument",
+    "boundaries": "Controlled clock/expression execution only; no timer/Docker/PG/signal/network; absolute service guardian unchanged by exact full-file comparison"
+  },
+  "scope": "Exact one-line integer ceil only; full-file reverse comparison confirms no other source change. Original30s, kill-after and original independent absolute guardian/service deadline preserved.",
+  "authorEvidenceAdopted": "One production_start100499ms red-green fixture adopted; no old6-group rerun",
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "serverCalls": 0,
+    "DockerOrNetworkActions": 0,
+    "PGConnections": 0,
+    "realInputsRead": false,
+    "timerOrSignalRun": false,
+    "buildPerformed": false,
+    "productionCreated": false,
+    "clock": "MODELED"
+  },
+  "bindingStatus": "PRODUCTION_CONSTANTS_STILL_UNBOUND_NOT_EXECUTION_READY",
+  "remaining": "Source F01 closed. C final exact production ROOT/NAME/application/archive/manifest/key/ops/front and C14/6/9 binding plus actual carrier/PG/lease execution remain separate; no live outcome inferred."
+}
