@@ -20,9 +20,10 @@ export const FRESH35_RECEIVER_CAPABILITY = Object.freeze({
 
 /** Missing protected record diagnostics, never execution authorization. */
 export function fresh35ReceiverBlocked(profile: string) {
-  if (profile !== FRESH35_RECEIVER_TARGET_PROFILE) throw new Error('OPTION_INVALID');
+  if (profile !== FRESH35_RECEIVER_TARGET_PROFILE && profile !== FRESH35_PRODUCTION_REAL_IMPORT_PROFILE) throw new Error('OPTION_INVALID');
   return Object.freeze({
     ...FRESH35_RECEIVER_CAPABILITY,
+    ...(profile===FRESH35_PRODUCTION_REAL_IMPORT_PROFILE?{target_profile:profile,message:'A protected production V2 installation and a separate exact REAL-batch authorization are required; preparation alone performs no import.'}:{}),
     state: 'NOT_STARTED',
     business_database_writes: false,
     connection_attempted: false,
@@ -33,3 +34,7 @@ export function fresh35ReceiverBlocked(profile: string) {
     verification: Object.freeze({ state: 'NOT_RUN' }),
   });
 }
+
+/** Distinct opt-in; real environment and external batch authority remain required. */
+export const FRESH35_PRODUCTION_REAL_IMPORT_PROFILE='FRESH35_PRODUCTION_REAL_IMPORT_V1';
+export const FRESH35_PRODUCTION_REAL_IMPORT_CAPABILITY=Object.freeze({target_profile:FRESH35_PRODUCTION_REAL_IMPORT_PROFILE,host_wired:true,requires_protected_production_v2_record:true,requires_external_exact_batch_authorization:true,prepare_only_option:'--prepare-only',production_execution_validated:false,automatic_fallback:false});

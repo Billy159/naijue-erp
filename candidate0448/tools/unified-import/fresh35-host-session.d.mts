@@ -18,3 +18,11 @@ export function assertFresh35HostCurrent(token:object):Promise<any>;
 export function verifyFresh35InstalledV1(client:object,context:object,sourceProfile?:string):Promise<any>;
 export function consumeFresh35VerificationV1(verified:object,client:object):any;
 export function openReviewedFresh35Host(config:unknown,sourceRoot:string,target:object,work:(...args:any[])=>unknown,options?:object):Promise<any>;
+
+export interface Fresh35ProductionPreparedImport {readonly packageKind:'REAL';readonly initialize:any;readonly identity:any;readonly steps:AsyncIterable<any>;readonly encodedScrypt:string}
+export const FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH:string;
+export function loadFresh35ProductionImportContext(sourceRoot:string,referenceDirectory:string):Promise<object>;
+export function describeFresh35ProductionImportBinding(context:object,prepared:Fresh35ProductionPreparedImport):Promise<Readonly<Record<string,string|number>>>;
+export function loadFresh35ProductionImportAuthorization(context:object,binding:Readonly<Record<string,string|number>>):Promise<object>;
+export function fresh35ProductionImportQueryGuard(context:object,authorization:object,prepared:Fresh35ProductionPreparedImport):Readonly<{check(sql:string,values?:unknown[]):Promise<void>;close():Promise<void>;expiresAt:number;authorizationSha256:string}>;
+export function openReviewedFresh35ProductionHost(config:unknown,sourceRoot:string,target:object,prepare:(admission:object)=>Promise<Fresh35ProductionPreparedImport>,work:(client:any,admission:object,binding:Readonly<Record<string,string|number>>)=>unknown,options?:{referenceDirectory?:string;sourceProfileSha256?:string;explicitZeroApproval?:object;prepareOnly?:boolean}):Promise<any>;

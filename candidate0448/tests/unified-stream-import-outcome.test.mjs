@@ -82,3 +82,58 @@ test('real synthetic preflight and planner feed exact source facts into reconcil
   assert.throws(()=>compareWholePackageSource(changed,program.initialize,summary.counts,plan.totals),e=>e.message==='VERIFY_SOURCE_COUNT_MISMATCH'&&e.field==='SALES_SETTLEMENT');
  }finally{await plan?.dispose();await rm(d,{recursive:true,force:true})}
 });
+
+let realModelSerial=0;
+async function productionCliModel(mode='COMMITTED'){
+ const stateUrl=stub(`export const events=[];export const mode=${JSON.stringify(mode)};export const serial=${++realModelSerial};`),state=await import(stateUrl);
+ let s=source.replace("const root=fileURLToPath(new URL('../../',import.meta.url));","const root='/SYNTHETIC_REAL_CLI_MODEL';");
+ const inject=(path,value)=>{s=s.replaceAll(path,stub(`import {events,mode} from ${JSON.stringify(stateUrl)};${value}`))};
+ inject('./fresh35-host-session.mjs',`export async function openReviewedFresh35Host(){throw Error('HISTORICAL_FALLBACK_PROHIBITED')}let n=0;export async function openReviewedFresh35ProductionHost(c,r,t,prepare,work,options){const client={modelConnection:++n};events.push('open:'+n);const p=await prepare({modelAdmission:n});events.push('prepared:'+n);let count=0;for await(const step of p.steps)count++;events.push('compiled:'+count);if(options.prepareOnly){events.push('close:'+n);return{result:{state:'PRODUCTION_REAL_IMPORT_PREPARED',binding:{model:true},business_database_writes:false,verification:{state:'NOT_RUN'}},cleanup:'CLOSED'}}events.push('authorize:'+n);if(mode==='NO_AUTH')throw Error('FRESH35_HOST_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');if(mode==='READBACK_FAIL'&&n===2)throw Error('READBACK_MODEL_FAILURE');const result=await work(client,{});events.push('close:'+n);return{result,cleanup:mode==='CLOSE_FAIL'&&n===1?'CLOSE_FAILED':'CLOSED',host_verification:{modelConnection:n}}}`);
+ inject('../../scripts/release/unified-install/fresh35-combined-record-v1.mjs',`export async function loadFresh35CombinedRecordEnvelope(){return{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V2'}}`);
+ inject('./stream-preflight.mjs',`export async function streamPreflight(){events.push('preflight');return{checks_passed:true,complete_package_validation:true,manifest_sha256:'a'.repeat(64),counts:{sales_header:25,sales_settlement:27}}}`);
+ inject('./stream-plan.mjs',`export async function prepareStreamPlan(p,s,m,o){events.push('plan:'+o.historicalSalesAdmission.modelAdmission);return{totals:{sales_net_due_cents:'123'},async dispose(){events.push('dispose')}}}`);
+ inject('./stream-program.mjs',`export async function buildStreamProgram(){return{identity:{planSha256:'b'.repeat(64)},initialize:{modelOriginalKey:'unchanged'},steps:(async function*(){yield{method:'publish',request:{request_key:'original-1'}};yield{method:'publish',request:{request_key:'original-2'}}})()}}`);
+ inject('./whole-package-client.ts',`export async function executeWholePackage(client,id,initialize,steps){events.push('execute:'+client.modelConnection);for await(const s of steps)events.push(s.request.request_key);return{state:mode==='READBACK_FAIL'||mode==='CLOSE_FAIL'?'COMMITTED':mode}}`);
+ inject('./whole-package-reconcile.mjs',`export async function reconcileWholePackage(client,init,encoded,counts,totals){events.push('verify:'+client.modelConnection);if(counts.sales_header!==25||counts.sales_settlement!==27||totals.sales_net_due_cents!=='123'||init.modelOriginalKey!=='unchanged')throw Error('SOURCE_MODEL_FACTS_DIFFER');return{state:'VERIFIED'}}`);
+ inject('./whole-package-inspect.ts',`export async function inspectWholePackage(client){events.push('inspect:'+client.modelConnection);return{state:'ABSENT'}}`);
+ inject('./whole-package-sql-kernel.ts',`export function createWholePackageSqlKernel(){events.push('kernel');return{}}`);
+ inject('./execution-client.ts',`export function assertPublicValuesExcludePrivateInputs(){}`);
+ s=s.replace(/from\s*(['"])(\.{1,2}\/[^'"]+)\1/g,(_m,_q,path)=>'from '+JSON.stringify(pathToFileURL(resolve('tools/unified-import',path)).href));
+ s=s.replace(/import\((['"])(\.{1,2}\/[^'"]+)\1\)/g,(_m,_q,path)=>'import('+JSON.stringify(pathToFileURL(resolve('tools/unified-import',path)).href)+')');
+ return{...await import(stub(s)),events:state.events};
+}
+async function withProductionCliInputs(work,packageKind='REAL'){
+ const fs=await import('node:fs/promises'),{HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256:profile}=await import('../packages/application/src/unified-import-contract.ts'),d=await mkdtemp(join(tmpdir(),'production-cli-model-'));
+ try{
+  const pkg=join(d,'pkg');await fs.mkdir(pkg);await writeFile(join(pkg,'manifest.json'),JSON.stringify({package_kind:packageKind,schema_contract:{source_declarations_sha256:profile}}));
+  for(const [name,value]of [['target','{}'],['admin','{}'],['connection',JSON.stringify({password:'SYNTHETIC_MODEL_PRIVATE'})],['scrypt','naijue:scrypt:1:32768:8:1:'+'c'.repeat(32)+':'+'d'.repeat(128)]])await writeFile(join(d,name),value,{mode:0o600});
+  const args=['--package',pkg,'--report',join(d,'report'),'--manifest-sha256','a'.repeat(64),'--target',join(d,'target'),'--admin',join(d,'admin'),'--connection',join(d,'connection'),'--scrypt-file',join(d,'scrypt'),'--target-profile','FRESH35_PRODUCTION_REAL_IMPORT_V1','--fresh35-reference-inputs',d,'--ack-exclusive-ddl-window'];
+  await work(args);
+ }finally{await rm(d,{recursive:true,force:true})}
+}
+test('REAL preparation and missing authority never invoke a writer; original steps are repeatable (CLI model)',async()=>{
+ await withProductionCliInputs(async args=>{
+  const prep=await productionCliModel();const p=await prep.runStreamImport([...args,'--prepare-only']);
+  assert.equal(p.state,'PRODUCTION_REAL_IMPORT_PREPARED');assert.equal(p.business_database_writes,false);assert.equal(p.verification.state,'NOT_RUN');assert.equal(p.connection_cleanup,'CLOSED');assert(!prep.events.some(x=>/authorize|execute|kernel|verify/.test(x)));
+  const rejected=await productionCliModel('NO_AUTH'),r=await rejected.runStreamImport(args);assert.equal(r.state,'NOT_STARTED');assert.equal(r.code,'FRESH35_HOST_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');assert(!rejected.events.some(x=>/execute|kernel|verify/.test(x)));
+ });
+ await withProductionCliInputs(async args=>{const m=await productionCliModel(),r=await m.runStreamImport(args);assert.equal(r.state,'NOT_STARTED');assert.equal(r.code,'FRESH35_HOST_REAL_PREPARED_PROGRAM_REQUIRED');assert.deepEqual(m.events,[])},'SYNTHETIC');
+});
+test('REAL commit and same-key replay close their original connection before independent source reconciliation (CLI model)',async()=>{
+ await withProductionCliInputs(async args=>{
+  for(const mode of ['COMMITTED','ALREADY_COMMITTED']){
+   const m=await productionCliModel(mode),r=await m.runStreamImport(args);assert.equal(r.state,mode);assert.equal(r.verification.state,'VERIFIED');assert.equal(r.readback_connection_cleanup,'CLOSED');
+   assert(m.events.indexOf('close:1')<m.events.indexOf('open:2'));assert(m.events.indexOf('authorize:1')<m.events.indexOf('execute:1'));assert(m.events.indexOf('authorize:2')<m.events.indexOf('verify:2'));
+   assert.equal(m.events.filter(x=>x.startsWith('execute:')).length,1);assert.equal(m.events.filter(x=>x.startsWith('verify:')).length,1);assert(m.events.includes('original-1'));assert(m.events.includes('original-2'));assert.equal(r.host_verification.modelConnection,1);assert.equal(r.readback_host_verification.modelConnection,2);
+  }
+ });
+});
+test('REAL unknown or rollback never opens a readback or auto-retries; post-commit failures retain commit (CLI model)',async()=>{
+ await withProductionCliInputs(async args=>{
+  for(const mode of ['UNKNOWN','ROLLED_BACK','CLOSE_FAIL','READBACK_FAIL']){
+   const m=await productionCliModel(mode),r=await m.runStreamImport(args);assert.equal(r.state,mode==='CLOSE_FAIL'||mode==='READBACK_FAIL'?'COMMITTED':mode);assert.equal(m.events.filter(x=>x.startsWith('execute:')).length,1);
+   if(mode!=='READBACK_FAIL'){assert(!m.events.includes('open:2'));assert(!m.events.some(x=>x.startsWith('verify:')))}
+   if(mode==='CLOSE_FAIL'||mode==='READBACK_FAIL')assert.equal(r.verification.state,'VERIFICATION_UNKNOWN');
+  }
+ });
+});

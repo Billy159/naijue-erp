@@ -1,0 +1,199 @@
+{
+  "task_id": "D1-FRESH35-PRODUCTION-REAL-IMPORT-SOURCE-20261106-01",
+  "state": "SOURCE_IMPLEMENTED_DIRECT_TESTS_PASS_NOT_PG",
+  "recorded_at": "2026-11-06T00:39:56.321991+08:00",
+  "authorization": "call_bcc0d925fe484649ad0daba1d55bf889 item0; C follow-up adds cli.mjs dispatcher and original direct tests",
+  "workspace": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "head_observed": "4ef61a80e22b9a7c6b02f2571576418d0afc8f32",
+  "delivery": "UNCOMMITTED_WIP_LEAVES_FOR_C_FREEZE",
+  "leaves": [
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "bytes": 32761,
+      "sha256": "efab525579d44c593cf3b9f74e4654f9f15494c958543eaacef829e413506890"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.d.mts",
+      "bytes": 3842,
+      "sha256": "0671fe4bddbd979ba40ffaee1306bfc3204eeae5432807810911016e1894cea1"
+    },
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "bytes": 19864,
+      "sha256": "fdae12f6b7a6962bf9b9b8764fa3075f7bd7d85391e9d6cb1cbfe2c85ea3cb7b"
+    },
+    {
+      "path": "tools/unified-import/stream-import-cli.mjs",
+      "bytes": 23112,
+      "sha256": "6605c956342b05cad0d74907e54a2ca30b0fcd7a9cbe9a55d133cb073ef68c75"
+    },
+    {
+      "path": "tools/unified-import/fresh35-receiver-diagnostics.ts",
+      "bytes": 2449,
+      "sha256": "7e25d5917cc5ec423a2d943f2fad5f7cfb9d1d2d6c4b83f968f0bfd626904657"
+    },
+    {
+      "path": "tools/unified-import/cli.mjs",
+      "bytes": 3345,
+      "sha256": "3163a0db7713f005c26f34265ec650a17e1e67179a5f06fb15aa4bd0e9641463"
+    },
+    {
+      "path": "tests/fresh35-host-session.test.mjs",
+      "bytes": 31193,
+      "sha256": "45ecc65ec4e59f6fcbf9fe46d5119d7d09129d965eb86f1c373ae2ba30f70614"
+    },
+    {
+      "path": "tests/fresh35-receiver-diagnostics.test.ts",
+      "bytes": 7530,
+      "sha256": "12102a8dc5007185072cae3f8452370c9af8e7de48c4b07dd51c522c36a27dfb"
+    },
+    {
+      "path": "tests/unified-stream-import-cli.test.mjs",
+      "bytes": 4674,
+      "sha256": "b3df62a0a8a360503ddb1add66bbc7cec4ad1813db1d2118882964706ac06cdf"
+    },
+    {
+      "path": "tests/unified-stream-import-outcome.test.mjs",
+      "bytes": 22929,
+      "sha256": "f3e6d48523db3225dfa60f3eb374e8723d36204626d5cdbe78d1b9b45d7c43aa"
+    }
+  ],
+  "behavior": [
+    "Explicit FRESH35_PRODUCTION_REAL_IMPORT_V1; old V1 loader still rejects V2; whole-import and allow-synthetic forbidden for this new selector.",
+    "Original protected production V2 reconstruction, exact source/catalog/install program and same physical-client catalog verification precede planning.",
+    "prepare-only passes only planner admission, exhausts fresh original stream, closes wire and returns PRODUCTION_REAL_IMPORT_PREPARED with business_database_writes=false and verification NOT_RUN.",
+    "Independent fixed root batch authorization is consumed after complete REAL compilation, before writer. Installation or source registration never authorizes import.",
+    "Exact binding covers record bytes, install program/sourceSet/target/catalog, manifest/plan, private initializer aggregate, complete original stream including methods/operation/request keys, batch IDs, namespace/cutoff and root key.",
+    "Every send checks external file identity, installed record generation and window. Initializer/private aggregate, ordinal/phase/root/exact request and accumulated complete typed stream digest must match before finish/commit.",
+    "Original SQL allowlist, Client/verification/admission WeakMaps, one transaction, rollback/UNKNOWN original-key inspect and single close owner retained. Deadline only shortens original window.",
+    "COMMITTED/ALREADY_COMMITTED first closes original wire, then independently reopens, admits, recompiles and reauthorizes original batch for source counts/totals reconciliation. UNKNOWN/ROLLED_BACK never auto-retries or opens readback.",
+    "Host receipt exposes external authorization byte SHA and exact binding, never encodedScrypt or its raw private input. Reconciliation uses locks then ROLLBACK; it is not labeled READ ONLY.",
+    "Dispatcher exits zero for prepared state only with CLOSED, local cleanup not FAILED, business_database_writes=false and verification NOT_RUN; old status semantics preserved."
+  ],
+  "external_input": {
+    "path": "/etc/naijue-erp/fresh35-production-import-v1.json (darwin /private/etc equivalent)",
+    "format": "FRESH35_PRODUCTION_REAL_IMPORT_AUTHORIZATION_V1",
+    "decision": "AUTHORIZE_EXACT_REAL_BATCH_IMPORT_AND_READBACK",
+    "root_keys": [
+      "format",
+      "decision",
+      "binding",
+      "startsAt",
+      "expiresAt",
+      "independentSafetyReviewSha256",
+      "authorizationReference"
+    ],
+    "binding_keys": [
+      "format",
+      "installationRecordSha256",
+      "installProgramSha256",
+      "sourceSetSha256",
+      "targetSha256",
+      "catalogSha256",
+      "manifestSha256",
+      "planSha256",
+      "initializerSha256",
+      "stepsSha256",
+      "stepCount",
+      "sourceNamespace",
+      "cutoffAt",
+      "baselineBatchId",
+      "documentBatchId",
+      "initializerOperationId",
+      "initializerRequestKey"
+    ],
+    "binding_format": "FRESH35_PRODUCTION_REAL_IMPORT_BINDING_V1",
+    "protection": "Root-owned trusted canonical parents, regular single-link file, O_NOFOLLOW, no group/other write. Original dev/inode/uid/mode/nlink/size/nanosecond timestamps checked. Private connection/scrypt inputs stay separate 0600. No authority file issuer or writer added.",
+    "window": "Subset of original installed physical birth/window; no extension, restart or later incremental admission."
+  },
+  "verification": [
+    {
+      "name": "initial red",
+      "exit": 1,
+      "tests": 1,
+      "failed": 1,
+      "reason": "new production exports absent before implementation"
+    },
+    {
+      "name": "initial unchanged CLI/diagnostic/outcome baseline",
+      "exit": 0,
+      "tests": 11,
+      "passed": 11,
+      "reused": true
+    },
+    {
+      "name": "affected host/receiver/CLI/outcome final",
+      "command": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node --test tests/fresh35-host-session.test.mjs tests/fresh35-receiver-diagnostics.test.ts tests/unified-stream-import-cli.test.mjs tests/unified-stream-import-outcome.test.mjs",
+      "exit": 0,
+      "tests": 32,
+      "passed": 32,
+      "skipped": 0,
+      "scope": "Actual source with explicit OS/wire/CLI dependency models, no DB; modeled capabilities rejected by real private module"
+    },
+    {
+      "name": "original coordinator/inspect/kernel/host",
+      "command": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node --test tests/unified-whole-package-client.test.ts tests/unified-whole-package-inspect.test.ts tests/unified-whole-package-sql-kernel.test.ts tests/unified-whole-package-host.test.mjs",
+      "exit": 0,
+      "tests": 32,
+      "passed": 32,
+      "skipped": 0
+    },
+    {
+      "name": "types",
+      "command": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json",
+      "exit": 0,
+      "prior_failure": "TS7016 in newly added literal mjs test import; corrected to existing dynamic URL style. Failure log preserved."
+    },
+    {
+      "name": "formal build",
+      "command": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node node_modules/typescript/bin/tsc -p tsconfig.build.json",
+      "exit": 0
+    },
+    {
+      "name": "git diff --check",
+      "exit": 0
+    }
+  ],
+  "logs": {
+    "initial-red": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-REAL-IMPORT-initial-red.log",
+      "sha256": "9023e9b0af872f53ce06143b740832e42548ca80ab1b0b986f45269ed882bee2"
+    },
+    "initial-existing-cli": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-REAL-IMPORT-initial-existing-cli.log",
+      "sha256": "cd8719660b3c531370cc1a12bc9ac6c09f6c5aaccfd97d17ee0f616064479ec0"
+    },
+    "direct-final": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-REAL-IMPORT-direct-final.log",
+      "sha256": "368a5f4ec001c359150c3efc6896ca8a26d57cb80fd09b83691ec895d227b04c"
+    },
+    "original-core": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-REAL-IMPORT-original-core.log",
+      "sha256": "70abe99bb3b2a7914341ccf86d5f277ed37d560dd4cd80922b781b8ea51d47ec"
+    },
+    "initial-types-failure": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-REAL-IMPORT-initial-types-failure.log",
+      "sha256": "d1ef54eaba4d2b923bf6016166bd7a41d2de289f8c39b15b6aeae72a1cda98a4"
+    },
+    "types-final": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-REAL-IMPORT-types-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-final": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-REAL-IMPORT-build-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "boundaries": [
+    "No DB schema/table/column/function/GRANT/persistent installation-record or business SQL change.",
+    "No frontend/shared business contract, T45 launcher/wrapper or D2 provider/API change.",
+    "No commit/index/controller root reports, real inputs, PG/server or production files touched."
+  ],
+  "unverified": [
+    "Actual production V2 OS/root loader/catalog/ACL and external authority operation on real host.",
+    "Full real 13-package import, real-PG closure/readback/conservation/audit/transaction/replay and performance acceptance.",
+    "Current synthetic 5d70 candidate excludes this WIP. Synthetic or model pass is not REAL acceptance.",
+    "No deployment/release/business restriction lifted; prior sealed18 run2 and other passed PG targets not rerun."
+  ],
+  "next": "C freezes exact ten leaves and updated source closure, coordinates QB targeted review. T45 remains sole server/DB owner. Actual production prepare/execution requires separately coordinated exact candidate and authorized window; this source packet is not execution permission."
+}

@@ -7,3 +7,15 @@ test('stream execution requires independently paired amount evidence flags befor
  }
  const help=spawnSync(process.execPath,['tools/unified-import/cli.mjs','stream-import','--help'],{encoding:'utf8'});assert.match(JSON.parse(help.stdout).usage,/--historical-line-amount-evidence/);
 });
+
+test('production preparation exits zero only for the explicit no-write result and acknowledged cleanup',async()=>{
+ const fs=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),d=await fs.mkdtemp(join(tmpdir(),'real-prepare-dispatch-'));
+ try{
+  await fs.writeFile(join(d,'cli.mjs'),await fs.readFile('tools/unified-import/cli.mjs'));
+  await fs.writeFile(join(d,'stream-import-cli.mjs'),`export async function runStreamImport(a){const r={state:'PRODUCTION_REAL_IMPORT_PREPARED',business_database_writes:false,connection_cleanup:'CLOSED',verification:{state:'NOT_RUN'}};if(a[0]==='close')r.connection_cleanup='CLOSE_FAILED';if(a[0]==='local')r.local_cleanup='FAILED';if(a[0]==='write')r.business_database_writes=true;if(a[0]==='verify')r.verification.state='VERIFIED';if(a[0]==='unknown')r.state='UNRECOGNIZED';return r}`);
+  for(const [arg,code]of [['ok',0],['close',3],['local',3],['write',3],['verify',3],['unknown',1]]){
+   const r=spawnSync(process.execPath,[join(d,'cli.mjs'),'stream-import',arg],{encoding:'utf8'});assert.equal(r.status,code,arg);
+   if(arg==='ok'){const v=JSON.parse(r.stdout);assert.equal(v.business_database_writes,false);assert.equal(v.verification.state,'NOT_RUN')}
+  }
+ }finally{await fs.rm(d,{recursive:true,force:true})}
+});
