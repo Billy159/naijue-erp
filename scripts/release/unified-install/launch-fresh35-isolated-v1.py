@@ -174,7 +174,7 @@ def json_new(path, value, mode=0o400):
     write_new(path, (json.dumps(value, sort_keys=True) + '\n').encode(),mode=mode)
 
 def persist_bootstrap_network_observation(a, obs, system_id):
-    p=a['proposal'];root=trusted(Path(p['workspaceDirectory']))
+    p=a['proposal'];root=Path(p['workspaceDirectory']);trusted(root)
     need(stat.S_IMODE(root.lstat().st_mode)==0o711,'NETWORK_OBSERVATION_PARENT_MODE')
     need(obs['systemIdentifier']==system_id and type(obs['databaseOid']) is str and re.fullmatch('[1-9][0-9]*',obs['databaseOid']) and obs['serverVersionNum']=='170011' and type(obs['postmasterStart']) is str and bool(obs['postmasterStart']),'POST_BOOTSTRAP_PHYSICAL_IDENTITY')
     need(obs['address']==p['host']=='127.0.0.1' and obs['port']==p['port'] and type(obs['port']) is int and obs['actor']==p['admin'] and obs['listenAddresses']=='127.0.0.1' and obs['unixSocketDirectories']=='' and obs['dataDirectory']==str(root/'data') and obs['hbaFile']==str(root/'data/pg_hba.conf'),'POST_BOOTSTRAP_NETWORK_IDENTITY')
