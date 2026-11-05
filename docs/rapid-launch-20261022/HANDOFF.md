@@ -1344,3 +1344,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - T45首次artifact-stage在上传前status读root0400公开授权失败；原受控后继最终root:root0444同字节只读修正，秘密保持。异步0440/0444消息交叉收据均保留，不再切模式。原key先ABSENT/无attempt后一次上传成功，70967936字节/b91bf14e/sourceSet0e6b01ec/authority04ef37b3为READY，40秒不变。
 - 唯一PhaseA作业t45-f35-5b26-prepare-20261105-01已提交，受原30分钟准确期限；实际签名/锁包/ldd结果待回，数据库20分钟未启。
 - D3真实offline预检尚在处理，已发现36 UNDECLARED_PACKAGE_FILE（source_files实际声明/物理边界待核）及至少235头SETTLEMENT_MISMATCH，最终去重数待终态。未标PASS，不补款/改金额/扩大六例批准；原D3分支定位，不重复清洗或放宽守卫。
+
+
+### 正式证明源码固定、真实预检271失败及PhaseA实际失败
+- D1生产V2的12叶固定57842e5838643c0b51199a9efd2e7adad7f666b0已推远端回读，回执54c4f7bb匹配；42项模型/tsc/build0，原QB仅审本增量。D2接原4运行叶；发行bundle模块身份闭包仍需准确接缝，源码不代表可安装。
+- D3预检自然终态，命令exit0但checks_passed=false，271=36原raw源包内布局+235结算不符。235为210历史RETURN无款、22SALE有款差、3RETURN有款差；不与已批6行金额混同。source reconcile/plan未运行。原失败保留，下一独立payload不含raw源且不删除旧副本；25款差追溯原头金额，历史合同consumer由D1定位。
+- T45 PhaseA原job FAILED/exit2/192.548220189秒，仅COMMAND_FAILED_1，因原run未留失败输出尚未知具体子命令及根因。原唯一只读诊断在途，无重放pull/build，DB20分钟未启，0PG/生产。最小日志/方法修订待实际诊断后固定验证。

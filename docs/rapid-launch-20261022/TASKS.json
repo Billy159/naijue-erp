@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T11:52:49.262246+00:00",
+    "at": "2026-11-05T11:57:49.633988+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28466,11 +28466,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Alignment five leaves frozen24a454; production V2 original modules implementation continues",
-      "D2": "Final five-document source equivalence review completed and adopted; runtime seam awaits D1 frozen API",
-      "D3": "Preserve actual preflight process; locate source_files physical boundary and settlement mismatches, no source/amount relaxation",
-      "T45": "Original key actual READY; unique phaseA job live, DB window not started",
-      "QB": "Fixed operations2 PASS adopted, no repeated review"
+      "D1": "Fixed57842 source under QB; diagnose exact historical settlement consumer contract plus build carrier seam without changing frozen leaves",
+      "D2": "Implement fixed production V2 runtime seam in original four files",
+      "D3": "Prepare separate standard payload r3 preserving raw sources; trace25 actual settlement differences; no full preflight repeat until fixed",
+      "T45": "PhaseA failed terminal; original readonly diagnostic only, no replay; proposed targeted failure-output fix",
+      "QB": "Review fixed57842 production-proof12 only"
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28481,7 +28481,7 @@
     },
     "privateReadyRows": {
       "owner": "D3",
-      "state": "ACTUAL_OFFLINE_PREFLIGHT_IN_PROGRESS_FAILURES_FOUND",
+      "state": "ACTUAL_PREFLIGHT_TERMINAL_FAILED_271",
       "receiptSHA256": "0279ded0e682ba295f2ef7b21bb3b2f771dba965aec54d5ec2866a76bfbdbd28",
       "tables": 26,
       "rows": 608916,
@@ -28507,17 +28507,29 @@
       "preflightPassed": false,
       "knownFailures": {
         "UNDECLARED_PACKAGE_FILE": 36,
-        "SETTLEMENT_MISMATCH": "at least235 heads, final dedup count pending; not covered by six approved line-amount cases"
-      }
+        "SETTLEMENT_MISMATCH": 235
+      },
+      "settlementGroups": {
+        "historicalReturnWithoutSettlement": 210,
+        "saleWithSettlementMismatch": 22,
+        "returnWithSettlementMismatch": 3
+      },
+      "manifestCandidateSHA256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+      "ledgerCandidateSHA256": "499c9bec0a8e65899d42fc934c6edd37f7c921fb7e23d0943842ab96e0712c80",
+      "sourceReconciliationRun": false,
+      "planRun": false
     },
     "productionInstallProofProposal": {
       "owner": "D1",
-      "state": "HUMAN_APPROVED_D1_CONTRACT_D2_RUNTIME_SEAM",
+      "state": "FIXED_12_LEAF_SOURCE_QB_REVIEW_IN_PROGRESS_D2_RUNTIME_CONSUMPTION",
       "path": "D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-TARGET-CONTRACT-DELTA.md",
       "sha256": "9b11eabac1880c5515d0f40e73203fa9cd27cbb5b134aa9d0394311858a390a8",
       "scope": "Versioned existing target/record and ordinary startup identity/source/catalog revalidation; operation window separate from service lease; actual target values/permissions unapproved",
       "approvalItem": 1,
-      "actualPermissionApplied": false
+      "actualPermissionApplied": false,
+      "commit": "57842e5838643c0b51199a9efd2e7adad7f666b0",
+      "implementationReceiptSHA256": "54c4f7bbe83e9d0c80f1e0e49a5d4ad0dfec2115538fa819483cbb79d723c10a",
+      "checks": "42 affected models PASS/typecheck0/build0; no PG or bundle verification"
     },
     "privateHallSourceReview": {
       "candidateSHA256": "8e1b71640f2c7172a15ad0be32c8aab029d28a1ee07afc3a41a8b5467ae98d53",
@@ -28570,7 +28582,7 @@
       "versionConstraintsChecked": 201,
       "metadataUnsatisfiedConstraints": 0,
       "signedReleaseVerified": false,
-      "state": "ACTUAL_ARTIFACT_READY_PHASE_A_RUNNING",
+      "state": "ACTUAL_PHASE_A_FAILED_READONLY_DIAGNOSTIC_IN_PROGRESS",
       "scope": "Original T45 provision successor only in its original fresh35-preparation output directory; no S application edits or server calls",
       "actualImagePullBuildOrContainerCreated": false,
       "actualTransmission": true,
@@ -28593,7 +28605,10 @@
       "databaseWindowStarted": false,
       "artifactKey": "t45-f35-5b26-ordinary-20261105-01",
       "artifactStatus": "READY",
-      "phaseAJob": "t45-f35-5b26-prepare-20261105-01"
+      "phaseAJob": "t45-f35-5b26-prepare-20261105-01",
+      "phaseAExitCode": 2,
+      "phaseAElapsedSeconds": 192.548220189,
+      "error": "COMMAND_FAILED_1; actual subcommand stdout/stderr discarded; root cause unknown; no replay"
     }
   }
 }
