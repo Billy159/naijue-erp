@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T17:06:42.563244+00:00",
+  "updatedAt": "2026-11-05T17:28:43.977967+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -29106,8 +29106,45 @@
         "state": "FAILED_124_AT_JOB_180_SECONDS_NOT_MATERIALIZED_PASS",
         "elapsedSeconds": 180.1178,
         "serverOwner": "T45",
-        "currentAction": "One bounded readonly failure-state diagnosis; no replay/deletion/PG",
-        "receipt": "Owner reported; exact diagnostic receipt pending"
+        "currentAction": "Only exact missing files; preserve old bytes. Wait original-key actual final closure; then external exact PG scope.",
+        "receipt": "Owner reported; exact diagnostic receipt pending",
+        "receiptSHA256": "7d8ca53a0e8e7fda40bec0daf917f89818f02891626692da7df6cfdef36f3330",
+        "diagnosis": "Original180s stopped in file write loop. Original unit inactive/dead/PID0; no container. Not Linux/PG failure.",
+        "existingFiles": {
+          "matched": 3878,
+          "bytes": 190151231,
+          "mismatch": 0,
+          "unexpected": 0,
+          "readonlyJob": "t45-f35-5d70-partial-emptyfix-readonly-20261106-01",
+          "elapsedSeconds": 1.820742
+        },
+        "missingFiles": {
+          "deploy": 3414,
+          "deployBytes": 46354060,
+          "metadata": 4,
+          "authorityAndProfile": 2
+        },
+        "r4": {
+          "commit": "13664cdad37c4ccdc9af2bbe85dd7e0f65b0faaf",
+          "wrapperSHA256": "3940464664de13f7627ce822c9618bf05b6fafc43890544324a87914ade62067",
+          "readySHA256": "807553b9144b1a770064253e246ad437197189b9eaf3c082589455317104000d",
+          "receiptSHA256": "27e0e960b85fb3798291f3e5e163441dad30f511ce063093614c307335b86376",
+          "state": "QB_PASS_SCOPED_SOURCE_AND_LOCAL_MODELS_NOT_EXECUTION",
+          "sourceScope": "Registered zero-byte ordinary member reader; exact same-root existing-tree verified missing-only O_EXCL continuation; private reader/fsync/targets remain.",
+          "reviewSHA256": "257d5dcabbba2c31c44e29af145ffd0c8f5d586648117a3a0c7450e0445eef55"
+        },
+        "continuation": {
+          "job": "t45-f35-5d70-materialize-remaining-20261106-01",
+          "state": "ORIGINAL_T45_SUBMITTING_ONCE_RESULT_PENDING",
+          "planSHA256": "841da7e3ddf644367e4cf230985e1313e0a5f11e2a48e6609f7dab0d96d05b40",
+          "newPreparationCreatedAt": 1793899557049,
+          "newPreparationDeadline": 1793900457049,
+          "processMaximumSeconds": 360,
+          "oldPreparationDeadlineUnchanged": 1793899386630,
+          "oldFailureUnchanged": true,
+          "stagingAuthorityRenewed": false,
+          "PGAuthorized": false
+        }
       }
     },
     "productionRealImportContinuation": {

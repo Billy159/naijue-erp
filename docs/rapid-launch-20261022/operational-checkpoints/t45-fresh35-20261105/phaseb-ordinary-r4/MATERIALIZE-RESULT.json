@@ -1,0 +1,133 @@
+{
+  "status": "FAILED_MATERIALIZATION_PARTIAL_PRESERVED_NO_REPLAY",
+  "originalJob": {
+    "jobId": "t45-f35-5d70-materialize-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-66e1a3dc495c",
+    "atUTC": "2026-11-05T17:00:12.058387+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "errorCode": "PHASE_TIMEOUT_UNKNOWN_OUTCOME_NO_REPLAY",
+    "exitCode": 124,
+    "elapsedSeconds": 180.1178003572859,
+    "exports": [],
+    "finishedAtUTC": "2026-11-05T17:03:12.194928+00:00"
+  },
+  "readonlyState": {
+    "jobId": "t45-f35-5d70-materialize-state-readonly-20261106-01",
+    "checkedAtUTC": "2026-11-05T17:04:39.199113+00:00",
+    "mutations": 0,
+    "applicationRootExists": true,
+    "fixedMetadata": {
+      "prepare-started.json": {
+        "exists": true,
+        "bytes": 506,
+        "mode": "0o600",
+        "uid": 0,
+        "mtimeNs": 1793898014422087132,
+        "symlink": false
+      },
+      "metadata/deployment-manifest.json": {
+        "exists": false
+      },
+      "metadata/source-descriptor.json": {
+        "exists": false
+      },
+      "authority/fresh35-isolated-deployment-v1.json": {
+        "exists": false
+      },
+      "state": {
+        "exists": false
+      },
+      "state/capacity/owner-profile.json": {
+        "exists": false
+      },
+      "start-intent.json": {
+        "exists": false
+      },
+      "container-receipt.json": {
+        "exists": false
+      }
+    },
+    "prepareMarker": {
+      "operationId": "t45-f35-5d70-ordinary-20261106-01",
+      "sourceSet": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+      "archiveSHA256": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+      "deploymentManifestSha256": "4954bb15a5800071ad0d633574e29f80bd62fd724ef02f4ee6066617d518ca92",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f"
+    },
+    "materializedFilesMetadata": {
+      "regularFileCount": 3878,
+      "regularFileBytes": 190151231,
+      "lastFiveByMtime": [
+        {
+          "path": "node_modules/@fastify/ajv-compiler/node_modules/ajv/node_modules/fast-uri/eslint.config.js",
+          "bytes": 135,
+          "mtimeNs": 1793898191858278615
+        },
+        {
+          "path": "node_modules/@fastify/ajv-compiler/node_modules/ajv/node_modules/fast-uri/index.js",
+          "bytes": 22264,
+          "mtimeNs": 1793898191908276660
+        },
+        {
+          "path": "node_modules/@fastify/ajv-compiler/node_modules/ajv/node_modules/fast-uri/lib/schemes.js",
+          "bytes": 7367,
+          "mtimeNs": 1793898191967274354
+        },
+        {
+          "path": "node_modules/@fastify/ajv-compiler/node_modules/ajv/node_modules/fast-uri/lib/utils.js",
+          "bytes": 20835,
+          "mtimeNs": 1793898192025272089
+        },
+        {
+          "path": "node_modules/@fastify/ajv-compiler/node_modules/ajv/node_modules/fast-uri/package.json",
+          "bytes": 1983,
+          "mtimeNs": 1793898192076270099
+        }
+      ],
+      "notAContentOrCompletenessVerification": true
+    },
+    "originalUnit": {
+      "exitCode": 0,
+      "fields": {
+        "MainPID": "0",
+        "Result": "success",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      }
+    },
+    "matchingContainerIDs": [],
+    "containerQueryExitCode": 0,
+    "status": "READONLY_PARTIAL_MATERIALIZATION_STATE_ONLY"
+  },
+  "sourceWrapperSHA256": "7b239be925bd29783f264a4bf903770cb07505011209af13724fa12125862a78",
+  "externalPlanSHA256": "a8743b2b25131d51a23f6fb4a97fb5a7bc5dc05ccffdc32c7e91180c0da8580c",
+  "preparationDeadlineMs": 1793899386630,
+  "actualPhaseTimeoutSeconds": 180,
+  "failureBoundary": "Original controlled job timeout terminated file materialization after 180.118s; 3878 regular deploy files /190151231 bytes present by metadata only. Metadata/authority/state not created. No full remote content verification claimed.",
+  "processBoundary": "Original operation systemd unit inactive/dead MainPID0. Unit Result=success does not override controlled phase FAILED124. No matching container IDs.",
+  "originalStageStillReusable": "Exact original READY receipt 83652102B/9dc78883/source190de retained. No upload replay or new artifact key.",
+  "retained": [
+    "Original partial phaseb-application-r1 root and exact prepare marker",
+    "All oldr1/r2 and exact6constant wrapper snapshots",
+    "Original failed job and new readonly state receipts",
+    "Exact staged artifact/oldgate backup/root newauthority evidence",
+    "Unused28parts"
+  ],
+  "mutationsAfterFailure": 0,
+  "PGOrContainerActions": 0,
+  "realOrProductionDataOperations": 0,
+  "next": "Await C exact successor scope based on retained partial root. Do not replay failed materialize, remove/overwrite partial files, invent resume, change original guards, or start PG. Existing stage/image/source evidence can be reused.",
+  "evidence": {
+    "materialize-evidence/preflight-materialize-preflight.json": "6ac1306aece1a87bbb91ef59134d257660b93c8e6641f70acc4905e9812ecd62",
+    "materialize-evidence/state-job.json": "7e3bc182134c661689cd133c8b990b14c8fd12977a33962340fe28905f7f73ac",
+    "materialize-evidence/original-job.json": "dbd850e09e4c6fd278b720f9bcd4bbfbb9cd3f3265fb955bbfcfbe60abbef3f2",
+    "materialize-evidence/state-materialize-state.json": "7830bd09e90e300889a70eec2166252312e708e9b5febb4349870ce1e6a53040",
+    "materialize-evidence/preflight-job.json": "afaf02d9e87350182f58f7f187832fd62e23e58d87864a2bbd8f288d5f3158bc"
+  }
+}

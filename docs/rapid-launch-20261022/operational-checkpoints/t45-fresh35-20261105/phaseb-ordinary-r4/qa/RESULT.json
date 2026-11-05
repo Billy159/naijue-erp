@@ -1,0 +1,140 @@
+{
+  "task_id": "QB-T45-MATERIALIZE-R4-13664cda-20261106",
+  "verdict": "PASS_SCOPED_SOURCE_AND_LOCAL_MODELS_NOT_EXECUTION",
+  "findings": [],
+  "recorded_at": "2026-11-06T01:25:48.265762+08:00",
+  "commit": "13664cdad37c4ccdc9af2bbe85dd7e0f65b0faaf",
+  "parent": "5fca405dba372a6b703ed024d23867711fe0d51d",
+  "comparison_parent_wrapper_sha256": "7b239be925bd29783f264a4bf903770cb07505011209af13724fa12125862a78",
+  "fixed_pins": [
+    {
+      "path": "docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/phaseb-ordinary-r4/fresh35-container-successor.py",
+      "sha256": "3940464664de13f7627ce822c9618bf05b6fafc43890544324a87914ade62067",
+      "bytes": 33123
+    },
+    {
+      "path": "docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/phaseb-ordinary-r4/test_fresh35_container_successor.py",
+      "sha256": "0e5efe95ff92130162840414ab37f839ebcc7a605014de58a0c2078e276df372",
+      "bytes": 27028
+    },
+    {
+      "path": "docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/phaseb-ordinary-r4/RESULT.json",
+      "sha256": "27e0e960b85fb3798291f3e5e163441dad30f511ce063093614c307335b86376",
+      "bytes": 6440
+    },
+    {
+      "path": "docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/phaseb-ordinary-r4/READY.json",
+      "sha256": "807553b9144b1a770064253e246ad437197189b9eaf3c082589455317104000d",
+      "bytes": 1043
+    }
+  ],
+  "requested_model_effort": "gpt-6.1-sol/high",
+  "actual_model_effort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "scope": "Only r4 wrapper/test increment versus exact r3 wrapper 7b239be9 and previously accepted r2 tests; no main/r2/fixture/REAL/PG re-review",
+  "source_comparison": {
+    "changed_existing_functions": [
+      "verify_materialized_application",
+      "main"
+    ],
+    "added_functions": [
+      "read_application_member",
+      "materialize_remaining",
+      "materialize_remaining_application"
+    ],
+    "all_other_functions_and_top_level_ast_unchanged": true,
+    "private_read_file_exact_unchanged": true,
+    "new_file_and_original_materialize_unchanged": true,
+    "constants_roots_targets_unchanged": true
+  },
+  "independent_checks": {
+    "passed": 9,
+    "failed": 0,
+    "checks": [
+      {
+        "name": "registered empty member works in original final verifier; original positive-size private reader stays closed",
+        "state": "PASS"
+      },
+      {
+        "name": "unregistered/wrong mode/link/symlink/owner/nonempty zero-file substitutions refuse",
+        "state": "PASS"
+      },
+      {
+        "name": "empty member path replacement and in-place growth during fd read refuse",
+        "state": "PASS"
+      },
+      {
+        "name": "all exact existing inodes preserved; only missing O_EXCL files created and original final verifier consumed",
+        "state": "PASS"
+      },
+      {
+        "name": "nine late existing-tree mismatches and used/start state refuse before any create",
+        "state": "PASS"
+      },
+      {
+        "name": "exact empty capacity inode and authority reused while completing one missing member",
+        "state": "PASS"
+      },
+      {
+        "name": "missing-member creation race refuses without overwrite or changing existing inodes",
+        "state": "PASS"
+      },
+      {
+        "name": "expired preparation refuses before image/archives/writes; no new window generated",
+        "state": "PASS"
+      },
+      {
+        "name": "new main phase records refusal without container recovery/readback/stop even with start artifacts",
+        "state": "PASS"
+      }
+    ],
+    "method": "Actual fixed wrapper in memory; real local temporary files/fd/O_EXCL/fsync, trusted owner and dispatcher/image modeled; no Docker/PG/server",
+    "limitations": "Root owner trust and dispatcher/image observations explicitly modeled, using actual local temp files, fd reads, inode/path checks, O_EXCL and fsync. Wrapper loaded through git show/compile in memory; no source tree copy."
+  },
+  "adopted_evidence": [
+    {
+      "name": "Author 11 targeted tests",
+      "status": "ADOPTED_OWNER_RECEIPT",
+      "passed": 11,
+      "elapsed_seconds": 0.094,
+      "note": "Pinned RESULT27e0e960 and test source0e5efe95; no separate original raw log supplied here, not rerun."
+    },
+    {
+      "name": "Existing partial tree readonly check",
+      "status": "ADOPTED_T45_RECEIPT_NOT_QB_HOST_VERIFIED",
+      "matched_files": 3878,
+      "matched_bytes": 190151231,
+      "missing_deploy_files": 3414,
+      "missing_deploy_bytes": 46354060,
+      "unexpected": 0,
+      "mismatch": 0,
+      "elapsed_seconds": 1.820741642266512,
+      "note": "Only pinned receipt adoption. Original FAILED124 and partial inodes remain historical facts; QB did not access host or rehash real archive/tree."
+    }
+  ],
+  "reviewed_behavior": [
+    "New ordinary-member reader accepts only registered emptySHA deploy members with exact0B/0644/single-link/stable full fd/path identity and inherited trusted-root path guard. Original positive-size private reader untouched. Nonempty member path stays on original reader and original final full SHA comparison.",
+    "Full immutable archive is parsed and checked using original archive_files before root validation. Original application receipt must match. Every existing root component must be expected with exact mode/link/content before new file writes. Unknown/start/used-capacity state rejects without application writes.",
+    "Missing archive members are created only with original O_EXCL/O_NOFOLLOW/fchmod/fsync path. Existing members, marker, exact authority and empty capacity inode are preserved. Final original verify_materialized_application consumes new reader.",
+    "Missing-file race never overwrites concurrent content. A race may leave already-created missing files as preserved partial state; this is not rollback or atomic materialization.",
+    "New materialize-remaining phase skips original container recovery and observation/stop branches on refusal. It does not start PG or rebuild an image. environment_image is an unchanged read-only Docker image inspection outside the local model.",
+    "Original preparation deadline check is retained at entry; new code does not generate a new deadline or DB window. Actual next C plan and job timeout must still use the authorized original remaining deadline; QB did not run or verify that operational job."
+  ],
+  "unverified": [
+    "Actual remaining3420 file creations on server, root ownership/path/filesystem behavior, fsync timings and final real7292 file closure.",
+    "Whether actual next external C plan/job preserves the original authorized preparation deadline and exact retained ROOT/receipt/archive.",
+    "Server/Docker/image/PG execution, container recovery/stop, target start and business checks.",
+    "No deployment, REAL source/execution or production acceptance; 6ed source result reused without re-review."
+  ],
+  "boundary": {
+    "source_changed": false,
+    "source_tree_copied": false,
+    "actual_private_or_business_inputs_read": false,
+    "real_archive_rehashed": false,
+    "server_access": false,
+    "docker_or_pg": false,
+    "application_on_server_written": false,
+    "execution_approval": false
+  },
+  "handoff": "C may adopt exact r4 source-only result and coordinate exact remaining job with T45, sole ops writer. No full suite, rebuild, old acceptance replay or new source tree is needed for this conclusion."
+}

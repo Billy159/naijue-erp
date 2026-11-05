@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "authorizationReference": "C 01a161ca consumes human call_e4aeea80 exact fresh35 scope and subsequent same-kind isolation preauthorization; distinct15min missing-only continuation after original180s failure and expired original preparation. Original5d70 artifact only, no PG or production.",
+  "operationId": "t45-f35-5d70-ordinary-20261106-01",
+  "opsSourceSha256": "3940464664de13f7627ce822c9618bf05b6fafc43890544324a87914ade62067",
+  "stagingAuthoritySha256": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c",
+  "imagePreparationExpiresAt": 1793900457049
+}

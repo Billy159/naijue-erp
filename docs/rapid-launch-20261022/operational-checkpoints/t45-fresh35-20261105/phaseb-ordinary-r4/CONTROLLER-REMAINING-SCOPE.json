@@ -1,0 +1,13 @@
+{
+  "scope": "Original exact5d70 missing-only materialize-remaining, max360s single original T45 new job, no old job replay. Execution only after C adopts original QB fixed13664 result.",
+  "createdAt": 1793899557049,
+  "expiresAt": 1793900457049,
+  "priorPreparationDeadlineUnchanged": 1793899386630,
+  "oldFailedJobPreserved": true,
+  "stageAuthorityNotRenewed": "b7b only proves original artifact staging; no upload is authorized by this continuation",
+  "sourceCommit": "13664cdad37c4ccdc9af2bbe85dd7e0f65b0faaf",
+  "planSHA256": "841da7e3ddf644367e4cf230985e1313e0a5f11e2a48e6609f7dab0d96d05b40",
+  "newJob": "t45-f35-5d70-materialize-remaining-20261106-01",
+  "targetRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r1",
+  "newPGWindowAuthorized": false
+}
