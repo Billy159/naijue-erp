@@ -164,10 +164,11 @@ export async function buildProduction(options) {
     outfile: path.join(buildRoot, releaseContract.entrypoints.backend.member), bundle: true, packages: 'external', platform: 'node', target: 'node24',
     format: 'esm', metafile: true, sourcemap: false, logLevel: 'silent',
     plugins: [{ name: 'frozen-backend-inputs', setup(build) {
-      build.onResolve({filter:/fresh35-host-session\.mjs$/},args=>{
+      build.onResolve({filter:/(?:fresh35-host-session|whole-sales-admission-v1)\.mjs$/},args=>{
         const relative=path.relative(sourceRoot,path.resolve(args.resolveDir,args.path)).split(path.sep).join('/');
-        requireRelease(relative===native35Contract.entry && ['apps/api/src/postgres-read-api.ts','adapters/postgres/src/runtime27-command-issuer.ts'].includes(path.relative(sourceRoot,args.importer).split(path.sep).join('/')), 'NATIVE35_EXACT_BOUNDARY_REQUIRED');
-        native35Needed=true;return {path:native35Contract.external,external:true};
+        const boundary=native35Contract.boundaries.find(row=>row.entry===relative);
+        requireRelease(boundary && boundary.importers.includes(path.relative(sourceRoot,args.importer).split(path.sep).join('/')), 'NATIVE35_EXACT_BOUNDARY_REQUIRED');
+        native35Needed=true;return {path:boundary.external,external:true};
       });
       build.onLoad({ filter: /\.(?:[cm]?js|tsx?|json)$/ }, async args => {
         const name = path.relative(sourceRoot, args.path).split(path.sep).join('/');

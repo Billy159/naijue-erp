@@ -31,7 +31,7 @@ export async function native35Closure(sourceRoot,referenceDirectory) {
   const references=await module.resolveFresh35ReferenceInputPaths(referenceDirectory);
   const descriptor=module.describeFresh35CombinedSource(await module.loadFresh35CombinedSource(sourceRoot,references));
   requireRelease(descriptor.format==='FRESH35_COMBINED_CURRENT_SOURCE_V1' && descriptor.capturedSourcePins.length===180
-    && Array.isArray(descriptor.currentSourcePins) && descriptor.currentSourcePins.some(p=>p.path===native35Contract.entry), 'NATIVE35_COMPLETE_SOURCE_SET_REQUIRED');
+    && Array.isArray(descriptor.currentSourcePins) && native35Contract.boundaries.every(boundary=>descriptor.currentSourcePins.some(p=>p.path===boundary.entry)), 'NATIVE35_COMPLETE_SOURCE_SET_REQUIRED');
   for(const pin of descriptor.currentSourcePins){native35SourceName(pin.path);requireRelease(/^[a-f0-9]{64}$/.test(pin.sha256),'NATIVE35_SOURCE_PIN_REQUIRED');
     const fixture=native35Contract.fixturePins.find(p=>p.path===pin.path);if(fixture)requireRelease(fixture.sha256===pin.sha256,'NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED');}
   return {sourceSetSha256:descriptor.sourceSetSha256,pins:descriptor.currentSourcePins,referenceIndexSha256:sha256(await boundedFile(referenceDirectory,'INDEX.json'))};
@@ -327,12 +327,12 @@ async function verifyGraph(kind, component, context) {
         allowedSource(imported);
         requireRelease(Object.hasOwn(graph.inputs, item.path) || Object.keys(graph.inputs).some(candidate => graphPath(sourceRoot, component.workingDirectory, candidate) === imported), 'UNRESOLVED_GRAPH_INPUT');
       } else {
-        if(kind==='backend' && native35 && item.path===native35Contract.external)nativeInputCount++;
+        if(kind==='backend' && native35 && native35Contract.boundaries.some(row=>row.external===item.path))nativeInputCount++;
         requireRelease((kind==='frontend' && relative==='node_modules/jszip/dist/jszip.min.js' && item.external===true && item.kind==='import-statement' && item.path==='<runtime>')
         || (inlineDocumentCssSources.has(relative)
         && exactEmbeddedCssSvg(kind, relative, item, sourceBytes.get(relative)))
-        || (kind==='backend' && native35 && item.kind==='import-statement' && item.path===native35Contract.external
-          && ['apps/api/src/postgres-read-api.ts','adapters/postgres/src/runtime27-command-issuer.ts'].includes(relative))
+        || (kind==='backend' && native35 && item.kind==='import-statement'
+          && native35Contract.boundaries.some(row=>row.external===item.path && row.importers.includes(relative)))
         || (kind === 'backend' && (nodeBuiltins.has(item.path)
         || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path)))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
       }
@@ -371,12 +371,12 @@ async function verifyGraph(kind, component, context) {
   for (const [name, details] of outputs) {
     for (const item of details.imports) {
       requireRelease(item && typeof item.path === 'string', 'INVALID_OUTPUT_IMPORT');
-      if(item.external && kind==='backend' && native35 && item.path===native35Contract.external)nativeOutputCount++;
+      if(item.external && kind==='backend' && native35 && native35Contract.boundaries.some(row=>row.external===item.path))nativeOutputCount++;
       if (item.external) requireRelease((kind === 'frontend'
         && Object.entries(details.inputs).some(([input, contribution]) => Number.isSafeInteger(contribution?.bytesInOutput)
           && contribution.bytesInOutput > 0 && inlineDocumentCssSources.has(graphPath(sourceRoot, component.workingDirectory, input)))
         && exactEmbeddedCssSvg(kind, name, item, fileBytes.get(name)))
-        || (kind==='backend' && native35 && name===component.entryOutput && item.kind==='import-statement' && item.path===native35Contract.external)
+        || (kind==='backend' && native35 && name===component.entryOutput && item.kind==='import-statement' && native35Contract.boundaries.some(row=>row.external===item.path))
         || (kind === 'backend' && (nodeBuiltins.has(item.path)
         || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path)))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
       else {
