@@ -1174,3 +1174,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 主控实际核QB 0a6d6976，采用95aba3b0四叶组合源码及定向模型PASS，无阻断发现；D1已过证明/LOGIN范围不重验。普通账号实际PG及三组业务仍NOT_RUN，未以模型代替实测。
 - C唯一新增deploy/runtime/fresh35-ordinary-runtime-v1.json，SHA f23a49050542089cdbdef3de09ab8690e2f2eeb697e318be20477d297b9b1832：明确单池/认证/有限超时及六maintenance选择，build及password为null显式未就绪。固定Node24.21原解析器实际拒原模板、仅内存补准确形式后接受，退出0，无连接/进程。最终发行副本填真实最终源码SHA/buildId并纳deployment manifest，T45仅按原proposal与私有凭据接线，不制造自指源码或假口令。
 - 原D2源码已交还，接同包独立本机Linux x64 glibc锁依赖准备，保持原package/lock/依赖/全局配置不变、无安装脚本；Mac原生库不能代替Linux，真实加载待T45原目标。T45继续原main三处观察、实际普通UID子进程、单池容量事实及清理，不新建控制层、不重建成功镜像。PG/正式导入/线上尚未执行。
+
+
+### 7色引用与4库存格窄问题已由既有裁决和准确来源封闭
+- 实际pin核D3来源范围附录05eab0d4。7调拨行的原来源颜色字面＝当前快照＝当前SKU颜色FK字典名称7/7，当前映射缺陷0；不同的旧条码owner不强制并为同一身份，旧SKU/原码追溯保留，不新增扫码绑定。
+- 两个原1件空版型库存格已消费A版，旧B候选本是另一规格；皮带原10/5格准确定位与既有97+10+5=112批准及当前唯一112对应。4格已按旧有效裁决封闭，不重复询问，不改包/库存/身份，不重跑核账/预检。此前缺fit/色差一律待裁建议已被准确替代，旧附录保留。
+- source_truth_verified=false继续仅作程序范围标识，不自动扩大成重采全源前置；先前EOF/聚合/截止及分类证据复用。实际PG独立读回与普通业务仍未验证，T45原入口配置接线和D2既有Linux依赖闭包继续，未开新PG或生产动作。
