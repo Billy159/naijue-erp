@@ -76,6 +76,7 @@ export async function assertFresh35SyntheticBootstrapNetworkCurrent(target,sourc
  const t=describeFresh35CombinedTarget(target);if(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')return null;
  need(bootstrapNetworks.has(target),'BOOTSTRAP_NETWORK_REQUIRED');return loadFresh35SyntheticBootstrapNetwork(target,sourceSetSha256);
 }
+export const FRESH35_COMBINED_PHYSICAL_FAILURE_CODES=Object.freeze(['FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS',...['DATABASE', 'CURRENT_ACTOR', 'SESSION_ACTOR', 'DATABASE_OID', 'SYSTEM_IDENTIFIER', 'SERVER_VERSION', 'POSTMASTER_BIRTH', 'SERVER_ADDRESS', 'SERVER_PORT', 'LISTEN_ADDRESSES', 'BOOTSTRAP_SOCKET', 'REPLICATION_ROLE', 'RECOVERY', 'TRANSACTION_ISOLATION', 'TRANSACTION_READ_ONLY', 'WINDOW_START', 'WINDOW_END', 'DATABASE_OWNER', 'EXCLUSIVE_BACKENDS', 'DATABASE_SET', 'NAMESPACE_SET', 'ROLE_SET', 'EVENT_TRIGGER_SET', 'EXTENSION_SET', 'PREPARED_XACT_SET'].map(label=>'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_'+label)]);
 export function fresh35CombinedTargetGuard(target,{requireEmpty}={requireEmpty:false}){
  need(typeof requireEmpty==='boolean','EXPLICIT_EMPTY_TARGET_FLAG_REQUIRED');
  return targetGuard(target,{requireEmpty,runtime:false});
@@ -99,27 +100,46 @@ function targetGuard(target,{requireEmpty,runtime}){
  OR EXISTS(SELECT 1 FROM pg_catalog.pg_collation c JOIN pg_catalog.pg_namespace n ON n.oid=c.collnamespace WHERE n.nspname NOT IN('pg_catalog','information_schema','pg_toast'))
  OR EXISTS(SELECT 1 FROM pg_catalog.pg_default_acl)
  THEN RAISE EXCEPTION 'FRESH35_COMBINED_EMPTY_DATABASE_REQUIRED' USING ERRCODE='55000'; END IF;`:'';
+ const physicalPredicates=[
+  ['DATABASE',`current_database()=${q(p.database)}`],
+  ['CURRENT_ACTOR',`current_user=${q(runtime?p.controller:p.owner)}`],
+  ['SESSION_ACTOR',`session_user=${q(runtime?p.controller:p.owner)}`],
+  ['DATABASE_OID',`(SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database())=${q(b.databaseOid)}`],
+  ['SYSTEM_IDENTIFIER',`(SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(b.systemIdentifier)}`],
+  ['SERVER_VERSION',`pg_catalog.current_setting('server_version_num')=${q(b.serverVersionNum)}`],
+  ['POSTMASTER_BIRTH',`pg_catalog.pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(b.postmasterStart.replace(/\+00$/,''))}`],
+  ['SERVER_ADDRESS',`pg_catalog.host(pg_catalog.inet_server_addr())=${q(p.host)}`],
+  ['SERVER_PORT',`pg_catalog.inet_server_port()=${p.port}`],
+  ...(production?[]:[['LISTEN_ADDRESSES',"pg_catalog.current_setting('listen_addresses')='127.0.0.1'"],['BOOTSTRAP_SOCKET',`${q(network.value.unixSocketDirectories)}='' /* root bootstrap network ${network.sha256} */`]]),
+  ['REPLICATION_ROLE',"pg_catalog.current_setting('session_replication_role')='origin'"],
+  ['RECOVERY','NOT pg_catalog.pg_is_in_recovery()'],
+  ['TRANSACTION_ISOLATION',`pg_catalog.current_setting('transaction_isolation')=${q(runtime?'repeatable read':'read committed')}`],
+  ['TRANSACTION_READ_ONLY',`pg_catalog.current_setting('transaction_read_only')=${q(runtime?'on':'off')}`],
+  ['WINDOW_START',`extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt}`],
+  ['WINDOW_END',`extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}`],
+  ['DATABASE_OWNER',`(SELECT pg_catalog.pg_get_userbyid(datdba) FROM pg_catalog.pg_database WHERE datname=current_database())=${q(p.owner)}`],
+  ['EXCLUSIVE_BACKENDS',"NOT EXISTS(SELECT 1 FROM pg_catalog.pg_stat_activity WHERE (backend_type='client backend' OR usename IS NOT NULL) AND pid<>pg_catalog.pg_backend_pid())"],
+  ['DATABASE_SET',`NOT EXISTS(SELECT 1 FROM pg_catalog.pg_database WHERE datname NOT IN('postgres','template0','template1',${q(p.database)}))`],
+  ['NAMESPACE_SET',"NOT EXISTS(SELECT 1 FROM pg_catalog.pg_namespace WHERE nspname NOT IN('public','pg_catalog','information_schema','pg_toast','naijue_erp'))"],
+  ['ROLE_SET',`NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE left(rolname,3)<>'pg_' AND rolname NOT IN(${roles.map(q).join(',')}))`],
+  ['EVENT_TRIGGER_SET','NOT EXISTS(SELECT 1 FROM pg_catalog.pg_event_trigger)'],
+  ['EXTENSION_SET',"NOT EXISTS(SELECT 1 FROM pg_catalog.pg_extension WHERE extname<>'plpgsql')"],
+  ['PREPARED_XACT_SET','NOT EXISTS(SELECT 1 FROM pg_catalog.pg_prepared_xacts)'],
+ ];
  return `DO $fresh35_combined_target$
+DECLARE
+ physical_checks boolean[];
+ physical_failure_codes CONSTANT text[] := ARRAY[${physicalPredicates.map(([label])=>q('FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_'+label)).join(',')}];
+ physical_index integer;
 BEGIN
- IF (current_database()=${q(p.database)} AND current_user=${q(runtime?p.controller:p.owner)} AND session_user=${q(runtime?p.controller:p.owner)}
- AND (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database())=${q(b.databaseOid)}
- AND (SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(b.systemIdentifier)}
- AND pg_catalog.current_setting('server_version_num')=${q(b.serverVersionNum)}
- AND pg_catalog.pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(b.postmasterStart.replace(/\+00$/,''))}
- AND pg_catalog.host(pg_catalog.inet_server_addr())=${q(p.host)} AND pg_catalog.inet_server_port()=${p.port}
- ${production?'':`AND pg_catalog.current_setting('listen_addresses')='127.0.0.1' AND ${q(network.value.unixSocketDirectories)}='' /* root bootstrap network ${network.sha256} */`}
- AND pg_catalog.current_setting('session_replication_role')='origin' AND NOT pg_catalog.pg_is_in_recovery()
- AND pg_catalog.current_setting('transaction_isolation')=${q(runtime?'repeatable read':'read committed')} AND pg_catalog.current_setting('transaction_read_only')=${q(runtime?'on':'off')}
- AND extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt} AND extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}
- AND (SELECT pg_catalog.pg_get_userbyid(datdba) FROM pg_catalog.pg_database WHERE datname=current_database())=${q(p.owner)}
- AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_stat_activity WHERE (backend_type='client backend' OR usename IS NOT NULL) AND pid<>pg_catalog.pg_backend_pid())
- AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_database WHERE datname NOT IN('postgres','template0','template1',${q(p.database)}))
- AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_namespace WHERE nspname NOT IN('public','pg_catalog','information_schema','pg_toast','naijue_erp'))
- AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE left(rolname,3)<>'pg_' AND rolname NOT IN(${roles.map(q).join(',')}))
- AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_event_trigger)
- AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_extension WHERE extname<>'plpgsql')
- AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_prepared_xacts)) IS DISTINCT FROM true
- THEN RAISE EXCEPTION 'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS' USING ERRCODE='55000'; END IF;
+ physical_checks := ARRAY[${physicalPredicates.map(([,expression])=>'('+expression+')').join(',\n ')}];
+ IF (true = ALL(physical_checks)) IS DISTINCT FROM true THEN
+  FOR physical_index IN 1..array_length(physical_checks,1) LOOP
+   IF physical_checks[physical_index] IS DISTINCT FROM true THEN
+    RAISE EXCEPTION '%',physical_failure_codes[physical_index] USING ERRCODE='55000';
+   END IF;
+  END LOOP;
+ END IF;
  IF NOT EXISTS(SELECT 1 FROM pg_catalog.pg_namespace n WHERE n.nspname='public' AND n.nspowner='pg_database_owner'::regrole::oid
   AND (SELECT array_agg(a::text ORDER BY a::text COLLATE "C") FROM unnest(n.nspacl) a)=ARRAY['=U/pg_database_owner','pg_database_owner=UC/pg_database_owner'])
  OR EXISTS(SELECT 1 FROM pg_catalog.pg_class WHERE relnamespace='public'::regnamespace)
