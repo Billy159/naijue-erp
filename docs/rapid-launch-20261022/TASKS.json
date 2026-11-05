@@ -22204,7 +22204,7 @@
       "latestDotRemoteDelivery": "Not independently confirmed; exact branch lookup returned no remote ref at last check, no push of Dot source claimed"
     },
     "owners": {
-      "Dot": "Sole app/schema/install/import owner;new22:06 WIP snapshot received; six-scheme successor and formal receiver/integration proofs pending.",
+      "Dot": "0448Z fourcontract stage received; exactlocalreceiver review active; no PG/combinedinstall acceptance",
       "D3": "D3-40 fixed26tablecandidate,index83; allcurrentapprovedlocalconsumers delivered",
       "C": "Existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP records and intake receipt only",
       "D1": "D1-20 delivered:83399lines, exact1SKU changed, no nullSKU, otherfields unchanged",
@@ -22225,7 +22225,7 @@
     "cutoffAuthority": "Already human-confirmed; do not ask again",
     "physicalSnapshotAndDocumentAlignment": "NOT_VERIFIED",
     "trueBlankFitARule": "Historical true-blank sales/transfer A rule plus direct human call_88267c72a7204d02940b136fb5218b16 item0 authorizing stock true blanks and exact normal-A alias; preserve all raw values/provenance, no unobserved SKU or barcode.",
-    "current": "INDEX83_D340_FIXED26TABLE_STANDARD_CANDIDATE_LOCAL_CONSUMPTION_COMPLETE_NOT_IMPORT_READY",
+    "current": "0448Z_CONTRACT_STAGE_RECEIVED_D122_D341_TARGETED_ADAPTATION_DELIVERED_NOT_FULL_IMPORT_READY",
     "next": [
       "Adopt Dot exact receiver/count changes and samecutoff sourcefact when delivered",
       "Re-run only changed/previousfailed standardpackage checks once legalinputs/codeexist, then separately approved isolatedPG",
@@ -24721,14 +24721,12 @@
     }
   },
   "currentWaitingConditions": [
-    "D3-40 fixed26tablemanifest fee27bf4...; 19B plus D1 exact1salesSKU and approved stock aggregates consumed; all42227stockcells/net80717,zero105493. No local identity/stock decision remains for these completed items.",
-    "Historicalhall userdirection and exact28894sourcewarehouse-currenthall mapping resolved byD1-21; formal derived-marker/originalfact/provenance receiving/readback remains Dot-owned; currentD340 untouched.",
-    "Dot:6original price/amount differences retained; bounded history receiver needed, no global tolerance/altered values.",
-    "Source factual question:oldT+ stopwrite and crossfile samecutoffstate unanswered; actualexported_at and independentCURRENT_EFFECTIVE alignment unknown.12:00cutoff approval is notexporttime.",
-    "Dot:8table countunit/expression gaps for approved many-to-one/zero settlements/historyhallrelations/approvedzerostock; unchanged18scopes reused; no complete reconciliation.",
-    "Latest fullbuild/typecheck/trustedinstallation/launcher/SQL/fullisolatedPG import-independentreadback-dedup-recovery-ordinarybusinesschain unverified; no production/server/SQL actions.",
-    "Current identified authorized season/image inputs0only, unknown assignments retained; oldmedia not defaultimported.",
-    "Local coordinationcheckpoint pending boundedpush;4original sourceWIP preserved; lastverifiedremote196f4c9... no remote-successclaim."
+    "0448Z ledger entiretarget max250000 vs actual608916,transfer273948 alone; Dot boundedexactcapacity/semantics successor needed,no truncation/customsplit.",
+    "Historicalhall D1-21 all28894candidate relations closed;0448Z formal evidence lacks exactrelationversion/capture/identitybridge; priorname-state observation cannot substitute. No newserverjob.",
+    "6money evidence newformat6/6 structuralpass,offlineonly; actualSQL/import/save/review/readback stillnotaccepted; preserve originalfacts.",
+    "exported_at null nowexpressible; independent fixed5documentset/cutoffalignment factual review stillmissing; original stopwrite/samecutoffquestion pending.",
+    "35table base-hall-amount combinedinstall/issuer/host/roles/fullPGimport-independentreadback-dedup-recovery-businesschain/safety unverified; no production.",
+    "D340 fixedmanifest unchanged;D121andD122privatecandidates retained;real data notuploaded;4originalsourceWIP preserved."
   ],
   "salesStaffMapping": {
     "status": "INDEX22_DRAFT_IDENTITY_REFERENCES_NOT_COMPLETE_STANDARD_STAFF",
@@ -25934,8 +25932,8 @@
   },
   "currentCleaningOwnerQueue20261104": {
     "D3": {
-      "current": "D3-40 fixed26tablecandidate,index83; allcurrentapprovedlocalconsumers delivered",
-      "next": "Wait precise Dot receiver/count source successor or original source cutofffact; no repeatedpreflight/scan without newinput",
+      "current": "D3-41 actual608916targetrows and273948transferline exceed250000;alignment factgap delivered",
+      "next": "Dot exact capacity successor and actualindependentalignment evidence; no giantledger/preflight",
       "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
@@ -25943,11 +25941,11 @@
       "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v4-standard-core-D3-07 plus sole central index/final manifest",
       "task": "D3-38-historical-b19-and-fixed-successor",
       "dispatchAccepted": true,
-      "status": "DELIVERED_WAITING_EXTERNAL_INPUT"
+      "status": "DELIVERED_WAITING_EXACT_NEW_INPUT"
     },
     "D1": {
-      "current": "D1-21 all28894warehouse-currenthall derivation candidates and original-basis sidecar delivered",
-      "next": "Wait Dot accurate derivedprovenance receiving; no repeated28894scan",
+      "current": "D1-22 sixamount evidence6/6 structureverified; hallcapturedrelation/version/time precisefactgap delivered",
+      "next": "Actual accuratewarehouseobservation or Dot receiver/provenance clarification, no fabricatedcapture",
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
@@ -25977,14 +25975,14 @@
     },
     "sourceAcceptance": {
       "threadId": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
-      "current": "0236Z exactreceiver review delivered;4existing blocker seams remain",
+      "current": "0448Z exact4interfaces delivered/read-only",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-      "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-source-0236Z-received-20261105-01/ERP-STAGE-SOURCE-20261105-0236Z/owner-review",
+      "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-contract-0448Z-received-20261105-01/owner-review",
       "sourceReadOnly": true,
-      "next": "Wait Dot exactreceiver successor or realindependentcutoffsource evidence; no repeated whole review",
-      "status": "DELIVERED_WAITING_EXACT_NEW_INPUT",
+      "next": "Wait exactnew source/failedconsumer only; no repeated review",
+      "status": "DELIVERED",
       "turnId": "01a1a728-0c3d-7690-9f54-d6ecae922e7f"
     }
   },
@@ -27529,7 +27527,7 @@
   },
   "currentDotReceiverDelta20261105": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/CONTROLLER-DOT-RECEIVER-DELTA.zh-CN.md",
-    "sha256": "a6872033f1d4a0e73575786828ca3612d6e010d236d01538bdb9e1dca7141e02",
+    "sha256": "a28bd8855e119c03b83ceaea3b4dd974c6ffbc710fe7f8c6d8d1c2dfcff05cda",
     "containsPrivateBusinessRows": false,
     "supersedesOldV4MissingGeneratorAndZeroSourceClaims": true
   },
@@ -28016,5 +28014,113 @@
     "changedField": "hall_id only; all other fields preserved",
     "runtimeDerivedProvenance": "NOT_WIRED_IN_0236Z;private sidecar not runtimeproof",
     "fixedD340Changed": false
+  },
+  "latestReceivedContractStage0448Z": {
+    "parts": [
+      {
+        "path": "/Users/billy/Downloads/ERP-CONTRACT-STAGE-SOURCE-20261105-0448Z.zip .part01",
+        "bytes": 12582912,
+        "sha256": "119357bf27a278d3a40883db2114f744d99e645c0805403b001a254e0c86aed9"
+      },
+      {
+        "path": "/Users/billy/Downloads/ERP-CONTRACT-STAGE-SOURCE-20261105-0448Z.zip.part02",
+        "bytes": 10339614,
+        "sha256": "e44fb09e13d8e4dfb93ca6dc8a164620e359205c60952b57955f0560fe26db0c"
+      }
+    ],
+    "part01FilenameSpacePreserved": true,
+    "zip": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-contract-0448Z-received-20261105-01/ERP-CONTRACT-STAGE-SOURCE-20261105-0448Z.zip",
+    "zipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
+    "zipBytes": 22922526,
+    "expectedZIPMatched": true,
+    "CRC": "PASS",
+    "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-contract-0448Z-received-20261105-01/extracted/ERP-CONTRACT-STAGE-SOURCE-20261105-0448Z",
+    "sourceOverwritten": false,
+    "scriptsExecuted": false,
+    "databaseExecuted": false,
+    "packageHashEntries": 6014,
+    "sourceEntries": 5892,
+    "sourceManifestSHA256": "d76ac2efa30c8d2bd1311958d05290ccd406eacb746e753db421bcc5f73da75d",
+    "fileIntegrity": "PASS",
+    "baseline": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
+    "workingTree": "UNCOMMITTED_WIP_DERIVED_FROM_0236Z",
+    "modelReview": {
+      "ownerThread": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
+      "model": "gpt-6.1-terra",
+      "thinking": "medium",
+      "scope": "Exact4localdatareceivers only"
+    },
+    "reportedVerification": {
+      "node": "24.21.0",
+      "npm": "11.9.0 corrected reruns09-12",
+      "syntheticTests": 428,
+      "groups": [
+        96,
+        46,
+        286
+      ],
+      "typechecks": "Reportedpass;hashedlogsverified,notrerunlocally",
+      "cleanInstall": false,
+      "PG": false,
+      "sourceReviewUnknownWarehouse": "Not final reviewed/installed/combined; not required by currentD1-21 knownwarehouse candidates"
+    },
+    "preserved": [
+      "Originalparts and instructions",
+      "0236Z and v5",
+      "Current4sourceWIP",
+      "D340fixeddata",
+      "D1-21derivedcandidate"
+    ],
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-contract-0448Z-received-20261105-01/INTAKE-RECEIPT.json",
+    "receiptSHA256": "949bc1fa8211a6eb7fc39b9b4d972f09665b5e38697d3200f2967a4e0c3b657d",
+    "status": "INTEGRITY_REVIEW_AND_TARGETED_LOCAL_CONSUMERS_DELIVERED_NOT_INSTALL_OR_IMPORT",
+    "review": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-contract-0448Z-received-20261105-01/owner-review/0448Z-CONSUMER-CONTRACT-01.md",
+      "sha256": "8fc0176d1e35ac61fe6184d51694354b19aa938d630b84ef55f98c3445f867bb"
+    },
+    "actualInterfaces": {
+      "hall": "HISTORICAL_SALES_HALL_EVIDENCE_V1 + external HISTORICAL_SALES_HALL_APPROVAL_V1; actualversion/capture facts required",
+      "amount": "HISTORICAL_LINE_AMOUNT_EVIDENCE_V1;OFFLINE_ARCHIVE_ONLY;stream execution still HISTORICAL_LINE_AMOUNT_OFFLINE_ONLY",
+      "counts": "SOURCE_OCCURRENCE_LEDGER_V1;250000 occurrence/mapping,64MiB limits; actualscope capacity pending",
+      "time": "CURRENT_EFFECTIVE_ALIGNMENT_V1 external independent factual review;exported_at null;not selfapproval"
+    },
+    "lockSHA256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+  },
+  "contract0448ZActualScopeD341": {
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v5-0448z-consumer-scope-D3-41/RESULT.json",
+    "sha256": "74938dcfdbf0e3d17004c92fbafa8083c2b5088d2f6bf7242fcb1bbeac726280",
+    "actualTargetRows": 608916,
+    "targetRowsExcludingApprovedZero": 503423,
+    "transferLineRows": 273948,
+    "maximumTargetRows": 250000,
+    "maximumOccurrencesAndMappings": 250000,
+    "maximumBytes": 67108864,
+    "bytesActuallyMeasured": false,
+    "legalPerTableOrWorkPackageSplitFound": false,
+    "standardPackageMutated": false,
+    "conclusion": "Actualbatch cannotfit currentmanifest-wide ledgercontract; no truncation/collapse/customsplit",
+    "alignment": "Null exported_at nowexpressible but independent factual reviewed_by/review_reference/alignment_basis absent in examined inputs; no selfsignature"
+  },
+  "contract0448ZD122": {
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/document-external-evidence-D1-22/RESULT.json",
+    "sha256": "92142a6a85217aa32e92b1d763b8a982f6d5da6ccab914e503af4c0a3d95687a",
+    "moneyEvidence": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/document-external-evidence-D1-22/historical-line-amount-evidence.candidate.json",
+      "sha256": "9c6ecc42717a8baf953190217d5fc8b82712233cf11b6cac7f619e8130e7a4e7",
+      "bytes": 8408,
+      "rows": 6,
+      "sourceReaderCheck": "6/6 byoriginalD1 Node24.21.0",
+      "independentControllerPin": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-contract-0448Z-received-20261105-01/CONTROLLER-AMOUNT-EVIDENCE-PIN.json",
+      "pinSHA256": "90328f33305552e2b9c624570c5d8a32a4f47fec23efad7a183070338bd94174",
+      "scope": "OFFLINE_ARCHIVE_ONLY",
+      "PG": false
+    },
+    "hallEvidence": {
+      "derivedCandidateRows": 28894,
+      "formalEvidenceRows": 0,
+      "missing": "Exact warehousecurrenthall captured together with warehouseversion/observedtime/sourceidentitybridge; priorname/state observation didnotqueryrelation",
+      "requiresNewReadNow": false
+    },
+    "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   }
 }
