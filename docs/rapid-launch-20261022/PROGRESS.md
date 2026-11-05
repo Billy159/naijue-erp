@@ -1325,3 +1325,7 @@ None返回修订独立QB9117ca04通过（保留真实guard体，4组必要复验
 
 
 - T45本次停止日志只读c55fa7e2/日记fa9404d7已核，初始04:27:31.128+08明确PHYSICAL_TARGET_DIFFERS（不是EMPTY）；原日志不含布尔分量，故具体根因仍UNKNOWN。D1只读证实正常安装前调用顺序不刻意保留并行client，但无服务端会话消失事实；不据此猜并发根因。C按今日委托批准同原源两项合批最小后继：原guard有限静态分量诊断贯通既有安全字段、原native错误后只等待有界真实Ready再原rollback，所有target/ACL/排他/窗口检查保留，失败未知仍拒绝。原r3停止保留，未重启或重放；后继固定源码/必要独立复验/一次新候选后再真实执行。
+
+
+### 2026-11-06 04:50｜两项最小源后继已固定
+D1回执7c1e70ef四叶逐文件SHA已核；native错误后真实Ready有界排空再原ROLLBACK（最多5秒且原deadline-45秒，超时/断线/错事务仍拒绝），原physical条件synthetic25/production23逐atom一次求值、false/null仍拒绝，首失败有限静态tag经原12字段originalInternalCode安全带回。13项作者受影响检查/types/build通过，仅源码/原生handler无网络模型。初始PHYSICAL实际分量仍未知、旧r3回滚结果不变。C一次冻结四叶给原QB窄验并让D2平行准备新固定载体；实际PG必须新目标/窗，不重放旧r3。D3同时只做已固定真实r3数据字节包装，绝不重洗或业务重算。

@@ -28462,33 +28462,36 @@
     },
     "transportPreparation": {
       "owner": "T45",
-      "state": "QB_PASS_FIXED_TWO_FILE_SOURCE_AND_LOCAL_MODEL_ONLY_NO_TRANSFER",
+      "state": "ORIGINAL_TYPED_ARTIFACT_ACTUAL_UID_TRANSFER_AND_COMPLETE_READY_PASS_NOT_REAL_DATA_TRANSPORT",
       "inventoryFiles": 3714,
       "inventoryBytes": 193060274,
       "runLimitsUnchanged": "128 flat text files,4MiB/file,32MiB/total",
       "noWorkaround": true,
       "sourceProposal": "Original ssh-control.py one typed artifact staging action; exact source/archive/bytes/path external authority, separate ready receipt; no extraction or root trust",
-      "actualTransfer": false,
-      "next": "Exact compatible target/archive/external authority binding; Linux transfer and throughput untested",
+      "actualTransfer": true,
+      "next": "Exact next source prefix/tail original receiver method, or separate REAL private data closure when ready; no old-key replay.",
       "commit": "5b26eea5260f4804c84843ad2e1369c457375026",
       "checks": "18 offline PASS; no server or upload;40s unchanged",
-      "reviewSHA256": "9bfe70be86da1fd138f6ec8c370088bb43885da3b7e98b0c85d161e2b1b49845"
+      "reviewSHA256": "9bfe70be86da1fd138f6ec8c370088bb43885da3b7e98b0c85d161e2b1b49845",
+      "historicalPreparationState": "QB_PASS_FIXED_TWO_FILE_SOURCE_AND_LOCAL_MODEL_ONLY_NO_TRANSFER",
+      "currentReceiptSHA256": "e4a63231c60928b41124ca1dcfa55f2f18896c0a7e15edd369f4dcf5af7f9c71"
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "critical": "T45 original sole executor exact877a/r3 stage/materialize; next newPG20 after actual readiness. QB only actual run evidence when ready, D2 full carrier complete, D1/D3 wait actual dependent work, no filler.",
+      "critical": "D1 correlated minimal physical-guard diagnosis/native-ready rollback source pack; QB scoped delta when stable; C fixed successor then D2 build; T45 original stopped r3 waits exact new source/window, no replay.",
       "independentPreparation": {
         "D2": "REAL/app config/release seams: actual helper/profile mismatch identified, T45 unique owner follows; no fake production config",
-        "D3": "Independent actual post-import expected inputs ready08404372; no missing cleaning fields, no source rescan; awaits real target/plan/result"
+        "D3": "Original r3 byte transport preparation only: reuse existing archive or stream-wrap exact manifest+31 members privately; no source rescan or business recomputation; still waits actual REAL target/results for independent readback."
       },
       "noFiller": true
     },
     "actualExecution": {
-      "newClusterCreated": false,
+      "newClusterCreated": true,
       "newDatabaseInstalled": false,
       "realDataImported": false,
       "artifactTransferred": true,
-      "productionChanged": false
+      "productionChanged": false,
+      "newClusterScope": "Only original synthetic r1/r2/r3; all stopped with preserved failure scenes, not a production database."
     },
     "privateReadyRows": {
       "owner": "D3",
@@ -29613,7 +29616,7 @@
         "owner": "D1",
         "model": "gpt-6.1-sol",
         "thinking": "high",
-        "state": "IMPLEMENTING_TWO_CORRELATED_MINIMAL_SOURCE_DELTAS",
+        "state": "FOUR_LEAVES_FIXED_AUTHOR13_AFFECTED_SOURCE_MODEL_CASES_PASS_NOT_PG",
         "scope": [
           "Original physical guard finite static failed-component diagnosis; same predicates and55000 refusal, safe originalInternalCode path",
           "Original same native client bounded actual ReadyForQuery drain after SQL failure, then unchanged rollback protocol guard; close/error/deadline fail closed"
@@ -29625,7 +29628,33 @@
           "No fake native ready flags or replacement connection"
         ],
         "actualPhysicalSubpredicate": "UNKNOWN_NOT_LOGGED",
-        "controllerAuthority": "Direct human decision delegation until2026-11-06T12:00+08"
+        "controllerAuthority": "Direct human decision delegation until2026-11-06T12:00+08",
+        "receiptSHA256": "7c1e70eff9a6c4bc32ac82e6cece3ebfe8ab3fdba0a338850af0870f180a3e2a",
+        "files": [
+          {
+            "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+            "bytes": 21957,
+            "sha256": "7b4f48001367c65fcb717009a4b00d803ba855e4bea91b03339ac75c712feff9"
+          },
+          {
+            "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+            "bytes": 22693,
+            "sha256": "ea5ffe9bc2ac665ab0e48723d18126ba3e33bb45729a23a7cb9eff7f8511eb43"
+          },
+          {
+            "path": "tests/fresh35-combined-lifecycle.test.mjs",
+            "bytes": 17806,
+            "sha256": "c02b086a53af242a4fa010ec258bbab5d04997f6871d23634ac49bfdf68e84d7"
+          },
+          {
+            "path": "tests/fresh35-combined-target.test.mjs",
+            "bytes": 21819,
+            "sha256": "7d0f550f80e4f745836dac0a109f0fd8a1eb39677512cf2965d3f7d6c0ac5c97"
+          }
+        ],
+        "authorUniqueChecks": 13,
+        "typesExit": 0,
+        "buildExit": 0
       }
     },
     "productionReleaseCompatibilityContinuation": {

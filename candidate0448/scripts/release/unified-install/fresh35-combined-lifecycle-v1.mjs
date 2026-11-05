@@ -8,7 +8,7 @@ import {randomBytes} from 'node:crypto';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
 import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
 import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,renderFresh35CombinedSchema,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
-import {describeFresh35CombinedTarget,assertFresh35InstallationTargetCurrent,fresh35CombinedTargetGuard,FRESH35_COMBINED_TARGET_MODULE_SHA256} from './fresh35-combined-target-v1.mjs';
+import {describeFresh35CombinedTarget,assertFresh35InstallationTargetCurrent,fresh35CombinedTargetGuard,FRESH35_COMBINED_TARGET_MODULE_SHA256,FRESH35_COMBINED_PHYSICAL_FAILURE_CODES} from './fresh35-combined-target-v1.mjs';
 const programs=new WeakMap(),approvals=new WeakMap(),completions=new WeakMap(),used=new WeakSet();
 const failureDiagnostics=new WeakMap(),internalFailureCodes=new WeakMap();
 const need=(ok,code)=>{if(!ok){const publicCode='FRESH35_COMBINED_'+code,error=Error(publicCode);if(/^[A-Z][A-Z0-9_]{0,80}$/.test(publicCode))internalFailureCodes.set(error,publicCode);throw error}};
@@ -73,6 +73,22 @@ function protocol(client,idle=false){
  const value=k=>{const d=Object.getOwnPropertyDescriptor(client,k);need(d&&Object.hasOwn(d,'value'),'NATIVE_PROTOCOL_DATA_REQUIRED');return d.value};
  need(value('pipeline')===false&&value('readyForQuery')===true&&!value('_activeQuery')&&Array.isArray(value('_queryQueue'))&&value('_queryQueue').length===0&&Array.isArray(value('_sentQueryQueue'))&&value('_sentQueryQueue').length===0&&value('_queryable')===true&&value('_ending')===false&&value('_ended')===false&&(!idle||value('_txStatus')==='I'),'EXCLUSIVE_IDLE_NATIVE_CLIENT_REQUIRED');
 }
+/** Wait only for the same native connection's real ReadyForQuery after a
+ * server ErrorResponse. Never changes driver state or submits/replays SQL. */
+async function waitNativeRollbackReady(client,deadline){
+ const remaining=()=>{const ms=deadline-Date.now();need(Number.isSafeInteger(deadline)&&ms>0,'ROLLBACK_READY_TIMEOUT');return ms};
+ const check=()=>{remaining();protocol(client);need(['T','E'].includes(Object.getOwnPropertyDescriptor(client,'_txStatus')?.value),'ROLLBACK_TRANSACTION_STATE_REQUIRED')};
+ remaining();need(client._queryable===true&&client._ending===false&&client._ended===false,'ROLLBACK_READY_CONNECTION_LOST');
+ if(client.readyForQuery===true){check();return;}
+ await new Promise((resolve,reject)=>{
+  const connection=client.connection;let timer,done=false;
+  const finish=error=>{if(done)return;done=true;clearTimeout(timer);connection.removeListener('readyForQuery',ready);for(const emitter of [client,connection]){emitter.removeListener('end',lost);emitter.removeListener('error',lost)}error?reject(error):resolve()};
+  const lost=()=>{try{need(false,'ROLLBACK_READY_CONNECTION_LOST')}catch(error){finish(error)}};
+  const ready=message=>{try{check();need(message?.status===client._txStatus,'ROLLBACK_TRANSACTION_STATE_REQUIRED');finish()}catch(error){finish(error)}};
+  connection.on('readyForQuery',ready);for(const emitter of [client,connection]){emitter.on('end',lost);emitter.on('error',lost)}
+  try{timer=setTimeout(()=>{try{need(false,'ROLLBACK_READY_TIMEOUT')}catch(error){finish(error)}},remaining())}catch(error){finish(error)}
+ });
+}
 export function validateFresh35CombinedJournalPath(target,directory){
  const t=describeFresh35CombinedTarget(target);need(typeof directory==='string'&&directory===join(t.proposal.workspaceDirectory,'installation-journal'),'JOURNAL_MUST_MATCH_AUTHORIZED_TARGET_WORKSPACE');return directory;
 }
@@ -116,13 +132,13 @@ export async function runFresh35CombinedInstall({program,authorization,client,jo
  need(authorizationState?.program===program&&!used.has(authorization),'GENUINE_UNUSED_TRUSTED_AUTHORIZATION_REQUIRED');
  assertFresh35InstallationTargetCurrent(p.target);
  need(process.version==='v24.21.0'&&!Object.keys(process.env).some(k=>k==='DATABASE_URL'||k.startsWith('PG')||k==='NODE_OPTIONS'||k==='NODE_PATH'||k.startsWith('LD_')||k.startsWith('DYLD_')),'PINNED_CLEAN_RUNTIME_REQUIRED');
- const {Client}=await import('pg'),pgPackage=await import('pg/package.json',{with:{type:'json'}});need(pgPackage.default.version==='8.23.1','PINNED_NATIVE_PG_REQUIRED');need(client instanceof Client&&Object.getPrototypeOf(client)===Client.prototype&&client.query===Client.prototype.query&&client._connected===true,'ORIGINAL_CONNECTED_NATIVE_PG_CLIENT_REQUIRED');
+ const {Client,DatabaseError}=await import('pg'),pgPackage=await import('pg/package.json',{with:{type:'json'}});need(pgPackage.default.version==='8.23.1','PINNED_NATIVE_PG_REQUIRED');need(client instanceof Client&&Object.getPrototypeOf(client)===Client.prototype&&client.query===Client.prototype.query&&client._connected===true,'ORIGINAL_CONNECTED_NATIVE_PG_CLIENT_REQUIRED');
  protocol(client,true);const c=client.connectionParameters;
  need(c.host===t.proposal.host&&Number(c.port)===t.proposal.port&&c.database===t.proposal.database&&c.user===t.proposal.owner&&!c.ssl,'NATIVE_CONNECTION_TARGET_DIFFERS');
- used.add(authorization);let emit,quarantined=false,primary,result,closed=false,failureState,primaryDiagnostic;
+ used.add(authorization);let emit,quarantined=false,primary,result,closed=false,failureState,primaryDiagnostic,serverErrorPendingReady=false;
  const originalQuery=Client.prototype.query,originalEnd=Client.prototype.end;
  const remaining=()=>{const now=Date.now();need(now>=t.startsAt&&now<t.expiresAt-45000,'INSTALL_WINDOW_OR_CLEANUP_RESERVE_EXPIRED');return Math.min(45000,t.expiresAt-45000-now)};
- const query=async(sql,cleanup=false)=>{need(!quarantined,'NO_SEND_AFTER_UNKNOWN_COMMIT');protocol(client);try{return await Reflect.apply(originalQuery,client,[{text:sql,query_timeout:cleanup?5000:remaining()}])}catch(e){if(e?.message==='Query read timeout')client.connection?.stream?.destroy();throw e}};
+ const query=async(sql,cleanup=false)=>{need(!quarantined,'NO_SEND_AFTER_UNKNOWN_COMMIT');protocol(client);serverErrorPendingReady=false;try{return await Reflect.apply(originalQuery,client,[{text:sql,query_timeout:cleanup?5000:remaining()}])}catch(e){serverErrorPendingReady=e instanceof DatabaseError;if(serverErrorPendingReady&&e.code==='55000'){const message=Object.getOwnPropertyDescriptor(e,'message')?.value;if(FRESH35_COMBINED_PHYSICAL_FAILURE_CODES.includes(message))internalFailureCodes.set(e,message)}if(e?.message==='Query read timeout')client.connection?.stream?.destroy();throw e}};
  try{
   emit=await journalAt(journalDirectory,fresh35CombinedSourceData(p.source).root,p.target);
   await emit({state:'BOUND',program:descriptor,authorizationSha256:authorizationState.sha256});
@@ -143,7 +159,7 @@ export async function runFresh35CombinedInstall({program,authorization,client,jo
     await emit.assertCurrent();const file=await open(join(journalDirectory,'catalog-canonical.json'),constants.O_CREAT|constants.O_EXCL|constants.O_WRONLY|constants.O_NOFOLLOW,0o400);try{await file.writeFile(raw);await file.sync()}finally{await file.close()}
     await emit({state:'PRECOMMIT_CATALOG_CHECKED',sha256:hash(raw),receipt});return {raw,sha256:hash(raw),receipt};
    },
-   commit:async()=>{const result=await query('COMMIT');protocol(client,true);return result},rollback:async()=>{const result=await query('ROLLBACK',true);protocol(client,true);return result},quarantine:()=>{quarantined=true},
+   commit:async()=>{const result=await query('COMMIT');protocol(client,true);return result},rollback:async()=>{if(serverErrorPendingReady){await waitNativeRollbackReady(client,Math.min(Date.now()+5000,t.expiresAt-45000));remaining()}const result=await query('ROLLBACK',true);protocol(client,true);return result},quarantine:()=>{quarantined=true},
   });
  }catch(error){primary=error;failureState=error.installState;primaryDiagnostic=failureDiagnostics.get(error)??installationFailure('BOUND',null,error,null)}
  finally{

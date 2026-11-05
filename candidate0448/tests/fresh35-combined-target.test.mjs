@@ -33,7 +33,7 @@ test('journal path cannot write outside the target workspace already bound into 
 
 test('controller inspection has its own read-only repeatable snapshot and keeps all physical and ACL checks',async()=>{
  const m=await bootstrapNetworkModel();try{await m.write(m.value);await m.api.loadFresh35SyntheticBootstrapNetwork(m.target,m.sourceSetSha256);const target=m.target,runtime=m.api.fresh35CombinedRuntimeTargetGuard(target),install=m.api.fresh35CombinedTargetGuard(target,{requireEmpty:false});
- assert.match(runtime,/current_user='fresh35_controller_20261106_r9' AND session_user='fresh35_controller_20261106_r9'/);
+ assert.match(runtime,/current_user='fresh35_controller_20261106_r9'/);assert.match(runtime,/session_user='fresh35_controller_20261106_r9'/);
  assert.match(runtime,/transaction_isolation'\)='repeatable read'/);
  assert.match(runtime,/transaction_read_only'\)='on'/);
  assert.match(install,/current_user='fresh35_owner_20261106_r9'/);
@@ -110,5 +110,46 @@ test('bootstrap network observation is consumed by original catalog/program func
   const actual=await import('../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs');assert.throws(()=>actual.describeFresh35CombinedProgram(program),/GENUINE_PROGRAM/);
   await m.fs.writeFile(m.path+'.new',JSON.stringify(m.value)+'\n',{mode:0o444});await m.fs.rename(m.path+'.new',m.path);
   await assert.rejects(()=>catalogAPI.assertFresh35CombinedCatalogCurrent(catalog),/FILE_CHANGED/);await assert.rejects(()=>lifecycleAPI.compileFresh35CombinedProgram({source,target:m.target,catalog}),/FILE_CHANGED/);
+ }finally{await m.close()}
+});
+
+test('physical predicate diagnostic preserves every original synthetic/production condition exactly once and uses only finite static tags',async()=>{
+ const m=await bootstrapNetworkModel();
+ const split=(text,separator)=>{const parts=[];let depth=0,quoted=false,start=0;for(let i=0;i<text.length;i++){const c=text[i];if(c==="'"){if(quoted&&text[i+1]==="'"){i++;continue}quoted=!quoted;continue}if(quoted)continue;if(c==='(')depth++;else if(c===')')depth--;if(depth===0&&text.startsWith(separator,i)){parts.push(text.slice(start,i));i+=separator.length-1;start=i+1}}parts.push(text.slice(start));return parts.map(s=>s.trim())};
+ try{
+  await m.write(m.value);
+  for(const production of [false,true]){
+   const arg=production?{...m.arg,purpose:'PRODUCTION_NEW_EMPTY_EXACT35',proposal:{...m.arg.proposal,database:'new_diag_erp',owner:'diag_owner',controller:'diag_controller',runtime:'diag_runtime',admin:'diag_admin'},ordinary:{connectHost:'postgres',connectPort:5432,serverAddress:'10.0.0.1',serverPort:5432,runtimeLoginValidUntil:null,referenceDirectory:'/root/refs'}}:m.arg;
+   const after=m.api.bindFresh35CombinedTarget(arg);
+   if(!production)await m.api.loadFresh35SyntheticBootstrapNetwork(after,m.sourceSetSha256);
+   const {proposal:p,physical:b,startsAt,expiresAt}=arg,runtime=false,q=v=>"'"+v.replaceAll("'","''")+"'",roles=[p.admin,p.owner,p.controller,p.runtime,...Object.values(m.api.FRESH35_COMBINED_INTERFACE_ROLES)],network={value:m.value,sha256:(await import('node:crypto')).createHash('sha256').update(await m.fs.readFile(m.path)).digest('hex')};
+   // Exact original composite from c596bb45, frozen independently of the new builder.
+   const originalCondition=`current_database()=${q(p.database)} AND current_user=${q(runtime?p.controller:p.owner)} AND session_user=${q(runtime?p.controller:p.owner)}
+ AND (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database())=${q(b.databaseOid)}
+ AND (SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(b.systemIdentifier)}
+ AND pg_catalog.current_setting('server_version_num')=${q(b.serverVersionNum)}
+ AND pg_catalog.pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(b.postmasterStart.replace(/\+00$/,''))}
+ AND pg_catalog.host(pg_catalog.inet_server_addr())=${q(p.host)} AND pg_catalog.inet_server_port()=${p.port}
+ ${production?'':`AND pg_catalog.current_setting('listen_addresses')='127.0.0.1' AND ${q(network.value.unixSocketDirectories)}='' /* root bootstrap network ${network.sha256} */`}
+ AND pg_catalog.current_setting('session_replication_role')='origin' AND NOT pg_catalog.pg_is_in_recovery()
+ AND pg_catalog.current_setting('transaction_isolation')=${q(runtime?'repeatable read':'read committed')} AND pg_catalog.current_setting('transaction_read_only')=${q(runtime?'on':'off')}
+ AND extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt} AND extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}
+ AND (SELECT pg_catalog.pg_get_userbyid(datdba) FROM pg_catalog.pg_database WHERE datname=current_database())=${q(p.owner)}
+ AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_stat_activity WHERE (backend_type='client backend' OR usename IS NOT NULL) AND pid<>pg_catalog.pg_backend_pid())
+ AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_database WHERE datname NOT IN('postgres','template0','template1',${q(p.database)}))
+ AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_namespace WHERE nspname NOT IN('public','pg_catalog','information_schema','pg_toast','naijue_erp'))
+ AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE left(rolname,3)<>'pg_' AND rolname NOT IN(${roles.map(q).join(',')}))
+ AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_event_trigger)
+ AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_extension WHERE extname<>'plpgsql')
+ AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_prepared_xacts)`;
+   const previous=(' IF ('+originalCondition+") IS DISTINCT FROM true THEN RAISE EXCEPTION 'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS'").replace(/\s+/g,' '),current=m.api.fresh35CombinedTargetGuard(after,{requireEmpty:true}).replace(/\s+/g,' ');
+   const originalAtoms=split(previous.slice(previous.indexOf(' IF (')+5,previous.indexOf(") IS DISTINCT FROM true THEN RAISE EXCEPTION 'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS'")),' AND ');
+   const array=current.slice(current.indexOf('physical_checks := ARRAY[')+'physical_checks := ARRAY['.length,current.indexOf(']; IF (true = ALL(physical_checks))'));
+   const currentAtoms=split(array,',').map(atom=>atom.slice(1,-1));assert.deepEqual(currentAtoms,originalAtoms,'no condition is removed, weakened or evaluated twice');
+   const tags=current.slice(current.indexOf('physical_failure_codes CONSTANT text[] := ARRAY['),current.indexOf(']; physical_index integer')).match(/FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_[A-Z_]+/g);
+   assert.equal(tags.length,originalAtoms.length);assert.equal(new Set(tags).size,tags.length);for(const tag of tags){assert(m.api.FRESH35_COMBINED_PHYSICAL_FAILURE_CODES.includes(tag));assert(tag.length<=81)}
+   assert.match(current,/IF \(true = ALL\(physical_checks\)\) IS DISTINCT FROM true/);assert.match(current,/IF physical_checks\[physical_index\] IS DISTINCT FROM true/);assert.match(current,/RAISE EXCEPTION '%',physical_failure_codes\[physical_index\] USING ERRCODE='55000'/);
+   assert(m.api.FRESH35_COMBINED_PHYSICAL_FAILURE_CODES.includes('FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS'));
+  }
  }finally{await m.close()}
 });

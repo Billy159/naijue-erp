@@ -1,0 +1,124 @@
+{
+  "task_id": "D1-R3-ROLLBACK-DRAIN-PHYSICAL-DIAGNOSTIC-20261106-01",
+  "state": "BOUNDED_ROLLBACK_FIX_AND_STATIC_PREDICATE_DIAGNOSTIC_SOURCE_PASS_NOT_PG",
+  "recorded_at": "2026-11-06T04:49:38.351943+08:00",
+  "workspace": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "head_observed": "ce9b7b701a041454afbe58297d1bc1b2ccd409b1",
+  "delivery": "FOUR_STABLE_UNCOMMITTED_LEAVES_FOR_C_SINGLE_CANDIDATE",
+  "leaves": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "bytes": 21957,
+      "sha256": "7b4f48001367c65fcb717009a4b00d803ba855e4bea91b03339ac75c712feff9"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "bytes": 22693,
+      "sha256": "ea5ffe9bc2ac665ab0e48723d18126ba3e33bb45729a23a7cb9eff7f8511eb43"
+    },
+    {
+      "path": "tests/fresh35-combined-lifecycle.test.mjs",
+      "bytes": 17806,
+      "sha256": "c02b086a53af242a4fa010ec258bbab5d04997f6871d23634ac49bfdf68e84d7"
+    },
+    {
+      "path": "tests/fresh35-combined-target.test.mjs",
+      "bytes": 21819,
+      "sha256": "7d0f550f80e4f745836dac0a109f0fd8a1eb39677512cf2965d3f7d6c0ac5c97"
+    }
+  ],
+  "authorization": "C direct approval under user delegation until local noon: one same-native-client rollback drain and exact original physical-predicate static diagnostics, existing 12-field safe consumer, no PG/schema/ACL change.",
+  "actual_input": "C/T45 stopped-r3 observation: unique initial FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS at 2026-11-06 04:27:31.128+08, SQLSTATE55000 from safe child diagnostic, no predicate values recorded. ROLLBACK_UNCONFIRMED and secondary protocol guard code retained. No old-r3 reread/restart by D1.",
+  "rollback": [
+    "Only after actual native pg DatabaseError from original query, await original same connection ReadyForQuery event; no driver state assignment, new connection/pool, SQL replay or fake event generation in runtime.",
+    "Wait at most min(now+5000ms, original expiresAt-45000ms). Ready event must pass unchanged protocol, original tx state T/E and match native event status. Then original remaining/protocol, ROLLBACK query and typed COMMIT/ROLLBACK-status checks.",
+    "Already-ready same packet proceeds through same real checks. Client/connection end/error, timeout/deadline or non-T/E rejects without sending rollback; drive retains ROLLBACK_UNCONFIRMED. All temporary event listeners/timer removed. Unknown COMMIT path still quarantines and never rolls back."
+  ],
+  "physical_diagnostic": [
+    "No literal/field error was established as the actual initial55000 cause; this part only diagnoses next exact run.",
+    "Each original physical boolean atom is evaluated once in local boolean array. (true=ALL(array)) IS DISTINCT FROM true and first element IS DISTINCT FROM true reject both false and NULL. Every original synthetic/production condition is compared against independently frozen pre-change c596bb45 source condition in regression (no Git history needed at test runtime).",
+    "First failing atom raises finite FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_<TAG>, ERRCODE55000 unchanged. Labels contain no actual values, target/role/SQL or arbitrary detail. Original empty/public/role/membership/DB-ACL conditions remain.",
+    "Frozen exact tag set plus old FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS recognized only for native DatabaseError with SQLSTATE55000. Native error message is matched against exact static list, never copied generically. Original private code registry feeds existing originalInternalCode in flat12 stderr and installation-child-failure JSON."
+  ],
+  "public_tag_suffixes": [
+    "DATABASE",
+    "CURRENT_ACTOR",
+    "SESSION_ACTOR",
+    "DATABASE_OID",
+    "SYSTEM_IDENTIFIER",
+    "SERVER_VERSION",
+    "POSTMASTER_BIRTH",
+    "SERVER_ADDRESS",
+    "SERVER_PORT",
+    "LISTEN_ADDRESSES",
+    "BOOTSTRAP_SOCKET",
+    "REPLICATION_ROLE",
+    "RECOVERY",
+    "TRANSACTION_ISOLATION",
+    "TRANSACTION_READ_ONLY",
+    "WINDOW_START",
+    "WINDOW_END",
+    "DATABASE_OWNER",
+    "EXCLUSIVE_BACKENDS",
+    "DATABASE_SET",
+    "NAMESPACE_SET",
+    "ROLE_SET",
+    "EVENT_TRIGGER_SET",
+    "EXTENSION_SET",
+    "PREPARED_XACT_SET"
+  ],
+  "verification": {
+    "red": {
+      "native_cases": 3,
+      "failed": 3,
+      "exit": 1
+    },
+    "native_and_closed_consumer": {
+      "tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "scope": "Actual native pg8.23.1 Client/Connection handlers and original drive/adapter, no network; delayed/same-packet ready, end/error/wrong tx state, original-deadline timeout, safe tag through original entry+launcher capture; fake and non55000 tags refused."
+    },
+    "target_affected": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "scope": "Original guard/controller/production/proof compile plus original-condition per-atom comparison. Final comparison freezes exact c596bb45 text instead of requiring mutable HEAD/history; final dedicated predicate case passed after this test-only change."
+    },
+    "catalog_affected": {
+      "tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0
+    },
+    "unique_affected_tests": 13,
+    "types_exit": 0,
+    "build_exit": 0,
+    "diff_check_exit": 0,
+    "logs": {
+      "native-red": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R3-ROLLBACK-PREDICATE-native-red.log",
+      "native-final": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R3-ROLLBACK-PREDICATE-native-final.log",
+      "target-final": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R3-ROLLBACK-PREDICATE-target-final.log",
+      "predicate-final": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R3-ROLLBACK-PREDICATE-predicate-final.log",
+      "catalog-final": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R3-ROLLBACK-PREDICATE-catalog-final.log",
+      "types": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R3-ROLLBACK-PREDICATE-types.log",
+      "build": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R3-ROLLBACK-PREDICATE-build.log"
+    }
+  },
+  "boundaries": [
+    "Only two original runtime modules and their two original direct tests changed; shared OS fixture restored unchanged.",
+    "No entry/launcher/wrapper/frontend/REAL host/pool/schema/function/GRANT/membership/business contract change. No commit/index write.",
+    "Previously accepted 27/REAL64/diagnostic QA reused, no full suite or real PG repeated."
+  ],
+  "unverified": [
+    "No SQL parsing/execution or actual PostgreSQL/client socket test in this run; native event model does not prove server rollback acceptance.",
+    "Initial physical predicate on old stopped r3 remains unknown because old log has only aggregate static code. No claim initial55000 root cause repaired, no change to old rollback outcome.",
+    "No server/PG/real data/provision/authorization/window/deploy performed."
+  ],
+  "next": "C freeze these four leaves and source closure once, original QB only this exact delta, then T45 sole-owner new target/window. Existing safe child receipt should reveal exact static physical predicate on a subsequent authorized execution; old scene retained."
+}
