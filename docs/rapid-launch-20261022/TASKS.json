@@ -29389,7 +29389,7 @@
       "state": "ACTIVE"
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "QB_SCOPED_PASS_EXACT_NEW_CARRIER_MATERIALIZING_NOT_ACTUAL_PG",
+      "state": "PRODUCER_NONE_RETURN_MINIMUM_SOURCE_FIX_FROZEN_QB_INCREMENT_PENDING",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29464,6 +29464,33 @@
         "resourcePreflightSHA256": "68e9a3916eabcf5966d1f306b3e3adbf61cbd183d6b07d80a832efc7bd6c9973",
         "actualProgramInstallAuthority": "PENDING_ACTUAL_DESCRIPTOR",
         "state": "START_PARAMETER_ERROR_ORIGINAL_KEY_COLLECTING_NOT_PG_PASS"
+      },
+      "actualR2Failure": {
+        "startJob": "t45-f35-223598-start-20261106-02",
+        "startExitCode": 2,
+        "startResultSHA256": "bb9d538424e86dcf5c92a12877aa1f7d7083fbd686f0948343bdf056862ec0a5",
+        "failureCode": "AttributeError",
+        "localRed": "producer assigns root=trusted(Path(...)); trusted validates and returnsNone; old model incorrectly returnedPath; local same contract red reproduced",
+        "actualServerTracebackExported": false,
+        "cleanupResultSHA256": "18ee90491d7bf11928f76cdc1c9201ed4c056885d2efcb551440456842219a96",
+        "containerStopped": true,
+        "cleanupComplete": true,
+        "allIndependentCleanupFields": true,
+        "installAuthorizationIssued": false,
+        "recordPublished": null,
+        "businessAcceptance": false,
+        "oldScenePreserved": true
+      },
+      "next": "T45 unique producer one-line fix + original4 None-return red/green; QB only two-leaf delta; fixed new r3 carrier/window, no replay or mutation of r2.",
+      "producerNoneReturnFix": {
+        "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
+        "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
+        "receiptSHA256": "f3bd4c5acb1ddb760c2f639e6347dd4c4f7821432efad628e8251417b51f3519",
+        "redCases": 4,
+        "redAttributeSubcases": 14,
+        "greenCases": 4,
+        "change": "Only producer path assignment/check; real trusted returnNone preserved; test guards now match real contract",
+        "newEnvironmentOrPG": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -29496,7 +29523,10 @@
       "registrationResultSHA256": "65baf677472431adca70356dc0672da2bd1205f582970b4918985939b43dbdd7",
       "generatorCheckExitCode": 0,
       "callerChecksPassed": 6,
-      "actualContainerVerified": false
+      "actualContainerVerified": false,
+      "fullBuildRoot": "47d4072e4be4660da22c5bfa65a5a4ab5cdd85be",
+      "fullBuildResultSHA256": "f2747f862a11aca1d1975760a7e90a34ce3ac8646168742669c5444e36b12bbc",
+      "buildAndPack": "PASS_ORIGINAL_451_FILES_NO_PG_NO_PRODUCTION"
     },
     "writerTransferHistory": [
       {

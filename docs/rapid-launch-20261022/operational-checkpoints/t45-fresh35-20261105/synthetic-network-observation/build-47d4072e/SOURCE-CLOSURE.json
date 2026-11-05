@@ -1,0 +1,1335 @@
+{
+  "sourceCommit": "47d4072e4be4660da22c5bfa65a5a4ab5cdd85be",
+  "sourceTree": "74077534cc84ad3fd7059ff87bc179a485645bfd",
+  "sourceSetSha256": "b3d8e62ca216a710855145082e9ea69263823e1161dcbf3387a685a4219bd951",
+  "sourceSetScope": "Original Native35 application/source closure; new release module is additionally bound by fixed Git root and eight individual leaves below",
+  "native35": [
+    {
+      "path": "adapters/postgres/migrations/0001_runtime_sales.sql",
+      "bytes": 19076,
+      "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+      "bytes": 1860,
+      "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0003_auth_sessions.sql",
+      "bytes": 886,
+      "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0004_transfer_runtime.sql",
+      "bytes": 31040,
+      "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0005_product_read_fields.sql",
+      "bytes": 1229,
+      "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0006_party_maintenance.sql",
+      "bytes": 14758,
+      "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+      "bytes": 32196,
+      "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0008_runtime_sparse_first_use.sql",
+      "bytes": 9720,
+      "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+      "bytes": 4477,
+      "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+      "bytes": 1316,
+      "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0011_history_storage.sql",
+      "bytes": 32931,
+      "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0012_history_header_native_reference.sql",
+      "bytes": 18141,
+      "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0013_native_party_import.sql",
+      "bytes": 24529,
+      "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0014_native_catalogue_import.sql",
+      "bytes": 12925,
+      "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+      "bytes": 18024,
+      "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+      "bytes": 6891,
+      "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0017_native_payment_import.sql",
+      "bytes": 11773,
+      "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+      "bytes": 75119,
+      "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0019_history_typed_publish_gate.sql",
+      "bytes": 3216,
+      "sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0020_runtime_document_numbers.sql",
+      "bytes": 5767,
+      "sha256": "8e56bbd0124bea56364753c0332a6cd17eaf2d389e843d95ea40c4d291ffc5d4",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+      "bytes": 54970,
+      "sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0022_product_media_retained_delete.sql",
+      "bytes": 7259,
+      "sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0023_inventory_key_admission.sql",
+      "bytes": 21576,
+      "sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0024_history_effective_revisions.sql",
+      "bytes": 4768,
+      "sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0025_product_season_selection.sql",
+      "bytes": 5339,
+      "sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+      "bytes": 90739,
+      "sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/migrations/0027_unified_business_documents.sql",
+      "bytes": 149907,
+      "sha256": "d42954acf56445b803ae126b364b1b2a7b0cfe70a98accaeef5cc13a9082c317",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-category-depth-successor.sql",
+      "bytes": 23682,
+      "sha256": "6341b48840bf60a6f20fa76ec1ef08a0909e42f9138335db81bfb1eb200f227f",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+      "bytes": 47325,
+      "sha256": "09fb597e7b89e77cfb9711ca7ddba8e3d4fa898bf142e77796d0f68be964b1a3",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+      "bytes": 46713,
+      "sha256": "eb5937320e017b89790a5dd5aa2d08601087e21b35b771f902f55b02ad6f4aaa",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+      "bytes": 17433,
+      "sha256": "2e6829ea72db20d5fdf62372dd9c52d44d32d9dd67d0ea0e9b02b57b082c65eb",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+      "bytes": 80332,
+      "sha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+      "bytes": 46316,
+      "sha256": "0eb5785c7e050c0b1eac5fe0fd8949dfd126f466130c841cef098247ef62cb38",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql",
+      "bytes": 27259,
+      "sha256": "41c491cca5f04cc19d15f0c05113cfb3c81fa39a648a5dc349874ba52ef588c9",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+      "bytes": 3098,
+      "sha256": "9e7c5f0864f19d2f60bd856aa965b12db81d53db40040bbfef521731d76e5d17",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+      "bytes": 14384,
+      "sha256": "5d60b860bc0261ad8103947baac642b20cfc2da5b3f07a88b87ad9135a22a227",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+      "bytes": 83818,
+      "sha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+      "bytes": 46909,
+      "sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+      "bytes": 20772,
+      "sha256": "bebad118d5519b9e899215230e16fce92cbee9148ebbf35ba03af513c1f4f475",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+      "bytes": 80495,
+      "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+      "bytes": 5205,
+      "sha256": "8bc9bbacafc64181a7aece848e4aac3ad565247ceb5498023e979fe2e7bf05de",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_document_product_reference_lock_permissions.sql",
+      "bytes": 5180,
+      "sha256": "3f26d275e3ca31abd861a0adc526cd69ef6a61e16b43796adc38b5f387e3634d",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_document_specification_barcodes_permissions.psql",
+      "bytes": 6292,
+      "sha256": "df40620771666ee37edbd3249bccecca9114ad4d48702251e51eb542750a6c5a",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_document_specification_barcodes_successor.sql",
+      "bytes": 20004,
+      "sha256": "13f45eb0ea10dcfd6d2cc42cf3efe251218debe499cf9d2f0b20fce61117cc0e",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_explicit_zero_evidence_successor.sql",
+      "bytes": 12629,
+      "sha256": "709e76b6d6f00ce06a8468f3605f938919d2e721c82798fa0ca278dc7b8b5db2",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_fit_numeric_business_codes_successor.sql",
+      "bytes": 448,
+      "sha256": "a21da5528e0f1d1423309c7b469706d0119cd50216e523eadbb831dc7587080d",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_fresh_core_history_fk_successor.sql",
+      "bytes": 13974,
+      "sha256": "ae1c61594696bce1aac263bbb6c8c9a44a43c815162e4246277ba8e7ba22fcd0",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical-original-restoration_successor.sql",
+      "bytes": 42958,
+      "sha256": "18ab7894162c9bd9053b7d6fd8126a70fcd81896c1fbb103972e4110fbe7b8de",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical_missing_settlement_successor.sql",
+      "bytes": 4694,
+      "sha256": "a0464dbeb0764c371319c2d8230ddb75eb89a00a607fa0ff15d77864fef910ea",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical_restoration_acl_hardening_v1.sql",
+      "bytes": 3053,
+      "sha256": "3b676e85ee4b41da5fd85e93a2c2b878a1b4bdefc1f953932c7c7a05deb5bfda",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical_sales_source_profile_successor.sql",
+      "bytes": 4923,
+      "sha256": "4dafd8ec9c64d7ac99f659711e50b27e4c7aacd30db3dc9897b19d886ba49e96",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical_staff_null_hall_successor.sql",
+      "bytes": 7891,
+      "sha256": "38a07279c703ec72c7f72af2894de6794103f582627d3da6f1e2800e8a52dc6f",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_product_maintenance_permissions.psql",
+      "bytes": 8149,
+      "sha256": "59a2ece00884e2768c45af742cb14a5fbd9f7642375726240da9944149aa70e2",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_product_nullable_scheme_successor.sql",
+      "bytes": 12244,
+      "sha256": "e95a32baf0f4bf4a49a8fd1e3ddcf01a92e30817881688d37fff1d5691509d40",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_published_settlement_identity_successor.sql",
+      "bytes": 2992,
+      "sha256": "317a8aee1ba8cd3d26faab32d7b4710ee9369650468753a5777f3d213107be2b",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_staff_departure_date_successor.sql",
+      "bytes": 371,
+      "sha256": "dcfbd60eaf7397eaefbbf0270b15adbdf0f72b716c5a74cac4596cdac683482f",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_category_alias_successor.sql",
+      "bytes": 26301,
+      "sha256": "886e63d9d7c308f1704c60cdd103e1b607180a6e02eb61cd65add7bb1d509bd5",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_initialization.sql",
+      "bytes": 196863,
+      "sha256": "680fdac8120d35122f8414924ed40fb175c1533a7cfd6b656077cec7242332f1",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_initialization_precedence_successor.sql",
+      "bytes": 35897,
+      "sha256": "92f7e48edef705ee5acc9cad06191e6470abe41e3b00ca18320731c476733ea4",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_master_chunks_v2_successor.sql",
+      "bytes": 43045,
+      "sha256": "970ce6bf96832816d3fd97020e2d7e3db2e3fa5db87e463c39708646b186cca4",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_publish_verify_disambiguation_successor.sql",
+      "bytes": 57635,
+      "sha256": "df3d3698830dfe38baca73bf3cf71c756357d55b1f473d799cb4252ec51cb9f5",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_settlement_identity_successor.sql",
+      "bytes": 4592,
+      "sha256": "f360d17b11cdd42b54f55bc9de91426728e5870a6668ba82785c1061bf844190",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_access_v2.sql",
+      "bytes": 10528,
+      "sha256": "a4210b92e4589dc31b5bf5f49af66b166d24dface7523095bc21adf2e8d9d5a8",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "bytes": 97511,
+      "sha256": "ed96bc73a7f8bf2919f3015542e87628ee6d402f2992ddc5ad5c5f275361177f",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_intent_v2.sql",
+      "bytes": 3704,
+      "sha256": "9e560885a1eec48846a595dc8bb642ae2106a8cf01647118297102589500a9a7",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_preflight_v2.sql",
+      "bytes": 2099,
+      "sha256": "b6ee0aaaced4d88ec17e962e2797b5c4aeddff87f4c9c9615a8cd6d12f851d32",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_search_path_v2.sql",
+      "bytes": 55488,
+      "sha256": "5f15bcfb6196431aa279dde8d5e05d37ece152fc19d32c0ffbba810ddfec5ef4",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_source_commit_v2.sql",
+      "bytes": 1928,
+      "sha256": "d5a934a891723ac80f97e3527f13793cd4a6d8a88c2d4983724dab6376f929d5",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_v2.sql",
+      "bytes": 73654,
+      "sha256": "f784d786f47255dcaa2958df07d3f3bf2d0056b5bdb2d77c5565ea5ee782f435",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_verify_v2.sql",
+      "bytes": 25423,
+      "sha256": "06fddf797c0eb964e2ec1eddcfe1797dfee6ae844dbdbb0df70887f3fcc0aa71",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_zero_balance_v2.sql",
+      "bytes": 10549,
+      "sha256": "5b37a3f7719cb5be7c653f44ff4399da51997db5127517264f27ec7b5dcbee91",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_known_balance_runtime_v2.sql",
+      "bytes": 21190,
+      "sha256": "0bf30934472cca7a11e1f321b530e925da84c336f706424dc9c150fe8476ff92",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_whole_closure_batch_binding_candidate.sql",
+      "bytes": 8120,
+      "sha256": "3d6d3df968d2926a45d50efb89c158961e8e2f58a1f07d451fd81f117dc7b608",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_whole_closure_singletons_candidate.sql",
+      "bytes": 7172,
+      "sha256": "81e568fb146c239668f7cc57ad370a2a9a0a65ee81cd23ef7d1876f66829277c",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_unified_live_history_dispatch_successor.sql",
+      "bytes": 5018,
+      "sha256": "15b400196725446d04757e431f27d815ed586a08b8c95ab73438ea1f1ead726f",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_whole_conversion_prefix_counts_v2.sql",
+      "bytes": 8996,
+      "sha256": "1eb96fbb0ca66042dd2a84473dacc95eeedc46948f2f2ad539a0271fb130433a",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_zero_amount_archive_successor.sql",
+      "bytes": 9922,
+      "sha256": "5159e75a04a0c20a9c47b8853df30c4233645509af0f352bc506dbd9a6ce30e6",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0035_historical_line_amount_successor.sql",
+      "bytes": 29900,
+      "sha256": "829f2fc6d28d616e3af6d0cc4a2ea8db02643e1c5f3d0ed7025c388203c84b44",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0035_historical_sales_hall_successor.sql",
+      "bytes": 289668,
+      "sha256": "0c9101adf318f72f61e2c1256ba7c160933b1411453c7e7f89684dc2ecc0edd1",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+      "bytes": 24811,
+      "sha256": "00831ce3dbf02af4ffb675c3e4593de3aa423b66ec17f6ff954702a4f343c9bc",
+      "mode": "644"
+    },
+    {
+      "path": "adapters/postgres/patches/0035_historical_settlement_retention_successor.sql",
+      "bytes": 4619,
+      "sha256": "414002fc7fda9942de58962664f25cc3e8f5617db6f467a6c99d920a7611adcc",
+      "mode": "644"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 105758,
+      "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+      "mode": "644"
+    },
+    {
+      "path": "package.json",
+      "bytes": 7355,
+      "sha256": "df132518fffedcac3dd2842f773de1f191b563a12887788a06c196a4ce753902",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/calendar-date.ts",
+      "bytes": 496,
+      "sha256": "3d12245db7fc90f2f985e50a0436b18ba8e2157cb92d9d214665cf06a36e658e",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/canonical-request-value.ts",
+      "bytes": 1413,
+      "sha256": "29daee138b2d5c802eb915610adef8448be447a7531df7883276896cbf9633fb",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/historical-sales-hall-evidence.ts",
+      "bytes": 10798,
+      "sha256": "9f4d82cb39801a6a7d11b95d556bc90fa115f607b2ede00fe588bc8ea2d0a6b5",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/history-import-lifecycle.ts",
+      "bytes": 2871,
+      "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/history-storage-contract.ts",
+      "bytes": 6920,
+      "sha256": "e3c1f3ae440510adb2992c362324f60e45bbf0ecce09417f4dc13af3780779d5",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/history-typed-closure.ts",
+      "bytes": 37914,
+      "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/history-typed-publication.ts",
+      "bytes": 4011,
+      "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/import-v2-contract.ts",
+      "bytes": 20742,
+      "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/inventory-cutoff-import.ts",
+      "bytes": 28775,
+      "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/native-barcode-import.ts",
+      "bytes": 16051,
+      "sha256": "5aaee52b0f624b774f2105131ecffd9f26c62187ba6afb3dc5e22d823fcb5f02",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/native-import-record-accounting.ts",
+      "bytes": 20974,
+      "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/native-import-schema-contract.ts",
+      "bytes": 14388,
+      "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/request-hash.ts",
+      "bytes": 413,
+      "sha256": "5cf9de26135fceb57d0e40564316e14c314a356ab9357fa6780522c7bd0114e4",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-current-effective-alignment.ts",
+      "bytes": 6616,
+      "sha256": "40676fb6929f247fa6bd47163e1da4d9170d373f84412ba826bca4dd15298846",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-explicit-zero-approval.ts",
+      "bytes": 7494,
+      "sha256": "5a1bd3813c64d8f3b50584b0c65af35d9935c54fc31ec1441aaf2296d47e7b5c",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-historical-line-amount-evidence.ts",
+      "bytes": 8633,
+      "sha256": "1b13b515be32e3e9a4b90b198ca27b93e52297e2cdbce03cda49dae43be60a39",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "bytes": 14961,
+      "sha256": "8d4854fa26d65221513e3e6ad74418d85b1ee2732153f2199d300a6eb4e3361a",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-historical-settlement-retention.ts",
+      "bytes": 7487,
+      "sha256": "bc740b8aa67059b385cf8e7e76b77af26164030b1e02d25f848d9e5245bb3c61",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-historical-staff-hall-approval.ts",
+      "bytes": 4654,
+      "sha256": "281ff8fc48e7946ad5f01edb976b7113f6c5ce896cd407ca6c8ff822b1d785da",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-import-contract.ts",
+      "bytes": 87582,
+      "sha256": "5b96e9a285def8e298377a29a50c02a9b637715c5e0c4297403da25eb39bf482",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-import-execution-v2-client.ts",
+      "bytes": 14439,
+      "sha256": "215928b797459fbd1c38633875efcda04a42745562816f598fe4d7c162963f5e",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-import-execution-v2.ts",
+      "bytes": 14037,
+      "sha256": "367997800d512d1f8f4e6635f8199f3ff6505cbce15efe20138a37ac350af7f6",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-import-execution.ts",
+      "bytes": 60031,
+      "sha256": "a76712126384b65dbe5c09cb7221b6e9c46082fbf4426c2604f8e29d2e5c3b39",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-import-historical-sales.ts",
+      "bytes": 1141,
+      "sha256": "1b8fd1e6ea7a69c89c5e6f49e3dacebf552995e7a18757e5f4b2a68d6bad025e",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-import-master-chunks-v2.ts",
+      "bytes": 12339,
+      "sha256": "e2145d1844af7e9d4564f89d79e226f1806e1b3f7445261fc7d0782f848a29a7",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-import-source-reconciliation.ts",
+      "bytes": 20923,
+      "sha256": "48df5635f98fdb837b14e80ce9f3a5985dcb778fee89fccc87e5ba3c6b6b5bee",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-import-stable-identity.ts",
+      "bytes": 8993,
+      "sha256": "4516d0322198decfd77bc6c862c4d2fd07fc7c72d599a2a2a387b2760120e628",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-import-whole-package-profile.ts",
+      "bytes": 7353,
+      "sha256": "784e449a79ff96d4cb07c6359f7c8de4555c50986226fe5b09c8dec5328ef4da",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-source-registration.ts",
+      "bytes": 5107,
+      "sha256": "56df246b0c2e03b4b411d71e8f85b9d1d7e5496495b15aaef1149115adc86df0",
+      "mode": "644"
+    },
+    {
+      "path": "packages/application/src/unified-zero-amount-archive.ts",
+      "bytes": 4342,
+      "sha256": "97c2e976faa20556a3deac6bcd06e5f5474ce758213aa2043c2eb0fa01c5f24b",
+      "mode": "644"
+    },
+    {
+      "path": "packages/authentication/src/passwords.ts",
+      "bytes": 3315,
+      "sha256": "f570e5f696ae71df145edb202e18b41eae7798f9d862cb67be6a156b6bf2fafd",
+      "mode": "644"
+    },
+    {
+      "path": "packages/authentication/src/ports.ts",
+      "bytes": 8127,
+      "sha256": "17f485fc75194aab0d4d182c4540f3c05d6a306447a5ce0cf425c41c92bab7f5",
+      "mode": "644"
+    },
+    {
+      "path": "packages/domain/src/errors.ts",
+      "bytes": 353,
+      "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9",
+      "mode": "644"
+    },
+    {
+      "path": "packages/domain/src/sales-money.ts",
+      "bytes": 2022,
+      "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30",
+      "mode": "644"
+    },
+    {
+      "path": "packages/domain/src/values.ts",
+      "bytes": 4820,
+      "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh27-legacy-rowtypes.mjs",
+      "bytes": 21306,
+      "sha256": "8a46b94861f052fcfa1ea5eca0a3015dfb807104b37e527e8bce3f8a6289853b",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh27-plan.mjs",
+      "bytes": 15274,
+      "sha256": "1f15a288d25541154232cf96f58f252418c0732d7ac8ccded890960499f09534",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh27-portable-successors.mjs",
+      "bytes": 5089,
+      "sha256": "2c9b937fecdb2c352c52b7b47ca90bad884b61f367dfe4c4bada29828d0eedb8",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh27-publication-isolation.mjs",
+      "bytes": 12422,
+      "sha256": "cd959a6dce0dae5e9e61236a91a7da5c672f261c504755a967615395b5ae4bca",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh27-sql-bundle.mjs",
+      "bytes": 4381,
+      "sha256": "63b2da64053afb9b55e89fdc71ebf9e8a54e0bf7c0cbe6116ff89448a96b8a1b",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-catalog-collector.mjs",
+      "bytes": 4440,
+      "sha256": "c1550324f98ccf299c4601c7e63d06bdec9b5db272833bfe82da7dd7f7d6dc47",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-catalog-contract.mjs",
+      "bytes": 12977,
+      "sha256": "ff9c0db13266ddbfe4ef17eeee41c5cee33273948f4fb7920ba5938d1bea742d",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-catalog-evidence-v2-adapter.mjs",
+      "bytes": 7805,
+      "sha256": "c6fb6bb3c9ad08df0b7f55e1ba8b97b3bd8b04413331a2fc1a23328266ecfef6",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-catalog-evidence-v2-query.mjs",
+      "bytes": 6808,
+      "sha256": "c64d105ec3c0b8ad346cf14f65bfb13f4885ccb27c53795ad56aedb037c0affc",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-catalog-evidence-v2.mjs",
+      "bytes": 19823,
+      "sha256": "f91471c11826e131fb9ce66b665283e578457c110a83c9923a4d5e21982b441d",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-catalog-postconditions.mjs",
+      "bytes": 26501,
+      "sha256": "989b3d7aeb33b2fa008f468130e55819b56f0ba0a34f599666256bbfb752af35",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-catalog-record-draft.mjs",
+      "bytes": 2129,
+      "sha256": "8975df4ee4a553065eb7559c0046ff38f2845905df8f4518a8f76702442508d6",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-catalog-schema-diff.mjs",
+      "bytes": 8345,
+      "sha256": "9fea40432f4b0678d24bb22962688dc1a8fd27d9f7ddd9a6c389dffcef37eda8",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "bytes": 35377,
+      "sha256": "46c922f5bb081c43d457dbec64fb5d7148522eab6310d8f05953b2015a4316d8",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "bytes": 19885,
+      "sha256": "dffde933bed168bf8269e9ad9e5c93a6c623d87267969d050e5b7c0f63154ba6",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "bytes": 8716,
+      "sha256": "afcd0af1beafecd35a6eb6d8dd6a7689a7733d857ca80819023d38c84d20e7b6",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "bytes": 12533,
+      "sha256": "b1b022270f545e5aef18815a68bff755468991395396d4fccaf087dbd5015b70",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "bytes": 21044,
+      "sha256": "f6877abf7dbffbfa415b5c35ee6ef2f380afe7e0831cffdef49fbea65f1de167",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-core-guards.mjs",
+      "bytes": 28014,
+      "sha256": "963a7447b0af71e306c125d944215d9f38ade476c871b13cea24070a9638d869",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs",
+      "bytes": 6604,
+      "sha256": "509a242ca7ba266804cacd43cbb06b73c936357f01069decb0881401f969ae6c",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs",
+      "bytes": 4442,
+      "sha256": "75d285812a7873f3e2634d1bc62d278b22366df8e9d3a2db887fd35ee700726a",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+      "bytes": 5016,
+      "sha256": "b4c4781be517966d673e7efd2690ddf7d7fb17185659930e7c22ebcfd68ff4aa",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "bytes": 18522,
+      "sha256": "2822b0cdef321705b34d411d59297716381e6c777728433f77d3356858ff5483",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-identity.mjs",
+      "bytes": 5892,
+      "sha256": "21c6cd18ed91ade49d907eccc4cfd04837927ef06d3fde8380b01ded6453b234",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-install.mjs",
+      "bytes": 12824,
+      "sha256": "f18f7b64150af5edccae498735aa70f7c1e9a3268e35a796c63018c4464761c2",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-metadata.mjs",
+      "bytes": 24343,
+      "sha256": "76bffc138fd9b4f9871b2cad3e98e955214f30c203590dcf4321fcf1ca45b931",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-plan.mjs",
+      "bytes": 5889,
+      "sha256": "017f1c59f18bd602cb9b2f2c1847783bd24d97fc88ec9854e5423df6da6c1efe",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-schema.mjs",
+      "bytes": 18825,
+      "sha256": "a0c91b1972ed928ed89875d42d8e6fb803cee3d6b49686f30f99fec5e6fdb151",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-source.mjs",
+      "bytes": 7902,
+      "sha256": "769053161ee12a9674e6cc0e6fb05114fe3a14010cd0d5d05fe27d89d047a470",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-v2-install-candidate.mjs",
+      "bytes": 7519,
+      "sha256": "c0e255eefc303db1eddbfe9e65410a709e838f03b57b4e185e58e9d4ae0b679c",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-v2-projection.mjs",
+      "bytes": 6636,
+      "sha256": "4f38ab9d834e44be22c9ba8e7514f56f692410ed07907fc910e759e00c165700",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs",
+      "bytes": 7084,
+      "sha256": "7d1983e0b87fad0470c8720b080421b3eb61604ca3e5280695bf6e46080c0890",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/install-whole-sales-record-v1.mjs",
+      "bytes": 12496,
+      "sha256": "abf23d5ee16fa2f6ab4c65e9f077d119d786880b82c9013166bb6a4f0e14c511",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "bytes": 94653,
+      "sha256": "3d4bda9b21584d1aea4b4263f294555d5ada06a6504ad5ed284a27ce2fbe2548",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/launch-whole-sales-install-v1.py",
+      "bytes": 5278,
+      "sha256": "d52822e17d19b9ef8c24da3c879454de7c01698b72d2076fde3fb68c21a5f970",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/legacy-dependency-source-report.mjs",
+      "bytes": 12932,
+      "sha256": "6b404decadc415b5f103e729d6289ada57349b18ecf2f0ccb3c87d4e327b26b6",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/preload-whole-sales-install-v1.mjs",
+      "bytes": 283,
+      "sha256": "7f8d0175b938342d486af1596ac17015710a314012018412373320502f115187",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/publish-installation-record.mjs",
+      "bytes": 960,
+      "sha256": "3f63fbc4bf2785453d79d6a11f0915cce6cc59dd0f6ccaeda0d181fad4ae6b53",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/record-whole-installation.mjs",
+      "bytes": 14336,
+      "sha256": "f2bfdad1950999fcf8cb76c0ece3adda315502e13052c24e53e0bfa44a2994ae",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/render-whole-package-local.mjs",
+      "bytes": 9667,
+      "sha256": "3128b307ddfb69e44ef65626df4b071e664f1f012597daa87fe4d467c65ca71a",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/trusted-install-path.mjs",
+      "bytes": 1161,
+      "sha256": "24caac5f0b2bcd8a2f8a4c19887b7453652a73a365c623bf33735bd1a1281e6f",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-catalog-gate.mjs",
+      "bytes": 16442,
+      "sha256": "0ec3ff7e2f8b0bb2711e86153013f4ece5537c28a93c5ba4e0d48a4786ef46f3",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-closure-integration-candidate.mjs",
+      "bytes": 6887,
+      "sha256": "a08a305b185b38bc71e268e0a70b1dc732b3b46a3dc628b7dbf908ae85bbba65",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-explicit-zero-integration-candidate.mjs",
+      "bytes": 2749,
+      "sha256": "41768498b284e1154415be3934aba16f5a450b2d7e13cca02838d2634065e712",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-installation-record.mjs",
+      "bytes": 2145,
+      "sha256": "a93e687b311d510dd4a2a418085c4b9928b5a3762475bb50553419cb70a67a8c",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-admission-v1.mjs",
+      "bytes": 2931,
+      "sha256": "4db4c959be578dca2522a1fa5a01fe3cb3146d37d62edf6da55b781f11dff874",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-catalog-v1.mjs",
+      "bytes": 9094,
+      "sha256": "8d7b5da1b76eab9c21ed75b2a9677d9a367e9b01b8ff877c77620344737da1d1",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-integration-candidate.mjs",
+      "bytes": 11963,
+      "sha256": "2eaa1912c1c81b2ecc8dcd43471493801e4cb0fdb6499cee66da68921b47cc70",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-module-boundary.mjs",
+      "bytes": 891,
+      "sha256": "1ead0cbcfe1374a0b2914673ddde6a33fe23dab40e9b02ffcfb17950d8807026",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-platform-layout.mjs",
+      "bytes": 707,
+      "sha256": "183fd37d44b9c2f5df7ad868768b929111b89a71d4c18c2c4c3b5dd0e8b1fcc4",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-record-v1.mjs",
+      "bytes": 2192,
+      "sha256": "f5e171a9a985c2d6f018d0dea8df20d24eda32a038b5ac3489363b7c36367df8",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-trusted-path.mjs",
+      "bytes": 1662,
+      "sha256": "ee0d9ea8147bf7ae56d658caff700fc83dd1c5b7f05e4518ff00fa86f0574628",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-search-path-source.mjs",
+      "bytes": 5637,
+      "sha256": "c3e7d976c3eca53f9dad1ad7f510aee6fc7e29f3d0d39dadcfbddc49e311426d",
+      "mode": "644"
+    },
+    {
+      "path": "tests/fixtures/unified-import/synthetic-package.ts",
+      "bytes": 10922,
+      "sha256": "b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82",
+      "mode": "644"
+    },
+    {
+      "path": "tests/fixtures/unified-import/whole-package-synthetic.ts",
+      "bytes": 27211,
+      "sha256": "9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/cli.mjs",
+      "bytes": 3345,
+      "sha256": "3163a0db7713f005c26f34265ec650a17e1e67179a5f06fb15aa4bd0e9641463",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/cli.ts",
+      "bytes": 39793,
+      "sha256": "88f6e6018f2ba44342be73073930bbabc09a507285c0fece0a820f4e3ea577ad",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/current-effective-alignment-cli-input.mjs",
+      "bytes": 1070,
+      "sha256": "07bb69786643443e4a344a1dd22e954926ba5279b7f3265d04d789e1abac1937",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/execution-client.ts",
+      "bytes": 23684,
+      "sha256": "4da1d4e7ee4c4152002e05a9f70a32cda3cc58680233fbe1e5442e69dc109da7",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/execution-plan.ts",
+      "bytes": 5313,
+      "sha256": "6c041ad1886a84120b667408d329e5a800151ffd7b0c42d5eea6f0426d8629f1",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/execution-v2-admission.ts",
+      "bytes": 9859,
+      "sha256": "c5eae33b4e502e29ab89549bce11a895ccfb3fafd8ae88a86232aa951228107c",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/explicit-zero-cli-input.mjs",
+      "bytes": 2578,
+      "sha256": "6e0d2bbb9f6ef99e2504bae2913b21c18c0be99cb58803894b98ee547f21a815",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "bytes": 33028,
+      "sha256": "63a4fba90214b982ba9799d39dfe0c041b6373df6f91decd141000535da4c33d",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/fresh35-receiver-diagnostics.ts",
+      "bytes": 2449,
+      "sha256": "7e25d5917cc5ec423a2d943f2fad5f7cfb9d1d2d6c4b83f968f0bfd626904657",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/historical-hall-cli-input.mjs",
+      "bytes": 966,
+      "sha256": "74aaf48eff4cdfc2d7c031f94df9d1e7aca73ff9e7de33e9806873309df498ef",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/historical-line-amount-cli-input.mjs",
+      "bytes": 978,
+      "sha256": "c52412f3ee33cd500790dd2737b6e75e720c257effa8e1155570778d4e7e0920",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/historical-settlement-retention-cli-input.mjs",
+      "bytes": 1004,
+      "sha256": "85ef8d7636e8591d534651b14d427145c6a57997dbb617b96d65caf282cb1e92",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/package-reader.ts",
+      "bytes": 6986,
+      "sha256": "4afc29dfa2dba07aa087bdc7ae0daa0ad862fd7b5b27dfd965772cae57fb372a",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/source-occurrence-file-reader.mjs",
+      "bytes": 4072,
+      "sha256": "24bc358bd6923a1472e5c65dcb09f9a0a7c008cdbb264bac258924e359a68e7d",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/source-occurrence-reader.mjs",
+      "bytes": 230,
+      "sha256": "1559ad1d001a8d105fa5d974c89d2d1d762171c930b5004fb93ca043647a3010",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/source-occurrence-report.mjs",
+      "bytes": 824,
+      "sha256": "5cd06d47510c1c8460a0ca0d6032cd52157970d677a49f2df4eecc1e840afaed",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/source-occurrence-storage.mjs",
+      "bytes": 3487,
+      "sha256": "30c8982235f1910768e1579ee02275b8f393fb4694612118713071213bddae47",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/source-reconciliation-cli-input.mjs",
+      "bytes": 965,
+      "sha256": "1c366db0f8cc22de4683d02f590068a2ee78f01c2f66e48032ff6f0bed446674",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/source-registration.mjs",
+      "bytes": 328,
+      "sha256": "bd358099b43428145b11ec3d74fdeed674680c1bb0fe63b373a2879dbdd0400c",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-baseline-requests.mjs",
+      "bytes": 5302,
+      "sha256": "3836d6b65ec507e30422bd13a70a58ecfc68a7b2ed85e5d7f041b3659561b740",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-binding.mjs",
+      "bytes": 1280,
+      "sha256": "2a36791a737e107e585436e5a04eb71d3ca130f93b0dc4c5314ab7832080c76f",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-document-requests.mjs",
+      "bytes": 12202,
+      "sha256": "3bc839f1d21f74cc5c8903268a7359e1dc74076712f64b517be8e60e33e2aad3",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-import-cli.mjs",
+      "bytes": 23112,
+      "sha256": "6605c956342b05cad0d74907e54a2ca30b0fcd7a9cbe9a55d133cb073ef68c75",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-master-graph.mjs",
+      "bytes": 10372,
+      "sha256": "df00c9b8b0d51c3cd378ca9b5569b6490246cc6de2f289f1120cb46fc224e802",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-package-metadata.mjs",
+      "bytes": 14294,
+      "sha256": "4e9f4ba1d28c4d398e9af7c44ecb108ebb23b10720d5eb9c775871ba8ba2be52",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-plan.mjs",
+      "bytes": 23475,
+      "sha256": "a0cc8b2abd4a7f41d97551efa248f78a7432fbe332831150b33d0ef21ae7b788",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-preflight-cli.mjs",
+      "bytes": 6932,
+      "sha256": "4a50698ef7f9a3bf665b5304b557dc59c21cdace8b66f8d1742344401b076022",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-preflight.mjs",
+      "bytes": 28683,
+      "sha256": "67a1637096f2350501d4fc695692420294b136fea913a0962f3202991d9cd768",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-prepare-cli.mjs",
+      "bytes": 9101,
+      "sha256": "cdde8f1e8dfc7cf19279a796bdae10943e9121a912fb86fa0de872abe61dcf3d",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-program.mjs",
+      "bytes": 7649,
+      "sha256": "205a3e2da066801f8db68490275ecb625f44cd3e8722597603fd80c1f9825e43",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-relations.mjs",
+      "bytes": 16099,
+      "sha256": "db4f100684bad2c72a869693d1d7fcfd4ea40fca71f6298a8dbabfae603e6398",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/stream-typed-hash.mjs",
+      "bytes": 2140,
+      "sha256": "9e48167e3e3df337bc7d34a8bbde1b1dc8b59c853fcc287d59c0c7a2f479441d",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "bytes": 19864,
+      "sha256": "fdae12f6b7a6962bf9b9b8764fa3075f7bd7d85391e9d6cb1cbfe2c85ea3cb7b",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/whole-package-client.ts",
+      "bytes": 7352,
+      "sha256": "ed105f0f7fd126fa848b1a06a021e367ebab1ab2bfd0deac914ef25d7968ca58",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/whole-package-host.mjs",
+      "bytes": 2706,
+      "sha256": "e77b9298c81ed03fbcf964fd0ea02937d256f254a66dc2b74191b9e1c50362b0",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/whole-package-inspect.ts",
+      "bytes": 1593,
+      "sha256": "4ca8e95f46de50f2adb06258f331cbdbcf00e0ece2aa816f22a1b59d5bc05af2",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/whole-package-reconcile.mjs",
+      "bytes": 9878,
+      "sha256": "c04e709de46a61bc6026a06f60bdd917e5b132644542f69e3d2d2eeae3de3ad1",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/whole-package-sql-kernel.ts",
+      "bytes": 6575,
+      "sha256": "af75e5f0b83ce5b0091ff68e248e1d2ae606469bcd61381c03d103a06df3593d",
+      "mode": "644"
+    },
+    {
+      "path": "tools/unified-import/whole-sales-host.mjs",
+      "bytes": 153,
+      "sha256": "4acdbd4d9a3f5a7c263864eb30f48fcb6483773ffa0eb97425d057ee6b8a445a",
+      "mode": "644"
+    }
+  ],
+  "releaseModule": [
+    {
+      "path": "config/release-contract.json",
+      "bytes": 7371,
+      "sha256": "bea9c9c79025f0f9def215fd72c9c71d6003ea4165ead1a9ecebf8c8bb289871",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/boot-entry.py",
+      "bytes": 49678,
+      "sha256": "b89f416918a4634ebc23bc1ea1bd87ccd0977d6a2f3741a9ed9cf56384a22b7b",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "bytes": 189938,
+      "sha256": "6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/generate-release-contract.mjs",
+      "bytes": 11120,
+      "sha256": "56c56bc77d7d8b3f560aa0ff3affac53864345e31b75cca7b37a035b488dde32",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/release-file-contract.test.mjs",
+      "bytes": 6305,
+      "sha256": "989258ecaedfafdd799fe3f6aa587db93a484953fc25b643cc65fc66673e72cc",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/rollback-candidate.py",
+      "bytes": 7665,
+      "sha256": "3b14e8b259e3974236e60a1fcbd1442d6e2cb950d25e068362ebf4323fe3bf63",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/test_capacity_launch_wiring.py",
+      "bytes": 84752,
+      "sha256": "bccd978780369afbbcf3e909ab6921520f7e1453d039a526be002089caaae61c",
+      "mode": "644"
+    },
+    {
+      "path": "scripts/release/test_rollback_helper_alignment.py",
+      "bytes": 8766,
+      "sha256": "bd46ed520d2549927c1506c5ca73ad64496d0053372a52db54419d99c8d2a790",
+      "mode": "644"
+    }
+  ],
+  "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-47d4072e4be4",
+  "referenceDirectory": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/reference-inputs",
+  "originalLoaderReferenceResolutionPassed": true,
+  "noApplicationOrPgOrHelperStarted": true,
+  "ordinaryArchiveNotRequestedNotGenerated": true
+}

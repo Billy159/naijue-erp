@@ -1,0 +1,78 @@
+{
+  "state": "SOURCE_ONLY_PRODUCER_RETURN_CONTRACT_FIX_RED_GREEN_FOUR_TESTS_PASS",
+  "atUtc": "2026-11-05T19:24:08.345689+00:00",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-producer-none-return-01/source/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "bytes": 94658,
+      "sha256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
+      "parentSha256": "3d4bda9b21584d1aea4b4263f294555d5ada06a6504ad5ed284a27ce2fbe2548"
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-producer-none-return-01/source/tests/test_fresh35_isolated_launcher.py",
+      "bytes": 68807,
+      "sha256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
+      "parentSha256": "1ce5f6d25abf0d3a08c41eb26b65725eaed5ef649a43adee23d6170970836aae"
+    }
+  ],
+  "changedFunctions": [
+    "persist_bootstrap_network_observation"
+  ],
+  "rootCause": {
+    "realGuardContract": "trusted(path) validates in place, no return statement; returns None on success",
+    "oldProducer": "Assigned None to root then called root.lstat()",
+    "badTestDouble": "Previous four mocks returned Path, which the real guard never returns",
+    "actualServerEvidence": "failure.json AttributeError only; no server traceback claimed",
+    "localReproduction": "Original function with real None return contract raises NoneType has no attribute lstat and creates no proof"
+  },
+  "fix": "Construct Path first, invoke existing trusted(root) for enforcement, keep path; trusted implementation and all its callers unchanged.",
+  "checks": [
+    {
+      "command": "python3 -B -m unittest test_fresh35_isolated_launcher.BootstrapNetworkObservationTests",
+      "cwd": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests",
+      "phase": "OLD_SOURCE_CORRECTED_TEST_CONTRACT",
+      "exitCode": 1,
+      "tests": 4,
+      "errors": 14,
+      "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-producer-none-return-01/RED-tests.log"
+    },
+    {
+      "command": "python3 -B -m unittest test_fresh35_isolated_launcher.BootstrapNetworkObservationTests",
+      "cwd": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests",
+      "phase": "FIXED_SOURCE_SAME_TEST_CONTRACT",
+      "exitCode": 0,
+      "tests": 4,
+      "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-producer-none-return-01/GREEN-tests.log"
+    },
+    {
+      "command": "git diff --check -- scripts/release/unified-install/launch-fresh35-isolated-v1.py tests/test_fresh35_isolated_launcher.py",
+      "exitCode": 0
+    }
+  ],
+  "unchanged": [
+    "trusted function/body/API",
+    "13-field proof/body bindings, original file metadata and O_EXCL/fsync",
+    "Original SQL/admin/role/permissions/native consumers",
+    "Release eight frozen files",
+    "Old223598/r2 failed carrier, all jobs and evidence"
+  ],
+  "currentOldCarrier": {
+    "cid": "c396958456cb7e4ddb4a05ceb339dc092aa33afeca39c2a1a7ff58da7afc2dd0",
+    "stopped": true,
+    "cleanupComplete": true
+  },
+  "unverified": [
+    "New isolated PostgreSQL execution of this source",
+    "Actual ordinary UID proof read/watch/epoch/current rejection",
+    "Native same-pool revocation",
+    "Production execution and business acceptance"
+  ],
+  "serverActionsForSourceFix": 0,
+  "pgStartsForSourceFix": 0,
+  "builds": 0,
+  "next": "C/QB review only these two leaves, reuse unchanged prior evidence. C new exact source/build package/new r3 root and independent finite window; never replay223598 or reuse old PG window."
+}

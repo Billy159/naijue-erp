@@ -1,0 +1,35 @@
+{
+  "errorCode": "DESCRIPTOR_NOT_CONFIRMED_OR_WINDOW_SHORT_NO_REPLAY",
+  "phase": "start-target",
+  "readback": {
+    "cid": "c396958456cb7e4ddb4a05ceb339dc092aa33afeca39c2a1a7ff58da7afc2dd0",
+    "containerStopped": false,
+    "evidence": {
+      "failure.json": {
+        "automaticRetry": false,
+        "code": "AttributeError",
+        "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+      },
+      "runtime-dependencies.json": {
+        "arch": "x64",
+        "fastify": "5.12.5",
+        "libvips": "8.18.7",
+        "pg": "8.23.1",
+        "platform": "linux",
+        "sharp": "0.35.5"
+      }
+    },
+    "evidenceSha256": {},
+    "forcedStopIsNotCleanShutdownProof": true,
+    "launcherExitCode": null,
+    "ordinaryProofEvidence": {},
+    "sourceResult": {
+      "cleanup": {
+        "cleanupComplete": false
+      },
+      "state": "UNKNOWN"
+    },
+    "status": "WAITING_ORIGINAL_LAUNCHER"
+  },
+  "status": "STOP_OR_UNKNOWN_NO_REPLAY"
+}

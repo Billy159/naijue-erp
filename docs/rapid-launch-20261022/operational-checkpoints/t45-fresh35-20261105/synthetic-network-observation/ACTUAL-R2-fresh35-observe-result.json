@@ -1,0 +1,67 @@
+{
+  "cid": "c396958456cb7e4ddb4a05ceb339dc092aa33afeca39c2a1a7ff58da7afc2dd0",
+  "containerStopped": true,
+  "evidence": {
+    "cleanup.json": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "errors": [],
+      "initialization": {
+        "descendantsReaped": true,
+        "errors": [],
+        "initialized": true,
+        "initializerReaped": true,
+        "stopReason": "INITIALIZER_EXITED"
+      },
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "failure.json": {
+      "automaticRetry": false,
+      "code": "AttributeError",
+      "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+    },
+    "runtime-dependencies.json": {
+      "arch": "x64",
+      "fastify": "5.12.5",
+      "libvips": "8.18.7",
+      "pg": "8.23.1",
+      "platform": "linux",
+      "sharp": "0.35.5"
+    }
+  },
+  "evidenceSha256": {},
+  "forcedStopIsNotCleanShutdownProof": true,
+  "launcherExitCode": 1,
+  "ordinaryProofEvidence": {},
+  "sourceResult": {
+    "businessVerified": false,
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "errors": [],
+      "initialization": {
+        "descendantsReaped": true,
+        "errors": [],
+        "initialized": true,
+        "initializerReaped": true,
+        "stopReason": "INITIALIZER_EXITED"
+      },
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "hostEnabled": false,
+    "hostVerified": false,
+    "independentSnapshotsVerified": false,
+    "ordinaryBusinessVerified": false,
+    "productionVerified": false,
+    "recordPublished": null,
+    "state": "FAILED_OR_CLEANUP_UNCONFIRMED",
+    "syntheticImportVerified": false
+  },
+  "status": "FAILED_OR_UNKNOWN_PRESERVED_NO_REPLAY"
+}
