@@ -129,13 +129,17 @@ test('native35 exact original source closure survives one real build and pack wi
  const closure=await native35Closure(repository,reference);
  const f=await fixture('native35-closure',true);
  for(const pin of closure.pins)await put(f.sourceRoot,pin.path,await readFile(path.join(repository,pin.path)));
- await put(f.sourceRoot,'apps/api/src/production-main.ts','export {describe} from "./postgres-read-api.ts";');
+ await put(f.sourceRoot,'apps/api/src/production-main.ts','export {describe} from "./postgres-read-api.ts"; export * as execution from "../../../packages/application/src/unified-import-execution.ts"; export * as profile from "../../../packages/application/src/unified-import-whole-package-profile.ts";');
  await put(f.sourceRoot,'apps/api/src/postgres-read-api.ts','import {describeFresh35OrdinaryAdmissionV2} from "../../../tools/unified-import/fresh35-host-session.mjs"; export const describe=describeFresh35OrdinaryAdmissionV2;');
  f.options.sourceCommit=await commitFixtureTree(f.sourceRoot);f.options.native35ReferenceDirectory=reference;
  const receipt=await buildProduction(f.options);assert.equal(receipt.status,'REAL_BUILD_AND_PACK_CONTRACT_VALIDATED');
  const opts={sourceManifest:path.join(f.options.manifestDirectory,'source-manifest.json'),buildManifest:path.join(f.options.manifestDirectory,'build-manifest.json'),buildRoot:f.options.buildRoot};
  const build=JSON.parse(await readFile(opts.buildManifest)),backend=await readFile(path.join(opts.buildRoot,'backend/production-main.js'),'utf8');
  assert.ok(backend.includes('./native35-source/tools/unified-import/fresh35-host-session.mjs'));
+ assert.ok(backend.includes('./native35-source/scripts/release/unified-install/whole-sales-admission-v1.mjs'));
+ const backendGraph=JSON.parse(await readFile(path.join(opts.buildRoot,'backend/metafile.json')));
+ for(const name of ['packages/application/src/unified-import-execution.ts','packages/application/src/unified-import-whole-package-profile.ts'])assert.ok(Object.hasOwn(backendGraph.inputs,name),'actual production application consumer participates');
+ for(const name of ['scripts/release/unified-install/whole-sales-admission-v1.mjs','tools/unified-import/whole-host-session.mjs','tools/unified-import/fresh35-host-session.mjs'])assert.ok(!Object.hasOwn(backendGraph.inputs,name),'physical proof module must retain the original native URL');
  const native=build.files.filter(r=>r.role==='native35');assert.equal(native.length,closure.pins.length);
  for(const row of native){const original=await readFile(path.join(repository,row.sourcePath));assert.equal(row.sha256,createHash('sha256').update(original).digest('hex'));assert.deepEqual(await readFile(path.join(opts.buildRoot,row.path)),original);}
  const nativeRoot=path.join(opts.buildRoot,'backend/native35-source');
@@ -191,4 +195,8 @@ print('ACTUAL_HELPER_ARCHIVE_AND_CLOSED_NATIVE_MEMBERS_PASS')`;
  const fixturePin=closure.pins.find(p=>p.path==='tests/fixtures/unified-import/synthetic-package.ts');
  const fixturePath=path.join(f.sourceRoot,fixturePin.path),fixtureBytes=await readFile(fixturePath);await writeFile(fixturePath,Buffer.concat([fixtureBytes,Buffer.from('\n// mixed version')]));
  await assert.rejects(native35Closure(f.sourceRoot,reference),/FIXTURE_BYTES/);await writeFile(fixturePath,fixtureBytes);
+ // The omitted real callers are registered individually; another API caller cannot borrow that boundary.
+ await put(f.sourceRoot,'apps/api/src/postgres-read-api.ts','export {assertWholeSalesAdmissionV1 as describe} from "../../../scripts/release/unified-install/whole-sales-admission-v1.mjs";');
+ const rejected={...f.options,sourceCommit:await commitFixtureTree(f.sourceRoot),buildRoot:path.join(f.root,'wrong-caller-build'),manifestDirectory:path.join(f.root,'wrong-caller-manifests')};
+ await assert.rejects(buildProduction(rejected),/NATIVE35_EXACT_BOUNDARY_REQUIRED/);
 });

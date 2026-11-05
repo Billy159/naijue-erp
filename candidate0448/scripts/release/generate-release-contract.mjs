@@ -26,9 +26,10 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
       || typeof contract.full.patchLevel !== 'string' || !/^26_[A-Za-z0-9_]+$/.test(contract.full.patchLevel)) {
     throw Error('INVALID_RELEASE_CONTRACT');
   }
-  if (!exactKeys(contract.native35,['root','entry','external','fixturePins']) || contract.native35.root !== 'backend/native35-source'
+  if (!exactKeys(contract.native35,['root','entry','external','fixturePins','boundaries']) || contract.native35.root !== 'backend/native35-source'
       || contract.native35.entry !== 'tools/unified-import/fresh35-host-session.mjs'
       || contract.native35.external !== './native35-source/tools/unified-import/fresh35-host-session.mjs') throw Error('INVALID_RELEASE_NATIVE35');
+  if (JSON.stringify(contract.native35.boundaries) !== JSON.stringify([{"entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","importers":["apps/api/src/postgres-read-api.ts","adapters/postgres/src/runtime27-command-issuer.ts"]},{"entry":"scripts/release/unified-install/whole-sales-admission-v1.mjs","external":"./native35-source/scripts/release/unified-install/whole-sales-admission-v1.mjs","importers":["packages/application/src/unified-import-execution.ts","packages/application/src/unified-import-whole-package-profile.ts"]}])) throw Error('INVALID_RELEASE_NATIVE35_BOUNDARIES');
   if (JSON.stringify(contract.native35.fixturePins) !== JSON.stringify([{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"9ca6ddbfd2c3255801a928e6f1ae661608ab7c1aec9d72d7901ccbb759a7f5c7"}])) throw Error('INVALID_RELEASE_NATIVE35_FIXTURE_PINS');
   const native35 = {profile:'source-confirmed-native-exact35-v1', migrationCount:27,
     installationRecord:'/etc/naijue-erp/fresh35-combined-installation-v1.json'};
