@@ -1364,3 +1364,10 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - D1 F01四叶逐hash核回执f194e3fc后固定db16b8c7a2c19537131944e8cef18e35e27070ba，11模型/tsc/build通过；原QB仅复验F01与实际受影响路径，未称真实OS/PG通过。D2据固定字节组合runtime7及发行原字节闭包；C授权其同步helper准确成员准入，批准marker不改。
 - QB cca4运维增量PASS回执1fa583a8已采用。T45一次准确resume job终态FAILED/exit2/120.636秒，回执f5fae315：固定registry manifest HEAD连接超时；宿主IPv4/IPv6短只读探测也超时，解析或路由原因尚未证实。build/签名/锁包/ldd未达，PG20分钟未启。旧现场、resume intent及READY保留，不重传或第三次pull；原T45转同digest可信离线载体方法准备，尚非环境通过。
 - D3 r3布局修复与25单原款事实保持，235历史结算接收合同由原D1接续，不猜款或改原金额。真实导入/普通业务/生产仍未通过。
+
+
+### F01限定关闭、运行发行13叶固定与离线镜像字节具备
+- 原QB对db16b8c7 F01定向复验PASS，回执5b303a58，C采用并仅关闭该固定源码问题；原57842失败历史保留，真实OS/PG未验。
+- D2 runtime7+发行6共13叶逐hash核bb440d32后固定fffe6a7546838c96da6d5b278f695e241443f4f3，已交原QB一次组合增量验收。实际小构建/打包/解包/helper成员读取及负例通过，非完整正式应用；部署重新审核marker保留。
+- T45本机已核固定amd64 OCI manifest/config/layer/DiffID，离线tar29870080字节/47788a24，回执54642e2e；未上传/load，RepoDigest及实际构建未验。原T45补存储后端最小只读事实并准备原工具离线后继，沿同类授权不再人工重批。
+- 210历史RETURN无款系既有0..N合同consumer遗漏，原D1已接预检/SQL及准确声明修复；25有款差额准确提案885f7a7f不擅自实施，原事实保持。其余真实导入、权限业务及生产仍未通过。
