@@ -1,0 +1,185 @@
+{
+  "task_id": "QB-877A-LOCAL-TAIL-ASSEMBLY-20261106",
+  "verdict": "PASS_SCOPED_ONE_SHOT_SOURCE_AND_MINIATURE_LOCAL_MODEL_NOT_SERVER",
+  "findings": [],
+  "source": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-877a32-local-tail-bound-01/assemble_original_receiver.py",
+    "sha256": "0bfaf9cb43a066c15d24f422975b9e0dc2363f6c900e03f1b58358625b9d71a6",
+    "bytes": 9622
+  },
+  "original_receiver": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-877a32-local-tail-bound-01/artifact-receiver.original.py",
+    "sha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653",
+    "bytes": 6230,
+    "context_literal_count": 1
+  },
+  "draft_normalized_sha256": "d974a3ed08472b96f0fd5d0f22a32240ac451b9de8fd3b46788ed3512303864d",
+  "exact_source_delta": "Only four constant assignments changed from draftd974a3ed; every other byte and function unchanged. Full bound source0bfaf9cb reviewed.",
+  "bound_constants": {
+    "TAIL_KEY": "f35-877a32-tail-20261106-01",
+    "TAIL_SHA": "64942ecadf87c012f9302fbb4bf34f8727801b8d9002a1773f6c356bc5ece48f",
+    "TAIL_AUTHORITY_SHA": "745383ce47b03314675a6f30d60a0232a392e3e622f7d9f08abbf323067fbb14",
+    "FINAL_AUTHORITY_SHA": "2cbd2a5119f71f9eedf6826e8dfeeecbf35e68fee0bcba3039c88fc7ded19d24"
+  },
+  "external_authorities": [
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/artifact-staging-877a32-tail-authorization-01.json",
+      "sha256": "745383ce47b03314675a6f30d60a0232a392e3e622f7d9f08abbf323067fbb14",
+      "value": {
+        "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+        "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+        "taskId": "T45",
+        "grantId": "5cc58239751e4e2a",
+        "artifactKey": "f35-877a32-tail-20261106-01",
+        "sourceSetSha256": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394",
+        "archiveSha256": "64942ecadf87c012f9302fbb4bf34f8727801b8d9002a1773f6c356bc5ece48f",
+        "archiveBytes": 2761894,
+        "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-877a32-tail-20261106-01",
+        "startsAt": 1793908073786,
+        "expiresAt": 1793909873786,
+        "decisionReference": "C human ERP delegation until2026-11-06 noon: transfer only exact raw compressed source/tools tail bytes[80902017:83663911] of877a, NOT complete application. D2 proof33f797f7; original40s channel, new tail key only. Old partial retained. After exact final verification, separate complete archive authority and original receiver required; no PG/REAL/production.",
+        "kind": "ORDINARY_SOURCE_AND_TOOLS"
+      }
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/artifact-staging-877a32-local-complete-authorization-01.json",
+      "sha256": "2cbd2a5119f71f9eedf6826e8dfeeecbf35e68fee0bcba3039c88fc7ded19d24",
+      "value": {
+        "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+        "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+        "taskId": "T45",
+        "grantId": "5cc58239751e4e2a",
+        "artifactKey": "f35-877a32-ordinary-local-20261106-02",
+        "sourceSetSha256": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394",
+        "archiveSha256": "6b57c96e5931ee4dc8c61b0f9c4d3d0e254b3c1eaeb6fbdfd3dc7f6088cb44ea",
+        "archiveBytes": 83663911,
+        "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-877a32-ordinary-local-20261106-02",
+        "startsAt": 1793908073786,
+        "expiresAt": 1793909873786,
+        "decisionReference": "C human ERP delegation until2026-11-06 noon: exact877a complete archive only, consume via ORIGINAL unmodified receiver from validated local file after fixed223598 prefix80902017+exact tail64942eca, whole6b57 length/hash required. New key02; retain old base and failed key01. Fixed source-reviewed one-off job only, original UID/authority/EOF/O_EXCL/finalization; no custom READY, PG/REAL/production or timeout extension.",
+        "kind": "ORDINARY_SOURCE_AND_TOOLS"
+      }
+    }
+  ],
+  "actual_tail_ready": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-877a32-local-tail-bound-01/TAIL-READY.json",
+    "sha256": "a12153bfe4d3ccd1c9d1c263a527540ee26dbd1c6568069dc93c0e109d84bffb",
+    "value": {
+      "status": "READY",
+      "receipt": {
+        "status": "READY",
+        "artifactKey": "f35-877a32-tail-20261106-01",
+        "sourceSetSha256": "46120d6b1021ceb0d9959846e5e5eb09a52d621382821d0d184946aeecd62394",
+        "archiveSha256": "64942ecadf87c012f9302fbb4bf34f8727801b8d9002a1773f6c356bc5ece48f",
+        "archiveBytes": 2761894,
+        "authoritySha256": "745383ce47b03314675a6f30d60a0232a392e3e622f7d9f08abbf323067fbb14",
+        "fileIdentity": [
+          66304,
+          393388,
+          2761894,
+          1793908528109039767,
+          1793908528231043441
+        ]
+      }
+    }
+  },
+  "D2_actual_byte_proof": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-877a32ed/ordinary/recovery-tail-r3-01/RESULT.json",
+    "sha256": "33f797f73a23faa54fc542f4d4342d0ddee935a33e6de3e40ccf9ae3f6452322",
+    "value": {
+      "status": "EXACT_ORIGINAL_TAIL_EXTRACTED_AND_BASE_PREFIX_PLUS_TAIL_STREAM_HASH_PROVED",
+      "sourceCommit": "877a32edb9fef422d76496ae388b0732208f8fc5",
+      "base": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-223598cb/ordinary/ordinary-transfer.tar.gz",
+        "bytes": 83663631,
+        "sha256": "f3126f335c8d2afcd9d7975460357c3e3b790724d80c0fe2436dcaf30e52ed56",
+        "wholeFileHashVerified": true
+      },
+      "target": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-877a32ed/ordinary/ordinary-transfer.tar.gz",
+        "bytes": 83663911,
+        "sha256": "6b57c96e5931ee4dc8c61b0f9c4d3d0e254b3c1eaeb6fbdfd3dc7f6088cb44ea",
+        "wholeFileHashVerified": true
+      },
+      "prefix": {
+        "offsetStartInclusive": 0,
+        "bytes": 80902017,
+        "offsetEndExclusive": 80902017,
+        "sha256": "f1a431cf97457bb53eea2af090565ba5358f3046158c928e517c7cedd1657283",
+        "baseAndTargetComparedByteForByte": true
+      },
+      "tail": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-877a32ed/ordinary/recovery-tail-r3-01/ordinary-transfer.tail-offset-80902017.bin",
+        "offsetStartInclusive": 80902017,
+        "offsetEndExclusive": 83663911,
+        "bytes": 2761894,
+        "sha256": "64942ecadf87c012f9302fbb4bf34f8727801b8d9002a1773f6c356bc5ece48f",
+        "mode": "0o600",
+        "copiedFromOriginalTargetBytes": true,
+        "readbackHashVerified": true
+      },
+      "streamReconstruction": {
+        "inputs": [
+          "base bytes[0:80902017]",
+          "tail entire2761894bytes"
+        ],
+        "bytes": 83663911,
+        "sha256": "6b57c96e5931ee4dc8c61b0f9c4d3d0e254b3c1eaeb6fbdfd3dc7f6088cb44ea",
+        "matchesExactOriginal877aArchive": true,
+        "fullReconstructedFileWritten": false,
+        "recompressionPerformed": false
+      },
+      "boundaries": {
+        "originalArchivesUnchanged": true,
+        "sourceOrBuildChanged": false,
+        "deletions": false,
+        "serverOrTransferExecuted": false,
+        "newCliOrInterfaceCreated": false
+      },
+      "nextStep": "Original T45 owner transfers only this exact tail with a new authorized channel operation; validates base and tail, assembles new file without altering old base/partial, verifies complete target bytes/SHA before original receiver. D2 performed local fixed-byte preparation only."
+    }
+  },
+  "independent_checks": {
+    "passed_groups": 4,
+    "fixed_source_authority_ready_binding": "Full source SHA/receiver bytes, four exact external values, two C leaf hashes/windows, original tail READY and D2 proof binding matched.",
+    "miniature_models": [
+      {
+        "name": "original assembly body passes root-private FD to intended UID1000 receiver, exact original upload publishes miniature fullhash READY once",
+        "state": "PASS"
+      },
+      {
+        "name": "six base-fullhash/identity/tail/final/authority/existing-output failures never call receiver or overwrite old inputs",
+        "state": "PASS"
+      },
+      {
+        "name": "original40s timeout propagates unknown without retry or removing private partial, old bytes retained",
+        "state": "PASS"
+      }
+    ],
+    "scope": "Actual original assembly and receiver-upload bodies with miniature local bytes. Root/UID/namespace/external authority and subprocess syscall modeled; no actual root, UID switch, server, 83MB reread, PG or real READY publication."
+  },
+  "reviewed_behavior": [
+    "Exact retained whole base SHA and fixed identity/original READY verified while only fixed prefix copied; same open descriptor retained, full base read not just prefix. Tail exact size/hash/original READY and stable identity required.",
+    "Root job and four bound pins checked; exact current root final authority file bytes/SHA equal C bundle leaf, final key/source/size/SHA/target/window matched before assembly.",
+    "New root0600 assembled file O_EXCL/O_NOFOLLOW; full concatenation length/SHA before original receiver, file and job-directory fsync. No unlink/overwrite of old base or original failed partial. Failure leaves private once-only partial and closes descriptors.",
+    "Original receiver byte-for-bytead0afee1, exactly one CONTEXT_LITERAL substitution. Isolated absolute Python command, UID/GID1000, extra_groups empty, clean env, stdin only already-open nonsecret archive FD; root-private path need not be traversed by child. Actual UID switch is not tested here.",
+    "Original receiver authority/context/time checks, exclusive target/part/bin/READY publication, EOF/fullSHA/fsync retained in original fixed code. Original40s subprocess timeout and fixed-key unknown/no-retry preserved. Root assembly validates receiver READY fields and its own input identity after child.",
+    "No new client/platform/controller layer, receiver or app changes, PG/schema/role/permission grant or business action. Source/template publication and actual server execution remain separate."
+  ],
+  "actual_window_checked_at_utc": "2026-11-05 20:02:48 UTC",
+  "actual_window_note": "Original receiver rechecks exact C scope/time at execution; this source result does not extend starts1793908073786/expires1793909873786 or create execution authority.",
+  "adopted_evidence_note": "D2 actual prefix80902017/tail2761894/full83663911/SHA proof33f797f7 and actual original tail receiver READY a12153bf read/hashed as small evidence. QB did not reread83MB real archive, transfer bytes or run server stream.",
+  "harness_note": "Miniature corruption case initially replaced the last X with X, so no mutation occurred. Corrected to guaranteed XOR change, kept initial log and reused successful FD/receiver positive check; no source changed.",
+  "unverified": [
+    "Actual server root file/UID/groups/FD/subprocess behavior and40s local receiver performance; final real complete READY still pending T45.",
+    "Actual base/tail current identity/window and source assembly on server must be checked by this exact job; no real old-input mutation, upload or receiver execution performed by QB.",
+    "No PG/new target/business/deployment result; prior source/network/release conclusions adopted without rerun.",
+    "Old failed full-transfer key/5MB partial and base retained; unknown must be inspected under original key and never replayed."
+  ],
+  "actual_model": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "source_modified": false,
+  "server_or_pg": false,
+  "new_authority_created": false,
+  "next": "C/T45 may adopt exact0bfaf one-shot source review and perform separately authorized same original receiver staging within still-current exact leaf. T45 remains sole server executor; no source or time/permission relaxation required."
+}

@@ -1,6 +1,7 @@
 {
-  "state": "WIP_SOURCE_FIXED_QB_REVIEW_PENDING_NOT_SERVER_EXECUTED",
+  "state": "QB_PASS_SCOPED_SOURCE_AND_MINI_MODEL_SERVER_EXECUTION_PENDING",
   "sourceSHA256": "0bfaf9cb43a066c15d24f422975b9e0dc2363f6c900e03f1b58358625b9d71a6",
   "receiverSHA256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653",
-  "scope": "Exact retained base prefix and persisted tail; unchanged original UID1000 receiver under separate external C leaf. No DB/new permissions/production."
+  "scope": "Exact retained base prefix and persisted tail; unchanged original UID1000 receiver under separate external C leaf. No DB/new permissions/production.",
+  "QBReceiptSHA256": "1ffaae49c686cbd8a713bfae2ac8e661fa200929a0b6e5dfeec9fd9ee237bded"
 }

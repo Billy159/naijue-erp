@@ -28369,7 +28369,11 @@
       "remotePriorVerifiedCommit": "3331fb76a3b114257f1d73e20a40f6db3958332c",
       "localHead": "d30a81d90ca03f984b139f540b64dc3b6879eea2",
       "pushRoute": "existing system HTTP proxy, command scoped; direct connection timed out",
-      "lastVerifiedRemoteCommit": "d0bd2c35f461ee385857e57fd0363c0c4f395ed8"
+      "lastVerifiedRemoteCommit": "d0bd2c35f461ee385857e57fd0363c0c4f395ed8",
+      "latestTailRecoveryCheckpoint": {
+        "commit": "d3a60a846d96f5cb2ead0d309a2ccbea170c1126",
+        "remoteVerified": true
+      }
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -29511,7 +29515,7 @@
       },
       "r3ProbeSHA256": "ee229ff8f96b5bf19514d1d9b25737605b73af2d21bb15ac73acb9886e66247b",
       "r3TransferRecovery": {
-        "state": "C_EXACT_LEAVES_ISSUED_T45_PREPARING_QB_NEW_OPS_DELTA",
+        "state": "QB_PASS_EXACT_SOURCE_T45_ASSEMBLY_IN_PROGRESS",
         "failedKey": "f35-877a32-ordinary-20261106-01",
         "failure": "LEASED_CHANNEL_TIMEOUT_DO_NOT_REPLAY",
         "partialBytes": 5038592,
@@ -29537,7 +29541,15 @@
         },
         "method": "New exact tail original channel; verify retained full base and tail; O_EXCL private assembly; original unmodified receiver as UID1000 consumes exact assembled bytes and alone publishes READY under separate C leaf; no resume platform or original key replay",
         "actualFullREADY": false,
-        "actualR3PG": false
+        "actualR3PG": false,
+        "tailActualREADY": true,
+        "tailReceiptSHA256": "a12153bfe4d3ccd1c9d1c263a527540ee26dbd1c6568069dc93c0e109d84bffb",
+        "fixedOpsSHA256": "0bfaf9cb43a066c15d24f422975b9e0dc2363f6c900e03f1b58358625b9d71a6",
+        "originalReceiverSHA256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653",
+        "r3WrapperSHA256": "fd9945be146a1fbacf721376320c531a9ad9500f085265acf1f044bced715075",
+        "materializationPlanSHA256": "3d5b3afab43d13fbef28d9cfd62c7e848bb51e347fb5820dfce648723f9abd3f",
+        "budgetDecision": "900s upper bound, total external deadline unchanged; prior365.58s evidence; require at least prior duration+120s remaining at start, no guard removal/timeout extension",
+        "QBReceiptSHA256": "1ffaae49c686cbd8a713bfae2ac8e661fa200929a0b6e5dfeec9fd9ee237bded"
       }
     },
     "productionReleaseCompatibilityContinuation": {
