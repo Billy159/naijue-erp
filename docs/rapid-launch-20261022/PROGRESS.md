@@ -1354,3 +1354,7 @@ D1核PG17.11官方源码：logical replication launcher会有bootstrap用户，�
 
 
 - PRIVATE-DATA-F01新e9b69后继独立QB09707e94定向3组PASS：增长写入上限、读后过期0写、正常45片及重复键拒绝；root/UID/receiver仍模型，服务器未验。C只将准确client7af303/test141d64整合到candidate0448（前置590/2ada哈希吻合），保留实际根678c脚本不改；原receiver8841和未绑定拼包器保存至既有ops目录。T45确认实际通道路径与非秘密grant期限后，C一次绑定45片+完整包有限窗口；不以源码通过代替实际运输。
+
+
+### 2026-11-06 05:41 | Exact finite private staging scope
+T45 verified canonical candidate artifact client7af; old root678 manager unchanged. C issued46 external leaves/index232114b5 for45 parts plus fullfc831c/93508914/manifest1e1e, starts1793914815706..expires1793917515706 (06:25:15.706 hard deadline). Same original40s, exact CAS/once upload/one assembly and original UID1000 trueREADY. Unknown stops original-key recovery; no unpack/PG/production, no new platform. Authority derives from human delegation before noon. Actual transfer evidence pending; approved source alone is not transfer PASS.

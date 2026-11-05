@@ -29818,7 +29818,7 @@
         "state": "QB_F01_CLOSED_SOURCE_INTEGRATED_NOT_SERVER_TRANSFER",
         "readySHA256": "aeae087ba1f5be52fa5b825df9ec808f839b398a8edeac95bcf07d9c199091cf",
         "clientSHA256": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085",
-        "actualClientUnchanged": true,
+        "actualClientUnchanged": false,
         "fragmentCount": 45,
         "fragmentBytes": 2097152,
         "lastFragmentBytes": 1234226,
@@ -29830,7 +29830,29 @@
         "fixedAssemblerSHA256": "e9b69bf4f2d90f29a7fc3a9780f074b881f9c23690b7c657b0ad4c937d3ed03f",
         "QBFinalReceiptSHA256": "09707e947826c09c13b65e48d03796870cb5841313f6880ecbc8d563777d8542",
         "testSHA256": "141d64add6441dd821bd25ca741bac079aae1a5d28fe5d92eecf3be662f2d8f1",
-        "sourceIntegration": "candidate0448 exact client590 predecessor; worktree root678c client untouched"
+        "sourceIntegration": "candidate0448 exact client590 predecessor; worktree root678c client untouched",
+        "actualClientReadback": {
+          "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/ssh-control.py",
+          "sha256": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085",
+          "T45ReadbackAt": "2026-11-06T05:37:52+08:00",
+          "oldRoot678Retained": true
+        }
+      },
+      "executionScope": {
+        "state": "C_EXACT_46_EXTERNAL_LEAVES_ISSUED_T45_ORIGINAL_PATH_PRECHECK_THEN_ONCE_TRANSFER",
+        "indexSHA256": "232114b5c7e889e26888690ccadbad19237ea923bbfef56c09065eb421d9d6d6",
+        "startsAt": 1793914815706,
+        "expiresAt": 1793917515706,
+        "rootAssemblyJob": "t45-real-r3-assemble-20261106-01",
+        "parts": 45,
+        "fullAuthoritySHA256": "54cd7700ae7ee5d25be5fe566c5f1019f2a4cd2e3895a294c608f9a6d43001ba",
+        "initialGateExpectedSHA256": "4d5a2af34066ffa7cc0af062193599bbfed1848867e1404f52163ac5fd37c862",
+        "sameOriginal40s": true,
+        "noNewPlatform": true,
+        "unpackAuthorized": false,
+        "PGAuthorized": false,
+        "productionAuthorized": false,
+        "authority": "C under direct human decision delegation before2026-11-06T12:00+08"
       }
     }
   }
