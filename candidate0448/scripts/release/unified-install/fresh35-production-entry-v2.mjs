@@ -77,7 +77,12 @@ export async function main(){
  try{
   await client.connect();
   const completion=await runFresh35CombinedInstall({program,authorization,client,journalDirectory:join(t.proposal.workspaceDirectory,'installation-journal')});
-  const result=describeFresh35CombinedCompletion(completion),publication=await publishFresh35CombinedRecord(completion);
+  const result=describeFresh35CombinedCompletion(completion);let publication;
+  try{publication=await publishFresh35CombinedRecord(completion)}catch(error){
+   // The native completion already confirms COMMIT and close. Publisher
+   // preconditions can fail before assigning their own publication stage.
+   error.installState??='COMMITTED_UNPUBLISHED';throw error;
+  }
   if(publication.state!=='RECORD_DURABLY_PUBLISHED'){
    const error=Error('FRESH35_PRODUCTION_ENTRY_DURABLE_V2_PUBLICATION_REQUIRED');
    error.installState=publication.state==='PUBLISHED_DURABILITY_UNKNOWN'?'PUBLISHED_DURABILITY_UNKNOWN':'COMMITTED_UNPUBLISHED';throw error;

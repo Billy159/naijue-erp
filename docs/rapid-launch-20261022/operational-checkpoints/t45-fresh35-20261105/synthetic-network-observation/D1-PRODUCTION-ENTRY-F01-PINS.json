@@ -1,0 +1,18 @@
+{
+  "finding": "PROD-ENTRY-F01",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-production-entry-v2.mjs",
+      "sha256": "43dd0f8602d4ec4d7df792aba6fc4b3de261c8bd681807b35a25240d3dc9d5a1",
+      "bytes": 9975
+    },
+    {
+      "path": "tests/fresh35-production-entry.test.mjs",
+      "sha256": "4e5e9a615081f93fcf52638b9dfc466bd185064689cad3c116d2a5cd94465d83",
+      "bytes": 20639
+    }
+  ],
+  "checks": "Original publisher body, original main and actual diagnostic function, with private completion/root/IO/native wire modeled. Original three untagged precondition failures were reproduced red (exit1/null), then all six scoped tests pass, no skips. Publication durability UNKNOWN preserved; setup/connect/rollback/native commit-UNKNOWN classifications unchanged. No PG or files published. One client/close, no retry, safe12 fields.",
+  "authority": "C F01 exact two-leaf source successor; old eight/three and other QA reused",
+  "sourceCopies": "f01-source; original source/ and RESULT.json not overwritten"
+}

@@ -53,7 +53,7 @@ test('production protected inputs use root0600 single-link nofollow stable bound
  }
 });
 
-async function modeledMain({mode='--execute',mutate,environment={},runtime={},entryPath,extraArg,wrongLoadedModule=false,staleEntry=false,connectFails=false,earlyRunFails=false,installState,publicationFails=false,publicationState='RECORD_DURABLY_PUBLISHED',missingEntryAuthority=false,missingExecutionAuthority=false,changeProof=false,changeSource=false}={}){
+async function modeledMain({mode='--execute',mutate,environment={},runtime={},entryPath,extraArg,wrongLoadedModule=false,staleEntry=false,connectFails=false,earlyRunFails=false,installState,publicationFails=false,publishRecord,publicationState='RECORD_DURABLY_PUBLISHED',missingEntryAuthority=false,missingExecutionAuthority=false,changeProof=false,changeSource=false}={}){
  const input=targetInput(),a={format:'FRESH35_PRODUCTION_ENTRY_AUTHORIZATION_V2',decision:'AUTHORIZE_EXACT_NEW35_PRODUCTION_INSTALL_AND_RECORD',sourceSetSha256:'a'.repeat(64),target:input,independentSafetyReviewSha256:'b'.repeat(64),authorizationReference:'MODEL ONLY NOT AN AUTHORIZATION'};
  mutate?.(a);const events=[],output=[];let proofReads=0,clients=0,closed=0;
  const client={_ending:false,_ended:false,connect:async()=>{events.push('connect');if(connectFails)throw Error('PRIVATE CONNECT DETAIL')}};
@@ -74,7 +74,7 @@ async function modeledMain({mode='--execute',mutate,environment={},runtime={},en
   loadPgForModel:async()=>({Client:class{constructor(options){clients++;events.push('client');assert.equal(options.user,input.proposal.owner);return client}}}),
   runFresh35CombinedInstall:async args=>{events.push('run');assert.equal(args.client,client);assert.equal(args.program,program);assert.equal(args.journalDirectory,join(input.proposal.workspaceDirectory,'installation-journal'));if(earlyRunFails)throw Error('EARLY NATIVE REFUSAL');client._ending=true;client._ended=true;closed++;if(installState)throw Object.assign(Error('PRIVATE INSTALL DETAIL'),{installState});return completion},
   describeFresh35CombinedCompletion:c=>{assert.equal(c,completion);return{state:'COMMITTED_UNPUBLISHED',program:{sourceSetSha256:'a'.repeat(64),targetSha256:'c'.repeat(64),programSha256:'d'.repeat(64)},catalogSha256:'e'.repeat(64)}},
-  publishFresh35CombinedRecord:async c=>{assert.equal(c,completion);assert(client._ended,'original wire must be closed before publication');events.push('publish');if(publicationFails)throw Object.assign(Error('PRIVATE PUBLISH DETAIL'),{installState:'COMMITTED_UNPUBLISHED'});return{state:publicationState,recordSha256:'f'.repeat(64)}},
+  publishFresh35CombinedRecord:async c=>{assert.equal(c,completion);assert(client._ended,'original wire must be closed before publication');events.push('publish');if(publishRecord)return publishRecord(c,{input});if(publicationFails)throw Object.assign(Error('PRIVATE PUBLISH DETAIL'),{installState:'COMMITTED_UNPUBLISHED'});return{state:publicationState,recordSha256:'f'.repeat(64)}},
   closePhysical:async c=>{assert.equal(c,client);events.push('fallback-close');c._ending=true;c._ended=true;closed++}
  };
  const body=source.slice(source.indexOf('export async function main(){')+'export async function main(){'.length,source.indexOf('\n}\n\nexport function productionEntryFailure'))
@@ -93,6 +93,39 @@ test('production bootstrap/describe are externally bound render-only modes; exec
  assert(r.events.indexOf('execution-authority')<r.events.indexOf('client'));assert(r.events.indexOf('source-current')<r.events.indexOf('connect'));assert(r.events.indexOf('run')<r.events.indexOf('publish'));
  const receipt=JSON.parse(r.output[0]);assert.equal(receipt.state,'RECORD_DURABLY_PUBLISHED');assert.equal(receipt.recordPublished,true);assert.equal(receipt.hostEnabled,false);assert.equal(receipt.businessVerified,false);assert(!r.output[0].includes('PRIVATE'));
  assert.doesNotMatch(source,/executeWholePackage|streamPreflight|new Pool|createPool|spawn\(|CREATE ROLE|writeFile|writeFileSync/);
+});
+
+test('PROD-ENTRY-F01 original publisher precondition failures retain the confirmed commit and preserve publisher durability uncertainty',async t=>{
+ const text=await readFile(new URL('../scripts/release/unified-install/fresh35-combined-record-v1.mjs',import.meta.url),'utf8');
+ const start=text.indexOf('export async function publishFresh35CombinedRecord(completion){')+'export async function publishFresh35CombinedRecord(completion){'.length;
+ const end=text.indexOf('\n}\n/** Read-only fixed-path loading.',start);assert(end>start);
+ for(const phase of ['existing-record','trusted-tree','lstat-eacces','published-durability-unknown'])await t.test(phase,async()=>{
+  let publisherCalls=0,writeCalls=0;
+  const result=await modeledMain({publishRecord:async(completion,{input})=>{
+   publisherCalls++;
+   const context={state:'COMMITTED_UNPUBLISHED',target:input,sourceRoot:root,recordModuleSha256:'original-publisher-fixture',installedAt:new Date().toISOString(),program:{sourceSetSha256:'a'.repeat(64),targetSha256:'b'.repeat(64),programSha256:'c'.repeat(64),catalogSha256:'d'.repeat(64)},catalogSha256:'e'.repeat(64),transactionReceipt:{},authorizationSha256:'f'.repeat(64)};
+   const deps={completion,describeFresh35CombinedCompletion:c=>{assert.equal(c,completion);return context},need:(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_RECORD_'+code)},issued:new WeakSet(),loadedModuleSha256:'original-publisher-fixture',process:{getuid:()=>0,geteuid:()=>0,execPath:'/trusted/node'},assertTrustedRootPath:async()=>{},assertTrustedRootTree:async()=>{if(phase==='trusted-tree')throw Error('UNTRUSTED_ROOT_INSTALL_PATH')},etc:'/etc',FRESH35_COMBINED_RECORD_PATH:'/etc/naijue-erp/fresh35-combined-installation-v1.json',lstat:async()=>{
+    if(phase==='existing-record')return{};
+    if(phase==='lstat-eacces')throw Object.assign(Error('PRIVATE EACCES'),{code:'EACCES'});
+    throw Object.assign(Error('ABSENT'),{code:'ENOENT'});
+   },publishInstallationRecord:async()=>{writeCalls++;throw Error('INSTALL_RECORD_PUBLISHED_DURABILITY_UNKNOWN')},hash:()=>{throw Error('MUST_NOT_RETURN_PUBLICATION')}};
+   // Execute the actual original publisher body. Errors from its three
+   // preconditions deliberately have NO pre-attached installState.
+   return new AsyncFunction(...Object.keys(deps),text.slice(start,end))(...Object.values(deps));
+  }});
+  assert(result.error);assert.equal(result.clients,1);assert.equal(result.closed,1);assert.equal(publisherCalls,1);assert.equal(result.output.length,0);assert(!result.events.includes('fallback-close'));
+  const failed=productionEntryFailure(result.error);assert.equal(failed.exitCode,2);
+  assert.equal(failed.receipt.installState,phase==='published-durability-unknown'?'PUBLISHED_DURABILITY_UNKNOWN':'COMMITTED_UNPUBLISHED');
+  assert.equal(writeCalls,phase==='published-durability-unknown'?1:0);assert.equal(Object.keys(failed.receipt).length,12);assert.equal(failed.receipt.automaticRetry,false);
+  assert.doesNotMatch(JSON.stringify(failed.receipt),/PRIVATE|EACCES|UNTRUSTED_ROOT|ALREADY_EXISTS|message|stack/);
+ });
+});
+
+test('PROD-ENTRY-F01 publication fallback does not relabel setup, connection or original transaction failures as committed',async()=>{
+ for(const [options,state,exitCode]of [[{missingExecutionAuthority:true},null,1],[{connectFails:true},null,1],[{installState:'ROLLED_BACK'},'ROLLED_BACK',1],[{installState:'COMMIT_OUTCOME_UNKNOWN'},'COMMIT_OUTCOME_UNKNOWN',2]]){
+  const result=await modeledMain(options);assert(result.error);assert(!result.events.includes('publish'));assert.equal(result.output.length,0);
+  const failed=productionEntryFailure(result.error);assert.equal(failed.receipt.installState,state);assert.equal(failed.exitCode,exitCode);
+ }
 });
 
 test('production entry refuses unauthorized format/decision/profile/source, wrong fixed paths/flags/runtime/env and changed evidence before connection (OS model)',async()=>{
