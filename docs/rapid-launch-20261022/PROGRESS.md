@@ -1012,3 +1012,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - T45原后继2叶c51884ef/a5f1a58c逐字节保存在既有operational-checkpoints，固定1d42a167e8f329df8f1ee13bbeb7c15e267f49dc已推远端并回读；原QB仅审该增量，未实际运行Docker/SSH/PG。
 - D3-51实际组装36来源pins及五个单据文件，批次候选5c2d7326-2276-1765-9667-1a8d6e9e8443，608916目标行保持；V2外部草案0542b2ad已交原D2独立源事实审查，再由C绑定。最终manifest/台账/预检未完成，不称导入就绪。
 - D1正式证明源码在途、D2普通启动精确API依赖保持；无生产变更。
+
+
+### 运维源码审查采用与最终对齐可信绑定
+- 原QB固定1d42a167两叶源码/定向模型PASS，回执e3629f29；独立8项及异常期限模型通过，真实APT/镜像/PG未验。准确隔离清单031a2572已提交用户确认，准备<=30分钟、数据库原20分钟，未收到实际回复前不执行。
+- D2对D3-51五文件427436行/36实际来源独立源审查通过，回执4123fe0b；仅批次/已批生成字段及厅意图变化，原身份、数量金额、引用及未知保持。C采用既有真人同状态事实，在清洗客户端外绑定固定V2摘要0542b2ad，私域绑定回执d74cfae8（非服务器批准）。
+- D3已接该绑定，继续原最终manifest/RECONCILIATION/sourceledger和受影响预检。未封包或导入，不称READY通过；D1正式V2源码仍在途，未覆盖WIP，无生产操作。
