@@ -46,8 +46,8 @@ RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CU
 FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
 # BEGIN GENERATED RELEASE CONTRACT
 # Generated from config/release-contract.json; edit that source, then regenerate.
-RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}},"exact35":{"profile":"source-confirmed-native-exact35-v1","migrationCount":27,"installationRecord":"/etc/naijue-erp/fresh35-combined-installation-v1.json"},"native35":{"root":"backend/native35-source","entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","fixturePins":[{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702"}],"boundaries":[{"entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","importers":["apps/api/src/postgres-read-api.ts","adapters/postgres/src/runtime27-command-issuer.ts"]},{"entry":"scripts/release/unified-install/whole-sales-admission-v1.mjs","external":"./native35-source/scripts/release/unified-install/whole-sales-admission-v1.mjs","importers":["packages/application/src/unified-import-execution.ts","packages/application/src/unified-import-whole-package-profile.ts"]}]}}''')
-RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":7297,"sha256":"dadc2c376c70ff4ce8d950d1537c542fde8b58910af9f6921a68d2667de1b6d0"}''')
+RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}},"exact35":{"profile":"source-confirmed-native-exact35-v1","migrationCount":27,"installationRecord":"/etc/naijue-erp/fresh35-combined-installation-v1.json","productionProfile":"source-confirmed-native-exact35-production-v2"},"native35":{"root":"backend/native35-source","entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","fixturePins":[{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702"}],"boundaries":[{"entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","importers":["apps/api/src/postgres-read-api.ts","adapters/postgres/src/runtime27-command-issuer.ts"]},{"entry":"scripts/release/unified-install/whole-sales-admission-v1.mjs","external":"./native35-source/scripts/release/unified-install/whole-sales-admission-v1.mjs","importers":["packages/application/src/unified-import-execution.ts","packages/application/src/unified-import-whole-package-profile.ts"]}]}}''')
+RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":7371,"sha256":"bea9c9c79025f0f9def215fd72c9c71d6003ea4165ead1a9ecebf8c8bb289871"}''')
 # END GENERATED RELEASE CONTRACT
 FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
 FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
@@ -587,7 +587,7 @@ def runtime35_record(p):
     record = reference(ref, 65536)
     need(isinstance(record, dict) and set(record) == {'format', 'installedAt', 'binding', 'target', 'transactionReceipt',
          'programSha256', 'catalogSpecSha256', 'catalogSha256', 'authorizationSha256', 'state'} and
-         record.get('format') == 'FRESH35_COMBINED_INSTALLATION_RECORD_V1' and
+         record.get('format') in ('FRESH35_COMBINED_INSTALLATION_RECORD_V1','FRESH35_COMBINED_INSTALLATION_RECORD_V2') and
          record.get('state') == 'COMMITTED_AND_CATALOG_CHECKED', 'EXACT35_INSTALLED_RECORD_REQUIRED')
     return record
 
@@ -608,22 +608,59 @@ def validate_exact35_installation_data(record, source, program):
     need(native_hash({k: source[k] for k in source_keys}) == source['sourceSetSha256'] == binding['sourceSetSha256'],
          'EXACT35_SOURCE_SET_CHANGED')
     target = record.get('target')
-    need(isinstance(target, dict) and set(target) == {'format', 'proposal', 'physical', 'startsAt', 'expiresAt', 'authority'} and
-         target.get('format') == 'FRESH35_COMBINED_TARGET_BINDING_V1' and
+    production = record.get('format') == 'FRESH35_COMBINED_INSTALLATION_RECORD_V2'
+    target_keys = {'format', 'proposal', 'physical', 'startsAt', 'expiresAt', 'authority'}
+    need(isinstance(target, dict) and set(target) == target_keys | ({'purpose','ordinary'} if production else set()) and
+         target.get('format') == ('FRESH35_COMBINED_TARGET_BINDING_V2' if production else 'FRESH35_COMBINED_TARGET_BINDING_V1') and
          target.get('authority') == 'BINDING_ONLY_NOT_CREATION_OR_EXECUTION_PERMISSION' and
          native_hash(target) == binding['targetSha256'], 'EXACT35_INSTALLED_TARGET_CHANGED')
     proposal, physical = target['proposal'], target['physical']
     need(isinstance(proposal, dict) and set(proposal) == {'database', 'owner', 'controller', 'runtime', 'admin', 'host', 'port', 'workspaceDirectory'} and
          isinstance(physical, dict) and set(physical) == {'systemIdentifier', 'databaseOid', 'serverVersionNum', 'postmasterStart'},
          'EXACT35_CLOSED_INSTALLED_TARGET_REQUIRED')
-    match = re.fullmatch(r'synthetic_fresh35_([0-9]{8})_(r[1-9][0-9]{0,3})', proposal.get('database', ''))
-    need(match and all(proposal[k] == 'fresh35_' + k + '_' + match[1] + '_' + match[2] for k in ('owner', 'controller', 'runtime', 'admin')) and
-         proposal['host'] == '127.0.0.1' and type(proposal['port']) is int and 1024 < proposal['port'] < 65536 and
-         proposal['port'] not in (5432, 55437, 55438, 55439) and
-         all(isinstance(physical[k], str) and re.fullmatch(r'[1-9][0-9]*', physical[k]) for k in ('systemIdentifier', 'databaseOid')) and
-         physical['serverVersionNum'] == '170011' and isinstance(physical['postmasterStart'], str) and
-         type(target['startsAt']) is int and type(target['expiresAt']) is int and
-         0 < target['expiresAt'] - target['startsAt'] <= 1200000, 'EXACT35_EXISTING_SYNTHETIC_TARGET_ONLY')
+    if production:
+        identifier = lambda v: isinstance(v,str) and re.fullmatch('[a-z][a-z0-9_]{0,62}',v) and not v.startswith('pg_')
+        endpoint = lambda v: isinstance(v,str) and 0<len(v)<=253 and not re.search(r"[\s\x00-\x1f\x7f'\"\\]",v)
+        port = lambda v: type(v) is int and 1<=v<=65535
+        directory = lambda v: isinstance(v,str) and v!='/' and Path(v).is_absolute() and os.path.normpath(v)==v
+        decimal = lambda v,maximum: isinstance(v,str) and re.fullmatch('[1-9][0-9]*',v) and len(v)<=len(str(maximum)) and int(v)<=maximum
+        interfaces = {'erp_unified27_initializer_2393dbc6db9581c2','erp_unified27_importer_2393dbc6db9581c2','erp_unified27_runtime_2393dbc6db9581c2'}
+        need(target['purpose']=='PRODUCTION_NEW_EMPTY_EXACT35' and all(identifier(proposal[k]) for k in ('database','owner','controller','runtime','admin')) and
+             not proposal['database'].startswith('synthetic_') and len({proposal[k] for k in ('owner','controller','runtime','admin')}|interfaces)==7,
+             'EXACT35_PRODUCTION_IDENTITIES_REQUIRED')
+        need(endpoint(proposal['host']) and port(proposal['port']) and directory(proposal['workspaceDirectory']), 'EXACT35_PRODUCTION_ENDPOINT_REQUIRED')
+        # Same stopped physical targets as the native V2 constructor; this does
+        # not authorize or create a replacement target.
+        stopped = {'7701337335828107278','7702857766154043447','7702904939491061813','7702914707883278365',
+                   '7703089336081934099','7703096890285320019','7703102194329098126','7703108941652350921',
+                   '7703123541136058418','7703146531489867910','7703158405630191866','7704494445995372557'}
+        need(decimal(physical['systemIdentifier'],18446744073709551615) and physical['systemIdentifier'] not in stopped and
+             decimal(physical['databaseOid'],4294967295) and physical['serverVersionNum']=='170011', 'EXACT35_PRODUCTION_PHYSICAL_REQUIRED')
+        birth=physical['postmasterStart']
+        need(isinstance(birth,str) and re.fullmatch(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+00',birth), 'EXACT35_PRODUCTION_BIRTH_REQUIRED')
+        try:birth_ms=dt.datetime.fromisoformat(birth.replace(' ','T')+':00').timestamp()*1000
+        except ValueError:raise Refused('EXACT35_PRODUCTION_BIRTH_REQUIRED')
+        need(type(target['startsAt']) is int and type(target['expiresAt']) is int and
+             all(abs(target[k])<=9007199254740991 for k in ('startsAt','expiresAt')) and target['startsAt']<target['expiresAt'] and
+             target['expiresAt']-target['startsAt']<=1200000 and target['startsAt']<=birth_ms<target['expiresAt'],'EXACT35_PRODUCTION_ORIGINAL_WINDOW_REQUIRED')
+        ordinary=target['ordinary']
+        need(isinstance(ordinary,dict) and set(ordinary)=={'connectHost','connectPort','serverAddress','serverPort','runtimeLoginValidUntil','referenceDirectory'} and
+             endpoint(ordinary['connectHost']) and port(ordinary['connectPort']) and endpoint(ordinary['serverAddress']) and port(ordinary['serverPort']) and directory(ordinary['referenceDirectory']),
+             'EXACT35_PRODUCTION_ORDINARY_ENDPOINT_REQUIRED')
+        lifetime=ordinary['runtimeLoginValidUntil']
+        need(lifetime is None or isinstance(lifetime,str) and re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z',lifetime),'EXACT35_PRODUCTION_LOGIN_LIFETIME_REQUIRED')
+        if lifetime is not None:
+            try:dt.datetime.fromisoformat(lifetime.replace('Z','+00:00'))
+            except ValueError:raise Refused('EXACT35_PRODUCTION_LOGIN_LIFETIME_REQUIRED')
+    else:
+        match = re.fullmatch(r'synthetic_fresh35_([0-9]{8})_(r[1-9][0-9]{0,3})', proposal.get('database', ''))
+        need(match and all(proposal[k] == 'fresh35_' + k + '_' + match[1] + '_' + match[2] for k in ('owner', 'controller', 'runtime', 'admin')) and
+             proposal['host'] == '127.0.0.1' and type(proposal['port']) is int and 1024 < proposal['port'] < 65536 and
+             proposal['port'] not in (5432, 55437, 55438, 55439) and
+             all(isinstance(physical[k], str) and re.fullmatch(r'[1-9][0-9]*', physical[k]) for k in ('systemIdentifier', 'databaseOid')) and
+             physical['serverVersionNum'] == '170011' and isinstance(physical['postmasterStart'], str) and
+             type(target['startsAt']) is int and type(target['expiresAt']) is int and
+             0 < target['expiresAt'] - target['startsAt'] <= 1200000, 'EXACT35_EXISTING_SYNTHETIC_TARGET_ONLY')
     receipt = record.get('transactionReceipt')
     need(isinstance(receipt, dict) and set(receipt) == {'nonce', 'database', 'actor', 'transactionId', 'backendPid'} and
          re.fullmatch(r'[a-f0-9]{48}', receipt.get('nonce', '')) and receipt['database'] == proposal['database'] and
@@ -651,7 +688,9 @@ def validate_runtime35(p, manifest, runtime, capacity_pending=False):
     target = validate_exact35_installation_data(record, reference(refs['sourceSet'], 16 * 1024 * 1024),
                                                reference(refs['program'], 16 * 1024 * 1024))
     proposal, physical = target['proposal'], target['physical']
-    expected = {'host': proposal['host'], 'port': proposal['port'], 'database': proposal['database'], 'role': proposal['runtime'],
+    production = record['format']=='FRESH35_COMBINED_INSTALLATION_RECORD_V2'
+    connection = target['ordinary'] if production else {'connectHost':proposal['host'],'connectPort':proposal['port']}
+    expected = {'host': connection['connectHost'], 'port': connection['connectPort'], 'database': proposal['database'], 'role': proposal['runtime'],
                 'databaseOid': physical['databaseOid'], 'postmasterStart': physical['postmasterStart']}
     need(runtime.get('capacityLaunch', {}).get('target') == expected, 'EXACT35_SAME_PHYSICAL_CAPACITY_TARGET_REQUIRED')
     runtime = capacity_runtime_configuration(p, runtime, capacity_pending)
@@ -659,10 +698,10 @@ def validate_runtime35(p, manifest, runtime, capacity_pending=False):
     maintenance = {'organizationMaintenance', 'catalogueMaintenance', 'paymentMaintenance', 'partyMaintenance', 'staffMaintenance', 'productMaintenance'}
     optional = maintenance | {'inventoryOutputSpool', 'staffCredentialRequestKeyFile'}
     need(required <= set(runtime) <= required | optional and runtime['schemaVersion'] == 1 and
-         runtime['profile'] == RELEASE_CONTRACT['exact35']['profile'] and runtime['documentCommands'] == 'NATIVE_RUNTIME' and
+         runtime['profile'] == RELEASE_CONTRACT['exact35']['productionProfile' if production else 'profile'] and runtime['documentCommands'] == 'NATIVE_RUNTIME' and
          all(runtime[k] is True for k in maintenance if k in runtime), 'CLOSED_EXACT35_RUNTIME_REQUIRED')
     config_target = runtime.get('postgres', {}).get('target', {})
-    need(all(config_target.get(k) == v for k, v in {'host': proposal['host'], 'port': proposal['port'], 'database': proposal['database'],
+    need(all(config_target.get(k) == v for k, v in {'host': connection['connectHost'], 'port': connection['connectPort'], 'database': proposal['database'],
          'user': proposal['runtime'], 'ssl': False}.items()), 'EXACT35_ORDINARY_LOGIN_TARGET_REQUIRED')
     need(runtime['productMedia'] == {'root': native['media']['containerRoot'], 'rootKey': native['media']['rootKey']}, 'EXACT35_MEDIA_BINDING_CHANGED')
     validate_full_credential(p, runtime)
@@ -699,9 +738,9 @@ def validate_runtime35(p, manifest, runtime, capacity_pending=False):
     if 'inventorySpool' in native:
         need(canonical(native['inventorySpool']['hostRoot'], kind='directory', root=ROOT).stat().st_uid == media.stat().st_uid,
              'EXACT35_PRIVATE_SPOOL_APP_OWNER_REQUIRED')
-    # No current producer can attest a production bridge target. Preserve this
-    # refusal until its original owners supply and review the missing contract.
-    need(proposal['host'] != '127.0.0.1', 'EXACT35_LOOPBACK_INSTALL_RECORD_NOT_A_BRIDGE_PRODUCTION_TARGET')
+    # A V1 synthetic install cannot authorize a production bridge, even when all
+    # other references agree. V2 uses its exact native production target contract.
+    need(production, 'EXACT35_LOOPBACK_INSTALL_RECORD_NOT_A_BRIDGE_PRODUCTION_TARGET')
 
 
 CAPACITY_VOLUMES = ('postgres', 'wal', 'backup', 'system', 'media')
@@ -1056,16 +1095,17 @@ def validate_references(p, capacity_pending=False):
     if not exact35_selected(p) and not exact26_full(p):
         need(db.get('status') == 'PASS_NEW_DATABASE_SCHEMA19_ONLY_NOT_IMPORT_NOT_AUTH' and db.get('actual', {}).get('database') == DATABASE and
              db['actual'].get('versions') == (list(range(1, 20)) if exact26_selected(p) else p['schemaVersions']) and db['actual'].get('tables') == 50, 'EXACT_NEW_DATABASE_SCHEMA_RECEIPT_REQUIRED')
-    migrations = {int(PurePosixPath(row['path']).name.split('_', 1)[0]): row['sha256'] for row in manifest['members'] if row.get('role') == 'migration'}
     if not exact35_selected(p) and not exact26_selected(p):
+        migrations = {int(PurePosixPath(row['path']).name.split('_', 1)[0]): row['sha256'] for row in manifest['members'] if row.get('role') == 'migration'}
         need(migrations == {row['version']: row['sha256'] for row in db.get('appliedMigrations', [])} and set(migrations) == set(range(1, 20)), 'RELEASE_SCHEMA_MIGRATION_HASH_MISMATCH')
     need(file_identity(p['runtimeConfiguration']['path']) == p['runtimeConfiguration']['identity'], 'PRIVATE_RUNTIME_FILE_IDENTITY_CHANGED')
     runtime = json_file(p['runtimeConfiguration']['path'], private=True)
     need(runtime.get('build') == {'buildId': p['buildId'], 'sourceCommit': p['sourceCommit']} and runtime.get('publicOrigin') == ORIGIN and
          runtime.get('documentCommands') == ('NATIVE_RUNTIME' if exact35_selected(p) or exact26_full(p) else 'DISABLED') and runtime.get('http') == {'host': '0.0.0.0', 'port': 3000, 'acceptedHosts': [HOST]} and
          runtime.get('assets') == {'root': '/app/web', 'entry': 'index.html'} and
-         runtime.get('profile') == (RELEASE_CONTRACT['exact35']['profile'] if exact35_selected(p) else FULL_PROFILE if exact26_full(p) else RUNTIME26_PROFILE if exact26_selected(p) else 'source-confirmed-native-v1'), 'R1_RUNTIME_CONFIGURATION_MISMATCH')
+         (exact35_selected(p) or runtime.get('profile') == (FULL_PROFILE if exact26_full(p) else RUNTIME26_PROFILE if exact26_selected(p) else 'source-confirmed-native-v1')), 'R1_RUNTIME_CONFIGURATION_MISMATCH')
     if exact35_selected(p):
+        # The protected native record selects the exact V1/V2 profile below.
         validate_runtime35(p, manifest, runtime, capacity_pending)
     elif exact26_selected(p):
         validate_runtime26(p, manifest, db, runtime, capacity_pending)
@@ -1185,10 +1225,71 @@ def mount(source, target, readonly=True):
     return ['--mount', 'type=bind,src=' + str(source) + ',dst=' + target + (',readonly' if readonly else '')]
 
 
+# The same finite nonsecret reference inputs as the original native resolver.
+EXACT35_REFERENCE_INPUTS = {
+    'fresh35-install-review-plan-20261105-r2/00-BLOCKED-entry.sql': '0741b94139b125637f5f81b784b5229ec4537904ef93639aced8129f2a38ea0c',
+    'fresh35-install-review-plan-20261105-r2/01-schema-REVIEW-ONLY.sql': '5fc8508ea96062898a42dc4c03c3a6ebe166158037cc6c7c3130a13d3ee14931',
+    'fresh35-install-review-plan-20261105-r2/02-lineage-REVIEW-ONLY.sql': '8785f1e225335caaf5777e477c761889b290d8543a4952cd897afff920df51d9',
+    'fresh35-install-review-plan-20261105-r2/candidate-source-pins.json': '0d018a1dff6f26e81be64892f5af596fa2a3ad9f15be654acf44acb463dc4d51',
+    'fresh35-install-review-plan-20261105-r2/expected-core-metadata.json': '2e2af3c2b8fa7460e2842e08d906bfee1114dd6c8d7d907ed5c3ed1e1c5ae480',
+    'fresh35-install-review-plan-20261105-r2/expected-declared-metadata.json': '3056cd7d6a36c6d08b712d2084d435807f448d9a7af2149ea723b40659efa47e',
+    'fresh35-install-review-plan-20261105-r2/migration-lineage.json': '11290c3de0b9f1711f748643091e1c14f44f83006b6b8991fa5fd12daf61abad',
+    'fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json': '2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f',
+    'cloud-pg-schema178v2-20261105-r2/evidence/functions.json': '9959bca2dd4d91d3fb1ba7558c5abdd0b70676b096eaf73c4dd117261534551f',
+}
+
+
+def runtime35_readonly_mount_arguments(p):
+    record = runtime35_record(p)
+    if record['format'] != 'FRESH35_COMBINED_INSTALLATION_RECORD_V2':
+        return []
+    refs = p['runtime35']['references']
+    source = reference(refs['sourceSet'], 16 * 1024 * 1024)
+    target = validate_exact35_installation_data(record, source, reference(refs['program'], 16 * 1024 * 1024))
+    manifest = reference(p['manifest'], 16 * 1024 * 1024)
+    native = manifest.get('native35', {})
+    need(isinstance(native, dict) and native.get('sourceSetSha256') == record['binding']['sourceSetSha256'] and
+         HASH.fullmatch(native.get('referenceIndexSha256', '')), 'EXACT35_REFERENCE_BUILD_BINDING_REQUIRED')
+    directory = canonical(target['ordinary']['referenceDirectory'], kind='directory')
+    def protected_bytes(filename):
+        filename = canonical(filename)
+        need(all(q.stat().st_uid == 0 and not q.stat().st_mode & 0o022 for q in [*filename.parents, filename]),
+             'EXACT35_OS_PROTECTED_REFERENCE_REQUIRED')
+        return bytes_file(filename, 16 * 1024 * 1024)
+    index_path = directory / 'INDEX.json'
+    raw = protected_bytes(index_path)
+    need(digest(raw) == native['referenceIndexSha256'], 'EXACT35_REFERENCE_INDEX_CHANGED')
+    try:
+        index = json.loads(raw)
+    except (ValueError, UnicodeError):
+        raise Refused('EXACT35_REFERENCE_INDEX_REQUIRED') from None
+    need(isinstance(index, list) and len(index) == len(EXACT35_REFERENCE_INPUTS), 'EXACT35_REFERENCE_INDEX_REQUIRED')
+    seen = set()
+    for row in index:
+        need(isinstance(row, dict) and isinstance(row.get('package_path'), str), 'EXACT35_REFERENCE_INDEX_REQUIRED')
+        name = row['package_path'].removeprefix('delivery/reference-inputs/')
+        need(row.get('package_path') == 'delivery/reference-inputs/' + name and
+             name in EXACT35_REFERENCE_INPUTS and name not in seen and row.get('sha256') == EXACT35_REFERENCE_INPUTS[name] and
+             type(row.get('bytes')) is int and 0 < row['bytes'] <= 16 * 1024 * 1024, 'EXACT35_REFERENCE_INDEX_REQUIRED')
+        seen.add(name)
+        raw = protected_bytes(directory / name)
+        need(len(raw) == row['bytes'] and digest(raw) == row['sha256'], 'EXACT35_REFERENCE_INPUT_CHANGED')
+    # The protected record and target-selected references have identical absolute
+    # paths in both namespaces. Only these eleven files are exposed, read-only.
+    record_path = RELEASE_CONTRACT['exact35']['installationRecord']
+    args = mount(record_path, record_path)
+    for name in ['INDEX.json', *sorted(EXACT35_REFERENCE_INPUTS)]:
+        filename = str(directory / name)
+        args += mount(filename, filename)
+    return args
+
+
 def runtime_mount_arguments(p):
     host = capacity_host_binding(p)
     args = [*mount(host['collector']['hostFile'], CAPACITY_COLLECTOR), *mount(host['profile']['hostFile'], CAPACITY_PROFILE)]
     native35 = exact35_selected(p)
+    if native35:
+        args += runtime35_readonly_mount_arguments(p)
     if not native35 and exact26_selected(p):
         refs = runtime_references(p)
         args += [*mount(refs['review']['path'], RUNTIME26_REVIEW), *mount(refs['independentReview']['path'], RUNTIME26_INDEPENDENT)]
