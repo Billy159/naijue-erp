@@ -57,7 +57,7 @@ test('bootstrap observer joins the catalog/record closure on install, controller
  const prodCatalog=await buildFresh35CombinedCatalog(source,prod,{modelPath,functionsPath});
  variants.push(graph.catalogAPI.fresh35CombinedOrdinaryCatalogSql(prodCatalog,source,prod,physical));
  for(const sql of variants){
-  assert(sql.guardSql.includes('DO $fresh35_observer_catalog$'));assert(sql.guardSql.includes('f.prosrc='));assert(sql.guardSql.includes('f.proacl'));
+  assert(!sql.guardSql.includes('DO $fresh35_observer_catalog$'),'the strict observer IF is embedded without a third DO result');assert(sql.guardSql.includes('f.prosrc='));assert(sql.guardSql.includes('f.proacl'));
   assert(sql.observationSql.includes("'bootstrapObserver'"));assert(sql.observationSql.includes('pg_get_functiondef(f.oid)'));
   assert(sql.observationSql.includes('pg_shdepend d WHERE d.dbid='));assert(sql.observationSql.includes('pg_depend d WHERE d.classid='));
  }
@@ -108,4 +108,39 @@ test('synthetic ordinary catalog is closed to true V1 target/birth/window and pr
  assert.throws(()=>fresh35CombinedSyntheticOrdinaryCatalogSql(catalog,source,target,{...p.physical,postmasterStart:'RESTARTED'}),/SYNTHETIC_ORDINARY_PHYSICAL_BINDING_REQUIRED/);
  assert.throws(()=>fresh35CombinedSyntheticOrdinaryCatalogSql({...catalog},source,target,p.physical),/GENUINE_CATALOG_REQUIRED/);
  assert.throws(()=>validateFresh35CombinedSyntheticOrdinaryCatalogObservation('{}',catalog,source,target),/ACTUAL_PHYSICAL_IDENTITY_DIFFERS/);
+});
+
+test('unchanged runtime/ordinary consumers accept two native pg command results and reject the prior three-result observer layout (native wire model, not PG)',async()=>{
+ const {Client}=await import('pg'),host=await readFile(root+'tools/unified-import/fresh35-host-session.mjs','utf8');
+ const runtimeStart=host.indexOf(' const guards=await client.query(sql.guardSql);'),runtimeEnd=host.indexOf(' const result=await client.query(sql.observationSql);',runtimeStart);
+ const ordinaryStart=host.indexOf('  const guards=await client.query(sql.guardSql);'),ordinaryEnd=host.indexOf('  const observed=await client.query(sql.observationSql);',ordinaryStart);
+ assert(runtimeStart>=0&&runtimeEnd>runtimeStart&&ordinaryStart>runtimeStart&&ordinaryEnd>ordinaryStart);
+ const runtimeConsumer=host.slice(runtimeStart,runtimeEnd),ordinaryConsumer=host.slice(ordinaryStart,ordinaryEnd),AsyncFunction=Object.getPrototypeOf(async()=>{}).constructor;
+ const need=(ok,code)=>{if(!ok)throw Error('FRESH35_HOST_'+code)},ack=(r,tag)=>assert.equal(r.command,tag);
+ async function nativeResults(sql,consumer,commands){
+  // Use the real pinned pg Client query/result accumulator. Only the transport
+  // supplies CommandComplete/ReadyForQuery frames; there is no socket or PG.
+  const client=new Client({pipeline:false}),con=client.connection;client.on('error',()=>{});client._attachListeners(con);client._connecting=true;con.emit('readyForQuery',{status:'I'});
+  let submitted=0;
+  con.query=actual=>{assert.equal(actual,sql);submitted++;queueMicrotask(()=>{for(const command of commands)con.emit('commandComplete',{text:command});con.emit('readyForQuery',{status:'T'})})};
+  try{return await new AsyncFunction('client','sql','need','ack',consumer+'return true;')(client,{guardSql:sql},need,ack)}finally{assert.equal(submitted,1);con.removeAllListeners();client.removeAllListeners();con.stream.destroy()}
+ }
+ const {source,catalog}=await bundle(),t=describeFresh35CombinedTarget(target),physical=t.physical;
+ const prod=networkModel.api.bindFresh35CombinedProductionTargetV2({proposal:{...t.proposal,database:'ack_prod_erp',owner:'ack_owner',controller:'ack_controller',runtime:'ack_runtime',admin:'ack_admin'},physical,startsAt:t.startsAt,expiresAt:t.expiresAt,purpose:'PRODUCTION_NEW_EMPTY_EXACT35',ordinary:{connectHost:'postgres',connectPort:5432,serverAddress:'172.20.0.4',serverPort:5432,runtimeLoginValidUntil:null,referenceDirectory:'/private/references'}});
+ const pc=await buildFresh35CombinedCatalog(source,prod,{modelPath,functionsPath});
+ const variants=[
+  [target,fresh35CombinedRuntimeCatalogSql(catalog,source,target),runtimeConsumer,/CATALOG_GUARD_ACK_INVALID/],
+  [target,graph.catalogAPI.fresh35CombinedSyntheticOrdinaryCatalogSql(catalog,source,target,physical),ordinaryConsumer,/ORDINARY_CATALOG_GUARD_ACK_INVALID/],
+  [prod,fresh35CombinedRuntimeCatalogSql(pc,source,prod),runtimeConsumer,/CATALOG_GUARD_ACK_INVALID/],
+  [prod,graph.catalogAPI.fresh35CombinedOrdinaryCatalogSql(pc,source,prod,physical),ordinaryConsumer,/ORDINARY_CATALOG_GUARD_ACK_INVALID/]
+ ];
+ for(const [bound,sql,consumer,refusal]of variants){
+  const check=networkModel.api.fresh35CombinedObserverCheck(bound),wrapper=networkModel.api.fresh35CombinedObserverGuard(bound);
+  assert(sql.guardSql.includes(check),'the exact strict source/ACL check stays inside the existing statement');
+  const stripped=sql.guardSql.replaceAll(check,'');
+  const before=consumer===runtimeConsumer?wrapper+'\n'+stripped:stripped.replace('DO $fresh35_combined_catalog$',wrapper+'\nDO $fresh35_combined_catalog$');
+  await assert.rejects(()=>nativeResults(before,consumer,['DO','DO','DO']),refusal,'the real previous three-result transport is rejected by the unmodified consumer');
+  assert.equal(await nativeResults(sql.guardSql,consumer,['DO','DO']),true);
+  await assert.rejects(()=>nativeResults(sql.guardSql,consumer,['DO','SELECT']),/ERR_ASSERTION|Expected values/,'two results with the wrong command tag still fail');
+ }
 });

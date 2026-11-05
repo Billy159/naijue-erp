@@ -148,9 +148,13 @@ COMMIT;
 /** The bootstrap object is outside the 152 business routines. Its full source,
  * signature, owner, attributes and explicit ACL are checked before any call. */
 export function fresh35CombinedObserverGuard(target){
+ return `DO $fresh35_observer_catalog$ BEGIN\n${fresh35CombinedObserverCheck(target)}\nEND $fresh35_observer_catalog$;`;
+}
+/** Embed the identical strict check in an existing DO when its native consumer
+ * expects one result for that statement. Bootstrap still uses the wrapper. */
+export function fresh35CombinedObserverCheck(target){
  const {proposal:p}=describeFresh35CombinedTarget(target),q=quote;
- return `DO $fresh35_observer_catalog$ BEGIN
- IF (SELECT count(*) FROM pg_catalog.pg_proc WHERE pronamespace='pg_catalog'::pg_catalog.regnamespace AND proname=${q(FRESH35_COMBINED_OBSERVER_NAME)})<>1
+ return `IF (SELECT count(*) FROM pg_catalog.pg_proc WHERE pronamespace='pg_catalog'::pg_catalog.regnamespace AND proname=${q(FRESH35_COMBINED_OBSERVER_NAME)})<>1
  OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_proc f JOIN pg_catalog.pg_language l ON l.oid=f.prolang JOIN pg_catalog.pg_roles o ON o.oid=f.proowner
   WHERE f.pronamespace='pg_catalog'::pg_catalog.regnamespace AND f.proname=${q(FRESH35_COMBINED_OBSERVER_NAME)}
   AND f.proowner=10 AND o.rolname=${q(p.admin)} AND o.rolsuper AND l.lanname='plpgsql'
@@ -164,8 +168,7 @@ export function fresh35CombinedObserverGuard(target){
    WHERE d.classid='pg_catalog.pg_proc'::pg_catalog.regclass AND d.objid=f.oid
    AND (d.refclassid='pg_catalog.pg_extension'::pg_catalog.regclass OR (ref.schema IS NOT NULL AND ref.schema<>'pg_catalog')))
   AND (SELECT array_agg(e::text ORDER BY e::text COLLATE pg_catalog."C") FROM pg_catalog.unnest(f.proacl) e)=ARRAY[${observerAcl(target).map(q).join(',')}])
- THEN RAISE EXCEPTION 'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_EXCLUSIVE_BACKENDS' USING ERRCODE='55000'; END IF;
-END $fresh35_observer_catalog$;`;
+ THEN RAISE EXCEPTION 'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_EXCLUSIVE_BACKENDS' USING ERRCODE='55000'; END IF;`;
 }
 /** Full raw catalog/dependencies join the existing catalog hash in the record;
  * it contains function metadata, never an activity row, PID, query or username. */
@@ -221,13 +224,13 @@ function targetGuard(target,{requireEmpty,runtime}){
   ['EXTENSION_SET',"NOT EXISTS(SELECT 1 FROM pg_catalog.pg_extension WHERE extname<>'plpgsql')"],
   ['PREPARED_XACT_SET','NOT EXISTS(SELECT 1 FROM pg_catalog.pg_prepared_xacts)'],
  ];
- return `${fresh35CombinedObserverGuard(target)}
-DO $fresh35_combined_target$
+ return `DO $fresh35_combined_target$
 DECLARE
  physical_checks boolean[];
  physical_failure_codes CONSTANT text[] := ARRAY[${physicalPredicates.map(([label])=>q('FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_'+label)).join(',')}];
  physical_index integer;
 BEGIN
+ ${fresh35CombinedObserverCheck(target)}
  physical_checks := ARRAY[${physicalPredicates.map(([,expression])=>'('+expression+')').join(',\n ')}];
  IF (true = ALL(physical_checks)) IS DISTINCT FROM true THEN
   FOR physical_index IN 1..array_length(physical_checks,1) LOOP
