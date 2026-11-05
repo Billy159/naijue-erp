@@ -284,14 +284,16 @@ function htmlResources(html) {
   requireRelease(configurations === 1, 'PRODUCTION_CONFIGURATION_REQUIRED'); return resources;
 }
 
-// One exact frozen icon in its two document CSS consumers, never a general data-URL allowance.
-const inlineDocumentCssSources = new Set(['apps/web/src/sales/detail.css', 'apps/web/src/current-form/transfer-proposal.css', 'apps/web/demo-replica/frontend/golden-consistency.css']);
+// One exact frozen icon in the existing document/shared CSS consumers, never a general data-URL allowance.
+const inlineDocumentCssSources = new Set(['apps/web/src/sales/detail.css', 'apps/web/src/current-form/transfer-proposal.css', 'apps/web/demo-replica/frontend/golden-consistency.css', 'apps/web/demo-replica/frontend/styles/shared/surface-controls.css']);
 function exactEmbeddedCssSvg(kind, owner, item, bytes) {
   return kind === 'frontend' && item?.external === true && item.kind === 'url-token'
     && path.posix.extname(owner) === '.css' && typeof item.path === 'string'
     && Buffer.byteLength(item.path, 'utf8') === 212
     && sha256(Buffer.from(item.path, 'utf8')) === '315e1978e00fb98a377a06cea68c4b841f7ac9b9d34e802e69f85f7a7dda6d6c'
-    && Buffer.isBuffer(bytes) && bytes.includes(item.path);
+    && Buffer.isBuffer(bytes) && (bytes.includes(item.path)
+      || (owner === 'apps/web/demo-replica/frontend/styles/shared/surface-controls.css'
+        && bytes.includes(item.path.replace(/[ ']/g, character => '\\' + character))));
 }
 
 /** Verify actual on-disk graph inputs and outputs. No production:true flag is accepted as provenance. */
