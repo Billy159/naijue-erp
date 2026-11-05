@@ -1427,3 +1427,10 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 真人call_06cfa0afedd741fc8cb642a9e97cf8ac item0明确回复“保留，我另行释放空间”。source-aca775575a95、source-cd3372b05d85、source-2bbc27152e96全部保留，未删除，不改派其他清理清单；此前待批状态已结束为保留决定。
 - 原D3已同步，055固定全源核账与a10 stream预检保留断点，实际容量足够前不执行、不将未验记通过、不重复无变化盘点。D1四叶合成入口及T45当前应用/环境分绑准备继续，不受本地容量等待阻塞。
 - 原D1 turn虽已终结，末回复为无关历史人员清洗，未作为四叶交付证据。主控已要求原owner沿现有WIP收口准确四叶hash和检查回执，不重复派工、不覆盖或提交未交回WIP。
+
+
+### 两阶段合成25入口四叶固定，原QB与T45并行接续
+- 原D1交回四叶，主控逐hash匹配d5b7f1f实施回执及25ea0947 source清单后固定22699eb435577b9754d15a5d25043751cc9e6cd1；真实S_test/sourceSet为5e8b75bd99301d10e586390b7e048bec0aa329d3c2f0e9302106c74e6c749ebc/212pins。作者10/10无skip、typecheck/build0；原a10业务22叶未动，未称PG通过。
+- C精确导出该committed candidate子树为应用根d77a8604977eccee66e155f6ea2a8eb233f28aa8/tree5fddd6f34fc3ae1a7dc533d0ef824caa10fcd08b。整合与build-root两分支已推GitHub并读回精确SHA；不覆盖工作树或旧7393包。
+- 原QB/high只验四叶两stage与绑定增量；T45/high沿原两叶准备成功镜像与新版ordinary应用分绑、三处独立只读35表/序列观察。真正PG待固定后继及必要验收和准确新窗口输入，不重建镜像、不改旧receipt、不加权限或新平台。
+- D1转只读核现有native35登录及普通账号销货/混合/调拨SAVE审核弃审链的原入口与缺项，避免只停在导入smoke。D3容量分支保持未执行，用户保留3旧导出决定不变。

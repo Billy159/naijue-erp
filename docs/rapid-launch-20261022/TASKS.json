@@ -28475,7 +28475,8 @@
       "D2": "Exact3 full old-build exports readonly cleanup candidate9133117a complete; no deletion, current7393 retained",
       "D3": "Fixed a10 streampreflight preparation1536ae74 done; both actual source reconciliation and preflight held for safe capacity",
       "T45": "Actual image ready22479274 and root receipt e475 verified; prepare existing new-app/environment binding and readonly observer seams, no PG",
-      "QB": "Exact5 fixed source PASS adopted plus actual T45 image outcome; next D1 four-leaf only when fixed"
+      "QB": "Exact5 fixed source PASS adopted plus actual T45 image outcome; next D1 four-leaf only when fixed",
+      "phaseBCurrent25": "Fixed22699eb4/5e8b75bd four-leaf QB increment; T45 same target app/environment successor preparation; D1 next native35 business route read-only. Capacity-dependent D3 remains held; exact3 old exports retained."
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28844,7 +28845,7 @@
     },
     "phaseBCurrent25SyntheticContinuation": {
       "owner": "D1",
-      "state": "IMPLEMENTING_FOUR_EXACT_LEAVES",
+      "state": "FOUR_LEAVES_FROZEN_ORIGINAL_QB_INCREMENT_IN_PROGRESS",
       "files": [
         "tests/fixtures/unified-import/whole-package-synthetic.ts",
         "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
@@ -28858,7 +28859,16 @@
       "twoPhaseCheckpoint": "Existing entry rollback/rejection/ABSENT then separate same-fixture commit/replay/new-connection reconcile; default all preserved, exact target/source/program/requestKey/initializer fingerprint cross-stage binding required",
       "independentObserverState": "Original T45 admin passfile/private psql transport exists but is not yet a controlled snapshot endpoint; D1/T45 original writer seams, no new grants/roles/pool",
       "independent35TableSnapshotVerified": false,
-      "controllerTableSelectAdded": false
+      "controllerTableSelectAdded": false,
+      "integrationCommit": "22699eb435577b9754d15a5d25043751cc9e6cd1",
+      "buildRootCommit": "d77a8604977eccee66e155f6ea2a8eb233f28aa8",
+      "buildRootTree": "5fddd6f34fc3ae1a7dc533d0ef824caa10fcd08b",
+      "sourceSetSha256": "5e8b75bd99301d10e586390b7e048bec0aa329d3c2f0e9302106c74e6c749ebc",
+      "pins": 212,
+      "implementationReceiptSHA256": "d5b7f1f3632d8a05e1345d85bd897ecf3ca15278ce8e1fa7730cc4f05f488759",
+      "checks": "Author10/10 no skip; typecheck/build0. Four exact delivery bytes matched by C; no repeated technical acceptance.",
+      "githubRemoteReadback": true,
+      "next": "Original QB only four-leaf increment; T45 original Python/current ordinary application environment binding and read-only snapshots successor prepares concurrently. D1 read-only maps original native35 normal-account business route next, no new platform."
     },
     "capacityCleanupCandidate": {
       "state": "HUMAN_DECIDED_RETAIN_ALL_THREE_NO_DELETION",
