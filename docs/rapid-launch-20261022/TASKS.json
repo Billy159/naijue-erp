@@ -337,8 +337,8 @@
       "prompt": "角色派工提示词/QF-前端独立验收.txt",
       "threadId": "01a161d2-717e-7f50-87bc-73a2d91f90a3",
       "hostId": "local",
-      "model": "gpt-6-luna",
-      "reasoningEffort": "max",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
       "sourceWriteEnabled": false,
       "fastRequested": false,
       "currentWork": "SOURCE447 DOC192 limited oneleaf/three finite gapcases PASS",
@@ -353,9 +353,9 @@
       "lastActualDispatch": {
         "model": "gpt-6.1-sol",
         "reasoningEffort": "medium",
-        "atUtc": "2026-10-24T16:49:04.132153+00:00",
         "toolAccepted": true,
-        "FastToolVerified": false
+        "FastToolVerified": false,
+        "atUtc": "2026-11-05T22:44:00Z"
       },
       "statusAsOfContinuation451": "DELIVERED_WAITING_EXACT_ACTUAL_INPUT_NO_DUPLICATE_DISPATCH"
     },
@@ -28159,7 +28159,9 @@
         "scripts/release/rollback-candidate.py (C reassigns original release compatibility scope; only same-file original tests)",
         "scripts/release/boot-entry.py (C reassigns original release compatibility scope; only same-file original tests)",
         "config/release-contract.json (C reassigns original release compatibility scope; only same-file original tests)",
-        "scripts/release/generate-release-contract.mjs (C reassigns original release compatibility scope; only same-file original tests)"
+        "scripts/release/generate-release-contract.mjs (C reassigns original release compatibility scope; only same-file original tests)",
+        "scripts/release/unified-install/launch-fresh35-production-v2.py",
+        "tests/test_fresh35_production_launcher.py"
       ],
       "D3": [
         "packages/application/src/unified-import-source-reconciliation.ts",
@@ -28481,13 +28483,14 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "T45 newproductionPython/test finalchecks/freeze, D1 final source-loader closure check, then fixedconsumer incrementQB and one unifiedbuild; D1productionentry9leaf + F01valid evidence reused. No oldr5 replay.",
+      "critical": "Finalfixedproduction consumer3leaf QB increment + D2 onebuild in parallel; prior9leaf andF01 scoped PASS adopted. T45 next freshisolated ops exactpins after artifactdescriptor, no oldr5 replay.",
       "independentPreparation": {
         "D1": "Production JS entry+source loader/strict V1 refusal, fixed source handoff and necessary scoped checks.",
         "T45": "Production Python consumer source only in independent new files, creation authority then actualfacts/entry/install; finite serviceLease separates installation. r5 actual run priority.",
         "D2": "Completed3de75 build/pack/tail readback adopted; wait next frozen source, do not rebuild same.",
         "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
-        "QB": "Observer8 and private transport source PASS adopted; next only productionconsumer increment when fixed."
+        "QB": "Observer8 and private transport source PASS adopted; next only productionconsumer increment when fixed.",
+        "QF": "Delivered exactnormalhost prerequisites; preserve report; actualbrowser core pendingnew35host, no repeatedDemo or fixtureQA."
       },
       "noFiller": true
     },
@@ -30036,7 +30039,7 @@
     },
     "productionBootstrapConsumerSourceDecision": {
       "authority": "C under direct human decision delegation until2026-11-06T12:00+08",
-      "state": "SOURCE_ONLY_IMPLEMENTING_NOT_PRODUCTION_EXECUTION",
+      "state": "FINAL_THREE_LEAF_SOURCE_FROZEN_NEXT_INCREMENT_QB_AND_BUILD",
       "writers": {
         "D1": "production JS entry/source loader/strict V1 refusal/direct tests",
         "T45": "new production Python bootstrap/direct tests"
@@ -30094,7 +30097,46 @@
         "independentChecks": 6,
         "actualPG": false
       },
-      "ordinaryStartOrdering": "Existing watcher includes recordparent: settle external entry/REALauthority and required private-file lifecycle before ordinary V2admit/start; no sibling authority mutations afterward without original re-admit. No watcher relaxation/newhook."
+      "ordinaryStartOrdering": "Existing watcher includes recordparent: settle external entry/REALauthority and required private-file lifecycle before ordinary V2admit/start; no sibling authority mutations afterward without original re-admit. No watcher relaxation/newhook.",
+      "sourceSetSHA256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+      "sourceDescriptorSHA256": "cb9c4ed8f3552dcdd1940d9459b6ad6c4d867b9b6e9c43e0fd8de1b6f76587ae",
+      "T45SourceReceiptSHA256": "f4e5d2e8f4eea1f518d06f1b266584e60f2f213d934a01fd9477c00a4916b343",
+      "T45SyntheticChecksAdopted": 16,
+      "actualPG": false,
+      "nextSourceLeaves": [
+        {
+          "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+          "sha256": "58db5fc564bebd8e712205558b9e755b66942ea75f9e2994f9b65c611f3a851f"
+        },
+        {
+          "path": "scripts/release/unified-install/launch-fresh35-production-v2.py",
+          "sha256": "f2adbe41b24faeaf38b89cf4a633ba6f6a6f462b9bee06e34231ded4a5c2ab73"
+        },
+        {
+          "path": "tests/test_fresh35_production_launcher.py",
+          "sha256": "4077edb2ba2492c8009fc38eaeebe96c90e471c48be91671dec426f39f49b406"
+        }
+      ]
+    },
+    "coreBrowserPreparation": {
+      "owner": "QF",
+      "threadId": "01a161d2-717e-7f50-87bc-73a2d91f90a3",
+      "checkedPriorActualState": "notLoaded; originalNov1turncompleted; no in-flight same scope",
+      "dispatchAccepted": true,
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "Fast": "UNVERIFIED",
+      "candidate": "47f1c4b0af84c2d8cf1cd2cf816d380f05e9adf0:candidate0448",
+      "scope": "Read-only reuse existing normal login/core sales/mixed/transfer/inventory/role consumer flow and exact host/data requirements; no new testplatform/candidate/service/PG and no usercomputer request.",
+      "actualBrowserBusinessPass": false,
+      "state": "ORIGINAL_QF_PREPARATION_DELIVERED_WAITING_EXACT_NEW35_NORMAL_HOST",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/0448-core-browser-prerequisites-20261106.md",
+      "receiptSHA256": "4b7af254ac044c04488682e832166ae69ff9a447c497e52a537f80456dd0192a",
+      "findings": [
+        "production-bootstrap is existing real HTTPS/session consumer",
+        "Existing live-production/all-document-actions browser scripts constrain synthetic-management.invalid fixtures; not genuine35 business evidence",
+        "Need fixedfinalsource/build/target/HTTPSURL, normal auth/three role identities and exact isolated writable businessscope fromT45; no usercomputer requests"
+      ]
     }
   }
 }
