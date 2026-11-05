@@ -20,6 +20,27 @@ export const FRESH35_COMBINED_BASE_ARTIFACTS=Object.freeze({
  'expected-declared-metadata.json':'3056cd7d6a36c6d08b712d2084d435807f448d9a7af2149ea723b40659efa47e',
  'migration-lineage.json':'11290c3de0b9f1711f748643091e1c14f44f83006b6b8991fa5fd12daf61abad',
 });
+/** Resolve the nine existing, independently pinned package inputs explicitly.
+ * Original cloud paths are provenance only, never local execution fallbacks. */
+export async function resolveFresh35ReferenceInputPaths(directory){
+ need(typeof directory==='string'&&resolve(directory)===directory&&await realpath(directory)===directory,'CANONICAL_REFERENCE_DIRECTORY_REQUIRED');
+ const baseline='fresh35-install-review-plan-20261105-r2';
+ const expected={...Object.fromEntries(Object.entries(FRESH35_COMBINED_BASE_ARTIFACTS).map(([name,sha])=>[baseline+'/'+name,sha])),
+  'fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json':'2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f',
+  'cloud-pg-schema178v2-20261105-r2/evidence/functions.json':'9959bca2dd4d91d3fb1ba7558c5abdd0b70676b096eaf73c4dd117261534551f'};
+ const index=JSON.parse((await regularFile(directory,'INDEX.json')).toString('utf8'));
+ need(Array.isArray(index)&&index.length===Object.keys(expected).length,'EXACT_REFERENCE_INDEX_REQUIRED');
+ const seen=new Set();
+ for(const item of index){
+  const prefix='delivery/reference-inputs/';
+  need(typeof item?.package_path==='string'&&item.package_path.startsWith(prefix),'REFERENCE_PACKAGE_PATH_REQUIRED');
+  const path=item.package_path.slice(prefix.length);
+  need(Object.hasOwn(expected,path)&&!seen.has(path)&&item.sha256===expected[path],'REFERENCE_INDEX_BINDING_DIFFERS');
+  seen.add(path);const bytes=await regularFile(directory,path);
+  need(bytes.length===item.bytes&&hash(bytes)===expected[path],'REFERENCE_INPUT_DIFFERS:'+path);
+ }
+ return Object.freeze({baselineDirectory:resolve(directory,baseline),modelPath:resolve(directory,'fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json'),functionsPath:resolve(directory,'cloud-pg-schema178v2-20261105-r2/evidence/functions.json')});
+}
 async function regularFile(root,path){
  const full=resolve(root,path);need(full.startsWith(root+sep)&&await realpath(full)===full,'REGULAR_SOURCE_PATH_REQUIRED');
  const stat=await lstat(full);need(stat.isFile()&&!stat.isSymbolicLink()&&stat.size>0&&stat.size<=16*1024*1024,'BOUNDED_SOURCE_FILE_REQUIRED');

@@ -1777,11 +1777,13 @@
     }
   ],
   "currentModelDirective": {
-    "localCleaningAndMapping": "gpt-6.1-terra/medium",
-    "serverUniqueOwnerT45": "gpt-6.1-sol/medium",
-    "applicationAndSQL": "Dot only; no local application changes",
-    "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-    "source": "User current unified-data-route instructions override old all-Sol task profiles; actual thread parameters specified on continuation"
+    "model": "gpt-6.1-sol",
+    "efforts": [
+      "medium",
+      "high"
+    ],
+    "sourceThread": "01a1aa63-3402-70e3-83af-cd393446504b",
+    "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
@@ -28122,5 +28124,147 @@
       "requiresNewReadNow": false
     },
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
+  },
+  "integration0448Continuation": {
+    "at": "2026-11-05T06:53:33.336128+00:00",
+    "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
+    "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
+    "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
+    "branch": "codex/erp-0448z-integration-20261105",
+    "worktree": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102",
+    "applicationRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+    "sourceStatus": "COPIED_UNMODIFIED_NOT_TESTED_NOT_RELEASE",
+    "externalDotInFlight": "UNKNOWN; do not infer stopped",
+    "goalToolStatus": "USER_RESUMED_ACTIVE_AND_UPDATED_OBJECTIVE_20261105",
+    "model": "gpt-6.1-sol",
+    "efforts": [
+      "medium",
+      "high"
+    ],
+    "fastToolVerified": false,
+    "writers": {
+      "controller": [
+        "integration metadata",
+        "shared contract/config/combined SQL/release coordination",
+        "scripts/release/unified-install shared installers/catalog/combined source",
+        "apps/api/src/production-main.ts and required runtime selectors",
+        "package/lock and shared CLI seam integration"
+      ],
+      "T45": [
+        "existing server execution outputs and private factual evidence only"
+      ],
+      "D3": [
+        "packages/application/src/unified-import-source-reconciliation.ts",
+        "tools/unified-import/source-reconciliation-cli-input.mjs",
+        "tools/unified-import/stream-preflight.mjs",
+        "tools/unified-import/stream-preflight.d.mts",
+        "tests/unified-source-occurrence-reconciliation.test.mjs",
+        "tests/unified-import-stream-preflight.test.mjs",
+        "new tools/unified-import/source-occurrence-* helpers and focused tests"
+      ],
+      "D1": [
+        "packages/application/src/unified-historical-line-amount-evidence.ts",
+        "tools/unified-import/historical-line-amount-cli-input.mjs",
+        "tools/unified-import/stream-plan.mjs",
+        "tools/unified-import/stream-plan.d.mts",
+        "tools/unified-import/stream-import-cli.mjs",
+        "adapters/postgres/patches/0035_historical_line_amount_successor.sql",
+        "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs",
+        "tests/historical-line-amount-evidence.test.mjs",
+        "tests/fresh35-historical-amount-candidate.test.mjs",
+        "tests/unified-stream-import-cli.test.mjs",
+        "tools/unified-import/stream-document-requests.mjs (amount evidence seam only)",
+        "tools/unified-import/stream-program.mjs (amount evidence seam only)",
+        "tools/unified-import/fresh35-host-session.mjs",
+        "tools/unified-import/whole-host-session.mjs",
+        "tools/unified-import/fresh35-receiver-diagnostics.ts",
+        "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+        "scripts/release/unified-install/whole-sales-admission-v1.mjs",
+        "scripts/release/unified-install/whole-sales-admission-v1.d.mts"
+      ]
+    },
+    "preservedWIP": "Original cleaning repo four files untouched",
+    "tasks": {
+      "C-0448-CAPACITY-01": {
+        "owner": "D3",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "SOURCE_FROZEN_SYNTHETIC_PASS_NOT_PG",
+        "next": "deliver bounded index API and 608916 scale evidence",
+        "scaleRows": 608916,
+        "ledgerBytes": 300062796,
+        "reportBytes": 269443633,
+        "seconds": 58.584,
+        "peakRSSBytes": 387055616,
+        "focusedTests": "48 PASS; scale independently PASS; no real PG"
+      },
+      "C-0448-AMOUNT-01": {
+        "owner": "D1",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "SOURCE_FROZEN_SYNTHETIC_PASS_NOT_PG",
+        "next": "C-0448-HOST-02 in progress",
+        "focusedTests": "31/31 plus launch typecheck"
+      },
+      "C-0448-FACTS-01": {
+        "owner": "T45",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "COMPLETED_READONLY",
+        "next": "accurate readonly fact receipt",
+        "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/RESULT.json",
+        "sha256": "c1cef48ed71a71b114c5f23f5e26e8a299bc8293d92fffe64f9e2c6b78717741",
+        "currentProduction": "old erp_prod; 15 old migrations; not new35"
+      },
+      "C-0448-HOST-01": {
+        "owner": "C",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "READ_COMPLETED_HANDOFF_TO_ORIGINAL_D1",
+        "next": "reuse existing session/record/capability, no legacy fallback"
+      },
+      "C-0448-HOST-02": {
+        "owner": "D1",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "DISPATCHED",
+        "next": "verified actual record and same-client capability; no fake installation"
+      },
+      "C-0448-LEDGER-02": {
+        "owner": "D3",
+        "state": "DISPATCHED",
+        "scope": "private source ledger only, frozen code"
+      },
+      "C-0448-HALL-FACTS-02": {
+        "owner": "D2",
+        "state": "DISPATCHED",
+        "scope": "readonly private capture consumption and approved identity resolution"
+      }
+    },
+    "github": {
+      "branch": "codex/erp-0448z-integration-20261105",
+      "commit": "8769cf923b2ae69e677972c4ecb9e4696eea96df",
+      "remoteVerified": true,
+      "status": "WIP_NOT_RELEASE"
+    },
+    "cleanInstall": {
+      "node": "24.21.0",
+      "npm": "11.9.0",
+      "exitCode": 0,
+      "packages": 171,
+      "nativeModules": "sharp/esbuild/pg loaded",
+      "lockUnchanged": true
+    },
+    "sourceFactGaps": [
+      "source real version0 differs from contract positive target-version capture",
+      "one captured dual-hall warehouse has existing approved single-hall direction, preserve both facts",
+      "two code-only bridges under bounded D2 review",
+      "independent actual cutoff alignment still missing"
+    ],
+    "portableReferences": {
+      "resolver": "resolveFresh35ReferenceInputPaths(directory)",
+      "tests": "5/5 PASS; first test carrier canonical /var alias failure corrected to realpath",
+      "path": "worktree/reference-inputs; original cloud paths provenance only"
+    }
   }
 }

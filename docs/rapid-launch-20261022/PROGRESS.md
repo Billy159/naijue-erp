@@ -903,3 +903,25 @@ Index12 coordination checkpoint ed4c37b58cf77d041134c2ce296cf8acfc95b8d6 pushed 
 
 
 GitHub接续记录检查点：`codex/e5c5a762-cleaning-20261102` @ `c38054e81d5d5115c859871cba9193ce916dcfe2` 已推送并独立核对远端引用。仅三份接续文档；051完整应用源码仅独立接收，未在本清洗分支合入或冒称远端交付。原四处源码/测试WIP保持原哈希，真实资料不入Git。
+
+
+### 2026-11-05 0448Z 实施接续
+- 用户来源Chat01a1aa63两条实施/持续上线原话已核；模型Sol6.1 medium/high，Fast工具未核验。
+- 唯一集成分支 codex/erp-0448z-integration-20261105；应用根 /Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448，输入0448Z完整快照，尚未测试/发布。
+- 原清洗分支4项源码WIP、D3-40数据、0236/0448原包均保留；不覆盖、不重导。
+- C协调公共合同与最终集成；T45补准确仓厅版本时间及正式目标/备份状态；D1/D3源码边界登记后接续。
+- 当前源台账250000容量不足608916；6条金额仍OFFLINE_ONLY；fresh35 host/release未接通。
+- Dot外部在途未知，独立工作树新改动单writer；后继包到达先比较，不叠加覆盖。
+- 旧目标工具仍BLOCKED且无resume/edit接口；新完成条件沿本次方案记录，未虚报创建/恢复。
+
+目标已由用户实际恢复active并更新为上线接续目标；旧无resume限制已被本次用户操作解除。D3唯一写来源台账/stream-preflight；D1唯一写金额证据/stream-plan/import CLI/金额SQL；C唯一写共享合同/安装宿主/正式入口和集成记录。T45唯一服务器owner。准确清单见TASKS.integration0448Continuation。
+
+
+### 2026-11-05 0448Z首批源码检查点
+- 新分支 codex/erp-0448z-integration-20261105 @8769cf923b2ae69e677972c4ecb9e4696eea96df 已推github并精确回读。唯一应用根candidate0448，不构建根部历史源码。
+- D3有界来源接收48定向通过；独立608916合成规模通过，原台账300062796bytes，58.584s/RSS387055616bytes。真实ledger后继准备中，不称整包PG通过。
+- D1金额+厅proof计划/请求31/31及launch类型检查通过；正式host仍未通，已接下一原D1包。
+- 固定Node24.21.0/npm11.9.0干净npm ci成功171包；锁未改，依赖核对和sharp/esbuild/pg原生加载成功。
+- C补原包9份reference显式本机路径加载器，5/5定向通过；没有改旧证据pin。
+- T45新只读事实确认仍旧正式erp_prod/15迁移；50单厅中准确桥+正version仅33仓17827头，15仓10976头真实version0，1双厅仓38头亦0，2仓53头码桥待D2准确核。不得造1、套revision105或取首厅。
+- 真实导入/PG35安装/权限业务/浏览器/正式发布仍未验；新修改仅WIP。
