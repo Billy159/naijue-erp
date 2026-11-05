@@ -1126,3 +1126,23 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - C精确导出该committed candidate子树为应用根d77a8604977eccee66e155f6ea2a8eb233f28aa8/tree5fddd6f34fc3ae1a7dc533d0ef824caa10fcd08b。整合与build-root两分支已推GitHub并读回精确SHA；不覆盖工作树或旧7393包。
 - 原QB/high只验四叶两stage与绑定增量；T45/high沿原两叶准备成功镜像与新版ordinary应用分绑、三处独立只读35表/序列观察。真正PG待固定后继及必要验收和准确新窗口输入，不重建镜像、不改旧receipt、不加权限或新平台。
 - D1转只读核现有native35登录及普通账号销货/混合/调拨SAVE审核弃审链的原入口与缺项，避免只停在导入smoke。D3容量分支保持未执行，用户保留3旧导出决定不变。
+
+
+### 容量已有新事实、全源核账接续，QB新增失败原owner定向修复
+- C一次实查当前卷可用11,311,050,752字节；用户保留3旧导出决定保持，未删。原D3/high接续准确TMP卷容量核实及原055固定一次有界全源核账，原行数/预算/512MiB停止余量保持；源核账scratch关闭回空间后才接a10 stream预检，不同时放两个大索引。当前已派达，真实执行结果未回。
+- 原QB已在22699eb4受控真实stage代码回调复现：末段只核ROLLED_BACK而不核code，PERMISSION_DENIED/IMPORT_FAILED等可误写rollbackVerified。C采用问题交原D1原四叶定向修复，原QB继续其余窄范围；未重复主控技术验收。
+- T45接缝准备继续，但最终ordinary应用source/归档/authority等待D1后继及QB受影响复验；不把22699eb4或5e8b旧S_test作为最终PG放行。实际PG尚未启动，镜像环境成功不等于应用/业务通过。
+
+
+### F01修复固定、全源核账实际运行、原生业务载体缺口交原D2
+- 原D1两叶F01分类与成功CLOSED输出修复逐hash匹配65ca5c51后固定de0722fad115c26f3d6a99d7a21bbb64db53a3ea；原entry5/5无skip，现原QB只复验F01及输出。旧22699 NEED_FIX/b23cfeb0及红反例保留，未当通过。D1当前source观察742779b8，不抢作最终S_final。
+- T45原父launcher及直接测试也属212pins，C明确唯一writer为T45，与原外wrapper/直接测试同包收口；须真实合并后重新求descriptor。不运行时覆盖旧pin、不改写e475镜像收据；原成功镜像不重建。
+- 原D3实际TMP卷开跑前11,306,754,048字节，无同项run，32固定文件全匹配。一次全源核账已真实启动，503457原发生项hash/EOF、registry和首批主表EOF，当前历史销售厅证据处理；scratch约1.73GB/余量约9.58GB，未触原停止线。尚无整批终态，不称608916目标已核通过；预检仍未启动。
+- D1已核synthetic V1真实安装记录与ordinary production-v2、importhost之间的用途兼容缺口。原D2/high只读核现有7叶及最小隔离消费接缝，不能把V1冒充V2、放宽正式保护或新造凭据；后续普通账号登录及SAVE审核链仍必验。
+
+
+### F01限定关闭、原native35消费接缝实施与核账进展
+- 原QB对de0722fa仅18定向向量复验PASS，回执eba00e19；关闭QB-SYNTHETIC25-SPLIT-F01。真实PG/跨进程完整admitted program仍未验，原四叶其它有效证据复用。
+- 原D2准确只读接缝38892c19采用。C登记原D1在host/.d.mts/catalog及直接测试实施封闭合成ordinary证明消费，原D2两factory及原integration runner有限fresh35分支唯一owner等待接口；生产V2/禁synthetic保护和原V1 record字节不变，无新角色/池/表或实际权限/环境动作。真正必要持久/权限差异先准确回C，不借接口制造批准。
+- T45原launcher+直接测试本地44模型、wrapper+直接测试18模型通过，仍在交回固定版本；最终app pins/归档/authorities未填且执行拒绝，不启动PG或重建镜像。
+- 本地全源核账已到调拨明细，销货头28894、调拨头14835及销货明细83399均EOF；临时约2.0GiB未触停止线。整批完整核账仍未出终态，stream预检尚未启动。

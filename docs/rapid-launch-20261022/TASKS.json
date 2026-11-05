@@ -28152,7 +28152,9 @@
       ],
       "T45": [
         "existing server execution outputs and private factual evidence only",
-        "candidate0448/scripts/release/ssh-control.py typed artifact staging and tests/test_ssh_artifact_staging.py only; original operational client unchanged"
+        "candidate0448/scripts/release/ssh-control.py typed artifact staging and tests/test_ssh_artifact_staging.py only; original operational client unchanged",
+        "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+        "tests/test_fresh35_isolated_launcher.py"
       ],
       "D3": [
         "packages/application/src/unified-import-source-reconciliation.ts",
@@ -28218,7 +28220,8 @@
         "scripts/release/manifest.mjs exact native35 member validation only",
         "config/release-contract.json native35 exact source members",
         "scripts/release/generate-release-contract.mjs and direct tests",
-        "scripts/release/deploy-candidate.py GENERATED RELEASE CONTRACT block only; function/approval marker frozen"
+        "scripts/release/deploy-candidate.py GENERATED RELEASE CONTRACT block only; function/approval marker frozen",
+        "tests/integration/live-ledger-balance-pairs.integration.test.ts exact finite fresh35 branch only; D2 unique owner after interface handoff; original V8 route unchanged"
       ]
     },
     "preservedWIP": "Original cleaning repo four files untouched",
@@ -28476,7 +28479,8 @@
       "D3": "Fixed a10 streampreflight preparation1536ae74 done; both actual source reconciliation and preflight held for safe capacity",
       "T45": "Actual image ready22479274 and root receipt e475 verified; prepare existing new-app/environment binding and readonly observer seams, no PG",
       "QB": "Exact5 fixed source PASS adopted plus actual T45 image outcome; next D1 four-leaf only when fixed",
-      "phaseBCurrent25": "Fixed22699eb4/5e8b75bd four-leaf QB increment; T45 same target app/environment successor preparation; D1 next native35 business route read-only. Capacity-dependent D3 remains held; exact3 old exports retained."
+      "phaseBCurrent25": "Fixed22699eb4/5e8b75bd four-leaf QB increment; T45 same target app/environment successor preparation; D1 next native35 business route read-only. Capacity-dependent D3 remains held; exact3 old exports retained.",
+      "native35BusinessGap": "D1 read-only verified synthetic V1 record / production V2 / importhost mismatch; original D2 high checking exact existing consumer seam, no source/permissions changes yet. Import smoke is not ordinary business PASS."
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28811,7 +28815,7 @@
       "storageAuthorReceiptSHA256": "5800fb6aba491c2585d5665697ca6fef46f08770d8f26e1ff5cc2978581d7e06",
       "representativeStorageBeforeBytes": 315944960,
       "representativeStorageAfterBytes": 152154112,
-      "realWholeRunRepeated": false,
+      "realWholeRunRepeated": true,
       "storageReviewSHA256": "4d44548d5aaef5092b58cc9a013af27626c14fbff3bf6ca71d343fd5125ec1e1",
       "resourceReceiptSHA256": "b6b7a6b53d1d1362e49efd18a21e0e4ca9d2a88e7cc9a0d1b78ba0c50c7e823b",
       "availableBytesAtCheck": 3032293376,
@@ -28823,7 +28827,16 @@
       "scratchBudgetBytes": 3294854658,
       "controllerAcceptedStopFreeBytes": 536870912,
       "budgetIsMeasuredPeak": false,
-      "capacityDecision": "Human explicitly retained all3 old exports; resource-dependent source reconciliation/preflight remain not run. D1/T45 independent work continues."
+      "capacityDecision": "Human retained3 old exports; new available space observed11,311,050,752B. Original D3 reactivated to confirm exact temp volume and then one bounded fixed055 run; stream preflight only after scratch cleanup.",
+      "latestWorkspaceAvailableBytes": 11311050752,
+      "currentBoundedRunState": "RUNNING_ACTUAL_FIXED055_SOURCE_RECONCILIATION",
+      "actualRunRelativePath": "v0448-final-merge-D3-51/r3/source-reconciliation-05579a94/run-01",
+      "actualTempVolumeFreeBytesAtStart": 11306754048,
+      "actualSourceEOFThisRun": true,
+      "actualOccurrencesThisRun": 503457,
+      "currentStageReported": "Sales headers28894, transfer headers14835 and sales lines83399 EOF; transfer lines in progress. Final source/target reconciliation unproven.",
+      "reportedScratchBytesApprox": 1730000000,
+      "reportedVolumeFreeBytesApprox": 9580000000
     },
     "settlement25AcceptedImplementation": {
       "commit": "a10d8daa06988abe63de28108473098adf19fff7",
@@ -28845,7 +28858,7 @@
     },
     "phaseBCurrent25SyntheticContinuation": {
       "owner": "D1",
-      "state": "FOUR_LEAVES_FROZEN_ORIGINAL_QB_INCREMENT_IN_PROGRESS",
+      "state": "F01_CLOSED_SCOPED_QB_PASS_T45_PARENT_INCREMENT_PENDING",
       "files": [
         "tests/fixtures/unified-import/whole-package-synthetic.ts",
         "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
@@ -28866,9 +28879,24 @@
       "sourceSetSha256": "5e8b75bd99301d10e586390b7e048bec0aa329d3c2f0e9302106c74e6c749ebc",
       "pins": 212,
       "implementationReceiptSHA256": "d5b7f1f3632d8a05e1345d85bd897ecf3ca15278ce8e1fa7730cc4f05f488759",
-      "checks": "Author10/10 no skip; typecheck/build0. Four exact delivery bytes matched by C; no repeated technical acceptance.",
+      "checks": "F01 author5/5 no skip; prior fixture/type/build checks reused. Original QB affected recheck requested; no PG.",
       "githubRemoteReadback": true,
-      "next": "Original QB only four-leaf increment; T45 original Python/current ordinary application environment binding and read-only snapshots successor prepares concurrently. D1 read-only maps original native35 normal-account business route next, no new platform."
+      "next": "D1 exact expected classification and stage/code evidence; original QB only affected recheck. T45 prepares seams but final ordinary application binding held for successor S_test.",
+      "finding": "Final injected publication failure only checked ROLLED_BACK, accepting unrelated permission/IMPORT_FAILED as expected; original QB reproduced from fixed22699eb4 runtime stage code.",
+      "repairOwner": "D1 original four leaves",
+      "fixCommit": "de0722fad115c26f3d6a99d7a21bbb64db53a3ea",
+      "failedReviewReceiptSHA256": "b23cfeb02c0d712da8604288926b22fe8d7f8b39bef7bbf92efe044f7f488ee6",
+      "fixReceiptSHA256": "65ca5c519c46011950cb47d28fe0c2a80325a036d6b83aaa45a1ce90abbcc57b",
+      "sourceSetAtD1Fix": "742779b80b1683300884148600ee404b312cd563c9c14f48e969496885d29a01",
+      "finalSourceSet": "PENDING_T45_LAUNCHER_AND_NECESSARY_NATIVE_RUNTIME_CONSUMER_INTEGRATION",
+      "t45AdditionalOwnedApplicationLeaves": [
+        "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+        "tests/test_fresh35_isolated_launcher.py"
+      ],
+      "finalOrdinaryArchiveReady": false,
+      "fixReviewReceiptSHA256": "eba00e1953393eec635f5af1107f742375eb3188f23cf7cbb81f015325f2a1b1",
+      "fixReviewScope": "18 directed runtime-stage vectors only; source/model PASS, no PG",
+      "fixedIssue": "QB-SYNTHETIC25-SPLIT-F01"
     },
     "capacityCleanupCandidate": {
       "state": "HUMAN_DECIDED_RETAIN_ALL_THREE_NO_DELETION",
@@ -28888,6 +28916,30 @@
       "humanDecision": "保留，我另行释放空间",
       "humanSource": "call_06cfa0afedd741fc8cb642a9e97cf8ac item0",
       "next": "User releases space separately; original D3 retains fixed code and inputs, resumes bounded run only after actual sufficient capacity. No substitute deletion list or repeated unchanged polling."
+    },
+    "native35SyntheticOrdinaryContinuation": {
+      "state": "D1_MINIMUM_SOURCE_IMPLEMENTATION_ACTIVE_D2_FACTORY_AND_RUNNER_INTERFACE_WAIT",
+      "authority": "Current full user goal requires genuine synthetic35 ordinary business; source-only existing module adaptation, no production or new permission execution",
+      "D1": [
+        "tools/unified-import/fresh35-host-session.mjs",
+        "tools/unified-import/fresh35-host-session.d.mts",
+        "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "existing direct tests"
+      ],
+      "D2": [
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/production-provider-composition.ts",
+        "existing direct tests",
+        "tests/integration/live-ledger-balance-pairs.integration.test.ts finite fresh35 consumer"
+      ],
+      "invariants": [
+        "Protected V1 bytes and V2 production restrictions unchanged",
+        "Exact genuine synthetic target, real ordinary LOGIN/pool/capacity/identity/lifetime proof; no caller capabilities",
+        "No new role/pool/record/schema or permissions unless exact necessary delta separately reviewed",
+        "Actual login and SALE/mixed SALE/TRANSFER are not satisfied by import smoke"
+      ],
+      "readOnlySeamReceiptSHA256": "38892c19c0ad4c303edbfbbe95c75c795048664cc8e7d9638f1c53019aacb7f9",
+      "PGExecuted": false
     }
   }
 }
