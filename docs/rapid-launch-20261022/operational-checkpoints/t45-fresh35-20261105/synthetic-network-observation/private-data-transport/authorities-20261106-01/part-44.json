@@ -1,0 +1,17 @@
+{
+  "format": "T45_PRIVATE_STANDARD_IMPORT_DATA_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_PRIVATE_STANDARD_IMPORT_DATA_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "t45-real-r3-part44-20261106-01",
+  "manifestSha256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+  "archiveSha256": "81a47929f84d70485181becbdf409931098265787935a11a10c08df6616f023d",
+  "archiveBytes": 2097152,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/private-standard-import-data/t45-real-r3-part44-20261106-01",
+  "startsAt": 1793914815706,
+  "expiresAt": 1793917515706,
+  "decisionReference": "C01a161ca under direct human decision delegation until2026-11-06 noon. Exact r3 manifest1e1e/archivefc831c/93508914 only, reviewed private7af receiver8841/assemblere9b69 and QB09707e94. Single original40s per fragment, once-only CAS+READY, exact45 order/full SHA; unknown stops original-key recovery. 45min hard total, private0700/0600; no unpack/PG/REAL import/production/old targets or data in Git.",
+  "kind": "PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT",
+  "fragmentIndex": 44,
+  "fragmentOffset": 90177536
+}

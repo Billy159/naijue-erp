@@ -1,0 +1,431 @@
+{
+  "status": "C_EXTERNAL_EXACT_PRIVATE_STAGING_SCOPE_NOT_EXECUTED",
+  "startsAt": 1793914815706,
+  "expiresAt": 1793917515706,
+  "rootAssemblyJob": "t45-real-r3-assemble-20261106-01",
+  "initialGateExpectedSha256": "4d5a2af34066ffa7cc0af062193599bbfed1848867e1404f52163ac5fd37c862",
+  "initialGateRequiresCurrentReadonlyAndStableIdentity": true,
+  "parts": [
+    {
+      "index": 1,
+      "offset": 0,
+      "bytes": 2097152,
+      "archiveSha256": "3cbb18ea4b45b20a3672e1826498699b10c5baad2328286a340abd49404ac4c8",
+      "artifactKey": "t45-real-r3-part01-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-01.json",
+      "authoritySha256": "26c9a097c146ee650a5a422a262e72e0990cf178a378166c68effc357b5604f5"
+    },
+    {
+      "index": 2,
+      "offset": 2097152,
+      "bytes": 2097152,
+      "archiveSha256": "dedc7cd99d5a88a10cb8f47bcaa6ef489ac7708fd6c650da92d7509cd2cd6df8",
+      "artifactKey": "t45-real-r3-part02-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-02.json",
+      "authoritySha256": "47202098e24773ce8a5cb23bd9ed69fdc2c0d5932f789116f6b1b878d0559e00"
+    },
+    {
+      "index": 3,
+      "offset": 4194304,
+      "bytes": 2097152,
+      "archiveSha256": "34c01309bb3158eef739f0ca692ca9767c31708389676cf1c0cf219208c9f5d7",
+      "artifactKey": "t45-real-r3-part03-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-03.json",
+      "authoritySha256": "e844891baaf21a4b7b0825ef7c4d34a60bec2120fc04b91a06b2473ccff5a210"
+    },
+    {
+      "index": 4,
+      "offset": 6291456,
+      "bytes": 2097152,
+      "archiveSha256": "5c4cec8b8211069cbeea5da6f1cc459d3e8f0fb09923f8a68da9069b3b6c1743",
+      "artifactKey": "t45-real-r3-part04-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-04.json",
+      "authoritySha256": "173e8cdba6727f15b028ece2ea6c9ee6a079dc4f20807b60d14727fc4ccc2613"
+    },
+    {
+      "index": 5,
+      "offset": 8388608,
+      "bytes": 2097152,
+      "archiveSha256": "6a3b5efbba17ea28ca2e2b64d0ded045514e10adbfe077f437a1518ed6e376b4",
+      "artifactKey": "t45-real-r3-part05-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-05.json",
+      "authoritySha256": "c1a6f7951bdeda53a501fef89c0a0b301f5d0a09be85b22c1b3f384ca5f7a576"
+    },
+    {
+      "index": 6,
+      "offset": 10485760,
+      "bytes": 2097152,
+      "archiveSha256": "c0230734913ce61310b622021ccfd5df04ac10a9b584a9e27acb52ff435abe0d",
+      "artifactKey": "t45-real-r3-part06-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-06.json",
+      "authoritySha256": "44ddb4f6f47e1e4f0c6218b5cd6d733d051dbef3779b9c44f8b1fe4ef593c756"
+    },
+    {
+      "index": 7,
+      "offset": 12582912,
+      "bytes": 2097152,
+      "archiveSha256": "f747ffc6e6e72300d9cd23c5e41849a14cd6f4477f312ff1c27258a21d250dc0",
+      "artifactKey": "t45-real-r3-part07-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-07.json",
+      "authoritySha256": "4b4766e9b94aa7384e66df8bc38d40ff04e71fe936a1dcde3105c2e6bea569d5"
+    },
+    {
+      "index": 8,
+      "offset": 14680064,
+      "bytes": 2097152,
+      "archiveSha256": "a7670baeae8b2031fa95f6ab84f9a848ade0497cbb53b7994319f25e7ed59bf8",
+      "artifactKey": "t45-real-r3-part08-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-08.json",
+      "authoritySha256": "f8716a89fbd7875b94a41e808ac1d4f433316c8b56e687444c62335541367c8d"
+    },
+    {
+      "index": 9,
+      "offset": 16777216,
+      "bytes": 2097152,
+      "archiveSha256": "487695e643075da984e445463ea4adb769723cbe2af85d5d1576daabd81daaab",
+      "artifactKey": "t45-real-r3-part09-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-09.json",
+      "authoritySha256": "f94ed8eb657dfe0c916ec7d49b37eb9f2d8378942d0696845a2ed9c699dac693"
+    },
+    {
+      "index": 10,
+      "offset": 18874368,
+      "bytes": 2097152,
+      "archiveSha256": "cb95a60a41e946b982e25a33cc37b448c1849b669e5a1da6acb9c1b55477ddcc",
+      "artifactKey": "t45-real-r3-part10-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-10.json",
+      "authoritySha256": "f164942b07ae5d7fc0869ba8ceefc4f4f2efe4626e8294e76d0b7a8bd27f1f6f"
+    },
+    {
+      "index": 11,
+      "offset": 20971520,
+      "bytes": 2097152,
+      "archiveSha256": "2d9c5375d6c333306d05c7a32998960346e84d5a6904b66081acfe5bff2404e6",
+      "artifactKey": "t45-real-r3-part11-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-11.json",
+      "authoritySha256": "db9dac9cad060baf4843b7200c2b8ea9e95b610b74f8f40be2875e1fa672b531"
+    },
+    {
+      "index": 12,
+      "offset": 23068672,
+      "bytes": 2097152,
+      "archiveSha256": "29d79076fdf6923309ae3faec105ec131ddfc776ca7fb3b5e433cd458f8975fd",
+      "artifactKey": "t45-real-r3-part12-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-12.json",
+      "authoritySha256": "230a7d1c5178ee123e4053d9ebb321b2f249abc97a54960628fa0e8c1e8c4efc"
+    },
+    {
+      "index": 13,
+      "offset": 25165824,
+      "bytes": 2097152,
+      "archiveSha256": "44333fc0432208ff22d958b271c75e88ca85bd98c23468effd43d5fab95c12ad",
+      "artifactKey": "t45-real-r3-part13-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-13.json",
+      "authoritySha256": "d579cd7b35636d7e53cf5d8615e53ff4636380578015baba996a96b0d3d27125"
+    },
+    {
+      "index": 14,
+      "offset": 27262976,
+      "bytes": 2097152,
+      "archiveSha256": "e0f9ddf6a5dd92d2cace01d603d3074c40f2ef9eb278c3c1c51fe2a83f9e3f2b",
+      "artifactKey": "t45-real-r3-part14-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-14.json",
+      "authoritySha256": "f629bd93e929796d911a535d82f0937554008b6319994e256bb8be91d042d20a"
+    },
+    {
+      "index": 15,
+      "offset": 29360128,
+      "bytes": 2097152,
+      "archiveSha256": "8ba81ec98297087858fe80a13abbcea36f25662bc0089a63fb61bde26f20dff2",
+      "artifactKey": "t45-real-r3-part15-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-15.json",
+      "authoritySha256": "0938d30a97f7520aa7e551e0b0f2b64cdc9b8f1a9caaf56ab3a4f437e8bc8421"
+    },
+    {
+      "index": 16,
+      "offset": 31457280,
+      "bytes": 2097152,
+      "archiveSha256": "5dc60b2dbc1c7e3152ddd8ff928a7881a5a4a87869b0cacb06cf2bbb61e450e9",
+      "artifactKey": "t45-real-r3-part16-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-16.json",
+      "authoritySha256": "fac3a0d05cc7c94d179821f1dc49e116ed73f2d1cb22e41d35154f2590fc40b9"
+    },
+    {
+      "index": 17,
+      "offset": 33554432,
+      "bytes": 2097152,
+      "archiveSha256": "458e30fd0b0982bd9f4f2df0e4d93132c93be4c17dd24e08d56d39322ca4b7e5",
+      "artifactKey": "t45-real-r3-part17-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-17.json",
+      "authoritySha256": "916334a63f101808ccc3374dda858b39dab697d8e1bd567eba789610aaef258c"
+    },
+    {
+      "index": 18,
+      "offset": 35651584,
+      "bytes": 2097152,
+      "archiveSha256": "7ec2490a261da4857958264e8385777a07d156c64bdcad3bca33c5a669ccc29c",
+      "artifactKey": "t45-real-r3-part18-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-18.json",
+      "authoritySha256": "1d1d224e9988872a73644055c0b0caab9679119240752c43104397db47e99730"
+    },
+    {
+      "index": 19,
+      "offset": 37748736,
+      "bytes": 2097152,
+      "archiveSha256": "95cfc322b359baefa4db0f1371b353c8626ccaf7c9d7f55fd426d3d19ba3e707",
+      "artifactKey": "t45-real-r3-part19-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-19.json",
+      "authoritySha256": "d3c92601bd3c2d01f6474295a558a3b6bf6b141b9eab0b89c606a5262f233bee"
+    },
+    {
+      "index": 20,
+      "offset": 39845888,
+      "bytes": 2097152,
+      "archiveSha256": "a4c1dce77a86b840df51df761bde51c33af50528b240a9b711d53509e0a91ed4",
+      "artifactKey": "t45-real-r3-part20-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-20.json",
+      "authoritySha256": "daa6abe38e40fd97128bb53d744dc453693571982acf6a5db5e1f4a09c5f69b0"
+    },
+    {
+      "index": 21,
+      "offset": 41943040,
+      "bytes": 2097152,
+      "archiveSha256": "e3ccb9763ec11b97d7465213a55a20cfcc3daf3948e2f0049cb2931512bfac35",
+      "artifactKey": "t45-real-r3-part21-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-21.json",
+      "authoritySha256": "a9f214bf8701a46752ccdb311cd5b805d6846f3099147b6686d431b53eaaa79c"
+    },
+    {
+      "index": 22,
+      "offset": 44040192,
+      "bytes": 2097152,
+      "archiveSha256": "c1518fcfcc87123c910dedeacc3c1c5cf235f80d41488a5bb097943acc46358f",
+      "artifactKey": "t45-real-r3-part22-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-22.json",
+      "authoritySha256": "da766baf153321b36265f77a8d317273ad259520d3360ccd64a69517d0aa8aa4"
+    },
+    {
+      "index": 23,
+      "offset": 46137344,
+      "bytes": 2097152,
+      "archiveSha256": "8273847966b7b7df6f15d37292c3f122ecaf674dc2e53826467531464b78ab0c",
+      "artifactKey": "t45-real-r3-part23-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-23.json",
+      "authoritySha256": "f140b18e085c124c1ed5e70af86f317dbf42ce4286c67556237aeb1cfd9c53b5"
+    },
+    {
+      "index": 24,
+      "offset": 48234496,
+      "bytes": 2097152,
+      "archiveSha256": "41b49dab28fcdb0177e55b997e4af45875e8e49f829986e93ee6ad4ea4edb7f9",
+      "artifactKey": "t45-real-r3-part24-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-24.json",
+      "authoritySha256": "08b836af94d4e1cbf2241f17305590017686d8fb92f527593c3d8957153ead01"
+    },
+    {
+      "index": 25,
+      "offset": 50331648,
+      "bytes": 2097152,
+      "archiveSha256": "6b588357e70efb55b0a26b003981a35a2a3c708f626dad1fb6609d7cdda0ec84",
+      "artifactKey": "t45-real-r3-part25-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-25.json",
+      "authoritySha256": "bbe414c937015221dea5a7cbebec0859e7911548417cee573a815c432fc3f684"
+    },
+    {
+      "index": 26,
+      "offset": 52428800,
+      "bytes": 2097152,
+      "archiveSha256": "a0dd962323d8fb663840df561b2713aee0b91080613c0c5c37f17ecb5887c05a",
+      "artifactKey": "t45-real-r3-part26-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-26.json",
+      "authoritySha256": "9a3d8631ac01d78721e59837eb4a9122c6c048857026d51aad79d6c450a2bebe"
+    },
+    {
+      "index": 27,
+      "offset": 54525952,
+      "bytes": 2097152,
+      "archiveSha256": "4de4d84e0b7057865a5ae8b3de0801809a279c8e24f71a39a561d085fd89b4eb",
+      "artifactKey": "t45-real-r3-part27-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-27.json",
+      "authoritySha256": "a9b899f889c6d68d8785510bcf2f2477bc33beb7b9ad565f7e784a30e450ae80"
+    },
+    {
+      "index": 28,
+      "offset": 56623104,
+      "bytes": 2097152,
+      "archiveSha256": "9fbcb36f69d28064673ef8b6b6a4ac9afa19b3e00c782629f43db736d3a237d2",
+      "artifactKey": "t45-real-r3-part28-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-28.json",
+      "authoritySha256": "6651c8c345ce552505409d63580cd5feca34e76de4767aa8941ef2d862f2dabe"
+    },
+    {
+      "index": 29,
+      "offset": 58720256,
+      "bytes": 2097152,
+      "archiveSha256": "a2f19600a6ac4aa8b18d158b75decdb5a665e49aeb94d52e6626e70b3eab6320",
+      "artifactKey": "t45-real-r3-part29-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-29.json",
+      "authoritySha256": "1e9c8f135a961902f6a49893847d7656de09cb8a019848f9a33b92236bdb14f1"
+    },
+    {
+      "index": 30,
+      "offset": 60817408,
+      "bytes": 2097152,
+      "archiveSha256": "01f463adaed8d7d23f09dd5beb4b1a43a72b2f4e32b19bfb9a058ae303631ead",
+      "artifactKey": "t45-real-r3-part30-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-30.json",
+      "authoritySha256": "371a3c427b9412737d2c4e46115f9a75412154cad5fa602f9668dbdbd08df97c"
+    },
+    {
+      "index": 31,
+      "offset": 62914560,
+      "bytes": 2097152,
+      "archiveSha256": "8bda46e262d5f497e071708425542ba6da05c7a3b540d9d353c577c1501fb39b",
+      "artifactKey": "t45-real-r3-part31-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-31.json",
+      "authoritySha256": "5b881d9961ff8de90630b30625ae24c81a815a51abc99d54adc96a6e98a0e279"
+    },
+    {
+      "index": 32,
+      "offset": 65011712,
+      "bytes": 2097152,
+      "archiveSha256": "954a9935b358d27c0965d382014df73c8e2c82b8e535c6fe21dfcafcbdab0b6e",
+      "artifactKey": "t45-real-r3-part32-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-32.json",
+      "authoritySha256": "1d707c3800ff20657a9ee88175b848e29f3cfdbc3287bdcb7e7a5855d6b3f91e"
+    },
+    {
+      "index": 33,
+      "offset": 67108864,
+      "bytes": 2097152,
+      "archiveSha256": "279b79a395a9efda5a09a80e5b721c9f17694a3db0bf44123dce5603c9930c66",
+      "artifactKey": "t45-real-r3-part33-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-33.json",
+      "authoritySha256": "9587bbd9729f5c1e3194ecf7fc394242c183a82666f05d6e94912f3617f0d979"
+    },
+    {
+      "index": 34,
+      "offset": 69206016,
+      "bytes": 2097152,
+      "archiveSha256": "a796aa460040cd93875abc769e7c2577033e27f3c32d5c5690d45a99e97ef67d",
+      "artifactKey": "t45-real-r3-part34-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-34.json",
+      "authoritySha256": "da0f164651bd25215de44b4ab121b8cf0ecf19822423b271a3e1565baa5cc7da"
+    },
+    {
+      "index": 35,
+      "offset": 71303168,
+      "bytes": 2097152,
+      "archiveSha256": "a9ba7278665e6d0e77f8ddc81cfc2a0fb5a7a18a00536a96238662db45780cce",
+      "artifactKey": "t45-real-r3-part35-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-35.json",
+      "authoritySha256": "11166f7107c35afdaa0468d7727d75a0cd918a0e28af944681c3bd982e108abf"
+    },
+    {
+      "index": 36,
+      "offset": 73400320,
+      "bytes": 2097152,
+      "archiveSha256": "63309c387337024afd380e345b8aacbd781f2141a87ac3f9295247bb23a5ee4e",
+      "artifactKey": "t45-real-r3-part36-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-36.json",
+      "authoritySha256": "c3c25aabb161e315a9a07da949a6c39bd56020d5ac35884c0200085a0b6c7ea9"
+    },
+    {
+      "index": 37,
+      "offset": 75497472,
+      "bytes": 2097152,
+      "archiveSha256": "532ae8d1b4990b3b3d661fb6c36a48c455572dbbe09d47bd8e1050b03f113c6b",
+      "artifactKey": "t45-real-r3-part37-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-37.json",
+      "authoritySha256": "74a4dbe4197ab3b29511b69bb3123e305c825f8124b71a243e0265b7667dde1a"
+    },
+    {
+      "index": 38,
+      "offset": 77594624,
+      "bytes": 2097152,
+      "archiveSha256": "726e15228dea7ddfbbf5e90f2562d5b1c3e52468f9d43c8db166baddcd8c2632",
+      "artifactKey": "t45-real-r3-part38-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-38.json",
+      "authoritySha256": "57c5b5a879feb0234781073bf4f7b9dbcba67e0906ee657508eba7ed8fff75af"
+    },
+    {
+      "index": 39,
+      "offset": 79691776,
+      "bytes": 2097152,
+      "archiveSha256": "07bab9e526f245e61fe96386beb1690116cd730593ac69ce33064433a0ae8100",
+      "artifactKey": "t45-real-r3-part39-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-39.json",
+      "authoritySha256": "d4f5dcc788070fbe4c5e68f11ce00d7f217964c991f480ccbb01655884cabd7e"
+    },
+    {
+      "index": 40,
+      "offset": 81788928,
+      "bytes": 2097152,
+      "archiveSha256": "472364c8c986190a11a39b93c795ee807c8d7c9dfdb5c1216a2cb91f2708c807",
+      "artifactKey": "t45-real-r3-part40-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-40.json",
+      "authoritySha256": "cb5bc0db9187581d197f19f97d91be3107913df3628304f92545ea6d47c88111"
+    },
+    {
+      "index": 41,
+      "offset": 83886080,
+      "bytes": 2097152,
+      "archiveSha256": "2d77f1ff9653273492dc15a1d6172fdce26462f7c4e2488dc5d1f6bade5f3ea6",
+      "artifactKey": "t45-real-r3-part41-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-41.json",
+      "authoritySha256": "6775faa0390622763c1f6f97325e0b4bd3999e05404631ad06bc6eb35df6941d"
+    },
+    {
+      "index": 42,
+      "offset": 85983232,
+      "bytes": 2097152,
+      "archiveSha256": "039f3637a363307c508047eae2b032d9d518fef5937ae5ba345758117e9d13b7",
+      "artifactKey": "t45-real-r3-part42-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-42.json",
+      "authoritySha256": "eb56a6a56e3a1150aa356e84a87d876968c48c1bec6ebec19d579ca90ecd130b"
+    },
+    {
+      "index": 43,
+      "offset": 88080384,
+      "bytes": 2097152,
+      "archiveSha256": "d691e601baf57a37a01d7764443f31118749720b154a10c54103fcdaf87e43f1",
+      "artifactKey": "t45-real-r3-part43-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-43.json",
+      "authoritySha256": "40c7dd422f926d6398eef4daeafe14382a05ea30de56a8e4dce9f5da7029acf1"
+    },
+    {
+      "index": 44,
+      "offset": 90177536,
+      "bytes": 2097152,
+      "archiveSha256": "81a47929f84d70485181becbdf409931098265787935a11a10c08df6616f023d",
+      "artifactKey": "t45-real-r3-part44-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-44.json",
+      "authoritySha256": "abbfb84aa2f6fd330ba4e051feb8b0078936c22e6d2064a06b594e59e0d67a84"
+    },
+    {
+      "index": 45,
+      "offset": 92274688,
+      "bytes": 1234226,
+      "archiveSha256": "a0c17af2a4a03ae75f471c5c5f5deece1e65faa744e8fad959d96dd41ab4eb43",
+      "artifactKey": "t45-real-r3-part45-20261106-01",
+      "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/part-45.json",
+      "authoritySha256": "4081d90d924ddccfe2f91dcaf77916a7e598111aa65e656b81ad8d27d8154dae"
+    }
+  ],
+  "final": {
+    "artifactKey": "t45-real-r3-full-20261106-01",
+    "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/private-data-transport/authorities-20261106-01/full.json",
+    "authoritySha256": "54cd7700ae7ee5d25be5fe566c5f1019f2a4cd2e3895a294c608f9a6d43001ba"
+  },
+  "boundAssemblerRequiredSha256BeforeBindings": "e9b69bf4f2d90f29a7fc3a9780f074b881f9c23690b7c657b0ad4c937d3ed03f",
+  "receiverSha256": "8841f413eed7580ad232ecaf1ec2d12644fe51be0a71a8a780195be2afb42fff",
+  "clientSha256": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085",
+  "QBReceiptSha256": "09707e947826c09c13b65e48d03796870cb5841313f6880ecbc8d563777d8542",
+  "budget": "45min hard total; each original remote40s, 45 fragment+46 CAS original jobs+one original assembly, bounded cleanup; unknown stops no replay",
+  "noActions": [
+    "No archive extraction",
+    "No PG connections or writes",
+    "No production operations",
+    "No credential or real record publication"
+  ]
+}
