@@ -1233,3 +1233,19 @@ GitHub接续记录检查点：`codex/e5c5a762-cleaning-20261102` @ `c38054e81d5d
 - C补原包9份reference显式本机路径加载器，5/5定向通过；没有改旧证据pin。
 - T45新只读事实确认仍旧正式erp_prod/15迁移；50单厅中准确桥+正version仅33仓17827头，15仓10976头真实version0，1双厅仓38头亦0，2仓53头码桥待D2准确核。不得造1、套revision105或取首厅。
 - 真实导入/PG35安装/权限业务/浏览器/正式发布仍未验；新修改仅WIP。
+
+### 2026-11-05 0448Z 增量及A/B批准后接续
+- 本地HEAD b68b841cff8a31fe883f2345adb00eca2a8b4cb2：HOST-02已冻结合入；eb22已远端核实，后继推送待回读。
+- C runtime/controller catalog与target 13项合成通过；QB固定0ceaccf7发现两项权限缺口，NEED_FIX采用，不称PG通过。
+- 用户分别批准A证据V2及B最小合成源码/合同接线；仅源码授权，无实际建库、授权、部署或延期。D1写A，C写B，D2原生入口，D3完整来源台账。
+- D3已接19表及后继5表/账户trace/22archive候选；1698原SKU/码仍held，最终V2头/hash/alignment未闭合，不称完整核账。
+- 实际human01a1aaaf-e069-7c83-bc93-e279685a714a确认导出期间停写且各表同状态；exported_at仍null，D3准确绑定最终文件。
+- C的B权限/HBA/真实完成记录发布/普通UID host源码在途；32 launcher模型、11 entry/lifecycle通过，实际PG/业务/cleanup未测。
+- T45仅完成准确准备，无新目标或新作业；最终源/fixture/目标绑定后再核实际执行范围。
+
+### 2026-11-05 A/B固定源码与普通运行入口接续
+- A20后端增量采用原QB源码PASS（04df7bcf…），5a0f4fb3含D3两consumer及C的V2展示helper；真实PG未测。
+- 用户B仅源码/合同批准已落实到878138a746cd92b034213380308fbbd5a6f3a4db；真实COMMIT发布既有record、controller精确两列读/单函数执行/本机HBA和同窗口host检查接通，原QB仅审B增量。32 launcher、AB/C组合32通过，不称安装/业务通过。
+- Git直连超时后使用现有系统代理，878138a7已推同分支并独立ls-remote回读。D2九叶接线合入0a3f763539a941407a69a56e59d9cfae2ac1b954，当前尚待后继推送。
+- D2的39受影响合成/launch类型通过，旧110+12有效证据复用；普通账号SQL/业务/部署未验。
+- D1沿原fixture补V2合成整包；D3继续source/bridge/resolution和最终私有包，目标快照须实证。D2接原1698 held准确桥；T45只准备准确新目标/预算，未起新作业。

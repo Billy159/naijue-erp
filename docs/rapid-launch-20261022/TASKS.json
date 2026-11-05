@@ -28126,14 +28126,14 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T06:53:33.336128+00:00",
+    "at": "2026-11-05T08:55:35.401711+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
     "branch": "codex/erp-0448z-integration-20261105",
     "worktree": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102",
     "applicationRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
-    "sourceStatus": "COPIED_UNMODIFIED_NOT_TESTED_NOT_RELEASE",
+    "sourceStatus": "INTEGRATION_WIP_SYNTHETIC_PARTIAL_NOT_PG_NOT_RELEASE",
     "externalDotInFlight": "UNKNOWN; do not infer stopped",
     "goalToolStatus": "USER_RESUMED_ACTIVE_AND_UPDATED_OBJECTIVE_20261105",
     "model": "gpt-6.1-sol",
@@ -28147,7 +28147,6 @@
         "integration metadata",
         "shared contract/config/combined SQL/release coordination",
         "scripts/release/unified-install shared installers/catalog/combined source",
-        "apps/api/src/production-main.ts and required runtime selectors",
         "package/lock and shared CLI seam integration"
       ],
       "T45": [
@@ -28160,7 +28159,9 @@
         "tools/unified-import/stream-preflight.d.mts",
         "tests/unified-source-occurrence-reconciliation.test.mjs",
         "tests/unified-import-stream-preflight.test.mjs",
-        "new tools/unified-import/source-occurrence-* helpers and focused tests"
+        "new tools/unified-import/source-occurrence-* helpers and focused tests",
+        "tools/unified-import/stream-relations.mjs V2 hall consumption",
+        "private complete ledger and central cleaned package; no fabricated source values"
       ],
       "D1": [
         "packages/application/src/unified-historical-line-amount-evidence.ts",
@@ -28180,7 +28181,21 @@
         "tools/unified-import/fresh35-receiver-diagnostics.ts",
         "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
         "scripts/release/unified-install/whole-sales-admission-v1.mjs",
-        "scripts/release/unified-install/whole-sales-admission-v1.d.mts"
+        "scripts/release/unified-install/whole-sales-admission-v1.d.mts",
+        "A V2 hall parser/approval/unified-import-contract hall branch",
+        "A hall SQL/combined generator",
+        "fresh35 host/admission exact V1/V2 profile seam",
+        "stream-package-metadata.mjs hall profile branch",
+        "tests/fixtures/unified-import/whole-package-synthetic.ts and direct fixture tests"
+      ],
+      "D2": [
+        "apps/api/src/production-main.ts",
+        "apps/api/src/production-provider-composition.ts",
+        "corresponding focused tests",
+        "private source facts/maps only; no central package writes",
+        "adapters/postgres/src/runtime27-command-issuer.ts",
+        "apps/api/src/postgres-read-api.ts",
+        "adapters/postgres/src/catalogue-settings-read-reader.ts and direct tests (frozen9 accepted)"
       ]
     },
     "preservedWIP": "Original cleaning repo four files untouched",
@@ -28227,25 +28242,86 @@
         "owner": "D1",
         "model": "gpt-6.1-sol",
         "effort": "high",
-        "state": "DISPATCHED",
-        "next": "verified actual record and same-client capability; no fake installation"
+        "state": "SOURCE_FROZEN_INTEGRATED_NOT_PG",
+        "next": "T45 exact synthetic scope after final A/B integration",
+        "commit": "b68b841cff8a31fe883f2345adb00eca2a8b4cb2",
+        "focusedTests": "D1 85/85; final affected26/26; root+launch typechecks exit0; no PG"
       },
       "C-0448-LEDGER-02": {
         "owner": "D3",
-        "state": "DISPATCHED",
-        "scope": "private source ledger only, frozen code"
+        "state": "PARTIAL_19_PLUS5_AND22_CANDIDATES_FINAL_V2_BINDING_PENDING",
+        "scope": "private source ledger only, frozen code",
+        "next": "D3 consume fixed D2-33 and D1-32; keep1698 held; rebind final head/manifest/alignment"
       },
       "C-0448-HALL-FACTS-02": {
         "owner": "D2",
-        "state": "DISPATCHED",
-        "scope": "readonly private capture consumption and approved identity resolution"
+        "state": "DELIVERED_D2_32_33",
+        "scope": "readonly private capture consumption and approved identity resolution",
+        "next": "C/D1 approved V2; private bridge exact scope preserved"
+      },
+      "C-0448-HALL-V2-03": {
+        "owner": "D1",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "FIXED_BACKEND_INCREMENT_QB_PASS_NOT_PG",
+        "next": "existing synthetic fixture then actual target warehouse/PG proof; no invented snapshot",
+        "commit": "5a0f4fb3",
+        "receiptSHA256": "04df7bcfa039f08ddf99cdeb25e11ec68ee40a5129668014de85db4fc93e2c0b"
+      },
+      "C-0448-RUNTIME-04": {
+        "owner": "D2",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "D2_FROZEN_9_LEAVES_INTEGRATED_NOT_PG",
+        "scope": "production-main/provider and necessary focused tests; extra files require explicit owner handoff",
+        "next": "QB incremental review after B; actual ordinary role SQL/business not tested",
+        "commit": "0a3f763539a941407a69a56e59d9cfae2ac1b954",
+        "receiptSHA256": "e2ec338513bc5469d25a7d8e06de4e250f8685a599853efe7fa9e171500e1ff1",
+        "checks": "39 affected synthetic PASS, reused110 provider/capacity+12 issuer; launch typecheck PASS"
+      },
+      "C-0448-REVIEW-01": {
+        "owner": "QB",
+        "state": "NEED_FIX_ACCEPTED",
+        "commit": "0ceaccf7716e62ef292d08ba622bb80855740c0f",
+        "findings": [
+          "controller schema_migration(version,description) SELECT missing",
+          "controller pg_control_system EXECUTE missing"
+        ],
+        "receiptSHA256": "4c0532b71415a0a10253a920ffd193a30ad29362464ac9b2992966da8504f418",
+        "next": "only affected B permissions/catalog/host review after fixed successor"
+      },
+      "C-0448-ISOLATED-B-03": {
+        "owner": "C",
+        "state": "SOURCE_FIXED_QB_INCREMENT_REVIEW_PENDING_NOT_PG",
+        "checks": "32 Python launcher PASS; combined AB/C target/catalog/lifecycle/entry/UI 32 PASS; no actual PG",
+        "next": "D1 existing synthetic fixture integration, T45 exact new scope",
+        "commit": "878138a746cd92b034213380308fbbd5a6f3a4db"
+      },
+      "C-0448-SYNTHETIC-FIXTURE-05": {
+        "owner": "D1",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "IN_PROGRESS_EXISTING_FIXTURE",
+        "scope": "tests/fixtures/unified-import/whole-package-synthetic.ts and direct tests only",
+        "next": "use original stream compiler and real admission callback; no new host/platform"
+      },
+      "C-0448-HELD-BRIDGES-06": {
+        "owner": "D2",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "DISPATCHED_NEXT_PRIVATE_EXACT_SCOPE",
+        "scope": "327SKU+1371barcode existing held source bridges, no central package writes",
+        "next": "D3 consume verified original identity only; no invented alias"
       }
     },
     "github": {
       "branch": "codex/erp-0448z-integration-20261105",
-      "commit": "8769cf923b2ae69e677972c4ecb9e4696eea96df",
+      "commit": "878138a746cd92b034213380308fbbd5a6f3a4db",
       "remoteVerified": true,
-      "status": "WIP_NOT_RELEASE"
+      "status": "FIXED_SOURCE_INCREMENT_NOT_PG_NOT_RELEASE",
+      "remotePriorVerifiedCommit": "eb22fd211e5f07ffc78d9ce6b7ec7a8749f13025",
+      "localHead": "0a3f763539a941407a69a56e59d9cfae2ac1b954",
+      "pushRoute": "existing system HTTP proxy, command scoped; direct connection timed out"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -28256,15 +28332,27 @@
       "lockUnchanged": true
     },
     "sourceFactGaps": [
-      "source real version0 differs from contract positive target-version capture",
-      "one captured dual-hall warehouse has existing approved single-hall direction, preserve both facts",
-      "two code-only bridges under bounded D2 review",
-      "independent actual cutoff alignment still missing"
+      "V2 hall source/target exact evidence implementation in progress under approved A",
+      "complete ledger held source and final V2 hashes pending",
+      "same-version actual fresh35 PG/install/import/business not tested"
     ],
     "portableReferences": {
       "resolver": "resolveFresh35ReferenceInputPaths(directory)",
       "tests": "5/5 PASS; first test carrier canonical /var alias failure corrected to realpath",
       "path": "worktree/reference-inputs; original cloud paths provenance only"
+    },
+    "approvedSourceDeltas": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/0448Z-HALL-AND-ISOLATED-SOURCE-DELTA.md",
+      "A": "Approved by actual root human call_0c8e68fb69a04e2ab20ae7b4c6dfc8af reply0; V2 JSON/SQL only, no tables/ordinary permissions",
+      "B": "Approved by actual root human same call reply1; exact synthetic source/contract only, no environment execution or window extension"
+    },
+    "currentEffectiveAlignmentHumanFact": {
+      "thread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "humanMessage": "01a1aaaf-e069-7c83-bc93-e279685a714a",
+      "verifiedBy": "C read_thread actual human",
+      "fact": "export period T+ no new or modified documents; all tables same state",
+      "exported_at": null,
+      "state": "USER_FACT_CONFIRMED_FINAL_SOURCE_HASH_BINDING_PENDING"
     }
   }
 }
