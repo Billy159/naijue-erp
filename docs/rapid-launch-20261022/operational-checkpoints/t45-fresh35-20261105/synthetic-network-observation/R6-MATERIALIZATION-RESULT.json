@@ -1,0 +1,131 @@
+{
+  "status": "R6_ORIGINAL_RECEIVER_FULL_READY_AND_MATERIALIZED_NO_PG_STARTED",
+  "exactSourceSetSha256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+  "archiveSha256": "f08cf2e73cae0ef469cdac86c103c03df990a5aba9e66b54bc0f8496242d07d3",
+  "archiveBytes": 83681662,
+  "jobs": [
+    {
+      "jobId": "t45-f35-19b223-tail-staging-policy-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.2676113359630108,
+      "jobSha256": "d89542e9754d6988b75a0b7d96399ba9326d3ccd03ba6c8f615bc15608e30e5b",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-19b223-tail-staging-policy-20261106-01/transport/release-receipts/t45-f35-19b223-tail-staging-policy-20261106-01/ordinary-policy-readback.json",
+      "receiptSha256": "d94693250950951c505d34bb5894388a52f414d0aad4df59cbe0a43d4589503f"
+    },
+    {
+      "jobId": "t45-f35-19b223-final-staging-policy-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.21789892809465528,
+      "jobSha256": "ec35fc02fb48e4dade46e8ea55a822820b068d101216162d0a2eedd002db424c",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-19b223-final-staging-policy-20261106-01/transport/release-receipts/t45-f35-19b223-final-staging-policy-20261106-01/ordinary-policy-readback.json",
+      "receiptSha256": "8945092dc51fdfc9b79e6ba347750b520877e7321db35a98746fd64c7c268612"
+    },
+    {
+      "jobId": "t45-f35-19b223-local-assemble-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 4.329144672024995,
+      "jobSha256": "b42c08264f0b5d904c290dfeb49de27eaf7d5b63b59056f0f4c93215baa73ec7",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-19b223-local-assemble-20261106-01/transport/release-receipts/t45-f35-19b223-local-assemble-20261106-01/local-assembly-original-receiver.json",
+      "receiptSha256": "1f89a2e9f588de983346454c5305a420eb6cc4dc439d7425c5af6af2a62f8e8c"
+    },
+    {
+      "jobId": "t45-f35-19b223-local-materialize-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 372.3948973752558,
+      "jobSha256": "323db1de19564bb44a23d05d9198f6fed70145f976379ab1ac1a7e38176b97e8",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-19b223-local-materialize-20261106-01/transport/release-receipts/t45-f35-19b223-local-materialize-20261106-01/fresh35-materialize-app-result.json",
+      "receiptSha256": "e8dfdfd24b15688726c95a2e5facb2cd063665756f3b3eb0c80a970d99df137c"
+    },
+    {
+      "jobId": "t45-f35-19b223-local-start-preflight-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.11866547167301178,
+      "jobSha256": "6fe89e334ce5c3b4c69fc51b6bbc49bfdea088af2e33475745f947e62839972a",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-19b223-local-start-preflight-20261106-01/transport/release-receipts/t45-f35-19b223-local-start-preflight-20261106-01/materialize-preflight.json",
+      "receiptSha256": "f19df126300c56dcd7bcc9a9b3173d08b75c56d3f579ffff975b4f3986f21a65"
+    }
+  ],
+  "latestResourcePreflight": {
+    "jobId": "t45-f35-19b223-local-start-preflight-20261106-01",
+    "checkedAtUTC": "2026-11-05T23:21:35.665788+00:00",
+    "mutations": 0,
+    "targetParent": {
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "applicationRoot": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.99169921875,
+        1.27587890625,
+        0.70751953125
+      ],
+      "memoryBytes": {
+        "MemTotal": 16731348992,
+        "MemAvailable": 14328467456,
+        "SwapTotal": 4294963200,
+        "SwapFree": 4203982848
+      },
+      "disk": {
+        "freeBytes": 15289950208,
+        "totalBytes": 489861931008,
+        "device": 66304
+      }
+    },
+    "image": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "materializeOriginalKey": {
+      "jobId": "t45-f35-19b223-local-materialize-20261106-01",
+      "requestPresent": true,
+      "resultPresent": true,
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "CASOriginalKey": {
+      "jobId": "t45-f35-19b223-final-staging-policy-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "matchingContainerIDs": [],
+    "currentApplication": {
+      "archiveSHA256": "f08cf2e73cae0ef469cdac86c103c03df990a5aba9e66b54bc0f8496242d07d3",
+      "deploymentManifestSha256": "9a9d52e0ea831443ce54c5a04a89f9cdbd3f210e104a0ae177e24d8842b54cbe",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-19b223-application-20261106-01",
+      "sourceSet": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1"
+    },
+    "startArtifactsPresent": {
+      "start-intent.json": false,
+      "container-receipt.json": false,
+      "authority/fresh35-isolated-provision-v1.json": false,
+      "authority/fresh35-combined-execution-v1.json": false
+    },
+    "status": "READONLY_FACTS_COLLECTED"
+  },
+  "privateFullUnchangedFromStagePreflight": true,
+  "oldR5PreservedStoppedFromStagePreflight": true,
+  "noPGStarted": true,
+  "fullArchiveNetworkReupload": false,
+  "imageBuilt": false,
+  "realDataExtracted": false,
+  "productionChanged": false,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "next": "Separate C exact new PG20 scope required; do not reuse old r5 authority/window or replay keys."
+}

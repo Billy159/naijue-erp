@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "9a9d52e0ea831443ce54c5a04a89f9cdbd3f210e104a0ae177e24d8842b54cbe",
+  "sourceSetSha256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793920998194,
+  "expiresAt": 1793922198194,
+  "independentSafetyReviewSha256": "3f351a20587b685fa88508dcc0a12fb72a68d560bfd7d9296eeb4ec7d530a0ab",
+  "authorizationReference": "C under direct human delegation until2026-11-06 noon. Exact19b/source2be5 phaseb-application-r6/container20261106-r6 only. Actual materializatione8dfdfd2/resourcef19df126; wrapper3110fa97/probecd75. Original20min/cleanup/2CPU3GiB/PID256/networknone/noports. Observer and twoDO fixed; noREAL/production/oldtargets. Separate installleaf requires actualprogram/target/proof. Samepool revocation remains untested."
+}

@@ -29901,7 +29901,7 @@
         "businessAccepted": false
       },
       "r6Preparation": {
-        "state": "ACTUAL_ORIGINAL_RECEIVER_READY_MATERIALIZATION_IN_PROGRESS",
+        "state": "ACTUAL_MATERIALIZATION_PASS_NEW_PG20_AUTHORIZED",
         "buildRoot": "19b2232649ab07a7cd43a75596f43221333d7cdd",
         "integration": "1e7aaa130ab1eef576f262a7f78ea7623d95e2ae",
         "sourceSetSHA256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
@@ -29926,7 +29926,12 @@
         "stagingExpiresAt": 1793921934994,
         "receiverReceiptSHA256": "1f89a2e9f588de983346454c5305a420eb6cc4dc439d7425c5af6af2a62f8e8c",
         "materializationJob": "t45-f35-19b223-local-materialize-20261106-01",
-        "materializationDeadline": 1793921337914
+        "materializationDeadline": 1793921337914,
+        "materializationReceiptSHA256": "e8dfdfd24b15688726c95a2e5facb2cd063665756f3b3eb0c80a970d99df137c",
+        "resourceReceiptSHA256": "f19df126300c56dcd7bcc9a9b3173d08b75c56d3f579ffff975b4f3986f21a65",
+        "provisionAuthoritySHA256": "1ee0aac051085a654c98f8382f964423d971676f224e6c173919e7e05a80639b",
+        "pgStartsAt": 1793920998194,
+        "pgExpiresAt": 1793922198194
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30178,7 +30183,7 @@
       ]
     },
     "productionNetworkNamespaceContinuation": {
-      "state": "QB_F01_CASE_INSENSITIVE_DNS_COLLISION_DIRECTED_TO_T45",
+      "state": "QB_F01_CLOSED_FOR_6FF2_SOURCE_PASS_ACTUAL_NETWORK_PENDING",
       "reportSHA256": "fcbc70aea32fb0acd8e95754447dc1850dbee483784f3af0fb258f3ce9ecd4b2",
       "reportCandidate": "47f1c4b0af84c2d8cf1cd2cf816d380f05e9adf0:candidate0448",
       "facts": "Formal API usesfront then data;127meansAPIownnamespace. ExistingsharedPGnetns branch isQAexact26only andcannotclaimformalV2support.",
@@ -30190,8 +30195,10 @@
       "readySHA256": "3cec625efe21a711c0824a62a0332352936c014a0043f44f29e7714a2ac7fa95",
       "runtimeOrProductionVerified": false,
       "finding": "SHARED-NAMESPACE-F01",
-      "fixedCandidate": "6b0f9a41bf12e8a710fb849007c69090e4d577a4",
-      "scope": "Only peer Name/Aliases DNS case equivalence; exact expected alias bytes remain; unaffected review reused."
+      "fixedCandidate": "6ff2b607418da90f0d4dbf64449fdf5f8c46e958",
+      "scope": "Only peer Name/Aliases DNS case equivalence; exact expected alias bytes remain; unaffected review reused.",
+      "qbF01SHA256": "e07a2c22210927557d8feb5da87af2a2c1cceb7cb93cf06e08e9bc488c343acb",
+      "nextBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c"
     }
   }
 }

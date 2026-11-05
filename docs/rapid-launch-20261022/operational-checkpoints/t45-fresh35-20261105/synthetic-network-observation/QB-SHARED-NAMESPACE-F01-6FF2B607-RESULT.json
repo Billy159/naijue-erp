@@ -1,0 +1,108 @@
+{
+  "task": "C-0448-SHARED-NAMESPACE-F01-SCOPED-SUCCESSOR",
+  "atUtc": "2026-11-05T23:21:43.387143+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "finding": {
+    "id": "SHARED-NAMESPACE-F01",
+    "status": "CLOSED_FOR_EXACT_6FF2B607",
+    "old6b0fNeedFixPreserved": true
+  },
+  "pins": {
+    "sourceCommit": "6ff2b607418da90f0d4dbf64449fdf5f8c46e958",
+    "readySha256": "b741cd2f8df4b629ba9e237162fbb5cdf47d6a481977cb783e866e4b70cca274",
+    "files": [
+      {
+        "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/deploy-candidate.py",
+        "bytes": 199005,
+        "sha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+        "parentSha256": "2aae0a2bc9a6225430adf7c4f9a3053b66405670e65794a04d6640464fd98d9e",
+        "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-f01-01/source/scripts/release/deploy-candidate.py"
+      },
+      {
+        "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/boot-entry.py",
+        "bytes": 49869,
+        "sha256": "0b2df14b92ae591e959c115e8920b4c00338f1cdf56b8a8bb6d7f9ef25cf28bb",
+        "parentSha256": "92e0ccb60d962abe20f877e2cd39bc74fd897a36e685b98402beb176fc335722",
+        "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-f01-01/source/scripts/release/boot-entry.py"
+      },
+      {
+        "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/rollback-candidate.py",
+        "bytes": 7665,
+        "sha256": "6e87f6ba93719f1d219a24741e810385a4525654f75ea4c553b198785bd0af5e",
+        "parentSha256": "28fce7227cdd10e032ec7b2c2832aafac545e9430a7ab6ab76cc7fb3c41ab7fd",
+        "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-f01-01/source/scripts/release/rollback-candidate.py"
+      },
+      {
+        "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/test_native35_shared_namespace.py",
+        "bytes": 11960,
+        "sha256": "95a863df26f969c2ff63a79d80ec7cb62f180fcaafe8340cbd32c230a879f29c",
+        "parentSha256": "afd5e69233b72262b74e53ceef4fd9f44585e76061f3e629369bac03e5936a97",
+        "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-f01-01/source/scripts/release/test_native35_shared_namespace.py"
+      }
+    ]
+  },
+  "parentResult": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/C-0448-SHARED-NAMESPACE-6B0F9A41-20261106/RESULT.json",
+    "sha256": "d56068c01e5eaa1fc6e6dd743983ece3833961100875cd5e05f39582b4d73203",
+    "otherPassedScopeReused": true
+  },
+  "independentChecks": {
+    "conclusion": "PASS_F01_EXACT_SUCCESSOR",
+    "cases": [
+      {
+        "case": "no-foreign-conflict",
+        "result": "PASS",
+        "outcome": "ACCEPTED",
+        "networkMutations": 0
+      },
+      {
+        "case": "same-case-alias",
+        "result": "PASS",
+        "outcome": "EXACT35_APP_ALIAS_CONFLICT",
+        "networkMutations": 0
+      },
+      {
+        "case": "uppercase-alias",
+        "result": "PASS",
+        "outcome": "EXACT35_APP_ALIAS_CONFLICT",
+        "networkMutations": 0
+      },
+      {
+        "case": "uppercase-container-name",
+        "result": "PASS",
+        "outcome": "EXACT35_APP_ALIAS_CONFLICT",
+        "networkMutations": 0
+      },
+      {
+        "case": "own-raw-alias-case-changed",
+        "result": "PASS",
+        "outcome": "EXACT35_OWNED_APP_ALIAS_REQUIRED",
+        "networkMutations": 0
+      }
+    ],
+    "onlyHelperChange": "peer Name/Aliases lowercase comparison; whole helper reverse-comparison exact",
+    "pinConsumers": {
+      "bootAndRollbackPinExactHelperSha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+      "allOtherBytesUnchanged": true
+    },
+    "boundaries": "Frozen original check; synthetic Docker/proc/record only; no Docker/PG/network/DNS actions; no whole suite rerun"
+  },
+  "authorEvidenceAdopted": "New case-equivalent regression method and mechanical pin check adopted; old9/bridge1/Node2 not rerun",
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "serverCalls": 0,
+    "DockerActions": 0,
+    "PGConnections": 0,
+    "networkCreatedOrMutated": false,
+    "liveDnsObserved": false,
+    "actualNamespaceOrLeaseTested": false,
+    "buildPerformed": false,
+    "DockerProcRecord": "MODELED"
+  },
+  "remaining": "No open source F01 in this exact successor. Reuse prior seven-leaf conclusions. Actual deployment/PG/front alias/DNS/namespace/health/lease remain separate exact facts and not tested by this receipt. Do not attribute successor QA to19b/r6."
+}
