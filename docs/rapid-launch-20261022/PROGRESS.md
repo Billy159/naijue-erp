@@ -1049,3 +1049,10 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - D3 r3仅31标准物理成员，APFS独立clone，原r2/36来源副本原地保留；布局回执47544dd3。25头有款差异实录cash与现27结算逐项一致，非漏款或已证明税口径，不造款、不将折扣标量猜金额；210RETURN无款及25差异待准确历史接收合同，未重跑预检。
 - T45精确诊断旧pull终态失败，build/签名/锁包/ldd均未至。后继日志+一次精确resume两叶固定cca4a82d443de7e5d5a7197e711a167b670c8be1已推远端，11作者模型通过，QB仅受影响范围验收中，未实际重试。
 - C交原D2唯一修改builder/manifest/releasecontract/generator及必要原测试；精确206源码pin闭包原字节，限定两强制fixture只读成员，其他测试/任意JS拒绝；deploy仅生成块同步，原功能及批准marker不动。未授权生产切换。
+
+
+### 同类隔离授权沿用、F01新固定与镜像实际失败接续
+- 最新用户“后续类似这样的都直接通过了 不需要我审批”已作为同类不扩权隔离续项授权沿用；准确目标、期限、资源、清理及原外部授权载体保持，不新增重复人工关卡。生产/真实数据/新增业务规则不由此放行。
+- D1 F01四叶逐hash核回执f194e3fc后固定db16b8c7a2c19537131944e8cef18e35e27070ba，11模型/tsc/build通过；原QB仅复验F01与实际受影响路径，未称真实OS/PG通过。D2据固定字节组合runtime7及发行原字节闭包；C授权其同步helper准确成员准入，批准marker不改。
+- QB cca4运维增量PASS回执1fa583a8已采用。T45一次准确resume job终态FAILED/exit2/120.636秒，回执f5fae315：固定registry manifest HEAD连接超时；宿主IPv4/IPv6短只读探测也超时，解析或路由原因尚未证实。build/签名/锁包/ldd未达，PG20分钟未启。旧现场、resume intent及READY保留，不重传或第三次pull；原T45转同digest可信离线载体方法准备，尚非环境通过。
+- D3 r3布局修复与25单原款事实保持，235历史结算接收合同由原D1接续，不猜款或改原金额。真实导入/普通业务/生产仍未通过。

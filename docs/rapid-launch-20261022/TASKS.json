@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T09:29:56.051263+00:00",
+  "updatedAt": "2026-11-05T12:18:42.123212+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "2276fdfb3928b2b5fa4af72b3883bbd478dd672d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T12:07:40.238932+00:00",
+    "at": "2026-11-05T12:18:42.123212+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28363,11 +28363,11 @@
     },
     "github": {
       "branch": "codex/erp-0448z-integration-20261105",
-      "commit": "24a454a618ddb055318c0e69240839a920049a61",
+      "commit": "db16b8c7a2c19537131944e8cef18e35e27070ba",
       "remoteVerified": true,
-      "status": "ALIGNMENT_V2_SOURCE_AND_AUTHOR_CHECKS_PUSHED_QB_PENDING_NOT_PG_NOT_RELEASE",
-      "remotePriorVerifiedCommit": "eb22fd211e5f07ffc78d9ce6b7ec7a8749f13025",
-      "localHead": "24a454a618ddb055318c0e69240839a920049a61",
+      "status": "F01_SOURCE_FIXED_QB_PENDING; no PG or release",
+      "remotePriorVerifiedCommit": "68a4d4021e580fc3a20db017a262fb05e69512a5",
+      "localHead": "db16b8c7a2c19537131944e8cef18e35e27070ba",
       "pushRoute": "existing system HTTP proxy, command scoped; direct connection timed out"
     },
     "cleanInstall": {
@@ -28471,11 +28471,11 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Priority F01 startup same-snapshot fix, then historical settlement consumer contract",
-      "D2": "Runtime7 preserved; exact native35 build/manifest/rootcontract/generator package implementation",
-      "D3": "r3 layout fixed;25 original settlement trace delivered, wait exact historic receiving contract before new preflight",
-      "T45": "Old failure preserved; fixed resume/log successor pending QB then new exact C plan, no actual retry",
-      "QB": "Fixedcca4 ops affected review;57842 remains NEED_FIX F01"
+      "D1": "F01 four leaves fixed db16b8c7 pending QB; next historical235 settlement consumer contract",
+      "D2": "Runtime7 combined with fixed F01; native35 release closure and exact helper member admission in progress; unique writer",
+      "D3": "r3 payload layout fixed; original235 settlement facts preserved, wait exact historical receiving contract",
+      "T45": "One resume failed with registry connection timeout; readonly diagnosis completed; exact offline image method preparation",
+      "QB": "db16b8c7 F01 only and affected paths; ops cca4 PASS adopted"
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28530,7 +28530,7 @@
     },
     "productionInstallProofProposal": {
       "owner": "D1",
-      "state": "QB_NEED_FIX_F01_STARTUP_RECORD_SNAPSHOT_RACE",
+      "state": "F01_FIX_FIXED_PENDING_QB_NOT_PG",
       "path": "D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-TARGET-CONTRACT-DELTA.md",
       "sha256": "9b11eabac1880c5515d0f40e73203fa9cd27cbb5b134aa9d0394311858a390a8",
       "scope": "Versioned existing target/record and ordinary startup identity/source/catalog revalidation; operation window separate from service lease; actual target values/permissions unapproved",
@@ -28542,7 +28542,10 @@
       "reviewSHA256": "98f923789d740fa16235b1ea6164d637801bc9958b404a7fd7ecc0eeec628c06",
       "findings": [
         "F01/P2 verified envelope vs later record stamp/hash permits startup-time replacement; original D1 fixing"
-      ]
+      ],
+      "successorCommit": "db16b8c7a2c19537131944e8cef18e35e27070ba",
+      "successorReceiptSHA256": "f194e3fc6be78576dadce2cf28c1d63638b4842b4c6ce35279ea646be98a368c",
+      "successorChecks": "11 source/private OS models PASS; typecheck/build/diff exit0; actual OS/PG not verified"
     },
     "privateHallSourceReview": {
       "candidateSHA256": "8e1b71640f2c7172a15ad0be32c8aab029d28a1ee07afc3a41a8b5467ae98d53",
@@ -28595,7 +28598,7 @@
       "versionConstraintsChecked": 201,
       "metadataUnsatisfiedConstraints": 0,
       "signedReleaseVerified": false,
-      "state": "FIXED_PULL_DIAGNOSTIC_RESUME_SUCCESSOR_QB_REVIEW_PENDING",
+      "state": "ONE_RESUME_FAILED_REGISTRY_CONNECTION_TIMEOUT_OFFLINE_METHOD_PREPARATION",
       "scope": "Original T45 provision successor only in its original fresh35-preparation output directory; no S application edits or server calls",
       "actualImagePullBuildOrContainerCreated": false,
       "actualTransmission": true,
@@ -28621,10 +28624,18 @@
       "phaseAJob": "t45-f35-5b26-prepare-20261105-01",
       "phaseAExitCode": 2,
       "phaseAElapsedSeconds": 192.548220189,
-      "error": "COMMAND_FAILED_1; actual subcommand stdout/stderr discarded; root cause unknown; no replay",
+      "error": "Actual docker pull manifest HEAD connection timeout. Host IPv4 and IPv6 readonly probes also timed out; resolution/route cause UNKNOWN. No signature/build/lock/ldd reached. No original job replay or third pull.",
       "resumeSourceCommit": "cca4a82d443de7e5d5a7197e711a167b670c8be1",
       "resumeSourceSHA256": "c82803153b9ebe5d24ded0f0e96baa12f11f4e38539fbe97ab2befc481a308e3",
-      "affectedAuthorTestsPass": 11
+      "affectedAuthorTestsPass": 11,
+      "resumeReviewSHA256": "1fa583a86e10b58eb4b02eee6e8b5ae8e00b106fad7a004f2e4c91b0c67b5ccb",
+      "resumePlanSHA256": "0f824e1e1ee5f5f394bb4fcb0bb9f183260c9171f50cc9af6d7c1f4b9a9108c8",
+      "resumeJob": "t45-f35-5b26-resume-image-20261105-01",
+      "resumeExitCode": 2,
+      "resumeElapsedSeconds": 120.63607704406604,
+      "resumeResultSHA256": "f5fae3150ca81f95271fcf0a9c0523dad092dccca4ff74822791bd2f22e9eaa0",
+      "actualImagePullAttempted": true,
+      "actualImageBuildOrContainerCreated": false
     },
     "packagingDecisions": {
       "owner": "D2",
@@ -28633,7 +28644,8 @@
         "tests/fixtures/unified-import/whole-package-synthetic.ts"
       ],
       "boundary": "Original forced206 proof source pins only at backend/native35-source original byte/path; no web/ordinary bundle or arbitrary fixture exemption; no implicit fixture execution/DB grants",
-      "releaseHelperApprovalMarkerChanged": false
+      "releaseHelperApprovalMarkerChanged": false,
+      "helperMemberAdmissionScope": "D2 unique writer: exact backend/native35-source member closure and sourcePath/hash/role including two approved fixtures; no generic suffix exception or execution permission; approval marker preserved"
     }
   }
 }
