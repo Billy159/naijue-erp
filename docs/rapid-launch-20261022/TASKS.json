@@ -28481,7 +28481,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "D1 PROD-ENTRY-F01 entry/test correction + T45 newproduction Python/test; D1 final loader after actualfile. QB current9leaf remainder then F01only/newPython consumer increment; one finalbuild. r5stopped and retained, no install replay.",
+      "critical": "T45 newproductionPython/test finalchecks/freeze, D1 final source-loader closure check, then fixedconsumer incrementQB and one unifiedbuild; D1productionentry9leaf + F01valid evidence reused. No oldr5 replay.",
       "independentPreparation": {
         "D1": "Production JS entry+source loader/strict V1 refusal, fixed source handoff and necessary scoped checks.",
         "T45": "Production Python consumer source only in independent new files, creation authority then actualfacts/entry/install; finite serviceLease separates installation. r5 actual run priority.",
@@ -30072,7 +30072,7 @@
           "twoDO": 3,
           "actualPG": false
         },
-        "QB": "NEED_FIX_ONLY_PROD_ENTRY_F01; remaining exact9leaf scope independently accepted and reused, noPG",
+        "QB": "Current47f1 F01closed + prior552b acceptedremaining9leafscope = SOURCE_AND_SCOPED_MODELS_PASS; actualPG and productionPython/finalclosure unverified.",
         "QBReceiptSHA256": "552b929755bca8249d0797a8ddcd6438e9b6d1c8e21bd852bcf3141eb5fe500f",
         "nativeTwoDOIndependentSHA256": "d44ef80162e849b02dbc8a5d5e974d4ade3afc11e77231ff981dcf08cfbef056",
         "next": "D1 F01only fix then QB affected recheck; T45 productionPython and finalsource closure increment; single final build."
@@ -30081,13 +30081,18 @@
         "id": "PROD-ENTRY-F01",
         "severity": "P2",
         "candidate": "caa2c985cbb22fefc8a320ed6cfd9a16d2d973ae",
-        "state": "CONFIRMED_ORIGINAL_PUBLISHER_COUNTEREXAMPLES_ASSIGNED_D1",
+        "state": "CLOSED_ONLY_FOR_FIXED_47F1C4B0_SOURCE_SCOPED_MODEL_NOT_PG",
         "actual": "After confirmed install completion, publisher existing-record/path/lstat precondition throw lacksinstallState; newCLI incorrectly exits1/null.",
         "expected": "COMMITTED_UNPUBLISHED/exit2 while preserving more specificPUBLISHED_DURABILITY_UNKNOWN; no retry.",
         "checks": "3 independent original-function seam examples; native/IO/completion models, noPG; oneclient/close and nosecretleak preserved.",
         "evidenceSHA256": "3c12c483a54d77081841aa24ca75a5b275453ab8cd26d76b5dc7824fb739c67a",
         "owner": "D1 productionentry/test only",
-        "recheck": "OriginalQB F01only after fixedbytes; other effective9leaf evidence adopted."
+        "recheck": "OriginalQB F01only after fixedbytes; other effective9leaf evidence adopted.",
+        "fixedIntegration": "47f1c4b0af84c2d8cf1cd2cf816d380f05e9adf0",
+        "authorPinsSHA256": "0d118630b7b5a7a3bec82fd5a6f39336c752f85f17a45e30ff45908c943aa010",
+        "QBReceiptSHA256": "17ebcb1b585ac8167578e75fd9aba9e7d7af56db20ceda5ed9944af10eeca821",
+        "independentChecks": 6,
+        "actualPG": false
       },
       "ordinaryStartOrdering": "Existing watcher includes recordparent: settle external entry/REALauthority and required private-file lifecycle before ordinary V2admit/start; no sibling authority mutations afterward without original re-admit. No watcher relaxation/newhook."
     }

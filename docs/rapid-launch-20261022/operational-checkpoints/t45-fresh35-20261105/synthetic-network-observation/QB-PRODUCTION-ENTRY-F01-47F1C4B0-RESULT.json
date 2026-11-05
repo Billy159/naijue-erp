@@ -1,0 +1,124 @@
+{
+  "task": "C-0448-PROD-ENTRY-F01-EXACT-SUCCESSOR",
+  "atUtc": "2026-11-05T22:37:41.050691+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "finding": {
+    "id": "PROD-ENTRY-F01",
+    "status": "CLOSED_FOR_EXACT_47F1C4B0",
+    "oldCaa2c985NeedFixPreserved": true
+  },
+  "pins": {
+    "sourceCommit": "47f1c4b0af84c2d8cf1cd2cf816d380f05e9adf0",
+    "finding": "PROD-ENTRY-F01",
+    "files": [
+      {
+        "path": "scripts/release/unified-install/fresh35-production-entry-v2.mjs",
+        "sha256": "43dd0f8602d4ec4d7df792aba6fc4b3de261c8bd681807b35a25240d3dc9d5a1",
+        "bytes": 9975
+      },
+      {
+        "path": "tests/fresh35-production-entry.test.mjs",
+        "sha256": "4e5e9a615081f93fcf52638b9dfc466bd185064689cad3c116d2a5cd94465d83",
+        "bytes": 20639
+      }
+    ],
+    "checks": "Original publisher body, original main and actual diagnostic function, with private completion/root/IO/native wire modeled. Original three untagged precondition failures were reproduced red (exit1/null), then all six scoped tests pass, no skips. Publication durability UNKNOWN preserved; setup/connect/rollback/native commit-UNKNOWN classifications unchanged. No PG or files published. One client/close, no retry, safe12 fields.",
+    "authority": "C F01 exact two-leaf source successor; old eight/three and other QA reused",
+    "sourceCopies": "f01-source; original source/ and RESULT.json not overwritten"
+  },
+  "authorPinsSha256": "0d118630b7b5a7a3bec82fd5a6f39336c752f85f17a45e30ff45908c943aa010",
+  "parentResult": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/C-0448-PRODUCTION-ENTRY-CAA2C985-20261106/RESULT.json",
+    "sha256": "552b929755bca8249d0797a8ddcd6438e9b6d1c8e21bd852bcf3141eb5fe500f",
+    "otherPassedScopeReused": true
+  },
+  "diffScope": "Only exact entry/test; entry adds publication catch after genuine completion, fills missing installState only, no authorization/lifecycle/ACL/target/result-consumer change",
+  "independentChecks": {
+    "finding": "PROD-ENTRY-F01",
+    "result": "PASS_EXACT_SUCCESSOR",
+    "cases": [
+      {
+        "phase": "existing-record",
+        "result": "PASS",
+        "actualExitCode": 2,
+        "actualInstallState": "COMMITTED_UNPUBLISHED",
+        "clients": 1,
+        "closes": 1,
+        "retries": 0,
+        "safeFields": 12
+      },
+      {
+        "phase": "trusted-tree",
+        "result": "PASS",
+        "actualExitCode": 2,
+        "actualInstallState": "COMMITTED_UNPUBLISHED",
+        "clients": 1,
+        "closes": 1,
+        "retries": 0,
+        "safeFields": 12
+      },
+      {
+        "phase": "lstat-eacces",
+        "result": "PASS",
+        "actualExitCode": 2,
+        "actualInstallState": "COMMITTED_UNPUBLISHED",
+        "clients": 1,
+        "closes": 1,
+        "retries": 0,
+        "safeFields": 12
+      },
+      {
+        "phase": "publish-durability",
+        "result": "PASS",
+        "actualExitCode": 2,
+        "actualInstallState": "PUBLISHED_DURABILITY_UNKNOWN",
+        "clients": 1,
+        "closes": 1,
+        "retries": 0,
+        "safeFields": 12
+      },
+      {
+        "phase": "connect-fails",
+        "result": "PASS",
+        "actualExitCode": 1,
+        "actualInstallState": null,
+        "clients": 1,
+        "closes": 1,
+        "retries": 0,
+        "safeFields": 12
+      },
+      {
+        "phase": "publish-success",
+        "result": "PASS",
+        "publication": "RECORD_DURABLY_PUBLISHED",
+        "clients": 1,
+        "closes": 1,
+        "retries": 0
+      }
+    ],
+    "boundaries": "Original new main, original publisher and actual lifecycle diagnostics; real target binding; completion/native/root/IO modeled; no PG/server or actual record publication"
+  },
+  "authorSix": "Adopted fixed author report; no full author-suite rerun",
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actual": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "PGStarted": false,
+    "buildPerformed": false,
+    "actualRecordPublication": false,
+    "realDataRead": false,
+    "completionRootIoNative": "MODELED; actual entry/publisher/diagnostic function bodies executed"
+  },
+  "notRepeated": [
+    "prior accepted nine-leaf scope",
+    "two-DO native transport",
+    "old13/7/64/private",
+    "full author8+3"
+  ],
+  "remaining": "No open F01 source finding for this exact successor. T45 production Python/source-loader actual consumers remain separate fixed increment. Actual PG/ACL/install/runtime/business/deployment not accepted by this report."
+}

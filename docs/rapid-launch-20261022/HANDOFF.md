@@ -1702,3 +1702,7 @@ C固定D1九叶caa2c985交原QB，采用作者生产入口8项/两DO3项，后�
 
 
 - 原QB九叶最终552b9297已采用：仅PROD-ENTRY-F01/P2需原D1修复，其他授权/模式/V1边界/source闭包与两DO接缝有效通过直接保留。独立两DO d44ef801使用真实pg8.23.1二进制parser、Client累计和原host消费者，正例2DO/反例3DO及错tag，仍是无PG模型，不冒充SQL/ACL真实验收。后继仅复验F01和新Python消费增量。
+
+
+### 2026-11-06 06:40 | 生产CLI已提交状态缺陷定向复验通过
+固定47f1c4b0保留genuine completion后裸发布失败的COMMITTED_UNPUBLISHED，且不覆盖PUBLISHED_DURABILITY_UNKNOWN；原QB17ebcb1b独立六窄场景PASS，F01仅对该固定后继关闭，旧caa NEED_FIX保留。结合552b9297其余九叶有效结论，D1模块源码/定向模型已通过；未验真实PG/实际发布，不代表部署通过。T45新生产Python/test仍在最终检查，D1唯一loader纳真实文件后核source闭包；后继只验这项新消费接缝，然后统一构建，不重两DO或已过后台全套。用户今日12:00前委托持续有效，无需用户操作；真实导入、普通业务、备份适用和上线证据仍未齐。
