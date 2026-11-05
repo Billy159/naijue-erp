@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T15:43:32.928276+00:00",
+  "updatedAt": "2026-11-05T15:50:53.217166+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T15:43:32.928276+00:00",
+    "at": "2026-11-05T15:50:53.217166+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28372,7 +28372,7 @@
       "remotePriorVerifiedCommit": "3331fb76a3b114257f1d73e20a40f6db3958332c",
       "localHead": "d30a81d90ca03f984b139f540b64dc3b6879eea2",
       "pushRoute": "existing system HTTP proxy, command scoped; direct connection timed out",
-      "lastVerifiedRemoteCommit": "28706d120b4765062f2e27728334f2478cb4791f"
+      "lastVerifiedRemoteCommit": "80ad81884fef1056b9cb563e13f60a1870956020"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -28988,12 +28988,12 @@
       "D1ReviewState": "QB_F01_CLOSED_SOURCE_AND_TARGETED_MODELS_ONLY",
       "D1ExpiryFixCommit": "1149f17ee350dded91e88423d5b20b6586d23c2e",
       "D1ExpiryFixReceiptSHA256": "b0f66472ca730e49974bd5debc4b28fc22958f67003229f80cabcb5b03100470",
-      "D2Next": "Same original packaging owner prepares isolated local Linux x64 glibc locked production dependencies; no source edits or server execution",
-      "T45Next": "Finish original main actual serial RO scene/ordinary child/profile/cleanup wiring using explicit C runtime template; wait final source/locked Linux closure/QB and exact valid window",
+      "D2Next": "Frozen dependency preparation returned read-only; final application build/ordinary packaging waits sole T45 four-leaf delivery + fixed merged source. No new ci/download or duplicate build.",
+      "T45Next": "Current launcher/wrapper main wiring active, C runtime template and locked Linux archive now delivered. Return fixed four-leaf pins/checks; C merges/QB/final build and explicit same-target fresh execution binding then T45 only executes.",
       "sourceOwnerSceneHandoffSHA256": "3c7bec4ee55c661942f44749e58d2c6ad6878cc593346798c8f07b26ebbf2f08",
       "capacityTemplateReviewSHA256": "de1de45ff4256a8f58c760e5f30af75d1e487fe5777ea2e44f9f1beb2b34226a",
       "linuxDependencyInputSHA256": "cbcb3ff8485957959a773e76cfc9bdb733ac6932636750c928f67c6f6e028dd6",
-      "linuxDependencyStatus": "LOCAL_SHARP_DARWIN_NOT_LINUX_ARTIFACT; exact locked Linux closure still required",
+      "linuxDependencyStatus": "FROZEN_REUSED_LOCK_SRI_ALL_FILES_ARCHIVE_READBACK_PASSED; TRUE_LINUX_LOAD_PENDING_T45",
       "D1ExpiryFixReviewSHA256": "2e0d07ab9cab03fd387c5daf3bab00c889d228cb83bef20b091bada81bb5716c",
       "D2SetupSuccessorCommit": "95aba3b0c3bdf850feee826c452e487f14d74431",
       "D2SetupSuccessorReceiptSHA256": "7d1ea76f7c4c151f20f3086a3df14041fd1ce1664451bd1449277ec22dbd1e36",
@@ -29011,7 +29011,17 @@
         "pgMax": 1,
         "sessionSeconds": 900,
         "noPoolOrPGStarted": true
-      }
+      },
+      "linuxDependencyReceiptSHA256": "c3694ee010090a54b685b08699768382652d03a32e8cb9f24e13eb93e2908308",
+      "linuxDependencyArchiveSHA256": "a6b5376561a31f0470a7efaa5b38a883fe790b17ce2a65b0020a041e5cdd0dda",
+      "linuxDependencyManifestSHA256": "990b0a035195e25e7ac6180638100d883a605ec17c10da2a45e85b8606dbcf57",
+      "linuxDependencyCounts": {
+        "packages": 73,
+        "files": 3285,
+        "archiveMembers": 3288,
+        "bytes": 10798748
+      },
+      "D1Next": "Read-only original production35 target/record/CLI and identity preparation seam; no server/PG/credentials. Exact missing production input only, no new platform or regression."
     }
   }
 }
