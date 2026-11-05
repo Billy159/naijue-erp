@@ -623,6 +623,8 @@ class InstallChildDiagnosticTests(unittest.TestCase):
         return saved['installation-child-failure.json']
     def test_closed_diagnostic_preserves_separate_errors_without_raw(self):
         v=self.payload();r=self.capture(json.dumps(v).encode());self.assertFalse(r['diagnosticUnavailable']);self.assertEqual({k:r[k] for k in v},v);self.assertEqual(r['exitCode'],1);self.assertNotIn('SECRET_SENTINEL',json.dumps(r))
+    def test_failed_no_installed_result_is_preserved_without_outcome_inference(self):
+        v={**self.payload(),'installState':'FAILED_NO_INSTALLED_RESULT','stage':'BOUND','step':None,'originalSQLSTATE':None,'rollbackInternalCode':None};r=self.capture(json.dumps(v).encode());self.assertFalse(r['diagnosticUnavailable']);self.assertEqual(r['installState'],'FAILED_NO_INSTALLED_RESULT');self.assertEqual(r['state'],'INSTALL_FAILED_OR_OUTCOME_UNKNOWN');self.assertFalse(r['automaticRetry']);self.assertNotIn('commitOutcome',r)
     def test_invalid_or_sensitive_payload_is_not_persisted(self):
         cases=[{**self.payload(),'message':'SECRET_SENTINEL'},{**self.payload(),'stage':'SQL select'},{**self.payload(),'originalSQLSTATE':'SECRET_SENTINEL'},{**self.payload(),'rollbackInternalCode':'PASSWORD_SECRET'},{**self.payload(),'step':'select * from users'},{**self.payload(),'step':'valid-looking-but-not-compiled'},{**self.payload(),'automaticRetry':True},{**self.payload(),'installState':{}},{**self.payload(),'validationCode':'unsafe detail'}]
         for v in cases:
