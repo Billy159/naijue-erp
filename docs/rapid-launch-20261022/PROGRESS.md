@@ -1,3 +1,9 @@
+## 2026-11-05 — 本批试导入口与恢复边界已核，尚未执行
+
+本轮实际D3-40 manifest中inventory_baseline为262632096字节/147708行，超过whole-import的64MiB单文件限制；后续本批固定选stream-import，不提高阈值、不自动改命令。先stream-preflight（manifest、包外零批准及离职空厅批准与各自SHA成对），准确合同修复及环境前置齐备后才stream-import --inspect-only→获准实际导入→stream-verify；三步包/目标/身份/批准/coalesce选择保持同一套。当前四接收阻塞未修，不重复跑已知失败整包。
+
+0236Z操作说明区分真实入口与旧别名：legacy initialize/apply不适用完整历史包；rollback-plan/rehearse/prepare/dry-run/import/reconcile等旧命令仍NOT_IMPLEMENTED退出3，不可写入可执行恢复方案。工具不恢复整库；由T45提供准确目标的备份、独立恢复及新业务后的回退边界。原177真实安装记录/现库指纹/ACL、固定Node依赖、受保护sales后继issuer/host/CLI闭包和真实35表尚未本候选验收；不手工装SQL再补伪造记录。上述为只读文档/入口/当前文件元数据核查，不是运行或PG通过。Dot仍负责代码和工具，T45唯一服务器owner。
+
 ## 2026-11-05 — 0236Z完整阶段源码已独立接收，接收合同增量定向核查中
 
 0236Z定向核查已收口：回执e9658203...确认4原接缝仍在。准确消费者为 unified-import-contract.ts:1559/stream-relations.mjs:61 厅规则、:1530/:46 金额精确等式、unified-import-contract.ts:1352–1356 对账三数、:1419–1420 实际导出时间/独立截止证据。显式零与零额旁车源码未变，既有有效源码范围可复用，但不能据此宣称本版整包/实库通过。196个候选厅差异未证明真实跨厅；本地原值继续保留。既有Dot短清单已同步，无新增技术平台或重复业务问题。接收记录提交673e562d...的有界推送25秒及读回20秒超时，远端状态未知；最后确证bdebf00d...保留，未强推。

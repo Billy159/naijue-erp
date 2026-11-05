@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T02:52:51.571702+00:00",
+  "updatedAt": "2026-11-05T03:00:21.158420+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "2276fdfb3928b2b5fa4af72b3883bbd478dd672d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -27529,7 +27529,7 @@
   },
   "currentDotReceiverDelta20261105": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/CONTROLLER-DOT-RECEIVER-DELTA.zh-CN.md",
-    "sha256": "e3980ba3a76ef97d7edda07de19ae65aaf26b83a50bf452c8c7521889c3c6c41",
+    "sha256": "286ff2ad447e1a0f22e5b935fbdfe4ff215c39b07f2b4c2b91e3b25b06531cf6",
     "containsPrivateBusinessRows": false,
     "supersedesOldV4MissingGeneratorAndZeroSourceClaims": true
   },
@@ -27938,5 +27938,43 @@
       ],
       "explicitZeroSourceUnchanged": true
     }
+  },
+  "current0236ZTrialEntryReadiness": {
+    "sourceManifestSHA256": "1c513b622a1beec7e2512ed7a3410d6c7d8d68cbdae8c44f175e71724165f131",
+    "dataManifestSHA256": "fee27bf4a99b6fff629fac08e856f55ed4fab4cf79bf7252a1804921d01dea0e",
+    "inventoryArtifactBytes": 262632096,
+    "inventoryArtifactRows": 147708,
+    "requiredImportEntry": "stream-import",
+    "reason": "Actual artifact exceeds whole-import64MiB per-artifact contract; no limit expansion or automatic switching",
+    "offlineEntry": "stream-preflight with exactmanifest + approvedzero + staffhall approval files/hash outsidepackage",
+    "postImportEntry": "stream-verify with same target/package/options/request identity",
+    "doNotUse": [
+      "legacy initialize/apply for full historical package",
+      "unimplemented rollback-plan/rehearse/prepare/dry-run/import/reconcile aliases",
+      "synthetic flags for realdata",
+      "manual SQL followed by forged trusted record"
+    ],
+    "installerPrerequisites": [
+      "ExactNode24.21.0/npm11.9.0 and trusted dependency closure",
+      "Actual original177 physical target catalog/ACL and original installation record before reviewed sales successor",
+      "Authorized original serverowner managed isolatedtarget/config; no guessed passwords/roles/ports",
+      "Protected launcher/config/issuer/host same version and real target observation"
+    ],
+    "databaseBackupRestore": "No whole-database restore command supplied by this import tool; T45 exact target backup/independentrestore/rollback procedures required, not yet executed under this candidate",
+    "status": "ENTRY_SELECTION_VERIFIED_FROM_CODE_DOC_AND_CURRENT_MANIFEST;REAL_INSTALL_IMPORT_NOT_READY",
+    "stillBlocked": [
+      "Four receiver contracts in0236Z review",
+      "Exactcutoff/sourceexport facts",
+      "Complete reconciliations",
+      "Fresh35 trustedinstallation and PG normalaccount lifecycle evidence"
+    ],
+    "actualCommandExecuted": false
+  },
+  "goalContinuation0236ZEntryAudit": {
+    "previousTurn": "PROGRESS:received verifiedsnapshot and exactreceiver review",
+    "currentTurn": "PROGRESS:actual262632096byteartifact selectsstream, disallowed oldCLI aliases distinguished, installerandbackup boundaries recorded",
+    "consecutiveNoProgressGoalTurns": 0,
+    "next": "Only accurate Dot receiver/installation successor or actual target-bound restore prerequisites, no unchanged fullpreflight rerun",
+    "goalComplete": false
   }
 }
