@@ -1295,3 +1295,11 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 最终组包新增阻断已实际复现：alignment自身SHA进入source_files后改变batch，header带batch又改变alignment；实际流式预检通过但prepareStreamPlan拒绝REGISTERED_SOURCE_MISMATCH。D1最小V2外部旁证提案ee0aed35/复现f7793666已提交用户确认，未实施；原注册算法/V1/数量金额不改，不用旧硬码绕开。正式目标/长期运行证明源码提案9b11eaba也已单独提交，未实施。
 - T45本机固定5b26源码及sourceSet0e6b01ec，传输归档70967936字节/b91bf14e、官方Debian13基础镜像amd64摘要7378260c，84包元数据201约束无未满足项；签名尚未实核，镜像未拉取或构建。原provision最小运维后继离线实现中，完毕只验该增量后再给准确新环境执行范围。
 - 当前实际状态：无新PG、无真实导入、无生产变更。D3最终合包等待新循环合同；D1只等准确回复，T45独立实现继续。已有源码和来源有效结论不重验。
+
+
+## 2026-11-05 两项合同实际确认与原owner接续
+
+- 用户实际回复call_6e09df03d7be48e0bd9a198a20029a60两项均“确认此项源码与合同修订”；已复核原提案ee0aed35（对齐V2）及9b11eaba（正式目标V2）文件摘要一致。本次不授权实际权限、环境、建库、导入或部署。
+- D1沿原任务先交对齐V2最小源码及普通/流式注册闭包、错误输入拒绝的必要验证；原V1、注册算法和真实数据不改。交付固定版本后立即交原QB增量验收，并解除D3最终组包的该依赖。
+- 正式V2 target/lifecycle/record/catalog/host原模块由D1唯一修改；普通运行API/issuer及实际入口仍D2唯一修改，精确接缝交接，原launcher不抢写。全部显式gpt-6.1-sol/high或medium，Fast开关未核验。
+- T45原运维后继回合已有实际命令输出，继续离线落源码，不重复派工或改成新控制平台。当前未新建数据库、未导入真实数据、未改生产。两项“已批准”不是“已实施/已验收”。

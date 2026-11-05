@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T11:05:07.529882+00:00",
+    "at": "2026-11-05T11:18:01.961444+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28147,7 +28147,8 @@
         "integration metadata",
         "shared contract/config/combined SQL/release coordination",
         "scripts/release/unified-install shared installers/catalog/combined source",
-        "package/lock and shared CLI seam integration"
+        "package/lock and shared CLI seam integration",
+        "Production V2 exact target/lifecycle/record/catalog ownership delegated exclusively to D1 on human approval; C coordinates no concurrent writes"
       ],
       "T45": [
         "existing server execution outputs and private factual evidence only",
@@ -28189,7 +28190,14 @@
         "fresh35 host/admission exact V1/V2 profile seam",
         "stream-package-metadata.mjs hall profile branch",
         "tests/fixtures/unified-import/whole-package-synthetic.ts and direct fixture tests",
-        "adapters/postgres/src/sales-historical-hall-projection.ts (explicit C handoff; D2 notified readonly)"
+        "adapters/postgres/src/sales-historical-hall-projection.ts (explicit C handoff; D2 notified readonly)",
+        "packages/application/src/unified-current-effective-alignment.ts",
+        "packages/application/src/unified-import-contract.ts alignment V2 branch",
+        "tools/unified-import/stream-package-metadata.mjs alignment V2 branch",
+        "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+        "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+        "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "corresponding declarations and affected existing direct tests only"
       ],
       "D2": [
         "apps/api/src/production-main.ts",
@@ -28366,7 +28374,7 @@
     "sourceFactGaps": [
       "Actual compatible isolated PG install/record/capture/rollback/replay/readback/cleanup untested",
       "Final private source_files/V2 authority and batch unsealed; 653 held rows/seven color-owner discrepancies retained",
-      "Production target/long-lived install proof proposal only; release helper approval unchanged"
+      "Approved alignment V2 and production V2 source implementation underway; actual production target and release approval still pending"
     ],
     "portableReferences": {
       "resolver": "resolveFresh35ReferenceInputPaths(directory)",
@@ -28377,7 +28385,16 @@
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/0448Z-HALL-AND-ISOLATED-SOURCE-DELTA.md",
       "A": "Approved by actual root human call_0c8e68fb69a04e2ab20ae7b4c6dfc8af reply0; V2 JSON/SQL only, no tables/ordinary permissions",
       "B": "Human call_0c8e68fb69a04e2ab20ae7b4c6dfc8af item1 explicitly approved source/contract only; exact new target and actual execution still T45-bound, no production or window extension",
-      "C": "Human call_66e02fc29e8e45e6bef014891af81ec0 item0 approved exact input intent/MASTER/audit/receipt/readback source contract only; no environment or production authority"
+      "C": "Human call_66e02fc29e8e45e6bef014891af81ec0 item0 approved exact input intent/MASTER/audit/receipt/readback source contract only; no environment or production authority",
+      "alignmentV2AndProductionV2": {
+        "source": "actual human reply in controller chat",
+        "questionCall": "call_6e09df03d7be48e0bd9a198a20029a60",
+        "answers": [
+          "确认此项源码与合同修订",
+          "确认此项源码与合同修订"
+        ],
+        "scope": "Source and contract only; no environment execution, actual grants, database creation, import or deployment"
+      }
     },
     "currentEffectiveAlignmentHumanFact": {
       "thread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
@@ -28441,13 +28458,13 @@
       "checks": "18 offline PASS; no server or upload;40s unchanged",
       "reviewSHA256": "9bfe70be86da1fd138f6ec8c370088bb43885da3b7e98b0c85d161e2b1b49845"
     },
-    "productionInstallProofGap": "Current fresh35 record/target only synthetic_fresh35 loopback20min. No approved production/long-lived ordinary proof API. D2 must not use it for production bridge or change target contract silently.",
+    "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "D1": "Alignment and production-target source contract proposals submitted; pending exact human reply; no repeat reproduction",
-      "D2": "Fixed D3-50 source review delivered/adopted; code remains frozen",
-      "D3": "External trusted source binding received; final group assembly waits only actual alignment seam fix; no duplicate data work",
-      "T45": "Offline minimal successor of original provision operations, fixed5b/source/image/metadata inputs; environment not authorized",
-      "QB": "No repeated source review; next only fixed T45 operations successor incremental review"
+      "D1": "Implement approved alignment V2 first and deliver fixed increment; then original production V2 target/record/catalog/host",
+      "D2": "Coordinate exact ordinary startup seam with D1; own API/runtime consumers only; no duplicate release review",
+      "D3": "Await fixed alignment V2 to assemble final source_files/batch/headers/proof; existing private source evidence retained",
+      "T45": "Original offline provision successor active; latest marker completed command, no server execution",
+      "QB": "Next review only fixed new source increments; previous PASS adopted"
     },
     "actualExecution": {
       "newClusterCreated": false,
@@ -28478,10 +28495,12 @@
     },
     "productionInstallProofProposal": {
       "owner": "D1",
-      "state": "EXACT_SOURCE_CONTRACT_PROPOSAL_SUBMITTED_TO_USER_NOT_IMPLEMENTED",
+      "state": "HUMAN_APPROVED_D1_CONTRACT_D2_RUNTIME_SEAM",
       "path": "D1/0448Z-HALL-C-INITIALIZATION-20261105/PRODUCTION-TARGET-CONTRACT-DELTA.md",
       "sha256": "9b11eabac1880c5515d0f40e73203fa9cd27cbb5b134aa9d0394311858a390a8",
-      "scope": "Versioned existing target/record and ordinary startup identity/source/catalog revalidation; operation window separate from service lease; actual target values/permissions unapproved"
+      "scope": "Versioned existing target/record and ordinary startup identity/source/catalog revalidation; operation window separate from service lease; actual target values/permissions unapproved",
+      "approvalItem": 1,
+      "actualPermissionApplied": false
     },
     "privateHallSourceReview": {
       "candidateSHA256": "8e1b71640f2c7172a15ad0be32c8aab029d28a1ee07afc3a41a8b5467ae98d53",
@@ -28499,14 +28518,15 @@
       "environmentAuthority": false
     },
     "alignmentRegistrationCycle": {
-      "state": "REPRODUCED_SOURCE_CONTRACT_PROPOSAL_AWAITING_USER",
+      "state": "HUMAN_APPROVED_ORIGINAL_D1_IMPLEMENTING",
       "codeBase": "41b86ec09105606eb5a43221fd29aed66ea9a4e4",
       "reproSHA256": "f7793666c0a7e1d67ceb928a269522f5dca23798b96094c74196703b9f467642",
       "proposalSHA256": "ee0aed35833a63ae90229d77ab21f66262afc099e0d8dc80a88c60188c5f9b58",
       "failure": "Actual streamPreflight passed but prepareStreamPlan rejected REGISTERED_SOURCE_MISMATCH; adding alignment proof to source_files changes batch, changing headers changes proof again",
       "minimumProposal": "External independently reviewed V2 alignment proof outside source_files; V1 and complete source registration algorithm retained; exact inventory/cutoff/registry/five-document bindings retained",
       "implemented": false,
-      "owner": "D1 after actual user approval"
+      "owner": "D1",
+      "approvalItem": 0
     },
     "compatibleIsolatedPreparation": {
       "owner": "T45",
