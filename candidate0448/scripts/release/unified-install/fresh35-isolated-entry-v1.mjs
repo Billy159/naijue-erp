@@ -98,9 +98,9 @@ export async function main(){
     let reachedFinalPublish=false;
     const badSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='publish'&&step.request.payload.phase==='DOCUMENTS'){reachedFinalPublish=true;step.request.payload.expected_sequence=Number(step.request.payload.expected_sequence)+1;}yield step;}}};
     const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,badSteps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
-    need(reachedFinalPublish&&result.state==='ROLLED_BACK','SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED');
+    if(!(reachedFinalPublish&&result.state==='ROLLED_BACK'&&result.code==='STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED'),{validationStage:'FINAL_PUBLISH',validationCode:result.code});
     need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH))).state==='ABSENT','SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED');
-    return {state:result.state,reachedFinalPublish,badApprovalRollback:true,badApprovalCode:badApprovalResult.code,missingSettlementRollback:true,missingSettlementCode:missingResult.code,originalBatchAbsent:true};
+    return {state:result.state,reachedFinalPublish,finalFailureStage:'FINAL_PUBLISH',finalFailureCode:result.code,badApprovalRollback:true,badApprovalCode:badApprovalResult.code,missingSettlementRollback:true,missingSettlementCode:missingResult.code,originalBatchAbsent:true};
    },options);
    need(failed.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
    if(stage==='rollback'){
@@ -127,7 +127,7 @@ export async function main(){
    await fixture.dispose();
    need(verification.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
    need(verification.result.settlementRetentionVerified===true&&verification.result.retainedHeaders===25&&verification.result.retainedSettlements===27,'SYNTHETIC_RETENTION_READBACK_REQUIRED');
-   process.stdout.write(JSON.stringify({state:'FRESH35_CONTROLLER_HOST_VERIFIED',hostVerification:verification.host_verification,ordinaryUid:process.getuid(),syntheticImportVerified:true,stage,fixtureBinding,fixtureBindingSha256,settlementRetentionVerified:verification.result.settlementRetentionVerified,retainedHeaders:verification.result.retainedHeaders,retainedSettlements:verification.result.retainedSettlements,failedAttempt:stage==='commit'?null:failed.result,importState:verification.result.importState,replayState:verification.result.replayState,readbackState:verification.result.readbackState,businessVerified:false})+'\n');return;
+   process.stdout.write(JSON.stringify({state:'FRESH35_CONTROLLER_HOST_VERIFIED',hostVerification:verification.host_verification,ordinaryUid:process.getuid(),syntheticImportVerified:true,stage,fixtureBinding,fixtureBindingSha256,settlementRetentionVerified:verification.result.settlementRetentionVerified,retainedHeaders:verification.result.retainedHeaders,retainedSettlements:verification.result.retainedSettlements,failedAttempt:stage==='commit'?null:failed.result,importState:verification.result.importState,replayState:verification.result.replayState,readbackState:verification.result.readbackState,connectionCleanup:'CLOSED',businessVerified:false})+'\n');return;
   }finally{await fixture?.dispose()}
  }
  const authorization=await loadFresh35CombinedAuthorization(program);
@@ -149,5 +149,5 @@ export async function main(){
  }
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
- try{await main()}catch(error){process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:typeof error?.installState==='string'?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',validationStage:['BAD_APPROVAL','MISSING_SETTLEMENT'].includes(error?.validationStage)?error.validationStage:null,validationCode:typeof error?.validationCode==='string'&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.validationCode)?error.validationCode:null,automaticRetry:false})+'\n');process.exitCode=1;}
+ try{await main()}catch(error){process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:typeof error?.installState==='string'?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',validationStage:['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'].includes(error?.validationStage)?error.validationStage:null,validationCode:typeof error?.validationCode==='string'&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.validationCode)?error.validationCode:null,automaticRetry:false})+'\n');process.exitCode=1;}
 }
