@@ -1,0 +1,19 @@
+✔ independent HTTP whole-query rejection: missing readiness (337.803647ms)
+✔ independent HTTP whole-query rejection: corrupt readiness (18.003445ms)
+✔ independent HTTP whole-query rejection: explicit incomplete (20.24865ms)
+✔ independent HTTP whole-query rejection: unknown cell (26.742968ms)
+✔ independent HTTP whole-query rejection: missing cell (21.295739ms)
+✔ independent HTTP whole-query rejection: incomplete off-page summary (44.384767ms)
+✔ independent HTTP whole-query rejection: corrupt visible total (26.836472ms)
+✔ independent HTTP whole-query rejection: cell integer exceeds signed bigint (10.45986ms)
+✔ independent complete source has real zero only and exact negative total (4.412023ms)
+✔ independent client rejects unknown, missing, partial and malformed totals rather than filling zero (37.95332ms)
+✔ independent client failed read keeps prior successful data and its executed page (4.09139ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1252.068261

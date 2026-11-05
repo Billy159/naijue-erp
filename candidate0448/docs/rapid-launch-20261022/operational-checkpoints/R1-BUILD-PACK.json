@@ -1,0 +1,16 @@
+{
+  "format": "naijue-release-pack-receipt-v1",
+  "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+  "buildId": "rapid-launch-r1-a77089c-02",
+  "sourceCommit": "a77089c1a8224df3d1a281054a9c872c054987ed",
+  "archive": {
+    "file": "release.tar.gz",
+    "bytes": 3142212,
+    "sha256": "cabaca9829c87bee464655a0c355479a87d95dac1ee88301ce88faad655cda69"
+  },
+  "manifestSha256": "b67132256adaba74b06abc7255db355ad221212d8ba78eb3795dd08b7d9a15f8",
+  "members": 180,
+  "archiveExtractions": 1,
+  "businessOrProductionValidation": false,
+  "deploymentExecuted": false
+}

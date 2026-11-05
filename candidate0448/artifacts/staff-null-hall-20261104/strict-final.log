@@ -1,0 +1,13 @@
+✔ approved exact historical departed staff admits null hall, not a general exception (3.528617ms)
+✔ missing, forged, tampered or unpinned approval cannot authorize a record (1.364364ms)
+✔ approval rejects duplicate IDs, keys and unsupported fields (0.68933ms)
+✔ approval rejects duplicate JSON keys and invalid UTF-8 even when digest is pinned (0.331837ms)
+✔ approval locator rejects non-int32 rows, controls, blank sheet and repeated refs (0.75352ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 621.267052

@@ -1,0 +1,59 @@
+✔ explicit versioned two-function ACL reduction precedes strict restoration gate (42.633821ms)
+✔ companion refuses non-default ACL and metadata drift; revokes PUBLIC only and preserves all nonACL metadata (2.604546ms)
+✔ historical reception installs zero archive before final exact verifier and keeps old sales composition intact (46.686928ms)
+✔ all five successor bodies remain exact, once, in dependency order under one transaction (1.763119ms)
+✖ access verifier changes only profile-command pin beyond the prior closure pin; permissions are identical (3.592853ms)
+✖ exact chain proposals never claim installation or runtime admission (1.801519ms)
+✔ every additional exact source pin rejects byte drift, missing or unexpected inputs (13.281875ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 241.580071
+
+✖ failing tests:
+
+test at tests/whole-package-sales-integration-candidate.test.mjs:25:1
+✖ access verifier changes only profile-command pin beyond the prior closure pin; permissions are identical (3.592853ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  10 !== 8
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-sales-integration-candidate.test.mjs:29:72)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 10,
+    expected: 8,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/whole-package-sales-integration-candidate.test.mjs:32:1
+✖ exact chain proposals never claim installation or runtime admission (1.801519ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  9 !== 8
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-sales-integration-candidate.test.mjs:37:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 9,
+    expected: 8,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

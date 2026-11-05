@@ -1,0 +1,37 @@
+{
+  "parentCommit": "2d0f5d2ef79a1d48f63a85cb0242661d2e54efde",
+  "scope": "schema-neutral CURRENT proposal read ports/parsers/reader only; mandatory explicit trusted host authorization; no HTTP/schema/write enablement",
+  "ownedPaths": [
+    "packages/application/src/current-form-ports.ts",
+    "packages/application/src/current-form-validation.ts",
+    "adapters/postgres/src/current-form-reader.ts",
+    "tests/current-form-reader.test.ts",
+    "docs/native-current-form-read.md",
+    "docs/native-catalogue-authority-next-step.md",
+    "evidence/current-form-reader-tests.log",
+    "evidence/current-form-reader-manifest.json"
+  ],
+  "sha256": {
+    "packages/application/src/current-form-ports.ts": "e44dcc0b16f44854b9fce494d1c50f6b5a82ddec3d0682e31e21c5e0e4a5a9ad",
+    "packages/application/src/current-form-validation.ts": "3664b799e0c2866bf3d3626d9663e317274d63c8caf4e3d29aaf5cce495a0a47",
+    "adapters/postgres/src/current-form-reader.ts": "408b1eb3afed5db7392dc9508afba7fdf5718ba7968b83e29f4970edba1cd08b",
+    "tests/current-form-reader.test.ts": "d0741645eae584670c704bd18b25daaa6051766fe5939179ac64a064718f20dc",
+    "docs/native-current-form-read.md": "7d788ce38e0003a7e0810031a6eb7230487ab7e799c28cb152a8942c9900db52",
+    "docs/native-catalogue-authority-next-step.md": "1b61ead2ff4d2f44c89efda73f45dbc6ddd4e174710c078f23e41ef10d318910",
+    "evidence/current-form-reader-tests.log": "707c538cb35fc6ddb9a1b8c17271c70e82b45cc75fa0edfadcaaa45feac7f176"
+  },
+  "verification": {
+    "command": "node --test tests/current-form-reader.test.ts",
+    "passed": 25,
+    "failed": 0,
+    "type": "synthetic parsers and scripted pg protocol only"
+  },
+  "notRun": [
+    "genuine PostgreSQL parser/engine/transaction acceptance",
+    "production or operations",
+    "compiler/build/full tests",
+    "HTTP/browser/performance acceptance",
+    "install/migration/import/commit/push/deploy"
+  ],
+  "revert": "All owned files are new. Remove only listed ownedPaths; preserve all other concurrent work."
+}

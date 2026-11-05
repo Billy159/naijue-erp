@@ -1,0 +1,12 @@
+{
+  "atUtc": "2026-10-22T18:13:03.071975+00:00",
+  "parent": "48f8bab3119c09ff810c327e89398ff7053af13b",
+  "files": [
+    {
+      "path": "apps/web/src/application/contracts.ts",
+      "owner": "C",
+      "sha256": "87b800c901110c1da02a8dfd92d229d55279330f70d2f7f9fb837155e46e4c62"
+    }
+  ],
+  "scope": "Optional transfer UI read configuration only; no schema/business rule change; absent does not infer default/group/grant. F1 consumer and QF targeted types follow."
+}

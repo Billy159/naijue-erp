@@ -1,0 +1,66 @@
+{
+  "atUtc": "2026-10-23T11:51:26.186046+00:00",
+  "parent": "b583957c5ab79306703fed93680cb9fa3dfe8ec1",
+  "taskId": "F01_SHARED_PRODUCTION_CSS",
+  "files": [
+    {
+      "path": "apps/web/src/application/styles/parties.css",
+      "bytes": 176,
+      "beforeSha256": "4e4ca0fcba75b2467514f1f1b1fccfc1193d110f89bfde35e1fc308128a24bf5",
+      "sha256": "2c30043eb6005d3818d7a9b2eeac7e76f6068d4ef18701702dd633fd9466d7a2",
+      "removedInstalledLibraryImportCount": 1,
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/styles/transfers.css",
+      "bytes": 230,
+      "beforeSha256": "be037ea22c8b9426ed31745b1ee649bfa040fe7cf04851bc61a3eb4f4f979666",
+      "sha256": "bafb6a6faea2b2c4110cff328eb0133966dc0c011b616fd3a7e34d8ff7d52f91",
+      "removedInstalledLibraryImportCount": 1,
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/demo-controls/single-select.css",
+      "bytes": 5299,
+      "beforeSha256": "d92da01d401bde97f3b1fbfed1f9361a9e932956b4704068739e8ef1eca0bbcd",
+      "sha256": "d9368cf3e89db451c3ee4d4220edd920f7e71a7f8bd0716bebbb9ecff70848e1",
+      "removedInstalledLibraryImportCount": 2,
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/demo-controls/multi-select.css",
+      "bytes": 7758,
+      "beforeSha256": "175658394e0e01507caf5f2f2ae46b90923833d3fda93115aeb65fecfb0cc9a6",
+      "sha256": "dfc3b9cf6234c2cbaf3e68fbbedd8d95803e1e0a099505004065d05def9df0e9",
+      "removedInstalledLibraryImportCount": 8,
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/components/product-candidate-action.css",
+      "bytes": 11738,
+      "beforeSha256": "341dd44945a0d10b4afd783ba3291fadf1e59a4798db77b1e471e1b7fe6f71a8",
+      "sha256": "c200b73cdfc188f60bf80942f087131b2073cc7f2deffb4d928333057ed35b06",
+      "removedInstalledLibraryImportCount": 7,
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-83/DELIVERY.json",
+  "ownerReceiptBytes": 3863,
+  "ownerReceiptSha256": "3a40a0d15694eecdea62fc60600a185f885a383e076eb44a36bb1a78c31b15b2",
+  "scope": "Only19 installedArco CSS import lines removed; all remaining custom/Demo bytes/order unchanged. Existing full library base retained once in shell/application CSS. No JS/TSX/buildconfig/lock/style lease/path/DTO/backend edits.",
+  "checksAdopted": {
+    "runtime": "Node24.21.0",
+    "cssOnly": "css-check-1 EXIT0 all8 outputs/no warnings",
+    "exact5SourcePreservation": "PASS exact reviewed proposed bytes, no additional source changes",
+    "applicationBase": "608389B and SHA91678ae13e38de0c186742c4ee4c689d11f3dd13ff4a438bbfb396e0ae9e989d byte-identical to real C166",
+    "nonBasePositiveArcoInputs": 0,
+    "selectedStaticOutputReductionBytes": 1295839
+  },
+  "qualification": "F1 finite CSS-only compile, not full application or production build/pack; static uncompressed bytes, not HTTP/first-screen/gzip/timing/perf",
+  "next": "One necessary original full production build/pack validates real CSSpositivecontribution and actualoutputbytes. IndependentQF scopedsource and affectedactualconsumer cascade only. Existing165 currentbrowser unmodified, no old48/backendrepeat.",
+  "notTested": [
+    "Full production new167 build/pack",
+    "Affected single/multi/product-candidate/party/transfer finalCSS actual cascade",
+    "ActualHTTP/firstscreen/transferredbytes/timing/performance"
+  ]
+}

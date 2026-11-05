@@ -1,0 +1,43 @@
+{
+  "checkpointUtc": "2026-10-21T16:31:02Z",
+  "status": "FROZEN_WIP_HANDOFF_NOT_REGISTERED_NOT_DEPLOYED",
+  "authorizationBoundary": "Explicit trusted kind/operation/scope/references/targetId per read; no transaction-candidate or native-import authority fallback",
+  "tests": {
+    "syntheticTests": {
+      "passed": 24,
+      "failed": 0,
+      "command": "node --test tests/store-settings-read.test.ts tests/store-settings-read-postgres-protocol.test.ts apps/api/src/store-settings-read-http.test.ts apps/web/src/settings/stores/http-reader.test.ts apps/web/src/settings/stores/controller.test.ts"
+    },
+    "scopedTypecheck": {
+      "exitCode": 0,
+      "command": "./node_modules/.bin/tsc --noEmit -p apps/web/src/settings/stores/tsconfig.json --pretty false"
+    },
+    "fullTypecheck": {
+      "exitCode": 2,
+      "remainingDiagnostic": "apps/web/unified-browser-harness/harness-app.tsx(15,74): TS2353 readOnly not in PartiesRouteConfiguration; outside this module ownership"
+    },
+    "notRun": [
+      "DOM/accessibility/focus/Arco-popup checks",
+      "production esbuild bundle",
+      "real PostgreSQL engine/DDL acceptance",
+      "real session/Origin/host-policy integration",
+      "Mac frozen-Demo page-by-page visual comparison",
+      "independent security review",
+      "complete repository regression"
+    ]
+  },
+  "resolvedFailures": [
+    "Initial Node strip-only parameter-property incompatibility in new PG/controller/test classes fixed; 24 tests rerun passing",
+    "Initial new HTTP test cast TS2352 fixed; scoped typecheck passing"
+  ],
+  "activeSessions": [],
+  "remaining": [
+    "Local frontend: register stores/warehouses navigation, routes, configuration and scoped stylesheet lifecycle without replacing existing shared work",
+    "Local backend: register HTTP plugin, trusted session+Origin callback, explicit directory/FK-reference grants and bounded PostgreSQL pool",
+    "Verify exact native hall/customer/default-sales-warehouse FK semantics on real PostgreSQL; no creation-time or inventory fabrication",
+    "Run DOM and Mac visual comparison including read-only modal focus, searchable/paged hall directory, filters, pagination and responsive density",
+    "Design separately authorized version/idempotency/audit/stock-completeness/reference-guarded maintenance commands; no fake save/importer fallback"
+  ],
+  "data": "SYNTHETIC ONLY; no real production rows or credentials",
+  "freezeReason": "Parent reported user handoff to local Codex frontend/backend/controller; no further feature expansion"
+}

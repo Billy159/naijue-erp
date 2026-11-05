@@ -1,0 +1,62 @@
+apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts(75,458): error TS2322: Type 'EntityId<"hall"> | null' is not assignable to type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts(85,381): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts(150,468): error TS2345: Argument of type '{ lines: { skuId: string; quantity: string; dealPrice: string | null; pricingRule: "UNIT_PRICE" | "DISCOUNT"; discountTenths: number | null; isGift: boolean; zeroConfirmed: boolean; }[]; ... 8 more ...; note: string | null; }' is not assignable to parameter of type 'NativeSalesCreateProposal'.
+  Types of property 'hallId' are incompatible.
+    Type 'string | null' is not assignable to type 'string'.
+      Type 'null' is not assignable to type 'string'.
+apps/web/preview-core-pages/sales-fixture.ts(23,58): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/existing-document-preparation.ts(35,54): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-create.test.ts(31,51): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-create.test.ts(45,257): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-create.test.ts(105,135): error TS2322: Type 'string | null' is not assignable to type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-existing-document.ts(47,90): error TS2322: Type 'EntityId<"hall"> | null' is not assignable to type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-existing-document.ts(57,25): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/form.tsx(138,196): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/signed-sale-economic-edit.test.ts(35,176): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/signed-sale-economic-edit.test.ts(57,176): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/signed-sale-economic-edit.test.ts(88,182): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/detail-content.tsx(57,1555): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/sales-page.tsx(116,13): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+apps/web/src/sales/sales.test.ts(220,43): error TS2322: Type 'EntityId<"hall"> | null' is not assignable to type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+packages/application/src/unified-current-effective-alignment.ts(25,102): error TS2550: Property 'isWellFormed' does not exist on type 'string'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2024' or later.
+packages/application/src/unified-import-source-reconciliation.ts(22,76): error TS2550: Property 'isWellFormed' does not exist on type 'string'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2024' or later.
+packages/application/src/unified-import-source-reconciliation.ts(34,134): error TS18046: 'v' is of type 'unknown'.
+packages/application/src/unified-import-source-reconciliation.ts(34,190): error TS18046: 'v' is of type 'unknown'.
+packages/application/src/unified-import-source-reconciliation.ts(34,217): error TS18046: 'v' is of type 'unknown'.
+packages/application/src/unified-import-source-reconciliation.ts(34,258): error TS18046: 'v' is of type 'unknown'.
+packages/application/src/unified-import-source-reconciliation.ts(34,281): error TS18046: 'v' is of type 'unknown'.
+packages/application/src/unified-import-source-reconciliation.ts(34,341): error TS18046: 'v' is of type 'unknown'.
+packages/application/src/unified-import-source-reconciliation.ts(34,354): error TS18046: 'v' is of type 'unknown'.
+packages/application/src/unified-import-source-reconciliation.ts(36,19): error TS18046: 'v' is of type 'unknown'.
+packages/application/src/unified-import-source-reconciliation.ts(40,19): error TS18046: 'v' is of type 'unknown'.
+packages/application/src/unified-import-source-reconciliation.ts(51,5): error TS18048: 'ledger' is possibly 'undefined'.
+packages/application/src/unified-import-source-reconciliation.ts(51,51): error TS18048: 'ledger' is possibly 'undefined'.
+packages/application/src/unified-import-source-reconciliation.ts(53,26): error TS18048: 'ledger' is possibly 'undefined'.
+packages/application/src/unified-import-source-reconciliation.ts(55,17): error TS18048: 'ledger' is possibly 'undefined'.
+packages/application/src/unified-import-source-reconciliation.ts(76,6): error TS18048: 'links' is possibly 'undefined'.
+packages/application/src/unified-import-source-reconciliation.ts(78,83): error TS18048: 'links' is possibly 'undefined'.
+packages/application/src/unified-import-source-reconciliation.ts(81,21): error TS18048: 'links' is possibly 'undefined'.
+packages/application/src/unified-import-source-reconciliation.ts(119,52): error TS18048: 'ledger' is possibly 'undefined'.
+packages/application/src/unified-import-source-reconciliation.ts(121,196): error TS18048: 'ledger' is possibly 'undefined'.
+tests/sales-query-postgres-protocol.test.ts(464,73): error TS2322: Type '"all"' is not assignable to type '"restricted"'.

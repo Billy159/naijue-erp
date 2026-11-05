@@ -1,0 +1,34 @@
+{
+  "jobId": "t45-r1-193-materialization-successor-20261028-194",
+  "status": "TERMINAL_FAILED_CARRIER_REAPED_UNIT_METADATA_BEFORE_MATERIALIZATION_CREDENTIAL_PG_NO_REPLAY",
+  "jobReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-193-materialization-successor-20261028-194/release-submission/release-receipts/t45-r1-193-materialization-successor-20261028-194/job.json",
+    "bytes": 518,
+    "sha256": "3991ca1c347ba225c88f69c382cfa1df3dff2759bd7ffe87e1f6acfdfe63fe52"
+  },
+  "engine": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-193-materialization-successor-20261028-194/release-submission/release-receipts/t45-r1-193-materialization-successor-20261028-194/consumer-engine-result.json",
+    "bytes": 576,
+    "sha256": "e86f631972405f62009c8cc1684a00c5d6c57b196463172c1932ef3bed20b55e"
+  },
+  "unit": "naijue-erp-op-5cc58239-e265dc77cfa6",
+  "elapsedSeconds": 0.9190143628511578,
+  "finishedAtUtc": "2026-10-27T18:45:11.251278+00:00",
+  "errorCode": "ORIGINAL193_NOT_LIVE",
+  "cause": "T45 required original193 transient unit ExecMainStatus2 in addition to inactive/MainPID0 and durable terminalFAILED2. Original193 transient unit already reaped: show returns LoadStatenot-found,ActiveStateinactive,SubStatedead,MainPID0,ExecMainStatus0, so guard refused.",
+  "original193UnitReadonlyRecovery": {
+    "MainPID": "0",
+    "ExecMainStatus": "0",
+    "LoadState": "not-found",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "source": "Same original SSH channel finite systemctl show only after194failure, no status mutation"
+  },
+  "newFilesWrittenBy194": 0,
+  "credentialReadBy194": false,
+  "pgConnected": false,
+  "businessCommandsIssued": 0,
+  "previous193PartialImmutablePreserved": true,
+  "next": "C exact new outer successor: retain original193 durableFAILED2+exactengine/carrier/noATTEMPT proofs, requireMainPID0 and either retained terminalunit ExecMainStatus2 or reaped LoadStatenot-found/inactive/dead. Do not infer live process from reaped ExecMainStatus0. Then original194-authorized exact missing materialization and neverstartedhost only.",
+  "modelAndFast": "UNVERIFIED"
+}

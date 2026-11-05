@@ -1,0 +1,21 @@
+{
+  "atUtc": "2026-10-22T18:18:18.463427+00:00",
+  "parent": "74f240af0124f945d0aa7586c8a21b9b1e7bcc83",
+  "groups": [
+    {
+      "slice": "F3_STORE_TAB_QUERY_RETURN_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/DEMO-STORE-RETURN-v1-RESULT.json",
+      "receiptSha256": "fb150f1219c41476cdf812b527cee30568b8ad3d96280d1c85eaffe76b74056e",
+      "files": [
+        {
+          "path": "apps/web/src/settings/stores/stores-page.tsx",
+          "owner": "F3",
+          "sha256": "985f707a015928b024b4e3d96f287b4354d612768198f318daec698f54d3da4b",
+          "bytes": 11334
+        }
+      ]
+    }
+  ],
+  "fileCount": 1,
+  "scope": "Retain only per-scope/tab UI query state with fresh reads. Three new developer DOM checks; browser/production not accepted."
+}

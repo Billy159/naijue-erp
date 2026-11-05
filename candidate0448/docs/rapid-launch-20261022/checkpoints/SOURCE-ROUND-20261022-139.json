@@ -1,0 +1,67 @@
+{
+  "atUtc": "2026-10-23T05:30:47.073569+00:00",
+  "parent": "62730b59715e240b24d3bf19d68146a7ef3cc3d1",
+  "taskId": "F03_DIRECT_UI_AND_B06_EXISTING_SOURCE_BINDINGS",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/inventory-matrix.tsx",
+      "owner": "F2",
+      "bytes": 31232,
+      "sha256": "387633b131664900312ab1195fbb22da8c14db432da6dbf7e10deb3130ee0699"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-page.tsx",
+      "owner": "F2",
+      "bytes": 16611,
+      "sha256": "bb2b89d2f13c4247ad89600d0d915691ac5935817af7eca642427b86c75ad100"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "owner": "F2",
+      "bytes": 52310,
+      "sha256": "49900a00970bdf40ae039bd2f1a60c8dac936a499a577ffa19a79349afa6ebab"
+    },
+    {
+      "path": "apps/web/src/inventory/tests/run-display-projection-dom-tests.mjs",
+      "owner": "F2",
+      "bytes": 10073,
+      "sha256": "f71293c3fd29ce6f398cfb8403f6929b58f1cceb8cb5d09aa6d7d308ebac73ed"
+    },
+    {
+      "path": "scripts/import-v2/authorized-sales-detail-reader.mjs",
+      "owner": "D3",
+      "bytes": 12934,
+      "sha256": "1d23396edbfa68cfdf3c0ad5d7f5c3e51886499c4b67e5863369890480603ae9"
+    },
+    {
+      "path": "scripts/import-v2/authorized-sales-detail-reader.test.mjs",
+      "owner": "D3",
+      "bytes": 19590,
+      "sha256": "b0a6f328d01d0d991c2f9efaac307008b845b699e1240ebf6090ad0fb964802d"
+    },
+    {
+      "path": "scripts/import-v2/authorized-settlement-reader.mjs",
+      "owner": "D3",
+      "bytes": 3351,
+      "sha256": "4c686ce436c6cc042e431cb7cf9c3a5fce717223c7da13951bab0b95467d5ec2"
+    },
+    {
+      "path": "scripts/import-v2/authorized-settlement-reader.test.mjs",
+      "owner": "D3",
+      "bytes": 7772,
+      "sha256": "7747be244eae062f8090906b91094b51a35f6c58f529d10c280659aa26a9fcbd"
+    }
+  ],
+  "checksAdopted": {
+    "F2": "F03-DIRECT-UI-01-delivery-v1 exact4 strict/existing model13/settings/query/projection/window DOM/CSS parser passed; source-only, no real performance/browser/PG",
+    "D3": "Original authorized SalesDetail/Settlement callback integration2 newtests passed; original sealed synthetic source+mapper, full32money, no genuine bigdata/PG/IDs generated"
+  },
+  "scope": "Complete native inventory workbench/matrix/settings/SKU choice consumers plus original source reader callbacks. QF2 added only as QF01 report-only scope, QF original documents/common/matrix. Original22 tasks stay22; deployment C63 actual private success recorded separately.",
+  "notTested": [
+    "These F03 changes not in C137",
+    "Browser actual native dialog/scroll/sticky/geometry/performance",
+    "Inventory fullfilter export/print and ledger missing fields not wired",
+    "Actual sales detail/settlement source consumption and SQL import"
+  ],
+  "next": "OriginalQB only newD3 callbackdelta; QF2 source F03 then one necessary fixed preview alongside ready F1 fixes. C original actualQA V2 fixture prerequisites next."
+}

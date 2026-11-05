@@ -1,0 +1,12 @@
+{
+  "number": 2,
+  "commit": "318440a1c5a396329a4bc8256d34008b4774faab",
+  "source": "frozen-commit:318440a1c5a396329a4bc8256d34008b4774faab",
+  "database": "naijue_erp_test_0eae9933770258d4",
+  "host": "127.0.0.1",
+  "port": 55432,
+  "code": 0,
+  "signal": null,
+  "logfile": "evidence/postgres-real-acceptance-318440a/acceptance.tap",
+  "sanitization": "Only local filesystem source/log locations replaced; all original run/result fields preserved."
+}

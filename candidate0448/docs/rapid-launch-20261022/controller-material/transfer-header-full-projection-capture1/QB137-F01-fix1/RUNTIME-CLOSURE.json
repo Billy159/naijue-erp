@@ -1,0 +1,828 @@
+{
+  "version": "TRANSFER_HEADER_FULL_PROJECTION_RUNTIME_V1",
+  "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+  "runtimeRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/runtime-source",
+  "nodeVersion": "24.21.0",
+  "capture": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/capture-once.mjs",
+    "bytes": 29323,
+    "sha256": "36c89d89a1f3b98b4cee2ad4bd798ed35b480eb00c0a54caf3ba3edaae412d54"
+  },
+  "entrypoints": [
+    "scripts/import-v3/native-transfer-header-source26.mjs",
+    "scripts/import-v3/native-transfer-line-source26.mjs",
+    "packages/application/src/history-typed-closure.ts"
+  ],
+  "sourceBytes": 342564,
+  "files": [
+    {
+      "path": "packages/application/src/catalogue-price-input.ts",
+      "bytes": 1945,
+      "sha256": "d1a713379e03532dda0d2812945ad1be1324cfb02520e50de2f3dd56e43199d7",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/values.ts",
+          "target": "packages/domain/src/values.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/catalogue-source-proof.ts",
+      "bytes": 3286,
+      "sha256": "b1481007ce402158186023a6cb670d6214d62e51588f8466b56421566c3baaa7",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/values.ts",
+          "target": "packages/domain/src/values.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./catalogue-price-input.ts",
+          "target": "packages/application/src/catalogue-price-input.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/history-import-lifecycle.ts",
+      "bytes": 2871,
+      "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/history-storage-contract.ts",
+      "bytes": 6913,
+      "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450",
+      "imports": []
+    },
+    {
+      "path": "packages/application/src/history-temporal-mapping.ts",
+      "bytes": 5699,
+      "sha256": "274a09cc4567d1aec860ae0d8679480b71a5003188b261ab9f26c8474663bb1c",
+      "imports": []
+    },
+    {
+      "path": "packages/application/src/history-typed-closure.ts",
+      "bytes": 36837,
+      "sha256": "0a995599ed1a78b9f319b41365362a655a243e7b043e58a2104281cea06b2446",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "node:crypto",
+          "target": "node:crypto"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/history-typed-publication.ts",
+      "bytes": 4011,
+      "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-typed-closure.ts",
+          "target": "packages/application/src/history-typed-closure.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/import-v2-contract.ts",
+      "bytes": 20742,
+      "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba",
+      "imports": []
+    },
+    {
+      "path": "packages/application/src/import-v2.ts",
+      "bytes": 10869,
+      "sha256": "de808fcf2d8a2b4ffa919d0d680474b594bb824b72516cae943605f910070294",
+      "imports": []
+    },
+    {
+      "path": "packages/application/src/import-v3-history-header-staging.ts",
+      "bytes": 5574,
+      "sha256": "f6a2e2ff3d4f38b60aa87c4ae508705a7afbf21b164e588f60152c25e09ad22c",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "./import-v3-history-header.ts",
+          "target": "packages/application/src/import-v3-history-header.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/import-v3-history-header.ts",
+      "bytes": 10991,
+      "sha256": "fcd09fb84c1f7dbfbb7889692933f37dbd99f3de64ea9d9258b85551f1884830",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "./import-v2-contract.ts",
+          "target": "packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-temporal-mapping.ts",
+          "target": "packages/application/src/history-temporal-mapping.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./import-v2.ts",
+          "target": "packages/application/src/import-v2.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./inventory-cutoff-import.ts",
+          "target": "packages/application/src/inventory-cutoff-import.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/import-v3-history-settlement.ts",
+      "bytes": 12610,
+      "sha256": "113c8ffb4fce7e7b045039eb0c41cdc7a07a9a506630412b0054de44a7979bbc",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/values.ts",
+          "target": "packages/domain/src/values.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./import-v2-contract.ts",
+          "target": "packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./import-v2.ts",
+          "target": "packages/application/src/import-v2.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./inventory-cutoff-import.ts",
+          "target": "packages/application/src/inventory-cutoff-import.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./native-payment-import.ts",
+          "target": "packages/application/src/native-payment-import.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/import-v3-history-staging.ts",
+      "bytes": 8722,
+      "sha256": "8e5fe853f52c012b8b754cbe8a8c5212162c47808a88262338f9c0fe1144c104",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "./import-v2-contract.ts",
+          "target": "packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./inventory-cutoff-import.ts",
+          "target": "packages/application/src/inventory-cutoff-import.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/inventory-cutoff-import.ts",
+      "bytes": 10553,
+      "sha256": "70e728e8c1b348f0e687c5e8aa5533a0064e897c1858d2606b4064262770fa2d",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/values.ts",
+          "target": "packages/domain/src/values.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-import-lifecycle.ts",
+          "target": "packages/application/src/history-import-lifecycle.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./native-import-record-accounting.ts",
+          "target": "packages/application/src/native-import-record-accounting.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/native-import-record-accounting.ts",
+      "bytes": 19637,
+      "sha256": "cfc4f36c6afb84ab1a4ed3664710539e3d5c1080b1461917720fa5aa2af8937f",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/values.ts",
+          "target": "packages/domain/src/values.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./inventory-cutoff-import.ts",
+          "target": "packages/application/src/inventory-cutoff-import.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./native-import-schema-contract.ts",
+          "target": "packages/application/src/native-import-schema-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-typed-publication.ts",
+          "target": "packages/application/src/history-typed-publication.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/native-import-schema-contract.ts",
+      "bytes": 14367,
+      "sha256": "8f1b52e96c6b3855dd19fac1dd07e7db02bc9c034b421b2c0862efa7ac75d692",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/native-payment-import.ts",
+      "bytes": 11101,
+      "sha256": "2d2d1d109211f3c4ec2df6c8fdbae246e5453c1735814d3b1dbba26fdf71702c",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/values.ts",
+          "target": "packages/domain/src/values.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./import-v2-contract.ts",
+          "target": "packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/native-product-import.ts",
+      "bytes": 24773,
+      "sha256": "e93bfc9f0fd7445a3ba4c36f1ee2930b38d693ad318b1d8c86941c676fd9a7e0",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/values.ts",
+          "target": "packages/domain/src/values.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./catalogue-source-proof.ts",
+          "target": "packages/application/src/catalogue-source-proof.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./import-v2-contract.ts",
+          "target": "packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./product-evidence-staging.ts",
+          "target": "packages/application/src/product-evidence-staging.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./import-v3-history-settlement.ts",
+          "target": "packages/application/src/import-v3-history-settlement.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/product-evidence-staging.ts",
+      "bytes": 8249,
+      "sha256": "753efac4a2e1d142bba66683233725db13912037510d9dc60eec8542a1872177",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/values.ts",
+          "target": "packages/domain/src/values.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./import-v2-contract.ts",
+          "target": "packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./history-storage-contract.ts",
+          "target": "packages/application/src/history-storage-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./catalogue-source-proof.ts",
+          "target": "packages/application/src/catalogue-source-proof.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/application/src/request-hash.ts",
+      "bytes": 1488,
+      "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "node:crypto",
+          "target": "node:crypto"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../domain/src/errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        }
+      ]
+    },
+    {
+      "path": "packages/domain/src/errors.ts",
+      "bytes": 353,
+      "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9",
+      "imports": []
+    },
+    {
+      "path": "packages/domain/src/values.ts",
+      "bytes": 4820,
+      "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "./errors.ts",
+          "target": "packages/domain/src/errors.ts"
+        }
+      ]
+    },
+    {
+      "path": "scripts/import-v2/run.mjs",
+      "bytes": 41512,
+      "sha256": "76a1094a56fedeb06b8c0f418393604f9e36acde8af1bb3219c9ad59813d487b",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "node:fs",
+          "target": "node:fs"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:fs/promises",
+          "target": "node:fs/promises"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:path",
+          "target": "node:path"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:crypto",
+          "target": "node:crypto"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v2-contract.ts",
+          "target": "packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v2.ts",
+          "target": "packages/application/src/import-v2.ts"
+        }
+      ]
+    },
+    {
+      "path": "scripts/import-v3/native-transfer-header-source26.mjs",
+      "bytes": 25454,
+      "sha256": "9c4026f871a49d17385b06597e8832734c9af7b54642719c2ec909850283c2cd",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "node:fs",
+          "target": "node:fs"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:fs/promises",
+          "target": "node:fs/promises"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:path",
+          "target": "node:path"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:url",
+          "target": "node:url"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:crypto",
+          "target": "node:crypto"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:zlib",
+          "target": "node:zlib"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:stream",
+          "target": "node:stream"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:stream/promises",
+          "target": "node:stream/promises"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v3-history-header.ts",
+          "target": "packages/application/src/import-v3-history-header.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v3-history-header-staging.ts",
+          "target": "packages/application/src/import-v3-history-header-staging.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/history-typed-closure.ts",
+          "target": "packages/application/src/history-typed-closure.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v3-history-settlement.ts",
+          "target": "packages/application/src/import-v3-history-settlement.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        }
+      ]
+    },
+    {
+      "path": "scripts/import-v3/native-transfer-line-source26.mjs",
+      "bytes": 32974,
+      "sha256": "a8ac7e2a5f847d386a825d1ad0769e3d0db47a5ba0cebaaf3d46d1eb6aebbcbe",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "node:crypto",
+          "target": "node:crypto"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:fs",
+          "target": "node:fs"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:fs/promises",
+          "target": "node:fs/promises"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:path",
+          "target": "node:path"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v2.ts",
+          "target": "packages/application/src/import-v2.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v2-contract.ts",
+          "target": "packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/inventory-cutoff-import.ts",
+          "target": "packages/application/src/inventory-cutoff-import.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v3-history-staging.ts",
+          "target": "packages/application/src/import-v3-history-staging.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v3-history-settlement.ts",
+          "target": "packages/application/src/import-v3-history-settlement.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/history-typed-closure.ts",
+          "target": "packages/application/src/history-typed-closure.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "./prepare-native-bindings.mjs",
+          "target": "scripts/import-v3/prepare-native-bindings.mjs"
+        }
+      ]
+    },
+    {
+      "path": "scripts/import-v3/prepare-native-bindings.mjs",
+      "bytes": 16213,
+      "sha256": "0bd42f0cd8c196f5260c488f204b59e92a0fed3abe249a9bf62862c0556ae15b",
+      "imports": [
+        {
+          "kind": "import",
+          "specifier": "node:crypto",
+          "target": "node:crypto"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:fs/promises",
+          "target": "node:fs/promises"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:path",
+          "target": "node:path"
+        },
+        {
+          "kind": "import",
+          "specifier": "node:url",
+          "target": "node:url"
+        },
+        {
+          "kind": "import",
+          "specifier": "../import-v2/run.mjs",
+          "target": "scripts/import-v2/run.mjs"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v2.ts",
+          "target": "packages/application/src/import-v2.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/import-v2-contract.ts",
+          "target": "packages/application/src/import-v2-contract.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/inventory-cutoff-import.ts",
+          "target": "packages/application/src/inventory-cutoff-import.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/request-hash.ts",
+          "target": "packages/application/src/request-hash.ts"
+        },
+        {
+          "kind": "import",
+          "specifier": "../../packages/application/src/native-product-import.ts",
+          "target": "packages/application/src/native-product-import.ts"
+        }
+      ]
+    }
+  ],
+  "packageScopes": [
+    {
+      "path": "package.json",
+      "exists": true,
+      "bytes": 6035,
+      "sha256": "19659037138fab259007dc61e1be547a265d5e9b17c002e930443cfa1f35e6b0"
+    },
+    {
+      "path": "packages/application/package.json",
+      "exists": false
+    },
+    {
+      "path": "packages/application/src/package.json",
+      "exists": false
+    },
+    {
+      "path": "packages/domain/package.json",
+      "exists": false
+    },
+    {
+      "path": "packages/domain/src/package.json",
+      "exists": false
+    },
+    {
+      "path": "packages/package.json",
+      "exists": false
+    },
+    {
+      "path": "scripts/import-v2/package.json",
+      "exists": false
+    },
+    {
+      "path": "scripts/import-v3/package.json",
+      "exists": false
+    },
+    {
+      "path": "scripts/package.json",
+      "exists": false
+    }
+  ],
+  "builtins": [
+    "node:crypto",
+    "node:fs",
+    "node:fs/promises",
+    "node:path",
+    "node:stream",
+    "node:stream/promises",
+    "node:url",
+    "node:zlib"
+  ],
+  "scanPolicy": "AST_LITERAL_RUNTIME_CLOSURE_NO_UNRESOLVED_EDGES_V1",
+  "buildEvidence": {
+    "generator": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/build-closure.mjs",
+      "bytes": 2267,
+      "sha256": "ff1dcd523ff64ed22734247558ae0d8570b7668efbd115b694504c159315dc30"
+    },
+    "parser": "TypeScript AST offline only; no application imports",
+    "parserVersion": "5.9.2",
+    "computedImports": 0,
+    "bareImports": 0,
+    "nonLoaderRequireBindings": [
+      {
+        "path": "packages/application/src/import-v3-history-header-staging.ts",
+        "kind": "EXACT_CONST_LOCAL_THROW_ASSERTION_NOT_MODULE_LOADER",
+        "declarationSha256": "52a5bdfd5ca2179094e98209f12954ea648945e8c7218342ba995b2cbc3c5737"
+      }
+    ],
+    "priorLineClosure": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/QB132-F01-fix1/RUNTIME-CLOSURE.json",
+      "bytes": 22201,
+      "sha256": "a40dc0e16d606921ff68b3656f8edfdeae18576d922f508ddb6228da85952427"
+    },
+    "unchangedPriorLineModules": 22,
+    "headerExportResult": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-projection-export1/RESULT.json",
+      "bytes": 2697,
+      "sha256": "7c4b3008b85383603e988588e8d69cfcbc13f82dc277ecc79c34e11ac47233af"
+    },
+    "reusedAstManifest": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/RUNTIME-CLOSURE.json",
+      "bytes": 26811,
+      "sha256": "42402a1c7e176095d447a6cc788fd53e8cb46b981073cca6cfbae555a5478634"
+    },
+    "unchangedExportedModules": 26,
+    "scope": "Only K cleanup carrier changed. All application source/runtime bytes and AST graph reused; no application imports or business reads."
+  }
+}

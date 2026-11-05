@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-10-20T21:23:27.183Z",
+  "baseCommit": "b0de250fdf786cc48716585b7c0d55baae49819e",
+  "sourceState": "Reviewed working-tree checkpoint; root owns coherent source commit. Exact current source is recorded in source.sha256, not represented as the base commit.",
+  "sourceManifestSha256": "67f88a7bbc023fd0ed3e1b39ead7a3c085b6fb30d7ef74c8657f80f048ce3d7b",
+  "sourceFileCount": 198,
+  "checks": [
+    {
+      "name": "application-typecheck",
+      "status": "PASS",
+      "log": "typecheck.txt",
+      "groups": 0,
+      "exitCode": 0
+    },
+    {
+      "name": "composed-sales-dom",
+      "status": "PASS",
+      "log": "sales-app-dom.txt",
+      "groups": 6,
+      "exitCode": 0
+    },
+    {
+      "name": "emitted-split-code-and-css-graphs",
+      "status": "PASS",
+      "log": "split-build.txt",
+      "groups": null,
+      "exitCode": 0
+    },
+    {
+      "name": "existing-application-dom",
+      "status": "PASS",
+      "log": "app-dom.txt",
+      "groups": 8,
+      "exitCode": 0
+    },
+    {
+      "name": "existing-transfer-composition-dom",
+      "status": "PASS",
+      "log": "transfer-app-dom.txt",
+      "groups": 6,
+      "exitCode": 0
+    },
+    {
+      "name": "existing-product-style-handshake-dom",
+      "status": "PASS",
+      "log": "product-style-dom.txt",
+      "groups": 4,
+      "exitCode": 0
+    },
+    {
+      "name": "portable-preview-source-typecheck",
+      "status": "PASS",
+      "log": "preview-typecheck.txt",
+      "groups": 0,
+      "exitCode": 0
+    }
+  ],
+  "stylesheetBytes": {
+    "sales": 15804,
+    "sales-detail": 7034
+  },
+  "historicalDiagnostic": "sales-app-dom-historical-selector-failure.txt is the first harness-only stale label failure, not a pass. It was fixed before the final successful run.",
+  "boundary": "Synthetic actual-component/native-mocked-HTTP DOM checks and static emitted graph analysis only. No browser, listener, network, database, credential, deployment, production lazy-network/performance or frozen-Demo pixel acceptance.",
+  "notRun": [
+    "Portable preview actual build/smoke: intentionally awaits root coherent committed source, required by existing source-freeze gate."
+  ],
+  "sourceManifest": "source.sha256",
+  "dependencies": "dependencies.sha256"
+}

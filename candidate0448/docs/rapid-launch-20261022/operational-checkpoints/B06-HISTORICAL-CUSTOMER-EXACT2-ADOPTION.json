@@ -1,0 +1,18 @@
+{
+  "atUtc": "2026-10-22T08:29:49.860274+00:00",
+  "status": "ACCEPT_QB50_EXACT2_SOURCE_NATIVE_MAPPING_ONLY",
+  "privatePinReference": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-historical-customer-exact2-review-v1.json",
+  "privatePinSha256": "e471ccdef09f385688d8f5709e072a033d471f0c6fdba8b7bb1b49ad55a9408a",
+  "candidateSha256": "7710b449e914eac02adfb7436c3749986ae3dd0d4a30a81140b98b57d8ea87e7",
+  "review": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice50-historical-customer-exact2/RESULT.json",
+    "sha256": "a97f71f8f33a7ce924dde572dee0d8ee6791719994128db7c8911d4db829207e",
+    "result": "PASS"
+  },
+  "notGranted": [
+    "actual predicate/filter/read/write runtime behavior",
+    "actual header native binding",
+    "schema26/COMMIT/PG/import/publication",
+    "full MAIN execution grant"
+  ]
+}

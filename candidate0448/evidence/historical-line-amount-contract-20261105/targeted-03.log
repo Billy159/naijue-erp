@@ -1,0 +1,19 @@
+✔ six synthetic original discrepancies are retained and read back exactly in ordinary and streaming intake (166.960891ms)
+✔ a source flag or valid-looking copied evidence never grants the discrepancy exception (233.526012ms)
+✔ new runtime documents cannot borrow reviewed historical differences (130.003029ms)
+✔ changed original amount, price, quantity or exact source occurrence fails closed (574.540981ms)
+✔ foreign namespace, source inventory, parent identity and missing header provenance cannot reuse evidence (295.318895ms)
+✔ known header and receipt contradictions remain blocking despite line evidence (177.672246ms)
+✔ every reviewed discrepancy must remain present and exact, not a partial allow-list (90.969112ms)
+✔ evidence rejects wrong digest, duplicate identities/occurrences, malformed money and unknown fields (5.896751ms)
+✔ immutable capability does not accept a JSON clone or leak mutable source aliases (3.144734ms)
+✔ existing sealed database codec retains all six price/quantity/amount facts without recomputation (synthetic protocol only) (7.619814ms)
+✔ offline source reception cannot create an executable import plan, even with a scrubbed summary (164.540951ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2153.397681

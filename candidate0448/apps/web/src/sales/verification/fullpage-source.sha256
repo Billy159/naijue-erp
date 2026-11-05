@@ -1,0 +1,13 @@
+9f012eb3d756c696f84e369516958496a31ac842520cfc28492873f43d3089ae  apps/web/src/sales/README.md
+6714ab2bb2111e9bb92d5e844f99df58e37bfac0ed3b88df93a4e7b8bc1da404  apps/web/src/sales/detail-content.tsx
+de8872785233b150a486514391b3fdd4179659e71845e484df6183807911947d  apps/web/src/sales/detail-host.tsx
+aeea0ee5a501f619f5b387415eb10df606610a82d9c156978540948e0fd741a7  apps/web/src/sales/detail-header.tsx
+a3c048e3201eaf0ddc7f5527ec537532a15792134fa17f0ad458329568b83353  apps/web/src/sales/detail.css
+fb3cb77f4f5f70252c175cd89ceb9631860028ee7e07cabbea9d3383f81595de  apps/web/src/sales/sales-page.tsx
+42565161a93872801d11b6b32d5c75275154f2c2ad1675ba3d57e9acd88c0b65  apps/web/src/sales/sales-route.tsx
+762e493d3b5c76138b6a2ebc628dea81f448ca8439e023fb6d4baeefd92004b5  apps/web/src/sales/sales.css
+50c3b12f7fa316c966c9f2bfc58efe1f0767d25bed68f77ac20085eae49385b5  apps/web/src/sales/reference-selector.tsx
+a269d9862f58483370cb297243612afcc9a448694f28bf7dcdeeb10ecb009b8e  apps/web/src/sales/tests/run-build-check.mjs
+ee5154358b726584abc84dd315eef30b4546b88cbe8319852114ca1078bebced  apps/web/src/sales/tests/run-dom-tests.mjs
+0e67e7e96545d1f7c1363d4d21eea241929abc52a5f7c6c7d469e2fc9249c2b1  apps/web/src/sales/tests/run-frozen-source-check.mjs
+cd57139d56e949852a014b05532400673b37e9a147967dcedae3f673d2178dd6  package.json

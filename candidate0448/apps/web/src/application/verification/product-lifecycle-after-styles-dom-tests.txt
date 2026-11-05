@@ -1,0 +1,8 @@
+PASS StrictMode: real lazy code/CSS gate; pending close/style retry; discarded host/tab/query instances are dead and the replacement reads valid correlated facts.
+PASS StrictMode: tab replacement aborts; images remain thumbnail-only until explicit preview; original-read replay/retry/close and Escape focus restoration work without stale preview.
+PASS StrictMode: close aborts and closes the native dialog; ignored late completion cannot reopen it; same-product remount starts fresh facts and scope.
+PASS StrictMode: in-place product prop replacement clears old facts before loading, disposes the old scope, aborts pending reads and preserves exact pid correlations.
+PASS StrictMode: parent-reference/identity replacement does not mix old facts; local error/retry/cancel remains live; revocation aborts immediately and a new identity can read afresh.
+PASS StrictMode: product replacement and identity revocation also abort explicitly opened original-image reads and remove previews despite late completions.
+PASS StrictMode: already-inactive parent and final unmount retain no product facts or live descendant scopes.
+All shared product-drawer lifecycle regressions passed in real React StrictMode + jsdom; this is not real-browser visual/network acceptance.

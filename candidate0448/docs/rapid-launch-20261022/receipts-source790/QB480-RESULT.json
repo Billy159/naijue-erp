@@ -1,0 +1,47 @@
+{
+  "reviewId": "QB480",
+  "decision": "PASS_PREFIX_STOCK_STAGE_IMAGE_SOURCE_DELTA_ONLY",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+      "bytes": 139504,
+      "sha256": "8e0a95058b794ddbc5975e244fbf7b1d76702dc7a5dfe7eeda679c1234db86f2"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+      "bytes": 184647,
+      "sha256": "fb948d51bfa131dc1de6d9ebb56b35cb84a5e68638d420bcba189eb594ada6b6"
+    }
+  ],
+  "baseline": "Priorprovider138840/4928eb82 andtest182087/53abcbec acceptedQB472/477. Provider inverse comparedexactfixedSOURCE776 bytes (samepriorSOURCE777leaf).",
+  "Standards": {
+    "blockingFindings": []
+  },
+  "Spec": {
+    "blockingFindings": []
+  },
+  "verified": {
+    "actualStageContract": "Originalnative-stock:contributor-create INSERTninecolumns uses literalNULL baseline_ledger_id, corresponding STAGE replay/nullproof retained.",
+    "publicationContract": "OriginalnativeStockPublicationContributor26 ninestaticfields includesstableImportId futureMAINledger. Originalclosure/publication must continue unchanged.",
+    "newAdapter": "stagedPrefixStockRow22 requires exactimport_stock_contributor relation, original26 fullprojection codec, capture(original)==capture(canonicalRow) requires exactrelation/key/rowshape with noextras. Reprojects whole ninefields after setting baseline_ledger_id:null only. Other8identity/source/unit/signedquantityfields retained, not omitted/normalizedfromDB.",
+    "route": "OnlyV22 stagedPrefixBinding26 capture STOCK_CONTRIBUTORS typedRows invokes transform. NonSTOCK row unchanged, sourceRows unchanged. Originalnormal openSources/closure/publication/148EXPECTED/109body/key/hash untouched.",
+    "inverseDiff": "Removeexacthelper+comment andrestoreoneconditionalyield ->previousproductionproviderbyteforbyte. Nootherproductionlogic changed.",
+    "checks": "OriginalD3 2necessarytestsPASS/0fail adopted, no rerun oldsuite: realretainedstockprepared syntheticfixture matches completeSTAGEimage, negativequantity/unit/source unchanged, nonprefixclosure exactoriginalpublicationstableledger, wrongrelation/missingfield/key/extrashape rejects, all5groups routefixture noDB."
+  },
+  "combinedIncrement": {
+    "qaObserver": "QB479 twoexactcontrol34178/1ae1e5a0 andtest19061/bebd70b2 alreadyPASS, reusewithoutnewreview",
+    "sourcePackage": "C/T45 successor must update CONSUMER_PROVIDER currentpin to139504/8e0a9505 and test/sourcepackage INPUT/hostprovider/externalgrant/moduleconsumerreview derivedpins as affected. Preserve all other121modulerefs and originalbaseline247c/newadapterbaseline:null. Old182 package/review/INPUT pins cannot silentlyrepresent newprovider."
+  },
+  "evidenceBoundary": "StaticSTAGE/publicationimage mismatch corrected. Actual187firstfailuregroup/relation remainsUNKNOWN untilobserveractualmetadata. Thisdoesnot prove actualPGcontentfix/fullprefixPASS/realBIND/109/PUBLISH.",
+  "handoff": "Use exactsamefixednewsource+QB479observer in C authorizedsingleboundedreadonlydiagnosticcarrier; no184/187replay, no148regeneration/sourcebodychanges/guardrelaxation",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "qbNo": [
+    "DB/server/SSH",
+    "businessdatareads",
+    "sourceedits",
+    "wholeprefixrun",
+    "fullsuite",
+    "newchat/subagent"
+  ]
+}

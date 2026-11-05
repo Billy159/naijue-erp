@@ -1,0 +1,150 @@
+{
+  "version": "C_SALES_PREPARE_EXISTING_TECHNICAL_FREEZE_V1",
+  "atUtc": "2026-10-22T18:35:02.646963+00:00",
+  "decision": "FREEZE_EXISTING_FIELD_READ_PREPARATION_DTO_NO_SAVE_CONTRACT_CHANGE",
+  "proposalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/SALES-PREPARE-EXISTING-PROPOSAL-v1.json",
+  "proposalSha256": "5d1d435b47a93a283e51ec20e4328f15cf6dfb4e42142c747fe357798d1e4de0",
+  "request": {
+    "method": "POST",
+    "path": "/sales/prepare-existing",
+    "authentication": "Same trusted sales authentication/current origin policy as /sales/prepare-create; actor never supplied by request",
+    "topLevelExactKeys": [
+      "salesId",
+      "expectedVersion",
+      "businessType",
+      "businessDate",
+      "note",
+      "hallId",
+      "customerId",
+      "salespersonId",
+      "warehouseId",
+      "orderDiscount",
+      "lines",
+      "settlements"
+    ],
+    "types": {
+      "salesId": "canonical existing UUID",
+      "expectedVersion": "positive safe integer bounded by existing DB int version",
+      "businessType": "SALE|RETURN|EXCHANGE, same explicit input semantics as existing SAVE",
+      "businessDate": "existing YYYY-MM-DD validator",
+      "note": "string|null; <=10000 UTF16 code units",
+      "hallId": "canonical UUID",
+      "customerId": "canonical UUID",
+      "salespersonId": "canonical UUID|null; existing frontend requirement unchanged",
+      "warehouseId": "canonical UUID",
+      "orderDiscount": "exact nonnegative yuan text"
+    },
+    "lineExactKeys": [
+      "existingLineId",
+      "skuId",
+      "quantity",
+      "dealPrice",
+      "pricingRule",
+      "discountTenths",
+      "isGift",
+      "zeroConfirmed"
+    ],
+    "lineTypes": {
+      "existingLineId": "canonical owned current salesLine UUID|null; never an arbitrary proposed new native UUID",
+      "skuId": "actual selected canonical SKU UUID",
+      "quantity": "exact signed nonzero integer text; SALE positive only",
+      "dealPrice": "exact nonnegative yuan text|null, existing pricing rule admits value",
+      "pricingRule": "UNIT_PRICE|DISCOUNT",
+      "discountTenths": "integer0..100|null, existing explicit exclusive rule",
+      "isGift": "boolean",
+      "zeroConfirmed": "boolean; not inferred from historical zero"
+    },
+    "settlementExactKeys": [
+      "existingSettlementId",
+      "paymentAccountId",
+      "paymentMethodId",
+      "direction",
+      "amount"
+    ],
+    "settlementTypes": {
+      "existingSettlementId": "canonical owned settlement UUID|null",
+      "paymentAccountId": "canonical UUID",
+      "paymentMethodId": "canonical UUID, actual enabled method of selected account",
+      "direction": "RECEIVE|REFUND",
+      "amount": "exact nonnegative yuan text"
+    },
+    "budgets": {
+      "requestBytes": 131072,
+      "linesMin": 1,
+      "linesMax": 200,
+      "settlementsMax": 3,
+      "preparedDraftMustFitOriginalSaveEnvelope": true
+    },
+    "forbiddenInput": [
+      "actor/role/grant",
+      "header number or new sales/document id",
+      "labels/snapshot/barcode/reference/minimum price authority",
+      "calculated line/header amounts",
+      "new native line/settlement ids",
+      "stockBasis/created/approved/source metadata"
+    ]
+  },
+  "response": {
+    "exactKeys": [
+      "expectedVersion",
+      "draft"
+    ],
+    "expectedVersion": "same actual locked loaded header version; never incremented here",
+    "draft": "existing SalesDraft wire format; bigint quantities/minor amounts are exact decimal strings via existing exactJson",
+    "ids": "existing salesId/number preserved; server native ids only for NEW or explicitly replaced rows; no new salesId/number reservation",
+    "notAWriteToken": "SAVE keeps its independent original requestKey and expectedVersion and rechecks actor/references/prices/CAS; prepare may be repeated and does not reserve business state"
+  },
+  "identityRules": {
+    "existingPointers": "Each nonnull pointer unique and belongs to this loaded document; sales lines must be currently active. Foreign/noncurrent/duplicate pointer rejected, no adoption/reactivation. Whole explicit proposal order retained; lineNo assigned1..N in that order, never grouped/sorted by SKU or UUID.",
+    "sameSku": "Keep exact existing line id, actual historical snapshot and stored referencePrice when existingLineId selects the same SKU. Recalculate quantity/deal/discount totals from explicit intent using its stored reference in discount mode; current minimum/reference availability and authorization still rechecked by current rules.",
+    "newOrChangedSku": "existingLineId=null creates a new line. If nonnull pointer selects a different SKU, allocate a new native line id and fetch current real MAIN snapshot/barcode/reference price; old id is omitted from incoming current lines, so existing SAVE mergeRetainedLines keeps it isCurrent=false with its old snapshot. This mapping is explicit in this preparation contract, never silent old-id snapshot overwrite.",
+    "actualExistingWriteFacts": "Current SAVE actually permits same-id sku/snapshot replacement; source does not impose a universal sameSKU identity invariant. The proposed preparation deliberately uses the already available omit+new-id path to retain the old row without changing SAVE or DDL. This is an explicit preparation choice for C freeze, not a claim of a pre-existing mandatory constraint.",
+    "settlements": "Same account+nonnull existingSettlementId retains id and actual stored method, which must equal explicit selected method; unknown stored method is not inferred. Changed account or existingSettlementId=null allocates a new native id and verifies selected actual account+method. Omitted old settlement follows existing SAVE removal behavior and old audit; no new physical-deletion rule.",
+    "inputPreservation": "Failure yields no partial draft; F1 must retain original local form and show conflict/reference error, no auto-reset, first-SKU selection or automatic submit."
+  },
+  "authorizationAndReadSequence": [
+    "Clone+closed parse and budgets before async; server-bound actor only.",
+    "Use one existing original sales UOW client; private server preparation nonce binds actor via existing getReceipt without writing receipt, never SAVE key. Load target once; authorize current actor against the stored document before disclosing version/state; require existing RUNTIME_LEDGER and DRAFT and exact expectedVersion. CUTOFF_HISTORY remains HISTORY-only.",
+    "Build proposed skeleton with original salesId and number, check both original-document SAVE access and proposed hall/warehouse/customer/staff/account scope with current native identity and existing reference policy. No made-up staff-hall or staff-role restriction.",
+    "Check pointer ownership/unique/current status. Obtain actual retained rows from loaded transaction, fresh native snapshots/facts only for new/replaced identities, no client snapshot authority.",
+    "Use existing gift/zero/minimum/pricing/sign/rounding/largest-remainder economics; RETURN/EXCHANGE remains independent signed rows and zero whole discount, settlement equality remains APPROVE-only.",
+    "Return bounded expectedVersion+draft; do not call putRuntimeSales/appendLedger/putBalance/appendAudit/insertReceipt/reserveRuntimeDocumentNumber/assertRuntimeDocumentNumber. SAVE still its existing complete write transaction."
+  ],
+  "readOnlyMeaning": {
+    "businessEffects": "Zero DML, zero receipt/audit/stock/document/number reservation. Restrict preparation-facing write methods to throw, and protocol trace must reject unexpected DML.",
+    "databaseTransaction": "Existing sales UOW uses READ COMMITTED with advisory/row locks and reference FOR SHARE. This minimal reuse cannot be labeled PostgreSQL READ ONLY, which rejects those row locks. No attempt to rewrite SQL or strip locks. If C requires a physical READ ONLY repeatable snapshot, a separately reviewed read adapter is necessary; this proposal claims only zero business writes.",
+    "race": "Read locks protect preparation snapshot until callback completes; later SAVE remains a fresh transaction and actual CAS/ref check. No cross-request grant cache."
+  },
+  "errors": {
+    "sameStatusesReuse": true,
+    "specific": [
+      "UNAUTHENTICATED401",
+      "FORBIDDEN403",
+      "DOCUMENT_NOT_FOUND404",
+      "VERSION_CONFLICT409",
+      "INVALID_STATE409",
+      "HISTORICAL_POSTING_NOT_IMPLEMENTED409",
+      "IMMUTABLE_SETTLEMENT_METHOD409",
+      "SKU_UNAVAILABLE409",
+      "SALES_REFERENCE_UNAVAILABLE409",
+      "SALES_SNAPSHOT_MISMATCH409",
+      "existing pricing/quantity budget errors"
+    ],
+    "pointerErrors": "Map foreign/noncurrent/duplicate proposal pointers to closed400 INVALID_HTTP_INPUT in this proposal; no SQL/private-provider error text"
+  },
+  "minimalNewChecks": [
+    "Unchanged existing line uses original id/snapshot/reference despite changed current labels/reference; explicit edited price uses existing economics; no DML.",
+    "New and SKU-replaced rows use distinct server ids+actual snapshot; omitted old id stays unchanged before SAVE; same proposal row order preserved.",
+    "Foreign/noncurrent/duplicate pointers rejected; no fallback adoption.",
+    "Version/state/history/disabled actor, original or proposed hall/ref/current method mismatch reject and no DML/partial response.",
+    "Same-account stored unknown method not filled; changed account verifies current method and new id.",
+    "Signed RETURN/EXCHANGE, gift/zero/minimum/rounding and exact response/save budgets reuse existing economics with only new preparation path checks.",
+    "HTTP provider absent route404; exact closed wire/auth/origin/query/contenttype/body limits; no route enabled just by code presence."
+  ],
+  "limits": [
+    "No new persisted fields/tables/constraints or SAVE write contract changes; reuse authorized existing omit+new-row path to retain old snapshot.",
+    "Zero business DML and no new document/number; READ COMMITTED locks are allowed, not PostgreSQL READ ONLY.",
+    "Absent provider stays unavailable; no runtime/actor/source grant from this DTO. Source checks precede actual host/client activation.",
+    "Additional actual write-contract or business difference must be reported before implementation."
+  ]
+}

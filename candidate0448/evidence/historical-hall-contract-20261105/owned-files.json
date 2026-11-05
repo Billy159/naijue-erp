@@ -1,0 +1,303 @@
+[
+  {
+    "path": "packages/domain/src/documents.ts",
+    "sha256": "9657631c34a52bc34eb9fc7c978ad5c8d9791eb755a4f08ab839df2412c1c739",
+    "bytes": 4098,
+    "baseline_sha256": "9b0163bba66bf4c4e192c4a397c7c002b805b51c81acfa4460faaa300af1fb23",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/history-storage-contract.ts",
+    "sha256": "e3c1f3ae440510adb2992c362324f60e45bbf0ecce09417f4dc13af3780779d5",
+    "bytes": 6920,
+    "baseline_sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/import-v3-history-header.ts",
+    "sha256": "d9d96ef575d40c657e51952f5baeb9d5d05802dada8ce4e43f72cdb856df8afb",
+    "bytes": 13712,
+    "baseline_sha256": "07a1b6e832b5b501c375391a3d566263b3ad1a599eece7296349a1467d29962b",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/sales-query-ports.ts",
+    "sha256": "8ebd852c4d3c6e790352dd256782b95ccc9af4e3b8c414742afcc33148a7a1f3",
+    "bytes": 12876,
+    "baseline_sha256": "7790d7f2740592c4c921511aaee306a7347fb592ffca224ea620382c8e654d23",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/imported-history-query-ports.ts",
+    "sha256": "364946ab144c3fe65c996ec76134e5d1ce13b19b3bb6a85b1a3bee0d32a1a3f2",
+    "bytes": 8474,
+    "baseline_sha256": "19813f6a99c5d36dc63e2875178bf496157a0a6fff42f9119ba7cd587abe649f",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/imported-history-query-validation.ts",
+    "sha256": "491f2daf02623b53843fab0b4ced9084c00fb0b8ede5a17c3078ddd6e35012d4",
+    "bytes": 28155,
+    "baseline_sha256": "1dfa695c4a80447dd9a602173f62b5257ede3c31c0c2047ea13da8bc5f05ad85",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/sales-native-facts.ts",
+    "sha256": "0d642dd4e7e95e1d23d832e9d78c92358c2daa66402dda52e78bf9a594d463fc",
+    "bytes": 9611,
+    "baseline_sha256": "194bbc2034260133572ac100b621d1c8082f2ff726834cf355a600815b1d6db8",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/ports.ts",
+    "sha256": "af6ec28691b68adde916797f8b0e5ff5bef4156422a3a7e667700485e0062050",
+    "bytes": 8016,
+    "baseline_sha256": "ab7b5e324c06a8761dba19b45f5e676b106e996759f71f6956a7cc75b3baf18e",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/native-sales-preparation.ts",
+    "sha256": "8f6164d0f4c7e80cb4aa0c858167a44d2e42d9a96cc9160cd88e3b0d98bf827c",
+    "bytes": 47447,
+    "baseline_sha256": "6a82b7572bd36db138ed367bf3bcbe4014d38af7d54bb5217e28496428fb5da4",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/sales-service.ts",
+    "sha256": "e57e710c2fb725f8681ff54254b5160cadcbfcab5f4e068378a6a72a9deb84aa",
+    "bytes": 19299,
+    "baseline_sha256": "9b6cc43ba996080966265e142dfd78a679d439a683382042abe47f48667ba0a8",
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/historical-sales-hall-evidence.ts",
+    "sha256": "87e1b2a7adadacc86fbd8bd325a65eea273771b7ea8a56df85aee5259eb76855",
+    "bytes": 4421,
+    "baseline_sha256": null,
+    "changed": true
+  },
+  {
+    "path": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+    "sha256": "ea3ff6b8edaa6e8b05d65d8ec4235e6b67078d42be00b33945d7c3b21cdb0dea",
+    "bytes": 6705,
+    "baseline_sha256": null,
+    "changed": true
+  },
+  {
+    "path": "adapters/postgres/src/sales-query-reader.ts",
+    "sha256": "8b32b1fb2785f88f71a5318841d394a613f09800a29575878375c41ecbe84a2b",
+    "bytes": 62712,
+    "baseline_sha256": "114338ae423931392389a1a141b81853694a26ba218dc97ba9f1fe63903b904d",
+    "changed": true
+  },
+  {
+    "path": "adapters/postgres/src/ordinary-document-list-reader.ts",
+    "sha256": "8f4ecdb99ef8581b1eee717c769097b85d2db77bec159f5253a34440853c11c1",
+    "bytes": 35288,
+    "baseline_sha256": "335f3b5e73b0e6d6451eefb54f49d012067ebf825d3b282c70de6cb71a5daf2b",
+    "changed": true
+  },
+  {
+    "path": "adapters/postgres/src/sales-unit-of-work.ts",
+    "sha256": "49511a4913812d2335968461add4f84be35f4567b8c37510d5999d169e030ad8",
+    "bytes": 48626,
+    "baseline_sha256": "998dd8edf6bdd5819c60d163ccda69acc82b92cd6d248f2ba51acab2752e7f24",
+    "changed": true
+  },
+  {
+    "path": "adapters/postgres/src/sales-migration-origin-codec.ts",
+    "sha256": "e9a763ac24055f181e6de9c5a22b4cd2ca9c50ffabb4da2ceba1c846c1d6cb52",
+    "bytes": 5022,
+    "baseline_sha256": "f662cd41f12a07769705d382f42ab8df0051e05af42af0882319078fcf3a1857",
+    "changed": true
+  },
+  {
+    "path": "adapters/postgres/src/sales-native-facts.ts",
+    "sha256": "3dfbe94088058c611e234ee826134858cbf3d9a7a20404a35b8cb9e982d0a79a",
+    "bytes": 17146,
+    "baseline_sha256": "4bb0200d0eeea01116df6e378ad9e6d035df3065b80d66597a6e031c1538d7bf",
+    "changed": true
+  },
+  {
+    "path": "adapters/postgres/src/sales-retained-approval-reader.ts",
+    "sha256": "3a87794bce57a6b9c7ef08babe2564688606ffcd5120882906a0d01f89d9c994",
+    "bytes": 5771,
+    "baseline_sha256": "74a7435b79bee387b94ff292f4f1cf8527debf59617842033aa736773f570859",
+    "changed": true
+  },
+  {
+    "path": "adapters/postgres/src/imported-history-query-reader.ts",
+    "sha256": "c206b5892a05288a5466db615e6be47b1425dd84ea8443b740352d1f932482ec",
+    "bytes": 51552,
+    "baseline_sha256": "8c66a25d0cf375c86051812e73d3d05d0e3b15ee19754f9f926cdfc42f8e11a9",
+    "changed": true
+  },
+  {
+    "path": "adapters/postgres/src/sales-historical-hall-projection.ts",
+    "sha256": "e8a7a87a951abe6f654b1b81aa1b102267101e2bf2f157c4a83e20c36270bb4f",
+    "bytes": 14308,
+    "baseline_sha256": null,
+    "changed": true
+  },
+  {
+    "path": "apps/api/src/input.ts",
+    "sha256": "1ba7a9f1a2d3fdb529af70adafdfeecdb8ba157270299d2c98c78ed090e1c0cf",
+    "bytes": 7792,
+    "baseline_sha256": "0fd0576b6eda799dc3d7aa18b7a3cbe4a66838f7adb69de2f7b535231bca9bad",
+    "changed": true
+  },
+  {
+    "path": "scripts/import-v3/prepare-native-header26-bindings.mjs",
+    "sha256": "91a50b91a9c74df916b12a3ee051696b7c558fb97e64b72a4d1ade6e894e8137",
+    "bytes": 10688,
+    "baseline_sha256": "fa76f6478d7cc87eb938c92fac20714870f1ab0b96be05788f8d94742aafad93",
+    "changed": true
+  },
+  {
+    "path": "scripts/import-v3/prepare-native-header26-bindings.test.mjs",
+    "sha256": "402ad72b4b33cb8e09191af98f7abac87c4204cc8d11d42bc468253806742f1f",
+    "bytes": 13102,
+    "baseline_sha256": "2ba138881f210b7a7ba60a34eff75d5174c10d316041bf64e8d7a8cc604da2b3",
+    "changed": true
+  },
+  {
+    "path": "scripts/import-v2/authorized-header-reader.mjs",
+    "sha256": "46b9c3d8140e46a62321ec35102bb8efe8f7cd45c60fabef8b4c7acbb441d316",
+    "bytes": 28257,
+    "baseline_sha256": "d16ee579794f5a5ca6d8710e30d2de9265fad1dee3bc79d1788261affd2bac0d",
+    "changed": true
+  },
+  {
+    "path": "scripts/import-v2/authorized-header-reader.d.mts",
+    "sha256": "e48329dac8584ac3d77ac202f2a6c8d9a797d67339809d413c63ac718b7b2bfc",
+    "bytes": 3264,
+    "baseline_sha256": "dcefaf2f60dd588a694acd882e3076e3a201725bef3150ba8cbecf516f53865b",
+    "changed": true
+  },
+  {
+    "path": "scripts/import-v2/authorized-header-reader.test.mjs",
+    "sha256": "defbfc3fc14d8c6713c23679814a788d98ac165089f0c051deba23e2222aa63a",
+    "bytes": 43332,
+    "baseline_sha256": "4d3f7b2f062632fdd64a60bc5319d44a1cbc1f7cb0bde5f5db2c8175be7067fd",
+    "changed": true
+  },
+  {
+    "path": "tools/unified-import/historical-hall-cli-input.mjs",
+    "sha256": "74aaf48eff4cdfc2d7c031f94df9d1e7aca73ff9e7de33e9806873309df498ef",
+    "bytes": 966,
+    "baseline_sha256": null,
+    "changed": true
+  },
+  {
+    "path": "tools/unified-import/stream-preflight-cli.mjs",
+    "sha256": "5ce6e6fd71cb2a8f38da104a30e458877df11f81175951b8bb38e2622a577c7f",
+    "bytes": 5907,
+    "baseline_sha256": "8856761084ceba5e45092024840430c278ddd517c2201736ea9d41a750bd1180",
+    "changed": true
+  },
+  {
+    "path": "tools/unified-import/stream-prepare-cli.mjs",
+    "sha256": "cdde8f1e8dfc7cf19279a796bdae10943e9121a912fb86fa0de872abe61dcf3d",
+    "bytes": 9101,
+    "baseline_sha256": "b63cbc086af156dc66f4e892beb5bd4b32254d25552839de03f6fb1e5729aad8",
+    "changed": true
+  },
+  {
+    "path": "tools/unified-import/stream-import-cli.mjs",
+    "sha256": "43bef93743ef7ae01081f8d4d4816ce6b7e7c7382861a9fac8bd0de77f3678b7",
+    "bytes": 16574,
+    "baseline_sha256": "e43218ea85f0584630222cbdfc79f53b7784d9e68804114da78bcd0b40e8e070",
+    "changed": true
+  },
+  {
+    "path": "tests/history-header-mapping.test.ts",
+    "sha256": "f07de241da77987acf54061e77a0e1bfded52831537fe44cce5c325f18168293",
+    "bytes": 13723,
+    "baseline_sha256": "77716e60fd30f0081feee6ffacc7c27349b103837cf97f8e5917819c074737ff",
+    "changed": true
+  },
+  {
+    "path": "tests/sales-native-facts.test.ts",
+    "sha256": "35472237d25302a039a1a9f22354e2dfb3e8dc48b09480ecf62db1bfc1c1e85c",
+    "bytes": 37792,
+    "baseline_sha256": "25cea1338395f6ffa5be8c2ac1960f69f3389c03cb7299796eeee3c2af359652",
+    "changed": true
+  },
+  {
+    "path": "tests/sales-authorization.test.ts",
+    "sha256": "5ba3483a336675c3cc4eeb11788cfbe1f2f579a5c2b15b4cee44b41880d6c1b1",
+    "bytes": 12207,
+    "baseline_sha256": "6af14ec1749bb7bfc88143b40875d1c851d621e4cce4afe30b4a1f879709153d",
+    "changed": true
+  },
+  {
+    "path": "tests/sales-query-postgres-protocol.test.ts",
+    "sha256": "d1bbe037c4b5774e4d3c51ba035e80c3e81ab99bf6a94e5e9ebe47ba9dee14b6",
+    "bytes": 51632,
+    "baseline_sha256": "255ffae8d23fe200381dcc54b1074f17895064deff7374f6b6037638a0a7b734",
+    "changed": true
+  },
+  {
+    "path": "tests/imported-history-query.test.ts",
+    "sha256": "826e30a67626ba639859e384fd41aa0ae566b77502a714fe25bb89aaab048cc1",
+    "bytes": 61308,
+    "baseline_sha256": "61e52da4d3dffa9c4a0f0dca8fa34559eadf9d98ced5cffb919cfbece16acd38",
+    "changed": true
+  },
+  {
+    "path": "tests/sales-migration-origin-reader.test.ts",
+    "sha256": "d7e33755829fe30d2c9a3e92abc1f1ec5134d55af1c8a4e7779d4798246bd215",
+    "bytes": 6194,
+    "baseline_sha256": "2b69f46e247d75ca28a84f90b491549b29fc1db78389e36375bc5b20c1cce94e",
+    "changed": true
+  },
+  {
+    "path": "tests/historical-sales-hall-evidence.test.ts",
+    "sha256": "7e68050e9cfefae21b3f4642bcdf06228fca43454193969b99b5bb1c890a29dd",
+    "bytes": 3891,
+    "baseline_sha256": null,
+    "changed": true
+  },
+  {
+    "path": "tests/historical-sales-hall-readback.test.ts",
+    "sha256": "1c3492d1f126f733a80cf1696b032268d888574b93e095cc11ee162345e848e5",
+    "bytes": 6139,
+    "baseline_sha256": null,
+    "changed": true
+  },
+  {
+    "path": "tests/historical-sales-hall-cli.test.mjs",
+    "sha256": "2049c6179cd6bc18509e5798d28f14631d0c4aaf0c6e630103d6a0137ccb2e4f",
+    "bytes": 5304,
+    "baseline_sha256": null,
+    "changed": true
+  },
+  {
+    "path": "tests/sales.test.ts",
+    "sha256": "56d9aeffb59719e998f30104261da4f4afd1386a2fa2fff3ec89fb9ea9b58cd7",
+    "bytes": 30200,
+    "baseline_sha256": "34528ff93798f277dc0e0f126efdae8527e1afcece6c4ef5f0a0c2851074be65",
+    "changed": true
+  },
+  {
+    "path": "tests/integration/sales-write-authorization-acceptance.ts",
+    "sha256": "d65145b5d481ad4dde3d4867d44a5740dba06c654bb375506fbb6fdec2aa8f2f",
+    "bytes": 23232,
+    "baseline_sha256": "579b9e0fa493b1f565485c3365eb1dec1292d758cf06366135576d94ff37138a",
+    "changed": true
+  },
+  {
+    "path": "tests/ordinary-document-list-postgres-protocol.test.ts",
+    "sha256": "3c5379ff24045336b26fb7dfa5ee051e4df74bc91c2dc9da610ef016015ea104",
+    "bytes": 23061,
+    "baseline_sha256": "45be4e8a34dcd4362033e49192c66b861122b44a9b3c8709ef07ed4a12b777d3",
+    "changed": true
+  },
+  {
+    "path": "tests/ordinary-sales-detail-postgres-protocol.test.ts",
+    "sha256": "851cec7dbd8856f2c7d1cbf060a27ebfe0811b4c505028f2ac11a0fe5f9683b7",
+    "bytes": 16728,
+    "baseline_sha256": "abe8a94d3315bb3496a824d7b85b2ca6954b254b6c2051c28515e97488c79463",
+    "changed": true
+  }
+]

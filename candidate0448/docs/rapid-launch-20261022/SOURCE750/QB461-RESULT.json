@@ -1,0 +1,69 @@
+{
+  "reviewId": "QB461",
+  "task": "SOURCE749 twoleaf host logical-to-physical initialmetadata wiring",
+  "decision": "PASS_FIXED_TWO_LEAF_SOURCE_INCREMENT_ONLY_NOT_ACTUAL_ADMISSION",
+  "fixedCommit": "76531b2140a28ae0e727e893082192b9b84a6913",
+  "sourcePins": [
+    {
+      "path": "scripts/import-v3/production-source-host.mjs",
+      "bytes": 40653,
+      "sha256": "ed6ee18c0c0a08991b63dce6611ef4c3c17e22d8f9217c9371fe812c9fc5f73b"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.test.mjs",
+      "bytes": 47777,
+      "sha256": "ec12e9be19b537ba78e6e7d6aba30a08204f7cf06b65ac3e9413c488e7f346a7"
+    }
+  ],
+  "deliveryRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/SOURCE749/HOST-PATH-WIRING-DELIVERY.json",
+    "bytes": 1316,
+    "sha256": "de172ff3b47080320643406ee5acb33c9817836ce03857177f3f8c23e724212f"
+  },
+  "unchangedProvider744Pins": [
+    {
+      "path": "scripts/import-v3/production-source-provider26.mjs",
+      "bytes": 130719,
+      "sha256": "08ef2f86f40f18a25105a96ab2f8c5f7c1ad82588a736581434e8247e315f01d"
+    },
+    {
+      "path": "scripts/import-v3/production-source-provider26.test.mjs",
+      "bytes": 169943,
+      "sha256": "f523a4967e2b554baf12b2c0f6edd24f907b30af4cb60d1ae0b6e9621294d8aa"
+    }
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "Standards": {
+    "findings": [],
+    "checks": [
+      "Only originalhost/test authorizedtwoleaves; provider744 exactbytesconfirmed. No mapper/79map/sourcegroup/jobidentity/SQL/store/executionkey changes.",
+      "Existing captureddatafunction resolver reused, exactoriginaltrustedSHA/bytebounds and descriptor capture retained; no secondarylocator/fallback added."
+    ]
+  },
+  "Spec": {
+    "findings": [],
+    "checks": [
+      "NonCOREinitialnative decision/review reads moved after provideropen/capture but before session.preflight/assertExecutionAllowed/sourcegroup factories/productauthorizer/closure orPoolactivation. Missinginvalidmapping stopsandcloses source/gate beforeactivation.",
+      "Logicaljob.sources.referenceDecisionFile/reviewFile remainunchanged forsubsequentnativeauthorizer. Initialread alone calls capturedoriginalsourceFileResolver26 withlogicalpath+originalSHA, verifiesphysicalpath/optionalSHA/exactbytes thenoriginal pinned reader andoriginal8MiBdecision/4MiBreviewlimits.",
+      "Decisionoriginalshape/schemaVersion2/validatorVersion/EXACT26/batch/namespace/PRODUCT/selection/nonemptydecisions checks retained. Wrongresolver/wrongpin/missingwhitelist/refusal never fallsbacktologicalfilesystem read.",
+      "CORE branch retains originalphysicalreviewreadbeforeproviders; no newresolvercontract forCORE. Legacy nonCOREwithnoresolveFile uses originalphysicalpathandallpins.",
+      "Allv21 adopted148evidence/defaultclosure/actualPGtransaction checks inheritedQB458. OnlyconsumerHost currentversion changes, originalSOURCE730baseline andprovider744/currentmodule pins retained."
+    ]
+  },
+  "finiteChecks": {
+    "ownerAdopted": "D3 reproducible logicalENOENT RED then9scopedGREEN/syntaxPASS adopted, no rerun. Reviewedtests exercise resolverbeforegrouppreflight/targetclosed,wrongnative+reviewpin,batch,selection,unlistedmap,oversizednative+review,legacyphysical path andcleanup.",
+    "qbChecks": "ExactGit/currentbytes/2leafdiff/provider744bytesonly; noDB/server/sourcebusinessbodies read."
+  },
+  "consumerReviewSuccessorRequirements": [
+    "T45/C update onlyaccurateCONSUMER_HOST currentref to40653/ed6ee18c0c0a08991b63dce6611ef4c3c17e22d8f9217c9371fe812c9fc5f73b andindependentreviewevidence chain includesQB458plusQB461. Do not alterbaselineSOURCE730hostref orlabelthisentireversionSOURCE730.",
+    "CONSUMER_PROVIDER remains exactSOURCE744130719/08ef2f86 withQB458; otherbaseline/currentUNCHANGEDmoduleclosure andoriginal79logical-to-physicalsource map stayexact.",
+    "No actualconfiguredsourceactivation/expected148consumption/currentruntime/grant/DB/MAIN/PUBLISH provenbythissourcePASS."
+  ],
+  "sourceChangedByQB": false,
+  "databaseOrRemoteAction": false,
+  "actualHostConstructed": false,
+  "actualMainOrPublish": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}

@@ -1,0 +1,29 @@
+{
+  "parent": "8f9822e1697d639f4cc28448fa27b7557382fd80",
+  "atUtc": "2026-10-23T04:34:00.844368+00:00",
+  "taskId": "C03_ACTUAL_PRODUCTION_MEDIA_SOURCE_CLASSIFICATION_FIX",
+  "files": [
+    {
+      "path": "scripts/release/manifest.mjs",
+      "owner": "C",
+      "bytes": 30559,
+      "sha256": "a7550b1f2767183b6d6ed8e057c5bf1af7ab898faadc30c58352e7366c73a239"
+    },
+    {
+      "path": "scripts/release/pack.test.mjs",
+      "owner": "C",
+      "bytes": 22106,
+      "sha256": "969d82ed0c13204b57a7f6b63d46c6349b7b9409bc365a61bfb0ac214608e75e"
+    }
+  ],
+  "trigger": "C131 real original build NON_PRODUCTION_SOURCE after R3 legitimate adapters/media graph entered. Preserved old build unchanged.",
+  "change": "Existing allowedSource excludes media data directories; permit only exact3 alreadyregistered production adapter source paths at adapters/media segment. All original path/member/bytes/graph/lock/HTML checks retained.",
+  "checks": {
+    "newTests": 2,
+    "before": "1PASS1FAIL NON_PRODUCTION_SOURCE",
+    "after": "2PASS0SKIP 88.043375ms",
+    "actualPreserved131Graph": "Existing validateRelease with fixed classifier passed207members; no newbuild/pack claimed",
+    "oldSuitesRepeated": false
+  },
+  "next": "OriginalQB exactdelta; originalfreshfixedbuild/pack then59 private stage realoffline npm/start/resources. No dependency/lock/runtime permissions/fields changed."
+}

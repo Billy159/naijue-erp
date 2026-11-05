@@ -1,0 +1,1114 @@
+TAP version 13
+# Subtest: cutoff SQL text: only the two already approved import tables and three approved provenance columns are added
+ok 1 - cutoff SQL text: only the two already approved import tables and three approved provenance columns are added
+  ---
+  duration_ms: 14.435158
+  type: 'test'
+  ...
+# Subtest: cutoff SQL text: used zero balances are retained by append-only ledger and a deferred noncascading composite FK
+ok 2 - cutoff SQL text: used zero balances are retained by append-only ledger and a deferred noncascading composite FK
+  ---
+  duration_ms: 1.055245
+  type: 'test'
+  ...
+# Subtest: cutoff SQL text: complete publication is explicit, per-key and serializes the initial takeover
+ok 3 - cutoff SQL text: complete publication is explicit, per-key and serializes the initial takeover
+  ---
+  duration_ms: 0.700746
+  type: 'test'
+  ...
+# Subtest: cutoff SQL text: IMPORT is a native closed target and sources/checkpoints/evidence must commit together
+ok 4 - cutoff SQL text: IMPORT is a native closed target and sources/checkpoints/evidence must commit together
+  ---
+  duration_ms: 0.644538
+  type: 'test'
+  ...
+# Subtest: cutoff SQL text: source/import adapter cannot overwrite balances/documents or generate Cartesian zero facts
+ok 5 - cutoff SQL text: source/import adapter cannot overwrite balances/documents or generate Cartesian zero facts
+  ---
+  duration_ms: 1.142711
+  type: 'test'
+  ...
+# Subtest: cutoff SQL text: historical first-version headers/details stay frozen and native first-use commands are not silently opened
+ok 6 - cutoff SQL text: historical first-version headers/details stay frozen and native first-use commands are not silently opened
+  ---
+  duration_ms: 0.300347
+  type: 'test'
+  ...
+# Subtest: cutoff composed SQL text: 0004 native source receipt guard is retained but excludes NULL-source cutoff baselines
+ok 7 - cutoff composed SQL text: 0004 native source receipt guard is retained but excludes NULL-source cutoff baselines
+  ---
+  duration_ms: 1.923088
+  type: 'test'
+  ...
+# Subtest: cutoff SQL text: bounded checkpoint lookup uses an IMPORT partial unique version index without casting indexed columns
+ok 8 - cutoff SQL text: bounded checkpoint lookup uses an IMPORT partial unique version index without casting indexed columns
+  ---
+  duration_ms: 0.340654
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol SALES: repeated actual lines insert once per used key, preserve negative quantities and commit exact receipt/audit
+ok 9 - first-use pg protocol SALES: repeated actual lines insert once per used key, preserve negative quantities and commit exact receipt/audit
+  ---
+  duration_ms: 36.39619
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol SALES: ledger error requests rollback and never reports commit
+ok 10 - first-use pg protocol SALES: ledger error requests rollback and never reports commit
+  ---
+  duration_ms: 8.998235
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol SALES: first balance error requests rollback and never reports commit
+ok 11 - first-use pg protocol SALES: first balance error requests rollback and never reports commit
+  ---
+  duration_ms: 5.601707
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol SALES: header error requests rollback and never reports commit
+ok 12 - first-use pg protocol SALES: header error requests rollback and never reports commit
+  ---
+  duration_ms: 8.727234
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol SALES: audit error requests rollback and never reports commit
+ok 13 - first-use pg protocol SALES: audit error requests rollback and never reports commit
+  ---
+  duration_ms: 6.535358
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol SALES: receipt error requests rollback and never reports commit
+ok 14 - first-use pg protocol SALES: receipt error requests rollback and never reports commit
+  ---
+  duration_ms: 8.093442
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol SALES: losing first-insert CAS is a conflict, never an upsert or synthetic success
+ok 15 - first-use pg protocol SALES: losing first-insert CAS is a conflict, never an upsert or synthetic success
+  ---
+  duration_ms: 4.446658
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol SALES: unknown COMMIT keeps original outcome unknown, discards connection and never retries
+ok 16 - first-use pg protocol SALES: unknown COMMIT keeps original outcome unknown, discards connection and never retries
+  ---
+  duration_ms: 22.374218
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol TRANSFER: repeated actual lines insert once per used key, preserve negative quantities and commit exact receipt/audit
+ok 17 - first-use pg protocol TRANSFER: repeated actual lines insert once per used key, preserve negative quantities and commit exact receipt/audit
+  ---
+  duration_ms: 15.502089
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol TRANSFER: ledger error requests rollback and never reports commit
+ok 18 - first-use pg protocol TRANSFER: ledger error requests rollback and never reports commit
+  ---
+  duration_ms: 5.858742
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol TRANSFER: first balance error requests rollback and never reports commit
+ok 19 - first-use pg protocol TRANSFER: first balance error requests rollback and never reports commit
+  ---
+  duration_ms: 4.450494
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol TRANSFER: header error requests rollback and never reports commit
+ok 20 - first-use pg protocol TRANSFER: header error requests rollback and never reports commit
+  ---
+  duration_ms: 4.526838
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol TRANSFER: audit error requests rollback and never reports commit
+ok 21 - first-use pg protocol TRANSFER: audit error requests rollback and never reports commit
+  ---
+  duration_ms: 4.187911
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol TRANSFER: receipt error requests rollback and never reports commit
+ok 22 - first-use pg protocol TRANSFER: receipt error requests rollback and never reports commit
+  ---
+  duration_ms: 5.950246
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol TRANSFER: losing first-insert CAS is a conflict, never an upsert or synthetic success
+ok 23 - first-use pg protocol TRANSFER: losing first-insert CAS is a conflict, never an upsert or synthetic success
+  ---
+  duration_ms: 2.768703
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol TRANSFER: unknown COMMIT keeps original outcome unknown, discards connection and never retries
+ok 24 - first-use pg protocol TRANSFER: unknown COMMIT keeps original outcome unknown, discards connection and never retries
+  ---
+  duration_ms: 5.23319
+  type: 'test'
+  ...
+# Subtest: first-use application: absent balance without explicit trusted proof still fails closed, including UNAPPROVE even with a hook
+ok 25 - first-use application: absent balance without explicit trusted proof still fails closed, including UNAPPROVE even with a hook
+  ---
+  duration_ms: 1.600176
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: proof is read-only, exact-key and cached only for this locked transaction
+ok 26 - first-use pg protocol: proof is read-only, exact-key and cached only for this locked transaction
+  ---
+  duration_ms: 1.137586
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: false warehouse_published never becomes zero success
+ok 27 - first-use pg protocol: false warehouse_published never becomes zero success
+  ---
+  duration_ms: 4.893178
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: false sku_published never becomes zero success
+ok 28 - first-use pg protocol: false sku_published never becomes zero success
+  ---
+  duration_ms: 1.761681
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: false balance_absent never becomes zero success
+ok 29 - first-use pg protocol: false balance_absent never becomes zero success
+  ---
+  duration_ms: 4.249583
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: false ledger_absent never becomes zero success
+ok 30 - first-use pg protocol: false ledger_absent never becomes zero success
+  ---
+  duration_ms: 2.958652
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: false valid_size never becomes zero success
+ok 31 - first-use pg protocol: false valid_size never becomes zero success
+  ---
+  duration_ms: 0.917857
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: unpublished fails before any business effect
+ok 32 - first-use pg protocol: unpublished fails before any business effect
+  ---
+  duration_ms: 6.294886
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: incomplete checkpoint fails before any business effect
+ok 33 - first-use pg protocol: incomplete checkpoint fails before any business effect
+  ---
+  duration_ms: 1.213095
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: missing final approval fails before any business effect
+ok 34 - first-use pg protocol: missing final approval fails before any business effect
+  ---
+  duration_ms: 0.807794
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: missing runtime schema/guard fails before any business effect
+ok 35 - first-use pg protocol: missing runtime schema/guard fails before any business effect
+  ---
+  duration_ms: 1.290022
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: waiter rereads the winning balance after canonical key lock and follows existing CAS, without second insert or zero proof
+ok 36 - first-use pg protocol: waiter rereads the winning balance after canonical key lock and follows existing CAS, without second insert or zero proof
+  ---
+  duration_ms: 0.742069
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol TRANSFER: unproven second endpoint prevents all effects despite a proven first endpoint
+ok 37 - first-use pg protocol TRANSFER: unproven second endpoint prevents all effects despite a proven first endpoint
+  ---
+  duration_ms: 1.649661
+  type: 'test'
+  ...
+# Subtest: first-use pg protocol: zero ledger-insert acknowledgement cannot create a balance or claim success
+ok 38 - first-use pg protocol: zero ledger-insert acknowledgement cannot create a balance or claim success
+  ---
+  duration_ms: 1.141415
+  type: 'test'
+  ...
+# Subtest: first-use SQL source: exactly two existing guard bodies replaced, no table/field/index/trigger or business data added
+ok 39 - first-use SQL source: exactly two existing guard bodies replaced, no table/field/index/trigger or business data added
+  ---
+  duration_ms: 16.674633
+  type: 'test'
+  ...
+# Subtest: first-use SQL source: prior IMPORT baseline and non-first-use UPDATE logic remain equivalent
+ok 40 - first-use SQL source: prior IMPORT baseline and non-first-use UPDATE logic remain equivalent
+  ---
+  duration_ms: 0.635647
+  type: 'test'
+  ...
+# Subtest: first-use SQL source: existing transfer source/reversal logic unchanged except bounded absent-key APPROVE allowance
+ok 41 - first-use SQL source: existing transfer source/reversal logic unchanged except bounded absent-key APPROVE allowance
+  ---
+  duration_ms: 4.965524
+  type: 'test'
+  ...
+# Subtest: first-use SQL source: exact complete publication, current operation effects, final delta/count and native receipt/audit are required
+ok 42 - first-use SQL source: exact complete publication, current operation effects, final delta/count and native receipt/audit are required
+  ---
+  duration_ms: 6.103158
+  type: 'test'
+  ...
+# Subtest: first-use source: advisory key namespace/order matches importer and precedes balance row lock
+ok 43 - first-use source: advisory key namespace/order matches importer and precedes balance row lock
+  ---
+  duration_ms: 2.743871
+  type: 'test'
+  ...
+# Subtest: first-use source: proof uses bounded immutable publication and exact native keys, never materializes zero during proof
+ok 44 - first-use source: proof uses bounded immutable publication and exact native keys, never materializes zero during proof
+  ---
+  duration_ms: 10.194352
+  type: 'test'
+  ...
+# Subtest: first-use application source: optional explicit trusted capability, only real APPROVE delta version1, no version0 placeholder
+ok 45 - first-use application source: optional explicit trusted capability, only real APPROVE delta version1, no version0 placeholder
+  ---
+  duration_ms: 1.742796
+  type: 'test'
+  ...
+# Subtest: pg protocol: exact decimal(18,2)/bigint codecs preserve extremes and reject rounding/overflow
+ok 46 - pg protocol: exact decimal(18,2)/bigint codecs preserve extremes and reject rounding/overflow
+  ---
+  duration_ms: 18.266243
+  type: 'test'
+  ...
+# Subtest: pg protocol: BEGIN/COMMIT use one client, and leaked handles close
+ok 47 - pg protocol: BEGIN/COMMIT use one client, and leaked handles close
+  ---
+  duration_ms: 6.089538
+  type: 'test'
+  ...
+# Subtest: pg protocol: callback failure requests rollback and never commit
+ok 48 - pg protocol: callback failure requests rollback and never commit
+  ---
+  duration_ms: 4.01085
+  type: 'test'
+  ...
+# Subtest: pg protocol: BEGIN/connect failures do not run callback
+ok 49 - pg protocol: BEGIN/connect failures do not run callback
+  ---
+  duration_ms: 4.913373
+  type: 'test'
+  ...
+# Subtest: pg protocol: uncertain COMMIT failure is not retried and client is discarded
+ok 50 - pg protocol: uncertain COMMIT failure is not retried and client is discarded
+  ---
+  duration_ms: 4.321771
+  type: 'test'
+  ...
+# Subtest: pg protocol: failed rollback reports both errors and discards client
+ok 51 - pg protocol: failed rollback reports both errors and discards client
+  ---
+  duration_ms: 1.481582
+  type: 'test'
+  ...
+# Subtest: pg protocol: new SAVE writes native rows, snapshots, audit and actor/key receipt without stock writes
+ok 52 - pg protocol: new SAVE writes native rows, snapshots, audit and actor/key receipt without stock writes
+  ---
+  duration_ms: 54.290293
+  type: 'test'
+  ...
+# Subtest: pg protocol: APPROVE locks balances in one stable order and CAS allows negative inventory
+ok 53 - pg protocol: APPROVE locks balances in one stable order and CAS allows negative inventory
+  ---
+  duration_ms: 19.806608
+  type: 'test'
+  ...
+# Subtest: pg protocol: repeated SKU actual lines retain distinct ledger sources and advance one cached balance twice
+ok 54 - pg protocol: repeated SKU actual lines retain distinct ledger sources and advance one cached balance twice
+  ---
+  duration_ms: 12.232498
+  type: 'test'
+  ...
+# Subtest: pg protocol: missing inventory coverage fails closed without insert/upsert/default zero
+ok 55 - pg protocol: missing inventory coverage fails closed without insert/upsert/default zero
+  ---
+  duration_ms: 8.697772
+  type: 'test'
+  ...
+# Subtest: pg protocol: UNAPPROVE appends a linked inverse without mutating original ledger or settlements
+ok 56 - pg protocol: UNAPPROVE appends a linked inverse without mutating original ledger or settlements
+  ---
+  duration_ms: 9.490428
+  type: 'test'
+  ...
+# Subtest: pg protocol: same actor/key replay returns original result only after current authorization
+ok 57 - pg protocol: same actor/key replay returns original result only after current authorization
+  ---
+  duration_ms: 8.691526
+  type: 'test'
+  ...
+# Subtest: pg protocol: changed content under original actor/key conflicts without re-executing
+ok 58 - pg protocol: changed content under original actor/key conflicts without re-executing
+  ---
+  duration_ms: 7.390476
+  type: 'test'
+  ...
+# Subtest: pg protocol: cutoff history remains queryable but commands fail before balance/ledger mutation
+ok 59 - pg protocol: cutoff history remains queryable but commands fail before balance/ledger mutation
+  ---
+  duration_ms: 4.976287
+  type: 'test'
+  ...
+# Subtest: pg protocol: settlement mismatch still blocks APPROVE before any mutation
+ok 60 - pg protocol: settlement mismatch still blocks APPROVE before any mutation
+  ---
+  duration_ms: 22.418192
+  type: 'test'
+  ...
+# Subtest: pg protocol: ledger write failure requests ROLLBACK, not COMMIT (not durability evidence)
+ok 61 - pg protocol: ledger write failure requests ROLLBACK, not COMMIT (not durability evidence)
+  ---
+  duration_ms: 26.5902
+  type: 'test'
+  ...
+# Subtest: pg protocol: balance write failure requests ROLLBACK, not COMMIT (not durability evidence)
+ok 62 - pg protocol: balance write failure requests ROLLBACK, not COMMIT (not durability evidence)
+  ---
+  duration_ms: 4.308857
+  type: 'test'
+  ...
+# Subtest: pg protocol: header write failure requests ROLLBACK, not COMMIT (not durability evidence)
+ok 63 - pg protocol: header write failure requests ROLLBACK, not COMMIT (not durability evidence)
+  ---
+  duration_ms: 3.671962
+  type: 'test'
+  ...
+# Subtest: pg protocol: audit write failure requests ROLLBACK, not COMMIT (not durability evidence)
+ok 64 - pg protocol: audit write failure requests ROLLBACK, not COMMIT (not durability evidence)
+  ---
+  duration_ms: 5.863895
+  type: 'test'
+  ...
+# Subtest: pg protocol: receipt write failure requests ROLLBACK, not COMMIT (not durability evidence)
+ok 65 - pg protocol: receipt write failure requests ROLLBACK, not COMMIT (not durability evidence)
+  ---
+  duration_ms: 10.577308
+  type: 'test'
+  ...
+# Subtest: pg protocol: document CAS zero-row result rejects stale update and requests rollback
+ok 66 - pg protocol: document CAS zero-row result rejects stale update and requests rollback
+  ---
+  duration_ms: 5.03536
+  type: 'test'
+  ...
+# Subtest: pg protocol: balance CAS zero-row result rejects stale quantity and requests rollback
+ok 67 - pg protocol: balance CAS zero-row result rejects stale quantity and requests rollback
+  ---
+  duration_ms: 5.64894
+  type: 'test'
+  ...
+# Subtest: pg protocol: foreign line ownership failure cannot silently skip a line write
+ok 68 - pg protocol: foreign line ownership failure cannot silently skip a line write
+  ---
+  duration_ms: 10.845142
+  type: 'test'
+  ...
+# Subtest: pg protocol: explicit discount/zero facts and pre-0002 unknowns decode without inference
+ok 69 - pg protocol: explicit discount/zero facts and pre-0002 unknowns decode without inference
+  ---
+  duration_ms: 5.444999
+  type: 'test'
+  ...
+# Subtest: pg protocol: unknown active pre-0002 pricing cannot approve, without rewriting stored rows
+ok 70 - pg protocol: unknown active pre-0002 pricing cannot approve, without rewriting stored rows
+  ---
+  duration_ms: 12.744667
+  type: 'test'
+  ...
+# Subtest: pg protocol: transfer receipt cannot be decoded or reused by a sales command with the same actor/key
+ok 71 - pg protocol: transfer receipt cannot be decoded or reused by a sales command with the same actor/key
+  ---
+  duration_ms: 4.157968
+  type: 'test'
+  ...
+# Subtest: pg protocol: memo-only SAVE writes header/evidence/receipt but never unchanged lines or settlement snapshots
+ok 72 - pg protocol: memo-only SAVE writes header/evidence/receipt but never unchanged lines or settlement snapshots
+  ---
+  duration_ms: 11.583565
+  type: 'test'
+  ...
+# Subtest: pg protocol: replaced line frees only its owned current position and leaves unchanged retained/sibling rows untouched
+ok 73 - pg protocol: replaced line frees only its owned current position and leaves unchanged retained/sibling rows untouched
+  ---
+  duration_ms: 8.84681
+  type: 'test'
+  ...
+# Subtest: pg protocol: current line-position swap releases only changed positions before guarded upserts
+ok 74 - pg protocol: current line-position swap releases only changed positions before guarded upserts
+  ---
+  duration_ms: 6.398369
+  type: 'test'
+  ...
+# Subtest: pg protocol: settlement SAVE deletes only removed rows and writes only changed/new values with snapshot/ownership guards
+ok 75 - pg protocol: settlement SAVE deletes only removed rows and writes only changed/new values with snapshot/ownership guards
+  ---
+  duration_ms: 9.673724
+  type: 'test'
+  ...
+# Subtest: pg protocol: changed line SAVE failure still requests rollback before audit/receipt
+ok 76 - pg protocol: changed line SAVE failure still requests rollback before audit/receipt
+  ---
+  duration_ms: 5.893837
+  type: 'test'
+  ...
+# Subtest: pg protocol: changed settlement SAVE failure still requests rollback before audit/receipt
+ok 77 - pg protocol: changed settlement SAVE failure still requests rollback before audit/receipt
+  ---
+  duration_ms: 5.104043
+  type: 'test'
+  ...
+# Subtest: pg protocol: stable-body receipt replay survives trusted hall change but denies revoked access without writes
+ok 78 - pg protocol: stable-body receipt replay survives trusted hall change but denies revoked access without writes
+  ---
+  duration_ms: 16.475323
+  type: 'test'
+  ...
+# Subtest: pg SQL-text contract: versioned bounded migration has no business seed or execution runner
+ok 79 - pg SQL-text contract: versioned bounded migration has no business seed or execution runner
+  ---
+  duration_ms: 16.097102
+  type: 'test'
+  ...
+# Subtest: pg SQL-text contract: native parties, product price and four-dimensional SKU remain separate
+ok 80 - pg SQL-text contract: native parties, product price and four-dimensional SKU remain separate
+  ---
+  duration_ms: 0.802078
+  type: 'test'
+  ...
+# Subtest: pg SQL-text contract: actual lines/settlements are native facts, not hidden whole-document JSON
+ok 81 - pg SQL-text contract: actual lines/settlements are native facts, not hidden whole-document JSON
+  ---
+  duration_ms: 20.643447
+  type: 'test'
+  ...
+# Subtest: pg SQL-text contract: quantities have no zero floor and unproven balance absence cannot be auto-created by sales
+ok 82 - pg SQL-text contract: quantities have no zero floor and unproven balance absence cannot be auto-created by sales
+  ---
+  duration_ms: 6.179757
+  type: 'test'
+  ...
+# Subtest: pg SQL-text contract: source, reversal, receipt/audit uniqueness and deferred atomic references are declared
+ok 83 - pg SQL-text contract: source, reversal, receipt/audit uniqueness and deferred atomic references are declared
+  ---
+  duration_ms: 19.845867
+  type: 'test'
+  ...
+# Subtest: pg SQL-text contract: historical branch stays closed, settlement equality uses final approved state
+ok 84 - pg SQL-text contract: historical branch stays closed, settlement equality uses final approved state
+  ---
+  duration_ms: 4.102068
+  type: 'test'
+  ...
+# Subtest: pg SQL-text contract: ISO business dates do not depend on session DateStyle
+ok 85 - pg SQL-text contract: ISO business dates do not depend on session DateStyle
+  ---
+  duration_ms: 1.152712
+  type: 'test'
+  ...
+# Subtest: pg SQL-text contract: missing or JSON-null receipt IDs cannot exploit nullable CHECK equality
+ok 86 - pg SQL-text contract: missing or JSON-null receipt IDs cannot exploit nullable CHECK equality
+  ---
+  duration_ms: 0.432724
+  type: 'test'
+  ...
+# Subtest: pg SQL-text contract: additive 0002 preserves unknown old pricing intent with no guessed backfill
+ok 87 - pg SQL-text contract: additive 0002 preserves unknown old pricing intent with no guessed backfill
+  ---
+  duration_ms: 1.065991
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC SALE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links
+ok 88 - SYNTHETIC SALE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links
+  ---
+  duration_ms: 132.779903
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC RETURN: independent same-warehouse save/approve/unapprove has exact effects without original-sale links
+ok 89 - SYNTHETIC RETURN: independent same-warehouse save/approve/unapprove has exact effects without original-sale links
+  ---
+  duration_ms: 14.008133
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC EXCHANGE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links
+ok 90 - SYNTHETIC EXCHANGE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links
+  ---
+  duration_ms: 6.985381
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: negative stock is a legal exact fact, not insufficient-stock rejection or zero truncation
+ok 91 - SYNTHETIC: negative stock is a legal exact fact, not insufficient-stock rejection or zero truncation
+  ---
+  duration_ms: 7.886591
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: exact replay after a lost response returns original result without repeat stock/audit/settlements
+ok 92 - SYNTHETIC: exact replay after a lost response returns original result without repeat stock/audit/settlements
+  ---
+  duration_ms: 6.042604
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: concurrent identical commands commit exactly once in the serialized reference adapter
+ok 93 - SYNTHETIC: concurrent identical commands commit exactly once in the serialized reference adapter
+  ---
+  duration_ms: 4.244255
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: same key changed content is conflict, not another write
+ok 94 - SYNTHETIC: same key changed content is conflict, not another write
+  ---
+  duration_ms: 6.705373
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: stale expected version cannot approve or overwrite
+ok 95 - SYNTHETIC: stale expected version cannot approve or overwrite
+  ---
+  duration_ms: 3.9025
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: approved quantity/amount cannot be edited or directly voided; must first unapprove
+ok 96 - SYNTHETIC: approved quantity/amount cannot be edited or directly voided; must first unapprove
+  ---
+  duration_ms: 7.51867
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: saved draft void changes no inventory, retains detail, becomes immutable
+ok 97 - SYNTHETIC: saved draft void changes no inventory, retains detail, becomes immutable
+  ---
+  duration_ms: 5.214634
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: exact settlement mismatch including underpayment blocks approval atomically
+ok 98 - SYNTHETIC: exact settlement mismatch including underpayment blocks approval atomically
+  ---
+  duration_ms: 10.202472
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: refund uses direction plus nonnegative actual amount, never negative payment/account balance
+ok 99 - SYNTHETIC: refund uses direction plus nonnegative actual amount, never negative payment/account balance
+  ---
+  duration_ms: 1.866225
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: same SKU real lines remain separate, including gift and different price
+ok 100 - SYNTHETIC: same SKU real lines remain separate, including gift and different price
+  ---
+  duration_ms: 3.99437
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: unapprove/edit/reapprove uses immutable original effects and retains removed referenced lines
+ok 101 - SYNTHETIC: unapprove/edit/reapprove uses immutable original effects and retains removed referenced lines
+  ---
+  duration_ms: 14.614402
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: duplicate unapprove cannot reverse one original effect twice
+ok 102 - SYNTHETIC: duplicate unapprove cannot reverse one original effect twice
+  ---
+  duration_ms: 6.881556
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: injected balance:2 failure rolls back all effects, and original key safely retries
+ok 103 - SYNTHETIC: injected balance:2 failure rolls back all effects, and original key safely retries
+  ---
+  duration_ms: 12.934684
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: injected document failure rolls back all effects, and original key safely retries
+ok 104 - SYNTHETIC: injected document failure rolls back all effects, and original key safely retries
+  ---
+  duration_ms: 10.409213
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: injected audit failure rolls back all effects, and original key safely retries
+ok 105 - SYNTHETIC: injected audit failure rolls back all effects, and original key safely retries
+  ---
+  duration_ms: 4.144303
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: injected receipt failure rolls back all effects, and original key safely retries
+ok 106 - SYNTHETIC: injected receipt failure rolls back all effects, and original key safely retries
+  ---
+  duration_ms: 5.164392
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: missing inventory coverage cannot be invented as zero
+ok 107 - SYNTHETIC: missing inventory coverage cannot be invented as zero
+  ---
+  duration_ms: 2.914722
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: stock overflow aborts instead of wrapping or partially posting
+ok 108 - SYNTHETIC: stock overflow aborts instead of wrapping or partially posting
+  ---
+  duration_ms: 5.746873
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: authorization is mandatory on writes and idempotent result recovery
+ok 109 - SYNTHETIC: authorization is mandatory on writes and idempotent result recovery
+  ---
+  duration_ms: 4.850776
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: imported cutoff history never falls through runtime reversal/edit logic
+ok 110 - SYNTHETIC: imported cutoff history never falls through runtime reversal/edit logic
+  ---
+  duration_ms: 5.134832
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: only approved documents enter settlement statistics; unapprove exits, reapprove reenters once
+ok 111 - SYNTHETIC: only approved documents enter settlement statistics; unapprove exits, reapprove reenters once
+  ---
+  duration_ms: 6.471555
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: true null creating-hall snapshot remains null after a different current hall saves
+ok 112 - SYNTHETIC: true null creating-hall snapshot remains null after a different current hall saves
+  ---
+  duration_ms: 3.260914
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: existing SAVE checks both source and proposed destination scopes before any mutation
+ok 113 - SYNTHETIC: existing SAVE checks both source and proposed destination scopes before any mutation
+  ---
+  duration_ms: 9.974118
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: duplicate documents cannot silently double-count settlement statistics
+ok 114 - SYNTHETIC: duplicate documents cannot silently double-count settlement statistics
+  ---
+  duration_ms: 2.044981
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: changing a caller alias while execute waits cannot change the data bound to the original request hash
+ok 115 - SYNTHETIC: changing a caller alias while execute waits cannot change the data bound to the original request hash
+  ---
+  duration_ms: 3.517584
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: audit retains every permitted mutable header field and business line price/display snapshot
+ok 116 - SYNTHETIC: audit retains every permitted mutable header field and business line price/display snapshot
+  ---
+  duration_ms: 5.001669
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: operation keys are scoped by authenticated actor, not globally shared
+ok 117 - SYNTHETIC: operation keys are scoped by authenticated actor, not globally shared
+  ---
+  duration_ms: 2.02358
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: duplicate/foreign lines and more than three settlement rows fail before persistence
+ok 118 - SYNTHETIC: duplicate/foreign lines and more than three settlement rows fail before persistence
+  ---
+  duration_ms: 6.446623
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: memo-only evidence is constant size, with no unchanged current or retained business rows
+ok 119 - SYNTHETIC: memo-only evidence is constant size, with no unchanged current or retained business rows
+  ---
+  duration_ms: 97.526825
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: edited, removed and added lines have complete evidence while unchanged siblings stay native
+ok 120 - SYNTHETIC: edited, removed and added lines have complete evidence while unchanged siblings stay native
+  ---
+  duration_ms: 5.533836
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: settlement additions, removals and changed account/direction/amount retain exact sparse evidence
+ok 121 - SYNTHETIC: settlement additions, removals and changed account/direction/amount retain exact sparse evidence
+  ---
+  duration_ms: 1.477831
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: APPROVE, UNAPPROVE and VOID carry workflow evidence without unchanged lines or settlements
+ok 122 - SYNTHETIC: APPROVE, UNAPPROVE and VOID carry workflow evidence without unchanged lines or settlements
+  ---
+  duration_ms: 3.700033
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC: original account/key/body survives trusted hall changes but current access is rechecked
+ok 123 - SYNTHETIC: original account/key/body survives trusted hall changes but current access is rechecked
+  ---
+  duration_ms: 3.135613
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: new save writes native facts/audit/receipt without inventory and preserves trusted creator role
+ok 124 - pg protocol transfer: new save writes native facts/audit/receipt without inventory and preserves trusted creator role
+  ---
+  duration_ms: 13.143105
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: approve locks both warehouses in one canonical ordered set before exact per-endpoint writes
+ok 125 - pg protocol transfer: approve locks both warehouses in one canonical ordered set before exact per-endpoint writes
+  ---
+  duration_ms: 17.192052
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: opposite endpoint failure causes rollback and no commit
+ok 126 - pg protocol transfer: opposite endpoint failure causes rollback and no commit
+  ---
+  duration_ms: 4.620969
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: global actor/key owned by SALES conflicts before decoding or reading transfer
+ok 127 - pg protocol transfer: global actor/key owned by SALES conflicts before decoding or reading transfer
+  ---
+  duration_ms: 1.030873
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: original-key replay decodes exact result then rechecks current target authorization
+ok 128 - pg protocol transfer: original-key replay decodes exact result then rechecks current target authorization
+  ---
+  duration_ms: 3.773295
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: missing coverage remains absent and cannot be inserted
+ok 129 - pg protocol transfer: missing coverage remains absent and cannot be inserted
+  ---
+  duration_ms: 11.092867
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: commit uncertainty discards connection and never retries with a new key
+ok 130 - pg protocol transfer: commit uncertainty discards connection and never retries with a new key
+  ---
+  duration_ms: 3.813745
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: rollback failure discards connection and reports both failures
+ok 131 - pg protocol transfer: rollback failure discards connection and reports both failures
+  ---
+  duration_ms: 0.750748
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: transaction handle cannot escape callback lifetime
+ok 132 - pg protocol transfer: transaction handle cannot escape callback lifetime
+  ---
+  duration_ms: 0.940211
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: absent document race uses CAS and rolls back losing insert
+ok 133 - pg protocol transfer: absent document race uses CAS and rolls back losing insert
+  ---
+  duration_ms: 1.199939
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: warehouse/SKU facts are current locked database facts, not submitted labels
+ok 134 - pg protocol transfer: warehouse/SKU facts are current locked database facts, not submitted labels
+  ---
+  duration_ms: 0.869491
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: UNAPPROVE reads original two endpoint facts and appends linked exact inverses
+ok 135 - pg protocol transfer: UNAPPROVE reads original two endpoint facts and appends linked exact inverses
+  ---
+  duration_ms: 15.036526
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: memo-only SAVE writes no unchanged native lines and audit line arrays stay empty
+ok 136 - pg protocol transfer: memo-only SAVE writes no unchanged native lines and audit line arrays stay empty
+  ---
+  duration_ms: 3.544831
+  type: 'test'
+  ...
+# Subtest: pg protocol transfer: line-position swap writes only the two real changed rows, without transient deactivate-all
+ok 137 - pg protocol transfer: line-position swap writes only the two real changed rows, without transient deactivate-all
+  ---
+  duration_ms: 2.626784
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: 0004 is additive and immutable sales migrations stay byte-for-byte unchanged
+ok 138 - transfer pg SQL-text contract, NOT engine evidence: 0004 is additive and immutable sales migrations stay byte-for-byte unchanged
+  ---
+  duration_ms: 9.679638
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: native transfer headers store trusted runtime provenance without sales money/customer fields
+ok 139 - transfer pg SQL-text contract, NOT engine evidence: native transfer headers store trusted runtime provenance without sales money/customer fields
+  ---
+  duration_ms: 1.704042
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: native lines retain positive bigint quantities, actual SKU identity, snapshots and inactive provenance
+ok 140 - transfer pg SQL-text contract, NOT engine evidence: native lines retain positive bigint quantities, actual SKU identity, snapshots and inactive provenance
+  ---
+  duration_ms: 1.302561
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: generic target/object IDs have closed kind checks and generated real target FKs
+ok 141 - transfer pg SQL-text contract, NOT engine evidence: generic target/object IDs have closed kind checks and generated real target FKs
+  ---
+  duration_ms: 5.698681
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: reciprocal deferred receipt/audit references include kind, target, actor and action
+ok 142 - transfer pg SQL-text contract, NOT engine evidence: reciprocal deferred receipt/audit references include kind, target, actor and action
+  ---
+  duration_ms: 1.98293
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: result shape requires salesId or transferId by kind and rejects missing/null identity
+ok 143 - transfer pg SQL-text contract, NOT engine evidence: result shape requires salesId or transferId by kind and rejects missing/null identity
+  ---
+  duration_ms: 1.370698
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: ledger union is exclusive, FK-backed and preserves sales and exact reversal uniqueness
+ok 144 - transfer pg SQL-text contract, NOT engine evidence: ledger union is exclusive, FK-backed and preserves sales and exact reversal uniqueness
+  ---
+  duration_ms: 1.550207
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: original sales functions stay unchanged behind source/receipt kind dispatch
+ok 145 - transfer pg SQL-text contract, NOT engine evidence: original sales functions stay unchanged behind source/receipt kind dispatch
+  ---
+  duration_ms: 2.262902
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: transfer insertion checks current native header/line, endpoint, quantity, date, version and runtime state
+ok 146 - transfer pg SQL-text contract, NOT engine evidence: transfer insertion checks current native header/line, endpoint, quantity, date, version and runtime state
+  ---
+  duration_ms: 1.713503
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: one reversal means exact original kind, line, endpoint, warehouse, SKU, date, version and signed inverse
+ok 147 - transfer pg SQL-text contract, NOT engine evidence: one reversal means exact original kind, line, endpoint, warehouse, SKU, date, version and signed inverse
+  ---
+  duration_ms: 2.543277
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: final receipts require exact sorted ledger IDs and one FROM/TO pair per current actual line
+ok 148 - transfer pg SQL-text contract, NOT engine evidence: final receipts require exact sorted ledger IDs and one FROM/TO pair per current actual line
+  ---
+  duration_ms: 2.076525
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: final status, version, actors, times and selected native header key fields agree
+ok 149 - transfer pg SQL-text contract, NOT engine evidence: final status, version, actors, times and selected native header key fields agree
+  ---
+  duration_ms: 2.542154
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: sparse changed-line audits never require full-document or previous-draft reconstruction
+ok 150 - transfer pg SQL-text contract, NOT engine evidence: sparse changed-line audits never require full-document or previous-draft reconstruction
+  ---
+  duration_ms: 1.214479
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: every material native line mutation requires exact OLD/NEW sparse SAVE evidence
+ok 151 - transfer pg SQL-text contract, NOT engine evidence: every material native line mutation requires exact OLD/NEW sparse SAVE evidence
+  ---
+  duration_ms: 1.258577
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: creator/owner provenance cannot mutate and posting actions cannot edit native business facts
+ok 152 - transfer pg SQL-text contract, NOT engine evidence: creator/owner provenance cannot mutate and posting actions cannot edit native business facts
+  ---
+  duration_ms: 19.099759
+  type: 'test'
+  ...
+# Subtest: transfer pg SQL-text contract, NOT engine evidence: transfer-only cumulative balance guard preserves negative quantities and unproven missing coverage
+ok 153 - transfer pg SQL-text contract, NOT engine evidence: transfer-only cumulative balance guard preserves negative quantities and unproven missing coverage
+  ---
+  duration_ms: 15.021993
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: save is stock-neutral; approve posts both endpoints with exact quantities and trusted creator
+ok 154 - SYNTHETIC transfer: save is stock-neutral; approve posts both endpoints with exact quantities and trusted creator
+  ---
+  duration_ms: 72.256262
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: same-SKU multiple actual lines retain identity and each two-ended effect
+ok 155 - SYNTHETIC transfer: same-SKU multiple actual lines retain identity and each two-ended effect
+  ---
+  duration_ms: 54.770557
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: approve/unapprove/edit/reapprove exactly reverses old effects before new quantities
+ok 156 - SYNTHETIC transfer: approve/unapprove/edit/reapprove exactly reverses old effects before new quantities
+  ---
+  duration_ms: 14.81261
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: retained removed line survives edit without being reposted
+ok 157 - SYNTHETIC transfer: retained removed line survives edit without being reposted
+  ---
+  duration_ms: 6.448939
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: rejects same warehouse without writes
+ok 158 - SYNTHETIC transfer: rejects same warehouse without writes
+  ---
+  duration_ms: 5.526483
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: rejects empty without writes
+ok 159 - SYNTHETIC transfer: rejects empty without writes
+  ---
+  duration_ms: 2.072744
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: rejects zero without writes
+ok 160 - SYNTHETIC transfer: rejects zero without writes
+  ---
+  duration_ms: 1.669478
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: rejects negative without writes
+ok 161 - SYNTHETIC transfer: rejects negative without writes
+  ---
+  duration_ms: 2.010443
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: rejects duplicate identity without writes
+ok 162 - SYNTHETIC transfer: rejects duplicate identity without writes
+  ---
+  duration_ms: 3.469717
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: rejects duplicate position without writes
+ok 163 - SYNTHETIC transfer: rejects duplicate position without writes
+  ---
+  duration_ms: 2.072857
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: rejects foreign owner without writes
+ok 164 - SYNTHETIC transfer: rejects foreign owner without writes
+  ---
+  duration_ms: 1.204509
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: original-key concurrent replay returns one operation; different content conflicts
+ok 165 - SYNTHETIC transfer: original-key concurrent replay returns one operation; different content conflicts
+  ---
+  duration_ms: 4.70518
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: expectedVersion CAS and state transitions fail closed
+ok 166 - SYNTHETIC transfer: expectedVersion CAS and state transitions fail closed
+  ---
+  duration_ms: 5.430889
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: draft void retains facts and has no stock effects
+ok 167 - SYNTHETIC transfer: draft void retains facts and has no stock effects
+  ---
+  duration_ms: 2.51863
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: ledger:2 failure rolls back both warehouses, evidence and version
+ok 168 - SYNTHETIC transfer: ledger:2 failure rolls back both warehouses, evidence and version
+  ---
+  duration_ms: 17.951109
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: balance:2 failure rolls back both warehouses, evidence and version
+ok 169 - SYNTHETIC transfer: balance:2 failure rolls back both warehouses, evidence and version
+  ---
+  duration_ms: 4.698004
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: document failure rolls back both warehouses, evidence and version
+ok 170 - SYNTHETIC transfer: document failure rolls back both warehouses, evidence and version
+  ---
+  duration_ms: 34.235739
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: audit failure rolls back both warehouses, evidence and version
+ok 171 - SYNTHETIC transfer: audit failure rolls back both warehouses, evidence and version
+  ---
+  duration_ms: 47.264282
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: receipt failure rolls back both warehouses, evidence and version
+ok 172 - SYNTHETIC transfer: receipt failure rolls back both warehouses, evidence and version
+  ---
+  duration_ms: 23.858494
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: one missing endpoint balance is NOT_READY and not implicit zero
+ok 173 - SYNTHETIC transfer: one missing endpoint balance is NOT_READY and not implicit zero
+  ---
+  duration_ms: 22.530845
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: input aliases cannot mutate hash or execution after first await
+ok 174 - SYNTHETIC transfer: input aliases cannot mutate hash or execution after first await
+  ---
+  duration_ms: 6.222209
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: missing or corrupted original endpoint provenance prevents reversal
+ok 175 - SYNTHETIC transfer: missing or corrupted original endpoint provenance prevents reversal
+  ---
+  duration_ms: 49.46535
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: cutoff history is never reversed as runtime ledger
+ok 176 - SYNTHETIC transfer: cutoff history is never reversed as runtime ledger
+  ---
+  duration_ms: 6.45206
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer policy: salesperson may approve and unapprove a visible transfer made by another salesperson
+ok 177 - SYNTHETIC transfer policy: salesperson may approve and unapprove a visible transfer made by another salesperson
+  ---
+  duration_ms: 7.033649
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer policy: trusted creator hall OR either endpoint hall, not creator current hall or client-selected worker
+ok 178 - SYNTHETIC transfer policy: trusted creator hall OR either endpoint hall, not creator current hall or client-selected worker
+  ---
+  duration_ms: 13.82648
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer policy: SAVE checks old and proposed scope, preserving original creator role/hall
+ok 179 - SYNTHETIC transfer policy: SAVE checks old and proposed scope, preserving original creator role/hall
+  ---
+  duration_ms: 4.915849
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer references: unknown/disabled SKU and disabled destination reject; disabled nonzero source exception remains
+ok 180 - SYNTHETIC transfer references: unknown/disabled SKU and disabled destination reject; disabled nonzero source exception remains
+  ---
+  duration_ms: 9.814901
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: unapproval rollback preserves complete original posting
+ok 181 - SYNTHETIC transfer: unapproval rollback preserves complete original posting
+  ---
+  duration_ms: 4.4945
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: audit stores only actual changed-line deltas, never unchanged retained document copies
+ok 182 - SYNTHETIC transfer: audit stores only actual changed-line deltas, never unchanged retained document copies
+  ---
+  duration_ms: 20.422632
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer: same account/key/content replay survives trusted role/hall changes and rechecks current scope
+ok 183 - SYNTHETIC transfer: same account/key/content replay survives trusted role/hall changes and rechecks current scope
+  ---
+  duration_ms: 5.064834
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC transfer references: disabled SKU SAVE may retain/reduce trusted prior aggregate but cannot increase, move endpoints or approve
+ok 184 - SYNTHETIC transfer references: disabled SKU SAVE may retain/reduce trusted prior aggregate but cannot increase, move endpoints or approve
+  ---
+  duration_ms: 16.020209
+  type: 'test'
+  ...
+1..184
+# tests 184
+# suites 0
+# pass 184
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2698.426214

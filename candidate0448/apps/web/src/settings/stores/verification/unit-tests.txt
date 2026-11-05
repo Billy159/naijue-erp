@@ -1,0 +1,32 @@
+✔ four explicit POST reads authenticate+authorize per request, no-store and native unknowns, no write routes/listener (638.196689ms)
+✔ current authentication, exact scope+operation+target and references grants fail closed before native reads (239.052538ms)
+✔ strict JSON/query/body budgets reject forged authority/write fields before policy; Origin delegated to mandatory host (29.619947ms)
+✔ backend and malformed response failures sanitized, abort explicit, no retry (24.40789ms)
+✔ construction inert; cancelled/superseded list results and late denials never publish or invalidate live identity (36.100065ms)
+✔ detail target replacement and list refresh abort/clear old facts; no reuse of list clone or inferred IDs (14.77284ms)
+✔ current list or detail 401/403 clears all private results before callback, without disposing caller parent (8.483949ms)
+✔ identity revision, unmount and forbidden hall-directory discovery clear pending results; no permission escalation (5.185368ms)
+✔ exact same-origin session requests send only executed fields, preserving real FK/native unknowns (56.847497ms)
+✔ wrong targets/ranges/native fields or invented stock/time fail without any fallback (21.555627ms)
+✔ permission/readiness errors sanitized, no retries, aborted calls never dispatch (13.996684ms)
+✔ native reader construction is inert, invalid/target-mismatched/missing scope/pre-aborted grants never acquire (10.38235ms)
+✔ count and page share RR/RO snapshot with exact scope/status/literal search and native FK IDs; NONE never joins references (17.409076ms)
+✔ explicit REFERENCES joins only actual FKs, preserves disabled/cross-hall names; list cannot enumerate target tables (4.660072ms)
+✔ ALL/empty scope, selected hall/status/page are parameterized, out-of-range and null detail are not guessed (5.286891ms)
+✔ corrupt database IDs/versions/states/total/partial pages/out-of-scope rows fail closed and rollback (14.856936ms)
+✔ acquire/begin/read/commit/rollback failures release exactly once, discard uncertain clients, never retry (5.666224ms)
+✔ abort between statements or during acquisition stops further SQL and late publication (4.58936ms)
+✔ inert service requires explicit policy/reader and reauthorizes exact directory/detail scopes and native targets (74.047747ms)
+✔ strict body rejects forged actor/scope/target, write data, unsafe range and invalid UUID before authorization (7.325787ms)
+✔ FK identities and disabled/empty native names survive; unknown creation/stock never become timestamps or zero (5.038039ms)
+✔ injected readers cannot leak out-of-scope rows, ungranted reference names, wrong targets, status or filtered hall (13.77842ms)
+✔ page/total exact snapshot range, duplicate IDs rejected, explicit out-of-range page retained; null detail not guessed (1.62053ms)
+✔ pre-abort, policy abort and late reader abort suppress all subsequent stages/publication (9.398335ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2383.525898

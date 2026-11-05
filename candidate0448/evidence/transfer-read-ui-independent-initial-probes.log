@@ -1,0 +1,86 @@
+✖ strict native detail rejects inconsistent product identity labels (10.899473ms)
+✖ strict native detail rejects inconsistent color identity labels (2.456012ms)
+✖ strict native detail rejects inconsistent FIT identity labels (2.315463ms)
+✖ strict native detail rejects one product mapped to multiple size groups (2.022944ms)
+✔ list, detail and selected-reference shape reject wrong identity and legacy scalar extras (3.013152ms)
+✔ matrix boundaries and exact canonical quantity semantics are preserved (0.930158ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 2
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1326.099667
+
+✖ failing tests:
+
+test at evidence/transfer-read-ui-independent-probes.test.ts:10:1
+✖ strict native detail rejects inconsistent product identity labels (10.899473ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/evidence/transfer-read-ui-independent-probes.test.ts:13:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at evidence/transfer-read-ui-independent-probes.test.ts:15:1
+✖ strict native detail rejects inconsistent color identity labels (2.456012ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/evidence/transfer-read-ui-independent-probes.test.ts:18:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at evidence/transfer-read-ui-independent-probes.test.ts:20:1
+✖ strict native detail rejects inconsistent FIT identity labels (2.315463ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/evidence/transfer-read-ui-independent-probes.test.ts:23:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at evidence/transfer-read-ui-independent-probes.test.ts:25:1
+✖ strict native detail rejects one product mapped to multiple size groups (2.022944ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/evidence/transfer-read-ui-independent-probes.test.ts:30:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

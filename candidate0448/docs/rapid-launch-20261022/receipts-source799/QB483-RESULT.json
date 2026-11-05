@@ -1,0 +1,80 @@
+{
+  "reviewId": "QB483",
+  "decision": "PASS_191_COMMITTED_PREFIX_CONTINUATION_SOURCE_PROTOCOL_ONLY",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-import-record-accounting.ts",
+      "bytes": 65341,
+      "sha256": "e9613bdfdfc7cf183db4a784dae11bb4234d56c2e63c90cc65b9f74c6e0eed4d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-core-staged-prefix-bind.ts",
+      "bytes": 28994,
+      "sha256": "a6d74aa6b695bc9d902634ad9a64a867d50e9f2e9f02d7ee1a359ee82c1b555b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/native-core-staged-prefix-bind.test.ts",
+      "bytes": 16288,
+      "sha256": "46b2b880ac1d3b07c45a7ab9c2622527df9f07d4b6337704a760cd8f6b0a1871"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/native-import-record-accounting-postgres-protocol.test.ts",
+      "bytes": 27208,
+      "sha256": "4ba744175444a0dd83950d5e8c93dcedb7c252308cd6fa05cd8397947db84177"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+      "bytes": 141627,
+      "sha256": "b604994c6cc222cc772dd3b81efaadcb98bb7f8acd69c1eb2e0341d575c683d2"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+      "bytes": 187650,
+      "sha256": "6200257abfba20c3546c7b58e508cb90d8301ee6f37747c2e474ad7a60b21ba4"
+    }
+  ],
+  "scope": "ExactD1four+D3twoleaf increment; accepted472/480/482 reused, no PG/sourcefullread/repeatedsuite",
+  "Standards": {
+    "blockingFindings": []
+  },
+  "Spec": {
+    "blockingFindings": []
+  },
+  "reviewed": {
+    "chain": "Originalcarryforward fullreceipt/audit/checkpoint/claim chain validatesfirst. OnlySTAGED, noIMPORT_CHUNK/PUBLISH, originalBINDauditcontainsproof triggers fullcurrentproof validation. Missinglegacyproof/inapplicablephase null; presentmalformed/wrongidentity/content throws, never silentnull.",
+    "currentRead": "verifyCommittedCoreStagedPrefix22 retains originalcompleteprojection/bytecodec/scopes. Same existingRRtransaction/client,13sequentialDECLARE/FETCH128/CLOSE sets, wholeactualsets withoutbatchfilter soextra/foreign affectroot. Originalauditexpectedroots independentlyretained; doesnot deriveexpectedfromcurrentDB or counts/PASSflags. SKUrecord11fields/UTCmicroseconds included. No connection/transaction/write/SQLbody/ACL change.",
+    "proof": "Strictownshape/version/binding/batch/actor/namespace/selection/cutoff/commandhash, original148preparationfields, schemeoperation/key/hash/approvalpins and orderedgroupstats shape. Actualroots+counts mustequal originalBINDaudit. PairedINIT checkedagain inoriginalchain.",
+    "sourceGate": "sourceauthority assertStagedPrefixContinuation26 revalidates originalexternalgrant/adopted148/INITrefs; originalselectProductionContinuation26 mustselectexactprefix1/unpublishedSTAGED and sameBINDkey/hash/fullBinding/claimchain. Proofbinding/preparation/schemeInitialization exactsourceownedvalues.",
+    "routing": "Onlyproofvalidatedfivegroup membership skipsstaging. HEADERS/TRANSFER_LINES/PRODUCTS/SKUS do notopenstageiterator. STOCK stillconsumes alloriginalgroups through reader.authorize+sourceauthorizeStep tofillstockGroups for originalACCOUNTsourcechecks, butemitsnoduplicatestagewrite. Other6groups originalstagepath. Nullproof originalall11path, nofalsecurrentproof manufactured duringinitialBIND.",
+    "phase": "AfterACCOUNT/PUBLISH no oldSTAGErootcomparison; proofnull, original suffixselector stillpreventsduplicateBIND/commands. Original107ACCOUNT/CLOSURE/PUBLISHbody/hash/key/order and4096stepbudget unchanged.",
+    "lifecycle": "Successclosesallcursors; errorspropagate to existing outerROLLBACK/discard/clientrelease, no failure-toPASS fallback."
+  },
+  "adoptedChecks": {
+    "D1": "9newaffectedprotocolPASS/0fail/0skip andtargetedstrictPASS; prior57checks notrepeated",
+    "D3": "5targetedPASS (2new+3affected), syntaxPASS; old472/480 suites notrepeated",
+    "actualPg": "NOT_EXECUTED_BY_QB_OR_D1_D3"
+  },
+  "cost": {
+    "projectedRows": 751190,
+    "sequentialReadCursors": 13,
+    "expectedFetches": 5879,
+    "rowsPerFetch": 128,
+    "elapsed": "NOT_MEASURED",
+    "performancePass": false
+  },
+  "handoff": "Newfixedconsumerpackage mustexplicitlyrepresent3productionchanges(provider/accountingreader/adapter), accuratecurrentpins andoriginalbaselines. Old188/481closure alone cannotcover changedreader/adapter. C/T45 exactnewcarrier/actualcurrentproof+suffixresult required; no191replay oractualPG byQB.",
+  "notValidated": [
+    "Actualcurrentrootread andruntimeSQLcursor/permissions",
+    "ActualsameR1suffix/main/COMMIT/PUBLISH",
+    "Performance/overallbusinessacceptance"
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "qbNo": [
+    "PG/SSH/server",
+    "sourceedit",
+    "businessrows/fullprefix",
+    "fullsuite",
+    "newchat/subagent"
+  ]
+}

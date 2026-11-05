@@ -1,0 +1,24 @@
+{
+  "id": "B06-ACCOUNT-IDENTITY-49",
+  "status": "EXACT49_IDENTITY_MAPPING_ACCEPTED_NOT_IMPORT_EXECUTED",
+  "atUtc": "2026-10-22T07:57:37.625682+00:00",
+  "outsidePin": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-account-identity-review49-v2.json",
+    "sha256": "4461b088ef16515ddf6163c40a8ec70d8a70c51020e6174669b896e017d7f1bc"
+  },
+  "candidateSha256": "c30deb8dcffcf8349084f5857e31926b9445a0c8a09d377a39fc10a2ca38d802",
+  "acceptedCount": 49,
+  "old45Preserved": true,
+  "new4ExplicitSourcePlanRelation": true,
+  "unlinked": 0,
+  "qa": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice42-private-account-exact4/RESULT.json",
+    "sha256": "b35aed89433a5399090152f070a142670a92ec4895050cf8e3e5bd27eba4cb7a"
+  },
+  "executionAuthorizedByPinAlone": false,
+  "notTested": [
+    "Full49 consumer independent acceptance separate",
+    "Actual server credential wrapping/login/account persistence/PG",
+    "Complete actual target/source/STAGE payload and command execution grant"
+  ]
+}

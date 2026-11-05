@@ -1,0 +1,46 @@
+import assert from 'node:assert/strict';
+import { mkdtemp,rm } from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+import {build} from 'esbuild';
+const here=path.dirname(fileURLToPath(import.meta.url)),temporary=await mkdtemp(path.join(here,'.management-controller-'));
+const uuid=n=>`00000000-0000-0000-0000-${String(n).padStart(12,'0')}`;
+function deferred(){let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});return{promise,resolve,reject};}
+try{
+  const outfile=path.join(temporary,'entry.mjs');await build({entryPoints:[path.join(here,'management-controller-entry.ts')],outfile,bundle:true,platform:'node',format:'esm',external:['react','react/*','react-dom','react-dom/*'],banner:{js:"import {createRequire} from 'node:module';const require=createRequire(import.meta.url);"},jsx:'automatic',loader:{'.css':'empty'},logLevel:'warning'});
+  const {ApplicationController}=await import(pathToFileURL(outfile).href);const controllers=[];
+  const calls=[];const http={origin:'https://synthetic.test',basePath:'/api',fetch:async(url,init)=>{calls.push([url,init]);assert.equal(url,'https://synthetic.test/api/auth/session');return new Response(JSON.stringify({principal:{accountId:uuid(1),staffId:uuid(2),loginName:'SYNTHETIC',role:'SALESPERSON',hallId:uuid(3),authVersion:1}}),{headers:{'content-type':'application/json'}});}};
+  const presentation={renderWorkspace:()=>null,renderRouteState:()=>null};
+  const sheet=()=>({loads:0,disposals:0,async load(){this.loads++;},dispose(){this.disposals++;}});
+  const create=routes=>{const controller=new ApplicationController({http,presentation,routes});controllers.push(controller);return controller;};
+  const disabled=create({});assert.equal(calls.length,0);await disabled.authentication.resolveSession();assert.deepEqual(disabled.routes,[]);
+  for(const route of ['products','product-categories','product-settings','barcode-schemes','store-settings'])assert.equal(await disabled.navigate(route),false);
+  assert.equal(calls.length,1);assert.equal(disabled.getSnapshot().phase,'home');
+  console.log('PASS management default-off: construction/no navigation does no business IO; absent capabilities stay unavailable even for a verified identity.');
+  const failSheet=sheet();for(const tabs of [[],['unknown'],['groups','groups'],['colors','groups','fits','seasons','write']])assert.throws(()=>create({productSettings:{stylesheet:failSheet,allowedTabs:tabs,initialTab:'groups'}}));
+  assert.throws(()=>create({parties:{stylesheet:failSheet,newRequestKey:()=> 'SYNTHETIC-ONLY',readOnly:false}}));
+  assert.throws(()=>create({productSettings:{stylesheet:failSheet,allowedTabs:['groups'],initialTab:'seasons'}}));assert.equal(failSheet.loads,0);
+  for(const value of [{allowedTabs:[],initialTab:'stores',allowHallDirectoryRead:false},{allowedTabs:['stores','stores'],initialTab:'stores',allowHallDirectoryRead:true},{allowedTabs:['stores'],initialTab:'warehouses',allowHallDirectoryRead:false},{allowedTabs:['stores'],initialTab:'stores'},{allowedTabs:['stores'],initialTab:'stores',allowHallDirectoryRead:1}])assert.throws(()=>create({storeSettings:{stylesheet:failSheet,...value}}));
+  const storeSheet=sheet(),storeTabs=['stores','warehouses'];
+  const storeController=create({storeSettings:{stylesheet:storeSheet,allowedTabs:storeTabs,initialTab:'stores',allowHallDirectoryRead:false}});
+  storeTabs.length=0;assert.equal(storeSheet.loads,0);assert.equal(calls.length,1,'Configured store route construction is inert');
+  await storeController.authentication.resolveSession();assert.deepEqual(storeController.routes,['store-settings']);
+  assert.equal(await storeController.navigate('store-settings'),true);assert.equal(storeSheet.loads,1);assert.equal(calls.length,2,'Preparing the route without mounting its View does no business read');
+  const products=sheet(),categories=sheet(),settings=sheet(),schemes=sheet(),target=sheet(),tabs=['groups','seasons'];
+  const controller=create({products:{stylesheet:products,product:{stylesheet:target}},productCategories:{stylesheet:categories},productSettings:{stylesheet:settings,allowedTabs:tabs,initialTab:'groups'},barcodeSchemes:{stylesheet:schemes}});
+  tabs.length=0;await controller.authentication.resolveSession();assert.deepEqual(controller.routes,['products','product-categories','product-settings','barcode-schemes']);
+  assert.equal(await controller.navigate('products'),true);assert.equal(controller.getSnapshot().route,'products');assert.equal(products.loads,1);assert.equal(target.loads,0);
+  assert.equal(await controller.navigate('product-categories'),true);assert.equal(categories.loads,1);
+  assert.equal(await controller.navigate('product-settings'),true);assert.equal(settings.loads,1);assert.equal(controller.getSnapshot().phase,'ready');
+  assert.equal(await controller.navigate('barcode-schemes'),true);assert.equal(schemes.loads,1);assert.equal(calls.length,3);
+  console.log('PASS management explicit capture: route caps/tabs copied, server salesperson role is not silently upgraded or treated as catalogue grant, leaf/style activation is bounded and target action CSS remains untouched.');
+  const gate=deferred(),gateSheet={loads:0,disposals:0,load(){this.loads++;return gate.promise;},dispose(){this.disposals++;}},other=sheet();
+  const pending=create({products:{stylesheet:gateSheet},barcodeSchemes:{stylesheet:other}});await pending.authentication.resolveSession();const first=pending.navigate('products');const abandoned=pending.getSnapshot().scope;
+  assert.equal(pending.getSnapshot().phase,'loading');assert.equal(await pending.navigate('barcode-schemes'),true);assert.equal(abandoned.active,false);gate.resolve();assert.equal(await first,false);assert.equal(pending.getSnapshot().route,'barcode-schemes');
+  const cancelGate=deferred(),cancelled=create({products:{stylesheet:{load:()=>cancelGate.promise,dispose(){}}}});await cancelled.authentication.resolveSession();const loading=cancelled.navigate('products');cancelled.cancelRoute();cancelGate.resolve();assert.equal(await loading,false);assert.equal(cancelled.getSnapshot().phase,'cancelled');
+  const broken=create({products:{stylesheet:{load:async()=>{throw new Error('PRIVATE STYLE FAILURE');},dispose(){}}}});await broken.authentication.resolveSession();assert.equal(await broken.navigate('products'),false);assert.equal(broken.getSnapshot().phase,'error');assert.equal(broken.getSnapshot().scope,null);
+  const allTabs=create({productSettings:{stylesheet:sheet(),allowedTabs:['colors','groups','fits','seasons'],initialTab:'colors'}});await allTabs.authentication.resolveSession();assert.equal(await allTabs.navigate('product-settings'),true);assert.equal(allTabs.getSnapshot().phase,'ready');
+  console.log('PASS management lifecycle: newer navigation, route cancel and CSS failure cannot publish an abandoned prepared route or business read.');
+  for(const value of controllers)value.dispose();assert.equal(products.disposals,1);assert.equal(settings.disposals,1);assert.equal(categories.disposals,1);assert.equal(schemes.disposals,1);assert.equal(target.disposals,1);assert.ok(controllers.every(value=>value.getSnapshot().phase==='disposed'));
+  console.log('PASS management disposal: configured action/route providers release once, no sessions/commands were created.');
+}finally{await rm(temporary,{recursive:true,force:true});}

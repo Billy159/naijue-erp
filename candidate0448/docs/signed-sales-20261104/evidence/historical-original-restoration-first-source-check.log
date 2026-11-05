@@ -1,0 +1,35 @@
+✖ candidate builds exactly on missing-settlement successor with literal single anchors and pins (30.219462ms)
+✔ ordinary historical absence including zero net requires proof, normal settlement equality remains strict (2.427054ms)
+✔ origin requires immutable version-one approved SALE, digest, source and published baseline closure (3.206721ms)
+✔ all actual rows and non-lifecycle header columns must still equal source origin exactly (1.263986ms)
+✔ every audit and receipt version is covered without truncation or gaps (1.207484ms)
+✔ any line or settlement delta or economic header delta anywhere in the chain rejects (1.854717ms)
+✔ sparse header pairs reject omissions, preserve explicit null and compare timestamps as instants (1.679546ms)
+✔ source body leaves ordinary actor, exact line effects and native mutation validators intact (1.622641ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 219.4533
+
+✖ failing tests:
+
+test at tests/historical-original-restoration-sql-source.test.mjs:30:1
+✖ candidate builds exactly on missing-settlement successor with literal single anchors and pins (30.219462ms)
+  AssertionError [ERR_ASSERTION]: missing function standard_whole_package_command_v2
+      at extract (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:11:2)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:33:57)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

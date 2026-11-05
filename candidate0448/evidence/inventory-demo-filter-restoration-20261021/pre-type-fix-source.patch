@@ -1,0 +1,1495 @@
+diff --git a/apps/web/build-preview.mjs b/apps/web/build-preview.mjs
+index 7c7647a..62ef411 100644
+--- a/apps/web/build-preview.mjs
++++ b/apps/web/build-preview.mjs
+@@ -15,6 +15,10 @@ const inventoryStyles = await build({ ...common, entryPoints: ['src/inventory/in
+ for (const [file, output] of Object.entries(inventoryStyles.metafile.outputs)) result.metafile.outputs[file] = output;
+ const pageSizeStyles = await build({ ...common, entryPoints: ['src/demo-controls/single-select.css'], outfile: path.join(outdir, 'chunks/single-select.css'), metafile: true });
+ Object.assign(result.metafile.outputs, pageSizeStyles.metafile.outputs);
++const productSearchStyles = await build({ ...common, entryPoints: ['src/components/product-candidate-action.css'], outfile: path.join(outdir, 'chunks/product-candidate-action.css'), metafile: true });
++Object.assign(result.metafile.outputs, productSearchStyles.metafile.outputs);
++const multiSelectStyles = await build({ ...common, entryPoints: ['src/demo-controls/multi-select.css'], outfile: path.join(outdir, 'chunks/multi-select.css'), metafile: true });
++Object.assign(result.metafile.outputs, multiSelectStyles.metafile.outputs);
+ const head = '<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>奈爵 ERP · TEST ONLY 库存交互预览</title>';
+ await writeFile(path.join(outdir, 'index.html'), `${head}<link rel="stylesheet" href="./main.css"></head><body><div id="root"></div><script type="module" src="./main.js"></script></body></html>`);
+ await writeFile(path.join(outdir, 'metafile.json'), JSON.stringify(result.metafile, null, 2));
+@@ -23,7 +27,7 @@ const standalone = await build({ ...common, entryPoints: ['preview/main.tsx'], w
+ const script = standalone.outputFiles.find(file => file.path.endsWith('.js'))?.text;
+ const css = standalone.outputFiles.find(file => file.path.endsWith('.css'))?.text;
+ if (!script || !css) throw new Error('Standalone preview bundle missing.');
+-await writeFile(path.join(outdir, 'inventory-preview-test-only.html'), `${head}<style data-inventory-inline data-demo-single-select-inline>${(css + await readFile(path.join(outdir, 'chunks/single-select.css'), 'utf8')).replaceAll('</style', '<\\/style')}</style></head><body><div id="root"></div><script>${script.replaceAll('</script', '<\\/script')}</script></body></html>`);
++await writeFile(path.join(outdir, 'inventory-preview-test-only.html'), `${head}<style data-inventory-inline data-demo-single-select-inline data-demo-multi-select-inline data-inventory-product-select-inline>${(css + await readFile(path.join(outdir, 'chunks/single-select.css'), 'utf8') + await readFile(path.join(outdir, 'chunks/multi-select.css'), 'utf8') + await readFile(path.join(outdir, 'chunks/product-candidate-action.css'), 'utf8')).replaceAll('</style', '<\\/style')}</style></head><body><div id="root"></div><script>${script.replaceAll('</script', '<\\/script')}</script></body></html>`);
+ const files = ['index.html', 'main.js', 'main.css', 'inventory-route.js', 'inventory-route.css', 'synthetic-reader.js', 'product-drawer.js', 'product-drawer.css', 'inventory-preview-test-only.html'];
+ for (const file of files) console.log(`${file}: ${(await stat(path.join(outdir, file))).size} bytes`);
+ console.log('Built static files only. No server, listener, deployment, database or network action.');
+diff --git a/apps/web/preview-core-pages/build.mjs b/apps/web/preview-core-pages/build.mjs
+index f25cab0..dff3a2f 100644
+--- a/apps/web/preview-core-pages/build.mjs
++++ b/apps/web/preview-core-pages/build.mjs
+@@ -47,7 +47,7 @@ const sourceSnapshotSha256 = sha(sourceInputHashes.map(row => `${row.sha256}  ${
+ const dependencyLockHashes = await Promise.all(['package.json', 'package-lock.json'].map(async file => ({ file, sha256: sha(await readFile(path.join(repo, file))) })));
+ const safe = (value, tag) => value.replace(new RegExp(`</${tag}`, 'gi'), match => `<\\/${match.slice(2)}`);
+ const html = '<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\'; style-src \'unsafe-inline\'; img-src data:; connect-src \'none\'; object-src \'none\'; base-uri \'none\'; form-action \'none\'">'
+-  + `<meta name="source-base-commit" content="${baseCommit}"><meta name="source-working-tree-snapshot-sha256" content="${sourceSnapshotSha256}"><title>奈爵 ERP · TEST ONLY 三个核心只读页面</title><style data-inventory-inline data-core-preview-inline data-demo-single-select-inline data-demo-multi-select-inline>${safe(css, 'style')}</style></head><body><div id="root"></div><script>${safe(script, 'script')}</script></body></html>`;
++  + `<meta name="source-base-commit" content="${baseCommit}"><meta name="source-working-tree-snapshot-sha256" content="${sourceSnapshotSha256}"><title>奈爵 ERP · TEST ONLY 三个核心只读页面</title><style data-inventory-inline data-core-preview-inline data-demo-single-select-inline data-demo-multi-select-inline data-inventory-product-select-inline>${safe(css, 'style')}</style></head><body><div id="root"></div><script>${safe(script, 'script')}</script></body></html>`;
+ const bytes = Buffer.byteLength(html);
+ if (bytes > 10 * 1024 * 1024) throw new Error(`Portable file exceeds reference-upload limit: ${bytes}; no feature was removed.`);
+ const file = path.join(output, `three-core-pages-synthetic-test-only-${baseCommit.slice(0, 12)}.html`);
+diff --git a/apps/web/preview-core-pages/main.tsx b/apps/web/preview-core-pages/main.tsx
+index c574fb4..ced1fc3 100644
+--- a/apps/web/preview-core-pages/main.tsx
++++ b/apps/web/preview-core-pages/main.tsx
+@@ -10,6 +10,7 @@ import './preview.css';
+ // fixture-style callback is not a production stylesheet/loading capability.
+ import '../src/sales/detail.css';
+ import '../src/demo-controls/single-select.css';
++import '../src/components/product-candidate-action.css';
+ const loadInlineSalesDetailStyles = async (): Promise<void> => {};
+ 
+ type Route = 'inventory' | 'sales' | 'transfers';
+diff --git a/apps/web/src/application/build-application.mjs b/apps/web/src/application/build-application.mjs
+index 6b7b419..a5e71fa 100644
+--- a/apps/web/src/application/build-application.mjs
++++ b/apps/web/src/application/build-application.mjs
+@@ -29,6 +29,8 @@ export async function buildApplication({ entryPoint, outdir }) {
+   Object.assign(result.metafile.outputs, pageSizeStyles.metafile.outputs);
+   const multiSelectStyles = await build({ ...common, entryPoints: [path.join(here, '../demo-controls/multi-select.css')], outfile: path.join(outdir, 'chunks/multi-select.css'), metafile: true });
+   Object.assign(result.metafile.outputs, multiSelectStyles.metafile.outputs);
++  const productSearchStyles = await build({ ...common, entryPoints: [path.join(here, '../components/product-candidate-action.css')], outfile: path.join(outdir, 'chunks/product-candidate-action.css'), metafile: true });
++  Object.assign(result.metafile.outputs, productSearchStyles.metafile.outputs);
+   await writeFile(path.join(outdir, 'metafile.json'), JSON.stringify(result.metafile, null, 2));
+   const manifest = Object.freeze({ entry: 'application.js', styles: styleManifests, productDrawerStyles: 'chunks/product-drawer.css' });
+   await writeFile(path.join(outdir, 'application-assets.json'), JSON.stringify(manifest, null, 2));
+diff --git a/apps/web/src/application/tests/run-build-check.mjs b/apps/web/src/application/tests/run-build-check.mjs
+index c3ab86c..35b606f 100644
+--- a/apps/web/src/application/tests/run-build-check.mjs
++++ b/apps/web/src/application/tests/run-build-check.mjs
+@@ -73,6 +73,15 @@ try {
+   for (const file of multiStyleInputs) assert.doesNotMatch(file, /dist\/css\/arco\.css|\/transfers\/|\/sales\//, 'Shared action CSS contains component leaves, not route/global styles');
+   const emittedMultiAction = await readFile(path.resolve(workingDirectory, multiCopies[0][0]), 'utf8');
+   assert.match(emittedMultiAction, /multi-select\.css/, 'The shared action resolves its separately emitted CSS beside its chunk');
++  const productSearch = closure(entryFor('../components/product-candidate-action.tsx'));
++  assert.ok([...inputsOf(productSearch)].some(file => file.endsWith('/es/Select/index.js')), 'Product finder uses the source Select leaf');
++  for (const file of inputsOf(inventoryRoute)) assert.doesNotMatch(file, /product-candidate-(?:action|styles)\.(?:tsx?|css)$/, 'Inventory defers product search action and styles');
++  const productStyles = byAbsolute.get(path.join(outdir, 'chunks/product-candidate-action.css')); assert.ok(productStyles);
++  assert.ok(Object.keys(outputs[productStyles].inputs).some(file => file.endsWith('/components/product-candidate-action.css')));
++  for (const file of Object.keys(outputs[productStyles].inputs)) assert.doesNotMatch(file, /dist\/css\/arco\.css|\/es\/style\/index\.css/, 'Product search imports leaves only, not Arco global reset');
++  assert.match(await readFile(path.resolve(workingDirectory, productStyles), 'utf8'), /inv-menu-grid/);
++  const productActionOutput = [...productSearch].find(name => Object.keys(outputs[name].inputs).some(file => file.endsWith('/components/product-candidate-styles.ts')));
++  assert.ok(productActionOutput); assert.match(await readFile(path.resolve(workingDirectory, productActionOutput), 'utf8'), /product-candidate-action\.css/);
+   const startupInputs = inputsOf(startup);
+   for (const file of startupInputs) assert.doesNotMatch(file, /\/(?:inventory|sales|parties|transfers)\/|synthetic|preview\//);
+   for (const [name, route] of [['startup', startup], ['inventory', inventoryRoute], ['sales', salesRoute]]) {
+diff --git a/apps/web/src/components/candidate-selector.tsx b/apps/web/src/components/candidate-selector.tsx
+index 97c1df4..b0a1348 100644
+--- a/apps/web/src/components/candidate-selector.tsx
++++ b/apps/web/src/components/candidate-selector.tsx
+@@ -1,103 +1,115 @@
+-import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
+-import { LatestQuery } from '../loading/latest-query.ts';
++import { useLayoutEffect, useMemo, useRef, useState, type ComponentType } from 'react';
+ import { ReadScope } from '../loading/read-scope.ts';
+-import type { CandidateKind, CandidatePage, CandidateParameters, InventoryReader, Selection } from '../inventory/contracts.ts';
++import type { PopupOwnership } from '../demo-controls/popup-ownership.ts';
++import { DemoMultiSelect } from '../demo-controls/multi-select.tsx';
++import type { DemoMultiOption } from '../demo-controls/multi-select-contract.ts';
++import type { Candidate, Selection } from '../inventory/contracts.ts';
++import type { CandidateSelectorProps, ProductCandidateActionProps, ProductCandidateActionModule } from './candidate-selector-contract.ts';
++import { useInventoryFilterPopupHost } from './inventory-filter-popup-host.ts';
++import { InventoryCandidateMenu } from './inventory-candidate-menu.tsx';
++import type { InventoryCandidateSnapshot } from './inventory-candidates.ts';
+ 
+-interface Props {
+-  readonly label: string;
+-  readonly kind: CandidateKind;
+-  readonly selected: readonly Selection[];
+-  readonly multiple?: boolean;
+-  readonly reader: InventoryReader;
+-  readonly scope: ReadScope;
+-  readonly categoryId: string | null;
+-  readonly placeholder?: string;
+-  readonly onChange: (items: readonly Selection[]) => void;
++const noCategoryRestriction: readonly string[] = Object.freeze([]);
++export function CandidateSelector(props: CandidateSelectorProps) {
++  const localHost = useInventoryFilterPopupHost(props.scope, props.popupHost === undefined);
++  const fields = { ...props, categoryIds: props.kind === 'category' || props.kind === 'warehouse' ? noCategoryRestriction : props.categoryIds, popupHost: props.popupHost === undefined ? localHost : props.popupHost };
++  return props.kind === 'product' ? <ProductSelector {...fields} /> : <ReferenceSelector {...fields} />;
+ }
+-
+-/** Reuses selection behavior, not a global candidate/catalog store. */
+-export function CandidateSelector(props: Props) {
+-  const [open, setOpen] = useState(false);
+-  const root = useRef<HTMLDivElement>(null);
+-  const trigger = useRef<HTMLButtonElement>(null);
+-  const id = useId();
+-  useEffect(() => {
+-    if (!open) return;
+-    const outside = (event: PointerEvent) => { if (event.target instanceof Node && !root.current?.contains(event.target)) setOpen(false); };
+-    document.addEventListener('pointerdown', outside);
+-    return () => document.removeEventListener('pointerdown', outside);
+-  }, [open]);
+-  return <div className={`iw-field ${props.kind === 'product' ? 'iw-product-field' : ''}`} ref={root}>
+-    <label id={`${id}-label`}>{props.label}</label>
+-    <button ref={trigger} type="button" className="iw-control" aria-labelledby={`${id}-label ${id}-value`} aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(value => !value)}>
+-      <span id={`${id}-value`} className={props.selected.length ? '' : 'muted'}>{props.selected.length ? props.selected.map(item => item.label).join('、') : props.placeholder ?? `全部${props.label}`}</span><span aria-hidden="true">⌄</span>
+-    </button>
+-    {open && <CandidatePopup {...props} id={id} close={() => { setOpen(false); trigger.current?.focus(); }} />}
++function ReferenceSelector(props: CandidateSelectorProps) {
++  const [search, setSearch] = useState(''); const [state, setState] = useState<InventoryCandidateSnapshot | null>(null);
++  const [notice, setNotice] = useState(''); const [explicit, setExplicit] = useState<Selection | null>(null);
++  const loadMore = useRef<(() => void) | null>(null);
++  const ownerKey = useMemo(() => ({ reader: props.reader, kind: props.kind, categories: props.categoryIds.join('\0') }), [props.reader, props.kind, props.categoryIds.join('\0')]);
++  const current = state?.search === search.trim() ? state : null; const candidates = current?.items ?? [];
++  const options = new Map([...props.selected, ...candidates].map(item => [item.id, item]));
++  const clearNotice = () => { setNotice(''); setExplicit(null); };
++  const incomplete = (option: DemoMultiOption, reason?: 'branch-exclusion') => {
++    const item = options.get(option.id); if (!item || 'disabled' in item && item.disabled) return;
++    setExplicit(item); setNotice(reason === 'branch-exclusion' ? '已选择整个分类分支，当前查询不支持只排除其中一个子分类。' : props.kind === 'category' ? '全部分类范围可能包含未分类商品，不能从全部范围排除单项。' : search.trim() ? '搜索结果不代表全部范围，不能据此排除单项。' : '候选尚未完整确认，不能从全部范围排除单项。');
++  };
++  return <div className="iw-field"><label>{props.label}</label><DemoMultiSelect scope={props.scope} popupHost={props.popupHost ?? null}
++    ownerKey={ownerKey} label={props.label} allLabel={props.kind === 'category' ? '全部分类' : `全部${props.label}`}
++    {...(props.kind === 'category' ? { hierarchy: 'category-branches' as const } : {})}
++    options={candidates.map(toMultiOption)}
++    selectedOptions={props.selected.map(toMultiOption)} value={props.selected.map(item => item.id)}
++    completeUniverse={current?.completeUniverse ?? false} onIncompleteSelection={incomplete}
++    onChange={ids => {
++      if (ids.length > 100) { setNotice('最多可明确选择 100 项，请减少选择。'); return; }
++      const selected = ids.map(id => options.get(id));
++      if (selected.some(item => !item)) { setNotice('候选已变化，请重新打开后选择。'); return; }
++      if (selected.some(item => item && 'disabled' in item && item.disabled && !props.selected.some(value => value.id === item.id))) { setNotice('该候选不可新选，已选条件未改变。'); return; }
++      clearNotice(); props.onChange(selected.filter((item): item is Selection => !!item));
++    }} search={search} onSearch={value => { setSearch(value); clearNotice(); }} menuItemLimit={202}
++    onMenuScroll={event => { const element = event.currentTarget; if (element.scrollHeight > element.clientHeight && element.scrollTop + element.clientHeight >= element.scrollHeight - 8) loadMore.current?.(); }}
++    onPopupClose={() => { setSearch(''); setState(null); clearNotice(); loadMore.current = null; }}
++    renderMenu={(menu, scope) => <InventoryCandidateMenu scope={scope} reader={props.reader} kind={props.kind} label={props.label}
++      categoryIds={props.categoryIds} selected={props.selected} search={search} setState={setState} loadMore={loadMore} menu={menu}
++      notice={notice} explicit={explicit} chooseExplicit={() => { if (scope.active && explicit && !('disabled' in explicit && explicit.disabled)) { props.onChange([explicit]); setSearch(''); clearNotice(); } }} />} />
+   </div>;
+ }
+ 
+-function CandidatePopup(props: Props & { readonly id: string; readonly close: () => void }) {
+-  const [owner, setOwner] = useState<{ parent: ReadScope; reader: InventoryReader; kind: CandidateKind; scope: ReadScope; query: LatestQuery<CandidateParameters, CandidatePage> } | null>(null);
+-  useEffect(() => {
+-    // Own scopes/queries in setup, not render. Replay disposes the abandoned
+-    // activation and creates a new one; a real close still aborts immediately.
+-    const scope = new ReadScope(props.scope.identity, `${props.scope.routeInstanceId}:candidate:${props.id}`, null, () => {});
+-    const query = new LatestQuery<CandidateParameters, CandidatePage>({ scope, execute: async read => {
+-      const result = await props.reader.readCandidates(read);
+-      if (!Number.isSafeInteger(result.exactTotal) || result.exactTotal < 0 || result.page !== read.parameters.page || result.items.length > read.parameters.pageSize || new Set(result.items.map(item => item.id)).size !== result.items.length) throw new Error('候选响应无效，请重新加载。');
+-      return result;
++function ProductSelector(props: CandidateSelectorProps) {
++  const host = useRef<HTMLDivElement>(null); const input = useRef<HTMLInputElement>(null);
++  const suppressOpen = useRef(false); const attached = useRef(false); const generation = useRef(0); const sequence = useRef(0);
++  const pending = useRef<Promise<void> | null>(null); const styles = useRef<ReturnType<ProductCandidateActionModule['createInventoryProductSelectStyles']> | null>(null);
++  const owned = useRef<{ scope: ReadScope; ownership: PopupOwnership } | null>(null);
++  const live = useRef(props); live.current = props;
++  const [activation, setActivation] = useState<ReadScope | null>(null); const [search, setSearch] = useState('');
++  const [View, setView] = useState<ComponentType<ProductCandidateActionProps> | null>(null);
++  const [phase, setPhase] = useState<'idle' | 'loading' | 'error'>('idle');
++  const clearPending = () => { generation.current++; pending.current = null; styles.current?.dispose(); styles.current = null; setPhase('idle'); };
++  const available = () => attached.current && live.current.scope.active && !!live.current.popupHost && !live.current.popupHost.controller.disposed;
++  useLayoutEffect(() => {
++    attached.current = true; suppressOpen.current = false; setSearch(''); setView(null); clearPending();
++    const abort = () => { owned.current?.ownership.dispose(); clearPending(); setActivation(null); setSearch(''); setView(null); };
++    props.scope.signal.addEventListener('abort', abort, { once: true });
++    return () => { attached.current = false; props.scope.signal.removeEventListener('abort', abort); owned.current?.ownership.dispose(); clearPending(); };
++  }, [props.scope, props.reader, props.productReader, props.popupHost]);
++  const open = () => {
++    if (suppressOpen.current || !available() || !host.current || !live.current.popupHost || owned.current?.ownership.active) return;
++    const parent = live.current.scope; const scope = new ReadScope(parent.identity, `${parent.routeInstanceId}:product-search:${++sequence.current}`, null, () => {});
++    let detach = () => {};
++    const ownership = live.current.popupHost.controller.open({ signal: parent.signal, onClose: reason => {
++      scope.dispose(); detach(); if (owned.current?.scope !== scope) return;
++      const restore = (reason === 'escape' || reason === 'close') && !!host.current?.contains(document.activeElement);
++      owned.current = null; setActivation(null); setSearch('');
++      if (pending.current) { clearPending(); setView(null); }
++      if (restore) queueMicrotask(() => { if (attached.current && live.current.scope === parent && parent.active && !owned.current) {
++        suppressOpen.current = true; const element = host.current?.querySelector<HTMLInputElement>('input:not([type="hidden"])'); element?.focus({ preventScroll: true }); queueMicrotask(() => { suppressOpen.current = false; });
++      } });
+     } });
+-    const dispose = () => { scope.dispose(); setOwner(null); };
+-    props.scope.signal.addEventListener('abort', dispose, { once: true });
+-    if (props.scope.active) setOwner({ parent: props.scope, reader: props.reader, kind: props.kind, scope, query }); else dispose();
+-    return () => { props.scope.signal.removeEventListener('abort', dispose); query.dispose(); scope.dispose(); };
+-  }, [props.scope, props.reader, props.kind, props.id]);
+-  return owner?.parent === props.scope && owner.reader === props.reader && owner.kind === props.kind && owner.scope.active
+-    ? <CandidateRead {...props} scope={owner.scope} query={owner.query} /> : null;
+-}
+-
+-function CandidateRead(props: Omit<Props, 'scope'> & { readonly scope: ReadScope; readonly query: LatestQuery<CandidateParameters, CandidatePage>; readonly id: string; readonly close: () => void }) {
+-  const [search, setSearch] = useState('');
+-  const [page, setPage] = useState(1);
+-  const searchInput = useRef<HTMLInputElement>(null);
+-  const { query } = props;
+-  const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
+-  useEffect(() => {
+-    searchInput.current?.focus();
+-    // Leaf replay cancels only the pending read. The popup owner, above, is
+-    // responsible for permanent teardown and parent identity invalidation.
+-    return () => query.cancel();
+-  }, [query]);
+-  useEffect(() => {
+-    // Opening is the first read. Debounce only this open control's candidate search.
+-    const timer = setTimeout(() => { void query.run({ kind: props.kind, search: search.trim(), page, pageSize: 20, selectedIds: props.selected.map(item => item.id), categoryId: props.categoryId }); }, search ? 180 : 0);
+-    return () => clearTimeout(timer);
+-    // Selected values stay visible even when outside this response page; selecting is not a new read.
+-    // eslint-disable-next-line react-hooks/exhaustive-deps
+-  }, [search, page, query, props.kind, props.categoryId]);
+-  const matchingResponse = snapshot.success?.parameters.search === search.trim() && snapshot.success.parameters.page === page && snapshot.success.parameters.categoryId === props.categoryId;
+-  const result = matchingResponse ? snapshot.success?.data : undefined;
+-  const pending = snapshot.phase === 'loading' || !matchingResponse && snapshot.phase !== 'error';
+-  const toggle = (item: Selection) => {
+-    const next = props.multiple
+-      ? props.selected.some(value => value.id === item.id) ? props.selected.filter(value => value.id !== item.id) : [...props.selected, { id: item.id, label: item.label }]
+-      : [{ id: item.id, label: item.label }];
+-    props.onChange(next);
+-    if (!props.multiple) props.close();
++    if (!ownership) { scope.dispose(); return; }
++    detach = live.current.popupHost.attach(ownership, host.current); owned.current = { scope, ownership }; setActivation(scope);
++  };
++  const prepare = () => {
++    if (suppressOpen.current || !available()) return; open();
++    if (View || pending.current) return;
++    const current = ++generation.current; const parent = props.scope; setPhase('loading');
++    const owns = () => available() && live.current.scope === parent && generation.current === current;
++    pending.current = import('./product-candidate-action.tsx').then(async module => {
++      if (!owns() || !host.current) return;
++      const lease = module.createInventoryProductSelectStyles(host.current.ownerDocument); styles.current = lease; await lease.load();
++      if (owns()) { setView(() => module.ProductCandidateAction); setPhase('idle'); }
++    }).catch(() => { if (owns()) { pending.current = null; clearPending(); setPhase('error'); owned.current?.ownership.close(); } })
++      .finally(() => { if (generation.current === current) pending.current = null; });
++    void pending.current;
+   };
+-  return <div className="iw-popover" role="dialog" aria-label={`选择${props.label}`} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); props.close(); } }}>
+-    <div className="iw-pop-head"><strong>选择{props.label}</strong><button type="button" className="iw-text-button" onClick={props.close} aria-label={`关闭${props.label}选择`}>×</button></div>
+-    <input ref={searchInput} className="iw-search" aria-label={`搜索${props.label}`} value={search} placeholder={props.kind === 'product' ? '商品款号 / 名称 / 系统货号' : `搜索${props.label}`} onChange={event => { query.cancel(); setSearch(event.target.value); setPage(1); }} onKeyDown={event => { if (event.key === 'Enter') event.preventDefault(); }} />
+-    <button type="button" className="iw-option iw-all-option" onClick={() => props.onChange([])}><span aria-hidden="true">{props.selected.length ? '□' : '✓'}</span> 全部{props.label}</button>
+-    <div className="iw-option-list" aria-busy={pending}>
+-      {pending && <p className="iw-inline-state" role="status">正在加载候选…</p>}
+-      {snapshot.phase === 'error' && <div className="iw-inline-state" role="alert">候选暂不可读取，已选条件未改变。<button type="button" className="iw-link" onClick={() => { if (snapshot.request) void query.run(snapshot.request.parameters); }}>重试</button></div>}
+-      {snapshot.phase === 'success' && result?.items.length === 0 && <p className="iw-inline-state">无匹配候选</p>}
+-      {snapshot.phase === 'success' && result?.items.map(item => <label key={item.id} className={`iw-option ${item.disabled ? 'muted' : ''}`} style={item.depth === 1 ? { paddingLeft: 28 } : undefined}>
+-        <input type={props.multiple ? 'checkbox' : 'radio'} name={props.id} checked={props.selected.some(value => value.id === item.id)} disabled={item.disabled} onChange={() => toggle(item)} />
+-        <span>{item.parentLabel && <small className="muted">{item.parentLabel} / </small>}{item.label}{item.disabled && '（不可新选）'}</span>
+-      </label>)}
+-    </div>
+-    <footer><span>{result && snapshot.phase === 'success' ? `共 ${result.exactTotal} 项` : '候选按需读取'}</span><div className="iw-actions"><button type="button" className="iw-text-button" disabled={page <= 1 || pending} onClick={() => setPage(value => value - 1)}>上一页</button><button type="button" className="iw-text-button" disabled={!result || page * 20 >= result.exactTotal || pending} onClick={() => setPage(value => value + 1)}>下一页</button><button type="button" className="iw-button" onClick={props.close}>完成</button></div></footer>
++  const enabled = props.scope.active && !!props.popupHost && !props.popupHost.controller.disposed;
++  return <div ref={host} className="iw-field iw-product-field inventory-product-control" onBlur={event => {
++    if (event.currentTarget.contains(event.relatedTarget as Node | null)) return;
++    const ticket = generation.current; queueMicrotask(() => { if (attached.current && generation.current === ticket && !host.current?.contains(document.activeElement)) owned.current?.ownership.close(); });
++  }}>
++    <label>{props.label}</label>
++    {View ? <View {...props} search={search} onSearch={setSearch} open={!!activation?.active} activationScope={activation}
++      focusOnMount={!!host.current?.contains(document.activeElement)} onOpen={next => { if (next) open(); else owned.current?.ownership.close(); }} />
++      : <div className="iw-product-search-shell"><input ref={input} className="iw-product-input" role="combobox" aria-label="商品搜索，多选" aria-expanded={!!activation?.active} aria-autocomplete="list"
++        disabled={!enabled} value={search} placeholder={props.placeholder ?? '商品款号 / 名称 / 系统货号'}
++        onFocus={prepare} onClick={prepare} onChange={event => { setSearch(event.target.value); prepare(); }}
++        onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); event.stopPropagation(); prepare(); } }} /><SearchIcon /></div>}
++    {phase === 'loading' && <span className="iw-filter-load-state" role="status">正在加载商品搜索…</span>}
++    {phase === 'error' && <span className="iw-filter-load-state" role="alert">商品搜索未加载。<button type="button" className="iw-link" onClick={prepare}>重试加载</button></span>}
+   </div>;
+ }
++function SearchIcon() { return <svg className="iw-search-icon" aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="4"><circle cx="21" cy="21" r="13"/><path d="m31 31 10 10"/></svg>; }
++
++function toMultiOption(item: Candidate): DemoMultiOption { return { id: item.id, name: item.label, ...(item.disabled === undefined ? {} : { disabled: item.disabled }), ...(item.parentId === undefined ? {} : { parentId: item.parentId }) }; }
+diff --git a/apps/web/src/development-host/tests/run-build-check.mjs b/apps/web/src/development-host/tests/run-build-check.mjs
+index 63a9184..304fd61 100644
+--- a/apps/web/src/development-host/tests/run-build-check.mjs
++++ b/apps/web/src/development-host/tests/run-build-check.mjs
+@@ -64,6 +64,10 @@ try {
+   for (const route of ['inventory', 'sales']) for (const file of inputsOf(closure(entryFor(`routes/${route}.tsx`)))) assert.doesNotMatch(file, /@arco-design\//);
+   for (const file of inputsOf(closure(entryFor('routes/transfers.tsx')))) assert.doesNotMatch(file, /detail-content\.tsx$|product-drawer-host\.tsx$|product-http-reader\.ts$|\/tests\//);
+   assert.ok(entryFor('../sales/detail-content.tsx')); assert.ok(entryFor('../transfers/detail-content.tsx')); assert.ok(entryFor('../inventory/product-drawer.tsx'));
++  assert.ok(entryFor('../components/product-candidate-action.tsx'));
++  const productStyles = byAbsolute.get(path.join(outdir, 'chunks/product-candidate-action.css')); assert.ok(productStyles);
++  assert.match(await readFile(path.join(outdir, 'chunks/product-candidate-action.css'), 'utf8'), /inv-menu-grid/);
++  for (const file of Object.keys(outputs[productStyles].inputs)) assert.doesNotMatch(file, /dist\/css\/arco\.css|\/es\/style\/index\.css/);
+   const css = Object.fromEntries(await Promise.all(Object.entries(result.manifest.styles).map(async ([key, filename]) => [key, await readFile(path.join(outdir, filename), 'utf8')])));
+   assert.match(css.application, /auth-panel/); assert.match(css.application, /demo-ui/);
+   assert.doesNotMatch(withoutSharedFocusInputExclusion(css.application), /\.mx-|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);
+diff --git a/apps/web/src/inventory/inventory-page.tsx b/apps/web/src/inventory/inventory-page.tsx
+index a1d50ad..b57fd4e 100644
+--- a/apps/web/src/inventory/inventory-page.tsx
++++ b/apps/web/src/inventory/inventory-page.tsx
+@@ -4,6 +4,7 @@ import type { Selection } from './contracts.ts';
+ import type { ProductReadOnlyReader } from './product-contracts.ts';
+ import { ProductDrawerHost } from './product-drawer-host.tsx';
+ import { EmptyIcon } from '../demo-presentation/icons.tsx';
++import { useInventoryFilterPopupHost } from '../components/inventory-filter-popup-host.ts';
+ import { CandidateSelector } from '../components/candidate-selector.tsx';
+ import { InventoryPagination } from '../components/pagination.tsx';
+ import { emptyInventoryFilter, type InventoryActions, type InventoryFilter, type InventoryPageSize, type InventoryParameters, type InventoryReader } from './contracts.ts';
+@@ -17,11 +18,11 @@ export interface InventoryPageProps {
+   readonly productReader: ProductReadOnlyReader;
+   readonly actions?: Pick<InventoryActions, 'onOpenCell'>;
+ }
+-const names = { products: '商品', category: '商品分类', warehouses: '仓库', suppliers: '供应商', fits: '版型', seasons: '季节' };
++const names = { products: '商品', categories: '商品分类', warehouses: '仓库', suppliers: '供应商', fits: '版型', seasons: '季节' };
+ function scopeLines(filter: InventoryFilter): string[] {
+   return (Object.keys(names) as (keyof typeof names)[]).map(key => {
+     const value = filter[key];
+-    const labels = key === 'category' ? filter.category ? [filter.category.label] : [] : (value as readonly { label: string }[]).map(item => item.label);
++    const labels = (value as readonly { label: string }[]).map(item => item.label);
+     return `${names[key]}：${labels.length ? labels.join('、') : '全部'}`;
+   });
+ }
+@@ -82,7 +83,8 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, quer
+     if (success) run({ ...success.parameters, page: 1, pageSize: size });
+     else setInitialPageSize(size);
+   };
+-  const fields = { reader, scope, categoryId: draft.category?.id ?? null };
++  const filterPopupHost = useInventoryFilterPopupHost(scope);
++  const fields = { reader, scope, productReader, popupHost: filterPopupHost, categoryIds: draft.categories.map(item => item.id) };
+   const settingLabels: Readonly<Record<keyof InventoryDisplaySettings, string>> = { category: '商品分类', supplier: '供应商', fit: '版型', sizeGroup: '尺码组', season: '季节', subtotal: '颜色小计', total: '商品合计', sizeDescription: '显示尺码组说明' };
+   if (snapshot.phase === 'disposed') return <div className="iw-empty" role="status"><strong>当前读取范围已关闭</strong><p>请重新进入库存页。旧身份结果已清除。</p></div>;
+   return <div className="iw-workbench">
+@@ -90,7 +92,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, quer
+     <form className="iw-query" aria-label="库存筛选" onSubmit={event => { event.preventDefault(); run({ filter: draft, page: 1, pageSize: displayedPageSize }); }}>
+       <div className="iw-query-row">
+         <CandidateSelector {...fields} kind="product" label="商品" selected={draft.products} multiple placeholder="商品款号 / 名称 / 系统货号" onChange={products => setDraft(value => ({ ...value, products }))} />
+-        <CandidateSelector {...fields} kind="category" label="商品分类" selected={draft.category ? [draft.category] : []} onChange={items => setDraft(value => ({ ...value, category: items[0] ?? null }))} />
++        <CandidateSelector {...fields} kind="category" label="商品分类" selected={draft.categories} multiple onChange={categories => setDraft(value => ({ ...value, categories }))} />
+         <CandidateSelector {...fields} kind="warehouse" label="仓库" selected={draft.warehouses} multiple onChange={warehouses => setDraft(value => ({ ...value, warehouses }))} />
+         <div className="iw-query-actions"><button type="button" className="iw-text-button iw-filter-toggle" aria-expanded={advanced} aria-controls="iw-advanced" onClick={() => setAdvanced(value => !value)}>{advanced ? '收起筛选 ⌃' : '高级筛选 ⌄'}</button><button type="submit" className="iw-button iw-primary">查询</button><button type="button" className="iw-button iw-reset" onClick={() => setDraft(emptyInventoryFilter())}>重置</button></div>
+       </div>
+diff --git a/apps/web/src/inventory/inventory.css b/apps/web/src/inventory/inventory.css
+index 3ee945c..94fc3bc 100644
+--- a/apps/web/src/inventory/inventory.css
++++ b/apps/web/src/inventory/inventory.css
+@@ -100,3 +100,12 @@
+ @media(max-width:1200px){.iw-result-tools,.iw-stats{flex-wrap:wrap}.iw-workbench{max-height:calc(100dvh - 68px)}}
+ @media(max-width:1100px){.iw-query{--iw-filter-columns:minmax(220px,2fr) minmax(150px,1fr) minmax(160px,1fr)}.iw-query-row{grid-template-columns:var(--iw-filter-columns)}.iw-query-actions{display:flex;grid-column:1/-1;gap:8px}.iw-query-actions>.iw-button,.iw-query-actions>.iw-text-button{width:92px}.iw-advanced{width:100%}}
+ @media(max-width:740px){.iw-query-row{grid-template-columns:repeat(2,minmax(0,1fr))}.iw-query-row .iw-product-field{grid-column:1/-1}.iw-advanced{grid-template-columns:1fr}.iw-empty{height:210px;min-height:210px}}
++
++/* Frozen inventory-select.jsx direct search shell, before the action-only Select loads. */
++.iw-product-search-shell{position:relative;width:100%;height:32px}
++.iw-product-input{box-sizing:border-box;width:100%;height:32px;padding:0 35px 0 11px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);color:var(--ca-ink);font:13px var(--ca-font-sans);outline:none}
++.iw-product-input::placeholder{color:var(--ca-control-placeholder)}
++.iw-product-input:focus{border-color:var(--ca-control-focus-border);background:var(--ca-surface)}
++.iw-search-icon{position:absolute;right:11px;top:9px;width:14px;height:14px;color:var(--ca-ink-2);pointer-events:none}
++.iw-filter-load-state{position:absolute;z-index:1600;top:calc(100% + 4px);left:0;padding:7px 10px;background:var(--ca-popover-bg);border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);font-size:12px}
++.iw-filter-notice{margin:0;padding:6px 8px;color:var(--ca-ink-2);font-size:12px;line-height:18px}
+diff --git a/apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs b/apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs
+index a5288e8..3bd764c 100644
+--- a/apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs
++++ b/apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs
+@@ -10,7 +10,7 @@ import { JSDOM } from 'jsdom';
+ // JSDOM proves lifecycle/event contracts, not browser implicit submission/layout.
+ const here = path.dirname(fileURLToPath(import.meta.url));
+ const temporary = await mkdtemp(path.join(here, '.inventory-query-lifecycle-'));
+-const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline></style><div id="root"></div><button id="outside">outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
++const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline data-demo-multi-select-inline data-inventory-product-select-inline></style><div id="root"></div><button id="outside">outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+ for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLDialogElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+ Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
+ dom.window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } });
+@@ -52,7 +52,7 @@ try {
+     return { ...data, products: data.products.map(product => ({ ...product, name })) };
+   };
+   const succeedInventory = async (request, name) => resolve(request, await inventoryData(request, name));
+-  const candidateData = (request, label = 'CURRENT CANDIDATE') => ({ page: request.read.parameters.page, exactTotal: 1, items: [{ id: `candidate-${label}`, label }] });
++  const candidateData = (request, label = 'CURRENT CANDIDATE') => ({ page: request.read.parameters.page, exactTotal: 1, items: [{ id: `candidate-${label}`, label, code: `CODE-${label}`, name: label }] });
+   const type = async (input, value) => act(async () => {
+     Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, value);
+     input.dispatchEvent(new Event('input', { bubbles: true }));
+@@ -92,7 +92,7 @@ try {
+   await reject(replaced, 'LATE REPLACED INVENTORY FAILURE'); assert.equal(host.querySelector('[role=alert]'), null);
+   await submit(); const other = latest('inventory'); assert.deepEqual(other.read.identity, identity('TEST-OTHER-IDENTITY', '2'));
+   await succeedInventory(other, 'OTHER IDENTITY FACT');
+-  await click(host.querySelector('.iw-product-field .iw-control')); await settle(); const revokedCandidate = latest('candidate');
++  await click(host.querySelector('.iw-product-field input')); await settle(); await type(host.querySelector('.iw-product-field input'), 'revoke'); await settle(220); const revokedCandidate = latest('candidate');
+   await click(button('刷新')); const revokedInventory = latest('inventory');
+   await act(async () => otherContext.replaceIdentity(identity('TEST-OTHER-IDENTITY', '3')));
+   assert.equal(revokedInventory.read.signal.aborted, true); assert.equal(revokedCandidate.read.signal.aborted, true);
+@@ -107,58 +107,134 @@ try {
+ 
+   const candidateContext = new ReadContext(identity('TEST-CANDIDATE'));
+   scope = candidateContext.createScope('TEST-CANDIDATE');
+-  let selected = [], fullSubmits = 0, uncancelledEnter = 0, categoryId = null;
++  let selected = [], fullSubmits = 0, uncancelledEnter = 0, categoryIds = [], candidateProductReader;
+   const renderCandidate = async () => act(async () => root.render(h(StrictMode, null,
+     h('form', { 'aria-label': 'candidate parent form', onSubmit: event => { event.preventDefault(); fullSubmits++; }, onKeyDown: event => { if (event.key === 'Enter' && !event.defaultPrevented) uncancelledEnter++; } },
+-      h(CandidateSelector, { scope, reader, kind: 'product', label: '商品', multiple: true, selected, categoryId, onChange: value => { selected = value; void renderCandidate(); } })))));
+-  const control = () => host.querySelector('.iw-control');
+-  const popup = () => host.querySelector('[role=dialog]');
++      h(CandidateSelector, { scope, reader, productReader: candidateProductReader, kind: 'product', label: '商品', multiple: true, selected, categoryIds, onChange: value => { selected = value; void renderCandidate(); } })))));
++  const input = () => host.querySelector('.iw-product-field input:not([type="hidden"])');
++  const popup = () => host.querySelector('.arco-select[aria-expanded="true"]') ? host.querySelector('.arco-select-popup') : null;
++  const dismiss = async () => act(async () => document.getElementById('outside').dispatchEvent(new Event('pointerdown', { bubbles: true })));
+   await renderCandidate(); const beforeFirst = count('candidate');
+-  // Closing during input attachment precedes the zero-delay candidate start.
+-  const closeOnFocus = event => { if (event.target.matches('.iw-search')) host.querySelector('[aria-label="关闭商品选择"]').click(); };
+-  host.addEventListener('focusin', closeOnFocus); await click(control()); await settle(); host.removeEventListener('focusin', closeOnFocus);
+-  assert.equal(popup(), null); assert.equal(count('candidate'), beforeFirst);
+-  await click(control()); await settle(); assert.equal(count('candidate'), beforeFirst + 1);
+-  const opening = latest('candidate'); assert.equal(opening.read.signal.aborted, false);
+-  assert.equal(opening.read.parameters.search, ''); assert.equal(opening.read.parameters.pageSize, 20);
++  await click(input()); await settle(); assert.ok(popup()); assert.match(popup().textContent, /最近搜索/); assert.equal(count('candidate'), beforeFirst);
++  assert.equal(host.querySelectorAll('.iw-search').length, 0); assert.doesNotMatch(popup().textContent, /选择商品|上一页|下一页|完成/);
++  await type(input(), 'one'); await type(input(), 'two'); await settle(220);
++  assert.equal(count('candidate'), beforeFirst + 1); const searched = latest('candidate');
++  assert.equal(searched.read.parameters.search, 'two'); assert.equal(searched.read.parameters.pageSize, 20); assert.deepEqual(searched.read.parameters.categoryIds, []);
+   const enter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+-  await act(async () => host.querySelector('.iw-search').dispatchEvent(enter));
+-  assert.equal(enter.defaultPrevented, true); assert.equal(uncancelledEnter, 0); assert.equal(fullSubmits, 0);
+-  await type(host.querySelector('.iw-search'), 'one'); await type(host.querySelector('.iw-search'), 'two');
+-  assert.equal(opening.read.signal.aborted, true); await settle(220);
+-  assert.equal(count('candidate'), beforeFirst + 2); const searched = latest('candidate'); assert.equal(searched.read.parameters.search, 'two');
+-  await click(host.querySelector('[aria-label="关闭商品选择"]')); assert.equal(searched.read.signal.aborted, true); assert.equal(popup(), null);
+-  await reject(searched, 'LATE CLOSED CANDIDATE FAILURE'); assert.equal(popup(), null);
+-  await resolve(opening, candidateData(opening, 'LATE SUPERSEDED CANDIDATE')); assert.doesNotMatch(host.textContent, /LATE SUPERSEDED/);
+-  console.log('PASS candidate StrictMode/debounce: close-before-start sends nothing; one open sends one actual transport; rapid search starts only its latest bounded read; Enter is default-cancelled before the parent form; close rejects late facts/failures.');
++  await act(async () => input().dispatchEvent(enter)); assert.equal(enter.defaultPrevented, true); assert.equal(uncancelledEnter, 0); assert.equal(fullSubmits, 0);
++  await type(input(), 'three'); assert.equal(searched.read.signal.aborted, true); await settle(220);
++  const superseding = latest('candidate'); assert.equal(count('candidate'), beforeFirst + 2);
++  await resolve(searched, candidateData(searched, 'LATE SUPERSEDED CANDIDATE')); assert.doesNotMatch(host.textContent, /LATE SUPERSEDED/);
++  await dismiss(); assert.equal(superseding.read.signal.aborted, true); await reject(superseding, 'LATE CLOSED CANDIDATE FAILURE'); await settle(); assert.equal(!!popup(), false);
++  console.log('PASS candidate StrictMode/debounce: recent history sends no catalogue read; direct inline input starts only the latest bounded search; Enter never submits inventory; close aborts and rejects late facts.');
+ 
+-  await click(control()); await settle(); const reopenedCandidate = latest('candidate');
+-  assert.equal(count('candidate'), beforeFirst + 3); assert.equal(reopenedCandidate.read.parameters.search, '');
++  await click(input()); await settle(); await type(input(), 'retry'); await settle(220); const reopenedCandidate = latest('candidate');
+   await reject(reopenedCandidate, 'TEST CANDIDATE FAILURE'); assert.match(popup().textContent, /候选暂不可读取/);
+-  const beforeCandidateRetry = count('candidate'); await click(button('重试')); assert.equal(count('candidate'), beforeCandidateRetry + 1);
++  const beforeCandidateRetry = count('candidate'); await click(button('重试候选')); assert.equal(count('candidate'), beforeCandidateRetry + 1);
+   const retriedCandidate = latest('candidate'); await resolve(retriedCandidate, candidateData(retriedCandidate));
+-  assert.equal(host.querySelectorAll('.iw-option-list input').length, 1); assert.doesNotMatch(popup().textContent, /正在加载候选|候选暂不可读取/);
+-  const beforeSelect = count('candidate'); await click(host.querySelector('.iw-option-list input')); await settle(220);
+-  assert.equal(count('candidate'), beforeSelect); assert.match(control().textContent, /CURRENT CANDIDATE/);
+-  await click(button('完成')); assert.equal(popup(), null); assert.equal(document.activeElement, control());
+-  await click(control()); await settle(); const remounted = latest('candidate'); assert.equal(count('candidate'), beforeSelect + 1);
+-  assert.deepEqual(remounted.read.parameters.selectedIds, ['candidate-CURRENT CANDIDATE']);
++  assert.equal(host.querySelectorAll('[data-product-id]').length, 1); assert.match(popup().textContent, /商品款号.*商品名称/);
++  assert.match(host.querySelector('.inv-option-code').textContent, /CODE-CURRENT CANDIDATE/); assert.equal(host.querySelector('.inv-option-name').textContent, 'CURRENT CANDIDATE');
++  const beforeSelect = count('candidate'); await click(host.querySelector('[data-product-id]')); await settle(220);
++  assert.equal(count('candidate'), beforeSelect); assert.equal(selected.length, 1); assert.match(host.querySelector('.inv-tag').textContent, /CODE-CURRENT CANDIDATE/);
++  assert.match(popup().textContent, /最近搜索/); assert.match(popup().textContent, /CODE-CURRENT CANDIDATE/);
++  await click(button('清空')); assert.doesNotMatch(popup().textContent, /CODE-CURRENT CANDIDATE/); assert.match(popup().textContent, /暂无最近搜索/);
++  await dismiss(); await settle(); await click(input()); await settle(); await type(input(), 'current'); await settle(220);
++  const remounted = latest('candidate'); assert.deepEqual(remounted.read.parameters.selectedIds, ['candidate-CURRENT CANDIDATE']);
+   await resolve(remounted, candidateData(remounted));
+-  console.log('PASS candidate error/retry/reopen: one retry recovers actual options; selecting keeps labels without rereading; completion returns focus; reopening starts fresh and sends current selected IDs.');
++  const retainedNode = host.querySelector('[data-product-id]'); const retainedKey = Object.keys(retainedNode).find(key => key.startsWith('__reactProps$'));
++  const retainedOptionClick = retainedNode[retainedKey].onClick;
++  console.log('PASS candidate error/retry/history: retry recovers source-style code/name options; selection uses actual provider identities without rereading; code tags and bounded local recent history survive closing only.');
+ 
+-  categoryId = 'TEST-CATEGORY'; const beforeCategory = count('candidate'); await renderCandidate(); await settle();
+-  assert.equal(count('candidate'), beforeCategory + 1); const categoryRead = latest('candidate'); assert.equal(categoryRead.read.parameters.categoryId, 'TEST-CATEGORY');
++  categoryIds = ['TEST-CATEGORY', 'TEST-CATEGORY-2']; const beforeCategory = count('candidate'); await renderCandidate(); await settle(220);
++  assert.equal(count('candidate'), beforeCategory + 1); const categoryRead = latest('candidate'); assert.deepEqual(categoryRead.read.parameters.categoryIds, categoryIds);
++  const beforeRetained = selected; await act(async () => retainedOptionClick(new MouseEvent('click', { bubbles: true })));
++  assert.equal(selected, beforeRetained, 'A retained old-query public option callback cannot change the current draft');
+   await act(async () => candidateContext.replaceIdentity(identity('TEST-CANDIDATE', '2')));
+-  assert.equal(categoryRead.read.signal.aborted, true); assert.equal(popup(), null);
+-  await reject(categoryRead, 'LATE REVOKED CANDIDATE FAILURE'); assert.equal(popup(), null);
+-  await clear(); scope = candidateContext.createScope('TEST-CANDIDATE-RESTORED'); await renderCandidate(); await click(control()); await settle();
++  assert.equal(categoryRead.read.signal.aborted, true); assert.equal(!!popup(), false);
++  await reject(categoryRead, 'LATE REVOKED CANDIDATE FAILURE'); assert.equal(!!popup(), false);
++  await clear(); scope = candidateContext.createScope('TEST-CANDIDATE-RESTORED'); await renderCandidate(); await click(input()); await settle(); await type(input(), 'unmount'); await settle(220);
+   const activeUnmount = latest('candidate'); assert.deepEqual(activeUnmount.read.identity, identity('TEST-CANDIDATE', '2'));
+   await clear(); assert.equal(activeUnmount.read.signal.aborted, true); await reject(activeUnmount, 'LATE UNMOUNT CANDIDATE FAILURE');
+   assert.equal(host.childElementCount, 0); candidateContext.clear();
+   assert.ok(disposedQueries.every(query => { const state = query.getSnapshot(); return state.phase === 'disposed' && state.success === null && state.request === null && state.error === null; }));
+-  assert.ok(disposedScopes.every(value => !value.active));
+-  assert.equal(productReads.length, 0);
+-  console.log('PASS final cleanup: category changes reread only candidates; identity abort and real unmount immediately abort pending candidates; late failure is ignored; disposed queries retain no request/success/error references, and no product prefetch occurs.');
++  assert.ok(disposedScopes.every(value => !value.active)); assert.equal(productReads.length, 0);
++  console.log('PASS final cleanup: category arrays reread only candidates; identity abort and real unmount immediately abort pending candidates; history/facts are cleared; no product prefetch occurs before active suggestions.');
++
++  // Active-candidate facts are separate existing target-only ports, not per-row hydration.
++  const previewContext = new ReadContext(identity('TEST-PREVIEW')); scope = previewContext.createScope('TEST-ACTIVE-PREVIEW'); selected = []; categoryIds = [];
++  candidateProductReader = { readProductBasics: pending('previewBasics'), readProductSpecifications: pending('previewSpecs'), readProductImages: pending('previewImages'),
++    readProductImage() { throw new Error('An original image must never prefetch.'); } };
++  await renderCandidate(); await click(input()); await settle(); assert.equal(count('previewBasics'), 0);
++  await type(input(), 'preview'); await settle(220); const previewCandidates = latest('candidate');
++  const two = [{ id: 'PREVIEW-A', label: 'A Product A', code: 'CODE-A', name: 'Product A' }, { id: 'PREVIEW-B', label: 'B Product B', code: 'CODE-B', name: 'Product B' }];
++  await resolve(previewCandidates, { page: 1, exactTotal: 2, items: two }); await settle();
++  assert.equal(count('previewBasics'), 1); assert.equal(count('previewSpecs'), 1); assert.equal(count('previewImages'), 1);
++  const oldFacts = ['previewBasics', 'previewSpecs', 'previewImages'].map(latest);
++  for (const read of oldFacts) assert.equal(read.read.parameters.productId, 'PREVIEW-A');
++  await act(async () => host.querySelector('[data-product-id="PREVIEW-B"]').dispatchEvent(new MouseEvent('mouseover', { bubbles: true })));
++  await settle(); for (const read of oldFacts) assert.equal(read.read.signal.aborted, true);
++  assert.equal(count('previewBasics'), 2); assert.equal(count('previewSpecs'), 2); assert.equal(count('previewImages'), 2);
++  const basics = (id, name, price = null) => ({ productId: id, code: `FACT-${id}`, name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: price });
++  await resolve(oldFacts[0], basics('PREVIEW-A', 'LATE OLD PREVIEW', '99.99'));
++  assert.doesNotMatch(host.textContent, /LATE OLD PREVIEW|99.99/);
++  await resolve(latest('previewBasics'), basics('PREVIEW-B', 'CURRENT PREVIEW FACT', '12.34'));
++  await resolve(latest('previewSpecs'), { productId: 'PREVIEW-B', sizeGroup: null, colors: [{ id: 'COLOR', label: 'Blue' }], fits: [{ id: 'FIT', label: 'Regular' }], sizes: [], skus: [] });
++  await resolve(latest('previewImages'), { productId: 'PREVIEW-B', images: [] });
++  assert.match(host.querySelector('.inv-preview').textContent, /CURRENT PREVIEW FACT/); assert.match(host.querySelector('.inv-preview').textContent, /12.34/);
++  assert.match(host.querySelector('.inv-preview').textContent, /1 色/); assert.match(host.querySelector('.inv-preview').textContent, /该商品尚未提供图片/);
++  await act(async () => input().dispatchEvent(new dom.window.CompositionEvent('compositionstart', { bubbles: true })));
++  await act(async () => input().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })));
++  assert.equal(selected.length, 0, 'IME confirmation cannot choose a candidate');
++  await act(async () => input().dispatchEvent(new dom.window.CompositionEvent('compositionend', { bubbles: true })));
++  await act(async () => input().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })));
++  assert.equal(selected.length, 0, 'The immediate post-composition Enter cannot choose a candidate'); await settle(50);
++  const beforeEnterCandidates = count('candidate'); const beforeEnterFacts = count('previewBasics');
++  const chooseEnter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
++  await act(async () => input().dispatchEvent(chooseEnter)); await settle();
++  assert.equal(chooseEnter.defaultPrevented, true); assert.equal(fullSubmits, 0); assert.equal(count('candidate'), beforeEnterCandidates); assert.equal(count('previewBasics'), beforeEnterFacts);
++  assert.equal(selected[0].id, 'PREVIEW-B'); assert.equal(host.querySelector('.inv-preview'), null);
++  await clear(); previewContext.clear();
++  console.log('PASS active preview: exactly one target gets basics/specifications/thumbnails; hover aborts prior target and ignores late facts; actual retail price is displayed; candidate Enter selects without inventory query or original-image fetch.');
++
++
++
++  // The real inventory page reuses shared TreeSelect branches and warehouse tags.
++  const referenceContext = new ReadContext(identity('TEST-REFERENCE-MULTI')); scope = referenceContext.createScope('TEST-REFERENCE-MULTI');
++  await renderPage(); await settle();
++  const refHost = label => host.querySelector(`[data-multi-label="${label}"]`);
++  const refControl = label => refHost(label).querySelector('.iw-control, .arco-tree-select-view');
++  const treeRows = label => [...refHost(label).querySelectorAll('.arco-tree-node')];
++  const treeRow = (label, name) => treeRows(label).find(row => row.querySelector('.arco-tree-node-title')?.textContent === name);
++  const checkbox = row => row?.querySelector('input[type=checkbox]');
++  await click(refControl('商品分类')); await settle(); const categoryCandidates = latest('candidate');
++  assert.equal(categoryCandidates.read.parameters.kind, 'category');
++  await resolve(categoryCandidates, { page: 1, exactTotal: 3, items: [
++    { id: 'CATEGORY-PARENT', label: 'Parent', parentId: null, depth: 0 },
++    { id: 'CATEGORY-CHILD', label: 'Child', parentId: 'CATEGORY-PARENT', parentLabel: 'Parent', depth: 1 },
++    { id: 'CATEGORY-OTHER', label: 'Other', parentId: null, depth: 0 },
++  ] });
++  assert.equal(refHost('商品分类').querySelectorAll('.iw-search, .iw-pop-head, footer').length, 0);
++  // Category ALL-minus is never synthesized, even when all named categories fit one page.
++  await click(checkbox(treeRow('商品分类', 'Parent'))); assert.match(refHost('商品分类').textContent, /不能从全部范围排除单项/);
++  await click([...refHost('商品分类').querySelectorAll('button')].find(button => button.textContent === '仅选择该项'));
++  assert.match(refHost('商品分类').querySelector('.arco-tag').textContent, /Parent/);
++  const parentNode = treeRow('商品分类', 'Parent'); if (parentNode.getAttribute('aria-expanded') !== 'true') await click(parentNode.querySelector('.arco-tree-node-switcher-icon[role="button"]'));
++  await settle(); assert.ok(treeRow('商品分类', 'Child')); assert.equal(checkbox(treeRow('商品分类', 'Child')).checked, true);
++  await click(checkbox(treeRow('商品分类', 'Child'))); assert.match(refHost('商品分类').textContent, /不支持只排除其中一个子分类/);
++  await click([...refHost('商品分类').querySelectorAll('button')].find(button => button.textContent === '仅选择该项'));
++  await click(checkbox(treeRow('商品分类', 'Other')));
++  const beforeExplicitQuery = count('inventory'); await submit(); assert.equal(count('inventory'), beforeExplicitQuery + 1);
++  assert.deepEqual(latest('inventory').read.parameters.filter.categories.map(item => item.id), ['CATEGORY-CHILD', 'CATEGORY-OTHER']);
++  await resolve(latest('inventory'), await inventoryData(latest('inventory'), 'CATEGORY MULTI RESULT'));
++  await click(refControl('仓库')); await settle(); assert.equal(refHost('商品分类').querySelector('.arco-tree-select').getAttribute('aria-expanded'), 'false');
++  const warehouseCandidates = latest('candidate'); assert.equal(warehouseCandidates.read.parameters.kind, 'warehouse');
++  await resolve(warehouseCandidates, { page: 1, exactTotal: 2, items: [{ id: 'WAREHOUSE-A', label: 'Warehouse A' }, { id: 'WAREHOUSE-B', label: 'Warehouse B' }] });
++  await click(checkbox(treeRow('仓库', 'Warehouse A'))); assert.match(refHost('仓库').querySelector('.arco-tag').textContent, /Warehouse B/);
++  assert.equal(refHost('仓库').querySelectorAll('.iw-search, .iw-pop-head, footer').length, 0);
++  await submit(); assert.deepEqual(latest('inventory').read.parameters.filter.warehouses.map(item => item.id), ['WAREHOUSE-B']);
++  await clear(); referenceContext.clear();
++  console.log('PASS inventory shared filters: native category hierarchy preserves explicit multi-branch IDs, refuses ALL-minus/parent-minus-child, deliberate replacement works; warehouse source tags select a true subset; changing controls never auto-submits inventory.');
++
+ } finally {
+   if (root && act) await act(async () => root.unmount());
+   restoreDispose?.();
+diff --git a/apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs b/apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs
+index 9452b9c..378afe1 100644
+--- a/apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs
++++ b/apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs
+@@ -9,7 +9,7 @@ import { JSDOM } from 'jsdom';
+ // verifies event/focus/lifecycle contracts, not browser geometry or pixel parity.
+ const here = path.dirname(fileURLToPath(import.meta.url));
+ const temporary = await mkdtemp(path.join(here, '.settings-popup-'));
+-const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline></style><div id="root"></div><button id="outside">outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
++const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline data-demo-multi-select-inline data-inventory-product-select-inline></style><div id="root"></div><button id="outside">outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+ for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLDialogElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+ Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
+ dom.window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } });
+@@ -42,6 +42,7 @@ try {
+   const settle = async () => act(async () => { await new Promise(resolve => setTimeout(resolve, 20)); });
+   const render = async strict => act(async () => root.render(strict ? h(StrictMode, null, h(InventoryPageView, { scope, reader, productReader })) : h(InventoryPageView, { scope, reader, productReader })));
+   const click = async element => { assert.ok(element); await act(async () => element.click()); };
++  const type = async (input, value) => act(async () => { Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, value); input.dispatchEvent(new Event('input', { bubbles: true })); });
+   const button = text => [...host.querySelectorAll('button')].find(element => element.textContent.trim() === text);
+   const popup = () => host.querySelector('.iw-settings');
+   const trigger = () => button('显示设置');
+@@ -84,28 +85,28 @@ try {
+ 
+     // With a genuine pending candidate, clicking settings via pointerdown uses
+     // its existing outside lifecycle. This patch must not start candidate reads.
+-    await click(host.querySelector('.iw-product-field .iw-control')); await settle();
+-    const beforeSettings = reads.length;
++    await click(host.querySelector('.iw-product-field input')); await settle(); await type(host.querySelector('.iw-product-field input'), 'TEST'); await act(async () => { await new Promise(resolve => setTimeout(resolve, 220)); });
++    const beforeSettings = reads.length; const beforeSettingsProduct = productReads.length;
+     await pointer(trigger()); await click(trigger());
+-    assert.equal(!!host.querySelector('.iw-product-field [role=dialog]'), false);
+-    assert.ok(popup()); assert.equal(reads.length, beforeSettings);
+-    await pointer(host.querySelector('.iw-product-field .iw-control'));
++    assert.equal(host.querySelector('.iw-product-field .arco-select')?.getAttribute('aria-expanded'), 'false');
++    assert.ok(popup()); assert.equal(reads.length, beforeSettings); assert.equal(productReads.length, beforeSettingsProduct);
++    await pointer(host.querySelector('.iw-product-field input'));
+     assert.equal(!!popup(), false); assert.deepEqual(counts(), idle);
+     await act(async () => root.render(null)); await settle();
+     // Candidate read above is expected once. Separate from display-only actions.
+-    assert.ok(reads.every(read => read.kind === 'product')); reads.length = 0;
++    assert.ok(reads.every(read => read.kind === 'product')); reads.length = 0; productReads.length = 0;
+   }
+ 
+   await render(true); const idle = counts();
+   await click(trigger()); await act(async () => context.replaceIdentity(identity('2')));
+-  assert.equal(!!popup(), false); assert.equal(!!host.querySelector('form'), false); assert.deepEqual(counts(), idle);
++  assert.equal(!!popup(), false); assert.equal(!!host.querySelector('form'), false); assert.deepEqual(counts(), { pointerdown: 0, click: 0, keydown: 0 });
+   outside.focus(); assert.equal((await escape(outside)).defaultPrevented, false);
+   scope = context.createScope('TEST-SETTINGS-RESTORED'); await render(true);
+   assert.equal(trigger().getAttribute('aria-expanded'), 'false'); assert.equal(!!popup(), false);
+   await click(trigger()); await click(button('关闭')); assert.equal(document.activeElement === trigger(), true);
+   await click(trigger()); await act(async () => root.render(null));
+   assert.equal(scope.active, true, 'Settings unmount must not dispose the caller-owned scope');
+-  assert.deepEqual(counts(), idle); assert.equal((await escape(outside)).defaultPrevented, false);
++  assert.deepEqual(counts(), { pointerdown: 0, click: 0, keydown: 0 }); assert.equal((await escape(outside)).defaultPrevented, false);
+   await render(true); assert.equal(!!popup(), false); await click(trigger()); assert.ok(popup());
+   await click(button('关闭')); assert.equal(reads.length, 0); assert.equal(productReads.length, 0); await act(async () => context.clear());
+   console.log('PASS settings identity/unmount: scope abort resets visibility/removes listeners synchronously, restored scopes never reopen stale intent, unmount preserves the parent scope, a fresh StrictMode mount still opens/closes. No inventory/product prefetch.');
+diff --git a/apps/web/tests/run-dom-tests.mjs b/apps/web/tests/run-dom-tests.mjs
+index 3a3eb8c..0a8c382 100644
+--- a/apps/web/tests/run-dom-tests.mjs
++++ b/apps/web/tests/run-dom-tests.mjs
+@@ -7,7 +7,7 @@ import { JSDOM } from 'jsdom';
+ const webRoot = fileURLToPath(new URL('..', import.meta.url));
+ const temporary = await mkdtemp(path.join(webRoot, '.test-tmp-'));
+ let root;
+-const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline></style><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
++const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline data-demo-multi-select-inline data-inventory-product-select-inline></style><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+ for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLDialogElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+ globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+ Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
+@@ -27,6 +27,7 @@ try {
+   const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+   const settle = async (ms = 30) => { await act(async () => { await pause(ms); }); };
+   const click = async element => { assert.ok(element, 'Expected clickable element'); await act(async () => { element.click(); }); };
++  const type = async (input, value) => act(async () => { Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, value); input.dispatchEvent(new Event('input', { bubbles: true })); });
+   const button = text => [...host.querySelectorAll('button')].find(element => element.textContent.trim() === text);
+   await act(async () => root.render(createElement(InventoryPageView, { scope, reader, productReader, actions: { onOpenCell: target => calls.push(target) } })));
+   assert.equal(reads.length, 0); assert.match(host.textContent, /等待查询/); assert.match(host.textContent, /尚未查询/); assert.doesNotMatch(host.textContent, /共 0 款/);
+@@ -34,13 +35,14 @@ try {
+   await click(button('高级筛选 ⌄')); assert.equal(reads.length, 0);
+   const fitField = [...host.querySelectorAll('.iw-field')].find(field => field.querySelector('label')?.textContent === '版型');
+   await click(fitField.querySelector('.iw-control')); await settle(); assert.equal(reads[0].kind, 'fit'); assert.match(host.textContent, /E版（特体）/);
+-  await act(async () => fitField.querySelector('[role=dialog]').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })));
+-  assert.equal(fitField.querySelector('[role=dialog]'), null); assert.equal(document.activeElement, fitField.querySelector('.iw-control'));
++  await act(async () => fitField.querySelector('input').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })));
++  assert.equal(fitField.querySelector('.arco-tree-select')?.getAttribute('aria-expanded'), 'false'); assert.equal(fitField.contains(document.activeElement), true);
+   reads.length = 0;
+   console.log('PASS DOM: advanced expansion does not read; opening FIT reads only its six candidate labels; Escape closes and returns focus.');
+-  await click(host.querySelector('.iw-product-field .iw-control')); await settle();
++  await click(host.querySelector('.iw-product-field input')); await settle(); assert.equal(reads.length, 0);
++  await type(host.querySelector('.iw-product-field input'), 'TEST-001'); await settle(220);
+   assert.equal(reads.length, 1); assert.equal(reads[0].kind, 'product'); assert.match(host.textContent, /TEST-001/);
+-  await click(host.querySelector('.iw-option-list input')); await click(button('完成'));
++  await click(host.querySelector('.iw-product-field [data-product-id]')); await act(async () => host.querySelector('form').dispatchEvent(new Event('pointerdown', { bubbles: true })));
+   assert.equal(reads.filter(event => event.kind === 'inventory').length, 0);
+   await act(async () => host.querySelector('form').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))); await settle();
+   assert.equal(reads.filter(event => event.kind === 'inventory').length, 1); assert.match(host.textContent, /共 1 款/); assert.match(host.textContent, /165\/S/); assert.match(host.textContent, /170\/M/); assert.doesNotMatch(host.textContent, /Y版（修身）|A版（标准）|未知/); assert.equal(host.querySelector('.mx-unknown'), null);
+@@ -69,7 +71,7 @@ try {
+   reader.unreadyNextInventory(); await click(button('刷新')); await settle(); assert.ok(host.querySelector('[role=alert]')); assert.match(host.textContent, /保留上次成功结果/); assert.doesNotMatch(host.textContent, /未知/);
+   await click(button('重试')); await settle(); assert.equal(host.querySelector('[role=alert]'), null);
+   console.log('PASS DOM: incomplete source rejects the whole query, never publishes unknown cells or invented zero totals.');
+-  await click(host.querySelector('.iw-product-field .iw-control')); await settle(); const beforeClose = reads.length; await click(button('完成')); await settle(220); assert.equal(reads.length, beforeClose);
++  await click(host.querySelector('.iw-product-field input')); await settle(); const beforeClose = reads.length; await act(async () => host.querySelector('form').dispatchEvent(new Event('pointerdown', { bubbles: true }))); await settle(220); assert.equal(reads.length, beforeClose);
+   await act(async () => context.clear()); assert.equal(host.querySelectorAll('.iw-control').length, 0); assert.match(host.textContent, /旧身份结果已清除/); assert.equal(host.querySelectorAll('.mx-stock').length, 0);
+   console.log('PASS DOM: closed selector does not read again; identity revocation removes all stock facts.');
+   await act(async () => root.unmount()); root = createRoot(host);
+@@ -178,7 +180,7 @@ try {
+   await click(host.querySelector('.mx-view')); await settle(); assert.equal(requests.length, 1);
+   assert.match(drawer().textContent, /正在读取当前页签/);
+   await click(tab('规格')); await settle(); assert.equal(requests.length, 2); assert.equal(requests[0].read.signal.aborted, true);
+-  const basePayload = (id, name) => ({ productId: id, code: 'TEST-CONTROLLED', name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
++  const basePayload = (id, name) => ({ productId: id, code: 'TEST-CONTROLLED', name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
+   await act(async () => requests[0].resolve(basePayload('test-product-1', 'STALE FIRST RESPONSE'))); await settle();
+   assert.doesNotMatch(drawer().textContent, /STALE FIRST RESPONSE/);
+   await click(host.querySelector('button[aria-label="关闭商品资料"]')); assert.equal(requests[1].read.signal.aborted, true);
+diff --git a/apps/web/src/components/candidate-selector-contract.ts b/apps/web/src/components/candidate-selector-contract.ts
+new file mode 100644
+index 0000000..7ece943
+--- /dev/null
++++ b/apps/web/src/components/candidate-selector-contract.ts
+@@ -0,0 +1,30 @@
++import type { ComponentType } from 'react';
++import type { CandidateKind, InventoryReader, Selection } from '../inventory/contracts.ts';
++import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
++import type { ReadScope } from '../loading/read-scope.ts';
++import type { DemoMultiSelectPopupHost } from '../demo-controls/multi-select.tsx';
++export interface CandidateSelectorProps {
++  readonly label: string;
++  readonly kind: CandidateKind;
++  readonly selected: readonly Selection[];
++  readonly multiple?: boolean;
++  readonly reader: InventoryReader;
++  readonly productReader?: ProductReadOnlyReader;
++  readonly scope: ReadScope;
++  readonly popupHost?: DemoMultiSelectPopupHost | null;
++  readonly categoryIds: readonly string[];
++  readonly placeholder?: string;
++  readonly onChange: (items: readonly Selection[]) => void;
++}
++export interface ProductCandidateActionProps extends CandidateSelectorProps {
++  readonly open: boolean;
++  readonly activationScope: ReadScope | null;
++  readonly search: string;
++  readonly onSearch: (search: string) => void;
++  readonly onOpen: (open: boolean) => void;
++  readonly focusOnMount: boolean;
++}
++export interface ProductCandidateActionModule {
++  readonly ProductCandidateAction: ComponentType<ProductCandidateActionProps>;
++  readonly createInventoryProductSelectStyles: (document: Document) => { load(): Promise<void>; dispose(): void };
++}
+diff --git a/apps/web/src/components/inventory-candidate-menu.tsx b/apps/web/src/components/inventory-candidate-menu.tsx
+new file mode 100644
+index 0000000..1f4a889
+--- /dev/null
++++ b/apps/web/src/components/inventory-candidate-menu.tsx
+@@ -0,0 +1,26 @@
++import { useEffect, useRef, type ReactNode } from 'react';
++import type { ReadScope } from '../loading/read-scope.ts';
++import type { CandidateKind, InventoryReader, Selection } from '../inventory/contracts.ts';
++import type { InventoryCandidateSnapshot } from './inventory-candidates.ts';
++import { useInventoryCandidates } from './use-inventory-candidates.ts';
++export function InventoryCandidateMenu(props: { readonly scope: ReadScope; readonly reader: InventoryReader; readonly kind: CandidateKind;
++  readonly label: string; readonly categoryIds: readonly string[]; readonly selected: readonly Selection[]; readonly search: string;
++  readonly setState: (state: InventoryCandidateSnapshot) => void; readonly loadMore: { current: (() => void) | null };
++  readonly menu: ReactNode; readonly notice: string; readonly explicit: Selection | null; readonly chooseExplicit: () => void }) {
++  const selected = useRef(props.selected); selected.current = props.selected;
++  const { query, snapshot } = useInventoryCandidates(props.scope, props.reader, props.kind, props.categoryIds, () => selected.current.map(item => item.id)); const search = props.search.trim();
++  useEffect(() => { if (!query) return; query.reset(search); const timer = setTimeout(() => { void query.loadNext(); }, search ? 180 : 0); return () => { clearTimeout(timer); query.reset(search); }; }, [query, search]);
++  useEffect(() => { props.setState(snapshot); }, [snapshot, props.setState]);
++  useEffect(() => { if (!query) return; const load = () => { if (query.getSnapshot().phase === 'success') void query.loadNext(); }; props.loadMore.current = load; return () => { if (props.loadMore.current === load) props.loadMore.current = null; }; }, [query, props.loadMore]);
++  if (!props.scope.active) return null;
++  const data = snapshot.search === search ? snapshot : null; const busy = !data || data.phase === 'idle' || data.phase === 'loading';
++  const selectedLabel = props.selected.length ? `已选 ${props.selected.length} 项` : data?.unfilteredTotal !== null && data?.unfilteredTotal !== undefined ? `已选 ${data.unfilteredTotal} 项` : `已选全部${props.label}`;
++  return <div className="inventory-reference-menu">{props.kind !== 'category' && <div className="inv-filter-tools">{data?.exactTotal !== null && data?.exactTotal !== undefined ? `匹配 ${data.exactTotal} 项` : `正在匹配${props.label}`} · {selectedLabel}</div>}
++    {props.notice && <p className="iw-filter-notice" role="status">{props.notice}{props.explicit && <> 如需只选“{props.explicit.label}”，请<button type="button" className="iw-link" onClick={props.chooseExplicit}>仅选择该项</button>。</>}</p>}
++    {data?.exactTotal !== null && data?.exactTotal !== undefined && props.menu}
++    {busy && <p className="iw-inline-state" role="status">正在读取候选…</p>}
++    {data?.phase === 'error' && <p className="iw-inline-state" role="alert">候选读取失败或范围已变化。<button type="button" className="iw-link" onClick={() => { query?.reset(search); void query?.loadNext(); }}>重试候选</button></p>}
++    {data?.phase === 'success' && data.items.length === 0 && <p className="iw-inline-state">没有匹配候选</p>}
++    {data?.limitReached && <p className="iw-filter-notice" role="status">已加载 200 项，尚有更多匹配候选，请输入名称缩小范围。匹配总数未截断。</p>}
++  </div>;
++}
+diff --git a/apps/web/src/components/inventory-candidates.ts b/apps/web/src/components/inventory-candidates.ts
+new file mode 100644
+index 0000000..1efdf0a
+--- /dev/null
++++ b/apps/web/src/components/inventory-candidates.ts
+@@ -0,0 +1,95 @@
++import { LatestQuery } from '../loading/latest-query.ts';
++import type { ReadScope } from '../loading/read-scope.ts';
++import type { Candidate, CandidateKind, CandidatePage, CandidateParameters, InventoryReader } from '../inventory/contracts.ts';
++
++const text = (value: unknown): value is string => typeof value === 'string' && !!value.trim();
++export const INVENTORY_CANDIDATE_LIMIT = 200;
++export interface InventoryCandidateSnapshot {
++  readonly search: string;
++  readonly phase: 'idle' | 'loading' | 'success' | 'error' | 'disposed';
++  readonly items: readonly Candidate[];
++  readonly exactTotal: number | null;
++  readonly unfilteredTotal: number | null;
++  readonly page: number;
++  readonly hasMore: boolean;
++  readonly limitReached: boolean;
++  /** No catalogue revision exists: only one complete, unsearched page proves all. */
++  readonly completeUniverse: boolean;
++}
++/** One open control owns this bounded read window. Never enumerates a catalogue. */
++export class InventoryCandidates {
++  readonly #scope: ReadScope;
++  readonly kind: CandidateKind;
++  readonly categoryIds: readonly string[];
++  readonly selectedIds: () => readonly string[];
++  readonly #query: LatestQuery<CandidateParameters, CandidatePage>;
++  readonly #listeners = new Set<() => void>();
++  readonly #onAbort = () => this.dispose();
++  #generation = 0;
++  #busy = false;
++  #snapshot: InventoryCandidateSnapshot = Object.freeze({ search: '', phase: 'idle', items: [], exactTotal: null,
++    unfilteredTotal: null, page: 0, hasMore: false, limitReached: false, completeUniverse: false });
++  constructor(scope: ReadScope, reader: InventoryReader, kind: CandidateKind,
++    categoryIds: readonly string[], selectedIds: () => readonly string[]) {
++    this.#scope = scope; this.kind = kind; this.categoryIds = Object.freeze([...categoryIds]); this.selectedIds = selectedIds;
++    this.#query = new LatestQuery({ scope, execute: async read => {
++      const result = await reader.readCandidates(read);
++      if (!Number.isSafeInteger(result.exactTotal) || result.exactTotal < 0 || result.page !== read.parameters.page
++        || result.items.length !== Math.min(20, Math.max(0, result.exactTotal - (read.parameters.page - 1) * 20)) || new Set(result.items.map(item => item.id)).size !== result.items.length
++        || result.items.some(item => !text(item.id) || !text(item.label) || item.disabled !== undefined && typeof item.disabled !== 'boolean'
++          || kind === 'product' && (!text(item.code) || !text(item.name)))) {
++        throw new TypeError('候选响应无效，请重新读取。');
++      }
++      return result;
++    } });
++    scope.signal.addEventListener('abort', this.#onAbort, { once: true });
++    if (!scope.active) this.dispose();
++  }
++  getSnapshot = (): InventoryCandidateSnapshot => this.#snapshot;
++  subscribe = (listener: () => void) => { if (this.#snapshot.phase === 'disposed') return () => {}; this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
++  reset(search: string): void {
++    if (!this.#scope.active || this.#snapshot.phase === 'disposed') return;
++    this.#generation++; this.#busy = false; this.#query.cancel();
++    this.#publish({ search: search.trim(), phase: 'idle', items: [], exactTotal: null, unfilteredTotal: this.#snapshot.unfilteredTotal,
++      page: 0, hasMore: false, limitReached: false, completeUniverse: false });
++  }
++  async loadNext(): Promise<void> {
++    const before = this.#snapshot;
++    if (!this.#scope.active || before.phase === 'disposed' || this.#busy || before.limitReached || before.page > 0 && !before.hasMore) return;
++    const generation = this.#generation; this.#busy = true; this.#publish({ ...before, phase: 'loading' });
++    try {
++      const outcome = await this.#query.run({ kind: this.kind, search: before.search, page: before.page + 1, pageSize: 20,
++        selectedIds: this.selectedIds(), categoryIds: this.categoryIds });
++      if (generation !== this.#generation || !this.#scope.active || outcome.status === 'discarded') return;
++      if (outcome.status === 'error') { this.#publish({ ...before, phase: 'error' }); return; }
++      const data = outcome.data; const ids = new Set(before.items.map(item => item.id));
++      if (before.exactTotal !== null && before.exactTotal !== data.exactTotal || data.items.some(item => ids.has(item.id))
++        || data.items.length === 0 && before.items.length < data.exactTotal) throw new TypeError('候选范围已变化。');
++      const items = Object.freeze([...before.items, ...data.items]);
++      if (items.length > INVENTORY_CANDIDATE_LIMIT || items.length > data.exactTotal) throw new TypeError('候选窗口超出读取边界。');
++      if (this.kind === 'category') {
++        const byId = new Map(items.map(item => [item.id, item]));
++        for (const item of items) {
++          if (item.parentId !== null && !text(item.parentId) || item.parentId === item.id || (item.parentId === null) !== (item.depth === 0)
++            || item.parentId !== null && (item.depth !== 1 || !text(item.parentLabel))
++            || item.parentId && byId.has(item.parentId) && byId.get(item.parentId)?.depth !== 0) throw new TypeError('分类层级响应无效。');
++        }
++      }
++      const hasMore = items.length < data.exactTotal;
++      this.#publish({ search: before.search, phase: 'success', items, exactTotal: data.exactTotal,
++        unfilteredTotal: before.search ? before.unfilteredTotal : data.exactTotal, page: data.page, hasMore,
++        limitReached: hasMore && items.length >= INVENTORY_CANDIDATE_LIMIT,
++        completeUniverse: !before.search && data.page === 1 && !hasMore });
++    } catch { if (generation === this.#generation && this.#scope.active) this.#publish({ ...before, phase: 'error' }); }
++    finally { if (generation === this.#generation) this.#busy = false; }
++  }
++  dispose(): void {
++    if (this.#snapshot.phase === 'disposed') return;
++    this.#generation++; this.#busy = false; this.#query.dispose();
++    this.#scope.signal.removeEventListener('abort', this.#onAbort);
++    this.#publish({ search: '', phase: 'disposed', items: [], exactTotal: null, unfilteredTotal: null, page: 0,
++      hasMore: false, limitReached: false, completeUniverse: false });
++    this.#listeners.clear();
++  }
++  #publish(value: InventoryCandidateSnapshot) { this.#snapshot = Object.freeze(value); for (const listener of [...this.#listeners]) { try { listener(); } catch { /* A view cannot compromise cancellation or ownership. */ } } }
++}
+diff --git a/apps/web/src/components/inventory-candidates.test.ts b/apps/web/src/components/inventory-candidates.test.ts
+new file mode 100644
+index 0000000..5ce5471
+--- /dev/null
++++ b/apps/web/src/components/inventory-candidates.test.ts
+@@ -0,0 +1,44 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { ReadContext } from '../loading/read-scope.ts';
++import type { QueryRead } from '../loading/latest-query.ts';
++import type { CandidateKind, CandidatePage, CandidateParameters, InventoryReader } from '../inventory/contracts.ts';
++import { InventoryCandidates } from './inventory-candidates.ts';
++function fixture(kind: CandidateKind = 'product') {
++  const context = new ReadContext({ accountId: 'TEST', sessionRevision: '1', permissionRevision: '1' });
++  const scope = context.createScope('TEST');
++  const requests: { read: QueryRead<CandidateParameters>; resolve: (data: CandidatePage) => void }[] = [];
++  const reader: InventoryReader = { readInventory() { throw new Error('Not an inventory query.'); }, readCandidates: read => new Promise(resolve => requests.push({ read, resolve })) };
++  const model = new InventoryCandidates(scope, reader, kind, ['CATEGORY-A', 'CATEGORY-B'], () => ['SELECTED']);
++  const respond = (total: number, ids?: readonly string[]) => { const request = requests.at(-1)!; const page = request.read.parameters.page;
++    request.resolve({ page, exactTotal: total, items: (ids ?? Array.from({ length: Math.min(20, Math.max(0, total - (page - 1) * 20)) }, (_, index) => `${page}-${index}`)).map(id => ({ id, label: `label ${id}`, code: `CODE ${id}`, name: `Name ${id}` })) }); };
++  return { context, scope, requests, model, respond };
++}
++test('candidate window is idle until explicitly started, bounded20, selected IDs/categories preserved, no next-page prefetch', async () => {
++  const f = fixture(); assert.equal(f.requests.length, 0); f.model.reset('  query  '); assert.equal(f.requests.length, 0);
++  const one = f.model.loadNext(); assert.equal(f.requests.length, 1); assert.deepEqual(JSON.parse(JSON.stringify(f.requests[0]!.read.parameters)), { kind: 'product', search: 'query', page: 1, pageSize: 20, selectedIds: ['SELECTED'], categoryIds: ['CATEGORY-A', 'CATEGORY-B'] });
++  f.respond(21); await one; assert.equal(f.model.getSnapshot().items.length, 20); assert.equal(f.requests.length, 1); assert.equal(f.model.getSnapshot().completeUniverse, false);
++  const two = f.model.loadNext(); f.respond(21); await two; assert.equal(f.model.getSnapshot().items.length, 21); assert.equal(f.model.getSnapshot().completeUniverse, false); await f.model.loadNext(); assert.equal(f.requests.length, 2); f.context.clear();
++});
++test('candidate all is proven only by one complete unsearched page, never accumulated or searched subset', async () => {
++  const f = fixture(); const first = f.model.loadNext(); f.respond(2); await first; assert.equal(f.model.getSnapshot().completeUniverse, true);
++  f.model.reset('CODE'); const searched = f.model.loadNext(); f.respond(2); await searched; assert.equal(f.model.getSnapshot().completeUniverse, false); assert.equal(f.model.getSnapshot().unfilteredTotal, 2); f.context.clear();
++});
++test('candidate search and scope disposal abort immediately and cannot publish late data', async () => {
++  const f = fixture(); const old = f.model.loadNext(); const oldRead = f.requests[0]!; f.model.reset('new'); assert.equal(oldRead.read.signal.aborted, true);
++  oldRead.resolve({ page: 1, exactTotal: 0, items: [] }); await old; assert.equal(f.model.getSnapshot().search, 'new'); assert.equal(f.model.getSnapshot().phase, 'idle');
++  const current = f.model.loadNext(); f.context.clear(); assert.equal(f.requests[1]!.read.signal.aborted, true); f.respond(1); await current;
++  assert.equal(f.model.getSnapshot().phase, 'disposed'); assert.deepEqual(f.model.getSnapshot().items, []); assert.equal(f.model.getSnapshot().exactTotal, null);
++});
++test('candidate rendering window stops at200 without pretending exactTotal is truncated', async () => {
++  const f = fixture(); for (let page = 1; page <= 10; page++) { const read = f.model.loadNext(); f.respond(999); await read; }
++  const state = f.model.getSnapshot(); assert.equal(state.items.length, 200); assert.equal(state.exactTotal, 999); assert.equal(state.limitReached, true); assert.equal(state.completeUniverse, false);
++  await f.model.loadNext(); assert.equal(f.requests.length, 10); f.context.clear();
++});
++test('candidate drift, duplicate identities and malformed known category relationships fail closed', async () => {
++  const f = fixture(); const first = f.model.loadNext(); f.respond(21); await first; const next = f.model.loadNext(); f.respond(21, ['1-0']); await next;
++  assert.equal(f.model.getSnapshot().phase, 'error'); assert.equal(f.model.getSnapshot().items.length, 20); f.context.clear();
++  const category = fixture('category'); const read = category.model.loadNext(); category.requests[0]!.resolve({ page: 1, exactTotal: 2, items: [
++    { id: 'A', label: 'A', parentId: 'B', parentLabel: 'B', depth: 1 }, { id: 'B', label: 'B', parentId: 'A', parentLabel: 'A', depth: 1 },
++  ] }); await read; assert.equal(category.model.getSnapshot().phase, 'error'); assert.deepEqual(category.model.getSnapshot().items, []); category.context.clear();
++});
+diff --git a/apps/web/src/components/inventory-filter-popup-host.ts b/apps/web/src/components/inventory-filter-popup-host.ts
+new file mode 100644
+index 0000000..12e9ebe
+--- /dev/null
++++ b/apps/web/src/components/inventory-filter-popup-host.ts
+@@ -0,0 +1,31 @@
++import { useLayoutEffect, useState } from 'react';
++import { ExclusivePopupController, type PopupOwnership } from '../demo-controls/popup-ownership.ts';
++import type { DemoMultiSelectPopupHost } from '../demo-controls/multi-select.tsx';
++import type { ReadScope } from '../loading/read-scope.ts';
++
++/** Page-owned arbitration shared by product search and every reference filter. */
++export function useInventoryFilterPopupHost(scope: ReadScope, enabled = true): DemoMultiSelectPopupHost | null {
++  const [owned, setOwned] = useState<{ scope: ReadScope; host: DemoMultiSelectPopupHost } | null>(null);
++  useLayoutEffect(() => {
++    if (!enabled) return;
++    const controller = new ExclusivePopupController();
++    let current: { ownership: PopupOwnership; element: HTMLElement } | null = null;
++    const host: DemoMultiSelectPopupHost = { controller, attach: (ownership, element) => {
++      if (!ownership.active) return () => {};
++      current = { ownership, element };
++      return () => { if (current?.ownership === ownership) current = null; };
++    } };
++    const outside = (event: Event) => {
++      const inside = current && (event.composedPath().includes(current.element) || event.target instanceof Node && current.element.contains(event.target));
++      controller.outside(inside ? current?.ownership ?? null : null);
++    };
++    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape' && controller.escape()) { event.preventDefault(); event.stopPropagation(); } };
++    const detach = () => { document.removeEventListener('pointerdown', outside, true); document.removeEventListener('click', outside, true); document.removeEventListener('keydown', escape, true); };
++    const abort = () => { detach(); controller.dispose(); current = null; setOwned(null); };
++    scope.signal.addEventListener('abort', abort, { once: true });
++    if (scope.active) { document.addEventListener('pointerdown', outside, true); document.addEventListener('click', outside, true); document.addEventListener('keydown', escape, true); setOwned({ scope, host }); }
++    else abort();
++    return () => { scope.signal.removeEventListener('abort', abort); detach(); controller.dispose(); current = null; };
++  }, [scope, enabled]);
++  return enabled && owned?.scope === scope && !owned.host.controller.disposed ? owned.host : null;
++}
+diff --git a/apps/web/src/components/inventory-filter-source-provenance.json b/apps/web/src/components/inventory-filter-source-provenance.json
+new file mode 100644
+index 0000000..d0a4f29
+--- /dev/null
++++ b/apps/web/src/components/inventory-filter-source-provenance.json
+@@ -0,0 +1,102 @@
++{
++  "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
++  "sources": [
++    {
++      "file": "frontend/inventory-select.jsx",
++      "sha256": "588e5076708db2a4e7f2e9bb345b7fa428fa1af0691bd878ae0eaec7edc2208c",
++      "ranges": [
++        {
++          "lines": [
++            11,
++            89
++          ],
++          "sha256": "de992beeb120065a700053803e13ae559e6f0bb7672a9179f2940e585e3798ca"
++        },
++        {
++          "lines": [
++            99,
++            120
++          ],
++          "sha256": "168ba466e3a75f5f5870ade00cea09346adc515e743e958629dc994457f8a6e8"
++        },
++        {
++          "lines": [
++            133,
++            156
++          ],
++          "sha256": "fe1c3a555c51029dc7b6df952f465511ca6a400a20c8dcd5196e4933d2ce6532"
++        },
++        {
++          "lines": [
++            191,
++            216
++          ],
++          "sha256": "2f677f78d1dca33fef332a9baf9a42fec7aa73fe466610954f6267c740ad9ae1"
++        },
++        {
++          "lines": [
++            263,
++            299
++          ],
++          "sha256": "77c5588df7895778d8925d8df4c560dd3c89eb1a690e28a8f1f06ee10db22b29"
++        }
++      ]
++    },
++    {
++      "file": "frontend/inventory-category.jsx",
++      "sha256": "e76e01dfd849e11eea23c3867d2185eb5fe512a3dc883045029c01d7d6d74a1e",
++      "ranges": [
++        {
++          "lines": [
++            69,
++            121
++          ],
++          "sha256": "fadf9e50ef7dfc83e28f22d437bb7068088996eb637e93af980eda06f8ed03e3"
++        }
++      ]
++    },
++    {
++      "file": "frontend/inventory-filters.jsx",
++      "sha256": "bdcd2aaef2f8b6dbd7f66ff13bb6dc5eee31e59e8f9f68c0ce33a917efb0dd48",
++      "ranges": [
++        {
++          "lines": [
++            11,
++            38
++          ],
++          "sha256": "acd8f2983848c7937043751f8609c89e22775977604e645f284ac6268f151570"
++        },
++        {
++          "lines": [
++            53,
++            137
++          ],
++          "sha256": "ff69cc16b9c425d65e727ef46c1eaf11f53269cbbee69d1e2b2815551d0ce7ff"
++        }
++      ]
++    }
++  ],
++  "presentation": [
++    "The source product Select is distinct from TreeSelect references: one inline search input, recent history and clear/remove actions, provider-projected code/name columns, side active-product facts aligned across the category and warehouse fields, native code tags.",
++    "Warehouse/reference filters use the shared installed TreeSelect action with source tags, inline search and informational toolbar, not bespoke title/search/footer dialogs.",
++    "Category reuses the same shared action with an explicit branch hierarchy mode backed by native parent identities."
++  ],
++  "readBoundaries": [
++    "Opening empty product search shows owner-scoped recent history and performs no candidate or product read.",
++    "Typing debounces a bounded20-result native candidate query. Each subsequent page needs scroll intent; the render window stops at200 without truncating exactTotal.",
++    "Only the active suggestion reads existing target-only basics/specifications/image thumbnails. No per-row details, whole-catalog hydration or original-image prefetch.",
++    "Scopes, query attachments and style leases are effect/action owned; identity, provider, query, close and unmount invalidate stale work."
++  ],
++  "intentionalDifferences": [
++    "The frozen global business bridges and all-catalog/private arrays are not copied. Search order/membership comes from the bounded native provider, not client catalog ranking.",
++    "Recent history is bounded20 and belongs to the current route/provider/identity. It is not loaded from unpartitioned legacy localStorage; only actually selected native product codes are remembered.",
++    "Legacy full-catalog multi-code paste/exact auto-selection is not emulated. Ordinary literal search remains available.",
++    "Category parent IDs mean server category-branch union. The source non-strict loaded-only cascade and inferred half-check states are not copied onto an incomplete candidate tree; unrestricted ALL-minus or parent-minus-child requests require an explicit positive replacement.",
++    "Only native parent relationships are nested. Unknown parent candidates are not invented; provider-owned labels remain authoritative. All known category IDs never normalize to unrestricted scope, which may include uncategorized products.",
++    "Unknown price or metadata is shown as not provided, never fabricated or derived. The target-only native retail price is nullable and distinct from historical sale reference price.",
++    "Preview uses authorized thumbnails only. Source catalog full-image hover zoom is not duplicated or prefetched.",
++    "Source ShadowRoot isolation is replaced by a local host selector; the direct-input font selector is strengthened to preserve13px against later route leaf CSS. No global Arco reset is imported.",
++    "Technical explicit-selection bound is100 per native query contract. Reset remains draft-only and inventory Query remains explicit."
++  ],
++  "verificationBoundary": "Source-derived DOM/CSS and scoped tests only. No real-browser screenshot, pixel, geometry, production data, database execution or visual acceptance claim."
++}
+diff --git a/apps/web/src/components/product-candidate-action.css b/apps/web/src/components/product-candidate-action.css
+new file mode 100644
+index 0000000..9316f42
+--- /dev/null
++++ b/apps/web/src/components/product-candidate-action.css
+@@ -0,0 +1,88 @@
++/* Action-only installed leaves. Frozen inventory-select.jsx CSS, scoped to its route host. */
++@import '@arco-design/web-react/es/Select/style/index.css';
++@import '@arco-design/web-react/es/InputTag/style/index.css';
++@import '@arco-design/web-react/es/_class/OverflowEllipsis/style/index.css';
++@import '@arco-design/web-react/es/Tag/style/index.css';
++@import '@arco-design/web-react/es/Checkbox/style/index.css';
++@import '@arco-design/web-react/es/Trigger/style/index.css';
++@import '@arco-design/web-react/es/Empty/style/index.css';
++.inventory-product-select{display:block;width:100%;min-width:0;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink);--arcoblue-6:var(--ca-primary-rgb);--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);--color-border-2:var(--ca-control-border)}
++.inventory-product-select .arco-select{display:block;width:100%;font-size:13px}
++.inventory-product-select .arco-select .arco-select-view{height:32px;min-height:32px;max-height:32px;overflow:hidden;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none}
++.inventory-product-select .arco-select:hover .arco-select-view{border-color:transparent;background:var(--ca-surface-muted)}
++.inventory-product-select .arco-select.arco-select-focused .arco-select-view{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted);box-shadow:none}
++.inventory-product-select .arco-select.arco-select-focused:not(.inv-has-tags) .arco-select-view{background:var(--ca-surface)}
++.inventory-product-select .arco-select .arco-input-tag,.inventory-product-select .arco-select .arco-input-tag:hover,.inventory-product-select .arco-select .arco-input-tag.arco-input-tag-focus{background:transparent!important}
++.inventory-product-select .arco-select .arco-input-tag-view,.inventory-product-select .arco-select .arco-input-tag-inner{min-width:0}
++.inventory-product-select .arco-select .arco-input-tag-inner{flex-wrap:nowrap;white-space:nowrap}
++.inventory-product-select .arco-select .arco-input-tag .arco-input-tag-tag,.inventory-product-select .arco-select.arco-select-focused .arco-input-tag .arco-input-tag-tag{height:23px;line-height:23px;max-width:none;flex:none;white-space:nowrap;background:var(--ca-surface);color:var(--ca-ink);border:0;border-radius:3px;box-shadow:none}
++.inventory-product-select .arco-select .arco-tag-content{overflow:visible;text-overflow:clip;white-space:nowrap}
++.inventory-product-select .arco-select .inv-tag{display:inline-flex;align-items:center;gap:2px;height:23px;max-width:none;padding:0 4px 0 7px;border:0;border-radius:3px;background:var(--ca-surface);color:var(--ca-ink);white-space:nowrap}
++.inventory-product-select .inv-tag-copy{border:0;padding:0;background:transparent;color:inherit;font:inherit;line-height:21px;cursor:copy;white-space:nowrap}
++.inventory-product-select .inv-tag-copy:focus-visible{outline:1px solid var(--ca-control-focus-border);outline-offset:1px}
++.inventory-product-select .arco-select .inv-tag .arco-tag-close-icon{margin-left:0}
++.inventory-product-select .arco-select .arco-tag-close-icon,.inventory-product-select .arco-select .arco-icon-hover{color:var(--ca-ink-2)}
++.inventory-product-select .arco-select .arco-input-tag .arco-input-tag-tag:has(.inv-count),.inventory-product-select .arco-select.arco-select-focused .arco-input-tag .arco-input-tag-tag:has(.inv-count){padding-inline:3px;border:0;background:transparent}
++.inventory-product-select .inv-count{white-space:nowrap;color:var(--ca-ink-2);font-size:12px}
++.inventory-product-select .arco-select .arco-select-view input{font-size:13px;min-width:42px;background:transparent}
++.inventory-product-select .arco-select-view .arco-select-view-suffix{flex:none}
++.inventory-product-select .arco-trigger-popup{max-width:calc(100vw - 24px)}
++.inventory-product-select .arco-select-popup{padding:0;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);background:var(--ca-popover-bg)}
++.inventory-product-select .arco-select-popup:has(.inv-menu-grid){border:0;box-shadow:none;background:transparent}
++.inventory-product-select .arco-select-popup-inner{max-height:320px;overflow:auto;padding:4px!important}
++.inventory-product-select .arco-select-option{display:flex;align-items:center;min-height:36px;padding:4px 8px!important;color:var(--ca-ink)!important;background:var(--ca-popover-bg);font-size:13px}
++.inventory-product-select .arco-select-option-selected{background:var(--ca-surface-subtle)!important;color:var(--ca-ink)!important}
++.inventory-product-select .arco-select-option-hover{background:var(--ca-popover-hover)!important;color:var(--ca-ink)!important}
++.inventory-product-select .arco-select-option-disabled{background:var(--ca-popover-bg)!important;color:var(--ca-disabled-ink)!important}
++.inventory-product-select .arco-select-option-content{width:100%;min-width:0}
++.inventory-product-select .inv-menu-grid{display:grid;grid-template-columns:var(--inv-list-width) minmax(0,1fr);gap:8px;align-items:start;min-height:0}
++.inventory-product-select .inv-menu-grid-empty{display:block;min-height:0}
++.inventory-product-select .inv-menu-list{min-width:0;min-height:0;overflow:hidden;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);background:var(--ca-popover-bg)}
++.inventory-product-select .inv-result-heading{display:grid;grid-template-columns:170px minmax(0,1fr);gap:10px;align-items:center;min-height:28px;padding:4px 12px;border-bottom:1px solid var(--ca-line);color:var(--ca-ink-2);font-size:12px;font-weight:400}
++.inventory-product-select .inv-menu-list .arco-select-popup-inner{box-sizing:border-box;max-height:306px;overflow-y:auto;padding:2px 4px!important;scrollbar-gutter:stable}
++.inventory-product-select .inv-menu-list .arco-select-option-wrapper{display:flex;align-items:center;min-height:30px;max-height:30px;margin:0;padding:0}
++.inventory-product-select .inv-menu-list .arco-select-checkbox{display:none}
++.inventory-product-select .inv-menu-list .arco-select-option{box-sizing:border-box;flex:1;height:30px;min-height:30px;padding:4px 8px!important}
++.inventory-product-select .inv-option-row{display:flex;gap:10px;align-items:center;width:100%;min-width:0;color:var(--ca-ink)}
++.inventory-product-select .inv-option-code{flex:none;width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:400;color:var(--ca-ink);font-variant-numeric:tabular-nums}
++.inventory-product-select .inv-option-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:400;color:var(--ca-ink-2)}
++.inventory-product-select .inv-preview{box-sizing:border-box;min-width:0;padding:8px 10px;background:var(--ca-surface-subtle);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);color:var(--ca-ink)}
++.inventory-product-select .inv-preview-title{margin-bottom:6px;font-size:13px;line-height:18px;font-weight:600;color:var(--ca-ink-2)}
++.inventory-product-select .inv-photo-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px 4px;align-items:start;margin-bottom:10px}
++.inventory-product-select .inv-photo-item{display:block;min-width:0;cursor:zoom-in;outline:none}
++.inventory-product-select .inv-photo-tile{box-sizing:border-box;display:block;width:100%;aspect-ratio:1;padding:2px;border-radius:3px;background:var(--ca-surface);overflow:hidden}
++.inventory-product-select .inv-photo-item:hover .inv-photo-tile,.inventory-product-select .inv-photo-item:focus-visible .inv-photo-tile{box-shadow:inset 0 0 0 1px var(--ca-control-focus-border)}
++.inventory-product-select .inv-photo-tile .arco-image{display:block!important;width:100%!important;height:100%!important;background:var(--ca-surface)}
++.inventory-product-select .inv-photo-tile .arco-image-img{width:100%!important;height:100%!important;object-fit:cover;object-position:center 35%}
++.inventory-product-select .inv-photo-label{display:block;overflow:hidden;margin-top:3px;text-align:center;text-overflow:ellipsis;white-space:nowrap;font-size:12px;line-height:16px;color:var(--ca-ink-2)}
++.inventory-product-select .inv-photo-zoom .arco-popover-inner{padding:8px}
++.inventory-product-select .inv-photo-zoom-content .arco-image{display:block;background:var(--ca-surface-muted)}
++.inventory-product-select .inv-photo-zoom-content .arco-image-img{width:100%!important;height:100%!important;object-fit:contain}
++.inventory-product-select .inv-photo-zoom-label{display:block;margin-top:5px;text-align:center;color:var(--ca-ink);font-size:12px}
++.inventory-product-select .inv-preview-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 10px;font-size:14px;line-height:20px}
++.inventory-product-select .inv-preview-field{min-width:0;overflow-wrap:anywhere}
++.inventory-product-select .inv-preview-field small{font-size:13px;color:var(--ca-ink-2)}
++.inventory-product-select .inv-preview-no-photo{margin:2px 0 6px;color:var(--ca-ink-2);font-size:12px}
++.inventory-product-select .inv-menu-heading{display:flex;align-items:center;justify-content:space-between;min-height:30px;padding:4px 12px;font-size:13px;font-weight:400;color:var(--ca-ink-2);border-bottom:1px solid var(--ca-line)}
++.inventory-product-select .inv-menu-heading button{padding:0;border:0;background:transparent;color:var(--ca-ink-2);cursor:pointer;font:inherit}
++.inventory-product-select .inv-menu-heading button:hover,.inventory-product-select .inv-menu-heading button:focus-visible{color:var(--ca-primary-ink);text-decoration:underline}
++.inventory-product-select .inv-history-menu .arco-select-checkbox{display:none}
++.inventory-product-select .inv-history-menu .arco-select-popup-inner{max-height:248px;padding:2px 4px!important}
++.inventory-product-select .inv-history-menu .arco-select-option-wrapper{padding:0}
++.inventory-product-select .inv-history-menu .arco-select-option{min-height:30px;padding:4px 8px!important;font-size:13px;font-weight:400}
++.inventory-product-select .inv-recent{display:flex;align-items:center;gap:8px;width:100%;min-width:0;color:var(--ca-ink)}
++.inventory-product-select .inv-recent span{flex:1;min-width:0;overflow-wrap:anywhere;line-height:18px}
++.inventory-product-select .inv-recent button{border:0;background:transparent;color:var(--ca-ink-2);cursor:pointer;font:inherit}
++.inventory-product-select .inv-recent button{width:18px;height:22px;padding:0;font-size:17px;line-height:22px;opacity:0}
++.inventory-product-select .arco-select-option-wrapper:hover .inv-recent button,.inventory-product-select .arco-select-option-hover .inv-recent button,.inventory-product-select .inv-recent button:focus-visible{opacity:1}
++.inventory-product-select .inv-recent button:hover{color:var(--ca-primary-ink)}
++.inventory-product-select .inv-no-result{padding:12px;color:var(--ca-ink-2);font-size:13px}
++.inventory-product-select{position:relative;--color-text-3:var(--ca-ink-3);--color-text-4:var(--ca-disabled-ink);--color-fill-1:var(--ca-surface-subtle);--color-fill-2:var(--ca-surface-muted);--color-fill-3:var(--ca-line);--color-fill-4:var(--ca-line-strong);--color-bg-2:var(--ca-surface);--color-bg-popup:var(--ca-surface);--color-primary-light-1:var(--ca-surface-subtle);--color-primary-light-2:var(--ca-popover-hover);--border-radius-small:var(--ca-radius-control);--border-radius-medium:var(--ca-radius-card)}
++.inventory-product-select .arco-trigger{z-index:1600!important}
++.inventory-product-select .arco-icon{display:inline-block;color:inherit;font-style:normal;width:1em;height:1em;vertical-align:-2px;stroke:currentColor}
++.inventory-product-select .arco-icon[fill=currentColor]{fill:currentColor;stroke:none}
++.inventory-product-select .arco-icon[stroke=currentColor]{stroke:currentColor;fill:none}
++.inventory-product-select .arco-select-suffix-icon svg{width:14px;height:14px}
++.inventory-product-select .inv-active-option{background:var(--ca-popover-hover)!important}
++.inventory-product-select .inv-photo-tile img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
++@media(max-width:740px){.inventory-product-select .inv-menu-grid{grid-template-columns:1fr;gap:4px}}
+diff --git a/apps/web/src/components/product-candidate-action.tsx b/apps/web/src/components/product-candidate-action.tsx
+new file mode 100644
+index 0000000..c149195
+--- /dev/null
++++ b/apps/web/src/components/product-candidate-action.tsx
+@@ -0,0 +1,128 @@
++export { createInventoryProductSelectStyles } from './product-candidate-styles.ts';
++import ArcoTag from '@arco-design/web-react/es/Tag/index.js';
++import type { TagProps } from '@arco-design/web-react/es/Tag/interface.js';
++import ArcoSelect from '@arco-design/web-react/es/Select/index.js';
++import type { OptionProps, SelectHandle, SelectProps } from '@arco-design/web-react/es/Select/interface.js';
++import { useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState, type ComponentType, type CSSProperties, type ForwardRefExoticComponent, type RefAttributes } from 'react';
++import type { Candidate } from '../inventory/contracts.ts';
++import type { ProductCandidateActionProps } from './candidate-selector-contract.ts';
++import { useInventoryCandidates } from './use-inventory-candidates.ts';
++import { ProductCandidatePreview } from './product-candidate-preview.tsx';
++const Select = ArcoSelect as unknown as ForwardRefExoticComponent<SelectProps & RefAttributes<SelectHandle>> & { Option: ComponentType<OptionProps> };
++const Tag = ArcoTag as unknown as ComponentType<TagProps>;
++const remoteSearch = () => undefined;
++
++/** Frozen inventory-select.jsx presentation. Only the active popup owns reads. */
++export function ProductCandidateAction(props: ProductCandidateActionProps) {
++  const attached = useRef(false); const live = useRef(props); live.current = props;
++  const isCurrent = () => attached.current && live.current === props && props.scope.active;
++  const currentOpen = () => isCurrent() && props.open && !!props.activationScope?.active;
++  useLayoutEffect(() => { attached.current = true; return () => { attached.current = false; }; }, []);
++  const composition = useRef({ active: false, endedAt: -Infinity });
++  const host = useRef<HTMLDivElement>(null); const select = useRef<SelectHandle | null>(null);
++  const [mounted, setMounted] = useState(false); const [, refreshPortal] = useReducer((value: number) => value + 1, 0);
++  const [selectionNotice, setSelectionNotice] = useState('');
++  const [copyStatus, setCopyStatus] = useState('');
++  const [history, setHistory] = useState<readonly string[]>([]); const [known, setKnown] = useState<ReadonlyMap<string, Candidate>>(() => new Map());
++  const [activeId, setActiveId] = useState(''); const [geometry, setGeometry] = useState({ width: 0, left: 0, right: 0, viewport: 0 });
++  const selected = useRef(props.selected); selected.current = props.selected;
++  const open = props.open && !!props.activationScope?.active && props.scope.active;
++  const search = props.search.trim(); const recent = !search;
++  const { query, snapshot } = useInventoryCandidates(open && !recent ? props.activationScope : null, props.reader, 'product', props.categoryIds, () => selected.current.map(item => item.id));
++  const current = snapshot.search === search ? snapshot : null; const candidates = current?.items ?? [];
++  const currentCandidates = useRef(candidates); currentCandidates.current = candidates;
++  const active = candidates.find(item => item.id === activeId) ?? candidates[0];
++  const busy = !current || current.phase === 'idle' || current.phase === 'loading';
++  useEffect(() => { if (!query || recent) return; query.reset(search); const timer = setTimeout(() => { void query.loadNext(); }, 180); return () => { clearTimeout(timer); query.reset(search); }; }, [query, search, recent]);
++  useEffect(() => { setMounted(true); if (props.focusOnMount) select.current?.focus(); }, []);
++  useEffect(() => {
++    if (!mounted || !open) return; let active = true; queueMicrotask(() => { if (active) refreshPortal(); }); return () => { active = false; };
++  }, [mounted, open]);
++  useLayoutEffect(() => {
++    const element = host.current; if (!element) return;
++    const measure = () => {
++      const rect = element.getBoundingClientRect(); const row = element.closest('.iw-query-row');
++      const warehouse = row?.querySelector<HTMLElement>('[data-multi-label="仓库"]')?.getBoundingClientRect();
++      setGeometry({ width: rect.width, left: rect.left, right: warehouse && Math.abs(warehouse.top - rect.top) < 3 ? warehouse.right : 0, viewport: window.innerWidth });
++    };
++    measure(); window.addEventListener('resize', measure);
++    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null; observer?.observe(element);
++    return () => { observer?.disconnect(); window.removeEventListener('resize', measure); };
++  }, []);
++  const available = Math.max(0, geometry.viewport - geometry.left - 12);
++  const popupWidth = Math.min(recent || !candidates.length ? geometry.width : Math.max(geometry.width + 308, geometry.right - geometry.left), available);
++  const listWidth = Math.min(geometry.width, Math.max(250, popupWidth - 308));
++  const visibleTagLimit = useMemo(() => {
++    if (props.selected.length < 2) return 3;
++    const context = document.createElement('canvas').getContext('2d'); if (!context) return Math.min(3, props.selected.length);
++    context.font = '13px Arial'; const widths = props.selected.slice(0, 3).map(item => context.measureText(known.get(item.id)?.code ?? item.label).width + 39);
++    for (let count = Math.min(3, props.selected.length); count > 1; count--) {
++      const reserve = props.selected.length > count ? 112 : 64;
++      if (widths.slice(0, count).reduce((sum, width) => sum + width, 0) + (count - 1) * 4 + reserve <= geometry.width) return count;
++    } return 1;
++  }, [props.selected, known, geometry.width]);
++  const remember = (value: string) => setHistory(previous => [value, ...previous.filter(item => item !== value)].slice(0, 20));
++  const selectCandidate = (item: Candidate) => {
++    if (!currentOpen()) return;
++    const target = currentCandidates.current.find(value => value.id === item.id);
++    if (!target || target.disabled || !target.code || !target.name) return;
++    item = target;
++    if (props.selected.length >= 100 && !props.selected.some(value => value.id === item.id)) { setSelectionNotice('最多可明确选择 100 款商品，请减少选择。'); return; }
++    setSelectionNotice(''); setKnown(previous => new Map(previous).set(item.id, item)); remember(item.code);
++    if (!props.selected.some(value => value.id === item.id)) props.onChange([...props.selected, { id: item.id, label: item.label }]);
++    props.onSearch(''); setActiveId(''); select.current?.focus();
++  };
++  const optionList = recent ? history.length ? history.map((value, index) => <Select.Option key={value} value={`__recent__${index}`}>
++    <span className="inv-recent"><span title={value}>{value}</span><button type="button" aria-label={`删除最近搜索 ${value}`} onMouseDown={event => { event.preventDefault(); event.stopPropagation(); }}
++      onClick={event => { event.preventDefault(); event.stopPropagation(); if (!currentOpen()) return; setHistory(previous => previous.filter(item => item !== value)); }}>×</button></span>
++  </Select.Option>) : [<Select.Option key="empty" value="__recent_empty__" disabled>暂无最近搜索</Select.Option>] : candidates.map(item => <Select.Option key={item.id} value={item.id} disabled={item.disabled} data-product-id={item.id}
++    className={active?.id === item.id ? 'inv-active-option' : undefined} onMouseEnter={() => { if (currentOpen()) setActiveId(item.id); }}>
++    <span className="inv-option-row"><span className="inv-option-code">{item.code}</span><span className="inv-option-name">{item.name}</span></span>
++  </Select.Option>);
++  return <div ref={host} className="inventory-product-select" onCompositionStart={() => { composition.current.active = true; }} onCompositionEnd={() => { composition.current.active = false; composition.current.endedAt = Date.now(); }} onKeyDownCapture={event => {
++    if (!isCurrent()) return;
++    if (event.key === 'Enter') {
++      event.preventDefault(); event.stopPropagation(); if (event.nativeEvent.isComposing || event.keyCode === 229 || composition.current.active || Date.now() - composition.current.endedAt < 40) return;
++      if (!recent && open) { const item = candidates.find(value => value.id === (activeId || active?.id)); if (item) selectCandidate(item); }
++    } else if ((event.key === 'ArrowDown' || event.key === 'ArrowUp') && !recent && candidates.length && !composition.current.active) {
++      event.preventDefault(); event.stopPropagation(); const index = Math.max(0, candidates.findIndex(item => item.id === (activeId || active?.id)));
++      setActiveId(candidates[(index + (event.key === 'ArrowDown' ? 1 : -1) + candidates.length) % candidates.length]!.id);
++    }
++  }}><Select ref={select} className={props.selected.length ? 'inv-has-tags' : undefined} aria-label="商品搜索，多选" mode="multiple" showSearch
++    value={props.selected.map(item => item.id)} inputValue={props.search} filterOption={false} onSearch={remoteSearch} disabled={!props.scope.active}
++    popupVisible={mounted && open} unmountOnExit allowClear={false} placeholder={props.placeholder ?? '商品款号 / 名称 / 系统货号'}
++    arrowIcon={<svg aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="4"><circle cx="21" cy="21" r="13"/><path d="m31 31 10 10"/></svg>}
++    maxTagCount={{ count: visibleTagLimit, render: count => <span className="inv-count">+{count} 更多</span>, showPopover: false }}
++    renderTag={({ value, closable }) => { const id = String(value); const item = props.selected.find(item => item.id === id); const code = known.get(id)?.code ?? item?.label ?? '';
++      return <Tag className="inv-tag" closable={closable} onClose={() => { if (isCurrent()) props.onChange(props.selected.filter(item => item.id !== id)); }}><button type="button" className="inv-tag-copy"
++        title={`点击复制款号 ${code}`} aria-label={`复制款号 ${code}`} onMouseDown={event => event.preventDefault()} onClick={event => { event.stopPropagation(); if (!isCurrent()) return;
++          void navigator.clipboard?.writeText(code).then(() => { if (isCurrent()) setCopyStatus(`已复制款号 ${code}`); }, () => { if (isCurrent()) setCopyStatus('复制失败，请检查剪贴板权限'); }); select.current?.focus();
++        }}>{code}</button></Tag>; }}
++    renderFormat={(_option, value) => { const id = typeof value === 'string' ? value : value.value; return known.get(id)?.code ?? props.selected.find(item => item.id === id)?.label ?? ''; }}
++    getPopupContainer={() => { if (!host.current) throw new Error('Product search host is not mounted.'); return host.current; }}
++    triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: popupWidth || undefined } }}
++    onInputValueChange={(value, reason) => { if (reason !== 'manual' || !isCurrent()) return; setSelectionNotice(''); query?.reset(''); setActiveId(''); props.onSearch(value); }}
++    onVisibleChange={visible => { if (isCurrent()) props.onOpen(visible); }}
++    onChange={(values: string[]) => {
++      if (!isCurrent()) return;
++      const recentValue = values.find(value => value.startsWith('__recent__'));
++      if (recentValue && open) { const value = history[Number(recentValue.slice('__recent__'.length))]; if (value) { query?.reset(''); props.onSearch(value); setActiveId(''); } return; }
++      const added = values.find(id => !props.selected.some(item => item.id === id));
++      if (added) { const item = candidates.find(value => value.id === added); if (item) selectCandidate(item); return; }
++      if (!open) return;
++      props.onChange(props.selected.filter(item => values.includes(item.id)));
++    }}
++    dropdownRender={menu => recent ? <div className="inv-history-menu"><div className="inv-menu-heading"><span>最近搜索</span>{history.length > 0 && <button type="button" aria-label="清空最近搜索" onMouseDown={event => event.preventDefault()} onClick={() => { if (currentOpen()) setHistory([]); }}>清空</button>}</div>{menu}</div>
++      : <div className={candidates.length ? 'inv-menu-grid' : 'inv-menu-grid inv-menu-grid-empty'} style={{ '--inv-list-width': `${listWidth}px` } as CSSProperties}>
++        <div className="inv-menu-list" onScrollCapture={event => { const element = event.target as HTMLElement; if (element.classList.contains('arco-select-popup-inner') && element.scrollHeight > element.clientHeight && element.scrollTop + element.clientHeight >= element.scrollHeight - 48) void query?.loadNext(); }}>
++          {candidates.length > 0 && <div className="inv-result-heading" aria-hidden="true"><span>商品款号</span><span>商品名称</span></div>}{menu}
++          {selectionNotice && <p className="inv-no-result" role="status">{selectionNotice}</p>}
++          {busy && <p className="inv-no-result" role="status">正在查找…</p>}
++          {current?.phase === 'error' && <p className="inv-no-result" role="alert">候选暂不可读取。<button type="button" className="iw-link" onClick={() => { query?.reset(search); void query?.loadNext(); }}>重试候选</button></p>}
++          {current?.phase === 'success' && !candidates.length && <p className="inv-no-result">没有匹配商品，可继续输入</p>}
++          {current?.limitReached && <p className="inv-no-result" role="status">已加载 200 项，请继续输入缩小范围。匹配总数 {current.exactTotal} 项。</p>}
++        </div>{active && open && props.activationScope && props.productReader && <ProductCandidatePreview parent={props.activationScope} reader={props.productReader} productId={active.id} />}
++      </div>}>
++    {optionList}
++  </Select><span className="sr-only" role="status">{copyStatus}</span></div>;
++}
+diff --git a/apps/web/src/components/product-candidate-preview.tsx b/apps/web/src/components/product-candidate-preview.tsx
+new file mode 100644
+index 0000000..986b255
+--- /dev/null
++++ b/apps/web/src/components/product-candidate-preview.tsx
+@@ -0,0 +1,38 @@
++import { useEffect, useState } from 'react';
++import { ReadScope } from '../loading/read-scope.ts';
++import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
++import { assertProductBasics, assertProductImages, assertProductSpecifications } from '../inventory/product-model.ts';
++import { useProductRead } from '../inventory/product-tab-state.tsx';
++
++/** Only the currently active suggestion owns these existing target-only reads. */
++export function ProductCandidatePreview(props: { readonly parent: ReadScope; readonly reader: ProductReadOnlyReader; readonly productId: string }) {
++  const [owned, setOwned] = useState<{ parent: ReadScope; reader: ProductReadOnlyReader; scope: ReadScope } | null>(null);
++  useEffect(() => {
++    const scope = new ReadScope(props.parent.identity, `${props.parent.routeInstanceId}:candidate-preview:${props.productId}`, props.productId, () => {});
++    const abort = () => { scope.dispose(); setOwned(null); };
++    props.parent.signal.addEventListener('abort', abort, { once: true });
++    if (props.parent.active) setOwned({ parent: props.parent, reader: props.reader, scope }); else abort();
++    return () => { props.parent.signal.removeEventListener('abort', abort); scope.dispose(); };
++  }, [props.parent, props.reader, props.productId]);
++  return owned?.parent === props.parent && owned.reader === props.reader && owned.scope.entityId === props.productId && owned.scope.active
++    ? <PreviewRead scope={owned.scope} reader={props.reader} /> : null;
++}
++function PreviewRead({ scope, reader }: { readonly scope: ReadScope; readonly reader: ProductReadOnlyReader }) {
++  const basics = useProductRead(scope, value => reader.readProductBasics(value), assertProductBasics);
++  const specs = useProductRead(scope, value => reader.readProductSpecifications(value), assertProductSpecifications);
++  const images = useProductRead(scope, value => reader.readProductImages(value), assertProductImages);
++  const data = basics.snapshot.success?.data; const specification = specs.snapshot.success?.data; const photos = images.snapshot.success?.data;
++  const fields = data ? [['款号', data.code], ['商品名称', data.name],
++    ...(specification ? [['颜色', `${specification.colors.length} 色`]] : []), ['商品分类', data.categoryLabel ?? '未提供'],
++    ['季节', data.seasonLabel ?? '未提供'], ...(specification ? [['版型', specification.fits.map(item => item.label).join(' / ') || '未提供']] : []),
++    ['零售价', data.retailPrice ?? '未提供']] : [];
++  const reads = [basics, specs, images]; const failed = reads.some(read => read.snapshot.phase === 'error');
++  return <aside className="inv-preview" aria-label="当前候选商品资料"><div className="inv-preview-title">商品资料</div>
++    {photos ? photos.images.length ? <div className="inv-photo-grid">{photos.images.map(photo => <div key={photo.id} className="inv-photo-item">
++      <span className="inv-photo-tile"><img src={photo.thumbnailUrl} alt={photo.label} loading="lazy" decoding="async" /></span><span className="inv-photo-label">{photo.label}</span></div>)}</div>
++      : <div className="inv-preview-no-photo">该商品尚未提供图片</div> : images.snapshot.phase === 'success' ? <div className="inv-preview-no-photo">图片资料未提供</div> : images.snapshot.phase !== 'error' && <div className="inv-preview-no-photo">正在读取商品图片…</div>}
++    {data ? <div className="inv-preview-info">{fields.map(([label, value]) => <div className="inv-preview-field" key={label}><small>{label}</small> {value}</div>)}</div>
++      : basics.snapshot.phase === 'success' ? <p className="inv-preview-no-photo">该商品尚未提供资料</p> : basics.snapshot.phase !== 'error' && <p className="inv-preview-no-photo" role="status">正在读取商品资料…</p>}
++    {failed && <p className="inv-preview-no-photo" role="alert">部分资料暂不可读取。<button type="button" className="iw-link" onClick={() => { for (const read of reads) if (read.snapshot.phase === 'error') read.read(); }}>重试资料</button></p>}
++  </aside>;
++}
+diff --git a/apps/web/src/components/product-candidate-styles.ts b/apps/web/src/components/product-candidate-styles.ts
+new file mode 100644
+index 0000000..3e913ec
+--- /dev/null
++++ b/apps/web/src/components/product-candidate-styles.ts
+@@ -0,0 +1,21 @@
++export function createInventoryProductSelectStyles(document: Document) {
++  let link: HTMLLinkElement | null = null; let rejectPending: ((error: Error) => void) | null = null;
++  let pending: Promise<void> | null = null; let disposed = false;
++  return { load(): Promise<void> {
++    if (disposed) return Promise.reject(new Error('The product search style owner is disposed.'));
++    if (document.querySelector('style[data-inventory-product-select-inline]')) return Promise.resolve();
++    if (pending) return pending;
++    pending = new Promise<void>((resolve, reject) => {
++      rejectPending = reject; const element = document.createElement('link'); link = element;
++      element.rel = 'stylesheet'; element.href = new URL('./product-candidate-action.css', import.meta.url).href;
++      element.dataset.inventoryProductSelectStyles = '';
++      element.onload = () => { element.onload = null; element.onerror = null; rejectPending = null; resolve(); };
++      element.onerror = () => { element.onload = null; element.onerror = null; element.remove(); link = null; pending = null; rejectPending = null; reject(new Error('商品搜索样式未加载。')); };
++      document.head.append(element);
++    }); return pending;
++  }, dispose() {
++    if (disposed) return; disposed = true;
++    if (link) { link.onload = null; link.onerror = null; link.remove(); link = null; }
++    rejectPending?.(new Error('The product search style owner is disposed.')); rejectPending = null; pending = null;
++  } };
++}
+diff --git a/apps/web/src/components/product-candidate-styles.test.ts b/apps/web/src/components/product-candidate-styles.test.ts
+new file mode 100644
+index 0000000..6baa36b
+--- /dev/null
++++ b/apps/web/src/components/product-candidate-styles.test.ts
+@@ -0,0 +1,26 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { createInventoryProductSelectStyles } from './product-candidate-styles.ts';
++function fakeDocument(inline = false) {
++  const links: { rel: string; href: string; dataset: Record<string, string>; onload: (() => void) | null; onerror: (() => void) | null; remove: () => void }[] = [];
++  const document = { querySelector: () => inline ? {} : null,
++    createElement() { const link = { rel: '', href: '', dataset: {}, onload: null, onerror: null, remove() { const index = links.indexOf(link); if (index >= 0) links.splice(index, 1); } }; return link; },
++    head: { append: (link: typeof links[number]) => links.push(link) } } as unknown as Document;
++  return { document, links };
++}
++test('product search stylesheet has one action-owned relative URL and releases its link', async () => {
++  const f = fakeDocument(); const lease = createInventoryProductSelectStyles(f.document); assert.equal(f.links.length, 0);
++  const first = lease.load(); assert.equal(lease.load(), first); assert.equal(f.links.length, 1);
++  assert.equal(f.links[0]!.rel, 'stylesheet'); assert.match(f.links[0]!.href, /\/product-candidate-action\.css$/);
++  f.links[0]!.onload!(); await first; lease.dispose(); assert.equal(f.links.length, 0); await assert.rejects(lease.load());
++});
++test('closed pending product style load rejects, cannot publish late load or retain handlers', async () => {
++  const f = fakeDocument(); const lease = createInventoryProductSelectStyles(f.document); const pending = lease.load(); const link = f.links[0]!;
++  const rejected = assert.rejects(pending); lease.dispose(); await rejected;
++  assert.equal(f.links.length, 0); assert.equal(link.onload, null); assert.equal(link.onerror, null); lease.dispose();
++});
++test('product style errors are retryable, and only actual portable-inline marker skips the link', async () => {
++  const f = fakeDocument(); const lease = createInventoryProductSelectStyles(f.document); const failed = lease.load(); const rejected = assert.rejects(failed);
++  f.links[0]!.onerror!(); await rejected; assert.equal(f.links.length, 0); const next = lease.load(); f.links[0]!.onload!(); await next; lease.dispose();
++  const inline = fakeDocument(true); const portable = createInventoryProductSelectStyles(inline.document); await portable.load(); assert.equal(inline.links.length, 0); portable.dispose();
++});
+diff --git a/apps/web/src/components/use-inventory-candidates.ts b/apps/web/src/components/use-inventory-candidates.ts
+new file mode 100644
+index 0000000..d2c259b
+--- /dev/null
++++ b/apps/web/src/components/use-inventory-candidates.ts
+@@ -0,0 +1,20 @@
++import { useEffect, useState, useSyncExternalStore } from 'react';
++import type { CandidateKind, InventoryReader } from '../inventory/contracts.ts';
++import type { ReadScope } from '../loading/read-scope.ts';
++import { InventoryCandidates, type InventoryCandidateSnapshot } from './inventory-candidates.ts';
++const idle: InventoryCandidateSnapshot = Object.freeze({ search: '', phase: 'idle', items: [], exactTotal: null, unfilteredTotal: null,
++  page: 0, hasMore: false, limitReached: false, completeUniverse: false });
++const empty = () => idle; const none = () => () => {};
++/** Effect-owned model: replay never leaves a permanent render-time subscription. */
++export function useInventoryCandidates(scope: ReadScope | null, reader: InventoryReader, kind: CandidateKind, categoryIds: readonly string[], selectedIds: () => readonly string[]) {
++  const [owned, setOwned] = useState<{ scope: ReadScope; reader: InventoryReader; kind: CandidateKind; key: string; query: InventoryCandidates } | null>(null);
++  const key = categoryIds.join('\0');
++  useEffect(() => {
++    if (!scope) return;
++    const query = new InventoryCandidates(scope, reader, kind, categoryIds, selectedIds); setOwned({ scope, reader, kind, key, query });
++    return () => query.dispose();
++  }, [scope, reader, kind, key]);
++  const query = owned?.scope === scope && owned.reader === reader && owned.kind === kind && owned.key === key && scope?.active ? owned.query : null;
++  const snapshot = useSyncExternalStore(query?.subscribe ?? none, query?.getSnapshot ?? empty, query?.getSnapshot ?? empty);
++  return { query, snapshot };
++}
+diff --git a/apps/web/src/inventory/tests/product-candidate-layout-entry.tsx b/apps/web/src/inventory/tests/product-candidate-layout-entry.tsx
+new file mode 100644
+index 0000000..d96a57c
+--- /dev/null
++++ b/apps/web/src/inventory/tests/product-candidate-layout-entry.tsx
+@@ -0,0 +1,4 @@
++export { act, createElement, StrictMode, useState } from 'react';
++export { createRoot } from 'react-dom/client';
++export { ProductCandidateAction } from '../../components/product-candidate-action.tsx';
++export { ReadContext } from '../../loading/read-scope.ts';
+diff --git a/apps/web/src/inventory/tests/run-product-candidate-layout-dom-tests.mjs b/apps/web/src/inventory/tests/run-product-candidate-layout-dom-tests.mjs
+new file mode 100644
+index 0000000..5bc5901
+--- /dev/null
++++ b/apps/web/src/inventory/tests/run-product-candidate-layout-dom-tests.mjs
+@@ -0,0 +1,66 @@
++import assert from 'node:assert/strict';
++import { createHash } from 'node:crypto';
++import { mkdtemp, readFile, rm } from 'node:fs/promises';
++import path from 'node:path';
++import { fileURLToPath, pathToFileURL } from 'node:url';
++import { build } from 'esbuild';
++import { JSDOM } from 'jsdom';
++const here = path.dirname(fileURLToPath(import.meta.url));
++const repo = path.resolve(here, '../../../../..');
++const temporary = await mkdtemp(path.join(here, '.product-filter-layout-'));
++const css = async entry => {
++  const result = await build({ entryPoints: [path.join(repo, entry)], bundle: true, write: false, minify: true, metafile: true, logLevel: 'warning' });
++  for (const input of Object.keys(result.metafile.inputs)) assert.doesNotMatch(input, /dist\/css\/arco\.css|\/es\/style\/index\.css$/, 'No global Arco reset');
++  return result.outputFiles[0].text;
++};
++const portable = await build({ absWorkingDir: path.join(repo, 'apps/web/preview-core-pages'), entryPoints: ['main.tsx'], outdir: path.join(temporary, 'portable'), bundle: true, platform: 'browser', target: 'es2022', format: 'iife', minify: true, write: false, define: { 'process.env.NODE_ENV': '"production"', 'import.meta.url': '"about:blank"' }, logLevel: 'warning' });
++const portableCss = portable.outputFiles.find(file => file.path.endsWith('.css'))?.text;
++assert.ok(portableCss); assert.match(portableCss, /inventory-product-select/);
++const coreBuilder = await readFile(path.join(repo, 'apps/web/preview-core-pages/build.mjs'), 'utf8');
++assert.match(coreBuilder, /data-inventory-product-select-inline/);
++const previewBuilder = await readFile(path.join(repo, 'apps/web/build-preview.mjs'), 'utf8');
++assert.match(previewBuilder, /data-inventory-product-select-inline/); assert.match(previewBuilder, /readFile\(path.join\(outdir, 'chunks\/product-candidate-action.css'\)/);
++const scenarios = [{ name: 'actual-portable-graph', css: portableCss }, { name: 'actual-split-inventory-action', css: await css('apps/web/src/application/styles/shell.css') + await css('apps/web/src/application/styles/inventory.css') + await css('apps/web/src/components/product-candidate-action.css') }];
++const dom = new JSDOM('<!doctype html><style></style><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
++for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
++Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
++globalThis.IS_REACT_ACT_ENVIRONMENT = true;
++globalThis.ResizeObserver = class { observe() {} unobserve() {} disconnect() {} }; dom.window.ResizeObserver = globalThis.ResizeObserver;
++dom.window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } });
++dom.window.HTMLElement.prototype.scrollIntoView = () => {};
++dom.window.HTMLCanvasElement.prototype.getContext = () => ({ font: '', measureText: text => ({ width: text.length * 7 }) });
++let root;
++try {
++  const output = path.join(temporary, 'entry.mjs');
++  await build({ entryPoints: [path.join(here, 'product-candidate-layout-entry.tsx')], outfile: output, bundle: true, platform: 'browser', format: 'esm', external: ['react', 'react-dom', 'react-dom/*'], banner: { js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);" }, jsx: 'automatic', logLevel: 'warning' });
++  const { act, createElement: h, StrictMode, useState, createRoot, ProductCandidateAction, ReadContext } = await import(pathToFileURL(output).href);
++  const host = document.getElementById('root'); root = createRoot(host);
++  const calls = [];
++  const reader = { readInventory() { throw new Error('No implicit inventory query.'); }, async readCandidates(read) { calls.push(read); return { page: 1, exactTotal: 2, items: [{ id: 'NATIVE-A', label: 'not parsed', code: 'CODE WITH SPACE', name: 'Native Name' }, { id: 'NATIVE-B', label: 'also not parsed', code: 'B', name: 'Other Name' }] }; } };
++  const productReader = { async readProductBasics(read) { return { productId: read.parameters.productId, code: 'CODE WITH SPACE', name: 'Native Name', categoryLabel: 'Category', seasonLabel: 'Season', yearLabel: null, supplierLabel: null, systemCode: null, retailPrice: '12.34' }; }, async readProductSpecifications(read) { return { productId: read.parameters.productId, sizeGroup: null, colors: [{ id: 'BLUE', label: 'Blue' }], fits: [{ id: 'REGULAR', label: 'Regular' }], sizes: [], skus: [] }; }, async readProductImages(read) { return { productId: read.parameters.productId, images: [] }; }, readProductImage() { throw new Error('No original image prefetch.'); } };
++  function Harness({ scope }) { const [selected, setSelected] = useState([]); const [search, setSearch] = useState('026'); return h('section', { className: 'demo-ui' }, h('div', { className: 'iw-workbench' }, h('form', { className: 'iw-query' }, h('div', { className: 'iw-query-row' }, h('div', { className: 'iw-field iw-product-field inventory-product-control' }, h('label', null, '商品'), h(ProductCandidateAction, { scope, activationScope: scope, reader, productReader, kind: 'product', label: '商品', selected, categoryIds: [], onChange: setSelected, search, onSearch: setSearch, onOpen() {}, open: true, focusOnMount: false })))))); }
++  for (const scenario of scenarios) {
++    document.querySelector('style').textContent = scenario.css;
++    const context = new ReadContext({ accountId: 'TEST-LAYOUT', sessionRevision: '1', permissionRevision: '1' }); const scope = context.createScope(`LAYOUT-${scenario.name}`);
++    await act(async () => root.render(h(StrictMode, null, h(Harness, { key: scenario.name, scope }))));
++    await act(async () => { await new Promise(resolve => setTimeout(resolve, 260)); });
++    const grid = host.querySelector('.inv-menu-grid'), heading = host.querySelector('.inv-result-heading'), code = host.querySelector('.inv-option-code'), name = host.querySelector('.inv-option-name');
++    assert.ok(grid && heading && code && name); assert.equal(code.textContent, 'CODE WITH SPACE'); assert.equal(name.textContent, 'Native Name');
++    assert.equal(host.querySelectorAll('.arco-select-view input').length, 1); assert.equal(host.querySelectorAll('.inv-menu-list input:not([type=checkbox])').length, 0); assert.equal(host.querySelectorAll('.iw-pop-head, .iw-popover footer').length, 0);
++    assert.equal(getComputedStyle(grid).display, 'grid'); assert.equal(getComputedStyle(grid).gap, '8px');
++    assert.equal(getComputedStyle(heading).gridTemplateColumns, '170px minmax(0,1fr)'); assert.equal(getComputedStyle(code).width, '170px');
++    assert.equal(getComputedStyle(host.querySelector('.arco-select-checkbox')).display, 'none');
++    assert.equal(getComputedStyle(host.querySelector('.arco-select-view')).minHeight, '32px'); assert.equal(getComputedStyle(host.querySelector('.arco-select-view')).maxHeight, '32px');
++    assert.equal(getComputedStyle(host.querySelector('.arco-select-view input')).fontSize, '13px');
++    const preview = host.querySelector('.inv-preview'); assert.ok(preview); assert.match(preview.textContent, /商品资料.*该商品尚未提供图片.*12.34/); assert.equal(getComputedStyle(preview).padding, '8px 10px');
++    assert.equal(getComputedStyle(host.querySelector('.inv-preview-info')).gridTemplateColumns, 'repeat(2,minmax(0,1fr))');
++    console.log(JSON.stringify({ scenario: scenario.name, cssSha256: createHash('sha256').update(scenario.css).digest('hex'), inputCount: 1, code: code.textContent, headingColumns: getComputedStyle(heading).gridTemplateColumns, previewColumns: getComputedStyle(host.querySelector('.inv-preview-info')).gridTemplateColumns }));
++    await act(async () => host.querySelector('[data-product-id="NATIVE-A"]').click());
++    assert.match(host.querySelector('.inv-tag').textContent, /CODE WITH SPACE/); assert.match(host.querySelector('.inv-history-menu').textContent, /最近搜索.*清空.*CODE WITH SPACE/);
++    assert.equal(getComputedStyle(host.querySelector('.inv-tag')).height, '23px');
++    await act(async () => root.render(null)); context.clear();
++    console.log(`PASS source product Select DOM/CSS and history tags: ${scenario.name}`);
++  }
++  assert.equal(calls.length, 2, 'One bounded candidate read per actual open scenario; no full inventory query or all-catalog pass');
++  console.log('PASS source-derived product finder DOM/CSS in actual portable and split stylesheet graphs. JSDOM computed declarations are not real-browser geometry, screenshots or pixel-parity acceptance.');
++} finally { if (root) await (await import('react')).act(async () => root.unmount()); dom.window.close(); await rm(temporary, { recursive: true, force: true }); }

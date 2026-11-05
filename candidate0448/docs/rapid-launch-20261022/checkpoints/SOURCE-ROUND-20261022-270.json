@@ -1,0 +1,55 @@
+{
+  "atUtc": "2026-10-24T02:09:00.321718+00:00",
+  "parent": "e1c0fd5fd8565674700b7d34f95c05b4b935ac84",
+  "taskId": "P14_NATIVE_CSS_REAL_DEMO_PAGE_ANCESTOR_ADAPTER",
+  "files": [
+    {
+      "path": "apps/web/src/product-categories/source-product-categories.css",
+      "bytes": 20543,
+      "sha256": "3963395754d19840fc4977f7b268fc8a8f9a1d60afc01b595f274c703ff2659c",
+      "owner": "F4"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F4/P14-NATIVE-CATEGORY-01/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "66810318e50ad366077b5792662e65640036d97c7d44d5e5ce103cbc105f6a9e",
+  "ownerDelivery": {
+    "taskId": "F04/P14-NATIVE-CATEGORY-01",
+    "atUtc": "2026-10-24T02:06:11.427589+00:00",
+    "scope": "Frozen native category workspace header/detail/form/CSS; preserve already verified Arco Tree/Input.Search content and existing nativeID complete-tree read and approved single-row maintenance.",
+    "changedFiles": [
+      {
+        "path": "apps/web/src/product-categories/product-categories-page.tsx",
+        "bytes": 15893,
+        "sha256": "b5439f8866b140d189e2fb0857a0663ff3ff90cfcc77c61475931dc847084fd8"
+      },
+      {
+        "path": "apps/web/src/product-categories/source-product-categories.css",
+        "bytes": 20543,
+        "sha256": "3963395754d19840fc4977f7b268fc8a8f9a1d60afc01b595f274c703ff2659c"
+      }
+    ],
+    "changes": [
+      "Frozen workspaceHead/actions + split section pc-editor-body/detail + category form/native input/native header/delete buttons in existing readonly and maintenance branches.",
+      "84 complete applicable Frozen final CSS rules from 9 ordered sources via existing F2 extraction method; declarations retained; unchanged C83 tree style overrides retained.",
+      "Native input remains same node while typing; existing CAS/receipt/dirty-navigation/readback model unchanged.",
+      "Native #page ancestor selector aliases actual .demo-page, same existing P16/P18 ancestor adaptation; no global frame changes."
+    ],
+    "checks": {
+      "strict": "PASS Node24.21.0 colors/tsconfig includes categories/fits; noEmit",
+      "dom": "PASS existing F2 category read/write seam synthetic HTTP/CAS/lost-response/receipt/readback/dirty guard and new native DOM/stable input/cancel/continue/discard",
+      "css": "PASS css-tree parse; 84 selected rules; SOURCE-MAP declarations unchanged",
+      "tree": "C83/previous native tree source and 8 model/reader cases reused; category-tree.tsx unmodified"
+    },
+    "notTested": [
+      "No Chrome/Demo geometry/cold1+repeat2 actual or PG permissions/real saves.",
+      "No integrated build/serve/deploy/Git changes by F4.",
+      "No whole P14 acceptance; atomic drag/undo still absent."
+    ],
+    "blockers": [
+      "Only reorder/undo: existing client/ports support CREATE/EDIT/DELETE and a single target expectedVersion; no atomic multi-sibling reorder/undo command. Keep draggable=false; request C coordinate existing backend owner before adding dependent writes. No replacement fake local-only order."
+    ],
+    "next": "C freeze exact two leaves and QF2 necessary native detail/header validation; retain original tree evidence. F4 proceeds P19 existing dictionary reader/full native page without waiting for reorder.",
+    "frozenPreviousPackage": "SOURCE266 62435e5f0cd4fd6c7bc85d2c202985a6291da342 four colors/fits leaves untouched after handoff."
+  },
+  "qualification": "Only same page CSS ancestor selector adapter actual.demo-page OR original#page; source268 historical checkpoint kept. Earlier hand-typed20567/c30b invalid and unused; authoritative program-derived DELIVERY20543/396339 used. TSX source268 unchanged; native colors266 unchanged. Not in fixed266 preview."
+}

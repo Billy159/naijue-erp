@@ -1,0 +1,5 @@
+Focused checks reuse dependencies from /workspace/scratch/f6bee04e937b/erp-runtime-restored-20261102/workcopy/node_modules; this is not a clean-install or release gate result.
+First red/green focused mapper run used system Node v24.22.1. Subsequent tests use pinned Node v24.21.0.
+v24.21.0
+c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048  package-lock.json
+c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048  /workspace/scratch/f6bee04e937b/erp-runtime-restored-20261102/workcopy/package-lock.json

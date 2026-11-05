@@ -1,0 +1,133 @@
+{
+  "scope": "SOURCE_SYNTHETIC_PROTOCOL_ONLY",
+  "disposition": "PASS_AFTER_TWO_OWNER_CORRECTIONS",
+  "source_files": [
+    {
+      "path": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+      "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7",
+      "verified_current": true
+    },
+    {
+      "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "sha256": "5abc8bc6727c5837cee91f9461b4b443599548fbb59917cc2b61f4e12d14c7ac",
+      "verified_current": true
+    },
+    {
+      "path": "adapters/postgres/src/inventory-cutoff-scope-reader.ts",
+      "sha256": "3095669aad9f72105c841011927a5955875c5ef4c085d784039df9ec2be77124",
+      "verified_current": true
+    },
+    {
+      "path": "packages/application/src/inventory-cutoff-import.ts",
+      "sha256": "021256deb31530703487ff34eafc9e5312d08392d75cc441c005c737a2d1bf28",
+      "verified_current": true
+    },
+    {
+      "path": "packages/application/src/inventory-cutoff-scope.ts",
+      "sha256": "b40c5dba43f836af5a4ed95da8a6db2267f03bb9cfc8d03cde63f9068c6e5b3a",
+      "verified_current": true
+    },
+    {
+      "path": "tests/inventory-cutoff-import.test.ts",
+      "sha256": "da6b3cc9be2b2576adb112c06eea68ac64253fab8faa7e376a17c9f50aa10ac6",
+      "verified_current": true
+    },
+    {
+      "path": "tests/inventory-cutoff-postgres-protocol.test.ts",
+      "sha256": "b6d416b9f2288242037efcd5f9722f0b5ca21840f3a6c302fedd2a5aa78eafb3",
+      "verified_current": true
+    },
+    {
+      "path": "tests/inventory-cutoff-schema-contract.test.ts",
+      "sha256": "2a6519ec5de5334395cb02b4ad529b3ef2cc4bcea0420c01840fe0a27bcd2220",
+      "verified_current": true
+    },
+    {
+      "path": "tests/inventory-cutoff-tsconfig.json",
+      "sha256": "1ccafab3409e8e233cc4db90a8fc0bfe86d4332840e4a3a98e22f39a134b31f7",
+      "verified_current": true
+    },
+    {
+      "path": "tests/support/synthetic-cutoff-fixtures.ts",
+      "sha256": "d152b72ec8941f51d044eb032ca4fcb5b170a6e7fddc811f97d1fc7abafdec64",
+      "verified_current": true
+    },
+    {
+      "path": "docs/inventory-cutoff-foundation.md",
+      "sha256": "3d9863d48dc073cf8cfaed127f50d51cc9c052af31bd276a1e2cd1f37e6b88e0",
+      "verified_current": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0001_runtime_sales.sql",
+      "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf",
+      "verified_current": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+      "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98",
+      "verified_current": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0003_auth_sessions.sql",
+      "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29",
+      "verified_current": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0004_transfer_runtime.sql",
+      "sha256": "a85dd812fdf561652433e6fc2da49024f95db1137e52b84170470ec5f937224d",
+      "verified_current": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0005_product_read_fields.sql",
+      "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a",
+      "verified_current": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0006_party_maintenance.sql",
+      "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c",
+      "verified_current": true
+    }
+  ],
+  "independent_probes": {
+    "command": "node --test --test-concurrency=1 evidence/inventory-cutoff-independent-probes.mjs",
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "no_database_server_browser_network_commit": true,
+  "artifacts": [
+    {
+      "path": "evidence/inventory-cutoff-independent-review.md",
+      "sha256": "717adfc39d5576957189f983c9aac64d1ee84210833d0ed3687c4d0d1b419b55"
+    },
+    {
+      "path": "evidence/inventory-cutoff-independent-probes.mjs",
+      "sha256": "a41df270af66070891113d51587aa3d52806ba784379737a3c3d790aacf66d53"
+    },
+    {
+      "path": "evidence/inventory-cutoff-independent-probes.log",
+      "sha256": "e1df3525b0449301a6dfde72edb22a204aabfbc57c1e4de05691fe5623f6788d"
+    },
+    {
+      "path": "evidence/inventory-cutoff-independent-probe-shape-observation.log",
+      "sha256": "1a560c5a6e4a5c4df4aafad490948935ff771aca3c4504ba6f53b55e64049532"
+    },
+    {
+      "path": "evidence/inventory-cutoff-independent-initial-source-sha256.txt",
+      "sha256": "ff256005acd71b8ed8a13feaf14e1849eb5c10ff983ad34e03cb2594251c7cde"
+    },
+    {
+      "path": "evidence/inventory-cutoff-independent-reviewed-source-sha256.txt",
+      "sha256": "8214973665f4357c1b3cf7be63e37339d33dd272b0b569ee012499a1c9f3370e"
+    },
+    {
+      "path": "evidence/inventory-cutoff-independent-dependency-sha256.txt",
+      "sha256": "8e9e5c4b976c5f212e5ea51d3680cee07e927e219f8b0606bc6cb0e6f71bb57e"
+    },
+    {
+      "path": "evidence/inventory-cutoff-independent-hash-check.log",
+      "sha256": "ff07f42be65fcf50cfc325235eb9b6369ed957c5aea98d26bcc1250c610e2269"
+    }
+  ]
+}

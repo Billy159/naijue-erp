@@ -1,0 +1,8 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+{"scenario":"actual-portable-graph","cssSha256":"56f9ecdd1552bc70a62c3e94b15b556aeb5dab36ee6aa4567d4ab3e9690af8c4","inputCount":1,"code":"CODE WITH SPACE","headingColumns":"170px minmax(0,1fr)","previewColumns":"repeat(2,minmax(0,1fr))"}
+PASS source product Select DOM/CSS and history tags: actual-portable-graph
+{"scenario":"actual-split-inventory-action","cssSha256":"6771bdbe49cd10da04d5e1686e32ecc9c29172d9ce919a1e6e3c053f572c7cd9","inputCount":1,"code":"CODE WITH SPACE","headingColumns":"170px minmax(0,1fr)","previewColumns":"repeat(2,minmax(0,1fr))"}
+PASS source product Select DOM/CSS and history tags: actual-split-inventory-action
+PASS source-derived product finder DOM/CSS in actual portable and split stylesheet graphs. JSDOM computed declarations are not real-browser geometry, screenshots or pixel-parity acceptance.

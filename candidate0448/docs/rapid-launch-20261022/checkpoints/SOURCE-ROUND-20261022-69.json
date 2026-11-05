@@ -1,0 +1,223 @@
+{
+  "atUtc": "2026-10-22T20:27:55.510644+00:00",
+  "parent": "6b770cb3f3dd64f2256c40ffbc71dca1a4a72f0a",
+  "groups": [
+    {
+      "slice": "YEAR_COMPOSITE_CONTROL_LABEL_CONTAINER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-YEAR-MOUSE-DELIVERY-v1.json",
+      "receiptSha256": "0bc2b15c38df87ede2fd718efaedaac7fad12007ce43e9d88fb56e18bf937fbc",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "PROD-UI-SOURCE-01-YEAR-MOUSE",
+        "owner": "F2",
+        "createdAt": "2026-10-22T20:26:48.908948+00:00",
+        "status": "MINIMAL_CONTAINER_SOURCE_EVENT_AB_TYPE_PASS_REAL_POINTER_PENDING",
+        "applicationFiles": [
+          {
+            "path": "apps/web/src/products/product-editor-base.tsx",
+            "beforeSha256": "46e346cb799e417d432c4cd08f0bcad3cfb312afe38b960651911c53e10642ef",
+            "sha256": "ab3b1299d8baff150f3decd7fe08481852e95083c74a0fde80d0225d56675e5c"
+          }
+        ],
+        "controllerReportedSourceBase": "C68 actual6b770cb3f3dd64f2256c40ffbc71dca1a4a72f0a; F2 held exact46e346 during corrected false-start and wrote only after true C release. No F2 Git operation.",
+        "actualBrowserEvidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v010-d6ad29c/YEAR-MOUSE-EVENTTRACE-CANDIDATE.json",
+            "sha256": "b507a55ec6e943f2380986251aa6fee869c448867a3b7ec52fabcdec1e6f386b"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v010-d6ad29c/YEAR-MOUSE-EVENTTRACE-RESULT.json",
+            "sha256": "6aa721c33e41cd41c31d0a43989850e2da83570e408a9b74ea7b3f39ca14ccc1"
+          }
+        ],
+        "provenBrowserObservation": "Exactly one mousedown/up, valueSPAN click opens; next enabled internalINPUT click closes. Both trusted/detail1; label.control is that internal text input; zero business changes. Recorded by exclusive Demo owner, not F2.",
+        "sourceAuthority": "Frozen product-current.js:4 field() uses DIV.field, source mountProductDetails explicitly passes year nonsearch/required. Current Arco select has its own aria-label/required and key handlers; no wrapping HTML label is needed.",
+        "change": "Only year field wrapper LABEL→DIV; exact same field class/caption/actual shared component/props/query/callback payload and save rules. No preventDefault/stopPropagation, synthetic event ignore, input hiding, shared-library patch or portal move.",
+        "relatedNonsearchScope": {
+          "changed": [
+            "ProductEditorBase year; only F2 shared flat consumer without onSearch and wrapped in label"
+          ],
+          "unchanged": [
+            "size-group uses product-editor-group DIV; default scheme uses DIV.field, both now search opted in",
+            "actual page-size source owns DIV/button host, no same year label wrapper",
+            "supplier/SKU/thickness/legacy searchable branches and category not part of this proved nonsearch gap",
+            "true multiseason remains untouched"
+          ]
+        },
+        "checks": {
+          "nativeLabelAB": {
+            "before": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-YEAR-MOUSE-AB-before.json",
+            "virtualAfter": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-YEAR-MOUSE-AB-after.json",
+            "actualSourceAfter": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-YEAR-MOUSE-AB-actual.json",
+            "exitCodes": [
+              0,
+              0,
+              0
+            ],
+            "cases": [
+              "Same actual Editor/Arco; before native caption click causes its LABEL to forward a real default click to its own input",
+              "In-memory one-tag candidate and final actual source DIV remove associated label/default forwarded INPUT click",
+              "Final selected-value SPAN mouse-like click opens with one SPAN event; aria label/required/nonsearch remain",
+              "Escape27 closes/Enter13 opens with real keycode values; year2026 unchanged and writes0"
+            ],
+            "limits": "jsdom considers tabindex ancestors interactive; its selected-value click did not reproduce Chrome second click. Native caption activation driver proves container association/intervention, without manual input click or handler monkey-patch. Real same-coordinate pointer A/B remains Demo pending, not claimed causal browser PASS.",
+            "harnessCorrection": "Used real keyCode/which27 and13; initial fixture key-only Escape was not consumed by installed Arco and left popup open. Corrected expected local result, retained actual browser observation separately."
+          },
+          "type": {
+            "entry": "apps/web/src/products/product-editor-base.tsx",
+            "actualTransitiveClosure": true,
+            "strict": true,
+            "exactOptionalPropertyTypes": true,
+            "noUncheckedIndexedAccess": true,
+            "exitCode": 0,
+            "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-YEAR-MOUSE-types.log",
+            "logBytes": 0
+          },
+          "unchangedLogicProof": "Script verified exact year component/callback body substring between caption and closing tag unchanged before/after; no NULL/save/default code edits. No repeat old semantics suite or style acceptance."
+        },
+        "notRun": [
+          "actual Chrome/pointer hit/layout",
+          "old YEAR style/full suite/P12",
+          "full build/Git/PG/business writes/deploy"
+        ],
+        "next": "C snapshot exact1 container successor; QF only source/event default association/ARIA/key and affected closure. Demo next fixed preview single mouse on same year value then Enter/Escape minimal recheck, without duplicating style tests. F2 moves to assigned CAT-TREE/P13 next.",
+        "authorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+        "browserResourceStatement": "F2 did not control actual Chrome/browser-harness and has no active input/control handles."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-base.tsx",
+          "owner": "F2",
+          "sha256": "ab3b1299d8baff150f3decd7fe08481852e95083c74a0fde80d0225d56675e5c",
+          "bytes": 21039
+        }
+      ]
+    },
+    {
+      "slice": "FINITE_STOCK26_NATIVE_BINDING_PREPARER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/stock26-source-candidate1/DELIVERY-RESULT.json",
+      "receiptSha256": "fa4fd4bd278e98f3ccc5c0fc64a0e02bdd7a7b9c51e574d235d9baef5842d720",
+      "receiptSnapshot": {
+        "taskId": "D3_STOCK26_JOIN_PREPARER_AND_FINITE_BINDING_CANDIDATE",
+        "status": "SOURCE_READY_NEW4PASS_ALL38303_PREPARER_MATCH_CANDIDATE_PENDING_NEW_JOIN_REVIEW",
+        "atUtc": "2026-10-22T20:25:02.017210+00:00",
+        "sourceExact2": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-stock26-bindings.mjs",
+            "bytes": 7058,
+            "sha256": "a3a90d355179a0b79a9b64bce87a7e81f698d938ab7653e1f6c9301d8734f418"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-stock26-bindings.test.mjs",
+            "bytes": 6030,
+            "sha256": "33ea23ce34e3a0a48fe354940d9b71629a7786874ce9a658617c575a198eb513"
+          }
+        ],
+        "signature": "createNativeStock26BindingPreparer({binding,selection,warehouses,skus,expected}) -> {prepare({canonicalStock,contributors}),finish(),close()}",
+        "scope": "Pure descriptor-captured finite native warehouse/SKU+full old aliases/product/lineage join; individual full source/group validation delegated to existing prepareNativeStockGroup. No execution/source authorization API or default identity inference.",
+        "candidate": {
+          "manifest": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-stock26-reference-candidate-20261023-D3-run1/CANDIDATE-MANIFEST.json",
+            "bytes": 2172,
+            "sha256": "a77a9731bdb4965c2e55059c8505b550062351f8cac642110dc6b5412bc0bb77"
+          },
+          "preparedGroups": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-stock26-reference-candidate-20261023-D3-run1/stock26-groups38303-PENDING.jsonl",
+            "bytes": 166485667,
+            "sha256": "3e8e7c58ea8f80c702eb9defe51454f4d9c0000e781fb87f0486cda6c1a7253d",
+            "groups": 38303,
+            "contributors": 38314
+          },
+          "groups": 38303,
+          "originalContributors": 38314,
+          "signedTotal": "80933",
+          "negativeOriginal": 402,
+          "negativeGroups": 397
+        },
+        "checks": {
+          "newProtocol": {
+            "pass": 4,
+            "fail": 0,
+            "log": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/stock26-source-candidate1/protocol-first.log",
+              "bytes": 701,
+              "sha256": "a81350369e54a29eba862f066f7d44957d61fed5c12dc7f251ba4886a2ac0c85"
+            }
+          },
+          "privateOriginalJoin": {
+            "evidence": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/stock26-source-candidate1/RESULT.json",
+              "bytes": 1196,
+              "sha256": "1d8edd19171774376bb8decd76c89c1bcc9e2788641d999bab9dbe55acc9651b"
+            },
+            "elapsedMilliseconds": 6420.801041,
+            "nodeResourceUsageMaxRSSRaw": 1098352,
+            "scope": "One new original38314 reviewed offset join plus existing pinned canonical13MB/lineage16MB/party628/SKU reference35MB artifacts. No original whole snapshot or registry scans.",
+            "notCapacityEvidence": true
+          },
+          "extractedSourceModule": {
+            "evidence": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/stock26-source-candidate1/EXTRACTED-PREPARER-VERIFICATION.json",
+              "bytes": 993,
+              "sha256": "725a6dc8fd1fcbd88343306e53dffdded5354aba03e59e0a35d539692497ad6b"
+            },
+            "all38303PreparedFingerprintsEqualPrivatePrototype": true,
+            "elapsedMilliseconds": 3974.013625,
+            "nodeResourceUsageMaxRSSRaw": 291280,
+            "originalOffsetReads": 0,
+            "pendingCandidateUse": "verification fixture only, never source authority"
+          },
+          "globalNewJoinChecks": [
+            "Every old stock SKU alias resolves literally to canonical SKU and approved native SKU/product",
+            "Every stock warehouse resolves literally to approved53 native warehouse map",
+            "Each complete canonical group conserves exact signed quantity and source unit",
+            "Original source IDs/keys/physical positions unique across all groups; no split or missing contributors",
+            "Final exact38303 groups/38314 contributors/80933 signed total checked before completion",
+            "29 represented warehouses;24 unrepresented scopes are not automatically labeled zero; original accepted zero evidence reused outside helper",
+            "No new native IDs or baseline ledger records"
+          ]
+        },
+        "newIndependentReviewOnly": [
+          "New source→lineage→canonical stock→approved native warehouse/SKU product join",
+          "Complete finite group coverage and exact prepared fingerprint binding",
+          "New pure preparer capture/global duplicate/finish fail-closed scope"
+        ],
+        "reuseWithoutRepeating": [
+          "Original38314 signed inventory rule and53 warehouse scope/24 approved zero decisions",
+          "QB94 SKU14999/aliases15121 decision and original source QA",
+          "628 party mappings and original inventory workbook audit",
+          "Existing stock store26 checks"
+        ],
+        "authorityBoundaries": {
+          "candidate": "PENDING and false execution; not an outside grant",
+          "preparer": "Pure only; caller must independently authenticate original and native reference artifacts before persistence",
+          "stockScope": "Only original immutable contributors, not ledger posting or balance rewrite",
+          "sourceNormalization": "Original signed occurrence rawFields+normalizedFields unchanged; canonical stock and old→canonical/native lineage stay separate group facts"
+        },
+        "notTested": [
+          "Genuine signed stock source factory/execution grant consumer",
+          "Actual native stock PG staging/readback",
+          "Actual baseline posting/import/publish/all11 closure",
+          "Whole import performance/capacity"
+        ],
+        "next": "C freeze registered exact2; QB only new finite join/preparer scope then C independent stock reference pin. Subsequent genuine consumer must recheck outside artifact pins and original offsets, never trust candidate as its own authority."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/prepare-native-stock26-bindings.mjs",
+          "owner": "D3",
+          "sha256": "a3a90d355179a0b79a9b64bce87a7e81f698d938ab7653e1f6c9301d8734f418",
+          "bytes": 7058
+        },
+        {
+          "path": "scripts/import-v3/prepare-native-stock26-bindings.test.mjs",
+          "owner": "D3",
+          "sha256": "33ea23ce34e3a0a48fe354940d9b71629a7786874ce9a658617c575a198eb513",
+          "bytes": 6030
+        }
+      ]
+    }
+  ],
+  "fileCount": 3,
+  "scope": "YEAR own one container+finite stock join2; browser final causality/PG/import remain untested."
+}

@@ -1,0 +1,64 @@
+{
+  "task": "sales list case-insensitive literal number-filter source alignment",
+  "observedHeadAtFreeze": "8c27fc12e152ba7acbdbda95662f9ef69d380847",
+  "historicalSummaryFreeze": "evidence/sales-list-summary-extension-sha256.txt",
+  "precedingOrderDelta": "evidence/sales-list-order-delta.json",
+  "sourceEvidence": "frozen frontend/sales-current.js:49 toLocaleLowerCase().includes(...)",
+  "sqlPredicate": "strpos(lower(h.number), lower($parameter)) > 0",
+  "clientMembership": "number.toLowerCase().includes(filter.number.toLowerCase())",
+  "semanticBoundary": "ASCII case-insensitive literal inclusion is shared. JavaScript default Unicode lowercase is deterministic, PostgreSQL lower uses database locale, and browser locale casing may differ. Deployment Unicode locale edge cases require real-engine verification.",
+  "files": [
+    {
+      "path": "adapters/postgres/src/sales-query-reader.ts",
+      "beforeSha256": "bfc60a672a323a4ff3e724cdc101a8f084bd7ccb8977d037b8a5697f709c66f2",
+      "sha256": "bf751e31dd92195e044aef57b7c946686afb26842d6aff5437f3b9169e2624b0"
+    },
+    {
+      "path": "packages/application/src/sales-query-ports.ts",
+      "beforeSha256": "df8a0ef2bb29d05a572ffa8bd8b32d55a84de07d9f026009028f42b04ecd1e9a",
+      "sha256": "94e98369e50af3911e58004c1ff376e8b861258c1c6761949d5e5c0f7156ec0a"
+    },
+    {
+      "path": "tests/sales-query-postgres-protocol.test.ts",
+      "beforeSha256": "04f57fba1bf393dc842d2ce89e5e7937bce1ce0d6d07cbb484ab2787b03dff9b",
+      "sha256": "f80d061eb504b8829f00e57383496a1d69dd21f81bf0c055c44baa96d3860daf"
+    },
+    {
+      "path": "apps/web/src/sales/response-validation.ts",
+      "beforeSha256": "7c807cbd37b1783e8044af2b2a25a4c78b39be91a8890407f9b44f2831a3766a",
+      "sha256": "5d34d190170869f17602f61d1b111a77e6711313ec9dd6eca29672fe47fb5ae5"
+    },
+    {
+      "path": "apps/web/src/sales/sales.test.ts",
+      "beforeSha256": "27038587ddb77a806e5c444ed6bf4075bcd69bee3e7e7c163cd299644fb6b2ff",
+      "sha256": "1e274c974ccf74ddd9ba4fa5d7546cbe74e1d4bc8b3be4266039f1cb27c7e6a2"
+    }
+  ],
+  "documentation": "evidence/sales-list-number-review.md",
+  "verification": {
+    "command": "node --test tests/sales-query-postgres-protocol.test.ts apps/web/src/sales/sales.test.ts",
+    "passed": 35,
+    "failed": 0,
+    "output": "evidence/sales-list-number-tests.log",
+    "diffCheck": "passed"
+  },
+  "unchanged": [
+    "authorization",
+    "target identity and other response field/filter checks",
+    "exact counts and paging",
+    "prior update-time/business-number/native-ID order",
+    "summary batching and snapshot",
+    "statistics approved-document scope",
+    "original summary and order evidence"
+  ],
+  "notPerformed": [
+    "compiler",
+    "broad aggregate checks",
+    "schema/index/extension/settings changes",
+    "UI presentation edits",
+    "root/package/controller edits",
+    "server/database/browser/network",
+    "installation",
+    "commit/push"
+  ]
+}

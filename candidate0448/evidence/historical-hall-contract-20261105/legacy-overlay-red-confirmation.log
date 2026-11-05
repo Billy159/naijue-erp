@@ -1,0 +1,38 @@
+✖ source620 retained HEADERS: complete original sales index and transfer ranges compose globally ordered real file streams and allocations without DB (13.916019ms)
+✖ source620 retained HEADERS: partial sales index refuses and changed captured canonical row cannot yield (4.538377ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 661.119358
+
+✖ failing tests:
+
+test at scripts/import-v3/production-source-provider26.test.mjs:446:1
+✖ source620 retained HEADERS: complete original sales index and transfer ranges compose globally ordered real file streams and allocations without DB (13.916019ms)
+  Error: HEADER26_BUSINESS_HALL_OVERLAY_RETIRED
+      at must (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/prepare-native-header26-bindings.mjs:11:51)
+      at createNativeHeader26BindingPreparer (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/prepare-native-header26-bindings.mjs:24:2)
+      at retainedHeaderInputs (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/production-source-provider26.test.mjs:418:293)
+      at retainedHeaderFiles (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/production-source-provider26.test.mjs:424:193)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/production-source-provider26.test.mjs:447:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'HEADER26_BUSINESS_HALL_OVERLAY_RETIRED'
+  }
+
+test at scripts/import-v3/production-source-provider26.test.mjs:451:1
+✖ source620 retained HEADERS: partial sales index refuses and changed captured canonical row cannot yield (4.538377ms)
+  Error: HEADER26_BUSINESS_HALL_OVERLAY_RETIRED
+      at must (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/prepare-native-header26-bindings.mjs:11:51)
+      at createNativeHeader26BindingPreparer (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/prepare-native-header26-bindings.mjs:24:2)
+      at retainedHeaderInputs (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/production-source-provider26.test.mjs:418:293)
+      at retainedHeaderFiles (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/production-source-provider26.test.mjs:424:193)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/production-source-provider26.test.mjs:452:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'HEADER26_BUSINESS_HALL_OVERLAY_RETIRED'
+  }

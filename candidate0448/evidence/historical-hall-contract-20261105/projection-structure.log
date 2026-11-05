@@ -1,0 +1,13 @@
+✔ sealed derived readback preserves original null and capture; later current changes are explicit without refreshing it (3.081413ms)
+✔ old absent evidence remains absent; present invalid, duplicate or nonhistorical evidence fails closed (2.208002ms)
+✔ readback SQL follows committed sealed import source on already scoped h, never current warehouse inference or privileges (0.506783ms)
+✔ legacy historical DTO preserves observation/current difference and rejects false current-equality assertions (2.145485ms)
+✔ batch projection expands source chunks once after the authorized page; SQL delimiter sanity is explicit, not engine validation (4.454174ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 240.468171

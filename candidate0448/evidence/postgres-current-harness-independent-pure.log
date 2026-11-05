@@ -1,0 +1,23 @@
+env: ‘/usr/bin/node’: No such file or directory
+
+Retry with verified node executable: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node
+✔ deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure (3.505973ms)
+✔ deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected (1.666499ms)
+✔ deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof (0.331696ms)
+✔ exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT (1.896275ms)
+✔ raw constraint assertion requires exact message, SQLSTATE and whole function identity (3.138661ms)
+✔ integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback (4.049037ms)
+✔ integration safety: accepts only a dedicated explicitly repeated loopback test target (0.509542ms)
+✔ integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs (0.554888ms)
+✔ integration safety: malformed and encoded credentials never appear in diagnostics (0.584093ms)
+✔ integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast (14.310883ms)
+✔ integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings (0.472929ms)
+✔ integration safety: historical migration prefix refuses before pool construction at current adapter revision (0.350619ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 293.403877

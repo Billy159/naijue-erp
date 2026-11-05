@@ -1,0 +1,78 @@
+{
+  "atUtc": "2026-10-22T23:45:51.874090+00:00",
+  "parent": "320a7ae049561eaff28d84bcb5289b36144a4b6e",
+  "groups": [
+    {
+      "slice": "fix: restore frozen transfer control font while retaining popup font",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-61/DELIVERY.json",
+      "receiptSha256": "a37425d1c99b6f5a19763348700ec1c70033869e68ed012a1680e3a0fdf6dd0e",
+      "receiptSnapshot": {
+        "chunk": 61,
+        "taskId": "F1/TR-UI-02-C105-control-font-regression",
+        "atUtc": "2026-10-22T23:44:42.518136+00:00",
+        "status": "READY_EXACT1_SPEC_CONTROL_ARIAL_POPUP_INTER_UNCHANGED",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "beforeSha256": "c713076f9df6065fda08131e67c0ebec37cf65c03404a5265615a08812c43e11",
+            "sha256": "858a0f21dded8b8e7fa524e53b8797645de8fde348bdfb1b793446f27b2f5a57"
+          }
+        ],
+        "checks": {
+          "font-2.log": "EXIT0_SCOPED_C105_NATIVE_SELECT_CASCADE",
+          "SOURCE-CHECK.json": "PASS_EXACT1_FONT_CONTEXT_AND_COMMENT_ONLY"
+        },
+        "notTested": [
+          "Next integrated browser control glyph/metrics",
+          "Whole pages/native save/permissions/PG/production"
+        ],
+        "reuse": "v018 actual controls32, popupInter250/header36.5/option33, selected mouse/Esc already effective. No new main count.",
+        "blockers": [],
+        "next": "C exact1 pin/QF affected font only; Demo confirm control font next preview. Source frozen.",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-61/RESULT.json",
+            "sha256": "6aba67021235915bfa9d44087be31fc4ae9bde4eb1b615ba221d13699c76fe15"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-61/PROBE.json",
+            "sha256": "3c92deccb376c97a4db9b60f9e94cfeee1b32a1eb4d7eeaf9346e7a4e2fbc814"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-61/SOURCE-CHECK.json",
+            "sha256": "56ca59cda9ba687209eb194760e356d66df18407866f557be692a227260d89d5"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-61/SOURCE.diff",
+            "sha256": "c470b66c8e7fa873b0bfe4f896573d91810ca4a496a2c4a018b3504b76cc54e7"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-61/PROBE-NOTES.json",
+            "sha256": "a94920c4e90a1b10647fd32bc204ad7d586274ab93f1ea911ef23f59b2fb1426"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-61/REPORT.md",
+            "sha256": "c791c748947011c3e8cd6caa456f7ab3708d884b126b2c6c1b7f8067a7b5aa23"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-61/font-1.log",
+            "sha256": "d8da0d9271ba4fcd075584596e2df20032cbe5a44c3c98180c97cc8ce3608866"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-61/font-2.log",
+            "sha256": "d0118c22e16f47d2fa9f65ff8650116285d1bf973e6db7ed85baef19677907fd"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "bytes": 9470,
+          "sha256": "858a0f21dded8b8e7fa524e53b8797645de8fde348bdfb1b793446f27b2f5a57"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only spec control root Arial/PingFang/MicrosoftYaHei inherited by view/value; popup staysInter and32size kept. Correct source104 inference using actualfinal frozen customcontrol. More108/nav110 unchanged; actual newfontpending, old48 local reused."
+}

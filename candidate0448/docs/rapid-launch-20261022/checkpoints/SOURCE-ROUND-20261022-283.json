@@ -1,0 +1,88 @@
+{
+  "atUtc": "2026-10-24T03:34:20.659029+00:00",
+  "parent": "10e3e29c0a3fd04d887b2ad289be749e0ec3f484",
+  "taskId": "QB218_F01_REJECT_ABORT_AFTER_FINAL_SPOOL_STAT",
+  "files": [
+    {
+      "path": "apps/api/src/inventory-http.ts",
+      "bytes": 13542,
+      "sha256": "a8ee89f0ccfd7d1c24fde96ec58f153ac82117016cd4517dd5f1f74c31b08027",
+      "owner": "D3"
+    },
+    {
+      "path": "apps/api/src/inventory-http.test.ts",
+      "bytes": 29410,
+      "sha256": "ff1b265c8a5468952d0f4ad07bc3c8ec69453f70442574a4ed246e5e57840f33",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+  "ownerReceiptSha256AtPin": "5c059bdd6ed8be7e6f266f0b1c87b43118accf55b7ff25661b6ed044d5fa7c89",
+  "ownerDelivery": {
+    "atUtc": "2026-10-24T03:28:33.530080+00:00",
+    "taskId": "D3-INVENTORY-PERFORMANCE-BACKEND-3-4-QB218-F01",
+    "status": "SOURCE_FIX_FROZEN_NEW1_RED_GREEN_STRICT_PASS_PENDING_ORIGINAL_QB_F01_ONLY",
+    "authority": "C adopted QB218 F01 and explicitly released only original inventory-http.ts plus its HTTP test. Original human four-problem01a16bb2 / meaningful-report01a161f7 authorizations retained; gpt-6.1-sol/xhigh, Fast unverified.",
+    "parentSource": {
+      "number": 279,
+      "commit": "4122253586c9a48216830409f4b9c7c93febf93e",
+      "historicalFourPinsPreservedAbove": true
+    },
+    "acceptedFailureEvidence": {
+      "probe": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice218-c279-c280-inventory-qualification-output/POST-STAT-DEADLINE-PROBE.json",
+      "pins": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice218-c279-c280-inventory-qualification-output/PROBE-SOURCE-PINS.json",
+      "facts": "Original producer already EOF/closed. Final FileHandle.stat awaited across100ms deadline; abort handler had no stream yet, so279 resumed and started200/complete after abort. QB probe elapsed222.56591699999998ms, files0, PG0/listeners0."
+    },
+    "fix": "Capture final awaited stat size, then call original active() before size comparison, createReadStream and success headers. There is no subsequent await before stream/header handoff; any later awaited preparation added in future must retain the same post-await active boundary. Existing abort DomainError408 path and original cleanup are reused.",
+    "files": [
+      {
+        "path": "apps/api/src/inventory-http.ts",
+        "bytes": 13542,
+        "sha256": "a8ee89f0ccfd7d1c24fde96ec58f153ac82117016cd4517dd5f1f74c31b08027"
+      },
+      {
+        "path": "apps/api/src/inventory-http.test.ts",
+        "bytes": 29410,
+        "sha256": "ff1b265c8a5468952d0f4ad07bc3c8ec69453f70442574a4ed246e5e57840f33"
+      }
+    ],
+    "releasedFrozenForC": true,
+    "otherOriginalTwoLeaves": [
+      {
+        "path": "adapters/postgres/src/inventory-query-reader.ts",
+        "unchanged": true
+      },
+      {
+        "path": "tests/inventory-query-postgres-protocol.test.ts",
+        "unchanged": true
+      }
+    ],
+    "checks": {
+      "testName": "inventory output spool F01: deadline during final stat never starts a successful network stream after producer EOF",
+      "command": "node --test --test-name-pattern='inventory output spool F01:' apps/api/src/inventory-http.test.ts",
+      "method": "One synthetic Fastify.inject case uses a one-call FileHandle.stat mock which waits for the ORIGINAL configured100ms AbortSignal deadline after the producer is closed, then returns the real file stat. No sleep deadline approximation, no production source substitute, no PG/listener.",
+      "red": "Before production fix this exact new case failed with actual200 versus expected408.",
+      "green": "After fix this same one case PASS: stat entered after producer EOF, returns after original abort, HTTP408 INVENTORY_READ_ABORTED, successful network stream never starts, no readiness header/complete frame, owned files empty.",
+      "strict": "Focused original HTTP source/test strict ES2023 NodeNext typecheck PASS.",
+      "prior7Rerun": false,
+      "host2Rerun": false,
+      "qualificationRerun": false,
+      "fullSuiteOrBuild": false,
+      "limit": "This rejects success after deadline; it does not independently preempt an already-running file stat or SQL and is not a request latency<=100ms claim."
+    },
+    "preserved": "Original complete EOF/COMMIT/release-before-network, all NDJSON products/scope/sum, file/resource cleanup, original host options, ordinary pages and qualification are unchanged. No new protocol/field/PG cancellation connection/authority/approval.",
+    "notPerformed": {
+      "PG": false,
+      "SSH": false,
+      "actualPerformance": false,
+      "Git": false,
+      "deploy": false,
+      "newRuntime": false,
+      "otherSourceEdits": false
+    },
+    "next": "C fixes only these exact2 pins as an increment over279 and originalQB only re-verifies F01. Keep279 historical result. D1 host and prior7/host2 checks are not replayed. Representative same-request actual performance and MAIN provider/review waiting conditions remain as previously recorded."
+  },
+  "stage": "FIXED_SOURCE_ORIGINAL_REVIEW_AFFECTED_SCOPE_ONLY_PENDING",
+  "actualPG": false,
+  "deployed": false
+}

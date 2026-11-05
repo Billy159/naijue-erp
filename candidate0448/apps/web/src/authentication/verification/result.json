@@ -1,0 +1,13 @@
+{
+  "scope": "apps/web/src/authentication/** only",
+  "status": "frozen after independent targeted defect clearance",
+  "unitTests": { "passed": 15, "failed": 0 },
+  "jsdomFlowGroups": { "passed": 7, "failed": 0 },
+  "isolatedStrictTypecheckExit": 0,
+  "unitCommand": "node --test apps/web/src/authentication/authentication.test.ts",
+  "domCommand": "node apps/web/src/authentication/tests/run-dom-tests.mjs",
+  "sourceManifest": "source.sha256",
+  "referenceManifest": "reference-source.sha256",
+  "limits": ["No real accounts or credentials", "No live login or network service", "No browser-runtime cookie proof", "No pixel-parity claim", "No root integration or test discovery edits", "No commit or deployment"],
+  "sharedTypecheckObservation": "Historical observation only; unrelated party-maintenance typing errors were reported, and this is not the integration owner's final aggregate result."
+}

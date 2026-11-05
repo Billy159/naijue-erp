@@ -1,0 +1,16 @@
+PURE_REVIEWED_SOURCE_SHA256=8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325
+✔ PURE actual recovery: ASCII prepare/run commands are ignored before a later exact stop (4.777687ms)
+✔ PURE actual recovery: ignored multibyte command cannot skip a later appended exact stop (2.55189ms)
+✔ PURE actual recovery: transient control read failure retains holder until an exact stop (0.814666ms)
+✔ PURE actual recovery: uncertain stop retains control, ignores other commands and retries only a later exact stop (1.821532ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 356.091935
+NEGATIVE_CONTROL_EXIT=0
+
+NOTE: The source had already advanced to the fixed8874c816 hash before this invocation; it is a positive intermediate4/4 result, not a negative-control failure.

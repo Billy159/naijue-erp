@@ -1,0 +1,46 @@
+{
+  "atUtc": "2026-10-22T08:48:09.401559+00:00",
+  "parent": "93ce7b61e5b0bb3573b7a2d6a66bda59eaf5214d",
+  "groups": [
+    {
+      "slice": "DOC01_RESET_QUERY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-19/DELIVERY.json",
+      "receiptSha256": "4a8129c70953778aa3031cf0b876728344a5c21a07ec21c76a8d300cdee744c8",
+      "files": [
+        {
+          "path": "apps/web/src/sales/sales-page.tsx",
+          "bytes": 14897,
+          "sha256": "5cf91a392534685b812f254586d9de73074cd8d9989320c99fbe1e23c5208882",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/transfers-page.tsx",
+          "bytes": 14447,
+          "sha256": "031883c69ba0d4de2c681356951634156da32fc9cbcf6bd08e1dff0b121903c8",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "PRODUCT_SPECS_THREE_SECTIONS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DATA-PRES-001-DELIVERY-v1.json",
+      "receiptSha256": "a65615dcd59cb4639d2e202d3950aed406e3ca1a592206b945fa59e3f9de9af0",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-specs.tsx",
+          "bytes": 13976,
+          "sha256": "86fac99520f3f092528de0191d90a0fea68b354abdff97f6340d500192a5c804",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "bytes": 9861,
+          "sha256": "8d1b5592ee9465196094ed50f8a855cb6dc42e3a627ffebe5eb9890530b77031",
+          "owner": "F2"
+        }
+      ]
+    }
+  ],
+  "fileCount": 4,
+  "scope": "Targeted source and DOM ready; independent review and fixed browser comparison pending"
+}

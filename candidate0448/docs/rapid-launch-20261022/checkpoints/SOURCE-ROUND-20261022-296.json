@@ -1,0 +1,239 @@
+{
+  "atUtc": "2026-10-24T06:42:57.560820+00:00",
+  "parent": "a0b9b9aff2d048106bc1c58b2290218aee29267f",
+  "taskId": "D1_C141_TRUE_HEAP_XMIN_WITNESS_FIX_C142",
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+      "bytes": 83818,
+      "sha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 69974,
+      "sha256": "ae8b7e5c0c1cc93babaed1c92d0ee5b0c91803730e16123c49cd711d716aa8c0",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+      "bytes": 29327,
+      "sha256": "bbf8be8ff97fa403e6f168da12549d966b9fd17c0b5980b9b13772ad5f865f61",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v14-core-heap-xmin-repair.sql",
+      "bytes": 22867,
+      "sha256": "0d29a04138d7ab30db8e52c7adde5821df5a5a52a05589fd2875fd1777f1c409",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 44009,
+      "sha256": "7b7848cec783b50aefb37ae80efdde2ad0b5b3ed66798df746af8181c12b5540",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/C142-HEAP-XMIN-FIX-v1.json",
+  "ownerReceiptSha256AtPin": "35bda01ee7552962d0758adeefe774bbbcf8e744a1169e80091ab8a9450fc1f1",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1/C141-core-heap-xmin-fix-for-C142",
+      "atUtc": "2026-10-24T06:41:51.771641+00:00",
+      "authority": "C141 actual diagnostic + C explicit same-function fix + C exact new path registration; original human01a161f7 reporting authorization",
+      "requiredModel": "gpt-6.1-sol/xhigh",
+      "fastSwitchVerified": false,
+      "delivery": "EXACT5_SOURCE_READY_PENDING_C142_QB_ACTUAL"
+    },
+    "completedScope": {
+      "actualRootCause": {
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-core-creation-guard-diagnostic-20261024-141/release-submission/release-receipts/c03-v14-core-creation-guard-diagnostic-20261024-141/core-actual.json",
+            "bytes": 7013,
+            "sha256": "a56e120cb40f8fc630f8e917b4c83eda486facca52eb114063f43eedea40fba4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-core-creation-guard-diagnostic-20261024-141/release-submission/release-receipts/c03-v14-core-creation-guard-diagnostic-20261024-141/engine-result.json",
+            "bytes": 29387,
+            "sha256": "7abba4b2f20deda6c6eb00e3cd834391e1110535b3901118c4f5683da3e35dd7"
+          }
+        ],
+        "recordXmin": 1860,
+        "actualHeapXmin": 3361,
+        "topXidLow32": 3361,
+        "allOtherCreationPredicatesTrue": true,
+        "batchEvidenceSourceHeadersRecords": [
+          1,
+          115,
+          115,
+          93,
+          22
+        ],
+        "actualOutcome": "Diagnostic callback/claims/CAS only; NO COMMIT; explicit ROLLBACK; fresh independent19 counts all0; leases released. Original139 failure retained. Not normal CORE PASS."
+      },
+      "sourceCorrection": [
+        "Preserve original SELECT * INTO STRICT b FROM import_batch WHERE id=selected_batch FOR UPDATE. Creation reads actual_batch.xmin explicitly from that same locked row; retain original <> topXidLow32 rejection.",
+        "BIND reads actual_receipt.xmin explicitly from the exact selected operation_receipt row; retain original = topXidLow32 branch and every current ADMIN, pristine-state and out-of-scope effect check.",
+        "Only add two bigint locals and two actual heap SELECTs, then replace the two composite witness references. All other original bytes/predicates restore exactly. No source.creation_xid substitution.",
+        "Update one core body pin in v14 runtime probe; v15 inherits v14. Update only v15 patch prerequisite pin. Current v11 and historical repair remain unchanged."
+      ],
+      "sourceOnlyRepair": {
+        "path": "adapters/postgres/patches/0026-v14-core-heap-xmin-repair.sql",
+        "database": "erp_qa_rapid26_core_20261024_01",
+        "databaseOid": "1034834",
+        "migrationVersions": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ],
+        "routineCount": 123,
+        "predecessorCanonicalSha256": "67d601f744889f81c0081a5fada51af672c8dcafe6571962aa32183328078350",
+        "canonicalPrecheck": "C must verify original runtime-role full canonical before script; script itself binds db/OID/versions/count/old helper body.",
+        "target": "naijue_erp.assert_core_initialization_v14(uuid,uuid,boolean)",
+        "oldBodySha256": "3163e6870f5bfa3e3a08f870779221649f13c7d5d6001fcf90503f74a6faba46",
+        "newBodySha256": "5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d",
+        "postRepairFullCanonicalSha256": null,
+        "bodyChanges": 1,
+        "mustPreserve": "Every pg_proc field except target prosrc; all122 other bodies/OID/owner/ACL/config/properties. Exact old body gate rejects wrong or already repaired predecessor. Transaction rolls back on any mismatch.",
+        "uninstalledR1": "Uses corrected complete v14 source; never apply QA-only repair to R1 or production. No v15 installation."
+      },
+      "finiteScan": {
+        "approvedFunctions": 14,
+        "rowtypeSystemFields": [
+          "xmin",
+          "cmin",
+          "ctid"
+        ],
+        "remainingCompositeMisreads": 0,
+        "correctRelationAliasReadsPreserved": true,
+        "unapprovedV12": "Unchanged and not resumed"
+      },
+      "preservedBusinessRules": "STAGED hidden; nonzero PUBLISH remains restricted until full authorized closure/conservation/transaction/audit/replay validation. Full real import incomplete, perwarehouse/originalSKU/unit conservation, missing historical people/time nullable, frontend required unchanged; anomalous2958 product barcodes excluded."
+    },
+    "changedFiles": [
+      {
+        "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+        "bytes": 83818,
+        "sha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d"
+      },
+      {
+        "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 69974,
+        "sha256": "ae8b7e5c0c1cc93babaed1c92d0ee5b0c91803730e16123c49cd711d716aa8c0"
+      },
+      {
+        "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+        "bytes": 29327,
+        "sha256": "bbf8be8ff97fa403e6f168da12549d966b9fd17c0b5980b9b13772ad5f865f61"
+      },
+      {
+        "path": "adapters/postgres/patches/0026-v14-core-heap-xmin-repair.sql",
+        "bytes": 22867,
+        "sha256": "0d29a04138d7ab30db8e52c7adde5821df5a5a52a05589fd2875fd1777f1c409"
+      },
+      {
+        "path": "tests/native-runtime26-capability.test.ts",
+        "bytes": 44009,
+        "sha256": "7b7848cec783b50aefb37ae80efdde2ad0b5b3ed66798df746af8181c12b5540"
+      }
+    ],
+    "checks": {
+      "sourcePreservation": "Reverse only2heapSELECTs/2witness identifiers/1declaration line restores full predecessor83461/164d93af957a775abb383d093124808e7f4ab3000d000c61ec825ebe4c59fa0d. Other two production leaves restore their exact predecessor hashes by reversing only one pin each.",
+      "node": {
+        "affectedExistingCases": 3,
+        "newCase": 1,
+        "pass": 4,
+        "fail": 0,
+        "skipped": 0,
+        "runs": [
+          {
+            "chunk": "a0643b",
+            "cases": 3,
+            "exit": 0
+          },
+          {
+            "chunk": "0d3854",
+            "cases": 1,
+            "exit": 0
+          }
+        ],
+        "scope": "v14/v15 exact routine pins; historical precedence body preservation; new exact heap witness and single-function repair preservation. Source checks only."
+      },
+      "strict": {
+        "roots": [
+          "adapters/postgres/src/native-import-accounting-capability.ts",
+          "tests/native-runtime26-capability.test.ts"
+        ],
+        "exit": 0,
+        "chunk": "1dbab8",
+        "scope": "strict NodeNext/ES2023 noEmit, noUncheckedIndexedAccess, exactOptionalPropertyTypes, noFallthroughCasesInSwitch, noImplicitOverride, verbatimModuleSyntax, rewriteRelativeImportExtensions"
+      },
+      "parserEvidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/C142-HEAP-XMIN-SOURCE-CHECK-v1.json",
+        "bytes": 3637,
+        "sha256": "3064cb45131c1b8d8c03fdb8c8322fdb8e9dff1ba565b2b1c9d909830c0665e0"
+      },
+      "parser": "pglast7.21/PostgreSQL17.7 grammar: fullv14 14SQL/10PLPG; v15 9SQL/3PLPG; repair3SQL/1PLPG. Source repair equals parsed draft exact bytes. Syntax only, no database execution.",
+      "historicalPrecedenceRepair": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql",
+        "bytes": 37213,
+        "sha256": "85045e37db7468db82050f536589241d6f5e36156e8a23029fca67ab080fb6d6"
+      },
+      "zeroActions": {
+        "databaseExecutions": 0,
+        "ssh": 0,
+        "ddlExecution": 0,
+        "git": 0,
+        "builds": 0,
+        "listeners": 0,
+        "frontendEdits": 0,
+        "sharedContractEdits": 0,
+        "D2D3ProducerEdits": 0,
+        "oldQAReruns": 0
+      }
+    },
+    "notTested": [
+      "New helper has not yet been installed or executed on PostgreSQL. New full metadata canonical and actual unchanged122/OID/ACL are pending C142/QB.",
+      "Normal CORE actual COMMIT, original-key replay, later old-row freshness rejection and postcommit independent readback remain C-owned.",
+      "Corrected r.xmin BIND current ADMIN/pristine-state branch is source-verified only; future actual BIND must verify it. C143 CORE does not cover BIND.",
+      "No full real import, full historical data, nonzero PUBLISH, R1 install, production deployment/business opening, browser or performance acceptance from this handoff."
+    ],
+    "blockers": {
+      "D1Source": "NONE: exact path now C registered; fixed5 leaves delivered.",
+      "actualValidation": "C sole PG executor: C142 single-function repair + original QB delta, followed by one new fixed-source NORMAL C143. Do not replay139/whole119 or sealed18run2."
+    },
+    "next": {
+      "C142": "Freeze exact5 leaves; before repair assert predecessor full canonical67d601 in original runtime-role context. Execute only exact QA successor; readback target newbody5ca42b, OID/owner/ACL/config and other122 unchanged, capture new canonical; original QB reviews only this delta.",
+      "C143": "Use final fixed source in one fresh normal transaction for real COMMIT and original-key replay. Preserve all earlier failures/diagnostic evidence. Avoid additional formal build/install until this actual normal boundary passes.",
+      "minimalOldRowNegativeSuggestedForCCoordination": "In the same existing QA after the fresh CORE COMMIT and before any BIND/business modifications: start a subsequent transaction in the original authorized role; read actual batch heap xmin and pg_current_xact_id low32 plus other creation flags/counts. Require heap xmin != current top while other flags remain valid, call original helper with same batch/core operation and creation=true, expect23514 original freshness rejection. Explicit ROLLBACK; a fresh independent lease must retain the committed baseline, not zero it. Keep this direct creation guard negative separate from original-key replay, which must still succeed. No D1 execution or extra database."
+    }
+  },
+  "ownershipRegistration": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+  "stage": "FIXED_SOURCE_LOCAL4_STRICT_SYNTAX_PASSED_ACTUAL_C142_PENDING",
+  "actualPG": false,
+  "deployed": false
+}

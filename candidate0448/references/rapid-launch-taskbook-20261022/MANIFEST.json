@@ -1,0 +1,100 @@
+{
+  "version": "2026-10-22-v1.2",
+  "scope": "Task documents and static schema inventory; no runtime secrets, live database dumps or product media",
+  "taskCount": 22,
+  "roleCount": 9,
+  "tableCount": 50,
+  "columnCount": 516,
+  "files": [
+    {
+      "path": "00-给新主控的开工短提示词.txt",
+      "bytes": 1384,
+      "sha256": "bf468c3ce63ffde134c092fda9ad939ed8634830f5e15c846fa188dd0e1e65e3"
+    },
+    {
+      "path": "01-主控完整实施提示词.txt",
+      "bytes": 41536,
+      "sha256": "c4a93dc05f9cef85857207afbacc9b63528e71764f1581dd269945f7c0f53803"
+    },
+    {
+      "path": "02-并行任务速查.txt",
+      "bytes": 1586,
+      "sha256": "547b3b79778a4cf0ad5686e026a71b56181d9685d67838a16c258519c0338a30"
+    },
+    {
+      "path": "03-数据库字段确认与保留清单.txt",
+      "bytes": 13375,
+      "sha256": "2f174e3a271cc75022dff928878d1fcec7dc4511f2c4efd74bae7bcccc442ec2"
+    },
+    {
+      "path": "README.txt",
+      "bytes": 2045,
+      "sha256": "6f22ab9c21cc8a001a9d065404d06802908824790bea7d4d74a9053cfc9152cf"
+    },
+    {
+      "path": "任务清单.json",
+      "bytes": 37685,
+      "sha256": "3b9ba4772451bf9580594cc06a5936e81aec0e8abc93235d5b3e33a8f92c1151"
+    },
+    {
+      "path": "当前50表字段快照.json",
+      "bytes": 170610,
+      "sha256": "d0317c27e41fa0219ec817e36c85e0b93527ef2479a0741f8c3d54aa86ec4cbe"
+    },
+    {
+      "path": "当前50表字段快照.txt",
+      "bytes": 67416,
+      "sha256": "89e155136bdd75b61ab473cd86a5ba22ea0341622416ea231a2a823fa1a1574d"
+    },
+    {
+      "path": "当前表字段速查.txt",
+      "bytes": 7880,
+      "sha256": "ebc0dbbcf094dd488cd14d201c8c61d4a9dc18ac3d6c5c19e1ab0c1aed9eb928"
+    },
+    {
+      "path": "角色派工提示词/C-主控与集成发布.txt",
+      "bytes": 27629,
+      "sha256": "24c856e79ff64ff7a93043310214a572046568705d3b37f72a88f7a30dfafe62"
+    },
+    {
+      "path": "角色派工提示词/D1-后端宿主事务与公共迁移.txt",
+      "bytes": 26185,
+      "sha256": "10d02ac71f86dbc3e051932c9fe3f564af87ca09968f9ba85b2d9734645bbda4"
+    },
+    {
+      "path": "角色派工提示词/D2-后端商品与基础资料维护.txt",
+      "bytes": 24499,
+      "sha256": "781dd7c51912847ac6a67e0e4a5e320509e39eaaed1bb1237918bbe2f42e3aac"
+    },
+    {
+      "path": "角色派工提示词/D3-后端库存历史与导入.txt",
+      "bytes": 25825,
+      "sha256": "1a52f9dff5c2f84df0bf9b6b28e480d6697be74ac6ffcfe331f9149534db409d"
+    },
+    {
+      "path": "角色派工提示词/F1-前端单据与公共界面.txt",
+      "bytes": 25086,
+      "sha256": "4cedfd2e8a1bafe04aa36667487163d4e889cccb6c529db61eb00d75a9344024"
+    },
+    {
+      "path": "角色派工提示词/F2-前端库存与商品.txt",
+      "bytes": 24158,
+      "sha256": "562cbd43a52b0c035b58ad259af0cb384c77bb3ef998057fd421fd56daa0d453"
+    },
+    {
+      "path": "角色派工提示词/F3-前端基础设置.txt",
+      "bytes": 23246,
+      "sha256": "629b8e517f124c66fc2cec2cdbd12ee68cca1011dd831359a717009ff710b33e"
+    },
+    {
+      "path": "角色派工提示词/QB-后端独立验收.txt",
+      "bytes": 23832,
+      "sha256": "ad8696f022f5693bdf6e8f9fdbed55bca17c0a6cd203bd1e945581398371889c"
+    },
+    {
+      "path": "角色派工提示词/QF-前端独立验收.txt",
+      "bytes": 23640,
+      "sha256": "e12810e124247152375a0e5bd97e0442db7b4370c8b6f5ef02505b5fbaccfe20"
+    }
+  ]
+}

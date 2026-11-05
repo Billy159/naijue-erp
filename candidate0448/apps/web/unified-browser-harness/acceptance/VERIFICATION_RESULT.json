@@ -1,0 +1,84 @@
+{
+  "syntheticOnly": true,
+  "verifiedAtUTC": "2026-10-21T16:38:30Z",
+  "scope": "Local source/build/Node/JSDOM only; no browser/network/database or visual pass",
+  "checks": {
+    "rootTypecheck": "PASS",
+    "webTypecheck": "PASS",
+    "applicationBuildAndDevhostBuild": "PASS",
+    "partyDOM": {
+      "status": "PASS",
+      "groups": 12,
+      "readOnlyDisabledBothKinds": true,
+      "omittedCapExistingWritesUnchanged": true
+    },
+    "originalApplicationDOM": {
+      "status": "PASS",
+      "groups": 8
+    },
+    "originalSalesApplicationDOM": {
+      "status": "PASS",
+      "groups": 6
+    },
+    "originalTransferApplicationDOM": {
+      "status": "PASS",
+      "groups": 6
+    },
+    "developmentHostDOM": {
+      "status": "PASS",
+      "groups": 5
+    },
+    "sharedDrawerLifecycleDOM": {
+      "status": "PASS",
+      "groups": 8
+    },
+    "productActionStyleHandshakeDOM": {
+      "status": "PASS",
+      "groups": 4
+    },
+    "fullInventoryQueryLifecycleDOM": "PASS",
+    "originalDictionaryDOM": "PASS",
+    "managementApplicationDOM": {
+      "status": "PASS",
+      "groups": 8,
+      "globalFetchCalls": 0
+    },
+    "catalogueFrozenSourceHashes": "30/30 MATCH",
+    "gitDiffCheck": "PASS"
+  },
+  "unifiedFinalChecks": {
+    "status": "PASS_WITH_EXPLICIT_UNFIXED_P1",
+    "nodeTests": 7,
+    "actualApplicationDOMGroups": 5,
+    "emittedSingleHTMLentryDOMGroups": 1,
+    "globalFetchCalls": 0,
+    "harnessTypecheck": "PASS",
+    "artifactSHA256": "ecb3a08e79a9c4847a3a7d741eeb026efa34becaf0e79675c8dc3fb3aad01ce9",
+    "runtimeSourceInputs": 234,
+    "artifactBytes": 2048675
+  },
+  "knownFailures": [
+    {
+      "id": "P1-SALES-NEW-REENTRY",
+      "status": "UNFIXED_REPRODUCED",
+      "strictScript": "node apps/web/unified-browser-harness/run-known-sales-new-reentry-regression.mjs",
+      "observedExitCode": 1,
+      "description": "SALE SAVE lost response -> original receipt confirmed -> products -> sales list -> direct NEW retains saved CREATE editor; explicit return-to-list path is not this case."
+    },
+    {
+      "id": "MAC-PRODUCT-IDLE-YEAR-SEASON",
+      "status": "CODE_FIXED_MAC_RECHECK_PENDING"
+    },
+    {
+      "id": "MAC-PRODUCT-DRAWER-ESC-FOCUS",
+      "status": "CODE_FIXED_MAC_RECHECK_PENDING"
+    },
+    {
+      "id": "MAC-BARCODE-SCHEME-ESC-FOCUS",
+      "status": "CODE_FIXED_MAC_RECHECK_PENDING"
+    }
+  ],
+  "browserVisualPass": false,
+  "databasePass": false,
+  "productionEnabled": false
+}

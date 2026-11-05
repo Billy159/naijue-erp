@@ -1,0 +1,138 @@
+{
+  "atUtc": "2026-10-24T01:46:24.692423+00:00",
+  "parent": "08befd0b3e52ec6b4e0819d726c84d9006b6dc20",
+  "taskId": "APPROVED_V14_CORE_BOOTSTRAP_HOST_EXECUTOR_CARRY_FORWARD",
+  "files": [
+    {
+      "path": "scripts/import-v3/native-bootstrap.mjs",
+      "bytes": 31017,
+      "sha256": "7b592804f14c89699c6890403d5820b537d81069d9ffe4b935069710072685da",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/native-bootstrap.test.mjs",
+      "bytes": 36722,
+      "sha256": "7c14e50eec6e294a3abc009ff38f6bd6531a848e094f07331210ca9e05d09762",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.mjs",
+      "bytes": 37807,
+      "sha256": "6fb4d8a38d91c15259af53804be075da7b8e587fb3800c9e595c46e65c0be1c9",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.test.mjs",
+      "bytes": 34135,
+      "sha256": "fc28b48b7cc556cba085955a1e6ef3b6b6383970923271680560984c12cad433",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/run.mjs",
+      "bytes": 28400,
+      "sha256": "45c304a94c0dfa168bdac04155a47520ce51d1b691aca92b9e38fb55bf8430e4",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/run.test.mjs",
+      "bytes": 35339,
+      "sha256": "f2fba6a9ec547c2a9c23048ca2a00553117c2f0cae7a97d6f5d0eac8253b2515",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json#v14CoreImplementation",
+  "ownerDelivery": {
+    "bootstrapFrozen": {
+      "atUtc": "2026-10-24T01:36:29.264504+00:00",
+      "files": [
+        {
+          "path": "scripts/import-v3/native-bootstrap.mjs",
+          "bytes": 31017,
+          "sha256": "7b592804f14c89699c6890403d5820b537d81069d9ffe4b935069710072685da"
+        },
+        {
+          "path": "scripts/import-v3/native-bootstrap.test.mjs",
+          "bytes": 36722,
+          "sha256": "7c14e50eec6e294a3abc009ff38f6bd6531a848e094f07331210ca9e05d09762"
+        }
+      ],
+      "checks": {
+        "newCoreCommandDigestAndSourceProof": 1,
+        "affectedOriginalCallbackUsingD1ProofFunction": 1,
+        "passed": 2,
+        "command": "node --test --test-name-pattern='v14 bootstrap|bootstrap26 real-source seam: exact49' scripts/import-v3/native-bootstrap.test.mjs",
+        "actualPG": false
+      },
+      "changes": [
+        "CORE first bootstrap consumes exact D1 CoreStageCommand/CoreInitializationMetadata/shared proof binder",
+        "Independent CORE review excludes commandhash; actual commandhash calculated after reviewSHA then inserted in original STAFF proof",
+        "coreSourceDigest independent of review pin/command/proof, future full MAIN null; exact115/49/22recorditems",
+        "Original same borrowed-client IMPORT_STAGE callback union CORE, no claims or fake counters in source callback"
+      ],
+      "released": true,
+      "next": "C exact source checkpoint/QB scope, no bootstrap leaf edits without directed finding; remaining host/run continue"
+    },
+    "hostFrozen": {
+      "atUtc": "2026-10-24T01:39:25.262555+00:00",
+      "files": [
+        {
+          "path": "scripts/import-v3/production-source-host.mjs",
+          "bytes": 37807,
+          "sha256": "6fb4d8a38d91c15259af53804be075da7b8e587fb3800c9e595c46e65c0be1c9"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.test.mjs",
+          "bytes": 34135,
+          "sha256": "fc28b48b7cc556cba085955a1e6ef3b6b6383970923271680560984c12cad433"
+        }
+      ],
+      "checks": {
+        "newHostTestsPassed": 3,
+        "affectedOriginalJobTestPassed": 1,
+        "initialTestIssue": "Fixture deleted nonexistent PRODUCT key; corrected to actual first closure group, only failing test rerun passed",
+        "actualPG": false
+      },
+      "changes": [
+        "Same host finite CORE config with null future full hash and exact independent source review, no fabricated all11/product factories",
+        "Actual preflight still before original pool activation; source denial closes once",
+        "Full continuation requires all11 actual factories/native source authority and bootstrap26:null; prior complete branch unchanged",
+        "Actual v14 metadata selector26_v14_core_initialization still metadata-only; original D1 issuer and source authority remain required"
+      ],
+      "released": true,
+      "next": "C exact checkpoint/QB scope; no host edits without directed finding; run carryforward integration continues"
+    },
+    "executorFrozen": {
+      "atUtc": "2026-10-24T01:42:36.524659+00:00",
+      "files": [
+        {
+          "path": "scripts/import-v3/run.mjs",
+          "bytes": 28400,
+          "sha256": "45c304a94c0dfa168bdac04155a47520ce51d1b691aca92b9e38fb55bf8430e4"
+        },
+        {
+          "path": "scripts/import-v3/run.test.mjs",
+          "bytes": 35339,
+          "sha256": "f2fba6a9ec547c2a9c23048ca2a00553117c2f0cae7a97d6f5d0eac8253b2515"
+        }
+      ],
+      "checks": {
+        "newExecutorTestsPassed": 3,
+        "affectedOriginalExecutorTestsPassed": 2,
+        "actualPG": false,
+        "initialFixtureRepairs": [
+          "Added synthetic UUID helper and shared history count import; reran failed only",
+          "UnknownCOMMIT fixture now fails actual CORE store COMMIT after persisted mock receipt, then original key recovery verifies no duplicate callback/claims"
+        ]
+      },
+      "changes": [
+        "Original executor finite CORE and BIND actions validate the D1 same-source command types, separate phase bindings and independent core source authorization even on receipt replay",
+        "Same borrowed callback then original accountant22 claims/seq1/cursor22/audit1to2; source callback does not forge claims",
+        "Full-source continuation rejects fresh STAGE/bootstrap; once BIND preserves source/account/session and22 claim count/actual current cursor",
+        "readCoreImportContinuation26 uses original D1 readNativeCoreWarehouseCarryForward in same actual leased client transaction; exact22 record/op/seq1 membership vs original53 source creator items, returns real checkpoint and31 remaining source warehouse items; no new producer or mutation",
+        "RR transaction intentionally not READ ONLY because D1 original read uses FOR SHARE; current source authority before target connection, original unknownCOMMIT/discard handling"
+      ],
+      "released": true
+    }
+  },
+  "qualification": "Only6 released D3 source/test leaves; party2 preserved259/QB205, D1 exact261 prerequisites, D2 260/QB206. Ownernew7+affected4 tests adopted without generic full replay. Independent QB/real PG/core init/full-source provider/whole business not accepted."
+}

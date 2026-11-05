@@ -1,0 +1,1 @@
+PASS source-structure: source frame/filter/matrix/pager declarations, native fold structure and display controls; 313154 byte portable preview, exact Page limit 262144. No browser/pixel claim.

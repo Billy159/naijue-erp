@@ -1,0 +1,63 @@
+{
+  "stage": "party-unresolved-write-403-recovery",
+  "verified_at_utc": "2026-10-20T20:37:25.317060+00:00",
+  "parent_commit": "38a1a9d00ce5060879af409c6e7e1febad07ab5f",
+  "branch": "codex/clean-erp-foundation",
+  "scope": [
+    "apps/web/src/parties/controller.ts",
+    "apps/web/src/parties/receipt-access-recovery.test.ts",
+    "apps/web/src/parties/README.md"
+  ],
+  "baseline_final_focused_tests": {
+    "passed": 8,
+    "failed": 7,
+    "expected_exit": 1,
+    "log": "baseline-final-tests.log"
+  },
+  "final_focused_tests": {
+    "passed": 15,
+    "failed": 0,
+    "log": "focused-unit.log"
+  },
+  "final_all_party_tests": {
+    "passed": 49,
+    "failed": 0,
+    "includes_focused_tests": true,
+    "log": "party-unit.log"
+  },
+  "final_existing_dom_groups": {
+    "passed": 11,
+    "failed": 0,
+    "CSS_rendered": false,
+    "log": "party-dom.log"
+  },
+  "scoped_typecheck": {
+    "status": "passed",
+    "log": "party-typecheck.log"
+  },
+  "static_lazy_build": {
+    "status": "passed",
+    "log": "party-build.log"
+  },
+  "diff_check": "passed",
+  "immutable_recovery": [
+    "requestKey",
+    "kind",
+    "target",
+    "expectedVersion",
+    "name",
+    "enabled"
+  ],
+  "unchanged_cleanup": [
+    "current401",
+    "trusted_identity_session_permission_invalidation",
+    "ordinary_definitive403_without_unresolved_work"
+  ],
+  "limits": [
+    "synthetic fixtures only",
+    "no real-browser or pixel acceptance",
+    "no root aggregate acceptance in this slice",
+    "no durable recovery after reload or auth invalidation",
+    "no network, DB, install, schema, commit, push or deployment"
+  ]
+}

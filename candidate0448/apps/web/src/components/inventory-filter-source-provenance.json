@@ -1,0 +1,102 @@
+{
+  "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "sources": [
+    {
+      "file": "frontend/inventory-select.jsx",
+      "sha256": "588e5076708db2a4e7f2e9bb345b7fa428fa1af0691bd878ae0eaec7edc2208c",
+      "ranges": [
+        {
+          "lines": [
+            11,
+            89
+          ],
+          "sha256": "de992beeb120065a700053803e13ae559e6f0bb7672a9179f2940e585e3798ca"
+        },
+        {
+          "lines": [
+            99,
+            120
+          ],
+          "sha256": "168ba466e3a75f5f5870ade00cea09346adc515e743e958629dc994457f8a6e8"
+        },
+        {
+          "lines": [
+            133,
+            156
+          ],
+          "sha256": "fe1c3a555c51029dc7b6df952f465511ca6a400a20c8dcd5196e4933d2ce6532"
+        },
+        {
+          "lines": [
+            191,
+            216
+          ],
+          "sha256": "2f677f78d1dca33fef332a9baf9a42fec7aa73fe466610954f6267c740ad9ae1"
+        },
+        {
+          "lines": [
+            263,
+            299
+          ],
+          "sha256": "77c5588df7895778d8925d8df4c560dd3c89eb1a690e28a8f1f06ee10db22b29"
+        }
+      ]
+    },
+    {
+      "file": "frontend/inventory-category.jsx",
+      "sha256": "e76e01dfd849e11eea23c3867d2185eb5fe512a3dc883045029c01d7d6d74a1e",
+      "ranges": [
+        {
+          "lines": [
+            69,
+            121
+          ],
+          "sha256": "fadf9e50ef7dfc83e28f22d437bb7068088996eb637e93af980eda06f8ed03e3"
+        }
+      ]
+    },
+    {
+      "file": "frontend/inventory-filters.jsx",
+      "sha256": "bdcd2aaef2f8b6dbd7f66ff13bb6dc5eee31e59e8f9f68c0ce33a917efb0dd48",
+      "ranges": [
+        {
+          "lines": [
+            11,
+            38
+          ],
+          "sha256": "acd8f2983848c7937043751f8609c89e22775977604e645f284ac6268f151570"
+        },
+        {
+          "lines": [
+            53,
+            137
+          ],
+          "sha256": "ff69cc16b9c425d65e727ef46c1eaf11f53269cbbee69d1e2b2815551d0ce7ff"
+        }
+      ]
+    }
+  ],
+  "presentation": [
+    "The source product Select is distinct from TreeSelect references: one inline search input, recent history and clear/remove actions, provider-projected code/name columns, side active-product facts aligned across the category and warehouse fields, native code tags.",
+    "Warehouse/reference filters use the shared installed TreeSelect action with source tags, inline search and informational toolbar, not bespoke title/search/footer dialogs.",
+    "Category reuses the same shared action with an explicit branch hierarchy mode backed by native parent identities."
+  ],
+  "readBoundaries": [
+    "Opening empty product search shows owner-scoped recent history and performs no candidate or product read.",
+    "Typing debounces a bounded20-result native candidate query. Each subsequent page needs scroll intent; the render window stops at200 without truncating exactTotal.",
+    "Only the active suggestion reads existing target-only basics/specifications/image thumbnails. No per-row details, whole-catalog hydration or original-image prefetch.",
+    "Scopes, query attachments and style leases are effect/action owned; identity, provider, query, close and unmount invalidate stale work."
+  ],
+  "intentionalDifferences": [
+    "The frozen global business bridges and all-catalog/private arrays are not copied. Search order/membership comes from the bounded native provider, not client catalog ranking.",
+    "Recent history is bounded20 and belongs to the current route/provider/identity. It is not loaded from unpartitioned legacy localStorage; only actually selected native product codes are remembered.",
+    "Legacy full-catalog multi-code paste/exact auto-selection is not emulated. Ordinary literal search remains available.",
+    "Category parent IDs mean server category-branch union. The source non-strict loaded-only cascade and inferred half-check states are not copied onto an incomplete candidate tree; unrestricted ALL-minus or parent-minus-child requests require an explicit positive replacement.",
+    "Only native parent relationships are nested. Unknown parent candidates are not invented; an orphan displays the supplied parentLabel / label path, while canonical labels and IDs remain unchanged.",
+    "Unknown price or metadata is shown as not provided, never fabricated or derived. The target-only native retail price is nullable and distinct from historical sale reference price.",
+    "Preview uses authorized thumbnails only. Source catalog full-image hover zoom is not duplicated or prefetched.",
+    "Source ShadowRoot isolation is replaced by a local host selector; the direct-input font selector is strengthened to preserve13px against later route leaf CSS. No global Arco reset is imported.",
+    "Technical explicit-selection bound is100 per native query contract. Reset remains draft-only and inventory Query remains explicit."
+  ],
+  "verificationBoundary": "Source-derived DOM/CSS and scoped tests only. No real-browser screenshot, pixel, geometry, production data, database execution or visual acceptance claim."
+}

@@ -1,0 +1,27 @@
+✔ native read authorization: lazy explicit pool, no lifecycle ownership or public authentication entry point (7.258881ms)
+✔ native read authorization: every canonical role retains ALL native warehouse IDs/halls/full labels in bounded returned order (11.098702ms)
+✔ native read authorization: inventory and all candidate kinds use the same current identity + warehouse grant, including disabled historical references (5.247607ms)
+✔ native read authorization: ALL sales intents are current-hall-only for salesperson, all for ADMIN/WAREHOUSE, never request filter/creator/staff scope (3.305087ms)
+✔ native read authorization: each canonical role can read exact requested product facts and media, with no stock/catalog/hall scan (4.161671ms)
+✔ native read authorization: ADMIN/WAREHOUSE permit exact null hall, but SALESPERSON always requires a real enabled current hall (1.914314ms)
+✔ native read authorization: missing/duplicate/malformed/disabled/stale identities fail closed before warehouse or business queries (6.237804ms)
+✔ native read authorization: each invocation re-reads identity, without mutable role map/account cache (2.233234ms)
+✔ native read authorization: warehouse scope empty, overflow, duplicate/invalid identity, missing hall or invalid label never truncates/invents facts (20.971621ms)
+✔ native read authorization: invalid actors, intents/targets and pre-aborted calls acquire no resource (2.546821ms)
+✔ native read authorization: actor/target facts are captured before awaits, not mutable caller replacements (1.024023ms)
+✔ native read authorization: abort during acquisition releases late client without BEGIN or business reads (0.242343ms)
+✔ native read authorization: abort after identity/warehouse query rolls back, never returns a scope or starts later work (2.790801ms)
+✔ native read authorization: failed SELECT/COMMIT rolls back, failed BEGIN/COMMIT/rollback quarantines exactly once and never retries (2.705596ms)
+✔ native read authorization: abort after acknowledged COMMIT withholds each grant but never rolls back or discards the clean committed lease (1.661399ms)
+✔ native read authorization: services await fresh authorization before reader count/page/sum/detail/history work; denial performs no business read (12.709724ms)
+✔ native read authorization: inventory and ledger narrow an ALL-warehouse grant to a requested other-hall warehouse only AFTER current scope resolution (3.746918ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 636.087149
+
+COMMAND_EXIT=0

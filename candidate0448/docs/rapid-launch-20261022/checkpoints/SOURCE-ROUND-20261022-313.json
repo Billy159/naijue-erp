@@ -1,0 +1,34 @@
+{
+  "atUtc": "2026-10-24T12:10:42.401499+00:00",
+  "parent": "38446a904ca3bb918722a68c667681fe217ca70d",
+  "taskId": "F3-B04-STAFF-LOGIN-OPEN-CONSUMER-20261024",
+  "files": [
+    {
+      "path": "apps/web/src/staff-settings/contracts.ts",
+      "owner": "F3",
+      "bytes": 5720,
+      "sha256": "e2561c36b33c3b259db8c3574e9567515a18e8af4a284580fc4f6f872ee5d01c"
+    },
+    {
+      "path": "apps/web/src/staff-settings/http-client.ts",
+      "owner": "F3",
+      "bytes": 15013,
+      "sha256": "a68ff04ab12974e4d138a5d87eae172ada5cd9287332ac906999b2f9a3adc5b6"
+    },
+    {
+      "path": "apps/web/src/staff-settings/staff-page.tsx",
+      "owner": "F3",
+      "bytes": 16376,
+      "sha256": "24a3a1786a82497a541c64c6168038ebfbba17fce71531e0bc6ae845fb9e4460"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STAFF-LOGIN-OPEN-CONSUMER-20261024.json",
+  "ownerReceiptBytes": 3442,
+  "ownerReceiptSha256": "fed05c6ba975686500649b6029d8499c05a169c7654ba5336612c457b43379ae",
+  "ownerSourceReleased": true,
+  "stage": "APPROVED_NODE24_21_SCOPED_TYPES_AND_HTTP_CHECK_PASS_ALL_OPEN_ONLY_NOT_BROWSER_PG",
+  "requiresBackendSource": 310,
+  "closedSemanticPending": true,
+  "wholePageAccepted": false,
+  "deployed": false
+}

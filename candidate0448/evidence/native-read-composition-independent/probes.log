@@ -1,0 +1,17 @@
+✔ independent: current account/session invalidations deny all five read families before policy/business SQL (302.484158ms)
+✔ independent: current hall and role facts, not forged headers/body, reach mandatory authorization (33.11041ms)
+✔ independent: failed authentication storage stays sanitized and never becomes an empty business response (14.302191ms)
+✔ independent: invalid host contracts never allocate a driver or silently enable fallback policy/media (1.046763ms)
+✔ independent: closing one API retires an injected active read and never closes another API pool (41.22274ms)
+✔ independent: standalone transfer authenticator snapshots origin, service, and resolver method (0.854764ms)
+✔ independent: composition captures all policy methods while their current internal state remains authoritative (29.646689ms)
+✔ independent: captured media origin/methods still validate each current provider URL, never exposing private fileRef (15.209032ms)
+✔ independent: injected pending policy is not network-drained by close and cannot acquire business storage afterward (9.034514ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1051.187167

@@ -1,0 +1,36 @@
+{
+  "atUtc": "2026-10-24T14:19:13.348859+00:00",
+  "parent": "17455422c68da9c8f7be7c2fdfa1d4cde080d7e8",
+  "taskId": "F1_A01_A02_PUREUI_01",
+  "files": [
+    {
+      "path": "apps/web/src/authentication/authentication-panel.tsx",
+      "bytes": 12117,
+      "sha256": "4ade4b74e8043060ee743d1098853dce80f76d69f59f4bcea9f0ebe39c5ae3a5",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/authentication/authentication.css",
+      "bytes": 6138,
+      "sha256": "831c17cb81b27ff2935414fa578d18c92448f8198d98891cb1264b0ab64af22f",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/authentication/account-menu.tsx",
+      "bytes": 4401,
+      "sha256": "644005ed0ce46f73627a5c7783239cc66f71e196d470f8f54d1728104164186e",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-155/DELIVERY.json",
+  "ownerReceiptBytes": 3239,
+  "ownerReceiptSha256": "4f5022ff6dc680f7479b4098bb8bf524d407912b863e8f2e6ae7f23dda194d22",
+  "stage": "LUNA_PRESENTATION_DELIVERED_TRANSPILE_PASS_TECHNICAL_STATE_AND_BROWSER_PENDING",
+  "remaining": [
+    "remember-account and password visibility local UI events",
+    "trusted employee display name existing authread seam",
+    "normal loading/error/Portal keyboard/focus read-only actual scope"
+  ],
+  "wholePageAccepted": false,
+  "deployed": false
+}

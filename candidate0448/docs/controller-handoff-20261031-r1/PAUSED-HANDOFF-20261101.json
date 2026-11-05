@@ -1,0 +1,37 @@
+{
+  "status": "PAUSED_USER_HANDOFF_NOT_RELEASE",
+  "completedSourceCommit": "c0794b4bdcbdfcf1fff4026a6fcf798f84133ca2",
+  "branch": "codex/db-v7-r1-preparation-20261031",
+  "repository": "https://github.com/Billy159/naijue-erp",
+  "wipPatch": "docs/controller-handoff-20261031-r1/WIP-history-synthetic-fixture.NOT-APPLIED.patch",
+  "wipNotAppliedToCommittedRuntime": true,
+  "wipFiles": [
+    {
+      "path": "apps/web/demo-replica/tests/history-chain-fixture.mjs",
+      "sha256": "53de0edeab74bfc1fa5962a45a4d98547e15981938531a994b99d2471f7f559c",
+      "bytes": 16154
+    },
+    {
+      "path": "apps/web/demo-replica/tests/unified-service-fixture.mjs",
+      "sha256": "bca8ff37155527a90b09d060e7d2780cb7a17cdf74565cf326ddec63eb19662b",
+      "bytes": 24057
+    },
+    {
+      "path": "apps/web/demo-replica/tests/unified-service-public-config.json",
+      "sha256": "035ef408e752139cccdf6bba15af93eec9965784e550c8e36cd78c32bd8ea57d",
+      "bytes": 1545
+    }
+  ],
+  "unverified": [
+    "WIP fixture syntax/imports/tests/browser",
+    "new metadata14 independent QB acceptance",
+    "combined latest source root tests/clean install/build/browser",
+    "SQL installation/new canonical/nonowner PG lifecycle/backup restore",
+    "production"
+  ],
+  "stoppedOwners": [
+    "D1 metadata frozen",
+    "D3 fixture WIP frozen",
+    "QB no new review"
+  ]
+}

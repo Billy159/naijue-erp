@@ -1,0 +1,53 @@
+{
+  "atUtc": "2026-10-23T14:26:15.200420+00:00",
+  "parent": "c0364f4605185ab86d3f5a0f1795666094887209",
+  "taskId": "F05_DEMO_CUSTOMER_SUPPLIER_ASSOCIATED_PAGE",
+  "files": [
+    {
+      "path": "apps/web/src/parties/party-route.tsx",
+      "bytes": 14127,
+      "sha256": "e1f03f1c03050a0f5e22b8f0166e635ded6d664e7319bdcf67c0b98a65b3ffcf",
+      "owner": "F3"
+    },
+    {
+      "path": "apps/web/src/parties/party-form.tsx",
+      "bytes": 6219,
+      "sha256": "f53fd880b4c3fbd57799614f7fa6d29bf09c37faec51e62fa233f10a38aa1eaa",
+      "owner": "F3"
+    },
+    {
+      "path": "apps/web/src/parties/controller.ts",
+      "bytes": 23767,
+      "sha256": "780df739ef4ac4d5cc8c03734ba7eb8f067f60a104ce0b085d55dbf49d723f51",
+      "owner": "F3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/party-frozen-page-v1/RESULT.json",
+  "ownerReceiptSha256": "c2b2cc1c54087796c43b8b66064e69907d22e84cdb9a2f11c5429446b6cbcb14",
+  "scope": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo/frontend/basic-settings-v2.jsx",
+      "commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sha256": "c16e44268ac75f50784c0ce8c8b45826eb267ec85c8cee06596d24ab2a0761fa",
+      "workingFileMatchesFrozenCommit": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo/frontend/basic-settings-v2.css",
+      "commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sha256": "92f519c978f94fdefed31f513f3279f01a5d40705fff51b8f76cba2265f31393",
+      "workingFileMatchesFrozenCommit": true
+    }
+  ],
+  "checksAdopted": {
+    "DOM-CHECK.json": {
+      "status": "PASS_REMAINING_PARTY_SOURCE_CARRIERS_AND_ROUTE_CONTEXT",
+      "sha256": "b0f0602e00d79d965b318b3aa22ec65443640bc36ca275b9dedf4df5af2c17f5"
+    },
+    "TYPECHECK.json": {
+      "status": "PASS",
+      "sha256": "9c8b61dcc0b914c35f448da5f88eeaad478f2b7982f8d33956430ffa22949bce"
+    }
+  },
+  "qualification": "SOURCE_FIXED_OWNER_AFFECTED_SELFCHECK_ONLY. Independent new source and actual consumer tests remain; no real HTTP/PG/SAVE/wholepage/performance/release accepted. Current184 runtime and next189 runtime do not include this new fixed source.",
+  "remaining": "C fixes exact3 then QF2 actual linked customer/supplier pages and forms only; reuse prior local scopes, no broad backend/protocol or old48 rerun."
+}

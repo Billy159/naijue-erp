@@ -1,0 +1,34 @@
+{
+  "scope": "SOURCE_OCCURRENCE_RECONCILIATION_OFFLINE_SYNTHETIC_ONLY",
+  "final_regression": {
+    "runtime": "v24.21.0",
+    "pass": 124,
+    "fail": 0,
+    "exit_code": 0,
+    "new_reconciliation_cases": 23
+  },
+  "focused_typecheck": {
+    "exit_code": 0
+  },
+  "full_root_typecheck": "INITIAL_FAILED_NOT_CLAIMED_PASSED",
+  "source_truth_verified": false,
+  "actual_22_zero_records_checked": false,
+  "actual_199_hall_relations_checked": false,
+  "postgresql": "NOT_RUN",
+  "settlement_identity_allocation": "NONE",
+  "production_actions": "NONE",
+  "security_review_retry": "NONE",
+  "new_files": [
+    "packages/application/src/unified-import-source-reconciliation.ts",
+    "tools/unified-import/source-reconciliation-cli-input.mjs",
+    "tests/unified-source-occurrence-reconciliation.test.mjs",
+    "docs/handoff/source-occurrence-reconciliation-v1.md"
+  ],
+  "shared_integration_by_other_owners": [
+    "packages/application/src/unified-import-contract.ts",
+    "tools/unified-import/stream-preflight.mjs",
+    "tools/unified-import/stream-preflight.d.mts",
+    "tools/unified-import/stream-preflight-cli.mjs",
+    "tools/unified-import/stream-binding.mjs"
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "id": "D1_EXACT26_IMPORT_SEASONS_HANDOFF_V2",
+  "status": "IMPLEMENTATION_CONTRACT_UNISSUED_SUCCESSOR26",
+  "atUtc": "2026-10-22T08:20:24.797694+00:00",
+  "authority": [
+    "FIELD-APPROVAL-SUPPLEMENT-v2-B.json B approved",
+    "FIELD-APPROVAL-SUPPLEMENT-v3-A.json approved one product column"
+  ],
+  "decision": "Use one full-source import against exactly migrations1..25. Native product creation writes the actual season array and immutable source proof in its original stage transaction. No temporary scalarization, post-publication repair, relation table or second importer architecture.",
+  "capability": {
+    "name": "NativeRuntime26Capability",
+    "owner": "D1 only",
+    "profile": "EXACT26",
+    "contract": "NATIVE_RUNTIME26_V1",
+    "issuance": "D1 factory bound to the explicit owned pool and C-approved frozen migration/routine/constraint/ACL pins. No caller bool, version>= comparison, ad hoc provider registration or reuse of a capability from another pool/target.",
+    "interface": "{readonly profile:\"EXACT26\";readonly contract:\"NATIVE_RUNTIME26_V1\";assertReady(client:Pick<PgSalesClient,\"query\">,purpose:NativeRuntime26Purpose):Promise<void>}",
+    "purposes": [
+      "IMPORT_STAGE",
+      "IMPORT_PRODUCT_SEASONS",
+      "IMPORT_PUBLISH",
+      "PRODUCT_SEASONS_READ",
+      "PRODUCT_MAINTENANCE",
+      "INVENTORY_ADMISSION",
+      "HISTORY_READ",
+      "CURRENT_FORM_READ",
+      "CURRENT_CUSTOMER_READ_WRITE"
+    ],
+    "construction": "Optional runtime constructor/dependency property. Omission preserves exact original19 behavior. Present requires both fixed discriminants and the D1-issued actual capability; all new-field SQL runs only after assertReady on the same acquired transaction/snapshot client.",
+    "proof": [
+      "Exact array[1..25], all old0001..19 migration file hashes reused unchanged; explicit fixed20..25 SQL bytes before applying. No runtime status inferred from migration registry alone.",
+      "Original19 source/native identity, no-adoption, typed closure, accounting, publication routines/triggers/indexes/FKs/ACL signatures remain independently pinned. Only explicitly enumerated new-migration replacements get successor pins; no broad remove-hash or existence-only fallbacks.",
+      "0023 replaces guard_cutoff_ledger/validate_sparse_balance_commit/validate_transfer_effect: verify each whole approved new body plus original unchanged semantic guards; published_inventory_key keeps its original meaning.",
+      "20 numbering,21 generated20deferredFK/root-child/actor/admin/account guards,22 retained references/media,23 admission proofs,24 five CLOSED effective tables,25 sole nullable/no-default uuid[] column+arrayCHECK/GIN/two-way/season publication closure: exact routines, trigger events/enabled/deferred flags, indexes, FKs, column shapes and restricted grants.",
+      "Same client observes database OID/name, current role, server address/port, postmaster start and expected target binding; scope check every import transaction/snapshot and final PUBLISH. Missing/changed/foreign target fails before new-field read/write. New prefix requires fresh pool/process, no hot R1 pool reuse."
+    ],
+    "notIssued": [
+      "No25 added to generic assertReviewedNativeImportSchema yet. Old DEFAULT19 callers still reject25.",
+      "No actual successor routine hashes/ACL pins fabricated; C coordinated engine window required.",
+      "HISTORY_REVISION remains unavailable: current0024 original revision trigger and effective write-close guards stay closed. This import/season capability does not imply history revision write permission."
+    ],
+    "synchronousD2View": {
+      "profile": "product-season-array-v1",
+      "assertVerified": "sync target object verification against actual alreadyverifiedpool orD1driver; frozenD2interfaceunchanged; derivedfromsameissuer, not asecondauthority"
+    },
+    "exactPrefix": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26
+    ],
+    "sourceOnlyNotice": "All inherited references to25 describeseasonfeaturemigration25, never acceptance of26byEXACT25. Concretefinalprefixis1..26; onlyEXACT26mayissue."
+  },
+  "D3": {
+    "bootstrap": "Explicit new target profile in binding and runner, never keep NATIVE_IMPORT_EXECUTION_19_V1 while accepting25. First STAGE retains exact sameclient bootstrap then audit/receipt transaction. The current46 fixed SQL pins remain19-only; new target/probe statements must be supplied to D1 and frozen as a new finite set before use.",
+    "writerSeam": "Existing party/catalogue/product/SKU/price/barcode/payment/history store constructors accept optional runtime property and assertReady(sameClient,\"IMPORT_STAGE\") before their SQL. Product season branch additionally IMPORT_PRODUCT_SEASONS. Do not merely extend numeric registry and let legacy no-runtime callsites through.",
+    "product": "Add an explicit V2 prepared-product/evidence branch carrying season_ids:null|sorted unique UUID[]. Keep exact old source raw_fields and scalar season_id. Reviewed310 each receives2actualatomicUUIDs; other confirmed singles receive1, unknown remainsNULL, explicit no-selection only reviewed[]. Bind the2956 mapping artifact actual hash/count, not a fabricated completeness count.",
+    "evidenceLocation": "Existing field_provenance.fields.native_product_import.season_selection; original source/binding tables reused. No new columns/tables beyond approved season_ids.",
+    "evidenceShape": {
+      "version": "NATIVE_PRODUCT_SEASON_SELECTION_V1",
+      "mapping_sha256": "exact independently reviewed complete mapping artifact SHA256",
+      "source_key": "same import_source_row.source_key",
+      "source_season": "exact original raw_fields.季节 JSON value",
+      "state": "UNKNOWN|KNOWN_EMPTY|KNOWN",
+      "season_ids": "null|[]|sorted unique actual UUID[]",
+      "references": "sorted [{sourceKey,nativeId,nativeSnapshot}] for every actual nonempty member; same batch SEASON catalogue binding required"
+    },
+    "evidenceRules": [
+      "Native product snapshot also includes season_ids equal to season_selection.season_ids. Source+native array+all member reference bindings are part of the original authorized row fingerprint/selection manifest and exact-key replay. No first-item scalar conversion.",
+      "For new nullable22/23fields in catalogue/party/SKU native snapshots, preserve exact full-current-row equality with explicit approved migration-default NULL facts where needed. Never silently strip meaningful fields from original source proof to pass. List each affected snapshot/provenance/validator branch to D1 before freeze.",
+      "Currentstage transaction locks original cutoff/batch/native identities, orderedactualseasonrows, inserts full native product and original source proof together. Failure rolls back this chunk; committed previous stage chunks remain STAGED and invisible.",
+      "After all chunks: independently validate perproduct array actualreadback against immutable source metadata, all2956map rows and310two-member entries, original typed history closure and perwarehouse conservation. Original MAIN FINAL/PUBLISH redoes the exact required new season closure check on its same receipt-locked transaction before statusIMPORTED."
+    ],
+    "publishGate": "D1 adds exact25 SQL season publication guard: require every PRODUCT original source row full selection metadata and matching actual native array/member same-batch bindings; duplicate/missing/extra/wrongbatch/mutated arrays reject. Old19 nonzero publication authorization/closure/accounting/stock checks preserved. No explicit PUBLISH until all new readback complete.",
+    "fallback": "No two-stage post-publication conversion. If implementation needs internal chunks, they stay under the same unpublished batch; allseason materialization finishes before final gate. No UNKNOWN scalar stand-in for the310 known multi selections."
+  },
+  "D2": {
+    "read": "Optional runtime property; assertReady same readclient PRODUCT_SEASONS_READ before array SQL. No-runtime readers retain19 original-column query and reject unknownprefix. Known25 route displays from array only; null and[] distinguished inedit. No fallback to oldscalar. Overlapfilter&&, count/productstock neverexpanded.",
+    "write": "V2 product edit/command needs PRODUCT_MAINTENANCE+PRODUCT_SEASONS_READ; real root field before_values.season_ids/after_values.season_ids participates in singleprepare/CAS/complete. Originalscalar unchanged, known->NULL rejected, old CREATE/EDIT409 on activated25 only. Oldreceiptrecovery not a businessrewrite.",
+    "missing": "Unavailablecapability/failedPGprobe mustreturnnotready, notemptyarray orsuccess. No fake assertReady in production composition."
+  },
+  "D1Remaining": [
+    "Finish25 immutable season source/publication guard after D3 agrees exact JSON above; current25 field/check/refguard source exists.",
+    "Freeze complete20..25 source and C coordinated minimalSQL application/negative/concurrency tests; capture actual successor pins then implement issuer/optional-runtime plumbing.",
+    "Complete HISTORY revision fullguard separately; never let import/season capability grant revision writes."
+  ],
+  "acceptanceDelta": [
+    "Existing sealed18/schema19 results reused; no rerun oldwholegoals.",
+    "Actual fresh25 profile + crosspool/missingroutine/wrongACL/unknownprefix failure; old19default remains unchanged.",
+    "310twoactualmembers and all2956source mappings exact readback; unknown staysNULL; 2958invalidbarcodesexcluded.",
+    "Direct arraycorruption andmissing/extra source/reference fail PUBLISH withno partialfinalreceipt.",
+    "Concurrent seasonbind vsdelete/idupdate no dangling references; nonRC reference writes explicitlyreject.",
+    "Actual newB staff/account/HALL safety/rollback and receipt constraints; noassertionsfromscripteddriver substituted forengine.",
+    "Original13 rejectsSTAFFwithaccount: exactapprovedbootstrapmustcommitunder26; ordinarysourceSTAFFplusunprovenaccountmuststillreject",
+    "OldCSVsourceunchanged; historical2exactrawsource/proof/path/identity/hashrejectaltered/extra/wrongnativecase; currentwrite/list excludedwhilehistoryFKdisplayretained",
+    "Currentwholecatalogue/warehouse snapshots includeapprovedtechnicalNULLcolumns andexactoldbusinessfacts; no broadfieldstrip"
+  ],
+  "supersedes": "EXACT25-IMPORT-SEASONS-HANDOFF-v1.json proposal only; never registered or issued",
+  "new26": {
+    "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+    "registeredOwner": "D1",
+    "scope": [
+      "exact2existingfieldsourcekind/hash/identity/English8fields/headerproof+publicationclosure",
+      "originalstaff+linkedaccountbootstrapstrictproofunderexistingimmutableJSON, no newaccountcolumns",
+      "22cataloguedeleted_at and23warehousecreated_operation_id full-current-nullshape proof successors"
+    ],
+    "immutableBaselines": "Original0012/0013/0014bytesnotmodified. Successor fullfunctionbodies mustpreservealloldbranches; newbranchallowlistexplicitlypinned.",
+    "predicateContract": "EXACT26-HISTORICAL-CUSTOMER-PREDICATE-v1.json",
+    "engineBlocker": "BOOTSTRAP-ORIGINAL-GUARD-BLOCKER-v1.json",
+    "pending": "D3bootstrapproof/seasonselection/24revisionJSON directalignment; Coutsidepins andenginewindow"
+  }
+}

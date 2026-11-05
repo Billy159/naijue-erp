@@ -1,0 +1,127 @@
+{
+  "atUtc": "2026-10-22T23:33:15.357566+00:00",
+  "parent": "d0f82b50d669c95099c97382622b50f39dbcaad6",
+  "groups": [
+    {
+      "slice": "fix: group current barcode page by native SKU coordinates",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-CURRENT-PAGE-GROUPS-DELIVERY-v1.json",
+      "receiptSha256": "3776e48bd0d00f2d3b3d3c442a9af4987ac0022b0ab24ea3c3b142b57340b545",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "PROD-RO-P10-01 original native current-page coordinate groups",
+        "role": "F2",
+        "atUtc": "2026-10-22T23:31:47.146129+00:00",
+        "status": "CURRENT_PAGE_GROUP_UI_SOURCE_READY_CHECKS_PASS_FULL_BARCODE_PAGE_NOT_ACCEPTED",
+        "authority": {
+          "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "sourceStart": "C107 actual fixed bc1cf5ef269f788aded2d85cbad2bbb4aa5ae175 and CSS released; C adopted map144e400c and authorized native bounded grouping"
+        },
+        "modelRequested": "gpt-6.1-sol/xhigh",
+        "fastRequested": false,
+        "input": {
+          "sourceRuntimeSupplementSha256": "ac2c79bfb072694ac4709a9e19ba23fed3ca607cb56ce468cf27eb72b482daef",
+          "nativeDtoMap": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-NATIVE-DTO-GROUPING-MAP-v1.json",
+          "nativeDtoMapSha256": "144e400c14b55844fc9292b1a1c0d3bf8069e13e5fa37b3318bbf71fb70ab7b3"
+        },
+        "completedScope": [
+          "Replace generic4column records with5 fact-backed color/fit/size/current-page MAIN/current-page CONFIRMED_OLD columns; grouping tuple uses original skuId+colorId+fitId+sizeId only, no cross-product/newSKU or code parsing.",
+          "First native barcode record is renderkey only; original barcodeid/rawcode/kind/enabled all retained. Multiple old/main records not deduped by label;停用 retained. No subtype/source/history-spec guesses.",
+          "Optional explicitly injected reader.specs only after populated barcodepage; exact nativeID labels additionally require sameSKU exact coordinates and current success/product/read attachment. New page/version key remounts labels; loading/error/cancel never show old labels. Missing capability/labels/mismatch remain未提供 with original binding intact.",
+          "Current-page note explicitly says total counts barcode records, sameSKU may have additional records on another page; page-missing kind says当前页未提供, never未生成/无需条码. Original native paging unchanged.",
+          "Default scheme stays未提供 under originalUNAVAILABLE contract, no CURRENT inference/view-scheme/all-history/generate/write buttons or new providers/contracts. Incomplete full-view operation omitted rather than fake all action.",
+          "Readonly-scoped frozen table35/pad4x8/line18 and min850 adapted to actual Arco including inner padding0, raw textprewrap. Previous glyph/P11/P12 CSS bytes preserved."
+        ],
+        "changedFiles": [
+          {
+            "path": "apps/web/src/products/product-page-barcodes.tsx",
+            "sha256": "f91133e586ca6b5162ac0c4112c06a87ee523daccdf431fd767737604b3f2a74",
+            "beforeSha256": "9a49a69f94454625c52dadd342488a7c3a6dcb0c81ed762451d5ce898f91a655",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-CURRENT-PAGE-GROUPS-source/product-page-barcodes.tsx"
+          },
+          {
+            "path": "apps/web/src/products/product-page.css",
+            "sha256": "24bd1910e355ad5236e2ec6cc5e0611792dc9334dcaba173c391035f6e5725ce",
+            "beforeSha256": "3227046563b0b8ea0e323c16b2c5f30102c12f618fd9b5bc2848321784fc9ac5",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-CURRENT-PAGE-GROUPS-source/product-page.css"
+          }
+        ],
+        "newApplicationFiles": 0,
+        "checks": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-CURRENT-PAGE-GROUPS-dom-v1.log",
+            "sha256": "ef89c59a75345eb9401f7fffff9f15b101ff40a5d07f08e074b01c91b487d84a",
+            "exitCode": 0,
+            "bytes": 669
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-CURRENT-PAGE-GROUPS-types-after-f1.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "exitCode": 0,
+            "bytes": 0
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-CURRENT-PAGE-GROUPS-cascade-v1.log",
+            "sha256": "e4f5dc67c963e06600f35a25b82ef5f6277bfd9f6a6870729202d5f29cc27f7f",
+            "exitCode": 0,
+            "bytes": 262
+          }
+        ],
+        "initialTypesFailure": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-CURRENT-PAGE-GROUPS-types.log",
+          "exitCode": 2,
+          "bytes": 172,
+          "externalOnly": "F1 sales/document-presentation.tsx159 NodeList spread under originalDOM-only libs; no P10 error. Preserved, not hidden."
+        },
+        "typesClosureAfterExternalFix": {
+          "exitCode": 0,
+          "bytes": 0,
+          "externalSourceBefore": "e794b9e3ad6e9d87b4e16103bebfbd8f1757985fba5b0f5d2129c07b7eebe1a0",
+          "externalSourceAfter": "e794b9e3ad6e9d87b4e16103bebfbd8f1757985fba5b0f5d2129c07b7eebe1a0",
+          "externalSourceStableDuringCheck": true
+        },
+        "domCoverage": [
+          "50 native records ->2 realcoordinate groups; duplicate names/size001/native UUIDs and raw00000000/停用 preserved",
+          "51 total remains records; page2 sameSKU old-only does not assert global MAIN absence",
+          "Old page label request signal aborted; late old label discarded, fresh read only",
+          "Missing specs cap makes no label read/provider; mismatched independently readSKU coords leave namesunknown, no identity repair",
+          "Zero barcode records skip specs,403 originalguard clears scoped facts",
+          "No default inferred/no all/scheme/generate/save/delete/addold controls"
+        ],
+        "cascadeResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-CURRENT-PAGE-GROUPS-cascade-result-v1.json",
+        "cascadeMethod": "Current actual leaf DOM + immutable actual C100 full CSS with new readonly block before/after all old styles. Matched source only, no browser geometry.",
+        "notRun": [
+          "Real populated barcode author/browser/PG/role validation",
+          "All-history/default scheme/source subtype/history-spec integration still unavailable",
+          "Fullpage/fullbuild/deployment; old45/list/tree/other accepted suites not rerun"
+        ],
+        "remainingContractGaps": [
+          "Product default scheme UNAVAILABLE and sixscheme CURRENT humanpending",
+          "Native page only, not whole-SKU history; no exact source/manual subtype/originalSpec metadata",
+          "No explicit scheme-detail reader in product page; no implicit client created"
+        ],
+        "blockers": {
+          "thisBoundedSlice": null,
+          "acceptance": "C fixed exact2+receipt/QF targeted original data/current-page semantics; actual filled preview only separately explicit author source, not borrowed from current emptyC105.",
+          "nextQueue": "P13 overview style new actual supplement pending C final evidence; only readonly locate until exact evidence; do not touch C harness/provider/nestednavigation F1."
+        },
+        "nextStep": "C fix exact2 and release. QF only grouping/spec-label generation/new readonly CSS; Demo later explicit populated/empty state matching, never mark wholeP10/full page PASS. P13 wait final fixed supplement before minimal style fix."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/products/product-page-barcodes.tsx",
+          "owner": "F2",
+          "bytes": 6221,
+          "sha256": "f91133e586ca6b5162ac0c4112c06a87ee523daccdf431fd767737604b3f2a74"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "owner": "F2",
+          "bytes": 21688,
+          "sha256": "24bd1910e355ad5236e2ec6cc5e0611792dc9334dcaba173c391035f6e5725ce"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only bounded current-page native SKU coordinate grouping and exact-label read generation; no DTO/backend/default scheme/current classification/identity inference/whole-history claims. Exact raw codes/disabled/null/partial retained. F1 navigation WIP not included; minimal P10types records e794 external context, not whole app. Actual filled browser pending."
+}

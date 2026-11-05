@@ -1,0 +1,89 @@
+{
+  "atUtc": "2026-10-22T08:53:09.740086+00:00",
+  "parent": "ea5ebccff4481cfb2ae044320f4bad90855eefeb",
+  "groups": [
+    {
+      "slice": "EXACT2_CURRENT_FORM_AND_SALES_FACTS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/EXACT2-CURRENT-CONSUMERS-RESULT.json",
+      "receiptSha256": "b6e8359f278c5b18d437d22c8225ea6e97f60b92fcaf23f65354a840ce46266e",
+      "files": [
+        {
+          "path": "adapters/postgres/src/current-form-reader.ts",
+          "bytes": 31314,
+          "sha256": "38a04e43ef16c255549285600a71c50ad5aa9c4c01091dd5f00963ec38580f19",
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/src/sales-native-facts.ts",
+          "bytes": 13908,
+          "sha256": "a9b4b7c7676f4a30b9fb3181956e9cfccaaf8fd6e15903e37ce87ad7469d85de",
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/src/sales-unit-of-work.ts",
+          "bytes": 32061,
+          "sha256": "5054d4f02da6275e5ba4bb280175ea1398b43db2c63cbdba37d5c1c9b496319d",
+          "owner": "D1"
+        },
+        {
+          "path": "tests/current-form-barcode-postgres-protocol.test.ts",
+          "bytes": 13213,
+          "sha256": "f213338dbb1625004dbb753a23a03493e13c4e90d4bc116a65886efc7afe6e38",
+          "owner": "D1"
+        },
+        {
+          "path": "tests/sales-native-facts.test.ts",
+          "bytes": 29836,
+          "sha256": "0c0d5493d017c79e546edac11c72f3c32e7729b99f6775965bc5fa8b432dc7df",
+          "owner": "D1"
+        }
+      ]
+    },
+    {
+      "slice": "HISTORICAL_CUSTOMER_EXACT2_SOURCE_PROOF",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/historical-customer-source-slice1/RESULT.json",
+      "receiptSha256": "3ee98d51103ee8b37e837973da1ca4eb43d15a93abaefdb60bcbc5f1f8c917ad",
+      "files": [
+        {
+          "path": "scripts/import-v3/historical-customer-source.mjs",
+          "bytes": 10822,
+          "sha256": "a14d4e3de13b744d170f082348bcf344b83e67c168b475cf333eb9d7ce34426c",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/historical-customer-source.test.mjs",
+          "bytes": 9423,
+          "sha256": "29057dcb6984a6384e08fc87c26059332118c8e3910fb1f2718e8311072d5f9d",
+          "owner": "D3"
+        }
+      ]
+    },
+    {
+      "slice": "PRODUCT_BARCODE_ROWS_AND_SCHEME",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DATA-PRES-002-DELIVERY-v1.json",
+      "receiptSha256": "aa3699cd758873014c2e83453f32807a4f32e4f5a4500384d1572e669dcb6bcd",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-contracts.ts",
+          "bytes": 7948,
+          "sha256": "0dd14376b4bc67da959a980829dae413a949c2552df04ea08a3b96e9c4bf49f3",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-editor.tsx",
+          "bytes": 28626,
+          "sha256": "4b9c55841c10960dd1fcad84e3d31ec796afeb2c36602bde04e7287d951a1b85",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "bytes": 11481,
+          "sha256": "28daa9b5ecb5878a560efc4f5f7a4b9404ec7ecd93d31537817b426ab95ff214",
+          "owner": "F2"
+        }
+      ]
+    }
+  ],
+  "fileCount": 10,
+  "scope": "New source/proof changes only; independent scoped QA and real engine/integration pending"
+}

@@ -1,0 +1,43 @@
+✔ SQL adapter uses fixed role boundaries and parameterized private secret without owning transaction (4.063178ms)
+✔ coordinator and SQL adapter use one client for provisional steps and one final commit (47.489871ms)
+✔ SQL adapter rejects duplicate response fields and invalid role acknowledgement (1.524303ms)
+✔ SQL kernel rejects a different client at every post-inspection stage before sending SQL (2.106449ms)
+✔ SQL kernel binds its initial client before awaiting role acknowledgment (0.434988ms)
+✖ zero-approval descriptor cannot cross SQL adapter without independent verified token (1.350332ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 621.166608
+
+✖ failing tests:
+
+test at tests/unified-whole-package-sql-kernel.test.ts:33:1
+✖ zero-approval descriptor cannot cross SQL adapter without independent verified token (1.350332ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /EXPLICIT_ZERO_APPROVAL_BINDING_INVALID/. Input:
+  
+  'Error: must not query'
+  
+      at async TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-whole-package-sql-kernel.test.ts:33:240)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: must not query
+        at Object.query (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-whole-package-sql-kernel.test.ts:33:152)
+        at role (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tools/unified-import/whole-package-sql-kernel.ts:15:87)
+        at Object.lockAndInspect (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tools/unified-import/whole-package-sql-kernel.ts:23:195)
+        at file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-whole-package-sql-kernel.test.ts:33:267
+        at waitForActual (node:assert:632:21)
+        at strict.rejects (node:assert:769:31)
+        at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-whole-package-sql-kernel.test.ts:33:253)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    expected: /EXPLICIT_ZERO_APPROVAL_BINDING_INVALID/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

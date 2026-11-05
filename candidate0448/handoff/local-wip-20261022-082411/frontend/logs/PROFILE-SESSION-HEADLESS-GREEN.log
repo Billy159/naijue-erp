@@ -1,0 +1,14 @@
+✔ profile session is inert; invalid literals and unchanged profile have no owner/IO side effects (0.708209ms)
+✔ navigate false preserves exact old app/transport and delegates both dirty/uncertain decisions (0.226541ms)
+✔ revoke during pending switch invalidates generation and cannot be silently ignored (0.141375ms)
+✔ dispose during pending switch prevents every late remount and releases only its owner (0.082ms)
+✔ revoke cancels in-flight enter; concurrent enter/switch reject without replacing ownership (0.082125ms)
+✔ newer revoke owns completion; older revoke and disposal cannot restore readiness (0.088ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76.80125

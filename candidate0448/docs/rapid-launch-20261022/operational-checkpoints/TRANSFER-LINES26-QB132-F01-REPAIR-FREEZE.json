@@ -1,0 +1,33 @@
+{
+  "atUtc": "2026-10-22T23:29:41.148579+00:00",
+  "status": "C_FIXED_K_F01_REPAIR_PENDING_INDEPENDENT_QB_ONLY",
+  "sourceConsumer": "34afa1dba210e51a9c882f16270ed3e42abc9716",
+  "newKVersionOnly": true,
+  "refs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/QB132-F01-fix1/prepare-once.mjs",
+      "bytes": 32296,
+      "sha256": "540daece1d8bd59305e2e87a5673b30f7f0168b61a2894bda56b9d0d2fbea03f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/QB132-F01-fix1/RUNTIME-CLOSURE.json",
+      "bytes": 22201,
+      "sha256": "a40dc0e16d606921ff68b3656f8edfdeae18576d922f508ddb6228da85952427"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/QB132-F01-fix1/RESULT.json",
+      "bytes": 7432,
+      "sha256": "41f2e70e5891a2a434152a7fbfa4639ead34127f89e30400a7290cbb3d66b8d3"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/QB132-F01-fix1/WINDOW-V2-REQUIREMENTS.json",
+      "bytes": 3662,
+      "sha256": "9fd634ea9369d87f5af004f348d7584f9b635aeb251d7bc66f52acd287e9f86e"
+    }
+  ],
+  "oldNeedFixRetained": true,
+  "physicalWindowSigned": false,
+  "originalBusinessSourceRead": false,
+  "scope": "Only QB132F01 runtime transitive closure/version; oldconsumer6 and datawindow not repeated",
+  "next": "QB only affectedclosure drift/import/version checks; C later one V2 physical preparation if accepted"
+}

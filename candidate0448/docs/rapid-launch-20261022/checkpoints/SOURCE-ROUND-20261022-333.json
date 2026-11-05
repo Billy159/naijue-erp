@@ -1,0 +1,31 @@
+{
+  "atUtc": "2026-10-24T14:46:44.922027+00:00",
+  "parent": "a7b1f23b256804f9a9e06cdbc0c4784e91997384",
+  "taskId": "D1_CURRENT_FORM_GLOBAL_INJOB_STAFF_REFERENCE",
+  "files": [
+    {
+      "path": "packages/application/src/current-form-ports.ts",
+      "bytes": 7664,
+      "sha256": "91f2bbd03a9688d8ec9eb5af589458db543705fb5bbbf72d9c24c9288094927c",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/current-form-validation.ts",
+      "bytes": 6988,
+      "sha256": "c156fd90c5f3319997fe19ae2bd2e16cb74958bbffc61d0e72492828183973e1",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/current-form-salesperson-global-reference.test.ts",
+      "bytes": 7201,
+      "sha256": "4fadfce246bfb6e18dfbeda17d93733c6665cad91b6eebdf0f8058bd466b8373",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/CURRENT-FORM-GLOBAL-STAFF-REFERENCE-v1.json",
+  "ownerReceiptBytes": 3968,
+  "ownerReceiptSha256": "6343050c55b7381fdfd7a03876256644e2b5e1f92263961efec428ac6155dfe8",
+  "stage": "SOURCE_TARGETED_NEW_CHECKS_AND_SCOPED_TYPES_PASS_NOT_BROWSER_OR_PG",
+  "wholePageAccepted": false,
+  "deployed": false
+}

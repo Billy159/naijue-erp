@@ -1,0 +1,52 @@
+{
+  "atUtc": "2026-10-22T07:59:08.387284+00:00",
+  "parent": "fd3fd3f6223ddc0436b38add6e11d7b1968012f3",
+  "groups": [
+    {
+      "slice": "F1_CHUNK14_EXTERNAL_OWNER_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-14/DELIVERY.json",
+      "receiptSha256": "93a9ce1973451397734a679e36fff65d1d057ee701621e9969859ad342d30b19",
+      "files": [
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "sha256": "bdd4ef34f619e630be54d438a97997c7b7c12cd30b1282d793df54265661337d",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "F2_MEDIA_READ",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-MEDIA-READ-DELIVERY-v1.json",
+      "receiptSha256": "5c540029cfbf9d9ef151e86ace63f98eb4ec8dc9801d5e7107220512eff78252",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-contracts.ts",
+          "sha256": "b08047990a56b74e4bbad97297a540c2be32a4c59d976691e8088fc6a5286df0",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-maintenance-http-client.ts",
+          "sha256": "417807720e8930b0d438a54a5e46457748032f64164c8933d7e5f926111ec41f",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-media.tsx",
+          "sha256": "adb312e326efbeee8bfce029e230c46450bac3fb85660469fbb11f37a14dd56f",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-editor.tsx",
+          "sha256": "5ec5c62992e542dd41e3a76013baacafe5bfda15e5a6d7ae8e0cbc0b77dd38d6",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "sha256": "8d5a36887810847aa0e67116707f67f67d3b976e1c50b012f5d15353b19f8063",
+          "owner": "F2"
+        }
+      ]
+    }
+  ],
+  "fileCount": 6,
+  "scope": "Source ready only; targeted QF/browser/runtime still pending"
+}

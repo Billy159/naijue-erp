@@ -1,0 +1,60 @@
+{
+  "atUtc": "2026-10-23T09:18:10.686099+00:00",
+  "parent": "bc4b70172e03cdb819ab49f32a1868febe8d1750",
+  "taskId": "F01_F02_WHOLE77_SALE_AND_DOC156_ROW_SOURCE",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "owner": "F1",
+      "beforeSha256": "8101a9e985ef58d12af953d5471dbadfa15fe28a209f7f1a0955a3a2f7b8af9d",
+      "bytes": 49033,
+      "sha256": "902b1c480e7e7645c480d8a03c31a2245b609c49b35ee6ed154295795c65ed2b"
+    },
+    {
+      "path": "apps/web/src/sales/document-presentation.tsx",
+      "owner": "F1",
+      "beforeSha256": "71481251cab48374ff487d4553a5ae42e76de9f8c364ad86be65ff511c03c2db",
+      "bytes": 18491,
+      "sha256": "071d7ca1b43222d127e4e601cf3ab4f4a78086c3cbdc7f8c47ca6d8e8d18259f"
+    },
+    {
+      "path": "apps/web/src/components/standard-overlay.css",
+      "owner": "F1",
+      "beforeSha256": "6b2fef9317c8eebffca44571ff9018d691b4250ae1b0afdd59d3234f8169f6a8",
+      "bytes": 8835,
+      "sha256": "d8230741c6358de7aafe750bac99041203a56ecccdd1ff879d91c69f0a2d8035"
+    },
+    {
+      "path": "apps/web/src/sales/detail.css",
+      "owner": "F1",
+      "beforeSha256": "6cd092ff7f8a7f36383a0a5bdc438e638a65254c2d8f85247de64cb8103f0a37",
+      "bytes": 35469,
+      "sha256": "3a29f14916fb7d2cc592f18a021b5c0ff6c550a980de5cbfaabced6327829efa"
+    },
+    {
+      "path": "apps/web/src/transfers/detail.css",
+      "owner": "F1",
+      "beforeSha256": "d0f9bf4e37fbc9fc4dfeca4bb9aa43d3ec3d091a8a0e001203d277cb26b14017",
+      "bytes": 13362,
+      "sha256": "7e40b911ae44e126aac13ddfcd3f7fca6507ddd50cacc3df6fdd5ee4f9b85f2d"
+    }
+  ],
+  "scope": "Complete frozen Demo SALE page header/type menu/inline payment/continuous lines/summary/source zero+leave layers wired to current native owner; exact T02 finalcascade removes erroneous all-td48 override preserving base36/draft48. Other C156 released4 retained.",
+  "findings": [
+    "DOC-147-SALE-TYPE-SOURCE",
+    "DOC-147-SALE-PAYMENT-SOURCE",
+    "DOC-156-T02-FILLED-ROW-SOURCE"
+  ],
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F1/chunk-77/SALE-AND-ROW-DELIVERY.json",
+  "ownerReceiptSha256": "efaf9295946f1609459d53176be0f0e3d8deb7bf63d316abec42435ee5ceace3",
+  "checksAdopted": {
+    "stage2": "sale-stage2-2.log exit0 after waiting for existing Portal readiness; earlier pointer-not-ready log retained, no production source change to evade",
+    "strictTypes": "sale-types-1.log exit0/no diagnostics",
+    "css": "sale-css-row-1.log exit0/twoCSS0warning",
+    "old11combinations": "Original document-pages-4 effective tests reused, no repeated old48/backend"
+  },
+  "notTested": [
+    "New fixed browser whole page/type menu measured geometry/row boxes/focus/real save-review/actualPG/representative performance/production deployment."
+  ],
+  "next": "C original one complete candidate then QF only new whole SALE/T02 and affected shared native overlay consumers; no CSS-only build or repeated previous passed same scopes."
+}

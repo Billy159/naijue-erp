@@ -1,0 +1,46 @@
+✔ V2 compiles exact historical declaration with raw audit sidecar and no inserted fit segment (73.935115ms)
+✔ V1 declaration/default compiler request objects and hashes remain unchanged (38.270911ms)
+✔ changed sidecar alters deterministic V2 record/program hashes but never V1 request (45.481679ms)
+✔ unknown fields, wrong product identity/source, scheme and coordinate/source conflicts reject (107.348574ms)
+✔ hash mismatch and duplicate JSON keys fail closed before accepting sidecar (4.484365ms)
+✔ complete distinct V2 request carries sidecar and original wire row, including receipt hash input (13.267155ms)
+✔ same logical V2 request key survives changed declaration, but whole request digest conflicts (28.131712ms)
+✔ existing barcode owned by another scheme rejects instead of rebinding (22.679281ms)
+✔ source refs retain exact coordinate rows; size code alone never resolves a different ID (17.139673ms)
+✔ accessor-swapped base, nested source refs, bytes, digest and admin reject without invoking getters (16.155886ms)
+✔ proxy and shared byte storage reject before traps or mutable-byte verification (5.356004ms)
+✔ exact byte transport preserves original noncanonical JSON bytes as immutable bytea hex (19.110735ms)
+✔ caller mutation after transport creation cannot change owned bytes/program; hash drift rejects (25.982793ms)
+✔ transport rejects shared bytes and accessors before invocation, and preserves existing compiler output (39.330952ms)
+✔ package-known disabled same-coordinate barcode rejects in parser/compiler/transport without restoration (28.609712ms)
+✔ package-known enabled exact existing coordinate remains accepted, without asserting live DB state (19.247963ms)
+✖ future SKU declaration rejects a size outside the product group even with valid pinned source refs and equal code (137.326864ms)
+✔ future SKU declaration accepts exact product group membership without inventing a SKU (163.706709ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 17
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1108.917384
+
+✖ failing tests:
+
+test at tests/unified-import-barcode-v2.test.ts:46:1
+✖ future SKU declaration rejects a size outside the product group even with valid pinned source refs and equal code (137.326864ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-import-barcode-v2.test.ts:50:175)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /COORDINATE_SIZE_GROUP/,
+    operator: 'throws',
+    diff: 'simple'
+  }

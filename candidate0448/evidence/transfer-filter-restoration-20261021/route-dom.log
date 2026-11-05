@@ -1,0 +1,16 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 1: real React StrictMode performs one route-activation list request; pinned Arco date/multi controls and exact frozen final columns; no candidate/detail/style prefetch.
+PASS DOM 2: draft/reset are inert; exact server paging; failures retain identified prior executed page and explicit retry.
+PASS DOM 3: action-only styled full-page detail; canonical identity matrix/full FIT/size names; legal blank vs nonexistent SKU; lazy saved snapshots; disabled mutations/product; return retains exact list scroll/focus without refetch.
+PASS DOM 4: cancel/reopen/return abort reads and reject late ignored-signal details without reviving targets.
+PASS DOM 5: action-only candidate read, exact matched/selected toolbar and visible all-check projection; no paging footer; incomplete all-minus is refused and repeated bottom scrolls request one next 20-row page.
+PASS DOM 6: same-account permission replacement clears list, draft/reference labels and pending candidate lifecycle.
+PASS DOM 7: StrictMode detail deep link has no hidden-list fetch; return triggers first list; 403 destroys old route facts immediately.
+PASS DOM 8: adversarial 2,000-row × 200-size native document never materializes a Cartesian grid; visible actual/saved rows and full-size pages stay bounded and complete through paging.
+PASS DOM 9: complete product capability is action-only; pending CSS has no unstyled drawer/data read; immediate close rejects late readiness; reopen reuses shared StrictMode-safe drawer with basics-only data and focus return.
+PASS DOM 10: style failure is honest/retryable with no product read; product 403 immediately invalidates transfer/list/detail/product facts.
+PASS DOM 11: closing during detail CSS load prevents late detail reads; identity revocation during product CSS load prevents both late drawer mount and product data reads.
+All 11 synthetic React/JSDOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.

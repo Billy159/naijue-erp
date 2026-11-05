@@ -1,0 +1,13 @@
+✔ historical hall observation is a separate trusted resolver, never package self-attestation or a source rewrite (6763.683621ms)
+(node:13) Warning: Closing file descriptor 18 on garbage collection
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13) [DEP0137] DeprecationWarning: Closing a FileHandle object on garbage collection is deprecated. Please close FileHandle objects explicitly using FileHandle.prototype.close(). In the future, an error will be thrown if a file descriptor is closed during garbage collection.
+✔ authenticated blank original sales hall reaches derived typed field while both original source copies remain blank (17914.938493ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25049.859761

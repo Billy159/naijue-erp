@@ -1,0 +1,109 @@
+{
+  "status": "PASS",
+  "commit": "7c9ec3cc17ac4f89d8152d9317558c7cd8afb383",
+  "currentHeadAtProof": "7c9ec3cc17ac4f89d8152d9317558c7cd8afb383",
+  "buildExitCode": 0,
+  "smokeExitCode": 0,
+  "file": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/three-core-pages-synthetic-test-only-7c9ec3cc17ac.html",
+  "bytes": 1387214,
+  "sha256": "90b4a11a14f4b12bae564424435aab34da4767de574a027992fb802ba68efb1a",
+  "sourceSnapshotSha256": "510c09d55047736d11b0745bddb4bfb552f23c80e3cae193070e50858a98f1dc",
+  "consumedSourceInputs": 83,
+  "productionSourceInputs": 76,
+  "previewSourceInputs": 7,
+  "allConsumedInputsMatchCurrentAndExactCommit": true,
+  "rootFrozenSourceManifest": {
+    "path": "evidence/demo-restoration-checkpoint-20261021/source-before.sha256",
+    "sha256": "fdc07bfcb8bc857f8081f12bc57b0e1047290f16ade4676d0387dc91a4c7431d",
+    "overlappingConsumedInputsMatched": 24
+  },
+  "dependencyDeclarationsMatchCurrentAndCommit": true,
+  "smokeGroups": [
+    "built artifact: actual shared menu, exactly three enabled routes, truthful test notice, no initial/idle provider reads",
+    "actual pagination action: no initialized Arco/native select before focus/open; real Arco opens100/200/500 with configured150px popup, inline offline styles, pre-query selection performs no read",
+    "actual default FIT display: two exact read-only warehouse aggregates, merged cells unavailable; show FIT restores four original rows/negative stock, hide FIT returns the same totals without another read",
+    "actual inventory drawer: target-only basics, source three-section color/size-group/FIT specs instead of extra SKU table, truthful images and close cleanup",
+    "actual sales query/full-page readonly detail: inline test-only CSS readiness, no modal, exact synthetic sale+return, one target per action, Back during pending read cannot revive detail, list preserved without refetch",
+    "actual transfer warehouse action: finite two-warehouse toolbar and all-selected checkboxes, one bounded read only on open, no manual paging footer or background/list read on close",
+    "actual transfer route/query/full-page detail: native sparse matrix, current FIT/full size facts, blank vs unsupported cells, saved snapshots, action-only shared drawer, back clears detail without list refetch",
+    "actual artifact route/page/back/interruption cleanup: fresh scopes, no stale results or late detail revival, no external resource/network request or runtime error"
+  ],
+  "observations": [
+    {
+      "action": "inventory-page-size",
+      "realArcoAfterFirstFocusOpen": true,
+      "options": [
+        "100款/页",
+        "200款/页",
+        "500款/页"
+      ],
+      "configuredPopupWidth": "150px",
+      "selectedBeforeQuery": 200,
+      "businessReadsBeforeQuery": 0,
+      "inlineStyleReadiness": true
+    },
+    {
+      "action": "inventory-fit-display",
+      "defaultRows": 2,
+      "hiddenFitIdentity": null,
+      "exactProjectedQuantities": [
+        [
+          "1",
+          "0",
+          "14"
+        ],
+        [
+          "6",
+          "0",
+          "14"
+        ]
+      ],
+      "mergedSourceCount": 2,
+      "mergedCellsDisabled": true,
+      "shownFitRows": 4,
+      "additionalReads": 0
+    },
+    {
+      "action": "transfer-warehouse-popup",
+      "finiteFixtureWarehouses": 2,
+      "allAndVisibleCandidatesChecked": 3,
+      "matched": 2,
+      "selected": 2,
+      "candidateReads": 1,
+      "listReadsWhileOpeningClosing": 0,
+      "manualPagingFooter": false
+    }
+  ],
+  "externalResourceRequests": 0,
+  "networkAttempts": 0,
+  "runtimeErrors": 0,
+  "previousDeliveredHtmlPreserved": [
+    {
+      "file": "apps/web/preview-core-pages/artifacts/three-core-pages-synthetic-test-only-38a1a9d00ce5.html",
+      "sha256": "e24befa91f2909a69c386a183be2dd252a8d90f9a5cce8a7cafb862489084374"
+    },
+    {
+      "file": "apps/web/preview-core-pages/artifacts/bc87b5bed2fb/three-core-pages-synthetic-test-only-bc87b5bed2fb.html",
+      "sha256": "b058a56e353628bfaca294a608a1248d1b74ff4402d1b70bda70f6bd7c92baf5"
+    }
+  ],
+  "fullLogs": [
+    {
+      "file": "build.log",
+      "sha256": "58ba67644d55485893b604a0023ab8abe4418548018902056183130357e241d0",
+      "bytes": 555
+    },
+    {
+      "file": "dom-smoke.log",
+      "sha256": "5e71ae725402449d76ecb7a2ffe55324711ac577f00a997c9a93239241498639",
+      "bytes": 1900
+    }
+  ],
+  "fits262144ByteEmbedLimit": false,
+  "fits10485760ByteReferenceLimit": true,
+  "limits": [
+    "Offline synthetic all-in-one derivative with explicit inline action CSS readiness, not production code/CSS lazy-network proof.",
+    "Actual bundled-code JSDOM interactions only: no real browser, screenshot/computed-layout/pixel, performance, real-data or deployment acceptance.",
+    "No source edits, TypeScript, upload, listener, PostgreSQL, install, commit or silent rebuild by this task."
+  ]
+}

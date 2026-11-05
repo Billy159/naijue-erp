@@ -1,0 +1,71 @@
+{
+  "atUtc": "2026-10-22T08:17:02.568212+00:00",
+  "parent": "91a6687b841e199c31de70d7780caa451616529a",
+  "groups": [
+    {
+      "slice": "F3_W8_STAFF_ACCOUNT_LEAF",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/F05-W8-WRITE-v1-RESULT.json",
+      "receiptSha256": "8c251f11acb2cc0ccb3cadbc85f90b8c4b3d579b26900ef971f829596c069b8a",
+      "files": [
+        {
+          "path": "apps/web/src/staff-settings/contracts.ts",
+          "sha256": "f43a69cfaa18202cf66f069d3a961812ed268cc843cbcef0a737600f169f0189",
+          "bytes": 5564,
+          "beforeSha256": "6177732fb2725634be85cd44df8057e70c7855521554eee6b62475409eb8a68c",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/controller.ts",
+          "sha256": "46cf3c96aee767e5a8aac0df96132ae2391342a4af4c0c7b4c68089db920bd09",
+          "bytes": 17143,
+          "beforeSha256": "ba7fe83e4bc42d273c70a717053ef886e4565c6013b0988a9e3efbc4fe020e69",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/controller.test.ts",
+          "sha256": "7490e9e36415ce6b7676e5236522483debb1b3afe49e630ae0875ddee6e8d797",
+          "bytes": 16137,
+          "beforeSha256": "6635bd6e078d8e83166ea381e321b24c1bdad8534deddf651f54d3bb19b7c89e",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/http-client.ts",
+          "sha256": "d5c2323b6bf4d85f5cd4c9cef35a18892a9ec9946fb793986120e4bb5a8166b9",
+          "bytes": 14598,
+          "beforeSha256": "8bcacd341bf2a5dd7134605a34b6a6e3226261b7865ae03e1c69e2a883de9c45",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/index.ts",
+          "sha256": "e62690dfd7c7c0581aa8d49939b7dfcc91c3a69904a43ef150bb12d5b5ff51e6",
+          "bytes": 820,
+          "beforeSha256": "eb7aa72476317b4a2dd72fc42d6c23b3f9b64dcefc57257755135390d664af9e",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-form.tsx",
+          "sha256": "537a45ef987c890f3cc224e40b96e0cad6ee87c1bd2ef2293416fb7ded2dec09",
+          "bytes": 10354,
+          "beforeSha256": "a5ee7c2b7b354098ad479a5de6b0e8951f4ef921677ee6f964dc49905bcb4a4a",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-page.tsx",
+          "sha256": "aca2530e924670876c66379fec78048da41c83d7a7e64d1ccc3a6f90bee15f0e",
+          "bytes": 13122,
+          "beforeSha256": "b4fbfbefb2969f9444d2306d2301c6868176f6c974fd191592af4e0ba7148fef",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/response-validation.ts",
+          "sha256": "995921228693847971b821b5aa240bc0f16bac5d085701179e3b6e7426803cca",
+          "bytes": 10506,
+          "beforeSha256": "f9d6023655eaad506cd54bc793d6f239d223b4e3a2d87660414d97cbb0685808",
+          "owner": "F3"
+        }
+      ]
+    }
+  ],
+  "fileCount": 8,
+  "scope": "leaf source ready; QF and root actual integration pending; actual writes CLOSED"
+}

@@ -1,0 +1,15 @@
+{
+  "status": "HUMAN_CONFIRMED_SOURCE_AND_WRITE_CONTRACT_ONLY",
+  "source": "User reply to request_user_input_async call_4cfb266feffe4bdfa3b0606ab1f1ab27, question0, 2026-11-01 Asia/Shanghai",
+  "answer": "确认本补充合同与源码修订",
+  "specification": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/HISTORY-DRAFT-TRANSFER-EXACT-SUPPLEMENT-20261101.md",
+  "specificationSha256": "ce965aea06e0f1ea08f9b185fd994554cd1f36dfe799eb8b5a3886eefa0b5ffc",
+  "scope": "Only exact approved DRAFT/EXCLUDED historical-transfer note and effective lineSet source/SQL-contract/readprojection successor. No new table/column/ACL. Original identity,version,original-key recovery,source preservation,rollback and zero inventory effect retained.",
+  "notAuthorized": [
+    "Actual database installation or change",
+    "Permission grant",
+    "QA178 window03 execution",
+    "Production or public deployment"
+  ],
+  "models": "gpt-6.1-sol/medium; Fast switch unavailable UNVERIFIED"
+}

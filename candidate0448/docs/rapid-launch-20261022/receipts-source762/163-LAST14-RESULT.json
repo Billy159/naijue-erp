@@ -1,0 +1,286 @@
+{
+  "status": "COMPLETED_LAST14_ALL_BOOLEANS_READONLY_WITH_EXCLUDED_GAPS",
+  "jobId": "t45-source158-last14-package-metadata-readonly-20261027-163",
+  "terminal": {
+    "jobId": "t45-source158-last14-package-metadata-readonly-20261027-163",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-5910ae1a75aa",
+    "atUTC": "2026-10-27T08:59:34.242826+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.06767859682440758,
+    "exports": [
+      "last14-metadata-result.json",
+      "package-metadata-copy-249.json"
+    ],
+    "finishedAtUTC": "2026-10-27T08:59:34.347028+00:00"
+  },
+  "actual": {
+    "automaticReplay": false,
+    "checks": [
+      {
+        "expectedSizeMatch": true,
+        "index": 118,
+        "lengthMatch": true,
+        "nonSymlink": true,
+        "pathClass": "CURRENT158_PRIVATE",
+        "regularFile": true,
+        "role": "REVIEW_MODULE_CURRENT",
+        "sequence": 250,
+        "shaMatch": true,
+        "sourceCallOrdinal": 361,
+        "statMatch": true,
+        "withinSmallCap": true
+      },
+      {
+        "expectedSizeMatch": null,
+        "failureCategory": "MISSING_OR_DISAPPEARED",
+        "index": 119,
+        "lengthMatch": null,
+        "nonSymlink": null,
+        "pathClass": "OLD148_BASELINE_CODE",
+        "regularFile": null,
+        "role": "REVIEW_MODULE_BASELINE",
+        "sequence": 251,
+        "shaMatch": null,
+        "sourceCallOrdinal": 362,
+        "statMatch": null,
+        "withinSmallCap": null
+      },
+      {
+        "expectedSizeMatch": true,
+        "index": 119,
+        "lengthMatch": true,
+        "nonSymlink": true,
+        "pathClass": "CURRENT158_PRIVATE",
+        "regularFile": true,
+        "role": "REVIEW_MODULE_CURRENT",
+        "sequence": 252,
+        "shaMatch": true,
+        "sourceCallOrdinal": 363,
+        "statMatch": true,
+        "withinSmallCap": true
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 20
+        },
+        "index": null,
+        "pathClass": "OLD146_HELPER",
+        "role": "PREFLIGHT_PRODUCTS_CODE_HELPER",
+        "sequence": 253,
+        "sourceCallOrdinal": 365
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 20
+        },
+        "index": null,
+        "pathClass": "OLD146_HELPER",
+        "role": "PREFLIGHT_SKUS_CODE_HELPER",
+        "sequence": 254,
+        "sourceCallOrdinal": 366
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 20
+        },
+        "index": null,
+        "pathClass": "OLD146_HELPER",
+        "role": "PREFLIGHT_BARCODES_CODE_HELPER",
+        "sequence": 255,
+        "sourceCallOrdinal": 367
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 20
+        },
+        "index": null,
+        "pathClass": "OLD146_HELPER",
+        "role": "PREFLIGHT_STOCK_CONTRIBUTORS_CODE_HELPER",
+        "sequence": 256,
+        "sourceCallOrdinal": 368
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 14
+        },
+        "index": null,
+        "pathClass": "OTHER_REGISTERED_OLD_PATH",
+        "role": "PREFLIGHT_HEADERS_salesWindow",
+        "sequence": 257,
+        "sourceCallOrdinal": 369
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 24
+        },
+        "index": null,
+        "pathClass": "OTHER_REGISTERED_OLD_PATH",
+        "role": "PREFLIGHT_HEADERS_closure",
+        "sequence": 258,
+        "sourceCallOrdinal": 370
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 18
+        },
+        "index": null,
+        "pathClass": "OTHER_REGISTERED_OLD_PATH",
+        "role": "PREFLIGHT_HEADERS_transferWindow",
+        "sequence": 259,
+        "sourceCallOrdinal": 371
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 22
+        },
+        "index": null,
+        "pathClass": "OTHER_REGISTERED_OLD_PATH",
+        "role": "PREFLIGHT_SALES_DETAILS_transport",
+        "sequence": 260,
+        "sourceCallOrdinal": 372
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 16
+        },
+        "index": null,
+        "pathClass": "OTHER_REGISTERED_OLD_PATH",
+        "role": "PREFLIGHT_SALES_DETAILS_options",
+        "sequence": 261,
+        "sourceCallOrdinal": 373
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 22
+        },
+        "index": null,
+        "pathClass": "OTHER_REGISTERED_OLD_PATH",
+        "role": "PREFLIGHT_SETTLEMENTS_transport",
+        "sequence": 262,
+        "sourceCallOrdinal": 374
+      },
+      {
+        "classification": "ADOPTED_VALID_SAME_PATH_AND_PIN_NOT_READ",
+        "evidence": {
+          "originalJobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+          "sequence": 16
+        },
+        "index": null,
+        "pathClass": "OTHER_REGISTERED_OLD_PATH",
+        "role": "PREFLIGHT_SETTLEMENTS_options",
+        "sequence": 263,
+        "sourceCallOrdinal": 375
+      }
+    ],
+    "copyMetadata": [
+      {
+        "bytes": 18,
+        "file": "package-metadata-copy-249.json",
+        "sequence": 249,
+        "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae",
+        "sourceStat": {
+          "st_ctime_ns": 1793070997286947413,
+          "st_dev": 66304,
+          "st_ino": 17969709,
+          "st_mode": 33024,
+          "st_mtime_ns": 1793017856663187321,
+          "st_size": 18
+        },
+        "stableAcrossRead": true
+      }
+    ],
+    "currentReads": 3,
+    "databaseAccessed": false,
+    "finishedAtUtc": "2026-10-27T08:59:34.327260+00:00",
+    "jobId": "t45-source158-last14-package-metadata-readonly-20261027-163",
+    "knownPackage249Read": {
+      "expectedSizeMatch": false,
+      "failureCategory": "SIZE_LENGTH_STAT_OR_SHA_MISMATCH",
+      "index": 118,
+      "lengthMatch": false,
+      "nonSymlink": true,
+      "pathClass": "OLD148_BASELINE_CODE",
+      "regularFile": true,
+      "role": "REVIEW_MODULE_BASELINE",
+      "sequence": 249,
+      "shaMatch": false,
+      "sourceCallOrdinal": 360,
+      "statMatch": true,
+      "withinSmallCap": true
+    },
+    "mismatches": [
+      {
+        "expectedSizeMatch": null,
+        "failureCategory": "MISSING_OR_DISAPPEARED",
+        "index": 119,
+        "lengthMatch": null,
+        "nonSymlink": null,
+        "pathClass": "OLD148_BASELINE_CODE",
+        "regularFile": null,
+        "role": "REVIEW_MODULE_BASELINE",
+        "sequence": 251,
+        "shaMatch": null,
+        "sourceCallOrdinal": 362,
+        "statMatch": null,
+        "withinSmallCap": null
+      }
+    ],
+    "notChecked": "Business commands, CORE projection, DATA, EXPECTED, large sources, secrets, DB state, provider/runtime/MAIN execution. Known160 leaf and old passed files not reread. This diagnostic does not establish historical failure order or runtime/business PASS.",
+    "originalChanged": false,
+    "processedOriginalLast14": 14,
+    "providerExecuted": false,
+    "reusedPriorOrSameBatch": 11,
+    "status": "COMPLETED_LAST14_ALL_BOOLEANS_READONLY_WITH_EXCLUDED_GAPS"
+  },
+  "verifiedReadonlyPackageCopies": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source158-last14-package-metadata-readonly-20261027-163/readonly-package-evidence/package.old148.json",
+      "bytes": 18,
+      "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source158-last14-package-metadata-readonly-20261027-163/release-submission/release-receipts/t45-source158-last14-package-metadata-readonly-20261027-163/job.json",
+      "bytes": 570,
+      "sha256": "a23803d73443e74d03890adf3fe5c634f1ae55068099c832d189fede4d2c41e6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source158-last14-package-metadata-readonly-20261027-163/release-submission/release-receipts/t45-source158-last14-package-metadata-readonly-20261027-163/last14-metadata-result.json",
+      "bytes": 7422,
+      "sha256": "5eb790ddbad46a6261fbe62bfc9b4d813e079a75da3beee5c3dbc923188f7a9d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source158-last14-package-metadata-readonly-20261027-163/release-submission/release-receipts/t45-source158-last14-package-metadata-readonly-20261027-163/package-metadata-copy-249.json",
+      "bytes": 202,
+      "sha256": "c0420a1c555fccb070fe8de4f26b9385115b727669d408cf008fa3e31b5546a0"
+    }
+  ],
+  "limits": "Only last14 CODE/metadata booleans plus exactknown oldpackage and mismatched standard package-lock preservation. No DB/provider/install/original mutation or business files. Not runtime or business PASS."
+}

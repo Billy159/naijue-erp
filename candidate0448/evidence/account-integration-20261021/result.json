@@ -1,0 +1,29 @@
+{
+  "parentCommit": "3774ece71b49702cbf8b9f20aaa06f4cb31c6410",
+  "scope": "Account original method identity and current schema1-10 source integration; synthetic checks only",
+  "checks": {
+    "typecheck": 0,
+    "typecheck:web": 0,
+    "build": 0,
+    "smoke:build": 0,
+    "npm test": {
+      "exit": 0,
+      "passed": 1285,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "boundaries": [
+    "No genuine current schema1-10 PostgreSQL execution yet",
+    "No paused actual data reads or writes",
+    "No production migration/deployment",
+    "Root tests do not replace native form host/browser/business acceptance"
+  ],
+  "logs": {
+    "build.log": "3dc2ab7fa913d1caf485b837f2676f1823f40c652a5f458c2d9dfc82975f9202",
+    "root-tests.log": "25fd1b7c5632624194ba4a25a333e267be7eb7e2d6bf0a74fa277be5ab7358f6",
+    "smoke.log": "3c6177f21159100df5ea4e14abea08431c1fa82cb6e857f787f9ae0f8e37c2fb",
+    "typecheck-web.log": "64834d395014a802513677e602eb3e5f8c677681ebd0c39b4bca8423e14f6b01",
+    "typecheck.log": "e561ac8f15ef0e499f65a370384076ae5d946984114f3c437eaa7ad0f14b400d"
+  }
+}

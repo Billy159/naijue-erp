@@ -1,0 +1,28 @@
+✔ ordinary runtime settlement retention uses immutable business audit and returns before import-only checks (22.16651ms)
+✔ real installation and exact cohort include both business-runtime successors before hardening (24.349537ms)
+✔ published anchor SQL rejects altered trigger events, timing, WHEN and unique-index keys/predicate (11.255934ms)
+✔ anchor unique indexes reject custom opclass or collation semantics (5.871797ms)
+✔ same-name CHECK true cannot replace the exact reversal XOR check (2.206052ms)
+✔ fresh exact standard source intent is not a recycled retired identity (1.346994ms)
+✔ older source identities remain retired despite new matching intent (0.217313ms)
+✔ wrong intent/runtime insertion remains denied, retained same-owner UPSERT stays allowed (0.16231ms)
+✔ source45 narrows only the current-transaction prepared source-record predicate (2.017746ms)
+✔ one guarded routine successor, no identity/schema/access/data reset or blanket migration bypass (0.773533ms)
+✔ ordinary and streamed intake retain 22 zero source records without changing existing financial rows (167.809463ms)
+✔ zero archive rejects a nonzero source record in both paths (84.2167ms)
+✔ zero archive is only accepted on retained historical sales headers (83.493187ms)
+✔ ordinary and streaming plans retain archive in the exact request and plan hash (214.641491ms)
+✔ archive successor binds unchanged old source hash plus optional archive in one audit transaction (21.558473ms)
+✔ formal reader queries original sales id and returns source trace without funds actions (114.555924ms)
+✔ trace reader refuses missing, ambiguous or mismatched original sales proof (0.979308ms)
+✔ trace SQL requires importer role and preserves underlying original proof privacy (26.032009ms)
+✔ SQL zero source locators enforce the same int32 and nonempty bounded sheet contract as intake (12.043968ms)
+✔ SQL length guards count UTF16 units rather than accepting oversized astral text (3.64824ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 880.911432

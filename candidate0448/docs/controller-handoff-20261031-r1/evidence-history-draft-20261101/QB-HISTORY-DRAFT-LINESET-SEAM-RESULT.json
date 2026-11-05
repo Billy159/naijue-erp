@@ -1,0 +1,135 @@
+{
+  "taskID": "QB_HISTORY_DRAFT_LINESET_SEAM_20261101",
+  "result": "NEED_FIX",
+  "scope": "FIXED_499f9e52_D3_EXACT8_PLUS_F1_EXACT5_SOURCE_SEAM_ONLY",
+  "createdAt": "2026-10-31T18:49:04.788271+00:00",
+  "sourceCommit": "499f9e524824d1bdd620faca1bddbd6d82540b01",
+  "baseCommit": "259eaa22da1ad8d882267820e869b2f6c5eaa8d4",
+  "approval": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-db-upgrade-r1-preparation-20261031/docs/rapid-launch-20261022/HISTORY-DRAFT-TRANSFER-WRITE-APPROVAL-20261101.json",
+    "bytes": 1099,
+    "sha256": "75643b0091e99d080fc2e2ae1ec628256b089a99a68a20d47087a834814af64e"
+  },
+  "specification": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/HISTORY-DRAFT-TRANSFER-EXACT-SUPPLEMENT-20261101.md",
+    "bytes": 15666,
+    "sha256": "ce965aea06e0f1ea08f9b185fd994554cd1f36dfe799eb8b5a3886eefa0b5ffc"
+  },
+  "artifacts": [
+    {
+      "repositoryPath": "packages/application/src/history-revision-contracts.ts",
+      "bytes": 6045,
+      "sha256": "0152d91d74661c6ac2bb16170e6dbee60eec1ddcea9873385cb9ed47928703d2"
+    },
+    {
+      "repositoryPath": "packages/application/src/history-revision-service.ts",
+      "bytes": 20551,
+      "sha256": "bdec25f4dea6ba88b804ba9967fb05faffa83142841f4cd686a83b5420e907ee"
+    },
+    {
+      "repositoryPath": "packages/application/src/imported-history-query-ports.ts",
+      "bytes": 8259,
+      "sha256": "19813f6a99c5d36dc63e2875178bf496157a0a6fff42f9119ba7cd587abe649f"
+    },
+    {
+      "repositoryPath": "packages/application/src/imported-history-query-validation.ts",
+      "bytes": 27313,
+      "sha256": "1dfa695c4a80447dd9a602173f62b5257ede3c31c0c2047ea13da8bc5f05ad85"
+    },
+    {
+      "repositoryPath": "adapters/postgres/src/imported-history-query-reader.ts",
+      "bytes": 51008,
+      "sha256": "8c66a25d0cf375c86051812e73d3d05d0e3b15ee19754f9f926cdfc42f8e11a9"
+    },
+    {
+      "repositoryPath": "tests/history-revision.test.ts",
+      "bytes": 22686,
+      "sha256": "e460704af10f4f16a960a270c2237138beb80091e47e083a14463d19de756603"
+    },
+    {
+      "repositoryPath": "tests/imported-history-query.test.ts",
+      "bytes": 60864,
+      "sha256": "61e52da4d3dffa9c4a0f0dca8fa34559eadf9d98ced5cffb919cfbece16acd38"
+    },
+    {
+      "repositoryPath": "tests/support/imported-history-query-fixtures.ts",
+      "bytes": 4735,
+      "sha256": "a643f3008a9278c18049c2257cadc06498db85dbf0732a6012a0bc7d81b47640"
+    },
+    {
+      "repositoryPath": "apps/web/demo-replica/frontend/runtime/documents/history-transfer-model.ts",
+      "bytes": 12388,
+      "sha256": "24c48afd7cd976344a1d9e56b60dd4112186fbba53d5e2b1631948f0f1149bbc"
+    },
+    {
+      "repositoryPath": "apps/web/demo-replica/frontend/runtime/documents/transfers-history-page.tsx",
+      "bytes": 29806,
+      "sha256": "1b4ed3af803817acd0e469629661fc09948f3bff2e79509230fc5c7c569e1e12"
+    },
+    {
+      "repositoryPath": "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts",
+      "bytes": 20518,
+      "sha256": "e8c76ce4f7125f45388f827ed97baa2b2b8b294fbf928a9ab972c7a5a4ed55c6"
+    },
+    {
+      "repositoryPath": "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs",
+      "bytes": 12432,
+      "sha256": "8130736ce5031829d58bf5c567b9020ed2c7a00f2fcd7a0b6535a8bda0718771"
+    },
+    {
+      "repositoryPath": "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx",
+      "bytes": 32757,
+      "sha256": "67cbdcb1747bd0fcac6c081b492e1f851ee987c0da0f85ac829e2080e61dab5e"
+    }
+  ],
+  "adoptedEvidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/HISTORY-DRAFT-LINESET-20261101-01/RESULT.json",
+      "bytes": 5413,
+      "sha256": "cf3ce661dfdc45b404f79b63af6becceccffde446e8c9139234d1aee2efbc6c6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/F1/HISTORY-DRAFT-TRANSFER-FRONTEND-20261101-01/RESULT.json",
+      "bytes": 4498,
+      "sha256": "bfe09a564f0f2ac01c4d031d68977432942fa491acf6015d8c10b8000f44f212"
+    }
+  ],
+  "findings": [
+    {
+      "id": "HISTORY-LINESET-F01",
+      "priority": "P2",
+      "owner": "F1",
+      "file": "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts",
+      "line": 53,
+      "function": "historyEffectiveCatalogResponse SOURCE branch",
+      "problem": "SOURCE origin.sourceLineId is only UUID-validated, not checked equal to current line.id/item.lineId. Contradictory source identity accepted and retained by frontend V2 decoder; approved contract and D3 backend validator require equality.",
+      "reproduction": "Fixed source499f9e52 loaded entirely in memory via git show. Actual page lineId...001/sku...002 and V2 item same ids, SOURCE sourceLineId...999, sourceGroup/currentGroup UNKNOWN, empty groups: historyLineCatalogResponse returns accepted wrong sourceLineId...999. checkedHistoryRevisionDraftLineSet rejects corresponding mismatch.",
+      "impact": "Frontend source provenance validation diverges from backend contract and accepts invalid source lineage. No claim that original backend produces this contradiction or that PG writes fail.",
+      "minimalFix": "F1 require origin.sourceLineId===line.id (or item.lineId) in SOURCE branch before return.",
+      "minimalRetest": "Exact wrong-sourceLineId V2 rejection plus valid SOURCE/V2 case and original V1 compatibility; no full-site rerun."
+    }
+  ],
+  "verified": [
+    "All13 scoped fixed blobs match D3/F1 delivery pins. Read only git show fixed source; current D1 store/SQL WIP excluded. Other six changed controller doc leaves not technical review scope.",
+    "D3 parser preserves old signed10000 numeric branch and sparse header semantics, new note max10000/null/empty, complete lineSet1..200 positive int64, duplicate nonnull pointers rejected while duplicate SKU/null-new independent rows allowed. No client allocation or snapshot contract.",
+    "Planner requires locked-store resolved optional fourth argument; same-SKU kept line retains ID/origin, changed SKU/null requires fresh revision-origin line, removed/foreign current pointers reject. New marker keeps metadata/groups on numeric edits. DRAFT+EXCLUDED gating and empty effects retained.",
+    "Read projection note uses after_facts key presence rather than coalesce; original source line-count verification precedes effective-array pagination; V2 uses same all-array total/page/order and SOURCE original snapshots versus REVISION snapshots and compound revision/group snapshots.",
+    "F1 model sends ordered full lineSet with old pointer or null, no client-created effective UUID/snapshot; duplicate SKU lanes and composite revision/group sections retained, incomplete input remains in state. Original uncertain/key recovery owner unchanged.",
+    "TransferProducts LIVE body byte-identical to parent except export keyword. V1 decoder original branch retained; new V2 rejected for sales/APPROVED; one SOURCE identity validation omission listed above.",
+    "Reused owner new scenario/strict-import-closure/frontend14/runtime type evidence as scoped reports, not full root/backend PG proof. No old50/full-site rerun."
+  ],
+  "independentMinimalChecks": [
+    "Exact13 fixed-blob/delivery hash agreement and export-only LIVE byte comparison.",
+    "Complete200 null-new duplicateSKU parser accepted,201 rejected; malicious getter in new lineSet item rejects without executing getter.",
+    "D3 SOURCE wrong pointer rejected; fixed F1 same contradiction accepted, reproducing finding."
+  ],
+  "jointNotVerified": [
+    "D1 transactional allocator/native SKU/reference/soft-delete/publication validation and store optional-resolved argument integration",
+    "D1 new SQL four function bodies/current-facts/commit/CAS/audit/receipt/rollback/unknown-COMMIT recovery",
+    "C exact profile/probe/canonical metadata closure and installed schema capability",
+    "Actual PG/ACL/QA window/browser/build/production and full HISTORY SAVE/readback with zero inventory effects"
+  ],
+  "next": "Original F1 fix HISTORY-LINESET-F01 then QB only affected V2/V1 rejection case. Freeze final D1+D3+F1+C complete group for separately scoped joint checks; missing current D1 WIP is not recorded as actual PG failure.",
+  "executionAuthorized": false,
+  "actualModelAndFast": "UNVERIFIED"
+}

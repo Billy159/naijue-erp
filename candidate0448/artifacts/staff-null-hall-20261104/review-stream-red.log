@@ -1,0 +1,36 @@
+✔ approved exact historical departed staff admits null hall, not a general exception (2.152452ms)
+✔ missing, forged, tampered or unpinned approval cannot authorize a record (1.001519ms)
+✔ approval rejects duplicate IDs, keys and unsupported fields (0.511158ms)
+✔ approval rejects duplicate JSON keys and invalid UTF-8 even when digest is pinned (0.432231ms)
+✔ ordinary preflight admits only externally approved exact departed staff (56.60274ms)
+✔ stream relation check shares exact departed approval and rejects active or unapproved (11.030177ms)
+✔ whole compiler binds exact approval bytes in immutable initialization, without creating a login (55.681466ms)
+✔ full streaming preflight retains approval wire in its summary (88.544545ms)
+✖ ordinary and full stream reject approval evidence absent from current manifest (79.027155ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 564.833315
+
+✖ failing tests:
+
+test at tests/unified-historical-staff-hall-preflight.test.mjs:13:1
+✖ ordinary and full stream reject approval evidence absent from current manifest (79.027155ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-historical-staff-hall-preflight.test.mjs:13:1280)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,98 @@
+{
+  "reviewId": "QB468",
+  "task": "Capturedactual148 singleissuerleaf R1v20 privatepackage selection narrowtechnicalreview",
+  "decision": "PASS_TARGET_SPECIFIC_SOURCE_AND_PROTOCOL_SELECTION_ONLY_NOT_MATERIALIZATION_OR_DB_ADMISSION",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "actualCapturedOldRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-old148-single-code-leaf-readonly-20261027-160/readonly-code-evidence/native-import-accounting-capability.old148.ts",
+    "bytes": 78034,
+    "sha256": "247cea8edd239f0ef8eaf453546d7757b638d47b992240f2fe5145687bd9757d"
+  },
+  "currentSharedRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-import-accounting-capability.ts",
+    "bytes": 78829,
+    "sha256": "f5effdc774355c0e34f44f80c933cec349a86f6bd204ec3ddee04c45d73101ab"
+  },
+  "formal730ExportRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/source730-original-derivation-readonly-export-20261027-01/source/adapters/postgres/src/native-import-accounting-capability.ts",
+    "bytes": 78829,
+    "sha256": "f5effdc774355c0e34f44f80c933cec349a86f6bd204ec3ddee04c45d73101ab"
+  },
+  "actual160ReceiptRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-old148-single-code-leaf-readonly-20261027-160/RESULT.json",
+    "bytes": 3717,
+    "sha256": "ff5ab8c1e8ec77ba9f13bf76e8de98531bf020f0581329d8cf27673e2dbd21cf"
+  },
+  "d3ComparisonRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/SOURCE160-SINGLE-ISSUER-R1-V20-COMPARISON.json",
+    "bytes": 10766,
+    "sha256": "13afa9158c88466cfcd2b5ab33edf2d8703a37f9fea7719595607e6350337342"
+  },
+  "candidatePayloadRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/SOURCE160-R1-PRIVATE-ISSUER-SINGLE-LEAF.PAYLOAD.json",
+    "bytes": 80828,
+    "sha256": "c600378601c5fcc75cc56cea01ccc93c8c308ae6e6813080718353e1859f5a78"
+  },
+  "currentR1ReviewRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice464-r1-v20-current-runtime/CURRENT-R1-RUNTIME-REVIEW.json",
+    "bytes": 1113,
+    "sha256": "6e1cfa12c08ce434f9650a450f954d27492b318909bd6898136dd5f2ddbd2075"
+  },
+  "diffRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice468-actual148-issuer-r1-v20-private-selection/actual148-vs-formal730.diff",
+    "bytes": 4175,
+    "sha256": "4835166f043894edbe73538b06046eb55dd0f76f0d0857301d9cd74dc7fb7581"
+  },
+  "protocolHarnessRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice468-actual148-issuer-r1-v20-private-selection/verify-v20-issuer-equivalence.mjs",
+    "bytes": 4826,
+    "sha256": "7ec1462d6a343faf2f51fe96abdf1fbce59e9e8374a92ad1b0c564a285fb1e09"
+  },
+  "protocolResultRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice468-actual148-issuer-r1-v20-private-selection/TARGETED-PROTOCOL-RESULT.json",
+    "bytes": 2068,
+    "sha256": "24382d474befcea7ee2a57a851ece575c4034c7c1bdd503989f0760a0e8d3002"
+  },
+  "checks": [
+    "Actual160preservedoldleaf78034/247cea8e andformalGit730/current78829/f5effdc7 exactpinsmatched. CandidatepayloadcontentUTF8 exactlyequalscapturedoldbytes, notreconstructedsourceortruncatedversion. Independentfull2hunkdiff equalsD3reportdiff exactly/+795bytes.",
+    "DifferenceonlyB07v21-from-v16-v14 probeconstantaddition, admittedv21profile andconditional historyResponsible/probe selector. R1currentreview exactv20 yields effectiveValueDisambiguationfalse; old/new historyInsertIdentity/barcodeSchemeInitialization/historyResponsibletrue, bothselectsameNATIVE_RUNTIME26_V20_METADATA_PROBE. Remainingwholebody—includingWeakMapleases,targetidentity/role/session/catalog/sourceguard/purposeallowlist/cleanup—unchanged.",
+    "RuntimeV20metadataquery exportedold/current exactbyteequal confirmedbyimportedrealmodules. Protocolfakepool runsrealcreateNativeRuntime26Issuer forbothmodules withactual157metadatafixture+QB464localtestreview; allthreeIMPORT_STAGE/IMPORT_PRODUCT_SEASONS/IMPORT_PUBLISH pass onoriginalissuerleases; noPGconnection.",
+    "Forbothold/currentmodules,wrongdatabase/wrongsession/wrongcanonical/source_routines_matchfalse eachrejectedNATIVE_RUNTIME26_NOT_READY duringinitialconstructorleaseanddiscards/releasesit. Tenfiniteprotocolcasespassed; identitynotweakenedfortargetselection.",
+    "Firstharnessassumed3queriesbutrealconstructoreagerlyverifies/releasesoneleaseandnextpoolacquisitionverifiesagain, soactual5; correctedharnessaccountingtooriginaldocumentedflow, issuersourceunchanged. Bothmodules5queries/2releasespositiveand1/1negativeconsistent.",
+    "D1independentnarrowstaticopinionreceived corroboratessamepreciseV20selection; noadditionalD1orQBDB/wholebackendtests. Provider755/host749/467/458/461sourceand464metadata conclusionsreused."
+  ],
+  "privateCandidateBoundary": {
+    "allowedTarget": "erp_rewrite_20261022_r1/OID1027659/exactcurrentQB464V20reviewonly",
+    "relativePath": "adapters/postgres/src/native-import-accounting-capability.ts",
+    "requiredContent": {
+      "bytes": 78034,
+      "sha256": "247cea8edd239f0ef8eaf453546d7757b638d47b992240f2fe5145687bd9757d"
+    },
+    "provenance": "Capturedactual148leaf confirmedby160stablecopy; explicitlydifferentfromformalGit73078829/f5eff. Newpackageisreviewedextraissuerselection, notpureGit730/onlytwoConsumerchanges.",
+    "reviewEntry22": "UNCHANGED onlyrelativeexactcapturedactual148baseline/currentnewprivateleafwithsame78034/247c; accurateactualnewprivatepathsuppliedbyT45, notyetmaterializedbyQB.",
+    "protected": "Nooverwriteold148/current158/sharedR/B07; keepcurrentv21sharedissuer. NoSQL/table/field/sourceDATA/109key/target change.",
+    "otherConsumers": "Provider755131559/35137b9f andhost74940653/ed6ee18c remainexistingapprovedbytes; no re-audit orsourceedit."
+  },
+  "requiredNext": [
+    "T45alone materializesselectedbytes innewregisteredprivateR1packageleaf,0400/readbackbyteSHA, originalcapturedbaselinepath preserved andnewcurrentpathaccuratelyrecorded; Cindependentconsumerreview/extgrant pinupdatedtospecificallyadoptthisthirdidentitydifference.",
+    "KeepQB464profileV20/target/postmaster/canonicaland3purpose reviewexact; actualissueronoriginalpool muststillverifycurrentmetadata, no V21 B07reuseorprofilewildcard.",
+    "Remaining206necessarysmallrefROchecks notcompletebythisreview; first56samefrozenrefs mayreusebutunknownlocators/otherdifferences notassumedcompatible.",
+    "Originalv21full148evidence/original109uncommittedsuffix/realexecutiongrant andactualMAIN/PUBLISH/runtimeadmission remainexternalactualconditions."
+  ],
+  "notTested": [
+    "Newprivatecandidateactualmaterialization/hashreadback",
+    "Remaining206smallreferenceidentitychecks",
+    "Actualnewprivateissuer/PG/currentruntimeadmission",
+    "ActualMAIN/PUBLISH/businessrelease/performance"
+  ],
+  "sourceChangedByQB": false,
+  "old148Changed": false,
+  "sharedOrB07Changed": false,
+  "databaseOrRemoteAction": false,
+  "actualCandidateMaterialized": false,
+  "actualIssuerCreatedAgainstDB": false,
+  "actualMainOrPublish": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}

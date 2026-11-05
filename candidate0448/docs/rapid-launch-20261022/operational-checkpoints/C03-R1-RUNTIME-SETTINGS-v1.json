@@ -1,0 +1,36 @@
+{
+  "version": "C_R1_FINAL_RUNTIME_OPERATOR_SETTINGS_V1",
+  "atUtc": "2026-10-22T22:58:47.303409+00:00",
+  "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+  "scope": "Existing host configuration under current source contract, no schema/field/DDL or business write contract change; no capacity/30users/runtime/public acceptance implied",
+  "productionSource": "d3c2188a3cd6df472ce85d221fae575682ba7301",
+  "buildId": "r1-d3c2188-20261023-01",
+  "profile": "source-confirmed-native-exact26-r1-v1",
+  "documentCommands": "DISABLED",
+  "postgresFiniteSettings": {
+    "max": 4,
+    "maxPendingAcquisitions": 16,
+    "connectionTimeoutMillis": 5000,
+    "acquisitionTimeoutMillis": 5000,
+    "queryTimeoutMillis": 25000,
+    "statementTimeoutMillis": 20000,
+    "lockTimeoutMillis": 3000,
+    "idleInTransactionTimeoutMillis": 30000,
+    "idlePoolTimeoutMillis": 1000,
+    "disposeGraceMillis": 1000,
+    "disposeTimeoutMillis": 5000
+  },
+  "authentication": {
+    "sessionTtlSeconds": 28800,
+    "policy": "source-confirmed-v1",
+    "sourceBoundary": "packages/authentication/README.md explicitly requires host to choose session lifetime. C chooses8h operational setting, not claimed historical source value."
+  },
+  "credentialHandling": "Future actual server program RAM reuses exact C05 target only; config remains server-only600/nonroot appuid. No privatefilebody/hash in public artifacts.",
+  "runtimeReviewSha256": "359b2286d57069a787139b6b7f250d59338af80142809412d411f381e3c4ad2d",
+  "runtimeSettingsInstalled": false,
+  "dataReady": false,
+  "realAccountsInserted": 0,
+  "mainAuthorizedByThisRecord": false,
+  "publicSwitchAuthorizedByThisRecord": false,
+  "capacityMeasured": false
+}

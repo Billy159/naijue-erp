@@ -1,0 +1,36 @@
+✔ SALE proposal→native preparation→existing editor SAVE/null CAS; no snapshots/minimums or local IDs sent (54.497662ms)
+✔ canonical yuan intent does not infer absent price and discounts serialize one unambiguous rule (4.156925ms)
+✔ duplicate clicks/edit/reset/cancel/identity reject even abort-ignoring preparation responses (16.554859ms)
+✔ missing price proof/invalid native snapshot rejected, raw proposal retained and explicit retry possible (14.321557ms)
+✔ discount reference changes cannot silently change the price accepted on Save (4.04168ms)
+✔ uncertain SAVE retained by native workspace; no new prep or operation; same original receipt recovers (5.475163ms)
+✔ current403 invokes application access-failure hook; cross-identity composition rejected (7.847944ms)
+✔ preparation HTTP inert exact native endpoint and strict correlated result; forged facts never fetch (13.517294ms)
+✔ shared SALE UTF8 budgets accept 200 rows/escaped note and retain exact native SAVE payload; oversize never dispatches (48.877041ms)
+✔ resolved native editor discarded through another route cannot revive original proposal as a second NEW (6.96611ms)
+✔ native RETURN negative and EXCHANGE mixed signs use existing null-CAS SAVE without original-sale linkage (4.051674ms)
+✔ distinct SKU IDs with duplicate current coordinates cannot prepare or dispatch SAVE (1.120646ms)
+✔ EXCHANGE same SKU opposing different-price rows preserve order and independent IDs through prepare→SAVE (2.35304ms)
+✔ discount SAVE quotes round-trip exactly; legacy null and original keys remain unchanged and pricing errors are known rejections (6.206181ms)
+✔ legacy read-only create preparation rejects nullable intent explicitly without coercing unknown facts (1.244789ms)
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (7.801338ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (4.383874ms)
+✔ historical signed discount remains exact on memo save without invented allocation (1.40864ms)
+✔ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (32.147337ms)
+✔ approved historical discount ruling: economic edits keep original discount without guessed allocation (3.361572ms)
+✔ historical missing settlement is shown unknown, never as zero or settled (1.018362ms)
+✔ changed historical unknown pricing saves explicit-price draft without invented intent (3.190648ms)
+✔ real existing editor initializes signed unknown rows and sends economic SAVE through ordinary proposal command (22.362586ms)
+✔ real existing editor reopens all-positive origin and sends economic SAVE through ordinary proposal command (5.153222ms)
+✔ original signed-sale discount survives all-positive edit below retained discount (5.912988ms)
+✔ original signed-sale discount survives all-positive reopen below retained discount (2.739434ms)
+✔ authenticated detail origin permits reopening preserved discount larger than all-positive subtotal, wrong origin rejected (1.193259ms)
+✔ historical origin detail wire accepts exact server projection only and never grants runtime or altered-discount exceptions (1.290375ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 498.738666

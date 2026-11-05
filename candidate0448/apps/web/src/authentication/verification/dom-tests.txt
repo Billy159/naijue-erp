@@ -1,0 +1,8 @@
+PASS auth DOM: inert mount, actual invalid login click clears secrets without requests, explicit session verification, cancel, late-session suppression.
+PASS auth DOM: one explicit login, repeated submit deduplicated, immediate secret clearing and verified identity content.
+PASS auth DOM: actual invalid password click clears all secrets without requests; confirmation rejects mismatch; Escape clears secrets/restores focus; repeat submit deduplicates; success invalidates all scopes and demands fresh login.
+PASS auth DOM: close during password write cancels local wait, clears identity, ignores late success and reports uncertainty rather than confirmed change.
+PASS auth DOM: logout clears business content immediately; unconfirmed server failure is truthful and explicit retry completes logout.
+PASS auth DOM: session and login failures show safe errors; explicit retry requires password re-entry and never automatically repeats a write.
+PASS auth DOM: unmount clears detached password fields, cancels pending login and cannot resurrect identity.
+All 7 authentication DOM groups passed in jsdom. No actual accounts, login, browser/network service, screenshots, cookie-runtime proof or frozen-Demo pixel-parity claim.

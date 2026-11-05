@@ -1,0 +1,3 @@
+Leaf TypeScript check. No real PostgreSQL, server or registry invocation.
+Command: node node_modules/typescript/bin/tsc --noEmit -p evidence/sales-query-typecheck.json
+Exit code: 0

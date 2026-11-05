@@ -1,0 +1,159 @@
+{
+  "reviewed_at_utc": "2026-10-20T18:19:00Z",
+  "scope": "Independent final-cascade/source-structure review only; no implementation changes, real browser, screenshot or pixel-parity claim.",
+  "source_commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "decision": "source acceptance withheld pending R1-R5 resolution or explicit scoped exceptions",
+  "findings": [
+    {
+      "id": "R1",
+      "status": "open",
+      "severity": "medium",
+      "area": "sidebar",
+      "source": "frontend/interaction-common.css:1 (.sidebar-note,.proto-tag display:none!important)",
+      "rewrite": "apps/web/src/demo-presentation/frame.css:16; demo-frame.tsx:31",
+      "finding": "The restored invisible proto tag still reserves its text line and 4px/14px padding; the final frozen source removes the element from layout."
+    },
+    {
+      "id": "R2",
+      "status": "open",
+      "severity": "low",
+      "area": "matrix row geometry",
+      "source": "frontend/interaction-common.css:5; matrix-experiments.css:1",
+      "rewrite": "apps/web/src/inventory/inventory.css:56",
+      "finding": "Final source cell block padding is 4px after the interaction layer overrides the initial 5px; rewrite retains 5px 8px."
+    },
+    {
+      "id": "R3",
+      "status": "open",
+      "severity": "medium",
+      "area": "matrix fold controls",
+      "source": "frontend/interaction-common.css:1; inventory-refinement.css:69-70",
+      "rewrite": "apps/web/src/inventory/inventory.css:80-81",
+      "finding": "Final source fold control keeps min-height:28px even though the later height is 22px. Rewrite omits min-height and reduces the control to 22px."
+    },
+    {
+      "id": "R4",
+      "status": "open",
+      "severity": "low",
+      "area": "display settings footer",
+      "source": "frontend/inventory-workbench.js:7,71; styles.css:44,49; inventory-workbench.css:10",
+      "rewrite": "apps/web/src/inventory/inventory-page.tsx:89; demo-presentation/controls.css:4,8,10",
+      "finding": "Source defaults and close controls are btn ghost (neutral transparent controls). Rewrite makes defaults a blue 12px link and close a bordered secondary button."
+    },
+    {
+      "id": "R5",
+      "status": "open",
+      "severity": "medium",
+      "area": "display settings responsive placement",
+      "source": "frontend/inventory-workbench.js:64-65",
+      "rewrite": "apps/web/src/inventory/inventory.css:37; inventory-page.tsx:89",
+      "finding": "Source fixed popover clamps horizontal position, bounds height to available viewport space/450px, and flips above the trigger when needed. Rewrite is absolute below/right with overflow:hidden, no max-height or flip. Short-viewport clipping is a risk inferred from declarations, not a measured browser result."
+    }
+  ],
+  "checks": {
+    "frozen_manifest_files": 14,
+    "frozen_manifest_all_match": true,
+    "empty_svg_path_matches_installed_2_66_16": true,
+    "arco_license_byte_identical": true,
+    "portable_sha256": "87558aa86863a627af720d597070f96a5938bc1fc969d2b716a4a25964fd92f7",
+    "portable_bytes": 286687,
+    "page_cap_bytes": 262144,
+    "page_over_cap_bytes": 24543,
+    "page_embeddable": false,
+    "browser_probe_performed": false,
+    "heavy_suites_repeated": false
+  },
+  "manifest_sha256": "bf3d91f5abf114de20df9f211d92066cf617018e7ea75deb0f54f58a786791c4",
+  "manifest_files": [
+    {
+      "path": "apps/web/preview/main.tsx",
+      "sha256": "9febe9516b6404a554b16905a5248b1246d11795af8c2a0ad4f7466b4d01cc96"
+    },
+    {
+      "path": "apps/web/preview/shell.css",
+      "sha256": "ddafd719266a1f5e1783cb206fb8c2ce205efa90705b5b61b7fabc0240cc1f09"
+    },
+    {
+      "path": "apps/web/src/components/pagination.tsx",
+      "sha256": "e535ddd99d01eeb25493cb024ea3f1e8228e613d0db99a7af8bc81b444be748d"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/ARCO-LICENSE",
+      "sha256": "41f929ce996762fbbfc9760266c45558e9f48f6179b2c2149e6eca6d1efc9123"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/README.md",
+      "sha256": "60af74a0dabdf6eaa62530915f08c19cf804a6b6c38705af4764b9c00675a8dc"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/controls.css",
+      "sha256": "c63ed867feef12d4abdd686bd654be6463394f677a0e4f19d967426d427b354c"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+      "sha256": "341060e6e52571eb2323db841a239f12c6e65d3ea5c7c153e6e987f5974c9b45"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/frame.css",
+      "sha256": "849486d3c7e4fbdc7612e5067116b69ed6d8e11137a1cf6d555c54138d7b42f5"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/icons.tsx",
+      "sha256": "39f988ac49335c65a3be7587f129cf76a85546e001221ca921dc57d7d20a80d2"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/tests/run-source-structure.mjs",
+      "sha256": "dcb7d21e56b781f51ca4fe875c8c1599dfac0d72682ede857ac978f7e030394a"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/tokens.css",
+      "sha256": "8ba3b7e1c9133524295d562cc712662a1045bb0804e4e0c3e77df4e2f3455054"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-matrix.tsx",
+      "sha256": "ab2bcf4572ed0c02c3045d1fbe49955e7f695928cc1ac44b3cb4cd971d1fefd1"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-page.tsx",
+      "sha256": "38147f8aaf504dbe6d6c47296fc9f8cbbd309679d36065451ace42bb746c47fc"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "sha256": "b1b1624d042a7016430c0b533d3775e80fe9bcf903b975f510edf1253fc44c92"
+    }
+  ],
+  "reference_files": [
+    {
+      "path": "LOAD_ORDER.md",
+      "sha256": "a5806268ab952d3b498add7c7f0b80ea55d3a77c0cf43ba4743287f09cf8dff4"
+    },
+    {
+      "path": "LAYOUT_MAP.md",
+      "sha256": "9c7b971ced09870885a234ce0c9c921e6a8d4fd7fb246ef156424ea16f14129a"
+    },
+    {
+      "path": "frontend/interaction-common.css",
+      "sha256": "b293a8574187a2e92901389ede4a90da9c2b6eea941da2db62e0eac6a5584c81"
+    },
+    {
+      "path": "frontend/inventory-workbench.css",
+      "sha256": "150b34257f18bee7143c6261258560e2a8e02db6d05cfa1e50a82012e7eb9dca"
+    },
+    {
+      "path": "frontend/inventory-refinement.css",
+      "sha256": "d054a7f141d0421936f8969724a5398e4cf76e26db9aa64bc8727eea7fdefce1"
+    },
+    {
+      "path": "frontend/inventory-matrix-experiment.js",
+      "sha256": "7439eb810ac2da36dbe791b9eb37240a4bcf6654bec98dff5674168e6e68e7a5"
+    },
+    {
+      "path": "frontend/ui-tokens.css",
+      "sha256": "fdb91a2df6218a7a24081831cd4a104c2817fe9e399dcdf934273c1bb465979d"
+    },
+    {
+      "path": "frontend/inventory-workbench.js",
+      "sha256": "4f54830acd5c242cfed21a55334ed12043e5a7b92a375f0a1f1d7ee6e2f8e59e"
+    }
+  ]
+}

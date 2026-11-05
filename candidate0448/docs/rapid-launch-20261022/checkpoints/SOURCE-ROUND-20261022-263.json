@@ -1,0 +1,194 @@
+{
+  "atUtc": "2026-10-24T01:57:42.215887+00:00",
+  "parent": "de8edb2a3bec176c2ee3918303b2005b96757580",
+  "taskId": "STORE_MODULE_RETURN_CONTEXT_RETAINS_DRAFT_REEXECUTES_FACTS",
+  "files": [
+    {
+      "path": "apps/web/src/settings/stores/stores-page.tsx",
+      "bytes": 11351,
+      "sha256": "9d3ac91c404c09bc459404fb8a905320e3b41b43344beb2953e1a2b6e2fe1aeb",
+      "owner": "F3"
+    },
+    {
+      "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+      "bytes": 11167,
+      "sha256": "2ea23c37eeea8d3ce90c05c6d994cc23e838cecd9747a9affebe6c12556182b0",
+      "owner": "F3"
+    },
+    {
+      "path": "apps/web/src/settings/stores/maintenance-controller.ts",
+      "bytes": 17342,
+      "sha256": "46e2f24af57d3692dff5463eaf89be42745026ee4618ab7b7f367bd5d5f619c4",
+      "owner": "F3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-route-context-v1/RESULT.json",
+  "ownerReceiptSha256AtPin": "059f2c9c96d186865b4957089bd23a260d4f104b03108102aa32facf34d4f572",
+  "ownerDelivery": {
+    "task": "F3-F05-STORE-MODULE-CLOSURE-CONTEXT-V1",
+    "clientDate": "2026-10-24",
+    "createdAt": "2026-10-24T01:56:11.635497+00:00",
+    "status": "SOURCE_READY_FOR_C_FIXED_MODULE_DELTA_AND_QF2_ACTUAL_RETURN_CHECK",
+    "headObserved": "de8edb2a3bec176c2ee3918303b2005b96757580",
+    "files": [
+      {
+        "path": "apps/web/src/settings/stores/stores-page.tsx",
+        "beforeSha256": "3132190e9ab1889bf13852354a6e9c4de1298f201384224621688710fc7777e4",
+        "afterSha256": "9d3ac91c404c09bc459404fb8a905320e3b41b43344beb2953e1a2b6e2fe1aeb",
+        "bytes": 11351
+      },
+      {
+        "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+        "beforeSha256": "b4b953c0e24c4f0142be13c01d361557f5faa82e0d9e3d18d4d87891b0fd8973",
+        "afterSha256": "2ea23c37eeea8d3ce90c05c6d994cc23e838cecd9747a9affebe6c12556182b0",
+        "bytes": 11167
+      },
+      {
+        "path": "apps/web/src/settings/stores/maintenance-controller.ts",
+        "beforeSha256": "0e036f8f6102b7a08bc3a8e714bfa2fdd6d9c2db710c4f468a7eef0add8d35fd",
+        "afterSha256": "46e2f24af57d3692dff5463eaf89be42745026ee4618ab7b7f367bd5d5f619c4",
+        "bytes": 17342
+      }
+    ],
+    "adoptedMatrix": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/SITE-REUSE-REGISTER.json",
+      "updatedAt": "2026-10-24T01:38:44.376126+00:00",
+      "currentRuntimeMode": "SCOPED_RUNTIME_EVIDENCE_NO_SINGLE_GLOBAL_CANDIDATE",
+      "rows": [
+        {
+          "id": "B01",
+          "name": "营业厅",
+          "status": "PARTIAL_UI_CHECKED",
+          "sourceStatus": "BOUNDED_SOURCE_CHECKED"
+        },
+        {
+          "id": "B02",
+          "name": "仓库",
+          "status": "PARTIAL_UI_CHECKED",
+          "sourceStatus": "BOUNDED_SOURCE_CHECKED"
+        },
+        {
+          "id": "O-B01",
+          "name": "新增/编辑营业厅",
+          "status": "UI_DIFFERENCE",
+          "sourceStatus": "BOUNDED_SOURCE_CHECKED"
+        },
+        {
+          "id": "O-B02",
+          "name": "新增/编辑仓库",
+          "status": "UI_DIFFERENCE",
+          "sourceStatus": "BOUNDED_SOURCE_CHECKED"
+        }
+      ],
+      "fact": "Original104 matrix and original named-runtime receipts read only; no matrix statuses altered."
+    },
+    "adoptedActual": [
+      {
+        "scope": "Named240limitedonly, no rerun",
+        "source": "dc71344d4ee249b1299fae2b777fac67a2089b4a",
+        "build": "ui-preview-dc71344-01-build01",
+        "rowIds": [
+          "P16",
+          "B01",
+          "B02",
+          "O-B01",
+          "O-I07",
+          "O-I08",
+          "O-C01"
+        ],
+        "report": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v087-qf-adopt-qf2-c240-targeted-actual/RESULT.json",
+          "bytes": 2955,
+          "sha256": "1a2388ab6921650b3e7047e89df6826109de42b1946a7d06e92ce5ac6b038d79"
+        }
+      },
+      {
+        "scope": "QF2_C243_STORE_AUDIT_P02_BASE_P03_COLOR_NAMED_ACTUAL",
+        "source": "415af7d344a843256dc8772960589517669fab46",
+        "build": "ui-preview-415af7d-01-build01",
+        "report": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v090-qf-adopt-qf2-c243-audit-p02-p03/RESULT.json",
+          "bytes": 3253,
+          "sha256": "6c476065d7d9d1bb2d3770e2b7727101e7d666ce98714279d18b8bbb2d6b399c"
+        }
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c233-stores-native-actual-01/RESULT.json",
+        "sha256": "474a6211a4b5d1fe2d41194a55ada6bb7497238becd741151b4a8ed260e65ab2",
+        "status": "NEED_FIX_ACTUAL"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c240-targeted-actual-01/RESULT.json",
+        "sha256": "3aa9498f75041a0599158fdd0182c876dd1438267b39a0a9b9341fa1d1c32517",
+        "status": "NEED_FIX_EXISTING_VISUAL_REMAINDERS"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c243-store-audit-actual-01/RESULT.json",
+        "sha256": "33e7b65d990164f1d49e250933ab18b1f082a2e3e8c07fb0194fb577494d7308",
+        "status": "PASS_NEW_STORE_AUDIT_CONSUMER_LIMITED_ACTUAL"
+      }
+    ],
+    "retainedWithoutRetest": [
+      "C233 full source list/empty/23long/paging/query/reset/two-tab conditions/current detail/new/edit forms/native single hall",
+      "C240 original tab-height geometry closure and customer-provider select/cancel/discard seam",
+      "C243 native synthetic audit0 lazy read/focus return/input retention; no actual permission/pending-write proof",
+      "C174 direct frozen App/Filters/Fields/Modal and source CSS; C136 focus/local portal"
+    ],
+    "sourceGap": "Existing UI WeakMap is keyed by route ReadScope and host initializes active tab at every mount. Local before normal module leave/new route/new reader returns default tab; QF2 previous two-tab reentry pass did not cover whole-module reentry.",
+    "change": "Existing authenticated StoreMaintenanceWorkspace now holds one bounded presentation context for selected tab and two tab input/applied query/selected hall/one shared scroll position. StoreSettingsPage and original maintenance host consume it; unchanged session editor priority wins when dirty/pending. Route request effects still dispose/recreate and re-read, identity/permission abort drops context. Existing no-workspace route-only fallback remains. No new cache of rows/results/DOM, persistence or application owner.",
+    "checks": {
+      "CHECK-before.json": {
+        "status": "NEED_FIX",
+        "sha256": "90738a5b5032b9e70ee713692922c5c8befc6a701ee4c41720aafb2b9030f1c9"
+      },
+      "CHECK-after.json": {
+        "status": "PASS_STORE_MODULE_RETURN_AFFECTED_SCOPE",
+        "sha256": "48d6427fedd25cf359b6319a50a1517a16b74713c61ea990226737afa0191efe"
+      },
+      "CHECK-after-hall.json": {
+        "status": "PASS_STORE_MODULE_RETURN_AFFECTED_SCOPE",
+        "sha256": "97c3efae127bae88a79754de7ad85ccab2ca7f4f08d3c0d02d06d797cf531696"
+      },
+      "TYPECHECK.json": {
+        "status": "PASS",
+        "sha256": "db01e8c669b1b2d3518f69466bc099fe784cdadc3ce16ffe5756a8f9ccb8a438"
+      }
+    },
+    "newAffectedUniqueGroups": 3,
+    "hallSelectionWireExtension": "Only first new case additionally checked native hall selection/returned label/wire; two previously passed new cases not rerun for that check.",
+    "commandCalls": 0,
+    "requestKeys": 0,
+    "unchangedByteRegions": [
+      {
+        "scope": "StoreMaintenanceController entire command class",
+        "sha256": "45ed2416972bebccb05ee458352ef9f02309a93626068e1c7e843391eb1dcacf"
+      },
+      {
+        "scope": "StoreSettingsContent entire existing rendering/actions/read/write/auth body",
+        "sha256": "b091303549f147d421b63af165b6d33f9aaed54080254416f7f965a47585a9b6"
+      },
+      {
+        "scope": "StoreMaintenanceHost and all detail/preparation/loading/error/close code below it",
+        "sha256": "85e5f9e1816c6a549468241b08e89d3de7d0290837f794fd88ec60c20f4fb18c"
+      }
+    ],
+    "typeDiagnostics": 0,
+    "diffCheck": "PASS",
+    "sourceUIAndCSSMutation": false,
+    "actualBrowser": false,
+    "physicalGeometry": "NOT_MEASURED",
+    "realHTTP": "NOT_TESTED",
+    "realPG": "NOT_TESTED",
+    "actualSave": "NOT_TESTED",
+    "noIntegratedBuildServerSQLGit": "F3 did none",
+    "currentReadOnlyAndWriteIntegration": {
+      "productionSource": "Original F1 mount currently supplies storeSettings session commands with real writesEnabled gate, native paged customer candidate provider and audit reader. This source wiring is not an actual new core runtime proof.",
+      "scopeBoundary": "Current source/permissions retained; no endpoint/DTO/new button/permission or scalar-hall change.",
+      "detail": "Active native edit/detail uses existing StoreMaintenanceHost fresh-read source form, covered by prior C233 receipt. Legacy StoreSettingsDetailModal has no page consumer (only its label helper is imported), so no new view button or dormant-UI rewrite was invented.",
+      "newActualCoreV14": "C261/C262 source only; exact22 ADMIN/WAREHOUSE native reads/current v14 execution require original C/D2/QB/runtime, not manufactured synthetic save success."
+    },
+    "otherF05Scopes": "C187 staff/account, C193+C195 paired name/login search, C192 parties, C182 payment context, C243 party unresolved summary retained; no new actual finding triggers a repeat migration here.",
+    "next": "C fixes exact3 and original complete-candidate pipeline; QF2 only ordinary menu round trip/new read+tab/draft/applied/hall/page/scroll and dirty-session owner preservation as necessary. Adopt already passed full-module visual/forms/query/audit scopes. Remaining actual business/capability/data/performance closures stay with original C/F1/D2/QB/QF2 owners."
+  },
+  "qualification": "Only released exact original owner leaves. Owner necessary affected checks adopted, independent source/actual not accepted. Fixed258 unchanged; new complete module candidate to include next. No developer WIP/old test staged."
+}

@@ -1,0 +1,11 @@
+{
+ "extends":"../tsconfig.json",
+ "include":[
+  "../packages/application/src/import-v3-history-sales-detail.ts",
+  "../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+  "./import-v3-history-sales-detail.test.ts",
+  "./history-sales-detail-staging-postgres-protocol.test.ts",
+  "./history-sales-detail-binding-resolver-postgres-protocol.test.ts",
+  "./support/synthetic-sales-detail-fixtures.ts"
+ ]
+}

@@ -1,0 +1,174 @@
+Explicitly opted-in disposable local target: 127.0.0.1:55432/naijue_erp_test_f76c53978c0c3a54. Real PostgreSQL results follow only if executed.
+TAP version 13
+# Subtest: REAL PostgreSQL: explicit disposable target and selected synthetic acceptance scenario
+    # Subtest: current eight-migration backend setup publishes synthetic scope without initial-zero seeding
+    ok 1 - current eight-migration backend setup publishes synthetic scope without initial-zero seeding
+      ---
+      duration_ms: 140.067762
+      type: 'test'
+      ...
+    # Subtest: disabled-account authentication STORAGE: committed session, rollback, account/session locks, sentinel hash version invalidation and revocation
+    ok 2 - disabled-account authentication STORAGE: committed session, rollback, account/session locks, sentinel hash version invalidation and revocation
+      ---
+      duration_ms: 32.544395
+      type: 'test'
+      ...
+    # Subtest: real schema rejects incoherent pricing intent, duplicate coordinate, invalid fit/image/numeric value and invalid session hash
+    ok 3 - real schema rejects incoherent pricing intent, duplicate coordinate, invalid fit/image/numeric value and invalid session hash
+      ---
+      duration_ms: 58.684592
+      type: 'test'
+      ...
+    # Subtest: same sales document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT
+    ok 4 - same sales document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT
+      ---
+      duration_ms: 243.455845
+      type: 'test'
+      ...
+    # Subtest: same transfer document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT
+    ok 5 - same transfer document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT
+      ---
+      duration_ms: 239.191857
+      type: 'test'
+      ...
+    # Subtest: signed independent RETURN/EXCHANGE native posting, settlement direction and linked inverse effects on current sparse scope
+    ok 6 - signed independent RETURN/EXCHANGE native posting, settlement direction and linked inverse effects on current sparse scope
+      ---
+      duration_ms: 321.059333
+      type: 'test'
+      ...
+    # Subtest: native scoped sales list/detail/history/statistics, literal search, hidden scope and page beyond end
+    ok 7 - native scoped sales list/detail/history/statistics, literal search, hidden scope and page beyond end
+      ---
+      duration_ms: 149.743345
+      type: 'test'
+      ...
+    # Subtest: native sales count/page share one real REPEATABLE READ snapshot across an intervening committed SAVE
+    ok 8 - native sales count/page share one real REPEATABLE READ snapshot across an intervening committed SAVE
+      ---
+      duration_ms: 93.09775
+      type: 'test'
+      ...
+    # Subtest: native product basics, exact three-SKU/two-size specifications and image METADATA only
+    ok 9 - native product basics, exact three-SKU/two-size specifications and image METADATA only
+      ---
+      duration_ms: 39.89037
+      type: 'test'
+      ...
+    # Subtest: deferred transfer line-position uniqueness permits an actual two-line swap with sparse audit and no stock effect
+    ok 10 - deferred transfer line-position uniqueness permits an actual two-line swap with sparse audit and no stock effect
+      ---
+      duration_ms: 171.213522
+      type: 'test'
+      ...
+    # Subtest: actual scrypt/auth service/PG store login: separate synthetic account, wrong password, secure cookie and current session
+    ok 11 - actual scrypt/auth service/PG store login: separate synthetic account, wrong password, secure cookie and current session
+      ---
+      duration_ms: 2940.562457
+      type: 'test'
+      ...
+    # Subtest: authenticated native inventory matrix/candidates and bounded ledger keyset pages on published synthetic scope
+    ok 12 - authenticated native inventory matrix/candidates and bounded ledger keyset pages on published synthetic scope
+      ---
+      duration_ms: 852.432621
+      type: 'test'
+      ...
+    # Subtest: authenticated bounded sales/detail/history/statistics, transfer/detail and product reads with honest unavailable media
+    ok 13 - authenticated bounded sales/detail/history/statistics, transfer/detail and product reads with honest unavailable media
+      ---
+      duration_ms: 720.526184
+      type: 'test'
+      ...
+    # Subtest: explicit test-only scope exclusions and spoofed cookie/authorization/actor/origin rejection across native read plugins
+    ok 14 - explicit test-only scope exclusions and spoofed cookie/authorization/actor/origin rejection across native read plugins
+      ---
+      duration_ms: 485.560958
+      type: 'test'
+      ...
+    # Subtest: actual PG logout revocation blocks every read family; exact native business fixture snapshot unchanged and owned API pool closure
+    ok 15 - actual PG logout revocation blocks every read family; exact native business fixture snapshot unchanged and owned API pool closure
+      ---
+      duration_ms: 149.439971
+      type: 'test'
+      ...
+    # Subtest: native profile plus canonical source-auth policy: actual A/B salesperson, ADMIN and WAREHOUSE logins with service-written multi-hall facts
+    ok 16 - native profile plus canonical source-auth policy: actual A/B salesperson, ADMIN and WAREHOUSE logins with service-written multi-hall facts
+      ---
+      duration_ms: 4057.022852
+      type: 'test'
+      ...
+    # Subtest: native current-hall sales scope versus genuine ADMIN/WAREHOUSE all scope over nonempty detail/history/references and approved sums
+    ok 17 - native current-hall sales scope versus genuine ADMIN/WAREHOUSE all scope over nonempty detail/history/references and approved sums
+      ---
+      duration_ms: 1424.790611
+      type: 'test'
+      ...
+    # Subtest: native all-warehouse inventory/candidates/ledger includes actual other-hall disabled historical references; exact shared product targets
+    ok 18 - native all-warehouse inventory/candidates/ledger includes actual other-hall disabled historical references; exact shared product targets
+      ---
+      duration_ms: 1391.741916
+      type: 'test'
+      ...
+    # Subtest: canonical transfer scope hides actual B-only service draft from A; later unpublished warehouse correctly makes all-warehouse inventory NOT_READY
+    ok 19 - canonical transfer scope hides actual B-only service draft from A; later unpublished warehouse correctly makes all-warehouse inventory NOT_READY
+      ---
+      duration_ms: 471.878106
+      type: 'test'
+      ...
+    # Subtest: current HTTP login/employment/role/hall fail closed and supplemental genuine-PG authorizers reject an explicitly stale captured hall
+    ok 20 - current HTTP login/employment/role/hall fail closed and supplemental genuine-PG authorizers reject an explicitly stale captured hall
+      ---
+      duration_ms: 220.82785
+      type: 'test'
+      ...
+    # Subtest: native-role sessions revoke on logout, read-phase exact business snapshots stay unchanged and one owned API pool closes
+    ok 21 - native-role sessions revoke on logout, read-phase exact business snapshots stay unchanged and one owned API pool closes
+      ---
+      duration_ms: 86.523484
+      type: 'test'
+      ...
+    # Subtest: native sales action matrix, preserved state/CAS, later-APPROVED original SAVE and GET-receipt via explicit TEST-ONLY AUTHENTICATION plus current disable recheck
+    ok 22 - native sales action matrix, preserved state/CAS, later-APPROVED original SAVE and GET-receipt via explicit TEST-ONLY AUTHENTICATION plus current disable recheck
+      ---
+      duration_ms: 1164.340451
+      type: 'test'
+      ...
+    # Subtest: known-PID actual account/staff/hall metadata UPDATE waits while native command identity locks remain held through commit
+    ok 23 - known-PID actual account/staff/hall metadata UPDATE waits while native command identity locks remain held through commit
+      ---
+      duration_ms: 143.423112
+      type: 'test'
+      ...
+    # Subtest: known-PID command waits for committed disable or ADMIN-to-SALESPERSON change and READ COMMITTED denies without business facts
+    ok 24 - known-PID command waits for committed disable or ADMIN-to-SALESPERSON change and READ COMMITTED denies without business facts
+      ---
+      duration_ms: 201.877916
+      type: 'test'
+      ...
+    # Subtest: identity SELECT actually waits on staff before hall disable commits; separate current hall SELECT rejects without unauthorized business facts
+    ok 25 - identity SELECT actually waits on staff before hall disable commits; separate current hall SELECT rejects without unauthorized business facts
+      ---
+      duration_ms: 80.439782
+      type: 'test'
+      ...
+    1..25
+ok 1 - REAL PostgreSQL: explicit disposable target and selected synthetic acceptance scenario
+  ---
+  duration_ms: 17500.538061
+  type: 'test'
+  ...
+# Actual PostgreSQL server_version_num=170011; synthetic disposable target only
+# Selected current suite=backend-0001-0008; prepared scenarios: disabled-account authentication STORAGE: committed session, rollback, account/session locks, sentinel hash version invalidation and revocation; real schema rejects incoherent pricing intent, duplicate coordinate, invalid fit/image/numeric value and invalid session hash; same sales document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT; same transfer document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT; signed independent RETURN/EXCHANGE native posting, settlement direction and linked inverse effects on current sparse scope; native scoped sales list/detail/history/statistics, literal search, hidden scope and page beyond end; native sales count/page share one real REPEATABLE READ snapshot across an intervening committed SAVE; native product basics, exact three-SKU/two-size specifications and image METADATA only; deferred transfer line-position uniqueness permits an actual two-line swap with sparse audit and no stock effect; actual scrypt/auth service/PG store login: separate synthetic account, wrong password, secure cookie and current session; authenticated native inventory matrix/candidates and bounded ledger keyset pages on published synthetic scope; authenticated bounded sales/detail/history/statistics, transfer/detail and product reads with honest unavailable media; explicit test-only scope exclusions and spoofed cookie/authorization/actor/origin rejection across native read plugins; actual PG logout revocation blocks every read family; exact native business fixture snapshot unchanged and owned API pool closure; native profile plus canonical source-auth policy: actual A/B salesperson, ADMIN and WAREHOUSE logins with service-written multi-hall facts; native current-hall sales scope versus genuine ADMIN/WAREHOUSE all scope over nonempty detail/history/references and approved sums; native all-warehouse inventory/candidates/ledger includes actual other-hall disabled historical references; exact shared product targets; canonical transfer scope hides actual B-only service draft from A; later unpublished warehouse correctly makes all-warehouse inventory NOT_READY; current HTTP login/employment/role/hall fail closed and supplemental genuine-PG authorizers reject an explicitly stale captured hall; native-role sessions revoke on logout, read-phase exact business snapshots stay unchanged and one owned API pool closes; native sales action matrix, preserved state/CAS, later-APPROVED original SAVE and GET-receipt via explicit TEST-ONLY AUTHENTICATION plus current disable recheck; known-PID actual account/staff/hall metadata UPDATE waits while native command identity locks remain held through commit; known-PID command waits for committed disable or ADMIN-to-SALESPERSON change and READ COMMITTED denies without business facts; identity SELECT actually waits on staff before hall disable commits; separate current hall SELECT rejects without unauthorized business facts
+# Current 0001–0008 backend terminal assertions are engine evidence only if this explicit suite actually ran. Authentication STORAGE only; no login, password verification, HTTP/UI, real-data, production-policy, performance or deployment acceptance is implied.
+# Actual auth-service/scrypt + native PostgreSQL HTTP-plugin assertions count as engine evidence only when this explicit suite runs. Fastify.inject only; synthetic test policies, no listening socket/browser/TLS, production grants, real data/media, performance or deployment acceptance.
+# Native source-confirmed profile assertions are actual policy-engine evidence only after this exact guarded fresh-PG suite executes. Original explicit-test-policy groups remain separate. Synthetic facts; Fastify.inject only. Supplemental stale-actor cases call genuine PG adapters, not a public HTTP race. No successful inventory readiness claim after the later unpublished transfer-only warehouse, and no listener/browser/TLS/real-data/media/performance/production acceptance.
+# Native sales ACTION authorization/lock assertions are actual engine evidence only after the exact guarded fresh-PG backend suite executes. Explicit fixture actors/references/economics; GET-receipt uses TEST-ONLY AUTHENTICATION with inject, not a session-authorized write host, browser/TLS or production acceptance. Known-PID row waits and separate READ COMMITTED hall statements are new evidence; earlier 22 groups retain their original boundaries. No new account, secret or production write-provider assembly.
+1..1
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19062.257244

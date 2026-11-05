@@ -1,0 +1,45 @@
+{
+  "status": "C_EXACT_R1_ORIGINAL109_SUCCESSOR_AUTHORIZED",
+  "registrationId": "t45-r1-stock-stage-v22-original109-continuation-20261027-190",
+  "atUtc": "2026-10-27T15:57:44.280685+00:00",
+  "deadlineUtc": "2026-10-27T18:00:00Z",
+  "maxWallSeconds": 7200,
+  "maxSteps": 4096,
+  "statementTimeoutMs": 12000,
+  "hostJob": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-stock-stage-v22-original109-continuation-20261027-190/inputs/executable-host-job26.json",
+    "bytes": 5026,
+    "sha256": "5dc97c3e381ae01e1ea3d296e4fa513092f8894ff1fe700f0de887b16b70249f"
+  },
+  "sourceGrant": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-stock-stage-v22-original109-continuation-20261027-190/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+    "bytes": 37326,
+    "sha256": "a3ffbb2d6ef5a3047fdc315fe801b62b525532e421cef4c37caf1673d64b880e"
+  },
+  "providerInput": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-stock-stage-v22-original109-continuation-20261027-190/inputs/provider-INPUT.FINAL.json",
+    "bytes": 188950,
+    "sha256": "b750c038365d6ac9b7337876934c263ebea2e42f3e4a269efdb10aabd0caa191"
+  },
+  "sourceRootReused": "t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source",
+  "actualQaEvidence": {
+    "job": "189",
+    "bytes": 11364,
+    "sha256": "600e72a3652ae39e15e5354953fb5d9e2b328aacbfc3cf7b119a7d08917c7948",
+    "scope": "Only isolatedQA ordinary RRRO adapter contents/coverage; no production SQL BIND or realimport claim"
+  },
+  "acceptedSourceReviews": [
+    "QB479",
+    "QB480",
+    "QB481"
+  ],
+  "preflight": "In same190 before any business action genuineordinary originalR1 RRRO exactidentity/currentcatalog181canonical6d3e/oldpostmaster + originalBINDkeyreceipt absent and batchSTAGED2/cursor22. Any drift/unknown or receiptpresent stops; no alternatekey or automatic suffix. Rollback/close then original host genuine checks still apply.",
+  "authorizedExecution": "Only original approved148 109commands with unchanged hashes/order/keys: first BIND then107ACCOUNT thenPUBLISH, accurate actor/source/batch; no testwrites/source reprepare/clear/reimport/INIT replay. Failure stops, originalkey recovery before targeted repair.",
+  "notAuthorized": "No APP/publicURL switch or restore/SQL/ACL/schema changes implied. QA189 approval not formal business/performance PASS.",
+  "originalDataAnd109RefsExact": true,
+  "original184187188189NotReplayed": true,
+  "QBDelivery": "SameQB exists notLoaded/readable; default and explicitlocal send returned threadnotfound notaccepted. Existing479480481source reviews and originalT45tasklevel189actual adopted; do not falsely claim newQB runtime review.",
+  "model": "gpt-6.1-sol/medium",
+  "Fast": "UNVERIFIED",
+  "actualExecution": "NOT_SUBMITTED"
+}

@@ -1,0 +1,11 @@
+✔ historical zero-discount SALE preserves negative facts and explicit refund rows (68.132763ms)
+✔ new runtime SALE does not inherit historical signed exception (15.476156ms)
+✔ unknown mixed discount rule is not invented and explicit refund mismatch still blocks (21.653937ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 395.547952

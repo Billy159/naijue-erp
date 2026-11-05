@@ -1,0 +1,30 @@
+{
+  "source": "Existing previously APT-authenticated Debian trixie/main package manifest; no network or new installation this preparation",
+  "all_three_package_sha256_match_prior_authenticated_manifest": true,
+  "all_extracted_regular_files_match_deb": 1964,
+  "all_symlinks_match_deb": 2,
+  "packages": [
+    {
+      "package": "postgresql-17",
+      "sha256": "d2ce1ddffafa783f9acda4c92c86fc21e8288bff3782d739294f14fa797d7886",
+      "regular_files": 1571,
+      "symlinks": 1
+    },
+    {
+      "package": "postgresql-client-17",
+      "sha256": "9d8558f8dd57c8e92e218a20698383575d53742ca3f9e7c2b7fe5f246d5216ae",
+      "regular_files": 371,
+      "symlinks": 0
+    },
+    {
+      "package": "libpq5",
+      "sha256": "20a4c9ef58b4baf90deda67cfb2cc062871c062830dddc234d28f5ac7931b86b",
+      "regular_files": 22,
+      "symlinks": 1
+    }
+  ],
+  "reverified_before_this_start": true,
+  "ordinary_files_verified": 1964,
+  "symlinks_verified": 2,
+  "new_installation_or_network_download": false
+}

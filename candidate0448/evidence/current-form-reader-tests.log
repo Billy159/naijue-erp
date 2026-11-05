@@ -1,0 +1,33 @@
+✔ current forms: strict bounded parsers accept only explicit native proposals and reject authority/default/coercion (9.741851ms)
+✔ current forms: no constructor connection, mandatory explicit authorization and invalid/pre-aborted reads never connect (1.577023ms)
+✔ current forms: fresh identity and explicit grant precede current eligible hall count/page, not historical observed references (7.768029ms)
+✔ current forms: revoked/unknown/stale current identities deny before provider or catalogue queries (3.835047ms)
+✔ current forms: null-hall ADMIN remains exact null, but mismatched null hall is denied (2.336062ms)
+✔ current forms: denied/empty/malformed explicit grants fail closed, never become default all (6.737132ms)
+✔ current forms: proposed foreign sales hall is denied before target disclosure, even with an all grant (1.781773ms)
+✔ current forms: selected sales hall must exist and be enabled in this same snapshot (0.978047ms)
+✔ current forms: enabled customers are native master candidates even unused, with literal parameterized search (1.407731ms)
+✔ current forms: all in-employment staff, not invented salesperson role/same-hall/login eligibility; current user only orders page (1.417773ms)
+✔ current forms: sales warehouse is enabled and belongs to proposed hall, never historical stock/observed membership (1.383212ms)
+✔ current forms: accounts require enabled method; hall affiliation is page recommendation, never count/WHERE restriction (0.628632ms)
+✔ current forms: transfer FROM retains disabled nonzero warehouse, TO only enabled; hall enabled is a fact not a new filter (2.323744ms)
+✔ current forms: explicit transfer hall scope precedes count/page without using prior observed transfers (1.643668ms)
+✔ current forms: exact native nullable retail only; absent minimum is explicit UNAVAILABLE, never null/zero facts (2.701216ms)
+✔ current forms: malformed native prices/labels and duplicate/page-count mismatches fail without fallback (3.93836ms)
+✔ current forms: exact bigint total and real out-of-range page remain empty without unsafe number coercion (5.331833ms)
+✔ current forms: target product SKU page uses native enabled four-dimensional joins and no eager catalogue/barcode fabrication (4.291372ms)
+✔ current forms: SKU batch is one bounded target set, no N+1, returns original requested order (1.314636ms)
+✔ current forms: unavailable/disabled/mismatched SKU batch does not silently drop entries or return partial IDs (3.30184ms)
+✔ current forms: aborted authorization and SQL prevent subsequent page queries; COMMIT acknowledgement never causes fictitious rollback (2.746646ms)
+✔ current forms: failed begin/commit/rollback clean up exactly once, discard uncertain clients, never hidden retry (2.953781ms)
+✔ current forms: driver-returned out-of-scope references and inconsistent account/method facts fail closed (2.767677ms)
+✔ current forms: caller mutations after authorizer await cannot change captured hall/target batch or grant (1.297995ms)
+✔ current forms: the maximum target batch stays one bounded set and never becomes per-SKU work (9.500339ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 638.506611

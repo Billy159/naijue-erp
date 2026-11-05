@@ -1,0 +1,8 @@
+{
+  "parent_commit": "d996c97d810b59e186f8788ba6a62baffdf95544",
+  "scope": "Four shared scope/query lifecycle fixes plusactualReactStrictMode regression",
+  "checks": "Focused strict types,26 product/loading tests,9inventory+5drawerDOM, frozenStrictMode harness,7independentprobes, oldsource negativecontrol failsasexpected",
+  "limitations": "Wholewebtypecheck duringtransferWIP failed and is preserved; no browser/layout/performance acceptance",
+  "rollback": "Revert sourcecommit; no externalstate changed",
+  "separate_followup": "Configuredstylesheet handshake and sharedframeCSS extraction notincluded"
+}

@@ -1,0 +1,63 @@
+Product target read slice verification, synthetic tests only. UTC 2026-10-20T16:48:20Z
+
+TYPECHECK
+apps/web/src/authentication/http-client.ts(137,17): error TS7006: Parameter 'input' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(137,24): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(141,14): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(144,13): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(145,29): error TS7006: Parameter 'input' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(145,36): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+
+TYPECHECK_EXIT=2
+
+BUILD
+apps/web/src/authentication/http-client.ts(137,17): error TS7006: Parameter 'input' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(137,24): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(141,14): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(144,13): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(145,29): error TS7006: Parameter 'input' implicitly has an 'any' type.
+apps/web/src/authentication/http-client.ts(145,36): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+
+BUILD_EXIT=2
+
+FOCUSED TESTS
+✔ SYNTHETIC product HTTP: four DTO-compatible read routes use current trusted policy; thumbnails and originals are separate (289.385559ms)
+✔ SYNTHETIC product HTTP: all detail/image routes require current authentication before policy/storage (28.505586ms)
+✔ SYNTHETIC product HTTP: client actor/roles/scope/URLs and noncanonical or missing IDs are rejected before policy (18.268492ms)
+✔ SYNTHETIC product HTTP: policy denial/mismatched grant denies images before metadata or media; revocation is current (63.809623ms)
+✔ SYNTHETIC product HTTP: missing product is JSON null; missing image is 404; no media storage/delivery is an explicit 501 (18.74492ms)
+✔ SYNTHETIC product HTTP: only allowlisted safe errors escape; SQL/provider internals stay redacted (25.89735ms)
+✔ SYNTHETIC product HTTP: query strings, malformed/empty JSON, unsupported media and body overflow fail before policy (16.001132ms)
+✔ SYNTHETIC product HTTP: existing session authenticator accepts matching POST Origin and rejects missing/cross-site origins before session lookup (10.828543ms)
+✔ product pg protocol: constructor does not connect; invalid/aborted/mismatched grant never connects (11.714654ms)
+✔ product pg protocol: basics parameterized target-only RR snapshot preserves actual nulls and original code (6.638512ms)
+✔ product pg protocol: missing product commits null without dependent queries (2.95524ms)
+✔ product pg protocol: three bounded specification set reads preserve group member identity/order/full labels and actual four-dimensional SKU combinations (3.545827ms)
+✔ product pg protocol: empty SKU set does not invent a matrix cross-product and keeps actual group sizes (1.187249ms)
+✔ product pg protocol: outside-group and duplicate SKU identities/coordinates fail instead of silently dropping or merging (2.91047ms)
+✔ product pg protocol: metadata list is two bounded set reads, preserves order, never reads bytes or returns delivery URLs (2.543515ms)
+✔ product pg protocol: explicit image query scopes BOTH product and image IDs; missing/mismatched image is never another product's image (2.871475ms)
+✔ product pg protocol: technical response bounds fail closed, never silently truncate metadata, group members or SKUs (37.207532ms)
+✔ product pg protocol: invalid stored image type/size and missing labels roll back without delivery fallback (3.914174ms)
+✔ product pg protocol: begin/connect/query/commit/rollback failures clean up exactly once, discard uncertain clients, no hidden retry (2.293781ms)
+✔ product pg protocol: abort during SQL rolls back and stops subsequent reads; abort after connect discards client (1.800021ms)
+✔ product read schema SOURCE ONLY: approved nullable fields are additive with no invented historical backfill (14.44099ms)
+✔ product read schema SOURCE ONLY: controlled image metadata keeps approved MIME/8MB limits, real audit facts and ordered target index (2.35386ms)
+✔ SYNTHETIC product service: four explicit reads reauthorize; image list resolves one thumbnail batch, original only explicit (6.607436ms)
+✔ SYNTHETIC product service: missing/empty actual targets stay null/empty; missing image is 404, never generated (3.250357ms)
+✔ SYNTHETIC product service: strict exact UUID inputs never reach policy or reader (1.859524ms)
+✔ SYNTHETIC product service: denied/revoked/malformed/mismatched grants do not read target or media (4.318758ms)
+✔ SYNTHETIC product service: missing trusted providers/media availability fails closed; unavailable delivery is explicit (1.045511ms)
+✔ SYNTHETIC product service: media links enforce target/variant/HTTPS configured origin and do not echo file references (4.399157ms)
+✔ SYNTHETIC product service: pending authorization cannot mutate captured actor/parameters; abort blocks reader/media (0.880133ms)
+✔ SYNTHETIC product service: wrong-target trusted metadata and aborted media response are never disclosed (1.938766ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1094.089592
+
+TEST_EXIT=0

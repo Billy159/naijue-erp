@@ -1,0 +1,1288 @@
+{
+  "format_version": "UNIFIED_STANDARD_PACKAGE_V1",
+  "tool_version": "0.2.0",
+  "schema_contract": {
+    "commit": "aa10f48d592b5200e6899a476e95340ad42b205a",
+    "source_declarations_sha256": "89117aebb5064a3f42065aaab077ffd0e90ec0fee07898e5416ee3c1ff18130e",
+    "proposed_contract_version": "UNIFIED_STANDARD_PACKAGE_V1"
+  },
+  "offline": true,
+  "database_import_implemented": false,
+  "execution_client_implemented": true,
+  "v2_conditional_source49_client_implemented": true,
+  "v2_engine_validated": false,
+  "v2_portable_profile_implemented": false,
+  "execution_engine_validated": false,
+  "execution_scope": "ISOLATED_SET_ROLE_PROOF_ONLY",
+  "production_login_capability": false,
+  "stream_preflight_scope": "STANDARD_PACKAGE_OFFLINE_CHECKS_NOT_EXECUTION_ADMISSION",
+  "implemented": [
+    "stream-preflight",
+    "stream-prepare (offline only)",
+    "stream-import (PG acceptance not run)",
+    "source-registration (declaration only)",
+    "validate",
+    "plan --offline",
+    "inspect-target",
+    "initialize",
+    "resume-initialize",
+    "apply",
+    "status",
+    "resume",
+    "verify",
+    "receipt-check",
+    "version",
+    "capability-report",
+    "contract-schema"
+  ],
+  "not_implemented": [
+    "rehearse",
+    "rollback-plan",
+    "prepare",
+    "dry-run",
+    "import",
+    "reconcile"
+  ],
+  "work_packages": [
+    {
+      "number": 1,
+      "name": "decisions",
+      "tables": []
+    },
+    {
+      "number": 2,
+      "name": "source_files",
+      "tables": []
+    },
+    {
+      "number": 3,
+      "name": "products",
+      "tables": [
+        "product_category",
+        "product",
+        "product_image"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "sku_dimensions_barcodes",
+      "tables": [
+        "color",
+        "fit",
+        "size",
+        "size_group",
+        "size_group_member",
+        "season",
+        "sku",
+        "barcode_scheme",
+        "sku_barcode"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "halls_warehouses",
+      "tables": [
+        "hall",
+        "warehouse"
+      ]
+    },
+    {
+      "number": 6,
+      "name": "staff",
+      "tables": [
+        "staff"
+      ]
+    },
+    {
+      "number": 7,
+      "name": "customers_suppliers_payments",
+      "tables": [
+        "customer",
+        "supplier",
+        "payment_method",
+        "payment_account",
+        "payment_account_hall"
+      ]
+    },
+    {
+      "number": 8,
+      "name": "transfer_headers",
+      "tables": [
+        "transfer_header"
+      ]
+    },
+    {
+      "number": 9,
+      "name": "transfer_lines",
+      "tables": [
+        "transfer_line"
+      ]
+    },
+    {
+      "number": 10,
+      "name": "sales_headers",
+      "tables": [
+        "sales_header"
+      ]
+    },
+    {
+      "number": 11,
+      "name": "sales_lines",
+      "tables": [
+        "sales_line"
+      ]
+    },
+    {
+      "number": 12,
+      "name": "complete_settlements",
+      "tables": [
+        "sales_settlement"
+      ]
+    },
+    {
+      "number": 13,
+      "name": "new_inventory_snapshot",
+      "tables": [
+        "inventory_baseline"
+      ]
+    }
+  ],
+  "profile": "historical-sales-source-v1",
+  "tables": {
+    "hall": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "default_customer_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "customer"
+      },
+      "default_sales_warehouse_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "warehouse"
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      }
+    },
+    "warehouse": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "hall_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "hall"
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "created_operation_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "generated": true
+      }
+    },
+    "customer": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "code": {
+        "kind": "text",
+        "nullable": false
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "created_at": {
+        "kind": "instant",
+        "nullable": true
+      },
+      "updated_at": {
+        "kind": "instant",
+        "nullable": true
+      }
+    },
+    "supplier": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "code": {
+        "kind": "text",
+        "nullable": false
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "created_at": {
+        "kind": "instant",
+        "nullable": true
+      },
+      "updated_at": {
+        "kind": "instant",
+        "nullable": true
+      }
+    },
+    "staff": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "hall_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "hall"
+      },
+      "role": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "ADMIN",
+          "WAREHOUSE",
+          "SALESPERSON"
+        ]
+      },
+      "contact": {
+        "kind": "text",
+        "nullable": true
+      },
+      "employment_status": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "在职",
+          "离职"
+        ]
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "departure_date": {
+        "kind": "date",
+        "nullable": true
+      }
+    },
+    "product_category": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "parent_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "product_category"
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "display_order": {
+        "kind": "int32",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "deleted_at": {
+        "kind": "instant",
+        "nullable": true
+      }
+    },
+    "color": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "code": {
+        "kind": "text",
+        "nullable": false
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "deleted_at": {
+        "kind": "instant",
+        "nullable": true
+      }
+    },
+    "fit": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "code": {
+        "kind": "text",
+        "nullable": false,
+        "pattern": "^[A-Z356789]$"
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "deleted_at": {
+        "kind": "instant",
+        "nullable": true
+      }
+    },
+    "size": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "code": {
+        "kind": "text",
+        "nullable": true
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      }
+    },
+    "size_group": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "code": {
+        "kind": "text",
+        "nullable": false
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      }
+    },
+    "size_group_member": {
+      "size_group_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "size_group"
+      },
+      "size_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "size"
+      },
+      "display_order": {
+        "kind": "int32",
+        "nullable": false
+      }
+    },
+    "season": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "code": {
+        "kind": "text",
+        "nullable": false
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "display_order": {
+        "kind": "int32",
+        "nullable": false
+      }
+    },
+    "product": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "product_code": {
+        "kind": "text",
+        "nullable": false
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "category_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "product_category"
+      },
+      "supplier_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "supplier"
+      },
+      "season_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "season"
+      },
+      "size_group_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "size_group"
+      },
+      "retail_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "year": {
+        "kind": "int32",
+        "nullable": true
+      },
+      "system_item_code": {
+        "kind": "text",
+        "nullable": true
+      },
+      "thickness": {
+        "kind": "text",
+        "nullable": true
+      },
+      "collar_pants_type": {
+        "kind": "text",
+        "nullable": true
+      },
+      "purchase_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "wholesale5_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "wholesale6_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "wholesale7_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "wholesale8_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "wholesale9_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "wholesale10_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "minimum_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "deleted_at": {
+        "kind": "instant",
+        "nullable": true
+      },
+      "default_barcode_scheme_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "barcode_scheme"
+      },
+      "season_ids": {
+        "kind": "uuid_array",
+        "nullable": true,
+        "reference": "season"
+      }
+    },
+    "product_image": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "product_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "product"
+      },
+      "file_ref": {
+        "kind": "text",
+        "nullable": false
+      },
+      "mime": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "image/png",
+          "image/jpeg",
+          "image/webp"
+        ]
+      },
+      "byte_size": {
+        "kind": "quantity",
+        "nullable": false,
+        "minimum": "1",
+        "maximum": "8388608"
+      },
+      "display_order": {
+        "kind": "int32",
+        "nullable": false
+      },
+      "created_at": {
+        "kind": "instant",
+        "nullable": false
+      },
+      "created_by_account_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "user_account"
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "image_role": {
+        "kind": "text",
+        "nullable": true,
+        "enum": [
+          "MAIN",
+          "WHITE_BACKGROUND",
+          "HANG_TAG",
+          "DETAIL",
+          "COLOR"
+        ]
+      },
+      "color_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "color"
+      }
+    },
+    "sku": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "product_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "product"
+      },
+      "color_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "color"
+      },
+      "fit_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "fit"
+      },
+      "size_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "size"
+      },
+      "sku_code": {
+        "kind": "text",
+        "nullable": false
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      },
+      "created_operation_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "generated": true
+      }
+    },
+    "barcode_scheme": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "barcode_type": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "Code128"
+        ]
+      },
+      "rule_description": {
+        "kind": "text",
+        "nullable": false
+      },
+      "code_length": {
+        "kind": "int32",
+        "nullable": true,
+        "minimum": 1
+      },
+      "rule_version": {
+        "kind": "text",
+        "nullable": false
+      },
+      "status": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "CURRENT",
+          "HISTORICAL"
+        ]
+      }
+    },
+    "sku_barcode": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "barcode": {
+        "kind": "text",
+        "nullable": false
+      },
+      "sku_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "sku"
+      },
+      "barcode_kind": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "MAIN",
+          "CONFIRMED_OLD"
+        ]
+      },
+      "scheme_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "barcode_scheme"
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      }
+    },
+    "payment_method": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      }
+    },
+    "payment_account": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "name": {
+        "kind": "text",
+        "nullable": false
+      },
+      "payment_method_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "payment_method"
+      },
+      "enabled": {
+        "kind": "boolean",
+        "nullable": false
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "generated": true,
+        "minimum": 1
+      }
+    },
+    "payment_account_hall": {
+      "payment_account_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "payment_account"
+      },
+      "hall_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "hall"
+      }
+    },
+    "sales_header": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "minimum": 1,
+        "generated": true
+      },
+      "stock_basis": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "RUNTIME_LEDGER",
+          "CUTOFF_HISTORY"
+        ]
+      },
+      "import_batch_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "number": {
+        "kind": "text",
+        "nullable": false
+      },
+      "business_type": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "SALE",
+          "RETURN",
+          "EXCHANGE"
+        ]
+      },
+      "business_date": {
+        "kind": "date",
+        "nullable": false
+      },
+      "hall_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "hall"
+      },
+      "salesperson_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "staff"
+      },
+      "customer_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "customer"
+      },
+      "warehouse_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "warehouse"
+      },
+      "status": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "DRAFT",
+          "APPROVED",
+          "VOID"
+        ]
+      },
+      "gross_amount": {
+        "kind": "signed_money",
+        "nullable": false
+      },
+      "order_discount": {
+        "kind": "money",
+        "nullable": false
+      },
+      "net_due": {
+        "kind": "signed_money",
+        "nullable": false
+      },
+      "note": {
+        "kind": "text",
+        "nullable": true
+      },
+      "created_by_account_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "user_account"
+      },
+      "created_hall_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "hall"
+      },
+      "created_at": {
+        "kind": "instant",
+        "nullable": true
+      },
+      "updated_at": {
+        "kind": "instant",
+        "nullable": true
+      },
+      "approved_by_account_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "user_account"
+      },
+      "approved_at": {
+        "kind": "instant",
+        "nullable": true
+      },
+      "responsible_staff_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "staff"
+      },
+      "created_by_staff_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "staff"
+      },
+      "approved_by_staff_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "staff"
+      }
+    },
+    "transfer_header": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "version": {
+        "kind": "int32",
+        "nullable": false,
+        "minimum": 1,
+        "generated": true
+      },
+      "stock_basis": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "RUNTIME_LEDGER",
+          "CUTOFF_HISTORY"
+        ],
+        "generated": true
+      },
+      "import_batch_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "number": {
+        "kind": "text",
+        "nullable": false
+      },
+      "business_date": {
+        "kind": "date",
+        "nullable": false
+      },
+      "from_warehouse_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "warehouse"
+      },
+      "to_warehouse_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "warehouse"
+      },
+      "status": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "DRAFT",
+          "APPROVED",
+          "VOID"
+        ]
+      },
+      "note": {
+        "kind": "text",
+        "nullable": true
+      },
+      "created_by_account_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "user_account"
+      },
+      "created_hall_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "hall"
+      },
+      "created_at": {
+        "kind": "instant",
+        "nullable": true
+      },
+      "updated_at": {
+        "kind": "instant",
+        "nullable": true
+      },
+      "approved_by_account_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "user_account"
+      },
+      "approved_at": {
+        "kind": "instant",
+        "nullable": true
+      },
+      "responsible_staff_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "staff"
+      },
+      "created_by_staff_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "staff"
+      },
+      "approved_by_staff_id": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "staff"
+      },
+      "created_role": {
+        "kind": "text",
+        "nullable": true,
+        "enum": [
+          "ADMIN",
+          "WAREHOUSE",
+          "SALESPERSON"
+        ]
+      }
+    },
+    "sales_line": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "is_current": {
+        "kind": "boolean",
+        "nullable": false,
+        "generated": true
+      },
+      "sales_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "sales_header"
+      },
+      "line_no": {
+        "kind": "int32",
+        "nullable": false,
+        "minimum": 1
+      },
+      "sku_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "sku"
+      },
+      "quantity": {
+        "kind": "quantity",
+        "nullable": false
+      },
+      "reference_price": {
+        "kind": "money",
+        "nullable": true
+      },
+      "deal_price": {
+        "kind": "money",
+        "nullable": false
+      },
+      "line_amount": {
+        "kind": "signed_money",
+        "nullable": false
+      },
+      "allocated_discount": {
+        "kind": "money",
+        "nullable": true
+      },
+      "is_gift": {
+        "kind": "boolean",
+        "nullable": true
+      },
+      "product_code_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "product_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "color_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "fit_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "size_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "barcode_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "pricing_rule": {
+        "kind": "text",
+        "nullable": true,
+        "enum": [
+          "UNIT_PRICE",
+          "DISCOUNT"
+        ]
+      },
+      "discount_tenths": {
+        "kind": "int32",
+        "nullable": true,
+        "minimum": 0,
+        "maximum": 100
+      },
+      "zero_confirmed": {
+        "kind": "boolean",
+        "nullable": true
+      }
+    },
+    "transfer_line": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "is_current": {
+        "kind": "boolean",
+        "nullable": false,
+        "generated": true
+      },
+      "transfer_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "transfer_header"
+      },
+      "line_no": {
+        "kind": "int32",
+        "nullable": false,
+        "minimum": 1
+      },
+      "sku_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "sku"
+      },
+      "quantity": {
+        "kind": "quantity",
+        "nullable": false
+      },
+      "product_code_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "product_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "color_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "fit_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "size_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "barcode_snapshot": {
+        "kind": "text",
+        "nullable": true
+      }
+    },
+    "sales_settlement": {
+      "id": {
+        "kind": "uuid",
+        "nullable": false,
+        "generated": true
+      },
+      "sales_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "sales_header"
+      },
+      "line_no": {
+        "kind": "int32",
+        "nullable": false,
+        "minimum": 1
+      },
+      "payment_account_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "payment_account"
+      },
+      "direction": {
+        "kind": "text",
+        "nullable": false,
+        "enum": [
+          "RECEIVE",
+          "REFUND"
+        ]
+      },
+      "amount": {
+        "kind": "money",
+        "nullable": false
+      },
+      "account_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "method_name_snapshot": {
+        "kind": "text",
+        "nullable": true
+      },
+      "payment_method_id_snapshot": {
+        "kind": "uuid",
+        "nullable": true,
+        "reference": "payment_method"
+      }
+    },
+    "inventory_baseline": {
+      "warehouse_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "warehouse"
+      },
+      "sku_id": {
+        "kind": "uuid",
+        "nullable": false,
+        "reference": "sku"
+      },
+      "quantity": {
+        "kind": "quantity",
+        "nullable": false
+      }
+    }
+  },
+  "historical_sales_source_engine_validated": false,
+  "source_classification_is_independent_fact_proof": false
+}

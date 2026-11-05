@@ -1,0 +1,188 @@
+{
+  "atUtc": "2026-10-24T00:25:56.381401+00:00",
+  "parent": "0997faf06b5d5d6465c93992573182e60cc2e98f",
+  "taskId": "D2_P10_EXISTING_DEFAULT_SCHEME_READ_ONLY_NATIVE26",
+  "files": [
+    {
+      "path": "packages/application/src/product-details-query-ports.ts",
+      "bytes": 5469,
+      "sha256": "4217a26a4a406e1b350145ccb79b091b1de22660a0ef820bf5c8d0143e334f3c",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/product-details-query-validation.ts",
+      "bytes": 11896,
+      "sha256": "a081d16568da63515f5637a628947e93cb59d50401b006601fe88e15d53c6db9",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/product-details-query-service.ts",
+      "bytes": 4513,
+      "sha256": "40337ed27ec214c52a8ea1a09503bb54acdbc2b79dafa4adceb851ad5c8471b2",
+      "owner": "D2"
+    },
+    {
+      "path": "adapters/postgres/src/product-details-query-reader.ts",
+      "bytes": 8640,
+      "sha256": "226016428a7839eb0160083225373be31d50e6aa5603f5a5e7bd374bacb7c99c",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/product-details-query-postgres-protocol.test.ts",
+      "bytes": 10400,
+      "sha256": "2b78627cfcaa08c2e129eb4691f435e33faa2e627b9a825281da217d7a1f138c",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/product-details-query.test.ts",
+      "bytes": 13975,
+      "sha256": "c97a9b5ea326dd65ee22d4fdd3faa5b1753808358f898951544bd728c59c3b61",
+      "owner": "D2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/P10-DEFAULT-SCHEME-READ-v1.json",
+  "ownerReceiptSha256AtPin": "98a981f49a9b0d195ef7b67216321aa924784829c2281206423b017e89b23159",
+  "ownerDelivery": {
+    "task": {
+      "id": "D2-P10-DEFAULT-SCHEME-READ-V1",
+      "atUtc": "2026-10-24T00:23:50.286277+00:00",
+      "status": "SOURCE_TARGETED_CHECKS_AND_STRICT_PASS_NOT_ACTUAL_PG",
+      "authority": "C本次明确授权：现有批准字段上的只读response变体，不新增人类审批；六scheme分类仍独立待批。",
+      "modelRequested": "gpt-6.1-sol/xhigh",
+      "actualModelAndFastSetting": "NOT_INDEPENDENTLY_VERIFIED"
+    },
+    "behavior": {
+      "changed": "同一原商品条码分页读取中，根据可信原native26能力读取product.default_barcode_scheme_id原值。真实非空UUID为AVAILABLE，真实NULL为NOT_SET；旧base19或未注入native26保持UNAVAILABLE/NO_PRODUCT_SCHEME_FIELD。",
+      "preserved": [
+        "同一原产品per-tab grant先于reader连接；原actor/product目标/取消/事务收尾保持。",
+        "count/page仍同一RR READ ONLY snapshot、同一product predicate；total仍全商品条码记录数。",
+        "原barcode raw/停用绑定/SKU身份、MAIN/CONFIRMED_OLD及schemeId保持；不存在从条码当前页、CURRENT、年份、方案名猜默认。",
+        "只读字段不改默认FK/NULL/引用或写语义；不创建方案，不增加DDL、API或purpose。"
+      ],
+      "failure": "native capability拒绝、缺列、缺少投影字段、非UUID及SQL错误均拒绝/失败；不会降为NOT_SET或UNAVAILABLE重试。不存在商品仍原null。"
+    },
+    "contract": {
+      "type": "ProductDefaultScheme",
+      "union": [
+        {
+          "state": "UNAVAILABLE",
+          "reason": "NO_PRODUCT_SCHEME_FIELD"
+        },
+        {
+          "state": "AVAILABLE",
+          "schemeId": "native actual UUID"
+        },
+        {
+          "state": "NOT_SET"
+        }
+      ],
+      "closedKeys": true,
+      "location": "ProductBarcodePage.defaultScheme；外层path/body/productId/version/page/pageSize/total/items不变。",
+      "responseValidation": "原application validation导出checkedProductDefaultScheme(unknown)；原service.readBarcodes在原grant之后调用，严格接受三个闭合分支，拒绝额外键/错误reason/缺ID/NULL ID。F2只读browser parser按已交同一union同步；D2不修改其文件。",
+      "schemeDescription": "AVAILABLE只说明实际默认FK；文本继续原独立dictionary kind+target grant的readBarcodeScheme，HTTP200对象或null。未从维护detail越权借权。",
+      "notIncluded": "单SKU完整历史/source-manual subtype/originalSpec未改；六scheme CURRENT裁决未实施。"
+    },
+    "injection": {
+      "constructor": "new PostgresProductDetailsQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.runtime26)",
+      "newParameter": "第3可选NativeRuntime26Capability；原第2保留。checkedNativeRuntime26Capability复用原严格shape/void验证，拒绝flag/version替代。",
+      "coherence": "native26存在必须同时有原pool-bound retained catalogue proof，防止新读取遗漏保留删除条件。仅第二v22 proof不启用default字段读取。",
+      "sameClient": "原RR事务内使用实际借出client调用assertReady(client,\"PRODUCT_SEASONS_READ\")，完成后才SELECT实际product FK；不是新用途，不能代每请求product grant或独立dictionary grant。",
+      "owner": "D1唯一API组合owner；D2没有修改postgres-read-api.ts或issuer。已通知原D1叶完成，可接续原strict闭包。",
+      "observedAdoptedOnly": "只读看到当前postgres-read-api.ts:522原owner已注入第三issuer?.runtime26；不把该观察当实际目标装配/PG/HTTP通过。"
+    },
+    "validation": {
+      "uniqueTests": 8,
+      "newUniqueTests": 5,
+      "affectedExistingUniqueTests": 3,
+      "coverage": [
+        "实际默认FK与条码关联方案不同、空的后页仍从同一个product FK返回AVAILABLE；total仍1。",
+        "实际NULL才NOT_SET，undefined/坏UUID失败，不继续count/page。",
+        "same actual protocol client+原PRODUCT_SEASONS_READ验证；cap拒绝或SQL缺列失败回滚；grant拒绝不连接/不调用cap。",
+        "严格响应三分支，额外键/错误reason/缺ID/NULL ID拒绝；原service授权后校验。",
+        "原无native26分支保留旧SQL和UNAVAILABLE；原raw停用历史条码/缺商品/原per-tab权限用例。"
+      ],
+      "firstRun": {
+        "log": "P10-DEFAULT-SCHEME-run1.tap",
+        "exit": 1,
+        "pass": 7,
+        "fail": 1,
+        "skip": 0,
+        "cause": "新增测试的禁止表join正则错误匹配default_barcode_scheme_id列名；只将正则收窄到naijue_erp.barcode_scheme/sku_barcode表名，生产实现未因此修改。"
+      },
+      "failedOnlyRerun": {
+        "log": "P10-DEFAULT-SCHEME-failed-only-run2.tap",
+        "exit": 0,
+        "pass": 1,
+        "fail": 0,
+        "skip": 0,
+        "passedSevenNotRepeated": true
+      },
+      "strict": {
+        "roots": [
+          "packages/application/src/product-details-query-ports.ts",
+          "packages/application/src/product-details-query-validation.ts",
+          "packages/application/src/product-details-query-service.ts",
+          "adapters/postgres/src/product-details-query-reader.ts",
+          "tests/product-details-query-postgres-protocol.test.ts",
+          "tests/product-details-query.test.ts"
+        ],
+        "firstLog": "P10-DEFAULT-SCHEME-types-run1.log",
+        "firstExit": 2,
+        "firstCause": "新增测试把Error直接强转成必带code对象，TS2352；改为in窄化。",
+        "finalLog": "P10-DEFAULT-SCHEME-types-run2.log",
+        "finalExit": 0,
+        "finalBytes": 0,
+        "scope": "原工程strict flags，6个本次叶及其依赖图，noEmit；不扩大为全项目构建。"
+      },
+      "notRun": [
+        "真实PG/schema/角色/原密码/HTTP/browser",
+        "全部reader/事务套/239/source49/旧48/sealed18",
+        "构建、发布或正式验收"
+      ]
+    },
+    "files": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-ports.ts",
+        "bytes": 5469,
+        "sha256": "4217a26a4a406e1b350145ccb79b091b1de22660a0ef820bf5c8d0143e334f3c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-validation.ts",
+        "bytes": 11896,
+        "sha256": "a081d16568da63515f5637a628947e93cb59d50401b006601fe88e15d53c6db9"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-service.ts",
+        "bytes": 4513,
+        "sha256": "40337ed27ec214c52a8ea1a09503bb54acdbc2b79dafa4adceb851ad5c8471b2"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/product-details-query-reader.ts",
+        "bytes": 8640,
+        "sha256": "226016428a7839eb0160083225373be31d50e6aa5603f5a5e7bd374bacb7c99c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/product-details-query-postgres-protocol.test.ts",
+        "bytes": 10400,
+        "sha256": "2b78627cfcaa08c2e129eb4691f435e33faa2e627b9a825281da217d7a1f138c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/product-details-query.test.ts",
+        "bytes": 13975,
+        "sha256": "c97a9b5ea326dd65ee22d4fdd3faa5b1753808358f898951544bd728c59c3b61"
+      }
+    ],
+    "boundaries": {
+      "sourceEdits": 6,
+      "newSourceFiles": 0,
+      "uiEdits": 0,
+      "sharedApiIssuerEdits": 0,
+      "ddlSqlApplyPgSsh": 0,
+      "buildGitMutations": 0,
+      "frontendHandoff": "原F2已收到准确闭合union、第三参数与独立方案详情合同；收到源码通过后继续同一消费者同步。",
+      "controllerNext": "C固定D2六叶，采用原D1 API组合增量、F2成对parser增量；实际验证由C沿原owner范围执行，源码通过不记真实业务/部署通过。",
+      "reportingAuthorization": "原人类message01a161f7-a5e8-7e10-9059-9537c28910c2/REPORTING-AUTHORIZATION.json；主动回C七项。"
+    }
+  },
+  "qualification": "Existing approved product default FK read only, trusted runtime26 optional proof and retained-delete proof; original base19 strictUNAVAILABLE preserved. Product and dictionary grant independent, no DDL/newfield/write semantics or inferred scheme. Owner8 scopedchecks+strict adopted, originalQB independent and originalAPI/F2 consumers pending; actualPG/HTTP/business/performance not tested. CurrentUI243/server229 do not include245."
+}

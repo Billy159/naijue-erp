@@ -1,0 +1,47 @@
+{
+  "baseHead": "2d0f5d2ef79a1d48f63a85cb0242661d2e54efde",
+  "changes": "uncommitted bounded sales editor and shared sales/transfer session integration",
+  "verification": {
+    "salesScopedTypes": "passed",
+    "applicationScopedTypes": "passed",
+    "newModelAndSessionNodeTests": 17,
+    "newCommandDomGroups": 6,
+    "readOnlySalesDomGroups": 18,
+    "salesApplicationDomGroups": 6,
+    "baseApplicationDomGroups": 8,
+    "prior157SalesFocusedBaseline": "separate historical check from this task, not rerun as new-file acceptance"
+  },
+  "corrections": [
+    "Initial command DOM exposed style-ready reuse across owner/scope/loader changes; fixed and retained initial failing log.",
+    "Superseded open completion cannot reset later raw input; final Node regression added."
+  ],
+  "limits": [
+    "Synthetic/mocked HTTP and DOM only. No live HTTP/PostgreSQL write or browser/pixel acceptance.",
+    "No full root/web compiler or aggregate build; backend/core WIP belongs to separate work.",
+    "Default read/development hosts do not configure commands. Native NEW remains unavailable without complete real preparation and a native document-number policy.",
+    "Current identity/product/account pickers and adding/removing rows are deliberately not implemented by this bounded editor.",
+    "No database schema, auth policy, migration, commit, push, installation or production action performed by this worker."
+  ],
+  "warnings": [
+    "Existing React19/Arco element.ref warning. The application opt-in DOM harness also emits act-wrapping warnings; all assertions and final command exit statuses pass."
+  ],
+  "files": [
+    "apps/web/src/application/contracts.ts",
+    "apps/web/src/application/controller.ts",
+    "apps/web/src/application/routes/sales.tsx",
+    "apps/web/src/application/routes/sales-commands.tsx",
+    "apps/web/src/sales/sales-page.tsx",
+    "apps/web/src/sales/sales-route.tsx",
+    "apps/web/src/sales/commands/contracts.ts",
+    "apps/web/src/sales/commands/index.ts",
+    "apps/web/src/sales/commands/form-model.ts",
+    "apps/web/src/sales/commands/form-model.test.ts",
+    "apps/web/src/sales/commands/editor-session.ts",
+    "apps/web/src/sales/commands/editor-session.test.ts",
+    "apps/web/src/sales/commands/form.tsx",
+    "apps/web/src/sales/commands/page-host.tsx",
+    "apps/web/src/sales/commands/tests/dom-entry.tsx",
+    "apps/web/src/sales/commands/tests/run-dom-tests.mjs",
+    "apps/web/src/sales/commands/README.md"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "scope": "NATIVE_PARTY_IMPORT_V1",
+  "entities": [
+    "HALL",
+    "CUSTOMER",
+    "SUPPLIER",
+    "STAFF",
+    "WAREHOUSE"
+  ],
+  "files": [
+    {
+      "path": "packages/application/src/native-party-import.ts",
+      "sha256": "412f3be7c69fada14ca94510d113df7184cccaaa492ad42a0e2f15600f961cf9"
+    },
+    {
+      "path": "adapters/postgres/src/native-party-import.ts",
+      "sha256": "fc5174d97da17803d88d9b543cadb22a8044ca946381d2f2d306808c51370240"
+    },
+    {
+      "path": "adapters/postgres/migrations/0013_native_party_import.sql",
+      "sha256": "d7a7b6ca2d00705939bfff87846e0a22870939df81d80e68752bcf08daa63116"
+    },
+    {
+      "path": "tests/native-party-import.test.ts",
+      "sha256": "9c866782e8ba855c1dc05f50dc7c1def418bffe84d6d0f17d0c9f6c539a7bafc"
+    },
+    {
+      "path": "tests/native-party-import-migration.test.ts",
+      "sha256": "e40a181575b942decd4440a4e4f561ffd3b412b18256b0b94dce0130c66ac4da"
+    },
+    {
+      "path": "docs/native-party-import.md",
+      "sha256": "b912dd196465b90d25ea8b727f0e00208056f3539240382341f6fd7d436cf1fe"
+    }
+  ],
+  "syntheticOnly": true,
+  "published": false,
+  "importReady": false,
+  "verification": {
+    "focusedTests": {
+      "status": "PASS",
+      "count": 19
+    },
+    "ownedIsolatedTypecheck": "PASS",
+    "postgresMigrationExecution": "NOT_RUN",
+    "postgresTriggerPermissionsConcurrency": "NOT_RUN",
+    "realImport": "NOT_RUN",
+    "independentGuardReview": "PASS_STATIC_NO_NEW_DETERMINISTIC_BLOCKER",
+    "focusedAndLiveRegression": {
+      "status": "PASS",
+      "count": 69,
+      "log": "evidence/native-party-import/focused-and-live-tests.txt"
+    }
+  },
+  "remainingGates": [
+    "Review/register exact schema13/14 coexistence contract and update party schema gate",
+    "Actual exact-source + reviewed-row-grant authorizer composition including SUPPLIER/WAREHOUSE",
+    "Disposable real PostgreSQL migration/creator/permissions/FK/concurrency rehearsal",
+    "Current-target final cutover reconciliation",
+    "Separately authorized controlled publication"
+  ],
+  "realDataInOwnedFiles": false
+}

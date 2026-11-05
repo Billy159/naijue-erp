@@ -1,0 +1,96 @@
+{
+  "format": "CURRENT_SOURCE_REVISION_SELECTION_REUSE_CHECK_V1",
+  "status": "NO_EQUIVALENT_PUBLIC_OLD_RUNTIME_SELECTOR_FOUND_IN_IMPORT_V3",
+  "searchedRoot": "/workspace/scratch/1f717a486422/naijue-erp-unified-e6a03c9f-20261101/scripts/import-v3",
+  "searchedTokens": [
+    "current_revision",
+    "currentRevision",
+    "active_effect_revision",
+    "document_id...revision"
+  ],
+  "existingNotEquivalent": {
+    "prepareFullSourceBindings26": "Consumes supplied documents and constructs native typed closure; does not select old runtime current_revision",
+    "buildHistoryTypedClosureExpected26": "Native/provenance typed manifest closure, not old document/revision pointer JOIN"
+  },
+  "sourceFieldRows": {
+    "file": "旧库字段目录.csv",
+    "document": [
+      60,
+      68,
+      69,
+      70
+    ],
+    "revision": [
+      539,
+      540,
+      541,
+      542,
+      543,
+      544
+    ]
+  },
+  "sourceConstraintRows": {
+    "file": "旧库约束目录.csv",
+    "documentPK": 33,
+    "revisionDocumentFK": 74,
+    "revisionPK": 75,
+    "expressionSemantics": "UNVERIFIED_NOT_USED_TO_INFER_POSITIVE_REVISION"
+  },
+  "sourceExcerpt": {
+    "file": "server/domain/transactions/command.js",
+    "startLine": 136,
+    "endLine": 143,
+    "declaredWholeFileSha256": "2c7a9da7d0a90a5878ae37d944b79b5c7abe52f3f4fdf6290cf094a975cbf9f8",
+    "completeWholeFileIndependentlyVerified": false
+  },
+  "inputs": [
+    {
+      "path": "/workspace/scratch/1f717a486422/unified-e6-development-20261101/controller-new-input-1416/extracted/SOURCE-EXCERPTS.json",
+      "bytes": 48897,
+      "sha256": "60badae79767e07d3e477638355c2ea442c3c202a9badccbe03af652a481e2c3"
+    },
+    {
+      "path": "/workspace/scratch/1f717a486422/unified-e6-development-20261101/controller-new-input-1416/extracted/SOURCE-INDEX.json",
+      "bytes": 13481,
+      "sha256": "5eb4052c67349796590fa99f724a0a5ffb6b42f5c7dac68ad59011f58caa993d"
+    },
+    {
+      "path": "/workspace/scratch/1f717a486422/unified-e6-development-20261101/controller-schema-input/unpacked/旧库字段目录.csv",
+      "bytes": 79442,
+      "sha256": "b3a22fce92619aa18c6fb671eb9a0d23e91791da54659059268476325cbb1d2d"
+    },
+    {
+      "path": "/workspace/scratch/1f717a486422/unified-e6-development-20261101/controller-schema-input/unpacked/旧库约束目录.csv",
+      "bytes": 65670,
+      "sha256": "63ba967906ecb5b6627afa9cadabbe3a9827e0f39c71befc4de3dd345481c96c"
+    },
+    {
+      "path": "/workspace/scratch/1f717a486422/naijue-erp-unified-e6a03c9f-20261101/scripts/import-v3/prepare-native-bindings.mjs",
+      "bytes": 40456,
+      "sha256": "26204d29b788ea9df119ba63e681452d332ee1ffdaea2a440ee39496e8b1b7bd"
+    },
+    {
+      "path": "/workspace/scratch/1f717a486422/naijue-erp-unified-e6a03c9f-20261101/packages/application/src/history-typed-closure.ts",
+      "bytes": 37914,
+      "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+    }
+  ],
+  "sqlExecuted": false,
+  "dbConnected": false,
+  "authority": "NONE",
+  "independentStaticPeer": {
+    "agent": "finite_sampling_context",
+    "decision": "SOURCE_ONLY_LIMITED_DOMAIN_CLEAR",
+    "scope": "exact pointers/int32/body opaque/complete cohort/metadata PK-FK",
+    "testsExecuted": false,
+    "pgExecuted": false,
+    "mustFixFindings": [],
+    "notGenericUntrustedJSObjectValidator": true
+  },
+  "mainTreeIntegration": {
+    "sourceByteIdentical": true,
+    "writerConnected": false,
+    "actualDataVerified": false,
+    "sourceValidationScope": "Selected source snippets and prior catalog text only, no DB connection; deployment paired full hashes remain controller-asserted."
+  }
+}

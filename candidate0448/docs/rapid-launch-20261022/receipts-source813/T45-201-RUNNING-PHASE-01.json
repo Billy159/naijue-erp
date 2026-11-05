@@ -1,0 +1,35 @@
+{
+  "jobId": "t45-r1-post200-original108-continuation-20261028-201",
+  "status": "ACTUAL_RUNNING_PREFLIGHT1050_PASSED_ORIGINAL_HOST_STARTING_NOT_TERMINAL",
+  "checkedAtUtc": "2026-10-27T19:43:35.348926+00:00",
+  "phase": "PREFLIGHT_PASSED_HOST_STARTING",
+  "phaseAtUtc": "2026-10-27T19:41:59.450617+00:00",
+  "unit": "naijue-erp-op-5cc58239-ed5cb0f18ccf",
+  "unitMetadata": {
+    "MainPID": 2154774,
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "actualCanonical": "1050b2aa3329ca8956365578765f89027808dd7f3f9b81ff970de66b82f5ad3f",
+  "originalBindReceiptCount": 1,
+  "batch": {
+    "status": "STAGED",
+    "sequence": "3",
+    "cursor": "22",
+    "counts": {
+      "SKU": 0,
+      "WAREHOUSE": 22,
+      "IMPORT_BATCH": 0,
+      "INVENTORY_LEDGER": 0
+    },
+    "history_payload_hash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8"
+  },
+  "preflightRollbackReturned": true,
+  "preflightClientsClosed": true,
+  "nativeCurrentProofAndSuffixOutcome": "UNKNOWN_IN_FLIGHT",
+  "maxSteps": 16225,
+  "maxWallSeconds": 7200,
+  "absoluteDeadlineUtc": "2026-10-27T22:00:00Z",
+  "replayAllowed": false
+}

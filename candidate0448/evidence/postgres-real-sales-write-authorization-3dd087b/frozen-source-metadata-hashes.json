@@ -1,0 +1,16 @@
+{
+  "commit": "3dd087b8072fc189837c8299f9ff54c9a1c76718",
+  "metadata": [
+    {
+      "name": "EXACT_COMMIT.txt",
+      "sha256": "504257151b7c783c2eca17cb323fe21fb916cb0a4752b01eb2cdd36f907b5851",
+      "validation": "Exact full commit marker plus one newline; content matched before and after"
+    },
+    {
+      "name": "PLAN_ONLY.json",
+      "sha256": "d1a7cf9d52c35ad8dd4ccffbd6ccd4a9d56f470179839db059cc1d8f0a37d833",
+      "validation": "Root-provided exact expected PLAN digest matched before and after"
+    }
+  ],
+  "current_working_tree_included_in_test_claim": false
+}

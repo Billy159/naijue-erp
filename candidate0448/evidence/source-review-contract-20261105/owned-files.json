@@ -1,0 +1,27 @@
+[
+  {
+    "path": "packages/application/src/historical-sales-source-review.ts",
+    "sha256": "d69a9fa3668f26bb647d08aae48e7e73054e74c19d2bf2b1de1002af9064a1d9",
+    "bytes": 7404
+  },
+  {
+    "path": "packages/application/src/unified-historical-sales-source-review.ts",
+    "sha256": "f97e147703c92f82a76321bddd81108ebb2c18b76201b0e2fbcd9c2a7a79702f",
+    "bytes": 10285
+  },
+  {
+    "path": "tools/unified-import/source-review-preflight-cli.mjs",
+    "sha256": "1503ec0c56fc3c3703638c785aed8916d98ef5c92581eb3fb3d10a4fc8224237",
+    "bytes": 2388
+  },
+  {
+    "path": "tests/historical-sales-source-review.test.ts",
+    "sha256": "72a0ed39c78aed43c5147ec26f8fe8c9a52decbe5813a2b495f0fa829e1b909d",
+    "bytes": 10805
+  },
+  {
+    "path": "tests/historical-sales-source-review-cli.test.mjs",
+    "sha256": "e187f946334a90c1cc1e6d22b12d2f2d2c01468b1b9d97f20baf21de25a5560d",
+    "bytes": 4120
+  }
+]

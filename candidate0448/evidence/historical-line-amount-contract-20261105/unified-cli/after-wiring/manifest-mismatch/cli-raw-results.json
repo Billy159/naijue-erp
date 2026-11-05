@@ -1,0 +1,59 @@
+[
+  {
+    "mode": "ordinary",
+    "label": "wrong-pin",
+    "command": [
+      "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node",
+      "tools/unified-import/cli.mjs",
+      "validate",
+      "--package",
+      "/tmp/synthetic-unified-history-AuhpJq/package",
+      "--report",
+      "/tmp/synthetic-unified-history-AuhpJq/ordinary-wrong-pin",
+      "--allow-synthetic",
+      "--offline",
+      "--manifest-sha256",
+      "0000000000000000000000000000000000000000000000000000000000000000",
+      "--historical-hall-approval",
+      "/tmp/synthetic-unified-history-AuhpJq/hall-review.json",
+      "--historical-hall-approval-sha256",
+      "4af33de741074e1937d4b0e04da730b85cc421d4b67bd7b23d4113ec532091c1",
+      "--historical-line-amount-evidence",
+      "/tmp/synthetic-unified-history-AuhpJq/amount-review.json",
+      "--historical-line-amount-evidence-sha256",
+      "a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0"
+    ],
+    "exit_code": 1,
+    "signal": null,
+    "stdout": "{\n  \"code\": \"PREFLIGHT_FAILED_CLOSED\",\n  \"message\": \"Unreadable or malformed standard package; no database action attempted\",\n  \"database_import_implemented\": false\n}\n",
+    "stderr": ""
+  },
+  {
+    "mode": "stream",
+    "label": "wrong-pin",
+    "command": [
+      "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node",
+      "tools/unified-import/cli.mjs",
+      "stream-preflight",
+      "--package",
+      "/tmp/synthetic-unified-history-AuhpJq/package",
+      "--report",
+      "/tmp/synthetic-unified-history-AuhpJq/stream-wrong-pin",
+      "--allow-synthetic",
+      "--manifest-sha256",
+      "0000000000000000000000000000000000000000000000000000000000000000",
+      "--historical-hall-approval",
+      "/tmp/synthetic-unified-history-AuhpJq/hall-review.json",
+      "--historical-hall-approval-sha256",
+      "4af33de741074e1937d4b0e04da730b85cc421d4b67bd7b23d4113ec532091c1",
+      "--historical-line-amount-evidence",
+      "/tmp/synthetic-unified-history-AuhpJq/amount-review.json",
+      "--historical-line-amount-evidence-sha256",
+      "a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0"
+    ],
+    "exit_code": 1,
+    "signal": null,
+    "stdout": "{\"code\":\"STREAM_PREFLIGHT_FAILED\",\"import_eligible\":false,\"business_database_writes\":false}\n",
+    "stderr": ""
+  }
+]

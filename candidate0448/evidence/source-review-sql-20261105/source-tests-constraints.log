@@ -1,0 +1,21 @@
+✔ new successor is review only, 35 tables / 166 routines, and cannot be substituted for old evidence (2.583365ms)
+✔ source compilation requires exact independently pinned r2 and reviewed design (8.636497ms)
+✔ all thirteen old routine bodies survive byte-for-byte after removing their sole new prefix (1.034393ms)
+✔ four effective runtime policies are replaced with positive visible-parent predicates, never added (1.346099ms)
+✔ only command/read are SECURITY DEFINER and only exact protected IMPORTER executes are proposed (1.216845ms)
+✔ cutoff remains nonnull for both ordinary modes and quarantine has no ordinary writer (0.47476ms)
+✔ approval bytes are retained contiguously with canonical base64, complete hash and unique JSON keys (0.247213ms)
+✔ raw source hash uses exact retained UTF8, never jsonb reserialization, and pointer read is bounded (0.278681ms)
+✔ SQL preserves semantic integer coordinates while matching app raw-shape and UTF16 boundaries (3.284057ms)
+✔ seal checks exact membership, source proofs and ordinary no-effect; resolution remains honestly unavailable (0.476318ms)
+✔ idempotency and concurrency checks precede new writes and cross-batch source duplication is explicit (0.315613ms)
+✔ synthetic app wrappers follow SQL primitive occurrence tuple and v8 algorithm without loss of raw originals (1.090732ms)
+✔ loader emits separate current pins and never alters old combined installer profiles (46.622259ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 420.60872

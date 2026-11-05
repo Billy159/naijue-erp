@@ -1,0 +1,24 @@
+✔ sales money and counts remain exact beyond Number and preserve negative sign (2.713756ms)
+✔ sales filters project the committed shape, reject dates/UUID/status and trim literal number (2.033117ms)
+✔ list validates exact totals, bounded page/row membership, no coercion or hidden extensions (2.362246ms)
+✔ list number membership uses deterministic lowercase literal inclusion without treating SQL wildcard characters specially (1.932672ms)
+✔ list requires exact non-gift quantity aggregates and a non-null native updated timestamp, without line bigint bounds (2.423812ms)
+✔ detail preserves independent RETURN snapshots, IDs, full size/FIT and nullable metadata (2.324006ms)
+✔ detail rejects wrong target lines, inactive rows, floating amounts, overflows and duplicate line identity (0.997226ms)
+✔ reference port rejects partial pages and noncanonical identities (0.941847ms)
+✔ HTTP construction is inert and one explicit list/detail call uses exact existing same-origin endpoints (19.044972ms)
+✔ malformed HTTP success cannot become an empty or successful sales result (2.508373ms)
+✔ safe HTTP status kinds remain errors, never successful zero pages (18.752802ms)
+✔ superseded/cancelled details and identity replacement discard transports that ignore signals (2.411013ms)
+✔ named detail is required and nullable current salesperson matches its reference identity (2.456108ms)
+✔ settlement name records map one-to-one to exact settlement/account identities with historical and current facts distinct (2.021265ms)
+✔ concrete filter reference HTTP reader is inert and projects only the actual bounded endpoint contract (4.037443ms)
+✔ filter reference HTTP rejects invalid parameters before fetch and old/malformed candidate responses without fallback (2.411221ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 840.065374

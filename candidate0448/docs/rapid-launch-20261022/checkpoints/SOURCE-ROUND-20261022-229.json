@@ -1,0 +1,69 @@
+{
+  "atUtc": "2026-10-23T22:23:31.567226+00:00",
+  "parent": "0812ef7ad464b38f9c6ee5179d1edd4069780269",
+  "taskId": "F1_O_S14_ZERO_COMPLETED_PENDING_ONLY_CONFIRM_TRIGGER",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 54271,
+      "sha256": "5216753bd3da53a78ae11ea62247e4a5d96955b00af1e5c9234a5522abde5cc9",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-116/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "66b7d5f024f0c7437cf37e83db8e0a129f72cc27bb8332a0da2522383d47030d",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh; Fast not verified",
+    "finding": "O-S14 original remaining zero-completed pending-only confirmation",
+    "status": "SOURCE_READY_ZERO_COMPLETED_MODE_CONFIRM_GATE_ACTUAL_PENDING",
+    "files": [
+      {
+        "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+        "bytes": 54271,
+        "sha256": "5216753bd3da53a78ae11ea62247e4a5d96955b00af1e5c9234a5522abde5cc9"
+      }
+    ],
+    "change": "One condition only: confirm when draft.lines.length; no extra confirmation for pending/query-only or empty. Existing completed-line mode effects untouched.",
+    "checks": {
+      "before-1": "RED original full new SalesNewDocumentForm: no completed rows, query-only input wrongly shows mode confirmation.",
+      "after-1": "PASS original full new page four affected states only: query-only, selected unfinished actual product/12/10, pending incoming query RETURN→SALE and empty. All no confirmation, mode immediately applied and original pending entries reset; header date/note/hall retained, no document/preparation/key/command generated.",
+      "types-1": "PASS exact changed form root complete strict imported closure; include=[] no exclusions.",
+      "adoptedNotRerun": "C reports original QFv069/source224 completed-line confirmation effects accepted. Sole condition change preserves that branch; mode method/source112 unchanged byte hash."
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-116/REPORT.md",
+        "bytes": 954,
+        "sha256": "abaca3de88b0481b5a75db6b30d7b695224ea48ef3408f03a382725d33e68c4a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-116/CHECKS.json",
+        "bytes": 766,
+        "sha256": "23938952c93b8d96a42d0701227715468e5197995023565bcbd70be0312ea929"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-116/RESULT.json",
+        "bytes": 892,
+        "sha256": "c29c7a173d6cd6e836c01815570ed934cd8093adb6a51bf2a3d8e060138a383a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-116/BEFORE-STATE.json",
+        "bytes": 151,
+        "sha256": "628e93a82d85210335c62e599e4955543fccbdeb1bd16eda53479392a6b12ea8"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-116/SOURCE.diff",
+        "bytes": 920,
+        "sha256": "bca7c0b8dc15a7fea7d35306faa42fb3f0237c5b951af05fd5a26cf7bd4bb724"
+      }
+    ],
+    "limitations": [
+      "C/QF containing candidate actual still required; no Chrome or whole page/source224 full scope rerun.",
+      "No native HTTP/PG/save/preparation/newkey, no build/service/Git/C total records.",
+      "Today227 TS and date-padding115 CSS remain unchanged; F2/C untouched."
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "One existing pending-only confirmation trigger line restored to frozen final implementation. Original224 confirmed effects adopted, not rerun. Four affected form states/strict owner checks are source-only; no Chrome/business/performance acceptance."
+}

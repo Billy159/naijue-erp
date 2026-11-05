@@ -1,0 +1,537 @@
+{
+  "atUtc": "2026-10-22T18:52:12.733341+00:00",
+  "parent": "eb57b347fb69c3ebd174ca787103f10c37acd236",
+  "groups": [
+    {
+      "slice": "TRANSFER_WHOLE_UI_AND_ACTUAL_THREE_CONSUMERS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-30/DELIVERY.json",
+      "receiptSha256": "dadbdc63139d2a581b0faf0703202326692883f9a240d6e67f582430381434c1",
+      "receiptSnapshot": {
+        "chunk": 30,
+        "status": "READY_FOR_C_PIN_WHOLE_TRANSFER_UI_NOT_ACCEPTED",
+        "sourceBase": "C52 da61c6a root capture; C53 source0 correction retained by C",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.ts",
+            "sha256": "340b91d7b3d2820c9f69b9acc182541b9863d59b3c20418edd8b480abe8e9f6e"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "sha256": "20886b99f357f8abf499d6a2068b820216535d9a5ed32bf4b2a88f968a14392e"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "sha256": "a8a72afef722f1ecf1b9b7ca69c7fcec52bcced69cfcd2ee318557a71d8d92ec"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-create.ts",
+            "sha256": "dd9b3afd3dc4ee11a0d8ec1158f695b4ad81d1a0e79146f761ccc9f6b988969a"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-new-document-form.tsx",
+            "sha256": "f8e7c4bbd0b49a76281f755951c67bfeb88e05d542f26b5d9fb0a81b074604bd"
+          },
+          {
+            "path": "apps/web/src/transfers/document-presentation.tsx",
+            "sha256": "5112445dd17c2b48fbad67f5cea940875816271c7c3806fae82782fda5697cf7"
+          },
+          {
+            "path": "apps/web/src/transfers/detail.css",
+            "sha256": "0e720595510710903cf3f1832cd37d6e4bb43c358f49b485abd5838cff905e5f"
+          },
+          {
+            "path": "apps/web/src/transfers/detail-content.tsx",
+            "sha256": "5099bb10933fcda7dfe32932c012f4cf01cc4a26da8bda121cd46ba2334b3340"
+          },
+          {
+            "path": "apps/web/src/transfers/detail-host.tsx",
+            "sha256": "d9e218567aa9093b442d952463f7b21ac532b84f88ba5cf597e90f385a175e9f"
+          },
+          {
+            "path": "apps/web/src/transfers/transfers-route.tsx",
+            "sha256": "93a1052a751514c8317dd42e2f0c1402bbfb5eb93e55c682b2abaabff6da09d4"
+          },
+          {
+            "path": "apps/web/src/transfers/transfers-page.tsx",
+            "sha256": "fca76b7b29cd35b9802b90532d9acdba97e3f1c0d6d9509ea57400834e9e8954"
+          },
+          {
+            "path": "apps/web/src/transfers/commands/manual-create-host.tsx",
+            "sha256": "fe1f95cf0d4ff2b67f1cf38e10938f9415bf6cc545f88338b279b789a3d667c5"
+          },
+          {
+            "path": "apps/web/src/transfers/commands/host.tsx",
+            "sha256": "cb3b64db3cd27a095346be2296f2b78d9135effccfa259ea8da2388b95cf98f4"
+          },
+          {
+            "path": "apps/web/src/transfers/commands/form.tsx",
+            "sha256": "3b2a83199060639a85be0f9f2254294053166ba4275b3391d81a01ef7317a057"
+          },
+          {
+            "path": "apps/web/src/transfers/commands/editable-lines.tsx",
+            "sha256": "322c43201368724a2b9040fb6e7e2ce2a6e6471f8a6e0bf73508b612af7b4e49"
+          },
+          {
+            "path": "apps/web/src/sales/document-presentation.tsx",
+            "sha256": "e25eafee77f9445425a1c6bc10dcd7c41a6f6a99b5b558ae8bc8b64115813dd7"
+          },
+          {
+            "path": "apps/web/src/current-form/product-finder.tsx",
+            "sha256": "b71bfea976f59f751bfc19fe950563878c80d02f89a135f5b5f1bfeee4a1a7b4"
+          },
+          {
+            "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+            "sha256": "9be1aad23f2c446ac40c7ac257aff035e02981b0fc48736e7f934550abba09b1"
+          },
+          {
+            "path": "apps/web/src/application/routes/transfers.tsx",
+            "sha256": "8ee965ad21993a329224a115ff1e0957bc09f3ced7c77d1fcd4ee9c23026d315"
+          },
+          {
+            "path": "apps/web/src/application/controller.ts",
+            "sha256": "ff003f419ff659d08352b533cb06734473e04f92bd42c0efbcda11895e4ee499"
+          },
+          {
+            "path": "apps/web/src/production-host/configuration.ts",
+            "sha256": "cc64efb5276c10b087b9a2d4471430606dc67f764e09e38346c0552e2409b59d"
+          },
+          {
+            "path": "apps/web/src/production-host/mount.tsx",
+            "sha256": "75cad8b91a08ddee08f9a443e3c31e72cc0ebf2f5ac0e08156d468fb2cfdf438"
+          }
+        ],
+        "findings": [
+          "TR-UI-01 source ready / browser pending",
+          "TR-UI-02 source ready / browser pending",
+          "TR-UI-03 source ready / browser pending",
+          "TR-UI-04 source ready / browser pending",
+          "NEW-FINDER-TAB-FOCUS-01 targeted red/green"
+        ],
+        "checks": [
+          {
+            "log": "types-6.log",
+            "exitCode": 0,
+            "scope": "Final actual production mount/root type closure after observed D1 union annotation delta; no F1 backend writes."
+          },
+          {
+            "log": "new-1.log",
+            "exitCode": 0,
+            "scope": "Actual new Transfer page native dictionary3 members but only2 actual writable SKU cells, warehouse/product portals, batch3/2 summary5/category, cancel and real product-page return retain DOM/raw/focus; zero commands."
+          },
+          {
+            "log": "saved-2.log",
+            "exitCode": 0,
+            "scope": "Actual saved edit/read common matrix and summary, exact bigint, raw7 total9, invalid1.5 preserved/blocks SAVE/pending-validation summary; real product-page return retains draft; zero commands."
+          },
+          {
+            "log": "inline-1.log",
+            "exitCode": 0,
+            "scope": "Final inline replacement remains at original row; bottom pending raw DOM stays mounted/suspended; cancel and finder Esc retain original; explicit canonical target3/2 confirmation."
+          },
+          {
+            "log": "keyboard-after.log",
+            "exitCode": 0,
+            "scope": "Fresh Transfer Tab counterexample fixed, next focus retained; Escape restores anchor/raw; old session5224 stays UNKNOWN."
+          },
+          {
+            "log": "sales-tab-1.log",
+            "exitCode": 0,
+            "scope": "Only affected actual Sales consumer Tab/Esc/raw check; zero commands."
+          },
+          {
+            "log": "capability-1.log",
+            "exitCode": 0,
+            "scope": "Independent transfer fullPage/default-size opt-ins, canonical id/parent checks, exact native TRANSFER sku-batch and identity-abort."
+          },
+          {
+            "log": "pending-1.log",
+            "exitCode": 0,
+            "scope": "First model check reused: explicit duplicate append, original-change invalidates confirmation, exact sizeId+groupId only mapping, prepare cancellation/late-read isolation."
+          }
+        ],
+        "previewFixtures": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-30/preview-fixtures.tsx",
+          "scenarios": [
+            "empty",
+            "filled",
+            "pending",
+            "row-edit",
+            "saved-edit",
+            "saved-view"
+          ],
+          "source": "Actual leafs/models with synthetic DTOs and3-member explicit dictionary, deliberately not hardcoded10",
+          "writes": "Unavailable. Not production save/audit."
+        },
+        "nativeBoundaries": [
+          "No backend/shared contract/schema/dependency/release-root configuration changes. C supplied TransferRouteConfiguration.productFullPage/initialSizeGroup.",
+          "Same native new-document preparation/write owner; pending/replace edits cancel old preparation; original CAS/key/replay unchanged.",
+          "Saved qty/date/note retain original line identity/snapshot/barcode. Saved new/replaced SKU/header/warehouse/scan append NOT MOUNTED pending native transfer prepare-existing.",
+          "Exact configured default-size UUID + bounded native dictionary; no first-group/UPPER/ten-size default; <=40 visible columns and saved adversarial paged fallback.",
+          "Real ProductFullPageHost reused for all3 consumers, retains hidden document DOM/raw/focus. Shared wrapper keeps default Sales labels.",
+          "Controller delta from C52 only passes readonly Transfer unauthorized callback; all other capture/dispose bytes reused.",
+          "Optional public transferProductFullPage/transferInitialSizeGroupId are independent; C owns actual host configuration/flags."
+        ],
+        "remaining": [
+          {
+            "id": "TRANSFER-WHOLEPAGE-BROWSER",
+            "status": "NOT_TESTED",
+            "detail": "C must pin22 files, run latest integrated build then immediately compare new/edit/read actual pages against Demo at same viewport; F1 owns no browser/server/build window."
+          },
+          {
+            "id": "TRANSFER-SAVED-EXISTING-PREPARE",
+            "status": "NOT_MOUNTED",
+            "detail": "New/replaced saved SKU/header/warehouse and scan append need native transfer read preparation; never reuse create IDs."
+          },
+          {
+            "id": "BARCODE-PARTIAL-NATIVE",
+            "status": "NEED_FIX",
+            "detail": "Final Demo partial current/history/compatible SKU barcode>=6 and product code search not supplied by native products query; separate exact scanner does not close this gap."
+          },
+          {
+            "id": "TRANSFER-REPLACEMENT-UNMAPPED-SIZE",
+            "status": "KNOWN_CONSERVATIVE_LIMIT",
+            "detail": "Non-unique/cross-group mapping blocks rather than guesses. Cancel, explicitly add target and delete original is available; direct cross-group re-entry remains UX gap."
+          },
+          {
+            "id": "PRODUCT-BARCODES-PRICES-STOCK",
+            "status": "EXISTING_OTHER_OWNER_IN_PROGRESS",
+            "detail": "Only full-page navigation/return wired here; F2/D1 tabs actual business acceptance not claimed."
+          },
+          {
+            "id": "LATEST-NATIVE-SAVE-AUDIT",
+            "status": "NOT_TESTED_THIS_SLICE",
+            "detail": "No PG, real save/audit, Excel app or physical print, and no old broad protocol rerun."
+          }
+        ],
+        "evidenceNotes": [
+          "Old v13.1 remains historical synthetic partial, never latest wholepage acceptance.",
+          "All failed probes retained. page1/2/3 exposed controlled Select empty-value issue; controlled empty array fixes same-fit reselection. page4 new group passed but saved selector was wrong; corrected saved2 exit0.",
+          "keyboard-before exit134 occurred while assert attempted inspecting unequal DOM objects; corrected boolean assertion before2 exit1 proves actual focus defect; after exit0. No app-memory/performance conclusion.",
+          "types5 exit2 onlyD1 WIP union diagnostic reported to C; types6 after actual D1 annotation delta exit0. No excluded diagnostics/backend edits."
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.ts",
+          "owner": "F1",
+          "sha256": "340b91d7b3d2820c9f69b9acc182541b9863d59b3c20418edd8b480abe8e9f6e",
+          "bytes": 26516
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "20886b99f357f8abf499d6a2068b820216535d9a5ed32bf4b2a88f968a14392e",
+          "bytes": 24807
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "sha256": "a8a72afef722f1ecf1b9b7ca69c7fcec52bcced69cfcd2ee318557a71d8d92ec",
+          "bytes": 3389
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-create.ts",
+          "owner": "F1",
+          "sha256": "dd9b3afd3dc4ee11a0d8ec1158f695b4ad81d1a0e79146f761ccc9f6b988969a",
+          "bytes": 8991
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-new-document-form.tsx",
+          "owner": "F1",
+          "sha256": "f8e7c4bbd0b49a76281f755951c67bfeb88e05d542f26b5d9fb0a81b074604bd",
+          "bytes": 1780
+        },
+        {
+          "path": "apps/web/src/transfers/document-presentation.tsx",
+          "owner": "F1",
+          "sha256": "5112445dd17c2b48fbad67f5cea940875816271c7c3806fae82782fda5697cf7",
+          "bytes": 7663
+        },
+        {
+          "path": "apps/web/src/transfers/detail.css",
+          "owner": "F1",
+          "sha256": "0e720595510710903cf3f1832cd37d6e4bb43c358f49b485abd5838cff905e5f",
+          "bytes": 12037
+        },
+        {
+          "path": "apps/web/src/transfers/detail-content.tsx",
+          "owner": "F1",
+          "sha256": "5099bb10933fcda7dfe32932c012f4cf01cc4a26da8bda121cd46ba2334b3340",
+          "bytes": 10048
+        },
+        {
+          "path": "apps/web/src/transfers/detail-host.tsx",
+          "owner": "F1",
+          "sha256": "d9e218567aa9093b442d952463f7b21ac532b84f88ba5cf597e90f385a175e9f",
+          "bytes": 3031
+        },
+        {
+          "path": "apps/web/src/transfers/transfers-route.tsx",
+          "owner": "F1",
+          "sha256": "93a1052a751514c8317dd42e2f0c1402bbfb5eb93e55c682b2abaabff6da09d4",
+          "bytes": 3282
+        },
+        {
+          "path": "apps/web/src/transfers/transfers-page.tsx",
+          "owner": "F1",
+          "sha256": "fca76b7b29cd35b9802b90532d9acdba97e3f1c0d6d9509ea57400834e9e8954",
+          "bytes": 15057
+        },
+        {
+          "path": "apps/web/src/transfers/commands/manual-create-host.tsx",
+          "owner": "F1",
+          "sha256": "fe1f95cf0d4ff2b67f1cf38e10938f9415bf6cc545f88338b279b789a3d667c5",
+          "bytes": 3340
+        },
+        {
+          "path": "apps/web/src/transfers/commands/host.tsx",
+          "owner": "F1",
+          "sha256": "cb3b64db3cd27a095346be2296f2b78d9135effccfa259ea8da2388b95cf98f4",
+          "bytes": 4031
+        },
+        {
+          "path": "apps/web/src/transfers/commands/form.tsx",
+          "owner": "F1",
+          "sha256": "3b2a83199060639a85be0f9f2254294053166ba4275b3391d81a01ef7317a057",
+          "bytes": 11111
+        },
+        {
+          "path": "apps/web/src/transfers/commands/editable-lines.tsx",
+          "owner": "F1",
+          "sha256": "322c43201368724a2b9040fb6e7e2ce2a6e6471f8a6e0bf73508b612af7b4e49",
+          "bytes": 5148
+        },
+        {
+          "path": "apps/web/src/sales/document-presentation.tsx",
+          "owner": "F1",
+          "sha256": "e25eafee77f9445425a1c6bc10dcd7c41a6f6a99b5b558ae8bc8b64115813dd7",
+          "bytes": 13640
+        },
+        {
+          "path": "apps/web/src/current-form/product-finder.tsx",
+          "owner": "F1",
+          "sha256": "b71bfea976f59f751bfc19fe950563878c80d02f89a135f5b5f1bfeee4a1a7b4",
+          "bytes": 7661
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "9be1aad23f2c446ac40c7ac257aff035e02981b0fc48736e7f934550abba09b1",
+          "bytes": 33035
+        },
+        {
+          "path": "apps/web/src/application/routes/transfers.tsx",
+          "owner": "F1",
+          "sha256": "8ee965ad21993a329224a115ff1e0957bc09f3ced7c77d1fcd4ee9c23026d315",
+          "bytes": 8874
+        },
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "owner": "F1",
+          "sha256": "ff003f419ff659d08352b533cb06734473e04f92bd42c0efbcda11895e4ee499",
+          "bytes": 38666
+        },
+        {
+          "path": "apps/web/src/production-host/configuration.ts",
+          "owner": "F1",
+          "sha256": "cc64efb5276c10b087b9a2d4471430606dc67f764e09e38346c0552e2409b59d",
+          "bytes": 7701
+        },
+        {
+          "path": "apps/web/src/production-host/mount.tsx",
+          "owner": "F1",
+          "sha256": "75cad8b91a08ddee08f9a443e3c31e72cc0ebf2f5ac0e08156d468fb2cfdf438",
+          "bytes": 9701
+        }
+      ]
+    },
+    {
+      "slice": "SALES_EXISTING_ZERO_DML_PREPARATION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/SALES-PREPARE-EXISTING-RESULT-v1.json",
+      "receiptSha256": "fb793c44a4f7ab295480e5ae0699316b7c733616249e75855c23a7b91b58a37e",
+      "receiptSnapshot": {
+        "task": "D1_SALES_PREPARE_EXISTING_READ_PREPARATION",
+        "status": "SOURCE_SYNTHETIC_PROTOCOL_READY_FOR_C_CHECKPOINT_AND_QB_NOT_HOST_ENABLED",
+        "atUtc": "2026-10-22T18:46:31.917Z",
+        "contract": "docs/rapid-launch-20261022/SALES-PREPARE-EXISTING-READ-CONTRACT-v1.json",
+        "files": [
+          {
+            "path": "packages/application/src/native-sales-preparation.ts",
+            "bytes": 29066,
+            "sha256": "a42862fe9c5389bc4f40a25b1eb7c66da3aeb4caf74c13784cbc40f8ef9702eb"
+          },
+          {
+            "path": "apps/api/src/sales-preparation-input.ts",
+            "bytes": 3870,
+            "sha256": "5e89890e2a0a3e74d799abadbced877a7ca9b8a4f98dd6fa317982cdb2677707"
+          },
+          {
+            "path": "apps/api/src/sales-http.ts",
+            "bytes": 11509,
+            "sha256": "329057f047f57c6e4f7363aae136a7941f3d9b235edcf4ca1f9d97535426f19b"
+          },
+          {
+            "path": "tests/native-sales-preparation.test.ts",
+            "bytes": 19901,
+            "sha256": "3f7524fd416740a73c5ccee54d849fc517f36ea647fe3507200c9331db55f744"
+          },
+          {
+            "path": "apps/api/src/sales-preparation-http.test.ts",
+            "bytes": 10966,
+            "sha256": "8560eb8198aff1bd39b169f563981999afa2c56aee96f72ca1ac3594d32d0b62"
+          }
+        ],
+        "frozenForCCheckpoint": true,
+        "entry": "createNativeSalesExistingPreparation(dependencies).prepareExisting(actor,proposal)",
+        "parser": "parseNativeSalesExistingProposal / API parseSalesExistingProposal",
+        "http": {
+          "method": "POST",
+          "path": "/sales/prepare-existing",
+          "independentProviderOption": "existingPreparation:{prepareExisting}",
+          "providerAbsent": 404,
+          "responseExactKeys": [
+            "expectedVersion",
+            "draft"
+          ],
+          "actualHostEnabled": false
+        },
+        "scope": {
+          "stored": "One original transaction and loaded RUNTIME_LEDGER DRAFT; stored and proposed authorization, actual version, pointer ownership/current status",
+          "identity": "Existing sameSKU id/snapshot/reference remain; NEW/replacedSKU use server new ids+current native facts, omitted old lines retained by unchanged SAVE",
+          "settlements": "Retained sameaccount method cannot be inferred/replaced; changed/new account gets new row with actual method pair",
+          "effects": "Private read view denies all business writes, stock and number ports; even caught write attempts poison preparation; closed callback scope",
+          "transaction": "Existing READ COMMITTED advisory/row locks; never labeled PG READ ONLY",
+          "economics": "Existing signed nonzero return/exchange, zero whole discount, gift/zero/minimum/current refs/exact pricing and stable allocation rules; SAVE budget retained"
+        },
+        "validation": {
+          "receipt": "SALES-PREPARE-EXISTING-VALIDATION-v1.json",
+          "newUnique": 10,
+          "affectedUnique": 3,
+          "finalPass": 13,
+          "skipped": 0,
+          "strictFinalActualExitCode": 0,
+          "syntheticOnly": true
+        },
+        "unchanged": [
+          "Old prepareCreate implementation and old create parser body",
+          "Existing SAVE/CAS/hash/number allocation implementation",
+          "Frontend and C shared contracts/config",
+          "DDL and stock/source rows"
+        ],
+        "notClaimed": [
+          "Actual PG readonly business-effect verification",
+          "Actual host route activation",
+          "Browser/manual real saved business edits",
+          "Actual current app/source authorization"
+        ]
+      },
+      "files": [
+        {
+          "path": "packages/application/src/native-sales-preparation.ts",
+          "owner": "D1",
+          "sha256": "a42862fe9c5389bc4f40a25b1eb7c66da3aeb4caf74c13784cbc40f8ef9702eb",
+          "bytes": 29066
+        },
+        {
+          "path": "apps/api/src/sales-preparation-input.ts",
+          "owner": "D1",
+          "sha256": "5e89890e2a0a3e74d799abadbced877a7ca9b8a4f98dd6fa317982cdb2677707",
+          "bytes": 3870
+        },
+        {
+          "path": "apps/api/src/sales-http.ts",
+          "owner": "D1",
+          "sha256": "329057f047f57c6e4f7363aae136a7941f3d9b235edcf4ca1f9d97535426f19b",
+          "bytes": 11509
+        },
+        {
+          "path": "tests/native-sales-preparation.test.ts",
+          "owner": "D1",
+          "sha256": "3f7524fd416740a73c5ccee54d849fc517f36ea647fe3507200c9331db55f744",
+          "bytes": 19901
+        },
+        {
+          "path": "apps/api/src/sales-preparation-http.test.ts",
+          "owner": "D1",
+          "sha256": "8560eb8198aff1bd39b169f563981999afa2c56aee96f72ca1ac3594d32d0b62",
+          "bytes": 10966
+        }
+      ]
+    },
+    {
+      "slice": "EXPLICIT26_EXECUTOR_AND_CLI_SELECTION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/executor26-slice1/RESULT.json",
+      "receiptSha256": "dc828971c9c808a8e30f21897cf5c8407ae0257aabb6dadd6bb336d01dd434f5",
+      "receiptSnapshot": {
+        "taskId": "D3_EXPLICIT26_POSTGRES_EXECUTOR_AND_CLI",
+        "atUtc": "2026-10-22T18:42:01.252886+00:00",
+        "status": "SOURCE_READY_NEW5_AFFECTED2PASS_NO_ACTUAL_RUNTIME_OR_MAIN49",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.mjs",
+            "bytes": 23075,
+            "sha256": "d2a1fc7b79505bfe1ef4f4f38372d9e2b1dd2dfd8418fe7cce2064ee674b3052"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.test.mjs",
+            "bytes": 22933,
+            "sha256": "2889834e6968cf170c40a617463f2412b4faad55e95232a214523923f5cb8844"
+          }
+        ],
+        "API": [
+          "createPostgresImportExecutor26({pool,binding,authorization,now,runtime26,bootstrap26})",
+          "Explicit CLI fifth positional flag --exact26 selects openImportHost26 + executor26; existing4args stay19; no auto profile detection/fallback."
+        ],
+        "behavior": [
+          "New explicit binding version NATIVE_IMPORT_EXECUTION_26_V1; separate stage map chooses all concrete successor store exports and D1 MAIN26/closure26 options.",
+          "Requires checked runtime26, exact stageNewBatch26 bootstrap methods and exact source authorization callbacks; construction inert, not a runtime/source grant issuer.",
+          "Initial source actor authorization before target borrow; Boolean source/runtime approvals and mutation substitution refused. PARTY/header-reference inputs require every explicit input profile26; product/catalogue/SKU require profile26 before SQL.",
+          "Actual issued-pool original client IMPORT_STAGE proof precedes first target SQL; exact targetidentity+prefix26, old schema19 guard path unchanged.",
+          "Same runtime capability flows into all native writers/closure and MAIN26 options, callback thirdcap forwarded intact under D1 MAIN contract.",
+          "Unknown COMMIT target/store errors discard without rollback or retry; same immutable source operation replay reuses target check, each native lease still proves runtime."
+        ],
+        "checks": {
+          "newSyntheticExecutor": 4,
+          "newCliRoute": 1,
+          "affectedLegacy": 2,
+          "passed": 7,
+          "skipped": 0,
+          "protocolLog": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/executor26-slice1/protocol-first.log",
+            "bytes": 919,
+            "sha256": "0eb4d4c8862979b69ab9159e738ab56cfe04e4b42509ced5173bb4bf2e181d4d"
+          },
+          "cliOnlyLog": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/executor26-slice1/cli-new-case.log",
+            "bytes": 237,
+            "sha256": "a3b3ea188e7061e89c5672099abfba72a3b6cc013addc8cce0f6f8830088a254"
+          },
+          "programChecks": "Node24 source parse/import through focused tests; pure MJS, no new standalone strict TSC claim."
+        },
+        "notClaimed": [
+          "Actual D1 runtime26 issuer/engine/catalogv7 admission",
+          "Actual49 source actor/fullgrant/bootstrap implementation or successful MAIN26 stage",
+          "All12 native stage paths tested end to end; positive protocol routes concrete BARCODE26 only, other store groups separately scoped tests",
+          "Complete11 real source factories/openImportHost26/PG/native writes/publication"
+        ],
+        "next": "C freeze exact2/new5+affected2 scopedQA; implement explicit openImportHost26 composition from reviewed providers and actual D1 issuer once no missing grant/factory contracts."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/run.mjs",
+          "owner": "D3",
+          "sha256": "d2a1fc7b79505bfe1ef4f4f38372d9e2b1dd2dfd8418fe7cce2064ee674b3052",
+          "bytes": 23075
+        },
+        {
+          "path": "scripts/import-v3/run.test.mjs",
+          "owner": "D3",
+          "sha256": "2889834e6968cf170c40a617463f2412b4faad55e95232a214523923f5cb8844",
+          "bytes": 22933
+        }
+      ]
+    }
+  ],
+  "fileCount": 29,
+  "scope": "Three independent source/protocol groups only. No actual browser/PG/business/MAIN authority or host activation. All mutable receipts snapshotted here."
+}

@@ -1,0 +1,134 @@
+{
+  "atUtc": "2026-10-24T00:52:28.972330+00:00",
+  "parent": "17a67300b669741decd1c4b5699a72f831e764cd",
+  "taskId": "F2_P10_FROZEN_ACTUAL_DEFAULT_SCHEME_NAME_SHARED_READ_OWNER",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-page-barcodes.tsx",
+      "bytes": 15831,
+      "sha256": "0039d898cc3a6b961b7691e4d1fbc1adfecc2a34b0660bc8b53fe50099b72484",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "a17e3906aa597ad48e279aa1c801d28baed49c3b5d256ce15da7130c58d58c57",
+  "ownerDelivery": {
+    "taskId": "F04-P10-EXISTING-DEFAULT-SCHEME-READ",
+    "subscope": "READONLY_ACTUAL_DEFAULT_SCHEME_NAME",
+    "owner": "F2",
+    "status": "SOURCE_READY_EXACT1_REAL_NAME_SHARED_QUERY_OWNER_LOCAL_CHECKS_PASS_HOST_AND_ACTUAL_PENDING",
+    "authority": {
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "model": "gpt-6.1-sol/xhigh; Fast not verified"
+    },
+    "completedScope": "AVAILABLE+independent reader first actual barcode-tab visit performs one exact product-FK description read. Native pc-read-value shows returned name; actual NOT_SET is source emdash. Header and click-only preview share one query/result owned by current scope/product/version/scheme/provider. Same-target page replacement preserves valid result. No global cache/new API/DTO/config property or editor hard import.",
+    "files": [
+      {
+        "path": "apps/web/src/products/product-page-barcodes.tsx",
+        "bytes": 15831,
+        "sha256": "0039d898cc3a6b961b7691e4d1fbc1adfecc2a34b0660bc8b53fe50099b72484",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/source/apps/web/src/products/product-page-barcodes.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/before/apps/web/src/products/product-page-barcodes.tsx",
+          "bytes": 11376,
+          "sha256": "ea11af494c2f315a62bf1bd09fd57c853c6ae6796637396d3a019db55105a242"
+        }
+      }
+    ],
+    "checks": {
+      "status": "PASS_NEW_DEFAULT_SCHEME_ACTUAL_NAME_FIELD_ONLY",
+      "positive": [
+        "first active field visit queries exact native FK once",
+        "real historical name shown in native pc-read-value",
+        "modal absent until click and shares same owner/result without second query",
+        "same product/version/FK pagination keeps name result"
+      ],
+      "negative": [
+        "NOT_SET displays source emdash with explicit title, no lookup",
+        "legacyUNAVAILABLE/missing independent cap do not query",
+        "null detail remains unavailable record, never NOT_SET",
+        "failure/retry transparent; foreign returned target rejected"
+      ],
+      "switching": [
+        "version/FK replaces and aborts old lookup; late403 ignored",
+        "account/scope releases old lookup and late403 cannot clear new page",
+        "current403 still clears current owner"
+      ],
+      "scope": "Only changed field/source owner checked; existing248 parser/contract/preview/public/full-six-tabs/backend suites reused; local DOM no actual HTTP/PG/browser claim"
+    },
+    "activity": {
+      "status": "PASS_NEW_NAME_FIELD_ACTIVITY_ONLY",
+      "checks": [
+        "hidden tab interrupts necessary name read and late403 is ignored",
+        "return resumes only the same necessary exact target; modal stays unmounted",
+        "initial inactive tab has0 barcode/nameIO, first actual visit has1 each"
+      ],
+      "notRun": "No prior name/preview/parser/six-tab/public suite rerun; local DOM only"
+    },
+    "strict": "Changed page root plus unchanged existing editor caller full strict imported closure0diagnostics; no imported-source exclusions. No old7-root suite rerun.",
+    "lifecycle": "Page-data visibility gates existing ProductQueryActivity: do not start hidden/unvisited field; pending reads stop while source page is replaced/hidden and only same needed target resumes. Metadata layout handoff aborts old version/FK. Account scope/provider changes release old owner; old result/late403 cannot contaminate new field. Current403 remains existing guard denial.",
+    "semantics": "UNAVAILABLE stays unavailable; NOT_SET true native NULL displays emdash with explicit title; AVAILABLE missing reader stays unreadable rather than guessed; detail null stays missing record not NOT_SET; errors/loading/cancel/retry explicit. Historical exact FK is usable; CURRENT/classification not inferred.",
+    "preserved": "Other248 six files remain exact. D2backend245/246 and QA201 unchanged. Same schemeReader interface/composition; existing editor still uses original open-owned preview branch, readonly supplies its field query to same preview. No other P10/history/SKU/price logic changed.",
+    "untested": [
+      "Original F1/C dual-optin host composition and actual native26 HTTP/PG/session/dictionary target grant",
+      "Containing candidate browser name field/preview display and actual timing",
+      "No old248 parser/preview/public/seven-leaf/whole-six-tab/backend suites rerun; no Chrome/service/Git/PG/fullbuild"
+    ],
+    "blocker": "No F2 source blocker. Same248 schemeReader host composition remains original F1/C; name field requires that independent capability. Date exact2 already released separately.",
+    "next": "C pin exact1 over248 -> same original F1/C composition unchanged -> original QF2 only new actual name/loading/error/notset/null and affected target/lifecycle; do not mark wholeP10/singleSKUhistory/sixscheme decisions complete.",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/SOURCE-MANIFEST.json",
+        "bytes": 3744,
+        "sha256": "8d7b761044e3a4a57e11f4f052043cb1b4b53be37481b92529aff34f7cf18e57"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/source.diff",
+        "bytes": 13226,
+        "sha256": "865fd67b1f7453fbbae6897a886baf1ba8fdcfa1feee1d00ab6601d05f2cd84c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/CHECKS.json",
+        "bytes": 1009,
+        "sha256": "92b8a80520f07820f294897d9c837e396722c838bc0b3c9b4b27d1af9b53a6e1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/ACTIVITY-CHECKS.json",
+        "bytes": 389,
+        "sha256": "1b87629d7fe7604c65e86aea5e75e9b561c88ec4b75dec280109bd306b3b20bd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/name.log",
+        "bytes": 506,
+        "sha256": "2621d218950f9380722374c4b119148df938c3755d2756089f0daad485e65726"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/activity.log",
+        "bytes": 169,
+        "sha256": "a25fff38be3220c61678c7db35121cc9e5efc3673978646da2f709ba50577b70"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/strict.log",
+        "bytes": 80,
+        "sha256": "315f5e38b765003a37f64d6b55c793e5a0b8819f63afccdc5e305c2975f0a02b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/types.log",
+        "bytes": 137,
+        "sha256": "b846d538fdac3635abb35549ba4cb2806bc1e9ccb2cc03e699dfcd93d1c5c8fc"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/verify-name.mjs",
+        "bytes": 10323,
+        "sha256": "f60ceeab3fe89439d6044acae8a1ffbeda49b2ec0a55b94aeb39b98dcaa539fb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/name-field-01/verify-activity.mjs",
+        "bytes": 7120,
+        "sha256": "2601139447fb7b10fece2d40813ad5c7374963ffff394f0e9c7fba00b558d10f"
+      }
+    ]
+  },
+  "qualification": "Actual default scheme name from precise independent reader on first actual tabvisit; same target LatestQuery reused for header and lazy modal with version/scope/activity isolation, not generic已设置. TrueNULL source dash vs unknown/error/unavailable distinct; no inferredscheme/cache/newAPI/backendfield. Owner newnecessary field/activity checks+strict adopted, independent QF2 and containingbrowser pending."
+}

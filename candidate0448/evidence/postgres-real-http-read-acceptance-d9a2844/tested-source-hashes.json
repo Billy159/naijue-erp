@@ -1,0 +1,18 @@
+{
+  "commit": "d9a28441777291d5436ec66682307f697501b20e",
+  "sha256": {
+    "tests/integration/http-read-acceptance.ts": "8a11561cf39c9ef850cf9514cbf4d9350b8171d1ab6f9074de85d3a75a143dff",
+    "tests/integration/backend-acceptance.ts": "ae67fd823d5c4ebc77fccc4cd21497577ee91146cdb14079d0717f06e00597e5",
+    "tests/integration/backend-source.test.ts": "fca0b0f8d3a9ce605111cdad07bb4d9b6570f50b19ea687c2ac911a243725d8e",
+    "tests/integration/postgres.integration.test.ts": "2a3711c79f044d80de7985034000404a60e4cdd29c5557855d95bd6e8f832702",
+    "tests/integration/migration-manifest.ts": "692497ee37f9ea1f4b72e9761fe8ba5b0ab3762303ca5cc73acbadaaca5136ea",
+    "tests/integration/database.ts": "aaab741db40d3667738e841d7582e510ff6c8762c369e469cd58a7b4352a9808",
+    "tests/integration/safety.ts": "a2488d99b04d5eb4ee1a59efdf7429b88669032c41783e359dcf823972188468",
+    "apps/api/src/postgres-read-api.ts": "43faf908d46dbbf6d8579d7ad8936d1781ff55b39df25985e0a8940997dda4ed",
+    "apps/api/src/authentication.ts": "2f1d422805068e8d48af6bf56b875c3e8ac93088bcbe6a86302e1a0b0fba1229",
+    "packages/authentication/src/service.ts": "668f9407d21c5e4e009cdc1c711b0c8e1593c5e91da25bd411da2d2113f7cfd9",
+    "packages/authentication/src/passwords.ts": "f26e8602205339b1d8ca728ce4d570151d691f252f7cf4faf8841161b51caa29",
+    "adapters/postgres/src/auth-store.ts": "30d284972c3c136bb809d9895faf7da25f496ff1e36b6ce161717388df67cb1d",
+    "adapters/postgres/src/bounded-pool.ts": "38d373b370c01997a4c17e912abefa8663a82ca00a57e7a86a72658c1021342b"
+  }
+}

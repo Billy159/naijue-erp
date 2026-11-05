@@ -1,0 +1,75 @@
+{
+  "atUtc": "2026-10-22T21:44:10.542977+00:00",
+  "parent": "edc1e9626005f4ccb44fde619253de337a561ab6",
+  "groups": [
+    {
+      "slice": "SCHEME_CATALOGUE_X_NORMAL_CSS_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-51/DELIVERY.json",
+      "receiptSha256": "48cc0487dc9dae82e8c4c2674b8f0a442b48ecb5dd532ff53a5f179c96ce137f",
+      "receiptSnapshot": {
+        "chunk": 51,
+        "atUtc": "2026-10-22T21:42:18.961179+00:00",
+        "status": "READY_FOR_C_PIN_CATALOGUE_X_CSS_ONLY",
+        "taskId": "F01/SCHEME-UI-01-P19-X-NORMAL",
+        "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+        "files": [
+          {
+            "path": "apps/web/src/components/standard-overlay.css",
+            "sha256": "b2b4e70c76cefa28a48b90b4d9a9707f767e80a6bb5fb7893573f62a4588a667"
+          }
+        ],
+        "completedScope": "Fix actual C83 catalogue X normal gray background and border in original shared F1 CSS, exactly two properties.",
+        "sourceEvidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-51/SOURCE-CHECK.json",
+            "sha256": "cb511549bf6411eee9d85ffca66b888abf5e0cdddff05273f094cd29a53e485c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-51/CASCADE-RESULT.json",
+            "sha256": "546062e9cf4e8b6e2b24738b5d98dadb21f3c24840f135400a3844534c0b497d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-51/cascade-1.log",
+            "sha256": "b49dbfb49736e77dc160cd7fc2ff0bad918572e970fdb334a2ff6f991091d1c7"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-51/cascade-2.log",
+            "sha256": "257050b73ba25a5f9bfb46f3c614dbc278fa8c00678ccc0662c899760d295881"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-51/close-cascade-check.mjs",
+            "sha256": "4a43e47ee3ff6757dfdfa732649d97bbc111862d2cf00fe55ed8f0c44b06c368"
+          }
+        ],
+        "checks": {
+          "sourceCheck": "PASS exact target two-property diff from C83, F1 ownership verified",
+          "cascade-1.log": "Failed probe RGB assertion: JSDOM returns unresolved var(--color-secondary), source was not modified again to satisfy this assertion. Failure retained.",
+          "cascade-2.log": "exit0; exact actual C83 full three inline styles in actual order. Normal late secondary token/1px before, transparent/0px after. Existing hover token and focus outline/shadow retained. Default modal, Drawer and footer computed states identical.",
+          "boundary": "Static normal CSS and equal-specificity attribute models of hover/focus-visible only. Unresolved custom properties are tokens, no measured RGB. Relative source @import warnings retained; no external resources loaded.",
+          "typesBuild": "Not run for CSS-only change per controller scope."
+        },
+        "notTested": [
+          "Next fixed candidate actual X normal/hover/focus visual against frozen Demo",
+          "Whole barcode-scheme module acceptance",
+          "Browser keyboard/close behavior on this candidate",
+          "Whole app integration build, PG, runtime save/readback, production business"
+        ],
+        "notRepeated": [
+          "Prior catalogue modal role/portal/Esc/focus/close behavior suites",
+          "P19 table/header and accepted prior control suites"
+        ],
+        "blockers": [],
+        "next": "C pin exact1 and minimal QF source review; original Demo owner next necessary candidate tests only new X appearance and genuinely affected scope. Source frozen until C pin/release; no whole-module or business PASS."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/components/standard-overlay.css",
+          "owner": "F1",
+          "bytes": 2604,
+          "sha256": "b2b4e70c76cefa28a48b90b4d9a9707f767e80a6bb5fb7893573f62a4588a667"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only catalogue X two-property visual correction; default modal/Drawer/footer untouched. New actualbrowser/wholepage/business NOT_ACCEPTED."
+}

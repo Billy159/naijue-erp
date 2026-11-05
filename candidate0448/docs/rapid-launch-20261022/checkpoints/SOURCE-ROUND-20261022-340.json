@@ -1,0 +1,23 @@
+{
+  "atUtc": "2026-10-24T16:01:41.219100+00:00",
+  "parent": "cf83999fe10ff6937566c841273e7437212ff71b",
+  "taskId": "C_REPLICA_ORIGINAL_FINAL_BRIDGE_ENTRY",
+  "files": [
+    {
+      "path": "apps/web/demo-replica/serve.mjs",
+      "bytes": 2973,
+      "sha256": "6b310688137ad455f5d0aeab5abe0ee27b7644aca620c99c35d6ceac7795c1c7",
+      "owner": "C"
+    },
+    {
+      "path": "apps/web/demo-replica/replica-identity.json",
+      "bytes": 793,
+      "sha256": "d38becb2fae697ca53206021c192caa5ff211b3b30ba288883102d5b3ae5f3f4",
+      "owner": "C"
+    }
+  ],
+  "stage": "SOURCE_ENTRY_FIXED_NOT_RESTARTED_OR_BROWSER_ACCEPTED",
+  "change": "Keep complete original final bridge and true view branches; data requests intercepted by exact F1 fixture before auth-entry; old false sample bootstrap removed from normal entry",
+  "wholePageAccepted": false,
+  "deployed": false
+}

@@ -1,0 +1,32 @@
+Independent source review corrections, 2026-10-20 UTC:
+
+1. Actual Select props distinguish pagination tl placement /150px width from
+   unchanged ordinary bl / measured width. The build includes an actual-prop AST
+   regression, without a fake geometry or browser claim.
+2. Route font uses separate family/size properties, preserving source inherited
+   line-height. Local title restores20px /30px /weight600 from the frozen cascade.
+   Static declaration regression protects the scoped cascade.
+3. Legitimate route leave clears only a clean unchanged editor/canceled detail.
+   Generic suspend and all dirty/uncertain recovery retention stay unchanged.
+   Deferred attachment check avoids treating StrictMode probes as route leave.
+   Bounded controller and actual route reentry regressions cover this behavior.
+4. Numeric pager children are direct source-style buttons/ellipsis spans via keyed
+   Fragment, not extra flex wrapper spans. Pager actions use gap4px and nowrap.
+   Actual DOM and static declaration checks protect the structure and policy.
+
+5. Frozen cache[type].draft preserves unapplied search/status after route remount.
+   These now live in bounded immutable per-kind session controllers, separate from
+   applied LatestQuery results. Typing dispatches nothing; route reentry preserves
+   exact raw drafts; paging/refresh use applied parameters only. Reset clears and
+   applies defaults for the current kind; identity/dispose clears both kinds.
+   Bounded controller and actual-Arco route regressions protect these boundaries.
+
+Inspected current shared controls.css before refreshing its hash. It contains
+neutral control/popup/pager families and the added iw-button.iw-ghost presentation
+rules, not inventory route/matrix/drawer selectors. Party route's own scope and
+Arco adapter rules remain the presentation authority for its table/modal.
+
+Final consolidated checks:34/34 unit tests,11/11 actual-Arco behavioral DOM groups,
+static Select/title/pager prop/cascade assertions, dynamic build and scoped strict
+TypeScript all passed. CSS is omitted in DOM tests; real browser/pixel/dropdown
+geometry is not established. Arco React19 ref deprecation observation remains.

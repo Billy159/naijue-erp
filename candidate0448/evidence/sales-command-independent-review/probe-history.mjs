@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import { ReadContext } from '../../apps/web/src/loading/read-scope.ts';
+import { SalesCommandWorkspace } from '../../apps/web/src/sales/commands/controller.ts';
+import { detail, draft, result, receipt, uuid } from '../../apps/web/src/sales/commands/fixtures.test-support.ts';
+const context = new ReadContext({ accountId:'INDEPENDENT',sessionRevision:'1',permissionRevision:'1' });
+let current = {...detail(), stockBasis:'CUTOFF_HISTORY'}, sent = 0;
+const controller = new SalesCommandWorkspace({scope:context.createScope('INDEPENDENT'),client:{execute:async command=>{sent++;return result(command)},receipt:async command=>receipt(command)},reader:{readDetail:async()=>current},newRequestKey:()=>`independent-${sent}`,onAccessFailure:()=>{}});
+assert.equal(await controller.openExisting(uuid(1)),true);
+assert.equal(await controller.submit('APPROVE'),false);
+current = detail('DRAFT',3);
+const refresh=await controller.readCurrent();
+const adopt=controller.adoptCurrent();
+const approve=await controller.submit('APPROVE');
+console.log(JSON.stringify({refresh,adopt,approve,sent,stockBasis:controller.getSnapshot().editor?.detail?.stockBasis}));
+controller.dispose();

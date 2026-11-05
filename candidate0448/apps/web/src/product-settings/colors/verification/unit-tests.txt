@@ -1,0 +1,38 @@
+✔ catalogue HTTP exposes only three explicit same-session POST reads with no-store and native unknowns; no listener (438.83167ms)
+✔ current host authentication and exact per-directory grants reject before native reader, with sanitized errors (47.057889ms)
+✔ category product-count capability is independent and enforced even against injected readers; NONE never leaks counts (29.128022ms)
+✔ strict JSON/query/body budgets reject forged authority and writes before policy; supported Origin delegated to mandatory host (25.636874ms)
+✔ malformed responses and backend failures are sanitized; overflow/abort are explicit and never auto-retried (39.988345ms)
+✔ native third-level parent IDs and signed order retained; same names do not merge (10.512807ms)
+✔ search exact authorized paths retains ancestors without reparenting or needing all branches expanded (3.264649ms)
+✔ streamed path matching preserves cross-segment/repeated-prefix semantics and branch isolation (4.338391ms)
+✔ 5000-level native tree search is iterative and bounded without materializing every ancestor path (320.761104ms)
+✔ catalogue browser transport has exact native values and same-origin-only executed parameters (35.523607ms)
+✔ catalogue tree sends empty query; unknown code and independently unauthorized counts stay null (9.932543ms)
+✔ catalogue rejects malformed range/count/identity/status or invented category code without static fallback (31.675016ms)
+✔ catalogue permission/overflow/readiness/abort errors are sanitized and never automatically retried (11.799697ms)
+✔ catalogue PG construction is inert; invalid/mismatched/aborted requests never acquire a client (7.296676ms)
+✔ color and fit count/page are parameterized, literal-substring and bounded in same RR snapshot; exact state and identity survive (7.138331ms)
+✔ category NONE capability reads complete bounded native tree but never queries products or invents code/count/depth (17.193051ms)
+✔ category ALL capability alone authorizes complete direct product counts, zero only from absent exact group in same snapshot (15.407706ms)
+✔ explicit empty and out-of-range color pages preserve requested page/total and do not clamp or fetch all (15.748093ms)
+✔ category count overflow fails before fetching rows; row overflow fails without product access, never truncates (2.771748ms)
+✔ count mismatch, missing/cyclic/duplicate category IDs and invalid counters fail closed, not repaired (4.465003ms)
+✔ persisted unsafe counts, invalid IDs/state/version, and partial pages are not silently converted (10.769858ms)
+✔ acquire/begin/query/commit/rollback failures release exactly once; uncertain client discarded; no automatic retries (2.56321ms)
+✔ abort between reads or while acquiring stops subsequent SQL and releases once; no late facts (7.4718ms)
+✔ catalogue read requires explicit trusted dependencies and reauthorizes each exact full-directory kind (39.934195ms)
+✔ category directory grant never implicitly grants product counts; exact NONE/ALL reader result is enforced (8.358316ms)
+✔ strict queries reject forged authority, write fields, unsafe paging/search and malformed actor before authorization (6.606156ms)
+✔ DTOs preserve exact native code/name/state/version, empty text and unrestricted signed category depth/order (2.106964ms)
+✔ full tree refuses duplicate/missing/cyclic/reparented/truncated/count-inconsistent data rather than inventing roots or totals (1.025114ms)
+✔ page length and total use executed range, explicit out-of-range empty pages do not silently clamp (1.444765ms)
+✔ pre-abort, policy abort and late reader abort never publish data or execute later stages (10.316108ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2156.187223

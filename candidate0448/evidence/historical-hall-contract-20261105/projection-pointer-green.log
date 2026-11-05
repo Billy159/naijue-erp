@@ -1,0 +1,306 @@
+✔ sealed derived readback preserves original null and capture; later current changes are explicit without refreshing it (3.707552ms)
+✔ old absent evidence remains absent; present invalid, duplicate or nonhistorical evidence fails closed (1.430041ms)
+✔ readback SQL follows committed sealed import source on already scoped h, never current warehouse inference or privileges (0.79861ms)
+✔ legacy historical DTO preserves observation/current difference and rejects false current-equality assertions (3.245581ms)
+✔ batch projection pins source chunk operation IDs before expansion after the authorized page; not engine validation (4.135067ms)
+✔ ordinary constructor is inert; absent/fake26/malformed capabilities fail closed (2.107612ms)
+✔ ordinary invalid parameters, malformed scope and prior abort never connect (1.98193ms)
+✖ ordinary sales old+new share native page, current-page previews, exact bigint and nullable creator/time (5.23391ms)
+✔ ordinary transfer page applies endpoint/creator hall scope before count and bounded children (1.984539ms)
+✔ ordinary exact snapshot revision excludes paging but changes for snapshot,target,kind,filter and identity scope (3.241608ms)
+✖ ordinary filter values stay bound, are intersections, and precede count/page (2.303173ms)
+✔ ordinary unknown gift classification never becomes zero or partial known category (2.235271ms)
+✔ ordinary malformed/duplicate/page-count/partial-null summary facts roll back rather than fake zero (1.903015ms)
+✔ ordinary empty out-of-range page preserves exact total without detail or totals hydration (0.495023ms)
+✔ ordinary separate sales totals preserve arbitrary-precision sums and same auth/filter/snapshot revision (2.039814ms)
+✔ ordinary transfer totals are independent from page and never signed historical quantities (1.86819ms)
+✔ ordinary page/summary revision race rejects before matched-line scan, including other-client commit (1.427767ms)
+✔ ordinary totals cannot reuse a revision across filters and invalid tokens never connect (1.363585ms)
+✔ ordinary current identity denial and failed runtime proof prevent document scans (0.977866ms)
+✔ ordinary abort after in-flight SQL stops delivery and rolls back (0.442807ms)
+✔ ordinary successful commit followed by abort never issues fictitious rollback (0.488716ms)
+✔ ordinary commit failure discards client; rollback failure retains both causes; no retry (0.936434ms)
+✔ ordinary adapter source has no raw source/proof/history import, xid allocator, sequence, cache or lock (0.798779ms)
+✔ ordinary revisions canonicalize equivalent selected sets and authorization clause unions (1.493139ms)
+✔ ordinary sums distinguish actual empty/gift-only zero from unknown gift facts (3.654673ms)
+✔ ordinary abort after readiness, identity or revision stops subsequent scans (0.637997ms)
+✔ ordinary caller mutation during readiness does not change the captured actor, filter or scope (0.689956ms)
+✔ ordinary unpublished business readiness fails before count/page/totals, never successful empty (0.756914ms)
+✔ ordinary sales source-confirmed-ordinary-documents-v1 cutoff categories remain unknown despite current catalog labels (0.765169ms)
+✔ ordinary transfers source-confirmed-ordinary-documents-v1 cutoff categories remain unknown despite current catalog labels (0.735955ms)
+✔ ordinary sales source-confirmed-unified-native-v1 cutoff categories remain unknown despite current catalog labels (0.517211ms)
+✔ ordinary transfers source-confirmed-unified-native-v1 cutoff categories remain unknown despite current catalog labels (1.118954ms)
+✔ ordinary category basis rejects missing or invalid stock provenance rather than inventing current classification (3.590809ms)
+✔ sales query pg protocol: mandatory pool never connects at construction; no aborted or invalid-scope connection (3.630788ms)
+✔ sales query pg protocol: exact count, relational page and one page-batched quantity read share scoped RR snapshot, no hydration/catalog/N+1 (3.932524ms)
+✔ ordinary native list preserves null creator/time and unknown non-gift aggregates without dropping actual rows (1.195047ms)
+✔ sales query pg protocol: count and page use case-insensitive literal number inclusion with original bound text, never LIKE wildcards (1.30919ms)
+✔ sales query pg protocol: list pages use creation time then binary business number and native identity, never business date (1.209958ms)
+✔ sales query pg protocol: one bounded batch preserves signed SALE/RETURN/EXCHANGE totals, bigint-min magnitude and gift-only zero (1.15121ms)
+✔ sales query pg protocol: incomplete, foreign, duplicate or malformed quantity facts fail closed (1.850263ms)
+✔ sales query pg protocol: empty out-of-range page retains exact total without global recount or fallback (0.497706ms)
+✔ sales query pg protocol: detail reads authorized native header/current snapshots/settlements in three bounded reads (3.330323ms)
+✔ ordinary sales creator projection uses explicit stored staff before any current account mapping (2.34548ms)
+✔ sales query pg protocol: hidden/missing detail and history rollback without reading child facts (3.083385ms)
+✔ sales query pg protocol: oversized detail fails closed rather than truncating current lines (9.596242ms)
+✔ sales query pg protocol: audit metadata exact count/page reapply current scope and SALES kind with stable tie-break (0.594032ms)
+✔ sales query pg protocol: settlement summary includes approved full scope only and exact unbounded numeric sums, account page separately (1.296807ms)
+✔ sales query pg protocol: decoding failure rolls back, unknown commit outcome is not retried and discards client (1.056873ms)
+✔ sales query pg protocol: begin/connect/rollback errors release or discard correctly; no hidden retries (0.89436ms)
+✔ sales query pg protocol: abort while SQL is in flight requests rollback and stops remaining reads (0.246085ms)
+✔ sales filter references pg protocol: all four kinds query only observed authorized references including disabled history (1.856227ms)
+✔ sales filter references pg protocol: bigint totals, bounded page and exact empty out-of-range semantics (0.632341ms)
+✔ sales filter references pg protocol: invalid request/grant/abort never connects, malformed provider facts roll back (1.385932ms)
+✔ sales detail pg protocol: current master labels and authoritative settlement snapshots share the one authorized RR snapshot (1.432574ms)
+✔ sales query pg protocol: list/count and both statistics reads share identical six-dimensional authorized predicates (0.836076ms)
+✔ sales query pg protocol: empty selections add no filter and malformed lists never acquire a client (1.780183ms)
+✔ sales detail pg protocol: original method identity comes only from nullable snapshot, never the account current method/name (1.701925ms)
+✔ normal sales union: exact same-client authorization precedes published effective count/totals and one bounded snapshot product projection (3.844724ms)
+✔ normal sales union: corrupt effective facts and current identity reject before page; SQL error remains an error and abort rolls back (1.663893ms)
+✔ normal sales union: zero published batches is explicit and empty exact totals are not publication proof (0.473738ms)
+✔ normal sales union: missing original HISTORY purpose rejects on the same lease without native-only fallback (0.640183ms)
+✔ normal sales pushdown: both branches filter before projection, all-match totals survive page2, and history proof stays unfiltered once per RR (6.079064ms)
+✔ sales detail current category projection follows real identities, signed non-gift quantity and historical unknown (2.056969ms)
+✔ sales full detail summary excludes cancelling category totals and rejects broken current identity (0.538669ms)
+✔ historical null business hall is read back without being lost to a hall inner join or inferred from warehouse (0.362336ms)
+✔ hall restricted historical read keeps exact business hall predicate with no null or warehouse fallback (0.347225ms)
+ℹ tests 66
+ℹ suites 0
+ℹ pass 64
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 494.458598
+
+✖ failing tests:
+
+test at tests/ordinary-document-list-postgres-protocol.test.ts:28:1
+✖ ordinary sales old+new share native page, current-page previews, exact bigint and nullable creator/time (5.23391ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /history_|import_source|source_file|raw_fields|FOR UPDATE|FOR SHARE|pg_current_xact_id\(|nextval\(/i. Input:
+  
+  '/* ordinary-document:page:sales */ WITH page_headers AS MATERIALIZED (\n' +
+    "    SELECT h.* FROM naijue_erp.sales_header h WHERE (naijue_erp.standard_business_ready() AND (h.import_batch_id IS NULL OR EXISTS(SELECT 1 FROM naijue_erp.import_batch b WHERE b.id=h.import_batch_id AND b.status='IMPORTED'))) AND (((h.hall_id=$1::uuid))) AND (h.hall_id=$2::uuid) ORDER BY h.created_at DESC NULLS LAST,h.id ASC LIMIT $3 OFFSET $4::bigint),\n" +
+    '    authorized_hall_headers AS MATERIALIZED (SELECT * FROM page_headers),hall_migration AS MATERIALIZED (\n' +
+    " SELECT h.id AS document_id,to_jsonb(h)->>'import_batch_id' AS current_batch_id,\n" +
+    '  m.*,r.result_data,r.status AS receipt_status,r.actor_account_id AS receipt_actor,r.completed_at,\n' +
+    "  m.after_values->'header' AS original_header,m.after_values->>'sourceRecordId' AS source_record_id\n" +
+    " FROM authorized_hall_headers h JOIN naijue_erp.audit_change m ON m.object_type='SALES' AND m.object_id=h.id\n" +
+    ' JOIN naijue_erp.operation_receipt r ON r.id=m.operation_id\n' +
+    " WHERE h.stock_basis='CUTOFF_HISTORY' AND m.action='MIGRATE_DOCUMENT'\n" +
+    "  AND r.target_type='SALES' AND r.target_id=h.id AND r.action=m.action\n" +
+    '), hall_pointers AS MATERIALIZED (\n' +
+    ` SELECT s.*,CASE WHEN s.decision_reason LIKE '{%"STANDARD_IMPORT_POINTER_V1"%'\n` +
+    '  THEN s.decision_reason::jsonb ELSE NULL END AS pointer\n' +
+    ' FROM hall_migration m JOIN naijue_erp.import_record s ON s.id=(m.source_record_id)::uuid\n' +
+    '  AND s.import_batch_id::text=m.current_batch_id\n' +
+    '), hall_chunks AS MATERIALIZED (\n' +
+    ' SELECT a.after_values,a.operation_id,b.id AS source_batch_id,b.source_name AS source_namespace,b.source_hash AS package_manifest_sha256,\n' +
+    '  a.object_id AS source_audit_batch,a.actor_account_id AS source_audit_actor,a.occurred_at AS source_occurred_at,\n' +
+    '  a.action AS source_audit_action,r.actor_account_id AS source_receipt_actor,r.completed_at AS source_completed_at,\n' +
+    '  r.result_data AS source_receipt_result,r.status AS source_receipt_status,r.action AS source_receipt_action,\n' +
+    '  r.target_type AS source_receipt_type,r.target_id AS source_receipt_batch\n' +
+    ' FROM naijue_erp.audit_change a JOIN naijue_erp.operation_receipt r ON r.id=a.operation_id\n' +
+    ' JOIN naijue_erp.import_batch b ON b.id=a.object_id\n' +
+    " WHERE a.operation_id IN(SELECT (pointer->>'operationId')::uuid FROM hall_pointers WHERE pointer->>'format'='STANDARD_IMPORT_POINTER_V1')\n" +
+    "  AND a.object_type='IMPORT' AND a.action='IMPORT_CHUNK'\n" +
+    "  AND b.status='IMPORTED' AND b.inventory_mode='DOCUMENT_CONVERSION' AND b.mapping_version='DOCUMENT_CONVERSION_V1'\n" +
+    '), hall_import_records AS MATERIALIZED (\n' +
+    ' SELECT item.value AS source_record,a.*\n' +
+    " FROM hall_chunks a CROSS JOIN LATERAL jsonb_array_elements(a.after_values->'records') item(value)\n" +
+    " WHERE item.value->>'id' IN(SELECT source_record_id FROM hall_migration) AND item.value ? 'historical_hall_evidence'\n" +
+    '), hall_source AS (\n' +
+    ' SELECT m.*,source.source_record,source.source_batch_id,source.source_namespace,source.package_manifest_sha256,\n' +
+    '  source.source_audit_batch,source.source_audit_actor,source.source_occurred_at,source.source_audit_action,\n' +
+    '  source.source_receipt_actor,source.source_completed_at,source.source_receipt_result,source.source_receipt_status,\n' +
+    '  source.source_receipt_action,source.source_receipt_type,source.source_receipt_batch,\n' +
+    '  source.after_values AS source_audit_values,source.operation_id AS source_operation_id,\n' +
+    '  p.pointer,p.source_system AS pointer_namespace,p.status AS pointer_status,p.reviewed_at AS pointer_reviewed_at,\n' +
+    '  p.source_key AS pointer_source_key,p.source_entity_type AS pointer_entity_type,p.source_record_hash AS pointer_hash,\n' +
+    '  p.source_file_ref AS pointer_file_ref,p.target_type AS pointer_target_type,p.target_id AS pointer_target_id\n' +
+    ' FROM hall_migration m JOIN hall_pointers p ON p.id::text=m.source_record_id\n' +
+    ' JOIN hall_import_records source ON source.source_batch_id::text=m.current_batch_id\n' +
+    "  AND source.source_record->>'id'=m.source_record_id AND source.operation_id::text=p.pointer->>'operationId'\n" +
+    '), hall_results AS (\n' +
+    " SELECT s.document_id,jsonb_agg(jsonb_build_object('evidence',s.source_record->'historical_hall_evidence','verified',(\n" +
+    "  s.receipt_status='COMMITTED' AND s.receipt_actor=s.actor_account_id AND s.occurred_at=s.completed_at\n" +
+    '  AND s.old_version IS NULL AND s.before_values IS NULL\n' +
+    "  AND s.result_data->>'sourceRecordId'=s.source_record_id\n" +
+    "  AND s.result_data->>'salesId'=s.document_id::text AND s.result_data->>'batchId'=s.source_batch_id::text\n" +
+    "  AND s.result_data->>'exposureDigest'=encode(sha256(convert_to((s.after_values-ARRAY['baseline','sourceRecordId'])::text,'UTF8')),'hex')\n" +
+    "  AND s.original_header->>'id'=s.document_id::text AND s.original_header->>'import_batch_id'=s.source_batch_id::text\n" +
+    "  AND s.original_header->>'stock_basis'='CUTOFF_HISTORY'\n" +
+    "  AND s.source_receipt_status='COMMITTED' AND s.source_receipt_type='IMPORT' AND s.source_receipt_batch=s.source_batch_id\n" +
+    '  AND s.source_audit_actor=s.source_receipt_actor AND s.source_occurred_at=s.source_completed_at\n' +
+    '  AND s.source_receipt_action=s.source_audit_action\n' +
+    "  AND s.pointer=jsonb_build_object('format','STANDARD_IMPORT_POINTER_V1','code','SOURCE_BOUND','operationId',s.source_operation_id)\n" +
+    "  AND s.pointer_status='IMPORTED' AND s.pointer_reviewed_at=s.source_completed_at AND s.pointer_namespace=s.source_namespace\n" +
+    "  AND s.pointer_source_key=s.source_record->>'source_key' AND s.pointer_entity_type=s.source_record->>'entity_type'\n" +
+    "  AND s.pointer_hash=s.source_record->>'source_hash' AND s.pointer_file_ref=s.source_record->>'file_ref'\n" +
+    "  AND s.pointer_target_type=s.source_record->>'target_type' AND s.pointer_target_id::text=s.source_record->>'target_id'\n" +
+    "  AND s.source_receipt_result->>'profile'='STANDARD_IMPORT_SQL_V1'\n" +
+    "  AND s.source_receipt_result->>'packageManifestSha256'=s.package_manifest_sha256\n" +
+    "  AND s.source_audit_values->>'profile'='STANDARD_IMPORT_SQL_V1'\n" +
+    "  AND s.source_audit_values->'request'->>'namespace'=s.source_namespace\n" +
+    "  AND s.source_record->>'entity_type'='SALES_HEADER' AND s.source_record->>'target_type'='SALES_HEADER'\n" +
+    "  AND s.source_record->>'target_id'=s.document_id::text\n" +
+    "  AND s.source_record->'fields'->>'id'=s.document_id::text AND s.source_record->'fields'->>'stock_basis'='CUTOFF_HISTORY'\n" +
+    "  AND s.source_record->'fields'->>'import_batch_id'=s.source_batch_id::text\n" +
+    "  AND to_jsonb(jsonb_populate_record(NULL::naijue_erp.sales_header,s.source_record->'fields'))=to_jsonb(jsonb_populate_record(NULL::naijue_erp.sales_header,s.original_header))\n" +
+    "  AND s.source_record->'fields'->'hall_id' IS NOT DISTINCT FROM s.original_header->'hall_id'\n" +
+    "  AND s.source_record->'fields'->'warehouse_id' IS NOT DISTINCT FROM s.original_header->'warehouse_id'\n" +
+    "  AND s.source_record->'historical_hall_evidence'->'selected_hall_id' IS NOT DISTINCT FROM s.original_header->'hall_id'\n" +
+    "  AND s.source_record->'historical_hall_evidence'->'warehouse_id' IS NOT DISTINCT FROM s.original_header->'warehouse_id'\n" +
+    "  AND jsonb_typeof(s.source_record->'source_refs')='array' AND jsonb_array_length(s.source_record->'source_refs')>0\n" +
+    "  AND s.source_record->>'source_hash'=encode(sha256(convert_to((jsonb_build_object(\n" +
+    "   'source_key',s.source_record->'source_key','fields',s.source_record->'fields','source_refs',s.source_record->'source_refs')\n" +
+    "   || CASE WHEN s.source_record ? 'zero_amount_archive' THEN jsonb_build_object('zero_amount_archive',s.source_record->'zero_amount_archive') ELSE '{}'::jsonb END\n" +
+    "   || CASE WHEN s.source_record ? 'explicit_zero_evidence' THEN jsonb_build_object('explicit_zero_evidence',s.source_record->'explicit_zero_evidence') ELSE '{}'::jsonb END\n" +
+    "   || jsonb_build_object('historical_hall_evidence',s.source_record->'historical_hall_evidence'))::text,'UTF8')),'hex')\n" +
+    ' ) IS TRUE)) AS historical_hall_proofs FROM hall_source s GROUP BY s.document_id\n' +
+    '),\n' +
+    '    page_lines AS MATERIALIZED (SELECT p.id AS document_id,p.stock_basis,l.id AS line_id,l.line_no,l.quantity::numeric AS quantity,l.is_gift AS is_gift,\n' +
+    '      s.product_id,l.product_code_snapshot,l.product_name_snapshot,cc.id AS category_id,cc.name AS category_name\n' +
+    '      FROM page_headers p JOIN naijue_erp.sales_line l ON l.sales_id=p.id AND l.is_current\n' +
+    "      LEFT JOIN naijue_erp.sku s ON s.id=l.sku_id LEFT JOIN naijue_erp.product cp ON cp.id=s.product_id AND p.stock_basis='RUNTIME_LEDGER' LEFT JOIN naijue_erp.product_category cc ON cc.id=cp.category_id),\n" +
+    '    page_metrics AS (SELECT document_id,\n' +
+    '    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE THEN quantity ELSE 0 END) END AS quantity,\n' +
+    '    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity<0 THEN -quantity ELSE 0 END) END AS incoming_quantity,\n' +
+    '    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity>0 THEN quantity ELSE 0 END) END AS outgoing_quantity\n' +
+    '    FROM page_lines GROUP BY document_id),\n' +
+    '    category_groups AS (SELECT document_id,category_id,category_name,min(line_no) AS first_line,\n' +
+    '      sum(quantity) AS value\n' +
+    "      FROM page_lines WHERE stock_basis='RUNTIME_LEDGER' AND is_gift IS FALSE GROUP BY document_id,category_id,category_name\n" +
+    '      HAVING sum(quantity)<>0),\n' +
+    '    category_ranked AS (SELECT *,row_number() OVER(PARTITION BY document_id ORDER BY first_line,category_id) AS category_row FROM category_groups),\n' +
+    "    category_summaries AS (SELECT document_id,jsonb_agg(jsonb_build_object('categoryId',category_id,'categoryName',category_name,'value',value::text) ORDER BY category_row) FILTER(WHERE category_row<=3) AS category_items,\n" +
+    '      count(*)::text AS category_count,count(*)>3 AS category_has_more FROM category_ranked GROUP BY document_id),\n' +
+    "    products AS (SELECT *,row_number() OVER(PARTITION BY document_id,coalesce(product_id::text,'line:'||line_id::text) ORDER BY line_no,line_id) AS identity_row FROM page_lines),\n" +
+    '    previews AS (SELECT *,row_number() OVER(PARTITION BY document_id ORDER BY line_no,line_id) AS preview_row FROM products WHERE identity_row=1),\n' +
+    '    product_summaries AS (SELECT document_id,CASE WHEN count(*) FILTER(WHERE product_id IS NULL)'... 2234 more characters
+  
+      at assertOrdinary (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/ordinary-document-list-postgres-protocol.test.ts:25:44)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/ordinary-document-list-postgres-protocol.test.ts:28:1047)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `/* ordinary-document:page:sales */ WITH page_headers AS MATERIALIZED (\n    SELECT h.* FROM naijue_erp.sales_header h WHERE (naijue_erp.standard_business_ready() AND (h.import_batch_id IS NULL OR EXISTS(SELECT 1 FROM naijue_erp.import_batch b WHERE b.id=h.import_batch_id AND b.status='IMPORTED'))) AND (((h.hall_id=$1::uuid))) AND (h.hall_id=$2::uuid) ORDER BY h.created_at DESC NULLS LAST,h.id ASC LIMIT $3 OFFSET $4::bigint),\n    authorized_hall_headers AS MATERIALIZED (SELECT * FROM page_headers),hall_migration AS MATERIALIZED (\n SELECT h.id AS document_id,to_jsonb(h)->>'import_batch_id' AS current_batch_id,\n  m.*,r.result_data,r.status AS receipt_status,r.actor_account_id AS receipt_actor,r.completed_at,\n  m.after_values->'header' AS original_header,m.after_values->>'sourceRecordId' AS source_record_id\n FROM authorized_hall_headers h JOIN naijue_erp.audit_change m ON m.object_type='SALES' AND m.object_id=h.id\n JOIN naijue_erp.operation_receipt r ON r.id=m.operation_id\n WHERE h.stock_basis='CUTOFF_HISTORY' AND m.action='MIGRATE_DOCUMENT'\n  AND r.target_type='SALES' AND r.target_id=h.id AND r.action=m.action\n), hall_pointers AS MATERIALIZED (\n SELECT s.*,CASE WHEN s.decision_reason LIKE '{%"STANDARD_IMPORT_POINTER_V1"%'\n  THEN s.decision_reason::jsonb ELSE NULL END AS pointer\n FROM hall_migration m JOIN naijue_erp.import_record s ON s.id=(m.source_record_id)::uuid\n  AND s.import_batch_id::text=m.current_batch_id\n), hall_chunks AS MATERIALIZED (\n SELECT a.after_values,a.operation_id,b.id AS source_batch_id,b.source_name AS source_namespace,b.source_hash AS package_manifest_sha256,\n  a.object_id AS source_audit_batch,a.actor_account_id AS source_audit_actor,a.occurred_at AS source_occurred_at,\n  a.action AS source_audit_action,r.actor_account_id AS source_receipt_actor,r.completed_at AS source_completed_at,\n  r.result_data AS source_receipt_result,r.status AS source_receipt_status,r.action AS source_receipt_action,\n  r.target_type AS source_receipt_type,r.target_id AS source_receipt_batch\n FROM naijue_erp.audit_change a JOIN naijue_erp.operation_receipt r ON r.id=a.operation_id\n JOIN naijue_erp.import_batch b ON b.id=a.object_id\n WHERE a.operation_id IN(SELECT (pointer->>'operationId')::uuid FROM hall_pointers WHERE pointer->>'format'='STANDARD_IMPORT_POINTER_V1')\n  AND a.object_type='IMPORT' AND a.action='IMPORT_CHUNK'\n  AND b.status='IMPORTED' AND b.inventory_mode='DOCUMENT_CONVERSION' AND b.mapping_version='DOCUMENT_CONVERSION_V1'\n), hall_import_records AS MATERIALIZED (\n SELECT item.value AS source_record,a.*\n FROM hall_chunks a CROSS JOIN LATERAL jsonb_array_elements(a.after_values->'records') item(value)\n WHERE item.value->>'id' IN(SELECT source_record_id FROM hall_migration) AND item.value ? 'historical_hall_evidence'\n), hall_source AS (\n SELECT m.*,source.source_record,source.source_batch_id,source.source_namespace,source.package_manifest_sha256,\n  source.source_audit_batch,source.source_audit_actor,source.source_occurred_at,source.source_audit_action,\n  source.source_receipt_actor,source.source_completed_at,source.source_receipt_result,source.source_receipt_status,\n  source.source_receipt_action,source.source_receipt_type,source.source_receipt_batch,\n  source.after_values AS source_audit_values,source.operation_id AS source_operation_id,\n  p.pointer,p.source_system AS pointer_namespace,p.status AS pointer_status,p.reviewed_at AS pointer_reviewed_at,\n  p.source_key AS pointer_source_key,p.source_entity_type AS pointer_entity_type,p.source_record_hash AS pointer_hash,\n  p.source_file_ref AS pointer_file_ref,p.target_type AS pointer_target_type,p.target_id AS pointer_target_id\n FROM hall_migration m JOIN hall_pointers p ON p.id::text=m.source_record_id\n JOIN hall_import_records source ON source.source_batch_id::text=m.current_batch_id\n  AND source.source_record->>'id'=m.source_record_id AND source.operation_id::text=p.pointer->>'operationId'\n), hall_results AS (\n SELECT s.document_id,jsonb_agg(jsonb_build_object('evidence',s.source_record->'historical_hall_evidence','verified',(\n  s.receipt_status='COMMITTED' AND s.receipt_actor=s.actor_account_id AND s.occurred_at=s.completed_at\n  AND s.old_version IS NULL AND s.before_values IS NULL\n  AND s.result_data->>'sourceRecordId'=s.source_record_id\n  AND s.result_data->>'salesId'=s.document_id::text AND s.result_data->>'batchId'=s.source_batch_id::text\n  AND s.result_data->>'exposureDigest'=encode(sha256(convert_to((s.after_values-ARRAY['baseline','sourceRecordId'])::text,'UTF8')),'hex')\n  AND s.original_header->>'id'=s.document_id::text AND s.original_header->>'import_batch_id'=s.source_batch_id::text\n  AND s.original_header->>'stock_basis'='CUTOFF_HISTORY'\n  AND s.source_receipt_status='COMMITTED' AND s.source_receipt_type='IMPORT' AND s.source_receipt_batch=s.source_batch_id\n  AND s.source_audit_actor=s.source_receipt_actor AND s.source_occurred_at=s.source_completed_at\n  AND s.source_receipt_action=s.source_audit_action\n  AND s.pointer=jsonb_build_object('format','STANDARD_IMPORT_POINTER_V1','code','SOURCE_BOUND','operationId',s.source_operation_id)\n  AND s.pointer_status='IMPORTED' AND s.pointer_reviewed_at=s.source_completed_at AND s.pointer_namespace=s.source_namespace\n  AND s.pointer_source_key=s.source_record->>'source_key' AND s.pointer_entity_type=s.source_record->>'entity_type'\n  AND s.pointer_hash=s.source_record->>'source_hash' AND s.pointer_file_ref=s.source_record->>'file_ref'\n  AND s.pointer_target_type=s.source_record->>'target_type' AND s.pointer_target_id::text=s.source_record->>'target_id'\n  AND s.source_receipt_result->>'profile'='STANDARD_IMPORT_SQL_V1'\n  AND s.source_receipt_result->>'packageManifestSha256'=s.package_manifest_sha256\n  AND s.source_audit_values->>'profile'='STANDARD_IMPORT_SQL_V1'\n  AND s.source_audit_values->'request'->>'namespace'=s.source_namespace\n  AND s.source_record->>'entity_type'='SALES_HEADER' AND s.source_record->>'target_type'='SALES_HEADER'\n  AND s.source_record->>'target_id'=s.document_id::text\n  AND s.source_record->'fields'->>'id'=s.document_id::text AND s.source_record->'fields'->>'stock_basis'='CUTOFF_HISTORY'\n  AND s.source_record->'fields'->>'import_batch_id'=s.source_batch_id::text\n  AND to_jsonb(jsonb_populate_record(NULL::naijue_erp.sales_header,s.source_record->'fields'))=to_jsonb(jsonb_populate_record(NULL::naijue_erp.sales_header,s.original_header))\n  AND s.source_record->'fields'->'hall_id' IS NOT DISTINCT FROM s.original_header->'hall_id'\n  AND s.source_record->'fields'->'warehouse_id' IS NOT DISTINCT FROM s.original_header->'warehouse_id'\n  AND s.source_record->'historical_hall_evidence'->'selected_hall_id' IS NOT DISTINCT FROM s.original_header->'hall_id'\n  AND s.source_record->'historical_hall_evidence'->'warehouse_id' IS NOT DISTINCT FROM s.original_header->'warehouse_id'\n  AND jsonb_typeof(s.source_record->'source_refs')='array' AND jsonb_array_length(s.source_record->'source_refs')>0\n  AND s.source_record->>'source_hash'=encode(sha256(convert_to((jsonb_build_object(\n   'source_key',s.source_record->'source_key','fields',s.source_record->'fields','source_refs',s.source_record->'source_refs')\n   || CASE WHEN s.source_record ? 'zero_amount_archive' THEN jsonb_build_object('zero_amount_archive',s.source_record->'zero_amount_archive') ELSE '{}'::jsonb END\n   || CASE WHEN s.source_record ? 'explicit_zero_evidence' THEN jsonb_build_object('explicit_zero_evidence',s.source_record->'explicit_zero_evidence') ELSE '{}'::jsonb END\n   || jsonb_build_object('historical_hall_evidence',s.source_record->'historical_hall_evidence'))::text,'UTF8')),'hex')\n ) IS TRUE)) AS historical_hall_proofs FROM hall_source s GROUP BY s.document_id\n),\n    page_lines AS MATERIALIZED (SELECT p.id AS document_id,p.stock_basis,l.id AS line_id,l.line_no,l.quantity::numeric AS quantity,l.is_gift AS is_gift,\n      s.product_id,l.product_code_snapshot,l.product_name_snapshot,cc.id AS category_id,cc.name AS category_name\n      FROM page_headers p JOIN naijue_erp.sales_line l ON l.sales_id=p.id AND l.is_current\n      LEFT JOIN naijue_erp.sku s ON s.id=l.sku_id LEFT JOIN naijue_erp.product cp ON cp.id=s.product_id AND p.stock_basis='RUNTIME_LEDGER' LEFT JOIN naijue_erp.product_category cc ON cc.id=cp.category_id),\n    page_metrics AS (SELECT document_id,\n    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE THEN quantity ELSE 0 END) END AS quantity,\n    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity<0 THEN -quantity ELSE 0 END) END AS incoming_quantity,\n    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity>0 THEN quantity ELSE 0 END) END AS outgoing_quantity\n    FROM page_lines GROUP BY document_id),\n    category_groups AS (SELECT document_id,category_id,category_name,min(line_no) AS first_line,\n      sum(quantity) AS value\n      FROM page_lines WHERE stock_basis='RUNTIME_LEDGER' AND is_gift IS FALSE GROUP BY document_id,category_id,category_name\n      HAVING sum(quantity)<>0),\n    category_ranked AS (SELECT *,row_number() OVER(PARTITION BY document_id ORDER BY first_line,category_id) AS category_row FROM category_groups),\n    category_summaries AS (SELECT document_id,jsonb_agg(jsonb_build_object('categoryId',category_id,'categoryName',category_name,'value',value::text) ORDER BY category_row) FILTER(WHERE category_row<=3) AS category_items,\n      count(*)::text AS category_count,count(*)>3 AS category_has_more FROM category_ranked GROUP BY document_id),\n    products AS (SELECT *,row_number() OVER(PARTITION BY document_id,coalesce(product_id::text,'line:'||line_id::text) ORDER BY line_no,line_id) AS identity_row FROM page_lines),\n    previews AS (SELECT *,row_number() OVER(PARTITION BY document_id ORDER BY line_no,line_id) AS preview_row FROM products WHERE identity_row=1),\n    product_summaries AS (SELECT document_id,CASE WHEN count(*) FILTER(WHERE product_id IS NULL)`... 2234 more characters,
+    expected: /history_|import_source|source_file|raw_fields|FOR UPDATE|FOR SHARE|pg_current_xact_id\(|nextval\(/i,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/ordinary-document-list-postgres-protocol.test.ts:31:1
+✖ ordinary filter values stay bound, are intersections, and precede count/page (2.303173ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /\bLIKE\b/. Input:
+  
+  '/* ordinary-document:page:sales */ WITH page_headers AS MATERIALIZED (\n' +
+    "    SELECT h.* FROM naijue_erp.sales_header h WHERE (naijue_erp.standard_business_ready() AND (h.import_batch_id IS NULL OR EXISTS(SELECT 1 FROM naijue_erp.import_batch b WHERE b.id=h.import_batch_id AND b.status='IMPORTED'))) AND (((h.hall_id=$1::uuid))) AND (h.hall_id=$2::uuid) AND (h.status=ANY($3::text[])) AND (h.hall_id=ANY($4::uuid[])) AND (strpos(lower(h.number),lower($5::text))>0) ORDER BY h.created_at DESC NULLS LAST,h.id ASC LIMIT $6 OFFSET $7::bigint),\n" +
+    '    authorized_hall_headers AS MATERIALIZED (SELECT * FROM page_headers),hall_migration AS MATERIALIZED (\n' +
+    " SELECT h.id AS document_id,to_jsonb(h)->>'import_batch_id' AS current_batch_id,\n" +
+    '  m.*,r.result_data,r.status AS receipt_status,r.actor_account_id AS receipt_actor,r.completed_at,\n' +
+    "  m.after_values->'header' AS original_header,m.after_values->>'sourceRecordId' AS source_record_id\n" +
+    " FROM authorized_hall_headers h JOIN naijue_erp.audit_change m ON m.object_type='SALES' AND m.object_id=h.id\n" +
+    ' JOIN naijue_erp.operation_receipt r ON r.id=m.operation_id\n' +
+    " WHERE h.stock_basis='CUTOFF_HISTORY' AND m.action='MIGRATE_DOCUMENT'\n" +
+    "  AND r.target_type='SALES' AND r.target_id=h.id AND r.action=m.action\n" +
+    '), hall_pointers AS MATERIALIZED (\n' +
+    ` SELECT s.*,CASE WHEN s.decision_reason LIKE '{%"STANDARD_IMPORT_POINTER_V1"%'\n` +
+    '  THEN s.decision_reason::jsonb ELSE NULL END AS pointer\n' +
+    ' FROM hall_migration m JOIN naijue_erp.import_record s ON s.id=(m.source_record_id)::uuid\n' +
+    '  AND s.import_batch_id::text=m.current_batch_id\n' +
+    '), hall_chunks AS MATERIALIZED (\n' +
+    ' SELECT a.after_values,a.operation_id,b.id AS source_batch_id,b.source_name AS source_namespace,b.source_hash AS package_manifest_sha256,\n' +
+    '  a.object_id AS source_audit_batch,a.actor_account_id AS source_audit_actor,a.occurred_at AS source_occurred_at,\n' +
+    '  a.action AS source_audit_action,r.actor_account_id AS source_receipt_actor,r.completed_at AS source_completed_at,\n' +
+    '  r.result_data AS source_receipt_result,r.status AS source_receipt_status,r.action AS source_receipt_action,\n' +
+    '  r.target_type AS source_receipt_type,r.target_id AS source_receipt_batch\n' +
+    ' FROM naijue_erp.audit_change a JOIN naijue_erp.operation_receipt r ON r.id=a.operation_id\n' +
+    ' JOIN naijue_erp.import_batch b ON b.id=a.object_id\n' +
+    " WHERE a.operation_id IN(SELECT (pointer->>'operationId')::uuid FROM hall_pointers WHERE pointer->>'format'='STANDARD_IMPORT_POINTER_V1')\n" +
+    "  AND a.object_type='IMPORT' AND a.action='IMPORT_CHUNK'\n" +
+    "  AND b.status='IMPORTED' AND b.inventory_mode='DOCUMENT_CONVERSION' AND b.mapping_version='DOCUMENT_CONVERSION_V1'\n" +
+    '), hall_import_records AS MATERIALIZED (\n' +
+    ' SELECT item.value AS source_record,a.*\n' +
+    " FROM hall_chunks a CROSS JOIN LATERAL jsonb_array_elements(a.after_values->'records') item(value)\n" +
+    " WHERE item.value->>'id' IN(SELECT source_record_id FROM hall_migration) AND item.value ? 'historical_hall_evidence'\n" +
+    '), hall_source AS (\n' +
+    ' SELECT m.*,source.source_record,source.source_batch_id,source.source_namespace,source.package_manifest_sha256,\n' +
+    '  source.source_audit_batch,source.source_audit_actor,source.source_occurred_at,source.source_audit_action,\n' +
+    '  source.source_receipt_actor,source.source_completed_at,source.source_receipt_result,source.source_receipt_status,\n' +
+    '  source.source_receipt_action,source.source_receipt_type,source.source_receipt_batch,\n' +
+    '  source.after_values AS source_audit_values,source.operation_id AS source_operation_id,\n' +
+    '  p.pointer,p.source_system AS pointer_namespace,p.status AS pointer_status,p.reviewed_at AS pointer_reviewed_at,\n' +
+    '  p.source_key AS pointer_source_key,p.source_entity_type AS pointer_entity_type,p.source_record_hash AS pointer_hash,\n' +
+    '  p.source_file_ref AS pointer_file_ref,p.target_type AS pointer_target_type,p.target_id AS pointer_target_id\n' +
+    ' FROM hall_migration m JOIN hall_pointers p ON p.id::text=m.source_record_id\n' +
+    ' JOIN hall_import_records source ON source.source_batch_id::text=m.current_batch_id\n' +
+    "  AND source.source_record->>'id'=m.source_record_id AND source.operation_id::text=p.pointer->>'operationId'\n" +
+    '), hall_results AS (\n' +
+    " SELECT s.document_id,jsonb_agg(jsonb_build_object('evidence',s.source_record->'historical_hall_evidence','verified',(\n" +
+    "  s.receipt_status='COMMITTED' AND s.receipt_actor=s.actor_account_id AND s.occurred_at=s.completed_at\n" +
+    '  AND s.old_version IS NULL AND s.before_values IS NULL\n' +
+    "  AND s.result_data->>'sourceRecordId'=s.source_record_id\n" +
+    "  AND s.result_data->>'salesId'=s.document_id::text AND s.result_data->>'batchId'=s.source_batch_id::text\n" +
+    "  AND s.result_data->>'exposureDigest'=encode(sha256(convert_to((s.after_values-ARRAY['baseline','sourceRecordId'])::text,'UTF8')),'hex')\n" +
+    "  AND s.original_header->>'id'=s.document_id::text AND s.original_header->>'import_batch_id'=s.source_batch_id::text\n" +
+    "  AND s.original_header->>'stock_basis'='CUTOFF_HISTORY'\n" +
+    "  AND s.source_receipt_status='COMMITTED' AND s.source_receipt_type='IMPORT' AND s.source_receipt_batch=s.source_batch_id\n" +
+    '  AND s.source_audit_actor=s.source_receipt_actor AND s.source_occurred_at=s.source_completed_at\n' +
+    '  AND s.source_receipt_action=s.source_audit_action\n' +
+    "  AND s.pointer=jsonb_build_object('format','STANDARD_IMPORT_POINTER_V1','code','SOURCE_BOUND','operationId',s.source_operation_id)\n" +
+    "  AND s.pointer_status='IMPORTED' AND s.pointer_reviewed_at=s.source_completed_at AND s.pointer_namespace=s.source_namespace\n" +
+    "  AND s.pointer_source_key=s.source_record->>'source_key' AND s.pointer_entity_type=s.source_record->>'entity_type'\n" +
+    "  AND s.pointer_hash=s.source_record->>'source_hash' AND s.pointer_file_ref=s.source_record->>'file_ref'\n" +
+    "  AND s.pointer_target_type=s.source_record->>'target_type' AND s.pointer_target_id::text=s.source_record->>'target_id'\n" +
+    "  AND s.source_receipt_result->>'profile'='STANDARD_IMPORT_SQL_V1'\n" +
+    "  AND s.source_receipt_result->>'packageManifestSha256'=s.package_manifest_sha256\n" +
+    "  AND s.source_audit_values->>'profile'='STANDARD_IMPORT_SQL_V1'\n" +
+    "  AND s.source_audit_values->'request'->>'namespace'=s.source_namespace\n" +
+    "  AND s.source_record->>'entity_type'='SALES_HEADER' AND s.source_record->>'target_type'='SALES_HEADER'\n" +
+    "  AND s.source_record->>'target_id'=s.document_id::text\n" +
+    "  AND s.source_record->'fields'->>'id'=s.document_id::text AND s.source_record->'fields'->>'stock_basis'='CUTOFF_HISTORY'\n" +
+    "  AND s.source_record->'fields'->>'import_batch_id'=s.source_batch_id::text\n" +
+    "  AND to_jsonb(jsonb_populate_record(NULL::naijue_erp.sales_header,s.source_record->'fields'))=to_jsonb(jsonb_populate_record(NULL::naijue_erp.sales_header,s.original_header))\n" +
+    "  AND s.source_record->'fields'->'hall_id' IS NOT DISTINCT FROM s.original_header->'hall_id'\n" +
+    "  AND s.source_record->'fields'->'warehouse_id' IS NOT DISTINCT FROM s.original_header->'warehouse_id'\n" +
+    "  AND s.source_record->'historical_hall_evidence'->'selected_hall_id' IS NOT DISTINCT FROM s.original_header->'hall_id'\n" +
+    "  AND s.source_record->'historical_hall_evidence'->'warehouse_id' IS NOT DISTINCT FROM s.original_header->'warehouse_id'\n" +
+    "  AND jsonb_typeof(s.source_record->'source_refs')='array' AND jsonb_array_length(s.source_record->'source_refs')>0\n" +
+    "  AND s.source_record->>'source_hash'=encode(sha256(convert_to((jsonb_build_object(\n" +
+    "   'source_key',s.source_record->'source_key','fields',s.source_record->'fields','source_refs',s.source_record->'source_refs')\n" +
+    "   || CASE WHEN s.source_record ? 'zero_amount_archive' THEN jsonb_build_object('zero_amount_archive',s.source_record->'zero_amount_archive') ELSE '{}'::jsonb END\n" +
+    "   || CASE WHEN s.source_record ? 'explicit_zero_evidence' THEN jsonb_build_object('explicit_zero_evidence',s.source_record->'explicit_zero_evidence') ELSE '{}'::jsonb END\n" +
+    "   || jsonb_build_object('historical_hall_evidence',s.source_record->'historical_hall_evidence'))::text,'UTF8')),'hex')\n" +
+    ' ) IS TRUE)) AS historical_hall_proofs FROM hall_source s GROUP BY s.document_id\n' +
+    '),\n' +
+    '    page_lines AS MATERIALIZED (SELECT p.id AS document_id,p.stock_basis,l.id AS line_id,l.line_no,l.quantity::numeric AS quantity,l.is_gift AS is_gift,\n' +
+    '      s.product_id,l.product_code_snapshot,l.product_name_snapshot,cc.id AS category_id,cc.name AS category_name\n' +
+    '      FROM page_headers p JOIN naijue_erp.sales_line l ON l.sales_id=p.id AND l.is_current\n' +
+    "      LEFT JOIN naijue_erp.sku s ON s.id=l.sku_id LEFT JOIN naijue_erp.product cp ON cp.id=s.product_id AND p.stock_basis='RUNTIME_LEDGER' LEFT JOIN naijue_erp.product_category cc ON cc.id=cp.category_id),\n" +
+    '    page_metrics AS (SELECT document_id,\n' +
+    '    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE THEN quantity ELSE 0 END) END AS quantity,\n' +
+    '    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity<0 THEN -quantity ELSE 0 END) END AS incoming_quantity,\n' +
+    '    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity>0 THEN quantity ELSE 0 END) END AS outgoing_quantity\n' +
+    '    FROM page_lines GROUP BY document_id),\n' +
+    '    category_groups AS (SELECT document_id,category_id,category_name,min(line_no) AS first_line,\n' +
+    '      sum(quantity) AS value\n' +
+    "      FROM page_lines WHERE stock_basis='RUNTIME_LEDGER' AND is_gift IS FALSE GROUP BY document_id,category_id,category_name\n" +
+    '      HAVING sum(quantity)<>0),\n' +
+    '    category_ranked AS (SELECT *,row_number() OVER(PARTITION BY document_id ORDER BY first_line,category_id) AS category_row FROM category_groups),\n' +
+    "    category_summaries AS (SELECT document_id,jsonb_agg(jsonb_build_object('categoryId',category_id,'categoryName',category_name,'value',value::text) ORDER BY category_row) FILTER(WHERE category_row<=3) AS category_items,\n" +
+    '      count(*)::text AS category_count,count(*)>3 AS category_has_more FROM category_ranked GROUP BY document_id),\n' +
+    "    products AS (SELECT *,row_number() OVER(PARTITION BY document_id,coalesce(product_id::text,'line:'||line_id::text) ORDER BY line_no,line_id) AS identity_row FROM page_lines),\n" +
+    '    previews AS (SELECT *,row_number() OVER(PARTITION BY document_id ORDER BY line_no,line_id) AS preview_row FROM products WHERE id'... 2345 more characters
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/ordinary-document-list-postgres-protocol.test.ts:31:697)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `/* ordinary-document:page:sales */ WITH page_headers AS MATERIALIZED (\n    SELECT h.* FROM naijue_erp.sales_header h WHERE (naijue_erp.standard_business_ready() AND (h.import_batch_id IS NULL OR EXISTS(SELECT 1 FROM naijue_erp.import_batch b WHERE b.id=h.import_batch_id AND b.status='IMPORTED'))) AND (((h.hall_id=$1::uuid))) AND (h.hall_id=$2::uuid) AND (h.status=ANY($3::text[])) AND (h.hall_id=ANY($4::uuid[])) AND (strpos(lower(h.number),lower($5::text))>0) ORDER BY h.created_at DESC NULLS LAST,h.id ASC LIMIT $6 OFFSET $7::bigint),\n    authorized_hall_headers AS MATERIALIZED (SELECT * FROM page_headers),hall_migration AS MATERIALIZED (\n SELECT h.id AS document_id,to_jsonb(h)->>'import_batch_id' AS current_batch_id,\n  m.*,r.result_data,r.status AS receipt_status,r.actor_account_id AS receipt_actor,r.completed_at,\n  m.after_values->'header' AS original_header,m.after_values->>'sourceRecordId' AS source_record_id\n FROM authorized_hall_headers h JOIN naijue_erp.audit_change m ON m.object_type='SALES' AND m.object_id=h.id\n JOIN naijue_erp.operation_receipt r ON r.id=m.operation_id\n WHERE h.stock_basis='CUTOFF_HISTORY' AND m.action='MIGRATE_DOCUMENT'\n  AND r.target_type='SALES' AND r.target_id=h.id AND r.action=m.action\n), hall_pointers AS MATERIALIZED (\n SELECT s.*,CASE WHEN s.decision_reason LIKE '{%"STANDARD_IMPORT_POINTER_V1"%'\n  THEN s.decision_reason::jsonb ELSE NULL END AS pointer\n FROM hall_migration m JOIN naijue_erp.import_record s ON s.id=(m.source_record_id)::uuid\n  AND s.import_batch_id::text=m.current_batch_id\n), hall_chunks AS MATERIALIZED (\n SELECT a.after_values,a.operation_id,b.id AS source_batch_id,b.source_name AS source_namespace,b.source_hash AS package_manifest_sha256,\n  a.object_id AS source_audit_batch,a.actor_account_id AS source_audit_actor,a.occurred_at AS source_occurred_at,\n  a.action AS source_audit_action,r.actor_account_id AS source_receipt_actor,r.completed_at AS source_completed_at,\n  r.result_data AS source_receipt_result,r.status AS source_receipt_status,r.action AS source_receipt_action,\n  r.target_type AS source_receipt_type,r.target_id AS source_receipt_batch\n FROM naijue_erp.audit_change a JOIN naijue_erp.operation_receipt r ON r.id=a.operation_id\n JOIN naijue_erp.import_batch b ON b.id=a.object_id\n WHERE a.operation_id IN(SELECT (pointer->>'operationId')::uuid FROM hall_pointers WHERE pointer->>'format'='STANDARD_IMPORT_POINTER_V1')\n  AND a.object_type='IMPORT' AND a.action='IMPORT_CHUNK'\n  AND b.status='IMPORTED' AND b.inventory_mode='DOCUMENT_CONVERSION' AND b.mapping_version='DOCUMENT_CONVERSION_V1'\n), hall_import_records AS MATERIALIZED (\n SELECT item.value AS source_record,a.*\n FROM hall_chunks a CROSS JOIN LATERAL jsonb_array_elements(a.after_values->'records') item(value)\n WHERE item.value->>'id' IN(SELECT source_record_id FROM hall_migration) AND item.value ? 'historical_hall_evidence'\n), hall_source AS (\n SELECT m.*,source.source_record,source.source_batch_id,source.source_namespace,source.package_manifest_sha256,\n  source.source_audit_batch,source.source_audit_actor,source.source_occurred_at,source.source_audit_action,\n  source.source_receipt_actor,source.source_completed_at,source.source_receipt_result,source.source_receipt_status,\n  source.source_receipt_action,source.source_receipt_type,source.source_receipt_batch,\n  source.after_values AS source_audit_values,source.operation_id AS source_operation_id,\n  p.pointer,p.source_system AS pointer_namespace,p.status AS pointer_status,p.reviewed_at AS pointer_reviewed_at,\n  p.source_key AS pointer_source_key,p.source_entity_type AS pointer_entity_type,p.source_record_hash AS pointer_hash,\n  p.source_file_ref AS pointer_file_ref,p.target_type AS pointer_target_type,p.target_id AS pointer_target_id\n FROM hall_migration m JOIN hall_pointers p ON p.id::text=m.source_record_id\n JOIN hall_import_records source ON source.source_batch_id::text=m.current_batch_id\n  AND source.source_record->>'id'=m.source_record_id AND source.operation_id::text=p.pointer->>'operationId'\n), hall_results AS (\n SELECT s.document_id,jsonb_agg(jsonb_build_object('evidence',s.source_record->'historical_hall_evidence','verified',(\n  s.receipt_status='COMMITTED' AND s.receipt_actor=s.actor_account_id AND s.occurred_at=s.completed_at\n  AND s.old_version IS NULL AND s.before_values IS NULL\n  AND s.result_data->>'sourceRecordId'=s.source_record_id\n  AND s.result_data->>'salesId'=s.document_id::text AND s.result_data->>'batchId'=s.source_batch_id::text\n  AND s.result_data->>'exposureDigest'=encode(sha256(convert_to((s.after_values-ARRAY['baseline','sourceRecordId'])::text,'UTF8')),'hex')\n  AND s.original_header->>'id'=s.document_id::text AND s.original_header->>'import_batch_id'=s.source_batch_id::text\n  AND s.original_header->>'stock_basis'='CUTOFF_HISTORY'\n  AND s.source_receipt_status='COMMITTED' AND s.source_receipt_type='IMPORT' AND s.source_receipt_batch=s.source_batch_id\n  AND s.source_audit_actor=s.source_receipt_actor AND s.source_occurred_at=s.source_completed_at\n  AND s.source_receipt_action=s.source_audit_action\n  AND s.pointer=jsonb_build_object('format','STANDARD_IMPORT_POINTER_V1','code','SOURCE_BOUND','operationId',s.source_operation_id)\n  AND s.pointer_status='IMPORTED' AND s.pointer_reviewed_at=s.source_completed_at AND s.pointer_namespace=s.source_namespace\n  AND s.pointer_source_key=s.source_record->>'source_key' AND s.pointer_entity_type=s.source_record->>'entity_type'\n  AND s.pointer_hash=s.source_record->>'source_hash' AND s.pointer_file_ref=s.source_record->>'file_ref'\n  AND s.pointer_target_type=s.source_record->>'target_type' AND s.pointer_target_id::text=s.source_record->>'target_id'\n  AND s.source_receipt_result->>'profile'='STANDARD_IMPORT_SQL_V1'\n  AND s.source_receipt_result->>'packageManifestSha256'=s.package_manifest_sha256\n  AND s.source_audit_values->>'profile'='STANDARD_IMPORT_SQL_V1'\n  AND s.source_audit_values->'request'->>'namespace'=s.source_namespace\n  AND s.source_record->>'entity_type'='SALES_HEADER' AND s.source_record->>'target_type'='SALES_HEADER'\n  AND s.source_record->>'target_id'=s.document_id::text\n  AND s.source_record->'fields'->>'id'=s.document_id::text AND s.source_record->'fields'->>'stock_basis'='CUTOFF_HISTORY'\n  AND s.source_record->'fields'->>'import_batch_id'=s.source_batch_id::text\n  AND to_jsonb(jsonb_populate_record(NULL::naijue_erp.sales_header,s.source_record->'fields'))=to_jsonb(jsonb_populate_record(NULL::naijue_erp.sales_header,s.original_header))\n  AND s.source_record->'fields'->'hall_id' IS NOT DISTINCT FROM s.original_header->'hall_id'\n  AND s.source_record->'fields'->'warehouse_id' IS NOT DISTINCT FROM s.original_header->'warehouse_id'\n  AND s.source_record->'historical_hall_evidence'->'selected_hall_id' IS NOT DISTINCT FROM s.original_header->'hall_id'\n  AND s.source_record->'historical_hall_evidence'->'warehouse_id' IS NOT DISTINCT FROM s.original_header->'warehouse_id'\n  AND jsonb_typeof(s.source_record->'source_refs')='array' AND jsonb_array_length(s.source_record->'source_refs')>0\n  AND s.source_record->>'source_hash'=encode(sha256(convert_to((jsonb_build_object(\n   'source_key',s.source_record->'source_key','fields',s.source_record->'fields','source_refs',s.source_record->'source_refs')\n   || CASE WHEN s.source_record ? 'zero_amount_archive' THEN jsonb_build_object('zero_amount_archive',s.source_record->'zero_amount_archive') ELSE '{}'::jsonb END\n   || CASE WHEN s.source_record ? 'explicit_zero_evidence' THEN jsonb_build_object('explicit_zero_evidence',s.source_record->'explicit_zero_evidence') ELSE '{}'::jsonb END\n   || jsonb_build_object('historical_hall_evidence',s.source_record->'historical_hall_evidence'))::text,'UTF8')),'hex')\n ) IS TRUE)) AS historical_hall_proofs FROM hall_source s GROUP BY s.document_id\n),\n    page_lines AS MATERIALIZED (SELECT p.id AS document_id,p.stock_basis,l.id AS line_id,l.line_no,l.quantity::numeric AS quantity,l.is_gift AS is_gift,\n      s.product_id,l.product_code_snapshot,l.product_name_snapshot,cc.id AS category_id,cc.name AS category_name\n      FROM page_headers p JOIN naijue_erp.sales_line l ON l.sales_id=p.id AND l.is_current\n      LEFT JOIN naijue_erp.sku s ON s.id=l.sku_id LEFT JOIN naijue_erp.product cp ON cp.id=s.product_id AND p.stock_basis='RUNTIME_LEDGER' LEFT JOIN naijue_erp.product_category cc ON cc.id=cp.category_id),\n    page_metrics AS (SELECT document_id,\n    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE THEN quantity ELSE 0 END) END AS quantity,\n    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity<0 THEN -quantity ELSE 0 END) END AS incoming_quantity,\n    CASE WHEN count(*) FILTER(WHERE is_gift IS NULL)>0 THEN NULL ELSE sum(CASE WHEN is_gift IS FALSE AND quantity>0 THEN quantity ELSE 0 END) END AS outgoing_quantity\n    FROM page_lines GROUP BY document_id),\n    category_groups AS (SELECT document_id,category_id,category_name,min(line_no) AS first_line,\n      sum(quantity) AS value\n      FROM page_lines WHERE stock_basis='RUNTIME_LEDGER' AND is_gift IS FALSE GROUP BY document_id,category_id,category_name\n      HAVING sum(quantity)<>0),\n    category_ranked AS (SELECT *,row_number() OVER(PARTITION BY document_id ORDER BY first_line,category_id) AS category_row FROM category_groups),\n    category_summaries AS (SELECT document_id,jsonb_agg(jsonb_build_object('categoryId',category_id,'categoryName',category_name,'value',value::text) ORDER BY category_row) FILTER(WHERE category_row<=3) AS category_items,\n      count(*)::text AS category_count,count(*)>3 AS category_has_more FROM category_ranked GROUP BY document_id),\n    products AS (SELECT *,row_number() OVER(PARTITION BY document_id,coalesce(product_id::text,'line:'||line_id::text) ORDER BY line_no,line_id) AS identity_row FROM page_lines),\n    previews AS (SELECT *,row_number() OVER(PARTITION BY document_id ORDER BY line_no,line_id) AS preview_row FROM products WHERE id`... 2345 more characters,
+    expected: /\bLIKE\b/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

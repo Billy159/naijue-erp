@@ -1,0 +1,58 @@
+✔ approved exact historical departed staff admits null hall, not a general exception (2.925816ms)
+✔ missing, forged, tampered or unpinned approval cannot authorize a record (1.822412ms)
+✔ approval rejects duplicate IDs, keys and unsupported fields (0.976545ms)
+✖ approval rejects duplicate JSON keys and invalid UTF-8 even when digest is pinned (2.994247ms)
+✔ ordinary preflight admits only externally approved exact departed staff (61.859687ms)
+✔ stream relation check shares exact departed approval and rejects active or unapproved (9.752628ms)
+✔ whole compiler binds exact approval bytes in immutable initialization, without creating a login (61.676107ms)
+✔ full streaming preflight retains approval wire in its summary (83.000695ms)
+✖ ordinary and full stream reject approval evidence absent from current manifest (12.434752ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 7
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 522.714069
+
+✖ failing tests:
+
+test at tests/unified-historical-staff-hall-approval.test.ts:12:1
+✖ approval rejects duplicate JSON keys and invalid UTF-8 even when digest is pinned (2.994247ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-historical-staff-hall-approval.test.ts:12:391)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/unified-historical-staff-hall-preflight.test.mjs:13:1
+✖ ordinary and full stream reject approval evidence absent from current manifest (12.434752ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-historical-staff-hall-preflight.test.mjs:13:584)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

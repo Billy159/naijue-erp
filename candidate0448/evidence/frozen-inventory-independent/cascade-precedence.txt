@@ -1,0 +1,1 @@
+PASS actual-CSS cascade precedence: primary/neutral/link/pager/ghost/stock/h1; old-reset negative control reproduces dark ink; inherited1.5 line-height and old-typography negative controls pass. No real-browser/pixel claim.

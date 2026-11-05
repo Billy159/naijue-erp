@@ -1,0 +1,197 @@
+{
+  "atUtc": "2026-10-23T03:35:10.222996+00:00",
+  "parent": "48882854534c2904d2ea0d16190d171cb981258d",
+  "groups": [
+    {
+      "slice": "F1 chunk66 complete transfer native selection and visible product frame plus C120 placeholders/home route",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/DELIVERY.json",
+      "receiptSha256": "b07cf93645ff9524614a22a6295c618be3a57457681c474d3dbc125c21b1e922",
+      "receiptSnapshot": {
+        "chunk": 66,
+        "taskId": "F1-T02-MATRIX-SOURCE-AND-ACTUAL-CONSUMER-UI-CONTINUATION",
+        "atUtc": "2026-10-23T03:33:41.758500+00:00",
+        "status": "READY_EXACT8_SOURCE_UI_AND_LINKED_STRICT_PASS_NOT_BROWSER",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "beforeSha256": "8ff873a986b2ce4fe1619bb8fe94bbf12aa331ddb3f63e4e6708211b27420aa3",
+            "sha256": "164c81c1fb1bb498b82024807597a78cbb9c07cf5f23ac3581ae87639540416b"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "beforeSha256": "858a0f21dded8b8e7fa524e53b8797645de8fde348bdfb1b793446f27b2f5a57",
+            "sha256": "13d55a95ecc575d99b01793e988cf7ff803421797deeb02f2b73b7abdb3be5e3"
+          },
+          {
+            "path": "apps/web/src/application/styles/sales-detail.css",
+            "beforeSha256": "4c51a66cf955da542ed8af9ab042093c1fa5af8ec99104178cbf5646cc9951cc",
+            "sha256": "cbeeb58f779b271dcd21b125212206f21667137b191deb310f44beab07d9ff89"
+          },
+          {
+            "path": "apps/web/src/demo-controls/single-select-action.tsx",
+            "beforeSha256": "051115760bebbca1318d6451dfea3fbb37d49fc10153cfcae55eef5f5d986679",
+            "sha256": "9d3ff7633dc21672808ec4db7a152d755cda0eb20e30353f2ba7a8c3d3c8ce98"
+          },
+          {
+            "path": "apps/web/src/demo-presentation/frame.css",
+            "beforeSha256": "abcb9859061102f0e49bda52622a630f49c05d9eb8c30878b87931c47e9794df",
+            "sha256": "24b7783715628e5d715ec427907cace8b220ef60c56d2bd94f6675a1592ffab6"
+          },
+          {
+            "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+            "beforeSha256": "d22efdf9d62f72c77615c75dadf2e33511d969575abf3fab67ac34d2e9f1ab1f",
+            "sha256": "df1febbffbef694b79a81e24d3b788378a52d5ff80613c158a42b234f2203d83"
+          },
+          {
+            "path": "apps/web/src/application/demo-frame-presentation.tsx",
+            "beforeSha256": "439e350c2ab35ffeacbf168d3ad8fa3878d73c2aeb6e1c53eef95d771e77e20f",
+            "sha256": "8f7101763a03f5ee8859be40b91deb2af826e6afe1791dd7b7ab5bdff9896a53"
+          },
+          {
+            "path": "apps/web/src/application/controller.ts",
+            "beforeSha256": "f0b016b5194461974346dcad48ec837ccdc5be6cfb595e5e2fbc806baf41e544",
+            "sha256": "a2f85a509683a3618af2ae8a2dca6e0114d4203c66e315c03285b2041ba28e28"
+          }
+        ],
+        "checks": {
+          "transfer-5": "EXIT0_NATIVE_TRANSFER_UI_SYNTHETIC",
+          "home-empty-2": "EXIT0_NATIVE_SINGLE_ROOT_AND_REAL_SALES_MANUAL_HOST_SYNTHETIC",
+          "css-source-1": "EXIT0_PROTECTED_REGIONS_ACTIVE_SELECTOR_AND_EXPLICIT_CSS_GRAPHS",
+          "types-3": "EXIT2_OTHER_OWNER_PRODUCT_SPECS_SIGNATURE",
+          "types-ui-1": "HISTORICAL_SAME_OTHER_OWNER_ERROR_NOT_HIDDEN",
+          "types-4": "EXIT0_STRICT_LINKED_AFTER_EXACT_F2_SIGNATURE_FIX"
+        },
+        "wholePagePass": false,
+        "wholeDirectReuseComplete": false,
+        "blockers": [],
+        "notTested": [
+          "Latest integrated build/HTTP/resource closure",
+          "Actual browser affected consumer paired geometry/operation",
+          "Native save/audit/roles/PG/recovery and formal representative performance"
+        ],
+        "next": "C exact8 pin and next necessary candidate; originalF2 type fix reused; source-map incomplete regions remain incomplete",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/INPUT.json",
+            "sha256": "5a60edc7b5586cee897469dfbbe66b8da1061db9889b44bc6bdd8ddc974f59b8"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/RESULT.json",
+            "sha256": "a1d4b621fb3229659f417a8dcab9af8a96e6b03c09eb2fb50e98e4eb28ca199e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/SOURCE-CHECK.json",
+            "sha256": "5305c05b570ab38e979778fdb85ea0e6ca9561e6368f2db4abdd934bb964b098"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/SOURCE.diff",
+            "sha256": "74b1c828c2abbf194ed625aa052e7c890227618408e736ac70e64cf27e005ea5"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/PROBE-NOTES.json",
+            "sha256": "35f70aba7a6bfc4edf0cfa8a7ef38edc975a41c7bc1df49b5c7eacecba9913f7"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/REGION-SOURCE-MAP.json",
+            "sha256": "564c6e553e25c4f17fabdcabddc621c4e2b6a5d8e5034ad4affbc676c2acfca9"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/REPORT.md",
+            "sha256": "8741c2c1374afd6050611a18616838531c6f28285abc002657fd1abf8bbadcb3"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/TRANSFER-RESULT.json",
+            "sha256": "65a9cfef80cb6f1aebf07bbf38bef4bb5d5751ec6219c7512e8e942d3305dae6"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/HOME-EMPTY-RESULT.json",
+            "sha256": "6f17c26375b522b2ac9b15fd3c63be1703a6180c7bbb2f108682c7d937ca939f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/CSS-SOURCE-RESULT.json",
+            "sha256": "d5f3751058634200653294a512478f4a93bdf5f9ce1dc17e334444afdae0dce8"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/transfer-5.log",
+            "sha256": "b20f38a744c59d3298b22919f3e34548b81e03ad5135ee88c2c98d6c20ffaa80"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/home-empty-2.log",
+            "sha256": "bd5cf0bfd58e803299de2facc41ae0f058462dd4251d6a0fee2bb64d35bca105"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/css-source-1.log",
+            "sha256": "d01de87f55e97dea69645d7ce037f40375d3cc15e9fdb54bb4245becfb85ea59"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/types-3.log",
+            "sha256": "1282b91ffacffb623bffb948e9eaaa31b2cedee06e5071a3d80cb8defcec4c41"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/types-ui-1.log",
+            "sha256": "1282b91ffacffb623bffb948e9eaaa31b2cedee06e5071a3d80cb8defcec4c41"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/types-4.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-66/TYPE-RECHECK-INPUT.json",
+            "sha256": "636d170cc822453302aec5746a3891bc597c8c0d61acd774674653ccfebb2a34"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "owner": "F1",
+          "bytes": 29195,
+          "sha256": "164c81c1fb1bb498b82024807597a78cbb9c07cf5f23ac3581ae87639540416b"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "bytes": 10747,
+          "sha256": "13d55a95ecc575d99b01793e988cf7ff803421797deeb02f2b73b7abdb3be5e3"
+        },
+        {
+          "path": "apps/web/src/application/styles/sales-detail.css",
+          "owner": "F1",
+          "bytes": 265,
+          "sha256": "cbeeb58f779b271dcd21b125212206f21667137b191deb310f44beab07d9ff89"
+        },
+        {
+          "path": "apps/web/src/demo-controls/single-select-action.tsx",
+          "owner": "F1",
+          "bytes": 5585,
+          "sha256": "9d3ff7633dc21672808ec4db7a152d755cda0eb20e30353f2ba7a8c3d3c8ce98"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/frame.css",
+          "owner": "F1",
+          "bytes": 6200,
+          "sha256": "24b7783715628e5d715ec427907cace8b220ef60c56d2bd94f6675a1592ffab6"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+          "owner": "F1",
+          "bytes": 6224,
+          "sha256": "df1febbffbef694b79a81e24d3b788378a52d5ff80613c158a42b234f2203d83"
+        },
+        {
+          "path": "apps/web/src/application/demo-frame-presentation.tsx",
+          "owner": "F1",
+          "bytes": 4019,
+          "sha256": "8f7101763a03f5ee8859be40b91deb2af826e6afe1791dd7b7ab5bdff9896a53"
+        },
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "owner": "F1",
+          "bytes": 51940,
+          "sha256": "a2f85a509683a3618af2ae8a2dca6e0114d4203c66e315c03285b2041ba28e28"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze originalF1 exact8; source/DOM/type checks adopted only. QF on next necessary exact candidate for affected transfer/Select/frame/home consumers. Retain all partial/direct-reuse gaps, no whole-page or real business/performance/deployment claim. F2 and F3 WIP excluded."
+}

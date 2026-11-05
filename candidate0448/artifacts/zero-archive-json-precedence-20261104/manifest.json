@@ -1,0 +1,140 @@
+{
+  "format": "WHOLE_HISTORICAL_RECEPTION_CANDIDATE_V1",
+  "engineExecuted": false,
+  "reviewed": false,
+  "runtimeCatalogAdmitted": false,
+  "admissionDisposition": "REFUSED_PENDING_VERSIONED_INSTALLATION_REVIEW",
+  "sqlSha256": "e5a93c3cb0c5b4d45c804397d77e18436289e1cc01edb1dd54799d8812662196",
+  "routineChanges": [
+    {
+      "signature": "naijue_erp.standard_whole_package_closed_v2(uuid)",
+      "before": "71ef59766fc69b83dd6494352e4ca8a189d27a8f09fc881d3421574558823601",
+      "after": "01e39386859cbb3e0617b9c89d1d7670a6b9db97af0a4e02b1d9a74460e30d5f"
+    },
+    {
+      "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)",
+      "before": "0d0547318a5a940639f288a73f08ebd9396b079b0c88810b7fa016870652d840",
+      "after": "b80d83ae257b1f09be9561ce2b68a3e36e95e8b469fe30883fe0c9284ac6faef"
+    },
+    {
+      "signature": "naijue_erp.validate_sales_settlement()",
+      "before": "149111d2da2a62f37a65578f76af7fddc156bbf3e8797e13c653d8481d294b21",
+      "after": "16dea25b6153d032e9f095e709d0f5e2fc8d583ad16806403eab83b6eeb60488"
+    },
+    {
+      "signature": "naijue_erp.standard_zero_amount_archive_trace(uuid)",
+      "before": null,
+      "after": "f45ff8ef2c47db7e049178c04e48379bed1e2975f88a084b335e6c26ac856782"
+    }
+  ],
+  "predecessorChain": [
+    {
+      "signature": "naijue_erp.standard_whole_package_closed_v2(uuid)",
+      "before": "71ef59766fc69b83dd6494352e4ca8a189d27a8f09fc881d3421574558823601",
+      "after": "d445ccee97d806f1e6a878c6a224ab01a8fd9890b685bfc85df9a7a2ee512c38"
+    },
+    {
+      "signature": "naijue_erp.standard_whole_package_closed_v2(uuid)",
+      "before": "d445ccee97d806f1e6a878c6a224ab01a8fd9890b685bfc85df9a7a2ee512c38",
+      "after": "01e39386859cbb3e0617b9c89d1d7670a6b9db97af0a4e02b1d9a74460e30d5f"
+    },
+    {
+      "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)",
+      "before": "0d0547318a5a940639f288a73f08ebd9396b079b0c88810b7fa016870652d840",
+      "after": "febd7953e7e14ffb5c7ed84705c02d71e152ec765db8bad12b132a574649b4f8"
+    },
+    {
+      "signature": "naijue_erp.validate_sales_settlement()",
+      "before": "149111d2da2a62f37a65578f76af7fddc156bbf3e8797e13c653d8481d294b21",
+      "after": "fc876ce73e260cd690205d1297cbac71649ae4b2fb81d88784d260e1e2ff1f86"
+    },
+    {
+      "signature": "naijue_erp.validate_sales_settlement()",
+      "before": "fc876ce73e260cd690205d1297cbac71649ae4b2fb81d88784d260e1e2ff1f86",
+      "after": "16dea25b6153d032e9f095e709d0f5e2fc8d583ad16806403eab83b6eeb60488"
+    },
+    {
+      "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)",
+      "before": "febd7953e7e14ffb5c7ed84705c02d71e152ec765db8bad12b132a574649b4f8",
+      "after": "23fbb6f80befaabac0dcccf9e3c82eb9151de154ad5cd61bed1b14a1ea752301"
+    },
+    {
+      "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)",
+      "before": "23fbb6f80befaabac0dcccf9e3c82eb9151de154ad5cd61bed1b14a1ea752301",
+      "after": "b80d83ae257b1f09be9561ce2b68a3e36e95e8b469fe30883fe0c9284ac6faef"
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_v2.sql",
+      "sha256": "f784d786f47255dcaa2958df07d3f3bf2d0056b5bdb2d77c5565ea5ee782f435"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_whole_closure_singletons_candidate.sql",
+      "sha256": "81e568fb146c239668f7cc57ad370a2a9a0a65ee81cd23ef7d1876f66829277c"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_access_v2.sql",
+      "sha256": "a4210b92e4589dc31b5bf5f49af66b166d24dface7523095bc21adf2e8d9d5a8"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_whole_closure_batch_binding_candidate.sql",
+      "sha256": "3d6d3df968d2926a45d50efb89c158961e8e2f58a1f07d451fd81f117dc7b608"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical_sales_source_profile_successor.sql",
+      "sha256": "4dafd8ec9c64d7ac99f659711e50b27e4c7aacd30db3dc9897b19d886ba49e96"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical_missing_settlement_successor.sql",
+      "sha256": "a0464dbeb0764c371319c2d8230ddb75eb89a00a607fa0ff15d77864fef910ea"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical-original-restoration_successor.sql",
+      "sha256": "18ab7894162c9bd9053b7d6fd8126a70fcd81896c1fbb103972e4110fbe7b8de"
+    },
+    {
+      "path": "adapters/postgres/migrations/0027_unified_business_documents.sql",
+      "sha256": "d42954acf56445b803ae126b364b1b2a7b0cfe70a98accaeef5cc13a9082c317"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_zero_amount_archive_successor.sql",
+      "sha256": "5159e75a04a0c20a9c47b8853df30c4233645509af0f352bc506dbd9a6ce30e6"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical_staff_null_hall_successor.sql",
+      "sha256": "189454b07e65928b0aeea65bca3f927335d1318a827eb0d2c03acc7ab03f180d"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_historical_restoration_acl_hardening_v1.sql",
+      "sha256": "3b676e85ee4b41da5fd85e93a2c2b878a1b4bdefc1f953932c7c7a05deb5bfda"
+    }
+  ],
+  "permissions": {
+    "grantStatements": 3,
+    "revokeStatements": 11,
+    "changedFromExistingAccessPolicy": true,
+    "executed": false,
+    "actualAclDeltaVerified": false,
+    "existingRoutinePermissionsUnchanged": false,
+    "newTraceExecuteRole": "erp_unified27_importer_2393dbc6db9581c2"
+  },
+  "sourceOnly": true,
+  "installationReady": false,
+  "activeProfilesChanged": false,
+  "requiredNextGate": "INDEPENDENT_COMBINED_SOURCE_REVIEW_AND_AUTHORIZED_ISOLATED_ENGINE_ACCEPTANCE_THEN_VERSIONED_CATALOG_ADMISSION",
+  "aclChanges": [
+    {
+      "signature": "naijue_erp.validate_sales_settlement()",
+      "before": "DEFAULT_PUBLIC_EXECUTE",
+      "after": "OWNER_ONLY_EXECUTE",
+      "operation": "REVOKE_PUBLIC_EXECUTE"
+    },
+    {
+      "signature": "naijue_erp.reject_immutable_change()",
+      "before": "DEFAULT_PUBLIC_EXECUTE",
+      "after": "OWNER_ONLY_EXECUTE",
+      "operation": "REVOKE_PUBLIC_EXECUTE"
+    }
+  ]
+}

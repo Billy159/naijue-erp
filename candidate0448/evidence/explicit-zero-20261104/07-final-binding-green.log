@@ -1,0 +1,12 @@
+✔ approved absent key has only a real approval line locator, whole snapshot binding and no inferred key (5.048968ms)
+✔ reject tampered pin, cutoff, nonzero, duplicates, unknown identity and listed stock (1.633548ms)
+✔ ordinary and full streaming require independent approval, compiler retains zero proof without ledger ID (543.368818ms)
+✔ proof tampering, transplanted rows, unpinned approval refs, extra approved keys and nonbaseline evidence fail closed (77.723058ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 978.509549

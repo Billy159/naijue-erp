@@ -1,0 +1,41 @@
+{
+  "id": "BACKEND-SKILLS-DIRECTIVE-20261023",
+  "atUtc": "2026-10-23T02:30:55.143713+00:00",
+  "authority": "Direct current human C message: 使用已安装两个后端技能辅助当前接口接入、业务修复、性能优化",
+  "skills": [
+    {
+      "path": "/Users/billy/.codex/skills/nodejs-backend-patterns/SKILL.md",
+      "when": "Before backend implementation",
+      "readByC": true
+    },
+    {
+      "path": "/Users/billy/.codex/skills/supabase-postgres-best-practices/SKILL.md",
+      "when": "Before SQL/schema/migration/index/permissions/locks/connections/slowqueries, then relevant refs",
+      "readByC": true
+    }
+  ],
+  "existingOwners": [
+    "D1",
+    "D2",
+    "D3"
+  ],
+  "existingReviewer": "QB01",
+  "models": "gpt-6.1-sol/xhigh",
+  "noNewFrameworkOrmPlatformOrRewrite": true,
+  "preserveValidEvidence": true,
+  "immediatePageGap": {
+    "id": "PAYMENT-METHOD-FILTER-NATIVE",
+    "owner": "D2 existing B05",
+    "frontendOwner": "F3 existing F05",
+    "evidence": [
+      "apps/web/src/payment-settings/http-client.ts readList rejects nonnullpaymentMethodId",
+      "Reader supportsPaymentMethodFilter absent disables original UI"
+    ],
+    "next": "Find existing sameorganization list capability first; ifmissing extend originalnative read with existing payment_method_id only. Exact paths beforewrite, no duplicate API/DTO factsource. F3 onlysignalscap once real contract wired.",
+    "schemaChangeAuthorized": false
+  },
+  "correctness": "Permission before filters/count/page/sum; realSKU/sign/exactmoney/threeenums/idempotency/version/rollback/unknowncommit originalkey. Distinguish empty/unloaded/failure/unmapped/unknown/zero; no swallowed failures",
+  "performance": "Authorizedpagedsummary, targeted details/images/source, noN+1 or repeatedhistorymapping; scopedversionedcache only evidence; measure connection/lock/SQL/assembly/serialization/transfer; no defaultindex/poolgrowth/cache/timeout. Cold1 repeat2 formal≤2000ms representative scale",
+  "executionBoundary": "C unique server/DB/build/deploy per originalauthorization; only registeredisolated realtransaction tests, frozenDemo read-only. NewDBfields/constraints/dependentwritecontracts require complete humanconfirmation.",
+  "handoff": "Fixedsource/pins, reason, scopedchecks/reused evidence, source/local/isolated/build/deploy stages, frontendconsumer/permissions/errors/capabilities, remaining/blocker/next/rollback"
+}

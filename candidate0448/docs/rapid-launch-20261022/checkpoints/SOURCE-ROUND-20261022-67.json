@@ -1,0 +1,267 @@
+{
+  "atUtc": "2026-10-22T20:17:20.016734+00:00",
+  "parent": "5e10613686ace68475b11a8115f5eda70c01b102",
+  "groups": [
+    {
+      "slice": "EXPLICIT_EXACT26_R1_READONLY_PRODUCTION_ENTRY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-EXACT26-PRODUCTION-ENTRY-RESULT-v1.json",
+      "receiptSha256": "1e458ebc2719bff8cdb86d28bcf54090338298f4331384350b9ef6a5b8d9bd62",
+      "receiptSnapshot": {
+        "version": "D1_EXPLICIT_EXACT26_R1_PRODUCTION_ENTRY_V1",
+        "status": "SOURCE_READY_C_CHECKPOINT_AND_QB_NEW_SCOPE_PENDING",
+        "role": "D1",
+        "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "files": [
+          {
+            "path": "apps/api/src/postgres-read-api.ts",
+            "bytes": 38828,
+            "sha256": "e29914115ac34214b9f478fcb143bcb90f6dbb7f7f191881d99a5a2059a4d5d3",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-provider-composition.ts",
+            "bytes": 9576,
+            "sha256": "86b4aca7c7c0d2a59ea6d8f51584bf5d00b51023ce52cb0caa3519e1439a3163",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-application-host.ts",
+            "bytes": 11249,
+            "sha256": "397c7f301b8d6a2e62ea0687d9acc39b69e18e33234dbd0be3164fc61504805a",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-main.ts",
+            "bytes": 4354,
+            "sha256": "5fabb036b037755d558802eb3e3719c62f6e204359b2ad58adac8c7ba9b8c4ec",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-provider-composition.test.ts",
+            "bytes": 34269,
+            "sha256": "0e5bd26eb749782b15a5d070bee7c74af78ba655a27a75497828ce04f16a6f91",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-application-host.test.ts",
+            "bytes": 9186,
+            "sha256": "1fc7ec4741fe71f6a089f056feb677390ce7f00c47373e63a0dc4499fd3edb0b",
+            "singleTerminalLF": true
+          }
+        ],
+        "fixedDependencies": [
+          {
+            "path": "adapters/postgres/src/current-form-reader.ts",
+            "bytes": 34634,
+            "sha256": "9c1c7ce16af6e74b5c2a2987c31bca2fd6d574b2ed11c15b2b1c9f5c4f62ebf3",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+            "bytes": 62176,
+            "sha256": "5786e25dcaa3d549658f88390bc03702b226b278ef7a880c1690a24dac06ec96",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "adapters/postgres/src/imported-history-query-reader.ts",
+            "bytes": 18629,
+            "sha256": "62573b869be60a311fcd3d9bbc6f8c81fb70a47bd5dc691971641f88aba9f486",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+            "bytes": 22060,
+            "sha256": "fc911a3b6e0db054814c7c9f5890bb8235a7850b7595ca1a87875b70d8537baa",
+            "singleTerminalLF": true
+          }
+        ],
+        "entry": {
+          "profile": "source-confirmed-native-exact26-r1-v1",
+          "configuration": "Separate closed10 data keys; runtime26Review exact {reviewFile,trustedReviewSha256}; documentCommands only DISABLED. Original closed9 old parser/profile/factory remain default19 and reject successor config.",
+          "api": "createProductionRuntime26ApplicationApi -> separate createPostgresRuntime26ApplicationApi -> exactly one fresh owned BoundedPostgresPool -> actual createNativeRuntime26Issuer. No caller-supplied pool/issuer/capability callback.",
+          "cli": "Explicit --exact26-r1 <absolute private configuration path>; old no-flag entry unchanged. No actual invocation/listener by D1.",
+          "startup": "Actual original managed admission lease proves all five existing finite readonly purposes; failure closes original pool with no legacy/raw fallback.",
+          "purposes": [
+            "PRODUCT_SEASONS_READ",
+            "CURRENT_CUSTOMER_READ_WRITE",
+            "CURRENT_FORM_READ",
+            "HISTORY_READ",
+            "INVENTORY_ADMISSION"
+          ]
+        },
+        "wiring": [
+          "All authentication/policies/read providers consume the exact same issuer.pool. Original owned pool retained only for close/background failure accounting.",
+          "ProductQuery and Management receive original issuer.catalogueRetainedDelete + productSeasonArray; Details receives retainedDelete.",
+          "CurrentForm receives issuer.runtime26 + historicalCustomerExclusion; Party receives historicalCustomerExclusion.",
+          "D3 C65 HISTORY receives closed {runtime26:issuer.runtime26}. D2 C64 ProductStock receives null old runtime plus issuer.runtime26.",
+          "R1 DISABLED registers no sales/transfer commands, CREATE prepare, existing prepare or party commands. No R2 or R3 activation.",
+          "Host reuses original captured-assets/API/Host/no-store boundary; private metadata pin excluded from public health/assets. Invalid successor host configuration closes owned API."
+        ],
+        "validation": {
+          "path": "R1-EXACT26-PRODUCTION-ENTRY-VALIDATION-v1.json",
+          "sha256": "d8c5443c4095390b0517072c58080cd39e62096cfd182a6d81da9b4217b9a003",
+          "newUnique": 7,
+          "affectedUnique": 4,
+          "pass": 11,
+          "skip": 0,
+          "failures": 0,
+          "strictFinalDirectExit": 0,
+          "actualDatabase": false,
+          "listener": false,
+          "build": false
+        },
+        "closedRemainders": [
+          "C actual R1 exact26 schema/ACL and fresh runtime-role catalog/independent review file; QA C35/C36 pins cannot be reused for R1.",
+          "H05 R2 existing preparation/commands and original catalogue proof remain separate; no broadened verifier/noop.",
+          "D3 full11 SOURCE, real49 MAIN, nonzero PUBLISH authorization/readback/conservation/transaction/audit/replay and full import remain incomplete and restricted.",
+          "STAGED remains unpublished; 2958 anomalous product-only barcodes stay excluded; original sparse history nulls preserved."
+        ],
+        "priorEvidence": "sealed18 run2 and accepted C35/C36 QA scopes reused without rerun; none grants production/source publication authority."
+      },
+      "files": [
+        {
+          "path": "apps/api/src/postgres-read-api.ts",
+          "sha256": "e29914115ac34214b9f478fcb143bcb90f6dbb7f7f191881d99a5a2059a4d5d3",
+          "bytes": 38828,
+          "owner": "D1"
+        },
+        {
+          "path": "apps/api/src/production-provider-composition.ts",
+          "sha256": "86b4aca7c7c0d2a59ea6d8f51584bf5d00b51023ce52cb0caa3519e1439a3163",
+          "bytes": 9576,
+          "owner": "D1"
+        },
+        {
+          "path": "apps/api/src/production-application-host.ts",
+          "sha256": "397c7f301b8d6a2e62ea0687d9acc39b69e18e33234dbd0be3164fc61504805a",
+          "bytes": 11249,
+          "owner": "D1"
+        },
+        {
+          "path": "apps/api/src/production-main.ts",
+          "sha256": "5fabb036b037755d558802eb3e3719c62f6e204359b2ad58adac8c7ba9b8c4ec",
+          "bytes": 4354,
+          "owner": "D1"
+        },
+        {
+          "path": "apps/api/src/production-provider-composition.test.ts",
+          "sha256": "0e5bd26eb749782b15a5d070bee7c74af78ba655a27a75497828ce04f16a6f91",
+          "bytes": 34269,
+          "owner": "D1"
+        },
+        {
+          "path": "apps/api/src/production-application-host.test.ts",
+          "sha256": "1fc7ec4741fe71f6a089f056feb677390ce7f00c47373e63a0dc4499fd3edb0b",
+          "bytes": 9186,
+          "owner": "D1"
+        }
+      ]
+    },
+    {
+      "slice": "GENUINE_ORDINARY_PARTY26_SOURCE_FACTORY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/party-source26-consumer1/RESULT.json",
+      "receiptSha256": "8c538ecfb1411b844b94a18ca106d61c7ca0bac7fb9366520f3a5f4e59d3fa33",
+      "receiptSnapshot": {
+        "taskId": "D3_GENUINE_ORDINARY_PARTY26_AND_HISTORICAL2_SOURCE_FACTORY",
+        "status": "SOURCE_READY_NEW4_SCOPE_CLOSED_ACTUAL630_NOT_BOOTSTRAP49",
+        "atUtc": "2026-10-22T20:14:00.753334+00:00",
+        "sourceExact2": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-party-source26.mjs",
+            "bytes": 13897,
+            "sha256": "4bb8aaea3b0241c47c455e82a6a8a5d7ff1afed06a089e20b517af1ac40425e5"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-party-source26.test.mjs",
+            "bytes": 10329,
+            "sha256": "d99701a6d863f79287a29f8df8439c6ec52237aa11a54fecb565065cf754f77b"
+          }
+        ],
+        "signature": "openReviewedPartySource26({binding,authorizedPayloadHash,source,historical,chunkRows})",
+        "scope": "Only approved ordinary party component plus optional separately reviewed exact2 historical customer source. Does not open103MB allocation registry, original362MB snapshot, workbooks or gzip. Native UUIDs reused.",
+        "checks": {
+          "synthetic": {
+            "newCases": 4,
+            "firstRunPass": 3,
+            "firstRunFail": 1,
+            "failedOnlyAfterCorrectionPass": 1,
+            "remainingFail": 0,
+            "initialFailure": "Ordinary self-declared bootstrap metadata was rejected by application validator before the factory-specific scope error. Added explicit ordinary-only fence before legacy preparation; only failed case rerun.",
+            "logs": [
+              {
+                "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/party-source26-consumer1/protocol-first.log",
+                "bytes": 3362,
+                "sha256": "aaad74bd06d44a523fb88046889809e29adc0964c0334c1d88f1c42b559e5106"
+              },
+              {
+                "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/party-source26-consumer1/protocol-failed-only-second.log",
+                "bytes": 242,
+                "sha256": "348cdc02f75270b19c0106065d46d6882e283238aab88034198b6d4b2f99dedf"
+              }
+            ]
+          },
+          "actual": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/party-source26-consumer1/ACTUAL630-RESULT.json",
+            "bytes": 1075,
+            "sha256": "8f738a9fef881cb0bf03e2b9ee924f7d21f1b48dc4cd0d0e2ef0955fa92727b3"
+          },
+          "rows": 630,
+          "chunks": 9,
+          "counts": {
+            "HALL": 43,
+            "WAREHOUSE": 53,
+            "STAFF": 49,
+            "CUSTOMER": 263,
+            "SUPPLIER": 222
+          },
+          "warehouseApprovedCreatedOperationNull": 53,
+          "historicalEnglish8Preserved": 2,
+          "actualMainScopeRejected": true,
+          "elapsedMilliseconds": 456.02441699999997,
+          "nodeResourceUsageMaxRSSRaw": 193520,
+          "syntheticClosure": "5 sources +13 unique typed projections including warehouse6, ordinary immutable native_party evidence, full native/header reference rows; no user_account projection"
+        },
+        "authorityBoundaries": {
+          "original628SourceAndNativeMapping": "Pinned C partial ordinary component + selected manifest; not full registry authority.",
+          "historical2": "Actual original English8 source+candidate+contract+separate C review consumed, including exact existing hardcoded reference validator.",
+          "newMetadata": "schemaProfile EXACT26 and warehouse created_operation_id NULL only, under existing import contract; original source/evidence bytes unchanged.",
+          "accounts49": "bootstrapAccountsCovered false; ordinary source refuses bootstrap_accounts. Identity49 does not grant augmented first-STAGE source or actual account INSERT.",
+          "authorizedPayloadHash": null,
+          "executionAuthorized": false
+        },
+        "preserved": [
+          "customer/supplier exact leading/trailing code text and unknown timestamps",
+          "all same-batch party relation native IDs with no first-candidate/name guess",
+          "atomic hall+warehouse96 despite ordinary chunk size",
+          "global source/native IDs, physical position, code and warehouse-record uniqueness",
+          "no ordinary/history customer source-kind mixing in one chunk",
+          "source/component/C pin FD/path/nofollow lifetime and descriptor-only options",
+          "authorization covers exact complete prepared chunks and concurrent mutation rejection"
+        ],
+        "notTested": [
+          "Real49 account technical source proof/bootstrap executor or credential source",
+          "Actual ordinary-party PostgreSQL stage/readback",
+          "Actual all11 typed closure or actual MAIN authorized payload",
+          "Import/publication/performance capacity"
+        ],
+        "next": "C freeze new source exact2; QB only new consumer/full26 composition and lifetime. Reuse old628/exact2 acceptance; keep49 bootstrap outside. Continue stock/header finite binding candidates through original queue."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/native-party-source26.mjs",
+          "sha256": "4bb8aaea3b0241c47c455e82a6a8a5d7ff1afed06a089e20b517af1ac40425e5",
+          "bytes": 13897,
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/native-party-source26.test.mjs",
+          "sha256": "d99701a6d863f79287a29f8df8439c6ec52237aa11a54fecb565065cf754f77b",
+          "bytes": 10329,
+          "owner": "D3"
+        }
+      ]
+    }
+  ],
+  "fileCount": 8,
+  "scope": "D1 read-only production exact26 profile/onepool6 and D3 ordinary630 source2; no real R1 runtime,49credential/bootstrap or MAIN grant."
+}

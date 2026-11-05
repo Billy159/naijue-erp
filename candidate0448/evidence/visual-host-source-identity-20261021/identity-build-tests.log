@@ -1,0 +1,10 @@
+✔ component revision follows actual build HEAD and dirty inputs prevent commit-only identity (2.840034ms)
+✔ independent app emits actual lazy routes/actions and separately owned CSS (3944.433966ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4444.079069

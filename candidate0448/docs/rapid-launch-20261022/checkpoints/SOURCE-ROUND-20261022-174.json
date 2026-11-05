@@ -1,0 +1,31 @@
+{
+  "atUtc": "2026-10-23T13:10:22.829340+00:00",
+  "parent": "9597624747385dfafc88615a7141440db8a54f00",
+  "taskId": "F05_STORES_FROZEN_DEMO_COMPLETE_PAGE",
+  "files": [
+    {
+      "path": "apps/web/src/settings/stores/demo-store-view.tsx",
+      "owner": "F3",
+      "bytes": 8283,
+      "sha256": "c2cabaa724d120515fe68c6d69cf7c1b58228a9871ca21685fc5bcd7c80ad85c"
+    },
+    {
+      "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+      "owner": "F3",
+      "bytes": 17067,
+      "sha256": "6f52c1d51bce96af1bbf1e9727abce26bba10fa10b6d77ad8f51814722b696eb"
+    },
+    {
+      "path": "apps/web/src/settings/stores/demo-store-ui.css",
+      "owner": "F3",
+      "bytes": 22576,
+      "sha256": "930b015945cff6e07c3d22b6e25b5513cb82582bc8aca9e9d96138da2e3d46c4"
+    }
+  ],
+  "frozenDemo": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "source": "frontend/basic-settings-v2.jsx App/Status/Filters/Fields/Modal and complete applicable CSS",
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F3/store-frozen-page-v1/RESULT.json",
+  "scope": "Complete hall/warehouse linked lists and maintenance modal source DOM; original formal scoped read/query/session/draft/lazy/receipt adapts. Approved warehouse single hall retained. Unchanged shared SettingsField/reference/directory/popup prefix and effective focus/portal cases preserved.",
+  "checksAdopted": "Original four directly affected synthetic consumer groups, changed2 roots strict0, CSS leaf0/diffcheck; no old P2/auth/protocol repeat.",
+  "qualification": "SOURCE_FIXED_ONLY; actual browser/HTTP/PG/realwrite/build/deploy not yet accepted. Original unique F1 production capability integration pending."
+}

@@ -1,0 +1,19 @@
+Product read-only backend slice, 2026-10-20
+
+Implemented: exact target-only POST /products/basics/query, /products/specifications/query, /products/images/query and /products/image/query. Frozen web DTO compatibility is type-tested. All routes require an injected current trusted authenticator and current explicit target authorization. Existing createSalesSessionAuthenticator is compatible, including mandatory same-origin POST Origin checks.
+
+Read SQL is real parameterized PostgreSQL SQL, not a synthetic fallback. Each reader invocation opens one REPEATABLE READ READ ONLY transaction on an injected pool, with rollback/release/discard paths. SQL/data read counts excluding BEGIN/COMMIT: basics 1; specifications 3 fixed bounded sets; images metadata 2 fixed bounded sets; explicit image metadata 1. Missing products short-circuit to null without child reads. Group member ordering and complete stored labels are preserved. size.code is not read or treated as identity. SKUs are actual persisted four-dimensional tuples; invalid group membership or duplicate identity/coordinates fails rather than merging, inventing cross-products or silently dropping rows.
+
+Migration 0005 only adds nullable approved year, system_item_code, thickness and collar_pants_type, plus approved product_image metadata and a target/order index. No backfill, dictionaries, accounts, file bytes, fabricated timestamps, minimum-price candidate or SKU price fields were added. Existing migrations were not changed or executed.
+
+Controlled media storage/delivery is NOT implemented. The explicit trusted controlled-media port handles a thumbnail batch separately from one original request, requires configured HTTPS delivery origin, opaque access-controlled URLs, and current authorization when bytes are actually delivered. No default URL or raw file_ref/public-path fallback exists. With media:null, actual empty metadata yields an empty list; stored image metadata requiring delivery returns 501 PRODUCT_MEDIA_NOT_IMPLEMENTED. Originals are resolved only on explicit /products/image/query. Actual file verification, thumbnail generation/storage, byte delivery and URL authorization remain host integration work; the SQL MIME/size constraints validate metadata, not file contents.
+
+All focused tests are clearly synthetic HTTP-injection, service-provider, SQL-source or scripted pg-protocol tests. They do NOT prove PostgreSQL parsing/execution, production authorization, storage, browser visual parity or deployment. No PG/server connection, migration execution, credentials, accounts, local Mac, install, commit, push or deployment occurred.
+
+AbortSignal behavior is cooperative between calls. An in-flight pg query or pool acquisition is not canceled by this reader; the trusted host must configure finite connection/database/rollback timeouts before deployment. Aborts stop subsequent reads and roll back/release once an in-flight call completes. No driver cancellation claim is made.
+
+Final verification: focused tests 30/30 passed, independently repeated by reviewer. Latest aggregate typecheck and build both exited 2 because concurrent apps/web/src/authentication/http-client.ts has implicit-any parameters at lines 137/141/144/145; no product-slice diagnostics were present. Do not call aggregate verification green until a later corrected rerun. Earlier pre-concurrent-edit typecheck passed, but does not override this final result.
+
+Frozen source manifest: /workspace/shared/product-query-source-hashes-20261020.txt (10 source/test/migration files, all verified unchanged).
+Owner verification log: /workspace/shared/product-query-final-check-20261020.log.
+Independent review: /workspace/shared/product-query-security-review-20261020.md (no blocking read-slice security defect; P2 timeout caveat).

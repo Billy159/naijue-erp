@@ -1,0 +1,5 @@
+43faf908d46dbbf6d8579d7ad8936d1781ff55b39df25985e0a8940997dda4ed  apps/api/src/postgres-read-api.ts
+4051f4da9328952f07b56b1d247a68ca81816f13929b857d8f55c8cc1faefdf0  apps/api/src/postgres-read-api.test.ts
+c8dc0f8b7037020345fce50598480a3689de08a3a8b1efa3c5fa6f0c3a91a940  apps/api/src/transfer-authentication.ts
+99d2e5440f4d0c9a2cdaa4c62569874a9e259873081252ce7e3d0bf1c8ac2f1a  apps/api/src/transfer-authentication.test.ts
+592004ccb1959a3a20fd9f2fcd9935e8b43a2244c1de894e6e1d44bcbd81ba2a  docs/postgres-read-api.md

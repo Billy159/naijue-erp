@@ -1,0 +1,63 @@
+{
+  "scope": "Explicit current0001\u20130008 only",
+  "count": 8,
+  "all_hashes_match_before_and_after": true,
+  "migrations": [
+    {
+      "version": 1,
+      "name": "0001_runtime_sales.sql",
+      "expected_sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf",
+      "observed_sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf",
+      "status": "MATCH"
+    },
+    {
+      "version": 2,
+      "name": "0002_sales_pricing_facts.sql",
+      "expected_sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98",
+      "observed_sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98",
+      "status": "MATCH"
+    },
+    {
+      "version": 3,
+      "name": "0003_auth_sessions.sql",
+      "expected_sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29",
+      "observed_sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29",
+      "status": "MATCH"
+    },
+    {
+      "version": 4,
+      "name": "0004_transfer_runtime.sql",
+      "expected_sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e",
+      "observed_sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e",
+      "status": "MATCH"
+    },
+    {
+      "version": 5,
+      "name": "0005_product_read_fields.sql",
+      "expected_sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a",
+      "observed_sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a",
+      "status": "MATCH"
+    },
+    {
+      "version": 6,
+      "name": "0006_party_maintenance.sql",
+      "expected_sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c",
+      "observed_sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c",
+      "status": "MATCH"
+    },
+    {
+      "version": 7,
+      "name": "0007_sparse_inventory_cutoff.sql",
+      "expected_sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7",
+      "observed_sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7",
+      "status": "MATCH"
+    },
+    {
+      "version": 8,
+      "name": "0008_runtime_sparse_first_use.sql",
+      "expected_sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262",
+      "observed_sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262",
+      "status": "MATCH"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../adapters/postgres/src/sales-query-reader.ts",
+    "../packages/application/src/sales-query-ports.ts",
+    "../packages/application/src/sales-query-validation.ts",
+    "../tests/sales-query.test.ts",
+    "../tests/sales-query-postgres-protocol.test.ts",
+    "../apps/web/src/sales/contracts.ts",
+    "../apps/web/src/sales/response-validation.ts",
+    "../apps/web/src/sales/tests/fixtures.ts",
+    "../apps/web/src/sales/sales.test.ts"
+  ]
+}

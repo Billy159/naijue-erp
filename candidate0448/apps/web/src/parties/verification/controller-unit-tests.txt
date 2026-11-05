@@ -1,0 +1,23 @@
+✔ independent lazy workspace constructs no reads and retains each bounded list without merging names/codes (16.656095ms)
+✔ create allocates no client code and generates one key only on explicit valid submit (5.867937ms)
+✔ edit reads current target only, preserves original code/null timestamps and sends native CAS without code (24.659009ms)
+✔ only native disable/restore commands, enabled-state guard and default-customer rejection preserve facts (4.148385ms)
+✔ uncertain write blocks duplicate/new/close and absent receipt never proves not committed; exact replay preserves key/CAS/name (3.350177ms)
+✔ receipt recovery validates native key/action/target/CAS and does not treat original result as current detail (2.251005ms)
+✔ replay rejection stays uncertain because it cannot prove original uncommitted (1.226232ms)
+✔ definitive CAS conflict retains draft, fetches current facts separately and rebases only by explicit preparation (6.559024ms)
+✔ duplicate clicks serialize; route suspend retains uncertain command and ignores late success (2.950692ms)
+✔ detail close/replace cancellation discards ignored-signal results and suspended detail can retry (2.842852ms)
+✔ identity/session/permission invalidation clears both independent lists, editor, drafts and pending command; late response cannot restore (2.394304ms)
+✔ 401/403 clears shared party scope before host callback, while stale cancelled errors cannot expire a replacement identity (32.922607ms)
+✔ exact total bounds page correction and latest query ignores superseded results (3.706348ms)
+✔ untrusted DTOs reject extra fields, identity/version regressions, wrong totals and malformed native receipts (3.70324ms)
+✔ list wrapper owns an immutable executed range during await and never adjusts with a mutated draft (2.146611ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5033.268439

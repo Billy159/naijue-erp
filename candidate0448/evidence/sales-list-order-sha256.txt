@@ -1,0 +1,5 @@
+bfc60a672a323a4ff3e724cdc101a8f084bd7ccb8977d037b8a5697f709c66f2  adapters/postgres/src/sales-query-reader.ts
+04f57fba1bf393dc842d2ce89e5e7937bce1ce0d6d07cbb484ab2787b03dff9b  tests/sales-query-postgres-protocol.test.ts
+d48ecb44bbdc28d7cdfd2f0c5cdea504d44d972905957ca87c3fcd4b7eb43576  evidence/sales-list-summary-extension-review.md
+69b1d9065829fc764c8130d9194e536cdccabd1a3637230d2b33e835a5fe0310  evidence/sales-list-order-tests.log
+1c6a0ed5b37f90825c829c20e8cdd36c8d4cd0bbb5849e51cfbe12106233f2a4  evidence/sales-list-order-delta.json

@@ -1,0 +1,8 @@
+bf751e31dd92195e044aef57b7c946686afb26842d6aff5437f3b9169e2624b0  adapters/postgres/src/sales-query-reader.ts
+94e98369e50af3911e58004c1ff376e8b861258c1c6761949d5e5c0f7156ec0a  packages/application/src/sales-query-ports.ts
+f80d061eb504b8829f00e57383496a1d69dd21f81bf0c055c44baa96d3860daf  tests/sales-query-postgres-protocol.test.ts
+5d34d190170869f17602f61d1b111a77e6711313ec9dd6eca29672fe47fb5ae5  apps/web/src/sales/response-validation.ts
+1e274c974ccf74ddd9ba4fa5d7546cbe74e1d4bc8b3be4266039f1cb27c7e6a2  apps/web/src/sales/sales.test.ts
+6dc0ce47623f381f4c41c1c43dace40ac914569cf133801a2cd6f99fa5e01b66  evidence/sales-list-number-review.md
+fb89066a1f114499b801d93aa6701b02426a0687d358e4b67aefaefe31fcb140  evidence/sales-list-number-tests.log
+04c89c776ab393dc96f6207a87d59675c2957c0b37e996a42347443407a89762  evidence/sales-list-number-delta.json

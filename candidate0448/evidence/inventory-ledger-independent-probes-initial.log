@@ -1,0 +1,41 @@
+✖ independent: direct reader suppresses result when cancellation arrives during COMMIT (14.035526ms)
+✔ independent: cancellation at connect prevents later SQL and releases once (2.591328ms)
+✔ independent: cancellation at BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY prevents later SQL and releases once (0.831717ms)
+✔ independent: cancellation at warehouse prevents later SQL and releases once (1.196505ms)
+✔ independent: cancellation at sku prevents later SQL and releases once (2.37848ms)
+✔ independent: cancellation at publication prevents later SQL and releases once (1.797913ms)
+✔ independent: cancellation at entries prevents later SQL and releases once (2.184407ms)
+✔ independent: maximum page validates 201st row, returning exactly 200 and last-visible cursor (20.625096ms)
+✔ independent: out-of-order lookahead rejects complete page before COMMIT (2.164846ms)
+✔ independent: cross-SKU lookahead rejects complete page before COMMIT (2.045984ms)
+✔ independent: unpublished baseline lookahead rejects complete page before COMMIT (2.113429ms)
+✔ independent: sales source wrong endpoint rejects complete page before COMMIT (0.948827ms)
+✔ independent: transfer source missing owner rejects complete page before COMMIT (2.323483ms)
+✔ independent: baseline version not null rejects complete page before COMMIT (1.13675ms)
+✔ independent: actual six-digit UTC timestamps preserve microseconds and reject invalid dates/offsets (0.796378ms)
+✔ independent: cursor never grants a missing warehouse and forged hall scope is rejected (2.79409ms)
+✔ independent: output labels stay current-reference and unknown/private fields fail closed (1.149187ms)
+✔ independent: HTTP inject without listener protects private trusted errors and exact wire result (286.593783ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 17
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1035.027837
+
+✖ failing tests:
+
+test at evidence/inventory-ledger-independent-probes.test.ts:46:1
+✖ independent: direct reader suppresses result when cancellation arrives during COMMIT (14.035526ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/evidence/inventory-ledger-independent-probes.test.ts:48:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

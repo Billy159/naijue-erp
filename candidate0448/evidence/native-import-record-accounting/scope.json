@@ -1,0 +1,87 @@
+{
+  "slice": "native import record once-only accounting plus read-only full warehouse/unit conservation",
+  "status": "SOURCE_SYNTHETIC_INDEPENDENT_REVIEW_PASS_NOT_INTEGRATED_PG_NOT_RUN",
+  "frozenAtUtc": "2026-10-21T16:16:03.531264+00:00",
+  "files": {
+    "packages/application/src/native-import-record-accounting.ts": "fd19abf70e18d683b53bc954cb50971f0ebd23b7fa3eff597eebb7e48550aecf",
+    "adapters/postgres/src/native-import-record-accounting.ts": "bfe4e5ec8c715106a93bdb0e50a54ced51d20d5aaf6d428b1404b82539f2c398",
+    "adapters/postgres/migrations/0015_native_import_record_accounting.sql": "fd9eb4400fb9c807770ae993e34ca79fceb9a00c914f9b52296902983ada3e80",
+    "tests/native-import-record-accounting.test.ts": "f61c59fd88e00c8b410f51d7e02668122fbd88fbe9a0af3342141b2b49d175e5",
+    "tests/native-import-record-accounting-postgres-protocol.test.ts": "55762c5ea53d8cc4c0d0307fe3930c8d4f7adb80c25ee6a1b8c5a03e943836c3",
+    "tests/native-import-record-accounting-migration.test.ts": "8d4587eb15a04def12948e2823669fb2bdf91713a74d2a8a1e24cd7e6c566a30",
+    "tests/native-import-record-accounting-conservation.test.ts": "33196bcc21ff9fd70c9115c2812d78c1d36c7af26876d32b5029c4a0bacd3da7",
+    "tests/native-import-record-accounting-tsconfig.json": "7ba153c2c36ede4f35db2c98becb874666c60ab269fbb1cc1d53904555726e6c",
+    "tests/support/native-record-accounting-fixtures.ts": "174e9d17ede5f6209afadf827910c1ef85a791cc1af81519be80dbccbfb907ea",
+    "docs/native-import-record-accounting.md": "9c6ebbc71f7842b0e85ad87d45f417af571ac7c5f9935a8746b7287e261b917b"
+  },
+  "metadataFreezeObservations": {
+    "packages/application/src/history-import-lifecycle.ts": {
+      "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606",
+      "originalFrozenSha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606",
+      "matchesPreviousFrozenScope": true,
+      "editedByAccountingAgent": false
+    },
+    "packages/application/src/inventory-cutoff-import.ts": {
+      "sha256": "2a23cfa999f8e2119e27a4ba8d8c93a5d3ce93fd2005cc5f952f46de554a1ee0",
+      "originalFrozenSha256": "2a23cfa999f8e2119e27a4ba8d8c93a5d3ce93fd2005cc5f952f46de554a1ee0",
+      "matchesPreviousFrozenScope": true,
+      "editedByAccountingAgent": false
+    },
+    "adapters/postgres/src/history-import-lifecycle.ts": {
+      "sha256": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51",
+      "originalFrozenSha256": "219726ac9679a1f9e3c85bf7fea8bc772e900c52da25bf319eab248a84cb461d",
+      "matchesPreviousFrozenScope": false,
+      "editedByAccountingAgent": false
+    },
+    "adapters/postgres/src/inventory-cutoff-import-store.ts": {
+      "sha256": "33a46ec1c99b4a4e4cbeab05c9132b45bb3ae2afb6609183ca3c8c267284c98f",
+      "originalFrozenSha256": "33a46ec1c99b4a4e4cbeab05c9132b45bb3ae2afb6609183ca3c8c267284c98f",
+      "matchesPreviousFrozenScope": true,
+      "editedByAccountingAgent": false
+    }
+  },
+  "metadataFreezeNote": "Accounting agent did not edit the four files. Three match the original metadata scope. PG history-import-lifecycle.ts current 2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51 is the parent-authorized 22P02 JSON-extraction parentheses hotfix; original 219726 baseline remains historical and is not overwritten. See evidence/history-lifecycle-json-extraction-fix/scope.json. Parent reports separate Mac schema11 v2 9/9 real acceptance; this is not new schema15/conservation acceptance.",
+  "verification": {
+    "newTests": "PASS 56/56; source/protocol only, not SQL execution",
+    "combinedRegression": "PASS 111/111; new 56 plus original cutoff/native-schema/SKU-stock 55",
+    "focusedTypecheck": "PASS tests/native-import-record-accounting-tsconfig.json",
+    "fullTypecheck": "PASS npm run typecheck final rerun; original earlier unrelated catalogue-settings-read error no longer present",
+    "whitespace": "PASS all 10 owned source/test/doc files",
+    "postgres": "NOT_RUN; no engine start/connection/migration/real import",
+    "independentReviewCore": "PASS separate earlier read-only reviewer; first 35 tests and focused tsc independently repeated; item/claim substitution, array hash collision, standalone FINAL and preflight race findings fixed. Final later JSON-number guard separately covered by conservation reviewer.",
+    "independentReviewCurrentConservation": "PASS /root/review_inventory_conservation_gate; frozen core SHAs unchanged; independently repeated all 56 tests plus focused tsc; 12 extra in-memory fictional negative mutations rejected (not committed regression tests, not engine evidence); no confirmed repair required"
+  },
+  "incrementalReviewRanges": {
+    "packages/application/src/native-import-record-accounting.ts": [
+      "lines 9,23-102,127-133: conservation version/plan/main-hash validation/manifests"
+    ],
+    "adapters/postgres/src/native-import-record-accounting.ts": [
+      "imports 6-17; lines 227-410: read-only conservation report/gate"
+    ],
+    "adapters/postgres/migrations/0015_native_import_record_accounting.sql": [
+      "lines 137-146: later V2 JSON-number type guard; remainder first-round reviewed"
+    ],
+    "tests/native-import-record-accounting-conservation.test.ts": [
+      "all 21 conservation tests"
+    ]
+  },
+  "boundaries": [
+    "No accounting-agent edits to metadata freeze/shared native schema contract/existing creators/current Mac schema11 package",
+    "No new receipt action or six-key result; original service/store authorizer/CAS/receipt/audit integration remains required",
+    "Only successful new claim INSERT RETURNING advances calculated progress; no count-to-counter assignment/backfill",
+    "Old V2 writer on schema15 deliberately fails closed; do not deploy before integration/engine acceptance",
+    "First claim requires original zero checkpoint; old nonzero/no-claim provenance needs separately authorized recovery",
+    "Conservation MAIN-command plan requires independent authentication; logical identity manifests are not re-downloaded whole-payload hashes",
+    "Negative and individual zero rows retained; zero-net groups explicitly unsupported, never invented/discarded",
+    "No private original data read/stored in Git; artifact counts in doc are parent-supplied verified context",
+    "Runtime new-guard capability checks/schema byte-pin-contract extension/isolated Mac schema15 acceptance pending"
+  ],
+  "closedAtUtc": "2026-10-21T16:20:19.955641+00:00",
+  "pendingIntegration": [
+    "Independently authenticated original creator/nativeRecord canonical-time plans and stockConservation manifest source-loader integration",
+    "Original cutoff CHUNK/PUBLISH explicit helper calls on original receipt-locked client with RETURNING, all-contributor attach, one CAS/audit/receipt and stock-conservation gate",
+    "Reviewed schema15 DDL byte pin and explicit shared schema-prefix/creator compatibility contract; old V2 schema15 writer intentionally failclosed until wired",
+    "Runtime enabled new-guard capability checks in scope reader",
+    "Separately authorized isolated Mac schema15 migrations/guards/directSQL/concurrency/unknown-COMMIT/full selected-artifact field and per-warehouse/unit acceptance"
+  ]
+}

@@ -1,0 +1,29 @@
+✔ direct COMMIT acceptance cases register without invoking setup or database work (2.956642ms)
+✔ real-client runner never substitutes finish, constraint forcing or synthetic SQL replies for direct COMMIT (5.999257ms)
+✔ no target binding or non-synthetic target is rejected before registration (0.976639ms)
+✔ physical target uses PostgreSQL host normalization rather than CIDR text (1.883971ms)
+✖ loopback aliases cannot admit the same physical database twice (1.824685ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.563188
+
+✖ failing tests:
+
+test at tests/whole-package-direct-commit-runner.test.mjs:38:1
+✖ loopback aliases cannot admit the same physical database twice (1.824685ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-direct-commit-runner.test.mjs:41:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /DISTINCT_PHYSICAL_SYNTHETIC_TARGETS_REQUIRED/,
+    operator: 'throws',
+    diff: 'simple'
+  }

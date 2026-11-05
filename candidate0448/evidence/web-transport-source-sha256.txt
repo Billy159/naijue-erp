@@ -1,0 +1,7 @@
+211de71bdb686ba208eb6ff461699cedbfe19fbedca19fe42e86116f01ae80c3  apps/web/src/transport/README.md
+39332b02e0512aa85a1cae14ad940ea6629aaa07794ff32825fff689cb08fd2d  apps/web/src/transport/http-query.ts
+8467bf1de073816b98e8335e24b73aacfeb757ea10e7794370ceed3799a7f6b2  apps/web/src/transport/http-readers.test.ts
+9a0d42be36146d910ac28844583dfec3982d12ffe32d8ac4806209fa21c1eac3  apps/web/src/transport/index.ts
+ea95174283db99ea6bbd6563cc16e3b3f5539f811dc01aa8ad83a29261939fe8  apps/web/src/transport/inventory-http-reader.ts
+cb172dcc3e3b8e4b0a52cd3c710e089022e4e0442086a8117b6d92434c90f3bc  apps/web/src/transport/product-http-reader.ts
+c9c6c9514d1c3df25fc6c3a69697cee73fadef31d8372083f47b1f64ed881b93  apps/web/src/transport/response-validation.ts

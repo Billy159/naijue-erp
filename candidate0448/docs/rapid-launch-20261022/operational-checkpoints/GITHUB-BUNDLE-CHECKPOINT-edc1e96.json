@@ -1,0 +1,36 @@
+{
+  "format": "PRIVATE_GITHUB_DRAFT_SOURCE_RECOVERY_CHECKPOINT_V1",
+  "atUtc": "2026-10-22T21:40:50.019861+00:00",
+  "sourceCommit": "edc1e9626005f4ccb44fde619253de337a561ab6",
+  "branch": "codex/local-takeover-wip-20261022-082411",
+  "normalGitHubBranchObserved": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+  "normalPushSucceeded": false,
+  "bundle": {
+    "name": "naijue-erp-source-edc1e96.bundle",
+    "bytes": 1581083,
+    "sha256": "43d4b35ac9b4b76f17bd5763872c29be888f14f1fda66bf4ea5622a0f03c6a28",
+    "requiredBaseCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+    "headRef": "HEAD"
+  },
+  "repository": "Billy159/naijue-erp",
+  "draftTag": "codex-checkpoint-20261022-a7e817b",
+  "scope": "Exact source throughC88/settingsanchor and docs33f1071 including v5 pending field confirmation, C-only metadata/source window/H06 technical freezes; no private data/authority originals/credentials",
+  "restore": "Verify SHA and git bundle verify with exact base; fetch HEAD into NEW codex/recovery branch without reset. Read HANDOFF. K/A/private-data/server references require separately authorized access; no inferred import or write grants.",
+  "businessRelease": false,
+  "uploadOutcome": "UNCONFIRMED_UNTIL_DOWNLOAD_SHA_AND_BUNDLE_VERIFY",
+  "verifiedReadback": {
+    "atUtc": "2026-10-22T21:42:42.225578+00:00",
+    "sourceCommit": "edc1e9626005f4ccb44fde619253de337a561ab6",
+    "url": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-eca8e7e6042ac6f9014e",
+    "isDraft": true,
+    "downloadSha256": "43d4b35ac9b4b76f17bd5763872c29be888f14f1fda66bf4ea5622a0f03c6a28",
+    "bytes": 1581083,
+    "bundleVerify": true,
+    "metadataByteIdentical": true,
+    "notesReadbackMatched": true,
+    "normalPushSucceeded": false,
+    "normalBranchSeparatelyVerified": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+    "businessRelease": false
+  },
+  "verified": true
+}

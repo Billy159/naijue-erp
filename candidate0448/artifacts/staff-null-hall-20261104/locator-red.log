@@ -1,0 +1,82 @@
+✖ exact successor adds independently pinned INIT approval and STAFF SQL guard to unchanged predecessor (5.313885ms)
+✔ patch keeps metadata/ACL/owner unchanged and rejects wrong predecessor (4.746456ms)
+✖ SQL approval locator requires JSON number, int32 and duplicate-free references (1.821997ms)
+✔ approved exact historical departed staff admits null hall, not a general exception (2.906943ms)
+✔ missing, forged, tampered or unpinned approval cannot authorize a record (1.128802ms)
+✔ approval rejects duplicate IDs, keys and unsupported fields (0.747256ms)
+✔ approval rejects duplicate JSON keys and invalid UTF-8 even when digest is pinned (0.535464ms)
+✖ approval locator rejects non-int32 rows, controls, blank sheet and repeated refs (1.231252ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 5
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 289.754822
+
+✖ failing tests:
+
+test at tests/historical-staff-hall-sql-source.test.mjs:5:1
+✖ exact successor adds independently pinned INIT approval and STAFF SQL guard to unchanged predecessor (5.313885ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '8d437a6ae5284479bc071390a7e6c90fd28c214a37a667ae68cd9d3a34c66eeb'
+  - 'a7419f25605ec58001bd8da61fad302ceb06283ec0e2889a7af9a9e45f6c2e96'
+  
+      at apply (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-staff-hall-sql-source.test.mjs:3:97)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-staff-hall-sql-source.test.mjs:5:284)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '8d437a6ae5284479bc071390a7e6c90fd28c214a37a667ae68cd9d3a34c66eeb',
+    expected: 'a7419f25605ec58001bd8da61fad302ceb06283ec0e2889a7af9a9e45f6c2e96',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/historical-staff-hall-sql-source.test.mjs:7:1
+✖ SQL approval locator requires JSON number, int32 and duplicate-free references (1.821997ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '8d437a6ae5284479bc071390a7e6c90fd28c214a37a667ae68cd9d3a34c66eeb'
+  - 'a7419f25605ec58001bd8da61fad302ceb06283ec0e2889a7af9a9e45f6c2e96'
+  
+      at apply (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-staff-hall-sql-source.test.mjs:3:97)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-staff-hall-sql-source.test.mjs:7:103)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '8d437a6ae5284479bc071390a7e6c90fd28c214a37a667ae68cd9d3a34c66eeb',
+    expected: 'a7419f25605ec58001bd8da61fad302ceb06283ec0e2889a7af9a9e45f6c2e96',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/unified-historical-staff-hall-approval.test.ts:13:1
+✖ approval locator rejects non-int32 rows, controls, blank sheet and repeated refs (1.231252ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-historical-staff-hall-approval.test.ts:13:488)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

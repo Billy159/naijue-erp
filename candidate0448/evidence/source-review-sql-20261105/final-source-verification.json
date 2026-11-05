@@ -1,0 +1,224 @@
+{
+  "startedAt": "2026-11-05T04:36:23.550Z",
+  "completedAt": "2026-11-05T04:36:56.878Z",
+  "node": "v24.21.0",
+  "nodePath": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node",
+  "command": [
+    "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node",
+    "--test",
+    "tests/fresh35-source-review-candidate.test.mjs",
+    "tests/historical-sales-source-review.test.ts",
+    "tests/historical-sales-source-review-cli.test.mjs",
+    "tests/fresh35-combined-catalog.test.mjs",
+    "tests/fresh35-combined-lifecycle.test.mjs",
+    "tests/fresh35-combined-source.test.mjs",
+    "tests/fresh35-combined-target.test.mjs",
+    "tests/fresh35-sales-hall-candidate.test.mjs",
+    "tests/fresh35-historical-amount-candidate.test.mjs"
+  ],
+  "exitCode": 0,
+  "sourcePinsUnchanged": true,
+  "changedPaths": [],
+  "predecessorSha256": "5fc8508ea96062898a42dc4c03c3a6ebe166158037cc6c7c3130a13d3ee14931",
+  "candidateSqlSha256": "daf8f4db446dc85d96f641944c31f836f2853836e121df71f5cfd43d3fa46a43",
+  "projectedTables": 35,
+  "projectedRoutines": 166,
+  "newRoutines": 14,
+  "changedExistingRoutines": 13,
+  "sourceSetSha256": "f9ff1460d76ea2a696568310c152608c2c85ec63c93ebdbf4bc2dbbb29cc38c3",
+  "sourcePins": [
+    {
+      "path": "adapters/postgres/patches/0035_source_review_kernel_candidate.sql",
+      "sha256": "f61f4c7a0912fd47c574dc27d7b25a01b6d80d1062151d9064296433b31126c5"
+    },
+    {
+      "path": "evidence/historical-hall-contract-20261105/source-review-contract.md",
+      "sha256": "82bc2c89dd116142a47c1f66c34b682374702693a067098518b040f2d32bf6b3"
+    },
+    {
+      "path": "evidence/source-review-contract-20261105/WIRE.md",
+      "sha256": "810e54d7c7774259c7dc67506dbf9b9d2807615dc2ee936160e55675b81cc235"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+    },
+    {
+      "path": "package.json",
+      "sha256": "df132518fffedcac3dd2842f773de1f191b563a12887788a06c196a4ce753902"
+    },
+    {
+      "path": "packages/application/src/calendar-date.ts",
+      "sha256": "3d12245db7fc90f2f985e50a0436b18ba8e2157cb92d9d214665cf06a36e658e"
+    },
+    {
+      "path": "packages/application/src/canonical-request-value.ts",
+      "sha256": "29daee138b2d5c802eb915610adef8448be447a7531df7883276896cbf9633fb"
+    },
+    {
+      "path": "packages/application/src/historical-sales-hall-evidence.ts",
+      "sha256": "87e1b2a7adadacc86fbd8bd325a65eea273771b7ea8a56df85aee5259eb76855"
+    },
+    {
+      "path": "packages/application/src/historical-sales-source-review.ts",
+      "sha256": "d69a9fa3668f26bb647d08aae48e7e73054e74c19d2bf2b1de1002af9064a1d9"
+    },
+    {
+      "path": "packages/application/src/history-import-lifecycle.ts",
+      "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+    },
+    {
+      "path": "packages/application/src/history-storage-contract.ts",
+      "sha256": "e3c1f3ae440510adb2992c362324f60e45bbf0ecce09417f4dc13af3780779d5"
+    },
+    {
+      "path": "packages/application/src/history-typed-closure.ts",
+      "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+    },
+    {
+      "path": "packages/application/src/history-typed-publication.ts",
+      "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+    },
+    {
+      "path": "packages/application/src/import-v2-contract.ts",
+      "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+    },
+    {
+      "path": "packages/application/src/inventory-cutoff-import.ts",
+      "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+    },
+    {
+      "path": "packages/application/src/native-barcode-import.ts",
+      "sha256": "5aaee52b0f624b774f2105131ecffd9f26c62187ba6afb3dc5e22d823fcb5f02"
+    },
+    {
+      "path": "packages/application/src/native-import-record-accounting.ts",
+      "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+    },
+    {
+      "path": "packages/application/src/native-import-schema-contract.ts",
+      "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053"
+    },
+    {
+      "path": "packages/application/src/request-hash.ts",
+      "sha256": "5cf9de26135fceb57d0e40564316e14c314a356ab9357fa6780522c7bd0114e4"
+    },
+    {
+      "path": "packages/application/src/unified-current-effective-alignment.ts",
+      "sha256": "49f30859ef31020415259bf2ad033c0089559013250eb14c117487fc0e5a5d9c"
+    },
+    {
+      "path": "packages/application/src/unified-explicit-zero-approval.ts",
+      "sha256": "5a1bd3813c64d8f3b50584b0c65af35d9935c54fc31ec1441aaf2296d47e7b5c"
+    },
+    {
+      "path": "packages/application/src/unified-historical-line-amount-evidence.ts",
+      "sha256": "caf1c72f611f25d793e8364cd0c3657d89778b7d32f009dc4939ee407686f8a1"
+    },
+    {
+      "path": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "sha256": "ea3ff6b8edaa6e8b05d65d8ec4235e6b67078d42be00b33945d7c3b21cdb0dea"
+    },
+    {
+      "path": "packages/application/src/unified-historical-sales-source-review.ts",
+      "sha256": "f97e147703c92f82a76321bddd81108ebb2c18b76201b0e2fbcd9c2a7a79702f"
+    },
+    {
+      "path": "packages/application/src/unified-historical-staff-hall-approval.ts",
+      "sha256": "281ff8fc48e7946ad5f01edb976b7113f6c5ce896cd407ca6c8ff822b1d785da"
+    },
+    {
+      "path": "packages/application/src/unified-import-contract.ts",
+      "sha256": "c29ced4a4cdc16d15d6942f78eb22f7a90c320b5fa8e423c56663b0b1c6c4c92"
+    },
+    {
+      "path": "packages/application/src/unified-import-historical-sales.ts",
+      "sha256": "1b8fd1e6ea7a69c89c5e6f49e3dacebf552995e7a18757e5f4b2a68d6bad025e"
+    },
+    {
+      "path": "packages/application/src/unified-import-source-reconciliation.ts",
+      "sha256": "fc5045dac5f8a029e36771597a2d9e54d811eecb153075f01f56fdbf70508007"
+    },
+    {
+      "path": "packages/application/src/unified-import-stable-identity.ts",
+      "sha256": "56745c0364145b15d881d27ccf3e139ead2d72e36c16c13f252f88ed7b32f644"
+    },
+    {
+      "path": "packages/application/src/unified-zero-amount-archive.ts",
+      "sha256": "97c2e976faa20556a3deac6bcd06e5f5474ce758213aa2043c2eb0fa01c5f24b"
+    },
+    {
+      "path": "packages/domain/src/errors.ts",
+      "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+    },
+    {
+      "path": "packages/domain/src/sales-money.ts",
+      "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30"
+    },
+    {
+      "path": "packages/domain/src/values.ts",
+      "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-source-review-candidate.mjs",
+      "sha256": "b6c4ef31c614ab4de79ab79066cb508251327a1c19fcc9894556aa545118b83a"
+    },
+    {
+      "path": "tools/unified-import/explicit-zero-cli-input.mjs",
+      "sha256": "6e0d2bbb9f6ef99e2504bae2913b21c18c0be99cb58803894b98ee547f21a815"
+    },
+    {
+      "path": "tools/unified-import/source-review-preflight-cli.mjs",
+      "sha256": "1503ec0c56fc3c3703638c785aed8916d98ef5c92581eb3fb3d10a4fc8224237"
+    }
+  ],
+  "testPins": [
+    {
+      "path": "tests/fresh35-source-review-candidate.test.mjs",
+      "sha256": "955d6babdf684d17d20493b6f9bd1e9f2db04e76f6b86a6bce613288c9027d54"
+    },
+    {
+      "path": "tests/historical-sales-source-review.test.ts",
+      "sha256": "72a0ed39c78aed43c5147ec26f8fe8c9a52decbe5813a2b495f0fa829e1b909d"
+    },
+    {
+      "path": "tests/historical-sales-source-review-cli.test.mjs",
+      "sha256": "e187f946334a90c1cc1e6d22b12d2f2d2c01468b1b9d97f20baf21de25a5560d"
+    },
+    {
+      "path": "tests/fresh35-combined-catalog.test.mjs",
+      "sha256": "90b1d94d709815a1fc3cb612847ba460f2fa0ee6c5c3f368885e0e0f4825d157"
+    },
+    {
+      "path": "tests/fresh35-combined-lifecycle.test.mjs",
+      "sha256": "9063b994fb856ad31dd7e1bbedeb3e0a7d1e0c13f6cb44413869a7b8068b8c3b"
+    },
+    {
+      "path": "tests/fresh35-combined-source.test.mjs",
+      "sha256": "650b30b09814b99dd78838155f4939c133759fb05474452c080792c72849228d"
+    },
+    {
+      "path": "tests/fresh35-combined-target.test.mjs",
+      "sha256": "8cb903e3520e79cd88276335972910fecaf5d731fc91c63018f35360fb442fdd"
+    },
+    {
+      "path": "tests/fresh35-sales-hall-candidate.test.mjs",
+      "sha256": "9383186cd51c8f0f9de9d1a82a859713f9ab6dfc98afe873456688406bef4b27"
+    },
+    {
+      "path": "tests/fresh35-historical-amount-candidate.test.mjs",
+      "sha256": "1c7ccff3e57fcb2a97689359adf2ee27f8cbf3c309927c753311995af37b5536"
+    }
+  ],
+  "sourceOnly": true,
+  "postgresConnected": false,
+  "postgresParsed": false,
+  "postgresEngineVerified": false,
+  "finalReportFromSqlSubreviewerReceived": false,
+  "reviewFailureEvidence": "independent-review-status.json",
+  "independentFullAdmission": false,
+  "installationReady": false,
+  "persisted": false,
+  "freshBootstrapClosed": false,
+  "reprocessingImplemented": false
+}

@@ -1,0 +1,42 @@
+PASS ordinary common edit route renders all16 facts and memo SAVE preserves nullable economics and methods
+✔ apps/web/demo-replica/frontend/runtime/documents/ordinary-preserving-edit.test.mjs (1680.878541ms)
+PASS historical signed SALE enters preserving editor without defaulting economics
+✔ apps/web/demo-replica/frontend/runtime/documents/ordinary-signed-preserving-edit.test.mjs (1347.480163ms)
+✔ sale units include gifts while incoming/outgoing exclude gifts; BigInt never rounds (4.721901ms)
+✔ return/exchange direction is net due, never settlement difference; unknown remains unknown (0.276399ms)
+✔ draft category display uses actual product/category identity, not equal labels; unpriced is not zero quantity (4.025764ms)
+✔ historical signed flow shows both directions even with unknown gifts and net-zero same SKU (3.457268ms)
+✔ N34-S13: deduction minus is exact presentation, zero unsigned and typed negative remains invalid (37.439323ms)
+▶ N34-S03: runtime summary excludes only unselected queries; strict SAVE and selected unknown stay strict
+  ✔ SALE empty draft + no-match search is a known empty display, not a zero-priced line (259.919014ms)
+  ✔ RETURN_EXCHANGE empty draft + no-match search is a known empty display, not a zero-priced line (49.750896ms)
+  ✔ selected complete SKU with unknown price remains unknown even beside pure search text (208.52968ms)
+✔ N34-S03: runtime summary excludes only unselected queries; strict SAVE and selected unknown stay strict (607.460943ms)
+▶ F04 actual proposal form exposes effective zero and explicit cancel/confirm without rewriting price intent
+  ✔ existing lines and unfinished entries use displayed zero, not stale raw price (502.809636ms)
+  ✔ actual native dialog cancel keeps false, confirm sets true and discount editing resets it (208.285316ms)
+✔ F04 actual proposal form exposes effective zero and explicit cancel/confirm without rewriting price intent (779.022764ms)
+✔ QF51-S04-READ-DIRECTION-LABEL-01: actual shared readonly renderer preserves signed quantities and Demo direction in every native state (351.710191ms)
+✔ saved sales specifications have scoped clipping and preserve full snapshot labels across states (1183.141291ms)
+✔ full specification dialog opens, closes, reopens and returns focus without changing saved facts (341.174015ms)
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (6.059541ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (1.351989ms)
+✔ historical signed discount remains exact on memo save without invented allocation (1.284349ms)
+✔ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (21.138831ms)
+✔ approved historical discount ruling: economic edits keep original discount without guessed allocation (0.943795ms)
+✔ historical missing settlement is shown unknown, never as zero or settled (0.292127ms)
+✔ changed historical unknown pricing saves explicit-price draft without invented intent (1.419622ms)
+✔ real existing editor initializes signed unknown rows and sends economic SAVE through ordinary proposal command (12.359193ms)
+✔ real existing editor reopens all-positive origin and sends economic SAVE through ordinary proposal command (2.210934ms)
+✔ original signed-sale discount survives all-positive edit below retained discount (2.715301ms)
+✔ original signed-sale discount survives all-positive reopen below retained discount (1.083086ms)
+✔ authenticated detail origin permits reopening preserved discount larger than all-positive subtotal, wrong origin rejected (2.002076ms)
+✔ historical origin detail wire accepts exact server projection only and never grants runtime or altered-discount exceptions (0.853843ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3114.94034

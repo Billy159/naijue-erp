@@ -1,0 +1,34 @@
+{
+  "version": "C_R2_EXACT26_COMPOSITION_TECHNICAL_FREEZE_V1",
+  "atUtc": "2026-10-22T20:37:36.424765+00:00",
+  "authority": "C technical interface selection under existing human implementation authorization; not new schema/business approval",
+  "proposal": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R2-EXACT26-ADMISSION-SCOPE-PROPOSAL-v1.json",
+  "profile": "source-confirmed-native-exact26-r2-v1",
+  "selectors": {
+    "configuration": "Independent closed successor config/factory. documentCommands must explicitly NATIVE_RUNTIME. Legacy19 and explicit26 R1 DISABLED unchanged.",
+    "capability": "Same closed {reviewFile,trustedReviewSha256}; one fresh owned BoundedPool and genuine issuer.pool; existing finite INVENTORY_ADMISSION only. No copied/boolean authority.",
+    "commands": "Original sales/transfer provider plus imported catalogue completeness proof unchanged. Runtime26 and historicalCustomerExclusion passed to same actual-client UOW.",
+    "existingPreparation": "Separate explicit R2-only sales/transfers existing-preparation option. CREATE flag alone never enables prepare-existing. R1 never mounts prepare/write plugins.",
+    "lifecycle": "Actual same-client metadata checks before BEGIN, within transaction and before COMMIT. Original CAS, single key, commit-unknown discard/no retry preserved."
+  },
+  "registeredFilesOnly": [
+    "apps/api/src/postgres-read-api.ts",
+    "apps/api/src/production-provider-composition.ts",
+    "apps/api/src/production-application-host.ts",
+    "apps/api/src/production-main.ts",
+    "apps/api/src/authenticated-document-commands.ts",
+    "their already registered focused tests"
+  ],
+  "excluded": [
+    "new path without registration",
+    "new table/field/constraint/purpose",
+    "source MAIN/PUBLISH authority",
+    "new numbering/CAS/SAVE business rule",
+    "maintained-product R3 completeness relaxation",
+    "R1 write enablement",
+    "PG/grant/server/credentials/production activation"
+  ],
+  "firstUseTestRegistration": "Withdrawn. inventory-first-use-postgres-protocol.test.ts was read/run only and unchanged; no new ownership or registration.",
+  "phase1": "Exact4 admission receipt d96f1d514c703e55c6f042530c07c9f605ce91f3d04ee46175ff1c1d2c27ff31; new protocol19 checks pending independent QB.",
+  "fieldApprovalNeeded": "No new business contract asserted by this technical selector. Any discovered business/field change must stop only that branch and be presented to user."
+}

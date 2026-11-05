@@ -1,0 +1,117 @@
+{
+  "atUtc": "2026-10-22T20:59:45.963967+00:00",
+  "parent": "f1e489513c9643dd994624b4c44d1030bd349a01",
+  "groups": [
+    {
+      "slice": "GENUINE_NATIVE_STOCK26_SOURCE_REFERENCE_AND_CLOSURE_CONSUMER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/stock-source26-consumer1/RESULT.json",
+      "receiptSha256": "765e9b09b6e36f505764a751ef89b4685fe470c0c27736953a4cacd108119b4c",
+      "receiptSnapshot": {
+        "taskId": "D3_GENUINE_STOCK26_ORIGINAL_SOURCE_REFERENCE_AND_CLOSURE_CONSUMER",
+        "status": "SOURCE_READY_NEW4_SCOPE_PASS_ACTUAL38303_38314_REFERENCE_ONLY_NOT_EXECUTION",
+        "atUtc": "2026-10-22T20:57:59.073305+00:00",
+        "sourceExact2": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.mjs",
+            "bytes": 20607,
+            "sha256": "4b02d44774953f22e9100e4114903ca06473f184c4d5af78a8df910472e1fdc4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.test.mjs",
+            "bytes": 16628,
+            "sha256": "a7daf7b1923ee35469a0f810d14c78050e67abd514d21b895e79fd437f7f70b2"
+          }
+        ],
+        "signature": "openReviewedStockSource26({binding,authorizedPayloadHash,reviewFile,trustedReviewSha256,source,references}) -> groups/authorize/verify/openClosure/close",
+        "authorityComposition": [
+          "Exact C stock reference-only review29470b6f plus QB117 metadata/result pin",
+          "Fresh actual38314 original rows via independently C-reviewed bounded offsets; sourceEvidence entire original raw+normalized projection matched",
+          "Fresh pinned canonical stock38303 and complete lineage38314 CSVs from exact base manifest",
+          "Independently C-reviewed original53 native warehouse mappings and SKU14999/full15121 aliases/product refs; no candidate-only native binding",
+          "All complete groups rebuilt by registered pure join preparer and compared to exact signed candidate; global fold/counters/fingerprints validated before external rows"
+        ],
+        "checks": {
+          "newSynthetic": {
+            "cases": 4,
+            "firstPass": 3,
+            "firstFail": 1,
+            "failedOnlyRerunPass": 1,
+            "remainingFail": 0,
+            "firstCorrection": "Missing root pin initially rejected by generic plain-evidence guard before expected scope message. Added explicit outside-pin guard before capture, tightened existing manifest byte-size check, reran only failed case; original logs retained.",
+            "logs": [
+              {
+                "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/stock-source26-consumer1/protocol-first.log",
+                "bytes": 3497,
+                "sha256": "589d504cc8c5d4df87d00ce1fd1e19ecbcb6be5cbba96adf81cd80fb28d79957"
+              },
+              {
+                "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/stock-source26-consumer1/protocol-failed-only-second.log",
+                "bytes": 259,
+                "sha256": "1ade8c08fb1010e39fd6b54b6ba87eecbd3709405909ab092f911073e5c14cbe"
+              }
+            ]
+          },
+          "actual": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/stock-source26-consumer1/ACTUAL38303-RESULT.json",
+            "bytes": 1158,
+            "sha256": "e6a60b6a70871461cb69522fde7aa8474fe44dfd4c60bc470f30e5984a90b60f"
+          },
+          "groups": 38303,
+          "contributors": 38314,
+          "signedTotal": "80933",
+          "negativeContributors": 402,
+          "negativeGroups": 397,
+          "preparedFingerprintStreamSha256": "fdd50bfbbf5d72c830b3ee72a88ea6973c71ea50c5bf5f51a683712d50d9a50c",
+          "allGroupsAuthorized": true,
+          "actualMainScopeRejected": true,
+          "syntheticClosure": "Two exact source projections and two complete nine-column import_stock_contributor rows, baseline_ledger_id NULL, sorted and session-owned. Original signed -5/+2 preserved.",
+          "elapsedMilliseconds": 66787.070208,
+          "nodeResourceUsageMaxRSSRaw": 1218656,
+          "nodeFlags": {
+            "heapMiB": 1024,
+            "serial": 1
+          },
+          "memoryOrFullImportCapacityPassed": false
+        },
+        "lifetimeAndBounds": [
+          "Nofollow files and parents, held FD+path stat for all pinned artifacts; source reader remains live",
+          "Candidate JSONL full hash verified before return; only compact group offsets/hashes and closure keys retained",
+          "Group reads verify their exact immutable record SHA; authorization captures input and detects concurrent mutation",
+          "Source/typed closure streams reopen group ranges on retained FD, preserve full evidence and contributor9; close/abort checks retain fail-closed lifetime",
+          "Unknown actual payload hash rejects closure; C reference-only reviews never grant source execution/MAIN/PUBLISH"
+        ],
+        "notTested": [
+          "Actual full11 closure comparison against PostgreSQL",
+          "Actual SOURCE/MAIN49 account/bootstrap execution or runtime capability",
+          "Native stock PG stage/readback/baseline ledger/balance writes",
+          "Deployment or capacity acceptance"
+        ],
+        "nonActions": {
+          "originalWorkbooksRead": 0,
+          "wholeMaterializedSourceScans": 0,
+          "headerGzipReads": 0,
+          "registryReread": 0,
+          "newNativeUUIDs": 0,
+          "SQL": 0,
+          "baselinePosted": false
+        },
+        "next": "C freeze exact2 and route only new genuineconsumer/lifetime/closure composition; reuse QB117/old inventory and native reference decisions. Then registered header finite joint preparer under existing mapper stable IDs."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/native-stock-source26.mjs",
+          "owner": "D3",
+          "sha256": "4b02d44774953f22e9100e4114903ca06473f184c4d5af78a8df910472e1fdc4",
+          "bytes": 20607
+        },
+        {
+          "path": "scripts/import-v3/native-stock-source26.test.mjs",
+          "owner": "D3",
+          "sha256": "a7daf7b1923ee35469a0f810d14c78050e67abd514d21b895e79fd437f7f70b2",
+          "bytes": 16628
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Source exact2 checkpoint only; actual source-only38303 consumption not PG/baseline/MAIN/PUBLISH. Independent new consumer QA next; original stock/reference scopes reused."
+}

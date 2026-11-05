@@ -1,0 +1,15 @@
+{
+  "atUtc": "2026-10-24T02:15:38.954193+00:00",
+  "parent": "87cf4954d5bffe3d6e6c6cf67ab7b7a99d27b34f",
+  "taskId": "C_EXISTING_PARTY_AUDIT_OPTIONAL_PUBLIC_ROUTE_SEAM",
+  "files": [
+    {
+      "path": "apps/web/src/application/contracts.ts",
+      "bytes": 12304,
+      "sha256": "ed409e774a7960d81c3fd0dd7578a83e8cd0aa1629ddf4247c03604c85a175db",
+      "owner": "C"
+    }
+  ],
+  "ownerIntent": "Original F3 ready queue reported current PartyHost accepts existing optional audit capability but shared PartiesRouteConfiguration lacks slot. Add exact existing SettingsAuditCapability type only; original imported type reused, no new runtime/provider/permission. F1 unique route/mount owner must pass original capability and existing onAccessFailure; targeted integrated source check with F1 next module, not another test suite.",
+  "qualification": "No consumer activated yet and no audit UI/HTTP/role/wholepage acceptance. Staff/payment existing slots unchanged, store243 alreadyconnected adopted. No backend field or dependent business write contract changed."
+}

@@ -1,0 +1,148 @@
+{
+  "atUtc": "2026-10-22T08:59:41.490814+00:00",
+  "parent": "cd14b79453798677e8dde4ffef79f327caeacaee",
+  "groups": [
+    {
+      "slice": "TRANSFER_NATIVE_HISTORY_SHARED_VIEW",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-20/DELIVERY.json",
+      "receiptSha256": "06471126749d854b1310476304f2976dbfee4ed1f7fa3c5c59e658d6e871160b",
+      "files": [
+        {
+          "path": "apps/web/src/components/document-history.tsx",
+          "bytes": 3503,
+          "sha256": "8507d7505b118e237f1b7b3f4017a294d643bc3202ce25c627149681dbff2645",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/history-view.tsx",
+          "bytes": 1936,
+          "sha256": "669d10f2ebc71d566518f2490e984c09e3a9f61ffb6f88340f659206273e2148",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/history-http-reader.ts",
+          "bytes": 3912,
+          "sha256": "f5814aadef7cfdee43c9bf8902225cbcc94fe04386757b8c7d3863dd88207f8e",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/history-controller.ts",
+          "bytes": 1918,
+          "sha256": "32ab71c0752eb880026817472fdee9dd3482335415dbffd40a471ae4682727d2",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/history-view.tsx",
+          "bytes": 2002,
+          "sha256": "9ee1d8b63162d994c99cee9bde3b69b7b58379495f222c919ffc6ca0f1d128d2",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/contracts.ts",
+          "bytes": 2371,
+          "sha256": "eaf33462ebfe96dc9cd288a85b6ef50a7e14d6355521d17f81fabdfef1ed8cb8",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/http-reader.ts",
+          "bytes": 2435,
+          "sha256": "b00896b59e22215e3aa725c13029756cebd55c15006e1e2cec4f5b8b03eb50c8",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/detail-content.tsx",
+          "bytes": 10472,
+          "sha256": "b40005d04e56bc80f050605f2816553ad1a94f1857bfad41d5da491993241f8a",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/form.tsx",
+          "bytes": 10356,
+          "sha256": "8846d9a10b78449994efb9ab5dc390491ff5b0880d2d9ed3331ad73022fb1b81",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/host.tsx",
+          "bytes": 3808,
+          "sha256": "9bf0573774a2ab930424e357e57992ef2425f9b04e85697a7f5618d03675f9e4",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/manual-create-host.tsx",
+          "bytes": 3063,
+          "sha256": "9b3d5476427cf5a69be698d50f7e44eac55b0d5ee780cad66ce8ab0f43f54e59",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/transfers-page.tsx",
+          "bytes": 14697,
+          "sha256": "c4a3584f7d2ed109f42c4f02efdbf79c6a7eb6bcc498c71d71b40e1c9e8436f3",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-new-document-form.tsx",
+          "bytes": 1554,
+          "sha256": "b241afd559ea222b0aeabc5ba6ad70494a60e0c1bb4fbce8f1a5c6d49407d2ca",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "W7_ACCOUNT_SETTINGS_LEAF",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/F05-W7-WRITE-v1-RESULT.json",
+      "receiptSha256": "3b8154d8db5beebc36ac5e061c4238d91a88ea29623f65f4b662c11b7b670685",
+      "files": [
+        {
+          "path": "apps/web/src/account-settings/contracts.ts",
+          "bytes": 3667,
+          "sha256": "24b1ce1ee1aa94219eb1114f02e472099fdad46fbe7d5c49449fb9ddb1966452",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/account-settings/response-validation.ts",
+          "bytes": 7217,
+          "sha256": "fca59942171a85cfa5aff8a2ab53f578faf82ea1f8a23255e36d954ca66036e6",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/account-settings/http-client.ts",
+          "bytes": 12405,
+          "sha256": "6b4f8fdfd12a846b139c11a315d2bb187b9cbc6e47e7e105b48ea3f943d89dc4",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/account-settings/controller.ts",
+          "bytes": 18985,
+          "sha256": "c428c715cd21dcbefe81a195b246a24af36fe9d47cca6bdfb171ecd7d2242324",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/account-settings/controller.test.ts",
+          "bytes": 10839,
+          "sha256": "c44caf7c434c60568f2f90661be2c37e40735e6e69ca44a32719cb574939528a",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/account-settings/account-form.tsx",
+          "bytes": 11773,
+          "sha256": "c87763b32b3ae08bfb186055ddb856d358a022e7296fa87d15ffa7a985c58396",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/account-settings/account-page.tsx",
+          "bytes": 10455,
+          "sha256": "8f6a72f88fe64ac1d39e38d8b6bbb52c463f73646164cae75c4da317479215be",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/account-settings/index.ts",
+          "bytes": 692,
+          "sha256": "d8eb5a4aec49d1daddd71e660c3f7233910d220d2eb3a793221bcf294986b1a7",
+          "owner": "F3"
+        }
+      ]
+    }
+  ],
+  "fileCount": 21,
+  "scope": "New source/targeted checks ready; QF and fixed-browser/actual backend pending"
+}

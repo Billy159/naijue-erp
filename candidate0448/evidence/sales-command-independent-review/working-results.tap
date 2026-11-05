@@ -1,0 +1,23 @@
+✔ history provenance cannot be promoted to runtime during refresh/adoption (15.392397ms)
+✔ runtime provenance cannot downgrade to historical during readback (3.466197ms)
+✔ new SAVE pins runtime provenance before its first authorized readback (6.937433ms)
+✔ same-version command status contradictions cannot become editable facts (13.02702ms)
+✔ known VOID is terminal even when an impossible response increments its version (17.643616ms)
+✔ legitimate later unapproval does not get rejected as a same-version contradiction (2.411518ms)
+✔ unknown outcome and receipt404 retain one immutable original key/payload/CAS without retry (3.525134ms)
+✔ a reentrant subscription can cancel before dispatch and dispose without revival (2.723257ms)
+✔ post-dispatch cancel is unknown, and late results cannot override new identity (2.408969ms)
+✔ provider exceptions and native response messages do not retain raw secrets (19.43175ms)
+✔ receipt-only error on POST is not a definitive original-command rejection (2.023616ms)
+✔ unaddressable dot-only operation keys are rejected before a mutating fetch (2.588509ms)
+✔ safe-integer CAS and complete exact native request shapes agree with existing parser (1.566831ms)
+✔ wrong action/key/target/CAS/status/ledger receipts cannot confirm an operation (2.38268ms)
+✔ approval uses exact saved funds and independently signed integer return quantities (1.302883ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 500.610824

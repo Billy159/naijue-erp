@@ -1,0 +1,37 @@
+{
+  "status": "PURE_DECLARED_COHORT_CONSISTENCY_NOT_AUTHORIZATION",
+  "baseline": "af9b56eba2f206b5fcf982e851c3af7aec35b2f2",
+  "sourceEvidence": [
+    {
+      "path": "scripts/import-v3/native-cleaning/exact-scalars.mjs",
+      "sha256": "5b985de72d979de4ed2c79488db88a0af464e54a48a3cbd1fc5c633ac6a910be"
+    },
+    {
+      "path": "scripts/import-v3/native-cleaning/identity-crosswalk.mjs",
+      "sha256": "0622c30ff7aa9a2888b0e32cc2279d5c3cee8fea6e5a699f3f3c18b694231b16"
+    },
+    {
+      "path": "scripts/import-v3/native-cleaning/README.zh-CN.md",
+      "sha256": "db1b42001c78ef1a8f9d1a71a977b9ecb6df0bbd0845a126fd18292e4d2b357c"
+    },
+    {
+      "path": "adapters/postgres/migrations/0001_runtime_sales.sql",
+      "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+    }
+  ],
+  "arithmeticDelegates": [
+    "normalizeQuantity",
+    "normalizeMoney"
+  ],
+  "io": false,
+  "actualSourceRowsUsed": false,
+  "unverified": [
+    "independent complete cohort",
+    "same extraction snapshot",
+    "source to target identity mapping",
+    "business semantics",
+    "writer admission",
+    "actual database schema"
+  ],
+  "schemaNote": "Original migration is contextual evidence, not a claim of final deployed schema."
+}

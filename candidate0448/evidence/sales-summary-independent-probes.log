@@ -1,0 +1,14 @@
+✔ frozen sources: signed non-gift sales summary, ignored retired returns, historical missing category, directional list and Shanghai minute (18.638608ms)
+✔ one RR snapshot, exact signed/minbigint/overflow/cancellation/zero facts and 200 IDs in one batch (42.848002ms)
+✔ empty page avoids batch, but missing/duplicate/foreign aggregates and malformed exact facts roll back (13.056404ms)
+✔ abort after batch cannot publish success and does not query or commit again (3.081448ms)
+✔ new response fields cannot be injected into request/auth scope and current authorization runs once per list (3.313787ms)
+✔ client exact strict shape keeps aggregate overflow but rejects omitted fields, malformed timestamp, duplicates and query mismatch (5.118941ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 630.378084

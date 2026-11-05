@@ -1,0 +1,127 @@
+{
+  "atUtc": "2026-10-22T19:58:52.098047+00:00",
+  "parent": "99d687b5b791c7bfad0efb81b9d08fe37ed7b2e3",
+  "groups": [
+    {
+      "slice": "PROD-UI-03-DELIVERY-v1",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-03-DELIVERY-v1.json",
+      "receiptSha256": "541e062c7c805af94f58d6201612a1a814a9913a73eb4c91bb0807718f257ab1",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "PROD-UI-03",
+        "priority": "P1",
+        "owner": "F2",
+        "createdAt": "2026-10-22T19:56:03.177042+00:00",
+        "status": "SOURCE_CASCADE_DOM_PASS_BROWSER_HIT_PENDING",
+        "files": [
+          {
+            "path": "apps/web/src/products/product-page.css",
+            "beforeSha256": "f041042a309e88a9ecd681b5ed5e21af35e1b600b120980059d5edf1ca4bfd8f",
+            "sha256": "402560de9b410d681280f6499b4f1c178d55e18656ad140737270e803717427a"
+          }
+        ],
+        "finding": {
+          "candidate": "v009-8755931",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v009-8755931/PRODUCT-POPUP-CLIPPING.json",
+          "sha256": "f5b72d11282a3752db3063f930229e7b4d974bb0aeaa5387155dccf16fb2a089",
+          "facts": "season popup261..415; active item bottom339/overflowhidden caused autumn/winter actual mouse hits on main"
+        },
+        "change": "One product-scoped rule sets .arco-tabs-content-item-active overflow:visible for current editor/read-only product tabs; existing local portals, inactive pane clipping and unrelated tabs unchanged. No global rule or z-index guess.",
+        "minimalSameConsumerScope": [
+          "Current ProductSeasonSelect under same product active-item",
+          "Year shared/supplier/category/other same product active-panel local popups benefit from this shared ancestor; no individual value/query changes",
+          "Same ProductFullPage readonly active class covered; readonly actual popup not claimed tested"
+        ],
+        "checks": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-03-dom-v1.log",
+            "exitCode": 0,
+            "scope": "actual editor/local popup/active item DOM; autumn+winter selected as real multi, no command; programmatic clicks are not browser hit proof"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-03-cascade-result-v1.json",
+            "sha256": "66516c5e8e313e0df71f3592126745eb63bb51cb039be24c261ce01bd03cad42",
+            "exitCode": 0,
+            "scope": "only overflow properties via native selector matching/CSS specificity with installed Arco after leaf; beforehidden->aftervisible; no remaining clipping ancestor up to product root; inactive/nonproduct remainhidden"
+          }
+        ],
+        "reused": "PROD-UI-02 dimensions accepted by Demo v009; no title/tab/font/grid geometry retest. Prior YEAR/P12 acceptance reused.",
+        "notRun": [
+          "actual Chrome/mouse hit/rect layout",
+          "actual readonly popup run",
+          "full build/Git/PG/deploy/typecheck for CSS-only"
+        ],
+        "next": "C snapshot this exact CSS-only P1 immediately; Demo in next final fixed preview only confirm pointer can hit/select autumn/winter without clipping. Resume CAT P2 in parallel afterward.",
+        "browserResource": "F2 has no actual Chrome/browser-harness control or active input handles.",
+        "authorization": "01a161f7-a5e8-7e10-9059-9537c28910c2"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "sha256": "402560de9b410d681280f6499b4f1c178d55e18656ad140737270e803717427a",
+          "bytes": 20275,
+          "owner": "F2"
+        }
+      ]
+    },
+    {
+      "slice": "PROD-SUPPLIER-NOCLEAR-DELIVERY-v1",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-SUPPLIER-NOCLEAR-DELIVERY-v1.json",
+      "receiptSha256": "bd056dd84bec11c967a28939c336bd2bbfe4138e0166f7f6ddd4aa6a356a2675",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "PROD-SUPPLIER-NOCLEAR",
+        "owner": "F2",
+        "createdAt": "2026-10-22T19:56:03.178422+00:00",
+        "status": "SOURCE_DOM_PASS_TYPE_CLOSURE_FOREIGN_WIP_BLOCKED",
+        "files": [
+          {
+            "path": "apps/web/src/products/product-editor-base.tsx",
+            "beforeSha256": "f5d28de69cc6c184ec9910dd7c38ff7cc6e9c2b66d5c5987baf705cde7b4415b",
+            "sha256": "80093bc9291ac4eff337cc56ede97061153b99aa893161abcbed208d48861395"
+          }
+        ],
+        "change": "Only supplier chooser gets required=true and allowClear=false; existing required guard rejects empty callback, search remains. No save parser/default/history changes.",
+        "authority": "Frozen product-current.js147 requires supplier selection and does not allow clear; docs/product-maintenance.md74-76 and actual parser preserve nullable EDIT while CREATE remains required. C explicitly authorized independent restoration.",
+        "checks": {
+          "dom": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-SUPPLIER-NOCLEAR-dom-v1.log",
+            "exitCode": 0,
+            "cases": [
+              "Actual editor v2 HTTP source path",
+              "original supplierNULL survives unrelated name-only EDIT",
+              "actual native UUID supplier candidate remains searchable/choosable/saved",
+              "no clear icon and Backspace does not clear"
+            ]
+          },
+          "strictTypeClosure": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-SUPPLIER-NOCLEAR-types.log",
+            "exitCode": 2,
+            "foreignDiagnostics": 12,
+            "file": "apps/web/src/current-form/sales-existing-document.ts",
+            "meaning": "12 branded salesLine/settlement ID diagnostics in F1 live WIP, no diagnostic for touched F2 file; not overall PASS, no foreign source modified or excluded"
+          }
+        },
+        "reused": "YEAR shared consumer logic unchanged; prior CSS/year/P12 tests not rerun.",
+        "notRun": [
+          "real browser",
+          "new real business save/PG",
+          "whole app build",
+          "independent QA"
+        ],
+        "next": "C fix this unique one-file slice separately and QF only supplier no-clear/null preservation and a clean fixed-source type closure; no repeat YEAR/P12.",
+        "authorization": "01a161f7-a5e8-7e10-9059-9537c28910c2"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-base.tsx",
+          "sha256": "80093bc9291ac4eff337cc56ede97061153b99aa893161abcbed208d48861395",
+          "bytes": 20505,
+          "owner": "F2"
+        }
+      ]
+    }
+  ],
+  "fileCount": 2,
+  "scope": "P1 product active tab popup overflow1; supplier no-clear1. Live unrelated F1 type errors not included; QF fixed clean closure required."
+}

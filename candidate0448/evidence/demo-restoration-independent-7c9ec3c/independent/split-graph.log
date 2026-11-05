@@ -1,0 +1,19 @@
+{
+  "pass": true,
+  "sourceSha256": "47c4c6b5af9d96082cb55a999ce0c7e10d1f584084f0c1f478fff56440efbb2a",
+  "staticInputCounts": {
+    "startup": 27,
+    "inventory": 32,
+    "pageSizeAction": 176
+  },
+  "pageSizeActionStyle": {
+    "bytes": 18904,
+    "sha256": "336888e52eb78606d371666ab6f1a2f543c8d9c1843bb2b011e0799688b9745a",
+    "inputs": [
+      "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Select/style/index.css",
+      "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Trigger/style/index.css",
+      "../components/inventory-page-size.css"
+    ]
+  },
+  "boundary": "Static emitted graph/CSS analysis only; no browser network waterfall, screenshots/pixels, database or runtime performance acceptance."
+}

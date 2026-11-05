@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile,mkdir,cp} from 'node:fs/promises';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {localizeCanonicalAssets} from './html-assets.mjs';
+/** Original release producer first; separate explicit loopback bootstrap second.
+ * Production HTTPS bootstrap and all production source files remain unchanged. */
+export async function buildCanonicalBrowser({runtimeRepo,runtimeCommit,outdir,entry,observe}){
+  const front=path.join(runtimeRepo,'apps/web/demo-replica/frontend');
+  const configuration={kind:'naijue-erp-production-host',http:{origin:'https://synthetic-opt00.invalid',basePath:'/api'},assets:{basePath:'/assets/'},session:{verifyOnMount:true},routes:{inventory:false,sales:true,transfers:true,salesExistingEdit:true,transferExistingEdit:true}};
+  const {buildProductionHost}=await import(pathToFileURL(path.join(runtimeRepo,'apps/web/demo-replica/build-production-host.mjs')).href);
+  const {checkProductionGraph}=await import(pathToFileURL(path.join(runtimeRepo,'apps/web/demo-replica/tests/production-graph-check.mjs')).href);
+  const production=path.join(outdir,'canonical-production');const produced=await buildProductionHost({configuration,outdir:production,sourceCheckpoint:runtimeCommit});const productionGraph=await checkProductionGraph(production);assert.equal(productionGraph.status,'PASS');
+  for(const input of produced.inputs)await observe(path.join(runtimeRepo,input.path),await readFile(path.join(runtimeRepo,input.path)));
+  const assets=path.join(outdir,'assets');await mkdir(assets);await cp(path.join(production,'source-styles'),path.join(assets,'source-styles'),{recursive:true});
+  try{await cp(path.join(production,'assets'),path.join(assets,'assets'),{recursive:true});}catch(error){if(error.code!=='ENOENT')throw error;}
+  const controls='<style>#test-tools{position:fixed;left:220px;bottom:0;max-width:850px;z-index:1500;padding:5px;font:12px system-ui;background:#fff4b9;border:1px solid #a65d00}#test-tools output{display:block}#test-tools button,#test-tools select{margin-right:8px}</style><div id="test-tools">SYNTHETIC REAL HTTP / CANONICAL COPIED RENDERER / NOT PG / READY ONLY / writes501 <select id="action-mode"><option value="FIRST_LIST_OPEN">首次：原列表进入编辑</option><option value="WARM_MODIFY">独立暖场景：修改</option></select><select id="sample-id"><option>cold-1</option><option>repeat-1</option><option>repeat-2</option></select><button id="arm-sample" type="button">准备计时</button><button id="abort-sample" type="button">终止观测（不改业务）</button><output id="sample-state">加载明确的合成环境…</output></div>';
+  const html=localizeCanonicalAssets(await readFile(path.join(production,'index.html'),'utf8'),configuration.http.origin).replace('<title>奈爵服饰 ERP</title>','<title>OPT00 SYNTHETIC HTTP · canonical copied renderer</title>').replace('</body>',controls+'</body>');await writeFile(path.join(outdir,'host-shell.html'),html);
+  const runtimeCss=new Set(['basic-settings-v2.css','runtime/settings/settings-runtime.css','runtime/settings/payment-halls.css','runtime/common/account-password.css'].map(name=>path.join(front,name)).concat(['standard-controls.css','standard-overlay.css','document-output.css'].map(name=>path.join(runtimeRepo,'apps/web/src/components',name))));
+  const {build}=await import(pathToFileURL(path.join(runtimeRepo,'node_modules/esbuild/lib/main.js')).href);
+  const result=await build({absWorkingDir:runtimeRepo,entryPoints:{application:entry},outdir:assets,bundle:true,splitting:true,format:'esm',platform:'browser',target:'es2022',jsx:'automatic',minify:true,metafile:true,chunkNames:'chunks/[name]-[hash]',assetNames:'assets/[name]-[hash]',define:{'process.env.NODE_ENV':'"production"'},alias:Object.fromEntries(['react','react-dom','@arco-design/web-react','jszip'].map(name=>[name,path.join(runtimeRepo,'node_modules',name)])),loader:{'.svg':'file','.png':'file','.jpg':'file','.woff2':'file'},plugins:[{name:'exact-original-copied-css-and-inputs',setup(builder){
+    builder.onResolve({filter:/\?(?:inline|inventory-drawer-retry)$/},async args=>{const inline=args.path.endsWith('?inline'),request=args.path.slice(0,args.path.lastIndexOf('?')),resolved=await builder.resolve(request,{resolveDir:args.resolveDir,kind:args.kind});if(resolved.errors.length)return {errors:resolved.errors};return {path:resolved.path,namespace:inline?'replica-inline-style':'replica-drawer-retry'};});
+    builder.onResolve({filter:/\.css$/},args=>{if(args.kind==='import-statement'&&args.importer.endsWith('.tsx')){const filename=path.resolve(args.resolveDir,args.path);if(runtimeCss.has(filename))return {path:filename,namespace:'replica-runtime-css'};}});
+    builder.onLoad({filter:/.*/,namespace:'replica-inline-style'},async args=>{const bytes=await readFile(args.path);await observe(args.path,bytes);return {contents:bytes,loader:'text'};});
+    builder.onLoad({filter:/.*/,namespace:'replica-drawer-retry'},async args=>{const bytes=await readFile(args.path);await observe(args.path,bytes);return {contents:bytes,loader:'tsx',resolveDir:path.dirname(args.path)};});
+    builder.onLoad({filter:/.*/,namespace:'replica-runtime-css'},async args=>{const bytes=await readFile(args.path);await observe(args.path,bytes);const key=path.relative(runtimeRepo,args.path).split(path.sep).join('/');return {contents:`const key=${JSON.stringify(key)};if(!document.querySelector('style[data-replica-component="'+key+'"]')){const style=document.createElement('style');style.dataset.replicaComponent=key;style.textContent=${JSON.stringify(bytes.toString())};document.head.append(style);}`,loader:'js'};});
+    builder.onLoad({filter:/.*/,namespace:'file'},async args=>{if(path.resolve(args.path)!==path.resolve(entry))await observe(args.path,await readFile(args.path));return undefined;});
+  }}]});await writeFile(path.join(assets,'metafile.json'),JSON.stringify(result.metafile,null,2)+'\n');
+  const reactRoots=new Set(Object.keys(result.metafile.inputs).filter(input=>/node_modules\/(react|react-dom)\//.test(input)).map(input=>path.resolve(runtimeRepo,input).split('/node_modules/')[0]));assert.equal(reactRoots.size,1,'Exactly one React/ReactDOM root');assert.equal([...reactRoots][0],runtimeRepo);
+  return {metafile:result.metafile,manifest:produced.assets,productionGraph,reactRoots:[...reactRoots]};
+}

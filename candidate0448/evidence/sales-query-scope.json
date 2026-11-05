@@ -1,0 +1,21 @@
+{
+  "parentCommit": "ce498d0350204683222f0a213feae8b6532ddc31",
+  "focusedTests": 21,
+  "scopedTypecheck": "PASS",
+  "independentReview": "PASS_SCOPED_SOURCE_AND_SCRIPTED_PROBES",
+  "implemented": [
+    "bounded sales list",
+    "current-line detail",
+    "paged native audit metadata",
+    "approved-only settlement statistics",
+    "read-only REPEATABLE READ PostgreSQL reader",
+    "authenticated strict POST HTTP boundary"
+  ],
+  "notVerified": [
+    "actual PostgreSQL SQL execution/query plans",
+    "driver SQL cancellation",
+    "production role-to-scope provider and composition",
+    "browser business acceptance"
+  ],
+  "rollback": "revert this source commit; no migration or runtime activation"
+}

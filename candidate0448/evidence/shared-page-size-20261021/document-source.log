@@ -1,0 +1,2 @@
+PASS source/CSSOM/SSR: final non-inventory spacing without changing inventory marker, scoped keyboard-focus exceptions, final settlement grid, transfer font/padding/heights/badge, sticky action cells with opaque/hover surfaces; non-Demo saved blocks absent, unavailable product/history semantics preserved.
+LIMIT: source, CSS selector/declaration and synthetic DOM assertions only. No browser layout, real pixel parity, live request, server, database or performance acceptance.

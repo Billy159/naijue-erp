@@ -1,0 +1,93 @@
+{
+  "atUtc": "2026-10-24T00:26:42.463447+00:00",
+  "parent": "1a713886f0208b890508748bad327f010adb43f0",
+  "taskId": "D1_P10_ORIGINAL_API_NATIVE26_CAPABILITY_CONSUMER",
+  "files": [
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "bytes": 47441,
+      "sha256": "138f18c69bb0490671de05b9a21265faa95b22df9f163e6895823e825ef8c840",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/P10-DEFAULT-SCHEME-HOST-RESULT-v1.json",
+  "ownerReceiptSha256AtPin": "e96ce74ac740424a83e1beb3a7f3bac913f5cb10cbf82795b092da66ec651431",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1_EXISTING_P10_DEFAULT_SCHEME_HOST_WIRING_V1",
+      "atUtc": "2026-10-24T00:24:26.067411+00:00",
+      "model": "gpt-6.1-sol/xhigh",
+      "fastSwitchVerified": false,
+      "reportingAuthority": "01a161f7-a5e8-7e10-9059-9537c28910c2 / docs/rapid-launch-20261022/REPORTING-AUTHORIZATION.json"
+    },
+    "completedScope": {
+      "status": "SOURCE_WIRING_AND_AFFECTED_STRICT_CLOSURE_PASS_NO_ACTUAL_PG",
+      "meaning": "Pass the same trusted issuer runtime26 to the existing product details reader; leave original pool and retained-delete second argument intact. Native profile only exists when original issuer exists. Per-request product grant, dictionary detail grant, all handlers and readiness remain unchanged.",
+      "actualConsumerCount": 1,
+      "controllerCorrectionAdopted": "Current file has one actual constructor at line522; the other same-name occurrence is the import. C explicitly adopted one real consumer; no extra route created.",
+      "D2Contract": "D2 reports six registered leaves complete; third optional NativeRuntime26Capability requires original retained capability and checks PRODUCT_SEASONS_READ on the original RR client. Legacy returns original UNAVAILABLE; schema26 reads actual product.default_barcode_scheme_id to AVAILABLE{schemeId} or NOT_SET."
+    },
+    "changedFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/postgres-read-api.ts",
+        "line": 522,
+        "before": {
+          "bytes": 47422,
+          "sha256": "94a4a84f6a454d4da02cf0f6339378a08c000c9f62dc3afd19f1c56550d679cd"
+        },
+        "after": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/postgres-read-api.ts",
+          "bytes": 47441,
+          "sha256": "138f18c69bb0490671de05b9a21265faa95b22df9f163e6895823e825ef8c840"
+        },
+        "change": "Only insert third argument issuer?.runtime26 into the original constructor; +19 bytes.",
+        "D2ReaderModifiedByD1": false
+      }
+    ],
+    "checks": {
+      "onlyApprovedArgumentInsertion": true,
+      "outsideCallBytesMatchBaseline": true,
+      "strict": {
+        "exitCode": 0,
+        "root": "apps/api/src/postgres-read-api.ts",
+        "flags": [
+          "--noEmit",
+          "--target ES2023",
+          "--module NodeNext",
+          "--moduleResolution NodeNext",
+          "--strict",
+          "--noUncheckedIndexedAccess",
+          "--exactOptionalPropertyTypes",
+          "--noFallthroughCasesInSwitch",
+          "--noImplicitOverride",
+          "--verbatimModuleSyntax",
+          "--rewriteRelativeImportExtensions",
+          "--skipLibCheck",
+          "--types node",
+          "--lib ES2023,DOM",
+          "--jsx react-jsx"
+        ],
+        "log": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/P10-DEFAULT-SCHEME-HOST-strict-run1.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "D2Tests": "Adopt D2 owner completion message: eight unique scopes (five new, three affected), failed assertion only rerun and six-root strict0. D1 did not rerun those tests.",
+      "newTestsRunByD1": 0,
+      "databaseOperations": 0,
+      "sshOperations": 0,
+      "builds": 0,
+      "gitOperations": 0,
+      "browserOperations": 0
+    },
+    "notTested": [
+      "Actual PostgreSQL/runtime issuer/profile behavior",
+      "Actual HTTP/defaultScheme response and frontend consumption",
+      "Deployment/full import/PUBLISH; CORE branch not implemented"
+    ],
+    "blockers": [],
+    "next": "C may freeze this exact API leaf with D2 six owned leaves. Necessary new-scope actual startup/PG/readback remains original C owner responsibility; no old source-suite rerun or new issuer/purpose/profile. Pending CORE confirmation is independent."
+  },
+  "qualification": "Only19B third optional existing runtime26 argument to actual single ctor, native26 available only with original issuer. Owner API dependency closure strictPASS after245 adopted; no new API/issuer/purpose/DDL/write capability or second invented handler. ActualPG/HTTP/browser/deployment remain untested."
+}

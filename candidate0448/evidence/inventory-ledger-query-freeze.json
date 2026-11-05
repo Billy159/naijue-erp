@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-10-20T19:45:53.834831+00:00",
+  "scope": "Native read-only inventory ledger query, opt-in unregistered plugin; synthetic/scripted evidence only",
+  "fileCount": 14,
+  "sourceManifest": "evidence/inventory-ledger-query-source.sha256",
+  "combinedManifestSha256": "362a787c8de26d60a70ce06f50865dad47fc57aeeac7afe2ddd86c97a9bc97ee",
+  "unchangedGuardSqlSha256": "b4364d9b6926e95e3f2cc8769a766b415c8f5772aa0079a2bdc3d4817a7a02e6",
+  "matrixReaderChange": "Exact unchanged GUARD_CAPABILITY extraction plus one import; verified against current HEAD",
+  "checks": {
+    "scopedTypeScript": "PASS: ./node_modules/.bin/tsc --noEmit -p tests/inventory-ledger-query-tsconfig.json",
+    "tests": "PASS 104/104: 81 ledger (41 application,26 scripted PostgreSQL protocol,14 Fastify inject) +23 existing inventory matrix protocol/source contracts",
+    "log": "evidence/inventory-ledger-query-scoped-check.log"
+  },
+  "notRun": [
+    "real PostgreSQL",
+    "EXPLAIN/performance",
+    "browser",
+    "production auth/session deployment",
+    "server listener",
+    "network",
+    "installation",
+    "commit",
+    "push"
+  ],
+  "files": [
+    {
+      "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+      "sha256": "57af8ff8fdd6747207850fb1f438cc2ff1f804e59e2802ef9a315d81e2f4bd02"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-publication-guards.ts",
+      "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-query-reader.ts",
+      "sha256": "241d27a98f14e26e2cbae3fc6d580fd7e3f1928eb42a7b1961907ae308ac477b"
+    },
+    {
+      "path": "apps/api/src/inventory-ledger-query-http.test.ts",
+      "sha256": "1744db037fdb45a30a6b219f7fabac8fae3085022111ad40b3d91157aef4987a"
+    },
+    {
+      "path": "apps/api/src/inventory-ledger-query-http.ts",
+      "sha256": "281e701f4a427e08c9eaffe0232cf288345dce16209d6658ab6cca12912c53d1"
+    },
+    {
+      "path": "docs/INVENTORY-LEDGER-QUERY.md",
+      "sha256": "e7893419b0e9ac4a47d2ea1aa23920d55acbc1903b3b99d62b40720485b52a0d"
+    },
+    {
+      "path": "packages/application/src/inventory-ledger-query-contracts.ts",
+      "sha256": "082e719099b38f0446cec3ace898f6da09f584bdfd4572d51bf0b2b8c4fa92dd"
+    },
+    {
+      "path": "packages/application/src/inventory-ledger-query-service.ts",
+      "sha256": "1bfd4800f5c855bcd145a1b48bdc31217a4dccdbe9caacfee11110d2f701a995"
+    },
+    {
+      "path": "packages/application/src/inventory-ledger-query-validation.ts",
+      "sha256": "18d824d29249419346ae7e87bc9840c10b26a4b3350d2791e058a5b1daf2288a"
+    },
+    {
+      "path": "tests/inventory-ledger-query-postgres-protocol.test.ts",
+      "sha256": "0a28b2621219a357723788b2093a194b69bfd32e8187d85a35881d60d86b8468"
+    },
+    {
+      "path": "tests/inventory-ledger-query-tsconfig.json",
+      "sha256": "fa8f6ef8761c05b5fa5e89299e2c428f030dae8419d356e87c9c07348e8fb849"
+    },
+    {
+      "path": "tests/inventory-ledger-query.test.ts",
+      "sha256": "a392cdae2303855540b364ed0e0bf72fda405e54e637023a4634a47a33ee9e59"
+    },
+    {
+      "path": "tests/inventory-query-postgres-protocol.test.ts",
+      "sha256": "a01bbf7f65d094659d048e5e9ea48b0ef0859336592017ce37ae6778247cc76e"
+    },
+    {
+      "path": "tests/support/synthetic-inventory-ledger-query.ts",
+      "sha256": "f5c9350f9f01f5db31a30ebb15994d5ffd3d3efdab127afe6e5cbfd69fc22ff7"
+    }
+  ]
+}

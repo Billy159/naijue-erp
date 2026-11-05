@@ -1,0 +1,86 @@
+{
+  "jobId": "t45-r1-v22-first-bind-original-key-recovery-readonly-20261027-186",
+  "job": {
+    "jobId": "t45-r1-v22-first-bind-original-key-recovery-readonly-20261027-186",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-a16209a20bd5",
+    "atUTC": "2026-10-27T14:35:54.028550+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 1.8730622460134327,
+    "exports": [
+      "engine-result.json",
+      "original-key-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T14:35:55.946327+00:00"
+  },
+  "actual": {
+    "jobId": "t45-r1-v22-first-bind-original-key-recovery-readonly-20261027-186",
+    "status": "PASS_ORIGINAL_FIRST_MAIN_KEY_RRRO_READBACK",
+    "businessDML": 0,
+    "commandsIssued": 0,
+    "grantIssued": false,
+    "credentialsExported": false,
+    "originalRequestKey": "97d9c78b-d846-47af-a3d9-38d9f1ee83c8",
+    "failedOperationJob": "t45-r1-v22-original109-controlled-continuation-20261027-184",
+    "identity": {
+      "database": "erp_rewrite_20261022_r1",
+      "oid": "1027659",
+      "role": "erp_rewrite_runtime_20261022",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "server_address": null,
+      "server_port": null,
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "readonly": "on"
+    },
+    "originalKeyReceipts": [],
+    "batch": [
+      {
+        "status": "STAGED",
+        "sequence": "2",
+        "cursor": "22",
+        "counts": {
+          "SKU": 0,
+          "WAREHOUSE": 22,
+          "IMPORT_BATCH": 0,
+          "INVENTORY_LEDGER": 0
+        },
+        "history_payload_hash": null
+      }
+    ],
+    "receiptObservation": "NO_ORIGINAL_KEY_RECEIPT_VISIBLE_IN_THIS_RR_SNAPSHOT",
+    "rollbackReturned": true,
+    "clientsClosed": true,
+    "finishedAtUtc": "2026-10-27T14:35:55.889Z"
+  },
+  "engine": {
+    "applicationChanged": false,
+    "businessDML": 0,
+    "checkedAtUtc": "2026-10-27T14:35:55.898432+00:00",
+    "commandsIssued": 0,
+    "grantIssued": false,
+    "jobId": "t45-r1-v22-first-bind-original-key-recovery-readonly-20261027-186",
+    "nodeExitCode": 0,
+    "runtimeStatus": "PASS_ORIGINAL_FIRST_MAIN_KEY_RRRO_READBACK",
+    "status": "PASS_ORIGINAL_FIRST_MAIN_KEY_READONLY_NO_REPLAY"
+  },
+  "exports": {
+    "original-key-result.json": {
+      "bytes": 1175,
+      "sha256": "dbd61cde75c1e6cb62faf40856f0fa118c82365e57ad92ef76d4a66a47ce2f2f"
+    },
+    "engine-result.json": {
+      "bytes": 384,
+      "sha256": "fcfead06212f212683ad2b3c8ce37a163415d2ee41503b269587c7a541001eeb"
+    },
+    "job.json": {
+      "bytes": 560,
+      "sha256": "919d0c760ab7a7bebdb9d502cf72b7e00c0658e10ae7c45a1e38981eb764111b"
+    }
+  },
+  "scope": "Original184 firstBIND key only RRRO3SELECT readback, no replay/no businessfunctions. No originalkey receipt visible, originalSTAGED2/cursor22 retained; not global alltable no-write proof."
+}

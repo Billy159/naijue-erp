@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../packages/application/src/history-import-lifecycle.ts",
+    "../packages/application/src/inventory-cutoff-import.ts",
+    "../adapters/postgres/src/history-import-lifecycle.ts",
+    "../adapters/postgres/src/inventory-cutoff-import-store.ts",
+    "./history-import-lifecycle.test.ts",
+    "./inventory-cutoff-postgres-protocol.test.ts",
+    "./support/synthetic-cutoff-fixtures.ts"
+  ]
+}

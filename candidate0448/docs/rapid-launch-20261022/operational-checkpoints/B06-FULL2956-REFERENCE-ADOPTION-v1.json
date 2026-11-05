@@ -1,0 +1,22 @@
+{
+  "atUtc": "2026-10-22T11:49:07.702998+00:00",
+  "scope": "FULL_REFERENCE_DECISIONS_ONLY",
+  "decision": "ACCEPT_EXACT_MANIFEST_REFERENCE_BINDINGS",
+  "authorityFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-product26-full-reference-review-v1.json",
+  "authoritySha256": "a21105ca99f0efff1acf10fda01f1bf62117e2ffd3214d4d43e02f9efc24025b",
+  "candidateManifestSha256": "59db45280b3e2072a638fb3017ddca09a1c8fc518f52fae2371240cb66aa5b4b",
+  "candidateManifestBytes": 5640429,
+  "products": 2956,
+  "newIndependentScope": "2644 previously unapproved full refs +310 new non-season refs + new V2 composition; exact2 and season/dictionary/party evidence reused",
+  "independentReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice73-full2956-reference-v2-59db4528/RESULT.json",
+    "sha256": "d9c721ddaf832288d3043a117a5b8e8194661d63e5f8102bb1f9b618fef92a60",
+    "result": "PASS"
+  },
+  "realImportExecutionAuthorized": false,
+  "notClaimed": [
+    "Actual source-reader authorization success",
+    "Current DB reference state",
+    "Issuer/49 accounts/full11factory/MAIN/PG/production"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "atUtc": "2026-10-23T08:42:16.559808+00:00",
+  "parent": "ecd1bf0c5af8870dad78a9aa8fc2979cd31eb665",
+  "taskId": "F02_WHOLE77_T02_COMPLETE_SOURCE_PAGE_FIRST",
+  "files": [
+    {
+      "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+      "owner": "F1",
+      "bytes": 6241,
+      "sha256": "3d8d618b54316011ca1f2316f49f569dd7c687750860a3b8e142eb599fd03478",
+      "beforeSha256": "df1febbffbef694b79a81e24d3b788378a52d5ff80613c158a42b234f2203d83"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "owner": "F1",
+      "bytes": 32289,
+      "sha256": "de3d71267df2ff6fd876d42c6ccc86be4ff452ad96455b652310b7986b8a34f7",
+      "beforeSha256": "915e756b0d40a9c325347ef5837660c992fd060d4d5d4e0a2ab29afc375c6039"
+    },
+    {
+      "path": "apps/web/src/transfers/document-presentation.tsx",
+      "owner": "F1",
+      "bytes": 13396,
+      "sha256": "71063f9f4791e6f992b55b87020c8052d26598e31e667de46a4a0db0c24761c0",
+      "beforeSha256": "990c655d5631bbc4eb0f1ade4c818c7e08fbd432f7386137f6b15e0036902a4f"
+    },
+    {
+      "path": "apps/web/src/transfers/detail.css",
+      "owner": "F1",
+      "bytes": 13219,
+      "sha256": "d0f9bf4e37fbc9fc4dfeca4bb9aa43d3ec3d091a8a0e001203d277cb26b14017",
+      "beforeSha256": "0e720595510710903cf3f1832cd37d6e4bb43c358f49b485abd5838cff905e5f"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal.css",
+      "owner": "F1",
+      "bytes": 12423,
+      "sha256": "5d41e89bb0dc6d944dbd5eb514d0bf9c64a37ab6e803c99238264422bb8a06b3",
+      "beforeSha256": "47a11634202257218f79df24ea3f554671a6ca6f6dd48f28a989336344b919cb"
+    }
+  ],
+  "scope": "Direct frozen transfer-current.editor/total/leave, golden editor and transfer matrix productEntry/tableSection/draftDock/pinDraft source blocks/final CSS -> actual TransferProposalForm/TransferMatrixTable/TransferDocumentSummary; original toolbar gray save and complete native finder input/background/focus/selection; only original unique frame unsaved authority, native business owner retained.",
+  "delivery": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-77/T02-DELIVERY.json",
+    "sha256": "e3b7b0b2c9cd205b29c9ddb6778b2910e50f67db883e0a5bb9218c8b02fd1e67"
+  },
+  "sourceMap": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-77/T02-DIRECT-REUSE-MAP.json",
+  "checksAdopted": {
+    "runtime-4": "Node v24.21.0",
+    "document-pages-4": "EXIT0_11_EXISTING_AUTHOR_PAGE_COMPOSITIONS_AND_AFFECTED_LAYERS",
+    "types-4": "EXIT0_FINAL_AFFECTED_CHAIN",
+    "css-2": "EXIT0_TWO_FINAL_SOURCE_BLOCKS_NO_WARNING"
+  },
+  "checkQualification": "Owner whole working-chain11 author-page compositions/type4/CSS2 adopted. This fixed commit includes only released5; new actual immutable candidate/QF must bind this narrower batch, no claim other SALE WIP is built.",
+  "excludedInFlight": [
+    "apps/web/src/current-form/sales-proposal-form.tsx",
+    "apps/web/src/sales/document-presentation.tsx",
+    "apps/web/src/components/standard-overlay.css",
+    "apps/web/src/sales/detail.css"
+  ],
+  "notTested": [
+    "Chrome whole T02 blank/filled/bottom/change selection/required overlays and original business write/data/performance",
+    "SALE whole77 new menu/payment/zero/leave source remains original F1 WIP",
+    "No new SKU/capability/unknown mapping or fake size/unit fact"
+  ],
+  "next": "C one complete T02 candidate from this exact commit; QF new5 source-only while QF2 owns Chrome153 output; actual newwhole after QF2 cleanrelease"
+}

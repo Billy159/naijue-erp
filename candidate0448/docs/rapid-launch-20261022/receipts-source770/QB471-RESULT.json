@@ -1,0 +1,120 @@
+{
+  "reviewId": "QB471",
+  "task": "Actual168 R1 twoColumnACLdelta/currentV20metadata independent review only",
+  "decision": "PASS_EXACT_POST_REPAIR_R1_V20_METADATA_ONLY_NOT_BIND_OR_EXECUTION",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "target": {
+    "database": "erp_rewrite_20261022_r1",
+    "server_addr": null,
+    "server_port": null,
+    "current_user": "erp_rewrite_runtime_20261022",
+    "database_oid": "1027659",
+    "session_user": "erp_rewrite_runtime_20261022",
+    "database_owner": "erp_rewrite_owner_20261022",
+    "postmaster_start": "2026-10-04 08:16:07.895273+00",
+    "replication_role": "origin",
+    "server_version_num": "170011"
+  },
+  "canonicalSha256": "64c4f6ad85a8683df3e1ce5bc341618f612b90d03232a2d4eefed84f2c1462f8",
+  "patchLevel": "26_v20_history_insert_identity_from_v19",
+  "purposes": [
+    "IMPORT_STAGE",
+    "IMPORT_PRODUCT_SEASONS",
+    "IMPORT_PUBLISH"
+  ],
+  "scope": "EXACT_TARGET_METADATA_ONLY",
+  "priorSourceReviewRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice470-r1-bind-two-column-acl/QB470-SOURCE-RESULT.json",
+    "bytes": 6228,
+    "sha256": "bf07155a08acbbec24341e87dcba36f31ac36c5008aea4a8b0f8f87b8bdc8d8f"
+  },
+  "priorRuntimeReviewRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice464-r1-v20-current-runtime/QB464-RESULT.json",
+    "bytes": 9067,
+    "sha256": "1f04fceec2f1010ce91a4f979319700396b4ef41112bf810996be0df5524401b"
+  },
+  "evidencePins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-two-column-acl-controlled-repair-20261027-168/RESULT.json",
+      "bytes": 10621,
+      "sha256": "e020d94b7c022c5cbb420bbe7a069632aef7601aff333333c68ae7d51bc27db8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-two-column-acl-controlled-repair-20261027-168/CATALOG-TWO-ACL-DELTA.json",
+      "bytes": 1580,
+      "sha256": "91f0365721d0a2b60a535599dcd564c480b54c4d87e67b8418712fa45e10f716"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-catalog.json",
+      "bytes": 1448690,
+      "sha256": "5e3a327c3879f133251115f1629af7055fbb98f05b6d43edb18e5c2c3d5503c6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-two-column-acl-controlled-repair-20261027-168/release-submission/release-receipts/t45-r1-two-column-acl-controlled-repair-20261027-168/r1-v20-catalog.json",
+      "bytes": 1448692,
+      "sha256": "1e37d7a6c851a34ea171cce86936716609aad12f59608805969aedfc0de6b218"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-two-column-acl-controlled-repair-20261027-168/release-submission/release-receipts/t45-r1-two-column-acl-controlled-repair-20261027-168/r1-v20-metadata.json",
+      "bytes": 780,
+      "sha256": "affa248c4fc9aa49fbb8b7fa6b5b320a7aea822ad650817b9977b80f9b2ffb71"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-two-column-acl-controlled-repair-20261027-168/release-submission/release-receipts/t45-r1-two-column-acl-controlled-repair-20261027-168/r1-v20-result.json",
+      "bytes": 1094,
+      "sha256": "d7b511b62f0bf51e2137393ba992d3a781dde9994c39aa209f7b8a035523af0e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-two-column-acl-controlled-repair-20261027-168/release-submission/release-receipts/t45-r1-two-column-acl-controlled-repair-20261027-168/grant-commit.json",
+      "bytes": 266,
+      "sha256": "bc308ab1efd5405cac57844bac20e29d5bf8595180a9c3be707ff59228d606a2"
+    }
+  ],
+  "actualTwoAclDifferences": [
+    {
+      "path": "$.columns[209].acl",
+      "before": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+      "after": "{erp_rewrite_runtime_20261022=aw/erp_rewrite_owner_20261022}"
+    },
+    {
+      "path": "$.columns[211].acl",
+      "before": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+      "after": "{erp_rewrite_runtime_20261022=aw/erp_rewrite_owner_20261022}"
+    }
+  ],
+  "checks": [
+    "IndependentfullJSONobjectcomparison: old157manifest copiedthenonlyimport_batch.history_expected_counts column209andhistory_payload_hash column211 acl changedexactlyfromruntime=a/ownertoruntime=aw/owner. Updatedexpected==entireactual168catalog, nootherfielddifference; noGRANTOPTIONstar.",
+    "Allremainingcatalogfieldsincluding131functionbodies/hashes/config/roles/memberships/schema/tableACL/othercolumns/triggers/constraints/indexes/identity strictlyidentical. PriorQB464source/role/catalogchecksreused, nofunctionexecution/sourceaudit/SQLrevalidation.",
+    "Independentlyrecomputedentire168catalogminusidentity PGJSONBcanonicalUTF8keylength/keybyteorder+spacesexact64c4f6ad85a8683df3e1ce5bc341618f612b90d03232a2d4eefed84f2c1462f8 equalsactualordinarymetadata/RESULT. SOURCE V20source_routines_matchtrue/schema1..26.",
+    "OriginalR1DBOID1027659/directacting=sessionerp_rewrite_runtime_20261022/nonowner/Unixnulladdrport/ownererp_rewrite_owner_20261022/postmaster2026-10-04 08:16:07.895273+00/server170011/origin identity unchanged. No SYN/native189/ownerroleborrowed.",
+    "168uniqueGRANTCOMMIT_RETURNED/beforeafterclosedreadonlyproof acceptedasT45actualscopedoperationresult, noBIND/provider/businessDML/APPswitch; originalfirstkeyreceipt[]/STAGED2cursor22 unchanged factsadopted, notglobalzeroDMLorBUSINESSPASS.",
+    "NewcurrentreviewonlyoriginalIMPORT_STAGE/IMPORT_PRODUCT_SEASONS/IMPORT_PUBLISH andV20profile. Olda912/QB464catalogsignatureisobsoletefornewACL, notsilentlyreused. NoCAS/normalcase/sourcegroup/member/conservation/transactionauthoritychange."
+  ],
+  "byteDistinction": {
+    "rawServerCatalog": {
+      "file": "r1-v20-catalog.json",
+      "bytes": 1236081,
+      "sha256": "0d5fff1df628595c7d787be836edf4b6271eccad781d394ddd125feefd37b0f4"
+    },
+    "actualControlCatalog": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-two-column-acl-controlled-repair-20261027-168/release-submission/release-receipts/t45-r1-two-column-acl-controlled-repair-20261027-168/r1-v20-catalog.json",
+      "bytes": 1448692,
+      "sha256": "1e37d7a6c851a34ea171cce86936716609aad12f59608805969aedfc0de6b218"
+    },
+    "meaning": "Raw1236081/0d5fff vscontrol1448692/1e37d7a6 keptseparate. Completeparsedcontrolcatalogcanonical64c4 verified; noformat-onlyrawrelayneeded."
+  },
+  "bindingStatus": "Localindependentreport/currentreviewprepared; accurateLinuxdestinationnotyetprovided, path-onlyrebindafterT45newcandidatepath. Noactualnewbusinesscarrier/windowapprovedbythisreview.",
+  "remaining": [
+    "T45accurateLinuxreport/reviewprivatepaths requiredforpath-onlyrebind; exactreport/reviewbytes mustbeinstalledandreadbackpinned.",
+    "Actualgenuineissuer.originalpool firstlease mustverifyfreshV20metadata/identity/new64c4 andthreeallowedpurposes, nohandeditingoldreviewhash.",
+    "Cnewexactexternalv21grant/currentinput/whole148evidence/original109uncommittedsuffix remainsseparate; noBIND/MAIN/PUBLISHperformedbythismetadatareview."
+  ],
+  "sourceOrDatabaseChangedByQB": false,
+  "actualIssuerCreated": false,
+  "actualSamePoolAdmission": false,
+  "actualBINDOrMainOrPublish": false,
+  "actualDataWriteTest": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}

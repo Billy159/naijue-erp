@@ -1,0 +1,132 @@
+{
+  "atUtc": "2026-10-24T00:52:28.823572+00:00",
+  "parent": "9ddb39d9e3c4382b062dab86f4d581e3e6d878a9",
+  "taskId": "F1_P10_OPTIONAL_DICTIONARY_READONLY_FULLPAGE_COMPOSITION",
+  "files": [
+    {
+      "path": "apps/web/src/application/routes/products.tsx",
+      "bytes": 7561,
+      "sha256": "c59c1afa5da5564ce18b6c50d23e90afa50017c5cd9c9a56959737d2bea2c504",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 14830,
+      "sha256": "8d2a6a1e803fb97e9c6aefba4448d45921ce45a9d90a410d1255c7d5a376ed86",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "cb27ee00f0065cd0a0a7a91efefd16b2e7c6f4b84158a436184071396bc2ef2e",
+  "ownerDelivery": {
+    "taskId": "F1_P10_DEFAULT_SCHEME_READONLY_EXISTING_READER_COMPOSITION",
+    "scope": "Existing readonly default-scheme optional capability only",
+    "files": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/routes/products.tsx",
+        "bytes": 7561,
+        "sha256": "c59c1afa5da5564ce18b6c50d23e90afa50017c5cd9c9a56959737d2bea2c504",
+        "relativePath": "apps/web/src/application/routes/products.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/before/apps/web/src/application/routes/products.tsx",
+          "bytes": 7071,
+          "sha256": "fff7cba7a05a4a894c337944ebed4e52a7791a0be4c43c445c69cd9d14575556"
+        }
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/production-host/mount.tsx",
+        "bytes": 14830,
+        "sha256": "8d2a6a1e803fb97e9c6aefba4448d45921ce45a9d90a410d1255c7d5a376ed86",
+        "relativePath": "apps/web/src/production-host/mount.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/before/apps/web/src/production-host/mount.tsx",
+          "bytes": 14232,
+          "sha256": "9d8ce3321aefca9d042660b661088b40894db658972468e9ab3abd71fd602907"
+        }
+      }
+    ],
+    "checks": {
+      "before-1": "EXIT1 original readonly route without maintenance lacked optional schemeReader despite barcode+dictionary explicit optins",
+      "after-1": "EXIT0 scoped route gates, preserved existing explicit provider/barcode read, exact SDK schemeId read, original denied/abort handling, original ProductionHost all3 entrance shared method",
+      "after-2": "EXIT0 plus necessary real ProductionHost negative: maintenance dictionary exists while barcodeSchemes=false; readonly schemeReader remains absent/no eager scheme request",
+      "types-1": "EXIT0 strict original mount+products-route imported closure, no F2/source exclusions"
+    },
+    "notTested": [
+      "No F2 parser/preview suite repetition",
+      "No Chrome/current integrated full-page or actual schema data acceptance",
+      "No real HTTP service/PG/permissions/SAVE/deploy",
+      "Synthetic native null dictionary response verifies wiring only, not a scheme name or CURRENT status"
+    ],
+    "blockers": "C pin/containing source QA and actual data/consumer successor",
+    "next": "C pins exact2; original QA new readonly consumer seam only. Actual default-scheme name and FK/source data read remain original F2/D2 scope. DirectApplication document fixture must explicitly supply this optional reader rather than assume ProductionHost path executes there.",
+    "sourceFrozenUntilCPin": true,
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/PROOF.json",
+        "bytes": 5974,
+        "sha256": "ff2c3c1f8a0c922cc003a5ca823f5be04abeeb4ddb8787429d9d6ef118c960c4"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/REPORT.md",
+        "bytes": 1066,
+        "sha256": "0619eacfb673ef7f6df605264ba601240d96908a829afdb309fc90acab085b23"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/RESULT.json",
+        "bytes": 1577,
+        "sha256": "86d2baf96f754ab51f51b26273d0c7ae981115316b088c61198055044838966d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/RESULT-after-1.json",
+        "bytes": 1402,
+        "sha256": "710bdbf2eb7f366b4102afef1342a710d43307b35f1b7fda78817c601fb16b7b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/SOURCE.diff",
+        "bytes": 8961,
+        "sha256": "22ba25beb56f364a8e0622d351a17ad92b743c6157d07404ca33eba415997131"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/BEFORE-CONSUMER.json",
+        "bytes": 72,
+        "sha256": "08b910fdf4039306fff7407f0ac19fecd552fc0fbde2aa7f1c904c9299cd1afa"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/AFTER-CONSUMER.json",
+        "bytes": 71,
+        "sha256": "e460e393650abfa7f611175e9d23f055ea03771dd797ec3ce45ec3c49c004f93"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/before-1.log",
+        "bytes": 631,
+        "sha256": "410fbb0051ca95bb0aca53e2f478d57b251646ba297954ef7f5a2545d98d31bf"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/after-1.log",
+        "bytes": 670,
+        "sha256": "a1adc72659610e3aecd082ad6491520cce4a2167e1ef8b581292a03a48a80c04"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/after-2.log",
+        "bytes": 670,
+        "sha256": "a1adc72659610e3aecd082ad6491520cce4a2167e1ef8b581292a03a48a80c04"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/readonly-scheme-composition-check.mjs",
+        "bytes": 14138,
+        "sha256": "f4bd69a417b9151bafb430550e1a82292bd77d99693c5212e3ec8d8b4f088368"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-129/tsconfig.json",
+        "bytes": 690,
+        "sha256": "0df22a54919d8981cad56698acbee71a72b5308be383f7292c02dd256d744ea1"
+      }
+    ]
+  },
+  "qualification": "Original explicit fullPage barcodes+allowedtab+independentdictionary optin only, one existing reader shared across product/sales/transfer permitted fullpage hosts. No maintenance authority borrowing/default client/API/DDL. Owner targeted originalProductionHost/route checks+strict adopted; actualbrowser/HTTP/PG/roles pending, new243 does not include251."
+}

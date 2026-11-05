@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../adapters/postgres/src/inventory-ledger-query-reader.ts",
+    "./inventory-ledger-query-postgres-protocol.test.ts",
+    "./live-ledger-storage-source.test.ts"
+  ]
+}

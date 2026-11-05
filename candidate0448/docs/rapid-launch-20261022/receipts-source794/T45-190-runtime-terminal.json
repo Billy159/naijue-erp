@@ -1,0 +1,26 @@
+{
+  "jobId": "t45-r1-stock-stage-v22-original109-continuation-20261027-190",
+  "status": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+  "automaticReplay": false,
+  "sourceReadyOnly": false,
+  "MAINOrPublishExecuted": true,
+  "phase": "ORIGINAL_NATIVE_SOURCE_STEP_SEQUENCE",
+  "originalHostReturned": true,
+  "adoptedFullEvidenceCheckedByOriginalBranch": true,
+  "actualRuntimeIssuerReturned": true,
+  "lastJournalEvent": {
+    "ordinal": 4096,
+    "kind": "SKU",
+    "digest": "71d6be3a8fcca2173885a2c101479f4293c8595984a18dbdc89e671761691631",
+    "state": "COMMITTED",
+    "receipt": {
+      "inserted": 0,
+      "replayed": 1
+    }
+  },
+  "committedSteps": 4096,
+  "mainCommittedSteps": 1,
+  "errorCode": "IMPORT_SOURCE_HOST_STEP_LIMIT",
+  "originalHostClosed": true,
+  "finishedAtUtc": "2026-10-27T17:31:53.168Z"
+}

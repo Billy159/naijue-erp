@@ -1,0 +1,63 @@
+.erp-overlay .erp-overlay-close{position:absolute;right:12px;top:12px;z-index:1;width:24px;min-width:24px;height:24px;min-height:24px;padding:0;border:0;background:transparent;color:var(--ca-ink-2,#86909c)}
+.erp-overlay .erp-overlay-close:focus-visible{outline:2px solid var(--ca-primary,#165dff);outline-offset:2px}
+.erp-overlay-close-in-header .erp-overlay-title-row{display:flex;align-items:center;justify-content:space-between;width:100%;min-width:0}
+.erp-overlay.erp-overlay-close-in-header .erp-overlay-title-row>.erp-overlay-close{position:static;flex:0 0 auto}
+.erp-overlay.arco-modal{color:var(--ca-ink,#1d2129);font:13px var(--ca-font-sans,Arial,sans-serif)}
+.erp-overlay.arco-modal .arco-modal-header{padding:12px 44px 12px 16px}
+.erp-overlay.arco-modal .arco-modal-content{padding:16px}
+.erp-overlay.arco-modal .arco-modal-content{position:static}
+.erp-overlay.arco-modal .arco-modal-footer{padding:10px 16px}
+.erp-product-drawer.arco-drawer .arco-drawer-header{min-height:54px;padding:12px 44px 12px 20px}
+.erp-product-drawer.arco-drawer .arco-drawer-scroll{display:flex;flex-direction:column;height:100%}
+.erp-product-drawer.arco-drawer .arco-drawer-content{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;padding:0}
+.erp-product-drawer.arco-drawer .iw-product-drawer-body{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;padding:0}
+.erp-product-drawer.arco-drawer .arco-drawer-content>.erp-overlay-close{position:fixed;top:12px;right:12px}
+.erp-overlay-anchor{position:fixed;inset:0;z-index:1050}
+/* Frozen pc-arco-modal variant. Owners opt in; ordinary overlays keep their
+ * existing spacing, focus, keyboard, portal and drawer behavior. */
+.erp-overlay.erp-overlay-catalogue.arco-modal{font:14px/1.5715 var(--ca-font-sans,Arial,sans-serif);background:var(--ca-surface,#fff);--color-text-1:var(--ca-ink,#232a36);--color-border-2:var(--ca-line,#e1e4e8)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-header{height:auto;padding:11px 14px;border-bottom:1px solid var(--ca-line,#e1e4e8)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-content{padding:12px 14px;line-height:1.5715}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-footer{padding:9px 14px;border-top:1px solid var(--ca-line,#e1e4e8)}
+.erp-overlay.erp-overlay-catalogue .erp-overlay-close{top:11px;font-size:14px;border:0;background:transparent}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-footer .erp-button.arco-btn-secondary:not(.arco-btn-disabled){background:var(--ca-surface,#fff);border:1px solid var(--ca-control-border,#c9ced6);color:var(--ca-ink,#232a36)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-footer .erp-button.arco-btn-secondary:not(.arco-btn-disabled):hover{background:var(--ca-surface-subtle,#f6f7f8);border-color:var(--ca-control-hover-border,#b8bec8)}
+/* Native frozen Modal close: 12px icon and centered 20px hover circle. Keep the
+ * existing keyboard-accessible 24px button; adapt its inset around that icon. */
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close{top:12px;right:14px;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:0;color:var(--ca-ink,#232a36)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close>.arco-icon{position:relative;width:12px;height:12px;font-size:12px;vertical-align:0}
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close::before{content:'';position:absolute;display:block;top:50%;left:50%;width:20px;height:20px;transform:translate(-50%,-50%);box-sizing:border-box;border-radius:50%;background-color:transparent;pointer-events:none;transition:background-color .1s cubic-bezier(0,0,1,1)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close.arco-btn:is(:hover,:active){border:0;background:transparent;color:var(--ca-ink,#232a36)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close:hover::before{background-color:var(--color-fill-2)}
+
+/* Frozen styles.css44–48/139–140 and interaction-common close icon, native
+ * document layer only. Existing Arco overlays above keep their implementation. */
+.erp-source-dialog{box-sizing:border-box;color:var(--ca-ink);border:1px solid var(--ca-popover-border);padding:0;box-shadow:var(--ca-shadow-dialog);background:var(--ca-popover-bg);font:var(--ui-font,13px)/1.5 var(--ca-font-sans)}
+.erp-source-dialog::backdrop{background:rgb(22 34 52 / 30%)}
+.erp-source-dialog p{margin:0}
+.erp-source-dialog .btn{font:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control,32px);height:var(--ui-control,32px);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font,13px);font-weight:500;white-space:nowrap;cursor:pointer}
+.erp-source-dialog .btn:hover{background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.erp-source-dialog .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.erp-source-dialog .btn.primary:hover{background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.erp-source-dialog .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.erp-source-dialog .ui-icon{display:inline-flex!important;align-items:center;justify-content:center;min-width:30px!important;min-height:30px!important;width:30px;padding:5px!important;border:0!important;background:transparent!important;color:var(--ca-primary-ink);vertical-align:middle}
+.erp-source-dialog .ui-icon svg{flex-shrink:0;pointer-events:none}
+.erp-source-dialog .ui-icon:hover{background:var(--ca-primary-hover-soft)!important}
+.erp-source-dialog .ui-icon:focus-visible{outline:2px solid var(--ca-primary);outline-offset:-2px}
+
+/* Frozen confirmation-dialogs.css compact confirmation surface; danger variants retain the red action. */
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog){width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;overflow:hidden;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);background:var(--ca-surface);color:var(--ca-ink);font-family:var(--ca-font-sans);font-size:14px}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>header{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:0;padding:20px 24px 0;border:0;background:var(--ca-surface);position:static}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>header h2{margin:0;color:var(--ca-ink);font-size:17px;font-weight:600;line-height:26px}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>header .ui-icon{flex:0 0 auto;width:28px;height:28px;min-width:28px!important;min-height:28px!important;padding:4px!important;border:0;background:transparent;color:var(--ca-ink-3);font-size:0}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>header .ui-icon:hover{background:var(--ca-surface-muted)!important;color:var(--ca-ink)}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>.ui-confirm-body{padding:10px 24px 18px;max-height:calc(100dvh - 148px);overflow:auto;color:var(--ca-ink-2);line-height:1.65}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>.ui-confirm-body p{margin:0 0 8px;overflow-wrap:anywhere}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>.ui-confirm-body p:last-child{margin-bottom:0}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>footer{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0;padding:0 24px 20px;border:0;background:var(--ca-surface)}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>footer .btn{min-height:32px;height:32px;padding:0 14px;font-size:14px;white-space:nowrap}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog)>footer .primary,
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog)>footer .primary:hover{background:var(--ca-critical);border-color:var(--ca-critical);color:var(--ca-on-primary)}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog)>footer .primary:hover{filter:brightness(.94)}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog) :focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
+@media(max-width:480px){.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>header{padding:16px 16px 0}.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>.ui-confirm-body{padding:8px 16px 16px}.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>footer{padding:0 16px 16px}}

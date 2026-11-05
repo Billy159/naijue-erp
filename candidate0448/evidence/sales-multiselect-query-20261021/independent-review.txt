@@ -1,0 +1,7 @@
+Correction to initial review:
+The earlier no-missed-consumers claim was too broad. Parent full root typecheck found active apps/web/preview-core-pages/sales-fixture.ts, which used a local f alias rather than filter.<field>. This was a genuine missed consumer.
+The fixture now applies all six plural lists with OR within dimensions and AND across them, including nullable salesperson handling. Two direct regressions cover matching values second, all dimensions, exact totals, paging and unchanged native business types.
+Expanded read-only follow-up search covered 355 tracked non-evidence TS/TSX/MJS/JS candidates, untracked source, SalesReader/TrustedSalesSnapshotReader providers, aliases, destructuring, bracket access, payload literals and endpoints; no additional active-source miss identified. This is not substitute compiler proof.
+Archived evidence probes native-read-policy-independent/probes.mjs, native-read-composition-independent/probes.test.mjs and sales-summary-independent-probes.mjs retain historical scalar contracts. They have no identified active package/build/source invocation and are intentionally preserved unchanged; adapt explicitly before future reuse.
+Original independent run passed 58 focused synthetic tests. Newest complete focused run passed 125 tests.
+No compiler, PostgreSQL, network, Docker, edits or commits performed by reviewer. Genuine PostgreSQL execution remains pending.

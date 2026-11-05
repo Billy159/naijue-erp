@@ -1,0 +1,24 @@
+{
+  "atUtc": "2026-10-22T20:03:57.465007+00:00",
+  "authority": "C technical interface choice inside already approved read behavior; no new user field/constraint/write contract approval substituted",
+  "proposal": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-RETAINED-DELETE-VIEW-PROPOSAL-v1.json",
+  "proposalSha256": "f902ae1956d72b45c477c39ef297fcd10c2c53ca093d39d9084fc2c74406e6e9",
+  "interface": {
+    "owner": "D1",
+    "existingConsumer": "CatalogueRetainedDeleteCapability from product-query-reader.ts",
+    "issuerProperty": "catalogueRetainedDelete",
+    "profile": "catalogue-retained-delete-v22",
+    "method": "assertVerified(pool: PgProductQueryPool): void",
+    "binding": "Only exact issuer.pool; no raw pool, copied pool, arbitrary object, or maintenance driver accepted",
+    "purpose": "PRODUCT_SEASONS_READ",
+    "purposeChange": false,
+    "authority": "Existing finite purpose and exact26 full target/catalog metadata prove readonly catalogue shape; no write, maintenance, PUBLISH or source-import grant"
+  },
+  "sourceFiles": [
+    "adapters/postgres/src/native-import-accounting-capability.ts",
+    "tests/native-runtime26-capability.test.ts"
+  ],
+  "decision": "FREEZE_EXACT_READONLY_ISSUER_VIEW",
+  "noNewSchemaAclOrBusinessRule": true,
+  "noSourceMainPublishAuthority": true
+}

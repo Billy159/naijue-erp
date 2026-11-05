@@ -1,0 +1,8 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Readonly profile actual detail budget {"nodes":1499,"savedRows":40,"sparseRows":40,"sizes":40}
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS profile DOM1: explicit same-root readonly configuration really reaches Sparse+Saved Arco tables,40/40/40, full exact strings/null-empty, disabled NEW, real product Drawer and precise return focus.
+PASS profile DOM2: old ignored-signal detail cannot revive a disposed owner/new inert profile; revoke during product read removes all table/size/portal facts and late product never returns.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS profile DOM3: actual dirty and uncertain SALE guards reject both profile switch/reentry, preserve exact app/input/original receipt key and one command; original receipt allows safe guarded disposal.

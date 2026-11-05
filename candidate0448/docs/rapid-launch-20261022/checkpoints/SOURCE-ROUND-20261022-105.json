@@ -1,0 +1,101 @@
+{
+  "atUtc": "2026-10-22T23:10:05.880243+00:00",
+  "parent": "60f8007c54476e2c7ccd6483e6e4b2bd03db7e76",
+  "groups": [
+    {
+      "slice": "fix: center catalogue and product tab text",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/RELATED-TAB-CENTER-DELIVERY-v1.json",
+      "receiptSha256": "1237226b334b8c35df6b8b0f6a35df92cc6a8557638f0657cd6635eee0077e78",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "CAT-UI-01 P15/P17 + PROD-UI-02 editor/readonly related glyph centering",
+        "role": "F2",
+        "atUtc": "2026-10-22T23:01:41.247104+00:00",
+        "status": "SOURCE_READY_EXACT2_PROPERTY_CHECK_PASS_BROWSER_GLYPH_PENDING",
+        "authority": {
+          "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "ownership": "C current explicit exact2 original F2 CSS ownership acknowledged; no shared/new file"
+        },
+        "modelRequested": "gpt-6.1-sol/xhigh",
+        "fastRequested": false,
+        "input": {
+          "path": "reports/ui-demo-comparison-20261022/v016-6eac13e/RELATED-TAB-GLYPH-SUPPLEMENT.json",
+          "sha256": "9625654f9d356bdce86ed0f3f318f1e7ce9857bbf9eba193a42fe6e8bda42dd3"
+        },
+        "completedScope": [
+          "Add only justify-content:center to existing catalogue-entry tab-title rule shared by colors/fits.",
+          "Add only justify-content:center to existing product editor/readonly :is scoped tab-title rule.",
+          "Keep dictionary C103 source unchanged652c57; all other CSS bytes unchanged. No TSX/native handlers/layout widths/rows/headers/data/caps changes."
+        ],
+        "consumerScope": {
+          "catalogueCssImports": [
+            "colors/entry-page.tsx (colors/fits wrappers)",
+            "product-categories/product-categories-page.tsx and application style entry"
+          ],
+          "catalogueApplicableSelector": "Only .catalogue-workbench .erp-tabs-host.catalogue-entry-tabs title, not category tree",
+          "productCssImports": [
+            "products/product-editor.tsx",
+            "products/product-page-view.tsx",
+            "application/styles/product-full-page.css"
+          ],
+          "productApplicableSelector": "Only product-editor/product-readonly-page + editor-tabs/readonly-tabs titles. Actual source readonly host class and view tabs both verified."
+        },
+        "changedFiles": [
+          {
+            "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+            "sha256": "92997f30b67efeb13305dcf7d78c82cbc80867988437a4d2cb433579021f6d07",
+            "beforeSha256": "d69895a7ae979323a217cbd038764b4df200b17e360df343e6110f396e772757",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/RELATED-TAB-CENTER-source/source-catalogue-settings.css"
+          },
+          {
+            "path": "apps/web/src/products/product-page.css",
+            "sha256": "b3a21e750f043ad2636d3a00144261488f271eeacb4d0614ec59682ee2b7a936",
+            "beforeSha256": "402560de9b410d681280f6499b4f1c178d55e18656ad140737270e803717427a",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/RELATED-TAB-CENTER-source/product-page.css"
+          }
+        ],
+        "newApplicationFiles": 0,
+        "checks": {
+          "exitCode": 0,
+          "method": "Only necessary singleproperty matched layout check; actual C100 whole inline CSS/provenance + existing mounted catalogue4/editor6 DOM. New properties placed before/after full actual bundle. Exact byte transformation proves no other style diff.",
+          "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/RELATED-TAB-CENTER-check-v1.log",
+          "logSha256": "5d916e6f9a8328a8157e6a5729967f7b4abd89a5849cb517f09847ad3c0fda29",
+          "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/RELATED-TAB-CENTER-result-v1.json",
+          "resultSha256": "2f825833dc42e4cf0421c752116d20aad9c9f0b3ba64c6c3485db40dfcbedd06",
+          "readonlyQualification": "Demo paired readonly actual widths reused; expected relative glyph offsets computed21(twochars)/12(fourchars), not new browser measurement. Editor source same selector but actual editor states not rerun.",
+          "types": "NOT_RUN_CSS_ONLY",
+          "priorCases": "Reused existing geometry/rows/headers/native/query accepted scope; no45cases or whole suite repeated."
+        },
+        "unchangedDictionarySha256": "652c57a87e9adefd311cddf9ec1436dd1db3865bbc0b2ac8010f71cc0e72b147",
+        "independentOutstanding": "Product shell actual root x/y+4 is original separate PRODUI02 residual, unchanged and not closed by text-only centering. P17 fit actual body not rerun; source shared selector does not create runtime PASS.",
+        "notRun": [
+          "New browser glyph Range for colors/fits/editor/readonly",
+          "Product shell+4 correction",
+          "Wholepage/fullbuild/realAPI/PG/data capability/deployment"
+        ],
+        "blockers": {
+          "sourceSlice": null,
+          "nextAcceptance": "C fixed exact2+receipt, QF new property only. Demo next necessary batch can combine F1 C104 height/font; glyph only, no old45 repeats.",
+          "stockOverview": "C owns harness flag wiring; no F2 overlay/cap mutation. Await precise native read interface request if needed."
+        },
+        "nextStep": "C fix exact2; retain C103 independent sourcePASS. Review and browser only newly affected tab glyphs; no wholepage upgrade."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+          "owner": "F2",
+          "bytes": 8634,
+          "sha256": "92997f30b67efeb13305dcf7d78c82cbc80867988437a4d2cb433579021f6d07"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "owner": "F2",
+          "bytes": 20298,
+          "sha256": "b3a21e750f043ad2636d3a00144261488f271eeacb4d0614ec59682ee2b7a936"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only two existing scoped tab title justify-content:center declarations. No TSX/data/handlers/shared/defaults. Product shell xy+4 independent residual remains. Prior effective evidence reused; actual glyph check pending fixed next preview."
+}

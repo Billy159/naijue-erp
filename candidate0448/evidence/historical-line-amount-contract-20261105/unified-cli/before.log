@@ -1,0 +1,32 @@
+file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-unified-offline-cli.test.mjs:114
+ for(const[label,changes]of [['no-offline',{noOffline:true}],['no-manifest',{noManifest:true}],['duplicate',{extra:['--historical-hall-approval',paths.hall]}],['db-option',{extra:['--connection-file','SYNTHETIC-never-read.json']}]]]){const r=await run('ordinary',label,changes);assert.equal(r.exit_code,2,JSON.stringify(r));assert.equal(r.output.code,'INVALID_ARGUMENTS');}
+                                                                                                                                                                                                                                       ^
+
+SyntaxError: Unexpected token ']'
+    at compileSourceTextModule (node:internal/modules/esm/utils:319:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:89:18)
+    at #translate (node:internal/modules/esm/loader:438:20)
+    at afterLoad (node:internal/modules/esm/loader:506:29)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:511:12)
+    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
+    at afterResolve (node:internal/modules/esm/loader:611:52)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)
+    at node:internal/modules/esm/loader:636:32
+    at TracingChannel.tracePromise (node:diagnostics_channel:362:14)
+
+Node.js v24.21.0
+✖ tests/historical-sales-unified-offline-cli.test.mjs (225.217567ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 238.893381
+
+✖ failing tests:
+
+test at tests/historical-sales-unified-offline-cli.test.mjs:1:1
+✖ tests/historical-sales-unified-offline-cli.test.mjs (225.217567ms)
+  'test failed'

@@ -1,0 +1,3 @@
+PASS: pinned actual frozen source, one-row readonly header/action order, full-page body/grid/line layout, no modal keys/backdrop, explicit historical category gap, unchanged native economics/protocol/dependency lock, and aggregate sales-composition test discovery.
+PASS: actual emitted application graph keeps startup and sales static code/CSS free of document-body code/styles; separate sales-detail CSS 7034 bytes; native shared controls retained.
+Source and actual emitted-import/CSS graph only. No browser/history/layout/pixel/network/performance/production acceptance.

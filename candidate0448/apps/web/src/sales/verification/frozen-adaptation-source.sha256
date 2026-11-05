@@ -1,0 +1,10 @@
+48f0d89f8feaf9a86e05a2065e769a0e74887d4e6bfdc2c0fb445ecb79e8f241  apps/web/src/sales/sales-page.tsx
+64be90248f9a32e6ba235d94429b7142651b065d95de095fd8c51fdcd31be592  apps/web/src/sales/detail-content.tsx
+4fea6abc29d96453a175cb0209960cff92cb56f13de18a17656d1baeb4984aec  apps/web/src/sales/detail-host.tsx
+d7fa577a399b4165fcbe0997677832efc7c4ec40dc19a00a30b316797309741d  apps/web/src/sales/reference-selector.tsx
+30cbab87bc13f3ea3cfc26187b61cd5c07ee2d15ea859cb2c3a10febc9fc2799  apps/web/src/sales/sales-pagination.tsx
+0384ff45ea09be96901c4c4dda4c1eff3618303a7ddaddb3c1882e6965cc37ca  apps/web/src/sales/sales.css
+965fa89d4786cf71d73bdf2aca7813156eda4132bb2e4599ece9f0d8c9483a21  apps/web/src/sales/README.md
+746c8042bdd6108553cfe4840f6a3aec0c0c1257142d026e53084cfd276a33e4  apps/web/src/sales/tests/run-dom-tests.mjs
+fc544e791e391659530db674eeb161f696d40283d56d6b0ea716e03a08a9af6d  apps/web/src/sales/tests/run-frozen-source-check.mjs
+fbd6f1115abea999186c8c0a72904b2ec7b29eef543bd75564ddf2db81e16110  apps/web/src/application/styles/sales-base.css

@@ -1,0 +1,97 @@
+{
+  "reviewId": "QB476",
+  "decision": "PASS_ORIGINAL_R1_V22_CURRENT_TARGET_METADATA_ONLY",
+  "scope": "actual181 exactsameR1 parent/current onebodydelta; acceptedQB471parent/QB472source/QB474samebodyQA reused, no tests/businessscan repeats",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/RESULT.json",
+      "bytes": 9437,
+      "sha256": "84f24051a74dd2da5ef464a70f74efc982203b591647f088336de9adb80bba12"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/parent-r1-v20-catalog.json",
+      "bytes": 1448692,
+      "sha256": "1e37d7a6c851a34ea171cce86936716609aad12f59608805969aedfc0de6b218"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/current-r1-v20-catalog.json",
+      "bytes": 1479276,
+      "sha256": "e98cea537c1d0aa209a9d282780df7fbaa8bf85d0a976c77fe7a39c9e4405ebf"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/current-r1-v20-metadata.json",
+      "bytes": 780,
+      "sha256": "5ea32feb0dbce08b62b3454b22e903ca66eb12bf99cb53ab503295e966d1132a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/current-r1-v20-result.json",
+      "bytes": 1112,
+      "sha256": "21d735a9c5a2ba92c336e6c2f7f30fb95f99db8931fb43b6b7f4a1c1ffd575cc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/install-current-result.json",
+      "bytes": 4248,
+      "sha256": "61af89cb37ecd4c02f137c5d6f04145fe66e7ee017e562609f591d56f4e4e4f4"
+    }
+  ],
+  "actualOwnerReceipt": "T45 originalR1/sys7691989034661916697 verified, fixed80495/980c4f58SQL ownerapply COMMITreturned/exit0/stderr0; before/afterordinaryRRRO rollbackreturned/clientsclosed. 0BIND/MAIN/PUBLISH/businessDML/APP/ACLroles changes. Existing175archive retained without newbackup.",
+  "independentChecks": {
+    "parentCanonicalRecomputed": "64c4f6ad85a8683df3e1ce5bc341618f612b90d03232a2d4eefed84f2c1462f8",
+    "newCanonicalRecomputed": "6d3e6d1aed92d0dd66441d92c3e6b2b3b17fabc5f0f642b5e54a981343a3fcdd",
+    "identityBeforeAfterExact": {
+      "database": "erp_rewrite_20261022_r1",
+      "server_addr": null,
+      "server_port": null,
+      "current_user": "erp_rewrite_runtime_20261022",
+      "database_oid": "1027659",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "database_owner": "erp_rewrite_owner_20261022",
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    },
+    "changedTop": "routines only",
+    "changedRoutine": "naijue_erp.assert_core_initialization_v14(uuid,uuid,boolean)",
+    "changedFields": [
+      "source",
+      "body_md5",
+      "body_sha256",
+      "definition_sha256"
+    ],
+    "other130RoutineObjectsExact": true,
+    "allOtherSectionsIncluding943ActualTriggersNamesAndOrderAclRolesColumnsRelationsExact": true,
+    "bodyEqualsFrozenSql": true,
+    "bodyBytes": 49980,
+    "bodySha256": "8a8374fb193ed9e5ddcc388b0141a91dc17420cef0baee4ffbb700cd9737add5",
+    "bodyMd5Recomputed": true,
+    "actualDefinitionSha256": "e64cbeed6c2074df00161da7a157948805f4a2dcf37a45023155c96a73d34146",
+    "ownerInvokerConfigAclSignatureUnchanged": true,
+    "sourceRoutinesMatch": true,
+    "all131Routines": true
+  },
+  "profile": "26_v22_staged_prefix_bind_from_v20",
+  "purposes": [
+    "IMPORT_STAGE",
+    "IMPORT_PRODUCT_SEASONS",
+    "IMPORT_PUBLISH"
+  ],
+  "purposeBasis": "Reuse originalR1 exactthree purposes reviewedQB464/471; no newpurposes; sourcecall sites retained byQB472. Metadataacceptance does not authorize actual business execution.",
+  "realImportExecutionAuthorized": false,
+  "notValidated": [
+    "Actualsamepoolissuer/lease/admission under freshcarrier",
+    "OriginalBIND firstcommit/deferredtrigger/content verification",
+    "Remaining109/import/PUBLISH/formalbusiness"
+  ],
+  "doNotConfuse": "Actual originalR1canonical6d3e with QA178b2e or oldR1parent64c4; historicalv20 filenames here contain actualv22. QApostmasterincompatible tests stillNOT_TESTED, not productionresult.",
+  "handoff": "FreshC exactsourcegrant/consumerreview/finalcarrier and targetboundruntime review required; preserve original148/121/109actor/key/body/hash/order and explicitactual160old247c issuerbaseline/newadapterbaseline:null. 181terminal no replay.",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "qbNo": [
+    "DB",
+    "SSH",
+    "DDL/businessDML",
+    "sourceedits",
+    "build/deploy",
+    "newchat/subagent"
+  ]
+}

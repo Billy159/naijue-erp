@@ -1,0 +1,80 @@
+{
+  "reviewId": "QB473_QA178_V20_PARENT_METADATA",
+  "decision": "PASS_EXACT_QA178_V20_TARGET_METADATA_ONLY",
+  "scope": "QA178 ordinaryrole current parentmetadata; no source/business/DDL approval",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v20-parent-catalog-readonly-20261027-179/RESULT.json",
+      "bytes": 5316,
+      "sha256": "5e4e952a32659d9a61bb02e25d6c3073499cb652fd6afdfbdfc3f7b4d4d35dca"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v20-parent-catalog-readonly-20261027-179/release-submission/release-receipts/t45-qa178-v20-parent-catalog-readonly-20261027-179/r1-v20-catalog.json",
+      "bytes": 1447174,
+      "sha256": "b9bc604e2b470031919eb5f681763f9358563c69f3dd4f3ea0ac9ac1354d8a51"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v20-parent-catalog-readonly-20261027-179/release-submission/release-receipts/t45-qa178-v20-parent-catalog-readonly-20261027-179/r1-v20-metadata.json",
+      "bytes": 778,
+      "sha256": "725016a42b81acbe5e49a3a11337b4c2b346d75574558b1b0fa43d9f2ffec587"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v20-parent-catalog-readonly-20261027-179/release-submission/release-receipts/t45-qa178-v20-parent-catalog-readonly-20261027-179/r1-v20-result.json",
+      "bytes": 1092,
+      "sha256": "966c5c3959c9c0ecda61f5a84bdda7deaa13c2e08e2c68e1b26df8c9cc25b1b5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-existing-private-pg-restore-successor-20261027-178/RESULT.json",
+      "bytes": 11954,
+      "sha256": "e91c563eab11d0975af738b28b9a5d39f5385df36863715d5e0b46373c0bfbb7"
+    }
+  ],
+  "actualIdentity": {
+    "database": "erp_rewrite_20261022_r1",
+    "server_addr": null,
+    "server_port": null,
+    "current_user": "erp_rewrite_runtime_20261022",
+    "database_oid": "16391",
+    "session_user": "erp_rewrite_runtime_20261022",
+    "database_owner": "erp_rewrite_owner_20261022",
+    "postmaster_start": "2026-10-27 13:22:19.696753+00",
+    "replication_role": "origin",
+    "server_version_num": "170011"
+  },
+  "qaIsolation": {
+    "actualSystemIdentifier": "7701337335828107278",
+    "originalSystemIdentifier": "7691989034661916697",
+    "socketDirectory": "/srv/naijue-erp/qa-v22-20261027-01/s",
+    "basis": "Actual178 adopted, no repeat environment/ACL probe"
+  },
+  "canonical": {
+    "independentlyRecomputed": "b0f0ee525a0fcdb21f6266718394a4118c22dfcf1731903178685ad0ee5a5a8e",
+    "algorithm": "Postgresjsonb objectkeys UTF8length thenbytes; original179 entirecatalog excludingidentity, exact all943 actualtrigger names retained; not normalized hash",
+    "matchesActual179Metadata": true,
+    "notOriginalR1Canonical64c4": true
+  },
+  "comparisonWithAccepted168": {
+    "all131RoutineObjectsExact": true,
+    "rolesSchemaColumnsIndexesPoliciesRelationsConstraintsMembershipsMigrationVersionsFormatNotice": "EXACT",
+    "all943Triggers": "Exact semantic multiset after matching only internal RI_ConstraintTrigger_[ac]_<digits> and Unique_ConstraintTrigger_<digits> generated names; corresponding definition name and listorder differ. All other trigger fields/counts retained, including enabled/deferrable/initially_deferred/routine/table/type. Original179 generated names retained in signedcatalog.",
+    "identity": "ActualQA OID16391/postmaster20261027 replaces originalR1 OID1027659/postmaster20261004; same logicalDB and runtime/session names",
+    "effectiveAcl": "Actual178 accepted protection/effectiveACL reused; no grant or securitydefiner change observed in179manifest"
+  },
+  "profile": "26_v20_history_insert_identity_from_v19",
+  "sourceRoutinesMatch": true,
+  "purposes": [
+    "IMPORT_STAGE"
+  ],
+  "realImportExecutionAuthorized": false,
+  "doesNotProve": [
+    "v22installerapplied",
+    "PLpgSQLruntime/triggerexecution",
+    "BINDsuccess",
+    "contentnegativecoverage",
+    "businessimport/publication"
+  ],
+  "knownQaBindingIdentityConflict": "OriginalINITtarget oldpostmaster !=actualQApostmaster; samebodyL241 fails firstBIND. MetadataPASS does not waive this assertion. C declined QAvariant/INIT/source/guard changes.",
+  "actual179": "COMPLETED0/RRRO/ROLLBACK/clientsclosed, noDDL/business scans/writes/BIND; originalownerreceipt adopted",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED"
+}

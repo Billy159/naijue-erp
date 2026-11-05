@@ -1,0 +1,16 @@
+{
+  "extends": "/workspace/shared/naijue-erp-rewrite/tsconfig.json",
+  "compilerOptions": {
+    "typeRoots": [
+      "/workspace/shared/naijue-erp-rewrite/node_modules/@types"
+    ]
+  },
+  "files": [
+    "/workspace/shared/naijue-erp-rewrite/tests/inventory-query.test.ts",
+    "/workspace/shared/naijue-erp-rewrite/apps/api/src/inventory-http.test.ts",
+    "/workspace/shared/naijue-erp-rewrite/apps/web/src/inventory/model.test.ts",
+    "/workspace/shared/naijue-erp-rewrite/apps/web/src/transport/http-readers.test.ts",
+    "/workspace/shared/naijue-erp-rewrite/apps/web/preview/synthetic-reader.ts"
+  ],
+  "include": []
+}

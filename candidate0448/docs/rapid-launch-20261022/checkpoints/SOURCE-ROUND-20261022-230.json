@@ -1,0 +1,159 @@
+{
+  "atUtc": "2026-10-23T22:43:51.248525+00:00",
+  "parent": "3270763d1c3d35fe02e615d78f04c4002ac55a99",
+  "taskId": "F04_P16_P18_FROZEN_DEMO_NATIVE_COMPLETE_READONLY_PAGES",
+  "files": [
+    {
+      "path": "apps/web/src/product-settings/size-groups/setting-page.tsx",
+      "bytes": 11309,
+      "sha256": "f6862f31f3ebdcacbff20015a90fc8d21891c3b8bda97fba5d8e49c160969dd4",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+      "bytes": 36633,
+      "sha256": "c24f86e417f95c5d0a00b6949e96ee59e5265d9dbbae8bfcb863ff1da4af2775",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "27dfe8cc6b952844e7a415b73dc2349bcc27885593192dd7c0bbb004fb78073c",
+  "ownerDelivery": {
+    "taskId": "F04-P16-P18-EXISTING-WHOLE-MIGRATION",
+    "owner": "F2",
+    "atUtc": "2026-10-23T22:42:19.399025+00:00",
+    "status": "WHOLE_NATIVE_SOURCE_READY_EXACT2_LOCAL_PASS_PENDING_C_FIXED_CANDIDATE_QF_ACTUAL",
+    "authority": {
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "dispatch": "Continue original F03/F04 P16/P18 register gap; no new task or role. Ownership exact2 already registered.",
+      "model": "gpt-6.1-sol/xhigh; Fast not verified"
+    },
+    "completedScope": "Verified prior delivery was styled generic Arco mapping, then copied the original two native dictionary pages as one complete source presentation: root/header/actions/tabs/body/search/native table/empty/pager and complete final applicable stylesheet closure. Existing read/permission/readonly semantics retained.",
+    "files": [
+      {
+        "path": "apps/web/src/product-settings/size-groups/setting-page.tsx",
+        "bytes": 11309,
+        "sha256": "f6862f31f3ebdcacbff20015a90fc8d21891c3b8bda97fba5d8e49c160969dd4",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/source/apps/web/src/product-settings/size-groups/setting-page.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/before/apps/web/src/product-settings/size-groups/setting-page.tsx",
+          "bytes": 5959,
+          "sha256": "136685009fb4f447dea1abd1210323c19e571e40c3651fab47b29a1ccb586e41"
+        }
+      },
+      {
+        "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+        "bytes": 36633,
+        "sha256": "c24f86e417f95c5d0a00b6949e96ee59e5265d9dbbae8bfcb863ff1da4af2775",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/source/apps/web/src/product-settings/size-groups/source-dictionary.css",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/before/apps/web/src/product-settings/size-groups/source-dictionary.css",
+          "bytes": 6733,
+          "sha256": "652c57a87e9adefd311cddf9ec1436dd1db3865bbc0b2ac8010f71cc0e72b147"
+        }
+      }
+    ],
+    "sourceProvenance": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/SOURCE-PROVENANCE.json",
+      "bytes": 4306,
+      "sha256": "4f1e6a23fc38e13e222c13982386e92ea7f052a48469fbedfb441c39f471192a"
+    },
+    "checks": {
+      "strict": "Changed setting-page.tsx full strict imported closure, 0 diagnostics, original project compiler flags/no imported-source exclusions",
+      "dom": "Actual ReadOnlyProductSettingsHost + real React19 StrictMode: native root/header/empty actions/tabs/editor body/direct input/plain table/pager; no Arco Tabs/Table/Pagination wrapper. One initial read.23 groups distinct duplicate IDs/001 size prefix; page2 503 retains old page and retry21-23; jump Enter/button;3 seasons switch/focus/search Enter once/clear; arrow skips unavailable tabs and returns fresh group page1. Synthetic DOM only.",
+      "css": {
+        "status": "PASS_LOCAL_SOURCE_CLOSURE_ONLY",
+        "sourceRuleBlocks": 105,
+        "sourceDeclarations": 343,
+        "nativeSelectorComparisons": 630,
+        "privateScopeHasSameSourceMatches": true,
+        "declarationBlocksAndOrderUnchanged": true,
+        "P19OldCssPrefixByteIdentical": true,
+        "newSelectorsMatchingP19": 0,
+        "cssParse": true,
+        "cssBundleWarnings": 0,
+        "notMeasured": "No actual browser pixels/scroll/timing or containing candidate build."
+      },
+      "shared": "P19 old CSS prefix unchanged and new native rules match P19 zero times; no behavioral rerun of accepted P19 or HTTP/PG suites",
+      "iteration": "Source extraction pseudo simplifier and test syntax/ancestor expectation corrected locally. Complete selector test identified missing generic body ancestor adaptation; fixed it and final630 source/target comparisons pass.",
+      "notRun": [
+        "Chrome/pixels/actual scroll/timing/real API/PG/business writes",
+        "Full uniform candidate build/Git/server/deployment",
+        "No old whole104 or old accepted data protocol/public component suites repeated"
+      ]
+    },
+    "untested": [
+      "Chrome/pixels/actual scroll/timing/real API/PG/business writes",
+      "Full uniform candidate build/Git/server/deployment",
+      "No old whole104 or old accepted data protocol/public component suites repeated"
+    ],
+    "blocker": "No source blocker/public seam needed. NO_CHROME; no retagging already fixed229 prebuild as containing this new work.",
+    "next": "C pin exact2 after229 in next necessary containing candidate -> original QF/QF2 affected P16/P18 whole native page source+actual comparison. Shared SITE-REUSE-REGISTER owner/locator/source method metadata updated by C/QF only. Reuse already accepted backend data/protocol/public controls and historical measured scopes; do not claim actual/full business acceptance from source.",
+    "registerCorrection": {
+      "owner": "F2 already authoritative",
+      "actualLeaf": "size-groups/setting-page.tsx shared by unchanged size-groups-page.tsx and seasons/seasons-page.tsx",
+      "css": "size-groups/source-dictionary.css appended native closure; colors CSS not a dependency of these two native leaves",
+      "method": "whole native DOM + final source CSS with minimal React/read adapters; independent actual pending"
+    },
+    "browser": "NO_CHROME, no browser operations in this module; prior I07 clean/release remains valid",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/SOURCE-MANIFEST.json",
+        "bytes": 4737,
+        "sha256": "bc31cc097c4d115a7aa9be450a973bdd489610ceeaa1484cdd268da1c6246f43"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/SOURCE-PROVENANCE.json",
+        "bytes": 4306,
+        "sha256": "4f1e6a23fc38e13e222c13982386e92ea7f052a48469fbedfb441c39f471192a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/CHECKS.json",
+        "bytes": 1687,
+        "sha256": "1aaddbade18d745df8664b83a85e643efeb4d79eeb667909bbcbd1382d7c3137"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/CSS-SOURCE-MAP.json",
+        "bytes": 53479,
+        "sha256": "07811cb984490fec8a4adbc354588c49c2051cbd2b51b53465d9e1e58e1cca6d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/CSS-CHECKS.json",
+        "bytes": 439,
+        "sha256": "712698109de8c718bcafb94f96102acd44b09dbf8d8e4fc5c274a34eb6efebf8"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/dom.log",
+        "bytes": 730,
+        "sha256": "cc4d321c660041321b894cff62421c2733d55f19ca8cf2b7e7c2bd90d500d6e1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/strict.log",
+        "bytes": 81,
+        "sha256": "f89349e84f4731b0c70c0e180a6740eec6a9a0e654b174d2856ddb165d9a3ed0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/css.log",
+        "bytes": 394,
+        "sha256": "33984900215fc92066830e1a040d2f9c1c971cc633a7a8c28ff1a1323f1c4290"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/source.diff",
+        "bytes": 44374,
+        "sha256": "3ec31463ffb71e950f521ccb023e469ce837d8d97fd7bcdedc3a74f32d76ee96"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/NATIVE-P16P18-groups-dom.html",
+        "bytes": 12695,
+        "sha256": "6fc0ac32ea9bbada586d9b9b98882cbad7fcf3961a9797ce81244327ed61a6af"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-NATIVE-PAGES-01/NATIVE-P16P18-seasons-dom.html",
+        "bytes": 10003,
+        "sha256": "1d35becc8ab51e2634e4f46a029799549ef442be40affa17453f07aceaf0ca5c"
+      }
+    ]
+  },
+  "qualification": "Original targeted owner necessary checks adopted; independent fixedsource review/containing successor browser actual pending. No wholepage/realbusiness/performance acceptance, not in running229."
+}

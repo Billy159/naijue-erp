@@ -1,0 +1,64 @@
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (6.391762ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (1.152215ms)
+✔ historical signed discount remains exact on memo save without invented allocation (0.867478ms)
+✔ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (28.914824ms)
+✔ approved historical discount ruling: economic edits keep original discount without guessed allocation (1.642383ms)
+✔ historical missing settlement is shown unknown, never as zero or settled (0.27235ms)
+✔ changed historical unknown pricing saves explicit-price draft without invented intent (2.817168ms)
+✔ real existing editor initializes historical signed unknown rows and sends economic SAVE through ordinary proposal command (11.855428ms)
+✖ original signed-sale discount survives all-positive edit below retained discount (2.957714ms)
+✖ original signed-sale discount survives all-positive reopen below retained discount (2.632255ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 8
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 421.296701
+
+✖ failing tests:
+
+test at apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:87:36
+✖ original signed-sale discount survives all-positive edit below retained discount (2.957714ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - '-400'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:90:60)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '-400',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:87:36
+✖ original signed-sale discount survives all-positive reopen below retained discount (2.632255ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:90:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

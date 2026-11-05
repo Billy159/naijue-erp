@@ -1,0 +1,191 @@
+{
+  "atUtc": "2026-10-22T21:06:50.116431+00:00",
+  "parent": "7d50566e838b91a637b9945d55f01811c0ba4b65",
+  "groups": [
+    {
+      "slice": "W7_NEW_ACCOUNT_UNTOUCHED_INITIAL_VALIDATION_TIMING_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/RESULT.json",
+      "receiptSha256": "30b4b55ac11204e4a7a47cee26c18688a2badb3ba46fef5483f34413e4fbf45f",
+      "receiptSnapshot": {
+        "taskId": "F05/W7-UI-01",
+        "owner": "F3",
+        "priority": "P2",
+        "clientDate": "2026-10-23",
+        "generatedAtObservedUtc": "2026-10-22T21:04:57.996115+00:00",
+        "status": "SOURCE_READY_FOR_C_CHECKPOINT_AND_TARGETED_INITIAL_OPEN_BROWSER_RECHECK",
+        "baselineHead": "d202f322cf68bab6bd5382feffe0bc83b8fe4962",
+        "observedHead": "7d50566e838b91a637b9945d55f01811c0ba4b65",
+        "scope": "One original registered account form file; remove unguarded field-group blur validation. Existing explicit submit remains the validation boundary. No controller, rules, schema or write behavior change.",
+        "findingEvidence": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v011-3fb36e8/GROUP2-RESULT.json",
+          "sha256": "1259fccf5cd2a1225ac5b0e168b6fca9ae6b06c7116e81427b886e9404deef4c"
+        },
+        "screenshotEvidence": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v011-3fb36e8/candidate-W7-new-account-modal.png",
+          "sha256": "d6b9542047126335d5c83779a836e63f06a7ed33da7d85d11f20681ed183144a",
+          "readOnlyVisualInspection": true
+        },
+        "diagnosis": {
+          "evidenceLevel": "Actual source AccountSettingsPage/AccountSettingsForm with current React19/Arco DOM under JSDOM, matched to dedicated actual-browser observation; not a new browser run.",
+          "before": "Initial focus moves Modal wrapper -> employee combobox DIV -> inner select INPUT. The combobox focusout bubbles to field-group onBlur, which calls controller.validate while dirty=false. All three required errors appear before typing/save.",
+          "after": "Same initial/focus-only event path yields zero field errors after removing only that blur handler. Existing explicit invalid submit still validates staff/loginName/password.",
+          "actualBrowserEventTrace": "NOT_INSTRUMENTED_BY_F3",
+          "newCandidateActualBrowser": "NOT_RUN"
+        },
+        "files": [
+          {
+            "path": "apps/web/src/account-settings/account-form.tsx",
+            "beforeSha256": "c6fdab00451dab9881675d9b1e1e4b63314015f253c992d196e2fa34e92cc806",
+            "afterSha256": "20f38f9f0c7fa238b93a85853418538775df5edf803c408ed8d3b5aa8a8e77d5"
+          }
+        ],
+        "patch": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/exact1.patch",
+          "sha256": "51a854e2764580324ad450f7b26f42921c5e9b55f4a96365bc864d512d983391"
+        },
+        "checks": [
+          {
+            "name": "Initial source page focus diagnostic and A/B",
+            "status": "PASS_LOCAL_DOM",
+            "beforeInitialFieldErrors": 3,
+            "afterInitialFieldErrors": 0,
+            "afterFocusOnlyFieldErrors": 0,
+            "allInputsBlank": true
+          },
+          {
+            "name": "Cancel and reopen",
+            "status": "PASS_LOCAL_DOM",
+            "fieldErrors": 0
+          },
+          {
+            "name": "Explicit invalid submit retains required validation",
+            "status": "PASS_LOCAL_DOM",
+            "requiredErrorKeys": [
+              "loginName",
+              "password",
+              "staff"
+            ],
+            "commands": 0,
+            "requestKeys": 0,
+            "staffPreSubmitReads": 0,
+            "note": "Local synthetic gate=true only in this invalid-submit validation check; production/preview gates unchanged. No password typed."
+          },
+          {
+            "name": "Actual closed-gate page",
+            "status": "PASS_LOCAL_DOM",
+            "confirmationDisabled": true
+          },
+          {
+            "name": "Affected strict types and exact source diff",
+            "status": "PASS",
+            "typeExitCode": 0,
+            "diffCheckExitCode": 0
+          },
+          {
+            "name": "One-attribute source proof",
+            "status": "PASS",
+            "otherRegisteredF3FilesUnchanged": 49,
+            "controllerRulesAndAuthorizationUnchanged": true
+          }
+        ],
+        "preserved": [
+          "Original validate/submit rules including actual staff requirement, role/hall employment checks and byte/NUL limits",
+          "Required field markers and existing error copy",
+          "Explicit writesEnabled/locked/dirty submit gates",
+          "Transient local password clearing and original command/receipt code",
+          "Arco focusLock, autoFocus=false, maskClosable=false, onCancel and Esc handling",
+          "All W7 native read/write/audit/fixture accepted evidence reused"
+        ],
+        "notTested": [
+          "New fixed candidate actual browser initial W7 Modal",
+          "Whole W7 page/form matrix or exact frozen-Demo independent page (none exists)",
+          "Generic Esc behavior; no broad Esc issue opened",
+          "PG/actual saves or role grants",
+          "Integrated build/server/deployment"
+        ],
+        "safetyFacts": {
+          "newRFiles": [],
+          "database": false,
+          "actualChrome": false,
+          "actualBrowserHarness": false,
+          "activeActualBrowserOperations": false,
+          "serverStarted": false,
+          "writeCommands": 0,
+          "requestKeys": 0,
+          "passwordTypedOrRecorded": false,
+          "gitMutation": false,
+          "otherNativeSuitesRerun": false
+        },
+        "roleSliceAdoption": {
+          "frontend": "C81/d202f322cf68bab6bd5382feffe0bc83b8fe4962",
+          "backend": "C79/f1e489513c9643dd994624b4c44d1030bd349a01",
+          "hashesVerifiedWithoutRetest": true,
+          "preview69StillUnsupported": true
+        },
+        "blockers": [],
+        "next": "C fixes exact1 and asks the dedicated actual preview/Demo task to reopen blank new W7 without typing/saving and verify no premature errors; do not broaden to all W7 protocols or Esc.",
+        "modelRequirement": {
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "xhigh",
+          "fastEnabledByF3": false,
+          "actualFastUiState": "NOT_OBSERVED"
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/BASELINE.json",
+            "sha256": "bb9367a7e390b5c4c3a2b19ec2ef7a5afae65bbbd35d283349d2cd272d95afd2"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/DIAGNOSTIC-before.json",
+            "sha256": "b712e78e93861fb7a7df366d4e0394f40864de5e72d0335d75304284743fecb4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/diagnostic-before.log",
+            "sha256": "01b9c16919391c091345fc1c9a293819e7b328fb490b7d07d5b71f507ad391f4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/DIAGNOSTIC-after.json",
+            "sha256": "667604388cf7fdc7611b610cce3a4f3aedf410d227e4cf39df6adf3fd739b813"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/after.log",
+            "sha256": "c4d4c9a21316d104e554bb1331efbfaee0fa662a840697eef8af6e3ab11a9433"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/diagnose-initial-validation.mjs",
+            "sha256": "d0044a5d611cc13d6ed0d248416e0e2f859e175166c0bc93af0ce33be8ef72c7"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/TYPE-CHECK.json",
+            "sha256": "27e9196fce2634af29a54a64169a42e32eaef7e39a115efc8ef2431c2ad29cbe"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/tsconfig.json",
+            "sha256": "648d08fc98b28dca5d224aae67d8b1edf476ac6f6a4de36716dd32fbc95e47b1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/SOURCE-PROTECTION.json",
+            "sha256": "ebf8b5972eeebe59b215cc7cf1c490cbccf61b5db6b5c73ff89d6f7eb7861296"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/w7-ui-01-v1/exact1.patch",
+            "sha256": "51a854e2764580324ad450f7b26f42921c5e9b55f4a96365bc864d512d983391"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/account-settings/account-form.tsx",
+          "owner": "F3",
+          "sha256": "20f38f9f0c7fa238b93a85853418538775df5edf803c408ed8d3b5aa8a8e77d5",
+          "bytes": 12241
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only exact one-file checkpoint. Initial real-focus DOM A/B source evidence, not Chrome or business save acceptance; original validation and command guards retained."
+}

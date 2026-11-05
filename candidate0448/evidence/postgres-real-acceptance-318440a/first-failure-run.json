@@ -1,0 +1,12 @@
+{
+  "number": 1,
+  "commit": "b508ce88127ce3e4562ff731982ac8b50a980146",
+  "source": "frozen-commit:b508ce88127ce3e4562ff731982ac8b50a980146",
+  "database": "naijue_erp_test_34bee6790108f6e9",
+  "host": "127.0.0.1",
+  "port": 55432,
+  "code": 1,
+  "signal": null,
+  "logfile": "evidence/postgres-real-acceptance-318440a/first-failure.tap",
+  "sanitization": "Only local filesystem source/log locations replaced; TAP stack prefixes are likewise replaced, with no lines removed."
+}

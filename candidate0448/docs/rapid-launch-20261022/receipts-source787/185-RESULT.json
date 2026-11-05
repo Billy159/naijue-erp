@@ -1,0 +1,173 @@
+{
+  "job": {
+    "jobId": "t45-v22-qa-readonly-prefix-adapter-20261027-185",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-511b2e765e4e",
+    "atUTC": "2026-10-27T14:41:42.003582+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 1.2204232409130782,
+    "exports": [
+      "qa-prefix-engine-result.json",
+      "qa-prefix-readonly-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T14:41:43.274157+00:00"
+  },
+  "runtime": {
+    "automaticReplay": false,
+    "businessAcceptance": false,
+    "clientsClosed": true,
+    "errorCode": "PRODUCTION_AUTHORITY26_C_EXECUTION_PIN_REQUIRED",
+    "firstBind": {
+      "bytes": 73746,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/BIND.json",
+      "sha256": "3a350163b35c771c8fd85401cf7c9d88a6736157300c444c10022c8b2e740609"
+    },
+    "mainAttempted": false,
+    "originalSourceBinding": {
+      "actorAccountId": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+      "authorizedPayloadHash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8",
+      "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+      "coreReceiptId": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1",
+      "coreSourceDigest": "2589b25c06bb1312b9d1f40627fb7432f44b4293b5d1ae7186223948b144cc28",
+      "cutoffAt": "2026-10-04T12:00:00+08:00",
+      "fixedSourceNamespace": "naijue:tplus:primary-ledger",
+      "phase": "FULL_SOURCE_CONTINUATION_26_V1",
+      "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+      "target": {
+        "database": "erp_rewrite_20261022_r1",
+        "postmasterStartedAt": "2026-10-04 08:16:07.895273+00",
+        "role": "erp_rewrite_runtime_20261022",
+        "serverAddress": null,
+        "serverPort": null
+      },
+      "version": "NATIVE_IMPORT_EXECUTION_26_V1"
+    },
+    "originalSourceDatabaseAccess": "PROHIBITED",
+    "prefixDiagnostic": {
+      "reason": "UNKNOWN"
+    },
+    "qaTuple": {
+      "actingRole": "erp_rewrite_runtime_20261022",
+      "database": "erp_rewrite_20261022_r1",
+      "databaseOid": "16391",
+      "ownerRole": "erp_rewrite_owner_20261022",
+      "postmasterStart": "2026-10-27 13:22:19.696753+00",
+      "serverAddress": null,
+      "serverPort": null,
+      "sessionUser": "erp_rewrite_runtime_20261022",
+      "socketDirectory": "/srv/naijue-erp/qa-v22-20261027-01/s",
+      "systemIdentifier": "7701337335828107278"
+    },
+    "registrationId": "t45-v22-qa-readonly-prefix-adapter-20261027-185",
+    "scenario": "READONLY_PREFIX_ADAPTER",
+    "scope": "QA_STORE_ONLY_NOT_PRODUCTION_SOURCE_HOST_EXECUTION",
+    "status": "STOP_NO_RETRY"
+  },
+  "engine": {
+    "APPChanged": false,
+    "BINDExecuted": false,
+    "COMMITExecuted": false,
+    "R1DatabaseAccess": false,
+    "attemptedOnce": true,
+    "automaticReplay": false,
+    "businessDML": 0,
+    "clientsClosed": true,
+    "errorCode": "QA_READONLY_STOP_SEE_ORIGINAL_RESULT",
+    "finishedAtUtc": "2026-10-27T14:41:43.217885+00:00",
+    "jobId": "t45-v22-qa-readonly-prefix-adapter-20261027-185",
+    "materializedFiles": [
+      {
+        "bytes": 4546,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-20261027-185/inputs/QA185-PLAN.json",
+        "sha256": "4bf0ad0e9b468d0e1b70bf5c9e3c2d63b8e6f512ec342f1c89fea80ed453d60e",
+        "uid": 0
+      },
+      {
+        "bytes": 4333,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-20261027-185/inputs/C-QA185-AUTHORITY.json",
+        "sha256": "c776f42ea1c46810d55174e24b4a7a422bedeeaa18ae30cf98a8ea99ac4e5423",
+        "uid": 0
+      },
+      {
+        "bytes": 2197,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-20261027-185/inputs/QA185-FIXTURE.json",
+        "sha256": "51a96313246415a91666169c0180f82eb78a257d3c5bd64a8b8f309f7316b234",
+        "uid": 0
+      },
+      {
+        "bytes": 29173,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-20261027-185/inputs/qa-control/qa-prefix-bind.mjs",
+        "sha256": "dbb2f336c37a1a5e8134dad2afcfe4afab7e6b2f88256e34ea9eeef06a320537",
+        "uid": 0
+      },
+      {
+        "bytes": 14728,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-20261027-185/inputs/qa-control/qa-prefix-bind.test.mjs",
+        "sha256": "00aae03b8584a86f534afbf35bd6c781a7c92f0c4ef49ab7f39f3e31a06bf0ed",
+        "uid": 0
+      }
+    ],
+    "original184FinalRefsVerified": [
+      {
+        "bytes": 37302,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+        "sha256": "27878ca323190831fa1142901ed24bec8d6c012cd18b9a0c6884c6ba6e822581"
+      },
+      {
+        "bytes": 188917,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/provider-INPUT.FINAL.json",
+        "sha256": "c7e1a1b42952b3cb7fc42468c52f7e2b3add59b069d5904998c7458d362d3acd"
+      },
+      {
+        "bytes": 5007,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/executable-host-job26.json",
+        "sha256": "6a68c9bb8bac08e75bc6c406ba1a83ca0cc2be60ce92ff131461b49b0ee302f9"
+      }
+    ],
+    "phase": "SOURCE_ONLY_CAPTURE_THEN_QA_ORDINARY_RRRO_PREFIX",
+    "prefixDiagnostic": {
+      "reason": "UNKNOWN"
+    },
+    "process": {
+      "elapsedSeconds": 0.4545292549300939,
+      "exitCode": 0,
+      "processExited": true,
+      "stderrBytes": 0,
+      "stdoutBytes": 1908
+    },
+    "runtimeStatus": "STOP_NO_RETRY",
+    "scope": "READONLY_PREFIX_ADAPTER",
+    "sourceSqlFileOnlyMaterialized": {
+      "bytes": 80495,
+      "executedAsSQL": false,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+      "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750"
+    },
+    "status": "STOP_QA_PREFIX_READONLY_NO_REPLAY"
+  },
+  "exports": {
+    "job.json": {
+      "bytes": 555,
+      "sha256": "c3b66bb0df6c7eedc52ffef2fb1d7d9eac79e51a299680e48e70a16294281963"
+    },
+    "qa-prefix-readonly-result.json": {
+      "bytes": 2172,
+      "sha256": "3709a846a6d954d3876b6de6567fdbbe6d5fa427f687e0512f3c8bc627d3e459"
+    },
+    "qa-prefix-engine-result.json": {
+      "bytes": 3685,
+      "sha256": "78eadda225b1025ab94a1dbc5e7d9b4dd859223465f40586973a19425a14ffa2"
+    }
+  },
+  "diagnosis": "Carrier omitted existing NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256 environment pin, statically required by provider before metadata/source streaming; stopped early with PRODUCTION_AUTHORITY26_C_EXECUTION_PIN_REQUIRED. No content round reached, mainAttemptedfalse, clientsClosedtrue. No replay; exact successor authority/registration/output required."
+}

@@ -1,0 +1,30 @@
+{
+  "version": "C_V22_184_EXACT_EXECUTION_ADOPTION_V1",
+  "decision": "AUTHORIZE_ONE_NEW_CONTROLLED_ORIGINAL109_CONTINUATION",
+  "atUtc": "2026-10-27T14:11:36.381290+00:00",
+  "registrationId": "t45-r1-v22-original109-controlled-continuation-20261027-184",
+  "deadlineUtc": "2026-10-27T16:30:00Z",
+  "maxWallSeconds": 7200,
+  "maxSteps": 4096,
+  "hostJob": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/executable-host-job26.json",
+    "bytes": 5007,
+    "sha256": "6a68c9bb8bac08e75bc6c406ba1a83ca0cc2be60ce92ff131461b49b0ee302f9"
+  },
+  "grant": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+    "bytes": 37302,
+    "sha256": "27878ca323190831fa1142901ed24bec8d6c012cd18b9a0c6884c6ba6e822581"
+  },
+  "providerInput": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-original109-controlled-continuation-20261027-184/inputs/provider-INPUT.FINAL.json",
+    "bytes": 188917,
+    "sha256": "c7e1a1b42952b3cb7fc42468c52f7e2b3add59b069d5904998c7458d362d3acd"
+  },
+  "sourcePackage": "182 actual95 files plus183 actual3metadata; QB477 closure adopted; QB472source/QB476 actualR1currentmetadata adopted",
+  "target": "Original R1 OID1027659/system7691989034661916697/postmaster2026-10-04 08:16:07.895273+00/newv22canonical6d3e6d1aed92d0dd66441d92c3e6b2b3b17fabc5f0f642b5e54a981343a3fcdd",
+  "scope": "Original148 BIND+107ACCOUNT+PUBLISH commands ordered, samebody/hash/key; actualrealimport, no productionregression; noAPP/publicswitch",
+  "failure": "Stop on failure; originalkey readback/recovery before further commands; no blindretry/newkey/replay169/181/182/183",
+  "limitations": "QA fullBIND positive/negative cases identityincompatible untested; real readonly adapter contents not yet observed; source/mock/installation not businessPASS",
+  "humanAuthority": "Main Chat direct v22 approval and standing realimport/serverowner/controlledpublication authorization"
+}

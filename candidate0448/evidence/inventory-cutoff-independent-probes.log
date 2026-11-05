@@ -1,0 +1,14 @@
+✔ independent SQL composition: baseline cannot reach the old strict TRANSFER receipt-source branch (14.33012ms)
+✔ independent SQL access path: import checkpoint audit lookup has an IMPORT object/version index (5.516136ms)
+✔ independent bounded protocol: 500 shuffled signed baselines lock before writes and advance one exact checkpoint (86.308617ms)
+✔ independent bounded validation: record 501 and zero stock cannot start a transaction (6.105507ms)
+✔ independent failure protocol: uncertain COMMIT requests rollback and discards without automatic replay (42.102405ms)
+✔ independent failure protocol: failed baseline plus failed rollback returns both failures and discards (21.396461ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 571.948468

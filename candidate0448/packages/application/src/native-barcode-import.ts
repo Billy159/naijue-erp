@@ -1,0 +1,231 @@
+import { requireDomain } from "../../domain/src/errors.ts";
+import { entityId } from "../../domain/src/values.ts";
+import { HISTORY_MAPPING_VERSION } from "./history-storage-contract.ts";
+import type { ImportSourceEvidence, JsonObject } from "./history-storage-contract.ts";
+import { IMPORT_V2_TABLES } from "./import-v2-contract.ts";
+import { requestHash } from "./request-hash.ts";
+
+export const NATIVE_BARCODE_IMPORT_VERSION = "NATIVE_BARCODE_IMPORT_V1";
+export const NATIVE_BARCODE_MAIN_DEMOTION_VERSION = "NATIVE_BARCODE_EXACT_APPROVED_MAIN_DEMOTION_V1";
+/** Exact reviewed decision descriptor, not an authorization by itself. The trusted
+ * host must separately check decision+human approval pins and original source. */
+export interface NativeBarcodeMainDemotion {
+  readonly version: typeof NATIVE_BARCODE_MAIN_DEMOTION_VERSION;
+  readonly mappingSha256: string; readonly approvalSha256: string; readonly entrySha256: string;
+  readonly sourceKey: string; readonly originalSourceRowSha256: string;
+  readonly oldSourceSkuKey: string; readonly canonicalSourceSkuKey: string; readonly barcode: string;
+  readonly keptMainSourceKey: string; readonly keptMainBarcode: string;
+}
+export interface NativeBarcodeSelection {
+  readonly source: "V3_BARCODE_REPLACEMENT"; readonly entity: "BARCODE"; readonly path: "business/03历史条码.csv";
+  readonly baseManifestSha256: string; readonly selectionSha256: string; readonly approvalSha256: string;
+  readonly csvSha256: string; readonly excludedSourceIdsSetSha256: string;
+}
+export interface NativeBarcodeInput {
+  readonly batchId: string; readonly fixedSourceNamespace: string; readonly selection: NativeBarcodeSelection;
+  readonly source: ImportSourceEvidence; readonly nativeBarcodeId: string;
+  readonly sku: { readonly canonicalSourceKey: string; readonly nativeId: string; readonly oldSourceSkuKey: string };
+  /** Original named scheme may only bind an exact existing native scheme, never silently become NULL. */
+  readonly scheme: { readonly id: string; readonly snapshot: JsonObject };
+  readonly mainDemotion?: NativeBarcodeMainDemotion;
+}
+export interface PreparedNativeBarcode extends NativeBarcodeInput {
+  readonly mappingVersion: typeof HISTORY_MAPPING_VERSION;
+  readonly nativeBarcode: { readonly id: string; readonly barcode: string; readonly sku_id: string;
+    readonly barcode_kind: "MAIN" | "CONFIRMED_OLD"; readonly scheme_id: string; readonly enabled: boolean };
+  readonly fingerprint: string;
+}
+export interface NativeBarcodeImportStore { stage(input: PreparedNativeBarcode): Promise<{ inserted: number; replayed: number }> }
+const text = (v: unknown): v is string => typeof v === "string" && v.trim().length > 0 && v.length <= 65536 && !v.includes("\0");
+const hash = (v: unknown): boolean => typeof v === "string" && /^[a-f0-9]{64}$/.test(v);
+export function prepareNativeBarcode(input: NativeBarcodeInput): PreparedNativeBarcode {
+  const row = structuredClone(input), s = row.source, n = s.normalizedFields, raw = s.rawFields, selection = row.selection;
+  entityId("sku", row.batchId); entityId("sku", row.nativeBarcodeId); entityId("sku", row.sku.nativeId);
+  requireDomain(text(row.fixedSourceNamespace) && selection?.source === "V3_BARCODE_REPLACEMENT"
+    && selection.entity === "BARCODE" && selection.path === "business/03历史条码.csv"
+    && [selection.baseManifestSha256, selection.selectionSha256, selection.approvalSha256,
+      selection.csvSha256, selection.excludedSourceIdsSetSha256].every(hash),
+  "NATIVE_BARCODE_SELECTION", "Only exact 15018-row v3 effective SKU barcode selection is admissible");
+  requireDomain(s && s.batchId === row.batchId && s.entityType === "BARCODE" && text(s.sourceKey)
+    && text(s.fileRef) && text(s.sheet) && typeof s.rowNo === "string" && /^[1-9]\d*$/.test(s.rowNo)
+    && BigInt(s.rowNo) <= 9223372036854775807n && hash(s.sourceFileSha256) && hash(s.rowSha256)
+    && s.fieldProvenance?.schema_version === 1 && s.fieldProvenance.fields && typeof s.fieldProvenance.fields === "object",
+  "NATIVE_BARCODE_SOURCE", "Exact selected original barcode occurrence required");
+  entityId("sku", s.id);
+  requireDomain(!Object.hasOwn(s.fieldProvenance, "native_sku_id") && !Object.hasOwn(s.fieldProvenance, "native_barcode")
+    && !Object.hasOwn(s.fieldProvenance, "native_barcode_import"),
+  "NATIVE_BARCODE_PROVENANCE", "Unaugmented original barcode provenance required");
+  const columns = IMPORT_V2_TABLES.find(t => t.entity === "BARCODE")!.columns;
+  requireDomain(Object.keys(n).length === columns.length && columns.every(c => Object.hasOwn(n, c.name)
+    && typeof n[c.name] === "string" && (n[c.name] as string).length <= 65536 && !(n[c.name] as string).includes("\0")
+    && (!c.required || n[c.name] !== "")), "NATIVE_BARCODE_COLUMNS", "Exact complete v3 effective barcode row required");
+  requireDomain(n["来源编号"] === s.sourceKey && raw["来源编号"] === s.sourceKey
+    && n["条码"] === raw["条码"] && text(n["条码"])
+    && n["绑定范围"] === "SKU" && (!Object.hasOwn(raw, "绑定范围") || raw["绑定范围"] === "SKU")
+    && n["SKU来源编号"] === row.sku.canonicalSourceKey && n["合并前SKU来源编号"] === row.sku.oldSourceSkuKey
+    && raw["SKU来源编号"] === row.sku.oldSourceSkuKey
+    && n["原始条码性质快照"] === raw["条码性质"]
+    && n["状态"] === raw["状态"] && (n["状态"] === "正常" || n["状态"] === "停用")
+    && n["原条码方案"] === raw["原条码方案"] && text(n["原条码方案"])
+    && (n["条码性质"] === "主码" || n["条码性质"] === "已确认旧码"),
+  "NATIVE_BARCODE_ORIGINAL", "Original SKU binding, raw code, state and scheme must be preserved; PRODUCT rows excluded");
+  const demotion = row.mainDemotion, isDemotion = raw["条码性质"] === "主码" && n["条码性质"] === "已确认旧码";
+  if (Object.hasOwn(row, "mainDemotion")) requireDomain(isDemotion && demotion && Object.keys(demotion).length === 11
+    && demotion.version === NATIVE_BARCODE_MAIN_DEMOTION_VERSION && [demotion.mappingSha256, demotion.approvalSha256, demotion.entrySha256].every(hash)
+    && demotion.sourceKey === s.sourceKey && demotion.originalSourceRowSha256 === s.rowSha256 && demotion.barcode === raw["条码"]
+    && demotion.oldSourceSkuKey === row.sku.oldSourceSkuKey && demotion.canonicalSourceSkuKey === row.sku.canonicalSourceKey
+    && demotion.oldSourceSkuKey !== demotion.canonicalSourceSkuKey && text(demotion.keptMainSourceKey) && demotion.keptMainSourceKey !== s.sourceKey
+    && text(demotion.keptMainBarcode) && demotion.keptMainBarcode !== demotion.barcode,
+  "NATIVE_BARCODE_MAIN_DOWNGRADE_NOT_APPROVED", "Exact separately authorized MAIN demotion descriptor required");
+  requireDomain(raw["条码性质"] === n["条码性质"] || isDemotion && demotion !== undefined,
+  "NATIVE_BARCODE_MAIN_DOWNGRADE_NOT_APPROVED", "An audit proposal or unbound flag cannot demote an original MAIN barcode");
+  for (const [field, value] of Object.entries(raw)) {
+    const p = (s.fieldProvenance.fields as Record<string, JsonObject>)[field];
+    requireDomain(p && ["ORIGINAL", "MIGRATION_DERIVED", "UNKNOWN"].includes(String(p.origin)) && text(p.reason)
+      && Object.hasOwn(p, "raw") && requestHash(p.raw) === requestHash(value)
+      && (p.origin !== "MIGRATION_DERIVED" || text(p.evidence_ref)),
+    "NATIVE_BARCODE_PROVENANCE", "Every original barcode cell requires exact raw provenance");
+  }
+  entityId("sku", row.scheme.id);
+  requireDomain(row.scheme.snapshot.id === row.scheme.id && row.scheme.snapshot.name === n["原条码方案"],
+    "NATIVE_BARCODE_SCHEME", "An actual explicitly mapped original barcode scheme is required");
+  const nativeBarcode = { id: row.nativeBarcodeId, barcode: n["条码"] as string,
+    sku_id: row.sku.nativeId, barcode_kind: n["条码性质"] === "主码" ? "MAIN" as const : "CONFIRMED_OLD" as const,
+    scheme_id: row.scheme.id, enabled: n["状态"] === "正常" };
+  return { ...row, mappingVersion: HISTORY_MAPPING_VERSION, nativeBarcode, fingerprint: requestHash(row) };
+}
+export function validatePreparedNativeBarcode(row: PreparedNativeBarcode): void {
+  const { mappingVersion: _mapping, nativeBarcode: _native, fingerprint: _hash, ...input } = row;
+  requireDomain(requestHash(prepareNativeBarcode(input)) === requestHash(row),
+    "NATIVE_BARCODE_PREPARED_CHANGED", "Prepared barcode changed");
+}
+export function nativeBarcodeSourceEvidence(row: PreparedNativeBarcode): JsonObject {
+  const s = row.source;
+  return { id: s.id, batch_id: s.batchId, entity_type: "BARCODE", source_key: s.sourceKey,
+    file_ref: s.fileRef, sheet: s.sheet, row_no: s.rowNo, source_file_sha256: s.sourceFileSha256,
+    row_sha256: s.rowSha256, raw_fields: s.rawFields, normalized_fields: s.normalizedFields,
+    field_provenance: { ...s.fieldProvenance, native_sku_id: row.sku.nativeId,
+      native_barcode: row.nativeBarcode.barcode,
+      native_barcode_import: { validator_version: NATIVE_BARCODE_IMPORT_VERSION, selection: { ...row.selection },
+        row_fingerprint: row.fingerprint, native_barcode: { ...row.nativeBarcode },
+        canonical_source_key: row.sku.canonicalSourceKey, old_source_sku_key: row.sku.oldSourceSkuKey,
+        scheme_snapshot: row.scheme.snapshot,
+        ...(Object.hasOwn(row, "mainDemotion") ? { main_demotion: row.mainDemotion as unknown as JsonObject } : {}) } } };
+}
+export async function stageNativeBarcode(input: NativeBarcodeInput, options: {
+  readonly mode?: "DRY_RUN" | "STAGE"; readonly store?: NativeBarcodeImportStore;
+  /** Independently check v3 inclusion, exact original row and all source/native bindings. */
+  readonly authorize?: (row: PreparedNativeBarcode) => Promise<void>;
+} = {}): Promise<{ mode: "DRY_RUN" | "STAGE"; inserted: number; replayed: number; published: false; importReady: false }> {
+  const row = prepareNativeBarcode(input);
+  if (options.mode === undefined || options.mode === "DRY_RUN") return { mode: "DRY_RUN", inserted: 0, replayed: 0, published: false, importReady: false };
+  requireDomain(options.mode === "STAGE" && options.store && options.authorize,
+    "NATIVE_BARCODE_AUTHORIZATION_REQUIRED", "Exact selected original barcode and native bindings require independent authority");
+  await options.authorize(structuredClone(row));
+  return { mode: "STAGE", ...await options.store.stage(row), published: false, importReady: false };
+}
+
+/** Exact original six descriptive rows approved by the human. This initialization
+ * scope is separate from product defaults/generation and grants no SQL authority. */
+export interface NativeBarcodeSchemeInitializationRow26 {
+  readonly sourceSchemeKey: string;
+  readonly native: { readonly id: string; readonly name: string; readonly barcode_type: string; readonly rule_description: string;
+    readonly code_length: number; readonly rule_version: string; readonly status: "CURRENT" | "HISTORICAL" };
+}
+const APPROVED_BARCODE_SCHEME_ROWS_26: readonly NativeBarcodeSchemeInitializationRow26[] = Object.freeze((
+[
+  {
+    "sourceSchemeKey": "2020",
+    "native": {
+      "id": "82656465-2758-4be8-a965-412a971e9c4b",
+      "name": "2020年新方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。2020颜色1位、尺码2位的最后补充优先于原表旧备注。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 14,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2018",
+    "native": {
+      "id": "c0b009e7-6f61-447a-b87e-ceea62711ec9",
+      "name": "18年货品",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 9,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2021",
+    "native": {
+      "id": "bc7ff32c-1025-4c30-8950-0b33a492c538",
+      "name": "2021年条码方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 13,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2021fit",
+    "native": {
+      "id": "48c4fe44-7521-44c1-a0e3-c547a1691028",
+      "name": "2021年版型条码方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 14,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2023",
+    "native": {
+      "id": "9c584ada-9d42-4159-9e51-208577657021",
+      "name": "2023年条码方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 14,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2026",
+    "native": {
+      "id": "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef",
+      "name": "2026年条码方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 15,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "CURRENT"
+    }
+  }
+] as NativeBarcodeSchemeInitializationRow26[]).map(row => Object.freeze({ sourceSchemeKey: row.sourceSchemeKey, native: Object.freeze(row.native) })));
+/** Fresh data only: callers cannot mutate the frozen approved baseline. */
+export function nativeBarcodeSchemeInitializationRows26(): readonly NativeBarcodeSchemeInitializationRow26[] {
+  return structuredClone(APPROVED_BARCODE_SCHEME_ROWS_26);
+}
+/** Every original UUID and all42 fields match exactly. Order may differ only to
+ * permit deterministic locking; extra/missing/duplicate rows never become replay. */
+export function validateNativeBarcodeSchemeInitializationRows26(value: unknown): asserts value is readonly NativeBarcodeSchemeInitializationRow26[] {
+  requireDomain(Array.isArray(value) && value.length === 6 && Reflect.ownKeys(value).length === 7
+    && Array.from({ length: 6 }, (_, index) => Object.hasOwn(value, index)).every(Boolean), "NATIVE_BARCODE_INITIALIZATION_ROWS", "Exactly six approved original schemes required");
+  const rows = value as unknown[]; const seen = new Set<string>();
+  for (const value of rows) {
+    requireDomain(value !== null && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype,
+      "NATIVE_BARCODE_INITIALIZATION_ROWS", "Original scheme row data required");
+    const row = value as NativeBarcodeSchemeInitializationRow26;
+    requireDomain(typeof row.sourceSchemeKey === "string" && !seen.has(row.sourceSchemeKey),
+      "NATIVE_BARCODE_INITIALIZATION_ROWS", "Unique original scheme source key required");
+    const approved = APPROVED_BARCODE_SCHEME_ROWS_26.find(item => item.sourceSchemeKey === row.sourceSchemeKey);
+    requireDomain(approved !== undefined && requestHash(row) === requestHash(approved),
+      "NATIVE_BARCODE_INITIALIZATION_ROWS", "Original scheme identity and all seven approved fields must match exactly");
+    seen.add(row.sourceSchemeKey);
+  }
+}

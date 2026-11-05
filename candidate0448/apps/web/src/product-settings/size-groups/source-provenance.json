@@ -1,0 +1,37 @@
+{
+  "frozenRoot": "/workspace/shared/frozen-demo-ui/extracted/8877-ui-evidence-b8bcfe3",
+  "sourceCommit": "b8bcfe3",
+  "sourceFiles": [
+    {
+      "path": "LOAD_ORDER.md",
+      "sha256": "a5806268ab952d3b498add7c7f0b80ea55d3a77c0cf43ba4743287f09cf8dff4"
+    },
+    {
+      "path": "frontend/product-current.js",
+      "sha256": "d5a3ae29d781aa725859196dac6ef4e64f0e3cea08b3cca5c199579c9527b0be"
+    },
+    {
+      "path": "frontend/product-arco.jsx",
+      "sha256": "0b70d765bc42d27872b743ce7bae753ab1920c6e6c3fd9baed33057a0308d057"
+    },
+    {
+      "path": "frontend/product-current.css",
+      "sha256": "b83ee2ee419f6076274fc06280d672194202809a71b529a19a7989659ec2364a"
+    },
+    {
+      "path": "frontend/product-inventory-unified.css",
+      "sha256": "645ae0acece1b438cb04b8e8b642a539f85ec506d2b72d079f02ca4de6ed0da0"
+    },
+    {
+      "path": "frontend/product-rework.css",
+      "sha256": "40d9ce96db6cfc4d6a1e4c531144a05f10a5e44df64073e2a9441468872d0254"
+    }
+  ],
+  "readOnly": true,
+  "productionFrozenDataImported": false,
+  "routeRegistered": false,
+  "apiRegistered": false,
+  "liveDatabaseVerified": false,
+  "visualAccepted": false,
+  "visualAcceptanceTarget": "Final Mac browser comparison for size groups, seasons, barcode schemes and scheme view"
+}

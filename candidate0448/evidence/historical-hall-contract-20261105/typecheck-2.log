@@ -1,0 +1,43 @@
+apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts(75,458): error TS2322: Type 'EntityId<"hall"> | null' is not assignable to type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts(85,381): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts(150,468): error TS2345: Argument of type '{ lines: { skuId: string; quantity: string; dealPrice: string | null; pricingRule: "UNIT_PRICE" | "DISCOUNT"; discountTenths: number | null; isGift: boolean; zeroConfirmed: boolean; }[]; ... 8 more ...; note: string | null; }' is not assignable to parameter of type 'NativeSalesCreateProposal'.
+  Types of property 'hallId' are incompatible.
+    Type 'string | null' is not assignable to type 'string'.
+      Type 'null' is not assignable to type 'string'.
+apps/web/preview-core-pages/sales-fixture.ts(23,58): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/existing-document-preparation.ts(35,54): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-create.test.ts(31,51): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-create.test.ts(45,257): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-create.test.ts(105,135): error TS2322: Type 'string | null' is not assignable to type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-existing-document.ts(58,25): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/signed-sale-economic-edit.test.ts(35,176): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/signed-sale-economic-edit.test.ts(57,176): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/signed-sale-economic-edit.test.ts(88,182): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/sales.test.ts(220,43): error TS2322: Type 'EntityId<"hall"> | null' is not assignable to type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+tests/sales-native-facts.test.ts(341,23): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(block: Promise<unknown> | (() => Promise<unknown>), message?: string | Error | undefined): Promise<void>', gave the following error.
+    Argument of type '() => void | Promise<void>' is not assignable to parameter of type 'Promise<unknown> | (() => Promise<unknown>)'.
+      Type '() => void | Promise<void>' is not assignable to type '() => Promise<unknown>'.
+        Type 'void | Promise<void>' is not assignable to type 'Promise<unknown>'.
+          Type 'void' is not assignable to type 'Promise<unknown>'.
+  Overload 2 of 2, '(block: Promise<unknown> | (() => Promise<unknown>), error: AssertPredicate, message?: string | Error | undefined): Promise<void>', gave the following error.
+    Argument of type '() => void | Promise<void>' is not assignable to parameter of type 'Promise<unknown> | (() => Promise<unknown>)'.
+      Type '() => void | Promise<void>' is not assignable to type '() => Promise<unknown>'.
+        Type 'void | Promise<void>' is not assignable to type 'Promise<unknown>'.
+          Type 'void' is not assignable to type 'Promise<unknown>'.

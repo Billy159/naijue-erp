@@ -1,0 +1,2 @@
+SOURCE-ONLY final integration typecheck; no PG/network/listener execution.
+typecheck_exit=0

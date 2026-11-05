@@ -1,0 +1,55 @@
+{
+  "atUtc": "2026-10-23T18:23:10.365626+00:00",
+  "parent": "8de984455c5d7e74f5ceff837700c6e98d8af3a9",
+  "taskId": "F04_QF2_V1_UNDER_V2_RECOVERY_FIX",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-editor-state.ts",
+      "bytes": 8721,
+      "sha256": "a206c7bd86fbb227fad81c36b79a1267ddef301c457e490ec4f197a0a3b78ce1",
+      "beforeBytes": 8574,
+      "beforeSha256": "951d4fd14351d9e7e3247660f9a081099388a7be87b73b4029f2edb3a298c106",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-editor-state.test.ts",
+      "bytes": 28284,
+      "sha256": "5bece889cb3fd1d2b188820e6e561d7e3268816f06db4bbbe433bccb1126cac9",
+      "beforeBytes": 23978,
+      "beforeSha256": "a4063387129dc06d1c95fcef32b4669a394b53a43f341df9269bd67d55fd2d40",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-P-RECOVERY-V1-UNDER-V2-01/RESULT.json",
+  "ownerReceiptSha256": "83f20b3586d3bbafc00a042f33c2bb7fbc06cbd32e44044922f5867815f0c86a",
+  "scope": "One production expression replaced by original-command schema version selection plus existing client capability guard. V2 accepts original V1 CREATE/EDIT with seasonId/no seasonIds; V1 still uses V1 parser and rejects V2/media. Commands without values follow existing client version unchanged.",
+  "checksAdopted": [
+    {
+      "name": "Project Node24 original bug reproduction",
+      "runtime": "v24.21.0",
+      "result": "RED_INVALID_PRODUCT_MAINTENANCE_AT_ORIGINAL_CONSTRUCTOR",
+      "log": "red.log"
+    },
+    {
+      "name": "Targeted missing old V1 CREATE and EDIT under V2, constructor no IO, absent receipt and exact old route/body/key explicit retry; invalid/mixed schema and V1 denies V2/media",
+      "runtime": "v24.21.0",
+      "result": "PASS_2_TESTS_FAIL_0",
+      "log": "green.log"
+    },
+    {
+      "name": "Affected actual transitive TypeScript graph including changed test source",
+      "result": "PASS_DIAGNOSTICS_0",
+      "log": "strict.log"
+    },
+    {
+      "name": "Changed-line whitespace/single final LF",
+      "result": "PASS"
+    }
+  ],
+  "qualification": "SOURCE_FIXED_OWNER_TARGETED_SELFCHECK_ONLY. No actual Chrome/HTTPservice/PG/commit/recovery/performance/productionrelease accepted. Current196 preview does not include this source. Independent new affected QA needed, old passed suites reused. QF2 newP2 original197 failure preserved; exactbody/order/key/route/seasonId unchanged, just parser selection. V1 client still rejects V2/media.",
+  "limitations": [
+    "No actual F1 stable session-owner integration or independent actual recovery acceptance",
+    "No Chrome/realHTTP/PG/deploy/whole-system PASS",
+    "No old six-tab48/inventory or full HTTP suite repetition"
+  ]
+}

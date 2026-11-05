@@ -1,0 +1,12 @@
+df8a0ef2bb29d05a572ffa8bd8b32d55a84de07d9f026009028f42b04ecd1e9a  packages/application/src/sales-query-ports.ts
+48d2a5fae6da57314dd2e82a39938f389365679c555324c4926d09ee7f11d515  adapters/postgres/src/sales-query-reader.ts
+d68e175724a0be1d081d9d2fbd811c524675f61eb795ad88a75e552faf8e303b  apps/web/src/sales/contracts.ts
+7c807cbd37b1783e8044af2b2a25a4c78b39be91a8890407f9b44f2831a3766a  apps/web/src/sales/response-validation.ts
+68253fde1f627b515c67f4f89ae3d72c12527f96d8adbb0de43a0ca2ba7dfe63  apps/web/src/sales/tests/fixtures.ts
+27038587ddb77a806e5c444ed6bf4075bcd69bee3e7e7c163cd299644fb6b2ff  apps/web/src/sales/sales.test.ts
+d39f9467ff7352fc691e4543f8c3e4c617f99093059e7b631e511ea87d4150c1  tests/sales-query.test.ts
+0a4035a1e4c930bf35216d6be66dee4541b06de01a30c985f237867294095461  tests/sales-query-postgres-protocol.test.ts
+bd2e3e8bb45d0e93961b9bdea41d561d5bd439ee7286cd5e48c403f0dc297548  apps/api/src/sales-query-http.test.ts
+62c29d26f5e2dd9714b5d87d38dfd4f12a3fe69c0b8b65bc03ae30037be31d65  evidence/sales-summary-independent-probes.mjs
+069889073393a0bb33264067f1d8e259821cde4512dbcbfbd3822b310c990404  /workspace/shared/frozen-demo-ui/extracted/8877-ui-evidence-b8bcfe3/frontend/sales-summary.js
+846a217125cc7f0fe2800a7508a01131ad3648cdd4fe8a69cf8284a4b6b4d3a1  /workspace/shared/frozen-demo-ui/extracted/8877-ui-evidence-b8bcfe3/frontend/sales-current.js

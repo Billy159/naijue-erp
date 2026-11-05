@@ -1,0 +1,31 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 1: idle/advanced expansion reads nothing; actual 20/50/100/200 page sizes and approved primary/advanced filters.
+PASS DOM 2: only clicked bounded reference port reads; Escape restores focus; explicit query uses real mocked HTTP and exact negative money.
+PASS DOM 3: server document pagination, reset without read, failed page-size keeps marked prior scope; retry applies new size only on success.
+PASS DOM 4: detail only on click; stored line/full labels/exact return economics; non-Demo saved blocks absent and product 查看 explicitly unavailable; no mutations; full-page Back retains mounted executed list, scroll and focus after reveal; no dialog/Tab trap/Escape dismissal.
+PASS DOM 5: new target is independent; Back/cancel/close abort and discard late ignored-signal responses; cancelled facts do not reappear.
+PASS DOM 6: cancelling page-size retains applied size; identity/session/permission replacement clears list/detail and discards late facts.
+PASS DOM 7: StrictMode setup/cleanup replay does not dispose the live route, detail or reference lifecycle.
+PASS DOM 8: concrete reference HTTP cancels on close/identity revocation and late responses cannot reopen candidates or restore old labels.
+PASS DOM 9: full native names, exact beyond-int64 aggregates without invented units, Shanghai next-day minute formatting, exchange sections and gift-excluded detail totals; one list plus one detail request only.
+PASS DOM 10: missing detail-style capability leaves native list/query usable and both detail activations visibly unavailable; no dummy CSS provider/read fallback.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /未审核|已作废/. Input:
+
+'已审核已作废'
+
+    at file:///workspace/shared/naijue-erp-rewrite/apps/web/src/sales/tests/run-dom-tests.mjs:180:147 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '已审核已作废',
+  expected: /未审核|已作废/,
+  operator: 'doesNotMatch',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

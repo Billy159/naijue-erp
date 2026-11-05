@@ -1,0 +1,124 @@
+{
+  "atUtc": "2026-10-24T05:14:23.961229+00:00",
+  "parent": "898375dbc19b5b2e0fcd10ee6c7315418b316454",
+  "taskId": "F1_EXPLICIT_INVENTORY_READ_RESPONSE_BUDGET_ONLY",
+  "files": [
+    {
+      "path": "apps/web/src/application/contracts.ts",
+      "bytes": 12438,
+      "sha256": "d1ffc5baa984c5f94e4a6e5163467f49464acc9acbd93d8764235038175053ed",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/inventory.tsx",
+      "bytes": 2259,
+      "sha256": "429e58a8b442d3f889f4d311c06b91bc4de3f3c14ed274a1f7839e08382a3f2c",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "a15ca0d56b9f855356d2b320d1abd031c1b99b0953652910a924571cd77d0e39",
+  "ownerDelivery": {
+    "taskId": "F1_INVENTORY_ROUTE_ONLY_RESPONSE_BUDGET_SEAM",
+    "status": "SOURCE_READY_LOCAL_PASS_FROZEN_C_PIN_AND_ACTUAL_ENTRY_PENDING",
+    "atUtc": "2026-10-24T05:13:09.766077+00:00",
+    "sourceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/contracts.ts",
+        "bytes": 12438,
+        "sha256": "d1ffc5baa984c5f94e4a6e5163467f49464acc9acbd93d8764235038175053ed"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/routes/inventory.tsx",
+        "bytes": 2259,
+        "sha256": "429e58a8b442d3f889f4d311c06b91bc4de3f3c14ed274a1f7839e08382a3f2c"
+      }
+    ],
+    "ownershipTransfer": {
+      "atUtc": "2026-10-24T05:07:24.903668+00:00",
+      "path": "apps/web/src/application/contracts.ts",
+      "fromOwner": "C",
+      "to": "F1",
+      "scope": "Temporary unique file writer; only InventoryRouteConfiguration optional maxResponseBytes slot for actual distinct inventory read budget. All other fields unchanged; C does not write until owner release.",
+      "beforeSha256": "ed409e774a7960d81c3fd0dd7578a83e8cd0aa1629ddf4247c03604c85a175db",
+      "reason": "Actual QF2-C289-LARGE-INVENTORY-ENTRY-RESOURCE-LIMIT-01; no backend field or business change",
+      "returnOwner": "C",
+      "status": "ACTIVE_F1_ONLY",
+      "source": "Current C directed delegation under human 01a161f7-a5e8-7e10-9059-9537c28910c2"
+    },
+    "sourceFrozenUntilCPin": true,
+    "contractsWriterReleasedByF1": true,
+    "implementation": "Optional InventoryRouteConfiguration.maxResponseBytes; only createInventoryHttpReader receives explicit override; omitted retains original options; all other readers/commands unchanged",
+    "checks": {
+      "before-1": "EXIT1 invalid local test passed emptyInventoryFilter function not its result; product validator correctly rejected",
+      "before-2": "EXIT1 corrected original dense200 input, old route ignores slot and original8MiB rejects large query",
+      "after-1": "EXIT0 original createApplication capture/auth/navigation, real product command/reader construction, complete explicit16MiB inventory read, original product/ledger8MiB, invalid original validator and omitted shared custom budget",
+      "types-1": "EXIT0 strict exact2 imported closure"
+    },
+    "fixture": {
+      "bytes": 11851402,
+      "sha256": "c697abe3686afed35943c5d203d3da13a9a8f2e5d8e7e9b4ae436bcee957941e",
+      "products": 200,
+      "knownQuantity": "76800",
+      "readReference": "SYNTHETIC-inventory-200x4x8x12-paircolor-v1"
+    },
+    "notTested": [
+      "C original full harness overlay removal/route optin/actual fullapp entry",
+      "No browser/PG/server/fullbuild/performance/production",
+      "No product command/SDK/default/timeout change"
+    ],
+    "next": "C pins exact2, restores contract reservation, removes only wrong C global override, sets explicit inventory route16MiB for synthetic optin, builds containing290+newscope and actual entry before original QF2 large200",
+    "blocker": "C containing candidate and actual app entry/measurement; original289+QF T03 unchanged",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/REPORT.md",
+        "bytes": 2659,
+        "sha256": "156f958f7ef6234d6ac1c2831e1a4e3e378e4c4d3482232ae523d1e120006ac8"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/SOURCE.diff",
+        "bytes": 1772,
+        "sha256": "d0c19e6d15e1416215d2132ecbc77783e13e298337e519e05217b7ca2b34a25c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/RESULT.json",
+        "bytes": 1960,
+        "sha256": "53bea526d76ea3a6f04c0129a834b36b98c34b4dcf5d8859d116236228180310"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/before-1.log",
+        "bytes": 2052,
+        "sha256": "1b1621434f19ffc16586e357552d5a44aa169a2009e5914fffc64dbfc3390992"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/before-2.log",
+        "bytes": 1401,
+        "sha256": "9c92e2f253af782d6d5243c16d3449ee762b08d14aa3ca236747460fda038bba"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/after-1.log",
+        "bytes": 162,
+        "sha256": "666014cda948701c358ac42295bd826b7684db63e668584d382382a846ccff70"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/route-budget-check.mjs",
+        "bytes": 9260,
+        "sha256": "a9efcec69afc4789d5dabf3049c8b64673eb3ec80b5e91b01e64f042d39b03aa"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/tsconfig.json",
+        "bytes": 690,
+        "sha256": "0d60e28564d907b1ca4b0626794819df9e5b4148774450c6d226542619742859"
+      }
+    ]
+  },
+  "stage": "FIXED_SOURCE_REAL_APPLICATION_ROUTE_READER_RED_GREEN_STRICT_ONLY_C_HARNESS_ACTUAL_PENDING",
+  "actualPG": false,
+  "deployed": false,
+  "sharedContractOwnershipReturnedToC": true
+}

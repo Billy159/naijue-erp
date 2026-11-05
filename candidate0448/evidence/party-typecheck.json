@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../packages/application/src/party-*.ts",
+    "../adapters/postgres/src/party-*.ts",
+    "../apps/api/src/party-*.ts",
+    "../tests/party-*.test.ts",
+    "../tests/support/party-*.ts"
+  ]
+}

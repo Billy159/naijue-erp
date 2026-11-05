@@ -1,0 +1,17 @@
+✔ CURRENT form HTTP: five strict read routes, exact totals, captured actor and no listener (738.047465ms)
+✔ CURRENT form HTTP: client actor, scope and invalid query fail before provider (43.115694ms)
+✔ CURRENT form HTTP: selected method mandatory only for account lookup (15.321977ms)
+✔ CURRENT form HTTP: authentication must precede reader and malformed trusted facts fail closed (45.978553ms)
+✔ CURRENT form HTTP: captured reader cannot be replaced after construction (21.900236ms)
+✔ CURRENT form HTTP: safe domain statuses and hidden internal diagnostics (66.548584ms)
+✔ CURRENT form HTTP: bounded body, JSON media and malformed payload (22.476562ms)
+✔ CURRENT form HTTP: injected raw abort event cancels before provider and rejects late results (18.980062ms)
+✔ CURRENT form HTTP: pending injected disconnect forwards cancellation and cleans listeners (11.615592ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2362.735132

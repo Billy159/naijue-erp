@@ -1,0 +1,86 @@
+{
+  "atUtc": "2026-10-22T19:55:30.194054+00:00",
+  "parent": "3af57db5fde74da1544e57200dee6f9c85f99bc6",
+  "groups": [
+    {
+      "slice": "F1_CHUNK_38",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-38/DELIVERY.json",
+      "receiptSha256": "2719788746c1368f25f94a7eecc788f0d3af0bf7faf4a41388e0fe50f1df3911",
+      "receiptSnapshot": {
+        "chunk": 38,
+        "status": "READY_FOR_C_PIN",
+        "scope": "Optional raw remote onSearch seam only",
+        "files": [
+          {
+            "path": "apps/web/src/demo-controls/single-select-contract.ts",
+            "sha256": "ab79bc3865a70f3c22a75429955772f1b3080a098efc4f2f1bfa174f6b62d52c"
+          },
+          {
+            "path": "apps/web/src/demo-controls/single-select-action.tsx",
+            "sha256": "7aa90f80a6b1fd69810e2bee06482f37873eeb5b4dd687c084b5bb0190e372ed"
+          }
+        ],
+        "behavior": "onSearch present enables Arco showSearch, forwards original text and disables local filtering; absent retains non-search. Existing non-clear/non-create, value guards, local portal and styles unchanged.",
+        "checks": {
+          "types-1.log": "exit0"
+        },
+        "notTested": [
+          "F2 size-group/barcode-scheme consumer",
+          "actual browser search or persistence"
+        ],
+        "blockers": [],
+        "next": "C exact pin then F2 explicit consumer; F1 resumes saved full-page bridge and actual Transfer product-page shell width"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/demo-controls/single-select-contract.ts",
+          "sha256": "ab79bc3865a70f3c22a75429955772f1b3080a098efc4f2f1bfa174f6b62d52c",
+          "owner": "F1",
+          "bytes": 2049
+        },
+        {
+          "path": "apps/web/src/demo-controls/single-select-action.tsx",
+          "sha256": "7aa90f80a6b1fd69810e2bee06482f37873eeb5b4dd687c084b5bb0190e372ed",
+          "owner": "F1",
+          "bytes": 3964
+        }
+      ]
+    },
+    {
+      "slice": "F1_CHUNK_39",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-39/DELIVERY.json",
+      "receiptSha256": "9653852f8eb5c39ba696f842f396dfe08f178f22e6e3442f64d643e7f08dcb2e",
+      "receiptSnapshot": {
+        "chunk": 39,
+        "status": "READY_FOR_C_PIN",
+        "defect": "TR-UI-05",
+        "evidence": "reports/ui-demo-comparison-20261022/v009-8755931/TRANSFER-PRODUCT-VIEW-WIDTH.json actual route1222 vs product535 flex0 1auto",
+        "files": [
+          {
+            "path": "apps/web/src/sales/document-presentation.tsx",
+            "sha256": "25fc352615e1bf721c754556377d91ef79bf25962b83e5925e3d940224c42bf0"
+          }
+        ],
+        "change": "Shared retained document wrapper width100/minWidth0; active whole-product section flex1/width100/minWidth0. Fill actual flex route without touching F2 product leaf, tokens or lifecycle.",
+        "checks": {
+          "types-2.log": "exit0; types1 failed solely imported WIP37 branded-map string mismatch, now corrected"
+        },
+        "notTested": [
+          "actual browser width equality and clipping; C next candidate Demo scope only"
+        ],
+        "blockers": [],
+        "next": "C pin then next actual App Transfer product-view width; no prior matrix/cancel/key/capture rerun"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/sales/document-presentation.tsx",
+          "sha256": "25fc352615e1bf721c754556377d91ef79bf25962b83e5925e3d940224c42bf0",
+          "owner": "F1",
+          "bytes": 13734
+        }
+      ]
+    }
+  ],
+  "fileCount": 3,
+  "scope": "Shared optional remote search seam2 and Transfer full product shell width1; no browser or business acceptance."
+}

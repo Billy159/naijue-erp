@@ -1,0 +1,57 @@
+{
+  "atUtc": "2026-10-22T08:32:05.398364+00:00",
+  "parent": "16eb3f6b43e41089f52e0e93ee830e6398368525",
+  "groups": [
+    {
+      "slice": "D2_W12_EXACT2_CURRENT_CONSUMERS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W12-EXACT2-RECEIPT.json",
+      "receiptSha256": "f2f9d6bc68feede06b7d16e4ad6104162313441e7cf6d7cf2343087e1916e219",
+      "files": [
+        {
+          "path": "adapters/postgres/src/party-read-reader.ts",
+          "sha256": "6a31adef3f82d62f9f5b7de398ec3eb883ac097ad5168633da6a80a8a3dff72d",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/party-maintenance-store.ts",
+          "sha256": "59b83af44a824f4dc7ea592b6ea1dead8b9ff51b77721ee3bd39516c53240ffe",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/organization-maintenance-store.ts",
+          "sha256": "c1bcccef279dded5b52072ec602b6ab76895d0d9691c7de39d1d7ac3a7cd0188",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/party-read-postgres-protocol.test.ts",
+          "sha256": "6cac03731f59b66d647e243fdd3cd6001198cc536ae3ee519e489f4f5b77fed0",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/party-postgres-protocol.test.ts",
+          "sha256": "5f586e687df278e51cfc5a8fcca7d80047460f580aa89ccccc5397bb77acb5f3",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/organization-maintenance.test.ts",
+          "sha256": "b6c12ec117068623ff7ccd5354164dc0ef721499ef670c286342929fa9b34a85",
+          "owner": "D2"
+        }
+      ]
+    },
+    {
+      "slice": "F2_DATA_PRES003_PRICE_STYLE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DATA-PRES-003-DELIVERY-v1.json",
+      "receiptSha256": "90a2c94e93439b8269b7ff057845ae4d59835d7e46c2ea991f116a8e26210187",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "sha256": "8f30fbe5750d7740b800d2b765d595119cd0fc9827c067a1f98530f81abb0498",
+          "owner": "F2"
+        }
+      ]
+    }
+  ],
+  "fileCount": 7,
+  "scope": "source consumers and style only; exact26 issuer and actual runtime/browser pending"
+}

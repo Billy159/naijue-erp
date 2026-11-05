@@ -1,0 +1,84 @@
+/* Frozen b8bcfe3 sales presentation, resolved in LOAD_ORDER.md order.
+ * Layout: sales-current.js:76–98,103–114,164–181; transfer-current.css,
+ * golden-consistency.css:13–55,91–114; sales-refinement.css final list widths;
+ * sales-detail-alignment.css final read-only document geometry.
+ * Scoped adaptation only. Shared controls/tokens stay shared; no legacy runtime. */
+.sales-workbench{display:flex;flex-direction:column;box-sizing:border-box;width:100%;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;height:calc(100dvh - var(--ui-topbar) - 32px);min-height:0;font:13px var(--ca-font-sans);color:var(--ca-ink)}
+.sales-workbench>.tc-head{display:flex;align-items:center;gap:12px;min-height:40px;margin:0 0 8px;flex:none;background:#fff}
+.sales-workbench>.tc-head h1{font-size:20px;line-height:28px;margin:0;font-weight:600}
+.sales-workbench>.tc-head>.btn{margin-left:auto}
+.sales-workbench .tc-filters{display:flex;flex-direction:column;gap:8px;align-items:stretch;flex:none;margin:0 0 14px;padding:0;border:0;background:transparent;--sales-filter-columns:minmax(120px,.8fr) minmax(120px,.8fr) 155px minmax(180px,1fr) minmax(168px,1.2fr) minmax(168px,1.2fr) max-content;--sales-filter-min-width:1204px}
+.sales-workbench .tc-filter-row{display:grid;grid-template-columns:var(--sales-filter-columns);align-items:end;gap:8px;min-width:var(--sales-filter-min-width)}
+.sales-workbench .iw-field{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:4px;min-width:0;width:auto;max-width:none;margin:0;color:var(--ca-ink-2);font-size:12px}
+.sales-workbench .iw-field>span:first-child,.sales-workbench .iw-field>label{padding-left:1px;line-height:normal}
+.sales-workbench .iw-field>input.iw-control{cursor:text;padding:4px 10px}
+.sales-workbench .iw-field>select.iw-control{padding:4px 9px}
+.sales-workbench .iw-field input::placeholder{color:var(--ca-ink-3)}
+.sales-workbench .tc-filter-secondary>.iw-field{grid-column:span 2}
+.sales-workbench .tc-filter-actions{display:flex;grid-column:-2/-1;justify-self:end;align-items:center;gap:8px;white-space:nowrap}
+.sales-workbench .tc-filter-actions>.btn:not(.tc-filter-toggle){min-width:70px}
+.sales-workbench .tc-filter-toggle{gap:5px;min-width:0;height:32px;padding:0 5px;font-size:12px;font-weight:400}
+.sales-workbench .tc-filter-toggle:hover,.sales-workbench .tc-filter-toggle[aria-expanded=true]{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.sales-workbench .ui-query-note{flex:none;font-size:12px;color:var(--ca-ink-2);line-height:1.6;margin:0;padding:6px 0 8px;min-height:28px}
+.sales-workbench .ui-query-note[data-pending=true]{font-weight:600;color:var(--ca-primary)}
+.sales-workbench .iw-alert,.sales-workbench .iw-loading-note{flex:none;padding:8px 12px;line-height:20px;font-size:12px;margin:0 0 6px;border:1px solid var(--ca-line);background:var(--ca-warning-soft);color:var(--ca-warning)}
+.sales-workbench .iw-alert{color:var(--ca-critical);background:var(--ca-critical-soft)}
+.sales-workbench .iw-alert .iw-link,.sales-workbench .iw-loading-note .iw-link{margin-left:8px}
+.sales-workbench .tc-list-scroll{flex:1;min-height:0;max-height:none;overflow:auto;background:var(--ca-surface);border:1px solid var(--ca-line);scrollbar-gutter:stable;overscroll-behavior:contain}
+.sales-table{width:100%;border-collapse:collapse;font:13px var(--ca-font-sans);font-variant-numeric:tabular-nums;color:var(--ca-ink)}
+.sales-table th,.sales-table td{box-sizing:border-box;text-align:left;vertical-align:middle;border-bottom:1px solid var(--ca-line)}
+.sales-table th{position:sticky;top:0;z-index:2;background:var(--ca-table-head);color:var(--ca-ink-2);font-weight:600;white-space:nowrap}
+.sales-table tbody tr:hover td{background:var(--ca-table-row-hover)}
+.sales-table .sales-numeric{text-align:right}
+.sales-workbench .sales-list{table-layout:fixed;min-width:1220px}
+.sales-workbench .sales-list th,.sales-workbench .sales-list td{height:44px;padding:4px 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:normal}
+.sales-workbench .sales-list th{height:40px;font-size:12px}
+.sales-workbench .sales-list th:nth-child(1){width:90px}.sales-workbench .sales-list th:nth-child(2){width:180px}.sales-workbench .sales-list th:nth-child(3){width:75px}.sales-workbench .sales-list th:nth-child(4){width:90px}.sales-workbench .sales-list th:nth-child(5){width:110px}.sales-workbench .sales-list th:nth-child(6){width:80px}.sales-workbench .sales-list th:nth-child(7){width:240px}.sales-workbench .sales-list th:nth-child(8){width:60px}.sales-workbench .sales-list th:nth-child(9){width:80px}.sales-workbench .sales-list th:nth-child(10){width:145px}.sales-workbench .sales-list th:nth-child(11){width:70px}
+.sales-workbench .sales-number{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;padding:0;font-size:13px}
+.sales-workbench .sales-view{padding:0;font-size:13px}
+.sales-unavailable{color:var(--ca-ink-3);font-size:12px}
+.sales-workbench .tc-empty{padding:20px 12px;color:var(--ca-ink-2);font-size:13px}
+.sales-workbench .tc-empty strong{font:inherit}.sales-workbench .tc-empty p{font-size:12px;line-height:20px;margin:8px 0}
+.sales-pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:42px;padding:8px 0;flex:none;font-size:12px;flex-wrap:wrap}
+.sales-pagination .sale-pagination-count{display:inline-flex;flex:none;align-items:center;gap:10px;white-space:nowrap}
+.sales-pagination nav{display:flex;align-items:center;gap:5px;flex:none;white-space:nowrap}
+.sales-pagination nav>.iw-button{height:28px;min-height:28px;padding:2px 7px;font-size:13px;font-weight:400}
+.sales-pagination .sales-page-item{display:inline-flex;align-items:center;gap:5px}
+.sales-pagination .iw-jump,.sales-pagination .iw-text-button{font-size:12px}
+.sales-workbench[hidden]{display:none}
+/* Lightweight Back frame remains usable while action code/CSS is pending. */
+.sales-detail-loading>.tc-head .actions{display:flex;align-items:center;gap:4px;margin-left:auto}
+@media(max-width:1450px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(100px,.8fr) minmax(100px,.8fr) 155px minmax(138px,1fr) minmax(110px,1.2fr) minmax(110px,1.2fr) max-content;--sales-filter-min-width:0px}}
+@media(max-width:1270px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(88px,.8fr) minmax(88px,.8fr) 155px minmax(115px,1fr) minmax(95px,1.2fr) minmax(95px,1.2fr) max-content}}
+
+/* Lightweight placeholders remain route-local; heavy TreeSelect CSS is action-only. */
+.demo-multi-host{position:relative;display:block;min-width:0;width:100%}
+.demo-multi-host .demo-multi-trigger{height:32px;font-size:13px}
+.demo-multi-host .demo-multi-state{display:block;font-size:12px;line-height:18px;color:var(--ca-ink-2);padding:4px 0}
+.sales-filter-notice{margin:0;padding:7px 8px;font-size:12px;line-height:18px;color:var(--ca-ink-2)}
+
+/* The light closed-state overlay already reserves 31px for the suffix. A lone
+ * token must use that remaining width, not subtract Arco's 42px reserve again.
+ * Keep the measured multi-token/+N presentation untouched. */
+.sales-workbench .tc-filter-row .demo-idle-selection:not(:has(.demo-idle-token-count))>.demo-idle-token:only-child{max-width:100%}
+/* Keep overflow on the full-height list, not on the short filter form: locally
+ * owned Arco popups can float over the results without a 32px-high clip. */
+.sales-workbench .tc-filters{overflow:visible}
+.sales-workbench .tc-filter-row>.iw-field,.sales-workbench .tc-filter-actions{flex-shrink:0}
+
+/* Native advanced number input: frozen styles/golden-consistency source field,
+ * controlled through the unchanged formal raw filter draft. */
+.sales-workbench .tc-filters input.iw-control{box-sizing:border-box;width:100%;min-width:0;height:32px;min-height:32px;margin:0;padding:4px 10px;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);color:var(--ca-ink);font:13px var(--ca-font-sans)}
+.sales-workbench .tc-filters input.iw-control:focus{outline:none;border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted)}
+
+/* Frozen styles.css44-52 plus final transfer-current.css workspace font/padding reset and tc-link. */
+.sales-workbench .btn{font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:4px 9px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:400;white-space:nowrap}
+.sales-workbench .btn:hover:not(:disabled){background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.sales-workbench .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.sales-workbench .btn.primary:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.sales-workbench .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.sales-workbench .btn:disabled{cursor:not-allowed;background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+.sales-workbench .tc-filter-actions>.tc-filter-toggle.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:0;height:32px;padding:0 5px;border:0;background:transparent;color:var(--ca-ink-2);font-size:12px;font-weight:400}
+.sales-workbench .tc-filter-actions>.tc-filter-toggle.btn:hover,.sales-workbench .tc-filter-actions>.tc-filter-toggle.btn[aria-expanded=true]{border:0;background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.sales-workbench .sales-list .btn.tc-link{color:var(--ca-primary-ink);border:0;background:transparent;padding:0;min-height:24px}
+.sales-workbench .sales-list .btn.tc-link:hover,.sales-workbench .sales-list .btn.tc-link:focus-visible{text-decoration:underline;color:var(--ca-primary-hover);background:transparent}

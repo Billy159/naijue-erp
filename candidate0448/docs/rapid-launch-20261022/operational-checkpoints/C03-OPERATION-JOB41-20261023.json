@@ -1,0 +1,39 @@
+{
+  "jobId": "c03-r1-runtime26-catalog-20261023-41",
+  "result": "PASS_ACTUAL_R1_RUNTIME_ROLE_FULL_CATALOG_ONLY_PENDING_QB_REVIEW",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-catalog-20261023-41/release-receipts/c03-r1-runtime26-catalog-20261023-41/engine-result.json",
+  "evidenceSha256": "f820047cdf0d2607ee05083d0d0984d5ad5f5a77f9eaba2988e208f5e98944ef",
+  "catalogServerRaw": {
+    "file": "runtime-catalog-canonical.json",
+    "bytes": 1129627,
+    "serverRawSha256": "b214698f6b0c79c8525123940198c93a454cedea407ceaa1da2f7e4bd84cd3ff",
+    "canonicalSha256": "f62de0a301d485da548324a89e97bd902f184ca45e0778901ab8d4be8dab15c7",
+    "identity": {
+      "database": "erp_rewrite_20261022_r1",
+      "server_addr": "172.18.0.3/32",
+      "server_port": 5432,
+      "current_user": "erp_rewrite_runtime_20261022",
+      "database_oid": "1027659",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "database_owner": "erp_rewrite_owner_20261022",
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    },
+    "counts": {
+      "relations": 60,
+      "columns": 592,
+      "routines": 121,
+      "triggers": 930,
+      "constraints": 529,
+      "indexes": 164,
+      "roles": 3
+    }
+  },
+  "catalogCollected": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-catalog-20261023-41/release-receipts/c03-r1-runtime26-catalog-20261023-41/runtime-catalog-canonical.json",
+    "bytes": 1348707,
+    "sha256": "d542092034a90c45dc10b638db252385137dc7b1e97c52dae1d5d731fd54975c"
+  },
+  "qualification": "Actual R1 runtime TCP original readonly catalog only. No issuer/final host/source authority; QB metadata pending. Original program39 label preserved, actual operation41."
+}

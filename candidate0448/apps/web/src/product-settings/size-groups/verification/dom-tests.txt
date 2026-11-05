@@ -1,0 +1,5 @@
+PASS groups: source headers/read-only controls, StrictMode, same-range pagination, pending/prior/empty/failure/retry, cancel, unmount/reopen, late transports, permission and identity invalidation.
+PASS seasons: source headers/read-only controls, StrictMode, same-range pagination, pending/prior/empty/failure/retry, cancel, unmount/reopen, late transports, permission and identity invalidation.
+PASS schemes: source headers/read-only controls, StrictMode, same-range pagination, pending/prior/empty/failure/retry, cancel, unmount/reopen, late transports, permission and identity invalidation.
+PASS dictionary search: source inline search is debounced server query, resets page, aborts older request immediately, ignores late facts, Enter does not duplicate debounce, readiness failure has no auto-retry, never filters frozen arrays.
+PASS barcode view: exact target native read, loading/close/Escape/focus return, close cancels + ignores late detail, actual unknowns/missing target, detail 401 clears list and modal together.

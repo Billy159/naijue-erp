@@ -1,0 +1,34 @@
+✔ exact operator-fixed catalogue binding rejects drift and wrong physical identity (1.948223ms)
+✔ same client exact SELECT ACK and genuine immutable source spec required (316.777346ms)
+✔ installed profile includes exact reference-lock successor with its narrower pg_catalog path (196.396299ms)
+✔ initial admission rejects disabled triggers, unvalidated constraints, disabled RLS and non-SET inherited roles (0.755564ms)
+✔ source spec binds exact permission patches and installer sources, not just routine bodies (212.186556ms)
+✔ installation record requires exact trusted-file shape and current source (4.743452ms)
+✔ root owned fixed record rejects writable, linked and application-owned metadata (0.611031ms)
+✔ finalization observes real query packet only after exact rollback acknowledgment; failure cannot produce record (40.484357ms)
+✔ fixed install sequence stops at every failed stage and cannot expose standalone finalization CLI (8.454451ms)
+✔ exit zero alone or a quit-before-tail cannot stand in for the server installation sentinel (0.850935ms)
+✔ local installation target must already be independently fixed and empty before any stage (0.758198ms)
+✔ versioned source spec changes only final closure pin and binds predecessor/combined artifact (715.276861ms)
+✔ versioned record validation binds exact format, predecessor, successor and final body (2.968937ms)
+✔ forged source spec refuses before any catalog query and cannot supply its own approval (9.412612ms)
+✔ acceptance admission obtains fixed trusted installation and source records, not caller authority (7.899335ms)
+✔ catalog observation is rollback-only and cannot substitute for approval (4.352245ms)
+✔ direct-commit engine runner requires trusted admission before initialization (1.712033ms)
+✔ explicit successor helper cannot fall back to original installation authority (5.085823ms)
+✔ direct COMMIT acceptance cases register without invoking setup or database work (166.333584ms)
+✔ real-client runner never substitutes finish, constraint forcing or synthetic SQL replies for direct COMMIT (8.331816ms)
+✔ no target binding or non-synthetic target is rejected before registration (0.719792ms)
+✔ physical target uses PostgreSQL host normalization rather than CIDR text (1.696334ms)
+✔ loopback aliases cannot admit the same physical database twice (0.772568ms)
+✔ one explicitly selected case can use one independently installed trusted target record (0.733232ms)
+✔ exclusive-client and no-admin-change window acknowledgment is required before registration (0.555394ms)
+✔ successor admission selection is a fixed enum, not a callback or approval boolean (0.736601ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1050.508368

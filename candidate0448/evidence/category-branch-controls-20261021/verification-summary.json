@@ -1,0 +1,32 @@
+{
+  "status": "Source frozen for parent compilation/coherent build and actual-browser comparison.",
+  "baseCommit": "cdd15dbd59de1393849ac44d9dbdc154a793299e",
+  "pureModelTests": 20,
+  "passingDomGroups": {
+    "categoryBranches": 7,
+    "flatSalesReference": 5,
+    "flatTransferFilter": 4,
+    "actualPortableAndSplitCssCascade": 4
+  },
+  "totalPassingDomGroups": 20,
+  "conditions": "DOM checks run serially after inventory owner released its slot; Node heap capped768MiB. No aggregate command or performance acceptance claimed.",
+  "additionalPasses": [
+    "Frozen category full/range source hashes",
+    "Exact flat source mapping",
+    "Owned-path git diff --check",
+    "Source manifest verification"
+  ],
+  "review": "Independent read-only review passed model/API/flat compatibility; identified retained callback gap was fixed with live state/open-generation/unmount guard and directly captured public callback tests. No further issue identified.",
+  "knownDifferences": [
+    "Strict positive branch IDs, not full-catalog non-strict SHOW_PARENT",
+    "No category ALL-minus approximation even complete page, because unrestricted can include uncategorized rows",
+    "Covered-child exclusions refused; separate deliberate positive-only selection required",
+    "Only present native parent rows nested, no fetch/invented nodes or partial halfchecks"
+  ],
+  "boundary": [
+    "No full compiler run by worker",
+    "No real-browser layout/pixel/visual acceptance",
+    "No performance/PG/production/deployment/network/install/commit action"
+  ],
+  "sourceStateSha256": "311f8ee502958aeaa85d7a0439961f9c935f4e84eac7f3b847bda76151122293"
+}

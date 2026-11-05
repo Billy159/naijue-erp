@@ -1,0 +1,128 @@
+{
+  "status": "PASS",
+  "scope": "Archive existing portable-preview evidence and compare hashes only. No source/UI/typecheck/build/DOM tests were rerun.",
+  "archivedAt": "2026-10-20T21:54:13.010Z",
+  "sourceCommit": "bc87b5bed2fb8f55ff9fd46a01f518d239fcc02a",
+  "currentHeadAtArchive": "140324c3bef083bcd950e4a6152bc384d3078d46",
+  "headInputHashComparisons": [
+    {
+      "commit": "bc87b5bed2fb8f55ff9fd46a01f518d239fcc02a",
+      "matchingConsumedInputs": 76,
+      "productionInputs": 69,
+      "previewInputs": 7
+    },
+    {
+      "commit": "d24dc431f5a6fb1a0ca70aaefba22d8a45c2a216",
+      "matchingConsumedInputs": 76,
+      "productionInputs": 69,
+      "previewInputs": 7
+    },
+    {
+      "commit": "e4aa8b2663da5984486ddc63b2f95e2a92ca0950",
+      "matchingConsumedInputs": 76,
+      "productionInputs": 69,
+      "previewInputs": 7
+    },
+    {
+      "commit": "140324c3bef083bcd950e4a6152bc384d3078d46",
+      "matchingConsumedInputs": 76,
+      "productionInputs": 69,
+      "previewInputs": 7
+    }
+  ],
+  "currentWorkingConsumedInputsMatch": true,
+  "copiedFiles": [
+    {
+      "file": "apps/web/preview-core-pages/verification/bc87b5bed2fb/build.log",
+      "sha256": "8db47d26be0453927f8c7bfbfe1da4369b5edbe7fbcd98889d6f4612a5987732",
+      "bytes": 555
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/bc87b5bed2fb/dom-smoke.log",
+      "sha256": "a3d88248c35034859201fcb8b5e95ddabf2584497d3141e394556baba348304c",
+      "bytes": 1302
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/bc87b5bed2fb/verification.json",
+      "sha256": "020efa8ffa02e680e78f3063308ed9e836dd6eeb701b2b5beb0dcb6d7f3623c2",
+      "bytes": 37950
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/bc87b5bed2fb/source-inputs.sha256",
+      "sha256": "08145638cce32f4b63cebb7f14dc90163cb64e8c006a0f0c186776ceba750181",
+      "bytes": 8086
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/bc87b5bed2fb/preview-source.sha256",
+      "sha256": "30b5ed650631ad2298d489ac91fbead6c6468758031e05e50c830d1674b77e99",
+      "bytes": 1292
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/bc87b5bed2fb/final-provenance.json",
+      "sha256": "07edf94320ae9ac96abd87967a005164cdc26b3ef57794d94864387b86f49be2",
+      "bytes": 1167
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/bc87b5bed2fb/final-provenance.log",
+      "sha256": "2f229ac7086eee89067e9e0543b9023a24a1a59eedd77576da8daced1214779b",
+      "bytes": 7492
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/bc87b5bed2fb/final-provenance-historical-head-advance.txt",
+      "sha256": "a90f8056934cf88df6da69c16cdb5693c116b050bb0f35819c87721b7c54cdc7",
+      "bytes": 468
+    }
+  ],
+  "htmlNotCopied": {
+    "sourceArtifact": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/bc87b5bed2fb/three-core-pages-synthetic-test-only-bc87b5bed2fb.html",
+    "bytes": 1365449,
+    "sha256": "b058a56e353628bfaca294a608a1248d1b74ff4402d1b70bda70f6bd7c92baf5"
+  },
+  "sourceSnapshotSha256": "08145638cce32f4b63cebb7f14dc90163cb64e8c006a0f0c186776ceba750181",
+  "prior38VerificationFilesUnchanged": [
+    {
+      "file": "apps/web/preview-core-pages/verification/build.log",
+      "sha256": "249d7b0c442c27792b65bc60afef86955bd1549ea1c3fa26956ceafc247ef321"
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/dom-smoke.log",
+      "sha256": "d1ca1ec6a37b958114b2d6ec2eb37fe2c27bd3d2e53a4f869ab178935cc2d954"
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/final-provenance.log",
+      "sha256": "ab9ece5c92096d6a89953f6da7e39021f06df9e5d47fc6bac1a96a32e80135c5"
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/preview-source.sha256",
+      "sha256": "87e6c7ac22cc15c43b7c905ea6c81f4f931f34f020bf2ffcaae1c31b4499d2da"
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/review.md",
+      "sha256": "6c6619d833f1cc9de738a3409b3fc75b8845c006928c88381bda05759150cab4"
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/source-inputs.sha256",
+      "sha256": "faa4a72f7fb493aaba0c13a7d2070cc95266cfd9197c54f87640b525f7792d94"
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "apps/web/preview-core-pages/verification/verification.json",
+      "sha256": "2e8f8ba95e0a6ad4d8c76d8881ae9cb6a820fa6b131e1a17323dd49cd71bea93"
+    }
+  ],
+  "smoke": {
+    "status": "Existing five-group synthetic JSDOM preview smoke PASS, not rerun",
+    "groups": 5,
+    "externalResourceRequests": 0,
+    "networkAttempts": 0,
+    "runtimeErrors": 0
+  },
+  "limits": [
+    "No HTML large file or882844-byte metafile copied.",
+    "No runtime source edit, compiler, new build, DOM rerun, browser, listener, upload, commit or performance claim.",
+    "Later d24/e4/backend-evidence HEADs do not change the76 exact consumed source inputs; this does not turn the portable file into a production deployment."
+  ]
+}

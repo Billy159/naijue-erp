@@ -1,0 +1,76 @@
+{
+  "atUtc": "2026-10-23T01:53:36.954793+00:00",
+  "result": {
+    "expectedOld": "6b1158aa4bc278862c685484eda27a93ca8759ef",
+    "target": "01accc753a0354d8753c28826b896bdcd2eca67a",
+    "objects": [
+      {
+        "commit": "d0f82b50d669c95099c97382622b50f39dbcaad6",
+        "tree": "8b1b85fa275a5f2087677959bcb7ee84c9478d18",
+        "changedPaths": 1,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "a922fcc9e39fc8bae0b9ce5992776f452ded0ba6",
+        "tree": "226595fead8731dac55edb90d5525c706f95643f",
+        "changedPaths": 3,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "6241fc07a1ff952f9c34fe3af27345339dcbecac",
+        "tree": "aeda1bda91693d00233efed2accb55ac55c31b09",
+        "changedPaths": 7,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "320a7ae049561eaff28d84bcb5289b36144a4b6e",
+        "tree": "2ea23a7f91e8523978f9aec782df3224420ede4b",
+        "changedPaths": 2,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "3a938141cb92bc90aea201480938fdb20b85ff41",
+        "tree": "b00fb31dd95216676060eb8564cb4ea93cadb114",
+        "changedPaths": 2,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "5ddccfb1ee8e39e3c5cd129da3c43c033239ecb7",
+        "tree": "36f8321726165a27853be3c9e23396a40fa5b778",
+        "changedPaths": 9,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "1578a5b0823af4c85a33aaecd629babdae3f4d5c",
+        "tree": "0ad73c3143866707391ac0f922911a6035364458",
+        "changedPaths": 2,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "f8d563b72e022ba47d3804084fcfd0b555af3042",
+        "tree": "6f009fd35eb7b97670f98df16710406659822a4b",
+        "changedPaths": 5,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "01accc753a0354d8753c28826b896bdcd2eca67a",
+        "tree": "68f720a007f9b8b2e7047e1eb6027c52582987f0",
+        "changedPaths": 6,
+        "returnedShaExact": true
+      }
+    ],
+    "force": false,
+    "status": "PASS_EXACT_ORIGINAL_OBJECTS_NONFORCED_NORMAL_BRANCH_FF_READBACK",
+    "atUtc": "2026-10-23T01:50:52.099030+00:00",
+    "remoteVerified": "01accc753a0354d8753c28826b896bdcd2eca67a",
+    "commits": 9,
+    "normalGitProtocolPushSucceeded": false
+  },
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-01accc7-20261023-01/RESULT.json",
+    "bytes": 2089,
+    "sha256": "33b20d5e5fc4f9570a955993e9cccb995b2fa2412a02ae45ca96edcae489971f"
+  },
+  "privateBusinessDataUploaded": false,
+  "formalBusinessRelease": false
+}

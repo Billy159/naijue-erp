@@ -1,0 +1,69 @@
+Independent verification against owner freeze manifest 362a787c8de26d60a70ce06f50865dad47fc57aeeac7afe2ddd86c97a9bc97ee.
+$ ./node_modules/.bin/tsc --noEmit -p tests/inventory-ledger-query-tsconfig.json
+Scoped TypeScript PASS
+$ node --test evidence/inventory-ledger-independent-probes.test.ts tests/inventory-query-postgres-protocol.test.ts
+✔ independent: direct reader suppresses result when cancellation arrives during COMMIT (17.818422ms)
+✔ independent: cancellation at connect prevents later SQL and releases once (1.873616ms)
+✔ independent: cancellation at BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY prevents later SQL and releases once (1.279733ms)
+✔ independent: cancellation at warehouse prevents later SQL and releases once (1.327553ms)
+✔ independent: cancellation at sku prevents later SQL and releases once (0.937657ms)
+✔ independent: cancellation at publication prevents later SQL and releases once (2.553322ms)
+✔ independent: cancellation at entries prevents later SQL and releases once (5.657869ms)
+✔ independent: maximum page validates 201st row, returning exactly 200 and last-visible cursor (14.241925ms)
+✔ independent: bytewise UUID and six-fraction timestamp pagination crosses ties without duplicates (9.755211ms)
+✔ independent: out-of-order lookahead rejects complete page before COMMIT (1.492863ms)
+✔ independent: cross-SKU lookahead rejects complete page before COMMIT (1.198937ms)
+✔ independent: unpublished baseline lookahead rejects complete page before COMMIT (0.922263ms)
+✔ independent: sales source wrong endpoint rejects complete page before COMMIT (2.020214ms)
+✔ independent: transfer source missing owner rejects complete page before COMMIT (0.936198ms)
+✔ independent: baseline version not null rejects complete page before COMMIT (0.816653ms)
+✔ independent: actual six-digit UTC timestamps preserve microseconds and reject invalid dates/offsets (1.179107ms)
+✔ independent: cursor never grants a missing warehouse and forged hall scope is rejected (1.68528ms)
+✔ independent: output labels stay current-reference and unknown/private fields fail closed (3.795742ms)
+✔ independent: HTTP inject without listener protects private trusted errors and exact wire result (327.201896ms)
+✔ SYNTHETIC PG protocol: constructor is inert; one native RR read keeps negative, explicit zero, proven absence and nonexistent coordinates distinct (27.795548ms)
+✔ SYNTHETIC PG protocol: exact count/full-filter sum remain independent from stable bounded product pages and empty out-of-range page (28.976063ms)
+✔ SYNTHETIC PG protocol: warehouse filter narrows before native validation, summary, sparse page balance reads and display order (3.485932ms)
+✔ SYNTHETIC PG protocol: no publication rejects entire snapshot, including an empty visible page (1.253694ms)
+✔ SYNTHETIC PG protocol: missing guards rejects entire snapshot, including an empty visible page (2.093128ms)
+✔ SYNTHETIC PG protocol: off-page unpublished SKU rejects entire snapshot, including an empty visible page (0.730681ms)
+✔ SYNTHETIC PG protocol: unsupported deeper native category hierarchy rejects entire snapshot, including an empty visible page (0.537578ms)
+✔ SYNTHETIC PG protocol: off-page missing group sizes rejects entire snapshot, including an empty visible page (0.561174ms)
+✔ SYNTHETIC PG protocol: off-page SKU outside product size group rejects entire snapshot, including an empty visible page (1.465828ms)
+✔ SYNTHETIC PG protocol: off-page corrupt sparse balance rejects entire snapshot, including an empty visible page (2.286199ms)
+✔ SYNTHETIC PG protocol: stale native hall rejects entire snapshot, including an empty visible page (0.86273ms)
+✔ SYNTHETIC PG protocol: unpublished warehouse rejects entire snapshot, including an empty visible page (0.475092ms)
+✔ SYNTHETIC PG protocol: no silent truncation of size, SKU or balance set queries (35.87311ms)
+✔ SYNTHETIC PG protocol: bounded fact rows cannot bypass the pre-allocation matrix work limit (37.12233ms)
+✔ SYNTHETIC PG protocol: corrupt page identity, duplicate SKU coordinate, missing sizes and invalid stock never become zero (4.724443ms)
+✔ SYNTHETIC PG protocol: aggregate arithmetic exceeds signed bigint without narrowing individual native quantity strings (1.762023ms)
+✔ SYNTHETIC PG protocol: all identity filters are parameters in the full-filter count/summary and fit page queries (2.26433ms)
+✔ SYNTHETIC PG protocol: bounded candidates use same snapshot, literal parameterized search and no selectedIds grants or hidden selected page (4.844694ms)
+✔ SYNTHETIC PG protocol: candidate kinds select closed native relations, stable paging and native optional metadata (5.301028ms)
+✔ SYNTHETIC PG protocol: candidate readiness uses only returned catalogue IDs and never broad stock predicates (5.493448ms)
+✔ SYNTHETIC PG protocol: returned invalid/unready candidate is rejected, never silently removed from an exact page (2.770757ms)
+✔ SYNTHETIC PG protocol: abort and failures roll back, uncertain COMMIT discards, rollback failure aggregates without retry (5.040845ms)
+✔ SOURCE CONTRACT ONLY: no global member/SKU preload, source-history reconcile, Cartesian zero relation or application-side N+1 (2.090055ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 42
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1011.923364
+$ sha256sum -c evidence/inventory-ledger-query-source.sha256
+adapters/postgres/src/inventory-ledger-query-reader.ts: OK
+adapters/postgres/src/inventory-publication-guards.ts: OK
+adapters/postgres/src/inventory-query-reader.ts: OK
+apps/api/src/inventory-ledger-query-http.test.ts: OK
+apps/api/src/inventory-ledger-query-http.ts: OK
+docs/INVENTORY-LEDGER-QUERY.md: OK
+packages/application/src/inventory-ledger-query-contracts.ts: OK
+packages/application/src/inventory-ledger-query-service.ts: OK
+packages/application/src/inventory-ledger-query-validation.ts: OK
+tests/inventory-ledger-query-postgres-protocol.test.ts: OK
+tests/inventory-ledger-query-tsconfig.json: OK
+tests/inventory-ledger-query.test.ts: OK
+tests/inventory-query-postgres-protocol.test.ts: OK
+tests/support/synthetic-inventory-ledger-query.ts: OK

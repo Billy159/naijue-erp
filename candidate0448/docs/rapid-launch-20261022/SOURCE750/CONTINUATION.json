@@ -1,0 +1,27 @@
+{
+  "rollback": "Original D1 four harness leaves ready, original issued lease identity preserved; observing rawdriver fixed markers without wrapping issued objects. Fixed same original04 rollback request bytes/IDs/key, current actor3/3/permissions proof required; committed receipt recovers instead of reexecution. Seven scoped tests/syntaxPASS. No login/CAS/newsecret/normalcase replay. Actual failed-only companion pending QB/source/carrier/currentproof.",
+  "v21": "QB461 SOURCE749 two-leaf seam PASS adopted alongside QB458 full v21 source review. Original provider744/host749 successor pair, original730baseline retained; actual152 job/currentreview/111output validation pending.",
+  "nativeProduct": "QB460 actual154 fullcatalog two-purpose metadata PASS and exactLinuxpath binding ready. Original156 genuinepool+issuer+source740 readonlypreflight exactcarrier adopted for one actual120s job, no4SAVE/initialization/role changes. Not yet actualpreflightPASS.",
+  "fixedFiles": [
+    {
+      "name": "approved-normal-history-v16.mjs",
+      "bytes": 29863,
+      "sha256": "f6f549fbec8b4790ba22e03b253f78c58c83bd84a35965a9fce5431437f5bbb4"
+    },
+    {
+      "name": "approved-normal-history-v16.test.mjs",
+      "bytes": 16267,
+      "sha256": "1fa0022d40de479f6371378a0ca0144a5ea77d88d678b9a303830dc58962c7b8"
+    },
+    {
+      "name": "qa-identity-parent.mjs",
+      "bytes": 95557,
+      "sha256": "befd02fa27acfad44f2c2405b9c6e0a41af3ee225ee2d9c990adbe14a82afdde"
+    },
+    {
+      "name": "qa-identity-parent.test.mjs",
+      "bytes": 52194,
+      "sha256": "0341eba0ad9e3b07052b5717822da97f66acfa1066d0f9b50db7df346e30dc3b"
+    }
+  ]
+}

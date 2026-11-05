@@ -1,0 +1,95 @@
+{
+  "atUtc": "2026-10-22T09:28:32.149306+00:00",
+  "parent": "ed2b82cd8c7e98a220f2592e8fa2ecaf0178a8bc",
+  "groups": [
+    {
+      "slice": "PRODUCT_INVENTORY_ROOT_NAVIGATION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-23/DELIVERY.json",
+      "receiptSha256": "01cf3ef2e11eee3b724ae7872599937aba26bdd7077e9abe410d84adb3f2e2d7",
+      "files": [
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "bytes": 36007,
+          "sha256": "a74ec581a1ad7afbebd8c1f0fcc92987c66578a71df16c0147f1f454f73bc8bb",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/application/routes/products.tsx",
+          "bytes": 7071,
+          "sha256": "fff7cba7a05a4a894c337944ebed4e52a7791a0be4c43c445c69cd9d14575556",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/application/routes/inventory.tsx",
+          "bytes": 1625,
+          "sha256": "eacf1fd8cb3391e087852199847ddbf3e88c12f0259ee0c0bd64914ce80d78e7",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "W13_SETTINGS_AUDIT_LEAF",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/F05-W13-AUDIT-v1-RESULT.json",
+      "receiptSha256": "69f62d7d09f1abd12fe4e9d188fcdadb2335a43d580f1aae6ebd90c158c4505d",
+      "files": [
+        {
+          "path": "apps/web/src/settings/audit/contracts.ts",
+          "bytes": 3870,
+          "sha256": "b3865857909ce84733fef399dc24d5250a7cfb36018dafb0f28d4d8222e53352",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/audit/http-reader.ts",
+          "bytes": 10170,
+          "sha256": "4719a9ed0f0232c1616c4aabfb1de464e2aad7bf794feb555668b9e162c7d56e",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/audit/controller.ts",
+          "bytes": 7994,
+          "sha256": "090e79328807c92b6cbb5f8ac8e2f512619d69f2cb24ae5ba1778e07d3ca0164",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+          "bytes": 11595,
+          "sha256": "27e850a60feeafdf408e38f52c2820c99ade71346fa5b5a6171c9acaa35258f0",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/audit/audit.css",
+          "bytes": 2112,
+          "sha256": "40fd656c0038332a8df877b8182d2f006531704788d072f2b8af86de024a1633",
+          "owner": "F3"
+        }
+      ]
+    },
+    {
+      "slice": "BOOTSTRAP26_AND_FULL_WAREHOUSE_PREPARE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/BOOTSTRAP26-PREPARE-RESULT.json",
+      "receiptSha256": "e1ce52688d4ab2afdd8922747597c8d069b48e4d7914f9964fb550858d84e5e3",
+      "files": [
+        {
+          "path": "packages/application/src/native-party-import.ts",
+          "bytes": 13813,
+          "sha256": "acbbd139de873581a1b7baab99ad8df0bb01188b54b491d9eba1b06b9bd2bb03",
+          "owner": "D1"
+        },
+        {
+          "path": "packages/application/src/import-v3-history-header-native-reference.ts",
+          "bytes": 19063,
+          "sha256": "fd67edb9a2f6d94ee3a4f18f93210239d855c5c30b5f5cac81f35f3f0b2dafb6",
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+          "bytes": 10672,
+          "sha256": "349970b9ef191013a21c715ca5c48bb1c0497bf8b977b4ba6629fb44b5bd3552",
+          "owner": "D1"
+        }
+      ]
+    }
+  ],
+  "fileCount": 11,
+  "scope": "Scoped source increments; no actual bootstrap49/production or browser acceptance"
+}

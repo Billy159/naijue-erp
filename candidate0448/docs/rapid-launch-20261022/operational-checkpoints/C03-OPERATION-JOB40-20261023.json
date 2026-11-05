@@ -1,0 +1,30 @@
+{
+  "atUtc": "2026-10-22T21:09:11.266643+00:00",
+  "jobId": "c03-actual-stage-add-read-20261023-40",
+  "result": "PASS_ACTUAL_STAGE_APPLICATION_ADD_AND_NATIVE_CONTROLLED_READ_DELTA",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-stage-add-read-20261023-40/release-receipts/c03-actual-stage-add-read-20261023-40/engine-result.json",
+  "evidenceSha256": "b84d682cc3add6f54f4dfaeb7ba0484a38cb2cf3f2a21540c314bd8b165a0d4c",
+  "scope": "C original bounded operational result only; no real import or public switch",
+  "notTested": [
+    "Real source MAIN/PUBLISH and final runtime app/role business acceptance"
+  ],
+  "adoption": "Original operational acceptance, no duplicate QB",
+  "qaCounts": {
+    "database": "erp_qa_rapid26_20261022_01",
+    "role": "erp_qa_owner_20261022_01",
+    "accounts": 2,
+    "products": 1,
+    "images": 3,
+    "audits": 11,
+    "receipts": 11,
+    "sources": 0
+  },
+  "rootVersion": 4,
+  "actualResultCollectedSha256": "4a4ada5b85ce989c4e24842543fd2f51229561289dfed4d7cd1c4711439abcf9",
+  "actualResultServerRaw": {
+    "file": "actual-stage-add-read-result.json",
+    "querySha256": "673a834e0a3d1731aa405c8f31ee5fc27ef96a78dfa79137a289172a49b87256",
+    "bytes": 4537
+  },
+  "httpVerified": false
+}

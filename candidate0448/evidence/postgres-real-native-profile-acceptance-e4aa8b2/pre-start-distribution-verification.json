@@ -1,0 +1,25 @@
+{
+  "old_owned_postmaster_pid_absent": true,
+  "loopback_port_55432_available_after_old_stop": true,
+  "official_extracted_distribution_reverified": [
+    {
+      "package": "libpq5_17.11-0+deb13u1_amd64.deb",
+      "package_sha256": "20a4c9ef58b4baf90deda67cfb2cc062871c062830dddc234d28f5ac7931b86b",
+      "regular_files_match_authenticated_package": 22,
+      "symlinks_match": 1
+    },
+    {
+      "package": "postgresql-17_17.11-0+deb13u1_amd64.deb",
+      "package_sha256": "d2ce1ddffafa783f9acda4c92c86fc21e8288bff3782d739294f14fa797d7886",
+      "regular_files_match_authenticated_package": 1571,
+      "symlinks_match": 1
+    },
+    {
+      "package": "postgresql-client-17_17.11-0+deb13u1_amd64.deb",
+      "package_sha256": "9d8558f8dd57c8e92e218a20698383575d53742ca3f9e7c2b7fe5f246d5216ae",
+      "regular_files_match_authenticated_package": 371,
+      "symlinks_match": 0
+    }
+  ],
+  "no_new_server_started_by_this_check": true
+}

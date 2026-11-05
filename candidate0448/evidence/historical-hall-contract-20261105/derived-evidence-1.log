@@ -1,0 +1,38 @@
+✔ legacy warehouse-derived hall overlays are rejected rather than re-adopted (17.797109ms)
+✔ sales header source identity: exact six fields match existing mapper IDs independently of blank hall and allocation UUID (225.677414ms)
+✔ header26 joins explicit native snapshots while keeping the existing stable history ID, UNKNOWN creator/time and original money imbalance (383.809321ms)
+✔ header26 rejects missing literal refs, duplicate sources, incomplete coverage and allocated-ID injection without a fallback (21.088999ms)
+✔ header26 historical-only customer binding requires the exact original invoice and party identity, never a unique-candidate fallback (11.631095ms)
+✔ header26 carries the exact supplied32-cell approval, captures source/ref options and never rounds a different tail or executes getters (213.583691ms)
+✔ historical source hall stays unknown with exact source fields and warehouse untouched (8.058433ms)
+✔ reliable literal historical sale hall survives cross-hall warehouse without name or code inference (13.848983ms)
+✔ current-batch approved warehouse inference preserves raw and normalized unknown source while marking migration-derived capture (26.849139ms)
+✔ approved inference preserves reliable different source hall and records difference, never overwrites it (15.100298ms)
+✔ unknown original plus observed warehouse hall is explicitly derived, never ORIGINAL (399.738428ms)
+✔ reliable original wins over different warehouse observation and retains a reviewable difference (0.77606ms)
+✔ unresolved source and warehouse retain explicit pending state without guessed hall or capture time (0.169304ms)
+✔ package self-attestation, changed source/target/capture and runtime bypass all fail closed (6.860586ms)
+✔ warehouse-derived business hall overlay is retired even with old decision metadata (2.712368ms)
+✔ calendar dates validate leap days and never infer midnight for DATETIME (1.528055ms)
+✔ local timestamp never becomes UTC while explicit offset remains explicit (0.523522ms)
+✔ Excel 1900 leap bug, 1904 epoch and missing cell evidence are explicit (0.400063ms)
+✔ exact fractional serials decode locally, ambiguous precision and date fractions do not round (0.431279ms)
+✔ date-only Excel format does not fabricate a DATETIME time of day (0.168533ms)
+✔ approved historical transfer keeps unknown actors/times/hall NULL and retains original role (2.065362ms)
+✔ sales mapper preserves historical imbalance and nullable salesperson, no live recalculation (1.077407ms)
+✔ date-only approval preserves date provenance without blocking resolved business date (0.743753ms)
+✔ unresolved serial date stays NULL with targeted issue; verified cell evidence enables exact date (1.555411ms)
+✔ unknown status/business enums, including prototype keys, are rejected rather than defaulted (0.616905ms)
+✔ binding mismatch, missing required sales hall, contradictory warehouses and stale overlay fail closed (0.79638ms)
+✔ unapproved money tail and original field change cannot silently normalize (1.26249ms)
+✔ missing business date remains unknown and not publishable rather than fabricated (0.481631ms)
+✔ approved creator hall carries migration-derived evidence, not a warehouse-derived fallback (0.940771ms)
+✔ only exact independently matched 32-cell approval can carry a money tail (1.790198ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2415.683765

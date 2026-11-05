@@ -1,0 +1,158 @@
+@import '../demo-controls/page-size-shell.css';
+@import '../demo-controls/idle-selection-tokens.css';
+/* Frozen b8bcfe3 styles.css:2-18,37-85 native shared dependencies.
+ * Frame20-35 stays in frame.css. Only root scope and existing Arco isolation
+ * replace the old document/shadow-root boundary; declarations remain source. */
+
+.demo-ui * {box-sizing:border-box}
+.demo-ui {margin:0;font:var(--ui-font)/1.5 var(--ca-font-sans);font-synthesis:none;color:var(--text);background:var(--bg)}
+.demo-ui button,
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)),
+.demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)),
+.demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)) {font:inherit;color:inherit}
+.demo-ui button,
+.demo-ui a {cursor:pointer}
+.demo-ui a {color:var(--ca-link);text-decoration:none}
+.demo-ui a:not(.nav):not(.btn):hover {color:var(--ca-link-hover);text-decoration:underline}
+.demo-ui p {margin:0}
+.demo-ui h1 {font-size:var(--ui-title);line-height:30px;margin:0;font-weight:600}
+.demo-ui h2 {font-size:16px;margin:0;font-weight:600}
+.demo-ui h3 {font-size:14px;margin:0;font-weight:600}
+.demo-ui small,
+.demo-ui .hint,
+.demo-ui .muted,
+.demo-ui .sublabel {font-size:var(--ui-small);color:var(--secondary)}
+.demo-ui button,
+.demo-ui a,
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)),
+.demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)),
+.demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)),
+.demo-ui summary,
+.demo-ui [tabindex] {touch-action:manipulation}
+.demo-ui :is(button,a,input,select,textarea,summary,[tabindex]):focus-visible {outline:2px solid var(--ca-control-focus-border);outline-offset:2px}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):not([type=checkbox]):not([type=radio]):focus-visible,
+.demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):focus-visible,
+.demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):focus-visible {outline:0}
+.demo-ui button:disabled {cursor:not-allowed;color:var(--disabled)}
+.demo-ui #page {padding:12px var(--ui-page-space) 16px;margin:auto;max-width:none}
+.demo-ui .page-head,
+.demo-ui .gold-head {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;min-height:32px}
+.demo-ui .page-head p {font-size:12px;color:var(--secondary)}
+.demo-ui .actions {display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.demo-ui .right {margin-left:auto}
+.demo-ui .btn {display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+.demo-ui .btn:hover {background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.demo-ui .btn.primary {background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.demo-ui .btn.primary:hover {background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.demo-ui .btn.primary:active {background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.demo-ui .btn.ghost {background:transparent;border-color:transparent;color:var(--ca-button-text)}
+.demo-ui .btn.ghost:hover {background:var(--ca-primary-hover-soft);color:var(--ca-button-text-hover)}
+.demo-ui .btn.danger {color:var(--error);border-color:var(--error);background:var(--error-light)}
+.demo-ui .btn:disabled {background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+.demo-ui label.field {display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--secondary);min-width:0}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):not([type=checkbox]),
+.demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)),
+.demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)),
+.demo-ui .picker-btn,
+.demo-ui .warehouse-picker summary {min-height:var(--ui-control);height:var(--ui-control);padding:4px 9px;border:1px solid var(--ca-control-border);background:var(--ca-control-bg);border-radius:var(--ca-radius-control);font-size:var(--ui-font);color:var(--text)}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))::placeholder,
+.demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))::placeholder {color:var(--ca-control-placeholder)}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):disabled,
+.demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):disabled,
+.demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):disabled {background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))[aria-invalid=true],
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)).invalid,
+.demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))[aria-invalid=true] {border-color:var(--error);color:var(--error)}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):not([type=checkbox]):not(:disabled):hover,
+.demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):not(:disabled):hover,
+.demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):not(:disabled):hover {border-color:var(--ca-control-hover-border)}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):not([type=checkbox]):focus,
+.demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):focus,
+.demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)):focus {border-color:var(--ca-control-focus-border);box-shadow:var(--ca-focus-ring)}
+.demo-ui textarea:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)) {height:auto;min-height:72px}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))[type=search] {width:240px}
+.demo-ui select:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input)) {min-width:128px}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input,.arco-checkbox input))[type=checkbox],
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input))[type=radio] {accent-color:var(--ca-primary-fill)}
+.demo-ui input:not(:where(.arco-input,.arco-select input,.arco-picker input,.arco-tree-select input,.arco-input-tag input,.arco-input-group input,.arco-checkbox input))[type=checkbox] {width:15px;height:15px;margin:0;flex-shrink:0}
+.demo-ui label.check {display:flex;align-items:center;gap:8px;min-height:32px;cursor:pointer}
+.demo-ui .picker-btn {text-align:left;cursor:pointer}
+.demo-ui .toolbar,
+.demo-ui .querybar,
+.demo-ui .doc-header {display:flex;gap:12px;align-items:end;flex-wrap:wrap;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--ca-radius-card);margin-bottom:10px}
+.demo-ui .querybar {display:block}
+.demo-ui .panel {background:var(--surface);border:1px solid var(--border);border-radius:var(--ca-radius-card);overflow:hidden}
+.demo-ui .panel-head,
+.demo-ui .stock-heading {padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.demo-ui .table-scroll {overflow:auto;max-width:100%}
+.demo-ui table:not(:where(.arco-table table,.arco-table th,.arco-table td)) {border-collapse:separate;border-spacing:0;width:100%;font-variant-numeric:tabular-nums;font-size:var(--ui-font);--table-row:var(--ui-row)}
+.demo-ui th:not(:where(.arco-table table,.arco-table th,.arco-table td)),
+.demo-ui td:not(:where(.arco-table table,.arco-table th,.arco-table td)) {padding:4px 10px;height:var(--table-row);text-align:left;border-bottom:1px solid var(--ca-table-grid);vertical-align:middle;white-space:nowrap}
+.demo-ui th:not(:where(.arco-table table,.arco-table th,.arco-table td)) {font-size:12px;font-weight:600;background:var(--ca-table-head);color:var(--ca-ink-2)}
+.demo-ui td:not(:where(.arco-table table,.arco-table th,.arco-table td)).num,
+.demo-ui th:not(:where(.arco-table table,.arco-table th,.arco-table td)).num {text-align:right}
+.demo-ui td:not(:where(.arco-table table,.arco-table th,.arco-table td)) .btn {height:26px;min-height:26px;padding:0 7px}
+.demo-ui tbody tr:hover>td {background:var(--ca-table-row-hover)}
+.demo-ui tbody tr.selected>td {background:var(--ca-table-selected)}
+.demo-ui tfoot td,
+.demo-ui tr.subtotal td {background:var(--ca-table-subtotal);font-weight:600}
+.demo-ui tfoot td {border-top:1px solid var(--strong)}
+.demo-ui .products-table {min-width:900px}
+.demo-ui .link,
+.demo-ui .number-link,
+.demo-ui .stock-num,
+.demo-ui .product-anchor {border:0;background:transparent;padding:0;color:inherit;text-decoration:none;font:inherit}
+.demo-ui .link,
+.demo-ui .product-anchor {font-weight:600;color:var(--ca-link)}
+
+/* Frozen Demo semantic controls, resolved from styles.css, inventory selectors'
+   local CSS and inventory-refinement.css. No route layout, matrix, or drawer CSS. */
+.iw-button,.iw-text-button,.iw-link,.iw-page-button,.iw-select{box-sizing:border-box;font:inherit;font-size:13px;color:var(--ca-ink);border-radius:4px;cursor:pointer;white-space:nowrap}
+.iw-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:32px;height:32px;padding:0 11px;border:1px solid var(--ca-button-secondary-border);background:var(--ca-button-secondary-bg);font-weight:500}
+.iw-button:hover:not(:disabled){background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.iw-button.iw-ghost{background:transparent;border-color:transparent;color:var(--ca-button-text)}
+.iw-button.iw-ghost:hover:not(:disabled){background:var(--ca-primary-hover-soft);color:var(--ca-button-text-hover)}
+.iw-primary{background:var(--ca-primary-fill);border-color:var(--ca-primary-fill);color:var(--ca-on-primary)}
+.iw-primary:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover);color:var(--ca-on-primary)}
+.iw-text-button{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:28px;height:30px;padding:3px 8px;background:transparent;border:0;color:var(--ca-ink-2);font-weight:400}
+.iw-text-button:hover:not(:disabled){color:var(--ca-primary-ink);background:var(--ca-primary-hover-soft)}
+.iw-link{min-height:24px;border:0;background:transparent;padding:0 3px;color:var(--ca-primary-ink);font-size:12px}
+.iw-link:hover:not(:disabled){text-decoration:underline;color:var(--ca-primary-active)}
+:is(.iw-button,.iw-control,.iw-select):disabled{color:var(--ca-control-disabled-text);background:var(--ca-control-disabled-bg);border-color:var(--ca-control-disabled-border);cursor:not-allowed}
+:is(.iw-text-button,.iw-link,.iw-page-button):disabled{color:var(--ca-disabled-ink);background:transparent;cursor:not-allowed}
+:is(.iw-button,.iw-text-button,.iw-link,.iw-page-button,.iw-control,.iw-select,.iw-search):focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
+.iw-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.iw-control{box-sizing:border-box;width:100%;height:32px;min-height:32px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);text-align:left;font:13px var(--ca-font-sans);cursor:pointer;color:var(--ca-ink)}
+.iw-control>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.iw-control>span:last-child{flex:none;color:var(--ca-ink-2)}
+.iw-control:hover{border-color:transparent;background:var(--ca-surface-muted)}
+.iw-control[aria-expanded=true]{border-color:var(--ca-control-focus-border)}
+.muted{color:var(--ca-ink-3)}
+.iw-popover{box-sizing:border-box;position:absolute;z-index:1600;top:calc(100% + 5px);left:0;width:max(100%,320px);max-width:calc(100vw - 24px);background:var(--ca-popover-bg);border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);color:var(--ca-ink);font:13px var(--ca-font-sans)}
+.iw-pop-head{padding:10px 12px 6px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.iw-pop-head strong{font-size:13px;font-weight:600}
+.iw-pop-head .iw-text-button{height:24px;min-height:24px;min-width:24px;padding:0;font-size:18px}
+.iw-search{box-sizing:border-box;width:calc(100% - 20px);height:32px;margin:6px 10px 10px;padding:5px 9px;border:1px solid var(--ca-control-border);border-radius:4px;font:13px var(--ca-font-sans);color:var(--ca-ink);background:var(--ca-surface)}
+.iw-search::placeholder{color:var(--ca-control-placeholder)}
+.iw-option-list{max-height:288px;overflow:auto;min-height:48px;padding:4px;scrollbar-gutter:stable}
+.iw-option{box-sizing:border-box;display:flex;gap:8px;align-items:center;width:100%;min-height:30px;padding:4px 8px;font:13px/20px var(--ca-font-sans);background:var(--ca-popover-bg);border:0;color:var(--ca-ink);text-align:left;cursor:pointer}
+.iw-option>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.iw-option:hover{background:var(--ca-popover-hover)}
+.iw-option input{width:15px;height:15px;accent-color:var(--ca-primary);margin:0;flex:none}
+.iw-option small{font-size:12px}
+.iw-all-option{border-bottom:1px solid var(--ca-line)}
+.iw-popover footer{padding:8px 12px;border-top:1px solid var(--ca-line);display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px}
+.iw-popover footer .iw-text-button{padding:2px 5px;font-size:12px}
+.iw-inline-state{margin:0;padding:10px;color:var(--ca-ink-2);font-size:13px;line-height:20px}
+.iw-pagination{display:flex;align-items:center;gap:10px;min-height:42px;flex:none;font:13px var(--ca-font-sans);color:var(--ca-ink-2);flex-wrap:wrap}
+.iw-pagination>.iw-select{box-sizing:border-box;flex:0 0 108px;width:108px;min-width:108px;max-width:108px;height:32px;min-height:32px;padding:3px 8px;border:1px solid transparent;background:var(--ca-surface-muted);font-size:12px}
+.iw-pagination>span{margin:0;white-space:nowrap}
+.iw-pager-actions{margin-left:auto;gap:4px}
+.iw-page-button{display:grid;place-items:center;min-width:28px;width:28px;height:28px;min-height:28px;padding:0;background:transparent;border:1px solid transparent;border-radius:3px;font-size:13px;color:var(--ca-ink-2)}
+.iw-page-button:hover:not(:disabled){background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.iw-page-button[aria-current=page]{background:var(--ca-primary-selected);border-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
+.iw-page-ellipsis{padding:0 3px}
+.iw-jump{display:flex;align-items:center;gap:4px;margin-left:6px;white-space:nowrap}
+.iw-jump input{height:28px;width:40px;padding:4px;text-align:center;box-sizing:border-box;border:1px solid var(--ca-control-border);border-radius:3px;font:inherit;background:var(--ca-surface);color:var(--ca-ink)}
+.iw-jump-go{height:28px;min-height:28px;padding:2px 5px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}

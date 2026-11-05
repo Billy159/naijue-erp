@@ -1,0 +1,26 @@
+diff --git a/tests/integration/backend-source.test.ts b/tests/integration/backend-source.test.ts
+index 5d80e98..4e86c2d 100644
+--- a/tests/integration/backend-source.test.ts
++++ b/tests/integration/backend-source.test.ts
+@@ -151,6 +151,8 @@ test("current fixture source: actual party CREATE precedes explicit nine-key pro
+   assert.match(sparse, /"KH000002" : "GYS000002"/u);
+   assert.match(sparse, /const partyActor = \{ accountId: ids\.referenceMaintainerAccount, hallId: null, role: "WAREHOUSE"/u);
+   assert.match(sparse, /"CREATE", 0, partyActor\.accountId/u);
++  assert.ok(sparse.includes("JSON.stringify([partyActor.accountId, create.requestKey])"), "party contention blocker must use the actual stored maintainer actor namespace");
++  assert.doesNotMatch(sparse, /receiptLock\(create\.requestKey\)/u);
+ });
+ 
+ /** These are source-wiring assertions only. They never import or execute the method-identity engine module. */
+diff --git a/tests/integration/sparse-acceptance.ts b/tests/integration/sparse-acceptance.ts
+index 7d54a17..89a0c96 100644
+--- a/tests/integration/sparse-acceptance.ts
++++ b/tests/integration/sparse-acceptance.ts
+@@ -109,7 +109,7 @@ export async function runSparseAcceptance(t: TestContext, pool: Pool): Promise<v
+   await t.test(SPARSE_SCENARIOS[0], async () => {
+     for (const kind of ["CUSTOMER", "SUPPLIER"] as const) {
+       const create: PartyCommand = { kind, actor: partyActor, action: "CREATE", name: `SYNTHETIC CURRENT ${kind}`, requestKey: `SYNTHETIC_PARTY_${kind}_CREATE` };
+-      const [created] = successfulPair(await contend(pool, receiptLock(create.requestKey), () => [parties.execute(create), parties.execute(create)]));
++      const [created] = successfulPair(await contend(pool, `naijue:receipt:${JSON.stringify([partyActor.accountId, create.requestKey])}`, () => [parties.execute(create), parties.execute(create)]));
+       assert.equal(created.code, kind === "CUSTOMER" ? "KH000002" : "GYS000002"); assert.equal(created.version, 1);
+       await assertOperation(pool, created, kind, created.partyId, "CREATE", 0, partyActor.accountId);
+       for (const [action, expectedVersion] of [["EDIT", 1], ["DISABLE", 2], ["RESTORE", 3]] as const) {

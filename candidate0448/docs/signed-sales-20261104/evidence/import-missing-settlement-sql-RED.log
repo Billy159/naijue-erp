@@ -1,0 +1,27 @@
+✖ missing settlement successor preserves exact migration proof and rejects ordinary approval bypass (1.987822ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114.871469
+
+✖ failing tests:
+
+test at tests/historical-missing-settlement-sql-source.test.mjs:4:1
+✖ missing settlement successor preserves exact migration proof and rejects ordinary approval bypass (1.987822ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical_missing_settlement_successor.sql'
+      at readFileSync (node:fs:483:20)
+      at read (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-missing-settlement-sql-source.test.mjs:2:18)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-missing-settlement-sql-source.test.mjs:5:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical_missing_settlement_successor.sql'
+  }

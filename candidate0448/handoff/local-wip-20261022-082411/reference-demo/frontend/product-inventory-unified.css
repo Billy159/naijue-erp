@@ -1,0 +1,106 @@
+/* The four product management workspaces use the inventory workbench's head,
+   filter controls, pagination and semantic tokens. Product-specific structures
+   (tree, settings tabs and ordinary tables) only define their own geometry. */
+#page:has(> .pc-workbench){padding:12px var(--ui-page-space) 16px}
+.pc-workbench{display:flex;flex-direction:column;min-width:0;max-height:calc(100dvh - var(--ui-topbar) - 24px);font:13px var(--ca-font-sans);color:var(--ca-ink)}
+.pc-workbench .pc-page-head{flex:none;min-height:32px;margin:0 0 8px}
+.pc-workbench .pc-page-head h1{margin:0;font-size:20px;line-height:30px}
+.pc-workbench .iw-head-actions{display:inline-flex;align-items:center;gap:4px;margin-left:auto;flex-wrap:wrap}
+.pc-workbench .iw-head-actions>.btn{box-sizing:border-box;height:30px;min-height:30px;padding:3px 8px;border:0;border-radius:var(--ca-radius-control);background:transparent;color:var(--ca-ink-2);font-size:13px;font-weight:400}
+.pc-workbench .iw-head-actions>.btn:hover:not(:disabled){background:var(--ca-primary-hover-soft);color:var(--ca-primary-ink)}
+.pc-workbench .iw-head-actions>.btn:disabled{border:0;background:transparent;color:var(--ca-disabled-ink)}
+.pc-workbench .iw-head-actions>.btn.primary{height:32px;min-height:32px;padding:4px 12px;border:1px solid var(--ca-primary-fill);background:var(--ca-primary-fill);color:var(--ca-on-primary);font-weight:500}
+.pc-workbench .iw-head-actions>.btn.primary:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover);color:var(--ca-on-primary)}
+
+/* Inventory Select/TreeSelect islands already render the product filters. */
+body.pc-mode #pc-filter.iw-query{flex:none;margin:0 0 4px;padding:0;border:0;background:transparent}
+body.pc-mode #pc-filter .pc-filter-row{gap:8px}
+body.pc-mode #pc-filter .pc-filter-row>.btn{height:32px;min-height:32px;font-size:13px}
+body.pc-mode #pc-filter .pc-filter-row>.pc-more-toggle{display:flex;align-items:center;justify-content:center;gap:4px;padding:0 4px;border:0;background:transparent;color:var(--ca-ink-2);font-weight:400}
+body.pc-mode #pc-filter .pc-filter-row>.pc-more-toggle:hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+body.pc-mode #pc-filter .pc-filter-row>[data-pc="reset-filter"]{border:1px solid var(--ca-control-border);background:var(--ca-surface);color:var(--ca-ink)}
+body.pc-mode #pc-filter .pc-filter-row>[data-pc="reset-filter"]:hover{border-color:var(--ca-control-border-hover);background:var(--ca-surface-subtle)}
+.pc-products .ui-filter-hint,.pc-products .pc-filter-hint{min-height:22px;margin:0;color:var(--ca-ink-2);font-size:12px;line-height:22px}
+
+/* Same gray heading, grid and row rhythm as the inventory matrix. */
+.pc-workbench :is(.pc-list-table,.pc-settings,.pc-schemes){min-width:0;border:0;border-radius:0;background:transparent}
+.pc-workbench :is(.pc-list-table,.pc-settings-body,.pc-schemes) table{width:100%;border-collapse:separate;border-spacing:0;font:12px var(--ca-font-sans);font-variant-numeric:tabular-nums}
+.pc-workbench :is(.pc-list-table,.pc-settings-body,.pc-schemes) th,
+.pc-workbench :is(.pc-list-table,.pc-settings-body,.pc-schemes) td{box-sizing:border-box;height:34px;min-height:34px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);line-height:18px;vertical-align:middle}
+.pc-workbench :is(.pc-list-table,.pc-settings-body,.pc-schemes) th{position:sticky;top:0;z-index:2;height:36px;background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px;font-weight:600}
+.pc-workbench :is(.pc-list-table,.pc-settings-body,.pc-schemes) tbody tr:hover>td{background:var(--ca-table-row-hover)}
+.pc-workbench :is(.pc-list-table,.pc-settings-body,.pc-schemes) td .btn.ghost{height:26px;min-height:26px;padding:2px 5px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:12px;font-weight:400}
+.pc-workbench :is(.pc-list-table,.pc-settings-body,.pc-schemes) td .btn.ghost:hover{background:var(--ca-primary-hover-soft);text-decoration:underline}
+
+/* Product information list: the result border and pager follow inventory. */
+.pc-products .pc-list-table{display:flex;flex-direction:column;min-height:0;flex:0 1 auto;border:1px solid var(--ca-line)}
+body.pc-mode .pc-products .pc-list-table .table-scroll{max-height:calc(100dvh - var(--ui-topbar) - 190px);min-height:0;overflow:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+body.pc-mode .pc-products:has(#pc-filter .pc-more-filters) .pc-list-table .table-scroll{max-height:calc(100dvh - var(--ui-topbar) - 230px)}
+.pc-products .pc-list-table table{min-width:1100px}
+.pc-products .pc-list-table td{white-space:nowrap}
+.pc-products .pc-list-table td:nth-child(2){max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc-products .pc-list-table .pc-meta{display:inline;margin:0 0 0 5px;font-size:12px;color:var(--ca-ink-3)}
+.pc-products .pc-list-table td:last-child,.pc-products .pc-list-table th:last-child{box-sizing:border-box;width:62px;min-width:62px;text-align:center;box-shadow:-1px 0 0 var(--ca-line),var(--ca-shadow-sticky)}
+.pc-products .pc-list-table td:last-child{background:var(--ca-surface)}
+.pc-products .pc-list-table tbody tr:hover td:last-child{background:var(--ca-table-row-hover)}
+.pc-products .pc-list-table th:last-child{background:var(--ca-table-head)}
+.pc-products .pc-list-table .empty{min-height:180px;display:flex;align-items:center;justify-content:center;color:var(--ca-ink-2);font-size:13px}
+/* Classification keeps its tree/detail workflow inside one flat split area. */
+.pc-categories .pc-category-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:0;min-height:0;height:calc(100dvh - var(--ui-topbar) - 94px);border-top:1px solid var(--ca-line);background:transparent}
+.pc-categories .pc-filter-tree{box-sizing:border-box;min-width:0;max-height:none;height:100%;padding:0 8px;border-right:1px solid var(--ca-line);border-radius:0;overflow:auto}
+#page .pc-categories #pc-manage-search{box-sizing:border-box;width:100%;height:32px;min-height:32px;margin:8px 0;padding:5px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);color:var(--ca-ink);font-size:13px}
+.pc-categories .pc-tree-row{min-height:30px;border-radius:2px;color:var(--ca-ink-2)}
+.pc-categories .pc-tree-row:hover{background:var(--ca-surface-subtle)}
+.pc-categories .pc-tree-row.selected,.pc-categories .pc-tree-row.selected:hover{background:var(--ca-primary-selected);color:var(--ca-primary-ink)}
+.pc-categories .pc-tree-row .btn{height:28px;min-height:28px;border:0;background:transparent;color:inherit;font-size:13px;font-weight:400}
+.pc-categories .pc-tree-row.selected .btn:last-child{font-weight:600}
+.pc-categories .pc-tree-row .btn:hover{background:transparent;color:var(--ca-primary-ink)}
+.pc-categories .pc-tree-row .pc-sort-grip{font-size:17px;color:var(--ca-ink-3)}
+.pc-categories .pc-filter-tree>.hint{margin:8px 3px;color:var(--ca-ink-3);font-size:12px;line-height:1.5}
+.pc-categories .pc-category-detail{min-width:0;height:100%;padding:0;overflow:auto}
+.pc-categories .pc-category-detail h2{margin:0;padding:9px 12px;border-bottom:1px solid var(--ca-line);background:var(--ca-table-head);color:var(--ca-ink);font-size:14px;font-weight:600;line-height:20px}
+.pc-categories .pc-category-detail>p{margin:12px;color:var(--ca-ink-2);font-size:12px}
+.pc-categories .pc-category-detail #pc-category-empty{height:calc(100% - 40px);min-height:240px}
+.pc-categories .pc-category-detail .pc-form-grid{max-width:900px;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;padding:12px}
+.pc-categories .pc-category-detail .pc-form-grid .field{font-size:12px;color:var(--ca-ink-2)}
+.pc-categories .pc-category-detail .pc-form-grid input{box-sizing:border-box;width:100%;height:32px;min-height:32px;border:1px solid transparent;background:var(--ca-surface-muted);font-size:13px}
+.pc-categories .pc-category-detail .pc-text-block{box-sizing:border-box;min-height:32px;margin:0;padding:5px 9px;border:0;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);font-size:13px;line-height:22px}
+.pc-categories .pc-category-detail .pc-delete-zone{margin:0 12px;padding:10px 0;border-color:var(--ca-line)}
+.pc-categories .pc-category-detail .inline-error:empty{display:none}
+
+/* Settings: a tab strip and the current dictionary table, without a card. */
+.pc-settings-page .pc-settings{display:flex;flex-direction:column;min-height:0;flex:1}
+.pc-settings-page .pc-settings .tabs{flex:none;gap:4px;margin:0;padding:0;border-bottom:1px solid var(--ca-line);background:transparent}
+.pc-settings-page .pc-settings .tabs button{box-sizing:border-box;min-width:76px;height:34px;min-height:34px;padding:5px 12px;background:transparent;color:var(--ca-ink-2);font-size:13px;font-weight:400}
+.pc-settings-page .pc-settings .tabs button:hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.pc-settings-page .pc-settings .tabs button.active{border-bottom-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
+.pc-settings-page .pc-settings-body{min-height:0;padding:8px 0 0;overflow:auto}
+.pc-settings-page .pc-settings-body .pc-section-line{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:32px;margin:0 0 8px}
+.pc-settings-page .pc-settings-body .pc-section-line input{box-sizing:border-box;width:min(360px,100%);height:32px;min-height:32px;padding:5px 9px;border:1px solid transparent;background:var(--ca-surface-muted);font-size:13px}
+.pc-settings-page .pc-settings-body .pc-section-line>.btn:not(.primary){height:30px;min-height:30px;padding:3px 8px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:13px;font-weight:400}
+.pc-settings-page .pc-settings-body .pc-section-line>.btn:not(.primary):hover{background:var(--ca-primary-hover-soft)}
+.pc-settings-page .pc-settings-body .pc-section-line h3{margin:0;font-size:14px;font-weight:600}
+.pc-settings-page .pc-settings-body table{border:1px solid var(--ca-line)}
+.pc-settings-page .pc-settings-body table th:last-child,.pc-settings-page .pc-settings-body table td:last-child{width:76px}
+.pc-settings-page .pc-settings-body .hint.spaced{margin:8px 0;color:var(--ca-ink-3);font-size:12px;line-height:1.5}
+.pc-settings-page .pc-attribute-grid{gap:16px}
+.pc-settings-page .pc-attribute-grid section{min-width:0}
+
+/* Barcode schemes: an inventory-density table and one low-key rule note. */
+.pc-schemes-page .pc-schemes{min-height:0;border:1px solid var(--ca-line)}
+.pc-schemes-page .pc-schemes .table-scroll{max-height:calc(100dvh - var(--ui-topbar) - 190px);overflow:auto}
+.pc-schemes-page .pc-schemes table{min-width:920px}
+.pc-schemes-page .pc-schemes th:nth-child(3),.pc-schemes-page .pc-schemes td:nth-child(3){width:37%;white-space:normal}
+.pc-schemes-page .pc-scheme-note{margin:0;padding:8px 12px;border-top:1px solid var(--ca-line);background:var(--ca-surface-subtle);color:var(--ca-ink-3);font-size:12px;line-height:1.5}
+
+@media(max-width:900px){
+ .pc-categories .pc-category-layout{grid-template-columns:220px minmax(0,1fr)}
+ .pc-categories .pc-category-detail .pc-form-grid{grid-template-columns:1fr}
+ .pc-settings-page .pc-attribute-grid{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+ .pc-categories .pc-category-layout{grid-template-columns:1fr;height:auto;max-height:none}
+ .pc-categories .pc-filter-tree{height:220px;border-right:0;border-bottom:1px solid var(--ca-line)}
+ .pc-categories .pc-category-detail{height:auto;min-height:180px}
+ .pc-products .pc-pagination.iw-pagination{flex-wrap:wrap}
+}

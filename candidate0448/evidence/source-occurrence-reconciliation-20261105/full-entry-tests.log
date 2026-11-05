@@ -1,0 +1,30 @@
+✔ original occurrence counts differ honestly from target counts, 22 sidecars remain separate from funds (502.731149ms)
+✔ equal-content distinct zero occurrences retain distinct permanent keys and technical archive targets (279.354858ms)
+✔ missing mapping fails closed (346.919081ms)
+✔ duplicate original fails closed (28.153146ms)
+✔ duplicate mapping fails closed (15.30022ms)
+✔ missing original fails closed (16.869509ms)
+✔ invented target fails closed (11.686237ms)
+✔ wrong source locator fails closed (14.328672ms)
+✔ unbound source hash fails closed (25.575816ms)
+✔ zero archive changed original fails closed (23.700854ms)
+✔ zero archive wrong parent fails closed (29.674572ms)
+✔ trusted evidence resists changed bytes, forged capabilities and another manifest (522.168535ms)
+✔ settlement identity cannot be reassigned through aliases or collapsed (223.822557ms)
+✔ 199 unclassified historical hall relationships remain unknown without approved derivation evidence (625.835054ms)
+✔ approved absence-zero is a separate target, pinned to inventory hash/cutoff/key and approval line, never a fake source row (55.490658ms)
+✔ approved zero cannot be double-counted as a source or silently omit approved keys (338.527464ms)
+✔ ordinary and stream standard-table preflights bind identical source occurrence evidence without changing legacy format (1254.823913ms)
+✔ validly pinned ledger with wrong mapping rejects both full preflight paths (1076.398727ms)
+✔ ordinary and stream count approved absent zeros separately from original inventory observations (720.103261ms)
+✔ individually pinned target records reject altered facts even if a caller supplies an unchanged manifest (14.354537ms)
+✔ historical hall reconciliation retains original, derived, difference and pending-review classifications without overwriting facts (103.71808ms)
+✔ offline CLI accepts only independently pinned, external occurrence evidence and prints counts rather than raw originals (752.533054ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9856.046523

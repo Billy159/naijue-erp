@@ -1,0 +1,29 @@
+✔ exact operator-fixed catalogue binding rejects drift and wrong physical identity (3.668064ms)
+✔ same client exact SELECT ACK and genuine immutable source spec required (250.929058ms)
+✔ installed profile includes exact reference-lock successor with its narrower pg_catalog path (243.40541ms)
+✔ initial admission rejects disabled triggers, unvalidated constraints, disabled RLS and non-SET inherited roles (0.725897ms)
+✔ source spec binds exact permission patches and installer sources, not just routine bodies (229.396931ms)
+✔ installation record requires exact trusted-file shape and current source (2.206822ms)
+✔ root owned fixed record rejects writable, linked and application-owned metadata (0.450633ms)
+✔ finalization observes real query packet only after exact rollback acknowledgment; failure cannot produce record (26.399989ms)
+✔ fixed install sequence stops at every failed stage and cannot expose standalone finalization CLI (4.510219ms)
+✔ exit zero alone or a quit-before-tail cannot stand in for the server installation sentinel (0.842174ms)
+✔ local installation target must already be independently fixed and empty before any stage (0.599664ms)
+✔ acceptance admission obtains fixed trusted installation and source records, not caller authority (6.533099ms)
+✔ catalog observation is rollback-only and cannot substitute for approval (7.856624ms)
+✔ direct-commit engine runner requires trusted admission before initialization (8.693202ms)
+✔ direct COMMIT acceptance cases register without invoking setup or database work (131.039706ms)
+✔ real-client runner never substitutes finish, constraint forcing or synthetic SQL replies for direct COMMIT (5.777475ms)
+✔ no target binding or non-synthetic target is rejected before registration (1.463403ms)
+✔ physical target uses PostgreSQL host normalization rather than CIDR text (2.054167ms)
+✔ loopback aliases cannot admit the same physical database twice (0.842922ms)
+✔ one explicitly selected case can use one independently installed trusted target record (0.85037ms)
+✔ exclusive-client and no-admin-change window acknowledgment is required before registration (1.319193ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 997.644889

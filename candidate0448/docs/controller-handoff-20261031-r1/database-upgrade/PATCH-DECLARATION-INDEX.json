@@ -1,0 +1,518 @@
+[
+  {
+    "file": "adapters/postgres/patches/0026-category-depth-successor.sql",
+    "declarations": [
+      {
+        "line": 25,
+        "declaration": "CREATE FUNCTION naijue_erp.lock_category_tree_statement() RETURNS trigger LANGUAGE plpgsql SECURITY INVOKER"
+      },
+      {
+        "line": 36,
+        "declaration": "CREATE TRIGGER category_tree_statement_lock BEFORE INSERT OR UPDATE OR DELETE ON naijue_erp.product_category"
+      },
+      {
+        "line": 39,
+        "declaration": "CREATE FUNCTION naijue_erp.validate_category_final_component() RETURNS trigger LANGUAGE plpgsql SECURITY INVOKER"
+      },
+      {
+        "line": 68,
+        "declaration": "CREATE CONSTRAINT TRIGGER category_final_component_depth AFTER INSERT OR UPDATE OR DELETE ON naijue_erp.product_category"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+    "declarations": [
+      {
+        "line": 186,
+        "declaration": "CREATE FUNCTION naijue_erp.maintenance_check_category_order(a naijue_erp.audit_change) RETURNS void"
+      },
+      {
+        "line": 332,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.maintenance_action_allowed(kind text, action text) RETURNS boolean LANGUAGE sql IMMUTABLE"
+      },
+      {
+        "line": 348,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_maintenance_receipt_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 375,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_maintenance_root_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 531,
+        "declaration": "ALTER TABLE naijue_erp.operation_receipt DROP CONSTRAINT receipt_result_by_kind;"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-history-effective-value-disambiguation.sql",
+    "declarations": [
+      {
+        "line": 23,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.history_effective_writes_closed() RETURNS trigger LANGUAGE plpgsql"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+    "declarations": [
+      {
+        "line": 10,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.history_revision_not_enabled() RETURNS trigger LANGUAGE plpgsql"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+    "declarations": [
+      {
+        "line": 145,
+        "declaration": "ALTER TABLE naijue_erp.sales_header ADD COLUMN responsible_staff_id uuid NULL,"
+      },
+      {
+        "line": 146,
+        "declaration": "ADD CONSTRAINT sales_responsible_staff_fk FOREIGN KEY(responsible_staff_id) REFERENCES naijue_erp.staff(id) ON UPDATE NO ACTION ON DELETE NO ACTION;"
+      },
+      {
+        "line": 147,
+        "declaration": "ALTER TABLE naijue_erp.transfer_header ADD COLUMN responsible_staff_id uuid NULL,"
+      },
+      {
+        "line": 148,
+        "declaration": "ADD CONSTRAINT transfer_responsible_staff_fk FOREIGN KEY(responsible_staff_id) REFERENCES naijue_erp.staff(id) ON UPDATE NO ACTION ON DELETE NO ACTION;"
+      },
+      {
+        "line": 168,
+        "declaration": "ALTER TABLE naijue_erp.operation_receipt DROP CONSTRAINT receipt_result_by_kind;"
+      },
+      {
+        "line": 182,
+        "declaration": "ALTER TABLE naijue_erp.inventory_ledger DROP CONSTRAINT ledger_event_kind;"
+      },
+      {
+        "line": 186,
+        "declaration": "ALTER TABLE naijue_erp.inventory_ledger DROP CONSTRAINT ledger_closed_source;"
+      },
+      {
+        "line": 194,
+        "declaration": "ALTER TABLE naijue_erp.inventory_ledger"
+      },
+      {
+        "line": 195,
+        "declaration": "ADD CONSTRAINT history_sales_operation_endpoint UNIQUE(operation_id,source_history_sales_line_id,endpoint),"
+      },
+      {
+        "line": 196,
+        "declaration": "ADD CONSTRAINT history_transfer_operation_endpoint UNIQUE(operation_id,source_history_transfer_line_id,endpoint);"
+      },
+      {
+        "line": 199,
+        "declaration": "CREATE FUNCTION naijue_erp.history_numeric_current_facts(kind text,target uuid) RETURNS jsonb LANGUAGE plpgsql VOLATILE"
+      },
+      {
+        "line": 280,
+        "declaration": "CREATE FUNCTION naijue_erp.history_numeric_money(value jsonb,nonnegative boolean DEFAULT false) RETURNS numeric LANGUAGE plpgsql IMMUTABLE"
+      },
+      {
+        "line": 293,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.history_revision_not_enabled() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 442,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.history_effective_writes_closed() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 486,
+        "declaration": "CREATE FUNCTION naijue_erp.guard_history_numeric_ledger() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 505,
+        "declaration": "CREATE TRIGGER history_numeric_ledger_guard BEFORE INSERT ON naijue_erp.inventory_ledger FOR EACH ROW EXECUTE FUNCTION naijue_erp.guard_history_numeric_ledger();"
+      },
+      {
+        "line": 507,
+        "declaration": "CREATE FUNCTION naijue_erp.validate_history_numeric_revision_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 536,
+        "declaration": "CREATE CONSTRAINT TRIGGER history_numeric_revision_commit AFTER INSERT ON naijue_erp.history_revision"
+      },
+      {
+        "line": 539,
+        "declaration": "CREATE FUNCTION naijue_erp.validate_history_numeric_receipt_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 552,
+        "declaration": "CREATE CONSTRAINT TRIGGER history_numeric_receipt_commit AFTER INSERT ON naijue_erp.operation_receipt"
+      },
+      {
+        "line": 555,
+        "declaration": "CREATE FUNCTION naijue_erp.validate_history_numeric_balance_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 588,
+        "declaration": "CREATE CONSTRAINT TRIGGER history_numeric_balance_commit AFTER INSERT OR UPDATE ON naijue_erp.inventory_balance"
+      },
+      {
+        "line": 593,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_sparse_balance_commit() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$"
+      },
+      {
+        "line": 673,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.reject_unimplemented_cutoff_write() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 692,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_sales_settlement() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 722,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.keep_transfer_header_provenance() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 761,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.transfer_header_audit_values(source_row naijue_erp.transfer_header) RETURNS jsonb LANGUAGE sql STABLE STRICT"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+    "declarations": [
+      {
+        "line": 11,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.history_revision_not_enabled() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 177,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.history_effective_writes_closed() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 209,
+        "declaration": "CREATE FUNCTION naijue_erp.history_effective_set_guard() RETURNS trigger LANGUAGE plpgsql SECURITY INVOKER"
+      },
+      {
+        "line": 238,
+        "declaration": "CREATE TRIGGER history_sales_line_effective_set_insert AFTER INSERT ON naijue_erp.history_sales_line_effective REFERENCING NEW TABLE AS history_new FOR EACH STATEMENT EXECUTE FUNCTION naijue_erp.history_effective_set_guard();"
+      },
+      {
+        "line": 239,
+        "declaration": "CREATE TRIGGER history_sales_line_effective_set_update AFTER UPDATE ON naijue_erp.history_sales_line_effective REFERENCING NEW TABLE AS history_new FOR EACH STATEMENT EXECUTE FUNCTION naijue_erp.history_effective_set_guard();"
+      },
+      {
+        "line": 240,
+        "declaration": "CREATE TRIGGER history_transfer_line_effective_set_insert AFTER INSERT ON naijue_erp.history_transfer_line_effective REFERENCING NEW TABLE AS history_new FOR EACH STATEMENT EXECUTE FUNCTION naijue_erp.history_effective_set_guard();"
+      },
+      {
+        "line": 241,
+        "declaration": "CREATE TRIGGER history_transfer_line_effective_set_update AFTER UPDATE ON naijue_erp.history_transfer_line_effective REFERENCING NEW TABLE AS history_new FOR EACH STATEMENT EXECUTE FUNCTION naijue_erp.history_effective_set_guard();"
+      },
+      {
+        "line": 242,
+        "declaration": "CREATE TRIGGER history_sales_settlement_effective_set_insert AFTER INSERT ON naijue_erp.history_sales_settlement_effective REFERENCING NEW TABLE AS history_new FOR EACH STATEMENT EXECUTE FUNCTION naijue_erp.history_effective_set_guard();"
+      },
+      {
+        "line": 243,
+        "declaration": "CREATE TRIGGER history_sales_settlement_effective_set_update AFTER UPDATE ON naijue_erp.history_sales_settlement_effective REFERENCING NEW TABLE AS history_new FOR EACH STATEMENT EXECUTE FUNCTION naijue_erp.history_effective_set_guard();"
+      },
+      {
+        "line": 245,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.guard_history_numeric_ledger() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 258,
+        "declaration": "CREATE FUNCTION naijue_erp.history_numeric_ledger_set_guard() RETURNS trigger LANGUAGE plpgsql SECURITY INVOKER"
+      },
+      {
+        "line": 278,
+        "declaration": "CREATE TRIGGER history_numeric_ledger_set_insert AFTER INSERT ON naijue_erp.inventory_ledger"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql",
+    "declarations": [
+      {
+        "line": 27,
+        "declaration": "ALTER TABLE naijue_erp.inventory_ledger"
+      },
+      {
+        "line": 30,
+        "declaration": "ADD CONSTRAINT ledger_recorded_balance_pair CHECK (((quantity_before IS NULL AND quantity_after IS NULL)"
+      },
+      {
+        "line": 41,
+        "declaration": "CREATE FUNCTION naijue_erp.guard_recorded_live_balance_pair() RETURNS trigger LANGUAGE plpgsql SECURITY INVOKER"
+      },
+      {
+        "line": 69,
+        "declaration": "CREATE TRIGGER zz_live_ledger_balance_snapshot BEFORE INSERT ON naijue_erp.inventory_ledger"
+      },
+      {
+        "line": 74,
+        "declaration": "CREATE FUNCTION naijue_erp.validate_recorded_live_balance_commit() RETURNS trigger LANGUAGE plpgsql SECURITY INVOKER"
+      },
+      {
+        "line": 108,
+        "declaration": "CREATE CONSTRAINT TRIGGER recorded_live_balance_final_consistency AFTER INSERT OR UPDATE ON naijue_erp.inventory_balance"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+    "declarations": [
+      {
+        "line": 6,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.guard_native_creation_identity() RETURNS trigger LANGUAGE plpgsql"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+    "declarations": [
+      {
+        "line": 4,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.guard_maintenance_audit_actor() RETURNS trigger LANGUAGE plpgsql VOLATILE"
+      },
+      {
+        "line": 29,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.guard_native_creation_identity() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 83,
+        "declaration": "CREATE FUNCTION naijue_erp.validate_document_specification_commit() RETURNS trigger LANGUAGE plpgsql VOLATILE"
+      },
+      {
+        "line": 177,
+        "declaration": "CREATE CONSTRAINT TRIGGER document_specification_commit AFTER INSERT ON naijue_erp.audit_change"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v12-history-numeric-revision.sql",
+    "declarations": [
+      {
+        "line": 24,
+        "declaration": "ALTER TABLE naijue_erp.operation_receipt DROP CONSTRAINT receipt_result_by_kind;"
+      },
+      {
+        "line": 38,
+        "declaration": "ALTER TABLE naijue_erp.inventory_ledger DROP CONSTRAINT ledger_event_kind;"
+      },
+      {
+        "line": 42,
+        "declaration": "ALTER TABLE naijue_erp.inventory_ledger DROP CONSTRAINT ledger_closed_source;"
+      },
+      {
+        "line": 50,
+        "declaration": "ALTER TABLE naijue_erp.inventory_ledger"
+      },
+      {
+        "line": 51,
+        "declaration": "ADD CONSTRAINT history_sales_operation_endpoint UNIQUE(operation_id,source_history_sales_line_id,endpoint),"
+      },
+      {
+        "line": 52,
+        "declaration": "ADD CONSTRAINT history_transfer_operation_endpoint UNIQUE(operation_id,source_history_transfer_line_id,endpoint);"
+      },
+      {
+        "line": 55,
+        "declaration": "CREATE FUNCTION naijue_erp.history_numeric_current_facts(kind text,target uuid) RETURNS jsonb LANGUAGE plpgsql VOLATILE"
+      },
+      {
+        "line": 135,
+        "declaration": "CREATE FUNCTION naijue_erp.history_numeric_money(value jsonb,nonnegative boolean DEFAULT false) RETURNS numeric LANGUAGE plpgsql IMMUTABLE"
+      },
+      {
+        "line": 148,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.history_revision_not_enabled() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 265,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.history_effective_writes_closed() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 309,
+        "declaration": "CREATE FUNCTION naijue_erp.guard_history_numeric_ledger() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 328,
+        "declaration": "CREATE TRIGGER history_numeric_ledger_guard BEFORE INSERT ON naijue_erp.inventory_ledger FOR EACH ROW EXECUTE FUNCTION naijue_erp.guard_history_numeric_ledger();"
+      },
+      {
+        "line": 330,
+        "declaration": "CREATE FUNCTION naijue_erp.validate_history_numeric_revision_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 359,
+        "declaration": "CREATE CONSTRAINT TRIGGER history_numeric_revision_commit AFTER INSERT ON naijue_erp.history_revision"
+      },
+      {
+        "line": 362,
+        "declaration": "CREATE FUNCTION naijue_erp.validate_history_numeric_receipt_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 375,
+        "declaration": "CREATE CONSTRAINT TRIGGER history_numeric_receipt_commit AFTER INSERT ON naijue_erp.operation_receipt"
+      },
+      {
+        "line": 378,
+        "declaration": "CREATE FUNCTION naijue_erp.validate_history_numeric_balance_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 411,
+        "declaration": "CREATE CONSTRAINT TRIGGER history_numeric_balance_commit AFTER INSERT OR UPDATE ON naijue_erp.inventory_balance"
+      },
+      {
+        "line": 416,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_sparse_balance_commit() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v14-core-heap-xmin-repair.sql",
+    "declarations": [
+      {
+        "line": 28,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.assert_core_initialization_v14(selected_batch uuid, selected_operation uuid, creation boolean) RETURNS void"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+    "declarations": [
+      {
+        "line": 15,
+        "declaration": "ALTER TABLE naijue_erp.operation_receipt DROP CONSTRAINT receipt_result_by_kind;"
+      },
+      {
+        "line": 31,
+        "declaration": "CREATE FUNCTION naijue_erp.assert_core_initialization_v14(selected_batch uuid, selected_operation uuid, creation boolean) RETURNS void"
+      },
+      {
+        "line": 219,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.assert_native_bootstrap_accounts(selected_batch uuid) RETURNS void"
+      },
+      {
+        "line": 348,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.guard_import_batch() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$"
+      },
+      {
+        "line": 369,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.guard_history_publication() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$"
+      },
+      {
+        "line": 444,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_import_batch_commit() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$"
+      },
+      {
+        "line": 497,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_import_accounting_checkpoint_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 557,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_import_operation() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$"
+      },
+      {
+        "line": 584,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.guard_import_accounting_claim() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 645,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_import_accounting_claim_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 678,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.assert_history_typed_closure(selected_batch uuid,plan jsonb,documents jsonb) RETURNS void"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql",
+    "declarations": [
+      {
+        "line": 34,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.assert_core_initialization_v14(selected_batch uuid, selected_operation uuid, creation boolean) RETURNS void"
+      },
+      {
+        "line": 219,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.assert_native_bootstrap_accounts(selected_batch uuid) RETURNS void"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+    "declarations": [
+      {
+        "line": 160,
+        "declaration": "CREATE FUNCTION naijue_erp.assert_barcode_scheme_initialization_v19(selected_batch uuid, selected_operation uuid) RETURNS void"
+      },
+      {
+        "line": 299,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_import_batch_commit() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$"
+      },
+      {
+        "line": 361,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_import_accounting_checkpoint_commit() RETURNS trigger LANGUAGE plpgsql"
+      },
+      {
+        "line": 430,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.validate_import_operation() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+    "declarations": [
+      {
+        "line": 151,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.guard_history_insert() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+    "declarations": [
+      {
+        "line": 23,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.assert_core_initialization_v14(selected_batch uuid, selected_operation uuid, creation boolean)"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql",
+    "declarations": [
+      {
+        "line": 6,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.assert_native_bootstrap_accounts(selected_batch uuid) RETURNS void"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  },
+  {
+    "file": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+    "declarations": [
+      {
+        "line": 6,
+        "declaration": "CREATE OR REPLACE FUNCTION naijue_erp.guard_successor_publication26() RETURNS trigger"
+      }
+    ],
+    "note": "静态声明索引；不是完整SQL解析，不执行，不代表目标差异"
+  }
+]

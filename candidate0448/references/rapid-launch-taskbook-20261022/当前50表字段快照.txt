@@ -1,0 +1,672 @@
+当前新工程数据库表与字段（源码快照，不是正式服务器实库清单）
+生成日期：2026-10-22
+依据：adapters/postgres/migrations/0001–0019。未连接数据库、未建库、未运行测试。
+统计：50 张表，516 个字段。后续表级约束以完整迁移SQL为准，下面不是可直接执行的DDL。
+本表逐列显示声明及后续列增补/可空变更；早期内联约束可能已被后续表级约束替代，完整ALTER记录见JSON的ddlStatements。
+新工程数据库与旧正式库不是默认同构；正式库现状由发布负责人只读核对。
+
+## schema_migration（3 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- version: integer PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- description: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- applied_at: timestamptz NOT NULL DEFAULT transaction_timestamp() [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## customer（7 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- code: text NOT NULL UNIQUE [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- created_at: timestamptz [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- updated_at: timestamptz [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## supplier（7 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- code: text NOT NULL UNIQUE [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- created_at: timestamptz [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- updated_at: timestamptz [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## hall（6 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- default_customer_id: uuid REFERENCES naijue_erp.customer(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- default_sales_warehouse_id: uuid [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## warehouse（5 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- hall_id: uuid NOT NULL REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## staff（7 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- hall_id: uuid REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- role: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- contact: text [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- employment_status: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## user_account（9 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- staff_id: uuid NOT NULL UNIQUE REFERENCES naijue_erp.staff(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- login_name: text NOT NULL UNIQUE [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- password_hash: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- login_enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- auth_version: integer NOT NULL CHECK (auth_version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- created_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- updated_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## product_category（5 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- parent_id: uuid REFERENCES naijue_erp.product_category(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- display_order: integer NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## color（5 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- code: text NOT NULL UNIQUE [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## fit（5 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- code: text NOT NULL UNIQUE CHECK (code ~ '^[A-Z]$') [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## size（3 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- code: text [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## size_group（3 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- code: text NOT NULL UNIQUE [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## size_group_member（3 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- size_group_id: uuid NOT NULL REFERENCES naijue_erp.size_group(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- size_id: uuid NOT NULL REFERENCES naijue_erp.size(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- display_order: integer NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## season（4 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- code: text NOT NULL UNIQUE [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- display_order: integer NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## product（22 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- product_code: text NOT NULL UNIQUE [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- category_id: uuid NOT NULL REFERENCES naijue_erp.product_category(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- supplier_id: uuid REFERENCES naijue_erp.supplier(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- season_id: uuid REFERENCES naijue_erp.season(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- size_group_id: uuid NOT NULL REFERENCES naijue_erp.size_group(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- retail_price: decimal(18,2) CHECK (retail_price >= 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- year: integer [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- system_item_code: text [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- thickness: text [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- collar_pants_type: text [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- purchase_price: decimal(18,2) CHECK (purchase_price >= 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- wholesale5_price: decimal(18,2) CHECK (wholesale5_price >= 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- wholesale6_price: decimal(18,2) CHECK (wholesale6_price >= 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- wholesale7_price: decimal(18,2) CHECK (wholesale7_price >= 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- wholesale8_price: decimal(18,2) CHECK (wholesale8_price >= 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- wholesale9_price: decimal(18,2) CHECK (wholesale9_price >= 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- wholesale10_price: decimal(18,2) CHECK (wholesale10_price >= 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- minimum_price: decimal(18,2) CHECK (minimum_price >= 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+
+## sku（8 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- product_id: uuid NOT NULL REFERENCES naijue_erp.product(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- color_id: uuid NOT NULL REFERENCES naijue_erp.color(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- fit_id: uuid NOT NULL REFERENCES naijue_erp.fit(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- size_id: uuid NOT NULL REFERENCES naijue_erp.size(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- sku_code: text NOT NULL UNIQUE [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## payment_method（4 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## payment_account（5 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- name: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- payment_method_id: uuid NOT NULL REFERENCES naijue_erp.payment_method(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## payment_account_hall（2 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- payment_account_id: uuid NOT NULL REFERENCES naijue_erp.payment_account(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- hall_id: uuid NOT NULL REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## sales_header（22 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- number: text NOT NULL CHECK (length(number) > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- business_type: text NOT NULL CHECK (business_type IN ('SALE', 'RETURN', 'EXCHANGE')) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- business_date: date NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- hall_id: uuid NOT NULL REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- salesperson_id: uuid REFERENCES naijue_erp.staff(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- customer_id: uuid NOT NULL REFERENCES naijue_erp.customer(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- warehouse_id: uuid NOT NULL REFERENCES naijue_erp.warehouse(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- status: text NOT NULL CHECK (status IN ('DRAFT', 'APPROVED', 'VOID')) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- gross_amount: decimal(18,2) NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- order_discount: decimal(18,2) NOT NULL CHECK (order_discount >= 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- net_due: decimal(18,2) NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- note: text [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- created_by_account_id: uuid NOT NULL REFERENCES naijue_erp.user_account(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- created_hall_id: uuid REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- created_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- updated_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- approved_by_account_id: uuid REFERENCES naijue_erp.user_account(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- approved_at: timestamptz [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- stock_basis: text NOT NULL CHECK (stock_basis IN ('RUNTIME_LEDGER', 'CUTOFF_HISTORY')) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- import_batch_id: uuid REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+
+## sales_line（20 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- sales_id: uuid NOT NULL REFERENCES naijue_erp.sales_header(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- line_no: integer NOT NULL CHECK (line_no > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- sku_id: uuid NOT NULL REFERENCES naijue_erp.sku(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- quantity: bigint NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- reference_price: decimal(18,2) CHECK (reference_price >= 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- deal_price: decimal(18,2) NOT NULL CHECK (deal_price >= 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- line_amount: decimal(18,2) NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- allocated_discount: decimal(18,2) NOT NULL CHECK (allocated_discount >= 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- is_gift: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- product_code_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- product_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- color_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- fit_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- size_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- barcode_snapshot: text [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- is_current: boolean NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- pricing_rule: text [来源 adapters/postgres/migrations/0002_sales_pricing_facts.sql]
+- discount_tenths: integer [来源 adapters/postgres/migrations/0002_sales_pricing_facts.sql]
+- zero_confirmed: boolean [来源 adapters/postgres/migrations/0002_sales_pricing_facts.sql]
+
+## sales_settlement（9 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- sales_id: uuid NOT NULL REFERENCES naijue_erp.sales_header(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- line_no: integer NOT NULL CHECK (line_no > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- payment_account_id: uuid NOT NULL REFERENCES naijue_erp.payment_account(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- direction: text NOT NULL CHECK (direction IN ('RECEIVE', 'REFUND')) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- amount: decimal(18,2) NOT NULL CHECK (amount >= 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- account_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- method_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- payment_method_id_snapshot: uuid REFERENCES naijue_erp.payment_method(id) [来源 adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql]
+
+## operation_receipt（15 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- actor_account_id: uuid NOT NULL REFERENCES naijue_erp.user_account(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- request_key: text NOT NULL CHECK (length(request_key) > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- request_hash: text NOT NULL CHECK (request_hash ~ '^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- action: text NOT NULL CHECK (action IN ('SAVE', 'APPROVE', 'UNAPPROVE', 'VOID')) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- target_type: text NOT NULL CHECK (target_type = 'SALES') [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- target_id: uuid NOT NULL REFERENCES naijue_erp.sales_header(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- status: text NOT NULL CHECK (status = 'COMMITTED') [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- result_data: jsonb NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- created_at: timestamptz NOT NULL DEFAULT transaction_timestamp() [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- completed_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- target_sales_id: uuid GENERATED ALWAYS AS (CASE WHEN target_type = 'SALES' THEN target_id END) STORED REFERENCES naijue_erp.sales_header(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- target_transfer_id: uuid GENERATED ALWAYS AS (CASE WHEN target_type = 'TRANSFER' THEN target_id END) STORED REFERENCES naijue_erp.transfer_header(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- target_customer_id: uuid GENERATED ALWAYS AS (CASE WHEN target_type = 'CUSTOMER' THEN target_id END) STORED REFERENCES naijue_erp.customer(id) [来源 adapters/postgres/migrations/0006_party_maintenance.sql]
+- target_supplier_id: uuid GENERATED ALWAYS AS (CASE WHEN target_type = 'SUPPLIER' THEN target_id END) STORED REFERENCES naijue_erp.supplier(id) [来源 adapters/postgres/migrations/0006_party_maintenance.sql]
+
+## audit_change（15 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- operation_id: uuid NOT NULL UNIQUE [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- actor_account_id: uuid NOT NULL REFERENCES naijue_erp.user_account(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- object_type: text NOT NULL CHECK (object_type = 'SALES') [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- object_id: uuid NOT NULL REFERENCES naijue_erp.sales_header(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- action: text NOT NULL CHECK (action IN ('SAVE', 'APPROVE', 'UNAPPROVE', 'VOID')) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- old_version: integer CHECK (old_version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- new_version: integer NOT NULL CHECK (new_version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- before_values: jsonb [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- after_values: jsonb NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- occurred_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- object_sales_id: uuid GENERATED ALWAYS AS (CASE WHEN object_type = 'SALES' THEN object_id END) STORED REFERENCES naijue_erp.sales_header(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- object_transfer_id: uuid GENERATED ALWAYS AS (CASE WHEN object_type = 'TRANSFER' THEN object_id END) STORED REFERENCES naijue_erp.transfer_header(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- object_customer_id: uuid GENERATED ALWAYS AS (CASE WHEN object_type = 'CUSTOMER' THEN object_id END) STORED REFERENCES naijue_erp.customer(id) [来源 adapters/postgres/migrations/0006_party_maintenance.sql]
+- object_supplier_id: uuid GENERATED ALWAYS AS (CASE WHEN object_type = 'SUPPLIER' THEN object_id END) STORED REFERENCES naijue_erp.supplier(id) [来源 adapters/postgres/migrations/0006_party_maintenance.sql]
+
+## inventory_ledger（14 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- operation_id: uuid NOT NULL REFERENCES naijue_erp.operation_receipt(id) DEFERRABLE INITIALLY DEFERRED [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- event_kind: text NOT NULL CHECK (event_kind IN ('APPROVE', 'UNAPPROVE')) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- warehouse_id: uuid NOT NULL REFERENCES naijue_erp.warehouse(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- sku_id: uuid NOT NULL REFERENCES naijue_erp.sku(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- quantity_delta: bigint NOT NULL CHECK (quantity_delta <> 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- source_sales_line_id: uuid REFERENCES naijue_erp.sales_line(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- endpoint: text NOT NULL CHECK (endpoint = 'SALES_WAREHOUSE') [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- source_document_version: integer CHECK (source_document_version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- reverses_entry_id: uuid UNIQUE REFERENCES naijue_erp.inventory_ledger(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- business_date: date NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- posted_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- source_transfer_line_id: uuid REFERENCES naijue_erp.transfer_line(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- source_import_batch_id: uuid REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+
+## inventory_balance（6 字段）
+建表来源：adapters/postgres/migrations/0001_runtime_sales.sql
+- warehouse_id: uuid NOT NULL REFERENCES naijue_erp.warehouse(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- sku_id: uuid NOT NULL REFERENCES naijue_erp.sku(id) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- quantity: bigint NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- last_operation_id: uuid REFERENCES naijue_erp.operation_receipt(id) DEFERRABLE INITIALLY DEFERRED [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+- updated_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0001_runtime_sales.sql]
+
+## auth_session（6 字段）
+建表来源：adapters/postgres/migrations/0003_auth_sessions.sql
+- token_hash: text PRIMARY KEY CHECK (token_hash ~ '^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0003_auth_sessions.sql]
+- account_id: uuid NOT NULL REFERENCES naijue_erp.user_account(id) [来源 adapters/postgres/migrations/0003_auth_sessions.sql]
+- auth_version: integer NOT NULL CHECK (auth_version > 0) [来源 adapters/postgres/migrations/0003_auth_sessions.sql]
+- created_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0003_auth_sessions.sql]
+- expires_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0003_auth_sessions.sql]
+- revoked_at: timestamptz [来源 adapters/postgres/migrations/0003_auth_sessions.sql]
+
+## transfer_header（17 字段）
+建表来源：adapters/postgres/migrations/0004_transfer_runtime.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- number: text NOT NULL CHECK (length(number) > 0) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- business_date: date NOT NULL [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- from_warehouse_id: uuid NOT NULL REFERENCES naijue_erp.warehouse(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- to_warehouse_id: uuid NOT NULL REFERENCES naijue_erp.warehouse(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- status: text NOT NULL CHECK (status IN ('DRAFT', 'APPROVED', 'VOID')) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- note: text [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- created_by_account_id: uuid NOT NULL REFERENCES naijue_erp.user_account(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- created_hall_id: uuid REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- created_role: text NOT NULL CHECK (created_role IN ('ADMIN', 'WAREHOUSE', 'SALESPERSON')) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- created_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- updated_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- approved_by_account_id: uuid REFERENCES naijue_erp.user_account(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- approved_at: timestamptz [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- stock_basis: text NOT NULL CHECK (stock_basis IN ('RUNTIME_LEDGER', 'CUTOFF_HISTORY')) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- import_batch_id: uuid REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+
+## transfer_line（13 字段）
+建表来源：adapters/postgres/migrations/0004_transfer_runtime.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- transfer_id: uuid NOT NULL REFERENCES naijue_erp.transfer_header(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- line_no: integer NOT NULL CHECK (line_no > 0) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- sku_id: uuid NOT NULL REFERENCES naijue_erp.sku(id) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- quantity: bigint NOT NULL CHECK (quantity > 0) [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- product_code_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- product_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- color_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- fit_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- size_name_snapshot: text NOT NULL [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- barcode_snapshot: text [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- is_current: boolean NOT NULL [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+- current_line_no: integer GENERATED ALWAYS AS (CASE WHEN is_current THEN line_no END) STORED [来源 adapters/postgres/migrations/0004_transfer_runtime.sql]
+
+## product_image（9 字段）
+建表来源：adapters/postgres/migrations/0005_product_read_fields.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- product_id: uuid NOT NULL REFERENCES naijue_erp.product(id) [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- file_ref: text NOT NULL CHECK (length(file_ref) > 0) [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- mime: text NOT NULL CHECK (mime IN ('image/png', 'image/jpeg', 'image/webp')) [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- byte_size: bigint NOT NULL CHECK (byte_size > 0 AND byte_size <= 8388608) [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- display_order: integer NOT NULL [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- created_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- created_by_account_id: uuid REFERENCES naijue_erp.user_account(id) [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0005_product_read_fields.sql]
+
+## import_batch（15 字段）
+建表来源：adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- source_name: text NOT NULL CHECK (source_name ~ '^[a-z][a-z0-9_.:-]*$') [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- source_manifest_ref: text NOT NULL CHECK (length(btrim(source_manifest_ref)) > 0) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- source_hash: text NOT NULL CHECK (source_hash ~ '^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- cutoff_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- mapping_version: text NOT NULL CHECK (length(btrim(mapping_version)) > 0) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- inventory_mode: text NOT NULL CHECK (inventory_mode = 'CUTOFF_STOCK_BASELINE') [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- status: text NOT NULL CHECK (status IN ('STAGED', 'VALIDATING', 'PASSED', 'IMPORTED', 'FAILED')) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- checkpoint: jsonb NOT NULL [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- created_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- completed_at: timestamptz [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- history_expected_counts: jsonb CHECK (history_expected_counts IS NULL OR naijue_erp.valid_history_counts(history_expected_counts)) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- history_actual_counts: jsonb CHECK (history_actual_counts IS NULL OR naijue_erp.valid_history_counts(history_actual_counts)) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- history_payload_hash: text CHECK (history_payload_hash ~ '^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- history_validation_passed: boolean NOT NULL DEFAULT false [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## import_record（11 字段）
+建表来源：adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- import_batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- source_entity_type: text NOT NULL CHECK (length(btrim(source_entity_type)) > 0) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- source_key: text NOT NULL CHECK (length(source_key) > 0) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- source_record_hash: text NOT NULL CHECK (source_record_hash ~ '^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- source_file_ref: text NOT NULL CHECK (length(btrim(source_file_ref)) > 0) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- target_type: text CHECK (target_type IN ('WAREHOUSE', 'SKU', 'INVENTORY_LEDGER', 'IMPORT_BATCH')) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- target_id: uuid [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- status: text NOT NULL CHECK (status IN ('ACCEPTED', 'QUARANTINED', 'EXCLUDED', 'CONFLICT', 'IMPORTED')) [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- decision_reason: text [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+- reviewed_at: timestamptz [来源 adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql]
+
+## barcode_scheme（7 字段）
+建表来源：adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- name: text NOT NULL CHECK (length(btrim(name)) > 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- barcode_type: text NOT NULL CHECK (length(btrim(barcode_type)) > 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- rule_description: text NOT NULL CHECK (length(btrim(rule_description)) > 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- code_length: integer CHECK (code_length > 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- rule_version: text NOT NULL CHECK (length(btrim(rule_version)) > 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- status: text NOT NULL CHECK (status IN ('CURRENT', 'HISTORICAL')) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+
+## sku_barcode（6 字段）
+建表来源：adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- barcode: text COLLATE "C" NOT NULL UNIQUE CHECK (length(barcode) > 0) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- sku_id: uuid NOT NULL REFERENCES naijue_erp.sku(id) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- barcode_kind: text NOT NULL CHECK (barcode_kind IN ('MAIN', 'CONFIRMED_OLD')) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- scheme_id: uuid REFERENCES naijue_erp.barcode_scheme(id) [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+- enabled: boolean NOT NULL [来源 adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql]
+
+## import_source_row（12 字段）
+建表来源：adapters/postgres/migrations/0011_history_storage.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- entity_type: text NOT NULL CHECK (length(entity_type) > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_key: text NOT NULL CHECK (length(source_key) > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- file_ref: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- sheet: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- row_no: bigint NOT NULL CHECK (row_no > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_file_sha256: text NOT NULL CHECK (source_file_sha256 ~ '^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- row_sha256: text NOT NULL CHECK (row_sha256 ~ '^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- raw_fields: jsonb NOT NULL CHECK (jsonb_typeof(raw_fields) = 'object') [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- normalized_fields: jsonb NOT NULL CHECK (jsonb_typeof(normalized_fields) = 'object') [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- field_provenance: jsonb NOT NULL CHECK ((jsonb_typeof(field_provenance) = 'object' AND field_provenance->'schema_version' = '1'::jsonb AND jsonb_typeof(field_provenance->'fields') = 'object') IS TRUE) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## import_sku_alias（6 字段）
+建表来源：adapters/postgres/migrations/0011_history_storage.sql
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- old_source_sku_id: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- canonical_sku_id: uuid NOT NULL REFERENCES naijue_erp.sku(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_row_id: uuid NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- canonical_source_key: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- mapping_basis: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## history_sales_header（27 字段）
+建表来源：adapters/postgres/migrations/0011_history_storage.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_row_id: uuid NOT NULL UNIQUE [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- number: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- business_date: date [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_status: text NOT NULL CHECK (source_status IN ('DRAFT', 'APPROVED', 'VOID')) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- note: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_by_source_key: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- approved_by_source_key: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_hall_id: uuid REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_hall_provenance: text NOT NULL CHECK (created_hall_provenance IN ('ORIGINAL', 'MIGRATION_DERIVED', 'UNKNOWN')) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_hall_reason: text NOT NULL CHECK (length(btrim(created_hall_reason)) > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_local_at: timestamp without time zone [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- updated_local_at: timestamp without time zone [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- approved_local_at: timestamp without time zone [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_instant: timestamptz [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- updated_instant: timestamptz [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- approved_instant: timestamptz [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- business_type: text NOT NULL CHECK (business_type IN ('SALE', 'RETURN', 'EXCHANGE')) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- hall_id: uuid NOT NULL REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- customer_id: uuid NOT NULL REFERENCES naijue_erp.customer(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- warehouse_id: uuid NOT NULL REFERENCES naijue_erp.warehouse(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- salesperson_id: uuid REFERENCES naijue_erp.staff(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- gross_amount: numeric(18,2) NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- order_discount: numeric(18,2) NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- net_due: numeric(18,2) NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## history_transfer_header（22 字段）
+建表来源：adapters/postgres/migrations/0011_history_storage.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_row_id: uuid NOT NULL UNIQUE [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- version: integer NOT NULL CHECK (version > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- number: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- business_date: date [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_status: text NOT NULL CHECK (source_status IN ('DRAFT', 'APPROVED', 'VOID')) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- note: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_by_source_key: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- approved_by_source_key: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_hall_id: uuid REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_hall_provenance: text NOT NULL CHECK (created_hall_provenance IN ('ORIGINAL', 'MIGRATION_DERIVED', 'UNKNOWN')) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_hall_reason: text NOT NULL CHECK (length(btrim(created_hall_reason)) > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_local_at: timestamp without time zone [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- updated_local_at: timestamp without time zone [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- approved_local_at: timestamp without time zone [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_instant: timestamptz [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- updated_instant: timestamptz [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- approved_instant: timestamptz [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- from_warehouse_id: uuid NOT NULL REFERENCES naijue_erp.warehouse(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- to_warehouse_id: uuid NOT NULL REFERENCES naijue_erp.warehouse(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- created_role_source: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## history_sales_line（21 字段）
+建表来源：adapters/postgres/migrations/0011_history_storage.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_row_id: uuid NOT NULL UNIQUE [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- header_id: uuid NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- line_no: integer NOT NULL CHECK (line_no > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- sku_id: uuid NOT NULL REFERENCES naijue_erp.sku(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- quantity: bigint NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- product_code_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- product_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- color_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- fit_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- size_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- barcode_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- reference_price: numeric(18,2) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- deal_price: numeric(18,2) NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- line_amount: numeric(18,2) NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- allocated_discount: numeric(18,2) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- is_gift: boolean [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- pricing_method_source: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- discount_tenths: integer [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- ordinary_zero_confirmed: boolean [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## history_transfer_line（13 字段）
+建表来源：adapters/postgres/migrations/0011_history_storage.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_row_id: uuid NOT NULL UNIQUE [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- header_id: uuid NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- line_no: integer NOT NULL CHECK (line_no > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- sku_id: uuid NOT NULL REFERENCES naijue_erp.sku(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- quantity: bigint NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- product_code_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- product_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- color_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- fit_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- size_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- barcode_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## history_sales_settlement（11 字段）
+建表来源：adapters/postgres/migrations/0011_history_storage.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_row_id: uuid NOT NULL UNIQUE [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- header_id: uuid NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- line_no: integer NOT NULL CHECK (line_no > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- payment_account_id: uuid NOT NULL REFERENCES naijue_erp.payment_account(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- direction: text NOT NULL CHECK (direction IN ('RECEIVE', 'REFUND')) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- amount: numeric(18,2) NOT NULL CHECK (amount >= 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- account_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- method_name_snapshot: text [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- payment_method_id_snapshot: uuid REFERENCES naijue_erp.payment_method(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## import_stock_contributor（9 字段）
+建表来源：adapters/postgres/migrations/0011_history_storage.sql
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_row_id: uuid NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- warehouse_id: uuid NOT NULL REFERENCES naijue_erp.warehouse(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- canonical_sku_id: uuid NOT NULL REFERENCES naijue_erp.sku(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- old_source_sku_id: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- canonical_stock_source_key: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- source_unit: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- signed_quantity: bigint NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- baseline_ledger_id: uuid REFERENCES naijue_erp.inventory_ledger(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## history_revision（14 字段）
+建表来源：adapters/postgres/migrations/0011_history_storage.sql
+- id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- document_kind: text NOT NULL CHECK (document_kind IN ('SALES', 'TRANSFER')) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- sales_id: uuid REFERENCES naijue_erp.history_sales_header(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- transfer_id: uuid REFERENCES naijue_erp.history_transfer_header(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- from_version: integer NOT NULL CHECK (from_version > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- to_version: integer NOT NULL CHECK (to_version = from_version + 1) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- actor_account_id: uuid NOT NULL REFERENCES naijue_erp.user_account(id) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- request_key: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- reason: text NOT NULL CHECK (length(btrim(reason)) > 0) [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- changed_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- before_facts: jsonb NOT NULL CHECK (jsonb_typeof(before_facts) = 'object') [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- after_facts: jsonb NOT NULL CHECK (jsonb_typeof(after_facts) = 'object') [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- stock_effect_basis: text NOT NULL [来源 adapters/postgres/migrations/0011_history_storage.sql]
+- stock_effect_evidence: jsonb NOT NULL CHECK (jsonb_typeof(stock_effect_evidence) = 'object') [来源 adapters/postgres/migrations/0011_history_storage.sql]
+
+## import_header_native_reference（10 字段）
+建表来源：adapters/postgres/migrations/0012_history_header_native_reference.sql
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+- entity_type: text NOT NULL CHECK (entity_type IN ('HALL', 'CUSTOMER', 'STAFF')) [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+- source_key: text NOT NULL CHECK (length(btrim(source_key)) > 0) [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+- source_row_id: uuid NOT NULL [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+- native_hall_id: uuid REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+- native_customer_id: uuid REFERENCES naijue_erp.customer(id) [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+- native_staff_id: uuid REFERENCES naijue_erp.staff(id) [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+- native_version: integer NOT NULL CHECK (native_version > 0) [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+- native_snapshot: jsonb NOT NULL CHECK (jsonb_typeof(native_snapshot) = 'object') [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+- validator_version: text NOT NULL CHECK (validator_version = 'V3_HISTORY_HEADER_NATIVE_REFERENCE_1') [来源 adapters/postgres/migrations/0012_history_header_native_reference.sql]
+
+## native_party_import_evidence（19 字段）
+建表来源：adapters/postgres/migrations/0013_native_party_import.sql
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- source_row_id: uuid PRIMARY KEY [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- entity_type: text NOT NULL CHECK (entity_type IN ('HALL','CUSTOMER','SUPPLIER','STAFF','WAREHOUSE')) [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- source_key: text NOT NULL CHECK (length(btrim(source_key))>0) [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- native_id: uuid NOT NULL [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- native_hall_id: uuid GENERATED ALWAYS AS (CASE WHEN entity_type='HALL' THEN native_id END) STORED REFERENCES naijue_erp.hall(id) DEFERRABLE INITIALLY DEFERRED [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- native_customer_id: uuid GENERATED ALWAYS AS (CASE WHEN entity_type='CUSTOMER' THEN native_id END) STORED REFERENCES naijue_erp.customer(id) DEFERRABLE INITIALLY DEFERRED [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- native_supplier_id: uuid GENERATED ALWAYS AS (CASE WHEN entity_type='SUPPLIER' THEN native_id END) STORED REFERENCES naijue_erp.supplier(id) DEFERRABLE INITIALLY DEFERRED [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- native_staff_id: uuid GENERATED ALWAYS AS (CASE WHEN entity_type='STAFF' THEN native_id END) STORED REFERENCES naijue_erp.staff(id) DEFERRABLE INITIALLY DEFERRED [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- native_warehouse_id: uuid GENERATED ALWAYS AS (CASE WHEN entity_type='WAREHOUSE' THEN native_id END) STORED REFERENCES naijue_erp.warehouse(id) DEFERRABLE INITIALLY DEFERRED [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- warehouse_record: jsonb CHECK (warehouse_record IS NULL OR jsonb_typeof(warehouse_record)='object') [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- native_snapshot: jsonb NOT NULL CHECK (jsonb_typeof(native_snapshot)='object') [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- source_snapshot: jsonb NOT NULL CHECK (jsonb_typeof(source_snapshot)='object') [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- selection: jsonb NOT NULL CHECK (jsonb_typeof(selection)='object') [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- authorization: jsonb NOT NULL CHECK (jsonb_typeof("authorization")='object') [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- row_fingerprint: text NOT NULL CHECK (row_fingerprint ~ '^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- validator_version: text NOT NULL CHECK (validator_version='NATIVE_PARTY_IMPORT_V1') [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- creation_xid: xid8 NOT NULL DEFAULT pg_current_xact_id() [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+- imported_at: timestamptz NOT NULL DEFAULT transaction_timestamp() [来源 adapters/postgres/migrations/0013_native_party_import.sql]
+
+## import_native_catalogue_binding（15 字段）
+建表来源：adapters/postgres/migrations/0014_native_catalogue_import.sql
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- entity_type: text NOT NULL CHECK (entity_type IN ('CATEGORY','COLOR','FIT','SIZE','SIZE_GROUP','SEASON','SIZE_GROUP_MEMBER')) [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- source_key: text NOT NULL CHECK (length(btrim(source_key)) > 0) [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- source_row_id: uuid NOT NULL [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- category_id: uuid REFERENCES naijue_erp.product_category(id) [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- color_id: uuid REFERENCES naijue_erp.color(id) [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- fit_id: uuid REFERENCES naijue_erp.fit(id) [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- size_id: uuid REFERENCES naijue_erp.size(id) [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- size_group_id: uuid REFERENCES naijue_erp.size_group(id) [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- season_id: uuid REFERENCES naijue_erp.season(id) [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- member_group_id: uuid [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- member_size_id: uuid [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- native_snapshot: jsonb NOT NULL CHECK (jsonb_typeof(native_snapshot)='object') [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- evidence_fingerprint: text NOT NULL CHECK (evidence_fingerprint ~ '^[a-f0-9]{64}$') [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+- validator_version: text NOT NULL CHECK (validator_version='NATIVE_CATALOGUE_IMPORT_V1') [来源 adapters/postgres/migrations/0014_native_catalogue_import.sql]
+
+## import_record_accounting_claim（8 字段）
+建表来源：adapters/postgres/migrations/0015_native_import_record_accounting.sql
+- import_batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0015_native_import_record_accounting.sql]
+- import_record_id: uuid NOT NULL [来源 adapters/postgres/migrations/0015_native_import_record_accounting.sql]
+- target_type: text NOT NULL CHECK (target_type IN ('WAREHOUSE','SKU','INVENTORY_LEDGER','IMPORT_BATCH')) [来源 adapters/postgres/migrations/0015_native_import_record_accounting.sql]
+- target_id: uuid NOT NULL [来源 adapters/postgres/migrations/0015_native_import_record_accounting.sql]
+- operation_id: uuid NOT NULL REFERENCES naijue_erp.operation_receipt(id) DEFERRABLE INITIALLY DEFERRED [来源 adapters/postgres/migrations/0015_native_import_record_accounting.sql]
+- checkpoint_sequence: integer NOT NULL CHECK (checkpoint_sequence > 0 AND checkpoint_sequence < 2147483646) [来源 adapters/postgres/migrations/0015_native_import_record_accounting.sql]
+- claimed_at: timestamptz NOT NULL [来源 adapters/postgres/migrations/0015_native_import_record_accounting.sql]
+- validator_version: text NOT NULL CHECK (validator_version='NATIVE_IMPORT_RECORD_ACCOUNTING_V1') [来源 adapters/postgres/migrations/0015_native_import_record_accounting.sql]
+
+## import_native_payment_binding（10 字段）
+建表来源：adapters/postgres/migrations/0017_native_payment_import.sql
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+- entity_type: text NOT NULL CHECK(entity_type IN ('PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL')) [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+- source_key: text NOT NULL CHECK(length(btrim(source_key))>0) [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+- source_row_id: uuid NOT NULL [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+- native_payment_method_id: uuid REFERENCES naijue_erp.payment_method(id) [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+- native_payment_account_id: uuid REFERENCES naijue_erp.payment_account(id) [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+- native_hall_id: uuid REFERENCES naijue_erp.hall(id) [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+- native_snapshot: jsonb NOT NULL CHECK(jsonb_typeof(native_snapshot)='object') [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+- evidence_fingerprint: text NOT NULL CHECK(evidence_fingerprint ~ '^[a-f0-9]{64}$') [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+- validator_version: text NOT NULL CHECK(validator_version='NATIVE_PAYMENT_IMPORT_V1') [来源 adapters/postgres/migrations/0017_native_payment_import.sql]
+
+## import_history_closure_manifest（10 字段）
+建表来源：adapters/postgres/migrations/0018_history_typed_publication.sql
+- batch_id: uuid PRIMARY KEY REFERENCES naijue_erp.import_batch(id) [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- validator_version: text NOT NULL CHECK(validator_version='HISTORY_TYPED_CLOSURE_V1') [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- selection_sha256: text NOT NULL CHECK(selection_sha256~'^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- authorized_payload_hash: text NOT NULL CHECK(authorized_payload_hash~'^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- source_manifest_sha256: text NOT NULL CHECK(source_manifest_sha256~'^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- typed_manifest_sha256: text NOT NULL CHECK(typed_manifest_sha256~'^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- document_manifest_sha256: text NOT NULL CHECK(document_manifest_sha256~'^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- expected_counts: jsonb NOT NULL CHECK(naijue_erp.history_closure_count_map(expected_counts,ARRAY['history_sales_header','history_sales_line','history_sales_settlement','history_transfer_header','history_transfer_line','import_source_row','import_sku_alias','import_stock_contributor','barcodes'])) [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- source_entity_counts: jsonb NOT NULL CHECK(naijue_erp.history_closure_count_map(source_entity_counts,ARRAY['HALL','WAREHOUSE','STAFF','CUSTOMER','SUPPLIER','CATEGORY','COLOR','FIT','SIZE','SIZE_GROUP','SIZE_GROUP_MEMBER','SEASON','PRODUCT','SKU','BARCODE','INVENTORY_BASELINE','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','SALES_HEADER','SALES_LINE','SETTLEMENT','TRANSFER_HEADER','TRANSFER_LINE'])) [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- document_count: integer NOT NULL CHECK(document_count BETWEEN 0 AND 100000) [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+
+## import_history_document_manifest（11 字段）
+建表来源：adapters/postgres/migrations/0018_history_typed_publication.sql
+- batch_id: uuid NOT NULL REFERENCES naijue_erp.import_history_closure_manifest(batch_id) [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- document_kind: text NOT NULL CHECK(document_kind IN('SALES','TRANSFER')) [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- source_key: text NOT NULL CHECK(length(btrim(source_key))>0) [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- header_source_row_id: uuid NOT NULL [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- sales_header_id: uuid [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- transfer_header_id: uuid [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- header_source_sha256: text NOT NULL CHECK(header_source_sha256~'^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- line_count: integer NOT NULL CHECK(line_count>0) [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- settlement_count: integer NOT NULL CHECK(settlement_count>=0) [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- source_document_sha256: text NOT NULL CHECK(source_document_sha256~'^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]
+- typed_document_sha256: text NOT NULL CHECK(typed_document_sha256~'^[0-9a-f]{64}$') [来源 adapters/postgres/migrations/0018_history_typed_publication.sql]

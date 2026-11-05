@@ -1,0 +1,106 @@
+{
+  "version": "D2-W8-STAFF-API-v1",
+  "taskId": "B05",
+  "fieldApproval": "C01-20261022-v1",
+  "state": "LEAF_SOURCE_CHECKED_SHARED_PREPARE_AND_CHILD_CLOSURE_PENDING",
+  "factory": "createStaffMaintenanceHttpPlugin",
+  "adapter": "PostgresStaffMaintenanceUnitOfWork(shared MaintenancePgUnitOfWork)",
+  "endpoints": {
+    "POST": "/staff/commands",
+    "GET": "/staff/receipts/:requestKey"
+  },
+  "commands": {
+    "CREATE": {
+      "action": "CREATE",
+      "requestKey": "original key",
+      "values": {
+        "name": "exact nonblank text <=2048 characters",
+        "role": "ADMIN | WAREHOUSE | SALESPERSON",
+        "hallId": "actual UUID | null; SALESPERSON requires UUID",
+        "contact": "exact text <=2048 characters | null"
+      },
+      "account": {
+        "id": "null for new account, actual account UUID for existing",
+        "expectedVersion": "null for new account, actual account version for existing",
+        "loginName": "exact nonblank <=256 UTF8 bytes",
+        "loginEnabled": "boolean",
+        "password": "new password for new account; null preserves existing encoding; nonnull resets via current policy"
+      }
+    },
+    "EDIT": {
+      "action": "EDIT",
+      "requestKey": "original key",
+      "id": "actual staff UUID",
+      "expectedVersion": "actual staff version",
+      "values": "same full values as CREATE; employment status is server managed",
+      "account": "null preserves current account fields; otherwise same exact account object with actual id/version or new null/null/password"
+    },
+    "LEAVE/REINSTATE": {
+      "action": "LEAVE or REINSTATE",
+      "requestKey": "original key",
+      "id": "actual staff UUID",
+      "expectedVersion": "actual staff version"
+    }
+  },
+  "accountNull": "CREATE no account; EDIT preserve existing account credentials/name/login flag, but staff role/hall/employment changes still revoke old sessions and advance account versions",
+  "result": {
+    "operationId": "actual operation UUID",
+    "kind": "STAFF",
+    "targetId": "actual staff UUID",
+    "version": "new staff version"
+  },
+  "readback": "Read existing W3 staff detail after success to receive actual linked account id/version; no account id added to strict four-key write result",
+  "rules": [
+    "ADMIN only via shared global administrator mutex -> original actor/key -> current identity -> sorted target account -> sorted target staff locks",
+    "Staff root version increments once; changed existing child account version/auth_version each increment once and all unrevoked sessions revoke in same original transaction",
+    "No staff/account identity rebind/removal; actual account creation timestamp preserved at microsecond precision",
+    "LEAVE changes 在职 to 离职 and disables current linked login; REINSTATE changes 离职 to 在职 and keeps login disabled, never automatic enable",
+    "Role/hall changes invalidate existing sessions; unrelated name/contact change preserves account row and sessions unless explicit account fields change",
+    "Last actual usable ADMIN cannot be removed by employment/role/login change",
+    "Selected new/restored hall must exist and be enabled; existing historical hall references preserved on leave",
+    "Password replaced with private stable HMAC for request fingerprint only; no password/hash/tag in safe audit or receipt",
+    "LEAVE/REINSTATE safe accounts arrays are full actual sets, including explicit [] for staff with no account; optional account CREATE/EDIT uses full actual before/after sets"
+  ],
+  "pendingSharedContract": [
+    "Current 0021 requires prepared audit before staff LEAVE/root child writes; shared evidence interface at test time has only complete(), so real PG submission is NOT ready",
+    "0021 currently only accepts STAFF LEAVE child account closure; D1 must extend CREATE/EDIT/REINSTATE and absent-account lifecycle",
+    "D1/C host private credential-key loading and production composition; C-managed isolated PG/QB window"
+  ],
+  "statusCodes": {
+    "400": [
+      "INVALID_STAFF_COMMAND",
+      "INVALID_ACCOUNT_COMMAND",
+      "INVALID_ACCOUNT_PASSWORD",
+      "INVALID_PARTY_INPUT",
+      "INVALID_ID",
+      "INVALID_HTTP_INPUT"
+    ],
+    "401": [
+      "UNAUTHENTICATED"
+    ],
+    "403": [
+      "FORBIDDEN"
+    ],
+    "404": [
+      "STAFF_NOT_FOUND",
+      "RECEIPT_NOT_FOUND"
+    ],
+    "409": [
+      "VERSION_CONFLICT",
+      "IDEMPOTENCY_CONFLICT",
+      "VERSION_STORAGE_OVERFLOW",
+      "NO_STAFF_CHANGE",
+      "INVALID_STAFF_STATE",
+      "INVALID_STAFF_ACCOUNT_STATE",
+      "STAFF_REFERENCE_UNAVAILABLE",
+      "LAST_AVAILABLE_ADMIN",
+      "ACCOUNT_LOGIN_CONFLICT"
+    ],
+    "503": [
+      "ACCOUNT_CREDENTIALS_NOT_READY"
+    ],
+    "500": [
+      "sanitized INTERNAL_ERROR; recover using original request key"
+    ]
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "atUtc": "2026-10-24T07:26:45.378507+00:00",
+  "parent": "1196fd49be8ffd67156f31ce663e70a990205477",
+  "taskId": "F1_C295_DOCUMENT_DATE_TOOLBAR_LEAVE_HOVER_THREE_FINDINGS",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-controls.css",
+      "bytes": 5108,
+      "sha256": "caa459666a8bf7e763d733b5763de1932960d0baee1df2fb9a14ba5c460893a6",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-existing-document-form.tsx",
+      "bytes": 6456,
+      "sha256": "da9687eb4b598f025653f8e0a4be2777f3bae2e52b991bb3fe37da92169a124f",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal.css",
+      "bytes": 79689,
+      "sha256": "a19810e11534faed0ae5b4be89b12b3f397b369b2d5db3eb9de35e2998ded69e",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/components/standard-overlay.css",
+      "bytes": 9181,
+      "sha256": "47d3cf8d6cfcc0e13831f4ebaffd2bc87861120d1dd7fff1042f05167eff87f8",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "6531ec1b3f7d7ff9575b1bb75f54adb49b52dadca0a362d67c3e298d82d04cea",
+  "ownerDelivery": {
+    "taskId": "F1_C295_DOCUMENT_CONTROLS_3_ISSUES",
+    "status": "SOURCE_READY_FROZEN_RELEASED_LOCAL_CHECKS_SCOPED_ACTUAL_PENDING",
+    "atUtc": "2026-10-24T07:25:19.620795+00:00",
+    "baselineSource": "17d2e89603233e07c0cfe8c344934148f7463536",
+    "baselineBuild": "ui-preview-17d2e89-01-build01",
+    "sourceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-controls.css",
+        "bytes": 5108,
+        "sha256": "caa459666a8bf7e763d733b5763de1932960d0baee1df2fb9a14ba5c460893a6"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-existing-document-form.tsx",
+        "bytes": 6456,
+        "sha256": "da9687eb4b598f025653f8e0a4be2777f3bae2e52b991bb3fe37da92169a124f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal.css",
+        "bytes": 79689,
+        "sha256": "a19810e11534faed0ae5b4be89b12b3f397b369b2d5db3eb9de35e2998ded69e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-overlay.css",
+        "bytes": 9181,
+        "sha256": "47d3cf8d6cfcc0e13831f4ebaffd2bc87861120d1dd7fff1042f05167eff87f8"
+      }
+    ],
+    "sourceFrozenUntilCPin": true,
+    "sourceWriterReleased": true,
+    "issueInputs": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-17d2e89-document-controls-actual/ISSUE-DOCUMENT-DATE-NORMAL.json",
+        "bytes": 6513,
+        "sha256": "efcea9883daaa6ce5f0212085442a6e79ae4b69dad3b6a162a4d4d181d3fc838"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-17d2e89-document-controls-actual/ISSUE-DOCUMENT-TOOLBAR-STYLE.json",
+        "bytes": 15348,
+        "sha256": "36b18628476405e7c49b35e76eb6cda8ee2cc1c402a299b905a51ca06aea605c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-17d2e89-document-controls-actual/ISSUE-DOCUMENT-LEAVE-HOVER.json",
+        "bytes": 12935,
+        "sha256": "1f2e45e8b6ed65f6f90a2fd4870006e57912efc98eb13a71198a79e732aea6fc"
+      }
+    ],
+    "checks": {
+      "date-after-3": "EXIT0 scoped source surface/lifecycle; no browser geometry",
+      "toolbar-before-3": "EXIT1 valid missing VOID semantic class reproduction",
+      "toolbar-after-2": "EXIT1 JSDOM focus shadow empty vs none; prior8 action/semantic/native Tab reached; visual NOT_PASS; later dialog branch not executed",
+      "source-contract": "PASS exact4 delta and original unchanged JS/guards",
+      "types-1": "EXIT0 strict modified TSX imported closure"
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/REPORT.md",
+        "bytes": 2584,
+        "sha256": "98f381810eee68829dfbe818a576d216f4f882c34857fa9f0f34f08cf400273a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/SOURCE.diff",
+        "bytes": 8099,
+        "sha256": "8729bba74a6f2e6e50b9b76b9afe0a10b44aa4109b2664b6b6d82d6f13cacee8"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/SOURCE-REUSE.json",
+        "bytes": 1886,
+        "sha256": "0557953bd9eba11d46c14dcdd28aa1513dc37e9b60809e4ab44fd3a5c6a1c35a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/SOURCE-CONTRACT-RESULT.json",
+        "bytes": 1466,
+        "sha256": "a503ca08a78e41952000a3eba56ff1f502e356a70b6ff877b4fae6a3a1721cc1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/DATE-RESULT.json",
+        "bytes": 2086,
+        "sha256": "ab270038d8529d16b0fd7688f0f8b560fdf8f93ae8ec79d96b2c576534effb0e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/AFTER-DATE-SURFACE.json",
+        "bytes": 1013,
+        "sha256": "e2327653fd8557bde9d7b9387a10303c52ea1f376d43d53694513eff855322c5"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/BEFORE-S04-SEMANTIC.json",
+        "bytes": 2454,
+        "sha256": "2190b8eb1b105997a9834435d5362689d3601772019785b9c48e1ba977dc542b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/AFTER-S04-SEMANTIC.json",
+        "bytes": 2483,
+        "sha256": "d63db48274b881818e99125213eece955d2e8e06225cf433b45f31b412b81a10"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/date-before-1.log",
+        "bytes": 579,
+        "sha256": "17b92c04a6d9342ed4a58ea8aee2fa04bc8cf537f65f48dc808d77a915afed33"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/date-before-2.log",
+        "bytes": 643,
+        "sha256": "180be3af266eb669ffe7dd30fcad5af9e97778571471890878409afcdb33e4ee"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/date-after-1.log",
+        "bytes": 540,
+        "sha256": "c7c7ccc2b7712638273826f85d329ff2e01cc6e233bf6afab578d7a60ee8a2bc"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/date-after-2.log",
+        "bytes": 548,
+        "sha256": "985379adcf117ecf34b0f24ce7c12aae55dda8af079d857ac61648975489a604"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/date-after-3.log",
+        "bytes": 100,
+        "sha256": "3b16a34e31e291e717a40bbf7a5abad47f32fe60096749bd768761b21aa10b5f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/toolbar-before-1.log",
+        "bytes": 203,
+        "sha256": "d4a15e7934b63373093ec21d2e19a9b37f231e445467bb84f9918ee9eded0fe5"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/toolbar-before-2.log",
+        "bytes": 1367,
+        "sha256": "cba4c150820b1c11ef7e8b5e6157dabae3afbd9c29f72adae509af3e5090273d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/toolbar-before-3.log",
+        "bytes": 966,
+        "sha256": "35b659ee22b091d9fe106ae6cdd01e380987a24ddeb1aa0c2fe7f2813a01c1e8"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/toolbar-after-1.log",
+        "bytes": 972,
+        "sha256": "d02c0ea491b3ae1d5fc2ab3c45b660c163226e6dc13cc4fed5fe3ecca352f1fa"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/toolbar-after-2.log",
+        "bytes": 962,
+        "sha256": "7d08f29c0b636b356f61d5e32cc46115cd3f36f0264b27d57a5cef87ec993c94"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/tsconfig.json",
+        "bytes": 493,
+        "sha256": "2d4855dbaff1b119a31927c0f845060434d807ce98daa6762ffb82890a67eb92"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/date-surface-check.mjs",
+        "bytes": 9503,
+        "sha256": "f35f4d0ad185a7524a3dad7146d99936b25845fe2820eacb94d0fe11ce39c934"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-139/toolbar-dialog-check.mjs",
+        "bytes": 14265,
+        "sha256": "f6adbdbbad5240e17d31872306890ad62414be56ae609d2511b120fd3fc47889"
+      }
+    ],
+    "notRun": [
+      "No actual browser geometry/color/focus",
+      "No full build/Git/PG/server",
+      "No business SAVE/VOID/APPROVE/discard",
+      "No prior whole suite repeat"
+    ],
+    "next": "C pins exact4 and builds once; original QF actual3 affected only; findings OPEN until actual evidence",
+    "blocker": "No source/type blocker. Actual containing-browser focus/style/geometry needed; JSDOM empty shadow is not acceptance."
+  },
+  "stage": "FIXED_SOURCE_DATE_STRICT_PASS_TOOLBAR_JSDOM_FOCUS_ASSERTION_EXIT1_RETAINED_ACTUAL_QF_REQUIRED",
+  "localLimitation": "Do not waive or relabel computedboxShadow empty-string vs none EXIT1. QF actual native focus/geometry/colors must verify all3 affected. Subsequent dialog local branch not run.",
+  "actualUiFindingsRemainOpen": [
+    "QF-C295-DOC-DATE-NESTED-INPUT-01",
+    "QF-C295-DOC-TOOLBAR-SEMANTIC-STYLE-01",
+    "QF-C295-DOC-LEAVE-DANGER-HOVER-01"
+  ],
+  "actualPG": false,
+  "deployed": false
+}

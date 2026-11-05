@@ -1,0 +1,62 @@
+{
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-794bec5-20261023-01/RESULT.json",
+    "bytes": 1715,
+    "sha256": "d6c7632226627a6071fb4737c3aa6bbcd8c3b651f200dda65845a3088c30a2c5"
+  },
+  "result": {
+    "expectedOld": "6eac13e213859d406cc570d85cc5065fd463acc7",
+    "target": "794bec548e10bf44e33f3b4287cafd15efcd83dc",
+    "objects": [
+      {
+        "commit": "12792c214832b826b851235ee15b946b48207f23",
+        "tree": "7088348a3a809d2db2b947f5a695039ac1ec7ff0",
+        "changedPaths": 8,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "d03f64304e69b2afc872094599f17f85e99e0c6c",
+        "tree": "b8e9cc09533d475be58d3ce283ba2edb20d7678a",
+        "changedPaths": 2,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "34afa1dba210e51a9c882f16270ed3e42abc9716",
+        "tree": "d5a0ec9bbf9231844ff6e45be127a686e30802fa",
+        "changedPaths": 3,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "d3c2188a3cd6df472ce85d221fae575682ba7301",
+        "tree": "c04c354d5909f7e33041a079bbc1b25eb60c4105",
+        "changedPaths": 2,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "60f8007c54476e2c7ccd6483e6e4b2bd03db7e76",
+        "tree": "5994c5262d2549229cb09fc3ddbb4e17b9df7635",
+        "changedPaths": 2,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+        "tree": "14cec1a2073e85db9a0c450e6b789c2feb02458d",
+        "changedPaths": 3,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "794bec548e10bf44e33f3b4287cafd15efcd83dc",
+        "tree": "1604fe275dd1b6199e6aee1a0e4dadbd11827f09",
+        "changedPaths": 6,
+        "returnedShaExact": true
+      }
+    ],
+    "force": false,
+    "status": "PASS_EXACT_ORIGINAL_OBJECTS_NONFORCED_NORMAL_BRANCH_FF_READBACK",
+    "atUtc": "2026-10-22T23:13:38.027626+00:00",
+    "remoteVerified": "794bec548e10bf44e33f3b4287cafd15efcd83dc",
+    "commits": 7,
+    "normalGitProtocolPushSucceeded": false
+  },
+  "ordinaryGitProtocolPassed": false
+}

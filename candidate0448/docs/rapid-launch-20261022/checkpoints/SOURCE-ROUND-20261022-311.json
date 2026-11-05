@@ -1,0 +1,24 @@
+{
+  "atUtc": "2026-10-24T12:08:35.001701+00:00",
+  "parent": "9f7324d75d8ffce1df693e18753ab51b97ed165b",
+  "taskId": "C_V16_FIXTURE_TYPED_LOCATION_CLOSURE",
+  "files": [
+    {
+      "path": "apps/web/preview-core-pages/sales-fixture.ts",
+      "owner": "C",
+      "bytes": 4994,
+      "sha256": "ddd75223b3f6e436d630b308b59416f19531fe7c900f20686bcd44a317736caf"
+    },
+    {
+      "path": "apps/web/unified-browser-harness/readonly-transfer-fixtures.ts",
+      "owner": "C",
+      "bytes": 3408,
+      "sha256": "4b1330ba097f45013a27b8394f83d9de4a6de123087ab4ac07ce4f6b46525018"
+    }
+  ],
+  "stage": "APPROVED_NODE24_21_WEB_TSC_EXIT0_AFTER_FIXTURE_FIELD_LOCATION_FIX",
+  "strictHandle": 43601,
+  "preservedFailures": "Ownertypes1/types2 and C prior detailroot1diagnostic preserved, no excluded source or widened DTO",
+  "realBusinessAccepted": false,
+  "deployed": false
+}

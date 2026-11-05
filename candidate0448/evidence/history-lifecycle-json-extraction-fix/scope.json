@@ -1,0 +1,38 @@
+{
+  "scope": "Minimal fix of real Mac PostgreSQL17.11 SQLSTATE22P02; no feature or guard change",
+  "observedFailure": {
+    "suite": "native-sale-published-source-0001-0011",
+    "engine": "PostgreSQL 17.11 on Mac task8",
+    "sqlstate": "22P02",
+    "message": "invalid input syntax for type integer: \"原行号\"",
+    "sourceTag": "history-lifecycle:transfer-line-fields",
+    "serverCharacter": 1248,
+    "oldProductionSha256": "219726ac9679a1f9e3c85bf7fea8bc772e900c52da25bf319eab248a84cb461d",
+    "acceptance": "FAILED 9 nodes: 1 pass / 8 fail; no successful native SALE lifecycle claim"
+  },
+  "correction": "Parenthesize the entire extracted JSON text VALUE in N and F helpers before casts; never cast key literals. No predicate, data, count, guard, checkpoint, receipt, publication capability or DDL weakened.",
+  "files": {
+    "adapters/postgres/src/history-import-lifecycle.ts": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51",
+    "tests/history-import-lifecycle.test.ts": "586d5d99da8508c6ceb2fa34a7bef0ba058f54faa2d142a235b34a4630e43097"
+  },
+  "unchangedMetadataFiles": {
+    "packages/application/src/history-import-lifecycle.ts": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606",
+    "packages/application/src/inventory-cutoff-import.ts": "2a23cfa999f8e2119e27a4ba8d8c93a5d3ce93fd2005cc5f952f46de554a1ee0",
+    "adapters/postgres/src/inventory-cutoff-import-store.ts": "33a46ec1c99b4a4e4cbeab05c9132b45bb3ae2afb6609183ca3c8c267284c98f"
+  },
+  "regression": "Generated transfer SQL requires l.line_no=(s.normalized_fields->>'原行号')::integer; both value helpers parenthesized for integer/numeric/date/uuid downstream use",
+  "staticVerification": {
+    "synthetic": "PASS 66/66 lifecycle+cutoffProtocol+SALEsource; lifecycle 35 tests",
+    "focusedTypecheck": "PASS (no diagnostics)",
+    "diffWhitespace": "PASS",
+    "sqlParserOrEngine": "NOT_RUN in cloud; generated SQL assertions do not execute PostgreSQL"
+  },
+  "freshMacAcceptance": "NOT_RUN; must use a new fresh isolated target; task8 failed instance remains stopped and untouched",
+  "explicitExclusions": [
+    "Unfinished PhaseA mapper/reader plan and TODO skeleton",
+    "Independent old TRANSFER_LINE unknown-COMMIT patch",
+    "Accounting proposal/migration0015",
+    "Any new DDL or payment directory",
+    "Source user data/production connections"
+  ]
+}

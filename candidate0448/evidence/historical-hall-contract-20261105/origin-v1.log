@@ -1,0 +1,53 @@
+✔ financial origin version4 verifies legacy compatibility anchor with no invented audit (17.457131ms)
+✔ financial origin version4 verifies published27 anchor with no invented audit (3.914186ms)
+✔ absent migration does not fabricate original facts or suppress SQL failure (0.572881ms)
+✔ sealed financial decoding preserves amounts above JavaScript safe integer in header and actual receipt (0.810718ms)
+✖ exceptional historical hall explicitly requires sealed version1 origin without changing ordinary version1 reads (1.768517ms)
+✔ native sales rules: original transaction capability is mandatory, never use request/form fallback facts (6.556358ms)
+✔ native sales rules: unknown minimum is not known absent; exact minimum remains authoritative (0.604897ms)
+✔ native sales rules: enabled same-hall refs and actual method are required; staff role/hall and account hall are not invented (0.902352ms)
+✔ native sales rules: new/replaced snapshots require current labels; unchanged stored observations survive rename/disabled old barcode (0.820086ms)
+✔ native sales rules: raw observations must bind exact enabled SKU; null manual observation is not a fake MAIN barcode (0.959868ms)
+✔ sales service: awaits both async original-tx rules gates before document/effects; rejection rolls back and original key can retry (9.191258ms)
+✔ native sales pg facts: original-query bounded target locks, actual member pairs, product prices read once and verifier uses same transaction (10.623904ms)
+✔ native sales pg facts: missing real verifier, schema10 and incomplete/invalid nine-price facts fail closed (3.605033ms)
+✔ native sales pg facts: original raw barcode targets preserve leading zero and do not load every alias/MAIN or document history (1.153961ms)
+✔ native sales pg facts: captured document cannot be redirected during async completeness and a closed scope cannot return facts (2.84437ms)
+✔ native sales UoW: missing verifier fails native capability on original bound actor/target and an escaped transaction stays closed (1.772274ms)
+✔ native sales UoW/service: real seam uses one original scripted client through locks, explicit completeness, SAVE/audit/receipt and commit (3.246985ms)
+✔ native sales UoW/service: unproven complete prices reject before native writes and roll back the same client (1.976775ms)
+✔ native method intent: runtime SAVE unchanged/amount and APPROVE reject account reassignment without effects; same method rename is identity-stable (4.48854ms)
+✔ native method intent: first SAVE retains selected M1 intent and rejects actual M2 before any document/receipt/effect (1.22754ms)
+✔ exact2 native sales facts: original object proof selects same-client predicate and propagates missing source/function (1.346954ms)
+✔ exact2 sales UoW: renewed object proof failure releases borrowed client before any SQL or callback (0.551146ms)
+✔ ordinary SAVE requires staff on new creation; untouched original NULL survives edits and committed-key reauthorization (3.259231ms)
+✔ native sales catalogue locks are product then SKU after nonlocking discovery (7.151469ms)
+✔ native sales association changed between discovery and locking fails closed (0.90972ms)
+✔ historical null and source-confirmed cross-hall references survive unchanged SAVE and APPROVE, but new or changed references stay strict (1.639386ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 25
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 471.274117
+
+✖ failing tests:
+
+test at tests/sales-migration-origin-reader.test.ts:28:1
+✖ exceptional historical hall explicitly requires sealed version1 origin without changing ordinary version1 reads (1.768517ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/sales-migration-origin-reader.test.ts:31:146)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

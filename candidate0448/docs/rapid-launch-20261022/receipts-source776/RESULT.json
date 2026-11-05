@@ -1,0 +1,117 @@
+{
+  "task": "V22_STAGED_PREFIX_FIRST_BIND_D1",
+  "status": "SOURCE_READY_TARGETED_CHECKS_PASS_NOT_POSTGRES_OR_BUSINESS_ACCEPTANCE",
+  "authority": "C direct v22 approval forwarding human reply 确认 v22，按此实施; R docs WRITE-CONTRACT-APPROVAL-v22-STAGED-PREFIX-BIND.json; exact4 production+2test leaf ownership",
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+      "bytes": 80495,
+      "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "bytes": 72282,
+      "sha256": "c0064daa8c74960814b236f8280c48b9c051bc8843a1ac265c3ef44b67ba61f6"
+    },
+    {
+      "path": "adapters/postgres/src/native-core-staged-prefix-bind.ts",
+      "bytes": 23570,
+      "sha256": "536f85177ab432e4ca0c35e844182c563252869f4e874f8b978d0f879f034a99"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 79436,
+      "sha256": "bf138b170144a15bcd5d68fad059e68705f4f7e67ae4906b93420d5cee4d0931"
+    },
+    {
+      "path": "tests/native-core-staged-prefix-bind.test.ts",
+      "bytes": 12019,
+      "sha256": "1986c17476aa4f60ee4a04a7be79fdadb7f69de62aa0e5cd75ba86a082b76814"
+    },
+    {
+      "path": "tests/native-core-staged-prefix-store.test.ts",
+      "bytes": 13323,
+      "sha256": "23b9110437961b1c5c61343fa81702cf2149b08db52abe6557a0a24efcb4d422"
+    }
+  ],
+  "interface": {
+    "storeOption": "stagedPrefixBinding26",
+    "method": "capture(command:BindFullSourceCommand):Promise<CoreStagedPrefixExpected22>",
+    "expectedKeys": [
+      "version",
+      "binding",
+      "preparation",
+      "groups",
+      "schemes",
+      "schemeInitialization",
+      "skuRecords"
+    ],
+    "sourceHasNoClientOrPool": true,
+    "groups": [
+      "HEADERS",
+      "TRANSFER_LINES",
+      "PRODUCTS",
+      "SKUS",
+      "STOCK_CONTRIBUTORS"
+    ],
+    "rows": "Source-owned async HistoryClosureRow26 streams, source before typed, relation/key strict byte order; source expected detached before await; original five retained readers once; schemes exact6",
+    "skuRecords": "Private full11column original source record projection; original UTC reviewed_at normalized without losing up to6microseconds; root scope CORE_STAGED_PREFIX_BIND_V22:SKU_RECORDS:typed",
+    "queryBatch": "128 rows / original encoded 4MiB row and pending bounds; indexed primary keys, exact full projections; genuine lease remains unchanged"
+  },
+  "sql": {
+    "profile": "26_v22_staged_prefix_bind_from_v20",
+    "changedRoutine": "naijue_erp.assert_core_initialization_v14(uuid,uuid,boolean)",
+    "newBodyBytes": 49980,
+    "newBodySha256": "8a8374fb193ed9e5ddcc388b0141a91dc17420cef0baee4ffbb700cd9737add5",
+    "oldBodySha256": "5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d",
+    "routineCountUnchanged": 131,
+    "parent": "ExactR1/OID1027659/socketnull/originalpostmaster/owner; full131routine body+definition pins and registry1..26; existing168 two column repair",
+    "changes": "One body successor, strict audit stagedPrefixProof, complete actual roots/source-native relationships, remaining17tables empty, canonical original SKU import_record proof; old warehouse claim/other record rejection retained",
+    "recursiveSchemeHelperAvoided": "Inline exact original nonrecursive v19 proof block, existing hardcoded6snapshots/3approvalpins and durable original receipt, no new routine/ACL",
+    "aclCompatibility": "168 catalog shows existing runtime EXECUTE on encode/row_hash, not projection/key/seed/fold/finish. Exact approved26 projection expressions and original SHA formulas expanded into finite queries/singlebody; no extra GRANT/new function or SECURITY DEFINER",
+    "originalProfilesRetained": true
+  },
+  "checks": {
+    "newProtocolAndCodecUniqueCases": 26,
+    "earlierPass": {
+      "cases": 25,
+      "fail": 0,
+      "skip": 0
+    },
+    "lastAffectedPass": {
+      "cases": 4,
+      "fail": 0,
+      "skip": 0,
+      "includesNewCodecEquivalenceCase": true
+    },
+    "affectedLegacyCoreBindCasesReused": 5,
+    "targetedStrictTypecheck": "PASS3backend+2tests, exactstrict flags incl verbatim/noUnchecked/exactOptional; transitive source dependencies checked",
+    "repositoryWideTypecheck": "Attempted early; FAIL existing frontend CommonJS/module and historical responsibleStaffId fixture errors; not repaired or hidden. Not a wholeproject PASS",
+    "sqlValidation": "Static exact-parent/onefunction/bodySHA/profile/retained rejection/codec formula checks only. No PostgreSQL parser, PLpgSQL compiler or trigger execution by D1"
+  },
+  "dataSafety": {
+    "original109CommandBodyHashKeyOrderUnchanged": true,
+    "receiptResultShapeUnchanged": true,
+    "originalPrefixNeverWrittenOrDeletedByAdapter": true,
+    "unknownCommit": "Existing discard/no automatic retry, original-key receipt lookup only; protocol fixture passed, actual UNKNOWN COMMIT not measured",
+    "realSourceFullImportComplete": false,
+    "stagedExposed": false,
+    "publishRestrictionLifted": false,
+    "frontendOrSharedCommandModified": false,
+    "dbOrSshOrServerOrBuildOrGitByD1": false
+  },
+  "next": {
+    "sourceOwnerD3": "Final original5 consumer files provided, skuRecords seventh-key delta coordinated. C/QB combine once; no duplicated source suite. Exact old148/R1 issuer baseline vs currentR sharedv21 additions explicitly remain true differences, notUNCHANGED",
+    "independentReview": "OriginalQB one concentrated actual delta review",
+    "actualOwner": "T45 only, C registers exact next source/currentreview/externalgrant. Old169/164/148 and acceptedSYN/sealed18run2 never replayed",
+    "actualPgEntry": "See PG-VALIDATION-HANDOFF.md. No runnable isolatedv22 PG harness currently supplied; exactR1 installSQL cannot be run on oldB07 or mismatchedQA by deleting identity checks."
+  },
+  "notTested": [
+    "PostgreSQL DDL/PLpgSQL compile and actual deferred trigger execution",
+    "Actual full8table+SKUrecord native/content agreement",
+    "Actual prefix BIND commit/trigger rollback under newprofile",
+    "SQL roots and source perrow validation timing on real fullprefix",
+    "Actual UNKNOWN COMMIT",
+    "Remaining109 commands, full real import, publication/formal business"
+  ]
+}

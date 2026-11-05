@@ -1,0 +1,22 @@
+{
+  "status": "no_blocking_findings",
+  "evidenceScope": "source review and synthetic scripted protocol/Fastify.inject only",
+  "independentProbeTests": 15,
+  "targetedRegressionTests": 64,
+  "finalCombinedTests": 79,
+  "failedTests": 0,
+  "skippedTests": 0,
+  "sourceManifest": "evidence/native-read-policy-independent/source.sha256",
+  "sourceManifestSha256": "918192697ba97d3046d7ca9a1407e169f98af33ec3c949a96af8a571b4edafe2",
+  "selectedManifestEntries": 31,
+  "authorityInputsVerified": 8,
+  "docsOnlyCorrectionVerified": true,
+  "independentCompilerExecuted": false,
+  "rootAggregateExecuted": false,
+  "actualPostgresExecuted": false,
+  "networkOrListenerUsed": false,
+  "productionSourceEdited": false,
+  "commitCreated": false,
+  "remainingBlockingFindings": [],
+  "report": "evidence/native-read-policy-independent/review.md"
+}

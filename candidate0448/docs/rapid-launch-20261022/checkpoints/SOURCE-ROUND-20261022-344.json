@@ -1,0 +1,388 @@
+{
+  "atUtc": "2026-10-24T18:36:33.453710+00:00",
+  "parent": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
+  "taskId": "PHASE2_ORIGINAL_COPY_READY_PACKAGES_AND_V15_V16_CONTINUATION",
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+      "owner": "D2",
+      "bytes": 47325,
+      "sha256": "09fb597e7b89e77cfb9711ca7ddba8e3d4fa898bf142e77796d0f68be964b1a3"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "owner": "D1",
+      "bytes": 60842,
+      "sha256": "0d920a2e03bb7391a984108d57f32e96bc8c2b8b6ea1bf73e38e23218d26e451"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/catalogue/category-page.tsx",
+      "owner": "F4",
+      "bytes": 15406,
+      "sha256": "f7f651093f48c73d9bc53b80cc44ddc6a63c519d7098922b0041eb97011229e6"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/catalogue/dictionary-page.tsx",
+      "owner": "F4",
+      "bytes": 7513,
+      "sha256": "ea817599ea8debc6b1f2f1bfe21cd58bd068390f162053731cad63351e77c317"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/catalogue/entry.tsx",
+      "owner": "F4",
+      "bytes": 4001,
+      "sha256": "8374222bf5de4c38b4633776e39b6e1d7b9b4400db8b090107392b10bcb2b50b"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/catalogue/scheme-page.tsx",
+      "owner": "F4",
+      "bytes": 4418,
+      "sha256": "b9a37a1e695f32b8ab6097dd2cb1ba0f409a6cc2493f3c76a10f6eb75061fe85"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/catalogue/source-controls.tsx",
+      "owner": "F4",
+      "bytes": 11153,
+      "sha256": "0dc40157fd8e49f2998a020398e14d14ac626431cbd8d1ae4a7ada55f1b8814d"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/catalogue/tests/run-dom-tests.mjs",
+      "owner": "F4",
+      "bytes": 11075,
+      "sha256": "a6b0ca48fd5426ab59ef549fb2d38101daabc0281732e244ae201172053228a2"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/account-menu.tsx",
+      "owner": "F1",
+      "bytes": 4623,
+      "sha256": "88f29850c8b0d7c0ed3e22988362fc6aba539a999d85090dba890664c97cfaef"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/account-password.css",
+      "owner": "F1",
+      "bytes": 472,
+      "sha256": "9fbe5102438c444874c21624a3dfde7475a0e0a1642480df6cfbb5c3539abddb"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/app-shell.tsx",
+      "owner": "F1",
+      "bytes": 2750,
+      "sha256": "77800dd16467295edc44c1e7149fc9c898c7cab2bc132849559c11a9d3cba66d"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/brand.tsx",
+      "owner": "F1",
+      "bytes": 220,
+      "sha256": "da33adbd14a1c1a4ba6008d7fa5207f2a71747592669460ea95c2f74bb4ef470"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/login-view.tsx",
+      "owner": "F1",
+      "bytes": 1634,
+      "sha256": "f8b7c830b1c7e6efcefcfab0bc1995b4212f371ad16bf0844157de55e76159d5"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/session.ts",
+      "owner": "F1",
+      "bytes": 1238,
+      "sha256": "aab4fdc754a55e1a60b7da6cfc0c396b921f40998a0c9062d9ee805f14f2432c"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/documents/sales-session.ts",
+      "owner": "F1",
+      "bytes": 2761,
+      "sha256": "bf7fb6f36e5abddf3d4396e916cbd147d57a0602811558df6bd2917a4977515d"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/documents/sales-view.tsx",
+      "owner": "F1",
+      "bytes": 552,
+      "sha256": "0740302ead87a5128529d53356003078376ec3b46469ef859e00f198e0f8c206"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/entry.tsx",
+      "owner": "F1",
+      "bytes": 1029,
+      "sha256": "59719a7890af91dc8ba3a3af0185444226b5c3e06c9fbeeca979ee1308a7a12f"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/assets.d.ts",
+      "owner": "F2",
+      "bytes": 77,
+      "sha256": "e7142bb71b6e3adbdae9014be8b7abe198a0cf572402bec6ba6b84ad09f04235"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx",
+      "owner": "F2",
+      "bytes": 15414,
+      "sha256": "14552c66d1810b0fc09a7e0fb7f9c89890541740b8a96006fdb420c2867ae36e"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/dialog.tsx",
+      "owner": "F2",
+      "bytes": 1423,
+      "sha256": "dd10f0474e72e63eb279f12fec9c40ee7b91d0aeb63a317f97973e6d59fe2626"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/index.tsx",
+      "owner": "F2",
+      "bytes": 1519,
+      "sha256": "96d5293ebaa43872e52e6a28ba02da44fe4c59d974a211f1ae7f93f0cb0148b7"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/inventory-runtime.test.mjs",
+      "owner": "F2",
+      "bytes": 15090,
+      "sha256": "a03cf385bc739988bf807ff2f26f3325e298080f1b5c1118a6e3e697325f26f6"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/ledger.tsx",
+      "owner": "F2",
+      "bytes": 6019,
+      "sha256": "f7e344bbf645ba0ace2a9a5b9a191b9c2a9cc39824f8848df5c2f464069d4ea9"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/matrix.tsx",
+      "owner": "F2",
+      "bytes": 16488,
+      "sha256": "8bdf9adb8f0c0d6792236e4b1ab340734d283c0420214770fc5c8cf10187d513"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/output.tsx",
+      "owner": "F2",
+      "bytes": 4881,
+      "sha256": "188e27047804420ed215ebb8619cc0fc69cbc1d01a48f651c16b05254d00e07c"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/page.tsx",
+      "owner": "F2",
+      "bytes": 14430,
+      "sha256": "65283ffb34f1bf78e527327e5bda0a2a398fea82d59e2ee45740a0c6345edf17"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/pagination.tsx",
+      "owner": "F2",
+      "bytes": 2788,
+      "sha256": "be9083e239a91528fc7e227231e7db102209f7f202bf5740adbd9bbd2efff46e"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/source-control-css.ts",
+      "owner": "F2",
+      "bytes": 21708,
+      "sha256": "dc351724c32347f821615a8fd7084463ca81e33868792dd691d8829e01c33f55"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/preview.tsx",
+      "owner": "F2",
+      "bytes": 5028,
+      "sha256": "e985ade2ba5bc24cfd9e19f8c6fdc03b877b89c1bfd8130dc6342c278766a97f"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/account-form.tsx",
+      "owner": "F3",
+      "bytes": 10217,
+      "sha256": "f42f98890c7b823e062e96b51b8de7e6b222a634fa5b6131582bfb67f1b0e60e"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/accounts-page.tsx",
+      "owner": "F3",
+      "bytes": 12207,
+      "sha256": "a2e6d46d6ecf1a79ad250a8fafa488209929a41d4bd12b1764299067e26dc78d"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/audit-drawer.tsx",
+      "owner": "F3",
+      "bytes": 6122,
+      "sha256": "aeb22b75e397cfe636a3c21e2d388086e2be8a5ecfb8297e225f0abac06b367b"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/controls.tsx",
+      "owner": "F3",
+      "bytes": 9533,
+      "sha256": "87e77a1cb5a6d2993b689976d31046b1763b7d9aad61292c0aef2da00a8f4026"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/index.ts",
+      "owner": "F3",
+      "bytes": 455,
+      "sha256": "0cdc9494e66c4c077b93ecc3c7766d52a237b4914a384aa2d3720e0d21bf5a4d"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/parties-entry.ts",
+      "owner": "F3",
+      "bytes": 243,
+      "sha256": "2c90207ab240127eeb81e162f88dca5a98e9dcff16cc6043c876108e81963321"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/parties-page.tsx",
+      "owner": "F3",
+      "bytes": 10579,
+      "sha256": "ee1373b0c091d4a270b41e0ff1965aebd5e68862368f153b1e2b5b65d835fd9b"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/parties-runtime.test.mjs",
+      "owner": "F3",
+      "bytes": 7578,
+      "sha256": "6efb49e9636608eae09b25956eb66b3761a57523dd3a4b36f24d779b7ebbba64"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/party-form.tsx",
+      "owner": "F3",
+      "bytes": 4487,
+      "sha256": "a4053c47abd363de54d94f8fff321dea854169c45e9f0f29abc8e55a8c90c8e7"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/payment-form.tsx",
+      "owner": "F3",
+      "bytes": 5446,
+      "sha256": "2ca5ba89dc2bca577e36394f4070ea0172369129550c25da8b623fd5f05860b8"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/payment-halls.css",
+      "owner": "F3",
+      "bytes": 204,
+      "sha256": "e9f7571da1a74c848a2aef812c5f3f673b95bf50e575dbba84f38e6c4c2d0e5c"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/payment-halls.tsx",
+      "owner": "F3",
+      "bytes": 4413,
+      "sha256": "93758d3d33201c57a2c1b42e31ef18a7c062cfb824ef9490a3b78b7db1a84758"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/payments-entry.ts",
+      "owner": "F3",
+      "bytes": 287,
+      "sha256": "f0f473949a62bbd0fb94ec94c43979da7449185f4e91b7ade43579238078893e"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/payments-page.tsx",
+      "owner": "F3",
+      "bytes": 13197,
+      "sha256": "fc228b2ad98868c06ca93583316a604f84e63ae90985774b3176ae66a159cfaa"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/payments-runtime.test.mjs",
+      "owner": "F3",
+      "bytes": 9005,
+      "sha256": "3788c57b140c73f06992c3a79bbbcb09a0caaf39cf590a4df924812b042ef472"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/personnel-entry.ts",
+      "owner": "F3",
+      "bytes": 558,
+      "sha256": "3865f8aaabd3d36d308428a3e86a30c75b72308d5d628add8e70a50ede173865"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/personnel-runtime.test.mjs",
+      "owner": "F3",
+      "bytes": 11717,
+      "sha256": "32b1f05ba3d669cae474970e151eb8b8ef2a186a11bc09f5d2cd218ff01b24db"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/settings-runtime.css",
+      "owner": "F3",
+      "bytes": 3458,
+      "sha256": "d4185a94ae94192a589659e9dc3594dd419c4953358523ced32c86fcd03e8dcb"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/staff-form.tsx",
+      "owner": "F3",
+      "bytes": 8355,
+      "sha256": "87753e1d5ca8baf8a3f9fa6ade3d92b6ffa0b013bca09781a5102499f5aca234"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/staff-page.tsx",
+      "owner": "F3",
+      "bytes": 13378,
+      "sha256": "a171e7aa7a8fdd02d7e9a59c88c977d1b4bee1e20b76a692da1dd67ea5743679"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/store-form.tsx",
+      "owner": "F3",
+      "bytes": 6528,
+      "sha256": "33fa9e346440266badc9bbe9cc2ba12e7793f33b6aa499ece907ce00d4e92de9"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/stores-page.tsx",
+      "owner": "F3",
+      "bytes": 14706,
+      "sha256": "7b9a7f3da82ecf3a5c94a2c16dff6adc0c6a1658c926d8164ceef3cf2bc5d7d0"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/stores-runtime.test.mjs",
+      "owner": "F3",
+      "bytes": 10895,
+      "sha256": "cfdf5770d56f33b30fa3c6d02e96b2b384bdcd43529e3bc40c4ff53d4410e30a"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/tsconfig.json",
+      "owner": "F3",
+      "bytes": 109,
+      "sha256": "1071d21fe9ff7dd5dcbf6219cd8d90582b07d1a6cb07e875dc78ee01fcebf892"
+    },
+    {
+      "path": "apps/web/demo-replica/tsconfig.runtime.json",
+      "owner": "C",
+      "bytes": 767,
+      "sha256": "11e23f512158ce93aa55a4f1f8f2fd780738fd3f93f69d75624bc02088c2fa3c"
+    },
+    {
+      "path": "apps/web/src/payment-settings/contracts.ts",
+      "owner": "F3",
+      "bytes": 4596,
+      "sha256": "4bb47bd0f491dfc69c8dbedde270b01f8a92c18f8a78bf17d960e270d6e94631"
+    },
+    {
+      "path": "apps/web/src/settings/audit/audit-entry.tsx",
+      "owner": "F3",
+      "bytes": 5268,
+      "sha256": "1f55d220a27592929536452505e03da9aeb521a1876deabf91842b14d48e5fd9"
+    },
+    {
+      "path": "apps/web/src/settings/audit/contracts.ts",
+      "owner": "F3",
+      "bytes": 4160,
+      "sha256": "1670b3eeb1ae483a354e514089e985df62119e461c440f3204b298382c7e3670"
+    },
+    {
+      "path": "apps/web/src/settings/stores/contracts.ts",
+      "owner": "F3",
+      "bytes": 1763,
+      "sha256": "27d779ccbd71e2f5c3c920c08fe384c98d755ef3be831faceec44d27f1702d80"
+    },
+    {
+      "path": "apps/web/src/settings/stores/maintenance-controller.ts",
+      "owner": "F3",
+      "bytes": 17320,
+      "sha256": "4c6336b4e82d0666d2a56aca05d032ce2b5bfcad3b86362d24f6d20f62391214"
+    },
+    {
+      "path": "apps/web/src/staff-settings/contracts.ts",
+      "owner": "F3",
+      "bytes": 5717,
+      "sha256": "83971fc925bea4b261d33dfbe6bc82203f99c5c347430daac43d73bc1e75bf81"
+    },
+    {
+      "path": "package.json",
+      "owner": "C",
+      "bytes": 6098,
+      "sha256": "78c546233e820d569488d63532ec6bee63d8da2c033849c0ced55d264486c58d"
+    },
+    {
+      "path": "tsconfig.json",
+      "owner": "C",
+      "bytes": 772,
+      "sha256": "17e8e118ba9b269168ceda1fbcd9515734777217a2f911367ef60f7c240b0ede"
+    }
+  ],
+  "stage": "SOURCE_WIP_OWNER_DIRECTED_CHECKS_REPORTED_NOT_UNIFIED_BROWSER_REAL_BUSINESS_OR_DEPLOYMENT",
+  "readableCandidateStill": "343/51b6575 unchanged fixed artifact at57896",
+  "backendExact2": "Approvedv15 compatibility guard only, unchanged original implementation suffix; original categoryOnly API block moved before CORE return; no actualSQL applied yet",
+  "frontendPackages": "F2 inventory; F3 hall/warehouse +customer/supplier +staff/accounts; F4 six catalogue pages source-ready. F1 shared mechanisms and partial pureviews only, original sales main body not yet wired. No completion promotion.",
+  "types": "Node + strict BrowserESM project both in existing typecheck; onecopied React declarations and actual DOM.Iterable, no hidden frontend. No dependency/lock changes.",
+  "newPendingUiOrBackendFields": false,
+  "productionChanged": false,
+  "status": "SOURCE_WIP_READY_PACKAGES_NOT_BROWSER_OR_REAL_BUSINESS",
+  "phase1Baseline": "51b65753ac15dc64f1bfbf28d1159c61b8318485"
+}

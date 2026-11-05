@@ -1,0 +1,19 @@
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (6.757376ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (1.692186ms)
+✔ historical signed discount remains exact on memo save without invented allocation (0.952885ms)
+✔ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (18.219675ms)
+✔ approved historical discount ruling: economic edits keep original discount without guessed allocation (0.911874ms)
+✔ historical missing settlement is shown unknown, never as zero or settled (0.25672ms)
+✔ changed historical unknown pricing saves explicit-price draft without invented intent (1.493045ms)
+✔ real existing editor initializes historical signed unknown rows and sends economic SAVE through ordinary proposal command (6.924802ms)
+✔ original signed-sale discount survives all-positive edit below retained discount (2.141245ms)
+✔ original signed-sale discount survives all-positive reopen below retained discount (1.503592ms)
+✔ authenticated detail origin permits reopening preserved discount larger than all-positive subtotal, wrong origin rejected (1.408985ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 350.227998

@@ -1,0 +1,2 @@
+PASS static browser bundle: inert index has no React/CSS; transfer route is separate; detail is dynamic; detail CSS is an explicit separate action-only asset; production graph excludes tests.
+The transfer source uses only the pinned source-requested Arco DatePicker/TreeSelect/Select APIs. This is not browser timing, deployment, pixel/layout or performance acceptance.

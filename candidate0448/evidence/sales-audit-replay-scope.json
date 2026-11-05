@@ -1,0 +1,24 @@
+{
+  "parentCommit": "6d89f603c94db75398ba0b0631a777f199c5a05f",
+  "focusedTests": 85,
+  "combinedSalesTransferTests": 130,
+  "independentProbes": 6,
+  "scopedTypecheckBuildImport": "PASS",
+  "changes": [
+    "sparse header/changed-line/settlement evidence",
+    "skip unchanged native detail writes",
+    "stable account/business fingerprint with current authorization on replay"
+  ],
+  "preserved": [
+    "price and stock semantics",
+    "retained line ownership",
+    "payment account snapshots",
+    "cross-kind request-key guard"
+  ],
+  "notVerified": [
+    "real PostgreSQL",
+    "whole-project acceptance",
+    "production deployment"
+  ],
+  "rollback": "revert source commit; no migration or runtime change"
+}

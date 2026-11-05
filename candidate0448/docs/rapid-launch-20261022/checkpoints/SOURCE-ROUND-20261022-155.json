@@ -1,0 +1,40 @@
+{
+  "atUtc": "2026-10-23T08:29:13.286487+00:00",
+  "parent": "c61ca60ac0faf177e39d354171e614161b0c41fe",
+  "taskId": "B03_Z02_PRIMARY_INVENTORY_NATIVE_KEY_READ_WIRING",
+  "files": [
+    {
+      "path": "adapters/postgres/src/inventory-query-reader.ts",
+      "owner": "D3",
+      "bytes": 41847,
+      "sha256": "446333468fa4954061a5732907544227ce56a93cc7cf24ca447dd789f2b606cb"
+    },
+    {
+      "path": "tests/inventory-query-postgres-protocol.test.ts",
+      "owner": "D3",
+      "bytes": 50291,
+      "sha256": "3cd6a13fa967dc490b86f0edd96c8a132bfdcd105575202b6775bf38abb58c99"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "owner": "D1",
+      "bytes": 47403,
+      "sha256": "f11c869e021de4dc39c20d11721721dc7c9ff9734b53d945f3972dfa09e438ea"
+    }
+  ],
+  "scope": "Same original pool/runtime26/season capability; preserve original cutoff members set proof; only target new native warehouse/SKU eligibility through existing exact-key public helper and same published batch in same RR snapshot. Current page/full count/sum/full output/actual returned candidates consistent. No new DTO/capability/DDL/write contract.",
+  "checksAdopted": {
+    "D3": "New2 inventory primary native keys scripted protocol and strict existing test closure;334 full/100 current/-668 fullsum;1001newSKU batches[1,1000,1] including newwarehouse qualification, original member helper calls0; not PG/performance",
+    "D1": "Only host constructor third same issuer.runtime26; original meaningful host1 and strict PASS; no new test or D3 suite replay"
+  },
+  "deliveryRefs": [
+    "D3/CONTINUATION-DELIVERY.json inventoryPrimaryNativeKeyImplementation",
+    "D1/INVENTORY-NATIVE-KEYS-RUNTIME-HOST-RESULT-v1.json sha3d901f23ba31395613b21bf9b6296321ac97beac2f9d751d15eed4508d02732c"
+  ],
+  "notTested": [
+    "Actual PostgreSQL/HTTP/browser/native pair query/performance/SQL plans",
+    "Public helper internal per-new-SKU receipt/audit expansion cost remains NOT_MEASURED",
+    "Current QA C75 nativeCREATE is separate fixed C154 actual evidence, not this new read consumer"
+  ],
+  "next": "Original QB review only exact3 and affected key/witness assumptions; C actual new-key read after effective scoped conclusion, no whole previous suites"
+}

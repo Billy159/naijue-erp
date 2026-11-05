@@ -1,0 +1,15 @@
+{
+  "commit": "c48eba1e9b05c76ecc9eec20c548dff13b5719b1",
+  "sha256": {
+    "tests/integration/backend-acceptance.ts": "ae67fd823d5c4ebc77fccc4cd21497577ee91146cdb14079d0717f06e00597e5",
+    "tests/integration/backend-source.test.ts": "91a1e2a191063b1a537bc6ba97124abbdad6c4ef2e8cd9287717f3daafa59e24",
+    "tests/integration/postgres.integration.test.ts": "3ae93136554e8371df19fbbe619f37d843a0c6a2753d6447c95d6db877075053",
+    "tests/integration/safety.ts": "a2488d99b04d5eb4ee1a59efdf7429b88669032c41783e359dcf823972188468",
+    "tests/integration/safety.test.ts": "67c695ee5520ea4ada9ac7273a4a63d37b73a49d5f9160aa9dbfc9ccaf2acf14",
+    "tests/integration/plan.ts": "1c00a3f685e385abe3fcb0f6b0bdc5b49c7edae250abadc73674590e3d9927e4",
+    "tests/integration/migration-manifest.ts": "4bc134f62232f85ebcd6353da6d5586ccf281a58af45005c52bfa16e51508a66",
+    "tests/integration/database.ts": "aaab741db40d3667738e841d7582e510ff6c8762c369e469cd58a7b4352a9808",
+    "tests/integration/fixtures.ts": "3705823c88a94b3810a05bbefa1f0b7bd98aec27647fc3ad1c7dce9f22a1eea0",
+    "tests/integration/adapter-helpers.ts": "b1ffde72029b83926b73780cedaf2a21f7b4c1e0a62afc12aca06a84bdec4cc8"
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "atUtc": "2026-10-22T09:22:47.127819+00:00",
+  "parent": "a7e817b4ff92210839e5d665caeead274d40fe5c",
+  "groups": [
+    {
+      "slice": "DOCUMENT_OUTPUTS_AND_SAVED_CONSUMERS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-22/DELIVERY.json",
+      "receiptSha256": "8ac2a611cebae4e1be8071f8746edb9da377826f56342c490f7d08f17eca2836",
+      "files": [
+        {
+          "path": "apps/web/src/components/document-output-contracts.ts",
+          "bytes": 7818,
+          "sha256": "a23976f1e1821978e55fef43bfed210293bfd5d61cd00bac8a30daad15c40173",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/components/document-output.tsx",
+          "bytes": 12974,
+          "sha256": "13a07ea864e8d08154a4bc7e19b32a17cb438403e287c743de9978b65fdf1370",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/components/document-output.css",
+          "bytes": 352,
+          "sha256": "b29472f435bb657a277cf1ef39f1e4d45d6b10dc9c7e797f965969a2f134542f",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/detail-header.tsx",
+          "bytes": 1821,
+          "sha256": "2977648f7e69214a475d567f4c816bc508988ea9a3cd74bc415398588380a5cd",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/detail-content.tsx",
+          "bytes": 9371,
+          "sha256": "e08126275938ac160c74f4cb432227413aac345d044bf9dd9da030a596581682",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/commands/form.tsx",
+          "bytes": 18595,
+          "sha256": "1c507416c05cd03f906690c1b9d538b8b779b6be28de535fa98efae41c897f6f",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/detail-content.tsx",
+          "bytes": 10726,
+          "sha256": "2db5cd7feb2bc20c2a42391cef93503a7328eeb98d42c5e8abd601c638451b28",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/form.tsx",
+          "bytes": 10736,
+          "sha256": "0965a36a630f87408a003a7e5a19990f6cbbb6edaddb731ce1d37059794978a4",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "NATIVE_PRODUCT26_PURE_PREPARE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product26-prepare-slice1/RESULT.json",
+      "receiptSha256": "ca7e63a42e23b72f4558a703fb496a9bdee472d8f6568236218c215c8d77dc9f",
+      "files": [
+        {
+          "path": "packages/application/src/native-product-import.ts",
+          "bytes": 24773,
+          "sha256": "e93bfc9f0fd7445a3ba4c36f1ee2930b38d693ad318b1d8c86941c676fd9a7e0",
+          "owner": "D3"
+        },
+        {
+          "path": "tests/native-product-size-override.test.ts",
+          "bytes": 9501,
+          "sha256": "637fe9bdf6beafeecfcdcff42a72c34fa5953a68103baa946b55c7da36e040c1",
+          "owner": "D3"
+        }
+      ]
+    },
+    {
+      "slice": "SETTINGS_AUDIT_READ",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W13-SETTINGS-AUDIT-RECEIPT.json",
+      "receiptSha256": "3d9ebdbdfedc767f5fafd09a675020f9b7479bdf05faed73dfd7d1b8f9521269",
+      "files": [
+        {
+          "path": "packages/application/src/settings-audit-ports.ts",
+          "bytes": 5877,
+          "sha256": "e7847cbcc343bc37dc7106ecd5b1c73fade5fac21a9e7b979e17d347eb4e897e",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/settings-audit-validation.ts",
+          "bytes": 7119,
+          "sha256": "2267c23b4452293a3bb1c5482f434d1495e3b43bcce27d235e1138639b65e4d2",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/settings-audit-service.ts",
+          "bytes": 1873,
+          "sha256": "96b5f0595249a715488138100c476a566b2d358e1dc36d9a864c28277d5f6cec",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/settings-audit-reader.ts",
+          "bytes": 9248,
+          "sha256": "c7a5bd17c7221f1bb5407b48dc2a1023aa2ce1d7fdfb8ffb4f2603956e157e63",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/settings-audit-http.ts",
+          "bytes": 4326,
+          "sha256": "ddf8810c175b723b83fe88bf8f0cfce7dab863da754569fbab4861894f7bdbf5",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/settings-audit-read.test.ts",
+          "bytes": 5659,
+          "sha256": "5d85f0bc39571e1d214be6491b6131005998425579ea34df92059866d23ef0a7",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/settings-audit-postgres-protocol.test.ts",
+          "bytes": 6071,
+          "sha256": "4a3fbcfd4ab95554e57ebd32132ef790125767a79cc026feac5575bc0f0c976c",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/settings-audit-http.test.ts",
+          "bytes": 2556,
+          "sha256": "158f0c66a81d284da4066af4a2c374b5d6ffb09153e5d3833151034c7f88387e",
+          "owner": "D2"
+        }
+      ]
+    }
+  ],
+  "fileCount": 18,
+  "scope": "New source/proof/output increments only; browser, actual PG and root integration remain scoped pending"
+}

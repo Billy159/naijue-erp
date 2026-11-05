@@ -1,0 +1,20 @@
+{
+  "atUtc": "2026-10-24T12:47:42.208976+00:00",
+  "parent": "8c6d90e0d3d521565574ef19817168035f072d4d",
+  "taskId": "F2_P01_P02_NORMAL_ENTRY_FOCUS",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-editor.tsx",
+      "owner": "F2",
+      "bytes": 32057,
+      "sha256": "e674ea81fc2dc31e385a333900a1ec0bfad522d9eb9c00b4a2f05d6ae870b757"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P01-P02-NORMAL-ENTRY-20261024-01/RESULT.json",
+  "ownerReceiptBytes": 3374,
+  "ownerReceiptSha256": "cef83e365f0ed3de140dc1270a2b40073852db97cdce05b13157c1f8eefc82ca",
+  "ownerSourceReleased": true,
+  "stage": "SOURCE_EXACT1_NORMAL_COMPONENT_STATES_AND_TRANSITIVE_TYPES_PASS_NOT_BROWSER",
+  "wholePageAccepted": false,
+  "deployed": false
+}

@@ -1,0 +1,2 @@
+PASS source provenance: exact frozen SHA256, 6 line ranges, 21 copied scoped rules and installed Arco hashes.
+PASS lazy boundary: lightweight dynamic-import contract, real Select leaf, no root barrel/full CSS/data/global bridge; action CSS stays a separate lazy entry.

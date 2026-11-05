@@ -1,0 +1,26 @@
+{
+  "atUtc": "2026-10-23T09:32:49.910792+00:00",
+  "parent": "a644337d26784d8c905d26dd89207fad7a0afe97",
+  "taskId": "C03_EXACT_INLINE_SVG_SECOND_DOCUMENT_CSS_CONSUMER",
+  "files": [
+    {
+      "path": "scripts/release/manifest.mjs",
+      "owner": "C",
+      "beforeSha256": "a7550b1f2767183b6d6ed8e057c5bf1af7ab898faadc30c58352e7366c73a239",
+      "bytes": 30615,
+      "sha256": "bba342885ea07154c58801d37bc9ffa98623fda22e779d3cd77b45cc1261829e"
+    }
+  ],
+  "actualFailure": "Production C158 firstbuild UNDECLARED_EXTERNAL_DEPENDENCY; same approved212B URI consumed in frozen transfer-proposal.css absent in original one-CSS owner set. Actual build158 failure preserved.",
+  "scope": "Only two exact owned CSS consumers replace single sales CSS origin in both input/output expressions; same exactURI212B/hash, positive output contribution and actual owner bytes checks retained. Backend/SQL/external/secret/other integrity checks unchanged.",
+  "checksAdopted": {
+    "newTargetedGateCases": 8,
+    "actualTransferInputAndOutput": "originalfalse -> candidatetrue",
+    "originalSalesAndFiveNegativeControls": "preserved",
+    "actualArtifact": "C158 firstproduction web/metafile plus frozen actual owner/output bytes"
+  },
+  "notTested": [
+    "Production new build/pack/stage/HTTP/business after patch, independent newscope receipt"
+  ],
+  "next": "Original QB only new exact secondconsumer guard scope; fresh production source159/build via original builder preserving158failedoutputs; UI158 unchanged and already QF assigned."
+}

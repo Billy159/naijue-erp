@@ -1,0 +1,31 @@
+# Explicit zero absence evidence: synthetic verification only
+
+No Mac, real stock file, production connection, typecheck, or build was accessed or run. Existing WIP was preserved. This is approval/compiler/preflight evidence, not PostgreSQL or complete 105433-row package acceptance.
+
+## Red and green
+
+- RED: `node --test tests/unified-explicit-zero-approval.test.ts` before implementation. Missing new approval module caused the expected failure. Log: 01-red.log.
+- Focused GREEN: `node --test tests/unified-explicit-zero-approval.test.ts` (4 tests), including exact ordinary/stream program equality. Log: 02-focused-green.log.
+- Regression GREEN: `node --test tests/unified-explicit-zero-approval.test.ts tests/unified-historical-staff-hall-preflight.test.mjs tests/unified-stream-baseline-boundary.test.mjs tests/unified-stream-wide-master-integration.test.mjs tests/unified-import-stream-preflight.test.mjs` (29 tests at that point). Log: 03-preflight-regression-green.log.
+- Compiler/CLI regression GREEN: `node --test tests/unified-stream-import-cli.test.mjs tests/unified-import-execution-v2.test.ts tests/unified-import-whole-package-profile.test.ts tests/unified-stream-real-registration.test.mjs` (24 tests). Log: 04-plan-regression-green.log.
+- Approval-only scale GREEN: `node --max-old-space-size=768 --test tests/unified-explicit-zero-scale.test.mjs`. 105433 synthetic approved keys; 42272961 approval bytes; 412-byte INIT descriptor; 2202-byte maximum evidence record; 17 sibling hashes; 10.39 seconds test duration; peak RSS 644664 KiB (629.6 MiB). Log: 05-approval-scale-green.log. This records a measured process peak, not a hard memory ceiling. Local execution needs Node matching repository requirements and memory headroom above the measured RSS plus the host/OS and other import phases. A 128 MiB process limit is not supported by this evidence. No full-size package or database result is claimed.
+
+## Contract
+
+`source_refs.row` remains a positive real line locator into the independently SHA-pinned approval JSONL, never an invented spreadsheet row. Each approved absence carries the original inventory whole-file hash, exact cutoff, namespace, resolved warehouse/SKU pair, exact zero and a unique source key. Existing listed stock may not be replaced by the compiler. Unknown identities remain rejected. Zero produces no ledger entry ID.
+
+Approval input is strict UTF-8 LF JSONL with final LF, no CR/BOM/blank lines/duplicate JSON keys. A trusted external SHA is required to create the process-private verified token. CLI input must be outside the package. Package self-assertions and copied tokens fail closed.
+
+INIT carries only `explicit_zero_approval` with format_version EXPLICIT_ZERO_APPROVAL_MERKLE_V1, sha256, inventory_file_sha256, source_namespace, cutoff_at, record_count, merkle_root_sha256. The host establishes full-file SHA to Merkle-root binding after independently pinned verification. SQL can verify row membership and binding; it must not claim to independently rehash the whole approval file.
+
+KEYS preserves explicit_zero_evidence with format_version EXPLICIT_ZERO_ABSENCE_V1, inventory_file_sha256, cutoff_at, approval_sha256, approval_row, approval_line, merkle_proof. Leaf SHA256 input is UTF8(`EXPLICIT_ZERO_LEAF_V1\n` + one-based decimal row + `\n` + original JSON line without LF). Parent SHA256 input is UTF8(`EXPLICIT_ZERO_NODE_V1\n` + left lowercase hex + `\n` + right lowercase hex), no trailing newline. An odd node duplicates itself. Depth must exactly match count, with row in [1,count], count <=250000. Three-leaf cross-language vector is merkle-three.json.
+
+Actual user-approved membership, original file bytes and independent authorization pin remain local. The synthetic artifacts do not authorize any real import.
+
+Final owned-byte hardening rerun: the reader now copies the caller's bytes once before checking the independent SHA and deriving facts/tree, so later mutation cannot swap hashed versus parsed evidence. The same scale command passed again in 8.55 seconds with peak RSS 563912 KiB (550.7 MiB), recorded in 06-owned-bytes-scale-green.log. Both measured peaks are retained; memory headroom guidance uses the larger observed peak, not a promise that a subsequent run stays at the smaller value.
+
+Additional trust-boundary review fixes (separate from SQL execution): 08-kernel-red.log records the failing missing-token adapter test before the fix. 09-kernel-green.log and 10-reader-boundary-green.log cover private-token checks before adapter SQL and the shared 65536-byte original approval-line limit. 11-host-red.log records direct raw host callbacks bypassing the adapter. 13-final-host-green.log records 28 passing focused + existing host tests after the physical host boundary began comparing INIT/inspect/verify descriptors against its separately supplied private token and checking KEYS evidence against that same token. Exact command: `node --test tests/unified-explicit-zero-host.test.mjs tests/unified-whole-package-host.test.mjs tests/unified-whole-package-sql-kernel.test.ts tests/unified-explicit-zero-approval.test.ts`. The runtime and independently provided operator SHA remain trusted inputs; this is not a claim to resist arbitrary malicious JavaScript execution in the trusted process.
+
+Parameter ownership hardening: 15-host-parameters-red.log captures the previously observed getter swap at the host parameter boundary. The host now rejects Proxy, accessor, non-plain or sparse parameter arrays and non-primitive values, then validates and forwards one frozen owned array. 16-host-parameters-green.log has 29 passing normal synthetic tests with the command above. 17-parameters-final-green.log has six passing focused host tests after moving parameter ownership before every allowed-query branch. No production test was performed. A subsequent independent security review was blocked by a safety check; it was not retried or routed around. The earlier concrete finding was fixed and functionally tested, but the final independent security review is NOT COMPLETE.
+
+Ownership release: core evidence, ordinary/stream validators, kernel and host files were released after final tests. stream-import-cli.mjs and later stream-plan.mjs memory-use changes belong to the handoff/package worker; that worker's later tests supersede earlier logs for those files.

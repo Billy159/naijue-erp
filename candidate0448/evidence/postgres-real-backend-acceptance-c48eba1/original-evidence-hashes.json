@@ -1,0 +1,9 @@
+{
+  "description": "Original credential-free successful TAP is byte-identical here. The result JSON has only machine-local path sanitization. No original result overwritten.",
+  "sha256": {
+    "acceptance-01-c48eba1.tap": "271358979f1ad7b05dd840828d4607b56fbf949e4591ef08fb66b069e293c1e4",
+    "acceptance-01-c48eba1.tap.json": "6d5f269ff5f20a29780336368eb8009ca0df823d12f63c04177843c056254da7",
+    "instance-fingerprint.json": "2904f33bf360e26651eb4f785be18caf656fce60eae215c131ad98c2ff79392b",
+    "pre-start-verification.json": "dee2fee773255a4cbb7c08d6eb853fc25ef19f70ccca7f2a42196485b1cbdb96"
+  }
+}

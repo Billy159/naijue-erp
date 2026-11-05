@@ -1,0 +1,55 @@
+{
+  "contractId": "CURRENT_EXACT_BARCODE_LOOKUP_V1",
+  "state": "PROPOSED_FOR_C_API_FREEZE_NO_IMPLEMENTATION_YET",
+  "method": "POST",
+  "leafPath": "/current-form/barcode/query",
+  "publicPath": "/api/current-form/barcode/query",
+  "input": {
+    "context": "{kind:SALES,hallId,warehouseId}|{kind:TRANSFER,fromWarehouseId,toWarehouseId}",
+    "barcode": "Exact original nonempty string, 1..512 chars, no trim/rewrite/numeric conversion; reject controls"
+  },
+  "resultUnion": [
+    {
+      "state": "FOUND",
+      "barcode": "exact request original",
+      "binding": {
+        "id": "native barcode UUID",
+        "kind": "MAIN|CONFIRMED_OLD"
+      },
+      "sku": "Existing CurrentFormSku exact four-dimensional native candidate (barcodeAvailability remains old UNAVAILABLE for main/manual; matched observed barcode is separately binding value)"
+    },
+    {
+      "state": "NOT_FOUND",
+      "barcode": "exact request original",
+      "binding": null,
+      "sku": null
+    },
+    {
+      "state": "UNAVAILABLE",
+      "barcode": "exact request original",
+      "binding": null,
+      "sku": null
+    }
+  ],
+  "semantics": [
+    "Find sku_barcode.barcode = bound exact text COLLATE C; native UNIQUE barcode cannot resolve multiple SKUs; >1 unexpected row is integrity failure, not first candidate",
+    "Multiple different raw MAIN/CONFIRMED_OLD aliases can bind same SKU; return exact observed binding, never rebind old code to guessed SKU",
+    "Only enabled binding+native eligible product/SKU/color/fit+valid group membership returns FOUND; disabled binding or disabled SKU returns UNAVAILABLE, no candidate",
+    "Product-only source codes and excluded2958 invalid product-level barcodes have no SKU binding, return NOT_FOUND; never product-search fallback",
+    "Refresh same-snapshot account/staff/hall; SALES salesperson ownhall and enabled samehall selectedwarehouse; TRANSFER from enabled-or-stock/to enabled, canonical proposal scope allows crosshall newcreator; later SAVE revalidates actual command independently",
+    "One bounded readonly RR transaction; no candidate/zero/write/number/preparation side effects",
+    "Unknown scan cannot create editable guessed SKU; scanner frontend chooses quantity update by exact SKU from FOUND only"
+  ],
+  "requiredAdditionalPaths": [
+    "packages/application/src/current-form-validation.ts",
+    "packages/application/src/source-confirmed-current-form-authorization.ts",
+    "tests/current-form-barcode-postgres-protocol.test.ts"
+  ],
+  "alreadyOwnedPaths": [
+    "packages/application/src/current-form-ports.ts",
+    "packages/application/src/current-form-service.ts",
+    "adapters/postgres/src/current-form-reader.ts",
+    "apps/api/src/current-form-http.ts"
+  ],
+  "initialTransferDefaultSize": "No approved configured initial default group or order fact in current DTO. Keep unconfigured empty structure; after actual product selection consume size_group_member.display_order and actual SKU identities. No first product/global group inferred. If user wants initial group, C needs source-backed default selection裁决; R1 not blocked."
+}

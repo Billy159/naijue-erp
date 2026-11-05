@@ -1,0 +1,5 @@
+apps/web/src/parties/party-route.tsx(50,544): error TS2345: Argument of type 'EventTarget | null' is not assignable to parameter of type 'HTMLElement'.
+  Type 'null' is not assignable to type 'HTMLElement'.
+apps/web/src/parties/party-route.tsx(52,250): error TS2345: Argument of type 'EventTarget | null' is not assignable to parameter of type 'HTMLElement'.
+  Type 'null' is not assignable to type 'HTMLElement'.
+apps/web/src/parties/party-single-select.tsx(11,70): error TS2339: Property 'label' does not exist on type 'OptionInfo'.

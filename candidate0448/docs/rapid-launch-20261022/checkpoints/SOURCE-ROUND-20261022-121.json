@@ -1,0 +1,72 @@
+{
+  "atUtc": "2026-10-23T02:59:34.339666+00:00",
+  "parent": "f3ab765526e6eb281ce1ea9aa5b76d670ec5d6a4",
+  "groups": [
+    {
+      "slice": "F1 existing shared production builder exact1 redundant autoCSS output boundary",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-65/DELIVERY.json",
+      "receiptSha256": "4bc414afb317c2b38243baa8589d3415c375acfa90127a46683f7b50878fe2f3",
+      "receiptSnapshot": {
+        "chunk": 65,
+        "taskId": "F1-EXISTING-BUILD-AUTO-CSS-OUTPUT",
+        "atUtc": "2026-10-23T02:57:02.897008+00:00",
+        "status": "READY_EXACT1_SOURCE_ONLY_NOT_BUILT",
+        "files": [
+          {
+            "path": "apps/web/src/application/build-application.mjs",
+            "beforeSha256": "720ac5f3408497934934bce6fcc60846b012ac4b68cdf661277598ff92dc24a8",
+            "sha256": "bc6ba035c175a75f1d1df9d2290b4447d57381ac11527c4b6c80fae7281d9766"
+          }
+        ],
+        "checks": {
+          "syntax-1": "EXIT0",
+          "source": "EXACT_BASE_CANDIDATE_AND20CSS_BOUNDARY_PASS_ONLY"
+        },
+        "wholePagePass": false,
+        "notTested": [
+          "C next necessary complete-page immutable build",
+          "Output closure/metadata no dangling CSS links, all original explicit CSS paths available",
+          "Actual output count and bytes measured from next build, not inherited historical38",
+          "Original QF affected page CSS/Portal/focus and existing cold1/repeat2 contract"
+        ],
+        "blockers": [],
+        "next": "C incorporate exact1 into next necessary fixed complete-page batch; no dedicated build or performance claim",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-65/INPUT.json",
+            "sha256": "d40d12ee392e263cc97affdddf8f25dace951059dfce06cc152c68e0afc18179"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-65/RESULT.json",
+            "sha256": "405c2e30f46f589f4bedd7287e0cf208e1dea4812120c457caa3c3a1f5164253"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-65/SOURCE-CHECK.json",
+            "sha256": "01a0f0bc18484afe074a946c63a9bdd029c58ba8a912369e3f3fa547d8d6a597"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-65/SOURCE.diff",
+            "sha256": "a1e4941e9151e9c34f1a65a51e8616de6177eb31172857be1bfcef8cfca3d0e6"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-65/REPORT.md",
+            "sha256": "dfa9752227cf1c097e5918e7f6e44774baa40cda1bcc741270a9319b7c3b04fe"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-65/syntax-1.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/application/build-application.mjs",
+          "owner": "F1",
+          "bytes": 5802,
+          "sha256": "bc6ba035c175a75f1d1df9d2290b4447d57381ac11527c4b6c80fae7281d9766"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze exact1 adopted original build owner candidate. Shared ESM/20explicitCSS/source-input recorder preserved; actual new build/resource graph and runtime performance remain unmeasured. No new runtime or stylesheet cascade change. Current C120 synthetic preview does not use this production-builder change."
+}

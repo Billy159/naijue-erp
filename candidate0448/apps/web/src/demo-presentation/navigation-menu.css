@@ -1,0 +1,14 @@
+/* Actual Arco Menu; scoped frozen hierarchy/spacing and shared tokens. */
+.demo-ui .demo-navigation-menu{background:transparent;padding:0;font:inherit;color:var(--ca-nav-text)}
+.demo-ui .demo-navigation-menu .arco-menu-inner{padding:0;overflow:visible}
+.demo-ui .demo-navigation-menu .arco-menu-group-title{height:auto;min-height:32px;padding:5px 12px;margin:7px 0 1px;font-size:13px;line-height:1.5;font-weight:600;color:var(--ca-ink);background:transparent}
+.demo-ui .demo-navigation-menu .arco-menu-item.nav{height:auto;min-height:32px;line-height:1.5;padding:5px 12px 5px 28px;margin:1px 0;color:var(--ca-nav-text);white-space:normal;background:transparent}
+.demo-ui .demo-navigation-menu .arco-menu-inline-header{height:auto;min-height:32px;line-height:1.5;padding:5px 28px;font-size:13px;color:var(--ca-nav-text);border-radius:3px;background:transparent}
+.demo-ui .demo-navigation-menu .arco-menu-inline-header.arco-menu-selected{background:transparent;font-weight:400}
+.demo-ui .demo-navigation-menu .arco-menu-inline .arco-menu-item.nav{padding-left:42px}
+.demo-ui .demo-navigation-menu .arco-menu-indent{display:none}
+.demo-ui .demo-navigation-menu .arco-menu-icon-suffix{right:12px;font-size:12px}
+.demo-ui .demo-navigation-menu .arco-menu-item.nav.arco-menu-selected{background:var(--ca-nav-selected-bg);color:var(--ca-nav-selected-text);font-weight:600;box-shadow:inset 3px 0 var(--ca-nav-selected-bar)}
+.demo-ui .demo-navigation-menu .arco-menu-item.nav.arco-menu-disabled{color:var(--ca-ink-2);cursor:not-allowed;background:transparent;box-shadow:none}
+.demo-ui .demo-navigation-menu .arco-menu-item.nav:not(.arco-menu-disabled):not(.arco-menu-selected):hover,.demo-ui .demo-navigation-menu .arco-menu-inline-header:hover{background:var(--ca-nav-hover-bg);color:var(--ca-nav-hover-text)}
+@media(max-width:760px){.demo-ui .demo-navigation-menu .arco-menu-item.nav,.demo-ui .demo-navigation-menu .arco-menu-inline-header{padding-left:20px}.demo-ui .demo-navigation-menu .arco-menu-inline .arco-menu-item.nav{padding-left:34px}}

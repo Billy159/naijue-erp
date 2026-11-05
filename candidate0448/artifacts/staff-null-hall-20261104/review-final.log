@@ -1,0 +1,22 @@
+✔ exact successor adds independently pinned INIT approval and STAFF SQL guard to unchanged predecessor (4.900989ms)
+✔ patch keeps metadata/ACL/owner unchanged and rejects wrong predecessor (5.648278ms)
+✔ SQL approval locator requires JSON number, int32 and duplicate-free references (1.756568ms)
+✔ SQL rejects duplicate keys before casting approval JSON to jsonb (1.937652ms)
+✔ approved exact historical departed staff admits null hall, not a general exception (2.872026ms)
+✔ missing, forged, tampered or unpinned approval cannot authorize a record (1.16902ms)
+✔ approval rejects duplicate IDs, keys and unsupported fields (0.73225ms)
+✔ approval rejects duplicate JSON keys and invalid UTF-8 even when digest is pinned (1.351144ms)
+✔ approval locator rejects non-int32 rows, controls, blank sheet and repeated refs (8.131683ms)
+✔ ordinary preflight admits only externally approved exact departed staff (86.12242ms)
+✔ stream relation check shares exact departed approval and rejects active or unapproved (9.680755ms)
+✔ whole compiler binds exact approval bytes in immutable initialization, without creating a login (58.645545ms)
+✔ full streaming preflight retains approval wire in its summary (110.185161ms)
+✔ ordinary and full stream reject approval evidence absent from current manifest (94.229343ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 685.685143

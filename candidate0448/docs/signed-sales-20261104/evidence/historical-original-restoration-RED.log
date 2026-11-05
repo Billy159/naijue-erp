@@ -1,0 +1,168 @@
+✖ candidate builds exactly on missing-settlement successor with literal single anchors and pins (1.455234ms)
+✖ ordinary historical absence including zero net requires proof, normal settlement equality remains strict (0.231622ms)
+✖ origin requires immutable version-one approved SALE, digest, source and published baseline closure (0.222078ms)
+✖ all actual rows and non-lifecycle header columns must still equal source origin exactly (0.159551ms)
+✖ every audit and receipt version is covered without truncation or gaps (0.194234ms)
+✖ any line or settlement delta or economic header delta anywhere in the chain rejects (0.258873ms)
+✖ sparse header pairs reject omissions, preserve explicit null and compare timestamps as instants (0.215449ms)
+✖ source body leaves ordinary actor, exact line effects and native mutation validators intact (0.408829ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 176.131097
+
+✖ failing tests:
+
+test at tests/historical-original-restoration-sql-source.test.mjs:30:1
+✖ candidate builds exactly on missing-settlement successor with literal single anchors and pins (1.455234ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+      at readFileSync (node:fs:483:20)
+      at read (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:7:22)
+      at candidate (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:15:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:31:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+  }
+
+test at tests/historical-original-restoration-sql-source.test.mjs:41:1
+✖ ordinary historical absence including zero net requires proof, normal settlement equality remains strict (0.231622ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+      at readFileSync (node:fs:483:20)
+      at read (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:7:22)
+      at candidate (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:15:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:42:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+  }
+
+test at tests/historical-original-restoration-sql-source.test.mjs:48:1
+✖ origin requires immutable version-one approved SALE, digest, source and published baseline closure (0.222078ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+      at readFileSync (node:fs:483:20)
+      at read (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:7:22)
+      at candidate (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:15:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:49:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+  }
+
+test at tests/historical-original-restoration-sql-source.test.mjs:58:1
+✖ all actual rows and non-lifecycle header columns must still equal source origin exactly (0.159551ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+      at readFileSync (node:fs:483:20)
+      at read (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:7:22)
+      at candidate (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:15:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:59:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+  }
+
+test at tests/historical-original-restoration-sql-source.test.mjs:66:1
+✖ every audit and receipt version is covered without truncation or gaps (0.194234ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+      at readFileSync (node:fs:483:20)
+      at read (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:7:22)
+      at candidate (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:15:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:67:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+  }
+
+test at tests/historical-original-restoration-sql-source.test.mjs:75:1
+✖ any line or settlement delta or economic header delta anywhere in the chain rejects (0.258873ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+      at readFileSync (node:fs:483:20)
+      at read (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:7:22)
+      at candidate (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:15:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:76:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+  }
+
+test at tests/historical-original-restoration-sql-source.test.mjs:83:1
+✖ sparse header pairs reject omissions, preserve explicit null and compare timestamps as instants (0.215449ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+      at readFileSync (node:fs:483:20)
+      at read (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:7:22)
+      at candidate (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:15:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:84:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+  }
+
+test at tests/historical-original-restoration-sql-source.test.mjs:92:1
+✖ source body leaves ordinary actor, exact line effects and native mutation validators intact (0.408829ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+      at readFileSync (node:fs:483:20)
+      at read (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:7:22)
+      at candidate (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:15:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-original-restoration-sql-source.test.mjs:93:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/adapters/postgres/patches/0027_historical-original-restoration_successor.sql'
+  }

@@ -1,0 +1,48 @@
+{
+  "format": "C_H06_INITIAL_READ_PROOF_TECHNICAL_FREEZE_V1",
+  "atUtc": "2026-10-22T21:39:05.413645+00:00",
+  "decision": "AUTHORIZE_EXACT4_READ_ONLY_PROOF_IMPLEMENTATION",
+  "proposal": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-R3-MAINTAINED-PROOF-PROPOSAL-v1.json",
+    "bytes": 15242,
+    "sha256": "00ae648610e512ce888da94b8b24578294af1ce52c0dca58658e711a778d1fdb"
+  },
+  "sourceFiles": [
+    {
+      "path": "adapters/postgres/src/catalogue-completeness.ts",
+      "observedSha256": "150f91305d878d3cd9ec5c7b13fd94e811efb67beea34be117ca79267ef1f148"
+    },
+    {
+      "path": "tests/catalogue-completeness.test.ts",
+      "observedSha256": "28d0b61c71080b5873b12c62253fa5190203b765c4242e7b0adfc93def40aaa2"
+    },
+    {
+      "path": "adapters/postgres/src/sales-unit-of-work.ts",
+      "observedSha256": "454cc1ae1c7bef479aec9555e5913d1fafeaabab911951202e3a525a7369954a"
+    },
+    {
+      "path": "tests/runtime-document-commit-outcome.test.ts",
+      "observedSha256": "c52953206ba7a9ded838048d0676bf32fe586eb3a01986e49a32573896758032"
+    }
+  ],
+  "preservedLegacyClassRegionSha256": "0f5125d73cc34e057dc62002131ffcdb4100f17b6eccc1701a4f33002d31f23d",
+  "anchors": [
+    "NATIVE_CREATE_COMMITTED_FULL_AUDIT_RECEIPT",
+    "PUBLISHED_EXACT26_FULL_IMPORT_BASELINE_PLUS_CONTIGUOUS_MAINTENANCE"
+  ],
+  "privateSelector": {
+    "catalogueReadProof": {
+      "profile": "MAINTAINED_CATALOGUE26_V1"
+    },
+    "default": "UNCHANGED_IMPORTED_VERIFIER"
+  },
+  "chainMaxSteps": 1024,
+  "chainOverflow": "UNAVAILABLE_ON_1025TH_NOT_TRUNCATED_PASS",
+  "transactionBinding": "Same genuine runtime26 actual managed client/private scopedQuery/verifier pair; no caller callback success, failed-proof fallback or cross-request cache",
+  "writeContractAssessment": "Consumes already approved persisted maintenance audit/receipt and existing source data only. No new field/table/index/grant/write/audit/receipt format or command permission. Evidence gap must fail, not alter writers.",
+  "laterComposition": "NOT_AUTHORIZED_BY_THIS_INITIAL_SLICE; R3 explicit composition and actual H06 QA C coordinated separately",
+  "null27": "Separate unapproved historical hall branch; this proof does not depend on/enable it",
+  "realImportExecutionAuthorized": false,
+  "postgresExecutionByD1": false,
+  "requestedModel": "gpt-6.1-sol/xhigh"
+}

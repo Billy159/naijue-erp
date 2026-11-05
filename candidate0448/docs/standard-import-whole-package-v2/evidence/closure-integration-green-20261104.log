@@ -1,0 +1,42 @@
+✔ all176 known routines are body-pinned before changing only search_path (290.660172ms)
+✔ nullable scheme successor is installed before hardening and pins the changed root guard (257.275059ms)
+✔ named dollar body cannot swallow the next routine or swap recorded/sparse signatures (275.828816ms)
+✔ multiline conversion successor preserves its exact signature and generated hardening matches checked-in source (293.270774ms)
+✔ successor parser rejects unknown, changed, duplicate or unparsed signatures instead of retaining old pins (1.81699ms)
+✔ candidate composes real closure and exact access verification into one atomic SQL unit (17.913855ms)
+✔ candidate access successor changes only the exact closure pin; retains all permissions and metadata guards (4.272242ms)
+✔ any byte drift of initializer kernel, candidate or access predecessor blocks rendering (5.706382ms)
+✔ renderer leaves existing initializer and runtime catalog wiring untouched (8.140488ms)
+✔ candidate replaces only closure after exact installed predecessor and owner check (11.978642ms)
+✔ closure independently requires exactly one seal, stage and final publication in order (4.168915ms)
+✔ child marker has the exact generated root and numeric ordinal with no caller extras (3.576615ms)
+✔ candidate preserves read-only committed inspection and original receipt/batch closure checks (5.507569ms)
+✔ new SQL implements prepare, ordered step, finish and existing-result inspection (4.881184ms)
+✔ old API retains one mutation and no per-step constraint forcing in new private kernel (1.510685ms)
+✔ root is server-created and ordinal/phase cannot authorize an unrelated transaction (1.609927ms)
+✔ eight publication/party guards select exact intent or exact checkpoint without weakening old strictness (1.322043ms)
+✔ new staff schema opt-in does not mutate old row or add a guessed date (0.857638ms)
+✔ real PG test runner is present without hidden connection or automatic execution (0.629444ms)
+✔ canonical SQL table tokens do not depend on database linguistic collation (1.026636ms)
+✔ new guard branch also pins canonical table-token case conversion (1.354168ms)
+✔ installer grants only exact wrappers, never role membership or private helper execution (1.384693ms)
+✔ new kernel allows unsealed bounded document rows and rejects rows after seal (2.900194ms)
+✔ whole row-intent path uses existing exact source target index and one prepared audit (0.61219ms)
+✔ new source-row deferred branch retains per-record proof and relies on mounted full receipt/batch checks (0.472041ms)
+✔ complete chain is checked by mandatory root closure, not rescanned for every child receipt (0.68778ms)
+✔ new validating prefixes avoid repeated full-history counts while final publication remains exact (0.962054ms)
+✔ real runner distinguishes insufficient and excess expected document counts without deleting legitimate rows (0.336976ms)
+✔ one bounded DOCUMENTS request retains multiple per-document seals (0.693308ms)
+✔ whole controllers cannot suppress deferred constraints before or after a wrapper (0.5967ms)
+✔ protected roles reject existing effective data privileges, ownership and schema creation (0.232891ms)
+✔ whole-package SQL never resolves catalog relations through attacker temp schema (1.815239ms)
+✔ whole controller rejects inherited roles even when SET is disabled (0.871718ms)
+✔ inspect and committed closure do not assign transaction IDs in read-only transactions (17.939901ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1287.596521

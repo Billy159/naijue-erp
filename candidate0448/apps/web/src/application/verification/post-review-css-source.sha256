@@ -1,0 +1,7 @@
+40d0a58176d8e666b6d2ceb3f0f63a5254c856d5cfad4097cb18e24c19dd8514  apps/web/src/application/README.md
+6ac43d12bf25dbb872d760317c46491f57d60fa6ebf09fcd46e1886a2e677e97  apps/web/src/application/styles/sales.css
+4e4ca0fcba75b2467514f1f1b1fccfc1193d110f89bfde35e1fc308128a24bf5  apps/web/src/application/styles/parties.css
+675f45eec8e7bafff0eda295e48a7a117ecdecc9cec2b32882e1b0333ef9c0b9  apps/web/src/application/styles/sales-base.css
+8c9ee0c4abc8f60d15bcaf4a5246e04bf347495ef97074eeb4cfb1a7c880512c  apps/web/src/application/tests/run-build-check.mjs
+4d836b26e9eea91a61f8bf1e0a8f45f392f2380fb4cced56e15d7c176faf9733  apps/web/src/application/tests/run-dom-tests.mjs
+bfea039cdd6e0b01a42929d56b607f81bc90f2a39a155f51b9b21c3c34574a1c  apps/web/src/sales/sales-route.tsx

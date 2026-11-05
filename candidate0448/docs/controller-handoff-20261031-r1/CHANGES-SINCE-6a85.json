@@ -1,0 +1,692 @@
+[
+  {
+    "path": "adapters/postgres/src/sales-query-reader.ts",
+    "state": "modified",
+    "sha256": "8d5199f30c8ea477ffa51dc29f8cb4f227443af1f641373ed5d334497d8d5244",
+    "baselineSha256": "4409a9618a4f371f7a65293b44a4f77391093f38f0182820e8a32d3d4ea2b3fb"
+  },
+  {
+    "path": "adapters/postgres/src/transfer-query-reader.ts",
+    "state": "modified",
+    "sha256": "9a55cf254be0b7b11b96b49c2314a5b38fba3846a0a641b21bc405ff8b90456d",
+    "baselineSha256": "5720e6610c9e1d330683ab655853bf5eb22226ae98eedd9221ef310bdd496a06"
+  },
+  {
+    "path": "apps/api/src/authenticated-document-commands.test.ts",
+    "state": "modified",
+    "sha256": "8d20578fc6385447fe92ca36e62620a8ab433d81ab193ad7e7688b4fb051611d",
+    "baselineSha256": "c0e34ebb6ad772c19108d8466a55af173ec1cd9e1af20ae64fc3aa52267f10d7"
+  },
+  {
+    "path": "apps/api/src/transfer-http.ts",
+    "state": "modified",
+    "sha256": "16be71d16f182853c1c369067d8c0a103f13dce84ecdcce0e79806ed40a884d3",
+    "baselineSha256": "d902b610b01c89c34e6222cb3eef78cacfdf6d0730736e15d077c2757e6c5e95"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/catalogue/scheme-page.tsx",
+    "state": "modified",
+    "sha256": "b0f06bfc56b973c8d1ef9a1e9533ebd6fa75feaca45b8caf00c8760a7de56016",
+    "baselineSha256": "f76cac73e70728c8af5bc5548421fb47275e168da30e35866880908f74d37aae"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/catalogue/tests/run-dom-tests.mjs",
+    "state": "modified",
+    "sha256": "bf3b4db62c762ec8ab603ca56b63395993816cf687fedae8b281c9b7808283f7",
+    "baselineSha256": "b64b7856017913b00c9d218545a471a66d972a8fd39f8c83c6215a4e4af9fa30"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/document-created-order.test.mjs",
+    "state": "added",
+    "sha256": "7887e55659c4ae236aed9d7ef9fb01411644cc114703e98708ff28d594d76276",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/document-created-order.ts",
+    "state": "added",
+    "sha256": "ea4f68334cf369fe1c66cee4d79caa1c9bc1a5b38d98748d6d517b1253de2a8d",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/document-created-preview.test.mjs",
+    "state": "added",
+    "sha256": "6225e65e687fc89d3ac36e3d47ee3ace92086b15e01e1c361c281c16983fd5fc",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
+    "state": "modified",
+    "sha256": "612cb1f2db8a162494b3a0d07f1fc068f8e2641744c6a8f6832658001d7d14f6",
+    "baselineSha256": "e4079005c5976282337858c4be816d8583d81964dab3d186cea60a614d0b1aff"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/responsibility-default-page.test.mjs",
+    "state": "added",
+    "sha256": "112c608e3faa319877584252e60f185d5bc451d683ce1d094e1b397f9ac4e0fd",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/responsible-capability.test.ts",
+    "state": "added",
+    "sha256": "95c59c85426cbd05a73c973b7b80889468955295a55b06d124cc691f89807982",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/responsible-select.tsx",
+    "state": "modified",
+    "sha256": "0a7a8cbf66f83aa89ddb551910ee0c1bb1c191decd3a657feb5604e69fe16459",
+    "baselineSha256": "121b7f0caaa553f0e72e8e64c1aaaf09d1482883c13624c59fa7d86712d887d1"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/sales-product-keyboard.test.mjs",
+    "state": "modified",
+    "sha256": "f34d7638fb706ca0b525d2889bfcc8b36912aab510fc12b7aff93f489032c8cf",
+    "baselineSha256": "780c903d0fbc828f1a1c661cd7490a984fc882e64072d7b738acc94a7db0c38a"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts",
+    "state": "modified",
+    "sha256": "8ec43a5d8b8d5b8a3953949012e9f9ee899f25b521b9219c7c2710f9faf40435",
+    "baselineSha256": "e238219f43b99fc2805e25483481e56dccf566476a6065ff2b921b4eea3fc23e"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/transfer-edit-flow.test.mjs",
+    "state": "added",
+    "sha256": "03f8894f8d4537de95291cd29f26ea6ce477c9f9691115757e09da5ddb2b4ed7",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx",
+    "state": "modified",
+    "sha256": "5e3a4e1372d97c596af654ce720666948585d83ed807a1aba9382048b67dfa4a",
+    "baselineSha256": "d861fe463a15e5e8fa78d9ee9e4db585c1824a33d27536450ea912a485d8b468"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/transfers-create-page.tsx",
+    "state": "modified",
+    "sha256": "ff83c65f689c3347c49987611a9773e70f565cfeaf97aca7a709bd621a327914",
+    "baselineSha256": "87d4551f180892a5a75afd1f60ec27cbf141b1597dea2a9985ca1caf822502c7"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/documents/visual-ui-contract.test.mjs",
+    "state": "added",
+    "sha256": "bb68724c1740bbc488e0a5e69eef3c011dbf1c408407a281c5a1ee3bb9fe8d74",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/inventory/inventory-runtime.test.mjs",
+    "state": "modified",
+    "sha256": "47974a6a204f1e1a5e8108df1cf08dc057b7e5b7adf1a32462340de8ad8e202d",
+    "baselineSha256": "52026a6fc0cf161c77eac42f4ee5aea3a7a2cc5320c3b038ff50a40c4a60c0c5"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/candidate-preview-css.ts",
+    "state": "added",
+    "sha256": "50531e11706a51645154402884ff336954ecf3e61394f854871ad3ababa9b80f",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/editor-barcodes.tsx",
+    "state": "modified",
+    "sha256": "c4c9378e4989a6fe8bdf04eb8cc2195d681ec32bb62942fd11447f3f45954547",
+    "baselineSha256": "82e3cfbaad7189c6cc393a71f95226ab5a23b1b71e65e482d3d4aabf31b8f961"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/editor-color-enabled.test.mjs",
+    "state": "added",
+    "sha256": "dc9b7f1d77583d77e374dafcecb46ab689de54c802608b773338871184bdf6a1",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/editor-draft-barcodes.tsx",
+    "state": "added",
+    "sha256": "a20119edfbf57d6ffbc00fd19f1556b05f03c08b5fff83b5155d96fefe8f9456",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/editor-fields.tsx",
+    "state": "modified",
+    "sha256": "5aa535fb7f9d5e6a7ea6c692edb838baa991ffd3d60a38c28782b9b8389e8fae",
+    "baselineSha256": "04874b19fde189ad983a5c78b715a80700a2fb8d558e887b0dad4710ec486b4d"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/editor-media.tsx",
+    "state": "modified",
+    "sha256": "e462c1b4fed15a9dc92bd9ebb6474fe616d07e7772825753e766795bd6090181",
+    "baselineSha256": "5caa680bc7bac139b82c4b3ea07c9a97a32fdf13b2c30d697d011469d5805943"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs",
+    "state": "modified",
+    "sha256": "15704785951c7f8af6e300e04516b071af7aab86a68482ab0679c5564f54a07e",
+    "baselineSha256": "c90f9d115fe81d629c66116d69b1595416c88ebb5aef346f622c53f447382385"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+    "state": "modified",
+    "sha256": "1d6e987abf5be703d60841faf903fea1e56fab0a4649a429ee823c1342a66287",
+    "baselineSha256": "fc6a4751f95ce069f22f3832d651a71a4dc1a5ee89ae110a1cb4df53df17b2ec"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/feature-media-gate.test.mjs",
+    "state": "added",
+    "sha256": "ac7d46d41414c28d0e974b4cd8294ca2acc238e65d665b4f116f3db50791554d",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/feature.ts",
+    "state": "modified",
+    "sha256": "743571e6c6d133c54f039534030ab539c50b975f6d602fddaa62916abb6d16ce",
+    "baselineSha256": "b5d6c48a884b58fca36a5cdf579274b82a8c444964312bfc93d77a737ebee5b0"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/photos.tsx",
+    "state": "modified",
+    "sha256": "2e64f8681558236d88d475271579bc5ba0a2a22a7a3b7d5905fa0355606af558",
+    "baselineSha256": "8ae7bf64969ada710db4dcd4cd53658c5dcb060bd4847c57a76e7a47b585a46c"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/preview.tsx",
+    "state": "modified",
+    "sha256": "794502702a2d77e0be3ac91aa03d18bcfb111e32241c5586ae348b32602d8c9e",
+    "baselineSha256": "e985ade2ba5bc24cfd9e19f8c6fdc03b877b89c1bfd8130dc6342c278766a97f"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/products/product-draft-ui.test.mjs",
+    "state": "added",
+    "sha256": "04dcb54049b481b921a106fdaed2a903c2b4066083f9ef0e6c77512a14f06bff",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/account-form.tsx",
+    "state": "modified",
+    "sha256": "1aa45a063ffc2f6efb8bd6c4f010067c3e8849e785123b7293fa63a9e91d8f7f",
+    "baselineSha256": "f42f98890c7b823e062e96b51b8de7e6b222a634fa5b6131582bfb67f1b0e60e"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/accounts-page.tsx",
+    "state": "modified",
+    "sha256": "381ce4bff5df26e514dbb36c84f1b98d83aa6def04274f582da972caf1a25835",
+    "baselineSha256": "d07a034543f2226cb129e910e88c29d68082153b86a0286f92977f03e0c3ee53"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/parties-page.tsx",
+    "state": "modified",
+    "sha256": "65eaa712f72324942bb894db8e3f73642811cc593a1ea3e9c75228a8da6b130d",
+    "baselineSha256": "d2308f336c7580a2944113c8741719d029756607ab57b4724a0534cfaad87a08"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/parties-runtime.test.mjs",
+    "state": "modified",
+    "sha256": "1c192252228a94d134af2017e261b5c014b6e5e79ba5b40c1cbc22d82a72d962",
+    "baselineSha256": "4e199784bb1dcc2732571caa7a056291f7a7f82ad1a76477af3b8bb4a69c8770"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/party-form.tsx",
+    "state": "modified",
+    "sha256": "5a956335321f89978d15fd45c8e3633212fa56ad6deaedb5414b4deff2554807",
+    "baselineSha256": "a4053c47abd363de54d94f8fff321dea854169c45e9f0f29abc8e55a8c90c8e7"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/payment-form.tsx",
+    "state": "modified",
+    "sha256": "6ab118d60a16886b451fb0e4f7f953a2411d572829770e32017229f1b9a29adc",
+    "baselineSha256": "c5d47a81f54d594f5d4420c9f3df778948173e3d68bef36aa789ff6171d65189"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/payments-page.tsx",
+    "state": "modified",
+    "sha256": "2d5f89070bb8ed9f50e0ce85d5d45bf9eae0455aa21f90992ee3fe6064678456",
+    "baselineSha256": "729d80d97d6158378c5216be780b3dcd6a173c54f2dbc2863ee3c4a70f2903a9"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/payments-runtime.test.mjs",
+    "state": "modified",
+    "sha256": "5a8b350f80111448226689d7ebfa907f002421cf6e683197750beaf71343ac67",
+    "baselineSha256": "2c2a638656d27dfc8d679c28c286be2b4f806f39570943b3d2f3ff3f9f8b9520"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/personnel-runtime.test.mjs",
+    "state": "modified",
+    "sha256": "5ea4d2aa2bf4a14463a16f7b14ee170f79491b7aaf5b5d3ee127c810e8162f09",
+    "baselineSha256": "5c59e321c4269b35953edfe452068a4ffb4fe03f6a9a46e83b3bdb1c29d47b60"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/staff-form.tsx",
+    "state": "modified",
+    "sha256": "2fee49cb0919b75a0e47ccf354299ea6e4de6a756d7225b0ab43f759f602fe63",
+    "baselineSha256": "87753e1d5ca8baf8a3f9fa6ade3d92b6ffa0b013bca09781a5102499f5aca234"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/staff-page.tsx",
+    "state": "modified",
+    "sha256": "fcf500c78ebd22aecb616c1ee3d290e502114754f9f94a44b9a865d15282dd9e",
+    "baselineSha256": "dc582d1f0a082256942dcaa496bb7df84360c2d1d94d16eb97dbf8ee4e0f180e"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/store-form.tsx",
+    "state": "modified",
+    "sha256": "93408155eab098c0f8e8ad8ba6d15fc5607aa6ee5035d1a243dcb6c264000190",
+    "baselineSha256": "33fa9e346440266badc9bbe9cc2ba12e7793f33b6aa499ece907ce00d4e92de9"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/stores-page.tsx",
+    "state": "modified",
+    "sha256": "249d731719448fc7dda02be54577d053a0fe381097bd1b89d5628977e73a7d5d",
+    "baselineSha256": "277a18c0f0ec41bd38b445d958fd22682ac216b6ae3440441249e4963121a985"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/runtime/settings/stores-runtime.test.mjs",
+    "state": "modified",
+    "sha256": "dcfc140b5ab51e5a64281c310666b636cabf2eb0458a317559e64b9451e15bf8",
+    "baselineSha256": "ab00c551916961b8bbd7b8d44bae318c2e432dd0abae166e30f1951ed3c5753c"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/styles/shared/inventory-query.css",
+    "state": "modified",
+    "sha256": "223eafda5b17a1b3b25ab0c54083b85d87f90e5c201ee1898f3c8ddc18a15c99",
+    "baselineSha256": "df1d3fda8a1d221a5cd357d504d0f548e4c753f4605ce809dd45be856140aa58"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/styles/shared/product-detail.css",
+    "state": "modified",
+    "sha256": "3f1a9edfb065ce1572659ac78400bc1f65ea213410ae4eb47a6f86d32eb4c86b",
+    "baselineSha256": "cfaa1f37b33a7df37d163bc2b41431d5c10abd39de171979ab7704a287c76e09"
+  },
+  {
+    "path": "apps/web/demo-replica/frontend/styles/shared/sales-editor.css",
+    "state": "modified",
+    "sha256": "005c5db2b2357bb73a7789c3571c97ccdebbd32adac15da8c5e9ff8a1c956e92",
+    "baselineSha256": "add52ab4b51ddeff48cfbacb214c7d8126cbdd2c2e4126f5b9f494247daa1c42"
+  },
+  {
+    "path": "apps/web/demo-replica/tests/transfer-chain-fixture.mjs",
+    "state": "modified",
+    "sha256": "2ae2293b3cd2848d5c1b60dc5e1abf763a077a032c0d0a1471f77a87821f195a",
+    "baselineSha256": "f37b06ffe96243eaa3548e01ff4e55282840103052f70ad217232bb5e1511a71"
+  },
+  {
+    "path": "apps/web/demo-replica/tests/transfer-chain-fixture.test.mjs",
+    "state": "modified",
+    "sha256": "fb07f9fd9d7c12bb9a840b5d064587a9a8d157862ab5dd837d9b6564cb7dfb78",
+    "baselineSha256": "c7243128b4180d3f7005db61955b6bda9876defb15f843c6d7364cb92154695c"
+  },
+  {
+    "path": "apps/web/demo-replica/tests/transfer-responsibility-preparation.test.mjs",
+    "state": "added",
+    "sha256": "ded6e1639f2cf730b8217deee8126a945c8e02f7feb6cf7d37b5370c6f6748d4",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/demo-replica/tests/transfer-responsibility-transport.mjs",
+    "state": "added",
+    "sha256": "1131703a7611b6104b02a02fd99bb48aad551266e385fdc83f5c87fbd9f29c8b",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/src/account-settings/account-form.tsx",
+    "state": "modified",
+    "sha256": "fc8ce2e24894c985b7aa98bcf669b2b6fbb3ccd01fda504f9ac111e64e1bc3e1",
+    "baselineSha256": "a272d39a8abea3bf6a14ada8d35844de15b5bb640c724968bf07ad9e6853b6ec"
+  },
+  {
+    "path": "apps/web/src/application/tests/run-dom-tests.mjs",
+    "state": "modified",
+    "sha256": "9eb139824742a8bb40e57ae88477d75367e61b8b2b3c67f8fed5d5f9f62a1d62",
+    "baselineSha256": "4d836b26e9eea91a61f8bf1e0a8f45f392f2380fb4cced56e15d7c176faf9733"
+  },
+  {
+    "path": "apps/web/src/current-form/fit-http-reader.test.ts",
+    "state": "added",
+    "sha256": "5c4d241f2c042e9645996fc85e3dff8db7d5d9050d89baff08d63aa02a312ef1",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/src/current-form/http-reader.ts",
+    "state": "modified",
+    "sha256": "715f5c21dd38d248cb1fe6c77e6b68ef47b432eabcbb0b18fc9bf815e0a303fb",
+    "baselineSha256": "414465295336c011f0ad11b9e73b46f145580050325655f2c842afbba44ed486"
+  },
+  {
+    "path": "apps/web/src/current-form/responsibility-default.test.ts",
+    "state": "added",
+    "sha256": "d61c863189d1798c149de3e7942fcaf628e7624b5fa68ee375e35f27a6e123f6",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+    "state": "modified",
+    "sha256": "820abe28f5016c2555e7f296302b733d2f9dd8f7fc6fed57a305933f5994dd95",
+    "baselineSha256": "fed30308001d92dae1e1d4e50bec4a55498f155a4cec9654a113b0462de7bb23"
+  },
+  {
+    "path": "apps/web/src/current-form/transfer-edit-flow.test.ts",
+    "state": "added",
+    "sha256": "3505c5ae970501874d57a6dcc328f672565b37ac928387a3d123e68e36c58162",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+    "state": "modified",
+    "sha256": "b60bffaa485216b72d9dc1c3990ddeea3451f58c0eefc055ac8eb206a04372ee",
+    "baselineSha256": "a08899324f555d83e169964e4b6f58e0c3ded6d0ce18e29c9254879a33436403"
+  },
+  {
+    "path": "apps/web/src/current-form/transfer-proposal.ts",
+    "state": "modified",
+    "sha256": "0a78d5c076db920ed3204b7562a58e737cbde22584d28d5cd78bf35a0ae76c41",
+    "baselineSha256": "f2d55fbad77001229d2ddce19b8499893e21203d16da5bb7df9c13c3ef6914f0"
+  },
+  {
+    "path": "apps/web/src/current-form/transfer-responsibility-null-codec.test.ts",
+    "state": "added",
+    "sha256": "f3eae28da5ce721a4c7ab9de24d57f4ea317ae46c71d0ec4fa955d0f847c2f93",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/src/parties/party-form.tsx",
+    "state": "modified",
+    "sha256": "d201d1930ad229860da154e325dd54f656646eca76ae66cfd09dca481f5e3621",
+    "baselineSha256": "f53fd880b4c3fbd57799614f7fa6d29bf09c37faec51e62fa233f10a38aa1eaa"
+  },
+  {
+    "path": "apps/web/src/parties/party-route.tsx",
+    "state": "modified",
+    "sha256": "2c977f4e10a7a07074004791c3b2390009843ad201a729b09ec0c33da222ca15",
+    "baselineSha256": "e1f03f1c03050a0f5e22b8f0166e635ded6d664e7319bdcf67c0b98a65b3ffcf"
+  },
+  {
+    "path": "apps/web/src/parties/tests/run-dom-tests.mjs",
+    "state": "modified",
+    "sha256": "f091c878fe8df4f735a1810115994e6ea54892fcef43ab7adfaa5b3201343006",
+    "baselineSha256": "448aded1f5355c508aafefa6b4d9a7d99e45d4fd762fe49bdfad2842907624c0"
+  },
+  {
+    "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+    "state": "modified",
+    "sha256": "63187a80f0950a454e31a304bb19a8812cc4dae7a44bef6e09e9078254fe8010",
+    "baselineSha256": "455012b113aa00641318268d33a1880d54ed33708c6ada0d6a18603d5f336b07"
+  },
+  {
+    "path": "apps/web/src/payment-settings/payment-page.tsx",
+    "state": "modified",
+    "sha256": "39101c39ec04cd2eb78681c44db320abe106b8f87c40f03813b8e25746df4b99",
+    "baselineSha256": "2617030777e4b5235ef7112877dabf4e4815ec434758293a5378ee8f93fb36e5"
+  },
+  {
+    "path": "apps/web/src/product-categories/product-categories-page.tsx",
+    "state": "modified",
+    "sha256": "39d010de691728b88f1c83ff94181b4406d3a390f89479785832d8aa8e9b0c28",
+    "baselineSha256": "872237b99dfed469ffb668387c340e33b6eb0829aeccf31605d5846304930a5d"
+  },
+  {
+    "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+    "state": "modified",
+    "sha256": "302c593ebda5e34fc117e2b8e76c70b4ed266c9073b2e4bfed2ced3da7fbcfbe",
+    "baselineSha256": "88b829f17b1cebeb347477a25642c747bf00acd925ba18e2debb7d8f183173e5"
+  },
+  {
+    "path": "apps/web/src/product-settings/colors/tests/run-modal-cancel-parity-dom-tests.mjs",
+    "state": "added",
+    "sha256": "9fca7d96f7e7c4aabbe14c83c3368a1ef0df5211c88f56a0a496b3a7c74aefa1",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/src/production-host/configuration.test.ts",
+    "state": "modified",
+    "sha256": "f287f8bb2d31fc5e04c568145c9f4e090cf3da6dfe55f98ae6437bb7a37328e1",
+    "baselineSha256": "fb3c9185c303fee85abbcf1e7d4feca806893ddd9b0ff6f098b964dcb25c41f8"
+  },
+  {
+    "path": "apps/web/src/production-host/configuration.ts",
+    "state": "modified",
+    "sha256": "e6a936edc492f6b1bdbfad22f07ba81155af6dc7619d61eb2f3c326894bbadee",
+    "baselineSha256": "b7977e511ec9f368fbc8580182b2b725641c9ec763ca19ac6a9cc8ca0fbd3795"
+  },
+  {
+    "path": "apps/web/src/production-host/mount.tsx",
+    "state": "modified",
+    "sha256": "24801c32306a62b416302a869873e3ad02341fa015747b53b36550bbfbc516c5",
+    "baselineSha256": "9ad09fe03609c9cefdb5f806e67a9c147e172323ff7eb90ce14381834ded9099"
+  },
+  {
+    "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+    "state": "modified",
+    "sha256": "e7f94e643621ddeb1649be991c7770706ba9a1779093d49abfb4165dff06c511",
+    "baselineSha256": "6f52c1d51bce96af1bbf1e9727abce26bba10fa10b6d77ad8f51814722b696eb"
+  },
+  {
+    "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+    "state": "modified",
+    "sha256": "58a5eca41555021207a45305782db8e1b99a4594b963b539cfa5749398420588",
+    "baselineSha256": "2ea23c37eeea8d3ce90c05c6d994cc23e838cecd9747a9affebe6c12556182b0"
+  },
+  {
+    "path": "apps/web/src/staff-settings/staff-form.tsx",
+    "state": "modified",
+    "sha256": "d178f4b2f18234a988115d44e05133383854446ae5c1c67a925080aecf18e87f",
+    "baselineSha256": "e314bf6427582eefed6978ba06c30f4df7430e6fc0457a4bccf0e32107851496"
+  },
+  {
+    "path": "apps/web/src/transfers/commands/http-client.ts",
+    "state": "modified",
+    "sha256": "4ae319fd2139b4db6e0d2d921fa4fc4d4d948755a9c717c975a084a8666c7e68",
+    "baselineSha256": "1374cfd7b5b310b49fa9aaaed2e91108ea1d1b52118ba5735463c44f02d11c77"
+  },
+  {
+    "path": "apps/web/src/transfers/commands/responsibility-http.test.ts",
+    "state": "added",
+    "sha256": "3cd231db6134dd31f070ce4cea56521a1e79a62790e647ef46f247347e767129",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/src/transfers/commands/responsibility-null-codec.test.ts",
+    "state": "added",
+    "sha256": "d5fe8f1cf0b7a3ac534a098832f33e1b3f995bf4ebe10c2ba5f2428c76dbedfb",
+    "baselineSha256": null
+  },
+  {
+    "path": "apps/web/src/transfers/commands/validation.ts",
+    "state": "modified",
+    "sha256": "a8d74c20d55e6d7ac1e539a2df9fccb82b10ccf097855f1a3fa1ce1e92bedd9c",
+    "baselineSha256": "86fc8b7807a1da76d5bd68f29f3a13304f739fa9c1d1def17cb481225723171d"
+  },
+  {
+    "path": "apps/web/unified-browser-harness/sales-transport.ts",
+    "state": "modified",
+    "sha256": "f6203a4f8a81ae6d46f7d761a01f04a0c03cc1781aa654988dbb87b8ea5fa652",
+    "baselineSha256": "4d4bfd766226c4acae4864cbfd4215b0ada7e6b36c9ea7170bb7a4cc5640ec81"
+  },
+  {
+    "path": "apps/web/unified-browser-harness/synthetic-transport.test.ts",
+    "state": "modified",
+    "sha256": "f61486736d33d0ccd810f8b3832cdb2e16e1b7d76fd9cc8d862e289215276406",
+    "baselineSha256": "0beba163446384bb1c76b658a2c68c9536d8bc96e63d529ccd6db8725229e063"
+  },
+  {
+    "path": "apps/web/unified-browser-harness/transfer-transport.ts",
+    "state": "modified",
+    "sha256": "4b5a247e094df104551632f31556a657eeda53ac2f38ef9a0598b15796293bf9",
+    "baselineSha256": "c7298f140e85461af8c345f8fd85a6ea9e2e992f0b2bcbeb82a477a59b69b077"
+  },
+  {
+    "path": "docs/history-sales-detail-plan-coverage.md",
+    "state": "added",
+    "sha256": "c0fbba0c6cff483f657812736840ae4a13ee4064c1a039d5e6ab3a1e897027f3",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/prepare-retained-sales-header-window-20261026.mjs",
+    "state": "added",
+    "sha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/prepare-retained-sales-options-20261026.mjs",
+    "state": "added",
+    "sha256": "b73b34b9df14e7694acfc68f7329216b7db4136f0e8d223e1cba0df957939480",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/prepare-retained-transfer-header-window-20261025-v2.mjs",
+    "state": "added",
+    "sha256": "aaea814af3db254c4801a7e07cadef7ddefd056d2b2f56f0a11c09c38ae70eac",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/retained-native-closure-fixtures-20261026/PROVENANCE.json",
+    "state": "added",
+    "sha256": "6a3217612bf8ae39669c40ed9952d596b3504b3e8c4c125db9b801b33bd45b90",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/retained-native-closure-fixtures-20261026/product.mjs",
+    "state": "added",
+    "sha256": "d80b024dc50f2986a1e39bb1795ceb57c1720fc6a33a5c2d80cec11ce5693ce5",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/retained-native-closure-fixtures-20261026/sku.mjs",
+    "state": "added",
+    "sha256": "ab2a0b7361541dae984470de49f2f49eab1038826d3bab289a0e28f38c569d8b",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/retained-native-closure-fixtures-20261026/stock.mjs",
+    "state": "added",
+    "sha256": "583c1d9d47579cf5e2735b3fbdfbfbb3053df581fda6a0f220e02e9c522631b3",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/retained-native-closure-streams-20261026.mjs",
+    "state": "added",
+    "sha256": "ada8e60d789c4ded205f901a12326658057a784e97ea5ffd62801e0d6f96ba24",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/retained-sales-settlement-consumer-20261025.mjs",
+    "state": "added",
+    "sha256": "2213f351e195e2927b2b7625e43c26f87a3e07dde41de7703482c031e16d7c1e",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/sales-header-closure-session-20261026.mjs",
+    "state": "added",
+    "sha256": "c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/fixtures/production-provider26/transfer-final-document-join1/join-core.mjs",
+    "state": "added",
+    "sha256": "1c655536bf1d4580071670bd984f7c952cfd1e8399525b4b8a9f1051bd215360",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/production-source-provider26-portability.test.mjs",
+    "state": "added",
+    "sha256": "82b738574092a4a62a585b3ef57a5b5898876feb064e86638fe6377334d94a3a",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/import-v3/production-source-provider26.test.mjs",
+    "state": "modified",
+    "sha256": "a6bf63feb1f2a10a613c3010ee4f03c7aba714b5b0be9d701bd6bb52935b9b41",
+    "baselineSha256": "f3463b099265eede1e2a8564e8239ca3ab5de5be133409803e393f33958fdf40"
+  },
+  {
+    "path": "scripts/import-v3/run.test.mjs",
+    "state": "modified",
+    "sha256": "38a386e97fbf3543c9f74142087d20186c8398d8791d4d7e9bcb468eedc897c2",
+    "baselineSha256": "8e059fb530a3fdfce36693a04a110fdf77f4d1e0409a0f7a22de02a5a8a082ea"
+  },
+  {
+    "path": "scripts/release/compare-runtime26-metadata.py",
+    "state": "added",
+    "sha256": "85d709ca90b98ba090e10d2f67d8afdd20b2e3b1473d01c27a0a1054d6f6cf83",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/release/compare-runtime26-metadata.test.py",
+    "state": "added",
+    "sha256": "5d8cba8f0214b165ba1ad3feaf6af653af942d8f652fd5efa1f874a29e3c6101",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/release/prepare-runtime26-v7-boundary.test.mjs",
+    "state": "added",
+    "sha256": "04e5d1cf6e642f41ea6e7ec60de62b03d8d71780ba09b34978129611c0a9beb8",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/release/prepare-runtime26-v7-tcp-only-0018.fixture.mjs",
+    "state": "added",
+    "sha256": "9e6e174ad20e43153d098d1a718711c88da0ce122d5cb06663e29e1d96ef2e44",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/release/prepare-runtime26-v7-unix-target.test.mjs",
+    "state": "added",
+    "sha256": "7d19a212b1f097f47d5068af65ac9eec9f2f67db678892a74babe584a4b9cfa9",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/release/prepare-runtime26-v7.mjs",
+    "state": "added",
+    "sha256": "1f06577d8ebc8a0affe2900f79b87ea8fb07bd0364d68e06d0aeb41e9d9868f9",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/release/prepare-runtime26-v7.test.mjs",
+    "state": "added",
+    "sha256": "e55bc4d2e03d4c051267649ca130cb1330a4176d604c6ac3a9618c23fcc4590a",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/release/render-runtime26-readonly-check.mjs",
+    "state": "added",
+    "sha256": "b695f742229e5033f711592b998707aa6f1d80f0d613bc21c6c26204b5413a64",
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/release/render-runtime26-readonly-check.test.mjs",
+    "state": "added",
+    "sha256": "ee83f27ddbe2c98513818b105e6cc7874c1f0717c8547667fec99edf24930827",
+    "baselineSha256": null
+  },
+  {
+    "path": "tests/authorized-effective-documents.test.ts",
+    "state": "modified",
+    "sha256": "1047b01dc4b6813e2aeee606fd049261505164acc8cd318c8557fa0918884ff7",
+    "baselineSha256": "c01afb385b12e233b3cc764c3d03db2cc904d75cf94655ee77662547fe820acd"
+  },
+  {
+    "path": "tests/history-sales-detail-plan.test.ts",
+    "state": "modified",
+    "sha256": "7dc25e985527732234a40984c1b2ec9ca857c073d52248a4a13c9d29848fc2d1",
+    "baselineSha256": "30c826e1ee58ab209f89066f931f1fb04e801c4071603bcce508a43a48160b68"
+  },
+  {
+    "path": "tests/product-entry-service-host.test.mjs",
+    "state": "added",
+    "sha256": "ee62a3946b1a5ff445f4ae09ff622902a14d654998f65534cf2161903418d1ef",
+    "baselineSha256": null
+  },
+  {
+    "path": "tests/sales-query-postgres-protocol.test.ts",
+    "state": "modified",
+    "sha256": "f4a44c2d4833232fce189b57b21c2e4ba81061e586675ba8f8fb67b8728a2650",
+    "baselineSha256": "2e2791dc49ed57142e920efd3e4c98398e8e4fa71c2c87c673189fd22ed5a1f7"
+  },
+  {
+    "path": "tests/support/product-entry-service-host-fixture.mjs",
+    "state": "added",
+    "sha256": "27fb814973cfdf7b43ba523ad07fbb682cf2e7816e18f9fb9019b576e50b8c1b",
+    "baselineSha256": null
+  },
+  {
+    "path": "tests/transfer-query-postgres-protocol.test.ts",
+    "state": "modified",
+    "sha256": "fa29f486e500c24552e7341dc8f9d4c92a2ebaa4af67938ca0f5bd82796758a5",
+    "baselineSha256": "0c2fdf631a9e8fa8ad781b54d72fe7490829a3913af7e0d500f30a405f0f77f2"
+  }
+]

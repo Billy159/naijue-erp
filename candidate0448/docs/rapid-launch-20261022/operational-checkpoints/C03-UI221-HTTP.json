@@ -1,0 +1,36 @@
+{
+  "atUtc": "2026-10-23T21:18:33.319673+00:00",
+  "taskId": "C03_UI221_FIXED_THREE_HTTP",
+  "status": "PASS_FIXED_C221_THREE_KEY_HTTP",
+  "sourceCommit": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
+  "buildId": "ui-preview-601fde4-01-build01",
+  "url": "http://127.0.0.1:57874/synthetic-unified.html",
+  "checks": [
+    {
+      "path": "synthetic-unified.html",
+      "status": 200,
+      "bytes": 3414787,
+      "sha256": "ecde3a3f6fa23704716b446ca677ed450a3ae2d6c67e29da48f57a3cb0a53374",
+      "sameImmutableBuild": true
+    },
+    {
+      "path": "candidate-identity.json",
+      "status": 200,
+      "bytes": 4413,
+      "sha256": "453d0a8a354e701740ba2b7e6cf390a6232c674b90651674923008361e0f1c07",
+      "sameImmutableBuild": true
+    },
+    {
+      "path": "provenance.json",
+      "status": 200,
+      "bytes": 51504,
+      "sha256": "f86d1aeb2336e165e8abc3ada8f1f1d02916afd3204c4fa9a7312b4dca231ba6",
+      "sameImmutableBuild": true
+    }
+  ],
+  "serverPid": 10351,
+  "serverSession": 95413,
+  "actualInputs": 413,
+  "actualModulesIncludingDependencies": 1368,
+  "qualification": "Fixed221 actual local synthetic preview includes originalT02LEFTNAV hook, NOT222datepointer fix. No realPG/permissions/save/business or formalperformance acceptance."
+}

@@ -1,0 +1,19 @@
+{
+  "status": "HOST_PATH_WIRING_SOURCE_READY_PENDING_AFFECTED_QB",
+  "files": [
+    {
+      "path": "scripts/import-v3/production-source-host.mjs",
+      "bytes": 40653,
+      "sha256": "ed6ee18c0c0a08991b63dce6611ef4c3c17e22d8f9217c9371fe812c9fc5f73b"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.test.mjs",
+      "bytes": 47777,
+      "sha256": "ec12e9be19b537ba78e6e7d6aba30a08204f7cf06b65ac3e9413c488e7f346a7"
+    }
+  ],
+  "change": "NonCORE initial decision/review read uses captured existing source reader exact logical-to-physical resolver after session capture but before preflight/group construction/DB activation. Logical job identity,79map and resolver whitelist preserved. CORE unchanged; legacy no-resolver original physical path supported. Wrong resolver rejects without fallback.",
+  "checks": "OriginalD3 RED logical ENOENT reproduced then GREEN9 scoped host checks/syntax PASS; no real data/PG/server or full suite.",
+  "unchanged": "Provider26 and test exact SOURCE744 pins unchanged; baseline730 algorithms and original109keys unchanged.",
+  "next": "OriginalQB only two-leaf path seam; T45 update unique consumerHost current byteSHA/review while retaining original730baseline/provider; current runtimeReview/job authority and actual111output validation still required."
+}

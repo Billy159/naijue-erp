@@ -1,0 +1,27 @@
+{
+  "atUtc": "2026-10-22T18:35:59.559101+00:00",
+  "parent": "7939759f5bc702e8beeb5a47776f7ee8e3101c88",
+  "groups": [
+    {
+      "slice": "QB92_F01_COMMIT_REVIEW_REVOCATION_BOUNDARY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/QB92-COMMIT-BOUNDARY-RESULT.json",
+      "receiptSha256": "1435c287f37dd923cc2b0bffba26f5c584d8e3ac8c93810e45113e9ea52313f9",
+      "files": [
+        {
+          "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+          "owner": "D1",
+          "sha256": "e878df562c39ed83391dd8e3c46608e51d252099886e5e55cf889a361d982206",
+          "bytes": 61638
+        },
+        {
+          "path": "tests/native-runtime26-capability.test.ts",
+          "owner": "D1",
+          "sha256": "a1d6c281b67ffe0f8a81872fce7922c8cff695bed30a17a7e99083dbe6c058c1",
+          "bytes": 14680
+        }
+      ]
+    }
+  ],
+  "fileCount": 2,
+  "scope": "Targeted fixed runtime revocation boundary only; old issuer15/121 not rerun. No actual issuer or SOURCE/MAIN authority granted."
+}

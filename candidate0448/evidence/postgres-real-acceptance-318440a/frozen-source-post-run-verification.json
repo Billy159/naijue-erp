@@ -1,0 +1,19 @@
+{
+  "evidence_kind": "POST_EXECUTION_FROZEN_SOURCE_BYTES_VS_COMMITTED_GIT_BLOBS",
+  "checks": [
+    {
+      "commit": "b508ce88127ce3e4562ff731982ac8b50a980146",
+      "tracked_files_checked": 733,
+      "mismatches": [],
+      "result": "MATCH",
+      "source_kind": "Frozen archive compared byte-for-byte with the specified committed Git blobs after execution."
+    },
+    {
+      "commit": "318440a1c5a396329a4bc8256d34008b4774faab",
+      "tracked_files_checked": 751,
+      "mismatches": [],
+      "result": "MATCH",
+      "source_kind": "Frozen archive compared byte-for-byte with the specified committed Git blobs after execution."
+    }
+  ]
+}

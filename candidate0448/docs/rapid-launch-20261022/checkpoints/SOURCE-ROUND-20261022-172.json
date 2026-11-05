@@ -1,0 +1,42 @@
+{
+  "atUtc": "2026-10-23T12:58:07.926939+00:00",
+  "parent": "efc7dd6eb268bf4ae5cd5ae8c5d11f8e68a3d28c",
+  "taskId": "B00_C80_NATIVE_CREATION_RECORD_SCOPE_BUG",
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+      "owner": "D1",
+      "bytes": 3098,
+      "sha256": "9e7c5f0864f19d2f60bd856aa965b12db81d53db40040bbfef521731d76e5d17"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "owner": "D1",
+      "bytes": 62206,
+      "sha256": "fa669dd8e3a3fd6ca1f20b99e54ef52f32ea0fe9f514dd32faed594421e15749"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "owner": "D1",
+      "bytes": 16966,
+      "sha256": "c7e40c3061ce4b13ac56afc010092de44ca648e7468534d42debe5fe3d23e990"
+    },
+    {
+      "path": "tests/product-media-write-capability.test.ts",
+      "owner": "D1",
+      "bytes": 8794,
+      "sha256": "56472313eb8deca51ba31f86752e591c284ed9135c568309b14fce6dd7c3fb4d"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "owner": "D1",
+      "bytes": 52010,
+      "sha256": "ab74cded2324891882d82fd5268f641d559faf16efdee67613f7d616a9eb0f3e"
+    }
+  ],
+  "ownerReceipt": "K/reports/backend/rapid-launch-20261022/D1/NATIVE-CREATION-RECORD-SCOPE-RESULT-v1.json",
+  "scope": "Only existing single trigger-function table branch scopes SKU-specific NEW/OLD record fields. Exact issuer body pin/patchLevel and three private fixtures follow; no permission, original predicate, source identity, table/column or trigger changes.",
+  "checksAdopted": "D1 directly affected metadata/media/host3of3 and strict4roots0. No19/H06/full26 repeat.",
+  "actualEvidence": "C80 actual42703 WAREHOUSE INSERT failed. Original column/function context not retained; do not invent. C91 original request-key/state/function readback pending. SQL parser and corrected real service outcome not yet measured.",
+  "qualification": "SOURCE_FIXED_ONLY; actual isolated patch/new sample/independent affected acceptance pending; no all-size write-contract change."
+}

@@ -1,0 +1,55 @@
+{
+  "atUtc": "2026-10-24T05:03:37.136168+00:00",
+  "parent": "c588049fd4caf7a610a8cef3aa88a4198ba380dd",
+  "taskId": "F4_C289_MODAL_INHERITED_LINE_HEIGHT_RESIDUAL",
+  "files": [
+    {
+      "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+      "bytes": 42784,
+      "sha256": "b68fd373ee16c5e73630ec6076e89d58a0c68a7a6af5ac31b0ec08b2e8297b83",
+      "owner": "F4"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F4/QF2-C289-MODAL-LINE-HEIGHT-01/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "d62e871157eb2c91ffb8144e8b6dd385520b5f0c23897f63b4b8cc3df95f1228",
+  "ownerDelivery": {
+    "taskId": "F04/QF2-C285-P15P17-MODAL-BODY-01",
+    "revision": "C289_RESIDUAL_LINE_HEIGHT",
+    "findingId": "QF2-C285-P15-P17-MODAL-BODY-GEOMETRY-01",
+    "actualStatus": "PARTIAL_UNTIL_CONTAINING_CANDIDATE_QF2_RECHECK",
+    "atUtc": "2026-10-24T05:02:46.189448+00:00",
+    "scope": "One CSS declaration line only, shared COLOR/FIT modal. Preserve actual-passed P14/P19 inset, native480/420/bare-host/field interval and existing draft lifecycle.",
+    "changedFiles": [
+      {
+        "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+        "bytes": 42784,
+        "sha256": "b68fd373ee16c5e73630ec6076e89d58a0c68a7a6af5ac31b0ec08b2e8297b83"
+      }
+    ],
+    "cause": "The prior private font:13px var(--ca-font-sans) shorthand has higher specificity than installed Arco/shared catalogue font and resets line-height to normal. C289 actual recorded candidate root normal vs native13px/20.4295px; installed Arco .arco-modal and shared catalogue use1.5715. This inherited reset reaches the auto-height16px title/header.",
+    "change": "Replace only that private shorthand with font-size:13px;font-family:var(--ca-font-sans), retaining the existing native1.5715 line-height. No new line-height constant, height, coordinate, transform, tolerance, DOM change or shared override.",
+    "checks": {
+      "sourceCSSOM": "PASS Node24 actual CatalogueEntryEditor/Arco DOM; before RED root normal; after both COLOR/FIT root13px+1.5715 and title16px+1.5715,16px body/bareIDhosts/480 carrier retained. Only native font token resolved to literal for JSDOM shorthand-variable limitation.",
+      "cssParse": "PASS zero esbuild CSS parser warnings",
+      "diff": "PASS diffcheck; 1 insertion/1 deletion in one CSS line"
+    },
+    "notTested": [
+      "No new browser rect or real font-layout measurements; original issue remains PARTIAL.",
+      "No replay of already-passed dirty lifecycle/P14P19 inset/paging/filter/allsuite.",
+      "No Chrome/PG/build/server/Git/runtime profile operations."
+    ],
+    "blockers": [],
+    "next": "C freeze single exact pin with next necessary candidate; original QF2 only residual COLOR/FIT outer height/Y plus input/footer Y, retaining already-passed scopes. Original289 left unchanged.",
+    "evidence": [
+      "before-source-dom.json",
+      "after-source-dom.json",
+      "modal-lineheight.mjs",
+      "source-check.log",
+      "source.diff"
+    ],
+    "authority": "C same-issue direction; original human01a161f7-a5e8-7e10-9059-9537c28910c2 reporting/fix authorization; gpt-6.1-sol/xhigh; Fast tool not available/verified."
+  },
+  "stage": "FIXED_SOURCE_CSSOM_RED_GREEN_ONLY_ACTUAL_MODAL_Y_HEIGHT_PENDING",
+  "actualPG": false,
+  "deployed": false
+}

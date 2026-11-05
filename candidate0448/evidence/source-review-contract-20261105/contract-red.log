@@ -1,0 +1,38 @@
+✔ unknown warehouse keeps exact original blank/null/decimal strings and no ordinary identity (4.314136ms)
+✔ orphan/ambiguous occurrences and duplicate business keys are retained separately, never guessed into groups (1.117763ms)
+✔ complete group closure requires exactly one matching original header and consistent classification (3.460244ms)
+✔ approval requires external exact SHA, namespace, manifest and original file pins (0.994421ms)
+✔ exact source tuple and deterministic capture UUID are cross-language reproducible, not a warehouse ID (0.884087ms)
+✔ cloned/self-declared approvals have no capability and internal bytes cannot be mutated through input (1.770598ms)
+✔ raw shape is closed, normalization is separate, and getters are never executed (0.812389ms)
+✖ PG-incompatible NUL and lone surrogates are rejected, never normalized or removed (1.418125ms)
+✔ duplicate JSON keys and unknown fields cannot hide an original occurrence (0.916884ms)
+✔ bounded approval byte segments and capture payloads preserve the full approved occurrence set (25725.562126ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26403.055075
+
+✖ failing tests:
+
+test at tests/historical-sales-source-review.test.ts:15:1
+✖ PG-incompatible NUL and lone surrogates are rejected, never normalized or removed (1.418125ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-source-review.test.ts:15:288)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SOURCE_REVIEW_/,
+    operator: 'throws',
+    diff: 'simple'
+  }

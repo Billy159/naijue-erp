@@ -1,0 +1,55 @@
+✖ SIGNED local persisted approval guard displays positive negative and large exact differences without dispatch (10.889649ms)
+✖ SIGNED local historical missing payments defer restoration proof to server without treating absence as zero (2.322217ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 228.985832
+
+✖ failing tests:
+
+test at apps/web/src/sales/commands/controller.test.ts:254:1
+✖ SIGNED local persisted approval guard displays positive negative and large exact differences without dispatch (10.889649ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(h.controller.getSnapshot().notice .includes(`差额（应结减实收）${expected} 元`))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/controller.test.ts:259:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at apps/web/src/sales/commands/controller.test.ts:264:1
+✖ SIGNED local historical missing payments defer restoration proof to server without treating absence as zero (2.322217ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   {
+  -     action: 'APPROVE',
+  -     expectedVersion: 2,
+  -     requestKey: 'missing-history:1',
+  -     salesId: '00000000-0000-0000-0000-000000000001'
+  -   }
+  - ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/controller.test.ts:271:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ { action: 'APPROVE', requestKey: 'missing-history:1', expectedVersion: 2, salesId: '00000000-0000-0000-0000-000000000001' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,57 @@
+{
+  "atUtc": "2026-10-23T18:45:52.053554+00:00",
+  "parent": "ec960d146917425002b5bcd204a694ad12d8e51c",
+  "taskId": "F2-QF2-P01-ACTUAL-SURFACE-01",
+  "files": [
+    {
+      "path": "apps/web/src/products/demo-source/product-inventory-unified.css",
+      "bytes": 22043,
+      "sha256": "58df6f4f78341855cd87dcb4e285c62f4061486a1324313e201fbbd674634240",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-P01-ACTUAL-SURFACE-01/RESULT.json",
+  "ownerReceiptSha256": "8d7d94be64474abce7e50f555ef13789ed21eec7f102e35cbed5775ce44adaf3",
+  "scope": [
+    {
+      "id": "QF2-P01-PAGE-INSET-01",
+      "status": "SOURCE_FIX_READY_ACTUAL_QF2_RETEST_PENDING",
+      "owner": "F2",
+      "change": "One source selector adapter :is(#page,.demo-page) to :where(#page,.demo-page), removing accidental ID priority over existing native golden inset; no declaration/DOM/layout change"
+    },
+    {
+      "id": "QF2-P01-IDLE-FILTER-SURFACE-01",
+      "status": "EXACT_PUBLIC_SOURCE_SEAMS_READY_FOR_C_TO_F1",
+      "owner": "F1 public controls",
+      "changedByF2": false,
+      "seams": "OWNER-SEAMS.md"
+    }
+  ],
+  "checksAdopted": [
+    {
+      "name": "All CSS rule declaration blocks/order identical; exactly one selector substitution; native padding winner reproduced before12/16 after16/20 and bottom64 unchanged",
+      "result": "PASS_SOURCE_ONLY",
+      "details": "CASCADE-RESULT.json",
+      "log": "cascade.log"
+    },
+    {
+      "name": "Affected CSS dependency parse/bundle",
+      "result": "PASS_WARNINGS_0"
+    },
+    {
+      "name": "C196 fixed-source matching of page/public controls/context",
+      "result": "PASS",
+      "details": "sourceDependencyPins"
+    },
+    {
+      "name": "Changed line whitespace/single LF",
+      "result": "PASS"
+    }
+  ],
+  "qualification": "F2_PAGE_SOURCE_FIX_FROZEN_PUBLIC_IDLE_SEAMS_REPORTED_TO_C",
+  "limitations": [
+    "No Chrome/browser automation, JS build/TypeScript/test suite or six-tabs48 repetition for CSS-only selector change",
+    "No new computed CSS/geometry/pixel or independent actual acceptance",
+    "No cross-write F1 shell/public files"
+  ]
+}

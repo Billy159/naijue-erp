@@ -1,0 +1,92 @@
+{
+  "mode": "PLAN_ONLY_NO_CONNECTION",
+  "suite": "backend-0001-0008",
+  "note": "One current schema; exact separately authorized fresh disposable target required before real execution.",
+  "migrations": [
+    {
+      "version": 1,
+      "filename": "0001_runtime_sales.sql",
+      "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+    },
+    {
+      "version": 2,
+      "filename": "0002_sales_pricing_facts.sql",
+      "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+    },
+    {
+      "version": 3,
+      "filename": "0003_auth_sessions.sql",
+      "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+    },
+    {
+      "version": 4,
+      "filename": "0004_transfer_runtime.sql",
+      "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+    },
+    {
+      "version": 5,
+      "filename": "0005_product_read_fields.sql",
+      "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+    },
+    {
+      "version": 6,
+      "filename": "0006_party_maintenance.sql",
+      "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+    },
+    {
+      "version": 7,
+      "filename": "0007_sparse_inventory_cutoff.sql",
+      "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+    },
+    {
+      "version": 8,
+      "filename": "0008_runtime_sparse_first_use.sql",
+      "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+    }
+  ],
+  "scenarios": [
+    "disabled-account authentication STORAGE: committed session, rollback, account/session locks, sentinel hash version invalidation and revocation",
+    "real schema rejects incoherent pricing intent, duplicate coordinate, invalid fit/image/numeric value and invalid session hash",
+    "same sales document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT",
+    "same transfer document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT",
+    "signed independent RETURN/EXCHANGE native posting, settlement direction and linked inverse effects on current sparse scope",
+    "native scoped sales list/detail/history/statistics, literal search, hidden scope and page beyond end",
+    "native sales count/page share one real REPEATABLE READ snapshot across an intervening committed SAVE",
+    "native product basics, exact three-SKU/two-size specifications and image METADATA only",
+    "deferred transfer line-position uniqueness permits an actual two-line swap with sparse audit and no stock effect",
+    "actual scrypt/auth service/PG store login: separate synthetic account, wrong password, secure cookie and current session",
+    "authenticated native inventory matrix/candidates and bounded ledger keyset pages on published synthetic scope",
+    "authenticated bounded sales/detail/history/statistics, transfer/detail and product reads with honest unavailable media",
+    "explicit test-only scope exclusions and spoofed cookie/authorization/actor/origin rejection across native read plugins",
+    "actual PG logout revocation blocks every read family; exact native business fixture snapshot unchanged and owned API pool closure",
+    "native profile plus canonical source-auth policy: actual A/B salesperson, ADMIN and WAREHOUSE logins with service-written multi-hall facts",
+    "native current-hall sales scope versus genuine ADMIN/WAREHOUSE all scope over nonempty detail/history/references and approved sums",
+    "native all-warehouse inventory/candidates/ledger includes actual other-hall disabled historical references; exact shared product targets",
+    "canonical transfer scope hides actual B-only service draft from A; later unpublished warehouse correctly makes all-warehouse inventory NOT_READY",
+    "current HTTP login/employment/role/hall fail closed and supplemental genuine-PG authorizers reject an explicitly stale captured hall",
+    "native-role sessions revoke on logout, read-phase exact business snapshots stay unchanged and one owned API pool closes",
+    "native sales action matrix, preserved state/CAS, later-APPROVED original SAVE and GET-receipt via explicit TEST-ONLY AUTHENTICATION plus current disable recheck",
+    "known-PID actual account/staff/hall metadata UPDATE waits while native command identity locks remain held through commit",
+    "known-PID command waits for committed disable or ADMIN-to-SALESPERSON change and READ COMMITTED denies without business facts",
+    "identity SELECT actually waits on staff before hall disable commits; separate current hall SELECT rejects without unauthorized business facts"
+  ],
+  "requiredGatesForExecution": [
+    "explicit approval of the exact operator-selected fresh disposable physical target",
+    "NODE_ENV=test",
+    "NAIJUE_PG_INTEGRATION",
+    "NAIJUE_PG_TEST_SUITE=backend-0001-0008",
+    "NAIJUE_PG_EXPECT_DATABASE",
+    "NAIJUE_PG_TEST_DATABASE_URL",
+    "existing --run entry point and marker",
+    "server-side fresh/exclusive loopback non-admin owner checks"
+  ],
+  "notExecuted": [
+    "PostgreSQL",
+    "SQL/DDL/EXPLAIN",
+    "migration",
+    "reference inserts",
+    "network",
+    "server startup",
+    "package installation"
+  ]
+}

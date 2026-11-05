@@ -1,0 +1,10 @@
+Command: node apps/web/src/demo-controls/tests/run-source-and-boundary-tests.mjs
+Cwd: /workspace/shared/naijue-erp-rewrite
+Started: 2026-10-21T02:10:21.403981+00:00
+--- complete merged stdout/stderr follows ---
+PASS source provenance: exact frozen SHA256, 6 line ranges, 21 copied scoped rules and installed Arco hashes.
+PASS lazy boundary: lightweight dynamic-import contract, real Select leaf, no root barrel/full CSS/data/global bridge; action CSS stays a separate lazy entry.
+
+--- end command output ---
+Finished: 2026-10-21T02:10:22.234354+00:00
+Exit code: 0

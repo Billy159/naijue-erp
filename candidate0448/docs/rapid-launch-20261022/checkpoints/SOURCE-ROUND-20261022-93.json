@@ -1,0 +1,63 @@
+{
+  "atUtc": "2026-10-22T22:01:34.058310+00:00",
+  "parent": "a62c1e504e8b1f1e66256b02a07091bcda77201c",
+  "groups": [
+    {
+      "slice": "C_EXPLICIT26_R1_BOOT_SELECTOR_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-runtime26-boot-delta-adopted-20261023-01/RESULT.json",
+      "receiptSha256": "4c3d600e47434c32719be488eaca7758d68a740aa9b2a063194d7402a6d9dc89",
+      "receiptSnapshot": {
+        "taskId": "C_EXPLICIT26_R1_BOOT_SELECTOR",
+        "status": "SOURCE_READY_PENDING_QB_NO_ACTUAL_BOOT",
+        "atUtc": "2026-10-22T22:01:34.058310+00:00",
+        "C90IndependentReview": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice126-explicit26-r1-deploy-selector-b0d58d38/RESULT.json",
+          "sha256": "66aea6b3fd69430baac77fb0fc57e51ed9486af26ba302ac46b1d32287ed227a",
+          "result": "PASS_SOURCE_DELTA_ONLY"
+        },
+        "preparedReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-runtime26-boot-delta-prep-20261023-01/PREPARATION-RESULT.json",
+        "preparedReceiptSha256": "ff887a832e4a16e4d53a06b1dab667b97612c4ec70fcffd357f099334e7790f6",
+        "patchSha256": "e5efb32ab8f469678985122332a95a4152b7988ce41e6da3de9a317e9c996996",
+        "docPatchSha256": "90a48e8991bb7cc8bf05cfc232d2d7bd57bfebb4cd513ae62db3bd41c4f8971d",
+        "files": [
+          {
+            "path": "scripts/release/boot-entry.py",
+            "owner": "C",
+            "bytes": 42351,
+            "sha256": "9234282b937a499a9cfe9d50af75523a514b50292a717ae52136fd36fcd1704e"
+          },
+          {
+            "path": "scripts/release/BOOT-ENTRY.md",
+            "owner": "C",
+            "bytes": 19763,
+            "sha256": "5776b34e894f29cc236494eb890a332e5747319c33b0e7055fc4473dfa0ceb88"
+          }
+        ],
+        "checks": {
+          "exactPreparedDelta": true,
+          "localCompile": true,
+          "prepared20": "Helper self-check evidence adopted, not rerun"
+        },
+        "notTested": [
+          "Actual final config/permanent review/build/stage/activation/fence/arm/boot/reboot/HTTPS/dataReady/business"
+        ],
+        "knownBoundary": "PG postmaster/address change requires fresh actual target metadata review; no automatic re-signing or unpinned restart"
+      },
+      "files": [
+        {
+          "path": "scripts/release/boot-entry.py",
+          "owner": "C",
+          "bytes": 42351,
+          "sha256": "9234282b937a499a9cfe9d50af75523a514b50292a717ae52136fd36fcd1704e"
+        },
+        {
+          "path": "scripts/release/BOOT-ENTRY.md",
+          "owner": "C",
+          "bytes": 19763,
+          "sha256": "5776b34e894f29cc236494eb890a332e5747319c33b0e7055fc4473dfa0ceb88"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only explicit26 boot plan/artifact handoff; original19/owner/fence/systemd/recovery gates preserved; no actual boot/entry/public/business claim."
+}

@@ -1,0 +1,152 @@
+{
+  "atUtc": "2026-10-24T00:11:35.373325+00:00",
+  "parent": "7d24666984aea19328b219202c3a3c75ce4d8162",
+  "taskId": "F1_STORE_AUDIT_ROOT_HOST_EXISTING_CAPABILITY_WIRING",
+  "files": [
+    {
+      "path": "apps/web/src/application/controller.ts",
+      "bytes": 57381,
+      "sha256": "3427bb64e63cb027e31f493934f68fb2a35579ef45f7fc4b008c2511d897522a",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/store-settings.tsx",
+      "bytes": 4317,
+      "sha256": "527b53262dceba4b9bb962b1bbbca27694744aeb4d125e7ecf031f834a83d6e3",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 14232,
+      "sha256": "9d8ce3321aefca9d042660b661088b40894db658972468e9ab3abd71fd602907",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "e410a749940549783cbbcd7c00868c7a80274fcff00199d50622145afa0c42cc",
+  "ownerDelivery": {
+    "taskId": "F1_STORE_AUDIT_ROOT_HOST_EXISTING_CAPABILITY_WIRING",
+    "scope": "Original existing store audit host injection and authoritative retained-write guard only",
+    "status": "READY_EXACT3_ORIGINAL_PRODUCTION_CONSUMER_SELF_CHECK_PASS_ACTUAL_PENDING",
+    "files": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/controller.ts",
+        "bytes": 57381,
+        "sha256": "3427bb64e63cb027e31f493934f68fb2a35579ef45f7fc4b008c2511d897522a",
+        "relativePath": "apps/web/src/application/controller.ts",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/before/apps/web/src/application/controller.ts",
+          "bytes": 56393,
+          "sha256": "51013461a202e8343671083882d3480727a85b98b5c2840539fb80642a8912f2"
+        }
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/routes/store-settings.tsx",
+        "bytes": 4317,
+        "sha256": "527b53262dceba4b9bb962b1bbbca27694744aeb4d125e7ecf031f834a83d6e3",
+        "relativePath": "apps/web/src/application/routes/store-settings.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/before/apps/web/src/application/routes/store-settings.tsx",
+          "bytes": 3567,
+          "sha256": "2bb9a329d577a7ca43c39e8722a668fb5882d81362f583b3223a37b4a4197e2d"
+        }
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/production-host/mount.tsx",
+        "bytes": 14232,
+        "sha256": "9d8ce3321aefca9d042660b661088b40894db658972468e9ab3abd71fd602907",
+        "relativePath": "apps/web/src/production-host/mount.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/before/apps/web/src/production-host/mount.tsx",
+          "bytes": 13905,
+          "sha256": "326a62410a786771766f59318c13f558fda02fcff3f8ca3aa2e6863ad114f71f"
+        }
+      }
+    ],
+    "peerDependency": {
+      "owner": "F3",
+      "source": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/parties/controller.ts",
+        "bytes": 23872,
+        "sha256": "c658665c7144863cf1761ae60d022bbcdcd40d6721496d33d5124b25a3ec3114"
+      },
+      "inCurrentHead": true,
+      "latestPathCommit": "7d24666984aea19328b219202c3a3c75ce4d8162",
+      "interface": "PartyWorkspace.hasUnresolvedWrite():boolean, loops only existing controllers and reads original authoritative getter",
+      "F1ChangedPeerSource": false
+    },
+    "checks": {
+      "before-1": "EXIT1 original ProductionHost old241 source shows 操作记录disabled/title未接入/capabilityfalse",
+      "after-1": "EXIT0 original ProductionHost, real original React/Arco/F3 page/HTTP reader and command controllers with explicit synthetic HTTP ports",
+      "types-1": "EXIT0 production mount/controller/store route full strict imported closure; no exclusions"
+    },
+    "notTested": [
+      "C127 public audit suite not repeated",
+      "No Chrome lease/browser pixel acceptance",
+      "No new integrated build/serve/deploy by F1",
+      "No actual HTTP server/PG/log data/permissions/business acceptance",
+      "Other retained owner getter source already authoritative; no per-owner full command suite repeated"
+    ],
+    "blockers": "C source pin + F3 exact getter dependency + containing candidate/actual provider binding",
+    "next": "C fix exact3 together with exact F3 getter dependency if not yet pinned; original QA only new host->store entry/currentrole and retained unresolved consumer scope on containing successor, existing public component suite adopted. Candidate240 does not contain this source.",
+    "sourceFrozenUntilCPin": true,
+    "artifacts": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/PROOF.json",
+        "bytes": 7156,
+        "sha256": "428b0cb31a8206e1b9f66d8d8e5fcf429bbb7f76ba6d1da2d3d320a8458cb31e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/REPORT.md",
+        "bytes": 1553,
+        "sha256": "88bb7fb3345f197a58bf0da921b4285afbb415bed89802e2d2de1e99ddbdd407"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/HOST-RESULT.json",
+        "bytes": 1717,
+        "sha256": "9046ae63aa58ee0a440c92dc1fccb696d938809169f9004577b7947a19a3113a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/SOURCE.diff",
+        "bytes": 8141,
+        "sha256": "7cd8fd3005431c54b0b7cbb86807af8fa6054ad80c8628a5e0d24d1b3828d8fd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/before-1.log",
+        "bytes": 1149,
+        "sha256": "f90c5efba0ea02d580f852fa7b58fae9c400467c9340be014d6ad86df3d59c48"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/after-1.log",
+        "bytes": 668,
+        "sha256": "afe9831b4370cb1de1be7e1ddd7c21b82da43631a4e9a419017de281cf631807"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/BEFORE-ENTRY.json",
+        "bytes": 133,
+        "sha256": "6fd6b8a896fff25a5c41cdce2b3ff02a6d4450b23986ddd3ca82a1c1f8600bfa"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/AFTER-ENTRY.json",
+        "bytes": 133,
+        "sha256": "7d5477e1c893d91ab062c017538fe3886743195aba4553a00ee9f57e94ecffaa"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/store-audit-host-check.mjs",
+        "bytes": 15155,
+        "sha256": "076a856b94d04f77874b0d090de5c69531516fc3f51adb4488b59c05ec6517e3"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-126/tsconfig.json",
+        "bytes": 853,
+        "sha256": "646cbdefeb0b3111ae9aa379dd88091119f95fea4b1e1be77d649a4de304a11c"
+      }
+    ]
+  },
+  "qualification": "Owner real production host/JSDOM source checks adopted: existing authenticated audit reader, current-principal module intersection, both route branches and authoritative retained workspace unresolved commands. No backend extension enabled-state, browser, PG or real logs claim; actual UI240 lacks this source243. Independent original QF new seam source review next; C241 and F3 242 reused."
+}

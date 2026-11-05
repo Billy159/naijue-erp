@@ -1,0 +1,123 @@
+{
+  "atUtc": "2026-10-22T22:05:08.785270+00:00",
+  "parent": "944d219cb744925e9b2f5cfa81d4bff17e05cc93",
+  "groups": [
+    {
+      "slice": "fix: restore transfer proposal layout and optional summary",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/DELIVERY.json",
+      "receiptSha256": "45be9758bd82aea41c2e5dc9f0f365b1d418158204786c2d87bef2b8fb0942e7",
+      "receiptSnapshot": {
+        "chunk": 53,
+        "atUtc": "2026-10-22T22:01:28.561916+00:00",
+        "status": "READY_EXACT3_TRANSFER_PRESENTATION_RESIDUAL_SLICE",
+        "taskId": "F01/TR-UI-01/02/03/04 existing findings only",
+        "baseline": {
+          "originalActual": "C83 4ee77b5; RESULT sha467ff9037ff318fd5ee1bcfac94c4e81c96bae794521df3c55678873d97dfb24",
+          "sourceAfter52": "C91 fe445c826b511898df7f3ecb7f3b19c756f3dc47"
+        },
+        "authority": "C explicit exact3 proposal-summary addition; original human reporting01a161f7-a5e8-7e10-9059-9537c28910c2",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "sha256": "8ff873a986b2ce4fe1619bb8fe94bbf12aa331ddb3f63e4e6708211b27420aa3"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "sha256": "8d9d562fb5cb76738556ca5de8ec1495d8123d26154075c702c0d2e0a0b5b7a2"
+          },
+          {
+            "path": "apps/web/src/transfers/document-presentation.tsx",
+            "sha256": "88dbb760caac30f0584f604fc4f22f167254ab50a34d268a10f4dab02fb986ea"
+          }
+        ],
+        "completedScope": [
+          "Native spec popup local class isolates padding0/frame; header8x10/font13/600, item6x10/min33/font13; native selected class+aria gives blue selected styling and check pseudo element.",
+          "Actual selected pending product code/input and name share inline flex, preserved replacement hint; table headers600, section title500, 4px below section head from exact frozen source, enabled View/Confirm blue and Delete/Cancel gray.",
+          "Optional proposal-only shared Summary splits product and quantity counters; category tags count distinct existing native product IDs, missing IDs pending and label/product-category conflicts unknown. Native quantity helper and original default-body output unchanged.",
+          "Footer local visual aligns counters/tags left. No unit DTO or made-up 件."
+        ],
+        "checks": {
+          "types-3.log": "exit0 final exact3 targeted strict import closure",
+          "structure-3.log": "exit0 actual React19/Arco native form in jsdom plus actual C83 full ordered CSS with scoped new rules; actual popup class, native selected aria, inline DOM, intended CSS tokens/spacing/header/margin. Checkmark source rule verified, no pseudo-element pixel claim.",
+          "summary-2.log": "exit0 final new branch eight cases plus byte-equal original default renders: empty, same product two rows, two products, missing ID, conflicting category label, conflicting category ID on same product, invalid quantity, exact bigint",
+          "source-boundary-1.log": "exit0 all other C91 form bytes, earlier CSS, shared exports/quantity helper/default body statements unchanged."
+        },
+        "iterationEvidence": "Initial local CSS failed to beat actual later Arco padding/font. Tightened scope to native local popup; next probe isolated JSDOM unresolved var() shorthand versus later background-color, confirmed by minimal diagnostic then used explicit background-color. Initial cleanup used wrong ReadContext method and masked first assertion; corrected to clear. Failure logs retained; no blind suite replay.",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/SOURCE-CHECK.json",
+            "sha256": "273c165641d0a957846408f63807acb32aeb0ffd6b2e63045085abf7e73fe318"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/STRUCTURE-RESULT.json",
+            "sha256": "a8d5ae70e4feea29745f7d57de5b8232e307e7c8a5c3d6177cb46a20a0958501"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/SUMMARY-RESULT.json",
+            "sha256": "2c6722380008d7cfa1eb8594f7b9fbbfbc11d9beecaeda09397c86aacb6eb81b"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/source-boundary-1.log",
+            "sha256": "f809e11acdc752461d1df9714404508f5f72648ab036f64b4aee79fcb90e29e7"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/structure-1.log",
+            "sha256": "bd7a702608256427d25bccc79c4b3c97f3b229b4ec61aed153ddf1806075908e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/structure-2.log",
+            "sha256": "71ffb22ff65acc6f06dc7ec8b14402deae04d7eb94fbe789f5f1486a2f4f7e24"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/structure-3.log",
+            "sha256": "ac6893143c216ec0d189b0de60f500fa03ed806a8768fe712a28a8131eada54b"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/summary-2.log",
+            "sha256": "89b4ae539285c7280fb08ad03900017ef7c0dcb8b4d89fab1014986a6b59c8d8"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-53/types-3.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "approvedDeviation": "No approved unit DTO: empty/nonempty both retain true 数量 X, no invented 件; source/render agreement with Demo unit text is not claimed.",
+        "knownRemaining": [
+          "Actual next candidate pixels/left/single focus/checkmark/row and table y still pending original Demo owner",
+          "Multi-category 3 + 更多 popup behavior is not restored in this minimal slice; existing complete tags retained with horizontal scrolling. Source reference frozen transfer-golden.js12, no current actual multi-category acceptance.",
+          "Product finder placeholder retains truthful barcode scan instruction because current lookup contract is not free barcode search. No fake capability.",
+          "Whole transfer page, real PG/permissions/save/readback and production acceptance remain open."
+        ],
+        "notRepeated": [
+          "C78 Delete/Tab actual local pass",
+          "C91 native menu geometry/focus source PASS adopted from C",
+          "Saved author3to4/remark/viewEsc local evidence",
+          "Prior SKU/quantity/provider/save/source suites; no app build/Chrome/PG"
+        ],
+        "blockers": [],
+        "next": "C pin exact3 and QF only new optional presentation/default compatibility/source regions. Combine C91+this slice at next necessary integrated candidate; Demo test only changed regions, reuse old accepted behaviors. Source frozen until C pin/release."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "owner": "F1",
+          "bytes": 29165,
+          "sha256": "8ff873a986b2ce4fe1619bb8fe94bbf12aa331ddb3f63e4e6708211b27420aa3"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "bytes": 6995,
+          "sha256": "8d9d562fb5cb76738556ca5de8ec1495d8123d26154075c702c0d2e0a0b5b7a2"
+        },
+        {
+          "path": "apps/web/src/transfers/document-presentation.tsx",
+          "owner": "F1",
+          "bytes": 9233,
+          "sha256": "88dbb760caac30f0584f604fc4f22f167254ab50a34d268a10f4dab02fb986ea"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only original TR visual regions and frontend optional summary with unchanged default; no units/quantity/SKU/save/provider changes. Static source checks not actualbrowser/wholepage/business."
+}

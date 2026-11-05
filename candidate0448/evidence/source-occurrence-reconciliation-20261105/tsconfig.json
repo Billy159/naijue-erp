@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","include":["../../packages/application/src/unified-import-source-reconciliation.ts"],"exclude":[]}

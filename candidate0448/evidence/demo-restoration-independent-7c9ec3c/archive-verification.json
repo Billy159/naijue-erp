@@ -1,0 +1,221 @@
+{
+  "purpose": "Archive integrity and source-provenance verification only; no new tests, builds, browser, source edits or acceptance run.",
+  "archivedAtUtc": "2026-10-21T01:32:55.770159+00:00",
+  "exactEvidenceCommit": "7c9ec3cc17ac4f89d8152d9317558c7cd8afb383",
+  "observedCurrentHeadAtArchive": "6561d835c1b9f841f43149d1ef143a148e307e98",
+  "independentSourceEvidenceChecksums": {
+    "entries": 13,
+    "matched": 13
+  },
+  "sourceManifestChecks": [
+    {
+      "label": "preview-consumed-inputs",
+      "sourceManifest": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/source-inputs.sha256",
+      "manifestSha256": "510c09d55047736d11b0745bddb4bfb552f23c80e3cae193070e50858a98f1dc",
+      "entries": 83,
+      "exactCommitMatched": 83,
+      "currentWorkingTreeMatched": 83,
+      "currentWorkingTreeMismatches": []
+    },
+    {
+      "label": "preview-tool-inputs",
+      "sourceManifest": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/preview-source.sha256",
+      "manifestSha256": "436e95b1bb5d0bccb025c387d51f6e7122b1403715b70cb02468331bee5006f9",
+      "entries": 12,
+      "exactCommitMatched": 12,
+      "currentWorkingTreeMatched": 12,
+      "currentWorkingTreeMismatches": []
+    },
+    {
+      "label": "frozen-checkpoint-inputs",
+      "sourceManifest": "/workspace/shared/naijue-erp-rewrite/evidence/demo-restoration-checkpoint-20261021/source-before.sha256",
+      "manifestSha256": "fdc07bfcb8bc857f8081f12bc57b0e1047290f16ade4676d0387dc91a4c7431d",
+      "entries": 51,
+      "exactCommitMatched": 51,
+      "currentWorkingTreeMatched": 50,
+      "currentWorkingTreeMismatches": [
+        {
+          "file": "apps/web/tests/run-bundle-smoke.mjs",
+          "exactCheckpointSha256": "43292918b2b3732045e1e9e897be1b3c12c350537c3c9bb0f2734e4cb0981061",
+          "currentSha256": "b75c4101d9d3ca3f55d6fa6449c51360572303100e014ea51621fa2ebe0760aa"
+        }
+      ]
+    },
+    {
+      "label": "independent-runtime-inputs",
+      "sourceManifest": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/reviewed-runtime.sha256",
+      "manifestSha256": "47c4c6b5af9d96082cb55a999ce0c7e10d1f584084f0c1f478fff56440efbb2a",
+      "entries": 24,
+      "exactCommitMatched": 24,
+      "currentWorkingTreeMatched": 24,
+      "currentWorkingTreeMismatches": []
+    }
+  ],
+  "dependencyDeclarationsMatchedCurrentAndExactCommit": [
+    "package.json",
+    "package-lock.json"
+  ],
+  "preview": {
+    "status": "PASS",
+    "buildExitCode": 0,
+    "smokeExitCode": 0,
+    "bundledDomGroups": 8,
+    "htmlVerifiedNotCopied": {
+      "sha256": "90b4a11a14f4b12bae564424435aab34da4767de574a027992fb802ba68efb1a",
+      "bytes": 1387214,
+      "deliveredLibraryFileId": "libfile_1b1839994d748191bfc8772775541582"
+    },
+    "sourceSnapshotSha256": "510c09d55047736d11b0745bddb4bfb552f23c80e3cae193070e50858a98f1dc"
+  },
+  "aggregateGate": {
+    "archivedReviewOriginalStatus": "Root aggregate check pending when the independent review was finalized.",
+    "laterCoordinatorReport": "Root full aggregate failed the stale old single-page negative-cell test. A separate owner test-only fix is distinct from exact-7c9ec3c evidence.",
+    "basis": "Parent coordinator handoff; no aggregate result log included in the supplied archive sources.",
+    "noAggregatePassClaim": true
+  },
+  "boundaries": [
+    "Independent model/build/synthetic DOM and 8 bundled-code JSDOM groups only.",
+    "Not real-browser, pixel/screenshot/computed-layout, performance, real-data, production-network or business acceptance.",
+    "No HTML, screenshots, node_modules, runtime, dist, huge metafile or generated execution output directories copied."
+  ],
+  "copiedSourceFiles": [
+    {
+      "archiveFile": "independent/review.md",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/review.md",
+      "bytes": 7809,
+      "sha256": "1fdc6dadbdf4a2779bc66b789225ed87ee22a178a2af64ac4328a9c101ec27f7"
+    },
+    {
+      "archiveFile": "independent/projection-invariants.ts",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/projection-invariants.ts",
+      "bytes": 4476,
+      "sha256": "9ef7ace876704993f4eedc197fbdc6cf3000687c61ebd30a8802ad8ab2cb67e7"
+    },
+    {
+      "archiveFile": "independent/projection-invariants.log",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/projection-invariants.log",
+      "bytes": 301,
+      "sha256": "d9d1d84528932fae50e6d4226d3692cf6ba70224a417f50cca60154b27d1366e"
+    },
+    {
+      "archiveFile": "independent/split-graph.mjs",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/split-graph.mjs",
+      "bytes": 6074,
+      "sha256": "89fae0034fc5cf4d3327cfdf01739a354c9dc44c0368f4bb9a9950a130646ee8"
+    },
+    {
+      "archiveFile": "independent/split-graph.log",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/split-graph.log",
+      "bytes": 797,
+      "sha256": "fad73d28cd1a583e6877af4c48ba7c32a2eb451b0a94ccf69fd5669847fde4aa"
+    },
+    {
+      "archiveFile": "independent/split-graph.json",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/split-graph.json",
+      "bytes": 28171,
+      "sha256": "3afb91284a29d9b55b057c9be6ca01ec005d60f1f0a6d546335ecfff7051110c"
+    },
+    {
+      "archiveFile": "independent/reviewed-runtime.sha256",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/reviewed-runtime.sha256",
+      "bytes": 2614,
+      "sha256": "47c4c6b5af9d96082cb55a999ce0c7e10d1f584084f0c1f478fff56440efbb2a"
+    },
+    {
+      "archiveFile": "independent/narrow-dom.mjs",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/narrow-dom.mjs",
+      "bytes": 6859,
+      "sha256": "34745404c3cb11e4cf3ca3fdffaf13dba409336c45728826c4f2a181193258c9"
+    },
+    {
+      "archiveFile": "independent/narrow-dom.log",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/narrow-dom.log",
+      "bytes": 981,
+      "sha256": "95f7ff9446c0a1b2d55b42bbb252e33e6f59c84d348f74fab5195edbac4ecf8c"
+    },
+    {
+      "archiveFile": "independent/unified-provenance.json",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/unified-provenance.json",
+      "bytes": 416,
+      "sha256": "eee2abb949613c6cdb731b73904cdb36dc10f1f3ca8d89eb2fd8c104f4674753"
+    },
+    {
+      "archiveFile": "independent/unified-before-check.log",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/unified-before-check.log",
+      "bytes": 2476,
+      "sha256": "0dc15c3fd98b6a670b8e3929b5afe2f9fb4ad3855d8818343d4c551424e844b7"
+    },
+    {
+      "archiveFile": "independent/unified-after-graph-check.log",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/unified-after-graph-check.log",
+      "bytes": 2476,
+      "sha256": "0dc15c3fd98b6a670b8e3929b5afe2f9fb4ad3855d8818343d4c551424e844b7"
+    },
+    {
+      "archiveFile": "independent/unified-after-dom-check.log",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/unified-after-dom-check.log",
+      "bytes": 2476,
+      "sha256": "0dc15c3fd98b6a670b8e3929b5afe2f9fb4ad3855d8818343d4c551424e844b7"
+    },
+    {
+      "archiveFile": "independent/SHA256SUMS",
+      "sourceFile": "/workspace/scratch/f6bee04e937b/evidence/demo-restoration-integration-20261021/SHA256SUMS",
+      "bytes": 1129,
+      "sha256": "d24fcd71190c5cf19a4aa3370271134078342b7f5b13e5840ec3482167e6690d"
+    },
+    {
+      "archiveFile": "preview/source-inputs.sha256",
+      "sourceFile": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/source-inputs.sha256",
+      "bytes": 8888,
+      "sha256": "510c09d55047736d11b0745bddb4bfb552f23c80e3cae193070e50858a98f1dc"
+    },
+    {
+      "archiveFile": "preview/preview-source.sha256",
+      "sourceFile": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/preview-source.sha256",
+      "bytes": 1292,
+      "sha256": "436e95b1bb5d0bccb025c387d51f6e7122b1403715b70cb02468331bee5006f9"
+    },
+    {
+      "archiveFile": "preview/verification.json",
+      "sourceFile": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/verification.json",
+      "bytes": 43085,
+      "sha256": "b9d21571fbad16d94695e0e026fc119825c7fe3837235a50210a2b8fc94a8664"
+    },
+    {
+      "archiveFile": "preview/final-provenance.json",
+      "sourceFile": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/final-provenance.json",
+      "bytes": 4899,
+      "sha256": "03f83bc7d32cdc2e09b9bd37e7f7b89c589ba8c19295bcbe95f9970b6c650ed3"
+    },
+    {
+      "archiveFile": "preview/final-provenance.log",
+      "sourceFile": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/final-provenance.log",
+      "bytes": 7559,
+      "sha256": "740c254c3ba2d7576a9aaf9a60a1f0fcd373e5734cdd47ef7ab6327d831287ba"
+    },
+    {
+      "archiveFile": "preview/build.log",
+      "sourceFile": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/build.log",
+      "bytes": 555,
+      "sha256": "58ba67644d55485893b604a0023ab8abe4418548018902056183130357e241d0"
+    },
+    {
+      "archiveFile": "preview/dom-smoke.log",
+      "sourceFile": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/7c9ec3cc17ac/dom-smoke.log",
+      "bytes": 1900,
+      "sha256": "5e71ae725402449d76ecb7a2ffe55324711ac577f00a997c9a93239241498639"
+    },
+    {
+      "archiveFile": "checkpoint/source-before.sha256",
+      "sourceFile": "/workspace/shared/naijue-erp-rewrite/evidence/demo-restoration-checkpoint-20261021/source-before.sha256",
+      "bytes": 5638,
+      "sha256": "fdc07bfcb8bc857f8081f12bc57b0e1047290f16ade4676d0387dc91a4c7431d"
+    },
+    {
+      "archiveFile": "checkpoint/scope.json",
+      "sourceFile": "/workspace/shared/naijue-erp-rewrite/evidence/demo-restoration-checkpoint-20261021/scope.json",
+      "bytes": 2885,
+      "sha256": "31ae54fdd6635235c96887b1c801a2ad6cbc20c67d84b7deff4301be420478ff"
+    }
+  ]
+}

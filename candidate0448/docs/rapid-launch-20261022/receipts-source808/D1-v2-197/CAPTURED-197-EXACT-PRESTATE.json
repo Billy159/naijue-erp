@@ -1,0 +1,1629 @@
+{
+  "originalReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/release-submission/release-receipts/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/original-key-result.json",
+    "bytes": 60922,
+    "sha256": "5abfee228c16a410b279b5de0a7cb14d8ea92eb7b2add4adbad2ba677186b603"
+  },
+  "identity": {
+    "database": "erp_rewrite_20261022_r1",
+    "oid": "1027659",
+    "role": "erp_rewrite_runtime_20261022",
+    "session_user": "erp_rewrite_runtime_20261022",
+    "server_address": null,
+    "server_port": null,
+    "postmaster_start": "2026-10-04 08:16:07.895273+00",
+    "readonly": "on"
+  },
+  "tables": [
+    {
+      "name": "history_sales_header",
+      "oid": "1028657",
+      "tableAcl": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022,erp_rewrite_runtime_20261022=r/erp_rewrite_owner_20261022}",
+      "columns": [
+        {
+          "name": "id",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "UPDATE",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "source_row_id",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "batch_id",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "version",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "number",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "business_date",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "source_status",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "note",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "created_by_source_key",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "approved_by_source_key",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "created_hall_id",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "created_hall_provenance",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "created_hall_reason",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "created_local_at",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "updated_local_at",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "approved_local_at",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "created_instant",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "updated_instant",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "approved_instant",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "business_type",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "hall_id",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "customer_id",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "warehouse_id",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "salesperson_id",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "gross_amount",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "order_discount",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "net_due",
+          "rawAcl": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        }
+      ],
+      "delta": {
+        "SELECT": [],
+        "INSERT": [],
+        "UPDATE": [
+          "id"
+        ]
+      }
+    },
+    {
+      "name": "history_sales_line",
+      "oid": "1028751",
+      "tableAcl": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022,erp_rewrite_runtime_20261022=r/erp_rewrite_owner_20261022}",
+      "columns": [
+        {
+          "name": "id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "UPDATE",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "source_row_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "batch_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "header_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "line_no",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "sku_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "quantity",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "product_code_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "product_name_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "color_name_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "fit_name_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "size_name_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "barcode_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "reference_price",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "deal_price",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "line_amount",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "allocated_discount",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "is_gift",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "pricing_method_source",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "discount_tenths",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "ordinary_zero_confirmed",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        }
+      ],
+      "delta": {
+        "SELECT": [],
+        "INSERT": [
+          "id",
+          "source_row_id",
+          "batch_id",
+          "header_id",
+          "line_no",
+          "sku_id",
+          "quantity",
+          "product_code_snapshot",
+          "product_name_snapshot",
+          "color_name_snapshot",
+          "fit_name_snapshot",
+          "size_name_snapshot",
+          "barcode_snapshot",
+          "reference_price",
+          "deal_price",
+          "line_amount",
+          "allocated_discount",
+          "is_gift",
+          "pricing_method_source",
+          "discount_tenths",
+          "ordinary_zero_confirmed"
+        ],
+        "UPDATE": [
+          "id"
+        ]
+      }
+    },
+    {
+      "name": "history_sales_settlement",
+      "oid": "1028815",
+      "tableAcl": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022,erp_rewrite_runtime_20261022=r/erp_rewrite_owner_20261022}",
+      "columns": [
+        {
+          "name": "id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "UPDATE",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "source_row_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "batch_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "header_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "line_no",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "payment_account_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "direction",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "amount",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "account_name_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "method_name_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "payment_method_id_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        }
+      ],
+      "delta": {
+        "SELECT": [],
+        "INSERT": [
+          "id",
+          "source_row_id",
+          "batch_id",
+          "header_id",
+          "line_no",
+          "payment_account_id",
+          "direction",
+          "amount",
+          "account_name_snapshot",
+          "method_name_snapshot",
+          "payment_method_id_snapshot"
+        ],
+        "UPDATE": [
+          "id"
+        ]
+      }
+    },
+    {
+      "name": "import_native_payment_binding",
+      "oid": "1029221",
+      "tableAcl": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+      "columns": [
+        {
+          "name": "batch_id",
+          "rawAcl": "{erp_rewrite_runtime_20261022=r/erp_rewrite_owner_20261022}",
+          "before": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "UPDATE",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "entity_type",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "source_key",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "source_row_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "native_payment_method_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "native_payment_account_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "native_hall_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "native_snapshot",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "evidence_fingerprint",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "validator_version",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "SELECT",
+              "grantable": false
+            }
+          ]
+        }
+      ],
+      "delta": {
+        "SELECT": [
+          "entity_type",
+          "source_key",
+          "source_row_id",
+          "native_payment_method_id",
+          "native_payment_account_id",
+          "native_hall_id",
+          "native_snapshot",
+          "evidence_fingerprint",
+          "validator_version"
+        ],
+        "INSERT": [
+          "batch_id",
+          "entity_type",
+          "source_key",
+          "source_row_id",
+          "native_payment_method_id",
+          "native_payment_account_id",
+          "native_hall_id",
+          "native_snapshot",
+          "evidence_fingerprint",
+          "validator_version"
+        ],
+        "UPDATE": [
+          "batch_id"
+        ]
+      }
+    },
+    {
+      "name": "payment_account",
+      "oid": "1027896",
+      "tableAcl": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022,erp_rewrite_runtime_20261022=r/erp_rewrite_owner_20261022}",
+      "columns": [
+        {
+          "name": "id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "UPDATE",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "name",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "payment_method_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "enabled",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "version",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        }
+      ],
+      "delta": {
+        "SELECT": [],
+        "INSERT": [
+          "id",
+          "name",
+          "payment_method_id",
+          "enabled",
+          "version"
+        ],
+        "UPDATE": [
+          "id"
+        ]
+      }
+    },
+    {
+      "name": "payment_account_hall",
+      "oid": "1027909",
+      "tableAcl": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022,erp_rewrite_runtime_20261022=r/erp_rewrite_owner_20261022}",
+      "columns": [
+        {
+          "name": "payment_account_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "UPDATE",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "hall_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        }
+      ],
+      "delta": {
+        "SELECT": [],
+        "INSERT": [
+          "payment_account_id",
+          "hall_id"
+        ],
+        "UPDATE": [
+          "payment_account_id"
+        ]
+      }
+    },
+    {
+      "name": "payment_method",
+      "oid": "1027888",
+      "tableAcl": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022,erp_rewrite_runtime_20261022=r/erp_rewrite_owner_20261022}",
+      "columns": [
+        {
+          "name": "id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "UPDATE",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "name",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "enabled",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "version",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        }
+      ],
+      "delta": {
+        "SELECT": [],
+        "INSERT": [
+          "id",
+          "name",
+          "enabled",
+          "version"
+        ],
+        "UPDATE": [
+          "id"
+        ]
+      }
+    },
+    {
+      "name": "sku_barcode",
+      "oid": "1028575",
+      "tableAcl": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022,erp_rewrite_runtime_20261022=r/erp_rewrite_owner_20261022}",
+      "columns": [
+        {
+          "name": "id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            },
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "UPDATE",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "barcode",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "sku_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "barcode_kind",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "scheme_id",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        },
+        {
+          "name": "enabled",
+          "rawAcl": null,
+          "before": [],
+          "after": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "privilege": "INSERT",
+              "grantable": false
+            }
+          ]
+        }
+      ],
+      "delta": {
+        "SELECT": [],
+        "INSERT": [
+          "id",
+          "barcode",
+          "sku_id",
+          "barcode_kind",
+          "scheme_id",
+          "enabled"
+        ],
+        "UPDATE": [
+          "id"
+        ]
+      }
+    }
+  ]
+}

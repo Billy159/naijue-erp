@@ -1,0 +1,15 @@
+{
+  "parentCommit": "231e53bbae1e161bec0da913c576637a348f885e",
+  "focusedTests": 49,
+  "scopedTypecheck": "PASS",
+  "scopedBuildImport": "PASS",
+  "review": "parent static scope review; no independent runtime rerun",
+  "missing": [
+    "PostgreSQL snapshot reader",
+    "baseline coverage/readiness persistence",
+    "production policy/reference facts",
+    "web transport and composition",
+    "inventory ledger query"
+  ],
+  "rollback": "revert source commit; no migrations or runtime activation"
+}

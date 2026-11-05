@@ -1,0 +1,13 @@
+{
+  "number": 1,
+  "commit": "3dd087b8072fc189837c8299f9ff54c9a1c76718",
+  "suite": "backend-0001-0008",
+  "source": "frozen-commit:3dd087b8072fc189837c8299f9ff54c9a1c76718",
+  "database": "naijue_erp_test_f76c53978c0c3a54",
+  "host": "127.0.0.1",
+  "port": 55432,
+  "code": 0,
+  "signal": null,
+  "logfile": "evidence/postgres-real-sales-write-authorization-3dd087b/acceptance.tap",
+  "sanitization": "Only machine-local source/log paths replaced; original selection/commit/target/exit fields retained."
+}

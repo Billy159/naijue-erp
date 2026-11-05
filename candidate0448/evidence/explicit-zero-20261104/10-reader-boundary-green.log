@@ -1,0 +1,19 @@
+✔ approved absent key has only a real approval line locator, whole snapshot binding and no inferred key (2.756397ms)
+✔ reject tampered pin, cutoff, nonzero, duplicates, unknown identity and listed stock (1.229628ms)
+✔ ordinary and full streaming require independent approval, compiler retains zero proof without ledger ID (471.511722ms)
+✔ proof tampering, transplanted rows, unpinned approval refs, extra approved keys and nonbaseline evidence fail closed (101.835581ms)
+✔ approval JSONL shares SQL 65536-byte raw-line limit and preserves owned bytes (5.839588ms)
+✔ SQL adapter uses fixed role boundaries and parameterized private secret without owning transaction (2.478266ms)
+✔ coordinator and SQL adapter use one client for provisional steps and one final commit (38.106534ms)
+✔ SQL adapter rejects duplicate response fields and invalid role acknowledgement (2.06941ms)
+✔ SQL kernel rejects a different client at every post-inspection stage before sending SQL (1.923754ms)
+✔ SQL kernel binds its initial client before awaiting role acknowledgment (0.739492ms)
+✔ zero-approval descriptor cannot cross SQL adapter without independent verified token (0.420236ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1001.773659

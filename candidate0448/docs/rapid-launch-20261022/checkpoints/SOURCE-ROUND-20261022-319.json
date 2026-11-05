@@ -1,0 +1,20 @@
+{
+  "atUtc": "2026-10-24T12:47:42.327368+00:00",
+  "parent": "831b0417bba081b0d965096f40b6e1d622709e8f",
+  "taskId": "F3_STAFF_UNKNOWN_ACCOUNT_DISPLAY",
+  "files": [
+    {
+      "path": "apps/web/src/staff-settings/staff-page.tsx",
+      "owner": "F3",
+      "bytes": 16412,
+      "sha256": "fed6a6c9f9894fd93dcc0d759d0a5436822b3b3356295e4a8a61d4212a130de0"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-account-frozen-page-v1/NULL-ACCOUNT-DISPLAY-20261024.json",
+  "ownerReceiptBytes": 1013,
+  "ownerReceiptSha256": "0edecb8faa2c322ab0114ba29efdebccb1376e05376164bdadf324b298724795",
+  "ownerSourceReleased": true,
+  "stage": "SOURCE_EXACT1_TRI_STATE_COMPONENT_AND_TYPES_PASS_NOT_BROWSER",
+  "wholePageAccepted": false,
+  "deployed": false
+}

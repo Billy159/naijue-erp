@@ -1,0 +1,15 @@
+✔ explicit versioned two-function ACL reduction precedes strict restoration gate (29.828216ms)
+✔ companion refuses non-default ACL and metadata drift; revokes PUBLIC only and preserves all nonACL metadata (3.162763ms)
+✔ historical reception installs zero archive before final exact verifier and keeps old sales composition intact (20.282055ms)
+✔ all five successor bodies remain exact, once, in dependency order under one transaction (1.327246ms)
+✔ access verifier changes only profile-command pin beyond the prior closure pin; permissions are identical (1.240471ms)
+✔ exact chain proposals never claim installation or runtime admission (0.233958ms)
+✔ every additional exact source pin rejects byte drift, missing or unexpected inputs (22.193878ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 266.883816

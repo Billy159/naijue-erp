@@ -1,0 +1,1 @@
+{"extends":"../tsconfig.json","include":["../packages/application/src/import-v3-history-settlement.ts","../adapters/postgres/src/import-v3-history-settlement-staging-store.ts","history-settlement*.test.ts","support/history-settlement-fixtures.ts"]}

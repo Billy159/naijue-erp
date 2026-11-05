@@ -1,0 +1,10 @@
+{"scope":"SYNTHETIC_APPROVAL_COMPILER_ONLY","rows":105433,"approval_bytes":42272961,"descriptor_bytes":412,"max_record_bytes":2202,"proof_depth":17,"peak_rss_kib":563912}
+✔ 105433 approved keys retain bounded INIT and bounded per-row proofs without inventing inventory locators (8548.064357ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9237.682114

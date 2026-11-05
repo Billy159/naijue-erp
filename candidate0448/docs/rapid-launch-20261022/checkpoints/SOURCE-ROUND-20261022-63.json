@@ -1,0 +1,41 @@
+{
+  "atUtc": "2026-10-22T20:00:49.131992+00:00",
+  "parent": "0bc99573c606ef30c17dd8689ed06239c14a4fd9",
+  "groups": [
+    {
+      "slice": "F1_CAT02_EXISTING_VIEWPORT_OPT_IN",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-40/DELIVERY.json",
+      "receiptSha256": "f671bfa40058b013c4648f24f1bd07066fad4a84ca70773665bfd49478f1b4f4",
+      "receiptSnapshot": {
+        "chunk": 40,
+        "status": "READY_FOR_C_PIN",
+        "scope": "CAT02 shared shell viewport opt-in",
+        "files": [
+          {
+            "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+            "sha256": "b01a9f78997b7caf7efc662a4bf04582ea61ee8160746db5007a4ec8fb5b48d2"
+          }
+        ],
+        "change": "Existing demo-frame-viewport condition now includes selected product-settings, alongside unchanged settings/stores. Reuses existing 100dvh/topbar/inner scroll frame CSS; no body or leaf/style change.",
+        "checks": {
+          "types-1.log": "exit0"
+        },
+        "notTested": [
+          "actual candidate CAT02 page scrolling and F2 tabs/table"
+        ],
+        "blockers": [],
+        "next": "C exact pin; F2 leaf continues; Demo verifies only new shell scrolling scope"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+          "sha256": "b01a9f78997b7caf7efc662a4bf04582ea61ee8160746db5007a4ec8fb5b48d2",
+          "owner": "F1",
+          "bytes": 4192
+        }
+      ]
+    }
+  ],
+  "fileCount": 1,
+  "scope": "One existing viewport opt-in; product-settings only plus preserved stores. No global CSS/new architecture/browser pass."
+}

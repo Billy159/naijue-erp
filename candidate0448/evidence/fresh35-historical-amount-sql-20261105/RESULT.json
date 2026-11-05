@@ -1,0 +1,68 @@
+{
+  "status": "SOURCE_CANDIDATE_ONLY",
+  "tests": {
+    "red": {
+      "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/fresh35-historical-amount-candidate.test.mjs",
+      "exitCode": 1,
+      "passed": 0,
+      "failed": 3,
+      "log": "01-red.log"
+    },
+    "finalRelatedRegression": {
+      "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/fresh35-historical-amount-candidate.test.mjs tests/historical-line-amount-evidence.test.mjs tests/fresh35-sales-hall-candidate.test.mjs",
+      "exitCode": 0,
+      "passed": 33,
+      "failed": 0,
+      "log": "10-restoration-final-regressions.log"
+    },
+    "restorationRed": {
+      "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test --test-name-pattern='new-profile empty-settlement' tests/fresh35-historical-amount-candidate.test.mjs",
+      "exitCode": 1,
+      "passed": 0,
+      "failed": 1,
+      "log": "07-restoration-red.log"
+    },
+    "restorationFocusedGreen": {
+      "exitCode": 0,
+      "passed": 1,
+      "failed": 0,
+      "log": "08-restoration-green.log",
+      "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test --test-name-pattern='new-profile empty-settlement' tests/fresh35-historical-amount-candidate.test.mjs"
+    }
+  },
+  "node": "24.21.0",
+  "tableCount": 35,
+  "routineCount": 152,
+  "newTables": 0,
+  "newColumns": 0,
+  "newRoutines": 0,
+  "permissionsChanged": false,
+  "databaseConnectionsOpened": 0,
+  "sqlParserRun": false,
+  "engineVerified": false,
+  "installationReady": false,
+  "realSixSourceRowsInspected": false,
+  "realSixSourceRowsFabricated": false,
+  "fullProjectTestsRunByThisWorker": false,
+  "sourceFiles": [
+    {
+      "path": "adapters/postgres/patches/0035_historical_line_amount_successor.sql",
+      "sha256": "862a5ae663356e3478bbc49a429c1552033d38be2a057f7c0d436590c0d0c067"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs",
+      "sha256": "dde263297bf995f5964237fa9a6a943c7b5dbc0d7278be45d03c26e9de6a45c6"
+    },
+    {
+      "path": "tests/fresh35-historical-amount-candidate.test.mjs",
+      "sha256": "1c7ccff3e57fcb2a97689359adf2ee27f8cbf3c309927c753311995af37b5536"
+    },
+    {
+      "path": "docs/fresh35-historical-line-amount-sql-20261105.md",
+      "sha256": "39d398c6ea0fbba33dda714679008d31e577006f3d55b1559f5b789fe31b9514"
+    }
+  ],
+  "openFindings": [
+    "OLD_PROFILE_ZERO_OR_ARCHIVE_RESTORATION_HASH_OMISSION_SOURCE_PATH_CONFIRMED_ENGINE_REPRODUCTION_PENDING"
+  ]
+}

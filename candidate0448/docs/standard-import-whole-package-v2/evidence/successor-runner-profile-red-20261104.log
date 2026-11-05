@@ -1,0 +1,32 @@
+✔ direct COMMIT acceptance cases register without invoking setup or database work (143.633189ms)
+✔ real-client runner never substitutes finish, constraint forcing or synthetic SQL replies for direct COMMIT (9.594336ms)
+✔ no target binding or non-synthetic target is rejected before registration (0.98633ms)
+✔ physical target uses PostgreSQL host normalization rather than CIDR text (1.567679ms)
+✔ loopback aliases cannot admit the same physical database twice (0.750725ms)
+✔ one explicitly selected case can use one independently installed trusted target record (0.581999ms)
+✔ exclusive-client and no-admin-change window acknowledgment is required before registration (1.148591ms)
+✖ successor admission selection is a fixed enum, not a callback or approval boolean (1.199204ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 285.74713
+
+✖ failing tests:
+
+test at tests/whole-package-direct-commit-runner.test.mjs:58:1
+✖ successor admission selection is a fixed enum, not a callback or approval boolean (1.199204ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-direct-commit-runner.test.mjs:61:65)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /ACCEPTANCE_CATALOG_PROFILE_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }

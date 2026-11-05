@@ -1,0 +1,23 @@
+2026-10-20 UTC verification observation, retained rather than hidden by rerun:
+
+Initial completed verification: 28/28 unit groups, 7/7 behavioral DOM groups,
+dynamic-leaf build check and scoped strict TypeScript all passed.
+
+After an additional immutable-executed-range regression test, the repeated unit
+suite completed 29 tests with 27 pass and 2 test timing failures, in 186,605 ms.
+The shared machine was under heavy concurrent CPU load. Observed failures:
+- The 2 ms blocked-microtask timeout test expected write outcome uncertain, but
+  request expired before fetch dispatch and correctly reported not-sent.
+- The 65,536-zero-byte real WebStream chunk probe took 183,665 ms and reached the
+  production 120,000 ms deadline first. It reported timeout/read, not the test's
+  expected malformed-response/RESPONSE_TOO_LARGE.
+
+These observations did not demonstrate a production timeout/uncertainty bug.
+They did demonstrate brittle scheduling assumptions in those tests. Correction
+must use controlled monotonic/timer progression and a cheap synthetic reader for
+chunk-count boundaries, not suppress tests or merely increase short deadlines.
+Separate bounded stalled-body and real cancellation/byte-limit coverage remains.
+
+The unit suite exit1 stopped the chained DOM/build/type command before those
+later checks ran. No final-pass claim should use that incomplete chain. Updated
+standalone final logs and result.json will state final status explicitly.

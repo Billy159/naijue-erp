@@ -1,0 +1,48 @@
+{
+  "atUtc": "2026-10-23T18:05:27.896234+00:00",
+  "parent": "ad345a51e0f35a42ff987b8f3e446506a9167647",
+  "taskId": "F01_DOC184_SALE_SPEC_NATIVE_CLASS_REPAIR",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 53499,
+      "sha256": "df596b2b929aa2f70a8dd645d139d5860c26055af9f0d7e8c23f6508e6a6b7b4",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-95/DELIVERY.json",
+  "ownerReceiptSha256": "ded4ce331c348d98c82dc61e13a2d1df9afd0a8da1b31aa0cc4f3786aa1cc4ca",
+  "ownerDelivery": {
+    "status": "SOURCE_READY_TARGETED_CONSUMER_ONLY",
+    "defect": "DOC-184-SALE-SPEC-CLASS-01",
+    "cause": "Installed Arco 2.66.16 Trigger.getChild wraps a disabled native button, moves className to span, clears native button className. Original candidate JSX was correct; reproduction before change fails exact native leaf class.",
+    "change": "Local ref-forwarding native button leaf passes original DOM props/children/disabled/events/ref, so original Arco Trigger keeps source native button classes and does not generate disabled span. No CSS/dependency/shared-control change.",
+    "checks": {
+      "before-1": "RED exact original class loss",
+      "after-1": "PASS disabled empty3/active color-fit-size pointer+keyboard/selection/native node ref/focus Escape and rerender",
+      "types-1": "PASS strict complete imported closure exact one source root include[]"
+    },
+    "actualRecheck": [
+      "SALE new empty3 disabled native button computed original class+arrow/style versus Demo",
+      "New/previous saved unreviewed same SalesProposalForm: enabled original spec pointer, Enter/selection/Escape focus affected only"
+    ],
+    "limitations": [
+      "No actual Chrome pass",
+      "No whole-page/integration build/SAVE/PG/deployment pass",
+      "Arco React19 ref warnings retained"
+    ],
+    "files": [
+      {
+        "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+        "bytes": 53499,
+        "sha256": "df596b2b929aa2f70a8dd645d139d5860c26055af9f0d7e8c23f6508e6a6b7b4"
+      }
+    ],
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "evidenceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-95",
+    "sourceFrozenUntilCPin": true,
+    "next": "Resume deferred v11 frontend same-SAVE transport next chunk96, no same-file concurrency; C/QF own actual candidate/browser."
+  },
+  "qualification": "SOURCE_FIXED_OWNER_TARGETED_REPRO_ONLY. Actual QF184 paired classloss preserved, newimmutable196 runtime required for minimal affected native empty3 and enabled pointer/key/Esc. No wholepage/SAVE/PG/performance/release accepted."
+}

@@ -1,0 +1,7 @@
+aaab741db40d3667738e841d7582e510ff6c8762c369e469cd58a7b4352a9808 tests/integration/database.ts unchanged from 60457e0
+a2488d99b04d5eb4ee1a59efdf7429b88669032c41783e359dcf823972188468 tests/integration/safety.ts unchanged from 60457e0
+e1039f3bd90928a6d8306303725f94bf1c92332fee39cf8fedfb2877e854d5e0 scripts/run-postgres-integration.mjs unchanged from 60457e0
+ae67fd823d5c4ebc77fccc4cd21497577ee91146cdb14079d0717f06e00597e5 tests/integration/backend-acceptance.ts unchanged from 60457e0
+8a11561cf39c9ef850cf9514cbf4d9350b8171d1ab6f9074de85d3a75a143dff tests/integration/http-read-acceptance.ts unchanged from 60457e0
+5ea8f860860f5cd2a7fe565fadd8116cc34b7477a1e52aa0333d0d8add8e3a91 tests/integration/native-http-read-acceptance.ts unchanged from 60457e0
+PLAN_ONLY: backend 24 scenario labels + existing parent/setup = intended 26 total tests; actual engine not run.

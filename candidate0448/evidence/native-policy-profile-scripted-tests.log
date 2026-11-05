@@ -1,0 +1,32 @@
+✔ SYNTHETIC composition: one lazy owned pool, 19 native auth/read routes, no business writes/listener (250.30121ms)
+✔ SYNTHETIC composition: explicit origin/policy/media and bounded configuration fail closed (2.466719ms)
+✔ SYNTHETIC native profile: closed host selection rejects unknown/mixed shapes before driver allocation (15.627777ms)
+✔ SYNTHETIC native profile: one lazy pool creates genuine read policies and the canonical transfer policy (45.028646ms)
+✔ SYNTHETIC native profile: current trusted ADMIN/WAREHOUSE versus salesperson role and hall map to source scopes (29.554561ms)
+✔ SYNTHETIC native profile: fresh identity denial cannot fall back to authenticated or requested grants (27.119136ms)
+✔ SYNTHETIC native profile: host choice captures without mutating caller authentication or external providers (10.36712ms)
+✔ SYNTHETIC native profile: policy storage failure is sanitized, cleans its lease and leaves siblings usable (11.7533ms)
+✔ SYNTHETIC native profile: abort during native identity query stops later policy/reader work, not sibling requests (14.56273ms)
+✔ SYNTHETIC composition: failed authentication-policy construction cleans its pool without a connection (10.268998ms)
+✔ SYNTHETIC composition: real Node scrypt login/store/session/logout wiring never exposes token in JSON (364.357045ms)
+✔ SYNTHETIC composition: all read families resolve the same current PG session; native adapters retain isolated failures (35.201341ms)
+✔ SYNTHETIC composition: missing/stale/cross-site credentials cannot reach policies or business SQL (22.749835ms)
+✔ SYNTHETIC composition: hall policy is mandatory, denied inventory/ledger and product reads do not obtain business leases (36.786554ms)
+✔ SYNTHETIC composition: sanitized provider failures remain local to their read plugin (11.78557ms)
+✔ SYNTHETIC composition: explicit raw aborted event in a pending policy does not cancel a sibling read (9.624239ms)
+✔ SYNTHETIC composition: caller method replacement cannot widen captured policy after construction (7.351114ms)
+✔ SYNTHETIC composition: pool disposal errors reject shutdown and never repeat driver end (25.551858ms)
+✔ SYNTHETIC composition source: no ambient configuration, startup, migration or business command registration (1.048762ms)
+✔ SYNTHETIC transfer session: current authenticated role/hall maps to exact canonical read scope, not request headers (4.048662ms)
+✔ SYNTHETIC transfer session: cookie-only exact HTTPS Origin checks reject credentials before storage (1.008559ms)
+✔ SYNTHETIC transfer session: no role fallback, stale session or hall-less salesperson identity (1.320203ms)
+✔ SYNTHETIC transfer session: explicit trusted configuration and provider failures are not hidden (1.160534ms)
+✔ SYNTHETIC transfer session: caller mutation cannot replace captured HTTPS origin or trusted resolver (0.744953ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2105.935086

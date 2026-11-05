@@ -1,0 +1,1060 @@
+{
+  "schemaVersion": 1,
+  "taskId": "C00-DEMO-REFERENCE-PACK",
+  "createdAtUtc": "2026-10-22T04:41:55.247608+00:00",
+  "purpose": "Distributable reference subset, not runnable Demo or production artifact",
+  "source": {
+    "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+    "tagConvention": "8877-final-baseline",
+    "readMethod": "git show <frozenCommit>:<sourcePath>",
+    "sourceRootLocal": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo"
+  },
+  "whitelistReuse": {
+    "F1DirectoryExistedAtInitialCheck": false,
+    "F1WhitelistReused": false
+  },
+  "counts": {
+    "verbatimCss": 28,
+    "verbatimComponents": 7,
+    "excerptDocuments": 11,
+    "screenshots": 0,
+    "sourceDerivedFiles": 46
+  },
+  "entries": [
+    {
+      "sourcePath": "frontend/basic-settings-v2.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 4027,
+      "sourceSha256": "92f519c978f94fdefed31f513f3279f01a5d40705fff51b8f76cba2265f31393",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          47
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/basic-settings-v2.css",
+        "bytes": 4027,
+        "sha256": "92f519c978f94fdefed31f513f3279f01a5d40705fff51b8f76cba2265f31393"
+      }
+    },
+    {
+      "sourcePath": "frontend/basic-settings.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 8645,
+      "sourceSha256": "8fb9a6e95820ecd4d1a1bfdd2c9f642d1e565001d79600f72e7908535fd1b971",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          26
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/basic-settings.css",
+        "bytes": 8645,
+        "sha256": "8fb9a6e95820ecd4d1a1bfdd2c9f642d1e565001d79600f72e7908535fd1b971"
+      }
+    },
+    {
+      "sourcePath": "frontend/brand-components.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 5264,
+      "sourceSha256": "6d110ad03e052a1eacc303b5cb6670a4c24c9ff1888232dba06bf72c0e18211f",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          75
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/brand-components.css",
+        "bytes": 5264,
+        "sha256": "6d110ad03e052a1eacc303b5cb6670a4c24c9ff1888232dba06bf72c0e18211f"
+      }
+    },
+    {
+      "sourcePath": "frontend/confirmation-dialogs.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 3601,
+      "sourceSha256": "ec94a66c9b4fb2ec808993bddb4943c1719cf82fc8104f90d492cee9bff4480d",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          86
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/confirmation-dialogs.css",
+        "bytes": 3601,
+        "sha256": "ec94a66c9b4fb2ec808993bddb4943c1719cf82fc8104f90d492cee9bff4480d"
+      }
+    },
+    {
+      "sourcePath": "frontend/entry-shared.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 3114,
+      "sourceSha256": "4e7ea9659db020b0b324821cde89a83f9bbac371c2742e43ec0204d8fd1c23d0",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          4
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/entry-shared.css",
+        "bytes": 3114,
+        "sha256": "4e7ea9659db020b0b324821cde89a83f9bbac371c2742e43ec0204d8fd1c23d0"
+      }
+    },
+    {
+      "sourcePath": "frontend/final-ui.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 3835,
+      "sourceSha256": "091f0855996134925b1c99a187977cfcd652210af8f447dd451bb38d27a154fa",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          8
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/final-ui.css",
+        "bytes": 3835,
+        "sha256": "091f0855996134925b1c99a187977cfcd652210af8f447dd451bb38d27a154fa"
+      }
+    },
+    {
+      "sourcePath": "frontend/gold.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 9164,
+      "sourceSha256": "6e5b7f4f2e39aae1e7d8c02f00cbfda5b545d7022b67704ba56e34c4e20cfbd5",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          128
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/gold.css",
+        "bytes": 9164,
+        "sha256": "6e5b7f4f2e39aae1e7d8c02f00cbfda5b545d7022b67704ba56e34c4e20cfbd5"
+      }
+    },
+    {
+      "sourcePath": "frontend/golden-consistency.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 36031,
+      "sourceSha256": "05cb997a5205ced67b8bba1df5e62f43529f67ef37bfd798439547f099888b22",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          230
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/golden-consistency.css",
+        "bytes": 36031,
+        "sha256": "05cb997a5205ced67b8bba1df5e62f43529f67ef37bfd798439547f099888b22"
+      }
+    },
+    {
+      "sourcePath": "frontend/interaction-common.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 5993,
+      "sourceSha256": "b293a8574187a2e92901389ede4a90da9c2b6eea941da2db62e0eac6a5584c81",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          14
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/interaction-common.css",
+        "bytes": 5993,
+        "sha256": "b293a8574187a2e92901389ede4a90da9c2b6eea941da2db62e0eac6a5584c81"
+      }
+    },
+    {
+      "sourcePath": "frontend/inventory-ledger.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 3229,
+      "sourceSha256": "f1756517f14b72ff38bd59e4080119de10e5e20696740e59d3c30c4a80e2b8ef",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          32
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/inventory-ledger.css",
+        "bytes": 3229,
+        "sha256": "f1756517f14b72ff38bd59e4080119de10e5e20696740e59d3c30c4a80e2b8ef"
+      }
+    },
+    {
+      "sourcePath": "frontend/inventory-refinement.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 11467,
+      "sourceSha256": "d054a7f141d0421936f8969724a5398e4cf76e26db9aa64bc8727eea7fdefce1",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          79
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/inventory-refinement.css",
+        "bytes": 11467,
+        "sha256": "d054a7f141d0421936f8969724a5398e4cf76e26db9aa64bc8727eea7fdefce1"
+      }
+    },
+    {
+      "sourcePath": "frontend/inventory-workbench.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 19393,
+      "sourceSha256": "150b34257f18bee7143c6261258560e2a8e02db6d05cfa1e50a82012e7eb9dca",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          120
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/inventory-workbench.css",
+        "bytes": 19393,
+        "sha256": "150b34257f18bee7143c6261258560e2a8e02db6d05cfa1e50a82012e7eb9dca"
+      }
+    },
+    {
+      "sourcePath": "frontend/matrix-experiments.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 6055,
+      "sourceSha256": "5f0a2b33b06001260d6f1e97e7290de94de9c8b05a6311c63c39b9c3a3d76f7f",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          31
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/matrix-experiments.css",
+        "bytes": 6055,
+        "sha256": "5f0a2b33b06001260d6f1e97e7290de94de9c8b05a6311c63c39b9c3a3d76f7f"
+      }
+    },
+    {
+      "sourcePath": "frontend/product-current.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 13031,
+      "sourceSha256": "b83ee2ee419f6076274fc06280d672194202809a71b529a19a7989659ec2364a",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          54
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/product-current.css",
+        "bytes": 13031,
+        "sha256": "b83ee2ee419f6076274fc06280d672194202809a71b529a19a7989659ec2364a"
+      }
+    },
+    {
+      "sourcePath": "frontend/product-inventory-unified.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 11556,
+      "sourceSha256": "645ae0acece1b438cb04b8e8b642a539f85ec506d2b72d079f02ca4de6ed0da0",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          106
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/product-inventory-unified.css",
+        "bytes": 11556,
+        "sha256": "645ae0acece1b438cb04b8e8b642a539f85ec506d2b72d079f02ca4de6ed0da0"
+      }
+    },
+    {
+      "sourcePath": "frontend/product-refinement.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 2061,
+      "sourceSha256": "499718314b8e479d5eff5e3d5c4d1f50230a95507b30f01e6a86aa2712f7565a",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          14
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/product-refinement.css",
+        "bytes": 2061,
+        "sha256": "499718314b8e479d5eff5e3d5c4d1f50230a95507b30f01e6a86aa2712f7565a"
+      }
+    },
+    {
+      "sourcePath": "frontend/product-rework.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 17034,
+      "sourceSha256": "40d9ce96db6cfc4d6a1e4c531144a05f10a5e44df64073e2a9441468872d0254",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          114
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/product-rework.css",
+        "bytes": 17034,
+        "sha256": "40d9ce96db6cfc4d6a1e4c531144a05f10a5e44df64073e2a9441468872d0254"
+      }
+    },
+    {
+      "sourcePath": "frontend/sales-current.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 17234,
+      "sourceSha256": "f21cc2f3f6b670d8bc96902ae659aa5ee6c54a3384cd3f9b8912498a15fcd2fd",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          45
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/sales-current.css",
+        "bytes": 17234,
+        "sha256": "f21cc2f3f6b670d8bc96902ae659aa5ee6c54a3384cd3f9b8912498a15fcd2fd"
+      }
+    },
+    {
+      "sourcePath": "frontend/sales-detail-alignment.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 14206,
+      "sourceSha256": "8b903028a1fd91407347f71d63bd7cc3a891df66c84d7e179647475847ef833b",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          363
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/sales-detail-alignment.css",
+        "bytes": 14206,
+        "sha256": "8b903028a1fd91407347f71d63bd7cc3a891df66c84d7e179647475847ef833b"
+      }
+    },
+    {
+      "sourcePath": "frontend/sales-golden.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 14186,
+      "sourceSha256": "51ba8658fd8c7b7eb270b62c0ddef6f335d37163290f711fa10c950f19b9a04f",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          399
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/sales-golden.css",
+        "bytes": 14186,
+        "sha256": "51ba8658fd8c7b7eb270b62c0ddef6f335d37163290f711fa10c950f19b9a04f"
+      }
+    },
+    {
+      "sourcePath": "frontend/sales-refinement.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 9949,
+      "sourceSha256": "61016985258cc56c40d7f75dbd7b016e06619abef92e6a6488d86189fbface8b",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          108
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/sales-refinement.css",
+        "bytes": 9949,
+        "sha256": "61016985258cc56c40d7f75dbd7b016e06619abef92e6a6488d86189fbface8b"
+      }
+    },
+    {
+      "sourcePath": "frontend/sales-returns.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 3401,
+      "sourceSha256": "c03d8943e727649ab6eb6fda8e8ce2c07dabd9baad781312bdc48fe29afbd0a4",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          6
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/sales-returns.css",
+        "bytes": 3401,
+        "sha256": "c03d8943e727649ab6eb6fda8e8ce2c07dabd9baad781312bdc48fe29afbd0a4"
+      }
+    },
+    {
+      "sourcePath": "frontend/styles.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 15498,
+      "sourceSha256": "c1cff2e1e5d9494c901b84b2b3f386a0cbf292687026e86c47bfde37baa0d3e5",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          196
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/styles.css",
+        "bytes": 15498,
+        "sha256": "c1cff2e1e5d9494c901b84b2b3f386a0cbf292687026e86c47bfde37baa0d3e5"
+      }
+    },
+    {
+      "sourcePath": "frontend/transfer-current.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 17318,
+      "sourceSha256": "5f36c1b79afdabf6daf9558f2408cd29e386b141038efc4b03a733afe322377e",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          83
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/transfer-current.css",
+        "bytes": 17318,
+        "sha256": "5f36c1b79afdabf6daf9558f2408cd29e386b141038efc4b03a733afe322377e"
+      }
+    },
+    {
+      "sourcePath": "frontend/transfer-scan-drawer.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 7536,
+      "sourceSha256": "9da6f1d651ccd62c0c1e8464cf6888b7d1e7c2e0d1372213b0151eaf06309ebb",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          55
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/transfer-scan-drawer.css",
+        "bytes": 7536,
+        "sha256": "9da6f1d651ccd62c0c1e8464cf6888b7d1e7c2e0d1372213b0151eaf06309ebb"
+      }
+    },
+    {
+      "sourcePath": "frontend/ui-review.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 7266,
+      "sourceSha256": "087dfe16245092a6113977a2cca5c8ddcb229f890af06acd5915e3b483b5b64f",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          58
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/ui-review.css",
+        "bytes": 7266,
+        "sha256": "087dfe16245092a6113977a2cca5c8ddcb229f890af06acd5915e3b483b5b64f"
+      }
+    },
+    {
+      "sourcePath": "frontend/ui-tokens.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 5953,
+      "sourceSha256": "fdb91a2df6218a7a24081831cd4a104c2817fe9e399dcdf934273c1bb465979d",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          61
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/ui-tokens.css",
+        "bytes": 5953,
+        "sha256": "fdb91a2df6218a7a24081831cd4a104c2817fe9e399dcdf934273c1bb465979d"
+      }
+    },
+    {
+      "sourcePath": "frontend/unified-single-select.css",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 3130,
+      "sourceSha256": "4ac7bf75f5a3f0e8dcb0d32dd508ced577e6ea435af2d6ff063341cb05314403",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          22
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/unified-single-select.css",
+        "bytes": 3130,
+        "sha256": "4ac7bf75f5a3f0e8dcb0d32dd508ced577e6ea435af2d6ff063341cb05314403"
+      }
+    },
+    {
+      "sourcePath": "frontend/unified-single-select.jsx",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 16042,
+      "sourceSha256": "0551d20e63ee3e50e214ee4137b6b4a7fa98b0eb441dd51cea32e01e434dd43d",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          201
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/unified-single-select.jsx",
+        "bytes": 16042,
+        "sha256": "0551d20e63ee3e50e214ee4137b6b4a7fa98b0eb441dd51cea32e01e434dd43d"
+      }
+    },
+    {
+      "sourcePath": "frontend/inventory-select.jsx",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 22542,
+      "sourceSha256": "588e5076708db2a4e7f2e9bb345b7fa428fa1af0691bd878ae0eaec7edc2208c",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          347
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/inventory-select.jsx",
+        "bytes": 22542,
+        "sha256": "588e5076708db2a4e7f2e9bb345b7fa428fa1af0691bd878ae0eaec7edc2208c"
+      }
+    },
+    {
+      "sourcePath": "frontend/inventory-category.jsx",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 8523,
+      "sourceSha256": "e76e01dfd849e11eea23c3867d2185eb5fe512a3dc883045029c01d7d6d74a1e",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          150
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/inventory-category.jsx",
+        "bytes": 8523,
+        "sha256": "e76e01dfd849e11eea23c3867d2185eb5fe512a3dc883045029c01d7d6d74a1e"
+      }
+    },
+    {
+      "sourcePath": "frontend/inventory-filters.jsx",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 13537,
+      "sourceSha256": "bdcd2aaef2f8b6dbd7f66ff13bb6dc5eee31e59e8f9f68c0ce33a917efb0dd48",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          222
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/inventory-filters.jsx",
+        "bytes": 13537,
+        "sha256": "bdcd2aaef2f8b6dbd7f66ff13bb6dc5eee31e59e8f9f68c0ce33a917efb0dd48"
+      }
+    },
+    {
+      "sourcePath": "frontend/transfer-date.jsx",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 7406,
+      "sourceSha256": "fbc551f89398375fb86321b21e37e018f53221d544b6194cd4539cad75513088",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          87
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/transfer-date.jsx",
+        "bytes": 7406,
+        "sha256": "fbc551f89398375fb86321b21e37e018f53221d544b6194cd4539cad75513088"
+      }
+    },
+    {
+      "sourcePath": "frontend/product-arco.jsx",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 17934,
+      "sourceSha256": "0b70d765bc42d27872b743ce7bae753ab1920c6e6c3fd9baed33057a0308d057",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          247
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/product-arco.jsx",
+        "bytes": 17934,
+        "sha256": "0b70d765bc42d27872b743ce7bae753ab1920c6e6c3fd9baed33057a0308d057"
+      }
+    },
+    {
+      "sourcePath": "frontend/topbar-account.jsx",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 1892,
+      "sourceSha256": "cb18e7b133d925c199c8538ab93c1363b6f3cb7f6881f530d0cc23fd34a2fdec",
+      "mode": "verbatim-reference-only",
+      "selectedLines": [
+        [
+          1,
+          38
+        ]
+      ],
+      "redaction": "none; selected files contain no actual business record literals",
+      "target": {
+        "path": "source/frontend/topbar-account.jsx",
+        "bytes": 1892,
+        "sha256": "cb18e7b133d925c199c8538ab93c1363b6f3cb7f6881f530d0cc23fd34a2fdec"
+      }
+    },
+    {
+      "sourcePath": "frontend/index.html",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 9466,
+      "sourceSha256": "abd6e2efe92e5f94d262ab591aba9cb7a6291099bd2bd5df80dcbb6760b08ded",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 1,
+          "endLine": 15,
+          "sha256": "240f78d8a7bed490d215a5ba03bfb231e5cac177a848a68bca7f8d7ad2ae9799"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Shell, navigation and CSS cascade order; excludes runtime script line 16. Old combined party route and local-browser notes are historical only.",
+      "target": {
+        "path": "excerpts/frontend/index.html.md",
+        "bytes": 5764,
+        "sha256": "2bccecb6841ce2183880aac3d181eb419b0a1384f02d7d36c4770971a351f55d"
+      }
+    },
+    {
+      "sourcePath": "frontend/sales-current.js",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 97574,
+      "sourceSha256": "846a217125cc7f0fe2800a7508a01131ad3648cdd4fe8a69cf8284a4b6b4d3a1",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 82,
+          "endLine": 98,
+          "sha256": "b4dbec135ace999aa86b0b6145de1655941c2c88a3e4eb1175003417de3cf845"
+        },
+        {
+          "startLine": 103,
+          "endLine": 118,
+          "sha256": "bc71493011337d8ab00566f7697bbe2f76d9218063419d2251effd23fb13e944"
+        },
+        {
+          "startLine": 121,
+          "endLine": 138,
+          "sha256": "92864f0633880cc5ded6486f2163ada1b854cbab1cb7920ddb24a1095d0633da"
+        },
+        {
+          "startLine": 163,
+          "endLine": 182,
+          "sha256": "361c36bcdfc2d85c785817eb331b26ea0b70e15a4f79574d8795f6276c9aec46"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Sales list, line table, return/exchange sections, header and toolbar. No loader, save or type-switch write branches. Use current precise monetary and SALE/RETURN/EXCHANGE contracts.",
+      "target": {
+        "path": "excerpts/frontend/sales-current.js.md",
+        "bytes": 13800,
+        "sha256": "d6f8b482b04b271e9c2a3386596338f2c1dc6b481077874a9e612d9e334a4ab2"
+      }
+    },
+    {
+      "sourcePath": "frontend/transfer-current.js",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 47998,
+      "sourceSha256": "650edaa65f8f8c21abdb0b557adffea366cb487e3839f2d65f5965edc954d824",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 71,
+          "endLine": 72,
+          "sha256": "25b97040b36329356c103b9dc3a6edf3d2cfe0116296df70135a2050a79ad50e"
+        },
+        {
+          "startLine": 76,
+          "endLine": 77,
+          "sha256": "a7fd62d6c770602647326bd391497951e28b1ff1e5f54a39a19f7990b50ebae1"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Transfer list and original editor skeleton. Line 72 includes an old local filter prefix for location only; do not port it into formal queries. Final enhancement is in transfer-golden.",
+      "target": {
+        "path": "excerpts/frontend/transfer-current.js.md",
+        "bytes": 7463,
+        "sha256": "c453fbd9c36ccf6c1cc7623e6806b5353d1bc10fdd373055da0db149f682b9ee"
+      }
+    },
+    {
+      "sourcePath": "frontend/transfer-golden.js",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 15946,
+      "sourceSha256": "18a79af41791e4d0fdabdbc5e26832b1817c408aa8efd061e2f347606c748fbd",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 10,
+          "endLine": 10,
+          "sha256": "8ed69430e97f40606761bb10634ef1ee1e1e8c9c1f76454ced2d3c9ae7699e8c"
+        },
+        {
+          "startLine": 15,
+          "endLine": 33,
+          "sha256": "184939291c0c47934b7b9a1a9a9eca0de7127ad498ac6c657960494fa8304d33"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Final transfer list, header and toolbar enhancement. Reference structure/order only; React must own rendering rather than copying old DOM mutation listeners.",
+      "target": {
+        "path": "excerpts/frontend/transfer-golden.js.md",
+        "bytes": 9908,
+        "sha256": "e8b9cb185f37b003e898f80b6bf73411f6c5cb32cdb776ad4109db59a4bbb75a"
+      }
+    },
+    {
+      "sourcePath": "frontend/transfer-matrix-experiment.js",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 38505,
+      "sourceSha256": "4cb72dcf248c21aa9fcc7f9988533f4e788bbbf386601bc0fb048061bc182e5d",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 8,
+          "endLine": 10,
+          "sha256": "ee9d4b60449f80959b913603e44880d3343e266e1a35cb12154fc58c39f5ff0a"
+        },
+        {
+          "startLine": 24,
+          "endLine": 26,
+          "sha256": "78e985eb55b276cf33b8746841d0d7bdf7ac5ea2ec044cfa8d5c30e5f935fe4e"
+        },
+        {
+          "startLine": 60,
+          "endLine": 87,
+          "sha256": "f0882397fb102bb2f42763648f6df9be7afda5840b31aa1ba2a4015a293df2ea"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Transfer size matrix, rows and initial entry dock. Excludes fixture/scan commit/replacement commit/save paths; adapt to genuine SKU identities.",
+      "target": {
+        "path": "excerpts/frontend/transfer-matrix-experiment.js.md",
+        "bytes": 9632,
+        "sha256": "453048f0abaa8bff41763cd70ae4e4764b4529831263ce7d1a82fa6ddbcc2d0f"
+      }
+    },
+    {
+      "sourcePath": "frontend/inventory-workbench.js",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 31055,
+      "sourceSha256": "4f54830acd5c242cfed21a55334ed12043e5a7b92a375f0a1f1d7ee6e2f8e59e",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 45,
+          "endLine": 59,
+          "sha256": "b340893d2643b10d379b827ef7261e118a092b585d4f356ac155b054267354c5"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Inventory filters, waiting/loading/error/empty/results states, pager and toolbar. Global references and debug markers are historical UI context, not a loader or data contract.",
+      "target": {
+        "path": "excerpts/frontend/inventory-workbench.js.md",
+        "bytes": 8010,
+        "sha256": "b8dcbb5c18eb5e72758f4db6944f5144acc615a110c0511d495fb61a5de61a10"
+      }
+    },
+    {
+      "sourcePath": "frontend/inventory-matrix-experiment.js",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 22268,
+      "sourceSha256": "7439eb810ac2da36dbe791b9eb37240a4bcf6654bec98dff5674168e6e68e7a5",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 17,
+          "endLine": 65,
+          "sha256": "1c8660d252948d3ab5519a431b1ab4fb9e86f77d990886dc791e3dc1cb7d7979"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Inventory product/group/color/size matrix presentation. Excludes localStorage history and loader; never merge inventory identity or coerce unknown quantities to zero.",
+      "target": {
+        "path": "excerpts/frontend/inventory-matrix-experiment.js.md",
+        "bytes": 6652,
+        "sha256": "5bd5f6ee3bfb0ba1ceb5d3d8fc093fe285f5b37f118bb73c276c4de025b3dcae"
+      }
+    },
+    {
+      "sourcePath": "frontend/product-current.js",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 73585,
+      "sourceSha256": "d5a3ae29d781aa725859196dac6ef4e64f0e3cea08b3cca5c199579c9527b0be",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 79,
+          "endLine": 81,
+          "sha256": "8dff4f26025d905571c636a25a1cd8e1979b3e035a57e61a20f591f48ba668ea"
+        },
+        {
+          "startLine": 83,
+          "endLine": 99,
+          "sha256": "e5a2f53c6c458bf2aea8516e1f254ebfddbdc3bf6283cfb16f8a21b621375e2b"
+        },
+        {
+          "startLine": 107,
+          "endLine": 111,
+          "sha256": "0113b5e998eae6f83d127fafdc4652151fa1b26c3985c1eb8cd21f3e08a58491"
+        },
+        {
+          "startLine": 119,
+          "endLine": 124,
+          "sha256": "0cbc58e8935ed9ab89ea8fb9d4f7cc542473ce6b62155bd4aec623238fbb8410"
+        },
+        {
+          "startLine": 128,
+          "endLine": 135,
+          "sha256": "46c3ed915944a0a55eac502d5b5255e6cbb0b55f7e379880bf9023eb038c10ba"
+        },
+        {
+          "startLine": 180,
+          "endLine": 180,
+          "sha256": "e565bd712a43eb2f23de8ee7772af8546f23fcf7e32a6aa14069ac05749c7eb3"
+        },
+        {
+          "startLine": 198,
+          "endLine": 202,
+          "sha256": "4afbc2506ac6f5f47099454a0c5ad5aa8927ece92eb693b88952a5cd167716fe"
+        },
+        {
+          "startLine": 207,
+          "endLine": 207,
+          "sha256": "ae9109d76429d589c2bea73a447fc418acf3818c04f2eed572f0190753da41b7"
+        },
+        {
+          "startLine": 213,
+          "endLine": 223,
+          "sha256": "d7de9514aec479aedc4e219e10fb15e263145a64d4786c95ee5d28ef54eef4c9"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Product columns, six tabs, base/specs/prices/stock/barcodes, categories and dictionaries. No catalogue, scheme literals, media or save branches. Old combinations/totals are presentation context only, not permission to create Cartesian-product SKUs or infer zero.",
+      "target": {
+        "path": "excerpts/frontend/product-current.js.md",
+        "bytes": 14945,
+        "sha256": "a4a1a650b1b33f116036bad7382148e7379cb6d0042b12b2dec693f0d488238c"
+      }
+    },
+    {
+      "sourcePath": "frontend/basic-settings-v2.jsx",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 25829,
+      "sourceSha256": "c16e44268ac75f50784c0ce8c8b45826eb267ec85c8cee06596d24ab2a0761fa",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 20,
+          "endLine": 23,
+          "sha256": "4605b2e99479a2b47a2f48af085dcdf6bbc4d4253ffd00bb508f09525443d9a7"
+        },
+        {
+          "startLine": 35,
+          "endLine": 67,
+          "sha256": "e3a385da7d15bea430a694ab4a656fb2256eea765dcab03ababcabdd6f407b5c"
+        },
+        {
+          "startLine": 72,
+          "endLine": 98,
+          "sha256": "076bf19cfcacdd7f2f5c7b6a59085e09d6725769d7a22cd6df0216011596c0b1"
+        },
+        {
+          "startLine": 170,
+          "endLine": 191,
+          "sha256": "48fcecf4a77066d122a26aafdea3ff34951328b35a842d1e3e7a8489d1170ff8"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Settings filters, field components, store/warehouse/staff/payment forms and modals. Excludes MASTER_DATA contents, M.save/status commands and mount override. Split customer/supplier; warehouse single hall, funds multi-hall. Password controls contain field code only, no password values.",
+      "target": {
+        "path": "excerpts/frontend/basic-settings-v2.jsx.md",
+        "bytes": 14220,
+        "sha256": "73ae48c70d73420a902d3bec310a55ef86c20ff205736e1ea21d8d9456dca727"
+      }
+    },
+    {
+      "sourcePath": "frontend/sales-funds-ui.js",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 7581,
+      "sourceSha256": "821e9a9c96dfe6e08db610a044fd339e183b0d41b8af1398a304ff7409c9dd1f",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 13,
+          "endLine": 14,
+          "sha256": "574f05f2d9f487c391331e4c00960252c533f905a3281c9edfa5c37717f88b23"
+        },
+        {
+          "startLine": 18,
+          "endLine": 19,
+          "sha256": "36d1a736fdb46794b8653fd03321be0170b4f03cc5769f5fa96afe224ccfba08"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Receipt/refund account and amount fields, selection dialog. Excludes localStorage access/memory and write listeners. recent(d) remains an unresolved expression, without any record data.",
+      "target": {
+        "path": "excerpts/frontend/sales-funds-ui.js.md",
+        "bytes": 4132,
+        "sha256": "e56c4dc151059358392232b1a6704659950b6c509a641b4b94443584f9e8ec9f"
+      }
+    },
+    {
+      "sourcePath": "frontend/transfer-scan-drawer.js",
+      "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sourceBytes": 14866,
+      "sourceSha256": "99a6c4324fc47a0d62f0890e9d1d68a771b1d9863a820828ff9a06edc6588f66",
+      "mode": "exact-line-excerpts-in-markdown",
+      "selectedLines": [
+        {
+          "startLine": 1,
+          "endLine": 47,
+          "sha256": "e91014244a92485045a0e085be9d41491633d5f5b8376a2affd0dbc431bd41ed"
+        },
+        {
+          "startLine": 64,
+          "endLine": 73,
+          "sha256": "d8740334fc19700eb7773c527aff0ab8a698ef3ad11c7063e5a074d85e141e96"
+        }
+      ],
+      "redaction": "source outside listed line ranges omitted; selected source bytes unchanged",
+      "caveat": "Scanner drawer DOM and row template only. No actual barcode or product values; do not copy old global/mock scanning commands.",
+      "target": {
+        "path": "excerpts/frontend/transfer-scan-drawer.js.md",
+        "bytes": 4377,
+        "sha256": "56f9bfc26c2fb9faab8f746a082b878e265937e0709db020261ff5b06512d9d8"
+      }
+    }
+  ],
+  "omissions": [
+    {
+      "input": "Frozen Demo screenshots proven wholly synthetic",
+      "status": "NOT_PROVIDED",
+      "acquisition": "Controller schedules synthetic-only reference capture with provenance; no browser started."
+    },
+    {
+      "input": "Four Jakarta woff2 fonts",
+      "status": "NOT_PROVIDED",
+      "sourceReference": "frontend/assets/fonts/jakarta-{400,500,600,700}.woff2",
+      "acquisition": "Controller separately approves distributable fonts or records fallback differences."
+    },
+    {
+      "input": "Complete Demo runtime, actual data, controlled media and credentials",
+      "status": "PRIVATE_NOT_DISTRIBUTED",
+      "acquisition": "Controller-approved controlled private channel; no assumed local-path access."
+    }
+  ],
+  "generatedFiles": [
+    {
+      "path": "INTERACTION-REFERENCE.md",
+      "bytes": 2322,
+      "sha256": "2d058df24c1e73f007df1c4d2ace18967ddbd0486346b9f61ea3e4d4e39aceb8",
+      "kind": "Generated explanatory metadata, not frozen source"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3028,
+      "sha256": "64dddfe599f0026e152bf0061edc29a2d796bc98c6b49d64299a817d5e6ef6ce",
+      "kind": "Generated explanatory metadata, not frozen source"
+    },
+    {
+      "path": "SOURCE-MAP.json",
+      "bytes": 11593,
+      "sha256": "c218823b64a52b9db2314af7a9ab389c673e06cbe502161af8613cebe0e5e7e5",
+      "kind": "Generated explanatory metadata, not frozen source"
+    }
+  ],
+  "manifestHashPolicy": "Manifest does not hash itself; controller READBACK.json inventories the entire final pack including manifest."
+}

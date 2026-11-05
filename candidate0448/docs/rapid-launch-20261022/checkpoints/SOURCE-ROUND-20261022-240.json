@@ -1,0 +1,99 @@
+{
+  "atUtc": "2026-10-23T23:49:26.606242+00:00",
+  "parent": "4c681a67cb270fdd8c176561458948e96214e7dc",
+  "taskId": "F1_O_S14_SELECTED_WORKLINE_UI_SUMMARY_PROJECTION",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 55064,
+      "sha256": "26e1c22f46ab4cced495978b54c0c171f8eadad644dbf0e2e7758ca6083dc85f",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "3088cd2ee3ff58c47a8d6b05ec4bf202992abf77053f92732e69e470b73b7ffa",
+  "ownerDelivery": {
+    "taskId": "DOC-SOURCE-03 / O-S14 SAME_WORKING_LINE_SEAM_CONSUMERS",
+    "scope": "Only proven selected-working-line semantic seam: visible summary/money, leave and strict SAVE input preservation",
+    "files": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal-form.tsx",
+        "bytes": 55064,
+        "sha256": "26e1c22f46ab4cced495978b54c0c171f8eadad644dbf0e2e7758ca6083dc85f"
+      }
+    ],
+    "checks": [
+      {
+        "execution": "after-1 EXIT0",
+        "state": "selected partial spec qty12 price10 plus independent query",
+        "assertions": [
+          "summary1款12件 and visible due120.00",
+          "original return dialog Continue retains exact draft/entries and mounted quantity input",
+          "original SAVE refuses incomplete spec, selected+query remain exact; nativecommand/requestkey/prepare0",
+          "unpriced selected work still1款12件 + 1条待定价; due待填写, never guessed0"
+        ]
+      },
+      {
+        "execution": "types-1 EXIT0",
+        "scope": "original form strict imported closure; no excluded code or peer edits"
+      }
+    ],
+    "notTested": [
+      "New browser paired actual state",
+      "WholeO-S14 or all source UI/realbusiness",
+      "HTTP/PG/permissions/newbuild/serve",
+      "No repeat old dialog/48 suite"
+    ],
+    "blockers": "C pin/integrate and original QA finite successor actual",
+    "next": "Original QF only selected work plus unselected query summary/valid amount and pending marker, adopt existing leave/SAVE source checks; no whole suite",
+    "sourceFrozenUntilCPin": true,
+    "artifacts": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/PROOF.json",
+        "bytes": 5167,
+        "sha256": "ad2022fa73d7b87f6a18713e2e75fce34fe614f28e393f3ef2d2f96b48c2bb39"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/REPORT.md",
+        "bytes": 1147,
+        "sha256": "2c8bbf4b9cf81a271237214fcde33f7ea31c6284cf2aadfc0f2392419f23d766"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/RESULT.json",
+        "bytes": 538,
+        "sha256": "a70321f9f98a9278283a971c9139ce2c2f4c9eb022159c68a7b0529f41911fe6"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/SOURCE.diff",
+        "bytes": 4149,
+        "sha256": "ecea1d015f3777ea56e9c93d549be7056943c52522dfa72dbb3f9f8340f81424"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/before-1.log",
+        "bytes": 1080,
+        "sha256": "54a779f1a26bfd3024e2711dfc759ad68253dfa6e6a30e97146eb4f19e651952"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/after-1.log",
+        "bytes": 471,
+        "sha256": "6d3189921249ce1cd01f9aa8d3b4e6bcd7b2e267ca392601b376bf6712171b68"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/BEFORE-CONSUMER-STATE.json",
+        "bytes": 116,
+        "sha256": "0ed9d440cebb3e4d2cc0655967b731b991f8c482812bdb3f3be79d899c66eca6"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-124/AFTER-CONSUMER-STATE.json",
+        "bytes": 116,
+        "sha256": "8136a997bd47c66def5abb8153477edbde45b07dfc017a7a3bd414932bc39feb"
+      }
+    ]
+  },
+  "qualification": "Sourceevidence confirms nativevisible totals include selectedworkingrows but notpurequery. Formpresentation projection fixed, knownmoney uses existingexactprecision; unknown/blankprice stayspending not invented0. Strictincompletespec SAVE rejection/inputpreservation remains. OwnerfullformRED/GREEN/typesadopted; independentQF/source/containingbrowseractual pending. CurrentUI233/production229doNOTcontain240."
+}

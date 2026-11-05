@@ -1,0 +1,39 @@
+{
+  "atUtc": "2026-10-23T19:58:32.484762+00:00",
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-1eef32a-01/HTTP-CHECKS.json",
+  "bytes": 1161,
+  "sha256": "4b39f7832d96c2a50e2187b7f189101164e0db20e9cb4e8ce8ea0cb16e0f0c8d",
+  "receiptContent": {
+    "atUtc": "2026-10-23T19:48:33.856356+00:00",
+    "taskId": "C03_UI214_FIXED_THREE_HTTP",
+    "status": "PASS_FIXED_C214_THREE_KEY_HTTP",
+    "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+    "buildId": "ui-preview-1eef32a-01-build01",
+    "url": "http://127.0.0.1:57870/synthetic-unified.html",
+    "checks": [
+      {
+        "path": "synthetic-unified.html",
+        "status": 200,
+        "bytes": 3404937,
+        "sha256": "baa577c4eaaef91ee5807de0f1ab73506e848f19e3ad4ab7619645c34dceb962",
+        "sameImmutableBuild": true
+      },
+      {
+        "path": "candidate-identity.json",
+        "status": 200,
+        "bytes": 2900,
+        "sha256": "75358d1a462f31c3be7f77c84fd88b40bb8da0d37b0f2c59bbf5eb591901ab76",
+        "sameImmutableBuild": true
+      },
+      {
+        "path": "provenance.json",
+        "status": 200,
+        "bytes": 51370,
+        "sha256": "cc5da4406b9a8c2077936029242428778273eb8e9dcf12f56162076bdfee6f92",
+        "sameImmutableBuild": true
+      }
+    ],
+    "qualification": "Actual local built resources only. Synthetic103/write-refusing harness; I07ledger/source-nav still unavailable despite productionhost source214; no realbusiness or formalperformance."
+  },
+  "qualification": "ACTUAL_LOCAL_UI214_THREE_HTTP_ONLY"
+}

@@ -1,0 +1,57 @@
+@import './tokens.css';
+@import './navigation-menu.css';
+/* One resolved source layer: styles.css 20–35, ui-review.css 5–6,
+   transfer-current.css 25, golden-consistency.css 2–4. */
+.demo-ui{box-sizing:border-box;min-width:0;color-scheme:light;color:var(--ca-ink);background:#fff;font:13px/1.5 var(--ca-font-sans);font-synthesis:none}
+.demo-ui *,.demo-ui *::before,.demo-ui *::after{box-sizing:border-box}
+:where(.demo-ui) button,:where(.demo-ui) input,:where(.demo-ui) select,:where(.demo-ui) textarea{font:inherit;color:inherit}
+.demo-ui button,.demo-ui a{touch-action:manipulation}
+.demo-ui :is(button,a,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
+/* styles.css:17 follows the generic ring. Text controls use a border/ring,
+   while composite Arco controls keep focus on their visible outer shell. */
+.demo-ui input:not([type=checkbox]):not([type=radio]):focus-visible,.demo-ui select:focus-visible,.demo-ui textarea:focus-visible{outline:0}
+.demo-ui :is(input:not([type=checkbox]):not([type=radio]),select,textarea):not(:where(.arco-picker input,.arco-tree-select input,.arco-select input,.arco-input-tag input)):focus-visible{border-color:var(--ca-control-focus-border);box-shadow:var(--ca-focus-ring)}
+.demo-ui .app{display:grid;grid-template-columns:var(--ui-sidebar) minmax(0,1fr);min-height:100dvh;background:#fff}
+.demo-ui .main{min-width:0;background:#fff}
+.demo-ui .sidebar{position:sticky;top:0;align-self:start;height:100dvh;overflow:auto;background:var(--ca-sidebar);border-right:1px solid var(--ca-line);padding:16px 10px;display:flex;flex-direction:column}
+.demo-ui .brand{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;color:var(--ca-ink);white-space:nowrap}
+.demo-ui .brand-mark{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border-radius:10px;background:var(--ca-primary);color:var(--ca-on-primary);font-size:25px;line-height:1;font-weight:700}
+.demo-ui .brand-name{font-size:19px;line-height:1.2;font-weight:700;letter-spacing:.01em}
+/* interaction-common.css:1 removes the earlier reserved prose space. */
+.demo-ui .sidebar-note,.demo-ui .proto-tag{display:none!important}
+.demo-ui .proto-tag{font-size:12px;color:var(--ca-ink-2);padding:4px 12px 14px}
+.demo-ui .nav{display:flex;align-items:center;width:100%;min-height:32px;padding:5px 12px;margin:1px 0;font-size:13px;border:0;background:transparent;color:var(--ca-nav-text);text-align:left;border-radius:3px;text-decoration:none;line-height:1.5;cursor:pointer}
+.demo-ui .nav.child{padding-left:28px}
+.demo-ui .nav.parent{font-weight:600;color:var(--ca-ink);margin-top:6px;cursor:default}
+.demo-ui .nav:not(:disabled):not(.parent):not(.selected):hover{background:var(--ca-nav-hover-bg);color:var(--ca-nav-hover-text)}
+.demo-ui .nav.selected,.demo-ui .nav.selected:hover{background:var(--ca-nav-selected-bg);color:var(--ca-nav-selected-text);font-weight:600;box-shadow:inset 3px 0 var(--ca-nav-selected-bar)}
+.demo-ui .nav:disabled{color:var(--ca-ink-2);cursor:not-allowed}
+.demo-ui .tc-nav-group>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.demo-ui .tc-nav-group>summary::-webkit-details-marker{display:none}
+.demo-ui .tc-nav-group>summary::after{content:'';width:6px;height:6px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(-45deg);margin-right:9px}
+.demo-ui .tc-nav-group[open]>summary::after{transform:rotate(45deg)}
+.demo-ui .tc-nav-children>.nav.child{padding-left:42px}
+.demo-ui .topbar{min-height:var(--ui-topbar);height:auto;background:var(--ca-surface);border-bottom:1px solid var(--ca-line);padding:6px var(--ui-page-space);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px}
+.demo-ui .breadcrumb{color:var(--ca-ink)}
+.demo-ui .demo-topbar-actions{display:flex;align-items:center;gap:12px;margin-left:auto}
+.demo-ui .demo-page{min-width:0;padding:12px var(--ui-page-space) 16px;margin:auto;max-width:none;background:#fff}
+/* golden-consistency.css:4 overrides only the non-inventory page spacing. */
+.demo-ui .demo-page:not(.demo-page-inventory){padding:16px 20px}
+/* Frozen product-rework.css:2. These are the actual adapted product roots.
+   Retained hidden/inert document descendants must not affect the active page. */
+.demo-ui .demo-page:has(:is(.product-full-page,.product-detail-workbench):not([hidden],[inert],[hidden] *,[inert] *)){padding:12px var(--ui-page-space) 16px}
+/* Frozen basic-settings-v2.css:2–8 bounds the settings page, not each row.
+   The real host's account/status header remains a normal, non-shrinking flex
+   sibling. Only this selected route consumes the remaining viewport; other
+   workbenches keep their existing document scrolling behavior. */
+.demo-frame-viewport{height:100dvh;min-height:0}
+.auth-panel:has(>.demo-frame-viewport){height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.auth-panel:has(>.demo-frame-viewport)>:not(.demo-frame-viewport){flex-shrink:0}
+.auth-panel>.demo-frame-viewport{height:auto;flex:1;min-height:0}
+.demo-frame-viewport>.app{height:100%;min-height:0;grid-template-rows:minmax(0,1fr);overflow:hidden}
+.demo-frame-viewport>.app>.sidebar{height:100%;min-height:0;align-self:stretch;overflow-y:auto}
+.demo-frame-viewport>.app>.main{display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.demo-frame-viewport>.app>.main>:not(.demo-page){flex-shrink:0}
+.demo-frame-viewport .demo-page{display:flex;flex-direction:column;flex:1;min-height:0;width:100%;margin:0;overflow:auto}
+@media(max-width:1100px){.demo-ui{--ui-sidebar:184px;--ui-page-space:12px}}
+@media(max-width:760px){.demo-ui{--ui-sidebar:156px;--ui-page-space:10px}.demo-ui .app{grid-template-columns:var(--ui-sidebar) minmax(420px,1fr)}.demo-ui .sidebar{padding:12px 6px}.demo-ui .sidebar .brand{gap:6px;padding-inline:6px}.demo-ui .sidebar .brand-mark{flex-basis:34px;width:34px;height:34px;border-radius:8px;font-size:20px}.demo-ui .sidebar .brand-name{font-size:16px}.demo-ui .nav.child{padding-left:20px}.demo-ui .topbar{min-height:var(--ui-topbar);padding-block:8px;gap:4px}}

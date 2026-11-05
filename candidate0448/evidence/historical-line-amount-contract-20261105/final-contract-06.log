@@ -1,0 +1,27 @@
+✔ six synthetic original discrepancies are retained and read back exactly in ordinary and streaming intake (144.972609ms)
+✔ a source flag or valid-looking copied evidence never grants the discrepancy exception (160.020599ms)
+✔ new runtime documents cannot borrow reviewed historical differences (90.568784ms)
+✔ changed original amount, price, quantity or exact source occurrence fails closed (334.689701ms)
+✔ foreign namespace, source inventory, parent identity and missing header provenance cannot reuse evidence (297.124175ms)
+✔ known header and receipt contradictions remain blocking despite line evidence (141.92948ms)
+✔ every reviewed discrepancy must remain present and exact, not a partial allow-list (52.594198ms)
+✔ evidence rejects wrong digest, duplicate identities/occurrences, malformed money and unknown fields (4.893057ms)
+✔ immutable capability does not accept a JSON clone or leak mutable source aliases (3.371267ms)
+✔ existing sealed database codec retains all six price/quantity/amount facts without recomputation (synthetic protocol only) (7.96823ms)
+✔ offline source reception cannot create an executable import plan, even with a scrubbed summary (78.33848ms)
+✔ actual offline CLI accepts only separately pinned evidence and preserves the archive-only boundary (1343.836562ms)
+✔ strict new batch profile accepts reviewed derived or pending hall evidence without rewriting source facts (307.397853ms)
+✔ strict new profile cannot downgrade by dropping the bundle or its row evidence (264.172852ms)
+✔ even compatible old profiles require every historical header when a bundle is selected (89.946647ms)
+✔ new evidence cannot be moved into a legacy profile to borrow its SQL admission (85.74917ms)
+✔ changed captured warehouse version or source locator fails closed in both paths (154.224673ms)
+✔ new hall profile is not a grant to an already installed old SQL engine (109.320045ms)
+✔ changing strict profile to old behavior changes the independently pinned manifest and is rejected at intake (42.940518ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2948.524594

@@ -1,0 +1,13 @@
+✔ approved exact historical departed staff admits null hall, not a general exception (1.65718ms)
+✔ missing, forged, tampered or unpinned approval cannot authorize a record (1.076981ms)
+✔ approval rejects duplicate IDs, keys and unsupported fields (0.502846ms)
+✔ ordinary preflight admits only externally approved exact departed staff (62.319737ms)
+✔ stream relation check shares exact departed approval and rejects active or unapproved (7.985485ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 327.137014

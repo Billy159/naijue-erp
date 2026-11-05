@@ -1,0 +1,27 @@
+✖ one synthetic new-profile package passes actual ordinary and stream CLI with both reviewed bundles and exact readback (1434.487985ms)
+✔ same combined package also preserves unknown export time with separate exact alignment review (2595.890705ms)
+✔ combined intake cannot drop either separately reviewed bundle (1804.334758ms)
+✔ wrong pins, missing pins and in-package evidence fail in both actual CLIs (3872.551815ms)
+✔ changing amounts while keeping old reviewed bytes cannot borrow the hall approval (895.828701ms)
+✔ changing hall capture or stripping its row proof cannot borrow the amount approval (1795.020837ms)
+✔ same combined evidence cannot be attached to a legacy schema or a different manifest pin (1493.452851ms)
+✔ ordinary evidence flags require explicit offline mode and manifest pin and do not accept duplicate or DB options (1417.146459ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15820.407226
+
+✖ failing tests:
+
+test at tests/historical-sales-unified-offline-cli.test.mjs:77:1
+✖ one synthetic new-profile package passes actual ordinary and stream CLI with both reviewed bundles and exact readback (1434.487985ms)
+  TypeError: Cannot read properties of undefined (reading 'historical_hall_evidence')
+      at file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-unified-offline-cli.test.mjs:85:146
+      at async scenario (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-unified-offline-cli.test.mjs:67:3)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-unified-offline-cli.test.mjs:78:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

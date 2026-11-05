@@ -1,0 +1,67 @@
+✔ strict declared evidence preserves raw bytes and binds product / pinned files (2.729928ms)
+✔ unavailable, forged, duplicated and malformed mappings fail closed (4.534815ms)
+✔ array accessors, holes, symbols and hidden properties cannot execute or escape validation (0.517828ms)
+✔ source segment length respects exact 512-character scanner limit without truncation (0.547216ms)
+✔ same historical color and size may belong to different actual fits without splitting source segment (2.029845ms)
+✖ proxy evidence containers reject before invoking any caller traps (1.968788ms)
+✖ unpaired UTF-16 source strings fail closed instead of changing when encoded as UTF-8 (0.522762ms)
+✔ well-formed supplementary Unicode remains exact, with no normalization or replacement (0.295085ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 6
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 329.69692
+
+✖ failing tests:
+
+test at tests/historical-barcode-attestation.test.ts:18:1
+✖ proxy evidence containers reject before invoking any caller traps (1.968788ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /INVALID_HISTORICAL_BARCODE_ATTESTATION/. Input:
+  
+  'Error: proxy prototype executed'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-barcode-attestation.test.ts:28:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: proxy prototype executed
+        at Object.getPrototypeOf (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-barcode-attestation.test.ts:21:131)
+        at Object.getPrototypeOf (<anonymous>)
+        at record (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/packages/application/src/historical-barcode-attestation.ts:11:61)
+        at parseHistoricalBarcodeAttestation (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/packages/application/src/historical-barcode-attestation.ts:23:10)
+        at file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-barcode-attestation.test.ts:28:21
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-barcode-attestation.test.ts:28:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25),
+    expected: /INVALID_HISTORICAL_BARCODE_ATTESTATION/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/historical-barcode-attestation.test.ts:33:1
+✖ unpaired UTF-16 source strings fail closed instead of changing when encoded as UTF-8 (0.522762ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-barcode-attestation.test.ts:40:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /INVALID_HISTORICAL_BARCODE_ATTESTATION/,
+    operator: 'throws',
+    diff: 'simple'
+  }

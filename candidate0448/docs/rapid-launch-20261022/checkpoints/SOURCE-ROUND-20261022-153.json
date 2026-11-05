@@ -1,0 +1,22 @@
+{
+  "atUtc": "2026-10-23T07:56:06.884872+00:00",
+  "parent": "e6e2a60b4c6c725031a919ef3b8e70e1e406b8da",
+  "taskId": "F03_APPLICATION_FULL_OUTPUT_CONSUMER_SEAM",
+  "files": [
+    {
+      "path": "apps/web/src/application/routes/inventory.tsx",
+      "owner": "F1",
+      "bytes": 1855,
+      "sha256": "7ae0e0f37f00d31a7174c3695bba93d00d755e4c342a9b595b3e498d7c87876f"
+    }
+  ],
+  "scope": "Original F2 outputreader input.http same HttpQueryOptions, onlytrusted onAccessFailure injects output; missingcallback no newcap, all oldroute readers/actions/navigation retained",
+  "checksAdopted": {
+    "F1": "Exactroute affectedstrict exit0, no repeatedF2streamtests"
+  },
+  "notTested": [
+    "HTTP/PG/outputactualbrowser/roles/performance",
+    "F1whole-doc chunk77 stillWIP notincluded"
+  ],
+  "next": "QF2 pair1 withsource152seven; C one complete inventoryoutput candidate, F1whole-doc independentnotblocked"
+}

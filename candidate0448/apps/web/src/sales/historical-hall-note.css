@@ -1,0 +1,8 @@
+.sale-historical-hall-evidence { margin: 10px 0; padding: 10px 12px; border: 1px solid var(--ca-popover-border, #e5e6eb); border-radius: 6px; background: var(--ca-surface-muted, #f7f8fa); color: var(--ca-ink-2, #4e5969); font-size: 13px; overflow-wrap: anywhere; }
+.sale-historical-hall-evidence summary { cursor: pointer; font-weight: 500; }
+.sale-historical-hall-evidence dl { margin: 10px 0 0; }
+.sale-historical-hall-evidence dl > div { display: grid; grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); gap: 8px; margin: 5px 0; }
+.sale-historical-hall-evidence dd { margin: 0; }
+.sales-hall-reassignment label { display: flex; align-items: center; gap: 12px; margin: 12px 0; }
+.sales-hall-reassignment [role="listbox"] { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; }
+@media (max-width: 480px) { .sale-historical-hall-evidence dl > div { grid-template-columns: 1fr; gap: 2px; } }

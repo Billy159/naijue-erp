@@ -1,0 +1,33 @@
+PURE_REVIEWED_SOURCE_SHA256=c96e4f80be77f19d92543544777e81a07deb004477573bf298976a28cd3dfe9b
+✔ PURE actual recovery: ASCII prepare/run commands are ignored before a later exact stop (2.754639ms)
+✖ PURE actual recovery: ignored multibyte command cannot skip a later appended exact stop (2.372606ms)
+✔ PURE actual recovery: transient control read failure retains holder until an exact stop (0.733838ms)
+✔ PURE actual recovery: uncertain stop retains control, ignores other commands and retries only a later exact stop (0.411621ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 287.522728
+
+✖ failing tests:
+
+test at evidence/backend-engine-suite-independent-20261020T2039Z/operator-recovery-independent.test.mjs:43:1
+✖ PURE actual recovery: ignored multibyte command cannot skip a later appended exact stop (2.372606ms)
+  AssertionError [ERR_ASSERTION]: Synthetic deadline: an appended exact stop must not be lost.
+      at file:///workspace/shared/naijue-erp-rewrite/evidence/backend-engine-suite-independent-20261020T2039Z/operator-recovery-independent.test.mjs:23:12
+      at retainForStopOnlyRecovery (eval at simulate (file:///workspace/shared/naijue-erp-rewrite/evidence/backend-engine-suite-independent-20261020T2039Z/operator-recovery-independent.test.mjs:20:19), <anonymous>:7:11)
+      at async simulate (file:///workspace/shared/naijue-erp-rewrite/evidence/backend-engine-suite-independent-20261020T2039Z/operator-recovery-independent.test.mjs:21:3)
+      at async TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/evidence/backend-engine-suite-independent-20261020T2039Z/operator-recovery-independent.test.mjs:45:18)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+EXPECTED_NEGATIVE_CONTROL_EXIT=1

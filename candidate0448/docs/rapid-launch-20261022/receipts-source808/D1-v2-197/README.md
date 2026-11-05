@@ -1,0 +1,21 @@
+# 197当前实证：后继暂存路径最小列级权限合批
+
+此v2是当前待审合批交付。旧R1-BARCODE-STAGE-MINIMUM-ACL-v1仅条码候选未执行、保留历史，不与本v2叠跑。D1未连PG、未执行GRANT/REVOKE或业务写入；T45唯一数据库执行owner。
+
+依据：197原始回执60922字节/SHA256 5abfee228c16a410b279b5de0a7cb14d8ea92eb7b2add4adbad2ba677186b603；RESULT8927/eb7f309c7c30fbe483f79e89eccfffade1284dc7c1b154d9b444f9bcb984dbb6。实际普通R1/OID1027659/原postmaster/RRRO读19表元数据、5nested函数和8插入目标21个启用的非internal trigger，全部为原SECURITY INVOKER。ROLLBACK及关闭成功，无正文/函数业务调用/ACL修改。
+
+197当前缺位精确组成：history_sales_header仅锁UPDATE；history_sales_line21列INSERT+锁；history_sales_settlement11列INSERT+锁；import_native_payment_binding9列SELECT+10列INSERT+锁；payment_account5列INSERT+锁；payment_account_hall2列INSERT+锁；payment_method4列INSERT+锁；sku_barcode6列INSERT+锁。只补共9 SELECT+59 INSERT+8锁所需单列UPDATE，即76个位、16条GRANT，反向对应16条REVOKE。函数EXECUTE均已有，零函数GRANT。
+
+锁列：有id的六表只UPDATE(id)，import_native_payment_binding只UPDATE(batch_id)，payment_account_hall只UPDATE(payment_account_id)。原SELECT FOR SHARE/FOR UPDATE需要至少一列UPDATE，保留原语句；writer不新增UPDATE。原不可变identity/历史保护trigger继续执行，原空/暂存/已发布准入不改。全字段INSERT源于原jsonb_populate_record SELECT .*，条码明确六列；payment binding原replay读取to_jsonb全快照故补齐原九列SELECT（batch_id原有SELECT保留）。不授表级业务权限、DELETE/TRUNCATE/GRANT OPTION、owner membership、函数权限或PUBLIC权限。
+
+这属于现有受批BARCODE→PAYMENT→SALES_DETAILS→SETTLEMENTS路径必要ACL落地，零新业务写合同/字段/约束。历史R1-SCHEMA19-RUNTIME-ACL只read/login，不重写也不重跑。195仅42501被保留，server具体message/context未导出；196条码target查询的精确ACL缺位与197全有限闭包是当前修补依据，不称恢复原错误对象，不保证其他未执行业务分支无缺口。
+
+正向文件grant-exact-197-columns.sql：C采用/原QB窄审后由T45在原owner角色执行，fail-stop；精确DB/OID/postmaster/socket/role属性/零membership/schemaUSAGE检查。八表逐表OID、owner、tableACL、RLS、完整列集及原始columnACL与197前态全等，核每个existing grantor/grantee/privilege/grantable。只16条GRANT，提交前再次逐列对比“197全部旧ACL位并上76新增位”的精确规范集合；不允许额外位、改grantor或GRANT OPTION。事务内8表完整列ACL/有效SELECT/INSERT/UPDATE前后回读，T45外部保全实际完整catalog、角色和schema/table/columnACL。任一错误立即ROLLBACK，不能继续COMMIT；不混入writer或业务测试。
+
+回退文件revoke-only-exact-197-added-columns.sql：C采用后、T45确认无后续ACL变化，按完全相同目标/八表身份/列/原tableACL及准确“旧+新增”列ACL前态执行，仅16 REVOKE撤此次76位，再核规范ACL恢复197全部旧位。事务失败ROLLBACK；提交后撤销不回滚已写业务也不授权重放。有效ACL能恢复，REVOKE可能留空attacl数组，不能保证原文本/旧canonical逐字恢复，禁止直接改pg_catalog。保留所有旧source/数据/回执/原始备份。
+
+当前目录重绑必须完成：列attacl纳入NATIVE_RUNTIME26_CATALOG_EXPORT，实际GRANT后旧canonical6d3e6d1aed92d0dd66441d92c3e6b2b3b17fabc5f0f642b5e54a981343a3fcdd不再代表当前。T45以原普通runtime角色只读导出新的完整catalog/身份；原QB仅核八表指定列ACL增量、其他catalogsections含131routines/body/ACL/21triggers及其余目录/role/schema/tableACL不变，再签准确current review。C/D3按实际新canonical统一重绑config/current-purpose/consumer/external执行授权及受影响精确依赖引用。v22单函数body/profile、registry1..26、store/issuer/provider和原命令/原键/16225预算不改；不能手改摘要沿旧review放行，不伪造未知新canonical。
+
+闭包边界：只本197核过的后续原暂存消费者有限路径；MAIN、守恒、完整历史闭包和PUBLISH仍按原合同核验。已提交BIND不重跑，195/196/197历史状态不改。新writer必须由C/T45准确carrier另行承接；本补丁或权限目录PASS不等于条码/真实完整导入/记账/PUBLISH通过。STAGED始终隐藏，2958条异常商品级码排除；历史缺人员/时间允许NULL、前端必填和逐仓库存守恒不变。
+
+本机必要检查：STATIC-CHECK验证16准确GRANT/REVOKE镜像、只197实证缺位、76新增位、所有旧ACL保留且无grantoption/业务DML/函数或schema变更。未运行PG SQL解析、权限执行或writer；由原QB源码增量审查，必要实际执行归T45。

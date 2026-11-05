@@ -1,0 +1,632 @@
+{
+  "atUtc": "2026-10-21T22:43:21.719838+00:00",
+  "status": "FAIL",
+  "target": {
+    "atUtc": "2026-10-21T22:43:21.719140+00:00",
+    "status": "READY",
+    "data": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1/data",
+    "run": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1",
+    "socket": "/private/tmp/nj-sealed18-20261022-r1",
+    "port": 55671,
+    "database": "naijue_erp_test_18e00101",
+    "suite": "sealed-history-0001-0018",
+    "entry": "tests/integration/sealed-history18.integration.ts",
+    "freeBytes": 2300518400,
+    "requiredBytes": 2298478592,
+    "deficitBytes": 0,
+    "reserveBytes": 2147483648,
+    "pgBudgetBytes": 134217728,
+    "syntheticAndLogsBudgetBytes": 16777216,
+    "runner": {
+      "bytes": 9804,
+      "sha256": "0904452cd22512154bbd9f2ec26ce00f6fdcef5c96178810d160609ae979d946"
+    },
+    "contextFiles": 104,
+    "contextBytes": 1285805,
+    "effectivePinsVerified": 119,
+    "initdbStarted": true,
+    "pgStarted": true,
+    "realPrivateRead": false,
+    "publication": "CLOSED"
+  },
+  "commands": [
+    {
+      "command": [
+        "/Users/billy/pg17/bin/initdb",
+        "-D",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1/data",
+        "-U",
+        "backend18_bootstrap",
+        "--auth-local=trust",
+        "--auth-host=scram-sha-256",
+        "--encoding=UTF8",
+        "--locale=C",
+        "--no-clean"
+      ]
+    },
+    {
+      "command": [
+        "/Users/billy/pg17/bin/pg_ctl",
+        "-D",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1/data",
+        "-l",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1/server.log",
+        "-w",
+        "-t",
+        "15",
+        "start"
+      ]
+    },
+    {
+      "command": [
+        "/Users/billy/pg17/bin/psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-h",
+        "/private/tmp/nj-sealed18-20261022-r1",
+        "-p",
+        "55671",
+        "-U",
+        "backend18_bootstrap",
+        "-d",
+        "postgres",
+        "-f",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1/provision.sql"
+      ]
+    },
+    {
+      "command": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/integration/sealed-history18.integration.ts"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "dedicatedEnv": "Loopback synthetic test URL, credentials not logged; exact suite/database; owned TMPDIR"
+    }
+  ],
+  "contextBefore": [
+    {
+      "path": "adapters/postgres/migrations/0001_runtime_sales.sql",
+      "bytes": 19076,
+      "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+    },
+    {
+      "path": "adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+      "bytes": 1860,
+      "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+    },
+    {
+      "path": "adapters/postgres/migrations/0003_auth_sessions.sql",
+      "bytes": 886,
+      "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+    },
+    {
+      "path": "adapters/postgres/migrations/0004_transfer_runtime.sql",
+      "bytes": 31040,
+      "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+    },
+    {
+      "path": "adapters/postgres/migrations/0005_product_read_fields.sql",
+      "bytes": 1229,
+      "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+    },
+    {
+      "path": "adapters/postgres/migrations/0006_party_maintenance.sql",
+      "bytes": 14758,
+      "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+    },
+    {
+      "path": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+      "bytes": 32196,
+      "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+    },
+    {
+      "path": "adapters/postgres/migrations/0008_runtime_sparse_first_use.sql",
+      "bytes": 9720,
+      "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+    },
+    {
+      "path": "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+      "bytes": 4477,
+      "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e"
+    },
+    {
+      "path": "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+      "bytes": 1316,
+      "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"
+    },
+    {
+      "path": "adapters/postgres/migrations/0011_history_storage.sql",
+      "bytes": 32931,
+      "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965"
+    },
+    {
+      "path": "adapters/postgres/migrations/0012_history_header_native_reference.sql",
+      "bytes": 18141,
+      "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512"
+    },
+    {
+      "path": "adapters/postgres/migrations/0013_native_party_import.sql",
+      "bytes": 24529,
+      "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54"
+    },
+    {
+      "path": "adapters/postgres/migrations/0014_native_catalogue_import.sql",
+      "bytes": 12925,
+      "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022"
+    },
+    {
+      "path": "adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+      "bytes": 18024,
+      "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a"
+    },
+    {
+      "path": "adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+      "bytes": 6891,
+      "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620"
+    },
+    {
+      "path": "adapters/postgres/migrations/0017_native_payment_import.sql",
+      "bytes": 11773,
+      "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"
+    },
+    {
+      "path": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+      "bytes": 74772,
+      "sha256": "6e966683d9559cebf532aefc2ce540827c0545bc03fdaaea4c3b5125219d4b64"
+    },
+    {
+      "path": "adapters/postgres/src/catalogue-completeness.ts",
+      "bytes": 10897,
+      "sha256": "150f91305d878d3cd9ec5c7b13fd94e811efb67beea34be117ca79267ef1f148"
+    },
+    {
+      "path": "adapters/postgres/src/codec.ts",
+      "bytes": 2896,
+      "sha256": "18496bac8de90fce54cdcb861ef057c51d38ce826ebd103456dc203e288b553c"
+    },
+    {
+      "path": "adapters/postgres/src/history-import-lifecycle.ts",
+      "bytes": 35552,
+      "sha256": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51"
+    },
+    {
+      "path": "adapters/postgres/src/history-typed-closure.ts",
+      "bytes": 8539,
+      "sha256": "c7d7c9eea986b211b698a2c6690731479ecab400e7daa48f8492023b01493bb9"
+    },
+    {
+      "path": "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+      "bytes": 9888,
+      "sha256": "d6e90fada082c111d914909c4789c7304ab96c4109ccce1720e043686e31ffde"
+    },
+    {
+      "path": "adapters/postgres/src/import-v3-history-header-staging-store.ts",
+      "bytes": 10372,
+      "sha256": "fcc8e5ee52a10eb525b775a836372062696a3eee357d7844acc7d613d98ed197"
+    },
+    {
+      "path": "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+      "bytes": 17878,
+      "sha256": "cb9b29cdd4cb029186a9d12ba77479db74c048ace92a1152f39e07d9eecf7ca5"
+    },
+    {
+      "path": "adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+      "bytes": 16102,
+      "sha256": "564b3461d2c20ed67a8e957f8974320e840595ba668aab3ee27b8ba067dd04c9"
+    },
+    {
+      "path": "adapters/postgres/src/import-v3-history-staging-store.ts",
+      "bytes": 5434,
+      "sha256": "2506f5395c471fc6829d22f9e5a03f906d66fd4bf6194866a6f35e72a716d8fd"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "bytes": 26699,
+      "sha256": "94c91ecce3937f36466a14fb3da3bc5a67403c2b8bcce807fbd589f4efd73426"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-posting-balances.ts",
+      "bytes": 13512,
+      "sha256": "4e61d39db910276ec46ae9eba732587716f0af5d8c2e7b81d357bc6807a3a8b1"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-publication-guards.ts",
+      "bytes": 2658,
+      "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872"
+    },
+    {
+      "path": "adapters/postgres/src/native-catalogue-import.ts",
+      "bytes": 15576,
+      "sha256": "80281138152436533dcbaf5bb7f91e288714b5eff2ef095623572c7836df5caf"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 23100,
+      "sha256": "2be0fae62fc793063d36956ef2d1027d990a56222b6c08e8cfe011d0d9d803b4"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-record-accounting.ts",
+      "bytes": 39529,
+      "sha256": "bfe4e5ec8c715106a93bdb0e50a54ced51d20d5aaf6d428b1404b82539f2c398"
+    },
+    {
+      "path": "adapters/postgres/src/native-party-import.ts",
+      "bytes": 17192,
+      "sha256": "d3cb8c26b7aebce4606ff70e5386483d4b994c6e0d2c046f4540c6e427fe5dab"
+    },
+    {
+      "path": "adapters/postgres/src/native-payment-import.ts",
+      "bytes": 11382,
+      "sha256": "07b06f9a1a705d70e2216cee6759d60ef489eadd14529ca2bce3cebc7eeddc4c"
+    },
+    {
+      "path": "adapters/postgres/src/native-product-import.ts",
+      "bytes": 12068,
+      "sha256": "a0981b7ba2cf1ecffb95251735e308046e41bc2c773d30780a271a457b0b4e62"
+    },
+    {
+      "path": "adapters/postgres/src/native-sku-import.ts",
+      "bytes": 13195,
+      "sha256": "1f9442f8b5945d3d55e7a1ea74b71f51e469e329b018d7851783adb183c5e2e3"
+    },
+    {
+      "path": "adapters/postgres/src/native-stock-contributor-import.ts",
+      "bytes": 10626,
+      "sha256": "b82d3d7861a662dc44cfa9cb02d8e51562f8aac75fa23f750199db6ca56723be"
+    },
+    {
+      "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+      "bytes": 3204,
+      "sha256": "9eb7925ef3fbccc0c09d50932dc4aed52e805c184086a502b6eef56a3f5892e7"
+    },
+    {
+      "path": "adapters/postgres/src/sales-native-facts.ts",
+      "bytes": 13212,
+      "sha256": "e85f571a7506dd351139742b5b5072945beda494a4f276d536d48252e15b1328"
+    },
+    {
+      "path": "adapters/postgres/src/sales-unit-of-work.ts",
+      "bytes": 29892,
+      "sha256": "2c0bb196d463a79f0f2fb8123496a691aa8b109e905ac5c55f4765fdfd90f142"
+    },
+    {
+      "path": "packages/application/src/catalogue-price-input.ts",
+      "bytes": 1945,
+      "sha256": "d1a713379e03532dda0d2812945ad1be1324cfb02520e50de2f3dd56e43199d7"
+    },
+    {
+      "path": "packages/application/src/catalogue-source-proof.ts",
+      "bytes": 3286,
+      "sha256": "b1481007ce402158186023a6cb670d6214d62e51588f8466b56421566c3baaa7"
+    },
+    {
+      "path": "packages/application/src/history-import-lifecycle.ts",
+      "bytes": 2871,
+      "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+    },
+    {
+      "path": "packages/application/src/history-storage-contract.ts",
+      "bytes": 6913,
+      "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+    },
+    {
+      "path": "packages/application/src/history-temporal-mapping.ts",
+      "bytes": 5699,
+      "sha256": "274a09cc4567d1aec860ae0d8679480b71a5003188b261ab9f26c8474663bb1c"
+    },
+    {
+      "path": "packages/application/src/history-typed-closure.ts",
+      "bytes": 34265,
+      "sha256": "dd6041e0b195d2b99ddcc93bd8c93ab5dae47282522cd5d2bf7a9eb088d4c70f"
+    },
+    {
+      "path": "packages/application/src/import-v2-contract.ts",
+      "bytes": 20742,
+      "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+    },
+    {
+      "path": "packages/application/src/import-v2.ts",
+      "bytes": 10869,
+      "sha256": "de808fcf2d8a2b4ffa919d0d680474b594bb824b72516cae943605f910070294"
+    },
+    {
+      "path": "packages/application/src/import-v3-history-header-native-reference.ts",
+      "bytes": 11762,
+      "sha256": "4fc796ea64755b12682ffdd488e044e85b5eba46d8d7f0751767147a93e358b5"
+    },
+    {
+      "path": "packages/application/src/import-v3-history-header-staging.ts",
+      "bytes": 5574,
+      "sha256": "f6a2e2ff3d4f38b60aa87c4ae508705a7afbf21b164e588f60152c25e09ad22c"
+    },
+    {
+      "path": "packages/application/src/import-v3-history-header.ts",
+      "bytes": 10991,
+      "sha256": "fcd09fb84c1f7dbfbb7889692933f37dbd99f3de64ea9d9258b85551f1884830"
+    },
+    {
+      "path": "packages/application/src/import-v3-history-sales-detail.ts",
+      "bytes": 13704,
+      "sha256": "ed6558d6382a36da46f9a28082847a6e48f8c30673c82f21eea491c8b55a52d7"
+    },
+    {
+      "path": "packages/application/src/import-v3-history-settlement.ts",
+      "bytes": 12610,
+      "sha256": "113c8ffb4fce7e7b045039eb0c41cdc7a07a9a506630412b0054de44a7979bbc"
+    },
+    {
+      "path": "packages/application/src/import-v3-history-staging.ts",
+      "bytes": 8722,
+      "sha256": "8e5fe853f52c012b8b754cbe8a8c5212162c47808a88262338f9c0fe1144c104"
+    },
+    {
+      "path": "packages/application/src/inventory-cutoff-import.ts",
+      "bytes": 10553,
+      "sha256": "70e728e8c1b348f0e687c5e8aa5533a0064e897c1858d2606b4064262770fa2d"
+    },
+    {
+      "path": "packages/application/src/inventory-posting.ts",
+      "bytes": 2716,
+      "sha256": "bee5f84b8c8087041bd322fbf65ac4847f885c7cc33cfb0b2f6f6b7afb202897"
+    },
+    {
+      "path": "packages/application/src/native-barcode-import.ts",
+      "bytes": 8655,
+      "sha256": "4631b2a4b8d707089dc6f80961cc45b611848be23afbaec0e7ee24b5d5552b5a"
+    },
+    {
+      "path": "packages/application/src/native-catalogue-import.ts",
+      "bytes": 17099,
+      "sha256": "e0504260cc73e6a1bce8a916f1f0729128ee4c2b43a5f38c0668eb3ce053fe8e"
+    },
+    {
+      "path": "packages/application/src/native-import-record-accounting.ts",
+      "bytes": 19083,
+      "sha256": "a5fbd9acb4c7406035e089661779402113a666136d1a50e8598c0cbaf25c68a3"
+    },
+    {
+      "path": "packages/application/src/native-import-schema-contract.ts",
+      "bytes": 11363,
+      "sha256": "59d77b654809ed915f94aef1d15033a0acff02ede24fb06beec4acd23614d77b"
+    },
+    {
+      "path": "packages/application/src/native-party-import.ts",
+      "bytes": 12919,
+      "sha256": "412f3be7c69fada14ca94510d113df7184cccaaa492ad42a0e2f15600f961cf9"
+    },
+    {
+      "path": "packages/application/src/native-payment-import.ts",
+      "bytes": 11101,
+      "sha256": "2d2d1d109211f3c4ec2df6c8fdbae246e5453c1735814d3b1dbba26fdf71702c"
+    },
+    {
+      "path": "packages/application/src/native-product-import.ts",
+      "bytes": 12689,
+      "sha256": "3a3ffc256dd2f99c2260d650a2cfde5151dbb9d7928b55d88f815f90561502bf"
+    },
+    {
+      "path": "packages/application/src/native-sku-import.ts",
+      "bytes": 13560,
+      "sha256": "520069c94358f98514028448784733d2b1e7b0b4c347522a6dc82e36e9fa61c6"
+    },
+    {
+      "path": "packages/application/src/native-stock-contributor-import.ts",
+      "bytes": 9736,
+      "sha256": "226e119f76d2b2f03114bdaf10963572ccbb1c9313a1ecd3cfc2338ce940a938"
+    },
+    {
+      "path": "packages/application/src/ports.ts",
+      "bytes": 6689,
+      "sha256": "94c19c5aefde07b727942500b354cb31b9f1dfa28d8ea8a32bdfdcd488c34486"
+    },
+    {
+      "path": "packages/application/src/product-evidence-staging.ts",
+      "bytes": 8249,
+      "sha256": "753efac4a2e1d142bba66683233725db13912037510d9dc60eec8542a1872177"
+    },
+    {
+      "path": "packages/application/src/request-hash.ts",
+      "bytes": 1488,
+      "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb"
+    },
+    {
+      "path": "packages/application/src/sales-business-rules.ts",
+      "bytes": 8242,
+      "sha256": "925bb3d5a0da89f18e4c0535e5a7db0930ca8b4fb33caa14c245955d95b44b8f"
+    },
+    {
+      "path": "packages/application/src/sales-change-evidence.ts",
+      "bytes": 3655,
+      "sha256": "44a53299d1a56891154afdcca2549e64343f37d4ebce8f878c17d8e80d6b1b12"
+    },
+    {
+      "path": "packages/application/src/sales-native-facts.ts",
+      "bytes": 6562,
+      "sha256": "27acef37b175fc393ac1c48c513fa51165ab7b1dd18e4a96d6749af207bef63f"
+    },
+    {
+      "path": "packages/domain/src/catalog.ts",
+      "bytes": 3402,
+      "sha256": "0771d67dd7374b027c02eaabe8366e793c897f8b6ac95093d74f37d64b65e000"
+    },
+    {
+      "path": "packages/domain/src/documents.ts",
+      "bytes": 3726,
+      "sha256": "1e140d723c25292e568cfd478d6c364537aff1f4440ae16307a0cc13e9a4cd01"
+    },
+    {
+      "path": "packages/domain/src/errors.ts",
+      "bytes": 353,
+      "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+    },
+    {
+      "path": "packages/domain/src/inventory.ts",
+      "bytes": 3242,
+      "sha256": "e3872082e0173600f90a48b7571e84860041504e3e49760cd349c5ad7d854f38"
+    },
+    {
+      "path": "packages/domain/src/sales-money.ts",
+      "bytes": 2022,
+      "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30"
+    },
+    {
+      "path": "packages/domain/src/values.ts",
+      "bytes": 4820,
+      "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+    },
+    {
+      "path": "scripts/import-v2/authorized-header-reader.mjs",
+      "bytes": 24175,
+      "sha256": "43a3614b9c87df06f20ee8d6881008359aa647fe08f1616ec6102332f4d7c90b"
+    },
+    {
+      "path": "scripts/import-v2/authorized-history-closure-reader.mjs",
+      "bytes": 12769,
+      "sha256": "ea1fc98729be0b597d4d41ab7ab7e732dc31832b864d7f19256f7e6f18541f39"
+    },
+    {
+      "path": "scripts/import-v2/authorized-native-payment-reader.mjs",
+      "bytes": 2318,
+      "sha256": "04da633418a52adf2d9109c39067cf30ccc49c7d1bad0739ecd5f4d675d0580c"
+    },
+    {
+      "path": "scripts/import-v2/authorized-reader.mjs",
+      "bytes": 12683,
+      "sha256": "3cd141bd2a2623973b0f632e9fb90ee5c7919f9b6e4872b5de4a1d69a9fcee23"
+    },
+    {
+      "path": "scripts/import-v2/authorized-sales-detail-reader.mjs",
+      "bytes": 12297,
+      "sha256": "c4fae2eb8689cc49b8413fe525003c1538d06e39857aa60aa9631a2af88a8dda"
+    },
+    {
+      "path": "scripts/import-v2/authorized-settlement-reader.mjs",
+      "bytes": 2459,
+      "sha256": "710da51599c0a7860e034d8fda5c508b98a132d6c1ca5e827243a7691211e7bb"
+    },
+    {
+      "path": "scripts/import-v2/extract-history-cell-evidence.py",
+      "bytes": 25730,
+      "sha256": "320e3b327a875a4bec39fbe00218eb4143a20ec730c6c9153609df2b33116547"
+    },
+    {
+      "path": "scripts/import-v2/run.mjs",
+      "bytes": 41512,
+      "sha256": "76a1094a56fedeb06b8c0f418393604f9e36acde8af1bb3219c9ad59813d487b"
+    },
+    {
+      "path": "scripts/import-v2/sealed-payment-source.mjs",
+      "bytes": 14338,
+      "sha256": "944fc4bb426593121cd01396fa25263c778d8cebc9681a92b50f61e255613267"
+    },
+    {
+      "path": "tests/integration/database.ts",
+      "bytes": 12035,
+      "sha256": "575a3ec6471ecb1a57c0b34b13b00019032c0444a7d5dc3f404fad91d2d0eff8"
+    },
+    {
+      "path": "tests/integration/frozen-0001-0008-manifest.ts",
+      "bytes": 1030,
+      "sha256": "8a672db78ea1c3ee6988cb43fa9ba888c7baf37333fb2b41cbaf982d5f7e07b6"
+    },
+    {
+      "path": "tests/integration/history-closure-database.ts",
+      "bytes": 1311,
+      "sha256": "d34310a8a2110317c90811faf32dded9439c6e62bc9c6c6a112e25262a673c26"
+    },
+    {
+      "path": "tests/integration/history-database.ts",
+      "bytes": 1885,
+      "sha256": "1e2fc006813460e9d83c7f2610c17dae16a0d4cb5ff93f721430110a1b4321f9"
+    },
+    {
+      "path": "tests/integration/history-native-reference-database.ts",
+      "bytes": 3881,
+      "sha256": "84efa479981d80432af23a492086a5e09f700ab1742f8c19ed9d00d156ae88af"
+    },
+    {
+      "path": "tests/integration/history-typed-database.ts",
+      "bytes": 2075,
+      "sha256": "7d9f00cbaac2906ee71ed244672d43fe0770f240c69ca74a2bf2045ce52a0a1a"
+    },
+    {
+      "path": "tests/integration/migration-manifest.ts",
+      "bytes": 7942,
+      "sha256": "9015d3098fbbb398a336ec6f12a41d298ab598441b8fe7fe061bf8293d276ed9"
+    },
+    {
+      "path": "tests/integration/native-import-accounting-database.ts",
+      "bytes": 2568,
+      "sha256": "3cd0709a8963068b33d4b6d68315859361011d9ef99ddd4b3dc101860d146907"
+    },
+    {
+      "path": "tests/integration/native-import-accounting-fixture.ts",
+      "bytes": 18996,
+      "sha256": "c097bae960af55357068a511540a21a111aaab50462c860e0b83d8cb4c7f83f7"
+    },
+    {
+      "path": "tests/integration/native-payment-database.ts",
+      "bytes": 1267,
+      "sha256": "be11c2d9b1fb4793d89d1ec4b98dbfadcf361141c5a13e36362bab9439c20aa5"
+    },
+    {
+      "path": "tests/integration/proof.ts",
+      "bytes": 2270,
+      "sha256": "9c6f72d2f51382296188ab1ca4ea70f5d8747b61f02e9358bcc525cf9c60f077"
+    },
+    {
+      "path": "tests/integration/safety.ts",
+      "bytes": 4186,
+      "sha256": "54df233cf39f1314e865f096e10c0beb795c793e31a51123fb863449e7d2009a"
+    },
+    {
+      "path": "tests/integration/sealed-history17-fixture.ts",
+      "bytes": 20903,
+      "sha256": "29c2c16d815606ccd9412be1bc46d70cff67a3a8b00d57c69d28e835290f6e7a"
+    },
+    {
+      "path": "tests/integration/sealed-history18-source-pin.ts",
+      "bytes": 1917,
+      "sha256": "b43b5c71340fb8e62d9155ee43e2ffdb8299b6ca2db39f4e9386b1ff5f2f0a68"
+    },
+    {
+      "path": "tests/integration/sealed-history18.integration.ts",
+      "bytes": 33927,
+      "sha256": "fa6923f2bb0cd8fd73fea802b4ce0a3b511e70a5d2918261fee92005cfc06b7f"
+    },
+    {
+      "path": "tests/support/history-closure-prepared-facts.ts",
+      "bytes": 12259,
+      "sha256": "610caa27f7e041303b5603cf625bf12409434dfffacd75ef39eb666e5fc25ea0"
+    },
+    {
+      "path": "tests/support/history18-routine-source-pins.json",
+      "bytes": 11248,
+      "sha256": "fe1a4d6e0a16894700f51848995f4899e6c725ad3c842af563f4d01870ea3691"
+    }
+  ],
+  "realPrivateRead": false,
+  "publication": "CLOSED",
+  "exitCode": 1,
+  "tap": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/sealed-history18-pg-run1.tap",
+    "bytes": 6703,
+    "sha256": "c22347ebb3dd3c51fd9be6a75de36b8955b3066fd53f1638d1af6bb06781263b"
+  },
+  "stop": {
+    "atUtc": "2026-10-21T22:43:30.163707+00:00",
+    "exactDataDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1/data",
+    "port": 55671,
+    "stopAttempted": true,
+    "stopExitCode": 0,
+    "pgCtlStatusExit": 3,
+    "postmasterPidAbsent": true,
+    "deleted": false
+  },
+  "sourceDriftAfter": [],
+  "syntheticTempEmpty": true,
+  "finishedAtUtc": "2026-10-21T22:43:30.168691+00:00"
+}

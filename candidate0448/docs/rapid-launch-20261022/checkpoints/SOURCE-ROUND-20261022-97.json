@@ -1,0 +1,64 @@
+{
+  "atUtc": "2026-10-22T22:14:33.474420+00:00",
+  "parent": "d8feca8efde86b8a540d7caa568a5f426a12cbe3",
+  "groups": [
+    {
+      "slice": "fix: align catalogue close glyph and hover shape",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-54/DELIVERY.json",
+      "receiptSha256": "a804635e49196c379c257f9441cbae3ddd3d67645cdce0491dc3fb05db693322",
+      "receiptSnapshot": {
+        "chunk": 54,
+        "atUtc": "2026-10-22T22:07:22.433158+00:00",
+        "status": "READY_EXACT1_CATALOGUE_MODAL_HOVER_SHAPE",
+        "taskId": "F01/SCHEME-UI-01 existing hover residual",
+        "files": [
+          {
+            "path": "apps/web/src/components/standard-overlay.css",
+            "sha256": "a399c700bce1dfcdbf0c477f9f5814ee8e00b965e4276bbb40ae3b3aa11d3a97"
+          }
+        ],
+        "scope": "Append modal-catalogue-only rules after intact C89 prefix. Retain24px accessible button, adapt native12px icon/20px circular hover source and correct icon insets12/14 -> visual18/20. Override square secondary hover/active fill; preserve focus outline and no TSX/event changes.",
+        "checks": {
+          "hover-1.log": "exit0 actual C89 full inline CSS order with modeled normal/hover/active/focus and pseudo-element; default modal/Drawer/catalogueDrawer/footer styles identical",
+          "source": "Entire C89 CSS prefix intact; StandardOverlay.tsx97c22b8d... unchanged. Frozen actual bundle SHA295c9572867eda492b2cc8075294c8d41604c926a205ed83db853e60693ecd2a provides12px native close and20px pseudo circle."
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-54/FROZEN-SOURCE.json",
+            "sha256": "5be6e542ca7479743f99c371e9d79f0f6b5387338272510791a1de68af1ef49b"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-54/HOVER-RESULT.json",
+            "sha256": "7e91bd056cdb0e108239f8162d87b136060760ea9dce2459b8ee3fd28c72becf"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-54/hover-1.log",
+            "sha256": "1f400fac934b40a9206d1e2a3cd6426336b6b12775018a78f51be8ffdac5b983"
+          }
+        ],
+        "limitations": [
+          "Hover/focus modeled with equal-specificity attributes; pseudo modeled with custom element tag, no actual pseudo pixels",
+          "Unresolved CSS variables retained as tokens",
+          "No actual Chrome/keyboard/close behavior suite/fullbuild/PG"
+        ],
+        "notRepeated": [
+          "C89 actual normal-base closed case and other38cases",
+          "Existing portal/Tab/EnterEsc/focusrestore/modal suites"
+        ],
+        "next": "C pin exact1; original Demo next necessary integrated candidate only new glyph/hover shape and affected close focus. P1 SALE-QUANTITY-DIRECTION-01 takes priority for all subsequent F1 work; no3tag work now.",
+        "blockers": [],
+        "wholeOverlayPass": false,
+        "realBusinessPass": false
+      },
+      "files": [
+        {
+          "path": "apps/web/src/components/standard-overlay.css",
+          "sha256": "a399c700bce1dfcdbf0c477f9f5814ee8e00b965e4276bbb40ae3b3aa11d3a97",
+          "owner": "F1",
+          "bytes": 3717
+        }
+      ]
+    }
+  ],
+  "controllerScope": "F1 exact1 appended catalogue-modal CSS only. Actual89 normal base result reused; keyboard/focus handlers unchanged. Actual hover pixels pending next necessary preview."
+}

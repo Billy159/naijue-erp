@@ -1,0 +1,45 @@
+{
+  "atUtc": "2026-10-23T20:02:50.500185+00:00",
+  "parent": "0f0f670a31938e564f75ff73efef8531d14d75ce",
+  "taskId": "DOC-215-T02-MATRIX-ENTRY-COORDINATE-01",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-proposal.ts",
+      "bytes": 45689,
+      "sha256": "48e3baecb4835b45b366d8265286c344b7161316b6d305de04c95094cf6198bf",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-106/DELIVERY.json",
+  "ownerReceiptSha256": "cb1753dae1fb075c241977cc0775bdd394ae9378df2710d902b15a4054802374",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "finding": "DOC-215-T02-MATRIX-ENTRY-COORDINATE-01",
+    "status": "SOURCE_READY_MATRIX_FIRST_ENTRY_COORDINATE_MERGE_ONLY",
+    "files": [
+      {
+        "path": "apps/web/src/current-form/transfer-proposal.ts",
+        "bytes": 45689,
+        "sha256": "48e3baecb4835b45b366d8265286c344b7161316b6d305de04c95094cf6198bf"
+      }
+    ],
+    "changes": [
+      "Original commit duplicate confirmation includes matching matrix coordinates, with exact draft/pending/replacement/matrix basis. Cancel preserves both matrix4 and pending2",
+      "Original confirmed append sums matching matrix4 and pending2 into one local6, then publishes line and consumed map together. Explicit later matrix quantity edits own one visible coordinate. Nonmatching matrix coordinates remain unchanged",
+      "Original source215 sameSAVE/CAS/pointer/identity path remains; no fake SKU ID/code/barcode/snapshot or new server field/API"
+    ],
+    "checks": {
+      "before-1": "RED Node24 actual original TransferNewDocumentForm: realS1 -> matrixXL4 -> bottomXL2 Enter leaves local2 + hiddenmap4, no append dialog, saveProposal null; exact observations+DOM retained",
+      "after-1": "PASS only new affected full-page flow: original native confirm/cancel preserves4/2 then merges6 once, later matrix7 no leftovermap, original sameSAVE/found receipt readback realSKU72 qty7; original real model nonmatching blueXL9 preserved",
+      "types-1": "PASS original model/form/create/existing4roots complete strict imported closure0"
+    },
+    "limitations": [
+      "Synthetic native ports/JSDOM only, no Chrome/PG/real native allocation/authority or whole-page acceptance",
+      "No98/209 or absent receipt reacceptance/retest",
+      "Original fixed215 evidence kept, one successor model file only; old public consumer contracts unchanged"
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "SOURCE_FIXED_OWNER_REAL_REACT_SYNTHETIC_PORT_RED_GREEN_ONLY; exact matrix4 thenbottom2 confirm6/cancel retains4and2, hidden coordinate cleared. Independent affected review pending; notin214/215 preview, noChrome/PG."
+}

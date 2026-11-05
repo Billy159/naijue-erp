@@ -1,0 +1,5 @@
+package.json: OK
+package-lock.json: OK
+tsconfig.json: OK
+apps/web/src/application/tsconfig.json: OK
+apps/web/preview-core-pages/tsconfig.json: OK

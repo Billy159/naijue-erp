@@ -1,0 +1,258 @@
+{
+  "version": 1,
+  "sourceRootLocal": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo",
+  "targetRootLocal": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/references/demo-ui-baseline",
+  "targetRootRepositoryRelative": "references/demo-ui-baseline",
+  "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "mapping": [
+    {
+      "sourceRepositoryRelative": "frontend/basic-settings-v2.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/basic-settings-v2.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/basic-settings.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/basic-settings.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/brand-components.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/brand-components.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/confirmation-dialogs.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/confirmation-dialogs.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/entry-shared.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/entry-shared.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/final-ui.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/final-ui.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/gold.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/gold.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/golden-consistency.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/golden-consistency.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/interaction-common.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/interaction-common.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/inventory-ledger.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/inventory-ledger.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/inventory-refinement.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/inventory-refinement.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/inventory-workbench.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/inventory-workbench.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/matrix-experiments.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/matrix-experiments.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/product-current.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/product-current.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/product-inventory-unified.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/product-inventory-unified.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/product-refinement.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/product-refinement.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/product-rework.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/product-rework.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/sales-current.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/sales-current.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/sales-detail-alignment.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/sales-detail-alignment.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/sales-golden.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/sales-golden.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/sales-refinement.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/sales-refinement.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/sales-returns.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/sales-returns.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/styles.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/styles.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/transfer-current.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/transfer-current.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/transfer-scan-drawer.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/transfer-scan-drawer.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/ui-review.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/ui-review.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/ui-tokens.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/ui-tokens.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/unified-single-select.css",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/unified-single-select.css",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/unified-single-select.jsx",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/unified-single-select.jsx",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/inventory-select.jsx",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/inventory-select.jsx",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/inventory-category.jsx",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/inventory-category.jsx",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/inventory-filters.jsx",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/inventory-filters.jsx",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/transfer-date.jsx",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/transfer-date.jsx",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/product-arco.jsx",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/product-arco.jsx",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/topbar-account.jsx",
+      "targetRepositoryRelative": "references/demo-ui-baseline/source/frontend/topbar-account.jsx",
+      "mode": "verbatim-reference-only"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/index.html",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/index.html.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/sales-current.js",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/sales-current.js.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/transfer-current.js",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/transfer-current.js.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/transfer-golden.js",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/transfer-golden.js.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/transfer-matrix-experiment.js",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/transfer-matrix-experiment.js.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/inventory-workbench.js",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/inventory-workbench.js.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/inventory-matrix-experiment.js",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/inventory-matrix-experiment.js.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/product-current.js",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/product-current.js.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/basic-settings-v2.jsx",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/basic-settings-v2.jsx.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/sales-funds-ui.js",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/sales-funds-ui.js.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    },
+    {
+      "sourceRepositoryRelative": "frontend/transfer-scan-drawer.js",
+      "targetRepositoryRelative": "references/demo-ui-baseline/excerpts/frontend/transfer-scan-drawer.js.md",
+      "mode": "exact-line-excerpts-in-markdown"
+    }
+  ],
+  "localPathPolicy": "Local roots are provenance only, not a remote dependency.",
+  "missingInputs": [
+    {
+      "input": "Frozen Demo screenshots proven wholly synthetic",
+      "status": "NOT_PROVIDED",
+      "acquisition": "Controller schedules synthetic-only reference capture with provenance; no browser started."
+    },
+    {
+      "input": "Four Jakarta woff2 fonts",
+      "status": "NOT_PROVIDED",
+      "sourceReference": "frontend/assets/fonts/jakarta-{400,500,600,700}.woff2",
+      "acquisition": "Controller separately approves distributable fonts or records fallback differences."
+    },
+    {
+      "input": "Complete Demo runtime, actual data, controlled media and credentials",
+      "status": "PRIVATE_NOT_DISTRIBUTED",
+      "acquisition": "Controller-approved controlled private channel; no assumed local-path access."
+    }
+  ]
+}

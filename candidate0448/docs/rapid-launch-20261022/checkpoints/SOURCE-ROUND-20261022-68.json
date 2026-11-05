@@ -1,0 +1,258 @@
+{
+  "atUtc": "2026-10-22T20:24:06.374648+00:00",
+  "parent": "e8a794f8491178ae61426e66a539e6a5ee3ac464",
+  "groups": [
+    {
+      "slice": "PRODUCT_SIZEGROUP_BARCODE_REMOTE_SEARCH_PAIR",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-SEARCH-PAIR-DELIVERY-v1.json",
+      "receiptSha256": "162d250c535e6d1fd2f11e8e3bcd6d3ef93bd3188f60b7c3475314787562a80f",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "PROD-UI-SOURCE-01-SEARCH-PAIR",
+        "owner": "F2",
+        "createdAt": "2026-10-22T20:17:07.739149+00:00",
+        "status": "SOURCE_DOM_TYPE_PASS_BROWSER_PENDING",
+        "applicationFiles": [
+          {
+            "path": "apps/web/src/products/product-editor-base.tsx",
+            "beforeSha256": "80093bc9291ac4eff337cc56ede97061153b99aa893161abcbed208d48861395",
+            "sha256": "46e346cb799e417d432c4cd08f0bcad3cfb312afe38b960651911c53e10642ef"
+          }
+        ],
+        "newApplicationFiles": [],
+        "sharedInputs": {
+          "controllerReported": "99d687b5/C61, exact2 shared onSearch seam",
+          "files": [
+            {
+              "path": "apps/web/src/demo-controls/single-select-contract.ts",
+              "sha256": "ab79bc3865a70f3c22a75429955772f1b3080a098efc4f2f1bfa174f6b62d52c"
+            },
+            {
+              "path": "apps/web/src/demo-controls/single-select-action.tsx",
+              "sha256": "7aa90f80a6b1fd69810e2bee06482f37873eeb5b4dd687c084b5bb0190e372ed"
+            },
+            {
+              "path": "apps/web/src/demo-controls/single-select-styles.ts",
+              "sha256": "8d2858bd480e128e9ca7a791db745db5b7b2f81bfb2a465aebfad0687c73216b"
+            },
+            {
+              "path": "apps/web/src/demo-controls/single-select.css",
+              "sha256": "d92da01d401bde97f3b1fbfed1f9361a9e932956b4704068739e8ef1eca0bbcd"
+            }
+          ],
+          "F2Writes": []
+        },
+        "scope": [
+          "Only size-groups and barcode-schemes join the existing year flat-presentation wrapper",
+          "Only the new pair passes raw onSearch; query.cancel + original180ms/latest query + existing50-page native reader remain F2-owned",
+          "Year callback remains omitted/nonsearch, source year parent label/event handlers not changed",
+          "Supplier/SKU/legacy-v1/true multiseason/category remain previous consumers; no shared/global source writes"
+        ],
+        "changes": [
+          "Generalized existing scoped year presentation to label/placeholder and optional onSearch; kept exact year class for scope and popup formula/lease lifecycle.",
+          "Default scheme placeholder follows frozen source选择方案, group选择尺码组. Required is aria metadata, not new EDIT validation or automatic choice.",
+          "The actual fixed shared callback disables native local filtering only when present, retaining authoritative server name-or-code match results.",
+          "No generic allowCreate/clear API addition, identity conversion, full-page preload or local aggregate."
+        ],
+        "checks": {
+          "dom": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-SEARCH-PAIR-dom-v1.log",
+            "exitCode": 0,
+            "cases": [
+              "Actual ProductEditor + actual v2 HTTP readers/client and shared Action",
+              "Group and default-scheme code-only query whose labels lack the query remains visible/selectable",
+              "Native50-item/page2 shape,503 error/retry and raw search parameters preserved",
+              "Selected actual UUID reaches existing full command unchanged; later synthetic commands deliberately receive known409 rejection, never claimed committed",
+              "Original default-schemeNULL survives unrelated name-only valid EDIT",
+              "Selecting new root default does not rewrite existing barcode raw00001234 or original schemeUUID",
+              "HOLD actual read signal aborted with scope and late native read cannot mutate or remount",
+              "Tiny affected check: year remains nonsearch; supplier/multiseason remain outside shared search pair"
+            ],
+            "qualification": "Synthetic provider fixture and controlled rejected mutations; no real native DB membership validation or business commit acceptance"
+          },
+          "type": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-SEARCH-PAIR-types.log",
+            "entry": "apps/web/src/products/product-editor-base.tsx",
+            "actualTransitiveSourceClosure": true,
+            "strict": true,
+            "exactOptionalPropertyTypes": true,
+            "noUncheckedIndexedAccess": true,
+            "exitCode": 0,
+            "logBytes": 0
+          },
+          "warnings": "Existing React19 Arco ref deprecation only; no act warnings"
+        },
+        "yearMouseIssue": {
+          "status": "WAITING_ACTUAL_EVENT_TRACE_NOT_REPRODUCED_LOCALLY",
+          "actualEvidenceDirectory": "reports/ui-demo-comparison-20261022/v010-d6ad29c",
+          "syntheticTrace": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-YEAR-MOUSE-before-EVENTS.json",
+          "actualLocalResult": "mousedown/up/view.click yielded oneDIV click, expandedtrue. Label ancestor confirmed but no forwarded input click observed. No source causality conclusion or speculative event suppression.",
+          "requested": "C/Demo one passive actual browser event+aria expansion trace and label.control metadata; pending exact evidence before targeted own-container fix or F1 seam"
+        },
+        "reused": [
+          "YEAR style/NULL/lease previous accepted range, not broad rerun",
+          "PROD-UI-02 measured dimensions and P1CSS402560de remain unchanged",
+          "P12 seven files acceptance unchanged",
+          "CAT leaf independently fixed C65, not mixed here"
+        ],
+        "notRun": [
+          "actual Chrome/pointer/geometry/hover/scroll",
+          "whole build/Git/PG/deployment",
+          "full previous suites"
+        ],
+        "next": "C fixed exact1 and QF only new pair/onSearch/current wrapper defaults/type. Next necessary Demo preview may exercise these fields and YEAR only once actual event trace is available.",
+        "authorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+        "browserResourceStatement": "No actual Chrome/browser-harness control or active input/control handles."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-base.tsx",
+          "owner": "F2",
+          "sha256": "46e346cb799e417d432c4cd08f0bcad3cfb312afe38b960651911c53e10642ef",
+          "bytes": 21043
+        }
+      ]
+    },
+    {
+      "slice": "TRANSFER_EXISTING_FULL_PROPOSAL_PAGE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-42/DELIVERY.json",
+      "receiptSha256": "40e6ce77d10745cb191f3801fb251c85635e336bd5717fde4b0c199c963d7994",
+      "receiptSnapshot": {
+        "chunk": 42,
+        "atUtc": "2026-10-22T20:22:37.909820+00:00",
+        "status": "READY_FOR_C_PIN_TRANSFER_EXISTING_FULL_PAGE",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-existing-document.ts",
+            "sha256": "c1faf59631c89cb56fa74d5573aadf344c705057732968321ad0d1d8d53a72f3"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+            "sha256": "4312584303768576d6785cf046c08cf4da1444bb5b7b418451e605096ddaa3cd"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.ts",
+            "sha256": "d931e400feba2c033fd570e94650afcb8778be66dcc2163e02d1f5b1f2702553"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "sha256": "e79d5b12812637c5b02d893b5ee6446733a53e6e8a15190bdabe8a04ae5dd143"
+          },
+          {
+            "path": "apps/web/src/transfers/commands/contracts.ts",
+            "sha256": "4842f24442c9e02b11094fa2f3ff43367dc03d0b044afd1607ed81daf231b984"
+          },
+          {
+            "path": "apps/web/src/transfers/commands/controller.ts",
+            "sha256": "3776b73830cbc6d09eb8388d3a237190f7b7ba6dece43ef72ce0e37d7f6710d7"
+          },
+          {
+            "path": "apps/web/src/transfers/commands/form.tsx",
+            "sha256": "da8b5b45308cc8422c04374cbca728920348cb36a5f2d4082b57093759a99821"
+          },
+          {
+            "path": "apps/web/src/transfers/commands/editable-lines.tsx",
+            "sha256": "1c20f7384c64a416900b3da913488c148b1680e12586d9c7e839ad59bc294303"
+          },
+          {
+            "path": "apps/web/src/application/routes/transfers.tsx",
+            "sha256": "da77cd206a37be1c9a7a79f896fddf3d651cedda3bf33a73b876b3f2476417ef"
+          },
+          {
+            "path": "apps/web/src/production-host/configuration.ts",
+            "sha256": "e1f92249410dcd40e2ad0986df891e2e7f79d32534644c18085c4112ed05f3c4"
+          },
+          {
+            "path": "apps/web/src/production-host/mount.tsx",
+            "sha256": "994e6fed5719178464b258ab450985b3cec8aa52941d53dac9a77efbc55d0781"
+          }
+        ],
+        "checks": {
+          "types-3.log": "exit0",
+          "transfer-existing-1.log": "exit0",
+          "transfer-existing-page-4.log": "exit0"
+        },
+        "scope": "Full saved Transfer matrix proposal under original native owner; actual SKU seed, original line pointers/snapshot/null barcode, explicit canonical size+group replacement, no same-SKU rebinding after delete, native existing preparation and original CAS/key/receipt guard. Duplicate/ambiguous old rows stay sparse. Prepared new-SKU recovery no longer throws on original catalogue gap. Visible Transfer details heading restored.",
+        "activation": "Explicit transfers.commands.existingPreparation or production routes.transferExistingEdit=true, default absent/false unchanged. Independent of manualCreate. No actual JSON flag enabled by F1.",
+        "notTested": [
+          "latest integrated Chrome full saved Transfer comparison, heading/matrixY actual pixels",
+          "remaining TR empty-cell/action/selector placeholder/truncation/focus style",
+          "actual isolated PostgreSQL prepare/save/approve, permissions and inventory",
+          "production deploy/release"
+        ],
+        "blockers": [],
+        "next": "C exact pin then original QF affected bridge and latest necessary actual candidate Demo; F1 resumes concrete TR visual residual with evidence. Accepted original axes/2SKU/cancel/capture/theme checks are not repeated."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-existing-document.ts",
+          "owner": "F1",
+          "sha256": "c1faf59631c89cb56fa74d5573aadf344c705057732968321ad0d1d8d53a72f3",
+          "bytes": 12366
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+          "owner": "F1",
+          "sha256": "4312584303768576d6785cf046c08cf4da1444bb5b7b418451e605096ddaa3cd",
+          "bytes": 4768
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.ts",
+          "owner": "F1",
+          "sha256": "d931e400feba2c033fd570e94650afcb8778be66dcc2163e02d1f5b1f2702553",
+          "bytes": 29244
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "e79d5b12812637c5b02d893b5ee6446733a53e6e8a15190bdabe8a04ae5dd143",
+          "bytes": 25802
+        },
+        {
+          "path": "apps/web/src/transfers/commands/contracts.ts",
+          "owner": "F1",
+          "sha256": "4842f24442c9e02b11094fa2f3ff43367dc03d0b044afd1607ed81daf231b984",
+          "bytes": 4993
+        },
+        {
+          "path": "apps/web/src/transfers/commands/controller.ts",
+          "owner": "F1",
+          "sha256": "3776b73830cbc6d09eb8388d3a237190f7b7ba6dece43ef72ce0e37d7f6710d7",
+          "bytes": 26394
+        },
+        {
+          "path": "apps/web/src/transfers/commands/form.tsx",
+          "owner": "F1",
+          "sha256": "da8b5b45308cc8422c04374cbca728920348cb36a5f2d4082b57093759a99821",
+          "bytes": 12331
+        },
+        {
+          "path": "apps/web/src/transfers/commands/editable-lines.tsx",
+          "owner": "F1",
+          "sha256": "1c20f7384c64a416900b3da913488c148b1680e12586d9c7e839ad59bc294303",
+          "bytes": 5672
+        },
+        {
+          "path": "apps/web/src/application/routes/transfers.tsx",
+          "owner": "F1",
+          "sha256": "da77cd206a37be1c9a7a79f896fddf3d651cedda3bf33a73b876b3f2476417ef",
+          "bytes": 9157
+        },
+        {
+          "path": "apps/web/src/production-host/configuration.ts",
+          "owner": "F1",
+          "sha256": "e1f92249410dcd40e2ad0986df891e2e7f79d32534644c18085c4112ed05f3c4",
+          "bytes": 7955
+        },
+        {
+          "path": "apps/web/src/production-host/mount.tsx",
+          "owner": "F1",
+          "sha256": "994e6fed5719178464b258ab450985b3cec8aa52941d53dac9a77efbc55d0781",
+          "bytes": 11149
+        }
+      ]
+    }
+  ],
+  "fileCount": 12,
+  "scope": "Search pair1 and Transfer existing bridge11. YEAR mouse still unchanged/open. No browser/PG or write activation."
+}

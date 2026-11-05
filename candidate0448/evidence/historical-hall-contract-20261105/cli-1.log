@@ -1,0 +1,72 @@
+✔ all public CLI help declares independently pinned historical hall approval (4629.731302ms)
+✖ public preflight consumes hall evidence; prepare/import remain offline before private host access (536.856101ms)
+✖ untrusted pin, package-contained approval and missing pair fail without host fallback (939.357873ms)
+✔ standalone stream-preflight validates pinned explicit-zero evidence without connection inputs (4691.847746ms)
+✔ offline preflight accepts both independent staff-hall and zero approvals without printing staff facts (555.420391ms)
+✔ formal stream-import CLI exposes safe usage and rejects missing options before any connection (923.46022ms)
+✔ formal CLI preserves commit, rollback, unknown and verification exit semantics (4613.747923ms)
+✔ offline CLI builds complete bounded requests and does not claim DB admission (384.534797ms)
+✔ prepare help offers the independent staff-hall approval pair (2.669968ms)
+✔ public prepare binds staff approval with combined=false, coalesce=false (3077.63581ms)
+✔ public prepare binds staff approval with combined=false, coalesce=true (2141.611036ms)
+✔ public prepare binds staff approval with combined=true, coalesce=false (736.621349ms)
+✔ public prepare binds staff approval with combined=true, coalesce=true (665.498974ms)
+✔ unapproved departed null-hall staff still fails preflight (445.536389ms)
+✔ a valid approval never exempts an active salesperson from hall mapping (423.240547ms)
+✔ valid staff approval does not bypass historical source host admission (1216.161085ms)
+✔ both approval pairs remain mandatory independently in a combined package (1766.598716ms)
+✔ staff approval parameters are paired and unique independently of zero parameters (26.59293ms)
+✔ wrong staff approval hash cannot be excused by valid explicit-zero approval (315.502623ms)
+✔ wrong explicit-zero hash cannot be excused by valid staff approval (362.06202ms)
+✔ staff approval namespace mismatch fails closed (393.619217ms)
+✔ staff approval source-hash mismatch fails closed (353.675312ms)
+✔ staff approval locator mismatch fails closed (490.497683ms)
+✔ staff approval package-contained file is rejected by the existing reader (318.575509ms)
+✔ staff approval symlink file is rejected by the existing reader (344.206304ms)
+✔ staff-only preparation verifies manifest pin before reading approval (265.567184ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 24
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13863.244737
+
+✖ failing tests:
+
+test at tests/historical-sales-hall-cli.test.mjs:20:1
+✖ public preflight consumes hall evidence; prepare/import remain offline before private host access (536.856101ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /warehouse_hall_id_at_capture|original_hall_id|sales:01/. Input:
+  
+  '{"historical_hall_approval":{"utf8":"{\\"format_version\\":\\"HISTORICAL_SALES_HALL_APPROVAL_V1\\",\\"source_namespace\\":\\"synthetic.unified.v1\\",\\"evidence_sha256\\":\\"4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1\\",\\"records\\":[{\\"source_key\\":\\"sales_header:01\\",\\"target_id\\":\\"247ad997-ce44-28b2-4722-9dfb83c05b23\\",\\"source_refs\\":[{\\"file_sha256\\":\\"69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7\\",\\"sheet\\":\\"SYNTHETIC\\",\\"row\\":1}],\\"evidence\\":{\\"format_version\\":\\"HISTORICAL_SALES_HALL_EVIDENCE_V1\\",\\"basis\\":\\"MIGRATION_DERIVED\\",\\"original_hall_id\\":null,\\"selected_hall_id\\":\\"6f84c8a3-27a6-72be-4c2b-03b1bfbcbe2c\\",\\"warehouse_id\\":\\"2a529b01-f4f7-ec6e-dc5b-b398288024ab\\",\\"warehouse_hall_id_at_capture\\":\\"6f84c8a3-27a6-72be-4c2b-03b1bfbcbe2c\\",\\"warehouse_version\\":1,\\"captured_at\\":\\"2026-11-05T03:00:00Z\\",\\"has_difference\\":false,\\"review_required\\":false}}]}","sha256":"8a2178c246c4d68a4b72ee976aa54f5b945a2f13f059727d7f2f44aa04b4e208"},"timings_ms":{"metadata_ms":41.14063100000004,"registry_ms":7.926215000000013,"records_ms":44.51643899999999,"relations_and_reconciliation_ms":16.793678,"index_hash_ms":1.3543339999999944,"total_ms":111.95818200000002,"jsonl_read_ms":11.2447379999997,"jsonl_decode_parse_ms":2.5177650000002245},"source_namespace":"synthetic.unified.v1","schema_declarations_sha256":"f5d4e26d8cfae8cc96d42a43b01c6c49217a9927d1b0dc42af0c1b4c3ce29b66","package_stage":"READY","manifest_sha256":"daea7583ceb39b4b5051beab06f248d2eb4c35724e1e1781a5173d3cb0c7e82e","index_schema_version":"UNIFIED_STREAM_FACTS_V3","index_sha256":"05348be1a0ea1237ce89a3d5f2a1b99eb9b901f924fb62d84fcf67ff6365dd2a","index_bytes":196608,"validation_scope":"STANDARD_PACKAGE_OFFLINE_V1","state":"STREAM_PREFLIGHT_COMPLETE","checks_passed":true,"complete_package_validation":true,"import_eligible":false,"business_database_writes":false,"counts":{"barcode_scheme":6,"color":1,"customer":1,"fit":1,"hall":1,"inventory_baseline":2,"payment_account":1,"payment_account_hall":1,"payment_method":1,"product":1,"product_category":1,"product_image":1,"sales_header":1,"sales_line":1,"sales_settlement":16,"season":1,"size":1,"size_group":1,"size_group_member":1,"sku":1,"sku_barcode":1,"staff":1,"supplier":1,"transfer_header":1,"transfer_line":1,"warehouse":2},"issue_count":0,"bytes_scanned":47346,"peak_rss_bytes":114958336,"limits":{"line_bytes":1048576,"total_bytes":8589934592,"rows":5000000,"issues":100000,"sqlite_cache_kib":4096},"remaining_checks":["source truth beyond declared evidence","target authorization, live database state and execution"]}\n'
+  
+      at file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-hall-cli.test.mjs:21:193
+      at fixture (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-hall-cli.test.mjs:17:8)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '{"historical_hall_approval":{"utf8":"{\\"format_version\\":\\"HISTORICAL_SALES_HALL_APPROVAL_V1\\",\\"source_namespace\\":\\"synthetic.unified.v1\\",\\"evidence_sha256\\":\\"4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1\\",\\"records\\":[{\\"source_key\\":\\"sales_header:01\\",\\"target_id\\":\\"247ad997-ce44-28b2-4722-9dfb83c05b23\\",\\"source_refs\\":[{\\"file_sha256\\":\\"69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7\\",\\"sheet\\":\\"SYNTHETIC\\",\\"row\\":1}],\\"evidence\\":{\\"format_version\\":\\"HISTORICAL_SALES_HALL_EVIDENCE_V1\\",\\"basis\\":\\"MIGRATION_DERIVED\\",\\"original_hall_id\\":null,\\"selected_hall_id\\":\\"6f84c8a3-27a6-72be-4c2b-03b1bfbcbe2c\\",\\"warehouse_id\\":\\"2a529b01-f4f7-ec6e-dc5b-b398288024ab\\",\\"warehouse_hall_id_at_capture\\":\\"6f84c8a3-27a6-72be-4c2b-03b1bfbcbe2c\\",\\"warehouse_version\\":1,\\"captured_at\\":\\"2026-11-05T03:00:00Z\\",\\"has_difference\\":false,\\"review_required\\":false}}]}","sha256":"8a2178c246c4d68a4b72ee976aa54f5b945a2f13f059727d7f2f44aa04b4e208"},"timings_ms":{"metadata_ms":41.14063100000004,"registry_ms":7.926215000000013,"records_ms":44.51643899999999,"relations_and_reconciliation_ms":16.793678,"index_hash_ms":1.3543339999999944,"total_ms":111.95818200000002,"jsonl_read_ms":11.2447379999997,"jsonl_decode_parse_ms":2.5177650000002245},"source_namespace":"synthetic.unified.v1","schema_declarations_sha256":"f5d4e26d8cfae8cc96d42a43b01c6c49217a9927d1b0dc42af0c1b4c3ce29b66","package_stage":"READY","manifest_sha256":"daea7583ceb39b4b5051beab06f248d2eb4c35724e1e1781a5173d3cb0c7e82e","index_schema_version":"UNIFIED_STREAM_FACTS_V3","index_sha256":"05348be1a0ea1237ce89a3d5f2a1b99eb9b901f924fb62d84fcf67ff6365dd2a","index_bytes":196608,"validation_scope":"STANDARD_PACKAGE_OFFLINE_V1","state":"STREAM_PREFLIGHT_COMPLETE","checks_passed":true,"complete_package_validation":true,"import_eligible":false,"business_database_writes":false,"counts":{"barcode_scheme":6,"color":1,"customer":1,"fit":1,"hall":1,"inventory_baseline":2,"payment_account":1,"payment_account_hall":1,"payment_method":1,"product":1,"product_category":1,"product_image":1,"sales_header":1,"sales_line":1,"sales_settlement":16,"season":1,"size":1,"size_group":1,"size_group_member":1,"sku":1,"sku_barcode":1,"staff":1,"supplier":1,"transfer_header":1,"transfer_line":1,"warehouse":2},"issue_count":0,"bytes_scanned":47346,"peak_rss_bytes":114958336,"limits":{"line_bytes":1048576,"total_bytes":8589934592,"rows":5000000,"issues":100000,"sqlite_cache_kib":4096},"remaining_checks":["source truth beyond declared evidence","target authorization, live database state and execution"]}\n',
+    expected: /warehouse_hall_id_at_capture|original_hall_id|sales:01/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/historical-sales-hall-cli.test.mjs:25:1
+✖ untrusted pin, package-contained approval and missing pair fail without host fallback (939.357873ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /HISTORICAL_HALL_APPROVAL_OUTSIDE_PACKAGE_REQUIRED/. Input:
+  
+  '{"code":"STREAM_PREFLIGHT_FAILED","import_eligible":false,"business_database_writes":false}\n'
+  
+      at file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-hall-cli.test.mjs:27:265
+      at async fixture (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-hall-cli.test.mjs:17:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '{"code":"STREAM_PREFLIGHT_FAILED","import_eligible":false,"business_database_writes":false}\n',
+    expected: /HISTORICAL_HALL_APPROVAL_OUTSIDE_PACKAGE_REQUIRED/,
+    operator: 'match',
+    diff: 'simple'
+  }

@@ -1,0 +1,36 @@
+✔ approved absent key has only a real approval line locator, whole snapshot binding and no inferred key (10.717445ms)
+✔ reject tampered pin, cutoff, nonzero, duplicates, unknown identity and listed stock (2.784141ms)
+✔ ordinary and full streaming require independent approval, compiler retains zero proof without ledger ID (2213.913878ms)
+✔ proof tampering, transplanted rows, unpinned approval refs, extra approved keys and nonbaseline evidence fail closed (291.522709ms)
+✔ approval JSONL shares SQL 65536-byte raw-line limit and preserves owned bytes (4.319031ms)
+✔ raw host callback cannot bypass zero token with inspect (74.283982ms)
+✔ raw host callback cannot bypass zero token with prepare (2.185474ms)
+✔ raw host callback cannot bypass zero token with verify (0.481921ms)
+✔ host binds verified token through raw callback and rejects altered KEYS proof (126.058772ms)
+✔ host rejects copied token before its first physical query (57.524185ms)
+✔ read-only reviewed gate precedes exclusive finite SQL and preserves ACK (3375.717162ms)
+✔ invalid command poisons session and allows only one rollback (672.730721ms)
+✔ raw query failure poisons until one rollback (514.931514ms)
+✔ overlapping query poisons both operations before rollback (551.151172ms)
+✔ public host has no caller-supplied catalog override and fails before connecting without installation record (545.181443ms)
+✔ a thrown undefined cannot turn into a successful host result (604.263131ms)
+✔ undefined error during catalog gate cannot enter work (640.870567ms)
+✔ socket error awaits the same delayed physical close and reports rejection (3221.268501ms)
+✔ unresponsive physical close times out, destroys socket and never reports CLOSED (1217.876064ms)
+✔ missing or mismatched runtime login is rejected before host work and the connection closes (1358.798236ms)
+✔ original177 host never admits the sales successor trace query (497.833594ms)
+✔ caller-injected session and verifier cannot attest a trusted sales physical session (1264.901465ms)
+✔ SQL adapter uses fixed role boundaries and parameterized private secret without owning transaction (4.770618ms)
+✔ coordinator and SQL adapter use one client for provisional steps and one final commit (60.867833ms)
+✔ SQL adapter rejects duplicate response fields and invalid role acknowledgement (0.95288ms)
+✔ SQL kernel rejects a different client at every post-inspection stage before sending SQL (5.278514ms)
+✔ SQL kernel binds its initial client before awaiting role acknowledgment (0.556123ms)
+✔ zero-approval descriptor cannot cross SQL adapter without independent verified token (0.48138ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16326.525257

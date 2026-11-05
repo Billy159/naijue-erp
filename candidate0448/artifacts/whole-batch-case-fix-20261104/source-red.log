@@ -1,0 +1,122 @@
+✖ batch closure IF comparisons parenthesize SQL CASE expressions (9.616105ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 266.273227
+
+✖ failing tests:
+
+test at tests/whole-batch-closure-case-parse-regression.test.mjs:2:1
+✖ batch closure IF comparisons parenthesize SQL CASE expressions (9.616105ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /IS DISTINCT FROM\s+CASE\b/. Input:
+  
+  '-- UNINSTALLED SOURCE CANDIDATE ONLY. Not in the reviewed install/catalog cohort.\n' +
+    '-- Requires independent review, new source/catalog pins and real PostgreSQL tests.\n' +
+    '-- No roles, permissions, tables, triggers or existing migration files are changed.\n' +
+    'BEGIN;\n' +
+    'SET LOCAL search_path=pg_catalog,naijue_erp,pg_temp;\n' +
+    'DO $predecessor$\n' +
+    'DECLARE p record;\n' +
+    'BEGIN\n' +
+    ' SELECT * INTO STRICT p FROM pg_catalog.pg_proc\n' +
+    " WHERE oid='naijue_erp.standard_whole_package_closed_v2(uuid)'::regprocedure;\n" +
+    ' IF p.proowner IS DISTINCT FROM current_user::regrole::oid\n' +
+    "  OR p.proowner IS DISTINCT FROM (SELECT nspowner FROM pg_catalog.pg_namespace WHERE nspname='naijue_erp')\n" +
+    "  OR encode(sha256(convert_to(p.prosrc,'UTF8')),'hex') IS DISTINCT FROM 'd445ccee97d806f1e6a878c6a224ab01a8fd9890b685bfc85df9a7a2ee512c38'\n" +
+    '  OR p.prosecdef IS DISTINCT FROM true\n' +
+    "  OR p.proconfig IS DISTINCT FROM ARRAY['search_path=pg_catalog, naijue_erp, pg_temp','TimeZone=UTC']\n" +
+    " THEN RAISE EXCEPTION 'WHOLE_BATCH_CLOSURE_PREDECESSOR_DIFFERS' USING ERRCODE='55000'; END IF;\n" +
+    'END $predecessor$;\n' +
+    'CREATE OR REPLACE FUNCTION naijue_erp.standard_whole_package_closed_v2(root_operation uuid) RETURNS jsonb\n' +
+    "LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,naijue_erp,pg_temp SET TimeZone='UTC' AS $$\n" +
+    'DECLARE root_a naijue_erp.audit_change%ROWTYPE; root_r naijue_erp.operation_receipt%ROWTYPE;\n' +
+    ' a naijue_erp.audit_change%ROWTYPE; r naijue_erp.operation_receipt%ROWTYPE; b naijue_erp.import_batch%ROWTYPE;\n' +
+    " init jsonb; previous jsonb:='{}'; last_status jsonb:='{}'; expected_ordinal integer:=0; ordinal integer; command_phase text;\n" +
+    ' baseline_id uuid; documents_id uuid; final_result jsonb; rank integer; last_rank integer:=-1;\n' +
+    ' baseline_sealed boolean:=false; documents_staged boolean:=false; documents_published boolean:=false;\n' +
+    'BEGIN\n' +
+    ' SELECT * INTO STRICT root_a FROM naijue_erp.audit_change WHERE operation_id=root_operation;\n' +
+    ' SELECT * INTO STRICT root_r FROM naijue_erp.operation_receipt WHERE id=root_operation;\n' +
+    " init:=root_a.after_values->'request';baseline_id:=(init->>'batch_id')::uuid;documents_id:=(init->'payload'->>'document_batch_id')::uuid;\n" +
+    " IF root_a.after_values->'whole_package_v2'->>'root_operation' IS DISTINCT FROM root_operation::text\n" +
+    "  OR root_a.after_values->'whole_package_v2'->'ordinal' IS DISTINCT FROM '0'::jsonb\n" +
+    "  OR root_r.action IS DISTINCT FROM 'IMPORT_INITIALIZE_CURRENT_ADMIN' OR baseline_id=documents_id\n" +
+    " THEN RAISE EXCEPTION 'WHOLE_ROOT_CONTEXT_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    " FOR a IN SELECT * FROM naijue_erp.audit_change WHERE after_values->'whole_package_v2'->>'root_operation'=root_operation::text\n" +
+    "   ORDER BY (after_values->'whole_package_v2'->>'ordinal')::integer LOOP\n" +
+    "  ordinal:=(a.after_values->'whole_package_v2'->>'ordinal')::integer;\n" +
+    "  IF ordinal IS DISTINCT FROM expected_ordinal THEN RAISE EXCEPTION 'WHOLE_ORDINAL_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    "  IF ordinal>0 AND a.after_values->'whole_package_v2' IS DISTINCT FROM\n" +
+    "    jsonb_build_object('root_operation',root_operation,'ordinal',ordinal) THEN\n" +
+    "   RAISE EXCEPTION 'WHOLE_CHILD_MARKER_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    '  expected_ordinal:=expected_ordinal+1;\n' +
+    '  SELECT * INTO STRICT r FROM naijue_erp.operation_receipt WHERE id=a.operation_id;\n' +
+    "  rank:=CASE a.after_values->>'phase' WHEN 'INITIALIZE' THEN 0 WHEN 'MASTER' THEN 1 WHEN 'KEYS' THEN 2 WHEN 'BASELINE_SEAL' THEN 3 WHEN 'DOCUMENT_STAGE' THEN 4 WHEN 'DOCUMENTS' THEN 5 WHEN 'DOCUMENT_PUBLISH' THEN 6 ELSE NULL END;\n" +
+    "  command_phase:=CASE a.after_values->>'phase' WHEN 'BASELINE_SEAL' THEN 'PUBLISH' WHEN 'DOCUMENT_PUBLISH' THEN 'PUBLISH' WHEN 'DOCUMENT_STAGE' THEN 'DOCUMENTS' ELSE a.after_values->>'phase' END;\n" +
+    '  IF rank IS NULL OR rank<last_rank OR (ordinal=0) IS DISTINCT FROM (rank=0)\n' +
+    "   OR r.actor_account_id IS DISTINCT FROM root_r.actor_account_id OR r.status IS DISTINCT FROM 'COMMITTED'\n" +
+    "   OR r.target_type IS DISTINCT FROM 'IMPORT' OR r.target_id NOT IN (baseline_id,documents_id)\n" +
+    '   OR r.target_id IS DISTINCT FROM (CASE WHEN rank<=3 THEN baseline_id ELSE documents_id END)\n' +
+    "   OR a.object_type IS DISTINCT FROM 'IMPORT' OR a.object_id IS DISTINCT FROM r.target_id OR a.actor_account_id IS DISTINCT FROM r.actor_account_id\n" +
+    '   OR a.id IS DISTINCT FROM r.id OR a.action IS DISTINCT FROM r.action OR a.occurred_at IS DISTINCT FROM root_r.completed_at OR r.completed_at IS DISTINCT FROM root_r.completed_at\n' +
+    "   OR a.after_values->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1' OR r.result_data->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1'\n" +
+    "   OR a.after_values->'request'->>'namespace' IS DISTINCT FROM init->>'namespace'\n" +
+    "   OR a.after_values->'request'->>'plan_sha256' IS DISTINCT FROM init->>'plan_sha256'\n" +
+    "   OR a.after_values->'request'->>'package_manifest_sha256' IS DISTINCT FROM init->>'package_manifest_sha256'\n" +
+    "   OR a.after_values->'request'->>'cutoff_at' IS DISTINCT FROM init->>'cutoff_at'\n" +
+    "   OR a.after_values->'request'->>'operation_id' IS DISTINCT FROM r.id::text OR a.after_values->'request'->>'request_key' IS DISTINCT FROM r.request_key\n" +
+    "   OR (ordinal>0 AND r.request_hash IS DISTINCT FROM encode(sha256(convert_to(command_phase||':'||(a.after_values->'request')::text,'UTF8')),'hex'))\n" +
+    '   OR a.before_values IS DISTINCT FROM previous->(r.target_id::text)\n' +
+    "   OR a.new_version IS DISTINCT FROM (a.after_values->'checkpoint'->>'sequence')::integer+1\n" +
+    "  THEN RAISE EXCEPTION 'WHOLE_RECEIPT_CHAIN_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    '  -- A committed receipt must prove the whole lifecycle independently of the writer.\n' +
+    '  -- MASTER/KEYS/DOCUMENTS chunks may repeat; boundary transitions may not.\n' +
+    '  IF (rank=3 AND baseline_sealed) OR (rank>3 AND NOT baseline_sealed)\n' +
+    '   OR (rank=4 AND documents_staged) OR (rank>4 AND NOT documents_staged)\n' +
+    '   OR documents_published THEN\n' +
+    "   RAISE EXCEPTION 'WHOLE_SINGLETON_PHASE_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    '  baseline_sealed:=baseline_sealed OR rank=3;\n' +
+    '  documents_staged:=documents_staged OR rank=4;\n' +
+    '  documents_published:=documents_published OR rank=6;\n' +
+    "  last_rank:=rank;previous:=jsonb_set(previous,ARRAY[r.target_id::text],a.after_values->'checkpoint');\n" +
+    "  last_status:=jsonb_set(last_status,ARRAY[r.target_id::text],r.result_data->'status');final_result:=r.result_data;\n" +
+    ' END LOOP;\n' +
+    ' IF NOT baseline_sealed OR NOT documents_staged OR NOT documents_published\n' +
+    '  OR last_rank<>6 OR expected_ordinal<4 OR (SELECT count(*) FROM jsonb_object_keys(previous))<>2 THEN\n' +
+    "  RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n" +
+    ' FOR b IN SELECT * FROM naijue_erp.import_batch WHERE id IN (baseline_id,documents_id) LOOP\n' +
+    '  -- Reconcile both batch identities and declared totals to the immutable INIT,\n' +
+    '  -- not merely to mutually agreeing live checkpoint/count values.\n' +
+    "  IF b.source_manifest_ref IS DISTINCT FROM init->'payload'->>'manifest_ref'\n" +
+    "   OR b.cutoff_at IS DISTINCT FROM (init->>'cutoff_at')::timestamptz\n" +
+    "   OR b.mapping_version IS DISTINCT FROM CASE WHEN b.id=baseline_id THEN 'STANDARD_INITIAL_EXPLICIT_KEYS_V1' ELSE 'DOCUMENT_CONVERSION_V1' END\n" +
+    "   OR b.inventory_mode IS DISTINCT FROM CASE WHEN b.id=baseline_id THEN 'CUTOFF_STOCK_BASELINE' ELSE 'DOCUMENT_CONVERSION' END\n" +
+    '   OR b.created_at IS DISTINCT FROM root_r.completed_at\n' +
+    '   OR b.completed_at IS DISTINCT FROM root_r.completed_at\n' +
+    "   OR b.checkpoint->'expected' IS DISTINCT FROM\n" +
+    "     CASE WHEN b.id=baseline_id THEN init->'payload'->'expected' ELSE init->'payload'->'expected_documents' END\n" +
+    "  THEN RAISE EXCEPTION 'WHOLE_BATCH_INITIALIZATION_BINDING_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    "  IF b.status IS DISTINCT FROM 'IMPORTED' OR last_status->>b.id::text IS DISTINCT FROM 'IMPORTED'\n" +
+    "   OR b.checkpoint IS DISTINCT FROM previous->b.id::text OR b.checkpoint->'counts' IS DISTINCT FROM b.checkpoint->'expected'\n" +
+    "   OR b.source_hash IS DISTINCT FROM init->>'package_manifest_sha256' OR b.source_name IS DISTINCT FROM init->>'namespace'\n" +
+    "  THEN RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n" +
+    ' END LOOP;\n' +
+    " IF (SELECT count(*) FROM naijue_erp.import_batch WHERE id IN (baseline_id,documents_id))<>2 THEN RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n" +
+    ' RETURN final_result;\n' +
+    'END $$;\n' +
+    'COMMIT;\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-batch-closure-case-parse-regression.test.mjs:2:233)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "-- UNINSTALLED SOURCE CANDIDATE ONLY. Not in the reviewed install/catalog cohort.\n-- Requires independent review, new source/catalog pins and real PostgreSQL tests.\n-- No roles, permissions, tables, triggers or existing migration files are changed.\nBEGIN;\nSET LOCAL search_path=pg_catalog,naijue_erp,pg_temp;\nDO $predecessor$\nDECLARE p record;\nBEGIN\n SELECT * INTO STRICT p FROM pg_catalog.pg_proc\n WHERE oid='naijue_erp.standard_whole_package_closed_v2(uuid)'::regprocedure;\n IF p.proowner IS DISTINCT FROM current_user::regrole::oid\n  OR p.proowner IS DISTINCT FROM (SELECT nspowner FROM pg_catalog.pg_namespace WHERE nspname='naijue_erp')\n  OR encode(sha256(convert_to(p.prosrc,'UTF8')),'hex') IS DISTINCT FROM 'd445ccee97d806f1e6a878c6a224ab01a8fd9890b685bfc85df9a7a2ee512c38'\n  OR p.prosecdef IS DISTINCT FROM true\n  OR p.proconfig IS DISTINCT FROM ARRAY['search_path=pg_catalog, naijue_erp, pg_temp','TimeZone=UTC']\n THEN RAISE EXCEPTION 'WHOLE_BATCH_CLOSURE_PREDECESSOR_DIFFERS' USING ERRCODE='55000'; END IF;\nEND $predecessor$;\nCREATE OR REPLACE FUNCTION naijue_erp.standard_whole_package_closed_v2(root_operation uuid) RETURNS jsonb\nLANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,naijue_erp,pg_temp SET TimeZone='UTC' AS $$\nDECLARE root_a naijue_erp.audit_change%ROWTYPE; root_r naijue_erp.operation_receipt%ROWTYPE;\n a naijue_erp.audit_change%ROWTYPE; r naijue_erp.operation_receipt%ROWTYPE; b naijue_erp.import_batch%ROWTYPE;\n init jsonb; previous jsonb:='{}'; last_status jsonb:='{}'; expected_ordinal integer:=0; ordinal integer; command_phase text;\n baseline_id uuid; documents_id uuid; final_result jsonb; rank integer; last_rank integer:=-1;\n baseline_sealed boolean:=false; documents_staged boolean:=false; documents_published boolean:=false;\nBEGIN\n SELECT * INTO STRICT root_a FROM naijue_erp.audit_change WHERE operation_id=root_operation;\n SELECT * INTO STRICT root_r FROM naijue_erp.operation_receipt WHERE id=root_operation;\n init:=root_a.after_values->'request';baseline_id:=(init->>'batch_id')::uuid;documents_id:=(init->'payload'->>'document_batch_id')::uuid;\n IF root_a.after_values->'whole_package_v2'->>'root_operation' IS DISTINCT FROM root_operation::text\n  OR root_a.after_values->'whole_package_v2'->'ordinal' IS DISTINCT FROM '0'::jsonb\n  OR root_r.action IS DISTINCT FROM 'IMPORT_INITIALIZE_CURRENT_ADMIN' OR baseline_id=documents_id\n THEN RAISE EXCEPTION 'WHOLE_ROOT_CONTEXT_INVALID' USING ERRCODE='23514'; END IF;\n FOR a IN SELECT * FROM naijue_erp.audit_change WHERE after_values->'whole_package_v2'->>'root_operation'=root_operation::text\n   ORDER BY (after_values->'whole_package_v2'->>'ordinal')::integer LOOP\n  ordinal:=(a.after_values->'whole_package_v2'->>'ordinal')::integer;\n  IF ordinal IS DISTINCT FROM expected_ordinal THEN RAISE EXCEPTION 'WHOLE_ORDINAL_INVALID' USING ERRCODE='23514'; END IF;\n  IF ordinal>0 AND a.after_values->'whole_package_v2' IS DISTINCT FROM\n    jsonb_build_object('root_operation',root_operation,'ordinal',ordinal) THEN\n   RAISE EXCEPTION 'WHOLE_CHILD_MARKER_INVALID' USING ERRCODE='23514'; END IF;\n  expected_ordinal:=expected_ordinal+1;\n  SELECT * INTO STRICT r FROM naijue_erp.operation_receipt WHERE id=a.operation_id;\n  rank:=CASE a.after_values->>'phase' WHEN 'INITIALIZE' THEN 0 WHEN 'MASTER' THEN 1 WHEN 'KEYS' THEN 2 WHEN 'BASELINE_SEAL' THEN 3 WHEN 'DOCUMENT_STAGE' THEN 4 WHEN 'DOCUMENTS' THEN 5 WHEN 'DOCUMENT_PUBLISH' THEN 6 ELSE NULL END;\n  command_phase:=CASE a.after_values->>'phase' WHEN 'BASELINE_SEAL' THEN 'PUBLISH' WHEN 'DOCUMENT_PUBLISH' THEN 'PUBLISH' WHEN 'DOCUMENT_STAGE' THEN 'DOCUMENTS' ELSE a.after_values->>'phase' END;\n  IF rank IS NULL OR rank<last_rank OR (ordinal=0) IS DISTINCT FROM (rank=0)\n   OR r.actor_account_id IS DISTINCT FROM root_r.actor_account_id OR r.status IS DISTINCT FROM 'COMMITTED'\n   OR r.target_type IS DISTINCT FROM 'IMPORT' OR r.target_id NOT IN (baseline_id,documents_id)\n   OR r.target_id IS DISTINCT FROM (CASE WHEN rank<=3 THEN baseline_id ELSE documents_id END)\n   OR a.object_type IS DISTINCT FROM 'IMPORT' OR a.object_id IS DISTINCT FROM r.target_id OR a.actor_account_id IS DISTINCT FROM r.actor_account_id\n   OR a.id IS DISTINCT FROM r.id OR a.action IS DISTINCT FROM r.action OR a.occurred_at IS DISTINCT FROM root_r.completed_at OR r.completed_at IS DISTINCT FROM root_r.completed_at\n   OR a.after_values->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1' OR r.result_data->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1'\n   OR a.after_values->'request'->>'namespace' IS DISTINCT FROM init->>'namespace'\n   OR a.after_values->'request'->>'plan_sha256' IS DISTINCT FROM init->>'plan_sha256'\n   OR a.after_values->'request'->>'package_manifest_sha256' IS DISTINCT FROM init->>'package_manifest_sha256'\n   OR a.after_values->'request'->>'cutoff_at' IS DISTINCT FROM init->>'cutoff_at'\n   OR a.after_values->'request'->>'operation_id' IS DISTINCT FROM r.id::text OR a.after_values->'request'->>'request_key' IS DISTINCT FROM r.request_key\n   OR (ordinal>0 AND r.request_hash IS DISTINCT FROM encode(sha256(convert_to(command_phase||':'||(a.after_values->'request')::text,'UTF8')),'hex'))\n   OR a.before_values IS DISTINCT FROM previous->(r.target_id::text)\n   OR a.new_version IS DISTINCT FROM (a.after_values->'checkpoint'->>'sequence')::integer+1\n  THEN RAISE EXCEPTION 'WHOLE_RECEIPT_CHAIN_INVALID' USING ERRCODE='23514'; END IF;\n  -- A committed receipt must prove the whole lifecycle independently of the writer.\n  -- MASTER/KEYS/DOCUMENTS chunks may repeat; boundary transitions may not.\n  IF (rank=3 AND baseline_sealed) OR (rank>3 AND NOT baseline_sealed)\n   OR (rank=4 AND documents_staged) OR (rank>4 AND NOT documents_staged)\n   OR documents_published THEN\n   RAISE EXCEPTION 'WHOLE_SINGLETON_PHASE_INVALID' USING ERRCODE='23514'; END IF;\n  baseline_sealed:=baseline_sealed OR rank=3;\n  documents_staged:=documents_staged OR rank=4;\n  documents_published:=documents_published OR rank=6;\n  last_rank:=rank;previous:=jsonb_set(previous,ARRAY[r.target_id::text],a.after_values->'checkpoint');\n  last_status:=jsonb_set(last_status,ARRAY[r.target_id::text],r.result_data->'status');final_result:=r.result_data;\n END LOOP;\n IF NOT baseline_sealed OR NOT documents_staged OR NOT documents_published\n  OR last_rank<>6 OR expected_ordinal<4 OR (SELECT count(*) FROM jsonb_object_keys(previous))<>2 THEN\n  RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n FOR b IN SELECT * FROM naijue_erp.import_batch WHERE id IN (baseline_id,documents_id) LOOP\n  -- Reconcile both batch identities and declared totals to the immutable INIT,\n  -- not merely to mutually agreeing live checkpoint/count values.\n  IF b.source_manifest_ref IS DISTINCT FROM init->'payload'->>'manifest_ref'\n   OR b.cutoff_at IS DISTINCT FROM (init->>'cutoff_at')::timestamptz\n   OR b.mapping_version IS DISTINCT FROM CASE WHEN b.id=baseline_id THEN 'STANDARD_INITIAL_EXPLICIT_KEYS_V1' ELSE 'DOCUMENT_CONVERSION_V1' END\n   OR b.inventory_mode IS DISTINCT FROM CASE WHEN b.id=baseline_id THEN 'CUTOFF_STOCK_BASELINE' ELSE 'DOCUMENT_CONVERSION' END\n   OR b.created_at IS DISTINCT FROM root_r.completed_at\n   OR b.completed_at IS DISTINCT FROM root_r.completed_at\n   OR b.checkpoint->'expected' IS DISTINCT FROM\n     CASE WHEN b.id=baseline_id THEN init->'payload'->'expected' ELSE init->'payload'->'expected_documents' END\n  THEN RAISE EXCEPTION 'WHOLE_BATCH_INITIALIZATION_BINDING_INVALID' USING ERRCODE='23514'; END IF;\n  IF b.status IS DISTINCT FROM 'IMPORTED' OR last_status->>b.id::text IS DISTINCT FROM 'IMPORTED'\n   OR b.checkpoint IS DISTINCT FROM previous->b.id::text OR b.checkpoint->'counts' IS DISTINCT FROM b.checkpoint->'expected'\n   OR b.source_hash IS DISTINCT FROM init->>'package_manifest_sha256' OR b.source_name IS DISTINCT FROM init->>'namespace'\n  THEN RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n END LOOP;\n IF (SELECT count(*) FROM naijue_erp.import_batch WHERE id IN (baseline_id,documents_id))<>2 THEN RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n RETURN final_result;\nEND $$;\nCOMMIT;\n",
+    expected: /IS DISTINCT FROM\s+CASE\b/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

@@ -1,0 +1,18 @@
+{
+  "version": "v22",
+  "status": "APPROVED_BY_EXPLICIT_USER_REPLY",
+  "receivedAtUtc": "2026-10-27T12:24:29.112058+00:00",
+  "source": "Current main Chat direct user send_user_message_question_reply",
+  "questionItemId": "[\"request_user_input_async\",\"call_71399ed4794f41288149ccc520cea6e2\",0]",
+  "exactUserReply": "确认 v22，按此实施",
+  "document": "docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v22-STAGED-PREFIX-BIND.md",
+  "documentSha256": "ce31b60514f2fb216a81121c4d954dd55c450e0594c876f63d87bd8c530997ff",
+  "scope": "ExactR1 eight-table original-source staged-prefix firstBIND admission with full member/native proof; only coreassert successor body and strict stagedPrefixProof auditJSON; remaining17 empty; original109 commands/keys/permissions/rollback/publication checks preserved",
+  "implementationOwners": [
+    "D1",
+    "D3"
+  ],
+  "executionOwner": "T45",
+  "independentReviewOwner": "QB",
+  "executionNotAutomaticallyGranted": true
+}

@@ -1,0 +1,10 @@
+{
+  "description": "SHA256 of retained original outside-repository evidence. Successful TAP is byte-identical here; JSON machine-local paths and first-failure stack prefixes are sanitized here. No original result is overwritten.",
+  "sha256": {
+    "acceptance-01-b508ce8.tap": "23ebee8db974ac1673ccfa92a06b5d0941270b5bb3655cc445ba5a04a7b052ca",
+    "acceptance-01-b508ce8.tap.json": "d3246583f0dd7ff57f4f80be6ee895c7ab9ffd42285b909629f99eebc964b260",
+    "acceptance-02-318440a.tap": "f76a7e272a7a2605c1f6b64c63de2abb9dc5bde206faa97d541b2739b798952c",
+    "acceptance-02-318440a.tap.json": "13f0eb72753ba19659f17d8d4b20e473a18263421a3367537cad0409ab9aa999",
+    "package-provenance.txt": "5f96aed6e1a24f9a72586c741d9d06f44b7b405b60649c02501145448f1a0123"
+  }
+}

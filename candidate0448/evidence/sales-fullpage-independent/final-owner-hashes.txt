@@ -1,0 +1,13 @@
+apps/web/src/sales/README.md: OK
+apps/web/src/sales/detail-content.tsx: OK
+apps/web/src/sales/detail-host.tsx: OK
+apps/web/src/sales/detail-header.tsx: OK
+apps/web/src/sales/detail.css: OK
+apps/web/src/sales/sales-page.tsx: OK
+apps/web/src/sales/sales-route.tsx: OK
+apps/web/src/sales/sales.css: OK
+apps/web/src/sales/reference-selector.tsx: OK
+apps/web/src/sales/tests/run-build-check.mjs: OK
+apps/web/src/sales/tests/run-dom-tests.mjs: OK
+apps/web/src/sales/tests/run-frozen-source-check.mjs: OK
+package.json: OK

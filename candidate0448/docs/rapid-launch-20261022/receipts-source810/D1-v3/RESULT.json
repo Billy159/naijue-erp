@@ -1,0 +1,28 @@
+{
+  "decision": "SOURCE_FIXED_199_BUILTIN_PROBES_PASS_AWAIT_QB_AND_C_NEW_EXECUTION_AUTHORITY",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v3-EMPTY-ACL/NORMALIZATION-DELTA.json",
+      "bytes": 2852,
+      "sha256": "8110be8b1ad71e1c80cf4aa3196db54a42bd6371aa26e738e7fbbad908ea1408"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v3-EMPTY-ACL/README.md",
+      "bytes": 2915,
+      "sha256": "25ebaa2cf555620ed580662cd65b28d7f8c864993b691cf15eb21663bc11aff8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v3-EMPTY-ACL/grant-exact-197-columns.sql",
+      "bytes": 60726,
+      "sha256": "16d99000f90ab87be3a3471b0b64c0b9dbb8fd610e3282be6538fb82a0bd2b5f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v3-EMPTY-ACL/revoke-only-exact-197-added-columns.sql",
+      "bytes": 60645,
+      "sha256": "35097f0b90491bd203a66738919c823a78ed9e793c615311fa99c32475e98932"
+    }
+  ],
+  "actual199ResultSha256": "dc6f08ac83364c3724f12e6790e1c65117152c843c978af16d994c3efa0ed526",
+  "changes": "Only four total NULL/empty-ACL normalization reads, no authorization change",
+  "databaseExecution": "NOT_EXECUTED_D1_NOT_OWNER"
+}

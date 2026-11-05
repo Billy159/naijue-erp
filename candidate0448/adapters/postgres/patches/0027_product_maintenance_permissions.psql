@@ -1,0 +1,50 @@
+\set ON_ERROR_STOP on
+-- Explicit whole-profile installation. Applies only to the fixed NOLOGIN runtime.
+-- Product image/media writes, DELETE, table-level write and role creation are excluded.
+BEGIN;
+SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname=:'runtime_role' AND rolname='erp_unified27_runtime_2393dbc6db9581c2' AND NOT rolsuper AND NOT rolcreaterole AND NOT rolcreatedb AND NOT rolreplication AND NOT rolbypassrls AND NOT rolcanlogin AND NOT rolinherit AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_auth_members m WHERE m.member=pg_roles.oid) AND oid<>current_user::regrole) AS role_ok \gset
+\if :role_ok
+\else
+ DO $$ BEGIN RAISE EXCEPTION 'PRODUCT_RUNTIME_ROLE_INVALID' USING ERRCODE='23514'; END $$;
+\endif
+-- Require exact pre-existing audit/receipt guards and their mounted triggers.
+DO $guards$
+DECLARE x record;
+BEGIN
+ FOR x IN SELECT * FROM (VALUES
+  ('guard_retained_catalogue_delete()','dec785b8b1f818b2daa3af4d3872139710cae32178516839e669f59aa6609758'),
+  ('guard_retained_catalogue_reference()','91cc169d60ca6db2700ed97e49632504cfba9d957ea467a4777137f946c6923c'),
+  ('guard_maintenance_before_root()','76d30c01785877cfab4bb2bf167e1cdcd583677d204b7d7efa0c2cc2c79fa05c'),
+  ('validate_maintenance_root_commit()','bf853800c33c492dd0b8224e489c42dfb1c9a046231001a3d42be830a257f479'),
+  ('guard_maintenance_child_write()','ceef464210d22280de7bc92ed900eebd3156ec65089ecdd8c55bbaca9c975d95'),
+  ('guard_native_creation_identity()','765f060da0e51a0a18309502a412cc2196dcde633c3e9db0cbe4a2b6383d5111'),
+  ('guard_maintenance_audit_actor()','1635b883d65abb3938b277287ff7b0b1bf28cdae367b54b282b3e81810486e89'),
+  ('keep_barcode_binding_identity()','14f6d02bca58955681e8d03236fb236cbfe3d041d35ecdb326cd3fa7e38d2733')
+ ) v(signature,sha) LOOP
+  IF NOT EXISTS(SELECT 1 FROM pg_catalog.pg_proc p JOIN pg_catalog.pg_namespace n ON n.oid=p.pronamespace JOIN pg_catalog.pg_language l ON l.oid=p.prolang WHERE p.oid=pg_catalog.to_regprocedure('naijue_erp.'||x.signature) AND p.prokind='f' AND p.provolatile='v' AND p.prosqlbody IS NULL AND p.proowner=n.nspowner AND l.lanname='plpgsql' AND NOT p.prosecdef AND NOT p.proretset AND p.pronargs=0 AND p.prorettype='trigger'::regtype AND p.proconfig=ARRAY['search_path=pg_catalog, naijue_erp, pg_temp'] AND pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(p.prosrc,'UTF8')),'hex')=x.sha) THEN RAISE EXCEPTION 'PRODUCT_GUARD_BODY_MISMATCH' USING ERRCODE='23514'; END IF;
+ END LOOP;
+ IF NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.product'::regclass AND tgname='product_maintenance_before_root' AND tgfoid='naijue_erp.guard_maintenance_before_root()'::regprocedure AND tgtype=23 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.product'::regclass AND tgname='product_maintenance_final_consistency' AND tgfoid='naijue_erp.validate_maintenance_root_commit()'::regprocedure AND tgtype=21 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgdeferrable AND tginitdeferred AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.product'::regclass AND tgname='product_retained_delete' AND tgfoid='naijue_erp.guard_retained_catalogue_delete()'::regprocedure AND tgtype=31 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.product'::regclass AND tgname='product_retained_reference' AND tgfoid='naijue_erp.guard_retained_catalogue_reference()'::regprocedure AND tgtype=23 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.sku'::regclass AND tgname='sku_retained_reference' AND tgfoid='naijue_erp.guard_retained_catalogue_reference()'::regprocedure AND tgtype=23 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.sku'::regclass AND tgname='sku_maintenance_write' AND tgfoid='naijue_erp.guard_maintenance_child_write()'::regprocedure AND tgtype=31 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.sku'::regclass AND tgname='sku_creation_identity' AND tgfoid='naijue_erp.guard_native_creation_identity()'::regprocedure AND tgtype=23 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.sku_barcode'::regclass AND tgname='barcode_maintenance_write' AND tgfoid='naijue_erp.guard_maintenance_child_write()'::regprocedure AND tgtype=31 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.sku_barcode'::regclass AND tgname='sku_barcode_retains_identity' AND tgfoid='naijue_erp.keep_barcode_binding_identity()'::regprocedure AND tgtype=27 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.audit_change'::regclass AND tgname='maintenance_audit_actor' AND tgfoid='naijue_erp.guard_maintenance_audit_actor()'::regprocedure AND tgtype=7 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ THEN RAISE EXCEPTION 'PRODUCT_GUARD_MOUNT_MISMATCH' USING ERRCODE='23514'; END IF;
+END $guards$;
+GRANT INSERT (id,product_code,name,category_id,supplier_id,season_id,size_group_id,year,system_item_code,thickness,collar_pants_type,default_barcode_scheme_id,enabled,version,deleted_at,purchase_price,retail_price,wholesale5_price,wholesale6_price,wholesale7_price,wholesale8_price,wholesale9_price,wholesale10_price,minimum_price,season_ids) ON naijue_erp.product TO :"runtime_role";
+GRANT UPDATE (product_code,name,category_id,supplier_id,size_group_id,year,system_item_code,thickness,collar_pants_type,default_barcode_scheme_id,enabled,version,deleted_at,purchase_price,retail_price,wholesale5_price,wholesale6_price,wholesale7_price,wholesale8_price,wholesale9_price,wholesale10_price,minimum_price,season_ids) ON naijue_erp.product TO :"runtime_role";
+GRANT UPDATE (enabled,version) ON naijue_erp.sku TO :"runtime_role";
+GRANT UPDATE (enabled) ON naijue_erp.sku_barcode TO :"runtime_role";
+SELECT
+ (SELECT count(*)=25 AND bool_and(pg_catalog.has_column_privilege(:'runtime_role','naijue_erp.product',c,'INSERT')) FROM unnest(ARRAY['id','product_code','name','category_id','supplier_id','season_id','size_group_id','year','system_item_code','thickness','collar_pants_type','default_barcode_scheme_id','enabled','version','deleted_at','purchase_price','retail_price','wholesale5_price','wholesale6_price','wholesale7_price','wholesale8_price','wholesale9_price','wholesale10_price','minimum_price','season_ids']) c)
+ AND (SELECT count(*)=23 AND bool_and(pg_catalog.has_column_privilege(:'runtime_role','naijue_erp.product',c,'UPDATE')) FROM unnest(ARRAY['product_code','name','category_id','supplier_id','size_group_id','year','system_item_code','thickness','collar_pants_type','default_barcode_scheme_id','enabled','version','deleted_at','purchase_price','retail_price','wholesale5_price','wholesale6_price','wholesale7_price','wholesale8_price','wholesale9_price','wholesale10_price','minimum_price','season_ids']) c)
+ AND pg_catalog.has_column_privilege(:'runtime_role','naijue_erp.sku','enabled','UPDATE') AND pg_catalog.has_column_privilege(:'runtime_role','naijue_erp.sku','version','UPDATE') AND pg_catalog.has_column_privilege(:'runtime_role','naijue_erp.sku_barcode','enabled','UPDATE') AS product_columns_ok \gset
+\if :product_columns_ok
+\else
+ DO $$ BEGIN RAISE EXCEPTION 'PRODUCT_COLUMN_GRANT_NOT_INSTALLED' USING ERRCODE='23514'; END $$;
+\endif
+COMMIT;

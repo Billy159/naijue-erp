@@ -1,0 +1,7 @@
+Syntax and independent plan/source probes, 2026-10-20 UTC
+syntax_exit=0
+PASS: all eight explicit migration hashes match original source bytes
+PASS: sparse-0001-0008 plan under blocked driver/network/spawn imports and blocked target/credential environment reads
+PASS: missing/unknown/whitespace/historical plan selections refuse with no fallback
+PASS: historical runtime refusal/source gate ordering, all-hash-before-Pool source shape, and no destructive database-helper cleanup
+RESULT: independent source-only probes passed; PostgreSQL/SQL/DDL/EXPLAIN/locks/rollback durability NOT RUN

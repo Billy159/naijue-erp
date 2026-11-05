@@ -1,0 +1,7 @@
+{
+  "evidence_kind": "POST_EXECUTION_FROZEN_SOURCE_BYTES_VS_COMMITTED_GIT_BLOBS",
+  "commit": "e4aa8b2663da5984486ddc63b2f95e2a92ca0950",
+  "tracked_files_checked": 1111,
+  "mismatches": [],
+  "result": "MATCH"
+}

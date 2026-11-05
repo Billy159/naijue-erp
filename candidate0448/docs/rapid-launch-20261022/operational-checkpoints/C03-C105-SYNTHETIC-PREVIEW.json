@@ -1,0 +1,51 @@
+{
+  "server": {
+    "atUtc": "2026-10-22T23:17:35.788674+00:00",
+    "url": "http://127.0.0.1:57848/synthetic-unified.html",
+    "source": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+    "build": "ui-preview-9a52d0f-01-build01",
+    "pid": 18750,
+    "sessionId": 13216,
+    "host": "127.0.0.1",
+    "serveSha256": "ab0f7595564fdd8f04cbea71a0708e08a0ed5553819eba5fbd2b0814d4c018f9",
+    "http": [
+      {
+        "path": "/synthetic-unified.html",
+        "status": 200,
+        "bytes": 2900286,
+        "sha256": "90192785b057113381f204766b668e6ac208812dc3f3af73618e0a39fc74a872",
+        "sourceHeader": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+        "buildHeader": "ui-preview-9a52d0f-01-build01"
+      },
+      {
+        "path": "/candidate-identity.json",
+        "status": 200,
+        "bytes": 2339,
+        "sha256": "ebc2dddc837a9c37fb99f3453457894b054ae6b3f87822149f01d78df61a6768",
+        "sourceHeader": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+        "buildHeader": "ui-preview-9a52d0f-01-build01"
+      },
+      {
+        "path": "/provenance.json",
+        "status": 200,
+        "bytes": 49833,
+        "sha256": "4702aa143ee8280b68a80dbbb91747a85ab52a37ee4dcf35f34f7672c49b4ac3",
+        "sourceHeader": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+        "buildHeader": "ui-preview-9a52d0f-01-build01"
+      }
+    ],
+    "syntheticOnly": true,
+    "browserBusinessPass": false
+  },
+  "preparation": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-9a52d0f-01/PREPARATION-RESULT.json",
+    "bytes": 4494,
+    "sha256": "5af506c2a6cc2815a84fbed8830a47bb5a9ff5d47c9e5ed9724a7eb5bd01e51f"
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-9a52d0f-01/MANIFEST.json",
+    "bytes": 610196,
+    "sha256": "74aa30a5127ff3492a34a011000f68754f6cf0d9e705e1c0d58d46c75704f3a1"
+  },
+  "qualification": "C105 only:4CSS +3explicit readonly UNKNOWN overview overlays and builderidentity; does not contain106107108. No native author expansion, nestedinventory disabled."
+}

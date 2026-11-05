@@ -1,0 +1,5 @@
+PASS settings default: exact existing controls, first-checkbox focus, inside hit testing, Escape default cancellation and trigger focus return; no idle listeners/reads.
+PASS settings default: checkbox/reset stay open; explicit close and trigger toggle return focus; outside pointer/click preserve outside focus; all actions make zero business reads.
+PASS settings StrictMode: exact existing controls, first-checkbox focus, inside hit testing, Escape default cancellation and trigger focus return; no idle listeners/reads.
+PASS settings StrictMode: checkbox/reset stay open; explicit close and trigger toggle return focus; outside pointer/click preserve outside focus; all actions make zero business reads.
+PASS settings identity/unmount: scope abort resets visibility/removes listeners synchronously, restored scopes never reopen stale intent, unmount preserves the parent scope, a fresh StrictMode mount still opens/closes. No inventory/product prefetch.

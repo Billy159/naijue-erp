@@ -1,0 +1,82 @@
+{
+  "reviewId": "QB470-SOURCE",
+  "task": "R1BIND exacttwoColumnUPDATE ACL repair/rollback SQL narrowreview",
+  "decision": "PASS_PINNED_SQL_SOURCE_ONLY_NOT_EXECUTED_OR_CURRENT_CATALOG_PASS",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "sourcePins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-BIND-TWO-COLUMN-ACL-v1/grant-two-columns.sql",
+      "bytes": 4854,
+      "sha256": "5a177d64f3e1963f130e131eb3393e968d2277bc35b642bdebaff331f40127af"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-BIND-TWO-COLUMN-ACL-v1/revoke-only-added-two-columns.sql",
+      "bytes": 4871,
+      "sha256": "cebd7aec2086f5d5116232c9000b38dba6f7e00c85ab0f28216d0d4b83faa997"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-BIND-TWO-COLUMN-ACL-v1/README.md",
+      "bytes": 3015,
+      "sha256": "3479039935a01fceef86fa4490e02b5d590eead938d8cf01588b7dc80d3ee512"
+    }
+  ],
+  "currentAclEvidenceRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167/RESULT.json",
+    "bytes": 6788,
+    "sha256": "2172d65c5491890e1837765708c96d8b2977a0025a9c96dc7d0de6fc890d9abf"
+  },
+  "originalKeyUncommittedSnapshotRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-main-original-key-recovery-readonly-20261027-165/RESULT.json",
+    "bytes": 4425,
+    "sha256": "48379f953eefa94d06fdf226fed40ef20a12332db5e85a2d6b15dd868a9666eb"
+  },
+  "statementChecks": [
+    {
+      "file": "grant-two-columns.sql",
+      "onlyPrivilegeMutation": "GRANT UPDATE (history_expected_counts, history_payload_hash) ON naijue_erp.import_batch TO erp_rewrite_runtime_20261022;",
+      "sameFullColumnSnapshotTwice": true,
+      "businessDMLStatements": 0
+    },
+    {
+      "file": "revoke-only-added-two-columns.sql",
+      "onlyPrivilegeMutation": "REVOKE UPDATE (history_expected_counts, history_payload_hash) ON naijue_erp.import_batch FROM erp_rewrite_runtime_20261022;",
+      "sameFullColumnSnapshotTwice": true,
+      "businessDMLStatements": 0
+    }
+  ],
+  "checks": [
+    "ExactR1databaseerp_rewrite_20261022_r1/OID1027659/Unixaddrnullportnull/postmaster2026-10-04 08:16:07.895273+00/currentownererp_rewrite_owner_20261022+import_batchrelationowner fixedbeforeGRANTandREVOKE. Businessroleerp_rewrite_runtime_20261022existingonly, noownerfallbackforbusiness.",
+    "167directpermissionmetadata all15SELECT/schemaUSAGE/checkpointUPDATE alreadytrue/tableUPDATEfalse/RLSfalse, onlyhistory_expected_counts+history_payload_hash UPDATEfalse. ExactproductionBIND storeSET checkpoint+twohistorycolumns withoriginalCAS/unbound/statusguards; noSQL/store/sourcecontract changed.",
+    "ForwardSQL onlyGRANT UPDATE(history_expected_counts,history_payload_hash) ONnaijue_erp.import_batch TOoriginalruntime, noGRANTOPTION/ALL/schemawidegrant/function/rolechange. Shortexplicittransaction+failstopguards requireoldtwofalse/newtwotrue andexistingcheckpoint/SELECT/schema/tableUPDATE/RLSstates preserved.",
+    "Transactionmetadata snapshots before/after identicalqueryshape includesallcolumnattacl/tableACL/effectiveSELECT+UPDATE. T45mustpreserveexistingroles/memberships/schemaACL/currentidentityevidence andcompareotherACLunchanged; mismatch/errorROLLBACK/failstop, notmanualskipcheck/continuebusiness.",
+    "RollbackSQL onlyREVOKE UPDATEsame2columnsFROMsamebusinessrole, oldtwoTRUE/newtwoFALSE withsamebaselineguards. RequireexactforwardreceiptandnointerveningACLchangesbeforeadoption. Doesnotrevokecheckpoint/otheroldrights, doesnotrollbackbusinessdata orautoauthorize replay.",
+    "REVOKEmayleaveemptyACLrepresentationinsteadoforiginalNULLattacl; READMEcorrectlydoesnotpromiseoldcanonicalrestore, forbidsdirectpg_catalogupdate. Recheckeffectivefalse/otherACL/rawattacl andfreshcatalogafteranyactualrollback.",
+    "165originalkeyRRROsnapshot receipt[]/STAGEDseq2cursor22/history_payload_hashNULL ispreservedactualuncommittedcheckpointproof, notglobalzeroDMLclaim. 167specificpermissiongap doesnotproveuniqueoriginal42501object/phase orabsenceofdownstreamguardgap.",
+    "NoPostgresparse/execution, GRANT, datawritetest, BIND,164replay/newkey/109continuation orfullsuiteperformedbyQB. SourcecandidatePASS only; T45soleDBexecutor afterCscopeadoption."
+  ],
+  "catalogImpact": {
+    "oldCanonical": "a9128360bad77c83afa4f6da8eafab2117a2a5d96d3a8bf23243e20617133cf5",
+    "expectedChange": "Twoimport_batchcolumnattacl entrieschange, rawcanonicalmustchange. Do nothandreplaceoldreviewhashorpretendoldQB464reviewcurrent.",
+    "requiredActualProof": "T45afterCOMMIT exportsameR1ordinary/sessionrole/target/postmaster/V20exactsourceprobe/fullcatalog. QBonlycomparethese2ACLentriesagainstpriorcatalogandallothermanifestfieldsunchanged; reuse131functionsourceaudit. Newcanonical andthreepurpose currentreviewwithaccurateexecutionpathpin required.",
+    "purposesUnchanged": [
+      "IMPORT_STAGE",
+      "IMPORT_PRODUCT_SEASONS",
+      "IMPORT_PUBLISH"
+    ],
+    "preserved": "issuer actual148selection468/privatepackage469/provider467/host461/sourcegroup/member/stock/transactions/109originalkeys unchanged"
+  },
+  "remaining": [
+    "Cexactrepair/metadataoperationadoptionandT45actualforwardcommit+permissionreadbacknotyetperformed.",
+    "Freshafterrepaircanonical/currentmetadataindependentreviewnotissuedhere.",
+    "NoactualBIND/MAIN/PUBLISH/businesssuccessinferredfromACLrepair/sourcePASS."
+  ],
+  "sourceChangedByQB": false,
+  "databaseOrRemoteAction": false,
+  "actualSqlParsedOrExecuted": false,
+  "actualGrantOrRevoke": false,
+  "actualDataWriteTest": false,
+  "actualCurrentRuntimeRebound": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}

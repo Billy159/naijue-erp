@@ -1,0 +1,84 @@
+{
+  "atUtc": "2026-10-23T04:41:36.495385+00:00",
+  "parent": "c28ea3f74d7fa2e4b1be1fb13bee99f5df70780e",
+  "files": [
+    {
+      "path": "scripts/import-v3/prepare-native-header26-bindings.mjs",
+      "owner": "D3",
+      "bytes": 8938,
+      "sha256": "d898fa92bc4296cdf5f6d2b44c512b4ca20ba2cf336bc77da4a1426e13f2825e"
+    },
+    {
+      "path": "scripts/import-v3/prepare-native-header26-bindings.test.mjs",
+      "owner": "D3",
+      "bytes": 10166,
+      "sha256": "002160a1bd6af66b69b8146fc686f9ac01f3f9d1d0f0d10dfa2c50ccac01ab92"
+    },
+    {
+      "path": "scripts/import-v3/verified-header-source.mjs",
+      "owner": "D3",
+      "bytes": 9565,
+      "sha256": "49a4160acf9ba7eed330e89f69cf68ef23f472898fc0341242bb1a779a500c90"
+    },
+    {
+      "path": "scripts/import-v3/verified-header-source.test.mjs",
+      "owner": "D3",
+      "bytes": 7075,
+      "sha256": "5343a432ac1231e819ca81e2d19bba4ca100cf6ea6dfe26d7c19fd8bb2c64068"
+    }
+  ],
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+  "receiptSliceSnapshot": {
+    "atUtc": "2026-10-23T04:40:21.673465+00:00",
+    "scope": "C explicitly accepted source identity six-field candidate only, independent of full header/hall DTO. No native persisted/SQL/fullheader authority.",
+    "sourcePaths": [
+      "scripts/import-v3/prepare-native-header26-bindings.mjs",
+      "scripts/import-v3/prepare-native-header26-bindings.test.mjs",
+      "scripts/import-v3/verified-header-source.mjs",
+      "scripts/import-v3/verified-header-source.test.mjs"
+    ],
+    "exports": {
+      "prepareSalesHeaderSourceIdentity26": "(binding, verifiedRecord) -> {sourceKey,nativeId,sourceRowId,sourceFileSha256,rowSha256,version:1}; exact existing history-sales-header stableImportId rule, original source id/file/row hashes; never allocation UUID/hall fallback",
+      "openVerifiedHeaderSource": "Existing constructor optional collectSalesIdentities:true collects only six-field candidates inside its original full gzip scan; salesHeaderSourceIdentities() becomes available after complete EOF/hash/count/CRC/UTF8 verification. Does not call rows(), create native header or change default reader behavior."
+    },
+    "newChecks": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "scope": "Six fields equal original mapper identity, blank hall retained/allocation ignored/cross-batch rejected; synthetic verified source uses exactly one physical stream, no rows rescan; bad whole-source digest returns no reader/candidates; close revokes."
+    },
+    "finiteIndexFinding": "Existing INDEX-CANDIDATE4930B reports SALES_HEADER expected/observed28282 but artifacts only SKU/payment3/stock/salesLine/settlement/transferLine. No SALES_HEADER finite offset artifact in that accepted manifest. No large index opened.",
+    "minimalPhysicalWorkAfterQB": {
+      "source": "Existing header-source-window-20261022-D3-run1/verified-source-headers.jsonl.gz",
+      "compressedBytes": 16931387,
+      "rawBytes": 398749141,
+      "containerRows": 42561,
+      "salesIdentityCandidatesExpected": 28282,
+      "transferRowsContainerOnly": 14279,
+      "constructors": 1,
+      "gzipStreams": 1,
+      "rowsMethodCalls": 0,
+      "api": "openVerifiedHeaderSource(existing options + collectSalesIdentities:true); consume salesHeaderSourceIdentities(); close in finally",
+      "sourceProof": "Existing header-source-window1/RESULT.json ba58af0a... and four-key batch/namespace/selection/cutoff unchanged",
+      "unneededReads": [
+        "XLSX/preflight regeneration",
+        "canonical CSV",
+        "32money overlay",
+        "parties/native bindings",
+        "SKU files",
+        "allocation registry"
+      ],
+      "output": "Only six-field source identity candidates via existing C job/artifact flow; no new approval/hash/report system. C determines exact private destination/resources/window; D3 has not created/opened them."
+    },
+    "nonActions": {
+      "realSourceReads": 0,
+      "PG": 0,
+      "newRandomUUIDs": 0,
+      "physicalWindowGranted": false,
+      "oldSuitesRepeated": false,
+      "reader4PathsModified": false
+    },
+    "next": "C freeze4 registered source paths; original QB only new identity generation/original ID consistency and one-pass collection; then C one necessary fresh source window. Candidate must receive C/QB source-to-history ID review before used as authoritative resolveNativeBinding input."
+  },
+  "controllerScope": "Freeze source-only six-field identity generator and original verified reader one-pass seam. Original2new checks adopted. OriginalQB only newdelta; physical read not yet executed, no fullheader/PG/native/import authority claimed."
+}

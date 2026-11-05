@@ -1,0 +1,107 @@
+{
+  "status": "SOURCE_ORIGINAL_KEY_ROLLBACK_ONLY_READY_ACTUAL_NOT_RUN",
+  "ownerScope": "C registered four logical leaves K originals + R mirrors",
+  "files": [
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.mjs",
+      "bytes": 29863,
+      "sha256": "f6f549fbec8b4790ba22e03b253f78c58c83bd84a35965a9fce5431437f5bbb4",
+      "mirrorsEqual": true
+    },
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.test.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.test.mjs",
+      "bytes": 16267,
+      "sha256": "1fa0022d40de479f6371378a0ca0144a5ea77d88d678b9a303830dc58962c7b8",
+      "mirrorsEqual": true
+    },
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 95557,
+      "sha256": "befd02fa27acfad44f2c2405b9c6e0a41af3ee225ee2d9c990adbe14a82afdde",
+      "mirrorsEqual": true
+    },
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 52194,
+      "sha256": "0341eba0ad9e3b07052b5717822da97f66acfa1066d0f9b50db7df346e30dc3b",
+      "mirrorsEqual": true
+    }
+  ],
+  "adoptedNormal04": {
+    "credential2to3Committed": true,
+    "qaVersion": 3,
+    "qaAuthVersion": 3,
+    "normalSales": "PASS version2/e3eee080-c3e7-46c4-8a14-8ab681c8285e",
+    "normalTransfer": "PASS version2/4855c67f-df31-48fa-bf4e-d0e4cc81e7d3",
+    "notReexecuted": true
+  },
+  "fixedDefect": "Original companion wrapped a genuine issuer lease in a new object; WeakMap lease verification rejects it before posting. Outer23505 assertion hid inner error. Regression with actual PostgresHistoryRevisionStore and protocol-only lease reproduces old rejection and accepts the original object. Not an actual PG rollback result.",
+  "implementation": [
+    "Companion PostgresHistoryRevisionStore.forRuntime26 receives original issued pool directly, no leased-object wrapper/runtime-capability mapping",
+    "createSynRollbackObserver instruments original raw pg driver client query below BoundedPool/issuer; retains raw identity/on/release and original args/results/errors; issuer-created frozen lease untouched",
+    "Only exact firstLedger/collisionLedger markers on same raw transaction record first rowCount, first balance rowCount, second PK error, rollback and zero commits; no SQL/body/parameter export",
+    "Record sanitized rollbackEvidence including inner service error BEFORE assertion, retain exact23505/firstledger/firstbalance/secondattempt/rollback/noCOMMIT assertions",
+    "Separate runApprovedOriginalRollbackOnly: exact prior04 request bytes/key/IDs and actor proof, currentQA3/read policy checked, two normal cases adopted only, zero normalHTTP/login/password/CAS",
+    "Original key receipt checked first: existing COMMITTED exact hash/operation/action/target returns original result without executing; absent permits original sole companion under current source-confirmed authorization and original store CAS",
+    "Before/after full bounded source/projection/stock/audit/receipt/currentfacts snapshots compare exact equality around actual failed service call; collision row included"
+  ],
+  "interfaces": {
+    "driver": "syn26UtcRollbackDriver(Pool,createSynRollbackObserver()) - parent uses this SAME exported UTC driver; no raw driver copies",
+    "parent": "runB07OriginalRollbackOnlyParent({plan})",
+    "parentContract": "B07_SYN26_ORIGINAL_ROLLBACK_ONLY_PARENT_V1",
+    "fixedOutput": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/rollback-companion-01",
+    "runner": "runApprovedOriginalRollbackOnly({pool,runtime26,input,rollbackObserver,rollbackContinuation:{originalRequestBytes,priorApprovedResult},now,recordRequest,recordObservation,readBackgroundFailureCount})",
+    "planAdditionalFields": [
+      "currentAccountVersion=3/currentAuthVersion=3",
+      "original04 exact request/approved/parent/actual refs",
+      "originalKeyReadOnlyProof ref",
+      "original same target/sourceKind/SYN metadata/scalar registration fields",
+      "new fixed currentpurpose gate refs/runtimeConfiguration/review/approvedInput"
+    ],
+    "original04Pins": {
+      "request": "1068/2d6eb543f1daf7f8db6665499196f827bfe61c7f6317b62fb4a909989f0e87bf",
+      "approved": "1217/00234117a33419d0fde210b6c6dbdabdd93d99f50e375b1ac2bf31d56d726756",
+      "parent": "1382/690084029c1a0c66fac09cc56263f771d5e65ebad5744d423629aa7d47a8965c",
+      "actual": "5315/8886b1e6aa90b814daa688e1b240dd3fbbc39945ce8435e054f944c7323f0cbb"
+    },
+    "readonlyProofShape": [
+      "businessDML0/credentialReadfalse/rollbackReturnedtrue/clientsClosedtrue",
+      "originalRequestSha256 exact2d6eb543...",
+      "target:{database exactSYN,oid16385,role sameordinary}",
+      "actor:{accountId b0714...0002,version3,authVersion3}"
+    ],
+    "currentAuthority": "Fresh genuine runtime26 issuer and original source-confirmed authorization recheck active account/staff/hall/source under original transaction; prior normal actor not used as a stale grant or session. No securitydefiner/owner-role authorization bypass."
+  },
+  "checks": {
+    "targetedNewRunnerTests": {
+      "passed": 5,
+      "skipped": 0
+    },
+    "targetedNewParentDriverTests": {
+      "passed": 2,
+      "skipped": 0
+    },
+    "node24SyntaxExitCode": 0,
+    "protocolOnlyNotPostgres": true
+  },
+  "actualDatabaseByD1": false,
+  "actualCompanionRetried": false,
+  "actualCredentialLoginSecretOrNormalHttp": false,
+  "prodApiSqlGuardIssuerChanged": false,
+  "next": [
+    "C fixed source/QB only four affected leaves",
+    "T45 original rollback key onceRO facts/readback and approved current identity evidence; existingreceipt routes recovery not newexecute",
+    "C exact newrollback-only carrier/currentpurpose/target registration, no credential3to4/login/replayednormalcases",
+    "T45 one actual original-key companion + ownedcleanup; keep realPG23505 result NOT_TESTED until observed"
+  ],
+  "notTested": [
+    "Actual originalkey companion firstendpoint DML+second23505+whole rollback",
+    "Actual originalkey committed recovery path",
+    "Real-source full import/formal business"
+  ],
+  "fast": "UNVERIFIED"
+}

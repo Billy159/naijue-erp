@@ -1,0 +1,8 @@
+{
+  "parent_commit": "d873946889fea98e0aa14fd07f783df1205958c1",
+  "review_method": "Root compared final documentation with independent review requested disclosure; verified runtime/test bytes unchanged. No tests repeated.",
+  "doc_sha256": "62fc36be5aec7dbf61787a7b6c21bc074ec86f007e39190559edb3a2187e7681",
+  "result": "Documentation gap closed: exact message and where masked; raw trusted engine observation needed, no weakened assertion or public exposure.",
+  "limits": "Prior independent 23 synthetic probes reused; no genuine PostgreSQL or production acceptance.",
+  "rollback": "Revert bounded pool leaf commit before integration; no database changes."
+}

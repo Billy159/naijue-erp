@@ -1,0 +1,33 @@
+{
+  "version": "WRITE_CONTRACT_APPROVAL_V4_MEDIA_COLOR_SWAP",
+  "status": "EXPLICIT_USER_APPROVED",
+  "atUtc": "2026-10-22T18:05:14.024029+00:00",
+  "source": {
+    "kind": "DIRECT_HUMAN_REPLY_IN_CONTROLLER_CHAT",
+    "questionItemId": "[\"request_user_input_async\",\"call_82226439f7bc4059aa8b13a7806c1243\",0]",
+    "answer": "确认图片颜色互换补充 v4"
+  },
+  "approvedDocument": {
+    "path": "WRITE-CONTRACT-SUPPLEMENT-v4-MEDIA-COLOR-SWAP.md",
+    "sha256": "c5fd95b27999b362022e7cdda4e65449e8b4a477fbcaef5035e6e5c93e3d2006"
+  },
+  "approvedScope": {
+    "newTables": 0,
+    "newColumns": 0,
+    "indexChanges": 0,
+    "function": "guard_maintenance_child_write",
+    "branch": "Image DELETE retained-id before+after prepared update only; final same-id reinsertion for color cycles",
+    "proposalSqlSha256": "8ccc6ee2cdfc381dbf144f1e4ba88341874bce73583df99fd05cb2e84e2666d1",
+    "diffSha256": "050e41870f7f209c9b9420ae2f8c34c68a09538c3e28c5fe138ca99b9bf014d6",
+    "preserve": [
+      "Original image/product identity and creation metadata",
+      "One child/root version advance",
+      "Original files/history/audit",
+      "Same actor/root/version and exact before/final after proof",
+      "Unique final color and all-or-nothing transaction"
+    ]
+  },
+  "implementationAuthorized": true,
+  "technicalAcceptance": "NOT_IMPLEMENTED_NOT_ENGINE_TESTED",
+  "notAuthorized": "Any unrelated schema/constraint changes, bypassed audit/permissions, temporary fake rows/colors or physical source-file deletion"
+}

@@ -1,0 +1,40 @@
+{
+  "atUtc": "2026-10-23T13:11:04.884980+00:00",
+  "parent": "d82b7b74a44396c8700300f7b670c46dd3851dfe",
+  "taskId": "F01_FROZEN_DEMO_COMPLETE_SALES_ENTRY_FIRST_BATCH",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal.ts",
+      "owner": "F1",
+      "bytes": 44753,
+      "sha256": "274423d5dee50badd5533a69492a5f4b8e2f931ac7094192d17e6c292a89e7b6"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "owner": "F1",
+      "bytes": 51114,
+      "sha256": "91fa85c4d9f24f008716c72da63acb7fdc63dde382d406127eadb34550c44708"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal.css",
+      "owner": "F1",
+      "bytes": 64387,
+      "sha256": "f3b7718ea8087f2a96a9326eab41954fa1cab28fa5a469505d51c0bca8caa265"
+    },
+    {
+      "path": "apps/web/src/current-form/http-reader.ts",
+      "owner": "F1",
+      "bytes": 10567,
+      "sha256": "b68f6a42e1abd924977f5bbbd51e1c64a6d185effee5c79bb2e5fd96d3e0729f"
+    }
+  ],
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F1/chunk-87/DELIVERY.json",
+  "ownerReceiptSha256": "26b9f602f138dada5b141debc8a4f8485e5bca076e7e52f9eaff53fa74bad93a",
+  "frozenDemo": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "source": "sales-current.js editor/lineTable/entryRow, actual final real-data-bridge.mjs fundsField/paymentRow and four final sales CSS layers",
+  "scope": "Complete native sales creation DOM/toolbar/input/table and final three payment rows; existing session/business adapted. Full dictionary/all groups and no-SKU coordinate draft inputs retained, actual SKU candidates not truncated. Stable payment input node and no arbitrary blur auto-append.",
+  "checksAdopted": "Original owner complete local consumer after3 PASS, final three-entry type check with same-owner chunk88 props, CSS0; do not claim native browser or real writes.",
+  "sameBatchDependency": "Shared sourceHost/pager chunk88 is necessary exact original control adapter in same upcoming candidate; do not build current175 with its WIP or silently claim dependency accepted.",
+  "remaining": "Missing-SKU/crossgroup/code/delegation write contract awaits concrete user confirmation; existing known true-SKU flows continue. Actual mixed price10to1 remains OPEN until QF new fixed consumer check.",
+  "qualification": "SOURCE_FIXED_ONLY_NOT_WHOLEPAGE_OR_REALBUSINESS_OR_PERFORMANCE_ACCEPTED"
+}

@@ -1,0 +1,9 @@
+{
+  "file": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/three-core-pages-synthetic-test-only-38a1a9d00ce5.html",
+  "bytes": 1364619,
+  "sha256": "e24befa91f2909a69c386a183be2dd252a8d90f9a5cce8a7cafb862489084374",
+  "baseCommit": "38a1a9d00ce5060879af409c6e7e1febad07ab5f",
+  "sourceSnapshotSha256": "faa4a72f7fb493aaba0c13a7d2070cc95266cfd9197c54f87640b525f7792d94",
+  "fitsEmbedLimit": false
+}
+Built local TEST ONLY files only. No server, listener, deployment, upload, database, credential or network action.

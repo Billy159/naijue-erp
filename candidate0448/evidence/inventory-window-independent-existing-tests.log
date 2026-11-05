@@ -1,0 +1,27 @@
+✔ canonical rows/section order and exact source totals survive windowing without cell traversal (10.632806ms)
+✔ 100/200/500 product synthetic pages have bounded visible work, not fabricated latency (2054.585743ms)
+✔ column window stays bounded as size axes grow and retains exact offscreen cells (15.483536ms)
+✔ half-open windows handle boundaries, empty data, zero viewport and invalid geometry (3.286794ms)
+✔ collapse takes immutable snapshots, preserves canonical IDs/totals, and describes reveal without expanding (0.872422ms)
+✔ sticky header metadata includes external offset and push-off by the next section (0.332046ms)
+✔ logical focus skips nonexistent SKU coordinates, preserves warehouse/size identities and stays in a section (2.715108ms)
+✔ scroll-to-cell computes axis coordinates without mounting all cells or fabricating missing quantities (323.175665ms)
+✔ a changing data reference cannot relabel an old canonical read (0.684094ms)
+✔ ID-based scroll anchors survive preceding collapse and fall back when their row is hidden (6.918799ms)
+✔ single inline projection follows frozen Demo detail and collapse structure, independent of window edges (1.751729ms)
+✔ optional source section description is outside thead and never pins thead prematurely (0.782329ms)
+✔ cached variable row measurements preserve actual geometry without measuring or materializing cells (1.818501ms)
+✔ only the current data ticket can publish; cancelled/late reads retain their own prior facts (15.466379ms)
+✔ scope cancellation and account/permission replacement clear references and invalidate scheduled focus (4.192814ms)
+✔ focus survives valid data/layout changes by logical ID but stale render actions never survive (6.092124ms)
+✔ a newer focus/clear invalidates earlier scheduled focus without changing data identity (2.698534ms)
+✔ disposal, cancellation or replacement during measurement cannot publish a partially built model (15.122171ms)
+✔ reflow cannot restore a model after its scope is invalidated during measurement (2.082502ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3019.447885

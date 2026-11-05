@@ -1,0 +1,72 @@
+{
+  "parent": "65c8637d722bbdbe6338945d7a5841ac66554965",
+  "atUtc": "2026-10-24T19:36:28.015090+00:00",
+  "scope": "D1 CORE ready reads11 and D3 original SQL primitives2; source owner tests only, real HTTP/PG not yet passed",
+  "files": [
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "bytes": 67664,
+      "sha256": "5baa3e2cb619590d3fb91af60e6690fbd7956f80efa973370ba0762f345a2f3b"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.ts",
+      "bytes": 18709,
+      "sha256": "6bbe4345b6683085f2dddf79eb3fce830a639218039c9cdb9677ee8f07501b13"
+    },
+    {
+      "path": "adapters/postgres/src/organization-maintenance-store.ts",
+      "bytes": 20713,
+      "sha256": "828eaf06e887145da034207f3a954982373ffe927fc06b8a0318585556a82099"
+    },
+    {
+      "path": "adapters/postgres/src/party-read-reader.ts",
+      "bytes": 7786,
+      "sha256": "1964f1f54418c9e705f2760b7450a2ec11cdf35b27f83558d1f77991617bb708"
+    },
+    {
+      "path": "adapters/postgres/src/catalogue-settings-read-reader.ts",
+      "bytes": 10632,
+      "sha256": "73eb28dcb4a4b4e47f26ed27289dc74795064b15490a0b66c7562dbc158b705b"
+    },
+    {
+      "path": "apps/api/src/organization-maintenance-http.ts",
+      "bytes": 8481,
+      "sha256": "028c77f36a2724ded78cc41d0387709bd686ee8e0e17504df5fc43bef934f24b"
+    },
+    {
+      "path": "apps/api/src/party-read-http.ts",
+      "bytes": 4586,
+      "sha256": "e084a55ba3df838a7fd31c842480d8f0250a6ad7e502edf7b0f837639e0b096c"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "bytes": 95066,
+      "sha256": "27ee4ac1c0bf5a5643fca6b4f622d7e1461ab45aaf747a7a5ccd2705094a445b"
+    },
+    {
+      "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+      "bytes": 23995,
+      "sha256": "adf14a069e0beffb9742d5a80300bcbe49fc7dc6add23c434cd3d2790e9efb79"
+    },
+    {
+      "path": "tests/party-read-postgres-protocol.test.ts",
+      "bytes": 9990,
+      "sha256": "40f8ffdef2aebd110cb77bece37e0acecd83cfdf0170872ccb43b03a83d5bad1"
+    },
+    {
+      "path": "tests/catalogue-settings-read-postgres-protocol.test.ts",
+      "bytes": 24386,
+      "sha256": "9489f89ebec2375be533a61a480d1faf2739986d05a0768217bf4001c3c034f7"
+    },
+    {
+      "path": "adapters/postgres/src/imported-history-query-reader.ts",
+      "bytes": 30332,
+      "sha256": "d87002e6a2b62fb4c940aa57f1d3bde1cef750beab445021713faf8551d86c53"
+    },
+    {
+      "path": "tests/imported-history-query.test.ts",
+      "bytes": 38116,
+      "sha256": "9340da5c9cd1843de3ec4cf00b22cb3167240e71cc79449b19b60eded27d5770"
+    }
+  ]
+}

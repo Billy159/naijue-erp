@@ -1,0 +1,79 @@
+{
+  "scope": "OFFLINE_OPERATOR_DEV_TOOL_ONLY; no actual business input processed",
+  "base_head": "2d0f5d2ef79a1d48f63a85cb0242661d2e54efde",
+  "contract": "0.3-offline-kernel.1",
+  "original_business_sheets": 18,
+  "original_ordered_columns": 154,
+  "node_tests_passed": 26,
+  "python_tests_passed": 16,
+  "focused_typescript": "PASS; command and exit code in focused-typecheck.log; no full-root compiler or build",
+  "v03_blank_templates": {
+    "files": 12,
+    "business_sheets": 18,
+    "records": 0,
+    "data_status": "PENDING",
+    "reader_errors": 0,
+    "issue_counts": [
+      {
+        "code": "NO_BUSINESS_RECORDS",
+        "severity": "PENDING",
+        "count": 1
+      }
+    ],
+    "databaseExecuted": false,
+    "importReady": false,
+    "publishReady": false,
+    "priceCompletenessVerified": false
+  },
+  "v03_synthetic_worked_example": {
+    "files": 1,
+    "business_sheets": 18,
+    "records": 46,
+    "data_status": "PENDING",
+    "reader_errors": 0,
+    "issue_counts": [
+      {
+        "code": "DATE_SEMANTICS_NOT_IMPLEMENTED",
+        "severity": "CAPABILITY",
+        "count": 16
+      },
+      {
+        "code": "UNRESOLVED_SOURCE_ISSUE",
+        "severity": "PENDING",
+        "count": 2
+      },
+      {
+        "code": "SOURCE_REFERENCE_TARGET_NOT_VALIDATED",
+        "severity": "PENDING",
+        "count": 6
+      }
+    ],
+    "databaseExecuted": false,
+    "importReady": false,
+    "publishReady": false,
+    "priceCompletenessVerified": false
+  },
+  "price_blank_contract": "Verified complete v0.3 price column + genuine blank => UNSET; zero => VALUE; formula/unreadable/missing => UNKNOWN; no native authority",
+  "no_database_or_schema_operations": true,
+  "no_dependency_or_lock_changes": true,
+  "no_real_business_rows_in_repository_evidence": true,
+  "known_remaining": [
+    "production/native publisher and actual empty-target import",
+    "full dates/timezone semantics",
+    "formal dictionaries and approved missing-source-key fallbacks",
+    "full historical economic/state/snapshot/identity semantics",
+    "baseline-aware historical edits",
+    "cutoff/final-delta source approvals"
+  ],
+  "files_sha256": {
+    "packages/application/src/import-preflight-contract.ts": "31a027efe64772c810b9bec3f8531ad7a1a0b30d21e209e5f3f249f6e5c63e8d",
+    "packages/application/src/import-preflight.ts": "4ccdc65cba897023ad6c67d67bad1e2d00e4072ff47981d1471f6fb7746210ca",
+    "scripts/import-preflight/read-xlsx.py": "cbf6e607bcf85b1ab39127b2e8ee1001dcba92263c26b239789c0040ef60951f",
+    "scripts/import-preflight/run.mjs": "660dfe31acd2842754934cefae94400f1545adeecdc2080daf3f82daf8c4e480",
+    "scripts/import-preflight/test_read_xlsx.py": "8421cc6a6e7db8b0e3ec8df09bbf13cdceeef5e0acd7a9941d9c4e95ddbb2fa8",
+    "scripts/import-preflight/README.md": "c707169f7823c3c4fd4e98f1b29abb2da943c6b6b8f9ca146deab01f12696ad6",
+    "tests/import-preflight.test.ts": "2f65551bbc57490226639bee28ceb928956c20e3d5c645fb32de9f8d0f7fad2a"
+  },
+  "resource_cap_handling": "CAPABILITY tool blocker, not source business-invalid; partial-read dependency absence is not asserted; partial-read identity manifest is empty; CLI exit 3",
+  "actual_uploaded_data_processed": false
+}

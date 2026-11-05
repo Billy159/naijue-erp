@@ -1,0 +1,7 @@
+node_modules
+dist/
+handoff/
+*.tsbuildinfo
+.env
+.env.*
+!*.example

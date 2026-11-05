@@ -1,0 +1,50 @@
+{
+  "atUtc": "2026-10-23T14:26:15.144974+00:00",
+  "parent": "74c9012e1a3a791cf4cc85b5e34e68f8834d47d0",
+  "taskId": "F06_ORIGINAL_PRODUCTION_MAINTENANCE_SESSION_WIRING",
+  "files": [
+    {
+      "path": "apps/web/src/production-host/configuration.ts",
+      "bytes": 8730,
+      "sha256": "05cb82357d55ef12929e51ee40b43baa576b963e92f7f34d2a94238e513909d7",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 12169,
+      "sha256": "3d4332ab38a312aed2dee76b23ca546ba79edc9a73ab06a21e3b22f933802f9e",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/staff-settings.tsx",
+      "bytes": 3115,
+      "sha256": "44424a136d82f27a9b44b2fc44cdef978dd204860710622a47aed9088157126a",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/payment-settings.tsx",
+      "bytes": 2710,
+      "sha256": "a46090d5b8d22d616b0b805ef02009544a77b5cde15d4f6e1f47ca7c29da72d7",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/account-settings.tsx",
+      "bytes": 3291,
+      "sha256": "1c787d72505a2e928fb7d6c07ef5e11106bd270566ba659dbdbd49522e401662",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-94/DELIVERY.json",
+  "ownerReceiptSha256": "d292aa757bda9ae3e0a110546168c0e7edef33c015ec390f087b2f3912f89a44",
+  "scope": null,
+  "checksAdopted": {
+    "consumer": "consumer-2 EXIT0 real mounted production host -> server-principal -> original PaymentSettingsPage/workspace; admin defaultfalse disabled, explicitadmin/warehouse enabled, salesperson disabled; native source modal opens, zero commands",
+    "types": "types-1 EXIT0 original exact5 entry closure"
+  },
+  "qualification": "SOURCE_FIXED_OWNER_AFFECTED_SELFCHECK_ONLY. Independent new source and actual consumer tests remain; no real HTTP/PG/SAVE/wholepage/performance/release accepted. Current184 runtime and next189 runtime do not include this new fixed source.",
+  "remaining": [
+    "C alone configures flags in approved exact stage and later permitted deployment; not claimed opened/writable in current production",
+    "Product maintenance stable session recovery wiring remains open separate F2 contract seam",
+    "No native SAVE/PG/business acceptance/latest fullpage or Chrome comparison claimed"
+  ]
+}

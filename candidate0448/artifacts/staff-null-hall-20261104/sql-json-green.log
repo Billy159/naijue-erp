@@ -1,0 +1,12 @@
+✔ exact successor adds independently pinned INIT approval and STAFF SQL guard to unchanged predecessor (15.905859ms)
+✔ patch keeps metadata/ACL/owner unchanged and rejects wrong predecessor (7.950539ms)
+✔ SQL approval locator requires JSON number, int32 and duplicate-free references (2.429843ms)
+✔ SQL rejects duplicate keys before casting approval JSON to jsonb (2.594571ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 218.073161

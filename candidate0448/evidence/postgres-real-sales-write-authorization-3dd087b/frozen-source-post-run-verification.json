@@ -1,0 +1,31 @@
+{
+  "status": "ACTUAL_REAL_POSTGRESQL_PASS_26_OF_26_FROZEN_SOURCE_UNCHANGED",
+  "commit": "3dd087b8072fc189837c8299f9ff54c9a1c76718",
+  "plan_sha256": "d1a7cf9d52c35ad8dd4ccffbd6ccd4a9d56f470179839db059cc1d8f0a37d833",
+  "committed_files_verified_before_and_after": 1215,
+  "all_eight_migration_hashes_unchanged": true,
+  "summary": {
+    "tests": 26,
+    "pass": 26,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "exit_code": 0,
+  "signal": null,
+  "expected_total_tests_before_run": 26,
+  "actual_total_tests": 26,
+  "actual_subtests": 25,
+  "duration_ms": 19062.257244,
+  "tap_sha256": "5b27fa904c36e79f476eb1040706ab02ba4c7ceac08a281b661632c590defd10",
+  "result_json_sha256": "6a6a1f579bbd5ba7617658d9c4973642477837c46d38c38d1f3bd6fcb078b0bc",
+  "prepared_supervisor_sha256": "247cd41d3ef3416082be28ee7a943cf590182d13db1a286395ce5875c1a2743a",
+  "physical_identifier": "7698921673096908826",
+  "database": "naijue_erp_test_f76c53978c0c3a54",
+  "target_retained_not_reusable": true,
+  "additional_database_or_run_performed": false,
+  "known_secret_format_scan": "No credential DSN, Bearer/cookie header, password environment assignment, or scrypt hash found in TAP; actual generated secrets remain inaccessible in holder memory and were not read.",
+  "holder_state": "Controlled operator remains idle after the single authorized run",
+  "verification_at_utc": "2026-10-21T01:15:06Z"
+}

@@ -1,0 +1,8 @@
+{
+  "sourceThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+  "sourceTurnId": "01a161dd-4711-7bd0-91ac-9c87c9bdcff9",
+  "sourceMessageId": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+  "verbatim": "沿当前正在执行的任务继续，先核实际运行状态，已派发、正在做或已完成的同范围任务不重复派工。\n\n我明确授权现有子任务在完成、受阻或需要验收时，主动向本主控Chat回报。派工时附上这条用户授权及来源。回报至少包含：任务ID、完成范围、改动文件、检查结果、未测项、阻塞和下一步；只报告有意义的进展，不反复发送无变化状态。\n\n主控负责持续接收并处理回报，不能等我提醒才检查。子任务结束后，立即按结果接续：\n\n1. 模块完成：保存固定检查点，交QF/QB验收，同时安排该开发角色的下一项就绪工作。\n2. 验收失败：交原开发角色定向修复，只复验受影响范围。\n3. 验收通过：采用有效结论，推送GitHub，符合批次条件就准备发布。\n4. 局部受阻：明确缺口，继续该角色其他不依赖阻塞的工作。\n\n如果子任务已经空闲却没有主动通知，主控应通过等待或读取工具取得最终回执并继续调度，不能让整个队列停在交接处。没有可执行工作时记录准确等待条件，避免重复盘点或凑任务。\n\n新增字段仍按约定交我确认，仅相关分支等待；其余工作继续。保持现有九角色、文件边界和gpt-6.1-sol/xhigh，持续推进到完整上线与交接。\n",
+  "recordedAt": "2026-10-22T04:59:34.743095+00:00",
+  "scope": "Existing nine-role rapid launch tasks may report meaningful completion/blockage/acceptance readiness to the current controller only; no unrelated messaging or duplicate jobs."
+}

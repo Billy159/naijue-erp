@@ -1,0 +1,14 @@
+/* Product list filters use the inventory Arco control islands and one optional second row. */
+body.pc-mode #pc-filter.pc-master-filters{box-sizing:border-box;display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;min-width:0;margin:0;padding:0 0 8px;border:0;background:transparent;overflow-x:auto;overflow-y:visible}
+body.pc-mode #pc-filter .pc-filter-row{box-sizing:border-box;display:grid;grid-template-columns:minmax(300px,1fr) 190px 160px 160px 112px 72px 72px;align-items:center;gap:8px;width:100%;min-width:1114px}
+body.pc-mode #pc-filter .pc-filter-row>*{min-width:0}
+body.pc-mode #pc-filter .pc-filter-row>.btn{box-sizing:border-box;width:100%;height:32px;min-height:32px;margin:0;padding:4px 8px;font-size:13px;white-space:nowrap}
+body.pc-mode #pc-filter .pc-filter-row>.pc-more-toggle{border:0;background:transparent;color:var(--ca-ink-2);font-weight:400}
+body.pc-mode #pc-filter .pc-filter-row>.pc-more-toggle:hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+body.pc-mode #pc-filter .pc-more-filters{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:8px;width:calc(100% - 280px);min-width:700px;margin:0;padding:0;border:0;flex-basis:auto;grid-column:auto}
+body.pc-mode #pc-filter .iw-product-select-host,body.pc-mode #pc-filter .iw-category-select-host,body.pc-mode #pc-filter .iw-filter-host{display:block;box-sizing:border-box;width:100%;height:32px;min-width:0}
+body.pc-mode .pc-list-table .table-scroll{max-height:calc(100vh - 247px)}
+body.pc-mode:has(#pc-filter .pc-more-filters) .pc-list-table .table-scroll{max-height:calc(100vh - 287px)}
+@media(max-width:1200px){body.pc-mode #pc-filter .pc-filter-row{min-width:1114px}body.pc-mode #pc-filter .pc-more-filters{width:700px}}
+body.pc-mode #pc-filter .pc-filter-row>[data-pc="reset-filter"]{border:1px solid var(--ca-control-border);background:var(--ca-surface);color:var(--ca-ink)}
+body.pc-mode #pc-filter .pc-filter-row>[data-pc="reset-filter"]:hover{background:var(--ca-surface-subtle);border-color:var(--ca-control-border-hover)}

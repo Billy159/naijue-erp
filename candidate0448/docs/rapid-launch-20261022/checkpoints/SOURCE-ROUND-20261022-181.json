@@ -1,0 +1,44 @@
+{
+  "atUtc": "2026-10-23T13:48:36.220313+00:00",
+  "parent": "722702a5ec340f2735c40bc41842423f6d4537c1",
+  "taskId": "F01_ACTUAL_PRODUCT_GROUP_COMPLETE_MEMBERS_AND_TRUSTED_PAYMENT_GROUPS",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/http-reader.ts",
+      "owner": "F1",
+      "bytes": 11333,
+      "sha256": "81dc8efef57cba263f914a66601e81f27c81a787d7bdee1bfcdbf32e12b4de63"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal.ts",
+      "owner": "F1",
+      "bytes": 47091,
+      "sha256": "574583f897928bd4755a7c7d5ea9e8f88684eaa9b3a598615a2aa6329ac40371"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "owner": "F1",
+      "bytes": 52296,
+      "sha256": "067f86f35e8b9ef0607c3b812c314aa5e4211585a47d0097980426b7347cd85f"
+    },
+    {
+      "path": "apps/web/src/demo-controls/single-select-contract.ts",
+      "owner": "F1",
+      "bytes": 2320,
+      "sha256": "b5d7a26655c43a0f1bab380ed5fc197fe04f7d0cef9d7587ccf1ffe794f4df83"
+    },
+    {
+      "path": "apps/web/src/demo-controls/single-select-action.tsx",
+      "owner": "F1",
+      "bytes": 6523,
+      "sha256": "d0b7128b06bd4968dc76e3294e573d55d5fd66a3fdbacd1a640dbc030a6c2719"
+    }
+  ],
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F1/chunk-91/DELIVERY.json",
+  "ownerReceiptSha256": "179697004144807668346353cbff49049c2d56cc20446e2d87b237728d1350c2",
+  "scope": "Current product explicit actual sizeGroupId only, full valid members incl absentSKU; missing group error and aborted/late metadata isolation. No global group choice or fakeSKU. Existing known true-SKU business path retained. Trusted AVAILABLE complete booleans drive original account optgroups; real code+name only when truecode exists, native null not fabricated.",
+  "checksAdopted": "Owner after3 effective cases reused, followup2 new missinggroup/zeroSKU/late/trustedgroup/wire consumer0 and finaltypes2 exit0; React19 ref warnings retained. No old48/backend repeat.",
+  "pageCoverage": "Original chunk91/PAGE-COVERAGE.json distinguishes entry主体 local source from samepage remaining dirtynav/identityRow numeric edit/saved actualgroup/date/account/lookup/scan/modal/final business and separate S04/T02. Never wholepage completed from175/181.",
+  "newWriteContract": "Not implemented or currently approved: NJNEW/delegated missingSKU SAVE etc. Only current group direction confirmed; exact remaining proposal pending.",
+  "qualification": "SOURCE_FIXED_ONLY; new runtime candidate and QF affected independent acceptance pending. Actual mixed10to1 remains open."
+}

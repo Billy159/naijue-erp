@@ -1,0 +1,13 @@
+{
+  "number": 3,
+  "commit": "e4aa8b2663da5984486ddc63b2f95e2a92ca0950",
+  "suite": "backend-0001-0008",
+  "source": "frozen-commit:e4aa8b2663da5984486ddc63b2f95e2a92ca0950",
+  "database": "naijue_erp_test_9fdd325d18bbbf0a",
+  "host": "127.0.0.1",
+  "port": 55432,
+  "code": 0,
+  "signal": null,
+  "logfile": "evidence/postgres-real-native-profile-acceptance-e4aa8b2/acceptance.tap",
+  "sanitization": "Only machine-local source/log locations replaced; original selection/commit/target/exit fields preserved."
+}

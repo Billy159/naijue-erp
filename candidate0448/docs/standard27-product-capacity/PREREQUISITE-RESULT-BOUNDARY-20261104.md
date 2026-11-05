@@ -1,0 +1,7 @@
+# Capacity prerequisite result boundary
+
+The capacity issuer remains literally disabled. Its dormant import-privilege, installed-guard and provenance-barrier observations now use an exact boolean-row decoder instead of property reads on unchecked result objects. The decoder rejects proxies, accessors, inherited fields, additional row fields, malformed arrays and nonboolean values without invoking accessor/proxy code. It copies and freezes the single boolean; false remains false and cannot become an admission decision. Normal PostgreSQL result metadata outside `rows` is not interpreted as evidence.
+
+The issuer checks that the original managed transaction context is still active immediately after each awaited prerequisite SQL call, before decoding its result or starting the next query. The existing lifecycle still owns failure poisoning and precommit checks. No callback, caller-supplied proof, gate override, installation path, grant or SQL candidate was added.
+
+Offline adversarial tests exercise the decoder directly. A source assertion checks wiring inside the dormant issuer; it does not execute that gated path. These tests are not live PostgreSQL parsing, actual writer/provenance closure, lock-acquisition proof or issuer acceptance. The unresolved catalog stability/acquisition and complete writer-reachability requirements remain unchanged. No PostgreSQL, production or Mac was contacted.

@@ -1,0 +1,57 @@
+{
+  "version": "SOURCE195_REMAINING_FINE_STEP_BUDGET_V1",
+  "status": "FINITE_STATIC_PRE196_BUDGET_NOT_EXECUTION_GRANT",
+  "inputs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-193-reaped-unit-successor-20261028-195/bundle/provider-INPUT.FINAL.json",
+      "bytes": 188947,
+      "sha256": "c538ca04de9f09fabaee3da4e5791dee43743fda2e44a268255f2768d54e6991"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-193-reaped-unit-successor-20261028-195/RESULT.json",
+      "bytes": 4193,
+      "sha256": "f7a2d394a3dea2d2961e5bd3780c0988d213c7d9daf61eceee04e2336cb685e8"
+    }
+  ],
+  "paymentManifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/payment-source-candidate1/RESULT.json",
+    "bytes": 1145,
+    "sha256": "dc94d44e09390ef7827310b86b9bdee0b5fab8fa95f9b50540150c978a81479b"
+  },
+  "countingRule": "Every source.steps yielded MAIN/CLOSURE/native stage chunk or row counts once at host.forwardSourceSteps26, and every successful execute including inserted0/replayed counts once at runImportSteps. Reader construction, authorization-only STOCK iteration and13cursor proof reads do not yield execution steps; 109 original MAIN commands are not the total fine-step budget.",
+  "conditions": [
+    "Same fixed source and original148/121/109 identities as195, pending original196 persistent-boundary recovery; no new command or key.",
+    "STAGED and no ACCOUNT/PUBLISH; original BIND committed plus complete current prefix proof and source identity authorize skipping HEADERS/TRANSFER_LINES/PRODUCTS/SKUS; STOCK fully source-authorized but emits zero repeated stage writes.",
+    "PARTY/CATALOGUE18 successful steps observed195 are replayed again under unchanged source rules; persistent success alone does not remove them from a fresh-run budget.",
+    "BARCODE15018 is one row per yielded step; ordinal19 is unresolved42501 until196, do not replay automatically or subtract from budget.",
+    "PAYMENT original small manifest has1086 rows/12 prepared chunks; SALES_DETAILS80918 and SETTLEMENTS25779 at100/chunk yield810/258.",
+    "107 ACCOUNT + CLOSURE1 + PUBLISH1 follow unchanged source order and keys. Original BIND emits zero because original suffix selector confirms it committed."
+  ],
+  "stepUpperBoundByKind": {
+    "PARTY_AND_CATALOGUE_REPLAY": 18,
+    "BARCODE": 15018,
+    "PAYMENT": 12,
+    "SALES_DETAIL": 810,
+    "SETTLEMENT": 258,
+    "ACCOUNT_MAIN": 107,
+    "CLOSURE": 1,
+    "PUBLISH_MAIN": 1
+  },
+  "totalFineStepUpperBound": 16225,
+  "current4096Sufficient": false,
+  "independentLowerBound": "BARCODE alone15018 emitted steps exceeds4096; the original failure42501 is unrelated to exhaustion.",
+  "recommendation": {
+    "newBatchMaxSteps": 16225,
+    "reason": "Use the exact finite proven full suffix upper bound16225, including repeated18source prelude. No arbitrary unbounded increase. Both host job and runner limits must agree and be independently fixed by C in a new carrier.",
+    "hardToolBound": 1000000,
+    "segmentationRequiredForStepLimit": false,
+    "runtimeEstimate": "UNKNOWN_NOT_MEASURED; this step budget does not establish sufficient wall-clock deadline or performance."
+  },
+  "post196": "Amend only actual receipt/recovery boundary. Do not subtract committed source steps unless existing source iterator actually suppresses them. If ACCOUNT has begun, current prefix proof becomes null and this bound is not applicable; recalculate using original legal selectors and retained stages.",
+  "unchanged": [
+    "No source/SQL/ACL/data/body/key/order/transaction changes",
+    "No scan of484368source bodies or regeneration148",
+    "No execution or replay195/196",
+    "No assertion that raising limit solves42501 or proves business/publication success"
+  ]
+}

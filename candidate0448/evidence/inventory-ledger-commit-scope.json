@@ -1,0 +1,13 @@
+{
+  "parent_commit": "76b0578236f342951c97ef0a5f014cc132f69cdb",
+  "scope": "Exact-key native ledger query and unregistered HTTP plugin; shared unchanged publicationguard SQL extraction",
+  "checks": "104 owner tests + scoped types;42 independent tests + scoped types;14 filefreezeverified",
+  "registration": false,
+  "UI_wiring": false,
+  "rollback": "Revert source commit; no schema or externalstate change",
+  "not_verified": [
+    "realPG/EXPLAIN",
+    "production authsession",
+    "browser/performance"
+  ]
+}

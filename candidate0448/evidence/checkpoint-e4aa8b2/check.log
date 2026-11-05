@@ -1,0 +1,1300 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check:all
+> npm run check && npm run check:web
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check
+> npm run check:dependencies && npm run typecheck && npm run build && npm run smoke:build && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check:dependencies
+> node scripts/verify-dependencies.mjs
+
+fastify: installed and locked 5.12.5
+pg: installed and locked 8.23.1
+react: installed and locked 19.1.1
+react-dom: installed and locked 19.1.1
+@arco-design/web-react: installed and locked 2.66.16
+@types/node: installed and locked 24.3.1
+@types/pg: installed and locked 8.23.1
+@types/react: installed and locked 19.1.12
+@types/react-dom: installed and locked 19.1.9
+typescript: installed and locked 5.9.2
+esbuild: installed and locked 0.25.12
+jsdom: installed and locked 29.1.1
+Dependency verification passed; 176 locked package entries, no installation performed.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 build
+> tsc -p tsconfig.build.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 smoke:build
+> node scripts/smoke-build.mjs
+
+Emitted JS imports and exact arithmetic pass. No server started; no database/client constructed.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test
+> node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/web/src/inventory/*.test.ts apps/web/src/inventory/windowing/*.test.ts apps/web/src/transport/*.test.ts apps/web/src/authentication/*.test.ts apps/web/src/sales/*.test.ts apps/web/src/sales/commands/*.test.ts apps/web/src/parties/*.test.ts apps/web/src/transfers/*.test.ts apps/web/src/demo-presentation/*.test.ts apps/api/src/*.test.ts tests/integration/migration-source.test.ts tests/integration/safety.test.ts tests/integration/proof.test.ts tests/integration/backend-source.test.ts
+
+✔ SYNTHETIC auth configuration fails closed and construction has no storage/credential side effect (8.42164ms)
+✔ SYNTHETIC auth: explicit login issues distinct opaque tokens, stores hashes only, resolves fresh staff identity (36.549738ms)
+✔ SYNTHETIC auth: disabled account rejects login and existing session (16.993719ms)
+✔ SYNTHETIC auth: resigned employee rejects login and existing session (1.024481ms)
+✔ SYNTHETIC auth: unknown employment rejects login and existing session (5.526317ms)
+✔ SYNTHETIC auth: unknown role rejects login and existing session (1.971862ms)
+✔ SYNTHETIC auth: missing salesperson hall rejects login and existing session (2.134631ms)
+✔ SYNTHETIC auth: disabled hall rejects login and existing session (7.848404ms)
+✔ SYNTHETIC auth: unknown hall rejects login and existing session (5.131731ms)
+✔ SYNTHETIC auth: invalid auth version rejects login and existing session (1.753423ms)
+✔ SYNTHETIC auth: unknown account/wrong password do not create sessions; invalid tokens never query storage (2.888349ms)
+✔ SYNTHETIC auth: absolute expiry, revocation and authentication version invalidate sessions without auto-login (5.664705ms)
+✔ SYNTHETIC auth: password change verifies old password, enforces confirmed rules and invalidates every old session atomically (8.342241ms)
+✔ SYNTHETIC auth: failed password transaction rolls back hash/version/revocations; concurrent changes cannot both succeed (6.685825ms)
+✔ SYNTHETIC auth: revocation or expiry committed while waiting for account lock cannot authenticate a stale session (1.716283ms)
+✔ SYNTHETIC source password policy uses normal self-change rule, not maintenance six-digit exception (1.353493ms)
+✔ SYNTHETIC Node scrypt: independent fixed vector verifies exactly; altered/unknown/legacy formats fail closed (3498.477023ms)
+✔ SYNTHETIC HTTP: login/session/logout use secure HttpOnly cookie only, never expose token/hash/password in JSON (825.804479ms)
+✔ SYNTHETIC HTTP: writes reject missing/wrong Origin, cross-site metadata and ambiguous credentials before storage (43.349299ms)
+✔ SYNTHETIC HTTP: duplicate/malformed cookie, unknown identity fields, query secrets and malformed body are rejected (67.112125ms)
+✔ SYNTHETIC HTTP: self-change clears cookie and invalidates old sessions, but failed revocation never claims logout (31.779837ms)
+✔ SYNTHETIC HTTP: trusted provider failures are sanitized without returning password, cookie or storage details (89.174261ms)
+✔ SYNTHETIC Sales cookie callback derives actor from session and requires origin for mutations (44.898045ms)
+✔ SCRIPTED pg auth: login is parameterized, account/staff locked, token hash only inserted inside transaction (2.626107ms)
+✔ SCRIPTED pg auth: password CAS and all-session revocation share the same transaction; closed handles reject (3.178744ms)
+✔ SCRIPTED pg auth: resolve locks account, fresh hall, then re-reads/locks the same session (2.096881ms)
+✔ SCRIPTED pg auth: newly disabled or missing hall after account lock denies login before session creation (2.049978ms)
+✔ SCRIPTED pg auth: storage/revocation error rolls back; commit failure discards connection; rollback failure aggregates (1.540775ms)
+✔ STATIC schema contract only: migration is additive session schema with no credential seed or backfill (3.577119ms)
+✔ SYNTHETIC inventory HTTP: required trusted providers, no listener and DTO-compatible read-only routes (1042.007483ms)
+✔ SYNTHETIC inventory HTTP: authentication runs first and receives request metadata, not client actor (123.191748ms)
+✔ SYNTHETIC inventory HTTP: malformed authentication and private auth errors fail closed (387.35508ms)
+✔ SYNTHETIC inventory HTTP: strict structured input rejects spoofed identity, query fields and malformed candidates without reading (470.45547ms)
+✔ SYNTHETIC inventory HTTP: malformed transport and body limits reject without reading (32.008149ms)
+✔ SYNTHETIC inventory HTTP: authorization failure prevents reader; facts unavailable is 503, never an empty successful page (49.807411ms)
+✔ SYNTHETIC inventory HTTP: unknown storage and malformed response never leak SQL, credentials or zero-total success (56.121976ms)
+✔ SYNTHETIC inventory HTTP: request disconnect signal reaches authorization and reader, listener registration is cleaned on response (39.726313ms)
+✔ SYNTHETIC inventory HTTP: simulated disconnected request aborts the forwarded signal and rejects a late result (48.213838ms)
+✔ SYNTHETIC inventory HTTP: reviewed session authenticator is structurally reusable and POST reads require trusted Origin (46.911209ms)
+✔ SYNTHETIC inventory HTTP: incomplete snapshot is 503, not a partial 200 or a zero-filled page (44.851059ms)
+✔ SYNTHETIC ledger HTTP: separate opt-in route, explicit providers, exact native DTO and no listener (1888.922419ms)
+✔ SYNTHETIC ledger HTTP: authentication precedes invalid JSON/body and receives no client actor (31.498533ms)
+✔ SYNTHETIC ledger HTTP: malformed trusted identity and authentication errors fail closed without leaking (35.975359ms)
+✔ SYNTHETIC ledger HTTP: strict body/query/cursor rejects identity spoofing and unknown fields before authorization (46.063068ms)
+✔ SYNTHETIC ledger HTTP: malformed/oversized JSON and wrong media reject without business reads (29.483644ms)
+✔ SYNTHETIC ledger HTTP: scope denial/revocation stops source reads, including reuse of a valid cursor (50.992544ms)
+✔ SYNTHETIC ledger HTTP: SKU_NOT_FOUND returns 404 without source details or successful empty history (55.085147ms)
+✔ SYNTHETIC ledger HTTP: INVENTORY_NOT_READY returns 503 without source details or successful empty history (44.540138ms)
+✔ SYNTHETIC ledger HTTP: INVENTORY_READ_ABORTED returns 408 without source details or successful empty history (38.042001ms)
+✔ SYNTHETIC ledger HTTP: INVENTORY_INTEGRITY_FAILED returns 500 without source details or successful empty history (10.866406ms)
+✔ SYNTHETIC ledger HTTP: private source payloads, malformed trusted facts and unknown SQL failures never leak (65.323253ms)
+✔ SYNTHETIC ledger HTTP: native baseline stays distinct from sales and transfer; version null and IDs retained (32.645723ms)
+✔ SYNTHETIC ledger HTTP: current session authenticator rejects cross-site/missing Origin before resolving session (48.866289ms)
+✔ SYNTHETIC ledger HTTP: request disconnect aborts forwarded read and late result is rejected; listeners cleaned (50.648837ms)
+✔ SYNTHETIC party HTTP: separate route lifecycle, original replay and minimal safe receipts; no listener (1068.85744ms)
+✔ SYNTHETIC party HTTP: writes reject code/dual-role/client actor/hidden fields and unknown queries (55.843986ms)
+✔ SYNTHETIC party HTTP: authentication/maintenance authorization and current role apply to all routes (50.739679ms)
+✔ SYNTHETIC party HTTP: strict pagination rejects repeated/unknown/coerced/disabled candidate filters (111.831713ms)
+✔ SYNTHETIC party HTTP: versions, default-customer dependencies and cross-kind request keys are conflicts (65.704237ms)
+✔ SYNTHETIC party HTTP: provider failures and invalid trusted actors never leak internals (100.46915ms)
+✔ SYNTHETIC party HTTP: malformed/media/body limits are bounded without storage changes (47.838397ms)
+✔ SYNTHETIC party sessions: authenticated current principal role retained and cookie/origin ambiguity rejected (3.469699ms)
+✔ SYNTHETIC approved party HTTP: technical code exhaustion is explicit and does not persist a party (58.581865ms)
+✔ SYNTHETIC atomic party HTTP: EDIT requires name plus boolean enabled and saves/replays the pair once (170.160006ms)
+✔ SYNTHETIC atomic party HTTP: default-customer dependency rejects both edits and status-only save remains atomic (49.314417ms)
+✔ SYNTHETIC composition: one lazy owned pool, 19 native auth/read routes, no business writes/listener (416.22504ms)
+✔ SYNTHETIC composition: explicit origin/policy/media and bounded configuration fail closed (4.560358ms)
+✔ SYNTHETIC native profile: closed host selection rejects unknown/mixed shapes before driver allocation (47.369564ms)
+✔ SYNTHETIC native profile: one lazy pool creates genuine read policies and the canonical transfer policy (90.185066ms)
+✔ SYNTHETIC native profile: current trusted ADMIN/WAREHOUSE versus salesperson role and hall map to source scopes (97.696518ms)
+✔ SYNTHETIC native profile: fresh identity denial cannot fall back to authenticated or requested grants (64.355502ms)
+✔ SYNTHETIC native profile: host choice captures without mutating caller authentication or external providers (27.288865ms)
+✔ SYNTHETIC native profile: policy storage failure is sanitized, cleans its lease and leaves siblings usable (36.427262ms)
+✔ SYNTHETIC native profile: abort during native identity query stops later policy/reader work, not sibling requests (10.844802ms)
+✔ SYNTHETIC composition: failed authentication-policy construction cleans its pool without a connection (7.289185ms)
+✔ SYNTHETIC composition: real Node scrypt login/store/session/logout wiring never exposes token in JSON (639.735511ms)
+✔ SYNTHETIC composition: all read families resolve the same current PG session; native adapters retain isolated failures (92.447354ms)
+✔ SYNTHETIC composition: missing/stale/cross-site credentials cannot reach policies or business SQL (40.735857ms)
+✔ SYNTHETIC composition: hall policy is mandatory, denied inventory/ledger and product reads do not obtain business leases (82.32972ms)
+✔ SYNTHETIC composition: sanitized provider failures remain local to their read plugin (349.059538ms)
+✔ SYNTHETIC composition: explicit raw aborted event in a pending policy does not cancel a sibling read (50.282005ms)
+✔ SYNTHETIC composition: caller method replacement cannot widen captured policy after construction (200.891449ms)
+✔ SYNTHETIC composition: pool disposal errors reject shutdown and never repeat driver end (94.287896ms)
+✔ SYNTHETIC composition source: no ambient configuration, startup, migration or business command registration (2.077786ms)
+✔ SYNTHETIC product HTTP: four DTO-compatible read routes use current trusted policy; thumbnails and originals are separate (632.11033ms)
+✔ SYNTHETIC product HTTP: all detail/image routes require current authentication before policy/storage (66.093999ms)
+✔ SYNTHETIC product HTTP: client actor/roles/scope/URLs and noncanonical or missing IDs are rejected before policy (35.340128ms)
+✔ SYNTHETIC product HTTP: policy denial/mismatched grant denies images before metadata or media; revocation is current (41.064602ms)
+✔ SYNTHETIC product HTTP: missing product is JSON null; missing image is 404; no media storage/delivery is an explicit 501 (25.881342ms)
+✔ SYNTHETIC product HTTP: only allowlisted safe errors escape; SQL/provider internals stay redacted (43.782771ms)
+✔ SYNTHETIC product HTTP: query strings, malformed/empty JSON, unsupported media and body overflow fail before policy (8.108335ms)
+✔ SYNTHETIC product HTTP: existing session authenticator accepts matching POST Origin and rejects missing/cross-site origins before session lookup (10.14326ms)
+✔ SYNTHETIC HTTP SALE: save/approve/unapprove/edit/reapprove, no original-sale reference and no listener (439.049163ms)
+✔ SYNTHETIC HTTP RETURN: save/approve/unapprove/edit/reapprove, no original-sale reference and no listener (28.391466ms)
+✔ SYNTHETIC HTTP EXCHANGE: save/approve/unapprove/edit/reapprove, no original-sale reference and no listener (53.996169ms)
+✔ SYNTHETIC HTTP: missing providers fail closed; unauthenticated requests never touch storage (13.469527ms)
+✔ SYNTHETIC HTTP: malformed server-derived actor fails closed instead of taking identity from the body (49.804016ms)
+✔ SYNTHETIC HTTP: actor cannot be spoofed, and auth receives request metadata only (23.04744ms)
+✔ SYNTHETIC HTTP: exact key replay and receipt lookup recover the original result without new mutations (27.565528ms)
+✔ SYNTHETIC HTTP: receipt is account-scoped and rechecks current access after revocation (27.984928ms)
+✔ SYNTHETIC HTTP: key content conflicts and stale versions return 409 without changing state (15.780094ms)
+✔ SYNTHETIC HTTP: approval requires exact settlement equality, not debt or overpayment (19.822634ms)
+✔ SYNTHETIC HTTP: proposed reference scope is checked by injected server authorization (60.067518ms)
+✔ SYNTHETIC HTTP: historical cutoff modifications remain explicitly unsupported (7.806278ms)
+✔ SYNTHETIC HTTP: saved-draft VOID changes no inventory; approved edits stay rejected (20.562741ms)
+✔ SYNTHETIC HTTP: rejects missing version without coercion or writes (7.23718ms)
+✔ SYNTHETIC HTTP: rejects numeric-string version without coercion or writes (8.554306ms)
+✔ SYNTHETIC HTTP: rejects fractional version without coercion or writes (43.478872ms)
+✔ SYNTHETIC HTTP: rejects unsafe version without coercion or writes (7.421301ms)
+✔ SYNTHETIC HTTP: rejects empty key without coercion or writes (7.114099ms)
+✔ SYNTHETIC HTTP: rejects noncanonical key without coercion or writes (5.455928ms)
+✔ SYNTHETIC HTTP: rejects unknown action without coercion or writes (47.815344ms)
+✔ SYNTHETIC HTTP: rejects server stock effects without coercion or writes (9.068988ms)
+✔ SYNTHETIC HTTP: rejects header status without coercion or writes (18.227264ms)
+✔ SYNTHETIC HTTP: rejects original-sale link without coercion or writes (11.388834ms)
+✔ SYNTHETIC HTTP: rejects malformed reference without coercion or writes (7.767872ms)
+✔ SYNTHETIC HTTP: rejects invalid real date without coercion or writes (11.755927ms)
+✔ SYNTHETIC HTTP: rejects numeric money without coercion or writes (6.524924ms)
+✔ SYNTHETIC HTTP: rejects decimal money without coercion or writes (11.910808ms)
+✔ SYNTHETIC HTTP: rejects exponent money without coercion or writes (8.866137ms)
+✔ SYNTHETIC HTTP: rejects leading-zero money without coercion or writes (6.330643ms)
+✔ SYNTHETIC HTTP: rejects negative-zero money without coercion or writes (12.641282ms)
+✔ SYNTHETIC HTTP: rejects numeric quantity without coercion or writes (11.186557ms)
+✔ SYNTHETIC HTTP: rejects fractional quantity without coercion or writes (12.026364ms)
+✔ SYNTHETIC HTTP: rejects overflow quantity without coercion or writes (20.74819ms)
+✔ SYNTHETIC HTTP: rejects fractional line position without coercion or writes (17.879972ms)
+✔ SYNTHETIC HTTP: rejects string boolean without coercion or writes (30.70737ms)
+✔ SYNTHETIC HTTP: rejects missing pricing intent without coercion or writes (8.445327ms)
+✔ SYNTHETIC HTTP: rejects null pricing intent without coercion or writes (9.013056ms)
+✔ SYNTHETIC HTTP: rejects unknown pricing intent without coercion or writes (6.76906ms)
+✔ SYNTHETIC HTTP: rejects missing zero confirmation without coercion or writes (5.179916ms)
+✔ SYNTHETIC HTTP: rejects string zero confirmation without coercion or writes (5.885932ms)
+✔ SYNTHETIC HTTP: rejects null zero confirmation without coercion or writes (11.273622ms)
+✔ SYNTHETIC HTTP: rejects fractional entered discount without coercion or writes (15.851049ms)
+✔ SYNTHETIC HTTP: rejects string entered discount without coercion or writes (14.028689ms)
+✔ SYNTHETIC HTTP: rejects out of range entered discount without coercion or writes (13.056537ms)
+✔ SYNTHETIC HTTP: rejects noncurrent incoming row without coercion or writes (100.183564ms)
+✔ SYNTHETIC HTTP: rejects snapshot unknown field without coercion or writes (21.198602ms)
+✔ SYNTHETIC HTTP: rejects settlement unknown field without coercion or writes (16.463716ms)
+✔ SYNTHETIC HTTP: rejects negative settlement without coercion or writes (36.850542ms)
+✔ SYNTHETIC HTTP: rejects foreign line owner without coercion or writes (7.208433ms)
+✔ SYNTHETIC HTTP: unknown query fields and malformed transport are rejected (14.101036ms)
+✔ SYNTHETIC HTTP: exact money/quantity arrive as bigint, and JSON never rounds bigint (10.371754ms)
+✔ SYNTHETIC HTTP: unexpected provider failures do not leak details and original key can retry (9.693985ms)
+✔ SYNTHETIC HTTP: unknown provider DomainError is not exposed as a client-supplied status or text (7.174613ms)
+✔ candidate policy / SYNTHETIC HTTP: explicit discount metadata persists and economics errors use allowlisted responses (17.905084ms)
+✔ SYNTHETIC sales query HTTP: five read routes use current trusted actor/policy, no listener, exact bigint strings (480.769231ms)
+✔ SYNTHETIC sales query HTTP: authentication missing/malformed/failing and missing providers never default to global (57.355882ms)
+✔ SYNTHETIC sales query HTTP: actor, role, scope and unknown filters cannot be granted from client data (28.403277ms)
+✔ SYNTHETIC sales query HTTP: current authorization denial and empty/malformed policy scope cannot touch reader (25.636191ms)
+✔ SYNTHETIC sales query HTTP: safe allowlisted errors and unknown SQL/provider messages remain redacted (29.665997ms)
+✔ SYNTHETIC sales query HTTP: strict transport rejects query strings, invalid JSON/media type and oversized body (24.494515ms)
+✔ SYNTHETIC sales filter references HTTP: authority injection, unknown kind, form eligibility and invalid paging fail before policy (19.693597ms)
+✔ SYNTHETIC sales filter references HTTP: denied grants never read, provider failure cannot become empty success (13.306546ms)
+✔ SYNTHETIC sales reference/detail HTTP: current session adapter and trusted Origin are reused, no alternate authentication (14.158671ms)
+✔ SYNTHETIC sales filter references HTTP: simulated disconnect aborts forwarded scope and rejects late provider result (14.083294ms)
+✔ SYNTHETIC transfer session: current authenticated role/hall maps to exact canonical read scope, not request headers (10.563413ms)
+✔ SYNTHETIC transfer session: cookie-only exact HTTPS Origin checks reject credentials before storage (1.680926ms)
+✔ SYNTHETIC transfer session: no role fallback, stale session or hall-less salesperson identity (2.230106ms)
+✔ SYNTHETIC transfer session: explicit trusted configuration and provider failures are not hidden (1.924679ms)
+✔ SYNTHETIC transfer session: caller mutation cannot replace captured HTTPS origin or trusted resolver (1.559896ms)
+✔ SYNTHETIC transfer HTTP: save/approve/unapprove/edit/reapprove is two-ended and never listens (1065.153105ms)
+✔ SYNTHETIC transfer HTTP: all security and reference providers are mandatory (10.599367ms)
+✔ SYNTHETIC transfer HTTP: unauthenticated requests do not touch storage (47.834241ms)
+✔ SYNTHETIC transfer HTTP: invalid trusted identities and roles fail closed without leaking authentication details (137.552175ms)
+✔ SYNTHETIC transfer HTTP: request identity is never accepted, authentication receives metadata only (49.164553ms)
+✔ SYNTHETIC transfer HTTP: trusted actor role and creation identity are isolated before asynchronous providers run (20.34159ms)
+✔ SYNTHETIC transfer HTTP: each accepted role comes from authentication, not request defaults (69.569526ms)
+✔ SYNTHETIC transfer HTTP: exact key replay and receipts expose only current-authorized result fields (45.860832ms)
+✔ SYNTHETIC transfer HTTP: receipt ownership and revoked current permission are checked (28.027353ms)
+✔ SYNTHETIC transfer HTTP: current hall visibility is checked without treating stored creator role as caller authority (20.19087ms)
+✔ SYNTHETIC transfer HTTP: receipt recovery rechecks authorization but does not revalidate reference/effect commands (15.341378ms)
+✔ SYNTHETIC transfer HTTP: changed-key contents and stale expectedVersion are conflicts, VOID does not post stock (17.114953ms)
+✔ SYNTHETIC transfer HTTP: semantic transfer/reference failures use explicit safe client statuses and roll back (104.056172ms)
+✔ SYNTHETIC transfer HTTP: missing inventory and historical posting basis are explicit conflicts, never manufactured stock (84.68596ms)
+✔ SYNTHETIC transfer HTTP: receipt failure rolls back and preserves the same original key for caller-directed retry (24.210966ms)
+✔ SYNTHETIC transfer HTTP: rejects missing version without coercion or writes (31.37902ms)
+✔ SYNTHETIC transfer HTTP: rejects numeric-string version without coercion or writes (22.698608ms)
+✔ SYNTHETIC transfer HTTP: rejects fractional version without coercion or writes (50.68371ms)
+✔ SYNTHETIC transfer HTTP: rejects unsafe version without coercion or writes (16.363045ms)
+✔ SYNTHETIC transfer HTTP: rejects zero version without coercion or writes (19.256202ms)
+✔ SYNTHETIC transfer HTTP: rejects empty key without coercion or writes (12.107764ms)
+✔ SYNTHETIC transfer HTTP: rejects key whitespace without coercion or writes (15.728628ms)
+✔ SYNTHETIC transfer HTTP: rejects unknown action without coercion or writes (10.28504ms)
+✔ SYNTHETIC transfer HTTP: rejects client stock effects without coercion or writes (23.830498ms)
+✔ SYNTHETIC transfer HTTP: rejects client transfer id on SAVE without coercion or writes (12.617096ms)
+✔ SYNTHETIC transfer HTTP: rejects header status without coercion or writes (14.809072ms)
+✔ SYNTHETIC transfer HTTP: rejects header creator account without coercion or writes (20.426269ms)
+✔ SYNTHETIC transfer HTTP: rejects header creator hall without coercion or writes (14.658037ms)
+✔ SYNTHETIC transfer HTTP: rejects header creator role without coercion or writes (9.715359ms)
+✔ SYNTHETIC transfer HTTP: rejects header action time without coercion or writes (8.12831ms)
+✔ SYNTHETIC transfer HTTP: rejects header missing note without coercion or writes (7.342671ms)
+✔ SYNTHETIC transfer HTTP: rejects numeric note without coercion or writes (7.252432ms)
+✔ SYNTHETIC transfer HTTP: rejects malformed warehouse without coercion or writes (7.514075ms)
+✔ SYNTHETIC transfer HTTP: rejects invalid calendar date without coercion or writes (9.994783ms)
+✔ SYNTHETIC transfer HTTP: rejects numeric quantity without coercion or writes (10.500484ms)
+✔ SYNTHETIC transfer HTTP: rejects fractional quantity without coercion or writes (11.547476ms)
+✔ SYNTHETIC transfer HTTP: rejects exponent quantity without coercion or writes (8.243898ms)
+✔ SYNTHETIC transfer HTTP: rejects leading-zero quantity without coercion or writes (11.954835ms)
+✔ SYNTHETIC transfer HTTP: rejects negative-zero quantity without coercion or writes (15.767499ms)
+✔ SYNTHETIC transfer HTTP: rejects overflow quantity without coercion or writes (67.747181ms)
+✔ SYNTHETIC transfer HTTP: rejects fractional line position without coercion or writes (46.216121ms)
+✔ SYNTHETIC transfer HTTP: rejects string line position without coercion or writes (7.040003ms)
+✔ SYNTHETIC transfer HTTP: rejects missing current marker without coercion or writes (9.706657ms)
+✔ SYNTHETIC transfer HTTP: rejects noncurrent incoming row without coercion or writes (9.062201ms)
+✔ SYNTHETIC transfer HTTP: rejects snapshot extra key without coercion or writes (7.223395ms)
+✔ SYNTHETIC transfer HTTP: rejects line sales-only field without coercion or writes (14.271261ms)
+✔ SYNTHETIC transfer HTTP: rejects sales-only settlements without coercion or writes (6.46472ms)
+✔ SYNTHETIC transfer HTTP: transition commands accept neither SAVE payload nor nullable version (12.321866ms)
+✔ SYNTHETIC transfer HTTP: malformed JSON/media/body limits and extra query fields are rejected (24.742675ms)
+✔ SYNTHETIC transfer HTTP: bigint quantity reaches trusted references exactly, without a numeric round trip (9.039819ms)
+✔ SYNTHETIC transfer HTTP: unknown provider errors never leak diagnostic text or arbitrary error codes (24.430577ms)
+✔ SYNTHETIC transfer query HTTP: three read routes use trusted actor/policy, never listen, and serialize exact counts/quantities (352.60299ms)
+✔ SYNTHETIC transfer query HTTP: detail current native catalog stays separate from saved snapshots, with complete size identities (46.026218ms)
+✔ SYNTHETIC transfer query HTTP: empty pages and requested paging retain exact decimal count contracts (14.960299ms)
+✔ SYNTHETIC transfer query HTTP: missing providers and missing/malformed/failing authentication never grant scope (38.334244ms)
+✔ SYNTHETIC transfer query HTTP: exact array-only list filters reject historical scalar paths and caller authority (26.418069ms)
+✔ SYNTHETIC transfer query HTTP: warehouse search/selected-ID exactness and bounds fail before policy (59.753636ms)
+✔ SYNTHETIC transfer query HTTP: bounded warehouse selection/search maxima are accepted without truncation (10.376158ms)
+✔ SYNTHETIC transfer query HTTP: literal search and selected IDs narrow the reader intent, never the trusted grant (10.61067ms)
+✔ SYNTHETIC transfer query HTTP: denied, empty and malformed current policy scopes cannot touch any reader (38.558623ms)
+✔ SYNTHETIC transfer query HTTP: all read routes reauthorize after access revocation, including selected warehouse IDs (10.285234ms)
+✔ SYNTHETIC transfer query HTTP: known safe errors map on every route while provider/SQL messages stay private (51.853469ms)
+✔ SYNTHETIC transfer query HTTP: synthetic request abort before/after policy or reader prevents delivery on all routes (19.341829ms)
+✔ SYNTHETIC transfer query HTTP: strict transport rejects query strings, malformed JSON/media and large bodies on all routes (40.661886ms)
+✔ HTTP auth is inert, explicit HTTPS only, fixed same-origin cookie requests and exact DTOs (125.969933ms)
+✔ HTTP session null is truthful; unknown/secret response fields, identities, redirect and wrong statuses fail closed (36.047084ms)
+✔ HTTP validation rejects oversize/empty inputs without fetching and sanitizes errors (6.062701ms)
+✔ HTTP status mappings distinguish old-password rejection and expiry without retaining server messages (9.297501ms)
+✔ HTTP cancellation, timeout and late ignored fetch response never produce a successful login/retry (27.570035ms)
+✔ HTTP bounded stream and content validation; pending body aborts without exposing contents (26.159714ms)
+✔ controller requires lifecycle, starts without reads/secrets, and explicit resolve handles null/current/revisions (27.532247ms)
+✔ repeated login is single-shot; logout supersedes pending login, clears ReadContext and ignores late identity (1.639536ms)
+✔ cancelled session resolution never restores identity; explicit retry is distinct and late rejection is consumed (0.724092ms)
+✔ successful password change clears all scopes and requires explicit fresh login, no automatic relogin (4.813983ms)
+✔ old-password/policy rejection retain verified identity, real expiry/uncertain writes clear it (2.158981ms)
+✔ logout failure is not success, cancellation/disposal/expiry clear host context and detach late responses (6.590895ms)
+✔ cancelled password write cannot report success; login expiry and session failure remain truthful (1.011038ms)
+✔ known login expiry timer invalidates current reads without making a network request (21.545628ms)
+✔ absolute monotonic deadline rejects microtask-starved streams and late fetch before timer callbacks (22.797458ms)
+✔ source default below: 360 width, anchor+5, right/left guard and 450 height ceiling (8.44657ms)
+✔ source short viewport flips above when more room exists there (0.371502ms)
+✔ narrow viewport caps width at viewport minus24 and right edge at8 minimum (0.339974ms)
+✔ left guard is8 even for a partially offscreen anchor (0.5986ms)
+✔ strict230 boundary stays below even with greater room above (0.596725ms)
+✔ 229 below flips above, but tied spaces do not (1.051704ms)
+✔ source100 height floor survives a shorter viewport; this is not a guarantee of fit (0.234231ms)
+✔ pathological sub24 viewport never emits negative CSS width (0.321148ms)
+✔ nonfinite dimensions and negative sizes are rejected, not pushed into CSS (1.700727ms)
+✔ inventory does not read before explicit run; bounded products and exact full-filter summary (103.650544ms)
+✔ preserves full size labels, FIT identities, complete-source zero/negative/nonexistent specifications (14.794647ms)
+✔ integer totals reject unknown instead of coercing it to zero and keep large exact values (2.528124ms)
+✔ filter draft mutation cannot relabel executed facts; failure preserves its own prior scope (26.021095ms)
+✔ missing cell, malformed integer and pagination mismatch fail instead of zero-success (11.487783ms)
+✔ identity replacement clears inventory references and stops future scope reads (3.977805ms)
+✔ candidate fixture is paged and independent from inventory reads (6.701561ms)
+✔ unready complete-source read rejects the entire query and preserves prior facts without filling holes (8.906285ms)
+✔ product DTOs validate target identity and preserve same-color/size different FIT legal SKUs (9.466685ms)
+✔ null/empty product facts are distinct from malformed success and unsafe media (3.048014ms)
+✔ product query is inert until activated; close clears facts and stale ignored transport cannot republish (3.042773ms)
+✔ synthetic provider reads target tabs independently and never reads originals for metadata (17.906802ms)
+✔ synthetic thumbnail fixture contains a decodable real PNG rather than passing only URL syntax (4.898492ms)
+✔ canonical rows/section order and exact source totals survive windowing without cell traversal (46.046281ms)
+✔ 100/200/500 product synthetic pages have bounded visible work, not fabricated latency (3293.029038ms)
+✔ column window stays bounded as size axes grow and retains exact offscreen cells (18.053093ms)
+✔ half-open windows handle boundaries, empty data, zero viewport and invalid geometry (2.305365ms)
+✔ collapse takes immutable snapshots, preserves canonical IDs/totals, and describes reveal without expanding (1.11734ms)
+✔ sticky header metadata includes external offset and push-off by the next section (0.585609ms)
+✔ logical focus skips nonexistent SKU coordinates, preserves warehouse/size identities and stays in a section (1.206123ms)
+✔ scroll-to-cell computes axis coordinates without mounting all cells or fabricating missing quantities (455.024691ms)
+✔ a changing data reference cannot relabel an old canonical read (1.693658ms)
+✔ ID-based scroll anchors survive preceding collapse and fall back when their row is hidden (4.71043ms)
+✔ single inline projection follows frozen Demo detail and collapse structure, independent of window edges (2.108114ms)
+✔ optional source section description is outside thead and never pins thead prematurely (0.798156ms)
+✔ cached variable row measurements preserve actual geometry without measuring or materializing cells (4.552377ms)
+✔ anchor capture/restore is exactly idempotent at the reported 220px description/header boundary (4.807598ms)
+✔ anchor identity round trips across every physical scroll offset with descriptions and measured header heights (48.925611ms)
+✔ a description anchor retains its captured body-edge context across preceding collapse and measurement reflow (7.254898ms)
+✔ normal-row anchors use the current fully pinned header height after measurement or collapse reflow (6.068252ms)
+✔ boundary anchors retain their transition phase without becoming hidden by grown or shrunk headers (5.378502ms)
+✔ native-table plan is bounded for 100 complete products (194.658311ms)
+✔ native-table plan is bounded for 200 complete products (447.515852ms)
+✔ native-table plan is bounded for 500 complete products (1377.092191ms)
+✔ retained logical focus adds one row and at most one column, not its intervening inventory (355.38038ms)
+✔ section margins remain outside table rows and both axes preserve complete extents (2.654474ms)
+✔ collapsed targets never retain a hidden warehouse row; indexed columns fail safely (1.560824ms)
+✔ original invalid viewport cannot be sanitized by section-coordinate translation (1.269233ms)
+✔ section margins and transformed scroll positions cannot overflow safe geometry (1.899465ms)
+✔ only the current data ticket can publish; cancelled/late reads retain their own prior facts (12.439584ms)
+✔ scope cancellation and account/permission replacement clear references and invalidate scheduled focus (7.909783ms)
+✔ focus survives valid data/layout changes by logical ID but stale render actions never survive (4.620718ms)
+✔ a newer focus/clear invalidates earlier scheduled focus without changing data identity (11.085024ms)
+✔ disposal, cancellation or replacement during measurement cannot publish a partially built model (15.799784ms)
+✔ reflow cannot restore a model after its scope is invalidated during measurement (1.032055ms)
+✔ registration is inert; only activated leaf and its styles load, then code is reused (20.162744ms)
+✔ shared code load keeps consumer cancellation separate (2.860034ms)
+✔ failed code or style leaves can retry without exposing a half-ready module (7.499041ms)
+✔ retained module references are LRU bounded; no cache eviction starts a load (1.693035ms)
+✔ inactive scopes do not start imports (2.880297ms)
+✔ reads start only on run; frozen executed parameters do not follow editable draft (4.331826ms)
+✔ newer query aborts old transport; ignored cancellation cannot overwrite newest result (1.36001ms)
+✔ refresh failure retains last successful facts and their own executed range (2.292581ms)
+✔ switching account clears references immediately; late response cannot reopen a closed region (1.226924ms)
+✔ permission/session refresh invalidates even the same account; clear blocks new scopes (1.428017ms)
+✔ different entity scopes have no shared result state, and closing one leaves another alive (1.877028ms)
+✔ authoritative command result beats old detail read and rejects later older entity versions (1.643787ms)
+✔ cancel read is not dispose and does not clear previous successful facts (0.647798ms)
+✔ invalid parameter snapshot does not supersede a valid pending request (1.313146ms)
+✔ subscriber errors and reentrant disposal cannot bypass cleanup or start an unwanted read (1.356866ms)
+✔ plain parameter snapshots reject cyclic, nonfinite and accessor input without invoking getters (1.153239ms)
+✔ disposing during success notification returns discarded rather than actionable old data (0.606373ms)
+✔ cancel before any successful read returns waiting state rather than false empty success (0.915009ms)
+✔ registration snapshots factories and validates the retained-reference budget (1.165069ms)
+✔ clearing references during an import does not create unbounded duplicate in-flight loads (0.793825ms)
+✔ clear without reactivation does not retain an import after settlement (0.735339ms)
+✔ party construction is inert and each read uses its exact native GET route with bounded same-origin session options (36.045002ms)
+✔ all four actions POST exact command DTOs to independent families without actor, kind, code or retries (12.211635ms)
+✔ EDIT atomically sends name and required enabled state and requires that exact state in the committed result (13.564996ms)
+✔ configuration rejects absolute/ambiguous prefixes, credentials and invalid resource bounds without sending (27.10558ms)
+✔ invalid kind, exact-key DTOs, identifiers, query values and oversized UTF-8 body all fail before dispatch (4.248519ms)
+✔ caller mutations after invocation cannot change dispatch or expected response validation (5.755838ms)
+✔ every known party 4xx code is retained only from an exact error envelope and proves command rejection (43.374052ms)
+✔ unknown, wrong-status, extra-field and malformed error envelopes never prove a write did not commit (15.159325ms)
+✔ network failure is sanitized, uncertain after write dispatch, and never retried (2.367607ms)
+✔ pre-abort and same-turn cancellation do not send; post-dispatch ignored abort stays uncertain and consumes late failure (10.368021ms)
+✔ timeout detaches ignored fetch, cancels a late body, and keeps writes uncertain (3.829732ms)
+✔ fetch/body microtasks cannot publish a result after the monotonic timeout budget (0.935967ms)
+✔ streamed bodies are byte/chunk bounded, stalled reads detach on timeout and cancellation (1251.060946ms)
+✔ malformed JSON/UTF-8/content, non-200 success and observable redirects never acknowledge a command (8.019828ms)
+✔ wrong kind/id/CAS/state/code successes are uncertain, and invalid list/candidate/detail/receipt data fail closed (51.897116ms)
+✔ independent lazy workspace constructs no reads and retains each bounded list without merging names/codes (13.214652ms)
+✔ per-kind unapplied filter drafts survive route leave independently of applied results and clear with identity (2.813703ms)
+✔ create allocates no client code and generates one key only on explicit valid submit (3.73646ms)
+✔ edit reads current target only, preserves original code/null timestamps and sends native CAS without code (21.801132ms)
+✔ only native disable/restore commands, enabled-state guard and default-customer rejection preserve facts (2.97341ms)
+✔ uncertain write blocks duplicate/new/close and absent receipt never proves not committed; exact replay preserves key/CAS/name (2.576ms)
+✔ receipt recovery validates native key/action/target/CAS and does not treat original result as current detail (2.402016ms)
+✔ replay rejection stays uncertain because it cannot prove original uncommitted (1.339439ms)
+✔ definitive CAS conflict retains draft, fetches current facts separately and rebases only by explicit preparation (0.984028ms)
+✔ duplicate clicks serialize; route suspend retains uncertain command and ignores late success (0.729226ms)
+✔ detail close/replace cancellation discards ignored-signal results and suspended detail can retry (1.010824ms)
+✔ identity/session/permission invalidation clears both independent lists, editor, drafts and pending command; late response cannot restore (1.265956ms)
+✔ 401/403 clears shared party scope before host callback, while stale cancelled errors cannot expire a replacement identity (1.379711ms)
+✔ exact total bounds page correction and latest query ignores superseded results (0.784303ms)
+✔ untrusted DTOs reject extra fields, identity/version regressions, wrong totals and malformed native receipts (1.989311ms)
+✔ list wrapper owns an immutable executed range during await and never adjusts with a mutated draft (0.912389ms)
+✔ atomic edit owns both name and state in one key/CAS; blocked default disable preserves both fields (1.126626ms)
+✔ state-only edit is dirty; uncertain atomic recovery locks both fields and replays identical state/name/key/CAS (1.434625ms)
+✔ legitimate route leave drops clean editors and detached detail, never dirty or unresolved recovery (1.297746ms)
+✔ CUSTOMER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (57.526482ms)
+✔ SUPPLIER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (2.951211ms)
+✔ replay403 rejection cannot establish rollback and later explicit replay uses identical object/key/CAS/payload (2.596381ms)
+✔ sibling403 read does not discard another kind's submitting command (6.137042ms)
+✔ sibling403 read does not discard another kind's uncertain command (6.914529ms)
+✔ a definitively rejected fresh sibling403 cannot discard the other kind's uncertain command (5.891584ms)
+✔ current401 during receipt still invalidates both party stores and host session (6.407868ms)
+✔ current401 during replay still invalidates both party stores and host session (3.409712ms)
+✔ current401 during sibling still invalidates both party stores and host session (4.367634ms)
+✔ late forbidden receipt after suspension cannot expire current identity or remove original recovery (3.709915ms)
+✔ late unauthenticated receipt after suspension cannot expire current identity or remove original recovery (1.432284ms)
+✔ late forbidden receipt cannot expire or repopulate a replacement identity (1.965193ms)
+✔ late unauthenticated receipt cannot expire or repopulate a replacement identity (3.300826ms)
+✔ ordinary403 still invalidates when there is no unresolved command, including a definitively rejected fresh submission (8.584322ms)
+✔ uncertain fresh403 cannot establish rollback and preserves the original command without automatic retry (1.478591ms)
+✔ workspace construction is inert; CREATE saves once with null CAS and no inventory optimism (20.563603ms)
+✔ DRAFT SAVE is CAS-bound and cannot silently approve unsaved local edits (39.152459ms)
+✔ APPROVED document cannot edit or SAVE/APPROVE/VOID; UNAPPROVE must commit then read back first (4.510232ms)
+✔ approval requires persisted exact settlement; independent return does not consult an original sale or stock balance (8.352755ms)
+✔ all historical writes stay closed even for historical DRAFT; VOID is saved DRAFT only (3.069872ms)
+✔ unknown outcome blocks edits/replacement/new writes and explicit receipt404 remains unknown (2.023819ms)
+✔ explicit replay keeps original key/CAS/deep payload and rejection cannot disprove original commit (3.529219ms)
+✔ wrong receipt action, target, CAS or posting count never becomes committed (10.553772ms)
+✔ local cancel before client invocation is not-sent; after invocation keeps uncertain and ignores late success (2.763592ms)
+✔ route suspension preserves original recovery, while identity disposal clears facts and ignores late results (2.31165ms)
+✔ definitive rejection preserves draft; explicit current read never force-rebases old CAS (3.817934ms)
+✔ access failures clear identity-scoped data before host callback, including malformed HTML-status invalidation (6.01969ms)
+✔ superseded detail/readCurrent cannot revive another target or disposed identity (2.921846ms)
+✔ duplicate generated request key is refused across resolved/discarded operations (2.693556ms)
+✔ unknown legacy price facts never become inferred SAVE or APPROVE intent (1.200454ms)
+✔ opened stock provenance is pinned across readback, conflict and recovery; cutoff history cannot promote (4.667491ms)
+✔ known command/read status must agree at its exact version; VOID remains terminal at all later reads (5.967986ms)
+✔ observed auth headers clear workspace immediately even when response JSON never arrives (13.963635ms)
+✔ command client construction is inert, same-origin exact endpoints retain exact native wire values (20.546329ms)
+✔ immutable caller snapshot protects original nested payload, target and CAS through dispatch and validation (2.532046ms)
+✔ malformed input and oversized UTF-8 draft are rejected before any fetch (4.801122ms)
+✔ recognized native original 4xx rejection is definitive, sanitized and not retried (15.406832ms)
+✔ receipt404 is a read absence and never a definitive command outcome (1.080261ms)
+✔ unknown, malformed or wrong-status errors and 5xx cannot prove non-commit (7.513967ms)
+✔ network errors are uncertain once dispatched, safe and never automatically retried (1.619536ms)
+✔ pre-abort/same-turn abort do not dispatch; abort after dispatch detaches an ignored fetch without claiming rollback (3.735126ms)
+✔ timeout consumes late fetch and cancels late body; monotonic checks prevent expired microtask success (9.303508ms)
+✔ stream timeout is bounded and cannot publish valid JSON after deadline (2.063316ms)
+✔ malformed/oversized/redirected/wrong-target successes stay uncertain, never fake empty results (8.310864ms)
+✔ receipt-only error code cannot prove command rejection; dot-segment keys fail closed before dispatch (2.368185ms)
+✔ observed 401/403 fails immediately and cancels any body without awaiting timeout or claiming non-commit (14.6168ms)
+✔ wire contracts exactly preserve native SAVE, command and receipt shape with deep isolation (33.13082ms)
+✔ draft projection excludes server managed/name facts and never invents missing old pricing intent (3.128887ms)
+✔ strict native command parser rejects extensions, missing fields, actor, coerced CAS and alternate route fields (2.508533ms)
+✔ independent return and exchange are signed, exact and original-sale-free, while SALE is positive only (1.585815ms)
+✔ native gift, zero-confirmation, half-up discount and allocation arithmetic are not coerced (1.292362ms)
+✔ result and receipt require exact key/action/target/CAS/status and posting identity agreement (0.944903ms)
+✔ native largest-remainder allocation preserves persisted row order and never merges equal SKUs (1.657002ms)
+✔ sales money and counts remain exact beyond Number and preserve negative sign (9.74887ms)
+✔ sales filters project the committed shape, reject dates/UUID/status and trim literal number (10.198269ms)
+✔ list validates exact totals, bounded page/row membership, no coercion or hidden extensions (18.847281ms)
+✔ list number membership uses deterministic lowercase literal inclusion without treating SQL wildcard characters specially (7.042194ms)
+✔ list requires exact non-gift quantity aggregates and a non-null native updated timestamp, without line bigint bounds (9.032145ms)
+✔ detail preserves independent RETURN snapshots, IDs, full size/FIT and nullable metadata (2.892067ms)
+✔ detail rejects wrong target lines, inactive rows, floating amounts, overflows and duplicate line identity (6.437345ms)
+✔ reference port rejects partial pages and noncanonical identities (1.058969ms)
+✔ HTTP construction is inert and one explicit list/detail call uses exact existing same-origin endpoints (59.558877ms)
+✔ malformed HTTP success cannot become an empty or successful sales result (17.15177ms)
+✔ safe HTTP status kinds remain errors, never successful zero pages (26.836601ms)
+✔ superseded/cancelled details and identity replacement discard transports that ignore signals (3.558922ms)
+✔ named detail is required and nullable current salesperson matches its reference identity (2.015608ms)
+✔ settlement name records map one-to-one to exact settlement/account identities with historical and current facts distinct (2.670058ms)
+✔ concrete filter reference HTTP reader is inert and projects only the actual bounded endpoint contract (7.576396ms)
+✔ filter reference HTTP rejects invalid parameters before fetch and old/malformed candidate responses without fallback (12.806107ms)
+✔ construction and parameter edits are inert, source arrays/page sizes are strict (22.936619ms)
+✔ exact read HTTP request shape, trusted session only and no hydration (40.445296ms)
+✔ response fails closed for missing summaries, wrong scope/count/page, duplicates and scalar aliases (4.84942ms)
+✔ detail validates complete canonical metadata while keeping saved full labels (4.533014ms)
+✔ contradictory current product/color/FIT/size identity facts fail closed (11.909923ms)
+✔ canonical matrix uses identities, full ordered sizes, exact actual quantities and legal empty vs nonexistent SKU (1.338092ms)
+✔ same labels never merge different product/color/FIT identities (0.980947ms)
+✔ wide and many-row grids select explicit bounded fallback before Cartesian materialization (102.234959ms)
+✔ exact formatting and huge count paging do not round quantities or expose unsafe page actions (3.149228ms)
+✔ superseded and cancelled list reads discard late ignored-signal success (7.170981ms)
+✔ failed read retains marked executed facts, identity replacement clears all list/detail results (5.102927ms)
+✔ 401/403 revoke route and child reads immediately without retained old labels (3.927968ms)
+✔ detail version guard never regresses an already-known version (1.32757ms)
+✔ bounded warehouse HTTP is independent, exact selected-ID intersection and rejects malformed candidates (5.646529ms)
+✔ malformed transport data never becomes successful empty results or fixtures (2.360163ms)
+✔ constructors are inert; exact same-origin POSTs use session credentials/no-store and only projected DTO fields (23.26361ms)
+✔ base configuration rejects foreign/ambiguous URLs before any request and permits explicit root/prefix (6.441687ms)
+✔ product tabs and individual image read use four exact routes and no eager related reads (9.482951ms)
+✔ HTTP 401/403/409/503 and capability failures remain distinct; safe known code only, no server details or automatic retries (17.308516ms)
+✔ network failure is sanitized and POST is never retried (1.129092ms)
+✔ malformed success is not an empty/zero success; invalid quantities, totals, fields, targets and media fail closed (12.275532ms)
+✔ candidate response verifies complete shape, exact page, labels, duplicates and option types (5.249468ms)
+✔ HTTP content, malformed UTF-8/JSON, unexpected empty success and observable redirects are rejected (4.208014ms)
+✔ decoded response stream and declared response size are bounded and cancelled, without truncating facts (9.185362ms)
+✔ request JSON size is bounded before fetch; full unmodified labels count as UTF-8 bytes (1.656596ms)
+✔ caller cancellation forwards to fetch and detaches immediately even when mocked fetch ignores it (12.589219ms)
+✔ stalled response body cancellation and total timeout are bounded (47.55735ms)
+✔ LatestQuery retains old executed facts on HTTP failure and discards superseded/closed HTTP reads (14.27701ms)
+✔ LatestQuery scope disposal cancels a pending HTTP body, clears facts and permits no late publication (2.430842ms)
+✔ zero-byte chunk streams and oversized exact integer text also fail closed within technical bounds (1402.420959ms)
+✔ inventory rejects different SKU or absent-vs-existing identity for one coordinate across warehouses (9.626402ms)
+✔ inventory prevents a SKU being reused by a different product even when every total is exact (3.271948ms)
+✔ known cells enforce signed-bigint bounds while exact aggregate totals may exceed those bounds (5.782068ms)
+✔ warehouse header labels/count/order and warehouse IDs must agree throughout the matrix (6.182244ms)
+✔ inventory result also respects executed product/fit/warehouse IDs and the bounded opaque read reference (5.99395ms)
+✔ monotonic deadline stops continuously resolved stream chunks without waiting for the timer task (10.896037ms)
+▶ deadline cannot publish a success after synchronous JSON decode/parse or DTO validation returns
+  ✔ elapsed during JSON parsing (4.102228ms)
+  ✔ elapsed during DTO validation (1.025445ms)
+✔ deadline cannot publish a success after synchronous JSON decode/parse or DTO validation returns (6.325504ms)
+✔ SYNTHETIC: fit is an independent SKU dimension, not merged with product/color/size (44.029629ms)
+✔ SYNTHETIC: multiple raw historical codes bind directly to one canonical SKU and retain primary (2.93029ms)
+✔ SYNTHETIC: raw barcode leading zeros and string identity are never numeric-normalized (0.893799ms)
+✔ SYNTHETIC: cross-SKU binding and corrupt conflicting lookup fail closed (0.876011ms)
+✔ SYNTHETIC: binding requires an existing enabled SKU, no guessed/matrix-created identity (0.821525ms)
+✔ SYNTHETIC: identical binding is idempotent; disabled code is not silently reactivated (3.21185ms)
+✔ SYNTHETIC: source sizes preserve absent and repeated codes without inventing identity (0.549805ms)
+✔ compile-time contract boundaries checked by tsc; this runtime assertion is not the typecheck (2.400745ms)
+✔ backend plan-only selection has its own scenarios and the same exact eight migration bytes (1480.276326ms)
+✔ backend plan refuses absent, unknown and historical selections rather than choosing a default (2528.322704ms)
+✔ backend source wiring uses the same pre-Pool guards and never activates the preserved historical body (55.257395ms)
+✔ native-profile engine preparation is distinct, explicit, actual-codec/default-driver and guarded-settings-only (11.426046ms)
+✔ HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double (8.611437ms)
+✔ backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path (3.668493ms)
+✔ migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses (71.666479ms)
+✔ migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses (23.873362ms)
+✔ migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes (35.48185ms)
+✔ migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets (2.530756ms)
+✔ migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content (2.036223ms)
+✔ deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure (6.483728ms)
+✔ deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected (1.611532ms)
+✔ deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof (0.140308ms)
+✔ exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT (2.801369ms)
+✔ raw constraint assertion requires exact message, SQLSTATE and whole function identity (1.380938ms)
+✔ integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback (5.213528ms)
+✔ integration safety: accepts only a dedicated explicitly repeated loopback test target (1.421102ms)
+✔ integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs (2.621037ms)
+✔ integration safety: malformed and encoded credentials never appear in diagnostics (0.539173ms)
+✔ integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast (18.583312ms)
+✔ integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings (1.036475ms)
+✔ integration safety: historical migration prefix refuses before pool construction at current adapter revision (0.666288ms)
+✔ cutoff synthetic: explicitly published full scope resolves absent real stock to exactly zero (77.894561ms)
+✔ cutoff synthetic: STAGED is whole-read not-ready, never an absent-zero proof (1.530973ms)
+✔ cutoff synthetic: VALIDATING is whole-read not-ready, never an absent-zero proof (0.672962ms)
+✔ cutoff synthetic: PASSED is whole-read not-ready, never an absent-zero proof (0.204388ms)
+✔ cutoff synthetic: FAILED is whole-read not-ready, never an absent-zero proof (4.864105ms)
+✔ cutoff synthetic: missing/duplicate/mismatched members and disabled constraints fail the entire scope (16.591452ms)
+✔ cutoff synthetic: scope members grow W+SKU rather than storing the zero Cartesian product (114.881685ms)
+✔ cutoff synthetic: zero baselines, duplicate source/target identities and over-bounded chunks are rejected (4.10392ms)
+✔ cutoff synthetic: explicit missing final-delta attestation cannot be inferred from EOF/counts (1.117422ms)
+✔ cutoff synthetic: stable source identity ignores filename, preserves namespace/category/key distinctions (1.804419ms)
+✔ cutoff synthetic: current authorization is required before store execution, even a receipt replay (2.477047ms)
+✔ cutoff pg protocol: staging freezes reviewed manifest and checkpoints with native receipt/audit (14.812627ms)
+✔ cutoff pg protocol: one bounded chunk atomically creates only nonzero stock and advances checkpoint (8.790809ms)
+✔ cutoff pg protocol: final explicit approval and publication use the same checkpoint transaction (4.139743ms)
+✔ cutoff pg protocol: same original key/hash replays immutable result without any stock/checkpoint writes (3.958084ms)
+✔ cutoff pg protocol: conflicting existing receipt request_hash never resumes/rewrites (4.631877ms)
+✔ cutoff pg protocol: conflicting existing receipt target_type never resumes/rewrites (1.156659ms)
+✔ cutoff pg protocol: conflicting existing receipt target_id never resumes/rewrites (0.873075ms)
+✔ cutoff pg protocol: conflicting existing receipt action never resumes/rewrites (1.819195ms)
+✔ cutoff pg protocol: stale checkpoint or frozen scope fails before source/stock writes (5.838277ms)
+✔ cutoff pg protocol: incomplete counts and mismatched approval manifest never publish (4.144729ms)
+✔ cutoff pg protocol: source failure requests rollback, never advances a committed synthetic checkpoint (11.612769ms)
+✔ cutoff pg protocol: ledger failure requests rollback, never advances a committed synthetic checkpoint (4.325449ms)
+✔ cutoff pg protocol: balance failure requests rollback, never advances a committed synthetic checkpoint (2.461319ms)
+✔ cutoff pg protocol: checkpoint failure requests rollback, never advances a committed synthetic checkpoint (2.275963ms)
+✔ cutoff pg protocol: audit failure requests rollback, never advances a committed synthetic checkpoint (5.366971ms)
+✔ cutoff pg protocol: receipt failure requests rollback, never advances a committed synthetic checkpoint (4.888752ms)
+✔ cutoff pg protocol: uncertain COMMIT discards connection and never automatically retries (2.77638ms)
+✔ cutoff pg protocol: zero-row source result rolls back without advancing checkpoint/evidence (1.493295ms)
+✔ cutoff pg protocol: zero-row ledger result rolls back without advancing checkpoint/evidence (7.921465ms)
+✔ cutoff pg protocol: zero-row balance result rolls back without advancing checkpoint/evidence (1.885251ms)
+✔ cutoff pg protocol: zero-row checkpoint result rolls back without advancing checkpoint/evidence (1.509993ms)
+✔ cutoff pg protocol: zero-row stage insert cannot create a false successful receipt (1.930974ms)
+✔ cutoff pg protocol: key-lock/source identities are deterministic after source filename rename (1.955488ms)
+✔ cutoff pg protocol: scope read uses one repeatable snapshot, W+SKU members, and native guard capability (2.418558ms)
+✔ cutoff pg protocol: no published scope and missing native integrity guards fail whole read (1.134636ms)
+✔ cutoff SQL text: only the two already approved import tables and three approved provenance columns are added (20.575316ms)
+✔ cutoff SQL text: used zero balances are retained by append-only ledger and a deferred noncascading composite FK (0.982648ms)
+✔ cutoff SQL text: complete publication is explicit, per-key and serializes the initial takeover (0.718447ms)
+✔ cutoff SQL text: IMPORT is a native closed target and sources/checkpoints/evidence must commit together (1.7928ms)
+✔ cutoff SQL text: source/import adapter cannot overwrite balances/documents or generate Cartesian zero facts (1.53501ms)
+✔ cutoff SQL text: historical first-version headers/details stay frozen and native first-use commands are not silently opened (0.8266ms)
+✔ cutoff composed SQL text: 0004 native source receipt guard is retained but excludes NULL-source cutoff baselines (2.136076ms)
+✔ cutoff SQL text: bounded checkpoint lookup uses an IMPORT partial unique version index without casting indexed columns (0.403203ms)
+✔ first-use pg protocol SALES: repeated actual lines insert once per used key, preserve negative quantities and commit exact receipt/audit (67.821721ms)
+✔ first-use pg protocol SALES: ledger error requests rollback and never reports commit (8.896434ms)
+✔ first-use pg protocol SALES: first balance error requests rollback and never reports commit (3.156145ms)
+✔ first-use pg protocol SALES: header error requests rollback and never reports commit (2.521935ms)
+✔ first-use pg protocol SALES: audit error requests rollback and never reports commit (26.831924ms)
+✔ first-use pg protocol SALES: receipt error requests rollback and never reports commit (2.760779ms)
+✔ first-use pg protocol SALES: losing first-insert CAS is a conflict, never an upsert or synthetic success (2.376499ms)
+✔ first-use pg protocol SALES: unknown COMMIT keeps original outcome unknown, discards connection and never retries (7.391195ms)
+✔ first-use pg protocol TRANSFER: repeated actual lines insert once per used key, preserve negative quantities and commit exact receipt/audit (9.491947ms)
+✔ first-use pg protocol TRANSFER: ledger error requests rollback and never reports commit (2.760135ms)
+✔ first-use pg protocol TRANSFER: first balance error requests rollback and never reports commit (2.88759ms)
+✔ first-use pg protocol TRANSFER: header error requests rollback and never reports commit (2.158369ms)
+✔ first-use pg protocol TRANSFER: audit error requests rollback and never reports commit (2.772527ms)
+✔ first-use pg protocol TRANSFER: receipt error requests rollback and never reports commit (2.620776ms)
+✔ first-use pg protocol TRANSFER: losing first-insert CAS is a conflict, never an upsert or synthetic success (2.525974ms)
+✔ first-use pg protocol TRANSFER: unknown COMMIT keeps original outcome unknown, discards connection and never retries (3.723897ms)
+✔ first-use application: absent balance without explicit trusted proof still fails closed, including UNAPPROVE even with a hook (1.903874ms)
+✔ first-use pg protocol: proof is read-only, exact-key and cached only for this locked transaction (3.064502ms)
+✔ first-use pg protocol: false warehouse_published never becomes zero success (1.674344ms)
+✔ first-use pg protocol: false sku_published never becomes zero success (1.424361ms)
+✔ first-use pg protocol: false balance_absent never becomes zero success (0.80523ms)
+✔ first-use pg protocol: false ledger_absent never becomes zero success (10.215016ms)
+✔ first-use pg protocol: false valid_size never becomes zero success (1.376777ms)
+✔ first-use pg protocol: unpublished fails before any business effect (0.688877ms)
+✔ first-use pg protocol: incomplete checkpoint fails before any business effect (1.232823ms)
+✔ first-use pg protocol: missing final approval fails before any business effect (0.539738ms)
+✔ first-use pg protocol: missing runtime schema/guard fails before any business effect (0.826759ms)
+✔ first-use pg protocol: waiter rereads the winning balance after canonical key lock and follows existing CAS, without second insert or zero proof (0.394809ms)
+✔ first-use pg protocol TRANSFER: unproven second endpoint prevents all effects despite a proven first endpoint (1.259929ms)
+✔ first-use pg protocol: zero ledger-insert acknowledgement cannot create a balance or claim success (1.228009ms)
+✔ first-use SQL source: exactly two existing guard bodies replaced, no table/field/index/trigger or business data added (4.486174ms)
+✔ first-use SQL source: prior IMPORT baseline and non-first-use UPDATE logic remain equivalent (0.622278ms)
+✔ first-use SQL source: existing transfer source/reversal logic unchanged except bounded absent-key APPROVE allowance (0.473335ms)
+✔ first-use SQL source: exact complete publication, current operation effects, final delta/count and native receipt/audit are required (1.138486ms)
+✔ first-use source: advisory key namespace/order matches importer and precedes balance row lock (0.777551ms)
+✔ first-use source: proof uses bounded immutable publication and exact native keys, never materializes zero during proof (1.032227ms)
+✔ first-use application source: optional explicit trusted capability, only real APPROVE delta version1, no version0 placeholder (0.353214ms)
+✔ SCRIPTED ledger PG: inert constructor, same native exact-key RR READ ONLY snapshot and three distinct provenance variants (49.28775ms)
+✔ SCRIPTED ledger PG: keyset pagination stays exact across same-timestamp ties and a new top entry without OFFSET/count (66.211491ms)
+✔ SCRIPTED ledger PG: empty ready history is not missing key/publication proof; nullable/duplicate size code is not global identity (10.758491ms)
+✔ SCRIPTED ledger PG: stale hall rejects before ledger disclosure (2.71541ms)
+✔ SCRIPTED ledger PG: stale warehouse label rejects before ledger disclosure (0.746912ms)
+✔ SCRIPTED ledger PG: missing authorized warehouse rejects before ledger disclosure (0.543211ms)
+✔ SCRIPTED ledger PG: missing exact SKU rejects before ledger disclosure (0.814716ms)
+✔ SCRIPTED ledger PG: wrong size group rejects before ledger disclosure (0.77061ms)
+✔ SCRIPTED ledger PG: missing publication guards rejects before ledger disclosure (4.873931ms)
+✔ SCRIPTED ledger PG: no published cutoff rejects before ledger disclosure (2.106857ms)
+✔ SCRIPTED ledger PG: multiple published cutoffs rejects before ledger disclosure (0.752855ms)
+✔ SCRIPTED ledger PG: incomplete final approval rejects before ledger disclosure (0.807559ms)
+✔ SCRIPTED ledger PG: unpublished exact SKU rejects before ledger disclosure (0.433428ms)
+✔ SCRIPTED ledger PG: unpublished exact warehouse rejects before ledger disclosure (1.208323ms)
+✔ SCRIPTED ledger PG: wrong ledger warehouse rolls back rather than returning partial history (2.178864ms)
+✔ SCRIPTED ledger PG: wrong ledger SKU rolls back rather than returning partial history (0.954374ms)
+✔ SCRIPTED ledger PG: mixed native source rolls back rather than returning partial history (3.168891ms)
+✔ SCRIPTED ledger PG: missing source document rolls back rather than returning partial history (1.206858ms)
+✔ SCRIPTED ledger PG: zero delta rolls back rather than returning partial history (3.497525ms)
+✔ SCRIPTED ledger PG: invalid timestamp rolls back rather than returning partial history (0.647931ms)
+✔ SCRIPTED ledger PG: bad endpoint rolls back rather than returning partial history (0.763298ms)
+✔ SCRIPTED ledger PG: corrupt look-ahead, staged baseline, missing native label and driver overfetch fail whole page (10.132068ms)
+✔ SCRIPTED ledger PG: invalid scope/cursor/actor and preabort do not connect; midread abort prevents following queries (6.634796ms)
+✔ SCRIPTED ledger PG: query/BEGIN/uncertain COMMIT/rollback failures release exactly once without retry (1.848095ms)
+✔ SOURCE CONTRACT ONLY ledger: no history materialization, aggregate, private imported payload, new database/pool or mutable source projection (1.801193ms)
+✔ SCRIPTED ledger PG: abort while COMMIT completes suppresses direct-reader result without misreporting or rolling back completed read (2.205984ms)
+✔ SYNTHETIC ledger service: explicit providers, same inventory policy, copied identity and exact narrowed warehouse/hall (23.152927ms)
+✔ SYNTHETIC ledger service: scope denial and revoked authorization never call reader (1.595137ms)
+✔ SYNTHETIC ledger service: abort before authorize and after provider prevents publication (0.493852ms)
+✔ SYNTHETIC ledger input rejects extra identity (0.933441ms)
+✔ SYNTHETIC ledger input rejects scope field (0.257088ms)
+✔ SYNTHETIC ledger input rejects missing cursor (0.243373ms)
+✔ SYNTHETIC ledger input rejects page size string (0.176396ms)
+✔ SYNTHETIC ledger input rejects oversize (0.295671ms)
+✔ SYNTHETIC ledger input rejects zero (0.29605ms)
+✔ SYNTHETIC ledger input rejects fraction (3.328898ms)
+✔ SYNTHETIC ledger input rejects invalid SKU (0.190882ms)
+✔ SYNTHETIC ledger input rejects cursor wrong type (0.099472ms)
+✔ SYNTHETIC ledger input rejects cursor missing ID (0.090892ms)
+✔ SYNTHETIC ledger input rejects cursor extra grant (0.442411ms)
+✔ SYNTHETIC ledger cursor rejects noncanonical timestamp 2026-02-30T18:20:30.123456Z (0.629953ms)
+✔ SYNTHETIC ledger cursor rejects noncanonical timestamp 2026-10-20T25:20:30.123456Z (0.179926ms)
+✔ SYNTHETIC ledger cursor rejects noncanonical timestamp 2026-10-20T18:20:60.123456Z (0.283997ms)
+✔ SYNTHETIC ledger cursor rejects noncanonical timestamp 2026-10-20T18:20:30.123Z (0.204764ms)
+✔ SYNTHETIC ledger cursor rejects noncanonical timestamp 2026-10-20T18:20:30.123456+00:00 (0.063395ms)
+✔ SYNTHETIC ledger cursor rejects noncanonical timestamp 0000-01-01T00:00:00.000000Z (0.051202ms)
+✔ SYNTHETIC ledger cursor rejects noncanonical timestamp infinity (0.045557ms)
+✔ SYNTHETIC ledger output: distinct closed native sources, retained reversal/version, current FIT/full size and microseconds (0.577123ms)
+✔ SYNTHETIC ledger response rejects private payload (0.396564ms)
+✔ SYNTHETIC ledger response rejects extra response (5.074035ms)
+✔ SYNTHETIC ledger response rejects wrong exact target (2.593994ms)
+✔ SYNTHETIC ledger response rejects wrong warehouse (0.745711ms)
+✔ SYNTHETIC ledger response rejects forged hall (0.335489ms)
+✔ SYNTHETIC ledger response rejects missing label (0.364053ms)
+✔ SYNTHETIC ledger response rejects collapsed FIT code (0.848739ms)
+✔ SYNTHETIC ledger response rejects zero delta (0.4317ms)
+✔ SYNTHETIC ledger response rejects float delta (0.275921ms)
+✔ SYNTHETIC ledger response rejects overflow (0.179675ms)
+✔ SYNTHETIC ledger response rejects version zero (0.139338ms)
+✔ SYNTHETIC ledger response rejects mixed baseline (6.207679ms)
+✔ SYNTHETIC ledger response rejects mixed source (0.223129ms)
+✔ SYNTHETIC ledger response rejects missing reversal (0.639597ms)
+✔ SYNTHETIC ledger response rejects unordered (0.27114ms)
+✔ SYNTHETIC ledger response rejects duplicate (0.19904ms)
+✔ SYNTHETIC ledger response rejects cursor detached (0.283025ms)
+✔ SYNTHETIC ledger output: next cursor must be last full-page row; after is exact microsecond/ID order (1.779892ms)
+✔ SYNTHETIC ledger service: malformed trusted actor/scope cannot become a global catalogue or reader grant (3.015228ms)
+✔ SYNTHETIC PG protocol: constructor is inert; one native RR read keeps negative, explicit zero, proven absence and nonexistent coordinates distinct (147.422978ms)
+✔ SYNTHETIC PG protocol: exact count/full-filter sum remain independent from stable bounded product pages and empty out-of-range page (163.439894ms)
+✔ SYNTHETIC PG protocol: warehouse filter narrows before native validation, summary, sparse page balance reads and display order (10.135158ms)
+✔ SYNTHETIC PG protocol: no publication rejects entire snapshot, including an empty visible page (4.944407ms)
+✔ SYNTHETIC PG protocol: missing guards rejects entire snapshot, including an empty visible page (2.522421ms)
+✔ SYNTHETIC PG protocol: off-page unpublished SKU rejects entire snapshot, including an empty visible page (2.253338ms)
+✔ SYNTHETIC PG protocol: unsupported deeper native category hierarchy rejects entire snapshot, including an empty visible page (1.419523ms)
+✔ SYNTHETIC PG protocol: off-page missing group sizes rejects entire snapshot, including an empty visible page (2.13616ms)
+✔ SYNTHETIC PG protocol: off-page SKU outside product size group rejects entire snapshot, including an empty visible page (2.530384ms)
+✔ SYNTHETIC PG protocol: off-page corrupt sparse balance rejects entire snapshot, including an empty visible page (2.6576ms)
+✔ SYNTHETIC PG protocol: stale native hall rejects entire snapshot, including an empty visible page (1.934753ms)
+✔ SYNTHETIC PG protocol: unpublished warehouse rejects entire snapshot, including an empty visible page (3.320506ms)
+✔ SYNTHETIC PG protocol: no silent truncation of size, SKU or balance set queries (99.061787ms)
+✔ SYNTHETIC PG protocol: bounded fact rows cannot bypass the pre-allocation matrix work limit (80.917863ms)
+✔ SYNTHETIC PG protocol: corrupt page identity, duplicate SKU coordinate, missing sizes and invalid stock never become zero (16.13066ms)
+✔ SYNTHETIC PG protocol: aggregate arithmetic exceeds signed bigint without narrowing individual native quantity strings (2.756147ms)
+✔ SYNTHETIC PG protocol: all identity filters are parameters in the full-filter count/summary and fit page queries (2.38954ms)
+✔ SYNTHETIC PG protocol: bounded candidates use same snapshot, literal parameterized search and no selectedIds grants or hidden selected page (8.281544ms)
+✔ SYNTHETIC PG protocol: candidate kinds select closed native relations, stable paging and native optional metadata (11.752139ms)
+✔ SYNTHETIC PG protocol: candidate readiness uses only returned catalogue IDs and never broad stock predicates (10.101699ms)
+✔ SYNTHETIC PG protocol: returned invalid/unready candidate is rejected, never silently removed from an exact page (3.807853ms)
+✔ SYNTHETIC PG protocol: abort and failures roll back, uncertain COMMIT discards, rollback failure aggregates without retry (5.768438ms)
+✔ SOURCE CONTRACT ONLY: no global member/SKU preload, source-history reconcile, Cartesian zero relation or application-side N+1 (1.603568ms)
+✔ SYNTHETIC inventory application: explicit providers only; authorized snapshot returns distinct negative/explicit-zero/complete-source-no-stock/nonexistent facts (11.745711ms)
+✔ SYNTHETIC inventory application: one authorized read per page, real total and identical full-filter summary across pages (38.906592ms)
+✔ SYNTHETIC inventory application: all page sizes and candidate page cardinality are exact (262.505771ms)
+✔ SYNTHETIC inventory application: actor/parameters frozen before first await; display labels never enter trusted filters (2.331034ms)
+✔ SYNTHETIC inventory application: explicit current scope rejects both requested and returned cross-warehouse leakage (3.554164ms)
+✔ SYNTHETIC inventory application: authorized warehouse filter narrows BEFORE the snapshot reader (1.572775ms)
+✔ SYNTHETIC inventory application: rejects actor injection before authorization or reading (0.829777ms)
+✔ SYNTHETIC inventory application: rejects hall injection before authorization or reading (1.213127ms)
+✔ SYNTHETIC inventory application: rejects unknown filter before authorization or reading (0.575132ms)
+✔ SYNTHETIC inventory application: rejects missing filter before authorization or reading (0.960594ms)
+✔ SYNTHETIC inventory application: rejects string page before authorization or reading (0.319059ms)
+✔ SYNTHETIC inventory application: rejects zero page before authorization or reading (0.40894ms)
+✔ SYNTHETIC inventory application: rejects fractional page before authorization or reading (1.62628ms)
+✔ SYNTHETIC inventory application: rejects unsafe offset before authorization or reading (0.557115ms)
+✔ SYNTHETIC inventory application: rejects unsupported page size before authorization or reading (0.486853ms)
+✔ SYNTHETIC inventory application: rejects invalid ID before authorization or reading (1.928349ms)
+✔ SYNTHETIC inventory application: rejects duplicate filters before authorization or reading (0.651458ms)
+✔ SYNTHETIC inventory application: rejects unbounded filters before authorization or reading (7.43996ms)
+✔ SYNTHETIC inventory application: malformed missing cell fails, never a zero-success (1.610053ms)
+✔ SYNTHETIC inventory application: malformed fractional stock fails, never a zero-success (0.957452ms)
+✔ SYNTHETIC inventory application: malformed overflow stock fails, never a zero-success (3.874833ms)
+✔ SYNTHETIC inventory application: malformed hidden unknown fails, never a zero-success (1.063855ms)
+✔ SYNTHETIC inventory application: malformed wrong row total fails, never a zero-success (0.979089ms)
+✔ SYNTHETIC inventory application: malformed wrong column total fails, never a zero-success (1.240377ms)
+✔ SYNTHETIC inventory application: malformed invalid readiness fails, never a zero-success (1.059092ms)
+✔ SYNTHETIC inventory application: malformed reference mismatch fails, never a zero-success (0.663358ms)
+✔ SYNTHETIC inventory application: malformed reference header injection fails, never a zero-success (0.668406ms)
+✔ SYNTHETIC inventory application: malformed wrong page fails, never a zero-success (1.359396ms)
+✔ SYNTHETIC inventory application: malformed unknown total fails, never a zero-success (0.752774ms)
+✔ SYNTHETIC inventory application: malformed truncated page fails, never a zero-success (1.951836ms)
+✔ SYNTHETIC inventory application: malformed response extra fails, never a zero-success (0.754152ms)
+✔ SYNTHETIC inventory application: malformed forged warehouse fails, never a zero-success (6.903574ms)
+✔ SYNTHETIC inventory application: malformed forged warehouse label fails, never a zero-success (1.234488ms)
+✔ SYNTHETIC inventory application: malformed invented n/a sku fails, never a zero-success (0.4112ms)
+✔ SYNTHETIC inventory application: readiness failure propagates; complete empty sets remain exact zero (1.151778ms)
+✔ SYNTHETIC inventory application: signal forwards unchanged and abort rejects a late reader result without claiming SQL cancellation (9.309496ms)
+✔ SYNTHETIC inventory application: conflicting SKU identity across warehouses and duplicate variant are rejected (54.474382ms)
+✔ SYNTHETIC inventory application: candidate responses enforce exact count, scope and strict optional fields (2.34148ms)
+✔ SYNTHETIC inventory application: integer quantities remain exact beyond JS safe integers and aggregate beyond signed bigint (13.131175ms)
+✔ SYNTHETIC inventory application: absent verified size columns are rejected, not a zero-stock product (0.785302ms)
+✔ SYNTHETIC inventory application: whole-scope incomplete imports reject even if visible page totals are complete (7.595314ms)
+✔ SYNTHETIC inventory application: incomplete off-page full-filter summary cannot publish a complete-looking page (14.807526ms)
+✔ native read authorization: lazy explicit pool, no lifecycle ownership or public authentication entry point (31.229822ms)
+✔ native read authorization: every canonical role retains ALL native warehouse IDs/halls/full labels in bounded returned order (9.736493ms)
+✔ native read authorization: inventory and all candidate kinds use the same current identity + warehouse grant, including disabled historical references (9.211009ms)
+✔ native read authorization: ALL sales intents are current-hall-only for salesperson, all for ADMIN/WAREHOUSE, never request filter/creator/staff scope (4.784156ms)
+✔ native read authorization: each canonical role can read exact requested product facts and media, with no stock/catalog/hall scan (7.709796ms)
+✔ native read authorization: ADMIN/WAREHOUSE permit exact null hall, but SALESPERSON always requires a real enabled current hall (3.349109ms)
+✔ native read authorization: missing/duplicate/malformed/disabled/stale identities fail closed before warehouse or business queries (15.801871ms)
+✔ native read authorization: each invocation re-reads identity, without mutable role map/account cache (1.379983ms)
+✔ native read authorization: warehouse scope empty, overflow, duplicate/invalid identity, missing hall or invalid label never truncates/invents facts (51.374544ms)
+✔ native read authorization: invalid actors, intents/targets and pre-aborted calls acquire no resource (4.728844ms)
+✔ native read authorization: actor/target facts are captured before awaits, not mutable caller replacements (2.045393ms)
+✔ native read authorization: abort during acquisition releases late client without BEGIN or business reads (0.855409ms)
+✔ native read authorization: abort after identity/warehouse query rolls back, never returns a scope or starts later work (2.553227ms)
+✔ native read authorization: failed SELECT/COMMIT rolls back, failed BEGIN/COMMIT/rollback quarantines exactly once and never retries (2.689173ms)
+✔ native read authorization: abort after acknowledged COMMIT withholds each grant but never rolls back or discards the clean committed lease (3.046786ms)
+✔ native read authorization: services await fresh authorization before reader count/page/sum/detail/history work; denial performs no business read (33.176962ms)
+✔ native read authorization: inventory and ledger narrow an ALL-warehouse grant to a requested other-hall warehouse only AFTER current scope resolution (5.143431ms)
+✔ SYNTHETIC party: complete separate create/edit/disable/restore lifecycle and sparse audit (33.209618ms)
+✔ SYNTHETIC party: exact replay returns original result after later edits, with no extra writes (9.329173ms)
+✔ SYNTHETIC party: replay and receipt reauthorize current actor role, role/hall are not part of fingerprint (3.4733ms)
+✔ SYNTHETIC party: enabled-hall default blocks disable, not harmless edit, and references remain retained (10.466493ms)
+✔ SYNTHETIC party: CAS rejects concurrent different operations while duplicate requests converge (15.416191ms)
+✔ SYNTHETIC party: transaction failures roll back native row/audit/receipt together (21.676808ms)
+✔ SYNTHETIC party: historical original code and unknown creation time remain verbatim (33.707395ms)
+✔ SYNTHETIC party: same exact code is legal across separate tables; duplicate within one is rejected (2.301494ms)
+✔ SYNTHETIC party: candidates are enabled-only and minimal; maintenance lists are separate and paged (103.605299ms)
+✔ SYNTHETIC party: no absent implicit providers, guessed code, hidden fields, coercion or dual usage (5.64027ms)
+✔ SYNTHETIC atomic party EDIT: name and enabled change together under one version, audit and original replay (5.061681ms)
+✔ SYNTHETIC atomic party EDIT: enabled-hall default blocks the entire rename and disable with no transient write (1.902766ms)
+✔ SYNTHETIC atomic party EDIT: state-only and rename-only work; both unchanged is a no-op rejection (3.74967ms)
+✔ SYNTHETIC atomic party EDIT: concurrent CAS never mixes name and enabled from competing proposals (4.882959ms)
+✔ SYNTHETIC atomic party EDIT: late audit or receipt failure rolls both proposed fields back (3.794546ms)
+✔ SYNTHETIC approved numbering pg protocol: existing/imported exact-prefix codes advance independent counters without rewriting (12.715408ms)
+✔ SYNTHETIC approved numbering pg protocol: simultaneous customer/supplier creates never duplicate and both start at one (25.770383ms)
+✔ SYNTHETIC approved numbering pg protocol: rollback consumes reservation, replay consumes none, gaps are allowed (7.018009ms)
+✔ SYNTHETIC approved numbering pg protocol: codes grow beyond six digits and explicitly stop at sequence storage exhaustion (1.321773ms)
+✔ approved party numbering: KH/GYS starts and minimum six-digit formatting, no 999999 cap (2.054695ms)
+✔ approved party numbering: exact existing prefix suffixes advance without rewriting padded originals (2.085074ms)
+✔ approved party numbering: technical signed-bigint exhaustion is explicit, no precision loss or wrap (4.100173ms)
+✔ SYNTHETIC approved party allocator: explicit wiring invokes separate reservations and exact replay does not allocate again (11.328075ms)
+✔ SYNTHETIC party pg protocol: construction is inert and create atomically writes native audit receipt (16.540525ms)
+✔ SYNTHETIC party pg protocol: supplier creation writes supplier only, no shared identity collection (2.406735ms)
+✔ SYNTHETIC party pg protocol: global actor/key conflicts with SALES or other party kinds before target access (10.053288ms)
+✔ SYNTHETIC party pg protocol: native edit locks row, preserves original code/null time and CAS uses old version (2.063945ms)
+✔ SYNTHETIC party pg protocol: zero-row CAS rolls back without audit or receipt (9.539515ms)
+✔ SYNTHETIC party pg protocol: trusted enabled-hall default check blocks mutation (6.046964ms)
+✔ SYNTHETIC party pg protocol: bounded one-statement search is parameterized, separate and keeps empty-page totals (6.781552ms)
+✔ SYNTHETIC party pg protocol: commit uncertainty discards connection, no hidden retry (6.630243ms)
+✔ SYNTHETIC party pg protocol: rollback failure aggregates and discards, escaped handles cannot query (1.703012ms)
+✔ SYNTHETIC atomic party pg protocol: combined EDIT is one guarded native CAS with one sparse audit and receipt (1.152212ms)
+✔ SYNTHETIC atomic party pg protocol: dependency rejection precedes all rename/state/audit/receipt writes (5.321586ms)
+✔ party SQL-TEXT only, NOT engine evidence: additive 0006, physically separate approved native fields, no seeds or re-coding (6.238562ms)
+✔ party SQL-TEXT only, NOT engine evidence: closed CUSTOMER/SUPPLIER kinds have native generated FKs and constrained actions (6.715713ms)
+✔ party SQL-TEXT only, NOT engine evidence: runtime provenance preserves native ids/codes/creation time and bans hard delete (1.459166ms)
+✔ party SQL-TEXT only, NOT engine evidence: enabled-hall default dependency is checked both ways under actual customer row locking (0.441861ms)
+✔ party SQL-TEXT only, NOT engine evidence: sparse native audit coherence does not build a full snapshot platform (1.130591ms)
+✔ party SQL-TEXT only, NOT engine evidence: party result and deferred receipts match final native facts with no inventory effect (0.659206ms)
+✔ party SQL-TEXT only, NOT engine evidence: approved independent KH/GYS counters are native bigint sequences, not a general numbering platform (0.638154ms)
+✔ party SQL-TEXT only, NOT engine evidence: allocation uses the matching transaction lock and advances past exact imported suffixes without rewriting (0.254729ms)
+✔ party SQL-TEXT only, NOT engine evidence: atomic EDIT allows changed name, state or both but rejects only a fully unchanged pair (0.421514ms)
+✔ bounded pg: pure construction is lazy, uses explicit pg controls, and does not mutate global type parsers (10.272462ms)
+✔ bounded pg: ambient PG values cannot supply missing credentials or override explicit startup controls (32.622834ms)
+✔ bounded pg: invalid finite bounds and unsafe TLS fail before driver construction without leaking input (4.637902ms)
+✔ bounded pg: FIFO pending queue and overload bound never become an unbounded pg wait queue (5.167182ms)
+✔ bounded pg: zero pending capacity still permits exactly max concurrent leases (2.326868ms)
+✔ bounded pg: failed and synchronously throwing acquisitions are sanitized and free only their own slot (3.233183ms)
+✔ bounded pg: acquisition deadline includes queue time and late success is discarded, not handed to a timed-out caller (5.435954ms)
+✔ bounded pg: expired queued requests leave no retained waiters (3.235938ms)
+✔ bounded pg: timed-out in-flight attempt stays charged until late failure; repeated deadlines cannot multiply driver attempts (1.709288ms)
+✔ bounded pg: release is idempotent, forwards discard as boolean only, and closes the lease (4.042055ms)
+✔ bounded pg: no query queue; release of an in-flight query discards and ignores late outcomes (3.611431ms)
+✔ bounded pg: release before scheduled query dispatch never issues SQL on a returned client (2.249408ms)
+✔ bounded pg: SQLSTATE errors permit adapter rollback and preserve only known conflict metadata, never retry SQL (3.763507ms)
+✔ bounded pg: pg local read timeout is not treated as SQL cancellation and retires the connection (1.347363ms)
+✔ bounded pg: five-character transport codes are not mistaken for server SQLSTATE (1.626722ms)
+✔ bounded pg: release failure is sanitized, quarantines capacity and is never retried, even during disposal (2.357979ms)
+✔ bounded pg: idle and checked-out driver error events are handled without raw logs or uncaught errors (2.232874ms)
+✔ bounded pg: disposal closes admission and queued callers immediately, permits graceful return, calls end once (1.423507ms)
+✔ bounded pg: disposal grace discards retained clients and settles local in-flight queries; no fake SQL cancellation (0.961035ms)
+✔ bounded pg: late acquisition after disposal timeout is still cleaned up and cannot be reused (1.310907ms)
+✔ bounded pg: synchronous close before dispatch performs no driver connection (1.393109ms)
+✔ bounded pg: end failure and unresolved end have finite sanitized outcomes, not a false cleanup-success claim (5.168322ms)
+✔ bounded pg: resource errors expose stable sanitized codes (0.97708ms)
+✔ pg protocol: exact decimal(18,2)/bigint codecs preserve extremes and reject rounding/overflow (5.995397ms)
+✔ pg protocol: BEGIN/COMMIT use one client, and leaked handles close (2.60457ms)
+✔ pg protocol: callback failure requests rollback and never commit (0.721302ms)
+✔ pg protocol: BEGIN/connect failures do not run callback (0.560466ms)
+✔ pg protocol: uncertain COMMIT failure is not retried and client is discarded (5.232438ms)
+✔ pg protocol: failed rollback reports both errors and discards client (1.006172ms)
+✔ pg protocol: new SAVE writes native rows, snapshots, audit and actor/key receipt without stock writes (34.06263ms)
+✔ pg protocol: APPROVE locks balances in one stable order and CAS allows negative inventory (11.122043ms)
+✔ pg protocol: repeated SKU actual lines retain distinct ledger sources and advance one cached balance twice (5.507827ms)
+✔ pg protocol: missing inventory coverage fails closed without insert/upsert/default zero (6.261784ms)
+✔ pg protocol: UNAPPROVE appends a linked inverse without mutating original ledger or settlements (3.777808ms)
+✔ pg protocol: same actor/key replay returns original result only after current authorization (6.999659ms)
+✔ pg protocol: changed content under original actor/key conflicts without re-executing (1.076934ms)
+✔ pg protocol: cutoff history remains queryable but commands fail before balance/ledger mutation (11.745966ms)
+✔ pg protocol: settlement mismatch still blocks APPROVE before any mutation (7.405814ms)
+✔ pg protocol: ledger write failure requests ROLLBACK, not COMMIT (not durability evidence) (27.057481ms)
+✔ pg protocol: balance write failure requests ROLLBACK, not COMMIT (not durability evidence) (1.375893ms)
+✔ pg protocol: header write failure requests ROLLBACK, not COMMIT (not durability evidence) (4.965448ms)
+✔ pg protocol: audit write failure requests ROLLBACK, not COMMIT (not durability evidence) (2.245319ms)
+✔ pg protocol: receipt write failure requests ROLLBACK, not COMMIT (not durability evidence) (6.902074ms)
+✔ pg protocol: document CAS zero-row result rejects stale update and requests rollback (1.188401ms)
+✔ pg protocol: balance CAS zero-row result rejects stale quantity and requests rollback (1.845206ms)
+✔ pg protocol: foreign line ownership failure cannot silently skip a line write (2.075344ms)
+✔ pg protocol: explicit discount/zero facts and pre-0002 unknowns decode without inference (1.637148ms)
+✔ pg protocol: unknown active pre-0002 pricing cannot approve, without rewriting stored rows (2.425964ms)
+✔ pg protocol: transfer receipt cannot be decoded or reused by a sales command with the same actor/key (0.97252ms)
+✔ pg protocol: memo-only SAVE writes header/evidence/receipt but never unchanged lines or settlement snapshots (2.362005ms)
+✔ pg protocol: replaced line frees only its owned current position and leaves unchanged retained/sibling rows untouched (3.245944ms)
+✔ pg protocol: current line-position swap releases only changed positions before guarded upserts (2.226195ms)
+✔ pg protocol: settlement SAVE deletes only removed rows and writes only changed/new values with snapshot/ownership guards (2.399932ms)
+✔ pg protocol: changed line SAVE failure still requests rollback before audit/receipt (3.990064ms)
+✔ pg protocol: changed settlement SAVE failure still requests rollback before audit/receipt (6.975923ms)
+✔ pg protocol: stable-body receipt replay survives trusted hall change but denies revoked access without writes (7.790066ms)
+✔ pg SQL-text contract: versioned bounded migration has no business seed or execution runner (9.395427ms)
+✔ pg SQL-text contract: native parties, product price and four-dimensional SKU remain separate (2.111833ms)
+✔ pg SQL-text contract: actual lines/settlements are native facts, not hidden whole-document JSON (2.772462ms)
+✔ pg SQL-text contract: quantities have no zero floor and unproven balance absence cannot be auto-created by sales (2.957971ms)
+✔ pg SQL-text contract: source, reversal, receipt/audit uniqueness and deferred atomic references are declared (1.153803ms)
+✔ pg SQL-text contract: historical branch stays closed, settlement equality uses final approved state (0.759986ms)
+✔ pg SQL-text contract: ISO business dates do not depend on session DateStyle (0.518758ms)
+✔ pg SQL-text contract: missing or JSON-null receipt IDs cannot exploit nullable CHECK equality (1.131101ms)
+✔ pg SQL-text contract: additive 0002 preserves unknown old pricing intent with no guessed backfill (1.377084ms)
+✔ product pg protocol: constructor does not connect; invalid/aborted/mismatched grant never connects (18.655391ms)
+✔ product pg protocol: basics parameterized target-only RR snapshot preserves actual nulls and original code (10.050127ms)
+✔ product pg protocol: missing product commits null without dependent queries (4.968809ms)
+✔ product pg protocol: three bounded specification set reads preserve group member identity/order/full labels and actual four-dimensional SKU combinations (5.244927ms)
+✔ product pg protocol: empty SKU set does not invent a matrix cross-product and keeps actual group sizes (1.436975ms)
+✔ product pg protocol: outside-group and duplicate SKU identities/coordinates fail instead of silently dropping or merging (6.899706ms)
+✔ product pg protocol: metadata list is two bounded set reads, preserves order, never reads bytes or returns delivery URLs (44.993208ms)
+✔ product pg protocol: explicit image query scopes BOTH product and image IDs; missing/mismatched image is never another product's image (6.692448ms)
+✔ product pg protocol: technical response bounds fail closed, never silently truncate metadata, group members or SKUs (107.158013ms)
+✔ product pg protocol: invalid stored image type/size and missing labels roll back without delivery fallback (2.114882ms)
+✔ product pg protocol: begin/connect/query/commit/rollback failures clean up exactly once, discard uncertain clients, no hidden retry (9.827914ms)
+✔ product pg protocol: abort during SQL rolls back and stops subsequent reads; abort after connect discards client (2.395583ms)
+✔ product read schema SOURCE ONLY: approved nullable fields are additive with no invented historical backfill (1.940236ms)
+✔ product read schema SOURCE ONLY: controlled image metadata keeps approved MIME/8MB limits, real audit facts and ordered target index (0.787098ms)
+✔ SYNTHETIC product service: four explicit reads reauthorize; image list resolves one thumbnail batch, original only explicit (19.84916ms)
+✔ SYNTHETIC product service: missing/empty actual targets stay null/empty; missing image is 404, never generated (7.030907ms)
+✔ SYNTHETIC product service: strict exact UUID inputs never reach policy or reader (0.94965ms)
+✔ SYNTHETIC product service: denied/revoked/malformed/mismatched grants do not read target or media (1.468162ms)
+✔ SYNTHETIC product service: missing trusted providers/media availability fails closed; unavailable delivery is explicit (5.186004ms)
+✔ SYNTHETIC product service: media links enforce target/variant/HTTPS configured origin and do not echo file references (6.10716ms)
+✔ SYNTHETIC product service: pending authorization cannot mutate captured actor/parameters; abort blocks reader/media (1.216866ms)
+✔ SYNTHETIC product service: wrong-target trusted metadata and aborted media response are never disclosed (1.465883ms)
+✔ candidate adapter / synthetic: unit-first discount rounding and gross survive save/approve with negative inventory (20.574995ms)
+✔ candidate adapter / synthetic: SALE positive; RETURN and EXCHANGE share independent signed-row acceptance (3.514265ms)
+✔ candidate adapter / synthetic: direct deal prices may differ within one product and preserve old reference snapshots (0.798229ms)
+✔ candidate adapter / synthetic: missing trusted catalog/reference providers and unknown facts fail closed (3.186764ms)
+✔ candidate adapter / synthetic: ordinary zero requires confirmation and still respects positive minimum (16.857871ms)
+✔ candidate adapter / synthetic: explicit pricing metadata is not inferred from ratios or old zero prices (0.629256ms)
+✔ candidate adapter / synthetic: exact gross, allocated shares and header totals reject forged economics (46.160114ms)
+✔ candidate adapter / synthetic: independent return and exchange prohibit whole discounts (0.662179ms)
+✔ candidate adapter / synthetic: fully discounted sale plus gift posts inventory with zero due and no settlement rows (24.116033ms)
+✔ candidate adapter / synthetic: zero-net exchange, no original sale and no settlement required (11.307667ms)
+✔ candidate adapter / synthetic: mixed receive/refund uses signed net, not sum of absolutes (5.859292ms)
+✔ candidate adapter / synthetic: unbalanced saved refund is allowed but approval needs exact equality (5.757525ms)
+✔ candidate adapter / synthetic: absolute zero RECEIVE or REFUND adapts to signed zero with valid references (13.40463ms)
+✔ candidate adapter / synthetic: approved rows stay read-only; unapprove/edit/reapprove retains pricing audit evidence (13.542033ms)
+✔ candidate adapter / synthetic: zero confirmation and entered discount are part of original-key identity (13.014101ms)
+✔ candidate adapter / synthetic: retained inactive unknown pricing is provenance, not active economics (15.184253ms)
+✔ candidate formula / synthetic: half-up discounted unit price is calculated before integer quantity (9.34392ms)
+✔ candidate formula / synthetic: largest remainder uses unequal weights and original-index ties (2.71918ms)
+✔ candidate formula / synthetic: allocator rejects signed gross and invalid order discounts (3.736814ms)
+✔ candidate formula / synthetic: exact bigint arithmetic has no JavaScript-safe-money business cap (0.510768ms)
+✔ candidate formula / synthetic: small exhaustive allocations conserve total and never exceed each gross (299.746842ms)
+✔ sales query pg protocol: mandatory pool never connects at construction; no aborted or invalid-scope connection (7.78136ms)
+✔ sales query pg protocol: exact count, relational page and one page-batched quantity read share scoped RR snapshot, no hydration/catalog/N+1 (5.601ms)
+✔ sales query pg protocol: count and page use case-insensitive literal number inclusion with original bound text, never LIKE wildcards (2.813261ms)
+✔ sales query pg protocol: list pages use updated time then binary business number and native identity, never business date (1.262261ms)
+✔ sales query pg protocol: one bounded batch preserves signed SALE/RETURN/EXCHANGE totals, bigint-min magnitude and gift-only zero (2.297843ms)
+✔ sales query pg protocol: incomplete, foreign, duplicate or malformed quantity facts fail closed (7.471109ms)
+✔ sales query pg protocol: empty out-of-range page retains exact total without global recount or fallback (0.467549ms)
+✔ sales query pg protocol: detail reads authorized native header/current snapshots/settlements in three bounded reads (6.380143ms)
+✔ sales query pg protocol: hidden/missing detail and history rollback without reading child facts (1.80509ms)
+✔ sales query pg protocol: oversized detail fails closed rather than truncating current lines (22.400873ms)
+✔ sales query pg protocol: audit metadata exact count/page reapply current scope and SALES kind with stable tie-break (6.464673ms)
+✔ sales query pg protocol: settlement summary includes approved full scope only and exact unbounded numeric sums, account page separately (1.544245ms)
+✔ sales query pg protocol: decoding failure rolls back, unknown commit outcome is not retried and discards client (0.984114ms)
+✔ sales query pg protocol: begin/connect/rollback errors release or discard correctly; no hidden retries (0.588811ms)
+✔ sales query pg protocol: abort while SQL is in flight requests rollback and stops remaining reads (6.028169ms)
+✔ sales filter references pg protocol: all four kinds query only observed authorized references including disabled history (10.747329ms)
+✔ sales filter references pg protocol: bigint totals, bounded page and exact empty out-of-range semantics (1.678357ms)
+✔ sales filter references pg protocol: invalid request/grant/abort never connects, malformed provider facts roll back (57.166922ms)
+✔ sales detail pg protocol: current master labels and authoritative settlement snapshots share the one authorized RR snapshot (16.983452ms)
+✔ sales query: required providers and empty/malformed trusted scopes fail closed (28.539954ms)
+✔ sales query: filters are strict, bounded, canonical and include actual calendar/range validation (7.077577ms)
+✔ sales query: actor, filters and granted clauses are isolated before and after policy await (4.535188ms)
+✔ sales query: abort and invalid actor stop before policy/reader, and current policy is called on every request (3.895167ms)
+✔ sales filter references: strict bounded literal parser rejects authority, active-only form semantics and malformed paging (3.084196ms)
+✔ sales filter references: mandatory provider capability and validation before policy, no fallback empty reader (2.474847ms)
+✔ sales filter references: current neutral list grant, immutable input/actor/scope and no new catalog authorization (4.53268ms)
+✔ sales filter references: revocation, empty grant and aborted in-flight policy/reader results fail closed (1.525331ms)
+✔ SYNTHETIC SALE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (145.053669ms)
+✔ SYNTHETIC RETURN: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (20.634554ms)
+✔ SYNTHETIC EXCHANGE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (12.726296ms)
+✔ SYNTHETIC: negative stock is a legal exact fact, not insufficient-stock rejection or zero truncation (3.190225ms)
+✔ SYNTHETIC: exact replay after a lost response returns original result without repeat stock/audit/settlements (5.371778ms)
+✔ SYNTHETIC: concurrent identical commands commit exactly once in the serialized reference adapter (4.660596ms)
+✔ SYNTHETIC: same key changed content is conflict, not another write (5.269238ms)
+✔ SYNTHETIC: stale expected version cannot approve or overwrite (6.704051ms)
+✔ SYNTHETIC: approved quantity/amount cannot be edited or directly voided; must first unapprove (5.601515ms)
+✔ SYNTHETIC: saved draft void changes no inventory, retains detail, becomes immutable (5.246697ms)
+✔ SYNTHETIC: exact settlement mismatch including underpayment blocks approval atomically (10.83838ms)
+✔ SYNTHETIC: refund uses direction plus nonnegative actual amount, never negative payment/account balance (1.420344ms)
+✔ SYNTHETIC: same SKU real lines remain separate, including gift and different price (5.199967ms)
+✔ SYNTHETIC: unapprove/edit/reapprove uses immutable original effects and retains removed referenced lines (23.466861ms)
+✔ SYNTHETIC: duplicate unapprove cannot reverse one original effect twice (13.238153ms)
+✔ SYNTHETIC: injected balance:2 failure rolls back all effects, and original key safely retries (15.54789ms)
+✔ SYNTHETIC: injected document failure rolls back all effects, and original key safely retries (14.38719ms)
+✔ SYNTHETIC: injected audit failure rolls back all effects, and original key safely retries (5.076829ms)
+✔ SYNTHETIC: injected receipt failure rolls back all effects, and original key safely retries (4.065361ms)
+✔ SYNTHETIC: missing inventory coverage cannot be invented as zero (2.085238ms)
+✔ SYNTHETIC: stock overflow aborts instead of wrapping or partially posting (3.77835ms)
+✔ SYNTHETIC: authorization is mandatory on writes and idempotent result recovery (4.797753ms)
+✔ SYNTHETIC: imported cutoff history never falls through runtime reversal/edit logic (5.353435ms)
+✔ SYNTHETIC: only approved documents enter settlement statistics; unapprove exits, reapprove reenters once (7.663789ms)
+✔ SYNTHETIC: true null creating-hall snapshot remains null after a different current hall saves (5.355516ms)
+✔ SYNTHETIC: existing SAVE checks both source and proposed destination scopes before any mutation (12.753252ms)
+✔ SYNTHETIC: duplicate documents cannot silently double-count settlement statistics (14.493093ms)
+✔ SYNTHETIC: changing a caller alias while execute waits cannot change the data bound to the original request hash (5.269243ms)
+✔ SYNTHETIC: audit retains every permitted mutable header field and business line price/display snapshot (4.535926ms)
+✔ SYNTHETIC: operation keys are scoped by authenticated actor, not globally shared (2.29511ms)
+✔ SYNTHETIC: duplicate/foreign lines and more than three settlement rows fail before persistence (3.35256ms)
+✔ SYNTHETIC: memo-only evidence is constant size, with no unchanged current or retained business rows (196.003394ms)
+✔ SYNTHETIC: edited, removed and added lines have complete evidence while unchanged siblings stay native (4.171835ms)
+✔ SYNTHETIC: settlement additions, removals and changed account/direction/amount retain exact sparse evidence (3.661343ms)
+✔ SYNTHETIC: APPROVE, UNAPPROVE and VOID carry workflow evidence without unchanged lines or settlements (3.508448ms)
+✔ SYNTHETIC: original account/key/body survives trusted hall changes but current access is rechecked (1.458321ms)
+✔ pg protocol transfer: new save writes native facts/audit/receipt without inventory and preserves trusted creator role (33.875501ms)
+✔ pg protocol transfer: approve locks both warehouses in one canonical ordered set before exact per-endpoint writes (34.667266ms)
+✔ pg protocol transfer: opposite endpoint failure causes rollback and no commit (10.458607ms)
+✔ pg protocol transfer: global actor/key owned by SALES conflicts before decoding or reading transfer (6.725772ms)
+✔ pg protocol transfer: original-key replay decodes exact result then rechecks current target authorization (5.301003ms)
+✔ pg protocol transfer: missing coverage remains absent and cannot be inserted (18.500262ms)
+✔ pg protocol transfer: commit uncertainty discards connection and never retries with a new key (1.640906ms)
+✔ pg protocol transfer: rollback failure discards connection and reports both failures (9.03738ms)
+✔ pg protocol transfer: transaction handle cannot escape callback lifetime (2.290953ms)
+✔ pg protocol transfer: absent document race uses CAS and rolls back losing insert (10.914087ms)
+✔ pg protocol transfer: warehouse/SKU facts are current locked database facts, not submitted labels (6.10118ms)
+✔ pg protocol transfer: UNAPPROVE reads original two endpoint facts and appends linked exact inverses (13.137305ms)
+✔ pg protocol transfer: memo-only SAVE writes no unchanged native lines and audit line arrays stay empty (9.689866ms)
+✔ pg protocol transfer: line-position swap writes only the two real changed rows, without transient deactivate-all (10.226424ms)
+✔ transfer pg query: required pool is lazy; aborted, invalid-input and denied-scope reads never connect (7.928352ms)
+✔ transfer pg query: count/page share scoped native relations and repeatable snapshot; values are parameterized (8.939275ms)
+✔ transfer pg query: explicit all and restrictive account/endpoint clauses remain parameterized intersections (2.277611ms)
+✔ transfer pg query: empty out-of-range page retains exact total without global fallback (2.707174ms)
+✔ transfer pg query: saved snapshots stay separate from bounded current canonical metadata (6.052895ms)
+✔ transfer pg query: hidden/missing detail rolls back before any child read (1.725646ms)
+✔ transfer pg query: oversized current detail fails instead of truncating (6.914151ms)
+✔ transfer pg query: bad persisted line identities, ownership, snapshots and quantities fail closed (4.516238ms)
+✔ transfer pg query: exact counts cannot be driver numbers and pages cannot exceed exact total (2.743745ms)
+✔ transfer pg query: commit uncertainty is not retried and discards the client (1.009433ms)
+✔ transfer pg query: begin/connect/rollback errors release correctly without hidden retries (2.537931ms)
+✔ transfer pg query: abort during SQL requests rollback and stops subsequent reads (0.42461ms)
+✔ transfer pg query: page quantities use one exact batch, include zero, and never hydrate catalog (1.299269ms)
+✔ transfer pg query: missing, duplicated, foreign and inexact aggregate rows fail closed (3.413099ms)
+✔ transfer pg query: metadata preserves canonical identities and full duplicate labels, not label grouping (1.696217ms)
+✔ transfer pg query: empty document needs no catalog and invalid canonical availability fails closed (5.170366ms)
+✔ transfer pg query: missing, duplicate, foreign and malformed full group members fail closed (7.196459ms)
+✔ transfer pg query: canonical SKU and complete group bounds reject overflow without truncation (341.38477ms)
+✔ transfer pg query: restricted filter references use identical whole-clause union before endpoint intersection (3.584592ms)
+✔ transfer pg query: all-scope references include unused/disabled native warehouses with literal bounded search (1.75156ms)
+✔ transfer pg query: selected warehouse IDs cannot create references outside authorized documents (1.235964ms)
+✔ transfer pg query: abort after canonical SKU read prevents remaining metadata SQL (1.110922ms)
+✔ transfer query: every trusted provider is required; empty/malformed scopes fail closed on all reads (38.090149ms)
+✔ transfer query: list filters require exact arrays, reject old scalars/aliases, and bound numeric pagination (7.645305ms)
+✔ transfer query: both warehouse-ID arrays accept 1000 distinct native IDs and reject 1001 (6.527788ms)
+✔ transfer query: warehouse lookup has one exact exclusive bounded search/selection contract (8.124745ms)
+✔ transfer query: detail has no aliases, caller identity, or optional transfer ID (1.07202ms)
+✔ transfer query: parsers copy and freeze all filter/selection arrays without mutating caller objects (0.820611ms)
+✔ transfer query: explicit source policy grants endpoint hall OR immutable salesperson creation role+hall for every intent (1.359651ms)
+✔ transfer query: immutable actor, array filters and copied granted scope survive policy await (2.067512ms)
+✔ transfer query: warehouse selected IDs are copied across await and cannot supply their own visibility (0.46788ms)
+✔ transfer query: malformed parameters fail before policy or reader on all three methods (0.82662ms)
+✔ transfer query: pre-abort and malformed actors never reach policy for any intent (1.336446ms)
+✔ transfer query: authorization is renewed on every list, detail and selected warehouse read (1.655382ms)
+✔ transfer query: abort after current policy or any snapshot reader prevents result delivery (1.703463ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: 0004 is additive and immutable sales migrations stay byte-for-byte unchanged (5.997271ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: native transfer headers store trusted runtime provenance without sales money/customer fields (1.755578ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: native lines retain positive bigint quantities, actual SKU identity, snapshots and inactive provenance (1.23742ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: generic target/object IDs have closed kind checks and generated real target FKs (0.90128ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: reciprocal deferred receipt/audit references include kind, target, actor and action (0.359464ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: result shape requires salesId or transferId by kind and rejects missing/null identity (0.946338ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: ledger union is exclusive, FK-backed and preserves sales and exact reversal uniqueness (0.710873ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: original sales functions stay unchanged behind source/receipt kind dispatch (1.182732ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: transfer insertion checks current native header/line, endpoint, quantity, date, version and runtime state (1.339531ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: one reversal means exact original kind, line, endpoint, warehouse, SKU, date, version and signed inverse (0.877651ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: final receipts require exact sorted ledger IDs and one FROM/TO pair per current actual line (0.635595ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: final status, version, actors, times and selected native header key fields agree (1.480231ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: sparse changed-line audits never require full-document or previous-draft reconstruction (0.637699ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: every material native line mutation requires exact OLD/NEW sparse SAVE evidence (2.150393ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: creator/owner provenance cannot mutate and posting actions cannot edit native business facts (1.081034ms)
+✔ transfer pg SQL-text contract, NOT engine evidence: transfer-only cumulative balance guard preserves negative quantities and unproven missing coverage (0.657345ms)
+✔ SYNTHETIC transfer: save is stock-neutral; approve posts both endpoints with exact quantities and trusted creator (22.870656ms)
+✔ SYNTHETIC transfer: same-SKU multiple actual lines retain identity and each two-ended effect (13.351169ms)
+✔ SYNTHETIC transfer: approve/unapprove/edit/reapprove exactly reverses old effects before new quantities (11.726542ms)
+✔ SYNTHETIC transfer: retained removed line survives edit without being reposted (10.437045ms)
+✔ SYNTHETIC transfer: rejects same warehouse without writes (3.393727ms)
+✔ SYNTHETIC transfer: rejects empty without writes (1.83312ms)
+✔ SYNTHETIC transfer: rejects zero without writes (1.157529ms)
+✔ SYNTHETIC transfer: rejects negative without writes (13.126091ms)
+✔ SYNTHETIC transfer: rejects duplicate identity without writes (0.800517ms)
+✔ SYNTHETIC transfer: rejects duplicate position without writes (1.244865ms)
+✔ SYNTHETIC transfer: rejects foreign owner without writes (1.838262ms)
+✔ SYNTHETIC transfer: original-key concurrent replay returns one operation; different content conflicts (2.563176ms)
+✔ SYNTHETIC transfer: expectedVersion CAS and state transitions fail closed (4.529572ms)
+✔ SYNTHETIC transfer: draft void retains facts and has no stock effects (2.009589ms)
+✔ SYNTHETIC transfer: ledger:2 failure rolls back both warehouses, evidence and version (5.016734ms)
+✔ SYNTHETIC transfer: balance:2 failure rolls back both warehouses, evidence and version (6.873942ms)
+✔ SYNTHETIC transfer: document failure rolls back both warehouses, evidence and version (3.348766ms)
+✔ SYNTHETIC transfer: audit failure rolls back both warehouses, evidence and version (12.460576ms)
+✔ SYNTHETIC transfer: receipt failure rolls back both warehouses, evidence and version (11.360121ms)
+✔ SYNTHETIC transfer: one missing endpoint balance is NOT_READY and not implicit zero (5.06866ms)
+✔ SYNTHETIC transfer: input aliases cannot mutate hash or execution after first await (3.278246ms)
+✔ SYNTHETIC transfer: missing or corrupted original endpoint provenance prevents reversal (29.661266ms)
+✔ SYNTHETIC transfer: cutoff history is never reversed as runtime ledger (3.267357ms)
+✔ SYNTHETIC transfer policy: salesperson may approve and unapprove a visible transfer made by another salesperson (7.038394ms)
+✔ SYNTHETIC transfer policy: trusted creator hall OR either endpoint hall, not creator current hall or client-selected worker (6.036631ms)
+✔ SYNTHETIC transfer policy: SAVE checks old and proposed scope, preserving original creator role/hall (5.459472ms)
+✔ SYNTHETIC transfer references: unknown/disabled SKU and disabled destination reject; disabled nonzero source exception remains (8.350417ms)
+✔ SYNTHETIC transfer: unapproval rollback preserves complete original posting (10.706463ms)
+✔ SYNTHETIC transfer: audit stores only actual changed-line deltas, never unchanged retained document copies (10.22072ms)
+✔ SYNTHETIC transfer: same account/key/content replay survives trusted role/hall changes and rechecks current scope (4.199793ms)
+✔ SYNTHETIC transfer references: disabled SKU SAVE may retain/reduce trusted prior aggregate but cannot increase, move endpoints or approve (9.349927ms)
+✔ SYNTHETIC: transfer pure plan has the exact same canonical SKU and equal opposite integer endpoints (4.910454ms)
+✔ SYNTHETIC: transfer cannot use the same warehouse or nonpositive actual line (3.252684ms)
+✔ SYNTHETIC: transfer rejects empty/currentless, approved and foreign/duplicate lines (0.952191ms)
+✔ SYNTHETIC: quantity signed bigint boundaries are exact, not JS-number limited (3.799098ms)
+✔ SYNTHETIC: quantity overflow/underflow and unsafe negation fail rather than wrap (3.894061ms)
+✔ SYNTHETIC: fractions, number input, whitespace and implicit conversions are rejected (0.305992ms)
+✔ SYNTHETIC: exact minor arithmetic has no binary floating-point error (0.927031ms)
+✔ SYNTHETIC: explicit scale precision is rejected, never rounded (0.324307ms)
+✔ SYNTHETIC: only a caller-supplied cap is enforced; no guessed production amount ceiling (0.315022ms)
+✔ SYNTHETIC: invalid money syntax, implicit scale and invalid caps fail (0.574062ms)
+✔ SYNTHETIC: versions cannot exceed safe integer range and dates cannot normalize silently (1.975178ms)
+✔ SYNTHETIC: command hash is property-order stable but content/type/line-order sensitive (1.082441ms)
+ℹ tests 1040
+ℹ suites 0
+ℹ pass 1040
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14539.763361
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check:web
+> npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:parties && npm run test:web:application && npm run test:web:transfers && npm run test:web:application:sales && npm run test:web:application:transfers && npm run test:web:product:styles && npm run test:web:product:lifecycle && npm run test:web:preview
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck:web
+> tsc -p apps/web/tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 build:preview
+> node apps/web/build-preview.mjs
+
+index.html: 369 bytes
+main.js: 186889 bytes
+main.css: 15535 bytes
+inventory-route.js: 53884 bytes
+inventory-route.css: 17732 bytes
+synthetic-reader.js: 229 bytes
+product-drawer.js: 2638 bytes
+product-drawer.css: 2062 bytes
+inventory-preview-test-only.html: 313154 bytes
+Built static files only. No server, listener, deployment, database or network action.
+Portable preview exceeds 256KiB budget: 313154 bytes. Functionality retained; split build is available.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:dom
+> node apps/web/tests/run-dom-tests.mjs
+
+PASS DOM: initial idle state performs no inventory/candidate reads and does not invent zero count.
+PASS DOM: advanced expansion does not read; opening FIT reads only its six candidate labels; Escape closes and returns focus.
+PASS DOM: opening candidates reads only candidates; selecting does not query; explicit query renders complete size/FIT identities.
+PASS DOM: negative quantities preserved, valid cell callback carries exact warehouse/SKU/FIT/size; absent spec has no action.
+PASS DOM: folds preserve totals; reset edits only draft; refresh uses executed filter, not changed draft.
+PASS DOM: read failure keeps marked previous facts; retry recovers without losing the draft.
+PASS DOM: incomplete source rejects the whole query, never publishes unknown cells or invented zero totals.
+PASS DOM: closed selector does not read again; identity revocation removes all stock facts.
+PASS DOM: failed/cancelled size changes retain visible/applied100; explicit query uses100; retry200 and its following query both use visible200.
+PASS DOM: 103-product fixture renders 100 then 3 products via explicit server-page reads, not matrix-row pagination.
+All 9 original DOM interaction groups passed.
+PASS drawer: pending action/style load is closeable with zero business reads; closed failed leaf stays closed, and reopening retries before reading.
+PASS drawer: no target read before 查看; only default 基础资料 reads; three exact tabs; no editable controls or mutation actions.
+PASS drawer: current legal SKUs preserve full sizes/FIT; image list uses lazy thumbnails; originals only on preview; image failure/retry and Escape retain drawer and restore focus.
+PASS drawer: failed tab retries locally; close returns original inventory focus; a different product has independent basics and truthful empty images.
+PASS drawer: tab switch, close, reopen, cancel and identity replacement abort target reads; deliberately ignored cancellation cannot leak stale facts or reopen UI; explicit retry and null state work.
+All 9 original DOM groups and 5 product-drawer groups passed in jsdom. Not real-browser screenshots, precise layout, network waterfall, frozen-Demo parity or performance acceptance.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:auth
+> node apps/web/src/authentication/tests/run-dom-tests.mjs
+
+PASS auth DOM: inert mount, actual invalid login click clears secrets without requests, explicit session verification, cancel, late-session suppression.
+PASS auth DOM: one explicit login, repeated submit deduplicated, immediate secret clearing and verified identity content.
+PASS auth DOM: actual invalid password click clears all secrets without requests; confirmation rejects mismatch; Escape clears secrets/restores focus; repeat submit deduplicates; success invalidates all scopes and demands fresh login.
+PASS auth DOM: close during password write cancels local wait, clears identity, ignores late success and reports uncertainty rather than confirmed change.
+PASS auth DOM: logout clears business content immediately; unconfirmed server failure is truthful and explicit retry completes logout.
+PASS auth DOM: session and login failures show safe errors; explicit retry requires password re-entry and never automatically repeats a write.
+PASS auth DOM: unmount clears detached password fields, cancels pending login and cannot resurrect identity.
+All 7 authentication DOM groups passed in jsdom. No actual accounts, login, browser/network service, screenshots, cookie-runtime proof or frozen-Demo pixel-parity claim.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:sales
+> node apps/web/src/sales/tests/run-dom-tests.mjs
+
+PASS DOM 1: idle/advanced expansion reads nothing; actual 20/50/100/200 page sizes and approved primary/advanced filters.
+PASS DOM 2: only clicked bounded reference port reads; Escape restores focus; explicit query uses real mocked HTTP and exact negative money.
+PASS DOM 3: server document pagination, reset without read, failed page-size keeps marked prior scope; retry applies new size only on success.
+PASS DOM 4: detail only on click; stored snapshots/full labels/barcode/unknown metadata/exact return economics; no mutations; full-page Back retains mounted executed list, scroll and focus after reveal; no dialog/Tab trap/Escape dismissal.
+PASS DOM 5: new target is independent; Back/cancel/close abort and discard late ignored-signal responses; cancelled facts do not reappear.
+PASS DOM 6: cancelling page-size retains applied size; identity/session/permission replacement clears list/detail and discards late facts.
+PASS DOM 7: StrictMode setup/cleanup replay does not dispose the live route, detail or reference lifecycle.
+PASS DOM 8: concrete reference HTTP cancels on close/identity revocation and late responses cannot reopen candidates or restore old labels.
+PASS DOM 9: full native names, exact beyond-int64 aggregates without invented units, Shanghai next-day minute formatting, exchange sections and gift-excluded detail totals; one list plus one detail request only.
+PASS DOM 10: missing detail-style capability leaves native list/query usable and both detail activations visibly unavailable; no dummy CSS provider/read fallback.
+PASS DOM 11: style readiness gates data; Back works while CSS is pending, preserves draft/results/DOM/scroll/focus, and late style success cannot start a closed read.
+PASS DOM 12: failed action CSS never mounts data; explicit retry joins code/style readiness and performs exactly one native read, with honest errors and source action order.
+PASS DOM 13: closed older style activation cannot unlock a newer target; only its own ready action starts the new independent document scope.
+PASS DOM 14: same-account session/permission revocation during action-style wait clears retained facts and cannot start late data after CSS resolves.
+PASS DOM 15: entering detail cancels/detaches a pending list-reference child without hidden-trigger focus; ignored-signal late candidates cannot reopen on Back or reread the list.
+PASS DOM 16: removing capability during pending action CSS immediately reveals list, restores safe heading focus/scroll, disables detail actions and discards late readiness without implicit reopening.
+PASS DOM 17: removing capability during detail data aborts its query/scope and drops ignored-signal late facts while retaining a usable list; reinstatement never rereads automatically.
+PASS DOM 18: removing capability from loaded detail clears document, reveals the original retained list and safely focuses its heading instead of its now-disabled trigger, without Back/read resurrection.
+All 18 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:parties
+> node apps/web/src/parties/tests/run-dom-tests.mjs
+
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 1: actual frozen Arco table/control structure, normal-status route-activation page only, reset applies defaults, independent kind lists; unsupported audit explicit.
+PASS DOM 11: per-kind unapplied search/status drafts survive actual route reentry without reads; results/paging stay tied to the applied filter and Reset clears/applies only its kind.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 2: actual520px source Modal/Fields readonly code, create reads nothing, exact name-only create, dirty-close guard and source-style close/refresh after confirmation.
+PASS DOM 3: fresh-target edit and readonly original code, native CAS conflict preserves name+state and requires explicit reconciliation.
+PASS DOM 4: uncertain outcome locks name/state and original key; receipt404 not rollback proof; explicit exact atomic replay closes only on confirmation.
+PASS DOM 5: source name+state edit is one atomic EDIT/CAS/key, guard failure changes neither, restore is same single edit; no extra row/delete/tag controls.
+PASS DOM 9: legitimate route leave clears a clean unchanged editor; reentry keeps bounded list/filter state without resurrecting the modal or rereading detail.
+PASS DOM 6: detail/candidate close aborts and discards late responses; enabled-only independent candidate page reads only on explicit open.
+PASS DOM 7: identity/session/permission invalidation clears both kinds, dialog facts and atomic command; late ignored response cannot restore facts.
+PASS DOM 8: replacement workspace with reused route ID gets fresh filter/editor identity and only its newly activated bounded default page.
+PASS DOM 10: actual numeric-window pager emits direct buttons and source ellipsis spans, with no numeric flex wrappers. No geometry is mocked.
+All 11 synthetic behavioral DOM groups passed using actual Arco components. CSS is deliberately not rendered: no frozen-Demo pixel/geometry/browser/performance acceptance claim.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:application
+> node apps/web/src/application/tests/run-dom-tests.mjs
+
+PASS DOM 1: missing host/config/providers fail closed; construction/mount/anonymous verification performs zero business imports, styles or reads.
+PASS DOM 2: real login form reuses auth/password clearing; only chosen leaf CSS activates; cancellation prevents late code/CSS from mounting; inventory waits for explicit query.
+PASS DOM 3: route replacement aborts prior real HTTP reader; late responses cannot restore old route; 503 remains a local failure, not empty success or raw server text.
+PASS DOM 4: verification/account/permission changes clear scopes before new identity; stale 401 cannot expire newer identity; current business 401 clears all authenticated content.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 5: actual Arco parties load only the activated bounded normal-status page; kinds remain independent; clean modal cannot resurrect after route leave; dirty/uncertain work blocks navigation; atomic name+enabled EDIT preserves key/bytes across lost response, absent receipt and exact replay; identity change aborts pending command and discards late facts.
+PASS DOM 6: composed password/logout flows reuse authentication, invalidate all scopes/drafts, clear forms and unmount the one actual React root.
+PASS DOM 7: explicit same-origin CSS links are inert, deduplicated, failure-retryable and removed on owner disposal; no resource/browser/network loading used.
+PASS DOM 8: route CSS failure is local, safe and explicitly retryable without business reads; unavailable transfer is not fabricated; failed host cleanup cannot prevent root disposal.
+All 8 synthetic application DOM groups passed. Not real-browser/network/Demo pixels/performance/production acceptance.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:transfers
+> node apps/web/src/transfers/tests/run-dom-tests.mjs
+
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 1: real React StrictMode performs one route-activation list request; pinned Arco date/multi controls and exact frozen final columns; no candidate/detail/style prefetch.
+PASS DOM 2: draft/reset are inert; exact server paging; failures retain identified prior executed page and explicit retry.
+PASS DOM 3: action-only styled full-page detail; canonical identity matrix/full FIT/size names; legal blank vs nonexistent SKU; lazy saved snapshots; disabled mutations/product; return retains exact list scroll/focus without refetch.
+PASS DOM 4: cancel/reopen/return abort reads and reject late ignored-signal details without reviving targets.
+PASS DOM 5: list cancellation preserves prior facts; warehouse dropdown alone activates bounded independently paged native reference requests.
+PASS DOM 6: same-account permission replacement clears list, draft/reference labels and pending candidate lifecycle.
+PASS DOM 7: StrictMode detail deep link has no hidden-list fetch; return triggers first list; 403 destroys old route facts immediately.
+PASS DOM 8: adversarial 2,000-row × 200-size native document never materializes a Cartesian grid; visible actual/saved rows and full-size pages stay bounded and complete through paging.
+PASS DOM 9: complete product capability is action-only; pending CSS has no unstyled drawer/data read; immediate close rejects late readiness; reopen reuses shared StrictMode-safe drawer with basics-only data and focus return.
+PASS DOM 10: style failure is honest/retryable with no product read; product 403 immediately invalidates transfer/list/detail/product facts.
+PASS DOM 11: closing during detail CSS load prevents late detail reads; identity revocation during product CSS load prevents both late drawer mount and product data reads.
+All 11 synthetic React/JSDOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:application:sales
+> node apps/web/src/application/tests/run-sales-dom-tests.mjs
+
+PASS sales app 1: malformed optional CSS capability fails closed; auth/route/query never loads detail styles or reads detail/references; actual list uses one explicit bounded query.
+PASS sales app 2: action CSS failure stays local and retryable; visible Back works while retry is pending; late CSS cannot read/reopen, and retained list/draft/focus/scroll survive without refetch.
+PASS sales app 3: configured readiness reaches actual full-page read-only detail via one target HTTP read, no modal/history or relative CSS fallback; Back restores original list.
+PASS sales app 4: cancel/Back abort current detail reads; abort-ignoring late401 cannot expire current identity or replace a newer target.
+PASS sales app 5: identity replacement aborts old detail before publishing new principal; old401 is ignored, current401 clears authenticated facts, and disposal releases route plus action CSS.
+PASS sales app 6: omitted detail capability preserves usable list but visibly disables both viewing controls, without fallback CSS/data; aliased route/action owners dispose exactly once and never load during cleanup.
+All 6 composed sales application DOM groups passed. Mocked native HTTP/CSS events only, not browser/layout/network/performance or production acceptance.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:application:transfers
+> node apps/web/src/application/tests/run-transfer-dom-tests.mjs
+
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS transfer app 1: actual first-party frame preserves disabled missing/new/edit routes and independent customer/supplier labels; auth alone stays inert; route cancellation discards late CSS, one explicit transfer activation reads one bounded page.
+PASS transfer app 2: detail code/CSS/data activates only on click, remains an inline full-page read-only view, and cancelled preparation retains the executed list/draft/scroll/focus without a new list read.
+PASS transfer app 3: optional product action waits one configured frame/body stylesheet, closes safely while pending, then uses the real lazy HTTP reader/shared drawer without any relative fallback CSS request or eager product reads.
+PASS transfer app 4: aborted/cancelled and closed/superseded detail late403/401s cannot expire the still-current route session or replace newer inline detail.
+PASS transfer app 5: current read-only403 clears route facts and permits same-route retry without destroying auth; identity replacement aborts children, old-scope401 is ignored, while a fresh current401 immediately clears auth/route facts despite its own abort cleanup.
+PASS transfer app 6: omitted product dependency leaves viewing explicitly disabled, not fixture/default-reader fallback; no edit/create/sales command route is activated.
+All6 composed transfer application DOM groups passed. Real leaf/native mocked HTTP and shared drawer, not browser/layout/network/performance acceptance.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:product:styles
+> node apps/web/src/application/tests/run-product-style-handshake-dom-tests.mjs
+
+PASS style handshake 1: caller preload and StrictMode attachments share exactly the configured CSS request; immediate close discards late style failure and never calls relative fallback.
+PASS style handshake 2: local CSS failure remains retryable; real body/tab reads wait for style readiness; module caching does not inject the default relative stylesheet.
+PASS style handshake 3: already-cached module code cannot bypass a different attachment’s required CSS owner.
+PASS style handshake 4: default inventory path remains separately deduplicated/retryable and close-safe after configured consumers; no network, browser or CSS-rendering claim.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:product:lifecycle
+> node apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs
+
+PASS StrictMode: real lazy code/CSS gate; pending close/style retry; discarded host/tab/query instances are dead and the replacement reads valid correlated facts.
+PASS StrictMode: tab replacement aborts; images remain thumbnail-only until explicit preview; original-read replay/retry/close and Escape focus restoration work without stale preview.
+PASS StrictMode: close aborts and closes the native dialog; ignored late completion cannot reopen it; same-product remount starts fresh facts and scope.
+PASS StrictMode: in-place product prop replacement clears old facts before loading, disposes the old scope, aborts pending reads and preserves exact pid correlations.
+PASS StrictMode: parent-reference/identity replacement does not mix old facts; local error/retry/cancel remains live; revocation aborts immediately and a new identity can read afresh.
+PASS StrictMode: product replacement and identity revocation also abort explicitly opened original-image reads and remove previews despite late completions.
+PASS StrictMode: already-inactive parent and final unmount retain no product facts or live descendant scopes.
+PASS deferred starts: real StrictMode effects replay, but discarded/cancelled/aborted attachments start zero transports; explicit retry starts exactly once.
+All shared product-drawer lifecycle regressions passed in real React StrictMode + jsdom with exact single-start basics/specs/images/original actions; this is not real-browser visual/network acceptance.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:preview
+> node apps/web/tests/run-bundle-smoke.mjs
+
+PASS split graph: startup excludes inventory/detail leaves; inventory excludes drawer/tab code; drawer excludes inactive tab code; startup/route CSS exclude detail styles.
+PASS built portable HTML: starts with zero reads; explicit menu opens idle route; query renders 3 synthetic products; three product tabs read lazily and full image only on click; cell callback says unavailable; close/reopen clears old facts; no jsdom runtime errors.
+This is actual bundled-code DOM smoke, not a real browser, screenshot, network waterfall or pixel/performance acceptance.

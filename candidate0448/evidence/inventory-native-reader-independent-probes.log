@@ -1,0 +1,18 @@
+✔ independent: exact negative below signed-bigint aggregate, proven absent balance, missing SKU and source size/warehouse order (36.144794ms)
+✔ independent: mutable direct-reader parameters and scope cannot change while pool acquisition is pending (9.694818ms)
+✔ independent: abort after delayed acquisition releases exactly once without BEGIN or data queries (5.680657ms)
+✔ independent: abort during acknowledged COMMIT still rejects stale result and discards acquired client (2.591184ms)
+✔ independent: whole-filter uncovered SKU or deeper hierarchy rejects even zero-count empty page before paging (2.833777ms)
+✔ independent: matrix work budget fails before warehouse-size Cartesian matrix allocation (207.643848ms)
+✔ independent: selected IDs do not become candidate grants; category emits bounded native parent metadata (3.034864ms)
+✔ independent: candidate proof stays returned-ID-bound and never reads stock or broad inventory status (4.843388ms)
+✔ independent: invalid returned category fails instead of silently pruning; empty candidate page skips member work (3.089639ms)
+✔ independent source: category parent inference shared, full-filter checks unpaged, key predicates native-typed, no writes or whole member hydration (1.866605ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 841.634317

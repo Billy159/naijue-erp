@@ -1,0 +1,203 @@
+{
+  "status": "PASS_EXACT_IMPORT_BATCH_PERMISSION_METADATA_READONLY",
+  "jobId": "t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167",
+  "terminal": {
+    "jobId": "t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-1e79e238e9fc",
+    "atUTC": "2026-10-27T09:42:53.457866+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.5180727220140398,
+    "exports": [
+      "engine-result.json",
+      "import-batch-acl-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T09:42:53.993169+00:00"
+  },
+  "actual": {
+    "jobId": "t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167",
+    "status": "PASS_EXACT_IMPORT_BATCH_PERMISSION_METADATA_READONLY",
+    "businessDML": 0,
+    "commandsIssued": 0,
+    "grantIssued": false,
+    "credentialsExported": false,
+    "failedOperationJob": "t45-r1-v20-adopted148-revised-baseline-20261027-164",
+    "identity": {
+      "database": "erp_rewrite_20261022_r1",
+      "oid": "1027659",
+      "role": "erp_rewrite_runtime_20261022",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "server_address": null,
+      "server_port": null,
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "readonly": "on"
+    },
+    "permissionMetadata": {
+      "owner": "erp_rewrite_owner_20261022",
+      "columns": [
+        {
+          "name": "id",
+          "attnum": 1,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "source_name",
+          "attnum": 2,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "source_manifest_ref",
+          "attnum": 3,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "source_hash",
+          "attnum": 4,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "cutoff_at",
+          "attnum": 5,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "mapping_version",
+          "attnum": 6,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "inventory_mode",
+          "attnum": 7,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "status",
+          "attnum": 8,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "checkpoint",
+          "attnum": 9,
+          "select": true,
+          "update": true,
+          "actualWriteColumn": true
+        },
+        {
+          "name": "created_at",
+          "attnum": 10,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "completed_at",
+          "attnum": 11,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "history_expected_counts",
+          "attnum": 12,
+          "select": true,
+          "update": false,
+          "actualWriteColumn": true
+        },
+        {
+          "name": "history_actual_counts",
+          "attnum": 13,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        },
+        {
+          "name": "history_payload_hash",
+          "attnum": 14,
+          "select": true,
+          "update": false,
+          "actualWriteColumn": true
+        },
+        {
+          "name": "history_validation_passed",
+          "attnum": 15,
+          "select": true,
+          "update": null,
+          "actualWriteColumn": false
+        }
+      ],
+      "memberships": [],
+      "rowSecurity": false,
+      "schemaUsage": true,
+      "tableSelect": true,
+      "tableUpdate": false,
+      "roleAttributes": {
+        "rolname": "erp_rewrite_runtime_20261022",
+        "rolsuper": false,
+        "rolinherit": false,
+        "rolcanlogin": true,
+        "rolcreatedb": false,
+        "rolbypassrls": false,
+        "rolcreaterole": false,
+        "rolreplication": false
+      },
+      "anyColumnUpdate": true,
+      "forceRowSecurity": false
+    },
+    "directPermissionGaps": [
+      {
+        "kind": "COLUMN_UPDATE",
+        "column": "history_expected_counts"
+      },
+      {
+        "kind": "COLUMN_UPDATE",
+        "column": "history_payload_hash"
+      }
+    ],
+    "allDirectPermissionsSufficient": false,
+    "conditionalMetadataSkipped": "Direct permission gaps present; no trigger/policy expansion performed",
+    "rollbackReturned": true,
+    "clientsClosed": true,
+    "finishedAtUtc": "2026-10-27T09:42:53.935Z"
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167/release-submission/release-receipts/t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167/job.json",
+      "bytes": 559,
+      "sha256": "f8ed28bcbaa2a253cdd6384ff99e0cc3572b0b662054d5dd514f83dda4ccc3e0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167/release-submission/release-receipts/t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167/import-batch-acl-result.json",
+      "bytes": 3971,
+      "sha256": "a3ad79e2f603b7e62e150e378e1fe365b6292f60779e10429129af6385716cff"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167/release-submission/release-receipts/t45-r1-import-batch-exact-acl-metadata-readonly-20261027-167/engine-result.json",
+      "bytes": 393,
+      "sha256": "c4230b739a941c39f6eb66e2726d10628091c7afa77ea761e98c1821f1b8e704"
+    }
+  ],
+  "noPermissionOrDatabaseMutation": true,
+  "noReplayOrBusinessFunctionOrRowLock": true,
+  "notRootCauseOrBusinessPass": "Metadata identifies concrete current role permissions only; exact earlier failing SQL/trigger phase is not reconstructed solely from this check."
+}

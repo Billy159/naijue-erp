@@ -1,0 +1,628 @@
+{
+  "schemaVersion": 1,
+  "assignedAtUtc": "2026-10-21T16:53:16.023574+00:00",
+  "repository": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+  "sourcePackageSha256": "bfa5da83a03808d69851e4c269dfc1eec86a38b404c3283602bed1e48a55ffb8",
+  "immutableHandoffRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-source-intake/verified-package/erp-local-handoff",
+  "frontend": {
+    "threadId": "01a15f4b-3497-7521-ac21-3d4e0db5a033",
+    "allow": [
+      "apps/web/**"
+    ],
+    "exclude": [
+      "apps/web/src/application/contracts.ts"
+    ],
+    "priorities": [
+      "P1-SALES-NEW-REENTRY",
+      "old Mac 3 known failures actual browser recheck",
+      "Arco real components and reuse audit/fixes",
+      "integrated frontend rebuilding and route coverage"
+    ]
+  },
+  "backend": {
+    "threadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+    "allow": [
+      "adapters/postgres/**",
+      "packages/domain/**",
+      "packages/application/**",
+      "apps/api/**",
+      "scripts/import-v2/**",
+      "scripts/import-v3/**",
+      "tests/**",
+      "related backend docs/** and evidence/**"
+    ],
+    "priorities": [
+      "PhaseA binding resolver protocol/focused typecheck",
+      "0015 accounting integration with locked transaction/CAS/audit/receipt/schema prefix/source authorizer",
+      "SETTLEMENT/payment typed bindings",
+      "fresh isolated synthetic PG verification; no existing DB migration"
+    ]
+  },
+  "controller": {
+    "threadId": "01a15f48-7d75-74fa-a12e-e9e56a73d003",
+    "exclusive": [
+      "package.json",
+      "package-lock.json",
+      "tsconfig*.json",
+      "apps/web/src/application/contracts.ts",
+      "root build/dependency orchestration"
+    ],
+    "sharedChanges": "Cross-end public contract/signature/schema-prefix/capability registry changes must identify exact file+single owner before edit; routine within assigned modules needs no further user approval",
+    "contractLockedSha256": "202d23bf77e2f4e8ae1632bcf778d2e8db9dd1fe7c49892cd5f44f3b83d282b2"
+  },
+  "dependencyInstallationOwner": "controller only; no cross-project node_modules symlinks",
+  "productionOperationsAuthorizedHere": false,
+  "sharedChangeAssignments": [
+    {
+      "id": "SHARED-0015-SCHEMA-REGISTRY",
+      "assignedAtUtc": "2026-10-21T16:58:17.239952+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "packages/application/src/native-import-schema-contract.ts",
+        "tests/integration/migration-manifest.ts"
+      ],
+      "purpose": "add explicit schema15 prefix/DDL hash and fresh isolated schema15 suite manifest",
+      "constraints": [
+        "preserve existing schema1-11 evidence and contracts",
+        "no maxVersion-only bypass",
+        "no existing DB migration",
+        "public inventory-cutoff-import signature remains locked pending concrete proposal"
+      ]
+    },
+    {
+      "id": "SHARED-ACCOUNTING-RAW-VALIDATION",
+      "assignedAtUtc": "2026-10-21T17:08:36.506207+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "packages/application/src/inventory-cutoff-import.ts"
+      ],
+      "purpose": "validate accounting raw command before structuredClone to prevent getter/symbol erasure",
+      "constraints": [
+        "no public fields/types/signatures changed",
+        "own-property detection must not invoke getter",
+        "legacy command semantics unchanged",
+        "retain store boundary validation",
+        "negative tests reject before connection/write"
+      ]
+    },
+    {
+      "id": "SHARED-0012-FRESH-PG-SYNTAX-REPAIR",
+      "assignedAtUtc": "2026-10-21T17:32:11.366998+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "adapters/postgres/migrations/0012_history_header_native_reference.sql",
+        "packages/application/src/native-import-schema-contract.ts",
+        "tests/integration/migration-manifest.ts",
+        "tests/integration/history-native-reference-database.ts"
+      ],
+      "purpose": "repair PL/pgSQL ambiguous CASE expression found by actual fresh PG17.11 SQLSTATE42601, update exact runtime and fresh-runner hash pins",
+      "constraints": [
+        "retain immutable original handoff and run1 FAIL unchanged",
+        "schema1-11 SQL and prior evidence unchanged",
+        "fresh empty database only; no existing or production database migration",
+        "do not relax validation or accept unknown schema versions",
+        "record actual changed SQL and pins with new source hash; rerun failed engine scope after change"
+      ]
+    },
+    {
+      "id": "SHARED-0013-0015-FRESH-PG-SYNTAX-REPAIR",
+      "assignedAtUtc": "2026-10-21T17:39:18.109913+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "adapters/postgres/migrations/0013_native_party_import.sql",
+        "adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+        "packages/application/src/native-import-schema-contract.ts",
+        "tests/integration/migration-manifest.ts"
+      ],
+      "purpose": "fresh engine SQLSTATE42601: quote authorization identifier consistently, parenthesize CASE expression; exact hash pins follow actual bytes",
+      "constraints": [
+        "no weakening of guards/types/authorization",
+        "preserve original handoff and prior failed TAP/checkpoints",
+        "new empty isolated target per run, never reuse failed target",
+        "schema1-11 unchanged; concrete helpers under existing backend exclusive ownership",
+        "report exact new complete source/hash checkpoint and real engine outcomes"
+      ]
+    },
+    {
+      "id": "FRONTEND-STORE-SETTINGS-READ-ROUTE",
+      "assignedAtUtc": "2026-10-21T17:44:20.851926+00:00",
+      "ownerThreadId": "01a15f4b-3497-7521-ac21-3d4e0db5a033",
+      "files": [
+        "apps/web/src/application/contracts.ts"
+      ],
+      "purpose": "single optional store-settings route backed by existing stores/warehouses read page, optional storeSettings configuration, allowedTabs/initialTab/explicit hall-directory read intent; no write capability or server grant",
+      "constraints": [
+        "complete current Arco overlay fixed checkpoint before this next integration batch",
+        "all existing ApplicationConfiguration shapes keep their semantics and remain inert on construction",
+        "stores and warehouses remain two existing B01/B02 tabs in the 35/65 inventory, not invented new completed pages",
+        "real endpoint paths come from existing store-settings/http-reader.ts and apps/api/store-settings-read-http.ts",
+        "synthetic preview may add explicit typed synthetic-only read handlers; no fallback at real host",
+        "no package/lock or backend/public read-port changes; no runtime host authentication override",
+        "controller locks contracts.ts again after this exact integration receipt"
+      ],
+      "state": "CLOSED_CONTRACT_RELOCKED",
+      "completedAtUtc": "2026-10-21T18:16:15.690371+00:00",
+      "contractLockedSha256": "71823c5ad70892413ce86ca1c0baf2f84d2f4c985ecefb8021013f6f0a4af947",
+      "receipt": "reports/controller/ARCO-STORES-V4-BUILD-INTAKE.json"
+    },
+    {
+      "id": "BACKEND-UNIFIED-API-AND-LOCAL-HTTPS-HOST",
+      "assignedAtUtc": "2026-10-21T17:50:56.010604+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/local-https-application-host.ts",
+        "apps/api/src/postgres-application-api.test.ts",
+        "apps/api/src/postgres-read-api.test.ts",
+        "tests/integration/unified-https-acceptance.ts"
+      ],
+      "purpose": "new explicit PostgresApplicationApi composition and local HTTPS wrapper, original read factory unchanged",
+      "approvedPublicInterface": {
+        "newFactory": "createPostgresApplicationApi(options: PostgresApplicationApiOptions, createDriver?): Promise<PostgresApplicationApi>",
+        "newReturnType": "PostgresApplicationApi extends PostgresReadApi with readonly trustedOrigin captured from factory config; old PostgresReadApi unchanged",
+        "documentCommands": "full explicit dependencies except unitOfWork/now, shared owned pool/UoW/clock/auth, explicit real catalogueCompleteness and native manual true",
+        "storeSettingsRead": "optional explicit StoreSettingsReadAuthorization, four existing read endpoints only",
+        "host": "startLocalHttpsApplicationHost({api:PostgresApplicationApi,address:{host:127.0.0.1,port},tls:{key,cert},assets:{root,entry}})",
+        "networkMount": "fixed local /api prefix maps to unprefixed internal API; real development build config http.basePath=/api, assets.basePath=/assets/"
+      },
+      "constraints": [
+        "original read factory signature/default capability/close/resource lifecycle unchanged",
+        "capture and validate config before first await/pool creation; one pool and auth service; all plugins before ready",
+        "compare captured API trustedOrigin to exact loopback host port before listening",
+        "static output only; restrict path/type/list, reject traversal/symlinks/source/incoming/provenance/key disclosure; no API fallback to HTML",
+        "TLS private key/cert caller-provided; no env/credential discovery; never Git/Library/log; generated private synthetic test cert may be used with explicit client CA verification",
+        "do not disable TLS verification or bypass browser security interstitial; no trust-store changes without required approval",
+        "close listener/API/pool under explicit ownership with in-flight and construction-failure cleanup",
+        "no root package/lock/tsconfig changes without exact separate assignment",
+        "complete current PhaseA stable work before jumping batches; no extra task or duplicate writer"
+      ]
+    },
+    {
+      "id": "BACKEND-HISTORY-DISPATCH-0016",
+      "assignedAtUtc": "2026-10-21T17:56:36.231360+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+        "packages/application/src/native-import-schema-contract.ts",
+        "tests/integration/migration-manifest.ts",
+        "packages/application/src/native-import-record-accounting.ts",
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "adapters/postgres/src/native-import-accounting-capability.ts"
+      ],
+      "purpose": "additive exact-source table-specific NEW dispatch repair, explicit finite16 compatibility and accounting/STAGE guard coverage; separate history16 fresh suite",
+      "approvedProposalSha256": "13249f633b4ea49b21f2b4dd01f8e6cfcab83fd049784791c3be7025198b2564",
+      "constraints": [
+        "all current1-15 DDL bytes and old15 suite/pins/evidence unchanged",
+        "only two nested table guards in old trigger body; retain all predicates, OID, locks, search_path",
+        "exact16 prefix + newDDLhash; no arbitrary future versions or max-only acceptance",
+        "preserve old15 exported schema meaning; assert supports explicit15/16 profiles",
+        "STAGE and CHUNK/PUBLISH on16 must retain full guard capability checks; no only-registry widening",
+        "unknown future17/missing/duplicate prefix negative tests retained",
+        "new HISTORY_TYPED_SCHEMA16_MIGRATIONS fresh suite; no reinterpretation of old15 9/9 as16 proof",
+        "no nonzero history publication guard changes before typed closure",
+        "test header/alias/contributor table branch guards and same-source replay/zero stock behavior in actual PG",
+        "no production/existing DB migration"
+      ]
+    },
+    {
+      "id": "BACKEND-UNIFIED-MANAGEMENT-READ-COMPOSITION",
+      "assignedAtUtc": "2026-10-21T18:12:50.797286+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/postgres-application-api.test.ts"
+      ],
+      "purpose": "Close exact missing genuine read plugin assembly after current HTTPS baseline; no party writes or frontend change",
+      "approvedPublicInterface": {
+        "productManagementRead?": "{ readonly authorization: ProductManagementQueryAuthorization }",
+        "catalogueSettingsRead?": "{ readonly authorization: CatalogueSettingsReadAuthorization }",
+        "dictionaryRead?": "{ readonly authorization: DictionaryReadAuthorization }"
+      },
+      "constraints": [
+        "three independent own data opt-ins on new PostgresApplicationApiOptions only; old read factory/types unchanged",
+        "capture provider authorize methods before await/pool allocation; reject malformed/inherited/accessor/unknown fields",
+        "construct actual Postgres reader on same owned bounded pool; same trusted auth; plugin before ready",
+        "absence installs no corresponding plugin; source-confirmed-native existing profile alone never authorizes new reads",
+        "no no-op grant/provider and no synthetic transport in real host",
+        "keep original stocks completeness and current authorization/identity fail-closed behavior",
+        "party GET/read-only assembly needs exact proposal separately because current plugin also exposes commands",
+        "no package/lock/frontend/contracts/root config changes",
+        "positive/negative default and explicit opt-in protocol checks; network proof only in actual HTTPS acceptance"
+      ]
+    },
+    {
+      "id": "FRONTEND-REAL-HOST-EXPLICIT-CAPABILITIES",
+      "assignedAtUtc": "2026-10-21T18:22:54.850966+00:00",
+      "ownerThreadId": "01a15f4b-3497-7521-ac21-3d4e0db5a033",
+      "files": [
+        "apps/web/src/development-host/configuration.ts",
+        "apps/web/src/development-host/mount.tsx",
+        "apps/web/src/development-host/tests/**",
+        "apps/web/src/development-host/*.test.ts"
+      ],
+      "purpose": "After current overlay batch, close real build versus synthetic host configuration gap using existing ApplicationConfiguration capability fields only",
+      "constraints": [
+        "application/contracts.ts remains locked71823c5ad70892413ce86ca1c0baf2f84d2f4c985ecefb8021013f6f0a4af947",
+        "new strict optional public UI config only; old configs/defaults/read-only behavior remain",
+        "explicit native manual SALE/TRANSFER opt-in maps existing commands with real crypto.randomUUID key and existing CURRENT/prepare/command/receipt HTTP clients; no synthetic provider",
+        "explicit readOnly parties option maps existing readOnly true route, real GET client and parties CSS; UI no maintenance opt-in",
+        "products optional viewer maps existing real product target reader and shared CSS; no guessed media URLs or grants",
+        "no server/API/ports/package/lock/root config changes; UI config never grants server rights",
+        "read-only startup remains free of eagerly loaded business command/fixture providers; native leaves lazy and only explicit opt-in",
+        "same origin /api and /assets; real host never falls back to synthetic transport",
+        "publish exact optional keys and files in phase receipt; focused default/opt-in/403/identity/uncertain regression, keep frozen review artifacts"
+      ]
+    },
+    {
+      "id": "BACKEND-PARTY-READ-ONLY-COMPOSITION",
+      "assignedAtUtc": "2026-10-21T18:24:45.423203+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "proposalSha256": "1db75152960139a583f1a387694ab182d15d44036007e6e23e86db6f8e2591a8",
+      "files": [
+        "packages/application/src/party-read-ports.ts",
+        "packages/application/src/party-read-service.ts",
+        "packages/application/src/party-read-policy.ts",
+        "adapters/postgres/src/party-read-reader.ts",
+        "apps/api/src/party-read-http.ts",
+        "apps/api/src/postgres-read-api.ts",
+        "tests/party-read-service.test.ts",
+        "tests/party-read-postgres-protocol.test.ts",
+        "apps/api/src/party-read-http.test.ts",
+        "apps/api/src/postgres-application-api.test.ts"
+      ],
+      "approvedPublicInterface": {
+        "newFactoryOnly": "PostgresApplicationApiOptions.partyRead?: { readonly authorization: PartyReadAuthorization }",
+        "authorization": "authorize(actor:PartyActor,intent:PartyReadIntent,signal:AbortSignal):Promise<PartyReadGrant>",
+        "intents": [
+          "LIST",
+          "DETAIL",
+          "CANDIDATES"
+        ],
+        "grant": "strict kind, operation, targetId (DETAIL only non-null); validated exact matches; never request-derived",
+        "http": "only six GET: customers/suppliers lists, candidates and exact id; no commands or receipts"
+      },
+      "constraints": [
+        "old read factory/options and party maintenance plugins/services/UoW/policy remain unchanged",
+        "same captured capabilities own-descriptor validation; same owned pool/auth/clock; register before ready; default absent",
+        "explicit source policy only; preserve original role ADMIN/WAREHOUSE for LIST/DETAIL; existing valid PartyRole for CANDIDATES; current server role never guessed",
+        "reuse original field/JSON/NULL/pagination semantics and pure validation; do not recompute historical snapshots",
+        "reader RR READ ONLY parameterized count/page in same snapshot; candidates enabled only; fixed kind-to-table mapping",
+        "no sequence/advisory mutation locks/INSERT/UPDATE/DELETE/audit/receipt/write or UoW dependency",
+        "authentication current cookie/Origin/fetch-site with same original party session authenticator; abort/error cleanup",
+        "protocol and real fresh PG/TLS separately reported; no production/existing DB/private file action",
+        "backend owns these files only; frontend contracts remain locked; no package/lock/root changes"
+      ]
+    },
+    {
+      "id": "BACKEND-PAYMENT-TYPED-SETTLEMENT-0017",
+      "assignedAtUtc": "2026-10-21T18:48:33.225757+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "proposalSha256": "69bd678d6f8dd8988f45501383b27cd030ad98e0e2302df3159ea82327193077",
+      "files": [
+        "adapters/postgres/migrations/0017_native_payment_import.sql",
+        "packages/application/src/native-payment-import.ts",
+        "adapters/postgres/src/native-payment-import.ts",
+        "packages/application/src/native-import-schema-contract.ts",
+        "tests/integration/migration-manifest.ts",
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "packages/application/src/native-import-record-accounting.ts",
+        "packages/application/src/import-v3-history-settlement.ts",
+        "adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+        "scripts/import-v2/authorized-native-payment-reader.mjs",
+        "scripts/import-v2/authorized-native-payment-reader.d.mts",
+        "scripts/import-v2/authorized-native-payment-reader.test.mjs",
+        "scripts/import-v2/authorized-settlement-reader.mjs",
+        "scripts/import-v2/authorized-settlement-reader.d.mts",
+        "scripts/import-v2/authorized-settlement-reader.test.mjs",
+        "tests/native-payment-import.test.ts",
+        "tests/native-payment-import-postgres-protocol.test.ts",
+        "tests/native-payment-import-tsconfig.json",
+        "tests/integration/(new payment/settlement exact synthetic17 helpers/tests)"
+      ],
+      "publicSeams": "Exact three staged sections in pinned proposal; independent PAYMENT_METHOD/ACCOUNT/HALL typed directory, independent settlement mapper/store/read-only resolver and sealed authorized readers; no edits to PhaseA public shape or import-v2 original template",
+      "constraints": [
+        "original1–16 DDL/old15constant/original15and16suite meaning unchanged",
+        "explicit finite17+hash only;18/missing/duplicate negative rejection; runtime17 validates history16 prosrc and new payment carrier FK/immutable guards; STAGE17 cannot skip actual capabilities",
+        "no native target adoption by name/ID; source+native+immutablebinding same transaction under original cutoff/batch locks",
+        "optional account-hall relation is source fact not authorization; exact composite occurrence from both original source keys; empty sheet no invented relation",
+        "original method identity independent of current account method; absent vs own empty retained; unknownNULL and nonempty unmapped failclosed; no snapshot rewriting by current names/enabled/method",
+        "whole32 approvals exact fileSHA/position/field/raw/candidate; direction explicit RECEIVE/REFUND; exact nonnegative cents0 valid; no recompute or magnitude guessing",
+        "independent settlement store/resolver exact source/header/payment bindings; SQL boundary revalidates full payload and precise replay; rollback/unknownCOMMIT preserve original semantics",
+        "no source file extraction/real import; new sealed readers synthetic private spool DRY_RUN unless independently exact-authorized STAGE",
+        "new isolated schema1–17 actual PG fixture after protocol/typecheck, stopped retained; do not reuse old schema11/15/16 target",
+        "no live sales/stock/checkpoint/receipt/publication side effects from historical settlement staging; nonzero history guard remains closed",
+        "no frontend/contracts/package/lock/root config/server operations"
+      ]
+    },
+    {
+      "id": "BACKEND-SEALED-SPOOL-LOWER-LIMIT",
+      "assignedAtUtc": "2026-10-21T19:40:43.605135+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "scripts/import-v2/sealed-payment-source.mjs",
+        "scripts/import-v2/authorized-native-payment-reader.d.mts",
+        "scripts/import-v2/authorized-settlement-reader.d.mts",
+        "scripts/import-v2/authorized-native-payment-reader.test.mjs",
+        "scripts/import-v2/authorized-settlement-reader.test.mjs",
+        "scripts/import-v2/payment-source-fixture.test-support.mjs"
+      ],
+      "publicSeam": "Optional captured maxSpoolBytes only for the two new readers, positive safe integer <= existing512MiB hard cap; default unchanged. Explicitly smaller operator cap, no trust/approval weakening.",
+      "constraints": [
+        "No increase in existing hard upper bound; no reserve reduction; no native/SQL/auth/selection/publish change",
+        "All existing own-data/getter/symbol/path/hash/mode/inode/preflight and per-yield verification constraints remain",
+        "Over-limit aborts before yield/binding callback; delete only newly owned partial temporary spool through existing safe close; originals and evidence retained",
+        "Negative invalid bounds, smaller cap red/green, default compatibility and source typecheck; no repeated PG required",
+        "Actual private input still requires independent external approval bytes/pin; do not extract/create STAGE solely because smaller budget now fits",
+        "For initial private DRY_RUN plan, run readers sequentially with <=128MiB cap; calculate fresh space budget including full verified extraction+one spool+2GiB reserve (no PG until separately planned)"
+      ]
+    },
+    {
+      "id": "FRONTEND-PRODUCT-FULLPAGE-P08-P13",
+      "assignedAtUtc": "2026-10-21T19:46:43.268968+00:00",
+      "ownerThreadId": "01a15f4b-3497-7521-ac21-3d4e0db5a033",
+      "files": [
+        "apps/web/src/application/contracts.ts",
+        "apps/web/src/products/product-page-contracts.ts"
+      ],
+      "purpose": "Optional ProductsRouteConfiguration.fullPage, true full-page read-only workspace and existing base/specs/images reuse; no new ApplicationRoute or invented endpoint",
+      "approvedPublicInterface": {
+        "fullPage": "optional {stylesheet,allowedTabs,initialTab,reader:ProductFullPageReadOnlyReader}",
+        "reader": "frontend-local explicit typed per-tab read capabilities; unavailable methods absent, captured own-data capability check before IO; existing base/specifications/images transport only until backend exact ports registered"
+      },
+      "constraints": [
+        "Only optional fullPage contract seam; existing configuration/Drawer semantics unchanged; return exact contract diff/hash to relock",
+        "No automatic backend grant; no guessed HTTP path, fake success, zero substitution, public-media fallback or new package API",
+        "Six original P08-P13 identifiers retained; unavailable fields/tabs explicit NOT_CONNECTED and no IO; no six-shell completion claim",
+        "ReadScope and LatestQuery per active target/tab; abort/late/identity/403/503/null/empty exact semantics; list state/scroll/exact trigger return",
+        "Same-app full page is explicit host composition difference from frozen window.open, no iframe/link directory/expanded Drawer substitute",
+        "Reuse existing base/spec/image inner read components; real Arco Tabs/Table/shared overlays; string amounts/quantities and unknown retained",
+        "contracts.ts temporary sole frontend owner for this assignment only, controller must relock after exact receipt; no root/package/backend edit"
+      ],
+      "state": "CLOSED_CONTRACT_RELOCKED_UI_WORK_CONTINUES",
+      "completedContractAtUtc": "2026-10-21T20:17:55.627625+00:00",
+      "contractLockedSha256": "202d23bf77e2f4e8ae1632bcf778d2e8db9dd1fe7c49892cd5f44f3b83d282b2",
+      "receipt": "reports/controller/PRODUCT-FULLPAGE-CONTRACT-REVIEW.json"
+    },
+    {
+      "id": "BACKEND-NONZERO-HISTORY-CLOSURE-STAGED",
+      "assignedAtUtc": "2026-10-21T19:46:43.268968+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "tests/integration/sealed-history17-fixture.ts",
+        "tests/integration/sealed-history17.integration.ts",
+        "packages/application/src/history-typed-closure.ts",
+        "adapters/postgres/src/history-typed-closure.ts",
+        "adapters/postgres/migrations/0018_history_typed_publication.sql",
+        "scripts/import-v2/authorized-history-closure-reader.mjs",
+        "scripts/import-v2/authorized-history-closure-reader.d.mts",
+        "scripts/import-v2/authorized-history-closure-reader.test.mjs",
+        "packages/application/src/native-import-record-accounting.ts",
+        "packages/application/src/history-import-lifecycle.ts",
+        "adapters/postgres/src/history-import-lifecycle.ts",
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "packages/application/src/native-import-schema-contract.ts",
+        "tests/integration/migration-manifest.ts"
+      ],
+      "approvedProposalSha256": "7175b78169bd79ae10bb0d3f6c3f7dffbddefcb7385f4a2ee9591ed3de6934ee",
+      "purpose": "First actual synthetic sealed-file-to-PG17 joint chain with original nonzero PUBLISH rejection; then additive exact18 closure manifests/capabilities and complete readback without changing1-17",
+      "constraints": [
+        "Stage1 actual combined synthetic file/typedSQL chain first; original nonzero publish must still fail with zero extra FINAL/receipt/claim/stock",
+        "Original1-17 bytes and finite15/16/17 constants/profiles unchanged; explicit18 only with full DDL/guard/ACL/function pins and future19 negatives",
+        "Only optional historyClosure on NativeAccountingPublishCommand, own-descriptor preclone validation, full closure enters MAIN hash and every replay source authorization",
+        "No expected-as-actual readback, bool-passed shortcut, old nonzero scope adoption, stock write in history mapper, or missing source treated zero",
+        "Before first schema18 publication provide exact canonical row/document digest encoding and source-authorized manifest STAGE signature/lock ordering as reviewable checkpoint; controller review can run while implementation proceeds",
+        "Original receipt-lock/source-auth/batch/native-history locks/readback/conservation/FINAL-once/CAS/audit/receipt/COMMIT-unknown semantics retained",
+        "Fresh synthetic target only after space/owner/port checks, stop retain; no private data STAGE, production migration or restore operation"
+      ],
+      "state": "STAGE1_COMPLETE_8_8; STAGE2_SQL_STAGE_IMPLEMENTATION_AUTHORIZED_CANONICAL_CHECKPOINT_REVIEWED",
+      "controllerReview": "reports/controller/HISTORY18-CANONICAL-REVIEW.json",
+      "projectionClarification": {
+        "acceptedAtUtc": "2026-10-21T20:44:00.022514+00:00",
+        "onlySemanticExclusions": [
+          "native_party_import_evidence.creation_xid",
+          "native_party_import_evidence.imported_at"
+        ],
+        "retainedIndependentProofs": [
+          "exact original0013 insert-current-xid/transactiontimestamp/no-existing-native adoption",
+          "original same-transaction commit/native provenance functions",
+          "immutable/no-truncate/ACL/function/trigger finite runtimepins"
+        ],
+        "stillIncluded": [
+          "all deterministic generated native_*_id via entity/nativeId",
+          "all other original carrier fields",
+          "CUSTOMER/SUPPLIER original creation snapshot times explicitly NULL per existing guard"
+        ],
+        "forbidden": [
+          "actual readback seeded expected/source grant",
+          "silent field omissions",
+          "assuming future generated native times supported"
+        ],
+        "requireV2ColumnSourceMatrix": true
+      }
+    },
+    {
+      "id": "BACKEND-PRIVATE-SOURCE-ONLY-DRY-RUN",
+      "assignedAtUtc": "2026-10-21T19:48:25.016175+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "purpose": "Execute reviewed private source-only materialization and sequential native-payment/settlement file readers, no SQL",
+      "approvedPlanSha256": "5a05296fea92664591c5ee37c9c59711b83050c9ef35c9cbed38fd580b771945",
+      "authorityReceipt": "reports/controller/IMPORT-AUTHORITY-INTAKE.json",
+      "authorityContext": "reports/controller/IMPORT-AUTHORITY-CONTEXT.md",
+      "constraints": [
+        "Recheck full resource budget/new absent target/noGit/no links/exclusive per-member writes/size SHA CRC; preserve2GiB reserve and originals",
+        "Whole32 exact source-cell verification against externally pinned unchanged32 records; no expanded correction or forced balancing",
+        "Max one128MiB spool at a time, close/await before next; overcap fails no automatic raise/retry",
+        "No SQL, database, native binding adoption, STAGE/PUBLISH/production write",
+        "Header reader original XLSX sourceRoot missing is separately NOT_RUN; no fake success or precomputed evidence substitute",
+        "Only technical counts/hash/status in reports, no business row/credentials/Git/Library uploads"
+      ]
+    },
+    {
+      "id": "BACKEND-IMPORTED-HISTORY-EXPLICIT-READ",
+      "assignedAtUtc": "2026-10-21T19:50:40.838020+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "packages/application/src/imported-history-query-ports.ts",
+        "packages/application/src/imported-history-query-validation.ts",
+        "packages/application/src/imported-history-query-service.ts",
+        "adapters/postgres/src/imported-history-query-reader.ts",
+        "apps/api/src/imported-history-query-http.ts",
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/postgres-application-api.test.ts"
+      ],
+      "purpose": "Four separate imported-history readonly POST endpoints and explicit new-factory optional importedHistoryRead; no LIVE/audit DTO change",
+      "approvedProposalSha256": "7175b78169bd79ae10bb0d3f6c3f7dffbddefcb7385f4a2ee9591ed3de6934ee",
+      "constraints": [
+        "Continue only after sealedPG17 first-stage stable checkpoint; no parallel second writer",
+        "Old read factory/default API unchanged; no implicit role/native-profile/LIVE grant; own-descriptor validate capture explicit authorization before pool/ready",
+        "Fresh schema18 full capability+verified imported closure only; STAGED/VALIDATING hidden, missingcap fail closed, no LIVE/synthetic fallback",
+        "RR READ ONLY parameterized SQL bounded page sizes20/50/100/200 and finite detail line/settlement pages; count/filter/grant before aggregate/page",
+        "Independent dataset HISTORY readonly DTO, decimal strings and raw NULL/local/instant provenance semantics; no internal source keys/paths/hashes/rawFields/password or maintenance capabilities",
+        "Initial synthetic integration may use exact explicit all-domain historical grants tied actor/intent/kind/target; no automatic real ADMIN/WAREHOUSE grants",
+        "Hall-scoped sales must use proven source membership; transfer creator/from/to ambiguous branch remains denied until exact policy reviewed, no OR expansion guessing",
+        "Return exact final authorization/grant type and concrete scope predicates as stable checkpoint before frontend attachment; missing user fact stays explicit"
+      ],
+      "state": "STAGE1_SEALED17_COMPLETE; IMPLEMENTATION_AFTER_HISTORY18_VERIFIED_CLOSURE_READY"
+    },
+    {
+      "id": "BACKEND-HEADER-STRICTER-RESOURCE-CAPS",
+      "assignedAtUtc": "2026-10-21T20:06:20.175022+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "scripts/import-v2/extract-history-cell-evidence.py",
+        "scripts/import-v2/authorized-header-reader.mjs",
+        "scripts/import-v2/authorized-header-reader.d.mts",
+        "scripts/import-v2/authorized-header-reader.test.mjs",
+        "scripts/import-v2/test_history_cell_evidence.py"
+      ],
+      "purpose": "Two independent stricter operator resource caps for original OOXML evidence output and selected-header output; existing hard512MiB/default unchanged",
+      "approvedInterface": {
+        "readerOptional": "maxEvidenceSpoolBytes?: number; maxSpoolBytes?: number; positive safe integers <=536870912, own-data captured before IO",
+        "extractorOptional": "fixed --max-evidence-bytes value passed by trusted reader; run keyword optional with same finite bound; no custom executable/script/args capability"
+      },
+      "constraints": [
+        "Only stricter limits, never increase existing512MiB maxima; absence original defaults and old signature semantics preserved",
+        "No source/preflight/whole32/creator/OOXML/style/numeric provenance or rawNULL/timezone policy weakening",
+        "Bounded bytes verified before write and again against returned evidence report; limit failure before yield/resolver callback, close-await only own temporary spool",
+        "Original XLSX/ZIP/cell evidence inputs unchanged; no SQL/native binding/STAGE/PUBLISH authorization",
+        "Negative getter/symbol/zero/negative/fraction/NaN/Infinity/string/overhard and two distinct overcap branches; defaults unchanged focused tests",
+        "First implementation checkpoint then fresh source-only execution plan may use evidence192MiB+selected192MiB+2GiB reserve =2550136832B; recheck free immediately, no overlapping PG work; old resourceFAIL preserved",
+        "If actual output exceeds chosen strict cap fail with technical code, retain original evidence/failure, no automatic raise/retry",
+        "Raw rows never shared/uploaded/Git; only counts/hash/actualbytes/lifecycle in reports"
+      ],
+      "state": "ACTIVE_IMPLEMENT_AFTER_CURRENT_SEALED_PG17_SAFE_CHECKPOINT"
+    },
+    {
+      "id": "BACKEND-HEADER-SEQUENTIAL-DERIVED-SPOOL",
+      "assignedAtUtc": "2026-10-21T20:17:28.530540+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "files": [
+        "scripts/import-v2/authorized-header-reader.mjs",
+        "scripts/import-v2/authorized-header-reader.test.mjs"
+      ],
+      "purpose": "Resource-only sequential lifetime: once original-cell derived evidence is fully verified and copied into the bounded in-memory index, release only that owned temporary file before opening selected-header spool",
+      "constraints": [
+        "Original XLSX, ZIP, base/amendment evidence and existing reports/checkpoints never deleted or changed",
+        "Finish full evidence bytes/SHA/source coverage validation and await read handle closure before any removal; enforce exact new derived path, same dev/inode/nonlink/private mode/size, otherwise fail closed",
+        "Keep per-record original cell evidence in selected source rows and authenticated in-memory index; never replace raw evidence with aggregate counts or skip source/preflight/whole32/creator rules",
+        "Strict caps remain <=512MiB/default512. Proposed actual source-only evidence192MiB and selected384MiB, max sequential384MiB + unchanged2GiB reserve =2550136832B; no coexistence budget dodge",
+        "Test full verification precedes unlink, own path only, changed/symlink path rejects, no selected write after failed hash; close-await and failure cleanup exact-owned scope",
+        "Current caps implementation can continue; coordinate at same backend checkpoint, do not parallelize file edits",
+        "Execute real header-only once only after reviewable fixed checkpoint and fresh budget passes; no SQL/STAGE/native binding/inferred mapping authorization"
+      ],
+      "state": "ACTIVE_RESOURCE_PLAN_REFINEMENT_AFTER_SEALED17"
+    },
+    {
+      "id": "BACKEND-PRIVATE-HEADER-SOURCE-ONLY-RUN1",
+      "assignedAtUtc": "2026-10-21T20:31:07.945283+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "state": "CLOSED_NOT_RUN_RESOURCE_GUARD",
+      "approvedPlan": "reports/backend/HEADER_SOURCE_ONLY_EXECUTION_PLAN_V2.json",
+      "approvedPlanSha256": "e91ad7a30bda4c946f56588bd72da44330be5a1261f45d7b8c76341beae384a8",
+      "approvedSourceCheckpointSha256": "6d5e3b4c1583c0a1f3e337bda6044462f1ed3aa9af487b25196e26701652c87b",
+      "caps": {
+        "maxEvidenceSpoolBytes": 201326592,
+        "maxSpoolBytes": 402653184
+      },
+      "minimumFreeBytes": 2558525440,
+      "reserveBytes": 2147483648,
+      "metadataLogAllowanceBytes": 8388608,
+      "observedFreeBytes": 2559651840,
+      "scope": "One complete original OOXML-backed header source-only pass, SALES_HEADER and TRANSFER_HEADER, sourceRoot exactly as plan; technical reports only",
+      "constraints": [
+        "Fresh disk guard before start; below minimum -> NOT_RUN, no cap increase or automatic retry",
+        "No concurrent new PG/large builds/downloads; preserve2GiB reserve",
+        "Use fixed reviewed extractor and sources, includeNativeReferenceSources=false, no native callbacks",
+        "Exhaust complete rows and await close, original bytes SHA before/after; expected28282sales+14279transfer are expectations only until observed",
+        "No SQL/native binding/STAGE/PUBLISH; no production/backup action",
+        "On actual cap/provenance failure retain FAIL and stop; no modifying originals or deleting previous evidence",
+        "Only cleanup new owned temporary spool under reviewed lifecycle; no original/old evidence cleanup"
+      ],
+      "result": "reports/backend/PRIVATE_HEADER_SOURCE_ONLY_RUN1.json",
+      "resultSha256": "3e1749250b073bf41d97f9bb4fe8b23a47977d86e0144339acb2c64272805249",
+      "actualFreeBytes": 2556846080,
+      "deficitBytes": 1679360
+    },
+    {
+      "id": "BACKEND-PRIVATE-HEADER-SOURCE-ONLY-LOWER-PLAN-RUN2",
+      "assignedAtUtc": "2026-10-21T20:33:39.209604+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "state": "CLOSED_KNOWN_UNEXECUTED_WRAPPER_FAILURE",
+      "basis": "Controller review of explicit narrowerOptionalPlanForControllerReview in HEADER_SOURCE_ONLY_EXECUTION_PLAN_V2.json; first attempt never opened reader, 1,679,360B short. Same source checkpoint unchanged. Stricter resource limit only; no source/authorization/SQL behavior change.",
+      "approvedSourceCheckpointSha256": "6d5e3b4c1583c0a1f3e337bda6044462f1ed3aa9af487b25196e26701652c87b",
+      "caps": {
+        "maxEvidenceSpoolBytes": 167772160,
+        "maxSpoolBytes": 335544320
+      },
+      "minimumFreeBytes": 2491416576,
+      "reserveBytes": 2147483648,
+      "metadataLogAllowanceBytes": 8388608,
+      "observedFreeBytes": 2559971328,
+      "constraints": [
+        "One new explicit run2 report; preserve original run1 NOT_RUN and all prior evidence",
+        "Fresh free >=2491416576 before any reader/OOXML/spool, otherwise NOT_RUN and no further resource variants automatically",
+        "Evidence160MiB and selected320MiB each strict hard failure; do not increase/retry if actual bytes exceed",
+        "No concurrent newPG/heavy build/download. No reserve reduction, data cleanup or new input copies",
+        "No native callbacks/references/SQL/STAGE/PUBLISH, whole source-only pass only",
+        "Full OOXML/source/selection/whole32/temporal/creator checks unchanged; complete traversal counts technical-only, original SHA before/after and await cleanup",
+        "No broad success from partial traversal; any actual cap/provenance failure stops and remains FAIL"
+      ],
+      "result": "reports/backend/PRIVATE_HEADER_SOURCE_ONLY_RUN2.json",
+      "reason": "ENOTDIR file.xlsx/.git before any file hash/reader/OOXML/spool"
+    },
+    {
+      "id": "BACKEND-PRIVATE-HEADER-KNOWN-UNEXECUTED-WRAPPER-REPAIR-RUN3",
+      "assignedAtUtc": "2026-10-21T20:35:21.111994+00:00",
+      "ownerThreadId": "01a15f4d-371d-72ff-be00-b4d1d0728029",
+      "state": "CLOSED_ACTUAL_SELECTED_SPOOL_CAP_FAIL_NO_AUTOMATIC_RETRY",
+      "reviewedRunnerSha256BeforeRegistrationLabel": "20b7c93ce14215413c030d1193d1aa6100946e4b2533eb617cd407a6de12626f",
+      "allowedDelta": "Leaf regular/no-link checked separately, .git loop begins dirname for files and self for directory; strict directory/no-link/errno retained; new unique run3 output/spool, registrationId metadata change only",
+      "sourceReaderOrInputChanged": false,
+      "scopeAndCaps": "All prior run2 constraints exact,160MiB/320MiB; threshold2491416576B includes2GiB reserve+8MiBlogs; noSQL/refs/nativecallbacks/PG",
+      "retryLimit": "This one known-unexecuted wrapper repair; preserve run2 FAIL, any actual read/provenance/cap failure stop with no automated retry",
+      "report": "reports/backend/PRIVATE_HEADER_SOURCE_ONLY_RUN3.json",
+      "requiredReceipt": "final actual runner hash after replacing pending registrationId, before command, preserve original corrected runner snapshot/pin",
+      "actualRunnerSha256": "781e8732811751d68724f2c2d5c061d3d535d283a32f1240c518c7f47e7ca907",
+      "result": "reports/backend/PRIVATE_HEADER_SOURCE_ONLY_RUN3.json",
+      "controllerReceipt": "reports/controller/HEADER-SOURCE-FAILURE-INTAKE.json"
+    }
+  ],
+  "syntheticPreviewRuntimeOwner": {
+    "threadId": "01a15f48-7d75-74fa-a12e-e9e56a73d003",
+    "assignedAtUtc": "2026-10-21T20:02:13.351756+00:00",
+    "version": "v9-ordinary-tables",
+    "port": 57755,
+    "helper": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/serve-unified-v9.py",
+    "helperSha256": "1f681e53b0bb208213a566c41c5fbdfaaa09ef336ecb39d913e2b955f8f3b869",
+    "mode": "foreground managed exec session",
+    "constraints": [
+      "127.0.0.1 only",
+      "immutable cached5d52e8b1… BODY",
+      "only / and /synthetic-unified.html",
+      "do not edit frontend owned source or old runtime reports",
+      "no genuine credentials/data/network API"
+    ]
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "atUtc": "2026-10-23T23:35:16.718396+00:00",
+  "parent": "679420c52b584f347549fc7ac04d93eae6ca9f7c",
+  "taskId": "D3_REAL_INITIALIZATION_BOOTSTRAP26_GENERIC_CALLBACK",
+  "files": [
+    {
+      "path": "scripts/import-v3/native-bootstrap.mjs",
+      "bytes": 26327,
+      "sha256": "54787f0a36f3e9d345c6795df5783af9420f73db4a268e0936772c1906c672cb",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/native-bootstrap.test.mjs",
+      "bytes": 27349,
+      "sha256": "aa5b839a22638d7933a25701314d1b0c0d6609a07c78d7bfb4aa57af4aaff9ef",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/native-party-source26.mjs",
+      "bytes": 16947,
+      "sha256": "bcef874a0791e1fed33a7d102f517f42e410de94cf4dad883730aadafd06a143",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/native-party-source26.test.mjs",
+      "bytes": 14295,
+      "sha256": "85f3208bd692641e4a981ca49f9d5dfdf0feb4fb397ae31262329e1b81d247da",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.mjs",
+      "bytes": 34047,
+      "sha256": "f2cf80bc8831058b76340d1da288a0d6005438b8294f148978fc06a0d5865e99",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.test.mjs",
+      "bytes": 28437,
+      "sha256": "ad3bd523a067bb31f2ff01cc75fa83fe56ee5cbc601922078e3db4477a767369",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+  "ownerReceiptSha256AtPin": "ba60f9b79df60c079e4afcaff772d41e835e1126e1c468f23ad0bdbf247b34f4",
+  "ownerDelivery": {
+    "atUtc": "2026-10-23T23:32:56.071Z",
+    "taskId": "D3-B04-B06-REAL-SOURCE26-FIRST-BOOTSTRAP-CALLBACK",
+    "status": "SOURCE_READY_ORIGINAL_EXACT6_NEW5_AFFECTED3_PASS_NO_REAL_EXECUTION",
+    "authority": "C directed original D3 registered bootstrap/source26/host files; real49 capture/45+4 identity/ordinary630/catalogue344 prior evidence adopted, not rescanned. No new core-first write semantics or independent import engine created.",
+    "sourceFiles": [
+      {
+        "path": "scripts/import-v3/native-bootstrap.mjs",
+        "bytes": 26327,
+        "sha256": "54787f0a36f3e9d345c6795df5783af9420f73db4a268e0936772c1906c672cb"
+      },
+      {
+        "path": "scripts/import-v3/native-bootstrap.test.mjs",
+        "bytes": 27349,
+        "sha256": "aa5b839a22638d7933a25701314d1b0c0d6609a07c78d7bfb4aa57af4aaff9ef"
+      },
+      {
+        "path": "scripts/import-v3/native-party-source26.mjs",
+        "bytes": 16947,
+        "sha256": "bcef874a0791e1fed33a7d102f517f42e410de94cf4dad883730aadafd06a143"
+      },
+      {
+        "path": "scripts/import-v3/native-party-source26.test.mjs",
+        "bytes": 14295,
+        "sha256": "85f3208bd692641e4a981ca49f9d5dfdf0feb4fb397ae31262329e1b81d247da"
+      },
+      {
+        "path": "scripts/import-v3/production-source-host.mjs",
+        "bytes": 34047,
+        "sha256": "f2cf80bc8831058b76340d1da288a0d6005438b8294f148978fc06a0d5865e99"
+      },
+      {
+        "path": "scripts/import-v3/production-source-host.test.mjs",
+        "bytes": 28437,
+        "sha256": "ad3bd523a067bb31f2ff01cc75fa83fe56ee5cbc601922078e3db4477a767369"
+      }
+    ],
+    "dedup": "Original sourceCallbackReady=false/only four26 SQL exports and19 actual initializer verified still missing before work. C realR1 source229/C109/QB198/QB199 and previous QA/source receipts adopted without rerun. No parallel old19/sealed18 tasks restarted.",
+    "constructor": {
+      "export": "openNativeImportBootstrap26(options)",
+      "path": "scripts/import-v3/native-bootstrap.mjs",
+      "return": "{report,authorizeStageSourceActor,now,bootstrap26:{authorizeStageSourceActor,stageNewBatch26},close}",
+      "requiredOptions": [
+        "binding:NATIVE_IMPORT_EXECUTION_26_V1 with exact real batch/namespace/selection/cutoff/authorizedPayloadHash/actor/target",
+        "accountSourceFile/trustedAccountSourceSha256",
+        "accountDecisionFile/trustedAccountDecisionSha256",
+        "reviewFile/trustedReviewSha256:full C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V2 execution authority",
+        "partySource:the SAME openReviewedPartySource26 instance",
+        "identityProof:{factsFile,trustedFactsSha256,approvedPlanFile,trustedApprovedPlanSha256}",
+        "identityReviewFile/trustedIdentityReviewSha256:separate C identity decision pin",
+        "bootstrapAt:fixed canonical UTC millisecond instant already bound by C full execution review"
+      ],
+      "executionReviewAddition": "Existing execution review must bind identityReviewSha256, bootstrapAt, stageRequestKey and exact stable operationId, alongside existing full binding/STAGE command hash/account49 source/decision/facts/approved plan/old source batch+manifest. This is execution metadata, not a new business schema column or a grant minted by D3. Identity-only49 review never substitutes full execution review.",
+      "fullIdentity": "Existing original V2 identity/approved plan checks reused. Exact26 requires49 prepared accounts/45 original employee links/4 explicit current-person links. Original4 null employee ID/code remainNULL; account/nativeStaff IDs retained; importer from actual original ADMIN/in-service/login-enabled/null-hall facts only. Trusted legacy credential wrapper only in private callback memory; no loginName/hash/salt in proof/ordinary projections/reports.",
+      "sameClient": "stageNewBatch26(client,{command,now,operationId},callbackRuntime26). Checks exact fixed time/STAGE/operation/batch/target/prefix26/empty domain via ORIGINAL four fixed26 SQL texts and arities. Reuses original stageNativePartyImportsOnClient(client,chunk,callbackRuntime26) on that same borrowed object. Account row returned id/staff/login_enabled/auth_version/version/created_at/updated_at checked against shared projection. No new pool/BEGIN/COMMIT/release or implicit schema permission. Original19 entry retained.",
+      "sharedProof": "Original approved7-key NATIVE_BOOTSTRAP_ACCOUNTS_PROOF_V1 per STAFF with exact8 authority identifiers/49-45-4 counts/original row identity/one native account snapshot. New party.bindBootstrapAccounts({enhanceStaff,verify}) accepts no mutation outside added bootstrap_accounts; existing parser validates full proof. Same source object/fingerprint then used by callback recursive customer/hall/warehouse/STAFF closure, normal PARTIES chunks and typed/source evidence. Before binding chunks cannot have been exposed. Old630 unenhanced fingerprint rejects after binding. Actual source component files remain immutable.",
+      "time": "Callback now must equal C-fixed bootstrapAt; source session may carry original now function and host preserves it in executor. Otherwise typed account native_snapshot times could differ from actualSTAGE. This timestamp is operation execution metadata, never invented historical customer/person time."
+    },
+    "host": "Original production-source-host26 validates separately pinned runtime catalog format/hash and exact actual26_v11_document_specification_save plus exact target; D1 issuer still independently proves actual catalog/ACL/purpose on real client. Source preflight/assertExecutionAllowed/native reference review remain separate mandatory before gate.activate. Oldv7/v9 metadata does not pass this real current host; no metadata-only/readpurpose promotion.",
+    "integrationOrder": [
+      "C source module opens the existing reviewed party source26 from exact accepted real component and supplemental sources, without consuming chunks yet.",
+      "Open real private bootstrap26 with SAME partySource and complete C-execution/identity/stage-time inputs. Its bind step enhances originalSTAFF once after full identity validation.",
+      "Source module exposes bootstrap26:bootstrap.bootstrap26 and now:bootstrap.now. PARTIES source factory delegates (scope,context)=>party.openClosure(scope,context); normal party steps/authorization use the same party.chunks()/party.authorize(). No second ordinary630 source instance.",
+      "Preserve original all11 factories/full source preflight/native reference decision/whole closure and authorized payload binding for the complete host. Actual execution exclusively C; D1 confirms lower same-client enhanced-source/guard compatibility."
+    ],
+    "checks": {
+      "newGroups": 5,
+      "affectedExistingGroups": 3,
+      "pass": 8,
+      "fail": 0,
+      "scope": "New callback2 synthetic49 incl45+4/metadata/time/client denial; new party2 recursive4-record closure/same strengthened STAFF in bootstrap/chunks/PARTIES source+typed evidence/no source substitution or post-exposure rebind; new host1 target/v11/fixedtime/missingfactory rejection. Original19 borrowed-client write1 and prior host constructor/preflight denial2 affected by metadata fixture update passed. Node imports also verify module syntax.",
+      "correction": "One new source-substitution negative test initially expected custom SOURCE_CHANGED, but existing reference validator correctly rejected the changed native name earlier with HISTORY_HEADER_REFERENCE_NATIVE_FIELDS. Accepted those precise valid rejection codes; reran only failedcase PASS. Callback positive rerun only after adding returned account projection checks; no old whole suites. Final account return verification handles original pg Date timestamps with getTime (not Date.parse(Date) which loses milliseconds); targeted49 positive rerun with .123Z and actual Date-shaped driver reply PASS. No broad repeat.",
+      "environment": "All synthetic temporary0600 fixtures and scripted Pg client; no real49 credential or approved source/authority artifact contents read or hashed, no actualPG, no import execution/login proof."
+    },
+    "coreFirstContractDifference": {
+      "status": "EXACT_HOST_PHASE_CONTRACT_MISSING_ONLY_THIS_EXECUTION_BRANCH_WAITING_C",
+      "current": "Original captureNativeSourceSession26 requires all11 real factories; openImportHost26 requires a nonempty complete PRODUCT reference decision/review and authorized full closure scope; runtime activates only after source preflight. Original createPostgresImportExecutor26 supports actual MAIN STAGE steps but host has no approved core-only scope/partial source-authority contract. Real MAIN authorizedPayloadHash remainsNULL, so the present real target cannot be activated safely by this host merely because callback code now exists.",
+      "cannotSubstitute": "No empty products/barcodes/history factory, changed expected counts or core digest masquerading as full MAIN; v7 empty-history QA predicates do not grant execution over known nonempty real history. QA0207/0280/C111 not admitted to realR1. No separate importer/new endpoint or source identity generation.",
+      "minimalExistingPathChangeForC": {
+        "path": "scripts/import-v3/production-source-host.mjs + original source-session provider + run.mjs only if existing step capability needs a finite phase check",
+        "proposedBehavior": "On original existing batch/selection/real identities, explicitly authorize a first-stage/core-parties/catalogue execution phase with its own exact source coverage/commands/receipt/request-key/operation/time and original write purposes; bind how this core authority relates to the eventual whole-source payload/expected counts without pretending unavailable full hash. Subsequent remaining sources resume same actual identity/source and original key/CAS protocol. Full PUBLISH still requires complete11closure and all still-applicable unknown branches; no implicit approval from successful core stage.",
+        "fieldAndWriteScope": "No new DB column needed for this proposal itself, but a separately executable partial-scope authority/write contract is not represented in the current reviewed host. C must settle it using original mechanism before code enables that branch. D3 did not implement or self-approve this phase."
+      },
+      "neededCInputs": [
+        "Precise approved first-commit boundary (STAGE alone with mandatory49 staff dependency closure versus core PARTIES+CATALOGUE steps) in original source-host contract",
+        "Exact real R1 target/current v11 review + IMPORT_STAGE actual purpose and firststage source authority, not read-only metadata",
+        "Real full binding or explicitly authorized phase binding/hash semantics; original MAIN currentlyNULL cannot be invented",
+        "C final server paths for real capture/decisions/identityreview/facts/plan/full executionreview; D3 reads none of those real payloads this turn"
+      ]
+    },
+    "lowerD1Seam": "Existing ImportStageBootstrap26.stageNewBatch26(client,input,runtime26) and stageNativePartyImportsOnClient(client,PreparedChunk,runtime26) preserved; existing fixed4SQL/arity unchanged. C to relay exact enhancedSTAFF/current account projection and operation/time binding to original D1 same-client writer/guard owner for compatibility. D3 modified none of his TS/SQL files.",
+    "actual": "NOT_EXECUTED. Real49/ordinary630/catalogue344 prior receipts remain reference facts only; no true sourceCallback runtime/MAIN/STAGE/commit/password login/businessReady/productionPUBLISH claimed.",
+    "nonActions": [
+      "No actual source/credential reads or values/output",
+      "No metadata/authority signatures",
+      "No SSH/PG/server/Chrome/Git/build",
+      "No schema/new UUID/source namespace/approval or core-phase rewrite",
+      "No old sourceQA/sealed18/full candidate scan or B07/ledger repeat"
+    ],
+    "next": "Generic6 source files released/frozen for C/QB now; independent complete CORE-first proposal preparation continues in existing receipt from accepted safe identity/party graph metadata only, no activation implementation. C/D1 sameclient guard pairing remains necessary."
+  },
+  "qualification": "Generic real26 sameclient callback/strengthened STAFF source consistency and v11 target metadata implementation source-ready, original19 preserved. Ownernew5+affected3 checks adopted as source-only; independent QB andactualreal49/source/STAGE/MAINhash notverified. Fullall11 guard retained, no CORE-only permission/activation without usercontractconfirmation. No newtables/fields/SQL or R1 sourcewrite occurred."
+}

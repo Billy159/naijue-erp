@@ -1,0 +1,13 @@
+{
+  "format": "GITHUB_NORMAL_BRANCH_CHECKPOINT_V1",
+  "sourceCommit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+  "verifiedAtUtc": "2026-10-22T21:27:50.617539+00:00",
+  "remoteApiReadback": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+  "normalPushSucceeded": true,
+  "repository": "Billy159/naijue-erp",
+  "branch": "codex/local-takeover-wip-20261022-082411",
+  "operationReceiptSha256": "35988d163354ca5d9a3ecdee13f33d0efe2e9a5e06a3f63066242f0f8f69e839",
+  "scope": "Exact committed source throughC87 and controller docs8bfeef8; private authority/data/server credentials excluded",
+  "businessRelease": false,
+  "restore": "Fetch exact verified branch into a separate codex recovery checkout. Read HANDOFF; K/A/private-data not in Git and require separately authorized access. No reset or inferred import permission."
+}

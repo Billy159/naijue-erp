@@ -1,0 +1,43 @@
+{
+  "atUtc": "2026-10-23T19:32:44.315195+00:00",
+  "parent": "225fa38435973a27a675bffa9cf58e3a9a45b0a0",
+  "taskId": "QF2-I01-EMPTY-ICON-SIZE-01",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "bytes": 111473,
+      "sha256": "e35e83755d3f0d58780994ff6fc3cba5aa06847f54539bae1d1cb066dd291eed",
+      "beforeSha256": "928971974247cad464cc54e0e6c402b7be7dc20e3f741209b990bf034fd85943",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I01-EMPTY-ICON-SIZE-01/RESULT.json",
+  "ownerReceiptSha256": "2c4ddef52091955f0bf1f3a541143e09025b0074c092f45628717642d60a3035",
+  "ownerDelivery": {
+    "taskId": "QF2-I01-EMPTY-ICON-SIZE-01",
+    "owner": "F2",
+    "atUtc": "2026-10-23T19:28:23.462606+00:00",
+    "status": "SOURCE_READY_EXACT1_RELEASED_FOR_C_FREEZE; ACTUAL_RECHECK_PENDING",
+    "authority": "C original targeted P2 after QF2 fixed196 actual; human reporting01a161f7-a5e8-7e10-9059-9537c28910c2",
+    "files": [
+      {
+        "path": "apps/web/src/inventory/inventory.css",
+        "bytes": 111473,
+        "sha256": "e35e83755d3f0d58780994ff6fc3cba5aa06847f54539bae1d1cb066dd291eed",
+        "beforeSha256": "928971974247cad464cc54e0e6c402b7be7dc20e3f741209b990bf034fd85943"
+      }
+    ],
+    "change": "Exactly one font-size56px->48px declaration in .inventory-source-workbench .iw-empty-host .arco-empty-image; retained line-height1 and all other native geometry/declarations. No generic Empty or product consumer changed.",
+    "basis": "QF2 fixed196 actual: same1470x668DPR2/resultsrect; candidate icon font/line56px/box63 high vs actual frozenDemo48px/box55.5 high. Disk inventory-select.jsx334 still says56px, so this is expressly alignment to measured final frozen runtime, not a claim source text says48.",
+    "checks": [
+      "Exact single-declaration diff; before/source preserved",
+      "CSS parse and bundle warnings0; unchanged accepted native whole-page checks reused"
+    ],
+    "notTested": [
+      "Actual new browser font/line/box and screenshot comparison; no browser access by F2",
+      "Inventory full suite/output/ledger/shared Empty not repeated; no deployment/build/Git"
+    ],
+    "next": "C fixed exact1, QF2 only original empty icon actual affected observation."
+  },
+  "qualification": "SOURCE_FIXED_ONLY; owner targeted checks adopted; independent affected acceptance and actual browser/business/performance remain separate. No build or deployment claimed."
+}

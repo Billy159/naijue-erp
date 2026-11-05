@@ -1,0 +1,146 @@
+✖ CUSTOMER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (11.542632ms)
+✖ SUPPLIER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (1.982983ms)
+✖ replay403 rejection cannot establish rollback and later explicit replay uses identical object/key/CAS/payload (2.098406ms)
+✖ sibling403 read does not discard another kind's submitting command (4.3921ms)
+✖ sibling403 read does not discard another kind's uncertain command (2.88493ms)
+✖ a definitively rejected fresh sibling403 cannot discard the other kind's uncertain command (2.011519ms)
+✔ current401 during receipt still invalidates both party stores and host session (8.173707ms)
+✔ current401 during replay still invalidates both party stores and host session (0.95597ms)
+✔ current401 during sibling still invalidates both party stores and host session (1.479158ms)
+✔ late forbidden receipt after suspension cannot expire current identity or remove original recovery (2.421302ms)
+✔ late unauthenticated receipt after suspension cannot expire current identity or remove original recovery (0.417658ms)
+✔ late forbidden receipt cannot expire or repopulate a replacement identity (0.597336ms)
+✔ late unauthenticated receipt cannot expire or repopulate a replacement identity (0.245032ms)
+✔ ordinary403 still invalidates when there is no unresolved command, including a definitively rejected fresh submission (1.755807ms)
+✖ uncertain fresh403 cannot establish rollback and preserves the original command without automatic retry (1.545467ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 8
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 943.731483
+
+✖ failing tests:
+
+test at ../../../tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:46:55
+✖ CUSTOMER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (11.542632ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:56:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:46:55
+✖ SUPPLIER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (1.982983ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:56:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:68:1
+✖ replay403 rejection cannot establish rollback and later explicit replay uses identical object/key/CAS/payload (2.098406ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:77:68)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:84:59
+✖ sibling403 read does not discard another kind's submitting command (4.3921ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:91:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:84:59
+✖ sibling403 read does not discard another kind's uncertain command (2.88493ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:91:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:97:1
+✖ a definitively rejected fresh sibling403 cannot discard the other kind's uncertain command (2.011519ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:102:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:152:1
+✖ uncertain fresh403 cannot establish rollback and preserves the original command without automatic retry (1.545467ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///tmp/party-unresolved-access-baseline-PDTMq5/parties/receipt-access-recovery.test.ts:156:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Baseline exit code: 1 (nonzero expected)

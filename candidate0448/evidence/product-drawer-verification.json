@@ -1,0 +1,81 @@
+{
+  "recordType": "Verified scoped command-result summary; captured owner stdout/stderr is in check-results.txt and product-drawer-check-results.txt.",
+  "testRunCompletedAtUTC": "2026-10-20T16:32:45Z",
+  "scope": "Inventory query and product read-only three-tab drawer; synthetic fixtures only.",
+  "artifact": {
+    "name": "inventory-preview-test-only.html",
+    "bytes": 271118,
+    "sha256": "e7539a72c8400b21d7abb56334e8153551759fdac7d7200b794f99f108bd2e67",
+    "portableBudgetBytes": 262144,
+    "bytesOverBudget": 8974,
+    "withinPortableBudget": false,
+    "splitBuildAvailable": true,
+    "functionalityRetained": true
+  },
+  "sourceEvidence": {
+    "manifest": "product-drawer-source.sha256",
+    "files": 21,
+    "sha256": "4a23c57dffc61ae50e965896f9fa510b76d5b80f4f9013d4a594f36cdfcc2b85",
+    "manifestRecheckedAfterMetadataCorrection": true,
+    "applicationSourceChangedForThisCorrection": false
+  },
+  "capturedCommandOutput": {
+    "name": "check-results.txt",
+    "sha256": "3c3dc2ce2c51820dd7e089e48b6f828eb782f090359ce207e4a2895aed54b8a4",
+    "identicalToOwnerLog": "product-drawer-check-results.txt",
+    "ownerLogSha256": "3c3dc2ce2c51820dd7e089e48b6f828eb782f090359ce207e4a2895aed54b8a4"
+  },
+  "checks": [
+    {
+      "command": "node_modules/.bin/tsc --noEmit -p apps/web/tsconfig.json",
+      "result": "passed"
+    },
+    {
+      "command": "node --test apps/web/src/loading/*.test.ts apps/web/src/inventory/*.test.ts",
+      "result": "passed",
+      "tests": 33,
+      "passed": 33,
+      "failed": 0,
+      "preservedPriorLoadingInventoryTests": 28,
+      "newProductTests": 5
+    },
+    {
+      "command": "node apps/web/tests/run-dom-tests.mjs",
+      "result": "passed in jsdom",
+      "interactionGroups": 14,
+      "preservedInventoryGroups": 9,
+      "productDrawerGroups": 5
+    },
+    {
+      "command": "node apps/web/build-preview.mjs",
+      "result": "passed; static files only; no server/listener/deployment; portable budget warning retained"
+    },
+    {
+      "command": "node apps/web/tests/run-bundle-smoke.mjs",
+      "result": "passed; split code/CSS graph isolation and actual bundled-code jsdom smoke"
+    }
+  ],
+  "independentReview": {
+    "result": "No confirmed blocking app defect found; independent exact SKU row, target replacement, focus-wrap, overlay Escape and thumbnail error/retry probes passed.",
+    "realBrowserAcceptance": false,
+    "browserProbeLimit": "Native Chromium failed before opening the document due to socket sandbox restriction; no page/focus/browser acceptance result."
+  },
+  "limits": [
+    "271118-byte portable HTML exceeds the 256KiB budget by 8,974 bytes; it cannot be embedded/executed in a Page visualization under its 256 KiB limit; may still be delivered as an HTML file. Split build retained.",
+    "Frozen Demo visual/field arrangement is provisional; no pixel parity or actual browser screenshot/accessibility acceptance.",
+    "No real product API, production account authorization, real-business completion, network-waterfall or large-scale performance acceptance.",
+    "Metadata-only correction; verified command suites were not rerun because application source did not change."
+  ],
+  "priorInventoryOnlyEvidence": [
+    {
+      "name": "inventory-only-20261020T155931Z-verification.json",
+      "sha256": "898dc0817ae18ea45ddcd0c8d3ec7fb4f3e3b63cd8ab76a553895d16ad09452b",
+      "scope": "Archived inventory-only summary for previous 248616-byte artifact; not current acceptance evidence."
+    },
+    {
+      "name": "inventory-only-20261020T155931Z-check-results.txt",
+      "sha256": "898dc0817ae18ea45ddcd0c8d3ec7fb4f3e3b63cd8ab76a553895d16ad09452b",
+      "scope": "Archived inventory-only summary for previous 248616-byte artifact; not current acceptance evidence."
+    }
+  ]
+}

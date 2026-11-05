@@ -1,0 +1,21 @@
+{
+  "atUtc": "2026-10-22T11:51:09.319456+00:00",
+  "parent": "275ac63fc01eeed971f2f2cb9c10fdfa38acfbeb",
+  "groups": [
+    {
+      "slice": "QF_HIDDEN_IN_ENTRY_TARGETED_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-27/DELIVERY.json",
+      "receiptSha256": "82a13f470a0210b6de2f86d6388e282e5e0710901def463ccbb94892b33cdfa6",
+      "files": [
+        {
+          "path": "apps/web/src/current-form/sales-proposal.ts",
+          "owner": "F1",
+          "sha256": "1e5f385cc2adde30d5c1094026d92abf62115008ba46cff6795da852215c30fb",
+          "bytes": 34758
+        }
+      ]
+    }
+  ],
+  "fileCount": 1,
+  "scope": "Only mode-switch guard for unresolved IN bottom entry; original QF counterexample targeted retest pending, chunk26 remains separate WIP."
+}

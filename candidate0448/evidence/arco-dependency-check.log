@@ -1,0 +1,13 @@
+fastify: installed and locked 5.12.5
+pg: installed and locked 8.23.1
+react: installed and locked 19.1.1
+react-dom: installed and locked 19.1.1
+@arco-design/web-react: installed and locked 2.66.16
+@types/node: installed and locked 24.3.1
+@types/pg: installed and locked 8.23.1
+@types/react: installed and locked 19.1.12
+@types/react-dom: installed and locked 19.1.9
+typescript: installed and locked 5.9.2
+esbuild: installed and locked 0.25.12
+jsdom: installed and locked 29.1.1
+Dependency verification passed; 176 locked package entries, no installation performed.

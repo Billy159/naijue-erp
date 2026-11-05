@@ -1,0 +1,49 @@
+{
+  "scope": "SYNTHETIC_ONLY_V1_COMPILER_GOLDEN_BEFORE_V2_REFACTOR",
+  "source_commit": "3cd4c3e8b17caf0bff1096b920be74449a1a6223",
+  "manifest_sha256": "0b274e1f688ea70881ed31fd9c507e5c0bd91b4fa551333be36e000944f4cb09",
+  "plan_sha256": "b187f78bbc438371b2c68a869b6ec1a20ab596086afaa95065fb9a805bebf0d6",
+  "program_sha256": "0cab897b5578e5173f3c4887bcea37cb8b232c1b88f2741966992a6640381a2e",
+  "requests": [
+    {
+      "operation_id": "cc7fa86c-df51-a9a9-a625-c7e11730fbae",
+      "request_key": "cc7fa86c-df51-a9a9-a625-c7e11730fbae",
+      "typed_request_sha256": "91765d0ea96ba58586c4084ddd52838940d37f9a036ff8bd437e7897eef8532f"
+    },
+    {
+      "operation_id": "8ca678a5-2a5a-e277-3647-f76788a17625",
+      "request_key": "8ca678a5-2a5a-e277-3647-f76788a17625",
+      "typed_request_sha256": "b40974c3474a3557e76962e22bd57f4fe4c7fe626884ab550cf1052c4e062f5c"
+    },
+    {
+      "operation_id": "bfa6982f-110c-28c6-4a56-b4883705d027",
+      "request_key": "bfa6982f-110c-28c6-4a56-b4883705d027",
+      "typed_request_sha256": "de63a7c02c4907bf4f781dd8dbf6d532a57dc9cb75a7154b7456860d084c3b85"
+    },
+    {
+      "operation_id": "9ed087d7-85e6-9dfa-451e-12d3facd1b4f",
+      "request_key": "9ed087d7-85e6-9dfa-451e-12d3facd1b4f",
+      "typed_request_sha256": "6234fbf9be69d19dc4e65a297811c4df10c669b1819b6ae67c3a8504e5ea974f"
+    },
+    {
+      "operation_id": "260311d5-01aa-60e8-da1c-b6f603a2adef",
+      "request_key": "260311d5-01aa-60e8-da1c-b6f603a2adef",
+      "typed_request_sha256": "55715fd283a3ecfcc76282773d68eb50e684a70274737db01e56ec635cf11172"
+    },
+    {
+      "operation_id": "91cc5d96-f38b-b29c-0fc2-0718d8509e80",
+      "request_key": "91cc5d96-f38b-b29c-0fc2-0718d8509e80",
+      "typed_request_sha256": "396e705be0e828cf4b28e7ebaebcac050f6dbc4e282ffb1e18528106b5626731"
+    },
+    {
+      "operation_id": "590216f9-bb99-48ce-4c46-3f567e0fe067",
+      "request_key": "590216f9-bb99-48ce-4c46-3f567e0fe067",
+      "typed_request_sha256": "651b72b241452bffc8d8afc5c01fd342507f4a4a14e49370224975335ce1fd28"
+    },
+    {
+      "operation_id": "e4ede634-404b-7d94-2c6f-c3e495fe35a0",
+      "request_key": "e4ede634-404b-7d94-2c6f-c3e495fe35a0",
+      "typed_request_sha256": "6636a4aab7649226725671fbfc991b3554a62aeec1c797a7f21892cc601f5b79"
+    }
+  ]
+}

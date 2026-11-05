@@ -1,0 +1,31 @@
+{
+  "jobId": "t45-r1-committed-prefix-original108-preparation-20261028-192",
+  "status": "TERMINAL_FAILED_CARRIER_STALE_DEADLINE_BEFORE_HELPERS_OR_DB_NO_REPLAY",
+  "jobReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-committed-prefix-original108-preparation-20261028-192/release-submission/release-receipts/t45-r1-committed-prefix-original108-preparation-20261028-192/job.json",
+    "bytes": 530,
+    "sha256": "2680694b7a5309bc95a1a616f1a9638f01a2385529344bd5c2a915f42a2fd6d4"
+  },
+  "engine": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-committed-prefix-original108-preparation-20261028-192/release-submission/release-receipts/t45-r1-committed-prefix-original108-preparation-20261028-192/consumer-engine-result.json",
+    "bytes": 355,
+    "sha256": "30bb43ea6e3d14405ddf0cc5002838cde7917bf1e33ae7edb7010cd6e32ab5e1"
+  },
+  "unit": "naijue-erp-op-5cc58239-5d4f858c409a",
+  "finishedAtUtc": "2026-10-27T18:34:51.561407+00:00",
+  "elapsedSeconds": 0.06807931582443416,
+  "errorCode": "INSUFFICIENT_C190_WINDOW",
+  "cause": "T45 carrier retained old190 PLAN.deadlineUtc and hardcoded exact check2026-10-27T18:00:00Z while authorized new192 host/grant deadline was2026-10-27T20:45:00Z. Time guard rejected before helper loading/protection/materialization/credentials/DB.",
+  "actualCarrierPlanDeadline": "2026-10-27T18:00:00Z",
+  "authorized192Deadline": "2026-10-27T20:45:00Z",
+  "authorizationValidNotBusinessSourceFailure": true,
+  "serverHelperOrCredentialLoadingReached": false,
+  "newSourceMaterializationReached": false,
+  "databaseConnectionReached": false,
+  "businessCommandsIssued": 0,
+  "applicationOrRouteChanged": false,
+  "schemaOrACLChanged": false,
+  "retry192": false,
+  "requestedNext": "C exact new carrier-only successor authority after original192 terminal preserved; bind plan/host/grant/guard same freshdeadline before submission. No replay192, no newbusiness keys or sourceprepare.",
+  "actualModelAndFast": "UNVERIFIED"
+}

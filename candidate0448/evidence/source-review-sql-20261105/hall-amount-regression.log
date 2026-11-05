@@ -1,0 +1,29 @@
+✔ exact35 amount candidate is source-only and adds no tables, columns, grants, or routines (2274.204923ms)
+✔ candidate consumes independently reviewed evidence exactly and keeps all numeric source strings (1730.670709ms)
+✔ patch rejects drifted predecessor and requires exact unique replacement anchors (1665.732202ms)
+✔ amount successor composes after the hall change without replacing the hall provenance controls (2396.189593ms)
+✔ new evidence is restricted to the explicit new profile and cannot be self-issued by a detail entry (1503.653752ms)
+✔ INIT validates bounded exact strings, source occurrences, uniqueness and genuine discrepancies (1525.6859ms)
+✔ immutable proof includes source hash binding and final exact consumption; no partial allow-list (1649.150689ms)
+✔ current economic actions retain formula and approved settlement rules; no metadata-only bypass was silently added (1589.654402ms)
+✔ credential-bound fenced verification reads original and current separately, and numeric diagnostics do not replace stored amounts (2368.996185ms)
+✔ new-profile empty-settlement restoration hashes original hall/archive/zero extensions while old profiles keep their exact base hash (2258.415492ms)
+✔ restoration extension projection rejects omitted, changed and cross-kind evidence without weakening receipt or actor proof (offline model) (2261.106804ms)
+✔ old zero/archive restoration omission is source-reachable but remains unmodified outside the reviewed new profile (2356.374561ms)
+✔ fresh35 delta has only two exact retained routine changes, one nullable column and no legacy dependencies (7.847141ms)
+✔ the SQL itself refuses non35 tables/routine cohorts before locking or modifying the retained sales header (0.504415ms)
+✔ source drift and caller-constructed plans fail without changing any old loader or installation gate (1.043409ms)
+✔ new profile is explicit and requires separately pinned complete approval coverage; old profile cannot carry new evidence (0.395479ms)
+✔ new profile inherits only the existing exact source declaration cohorts, not permissions or runtime exemptions (0.21379ms)
+✔ historical exceptions need exact provenance and unchanged pair; changing current hall/warehouse returns to ordinary rules (0.628627ms)
+✔ approval is bounded, hash-pinned, duplicate-free and indexed once per chunk; evidence enters source hash and immutable audit records (0.434936ms)
+✔ source evidence preserves original conflicts and pending state, and verifies the warehouse capture only on intake (0.258319ms)
+✔ public loader exposes patch-only composition plus exact changed bodies, final152 pins and current source pins without evidence admission (974.536602ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23785.972797

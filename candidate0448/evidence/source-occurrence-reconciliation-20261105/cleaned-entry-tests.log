@@ -1,0 +1,31 @@
+✔ original occurrence counts differ honestly from target counts, 22 sidecars remain separate from funds (37.049279ms)
+✔ equal-content distinct zero occurrences retain distinct permanent keys and technical archive targets (14.53007ms)
+✔ missing mapping fails closed (9.802867ms)
+✔ duplicate original fails closed (8.333359ms)
+✔ duplicate mapping fails closed (9.979468ms)
+✔ missing original fails closed (16.771434ms)
+✔ invented target fails closed (12.123014ms)
+✔ wrong source locator fails closed (8.667383ms)
+✔ unbound source hash fails closed (8.425522ms)
+✔ zero archive changed original fails closed (8.781145ms)
+✔ zero archive wrong parent fails closed (8.983345ms)
+✔ trusted evidence resists changed bytes, forged capabilities and another manifest (9.670316ms)
+✔ settlement identity cannot be reassigned through aliases or collapsed (19.78963ms)
+✔ 199 unclassified historical hall relationships remain unknown without approved derivation evidence (25.78207ms)
+✔ approved absence-zero is a separate target, pinned to inventory hash/cutoff/key and approval line, never a fake source row (32.742003ms)
+✔ approved zero cannot be double-counted as a source or silently omit approved keys (18.357367ms)
+✔ ordinary and stream standard-table preflights bind identical source occurrence evidence without changing legacy format (163.810768ms)
+✔ validly pinned ledger with wrong mapping rejects both full preflight paths (78.574585ms)
+✔ ordinary and stream count approved absent zeros separately from original inventory observations (91.024964ms)
+✔ individually pinned target records reject altered facts even if a caller supplies an unchanged manifest (7.554564ms)
+✔ historical hall reconciliation retains original, derived, difference and pending-review classifications without overwriting facts (38.518408ms)
+✔ offline CLI accepts only independently pinned, external occurrence evidence and prints counts rather than raw originals (735.512543ms)
+✔ CLEANED records resolve existing registry targets without generating IDs or mutating source rows (102.677206ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1738.576717

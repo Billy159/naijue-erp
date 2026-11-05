@@ -1,0 +1,21 @@
+{
+  "atUtc": "2026-10-22T08:14:35.913783+00:00",
+  "parent": "877136977ad5ec8977824623dee59cb71c17293f",
+  "groups": [
+    {
+      "slice": "F1_FIXED_LOCAL_V2_QUERY_ROUTE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-16/DELIVERY.json",
+      "receiptSha256": "a9f0c13b36834ce96348dbc8a00538ebcae61cac021a3c28caa705e263ef58f8",
+      "files": [
+        {
+          "path": "apps/web/src/transport/http-query.ts",
+          "bytes": 13109,
+          "sha256": "fe9679d865c4fb9f02ad860171a326ebf83e47c3b1a7b84a97e97b2c65316223",
+          "owner": "F1"
+        }
+      ]
+    }
+  ],
+  "fileCount": 1,
+  "scope": "versioned local route unblock only; F2 affected two tests pending"
+}

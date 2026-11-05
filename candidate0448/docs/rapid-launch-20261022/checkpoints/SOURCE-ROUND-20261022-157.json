@@ -1,0 +1,46 @@
+{
+  "atUtc": "2026-10-23T08:57:25.070063+00:00",
+  "parent": "400cf1e490a272dd14d33750ef06bedd2a3031cf",
+  "taskId": "B03_QB172_F01_NATIVE_WAREHOUSE_WITNESS_FIX",
+  "files": [
+    {
+      "path": "adapters/postgres/src/inventory-query-reader.ts",
+      "owner": "D3",
+      "beforeSha256": "446333468fa4954061a5732907544227ce56a93cc7cf24ca447dd789f2b606cb",
+      "bytes": 42689,
+      "sha256": "b47c3fff33d40693710c14ddd2ce10b31ce597b713634e1b5e06f57b0f293b0c"
+    },
+    {
+      "path": "tests/inventory-query-postgres-protocol.test.ts",
+      "owner": "D3",
+      "beforeSha256": "3cd6a13fa967dc490b86f0edd96c8a132bfdcd105575202b6775bf38abb58c99",
+      "bytes": 56116,
+      "sha256": "1b1ee38484994cb7765617164d4d4a4f094d402efc533ad75f76d8043c169186"
+    }
+  ],
+  "finding": "QB172-F01",
+  "scope": "Original cutoff-member witness retained; only when absent use actual native SKU/id+created_operation_id and original public exact-key helper proves samebatch/admitted/bothnew basis with identical actual SKU creation operation. No mere-nonNULL authorization, business SKU substitution, fake member/0/entry, new fields/cap/DTO or host change.",
+  "checksAdopted": {
+    "red": {
+      "pattern": "inventory primary native keys QB172-F01:",
+      "tests": 2,
+      "pass": 1,
+      "fail": 1,
+      "reason": "QB minimal complete cutoff SKU=0/ledger=0 + nativeSKU1 + authorized native warehouse rejects before helper on original source: INVENTORY_NOT_READY No retained native SKU witness is available for warehouse qualification. Negative group already rejects."
+    },
+    "green": {
+      "samePattern": true,
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "exitCode": 0,
+      "strictExitCode": 0,
+      "strict": "Original targeted protocol test and transitive dependencies under strict NodeNext options."
+    },
+    "coverage": "Minimal zero-cutoff/nativeSKU1 both-new pair across page, full output and returned candidates; separate actual native witness never substitutes business SKU; cutoff-member control no native lookup; truly no SKU rejects/helper0. Null native operation, malformed native ID, false grant, wrong warehouse/SKU/batch/basis, missing warehouse/SKU operation or differing actual native SKU operation all reject before summary/catalog/result publication; rollback/release retained. Scripted driver/runtime only."
+  },
+  "notTested": [
+    "No actual PostgreSQL/new warehouse/real public-function execution/plan/internal repeated work/latency/HTTP/UI/build/deploy/MAIN/real49."
+  ],
+  "next": "Original QB onlyF01 recheck on fixed157; oldvalid150/151/155other/host1 reused. Existing actual C75 and C77 proof separate scope; no production or full performance claim."
+}

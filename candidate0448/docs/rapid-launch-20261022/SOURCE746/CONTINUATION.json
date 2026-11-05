@@ -1,0 +1,18 @@
+{
+  "v21": "QB458 four-leaf source PASS adopted. D3 complete baseline closure ready: 88 code modules; 120 review entries including old physical aliases and package lock. Original T45 job152 maps84 new paths and36 retained paths; exact output/runtime/grant and committed-prefix checks in progress; no MAIN/PUBLISH yet.",
+  "evidenceRefs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/SOURCE744-ADOPTED148-DEPENDENCY-CLOSURE.json",
+      "bytes": 422400,
+      "sha256": "572d2f5734f169b572e3bad7b937637b18baaae7c6c02ddc3a1582220ab373eb"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/SOURCE744-ADOPTED148-REVIEW.DRAFT.json",
+      "bytes": 74308,
+      "sha256": "e7ad6ef6405a23aa9f0fabcaf65b8b1655f8fc434da74a9fc7fb4e217e95e49c"
+    }
+  ],
+  "normal": "Minimal isolated role repair committed: exact five column SELECT grants across four dictionaries; other columns/relation ACL unchanged. Ordinary-role readonly inventory_key_admission admitted true. New catalog d92797336281ddc4d831842ee4d8cd4468272aa5974a4ae04e5b91b053fa2632. No CAS/login/business DML. Original first42501 not uniquely reproduced. D1 original two-leaf strict04/auth2-to3 continuation underway; old03 never replay.",
+  "nativeProduct": "Actual151 source740 mismatch accurately traced offline to two existing approved patches: category-order-undo then v19-barcode-scheme-initialization;131required,123matches,2missing6changed. D1 checking full existing preconditions; no actual upgrade/preflight/product save yet.",
+  "scope": "Full37pages67overlays/allstates/real business/history editable/performance/formal release incomplete. Normal34 remains synthetic; formal unchanged."
+}

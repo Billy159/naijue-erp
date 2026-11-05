@@ -1,0 +1,8 @@
+{
+  "atUtc": "2026-10-22T20:10:07.404598+00:00",
+  "appliesTo": "SOURCE-ROUND-20261022-64.json",
+  "correction": "D1 current-form exact2 group slice fallback F1_TRANSFER_ANCHOR is a metadata label error. Its actual receipt is D1 CURRENT-FORM-EXACT26 and files/owner/hashes are correct; QB111 reviewed correct D1 scope. Separate real F1 anchor1 remains independently assignedQF.",
+  "originalPreserved": true,
+  "sourceChange": false,
+  "newTechnicalReviewRequired": false
+}

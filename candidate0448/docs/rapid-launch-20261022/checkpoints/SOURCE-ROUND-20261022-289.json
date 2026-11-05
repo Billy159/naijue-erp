@@ -1,0 +1,107 @@
+{
+  "atUtc": "2026-10-24T04:45:00.373708+00:00",
+  "parent": "fcf911abe56b05e8746ec187996a0d5a349bb87d",
+  "taskId": "F2_INVENTORY_OUTPUT_RETURN_FOCUS_AFTER_DOM_COMMIT",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/inventory-page.tsx",
+      "bytes": 22080,
+      "sha256": "7e6c80f87fd9efa46367aeacd37686f48a29554ac0e9299f36642591a2d9b04c",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-C285-OUTPUT-RETURN-FOCUS-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "3c80d6b3d616eda59f7b9f8eff622d7fbe51365f56e7113479531cb5836b0fa4",
+  "ownerDelivery": {
+    "taskId": "F2-QF2-C285-OUTPUT-RETURN-FOCUS-01",
+    "atUtc": "2026-10-24T04:44:10.627884+00:00",
+    "status": "SOURCE_FIXED_LOCAL_COMPONENT_RED_GREEN_PASS_ACTUAL_RETEST_PENDING",
+    "authority": {
+      "humanReporting": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "request": "Original F2 targeted P2 focus defect on source285/57884; exact existing inventory-page owner only",
+      "modelRequested": "gpt-6.1-sol",
+      "reasoningRequested": "xhigh",
+      "fast": "UNVERIFIABLE_TOOL_SWITCH_NOT_EXPOSED"
+    },
+    "completedScope": {
+      "issue": "QF2-C285-INVENTORY-OUTPUT-RETURN-FOCUS-01",
+      "qaIssueStatus": "OPEN_UNTIL_ORIGINAL_QF2_FIXED_CANDIDATE_ACTUAL_RETEST",
+      "baselineSource": "5dd68305be13f7047a6b3716ccde858815de2681",
+      "baselineBuild": "ui-preview-5dd6830-01-build01",
+      "observedRed": "All six tested close paths reproduced BODY. Recorded focus attempt saw connected trigger disabled=true and dialog still present. Later dialog.close occurred.",
+      "fix": "Only parent inventory page: close sets outputRequest=null; useEffect on committed null restores and clears stored trigger after dialog unmount. Require existing scope active and connected enabled trigger. No timeout, flushSync, shared output edits, geometry, layout or DTO change.",
+      "causalityLimit": "Local component instrumentation proves disabled/close ordering causes the symptom in the same source chain; actual Chrome failure evidence is QF2 original report, fixed Chrome confirmation remains pending."
+    },
+    "changedFiles": [
+      {
+        "path": "apps/web/src/inventory/inventory-page.tsx",
+        "bytes": 22080,
+        "sha256": "7e6c80f87fd9efa46367aeacd37686f48a29554ac0e9299f36642591a2d9b04c",
+        "beforeBytes": 21797,
+        "beforeSha256": "eb21615f8eefe3687dbc54872f7c4325e083b9c002040c44a9c28aca6510a204"
+      }
+    ],
+    "checks": {
+      "red": {
+        "command": "node verify-focus.cjs before",
+        "exitCode": 1,
+        "cases": 6,
+        "exactTriggerReturns": 0,
+        "got": "BODY",
+        "artifact": "before-FOCUS.json"
+      },
+      "green": {
+        "command": "node verify-focus.cjs after",
+        "exitCode": 0,
+        "cases": 6,
+        "exactTriggerReturns": 6,
+        "paths": [
+          "export Cancel",
+          "export native cancel event (Escape)",
+          "export X",
+          "print Close",
+          "print native cancel event (Escape)",
+          "print preview document Escape"
+        ],
+        "eachReopened": true,
+        "focusTiming": "all focus attempts disabled=false, dialogPresent=false, preceding dialog.close",
+        "queryCalls": 1,
+        "printOutputReads": 3,
+        "artifact": "after-FOCUS.json"
+      },
+      "strict": {
+        "roots": [
+          "apps/web/src/inventory/inventory-page.tsx"
+        ],
+        "originalFlags": true,
+        "diagnostics": 0,
+        "artifact": "strict-page.log"
+      },
+      "harnessOnlyCorrection": "Removed an unrelated expectation that completed print operations must have aborted signals. Completed operations have already cleared own controller; no source change was made for it. The corrected exact-focus assertion then failed on all six original cases and passed after the source fix."
+    },
+    "untested": [
+      "Fixed candidate actual Chrome Cancel/Esc and print Close, owned by original QF2",
+      "No PG/server/app build/browser operations performed",
+      "No repeat of prior full208-row output reconciliation, dense windowing/performance, ZIP or old suite; local fixture is empty successful query only to isolate focus"
+    ],
+    "blockers": [],
+    "next": "C may include exact one pinned page in necessary source288+ integration. Original QF2 only rechecks one export Cancel or Escape and one print Close, plus exact triggering enabled action; do not repeat full208 output or prior native matrix checks. F2 stop-write this exact page after delivery.",
+    "evidence": {
+      "originalIssue": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c285-associated-modules-actual-01/ISSUE-INVENTORY-OUTPUT-RETURN-FOCUS.json",
+      "files": [
+        "SOURCE-MANIFEST.json",
+        "source.diff",
+        "before-FOCUS.json",
+        "after-FOCUS.json",
+        "strict-page.log",
+        "verify-focus.cjs",
+        "before/inventory-page.tsx",
+        "source/inventory-page.tsx"
+      ]
+    }
+  },
+  "stage": "FIXED_SOURCE_RED_GREEN_COMPONENT_AND_STRICT_PASS_ACTUAL_RETEST_PENDING",
+  "actualPG": false,
+  "deployed": false
+}

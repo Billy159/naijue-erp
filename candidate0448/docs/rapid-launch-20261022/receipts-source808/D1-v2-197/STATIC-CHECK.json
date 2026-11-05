@@ -1,0 +1,17 @@
+{
+  "status": "PASS_LOCAL_FINITE_STATIC_CHECKS_NOT_DATABASE_PARSE_OR_EXECUTION",
+  "grantStatements": 16,
+  "reverseStatements": 16,
+  "exactNewEffectiveBits": {
+    "SELECT": 9,
+    "INSERT": 59,
+    "UPDATE_for_existing_row_locks": 8
+  },
+  "allOldPrivilegeBitsPreserved": true,
+  "allAddedBitsUseOriginalOwnerGrantorOriginalRuntimeGranteeNoGrantOption": true,
+  "onlyObserved197MissingColumns": true,
+  "scopeBeyondEightTables": false,
+  "businessDMLOrRoutineSchemaRoleChanges": false,
+  "databaseExecution": "NOT_EXECUTED_D1_NOT_OWNER",
+  "databaseSQLParse": "NOT_TESTED"
+}

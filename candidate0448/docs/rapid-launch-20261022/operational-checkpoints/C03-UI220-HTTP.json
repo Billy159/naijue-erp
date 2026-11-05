@@ -1,0 +1,41 @@
+{
+  "atUtc": "2026-10-23T20:46:33.771999+00:00",
+  "taskId": "C03_UI220_FIXED_THREE_HTTP",
+  "status": "PASS_FIXED_C220_THREE_KEY_HTTP",
+  "sourceCommit": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
+  "buildId": "ui-preview-1b46a5d-01-build01",
+  "url": "http://127.0.0.1:57873/synthetic-unified.html",
+  "checks": [
+    {
+      "path": "synthetic-unified.html",
+      "status": 200,
+      "bytes": 3414020,
+      "sha256": "726295ed1157ef2f9c9fbb50404331ff69d9b39fd8c66af83da6aa7d1bcadb58",
+      "sameImmutableBuild": true
+    },
+    {
+      "path": "candidate-identity.json",
+      "status": 200,
+      "bytes": 4443,
+      "sha256": "eded4be77dcdca056eaa048207732b57f692812bcf7a8b5846e2723192c560db",
+      "sameImmutableBuild": true
+    },
+    {
+      "path": "provenance.json",
+      "status": 200,
+      "bytes": 51504,
+      "sha256": "9206a14c4860f8354067ee1f5ff58f4c82b9c31e7fbf9fda1f5a4825654f7645",
+      "sameImmutableBuild": true
+    }
+  ],
+  "serverPid": 6596,
+  "serverSession": 55096,
+  "qualification": "Fixed220 actual local preview resources;18 declared synthetic overlays andfiction-only24row ledger, no productionmount220 consumption, real PG/permissions/save/formalperformance NOT_ACCEPTED. 218/219 newactualpending.",
+  "actualInputCount": 413,
+  "actualModuleInputCountIncludingDependencies": 1368,
+  "originalBuildInvocations": 1,
+  "sourceDirectoryImmutable": true,
+  "realBusinessAccepted": false,
+  "productionMount220ConsumedByHarness": false,
+  "browserAssignment": "QF2 sole after explicit QF217 clean; no C browser operations"
+}

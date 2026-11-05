@@ -1,0 +1,65 @@
+[
+  {
+    "original_path": "/workspace/shared/fresh35-install-review-plan-20261105-r2/00-BLOCKED-entry.sql",
+    "package_path": "delivery/reference-inputs/fresh35-install-review-plan-20261105-r2/00-BLOCKED-entry.sql",
+    "bytes": 334,
+    "sha256": "0741b94139b125637f5f81b784b5229ec4537904ef93639aced8129f2a38ea0c",
+    "scope": "DDL/catalog/source metadata only; not a database or installation approval"
+  },
+  {
+    "original_path": "/workspace/shared/fresh35-install-review-plan-20261105-r2/01-schema-REVIEW-ONLY.sql",
+    "package_path": "delivery/reference-inputs/fresh35-install-review-plan-20261105-r2/01-schema-REVIEW-ONLY.sql",
+    "bytes": 851652,
+    "sha256": "5fc8508ea96062898a42dc4c03c3a6ebe166158037cc6c7c3130a13d3ee14931",
+    "scope": "DDL/catalog/source metadata only; not a database or installation approval"
+  },
+  {
+    "original_path": "/workspace/shared/fresh35-install-review-plan-20261105-r2/02-lineage-REVIEW-ONLY.sql",
+    "package_path": "delivery/reference-inputs/fresh35-install-review-plan-20261105-r2/02-lineage-REVIEW-ONLY.sql",
+    "bytes": 4747,
+    "sha256": "8785f1e225335caaf5777e477c761889b290d8543a4952cd897afff920df51d9",
+    "scope": "DDL/catalog/source metadata only; not a database or installation approval"
+  },
+  {
+    "original_path": "/workspace/shared/fresh35-install-review-plan-20261105-r2/candidate-source-pins.json",
+    "package_path": "delivery/reference-inputs/fresh35-install-review-plan-20261105-r2/candidate-source-pins.json",
+    "bytes": 29726,
+    "sha256": "0d018a1dff6f26e81be64892f5af596fa2a3ad9f15be654acf44acb463dc4d51",
+    "scope": "DDL/catalog/source metadata only; not a database or installation approval"
+  },
+  {
+    "original_path": "/workspace/shared/fresh35-install-review-plan-20261105-r2/expected-core-metadata.json",
+    "package_path": "delivery/reference-inputs/fresh35-install-review-plan-20261105-r2/expected-core-metadata.json",
+    "bytes": 934749,
+    "sha256": "2e2af3c2b8fa7460e2842e08d906bfee1114dd6c8d7d907ed5c3ed1e1c5ae480",
+    "scope": "DDL/catalog/source metadata only; not a database or installation approval"
+  },
+  {
+    "original_path": "/workspace/shared/fresh35-install-review-plan-20261105-r2/expected-declared-metadata.json",
+    "package_path": "delivery/reference-inputs/fresh35-install-review-plan-20261105-r2/expected-declared-metadata.json",
+    "bytes": 247508,
+    "sha256": "3056cd7d6a36c6d08b712d2084d435807f448d9a7af2149ea723b40659efa47e",
+    "scope": "DDL/catalog/source metadata only; not a database or installation approval"
+  },
+  {
+    "original_path": "/workspace/shared/fresh35-install-review-plan-20261105-r2/migration-lineage.json",
+    "package_path": "delivery/reference-inputs/fresh35-install-review-plan-20261105-r2/migration-lineage.json",
+    "bytes": 8567,
+    "sha256": "11290c3de0b9f1711f748643091e1c14f44f83006b6b8991fa5fd12daf61abad",
+    "scope": "DDL/catalog/source metadata only; not a database or installation approval"
+  },
+  {
+    "original_path": "/workspace/shared/fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json",
+    "package_path": "delivery/reference-inputs/fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json",
+    "bytes": 1344801,
+    "sha256": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+    "scope": "DDL/catalog/source metadata only; not a database or installation approval"
+  },
+  {
+    "original_path": "/workspace/scratch/f6bee04e937b/cloud-pg-schema178v2-20261105-r2/evidence/functions.json",
+    "package_path": "delivery/reference-inputs/cloud-pg-schema178v2-20261105-r2/evidence/functions.json",
+    "bytes": 1901706,
+    "sha256": "9959bca2dd4d91d3fb1ba7558c5abdd0b70676b096eaf73c4dd117261534551f",
+    "scope": "DDL/catalog/source metadata only; not a database or installation approval"
+  }
+]

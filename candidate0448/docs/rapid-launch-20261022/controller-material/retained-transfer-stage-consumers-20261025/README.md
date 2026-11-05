@@ -1,0 +1,3 @@
+Original D3 delivered control-source checkpoint only; original control directory remains execution input owned by D3/T45. No application runtime entry or new importer.
+
+QB305 header and QB306 line limited source/protocol PASS; exact source identities below are recorded in existing TASKS/PROGRESS/HANDOFF. Two original tests now use fileURLToPath for Chinese paths, each affected file-adapter case passed once. Tests reference private original fixtures, intentionally excluded here; this snapshot alone is not a runnable real-data test or actual PG/import proof. No business originals, authority, runtime credentials, or private fixture JSON are included.

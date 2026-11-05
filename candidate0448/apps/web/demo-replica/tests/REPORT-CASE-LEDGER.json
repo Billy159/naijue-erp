@@ -1,0 +1,2307 @@
+{
+  "originalMatrixCheckpoint": "2fa3832da9afe159410b20f705ed03ca423e96c9",
+  "notice": "Incremental listed-step evidence only; original80 findings/105 pages are NOT globally marked passed. Earlier batches retain separate evidence documents.",
+  "records": [
+    {
+      "caseId": "N34-T03-SUMMARY-01",
+      "sourceCheckpoint": "f67be3486275a299848568ecd5b88f40194b810a",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "打开调拨列表首条",
+        "检查详情底部款件分类",
+        "展开+1更多",
+        "Esc关闭"
+      ],
+      "expected": [
+        "6款6件",
+        "衬衫3/长裤1/辅料及其他1/更多配饰1",
+        "零额外detail读取、Esc原焦点"
+      ],
+      "actual": "3/3 headed checks PASS",
+      "evidence": {
+        "path": "detail-summary-20261029/browser-green/result.json",
+        "sha256": "dd1706da71786407d07fb47e2ad00d9fbfe4f3eb5c8951e38a06950d4366d845"
+      },
+      "boundary": "只读合成页面；不覆盖真实调拨写入"
+    },
+    {
+      "caseId": "N34-S04-DETAIL-SUMMARY-01",
+      "sourceCheckpoint": "402c0e1c175da063159df44f1731dfbafc7b493d",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "打开QA-XS-0021销售",
+        "打开QA-XS-0024退货",
+        "打开QA-XS-0018换货"
+      ],
+      "expected": [
+        "销售3款6件衬衫4长裤2",
+        "退6换0应退1374.40",
+        "退1换5应收896.40"
+      ],
+      "actual": "三类实际详情摘要PASS",
+      "evidence": {
+        "path": "detail-summary-20261029/sales-browser-green/result.json",
+        "sha256": "d3389635794edcd962e15fdc828de1ebf74a31e5e4464fd28598e3abc3723507"
+      },
+      "boundary": "只读合成；SQL组件另测，不是完整PG reader/runtime"
+    },
+    {
+      "caseId": "N34-S03-EMPTY-01",
+      "sourceCheckpoint": "402c0e1c175da063159df44f1731dfbafc7b493d",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "新增销货",
+        "业务类型选退货/换货",
+        "检查空摘要"
+      ],
+      "expected": [
+        "退0换0差额0.00",
+        "无销售金额/优惠通用摘要"
+      ],
+      "actual": "PASS",
+      "evidence": {
+        "path": "detail-summary-20261029/sales-browser-green/result.json",
+        "sha256": "d3389635794edcd962e15fdc828de1ebf74a31e5e4464fd28598e3abc3723507"
+      },
+      "boundary": "仅该空态子项；其他原复合条件不整体关闭"
+    },
+    {
+      "caseId": "N34-T02-REFOCUS-01",
+      "sourceCheckpoint": "8e1390511d40e6710442b840ca2ca390b18419b3",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "新增调拨输入M260",
+        "Esc→ArrowDown",
+        "改词M2600→ArrowDown",
+        "关闭→Enter"
+      ],
+      "expected": [
+        "Esc方向键保持关闭且无读取",
+        "改词打开、方向键聚焦候选",
+        "显式Enter可重开"
+      ],
+      "actual": "修前读取2→3；修后2→2，三个键盘检查PASS",
+      "evidence": {
+        "path": "controls-followup-20261029/green/result.json",
+        "sha256": "82a119a537dbec6d7a99e92b6d6f246f1fd08aadac29fb4ea37437035647c623"
+      },
+      "boundary": "不替代所有IME/扫描/多行编辑验收"
+    },
+    {
+      "caseId": "NEW-SALES-AMOUNT-STICKY-01",
+      "sourceCheckpoint": "8e1390511d40e6710442b840ca2ca390b18419b3",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "1440打开销货详情不滚动",
+        "1440横滚最右",
+        "900横滚最右"
+      ],
+      "expected": [
+        "239.00/478.40/657.00完整且操作可见",
+        "列合计及表宽1190",
+        "保留sticky与窄屏横滚"
+      ],
+      "actual": "修前数字range被盖3px；修后3项PASS；table/client1190",
+      "evidence": {
+        "path": "controls-followup-20261029/green/result.json",
+        "sha256": "82a119a537dbec6d7a99e92b6d6f246f1fd08aadac29fb4ea37437035647c623"
+      },
+      "boundary": "原Demo也有；用户授权可读性修复，非金额变化/非窄屏不滚动全部可见"
+    },
+    {
+      "caseId": "USER-SALES-LIFECYCLE-UNAPPROVE-RECEIPT",
+      "sourceCheckpoint": "402c0e1c175da063159df44f1731dfbafc7b493d",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "新建保存",
+        "审核",
+        "真实提交弃审后丢响应",
+        "查询原回执",
+        "重新编辑保存",
+        "库存/操作历史回看"
+      ],
+      "expected": [
+        "恰好四次命令v1→v4",
+        "库存1504→1503→1504→1504",
+        "草稿及保存1款1件衬衫1"
+      ],
+      "actual": "PASS",
+      "evidence": {
+        "path": "detail-summary-20261029/sales-chain-current/result.json",
+        "sha256": "a700c7d457e0ff29fe83c163d44878c88bdc832f39c2fc073ed633e33da6188a"
+      },
+      "boundary": "实际正式service+合成内存，NOT PG；不含真实账号/凭据/生产数据"
+    },
+    {
+      "caseId": "N34-S01-01",
+      "sourceCheckpoint": "b718ecdf39f056d7ccaaf81f4df555de6d0f8d3b",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "销货单查询不存在单号",
+        "查询QA-XS-0021",
+        "重置"
+      ],
+      "expected": [
+        "0与1条均有禁用上/下页及1/1",
+        "重置恢复多页下一页"
+      ],
+      "actual": "5/5 headed checks PASS; native sales/transfer ownership matrices PASS",
+      "evidence": {
+        "path": "list-controls-20261029/retry-browser-green/result.json",
+        "sha256": "5145ce3e7754ad46385386dada904099ee0233fa182e9cb75c35571c191bec15"
+      },
+      "boundary": "封闭合成只读查询，不覆盖完整原复合finding"
+    },
+    {
+      "caseId": "N34-S02-DATE-ORDER-01",
+      "sourceCheckpoint": "b718ecdf39f056d7ccaaf81f4df555de6d0f8d3b",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "销货/调拨开始日期2026-10-30、结束2026-10-01",
+        "查询"
+      ],
+      "expected": [
+        "准确开始晚于结束提示",
+        "无HTTP请求"
+      ],
+      "actual": "5/5 headed checks PASS; native sales/transfer ownership matrices PASS",
+      "evidence": {
+        "path": "list-controls-20261029/retry-browser-green/result.json",
+        "sha256": "5145ce3e7754ad46385386dada904099ee0233fa182e9cb75c35571c191bec15"
+      },
+      "boundary": "封闭合成只读查询，不覆盖完整原复合finding"
+    },
+    {
+      "caseId": "NEW-LOCAL-VALIDATION-RETRY-01",
+      "sourceCheckpoint": "b718ecdf39f056d7ccaaf81f4df555de6d0f8d3b",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "两页保留旧有效结果",
+        "提交倒置日期"
+      ],
+      "expected": [
+        "本地错误不提供重放旧查询按钮",
+        "真实网络失败仍按原请求重试（另native矩阵）"
+      ],
+      "actual": "5/5 headed checks PASS; native sales/transfer ownership matrices PASS",
+      "evidence": {
+        "path": "list-controls-20261029/retry-browser-green/result.json",
+        "sha256": "5145ce3e7754ad46385386dada904099ee0233fa182e9cb75c35571c191bec15"
+      },
+      "boundary": "封闭合成只读查询，不覆盖完整原复合finding"
+    },
+    {
+      "caseId": "USER-TRANSFER-ACTION-FIXED-01",
+      "sourceCheckpoint": "d5792f66efda90bcb95aaf4498964a0a88c56ca9",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "1440和900横滚起中末",
+        "各6尺码组操作头行bbox与按钮可见性",
+        "末组查看抽屉关闭"
+      ],
+      "expected": [
+        "头行右固定对齐差≤1px",
+        "按钮居中完整可见",
+        "原单据URL/scroll/focus保留"
+      ],
+      "actual": "8/8 headed PASS",
+      "evidence": {
+        "path": "action-alignment-20261029/green/result.json",
+        "sha256": "56b75f1c63a4f9c178458418c592de946c0f8dc7f159a91ff5b7e3cfb485acf9"
+      },
+      "boundary": "仅调拨详情；两列表/销货页扩展另行验证"
+    },
+    {
+      "caseId": "USER-ALL-DOCUMENT-ACTIONS-FIXED-01",
+      "sourceCheckpoint": "f07354eaf589df953c79b9c17089585fce3672c2",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "销货/调拨列表及销货详情/编辑",
+        "1440/900横滚起中末",
+        "销货查看抽屉关闭"
+      ],
+      "expected": [
+        "头与行均right sticky对齐",
+        "所有操作按钮完整可见",
+        "抽屉仍原页原焦点"
+      ],
+      "actual": "26/26 headed PASS; typecheck0",
+      "evidence": {
+        "path": "action-alignment-20261029/all-green/result.json",
+        "sha256": "e3f62aeff28807b7928b59130a3ba8d14a18d81ea6c721eac57626ed9b185fa1"
+      },
+      "boundary": "调拨详情另8项；900列表筛选区页面横向溢出另登记未修，不能推为整页PASS"
+    },
+    {
+      "caseId": "NEW-DOCUMENT-FILTER-RESPONSIVE-01",
+      "sourceCheckpoint": "d26c87e71a7309f563fd818b3e938f11b9f37ea3",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "销售/调拨在1440/1280/1100/900/750",
+        "高级筛选收起展开",
+        "每尺寸实际查询"
+      ],
+      "expected": [
+        "body无横溢出",
+        "筛选/查询控件完整可见",
+        "非零数据查询可达"
+      ],
+      "actual": "30/30 headed PASS; typecheck0",
+      "evidence": {
+        "path": "list-responsive-20261029/green/result.json",
+        "sha256": "9583b2f088a51dd10ec1e5235d0855ac07484d6e288a03fd54af5469a832af90"
+      },
+      "boundary": "只覆盖上述两列表和尺寸，不泛化全站响应式"
+    },
+    {
+      "caseId": "DEMO-RETURN-DIRECTION-AND-LIFECYCLE-01",
+      "sourceCheckpoint": "ce5f32a4dcb4cabe94b83bc67ea5351ac2f00257",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "新建退货选择真实SKU规格",
+        "退回→换出→退回",
+        "SAVE→APPROVE→丢弃审响应→查原回执",
+        "弃审后编辑SAVE并核操作历史/库存"
+      ],
+      "expected": [
+        "仅数量符号变化，退款不自动改写",
+        "4个实际命令v1→4",
+        "库存1504→1505→1504→1504"
+      ],
+      "actual": "headed lifecycle PASS; pure helper/real form DOM PASS; session23/23; typecheck0",
+      "evidence": {
+        "path": "sales-direction-20261029/return-browser/result.json",
+        "sha256": "5303b10ec653d696e54dc1c2571d7f233302f4a3f300708829bd6eb111f481a0"
+      },
+      "boundary": "真实正式service+合成内存事务，不是PostgreSQL；混合换货前台链待单独验"
+    },
+    {
+      "caseId": "USER-MIXED-EXCHANGE-LIFECYCLE-01",
+      "sourceCheckpoint": "ce5f32a4dcb4cabe94b83bc67ea5351ac2f00257",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "新建退换同SKU两独立行-1和+2",
+        "正式SAVE EXCHANGE应收239",
+        "审核→丢弃审响应→原回执",
+        "编辑保存/历史/库存读回"
+      ],
+      "expected": [
+        "两行独立身份、金额-239/+478",
+        "4命令v1→4",
+        "库存1504→1503→1504→1504"
+      ],
+      "actual": "headed full listed lifecycle PASS",
+      "evidence": {
+        "path": "sales-direction-20261029/exchange-browser2/result.json",
+        "sha256": "a33717b6af51db0ed8c190f8c642a2ef82ae275b0bec1b6b4c6102a6ea99b22b"
+      },
+      "boundary": "正式service+既有合成内存事务，非PG。首轮功能通过但03-saved截图过早捕获懒加载；加真实页面就绪等待后二轮重跑并检像素，不用旧图冒当前"
+    },
+    {
+      "caseId": "N33-P19-DETAIL-01",
+      "sourceCheckpoint": "5dfb3e91a0e2b23cdfd9eb5d74e3c56e53a7d91a",
+      "scopeStatus": "PASS_CURRENT_SEGMENTS_HISTORY_EXPLICIT_UNKNOWN",
+      "steps": [
+        "条码列表打开2026当前方案",
+        "打开2020历史方案",
+        "真实库存商品ID进入商品条码页查看方案再关闭"
+      ],
+      "expected": [
+        "可信当前5段1+1+7+3+3",
+        "历史保留原文且结构未提供",
+        "共用展示、原始条码不变、仅3次协商detail无写入"
+      ],
+      "actual": "headed 5/5 PASS; native59/59; typecheck0; screenshot animation finalized and pixels inspected",
+      "evidence": {
+        "path": "barcode-segments-20261029/browser-green2/result.json",
+        "sha256": "b834471211ab95e87f9c5dc8fdb899fc49d5339f6bb6420ce8939305bb0af23a"
+      },
+      "boundary": "历史分段无可信结构合同不伪造；非生成/保存变更；首轮功能过但截图入场动画中间态，二轮固定动画后重新点验。"
+    },
+    {
+      "caseId": "USER-TRANSFER-LIFECYCLE-01",
+      "sourceCheckpoint": "a148adac5182df6e9493192077971f1263e2c589",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "真实新建调拨选择两仓/商品规格2件",
+        "保存→列表/详情/库存读回",
+        "审核→弃审响应丢失→原回执核实",
+        "弃审后编辑保存/四条操作历史/两仓读回"
+      ],
+      "expected": [
+        "4实际命令v1→4",
+        "已知两仓SKU 3/2→1/4→3/2→3/2，总库存不变",
+        "原回执确认无盲目重复写"
+      ],
+      "actual": "headed browser-fourth PASS; native7/7; typecheck0; approved/edited pixels inspected",
+      "evidence": {
+        "path": "transfer-chain-20261029/browser-fourth/result.json",
+        "sha256": "2c2a1330b8a4a68210ccca48a1fd37deca5e392c21b77af303be3d394a1d2fca"
+      },
+      "boundary": "独立正式transfer service+既有内存事务，非PG非销售联合账本；仅隔离build启用transferExistingEdit、关闭sales写入口。前轮harness错selector/旧build未启用调拨编辑/自动进入编辑未等待均保留失败，未放宽正式授权。"
+    },
+    {
+      "caseId": "CANDIDATE-PREVIEW-OWNERSHIP-01",
+      "relatedOriginalCaseIds": [
+        "RECHECK-P01",
+        "RECHECK-O-S03",
+        "RECHECK-O-C01"
+      ],
+      "sourceCheckpoint": "4bebacd06258bb26f7890a7564e92d4e6c04a52f",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY_NOT_WHOLE_ENTRY",
+      "steps": [
+        "商品筛选ArrowDown/Up核真实预览身份",
+        "销售候选聚焦第二项→搜索仅第一项→无结果→Esc"
+      ],
+      "expected": [
+        "高亮商品与读取一致",
+        "排除旧ID后不残留、空结果不显示旧资料"
+      ],
+      "actual": "headed6/6; actual-popup RED→GREEN;2 existing native regressions;typecheck0",
+      "evidence": {
+        "path": "candidate-preview-20261029/browser-green/result.json",
+        "sha256": "3a5b92893900b06fe5a3f61cab84c1a4560ce9ce068fea71fe65a6f7277ec722"
+      },
+      "boundary": "当前查询/键盘子场景，不算原105整入口通过。"
+    },
+    {
+      "caseId": "RECHECK-P08",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "originalSteps": "商品只读基础资料→各字段缺省/空值→六页签返回；核名称与选中商品相同。",
+      "steps": "观察真实基础字段、六页签往返、明确null字段不伪造",
+      "actual": {
+        "heading": "M26001 · 商务免烫衬衫",
+        "nullableFields": [
+          "M26001",
+          "商务免烫衬衫",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—"
+        ]
+      },
+      "evidence": {
+        "path": "recheck-products-20261029/read-third/result.json",
+        "sha256": "bae0867ccf6ce90abd6c7607fd395479146cfd50504554d5a3fe511dfca922c0"
+      },
+      "frozenEvidence": {
+        "path": "frozen-products-recheck-1803/result.json",
+        "sha256": "cee451f54592c8f0cab123a7f3396455dc4f43c15a6f02be4a68ecc402ab7e43"
+      },
+      "boundary": "本条指定只读交互已证；直接只读路由，未覆盖保存后用户入口/无权限/真实PG。不是整页所有状态通过。"
+    },
+    {
+      "caseId": "RECHECK-P09",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PARTIAL",
+      "originalSteps": "商品只读规格→不同尺码组/无尺码→分页；核颜色版型和原尺寸对应。",
+      "steps": "六种实际尺码组含无尺码，颜色版型对应；分页存在性核对",
+      "actual": [
+        {
+          "productId": "00000000-0000-4000-8000-000000004000",
+          "sizeGroup": {
+            "id": "00000000-0000-4000-8000-000000000100",
+            "label": "男装上衣尺码"
+          },
+          "sizes": [
+            {
+              "id": "00000000-0000-4000-8000-000000001000",
+              "label": "160/XS"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001001",
+              "label": "165/S"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001002",
+              "label": "170/M"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001003",
+              "label": "175/L"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001004",
+              "label": "180/XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001005",
+              "label": "185/2XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001006",
+              "label": "190/3XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001007",
+              "label": "195/4XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001008",
+              "label": "200/5XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001009",
+              "label": "205/6XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001010",
+              "label": "无尺码"
+            }
+          ]
+        },
+        {
+          "productId": "00000000-0000-4000-8000-000000004001",
+          "sizeGroup": {
+            "id": "00000000-0000-4000-8000-000000000101",
+            "label": "男装裤子尺码"
+          },
+          "sizes": [
+            {
+              "id": "00000000-0000-4000-8000-000000001100",
+              "label": "29"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001101",
+              "label": "30"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001102",
+              "label": "31"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001103",
+              "label": "32"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001104",
+              "label": "33"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001105",
+              "label": "34"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001106",
+              "label": "35"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001107",
+              "label": "36"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001108",
+              "label": "38"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001109",
+              "label": "40"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001110",
+              "label": "无尺码"
+            }
+          ]
+        },
+        {
+          "productId": "00000000-0000-4000-8000-000000004002",
+          "sizeGroup": {
+            "id": "00000000-0000-4000-8000-000000000102",
+            "label": "女装尺码组"
+          },
+          "sizes": [
+            {
+              "id": "00000000-0000-4000-8000-000000001200",
+              "label": "150/XS"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001201",
+              "label": "155/S"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001202",
+              "label": "160/M"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001203",
+              "label": "165/L"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001204",
+              "label": "170/XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001205",
+              "label": "175/2XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001206",
+              "label": "180/3XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001207",
+              "label": "185/4XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001208",
+              "label": "190/5XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001209",
+              "label": "195/6XL"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001210",
+              "label": "无尺码"
+            }
+          ]
+        },
+        {
+          "productId": "00000000-0000-4000-8000-000000004003",
+          "sizeGroup": {
+            "id": "00000000-0000-4000-8000-000000000103",
+            "label": "鞋码"
+          },
+          "sizes": [
+            {
+              "id": "00000000-0000-4000-8000-000000001300",
+              "label": "38"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001301",
+              "label": "39"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001302",
+              "label": "40"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001303",
+              "label": "41"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001304",
+              "label": "42"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001305",
+              "label": "43"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001306",
+              "label": "44"
+            }
+          ]
+        },
+        {
+          "productId": "00000000-0000-4000-8000-000000004004",
+          "sizeGroup": {
+            "id": "00000000-0000-4000-8000-000000000104",
+            "label": "童装尺码"
+          },
+          "sizes": [
+            {
+              "id": "00000000-0000-4000-8000-000000001400",
+              "label": "90"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001401",
+              "label": "100"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001402",
+              "label": "110"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001403",
+              "label": "120"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001404",
+              "label": "130"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001405",
+              "label": "140"
+            }
+          ]
+        },
+        {
+          "productId": "00000000-0000-4000-8000-000000004005",
+          "sizeGroup": {
+            "id": "00000000-0000-4000-8000-000000000105",
+            "label": "配饰均码"
+          },
+          "sizes": [
+            {
+              "id": "00000000-0000-4000-8000-000000001500",
+              "label": "无尺码"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000001501",
+              "label": "均码"
+            }
+          ]
+        }
+      ],
+      "evidence": {
+        "path": "recheck-products-20261029/read-third/result.json",
+        "sha256": "bae0867ccf6ce90abd6c7607fd395479146cfd50504554d5a3fe511dfca922c0"
+      },
+      "frozenEvidence": {
+        "path": "frozen-products-recheck-1803/result.json",
+        "sha256": "cee451f54592c8f0cab123a7f3396455dc4f43c15a6f02be4a68ecc402ab7e43"
+      },
+      "boundary": "原steps要求规格分页；当前只读规格展示完整颜色/尺码组/版型三分区，无分页入口，待冻结Demo同状态核并明确不适用，不造分页。"
+    },
+    {
+      "caseId": "RECHECK-P10",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "originalSteps": "有默认方案/NOT_SET各进入条码页→名称→查看方案；NOT_SET不请求空ID。",
+      "steps": "AVAILABLE/NOT_SET方案名称和详情；空ID不得发请求",
+      "actual": "AVAILABLE原方案可关闭；NOT_SET禁用且零scheme请求",
+      "evidence": {
+        "path": "recheck-products-20261029/read-third/result.json",
+        "sha256": "bae0867ccf6ce90abd6c7607fd395479146cfd50504554d5a3fe511dfca922c0"
+      },
+      "frozenEvidence": {
+        "path": "frozen-products-recheck-1803/result.json",
+        "sha256": "cee451f54592c8f0cab123a7f3396455dc4f43c15a6f02be4a68ecc402ab7e43"
+      },
+      "boundary": "本条指定只读交互已证；直接只读路由，未覆盖保存后用户入口/无权限/真实PG。不是整页所有状态通过。"
+    },
+    {
+      "caseId": "RECHECK-P11",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "originalSteps": "只读价格页核九价顺序、空白/零、小数，不出现可编辑或假粘贴承诺。",
+      "steps": "九价顺序/null零小数/只读无假粘贴承诺",
+      "actual": {
+        "labels": [
+          "采购价",
+          "零售价",
+          "五级批发价（工厂店供货价）",
+          "六级批发价（贴牌价）",
+          "七级批发价（批发价）",
+          "八级批发价（代理商供货价）",
+          "九级批发价（工厂店零售价）",
+          "十级批发价（葛玉珠）",
+          "最低售价"
+        ],
+        "values": [
+          "—",
+          "0.00",
+          "42.30",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—"
+        ]
+      },
+      "evidence": {
+        "path": "recheck-products-20261029/read-third/result.json",
+        "sha256": "bae0867ccf6ce90abd6c7607fd395479146cfd50504554d5a3fe511dfca922c0"
+      },
+      "frozenEvidence": {
+        "path": "frozen-products-recheck-1803/result.json",
+        "sha256": "cee451f54592c8f0cab123a7f3396455dc4f43c15a6f02be4a68ecc402ab7e43"
+      },
+      "boundary": "本条指定只读交互已证；直接只读路由，未覆盖保存后用户入口/无权限/真实PG。不是整页所有状态通过。"
+    },
+    {
+      "caseId": "RECHECK-P12",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "originalSteps": "只读图片→放大→Esc/关闭→返回商品；无图状态可读。",
+      "steps": "无图/合成原图失败→再点放大→Esc返回原图页",
+      "actual": true,
+      "evidence": {
+        "path": "recheck-products-20261029/read-third/result.json",
+        "sha256": "bae0867ccf6ce90abd6c7607fd395479146cfd50504554d5a3fe511dfca922c0"
+      },
+      "frozenEvidence": {
+        "path": "frozen-products-recheck-1803/result.json",
+        "sha256": "cee451f54592c8f0cab123a7f3396455dc4f43c15a6f02be4a68ecc402ab7e43"
+      },
+      "boundary": "本条指定只读交互已证；直接只读路由，未覆盖保存后用户入口/无权限/真实PG。不是整页所有状态通过。"
+    },
+    {
+      "caseId": "RECHECK-P13",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PARTIAL",
+      "originalSteps": "只读库存→查看详细库存→核当前商品已带入→返回原商品与列表条件。",
+      "steps": "库存首次失败→重试→全部仓→详细库存带入真实商品",
+      "actual": {
+        "productQuery": {
+          "filter": {
+            "products": [
+              {
+                "id": "00000000-0000-4000-8000-000000004000",
+                "label": "M26001 · 商务免烫衬衫"
+              }
+            ],
+            "categories": [],
+            "warehouses": [],
+            "suppliers": [],
+            "fits": [],
+            "seasons": []
+          },
+          "page": 1,
+          "pageSize": 100
+        },
+        "restoredInventoryQuery": {
+          "filter": {
+            "products": [],
+            "categories": [],
+            "warehouses": [],
+            "suppliers": [],
+            "fits": [],
+            "seasons": []
+          },
+          "page": 1,
+          "pageSize": 100
+        }
+      },
+      "evidence": {
+        "path": "recheck-products-20261029/read-third/result.json",
+        "sha256": "bae0867ccf6ce90abd6c7607fd395479146cfd50504554d5a3fe511dfca922c0"
+      },
+      "frozenEvidence": {
+        "path": "frozen-products-recheck-1803/result.json",
+        "sha256": "cee451f54592c8f0cab123a7f3396455dc4f43c15a6f02be4a68ecc402ab7e43"
+      },
+      "boundary": "实际返回原库存成功查询已证；原matrix写返回原商品/商品列表与冻结Demo合同不符，等待标明纠正。未验未提交草稿/折叠/滚动，不宣称完整状态恢复。"
+    },
+    {
+      "caseId": "RECHECK-P19",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "originalSteps": "2026当前与历史方案→逐一规则详情→关闭；未知适用范围不得编造。",
+      "steps": "全部六方案逐一真实详情与关闭/Esc，历史结构/适用范围未知",
+      "actual": {
+        "sixDetails": [
+          "方案名称\n2020年新方案\n条码类型\nCODE128\n编码规则\n原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。2020颜色1位、尺码2位的最后补充优先于原表旧备注。声明总长仅保留方案说明，不代替每条历史原码。\n新增生成结构\n结构未提供；保留原说明，不按当前规则推断或重建历史条码。\n总长度\n14 位",
+          "方案名称\n2018年货品\n条码类型\nCODE128\n编码规则\n8 + 自定义5位 + 颜色1位 + 尺码2位\n新增生成结构\n结构未提供；保留原说明，不按当前规则推断或重建历史条码。\n总长度\n9 位",
+          "方案名称\n2021年条码方案\n条码类型\nCODE128\n编码规则\n6 + 货号7位 + 颜色3位 + 尺码2位\n新增生成结构\n结构未提供；保留原说明，不按当前规则推断或重建历史条码。\n总长度\n13 位",
+          "方案名称\n2021年版型条码方案\n条码类型\nCODE128\n编码规则\n2 + 货号7位 + 版型1位 + 颜色3位 + 尺码2位\n新增生成结构\n结构未提供；保留原说明，不按当前规则推断或重建历史条码。\n总长度\n14 位",
+          "方案名称\n2023年条码方案\n条码类型\nCODE128\n编码规则\n9 + 货号7位 + 颜色3位 + 尺码3位\n新增生成结构\n结构未提供；保留原说明，不按当前规则推断或重建历史条码。\n总长度\n14 位",
+          "方案名称\n2026年条码方案\n条码类型\nCode128\n编码规则\n原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。\n新增生成结构\n固定前缀 5（1位）\n实际SKU版型码（1位）\n手填系统货号（7位）\n颜色码（3位）\n尺码码（3位）\n总长度\n15 位"
+        ],
+        "applicability": "UNKNOWN preserved"
+      },
+      "evidence": {
+        "path": "recheck-products-20261029/read-third/result.json",
+        "sha256": "bae0867ccf6ce90abd6c7607fd395479146cfd50504554d5a3fe511dfca922c0"
+      },
+      "frozenEvidence": {
+        "path": "frozen-products-recheck-1803/result.json",
+        "sha256": "cee451f54592c8f0cab123a7f3396455dc4f43c15a6f02be4a68ecc402ab7e43"
+      },
+      "boundary": "本条指定只读交互已证；直接只读路由，未覆盖保存后用户入口/无权限/真实PG。不是整页所有状态通过。"
+    },
+    {
+      "caseId": "RECHECK-P15",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "originalSteps": "颜色搜索→50条→第二页→99页跳转→切tab返回；页码下缘真实可点。",
+      "actual": {
+        "lastPage": {
+          "path": "/api/catalogue-settings-read/colors/query",
+          "request": {
+            "search": "",
+            "page": 4,
+            "pageSize": 50
+          },
+          "status": 200,
+          "body": {
+            "page": 4,
+            "pageSize": 50,
+            "total": 182,
+            "items": [
+              {
+                "id": "00000000-0000-4000-8000-000000020150",
+                "code": "822",
+                "name": "迷彩色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020151",
+                "code": "116",
+                "name": "酒红色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020152",
+                "code": "263",
+                "name": "酱咖色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020153",
+                "code": "405",
+                "name": "酱紫色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020154",
+                "code": "209",
+                "name": "金色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020155",
+                "code": "537",
+                "name": "铁灰色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020156",
+                "code": "108",
+                "name": "铁锈红",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020157",
+                "code": "806",
+                "name": "银灰色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020158",
+                "code": "723",
+                "name": "银色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020159",
+                "code": "512",
+                "name": "雾霾蓝",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020160",
+                "code": "524",
+                "name": "青夹蓝",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020161",
+                "code": "325",
+                "name": "青灰绿",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020162",
+                "code": "814",
+                "name": "青灰色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020163",
+                "code": "315",
+                "name": "青绿色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020164",
+                "code": "532",
+                "name": "青花蓝",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020165",
+                "code": "406",
+                "name": "青莲色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020166",
+                "code": "516",
+                "name": "青蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020167",
+                "code": "114",
+                "name": "靓红色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020168",
+                "code": "534",
+                "name": "靛蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020169",
+                "code": "601",
+                "name": "驼色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020170",
+                "code": "527",
+                "name": "麦蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020171",
+                "code": "815",
+                "name": "麻灰色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020172",
+                "code": "275",
+                "name": "黄咖色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020173",
+                "code": "310",
+                "name": "黄绿色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020174",
+                "code": "201",
+                "name": "黄色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020175",
+                "code": "264",
+                "name": "黑咖色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020176",
+                "code": "709",
+                "name": "黑湖蓝",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020177",
+                "code": "804",
+                "name": "黑灰色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020178",
+                "code": "105",
+                "name": "黑红色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020179",
+                "code": "821",
+                "name": "黑绿色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020180",
+                "code": "701",
+                "name": "黑色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020181",
+                "code": "708",
+                "name": "黑蓝色",
+                "enabled": true,
+                "version": 1
+              }
+            ]
+          }
+        },
+        "returned": {
+          "path": "/api/catalogue-settings-read/colors/query",
+          "request": {
+            "search": "",
+            "page": 1,
+            "pageSize": 50
+          },
+          "status": 200,
+          "body": {
+            "page": 1,
+            "pageSize": 50,
+            "total": 182,
+            "items": [
+              {
+                "id": "00000000-0000-4000-8000-000000020000",
+                "code": "001",
+                "name": "A",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020001",
+                "code": "002",
+                "name": "B",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020002",
+                "code": "003",
+                "name": "C",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020003",
+                "code": "004",
+                "name": "D",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020004",
+                "code": "515",
+                "name": "上青色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020005",
+                "code": "0",
+                "name": "不分色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020006",
+                "code": "259",
+                "name": "中咖色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020007",
+                "code": "811",
+                "name": "中灰色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020008",
+                "code": "530",
+                "name": "中灰蓝",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020009",
+                "code": "510",
+                "name": "中蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020010",
+                "code": "707",
+                "name": "乌墨色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020011",
+                "code": "706",
+                "name": "乌色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020012",
+                "code": "508",
+                "name": "乌蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020013",
+                "code": "703",
+                "name": "乌黑色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020014",
+                "code": "519",
+                "name": "云彩蓝",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020015",
+                "code": "305",
+                "name": "军绿色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020016",
+                "code": "623",
+                "name": "卡其绿",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020017",
+                "code": "621",
+                "name": "卡其色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020018",
+                "code": "251",
+                "name": "咖啡色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020019",
+                "code": "823",
+                "name": "咖绿色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020020",
+                "code": "262",
+                "name": "咖色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020021",
+                "code": "256",
+                "name": "咖驼色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020022",
+                "code": "309",
+                "name": "咸菜绿",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020023",
+                "code": "514",
+                "name": "哈青色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020024",
+                "code": "202",
+                "name": "土黄色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020025",
+                "code": "321",
+                "name": "墨玉绿",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020026",
+                "code": "304",
+                "name": "墨绿色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020027",
+                "code": "526",
+                "name": "墨蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020028",
+                "code": "529",
+                "name": "夜蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020029",
+                "code": "112",
+                "name": "大红色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020030",
+                "code": "505",
+                "name": "天蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020031",
+                "code": "905",
+                "name": "太空灰",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020032",
+                "code": "317",
+                "name": "太空绿",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020033",
+                "code": "528",
+                "name": "好运蓝",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020034",
+                "code": "204",
+                "name": "姜黄色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020035",
+                "code": "837",
+                "name": "宝石绿",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020036",
+                "code": "502",
+                "name": "宝蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020037",
+                "code": "535",
+                "name": "彩蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020038",
+                "code": "838",
+                "name": "抹茶绿",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020039",
+                "code": "224",
+                "name": "暖黄色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020040",
+                "code": "134",
+                "name": "暗粉色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020041",
+                "code": "318",
+                "name": "暗绿色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020042",
+                "code": "509",
+                "name": "暗蓝色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020043",
+                "code": "722",
+                "name": "本白色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020044",
+                "code": "805",
+                "name": "杏灰色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020045",
+                "code": "111",
+                "name": "杏红色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020046",
+                "code": "161",
+                "name": "杏色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020047",
+                "code": "522",
+                "name": "松木蓝",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020048",
+                "code": "313",
+                "name": "松绿色",
+                "enabled": true,
+                "version": 1
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000020049",
+                "code": "531",
+                "name": "松花蓝",
+                "enabled": true,
+                "version": 1
+              }
+            ]
+          }
+        }
+      },
+      "evidence": {
+        "path": "recheck-products-20261029/dictionaries-second/result.json",
+        "sha256": "545d77bff8f8826de46f414698c286aa75e1ccb4fede9ef0cb9ff9ac0e8cbbe1"
+      },
+      "boundary": "固定候选实际只读列明步骤；本批冻结对应状态尚未新配对，非所有权限/真实PG通过。"
+    },
+    {
+      "caseId": "RECHECK-P16",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "originalSteps": "尺码组列宽→50条→切颜色再回→搜索；核每页数保留与包含尺码列。",
+      "actual": {
+        "path": "/api/dictionary-read/size-groups/query",
+        "request": {
+          "search": "男装",
+          "page": 1,
+          "pageSize": 50
+        },
+        "status": 200,
+        "body": {
+          "page": 1,
+          "pageSize": 50,
+          "total": 2,
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000000100",
+              "name": "男装上衣尺码",
+              "sizes": [
+                {
+                  "id": "00000000-0000-4000-8000-000000001000",
+                  "name": "160/XS",
+                  "displayOrder": 0
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001001",
+                  "name": "165/S",
+                  "displayOrder": 1
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001002",
+                  "name": "170/M",
+                  "displayOrder": 2
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001003",
+                  "name": "175/L",
+                  "displayOrder": 3
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001004",
+                  "name": "180/XL",
+                  "displayOrder": 4
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001005",
+                  "name": "185/2XL",
+                  "displayOrder": 5
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001006",
+                  "name": "190/3XL",
+                  "displayOrder": 6
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001007",
+                  "name": "195/4XL",
+                  "displayOrder": 7
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001008",
+                  "name": "200/5XL",
+                  "displayOrder": 8
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001009",
+                  "name": "205/6XL",
+                  "displayOrder": 9
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001010",
+                  "name": "无尺码",
+                  "displayOrder": 10
+                }
+              ]
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000101",
+              "name": "男装裤子尺码",
+              "sizes": [
+                {
+                  "id": "00000000-0000-4000-8000-000000001100",
+                  "name": "29",
+                  "displayOrder": 0
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001101",
+                  "name": "30",
+                  "displayOrder": 1
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001102",
+                  "name": "31",
+                  "displayOrder": 2
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001103",
+                  "name": "32",
+                  "displayOrder": 3
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001104",
+                  "name": "33",
+                  "displayOrder": 4
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001105",
+                  "name": "34",
+                  "displayOrder": 5
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001106",
+                  "name": "35",
+                  "displayOrder": 6
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001107",
+                  "name": "36",
+                  "displayOrder": 7
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001108",
+                  "name": "38",
+                  "displayOrder": 8
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001109",
+                  "name": "40",
+                  "displayOrder": 9
+                },
+                {
+                  "id": "00000000-0000-4000-8000-000000001110",
+                  "name": "无尺码",
+                  "displayOrder": 10
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "path": "recheck-products-20261029/dictionaries-second/result.json",
+        "sha256": "545d77bff8f8826de46f414698c286aa75e1ccb4fede9ef0cb9ff9ac0e8cbbe1"
+      },
+      "boundary": "固定候选实际只读列明步骤；本批冻结对应状态尚未新配对，非所有权限/真实PG通过。"
+    },
+    {
+      "caseId": "RECHECK-P17",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PARTIAL",
+      "originalSteps": "版型50条→切季节再回→无匹配→清空→新增取消；保留页大小。",
+      "actual": {
+        "path": "/api/catalogue-settings-read/fits/query",
+        "request": {
+          "search": "",
+          "page": 1,
+          "pageSize": 50
+        },
+        "status": 200,
+        "body": {
+          "page": 1,
+          "pageSize": 50,
+          "total": 6,
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000002100",
+              "code": "Y",
+              "name": "Y版（修身）",
+              "enabled": true,
+              "version": 1
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000002101",
+              "code": "A",
+              "name": "A版（标准）",
+              "enabled": true,
+              "version": 1
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000002102",
+              "code": "B",
+              "name": "B版（宽松）",
+              "enabled": true,
+              "version": 1
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000002103",
+              "code": "C",
+              "name": "C版（加肥）",
+              "enabled": true,
+              "version": 1
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000002104",
+              "code": "D",
+              "name": "D版（加肥加大）",
+              "enabled": true,
+              "version": 1
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000002105",
+              "code": "E",
+              "name": "E版（特体）",
+              "enabled": true,
+              "version": 1
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "path": "recheck-products-20261029/dictionaries-second/result.json",
+        "sha256": "545d77bff8f8826de46f414698c286aa75e1ccb4fede9ef0cb9ff9ac0e8cbbe1"
+      },
+      "boundary": "当前生产构建未启用版型维护，新增取消待合法草稿能力单独构建，不强行启用"
+    },
+    {
+      "caseId": "RECHECK-P18",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "originalSteps": "季节四项→50条→切版型再回→无匹配后第一次Esc；核搜索清空。",
+      "actual": {
+        "input": "",
+        "response": {
+          "path": "/api/dictionary-read/seasons/query",
+          "request": {
+            "search": "",
+            "page": 1,
+            "pageSize": 50
+          },
+          "status": 200,
+          "body": {
+            "page": 1,
+            "pageSize": 50,
+            "total": 4,
+            "items": [
+              {
+                "id": "00000000-0000-4000-8000-000000002200",
+                "name": "春季"
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000002201",
+                "name": "夏季"
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000002202",
+                "name": "秋季"
+              },
+              {
+                "id": "00000000-0000-4000-8000-000000002203",
+                "name": "冬季"
+              }
+            ]
+          }
+        }
+      },
+      "evidence": {
+        "path": "recheck-products-20261029/dictionaries-second/result.json",
+        "sha256": "545d77bff8f8826de46f414698c286aa75e1ccb4fede9ef0cb9ff9ac0e8cbbe1"
+      },
+      "boundary": "固定候选实际只读列明步骤；本批冻结对应状态尚未新配对，非所有权限/真实PG通过。"
+    },
+    {
+      "caseId": "RECHECK-P02",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PARTIAL",
+      "actual": "正式V2 service读取，六tab返回草稿保留，保存无权限禁用",
+      "evidence": {
+        "path": "recheck-products-20261029/editor-second/result.json",
+        "sha256": "8187235c7796997843b883ec2bb207649bb14f3e4e3e08584bdc6960c368256b"
+      },
+      "boundary": "各字典选择/取消随后逐项，非保存通过"
+    },
+    {
+      "caseId": "RECHECK-P03",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PARTIAL",
+      "actual": "颜色/版型穿梭框实际打开取消且不改变原规格",
+      "evidence": {
+        "path": "recheck-products-20261029/editor-second/result.json",
+        "sha256": "8187235c7796997843b883ec2bb207649bb14f3e4e3e08584bdc6960c368256b"
+      },
+      "boundary": "加入移除/搜索/确认/sizegroup guard仍待实际步骤"
+    },
+    {
+      "caseId": "RECHECK-P05",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "actual": "九格Tab/换行/末尾空换行；abc与10项拒绝不改原值，内部空格保留未设置。真实DOM ClipboardEvent，非系统剪贴板权限验收。",
+      "evidence": {
+        "path": "recheck-products-20261029/editor-second/result.json",
+        "sha256": "8187235c7796997843b883ec2bb207649bb14f3e4e3e08584bdc6960c368256b"
+      },
+      "boundary": "明确合成只读service+本地草稿，不是商品保存/权限/PG验收。"
+    },
+    {
+      "caseId": "RECHECK-P02-DISCARD",
+      "sourceCheckpoint": "d9a318243deef6d46282fcfcde050717fd853efe",
+      "scopeStatus": "PARTIAL",
+      "actual": "继续编辑保留页，明确放弃才离开；重新打开读原值，未发送商品写入",
+      "evidence": {
+        "path": "recheck-products-20261029/editor-second/result.json",
+        "sha256": "8187235c7796997843b883ec2bb207649bb14f3e4e3e08584bdc6960c368256b"
+      },
+      "boundary": "明确合成只读service+本地草稿，不是商品保存/权限/PG验收。"
+    },
+    {
+      "caseId": "RECHECK-P03-MODAL-GEOMETRY",
+      "sourceCheckpoint": "35ef9040",
+      "scopeStatus": "PASS_LISTED_MODAL_GEOMETRY_ONLY",
+      "actual": "1440/900 color+fit780px, frozen780px; no clipping; retained original cancel behavior",
+      "evidence": [
+        {
+          "path": "recheck-products-20261029/spec-green-1440/result.json",
+          "sha256": "614c891b414d12fa17d90cd69ff4a8dc686f53f10e704081ca4f895a4a70cce6"
+        },
+        {
+          "path": "recheck-products-20261029/spec-green-900/result.json",
+          "sha256": "614c891b414d12fa17d90cd69ff4a8dc686f53f10e704081ca4f895a4a70cce6"
+        },
+        {
+          "path": "frozen-spec-modal-1828/result.json",
+          "sha256": "54f2dec6269108de800856af34249ab595fd8a7213946643335a63f634c2b02a"
+        }
+      ],
+      "boundary": "Original P03 full selection scenarios stillpartial; this is observed UI defect fix, not count increment for105."
+    },
+    {
+      "caseId": "RECHECK-P03-CODE",
+      "sourceCheckpoint": "da2cd0462eb28f7dbde3c1eb871e21c6cffe9e48",
+      "scopeStatus": "PASS_LISTED_CODE_SEARCH_MOVE_CANCEL",
+      "actual": "001真实A→加入→已选按001→移除→取消原规格保留",
+      "evidence": [
+        {
+          "path": "recheck-products-20261029/code-red2/result.json",
+          "sha256": "a874d1076a357e5203f1c3ff9b694aa743fd55294963b23817271deafc58b067"
+        },
+        {
+          "path": "recheck-products-20261029/code-green4/result.json",
+          "sha256": "226546fdb1bbb0960c8faa1b9c66844826e4f01e86f95983bd80033592b2ce71"
+        },
+        {
+          "path": "frozen-spec-code-1832/result.json",
+          "sha256": "6754b39dfab9fd8e9bb3c3ed4e5564ea79ddfe6c87e8455088fae4ac69e336ba"
+        }
+      ],
+      "boundary": "仅已加载真实code；没有code的历史选项不推断。原105不新增条数。"
+    },
+    {
+      "caseId": "PRODUCT-EDIT-LIFECYCLE",
+      "relatedOriginalCaseIds": [
+        "RECHECK-P02",
+        "RECHECK-P05",
+        "RECHECK-P08",
+        "RECHECK-P11"
+      ],
+      "sourceCheckpoint": "9beb606627bee380fec25fd880369a74e6bfb8d2",
+      "scopeStatus": "PASS_LIMITED_FORMAL_SERVICE_HTTP_MEMORY_HEADED",
+      "steps": [
+        "修改现有商品名称及采购价0/零售价123.45",
+        "保存后只读详情核九价/null≠0",
+        "列表核名称价格",
+        "列表真实编辑入口重开核原值"
+      ],
+      "actual": "one actual command/version2, headed exit0, native14/14",
+      "evidence": {
+        "path": "recheck-products-20261029/product-edit-first/result.json",
+        "sha256": "9e423481fca6e27dd65eb6a47eb2919bf5f1e880957ed7f8d35c89d7672d3d96"
+      },
+      "boundary": "仅现有名称九价、独立product profile；无PG/新增SKU/媒体/删除/多模块共同账本，不增加105完整页面计数。"
+    },
+    {
+      "caseId": "USER-CONTROLS-SPEC-SEARCH",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "商品编辑规格打开颜色穿梭框",
+        "读取左右搜索input背景并截图",
+        "冻结b8原UI打开搜索001比较input透明样式"
+      ],
+      "expected": [
+        "左右搜索不出现内嵌白矩形，复用Demo现有class"
+      ],
+      "actual": "旧da2固定产物真实RED：input白255 wrapper灰242；a066固定产物真实GREEN：input透明 wrapper灰240；冻结原UI input透明。native产品测试与类型exit0复用。",
+      "evidence": {
+        "path": "recheck-products-20261029/style-green/result.json",
+        "sha256": "9b7d15655dba13556b3a1fef41adcae62a8cd39fe7ad05567b78c7aeb3369b1e",
+        "demoPath": "frozen-spec-style-1850/result.json",
+        "demoSha256": "9875549a0fb05bd76dcbe16bd8a87f321218ddc2f36584b3bbc47497ab9501bd"
+      },
+      "boundary": "candidate空闲、Demo source001聚焦，仅input透明性配对；不称整弹层同状态像素通过，合成只读，非PG。"
+    },
+    {
+      "caseId": "RECHECK-P02",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "编辑态逐个打开分类、年份、季节、供应商并选首候选、外部关闭",
+        "厚薄空候选与领型501错误/重试如实记录"
+      ],
+      "expected": [
+        "选择与取消保留；失败可重试；无pageerror"
+      ],
+      "actual": "六控件逐一实际开合；基础缺省厚薄无值/领型501分别记录",
+      "evidence": {
+        "path": "recheck-products-20261029/controls-resumed2/result.json",
+        "sha256": "2971133b649df8f7cbdf11e33f01f84c119f91fb51be14984b9650d3533b4801"
+      },
+      "boundary": "新增态、厚薄/领型有效候选选择尚未覆盖"
+    },
+    {
+      "caseId": "RECHECK-P03",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "编辑版型搜索B→加入→已选侧搜索B→移除→取消",
+        "确认原颜色/版型/尺码文本完全保留及尺码组禁用"
+      ],
+      "expected": [
+        "选择与取消保留；失败可重试；无pageerror"
+      ],
+      "actual": "版型B搜索加入、已选侧编码搜索、移除、取消原规格保持；既有商品尺码组禁用保护",
+      "evidence": {
+        "path": "recheck-products-20261029/controls-resumed2/result.json",
+        "sha256": "2971133b649df8f7cbdf11e33f01f84c119f91fb51be14984b9650d3533b4801"
+      },
+      "boundary": "新增商品尺码组切换、颜色原步骤仍须补齐；非完整页面通过"
+    },
+    {
+      "caseId": "RECHECK-P07",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "steps": [
+        "编辑库存首次注入500→点击重试",
+        "切全部仓→基础资料→库存重入",
+        "确认仅看有库存按钮保留及无编辑输入"
+      ],
+      "expected": [
+        "选择与取消保留；失败可重试；无pageerror"
+      ],
+      "actual": "编辑库存首次500→点击重试成功→全部仓→切离重入刷新保留全部仓；只读无编辑输入",
+      "evidence": {
+        "path": "recheck-products-20261029/controls-resumed/result.json",
+        "sha256": "2c468d7a1c69e33ba9cd27c8c36f8f80d6bd07dc0706ab3fcc8df05712a48d58"
+      },
+      "boundary": "只读合成；非真实PG库存或保存验收"
+    },
+    {
+      "caseId": "RECHECK-P02",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "新增分类/年份/季节春夏/供应商选择、切页保留；取消→继续编辑与Esc均保留款号名称"
+      ],
+      "expected": [
+        "草稿切页与取消不丢失、尺码成员与所选组对应"
+      ],
+      "actual": "新增分类/年份/季节春夏/供应商选择、切页保留；取消→继续编辑与Esc均保留款号名称",
+      "evidence": {
+        "path": "recheck-products-20261029/controls-new/result.json",
+        "sha256": "907106ebdcd4ad51a02f1e01bebe0679619b47e2a13444443d5af2d39fe62ba3"
+      },
+      "pairedDemo": {
+        "path": "frozen-product-new-1922b/result.json",
+        "sha256": "8de67667c7417adcc1b47b2cd7db9882c4eb6135a201b12a13a69c6c1dc0a706",
+        "scope": "款号名称切页/取消/ESC与尺码组裤子→配饰，不冒全部控件对照"
+      },
+      "boundary": "厚薄和领型仍仅缺数据/501边界，不计有效候选通过"
+    },
+    {
+      "caseId": "RECHECK-P03",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PASS_LISTED_STEPS",
+      "steps": [
+        "颜色001搜索→加入A→移除→取消无原规格改变；新增尺码组上衣→裤子→配饰切换，每组成员按返回资料显示；切页保留配饰组"
+      ],
+      "expected": [
+        "草稿切页与取消不丢失、尺码成员与所选组对应"
+      ],
+      "actual": "颜色001搜索→加入A→移除→取消无原规格改变；新增尺码组上衣→裤子→配饰切换，每组成员按返回资料显示；切页保留配饰组",
+      "evidence": {
+        "path": "recheck-products-20261029/controls-new/result.json",
+        "sha256": "907106ebdcd4ad51a02f1e01bebe0679619b47e2a13444443d5af2d39fe62ba3"
+      },
+      "pairedDemo": {
+        "path": "frozen-product-new-1922b/result.json",
+        "sha256": "8de67667c7417adcc1b47b2cd7db9882c4eb6135a201b12a13a69c6c1dc0a706",
+        "scope": "款号名称切页/取消/ESC与尺码组裤子→配饰，不冒全部控件对照"
+      },
+      "boundary": "配合controls-resumed2版型结果覆盖P03列明步骤；非SKU保存/新增版型维护/真实PG"
+    },
+    {
+      "caseId": "RECHECK-B01",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PASS_LISTED_READ_AND_CANCEL_STEPS_ONLY",
+      "steps": [
+        "营业厅trim查询相同且一条；同厅默认仓改选总仓，取消继续保留、放弃后原网点仓恢复；新增默认仓禁用并明确解释，不保存。"
+      ],
+      "expected": [
+        "查询返回与显示一致，取消保留或放弃按明确动作，无页面异常。"
+      ],
+      "actual": "营业厅trim查询相同且一条；同厅默认仓改选总仓，取消继续保留、放弃后原网点仓恢复；新增默认仓禁用并明确解释，不保存。",
+      "evidence": {
+        "path": "recheck-products-20261029/foundation-second/result.json",
+        "sha256": "d0d853f80bbd2fd8be1705dec509027f97d00f9774cf2bfc62cc8e3d24485e22"
+      },
+      "boundary": "仅B01子case通过；该轮整体因B02测试定位失败为FAIL。单厅合成、无冻结同状态配对、无维护保存或跨厅验证。"
+    },
+    {
+      "caseId": "RECHECK-B02",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PASS_LISTED_READ_AND_CANCEL_STEPS_ONLY",
+      "steps": [
+        "真实选厅请求及四仓返回/DOM一致；无匹配与全部恢复；trim搜索总仓唯一结果；新增选厅取消继续/放弃；编辑使用状态取消后重新读取正常。"
+      ],
+      "expected": [
+        "查询返回与显示一致，取消保留或放弃按明确动作，无页面异常。"
+      ],
+      "actual": "真实选厅请求及四仓返回/DOM一致；无匹配与全部恢复；trim搜索总仓唯一结果；新增选厅取消继续/放弃；编辑使用状态取消后重新读取正常。",
+      "evidence": {
+        "path": "recheck-products-20261029/foundation-root1947/result.json",
+        "sha256": "2fbc30f23254827ddf9d9e88246f8d357b1166d26bccae75571061e52d3f4c01"
+      },
+      "boundary": "单厅四仓同厅，不能证明跨厅排除/停用实际数据筛选；仅草稿取消，不保存、不PG，未配对冻结同状态。"
+    },
+    {
+      "caseId": "RECHECK-B03",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "客户标签与正常数据",
+        "客户身份/带空格查询对照",
+        "客户编辑权限保持",
+        "供应商身份/带空格查询对照",
+        "供应商编辑权限保持",
+        "返回客户标签"
+      ],
+      "expected": [
+        "真实查询响应与DOM一致、正常完成无可见非空alert/pageerror；不绕过禁用维护。"
+      ],
+      "actual": "所列6步骤实际前台PASS；原完整case仍PARTIAL",
+      "evidence": {
+        "path": "foundation-test-prep/actual-b03-root1956/result.json",
+        "sha256": "82e7a50716dc9b19bc7e9c17545e11c3a8eab9c882773da7dc4d16e31e6dcffd"
+      },
+      "missingSteps": [
+        "客户只读配置禁用编辑，未执行编辑取消，不绕过权限",
+        "供应商只读配置禁用编辑，未执行编辑取消，不绕过权限",
+        "操作记录原步骤若指audit drawer，本脚本未打开；保留待验，不以截图替代业务记录。"
+      ],
+      "boundary": "有限合成只读；非PG，不把readonly取消或禁用按钮当写入成功；未配对全部冻结Demo同状态。"
+    },
+    {
+      "caseId": "RECHECK-B04",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "员工列表",
+        "全部角色开合/选择/查询/重置",
+        "全部营业厅开合/选择/查询/重置",
+        "员工状态开合/选择/查询/重置",
+        "已关闭筛选明确不可用",
+        "真实编辑打开/草稿继续/放弃/重开未保存"
+      ],
+      "expected": [
+        "真实查询响应与DOM一致、正常完成无可见非空alert/pageerror；不绕过禁用维护。"
+      ],
+      "actual": "所列6步骤实际前台PASS；原完整case仍PARTIAL",
+      "evidence": {
+        "path": "foundation-test-prep/actual-b04-root1956/result.json",
+        "sha256": "0af3c5a8d100888c04c83b0862d06956b44d3ddb0dbe6e6238ed2787c33e31f2"
+      },
+      "missingSteps": [
+        "正式reader closed尚未就绪；未强行调用，也不称已关闭筛选成功",
+        "本批只读桥未保存员工；离职仅空结果，未提供离职/关闭账号样本；不结转其他profile保存证据"
+      ],
+      "boundary": "有限合成只读；非PG，不把readonly取消或禁用按钮当写入成功；未配对全部冻结Demo同状态。"
+    },
+    {
+      "caseId": "RECHECK-B05",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "收款方式列表",
+        "微信空格/去空格",
+        "状态筛选及重置清空",
+        "编辑权限未绕过"
+      ],
+      "expected": [
+        "真实查询响应与DOM一致、正常完成无可见非空alert/pageerror；不绕过禁用维护。"
+      ],
+      "actual": "所列4步骤实际前台PASS；原完整case仍PARTIAL",
+      "evidence": {
+        "path": "foundation-test-prep/actual-b05-root1956/result.json",
+        "sha256": "259328655e0d9da5c98effc0b7ee2c95e08475899db81f49fcbc1b42e8098384"
+      },
+      "missingSteps": [
+        "paymentSettings维护flag未开启，编辑取消未执行；状态仅列表筛选，不是保存状态变更"
+      ],
+      "boundary": "有限合成只读；非PG，不把readonly取消或禁用按钮当写入成功；未配对全部冻结Demo同状态。"
+    },
+    {
+      "caseId": "RECHECK-B06",
+      "sourceCheckpoint": "a066e40502a221d314553bcfbca849bcac510a84",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "资金账户实际路由",
+        "按收款方式/无匹配/全部恢复",
+        "现金空格/去空格",
+        "重置恢复列表",
+        "编辑权限未绕过",
+        "收款方式/资金账户标签往返"
+      ],
+      "expected": [
+        "真实查询响应与DOM一致、正常完成无可见非空alert/pageerror；不绕过禁用维护。"
+      ],
+      "actual": "所列6步骤实际前台PASS；原完整case仍PARTIAL",
+      "evidence": {
+        "path": "foundation-test-prep/actual-b06-root1956/result.json",
+        "sha256": "5d87d8d5ef28d9349e91cde1583d29e95dde35c0c4e7b6af0c6d918b668c1395"
+      },
+      "missingSteps": [
+        "现有QA账户均仅一个网点营业厅；列表正式UI无营业厅列，编辑disabled，无法证明多厅显示。未伪造多厅响应。",
+        "paymentSettings维护flag未开启，编辑取消未执行"
+      ],
+      "boundary": "有限合成只读；非PG，不把readonly取消或禁用按钮当写入成功；未配对全部冻结Demo同状态。"
+    },
+    {
+      "caseId": "RECHECK-B05",
+      "sourceCheckpoint": "ae9836db450575541b84a063733357e2068e63de",
+      "scopeStatus": "PASS_LISTED_READ_AND_CANCEL_STEPS_ONLY",
+      "steps": [
+        "收款方式列表",
+        "微信空格/去空格",
+        "状态筛选及重置清空",
+        "真实合成ADMIN/读取现有详情/打开编辑",
+        "仅修改名称草稿不提交",
+        "取消后正常确认提示/继续填写保留草稿",
+        "再次取消/放弃草稿/关闭",
+        "重开详情及名称/状态/既有厅均未改变",
+        "未修改取消直接关闭/未调用任何保存或回执"
+      ],
+      "expected": [
+        "合成ADMIN与现有维护开关允许准备编辑；改名草稿取消继续保留，放弃后完整详情未改变；任何commands/receipt不得请求。"
+      ],
+      "actual": "实际前台9步骤通过，visible alert/pageerror为空；未保存。",
+      "evidence": {
+        "path": "payment-cancel-prep/actual-b05/result.json",
+        "sha256": "5a22277e01efe288ef3af5b14a3655d30c1bfc92a307b5ac385738c8edf59a0c"
+      },
+      "missingSteps": [],
+      "boundary": "独立公开测试配置仅增加已有maintenance.paymentSettings，正式权限原样；只读桥始终拒commands。单厅，无PG/写入/完整冻结Demo配对，多厅B06仍待。"
+    },
+    {
+      "caseId": "RECHECK-B06",
+      "sourceCheckpoint": "ae9836db450575541b84a063733357e2068e63de",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "资金账户实际路由",
+        "按收款方式/无匹配/全部恢复",
+        "现金空格/去空格",
+        "重置恢复列表",
+        "真实合成ADMIN/读取现有详情/打开编辑",
+        "仅修改名称草稿不提交",
+        "取消后正常确认提示/继续填写保留草稿",
+        "再次取消/放弃草稿/关闭",
+        "重开详情及名称/状态/既有厅均未改变",
+        "未修改取消直接关闭/未调用任何保存或回执",
+        "收款方式/资金账户标签往返"
+      ],
+      "expected": [
+        "合成ADMIN与现有维护开关允许准备编辑；改名草稿取消继续保留，放弃后完整详情未改变；任何commands/receipt不得请求。"
+      ],
+      "actual": "实际前台11步骤通过，visible alert/pageerror为空；未保存。",
+      "evidence": {
+        "path": "payment-cancel-prep/actual-b06/result.json",
+        "sha256": "12cf823a78c81e95a81f9852467692550fddd2cea0985c769a0dc3282c75912a"
+      },
+      "missingSteps": [
+        "现有QA账户仅单厅，列表无营业厅列；本次编辑只验证既有单厅，原多厅显示仍未覆盖。未伪造多厅历史。"
+      ],
+      "boundary": "独立公开测试配置仅增加已有maintenance.paymentSettings，正式权限原样；只读桥始终拒commands。单厅，无PG/写入/完整冻结Demo配对，多厅B06仍待。"
+    },
+    {
+      "caseId": "RECHECK-P14",
+      "sourceCheckpoint": "5fc8aec82178288f5857caf488453258e3b0ef85",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "真实会话/分类查询/根节点/初选资料",
+        "展开真实父节点并保留父资料",
+        "搜索短袖保留命中父节点/不改选中资料",
+        "选择短袖自动清空搜索并恢复展开树",
+        "无匹配/Esc保留搜索/清空保留选择与展开",
+        "未编辑取消保留子分类资料",
+        "原生维护能力编辑草稿取消恢复",
+        "新增一级填写后取消回原选中子分类",
+        "新增下级填写后取消回原父分类",
+        "编辑后换节点继续编辑/放弃确认已解消",
+        "编辑中搜索切换取消保留草稿与搜索且选择不漂移",
+        "反复收起展开保持选择且没有隐藏动画副本",
+        "重读数据未变且零写命令"
+      ],
+      "actual": "13/13 listed browser steps PASS; original whole page remains PARTIAL",
+      "evidence": {
+        "path": "recovery/category-test-prep/actual-complete-5fc8/result.json",
+        "sha256": "cc6514d1ed470bee152435c3f7a4c01f55f64a8d3132c62f71c6002d70e61e6f"
+      },
+      "boundary": "dot headed Chromium真实构建、隔离合成只读桥；未验证分类保存/排序/删除、真实PG权限或同轮冻结Demo配对；无写命令。"
+    },
+    {
+      "caseId": "RECHECK-T01",
+      "sourceCheckpoint": "51ed075680139a3862a528d221f0ed7a0d05db7b",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "原生build/session/默认列表/实际字段与分类/汇总",
+        "列表操作末列在960px左右横滚均固定右侧",
+        "全部条件真实第2页→查看→返回保留第2页/筛选/行",
+        "恢复原每页20与全部条件",
+        "全部条件展开高级筛选：实际可见标签无空白壳，记录几何/底色",
+        "实际分类+N展开/关闭，缺样本明确保留",
+        "已审核单独选择→查询→严格状态/色/数据（作废详情返回）",
+        "已作废单独选择→查询→严格状态/色/数据（作废详情返回）",
+        "未审核单独选择→查询→严格状态/色/数据（作废详情返回）",
+        "已审核+已作废组合→查询，无未审核混入",
+        "已作废+不存在单号→空结果→收起展开保留；销货零页禁翻",
+        "原日历倒序→具体日期错误，仅此步允许该非空alert；原列表保留",
+        "倒序后日历改正10月20日→重新查询→错误消失/实际当天数据",
+        "原未审核0022/已审核销货单号→单条→查看返回筛选/单行保持",
+        "原未审核调出仓实际候选→单仓选择查询",
+        "重置全部并重读fixture无变，零写命令"
+      ],
+      "actual": "16 listed step records PASS, with explicit unavailable substeps; wholePass false",
+      "evidence": {
+        "path": "recovery/document-list-test-prep/actual-t01-fifth/result.json",
+        "sha256": "fabfdb80456091d4972efbb75549527c45cfd2044b0d4a5fd05e9adf638e9101"
+      },
+      "missingSteps": [
+        "原分类+N/其余分类浮层：当前未变fixture无hasMore样本；只核实际分类汇总/历史未知，不造第四分类",
+        "仅候选单侧未变合成数据；未在本轮配对冻结Demo，也未验证真实角色/PG授权或生产；不声明整页/全系统验收"
+      ],
+      "boundary": "dot headed真实产物+未改合成只读fixture。无生产/PG写验收，未同轮冻结Demo配对。缺样本子步骤明确跳过，不计完整通过。"
+    },
+    {
+      "caseId": "RECHECK-S01",
+      "sourceCheckpoint": "51ed075680139a3862a528d221f0ed7a0d05db7b",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "原生build/session/默认列表/实际字段与分类/汇总",
+        "列表操作末列在960px左右横滚均固定右侧",
+        "全部条件真实第2页→查看→返回保留第2页/筛选/行",
+        "原第2页每页20改50→第1页",
+        "恢复原每页20与全部条件",
+        "全部条件展开高级筛选：实际可见标签无空白壳，记录几何/底色",
+        "实际分类+N展开/关闭，缺样本明确保留",
+        "已审核单独选择→查询→严格状态/色/数据（作废详情返回）",
+        "已作废单独选择→查询→严格状态/色/数据（作废详情返回）",
+        "未审核单独选择→查询→严格状态/色/数据（作废详情返回）",
+        "已审核+已作废组合→查询，无未审核混入",
+        "已作废+不存在单号→空结果→收起展开保留；销货零页禁翻",
+        "原日历倒序→具体日期错误，仅此步允许该非空alert；原列表保留",
+        "倒序后日历改正10月20日→重新查询→错误消失/实际当天数据",
+        "原未审核0022/已审核销货单号→单条→查看返回筛选/单行保持",
+        "原营业员ZZZ987实际搜索→明确无匹配提示，不以全部项冒结果",
+        "原退货/换货→查询→已审核退换详情返回；分页按真实容量",
+        "营业厅实际候选选择→查询→详情返回保留",
+        "客户实际候选选择→查询→详情返回保留",
+        "重置全部并重读fixture无变，零写命令"
+      ],
+      "actual": "20 listed step records PASS, with explicit unavailable substeps; wholePass false",
+      "evidence": {
+        "path": "recovery/document-list-test-prep/actual-s01-first/result.json",
+        "sha256": "ed619c3dfa4c979645fc949a46066cad9352dd809e23cfddb0884c9f4d533ebb"
+      },
+      "missingSteps": [
+        "原分类+N/其余分类浮层：当前未变fixture无hasMore样本；只核实际分类汇总/历史未知，不造第四分类",
+        "退换真实仅18张（每页20最小）；原退换第2页无数据，不能造第2页",
+        "仅候选单侧未变合成数据；未在本轮配对冻结Demo，也未验证真实角色/PG授权或生产；不声明整页/全系统验收"
+      ],
+      "boundary": "dot headed真实产物+未改合成只读fixture。无生产/PG写验收，未同轮冻结Demo配对。缺样本子步骤明确跳过，不计完整通过。"
+    },
+    {
+      "caseId": "RECHECK-A02",
+      "sourceCheckpoint": "d0fdba5d5565c2adec1aca65d8f9ee74c1d6c876",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "库存初始真实会话/主框架/菜单/面包屑/账户几何",
+        "销货单列表实际侧栏点击→已加载结果/选中项/面包屑/账号位置",
+        "调拨单列表实际侧栏点击→已加载结果/选中项/面包屑/账号位置",
+        "商品信息实际侧栏点击→已加载结果/选中项/面包屑/账号位置",
+        "员工与账号实际侧栏点击→已加载结果/选中项/面包屑/账号位置",
+        "主框架调拨/销货组鼠标折叠并展开，焦点不丢",
+        "同两组Enter折叠/展开，焦点留在summary",
+        "浏览器Back商品→Forward设置，路由/选中项/面包屑与真实结果一致",
+        "返回库存遵守普通路由重挂载idle合同，再真实全部查询完成无卡住",
+        "有界连续切换后最后库存意图胜出，无旧页覆盖/新tab/卡加载"
+      ],
+      "actual": "10 bounded headed steps PASS; wholePass false",
+      "evidence": {
+        "path": "recovery/navigation-inventory-test-prep/actual-a02-first/result.json",
+        "sha256": "eff13fd53f6b11204199a26608bb062e59ed7cfaa4af89992b69910ed612012b"
+      },
+      "missingSteps": [
+        "本轮仅候选原生构建、合成ADMIN、五代表路由；未配对冻结Demo、其他角色/退出/改密写入与其余设置入口。不冒整页/全系统通过。",
+        "普通侧栏返回按现源码重新idle，不主张恢复库存草稿/折叠/滚动；显式商品→详细库存→返回原查询另见既有P13证据，不重复。"
+      ],
+      "boundary": "dot真实浏览器合成读取。窄屏完整布局、其余页面/权限/生产性能/真实PG不在本次通过范围。"
+    },
+    {
+      "caseId": "RECHECK-I01",
+      "sourceCheckpoint": "d0fdba5d5565c2adec1aca65d8f9ee74c1d6c876",
+      "scopeStatus": "PARTIAL",
+      "steps": [
+        "新入口初始idle、查询控件就绪；没有伪造自动库存结果",
+        "全部真实查询：六款四仓1504、完整数量/汇总合同和实际挂载单元格",
+        "1440×1000真实横纵滚动/虚拟窗口/固定列宽/合计操作边界",
+        "900×1000真实横纵滚动/虚拟窗口/固定列宽/合计操作边界",
+        "1470×668真实横纵滚动/虚拟窗口/固定列宽/合计操作边界",
+        "回1440原视口、矩阵重新稳定且原全部结果保持",
+        "原单款草稿不冒已执行结果→真实查询仅该款",
+        "原两款逐个选择并查询，只返回两款实际身份/数量",
+        "原单款折叠→另款仍明细→恢复；总数及焦点正确",
+        "原单颜色仓明细折叠→所有库存真实汇总→展开，焦点与值一致",
+        "原全部折叠→所有颜色/库存两款汇总→展开还原实际明细",
+        "高级条件真实开合→原重置立即查询全部并清商品/脏提示/折叠/滚动"
+      ],
+      "actual": "12 bounded headed steps PASS; wholePass false",
+      "evidence": {
+        "path": "recovery/navigation-inventory-test-prep/actual-i01-first/result.json",
+        "sha256": "55c43ce7559b21ce05ac4bcc054fbae07512260745d820902df173e72fdf2e21"
+      },
+      "missingSteps": [
+        "900px保留原窄屏固定前列与后列空间冲突基线；只核列宽、合计/操作无互遮及真实滚动，不判窄屏完整布局已修。",
+        "仅候选原生构建及未改QA合成读取；未本轮配对冻结Demo、生产/PG/其他角色；全量DTO精确验证不等于所有离屏单元格视觉验收。",
+        "分类/季节/供应商无匹配与上下键预览已有独立范围证据，本脚本不重复；库存流水、查看商品、显示设置、导出/打印、故障重试不属于本次I01原有界步骤，均不冒通过。"
+      ],
+      "boundary": "dot真实浏览器合成读取。窄屏完整布局、其余页面/权限/生产性能/真实PG不在本次通过范围。"
+    },
+    {
+      "caseId": "B06-MULTIHALL",
+      "originalCase": "RECHECK-B06",
+      "sourceCheckpoint": "bac60d98aef485411c694d07721dcee66e71b355",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "wholePass": false,
+      "steps": [
+        "actual read service supplies three independent current synthetic accounts",
+        "actual shared-account detail displays both original hall names",
+        "remove hall B from draft using genuine multiple selection",
+        "cancel then continue preserves the one-hall draft",
+        "remote no-match retains selection; matching search adds second hall",
+        "clear all draft halls then explicitly discard without sending a command",
+        "reopen reads the unchanged actual two-hall source; clean cancel closes"
+      ],
+      "actual": "7 headed steps PASS; no commands/receipts",
+      "evidence": {
+        "path": "recovery/multihall-service-test-prep/actual-b06-third/result.json",
+        "sha256": "dd6f550a9fe1c569f2784010e206961336df084039fabe68afaf189827ca1042"
+      },
+      "boundary": "Real HTTP/readservice/UI plus test ACL and persistence adapters; NOT PG/auth/save/wholecase acceptance."
+    },
+    {
+      "caseId": "B02-HALL-RESTRICTION",
+      "originalCase": "RECHECK-B02",
+      "sourceCheckpoint": "bac60d98aef485411c694d07721dcee66e71b355",
+      "scopeStatus": "PASS_LISTED_STEPS_ONLY",
+      "wholePass": false,
+      "steps": [
+        "warehouse hall filter separates two existing warehouses without new permissions",
+        "each hall default-warehouse candidate excludes the existing other-hall warehouse"
+      ],
+      "actual": "2 headed steps PASS; no commands/receipts",
+      "evidence": {
+        "path": "recovery/multihall-service-test-prep/actual-b02-first/result.json",
+        "sha256": "c287a7ff09cd385b40ea672091d764591f2567a83238cbab6deade8650a4d614"
+      },
+      "boundary": "Real HTTP/readservice/UI plus test ACL and persistence adapters; NOT PG/auth/save/wholecase acceptance."
+    }
+  ]
+}

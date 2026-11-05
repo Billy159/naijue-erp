@@ -1,0 +1,101 @@
+{
+  "status": "FAILED_FIRST_MAIN_ATTEMPT_42501_OUTCOME_UNVERIFIED_AT_FAILURE_NOT_NO_WRITE_CLAIM",
+  "jobId": "t45-r1-v20-adopted148-revised-baseline-20261027-164",
+  "receipts": {
+    "job.json": {
+      "jobId": "t45-r1-v20-adopted148-revised-baseline-20261027-164",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "FAILED",
+      "unit": "naijue-erp-op-5cc58239-e2132152309b",
+      "atUTC": "2026-10-27T09:27:34.052921+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 2,
+      "elapsedSeconds": 14.483064545784146,
+      "exports": [
+        "consumer-engine-result.json",
+        "consumer-runtime-result.json"
+      ],
+      "finishedAtUTC": "2026-10-27T09:27:48.581089+00:00"
+    },
+    "consumer-runtime-result.json": {
+      "jobId": "t45-r1-v20-adopted148-revised-baseline-20261027-164",
+      "status": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+      "automaticReplay": false,
+      "sourceReadyOnly": false,
+      "MAINOrPublishExecuted": false,
+      "phase": "ORIGINAL_NATIVE_SOURCE_STEP_SEQUENCE",
+      "originalHostReturned": true,
+      "adoptedFullEvidenceCheckedByOriginalBranch": true,
+      "actualRuntimeIssuerReturned": true,
+      "lastJournalEvent": {
+        "ordinal": 1,
+        "kind": "MAIN",
+        "digest": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+        "state": "FAILED_OUTCOME_UNVERIFIED",
+        "code": "IMPORT_EXECUTION_FAILED"
+      },
+      "errorCode": "42501",
+      "originalHostClosed": true,
+      "finishedAtUtc": "2026-10-27T09:27:48.412Z"
+    },
+    "consumer-engine-result.json": {
+      "actualMode": "FULL_NATIVE_CONTINUATION",
+      "actualPhase": "ORIGINAL_NATIVE_SOURCE_STEP_SEQUENCE",
+      "applicationChanged": false,
+      "automaticReplay": false,
+      "checkedAtUtc": "2026-10-27T09:27:48.527772+00:00",
+      "errorCode": "ORIGINAL_CONSUMER_STOP_SEE_ORIGINAL_RESULT",
+      "externalGrant": {
+        "bytes": 36998,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/bundle/C-EXECUTION-GRANT.json",
+        "sha256": "defa71cff4547c2ae933410e9f1d45d4187fb1904428013f2913ab90d592dbea"
+      },
+      "finalInput": {
+        "bytes": 188589,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/source-input.json",
+        "sha256": "dbcbf022827d9ceb44e155f37ccca816d09604425a4cebeb231bc23f58a72232"
+      },
+      "initialState": "Original153 prefix0/109 remaining, original source/data preserved",
+      "jobId": "t45-r1-v20-adopted148-revised-baseline-20261027-164",
+      "newSecretChannelCreated": "[REDACTED]",
+      "node": {
+        "bytes": 126595440,
+        "mode": 493,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c03-maintenance-matrix-20261022-26/tools/node",
+        "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+        "uid": 0,
+        "version": "v24.21.0"
+      },
+      "nodeExitCode": 2,
+      "processOutcome": "RETURNED",
+      "runtimeStatus": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+      "status": "STOP_SOURCE_CONSUMER_OR_UNKNOWN_NO_REPLAY",
+      "stderrBytes": 0,
+      "stdoutBytes": 135
+    }
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/release-submission/release-receipts/t45-r1-v20-adopted148-revised-baseline-20261027-164/job.json",
+      "bytes": 556,
+      "sha256": "ec4a04cc68edbab7edf466ceee51ddac7a804f6e07be2cdb2e2be5310468264d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/release-submission/release-receipts/t45-r1-v20-adopted148-revised-baseline-20261027-164/consumer-runtime-result.json",
+      "bytes": 735,
+      "sha256": "a5a7d32563a36a68568d62b6a347cdc3f338c76657d592c5e55119f59a58ed55"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/release-submission/release-receipts/t45-r1-v20-adopted148-revised-baseline-20261027-164/consumer-engine-result.json",
+      "bytes": 1580,
+      "sha256": "fe9b62289390b77cd0832d34c40dc7a1b021637f87274ac97f466587b52fb85d"
+    }
+  ],
+  "businessAcceptance": false,
+  "applicationSwitch": false,
+  "noReplay": true,
+  "interpretation": "First MAIN was ATTEMPTED; last journal FAILED_OUTCOME_UNVERIFIED. MAINOrPublishExecutedfalse means no recorded COMMITTED MAIN event, not proof that no MAIN ran or wrote. Host evidence/runtime issuer returned and host closed. Original key recovery is separate165."
+}

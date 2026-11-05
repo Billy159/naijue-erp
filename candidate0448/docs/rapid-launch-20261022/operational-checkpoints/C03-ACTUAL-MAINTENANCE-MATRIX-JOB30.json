@@ -1,0 +1,93 @@
+{
+  "atUtc": "2026-10-22T17:42:50.909973+00:00",
+  "jobId": "c03-maintenance-matrix-20261022-30",
+  "status": "PASS_ACTUAL_SYNTHETIC_MAINTENANCE_COMMIT_MATRIX_ONLY",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-maintenance-matrix-20261022-30/release-receipts/c03-maintenance-matrix-20261022-30/engine-result.json",
+  "evidenceSha256": "ecc5dc30bc9ce32d5d634ef4958334fa8f6f5ecc360defd7fdbf1b8b34b979e6",
+  "cases": [
+    {
+      "label": "synthetic anchor fixture only",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "STAFF CREATE including one account with deferred root proof",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "synthetic active session fixture",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "STAFF EDIT role changes one child epoch and revokes old session",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "STAFF LEAVE rejects missing child epoch, no committed change",
+      "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+      "code": "23514"
+    },
+    {
+      "label": "STAFF LEAVE commits disabled child and one epoch",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "STAFF REINSTATE rejects silently enabling login",
+      "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+      "code": "23514"
+    },
+    {
+      "label": "STAFF REINSTATE commits with login still disabled",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "ACCOUNT RESTORE exact root safety epoch",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "synthetic session before reset",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "ACCOUNT RESET_PASSWORD actual changed credential and revoked session",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "ACCOUNT RESET_PASSWORD rejects unchanged credential",
+      "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+      "code": "23514"
+    },
+    {
+      "label": "STAFF EDIT combined role and reset advances child once",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "label": "HALL CREATE with prepared exact receipt",
+      "status": "PASS_ACTUAL_COMMIT"
+    }
+  ],
+  "readback": {
+    "staffVersion": 5,
+    "accountVersion": 7,
+    "authVersion": 7,
+    "receiptCount": "8",
+    "auditCount": "8",
+    "activeSessions": "0",
+    "sourceRows": "0"
+  },
+  "qaAccounts": 2,
+  "qaSourceRows": 0,
+  "qaNotAnEmptyMainTarget": true,
+  "oldDatabaseWrites": false,
+  "r1DatabaseWrites": false,
+  "realImport": false,
+  "productionSwitched": false,
+  "notCovered": [
+    "published last-usable-admin guard/race",
+    "real source bootstrap49",
+    "product/media/admission",
+    "runtime issuer or public routes",
+    "Actual source import/publication",
+    "Production target unchanged"
+  ],
+  "delegation": "C unique operations owner direct task acceptance; QF/QB must not repeat same matrix"
+}

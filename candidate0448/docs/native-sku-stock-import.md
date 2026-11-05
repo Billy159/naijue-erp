@@ -1,0 +1,21 @@
+# Native SKU, effective barcode and original stock source staging
+
+**Source only. No migration, database connection, real import, publication or inventory posting has been run.** These internal functions are not live create/write endpoints. Every entry point is `DRY_RUN` by default. `STAGE` requires an independently implemented exact-byte and per-original-row authorizer; an input hash computed from caller data is never authority.
+
+## Contracts
+
+These three SQL staging adapters require the **complete, exact reviewed 1–14 migration prefix** via the shared native-import schema contract (which pins the final 0012/0013/0014 source hashes). Missing, duplicate, wrongly typed or unknown later registry versions fail before target writes. An uncertain `COMMIT` discards its connection and preserves the original error; it is never followed by `ROLLBACK` or an automatic retry.
+
+- `native-sku-import.ts` creates one canonical native SKU from one complete canonical group and retains **every** old SKU occurrence in `import_source_row` plus `import_sku_alias`. The representative is not duplicated. Product/dictionary references require exact same-batch proofs and locked native rows, including actual product size-group membership. The immutable native `import_record` counts **once per canonical SKU**, not per old alias. The transaction rejects pre-existing target adoption, partial source replay, drift, and unknown schema prefixes.
+- `native-barcode-import.ts` accepts only the effective v3 SKU-bound barcode selection; PRODUCT-bound source rows fail before SQL and remain outside database import. It retains raw code text and exact original scheme mapping. An original MAIN changed to CONFIRMED_OLD is **rejected**, including all 21 v2 audit proposals pending a separately approved versioned business decision. No generated/MIGR barcode exists here. SQL prevents another enabled MAIN for a SKU and never deletes/rebinds a raw barcode.
+- `native-stock-contributor-import.ts` stages one complete (warehouse, canonical SKU) key from **all original signed rows**. It checks old-to-canonical alias, exact original row and lineage, one compatible unit, and the signed sum against the effective stock CSV. `import_stock_contributor.baseline_ledger_id` remains NULL at this step. Thus staging alone **does not change inventory**.
+
+## Known cutover blockers
+
+1. **Baseline ledger/balance not yet posted.** 0007 requires an audited `IMPORT_CHUNK` receipt, immutable baseline `import_record`, one ledger and one sparse balance in the same transaction. The source-only contributor stage is not a substitute. The 0011 contributor link can be filled only once after an exact baseline exists.
+2. **Checkpoint coordination needed.** Native WAREHOUSE and SKU creators already insert immutable `import_record`. The original 0007 chunk writer would duplicate those records while trying to increment the four target counters. A separately reviewed, receipt/CAS-audited native-scope checkpoint adapter must count each exact record once, without rewriting immutable evidence or directly inflating counters. Do not call `IMPORT_PUBLISH` or bypass this gate.
+3. **MAIN decisions needed.** Fifteen canonical SKUs have multiple original MAIN candidates. All 15 v2 audit proposals select an original MAIN of the canonical representative SKU; zero require the lexicographic fallback. The proposals to retain other original raw codes as confirmed-old aliases are not yet business authorization, and scanning resolution for them has not been implemented or verified.
+4. **Missing MAIN facts.** An exact effective CSV join found 20 of 14,999 canonical SKUs have no effective barcode at all, hence no MAIN; new sales preparation requires an actual MAIN and will reject those SKUs. Neither a fabricated MIGR code nor relaxing sales preparation is authorized.
+5. **Barcode scheme binding.** Every effective barcode has a nonblank original scheme. The barcode stage requires an exact existing native `barcode_scheme`; no scheme creator, nullable default or invented mapping is supplied by these modules.
+
+Private review CSVs with identities and raw codes are outside Git. Synthetic-focused tests are in `tests/native-sku-stock-import.test.ts`. Real PostgreSQL migration/trigger/transaction/concurrency acceptance remains **NOT_RUN**.

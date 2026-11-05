@@ -1,0 +1,67 @@
+✖ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (4.498473ms)
+✖ historical signed SALE edits signed quantity and price without changing row identities (0.900096ms)
+✖ historical signed discount remains exact on memo save without invented allocation (0.393314ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 228.558542
+
+✖ failing tests:
+
+test at apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:10:1
+✖ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (4.498473ms)
+  AssertionError [ERR_ASSERTION]: {"ok":false,"errors":{"form":"历史签名销货单仅可保留原有明细和收退资料修改备注。"}}
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:13:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:17:1
+✖ historical signed SALE edits signed quantity and price without changing row identities (0.900096ms)
+  AssertionError [ERR_ASSERTION]: {"ok":false,"errors":{"form":"历史签名销货单仅可保留原有明细和收退资料修改备注。"}}
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:20:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:23:1
+✖ historical signed discount remains exact on memo save without invented allocation (0.393314ms)
+  TypeError [Error]: Invalid native sales command contract.
+      at invalid (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/validation.ts:7:35)
+      at validateSalesDraft (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/validation.ts:59:96)
+      at draftFromSalesDetail (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/validation.ts:147:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:24:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

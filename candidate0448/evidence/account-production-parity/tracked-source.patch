@@ -1,0 +1,1035 @@
+diff --git a/adapters/postgres/src/current-form-reader.ts b/adapters/postgres/src/current-form-reader.ts
+index 8017db7..a0945a1 100644
+--- a/adapters/postgres/src/current-form-reader.ts
++++ b/adapters/postgres/src/current-form-reader.ts
+@@ -1,3 +1,4 @@
++import { readCurrentRecentAccount } from "./current-account-recommendations.ts";
+ import type { ActorContext } from "../../../packages/application/src/ports.ts";
+ import type { CurrentFormAuthorization, CurrentFormContext, CurrentFormIdentity, CurrentFormIntent, CurrentFormPage,
+   CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReader, CurrentFormReadGrant,
+@@ -65,10 +66,13 @@ function sku(row: Record<string, unknown>): CurrentFormSku {
+ export class PostgresCurrentFormReader implements CurrentFormReader {
+   private readonly pool: PgSalesPool;
+   private readonly authorize: CurrentFormAuthorization["authorize"];
+-  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization) {
++  private readonly recommendationTimeoutMillis: number;
++  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization, options?: { readonly recommendationTimeoutMillis?: number }) {
+     if (typeof pool?.connect !== "function" || typeof authorization?.authorize !== "function")
+       throw new TypeError("Current forms require an explicit PostgreSQL pool and trusted form authorization provider");
+-    this.pool = pool; this.authorize = authorization.authorize.bind(authorization);
++    const timeout = options?.recommendationTimeoutMillis ?? 250;
++    if (!Number.isInteger(timeout) || timeout < 1 || timeout > 1000) throw new TypeError("Optional account recommendation timeout must be an integer from 1 through 1000 milliseconds");
++    this.pool = pool; this.authorize = authorization.authorize.bind(authorization); this.recommendationTimeoutMillis = timeout;
+   }
+   private async identity(query: Query, actor: ActorContext): Promise<CurrentFormIdentity> {
+     const rows = (await query(`/* current-form:identity */ SELECT a.id AS account_id, a.staff_id, a.login_enabled,
+@@ -121,11 +125,52 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
+     const offset = (parameters.page - 1) * 20; const pageValues = [...values, ...orderValues, 20, offset];
+     const rows = (await query(`/* current-form:page */ SELECT ${columns} ${from} WHERE ${where}
+       ORDER BY ${order} LIMIT $${pageValues.length - 1} OFFSET $${pageValues.length}`, pageValues)).rows;
+-    const remaining = total > BigInt(offset) ? total - BigInt(offset) : 0n;
++    return this.decodedPage(parameters, total, rows, decode);
++  }
++  private decodedPage<T extends { readonly id: string }>(parameters: { readonly page: number; readonly pageSize: 20 }, total: bigint,
++    rows: readonly Record<string, unknown>[], decode: (row: Record<string, unknown>) => T): CurrentFormPage<T> {
++    const offset = (parameters.page - 1) * 20; const remaining = total > BigInt(offset) ? total - BigInt(offset) : 0n;
+     requireDomain(rows.length === Number(remaining > 20n ? 20n : remaining), "INVALID_DATABASE_VALUE", "Current form page/count mismatch or overflow");
+     const items = rows.map(decode); requireDomain(new Set(items.map(row => row.id)).size === items.length, "INVALID_DATABASE_VALUE", "Repeated native candidate identity");
+     return Object.freeze({ page: parameters.page, pageSize: 20, exactTotal: total, items: Object.freeze(items) });
+   }
++  private async paymentAccounts(query: Query, parameters: Extract<CurrentSalesReferenceQuery, { kind: "paymentAccount" }>, signal: AbortSignal,
++    from: string, where: string, columns: string, values: unknown[], decode: (row: Record<string, unknown>) => CurrentSalesReferenceItem): Promise<CurrentFormPage<CurrentSalesReferenceItem>> {
++    // Eligibility/count is authoritative and independent of every optional hint.
++    const total = count((await query(`/* current-form:count */ SELECT count(*)::text AS total ${from} WHERE ${where}`, values)).rows);
++    const offset = (parameters.page - 1) * 20; let rows: Record<string, unknown>[]; let recommendationAvailability: "AVAILABLE" | "UNAVAILABLE";
++    await query("SAVEPOINT current_account_recommendation");
++    try {
++      const settings = (await query("/* current-form:recommendation-timeout */ SELECT current_setting('statement_timeout') AS statement_timeout")).rows;
++      requireDomain(settings.length === 1 && typeof settings[0]!.statement_timeout === "string", "CURRENT_ACCOUNT_RECOMMENDATION_UNAVAILABLE", "Original timeout is unavailable");
++      const original = settings[0]!.statement_timeout;
++      const match = /^(0|[1-9]\d*)(us|ms|s|min|h|d)?$/.exec(original);
++      requireDomain(match, "CURRENT_ACCOUNT_RECOMMENDATION_UNAVAILABLE", "Original timeout is not a recognized PostgreSQL value");
++      const units: Record<string, bigint> = { us: 1n, ms: 1000n, s: 1000000n, min: 60000000n, h: 3600000000n, d: 86400000000n };
++      const originalMicros = BigInt(match[1]!) * units[match[2] ?? "ms"]!;
++      const budget = originalMicros > 0n && originalMicros < BigInt(this.recommendationTimeoutMillis) * 1000n ? original : `${this.recommendationTimeoutMillis}ms`;
++      await query("SELECT set_config('statement_timeout', $1::text, true)", [budget]);
++      const recent = await readCurrentRecentAccount(query, parameters.hallId, parameters.paymentMethodId);
++      const pageValues = [...values, parameters.hallId, recent, 20, offset];
++      rows = (await query(`/* current-form:page */ SELECT ${columns},
++        (EXISTS (SELECT 1 FROM naijue_erp.payment_account_hall ph WHERE ph.payment_account_id = r.id AND ph.hall_id = $3::uuid)
++          OR r.id = $4::uuid) IS TRUE AS is_recommended ${from} WHERE ${where}
++        ORDER BY is_recommended DESC, r.id LIMIT $5 OFFSET $6`, pageValues)).rows;
++      for (const row of rows) booleanValue(row.is_recommended);
++      await query("SELECT set_config('statement_timeout', $1::text, true)", [original]);
++      await query("RELEASE SAVEPOINT current_account_recommendation"); recommendationAvailability = "AVAILABLE";
++    } catch (error) {
++      if (signal.aborted) throw error;
++      // PostgreSQL ROLLBACK TO also restores the original SET LOCAL timeout. If
++      // recovery fails the whole snapshot fails, rather than faking a usable client.
++      await query("ROLLBACK TO SAVEPOINT current_account_recommendation");
++      await query("RELEASE SAVEPOINT current_account_recommendation");
++      rows = (await query(`/* current-form:eligible-account-fallback */ SELECT ${columns} ${from} WHERE ${where}
++        ORDER BY r.id LIMIT $3 OFFSET $4`, [...values, 20, offset])).rows;
++      recommendationAvailability = "UNAVAILABLE";
++    }
++    return Object.freeze({ ...this.decodedPage(parameters, total, rows, decode), recommendationAvailability });
++  }
+   readSalesReferences(actor: ActorContext, input: CurrentSalesReferenceQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentSalesReferenceItem>> {
+     const parameters = parseCurrentSalesReferenceQuery(input);
+     return this.snapshot(actor, { kind: "sales-references", parameters }, signal, async (query, identity, grant) => {
+@@ -157,12 +202,13 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
+           columns = `r.id, r.name, NULL::text AS code, r.hall_id, h.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
+         case "paymentAccount":
+           from = "FROM naijue_erp.payment_account r JOIN naijue_erp.payment_method pm ON pm.id = r.payment_method_id";
+-          where = `r.enabled AND pm.enabled AND (${match("r.name")} OR ${match("pm.name")})`; orderValues.push(parameters.hallId);
+-          order = `(EXISTS (SELECT 1 FROM naijue_erp.payment_account_hall ph WHERE ph.payment_account_id = r.id AND ph.hall_id = $${values.length + 1}::uuid)) DESC, ${order}`;
++          values.push(parameters.paymentMethodId);
++          where = `r.enabled AND pm.enabled AND r.payment_method_id = $${values.length}::uuid AND (${match("r.name")} OR ${match("pm.name")})`;
++          order = "r.id";
+           columns = `r.id, r.name, NULL::text AS code, NULL::uuid AS hall_id, NULL::text AS hall_name, pm.id AS payment_method_id, pm.name AS payment_method_name`; break;
+         default: throw new TypeError("Unsupported current reference kind");
+       }
+-      return this.page(query, parameters, from, where, columns, order, values, row => {
++      const decode = (row: Record<string, unknown>): CurrentSalesReferenceItem => {
+         const kind = ({ hall: "hall", customer: "customer", salesperson: "staff", warehouse: "warehouse", paymentAccount: "paymentAccount" } as const)[parameters.kind];
+         const hallId = row.hall_id === null ? null : id("hall", row.hall_id); const hallName = nullableText(row.hall_name);
+         requireDomain((hallId === null) === (hallName === null), "INVALID_DATABASE_VALUE", "Native hall identity/label mismatch");
+@@ -173,10 +219,12 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
+         const paymentMethodId = row.payment_method_id === null ? null : id("paymentMethod", row.payment_method_id);
+         const paymentMethodName = nullableText(row.payment_method_name);
+         requireDomain((paymentMethodId === null) === (paymentMethodName === null)
+-          && (parameters.kind === "paymentAccount" ? paymentMethodId !== null : paymentMethodId === null), "INVALID_DATABASE_VALUE", "Native payment method identity/label mismatch");
++          && (parameters.kind === "paymentAccount" ? paymentMethodId === parameters.paymentMethodId : paymentMethodId === null), "INVALID_DATABASE_VALUE", "Native payment method identity/label mismatch");
+         requireDomain(parameters.kind === "customer" ? row.code !== null : row.code === null, "INVALID_DATABASE_VALUE", "Unexpected native reference code shape");
+         return Object.freeze({ id: nativeId, name: text(row.name), code: nullableText(row.code), hallId, hallName, paymentMethodId, paymentMethodName });
+-      }, orderValues);
++      };
++      if (parameters.kind === "paymentAccount") return this.paymentAccounts(query, parameters, signal, from, where, columns, values, decode);
++      return this.page(query, parameters, from, where, columns, order, values, decode, orderValues);
+     });
+   }
+   readTransferWarehouses(actor: ActorContext, input: CurrentTransferWarehouseQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentTransferWarehouse>> {
+diff --git a/adapters/postgres/src/sales-native-facts.ts b/adapters/postgres/src/sales-native-facts.ts
+index 30e9d64..6d7997e 100644
+--- a/adapters/postgres/src/sales-native-facts.ts
++++ b/adapters/postgres/src/sales-native-facts.ts
+@@ -63,8 +63,8 @@ export class PostgresNativeSalesFacts {
+     for (const line of current) { id("salesLine", line.id); id("sku", line.skuId); requireDomain(line.salesId === h.id, "TRANSACTION_SCOPE", "Native facts require owned actual sales lines"); }
+     id("sales", h.id); id("hall", h.hallId); id("warehouse", h.warehouseId); id("customer", h.customerId);
+     if (h.salespersonId !== null) id("staff", h.salespersonId);
+-    const schema = one((await this.query("/* native-sales-facts:schema */ SELECT EXISTS (SELECT 1 FROM naijue_erp.schema_migration WHERE version = 9) AS installed")).rows);
+-    requireDomain(schema.installed === true, "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "Native nine-price/barcode schema has not been installed");
++    const schema = one((await this.query("/* native-sales-facts:schema */ SELECT EXISTS (SELECT 1 FROM naijue_erp.schema_migration WHERE version = 10) AS installed")).rows);
++    requireDomain(schema.installed === true, "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "Current native sales schema including the original-method snapshot has not been installed");
+     const hall = one((await this.query("/* native-sales-facts:hall */ SELECT id, enabled FROM naijue_erp.hall WHERE id = $1::uuid FOR SHARE", [h.hallId])).rows);
+     const warehouse = one((await this.query("/* native-sales-facts:warehouse */ SELECT id, hall_id, enabled FROM naijue_erp.warehouse WHERE id = $1::uuid FOR SHARE", [h.warehouseId])).rows);
+     const customer = one((await this.query("/* native-sales-facts:customer */ SELECT id, enabled FROM naijue_erp.customer WHERE id = $1::uuid FOR SHARE", [h.customerId])).rows);
+diff --git a/adapters/postgres/src/sales-query-reader.ts b/adapters/postgres/src/sales-query-reader.ts
+index e998316..5a6fd95 100644
+--- a/adapters/postgres/src/sales-query-reader.ts
++++ b/adapters/postgres/src/sales-query-reader.ts
+@@ -68,7 +68,7 @@ function decodeLine(row: Record<string, unknown>): SalesLineRow {
+       fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
+ }
+ function decodeSettlement(row: Record<string, unknown>): SalesSettlementRow {
+-  return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id),
++  return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id), paymentMethodId: nullableId("paymentMethod", row.payment_method_id_snapshot),
+     direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: moneyFromSql(row.amount) };
+ }
+ /** Only internal static column names enter SQL; every scope/filter value is a driver parameter. */
+@@ -212,7 +212,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
+         color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current FROM naijue_erp.sales_line
+         WHERE sales_id = $1 AND is_current ORDER BY line_no, id LIMIT $2`, [header.id, SALES_DETAIL_MAX_CURRENT_LINES + 1])).rows;
+       requireDomain(lineRows.length <= SALES_DETAIL_MAX_CURRENT_LINES, "SALES_READ_TOO_LARGE", "Sales detail exceeds the bounded response limit");
+-      const settlementRows = (await query(`SELECT s.id, s.sales_id, s.line_no, s.payment_account_id, s.direction, s.amount::text,
++      const settlementRows = (await query(`SELECT s.id, s.sales_id, s.line_no, s.payment_account_id, s.payment_method_id_snapshot, s.direction, s.amount::text,
+         s.account_name_snapshot, s.method_name_snapshot, pa.name AS current_account_name, pm.name AS current_method_name
+         FROM naijue_erp.sales_settlement s JOIN naijue_erp.payment_account pa ON pa.id = s.payment_account_id
+         JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id
+diff --git a/adapters/postgres/src/sales-unit-of-work.ts b/adapters/postgres/src/sales-unit-of-work.ts
+index 9d1acf5..f0900c1 100644
+--- a/adapters/postgres/src/sales-unit-of-work.ts
++++ b/adapters/postgres/src/sales-unit-of-work.ts
+@@ -40,7 +40,7 @@ const LINE_SELECT = `SELECT id, sales_id, line_no, sku_id, quantity::text, refer
+   line_amount::text, allocated_discount::text, is_gift, pricing_rule, discount_tenths, zero_confirmed, product_code_snapshot, product_name_snapshot,
+   color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current
+   FROM naijue_erp.sales_line WHERE sales_id = $1 ORDER BY line_no, id`;
+-const SETTLEMENT_SELECT = `SELECT id, sales_id, line_no, payment_account_id, direction, amount::text
++const SETTLEMENT_SELECT = `SELECT id, sales_id, line_no, payment_account_id, payment_method_id_snapshot, direction, amount::text
+   FROM naijue_erp.sales_settlement WHERE sales_id = $1 ORDER BY line_no, id`;
+ 
+ 
+@@ -63,7 +63,7 @@ function decodeLine(row: Record<string, unknown>): SalesLineRow {
+       fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
+ }
+ function decodeSettlement(row: Record<string, unknown>): SalesSettlementRow {
+-  return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id),
++  return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id), paymentMethodId: nullableId("paymentMethod", row.payment_method_id_snapshot),
+     direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: moneyFromSql(row.amount) };
+ }
+ 
+@@ -92,6 +92,10 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
+     try {
+       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
+       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
++      const schema = await client.query(`/* sales:current-schema */ SELECT EXISTS (
++        SELECT 1 FROM naijue_erp.schema_migration WHERE version = 10) AS current_sales_schema_ready`);
++      requireDomain(schema.rows.length === 1 && schema.rows[0]!.current_sales_schema_ready === true,
++        "SALES_SCHEMA_NOT_READY", "The current sales writer requires reviewed schema version 10");
+       const result = await work(tx);
+       tx.close();
+       commitAttempted = true; await client.query("COMMIT");
+@@ -257,15 +261,21 @@ class PostgresSalesTransaction implements SalesTransaction {
+     for (const row of document.settlements) {
+       requireDomain(row.salesId === h.id, "FOREIGN_SETTLEMENT_ID", "Settlement must belong to this sales document");
+       const previous = this.previousSettlements.get(row.id);
++      // Status-only reversal/void never rewrites an unchanged stored unknown.
++      // Runtime SAVE/APPROVE enforce explicit intent before reaching this adapter.
+       if (previous !== undefined && sameSalesSettlement(previous, row)) continue;
+-      const written = await this.query(`INSERT INTO naijue_erp.sales_settlement (id, sales_id, line_no, payment_account_id, direction, amount, account_name_snapshot, method_name_snapshot)
+-        SELECT $1, $2, $3, pa.id, $5, $6, pa.name, pm.name FROM naijue_erp.payment_account pa
+-        JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id WHERE pa.id = $4
++      requireDomain(typeof row.paymentMethodId === "string", "INVALID_SETTLEMENT_REFERENCE", "Runtime settlement requires its explicit selected payment-method identity");
++      if (previous?.paymentAccountId === row.paymentAccountId) requireDomain(previous.paymentMethodId === row.paymentMethodId,
++        "IMMUTABLE_SETTLEMENT_METHOD", "The original method of a retained same-account settlement cannot be replaced or inferred");
++      const written = await this.query(`INSERT INTO naijue_erp.sales_settlement (id, sales_id, line_no, payment_account_id, direction, amount, account_name_snapshot, method_name_snapshot, payment_method_id_snapshot)
++        SELECT $1, $2, $3, pa.id, $5, $6, pa.name, pm.name, pm.id FROM naijue_erp.payment_account pa
++        JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id WHERE pa.id = $4 AND pm.id = $7::uuid
+         ON CONFLICT (id) DO UPDATE SET line_no = EXCLUDED.line_no, payment_account_id = EXCLUDED.payment_account_id,
+         direction = EXCLUDED.direction, amount = EXCLUDED.amount,
+         account_name_snapshot = CASE WHEN sales_settlement.payment_account_id = EXCLUDED.payment_account_id THEN sales_settlement.account_name_snapshot ELSE EXCLUDED.account_name_snapshot END,
+-        method_name_snapshot = CASE WHEN sales_settlement.payment_account_id = EXCLUDED.payment_account_id THEN sales_settlement.method_name_snapshot ELSE EXCLUDED.method_name_snapshot END
+-        WHERE sales_settlement.sales_id = EXCLUDED.sales_id`, [row.id, row.salesId, row.lineNo, row.paymentAccountId, row.direction, moneyToSql(row.amount)]);
++        method_name_snapshot = CASE WHEN sales_settlement.payment_account_id = EXCLUDED.payment_account_id THEN sales_settlement.method_name_snapshot ELSE EXCLUDED.method_name_snapshot END,
++        payment_method_id_snapshot = CASE WHEN sales_settlement.payment_account_id = EXCLUDED.payment_account_id THEN sales_settlement.payment_method_id_snapshot ELSE EXCLUDED.payment_method_id_snapshot END
++        WHERE sales_settlement.sales_id = EXCLUDED.sales_id`, [row.id, row.salesId, row.lineNo, row.paymentAccountId, row.direction, moneyToSql(row.amount), row.paymentMethodId]);
+       requireDomain(written.rowCount === 1, "INVALID_SETTLEMENT_REFERENCE", "Settlement identity or payment account reference is invalid");
+     }
+   }
+diff --git a/apps/api/src/input.ts b/apps/api/src/input.ts
+index c8e5300..ee2e35a 100644
+--- a/apps/api/src/input.ts
++++ b/apps/api/src/input.ts
+@@ -49,9 +49,9 @@ function line(value: unknown): SalesLineRow {
+     isGift: boolean(row.isGift), snapshot: snapshot(row.snapshot), isCurrent: true };
+ }
+ function settlement(value: unknown): SalesSettlementRow {
+-  const row = object(value, ["id", "salesId", "lineNo", "paymentAccountId", "direction", "amount"]);
++  const row = object(value, ["id", "salesId", "lineNo", "paymentAccountId", "paymentMethodId", "direction", "amount"]);
+   return { id: id("settlement", row.id), salesId: id("sales", row.salesId), lineNo: integer(row.lineNo),
+-    paymentAccountId: id("paymentAccount", row.paymentAccountId), direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: minorAmount(string(row.amount)) };
++    paymentAccountId: id("paymentAccount", row.paymentAccountId), paymentMethodId: id("paymentMethod", row.paymentMethodId), direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: minorAmount(string(row.amount)) };
+ }
+ function draft(value: unknown): SalesDraft {
+   const row = object(value, ["header", "lines", "settlements"]);
+diff --git a/apps/api/src/sales-http.test.ts b/apps/api/src/sales-http.test.ts
+index 53180b6..a62ae32 100644
+--- a/apps/api/src/sales-http.test.ts
++++ b/apps/api/src/sales-http.test.ts
+@@ -292,3 +292,10 @@ test("SYNTHETIC HTTP transaction forwarding: receipt recovery receives the same
+   assert.equal((await f.app.inject({ url: "/sales/receipts/save" })).statusCode, 200);
+   assert.equal(new Set(observed).size, 4);
+ });
++test("SYNTHETIC HTTP method intent: known pair/retained-identity rejections are safe conflicts, not provider details or unknown outcomes", async t => {
++  for (const code of ["SETTLEMENT_METHOD_MISMATCH", "IMMUTABLE_SETTLEMENT_METHOD"]) {
++    const f = await setup(t, { authorize: async () => { throw new DomainError(code, "PRIVATE method identity diagnostics"); } });
++    const response = await f.post(save()); assert.equal(response.statusCode, 409); assert.equal(response.json().error.code, code);
++    assert.ok(!response.body.includes("PRIVATE")); assert.equal(f.store.snapshot().headers.size, 0);
++  }
++});
+diff --git a/apps/api/src/sales-http.ts b/apps/api/src/sales-http.ts
+index b8638d7..3d7252c 100644
+--- a/apps/api/src/sales-http.ts
++++ b/apps/api/src/sales-http.ts
+@@ -18,6 +18,7 @@ const statuses: Readonly<Record<string, number>> = {
+   INVALID_MONEY: 400, INVALID_VERSION: 400, INVALID_BUSINESS_DATE: 400,
+   FORBIDDEN: 403, DESTINATION_SCOPE_FORBIDDEN: 403, DOCUMENT_NOT_FOUND: 404, RECEIPT_NOT_FOUND: 404,
+   VERSION_CONFLICT: 409, IDEMPOTENCY_CONFLICT: 409, INVALID_STATE: 409,
++  SETTLEMENT_METHOD_MISMATCH: 409, IMMUTABLE_SETTLEMENT_METHOD: 409,
+   HISTORICAL_POSTING_NOT_IMPLEMENTED: 409, INVENTORY_NOT_READY: 409, MISSING_POSTING_PROVENANCE: 409,
+   INVALID_NUMBER: 422, INVALID_BUSINESS_TYPE: 422, INVALID_DISCOUNT: 422, INVALID_LINES: 422,
+   INVALID_LINE: 422, INVALID_PRICE: 422, SETTLEMENT_LIMIT: 422, INVALID_SETTLEMENT: 422,
+diff --git a/docs/native-catalogue-schema.md b/docs/native-catalogue-schema.md
+index fb85415..a697f31 100644
+--- a/docs/native-catalogue-schema.md
++++ b/docs/native-catalogue-schema.md
+@@ -16,17 +16,18 @@ product in ACCESS EXCLUSIVE mode, verifies exactly versions 1–8, and rejects a
+ nonempty product table before adding nullable fields. A failed precondition is not
+ permission to truncate, delete, backfill NULL, forge registry rows or disable guards.
+ 
+-The existing explicit genuine-PG `MIGRATIONS` harness intentionally remains its
+-reviewed 0001–0008 scope. Its historical synthetic fixtures insert products between
+-0005 and 0006, so appending 0009 there would necessarily violate the empty-product
+-precondition. No previous SQL hash, fixture or suite was silently changed. A new
+-reviewed 1–9 harness must apply all nine files before its explicit nine-price
+-product fixture, assert registry versions 1–9, and test 0009 guards on separate
+-fresh targets. Passing the existing eight-migration suite does not verify 0009.
+-
+-Old schema-neutral readers remain compatible with their existing prefix. Future
+-native nine-price/barcode facts must explicitly require version 9 before referencing
+-its columns; no compatibility value/default or pretend ready state is provided.
++The immutable original1–8 byte manifest now lives in
++`tests/integration/frozen-0001-0008-manifest.ts` as historical evidence only. It is
++not an executable compatibility suite. The single current MIGRATIONS list is1–10:
++apply all ten before any product/settlement fixture, then insert all nine explicit
++price values. Version10 is the separately approved original-method settlement
++snapshot, not another catalogue field. No earlier migration bytes were rewritten.
++Passing old eight-version evidence does not verify0009/0010 or current writehost.
++
++Current native sales writes/facts require version10, without legacy options. The
++schema-neutral proposal reader remains a deliberately incomplete read projection;
++its optional recommendations may degrade unavailable on missing later schema, but
++that never grants schema-critical write authority. No genuine new migration ran.
+ 
+ ## Product prices
+ 
+@@ -78,7 +79,7 @@ rollback, import, native economics, production startup or browser acceptance.
+ Still required: strict explicit-nine-price input validation at the actual product
+ creation/import path; reviewed native in-transaction batch reference/pricing facts;
+ trusted import completeness proof; current barcode read/scan adapters; dedicated
+-1–9 real-engine acceptance; document numbering; and real write-host composition.
++1–10 real-engine acceptance; document numbering; and real write-host composition.
+ The current CURRENT proposal reader honestly keeps minimum/barcode availability
+ UNAVAILABLE rather than treating this unexecuted schema source as live authority.
+ 
+diff --git a/docs/native-current-form-read.md b/docs/native-current-form-read.md
+index 6ca3a26..2460f8f 100644
+--- a/docs/native-current-form-read.md
++++ b/docs/native-current-form-read.md
+@@ -1,6 +1,8 @@
+ # Native CURRENT form proposal reads
+ 
+-Parent source: `2d0f5d2ef79a1d48f63a85cb0242661d2e54efde`.
++Original parent source: `2d0f5d2ef79a1d48f63a85cb0242661d2e54efde`.
++Current account parity amendment: see `native-account-production-parity.md` and
++`evidence/account-production-parity/manifest.json`; original25-test evidence remains historical.
+ This slice adds new ports, strict parsers and a PostgreSQL reader only. It does not
+ register HTTP routes, change the deliberate read-only API composition, enable
+ production forms, allocate document numbers, change schema or authorize commands.
+@@ -32,7 +34,8 @@ or prevent changes between read and submit. No cross-request facts cache exists.
+ - `readSalesReferences(actor, { kind, hallId, search, page, pageSize: 20 }, signal)`.
+   Kinds are hall, customer, salesperson, warehouse and paymentAccount. Only the
+   hall picker uses null hallId. All other queries explicitly name their proposed
+-  sales hall; it must exist, be enabled, be in the host grant, and match the current
++  sales hall. The paymentAccount kind additionally requires canonical paymentMethodId;
++  other kinds reject that property. The hall must exist, be enabled, be in the host grant, and match the current
+   salesperson's hall. Admin/warehouse action scope is not narrowed to their own hall.
+ - `readTransferWarehouses(actor, { direction: FROM | TO, search, page, pageSize: 20 }, signal)`.
+ - `readProducts(actor, { context, search, page, pageSize: 20 }, signal)`.
+@@ -50,11 +53,12 @@ Candidate search is a bounded 0–200-character, already-trimmed, control-free s
+ substring: percent, underscore, backslash and quotes are not wildcard/code. Existing
+ PostgreSQL locale rules apply; browser Unicode-locale parity is not claimed.
+ 
+-Counts and stable name/code + native-ID-ordered pages use two set queries in the
+-same snapshot. Pagination is exactly 20 and real out-of-range pages stay empty.
+-The batch uses one bounded target query, never per-SKU calls. No document-history
+-scan, historical-observed master filter, eager full catalogue or fake all-entity ID
+-is used. Native labels and IDs remain intact.
++Non-account counts and stable name/code + native-ID-ordered pages use two set
++queries in the same snapshot. Account counts remain pure current eligibility; optional
++recommendation reads use a short-budget savepoint and stable account-ID bucket order. Pagination is exactly 20 and real out-of-range pages stay empty.
++The batch uses one bounded target query, never per-SKU calls. No historical-observed
++master filter, eager full catalogue or fake all-entity ID is used. Optional recent-use
++recommendation has a bounded runtime-document proof, never a candidate eligibility filter. Native labels and IDs remain intact.
+ 
+ ## Eligibility and evidence
+ 
+@@ -67,8 +71,11 @@ is used. Native labels and IDs remain intact.
+   non-left staff and recommends the current user, not only same-hall salespeople.
+   Native staff has no separate `enabled` column. This slice does not invent that
+   missing legacy flag or claim full legacy enabled-flag equivalence.
+-- Payment account and its one native method must both be enabled. Hall affiliations
+-  are recommendation ordering only, never an ACL or count restriction. Frozen
++- Payment account and its one selected native method must both be enabled and the
++  account actual method must equal the required paymentMethodId. Hall affiliations
++  and the one bounded proven recent account are unioned recommendation ordering
++  only, never an ACL or count restriction. Optional failure leaves all eligible
++  accounts selectable in stable native-ID order. Frozen
+   sales-funds-ui.js:17,22 and candidate sales/validation.ts settlement handling
+   explicitly support this distinction. No balances, debt or invented fund rows.
+ - Transfer FROM is enabled OR has nonzero native inventory; TO is enabled. The
+@@ -83,13 +90,15 @@ is used. Native labels and IDs remain intact.
+ 
+ ## Honest storage and launch boundaries
+ 
+-Current migrations 0001–0008 store only product.retail_price. Product responses
++The original0001–0008 prefix stored only product.retail_price. Source0009 now defines
++the approved nine prices, but this deliberately incomplete proposal projection still
++exposes only retail and does not manufacture catalogue-completeness authority. Product responses
+ preserve its exact nullable decimal(18,2) yuan text and state
+ `minimumPriceAvailability: UNAVAILABLE`. They do not expose a fabricated minimum
+ price, nine-price set or no-minimum policy. Missing is not null/zero business facts.
+ 
+-Current migrations have no native barcode authority relation. Only historical line
+-barcode_snapshot columns exist. SKU responses therefore state
++Source0009 now defines the approved native barcode relations. This proposal reader
++does not yet expose a trusted current barcode picker or claim the schema is installed. SKU responses therefore state
+ `barcodeAvailability: UNAVAILABLE`, do not include a fake null barcode, and never
+ borrow a historical observation to manufacture a CURRENT binding.
+ 
+@@ -102,15 +111,19 @@ transaction reference/pricing assembly and real write-host startup still remain.
+ 
+ ## Verification and rollback
+ 
+-`node --test tests/current-form-reader.test.ts` passes 25 synthetic/parser/scripted
+-pg tests. These check strict bounds and immutable capture, fresh identity/revocation,
++`node --test tests/current-form-reader.test.ts` now has32 synthetic/parser/scripted
++pg tests; the original25-test log is a historical artifact. Current focused results
++and exact source hashes are in evidence/account-production-parity/. These check strict bounds and immutable capture, fresh identity/revocation,
+ explicit grants/scope, source-specific eligibility, stable native facts, exact prices
+ and counts, bounded target sets, aborts and cleanup. They inspect requested SQL but
+ do not run a PostgreSQL parser/engine, locks, isolation, optimizer, production host,
+ real authentication/browser workflow or performance acceptance. No install, actual
+-DB/operations, compiler/build, commit, push or deployment ran in this slice.
++DB/operations, full build, commit, push or deployment ran in this slice. Current
++focused TypeScript is recorded in the amendment evidence.
+ 
+-All implementation changes are new files. To revert only this slice, remove the
++The original slice added new files. Its removal recipe is historical, not a safe
++recipe for the later account/method contract amendment. Revert current amendment
++using its scoped manifest, not by deleting shared domain files. Original scope: the
+ three current-form TypeScript modules, current-form-reader.test.ts, this document,
+ native-catalogue-authority-next-step.md and the current-form evidence files listed
+ in evidence/current-form-reader-manifest.json. Do not reset other workers' files.
+diff --git a/docs/native-sales-transaction-facts.md b/docs/native-sales-transaction-facts.md
+index f4a9011..ee719c5 100644
+--- a/docs/native-sales-transaction-facts.md
++++ b/docs/native-sales-transaction-facts.md
+@@ -3,8 +3,10 @@
+ This is explicit opt-in source implementation, not a production write host, real
+ catalogue publisher, genuine-PG lock/transaction acceptance or an enabled form.
+ The prior synchronous candidate rules and explicit synthetic providers remain
+-compatible. No domain, shared authorization policy, HTTP route or schema-execution
+-path is changed by this slice.
++supported as explicit test providers, not a legacy-schema writer mode. The later
++approved method-identity amendment changes domain/transport fields; see
++`native-account-production-parity.md`. Shared authorization policy and production
++HTTP composition remain untouched.
+ 
+ ## Async original-transaction seam
+ 
+@@ -23,9 +25,10 @@ Inventory delta/sign policy remains the existing candidate-source rule.
+ 
+ `PostgresSalesUnitOfWork(pool, { catalogueCompleteness })` captures an explicit
+ `NativeCatalogueCompletenessVerifier.assertComplete` when native catalogue facts
+-are intended. Old `PostgresSalesUnitOfWork(pool)` remains usable with the existing
+-explicit non-native rules and eight-migration fixtures, but cannot supply native
+-pricing facts. There is no default or ready=true toggle.
++are intended. Every current PostgresSalesUnitOfWork transaction requires schema10
++before its callback, including explicit synthetic-test providers. No old-schema
++writer fallback or settlement snapshot compatibility flag exists. Missing real
++completeness cannot supply native pricing facts; no ready=true default exists.
+ 
+ The verifier receives only exact target product IDs and a query function on the
+ original, still-active command transaction. It must read real persistent validated
+@@ -42,7 +45,7 @@ every genuine blank. All nine keys must be known before publication.
+ The PostgreSQL capability requires the original receipt actor/key and single sales
+ target to have been bound. It reuses the existing current account/staff/hall lookup
+ and its transaction-held SHARE locks. It then reads through the same original
+-client and requires migration version 9 before touching its price/barcode columns.
++client and requires migration version10 before touching its price/barcode columns.
+ Native action and proposed-scope authorization remain separate, mandatory host
+ providers; reference/economic facts are not themselves a permission grant.
+ 
+@@ -67,7 +70,7 @@ are sorted and queried in at-most-200-ID batches, not one query per line/SKU:
+ 
+ Account/staff/hall and reference/SKU/product facts are locked on the command client.
+ Their lock ordering and READ COMMITTED behavior are requested by this source, not
+-claimed as PostgreSQL-engine proof. A real 1–9 suite still needs to validate waits,
++claimed as PostgreSQL-engine proof. A real1–10 suite still needs to validate waits,
+ concurrent maintenance, ordering/deadlocks, snapshot visibility, constraints and
+ rollback. No catalogue mutation, balance, audit or receipt is emitted by fact reads.
+ The query capability checks transaction active state and cannot work after close.
+@@ -85,7 +88,12 @@ Sales hall/customer/warehouse must be enabled and warehouse must belong to the
+ proposed sales hall. Optional staff requires exact native employment status 在职;
+ there is no invented salesperson-role or staff-hall restriction. Native staff still
+ has no separate enabled flag, so this is not a claim to reproduce an absent legacy
+-flag. Account and method must both be enabled.
++flag. Account and method must both be enabled, and each explicit intended
++paymentMethodId must equal the locked account actual method. Runtime SAVE/APPROVE
++have no unchanged-row import exemption. Unknown stored method IDs are not inferred
++from names/current account; they cannot approve. Same-account retained method IDs
++are immutable; changing the account or creating a genuinely new settlement captures
++the actual matching method inside the original transaction.
+ 
+ A retained line's real loaded native ID, SKU and unchanged snapshot may preserve
+ old labels/raw observations across master renames or later barcode disablement.
+@@ -104,14 +112,16 @@ create credentials, execute migrations or register write plugins in the read API
+ ## Verification
+ 
+ The focused command is recorded in evidence/sales-native-facts-manifest.json.
+-177 tests pass across the new 13 unit/scripted-pg groups, existing sales lifecycle,
++The original artifact records177 passing tests across the new 13 unit/scripted-pg groups, existing sales lifecycle,
+ economics, action authorization, PostgreSQL protocol and Fastify inject boundaries.
+ New coverage includes both awaited rules, failure before effects, same-key retry,
+-original-client proof, missing verifier/version9, incomplete prices, bounded 201-SKU
++original-client proof, missing verifier/schema requirements, incomplete prices, bounded 201-SKU
+ set batches, product read-once, preserved snapshots, exact old-code observations,
+ commit/rollback and closed query capabilities. No genuine PostgreSQL engine or
+-publisher, browser, live host, operations, compiler/build or production mutation ran
+-from this worker. Root's aggregate typecheck is recorded separately.
++publisher, browser, live host, operations or production mutation ran
++from this worker. Current amendment focused TypeScript and281 unit/protocol/HTTP
++regressions are recorded in evidence/account-production-parity/; the old177 log
++is not relabelled as current-schema engine acceptance. Root aggregate checks are separate.
+ 
+ Scope/revert: only the new native-facts modules/test/document/evidence and the small
+ tracked edits to application ports, sales service and PostgreSQL sales UoW belong
+diff --git a/packages/application/src/current-form-ports.ts b/packages/application/src/current-form-ports.ts
+index e2cafba..f524f1f 100644
+--- a/packages/application/src/current-form-ports.ts
++++ b/packages/application/src/current-form-ports.ts
+@@ -5,15 +5,19 @@ import type { EntityId } from "../../domain/src/values.ts";
+  * authorization, authoritative transaction facts, numbering or a prepared draft. */
+ export interface CurrentFormPage<T> {
+   readonly page: number; readonly pageSize: 20; readonly exactTotal: bigint; readonly items: readonly T[];
++  /** Only paymentAccount pages expose this optional hint status. AVAILABLE covers
++   * verified runtime-active/source-hall hints, not unproven CUTOFF_HISTORY activity. */
++  readonly recommendationAvailability?: "AVAILABLE" | "UNAVAILABLE";
+ }
+ export type CurrentFormContext = { readonly kind: "SALES"; readonly hallId: EntityId<"hall"> }
+   | { readonly kind: "TRANSFER" };
+ export interface CurrentFormSearch { readonly search: string; readonly page: number; readonly pageSize: 20 }
+-export interface CurrentSalesReferenceQuery extends CurrentFormSearch {
+-  readonly kind: "hall" | "customer" | "salesperson" | "warehouse" | "paymentAccount";
+-  /** null only for the hall picker; all other references belong to this proposed form hall. */
+-  readonly hallId: EntityId<"hall"> | null;
+-}
++/** Only account lookup carries a selected method; omission is not an all-method grant. */
++export type CurrentSalesReferenceQuery = CurrentFormSearch & (
++  { readonly kind: "hall"; readonly hallId: null }
++  | { readonly kind: "customer" | "salesperson" | "warehouse"; readonly hallId: EntityId<"hall"> }
++  | { readonly kind: "paymentAccount"; readonly hallId: EntityId<"hall">; readonly paymentMethodId: EntityId<"paymentMethod"> }
++);
+ export interface CurrentSalesReferenceItem {
+   readonly id: string; readonly name: string; readonly code: string | null;
+   readonly hallId: EntityId<"hall"> | null; readonly hallName: string | null;
+diff --git a/packages/application/src/current-form-validation.ts b/packages/application/src/current-form-validation.ts
+index c79e334..2e66df4 100644
+--- a/packages/application/src/current-form-validation.ts
++++ b/packages/application/src/current-form-validation.ts
+@@ -32,10 +32,19 @@ function context(value: unknown): CurrentFormContext {
+   return Object.freeze({ kind: "SALES", hallId: id("hall", row.hallId) });
+ }
+ export function parseCurrentSalesReferenceQuery(value: unknown): CurrentSalesReferenceQuery {
+-  const row = record(value, ["kind", "hallId", "search", "page", "pageSize"]);
+-  if (!["hall", "customer", "salesperson", "warehouse", "paymentAccount"].includes(row.kind as string)
+-    || (row.kind === "hall" ? row.hallId !== null : row.hallId === null)) invalid();
+-  return Object.freeze({ ...search(row), kind: row.kind as CurrentSalesReferenceQuery["kind"], hallId: row.hallId === null ? null : id("hall", row.hallId) });
++  const accountKind = value !== null && typeof value === "object" && !Array.isArray(value)
++    && (value as Record<string, unknown>).kind === "paymentAccount";
++  const row = record(value, accountKind ? ["kind", "hallId", "paymentMethodId", "search", "page", "pageSize"]
++    : ["kind", "hallId", "search", "page", "pageSize"]);
++  if (row.kind === "hall") {
++    if (row.hallId !== null) invalid();
++    return Object.freeze({ ...search(row), kind: "hall", hallId: null });
++  }
++  const hallId = id("hall", row.hallId);
++  if (row.kind === "paymentAccount") return Object.freeze({ ...search(row), kind: "paymentAccount", hallId,
++    paymentMethodId: id("paymentMethod", row.paymentMethodId) });
++  if (row.kind !== "customer" && row.kind !== "salesperson" && row.kind !== "warehouse") invalid();
++  return Object.freeze({ ...search(row), kind: row.kind, hallId });
+ }
+ export function parseCurrentTransferWarehouseQuery(value: unknown): CurrentTransferWarehouseQuery {
+   const row = record(value, ["direction", "search", "page", "pageSize"]); if (row.direction !== "FROM" && row.direction !== "TO") invalid();
+diff --git a/packages/application/src/sales-change-evidence.ts b/packages/application/src/sales-change-evidence.ts
+index b0f523e..730e8e2 100644
+--- a/packages/application/src/sales-change-evidence.ts
++++ b/packages/application/src/sales-change-evidence.ts
+@@ -6,7 +6,7 @@ const headerFields = ["number", "businessType", "businessDate", "hallId", "sales
+ const lineFields = ["id", "salesId", "lineNo", "skuId", "quantity", "referencePrice", "dealPrice", "pricingRule", "discountTenths",
+   "zeroConfirmed", "lineAmount", "allocatedDiscount", "isGift", "isCurrent"] as const;
+ const snapshotFields = ["productCode", "productName", "colorName", "fitName", "sizeName", "barcode"] as const;
+-const settlementFields = ["id", "salesId", "lineNo", "paymentAccountId", "direction", "amount"] as const;
++const settlementFields = ["id", "salesId", "lineNo", "paymentAccountId", "paymentMethodId", "direction", "amount"] as const;
+ 
+ /** Explicit native-value comparisons, not display/JSON coercions or audit reconstruction. */
+ export function sameSalesLine(left: SalesLineRow, right: SalesLineRow): boolean {
+@@ -42,8 +42,8 @@ export function salesChangeEvidence(previous: SalesDocument | undefined, next: S
+       referencePrice, dealPrice, pricingRule, discountTenths, zeroConfirmed, lineAmount, allocatedDiscount, isGift,
+       snapshot: { productCode: snapshot.productCode, productName: snapshot.productName, colorName: snapshot.colorName,
+         fitName: snapshot.fitName, sizeName: snapshot.sizeName, barcode: snapshot.barcode }, isCurrent })),
+-    settlements: document.settlements.filter(row => changedSettlements.has(row.id)).map(({ id, salesId, lineNo, paymentAccountId, direction, amount }) => ({
+-      id, salesId, lineNo, paymentAccountId, direction, amount }))
++    settlements: document.settlements.filter(row => changedSettlements.has(row.id)).map(({ id, salesId, lineNo, paymentAccountId, paymentMethodId, direction, amount }) => ({
++      id, salesId, lineNo, paymentAccountId, paymentMethodId, direction, amount }))
+   });
+   return { before: previous ? values(previous) : null, after: values(next) };
+ }
+diff --git a/packages/application/src/sales-native-facts.ts b/packages/application/src/sales-native-facts.ts
+index 0545c6e..522e5c6 100644
+--- a/packages/application/src/sales-native-facts.ts
++++ b/packages/application/src/sales-native-facts.ts
+@@ -45,6 +45,8 @@ function resolver(document: SalesDraft | SalesDocument, facts: NativeSalesRefere
+         const account = accounts.get(settlement.paymentAccountId);
+         requireDomain(account?.enabled === true && account.methodEnabled === true,
+           "SALES_REFERENCE_UNAVAILABLE", "Settlement account and its actual method must remain enabled");
++        requireDomain(settlement.paymentMethodId !== null && settlement.paymentMethodId === account.methodId,
++          "SETTLEMENT_METHOD_MISMATCH", "Selected payment-method identity must match the locked account actual method");
+       }
+       for (const line of proposed.lines.filter(row => row.isCurrent)) {
+         const current = skus.get(line.skuId); requireDomain(current?.enabled === true, "SKU_UNAVAILABLE", "Current formal SKU facts are unavailable");
+diff --git a/packages/application/src/sales-service.ts b/packages/application/src/sales-service.ts
+index 22e7d9a..ebfbadc 100644
+--- a/packages/application/src/sales-service.ts
++++ b/packages/application/src/sales-service.ts
+@@ -2,7 +2,7 @@ import { applyInventoryEntry, assertPostingCoverage } from "./inventory-posting.
+ import type { SalesDocument, SalesDraft, SalesLineRow } from "../../domain/src/documents.ts";
+ import { requireDomain } from "../../domain/src/errors.ts";
+ import type { InventoryLedgerRow } from "../../domain/src/inventory.ts";
+-import { addMoney, minorAmount, negateMoney, negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
++import { addMoney, entityId, minorAmount, negateMoney, negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
+ import type { EntityId } from "../../domain/src/values.ts";
+ import type { SalesCommand, SalesDependencies, SalesResult } from "./ports.ts";
+ import { requestHash } from "./request-hash.ts";
+@@ -27,9 +27,10 @@ function validateDraft(draft: SalesDraft): void {
+   requireDomain(draft.settlements.length <= 3, "SETTLEMENT_LIMIT", "At most three document settlement rows are supported by the observed Demo rule");
+   ids.clear(); positions.clear();
+   for (const row of draft.settlements) {
+-    requireDomain(row.salesId === draft.header.id && row.amount >= 0n && ["RECEIVE", "REFUND"].includes(row.direction)
++    requireDomain(row.salesId === draft.header.id && typeof row.paymentMethodId === "string" && row.amount >= 0n && ["RECEIVE", "REFUND"].includes(row.direction)
+       && Number.isSafeInteger(row.lineNo) && row.lineNo > 0 && !ids.has(row.id) && !positions.has(row.lineNo),
+     "INVALID_SETTLEMENT", "Expected owned, unique, nonnegative receive/refund rows");
++    entityId("paymentMethod", row.paymentMethodId);
+     ids.add(row.id); positions.add(row.lineNo);
+   }
+ }
+diff --git a/packages/domain/src/documents.ts b/packages/domain/src/documents.ts
+index c14a88b..a58ec39 100644
+--- a/packages/domain/src/documents.ts
++++ b/packages/domain/src/documents.ts
+@@ -30,7 +30,9 @@ export interface SalesLineRow {
+ }
+ export interface SalesSettlementRow {
+   readonly id: EntityId<"settlement">; readonly salesId: EntityId<"sales">; readonly lineNo: number;
+-  readonly paymentAccountId: EntityId<"paymentAccount">; readonly direction: "RECEIVE" | "REFUND";
++  readonly paymentAccountId: EntityId<"paymentAccount">;
++  /** Original selected method identity; NULL only represents unknown stored history, never runtime intent. */
++  readonly paymentMethodId: EntityId<"paymentMethod"> | null; readonly direction: "RECEIVE" | "REFUND";
+   readonly amount: MinorAmount;
+ }
+ export interface SalesDocument {
+diff --git a/tests/catalogue-authority-schema-contract.test.ts b/tests/catalogue-authority-schema-contract.test.ts
+index f738e03..8de0699 100644
+--- a/tests/catalogue-authority-schema-contract.test.ts
++++ b/tests/catalogue-authority-schema-contract.test.ts
+@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
+ import test from "node:test";
+ import { readFile } from "node:fs/promises";
+ import { createHash } from "node:crypto";
++import { FROZEN_0001_0008_MIGRATIONS } from "./integration/frozen-0001-0008-manifest.ts";
+ import { MIGRATIONS } from "./integration/migration-manifest.ts";
+ const file = "0009_catalogue_prices_barcodes.sql";
+ const ddl = await readFile(new URL(`../adapters/postgres/migrations/${file}`, import.meta.url), "utf8");
+@@ -55,10 +56,10 @@ test("catalogue authority migration source: only migration registry inserted; no
+   assert.match(sql, /VALUES \(9, 'Approved product nine-price/);
+   assert.ok(!/password|session|credential|inventory_balance|inventory_ledger|import_batch|operation_receipt|sales_header|transfer_header/.test(sql));
+ });
+-test("catalogue authority migration source: legacy eight-migration harness is deliberately unchanged and does not silently apply incompatible 0009 to populated fixtures", async () => {
+-  assert.deepEqual(MIGRATIONS.map(([version]) => version), [1,2,3,4,5,6,7,8]);
+-  assert.ok(!MIGRATIONS.some(([, name]) => String(name) === file));
+-  for (const [, name, sha256] of MIGRATIONS) {
++test("catalogue authority migration source: frozen historical eight-prefix stays immutable; current harness requires1–10 before products", async () => {
++  assert.deepEqual(FROZEN_0001_0008_MIGRATIONS.map(([version]) => version), [1,2,3,4,5,6,7,8]);
++  assert.deepEqual(MIGRATIONS.map(([version]) => version), [1,2,3,4,5,6,7,8,9,10]);
++  for (const [, name, sha256] of FROZEN_0001_0008_MIGRATIONS) {
+     const source = await readFile(new URL(`../adapters/postgres/migrations/${name}`, import.meta.url));
+     assert.equal(createHash("sha256").update(source).digest("hex"), sha256, name);
+   }
+diff --git a/tests/current-form-reader.test.ts b/tests/current-form-reader.test.ts
+index 2acccdb..a61b86f 100644
+--- a/tests/current-form-reader.test.ts
++++ b/tests/current-form-reader.test.ts
+@@ -1,9 +1,10 @@
+ /** SYNTHETIC/scripted pg protocol only: no database, listener, operations or imported data. */
+ import assert from "node:assert/strict";
+ import test from "node:test";
++import { readCurrentRecentAccount } from "../adapters/postgres/src/current-account-recommendations.ts";
+ import { PostgresCurrentFormReader } from "../adapters/postgres/src/current-form-reader.ts";
+ import type { PgSalesClient, PgSalesResult } from "../adapters/postgres/src/sales-unit-of-work.ts";
+-import type { CurrentFormAuthorization, CurrentFormIntent, CurrentFormReadGrant } from "../packages/application/src/current-form-ports.ts";
++import type { CurrentFormAuthorization, CurrentFormIntent, CurrentFormReadGrant, CurrentSalesReferenceQuery } from "../packages/application/src/current-form-ports.ts";
+ import { parseCurrentSalesReferenceQuery, parseCurrentTransferWarehouseQuery, parseCurrentFormProductQuery,
+   parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery } from "../packages/application/src/current-form-validation.ts";
+ import { actor, sid } from "./support/synthetic-fixtures.ts";
+@@ -12,7 +13,12 @@ const signal = () => new AbortController().signal;
+ const context = { kind: "SALES" as const, hallId: hall };
+ const transferContext = { kind: "TRANSFER" as const };
+ const search = { search: "", page: 1, pageSize: 20 as const };
+-const reference = (kind: "hall" | "customer" | "salesperson" | "warehouse" | "paymentAccount" = "hall") => ({ ...search, kind, hallId: kind === "hall" ? null : hall });
++const selectedMethod = sid("paymentMethod", 1004);
++function reference(kind: CurrentSalesReferenceQuery["kind"] = "hall"): CurrentSalesReferenceQuery {
++  if (kind === "hall") return { ...search, kind, hallId: null };
++  if (kind === "paymentAccount") return { ...search, kind, hallId: hall, paymentMethodId: selectedMethod };
++  return { ...search, kind, hallId: hall };
++}
+ interface Step { readonly sql: RegExp; readonly rows?: Record<string, unknown>[]; readonly error?: Error; readonly inspect?: (values: unknown[], sql: string) => void }
+ class Client implements PgSalesClient {
+   readonly calls: { sql: string; values: unknown[] }[] = []; readonly releases: (Error | boolean | undefined)[] = [];
+@@ -35,6 +41,17 @@ const identity = (change: Record<string, unknown> = {}): Step => ({ sql: /curren
+ const selectedHall = (): Step => ({ sql: /current-form:sales-hall/, rows: [{ id: hall, enabled: true }] });
+ const total = (value = "1", inspect?: Step["inspect"]): Step => ({ sql: /current-form:count/, rows: [{ total: value }], ...(inspect ? { inspect } : {}) });
+ const page = (rows: Record<string, unknown>[], inspect?: Step["inspect"]): Step => ({ sql: /current-form:page/, rows, ...(inspect ? { inspect } : {}) });
++const savepoint = (): Step => ({ sql: /^SAVEPOINT current_account_recommendation$/ });
++const releaseHints = (): Step => ({ sql: /^RELEASE SAVEPOINT current_account_recommendation$/ });
++const rollbackHints = (): Step => ({ sql: /^ROLLBACK TO SAVEPOINT current_account_recommendation$/ });
++const setTimeout = (value: string): Step => ({ sql: /^SELECT set_config\('statement_timeout'/, inspect(values) { assert.deepEqual(values, [value]); } });
++function hints(recent: string | null = null, original = "15s", budget = "250ms"): Step[] {
++  return [savepoint(), { sql: /current-form:recommendation-timeout/, rows: [{ statement_timeout: original }] }, setTimeout(budget),
++    { sql: /current-form:recent-account/, rows: [{ recent_account_id: recent, candidate_overflow: false, proof_overflow: false }], inspect(values) {
++      assert.deepEqual(values, [hall, selectedMethod, 51, 50, 100001, 2000, 100000]);
++    } }];
++}
++const restoreHints = (original = "15s"): Step[] => [setTimeout(original), releaseHints()];
+ const item = (change: Record<string, unknown> = {}) => ({ id: hall, name: "SYNTHETIC 完整名称", code: null, hall_id: hall, hall_name: "SYNTHETIC 完整厅名", payment_method_id: null, payment_method_name: null, ...change });
+ const sku = (change: Record<string, unknown> = {}) => ({ id: skuId, sku_code: "SYNTHETIC ORIGINAL SKU", product_id: productId, product_code: "SYNTHETIC ORIGINAL PRODUCT", product_name: "SYNTHETIC 完整商品名", color_id: sid("color", 994), color_name: "SYNTHETIC 完整颜色", fit_id: sid("fit", 995), fit_name: "SYNTHETIC 完整版型", size_id: sid("size", 996), size_name: "SYNTHETIC 完整尺码", size_group_id: sid("sizeGroup", 997), member_size_id: sid("size", 996), sku_enabled: true, product_enabled: true, color_enabled: true, fit_enabled: true, ...change });
+ const allow: CurrentFormAuthorization = { async authorize() { return { kind: "all" }; } };
+@@ -98,7 +115,7 @@ test("current forms: denied/empty/malformed explicit grants fail closed, never b
+ });
+ test("current forms: proposed foreign sales hall is denied before target disclosure, even with an all grant", async () => {
+   const client = new Client([begin(), identity(), rollback()]);
+-  await assert.rejects(() => reader(client).readSalesReferences(actor, { ...reference("customer"), hallId: foreignHall }, signal()), { code: "FORBIDDEN" }); client.done();
++  await assert.rejects(() => reader(client).readSalesReferences(actor, { ...search, kind: "customer", hallId: foreignHall }, signal()), { code: "FORBIDDEN" }); client.done();
+   const restricted = new Client([begin(), identity({ role: "ADMIN" }), rollback()]);
+   await assert.rejects(() => reader(restricted, { async authorize() { return { kind: "halls", hallIds: [foreignHall] }; } }).readProducts(actor, { ...search, context }, signal()), { code: "FORBIDDEN" }); restricted.done();
+ });
+@@ -128,13 +145,18 @@ test("current forms: sales warehouse is enabled and belongs to proposed hall, ne
+   }), page([]), commit()]);
+   assert.equal((await reader(client).readSalesReferences(actor, reference("warehouse"), signal())).items.length, 0); client.done();
+ });
+-test("current forms: accounts require enabled method; hall affiliation is page recommendation, never count/WHERE restriction", async () => {
+-  const accountId = sid("paymentAccount", 1003), method = sid("paymentMethod", 1004); const client = new Client([begin(), identity(), selectedHall(), total("1", (values, sql) => {
+-    assert.deepEqual(values, [""]); assert.match(sql, /r.enabled AND pm.enabled/); assert.ok(!/payment_account_hall/.test(sql));
+-  }), page([item({ id: accountId, hall_id: null, hall_name: null, payment_method_id: method, payment_method_name: "SYNTHETIC 完整方式" })], (values, sql) => {
+-    assert.deepEqual(values, ["", hall, 20, 0]); assert.match(sql, /ORDER BY \(EXISTS \(SELECT 1 FROM naijue_erp.payment_account_hall/); assert.match(sql, /LIMIT \$3 OFFSET \$4/);
+-  }), commit()]);
+-  const result = await reader(client).readSalesReferences(actor, reference("paymentAccount"), signal()); assert.equal(result.items[0]!.paymentMethodId, method); client.done();
++test("current forms: selected-method accounts stay globally eligible; OR recommendations share stable account-ID base order", async () => {
++  const accountId = sid("paymentAccount", 1003); const client = new Client([begin(), identity(), selectedHall(), total("1", (values, sql) => {
++    assert.deepEqual(values, ["", selectedMethod]); assert.match(sql, /r.enabled AND pm.enabled AND r.payment_method_id = \$2::uuid/);
++    assert.ok(!/payment_account_hall|sales_header|hall_id/.test(sql));
++  }), ...hints(accountId), page([item({ id: accountId, hall_id: null, hall_name: null, payment_method_id: selectedMethod, payment_method_name: "SYNTHETIC 完整方式", is_recommended: true })], (values, sql) => {
++    assert.deepEqual(values, ["", selectedMethod, hall, accountId, 20, 0]);
++    assert.match(sql, /EXISTS \(SELECT 1 FROM naijue_erp.payment_account_hall/); assert.match(sql, /OR r.id = \$4::uuid/);
++    assert.match(sql, /ORDER BY is_recommended DESC, r.id LIMIT \$5 OFFSET \$6/);
++    assert.ok(!/ORDER BY.*name|updated_at/.test(sql));
++  }), ...restoreHints(), commit()]);
++  const result = await reader(client).readSalesReferences(actor, reference("paymentAccount"), signal());
++  assert.equal(result.items[0]!.paymentMethodId, selectedMethod); assert.equal(result.recommendationAvailability, "AVAILABLE"); readonly(client); client.done();
+ });
+ test("current forms: transfer FROM retains disabled nonzero warehouse, TO only enabled; hall enabled is a fact not a new filter", async () => {
+   for (const direction of ["FROM", "TO"] as const) {
+@@ -218,7 +240,7 @@ test("current forms: driver-returned out-of-scope references and inconsistent ac
+     { kind: "paymentAccount", row: item({ id: sid("paymentAccount", 2102), hall_id: null, hall_name: null, payment_method_id: sid("paymentMethod", 2103), payment_method_name: null }), selected: true }
+   ];
+   for (const value of cases) {
+-    const client = new Client([begin(), identity(), ...(value.selected ? [selectedHall()] : []), total(), page([value.row]), rollback()]);
++    const client = new Client([begin(), identity(), ...(value.selected ? [selectedHall()] : []), total(), ...(value.kind === "paymentAccount" ? hints() : []), page([{ ...value.row, ...(value.kind === "paymentAccount" ? { is_recommended: false } : {}) }]), ...(value.kind === "paymentAccount" ? restoreHints() : []), rollback()]);
+     await assert.rejects(() => reader(client).readSalesReferences(actor, reference(value.kind), signal()), { code: "INVALID_DATABASE_VALUE" }); client.done();
+   }
+   const client = new Client([begin(), identity(), total(), page([{ id: sid("warehouse", 2104), name: "SYNTHETIC W", hall_id: foreignHall, hall_name: "SYNTHETIC H", enabled: true, hall_enabled: true, has_nonzero_inventory: false }]), rollback()]);
+@@ -241,3 +263,82 @@ test("current forms: the maximum target batch stays one bounded set and never be
+   const client = new Client([begin(), identity(), { sql: /current-form:sku-batch/, rows: ids.map((id, index) => sku({ id, size_id: sid("size", 2500 + index), member_size_id: sid("size", 2500 + index) })), inspect(values) { assert.equal((values[0] as unknown[]).length, 200); assert.equal(values[1], 201); } }, commit()]);
+   assert.equal((await reader(client).readSkuBatch(actor, { context: transferContext, skuIds: ids }, signal())).length, 200); assert.equal(client.calls.length, 4); client.done();
+ });
++
++test("current forms: payment method is mandatory/canonical only for account queries; invalid contract never connects", async () => {
++  const { paymentMethodId: _method, ...missing } = reference("paymentAccount") as Extract<CurrentSalesReferenceQuery, { kind: "paymentAccount" }>;
++  let connections = 0; const r = new PostgresCurrentFormReader({ async connect() { connections++; throw new Error("must not connect"); } }, allow);
++  for (const input of [missing, { ...missing, paymentMethodId: null }, { ...missing, paymentMethodId: "fake" }, { ...missing, paymentMethodId: selectedMethod.toUpperCase() },
++    { ...reference("customer"), paymentMethodId: selectedMethod }, { ...reference(), paymentMethodId: selectedMethod }]) {
++    await assert.rejects(async () => r.readSalesReferences(actor, input as never, signal()), { code: "INVALID_CURRENT_FORM_QUERY" });
++  }
++  assert.equal(connections, 0);
++});
++test("current forms: optional recent timeout/missing SQL permission/overflow recover same connection with pure global eligibility", async () => {
++  for (const code of ["57014", "42703", "42501", "CURRENT_ACCOUNT_RECOMMENDATION_UNAVAILABLE"]) {
++    const failure = Object.assign(new Error("SYNTHETIC optional recommendation failure"), { code }); const accountId = sid("paymentAccount", 3010);
++    const prefix = hints().slice(0, 3); const client = new Client([begin(), identity(), selectedHall(), total(), ...prefix,
++      { sql: /current-form:recent-account/, error: failure }, rollbackHints(), releaseHints(),
++      { sql: /current-form:eligible-account-fallback/, rows: [item({ id: accountId, hall_id: null, hall_name: null, payment_method_id: selectedMethod, payment_method_name: "SYNTHETIC cross-hall eligible" })], inspect(values, sql) {
++        assert.deepEqual(values, ["", selectedMethod, 20, 0]); assert.match(sql, /r.enabled AND pm.enabled AND r.payment_method_id = \$2::uuid/);
++        assert.match(sql, /ORDER BY r.id LIMIT \$3 OFFSET \$4/); assert.ok(!/payment_account_hall|sales_header|hall_id =|is_recommended/.test(sql));
++      } }, commit()]);
++    const result = await reader(client).readSalesReferences(actor, reference("paymentAccount"), signal());
++    assert.equal(result.items[0]!.id, accountId); assert.equal(result.recommendationAvailability, "UNAVAILABLE"); assert.equal(result.exactTotal, 1n);
++    assert.equal(client.calls.filter(call => call.sql.includes("current-form:recent-account")).length, 1); client.done();
++  }
++});
++test("current forms: optional recommendation timeout is bounded, does not extend tighter original, and restores success setting", async () => {
++  for (const [original, budget, option] of [["0", "250ms", undefined], ["15s", "1000ms", 1000], ["100ms", "100ms", 250], ["100us", "100us", 250]] as const) {
++    const client = new Client([begin(), identity(), selectedHall(), total("0"), ...hints(null, original, budget), page([]), ...restoreHints(original), commit()]);
++    await new PostgresCurrentFormReader({ async connect() { return client; } }, allow, option === undefined ? undefined : { recommendationTimeoutMillis: option })
++      .readSalesReferences(actor, reference("paymentAccount"), signal()); client.done();
++  }
++  for (const value of [0, 1001, -1, 2.5, NaN]) assert.throws(() => new PostgresCurrentFormReader({ async connect() { throw new Error(); } }, allow, { recommendationTimeoutMillis: value }), /1 through 1000/);
++});
++test("current forms: eligibility SQL/count, decoder, and failed savepoint recovery do not degrade into successful hints", async () => {
++  const core = new Error("SYNTHETIC authoritative count denied"); const denied = new Client([begin(), identity(), selectedHall(), { sql: /current-form:count/, error: core }, rollback()]);
++  await assert.rejects(() => reader(denied).readSalesReferences(actor, reference("paymentAccount"), signal()), core); denied.done();
++  const mismatch = new Client([begin(), identity(), selectedHall(), total(), ...hints(), page([item({ id: sid("paymentAccount", 3011), hall_id: null, hall_name: null, payment_method_id: sid("paymentMethod", 3012), payment_method_name: "OTHER", is_recommended: false })]), ...restoreHints(), rollback()]);
++  await assert.rejects(() => reader(mismatch).readSalesReferences(actor, reference("paymentAccount"), signal()), { code: "INVALID_DATABASE_VALUE" }); mismatch.done();
++  const recovery = new Error("SYNTHETIC rollback-to failed"); const broken = new Client([begin(), identity(), selectedHall(), total(), ...hints().slice(0,3), { sql: /current-form:recent-account/, error: core }, { ...rollbackHints(), error: recovery }, rollback()]);
++  await assert.rejects(() => reader(broken).readSalesReferences(actor, reference("paymentAccount"), signal()), recovery); broken.done();
++});
++test("current forms: recent proof is one bounded aggregate, retains sales-family/order/original-pair and does not invent historical active facts", async () => {
++  let calls = 0; const recent = sid("paymentAccount", 3013);
++  const query = async (sql: string, values?: unknown[]): Promise<PgSalesResult> => { calls++; assert.deepEqual(values, [hall, selectedMethod, 51, 50, 100001, 2000, 100000]);
++    assert.match(sql, /h.status = 'APPROVED' AND h.stock_basis = 'RUNTIME_LEDGER'/); assert.ok(!/business_type\s*=|CUTOFF_HISTORY|method_name_snapshot/.test(sql));
++    assert.match(sql, /h.business_date DESC NULLS LAST, h.updated_at DESC, h.id DESC LIMIT \$3/);
++    assert.match(sql, /ss.payment_method_id_snapshot = a.payment_method_id/); assert.match(sql, /d.id DESC, ss.line_no ASC LIMIT 1/);
++    assert.match(sql, /NOT EXISTS \(SELECT 1 FROM naijue_erp.inventory_ledger reversal/); assert.match(sql, /e.source_document_version = d.version/);
++    assert.match(sql, /e.quantity_delta::numeric = -l.quantity::numeric/); assert.match(sql, /e.distinct_line_count = l.line_count/);
++    assert.equal((sql.match(/FROM naijue_erp.sales_header/g) ?? []).length, 1); assert.equal((sql.match(/LIMIT \$5/g) ?? []).length, 2);
++    return { rows: [{ recent_account_id: recent, candidate_overflow: true, proof_overflow: false }], rowCount: 1 };
++  };
++  assert.equal(await readCurrentRecentAccount(query, hall, selectedMethod), recent); assert.equal(calls, 1);
++  for (const row of [{ recent_account_id: null, candidate_overflow: true, proof_overflow: false }, { recent_account_id: recent, candidate_overflow: false, proof_overflow: true }])
++    await assert.rejects(() => readCurrentRecentAccount(async () => ({ rows: [row], rowCount: 1 }), hall, selectedMethod), { code: "CURRENT_ACCOUNT_RECOMMENDATION_UNAVAILABLE" });
++  assert.equal(await readCurrentRecentAccount(async () => ({ rows: [{ recent_account_id: null, candidate_overflow: false, proof_overflow: false }], rowCount: 1 }), hall, selectedMethod), null);
++});
++test("current forms: every optional config/page/restore failure recovers via savepoint and never hides globally eligible accounts", async () => {
++  const accountId = sid("paymentAccount", 3020), failure = new Error("SYNTHETIC optional failure");
++  const candidate = item({ id: accountId, hall_id: null, hall_name: null, payment_method_id: selectedMethod, payment_method_name: "SYNTHETIC method" });
++  const scenarios: Step[][] = [
++    [savepoint(), { sql: /current-form:recommendation-timeout/, error: failure }],
++    [savepoint(), { sql: /current-form:recommendation-timeout/, rows: [{ statement_timeout: "untrusted timeout" }] }],
++    [...hints().slice(0, 2), { ...setTimeout("250ms"), error: failure }],
++    [...hints(), { sql: /current-form:page/, error: failure }],
++    [...hints(), page([{ ...candidate, is_recommended: false }]), { ...setTimeout("15s"), error: failure }]
++  ];
++  for (const steps of scenarios) {
++    const client = new Client([begin(), identity(), selectedHall(), total(), ...steps, rollbackHints(), releaseHints(),
++      { sql: /current-form:eligible-account-fallback/, rows: [candidate] }, commit()]);
++    const result = await reader(client).readSalesReferences(actor, reference("paymentAccount"), signal());
++    assert.equal(result.recommendationAvailability, "UNAVAILABLE"); assert.equal(result.items[0]!.id, accountId); assert.equal(result.exactTotal, 1n); client.done();
++  }
++});
++test("current forms: optional cancellation remains cancellation with whole rollback, not an unrequested fallback", async () => {
++  const control = new AbortController(); const client = new Client([begin(), identity(), selectedHall(), total("0"),
++    ...hints().slice(0, 3), { sql: /current-form:recent-account/, rows: [{ recent_account_id: null, candidate_overflow: false, proof_overflow: false }], inspect() { control.abort(); } }, rollback()]);
++  await assert.rejects(() => reader(client).readSalesReferences(actor, reference("paymentAccount"), control.signal), { code: "CURRENT_FORM_READ_ABORTED" });
++  assert.ok(!client.calls.some(call => call.sql.includes("eligible-account-fallback"))); client.done();
++});
+diff --git a/tests/inventory-first-use-postgres-protocol.test.ts b/tests/inventory-first-use-postgres-protocol.test.ts
+index 38bd73a..9174a5c 100644
+--- a/tests/inventory-first-use-postgres-protocol.test.ts
++++ b/tests/inventory-first-use-postgres-protocol.test.ts
+@@ -56,8 +56,8 @@ function salesScenario(): { read: Step[]; proof: Step[]; writes: Step[]; execute
+   const lines = draft.lines.map(l => ({ id: l.id, sales_id: l.salesId, line_no: l.lineNo, sku_id: l.skuId, quantity: l.quantity.toString(), reference_price: l.referencePrice === null ? null : moneyToSql(l.referencePrice), deal_price: moneyToSql(l.dealPrice),
+     line_amount: moneyToSql(l.lineAmount), allocated_discount: moneyToSql(l.allocatedDiscount), is_gift: l.isGift, pricing_rule: l.pricingRule, discount_tenths: l.discountTenths, zero_confirmed: l.zeroConfirmed,
+     product_code_snapshot: l.snapshot.productCode, product_name_snapshot: l.snapshot.productName, color_name_snapshot: l.snapshot.colorName, fit_name_snapshot: l.snapshot.fitName, size_name_snapshot: l.snapshot.sizeName, barcode_snapshot: l.snapshot.barcode, is_current: true }));
+-  return { read: [{ sql: /^SELECT pg_advisory_xact_lock/ }, { sql: /FROM naijue_erp.operation_receipt/, rows: [] }, { sql: /^SELECT pg_advisory_xact_lock/ }, { sql: /FROM naijue_erp.sales_header/, rows: [header] },
+-    { sql: /FROM naijue_erp.sales_line/, rows: lines }, { sql: /FROM naijue_erp.sales_settlement/, rows: draft.settlements.map(r => ({ id: r.id, sales_id: r.salesId, line_no: r.lineNo, payment_account_id: r.paymentAccountId, direction: r.direction, amount: moneyToSql(r.amount) })) },
++  return { read: [{ sql: /sales:current-schema/, rows: [{ current_sales_schema_ready: true }] }, { sql: /^SELECT pg_advisory_xact_lock/ }, { sql: /FROM naijue_erp.operation_receipt/, rows: [] }, { sql: /^SELECT pg_advisory_xact_lock/ }, { sql: /FROM naijue_erp.sales_header/, rows: [header] },
++    { sql: /FROM naijue_erp.sales_line/, rows: lines }, { sql: /FROM naijue_erp.sales_settlement/, rows: draft.settlements.map(r => ({ id: r.id, sales_id: r.salesId, line_no: r.lineNo, payment_account_id: r.paymentAccountId, payment_method_id_snapshot: r.paymentMethodId, direction: r.direction, amount: moneyToSql(r.amount) })) },
+     ...locks([{ warehouseId: ids.warehouse, skuId: ids.sku }])], proof: [...publication(), zero()], writes: [ledger, firstInsert("-2"), ledger, update("-5"), ...finals("sales")],
+     execute(client) { let n = 10_000; return createSalesService({ unitOfWork: new PostgresSalesUnitOfWork({ async connect() { return client; } }), authorization: { async assertAllowed() {} }, rules: SYNTHETIC_RULES, now: () => time, newId: kind => sid(kind, n++) })
+       .execute({ action: "APPROVE", actor, salesId: ids.sales, expectedVersion: version(1), requestKey: "first-actual-approval" }); } };
+diff --git a/tests/postgres-protocol.test.ts b/tests/postgres-protocol.test.ts
+index a28a2bd..e38ce9d 100644
+--- a/tests/postgres-protocol.test.ts
++++ b/tests/postgres-protocol.test.ts
+@@ -24,7 +24,10 @@ class ProtocolClient implements PgSalesClient {
+   readonly calls: { sql: string; values: unknown[] }[] = [];
+   readonly releases: (Error | boolean | undefined)[] = [];
+   private readonly steps: Step[];
+-  constructor(steps: Step[]) { this.steps = steps; }
++  constructor(steps: Step[]) {
++    this.steps = steps.flatMap(step => step.sql.test("BEGIN ISOLATION LEVEL READ COMMITTED") && !step.error
++      ? [step, { sql: /sales:current-schema/, rows: [{ current_sales_schema_ready: true }], inspect(_values: unknown[], sql: string) { assert.match(sql, /schema_migration WHERE version = 10/); } }] : [step]);
++  }
+   async query(sql: string, values: unknown[] = []): Promise<PgSalesResult> {
+     this.calls.push({ sql, values: structuredClone(values) });
+     const step = this.steps.shift();
+@@ -62,7 +65,7 @@ function lineRows(document: SalesDocument): Record<string, unknown>[] {
+     size_name_snapshot: l.snapshot.sizeName, barcode_snapshot: l.snapshot.barcode }));
+ }
+ function settlementRows(document: SalesDocument): Record<string, unknown>[] {
+-  return document.settlements.map(r => ({ id: r.id, sales_id: r.salesId, line_no: r.lineNo, payment_account_id: r.paymentAccountId, direction: r.direction, amount: moneyToSql(r.amount) }));
++  return document.settlements.map(r => ({ id: r.id, sales_id: r.salesId, line_no: r.lineNo, payment_account_id: r.paymentAccountId, payment_method_id_snapshot: r.paymentMethodId, direction: r.direction, amount: moneyToSql(r.amount) }));
+ }
+ function balanceRow(skuId = ids.sku, amount = "0", balanceVersion = 1): Record<string, unknown> {
+   return { warehouse_id: ids.warehouse, sku_id: skuId, quantity: amount, version: balanceVersion, last_operation_id: null, updated_at: time };
+@@ -109,7 +112,9 @@ function documentWrites(document: SalesDocument, isNew = false, previous: SalesD
+   ...(removedIds.length ? [{ sql: /^DELETE FROM naijue_erp.sales_settlement WHERE sales_id = \$1 AND id = ANY\(\$2::uuid\[\]\)/,
+     inspect(values: unknown[]) { assert.deepEqual(values, [ids.sales, removedIds]); } }] : []),
+   ...document.settlements.filter(row => !oldSettlements.has(row.id) || requestHash(oldSettlements.get(row.id)) !== requestHash(row)).map<Step>(row => ({ sql: /^INSERT INTO naijue_erp.sales_settlement/, inspect(values, sql) {
+-    assert.equal(values[0], row.id); assert.equal(values[5], moneyToSql(row.amount));
++    assert.equal(values[0], row.id); assert.equal(values[5], moneyToSql(row.amount)); assert.equal(values[6], row.paymentMethodId);
++    assert.match(sql, /pa.name, pm.name, pm.id/); assert.match(sql, /WHERE pa.id = \$4 AND pm.id = \$7::uuid/);
++    assert.match(sql, /THEN sales_settlement.payment_method_id_snapshot ELSE EXCLUDED.payment_method_id_snapshot END/);
+     assert.match(sql, /pa.name, pm.name/); assert.match(sql, /THEN sales_settlement.account_name_snapshot ELSE EXCLUDED.account_name_snapshot END/);
+     assert.match(sql, /WHERE sales_settlement.sales_id = EXCLUDED.sales_id/);
+   } }))];
+@@ -547,3 +552,39 @@ test("pg protocol sales authorization: genuine null-hall ADMIN skips hall lookup
+   assert.equal((await actionService(client).execute(command)).status, "DRAFT");
+   assert.ok(client.calls.every(call => !/sales-authorization:hall/.test(call.sql))); client.done();
+ });
++
++test("pg protocol schema10: absent current schema fails before callback, has no legacy writer retry and rolls back", async () => {
++  const calls: string[] = []; let callbacks = 0, released = 0;
++  const client: PgSalesClient = { async query(sql) { calls.push(sql); return { rows: sql.includes("sales:current-schema") ? [{ current_sales_schema_ready: false }] : [], rowCount: 0 }; }, release() { released++; } };
++  await assert.rejects(() => new PostgresSalesUnitOfWork({ async connect() { return client; } }).transaction(async () => { callbacks++; }), { code: "SALES_SCHEMA_NOT_READY" });
++  assert.equal(callbacks, 0); assert.equal(released, 1); assert.deepEqual(calls.map(sql => sql.includes("sales:current-schema") ? "SCHEMA10" : sql), ["BEGIN ISOLATION LEVEL READ COMMITTED", "SCHEMA10", "ROLLBACK"]);
++});
++test("pg protocol method identity: amount edits preserve original known ID, changed account captures explicit new method in original transaction", async () => {
++  for (const changedAccount of [false, true]) {
++    const source = storedDocument(); const old = source.settlements[0]!; const changed = { ...old, amount: minorAmount("99"),
++      ...(changedAccount ? { paymentAccountId: sid("paymentAccount", 7100), paymentMethodId: sid("paymentMethod", 7101) } : {}) };
++    const next = { ...source, header: { ...source.header, version: version(2) }, settlements: [changed] };
++    const client = new ProtocolClient([begin(), ...salesRead(source), ...documentWrites(next, false, source), commit()]);
++    await uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(next); });
++    const write = client.calls.find(call => /^INSERT INTO naijue_erp.sales_settlement/.test(call.sql))!;
++    assert.equal(write.values[6], changed.paymentMethodId); assert.match(write.sql, /pm.name, pm.id/);
++    assert.match(write.sql, /THEN sales_settlement.payment_method_id_snapshot ELSE EXCLUDED.payment_method_id_snapshot END/); client.done();
++  }
++});
++test("pg protocol method identity: retained same-account original known/NULL ID cannot be overwritten by caller's current method", async () => {
++  for (const previousMethod of [sid("paymentMethod", 31), null]) {
++    const base = storedDocument(); const source = { ...base, settlements: base.settlements.map(row => ({ ...row, paymentMethodId: previousMethod })) };
++    const next = { ...source, header: { ...source.header, version: version(2) }, settlements: source.settlements.map(row => ({ ...row, paymentMethodId: sid("paymentMethod", 7102) })) };
++    const client = new ProtocolClient([begin(), ...salesRead(source), { sql: /^UPDATE naijue_erp.sales_header/ }, rollback()]);
++    await assert.rejects(() => uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(next); }), { code: "IMMUTABLE_SETTLEMENT_METHOD" });
++    assert.ok(!client.calls.some(call => /^INSERT INTO naijue_erp.sales_settlement/.test(call.sql))); client.done();
++  }
++});
++
++test("pg protocol method identity: status-only writer preserves original NULL unchanged instead of guessing/backfilling a method", async () => {
++  const base = storedDocument(undefined, "APPROVED"); const source = { ...base, settlements: base.settlements.map(row => ({ ...row, paymentMethodId: null })) };
++  const next = { ...source, header: { ...source.header, status: "DRAFT" as const, version: version(2), approvedByAccountId: null, approvedAt: null } };
++  const client = new ProtocolClient([begin(), ...salesRead(source), ...documentWrites(next, false, source), commit()]);
++  await uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(next); });
++  assert.ok(!client.calls.some(call => /^INSERT INTO naijue_erp.sales_settlement/.test(call.sql))); client.done();
++});
+diff --git a/tests/sales-business-rules.test.ts b/tests/sales-business-rules.test.ts
+index b21be76..3b17b8e 100644
+--- a/tests/sales-business-rules.test.ts
++++ b/tests/sales-business-rules.test.ts
+@@ -32,7 +32,7 @@ function draft(businessType: SalesBusinessType, input: readonly SalesLineRow[],
+   const due = gross - BigInt(discount);
+   return { ...syntheticDraft(businessType), header: { ...syntheticDraft(businessType).header, businessType, grossAmount: gross, orderDiscount: money(discount), netDue: money(due) },
+     lines: input.map((row, index) => ({ ...row, allocatedDiscount: shares[index]! })),
+-    settlements: due === 0n ? [] : [{ id: sid("settlement", 500), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, direction: due < 0n ? "REFUND" : "RECEIVE", amount: money(due < 0n ? -due : due) }] };
++    settlements: due === 0n ? [] : [{ id: sid("settlement", 500), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, paymentMethodId: sid("paymentMethod", 31), direction: due < 0n ? "REFUND" : "RECEIVE", amount: money(due < 0n ? -due : due) }] };
+ }
+ const rules = () => createCandidateSalesBusinessRules(facts());
+ const check = (value: SalesDraft) => rules().assertDraftChange(undefined, value);
+@@ -151,7 +151,7 @@ test("candidate adapter / synthetic: unbalanced saved refund is allowed but appr
+ test("candidate adapter / synthetic: absolute zero RECEIVE or REFUND adapts to signed zero with valid references", async () => {
+   for (const direction of ["RECEIVE", "REFUND"] as const) {
+     const f = fixture({ rules: rules() }); const value = draft("SALE", [line(0, "1", 0, { isGift: true })]);
+-    await f.service.execute(save({ ...value, settlements: [{ id: sid("settlement", 500), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, direction, amount: money(0) }] }));
++    await f.service.execute(save({ ...value, settlements: [{ id: sid("settlement", 500), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, paymentMethodId: sid("paymentMethod", 31), direction, amount: money(0) }] }));
+     await f.service.execute(approve()); assert.equal(f.balance(), -1n);
+   }
+ });
+diff --git a/tests/sales-native-facts.test.ts b/tests/sales-native-facts.test.ts
+index e6619a6..aba5ed4 100644
+--- a/tests/sales-native-facts.test.ts
++++ b/tests/sales-native-facts.test.ts
+@@ -123,7 +123,7 @@ test("native sales pg facts: original-query bounded target locks, actual member
+   assert.equal(f.calls.filter(row => row.sql.includes("native-sales-facts:membership")).length, 2);
+   assert.ok(f.calls.filter(row => row.sql.includes("native-sales-facts:") && !row.sql.includes(":schema")).every(row => /FOR SHARE/.test(row.sql)));
+ });
+-test("native sales pg facts: missing real verifier, schema9 and incomplete/invalid nine-price facts fail closed", async () => {
++test("native sales pg facts: missing real verifier, schema10 and incomplete/invalid nine-price facts fail closed", async () => {
+   let queried = false; const missing = new PostgresNativeSalesFacts(async () => { queried = true; return { rows: [], rowCount: 0 }; }, () => {}, () => []);
+   await assert.rejects(() => missing.load(syntheticDraft()), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); assert.equal(queried, false);
+   const old = pgFixture({ schema: false }); await assert.rejects(() => old.reader.load(old.draft), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); assert.equal(old.calls.length, 1); assert.equal(old.completeCalls(), 0);
+@@ -148,6 +148,7 @@ test("native sales pg facts: captured document cannot be redirected during async
+ test("native sales UoW: missing verifier fails native capability on original bound actor/target and an escaped transaction stays closed", async () => {
+   const calls: string[] = []; let connections = 0, released = 0, escaped: SalesTransaction | undefined;
+   const client: PgSalesClient = { async query(sql) { calls.push(sql); let rows: Record<string, unknown>[] = [];
++    if (sql.includes("sales:current-schema")) rows = [{ current_sales_schema_ready: true }];
+     if (sql.includes("sales-authorization:identity")) rows = [{ account_id: actor.accountId, staff_id: syntheticSalesIdentity().staffId, login_enabled: true, role: "SALESPERSON", employment_status: "在职", hall_id: ids.hall }];
+     if (sql.includes("sales-authorization:hall")) rows = [{ id: ids.hall, enabled: true }];
+     return { rows, rowCount: rows.length }; }, release() { released++; } };
+@@ -164,6 +165,7 @@ test("native sales UoW/service: real seam uses one original scripted client thro
+   let escapedQuery: NativeSalesFactQuery | undefined;
+   const client: PgSalesClient = { async query(sql, values = []) {
+     calls.push(sql);
++    if (sql.includes("sales:current-schema")) return { rows: [{ current_sales_schema_ready: true }], rowCount: 1 };
+     if (sql.includes("native-sales-facts:") || sql.includes("SYNTHETIC-persisted-completeness")) return f.query(sql, values);
+     if (sql.includes("sales-authorization:identity")) return { rows: [{ account_id: actor.accountId, staff_id: syntheticSalesIdentity().staffId, login_enabled: true, role: "SALESPERSON", employment_status: "在职", hall_id: ids.hall }], rowCount: 1 };
+     if (sql.includes("sales-authorization:hall")) return { rows: [{ id: ids.hall, enabled: true }], rowCount: 1 };
+@@ -189,6 +191,7 @@ test("native sales UoW/service: real seam uses one original scripted client thro
+ test("native sales UoW/service: unproven complete prices reject before native writes and roll back the same client", async () => {
+   const f = pgFixture(); const calls: string[] = []; let releases = 0, sequence = 9500;
+   const client: PgSalesClient = { async query(sql, values = []) { calls.push(sql);
++    if (sql.includes("sales:current-schema")) return { rows: [{ current_sales_schema_ready: true }], rowCount: 1 };
+     if (sql.includes("native-sales-facts:")) return f.query(sql, values);
+     if (sql.includes("sales-authorization:identity")) return { rows: [{ account_id: actor.accountId, staff_id: syntheticSalesIdentity().staffId, login_enabled: true, role: "SALESPERSON", employment_status: "在职", hall_id: ids.hall }], rowCount: 1 };
+     if (sql.includes("sales-authorization:hall")) return { rows: [{ id: ids.hall, enabled: true }], rowCount: 1 };
+@@ -199,3 +202,31 @@ test("native sales UoW/service: unproven complete prices reject before native wr
+   await assert.rejects(() => service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-unpublished-catalogue", expectedVersion: null, draft: syntheticDraft() }), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
+   assert.equal(calls.at(-1), "ROLLBACK"); assert.ok(!calls.some(sql => /^INSERT|^UPDATE/.test(sql))); assert.equal(releases, 1);
+ });
++
++test("native method intent: runtime SAVE unchanged/amount and APPROVE reject account reassignment without effects; same method rename is identity-stable", async () => {
++  const store = new SyntheticStore(); let currentMethod = method, sequence = 11000;
++  const uow = { transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> { return store.transaction(tx => work({ ...tx,
++    async getCurrentSalesReferenceFacts(document) { const value = nativeFacts(document); return { ...value, paymentAccounts: value.paymentAccounts.map(account => ({ ...account, methodId: currentMethod })) }; }
++  })); } };
++  const service = createSalesService({ unitOfWork: uow, rules, authorization: { async assertAllowed() {} }, now: () => "2026-10-21T08:00:00Z", newId: kind => sid(kind, sequence++) });
++  const draft = syntheticDraft(); await service.execute({ action: "SAVE", actor, draft, expectedVersion: null, requestKey: "known-method" });
++  // A renamed method retains this same identity; no method labels participate in validation.
++  await rules.assertDraftChange(undefined, draft, txFacts(nativeFacts()));
++  currentMethod = sid("paymentMethod", 11001); const before = store.snapshot();
++  for (const amount of [draft.settlements[0]!.amount, minorAmount("99")]) await assert.rejects(() => service.execute({ action: "SAVE", actor,
++    draft: { ...draft, settlements: draft.settlements.map(row => ({ ...row, amount })) }, expectedVersion: version(1), requestKey: `method-save-${amount}` }), { code: "SETTLEMENT_METHOD_MISMATCH" });
++  await assert.rejects(() => service.execute({ action: "APPROVE", actor, salesId: ids.sales, expectedVersion: version(1), requestKey: "method-approve" }), { code: "SETTLEMENT_METHOD_MISMATCH" });
++  assert.deepEqual(store.snapshot(), before);
++  const unknown = { ...draft, settlements: draft.settlements.map(row => ({ ...row, paymentMethodId: null })) };
++  await assert.rejects(() => service.execute({ action: "SAVE", actor, draft: unknown, expectedVersion: version(1), requestKey: "unknown-runtime" }), { code: "INVALID_SETTLEMENT" });
++  await assert.rejects(async () => rules.assertDraftChange(undefined, unknown, txFacts(nativeFacts())), { code: "SETTLEMENT_METHOD_MISMATCH" });
++});
++test("native method intent: first SAVE retains selected M1 intent and rejects actual M2 before any document/receipt/effect", async () => {
++  const store = new SyntheticStore(); const before = store.snapshot(); let sequence = 12000;
++  const service = createSalesService({ unitOfWork: { transaction<T>(work: (tx: SalesTransaction) => Promise<T>) { return store.transaction(tx => work({ ...tx,
++    async getCurrentSalesReferenceFacts(document) { const value = nativeFacts(document); return { ...value,
++      paymentAccounts: value.paymentAccounts.map(account => ({ ...account, methodId: sid("paymentMethod", 12001) })) }; }
++  })); } }, rules, authorization: { async assertAllowed() {} }, now: () => "2026-10-21T08:03:00Z", newId: kind => sid(kind, sequence++) });
++  await assert.rejects(() => service.execute({ action: "SAVE", actor, draft: syntheticDraft(), expectedVersion: null, requestKey: "new-selected-method-race" }), { code: "SETTLEMENT_METHOD_MISMATCH" });
++  assert.deepEqual(store.snapshot(), before);
++});
+diff --git a/tests/sales-query-postgres-protocol.test.ts b/tests/sales-query-postgres-protocol.test.ts
+index eaf2183..1fdb49d 100644
+--- a/tests/sales-query-postgres-protocol.test.ts
++++ b/tests/sales-query-postgres-protocol.test.ts
+@@ -223,7 +223,7 @@ test("sales filter references pg protocol: invalid request/grant/abort never con
+   await assert.rejects(() => reader(duplicate).readReferences(read(input)), { code: "INVALID_DATABASE_VALUE" }); duplicate.done();
+ });
+ test("sales detail pg protocol: current master labels and authoritative settlement snapshots share the one authorized RR snapshot", async () => {
+-  const settlement = { id: sid("settlement", 15), sales_id: ids.sales, line_no: 1, payment_account_id: ids.payment, direction: "RECEIVE", amount: "90071992547409.93",
++  const settlement = { id: sid("settlement", 15), sales_id: ids.sales, line_no: 1, payment_account_id: ids.payment, payment_method_id_snapshot: sid("paymentMethod", 31), direction: "RECEIVE", amount: "90071992547409.93",
+     account_name_snapshot: "SYNTHETIC original account", method_name_snapshot: "SYNTHETIC original method", current_account_name: "SYNTHETIC renamed account", current_method_name: "SYNTHETIC renamed method" };
+   const client = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [{ ...header(), salesperson_id: sid("staff", 444), salesperson_name: "SYNTHETIC former salesperson" }], inspect(values, sql) {
+     scoped(values, sql); assert.match(sql, /LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id/); assert.ok(!/enabled|employment_status/.test(sql));
+@@ -275,3 +275,13 @@ test("sales query pg protocol: empty selections add no filter and malformed list
+   }
+   assert.equal(acquired, 0);
+ });
++test("sales detail pg protocol: original method identity comes only from nullable snapshot, never the account current method/name", async () => {
++  for (const original of [sid("paymentMethod", 31), null]) {
++    const settlement = { id: sid("settlement", 15), sales_id: ids.sales, line_no: 1, payment_account_id: ids.payment, payment_method_id_snapshot: original,
++      direction: "RECEIVE", amount: "2.50", account_name_snapshot: "SYNTHETIC old account", method_name_snapshot: "SYNTHETIC old method",
++      current_account_name: "SYNTHETIC current account", current_method_name: "SYNTHETIC different method" };
++    const client = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [header()] }, { sql: /FROM naijue_erp.sales_line/, rows: [line()] },
++      { sql: /FROM naijue_erp.sales_settlement/, rows: [settlement], inspect(_values, sql) { assert.match(sql, /s.payment_method_id_snapshot/); assert.doesNotMatch(sql, /COALESCE|pm.id AS payment_method_id_snapshot/); } }, commit()]);
++    const detail = await reader(client).readDetail(read({ salesId: ids.sales })); assert.equal(detail.document.settlements[0]!.paymentMethodId, original); client.done();
++  }
++});
+diff --git a/tests/support/synthetic-fixtures.ts b/tests/support/synthetic-fixtures.ts
+index 1fe82eb..bc7c748 100644
+--- a/tests/support/synthetic-fixtures.ts
++++ b/tests/support/synthetic-fixtures.ts
+@@ -30,7 +30,7 @@ export function syntheticDraft(businessType: SalesBusinessType = "SALE", quantit
+   const due = minorAmount(lines.reduce((sum, row) => sum + row.lineAmount, 0n).toString());
+   return { header: { id: ids.sales, number: "SYNTHETIC-DOC-0001", businessType, businessDate: businessDate("2026-10-20"), hallId: ids.hall,
+     salespersonId: null, customerId: ids.customer, warehouseId: ids.warehouse, grossAmount: due, orderDiscount: minorAmount("0"), netDue: due, note: "SYNTHETIC ONLY" }, lines,
+-    settlements: due === 0n ? [] : [{ id: sid("settlement", 15), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment,
++    settlements: due === 0n ? [] : [{ id: sid("settlement", 15), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, paymentMethodId: sid("paymentMethod", 31),
+       direction: due < 0n ? "REFUND" : "RECEIVE", amount: minorAmount((due < 0n ? -due : due).toString()) }] };
+ }
+ /** EXCLUSIVELY SYNTHETIC convention: outgoing positive, incoming negative, no discounts.

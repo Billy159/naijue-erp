@@ -1,0 +1,72 @@
+{
+  "jobIdReserved": "t45-r1-post200-original108-continuation-20261028-201",
+  "status": "QB487_LINUX_REBOUND_FINAL_LOCAL_FIELDS_READY_WAIT_C_EXECUTION_AUTHORITY",
+  "executionReady": false,
+  "remoteSubmitted": false,
+  "preparedAtUtc": "2026-10-27T19:37:09.528586+00:00",
+  "host": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/executable-host-job26.json",
+    "bytes": 5020,
+    "sha256": "55753050def020e7844bb27e8716226110fcdfa887a860629e365d82adc222d8"
+  },
+  "grantFieldsForC": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/C-SOURCE-GRANT.FIELDS-FOR-C.json",
+    "bytes": 37308,
+    "sha256": "d3e6ae86d3dc99b048ce876f8776c6b4b8f8a85c101bf56f72f35f9cf210bf32"
+  },
+  "providerInputWaiting": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/provider-INPUT.WAITING-C-GRANT.json",
+    "bytes": 188643,
+    "sha256": "573c42ee80d478e427e5c1c8fd02ee77ac5cffb1506eb2f5933acfcf88bee6b4"
+  },
+  "consumerReview": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/evidence/V22-CONSUMER-REVIEW.json",
+    "bytes": 86294,
+    "sha256": "763648959dd5ecf97db922445ac58ecec4c21b31157b0ded51fbdc1bc57f0873"
+  },
+  "adoptedPreparation": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/evidence/ADOPTED-PREPARATION.V22.json",
+    "bytes": 1870,
+    "sha256": "3f439f4b0ea44956869bbb6f761d25215fb959a2de14eae59326e77039699312"
+  },
+  "runtimeReview": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/reviews/CURRENT-R1-V22-ACL200-RUNTIME-REVIEW.json",
+    "bytes": 1085,
+    "sha256": "8a18436395d4aad6c3894de5cae19542a8cd23ad7e6365029f9ec1f8f0f085af"
+  },
+  "QB487": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/reviews/QB487-RESULT.json",
+    "bytes": 10685,
+    "sha256": "1e2d01d4c3a52a105240638bdd867bde897ee1ab24572c6ae5ed1f273bed0662"
+  },
+  "currentCanonical": "1050b2aa3329ca8956365578765f89027808dd7f3f9b81ff970de66b82f5ad3f",
+  "sourceRootReused": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-committed-prefix-original108-continuation-20261028-193/inputs/source",
+  "sourceModuleCount": 121,
+  "sourceModulesCurrentAndBaselinesIdenticalToActual193": true,
+  "newProgramRuntimeDelta": false,
+  "codePackageReused": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-committed-prefix-original108-continuation-20261028-193/bundle/shared-code-package.json",
+    "bytes": 1937471,
+    "sha256": "8e655414d838e9049211201a64acff45547fc2b8c3adae563ea489debad86ff4"
+  },
+  "sixSourceInputObjectsUnchanged": true,
+  "original109CommandRefsUnchanged": true,
+  "original121INITand188PrefixRefUnchanged": true,
+  "originalActor": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+  "originalBatch": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+  "windowProposal": {
+    "freshAbsoluteDeadlineUtc": "2026-10-27T22:00:00Z",
+    "maximumSeconds": 7200,
+    "maxStepsHostAndRunner": 16225,
+    "statementTimeoutMs": 12000,
+    "actualDurationEstimate": "UNKNOWN; budget does not prove runtime sufficiency",
+    "old193WindowNotReused": true
+  },
+  "admissionBeforeAnyNativeAction": "Actual1050catalog/target; originalBINDkey COMMITTED/hash4e546,STAGED3/cursor22/history1acb/noACCOUNT-PUBLISH; original public fullchain/currentproof+148/121 identity/selectorprefix1; drift/unknown stops. No old job/key replay.",
+  "remaining": [
+    "C finalnewsourcegrant+finalINPUT+executionadoption",
+    "Finish new201 carrier exactmetadatawx and original193fullclosure/deps verification; no source materialization/installation",
+    "Actualnewwriter preflight/fullproof and remaining originalstages107/PUBLISH not yet executed"
+  ],
+  "actualModelAndFast": "UNVERIFIED"
+}

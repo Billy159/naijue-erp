@@ -1,0 +1,39 @@
+{
+  "atUtc": "2026-10-23T20:22:55.572731+00:00",
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-753bd09-01/HTTP-CHECKS.json",
+  "bytes": 1161,
+  "sha256": "83dead43e0ed4b51ed7233a53be068f403f0a875efc51c18ea3f014a47675a79",
+  "receiptContent": {
+    "atUtc": "2026-10-23T20:18:54.154050+00:00",
+    "taskId": "C03_UI217_FIXED_THREE_HTTP",
+    "status": "PASS_FIXED_C217_THREE_KEY_HTTP",
+    "sourceCommit": "753bd09b115fce1118b1680d77daaf2032683ab0",
+    "buildId": "ui-preview-753bd09-01-build01",
+    "url": "http://127.0.0.1:57872/synthetic-unified.html",
+    "checks": [
+      {
+        "path": "synthetic-unified.html",
+        "status": 200,
+        "bytes": 3412884,
+        "sha256": "8dacbc00ad7ace2c24249261f5354e862b84f0a133bec9c6467fac36956c5988",
+        "sameImmutableBuild": true
+      },
+      {
+        "path": "candidate-identity.json",
+        "status": 200,
+        "bytes": 3946,
+        "sha256": "aa03c3ab0134629ae926c6b6d39209a45fc8dfb2b8397a99a9c28304cec9c7e8",
+        "sameImmutableBuild": true
+      },
+      {
+        "path": "provenance.json",
+        "status": 200,
+        "bytes": 51504,
+        "sha256": "69a81a028f0ba5c4aba4ae34fd0b39631f774d49a17026b6e9c2c56b94577c6e",
+        "sameImmutableBuild": true
+      }
+    ],
+    "qualification": "Fixed217 actual local preview resources;18 declared synthetic overlays; ledger24fictionrows explicitly marked, pureUI only. No218/219, no actualPG/permissions/save/formalperformance."
+  },
+  "qualification": "Actual locallybuilt served resources only; ledger24fictionrows; no218/219 or actualPG/formalperformance/deploy"
+}

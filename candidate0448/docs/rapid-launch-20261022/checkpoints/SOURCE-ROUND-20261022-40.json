@@ -1,0 +1,234 @@
+{
+  "atUtc": "2026-10-22T17:54:35.107497+00:00",
+  "parent": "2ad90db3de13dfc28fb802c518f37a8b9dde4156",
+  "groups": [
+    {
+      "slice": "WHOLE_SALES_NEW_EDIT_VIEW_SHARED_UI",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-26/DELIVERY.json",
+      "receiptSha256": "b61a018b222d29149a9a710f1888c7d5752999ca3298633362f0b138c34993a0",
+      "files": [
+        {
+          "path": "apps/web/src/sales/document-presentation.tsx",
+          "owner": "F1",
+          "bytes": 13147,
+          "sha256": "d922d0aac237c178ba97a554981f18e1fcca221cbb1012e33c3fd24c94694216"
+        },
+        {
+          "path": "apps/web/src/sales/detail-content.tsx",
+          "owner": "F1",
+          "bytes": 9292,
+          "sha256": "0e4612468b43c7b024943b16ebb6b48c3c2af8085eb7a8a036a415545c759e90"
+        },
+        {
+          "path": "apps/web/src/sales/detail.css",
+          "owner": "F1",
+          "bytes": 28954,
+          "sha256": "96c7986227987b49b5499148ea11f3a49ba65da01841e282f4aa4fefecbd3b9b"
+        },
+        {
+          "path": "apps/web/src/sales/detail-host.tsx",
+          "owner": "F1",
+          "bytes": 2866,
+          "sha256": "5e7cf0af28dcdd850cecd32d8204d5381d32a3f969c12de815c16c68f81cdd48"
+        },
+        {
+          "path": "apps/web/src/sales/sales-route.tsx",
+          "owner": "F1",
+          "bytes": 1744,
+          "sha256": "78ac844061dac461dd970cbeae1e7ac35e4c429324f0ae5434f2ddbe98d29a62"
+        },
+        {
+          "path": "apps/web/src/sales/sales-page.tsx",
+          "owner": "F1",
+          "bytes": 15058,
+          "sha256": "87efcc7af3bbccd0394191189cac6dfd2aefe71b188a5659c02d7aeeb62ef527"
+        },
+        {
+          "path": "apps/web/src/sales/commands/form.tsx",
+          "owner": "F1",
+          "bytes": 20822,
+          "sha256": "6bc1da324d3d0a9dc91ab039d1611149bcb4bd1e03d63e3532c36be7d8518e06"
+        },
+        {
+          "path": "apps/web/src/sales/commands/form-model.ts",
+          "owner": "F1",
+          "bytes": 7436,
+          "sha256": "2ce58ead82419cc495690ed648088366a8592c558b33b80b2c3131f1e9c32f60"
+        },
+        {
+          "path": "apps/web/src/sales/commands/page-host.tsx",
+          "owner": "F1",
+          "bytes": 6130,
+          "sha256": "6b0b3912d76c89554cfda761809bc1f77018645d0618e447d8af23ab54d9516c"
+        },
+        {
+          "path": "apps/web/src/sales/commands/manual-create-host.tsx",
+          "owner": "F1",
+          "bytes": 3238,
+          "sha256": "8a434fa41d242a6a6b25ae96741c5f1e8bdd1e48cf8caa49349cff7ed9554ee6"
+        },
+        {
+          "path": "apps/web/src/current-form/http-reader.ts",
+          "owner": "F1",
+          "bytes": 10078,
+          "sha256": "491ffb0d1e55fd861e69800e7361964dcefd0997ce7ee2b8d696830dfb869e95"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "bytes": 30317,
+          "sha256": "71d707213c0ae6a0d75119548acd928e1d6ba6eaddceef4e2a45d3456513ad72"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal.css",
+          "owner": "F1",
+          "bytes": 247,
+          "sha256": "7f965f48bbcd6cbcea0b190b6b25cbe38f5590f9df2929190de702d1d57f8fdb"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-new-document-form.tsx",
+          "owner": "F1",
+          "bytes": 1537,
+          "sha256": "f5031ff947e472e7ceb4e3ca231d74bc660b46416fee65c3b23d4f6af1c6b9e2"
+        },
+        {
+          "path": "apps/web/src/application/routes/sales.tsx",
+          "owner": "F1",
+          "bytes": 3027,
+          "sha256": "cf1714b440c69bad49222ba53481e2841b870d9d7df45b0b2bf3696337f23fd5"
+        },
+        {
+          "path": "apps/web/src/application/routes/sales-commands.tsx",
+          "owner": "F1",
+          "bytes": 4136,
+          "sha256": "35968ef12637e2a037e8ae7e16a5754e6c57286451ab108b4de27ce24aa272c8"
+        },
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "owner": "F1",
+          "bytes": 36043,
+          "sha256": "6c3e0e20f044d1f8e6eac683d1bdbebb925a73e0f4af59206473633f58b28b4d"
+        },
+        {
+          "path": "apps/web/src/application/demo-frame-presentation.tsx",
+          "owner": "F1",
+          "bytes": 3731,
+          "sha256": "e5952308aa25a9e7d1db2758053a3bad671f4fbd83fba082b21345b811e29bc6"
+        },
+        {
+          "path": "apps/web/src/production-host/configuration.ts",
+          "owner": "F1",
+          "bytes": 7094,
+          "sha256": "61547f69b224b9f30682ed94c67215fe6eb07eae940932e177d6ea100d99e038"
+        },
+        {
+          "path": "apps/web/src/production-host/mount.tsx",
+          "owner": "F1",
+          "bytes": 9097,
+          "sha256": "f5cfec236b89452b8aee6155c6a8afb438967d971aa2055f13a19a1101b44829"
+        }
+      ]
+    },
+    {
+      "slice": "EXPLICIT_NATIVE_SKU26_FULL_SHAPE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sku26-slice1/RESULT.json",
+      "receiptSha256": "28a39032edb157c03896c359e33a35b8cc1f3047cee9d36ba0f39de72d9b1cf9",
+      "files": [
+        {
+          "path": "packages/application/src/native-sku-import.ts",
+          "owner": "D3",
+          "bytes": 17145,
+          "sha256": "dfe22b0342c8204e8da526c0ee0f9961014f7e05eddb2c31ed052e1bf1d366eb"
+        },
+        {
+          "path": "adapters/postgres/src/native-sku-import.ts",
+          "owner": "D3",
+          "bytes": 15936,
+          "sha256": "12f9ee3d37260843dd5ec69377eabeb806ced5c40a526e3fb8a1e9df8d7f6c30"
+        },
+        {
+          "path": "tests/native-sku-stock-import.test.ts",
+          "owner": "D3",
+          "bytes": 31953,
+          "sha256": "498d570ed8579faefdd6cb1da900b91022d1ebea355a612bf558cbc8fa19d235"
+        }
+      ]
+    },
+    {
+      "slice": "BOUNDED_VERIFIED_OFFSET_SOURCE_CONSUMER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/offset-reader-slice1/RESULT.json",
+      "receiptSha256": "c3a325dd65dab8c2ec4b580643801c8e2cd2c4a1b7d63abd9d5523c74f8eaaeb",
+      "files": [
+        {
+          "path": "scripts/import-v3/verified-offset-source.mjs",
+          "owner": "D3",
+          "bytes": 13069,
+          "sha256": "2fa3a40c2df8710fe5ba7d1d5e93cee0d041d5bddad7ec75bed070ea5e1d3fbf"
+        },
+        {
+          "path": "scripts/import-v3/verified-offset-source.test.mjs",
+          "owner": "D3",
+          "bytes": 9748,
+          "sha256": "c7daab0074b114f749bd9c952d94c1f02f00fe8034f657c822da2d9f45c905c3"
+        }
+      ]
+    },
+    {
+      "slice": "ORDERED_PRODUCT_MEDIA_WRITE_WITH_PRIVATE_PREPARED_PROOF",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W17-MEDIA-WRITER-RECEIPT.json",
+      "receiptSha256": "35fbebca3e7eac3d03b86183b3b6754db6503f293936452b695864986bbfd73a",
+      "files": [
+        {
+          "path": "packages/application/src/product-maintenance-ports.ts",
+          "owner": "D2",
+          "bytes": 12263,
+          "sha256": "432854d771d96363dc02ef29e3391504aeeafc120eb21bc6f7f9da09b9c27bfc"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-validation.ts",
+          "owner": "D2",
+          "bytes": 12173,
+          "sha256": "3c62da14e0fcd220a1eda359917640ce1217be28d555d9c7e6e957b499e0c40a"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-service.ts",
+          "owner": "D2",
+          "bytes": 30425,
+          "sha256": "746903dcc5138ae72e635a551d0ca166b0efcda9040d3801d5ff655a5d7314e9"
+        },
+        {
+          "path": "adapters/postgres/src/product-maintenance-store.ts",
+          "owner": "D2",
+          "bytes": 37759,
+          "sha256": "d9db96b04e048927bb60ad21b2e30382d1f5243020f07b9b9b857acccedbe1e2"
+        },
+        {
+          "path": "apps/api/src/product-maintenance-http.ts",
+          "owner": "D2",
+          "bytes": 7683,
+          "sha256": "c39b4c38c395a0ccf31b179a8eb9757ed48ee8989b84c5be85419718a80501cc"
+        },
+        {
+          "path": "tests/product-maintenance.test.ts",
+          "owner": "D2",
+          "bytes": 33366,
+          "sha256": "0cdc0db48b4f724300ebf8120b3d2c4151c0d15aac0e85ffc4ab61e286bc6dd1"
+        },
+        {
+          "path": "tests/product-maintenance-postgres-protocol.test.ts",
+          "owner": "D2",
+          "bytes": 27891,
+          "sha256": "f7531a5ce23e529ab0ab9fb3696c28915075ba8bcdd599457ea2a6fc2f0675f2"
+        },
+        {
+          "path": "apps/api/src/product-maintenance-http.test.ts",
+          "owner": "D2",
+          "bytes": 12526,
+          "sha256": "6a94599b451b8b9784d8568b2b71a67bad081cd8279e93b18ae79e6c1ac44227"
+        }
+      ]
+    }
+  ],
+  "fileCount": 33,
+  "scope": "New fixed source slices only; sales whole-page NOT_ACCEPTED and remaining finder/edit preparation declared. Media cyclic branch not implemented pendinguser; stage durability P2 separate. No PG/native import/production upgrade."
+}

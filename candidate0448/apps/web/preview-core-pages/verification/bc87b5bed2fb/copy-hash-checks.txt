@@ -1,0 +1,8 @@
+apps/web/preview-core-pages/verification/bc87b5bed2fb/build.log: OK
+apps/web/preview-core-pages/verification/bc87b5bed2fb/dom-smoke.log: OK
+apps/web/preview-core-pages/verification/bc87b5bed2fb/verification.json: OK
+apps/web/preview-core-pages/verification/bc87b5bed2fb/source-inputs.sha256: OK
+apps/web/preview-core-pages/verification/bc87b5bed2fb/preview-source.sha256: OK
+apps/web/preview-core-pages/verification/bc87b5bed2fb/final-provenance.json: OK
+apps/web/preview-core-pages/verification/bc87b5bed2fb/final-provenance.log: OK
+apps/web/preview-core-pages/verification/bc87b5bed2fb/final-provenance-historical-head-advance.txt: OK

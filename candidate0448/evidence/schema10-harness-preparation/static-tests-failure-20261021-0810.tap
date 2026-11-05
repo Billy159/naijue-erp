@@ -1,0 +1,83 @@
+✔ backend plan-only selection has its own scenarios and the same exact ten current migration bytes (2837.844351ms)
+✔ backend plan refuses absent, unknown and historical selections rather than choosing a default (6596.294888ms)
+✖ current runner rejects historical selections before settings or child creation, without a test URL (76.977813ms)
+✔ current source wiring uses pre-Pool guards, migrates ten before seed and has no historical execution body (106.20787ms)
+✔ sales action engine preparation appends native transaction/known-PID cases without credentials or operator changes (19.817581ms)
+✔ native-profile engine preparation is distinct, explicit, actual-codec/default-driver and guarded-settings-only (18.388648ms)
+✔ HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double (12.879858ms)
+✔ backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path (13.595925ms)
+✔ current fixture source: actual party CREATE precedes explicit nine-key product after all ten migrations, no zero or old-schema seed (30.027795ms)
+✔ migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses (67.216906ms)
+✔ migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses (12.324596ms)
+✔ historical SQL baseline source only: frozen 0001-0008 hashes remain unchanged, not a current executable suite (40.08857ms)
+✔ CURRENT migration manifest source only: exact reviewed1–10 bytes include empty-catalogue and nullable method identity guards (57.719334ms)
+✔ migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets (4.923181ms)
+✔ migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content (0.788799ms)
+✔ deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure (20.645805ms)
+✔ deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected (19.158145ms)
+✔ deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof (2.577805ms)
+✔ exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT (12.194979ms)
+✔ raw constraint assertion requires exact message, SQLSTATE and whole function identity (3.975177ms)
+✔ integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback (13.497192ms)
+✔ integration safety: accepts only a dedicated explicitly repeated loopback test target (4.715619ms)
+✔ integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs (10.195496ms)
+✔ integration safety: malformed and encoded credentials never appear in diagnostics (1.041877ms)
+✔ integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast (39.352774ms)
+✔ integration safety: only explicit current schema1–10 suites are accepted (1.124475ms)
+✔ integration safety: historical5/8 prefixes and unknown modes refuse before current Pool construction (2.055883ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 26
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13922.549386
+
+✖ failing tests:
+
+test at tests/integration/backend-source.test.ts:30:1
+✖ current runner rejects historical selections before settings or child creation, without a test URL (76.977813ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /from ["'][^"']*(?:database|postgres\.integration|pg)[^"']*["']|\.env|new Pool/u. Input:
+  
+  '/** Deliberately not part of npm test/check. No .env loading, service startup or database provisioning. */\n' +
+    'import { spawn } from "node:child_process";\n' +
+    'import { randomBytes } from "node:crypto";\n' +
+    'import { fileURLToPath } from "node:url";\n' +
+    'import { integrationSettings, integrationSuite, requireCurrentIntegrationSuite, safeTarget } from "../tests/integration/safety.ts";\n' +
+    '\n' +
+    'const args = process.argv.slice(2);\n' +
+    'if (args.length === 1 && args[0] === "--help") {\n' +
+    '  console.log("Dormant CURRENT schema1–10 PostgreSQL validation. Read tests/integration/README.md first.\\nRun only after approval: node scripts/run-postgres-integration.mjs --run\\nRequires NODE_ENV=test, NAIJUE_PG_INTEGRATION, NAIJUE_PG_TEST_SUITE=sparse-0001-0010|backend-0001-0010, NAIJUE_PG_TEST_DATABASE_URL and NAIJUE_PG_EXPECT_DATABASE. Earlier1–8 passes are historical only.\\nNo provisioning, automatic cleanup, .env loading, remote target or production data is supported.");\n' +
+    '} else if (args.length !== 1 || args[0] !== "--run") {\n' +
+    '  console.error("Refused: explicit --run is required. Use --help for prerequisites; no connection was attempted.");\n' +
+    '  process.exitCode = 2;\n' +
+    '} else {\n' +
+    '  try {\n' +
+    '    const suite = integrationSuite(process.env);\n' +
+    '    requireCurrentIntegrationSuite(suite);\n' +
+    '    const settings = integrationSettings(process.env);\n' +
+    '    console.log(`Explicitly opted-in disposable local target: ${safeTarget(settings)}. CURRENT1–10 results follow only if executed; historical1–8 results are not reused.`);\n' +
+    '    const child = spawn(process.execPath, ["--test", "--test-concurrency=1", "--test-reporter=tap", "tests/integration/postgres.integration.test.ts"], {\n' +
+    '      cwd: fileURLToPath(new URL("../", import.meta.url)), stdio: "inherit", shell: false,\n' +
+    '      env: { ...process.env, NAIJUE_PG_RUNNER_MARKER: randomBytes(32).toString("hex") }\n' +
+    '    });\n' +
+    '    child.once("error", () => { console.error("Could not start the integration test process; no result is claimed."); process.exitCode = 1; });\n' +
+    '    child.once("exit", (code, signal) => { process.exitCode = signal ? 1 : (code ?? 1); });\n' +
+    '    for (const signal of ["SIGINT", "SIGTERM"]) process.once(signal, () => { child.kill(signal); });\n' +
+    '  } catch (error) {\n' +
+    '    console.error(error instanceof Error ? error.message : "Integration safety validation failed");\n' +
+    '    process.exitCode = 2;\n' +
+    '  }\n' +
+    '}\n'
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/tests/integration/backend-source.test.ts:35:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/** Deliberately not part of npm test/check. No .env loading, service startup or database provisioning. */\nimport { spawn } from "node:child_process";\nimport { randomBytes } from "node:crypto";\nimport { fileURLToPath } from "node:url";\nimport { integrationSettings, integrationSuite, requireCurrentIntegrationSuite, safeTarget } from "../tests/integration/safety.ts";\n\nconst args = process.argv.slice(2);\nif (args.length === 1 && args[0] === "--help") {\n  console.log("Dormant CURRENT schema1–10 PostgreSQL validation. Read tests/integration/README.md first.\\nRun only after approval: node scripts/run-postgres-integration.mjs --run\\nRequires NODE_ENV=test, NAIJUE_PG_INTEGRATION, NAIJUE_PG_TEST_SUITE=sparse-0001-0010|backend-0001-0010, NAIJUE_PG_TEST_DATABASE_URL and NAIJUE_PG_EXPECT_DATABASE. Earlier1–8 passes are historical only.\\nNo provisioning, automatic cleanup, .env loading, remote target or production data is supported.");\n} else if (args.length !== 1 || args[0] !== "--run") {\n  console.error("Refused: explicit --run is required. Use --help for prerequisites; no connection was attempted.");\n  process.exitCode = 2;\n} else {\n  try {\n    const suite = integrationSuite(process.env);\n    requireCurrentIntegrationSuite(suite);\n    const settings = integrationSettings(process.env);\n    console.log(`Explicitly opted-in disposable local target: ${safeTarget(settings)}. CURRENT1–10 results follow only if executed; historical1–8 results are not reused.`);\n    const child = spawn(process.execPath, ["--test", "--test-concurrency=1", "--test-reporter=tap", "tests/integration/postgres.integration.test.ts"], {\n      cwd: fileURLToPath(new URL("../", import.meta.url)), stdio: "inherit", shell: false,\n      env: { ...process.env, NAIJUE_PG_RUNNER_MARKER: randomBytes(32).toString("hex") }\n    });\n    child.once("error", () => { console.error("Could not start the integration test process; no result is claimed."); process.exitCode = 1; });\n    child.once("exit", (code, signal) => { process.exitCode = signal ? 1 : (code ?? 1); });\n    for (const signal of ["SIGINT", "SIGTERM"]) process.once(signal, () => { child.kill(signal); });\n  } catch (error) {\n    console.error(error instanceof Error ? error.message : "Integration safety validation failed");\n    process.exitCode = 2;\n  }\n}\n',
+    expected: /from ["'][^"']*(?:database|postgres\.integration|pg)[^"']*["']|\.env|new Pool/u,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

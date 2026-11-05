@@ -1,0 +1,112 @@
+{
+  "atUtc": "2026-10-24T00:21:37.146528+00:00",
+  "parent": "48a53a6ca4e2c61e67d26f18ee3531145c0a312c",
+  "taskId": "F2_I07_EXISTING_CLOSE_HOVER_FINAL_CASCADE",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/ledger.css",
+      "bytes": 8763,
+      "sha256": "684a447a99420ab5e35a956db754599ded7b12cf03b6b9fa566877eca8d05fb9",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/hover-final-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "5ddc8ba52fb5eac6207b5936cfefeab66dafb30830fd7855d8db6711a4109489",
+  "ownerDelivery": {
+    "taskId": "QF2-I07-CARRIER-INSET-01",
+    "subscope": "ACTUAL240_CLOSE_HOVER_BACKGROUND_ONLY",
+    "owner": "F2",
+    "status": "SOURCE_READY_EXACT1_NATIVE_HOVER_OVERRIDE_LOCAL_CASCADE_PASS_NEW_ACTUAL_PENDING",
+    "authority": {
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "model": "gpt-6.1-sol/xhigh; Fast not verified"
+    },
+    "completedScope": "Append same final frozen interaction-common.css .ui-icon:hover background:var(--primary-light)!important, scoped solely to existing inventory ledger close hover. Original ledger grey-hover base and all previous CSS byte unchanged; original normal/glyph/30px hit/color/close lifecycle untouched.",
+    "files": [
+      {
+        "path": "apps/web/src/inventory/ledger.css",
+        "bytes": 8763,
+        "sha256": "684a447a99420ab5e35a956db754599ded7b12cf03b6b9fa566877eca8d05fb9",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/hover-final-01/source/apps/web/src/inventory/ledger.css",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/hover-final-01/before/apps/web/src/inventory/ledger.css",
+          "bytes": 8508,
+          "sha256": "00bdd3de934ee55835b0f7756ada0b9a2f5fa2055a660f3a5433392164223036"
+        }
+      }
+    ],
+    "checks": {
+      "status": "PASS_LOCAL_CAPTURED_HOVER_CASCADE_AND_EXISTING_CONSUMER_SCOPE",
+      "source": ".ui-icon:hover background:var(--primary-light)!important from frozen interaction-common.css",
+      "target": ".inventory-ledger.arco-drawer .erp-overlay-close:hover",
+      "beforeActual": "rgb(246, 247, 248)",
+      "nativeActual": "rgb(236, 244, 255)",
+      "localResolvedWinner": "rgb(236, 244, 255)",
+      "previousCssByteIdentical": true,
+      "onlyOneBackgroundDeclarationAdded": true,
+      "sourceNormalSizeGlyphColorAndLifecycleUnchanged": true,
+      "actualConsumerScopeMatches": 1,
+      "cssParse": true,
+      "cssBundleWarnings": 0,
+      "notRun": "No new browser normal/hover pixels or X/focus retest; no12region/Today/public/default/20+4 suite; CSS-only no TS check. Only original QF2 targeted new hover remains."
+    },
+    "actualInputs": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c240-targeted-actual-01/browser/I07-CANDIDATE-HOVER-CASCADE.json",
+        "bytes": 3701,
+        "sha256": "5dd0989b3df30eec2957ed5cbb56113d4b4a4a5110c69bc855aa168aa091bf5f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c240-targeted-actual-01/browser/I07-DEMO-HOVER-CASCADE.json",
+        "bytes": 3337,
+        "sha256": "4e39b56afe0ba9f27dced2a4ff53be4eaed7f37e975dc78c24f16e3cfe3e8ef8"
+      }
+    ],
+    "consumer236Unchanged": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/inventory/ledger-drawer.tsx",
+      "bytes": 14167,
+      "sha256": "b4c10d0ad01d24b5be068f73bfc0dc0151d49ef9ef97c051d725d9ee2a73f18c"
+    },
+    "reused": "C/QF2 actual240 accepted original normal/hover30button/16SVG/8path/1.7round and normal/hover stroke color; X returned to original TEST001cell/read1/commands0. Those scopes not rerun or reaccepted by this local CSS check.",
+    "untested": [
+      "New containing candidate actual hover background",
+      "No Chrome/service/PG/Git/fullbuild or public/default/12regions/Today/20+4 tests; CSS-only no TypeScript rerun"
+    ],
+    "blocker": "None in source; NO_CHROME, Chrome exclusive QF; source pin/containing candidate then original QF2 only this hover.",
+    "next": "C pin exact1 -> successor containing candidate -> original QF2 only final hover background; reuse source236 and actual240 passed shape/X/focus/data scopes. Public date anchor is F1 only.",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/hover-final-01/SOURCE-MANIFEST.json",
+        "bytes": 2328,
+        "sha256": "456343a87fd13a6ebba04dc0fd651b69b3ce19253e4f55d81c1e33e017f9b304"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/hover-final-01/CHECKS.json",
+        "bytes": 786,
+        "sha256": "f17c976fc0f9df9e67aaba2ac13dbed0c68efc668a0674e77020034d1bff2252"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/hover-final-01/source.diff",
+        "bytes": 543,
+        "sha256": "b5411b41b605b3e7d2341d0e560fc172d25be5c17b513667844cca0ce2c2baf1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/hover-final-01/added.css",
+        "bytes": 255,
+        "sha256": "d73f9ebaf0a6203126ad64713e51225ee4da683c349ec7e0936e04d0eb267bee"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/hover-final-01/check-hover.cjs",
+        "bytes": 4712,
+        "sha256": "90f3ae4c4bb7c395f699e8d4a662998b7a02aacc56f0c4eea4b8ffd30cc45c2b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/hover-final-01/checks.log",
+        "bytes": 733,
+        "sha256": "6bed693e1ff8987465753a58652cce0485b9f3882fa1ba453c6c241daac437c0"
+      }
+    ]
+  },
+  "qualification": "Frozen final ui-icon hover background/priority adapted to actual private ledgerclose, exact old CSS prefix preserved. Actual240 paired failure evidence and original glyph/geometry/Xfocus passes reused; new containing browser hover actual pending, not in240 or fixed243 preparation."
+}

@@ -1,0 +1,21 @@
+{
+  "parent_commit": "c2c5aa3224a76b24ed759e605faf32fae6494554",
+  "scope": "Ready-only zero contract, frozen inventory source restoration, independent party UI, lazy authenticated application composition; no deployment",
+  "source_reviews": [
+    "inventory-zero-independent-review.md",
+    "party-source-ui-independent-review.md",
+    "frozen-inventory-independent/review.md"
+  ],
+  "root_followup": "Shared reset specificity and inherited typography corrected after app and party freeze. Their historical control dependency hashes are retained, not relabelled. Independent actual-CSS regression covers final shared style, root preview build/structure/bundle checks passed. Application and party runtime source unchanged.",
+  "final_controls_sha256": "d03119b81ee1a5c065ea01c6b62509d6fadc2cb3133c482568645fc95be681ac",
+  "tests_discovery": "Added party pure tests, popover geometry, party and application DOM commands. Exact whole committed checkpoint pending separately.",
+  "limits": [
+    "No real browser or pixel acceptance",
+    "No live PostgreSQL",
+    "No deployed server",
+    "Sales structural scaffold not accepted frozen appearance",
+    "Window model not wired to renderer",
+    "Private frozen price configuration not yet extracted"
+  ],
+  "rollback": "Revert this coherent commit; no database or production state changed."
+}

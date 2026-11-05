@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [],
+  "files": [
+    "../packages/application/src/transfer-query-ports.ts",
+    "../packages/application/src/transfer-query-validation.ts",
+    "../packages/application/src/transfer-query-service.ts",
+    "../adapters/postgres/src/transfer-query-reader.ts",
+    "../apps/api/src/transfer-query-http.ts",
+    "../apps/api/src/transfer-query-http.test.ts",
+    "transfer-query.test.ts",
+    "transfer-query-postgres-protocol.test.ts"
+  ]
+}

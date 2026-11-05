@@ -1,0 +1,52 @@
+{
+  "atUtc": "2026-10-22T18:19:16.950667+00:00",
+  "parent": "6ce728a922ed127423b12e3f0971e14e567af170",
+  "groups": [
+    {
+      "slice": "RUNTIME26_PRIVATE_LIVE_LEASE_AND_PREPARED_MEDIA",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/RUNTIME26-ISSUER-RESULT.json",
+      "receiptSha256": "e762e79bed0f17c1d7ba58799bfa97ad9d7bbaa4adea8f1b9d2434a9fb627b70",
+      "files": [
+        {
+          "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+          "owner": "D1",
+          "sha256": "5d8dc1ec198e075a0f58a6387c26952e46e7289fffe96690c94346818b88cd5d",
+          "bytes": 61345
+        },
+        {
+          "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+          "owner": "D1",
+          "sha256": "ae4b43c965c839285dff84fcabd561b6708ccd6bc362fbfb98281a5b09659390",
+          "bytes": 17570
+        },
+        {
+          "path": "tests/native-runtime26-capability.test.ts",
+          "owner": "D1",
+          "sha256": "b12267b6bb873f7ab37fc873b7d0e5729c6ef5149bb7174c35cb4fc2c298d266",
+          "bytes": 12665
+        },
+        {
+          "path": "tests/product-media-write-capability.test.ts",
+          "owner": "D1",
+          "sha256": "98766726585faa7edc5fcb7c627a12bee5a440dc8a45330fe0c9644a31740eab",
+          "bytes": 8781
+        }
+      ]
+    },
+    {
+      "slice": "APPROVED_V7_SINGLE_IMAGE_GUARD_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/engine-parse26-v7-media-color-swap/RESULT.json",
+      "receiptSha256": "5910fabe75a5e6b249daafd5a5eaa2e7d6441a4e8302cd5c62e6917c20115b16",
+      "files": [
+        {
+          "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+          "owner": "D1",
+          "sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c",
+          "bytes": 90739
+        }
+      ]
+    }
+  ],
+  "fileCount": 5,
+  "scope": "D1 source/protocol only; no actual v7 guard install or actual issuer/MAIN/source authority implied. User v4 approval retained and v6 prefix byte-identical."
+}

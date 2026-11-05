@@ -1,0 +1,67 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /当前可保留全部原始事实修改备注/. Input:
+
+'查看销货单未审核· 已保存返回单据重试编辑资料单据日期 *2026-10-20业务类型 *退货/换货营业厅 *TEST 当前营业厅营业员 *—客户 *TEST 当前客户出库仓 *TEST 当前出库仓单号TEST-SALES-1整单优惠 / 抹零¥0.00应结金额¥-9007199254740993.01收款—TEST 保存账户¥900719925474099.30—TEST 保存账户-¥900719925474099.31—TEST 保存账户¥900719925474099.32—TEST 保存账户-¥900719925474099.33—TEST 保存账户¥900719925474099.34—TEST 保存账户-¥900719925474099.35—TEST 保存账户¥900719925474099.36—TEST 保存账户-¥900719925474099.37—TEST 保存账户¥900719925474099.38—TEST 保存账户-¥900719925474099.39—TEST 保存账户¥900719925474099.40—TEST 保存账户-¥900719925474099.41—TEST 保存账户¥900719925474099.42—TEST 保存账户-¥900719925474099.43—TEST 保存账户¥900719925474099.44—TEST 保存账户-¥900719925474099.45备注TEST 独立退货商品明细款号／商品名称颜色版型尺码数量参考零售价折扣成交单价金额操作TEST-SNAPSHOTTEST 保存商品 1TEST 保存颜色Y版（修身）165/S退回 -19007199254740993.019007199254740993.01-9007199254740993.01查看赠品状态未记录退回 —件换出 —件应退 ¥9007199254740993.01已退 ¥0.08 · 未退 ¥9007199254740992.93原单实际规格或保存资料未完整读到，保留原编辑页；新增和改选暂不可用。'
+
+    at file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/demo-replica/frontend/runtime/documents/ordinary-preserving-edit.test.mjs:4:2400 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '查看销货单未审核· 已保存返回单据重试编辑资料单据日期 *2026-10-20业务类型 *退货/换货营业厅 *TEST 当前营业厅营业员 *—客户 *TEST 当前客户出库仓 *TEST 当前出库仓单号TEST-SALES-1整单优惠 / 抹零¥0.00应结金额¥-9007199254740993.01收款—TEST 保存账户¥900719925474099.30—TEST 保存账户-¥900719925474099.31—TEST 保存账户¥900719925474099.32—TEST 保存账户-¥900719925474099.33—TEST 保存账户¥900719925474099.34—TEST 保存账户-¥900719925474099.35—TEST 保存账户¥900719925474099.36—TEST 保存账户-¥900719925474099.37—TEST 保存账户¥900719925474099.38—TEST 保存账户-¥900719925474099.39—TEST 保存账户¥900719925474099.40—TEST 保存账户-¥900719925474099.41—TEST 保存账户¥900719925474099.42—TEST 保存账户-¥900719925474099.43—TEST 保存账户¥900719925474099.44—TEST 保存账户-¥900719925474099.45备注TEST 独立退货商品明细款号／商品名称颜色版型尺码数量参考零售价折扣成交单价金额操作TEST-SNAPSHOTTEST 保存商品 1TEST 保存颜色Y版（修身）165/S退回 -19007199254740993.019007199254740993.01-9007199254740993.01查看赠品状态未记录退回 —件换出 —件应退 ¥9007199254740993.01已退 ¥0.08 · 未退 ¥9007199254740992.93原单实际规格或保存资料未完整读到，保留原编辑页；新增和改选暂不可用。',
+  expected: /当前可保留全部原始事实修改备注/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+✖ apps/web/demo-replica/frontend/runtime/documents/ordinary-preserving-edit.test.mjs (1304.997572ms)
+✔ N34-S13: deduction minus is exact presentation, zero unsigned and typed negative remains invalid (24.766391ms)
+▶ N34-S03: runtime summary excludes only unselected queries; strict SAVE and selected unknown stay strict
+  ✔ SALE empty draft + no-match search is a known empty display, not a zero-priced line (208.021952ms)
+  ✔ RETURN_EXCHANGE empty draft + no-match search is a known empty display, not a zero-priced line (35.673201ms)
+  ✔ selected complete SKU with unknown price remains unknown even beside pure search text (163.21217ms)
+✔ N34-S03: runtime summary excludes only unselected queries; strict SAVE and selected unknown stay strict (486.973598ms)
+▶ F04 actual proposal form exposes effective zero and explicit cancel/confirm without rewriting price intent
+  ✔ existing lines and unfinished entries use displayed zero, not stale raw price (400.341224ms)
+  ✔ actual native dialog cancel keeps false, confirm sets true and discount editing resets it (170.816851ms)
+✔ F04 actual proposal form exposes effective zero and explicit cancel/confirm without rewriting price intent (604.598286ms)
+✖ QF51-S04-READ-DIRECTION-LABEL-01: actual shared readonly renderer preserves signed quantities and Demo direction in every native state (310.500999ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 8
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2734.710972
+
+✖ failing tests:
+
+test at apps/web/demo-replica/frontend/runtime/documents/ordinary-preserving-edit.test.mjs:1:1
+✖ apps/web/demo-replica/frontend/runtime/documents/ordinary-preserving-edit.test.mjs (1304.997572ms)
+  'test failed'
+
+test at apps/web/demo-replica/frontend/runtime/documents/sales-display-regression.test.mjs:101:1
+✖ QF51-S04-READ-DIRECTION-LABEL-01: actual shared readonly renderer preserves signed quantities and Demo direction in every native state (310.500999ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      '退回 -1',
+  +   '卖出 2'
+  -   '换出 2'
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/demo-replica/frontend/runtime/documents/sales-display-regression.test.mjs:112:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '退回 -1', '卖出 2' ],
+    expected: [ '退回 -1', '换出 2' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

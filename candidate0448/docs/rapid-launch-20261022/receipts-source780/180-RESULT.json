@@ -1,0 +1,134 @@
+{
+  "jobId": "t45-qa178-v22-one-body-install-catalog-20261027-180",
+  "job": {
+    "jobId": "t45-qa178-v22-one-body-install-catalog-20261027-180",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-0d8dcd569ac2",
+    "atUTC": "2026-10-27T13:46:12.185800+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.9691797369159758,
+    "exports": [
+      "engine-result.json",
+      "r1-v20-catalog.json",
+      "r1-v20-metadata.json",
+      "r1-v20-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T13:46:13.268990+00:00"
+  },
+  "engine": {
+    "applicationChanged": false,
+    "businessDML": 0,
+    "checkedAtUtc": "2026-10-27T13:46:13.156812+00:00",
+    "commandsIssued": 0,
+    "commitReturned": true,
+    "grantIssued": false,
+    "installerAttempted": true,
+    "installerProcess": {
+      "exitCode": 0,
+      "processExited": true,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "jobId": "t45-qa178-v22-one-body-install-catalog-20261027-180",
+    "nodeExitCode": 0,
+    "onlyApprovedFunctionDDL": true,
+    "preimage": {
+      "bodySha256": "5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d",
+      "database": "erp_rewrite_20261022_r1",
+      "oid": "16391",
+      "postmaster": "2026-10-27 13:22:19.696753+00",
+      "sessionUser": "t15_prod_bootstrap",
+      "systemIdentifier": "7701337335828107278"
+    },
+    "runtimeStatus": "COMPLETED_QA178_V22_METADATA_CATALOG_READONLY",
+    "status": "PASS_QA178_V22_SINGLE_BODY_INSTALL_AND_ORDINARY_CATALOG_ONLY"
+  },
+  "actual": {
+    "jobId": "t45-qa178-v22-one-body-install-catalog-20261027-180",
+    "status": "COMPLETED_QA178_V22_METADATA_CATALOG_READONLY",
+    "businessDML": 0,
+    "grantIssued": false,
+    "metadata": {
+      "file": "r1-v20-metadata.json",
+      "bytes": 565,
+      "sha256": "99c96dd1e9b567f883e6cead6e826557407d1754a95eaf965df0938c6b50ac92"
+    },
+    "catalog": {
+      "file": "r1-v20-catalog.json",
+      "bytes": 1265147,
+      "sha256": "6bda10ea64f3e1e1801abcf8e332b1ddb73361a8aec7e1a0f940e84c050d3bd8"
+    },
+    "sourceRoutinesMatch": true,
+    "identity": {
+      "database": "erp_rewrite_20261022_r1",
+      "server_addr": null,
+      "server_port": null,
+      "current_user": "erp_rewrite_runtime_20261022",
+      "database_oid": "16391",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "database_owner": "erp_rewrite_owner_20261022",
+      "postmaster_start": "2026-10-27 13:22:19.696753+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    },
+    "canonicalSha256": "b2e735f997cfaf3711177b1503b76597d5ed84d79722abf24538858dcf67f7f2",
+    "rollbackReturned": true,
+    "clientsClosed": true
+  },
+  "catalogDelta": {
+    "parent179": {
+      "database": "erp_rewrite_20261022_r1",
+      "server_addr": null,
+      "server_port": null,
+      "current_user": "erp_rewrite_runtime_20261022",
+      "database_oid": "16391",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "database_owner": "erp_rewrite_owner_20261022",
+      "postmaster_start": "2026-10-27 13:22:19.696753+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    },
+    "changedTopLevel": [
+      "routines"
+    ],
+    "changedRoutines": [
+      "naijue_erp.assert_core_initialization_v14(uuid,uuid,boolean)"
+    ],
+    "bodyBytes": 49980,
+    "bodySha256": "8a8374fb193ed9e5ddcc388b0141a91dc17420cef0baee4ffbb700cd9737add5",
+    "otherCatalogSectionsExactEqual": true
+  },
+  "exports": {
+    "engine-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v22-one-body-install-catalog-20261027-180/release-submission/release-receipts/t45-qa178-v22-one-body-install-catalog-20261027-180/engine-result.json",
+      "bytes": 969,
+      "sha256": "af37d05133d8b612ba00dc31a0eedcb429014d997c3b25ac346b246b886031bc"
+    },
+    "r1-v20-catalog.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v22-one-body-install-catalog-20261027-180/release-submission/release-receipts/t45-qa178-v22-one-body-install-catalog-20261027-180/r1-v20-catalog.json",
+      "bytes": 1477758,
+      "sha256": "208b3bd3698f3186e749d070321686e47c1a6f168fc1fb0afeb7306a88adcc5e"
+    },
+    "r1-v20-metadata.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v22-one-body-install-catalog-20261027-180/release-submission/release-receipts/t45-qa178-v22-one-body-install-catalog-20261027-180/r1-v20-metadata.json",
+      "bytes": 778,
+      "sha256": "94b23b42798afa5440054585e3f3e78345d4d822662d2de1ea9fa1b4cd3f408c"
+    },
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v22-one-body-install-catalog-20261027-180/release-submission/release-receipts/t45-qa178-v22-one-body-install-catalog-20261027-180/job.json",
+      "bytes": 595,
+      "sha256": "61fc0ab269a569711774170b06efa0aef429a11bb9dd168c6164f222f191266b"
+    },
+    "r1-v20-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v22-one-body-install-catalog-20261027-180/release-submission/release-receipts/t45-qa178-v22-one-body-install-catalog-20261027-180/r1-v20-result.json",
+      "bytes": 1086,
+      "sha256": "f690e4bd76e1580cec4151e98d7e2a63b7911d13bb9e13a6afe8453e3e7d8cd1"
+    }
+  },
+  "limits": "QA178 single-body DDL/COMMIT + ordinary RRRO catalog observation only. No BIND or reachable business-case validation; NOT_TESTED_BINDING_IDENTITY_INCOMPATIBLE unchanged. Original R1 untouched."
+}

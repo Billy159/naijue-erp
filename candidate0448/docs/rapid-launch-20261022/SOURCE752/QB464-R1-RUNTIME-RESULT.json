@@ -1,0 +1,116 @@
+{
+  "reviewId": "QB464",
+  "task": "Actual157 R1 V20 current runtime independent metadata-only review with exactLinuxpath",
+  "decision": "PASS_EXACT_R1_V20_TARGET_METADATA_ONLY_NOT_EXECUTION_OR_BUSINESS",
+  "target": {
+    "database": "erp_rewrite_20261022_r1",
+    "server_addr": null,
+    "server_port": null,
+    "current_user": "erp_rewrite_runtime_20261022",
+    "database_oid": "1027659",
+    "session_user": "erp_rewrite_runtime_20261022",
+    "database_owner": "erp_rewrite_owner_20261022",
+    "postmaster_start": "2026-10-04 08:16:07.895273+00",
+    "replication_role": "origin",
+    "server_version_num": "170011"
+  },
+  "canonicalSha256": "a9128360bad77c83afa4f6da8eafab2117a2a5d96d3a8bf23243e20617133cf5",
+  "patchLevel": "26_v20_history_insert_identity_from_v19",
+  "purposes": [
+    "IMPORT_STAGE",
+    "IMPORT_PRODUCT_SEASONS",
+    "IMPORT_PUBLISH"
+  ],
+  "scope": "EXACT_TARGET_METADATA_ONLY",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "evidencePins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-metadata.json",
+      "bytes": 780,
+      "sha256": "57a53630c21a3203f826be9a0752605c8e5174b042af3005e01ee06433bbf4d0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-catalog.json",
+      "bytes": 1448690,
+      "sha256": "5e3a327c3879f133251115f1629af7055fbb98f05b6d43edb18e5c2c3d5503c6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-result.json",
+      "bytes": 1099,
+      "sha256": "2d445ec92ab3b315705f14aea290bdb17fd66156edea1e73e9e2c952db09760e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/job.json",
+      "bytes": 601,
+      "sha256": "f768cac004f71973b59ba161a9c5d825d7140a634a96662033720876d410327e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/engine-result.json",
+      "bytes": 387,
+      "sha256": "3302c686f48d02d657e3a6c560890feac811850e66929d84e79e2513aab0f953"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/bundle/PLAN.json",
+      "bytes": 1824,
+      "sha256": "7e537b9323df162175c7cc0c0f02de46a436550bf022172a617d064a382e253f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/bundle/R1-V20-COMBINED.sql",
+      "bytes": 28920,
+      "sha256": "1ab416deb294416853bc1839932ca310a592d1ac0b8d4f58ff89f1c2bcc7a1ba"
+    }
+  ],
+  "byteIdentityDistinction": {
+    "originalRemoteRawCatalog": {
+      "file": "r1-v20-catalog.json",
+      "bytes": 1236079,
+      "sha256": "95dbc3b467cf59b7247da7bfc939818c67d4841f629dbbbd2f6a5ff049eaf9df"
+    },
+    "actualControlCatalog": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-catalog.json",
+      "bytes": 1448690,
+      "sha256": "5e3a327c3879f133251115f1629af7055fbb98f05b6d43edb18e5c2c3d5503c6"
+    },
+    "originalRemoteRawMetadata": {
+      "file": "r1-v20-metadata.json",
+      "bytes": 567,
+      "sha256": "b9bc7bf416db345a179f8025dc52c877dc59a14707f527a04496de680e567c64"
+    },
+    "actualControlMetadata": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-metadata.json",
+      "bytes": 780,
+      "sha256": "57a53630c21a3203f826be9a0752605c8e5174b042af3005e01ee06433bbf4d0"
+    },
+    "meaning": "ControlJSONserialization differs, notrawfileSHAequal. Entireparsedcatalog minusidentity recomputedPGJSONBcanonical exactlymatchesactual157metadata/RESULT. Noformat-onlyrelayrequired; raw/controlpins keptseparate."
+  },
+  "checks": [
+    "Freshactual157 COMPLETEDexit0/RRRO ROLLBACKreturned/clientsClosed/0businessDML/0grant adopted, exactR1notnative189/SYN target. Noold125/150/153catalog substituted.",
+    "OriginalR1/OID1027659/directsession=actingruntime/Unixnulladdress+port/postmaster2026-10-04 08:16:07.895273+00/server170011/origin; ownererp_rewrite_owner_20261022. SourceprofileV20exactprobe source_routines_matchtrue andschema1..26.",
+    "Fullcontrolcatalog1448690/5e3a327c independentlycanonicalPGJSONBhash a9128360 usingUTF8keylength/keybytes sortingandPGspaces. Raw1236079/95dbc3b4 retainedasremoteobservation only, notmixedwithcontrolbytes.",
+    "All131routinebodyMD5/SHA256 matchactualsourcebytes, allrelations+routinesownedbyexactR1owner. Acting+session runtimeLOGIN/nonsuperuser/nonBYPASS/noINHERIT/noCREATEDB/CREATEROLE/replication; rolemembershipsnone.",
+    "Complete594columns/60relations/943triggers/537constraints/166indexes/131routines/roles/ACL/body/config/sourceincludedincanonical. Noninternaltriggersactive/allconstraintsvalidated/indexesvalidready/noPUBLICrelationgrants/schemaUSAGEonlyforruntime. No rowbusinessdata inspected.",
+    "Minimumactualexistingfactorypurposes onlyIMPORT_STAGE (run26target/stages/closure/nativeaccounting), IMPORT_PRODUCT_SEASONS (native-product-import85/190), IMPORT_PUBLISH (cutoffstore/nativeaccountingpublish). NoPRODUCT_SEASONS_READ/PRODUCT_MAINTENANCE/HISTORY_REVISION/INVENTORY_ADMISSION orotherpurposes.",
+    "SOURCE749host FULL_SOURCE_CONTINUATION_26_V1 accepts V20profile; SOURCE744provider+originalfactories use genuineissuer.pool/runtime26. Existing458+461sourceaudit/120moduleclosure/153original109prefix0/STAGEDseq2cursor22 adoptedwithoutrepeattechnicalreview.",
+    "Metadatareview explicitlyrealImportExecutionAuthorizedfalse; separateCexternallypinnedv21sourceexecutiongrant/adopted148closure/proof/originalcommands/currentchain required. 148source-onlypreparation andthisreview do notgrant MAIN/PUBLISH orbusinessacceptance."
+  ],
+  "linuxBinding": {
+    "reportDestination": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source744-adopted148-consumer-preparation-20261027-152/inputs/reviews/INDEPENDENT-R1-RUNTIME-REVIEW.json",
+    "reviewDestination": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source744-adopted148-consumer-preparation-20261027-152/inputs/reviews/CURRENT-R1-RUNTIME-REVIEW.json",
+    "installationRequirement": "T45 copythisreportandLinuxboundreview exactbytes/privatefiles andreadbackpins. Noeditreportoridentity/reviewtargetaftercopy. BindreviewfileSHA tooriginalconfig; issueroriginalpoolmustactuallyverifyfreshV20metadata andidentityonitsownlease beforepurposes.",
+    "pathsProvidedBy": "T45 explicit original152preparedconsumer executionroot incurrentdelegation"
+  },
+  "remaining": [
+    "Actualoriginalsamepoolissuer/firstleaseassertReadyandnew3purposeconsumption notperformedbyQB.",
+    "Actualv21consumer-onlyclosure/input/manifest/DATA/wholeEXPECTED/109commands/currentuncommittedsuffix exactCgrant stillrequiredbyoriginalruntimefactory.",
+    "MAIN/PUBLISH/realbusiness/formalrelease/performance notperformedoraccepted."
+  ],
+  "databaseOrRemoteAction": false,
+  "actualIssuerCreated": false,
+  "actualSamePoolAdmission": false,
+  "actualSource148Consumed": false,
+  "actualMainOrPublish": false,
+  "actualPerformanceMeasured": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}

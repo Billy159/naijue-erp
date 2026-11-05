@@ -1,0 +1,12 @@
+{
+  "tests": {
+    "command": "node --test tests/current-form-reader.test.ts apps/api/src/current-form-http.test.ts",
+    "exitCode": 0,
+    "log": "evidence/current-payment-method-selector/tests.tap"
+  },
+  "focusedTypecheck": {
+    "command": "./node_modules/.bin/tsc --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --verbatimModuleSyntax --rewriteRelativeImportExtensions --skipLibCheck --types node tests/current-form-reader.test.ts apps/api/src/current-form-http.test.ts",
+    "exitCode": 0,
+    "log": "evidence/current-payment-method-selector/typecheck.log"
+  }
+}

@@ -1,0 +1,14 @@
+packages/application/src/sales-query-ports.ts
+packages/application/src/sales-query-validation.ts
+packages/application/src/sales-reference-query-validation.ts
+packages/application/src/sales-query-service.ts
+adapters/postgres/src/sales-query-reader.ts
+apps/api/src/sales-query-http.ts
+apps/api/src/sales-query-http.test.ts
+tests/sales-query.test.ts
+tests/sales-reference-query.test.ts
+tests/sales-query-postgres-protocol.test.ts
+docs/sales-reference-queries.md
+evidence/sales-reference-typecheck.json
+evidence/sales-reference-check.log
+evidence/sales-reference-typecheck.log

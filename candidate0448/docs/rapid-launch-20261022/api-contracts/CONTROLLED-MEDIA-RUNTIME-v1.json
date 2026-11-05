@@ -1,0 +1,74 @@
+{
+  "version": "C_CONTROLLED_MEDIA_RUNTIME_V1",
+  "status": "C_FROZEN_IMPLEMENTATION_CONTRACT_ACTUAL_RUNTIME_NOT_ENABLED",
+  "atUtc": "2026-10-22T11:36:11.047128+00:00",
+  "schemaAuthority": "C01-v1 image roles/color + retained native media fields; no new table, column or write authority",
+  "baseContract": {
+    "path": "CONTROLLED-MEDIA-CONTRACT-v1.json",
+    "sha256": "3b05ef21889ca1b888c2f5e08312e9e9a6fb62c0b9bb8938314c416ec47e9776"
+  },
+  "codec": {
+    "package": "sharp",
+    "exactVersion": "0.35.5",
+    "integrity": "sha512-Ywn4OnzGukp7CDMrp08RQ50YKmuwG47brZgIVPTvBaaAfQlRlygrRqSrxdCiL9M+LlzLBiJ68IR1QqvzHyjC7g==",
+    "entry": "adapters/media/src/sharp-product-image-codec.ts",
+    "sources": [
+      "https://sharp.pixelplumbing.com/api-constructor/",
+      "https://sharp.pixelplumbing.com/api-output/",
+      "https://sharp.pixelplumbing.com/install/"
+    ],
+    "inputs": "Only binary PNG/JPEG/WEBP, detected format must equal declared supported MIME. Metadata alone is insufficient: fully decode bounded pixels before success. Original bytes remain unchanged; thumbnail separate. Reject animated/multi-page input explicitly, no implicit first-frame flattening.",
+    "limits": {
+      "inputBytesMax": 8388608,
+      "dimensionMax": 8192,
+      "decodedPixelsMax": 20000000,
+      "channelsMax": 4,
+      "decodedBytesMax": 80000000,
+      "thumbnailWidthMax": 320,
+      "thumbnailHeightMax": 320,
+      "thumbnailBytesMax": 262144,
+      "processingSecondsMax": 10,
+      "activeCodecsMax": 1,
+      "queuedCodecsMax": 2
+    },
+    "thumbnail": "Auto-orient derived thumbnail, fit inside320x320 without enlargement, WEBP quality80; fresh SHA/size/MIME and originalSHA binding. Do not alter original.",
+    "cancellation": "Check AbortSignal before/after awaits; destroy codec on abort and bounded timeout, do not return stage on aborted/late completion. A timeout/error is failure, never metadata-only success."
+  },
+  "stage": {
+    "entry": "adapters/media/src/product-media-stage.ts",
+    "configuration": "Explicit canonical private root outside public/static/dist and actual host current identity authorization callback; no default root, auto root discovery or browser source path. Test only scoped synthetic private fixture roots.",
+    "binding": [
+      "current actorAccountId",
+      "productId actual EDIT or explicit CREATE-draft null",
+      "original product command requestKey",
+      "original per-file uploadKey",
+      "original exact bytes SHA256/byteSize/MIME",
+      "opaque upload UUID",
+      "actual createdAt/expiresAt"
+    ],
+    "expirySeconds": 86400,
+    "authorization": "Fresh actual ADMIN/WAREHOUSE create/edit scope authorization before upload and before root-command consumption; URL/UUID alone not authority. Storage provider never infers grants from input role or boolean.",
+    "idempotency": "Same exact actor+command+uploadKey+scope+bytes returns existing stage; changed scope/content under same key409. Atomic exclusive immutable manifests and files, mode0700dirs/0600files, fsync before stage success. Concurrent same-key cannot produce two visible committed stages.",
+    "consumption": "Root CREATE/EDIT passes original actor/scope/requestKey; before mutation re-read nofollow private manifest/original/thumb, exact digest/size/MIME/expiry and original-derived binding. Supply immutable prepared image facts to D1 same-client audit/receipt transaction. New native image UUID is not upload UUID unless explicitly created by native ID source.",
+    "retention": "No cleanup/delete on cancel/save failure/unknown COMMIT/expiry; replaced originals retained. No credentials or business payload in public output. Actual host manifest producer and delivery mapping must consume these exact prepared facts."
+  },
+  "wireActivation": {
+    "routeVersion": "Existing product V2 routes only; no new route/version or DB fields.",
+    "oldCommands": "Existing exact V2 shape without imageChanges keeps original parse/output/hash and replay/recovery behavior. Never synthesize imageChanges:[] for a pre-existing original key.",
+    "newCommands": "New media-aware CREATE/EDIT exact extended shape requires imageChanges array, [] explicit no image edit. New client activates only with explicit stage and command capabilities; reserves original requestKey before upload and before send.",
+    "conflict": "Same original key with changed old/new shape or imageChanges conflicts; no command hash regeneration or implicit key replacement. Receipt lookup/recovery precedes adoption/retry as existing contract.",
+    "saveGate": "Missing stage/codec/actual schema22+/D1 prepared-image capability fails before mutation. A staged upload does not imply product save. Original receipt four keys and one product operation/version remain."
+  },
+  "owners": {
+    "D2": "Codec/stage plus existing product parser/ports/service/store+tests within registered bounds; no package/lock edits",
+    "D1": "Actual runtime composition/private manifests + original same-client prepared images closure/ACL; production gate C only",
+    "F2": "After frozen writer/client contract, explicit media-aware UI capability; no autonomous activation",
+    "C": "Exact dependency/lock, storage/root provenance, targeted isolated runtime/PG/build/release"
+  },
+  "notClaimed": [
+    "Actual decode/thumbnail runtime yet",
+    "Actual private source/root mapping",
+    "PG image transaction",
+    "Browser/upload/production acceptance"
+  ]
+}

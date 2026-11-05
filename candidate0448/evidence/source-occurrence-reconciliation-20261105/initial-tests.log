@@ -1,0 +1,27 @@
+✔ original occurrence counts differ honestly from target counts, 22 sidecars remain separate from funds (51.164953ms)
+✔ equal-content distinct zero occurrences retain distinct permanent keys and technical archive targets (30.141577ms)
+✔ missing mapping fails closed (8.29849ms)
+✔ duplicate original fails closed (4.97552ms)
+✔ duplicate mapping fails closed (4.532498ms)
+✔ missing original fails closed (4.852859ms)
+✔ invented target fails closed (8.014834ms)
+✔ wrong source locator fails closed (5.336405ms)
+✔ unbound source hash fails closed (5.28059ms)
+✔ zero archive changed original fails closed (8.215113ms)
+✔ zero archive wrong parent fails closed (6.478933ms)
+✔ trusted evidence resists changed bytes, forged capabilities and another manifest (9.465933ms)
+✔ settlement identity cannot be reassigned through aliases or collapsed (17.695105ms)
+✔ unknown historical hall stays unknown and 199 relationships never use staff or warehouse as historical truth (53.364174ms)
+✔ approved absence-zero is a separate target, pinned to inventory hash/cutoff/key and approval line, never a fake source row (24.607849ms)
+✔ approved zero cannot be double-counted as a source or silently omit approved keys (25.007273ms)
+✔ ordinary and stream standard-table preflights bind identical source occurrence evidence without changing legacy format (591.63296ms)
+✔ validly pinned ledger with wrong mapping rejects both full preflight paths (236.856608ms)
+✔ ordinary and stream count approved absent zeros separately from original inventory observations (533.595693ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2547.385357

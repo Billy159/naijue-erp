@@ -1,0 +1,25 @@
+✔ exact operator-fixed catalogue binding rejects drift and wrong physical identity (3.112765ms)
+✔ same client exact SELECT ACK and genuine immutable source spec required (284.770944ms)
+✔ installed profile includes exact reference-lock successor with its narrower pg_catalog path (217.981299ms)
+✔ initial admission rejects disabled triggers, unvalidated constraints, disabled RLS and non-SET inherited roles (0.744722ms)
+✔ source spec binds exact permission patches and installer sources, not just routine bodies (236.939155ms)
+✔ installation record requires exact trusted-file shape and current source (3.262596ms)
+✔ root owned fixed record rejects writable, linked and application-owned metadata (0.533345ms)
+✔ finalization observes real query packet only after exact rollback acknowledgment; failure cannot produce record (31.956285ms)
+✔ fixed install sequence stops at every failed stage and cannot expose standalone finalization CLI (6.067812ms)
+✔ exit zero alone or a quit-before-tail cannot stand in for the server installation sentinel (0.643189ms)
+✔ local installation target must already be independently fixed and empty before any stage (0.880605ms)
+✔ versioned source spec changes only final closure pin and binds predecessor/combined artifact (658.436744ms)
+✔ versioned record validation binds exact format, predecessor, successor and final body (2.283041ms)
+✔ forged source spec refuses before any catalog query and cannot supply its own approval (5.591162ms)
+✔ combined initializer candidate is one transaction with both guarded successors then exact access verifier (18.822251ms)
+✔ catalog proposal changes one exact routine pin without fabricating a trusted spec or installation record (9.987705ms)
+✔ batch candidate drift fails closed and original singleton output remains stable (4.011066ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1068.070008

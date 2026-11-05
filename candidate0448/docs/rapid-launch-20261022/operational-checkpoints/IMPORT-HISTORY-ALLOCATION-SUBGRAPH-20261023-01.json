@@ -1,0 +1,31 @@
+{
+  "version": "C_IMPORT_HISTORY_ALLOCATION_SUBGRAPH_DERIVATION_CHECKPOINT_V1",
+  "atUtc": "2026-10-22T20:44:29.449438+00:00",
+  "status": "ALLOCATION_ONLY_PENDING_NEW_SCOPED_QB_REVIEW",
+  "delivery": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/history-allocation-subgraph1/DELIVERY-RESULT.json",
+    "sha256": "69fcceda6ec4b602b0128a425048b33e18fd08246a412e8af9813fd9f7690acd",
+    "bytes": 4701
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-history-allocation-subgraph-20261023-D3-run1/MANIFEST.json",
+    "sha256": "d794143076469ff88ae896d0429c46afdba9b93c2dc191d4c59111918f2f7322",
+    "bytes": 3423
+  },
+  "originalRegistry": {
+    "bytes": 103890023,
+    "sha256": "39087c056cb48048a1f697b0300bbe3df2779a954f996d46a42a526e086ced17",
+    "rows": 468871
+  },
+  "selectedCounts": {
+    "SALES_HEADER": 28282,
+    "TRANSFER_HEADER": 14279,
+    "SALES_LINE": 80918,
+    "SETTLEMENT": 25779,
+    "TRANSFER_LINE": 261641
+  },
+  "total": 410899,
+  "reviewScope": "Only new bounded streaming derivation/parser, original-row byte preservation and saved evidence+count/hash metadata. Original allocation/source QA reused; no rescan of original registry or full outputs.",
+  "realImportExecutionAuthorized": false,
+  "referenceAuthorityGranted": false
+}

@@ -1,0 +1,84 @@
+✔ original occurrence counts differ honestly from target counts, 22 sidecars remain separate from funds (69.169334ms)
+✔ equal-content distinct zero occurrences retain distinct permanent keys and technical archive targets (43.836756ms)
+✔ missing mapping fails closed (16.349905ms)
+✔ duplicate original fails closed (8.732196ms)
+✔ duplicate mapping fails closed (18.171403ms)
+✔ missing original fails closed (13.937119ms)
+✔ invented target fails closed (20.526125ms)
+✔ wrong source locator fails closed (10.819139ms)
+✔ unbound source hash fails closed (9.697236ms)
+✔ zero archive changed original fails closed (11.77705ms)
+✔ zero archive wrong parent fails closed (11.742844ms)
+✔ trusted evidence resists changed bytes, forged capabilities and another manifest (17.899218ms)
+✔ settlement identity cannot be reassigned through aliases or collapsed (38.312847ms)
+✔ 199 unclassified historical hall relationships remain unknown without approved derivation evidence (56.472602ms)
+✔ approved absence-zero is a separate target, pinned to inventory hash/cutoff/key and approval line, never a fake source row (78.218317ms)
+✔ approved zero cannot be double-counted as a source or silently omit approved keys (39.140152ms)
+✖ ordinary and stream standard-table preflights bind identical source occurrence evidence without changing legacy format (180.966968ms)
+✖ validly pinned ledger with wrong mapping rejects both full preflight paths (127.941415ms)
+✖ ordinary and stream count approved absent zeros separately from original inventory observations (171.833663ms)
+✔ individually pinned target records reject altered facts even if a caller supplies an unchanged manifest (14.613644ms)
+✔ historical hall reconciliation retains original, derived, difference and pending-review classifications without overwriting facts (97.031223ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 18
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1449.620533
+
+✖ failing tests:
+
+test at tests/unified-source-occurrence-reconciliation.test.mjs:42:1
+✖ ordinary and stream standard-table preflights bind identical source occurrence evidence without changing legacy format (180.966968ms)
+  AssertionError [ERR_ASSERTION]: {"code":"HISTORICAL_HALL_EVIDENCE_SHAPE","file":"sales_header.jsonl","row":1,"field":"historical_hall_evidence"}
+  
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/unified-source-occurrence-reconciliation.test.mjs:42:248)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/unified-source-occurrence-reconciliation.test.mjs:43:1
+✖ validly pinned ledger with wrong mapping rejects both full preflight paths (127.941415ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SOURCE_RECONCILIATION_/. Input:
+  
+  '{"code":"HISTORICAL_HALL_EVIDENCE_SHAPE","file":"sales_header.jsonl","row":1,"field":"historical_hall_evidence"}\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/unified-source-occurrence-reconciliation.test.mjs:43:362)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '{"code":"HISTORICAL_HALL_EVIDENCE_SHAPE","file":"sales_header.jsonl","row":1,"field":"historical_hall_evidence"}\n',
+    expected: /SOURCE_RECONCILIATION_/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/unified-source-occurrence-reconciliation.test.mjs:44:1
+✖ ordinary and stream count approved absent zeros separately from original inventory observations (171.833663ms)
+  AssertionError [ERR_ASSERTION]: {"code":"HISTORICAL_HALL_EVIDENCE_SHAPE","file":"sales_header.jsonl","row":1,"field":"historical_hall_evidence"}
+  
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/unified-source-occurrence-reconciliation.test.mjs:44:271)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

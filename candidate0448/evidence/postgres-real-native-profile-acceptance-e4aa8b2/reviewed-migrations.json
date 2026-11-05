@@ -1,0 +1,47 @@
+{
+  "suite": "backend-0001-0008",
+  "commit": "e4aa8b2663da5984486ddc63b2f95e2a92ca0950",
+  "frozen_plan_sha256": "2bafc8989ae97997c4517143d8ee5f3b2094526a4a7e107051bb58df6d310a3a",
+  "migrations": [
+    {
+      "version": 1,
+      "filename": "0001_runtime_sales.sql",
+      "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+    },
+    {
+      "version": 2,
+      "filename": "0002_sales_pricing_facts.sql",
+      "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+    },
+    {
+      "version": 3,
+      "filename": "0003_auth_sessions.sql",
+      "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+    },
+    {
+      "version": 4,
+      "filename": "0004_transfer_runtime.sql",
+      "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+    },
+    {
+      "version": 5,
+      "filename": "0005_product_read_fields.sql",
+      "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+    },
+    {
+      "version": 6,
+      "filename": "0006_party_maintenance.sql",
+      "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+    },
+    {
+      "version": 7,
+      "filename": "0007_sparse_inventory_cutoff.sql",
+      "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+    },
+    {
+      "version": 8,
+      "filename": "0008_runtime_sparse_first_use.sql",
+      "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+    }
+  ]
+}

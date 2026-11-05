@@ -1,0 +1,192 @@
+{
+  "format": "FRESH_EMPTY_LEGACY_ROWTYPE_SOURCE_CANDIDATE_V1",
+  "generator": {
+    "path": "scripts/release/unified-install/fresh27-legacy-rowtypes.mjs",
+    "sha256": "8a46b94861f052fcfa1ea5eca0a3015dfb807104b37e527e8bce3f8a6289853b"
+  },
+  "sql": {
+    "path": "adapters/postgres/patches/0027_fresh_legacy_rowtypes_successor.sql",
+    "sha256": "f3730f1ab5f3b6ac6e1ab73b2792cbf6ca77861f01094c141820000d265c0201"
+  },
+  "ordered_sources": [
+    {
+      "path": "adapters/postgres/migrations/0011_history_storage.sql",
+      "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965"
+    },
+    {
+      "path": "adapters/postgres/migrations/0017_native_payment_import.sql",
+      "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"
+    },
+    {
+      "path": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+      "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+    },
+    {
+      "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+      "sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+      "sha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+      "sha256": "0eb5785c7e050c0b1eac5fe0fd8949dfd126f466130c841cef098247ef62cb38"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+      "sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+      "sha256": "bebad118d5519b9e899215230e16fce92cbee9148ebbf35ba03af513c1f4f475"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+      "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750"
+    }
+  ],
+  "replacements": [
+    {
+      "signature": "naijue_erp.assert_barcode_scheme_initialization_v19(pg_catalog.uuid,pg_catalog.uuid)",
+      "name": "assert_barcode_scheme_initialization_v19",
+      "source": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+      "before_sha256": "8d4f7d457403d6c4737e5a9b38d6d4f48c0ef3c5e94dd2e8ff408d3b57a198ca",
+      "after_sha256": "fd0b0a102b7ef86498920a5c2006a692ec7179eec6f3cff9fdd8db2e14e6b471",
+      "old_declaration": "e naijue_erp.native_party_import_evidence%ROWTYPE",
+      "new_declaration": "e record",
+      "return_type": "void",
+      "assignment": "SELECT * INTO STRICT e FROM naijue_erp.native_party_import_evidence",
+      "initialization": "SELECT_INTO_STRICT"
+    },
+    {
+      "signature": "naijue_erp.assert_core_initialization_v14(pg_catalog.uuid,pg_catalog.uuid,pg_catalog.bool)",
+      "name": "assert_core_initialization_v14",
+      "source": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+      "before_sha256": "8a8374fb193ed9e5ddcc388b0141a91dc17420cef0baee4ffbb700cd9737add5",
+      "after_sha256": "c83323159c8a36a8115312ad9530230964759b4969cd6b93576a90f26856c542",
+      "old_declaration": "e naijue_erp.native_party_import_evidence%ROWTYPE",
+      "new_declaration": "e record",
+      "return_type": "void",
+      "assignment": "SELECT * INTO STRICT e FROM naijue_erp.native_party_import_evidence",
+      "initialization": "SELECT_INTO_STRICT"
+    },
+    {
+      "signature": "naijue_erp.guard_header_native_reference()",
+      "name": "guard_header_native_reference",
+      "source": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+      "before_sha256": "1584d2600c763f0d38cd3dd4fa7dd14ea90465ef9376d7165a58d71bce0dec3c",
+      "after_sha256": "b9efd63a20a8a66e9ab66025751da35dc481f9e22eb3a5e65d7085d873c2a0f3",
+      "old_declaration": "source naijue_erp.import_source_row%ROWTYPE",
+      "new_declaration": "source record",
+      "return_type": "trigger",
+      "assignment": "SELECT * INTO STRICT source FROM naijue_erp.import_source_row",
+      "initialization": "SELECT_INTO_STRICT"
+    },
+    {
+      "signature": "naijue_erp.guard_history_insert()",
+      "name": "guard_history_insert",
+      "source": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+      "before_sha256": "98fcf82074f4aaf0712b2af3aca5a12a7e4975933712caffd577e652eca7e12f",
+      "after_sha256": "7609c07156e5a8dba605362e10fdb8adc5ab9fa790e49e367732e5731c61d511",
+      "old_declaration": "source naijue_erp.import_source_row%ROWTYPE",
+      "new_declaration": "source record",
+      "return_type": "trigger",
+      "assignment": "SELECT * INTO STRICT source FROM naijue_erp.import_source_row",
+      "initialization": "SELECT_INTO_STRICT"
+    },
+    {
+      "signature": "naijue_erp.guard_native_catalogue_binding()",
+      "name": "guard_native_catalogue_binding",
+      "source": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+      "before_sha256": "7418579c0d1c3a1951696a12ad165a421d26b87f0e449d9d7d250497dc2ddc21",
+      "after_sha256": "c2e6f8f2e7effbd42e6343e58696b8b1bb7b3963ddd6c340f74dab278e7a9c5d",
+      "old_declaration": "s naijue_erp.import_source_row%ROWTYPE",
+      "new_declaration": "s record",
+      "return_type": "trigger",
+      "assignment": "SELECT * INTO STRICT s FROM naijue_erp.import_source_row",
+      "initialization": "SELECT_INTO_STRICT"
+    },
+    {
+      "signature": "naijue_erp.guard_native_payment_binding()",
+      "name": "guard_native_payment_binding",
+      "source": "adapters/postgres/migrations/0017_native_payment_import.sql",
+      "before_sha256": "774cc9b1604a8d0948f73c7298fa67a10233962af218b89fe0b9675107148d35",
+      "after_sha256": "ee0e1990c02ca14f3dccc7f8b842d0b19a965ca1826a85b18c4bb2a6535088de",
+      "old_declaration": "s naijue_erp.import_source_row%ROWTYPE",
+      "new_declaration": "s record",
+      "return_type": "trigger",
+      "assignment": "SELECT * INTO STRICT s FROM naijue_erp.import_source_row",
+      "initialization": "SELECT_INTO_STRICT"
+    },
+    {
+      "signature": "naijue_erp.history_effective_writes_closed()",
+      "name": "history_effective_writes_closed",
+      "source": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+      "before_sha256": "5cfe1d51d7cfa4f30c5fe758ed3b203ec714fa4fc99185a901454d705ea3ba54",
+      "after_sha256": "d5e4fbf5ae701d14a70ea7d7934b7c5882d174a38e0a0bdecb22b30716c22f5f",
+      "old_declaration": "revision naijue_erp.history_revision%ROWTYPE",
+      "new_declaration": "revision record",
+      "return_type": "trigger",
+      "assignment": "SELECT * INTO STRICT revision FROM naijue_erp.history_revision",
+      "initialization": "SELECT_INTO_STRICT"
+    },
+    {
+      "signature": "naijue_erp.validate_history_closure_commit()",
+      "name": "validate_history_closure_commit",
+      "source": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+      "before_sha256": "e61d2c5dd34792f5ca277cada1dc12a6904b1be95031c0a6c4810080b24dd03b",
+      "after_sha256": "b3dc8e536075e27b9ddf83d017611176e88cc8160d88c3ef92e6477193547eb7",
+      "old_declaration": "m naijue_erp.import_history_closure_manifest%ROWTYPE",
+      "new_declaration": "m record",
+      "return_type": "trigger",
+      "assignment": "SELECT * INTO STRICT m FROM naijue_erp.import_history_closure_manifest",
+      "initialization": "SELECT_INTO_STRICT"
+    },
+    {
+      "signature": "naijue_erp.validate_history_numeric_balance_commit()",
+      "name": "validate_history_numeric_balance_commit",
+      "source": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+      "before_sha256": "fab0bf7a3f1681d6034b09dbb5c7ad8efa606c6fa82f24fc101bc5b70636a837",
+      "after_sha256": "e7c3b1082f5c5fd5b6634c8db26df08af2e6e7296a7297a5b1af28aa76e6d703",
+      "old_declaration": "revision naijue_erp.history_revision%ROWTYPE",
+      "new_declaration": "revision record",
+      "return_type": "trigger",
+      "assignment": "SELECT * INTO STRICT revision FROM naijue_erp.history_revision",
+      "initialization": "SELECT_INTO_STRICT"
+    },
+    {
+      "signature": "naijue_erp.validate_history_product_proofs(pg_catalog.uuid)",
+      "name": "validate_history_product_proofs",
+      "source": "adapters/postgres/migrations/0011_history_storage.sql",
+      "before_sha256": "dab49bb495de85d5e66350affd348f85e0595411ea7ab7378104a3963db2a38e",
+      "after_sha256": "9d61d7b09a58decc03173044e109b5a8aa3d5300c2d7fa0f379470fe16b83ef6",
+      "old_declaration": "source naijue_erp.import_source_row%ROWTYPE",
+      "new_declaration": "source record",
+      "return_type": "void",
+      "assignment": "FOR source IN SELECT * FROM naijue_erp.import_source_row",
+      "initialization": "FOR_SELECT_LOOP"
+    },
+    {
+      "signature": "naijue_erp.validate_native_party_import_commit()",
+      "name": "validate_native_party_import_commit",
+      "source": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+      "before_sha256": "5383c9941e06c7748af6603eee56559b102b09305c11771a813c6cf859ad37e3",
+      "after_sha256": "431123fc6d866fad56fbbeaa02393d20e75883f3598d80f782a1c1c60441b3db",
+      "old_declaration": "s naijue_erp.import_source_row%ROWTYPE",
+      "new_declaration": "s record",
+      "return_type": "trigger",
+      "assignment": "SELECT * INTO STRICT s FROM naijue_erp.import_source_row",
+      "initialization": "SELECT_INTO_STRICT"
+    }
+  ],
+  "remaining_composite_inputs": [
+    "naijue_erp.assert_native_product_season_source(naijue_erp.import_source_row)",
+    "naijue_erp.validate_exact_historical_customer_intent(naijue_erp.native_party_import_evidence,naijue_erp.import_batch)"
+  ],
+  "database_accessed": false,
+  "engine_verified": false,
+  "installation_registered": false,
+  "old_tables_removed": false,
+  "independent_review_complete": false
+}

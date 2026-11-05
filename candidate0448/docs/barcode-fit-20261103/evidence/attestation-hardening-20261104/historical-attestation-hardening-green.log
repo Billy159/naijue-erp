@@ -1,0 +1,48 @@
+✔ strict declared evidence preserves raw bytes and binds product / pinned files (9.765964ms)
+✔ unavailable, forged, duplicated and malformed mappings fail closed (32.622368ms)
+✔ array accessors, holes, symbols and hidden properties cannot execute or escape validation (1.176043ms)
+✔ source segment length respects exact 512-character scanner limit without truncation (0.745597ms)
+✔ same historical color and size may belong to different actual fits without splitting source segment (6.46197ms)
+✔ proxy evidence containers reject before invoking any caller traps (1.524833ms)
+✔ unpaired UTF-16 source strings fail closed instead of changing when encoded as UTF-8 (6.31552ms)
+✔ well-formed supplementary Unicode remains exact, with no normalization or replacement (0.805041ms)
+✔ offline local declarations resolve product-selected scheme against actual allocated SKU coordinates (14.415129ms)
+✔ coordinate mismatches remain missing; duplicate or cross-product identities are rejected (0.979938ms)
+✔ historical 910 and current 910 remain scoped by source and size identity, never inferred from equal raw code (0.713692ms)
+✔ V2 proof-reader maps only exact allocated product/coordinate and labels local declaration (4.809842ms)
+✔ absent mapping remains missing; duplicate proof rows, spoofed scope and malformed pins reject (5.043863ms)
+✔ all five product scheme declarations pass through candidate reader without remapping source segments (3.665905ms)
+✔ one published product scheme cannot contain conflicting source product segments (1.913968ms)
+✔ offline V2 exact 2018 source-segment reference (94.34139ms)
+✔ offline V2 exact 2020 source-segment reference (29.573744ms)
+✔ offline V2 exact 2021 source-segment reference (29.050583ms)
+✔ offline V2 exact 2021fit source-segment reference (30.144242ms)
+✔ offline V2 exact 2023 source-segment reference (23.584166ms)
+✔ V2 compiles exact historical declaration with raw audit sidecar and no inserted fit segment (95.608676ms)
+✔ V1 declaration/default compiler request objects and hashes remain unchanged (67.327479ms)
+✔ changed sidecar alters deterministic V2 record/program hashes but never V1 request (65.713661ms)
+✔ unknown fields, wrong product identity/source, scheme and coordinate/source conflicts reject (100.344784ms)
+✔ hash mismatch and duplicate JSON keys fail closed before accepting sidecar (5.852492ms)
+✔ complete distinct V2 request carries sidecar and original wire row, including receipt hash input (18.068027ms)
+✔ same logical V2 request key survives changed declaration, but whole request digest conflicts (30.317333ms)
+✔ existing barcode owned by another scheme rejects instead of rebinding (10.745924ms)
+✔ source refs retain exact coordinate rows; size code alone never resolves a different ID (14.159866ms)
+✔ accessor-swapped base, nested source refs, bytes, digest and admin reject without invoking getters (18.282242ms)
+✔ proxy and shared byte storage reject before traps or mutable-byte verification (5.4034ms)
+✔ exact byte transport preserves original noncanonical JSON bytes as immutable bytea hex (16.903004ms)
+✔ caller mutation after transport creation cannot change owned bytes/program; hash drift rejects (20.850885ms)
+✔ transport rejects shared bytes and accessors before invocation, and preserves existing compiler output (28.607658ms)
+✔ package-known disabled same-coordinate barcode rejects in parser/compiler/transport without restoration (25.927577ms)
+✔ package-known enabled exact existing coordinate remains accepted, without asserting live DB state (14.571967ms)
+✔ root binds complete ordered program with inline MASTER replacement and both publish targets (219.577822ms)
+✔ deletion, duplicates, reorder, publish gaps, target and rehashed payload tamper reject (590.522922ms)
+✔ stable package key keeps root operation while catalog payload changes; different key changes operation (95.220286ms)
+✔ root requires explicit target and bounded key; getters are rejected without invocation (67.844618ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1441.303922

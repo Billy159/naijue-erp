@@ -1,0 +1,310 @@
+{
+  "id": "C01-SUPPLEMENT-20261022-v2",
+  "status": "PENDING_EXPLICIT_HUMAN_APPROVAL",
+  "previousApproval": "C01-20261022-v1 A-D remains approved",
+  "createdAtUtc": "2026-10-22T07:20:36.723023+00:00",
+  "A": {
+    "owner": "D1/D2/D3/F2",
+    "newTables": 1,
+    "newColumns": 2,
+    "central": {
+      "id": "PRODUCT_ATOMIC_SEASONS_RELATION_PROPOSAL_V1",
+      "status": "PENDING_USER_SCHEMA_APPROVAL_NO_IMPLEMENTATION",
+      "atUtc": "2026-10-22T07:15:54.745680+00:00",
+      "requestedSemantics": "真正春/夏等多选；不建立组合字典值、不取首项覆盖原标量",
+      "reservedVersion": 25,
+      "proposedPath": "adapters/postgres/migrations/0025_product_season_membership.sql",
+      "newTable": "naijue_erp.product_season",
+      "columns": [
+        {
+          "name": "product_id",
+          "type": "uuid",
+          "nullable": false,
+          "FK": "product(id)"
+        },
+        {
+          "name": "season_id",
+          "type": "uuid",
+          "nullable": false,
+          "FK": "season(id)"
+        }
+      ],
+      "constraints": [
+        "PRIMARY KEY(product_id,season_id)",
+        "No cascade DELETE; retained source/native identities remain",
+        "No invented timestamps/IDs/defaults",
+        "New/changed references must target actual approved atomic season IDs",
+        "Same product version +1, original request key/operation, shared prepare BEFORE relation changes; before/after.seasons complete actual sets; final set closure and same-root child guard",
+        "Source/import path only consumes explicitly reviewed original season mapping; no default split/first/global fallback"
+      ],
+      "preservation": [
+        "Original product.season_id and original imported/source evidence remain unchanged",
+        "Original scalar is never overwritten with first selected atomic season or synthetic combined ID",
+        "Original history/person/time/inventory/SKU identity unchanged"
+      ],
+      "readSemantics": [
+        "New explicit season relation is authoritative once written",
+        "Legacy scalar remains separately reportable as an unresolved original value until explicitly mapped; it is not silently split",
+        "DTO seasonIds array and separate legacySeason fact; original existing API scalar only retained as compatibility source, never reconstructed from first item",
+        "Filter multi-season uses ANY actual relation member; legacy scalar filtering explicitly separate, no combo dictionary option"
+      ],
+      "dependencies": [
+        "D2 define native atomic season IDs/approved catalogue and new array DTO/client write input",
+        "D1 central migration only after user reviews and approves exact new table/two columns+constraints",
+        "D1/D2 extend same product prepare+relation guards, runtime exact finite schema25 capability",
+        "D3 source/import consumer explicitly maps reviewed atomic references, never writes unapproved combination values",
+        "F2 consumes approved array contract; frontend required validation stays unchanged"
+      ],
+      "countsIfApproved": {
+        "oldTables": 50,
+        "oldColumns": 516,
+        "C01TablesAdded": 6,
+        "C01ColumnsAdded": 63,
+        "thisTablesAdded": 1,
+        "thisColumnsAdded": 2,
+        "totalTables": 57,
+        "totalColumns": 581
+      },
+      "notImplemented": [
+        "No0025 file/table",
+        "No dictionary combo values",
+        "No migration/profile/run",
+        "No source/backfill/scalar edits"
+      ]
+    },
+    "contract": {
+      "version": "D2-TRUE-SEASON-MULTISELECT-PROPOSAL-v1",
+      "status": "PROPOSAL_ONLY_REQUIRES_C_AND_HUMAN_SCHEMA_APPROVAL",
+      "tasks": [
+        "B04",
+        "F04",
+        "B06"
+      ],
+      "direction": {
+        "humanMessage": "01a16264-4ea0-7b31-8430-4eb8fb147482",
+        "approved": "真实单季多选：春+夏显示春、夏；不采用组合字典值",
+        "pending": "本补充关系DDL/迁移/读写消费及实际导入"
+      },
+      "fieldDelta": {
+        "newTables": 1,
+        "newColumns": 2,
+        "existingColumnsChanged": 0,
+        "table": "naijue_erp.product_season",
+        "columns": [
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "reference": "product(id)",
+            "onDelete": "NO ACTION",
+            "meaning": "真实商品身份"
+          },
+          {
+            "name": "season_id",
+            "type": "uuid",
+            "nullable": false,
+            "default": null,
+            "reference": "season(id)",
+            "onDelete": "NO ACTION",
+            "meaning": "一个真实单季身份"
+          }
+        ],
+        "primaryKey": [
+          "product_id",
+          "season_id"
+        ],
+        "indexes": [
+          [
+            "season_id",
+            "product_id"
+          ]
+        ],
+        "versionAndAudit": "复用product.version与原PRODUCT operation/audit/receipt，不增关系行id/version/时间/创建者"
+      },
+      "proposedDdl": "CREATE TABLE naijue_erp.product_season (product_id uuid NOT NULL REFERENCES naijue_erp.product(id) ON DELETE NO ACTION, season_id uuid NOT NULL REFERENCES naijue_erp.season(id) ON DELETE NO ACTION, PRIMARY KEY (product_id,season_id));\nCREATE INDEX product_season_season_product_idx ON naijue_erp.product_season(season_id,product_id);",
+      "legacyScalar": {
+        "preserve": "保留product.season_id的字段、原FK与原值作为旧单值来源，不drop、不改数组、不写多选首项。迁移后普通EDIT不写此列，新建v2商品旧列为NULL。",
+        "backfill": "C批准后从现存已证实单季scalar写同产品同季1条关系；原NULL不补默认。未知或旧组合字典不能按字符串猜测拆分，由D3核来源。",
+        "currentRead": "迁移及逐项对账完成后product_season是唯一当前选择来源。空关系不fallback旧scalar，防止用户清空后旧季节复活。",
+        "activation": "迁移/来源读回未完成不启用v2；缺表/权限/数据错误明确未就绪，不能变成空集合。",
+        "rollback": "保全旧scalar及关系映射；有多选写入后旧应用不得继续scalar写。必要回退为维护/只读，不能把多选压回首季。"
+      },
+      "writeApi": {
+        "route": "POST /products/v2/commands",
+        "actions": "沿用CREATE/EDIT/DISABLE/RESTORE/DELETE；不开放季节字典编辑",
+        "createEdit": "W2其余字段/SKU/条码/九价保持。values.seasonId替换成必填values.seasonIds:UUID[]。[]明确当前无已选；遗漏/null/重复/不存在UUID均拒绝。",
+        "canonicalization": "校验后按UUID排序用于指纹/锁/证据，不把重复项静默去重；展示顺序不参与集合身份。",
+        "concurrency": "锁商品根和原关系、season按id有序FOR SHARE；同一product.version CAS。根只增1、一次原actor/key回执、一次审计。",
+        "mutation": "仅删除/插入差集；不重建无变化集合。商品逻辑删除保留季节关系及历史身份。",
+        "transaction": "季节与本次SKU/条码/九价/图片变化一起，prepare实际前后审计→根与子关系→complete；任一失败同事务回滚。",
+        "audit": "before_values.seasons/after_values.seasons为完整排序[{product_id,season_id}]；CREATE before仍null，after完整集合；EDIT集合不变不造子审计。",
+        "d1Required": "关系变更守卫必须核完整原集/新集、当前事务原操作、根CAS和回执闭合。单靠前端不够；D1唯一owner分配新迁移号。",
+        "result": "严格{operationId,kind:PRODUCT,targetId,version}；复用GET /products/receipts/:requestKey"
+      },
+      "readApi": {
+        "edit": "POST /products/maintenance/v2/detail/query {productId}，values.seasonIds与references.seasons:[{id,name}]逐项相等；无单值seasonId/season。",
+        "display": "按现有season.display_order再id稳定排序，真实名称用顿号连接；春+夏=春、夏，空集合seasonLabel=null。",
+        "frozenDto": "列表/basics仍seasonLabel:string|null，原URL与形状保持，只改真实关系来源；prices/barcodes/stock冻结DTO不扩展。",
+        "filter": "既有filter.seasonIds为空不限制，非空与商品已选集合有任一交集即命中（OR）；维度间AND。用EXISTS防止重复商品计数、分页或库存累计。",
+        "candidate": "列表候选从当前授权商品关联的真实单季取DISTINCT，先权限后count/page；编辑候选沿现有只读seasons。",
+        "bounded": "单页集合聚合/一次批量关系读取，不逐商品N+1，不全商品物化。"
+      },
+      "compatibility": {
+        "oldEditor": "v2启用后旧/products/commands CREATE/EDIT与旧maintenance/detail/query返回409 PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED，提示v2。不能把旧单值全量覆盖多选；不任取首季。旧状态动作与已提交回执保留。",
+        "replay": "旧已提交键先按其原版本校验并恢复原receipt，绝不重放旧业务写。新v2指纹绑定合同版本，防止原key跨v1/v2误复用。",
+        "release": "同一包切换v2编辑器和后端，保留旧源码/验收/回执证据；未就绪不假称多选可用。"
+      },
+      "source310": {
+        "file": "../local-takeover-20261021-private-data/native-dictionary-occurrence-candidate-20261022-D3-run1/exact-multi-season-310-PENDING.json",
+        "sha256": "e4ce771e24e84d0bf3ffb1884f165c16e8d180374bb867a3e432ebc798e95faf",
+        "measuredRows": 310,
+        "measuredOriginalSeasonCounts": {
+          "春、夏": 19,
+          "秋、冬": 291
+        },
+        "expectedLinks": 620,
+        "expectedLinksStatus": "推导目标数，未导入/未PG读回",
+        "mapping": "D3按原product身份逐件映射到现有春+夏或秋+冬字典UUID；原sourceKey/productCode/sourceSeason保存在原私有源包及逐键映射，不删除原文。",
+        "acceptance": "310个product逐一唯一匹配；每个单季有唯一明确字典映射；每件恰好2条、总620条实际读回，0重复/额外/遗漏。歧义仍PENDING，不唯一候选猜绑。",
+        "singleBlank": "其他证实单季=1条；原空白/未知=0条且来源未知状态不改，0条不声称历史明确无季节。用户显式清空由新审计区分，不倒写来源。",
+        "batch": "新批独立manifest/hash；不修改封存原件，不用旧快照覆盖新业务。"
+      },
+      "owners": {
+        "C": "汇总完整字段/约束/行为提交用户确认并冻结",
+        "D1": "迁移/子审计/宿主能力",
+        "D2": "登记范围内商品维护/列表/读取叶子",
+        "D3": "原310逐件映射与导入证据",
+        "F2": "自有前端多选及v2传输",
+        "QB_QF": "仅首次新季节链及受影响验证"
+      },
+      "focusedAcceptance": [
+        "单季、春夏新建、增删一季、清空准确读回，root.version只增1",
+        "多季OR筛选每商品只计一次；权限候选不泄漏",
+        "旧scalar原值保持、旧客户端拒绝、旧回执恢复",
+        "无效/重复season、陈旧version、拒权、audit/receipt失败无部分写",
+        "310→620逐键保真，缺失保持PENDING",
+        "缺表/未迁完明确不可用，不伪造空集"
+      ],
+      "implementation": "本文件仅建议；未新建迁移SQL文件、未修改待批准季节分支、未连接数据库/导入。"
+    }
+  },
+  "B": {
+    "owner": "D1/D2",
+    "newTables": 0,
+    "newColumns": 0,
+    "contract": {
+      "id": "MAINTENANCE_PREPARE_BEFORE_MUTATION_V1",
+      "status": "REVIEWABLE_SOURCE_PROPOSAL_NO_DDL_OR_BUSINESS_BRANCH_EXECUTED",
+      "atUtc": "2026-10-22T07:15:54.744360+00:00",
+      "approvedFieldDelta": {
+        "newTables": 0,
+        "newColumns": 0,
+        "existingColumnsChanged": 0
+      },
+      "interface": {
+        "prepare": "MaintenanceEvidenceSession.prepare?(input:MaintenanceCompletion):Promise<void>",
+        "compatibility": "Optional type keeps earlier independent test/leaf structural adapters valid; every applicable production leaf MUST require method and reject if absent, never optional-chain success. Real shared driver implements it.",
+        "prepareBehavior": [
+          "Require original actor/key/kind getReceipt binding and allowed write action",
+          "Validate exact one-step versions/time, bounded credential-free before/after JSON",
+          "Insert immutable audit under original operation exactly once; cache canonical completion fingerprint only in this transaction",
+          "No receipt yet; no own transaction/pool/commit",
+          "Further prepare always rejects; escape after callback rejects"
+        ],
+        "completeBehavior": [
+          "If prepared: exact same completion fingerprint or reject before receipt",
+          "If not prepared: existing simple completion internally prepares then inserts receipt, preserving older simple-root behavior",
+          "Insert exact COMMITTED receipt after actual leaf writes; close one completion",
+          "Any leaf/audit/receipt failure rolls back same original client; unknown COMMIT discards and retains original key for current-authorized readback"
+        ]
+      },
+      "sqlConstraintDelta": {
+        "file": "0021_native_maintenance_receipts.sql only, old0001-0019 immutable",
+        "generatedFKs": "20 new generated maintenance audit/receipt target FKs become DEFERRABLE INITIALLY DEFERRED; target existence still mandatory at COMMIT; no DROP of original actor FKs or reciprocal deferred audit/receipt identity",
+        "why": "Prepared audit may reference a root created later in same transaction. New root and all children must exist and match at COMMIT. This creates no cross-transaction success lane.",
+        "sameTransactionProof": "Prepared audit current row xmin matches original current transaction; immutable afterward; root BEFORE captures/checks actual old child rows/complete relation sets, child events match same root/version operation; deferred root checks final sets/actual values/receipt",
+        "existingUnaffected": "All old receipt/action branches and original import/bootstrap guards preserved, self-password existing narrow transition preserved; no new prefix granted by this proposal"
+      },
+      "safeAccountRow": [
+        "id",
+        "staff_id",
+        "login_name",
+        "login_enabled",
+        "auth_version",
+        "version",
+        "created_at",
+        "updated_at"
+      ],
+      "safeAccountEvidence": {
+        "before_values.accounts": "Complete actual previously linked safe rows sorted by id; [] when none. For new STAFF with before_values=NULL, logical old set is [].",
+        "after_values.accounts": "Complete actual final linked safe rows sorted by id. IDs cannot be invented/rebound/deleted; optional newly created account explicitly permitted for STAFF CREATE/EDIT only.",
+        "after_values.account_credentials": "Proposed closed metadata [{account_id,action:CREATE|RESET_PASSWORD}] only when a real new/reset credential occurs; no hash/password/salt/tag. Needed to distinguish legitimate same-root credential reset from unauthorized hash change.",
+        "passwordHash": "New/runtime reset uses existing fixed scrypt format; hash changes only matching CREATE/RESET metadata, never exposed in audit. HMAC tag affects original request fingerprint only, never direct audit field.",
+        "sessionRevocation": "Each existing account safety transition advances auth_version and version exactly once, updated_at same operation time, revokes every unrevoked session in same original transaction. Combined staff/credential/account edits advance once, not once per sub-action."
+      },
+      "applicableOperations": [
+        {
+          "root": "PRODUCT all commands",
+          "children": "changed retained sku/barcode/image rows in before/after arrays, each actual old row checked before root mutation and each actual new row at deferred closure; no SKU/barcode delete or identity rebind"
+        },
+        {
+          "root": "PAYMENT_ACCOUNT all commands",
+          "children": "complete payment_halls relation set only when actual set changes; CREATE may have explicit empty[]; changed set before actual equality before root; after final equality; direct child writes require same prepared root operation"
+        },
+        {
+          "root": "WAREHOUSE CREATE",
+          "children": "created_operation_id requires prepared sameoperation audit before INSERT; immutable thereafter; other warehouse commands may use same prepare flow"
+        },
+        {
+          "root": "STAFF CREATE",
+          "children": "optional real account create in same root operation; before no account, after complete actual set; new account auth/version1, current clock, explicit trusted hash and CREATE metadata"
+        },
+        {
+          "root": "STAFF EDIT",
+          "children": "optional account create/edit/reset; role/hall changes invalidate all actual linked account epochs and sessions; complete actual safe account before/after; optional reset metadata; no field/hash leakage"
+        },
+        {
+          "root": "STAFF LEAVE",
+          "children": "actual staff 在职->离职; each linked account login=false, auth/version+1, all sessions revoked; []->[] legal"
+        },
+        {
+          "root": "STAFF REINSTATE",
+          "children": "actual staff 离职->在职; accounts remain disabled, auth/version+1 and sessions revoked; no automatic login enable; same linked IDs; []->[] legal"
+        },
+        {
+          "root": "ACCOUNT standalone CREATE/EDIT/DISABLE/RESTORE/RESET_PASSWORD",
+          "children": "safe own root sparse before/after plus exact credential action metadata for actual new/reset hash; auth/version/session closure as applicable; same existing single UoW"
+        }
+      ],
+      "administratorOrder": [
+        "existing topology advisory lock when applicable",
+        "global naijue:maintenance:available-admin:v1 BEFORE current identity row locks",
+        "original actor/key advisory lock",
+        "fresh current account/staff/hall and role",
+        "target staff/account rows in UUID order",
+        "recheck actual last usable ADMIN and mutate under same lock",
+        "audit prepare, root/children/sessions, complete receipt, COMMIT"
+      ],
+      "administratorScopeNote": "Current fixed driver has STAFF/ACCOUNT lock. Propose also HALL disable/restore path before identity, because current authentication rejects accounts linked to disabled halls. Confirm this semantic scope with C/D2, no extra columns.",
+      "engineChecksRequested": [
+        "actual prepare+root CREATE+FK deferred closure, missing root cannot commit",
+        "payment false before/final/mixedoperation fails, full correct empty/nonempty set passes",
+        "STAFF all root/account combinations and original-key changed password HMAC conflict",
+        "last usable ADMIN concurrent changes, no identity lock upgrade deadlock",
+        "sameclient rollback/fault/unknownCOMMIT/replay current auth",
+        "new warehouse/SKU original creation operation and native key admission"
+      ],
+      "requires": "C confirms exact constraint/operation diff inside C01 or escalates explicit extra semantics; no DDL or real write before confirmation/window",
+      "sourceDraftLimit": "Current0021 draft only covers product/payment + STAFF LEAVE. Must extend to approved CREATE/EDIT/REINSTATE optional account transitions before claiming ready."
+    }
+  },
+  "unaffectedContinue": [
+    "R1 schema19 reads and account bootstrap",
+    "fixed candidate preview and Demo comparison",
+    "source and protocol reviews",
+    "existing approved scope development",
+    "release/backup preparation"
+  ],
+  "executionState": "No0025 DDL/write branch; 0021 draft constraints not executed; source interface preparation does not grant real writes."
+}

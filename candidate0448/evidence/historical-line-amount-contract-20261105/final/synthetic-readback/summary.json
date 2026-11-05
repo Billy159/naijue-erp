@@ -1,0 +1,80 @@
+{
+  "historical_line_amount_differences": 6,
+  "historical_line_amount_execution_boundary": "OFFLINE_ARCHIVE_ONLY",
+  "historical_line_amount_report": {
+    "relative_path": "historical-line-amount-differences.jsonl",
+    "row_count": 6,
+    "bytes": 4123,
+    "sha256": "de406e0e7faa804f41f70bc534ce3855a61507c4351b5891ab71c958af7d76a4"
+  },
+  "historical_line_amount_evidence": {
+    "relative_path": "historical-line-amount-evidence.json",
+    "bytes": 3218,
+    "sha256": "c162e8847ec7a5ba50f925112f0341d7ef4a68a370962b053e586c91a30951a7"
+  },
+  "timings_ms": {
+    "metadata_ms": 28.282238000000007,
+    "registry_ms": 8.146427000000017,
+    "records_ms": 42.31239799999997,
+    "relations_and_reconciliation_ms": 10.160025000000019,
+    "index_hash_ms": 3.043882999999994,
+    "total_ms": 92.24803200000002,
+    "jsonl_read_ms": 6.052756000000045,
+    "jsonl_decode_parse_ms": 2.209761999999955
+  },
+  "source_namespace": "synthetic.unified.v1",
+  "schema_declarations_sha256": "e929e89fe7f026d10e6fd35af37d1eb48cd07db2f7da4eed76352e497b134cb9",
+  "package_stage": "READY",
+  "manifest_sha256": "e88b70dcd7b495d6191e539f236103c83275bfa3211fb98b5c357303550ac21c",
+  "index_schema_version": "UNIFIED_STREAM_FACTS_V3",
+  "index_sha256": "ec3725be8ce6d5566559e570bdb9481701992688aec025608a9088f8c9c99fbf",
+  "index_bytes": 159744,
+  "validation_scope": "STANDARD_PACKAGE_OFFLINE_V1",
+  "state": "STREAM_PREFLIGHT_COMPLETE",
+  "checks_passed": true,
+  "complete_package_validation": true,
+  "import_eligible": false,
+  "business_database_writes": false,
+  "counts": {
+    "barcode_scheme": 6,
+    "color": 1,
+    "customer": 1,
+    "fit": 1,
+    "hall": 1,
+    "inventory_baseline": 2,
+    "payment_account": 1,
+    "payment_account_hall": 1,
+    "payment_method": 1,
+    "product": 1,
+    "product_category": 1,
+    "product_image": 1,
+    "sales_header": 1,
+    "sales_line": 6,
+    "sales_settlement": 1,
+    "season": 1,
+    "size": 1,
+    "size_group": 1,
+    "size_group_member": 1,
+    "sku": 1,
+    "sku_barcode": 1,
+    "staff": 1,
+    "supplier": 1,
+    "transfer_header": 1,
+    "transfer_line": 1,
+    "warehouse": 2
+  },
+  "issue_count": 0,
+  "bytes_scanned": 39876,
+  "peak_rss_bytes": 121679872,
+  "limits": {
+    "line_bytes": 1048576,
+    "total_bytes": 8589934592,
+    "rows": 5000000,
+    "issues": 100000,
+    "sqlite_cache_kib": 4096
+  },
+  "remaining_checks": [
+    "source truth beyond declared evidence",
+    "target authorization, live database state and execution"
+  ]
+}

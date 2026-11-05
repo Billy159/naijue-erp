@@ -1,0 +1,6 @@
+PASS reference popup 1: StrictMode opens one bounded native transport; replacement synchronously aborts the old owner, keeps one dialog and ignores late facts.
+PASS reference popup 2: outside and Escape abort/detach, reopening reads once, and focus returns only from inside the dismissed control.
+PASS reference popup 3: advanced-filter removal and explicit close clean up without hidden focus; choosing a reference only edits the draft.
+PASS reference popup 4: entering detail and route unmount abort pending candidates, drop late completions, preserve the retained list and release page listeners.
+PASS reference popup 5: same-account identity/permission revocation aborts the transport and listener ownership immediately; late completion cannot reopen or reread.
+All 5 focused synthetic reference-popup DOM groups passed. No real browser, production data, Demo appearance or performance acceptance.

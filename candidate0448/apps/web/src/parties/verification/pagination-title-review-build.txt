@@ -1,0 +1,4 @@
+PASS static frozen title cascade: route font properties preserve inherited line-height; local title20px/30px/600. No computed geometry is mocked.
+PASS static actual-Select props: pagination tl/150px; regular bl/original measured width; autoAlignPopupWidth=false. No rendered geometry is mocked or claimed.
+PASS static build: inert client/controller entry has no React route/CSS; maintenance form and candidate popup are dynamic leaves; each visual entry has an explicit CSS bundle.
+Build only, with external existing React and bundled installed Arco/CSS. No route host installation, listener, network, performance or frozen-Demo visual acceptance.

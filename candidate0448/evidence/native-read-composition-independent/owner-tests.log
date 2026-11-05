@@ -1,0 +1,24 @@
+✔ SYNTHETIC composition: one lazy owned pool, 19 native auth/read routes, no business writes/listener (931.732355ms)
+✔ SYNTHETIC composition: explicit origin/policy/media and bounded configuration fail closed (10.625964ms)
+✔ SYNTHETIC composition: failed authentication-policy construction cleans its pool without a connection (15.625464ms)
+✔ SYNTHETIC composition: real Node scrypt login/store/session/logout wiring never exposes token in JSON (1042.670873ms)
+✔ SYNTHETIC composition: all read families resolve the same current PG session; native adapters retain isolated failures (106.087266ms)
+✔ SYNTHETIC composition: missing/stale/cross-site credentials cannot reach policies or business SQL (27.050508ms)
+✔ SYNTHETIC composition: hall policy is mandatory, denied inventory/ledger and product reads do not obtain business leases (30.999193ms)
+✔ SYNTHETIC composition: sanitized provider failures remain local to their read plugin (58.42141ms)
+✔ SYNTHETIC composition: explicit raw aborted event in a pending policy does not cancel a sibling read (30.466155ms)
+✔ SYNTHETIC composition: caller method replacement cannot widen captured policy after construction (24.53451ms)
+✔ SYNTHETIC composition: pool disposal errors reject shutdown and never repeat driver end (19.898739ms)
+✔ SYNTHETIC composition source: no ambient configuration, startup, migration or business command registration (2.859501ms)
+✔ SYNTHETIC transfer session: current authenticated role/hall maps to exact canonical read scope, not request headers (26.046855ms)
+✔ SYNTHETIC transfer session: cookie-only exact HTTPS Origin checks reject credentials before storage (0.64867ms)
+✔ SYNTHETIC transfer session: no role fallback, stale session or hall-less salesperson identity (3.650227ms)
+✔ SYNTHETIC transfer session: explicit trusted configuration and provider failures are not hidden (1.817642ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5080.584114

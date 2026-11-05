@@ -1,0 +1,4 @@
+apps/web/src/development-host/verification/focused-checks.txt: OK
+apps/web/src/development-host/verification/result.json: OK
+apps/web/src/development-host/verification/source.sha256: OK
+apps/web/src/development-host/verification/application-dependencies.sha256: OK

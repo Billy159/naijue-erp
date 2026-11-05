@@ -1,0 +1,112 @@
+{
+  "version": "V22_QA178_PREPARED_INPUT_V1",
+  "status": "TARGET_AND_INSTALLER_READY_NOT_EXECUTION_AUTHORITY",
+  "executionReady": false,
+  "scope": "QA_STORE_ONLY_ORIGINAL_SOURCE_IDENTITY_RETAINED",
+  "actualQaTuple": {
+    "database": "erp_rewrite_20261022_r1",
+    "databaseOid": "16391",
+    "ownerRole": "erp_rewrite_owner_20261022",
+    "actingRole": "erp_rewrite_runtime_20261022",
+    "sessionUser": "erp_rewrite_runtime_20261022",
+    "serverAddress": null,
+    "serverPort": null,
+    "postmasterStart": "2026-10-27 13:22:19.696753+00",
+    "systemIdentifier": "7701337335828107278",
+    "socketDirectory": "/srv/naijue-erp/qa-v22-20261027-01/s"
+  },
+  "originalSystemIdentifier": "7691989034661916697",
+  "logicalNamesSameActualInstancesDistinct": true,
+  "actualTargetEvidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-existing-private-pg-restore-successor-20261027-178/RESULT.json",
+    "bytes": 11954,
+    "sha256": "e91c563eab11d0975af738b28b9a5d39f5385df36863715d5e0b46373c0bfbb7"
+  },
+  "instanceContainerId": "4436fe1c37b1e95442c3aa65b81c648daef68bcc9abe94fdc138dd405bce3b56",
+  "originalSourceBinding": {
+    "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+    "fixedSourceNamespace": "naijue:tplus:primary-ledger",
+    "cutoffAt": "2026-10-04T12:00:00+08:00",
+    "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+    "actorAccountId": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+    "version": "NATIVE_IMPORT_EXECUTION_26_V1",
+    "phase": "FULL_SOURCE_CONTINUATION_26_V1",
+    "coreSourceDigest": "2589b25c06bb1312b9d1f40627fb7432f44b4293b5d1ae7186223948b144cc28",
+    "authorizedPayloadHash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8",
+    "target": {
+      "database": "erp_rewrite_20261022_r1",
+      "role": "erp_rewrite_runtime_20261022",
+      "serverAddress": null,
+      "serverPort": null,
+      "postmasterStartedAt": "2026-10-04 08:16:07.895273+00"
+    },
+    "coreReceiptId": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1"
+  },
+  "originalSourceDatabaseAccess": "PROHIBITED",
+  "sourceSql": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+    "bytes": 80495,
+    "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750"
+  },
+  "installer": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/INSTALL-QA178.sql",
+    "bytes": 80493,
+    "sha256": "3cc2b3814762c94dd16ff10eaac2cf3e7ec14248d610e149a4ebd24b6bbad19b",
+    "bodySha256": "8a8374fb193ed9e5ddcc388b0141a91dc17420cef0baee4ffbb700cd9737add5",
+    "applied": false
+  },
+  "originalSourceJobBaseline": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/executable-host-job26.json",
+    "bytes": 4992,
+    "sha256": "7fcb5f3cc23e425074806c7d42caeced927b9226bb6dfd89b6c9c38f5ad0f05b",
+    "deadlineUtc": "2026-10-27T10:45:00Z",
+    "executableAsIs": false,
+    "reason": "Expired original carrier; use fresh exact C source-only job/grant without changing original source binding"
+  },
+  "originalBind": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/BIND.json",
+    "bytes": 73746,
+    "sha256": "3a350163b35c771c8fd85401cf7c9d88a6736157300c444c10022c8b2e740609"
+  },
+  "observedProbeBudget": {
+    "statementTimeoutMs": 10000,
+    "queryTimeoutMs": 12000,
+    "connectionTimeoutMs": 5000,
+    "notBindingBudgetApproval": true
+  },
+  "requiredBeforeRun": {
+    "qaParentV20CanonicalAndIndependentReview": null,
+    "qaCurrentV22CanonicalAndIndependentReview": null,
+    "immutableSourcePackageRootAnd5ModuleRefs": null,
+    "freshOriginalSourceOnlyHostJobAndProviderInputEnvRefs": null,
+    "qaStatementTimeoutAndDeadline": null,
+    "exactControlAuthority": null,
+    "caseFixtureEvidence": null
+  },
+  "preciseSourceOnlyRequirements": {
+    "hostJobFields": [
+      "Fresh registrationId/deadlineUtc; same original binding, source refs and provider source identity; never use original database config for a connection"
+    ],
+    "providerEnv": [
+      "NAIJUE_IMPORT_PROVIDER26_INPUT_FILE",
+      "NAIJUE_IMPORT_PROVIDER26_INPUT_SHA256"
+    ],
+    "sourceGrant": [
+      "Exact current external grant accepted by original provider authority; original148/currentconsumer/INIT refs, same original R1 target and109command hashes; only read source expected for this QA carrier"
+    ],
+    "runtime": [
+      "Actual QA v22 currentreview, true tuple; same original pg Pool/issuer/service/store/adapter; no full production host/run execution in QA"
+    ]
+  },
+  "actualObserved": {
+    "v20RestoreOnly": true,
+    "v22Applied": false,
+    "bindExecuted": false,
+    "fullPrefixRowAgreementVerified": false,
+    "productionSourceHostOnQaVerified": false,
+    "negativeCasesPreparedByThisEntry": false,
+    "unknownCommitTested": false,
+    "realSourceImportOrPublishPass": false
+  },
+  "next": "C/QB review only two control scripts plus this exact target derivation. T45 only may apply after exact adoption. Do not pass this incomplete prepared-input record to the execution CLI as a runnable C plan."
+}

@@ -1,0 +1,37 @@
+{
+  "reviewId": "QB484",
+  "decision": "PASS_ACCOUNTING_READER_EXPLICIT_DELTA_ROLE_SOURCE_ONLY",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+      "bytes": 141902,
+      "sha256": "eb41ccd6f7cd303fc20b1580d5a0273b4186490449ef6202f71a227c2e92ccc6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+      "bytes": 188925,
+      "sha256": "25c3656b6f70320ddb45ca9620465c74823d5c687ec17c294e4f427c2e090f43"
+    }
+  ],
+  "scope": "Only2leafdelta afterQB483 provider141627/b604+test187650/6200, allotherQB483source/protocol retained withoutrepeat",
+  "Standards": {
+    "blockingFindings": []
+  },
+  "Spec": {
+    "blockingFindings": []
+  },
+  "reviewed": {
+    "role": "CONSUMER_PREFIX_ACCOUNTING_READER required once onlyfor explicitv22; exactcurrentpath resolves ../../adapters/postgres/src/native-import-record-accounting.ts relativeoriginalproviderURL. Samepath cannotbeUNCHANGED.",
+    "completeRoles": "v22exact7roles, previousv21exact2roles unchanged; duplicate/missingroles/currentpaths/wrongpath reject",
+    "refs": "Realbaseline/current separate strictpath/bytes/SHA+beforeafterstat checks retained; baselinecannotbenull exceptnewadapter. No duplicate oldUNCHANGEDaccountingcurrent. Original148historicalbaseline mustremain real evidence, not overwritten/copiedcurrent.",
+    "preserved": "Originalapplication/native-import-record-accounting.ts remains criticalUNCHANGED; newlychanged adapterreader path isdistinct. No schema/SQL/store/issuer/source/109key or continuationlogic changes in thisdelta.",
+    "checks": "Owner3targetedtestsPASS (newrolepositive+8negative and2affected),syntaxPASS reused; legacyv21 acceptance exercised. No tests/PG rerun byQB."
+  },
+  "handoff": "C/T45 finalmodulelist replace oldaccountingreaderUNCHANGEDwithnewrole, keep originalbaseline/explicitcurrent65341e961, v22sevenrole set and newprovider141902eb41 plusrelatedpackage/consumer/grantpins. QB483 other4leaves accepted, oldb604provider no longerfinalcandidate. Physicalnewcarrier refs needaccuratefinalization beforeexecution.",
+  "notValidated": [
+    "Actualnewconsumerpackage/runtimecurrentroot/cursor",
+    "ActualMAINsuffix/BIND/PUBLISH/performance"
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED"
+}

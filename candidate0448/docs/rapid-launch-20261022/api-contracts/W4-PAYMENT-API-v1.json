@@ -1,0 +1,125 @@
+{
+  "version": "D2-W4-PAYMENT-API-v1",
+  "taskId": "B05",
+  "fieldApproval": "C01-20261022-v1",
+  "factory": "createPaymentMaintenanceHttpPlugin",
+  "adapter": "PostgresPaymentMaintenanceUnitOfWork(shared MaintenancePgUnitOfWork)",
+  "authentication": "trusted current actor; D1 real in-transaction ADMIN or WAREHOUSE; own receipt reauthorizes original action",
+  "endpoints": [
+    {
+      "prefix": "/payment/methods",
+      "kind": "PAYMENT_METHOD",
+      "post": "/commands",
+      "get": "/receipts/:requestKey"
+    },
+    {
+      "prefix": "/payment/accounts",
+      "kind": "PAYMENT_ACCOUNT",
+      "post": "/commands",
+      "get": "/receipts/:requestKey"
+    }
+  ],
+  "commands": {
+    "CREATE": {
+      "action": "CREATE",
+      "requestKey": "bounded original key",
+      "values": "exact fields below"
+    },
+    "EDIT": {
+      "action": "EDIT",
+      "requestKey": "bounded original key",
+      "id": "native UUID",
+      "expectedVersion": "positive stored version",
+      "values": "exact fields below"
+    },
+    "DISABLE/RESTORE": {
+      "action": "DISABLE or RESTORE",
+      "requestKey": "bounded original key",
+      "id": "native UUID",
+      "expectedVersion": "positive stored version"
+    }
+  },
+  "values": {
+    "PAYMENT_METHOD": {
+      "name": "nonblank bounded string",
+      "enabled": "boolean"
+    },
+    "PAYMENT_ACCOUNT": {
+      "name": "nonblank bounded string",
+      "enabled": "boolean",
+      "paymentMethodId": "actual method UUID, immutable on EDIT",
+      "hallIds": "explicit UUID set; multiple or empty supported; duplicates rejected; sorted for canonical key hash"
+    }
+  },
+  "result": {
+    "operationId": "actual operation UUID",
+    "kind": "PAYMENT_METHOD or PAYMENT_ACCOUNT",
+    "targetId": "actual native UUID",
+    "version": "new root version"
+  },
+  "receipt": {
+    "requestKey": "original key",
+    "action": "original action",
+    "status": "COMMITTED",
+    "completedAt": "actual trusted completion timestamp",
+    "result": "strict four-key result"
+  },
+  "rules": [
+    "Root CAS, hall delta, audit and original-key receipt share one D1 transaction/client",
+    "Only new hall links require enabled halls; existing disabled halls may be retained",
+    "Active account requires enabled actual method; disable method rejects enabled accounts",
+    "Account method immutable; no balance/inventory/history updates",
+    "Imported source FK references prevent hall-link deletion; 409 PAYMENT_RELATION_IN_USE rather than rewriting source",
+    "No read-route duplication; compose separately with W3 organization read plugin"
+  ],
+  "statusCodes": {
+    "400": [
+      "INVALID_PAYMENT_COMMAND",
+      "INVALID_PARTY_INPUT",
+      "INVALID_ID",
+      "INVALID_HTTP_INPUT"
+    ],
+    "401": [
+      "UNAUTHENTICATED"
+    ],
+    "403": [
+      "FORBIDDEN"
+    ],
+    "404": [
+      "PAYMENT_NOT_FOUND",
+      "RECEIPT_NOT_FOUND"
+    ],
+    "409": [
+      "VERSION_CONFLICT",
+      "IDEMPOTENCY_CONFLICT",
+      "IMMUTABLE_PAYMENT_METHOD",
+      "INVALID_PAYMENT_STATE",
+      "NO_PAYMENT_CHANGE",
+      "PAYMENT_METHOD_IN_USE",
+      "PAYMENT_REFERENCE_UNAVAILABLE",
+      "PAYMENT_RELATION_IN_USE",
+      "VERSION_STORAGE_OVERFLOW"
+    ],
+    "413": [
+      "PAYMENT_RELATION_TOO_LARGE",
+      "BODY_TOO_LARGE"
+    ],
+    "500": [
+      "sanitized INTERNAL_ERROR; recover using original request key"
+    ]
+  },
+  "sharedAuditDependency": {
+    "owner": "D1",
+    "rootSparseFields": "actual changed snake_case values only, version mandatory",
+    "relationKey": "payment_halls",
+    "shape": "complete [{payment_account_id,hall_id}] before/after only if changed; CREATE after includes actual complete links",
+    "status": "Requested C forward D1; current 0021 rejects this child key until shared relation closure extended"
+  },
+  "notClaimed": [
+    "real PostgreSQL engine",
+    "schema applied",
+    "production host assembly",
+    "browser integration",
+    "release"
+  ]
+}

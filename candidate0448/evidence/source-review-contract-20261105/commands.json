@@ -1,0 +1,44 @@
+[
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-source-review.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/source-review-contract-20261105/contract-red.log",
+    "exit_code": 1
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-source-review.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/source-review-contract-20261105/contract-green.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-source-review.test.ts tests/historical-sales-source-review-cli.test.mjs",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/source-review-contract-20261105/application-cli.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node node_modules/typescript/bin/tsc --noEmit",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/source-review-contract-20261105/typecheck.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-source-review.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/source-review-contract-20261105/jsonb-compat-red.log",
+    "exit_code": 1
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-source-review.test.ts tests/historical-sales-source-review-cli.test.mjs",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/source-review-contract-20261105/jsonb-compat-green.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node node_modules/typescript/bin/tsc --noEmit",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/source-review-contract-20261105/jsonb-compat-typecheck.log",
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "atUtc": "2026-10-24T14:38:07.943228+00:00",
+  "parent": "2da8bd50962245d2ec74e540745088988926b6ab",
+  "taskId": "F1_A01_A02_TECHNICAL_CONTROLS_01",
+  "files": [
+    {
+      "path": "apps/web/src/authentication/authentication-panel.tsx",
+      "bytes": 13807,
+      "sha256": "7e388e6fa7dae6dfd74e5bd3c8cb9d77e834b5ee2f6980ca23ffba92a74c7b61",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/authentication/authentication.css",
+      "bytes": 6591,
+      "sha256": "85ce46d942c75b44d61f9a81775f756335ee057934befea5da1f8899d36aed81",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/authentication/account-menu.tsx",
+      "bytes": 4692,
+      "sha256": "af6743ed13fff55bf422c6adca110990bf6e9cbaa334c6ba656182d487a5ece8",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/authentication/http-client.ts",
+      "bytes": 10896,
+      "sha256": "89fc860af3c4b89c3d2d980273b69d57051b7468e3cd39a58e6ec8d0a775284f",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/authentication/tests/dom-entry.tsx",
+      "bytes": 483,
+      "sha256": "75d389575a9ce1bc0bdce920ecd6fb9bfc129b7080558ac26ae74f62bd5d0502",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/authentication/tests/run-dom-tests.mjs",
+      "bytes": 22172,
+      "sha256": "3dbab610be3ece1d8bd0ed94739d23d0f1a4262243c3f676a4c56e0dccd7cdaa",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-156/DELIVERY.json",
+  "ownerReceiptBytes": 3745,
+  "ownerReceiptSha256": "8700a69a60a051bdee465ac3b4abc538ff6a9a5d17d5ed0308d4c8b496e93e80",
+  "stage": "SOURCE_TARGETED_COMPONENT_PROTOCOL_AND_SCOPED_TYPES_PASS_NOT_BROWSER",
+  "wholePageAccepted": false,
+  "deployed": false
+}

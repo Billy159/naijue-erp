@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../packages/application/src/inventory-ledger-query-*.ts",
+    "../adapters/postgres/src/inventory-ledger-query-reader.ts",
+    "../adapters/postgres/src/inventory-query-reader.ts",
+    "../adapters/postgres/src/inventory-publication-guards.ts",
+    "../apps/api/src/inventory-ledger-query-*.ts",
+    "./inventory-ledger-query*.test.ts",
+    "./inventory-query-postgres-protocol.test.ts",
+    "./support/synthetic-inventory-ledger-query.ts"
+  ]
+}

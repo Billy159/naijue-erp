@@ -1,0 +1,71 @@
+{
+  "reviewedAt": "2026-10-20T21:28:53.745Z",
+  "status": "PASS for scoped source/static/synthetic integration; no remaining scoped blocker found",
+  "independentlyReproducedAndOwnerFixed": [
+    "Hidden-list reference read/popup survived detail activation",
+    "Removing active optional style capability blanked route"
+  ],
+  "checks": [
+    {
+      "name": "Independent interrupted-flow React observations",
+      "count": 12,
+      "passed": true,
+      "log": "dom-after-fixes.txt"
+    },
+    {
+      "name": "Final owner React/JSDOM harness independently rerun",
+      "count": 18,
+      "exitCode": 0,
+      "log": "final-owner-dom-rerun.txt"
+    },
+    {
+      "name": "Final composed native mocked-HTTP/CSS sales harness independently rerun",
+      "count": 6,
+      "exitCode": 0,
+      "log": "final-composed-sales-rerun.txt"
+    },
+    {
+      "name": "Actual emitted application code/CSS graph and pinned source/economics/discovery checks",
+      "exitCode": 0,
+      "log": "source-graph.txt"
+    },
+    {
+      "name": "Final owner exact source manifest",
+      "exitCode": 0,
+      "manifest": "apps/web/src/sales/verification/fullpage-source.sha256",
+      "sha256": "1ad1cc73d2b8f10a59717d4545c4cde69907449a87e872347c18df8d4c2cec2b",
+      "log": "final-owner-hashes.txt"
+    },
+    {
+      "name": "Final independent source manifest",
+      "exitCode": 0,
+      "manifest": "reviewed-source.sha256",
+      "sha256": "c5168607a15541d990b96a7b3f864ea42810ddf9c2352973e76e0477bc3fb2e4",
+      "log": "final-independent-hashes.txt"
+    },
+    {
+      "name": "Scoped git diff --check",
+      "exitCode": 0,
+      "log": "final-diff-check.txt"
+    }
+  ],
+  "stylesheetBytes": {
+    "application": 15045,
+    "inventory": 17732,
+    "sales": 15804,
+    "sales-detail": 7034,
+    "parties": 596143,
+    "transfers": 588146,
+    "transfer-detail": 6983,
+    "transfer-product": 2933
+  },
+  "rootCompilerOrFullAggregateRun": false,
+  "productionEditsByReviewer": false,
+  "limits": [
+    "Only visible 返回列表; no native browser URL/history/Back-Forward implementation or claim",
+    "Native historical category/unit data remains unavailable; no current-catalog inference",
+    "Read-only and disabled unsupported actions remain explicit",
+    "Portable fixture callback/inline CSS is not production lazy-loading proof; new portable build/smoke remains root commit-gated",
+    "No actual browser/layout/pixel/network/performance/service/database/install/listener/commit/push/deploy acceptance"
+  ]
+}

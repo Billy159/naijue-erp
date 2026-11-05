@@ -1,0 +1,36 @@
+✔ backend plan-only selection has its own scenarios and the same exact ten current migration bytes (653.015903ms)
+✔ backend plan refuses absent, unknown and historical selections rather than choosing a default (5307.57471ms)
+✔ current runner rejects historical selections before settings or child creation, without a test URL (1390.519325ms)
+✔ current source wiring uses pre-Pool guards, migrates ten before seed and has no historical execution body (10.164387ms)
+✔ sales action engine preparation appends native transaction/known-PID cases without credentials or operator changes (5.274968ms)
+✔ native-profile engine preparation is distinct, explicit, actual-codec/default-driver and guarded-settings-only (7.104381ms)
+✔ HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double (8.914317ms)
+✔ backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path (5.103993ms)
+✔ current fixture source: actual party CREATE precedes explicit nine-key product after all ten migrations, no zero or old-schema seed (10.097503ms)
+✔ current10 method engine preparation uses real native rules, explicit provenance and observed non-key metadata locks (12.91809ms)
+✔ migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses (48.39879ms)
+✔ migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses (17.619694ms)
+✔ historical SQL baseline source only: frozen 0001-0008 hashes remain unchanged, not a current executable suite (58.494347ms)
+✔ CURRENT migration manifest source only: exact reviewed1–10 bytes include empty-catalogue and nullable method identity guards (89.739099ms)
+✔ migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets (7.563798ms)
+✔ migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content (2.134205ms)
+✔ deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure (22.427674ms)
+✔ deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected (1.53571ms)
+✔ deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof (16.983067ms)
+✔ exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT (24.373843ms)
+✔ raw constraint assertion requires exact message, SQLSTATE and whole function identity (20.121132ms)
+✔ integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback (4.942632ms)
+✔ integration safety: accepts only a dedicated explicitly repeated loopback test target (2.236207ms)
+✔ integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs (3.064413ms)
+✔ integration safety: malformed and encoded credentials never appear in diagnostics (0.925532ms)
+✔ integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast (31.581966ms)
+✔ integration safety: only explicit current schema1–10 suites are accepted (0.954506ms)
+✔ integration safety: historical5/8 prefixes and unknown modes refuse before current Pool construction (0.715379ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12380.998334

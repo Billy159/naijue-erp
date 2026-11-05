@@ -1,0 +1,18 @@
+{
+  "result": "APPROVED_ALL_A_B_C_D",
+  "version": "C01-20261022-v1",
+  "answer": "确认全部 A–D",
+  "source": "本主控Chat中的原始人类异步确认答复，questionItemId对应request_user_input_async/call_7bf5df70571542a4acda40ceebd91aa5/0。",
+  "questionId": "call_7bf5df70571542a4acda40ceebd91aa5",
+  "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+  "receivedAtUtc": "2026-10-22T05:09:34.682552+00:00",
+  "receivedAtAsiaShanghai": "2026-10-22T13:09:34.682797+08:00",
+  "scope": {
+    "newTables": 6,
+    "newColumns": 63,
+    "existingTableColumnsPreserved": 516,
+    "constraints": "Only the objects and semantics in this confirmation version"
+  },
+  "confirmedRowsSha256": "6ecc0460265f1a15d698fa807c2cda1e37c82821242857124ceb1b8f3a65c67a",
+  "hashScope": "Canonical63 schema row definitions excluding mutable approval status"
+}

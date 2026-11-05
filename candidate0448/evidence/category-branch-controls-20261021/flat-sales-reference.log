@@ -1,0 +1,8 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS reference popup 1: StrictMode opens one bounded transport; static↔reference and reference replacement synchronously abort old owners, retain one local tree and one listener pair, and reject late facts.
+PASS reference popup 2: outside/Escape abort and restore only in-control focus; debounced remote search aborts stale generations, retains selected labels, and never promotes filtered/cross-page/200-capped windows to ALL; explicit positive-only resolution and bottom-scroll bounded pages work.
+PASS reference popup 3: advanced removal/explicit close clean up without hidden focus; genuine checked ALL and fitted plural tags edit only draft; explicit query carries all six plural dimensions and native RETURN+EXCHANGE grouping.
+PASS reference popup 4: entering detail and route unmount abort pending candidates, drop late completions, preserve the retained applied list and release page listeners.
+PASS reference popup 5: open-reader replacement aborts without implicit reads or stale labels; same-account identity/permission revocation aborts the transport and listener ownership immediately; late completion cannot reopen or reread.
+All 5 focused synthetic reference-popup DOM groups passed. No real browser, production data, Demo appearance or performance acceptance.

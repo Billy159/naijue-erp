@@ -1,0 +1,48 @@
+{
+  "atUtc": "2026-10-22T20:13:30.185814+00:00",
+  "parent": "e0b3f4b8bced9203b3fe5668b3e839d3b0283b8a",
+  "groups": [
+    {
+      "slice": "EXISTING_VIEWPORT_PAYMENT_STAFF_ACCOUNT_OPT_INS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-43/DELIVERY.json",
+      "receiptSha256": "ec81830d249a2a92da4fd373cb9e8a5821d63f9991e2501e9515c7776bd09440",
+      "receiptSnapshot": {
+        "chunk": 43,
+        "status": "READY_FOR_C_PIN",
+        "scope": "PAY-UI-01 shared BS viewport opt-in, verified staff/account siblings",
+        "files": [
+          {
+            "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+            "sha256": "50d9f12babc4bdd21f3d35fb324a36a2ad308dd72f13aa82e2c2d2d66c9b7d31"
+          }
+        ],
+        "sourceEvidence": [
+          "Frozen frontend/basic-settings-v2.css:2-8 BS page fixed 100dvh main/page/bs flex chain; 21 table minHeight0;23 footer marginTop auto",
+          "Native staff-page.tsx:85, account-page.tsx:47, payment-page.tsx:108 use same bs-page/store-settings-workbench skeleton; staff/account use same scoped source-store-settings CSS; account is approved W7 sibling, not a separate frozen Demo page.",
+          "v010-d6ad29c/DEMO-PAYMENT-METHOD-GEOMETRY.json vs CANDIDATE-PAYMENT-METHOD-GEOMETRY.json actual shorter main/pager evidence"
+        ],
+        "change": "Only selected settings/payments, settings/staff, settings/accounts added to original finite demo-frame-viewport; stores/product-settings unchanged; frame CSS/body/leaf untouched.",
+        "checks": {
+          "types-1.log": "exit0"
+        },
+        "notTested": [
+          "actual candidate fixed main/table/pager dimensions",
+          "payment tab scroll persistence, actual candidate only one row",
+          "W7 account actual browser"
+        ],
+        "blockers": [],
+        "next": "C exact pin then narrow Demo shell geometry; F3 leaf styles already accepted are reused"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+          "sha256": "50d9f12babc4bdd21f3d35fb324a36a2ad308dd72f13aa82e2c2d2d66c9b7d31",
+          "owner": "F1",
+          "bytes": 4342
+        }
+      ]
+    }
+  ],
+  "fileCount": 1,
+  "scope": "Only finite same existing BS frame opt-ins; original stores/productsettings preserved; no new CSS/whole-page geometry claim."
+}

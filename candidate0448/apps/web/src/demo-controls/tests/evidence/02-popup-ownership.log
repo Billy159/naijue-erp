@@ -1,0 +1,24 @@
+Command: node --test apps/web/src/demo-controls/popup-ownership.test.ts
+Cwd: /workspace/shared/naijue-erp-rewrite
+Started: 2026-10-21T02:10:15.391030+00:00
+--- complete merged stdout/stderr follows ---
+✔ opening another closes the previous owner; stale handles cannot close it (3.181696ms)
+✔ outside distinguishes current popup/trigger from outside or a stale owner (0.398788ms)
+✔ Escape and owner disposal close exactly once and detach scope listeners (0.348518ms)
+✔ scope disposal revokes pending lazy ownership and cannot affect a later scope (0.499004ms)
+✔ controllers are separate per session and disposal permanently rejects new owners (0.287319ms)
+✔ replacement callbacks may reenter: newest open wins, not outer request (0.369338ms)
+✔ a replacement callback may dispose session or next scope without creating an owner (0.384344ms)
+✔ throwing close callback cannot leave an orphan owner or listener (1.161401ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 571.051077
+
+--- end command output ---
+Finished: 2026-10-21T02:10:21.403388+00:00
+Exit code: 0

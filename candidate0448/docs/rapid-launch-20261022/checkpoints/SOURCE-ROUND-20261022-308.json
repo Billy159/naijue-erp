@@ -1,0 +1,69 @@
+{
+  "atUtc": "2026-10-24T12:01:45.519219+00:00",
+  "parent": "e1ba792eabcc4124a886c30e7fdb950972f93476",
+  "taskId": "D3-B07-V16-HISTORY-HEAD-RESPONSIBLE",
+  "files": [
+    {
+      "path": "packages/application/src/history-revision-contracts.ts",
+      "bytes": 4407,
+      "sha256": "e19a333515b7c29e5051591ea3b585dec05579282d003466ad77272864b316d2",
+      "owner": "D3"
+    },
+    {
+      "path": "packages/application/src/history-revision-service.ts",
+      "bytes": 13255,
+      "sha256": "6a96c3cbba56d6ef91c64e671f2245b4602b1505013fcff86727e1902ff9cdb1",
+      "owner": "D3"
+    },
+    {
+      "path": "packages/application/src/imported-history-query-ports.ts",
+      "bytes": 6173,
+      "sha256": "a73bbef0466941bf298fd189a07ab0dc31544ad9740839cf9008f7daa4ea88e3",
+      "owner": "D3"
+    },
+    {
+      "path": "packages/application/src/imported-history-query-validation.ts",
+      "bytes": 19330,
+      "sha256": "5561014c5adebec52f1a875f8b417d520d67b80da2d02b49dc25634d3c190d70",
+      "owner": "D3"
+    },
+    {
+      "path": "adapters/postgres/src/imported-history-query-reader.ts",
+      "bytes": 24310,
+      "sha256": "c0c143d72641871df7e53acb948559f9f43bf7f88762e49e4571cada316c1053",
+      "owner": "D3"
+    },
+    {
+      "path": "tests/history-revision.test.ts",
+      "bytes": 13070,
+      "sha256": "5da1ac71a80c762f5f501d26a92659f6df93d060839db3d9c8f4ed5f6efabbf7",
+      "owner": "D3"
+    },
+    {
+      "path": "apps/api/src/history-revision-http.test.ts",
+      "bytes": 6657,
+      "sha256": "c20b58e2d0a4182a4bf0af52ac5e795d467fd76465e59d744edc7550a76153f1",
+      "owner": "D3"
+    },
+    {
+      "path": "tests/imported-history-query.test.ts",
+      "bytes": 33324,
+      "sha256": "157958d56b6e1c094d5f0b63b26aef205b6f9637b00f2936c3a1d3b54c47adbd",
+      "owner": "D3"
+    },
+    {
+      "path": "tests/support/imported-history-query-fixtures.ts",
+      "bytes": 3379,
+      "sha256": "8f4ad8b80ed470792b917634ecaf64fb5afe25fa4a71e1bea617391fb7a9872b",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json#historyB07V16ResponsibleImplementation",
+  "ownerReceiptSectionSha256": "e1144ab5f86a8c59f203dd633605d3103ce4862b7f506bc5fde493dbfd9bbd7d",
+  "ownerSourceReleased": true,
+  "stage": "SOURCE_EXACT9_FROZEN_NEW5_PASS_STRICT_PASS_PENDING_D1_SQL_HOST_AND_ACTUAL_QA",
+  "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
+  "wholePageAccepted": false,
+  "isolatedPostgresAccepted": false,
+  "deployed": false
+}

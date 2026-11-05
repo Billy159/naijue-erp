@@ -1,0 +1,113 @@
+{
+  "task": "r1HistoricalDraftLineSet_D1",
+  "approval": "docs/rapid-launch-20261022/HISTORY-DRAFT-TRANSFER-WRITE-APPROVAL-20261101.json",
+  "sourceBase": "032cde9f67e06e8412f2f1890b77d1c90ea54d26",
+  "scope": "SOURCE_PROTOCOL_AND_SQL_TEXT_ONLY_NO_PG_INSTALL_PERMISSION_BUILD_BROWSER",
+  "files": [
+    {
+      "path": "adapters/postgres/src/history-revision-store.ts",
+      "bytes": 34008,
+      "sha256": "67fb25d55a33b5f98bc42449c6a53d2806a1ab237e46d5ff4b4fc2964fa1a767",
+      "gitBlob": "5dc565e2e07fdf34b0d5fbae71a0932cc67fbc27"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+      "bytes": 46713,
+      "sha256": "eb5937320e017b89790a5dd5aa2d08601087e21b35b771f902f55b02ad6f4aaa",
+      "gitBlob": "6a83373d1911f41f45805e8d423b5fc035782d54"
+    },
+    {
+      "path": "tests/history-revision-postgres-protocol.test.ts",
+      "bytes": 31330,
+      "sha256": "4a7bb13af2e4a0b908b1b2ab15e813e453b8fd49c45ea09434c3f4839f06b73f",
+      "gitBlob": "38aebf54499bfe1111712d011658777e84ce9435"
+    },
+    {
+      "path": "tests/history-revision-set-guards.test.ts",
+      "bytes": 4991,
+      "sha256": "be5446a28f2279fa423f5cf9916c8541d5e74af24afd338b6a36657365c5beac",
+      "gitBlob": "522fbac6b01aa3a260e9b18a7a0b04cd49a6c9a8"
+    }
+  ],
+  "functions": [
+    {
+      "name": "naijue_erp.history_numeric_current_facts",
+      "arguments": "kind text,target uuid",
+      "prosrcBytes": 9474,
+      "prosrcSha256": "e9b62d95e68633c4fa2e0d5de8ba8d4fd5a577fa863941332553818ff01de8dc"
+    },
+    {
+      "name": "naijue_erp.history_revision_not_enabled",
+      "arguments": "",
+      "prosrcBytes": 29632,
+      "prosrcSha256": "5d66ae3f7ad2dd49fe1d935299e44386923dfcc073d9485b992f03980c661a7c"
+    },
+    {
+      "name": "naijue_erp.history_effective_set_guard",
+      "arguments": "",
+      "prosrcBytes": 2512,
+      "prosrcSha256": "324d469b4452aa8a5b37cc51cf2e41ad50fdd94718738dbb59d6796dfbdb83a1"
+    },
+    {
+      "name": "naijue_erp.validate_history_numeric_revision_commit",
+      "arguments": "",
+      "prosrcBytes": 3249,
+      "prosrcSha256": "a73089ea7b30cfdb43f616ee1e8ae5fbc2f9a47d4c713b322b4012a28c6fe01c"
+    }
+  ],
+  "parentFunctions": [
+    {
+      "signature": "naijue_erp.history_numeric_current_facts(text,uuid)",
+      "sha256": "dadecb6cce657834ce3719eb339f56f95dbbf27d6e0a92216940ed91697cadc8"
+    },
+    {
+      "signature": "naijue_erp.history_revision_not_enabled()",
+      "sha256": "917601e4a32df8b38047094d05a581883e040876ee091c7de0f5ffe8999a5d16"
+    },
+    {
+      "signature": "naijue_erp.history_effective_set_guard()",
+      "sha256": "a2fc6d48df9560e281a7b7a8604624d7b3219623b9dedc55a53284ad9951a900"
+    },
+    {
+      "signature": "naijue_erp.validate_history_numeric_revision_commit()",
+      "sha256": "6cc941ed8ea63927fea7f372da6477c5def8e809a8dde1c348d07331ff9be0b6"
+    }
+  ],
+  "checks": {
+    "affectedFilesSuite": {
+      "pass": 24,
+      "fail": 0,
+      "skip": 0,
+      "scope": "original directly affected history-revision protocol and set-guard tests, including 6 newly added cases at that point"
+    },
+    "laterAddedSuccessorCase": {
+      "pass": 1,
+      "fail": 0,
+      "skip": 0
+    },
+    "finalAffectedNewBranchesAfterCollisionTightening": {
+      "pass": 7,
+      "fail": 0,
+      "skip": 0
+    },
+    "strictTypes": "tsconfig root compilerOptions with explicit store + both protocol test roots and their transitive imports; no settings relaxed; exit0",
+    "diffCheck": "exit0"
+  },
+  "implementation": [
+    "Original same-client publication/identity/source/head locks and original actor/key hash replay before CAS retained",
+    "newId transferLine minted after receipt recovery and CAS; collision check includes document/op/revision/previous head/current and all original source line IDs",
+    "Original native snapshot helper with SHARE locks and full groups; explicit retained/published source facts; no fabricated SKU or balance",
+    "Full set stored in original revision JSON/head, actual native origins/snapshots retained, source line FK projection not written for marked sets",
+    "Legacy quantities/approved transfer delta branch retained; current marked JSON survives later numeric patch; null note preserved by own-property check",
+    "SQL four same-signature invoker replacements preserve owner/ACL/trigger binding; parent four exact old bodies pinned; old P04 numeric validation tail retained",
+    "New SQL admission independently checks actual original/source/native rows/full groups and zero effects, deferred original receipt/audit/current-facts closure plus explicit zero FK/ledger writes"
+  ],
+  "notTested": [
+    "SQL parse/install/PLpgSQL execution",
+    "PostgreSQL/nonowner privileges/locks/trigger behavior/performance",
+    "C metadata/profile/canonical successor pending registration after this exact handback",
+    "new frontend integration/browser/build",
+    "actual data import/PUBLISH/QA178 window03/production"
+  ],
+  "rollback": "No DB was touched. Keep fixed source/SQL; do not install or activate separately from matching C profile and D3/F1 consumers. After any future committed marked data, old-unaware reader/profile cannot be silently deployed; preserve versioned readback and use controlled compensating revision, never delete source/history/marker or roll head backwards."
+}

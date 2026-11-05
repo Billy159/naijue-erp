@@ -1,0 +1,10 @@
+✔ historical source hall stays unknown with exact source fields and warehouse untouched (10.764697ms)
+✔ reliable literal historical sale hall survives cross-hall warehouse without name or code inference (4.1796ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 232.41505

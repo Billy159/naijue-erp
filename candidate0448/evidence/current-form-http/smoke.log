@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 smoke:build
+> node scripts/smoke-build.mjs
+
+Emitted JS imports and exact arithmetic pass. No server started; no database/client constructed.

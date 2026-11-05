@@ -1,0 +1,27 @@
+{
+  "atUtc": "2026-10-22T18:39:23.539763+00:00",
+  "parent": "04a6e08a2f2571828b62cbbe44f2346dbc697112",
+  "groups": [
+    {
+      "slice": "DEMO_V008_ROOT_CAPABILITY_CAPTURE_AND_FINDER_POPUP",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-31/DELIVERY.json",
+      "receiptSha256": "46e22b2abd3853c747dc3405a1421d4d001ad99ec4532227b9210f6b5e359626",
+      "files": [
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "owner": "F1",
+          "sha256": "d14aa54e3bb8f43231f52f3e8a0860b25f0f52fb7dcf9a4c4c6a1e9c007bce27",
+          "bytes": 38630
+        },
+        {
+          "path": "apps/web/src/current-form/product-finder.css",
+          "owner": "F1",
+          "sha256": "67a5401e1d21b3c7f43b196904fcc50247562dc6ee9de918accb24d36bf3de26",
+          "bytes": 7158
+        }
+      ]
+    }
+  ],
+  "fileCount": 2,
+  "scope": "Only root read capability immutable capture and finder actualroot sizing. Transfer source UI WIP excluded. Actual browser minimal recheck pending."
+}

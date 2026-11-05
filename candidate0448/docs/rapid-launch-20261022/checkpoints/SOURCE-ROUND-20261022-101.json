@@ -1,0 +1,42 @@
+{
+  "atUtc": "2026-10-22T22:42:49.377503+00:00",
+  "parent": "12792c214832b826b851235ee15b946b48207f23",
+  "groups": [
+    {
+      "slice": "fix: classify exact embedded SVG resource in release graph",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/production-release-inline-svg-guard-adopted-20261023-01/RESULT.json",
+      "receiptSha256": "d7eb1e830f364cfbfdbcde59d2b1bbef2009a5022306cb0a0b66f3559b6f1fa0",
+      "receiptSnapshot": {
+        "id": "C_PRODUCTION_INLINE_SVG_GUARD_ADOPTED_20261023_01",
+        "atUtc": "2026-10-22T22:42:49.377503+00:00",
+        "status": "SOURCE_READY_PENDING_QB_NEW_INLINE_RESOURCE_SCOPE_ONLY",
+        "sourceFiles": [
+          {
+            "path": "scripts/release/manifest.mjs",
+            "owner": "C",
+            "bytes": 28148,
+            "sha256": "2e31a641bd2ee171bb0a9c99acb1215f878c1b497efae9ba4192c822f5ab61fb"
+          }
+        ],
+        "baseSha256": "72cc4df218d11e714ae1651b34e469b8434aeb176f6b0014583eb9a7b1f546e0",
+        "prepResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/production-release-inline-svg-guard-fix-prep-20261023-01/RESULT.json",
+        "prepResultSha256": "b996b14e8d657842484317031d52b6fcf3dcec3c6bf6acdd95b7a60546ba8da9",
+        "patchSha256": "c3cafaad54a4770d3eb118c7f101a9a568f9abcd6c7c27312d86603b70804d5a",
+        "scope": "Exact212B SVG URI/hash, frontend url-token only, original CSS input or CSS output with exact origin positive contribution+actualownerbytes. Original backend/SQL/other guards unchanged.",
+        "newPureCasesAdopted": 46,
+        "prior98FailurePreserved": true,
+        "buildOrPackExecuted": false,
+        "businessWritesOrFieldsChanged": false
+      },
+      "files": [
+        {
+          "path": "scripts/release/manifest.mjs",
+          "owner": "C",
+          "bytes": 28148,
+          "sha256": "2e31a641bd2ee171bb0a9c99acb1215f878c1b497efae9ba4192c822f5ab61fb"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only original212byte search SVG resource classification, retaining source/body/origin constraints and all package/provenance/hash guards; no genericdata/http admission. Oldproduction98 failure and pack0 retained. NewQB then freshfixedsource/build once."
+}

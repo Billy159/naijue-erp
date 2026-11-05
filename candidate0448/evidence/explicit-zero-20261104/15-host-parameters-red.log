@@ -1,0 +1,32 @@
+✔ raw host callback cannot bypass zero token with inspect (6.75542ms)
+✔ raw host callback cannot bypass zero token with prepare (0.736141ms)
+✔ raw host callback cannot bypass zero token with verify (1.284678ms)
+✔ host binds verified token through raw callback and rejects altered KEYS proof (2.413154ms)
+✔ host rejects copied token before its first physical query (0.803243ms)
+✖ host never forwards accessor-swapped query parameters (1.147252ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 458.217651
+
+✖ failing tests:
+
+test at tests/unified-explicit-zero-host.test.mjs:13:1
+✖ host never forwards accessor-swapped query parameters (1.147252ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-explicit-zero-host.test.mjs:13:551
+      at async runWholeSession (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tools/unified-import/whole-host-session.mjs:39:75)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-explicit-zero-host.test.mjs:13:417)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /WHOLE_SQL_PARAMETERS_INVALID/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

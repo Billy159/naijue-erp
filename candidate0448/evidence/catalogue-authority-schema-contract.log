@@ -1,0 +1,15 @@
+✔ catalogue authority migration source: exact 0001-0008 and empty-product preconditions precede any catalogue DDL under one lock/transaction (11.144232ms)
+✔ catalogue authority migration source: exactly eight nullable nonnegative product price columns, retail reused, no state/default/SKU prices (4.364776ms)
+✔ catalogue authority migration source: approved descriptive scheme fields only, nullable unknown length, no seed/configuration engine (2.097448ms)
+✔ catalogue authority migration source: exact raw text unique including disabled identities and nullable scheme FK; no re-encoding or guessed identifiers (2.909269ms)
+✔ catalogue authority migration source: disabled/raw identity cannot be deleted or moved to another SKU, descriptive/status updates remain separate (1.64237ms)
+✔ catalogue authority migration source: only migration registry inserted; no credentials, business records, balances or import publication (4.449951ms)
+✔ catalogue authority migration source: legacy eight-migration harness is deliberately unchanged and does not silently apply incompatible 0009 to populated fixtures (74.050955ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1312.586989

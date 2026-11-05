@@ -1,0 +1,109 @@
+{
+  "version": "D2-SEASON-PRODUCT-ARRAY-SUPPLEMENT-v2",
+  "status": "PROPOSAL_ONLY_PENDING_C_AND_HUMAN_FULL_FIELD_APPROVAL",
+  "supersedes": {
+    "file": "SEASON-MULTISELECT-SUPPLEMENT-v1.json",
+    "reason": "人类明确不采用product_season关系表；旧提案原件保留，不执行。"
+  },
+  "humanDirection": {
+    "record": "R/docs/rapid-launch-20261022/FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
+    "answer": "季节是字典表的数据啊，为什么是属于product_season ，应该就是商品里增加个字段用来存这个多选",
+    "approved": "商品内一个字段存多个真实season字典UUID；确切类型/约束/NULL语义尚待完整确认"
+  },
+  "fieldDelta": {
+    "newTables": 0,
+    "newColumns": 1,
+    "existingColumnsChanged": 0,
+    "table": "naijue_erp.product",
+    "column": "season_ids",
+    "type": "uuid[]",
+    "nullable": true,
+    "default": null,
+    "meaning": "当前商品已选真实季节字典UUID集合，不保存组合名称，不增加字典项。",
+    "indexes": [
+      {
+        "type": "GIN",
+        "expression": "season_ids",
+        "purpose": "同列季节多选重叠筛选；不扩行或重复商品计数"
+      }
+    ],
+    "ddlProposal": "ALTER TABLE naijue_erp.product ADD COLUMN season_ids uuid[];\nCREATE INDEX product_season_ids_gin ON naijue_erp.product USING gin(season_ids);",
+    "noImplicitForeignKey": "PostgreSQL普通FOREIGN KEY不能逐个约束uuid[]元素；不能声明已有数组元素FK。必须同时实施以下数据库检查和两向引用保护。"
+  },
+  "semantics": {
+    "NULL": "未知/尚未按证据转换的历史选择。保留来源未知，不能在读取或表单初始化时偷偷变成[]。",
+    "emptyArray": "明确已知当前无季节选择；新建者显式选空或编辑者显式清空时写[]。不代表所有历史空白来源本来就是空选择。",
+    "nonemptyArray": "一个或多个真实单季UUID；单季=[id]，春夏=[春UUID,夏UUID]。",
+    "create": "必填seasonIds:UUID[]，允许显式[]，不接受null/缺字段。",
+    "edit": "必填seasonIds:UUID[]|null。null仅在旧行也是NULL且用户未改季节时保留未知；不能把已知集合改为NULL。用户清空写[]，拒绝把原未知自动清空。",
+    "read": "编辑DTO原样返回null或数组；references.seasons为当前已知UUID名称集合，unknown/null时为空但不反向覆盖seasonIds。F2保留unknown与显式清空的不同状态。",
+    "legacyScalar": "原product.season_id字段、原FK与原值保留作旧来源；新普通EDIT不写它，新v2CREATE旧列为NULL。没有从数组取首项回写、没有运行时fallback。来源原文/旧映射照旧保全。"
+  },
+  "constraints": {
+    "shape": "NULL允许；非NULL仅规范一维uuid数组（空{}特殊允许、非空lower bound=1）；不能二维/稀疏/异型输入。",
+    "elements": "拒绝NULL元素、重复UUID、非法UUID和不存在字典UUID。API先拒绝重复，再按UUID规范排序用于保存和指纹；不静默去重。",
+    "databaseCheck": "D1新增纯数组校验函数/CHECK：对非NULL检查一维规范形状、count(*)=count(distinct element)、每项非NULL；空数组合法。函数只做值校验，不以跨表lookup伪称IMMUTABLE。",
+    "forwardReference": "D1在product INSERT/UPDATE OF season_ids触发器对实际新集合的season行按UUID顺序FOR KEY SHARE，确认每个ID存在；缺任何一个整操作拒绝。与root保存同事务，不能只依赖前端选项。",
+    "reverseReference": "season DELETE或id变更时，只要product.season_ids仍含该ID即拒绝；旧scalar FK继续保护旧引用。查询覆盖全部保留商品，包括软删除行；不能删字典后留下悬空数组。",
+    "raceSafety": "实际新关联与字典删除/改ID必须在同一数据库约束和行锁体系下互斥；按真实PG并发负例确认，不用单线程应用检查冒充。",
+    "dictionaryScope": "季节字典仍只读维护范围，不开放新增/编辑/删除菜单；引用保护同时约束直接SQL和未来程序。"
+  },
+  "api": {
+    "writeRoute": "POST /products/v2/commands",
+    "createEdit": "保留W2其余实际字段/九价/SKU/条码，values.seasonId替换成values.seasonIds，按上述NULL/[]规则。图片扩展独立合同。",
+    "editRead": "POST /products/maintenance/v2/detail/query {productId}; values.seasonIds:null|UUID[]，references.seasons:[{id,name}]；两个已知集合一致。",
+    "audit": "这是一个真实PRODUCT根字段：before_values.season_ids/after_values.season_ids保留实际NULL/[]/数组；CREATE before仍null。与其他改动一次product.version CAS、一次prepare/root/complete和原key回执；不是新子表或第二操作。",
+    "noChange": "规范化后的相同集合不单独推进版本或造季节审计；若另有本次有效商品改动，沿既有根规则推进一次。",
+    "result": "严格{operationId,kind:PRODUCT,targetId,version}；原回执查询保持。"
+  },
+  "readsAndCompatibility": {
+    "display": "批量join LATERAL/unnest或单页集合读取真实字典；按season.display_order,id排序并以顿号拼接。春+夏显示春、夏。unknown与[]在原冻结seasonLabel均可为null；编辑原始seasonIds区分状态。",
+    "filter": "现有filter.seasonIds为空不限制；非空使用p.season_ids && $selected::uuid[]，任一交集命中，NULL/[]不命中非空筛选。其他维度AND。不要JOIN展开后count(*)或库存SUM，避免重复计数。",
+    "candidates": "只在授权商品范围内unnest实际数组再DISTINCT字典；先权限后count/page。编辑候选仍现有单季字典，不能造春夏/秋冬组合项。",
+    "bounds": "单页批量读取/聚合，不逐商品N+1、不全目录加载；数组膨胀达到明确技术界限时整请求失败，不截断。",
+    "oldRead": "列表/basics现有URL和seasonLabel DTO形状保留，来源换新列；未验证新字段能力时维持EXACT19原读，不能暗读新列。",
+    "oldEditor": "新v2启用后旧CREATE/EDIT和单值编辑快照明确409 PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED，不能把旧seasonId当覆盖数组或取首项。保留旧状态命令及已提交回执恢复；同一上线包切换编辑器和后端。",
+    "activation": "D1实际新列/约束/引用保护及数据转换完成并核验后才启用v2。只加列或只有version编号不足以放行。未就绪错误不能伪装NULL/[]。"
+  },
+  "migrationAnd310": {
+    "sourceFile": "../local-takeover-20261021-private-data/native-dictionary-occurrence-candidate-20261022-D3-run1/exact-multi-season-310-PENDING.json",
+    "sourceSha256": "e4ce771e24e84d0bf3ffb1884f165c16e8d180374bb867a3e432ebc798e95faf",
+    "verifiedRows": 310,
+    "verifiedSourceCounts": {
+      "春、夏": 19,
+      "秋、冬": 291
+    },
+    "expected": "310件各存2个真实单季UUID，总620个数组元素；这是推导目标，未写入/未PG读回。",
+    "mapping": "D3逐sourceKey/product身份和明确单季字典映射，不猜唯一候选；原sourceSeason/productCode/原SKU与新旧映射留原件和逐键转换证据。",
+    "otherValues": "已证实原单季scalar及来源=对应单元素数组；原空白/未知保留NULL，只有来源明确无选择且规则已确认才转[]。不可按分隔符自动解析未核来源。",
+    "acceptance": "逐310件核identity、数组两个成员准确、无重复NULL/缺失/额外；逐单季/unknown样本及所有异常逐键对账；不只比620总数。",
+    "safety": "新批manifest/hash独立，保留旧scalar和来源；不改封存原件，不以旧快照覆盖上线新业务；与后续增量按同一商品身份合并。",
+    "rollback": "保留新增列及真实数组数据；多选写入后不能降到只支持scalar的可写旧应用。必要回退维护/只读或兼容数组版本，绝不缩成首季。"
+  },
+  "owners": {
+    "C": "展示完整单列方案并取得人类确认；不把此前关系表未批准当本列已批准",
+    "D1": "唯一DDL/检查函数/两向触发器/宿主能力owner，分配迁移号",
+    "D2": "批准后既有商品维护及四类读取对应能力消费",
+    "D3": "310来源映射/单季unknown迁移与读回证据",
+    "F2": "真实多选、unknown保留、显式清空、v2请求及稳定显示",
+    "QB_QF": "仅新链必要负例/读回/受影响UI"
+  },
+  "focusedAcceptance": [
+    "NULL、[]、单季、多季分别准确持久化/读回；旧scalar不改",
+    "重复/NULL元素/二维/非字典ID拒绝，字典引用删除/改ID被阻止",
+    "真实PG并发绑定季节与删除同季节不能产生悬空引用",
+    "ANY重叠筛选同商品只计一次，权限候选不泄漏，库存不倍增",
+    "原key复用/变更冲突、root CAS及prepare/audit失败无部分写",
+    "精确310两元素数组逐件保真，所有未核来源仍UNKNOWN/PENDING"
+  ],
+  "sideEffects": "仅修订提案JSON；未写商品新列/DDL/迁移/导入/消费。",
+  "controllerRecord": {
+    "id": "C01-SUPPLEMENT-v3-A-PRODUCT-SEASONS",
+    "status": "AWAITING_EXPLICIT_HUMAN_APPROVAL",
+    "atUtc": "2026-10-22T07:36:09.475330+00:00",
+    "sourceProposal": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/SEASON-PRODUCT-ARRAY-SUPPLEMENT-v2.json",
+    "sourceSha256": "443bd586196ec157912a3ecfca860f9e11217cb106caf6376aa43b3d8e2b1263",
+    "superseded": "SCHEMA-SUPPLEMENT-v2 A relation table rejected by human; B approved separately, unchanged",
+    "execution": "No DDL/consumer branch/import until approval; unrelated work continues"
+  }
+}

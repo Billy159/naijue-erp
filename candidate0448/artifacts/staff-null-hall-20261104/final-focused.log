@@ -1,0 +1,16 @@
+✔ exact successor adds independently pinned INIT approval and STAFF SQL guard to unchanged predecessor (9.010736ms)
+✔ patch keeps metadata/ACL/owner unchanged and rejects wrong predecessor (7.13494ms)
+✔ approved exact historical departed staff admits null hall, not a general exception (2.410916ms)
+✔ missing, forged, tampered or unpinned approval cannot authorize a record (1.518375ms)
+✔ approval rejects duplicate IDs, keys and unsupported fields (0.948292ms)
+✔ ordinary preflight admits only externally approved exact departed staff (111.645987ms)
+✔ stream relation check shares exact departed approval and rejects active or unapproved (23.184067ms)
+✔ whole compiler binds exact approval bytes in immutable initialization, without creating a login (109.177968ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 848.70627

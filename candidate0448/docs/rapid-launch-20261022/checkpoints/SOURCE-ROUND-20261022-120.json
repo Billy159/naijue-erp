@@ -1,0 +1,186 @@
+{
+  "atUtc": "2026-10-23T02:54:13.202945+00:00",
+  "parent": "f4e33a9c88f1c39c353a71e4d230e0b2d08ce5cb",
+  "groups": [
+    {
+      "slice": "F3 native payment method filter HTTP reader and paired capability",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/RESULT.json",
+      "receiptSha256": "df7f8bddd08239c02868a80c7764a328ab8d8156c5f41f1ca400d8ac7d19ba7b",
+      "receiptSnapshot": {
+        "taskId": "F05/PAYMENT-METHOD-FILTER-ADAPTER-v1",
+        "owner": "F3",
+        "clientDate": "2026-10-23",
+        "generatedAtObservedUtc": "2026-10-23T02:53:20.218123+00:00",
+        "status": "SOURCE_READY_PAIRED_NATIVE_READER_CAPABILITY_FOR_C_CHECKPOINT",
+        "baselineHead": "a413603a349dbbdda98f45260740935740c0bbf0",
+        "headObserved": "f4e33a9c88f1c39c353a71e4d230e0b2d08ce5cb",
+        "files": [
+          {
+            "path": "apps/web/src/payment-settings/http-client.ts",
+            "beforeSha256": "657d454ae7a090b443f1458bd38ae7fa72d6b53d0a37f88b1e3cba89a8734d9b",
+            "afterSha256": "c3fd732d3b5c3ab051983d61f82645bda03ef58bad915a00d13bbf4a390ba149"
+          }
+        ],
+        "newRFiles": [],
+        "patch": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/final-exact1.patch",
+          "sha256": "93f977ae19180fd6546bc088e073df83613ff34c75757db74aba05bf8b8c3e2b"
+        },
+        "backend": {
+          "fixedCommit": "b5fe3c69d6232c093cf4733c59d97368d36a2c82",
+          "checkpoint": "C116",
+          "sixSourceHashesMatch": true,
+          "files": [
+            {
+              "path": "packages/application/src/organization-maintenance-ports.ts",
+              "sha256": "9551909914aabd3678eed177e9948272bf0ff3375a8d01e41c716e21497b8e8a"
+            },
+            {
+              "path": "packages/application/src/organization-maintenance-validation.ts",
+              "sha256": "791bb1849d20936a901bf55b3739288a63e31517d75297e9cd1e1e50b9682414"
+            },
+            {
+              "path": "adapters/postgres/src/organization-maintenance-store.ts",
+              "sha256": "cab32ada2370dad00a910767d52ee7a209173b6b2fcef943abdabd3dc7eb1aab"
+            },
+            {
+              "path": "apps/api/src/organization-maintenance-http.test.ts",
+              "sha256": "9d49b304e4bb1f2a689de2c3b984e9d5bb326ef16897be859eb3af8554810fdb"
+            },
+            {
+              "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+              "sha256": "2322dad2e4197ba0631c44aa82bb037ba0746e47e50bfa64300dac39bae0e00a"
+            },
+            {
+              "path": "docs/organization-staff-payment-maintenance.md",
+              "sha256": "8a2f4c3618506753597c8cbd49ae6ef0b522566be81f1fcc568228e254850357"
+            }
+          ],
+          "QB": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice138-payment-method-filter-b5fe3c69/RESULT.json",
+            "sha256": "f99d127c0cb2d84808e7f9c8308e73b66ce6650a5b9200ec644adc56b7fd5de0"
+          },
+          "priorPreparedSourceSha256": "ae11403b0c983761099b40bd7a6cc29cef89b070571e99efd0c18fb1da728442",
+          "verifiedWithoutRerunningAcceptedTests": true
+        },
+        "QBAdopted": {
+          "result": "PASS_C116_PAYMENT_METHOD_FILTER_SOURCE_PROTOCOL_ONLY",
+          "commit": "b5fe3c69d6232c093cf4733c59d97368d36a2c82",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice138-payment-method-filter-b5fe3c69/RESULT.json",
+          "sha256": "f99d127c0cb2d84808e7f9c8308e73b66ce6650a5b9200ec644adc56b7fd5de0",
+          "testsRerun": false
+        },
+        "nativeBehavior": "Accounts post original PAYMENT_ACCOUNT exact6 with explicit paymentMethodId null/nativeUUID; methods remain exact5. Same true native reader advertises supportsPaymentMethodFilter:true. No postpage filter, extra lookup, DTO/schema/write or host change.",
+        "checks": {
+          "priorSevenRequestGroupsReused": true,
+          "preparedReceipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/PREPARED-RESULT.json",
+            "sha256": "f3f69983078dfc5cabfa659b5aa8015c2d2d6da9ee8c1d878202ae68c8ae42a1"
+          },
+          "flagOnly": {
+            "status": "PASS_FLAG_ONLY_ON_IMPLEMENTED_NATIVE_HTTP_READER",
+            "supportsPaymentMethodFilter": true,
+            "requestCount": 0,
+            "priorSevenRequestGroupsReused": true,
+            "backendQBRerun": false,
+            "actualPG": false,
+            "browser": false,
+            "server": false
+          },
+          "affectedTypesFinal": {
+            "exitCode": 0,
+            "scope": "True capability in actual HTTP adapter + dependent payment page and shared types; strict/noEmit",
+            "priorSevenRequestGroupsRerun": false
+          },
+          "sixBackendPinsAndQBHash": "MATCH",
+          "diffCheckExitCode": 0
+        },
+        "notTested": [
+          "Actual PG matching rows/count/ACL/performance",
+          "Actual UI selector/input/query/pagination in new centralized candidate",
+          "Formal production preparation/audit capabilities",
+          "Real save/write business acceptance",
+          "Deployment/production"
+        ],
+        "formalHostDependencies": "Unchanged C/F1 mount preparation and audit-cap conditions in PAYMENT-COMPLETE-UI-v1/HOST-DEPENDENCIES; C113 audit0 only synthetic. Capability means implemented reader protocol, not granted user authority or formal data/performance PASS.",
+        "safetyFacts": {
+          "previousPageExact2Changed": false,
+          "sharedHttpOrRootOrHostChanged": false,
+          "backendChangedByF3": false,
+          "newBusinessSchemaOrRules": false,
+          "actualBrowser": false,
+          "database": false,
+          "server": false,
+          "integratedBuild": false,
+          "writeCommands": 0,
+          "gitMutation": false
+        },
+        "blockers": [],
+        "next": "C freeze final exact1 with current completeSALE/product/payment candidate; QF only new reader capability/paired source condition and actual new filter consumer; reuse previous seven requests and QB138. Then F3 proceeds to newly assigned audit focus/retention findings in original registered files.",
+        "authority": {
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "humanMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "gateSatisfiedByC": "C116 b5fe3c69 + QB138 f99d127c",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "xhigh",
+          "fastEnabledByF3": false,
+          "actualFastUi": "NOT_OBSERVED"
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/PAIRED-BACKEND-QB138.json",
+            "sha256": "90939bcee6b617094ec296503ff7fad3e7986bd6bb16bb45793d227b86ce5e0e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/PREPARED-RESULT.json",
+            "sha256": "f3f69983078dfc5cabfa659b5aa8015c2d2d6da9ee8c1d878202ae68c8ae42a1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/FLAG-CHECK.json",
+            "sha256": "7e8ba65a1135f8c736fec35df67eac91172a5464d7492ad9cf75085da7fa585e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/flag.log",
+            "sha256": "b74700ff485d323b0d3d6fae3c1ce0517711230335dee9aa4173b955f0394196"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/check-capability-flag.mjs",
+            "sha256": "d0633f783e5442b6d507187785363bbca38c23ebcf0ed62bf9af1b13c272c64d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/TYPE-CHECK-FINAL.json",
+            "sha256": "49b8ba93769a7071bc82856177b771d197b931cd3c541bd05294158af012ddf4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/types-final.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/SOURCE-PROTECTION-FINAL.json",
+            "sha256": "fe6b2da376828a4ae284e31ac5825061f05823fea422eaa8fe1ef6e26b991111"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-method-filter-adapter-v1/final-exact1.patch",
+            "sha256": "93f977ae19180fd6546bc088e073df83613ff34c75757db74aba05bf8b8c3e2b"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/payment-settings/http-client.ts",
+          "owner": "F3",
+          "bytes": 13321,
+          "sha256": "c3fd732d3b5c3ab051983d61f82645bda03ef58bad915a00d13bbf4a390ba149"
+        }
+      ]
+    }
+  ],
+  "backendPair": {
+    "commit": "b5fe3c69d6232c093cf4733c59d97368d36a2c82",
+    "independentReview": "QB138",
+    "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice138-payment-method-filter-b5fe3c69/RESULT.json",
+    "resultSha256": "f99d127c0cb2d84808e7f9c8308e73b66ce6650a5b9200ec644adc56b7fd5de0",
+    "scope": "SOURCE_PROTOCOL_ONLY"
+  },
+  "controllerScope": "Freeze exact1 real HTTP reader protocol pairing, no secondDTO/fakecap or local page postfilter. Native capability does not imply actual PostgreSQL, formal permissions/performance, default host, browser or deployment PASS. Original seven request checks and scoped backend QA reused."
+}

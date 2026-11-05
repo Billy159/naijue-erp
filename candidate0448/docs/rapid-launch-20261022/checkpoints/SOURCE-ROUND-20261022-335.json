@@ -1,0 +1,19 @@
+{
+  "atUtc": "2026-10-24T14:54:18.974885+00:00",
+  "parent": "0f1f88f10e953fba6d4cbf3acc74be1c3f084341",
+  "taskId": "F1/V16-THREE-ROLE-RESPONSIBLE-REFERENCE-HOST-01",
+  "files": [
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 19988,
+      "sha256": "9ad09fe03609c9cefdb5f806e67a9c147e172323ff7eb90ce14381834ded9099",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-159/DELIVERY.json",
+  "ownerReceiptBytes": 3410,
+  "ownerReceiptSha256": "07231c386bbebc9f4421112b4510b4c8ea56ea2de893a0148f0e88c882fb6ddb",
+  "stage": "SOURCE_TARGETED_HOST_CHECKS_AND_SCOPED_TYPES_PASS_NOT_BROWSER_OR_PG",
+  "wholePageAccepted": false,
+  "deployed": false
+}

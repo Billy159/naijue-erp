@@ -1,0 +1,479 @@
+{
+  "description": "SYNTHETIC identity example only, not a complete import package. Keep actual document business fields unchanged.",
+  "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+  "dimension_registry": [
+    {
+      "entity_type": "PRODUCT",
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "canonical_source_key": "original-product-001",
+      "target_id": "853af698-c213-56b7-bc0b-fcae8e64ca2a",
+      "aliases": [],
+      "identity_basis": "STABLE_IMPORT_ID_V1",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    },
+    {
+      "entity_type": "COLOR",
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "canonical_source_key": "original-color-01",
+      "target_id": "7f5ff1ea-9201-7055-cb30-c4c1f57d68af",
+      "aliases": [],
+      "identity_basis": "STABLE_IMPORT_ID_V1",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    },
+    {
+      "entity_type": "FIT",
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "canonical_source_key": "original-fit-A",
+      "target_id": "e40bcec7-8470-b858-82a6-3770dd12a65f",
+      "aliases": [],
+      "identity_basis": "STABLE_IMPORT_ID_V1",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    },
+    {
+      "entity_type": "SIZE",
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "canonical_source_key": "pants-group:original-size-910",
+      "target_id": "0051b8bd-5367-c1d8-81aa-45f6e23387da",
+      "aliases": [],
+      "identity_basis": "STABLE_IMPORT_ID_V1",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    }
+  ],
+  "sku_registry": {
+    "entity_type": "SKU",
+    "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+    "canonical_source_key": "naijue:source-identity:v1:[\"SKU\",\"original-product-001\",\"original-color-01\",\"original-fit-A\",\"pants-group:original-size-910\"]",
+    "target_id": "9a8fd8d3-8968-a651-e9ec-4c3b596763a3",
+    "aliases": [],
+    "identity_basis": "STABLE_IMPORT_ID_V1",
+    "source_refs": [
+      {
+        "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sheet": "SYNTHETIC",
+        "row": 1
+      }
+    ]
+  },
+  "sku_record": {
+    "source_key": "naijue:source-identity:v1:[\"SKU\",\"original-product-001\",\"original-color-01\",\"original-fit-A\",\"pants-group:original-size-910\"]",
+    "fields": {
+      "id": "9a8fd8d3-8968-a651-e9ec-4c3b596763a3",
+      "product_id": "853af698-c213-56b7-bc0b-fcae8e64ca2a",
+      "color_id": "7f5ff1ea-9201-7055-cb30-c4c1f57d68af",
+      "fit_id": "e40bcec7-8470-b858-82a6-3770dd12a65f",
+      "size_id": "0051b8bd-5367-c1d8-81aa-45f6e23387da",
+      "sku_code": "NJIMP1-9a8fd8d3-8968-a651-e9ec-4c3b596763a3",
+      "enabled": false,
+      "version": 1,
+      "created_operation_id": null
+    },
+    "source_refs": [
+      {
+        "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sheet": "SYNTHETIC",
+        "row": 1
+      }
+    ]
+  },
+  "sales_header_registry": {
+    "entity_type": "SALES_HEADER",
+    "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+    "canonical_source_key": "naijue:source-identity:v1:[\"SALES_HEADER\",\"ORIGINAL_ID\",\"original-sale-0001\"]",
+    "target_id": "c0fe4614-d469-8cc1-bc5a-560e6fe84e47",
+    "aliases": [],
+    "identity_basis": "STABLE_IMPORT_ID_V1",
+    "source_refs": [
+      {
+        "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sheet": "SYNTHETIC",
+        "row": 1
+      }
+    ]
+  },
+  "sales_line_registry": [
+    {
+      "entity_type": "SALES_LINE",
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "canonical_source_key": "naijue:source-identity:v1:[\"SALES_LINE\",\"naijue:source-identity:v1:[\\\"SALES_HEADER\\\",\\\"ORIGINAL_ID\\\",\\\"original-sale-0001\\\"]\",\"PERSISTED_LEDGER_ID\",\"11111111-1111-4111-8111-111111111111\"]",
+      "target_id": "599efe60-0c93-26f6-ee3f-ccdc86606dca",
+      "aliases": [],
+      "identity_basis": "STABLE_IMPORT_ID_V1",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    },
+    {
+      "entity_type": "SALES_LINE",
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "canonical_source_key": "naijue:source-identity:v1:[\"SALES_LINE\",\"naijue:source-identity:v1:[\\\"SALES_HEADER\\\",\\\"ORIGINAL_ID\\\",\\\"original-sale-0001\\\"]\",\"PERSISTED_LEDGER_ID\",\"22222222-2222-4222-8222-222222222222\"]",
+      "target_id": "f201d685-624f-04fb-fab9-ceb39aced16b",
+      "aliases": [],
+      "identity_basis": "STABLE_IMPORT_ID_V1",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    }
+  ],
+  "sales_line_parent_references": [
+    {
+      "id": "599efe60-0c93-26f6-ee3f-ccdc86606dca",
+      "sales_id": "c0fe4614-d469-8cc1-bc5a-560e6fe84e47"
+    },
+    {
+      "id": "f201d685-624f-04fb-fab9-ceb39aced16b",
+      "sales_id": "c0fe4614-d469-8cc1-bc5a-560e6fe84e47"
+    }
+  ],
+  "sku_generator_input": {
+    "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+    "dimensions": {
+      "product": {
+        "entity_type": "PRODUCT",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "original-product-001",
+        "target_id": "853af698-c213-56b7-bc0b-fcae8e64ca2a",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      },
+      "color": {
+        "entity_type": "COLOR",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "original-color-01",
+        "target_id": "7f5ff1ea-9201-7055-cb30-c4c1f57d68af",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      },
+      "fit": {
+        "entity_type": "FIT",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "original-fit-A",
+        "target_id": "e40bcec7-8470-b858-82a6-3770dd12a65f",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      },
+      "size": {
+        "entity_type": "SIZE",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "pants-group:original-size-910",
+        "target_id": "0051b8bd-5367-c1d8-81aa-45f6e23387da",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "source_refs": [
+      {
+        "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sheet": "SYNTHETIC",
+        "row": 1
+      }
+    ]
+  },
+  "unknown_activation_input": {
+    "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+    "dimensions": {
+      "product": {
+        "entity_type": "PRODUCT",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "original-product-001",
+        "target_id": "853af698-c213-56b7-bc0b-fcae8e64ca2a",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      },
+      "color": {
+        "entity_type": "COLOR",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "original-color-01",
+        "target_id": "7f5ff1ea-9201-7055-cb30-c4c1f57d68af",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      },
+      "fit": {
+        "entity_type": "FIT",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "original-fit-A",
+        "target_id": "e40bcec7-8470-b858-82a6-3770dd12a65f",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      },
+      "size": {
+        "entity_type": "SIZE",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "pants-group:original-size-910",
+        "target_id": "0051b8bd-5367-c1d8-81aa-45f6e23387da",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      }
+    },
+    "enabled": null,
+    "source_refs": [
+      {
+        "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sheet": "SYNTHETIC",
+        "row": 1
+      }
+    ]
+  },
+  "unknown_activation_expected": {
+    "error": "SKU_ACTIVATION_FACT_REQUIRED",
+    "emit_sku_record": false,
+    "emit_default_enabled": false
+  },
+  "local_occurrence_ledger_example": {
+    "description": "LOCAL PACKER SIDECAR ONLY; never pass this object as a standard-package table or invent matching proof.",
+    "version": "LOCAL_OCCURRENCE_LEDGER_V1",
+    "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+    "rows": [
+      {
+        "entity_type": "SALES_LINE",
+        "parent_canonical_source_key": "naijue:source-identity:v1:[\"SALES_HEADER\",\"ORIGINAL_ID\",\"original-sale-0001\"]",
+        "occurrence_id": "11111111-1111-4111-8111-111111111111",
+        "first_seen_source_ref": {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 2
+        },
+        "matching_basis": "SYNTHETIC_FIXTURE_PINNED_OCCURRENCE",
+        "canonical_source_key": "naijue:source-identity:v1:[\"SALES_LINE\",\"naijue:source-identity:v1:[\\\"SALES_HEADER\\\",\\\"ORIGINAL_ID\\\",\\\"original-sale-0001\\\"]\",\"PERSISTED_LEDGER_ID\",\"11111111-1111-4111-8111-111111111111\"]",
+        "target_id": "599efe60-0c93-26f6-ee3f-ccdc86606dca"
+      },
+      {
+        "entity_type": "SALES_LINE",
+        "parent_canonical_source_key": "naijue:source-identity:v1:[\"SALES_HEADER\",\"ORIGINAL_ID\",\"original-sale-0001\"]",
+        "occurrence_id": "22222222-2222-4222-8222-222222222222",
+        "first_seen_source_ref": {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 3
+        },
+        "matching_basis": "SYNTHETIC_FIXTURE_PINNED_OCCURRENCE",
+        "canonical_source_key": "naijue:source-identity:v1:[\"SALES_LINE\",\"naijue:source-identity:v1:[\\\"SALES_HEADER\\\",\\\"ORIGINAL_ID\\\",\\\"original-sale-0001\\\"]\",\"PERSISTED_LEDGER_ID\",\"22222222-2222-4222-8222-222222222222\"]",
+        "target_id": "f201d685-624f-04fb-fab9-ceb39aced16b"
+      }
+    ]
+  },
+  "sales_line_generator_inputs": [
+    {
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "entity_type": "SALES_LINE",
+      "header": {
+        "entity_type": "SALES_HEADER",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "naijue:source-identity:v1:[\"SALES_HEADER\",\"ORIGINAL_ID\",\"original-sale-0001\"]",
+        "target_id": "c0fe4614-d469-8cc1-bc5a-560e6fe84e47",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      },
+      "basis": "PERSISTED_LEDGER_ID",
+      "original_id": "11111111-1111-4111-8111-111111111111",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 2
+        }
+      ]
+    },
+    {
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "entity_type": "SALES_LINE",
+      "header": {
+        "entity_type": "SALES_HEADER",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "naijue:source-identity:v1:[\"SALES_HEADER\",\"ORIGINAL_ID\",\"original-sale-0001\"]",
+        "target_id": "c0fe4614-d469-8cc1-bc5a-560e6fe84e47",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      },
+      "basis": "PERSISTED_LEDGER_ID",
+      "original_id": "22222222-2222-4222-8222-222222222222",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 3
+        }
+      ]
+    }
+  ],
+  "transfer_identity_example": {
+    "header_generator_input": {
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "entity_type": "TRANSFER_HEADER",
+      "basis": "ORIGINAL_ID",
+      "original_id": "synthetic-original-transfer-0001",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    },
+    "header_registry": {
+      "entity_type": "TRANSFER_HEADER",
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "canonical_source_key": "naijue:source-identity:v1:[\"TRANSFER_HEADER\",\"ORIGINAL_ID\",\"synthetic-original-transfer-0001\"]",
+      "target_id": "5bb79e29-df78-6f62-25ee-5296e1522755",
+      "aliases": [],
+      "identity_basis": "STABLE_IMPORT_ID_V1",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    },
+    "line_generator_input": {
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "entity_type": "TRANSFER_LINE",
+      "header": {
+        "entity_type": "TRANSFER_HEADER",
+        "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+        "canonical_source_key": "naijue:source-identity:v1:[\"TRANSFER_HEADER\",\"ORIGINAL_ID\",\"synthetic-original-transfer-0001\"]",
+        "target_id": "5bb79e29-df78-6f62-25ee-5296e1522755",
+        "aliases": [],
+        "identity_basis": "STABLE_IMPORT_ID_V1",
+        "source_refs": [
+          {
+            "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sheet": "SYNTHETIC",
+            "row": 1
+          }
+        ]
+      },
+      "basis": "ORIGINAL_ID",
+      "original_id": "synthetic-original-transfer-line-0001",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    },
+    "line_registry": {
+      "entity_type": "TRANSFER_LINE",
+      "source_namespace": "SYNTHETIC:stable-identity-example-v1",
+      "canonical_source_key": "naijue:source-identity:v1:[\"TRANSFER_LINE\",\"naijue:source-identity:v1:[\\\"TRANSFER_HEADER\\\",\\\"ORIGINAL_ID\\\",\\\"synthetic-original-transfer-0001\\\"]\",\"ORIGINAL_ID\",\"synthetic-original-transfer-line-0001\"]",
+      "target_id": "902adc0d-f8a1-6dfc-8fa9-4e52f8dec40c",
+      "aliases": [],
+      "identity_basis": "STABLE_IMPORT_ID_V1",
+      "source_refs": [
+        {
+          "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ]
+    },
+    "line_identity_fields": {
+      "id": "902adc0d-f8a1-6dfc-8fa9-4e52f8dec40c",
+      "transfer_id": "5bb79e29-df78-6f62-25ee-5296e1522755"
+    }
+  },
+  "input_scope": "Only identity helpers and SKU fields are complete. Header/detail identity fields must be combined with unchanged complete business fields required by TABLE_SCHEMAS. Synthetic ledger matching proof is not evidence for user data."
+}

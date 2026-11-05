@@ -1,0 +1,60 @@
+Proposal only; not applied to running or on-disk supervisor.
+The live credential holder cannot load this patch safely.
+Separate lifecycle/source/permission review is required before activation.
+
+--- provision-and-test.mjs
++++ provision-and-test.mjs
+@@ -56,7 +56,8 @@
+   console.log(JSON.stringify({ status: 'FRESH_TARGET_READY_NO_MIGRATIONS', host: '127.0.0.1', port: Number(port), ...identity }));
+ }
+ 
+-async function run(source) {
++async function run(source, suite) {
++  if (suite !== 'sparse-0001-0008' && suite !== 'backend-0001-0008') throw new Error('Only the two explicit reviewed current-schema suites are accepted.');
+   if (!pendingDatabase) throw new Error('No unused fresh database. Explicit prepare required after any execution.');
+   if (!/^\/workspace\/shared\/erp-pg-source-[a-f0-9]{7,40}-[a-zA-Z0-9_-]+$/.test(source)) throw new Error('Only root-prepared frozen source archive paths are accepted.');
+   const commit = (await readFile(`${source}/EXACT_COMMIT.txt`, 'utf8')).trim();
+@@ -74,11 +75,11 @@
+     ...env,
+     NODE_ENV: 'test',
+     NAIJUE_PG_INTEGRATION: 'I_APPROVE_A_FRESH_DISPOSABLE_LOCAL_DATABASE',
+-    NAIJUE_PG_TEST_SUITE: 'sparse-0001-0008',
++    NAIJUE_PG_TEST_SUITE: suite,
+     NAIJUE_PG_EXPECT_DATABASE: database,
+     NAIJUE_PG_TEST_DATABASE_URL: `postgresql://${testRole}:${encodeURIComponent(testPassword)}@127.0.0.1:${port}/${database}`
+   };
+-  console.log(JSON.stringify({ status: 'ENGINE_RUN_START', number, commit, source, database, logfile }));
++  console.log(JSON.stringify({ status: 'ENGINE_RUN_START', number, commit, suite, source, database, logfile }));
+   const child = spawn(process.execPath, ['scripts/run-postgres-integration.mjs', '--run'], { cwd: source, env: runEnv, stdio: ['ignore', 'pipe', 'pipe'] });
+   let output = '';
+   for (const stream of [child.stdout, child.stderr]) stream.on('data', chunk => {
+@@ -91,8 +92,8 @@
+     child.once('exit', (code, signal) => resolve({ code, signal }));
+   });
+   await writeFile(logfile, output);
+-  await writeFile(`${logfile}.json`, JSON.stringify({ number, commit, source, database, host: '127.0.0.1', port: Number(port), ...result }, null, 2) + '\n');
+-  console.log(JSON.stringify({ status: 'ENGINE_RUN_FINISHED_TARGET_RETAINED_NOT_REUSABLE', number, commit, database, logfile, ...result }));
++  await writeFile(`${logfile}.json`, JSON.stringify({ number, commit, suite, source, database, host: '127.0.0.1', port: Number(port), ...result }, null, 2) + '\n');
++  console.log(JSON.stringify({ status: 'ENGINE_RUN_FINISHED_TARGET_RETAINED_NOT_REUSABLE', number, commit, suite, database, logfile, ...result }));
+ }
+ 
+ try {
+@@ -111,7 +112,7 @@
+   await prepare();
+   const commandFile = `${base}/commands.txt`;
+   await writeFile(commandFile, '');
+-  console.log(`READY_FOR_COMMAND_FILE: ${commandFile}: run <frozen source archive> | prepare | stop`);
++  console.log(`READY_FOR_COMMAND_FILE: ${commandFile}: run <frozen source archive> (sparse only) | run-backend <frozen source archive> | prepare | stop`);
+   let commandOffset = 0;
+   let shouldStop = false;
+   while (!shouldStop) {
+@@ -123,7 +124,8 @@
+       commandOffset += Buffer.byteLength(line + '\n');
+     try {
+       if (line === 'prepare') await prepare();
+-      else if (line.startsWith('run ')) await run(line.slice(4).trim());
++      else if (line.startsWith('run ')) await run(line.slice(4).trim(), 'sparse-0001-0008');
++      else if (line.startsWith('run-backend ')) await run(line.slice(12).trim(), 'backend-0001-0008');
+       else if (line === 'stop') {
+         console.log(await command(`${bin}/pg_ctl`, ['-D', data, '-m', 'fast', '-w', 'stop']));
+         serverStarted = false;

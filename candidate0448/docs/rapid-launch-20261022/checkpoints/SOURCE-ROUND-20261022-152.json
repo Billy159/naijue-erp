@@ -1,0 +1,65 @@
+{
+  "atUtc": "2026-10-23T07:50:05.087294+00:00",
+  "parent": "385ed1e7a306a9bf991cfa9fa2f641713b56662b",
+  "taskId": "F03_FULL_EXECUTED_QUERY_OUTPUT_CONSUMER_AND_SUMMARY_SURFACE",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/contracts.ts",
+      "owner": "F2",
+      "bytes": 5030,
+      "sha256": "4a3ea803da0ae30aec3e746e5247eee75c3895ce59d9fc13f7c1a90c927027a6"
+    },
+    {
+      "path": "apps/web/src/inventory/output-adapter.ts",
+      "owner": "F2",
+      "bytes": 17310,
+      "sha256": "83e4253b0384c9700eb5b47c4b5146c322da37948c8a80cc8bbdb2d82bdb214b"
+    },
+    {
+      "path": "apps/web/src/inventory/output-adapter.test.ts",
+      "owner": "F2",
+      "bytes": 18015,
+      "sha256": "de1186f6dbce3002bd981a09091212c1fa550ca4935c5c37ec9669313d065ddd"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-output.tsx",
+      "owner": "F2",
+      "bytes": 7067,
+      "sha256": "a1276af47734f760ef90eaa7135e4947d229bf6be19c8db7f790963f70865b58"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-page.tsx",
+      "owner": "F2",
+      "bytes": 20204,
+      "sha256": "daf3bc7fd4efee881affa41e01ddac13f10856b49387787782392bd034a04d76"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "owner": "F2",
+      "bytes": 58184,
+      "sha256": "6897a42e73454839d9c22d0b165a829e6bff34888f1b0aebae97f4bee77536ea"
+    },
+    {
+      "path": "apps/web/src/transport/response-validation.ts",
+      "owner": "F2",
+      "bytes": 11383,
+      "sha256": "aaaf1a5fe442b597c7b789616dd27b622e3cbdfc290e7998635687f4cadff354"
+    }
+  ],
+  "scope": [
+    "NativeDemo lazy default export/print UI+same sourcewriter projections/settings",
+    "Client exact NDJSON summary/product/COMMIT-complete+normalEOF/count/ref/precisesum/permissions/cancel; no currentpagefake/exportcap",
+    "Extract original singleproduct validator no otherDTO changes; currentpage crossproduct checks retained",
+    "Original final total/folded cell surface selectors consume ui-action-cell, sticky unchanged"
+  ],
+  "checksAdopted": {
+    "F2": "New8 node:test synthetic/DOM includingUTF8/streamfaults/>32MiB/newnativefirstclick/cancel/retry/executedfilter/XLSXrealblob/printiframe; affectedold5 HTTPconsumer adopted;strict/CSSparser0warnings",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F03-FULL-OUTPUT-v1.json"
+  },
+  "notTested": [
+    "RealPG/RR/HTTP/session/origin/browserdownloads/print/representative realdata perf",
+    "Application route consumer F1 stillneeds fixedoriginalhost seam",
+    "Silver realfields missing/ledger6cols/filter/count"
+  ],
+  "next": "OriginalQF2 fixed7 source then actualnewcompletecandidate; originalF1route1 uniqueowner, QF wholepagesource work continuesindependently"
+}

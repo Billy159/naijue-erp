@@ -1,0 +1,170 @@
+{
+  "atUtc": "2026-10-24T02:41:40.556651+00:00",
+  "parent": "32def02bd7b0627145c193a2f3b7a4fb9fb552c5",
+  "taskId": "RUNTIME_PROOF_MATERIALIZATION_STATIC_PIN_REUSE_TRANSIENT_LEASE_RECOVERY",
+  "files": [
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 67771,
+      "sha256": "81688b3873dd2ae186e1f9662cae44d1f0aa0a325f27e0beeea9000472af1524",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/sales-unit-of-work.ts",
+      "bytes": 37517,
+      "sha256": "609842464e730a47ad75c83bba91bdc4c16f9161d3ea9245c773552ec27956bc",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 26007,
+      "sha256": "f19a4c7e6c24fcb364ce31fe33ea15197a3a770209b68dd95ad31e8959ee0df5",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/RUNTIME-PERFORMANCE-AVAILABILITY-SOURCE-v1.json",
+  "ownerReceiptSha256AtPin": "b93f4c0b3124629942db82723a2ae0ff7562599dc457f0e5e78bf2cd7e7fd01f",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1_B01_B02_RUNTIME_PERFORMANCE_AND_TRANSIENT_AVAILABILITY_V1",
+      "atUtc": "2026-10-24T02:35:10.893340+00:00",
+      "model": "gpt-6.1-sol/xhigh",
+      "fastSwitchVerified": false,
+      "authority": "Existing ERP task and human01a161f7-a5e8-7e10-9059-9537c28910c2 active reporting/targeted implementation authorization; no new task or write contract"
+    },
+    "completedScope": {
+      "status": "LOCAL_SOURCE_COMPLETE_TARGETED_PROTOCOL_AND_STRICT_PASS_AWAITING_ORIGINAL_QB_AND_C_ONE_ACTUAL_AFTER_GROUP",
+      "performance": {
+        "catalog": "Original complete observed manifest is explicitly MATERIALIZED once within EACH probe. All exact current identity/schema/source routine/catalog digest checks remain; no cross-request/lease static catalog cache, new purpose, registry, release epoch or schema substitute.",
+        "reviewFiles": "Exactly two content reads/hashes at issuer initialization. Every later file check still opens no-follow and compares the same fd/path inode/device/mode/size and nanosecond mtime/ctime before/after; any file change (including identical-byte rewrite/restoredmtime) permanently revokes the issuer. Temporary file resource failure rejects the current request.",
+        "salesUow": "Remove only the duplicate pre-BEGIN runtime assert. Actual issuer checkout still fully verifies; same-client after-BEGIN verification precedes schema/current-actor/business work; original pre-COMMIT verification and file checks remain. Empty protocol work has4→3 full probes including checkout; inner actual domain/assertion calls are preserved.",
+        "readPath": "Original C113/C115-style read still has two genuine full probes, not one cached static assertion. Expected improvement is reduced computation/read/hash cost per boundary, not an asserted measured latency gain."
+      },
+      "availability": {
+        "recoverable": "Known PostgreSQL cancellation/transport/resource failure marks the current lease failed; that lease permits rollback/discard only. Release discards with the original failure even if caller passes no error. No same-request retry, automatic write replay or default authorization.",
+        "newRequest": "An independently acquired lease must reread unchanged original pins and complete a fresh full target/schema/catalog/role proof before business SQL. A failure during borrow discards that lease.",
+        "permanent": "Confirmed proof/target/catalog mismatch and unrecognized nontransient errors remain permanently revoked. Restoring changed files/catalog cannot revive that issuer.",
+        "commit": "Original unknown-COMMIT failure preserves original request key recovery: discard without rollback/retry. Commit aliases still synchronously check original file pins immediately before dispatch."
+      },
+      "unchanged": "Current role/hall/business authorization, original CAS/deferred guards, caller rollback/receipt semantics, bounded pool queue/timeouts, v11/v14 metadata identities, CORE pipeline and all source/D3/HTTP/frontend leaves remain unchanged."
+    },
+    "changedFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 67771,
+        "sha256": "81688b3873dd2ae186e1f9662cae44d1f0aa0a325f27e0beeea9000472af1524"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/sales-unit-of-work.ts",
+        "bytes": 37517,
+        "sha256": "609842464e730a47ad75c83bba91bdc4c16f9161d3ea9245c773552ec27956bc"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/native-runtime26-capability.test.ts",
+        "bytes": 26007,
+        "sha256": "f19a4c7e6c24fcb364ce31fe33ea15197a3a770209b68dd95ad31e8959ee0df5"
+      }
+    ],
+    "checks": {
+      "newUniqueScopes": 5,
+      "directlyAffectedExistingScopes": 15,
+      "uniquePassing": 20,
+      "singleRunClaim": "19/19 directly relevant issuer module scopes first run; then one additional identical-byte rewrite negative scope passed separately. This is not a claim of one20/20 execution.",
+      "skips": 0,
+      "newScopes": [
+        "Read/hash only2 original content files across multiple requests/explicit guards/COMMIT while6 full catalog probes still execute",
+        "Known57014/transport-withoutSQLSTATE/bounded-client-closed failures each reject current request and COMMIT, discard, then fresh lease/full verification permits a new request without auto retry",
+        "Failed borrow followed by a real catalog mismatch never recovers from stale proof; restored catalog still cannot revive revoked issuer",
+        "Sales original same-client afterBEGIN and preCOMMIT proofs preserve drift denial and unknown-COMMIT discard; healthy transaction uses3 probes including checkout",
+        "Identical-byte proof-file rewrite with restoredmtime is detected by retained file signature before COMMIT and stays revoked"
+      ],
+      "affectedScope": "Complete existing issuer test module once because file-pin and lease-failure lifecycle changes affect its exact target/prefix/source checks, current lease identity, purpose views, revocation/no-follow/files/COMMIT aliases, in-flight guard and unknown-COMMIT behavior. No unrelated backend or old SPEC suites rerun.",
+      "strict": {
+        "exitCode": 0,
+        "roots": [
+          "tests/native-runtime26-capability.test.ts",
+          "adapters/postgres/src/sales-unit-of-work.ts"
+        ],
+        "scope": "Original strict ES2023/NodeNext/noEmit/noUncheckedIndexedAccess/exactOptionalPropertyTypes/verbatim/rewrite flags, complete imported dependency graph",
+        "lastToolChunk": "c16aae"
+      },
+      "sqlGrammar": "Original metadata query after MATERIALIZED parsed as exactly1 statement with pglast static parser; no PostgreSQL execution or EXPLAIN.",
+      "baselineEvidence": {
+        "C113": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-p10-native26-default-scheme-readonly-20261024-113/release-submission/release-receipts/c03-p10-native26-default-scheme-readonly-20261024-113/p10-readonly-actual.json",
+          "bytes": 81977,
+          "sha256": "909c9d72cef843734500d3ea00aa2aeae1fc20c7b2e78b347d2180a6818db44f"
+        },
+        "C115": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-p10-sku-page-and-filter-compact-readonly-20261024-115/release-submission/release-receipts/c03-p10-sku-page-and-filter-compact-readonly-20261024-115/p10-sku-readonly-actual.json",
+          "bytes": 74543,
+          "sha256": "b4c85a55804da51a5f92973c4076e4a83bcbbbf253c92b04c428b991cf8eb87a"
+        },
+        "C113FirstSamePageGroup": [
+          {
+            "receiptPointer": "/reads/0",
+            "readReturnedMs": 121.227844,
+            "fullMetadataProbeCount": 2,
+            "fullMetadataProbeMs": 115.04339399999992
+          },
+          {
+            "receiptPointer": "/reads/1",
+            "readReturnedMs": 119.00071600000001,
+            "fullMetadataProbeCount": 2,
+            "fullMetadataProbeMs": 114.36553200000003
+          },
+          {
+            "receiptPointer": "/reads/2",
+            "readReturnedMs": 117.60847199999989,
+            "fullMetadataProbeCount": 2,
+            "fullMetadataProbeMs": 113.117528
+          }
+        ],
+        "C113All12ReadMs": {
+          "min": 116.94926200000009,
+          "max": 121.227844
+        },
+        "C115All12ReadMs": {
+          "min": 117.22224899999992,
+          "max": 124.60923
+        },
+        "qualification": "Driver round-trip includes PostgreSQL/transport/decode; wire bytes and pure server execution are NULL in original evidence. These limited isolated samples are not formal-scale acceptance or a503 cause."
+      },
+      "databaseOperations": 0,
+      "sshOperations": 0,
+      "builds": 0,
+      "gitOperations": 0,
+      "listenersOpened": 0,
+      "browserOperations": 0,
+      "credentialsRead": false
+    },
+    "notTested": [
+      "Actual PostgreSQL execution plan/canonical catalog equivalence and measured after improvement",
+      "Actual PostgreSQL timeout/cancellation/new-connection recovery or engine mismatch negative controls",
+      "Formal R1 request/HTTP/browser latency, production503 cause, concurrency/capacity/formal-scale budget",
+      "Unrelated SPEC01/02/03 or earlier source/CORE checks; existing valid results adopted"
+    ],
+    "blockers": {
+      "source": "No source implementation or unit/type blocker",
+      "actualAfter": "C remains sole actual target/server/database owner. One comparable C113 first-page3-read group plus bounded transient/mismatch counterexamples awaits exact newly frozen source. CORE initialization and C116/C117 continue independently."
+    },
+    "next": {
+      "CFreeze": "Freeze exactly these3 owned leaves; original QB reviews the new performance/lease lifecycle delta only. No root config, schema field or write contract added.",
+      "actualAfterPlan": {
+        "base": "Reuse original C113 actual readonly readBarcodes request inputs/reference/role and existing finite runner instrumentation; first same page observed+repeat1+repeat2 only, not all original12 pages or old goals.",
+        "requiredMeasurements": [
+          "Total request/readReturnedMs",
+          "Number and total/individual full metadata probe driverRoundTripMs",
+          "Business query counts and durations",
+          "Response/result sizes and serialization with original unknown wire/server times retained",
+          "Actual current target/role/process/reference/row counts before-after, accurately bind the new source closure"
+        ],
+        "expectedCounts": "Read2 full probes remain2; sales emptyprotocol4→3. No claim of cached current identity or dropped authority.",
+        "negatives": "C performs one bounded metadata timeout/transport failure showing failed current request+discard/no automaticretry then a separately received request completing full proof; one actual target/catalog/proof mismatch remains closed. Never use fake unit result as actualPG evidence.",
+        "authorization": "Necessary new-scope after validation is C coordinated; no D1 PG/SSH/new DB/DDL"
+      },
+      "D1": "Only concrete new findings receive targeted original-owner fixes. After this package, original inventory HTTP output seam stays D3-owned and F1 scope coordination proceeds without D1 editing their leaves."
+    }
+  },
+  "qualification": "Only released original owner leaves; owner targeted necessary checks adopted, independent source and actual containing runtime/performance not accepted. Fixed273 stays immutable; no active other-owner source or tests WIP staged."
+}

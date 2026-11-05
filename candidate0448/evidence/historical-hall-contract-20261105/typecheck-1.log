@@ -1,0 +1,51 @@
+apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts(75,458): error TS2322: Type 'EntityId<"hall"> | null' is not assignable to type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts(85,381): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts(150,468): error TS2345: Argument of type '{ lines: { skuId: string; quantity: string; dealPrice: string | null; pricingRule: "UNIT_PRICE" | "DISCOUNT"; discountTenths: number | null; isGift: boolean; zeroConfirmed: boolean; }[]; ... 8 more ...; note: string | null; }' is not assignable to parameter of type 'NativeSalesCreateProposal'.
+  Types of property 'hallId' are incompatible.
+    Type 'string | null' is not assignable to type 'string'.
+      Type 'null' is not assignable to type 'string'.
+apps/web/preview-core-pages/sales-fixture.ts(23,58): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/existing-document-preparation.ts(35,54): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-create.test.ts(31,51): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-create.test.ts(45,257): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-create.test.ts(105,135): error TS2322: Type 'string | null' is not assignable to type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-existing-document.ts(47,90): error TS2322: Type 'EntityId<"hall"> | null' is not assignable to type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+apps/web/src/current-form/sales-existing-document.ts(57,25): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/form.tsx(138,196): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/signed-sale-economic-edit.test.ts(35,176): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/signed-sale-economic-edit.test.ts(57,176): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/commands/signed-sale-economic-edit.test.ts(88,182): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/detail-content.tsx(57,1555): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.
+apps/web/src/sales/sales-page.tsx(116,13): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+apps/web/src/sales/sales.test.ts(220,43): error TS2322: Type 'EntityId<"hall"> | null' is not assignable to type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+tests/integration/sales-write-authorization-acceptance.ts(95,47): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'EntityId<"hall">'.
+  Type 'null' is not assignable to type 'EntityId<"hall">'.
+    Type 'null' is not assignable to type 'string'.
+tests/sales-native-facts.test.ts(49,88): error TS2345: Argument of type '{ hall: { enabled: boolean; id?: EntityId<"hall">; }; salesId: EntityId<"sales">; warehouse: { readonly id: EntityId<"warehouse">; readonly hallId: EntityId<"hall">; readonly enabled: boolean; }; ... 6 more ...; retainedLines: readonly Pick<...>[]; } | { ...; } | { ...; } | { ...; }' is not assignable to parameter of type 'NativeSalesReferenceFacts'.
+  Type '{ hall: { enabled: boolean; id?: EntityId<"hall">; }; salesId: EntityId<"sales">; warehouse: { readonly id: EntityId<"warehouse">; readonly hallId: EntityId<"hall">; readonly enabled: boolean; }; ... 6 more ...; retainedLines: readonly Pick<SalesLineRow, "id" | "skuId" | "snapshot">[]; }' is not assignable to type 'NativeSalesReferenceFacts'.
+    Types of property 'hall' are incompatible.
+      Type '{ enabled: boolean; id?: EntityId<"hall">; }' is not assignable to type '{ readonly id: EntityId<"hall">; readonly enabled: boolean; }'.
+        Property 'id' is optional in type '{ enabled: boolean; id?: EntityId<"hall">; }' but required in type '{ readonly id: EntityId<"hall">; readonly enabled: boolean; }'.
+tests/sales.test.ts(173,21): error TS2345: Argument of type 'EntityId<"hall"> | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'.

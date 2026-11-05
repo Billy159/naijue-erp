@@ -1,0 +1,6 @@
+PASS 1: strict public configuration rejects 38 malformed/private settings and invalid asset paths; accepted values are immutable.
+PASS 2: offline build HTML attaches only shell/host CSS; startup static JS excludes business leaves/Arco/fixtures; env sentinel is absent from emitted files.
+PASS 3: cross-origin/HTTP/duplicate roots fail before I/O; mount and route switches do not authenticate or grant absent routes; write/party navigation remains disabled.
+PASS 4: lazy CSS cancellation prevents late mount; identity replacement aborts business reads, stale 401 cannot expire newer identity; dispose clears scope/DOM/styles and cannot resurrect.
+PASS 5: bfcache invalidates and restores only a fresh unresolved owner, repeated pageshow does not duplicate; explicit verifyOnMount makes one cookie session check and cancellation discards late identity.
+All 5 independent development-host review groups passed. Offline esbuild/jsdom/mock-fetch only. No server, browser, network, DB, production, visual, or real transport acceptance.

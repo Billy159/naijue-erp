@@ -1,0 +1,38 @@
+{
+  "status": "C_EXACT_192_COMMITTED_BIND_CONTINUATION_AUTHORIZED",
+  "jobId": "t45-r1-committed-prefix-original108-preparation-20261028-192",
+  "atUtc": "2026-10-27T18:32:22.148646+00:00",
+  "deadlineUtc": "2026-10-27T20:45:00Z",
+  "maxWallSeconds": 7200,
+  "maxSteps": 4096,
+  "statementTimeoutMs": 12000,
+  "hostJob": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-committed-prefix-original108-preparation-20261028-192/inputs/executable-host-job26.json",
+    "bytes": 5020,
+    "sha256": "c1d1249c1def3549483877103df619c5f6223a6e0441af1a897da29e26981426"
+  },
+  "sourceGrant": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-committed-prefix-original108-preparation-20261028-192/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+    "bytes": 37323,
+    "sha256": "8ab163a5b706c54b2f107a1ba5fc41a957696e1899ff2d32e5bf1b67bc0c6708"
+  },
+  "providerInput": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-committed-prefix-original108-preparation-20261028-192/inputs/provider-INPUT.FINAL.json",
+    "bytes": 188944,
+    "sha256": "49ac76941eb1215685b4b660c2cf11a3986839a2c8c0ca44c700c800e33e76cb"
+  },
+  "package": {
+    "bytes": 1937471,
+    "sha256": "8e655414d838e9049211201a64acff45547fc2b8c3adae563ea489debad86ff4"
+  },
+  "reviews": [
+    "QB483",
+    "QB484"
+  ],
+  "precondition": "Same actual original R1 identity/catalog6d3e, original BIND key COMMITTED exacthash, STAGED3/cursor22/history1acb and noACCOUNT/PUBLISH. Current original fullchain/proof checks mandatory. Any drift/unknown stops, no alternate key or automatic suffix beyond approved original sequence.",
+  "execution": "Single new192 revised consumer and original remaining107ACCOUNT+PUBLISH, all original109refs/keys retained, selector skips committedBIND. Source authorization/uncompleted stages retained. No replay190191/INIT/reprepare148/clear/reimport/SQLACL/APPpublicswitch. Failure original-key recovery before repair.",
+  "physicalBinding": "Only fixed reviewed3runtime delta and existing121module refs; actual Linux materialization wx/mode+hash/closure checks originalT45. Three ENV must final192 inputpath/inputSHA/grantSHA, no old190/QA values. Do not execute before all exact fields are consumed.",
+  "actualExecution": "NOT_SUBMITTED",
+  "model": "gpt-6.1-sol/medium",
+  "Fast": "UNVERIFIED"
+}

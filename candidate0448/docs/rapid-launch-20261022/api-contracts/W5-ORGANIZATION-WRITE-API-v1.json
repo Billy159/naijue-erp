@@ -1,0 +1,119 @@
+{
+  "version": "D2-W5-ORGANIZATION-WRITE-API-v1",
+  "taskId": "B05",
+  "fieldApproval": "C01-20261022-v1",
+  "readContract": "D2-W3-B05-READ-v1 unchanged; 31 prior declarations checked exact source text against790eb3f, no old tests repeated",
+  "factory": "createOrganizationMaintenanceHttpPlugin",
+  "adapter": "PostgresOrganizationMaintenanceUnitOfWork(shared MaintenancePgUnitOfWork)",
+  "endpoints": [
+    {
+      "prefix": "/organization/halls",
+      "kind": "HALL",
+      "POST": "/commands",
+      "GET": "/receipts/:requestKey"
+    },
+    {
+      "prefix": "/organization/warehouses",
+      "kind": "WAREHOUSE",
+      "POST": "/commands",
+      "GET": "/receipts/:requestKey"
+    }
+  ],
+  "commands": {
+    "CREATE": {
+      "action": "CREATE",
+      "requestKey": "bounded original key",
+      "values": "exact full values below"
+    },
+    "EDIT": {
+      "action": "EDIT",
+      "requestKey": "bounded original key",
+      "id": "native UUID",
+      "expectedVersion": "actual native root version",
+      "values": "exact full values below"
+    },
+    "DISABLE/RESTORE": {
+      "action": "DISABLE or RESTORE",
+      "requestKey": "bounded original key",
+      "id": "native UUID",
+      "expectedVersion": "actual native root version"
+    }
+  },
+  "values": {
+    "HALL": {
+      "name": "nonblank bounded string",
+      "enabled": "boolean",
+      "defaultCustomerId": "native UUID|null",
+      "defaultSalesWarehouseId": "native UUID|null"
+    },
+    "WAREHOUSE": {
+      "name": "nonblank bounded string",
+      "enabled": "boolean",
+      "hallId": "single native UUID; no hallIds/oldRelations accepted"
+    }
+  },
+  "result": {
+    "operationId": "actual operation UUID",
+    "kind": "HALL|WAREHOUSE",
+    "targetId": "native root UUID",
+    "version": "new root version"
+  },
+  "receipt": {
+    "requestKey": "original key",
+    "action": "original action",
+    "status": "COMMITTED",
+    "completedAt": "actual trusted time",
+    "result": "strict4-key result"
+  },
+  "rules": [
+    "Global organization topology transaction lock precedes current identity row locks",
+    "Hall default sales warehouse must belong to exact hall; enabled hall requires enabled selected defaults",
+    "Warehouse explicit create/move/restore hall must be enabled and real",
+    "Warehouse disable rejects enabled hall default reference; move rejects any incompatible actual default reference",
+    "No history rewrite, no automatic hall/default cleanup, no inventory SQL",
+    "Warehouse CREATE created_operation_id=current operation; existing NULL retained unknown; EDIT does not SET proof column",
+    "Root one-step CAS, sparse snake_case audit and receipt share one D1 client/transaction",
+    "Read factories/routes unchanged, write factory composed alongside explicitly"
+  ],
+  "statusCodes": {
+    "400": [
+      "INVALID_ORGANIZATION_COMMAND",
+      "INVALID_PARTY_INPUT",
+      "INVALID_ID",
+      "INVALID_HTTP_INPUT"
+    ],
+    "401": [
+      "UNAUTHENTICATED"
+    ],
+    "403": [
+      "FORBIDDEN"
+    ],
+    "404": [
+      "ORGANIZATION_NOT_FOUND",
+      "RECEIPT_NOT_FOUND"
+    ],
+    "409": [
+      "VERSION_CONFLICT",
+      "IDEMPOTENCY_CONFLICT",
+      "INVALID_ORGANIZATION_STATE",
+      "NO_ORGANIZATION_CHANGE",
+      "VERSION_STORAGE_OVERFLOW",
+      "ORGANIZATION_REFERENCE_UNAVAILABLE",
+      "WAREHOUSE_DEFAULT_IN_USE"
+    ],
+    "500": [
+      "sanitized failure; recover with original request key"
+    ]
+  },
+  "dependencies": [
+    "0021 D1 receipt/audit",
+    "0023 D1 warehouse.created_operation_id approved source/schema pending"
+  ],
+  "notClaimed": [
+    "real PostgreSQL engine",
+    "migration execution",
+    "production assembly",
+    "browser check",
+    "release"
+  ]
+}

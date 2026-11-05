@@ -1,0 +1,26 @@
+{
+  "reviewed_at_utc": "2026-10-20T21:09:34.659698+00:00",
+  "base_head": "228dc28cf00bc1e2aacc9331a82e3219ecfe12d2",
+  "scope": "Read-only source review plus bounded pure/static/fabricated helper checks. No actual PG/credentials/network access or production edits/commit.",
+  "source_manifest": "source-sha256.txt",
+  "owner_manifest_matches": true,
+  "final_hashes_unchanged_after_checks": true,
+  "checks": {
+    "pure_regressions": {
+      "passed": 22,
+      "failed": 0,
+      "exit_status": 0
+    },
+    "source_and_fabricated_helper_probes": {
+      "passed": 14,
+      "failed": 0,
+      "exit_status": 0
+    },
+    "integration_typecheck_exit_status": 0,
+    "syntax_checks": 6,
+    "syntax_exit_status": 0,
+    "git_diff_check_exit_status": 0
+  },
+  "actual_postgresql_run": "NOT RUN by independent reviewer",
+  "failures": "No independent final check failures. Owner earlier JSON-wrapper unknown-type compiler failure is preserved separately and was corrected before final freeze."
+}

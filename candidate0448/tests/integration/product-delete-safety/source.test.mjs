@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
+test('negative PG scenario requires explicit zero proof when balance is absent',()=>{const source=readFileSync(new URL('./hidden-reference.real-pg.test.mjs',import.meta.url),'utf8');assert.match(source,/standard_inventory_key_proof/);assert.match(source,/EXPLICIT_ZERO/);assert.doesNotMatch(source,/coalesce\(b\.quantity\s*,\s*0\)/i);});
+test('negative test snapshots full product audit and receipt rows, not only counts',()=>{const source=readFileSync(new URL('./hidden-reference.real-pg.test.mjs',import.meta.url),'utf8');assert.match(source,/jsonb_agg\(to_jsonb\(a\) ORDER BY a\.id\)/);assert.match(source,/jsonb_agg\(to_jsonb\(r\) ORDER BY r\.id\)/);});

@@ -1,0 +1,58 @@
+{
+  "atUtc": "2026-10-24T12:10:07.465320+00:00",
+  "parent": "37cbc564221fbb5a1d9c2880de927e25934f37de",
+  "taskId": "F1_TRANSFER_BODY_V16_READ_FOCUS_312",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+      "bytes": 6033,
+      "sha256": "52b95738d2667805a6a17324b49173a227c68401c16e30fc959a0362a5d13179",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "bytes": 35695,
+      "sha256": "5f119d415a0df2f06f4c1fd4e572b0a303881b4d05c2b3009fcdc31697fac741",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/response-validation.ts",
+      "bytes": 11150,
+      "sha256": "3a58ffe04d25987827bddbee8bbf5c56ab6b9fb0a4e38bf8bb7eb55e1fbda023",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/detail-content.tsx",
+      "bytes": 11066,
+      "sha256": "050d37e6f512674c60da383f6bd5debace6addea02cfaa0806af2e1fd004948e",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/form.tsx",
+      "bytes": 16654,
+      "sha256": "e5ed50dd8307c0d9b7eb7ac464e6e492f8f8e21f3d8f5262934d814185604a71",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/tests/fixtures.ts",
+      "bytes": 2853,
+      "sha256": "fb01b004cc2f148b7bbcd0a8ce4bf863e4009a330b213209e976f4a94fdb3cac",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/tests/fixtures.ts",
+      "bytes": 3445,
+      "sha256": "5fad2697bda6c6c30b17b6c2cd084362123936c4537f178e2d2dc899b5cac676",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-146/DELIVERY.json",
+  "ownerReceiptBytes": 5867,
+  "ownerReceiptSha256": "4489de59ad06589f83cd9b71508adf3b3ce8892049813a28c21b0fdba3ba047f",
+  "ownerSourceReleased": true,
+  "stage": "NORMAL_STATE_BODY_SOURCE_AND_STRICT_V16_READ_FOCUS_COMPONENT_CHECKS_PASS_NOT_BROWSER_OR_WRITE",
+  "webTypeCheck": "CapprovedNode24.21 tsc exit0 handle43601 afterCfixture fieldlocationfix311",
+  "wholePageAccepted": false,
+  "realBusinessAccepted": false,
+  "deployed": false
+}

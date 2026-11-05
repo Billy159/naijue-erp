@@ -1,0 +1,48 @@
+diff --git a/apps/web/src/inventory/inventory-page.tsx b/apps/web/src/inventory/inventory-page.tsx
+index 6ca72d0..a1d50ad 100644
+--- a/apps/web/src/inventory/inventory-page.tsx
++++ b/apps/web/src/inventory/inventory-page.tsx
+@@ -3,13 +3,13 @@ import type { ReadScope } from '../loading/read-scope.ts';
+ import type { Selection } from './contracts.ts';
+ import type { ProductReadOnlyReader } from './product-contracts.ts';
+ import { ProductDrawerHost } from './product-drawer-host.tsx';
+-import { useAnchoredPopover } from '../demo-presentation/anchored-popover.ts';
+ import { EmptyIcon } from '../demo-presentation/icons.tsx';
+ import { CandidateSelector } from '../components/candidate-selector.tsx';
+ import { InventoryPagination } from '../components/pagination.tsx';
+ import { emptyInventoryFilter, type InventoryActions, type InventoryFilter, type InventoryPageSize, type InventoryParameters, type InventoryReader } from './contracts.ts';
+ import { createInventoryQuery, totalLabel } from './model.ts';
+ import { defaultDisplaySettings, InventoryMatrix, type InventoryDisplaySettings } from './inventory-matrix.tsx';
++import { useInventorySettingsPopup } from './settings-popup.ts';
+ 
+ export interface InventoryPageProps {
+   readonly scope: ReadScope;
+@@ -53,15 +53,16 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, quer
+   const productSequence = useRef(0);
+   const openProduct = (target: Selection) => { productTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; productSequence.current++; setProduct(target); };
+   const closeProduct = () => { setProduct(null); if (productTrigger.current?.isConnected) productTrigger.current.focus(); };
+-  const [settingsOpen, setSettingsOpen] = useState(false);
++  const settingsPopup = useInventorySettingsPopup(scope);
++  const settingsOpen = settingsPopup.open;
+   const [scopeOpen, setScopeOpen] = useState(false);
+   const [settings, setSettings] = useState<InventoryDisplaySettings>(defaultDisplaySettings);
+   const [collapsedProducts, setCollapsedProducts] = useState<ReadonlySet<string>>(new Set());
+   const [collapsedColors, setCollapsedColors] = useState<ReadonlySet<string>>(new Set());
+   const scopeDialog = useRef<HTMLDialogElement>(null);
+   const scopeTrigger = useRef<HTMLButtonElement>(null);
+-  const settingsTrigger = useRef<HTMLButtonElement>(null);
+-  const settingsPosition = useAnchoredPopover(settingsOpen, settingsTrigger);
++  const settingsTrigger = settingsPopup.trigger;
++  const settingsPosition = settingsPopup.position;
+   useEffect(() => {
+     if (!scopeOpen) return;
+     const dialog = scopeDialog.current;
+@@ -100,7 +101,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, quer
+       </div>}
+       <p className={`iw-query-note ${dirty ? 'iw-dirty' : ''}`}>{dirty ? '条件已修改，点击「查询」后生效；当前结果仍使用上次已执行条件。' : ''}</p>
+     </form>
+-    <div className="iw-result-tools"><div className="iw-stats"><strong>{busy ? '正在查询' : snapshot.phase === 'error' ? '查询未完成' : result ? '查询结果' : '等待查询'}</strong><span>{result ? `${result.exactTotalProducts.toLocaleString('zh-CN')} 款商品 · ${result.warehouseLabels.length} 个仓库 · 全部匹配库存 ${totalLabel(result.allMatchesTotal)}` : busy ? '正在读取当前查询范围…' : '选择筛选条件后点击查询'}</span>{success && <button ref={scopeTrigger} type="button" className="iw-link" onClick={() => setScopeOpen(true)}>查看范围</button>}</div><div className="iw-actions">{result && result.products.length > 0 && <button type="button" className="iw-text-button" onClick={() => setCollapsedProducts(collapsedProducts.size === result.products.length ? new Set() : new Set(result.products.map(product => product.id)))}>{collapsedProducts.size === result.products.length ? '展开' : '折叠'}</button>}<div className="iw-settings-wrap"><button ref={settingsTrigger} type="button" className="iw-text-button" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(value => !value)}>显示设置</button>{settingsOpen && <div className="iw-settings" style={settingsPosition} role="dialog" aria-label="库存显示设置"><div className="iw-settings-body"><div className="iw-pop-head"><strong>商品辅助字段</strong></div><div className="iw-settings-grid">{(['category', 'supplier', 'fit', 'sizeGroup', 'season'] as const).map(key => <label key={key}><input type="checkbox" checked={settings[key]} onChange={event => setSettings(value => ({ ...value, [key]: event.target.checked }))} />{settingLabels[key]}</label>)}</div><div className="iw-pop-head"><strong>汇总显示</strong></div><div className="iw-settings-grid">{(['subtotal', 'total', 'sizeDescription'] as const).map(key => <label key={key}><input type="checkbox" checked={settings[key]} onChange={event => setSettings(value => ({ ...value, [key]: event.target.checked }))} />{settingLabels[key]}</label>)}</div><p className="iw-settings-note muted">隐藏版型时只读汇总，显示版型后查看各自库存；SKU 身份不变。</p></div><div className="iw-actions"><button type="button" className="iw-button iw-ghost" onClick={() => setSettings(defaultDisplaySettings)}>恢复默认</button><button type="button" className="iw-button iw-ghost" onClick={() => { setSettingsOpen(false); settingsTrigger.current?.focus(); }}>关闭</button></div></div>}</div></div></div>
++    <div className="iw-result-tools"><div className="iw-stats"><strong>{busy ? '正在查询' : snapshot.phase === 'error' ? '查询未完成' : result ? '查询结果' : '等待查询'}</strong><span>{result ? `${result.exactTotalProducts.toLocaleString('zh-CN')} 款商品 · ${result.warehouseLabels.length} 个仓库 · 全部匹配库存 ${totalLabel(result.allMatchesTotal)}` : busy ? '正在读取当前查询范围…' : '选择筛选条件后点击查询'}</span>{success && <button ref={scopeTrigger} type="button" className="iw-link" onClick={() => setScopeOpen(true)}>查看范围</button>}</div><div className="iw-actions">{result && result.products.length > 0 && <button type="button" className="iw-text-button" onClick={() => setCollapsedProducts(collapsedProducts.size === result.products.length ? new Set() : new Set(result.products.map(product => product.id)))}>{collapsedProducts.size === result.products.length ? '展开' : '折叠'}</button>}<div className="iw-settings-wrap"><button ref={settingsTrigger} type="button" className="iw-text-button" aria-expanded={settingsOpen} onClick={settingsPopup.toggle}>显示设置</button>{settingsOpen && <div ref={settingsPopup.panel} className="iw-settings" style={settingsPosition} role="dialog" aria-label="库存显示设置"><div className="iw-settings-body"><div className="iw-pop-head"><strong>商品辅助字段</strong></div><div className="iw-settings-grid">{(['category', 'supplier', 'fit', 'sizeGroup', 'season'] as const).map(key => <label key={key}><input type="checkbox" checked={settings[key]} onChange={event => setSettings(value => ({ ...value, [key]: event.target.checked }))} />{settingLabels[key]}</label>)}</div><div className="iw-pop-head"><strong>汇总显示</strong></div><div className="iw-settings-grid">{(['subtotal', 'total', 'sizeDescription'] as const).map(key => <label key={key}><input type="checkbox" checked={settings[key]} onChange={event => setSettings(value => ({ ...value, [key]: event.target.checked }))} />{settingLabels[key]}</label>)}</div><p className="iw-settings-note muted">隐藏版型时只读汇总，显示版型后查看各自库存；SKU 身份不变。</p></div><div className="iw-actions"><button type="button" className="iw-button iw-ghost" onClick={() => setSettings(defaultDisplaySettings)}>恢复默认</button><button type="button" className="iw-button iw-ghost" onClick={settingsPopup.close}>关闭</button></div></div>}</div></div></div>
+     {snapshot.phase === 'error' && <div role="alert" className="iw-alert">{snapshot.error instanceof Error ? snapshot.error.message : '库存查询暂不可用。'} {result && '以下保留上次成功结果，并非本次新结果。'}{sizeChangePending && ` 本次 ${requestedPageSize} 款/页读取失败，当前仍显示 ${displayedPageSize} 款/页；重试可重新读取 ${requestedPageSize} 款/页。`}<button type="button" className="iw-link" onClick={() => { if (snapshot.request) run(snapshot.request.parameters); }}>重试</button></div>}
+     {busy && <div className="iw-loading-note" role="status">{result ? sizeChangePending ? `正在按 ${requestedPageSize} 款/页更新，以下仍为 ${displayedPageSize} 款/页的上次结果。` : '正在更新，以下为上次已执行范围的结果。' : '正在加载库存…'}<button type="button" className="iw-link" onClick={() => query.cancel()}>取消本次读取</button></div>}
+     {<div className="iw-results" tabIndex={0} role="region" aria-label="库存查询结果" aria-busy={busy}>

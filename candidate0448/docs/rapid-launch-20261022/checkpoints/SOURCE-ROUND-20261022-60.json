@@ -1,0 +1,69 @@
+{
+  "atUtc": "2026-10-22T19:53:57.018686+00:00",
+  "parent": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
+  "groups": [
+    {
+      "slice": "D1_CURRENT_PRODUCTS_NATIVE_CODE_CONTAINS_SEARCH",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/CURRENT-PRODUCT-CODE-SEARCH-RESULT-v1.json",
+      "receiptSha256": "e64232a10f7b33a134527cf178043551fbf19ede2d9257fb027b05d56098f781",
+      "receiptSnapshot": {
+        "task": "D1_CURRENT_PRODUCTS_NATIVE_CODE_CONTAINS_SEARCH",
+        "status": "SOURCE_PROTOCOL_READY_FROZEN_FOR_C_CHECKPOINT_NO_HOST_ACTIVATION",
+        "atUtc": "2026-10-22T19:50:47.710Z",
+        "files": [
+          {
+            "path": "adapters/postgres/src/current-form-reader.ts",
+            "bytes": 33344,
+            "sha256": "7c748ca0fee408931dd523293509b81c32dc87ffc94b219d80e6237988f65434"
+          },
+          {
+            "path": "tests/current-form-reader.test.ts",
+            "bytes": 52178,
+            "sha256": "c597c7db26476ee504186499c2ac041e55070aaf83a70ae3d6dc4abd557bde8d"
+          }
+        ],
+        "frozenForCCheckpoint": true,
+        "delta": {
+          "unchanged": "Identity/current hall/explicit grant/RR READ ONLY/20 rows/native product sort/category DTO and exact bigint count retained; code/name short search remains.",
+          "codeFields": "At six or more characters additionally match actual p.system_item_code, eligible sku.sku_code and enabled MAIN/CONFIRMED_OLD sku_barcode text using parameterized literal strpos/lower. Existing actual native field values only; no raw-source code candidate or inferred SKU.",
+          "systemItemCode": "Nullable existing system item text is searched as its actual value, never asserted to be a barcode or converted to a SKU identity.",
+          "dedupe": "Correlated EXISTS rather than outer SKU/barcode joins. One shared where for count and page, no firstSKU pick or DISTINCT hiding fanout.",
+          "stage": "Exclude explicitly linked native product sources in non-IMPORTED batches for every product match; additional SKU/barcode branches reuse existing readBarcode native provenance keys to exclude non-published bindings.",
+          "invalidProductBarcodes": "2,958 excluded source-only product-level anomalies are not inserted, selected from raw fields or interpreted as SKU."
+        },
+        "validation": {
+          "receipt": "CURRENT-PRODUCT-CODE-SEARCH-VALIDATION-v1.json",
+          "newUnique": 3,
+          "affectedUnique": 3,
+          "pass": 6,
+          "skipped": 0,
+          "strictFinalActualExitCode": 0,
+          "syntheticProtocolOnly": true
+        },
+        "existingObjectPermissionDelta": "R1-EXACT26-COMPOSITION-AND-ACL-v1.json: SELECT(batch_id,entity_type,field_provenance) on existing import_source_row is newly needed if absent; import_batch id/status already in old R1 contract.",
+        "notClaimed": [
+          "Actual SQL engine execution or large-data timing",
+          "Actual R1 runtime role grant",
+          "Frontend, route activation or browser validation",
+          "Schema26 runtime activation or SOURCE/MAIN/PUBLISH authority"
+        ]
+      },
+      "files": [
+        {
+          "path": "adapters/postgres/src/current-form-reader.ts",
+          "bytes": 33344,
+          "sha256": "7c748ca0fee408931dd523293509b81c32dc87ffc94b219d80e6237988f65434",
+          "owner": "D1"
+        },
+        {
+          "path": "tests/current-form-reader.test.ts",
+          "bytes": 52178,
+          "sha256": "c597c7db26476ee504186499c2ac041e55070aaf83a70ae3d6dc4abd557bde8d",
+          "owner": "D1"
+        }
+      ]
+    }
+  ],
+  "fileCount": 2,
+  "scope": "Existing actual code search/publication exclusion; no DTO/schema/host/PG change"
+}

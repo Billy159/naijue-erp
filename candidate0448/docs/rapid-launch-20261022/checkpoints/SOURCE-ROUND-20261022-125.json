@@ -1,0 +1,141 @@
+{
+  "atUtc": "2026-10-23T03:36:50.464144+00:00",
+  "parent": "3f28a0eb58cdab53580f72d15c21bb763e0d4832",
+  "groups": [
+    {
+      "slice": "F3 full existing Hall/Warehouse UI native lazy preparation and current-scope lifecycle",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-complete-ui-v2/RESULT.json",
+      "receiptSha256": "0a0d77e29593d3b36b7166812a039f9aed94c40a868a7668cb26b688ceaded8b",
+      "receiptSnapshot": {
+        "taskId": "F05/STORE-COMPLETE-UI-v2",
+        "clientDate": "2026-10-23",
+        "atUtc": "2026-10-23T03:35:52.067036+00:00",
+        "status": "READY_OWNED_EXACT3_FOR_C_FREEZE_EXTERNAL_ROUTE_WIP_RECORDED",
+        "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "baseHead": "3019b1071af05820865d662ff202ac141651d152",
+        "headObserved": "48882854534c2904d2ea0d16190d171cb981258d",
+        "files": [
+          {
+            "path": "apps/web/src/settings/stores/stores-page.tsx",
+            "beforeSha256": "5e4ca49d3f64fde368e58d7f382c552a546bfa2b95992e617de0bb568f9c71a1",
+            "sha256": "3132190e9ab1889bf13852354a6e9c4de1298f201384224621688710fc7777e4",
+            "bytes": 11629
+          },
+          {
+            "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+            "beforeSha256": "b09755a2d9593503e3aab3e21e78bf59525f33e04f5cd4f594016d97c793f0ca",
+            "sha256": "b6d8a734fb5e3660eedf4e16917624d42fdb9382c8006915885c7c77406221de",
+            "bytes": 15781
+          },
+          {
+            "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+            "beforeSha256": "c96590ecca4b7a43b7b6c71c1da527a0bb32e14a6e2f5c64ebd8f32cd480107d",
+            "sha256": "b4b953c0e24c4f0142be13c01d361557f5faa82e0d9e3d18d4d87891b0fd8973",
+            "bytes": 10844
+          }
+        ],
+        "completeUiScope": [
+          "B01 hall list",
+          "B02 warehouse list",
+          "O-B01 new/edit hall",
+          "O-B02 new/edit single-hall warehouse"
+        ],
+        "sourceReuse": "Preserve prior directly migrated complete App/Filters/Field/Fields/Modal/Pager and final scoped CSS. Exact11 frozen files verified against b8bcfe3;5 mapped source regions with actual current import chain and original4 receipts retained. Whole-page direct reuse acceptance remains pending.",
+        "nativeAddedStates": "Loading/code failure/retry/draft discard/current read ownership per latest human attachment5.6/5.9/5.10; native content uses migrated Demo Modal, not claimed as Demo function.",
+        "changes": [
+          "Maintenance form loads only after explicit open. Initial route source DOM evaluates no maintenance leaf.",
+          "Explicit edit action starts code and exact native detail independently. Retry code after successful detail does not reread detail.",
+          "Loading/error/cancel/retry preserve workspace-owned controller and draft; closed/aborted/old callbacks cannot reopen or replace current form.",
+          "Detail result binding matches exact scope/reader/kind/id before rendering or preparing editor.",
+          "Remove only StoreCommandForm all-form blur validation; explicit native submit still validates. Generic shared Field/PreparationModal/directory code unchanged."
+        ],
+        "checks": {
+          "newSourceDomGroups": 11,
+          "commands": 0,
+          "requestKeys": 0,
+          "exact3Strict": "PASS",
+          "expandedApplicationRouteStrict": "WAITING_F2_CURRENT_TYPING",
+          "leafGraph": "PASS write:false route/source/CSS graph46inputs11virtualoutputs packages external",
+          "diff": "PASS",
+          "otherF3FilesUnchanged": 67,
+          "previousLayoutScrollPagerW5Audit122MethodFilter138": "REUSED_NOT_RERUN"
+        },
+        "artifacts": {
+          "CHECK-FINAL.json": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-complete-ui-v2/CHECK-FINAL.json",
+            "sha256": "8a77a558aa0e674c8022a1badbc7a308f7145e95339347ae20737651e69b3ef1"
+          },
+          "TYPE-CHECK.json": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-complete-ui-v2/TYPE-CHECK.json",
+            "sha256": "4082ac7ea60b718da85e5f4950875b6eed3877263b9090d4908478deb57c8ba0"
+          },
+          "DEMO-TO-SOURCE-MAP.json": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-complete-ui-v2/DEMO-TO-SOURCE-MAP.json",
+            "sha256": "d3cde6f053c50348f171ca587a8ca7e5022ccca124e085b33ae77b2acb3d9131"
+          },
+          "LEAF-GRAPH.json": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-complete-ui-v2/LEAF-GRAPH.json",
+            "sha256": "eb931de3da4696b52aa5227f709f3933b7630e522ed6db3d148ac47a88404db3"
+          },
+          "SOURCE-PROTECTION.json": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-complete-ui-v2/SOURCE-PROTECTION.json",
+            "sha256": "c8b18ba71f8becf1ec394978332da09e42992eb13c8fb4afb769bc0435d1e38d"
+          },
+          "exact3.patch": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-complete-ui-v2/exact3.patch",
+            "sha256": "da456d208658879a9445b871123f57d33d7547519213b3fd88fba9c8694bea34"
+          }
+        },
+        "unmeasured": [
+          "Actual browser paired full page/new/edit/data/selected/scroll/key state acceptance",
+          "Cold1/repeat2 timings/response bytes/representative scale/current central React runtime duplication",
+          "Real native save/readback/auth/transactions/PG/performance/production host/deployment",
+          "Current application store route still passes no audit capability: original C/F1 host seam remains explicit; no button or feature removed"
+        ],
+        "blockers": [
+          {
+            "owner": "F2 via C",
+            "kind": "EXPANDED_ROUTE_TYPING_WIP",
+            "path": "apps/web/src/products/product-editor-media.tsx:100",
+            "check": "types-run4-after-f2.log",
+            "doesNotInvalidate": "Owned exact3 type/source-DOM PASS; does not claim whole application type/build PASS",
+            "previousF2TransferTyping": "Closed by original F2; new unrelated media WIP error replaces it"
+          }
+        ],
+        "wholePagePass": false,
+        "actualBrowser": false,
+        "server": false,
+        "database": false,
+        "newProductionSave": false,
+        "next": "C freeze owned exact3 using source-DOM11 and exact3 strict PASS; full route typing/current product-media WIP remains C/F2 owner. Next necessary integrated candidate QF verifies affected B01/B02/O-B01/O-B02 states, reusing same-version valid source/partial proofs. C/F1 real host prepare/audit capability remains explicit. No further broad type loops by F3 on changing external WIP.",
+        "modelRequirement": {
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "xhigh",
+          "fastEnabledByF3": false,
+          "actualFastUiSwitch": "NOT_OBSERVED"
+        }
+      },
+      "files": [
+        {
+          "path": "apps/web/src/settings/stores/stores-page.tsx",
+          "owner": "F3",
+          "bytes": 11629,
+          "sha256": "3132190e9ab1889bf13852354a6e9c4de1298f201384224621688710fc7777e4"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+          "owner": "F3",
+          "bytes": 15781,
+          "sha256": "b6d8a734fb5e3660eedf4e16917624d42fdb9382c8006915885c7c77406221de"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+          "owner": "F3",
+          "bytes": 10844,
+          "sha256": "b4b953c0e24c4f0142be13c01d361557f5faa82e0d9e3d18d4d87891b0fd8973"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze exact3 only; adopt11 unique new source/DOM groups and actual exact3 strict, old accepted layout/scroll/pager/audit/methodfilter reused. Expanded application type check on external F2 currentWIP failure preserved; WIP excluded, no application type/build/actualChrome/formalhost/PG/performance/deploy pass."
+}

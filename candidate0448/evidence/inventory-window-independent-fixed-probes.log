@@ -1,0 +1,41 @@
+Oracle cases 3320
+Anchor sweep cases 25648
+✔ independent variable geometry matches half-open brute row/column oracle across collapse modes (276.951928ms)
+✔ independent every viewport numeric field rejects negative/nonfinite values and overscan fractions (10.107819ms)
+✔ independent invalid measured extents and unsafe accumulated geometry reject (6.253746ms)
+✔ independent exact aggregate/cell facts and logical identities remain original references (1.739478ms)
+✔ independent stale focus/opaque tickets/account abort never restore cleared references (3.137831ms)
+✔ independent scroll-anchor unchanged-model roundtrip at description/header section boundaries (1.266473ms)
+✖ independent header-height reflow preserves exact logical body-edge anchor rather than stale occlusion (13.275614ms)
+✔ independent fractional boundary sweep roundtrips unchanged models with unequal measured header heights (92.735966ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1624.855139
+
+✖ failing tests:
+
+test at ../../../tmp/inventory-window-independent-fixed-probes.mjs:25:1
+✖ independent header-height reflow preserves exact logical body-edge anchor rather than stale occlusion (13.275614ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  25 !== 5
+  
+      at TestContext.<anonymous> (file:///tmp/inventory-window-independent-fixed-probes.mjs:25:746)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 25,
+    expected: 5,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

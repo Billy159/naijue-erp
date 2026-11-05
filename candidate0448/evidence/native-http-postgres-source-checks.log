@@ -1,0 +1,80 @@
+Connection-free final preparation checks only. No PostgreSQL/network/browser/TLS execution.
+✔ backend plan-only selection has its own scenarios and the same exact eight migration bytes (733.253367ms)
+✔ backend plan refuses absent, unknown and historical selections rather than choosing a default (2102.78528ms)
+✔ backend source wiring uses the same pre-Pool guards and never activates the preserved historical body (22.29262ms)
+✔ HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double (9.124395ms)
+✔ backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path (9.794156ms)
+✔ migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses (10.213469ms)
+✔ migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses (2.169844ms)
+✔ migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes (13.609588ms)
+✔ migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets (2.313347ms)
+✔ migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content (0.564421ms)
+✔ deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure (5.115576ms)
+✔ deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected (1.689901ms)
+✔ deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof (0.228386ms)
+✔ exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT (1.857641ms)
+✔ raw constraint assertion requires exact message, SQLSTATE and whole function identity (4.116564ms)
+✔ integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback (3.556537ms)
+✔ integration safety: accepts only a dedicated explicitly repeated loopback test target (0.901389ms)
+✔ integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs (1.202307ms)
+✔ integration safety: malformed and encoded credentials never appear in diagnostics (0.694015ms)
+✔ integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast (27.969885ms)
+✔ integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings (3.260679ms)
+✔ integration safety: historical migration prefix refuses before pool construction at current adapter revision (0.431698ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3629.853239
+
+Final post-review-hardening integration typecheck and source checks:
+✔ backend plan-only selection has its own scenarios and the same exact eight migration bytes (469.898511ms)
+✔ backend plan refuses absent, unknown and historical selections rather than choosing a default (815.708038ms)
+✔ backend source wiring uses the same pre-Pool guards and never activates the preserved historical body (13.23097ms)
+✔ HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double (4.164029ms)
+✔ backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path (2.32675ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1599.268658
+FINAL_SOURCE_CHECKS=PASS; PG_ENGINE=NOT_RUN; NETWORK_TLS_BROWSER=NOT_RUN
+
+Final disconnect-drain hardening checks:
+✔ backend plan-only selection has its own scenarios and the same exact eight migration bytes (832.648686ms)
+✔ backend plan refuses absent, unknown and historical selections rather than choosing a default (1054.716423ms)
+✔ backend source wiring uses the same pre-Pool guards and never activates the preserved historical body (14.083742ms)
+✔ HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double (4.038475ms)
+✔ backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path (3.380392ms)
+✔ migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses (13.255694ms)
+✔ migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses (2.981366ms)
+✔ migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes (9.91665ms)
+✔ migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets (1.092873ms)
+✔ migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content (0.906899ms)
+✔ deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure (16.593147ms)
+✔ deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected (6.563591ms)
+✔ deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof (2.536731ms)
+✔ exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT (8.150948ms)
+✔ raw constraint assertion requires exact message, SQLSTATE and whole function identity (5.741482ms)
+✔ integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback (8.6315ms)
+✔ integration safety: accepts only a dedicated explicitly repeated loopback test target (2.0924ms)
+✔ integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs (4.18817ms)
+✔ integration safety: malformed and encoded credentials never appear in diagnostics (1.289849ms)
+✔ integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast (61.432834ms)
+✔ integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings (2.784507ms)
+✔ integration safety: historical migration prefix refuses before pool construction at current adapter revision (0.504927ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2232.837887
+FINAL_DISCONNECT_DRAIN_CHECKS=PASS; PG_ENGINE=NOT_RUN; NETWORK_TLS_BROWSER=NOT_RUN

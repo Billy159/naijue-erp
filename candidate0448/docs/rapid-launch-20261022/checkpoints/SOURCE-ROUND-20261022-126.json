@@ -1,0 +1,39 @@
+{
+  "atUtc": "2026-10-23T03:46:24.926773+00:00",
+  "parent": "8dbb521d668f2475c5b39e1e25b214a4258fa38d",
+  "groups": [
+    {
+      "slice": "C exact media lazy entry implementation in static shared output closure",
+      "files": [
+        {
+          "path": "scripts/release/manifest.mjs",
+          "owner": "C",
+          "bytes": 30269,
+          "beforeSha256": "48febfabb4a55086b171a6fbce01b678ed08c99eb8b1f0e8ecd3017dc52bdd09",
+          "sha256": "ce6bcd225bff525d25394ff70c3a0083d4b9f09640bce9f42bdde01a504c0b0d"
+        },
+        {
+          "path": "scripts/release/pack.test.mjs",
+          "owner": "C",
+          "bytes": 20828,
+          "beforeSha256": "6701e81d2c9893ad34fd4c5168d79c29286b2dce535d705359406198b8778d1c",
+          "sha256": "d5aaefa63f31e57eb256b57f2a8c12adeb545ec28ec86dcf03aee75c2ca4af18"
+        }
+      ],
+      "actualFailure": "C125 original build9.377s failed RUNTIME_MEDIA_CHUNK_SOURCE_REQUIRED; exact376B entry facade has inputs={}, existing statically imported chunk has same frozen source positive6617B. No data-exclusion or source-entry change.",
+      "checks": {
+        "newGroups": 2,
+        "passed": 2,
+        "durationMs": 85.466833,
+        "redExit": 1,
+        "greenExit": 0,
+        "oldQB144Groups": "REUSED_NOT_RERUN",
+        "red": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/runtime-media-chunk-shared-facade-20261023-01/red.log",
+        "green": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/runtime-media-chunk-shared-facade-20261023-01/green.log",
+        "actualMetafileDiagnosis": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/runtime-media-chunk-shared-facade-20261023-01/ACTUAL-FAILURE-DIAGNOSIS.json"
+      },
+      "scope": "Use actual validated output graph static import closure for positive implementation contribution; direct entry still exactsource/frozen and existing restricted name. Dynamic-only/unrelated output fails. No new eligibility/approval system. Existing release guard compatibility fix only."
+    }
+  ],
+  "controllerScope": "Latest anti-over-defense applied: fix observed existing build failure directly; only2 new affected checks and original QB newscope review, no new gate/framework/fullsuite. Old125/122 failures preserved, no pack/runtime/PG/browser acceptance inferred."
+}

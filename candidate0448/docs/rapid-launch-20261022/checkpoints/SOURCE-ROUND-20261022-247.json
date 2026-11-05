@@ -1,0 +1,139 @@
+{
+  "atUtc": "2026-10-24T00:27:52.821256+00:00",
+  "parent": "c75d03619f6e4f69c97a08edf69991c727add9b9",
+  "taskId": "F1_USER_UI_DATES_NATIVE_PORTAL_ANCESTOR_ADAPTATION",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-controls.tsx",
+      "bytes": 6905,
+      "sha256": "16d4b6ba08224d691f5bf300d600ba27c20ec319fa6e2c1a11d78f2d64dde9c0",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/components/standard-controls.css",
+      "bytes": 2760,
+      "sha256": "9e52095cb7f0b191e000114ed201c5feb3fe8f9f3408ae085655a66b5e4a9327",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "ef5d3118b67db07c9f6fa596e20185a7be1eecf5cd14487f7bc3d2c593f5bc7a",
+  "ownerDelivery": {
+    "taskId": "USER-UI-DATES / I07 native portal ancestor adaptation",
+    "scope": "Existing I07 source-native portal containing block only",
+    "status": "READY_EXACT2_EXPLICIT_SOURCE_PORTAL_MOUNT_CONSUMER_SELF_CHECK_PASS_F2_AND_ACTUAL_PENDING",
+    "files": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-controls.tsx",
+        "bytes": 6905,
+        "sha256": "16d4b6ba08224d691f5bf300d600ba27c20ec319fa6e2c1a11d78f2d64dde9c0",
+        "relativePath": "apps/web/src/components/standard-controls.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/before/apps/web/src/components/standard-controls.tsx",
+          "bytes": 6439,
+          "sha256": "480dbd9b38832a7a1daadfcb7f0c91c4f5cab629859cbee98d94c922bd027f12"
+        }
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-controls.css",
+        "bytes": 2760,
+        "sha256": "9e52095cb7f0b191e000114ed201c5feb3fe8f9f3408ae085655a66b5e4a9327",
+        "relativePath": "apps/web/src/components/standard-controls.css",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/before/apps/web/src/components/standard-controls.css",
+          "bytes": 2418,
+          "sha256": "c78802c45d4b05237f0adc08b436d029ebbc5ebc673684812a93061d83484d52"
+        }
+      }
+    ],
+    "checks": {
+      "before-1": "EXIT1 old source receives proposed opt-in but hostrelative/noportal remains; expected structural RED. Unknown prop warning is old pre-API source, retained.",
+      "after-1": "EXIT0 original Arco field/native mount/parent scope and installed native layout replay from QF240; no real pixel measurement",
+      "after-2": "EXIT137, no output. Added closing probe incorrectly checked open topology after native close and used DOM-object equality; moved topology check before close and replaced DOM comparisons with booleans. No product source changed for this probe correction.",
+      "after-3": "EXIT0 original user-event first pointer opens same Arco picker, same-field portal ownership, Escape closes/raw date unchanged, native mount cleanup on unmount, default local branch unchanged. Installed Arco replay candidate607/159 vs source/expected591/159, top36 vs158, no new math in product.",
+      "types-1": "EXIT0 strict original shared component imported closure; source unchanged since check"
+    },
+    "notRun": [
+      "No new browser pixel/offsetParent acceptance",
+      "No F2 consumer/body CSS changed by F1",
+      "No old Today/font/shape or whole public suite rerun",
+      "No build/serve/HTTP/PG/deploy"
+    ],
+    "blockers": "C pin plus F2 original loop/body adaptation then containing candidate",
+    "next": "C pins shared API then original F2 consumes one loop prop/scoped body rule, preserving244hover. After one containing build, original QA only paired native date popup/ancestor/rect/one close affected scope; no old Today/font suite.",
+    "sourceFrozenUntilCPin": true,
+    "artifacts": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/API.json",
+        "bytes": 1100,
+        "sha256": "1857bbd88f1697cb38242ffd3222544057b3a41ede76cce7ee88a54317d29a45"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/PROOF.json",
+        "bytes": 7257,
+        "sha256": "15546d184eaead6f4989b2cded2a6e35fafc0579866f10c3dc8aed8c393bc2ff"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/REPORT.md",
+        "bytes": 1198,
+        "sha256": "d91fea0d88c693af83ed12b5cf7d3210f8d69b0e1503cfac31ac3984e1694f6c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/RESULT.json",
+        "bytes": 981,
+        "sha256": "b851e96ec905b213b5a1216b474fa5aa710ec8e528294d6591e73c84d426b6c9"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/RESULT-after-1.json",
+        "bytes": 883,
+        "sha256": "b2a5380cb5e822110dd35748ddfa631dbf49081ed34b28f48b5d91b3213dc709"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/SOURCE.diff",
+        "bytes": 3803,
+        "sha256": "a5333fada2e3af99482c7bdc605a7d292680a4732e432fe2f6db36bd323c7b26"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/before-1.log",
+        "bytes": 883,
+        "sha256": "895479718fa22b3e4fd2ac82b65b0f5c94d9cd4a1c2c8f01d2742983ded744f4"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/after-1.log",
+        "bytes": 101,
+        "sha256": "75db407b9d48acfed40447b78fcbf4b41a90a98a57dfc146376fc57e7229eb2e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/after-2.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/after-3.log",
+        "bytes": 101,
+        "sha256": "75db407b9d48acfed40447b78fcbf4b41a90a98a57dfc146376fc57e7229eb2e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/OPEN-TOPOLOGY-CHECK.json",
+        "bytes": 104,
+        "sha256": "2832e0eb5b453e6bdc9cdbb44e91e0eec7ad14d25e431ce4ab3219224d099fd0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/date-portal-mount-check.mjs",
+        "bytes": 9337,
+        "sha256": "3c10432ddec198925f259f58faf9a865e673c4eacaa4b7a5fbc1699b9398436b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-127/tsconfig.json",
+        "bytes": 534,
+        "sha256": "ab49a426fe5ba305e32d7f7cd43473ebac086d4f742aa816e9cc9625e5b21c0c"
+      }
+    ]
+  },
+  "qualification": "Existing UIDate explicit ancestor optin restores Frozen static host/portal and native Arco positioning; default local DOM/handlers remain. Actual240 paired rect/offset data replay and one real-Arco JSDOM pointer/close/unmount source checks adopted, not actual browser geometry. F2 ledger consumer/body position still pending; not in fixed243."
+}

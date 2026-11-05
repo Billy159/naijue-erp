@@ -1,0 +1,18 @@
+{
+  "type": "PRIVATE_DRAFT_RECOVERABLE_GIT_CHECKPOINT_NOT_BRANCH_PUSH_OR_PRODUCTION",
+  "sourceAndHandoffCommit": "9be8063393ac44a6a990fd3d8f18c60d2227c51f",
+  "prerequisiteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "atUtc": "2026-10-22T17:38:24.391673+00:00",
+  "bundle": {
+    "name": "naijue-erp-source-9be8063.bundle",
+    "bytes": 825891,
+    "sha256": "f26d5f834b8b2d00961829fd004eb31a0a3e3203039b4f03cde0f784bb7aca6b"
+  },
+  "scope": "Source round1..36, exact schema21..26 source, current model directive, queue/QA index140/handoff; independent source and engine scopes retained",
+  "excluded": "Private raw business data, runtime configuration/credentials, uncommitted owner WIP",
+  "localVerification": "git bundle verify PASS; remote download/readback next",
+  "status": "UPLOADED_DOWNLOADED_HASH_AND_GIT_BUNDLE_VERIFIED",
+  "normalBranchAdvanced": false,
+  "remoteBranchStill": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "draftTag": "codex-checkpoint-20261022-a7e817b"
+}

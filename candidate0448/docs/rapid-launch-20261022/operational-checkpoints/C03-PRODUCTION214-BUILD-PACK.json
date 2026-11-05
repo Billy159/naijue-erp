@@ -1,0 +1,23 @@
+{
+  "atUtc": "2026-10-23T19:58:32.484762+00:00",
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-c214-production-prep-20261024-01/pack01/pack-receipt.json",
+  "bytes": 561,
+  "sha256": "0a8f132e531c5d5b8b4f5489cda86a3892df1908559144b5583cc6918de00999",
+  "receiptContent": {
+    "format": "naijue-release-pack-receipt-v1",
+    "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+    "buildId": "r1-1eef32a-20261024-01",
+    "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+    "archive": {
+      "file": "release.tar.gz",
+      "bytes": 1291565,
+      "sha256": "9d9b8b96bca5535360de7cd2e7d5c51d55b90539c05fb2e60e382295a88c94c7"
+    },
+    "manifestSha256": "157931367958df66a3b81c0c114c11eb7e0775e92913d9bc67dca4387fcbd143",
+    "members": 225,
+    "archiveExtractions": 1,
+    "businessOrProductionValidation": false,
+    "deploymentExecuted": false
+  },
+  "qualification": "ACTUAL_LOCAL_PRODUCTION_BUILD4_659S_PACK225_ONEEXTRACT_NOT_DEPLOYED"
+}

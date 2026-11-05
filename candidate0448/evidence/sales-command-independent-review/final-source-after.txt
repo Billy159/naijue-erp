@@ -1,0 +1,10 @@
+apps/web/src/sales/commands/README.md: OK
+apps/web/src/sales/commands/contracts.ts: OK
+apps/web/src/sales/commands/controller.test.ts: OK
+apps/web/src/sales/commands/controller.ts: OK
+apps/web/src/sales/commands/fixtures.test-support.ts: OK
+apps/web/src/sales/commands/http-client.test.ts: OK
+apps/web/src/sales/commands/http-client.ts: OK
+apps/web/src/sales/commands/index.ts: OK
+apps/web/src/sales/commands/validation.test.ts: OK
+apps/web/src/sales/commands/validation.ts: OK

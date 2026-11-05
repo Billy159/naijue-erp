@@ -1,0 +1,15 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 1: actual frozen Arco table/control structure, normal-status route-activation page only, reset applies defaults, independent kind lists; unsupported audit explicit.
+PASS DOM 11: per-kind unapplied search/status drafts survive actual route reentry without reads; results/paging stay tied to the applied filter and Reset clears/applies only its kind.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 2: actual520px source Modal/Fields readonly code, create reads nothing, exact name-only create, dirty-close guard and source-style close/refresh after confirmation.
+PASS DOM 3: fresh-target edit and readonly original code, native CAS conflict preserves name+state and requires explicit reconciliation.
+PASS DOM 4: uncertain outcome locks name/state and original key; receipt404 not rollback proof; explicit exact atomic replay closes only on confirmation.
+PASS DOM 5: source name+state edit is one atomic EDIT/CAS/key, guard failure changes neither, restore is same single edit; no extra row/delete/tag controls.
+PASS DOM 9: legitimate route leave clears a clean unchanged editor; reentry keeps bounded list/filter state without resurrecting the modal or rereading detail.
+PASS DOM 6: detail/candidate close aborts and discards late responses; enabled-only independent candidate page reads only on explicit open.
+PASS DOM 7: identity/session/permission invalidation clears both kinds, dialog facts and atomic command; late ignored response cannot restore facts.
+PASS DOM 8: replacement workspace with reused route ID gets fresh filter/editor identity and only its newly activated bounded default page.
+PASS DOM 10: actual numeric-window pager emits direct buttons and source ellipsis spans, with no numeric flex wrappers. No geometry is mocked.
+All 11 synthetic behavioral DOM groups passed using actual Arco components. CSS is deliberately not rendered: no frozen-Demo pixel/geometry/browser/performance acceptance claim.

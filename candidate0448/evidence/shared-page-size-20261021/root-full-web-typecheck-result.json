@@ -1,0 +1,6 @@
+{
+  "command": "npm run typecheck:web",
+  "exitCode": 0,
+  "sourceManifestSha256": "290d6f76014306e3b8611bc32776328f7f19fbcceb72412771616688ea3a1d77",
+  "boundary": "Full frontend typecheck only; not full repository aggregate or real browser acceptance."
+}

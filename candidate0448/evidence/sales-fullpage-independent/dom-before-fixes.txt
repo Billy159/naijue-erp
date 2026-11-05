@@ -1,0 +1,30 @@
+PASS: Opening full-page detail aborts prior pending list refresh: actual=true, expected=true
+PASS: Ignored-signal late list cannot replace retained executed rows: actual=false, expected=false
+PASS: Back restores original trigger after list reveal: actual=true, expected=true
+PASS: Detail and Back do not initiate hidden list refresh: actual=2, expected=2
+FAIL: Entering full-page detail aborts a pending list-reference read: actual=false, expected=true
+FAIL: Entering detail removes hidden-list candidate popover: actual=false, expected=true
+FAIL: Late reference cannot restore a stale popup on Back: actual=false, expected=true
+FAIL: Removing optional style capability during pending-style leaves list usable: actual=true, expected=false
+PASS: Removing capability during pending-style disables both detail activations: actual=true, expected=true
+PASS: Revoked pending style cannot start a detail read: actual=0, expected=0
+FAIL: Removing optional style capability during loaded-detail leaves list usable: actual=true, expected=false
+PASS: Removing capability during loaded-detail disables both detail activations: actual=true, expected=true
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Independent lifecycle observations failed
+
+5 !== 0
+
+    at file:///workspace/shared/naijue-erp-rewrite/evidence/sales-fullpage-independent/run-dom-probes.mjs:79:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 5,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

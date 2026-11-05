@@ -1,0 +1,13 @@
+✔ product DTOs validate target identity and preserve same-color/size different FIT legal SKUs (2.336931ms)
+✔ null/empty product facts are distinct from malformed success and unsafe media (1.578908ms)
+✔ product query is inert until activated; close clears facts and stale ignored transport cannot republish (2.138036ms)
+✔ synthetic provider reads target tabs independently and never reads originals for metadata (15.09989ms)
+✔ synthetic thumbnail fixture contains a decodable real PNG rather than passing only URL syntax (4.222182ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 383.97706

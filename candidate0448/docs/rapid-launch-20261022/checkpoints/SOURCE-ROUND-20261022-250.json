@@ -1,0 +1,108 @@
+{
+  "atUtc": "2026-10-24T00:40:05.279371+00:00",
+  "parent": "ec981daf71023de723352fa31ebff227647c45ea",
+  "taskId": "F1_O_S14_NATIVE_MOUSE_OPENER_LABEL_FORWARDING",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 55058,
+      "sha256": "0fc5e21fb013c3c7f5a666d9210b7092f1a89bd5da850d2bc51dc816a2d8b784",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "2e1efaff6114104221218d93410d7b3d5b0b861f8e756c266bc5842228769295",
+  "ownerDelivery": {
+    "taskId": "DOC-SOURCE-03 / O-S14 native business-mode mouse opener",
+    "scope": "Only original mode field native mouse activation wrapper",
+    "files": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal-form.tsx",
+        "bytes": 55058,
+        "sha256": "0fc5e21fb013c3c7f5a666d9210b7092f1a89bd5da850d2bc51dc816a2d8b784"
+      }
+    ],
+    "checks": {
+      "before-1": "EXIT1 one pointer yields2 visibility requests, expected1. Original native event targets saved; React act warnings retained for discrete diagnostic release.",
+      "after-1": "EXIT1: value target already one request, next test wrongly targeted pointer-events:none hidden input. Corrected only test to real pointer-eligible surface and arrow, no product source change.",
+      "after-2": "EXIT0 original full SalesNewDocumentForm, selected qty12/price10 with unfinished specs/query: value, field surface and arrow each yields one real native click and one open request; original two options render; exact draft/entries/header preserved; original Escape closes between probes; key/write/prepare0",
+      "types-1": "EXIT0 strict original form imported closure"
+    },
+    "notTested": [
+      "No Chrome/browser repaired-version acceptance",
+      "No already-passed237/240 confirmation, cancel/effects or whole-page suite rerun",
+      "No new build/serve/HTTP/PG/business/deploy"
+    ],
+    "blockers": "C pin + containing candidate/actual mouse opener recheck",
+    "next": "C fixes one original form file then originalQF successor only native field/arrow firstclick and selected-state opener; adopt already-passed original gate/quantity/keyboard scope.",
+    "sourceFrozenUntilCPin": true,
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/PROOF.json",
+        "bytes": 6917,
+        "sha256": "8b4b4e4bf06395836d71e9fa45cc0424022473b8c111bb0b6f98ab8042c6f22b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/REPORT.md",
+        "bytes": 1113,
+        "sha256": "7c80f166f93f8cfd82371afec5638eafd2a751bf59dd19eab590e7382cdf9d9a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/RESULT.json",
+        "bytes": 1198,
+        "sha256": "e149b28924d0a0f27a56c6fc0464a29756f745f38ca71ffbcc84a918a9648c3a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/SOURCE.diff",
+        "bytes": 3984,
+        "sha256": "523f46476f17a736d4cfccaed6382273d7aaf7f14182bf56dd5f538936fbc5f1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/BEFORE-value.json",
+        "bytes": 430,
+        "sha256": "2df4bdd78dcb71235f72fc75ca7a671449b12169438ecd5d3dd4a407ed4c4f1b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/AFTER-value.json",
+        "bytes": 255,
+        "sha256": "d2cc85bf7595a22803aefd449b3e02a5ae6e8c70549de90b66eec2ceaa3e9745"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/AFTER-surface.json",
+        "bytes": 259,
+        "sha256": "4b46d63df9674c550a0f120371c9e12f6e2a72d10b155757167527e68917ab74"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/AFTER-arrow.json",
+        "bytes": 259,
+        "sha256": "f1a9cac42435fc691c83cfc1dd5e1c4f4e7cf994c6ee415eaa54cd14367e853a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/before-1.log",
+        "bytes": 11528,
+        "sha256": "2a497b694a5ab79dbf5e33077035dde9de15447a141e878619c410cf496fe8ab"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/after-1.log",
+        "bytes": 9320,
+        "sha256": "0cb6af91bb1a81c076aa05cc080b1015b1a3268b36ee9cffa619534a2882c2bb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/after-2.log",
+        "bytes": 469,
+        "sha256": "cec2bc16fb1347f7b69bcef0ab15738582f8d5057538c501d4d1681cb6865cb5"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/mode-pointer-check.mjs",
+        "bytes": 13881,
+        "sha256": "4240b5f8023feeba4a2087d878db88e9c29a95f44fdb40eba0d2369919594882"
+      }
+    ]
+  },
+  "qualification": "Only business-mode wrapper LABEL→DIV/ref type prevents duplicate native label forwarding into direct Arco hiddeninput; FrozenShadowRoot had blocked that boundary. Local before detects two callbacks but does not claim exact actualcollapse timing. New pointer field/arrow tests+strict adopted, actualcontainingbrowser pending. Existing237240 model/retention/summary/keyboard source and actual positives reused."
+}

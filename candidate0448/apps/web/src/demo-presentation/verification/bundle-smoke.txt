@@ -1,0 +1,3 @@
+PASS split graph: startup excludes inventory/detail leaves; inventory excludes drawer/tab code; drawer excludes inactive tab code; startup/route CSS exclude detail styles.
+PASS built portable HTML: starts with zero reads; explicit menu opens idle route; query renders 3 synthetic products; three product tabs read lazily and full image only on click; cell callback says unavailable; close/reopen clears old facts; no jsdom runtime errors.
+This is actual bundled-code DOM smoke, not a real browser, screenshot, network waterfall or pixel/performance acceptance.

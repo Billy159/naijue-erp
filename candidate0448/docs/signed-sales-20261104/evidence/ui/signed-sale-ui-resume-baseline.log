@@ -1,0 +1,39 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /当前可保留全部原始事实修改备注/. Input:
+
+'查看销货单未审核· 已保存返回单据重试编辑资料单据日期 *2026-10-20业务类型 *销售营业厅 *TEST 当前营业厅营业员 *—客户 *TEST 当前客户出库仓 *TEST 当前出库仓单号TEST-SALES-1整单优惠 / 抹零¥0.00应结金额¥-9007199254740993.01收款—TEST 保存账户¥900719925474099.30—TEST 保存账户-¥900719925474099.31—TEST 保存账户¥900719925474099.32—TEST 保存账户-¥900719925474099.33—TEST 保存账户¥900719925474099.34—TEST 保存账户-¥900719925474099.35—TEST 保存账户¥900719925474099.36—TEST 保存账户-¥900719925474099.37—TEST 保存账户¥900719925474099.38—TEST 保存账户-¥900719925474099.39—TEST 保存账户¥900719925474099.40—TEST 保存账户-¥900719925474099.41—TEST 保存账户¥900719925474099.42—TEST 保存账户-¥900719925474099.43—TEST 保存账户¥900719925474099.44—TEST 保存账户-¥900719925474099.45备注TEST 独立退货商品明细款号／商品名称颜色版型尺码数量参考零售价折扣成交单价金额操作TEST-SNAPSHOTTEST 保存商品 1TEST 保存颜色Y版（修身）165/S退回 -19007199254740993.019007199254740993.01-9007199254740993.01查看—款 -1件卖出 0件 · 退回 1件 · 净 -1件（含赠品）分类统计未提供销售金额 ¥-9007199254740993.01优惠 ¥0.00应结 ¥-9007199254740993.01已退 ¥0.08 · 未退 ¥9007199254740992.93原单实际规格或保存资料未完整读到，保留原编辑页；新增和改选暂不可用。'
+
+    at file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/demo-replica/frontend/runtime/documents/ordinary-signed-preserving-edit.test.mjs:4:2496 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '查看销货单未审核· 已保存返回单据重试编辑资料单据日期 *2026-10-20业务类型 *销售营业厅 *TEST 当前营业厅营业员 *—客户 *TEST 当前客户出库仓 *TEST 当前出库仓单号TEST-SALES-1整单优惠 / 抹零¥0.00应结金额¥-9007199254740993.01收款—TEST 保存账户¥900719925474099.30—TEST 保存账户-¥900719925474099.31—TEST 保存账户¥900719925474099.32—TEST 保存账户-¥900719925474099.33—TEST 保存账户¥900719925474099.34—TEST 保存账户-¥900719925474099.35—TEST 保存账户¥900719925474099.36—TEST 保存账户-¥900719925474099.37—TEST 保存账户¥900719925474099.38—TEST 保存账户-¥900719925474099.39—TEST 保存账户¥900719925474099.40—TEST 保存账户-¥900719925474099.41—TEST 保存账户¥900719925474099.42—TEST 保存账户-¥900719925474099.43—TEST 保存账户¥900719925474099.44—TEST 保存账户-¥900719925474099.45备注TEST 独立退货商品明细款号／商品名称颜色版型尺码数量参考零售价折扣成交单价金额操作TEST-SNAPSHOTTEST 保存商品 1TEST 保存颜色Y版（修身）165/S退回 -19007199254740993.019007199254740993.01-9007199254740993.01查看—款 -1件卖出 0件 · 退回 1件 · 净 -1件（含赠品）分类统计未提供销售金额 ¥-9007199254740993.01优惠 ¥0.00应结 ¥-9007199254740993.01已退 ¥0.08 · 未退 ¥9007199254740992.93原单实际规格或保存资料未完整读到，保留原编辑页；新增和改选暂不可用。',
+  expected: /当前可保留全部原始事实修改备注/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.22.1
+✖ apps/web/demo-replica/frontend/runtime/documents/ordinary-signed-preserving-edit.test.mjs (2043.946619ms)
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (7.143275ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (1.257557ms)
+✔ historical signed discount remains exact on memo save without invented allocation (0.920167ms)
+✔ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (30.748023ms)
+✔ approved historical discount ruling: economic edits keep original discount without guessed allocation (24.661323ms)
+✔ historical missing settlement is shown unknown, never as zero or settled (1.183369ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2059.695666
+
+✖ failing tests:
+
+test at apps/web/demo-replica/frontend/runtime/documents/ordinary-signed-preserving-edit.test.mjs:1:1
+✖ apps/web/demo-replica/frontend/runtime/documents/ordinary-signed-preserving-edit.test.mjs (2043.946619ms)
+  'test failed'

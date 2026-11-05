@@ -1,0 +1,16 @@
+{
+  "atUtc": "2026-10-24T13:00:20.840241+00:00",
+  "parent": "9073050ed390bca17e727826997f4b629a7ee42d",
+  "taskId": "C_SYNTHETIC_SALES_TRUE_CREATOR_LABEL",
+  "files": [
+    {
+      "path": "apps/web/preview-core-pages/sales-fixture.ts",
+      "owner": "C",
+      "bytes": 5049,
+      "sha256": "653258aa16b13a43ef3cab9ef0db5e0eb99feac90e30185165a9a300b1e27e8c"
+    }
+  ],
+  "stage": "SYNTHETIC_FIXTURE_ONLY_NOT_REAL_IDENTITY",
+  "wholePageAccepted": false,
+  "deployed": false
+}

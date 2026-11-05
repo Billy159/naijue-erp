@@ -1,0 +1,24 @@
+{
+  "atUtc": "2026-10-24T16:32:20.381178+00:00",
+  "parent": "b27163b6e2216adc56495d441e418698548e0859",
+  "taskId": "D3_NATIVE_BIGINT_LOSSLESS_CAPTURE",
+  "files": [
+    {
+      "path": "packages/application/src/import-v3-history-settlement.ts",
+      "bytes": 12631,
+      "sha256": "c7684de01216f8df950f5c903dc231843665df428093a3edeb5e7caa5c637616",
+      "owner": "D3"
+    },
+    {
+      "path": "tests/history-settlement.test.ts",
+      "bytes": 8042,
+      "sha256": "6273a7beb09d0414c41ba9c39c33f604d11749b4031bcee52e52f132dba33508",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+  "ownerReceiptSha256": "aadeb92dd495bc41c6c0421f82b693c15190c873d28302ac762b5d3f0ab17321",
+  "stage": "SOURCE_TARGETED3_DOMAIN_TYPED_NATIVE_HASH_CHECKS_PASS_NOT_QB_OR_NATIVE_EXECUTION",
+  "change": "Allow native bigint primitive unchanged into existing typed requestHash; old hashes/strict descriptors remain, no new DTO/schema/permission/persistence encoding",
+  "deployed": false
+}

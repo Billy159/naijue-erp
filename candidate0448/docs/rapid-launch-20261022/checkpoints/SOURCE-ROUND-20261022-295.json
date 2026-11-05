@@ -1,0 +1,105 @@
+{
+  "atUtc": "2026-10-24T05:42:17.483582+00:00",
+  "parent": "1245f5e6dca27baf3a851384d82e7334d775d588",
+  "taskId": "F2_SOURCE_CHOICE_CANCEL_EXACT_CANONICAL_FOCUS_RESTORE",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/inventory-matrix.tsx",
+      "bytes": 48799,
+      "sha256": "069d10474c7e22cca99841a2008f5b1b37b6fc86e8ca229dd4eeb5f8333de1b6",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-C291-SOURCE-CHOICE-CANCEL-FOCUS-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "f130ee1e339ea853d4c1f0fdbe678c3cd5321f1e6281bb50a3b16bc323369f16",
+  "ownerDelivery": {
+    "taskId": "F2-QF2-C291-SOURCE-CHOICE-CANCEL-FOCUS-01",
+    "atUtc": "2026-10-24T05:40:06.011995+00:00",
+    "status": "SOURCE_FIXED_TARGETED_COMPONENT_RED_GREEN_STRICT_PASS_ACTUAL_RETEST_PENDING",
+    "authority": {
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanReporting": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "modelRequested": "gpt-6.1-sol",
+      "reasoningRequested": "xhigh",
+      "fast": "UNVERIFIABLE_NO_TOOL_SWITCH",
+      "scope": "Original F2 matrix source-choice cancel focus only; keep old source289 output focus actual CLOSED, no old suite/Chrome/build/PG"
+    },
+    "completedScope": {
+      "issue": "QF2-C291-INVENTORY-SOURCE-CHOICE-CANCEL-FOCUS-01",
+      "baselineSource": "d2c30814e5ebfb2bfc17bd32286f5047a61bc5c6",
+      "baselineBuild": "ui-preview-d2c3081-01-build01",
+      "qaStatus": "OPEN_UNTIL_ORIGINAL_QF2_FIXED_INVENTORY_CANDIDATE_ACTUAL_RETEST",
+      "localCause": "No source-picker trigger was retained for cancel; moving into the owned dialog cleared WindowedInventoryMatrix focus via onBlurCapture. Same component chain locally reproduced BODY and lost FIT1 logical position (reset to first FIT0) on both Escape and Close.",
+      "fix": "Capture exact clicked/keyed stock element plus current DTO/scope signal; preserve existing logical stock focus only while its owned source picker is open; cancel explicitly closes native dialog and clears choices; post-unmount effect returns the same still-connected trigger with preventScroll if DTO/scope remain current. Selecting a source clears this cancel-return ref before invoking unchanged real selected target callback, avoiding focus theft from next owner.",
+      "nativeEntrypoints": "Native source choice contains Close plus Escape; no X or separate Cancel button exists and none was added."
+    },
+    "changedFiles": [
+      {
+        "path": "apps/web/src/inventory/inventory-matrix.tsx",
+        "bytes": 48799,
+        "sha256": "069d10474c7e22cca99841a2008f5b1b37b6fc86e8ca229dd4eeb5f8333de1b6",
+        "beforeBytes": 47728,
+        "beforeSha256": "3a7b62b92712dba895f68bc4e49ba068cd511aef8d7a940e3df8e5a545bb8f87"
+      }
+    ],
+    "checks": {
+      "red": {
+        "command": "node verify-source-choice.cjs before",
+        "exitCode": 1,
+        "cases": 2,
+        "result": "Both Escape and Close produced BODY; the opening source was FIT1 but dialog blur changed live cell address to FIT0.",
+        "artifact": "before-FOCUS.json"
+      },
+      "green": {
+        "command": "node verify-source-choice.cjs after",
+        "exitCode": 0,
+        "cases": 3,
+        "paths": [
+          "escape",
+          "close",
+          "pointer-escape"
+        ],
+        "exactOriginalTriggerAndFIT": true,
+        "sameMountedWindowAndScroll": true,
+        "afterCancelEndDownHome": true,
+        "bothPointerAndKeyboardOpen": true,
+        "exactFIT1SkuSelectionPreserved": true,
+        "nextFocusOwnerNotStolen": true,
+        "canonicalDataUnchanged": true,
+        "artifact": "after-FOCUS.json"
+      },
+      "strict": {
+        "roots": [
+          "apps/web/src/inventory/inventory-matrix.tsx"
+        ],
+        "originalFlags": true,
+        "diagnostics": 0,
+        "artifact": "strict-matrix.log"
+      },
+      "changesAfterFirstGreen": "Only comments plus explicit pointer-open case added to the same targeted harness; final three-case run and necessary matrix strict check passed."
+    },
+    "untested": [
+      "Fixed actual Chrome Esc returns exact original stock canonical address and one End navigation after cancel; remains original QF2 scope",
+      "No real browser, app build, PG/server, dense output, old matrix/window suite or source289 output regression repeated",
+      "Local two-product structural data and controlled geometry are component evidence, not actual dense performance/permissions evidence"
+    ],
+    "blockers": [],
+    "next": "C freeze exact one matrix pin into next relevant complete inventory candidate. Original QF2 minimal actual one ambiguous cell -> Esc -> exact stock/FIT -> End. No separate rebuild requested just for this fix, no block on unrelated CORE-only source294. Inventory module cannot be all PASS before this actual gap closes. F2 exact leaf stop-write.",
+    "evidence": {
+      "qaIssue": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c291-modal-large-inventory-actual-01/ISSUE-SOURCE-CHOICE-CANCEL-FOCUS.json",
+      "files": [
+        "SOURCE-MANIFEST.json",
+        "source.diff",
+        "before-FOCUS.json",
+        "after-FOCUS.json",
+        "strict-matrix.log",
+        "verify-source-choice.cjs",
+        "before/inventory-matrix.tsx",
+        "source/inventory-matrix.tsx"
+      ]
+    }
+  },
+  "stage": "FIXED_SOURCE_COMPONENT_RED_GREEN_STRICT_ACTUAL_NATIVE_CANCEL_PENDING",
+  "actualPG": false,
+  "deployed": false
+}

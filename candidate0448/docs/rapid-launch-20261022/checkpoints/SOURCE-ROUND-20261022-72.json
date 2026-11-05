@@ -1,0 +1,57 @@
+{
+  "atUtc": "2026-10-22T20:41:50.591749+00:00",
+  "parent": "31cb08dc638becb2539618a566a4c568f2768764",
+  "groups": [
+    {
+      "slice": "SAVED_SALES_REFERENCE_AND_IMMUTABLE_PROVENANCE_DIRECTED_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-45/DELIVERY.json",
+      "receiptSha256": "3a03b490a5ba2236eb28c9dfa2f9cc2484e4c43eca86a8c5713eb99dcb2afbff",
+      "receiptSnapshot": {
+        "chunk": 45,
+        "status": "READY_FOR_C_PIN_QF_SAVED_SALES_PRICE_PROVENANCE_FIX",
+        "findings": [
+          "QF-F1-SAVED-SKU-REFERENCE-01",
+          "QF-F1-SAVED-SKU-PROVENANCE-02"
+        ],
+        "files": [
+          {
+            "path": "apps/web/src/current-form/sales-proposal.ts",
+            "sha256": "5669b8be97d084543dbb2a9f8754cf871dffc3686f7ea9a2daa0eccea31787d5"
+          },
+          {
+            "path": "apps/web/src/current-form/sales-existing-document.ts",
+            "sha256": "41361d62da08a09f99d18a079ae2ebdcc73a89a22c7cd2d38f1f33a2b5d35b86"
+          }
+        ],
+        "scope": "Stored reference only for original SKU; new identity with no current product read uses unknown reference and blocks discount. Before prepared draft adoption, compare actual displayed per-line price/amount/reference and whole gross/discount/net; mismatches retain raw and original native draft with no key/SAVE. Immutable original row provenance restores snapshot/reference on A->B->A and clears on reset/dispose. No field, permission, pricing policy or backend change.",
+        "checks": {
+          "types-1.log": "exit0",
+          "saved-price-provenance-1.log": "exit0 two findings targeted with actual99 quote and valid stale110 quote fence; result FIX-RESULT.json"
+        },
+        "reused": "All9 prior race/401/403/uncertain and ports58 untouched/reused, not rerun.",
+        "notTested": [
+          "independent QF fixed-version recheck",
+          "latest Chrome saved whole page",
+          "PostgreSQL/current pricing/permissions or production"
+        ],
+        "blockers": [],
+        "next": "C exact2 new pin then QF only affected two conditions and types; pending finite party frame/StandardOverlay actual Demo differences follow."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/sales-proposal.ts",
+          "owner": "F1",
+          "sha256": "5669b8be97d084543dbb2a9f8754cf871dffc3686f7ea9a2daa0eccea31787d5",
+          "bytes": 38444
+        },
+        {
+          "path": "apps/web/src/current-form/sales-existing-document.ts",
+          "owner": "F1",
+          "sha256": "41361d62da08a09f99d18a079ae2ebdcc73a89a22c7cd2d38f1f33a2b5d35b86",
+          "bytes": 18779
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact checkpoint only; QF independent counterexamples remain open until its narrow fixed recheck."
+}

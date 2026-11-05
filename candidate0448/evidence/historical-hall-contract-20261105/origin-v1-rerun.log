@@ -1,0 +1,13 @@
+✔ financial origin version4 verifies legacy compatibility anchor with no invented audit (20.329932ms)
+✔ financial origin version4 verifies published27 anchor with no invented audit (4.077127ms)
+✔ absent migration does not fabricate original facts or suppress SQL failure (0.714949ms)
+✔ sealed financial decoding preserves amounts above JavaScript safe integer in header and actual receipt (2.894696ms)
+✔ exceptional historical hall explicitly requires sealed version1 origin without changing ordinary version1 reads (1.31491ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 474.70888

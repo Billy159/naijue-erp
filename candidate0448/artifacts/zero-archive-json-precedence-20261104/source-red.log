@@ -1,0 +1,28 @@
+✖ archive key subtraction applies to extracted JSON object, never to bare text key (10.470179ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 125.999079
+
+✖ failing tests:
+
+test at tests/zero-archive-json-precedence.test.mjs:2:1
+✖ archive key subtraction applies to extracted JSON object, never to bare text key (10.470179ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(body.includes("(entry->'zero_amount_archive')-ARRAY['profile','records']"))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/zero-archive-json-precedence.test.mjs:2:347)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

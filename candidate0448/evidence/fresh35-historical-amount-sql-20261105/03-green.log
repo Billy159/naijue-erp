@@ -1,0 +1,11 @@
+✔ exact35 amount candidate is source-only and adds no tables, columns, grants, or routines (2241.869052ms)
+✔ candidate consumes independently reviewed evidence exactly and keeps all numeric source strings (1963.498271ms)
+✔ patch rejects drifted predecessor and requires exact unique replacement anchors (1884.303617ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6223.045638

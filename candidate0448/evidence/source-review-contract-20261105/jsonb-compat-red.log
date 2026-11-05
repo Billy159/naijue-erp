@@ -1,0 +1,78 @@
+✔ unknown warehouse keeps exact original blank/null/decimal strings and no ordinary identity (3.397053ms)
+✔ orphan/ambiguous occurrences and duplicate business keys are retained separately, never guessed into groups (0.73975ms)
+✔ complete group closure requires exactly one matching original header and consistent classification (3.589258ms)
+✔ approval requires external exact SHA, namespace, manifest and original file pins (1.400987ms)
+✔ exact source tuple and deterministic capture UUID are cross-language reproducible, not a warehouse ID (0.694011ms)
+✔ cloned/self-declared approvals have no capability and internal bytes cannot be mutated through input (1.996725ms)
+✔ raw shape is closed, normalization is separate, and getters are never executed (0.327922ms)
+✔ PG-incompatible NUL and lone surrogates are rejected, never normalized or removed (0.807249ms)
+✔ duplicate JSON keys and unknown fields cannot hide an original occurrence (0.688383ms)
+✔ bounded approval byte segments and capture payloads preserve the full approved occurrence set (163.51872ms)
+✖ wide source objects are chunked below both exact wire and PostgreSQL jsonb text limits (845.171467ms)
+✖ PostgreSQL byte projection counts structural spaces but not punctuation in escaped/Unicode strings (0.953118ms)
+✖ original numeric coordinate lexemes cannot be rounded into an integer by JS (0.642538ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 10
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1276.958702
+
+✖ failing tests:
+
+test at tests/historical-sales-source-review.test.ts:21:1
+✖ wide source objects are chunked below both exact wire and PostgreSQL jsonb text limits (845.171467ms)
+  AssertionError [ERR_ASSERTION]: PostgreSQL structural spaces count toward the same budget
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-source-review.test.ts:25:107)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/historical-sales-source-review.test.ts:27:1
+✖ PostgreSQL byte projection counts structural spaces but not punctuation in escaped/Unicode strings (0.953118ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-source-review.test.ts:28:131)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/historical-sales-source-review.test.ts:32:1
+✖ original numeric coordinate lexemes cannot be rounded into an integer by JS (0.642538ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/tests/historical-sales-source-review.test.ts:33:174)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SOURCE_REVIEW_.*NUMBER|SOURCE_REVIEW_.*COORDINATE/,
+    operator: 'throws',
+    diff: 'simple'
+  }

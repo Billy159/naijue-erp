@@ -1,0 +1,32 @@
+{
+  "version": "C_QA187_EXECUTION_ADOPTION_V1",
+  "atUtc": "2026-10-27T14:43:25.253441+00:00",
+  "registrationId": "t45-v22-qa-readonly-prefix-adapter-successor-20261027-187",
+  "decision": "AUTHORIZE_ONE_REVISED_READONLY_QA187_FIXED_MISSING_ORIGINAL_GRANT_ENV_PIN",
+  "plan": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/inputs/QA187-PLAN.json",
+    "bytes": 4586,
+    "sha256": "3dc5b646abe92d28916868b5891acaa6ce8b47cb81b7fa065fe2c8cf76c3411d"
+  },
+  "authority": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/inputs/C-QA187-AUTHORITY.json",
+    "bytes": 4363,
+    "sha256": "e86cdee882a1d1f0224ad1d4a55f044f8ee32cd74f8a5d56c1f6f6d623417cfa"
+  },
+  "fixture": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/inputs/QA187-FIXTURE.json",
+    "bytes": 2207,
+    "sha256": "3cdd97882c6709b8ede05634c24809259b8d3ef6b1a42f913c25a933f693be61"
+  },
+  "prerequisite": "T45 must materialize sameproductionSQL80495/980c4f58 at exact182 sourcepath, and verify actual184 finalhost5007/6a68/input188917/c7e1/sourcegrant37302/2787 refs before run. No newserverjob competes with active184.",
+  "runtime": "Actualfrozen statement120000/maxconn1/connection10000/idle10000; outermax1800/deadline16:30Z. Proposedquery125000/lock3000/idletxn30000 notimplemented notclaimed; no codechanges.",
+  "scope": "Only source capture readonly/originalsourceDatabaseAccessPROHIBITED + genuineQA ordinary RRRO productionadapter fullnative content and coverage SELECT thenROLLBACK. NoBIND/businessDML/COMMIT/QAvariant/negativefixture/sourceDBconnection.",
+  "sourceEnvironment": {
+    "NAIJUE_IMPORT_PROVIDER26_INPUT_FILE": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/provider-INPUT.FINAL.json",
+    "NAIJUE_IMPORT_PROVIDER26_INPUT_SHA256": "c7e1a1b42952b3cb7fc42468c52f7e2b3add59b069d5904998c7458d362d3acd",
+    "NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256": "27878ca323190831fa1142901ed24bec8d6c012cd18b9a0c6884c6ba6e822581"
+  },
+  "authoritySource": "User explicitv22 plus existing isolatedQA/soleowner execution authority; C adoptsQB475source/QB474actualQAmetadata/QB477physicalclosure. No newhumanapproval required for this accepted readonlycheck.",
+  "notPassed": "No actualreadonly prefix/latency/BIND/trigger/UNKNOWN/formalbusiness pass inferred",
+  "predecessor": "185 FAILED2/1.220423241s before sourcecapture/QAactivation; carrier omitted existing mandatoryenvpin. Preserve185 ATTEMPT/RESULT and185file materialization, no replay. Onlynew187 registration/output/authority plusmissingthirdenv pin; production/source/control/query/permissions unchanged."
+}

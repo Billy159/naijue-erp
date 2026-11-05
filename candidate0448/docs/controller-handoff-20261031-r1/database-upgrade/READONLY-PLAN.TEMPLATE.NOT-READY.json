@@ -1,0 +1,18 @@
+{
+  "format": "RUNTIME26_READONLY_METADATA_PLAN_V1",
+  "scope": "EXACT_TARGET_METADATA_ONLY_NO_UPGRADE",
+  "sourceFile": "adapters/postgres/src/native-import-accounting-capability.ts",
+  "sourceSha256": "b1a25522163d444b891a87c2e27bb0ccd34bbfcecfda9657aa4ff8ab75e05a99",
+  "sourceCommit": null,
+  "profile": "V6",
+  "target": {
+    "database": null,
+    "databaseOid": null,
+    "runtimeRole": null,
+    "sessionUser": null,
+    "serverAddress": null,
+    "serverPort": null,
+    "postmasterStart": null,
+    "serverVersionNum": null
+  }
+}

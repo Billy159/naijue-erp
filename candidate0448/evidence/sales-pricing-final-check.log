@@ -1,0 +1,246 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check
+> npm run check:dependencies && npm run typecheck && npm run build && npm run smoke:build && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check:dependencies
+> node scripts/verify-dependencies.mjs
+
+fastify: installed and locked 5.12.5
+pg: installed and locked 8.23.1
+react: installed and locked 19.1.1
+react-dom: installed and locked 19.1.1
+@types/node: installed and locked 24.3.1
+@types/pg: installed and locked 8.23.1
+@types/react: installed and locked 19.1.12
+@types/react-dom: installed and locked 19.1.9
+typescript: installed and locked 5.9.2
+Dependency verification passed; 78 locked package entries, no installation performed.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 build
+> tsc -p tsconfig.build.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 smoke:build
+> node scripts/smoke-build.mjs
+
+Emitted JS imports and exact arithmetic pass. No server started; no database/client constructed.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test
+> node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/api/src/*.test.ts
+
+✔ SYNTHETIC HTTP SALE: save/approve/unapprove/edit/reapprove, no original-sale reference and no listener (1080.762404ms)
+✔ SYNTHETIC HTTP RETURN: save/approve/unapprove/edit/reapprove, no original-sale reference and no listener (73.664822ms)
+✔ SYNTHETIC HTTP EXCHANGE: save/approve/unapprove/edit/reapprove, no original-sale reference and no listener (60.681901ms)
+✔ SYNTHETIC HTTP: missing providers fail closed; unauthenticated requests never touch storage (17.849166ms)
+✔ SYNTHETIC HTTP: malformed server-derived actor fails closed instead of taking identity from the body (32.915624ms)
+✔ SYNTHETIC HTTP: actor cannot be spoofed, and auth receives request metadata only (30.617432ms)
+✔ SYNTHETIC HTTP: exact key replay and receipt lookup recover the original result without new mutations (33.420745ms)
+✔ SYNTHETIC HTTP: receipt is account-scoped and rechecks current access after revocation (20.359262ms)
+✔ SYNTHETIC HTTP: key content conflicts and stale versions return 409 without changing state (19.160004ms)
+✔ SYNTHETIC HTTP: approval requires exact settlement equality, not debt or overpayment (20.595259ms)
+✔ SYNTHETIC HTTP: proposed reference scope is checked by injected server authorization (51.022772ms)
+✔ SYNTHETIC HTTP: historical cutoff modifications remain explicitly unsupported (8.695957ms)
+✔ SYNTHETIC HTTP: saved-draft VOID changes no inventory; approved edits stay rejected (37.482931ms)
+✔ SYNTHETIC HTTP: rejects missing version without coercion or writes (13.839152ms)
+✔ SYNTHETIC HTTP: rejects numeric-string version without coercion or writes (15.465107ms)
+✔ SYNTHETIC HTTP: rejects fractional version without coercion or writes (9.794601ms)
+✔ SYNTHETIC HTTP: rejects unsafe version without coercion or writes (5.297389ms)
+✔ SYNTHETIC HTTP: rejects empty key without coercion or writes (5.144769ms)
+✔ SYNTHETIC HTTP: rejects noncanonical key without coercion or writes (7.661369ms)
+✔ SYNTHETIC HTTP: rejects unknown action without coercion or writes (19.909504ms)
+✔ SYNTHETIC HTTP: rejects server stock effects without coercion or writes (6.366703ms)
+✔ SYNTHETIC HTTP: rejects header status without coercion or writes (6.89798ms)
+✔ SYNTHETIC HTTP: rejects original-sale link without coercion or writes (8.538896ms)
+✔ SYNTHETIC HTTP: rejects malformed reference without coercion or writes (11.202959ms)
+✔ SYNTHETIC HTTP: rejects invalid real date without coercion or writes (7.002775ms)
+✔ SYNTHETIC HTTP: rejects numeric money without coercion or writes (6.807341ms)
+✔ SYNTHETIC HTTP: rejects decimal money without coercion or writes (5.516833ms)
+✔ SYNTHETIC HTTP: rejects exponent money without coercion or writes (5.932017ms)
+✔ SYNTHETIC HTTP: rejects leading-zero money without coercion or writes (13.530914ms)
+✔ SYNTHETIC HTTP: rejects negative-zero money without coercion or writes (6.067276ms)
+✔ SYNTHETIC HTTP: rejects numeric quantity without coercion or writes (8.542124ms)
+✔ SYNTHETIC HTTP: rejects fractional quantity without coercion or writes (14.019368ms)
+✔ SYNTHETIC HTTP: rejects overflow quantity without coercion or writes (6.589469ms)
+✔ SYNTHETIC HTTP: rejects fractional line position without coercion or writes (14.538688ms)
+✔ SYNTHETIC HTTP: rejects string boolean without coercion or writes (18.236985ms)
+✔ SYNTHETIC HTTP: rejects missing pricing intent without coercion or writes (12.460677ms)
+✔ SYNTHETIC HTTP: rejects null pricing intent without coercion or writes (6.680517ms)
+✔ SYNTHETIC HTTP: rejects unknown pricing intent without coercion or writes (5.346182ms)
+✔ SYNTHETIC HTTP: rejects missing zero confirmation without coercion or writes (6.661876ms)
+✔ SYNTHETIC HTTP: rejects string zero confirmation without coercion or writes (6.689778ms)
+✔ SYNTHETIC HTTP: rejects null zero confirmation without coercion or writes (5.095855ms)
+✔ SYNTHETIC HTTP: rejects fractional entered discount without coercion or writes (6.510166ms)
+✔ SYNTHETIC HTTP: rejects string entered discount without coercion or writes (8.393934ms)
+✔ SYNTHETIC HTTP: rejects out of range entered discount without coercion or writes (14.588584ms)
+✔ SYNTHETIC HTTP: rejects noncurrent incoming row without coercion or writes (8.344572ms)
+✔ SYNTHETIC HTTP: rejects snapshot unknown field without coercion or writes (6.596954ms)
+✔ SYNTHETIC HTTP: rejects settlement unknown field without coercion or writes (13.718446ms)
+✔ SYNTHETIC HTTP: rejects negative settlement without coercion or writes (19.919037ms)
+✔ SYNTHETIC HTTP: rejects foreign line owner without coercion or writes (8.139821ms)
+✔ SYNTHETIC HTTP: unknown query fields and malformed transport are rejected (11.804529ms)
+✔ SYNTHETIC HTTP: exact money/quantity arrive as bigint, and JSON never rounds bigint (5.372238ms)
+✔ SYNTHETIC HTTP: unexpected provider failures do not leak details and original key can retry (11.540526ms)
+✔ SYNTHETIC HTTP: unknown provider DomainError is not exposed as a client-supplied status or text (10.094363ms)
+✔ candidate policy / SYNTHETIC HTTP: explicit discount metadata persists and economics errors use allowlisted responses (16.833517ms)
+✔ registration is inert; only activated leaf and its styles load, then code is reused (50.259164ms)
+✔ shared code load keeps consumer cancellation separate (4.770835ms)
+✔ failed code or style leaves can retry without exposing a half-ready module (3.580106ms)
+✔ retained module references are LRU bounded; no cache eviction starts a load (6.551926ms)
+✔ inactive scopes do not start imports (2.761547ms)
+✔ reads start only on run; frozen executed parameters do not follow editable draft (4.645614ms)
+✔ newer query aborts old transport; ignored cancellation cannot overwrite newest result (5.356454ms)
+✔ refresh failure retains last successful facts and their own executed range (3.457197ms)
+✔ switching account clears references immediately; late response cannot reopen a closed region (5.722571ms)
+✔ permission/session refresh invalidates even the same account; clear blocks new scopes (1.503106ms)
+✔ different entity scopes have no shared result state, and closing one leaves another alive (1.360836ms)
+✔ authoritative command result beats old detail read and rejects later older entity versions (2.166981ms)
+✔ cancel read is not dispose and does not clear previous successful facts (3.018121ms)
+✔ invalid parameter snapshot does not supersede a valid pending request (1.328687ms)
+✔ subscriber errors and reentrant disposal cannot bypass cleanup or start an unwanted read (2.56263ms)
+✔ plain parameter snapshots reject cyclic, nonfinite and accessor input without invoking getters (2.13973ms)
+✔ disposing during success notification returns discarded rather than actionable old data (1.199867ms)
+✔ cancel before any successful read returns waiting state rather than false empty success (0.440752ms)
+✔ registration snapshots factories and validates the retained-reference budget (2.928466ms)
+✔ clearing references during an import does not create unbounded duplicate in-flight loads (3.999636ms)
+✔ clear without reactivation does not retain an import after settlement (0.417331ms)
+✔ SYNTHETIC: fit is an independent SKU dimension, not merged with product/color/size (4.330106ms)
+✔ SYNTHETIC: multiple raw historical codes bind directly to one canonical SKU and retain primary (6.550078ms)
+✔ SYNTHETIC: raw barcode leading zeros and string identity are never numeric-normalized (0.475451ms)
+✔ SYNTHETIC: cross-SKU binding and corrupt conflicting lookup fail closed (0.966479ms)
+✔ SYNTHETIC: binding requires an existing enabled SKU, no guessed/matrix-created identity (0.65443ms)
+✔ SYNTHETIC: identical binding is idempotent; disabled code is not silently reactivated (3.073613ms)
+✔ compile-time contract boundaries checked by tsc; this runtime assertion is not the typecheck (22.409356ms)
+✔ pg protocol: exact decimal(18,2)/bigint codecs preserve extremes and reject rounding/overflow (14.680753ms)
+✔ pg protocol: BEGIN/COMMIT use one client, and leaked handles close (3.622762ms)
+✔ pg protocol: callback failure requests rollback and never commit (2.189366ms)
+✔ pg protocol: BEGIN/connect failures do not run callback (0.519625ms)
+✔ pg protocol: uncertain COMMIT failure is not retried and client is discarded (6.114009ms)
+✔ pg protocol: failed rollback reports both errors and discards client (2.685197ms)
+✔ pg protocol: new SAVE writes native rows, snapshots, audit and actor/key receipt without stock writes (16.133508ms)
+✔ pg protocol: APPROVE locks balances in one stable order and CAS allows negative inventory (16.780784ms)
+✔ pg protocol: repeated SKU actual lines retain distinct ledger sources and advance one cached balance twice (11.61797ms)
+✔ pg protocol: missing inventory coverage fails closed without insert/upsert/default zero (8.48268ms)
+✔ pg protocol: UNAPPROVE appends a linked inverse without mutating original ledger or settlements (4.134327ms)
+✔ pg protocol: same actor/key replay returns original result only after current authorization (3.146243ms)
+✔ pg protocol: changed content under original actor/key conflicts without re-executing (1.767674ms)
+✔ pg protocol: cutoff history remains queryable but commands fail before balance/ledger mutation (1.593227ms)
+✔ pg protocol: settlement mismatch still blocks APPROVE before any mutation (0.939908ms)
+✔ pg protocol: ledger write failure requests ROLLBACK, not COMMIT (not durability evidence) (3.079927ms)
+✔ pg protocol: balance write failure requests ROLLBACK, not COMMIT (not durability evidence) (1.942292ms)
+✔ pg protocol: header write failure requests ROLLBACK, not COMMIT (not durability evidence) (2.243693ms)
+✔ pg protocol: line write failure requests ROLLBACK, not COMMIT (not durability evidence) (1.35859ms)
+✔ pg protocol: settlement write failure requests ROLLBACK, not COMMIT (not durability evidence) (2.363698ms)
+✔ pg protocol: audit write failure requests ROLLBACK, not COMMIT (not durability evidence) (3.358629ms)
+✔ pg protocol: receipt write failure requests ROLLBACK, not COMMIT (not durability evidence) (1.951441ms)
+✔ pg protocol: document CAS zero-row result rejects stale update and requests rollback (1.691294ms)
+✔ pg protocol: balance CAS zero-row result rejects stale quantity and requests rollback (1.4313ms)
+✔ pg protocol: foreign line ownership failure cannot silently skip a line write (1.803398ms)
+✔ pg protocol: explicit discount/zero facts and pre-0002 unknowns decode without inference (1.515308ms)
+✔ pg protocol: unknown active pre-0002 pricing cannot approve, without rewriting stored rows (3.336781ms)
+✔ pg SQL-text contract: versioned bounded migration has no business seed or execution runner (195.650644ms)
+✔ pg SQL-text contract: native parties, product price and four-dimensional SKU remain separate (24.525787ms)
+✔ pg SQL-text contract: actual lines/settlements are native facts, not hidden whole-document JSON (18.183124ms)
+✔ pg SQL-text contract: quantities have no zero floor and balance coverage cannot be auto-created by sales (31.700608ms)
+✔ pg SQL-text contract: source, reversal, receipt/audit uniqueness and deferred atomic references are declared (58.712492ms)
+✔ pg SQL-text contract: historical branch stays closed, settlement equality uses final approved state (10.784165ms)
+✔ pg SQL-text contract: ISO business dates do not depend on session DateStyle (5.930506ms)
+✔ pg SQL-text contract: missing or JSON-null receipt IDs cannot exploit nullable CHECK equality (8.244618ms)
+✔ pg SQL-text contract: additive 0002 preserves unknown old pricing intent with no guessed backfill (6.78215ms)
+✔ candidate adapter / synthetic: unit-first discount rounding and gross survive save/approve with negative inventory (596.847332ms)
+✔ candidate adapter / synthetic: SALE positive; RETURN and EXCHANGE share independent signed-row acceptance (7.409708ms)
+✔ candidate adapter / synthetic: direct deal prices may differ within one product and preserve old reference snapshots (1.004694ms)
+✔ candidate adapter / synthetic: missing trusted catalog/reference providers and unknown facts fail closed (24.513244ms)
+✔ candidate adapter / synthetic: ordinary zero requires confirmation and still respects positive minimum (26.666548ms)
+✔ candidate adapter / synthetic: explicit pricing metadata is not inferred from ratios or old zero prices (15.647224ms)
+✔ candidate adapter / synthetic: exact gross, allocated shares and header totals reject forged economics (6.112401ms)
+✔ candidate adapter / synthetic: independent return and exchange prohibit whole discounts (70.714239ms)
+✔ candidate adapter / synthetic: fully discounted sale plus gift posts inventory with zero due and no settlement rows (16.558926ms)
+✔ candidate adapter / synthetic: zero-net exchange, no original sale and no settlement required (4.958522ms)
+✔ candidate adapter / synthetic: mixed receive/refund uses signed net, not sum of absolutes (5.95024ms)
+✔ candidate adapter / synthetic: unbalanced saved refund is allowed but approval needs exact equality (72.01755ms)
+✔ candidate adapter / synthetic: absolute zero RECEIVE or REFUND adapts to signed zero with valid references (10.510049ms)
+✔ candidate adapter / synthetic: approved rows stay read-only; unapprove/edit/reapprove retains pricing audit evidence (11.408023ms)
+✔ candidate adapter / synthetic: zero confirmation and entered discount are part of original-key identity (5.458078ms)
+✔ candidate adapter / synthetic: retained inactive unknown pricing is provenance, not active economics (13.709782ms)
+✔ candidate formula / synthetic: half-up discounted unit price is calculated before integer quantity (24.95942ms)
+✔ candidate formula / synthetic: largest remainder uses unequal weights and original-index ties (3.687313ms)
+✔ candidate formula / synthetic: allocator rejects signed gross and invalid order discounts (1.334873ms)
+✔ candidate formula / synthetic: exact bigint arithmetic has no JavaScript-safe-money business cap (2.662874ms)
+✔ candidate formula / synthetic: small exhaustive allocations conserve total and never exceed each gross (537.009544ms)
+✔ SYNTHETIC SALE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (52.963846ms)
+✔ SYNTHETIC RETURN: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (35.626003ms)
+✔ SYNTHETIC EXCHANGE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (81.437017ms)
+✔ SYNTHETIC: negative stock is a legal exact fact, not insufficient-stock rejection or zero truncation (72.783108ms)
+✔ SYNTHETIC: exact replay after a lost response returns original result without repeat stock/audit/settlements (31.786671ms)
+✔ SYNTHETIC: concurrent identical commands commit exactly once in the serialized reference adapter (8.331879ms)
+✔ SYNTHETIC: same key changed content is conflict, not another write (21.359333ms)
+✔ SYNTHETIC: stale expected version cannot approve or overwrite (69.129206ms)
+✔ SYNTHETIC: approved quantity/amount cannot be edited or directly voided; must first unapprove (15.919862ms)
+✔ SYNTHETIC: saved draft void changes no inventory, retains detail, becomes immutable (7.164786ms)
+✔ SYNTHETIC: exact settlement mismatch including underpayment blocks approval atomically (54.29421ms)
+✔ SYNTHETIC: refund uses direction plus nonnegative actual amount, never negative payment/account balance (10.858041ms)
+✔ SYNTHETIC: same SKU real lines remain separate, including gift and different price (6.876125ms)
+✔ SYNTHETIC: unapprove/edit/reapprove uses immutable original effects and retains removed referenced lines (15.795505ms)
+✔ SYNTHETIC: duplicate unapprove cannot reverse one original effect twice (10.010988ms)
+✔ SYNTHETIC: injected balance:2 failure rolls back all effects, and original key safely retries (9.036408ms)
+✔ SYNTHETIC: injected document failure rolls back all effects, and original key safely retries (34.516598ms)
+✔ SYNTHETIC: injected audit failure rolls back all effects, and original key safely retries (25.86641ms)
+✔ SYNTHETIC: injected receipt failure rolls back all effects, and original key safely retries (10.071025ms)
+✔ SYNTHETIC: missing inventory coverage cannot be invented as zero (4.038774ms)
+✔ SYNTHETIC: stock overflow aborts instead of wrapping or partially posting (2.818828ms)
+✔ SYNTHETIC: authorization is mandatory on writes and idempotent result recovery (4.521685ms)
+✔ SYNTHETIC: imported cutoff history never falls through runtime reversal/edit logic (3.913956ms)
+✔ SYNTHETIC: only approved documents enter settlement statistics; unapprove exits, reapprove reenters once (5.741107ms)
+✔ SYNTHETIC: true null creating-hall snapshot remains null after a different current hall saves (2.959764ms)
+✔ SYNTHETIC: existing SAVE checks both source and proposed destination scopes before any mutation (15.575886ms)
+✔ SYNTHETIC: duplicate documents cannot silently double-count settlement statistics (12.198714ms)
+✔ SYNTHETIC: changing a caller alias while execute waits cannot change the data bound to the original request hash (15.967358ms)
+✔ SYNTHETIC: audit retains every permitted mutable header field and business line price/display snapshot (19.099583ms)
+✔ SYNTHETIC: operation keys are scoped by authenticated actor, not globally shared (12.400927ms)
+✔ SYNTHETIC: duplicate/foreign lines and more than three settlement rows fail before persistence (1.90113ms)
+✔ SYNTHETIC: transfer pure plan has the exact same canonical SKU and equal opposite integer endpoints (3.488458ms)
+✔ SYNTHETIC: transfer cannot use the same warehouse or nonpositive actual line (7.170423ms)
+✔ SYNTHETIC: transfer rejects empty/currentless, approved and foreign/duplicate lines (7.035636ms)
+✔ SYNTHETIC: quantity signed bigint boundaries are exact, not JS-number limited (2.960345ms)
+✔ SYNTHETIC: quantity overflow/underflow and unsafe negation fail rather than wrap (2.323855ms)
+✔ SYNTHETIC: fractions, number input, whitespace and implicit conversions are rejected (0.34695ms)
+✔ SYNTHETIC: exact minor arithmetic has no binary floating-point error (1.733032ms)
+✔ SYNTHETIC: explicit scale precision is rejected, never rounded (1.321531ms)
+✔ SYNTHETIC: only a caller-supplied cap is enforced; no guessed production amount ceiling (0.895076ms)
+✔ SYNTHETIC: invalid money syntax, implicit scale and invalid caps fail (0.448678ms)
+✔ SYNTHETIC: versions cannot exceed safe integer range and dates cannot normalize silently (2.007683ms)
+✔ SYNTHETIC: command hash is property-order stable but content/type/line-order sensitive (2.897857ms)
+ℹ tests 182
+ℹ suites 0
+ℹ pass 182
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6540.336878
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

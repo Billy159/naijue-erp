@@ -1,0 +1,31 @@
+{
+  "scope": "renderer-neutral inventory windowing anchor boundary fix only",
+  "tests": {
+    "command": "node --test --test-concurrency=2 apps/web/src/inventory/windowing/*.test.ts",
+    "exitCode": 0,
+    "passed": 24,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "evidence": "Observed completed test runner output; deterministic algorithm/count tests only."
+  },
+  "typecheck": {
+    "command": "node_modules/.bin/tsc --noEmit -p apps/web/src/inventory/windowing/tsconfig.json",
+    "exitCode": 0,
+    "log": "typecheck.txt"
+  },
+  "regressions": [
+    "Exact two-section 220px boundary with 32px descriptions / 20px headers; deltas -20/-15/-10/-5 and adjacent description/header positions.",
+    "Unchanged-model identity round trip for every valid integer scroll offset, sticky chrome offsets 0/10, viewport heights 60/95, measured header heights 31/17.",
+    "Captured description body edge preserved across preceding product collapse and measured warehouse-height reflow.",
+    "Normal warehouse-row offset5 remains at the current body edge after measured header growth20\u219240 or shrink20\u21928, with sticky chrome0/10 and preceding product collapse.",
+    "Description-boundary anchor identity remains visible and recaptures the same row/offset when header heights grow20\u219240 or shrink20\u21927; pinned and pushed-off contexts are treated separately."
+  ],
+  "limitations": [
+    "No renderer integration.",
+    "No browser latency/DOM/visual-fidelity measurement.",
+    "No network, database, install, commit or push."
+  ],
+  "anchorSemantics": "Capture records the owning header section and pinned/push-off phase. Restore uses current height for fully pinned headers, captured partial occlusion clamped to current height for pushed-off headers, and chrome only when no header was active.",
+  "finalModelSHA256": "3694eef830dd37cd7c76d7cd834e25911843124b58b8988691ec71dc90e7ed54"
+}

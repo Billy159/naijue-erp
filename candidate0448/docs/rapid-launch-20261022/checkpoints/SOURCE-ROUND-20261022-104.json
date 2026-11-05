@@ -1,0 +1,100 @@
+{
+  "atUtc": "2026-10-22T22:58:47.303409+00:00",
+  "parent": "d3c2188a3cd6df472ce85d221fae575682ba7301",
+  "groups": [
+    {
+      "slice": "fix: align transfer specification control height and font",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/DELIVERY.json",
+      "receiptSha256": "37b26af023072066b47ecff74a0cf92b1bd4ca06246f0c2ebf43d9afd653b017",
+      "receiptSnapshot": {
+        "chunk": 58,
+        "atUtc": "2026-10-22T22:53:11.766304+00:00",
+        "status": "READY_EXACT1_TRANSFER_SPEC_HEIGHT_FONT_ONLY",
+        "taskId": "F01/TR-UI-01/02/03/04 existing C98 residual",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "sha256": "3e03b9ccdfcf66152f1b4d7edf8a6b2fb352774dffd800c31dd52e67dd4bb66d"
+          }
+        ],
+        "scope": [
+          "Existing proposal data-transfer-spec root height30 becomes32/min32; native small Select inner view also32/min32, line30/font13 to match frozen ID-rule control.",
+          "Inter stack local to proposal spec root/view and transfer-spec-popup only. No global font/tokens/ordinary controls or font assets changed.",
+          "All More100 styles, application component/form TSX, data/provider/quantity/save remain unchanged. Frozen K57 inputs untouched."
+        ],
+        "checks": {
+          "style-3.log": "exit0 actual pinned native Select under actual C98 full late Arco CSS: targetroot30/view28 ->32/32, localInter root/view/popup; ordinarysmallSelect/root/view/popup computed states identical after stabilized baseline.",
+          "STYLE-SOURCE.json": "Demo golden88/170 ID32/min32 wins over genericclass18330; native frozen product-arco normalize Inter evidence and actual C98 control32/30 pair bound.",
+          "SOURCE-CHECK.json": "Reversing one root-rule edit and appended local tail returns exact source100 CSS; original More rules/components/caller unchanged; K57 manifest/files rehashed unchanged."
+        },
+        "probeLimitations": [
+          "First raw native Select StrictMode portal was absent until explicit owner postcommit refresh; no application source changed for it. Raw DOM diagnostic retained.",
+          "Second check detected detached-popup inherited-font cache in jsdom. Same original stylesheet reassignment stabilized baseline; cold/warm/after values retained before ordinary comparison.",
+          "React19 ref and native transition act warnings retained. CSS-only slice: no types/appbuild/old interaction suites needed or run.",
+          "Computed CSS is not Chrome rectangles, font-loading/glyph metrics or full-page acceptance."
+        ],
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/STYLE-SOURCE.json",
+            "sha256": "bec65b5f1bd5856678728003d0aaaaede3bc67aed5de6bf150e31f504b573f2c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/STYLE-RESULT.json",
+            "sha256": "c231db36daaf254edbc3dccf85df71d23b578cbd114622f230d0320bedd558b6"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/STYLE-PROBE.json",
+            "sha256": "f0d9d2274ab8f3f7b9b41dd9c5976f2d3a6461271198d15f80d6933009b60c10"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/SOURCE-CHECK.json",
+            "sha256": "901d30329f1a5802a3020411553306804dd909d8a2f8647defa66ee95bb1c22b"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/SOURCE.diff",
+            "sha256": "1af3fba7829d400602e85c3598b818de71c3ad4d719549902e2f097a108ef5b4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/AUTO-FILL-CONTRACT-NOTE.json",
+            "sha256": "5a37b34fb4763e80edf9804b83c267fe00c3e97b8e832449ff3e4238a163dab5"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/style-1.log",
+            "sha256": "0754c34883ecf866a0ee2e3a06f52f2cd52e2a906c3839121f16b7f6814e024a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/style-2.log",
+            "sha256": "264c2cc9f73895e3a6fd23f6dd040c32f70e4696a412d5f5b5c43540fab21fa1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-58/style-3.log",
+            "sha256": "49247572e141032d6c96909a4239234975e365ecfc74d2d39caf3f002c70f5f7"
+          }
+        ],
+        "autoFill": "K-only checked-current-contract note: no explicit manual-required or first-fit-default approval clause found in checked current sources. Keep UNKNOWN, not mark approved Demo deviation, not implemented. Real SKU/complete/unique-source preconditions proposed for C judgment only.",
+        "notTested": [
+          "Next fixed integrated candidate actual spec32/font appearance and genuinely affected new/saved contexts",
+          "Whole transfer page and other fonts/states",
+          "Automatic color/fit behavior approval or implementation",
+          "Native save/PG/roles/production"
+        ],
+        "notRepeated": [
+          "C98 already closed popup anchor/header/selected tick/name/y/X/P1 cases",
+          "More100 source/lifecycle tests or K57 isolated entry build",
+          "Existing native/provider/save suites"
+        ],
+        "blockers": [],
+        "next": "C exact1 pin, QF new style scope only, original Demo next actual control32/Inter. Automatic selection branch remains K-only unknown; More57 build stays C100. Source frozen pending C pin/release."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "bytes": 9332,
+          "sha256": "3e03b9ccdfcf66152f1b4d7edf8a6b2fb352774dffd800c31dd52e67dd4bb66d"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only proposal data-transfer-spec root/view32px and localInter font plus transfer-spec-popup font. OtherordinarySelect/globalstyles/defaultMore/provider/business untouched. Autofill remains evidence-only no approvedexception invented. ActualChrome pending newfixedpreview, old C98 local evidence reused."
+}

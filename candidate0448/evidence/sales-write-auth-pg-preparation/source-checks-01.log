@@ -1,0 +1,34 @@
+SOURCE-ONLY integration typecheck and pure checks; PostgreSQL remains stopped/unconnected.
+✔ backend plan-only selection has its own scenarios and the same exact eight migration bytes (1223.792666ms)
+✔ backend plan refuses absent, unknown and historical selections rather than choosing a default (1457.11436ms)
+✔ backend source wiring uses the same pre-Pool guards and never activates the preserved historical body (14.617551ms)
+✔ sales action engine preparation appends native transaction/known-PID cases without credentials or operator changes (2.962183ms)
+✔ native-profile engine preparation is distinct, explicit, actual-codec/default-driver and guarded-settings-only (5.331494ms)
+✔ HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double (4.060138ms)
+✔ backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path (3.060987ms)
+✔ migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses (19.866214ms)
+✔ migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses (1.909883ms)
+✔ migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes (8.324648ms)
+✔ migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets (0.907602ms)
+✔ migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content (0.895781ms)
+✔ deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure (6.89094ms)
+✔ deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected (5.577758ms)
+✔ deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof (0.35605ms)
+✔ exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT (5.748906ms)
+✔ raw constraint assertion requires exact message, SQLSTATE and whole function identity (2.596305ms)
+✔ integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback (8.053771ms)
+✔ integration safety: accepts only a dedicated explicitly repeated loopback test target (1.841822ms)
+✔ integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs (1.22263ms)
+✔ integration safety: malformed and encoded credentials never appear in diagnostics (0.245909ms)
+✔ integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast (559.395432ms)
+✔ integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings (2.375559ms)
+✔ integration safety: historical migration prefix refuses before pool construction at current adapter revision (1.269757ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3261.823615
+source_checks_exit=0

@@ -1,0 +1,166 @@
+{
+  "atUtc": "2026-10-22T20:58:48.396815+00:00",
+  "parent": "3a30a5128e8f891db803f7efd8fb174d448aa3a4",
+  "groups": [
+    {
+      "slice": "STAFF_ROLE_ONLY_ADDITIVE_EXACT6_READ_FILTER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/staff-role-read-v1/RESULT.json",
+      "receiptSha256": "a11f9799520dde601e4ae6b00b8d6dc97cdcbaf70176f1576982b0a285b8bcd0",
+      "receiptSnapshot": {
+        "format": "D2_STAFF_ROLE_READ_DELIVERY_V1",
+        "taskId": "B05_STAFF_ROLE_READ_FILTER",
+        "recordedAtUtc": "2026-10-22T20:56:20.497441+00:00",
+        "status": "SOURCE_DONE_NEW4_AND_EXACT_SCOPE_STRICT_PASS_NOT_PG_OR_UI",
+        "authority": {
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "humanProgressAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "requestedModel": "gpt-6.1-sol/xhigh",
+          "technicalFreeze": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/STAFF-ROLE-READ-FILTER-TECHNICAL-FREEZE-v1.json",
+            "sha256": "2c1dc13e94ea97c59c47a0036dd02d765c818616bd0fe2084f98066ef819a6ce"
+          }
+        },
+        "observedHead": "3a30a5128e8f891db803f7efd8fb174d448aa3a4",
+        "candidateCommit": null,
+        "files": [
+          {
+            "path": "packages/application/src/organization-maintenance-ports.ts",
+            "beforeSha256": "63647796b41120410125f4647200b3ab7ddf6b5241315144e71fc5918db5ee26",
+            "afterSha256": "2d85aadcc84f58c1ec7e14ef0b4c2e82b95987a7d4aefbfd5ba11ce408b94f25"
+          },
+          {
+            "path": "packages/application/src/organization-maintenance-validation.ts",
+            "beforeSha256": "0b7b9ec28c2789739decfd5f37ca8bb3fd9ea30d5a593d44a155363c6da13266",
+            "afterSha256": "416d16645d6c886363b301745fb5b74c078accc39a5c0f2275a2489f5b5411da"
+          },
+          {
+            "path": "adapters/postgres/src/organization-maintenance-store.ts",
+            "beforeSha256": "c1bcccef279dded5b52072ec602b6ab76895d0d9691c7de39d1d7ac3a7cd0188",
+            "afterSha256": "f55fa7db93794b95178dd5de04a0a3875e65559996d67628c719ec81c543bd20"
+          },
+          {
+            "path": "apps/api/src/organization-maintenance-http.test.ts",
+            "beforeSha256": "256ae71c453a40db2aa3035fbea1c9bf66d193eba42f4489b95c29c321bd6067",
+            "afterSha256": "f82079d847f1304838fc9ea9e3bba96699e771c53ead913fe6ac5bf8fb5ab05b"
+          },
+          {
+            "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+            "beforeSha256": "1b25b1d9ff782b487ac0c9117ba8babcbf63cf61de406fc85fcff2f98f2759f5",
+            "afterSha256": "25cf914211345dab377fcbbc4d0f46e5d463133ddb00815bd78e79af2961df91"
+          },
+          {
+            "path": "docs/organization-staff-payment-maintenance.md",
+            "beforeSha256": "a22d8ed186101c5d0d627963549a7427994ba4d9ade42f08b490aaa929910df6",
+            "afterSha256": "c57eb0bb74311a4b6129d740b1b46bb29c3fd8db48b3f00189ec83633d96281d"
+          }
+        ],
+        "change": "Additive exact6 STAFF role request type/parser + parameterized matched-CTE predicate; preserve original exact5 and response. No auth/login/schema/write change.",
+        "checks": [
+          {
+            "name": "New4 regression red before source fix",
+            "status": "REPRODUCED",
+            "passed": 0,
+            "failed": 4,
+            "log": "red.log",
+            "sha256": "f98380c4b95df060568660387d53b4cf5d7156ec14b1ed9c0311ca1a37b63c5f",
+            "meaning": "Original role6 rejected400/INVALID_ORGANIZATION_QUERY before new SQL/auth path"
+          },
+          {
+            "name": "New4 protocol/Fastify inject only",
+            "status": "PASS",
+            "passed": 4,
+            "failed": 0,
+            "log": "green.log",
+            "sha256": "6b7f0f6abd26947194ae1546c471c99d198a2818e2fdc8297bc6acb7e18566b7",
+            "command": "Node24 --test --test-concurrency=1 --test-name-pattern=staff-role v1 tests/organization-maintenance-postgres-protocol.test.ts apps/api/src/organization-maintenance-http.test.ts"
+          },
+          {
+            "name": "Changed five TypeScript entries strict",
+            "status": "PASS",
+            "exitCode": 0,
+            "log": "types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "flags": "noEmit strict noUncheckedIndexedAccess exactOptionalPropertyTypes noFallthroughCasesInSwitch noImplicitOverride verbatimModuleSyntax allowImportingTsExtensions NodeNext ES2023 skipLibCheck node ES2023,DOM"
+          },
+          {
+            "name": "Exact6 diff whitespace check",
+            "status": "PASS",
+            "exitCode": 0
+          }
+        ],
+        "coverage": [
+          "Old5 and STAFF6 exact shapes, all three approved roles and explicit empty all",
+          "Invalid NULL/unknown/partial/loginStatus/extra/other-family role rejected before connection",
+          "Native SQL role parameter before shared matched count/page, existing employment/hall/name/sort/offset parameters preserved; finite page2 total21 response",
+          "All preserves unmapped original role and account:null; bad native account boolean remains data failure",
+          "Request role ADMIN cannot elevate actual WAREHOUSE actor; no page SQL before refusal",
+          "Existing HTTP exact5/6 response/cache/status boundaries, 400/401/403 and no real listener"
+        ],
+        "notTested": [
+          "Actual PostgreSQL/ACL/result filtering or live page counts",
+          "F3 client/UI role availability or browser",
+          "Deployment/production",
+          "Old full maintenance suites not repeated"
+        ],
+        "unchangedSourceBodies": [
+          "packages/application/src/organization-maintenance-service.ts",
+          "apps/api/src/organization-maintenance-http.ts",
+          "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+          "F3 staff and shared HTTP readers"
+        ],
+        "deferred": "loginStatus not accepted; no closed/no-account classification or effective canLogin inference",
+        "newRPaths": [],
+        "rFilesChanged": 6,
+        "schemaOrCredentialOrWriteSemanticsChange": false,
+        "databaseConnection": false,
+        "browserOrHostOrBuild": false,
+        "gitMutation": false,
+        "artifacts": {
+          "API.json": "bf687e34c234701eb2143217247b7e5f438529c112d539c8f08a8c79e72a566c",
+          "applied-exact6.diff": "fb0f7f740208073e669f68d38233f97fd894b7857a6765eaca54214eebf93a3a"
+        },
+        "blockers": [],
+        "next": "C fixes exact6 and routes only new role scope to QB/F3. Source files released for C pinning; no further D2 edits without a concrete new issue. Login rule remains independently pending."
+      },
+      "files": [
+        {
+          "path": "packages/application/src/organization-maintenance-ports.ts",
+          "owner": "D2",
+          "sha256": "2d85aadcc84f58c1ec7e14ef0b4c2e82b95987a7d4aefbfd5ba11ce408b94f25",
+          "bytes": 5998
+        },
+        {
+          "path": "packages/application/src/organization-maintenance-validation.ts",
+          "owner": "D2",
+          "sha256": "416d16645d6c886363b301745fb5b74c078accc39a5c0f2275a2489f5b5411da",
+          "bytes": 9392
+        },
+        {
+          "path": "adapters/postgres/src/organization-maintenance-store.ts",
+          "owner": "D2",
+          "sha256": "f55fa7db93794b95178dd5de04a0a3875e65559996d67628c719ec81c543bd20",
+          "bytes": 16721
+        },
+        {
+          "path": "apps/api/src/organization-maintenance-http.test.ts",
+          "owner": "D2",
+          "sha256": "f82079d847f1304838fc9ea9e3bba96699e771c53ead913fe6ac5bf8fb5ab05b",
+          "bytes": 4875
+        },
+        {
+          "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+          "owner": "D2",
+          "sha256": "25cf914211345dab377fcbbc4d0f46e5d463133ddb00815bd78e79af2961df91",
+          "bytes": 10597
+        },
+        {
+          "path": "docs/organization-staff-payment-maintenance.md",
+          "owner": "D2",
+          "sha256": "c57eb0bb74311a4b6129d740b1b46bb29c3fd8db48b3f00189ec83633d96281d",
+          "bytes": 3798
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact owner/hash checkpoint only. Role read implementation independent of pending closed-login classification; QB new scope next."
+}

@@ -1,0 +1,103 @@
+{
+  "id": "UI-DIRECT-MIGRATION-20261023-02",
+  "atUtc": "2026-10-23T02:30:55.143713+00:00",
+  "authority": "Direct current human C message: 原Demo对比任务已关闭，接管证据和未完成项，沿原任务、owner及验收路由推进",
+  "existingTasks": [
+    "F01",
+    "F02",
+    "F03",
+    "F04",
+    "F05",
+    "F06",
+    "C03",
+    "QF01"
+  ],
+  "closedDemoChat": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+  "resumeClosedChat": false,
+  "evidenceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022",
+  "evidenceUniqueWriter": "Existing QF01 on behalf of C; existing files preserved",
+  "independentRoutes": "QF source+actual browser UI/performance; QB backend/isolated business; C adopts no duplicate",
+  "models": "gpt-6.1-sol/xhigh",
+  "fastRequested": false,
+  "denominator": {
+    "pages": 37,
+    "overlays": 67,
+    "total": 104
+  },
+  "counts": {
+    "wholePagePass": 0,
+    "wholeOverlayPass": 0,
+    "partialPassedCases": 48,
+    "statusCounts": {
+      "NOT_RUN": 57,
+      "UI_DIFFERENCE": 30,
+      "PARTIAL_UI_CHECKED": 6,
+      "WAITING_INTEGRATION": 10,
+      "APPROVED_VISUAL_EXCEPTION": 1
+    }
+  },
+  "currentUiArtifact": {
+    "source": "1578a5b0823af4c85a33aaecd629babdae3f4d5c",
+    "build": "ui-preview-1578a5b-01-build01",
+    "url": "http://127.0.0.1:57850/synthetic-unified.html",
+    "htmlSha256": "748f119f360e29b6b34a05a1f0f0497614c8c928a7747385f92f642aa32285fa",
+    "scope": "Synthetic only. Does not include source115 or current product WIP."
+  },
+  "priority": [
+    "Complete SALE entry",
+    "mixed RETURN/EXCHANGE",
+    "shared edit/view",
+    "transfermatrix",
+    "product6tabs",
+    "settings",
+    "inventory/otherlists/details/publicoverlays"
+  ],
+  "implementation": "Migrate complete frozenDemo UI where multiple core deviations; keep proven regions; minimal React business adapter, no oldstorage/interfaces/globalarchitecture. No prolonged imitation patching. Fullstate then shared build, not perCSS build.",
+  "proof": "Per page Demo file/function/finalCSS→currententry→adapter→build/resourcegraph/actualHTTP/browser; classify unchanged/minimaladapter/recreated/notconnected/unknown honestly",
+  "businessInvariants": [
+    "originalSKU/identity",
+    "quantitysign/integer",
+    "exactmoney",
+    "threeinternalSALE/RETURN/EXCHANGE",
+    "permission beforefilter/count/page/sum",
+    "idempotency originalkey",
+    "versionconflict",
+    "rollback andunknowncommit recovery"
+  ],
+  "approvedDifferences": [
+    "warehouse singlehall",
+    "fundaccount multihall",
+    "customer supplier split",
+    "selfpassword",
+    "season_ids multiple dictionaryIDs",
+    "cancelled units/correction",
+    "centered executedqueryscope"
+  ],
+  "sharedArchitecture": "React19.1.1/Arco2.66.16 actualshared runtime/modulegraph; route/onopen/tabfirstvisit code/data/render, stableowner draft, localupdates, scopedcleanup/staleguards. Images lazythumbs. Measure beforememo/cache/virtualization. No secondUI/runtime/platform.",
+  "performance": {
+    "samples": "cold1 + keyrepeat2/page",
+    "formalQueryMaxMs": 2000,
+    "separateStages": [
+      "server",
+      "transfer",
+      "parse",
+      "render",
+      "interactive"
+    ],
+    "otherEvidence": [
+      "requestcount/bytes",
+      "mount/updatecount",
+      "longtasks",
+      "representativescale"
+    ],
+    "uiThreshold": "Record baseline andbasis first, no postmeasure target changes",
+    "synthetic": "One row never proves representative or formal performance"
+  },
+  "skills": [
+    "vercel-react-best-practices",
+    "vercel-composition-patterns",
+    "web-design-guidelines"
+  ],
+  "compatibility": "Only currentReact19.1.1/Arco rules; no Next/Vercel/Vue/Activity/useEffectEvent/newdeps/redesign",
+  "completion": "All applicable104+newentries and states have evidence, unapproved differences closed, actual migrated shared/on-demand runtime, affectedrealbusiness andperformance passed; waiting remains incomplete"
+}

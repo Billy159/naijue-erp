@@ -1,0 +1,134 @@
+{
+  "atUtc": "2026-10-22T08:13:58.062484+00:00",
+  "parent": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+  "groups": [
+    {
+      "slice": "F1_CHUNK15_W5_W6_ROOT",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-15/DELIVERY.json",
+      "receiptSha256": "8a28342825869b4aaaf542a51c21739df690ff39c0844c35eaeb50ee9a911ced",
+      "files": [
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "sha256": "77417cd25c1a07bea6b295c571ebadca2c0aefa318c59cf5aeefe1cc975b4d7d",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/application/routes/store-settings.tsx",
+          "sha256": "2bb9a329d577a7ca43c39e8722a668fb5882d81362f583b3223a37b4a4197e2d",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/application/routes/product-categories.tsx",
+          "sha256": "ebc2ed253b40ae0413a4f42c265a1ae65d1e659d25194d256e119c380c10e870",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/application/routes/product-settings.tsx",
+          "sha256": "4f401b3d72b177f85eea965be0aa1d4222d9894b9a7b45d8a5f2b8d3e12b5a29",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/production-host/mount.tsx",
+          "sha256": "02ccb141d0be93f60efed9b28e3feb52f5200db518a5335ebeafb5341a135a0b",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "D1_HALL_ADMIN_LOCK",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/HALL-ADMINISTRATOR-LOCK-RESULT.json",
+      "receiptSha256": "218d8f02544ee1cfc18533850aff514039a82cef3abf882ca0fffe13fd4606d2",
+      "files": [
+        {
+          "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+          "sha256": "441358a048d700a51b3234b982ddb31a3e5d050835cc85eb1d16192a2c92b763",
+          "owner": "D1"
+        },
+        {
+          "path": "packages/application/src/maintenance-commit-ports.ts",
+          "sha256": "0ccbeab00bfdf7fe1b82801b33107ab297ee17a8804a3f37fb01441025e7c815",
+          "owner": "D1"
+        },
+        {
+          "path": "tests/maintenance-command-postgres-protocol.test.ts",
+          "sha256": "af40a73215ac45e2314d729ae0c366f50aa0e78ba38a59b73649ebeb92d2062a",
+          "owner": "D1"
+        }
+      ]
+    },
+    {
+      "slice": "D3_APPROVED21_BARCODE_PROOF",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/barcode-demotion-slice1/RESULT.json",
+      "receiptSha256": "b44fd866913e859ef84b8a69d9d4a00fe89f42dd11404aeaa652fd4012819fbc",
+      "files": [
+        {
+          "path": "packages/application/src/native-barcode-import.ts",
+          "sha256": "bf5798294d80953fb7b6f38fcecdc9207ef045503962afd2655c04008c12fd93",
+          "owner": "D3"
+        },
+        {
+          "path": "tests/native-barcode-import.test.ts",
+          "sha256": "a73fdbbdbd71a848331c1f2321b5dc5191d1144e36f02cfd5ebdcb64a5f236c0",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/native-source-authorizers.mjs",
+          "sha256": "c1bd007de45d730d43a8b3e99de014755309df1cc2d5916ff441f282d67be6a0",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/native-source-authorizers.test.mjs",
+          "sha256": "ff79737cffec636768cf40a03db42dfc0f5b50b133b314baf3c1f3fba991ce50",
+          "owner": "D3"
+        }
+      ]
+    },
+    {
+      "slice": "D3_VERIFIED_HEADER_FACTORY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/verified-header-factory-slice1/RESULT.json",
+      "receiptSha256": "b8f130eaefd15190b4a2a1c5b6f4a5789efa76d68f9617083c3356c1ab4c1160",
+      "files": [
+        {
+          "path": "scripts/import-v3/verified-header-source.mjs",
+          "sha256": "c36b9517bc56cd32fee190094e3dbbe15ba4f3ffe9d6cece99b6557f56842b76",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/verified-header-source.test.mjs",
+          "sha256": "8eb9aad5e0b5a53a71b0c8dad6f6c5fc4ac3ce4abad1cbe7bec887a4f4239c9f",
+          "owner": "D3"
+        }
+      ]
+    },
+    {
+      "slice": "C_BOOT_ENTRY_SOURCE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/c02-preparation/boot-persistence/RESULT.json",
+      "receiptSha256": "847c78a5d060f4fb55120e3352ac09a3b799bd0a55723f888eb1a75bfcf8aafc",
+      "files": [
+        {
+          "path": "scripts/release/boot-entry.py",
+          "sha256": "ca3594a92cac5a66799d5dd5081d1c25a0e48952c5601211295f5b3e43eab7d8",
+          "owner": "C"
+        },
+        {
+          "path": "scripts/release/BOOT-ENTRY.md",
+          "sha256": "9452c7be1d18696133d773ac0307a5030ee1c3bd1e6c396dea153c5e25fa10fa",
+          "owner": "C"
+        }
+      ]
+    },
+    {
+      "slice": "C_W5_OPTIONAL_ROOT_CONTRACT",
+      "files": [
+        {
+          "path": "apps/web/src/application/contracts.ts",
+          "sha256": "7fb0b714523a8da0e8220fb12ce2ba09fa0b8703b2cd03c980575fa1ae03ef5e",
+          "owner": "C"
+        }
+      ],
+      "qualification": "F1 chunk15 consumed actual shared optional customer provider contract; no write gate enabled"
+    }
+  ],
+  "fileCount": 17,
+  "scope": "Source checkpoint; independent scoped QA pending; actualPG/browser/boot/deployment NOT TESTED"
+}

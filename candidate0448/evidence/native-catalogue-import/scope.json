@@ -1,0 +1,56 @@
+{
+  "scope": "Native CATEGORY/COLOR/FIT/SIZE/SIZE_GROUP/SEASON plus composite member creation; no actual import",
+  "status": "SOURCE_IMPLEMENTED_SYNTHETIC_PROTOCOL_VERIFIED_NOT_IMPORT_READY",
+  "files": [
+    {
+      "path": "adapters/postgres/migrations/0014_native_catalogue_import.sql",
+      "sha256": "32a46625af421e032b1e8d3c16fd81f6ca615920286561256b99f4dc1d0d30ed"
+    },
+    {
+      "path": "packages/application/src/native-catalogue-import.ts",
+      "sha256": "e0504260cc73e6a1bce8a916f1f0729128ee4c2b43a5f38c0668eb3ce053fe8e"
+    },
+    {
+      "path": "adapters/postgres/src/native-catalogue-import.ts",
+      "sha256": "975eb25f50da38549289f374fc01a3a3e893b4c26bb4dd73472a83e67edf6ed8"
+    },
+    {
+      "path": "tests/native-catalogue-import.test.ts",
+      "sha256": "35ae2770b1717c9643797b438c448230f551ab693d8d84850b688403440d3b2e"
+    },
+    {
+      "path": "docs/native-catalogue-import.md",
+      "sha256": "2744cb2de5739832cf56a9b91e0e11f21fda12f38068c8b7f0d82e9be8ae55d1"
+    }
+  ],
+  "verification": {
+    "focused_synthetic_tests": {
+      "passed": 11,
+      "failed": 0
+    },
+    "adjacent_synthetic_tests_previous_run": {
+      "passed": 27,
+      "failed": 0,
+      "note": "Unified replay source with PRODUCT and schema12 source tests; subsequent one-line COMMIT boundary fix independently rechecked in focused 11/11 and final typecheck/build/smoke."
+    },
+    "typecheck": "PASS final unified replay + COMMIT boundary source",
+    "build": "PASS final unified replay + COMMIT boundary source",
+    "independent_review": "Final read-only replay review confirmed stable-ID locks, all-row evidence classification before INSERT, maintained-target/dependency replay without writes, first-time stale dependency rejection, false observation without readiness, and no ROLLBACK after COMMIT attempt; independent focused 11/11 PASS; real PG NOT_RUN.",
+    "smoke_build": "PASS; emitted imports/arithmetic, no server or database client constructed"
+  },
+  "not_run": [
+    "real PostgreSQL",
+    "migration application",
+    "real source loader/authorizer execution",
+    "actual private-data import",
+    "publication",
+    "deployment"
+  ],
+  "trust_boundary": "Trusted adapter proves native initially absent or exact triple replay. Typed SQL directory independently certifies binding-time snapshot/source/decision/FK/immutability, NOT same-transaction INSERT attestation. No BIND_EXISTING mode.",
+  "private_data_in_git": false,
+  "unchanged_frozen_migrations": [
+    "0011",
+    "0012"
+  ],
+  "replay_policy": "Exact immutable original source + typed binding + creation snapshot/decision fingerprint and stable native identity replay without writes even after native/dependency maintenance. First creation still requires current dependencies to match; no existing target without complete operation evidence is adopted. nativeCurrentMatchesCreation may be false. Publication-time current reconciliation is independent."
+}

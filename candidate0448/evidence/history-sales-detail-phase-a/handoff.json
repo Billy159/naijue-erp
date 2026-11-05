@@ -1,0 +1,43 @@
+{
+  "status": "WIP_LOCAL_BACKEND_HANDOFF_NOT_IMPORT_READY",
+  "files": {
+    "packages/application/src/import-v3-history-sales-detail.ts": "ed6558d6382a36da46f9a28082847a6e48f8c30673c82f21eea491c8b55a52d7",
+    "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts": "2ad41dc6e24a2947631aa88a2dc7248c47715b39c3997fecc67dc23d265f81f2",
+    "scripts/import-v2/authorized-sales-detail-reader.mjs": "c4fae2eb8689cc49b8413fe525003c1538d06e39857aa60aa9631a2af88a8dda",
+    "scripts/import-v2/authorized-sales-detail-reader.d.mts": "a023f1e936309a86da7702af287a0519cdf5dae1ac3c9e03e50a5584c0e2d37a",
+    "scripts/import-v2/authorized-sales-detail-reader.test.mjs": "c13d94c77478a305cba4bb0737b25215fa46effb21110339a83f16d15b606052",
+    "tests/import-v3-history-sales-detail.test.ts": "3dafbee07acee1d97ccbc907c2b4d3b47bd80482a956a935e9d784979c597910",
+    "tests/history-sales-detail-staging-postgres-protocol.test.ts": "4e7b15211e08adcf9240bce8e21171d80a949ffd40a398977b0dc2ad101d76df",
+    "tests/support/synthetic-sales-detail-fixtures.ts": "d7e4f8a8dc1cc6364572d73fba264caa6f29148545779de1fc1fc6643beb1496",
+    "tests/history-sales-detail-tsconfig.json": "61a503510e6e337a4c361f24e4d9c08b9b55b40589bb51678d9aaa60fc9e494c",
+    "docs/history-sales-detail-staging-plan.md": "f7ad55722f7ee3bbd16c15ac6af4c6be089a6f258146f16da596d97bd0ba9d1b",
+    "tests/history-sales-detail-plan.test.ts": "30c826e1ee58ab209f89066f931f1fb04e801c4071603bcce508a43a48160b68",
+    "docs/history-sales-detail-phase-a-handoff.md": "f2695e2fa8ff6e921af9256bb4164802a27785b6f088eccafe0d8d632d0637ff"
+  },
+  "verification": {
+    "reviewedPriorVersion": "Mapper/protocol14/14 + source-reader2/2 PASS; focused TS PASS; locale independent proof hash regression PASS",
+    "independentReview": "No remaining definite defect in earlier mapper/store/reader version; final WIP resolver/refactor NOT_REVIEWED",
+    "finalRerun": "PASS 16/16 actual mapper/protocol/reader tests, 0 fail/skip/todo; focused TypeScript exit0 after final resolver/refactor (session51256 completed)",
+    "phaseAPostgres": "NOT_RUN",
+    "metadataJsonCastSeparateSuite": "Coordinator-confirmed fresh Mac schema1\u201311 native SALE9/9 PASS; not PhaseA acceptance"
+  },
+  "knownTodo": [
+    "Last read-only binding resolver/refactor needs dedicated synthetic protocol tests and independent review",
+    "Fresh local synthetic PG acceptance for PhaseA SQL/guards/transactions/replay",
+    "SETTLEMENT/payment typed-source directory not implemented; no migration number reserved",
+    "PUBLISH historical nonzero sales capability remains closed; do not weaken gate",
+    "Original planning skeleton14TODO is not actual implementation acceptance",
+    "Accounting/conservation integration belongs to another owner"
+  ],
+  "noScopeExpansion": true,
+  "noCloudPg": true,
+  "noProductionConnectionOrPublication": true,
+  "frozenMetadataSha256": {
+    "packages/application/src/history-import-lifecycle.ts": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606",
+    "packages/application/src/inventory-cutoff-import.ts": "2a23cfa999f8e2119e27a4ba8d8c93a5d3ce93fd2005cc5f952f46de554a1ee0",
+    "adapters/postgres/src/history-import-lifecycle.ts": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51",
+    "adapters/postgres/src/inventory-cutoff-import-store.ts": "33a46ec1c99b4a4e4cbeab05c9132b45bb3ae2afb6609183ca3c8c267284c98f"
+  },
+  "frozenAtUtc": "2026-10-21T16:30:35Z",
+  "activeOwnedProcesses": "NONE; session51256 completed exit0; no server/database/browser started"
+}

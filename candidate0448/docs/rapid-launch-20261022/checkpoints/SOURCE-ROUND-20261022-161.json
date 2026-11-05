@@ -1,0 +1,37 @@
+{
+  "atUtc": "2026-10-23T09:39:14.235690+00:00",
+  "parent": "6b14180346ed096c83f443ebd0fcd5520b22d7a3",
+  "taskId": "B04_SPEC01_NATIVE_PRODUCT_MANAGEMENT_INVENTORY_KEYS",
+  "files": [
+    {
+      "path": "adapters/postgres/src/product-management-query-reader.ts",
+      "owner": "D2",
+      "beforeSha256": "1a007c70866c38cc82344a3b57daf6a4b04d608d237ff4acc1fd4c8c80c17993",
+      "bytes": 24945,
+      "sha256": "317464fdf8ca0cbc93142c4550d12b27579d490b4c47f6947822d5b7c25e8435"
+    },
+    {
+      "path": "tests/product-management-query-reader.test.ts",
+      "owner": "D2",
+      "beforeSha256": "3e68a10d1e489d097cd2cd2ae8e4a6b5d4f563c83be47831e3c0999361e06d0c",
+      "bytes": 21962,
+      "sha256": "04b372c89fae9877bea283c967fb1f907a57ea2f71b10864d682d5b8b779043d"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "owner": "D1",
+      "beforeSha256": "f11c869e021de4dc39c20d11721721dc7c9ff9734b53d945f3972dfa09e438ea",
+      "bytes": 47422,
+      "sha256": "94a4a84f6a454d4da02cf0f6339378a08c000c9f62dc3afd19f1c56550d679cd"
+    }
+  ],
+  "scope": "Only productmanagement all-warehouses currentreader consumes originalruntime26/sameRR IA, proves non-cutoff warehouse+matchedSKU through existing readInventoryKeyAdmissions with bounded1000 batches/actual opposing witnesses. Original publication/checkpoint/guards/size/balance/read-authority retained; no-cap legacy unchanged; D1 solehost fourtharg only, no maininventory or ledger construction change.",
+  "checksAdopted": {
+    "D2": "Original counterexample RED STOCK_NOT_READY→GREEN, reader+application23tests PASS (6new); targeted strict0. Wrong grant/key/batch/basis/op and missingwitness reject,1001 nativeSKUs2helperbatches, no-cap/candidates/abort/total/negative/null controls.",
+    "D1": "Actual releasedD2 constructor consumed; meaningfulhost1/1 PASS and exacthost strict0. No D2 test replay."
+  },
+  "notTested": [
+    "ActualPG/native newwarehouse/newSKU consumers/HTTP/performance/business/deploy."
+  ],
+  "next": "OriginalQB only new productmanagement scope; originalC79 primaryinventory exact157 actualread remains separate and not retested; after bounded realread schedule exact161 productmanagement new consumer."
+}

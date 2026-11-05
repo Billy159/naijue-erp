@@ -1,0 +1,17 @@
+docs/POSTGRES-INTEGRATION.md
+scripts/run-postgres-integration.mjs
+tests/integration/README.md
+tests/integration/backend-acceptance.ts
+tests/integration/backend-source.test.ts
+tests/integration/database.ts
+tests/integration/fixtures.ts
+tests/integration/frozen-0001-0008-manifest.ts
+tests/integration/method-identity-acceptance.ts
+tests/integration/migration-manifest.ts
+tests/integration/migration-source.test.ts
+tests/integration/plan.ts
+tests/integration/postgres.integration.test.ts
+tests/integration/safety.test.ts
+tests/integration/safety.ts
+tests/integration/sales-write-authorization-acceptance.ts
+tests/integration/sparse-acceptance.ts

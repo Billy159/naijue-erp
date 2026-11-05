@@ -1,0 +1,2 @@
+Command: node node_modules/typescript/bin/tsc -p evidence/product-drawer-lifecycle/tsconfig.focused.json
+Exit code: 0

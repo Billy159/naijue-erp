@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import { mkdtemp, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { build } from 'esbuild';
+import { JSDOM } from 'jsdom';
+const here = path.dirname(fileURLToPath(import.meta.url)), temporary = await mkdtemp(path.join(here, '.sparse-lines-dom-'));
+const dom = new JSDOM('<div id="root"></div><button id="outside">SYN outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+for (const name of ['window', 'document', 'navigator', 'HTMLElement', 'HTMLInputElement', 'HTMLIFrameElement', 'Element', 'SVGElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'MutationObserver', 'getComputedStyle']) Object.defineProperty(globalThis, name, { configurable: true, value: dom.window[name] });
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+globalThis.ResizeObserver = class { observe() {} unobserve() {} disconnect() {} };
+globalThis.requestAnimationFrame = dom.window.requestAnimationFrame.bind(dom.window); globalThis.cancelAnimationFrame = dom.window.cancelAnimationFrame.bind(dom.window);
+dom.window.matchMedia = () => ({ matches: false, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {} }); HTMLElement.prototype.scrollIntoView = () => {};
+let root, cleanup, fetches = 0; const originalFetch = globalThis.fetch;
+globalThis.fetch = () => { fetches++; throw Error('Unexpected IO'); };
+try {
+  const output = path.join(temporary, 'entry.mjs');
+  await build({ stdin: { resolveDir: here, contents: "export{act,createElement,StrictMode}from'react';export{createRoot}from'react-dom/client';export{TransferSparseLines}from'../sparse-lines.tsx';export{detail,uuid}from'./fixtures.ts';", loader: 'tsx' }, outfile: output, bundle: true, platform: 'node', format: 'esm', jsx: 'automatic', external: ['react', 'react/*', 'react-dom', 'react-dom/*'], loader: { '.css': 'empty' }, banner: { js: "import{createRequire}from'node:module';const require=createRequire(import.meta.url);" }, logLevel: 'warning' });
+  const { act, createElement: h, StrictMode, createRoot, TransferSparseLines, detail, uuid } = await import(pathToFileURL(output).href); cleanup = act;
+  const host = document.getElementById('root'); root = createRoot(host); const opened = [];
+  const data = detail(); data.document.lines = Array.from({ length: 83 }, (_, i) => ({ ...data.document.lines[0], id: uuid(1000 + i), lineNo: i + 1, quantity: i === 0 ? '9007199254740993' : String(i + 1), snapshot: { ...data.document.lines[0].snapshot, productName: 'SYN saved must not replace current', sizeName: 'SYN old size' } }));
+  data.catalog.sizeGroups = [200, 83].map((length, group) => ({ sizeGroupId: uuid(50 + group), code: 'SYN-G' + group, name: 'SYN current group ' + group, members: Array.from({ length }, (_, i) => ({ sizeId: uuid((group ? 500 : 60) + i), code: i === 0 ? null : 'SYN-S' + i, name: 'SYN current size ' + group + '-' + i, displayOrder: i })) }));
+  const onOpenProduct = (id, label) => opened.push({ id, label, trigger: document.activeElement });
+  const render = async (value, enabled = true) => { await act(async () => root.render(h(StrictMode, null, h(TransferSparseLines, { data: value, ...(enabled ? { onOpenProduct } : {}) })))); await act(async () => new Promise(resolve => setTimeout(resolve, 20))); };
+  const rows = () => Array.from(host.querySelectorAll('tbody tr:not(.arco-table-empty-row)'));
+  const cells = row => row.querySelectorAll('td'); const quantity = row => cells(row)[4].textContent;
+  const button = text => [...host.querySelectorAll('button')].find(node => node.textContent === text);
+  const click = async node => { assert.ok(node, 'Target exists'); await act(async () => { node.focus(); node.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })); }); };
+  const enter = async node => { assert.ok(node); await act(async () => { node.focus(); node.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13, bubbles: true, cancelable: true })); }); };
+  await render(data); assert.ok(host.querySelector('.arco-table'), 'Sparse actual-line path must use shared real Arco Table');
+  assert.equal(rows().length, 40); assert.equal(host.querySelectorAll('.arco-table-td').length, 240); assert.equal(host.querySelectorAll('.arco-table-cell-wrap-value').length, 0, 'Official plain read-only cell content removes only the redundant inline wrapper');
+  assert.match(rows()[0].textContent, /TEST 当前商品 1/); assert.doesNotMatch(host.querySelector('table').textContent, /SYN saved must not replace current|SYN old size/); assert.equal(cells(rows()[0])[3].textContent, 'SYN current size 0-0');
+  assert.equal(quantity(rows()[0]), '9,007,199,254,740,993'); assert.equal(cells(rows()[0])[4].title, '9,007,199,254,740,993');
+  const oldFirst = rows()[0]; await render({ ...data, document: { ...data.document, lines: [data.document.lines[1], data.document.lines[0], ...data.document.lines.slice(2)] } }); assert.equal(rows()[1], oldFirst, 'Repeated same-SKU rows keep line.id ownership across reorder');
+  const trigger = rows()[1].querySelector('button'); await click(trigger); assert.equal(opened.length, 1); assert.equal(opened[0].id, data.catalog.skus[0].productId); assert.equal(opened[0].label, 'TEST 当前款号 · TEST 当前商品 1'); assert.equal(opened[0].trigger, trigger);
+  const next = host.querySelector('[aria-label="调拨明细分页"] [aria-label="下一页"]'); await enter(next); assert.equal(rows().length, 40); assert.equal(quantity(rows()[0]), '41'); assert.equal(document.activeElement, next);
+  await enter(next); assert.equal(rows().length, 3); assert.equal(quantity(rows()[2]), '83');
+  const sizesToggle = button('查看完整规范尺码组'); await click(sizesToggle); assert.equal(host.querySelectorAll('.transfer-full-sizes > ol > li').length, 40);
+  const sizeNext = host.querySelector('[aria-label="规范尺码分页"] [aria-label="下一页"]'); await enter(sizeNext); assert.equal(host.querySelector('.transfer-full-sizes > ol > li').textContent, 'SYN current size 0-40'); assert.equal(document.activeElement, sizeNext);
+  await click(button('收起规范尺码组')); assert.equal(host.querySelector('.transfer-full-sizes'), null); await click(button('查看完整规范尺码组')); assert.equal(host.querySelector('.transfer-full-sizes > ol > li').textContent, 'SYN current size 0-40');
+  const readWholeGroup = async expected => {
+    const pager = () => host.querySelector('[aria-label="规范尺码分页"]');
+    while (Number(pager().querySelector('.arco-pagination-jumper > span').textContent) > 1) await enter(pager().querySelector('[aria-label="上一页"]'));
+    const found = []; for (let page = 1; page <= Math.ceil(expected.length / 40); page++) { const items = [...host.querySelectorAll('.transfer-full-sizes > ol > li')]; assert.ok(items.length <= 40); found.push(...items.map(item => item.textContent)); if (page < Math.ceil(expected.length / 40)) await enter(pager().querySelector('[aria-label="下一页"]')); }
+    assert.deepEqual(found, expected.map(member => member.name), 'All canonical members remain reachable exactly once without truncation or Cartesian rows');
+  };
+  await readWholeGroup(data.catalog.sizeGroups[0].members);
+  const groupNext = button('下一组'); await click(groupNext); assert.match(host.querySelector('.transfer-full-sizes strong').textContent, /group 1/); assert.equal(host.querySelector('.transfer-full-sizes > ol > li').textContent, 'SYN current size 1-0'); assert.equal(document.activeElement, groupNext);
+  await readWholeGroup(data.catalog.sizeGroups[1].members);
+  const reordered = { ...data, catalog: { ...data.catalog, sizeGroups: [...data.catalog.sizeGroups].reverse() } }; document.getElementById('outside').focus(); await render(reordered); assert.match(host.querySelector('.transfer-full-sizes strong').textContent, /group 1/, 'Selected group follows its identity, not its old array slot'); assert.equal(document.activeElement, document.getElementById('outside'));
+  await render({ ...data, document: { ...data.document, lines: data.document.lines.slice(0, 2) }, catalog: { ...data.catalog, sizeGroups: [data.catalog.sizeGroups[0]] } }); assert.equal(rows().length, 2); assert.match(host.querySelector('.transfer-full-sizes strong').textContent, /group 0/); assert.equal(host.querySelector('.transfer-full-sizes > ol > li').textContent, 'SYN current size 0-0');
+  await render({ ...data, document: { ...data.document, lines: [] }, catalog: { skus: [], sizeGroups: [] } }); assert.equal(host.querySelector('.transfer-full-sizes'), null); assert.equal(button('查看完整规范尺码组').getAttribute('aria-expanded'), 'false'); assert.equal(button('查看完整规范尺码组').disabled, true); assert.equal(host.querySelector('nav'), null); await render(data); assert.equal(host.querySelector('.transfer-full-sizes'), null, 'Returning groups do not revive a disclosure cleared with absent facts');
+  await render(data, false); assert.ok(rows().every(row => row.querySelector('button').disabled)); assert.equal(opened.length, 1);
+  await render(detail(2)); assert.equal(rows().length, 2); assert.equal(host.querySelector('.transfer-full-sizes'), null, 'New document starts with no old group disclosure'); assert.match(rows()[0].textContent, /TEST 当前商品 2/);
+  await render({ ...detail(2), document: { ...detail(2).document, lines: [] }, catalog: { skus: [], sizeGroups: [] } }); assert.equal(rows().length, 0); assert.match(host.textContent, /本单没有实际明细行/); assert.equal(button('查看完整规范尺码组').disabled, true); assert.equal(host.querySelector('nav[aria-label="规范尺码组分页"]'), null);
+  const bounds = []; for (const size of [40, 83, 2000]) { const bounded = { ...data, document: { ...data.document, header: { ...data.document.header, id: uuid(20000 + size) }, lines: Array.from({ length: size }, (_, i) => ({ ...data.document.lines[0], id: uuid(30000 + i), quantity: '1', lineNo: i + 1 })) } }; await render(bounded); assert.equal(rows().length, 40); await click(button('查看完整规范尺码组')); const nodes = host.querySelectorAll('*').length; assert.equal(host.querySelectorAll('.transfer-full-sizes > ol > li').length, 40); assert.ok(nodes < 1000, 'Actual read rows plus complete-size-group page stay bounded'); bounds.push({ inputActualLines: size, mountedRows: rows().length, sizeItems: 40, nodes }); }
+  const staleProduct = rows()[0].querySelector('button'); await act(async () => root.render(null)); staleProduct.dispatchEvent(new MouseEvent('click', { bubbles: true })); assert.equal(opened.length, 1); assert.equal(host.childElementCount, 0); assert.equal(fetches, 0);
+  console.log('PASS sparse bounded DOM', JSON.stringify(bounds));
+  console.log('PASS SparseLines actual Arco Table/Pagination, repeated line.id, current-vs-saved facts, exact td quantities, product trigger ownership, group identity/all40 size pages, fold/page/new-document/shrink/newer focus, absent capability and unmount/no IO.');
+} finally { if (root) await cleanup(async () => root.unmount()); globalThis.fetch = originalFetch; dom.window.close(); await rm(temporary, { recursive: true, force: true }); }

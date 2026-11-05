@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
+  "buildId": "ui-preview-6eac13e-01-build01",
+  "url": "http://127.0.0.1:57846/synthetic-unified.html",
+  "htmlSha256": "3830c86f6a673c72a6dbeac834d26977ff0ee33e2a11643ce930c5d9811530df",
+  "htmlBytes": 2898804,
+  "overlaySha256": "6f698d81c045a4ca58348edf5025b764449e7175090ed7215d8701ca8eddb603",
+  "actualInputs": 400,
+  "sourceModules": 383,
+  "undeclaredDiffs": 0,
+  "sourceDeltaVs98": [
+    "P16/P18 leaf+CSS",
+    "Moreproposal component+CSS"
+  ],
+  "fixtureRuntime15Unchanged": true,
+  "HTTPIdentityProvenanceReadback": true,
+  "serverReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-6eac13e-01/SERVER.json",
+  "serverReceiptSha256": "ee16e594f6eda84701c1c75e782677c94c02a9228f61b250350adffd913e83a1",
+  "syntheticOnly": true,
+  "wholePagePass": false,
+  "realBusinessPass": false
+}

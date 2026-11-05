@@ -1,0 +1,3 @@
+PASS sales: abort after acquisition releases acquired client without BEGIN/read
+PASS sales: pre-connect copied query/scope survive mutation across pool await
+Independent bounded synthetic sales probe groups: 2/2 passed. No PostgreSQL, network or listener.

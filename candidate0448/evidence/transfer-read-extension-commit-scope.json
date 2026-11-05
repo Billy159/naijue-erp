@@ -1,0 +1,14 @@
+{
+  "parent_commit": "667db1f6cd5849f6be7e8f4dc9e6cfac0342fca6",
+  "scope": "Clean arrayfilters, nativepage quantities/timestamps, scopedwarehouserefs, canonicalSKUmetadata",
+  "checks": "48 owner tests/types,76 independent scoped tests including28 probes;138regression terminalsummary available butfullprioroutputtruncated",
+  "full_engine": false,
+  "frontend": "Separately in progress, notcommittedhere",
+  "rollback": "Revert sourcecommit; no schema or externalstate changed",
+  "limits": [
+    "realPG/plans/grants",
+    "DBUnicode lowercase and C ordering vs browserlocale",
+    "historicalcategorysnapshot unavailable",
+    "currentwarehouse stock notinvented"
+  ]
+}

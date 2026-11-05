@@ -1,0 +1,129 @@
+{
+  "format": "rapid-launch-new-database-v1",
+  "jobId": "c02-new-database-20261022-05",
+  "status": "PASS_NEW_DATABASE_SCHEMA19_ONLY_NOT_IMPORT_NOT_AUTH",
+  "oldDatabaseModified": false,
+  "businessRowsInserted": false,
+  "productionSwitched": false,
+  "credentialsExported": false,
+  "databaseCreated": true,
+  "rolesCreated": [
+    "erp_rewrite_owner_20261022",
+    "erp_rewrite_runtime_20261022"
+  ],
+  "appliedMigrations": [
+    {
+      "version": 1,
+      "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+    },
+    {
+      "version": 2,
+      "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+    },
+    {
+      "version": 3,
+      "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+    },
+    {
+      "version": 4,
+      "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+    },
+    {
+      "version": 5,
+      "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+    },
+    {
+      "version": 6,
+      "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+    },
+    {
+      "version": 7,
+      "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+    },
+    {
+      "version": 8,
+      "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+    },
+    {
+      "version": 9,
+      "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e"
+    },
+    {
+      "version": 10,
+      "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"
+    },
+    {
+      "version": 11,
+      "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965"
+    },
+    {
+      "version": 12,
+      "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512"
+    },
+    {
+      "version": 13,
+      "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54"
+    },
+    {
+      "version": 14,
+      "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022"
+    },
+    {
+      "version": 15,
+      "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a"
+    },
+    {
+      "version": 16,
+      "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620"
+    },
+    {
+      "version": 17,
+      "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"
+    },
+    {
+      "version": 18,
+      "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+    },
+    {
+      "version": 19,
+      "sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b"
+    }
+  ],
+  "actual": {
+    "database": "erp_rewrite_20261022_r1",
+    "owner": "erp_rewrite_owner_20261022",
+    "versions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tables": 50,
+    "businessAccounts": 0,
+    "postmasterStartedAt": "2026-10-04 08:16:07.895273+00"
+  },
+  "runtimeConfigurationReference": "/srv/naijue-erp/rapid-launch-20261022/databases/erp_rewrite_20261022_r1/runtime-database.json",
+  "runtimeRoleGrantedBusinessTablePrivileges": false,
+  "remaining": [
+    "D1 least-privilege R1 ACL contract",
+    "real account/credential initialization",
+    "real source authority and import",
+    "query/browser/HTTPS acceptance"
+  ],
+  "finishedAtUtc": "2026-10-22T06:08:40.335276+00:00"
+}

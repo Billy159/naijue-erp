@@ -1,0 +1,61 @@
+/** Root-deployed bridge for one disposable validation instance. It uses the
+ * unchanged genuine combined authorization/install path. It never publishes a
+ * record, grants privileges, issues authorization or enables a runtime host. */
+import {readFile,lstat,open} from 'node:fs/promises';
+import {constants} from 'node:fs';
+import {resolve,join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
+import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
+import {loadFresh35CombinedSource,describeFresh35CombinedSource} from './fresh35-combined-source-v1.mjs';
+import {bindFresh35CombinedTarget} from './fresh35-combined-target-v1.mjs';
+import {buildFresh35CombinedCatalog} from './fresh35-combined-catalog-v1.mjs';
+import {compileFresh35CombinedProgram,describeFresh35CombinedProgram,loadFresh35CombinedAuthorization,runFresh35CombinedInstall,describeFresh35CombinedCompletion} from './fresh35-combined-lifecycle-v1.mjs';
+const root='/opt/naijue-erp/fresh35-combined-v1';
+const authority='/etc/naijue-erp/fresh35-isolated-provision-v1.json';
+const need=(ok,code)=>{if(!ok)throw Error('FRESH35_ISOLATED_'+code)};
+export function isolatedClientOptions(target,password){
+ need(target?.proposal?.host==='127.0.0.1'&&typeof password==='string'&&/^[a-f0-9]{64}$/.test(password),'PRIVATE_OWNER_CONNECTION_INPUT');
+ const p=target.proposal;return {host:p.host,port:p.port,database:p.database,user:p.owner,password,ssl:false,application_name:'fresh35-isolated-v1',connectionTimeoutMillis:5000,query_timeout:45000,options:'-c search_path=pg_catalog -c TimeZone=UTC -c lock_timeout=5000 -c statement_timeout=40000'};
+}
+async function privateText(path){
+ await assertTrustedRootPath(path);const file=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW);
+ try{const s=await file.stat();need(s.isFile()&&s.uid===0&&s.nlink===1&&(s.mode&0o077)===0&&s.size>0&&s.size<4*1024*1024,'PRIVATE_INPUT_REQUIRED');return await file.readFile('utf8')}finally{await file.close()}
+}
+export async function main(){
+ need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0&&process.version==='v24.21.0','TRUSTED_ROOT_RUNTIME_REQUIRED');
+ need(process.argv.length===3&&['--describe','--execute'].includes(process.argv[2])&&process.argv[1]===root+'/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs','FIXED_ENTRY_REQUIRED');
+ need(!Object.keys(process.env).some(k=>k==='NODE_OPTIONS'||k==='NODE_PATH'||k==='DATABASE_URL'||k.startsWith('PG')||k.startsWith('LD_')||k.startsWith('DYLD_')),'CLEAN_ENV_REQUIRED');
+ await assertTrustedRootTree(root);await assertTrustedRootPath(process.execPath);
+ const a=parseStrictJson(await privateText(authority));
+ need(a.format==='FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1'&&a.decision==='AUTHORIZE_EXACT_NEW35_TCP_BOOTSTRAP_AND_CLEANUP','EXTERNAL_PROVISION_AUTHORITY_REQUIRED');
+ const workspace=a.proposal.workspaceDirectory;
+ need(/^\/var\/lib\/naijue-erp\/fresh35-isolated\/cloud-pg-fresh35-[0-9]{8}-r[1-9][0-9]{0,3}$/.test(workspace),'FIXED_WORKSPACE_REQUIRED');
+ const input=parseStrictJson(await privateText(join(workspace,'target-binding.json')));
+ need(Object.keys(input.proposal).length===Object.keys(a.proposal).length&&Object.keys(a.proposal).every(k=>Object.hasOwn(input.proposal,k)&&input.proposal[k]===a.proposal[k])&&input.startsAt===a.startsAt&&input.expiresAt===a.expiresAt,'TARGET_PROVISION_BINDING_DIFFERS');
+ const source=await loadFresh35CombinedSource(root,{baselineDirectory:root+'/review-inputs/base-r2'});
+ need(describeFresh35CombinedSource(source).sourceSetSha256===a.sourceSetSha256,'SOURCE_SET_DIFFERS');
+ const target=bindFresh35CombinedTarget(input);
+ const catalog=await buildFresh35CombinedCatalog(source,target,{modelPath:root+'/review-inputs/expected-catalog-model.json',functionsPath:root+'/review-inputs/functions.json'});
+ const program=await compileFresh35CombinedProgram({source,target,catalog});
+ if(process.argv[2]==='--describe'){process.stdout.write(JSON.stringify(describeFresh35CombinedProgram(program))+'\n');return;}
+ const authorization=await loadFresh35CombinedAuthorization(program);
+ const raw=await privateText(join(workspace,'credentials',a.proposal.owner+'.pgpass'));
+ const prefix=`127.0.0.1:${a.proposal.port}:*:${a.proposal.owner}:`;
+ need(raw.startsWith(prefix)&&/^[a-f0-9]{64}\n$/.test(raw.slice(prefix.length)),'EXACT_OWNER_CREDENTIAL_REQUIRED');
+ const {Client}=await import('pg');const client=new Client(isolatedClientOptions(input,raw.slice(prefix.length,-1)));
+ let connected=false;
+ try{
+  await client.connect();connected=true;
+  const completion=await runFresh35CombinedInstall({program,authorization,client,journalDirectory:join(workspace,'installation-journal')});
+  const result=describeFresh35CombinedCompletion(completion);
+  process.stdout.write(JSON.stringify({state:result.state,sourceSetSha256:result.program.sourceSetSha256,programSha256:result.program.programSha256,targetSha256:result.program.targetSha256,catalogSha256:result.catalogSha256,transactionReceipt:result.transactionReceipt,recordPublished:false,hostEnabled:false,businessVerified:false})+'\n');
+ }finally{
+  // Lifecycle closes its client on success and failure. A connect failure can
+  // still leave a socket, so always close it here without issuing another SQL.
+  if(!connected||!client._ended)try{await client.end()}catch{client.connection?.stream?.destroy()}
+ }
+}
+if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
+ try{await main()}catch(error){process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:typeof error?.installState==='string'?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',automaticRetry:false})+'\n');process.exitCode=1;}
+}

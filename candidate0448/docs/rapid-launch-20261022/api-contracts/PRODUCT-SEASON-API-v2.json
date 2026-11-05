@@ -1,0 +1,103 @@
+{
+  "version": "D2-PRODUCT-SEASON-API-v2",
+  "status": "FROZEN_CONTRACT_IMPLEMENTATION_IN_PROGRESS",
+  "approval": "docs/rapid-launch-20261022/FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
+  "scope": "Approved single product.season_ids array; existing SKU/barcode/nine-price rules unchanged; image writes use a separately frozen contract.",
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/products/v2/commands",
+      "body": "CREATE: {action,requestKey,values,skus,barcodes}; EDIT adds {id,expectedVersion}; DISABLE/RESTORE/DELETE: {action,requestKey,id,expectedVersion}",
+      "result": "{operationId:UUID,kind:'PRODUCT',targetId:UUID,version:positiveInteger}",
+      "bodyLimitBytes": 1048576
+    },
+    {
+      "method": "POST",
+      "path": "/products/maintenance/v2/detail/query",
+      "body": {
+        "productId": "UUID"
+      },
+      "result": "{productId,version,deletedAt,values,skus,barcodes,references}",
+      "bodyLimitBytes": 8192
+    },
+    {
+      "method": "POST",
+      "path": "/products/maintenance/candidates/query",
+      "body": "{kind:'seasons',search:string,page:positiveInteger,pageSize:20|50|100}",
+      "result": "Existing candidate DTO. Individual native season dictionary entries; no combination entries."
+    },
+    {
+      "method": "GET",
+      "path": "/products/receipts/:requestKey",
+      "result": "Existing COMMITTED receipt DTO; original key and actor namespace shared across v1/v2."
+    }
+  ],
+  "values": {
+    "productCode": "string, immutable after CREATE",
+    "name": "string",
+    "categoryId": "UUID",
+    "supplierId": "UUID|null; CREATE requires UUID",
+    "seasonIds": "CREATE: UUID[]; EDIT: UUID[]|null; required own property",
+    "sizeGroupId": "UUID",
+    "year": "int32|null; CREATE requires int32",
+    "systemItemCode": "string|null; CREATE requires string",
+    "thickness": "string|null",
+    "collarPantsType": "string|null",
+    "defaultBarcodeSchemeId": "UUID|null; CREATE requires UUID",
+    "enabled": "boolean",
+    "prices": "All nine existing product price keys required, each canonical money string|null. No SKU prices.",
+    "removedFromV2": "seasonId is forbidden as an extra property; legacy scalar is not writable or returned in v2.values."
+  },
+  "seasons": {
+    "null": "Historical UNKNOWN. EDIT null only when actual stored season_ids is already NULL. F2 must preserve unchanged unknown, not default it to [].",
+    "empty": "Explicit known empty/clear. Valid CREATE or EDIT; no fake mandatory-single-season rule.",
+    "selected": "Canonical lowercase UUID array. Reject duplicates, NULL elements, nested arrays, invalid UUIDs and missing dictionaries. Normalize UUID order only after validation; equal sets are equal requests/no season change.",
+    "references": "references.seasons:[{id:UUID,name:string}] replaces references.season. Dictionary display_order,id order; exactly actual selected members. NULL and [] both references.seasons=[]; values.seasonIds carries the distinction.",
+    "createLegacyScalar": "New v2 product.season_id=NULL.",
+    "editLegacyScalar": "Existing product.season_id retained exactly, never assigned from first array member.",
+    "readLabel": "Existing drawer/list seasonLabel remains string|null. Batch dictionary aggregation with '、'; no DTO change to frozen drawer.",
+    "filters": "Existing filter.seasonIds nonempty ANY-overlap; empty unrestricted. Unique product count and stock totals; authorization scope applied before candidate expansion.",
+    "sizePolicy": "No new business cap; existing HTTP body bound. Invalid arrays reject whole request, never truncate."
+  },
+  "referencesOther": "categoryPath/supplier/sizeGroup/defaultBarcodeScheme retain existing v1 shapes.",
+  "children": "skus and barcodes retain W2 exact fields, CAS and immutable identity/raw-barcode rules.",
+  "transactions": "One PRODUCT root CAS, original request key, D1 prepare BEFORE root/children mutation, complete after writes. season_ids is actual root before/after JSON, not child-table audit.",
+  "idempotency": "v2 CREATE/EDIT hashes include explicit contractVersion:2 and canonical array, preventing cross-contract key reuse. Status commands share old canonical hash. Old committed v1 CREATE/EDIT retries recover only exact original hash/current permission before upgrade rejection. HTTP 500/unknown commit: query original receipt, do not invent a new key.",
+  "compatibility": {
+    "unverified": "v2 returns503 PRODUCT_SEASON_NOT_READY. Existing EXACT19 list/detail reads retain legacy SQL; no new-column probe or catch/fallback. Existing v1 maintenance preserved only before verified activation.",
+    "verified": "Old /products/commands CREATE/EDIT without existing matching receipt and old /products/maintenance/detail/query return409 PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED. Existing status commands and receipt recovery continue.",
+    "activation": "D1 verifies actual column/checks/two-way season reference guards/runtime ACL and conversion, issues target-bound synchronous capability. Constructor flag/version alone is not proof. C activates frontend and backend together."
+  },
+  "errors": {
+    "400": [
+      "INVALID_PRODUCT_MAINTENANCE"
+    ],
+    "409": [
+      "PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED",
+      "PRODUCT_SEASON_UNKNOWN_RESET",
+      "PRODUCT_REFERENCE_UNAVAILABLE",
+      "VERSION_CONFLICT",
+      "IDEMPOTENCY_CONFLICT",
+      "NO_PRODUCT_CHANGE"
+    ],
+    "503": [
+      "PRODUCT_SEASON_NOT_READY",
+      "MAINTENANCE_PREPARE_NOT_READY"
+    ],
+    "common": "Existing 401/403/404/413 and sanitized500 remain; no DB detail/paths leaked."
+  },
+  "providerSeam": {
+    "definition": "ProductSeasonArrayCapability {profile:'product-season-array-v1';assertVerified(target:object):void}, exported beside existing retained-delete capability in adapters/postgres/src/product-query-reader.ts",
+    "readers": "Optional third constructor argument; exact actual pool passed to synchronous verifier; missing capability keeps legacy SQL.",
+    "writer": "PostgresProductMaintenanceUnitOfWork options.seasonCapability; exact D1 driver object passed to synchronous verifier; verified instance exposes readonly seasonContract:'product-season-array-v1' to application.",
+    "issuer": "D1 only. Reject malformed object/getters/async verifier/nonvoid result. D1 verifier must reject any different/unverified target; capability creation is not implemented by D2."
+  },
+  "statusEvidence": "Contract frozen only. No schema, real PG, startup, production conversion, browser or deployment validation claimed.",
+  "owners": {
+    "D2": "registered product leaves/read consumers",
+    "D1": "schema and capability issuer/host",
+    "D3": "310 source conversion",
+    "F2": "v2 multi-select UI",
+    "C": "checkpoint and activation"
+  }
+}

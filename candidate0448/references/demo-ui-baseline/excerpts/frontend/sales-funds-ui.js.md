@@ -1,0 +1,19 @@
+# frontend/sales-funds-ui.js - Frozen UI excerpts
+
+Source commit: `b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3`. Full source SHA256: `821e9a9c96dfe6e08db610a044fd339e183b0d41b8af1398a304ff7409c9dd1f`.
+
+Boundary: Receipt/refund account and amount fields, selection dialog. Excludes localStorage access/memory and write listeners. recent(d) remains an unresolved expression, without any record data. These are incomplete reference fragments; unresolved expressions are preserved. Empty data has not been inserted to fabricate a runnable module.
+
+## Original lines 13-14
+
+```javascript
+function amountHint(d){const a=A.amounts(d),f=A.payment(d),expected=a.direction==='无'?'无需收退款':(a.direction==='退款'?'应退':'应收')+' ¥'+K.money(a.amountCents),mismatch=f.amountCents!=null&&f.amountCents!==a.amountCents;return `<small data-funds-hint class="${mismatch?'field-error':''}" role="status">${expected}${mismatch?' · 金额不一致，无法审核':''}</small>`}
+function field(d,editable){const f=A.payment(d),zero=f.direction==='无'&&d.lines?.length,name=zero?'资金':label(d),text=f.accountId?combo(f.methodId,f.accountId,d.funds):'请选择';return `<label class="tc-gold-field" data-funds-field><span class="sale-field-label">${zero?'收款账户':name+'账户'}${zero?'':' <span class="ui-required">*</span>'}</span>${zero?'<span class="sale-read-value">无需收退款账户</span>':editable?`<button type="button" class="btn entity-control ui-single-flat" data-sale="funds" aria-label="${name}账户">${h(text)}</button>`:`<span class="sale-read-value">${h(text)}</span>`}</label><label class="tc-gold-field" data-funds-amount-field><span class="sale-field-label">${name}金额 <span class="ui-required">*</span></span>${editable?`<input data-document-funds-amount aria-label="${name}金额" inputmode="decimal" placeholder="${zero?'请输入0':'请输入金额'}" value="${f.amountCents==null?'':K.money(f.amountCents)}">`:`<span class="sale-read-value">${f.amountCents==null?'':K.money(f.amountCents)}</span>`}${amountHint(d)}</label>`}
+```
+
+## Original lines 18-19
+
+```javascript
+function render(){const choice=document.querySelector('[data-fund-choose]');if(!choice)return;const rows=A.accounts().filter(a=>allowed(a,draft.methodId));choice.disabled=!draft.methodId||!rows.length;choice.textContent=draft.accountId?accountText(account(draft.accountId)):!draft.methodId?'请先选择收款方式':!rows.length?'暂无可用账户':'请选择资金账户';choice.title=choice.textContent;const hint=document.querySelector('#funds-account-hint');hint.textContent=draft.methodId&&!rows.length?'该收款方式暂无正常可用的资金账户，请先配置资金账户。':'';}
+function open(d,editable,callback){if(!editable)return;documentRef=d;onApply=callback;draft={...A.payment(d)};const rec=recent(d).filter(x=>method(x.methodId)&&account(x.accountId)&&allowed(account(x.accountId),x.methodId));recommendation=rec[0];SALES_UI.modal(label(d)+'账户',`<div class="funds-editor">${recommendation?`<section><p>最近使用${recommendation.storeId!==d.storeId?'（其他营业厅，请核对）':''}</p><button type="button" class="btn" data-fund-recent>${h(combo(recommendation.methodId,recommendation.accountId))}</button></section>`:''}<label><span>1. 选择收款方式 <span class="ui-required">*</span></span><select id="funds-method" aria-label="收款方式"><option value="">请选择</option>${A.methods().filter(x=>x.enabled!==false&&A.accounts().some(a=>allowed(a,x.id))).map(x=>`<option value="${h(x.id)}" ${draft.methodId===x.id?'selected':''}>${h(x.name)}</option>`).join('')}</select></label><label><span>2. 选择资金账户 <span class="ui-required">*</span></span><button type="button" class="btn entity-control" data-fund-choose aria-label="选择资金账户" aria-haspopup="listbox" aria-expanded="false">请选择资金账户</button></label><small id="funds-account-hint"></small><p id="funds-error" role="alert"></p></div>`,`<button class="btn" data-sale="close">取消</button><button class="btn primary" data-funds-confirm>确定</button>`,null,'sale-funds-dialog');render()}
+```

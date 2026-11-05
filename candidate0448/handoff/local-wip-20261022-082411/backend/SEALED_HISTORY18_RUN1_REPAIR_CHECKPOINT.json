@@ -1,0 +1,48 @@
+{
+  "atUtc": "2026-10-21T22:49:25.818457+00:00",
+  "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/checkpoints/sealed-history18-run1-repair-v1",
+  "manifest": {
+    "bytes": 38876,
+    "sha256": "0c0548af24bbac7857a75a59ac8836aa5a3dcc2299a6424fc6358d007bd9478d"
+  },
+  "sourceFiles": 7,
+  "beforeFiles": 7,
+  "logs": 8,
+  "lifecycleFiles": 9,
+  "runners": 2,
+  "docs": 1,
+  "patch": {
+    "path": "delta-from-effective.patch",
+    "bytes": 25146,
+    "sha256": "f3834df1e8534f9b84b326241913b83df100f2301d87bb3e1a3dda62de9845a0"
+  },
+  "actualRun1": "FAIL_7OF9_CHILD_PASS_TAP7PASS3FAIL",
+  "run1Stopped": "PG_CTL3_PID_ABSENT",
+  "repairedSqlPg": "NOT_RUN",
+  "protocol": "10/10_ONLY",
+  "integrationTypesExit": 0,
+  "newDdl18Sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da",
+  "newAssertRoutineMd5": "0d7ea7603816f2ea9c80b4f554b006a5",
+  "run2": {
+    "status": "PREPARED_NOT_EXECUTED_REQUIRES_NEW_CONTROLLER_CLEAR_AND_FRESH_FULL_GUARD",
+    "runner": {
+      "path": "runners/sealed_history_pg18_run2.py",
+      "bytes": 9804,
+      "sha256": "0c639cd39547a4711227727f7a6167f7e5ed407734285e822faed641c8adfee2"
+    },
+    "command": [
+      "python3",
+      "reports/backend/sealed_history_pg18_run2.py",
+      "run-clear-window-2"
+    ],
+    "data": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-2/data",
+    "port": 55672,
+    "database": "naijue_erp_test_18e00102",
+    "socket": "/private/tmp/nj-sealed18-20261022-r2",
+    "requiredBytes": 2298478592,
+    "reserveBytes": 2147483648,
+    "pgBytes": 134217728,
+    "syntheticLogContextBytes": 16777216
+  },
+  "publication": "CLOSED"
+}

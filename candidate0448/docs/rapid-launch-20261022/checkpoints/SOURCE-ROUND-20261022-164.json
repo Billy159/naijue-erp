@@ -1,0 +1,28 @@
+{
+  "atUtc": "2026-10-23T11:12:50.078749+00:00",
+  "parent": "873d4cc06a75b7781d15526f2b6715bff7d7bb6c",
+  "taskId": "F01_DOC158_NEW_SALE_LEAVE_INITIAL_FOCUS",
+  "finding": "DOC-158-NEW-SALE-LEAVE-INITIAL-FOCUS-01",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 48996,
+      "beforeSha256": "902b1c480e7e7645c480d8a03c31a2245b609c49b35ee6ed154295795c65ed2b",
+      "sha256": "9ab2fc38921d686edb6e44f5bea3d034ed388e7be06177c0ee0ed57b17bd9453",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-82/DELIVERY.json",
+  "ownerReceiptSha256": "8bf928e0f07e5f37753e7fc963e2fe7e1d1c839104e3443526e18c98d0c0f3e8",
+  "scope": "Remove initialFocus override on only newSALE leave source dialog. Existing native first headerclose default preserved; helper/zero/oldsaved440/mode700/draft/command owners unchanged.",
+  "checksAdopted": {
+    "runtime": "Node24.21.0",
+    "focus-before-2": "EXIT1_exact_close_vs_continue_assertion",
+    "focus-after": "EXIT0_only_affected_caller_and_unchanged_draft_note_cancel_opener",
+    "types-1": "EXIT0_final_affected_chain"
+  },
+  "notTested": [
+    "Chrome actual initialfocus/Tab/Esc/continue return after this fixed source; genuine business unchanged but not revalidated."
+  ],
+  "next": "C one complete164 candidate then originalQF only the actual failed focus afterQF2 current162recovery modulecleanrelease. Reuse158 actual mode/payment/summary and original162 source6; no whole re-run."
+}

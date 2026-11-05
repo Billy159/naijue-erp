@@ -1,0 +1,76 @@
+{
+  "atUtc": "2026-10-22T09:43:51.400675+00:00",
+  "parent": "4825fa1da5450baa0abb44a001b61ff20af71509",
+  "groups": [
+    {
+      "slice": "STOCK_OVERVIEW_FRONTEND_EXPLICIT_CAPABILITY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DATA-PRES-004-OVERVIEW-DELIVERY-v1.json",
+      "receiptSha256": "0fcfa1120acd24a606400bcf3f21648b7874dba9f6da583b3e2072182b37b799",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-page-contracts.ts",
+          "bytes": 2649,
+          "sha256": "a853ece243183b43d857fc3b17e7de1041a768b19adac10e6e1105497ff3cdea",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-configuration.ts",
+          "bytes": 4800,
+          "sha256": "e3a56ccb12e9fccc68808d2f040a25f4641af7a9f8ba06fb7b574807584f88d4",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-reader.ts",
+          "bytes": 2093,
+          "sha256": "c1b7041ecc4b1d7113a781b515f69b0d61727822a74fde2c1b98717c33d2626e",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-http-reader.ts",
+          "bytes": 4114,
+          "sha256": "40f1f704dd8d8bd88e1ce8dd662f1dbb2d7e91a3e63dba1640e37feb245d30b7",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-validation.ts",
+          "bytes": 5196,
+          "sha256": "b112b498cf67b137532b4029f69d75a0271469f2295a17cb19c75dd208744c47",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-stock.tsx",
+          "bytes": 6902,
+          "sha256": "fa8f08bd390ad30bdcbdf8c91a892d809b883a43099a7bfaa7ead6679805c846",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-editor.tsx",
+          "bytes": 29029,
+          "sha256": "c7e4585d41a6dd062371d3506add0f4b946ce2a3a6aef4b2bd0c2878a46d5310",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "bytes": 12603,
+          "sha256": "917dd2feee18fca89b63349342f7b8ad709d5a9e1afc1fbfc5e871fc64adc77f",
+          "owner": "F2"
+        }
+      ]
+    },
+    {
+      "slice": "QB63_F01_SCALAR_TYPE_TARGETED_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/QB63-F01-RESULT.json",
+      "receiptSha256": "c715798b9fcd0a3f7f86a74e31623c4be3dee7f1509076921a894b5da8f45114",
+      "files": [
+        {
+          "path": "packages/application/src/import-v3-history-header-native-reference.ts",
+          "bytes": 19244,
+          "sha256": "6b2b53d649250fc40256d2994c9a645ab5888bf334bab41c3a871b3e59586a85",
+          "owner": "D1"
+        }
+      ]
+    }
+  ],
+  "fileCount": 9,
+  "scope": "New overview UI and narrow type fix only; independent QA, browser, actual PG remain separate"
+}

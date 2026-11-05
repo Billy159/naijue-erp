@@ -1,0 +1,7 @@
+UTC 2026-10-21T04:30:35Z
+MemTotal:       10230288 kB
+MemFree:         7774908 kB
+MemAvailable:    7705072 kB
+Buffers:            4580 kB
+Cached:           100728 kB
+{"node":"v24.19.0","heapLimit":2348810240,"pidNamespace":"Per-command process namespace; other workers are not visible here."}

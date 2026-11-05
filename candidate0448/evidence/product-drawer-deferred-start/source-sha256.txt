@@ -1,0 +1,4 @@
+09ac0884e4c8103e6f5c15cff83aea5ac30abfd604541a5be132133c35633f19  apps/web/src/inventory/product-tab-state.tsx
+1491cdfaa42e23769efb32dce4ccf8a6c304c703a69062615f2166315388deef  apps/web/src/inventory/product-tab-images.tsx
+0efac11e4a10d2715c8b4b4ff11daa854337b1593bc7aebe6e76ed923cca3cde  apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs
+e52e60f859cb7ed7559168a6042b04124889783c44b8fb931b76f2503bfdbebf  apps/web/src/inventory/tests/product-drawer-deferred-start-entry.tsx

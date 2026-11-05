@@ -1,0 +1,105 @@
+{
+  "note": "静态原文件hash；不导入、不运行；原候选冻结清单未改",
+  "files": [
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/01-tests-first/scripts/release/prepare-runtime26-v7-boundary.test.mjs",
+      "sha256": "04e5d1cf6e642f41ea6e7ec60de62b03d8d71780ba09b34978129611c0a9beb8"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/01-tests-first/scripts/release/prepare-runtime26-v7.test.mjs",
+      "sha256": "e55bc4d2e03d4c051267649ca130cb1330a4176d604c6ac3a9618c23fcc4590a"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/02-implementation/scripts/release/prepare-runtime26-v7.mjs",
+      "sha256": "9e6e174ad20e43153d098d1a718711c88da0ce122d5cb06663e29e1d96ef2e44"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/FREEZE-RECEIPT.json",
+      "sha256": "e580ea329a3bdece3af482ae9e41797fc7cc0f36a667a7ce517357a6d61b0233"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/INDEPENDENT-STATIC-REVIEW.json",
+      "sha256": "b063324f3808f9c1cb04295545cf7fc1d9ceace20d3b913c06b7e282b4b39923"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/README.md",
+      "sha256": "ace96b2dfc770afe1776facd645afa9b3b6fe9632db235da26133ebf9f2dc436"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/SHA256SUMS.txt",
+      "sha256": "a55a9236b69bc413a622ced428288fe6454036562d1607754bc102e066d87b4d"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/SOURCE-PINS.json",
+      "sha256": "8bb9a506b2d6ea360acd337b5515d4a51515100c4a3da13ec9d7f9d238c3cc74"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/STATIC-VALIDATION.json",
+      "sha256": "696c4e642c338bb4b437392e6b92ca6b30446a784e46884e8a7a04a6d9957d96"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/contracts/APPROVAL-ACTIONS.NOT-AUTHORIZED.json",
+      "sha256": "01aed1cdd50264ad6d2c8a6f2711fa7b142d06404162ea563f0d4ebc0c1ac6e2"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/contracts/DDL-ACL-REVIEW-CONFIG.md",
+      "sha256": "505ca8ad452c35e2477c1e874b035cdf31e3006f1e2bfd794f7db070f3c424ee"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/contracts/NEW-ISOLATED-WORKFLOW.md",
+      "sha256": "3272ffd1bbae614ffde6f5ab1c01798f7764122baf58d8ee302fa7d2cf5a8e4f"
+    },
+    {
+      "path": "recovery/v7-preparation-successor-prep-0018/provenance/recovered-0012-prepare-runtime26-v7.test.mjs.SOURCE-ONLY",
+      "sha256": "9e89fe3cb66775d402cbb08a7b3fd794c0b50cb1305da04e9538dd81e02f2b7c"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/01-tests-first/scripts/release/prepare-runtime26-v7-tcp-only-0018.fixture.mjs",
+      "sha256": "9e6e174ad20e43153d098d1a718711c88da0ce122d5cb06663e29e1d96ef2e44"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/01-tests-first/scripts/release/prepare-runtime26-v7-unix-target.test.mjs",
+      "sha256": "7d19a212b1f097f47d5068af65ac9eec9f2f67db678892a74babe584a4b9cfa9"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/02-implementation/scripts/release/prepare-runtime26-v7.mjs",
+      "sha256": "1f06577d8ebc8a0affe2900f79b87ea8fb07bd0364d68e06d0aeb41e9d9868f9"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/FREEZE-RECEIPT.json",
+      "sha256": "ebc33ea36d49bb186a103ec98c232cfc6e12677f14c8930d1d5f8afaf01a9e11"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/INDEPENDENT-STATIC-REVIEW.json",
+      "sha256": "21d4c7cc5c6a7b6ed10bcbe5015d54db62c6c997481710b0bd91fdf35583a676"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/README.md",
+      "sha256": "a993866aed53d04bc9c88188bd6968dd4bf22f82ca282acea6c4469a524168f0"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/SHA256SUMS.txt",
+      "sha256": "e5677d21aaa11ea1c99d9a134477c0dfba63915ea13263ee66e2d3e11636adbd"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/SOURCE-PINS.json",
+      "sha256": "c5c4b67665dfe7cc04451ce8ac047b31abebb4271ae552b9bc82caca7fb0c765"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/STATIC-VALIDATION.json",
+      "sha256": "c983037a3a53124dc8cc995829df885b3608b8c208c7295d4c48b07a2c615d9f"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/contracts/APPROVAL-GATES.NOT-AUTHORIZED.json",
+      "sha256": "49f9eda413d8a76a7a633e4c506db6a5f0756bfa90e16174741afec2741612d6"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/contracts/COMPATIBILITY-AUDIT.md",
+      "sha256": "45db3cca7915d741193bcaa66c3d0703570a1daef88cb753b5d1be60e700d8bd"
+    },
+    {
+      "path": "recovery/v7-unix-target-extension-prep-0030/contracts/EXACT-UNIX-TARGET-AND-APPROVALS.md",
+      "sha256": "00e41adf6a63b055771629c102b51dc4ee5aaf9797d735a0840e9a9e1e999a27"
+    }
+  ]
+}

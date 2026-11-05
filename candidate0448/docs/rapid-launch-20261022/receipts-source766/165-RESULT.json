@@ -1,0 +1,95 @@
+{
+  "status": "COMPLETED_ORIGINAL_FIRST_MAIN_KEY_RRRO_NO_RECEIPT_CHECKPOINT_UNCHANGED",
+  "jobId": "t45-r1-first-main-original-key-recovery-readonly-20261027-165",
+  "receipts": {
+    "job.json": {
+      "jobId": "t45-r1-first-main-original-key-recovery-readonly-20261027-165",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "unit": "naijue-erp-op-5cc58239-5530f7288331",
+      "atUTC": "2026-10-27T09:32:07.166898+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 0,
+      "elapsedSeconds": 0.5188163057900965,
+      "exports": [
+        "engine-result.json",
+        "original-key-result.json"
+      ],
+      "finishedAtUTC": "2026-10-27T09:32:07.708378+00:00"
+    },
+    "original-key-result.json": {
+      "jobId": "t45-r1-first-main-original-key-recovery-readonly-20261027-165",
+      "status": "PASS_ORIGINAL_FIRST_MAIN_KEY_RRRO_READBACK",
+      "businessDML": 0,
+      "commandsIssued": 0,
+      "grantIssued": false,
+      "credentialsExported": false,
+      "originalRequestKey": "97d9c78b-d846-47af-a3d9-38d9f1ee83c8",
+      "failedOperationJob": "t45-r1-v20-adopted148-revised-baseline-20261027-164",
+      "identity": {
+        "database": "erp_rewrite_20261022_r1",
+        "oid": "1027659",
+        "role": "erp_rewrite_runtime_20261022",
+        "session_user": "erp_rewrite_runtime_20261022",
+        "server_address": null,
+        "server_port": null,
+        "postmaster_start": "2026-10-04 08:16:07.895273+00",
+        "readonly": "on"
+      },
+      "originalKeyReceipts": [],
+      "batch": [
+        {
+          "status": "STAGED",
+          "sequence": "2",
+          "cursor": "22",
+          "counts": {
+            "SKU": 0,
+            "WAREHOUSE": 22,
+            "IMPORT_BATCH": 0,
+            "INVENTORY_LEDGER": 0
+          },
+          "history_payload_hash": null
+        }
+      ],
+      "receiptObservation": "NO_ORIGINAL_KEY_RECEIPT_VISIBLE_IN_THIS_RR_SNAPSHOT",
+      "rollbackReturned": true,
+      "clientsClosed": true,
+      "finishedAtUtc": "2026-10-27T09:32:07.656Z"
+    },
+    "engine-result.json": {
+      "applicationChanged": false,
+      "businessDML": 0,
+      "checkedAtUtc": "2026-10-27T09:32:07.662456+00:00",
+      "commandsIssued": 0,
+      "grantIssued": false,
+      "jobId": "t45-r1-first-main-original-key-recovery-readonly-20261027-165",
+      "nodeExitCode": 0,
+      "runtimeStatus": "PASS_ORIGINAL_FIRST_MAIN_KEY_RRRO_READBACK",
+      "status": "PASS_ORIGINAL_FIRST_MAIN_KEY_READONLY_NO_REPLAY"
+    }
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-main-original-key-recovery-readonly-20261027-165/release-submission/release-receipts/t45-r1-first-main-original-key-recovery-readonly-20261027-165/job.json",
+      "bytes": 556,
+      "sha256": "b390fa0683536a7ee36b5c98c00023a15585235b56d85ffbde421eaa4c8d335b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-main-original-key-recovery-readonly-20261027-165/release-submission/release-receipts/t45-r1-first-main-original-key-recovery-readonly-20261027-165/original-key-result.json",
+      "bytes": 1163,
+      "sha256": "b2149bb95fe2a7ded0e538e6a9e910f00d13131112bdea8c73390356473c0617"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-main-original-key-recovery-readonly-20261027-165/release-submission/release-receipts/t45-r1-first-main-original-key-recovery-readonly-20261027-165/engine-result.json",
+      "bytes": 380,
+      "sha256": "00ab90975f5d4ad65489ca12582021a8ab71571e8cbbef865761926e5358e9fb"
+    }
+  ],
+  "businessAcceptance": false,
+  "applicationSwitch": false,
+  "noReplay": true,
+  "interpretation": "Current exact R1 RRRO snapshot original actor/key/target receipt[]; STAGED/2/22 countsWarehouse22 others0/historyhashnull. This is readback evidence, not a global proof of zero historical DML. ThreeSELECT only, ROLLBACK andclientclosed."
+}

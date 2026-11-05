@@ -1,0 +1,37 @@
+✔ approved absent key has only a real approval line locator, whole snapshot binding and no inferred key (3.684742ms)
+✔ reject tampered pin, cutoff, nonzero, duplicates, unknown identity and listed stock (2.742825ms)
+✔ ordinary and full streaming require independent approval, compiler retains zero proof without ledger ID (864.654963ms)
+✔ ordinary preflight admits only externally approved exact departed staff (174.197823ms)
+✔ stream relation check shares exact departed approval and rejects active or unapproved (11.899809ms)
+✔ whole compiler binds exact approval bytes in immutable initialization, without creating a login (767.208959ms)
+✔ full streaming preflight retains approval wire in its summary (529.618385ms)
+✔ ordinary and full stream reject approval evidence absent from current manifest (102.00596ms)
+✔ stream errors identify file, physical JSONL row and field without echoing raw values (783.561655ms)
+✔ duplicate line positions are concrete failures; report cannot overwrite (485.860687ms)
+✔ oversized line fails closed (409.901714ms)
+✔ malformed UTF8 and byte-pin drift both report the file without raw content (136.400841ms)
+✔ symlink data is refused without following the target (43.944902ms)
+✔ credential-bearing row is blocked before disk identity insertion and not echoed (54.574632ms)
+✔ canonical registry aliases resolve but cannot duplicate a physical target row (63.106846ms)
+✔ full offline validation still never implies execution admission (74.57514ms)
+✔ staff departure profile uses shared nullable date validation; unknown profiles fail closed (58.473241ms)
+✔ report directory cannot be created inside the input package (13.577961ms)
+✔ symlinked report parent cannot redirect output into the package (32.566877ms)
+✔ stream CLI supports explicit synthetic opt-in and complete offline output (751.29804ms)
+✔ every registry identity must have a valid materialized row (193.592196ms)
+✔ closed disk registry preserves the explicit identity basis for read-only consumers (241.358974ms)
+✔ invalid JSON report identifies the actual report file (281.077814ms)
+✔ actual asset size is bounded even when its declared pin is tiny (104.069208ms)
+✔ registry lookup SQL is prepared once rather than once per source row (80.633207ms)
+✔ V3 index retains complete ordered registry objects for canonical plan hashing (52.340424ms)
+✔ CLEANED generated-field omission matches the original validator (89.454307ms)
+✔ legacy wide inventory chunk rejects; versioned plan may split with unchanged rows (1413.15224ms)
+✔ READY synthetic wide master rows split by bytes only under new profile (2874.608915ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6019.363318

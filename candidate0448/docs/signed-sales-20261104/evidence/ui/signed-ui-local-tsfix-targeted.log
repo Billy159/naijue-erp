@@ -1,0 +1,90 @@
+✔ N34-S13: deduction minus is exact presentation, zero unsigned and typed negative remains invalid (80.070768ms)
+▶ N34-S03: runtime summary excludes only unselected queries; strict SAVE and selected unknown stay strict
+  ✔ SALE empty draft + no-match search is a known empty display, not a zero-priced line (255.3663ms)
+  ✔ RETURN_EXCHANGE empty draft + no-match search is a known empty display, not a zero-priced line (52.080463ms)
+  ✔ selected complete SKU with unknown price remains unknown even beside pure search text (190.497304ms)
+✔ N34-S03: runtime summary excludes only unselected queries; strict SAVE and selected unknown stay strict (651.6529ms)
+▶ F04 actual proposal form exposes effective zero and explicit cancel/confirm without rewriting price intent
+  ✔ existing lines and unfinished entries use displayed zero, not stale raw price (438.133067ms)
+  ✔ actual native dialog cancel keeps false, confirm sets true and discount editing resets it (169.29888ms)
+✔ F04 actual proposal form exposes effective zero and explicit cancel/confirm without rewriting price intent (678.846045ms)
+✖ QF51-S04-READ-DIRECTION-LABEL-01: actual shared readonly renderer preserves signed quantities and Demo direction in every native state (223.764244ms)
+▶ sales new/edit views preserve inline entry without an independent scan workspace
+  ✔ new SALE (201.409857ms)
+  ✔ new RETURN_EXCHANGE (34.532316ms)
+  ✔ existing SALE (36.137722ms)
+  ✔ existing RETURN_EXCHANGE (30.314792ms)
+✔ sales new/edit views preserve inline entry without an independent scan workspace (1337.223595ms)
+✔ actual approved wrapper accepts STRING v2 and matches original QA SKU/product reads for1 and all192 original ordered rows (87.549064ms)
+✔ datasetundefined native factory matches old SKU/product reads and explicit declared catalog group (6.065213ms)
+✔ finite native original reader and new wire preserve all200 distinct SKU tuples without truncation (38.768105ms)
+✔ readable product with unknown group remains UNAVAILABLE although every actual SKU has a group (10.028215ms)
+✔ new registration is exact POST-only, closed-origin and never forwards missing/duplicate/invalid-context requests (4.017994ms)
+✔ target product group conflict is rejected rather than treating its SKU group as eligibility (1.845743ms)
+✔ original401/403 and same-context denial remain failures, with no automatic legacy/new-route fallback (2.615112ms)
+✔ aborted and late original finite reads cannot return a successful new response (9.738897ms)
+✔ actual QA wrapper + strict client initializes sales 3 saved lines and independent transfer dictionary (27.20812ms)
+✔ actual QA wrapper + strict client initializes transfer 3 saved lines and independent transfer dictionary (5.761566ms)
+✔ actual QA wrapper + strict client initializes sales 200 saved lines and independent transfer dictionary (21.90768ms)
+✔ original finite SAVE and receipt store remain usable and independent of the new read (5.50702ms)
+✔ SALE proposal→native preparation→existing editor SAVE/null CAS; no snapshots/minimums or local IDs sent (54.458179ms)
+✔ canonical yuan intent does not infer absent price and discounts serialize one unambiguous rule (3.882207ms)
+✔ duplicate clicks/edit/reset/cancel/identity reject even abort-ignoring preparation responses (14.280819ms)
+✔ missing price proof/invalid native snapshot rejected, raw proposal retained and explicit retry possible (6.564485ms)
+✔ discount reference changes cannot silently change the price accepted on Save (5.178678ms)
+✔ uncertain SAVE retained by native workspace; no new prep or operation; same original receipt recovers (4.497209ms)
+✔ current403 invokes application access-failure hook; cross-identity composition rejected (3.825927ms)
+✔ preparation HTTP inert exact native endpoint and strict correlated result; forged facts never fetch (17.374621ms)
+✔ shared SALE UTF8 budgets accept 200 rows/escaped note and retain exact native SAVE payload; oversize never dispatches (108.683308ms)
+✔ resolved native editor discarded through another route cannot revive original proposal as a second NEW (3.186832ms)
+✔ native RETURN negative and EXCHANGE mixed signs use existing null-CAS SAVE without original-sale linkage (5.646127ms)
+✔ distinct SKU IDs with duplicate current coordinates cannot prepare or dispatch SAVE (1.104378ms)
+✔ EXCHANGE same SKU opposing different-price rows preserve order and independent IDs through prepare→SAVE (3.766742ms)
+✔ discount SAVE quotes round-trip exactly; legacy null and original keys remain unchanged and pricing errors are known rejections (8.070079ms)
+✔ legacy read-only create preparation rejects nullable intent explicitly without coercing unknown facts (1.783202ms)
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (14.419339ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (1.750303ms)
+✔ historical signed discount remains exact on memo save without invented allocation (1.214934ms)
+✔ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (23.964335ms)
+✔ approved historical discount ruling: economic edits keep original discount without guessed allocation (1.544623ms)
+✔ historical missing settlement is shown unknown, never as zero or settled (0.533046ms)
+✔ changed historical unknown pricing saves explicit-price draft without invented intent (1.813489ms)
+✔ real existing editor initializes signed unknown rows and sends economic SAVE through ordinary proposal command (8.01654ms)
+✔ real existing editor reopens all-positive origin and sends economic SAVE through ordinary proposal command (2.238092ms)
+✔ original signed-sale discount survives all-positive edit below retained discount (2.341494ms)
+✔ original signed-sale discount survives all-positive reopen below retained discount (0.967395ms)
+✔ authenticated detail origin permits reopening preserved discount larger than all-positive subtotal, wrong origin rejected (0.540188ms)
+✔ historical origin detail wire accepts exact server projection only and never grants runtime or altered-discount exceptions (0.66452ms)
+ℹ tests 54
+ℹ suites 0
+ℹ pass 53
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2979.464368
+
+✖ failing tests:
+
+test at apps/web/demo-replica/frontend/runtime/documents/sales-display-regression.test.mjs:101:1
+✖ QF51-S04-READ-DIRECTION-LABEL-01: actual shared readonly renderer preserves signed quantities and Demo direction in every native state (223.764244ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      '退回 -1',
+  +   '卖出 2'
+  -   '换出 2'
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/demo-replica/frontend/runtime/documents/sales-display-regression.test.mjs:112:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '退回 -1', '卖出 2' ],
+    expected: [ '退回 -1', '换出 2' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,27 @@
+PASS independent 1: pure shared frame has separate customers/suppliers, no identity work or automatic navigation; omitted transfer capability rejects activation without styles or business reads.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS independent 2: construction/mount/auth are inert; explicit transfer route CSS failure/retry creates exactly one bounded first-page native read, with hidden detail/product/candidate CSS and reads absent.
+PASS independent 3: detail/product CSS failures retry locally; cancel ignores late readiness; real configured product read never inserts relative fallback CSS; closed/cancelled product late401/403 cannot clear current auth/route.
+PASS independent 4: fresh product403 is transfer-local and same-menu retryable; superseded list401 is ignored; sales403 is not generalized into route disposal; fresh product401 clears the whole authenticated workspace.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+'home' !== 'ready'
+
+    at file:///workspace/shared/naijue-erp-rewrite/evidence/application-core-integration-independent-dom.mjs:127:67 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'home',
+  expected: 'ready',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

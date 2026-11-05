@@ -1,0 +1,22 @@
+[
+  {
+    "path": "adapters/postgres/patches/0035_source_review_kernel_candidate.sql",
+    "sha256": "f61f4c7a0912fd47c574dc27d7b25a01b6d80d1062151d9064296433b31126c5",
+    "bytes": 45405
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-source-review-candidate.mjs",
+    "sha256": "b6c4ef31c614ab4de79ab79066cb508251327a1c19fcc9894556aa545118b83a",
+    "bytes": 18420
+  },
+  {
+    "path": "tests/fresh35-source-review-candidate.test.mjs",
+    "sha256": "955d6babdf684d17d20493b6f9bd1e9f2db04e76f6b86a6bce613288c9027d54",
+    "bytes": 15589
+  },
+  {
+    "path": "evidence/source-review-sql-20261105/run-final-source-verification.mjs",
+    "sha256": "8c09103063376b0245e930bea71e993f0e124918e498b2b4f805edb383f1408a",
+    "bytes": 3259
+  }
+]

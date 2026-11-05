@@ -1,0 +1,45 @@
+{
+  "atUtc": "2026-10-22T08:19:25.367344+00:00",
+  "status": "PARTIAL_DATA_CANDIDATES_ACCEPTED_NOT_IMPORT",
+  "privatePinReference": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-product-reference-delta-and-seasons-review-v1.json",
+  "privatePinSha256": "bd74227eb749739db5920e959ffd4b6c06d3128d8a32e4ad32254afda5f19aca",
+  "review": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice49-product-and-season-candidates/RESULT.json",
+    "sha256": "6cb856894e976c42279d3165e22057aeaf5b4aae371c8331138b4fec99bb27c0",
+    "result": "PASS",
+    "qualification": "NEW2_REF_PLUS_OLD2644_PRESERVATION_AND_2956_SEASON_SOURCE_CANDIDATE_ONLY"
+  },
+  "components": [
+    {
+      "name": "product-reference-decisions2646-PENDING.json",
+      "sha256": "8ea52f679e0896b052b6dfc6b62fe457b9409cf61cafe24185a24ec080c3d244",
+      "bytes": 3680252
+    },
+    {
+      "name": "exact-two-size-override-rows-PENDING.json",
+      "sha256": "8726ce5b6dcb0241d77dea09bce8ddf1a9d2573318a03f407684de2065075868",
+      "bytes": 18871
+    },
+    {
+      "name": "product-season-source-conversion2956-PENDING.json",
+      "sha256": "c05e8f46bd20d050877ae431103b52d199c953919b7e8186f822f11081f9f779",
+      "bytes": 2322054
+    },
+    {
+      "name": "exact310-multiple-season-members-PENDING.json",
+      "sha256": "586c832879c88db53c6b1d9201a346cdf87c42ca61ddc7300ac4ed98337528e7",
+      "bytes": 264966
+    }
+  ],
+  "scope": [
+    "2646 manifest: only new2 reviewed full reference rows plus preservation of prior2644 objects; not full2646 reference authority",
+    "All2956 exact source-key/native-product mapping of season arrays:2598 single,48 unknownNULL,310 two atomic dictionary UUIDs; exact310 subset=620 members",
+    "Original scalar/source provenance retained; existing fresh UUID mapping reused"
+  ],
+  "notGranted": [
+    "全2956 nativeproduct reference manifest/所有生产授权：此2646只新增2和旧2644保全。",
+    "新season_ids schema/source消费、两向引用保护和EXACT19到新版的显式门禁。",
+    "实际PG/导入/原scalar持久化读回与真实310数组保存/并发。",
+    "C独立outside refs/season pins与完整MAIN执行grant；QB未创建authority。"
+  ]
+}

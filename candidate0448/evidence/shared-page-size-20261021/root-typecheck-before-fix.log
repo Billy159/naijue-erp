@@ -1,0 +1,19 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck:web
+> tsc -p apps/web/tsconfig.json
+
+apps/web/src/demo-controls/page-size-select.tsx(59,46): error TS2345: Argument of type '() => Promise<typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action")> | Promise<DemoPageSizeAction>' is not assignable to parameter of type '(value: void) => typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" } }) | PromiseLike<typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" }...'.
+  Type 'Promise<typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" } })> | Promise<DemoPageSizeAction>' is not assignable to type 'typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" } }) | PromiseLike<typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" } })>'.
+    Type 'Promise<DemoPageSizeAction>' is not assignable to type 'typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" } }) | PromiseLike<typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" } })>'.
+      Type 'Promise<DemoPageSizeAction>' is not assignable to type 'PromiseLike<typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" } })>'.
+        Types of property 'then' are incompatible.
+          Type '<TResult1 = DemoPageSizeAction, TResult2 = never>(onfulfilled?: ((value: DemoPageSizeAction) => TResult1 | PromiseLike<TResult1>) | null | undefined, onrejected?: ((reason: any) => TResult2 | PromiseLike<...>) | ... 1 more ... | undefined) => Promise<...>' is not assignable to type '<TResult1 = typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" } }), TResult2 = never>(onfulfilled?: ((value: typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resol...'.
+            Types of parameters 'onfulfilled' and 'onfulfilled' are incompatible.
+              Types of parameters 'value' and 'value' are incompatible.
+                Type 'DemoPageSizeAction' is not assignable to type 'typeof import("/workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/single-select-action", { with: { "resolution-mode": "import" } })'.
+                  Types of property 'DemoSingleSelectAction' are incompatible.
+                    Type 'ComponentType<DemoSingleSelectActionProps>' is not assignable to type '(props: DemoSingleSelectActionProps) => Element'.
+                      Type 'ComponentClass<DemoSingleSelectActionProps, any>' is not assignable to type '(props: DemoSingleSelectActionProps) => Element'.
+                        Type 'ComponentClass<DemoSingleSelectActionProps, any>' provides no match for the signature '(props: DemoSingleSelectActionProps): Element'.
+apps/web/src/demo-controls/page-size-select.tsx(63,55): error TS2367: This comparison appears to be unintentional because the types 'true | undefined' and 'false' have no overlap.

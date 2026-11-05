@@ -1,0 +1,4 @@
+.erp-document-tag.arco-tag{display:inline-flex;flex:none;align-items:center;height:auto;margin:0;padding:3px 7px;border:0;border-radius:4px;font-size:12px;font-weight:500;line-height:20px}
+.erp-document-tag[data-status-appearance=pending]{background:var(--ca-warning-soft);color:var(--ca-warning)}
+.erp-document-tag[data-status-appearance=effective]{background:var(--ca-success-soft);color:var(--ca-success)}
+.erp-document-tag[data-status-appearance=void]{background:var(--ca-neutral-tag-bg);color:var(--ca-neutral-tag-ink)}

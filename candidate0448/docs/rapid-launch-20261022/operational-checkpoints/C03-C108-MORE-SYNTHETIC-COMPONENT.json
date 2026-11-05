@@ -1,0 +1,60 @@
+{
+  "server": {
+    "atUtc": "2026-10-22T23:36:45.879909+00:00",
+    "url": "http://127.0.0.1:57849/component-more.html",
+    "source": "f4feb43ad4b50397817aa652428e5911232c9fe7",
+    "build": "ui-component-more-f4feb43-01-build01",
+    "pid": 22591,
+    "sessionId": 85344,
+    "host": "127.0.0.1",
+    "serveSha256": "f73f1d8c72f590a0e1eaa76543918676fca8e524f07c28aec3f7b10b6caf9117",
+    "http": [
+      {
+        "path": "/component-more.html",
+        "status": 200,
+        "bytes": 1021833,
+        "sha256": "fc8f6874f7b3bbcf1455bdff2d34e9fb7cbd6224c17a8b4808e461120e3d49ea",
+        "sourceHeader": "f4feb43ad4b50397817aa652428e5911232c9fe7",
+        "buildHeader": "ui-component-more-f4feb43-01-build01",
+        "classification": "SYNTHETIC_COMPONENT_ONLY"
+      },
+      {
+        "path": "/candidate-identity.json",
+        "status": 200,
+        "bytes": 1573,
+        "sha256": "7c1a6c3109f6cf9ab4d854ab177da119abeab4734f872cdfc42fbbde59f6c05c",
+        "sourceHeader": "f4feb43ad4b50397817aa652428e5911232c9fe7",
+        "buildHeader": "ui-component-more-f4feb43-01-build01",
+        "classification": "SYNTHETIC_COMPONENT_ONLY"
+      },
+      {
+        "path": "/provenance.json",
+        "status": 200,
+        "bytes": 3406,
+        "sha256": "d5744c274fb498850de6742800aa3a229bf3d3e2cca83c2fac939d9bc5a34b37",
+        "sourceHeader": "f4feb43ad4b50397817aa652428e5911232c9fe7",
+        "buildHeader": "ui-component-more-f4feb43-01-build01",
+        "classification": "SYNTHETIC_COMPONENT_ONLY"
+      }
+    ],
+    "syntheticComponentOnly": true,
+    "mainNativeAuthorChanged": false,
+    "actualFontAndGeometry": "PENDING_DEMO_ONLY_NEW_RESIDUALS"
+  },
+  "buildResult": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-component-more-f4feb43-01/RESULT.json",
+    "bytes": 6656,
+    "sha256": "ff16f37e24048cb22c4c9b1f268d761d0eddd5bb8231857de46d9a8a42f7082b"
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-component-more-f4feb43-01/MANIFEST.json",
+    "bytes": 611158,
+    "sha256": "3e6e734ac4ea81886ba5d99c0fff6d6926845c270546abef59b2e6c02eebd7b7"
+  },
+  "actualDemo": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v019-component-more-f4feb43/RESULT.json",
+    "bytes": 8613,
+    "sha256": "0d89f3b9c3f2a2464cf14d93d1b04e2e3f2caaab83caf9d70cb729a99ef47f87"
+  },
+  "scope": "Component residual density/platformfont/clamp and actualwindow scroll closed only. Main native48 unchanged; native >=4 categories untested."
+}

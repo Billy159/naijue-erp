@@ -1,0 +1,88 @@
+Explicitly opted-in disposable local target: 127.0.0.1:55432/naijue_erp_test_0eae9933770258d4. Real PostgreSQL results follow only if executed.
+TAP version 13
+# Subtest: REAL PostgreSQL: explicit disposable target and selected synthetic acceptance scenario
+    # Subtest: exact reviewed eight migration registry; historical reference fixture has no stock rows
+    ok 1 - exact reviewed eight migration registry; historical reference fixture has no stock rows
+      ---
+      duration_ms: 210.707321
+      type: 'test'
+      ...
+    # Subtest: 0006 independent party CREATE/EDIT/DISABLE/RESTORE, duplicate receipt, numbering, rollback and dependency guard
+    ok 2 - 0006 independent party CREATE/EDIT/DISABLE/RESTORE, duplicate receipt, numbering, rollback and dependency guard
+      ---
+      duration_ms: 934.036574
+      type: 'test'
+      ...
+    # Subtest: IMPORT_STAGE/membership chunks commit atomically; early publication and pre-publication runtime use fail closed
+    ok 3 - IMPORT_STAGE/membership chunks commit atomically; early publication and pre-publication runtime use fail closed
+      ---
+      duration_ms: 495.57849
+      type: 'test'
+      ...
+    # Subtest: 0007 baseline COMMIT, native-only old trigger dispatch, exact import source/receipt/audit/balance and rollback
+    ok 4 - 0007 baseline COMMIT, native-only old trigger dispatch, exact import source/receipt/audit/balance and rollback
+      ---
+      duration_ms: 257.017553
+      type: 'test'
+      ...
+    # Subtest: IMPORT checkpoint unique index, server function shape and forced-index EXPLAIN without ANALYZE
+    ok 5 - IMPORT checkpoint unique index, server function shape and forced-index EXPLAIN without ANALYZE
+      ---
+      duration_ms: 12.290098
+      type: 'test'
+      ...
+    # Subtest: complete sparse publication, absent-is-zero versus missing coordinate, native scoped reader and candidates
+    ok 6 - complete sparse publication, absent-is-zero versus missing coordinate, native scoped reader and candidates
+      ---
+      duration_ms: 324.390265
+      type: 'test'
+      ...
+    # Subtest: first sale SQL failure rolls back absent balance, ledger, header, audit and receipt before retry
+    ok 7 - first sale SQL failure rolls back absent balance, ledger, header, audit and receipt before retry
+      ---
+      duration_ms: 797.280935
+      type: 'test'
+      ...
+    # Subtest: first transfer creates only actual endpoint effects, retains zeros and rejects old deferred balance corruption
+    ok 8 - first transfer creates only actual endpoint effects, retains zeros and rejects old deferred balance corruption
+      ---
+      duration_ms: 592.443943
+      type: 'test'
+      ...
+    # Subtest: new first-use sparse deferred invariant rejects corruption at COMMIT without consuming fresh key
+    ok 9 - new first-use sparse deferred invariant rejects corruption at COMMIT without consuming fresh key
+      ---
+      duration_ms: 86.18801
+      type: 'test'
+      ...
+    # Subtest: two distinct documents really waiting on one absent inventory key, exact cumulative first-use outcome
+    ok 10 - two distinct documents really waiting on one absent inventory key, exact cumulative first-use outcome
+      ---
+      duration_ms: 335.280302
+      type: 'test'
+      ...
+    # Subtest: retained zero/history and old native source guards reject; native reader remains read-only
+    ok 11 - retained zero/history and old native source guards reject; native reader remains read-only
+      ---
+      duration_ms: 119.25453
+      type: 'test'
+      ...
+    1..11
+ok 1 - REAL PostgreSQL: explicit disposable target and selected synthetic acceptance scenario
+  ---
+  duration_ms: 5299.232481
+  type: 'test'
+  ...
+# Actual PostgreSQL server_version_num=170011; synthetic disposable target only
+# Prepared scenarios: 0006 independent party CREATE/EDIT/DISABLE/RESTORE, duplicate receipt, numbering, rollback and dependency guard; 0007 baseline COMMIT, native-only old trigger dispatch, exact import source/receipt/audit/balance and rollback; IMPORT checkpoint unique index, server function shape and forced-index EXPLAIN without ANALYZE; complete sparse publication, absent-is-zero versus missing coordinate, native scoped reader and candidates; 0008 first SALES and TRANSFER APPROVE/UNAPPROVE, repeated effects, duplicate replay and retained zeros; two distinct documents really waiting on one absent inventory key, exact cumulative first-use outcome; new sparse deferred corruption plus retained old transfer/reversal/source guards still reject
+# Forced-index checkpoint EXPLAIN (not ANALYZE, not natural planner/load evidence): [{"Plan":{"Node Type":"Index Scan","Parallel Aware":false,"Async Capable":false,"Scan Direction":"Forward","Index Name":"audit_import_checkpoint_version","Relation Name":"audit_change","Alias":"audit_change","Index Cond":"((object_id = '7e570000-0000-4000-8000-000000000bb8'::uuid) AND (new_version = 3))"}}]
+# 0001–0008 terminal assertions reached only if the engine actually executed this opted-in scenario. No production/import-file/HTTP/auth/load/upgrade acceptance is implied.
+1..1
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7868.426796

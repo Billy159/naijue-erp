@@ -1,0 +1,23 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {createRuntime27CommandIssuer} from '../adapters/postgres/src/runtime27-command-issuer.ts';
+import {PostgresMaintenanceCommandUnitOfWork} from '../adapters/postgres/src/maintenance-command-unit-of-work.ts';
+import {assertStandard27ProductCatalogLockWitness} from '../adapters/postgres/src/standard27-product-catalog-stability.ts';
+function fixture(){let state='I';const calls:string[]=[];const witness={backend_pid:'99',transaction_id:'123',virtual_transaction:'1/2',catalog_locks_held:true,catalog_writes_denied:true};const raw={getTransactionStatus(){return state;},release(){},async query(sql:string){calls.push(sql);const command=sql.startsWith('SET ')?'SET':sql.startsWith('BEGIN')?'BEGIN':sql==='COMMIT'?'COMMIT':sql==='ROLLBACK'?'ROLLBACK':'SELECT';if(command==='BEGIN')state='T';if(command==='COMMIT'||command==='ROLLBACK')state='I';return {command,rowCount:command==='SELECT'?1:0,rows:sql.includes('standard27-product:catalog-stability')?[{...witness}]:command==='SELECT'?[{database:'synthetic_test',role:'erp_unified27_runtime_2393dbc6db9581c2',session_user:'runtime',server_port:5432,row_security:'on',search_path:'pg_catalog',replication_role:'origin',superuser:false,bypass:false,session_superuser:false,session_bypass:false,runtime_inherit:false,runtime_membership:false,can_create:false,version_ok:true,gate_ok:true,read_only:'off',isolation:'read committed',policies_ok:true}]:[]};}};const i=createRuntime27CommandIssuer({async connect(){return raw;}},{database:'synthetic_test',user:'runtime',port:5432});return {...i,calls,witness,driver:new PostgresMaintenanceCommandUnitOfWork(i.pool)};}
+test('lock witness uses only genuine managed issuer context, never readiness claims',async()=>{let calls=0;await assert.rejects(assertStandard27ProductCatalogLockWitness({async connect(){calls++;throw Error();}}, {async assertReady(){calls++;}} as never,{}));assert.equal(calls,0);});
+test('native witness pins backend, transaction and virtual transaction throughout the context',async()=>{
+ const f=fixture();await f.driver.transaction(async context=>{await assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,context);await assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,context);f.witness.transaction_id='124';await assert.rejects(assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,context));});
+});
+test('missing locks, native transaction identity or catalog write exclusion refuses',async()=>{
+ for(const patch of [{catalog_locks_held:false},{catalog_writes_denied:false},{transaction_id:''},{virtual_transaction:''},{backend_pid:''}]){const f=fixture();Object.assign(f.witness,patch);await assert.rejects(f.driver.transaction(context=>assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,context)));}
+});
+test('source witness observes own granted conflicting locks, never acquires locks or edits ACL',async()=>{
+ const f=fixture();await f.driver.transaction(context=>assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,context));const sql=f.calls.find(s=>s.includes('standard27-product:catalog-stability'))!;
+ for(const name of ['pg_authid','pg_auth_members','pg_proc','pg_class','pg_attribute','pg_policy','pg_trigger','pg_depend','pg_amproc','pg_amop'])assert.ok(sql.includes(name),name);
+ assert.match(sql,/l\.pid=pg_backend_pid\(\)/);assert.match(sql,/l\.granted/);assert.match(sql,/l\.locktype='relation'/);assert.match(sql,/c\.relisshared THEN 0/);assert.match(sql,/'ShareLock','ShareRowExclusiveLock','ExclusiveLock','AccessExclusiveLock'/);assert.doesNotMatch(sql,/LOCK TABLE|\bGRANT\s+\w|\bREVOKE\b|pg_current_xact_id\(\)/);
+});
+test('closed contexts cannot reuse a prior lock witness',async()=>{const f=fixture();let saved:object;await f.driver.transaction(async context=>{saved=context;await assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,context);});await assert.rejects(assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,saved!));});
+test('changed backend or virtual transaction rejects and a lost witness cannot be restored by retry',async()=>{
+ for(const patch of [{backend_pid:'100'},{virtual_transaction:'1/3'},{catalog_locks_held:false}]){const f=fixture();await f.driver.transaction(async context=>{
+  await assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,context);const old={...f.witness};Object.assign(f.witness,patch);await assert.rejects(assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,context));Object.assign(f.witness,old);const before=f.calls.length;await assert.rejects(assertStandard27ProductCatalogLockWitness(f.pool,f.runtime27,context));assert.equal(f.calls.length,before);
+ });}
+});

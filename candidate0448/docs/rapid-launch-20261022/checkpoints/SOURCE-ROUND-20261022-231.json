@@ -1,0 +1,74 @@
+{
+  "atUtc": "2026-10-23T22:43:51.385142+00:00",
+  "parent": "6d07f0b5f179d814af3c3e97a3a7816eecd957bf",
+  "taskId": "F1_USER_UI_DATES_NATIVE_SHADOW_FONT",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-controls.css",
+      "bytes": 2418,
+      "sha256": "c78802c45d4b05237f0adc08b436d029ebbc5ebc673684812a93061d83484d52",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-117/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "e807265eb7a6b2133046d3c1066b4917a229cd58d76b86b2333a4d6594f1a6c9",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh; Fast not verified",
+    "finding": "Original USER-UI-DATES229 font/anchor residual",
+    "status": "SOURCE_READY_SCOPED_LEDGER_DATE_FONT_ANCHOR_UNKNOWN_UNCHANGED",
+    "files": [
+      {
+        "path": "apps/web/src/components/standard-controls.css",
+        "bytes": 2418,
+        "sha256": "c78802c45d4b05237f0adc08b436d029ebbc5ebc673684812a93061d83484d52"
+      }
+    ],
+    "change": "Only owned ledger UIDate calendar root font13px Arial/PingFang normal copied from final Frozen Shadow host inheritance; no trigger/popup positioning or global portal font change.",
+    "checks": {
+      "before-1": "RED original actual I07 popup inherits14px Inter, expected Frozen13px Arial family.",
+      "after-1": "PASS local actual I07 calendar/body13px Arial/PingFang normal; week50013/32 and date-value50014/24 retained, reads1. No native selection/query action, no dimensions measured.",
+      "stylesOnly": "No TS changed/type suite rerun, imported sheet parsed by original component computed-style check. Today/padding/Esc/20+4 actual229 retained and not repeated."
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-117/REPORT.md",
+        "bytes": 1287,
+        "sha256": "b4b42f25806932fddf3ef3a54664b34b50fd96436ae322a9bd22e5e0ca21b55a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-117/PROOF.json",
+        "bytes": 9020,
+        "sha256": "97b72d260a22fe637bcc30727f8ee9a24d692cab28e7c1101c48a8de66830f2c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-117/RESULT.json",
+        "bytes": 1072,
+        "sha256": "c3958f1ed294df808fca87ab2adeaf965881dc5c0c6c4b625612965f7bac8259"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-117/BEFORE-FONT.json",
+        "bytes": 1374,
+        "sha256": "07379adfc1c9f64b472c35e48454f7ee48dcfbef11f8c9720764a4174a86f70d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-117/AFTER-FONT.json",
+        "bytes": 856,
+        "sha256": "42d29924f001255dc3fc28c84fa0b6213c40f6fe7890ad17e1e11bbd4bd1c765"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-117/SOURCE.diff",
+        "bytes": 1047,
+        "sha256": "7d8c14c40a83e3e3451c60fbebf1c576cf5e30e80c7f795d005b1eb77294b5d0"
+      }
+    ],
+    "remaining": "Actual font and native anchor containing-block data pending later C-controlled exact window; anchor root cause UNKNOWN. No guess/offset/sourceposition change.",
+    "limitations": [
+      "Actual229 Today and final padding/dimensions accepted only at prior scope and reused; no replays.",
+      "No Chrome/HTTP/PG/whole build/Git/C or F2 writes. Standard-controls.tsx exact227 unchanged.",
+      "No full calendar/page/real-business PASS from local fonts."
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "Original targeted owner necessary checks adopted; independent fixedsource review/containing successor browser actual pending. No wholepage/realbusiness/performance acceptance, not in running229."
+}

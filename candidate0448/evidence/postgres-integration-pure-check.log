@@ -1,0 +1,16 @@
+✔ deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure (11.650179ms)
+✔ deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected (7.5617ms)
+✔ deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof (1.822164ms)
+✔ integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback (15.806178ms)
+✔ integration safety: accepts only a dedicated explicitly repeated loopback test target (1.466085ms)
+✔ integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs (1.928587ms)
+✔ integration safety: malformed and encoded credentials never appear in diagnostics (2.636524ms)
+✔ integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast (32.424619ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 846.350457

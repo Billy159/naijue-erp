@@ -1,0 +1,4 @@
+PASS focused 1: direct-host target replacement aborts old scope, late A cannot replace B, same-target reopening owns new child identity, same-account permission revocation clears pending detail.
+PASS focused 2: StrictMode reference selector is initially inert, reads bounded 20-item native pages, clears page-one labels on page two, aborts/clears late ignored-signal candidates on same-account session revision.
+PASS focused 3: 2,000 actual lines accepted, 2,001 rejected, fourth settlement rejected, cross-document settlement ownership rejected.
+All focused checks passed. Synthetic only; no network, database, service, real browser or source changes.

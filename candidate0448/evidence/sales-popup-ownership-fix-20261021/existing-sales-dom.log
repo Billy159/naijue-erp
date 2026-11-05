@@ -1,0 +1,19 @@
+PASS DOM 1: idle/advanced expansion reads nothing; actual 20/50/100/200 page sizes and approved primary/advanced filters.
+PASS DOM 2: only clicked bounded reference port reads; Escape restores focus; explicit query uses real mocked HTTP and exact negative money.
+PASS DOM 3: server document pagination, reset without read, failed page-size keeps marked prior scope; retry applies new size only on success.
+PASS DOM 4: detail only on click; stored line/full labels/exact return economics; non-Demo saved blocks absent and product 查看 explicitly unavailable; no mutations; full-page Back retains mounted executed list, scroll and focus after reveal; no dialog/Tab trap/Escape dismissal.
+PASS DOM 5: new target is independent; Back/cancel/close abort and discard late ignored-signal responses; cancelled facts do not reappear.
+PASS DOM 6: cancelling page-size retains applied size; identity/session/permission replacement clears list/detail and discards late facts.
+PASS DOM 7: StrictMode setup/cleanup replay does not dispose the live route, detail or reference lifecycle.
+PASS DOM 8: concrete reference HTTP cancels on close/identity revocation and late responses cannot reopen candidates or restore old labels.
+PASS DOM 9: full native names, exact beyond-int64 aggregates without invented units, Shanghai next-day minute formatting, exchange sections and gift-excluded detail totals; one list plus one detail request only.
+PASS DOM 10: missing detail-style capability leaves native list/query usable and both detail activations visibly unavailable; no dummy CSS provider/read fallback.
+PASS DOM 11: style readiness gates data; Back works while CSS is pending, preserves draft/results/DOM/scroll/focus, and late style success cannot start a closed read.
+PASS DOM 12: failed action CSS never mounts data; explicit retry joins code/style readiness and performs exactly one native read, with honest errors and source action order.
+PASS DOM 13: closed older style activation cannot unlock a newer target; only its own ready action starts the new independent document scope.
+PASS DOM 14: same-account session/permission revocation during action-style wait clears retained facts and cannot start late data after CSS resolves.
+PASS DOM 15: entering detail cancels/detaches a pending list-reference child without hidden-trigger focus; ignored-signal late candidates cannot reopen on Back or reread the list.
+PASS DOM 16: removing capability during pending action CSS immediately reveals list, restores safe heading focus/scroll, disables detail actions and discards late readiness without implicit reopening.
+PASS DOM 17: removing capability during detail data aborts its query/scope and drops ignored-signal late facts while retaining a usable list; reinstatement never rereads automatically.
+PASS DOM 18: removing capability from loaded detail clears document, reveals the original retained list and safely focuses its heading instead of its now-disabled trigger, without Back/read resurrection.
+All 18 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.

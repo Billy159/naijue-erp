@@ -1,0 +1,215 @@
+{
+  "atUtc": "2026-10-24T01:46:24.514961+00:00",
+  "parent": "5c44f3c3b2f7550ced22d3243135cdb9fa3813fd",
+  "taskId": "APPROVED_V14_CORE_BIND_GUARDS_EXACT_MEMBER_HOST",
+  "files": [
+    {
+      "path": "packages/application/src/inventory-cutoff-import.ts",
+      "bytes": 23658,
+      "sha256": "7f75bb45cff5cd91e96e9433b8d37c351356962a19355520d82cab479dc4b140",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/native-import-record-accounting.ts",
+      "bytes": 20967,
+      "sha256": "06195d499881260665cd780227b4b4fc69f7a17601feede8cf59148e87b8e7a9",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "bytes": 58007,
+      "sha256": "b58ce7f2ed626dc049bc0c2269a92137e3d9d48d65e226c69349cdc78e470231",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-record-accounting.ts",
+      "bytes": 48889,
+      "sha256": "715db7f2409430fe9498ee97af37c8d3e7a49d8acbadc169505b187d02e854e5",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/import-v3-history-header-native-reference.ts",
+      "bytes": 20603,
+      "sha256": "70d5f165464d86abde0a3d3bed09f199ff5835360d45f6f3106249f3fea4b293",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 65304,
+      "sha256": "551260a063e0305cb467063973d06126f58bf3bab7457c4a18b32f64d31e0a92",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "bytes": 55595,
+      "sha256": "081a492907db1d708f4982ad68b63593c706f339cda6ebd2396f295786434d16",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+      "bytes": 83455,
+      "sha256": "d1c41d61846fa48e64f178125f4e58610cf6be11d908c88c695ba2ade7d26d1b",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/import-stage-bootstrap-postgres-protocol.test.ts",
+      "bytes": 33957,
+      "sha256": "0cd4820b631471c270da5b642ef6c7cdd630d94c3ca6ff9c4160d8b857df031a",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 18791,
+      "sha256": "469e7f470a544138f809ca60a45e12f68091ca9d6598be2cae41eb6d7de59afd",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V14-CORE-INITIALIZATION-SOURCE-v1.json",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1_B06_APPROVED_V14_CORE_INITIALIZATION_SOURCE_V1",
+      "atUtc": "2026-10-24T01:44:32.795793+00:00",
+      "model": "gpt-6.1-sol/xhigh",
+      "fastRequested": "off",
+      "fastSwitchVerified": false,
+      "humanApproval": "01a16b7f-3cf4-7041-b338-0aa2e693001b / docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
+      "reportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2 / docs/rapid-launch-20261022/REPORTING-AUTHORIZATION.json"
+    },
+    "completedScope": {
+      "status": "SOURCE_IMPLEMENTED_TARGETED_PROTOCOL_AND_STRICT_PASS_AWAITING_QB_AND_C_ENGINE_VALIDATION",
+      "core": "Original same-client finite callback then22 actual INSERT RETURNING claims then0to1 CAS; unique CORE audit1to2/beforezero/closedafter/receipt seq1 cursor22; exact115/49 proof. No synthetic CHUNK or extra STAGE/audit/receipt.",
+      "bind": "Original receipt-first independent source authorization; once-only samebatch NULL metadata/expected{} to real full binding; sequence+1/counts cursor unchanged/zero claims; no user_account/auth_session/source/native birth mutation.",
+      "guards": "One incremental patch keeps old migrations, global audit increment CHECK, claim PK/positive sequence, complete publication/FINAL/conservation and current typed equality. Exact CORE INSERT/UPDATE deferred events share one final proof; private helper also checks one full binding, immutable birth,22 claims, finite no-business-effect set and authorized sparse master version chains/current frozen projections.",
+      "host": "Existing exact26 factory accepts mutually exclusive coreInitializationRead binding, mounts only original authentication and settings22/22; original RR actualclient proof/current ADMIN/WAREHOUSE check uses D2 committed-core capability. Source equality/count/account existence alone cannot give grant. No global readiness changed.",
+      "carryForward": "Read back exact22 original claim/record/op/seq1/source identity; later plan counts them once and only claims remaining warehouse records. No silent conflict/ON CONFLICT skip.",
+      "runtime": "Original v11 metadata query/path retained; explicit26_v14_core_initialization selects exact123 function catalog,9 replaced original bodies plus1 private helper. Same IMPORT_STAGE purposes require independent C review; no v12/v13/default issuer/new purpose.",
+      "proof": "Original strict7 bootstrap proof unchanged; actual command binding helper distinguishes CORE input digest from full payload digest; review hash is external command input and final commandhash remains actual receipt/proof binding."
+    },
+    "changedFiles": [
+      {
+        "path": "packages/application/src/inventory-cutoff-import.ts",
+        "bytes": 23658,
+        "sha256": "7f75bb45cff5cd91e96e9433b8d37c351356962a19355520d82cab479dc4b140"
+      },
+      {
+        "path": "packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20967,
+        "sha256": "06195d499881260665cd780227b4b4fc69f7a17601feede8cf59148e87b8e7a9"
+      },
+      {
+        "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "bytes": 58007,
+        "sha256": "b58ce7f2ed626dc049bc0c2269a92137e3d9d48d65e226c69349cdc78e470231"
+      },
+      {
+        "path": "adapters/postgres/src/native-import-record-accounting.ts",
+        "bytes": 48889,
+        "sha256": "715db7f2409430fe9498ee97af37c8d3e7a49d8acbadc169505b187d02e854e5"
+      },
+      {
+        "path": "packages/application/src/import-v3-history-header-native-reference.ts",
+        "bytes": 20603,
+        "sha256": "70d5f165464d86abde0a3d3bed09f199ff5835360d45f6f3106249f3fea4b293"
+      },
+      {
+        "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 65304,
+        "sha256": "551260a063e0305cb467063973d06126f58bf3bab7457c4a18b32f64d31e0a92"
+      },
+      {
+        "path": "apps/api/src/postgres-read-api.ts",
+        "bytes": 55595,
+        "sha256": "081a492907db1d708f4982ad68b63593c706f339cda6ebd2396f295786434d16"
+      },
+      {
+        "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+        "bytes": 83455,
+        "sha256": "d1c41d61846fa48e64f178125f4e58610cf6be11d908c88c695ba2ade7d26d1b"
+      },
+      {
+        "path": "tests/import-stage-bootstrap-postgres-protocol.test.ts",
+        "bytes": 33957,
+        "sha256": "0cd4820b631471c270da5b642ef6c7cdd630d94c3ca6ff9c4160d8b857df031a"
+      },
+      {
+        "path": "tests/native-runtime26-capability.test.ts",
+        "bytes": 18791,
+        "sha256": "469e7f470a544138f809ca60a45e12f68091ca9d6598be2cae41eb6d7de59afd"
+      }
+    ],
+    "checks": {
+      "newUniqueScopes": 8,
+      "affectedLegacyScopes": 3,
+      "skips": 0,
+      "passingScopes": [
+        "CORE22 actual-return accounting/original callback order/audit1to2/current-authorized receipt replay",
+        "CORE zero claim failure rollback and unknown COMMIT discard/no rollback retry",
+        "One full binding with zero claims/no auth/source mutation/samekey replay/second bind and changed payload rejection",
+        "CORE malformed member/authority/record scope rejection",
+        "Committed CORE read exact22/current identity/member drift denial on original client",
+        "Full MAIN exact22 birth carry-forward read without reclaims",
+        "Explicit v14 metadata selector/finite purpose/metadataOnly review",
+        "Exact patch function body pins and retained v11 probe",
+        "Affected original-key full STAGE replay",
+        "Affected original26 callback same-client lifecycle",
+        "Affected original v11 issuer lease/metadata behavior"
+      ],
+      "initialFailures": "New CORE positive tests initially used old six-fraction synthetic timestamp; corrected only new fixture to canonical bootstrapAt. One new source assertion regex wrongly spanned the entire patch; narrowed test to its actual exact-body pin purpose. SQL parser found unparenthesized CASE in new bootstrap IF; source repaired and only affected grammar/body pin checks rerun. No failures hidden or actualPG claims.",
+      "strict": {
+        "exitCode": 0,
+        "roots": [
+          "apps/api/src/postgres-read-api.ts",
+          "adapters/postgres/src/inventory-cutoff-import-store.ts",
+          "packages/application/src/import-v3-history-header-native-reference.ts",
+          "tests/import-stage-bootstrap-postgres-protocol.test.ts",
+          "tests/native-runtime26-capability.test.ts"
+        ],
+        "scope": "Original strict noEmit ES2023/NodeNext/noUncheckedIndexedAccess/exactOptionalPropertyTypes/noFallthrough/noImplicitOverride/verbatimModuleSyntax/rewriteRelativeImportExtensions/skipLibCheck/node/libDOM/jsxReact flags, complete imported dependency graph",
+        "lastToolChunk": "22d2a3"
+      },
+      "sqlGrammar": {
+        "tool": "pglast7.21 installed only in temporary /tmp parser directory; no project/runtime dependency change",
+        "sqlStatements": 14,
+        "plpgsqlFunctions": 10,
+        "result": "PASS_STATIC_GRAMMAR_ONLY",
+        "lastToolChunk": "992d08 plus514516 authority final grammar",
+        "notEngineAcceptance": true
+      },
+      "originalFunctionBases": "All8 replaced original0007/0011/0015/0018 function bodies checked to match current v11 expected body pins before insertion; bootstrap starts approved v8 body. Old migration files not edited.",
+      "databaseOperations": 0,
+      "sshOperations": 0,
+      "builds": 0,
+      "gitOperations": 0,
+      "browserOperations": 0,
+      "credentialsOrRealSourceCaptureRead": false,
+      "D2SettingsFilesChangedByD1": false,
+      "D3LeavesChangedByD1": false
+    },
+    "notTested": [
+      "Actual PostgreSQL DDL/type/name resolution, real deferred trigger execution, roles/ACL/private helper EXECUTE and runtime catalog export",
+      "Actual first real49/115/22claim transaction, login/password/session resume and exact22 directory response",
+      "Actual full source availability/one-time binding/full MAIN31 remainder/current maintenance chain/complete PUBLISH; full real import remains incomplete",
+      "Actual HTTP/browser/deployment; old sealed18/H06/generic239/QB200 and other accepted suites not rerun"
+    ],
+    "blockers": {
+      "implementationApproval": "Approved v14 implemented; not WAITING_USER",
+      "actualExecution": "C alone must install/review exact v14 on coordinated isolated target/role; original live v11/C114 data untouched. PUBLIC helper EXECUTE remains revoked; exact nonowner runtime helper/table privileges need C independent review.",
+      "fullSource": "Genuine full MAIN hash/whole counts remain unavailable until actual full source independently closes; this module never substitutes zero or fake producer.",
+      "sourceReview": "First complete source candidate now ready for original QB targeted review; no independent technical PASS asserted by owner."
+    },
+    "next": {
+      "C": "Freeze the10 precise leaves as one v14 source candidate; send original QB only new CORE/BIND/guard/current-proof delta; coordinate necessary actual target installation/runtime/ACL/rollback/login later.",
+      "D3Methods": {
+        "types": "CoreStageCommand/CoreInitializationMetadata/CoreSourceMembers/CoreWarehouseItem/CoreFullSourceBinding/BindFullSourceCommand in original inventory-cutoff-import.ts",
+        "store": "new PostgresCutoffImportStore(pool,{runtime26,stageBootstrap26,coreAuthorization:{assertAllowed(actor,CoreImportCommand)}})",
+        "callback": "stageNewBatch26(client,{command:IMPORT_STAGE|IMPORT_CORE_STAGE,now,operationId},callbackRuntime):Promise<void>; unchanged borrowed43SQL",
+        "proof": "assertBootstrapAccountCommandBinding(input,command,operationId,now)",
+        "carryForward": "readNativeCoreWarehouseCarryForward(actualClient,{batchId,coreReceiptId,coreSourceDigest},runtime26) -> {checkpoint,claims22,warehouses22}; read only, before new MAIN effects",
+        "runtimePatchSelector": "review.catalog.patchLevel=26_v14_core_initialization; v11 remains26_v11_document_specification_save; metadataOnly false execution authority unchanged"
+      },
+      "host": "createPostgresRuntime26ApplicationApi(options with coreInitializationRead:{profile:COMMITTED_CORE_SETTINGS_V14,batchId,operationId,coreSourceDigest},original review). No currentForms/readExtensions/write providers/media inCORE; technical CURRENT_FORM_READ and original auth credentials compatibility independently required.",
+      "D1": "Address only concrete QB/actual affected failures on original leaves; continue remaining authorized backend scope, do not mark full import/dataReady/PUBLISH complete."
+    }
+  },
+  "qualification": "Human-approved exact v14 source; owner8 new and3 affected checks plus strict/static grammar adopted, not independent QB or actual PG/DDL/49accounts. Old v11 unchanged; v13 unapproved. D2 settings260 separate; D3 next frozen module. No active WIP or unrelated product-query test staged."
+}

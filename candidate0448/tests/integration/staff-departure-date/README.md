@@ -1,0 +1,6 @@
+# Local synthetic PostgreSQL check, not executed in cloud
+Run rollback.sql only on a separately verified disposable synthetic pre-successor target, with psql -X -v ON_ERROR_STOP=1. It temporarily applies the exact ADD COLUMN statement, checks nullable date/no default and unchanged required role, probes date/null storage and invalid-calendar rejection, then rolls back. Require the ROLLBACK ACK and a separate new-connection catalog check that departure_date is absent. No actual personnel or original cloud target should be used.
+
+This is a schema/type check, not full standard-import acceptance. The local Codex must additionally run the reviewed whole-package import successor with the explicit staff-departure-v1 declaration, assert known date/null readback, unchanged staff IDs/references, no user_account creation, and transaction rollback/new-connection restoration. Old V1 schema declarations remain valid and omit the field. The new successor's schema fingerprint and exact row accounting must be admitted by the importer, never bypassed.
+
+Ordinary LEAVE/REINSTATE remains unchanged and does not invent/reset a departure date. The date is source history, not the maintenance audit timestamp. No default, data backfill or login permission is added.

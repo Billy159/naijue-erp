@@ -1,0 +1,45 @@
+✔ candidate builds exactly on missing-settlement successor with literal single anchors and pins (19.243171ms)
+✔ ordinary historical absence including zero net requires proof, normal settlement equality remains strict (9.245708ms)
+✔ origin requires immutable positive-version approved SALE, digest, source and published baseline closure (3.087647ms)
+✔ all actual rows and non-lifecycle header columns must still equal source origin exactly (2.783399ms)
+✔ every audit and receipt version is covered without truncation or gaps (1.401999ms)
+✔ any line or settlement delta or economic header delta anywhere in the chain rejects (3.339268ms)
+✔ sparse header pairs reject omissions, preserve explicit null and compare timestamps as instants (4.072473ms)
+✔ source body leaves ordinary actor, exact line effects and native mutation validators intact (1.695284ms)
+✔ known header, signed-line and allocation contradictions reject before missing-evidence exception (2.317698ms)
+✔ trigger admission binds original predicates, full event columns and zero arguments (4.91013ms)
+✔ explicit versioned two-function ACL reduction precedes strict restoration gate (53.059683ms)
+✔ companion refuses non-default ACL and metadata drift; revokes PUBLIC only and preserves all nonACL metadata (32.091244ms)
+✔ restoration PLpgSQL IF comparisons parenthesize all five CASE operands (12.939521ms)
+✔ batch closure IF comparisons parenthesize SQL CASE expressions (18.238423ms)
+✔ finalizer main remains unconditionally disabled until independent pre-Node launch assurance exists (15.547607ms)
+✔ finalizer consumes independent fixed root review evidence, never creates approval from observation (9.650027ms)
+✔ finalizer is explicit, root-only, no-overwrite, source-stable and read-only toward PostgreSQL (6.505075ms)
+✔ review validator accepts only separately supplied exact reviewed binding, not observation or approval flags (317.95724ms)
+✔ versioned source spec changes only final closure pin and binds predecessor/combined artifact (1220.522218ms)
+✔ versioned record validation binds exact format, predecessor, successor and final body (1.366739ms)
+✔ forged source spec refuses before any catalog query and cannot supply its own approval (5.913495ms)
+✔ historical reception installs zero archive before final exact verifier and keeps old sales composition intact (57.698404ms)
+✔ batch binding successor requires exact independently reviewed singleton predecessor (9.379473ms)
+✔ each published batch binds immutable INIT source identity, lifecycle and precise expected counts (14.565523ms)
+✔ batch successor retains every existing singleton, marker, receipt and batch predicate (3.028442ms)
+✔ candidate composes real closure and exact access verification into one atomic SQL unit (17.781154ms)
+✔ candidate access successor changes only the exact closure pin; retains all permissions and metadata guards (8.098151ms)
+✔ any byte drift of initializer kernel, candidate or access predecessor blocks rendering (8.986887ms)
+✔ renderer leaves existing initializer and runtime catalog wiring untouched (12.649882ms)
+✔ candidate replaces only closure after exact installed predecessor and owner check (18.561811ms)
+✔ closure independently requires exactly one seal, stage and final publication in order (3.72994ms)
+✔ child marker has the exact generated root and numeric ordinal with no caller extras (2.387074ms)
+✔ candidate preserves read-only committed inspection and original receipt/batch closure checks (6.133939ms)
+✔ all five successor bodies remain exact, once, in dependency order under one transaction (1.911748ms)
+✔ access verifier changes only profile-command pin beyond the prior closure pin; permissions are identical (1.723006ms)
+✔ exact chain proposals never claim installation or runtime admission (0.28994ms)
+✔ every additional exact source pin rejects byte drift, missing or unexpected inputs (7.091032ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1466.810216

@@ -1,0 +1,48 @@
+{
+  "scope": "Read-only frozen-source full-page sales detail and action-only detail styles",
+  "frozenSourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "checks": [
+    {
+      "command": "./node_modules/.bin/tsc --noEmit -p apps/web/src/sales/tsconfig.json",
+      "exitCode": 0,
+      "log": "fullpage-typecheck.txt"
+    },
+    {
+      "command": "node apps/web/src/sales/tests/run-dom-tests.mjs",
+      "exitCode": 0,
+      "syntheticDomGroups": 14,
+      "log": "fullpage-dom-tests.txt"
+    },
+    {
+      "command": "node --test apps/web/src/sales/sales.test.ts",
+      "exitCode": 0,
+      "tests": 16,
+      "log": "fullpage-unit-tests.txt"
+    },
+    {
+      "command": "node apps/web/src/sales/tests/run-frozen-source-check.mjs",
+      "exitCode": 0,
+      "pinnedFrozenHashes": 10,
+      "log": "fullpage-source-check.txt"
+    },
+    {
+      "command": "node apps/web/src/sales/tests/run-build-check.mjs",
+      "exitCode": 0,
+      "log": "fullpage-build-check.txt"
+    }
+  ],
+  "factsPreserved": [
+    "Exact integer money/count strings and UUID identity",
+    "Saved SKU/FIT/full size/barcode and historical payment names",
+    "SALE/RETURN/EXCHANGE/gifts display without category inference",
+    "Cancelled/late/identity-safe scopes and StrictMode lifecycle"
+  ],
+  "limits": [
+    "Visible 返回列表 only; no browser URL/history integration",
+    "Native historical category snapshot remains unavailable",
+    "Unsupported write/export/print/history controls not enabled",
+    "No real browser/computed layout/pixel/performance acceptance",
+    "No service/network/listener/database/install/commit/push/deploy actions",
+    "Shared application/asset wiring is separately owned and verified"
+  ]
+}

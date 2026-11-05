@@ -1,0 +1,16 @@
+{
+  "id": "v7-empty-history-publication-dispatch",
+  "status": "EXPLICITLY_APPROVED_BY_USER",
+  "recordedAtUtc": "2026-10-23T07:53:41.712615+00:00",
+  "document": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v7-EMPTY-HISTORY-PUBLISH.md",
+  "documentSha256": "af5a68a34db33f7642020eadeca0f66154cd83414a5c6e3ad2d8d431a9496125",
+  "originalReview": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/PUBLISH71-EXACT2-DISPATCH-ASSESSMENT-v1.json",
+  "originalReviewSha256": "20b918381d8f50104f442007e124673b7a08f39c049a5025d0ab798908a3e4b9",
+  "newTables": 0,
+  "newColumns": 0,
+  "publicationConditionChanged": true,
+  "heldOnlyRelatedBranch": true,
+  "otherWorkContinues": true,
+  "approvalRecord": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json",
+  "branchAwaitingImplementation": true
+}

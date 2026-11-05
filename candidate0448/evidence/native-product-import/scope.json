@@ -1,0 +1,51 @@
+{
+  "scope": "guarded schema-11 native PRODUCT creation only",
+  "files": [
+    {
+      "path": "packages/application/src/native-product-import.ts",
+      "sha256": "c434923e8fcb8832459b7c62b8a80438a00c1215fd79dbe12cb5eabebd19d11d"
+    },
+    {
+      "path": "adapters/postgres/src/native-product-import.ts",
+      "sha256": "a589b9ed1bfb9b4e1f4f0dd081fe5635c7cead4be0ad8b3ab1adce9b1dc92a58"
+    },
+    {
+      "path": "tests/native-product-import.test.ts",
+      "sha256": "274515f61edbcec95c995626a9fb3b0e6512c55df8dc8f5f0821dcc3701b231a"
+    },
+    {
+      "path": "docs/native-product-import.md",
+      "sha256": "e42ab2e06410f4b7db955c37f18fbde0908d5358dfb9748e398ae76f8fca2588"
+    }
+  ],
+  "data": "fictional synthetic inputs only",
+  "live_database_connected": false,
+  "migrations_executed": false,
+  "real_import_performed": false,
+  "published": false,
+  "deployed": false,
+  "frontend_or_live_required_rules_changed": false,
+  "sku_inventory_barcode_or_other_mappers_changed": false,
+  "still_required": [
+    "independent exact-file/original-row/reference mapping authorizer and source loader",
+    "real PostgreSQL migration/transaction/trigger/concurrency acceptance",
+    "full entity staging and publication gates before real import readiness"
+  ],
+  "independent_review": {
+    "model": "gpt-6.1-sol",
+    "result": "two P2 reader-contract issues fixed and re-reviewed: two-level category limit, actual locked nonempty size-group member"
+  },
+  "verification_log": "evidence/native-product-import/verification.log",
+  "verification": {
+    "typecheck": "passed",
+    "build": "passed",
+    "smoke_build": "passed",
+    "focused_tests": {
+      "passed": 25,
+      "failed": 0
+    },
+    "native_emitted_module_import": "passed",
+    "real_postgresql_acceptance": "not run",
+    "entire_repository_test_suite": "not run by this task"
+  }
+}

@@ -1,0 +1,38 @@
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (6.922001ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (1.217735ms)
+✔ historical signed discount remains exact on memo save without invented allocation (0.801834ms)
+✔ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (20.762464ms)
+✔ approved historical discount ruling: economic edits keep original discount without guessed allocation (1.315378ms)
+✔ historical missing settlement is shown unknown, never as zero or settled (0.50537ms)
+✖ changed historical unknown pricing saves explicit-price draft without invented intent (2.406251ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 313.658159
+
+✖ failing tests:
+
+test at apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:53:1
+✖ changed historical unknown pricing saves explicit-price draft without invented intent (2.406251ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== '600'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:60:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '600',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

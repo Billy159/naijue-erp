@@ -1,0 +1,15 @@
+Recorded stdout from the completed 2026-10-21 entry smoke run. The tested entry, routes, fixture, stylesheet-owner, and shell source have not changed since this run. This is simulated DOM evidence only, with no listener and no real-browser screenshot/waterfall claim.
+Command: node --test apps/web/visual-acceptance-host/tests/entry.test.mjs
+
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+✔ new test-only entry mounts the source frame and actual three pages without production auth (2692.153307ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5381.957325

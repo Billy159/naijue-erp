@@ -1,0 +1,17 @@
+✔ batch closure IF comparisons parenthesize SQL CASE expressions (19.741363ms)
+✔ versioned source spec changes only final closure pin and binds predecessor/combined artifact (904.22127ms)
+✔ versioned record validation binds exact format, predecessor, successor and final body (1.494741ms)
+✔ forged source spec refuses before any catalog query and cannot supply its own approval (5.980621ms)
+✔ historical reception installs zero archive before final exact verifier and keeps old sales composition intact (42.586553ms)
+✔ all five successor bodies remain exact, once, in dependency order under one transaction (2.800753ms)
+✔ access verifier changes only profile-command pin beyond the prior closure pin; permissions are identical (1.827308ms)
+✔ exact chain proposals never claim installation or runtime admission (0.570095ms)
+✔ every additional exact source pin rejects byte drift, missing or unexpected inputs (8.920923ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1092.808892

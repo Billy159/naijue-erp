@@ -1,0 +1,19 @@
+{
+  "atUtc": "2026-10-22T18:47:03.636563+00:00",
+  "scope": "SKU_REFERENCE_DECISIONS_ONLY",
+  "authorityFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-sku26-reference-review-v1.json",
+  "authoritySha256": "f238530f1b3eec7f5586f7f08e4497982782f53500c65ad6c37a19b6a56f1273",
+  "independentReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice94-sku14999-source-reference/RESULT.json",
+    "sha256": "bf69321816b617782c1cfb9fed12ea28d15e7c0c705cd7fc0ec5e34d82930bd8",
+    "result": "PASS"
+  },
+  "counts": {
+    "canonical": 14999,
+    "originalAliases": 15121,
+    "collisionGroups": 110,
+    "members": 232
+  },
+  "realImportExecutionAuthorized": false,
+  "notSourceMainRuntimeGrant": true
+}

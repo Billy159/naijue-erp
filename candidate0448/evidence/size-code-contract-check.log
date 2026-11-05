@@ -1,0 +1,15 @@
+✔ SYNTHETIC: fit is an independent SKU dimension, not merged with product/color/size (15.813768ms)
+✔ SYNTHETIC: multiple raw historical codes bind directly to one canonical SKU and retain primary (17.637975ms)
+✔ SYNTHETIC: raw barcode leading zeros and string identity are never numeric-normalized (3.252121ms)
+✔ SYNTHETIC: cross-SKU binding and corrupt conflicting lookup fail closed (2.003016ms)
+✔ SYNTHETIC: binding requires an existing enabled SKU, no guessed/matrix-created identity (0.668806ms)
+✔ SYNTHETIC: identical binding is idempotent; disabled code is not silently reactivated (2.534741ms)
+✔ SYNTHETIC: source sizes preserve absent and repeated codes without inventing identity (0.911567ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1756.613459

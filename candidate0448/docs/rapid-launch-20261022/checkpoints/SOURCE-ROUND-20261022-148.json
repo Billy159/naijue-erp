@@ -1,0 +1,39 @@
+{
+  "atUtc": "2026-10-23T06:59:16.390629+00:00",
+  "parent": "ade0aa60c93c18d5ef3eb57dfcb4266113615c80",
+  "taskId": "B03_APPROVED_CURRENT_SEASON_ARRAY_READ_HOST_PAIR",
+  "files": [
+    {
+      "path": "adapters/postgres/src/inventory-query-reader.ts",
+      "owner": "D3",
+      "bytes": 32643,
+      "sha256": "604023559e21dc49257c293de0affd4199b76a6cfc4ca65f12240a23b521b43b"
+    },
+    {
+      "path": "tests/inventory-query-postgres-protocol.test.ts",
+      "owner": "D3",
+      "bytes": 37343,
+      "sha256": "22c9f39ad75d3edcd9608253e465f77ddfb186910d3f50793b0a59a5fac04d1b"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "owner": "D1",
+      "bytes": 47365,
+      "sha256": "6179e1446f46952517eef7f67cc1170cc007c055ecebfeb7a75a9156e1008b36"
+    }
+  ],
+  "scope": [
+    "Reuse original productSeasonArray capability verified on samepool; current season_ids ORoverlap across authorized count/fullsummary/page/balance/candidates, no scalarfallback current NULL/empty",
+    "Original onehost injects exact existing issuer object; no-cap legacy retained",
+    "Ownerregistry existing read/output8 paths D3 unique, no schema/write-contract authority"
+  ],
+  "checksAdopted": {
+    "D3": "New2 scripted inventory season array targeted tests/strict originalPGtest fullclosure PASS",
+    "D1": "Two original affected host composition checks/strict entry closure PASS, oldquery tests not repeated"
+  },
+  "notTested": [
+    "ActualPG/SQL/HTTP/UI/role/performance",
+    "Fullquery output notimplemented inthisdelta"
+  ],
+  "next": "OriginalQB exact3/sourceprotocol only; current UI147 remainsseparatelyfixed"
+}

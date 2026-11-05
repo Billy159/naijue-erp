@@ -1,0 +1,181 @@
+{
+  "jobId": "t45-r1-195-barcode-original-key-readonly-20261028-196",
+  "status": "ACTUAL_READONLY_RECOVERY_COMPLETED_WITH_CARRIER_EXIT_STATUS_PREFIX_BUG",
+  "actualDispatcherStatus": "FAILED",
+  "actualDispatcherExitCode": 2,
+  "dispatcherReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-195-barcode-original-key-readonly-20261028-196/release-submission/release-receipts/t45-r1-195-barcode-original-key-readonly-20261028-196/job.json",
+    "bytes": 544,
+    "sha256": "a81be8a990f78c0952ee3b785590a4616a7a35263aaea4276f34c178a8dfd9cf"
+  },
+  "readerReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-195-barcode-original-key-readonly-20261028-196/release-submission/release-receipts/t45-r1-195-barcode-original-key-readonly-20261028-196/original-key-result.json",
+    "bytes": 16026,
+    "sha256": "c86ea5c622156e5234fc7df38ae69a5c6fba2272d0c183efc35fea3ae449ded6"
+  },
+  "engineReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-195-barcode-original-key-readonly-20261028-196/release-submission/release-receipts/t45-r1-195-barcode-original-key-readonly-20261028-196/engine-result.json",
+    "bytes": 2011,
+    "sha256": "2a37cf480378f74da86e868d9f21de20a09dc6d59b67d2bfdfacb6f370f24ab3"
+  },
+  "carrierExitExplanation": "Reader nodeExit0 and both result statuses show actual read success. T45 carrier final status startsPASS195_ but old shell exit predicate only acceptsPASS_, so wrapper returned2 after all reads/rollback/close succeeded. Preserve FAILED receipt; no rerun needed or completion fabricated.",
+  "checkedAtUtc": "2026-10-27T19:02:07.131Z",
+  "actualTargetAndRole": {
+    "database": "erp_rewrite_20261022_r1",
+    "oid": "1027659",
+    "role": "erp_rewrite_runtime_20261022",
+    "session_user": "erp_rewrite_runtime_20261022",
+    "server_address": null,
+    "server_port": null,
+    "postmaster_start": "2026-10-04 08:16:07.895273+00",
+    "readonly": "on"
+  },
+  "journal195": {
+    "bytes": 5623,
+    "committedOrdinalsContiguousFrom1": true,
+    "committedOrdinalsCount": 18,
+    "committedOrdinalsUnique": true,
+    "firstEvent": {
+      "digest": "7dba52f72fe19d6dff261bd425d80894b75d9c9966670fcea51b405ee31a7aaa",
+      "kind": "PARTY",
+      "ordinal": 1,
+      "receiptCounts": {},
+      "state": "ATTEMPTING"
+    },
+    "groups": {
+      "BARCODE": {
+        "committedWithReceiptCounts": 0,
+        "events": 2,
+        "inserted": 0,
+        "replayed": 0,
+        "states": {
+          "ATTEMPTING": 1,
+          "FAILED_OUTCOME_UNVERIFIED": 1
+        }
+      },
+      "CATALOGUE": {
+        "committedWithReceiptCounts": 10,
+        "events": 20,
+        "inserted": 0,
+        "replayed": 344,
+        "states": {
+          "ATTEMPTING": 10,
+          "COMMITTED": 10
+        }
+      },
+      "PARTY": {
+        "committedWithReceiptCounts": 8,
+        "events": 16,
+        "inserted": 0,
+        "replayed": 515,
+        "states": {
+          "ATTEMPTING": 8,
+          "COMMITTED": 8
+        }
+      }
+    },
+    "lastEvent": {
+      "digest": "df8ddd952e811e4aec196cd506fe2da9cf27603f85af21448288e9d2ae37db5c",
+      "kind": "BARCODE",
+      "ordinal": 19,
+      "receiptCounts": {},
+      "state": "FAILED_OUTCOME_UNVERIFIED"
+    },
+    "lines": 38,
+    "mainEvents": [],
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-193-reaped-unit-successor-20261028-195/results/original-native-step-journal.jsonl",
+    "rawBodyExported": false,
+    "sha256": "d81b329ac4732c2aacbd4cb4ff2001c9027ce1df3e3b367693ce275790d0925b"
+  },
+  "failedOrdinal19": {
+    "identity": {
+      "journalOrdinal": 19,
+      "kind": "BARCODE",
+      "digest": "df8ddd952e811e4aec196cd506fe2da9cf27603f85af21448288e9d2ae37db5c",
+      "sourceRowId": "01dac3ee-b68d-64f8-75d8-d9c1066c09be",
+      "nativeBarcodeId": "d120406f-905d-4aa3-b06b-7d78d1401434",
+      "mainRequestKey": null,
+      "requestKeyExplanation": "NATIVE_BARCODE_ROW_STAGE_HAS_NO_MAIN_REQUEST_KEY; durableidentity is original source/native IDs and exact prepared payload digest",
+      "rangeDigestMatched": true
+    },
+    "durability": "BOTH_NATIVE_AND_SOURCE_ABSENT_IN_CURRENT_RR_SNAPSHOT",
+    "nativeMatches": 0,
+    "sourceMatches": 0,
+    "failedDigestOperationReceipts": []
+  },
+  "batch": [
+    {
+      "status": "STAGED",
+      "sequence": "3",
+      "cursor": "22",
+      "counts": {
+        "SKU": 0,
+        "WAREHOUSE": 22,
+        "IMPORT_BATCH": 0,
+        "INVENTORY_LEDGER": 0
+      },
+      "history_payload_hash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8"
+    }
+  ],
+  "mainCommandReceipts": [
+    {
+      "id": "4d8a0208-bee7-cc6f-da1a-3b060b210ce2",
+      "request_key": "97d9c78b-d846-47af-a3d9-38d9f1ee83c8",
+      "request_hash": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+      "action": "IMPORT_BIND_FULL_SOURCE",
+      "status": "COMMITTED",
+      "sequence": "3",
+      "cursor": "22",
+      "result_status": "STAGED"
+    }
+  ],
+  "exactPermissionEvidence": {
+    "role": "erp_rewrite_runtime_20261022",
+    "object": "naijue_erp.sku_barcode",
+    "firstMissingRequiredSourceQuery": {
+      "stage": "native-barcode:target FOR UPDATE",
+      "relations": [
+        {
+          "object": "naijue_erp.sku_barcode",
+          "missingSelectColumns": [],
+          "rowLockRequiresUpdateOnAtLeastOneColumn": true,
+          "actualAnyColumnUpdate": false
+        }
+      ]
+    },
+    "tableSelect": true,
+    "anyColumnUpdate": false,
+    "insertColumnsMissing": [
+      "id",
+      "barcode",
+      "sku_id",
+      "barcode_kind",
+      "scheme_id",
+      "enabled"
+    ],
+    "cutoffRoutineExecute": true,
+    "priorRequiredStagesNoMissingPrivilege": [
+      "native-barcode:schema",
+      "native-barcode:batch FOR UPDATE",
+      "native-barcode:sku-alias FOR SHARE OF k,r,a",
+      "native-barcode:scheme FOR SHARE"
+    ],
+    "original195Sqlstate": "42501",
+    "limitation": "195 original server message/statement context was not retained. This is exact observed ACL deficit + original fixedsource SQL-order evidence, not a recovered original server-error detail."
+  },
+  "cleanup": {
+    "RRRO": true,
+    "rollbackReturned": true,
+    "clientsClosed": true,
+    "businessDML": 0,
+    "grantIssued": false,
+    "selectQueries": 8
+  },
+  "notAuthorizedOrDone": [
+    "No writer/replay of195or196",
+    "No privilege/grant/schema/APP/public change",
+    "No new MAIN or request key fabricated"
+  ],
+  "next": "C/D1 determine precise minimal reviewed role/column permissions and rebind canonical/runtime review if approved; exact newwriter authority required. D3 conditional16225 budget only applies while STAGED/noACCOUNT/currentproofvalid. Original195 remains failed; all oldkeys/18replayed rows preserved.",
+  "actualModelAndFast": "UNVERIFIED"
+}

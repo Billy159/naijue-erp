@@ -1,0 +1,161 @@
+{
+  "atUtc": "2026-10-24T00:40:05.149672+00:00",
+  "parent": "f23aede734dd3fce95c76c17d31324a6ab39522c",
+  "taskId": "F2_I07_UIDATE_NATIVE_ANCESTOR_CONSUMER",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/ledger-drawer.tsx",
+      "bytes": 14211,
+      "sha256": "1d61f99a9ef5c08cad26ff02b375ec5ce3ce8b0a24165804a5846d841aef1486",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger.css",
+      "bytes": 8988,
+      "sha256": "08117f67fc24fc991885f9a185779d241e6695246063366a808340a77102394b",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "eb99f12556d218111019d76513a2aa732c9d0653016a2cc9f4ec689ceb7bcb53",
+  "ownerDelivery": {
+    "taskId": "USER-UI-DATES",
+    "related": "QF2-I07-CARRIER-INSET-01",
+    "subscope": "I07 start/end UIDate explicit ancestor mount + original static drawer body",
+    "owner": "F2",
+    "status": "SOURCE_READY_EXACT2_FIXED247_CONSUMER_AND_STRICT_PASS_ACTUAL_PAIR_ANCHOR_PENDING",
+    "authority": {
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "model": "gpt-6.1-sol/xhigh; Fast not verified"
+    },
+    "completedScope": "Both original start/end UIDate calls explicitly popupMount=ancestor; one scoped original ledger body position:static adapter. Same native outer drawer positioning ancestor; no x/y/offset/width/transform constants. Entire previous CSS incl244hover and all other TSX bytes preserved. Public247 only read.",
+    "files": [
+      {
+        "path": "apps/web/src/inventory/ledger-drawer.tsx",
+        "bytes": 14211,
+        "sha256": "1d61f99a9ef5c08cad26ff02b375ec5ce3ce8b0a24165804a5846d841aef1486",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/source/apps/web/src/inventory/ledger-drawer.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/before/apps/web/src/inventory/ledger-drawer.tsx",
+          "bytes": 14167,
+          "sha256": "b4c10d0ad01d24b5be068f73bfc0dc0151d49ef9ef97c051d725d9ee2a73f18c"
+        }
+      },
+      {
+        "path": "apps/web/src/inventory/ledger.css",
+        "bytes": 8988,
+        "sha256": "08117f67fc24fc991885f9a185779d241e6695246063366a808340a77102394b",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/source/apps/web/src/inventory/ledger.css",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/before/apps/web/src/inventory/ledger.css",
+          "bytes": 8763,
+          "sha256": "684a447a99420ab5e35a956db754599ded7b12cf03b6b9fa566877eca8d05fb9"
+        }
+      }
+    ],
+    "requiredPublic247": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-controls.tsx",
+        "bytes": 6905,
+        "sha256": "16d4b6ba08224d691f5bf300d600ba27c20ec319fa6e2c1a11d78f2d64dde9c0",
+        "readOnly": true,
+        "fixedSource": 247
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-controls.css",
+        "bytes": 2760,
+        "sha256": "9e52095cb7f0b191e000114ed201c5feb3fe8f9f3408ae085655a66b5e4a9327",
+        "readOnly": true,
+        "fixedSource": 247
+      }
+    ],
+    "checks": {
+      "status": "PASS_LOCAL_LEDGER_TWO_DATE_ANCESTOR_OPTIN_AND_CONTAINING_BLOCK_CHAIN",
+      "changed": "Only two UIDate popupMount props plus one private bodypositionstatic rule; all previous CSS incl244hover and all other TSX byte unchanged",
+      "api": "Fixed247 UIDate, same original values/handlers",
+      "beforeBodyPosition": "relative",
+      "afterBodyPosition": "static",
+      "portalOwners": [
+        "DIV.arco-drawer erp-overlay erp-overlay-close-in-header inventory-ledger slideRight-appear slideRight-appear-active",
+        "DIV.arco-drawer erp-overlay erp-overlay-close-in-header inventory-ledger slideRight-appear slideRight-appear-active"
+      ],
+      "otherMountedPositionedControls": [
+        {
+          "element": "INPUT.arco-select-view-input arco-select-hidden",
+          "owner": "SPAN.arco-select-view-selector"
+        },
+        {
+          "element": "DIV.demo-single-select-portal",
+          "owner": "DIV.demo-single-select ui-single-host"
+        }
+      ],
+      "initialReads": 1,
+      "unexpectedFilterOrWriteOperations": 0,
+      "qualification": "Real ledger/React19/installed Arco and fixed247 local DOM+computed position chain only; no offsetParent/layout/left/top pixels, Today/font/pointer/public suite or actual Chrome acceptance. Original QF2 must verify pair actual date placement on new containing candidate."
+    },
+    "css": {
+      "cssParse": true,
+      "cssDependencyBundleWarnings": 0,
+      "scope": "Changed ledger CSS only; no full preview build"
+    },
+    "strict": "Changed ledger drawer full strict imported closure0diagnostics with exact fixed247 typed API; no imported source exclusions",
+    "preserved": "Date values/handlers/disabled/font/size/filter reads unchanged; original SourceCloseIcon/30hit/hoverfinal/reader/20+4 untouched. Mounted select hidden input and own portal retain original local positioning owners after bodystatic.",
+    "untested": [
+      "New containing candidate actual pair popup x/y/top/root clamp placement",
+      "Inactive/closed currently unmounted popup geometries not broadly rechecked; original source/public paths reused",
+      "No Today/font/pointer/default/public/12region/20+4 suites rerun or new Chrome/fullbuild/HTTP/PG/service/Git/deployment"
+    ],
+    "warnings": "Two existing Arco React19 ref deprecation warnings. First local typecheck wrapper had an escaped-newline generation syntax error; fixed wrapper only, then real strict closure passed without source/flags changes.",
+    "blocker": "None in source. Public247 fixed pins matched. NO_CHROME; containing candidate and original QF2 affected pair date actual pending.",
+    "next": "C pin exact2 after244hover + fixed247 public dependencies -> containing successor -> original QF2 only start/end ancestor placement. Reuse Today14fontmetrics/12regions/normal glyph and existing fixed close hover source. P10 exact7 is a separate already released batch.",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/SOURCE-MANIFEST.json",
+        "bytes": 2765,
+        "sha256": "cf97e7aa54703136b9f3f5b2cb81bb53412f27aac5328bbbdcba9f3c4825f7da"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/source.diff",
+        "bytes": 2716,
+        "sha256": "586e28f76968d9a21ef44c4d5300fd94e826e0c3c252089d05069d7ae5f9deef"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/CHECKS.json",
+        "bytes": 1283,
+        "sha256": "977f376598665abeb54a9792914be6d493fd55935fcbf1e4f697aac5a8a241ea"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/CSS-CHECKS.json",
+        "bytes": 120,
+        "sha256": "b74630659e8dab0cc1643f1f912a81df92ef707ad7f7b786b513fed2f61f12e1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/checks.log",
+        "bytes": 641,
+        "sha256": "bd885468df53a98d2bd9b4bead5be26f72bbe8c4127789c593a43a7f5f75f956"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/strict.log",
+        "bytes": 79,
+        "sha256": "c8e449dd40614fedc0146cb8af334073471dbed99f85fa443cc3f1fd13528d95"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/types.log",
+        "bytes": 135,
+        "sha256": "cf892455a12151858379ad6d25d139fc98a4abaec66dd13f8cc5a2905f9f502c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/verify-consumer.cjs",
+        "bytes": 9714,
+        "sha256": "83efd7c2935b7f87f6ef3383c06491d29d928565755ac7e5331a8a3c05a49697"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/date-ancestor-01/actual-consumer-dom.html",
+        "bytes": 8869,
+        "sha256": "1130e3c80a5f4fdfe2a71b7856287095372750b7532725c6e6044a4a98e7d70e"
+      }
+    ]
+  },
+  "qualification": "Original ledger start/end two UIDate optin and scoped bodypositionstatic only, includes244 exact hover prefix; oldpublic247 reused. RealReact/Arco consumer static chain+strict adopted, not new actual rect/offsetParent. Independent consumer and containing browser pending; old14font/Today/shape scopes retained."
+}

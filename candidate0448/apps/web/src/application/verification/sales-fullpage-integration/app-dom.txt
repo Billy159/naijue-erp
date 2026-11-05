@@ -1,0 +1,12 @@
+PASS DOM 1: missing host/config/providers fail closed; construction/mount/anonymous verification performs zero business imports, styles or reads.
+PASS DOM 2: real login form reuses auth/password clearing; only chosen leaf CSS activates; cancellation prevents late code/CSS from mounting; inventory waits for explicit query.
+PASS DOM 3: route replacement aborts prior real HTTP reader; late responses cannot restore old route; 503 remains a local failure, not empty success or raw server text.
+PASS DOM 4: verification/account/permission changes clear scopes before new identity; stale 401 cannot expire newer identity; current business 401 clears all authenticated content.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 5: actual Arco parties load only the activated bounded normal-status page; kinds remain independent; clean modal cannot resurrect after route leave; dirty/uncertain work blocks navigation; atomic name+enabled EDIT preserves key/bytes across lost response, absent receipt and exact replay; identity change aborts pending command and discards late facts.
+PASS DOM 6: composed password/logout flows reuse authentication, invalidate all scopes/drafts, clear forms and unmount the one actual React root.
+PASS DOM 7: explicit same-origin CSS links are inert, deduplicated, failure-retryable and removed on owner disposal; no resource/browser/network loading used.
+PASS DOM 8: route CSS failure is local, safe and explicitly retryable without business reads; unavailable transfer is not fabricated; failed host cleanup cannot prevent root disposal.
+All 8 synthetic application DOM groups passed. Not real-browser/network/Demo pixels/performance/production acceptance.

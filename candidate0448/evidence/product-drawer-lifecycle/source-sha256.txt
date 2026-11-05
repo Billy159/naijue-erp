@@ -1,0 +1,6 @@
+2c8cd483c5b592170b9ba7d77a8b40f52d2061f8a5bc202d260c67ede8f7f830  apps/web/src/inventory/product-drawer-host.tsx
+6d424ff47967410c3fa7a8ef6c3cbcbfc87af27b61bd49c5a7eb1379f5a2ba12  apps/web/src/inventory/product-drawer.tsx
+5bc78e88c36cd72f882002d846c4dad1f3f85843f2d89ceee6d418a32287228e  apps/web/src/inventory/product-tab-state.tsx
+1314a78f06a8e0b5b3a5f255e39137aae9291ef87619b24cab769965dca6259b  apps/web/src/inventory/product-tab-images.tsx
+89651235be9faf07b952c04629665361025eaa241e165037e5a7e16f985da73c  apps/web/src/inventory/tests/product-drawer-lifecycle-entry.tsx
+782d73eccca0ccbe705f8243734f2fb04bd536a3c19f87562d06b0d4e6abbb12  apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs

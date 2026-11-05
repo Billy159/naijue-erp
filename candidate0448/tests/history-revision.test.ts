@@ -1,0 +1,220 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createHistoryRevisionService, parseHistoryRevisionCommand, planHistoryRevision } from '../packages/application/src/history-revision-service.ts';
+import type { HistoryRevisionCommand, HistoryRevisionCurrent, HistoryRevisionResolvedDraftLineSet, HistoryRevisionDependencies } from '../packages/application/src/history-revision-contracts.ts';
+import { historyActor as actor } from './support/imported-history-query-fixtures.ts';
+
+const id = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
+function current(kind: 'sales' | 'transfers' = 'sales'): HistoryRevisionCurrent {
+  return { kind, documentId: id(1), version: 1, previousRevisionId: null, importBatchId: id(2), publishedOperationId: id(3), documentManifestHash: 'a'.repeat(64), responsibleStaffId: null,
+    sourceStatus: 'APPROVED', baselineEffect: 'INCLUDED_APPROVED', businessDate: '2026-10-04', warehouseId: kind === 'sales' ? id(4) : null,
+    fromWarehouseId: kind === 'transfers' ? id(4) : null, toWarehouseId: kind === 'transfers' ? id(5) : null,
+    lines: [{ lineId: id(6), skuId: id(7), quantity: '2', ...(kind === 'sales' ? { dealPrice: '10.00', lineAmount: '20.00', allocatedDiscount: null } : {}) }],
+    totals: kind === 'sales' ? { grossAmount: '20.00', orderDiscount: '0.00', netDue: '20.00' } : null,
+    settlements: kind === 'sales' ? [{ settlementId: id(8), direction: 'RECEIVE', amount: '20.00' }] : [] };
+}
+function command(kind: 'sales' | 'transfers' = 'sales'): HistoryRevisionCommand {
+  return { kind, documentId: id(1), expectedVersion: 1, requestKey: 'synthetic-history-revise', reason: 'Correct known quantity',
+    lines: [{ lineId: id(6), quantity: '3' }], totals: null, settlements: [] };
+}
+const plan = (c = current(), q = command()) => planHistoryRevision(c, q, id(99));
+
+test('history correction captures sparse fields without turning omitted money into null; rejects getters/hidden/unknown/duplicate rows', () => {
+  assert.deepEqual(parseHistoryRevisionCommand(command()), command()); let gets = 0;
+  const getter = Object.defineProperty(command(), 'reason', { enumerable: true, get() { gets++; return 'reason'; } });
+  for (const q of [getter, { ...command(), status: 'APPROVED' }, { ...command(), lines: [command().lines[0], command().lines[0]] },
+    { ...command(), lines: [{ lineId: id(6), quantity: '1.5' }] }, { ...command(), lines: [{ lineId: id(6), dealPrice: '10.001' }] },
+    { ...command(), lines: [{ lineId: id(6), quantity: 3 }] }, { ...command(), lines: [{ lineId: id(6) }] },
+    { ...command(), lines: Object.assign([], { hidden: true }) }, { ...command(), reason: '' }]) assert.throws(() => parseHistoryRevisionCommand(q));
+  assert.equal(gets, 0);
+});
+test('baseline-included sales increases/decreases only the effective quantity difference; original facts stay unchanged', () => {
+  const c = current(), original = structuredClone(c), first = plan(c);
+  assert.deepEqual(first.effects.map(e => e.quantityDelta), ['-1']); assert.equal(first.after.version, 2);
+  assert.equal(first.after.previousRevisionId, id(99)); assert.deepEqual(c, original);
+  const second = planHistoryRevision(first.after, { ...command(), expectedVersion: 2, lines: [{ lineId: id(6), quantity: '1' }] }, id(100));
+  assert.deepEqual(second.effects.map(e => e.quantityDelta), ['2']);
+  assert.equal(7n + BigInt(first.effects[0]!.quantityDelta) + BigInt(second.effects[0]!.quantityDelta), 8n);
+});
+test('signed independent return/exchange quantity is not flipped again by business type', () => {
+  const c = current(); (c.lines[0] as { quantity: string }).quantity = '-2';
+  assert.deepEqual(plan(c, { ...command(), lines: [{ lineId: id(6), quantity: '-3' }] }).effects.map(e => e.quantityDelta), ['1']);
+});
+test('transfer quantity differences conserve both ends and retain each actual line identity', () => {
+  const p = plan(current('transfers'), command('transfers'));
+  assert.deepEqual(p.effects.map(e => [e.endpoint, e.quantityDelta]), [['FROM', '-1'], ['TO', '1']]);
+  assert.equal(p.effects.reduce((sum, e) => sum + BigInt(e.quantityDelta), 0n), 0n); assert.ok(p.effects.every(e => e.lineId === id(6)));
+});
+test('money-only correction creates no stock effects and requires revised settlement equality without balancing old history', () => {
+  const p = plan(current(), { ...command(), lines: [{ lineId: id(6), dealPrice: '11.00', lineAmount: '22.00' }],
+    totals: { grossAmount: '22.00', orderDiscount: '0.00', netDue: '22.00' }, settlements: [{ settlementId: id(8), amount: '22.00' }] });
+  assert.deepEqual(p.effects, []); assert.equal(p.moneyChanged, true);
+  assert.throws(() => plan(current(), { ...command(), lines: [{ lineId: id(6), lineAmount: '22.00' }], totals: { grossAmount: '22.00', orderDiscount: '0.00', netDue: '22.00' } }), { code: 'SETTLEMENT_MISMATCH' });
+  const legacy = current(); (legacy.settlements[0] as { amount: string }).amount = '18.50';
+  assert.equal(plan(legacy).after.settlements[0]!.amount, '18.50');
+});
+test('unknown original business date remains null for money-only revision and refuses quantity posting without inventing a date', () => {
+  const c = { ...current(), businessDate: null };
+  const p = plan(c, { ...command(), lines: [{ lineId: id(6), dealPrice: '11.00', lineAmount: '22.00' }],
+    totals: { grossAmount: '22.00', orderDiscount: '0.00', netDue: '22.00' }, settlements: [{ settlementId: id(8), amount: '22.00' }] });
+  assert.equal(p.after.businessDate, null); assert.deepEqual(p.effects, []);
+  assert.throws(() => plan(c), { code: 'HISTORY_REVISION_BUSINESS_DATE_UNKNOWN' });
+  const draft = plan({ ...c, sourceStatus: 'DRAFT', baselineEffect: 'EXCLUDED_NOT_EFFECTIVE' });
+  assert.equal(draft.after.businessDate, null); assert.deepEqual(draft.effects, []);
+});
+test('explicit nullable discount stays null while an omitted field retains its effective value', () => {
+  const c = current(); (c.lines[0] as { allocatedDiscount: string | null }).allocatedDiscount = '1.00';
+  assert.equal(plan(c).after.lines[0]!.allocatedDiscount, '1.00');
+  const p = plan(c, { ...command(), lines: [{ lineId: id(6), allocatedDiscount: null }] });
+  assert.equal(p.after.lines[0]!.allocatedDiscount, null); assert.deepEqual(p.effects, []);
+});
+test('original DRAFT/VOID facts cannot become approved or affect stock merely by revision', () => {
+  for (const sourceStatus of ['DRAFT', 'VOID'] as const) {
+    const c = { ...current(), sourceStatus, baselineEffect: 'EXCLUDED_NOT_EFFECTIVE' as const };
+    const p = plan(c); assert.deepEqual(p.effects, []); assert.equal(p.after.sourceStatus, sourceStatus);
+  }
+});
+test('unproven baseline, stale version, foreign row, no change and overflowing differences reject', () => {
+  assert.throws(() => plan({ ...current(), documentManifestHash: '' }), { code: 'HISTORY_REVISION_BASELINE_UNPROVEN' });
+  assert.throws(() => plan({ ...current(), baselineEffect: 'EXCLUDED_NOT_EFFECTIVE' }), { code: 'HISTORY_REVISION_BASELINE_UNPROVEN' });
+  assert.throws(() => plan({ ...current(), version: 2 }), { code: 'VERSION_CONFLICT' });
+  assert.throws(() => plan(current(), { ...command(), lines: [{ lineId: id(66), quantity: '3' }] }), { code: 'HISTORY_REVISION_FOREIGN_ROW' });
+  assert.throws(() => plan(current(), { ...command(), lines: [{ lineId: id(6), quantity: '2' }] }), { code: 'HISTORY_REVISION_EMPTY' });
+  const c = current(); (c.lines[0] as { quantity: string }).quantity = '-9223372036854775808';
+  assert.throws(() => plan(c, { ...command(), lines: [{ lineId: id(6), quantity: '9223372036854775807' }] }), { code: 'HISTORY_REVISION_QUANTITY_OVERFLOW' });
+});
+test('transfer rejects money/settlement/warehouse/status additions at the command boundary', () => {
+  for (const q of [{ ...command('transfers'), lines: [{ lineId: id(6), lineAmount: '1.00' }] },
+    { ...command('transfers'), totals: current().totals }, { ...command('transfers'), settlements: [{ settlementId: id(8), amount: '1.00' }] },
+    { ...command(), warehouseId: id(45) }, { ...command(), sourceStatus: 'DRAFT' }]) assert.throws(() => parseHistoryRevisionCommand(q));
+});
+test('service requires exact HISTORY write grant; no default authority/store or permission fallback', async () => {
+  let calls = 0;
+  const deps: HistoryRevisionDependencies = { authorization: { async authorize(_a, q) { return { dataset: 'HISTORY', kind: q.kind, documentId: q.documentId, actorAccountId: actor.accountId }; } },
+    store: { async revise(_a, q) { calls++; return { operationId: id(90), dataset: 'HISTORY', kind: q.kind, documentId: q.documentId, revisionId: id(99), version: q.expectedVersion + 1, ledgerEntryIds: [id(91)] }; } }, now: () => '2026-10-22T05:00:00.000Z' };
+  assert.throws(() => createHistoryRevisionService({} as HistoryRevisionDependencies));
+  const result = await createHistoryRevisionService(deps).execute(actor, command(), new AbortController().signal);
+  assert.equal(result.dataset, 'HISTORY'); assert.equal(calls, 1); assert.ok(Object.isFrozen(result.ledgerEntryIds));
+  await assert.rejects(createHistoryRevisionService({ ...deps, authorization: { async authorize(_a, q) { return { dataset: 'HISTORY', kind: q.kind, documentId: id(77), actorAccountId: actor.accountId }; } } }).execute(actor, command(), new AbortController().signal), { code: 'FORBIDDEN' });
+  const cancel = new AbortController(); cancel.abort(); await assert.rejects(createHistoryRevisionService(deps).execute(actor, command(), cancel.signal), { code: 'HISTORY_REVISION_ABORTED' }); assert.equal(calls, 1);
+});
+test('authorized provider mutation cannot alter captured write; invalid receipt cannot become success', async () => {
+  const deps: HistoryRevisionDependencies = { authorization: { async authorize(_a, q) { const g = { dataset: 'HISTORY' as const, kind: q.kind, documentId: q.documentId, actorAccountId: actor.accountId }; (q.lines[0] as { quantity: string }).quantity = '999'; return g; } },
+    store: { async revise(_a, q) { assert.equal(q.lines[0]!.quantity, '3'); return { operationId: id(90), dataset: 'HISTORY', kind: q.kind, documentId: q.documentId, revisionId: id(99), version: 999, ledgerEntryIds: [] }; } }, now: () => '2026-10-22T05:00:00.000Z' };
+  await assert.rejects(createHistoryRevisionService(deps).execute(actor, command(), new AbortController().signal), { code: 'HISTORY_REVISION_INVALID_RECEIPT' });
+});
+
+test('v16 history head: DRAFT date endpoints responsible revise without stock and later numeric preserves responsibility', () => {
+  const c: HistoryRevisionCurrent = { ...current('transfers'), sourceStatus: 'DRAFT', baselineEffect: 'EXCLUDED_NOT_EFFECTIVE', businessDate: null };
+  const q: HistoryRevisionCommand = { ...command('transfers'), lines: [], header: { businessDate: '2026-10-24', fromWarehouseId: id(40), toWarehouseId: id(41), responsibleStaffId: id(42) } };
+  const p = plan(c, q); assert.equal(p.before.responsibleStaffId, null); assert.equal(p.after.responsibleStaffId, id(42));
+  assert.equal(p.after.businessDate, '2026-10-24'); assert.equal(p.after.fromWarehouseId, id(40)); assert.equal(p.after.toWarehouseId, id(41));
+  assert.deepEqual(p.effects, []); assert.equal(p.moneyChanged, false); assert.equal(c.businessDate, null); assert.equal(c.responsibleStaffId, null);
+  const next = planHistoryRevision(p.after, { ...command('transfers'), expectedVersion: 2 }, id(100));
+  assert.equal(next.after.responsibleStaffId, id(42)); assert.equal(next.after.businessDate, '2026-10-24'); assert.deepEqual(next.effects, []);
+  const legacy = { ...current() }; delete (legacy as { responsibleStaffId?: string | null }).responsibleStaffId;
+  assert.equal(plan(legacy).before.responsibleStaffId, null); assert.equal(plan(legacy).after.responsibleStaffId, null);
+  assert.deepEqual(parseHistoryRevisionCommand(command()), command()); assert.equal(Object.hasOwn(parseHistoryRevisionCommand(command()), 'header'), false);
+});
+test('v16 history head: state kind invalid references and creator overrides refuse while approved numeric remains delta only', () => {
+  for (const header of [{ responsibleStaffId: null }, { responsibleStaffId: '' }, { createdByStaffId: id(40) }, { createdByAccountId: id(40) }, { businessDate: '2026-02-30' }, { fromWarehouseId: id(40) }])
+    assert.throws(() => parseHistoryRevisionCommand({ ...command(), lines: [], header }));
+  for (const sourceStatus of ['APPROVED', 'VOID'] as const)
+    assert.throws(() => plan({ ...current(), sourceStatus, baselineEffect: sourceStatus === 'APPROVED' ? 'INCLUDED_APPROVED' : 'EXCLUDED_NOT_EFFECTIVE' }, { ...command(), lines: [], header: { responsibleStaffId: id(40) } }));
+  const draft: HistoryRevisionCurrent = { ...current('transfers'), sourceStatus: 'DRAFT', baselineEffect: 'EXCLUDED_NOT_EFFECTIVE' };
+  assert.throws(() => plan(draft, { ...command('transfers'), lines: [], header: { fromWarehouseId: id(5) } }));
+  assert.throws(() => plan(draft, { ...command('transfers'), lines: [], header: { businessDate: draft.businessDate! } }), { code: 'HISTORY_REVISION_EMPTY' });
+  assert.deepEqual(plan().effects.map(x => x.quantityDelta), ['-1']);
+});
+
+test('transfer draft clear records explicit NULL while salesperson-only sales rejects independent responsibility',()=>{
+ const c={...current('transfers'),sourceStatus:'DRAFT' as const,baselineEffect:'EXCLUDED_NOT_EFFECTIVE' as const,responsibleStaffId:id(42)};
+ const q={...command('transfers'),lines:[],header:{responsibleStaffId:null}};
+ assert.equal(parseHistoryRevisionCommand(q).header!.responsibleStaffId,null);
+ const p=plan(c,q);assert.equal(p.before.responsibleStaffId,id(42));assert.equal(p.after.responsibleStaffId,null);
+ assert.deepEqual(p.effects,[]);assert.equal(p.moneyChanged,false);
+ assert.throws(()=>plan({...c,sourceStatus:'APPROVED',baselineEffect:'INCLUDED_APPROVED'},q));
+ assert.throws(()=>parseHistoryRevisionCommand({...q,header:{responsibleStaffId:''}}));
+ assert.throws(()=>parseHistoryRevisionCommand({...command(),lines:[],header:{responsibleStaffId:id(42)}}));
+ assert.throws(()=>parseHistoryRevisionCommand({...q,header:{createdByStaffId:id(42)}}));
+});
+
+
+test('T16 indexed planner keeps baseline array order and patch effect order across many lines and reversed settlement patches', () => {
+  const c = current(), count = 1000;
+  (c as { lines: HistoryRevisionCurrent['lines'] }).lines = Array.from({ length: count }, (_, n) => ({ ...c.lines[0]!, lineId: id(1000 + n), skuId: id(3000 + n), quantity: n % 2 ? '-2' : '2' }));
+  (c as { settlements: HistoryRevisionCurrent['settlements'] }).settlements = [
+    { settlementId: id(9000), direction: 'RECEIVE', amount: '30.00' },
+    { settlementId: id(9001), direction: 'REFUND', amount: '10.00' }
+  ];
+  const original = structuredClone(c), patches = [999, 0, 500].map(n => ({ lineId: id(1000 + n), quantity: n === 999 ? '-3' : '4' }));
+  const p = plan(c, { ...command(), lines: patches, settlements: [
+    { settlementId: id(9001), amount: '11.00' }, { settlementId: id(9000), amount: '31.00' }
+  ] });
+  assert.deepEqual(c, original); assert.deepEqual(p.before.lines, original.lines);
+  assert.deepEqual(p.after.lines.map(l => l.lineId), original.lines.map(l => l.lineId));
+  assert.deepEqual(p.effects.map(e => [e.lineId, e.quantityDelta]), [[id(1999), '1'], [id(1000), '-2'], [id(1500), '-2']]);
+  assert.deepEqual(p.after.settlements, [
+    { settlementId: id(9000), direction: 'RECEIVE', amount: '31.00' },
+    { settlementId: id(9001), direction: 'REFUND', amount: '11.00' }
+  ]);
+  assert.equal(p.after.totals!.netDue, '20.00'); assert.equal(p.moneyChanged, true);
+  assert.equal(p.toVersion, 2); assert.equal(p.after.previousRevisionId, id(99));
+});
+test('T16 indexed planner retains duplicate baseline identity and foreign settlement rejection', () => {
+  const duplicateLines = current(); (duplicateLines as { lines: HistoryRevisionCurrent['lines'] }).lines = [duplicateLines.lines[0]!, { ...duplicateLines.lines[0]!, quantity: '9' }];
+  assert.throws(() => plan(duplicateLines), { code: 'HISTORY_REVISION_INVALID' });
+  const duplicateSettlements = current(); (duplicateSettlements as { settlements: HistoryRevisionCurrent['settlements'] }).settlements = [duplicateSettlements.settlements[0]!, { ...duplicateSettlements.settlements[0]!, amount: '1.00' }];
+  assert.throws(() => plan(duplicateSettlements), { code: 'HISTORY_REVISION_INVALID' });
+  assert.throws(() => plan(current(), { ...command(), settlements: [{ settlementId: id(9999), amount: '20.00' }] }), { code: 'HISTORY_REVISION_FOREIGN_ROW' });
+});
+
+const draftTransfer = (): HistoryRevisionCurrent => ({...current('transfers'),sourceStatus:'DRAFT',baselineEffect:'EXCLUDED_NOT_EFFECTIVE',note:null});
+const setCommand = (lineSet: NonNullable<HistoryRevisionCommand['lineSet']>): HistoryRevisionCommand => ({...command('transfers'),lines:[],lineSet});
+function nativeFacts(revisionId=id(99)): HistoryRevisionResolvedDraftLineSet {
+  const origin={kind:'REVISION' as const,createdRevisionId:revisionId,identity:{productId:id(201),colorId:id(202),fitId:id(203),sizeId:id(204)},groupId:id(205),snapshot:{productCodeSnapshot:'原生款号',productNameSnapshot:'本次新增品名',colorNameSnapshot:'红',fitNameSnapshot:'A',sizeNameSnapshot:'S',barcodeSnapshot:null}};
+  return {lines:[{lineId:id(101),skuId:id(102),quantity:'2',origin}],nativeGroups:[{revisionId,groupId:id(205),name:'完整当前尺码组',sizes:[{sizeId:id(204),name:'S',displayOrder:0},{sizeId:id(206),name:'M',displayOrder:1}]}]};
+}
+test('draft transfer note preserves omission, explicit null/empty and legacy long notes without tightening numeric edits',()=>{
+  const c={...draftTransfer(),note:'旧'.repeat(10001)};
+  assert.equal(plan(c,command('transfers')).after.note,c.note);
+  for(const note of [null,'','新'.repeat(10000)])assert.equal(plan(c,{...command('transfers'),lines:[],header:{note}}).after.note,note);
+  assert.throws(()=>parseHistoryRevisionCommand({...command('transfers'),lines:[],header:{note:'新'.repeat(10001)}}));
+  const oldSigned={...c,lines:[{lineId:id(6),skuId:id(7),quantity:'-4'}]};
+  assert.equal(plan(oldSigned,{...command('transfers'),lines:[{lineId:id(6),quantity:'-5'}]}).after.lines[0]!.quantity,'-5');
+  for(const status of ['APPROVED','VOID'] as const)assert.throws(()=>plan({...current('transfers'),sourceStatus:status,baselineEffect:status==='APPROVED'?'INCLUDED_APPROVED':'EXCLUDED_NOT_EFFECTIVE'},{...command('transfers'),lines:[],header:{note:'x'}}));
+});
+test('draft complete lineSet parses exact bounded positive lines and keeps legacy 10000 signed patches',()=>{
+  const valid=setCommand([{lineId:null,skuId:id(102),quantity:'9223372036854775807'}]);assert.deepEqual(parseHistoryRevisionCommand(valid),valid);
+  for(const lineSet of [null,[],Array(201).fill({lineId:null,skuId:id(102),quantity:'1'}),...[ '0','-1','+1','01','1.0','1e2','9223372036854775808'].map(quantity=>[{lineId:null,skuId:id(102),quantity}])])assert.throws(()=>parseHistoryRevisionCommand({...valid,lineSet}));
+  assert.throws(()=>parseHistoryRevisionCommand({...valid,lines:[{lineId:id(6),quantity:'1'}]}));
+  assert.throws(()=>parseHistoryRevisionCommand({...valid,kind:'sales'}));
+  const many=Array.from({length:10000},(_,i)=>({lineId:id(i+500),quantity:'-1'}));assert.equal(parseHistoryRevisionCommand({...command('transfers'),lines:many}).lines.length,10000);
+});
+test('draft lineSet uses only store-resolved identities and preserves repeated SKU lines as independent ordered IDs',()=>{
+  const facts=nativeFacts(),origin=facts.lines[0]!.origin;
+  const resolved={...facts,lines:[{lineId:id(6),skuId:id(7),quantity:'3',origin:{kind:'SOURCE' as const,sourceLineId:id(6)}},facts.lines[0]!,{...facts.lines[0]!,lineId:id(103),origin}]};
+  const input=setCommand([{lineId:id(6),skuId:id(7),quantity:'3'},{lineId:null,skuId:id(102),quantity:'2'},{lineId:null,skuId:id(102),quantity:'2'}]);
+  assert.throws(()=>planHistoryRevision(draftTransfer(),input,id(99)),{code:'HISTORY_REVISION_RESOLVED_LINE_SET_REQUIRED'});
+  const result=planHistoryRevision(draftTransfer(),input,id(99),resolved);
+  assert.deepEqual(result.after.lines.map(l=>l.lineId),[id(6),id(101),id(103)]);assert.equal(result.after.nativeGroups![0]!.sizes.length,2);assert.deepEqual(result.effects,[]);assert.equal(result.after.draftLineSetVersion,1);
+  const next=planHistoryRevision(result.after,{...command('transfers'),expectedVersion:2,lines:[{lineId:id(101),quantity:'4'}]},id(100));assert.deepEqual(next.after.lines[1]!.origin,origin);assert.deepEqual(next.after.nativeGroups,result.after.nativeGroups);
+  assert.throws(()=>planHistoryRevision(result.after,{...command('transfers'),expectedVersion:2,lines:[{lineId:id(101),quantity:'-1'}]},id(100)));
+});
+test('draft complete set removes/replaces without mutating source, rejects foreign and reused current IDs',()=>{
+  const before=draftTransfer(),unchanged=structuredClone(before),facts=nativeFacts();
+  const input=setCommand([{lineId:id(6),skuId:id(102),quantity:'2'}]);
+  const p=planHistoryRevision(before,input,id(99),facts);assert.deepEqual(before,unchanged);assert.deepEqual(p.after.lines.map(l=>l.lineId),[id(101)]);assert.equal(p.effects.length,0);
+  assert.throws(()=>planHistoryRevision(before,setCommand([{lineId:id(999),skuId:id(102),quantity:'2'}]),id(99),facts),{code:'HISTORY_REVISION_FOREIGN_ROW'});
+  assert.throws(()=>planHistoryRevision(before,input,id(99),{...facts,lines:[{...facts.lines[0]!,lineId:id(6)}]}));
+  assert.throws(()=>planHistoryRevision({...before,sourceStatus:'VOID'},input,id(99),facts));
+  assert.throws(()=>planHistoryRevision(before,input,id(99),{...facts,nativeGroups:[]}));
+  assert.throws(()=>planHistoryRevision({...before,businessDate:null},input,id(99),facts),{code:'HISTORY_REVISION_BUSINESS_DATE_UNKNOWN'});
+  const nextFacts={lines:[p.after.lines[0]!],nativeGroups:p.after.nativeGroups!} as HistoryRevisionResolvedDraftLineSet;
+  const retained=planHistoryRevision(p.after,{...setCommand([{lineId:id(101),skuId:id(102),quantity:'2'}]),expectedVersion:2,header:{note:'只改备注'}},id(100),nextFacts);
+  assert.deepEqual(retained.after.lines[0]!.origin,p.after.lines[0]!.origin);
+  const forged=structuredClone(nextFacts);if(forged.lines[0]!.origin.kind!=='REVISION')throw Error('origin');
+  (forged.lines[0]!.origin.snapshot as {productNameSnapshot:string}).productNameSnapshot='当前改名不能回写';
+  assert.throws(()=>planHistoryRevision(p.after,{...setCommand([{lineId:id(101),skuId:id(102),quantity:'2'}]),expectedVersion:2,header:{note:'x'}},id(100),forged));
+  assert.throws(()=>planHistoryRevision(p.after,{...setCommand([{lineId:id(6),skuId:id(102),quantity:'2'}]),expectedVersion:2},id(100),nextFacts),{code:'HISTORY_REVISION_FOREIGN_ROW'});
+});

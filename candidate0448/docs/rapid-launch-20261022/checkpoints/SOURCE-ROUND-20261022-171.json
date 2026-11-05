@@ -1,0 +1,17 @@
+{
+  "parent": "ee75f62ff5f55ed8e7a64b68b94bde9e69f201ab",
+  "atUtc": "2026-10-23T12:52:00.417565+00:00",
+  "taskId": "F04_QF2_P_SIZE_GROUP_PAGE_01",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-editor-specs.tsx",
+      "owner": "F2",
+      "bytes": 16933,
+      "sha256": "87dea207c0f1ab9220242fdd102cc7bd317e4633061deb48d61a2c12cd470f7d"
+    }
+  ],
+  "scope": "Resolve selected native size group ID across original full paged dictionary, no name alias or first100 restriction. Preserve code/color/fit draft and cancellation/current-error semantics. Internal data adapter remains reusable during new complete Demo page migration.",
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F2/QF2-P-SIZE-GROUP-PAGE-01/RESULT.json",
+  "checksAdopted": "Original owner six targeted RED-to-GREEN AddSku consumer cases and strict0. No new R test infrastructure or existing48 repeat.",
+  "qualification": "Source/synthetic consumer only. New copied page actual/HTTP/PG/save/performance not accepted. Original old DOM not reinstated as page migration base."
+}

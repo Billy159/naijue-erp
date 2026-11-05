@@ -1,0 +1,58 @@
+{
+  "job": {
+    "jobId": "t45-v22-private-pg17-instance-restore-20261027-177",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-39b48c357f6c",
+    "atUTC": "2026-10-27T13:22:03.507318+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 17.317037734901533,
+    "exports": [
+      "qa-instance-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T13:22:20.865186+00:00"
+  },
+  "actual": {
+    "APPChanged": false,
+    "BINDExecuted": false,
+    "archive": {
+      "bytes": 196161886,
+      "consistentSnapshot": true,
+      "mode": "0400",
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-r1-snapshot-isolated-clone-20261027-175/inputs/r1-v20-consistent-snapshot.dump",
+      "sha256": "ac2dcd5afcd368617aa16a3177211e8de9a72ab4eb55bf80b863b145d1ec04dc"
+    },
+    "containerCreateSubmitted": true,
+    "errorCode": "TypeError",
+    "finishedAtUtc": "2026-10-27T13:22:20.819721+00:00",
+    "jobId": "t45-v22-private-pg17-instance-restore-20261027-177",
+    "newContainerId": "4436fe1c37b1e95442c3aa65b81c648daef68bcc9abe94fdc138dd405bce3b56",
+    "oldRolesChanged": false,
+    "privatePostgresReady": true,
+    "processes": [
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "sourceBusinessWrites": false,
+    "sourceConfigurationChanged": false,
+    "status": "STOP_PARTIAL_PRIVATE_INSTANCE_PRESERVED_NO_REPLAY",
+    "v22Applied": false
+  },
+  "diagnosis": "Local source verified original144.verify_node remaining() requires DEADLINE, omitted by new carrier loader. Failure after PG ready and before roles or restore; successor must verify exact existing instance and empty role/db before continuation. No replay."
+}

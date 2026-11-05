@@ -1,0 +1,26 @@
+{
+  "atUtc": "2026-10-24T11:19:43.987387+00:00",
+  "parent": "98dc2acaf05d6bea627338ca1a0d25725ffdf47a",
+  "taskId": "F3_WHOLE_PAGE_HANDOFF_303",
+  "files": [
+    {
+      "path": "apps/web/src/settings/stores/stores-page.tsx",
+      "owner": "F3",
+      "bytes": 11626,
+      "sha256": "40f7f6ada43d5ee59afd1242a430becf3bb2edd2b9d11fe73d61fafd8eed3d6f"
+    },
+    {
+      "path": "apps/web/src/settings/stores/demo-store-view.tsx",
+      "owner": "F3",
+      "bytes": 8486,
+      "sha256": "fc7350df75eb950efe996a5723837296021dfc724e4ee073462145557fa0348a"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/b01-b02-whole-page-package-v2/PACKAGE.json",
+  "ownerReceiptBytes": 21873,
+  "ownerReceiptSha256": "4fa0b3f9faf098e424ffd51b9c0537f350fde9d26993aa679060ddadae999636",
+  "ownerSourceReleased": true,
+  "stage": "SOURCE_DISPOSED_STATE_SAME_DEMO_SHELL_APPROVED_NODE24_21_TYPEPASS_ACTUAL_PENDING",
+  "wholePageAccepted": false,
+  "deployed": false
+}

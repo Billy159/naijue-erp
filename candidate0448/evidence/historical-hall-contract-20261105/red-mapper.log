@@ -1,0 +1,26 @@
+✖ historical source hall stays unknown with exact source fields and warehouse untouched (5.367665ms)
+✔ reliable literal historical sale hall survives cross-hall warehouse without name or code inference (5.951284ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 273.489172
+
+✖ failing tests:
+
+test at scripts/import-v3/prepare-native-header26-bindings.test.mjs:58:1
+✖ historical source hall stays unknown with exact source fields and warehouse untouched (5.367665ms)
+  Error: HEADER26_BINDING_REFERENCE_REQUIRED
+      at must (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/prepare-native-header26-bindings.mjs:10:51)
+      at reference (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/prepare-native-header26-bindings.mjs:42:100)
+      at Object.prepare (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/prepare-native-header26-bindings.mjs:46:32)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source/scripts/import-v3/prepare-native-header26-bindings.test.mjs:60:61)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'HEADER26_BINDING_REFERENCE_REQUIRED'
+  }

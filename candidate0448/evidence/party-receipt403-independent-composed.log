@@ -1,0 +1,7 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS independent party1: actual composed receipt403/404 and replay403 retain locked original target/CAS/name/enabled/key; navigation stays guarded; explicit successful replay sends byte-identical body/key and accepts only its native result.
+PASS independent party2: actual composed stale abort-ignoring receipt401/403 after trusted identity replacement cannot expire the new principal, resurrect old editor or restore original operation.
+PASS independent party3: current receipt401 and replay401 still expire global authentication and clear both workspace/editor/recovery surfaces; raw denial text never renders.
+All three independent composed party recovery groups passed. Mocked HTTP/CSS only, no network/browser/server/DB or aggregate compiler.

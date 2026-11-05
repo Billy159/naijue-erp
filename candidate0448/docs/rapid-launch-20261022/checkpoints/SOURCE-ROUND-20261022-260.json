@@ -1,0 +1,164 @@
+{
+  "atUtc": "2026-10-24T01:32:58.799748+00:00",
+  "parent": "befbb9b733bc05bac8804a9ee84c07f743e1f612",
+  "taskId": "D2_APPROVED_V14_EXACT_CORE_MEMBER_STORE_SETTINGS_READ_SCOPE",
+  "files": [
+    {
+      "path": "packages/application/src/store-settings-read-ports.ts",
+      "bytes": 4201,
+      "sha256": "3f8e63ce3d2ae022a8446d2bd90fb1fc076173c1b8109fc4b58a1b48d0a6ffcf",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/store-settings-read-validation.ts",
+      "bytes": 10648,
+      "sha256": "54667587d05f8fbdb1fdd8d76cdd83d43570cdfa5a18427454fc0f9c7cad6018",
+      "owner": "D2"
+    },
+    {
+      "path": "adapters/postgres/src/store-settings-read-reader.ts",
+      "bytes": 11406,
+      "sha256": "b7e011770a50a93a32881c1e0669f96d3a3cfdc32310d909fdc43609a37b9346",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/store-settings-read-postgres-protocol.test.ts",
+      "bytes": 17886,
+      "sha256": "594f4f7862855083941040ce3fa43f2125c8f7f772dea95aa0c48bcdc351b8d4",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/store-settings-read.test.ts",
+      "bytes": 13415,
+      "sha256": "49562061d92bccd3084fe7adcc0525b74697efd6e8410af4b14751643f249acb",
+      "owner": "D2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/V14-CORE-MEMBERS-READ-v1.json",
+  "ownerReceiptSha256AtPin": "af564732b75975442c9fb43eccf11e7c61c8a842676142cd165f381ff2b135da",
+  "ownerDelivery": {
+    "task": {
+      "id": "D2-V14-CORE-EXACT-MEMBER-READ-V1",
+      "atUtc": "2026-10-24T01:30:12.306903+00:00",
+      "status": "SOURCE_NEW_MEMBER_SCOPE6_AND_STRICT_PASS_REAL_CORE_NOT_EXECUTED",
+      "authority": "R/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json；C已核跨Chat直接human userMessage01a16b7f-3cf4-7041-b338-0aa2e693001b，非D2推断授权。",
+      "ownership": "D2原3读取叶+原2必要test；D1宿主/proof/config/新共享types/source/store/SQL仍原owner。",
+      "modelRequested": "gpt-6.1-sol/xhigh",
+      "actualModelAndFastSetting": "NOT_INDEPENDENTLY_VERIFIED"
+    },
+    "outcome": {
+      "completed": "StoreSettingsScope新增精确CORE_MEMBERS，对应真实committed CORE下获准22hallIDs/22warehouseIDs。reader所有count/page/detail/FKnames在同原RR中、cap验证完成后读取。",
+      "warehouseScope": "CORE仓库按warehouse.id精确集合，绝非按hall_id放宽到同厅非member仓；响应逐行同样核根ID集合。",
+      "notEmptyFallback": "空/缺/错scope或缺proof不连接读取；proof/当前角色校验失败不返回empty/known0、不fallbackALL。合法过滤或空后页可以空，但total仍准确授权subset数。",
+      "compatibility": "原ALL/HALL_IDS行为及口径保持；READONLY RR/原收尾、retained单厅warehouse/hall字段、未知created/updated/stockFacts保持。未修改P10已释放7叶或重复其验证。",
+      "realState": "采用C/D1本次明确0actualCORE事实；D2没有PG/初始化/登录或真实成员读取。"
+    },
+    "internalSeam": {
+      "scope": "{kind:\"CORE_MEMBERS\",hallIds:readonly string[22],warehouseIds:readonly string[22]}；实际TS为readonly string[]并在原grant validator严格检查长度22/UUID/无重/闭合键。",
+      "capability": "StoreSettingsCoreReadCapability，定义在原store-settings-read-ports.ts；{profile:\"COMMITTED_CORE_SETTINGS_V14\",assertReady(client:object,read:StoreSettingsScopedRead):Promise<void>}，必须成功void不能返回flag。",
+      "constructor": "new PostgresStoreSettingsReadReader(pool,coreCapability?)，第2可选参数；legacy一个pool原调用保持。",
+      "execution": "COREscope无cap在connect前STORE_SETTINGS_FORBIDDEN；有cap在BEGIN REPEATABLE READ READ ONLY后、任何COUNT/page/detail/FKjoin前assertReady原actualclient+经原validators冻结的actor/intent/grant/signal。target/source/role证明由D1实际host负责，不是shape自证。",
+      "providerOwner": "D1原trustedhost/server config可选coreInitializationRead，绑定已COMMITTED CORE operationId/coreSourceDigest及原persisted CORE audit.sourceMembers精确hall22/warehouse22，闭包构造cap。scope不含第二套core字段。",
+      "requiredProviderChecks": [
+        "原实际目标/pool/client和committed CORE不可变audit/receipt/memberproof严格匹配。",
+        "read.actor为当前可信ADMIN/WAREHOUSE，并核当前账号/员工/厅状态及原会话/请求授权；SALESPERSON/nonpermitted/非CORE保持原拒绝。",
+        "read.grant.scope精确两个集合与原proof逐值相等；不是只比22数量或从前端IDs/flag/账号存在数建立授权。",
+        "read.intent/grant target/kind/operation按本次实际请求，任何缺失/错proof/失败抛错，不默认为ALL。"
+      ],
+      "delivery": "实施前已发送D1准确签名/profile与来源责任；source完成再次发送同一seam。C后续转述D1的coreInitializationRead约定与此完全一致。",
+      "providerStatus": "D1原实现并行；本回执不宣称其producer/provider/SQL/实际proof已完成或已有真实提交。"
+    },
+    "implementation": {
+      "files": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/store-settings-read-ports.ts",
+          "bytes": 4201,
+          "sha256": "3f8e63ce3d2ae022a8446d2bd90fb1fc076173c1b8109fc4b58a1b48d0a6ffcf"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/store-settings-read-validation.ts",
+          "bytes": 10648,
+          "sha256": "54667587d05f8fbdb1fdd8d76cdd83d43570cdfa5a18427454fc0f9c7cad6018"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/store-settings-read-reader.ts",
+          "bytes": 11406,
+          "sha256": "b7e011770a50a93a32881c1e0669f96d3a3cfdc32310d909fdc43609a37b9346"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/store-settings-read-postgres-protocol.test.ts",
+          "bytes": 17886,
+          "sha256": "594f4f7862855083941040ce3fa43f2125c8f7f772dea95aa0c48bcdc351b8d4"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/store-settings-read.test.ts",
+          "bytes": 13415,
+          "sha256": "49562061d92bccd3084fe7adcc0525b74697efd6e8410af4b14751643f249acb"
+        }
+      ],
+      "sourceChanges": 3,
+      "testChanges": 2,
+      "newSourceFiles": 0,
+      "sqlScope": [
+        "CORE stores count/page/detail以n.id=ANY(hallIds)。",
+        "CORE warehouses count/page/detail以n.id=ANY(warehouseIds)，原hallId筛选只是进一步收窄。",
+        "原status/search/hall literal filter、name COLLATE C/id排序和page20|50|100保持；COUNT/page同predicate及RR。",
+        "REFERENCES仅page/detail追加相反种类的精确成员数组：hall默认warehouse名字JOIN受warehouse22，warehouse所属hall名字JOIN受hall22；count不读FK名字，无多余不可推类型参数。",
+        "NONE仍不JOIN任何FK目标表，响应名字NULL；原legacy参数及无CORE SQL分支保持。"
+      ],
+      "returnedFacts": "逐行根ID属于获准集合；CORE total不得超过对应22成员数。实际FK身份保留，如果FK指非获准厅/仓，name=NULL，响应validator拒绝泄漏非member名字；没有反推/改写归属。customer名字只许可hall行自身实际FK，不枚举客户目录。",
+      "notChanged": [
+        "D1新共享application types/CORE写store/SQL patch/sourceproof/API/host config",
+        "任何UI/原F2 source257/字典/写合同/权限角色模型/数据库字段",
+        "现有路由及公开DTO字段/业务state；COREscope和cap仅server内部。"
+      ],
+      "coreActionGrant": "本次只读cap不是CORE写/全量BIND或其他purpose的授权。"
+    },
+    "validation": {
+      "newUniqueCases": 6,
+      "firstRun": {
+        "log": "V14-CORE-MEMBERS-READ-run1.tap",
+        "exit": 0,
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "coverage": [
+        "同一个实际protocol client，BEGIN后proof先于exact22集合的count/page；空后页total22保持。",
+        "CORE仓库按warehouse.id，排除同厅但非member仓；detail SQL精确scope且返回校验同样拒绝注入外成员。",
+        "FK names仅精确target数组JOIN；member正确名字可读，外member FK身份保留但名字NULL，注入外member名字拒绝。",
+        "缺cap/空集合/少成员/重复成员在connect/reader前拒绝，proof/成员/当前principal拒绝仅BEGIN+ROLLBACK，不读data/不ALL/不返回0。",
+        "server内部grant闭合；body伪role/core/scope不接受且无policy/reader执行。",
+        "response root集合、名字集合和total<=22约束；合法22空后页保留。"
+      ],
+      "strict": {
+        "log": "V14-CORE-MEMBERS-READ-types-run1.log",
+        "exit": 0,
+        "bytes": 0,
+        "scope": "原3叶+2test及依赖图，工程strict flags/noEmit。"
+      },
+      "evidenceLimit": "新member/role/committed-proof案例均脚本protocol/合成service回调，不是实际CORE证据验证或真实角色SQL结果。D1原provider的真实实现/验证仍独立必要。",
+      "notRerun": [
+        "已过settings/backend全套/49/generic239/sealed18/旧48",
+        "P10 source257/QB204、default/C113/QB202/旧skuId/SKU-page checks"
+      ],
+      "notRun": [
+        "真实PG/SQL apply/初始化/登录/真实22行/浏览器",
+        "build/release/Git/host配置写入"
+      ]
+    },
+    "dependencies": {
+      "nextOwner": "D1将同原trustedhost proof/config authorizer接入此cap并发CORE_MEMBERS grant；不双写D2三叶。",
+      "apiBoundary": "原service每请求先authorization再reader，原公开body不接受core集合/role；D2不修改D1 API owner。",
+      "cActualOwner": "C唯一后续新受控实际窗口，C114原查询完成后另协调v14；本回执不重开PG或假称source完成即生产可读。",
+      "currentMissing": "真实committed CORE proof及原provider实际装配/target权限结果，因0actualCORE而仍未测；不再等人类审批，也不新起方案或第二policy。"
+    },
+    "handoff": {
+      "controller": "本次七字段回执，C固定原5文件/source scope后，按最小新scope采原owner实际结果；不重复已过范围。",
+      "d1": "准确constructor/type/profile/actualclient回调与成员/FK规则已主动发送原D1。",
+      "boundaries": "0新表列/DDL/数据库操作/新读API/新角色模型/普通写授权；单厅归属、历史未知保持。",
+      "reportingAuthorization": "原人类01a161f7-a5e8-7e10-9059-9537c28910c2/REPORTING-AUTHORIZATION.json及本次v14直接human批准；Sol61/xhigh请求，Fast无工具开关未核。"
+    }
+  },
+  "qualification": "HumanapprovedexactCORE_MEMBERS hall22/warehouse22 set beforecount/page/detail/FKnames in originalRR, sameactualclient trustedproofcaprequired. OriginalALL/HALL_IDS unchanged, no publicbodygrant/role model/DBDDL/write. Owner6newprotocoltests+strict adopted; actual committedCORE proof/provider API composition D1pending, not real22read/rolepass. OriginalD2sole3readleavesretained."
+}

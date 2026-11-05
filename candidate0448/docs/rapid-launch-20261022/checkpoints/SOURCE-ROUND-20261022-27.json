@@ -1,0 +1,108 @@
+{
+  "atUtc": "2026-10-22T09:39:26.196431+00:00",
+  "parent": "d4f6583fb4be5cf7ba04fee8967c5df58c27c3c5",
+  "groups": [
+    {
+      "slice": "PRODUCT_STOCK_OVERVIEW_CONTRACT_HTTP",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W14-STOCK-OVERVIEW-RECEIPT.json",
+      "receiptSha256": "2c421cc062aa85f218fbca21c675011793f01b3128cf19b8ca3eeba4aa27b65d",
+      "files": [
+        {
+          "path": "packages/application/src/product-details-query-ports.ts",
+          "bytes": 5300,
+          "sha256": "3e980ff552d886e2be1abc1c7eeeef818cca0d8c5cb4c5201c6588a6ded55120",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/product-details-query-validation.ts",
+          "bytes": 10918,
+          "sha256": "05f0074b960b67136bfabd741353001a776a2600d6de324b4372bb8f98530ab9",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/product-details-query-service.ts",
+          "bytes": 4326,
+          "sha256": "5ddd5564dc0161d713555708bed6be291387e2a3c4a7e59db54d3b83e8c00950",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/product-details-query-http.ts",
+          "bytes": 5274,
+          "sha256": "2c6eba5fcb3e03f1ccc8a42c2e924ed423acce2859df57716b10c6738920e3fe",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/product-details-query.test.ts",
+          "bytes": 12011,
+          "sha256": "87bc32aaee040343391accb67e3e660d1aa2f6ce859b48e35bda43d51910a2d0",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/product-details-query-http.test.ts",
+          "bytes": 7812,
+          "sha256": "1f42d0e34c2228515b3d63f1f68d94d5fd5a25e4d21726b1b1de4af4901d497f",
+          "owner": "D2"
+        }
+      ]
+    },
+    {
+      "slice": "PRODUCT_STOCK_OVERVIEW_READER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product-stock-overview-slice1/RESULT.json",
+      "receiptSha256": "bc6a7643bec3eca338cce28546b18facc1460735f95192840c9acb2e7e4f0cb6",
+      "files": [
+        {
+          "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+          "bytes": 21817,
+          "sha256": "ec8ce97299f3409a30253b9f4e8b6477ba144b82183307d84b9451bab0cc5975",
+          "owner": "D3"
+        },
+        {
+          "path": "tests/product-warehouse-stock-postgres-protocol.test.ts",
+          "bytes": 22031,
+          "sha256": "b75b3f45d6659575e6d1b7aba0b4d2119712edad8c243ec13bbab10512b4564c",
+          "owner": "D3"
+        }
+      ]
+    },
+    {
+      "slice": "OUTPUT_COMMITTED_STALE_TARGETED_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-24/DELIVERY.json",
+      "receiptSha256": "4465ab104820f4d4774c0054d9340245faf13e0dcf19450cac6cc15f74e4f6d4",
+      "files": [
+        {
+          "path": "apps/web/src/sales/commands/form.tsx",
+          "bytes": 18616,
+          "sha256": "1c72a4e167f460a00288816697f027230d5187e2503809aad228ae6513491f58",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/form.tsx",
+          "bytes": 10757,
+          "sha256": "df29b4386b3a13d25d046d2677161a61c67de20b8ea6740c73e57289ff2ce7bb",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "NATIVE_PRODUCT26_WRITER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/PRODUCT26-WRITER-RESULT.json",
+      "receiptSha256": "def71ab0384f618671a3150bdc51c14dd341e49d7b25ae3f7ca09caf5c9a2bdd",
+      "files": [
+        {
+          "path": "adapters/postgres/src/native-product-import.ts",
+          "bytes": 17047,
+          "sha256": "bb1fbf0d56fc3de6d8cece71273a6eb4dab13e00db3c7c089c214f5a9f4992d7",
+          "owner": "D1"
+        },
+        {
+          "path": "tests/native-product-import.test.ts",
+          "bytes": 31720,
+          "sha256": "954d6cf81841dd1d884714dcd91e6d7d52aa59ebb6712152c4fae47f5b0ef16e",
+          "owner": "D1"
+        }
+      ]
+    }
+  ],
+  "fileCount": 12,
+  "scope": "New source/protocol and targeted output fix only; actual SQL, issuer, browser and business pending"
+}

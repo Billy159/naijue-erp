@@ -1,0 +1,29 @@
+{
+  "format": "WHOLE_CLOSURE_INTEGRATION_REVIEW_CANDIDATE_V1",
+  "engineExecuted": false,
+  "reviewed": false,
+  "runtimeCatalogAdmitted": false,
+  "sqlSha256": "d0e7188b09614310945137599e30e3521f6601c782177c3c257541bbb9071ead",
+  "routineChanges": [
+    {
+      "signature": "naijue_erp.standard_whole_package_closed_v2(uuid)",
+      "before": "71ef59766fc69b83dd6494352e4ca8a189d27a8f09fc881d3421574558823601",
+      "after": "d445ccee97d806f1e6a878c6a224ab01a8fd9890b685bfc85df9a7a2ee512c38"
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_v2.sql",
+      "sha256": "f784d786f47255dcaa2958df07d3f3bf2d0056b5bdb2d77c5565ea5ee782f435"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_whole_closure_singletons_candidate.sql",
+      "sha256": "81e568fb146c239668f7cc57ad370a2a9a0a65ee81cd23ef7d1876f66829277c"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_access_v2.sql",
+      "sha256": "a4210b92e4589dc31b5bf5f49af66b166d24dface7523095bc21adf2e8d9d5a8"
+    }
+  ],
+  "requiredNextGate": "INDEPENDENT_ENGINE_AND_METADATA_REVIEW_THEN_VERSIONED_RUNTIME_CATALOG_SUCCESSOR"
+}

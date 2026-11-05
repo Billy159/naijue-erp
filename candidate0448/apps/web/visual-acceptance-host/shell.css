@@ -1,0 +1,10 @@
+@import '../src/demo-presentation/frame.css';
+@import '../src/demo-presentation/controls.css';
+html,body{margin:0;padding:0;background:#fff}
+/* Existing topbar action slot only: no added row or business-layout height. */
+.acceptance-marker{font:600 10px/16px system-ui,sans-serif;color:#774b00;background:#fff7db;border:1px solid #e8c76d;border-radius:3px;padding:1px 5px;white-space:nowrap}
+/* Closed by default, out of normal flow. It never changes the pager budget. */
+.acceptance-diagnostics{position:fixed;right:5px;bottom:3px;z-index:1200;font:10px/14px system-ui,sans-serif;color:#6a6a6a;background:#fff;border:1px solid #ddd;border-radius:3px;max-width:min(640px,90vw)}
+.acceptance-diagnostics>summary{padding:1px 5px;cursor:pointer}
+.acceptance-diagnostics[open]{padding:7px;box-shadow:0 4px 20px #0002}
+.acceptance-diagnostics p{margin:4px 0}

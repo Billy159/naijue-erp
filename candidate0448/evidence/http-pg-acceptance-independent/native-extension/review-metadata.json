@@ -1,0 +1,18 @@
+{
+  "reviewed_at_utc": "2026-10-20T21:45:16.278023+00:00",
+  "base_head": "d24dc431f5a6fb1a0ca70aaefba22d8a45c2a216",
+  "owner_manifest_matches": true,
+  "final_hashes_unchanged_after_checks": true,
+  "new_source_files": 5,
+  "independent_checks": {
+    "static_and_fabricated_helper_probes_passed": 19,
+    "pure_regressions_passed": 23,
+    "failures": 0,
+    "syntax_checks_passed": 6,
+    "git_diff_check_exit": 0
+  },
+  "compiler": "Not rerun by reviewer to avoid duplicate compiler. Owner final-checks-04.log reviewed, aggregate exit0 and owner reported integration tsc success.",
+  "actual_native_http_pg_execution": "NOT RUN by independent reviewer;22 remains expected total only if sole runtime owner executes the fresh guarded suite.",
+  "preserved_failure": "Owner source-only TS7022 session inference failure (typecheck-01.log, exit2), fixed before final freeze. No independent final check failures.",
+  "access": "Read-only source/static/fabricated helper checks only. No DB, network, runtime credentials, secret files, holder operations, source edits or commits."
+}

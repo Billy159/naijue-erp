@@ -1,0 +1,37 @@
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (6.628245ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (0.992865ms)
+✔ historical signed discount remains exact on memo save without invented allocation (0.621496ms)
+✔ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (22.266933ms)
+✔ approved historical discount ruling: economic edits keep original discount without guessed allocation (1.408616ms)
+✔ historical missing settlement is shown unknown, never as zero or settled (0.627668ms)
+✔ changed historical unknown pricing saves explicit-price draft without invented intent (2.380633ms)
+✔ real existing editor initializes historical signed unknown rows and sends economic SAVE through ordinary proposal command (11.502486ms)
+✔ original signed-sale discount survives all-positive edit below retained discount (2.60178ms)
+✔ original signed-sale discount survives all-positive reopen below retained discount (1.236307ms)
+✖ authenticated detail origin permits reopening preserved discount larger than all-positive subtotal, wrong origin rejected (0.552438ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 306.390642
+
+✖ failing tests:
+
+test at apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:95:1
+✖ authenticated detail origin permits reopening preserved discount larger than all-positive subtotal, wrong origin rejected (0.552438ms)
+  Error [DomainError]: Sales discount must be between zero and nonnegative gross total
+      at requireDomain (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/packages/domain/src/errors.ts:11:25)
+      at allocateSalesDiscount (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/packages/domain/src/sales-money.ts:18:3)
+      at validateSalesDraft (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/validation.ts:94:120)
+      at draftFromSalesDetail (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/validation.ts:157:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:98:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    code: 'INVALID_ORDER_DISCOUNT'
+  }

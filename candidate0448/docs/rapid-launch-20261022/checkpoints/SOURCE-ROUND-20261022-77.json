@@ -1,0 +1,160 @@
+{
+  "atUtc": "2026-10-22T20:51:08.753711+00:00",
+  "parent": "27adc459150cc27a22868f30abdb7210b70b3677",
+  "groups": [
+    {
+      "slice": "NATIVE_ARCO_CATEGORY_TREE_AND_PAGE_STRUCTURE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT-TREE-P13-DELIVERY-v2.json",
+      "receiptSha256": "0634655ee77f52d43c3b4b6cd8ce372eba2a8c1f1cd47653676888770746ccea",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskIds": [
+          "CAT-TREE-01",
+          "CAT-UI-03/P13"
+        ],
+        "owner": "F2",
+        "createdAt": "2026-10-22T20:49:38.095675+00:00",
+        "status": "SOURCE_NATIVE_ARCO_DOM_TYPE_READY_BROWSER_AND_MAINTENANCE_PENDING",
+        "applicationFiles": [
+          {
+            "path": "apps/web/src/product-categories/product-categories-page.tsx",
+            "beforeSha256": "ed2802b94cfa50cf50161c9d1d92d2c435c470a081acc7bdecda215b7daf068d",
+            "sha256": "af4f42d0f56789d4072498f6be6177d2cddcf745f3d633fd70f64e1a88bb51f0"
+          },
+          {
+            "path": "apps/web/src/product-categories/category-tree.tsx",
+            "beforeSha256": "21cba3f4a470201ea664224f2e5150fa20f9b82c68f0165e247d1ac303e11ad1",
+            "sha256": "e02cef1e38e60340681108fc68ce0a31a7f507c65e8b737b52d8cb9af96e4c3a"
+          },
+          {
+            "path": "apps/web/src/product-categories/source-product-categories.css",
+            "beforeSha256": "5d8cc7479b2395eed9634a16b6169f8008cb3dee2ca3e0be3677eb5900d01034",
+            "sha256": "6cb3a6f6f19f1b1f7ec2bcf3be956c864c682ea1bfd2079358f9c39d79ceb02a"
+          }
+        ],
+        "newApplicationFiles": [],
+        "authority": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v010-d6ad29c/CATEGORY-SOURCE-RUNTIME-SUPPLEMENT.json",
+          "sha256": "cecd4d5067b010e4deae5771cea81ee9785ff3f5d946ec187d487cc134b67861",
+          "candidate": "d6ad29c7d8b105e517a95e70bcb48138b55bd817/build01",
+          "sourceBefore": "all four category source pins matched actual reported inputs; no duplicate live repair"
+        },
+        "sourceProvenance": [
+          {
+            "path": "frontend/product-current.js",
+            "lines": "4,176-182",
+            "sha256": "d5a3ae29d781aa725859196dac6ef4e64f0e3cea08b3cca5c199579c9527b0be"
+          },
+          {
+            "path": "frontend/product-arco.jsx",
+            "lines": "19-33,210-230",
+            "sha256": "0b70d765bc42d27872b743ce7bae753ab1920c6e6c3fd9baed33057a0308d057"
+          },
+          {
+            "path": "frontend/product-inventory-unified.css",
+            "lines": "49-69",
+            "sha256": "645ae0acece1b438cb04b8e8b642a539f85ec506d2b72d079f02ca4de6ed0da0"
+          },
+          {
+            "path": "frontend/product-rework.css",
+            "lines": "31",
+            "sha256": "40d9ce96db6cfc4d6a1e4c531144a05f10a5e44df64073e2a9441468872d0254"
+          }
+        ],
+        "reuseClassification": "最小适配：actual installed Arco Tree and Input.Search consume native complete-tree data; no custom visual tree rows or old Demo runtime/store",
+        "changes": [
+          "Replaced hand-rendered role tree/treeitem/chevrons/search-clear with actual Tree blockNode and Input.Search allowClear; actual native triangles, indentation/selection/search icon.",
+          "Kept original tree-model.ts intact: exact UUID/parent/displayOrder deterministic order, full authorized tree, iterative full-path KMP matching and native arbitrary legacy depth. Adapter assembles all returned hierarchy nodes iteratively, no two-level truncation/fake all/label-to-ID.",
+          "Installed Arco2.66 lacks full original arrow navigation; retained a thin bridge using actual Tree public title slot and own native-ID span focus, not custom tree rendering or shared-library monkey-patch. Native Tree owns rows/expansion/selection.",
+          "Removed normal-page refresh/constant readonly/tree technical notes/extra code-order-version facts/constant total/always-disabled undo. Dynamic actual read failures/stale results/command recovery remain.",
+          "New/root/child/edit/save/delete capabilities and dirty/uncertain/CAS remain actual existing paths. Missing cap keeps real controls disabled with current reasons; no fake readonly substitute editor or write result.",
+          "Explicitly no fake drag/reorder: native action enum has no REORDER, so draggable=false and no noop drop handler. Undo has no actual history, so not displayed by default.",
+          "Scoped original native-control tokens: actual Input.Search uses group-wrapper+inner-wrapper in current library, so adapt correct actual DOM selectors; 32px search/margin8/font13, native Tree min32/font13. No inactive custom chevron CSS retained."
+        ],
+        "checks": {
+          "dom": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT-TREE-P13-dom-v1.log",
+            "exitCode": 0,
+            "cases": [
+              "Actual ProductCategoriesPage + installed Arco Tree/Input.Search + actual DemoFrame in StrictMode",
+              "Native root order, four-level original UUID paths, two identical leaf names in different branches remain distinct and select correct path",
+              "Full cross-segment path search, native clear icon restores manual expansion, no new server read per keystroke",
+              "Native triangle expand and title-slot ArrowLeft/Enter focus/select retain functional navigation",
+              "Strict native DTO fixture allNULL displays未提供; separate uniform known-count fixture shows0款, no zero fabrication",
+              "No extra technical facts/constant note/refresh/alwaysundo or fake draggable controls",
+              "Explicit synthetic CATEGORY capability invokes existing dirty-leave modal through real tree selection; continue/drop edit works, client rejects test if execute called, writes0",
+              "Scope abort clears private native tree data from DOM"
+            ],
+            "qualification": "Synthetic complete-directory fixtures/real validation and controllers; not actual native DB/grant/business write or browser pointer",
+            "reuseQualification": "Same actual native Tree DOM/keyboard/identity checks reused; the only later source change is equivalent Array.from conversion of own title-slot NodeList for existing DOM-only compiler contract."
+          },
+          "cascade": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT-TREE-P13-cascade-result-v1.json",
+            "sha256": "b2f9b2616ea26f75c11c5e1a25cd88ff989cb8e07f58e214bbc211c1f742786f",
+            "exitCode": 0,
+            "scope": "actual native Tree/Input.Search DOM, installed shared/Arco loaded after leaf; exact selectors win tree13/min32/search root+inner32/margin8; noncategory semantic styles unchanged",
+            "qualification": "Source matched cascade only; actual pixel row/long-tree scroll and final winner pending Demo"
+          },
+          "type": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT-TREE-P13-types-dom-only.log",
+            "entries": [
+              "apps/web/src/product-categories/product-categories-page.tsx",
+              "apps/web/src/product-categories/category-tree.tsx"
+            ],
+            "actualTransitiveClosure": true,
+            "strict": true,
+            "exactOptionalPropertyTypes": true,
+            "noUncheckedIndexedAccess": true,
+            "exitCode": 0,
+            "logBytes": 0,
+            "lib": "ES2023,DOM; no added DOM.Iterable"
+          },
+          "meaningfulCorrection": "Using a ref map for native title focus was unreliable through library React-node recreation; final bridge queries only its own public title-slot native-ID spans under the local host, tested with ArrowLeft/Enter. Styles matched actual Input.Search group/inner wrappers after DOM inspection, not obsolete .arco-input-wrapper class.",
+          "compatibilityCorrection": "C/F1 noted TS2488 for direct NodeList iteration under its original DOM-only lib. Own category-tree now uses Array.from, no shared/lib configuration changes; strict affected entry/transitive closure passes without DOM.Iterable."
+        },
+        "nativeReadWriteDistinction": {
+          "read": "Complete legacy arbitrary-depth parent graph retained; 4-level fixture checked, old5000-depth tree-model algorithm unchanged and not rerun as a full UI performance acceptance.",
+          "write": "Existing approved PostgreSQL validateChange line43 permits CREATE/reparent only under a first-level category, while existing deeper legacy rows retain original parent for EDIT. Original UI new-child gate remains; no accidental new write allowance from read-depth preservation.",
+          "reorder": "No native REORDER/undo API or accepted transaction semantics supplied. Wait C/D2 exact port if required; do not simulate two writes/old Demo storage."
+        },
+        "remaining": [
+          "actual final native Tree/search row32/scroll/selection/keyboard browser check",
+          "trusted maintenance host injection and same editable business states",
+          "actual ordering/undo native port if enabled later",
+          "extreme-depth native library UI/performance, no claim5000-depth browser acceptance"
+        ],
+        "notRun": [
+          "actual Chrome/browser-harness/Demo drag-save-delete",
+          "real PG/permissions/business commands",
+          "whole build/Git/deploy",
+          "old accepted suites"
+        ],
+        "next": "C fix exact3; QF only new native Tree adapter/hierarchy/search/guard/type/cascade. Demo next necessary preview P13 affected structure/tree interactions and same capability qualification; do not call readonly missing-cap preview editable PASS. F2 next reads P19 leaf/overlay supplement and registers any missing ownership before writes.",
+        "authorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+        "browserResourceStatement": "No actual Chrome/browser-harness control or active input/control handles.",
+        "supersedes": "CAT-TREE-P13-DELIVERY-v1.json exact tree hash superseded by same-behavior DOM-library compatibility fix"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/product-categories/product-categories-page.tsx",
+          "owner": "F2",
+          "sha256": "af4f42d0f56789d4072498f6be6177d2cddcf745f3d633fd70f64e1a88bb51f0",
+          "bytes": 15446
+        },
+        {
+          "path": "apps/web/src/product-categories/category-tree.tsx",
+          "owner": "F2",
+          "sha256": "e02cef1e38e60340681108fc68ce0a31a7f507c65e8b737b52d8cb9af96e4c3a",
+          "bytes": 4519
+        },
+        {
+          "path": "apps/web/src/product-categories/source-product-categories.css",
+          "owner": "F2",
+          "sha256": "6cb3a6f6f19f1b1f7ec2bcf3be956c864c682ea1bfd2079358f9c39d79ceb02a",
+          "bytes": 4522
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact checkpoint only. Scoped author checks adopted; new technical acceptance independently assigned, no controller duplicate QA."
+}

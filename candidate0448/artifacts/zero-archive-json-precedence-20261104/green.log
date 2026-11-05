@@ -1,0 +1,22 @@
+✔ explicit versioned two-function ACL reduction precedes strict restoration gate (68.861702ms)
+✔ companion refuses non-default ACL and metadata drift; revokes PUBLIC only and preserves all nonACL metadata (14.977914ms)
+✔ exact successor adds independently pinned INIT approval and STAFF SQL guard to unchanged predecessor (11.49446ms)
+✔ patch keeps metadata/ACL/owner unchanged and rejects wrong predecessor (8.448784ms)
+✔ SQL approval locator requires JSON number, int32 and duplicate-free references (4.881164ms)
+✔ SQL rejects duplicate keys before casting approval JSON to jsonb (4.002557ms)
+✔ historical reception installs zero archive before final exact verifier and keeps old sales composition intact (81.423908ms)
+✔ archive successor binds unchanged old source hash plus optional archive in one audit transaction (25.24215ms)
+✔ formal reader queries original sales id and returns source trace without funds actions (135.788695ms)
+✔ trace reader refuses missing, ambiguous or mismatched original sales proof (1.066523ms)
+✔ trace SQL requires importer role and preserves underlying original proof privacy (4.499285ms)
+✔ SQL zero source locators enforce the same int32 and nonempty bounded sheet contract as intake (4.854917ms)
+✔ SQL length guards count UTF16 units rather than accepting oversized astral text (13.572307ms)
+✔ archive key subtraction applies to extracted JSON object, never to bare text key (8.638953ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 469.300283

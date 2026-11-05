@@ -1,0 +1,127 @@
+{
+  "atUtc": "2026-10-24T05:32:48.981897+00:00",
+  "parent": "ab0fd143ee8a1198c6877f9023b82d09574e770e",
+  "taskId": "D1_CORE_SETTINGS_AUDIT_SAME_LEASE_SOURCE_SCOPE_AND_HOST",
+  "files": [
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "bytes": 57644,
+      "sha256": "046a123b4a863e6ea62208fe68ef6993a3a9a2be84725b28a2bfea8ca5db0e4d",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "bytes": 81740,
+      "sha256": "48c325c614651747d2dbedb7110aac5b08da796c4536e8487c02f12ea9cbb908",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/CORE-SETTINGS-AUDIT-HOST-v1.json",
+  "ownerReceiptSha256AtPin": "92c1e84167880c4e62e0f976c84cd102c533f4be2b6e8042856ae5c876c66a99",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1/CORE-settings-audit-host",
+      "atUtc": "2026-10-24T05:30:37.663482+00:00",
+      "authority": "C original explicit CORE audit read-wiring continuation under01a161f7 and v14 approved actual committed CORE scope; D2 narrow reader scope explicitly adopted by C",
+      "requiredModel": "gpt-6.1-sol/xhigh",
+      "fastSwitchVerified": false
+    },
+    "completedScope": {
+      "status": "SOURCE_HOST_READY_SYNTHETIC_PASS_NOT_DATABASE_OR_BROWSER_ACCEPTANCE",
+      "existingReadContract": "Reused W13 existing POST /settings/audit/query, service/DTO/HTTP and safe per-module projection. Real COMMITTED maintenance audit+receipt joined to retained native objects, exact total/page in one original SQL snapshot after all original filters. No second endpoint, fake empty reader or synthetic business return in production.",
+      "noFullMainDependency": "HALL/WAREHOUSE maintenance audit uses those native objects and committed maintenance operations; it does not require full MAIN, nonzero inventory publication or HISTORY datasets. Original IMPORT_CORE_STAGE aggregate is an IMPORT audit, not a fabricated HALL/WAREHOUSE maintenance event; a real query may legitimately return0 if no such ordinary operations exist.",
+      "host": "Original CORE branch registers only the original audit plugin before its early return, alongside existing auth/store settings. Uses one existing issuer-managed bounded pool and original PostgresMaintenanceCommandUnitOfWork plus fixed D2 SOURCE292 adapter third parameter. CORE still mounts no inventory/current forms/HISTORY/product/category/other maintenance writer. No production configuration field/CLI, frontend or shared/write DTO change.",
+      "sourceAuthority": "createCommittedCoreSettingsRead derives auditCapability from the SAME original committed birth receipt/digest, complete115/49 members, immutable source readback and original22 warehouse claims proof. CURRENT_FORM_READ runtime purpose remains explicit and unchanged. No new purpose, cached authority, separate source bypass, caller boolean or full-MAIN capability substitution.",
+      "transaction": "D2 performs original HALL LIST administrator mutex/current account/staff/hall row locks first. Host unwraps the ORIGINAL active MaintenancePgContext through maintenanceContextClient(context,pool), verifies exact runtime metadata and committed CORE/current49-member identity on that managed lease, checks context is still active, and returns the exact22 hall/22 warehouse ID arrays. Same original maintenance transaction then executes the original audit SQL and COMMIT/release. No extra audit-read lease or pool. Existing RC identity-lock transaction retained; count/page share one statement snapshot. This does NOT claim the audit transaction is REPEATABLE READ/READ ONLY; existing store-settings reader retains its previous RR proof.",
+      "scope": "Fixed D2 SOURCE292 capability limits CORE ALL to HALL+WAREHOUSE, explicit other modules403, and restricts object branches to real22 member IDs before count/page. Current ADMIN/WAREHOUSE only; salesperson denied and viewer must still match original49 CORE account/staff membership. Out-of-member objectId is evaluated by real filtered SQL and gives legitimate0; query errors remain sanitized500. Original object/actor literal search, action, inclusive Shanghai dates, page/size, stable order,4MiB bounded projected result, credential exclusion and exact total semantics unchanged.",
+      "dependency": {
+        "checkpoint": "C SOURCE292=3ee4ab5c8ac8e43d425c48acf1b810d80c7557d3",
+        "report": "../D2/W13-CORE-AUDIT-v1.json",
+        "exactPins": [
+          {
+            "path": "adapters/postgres/src/settings-audit-reader.ts",
+            "bytes": 12147,
+            "sha256": "135de199e6cdeea99f2eb0f30a0e4b05e296d244793bade2fb410e5918cad32c"
+          },
+          {
+            "path": "tests/settings-audit-postgres-protocol.test.ts",
+            "bytes": 14140,
+            "sha256": "0add31d63543ac95927e773132189755483ce9fe7dd84a75eae4bdc851aa7354"
+          }
+        ],
+        "tests": "D2 four new/two directed default/second-parameter cases adopted, not rerun by D1."
+      },
+      "priorityBugPreserved": "C136-JSON-PRECEDENCE-FIX-v1.json exact5 leaves verified unchanged during this independent two-leaf host integration. Original C source289 Esc fix/whole-source closure is composed by C; D1 touched no frontend."
+    },
+    "changedFiles": [
+      {
+        "path": "apps/api/src/postgres-read-api.ts",
+        "bytes": 57644,
+        "sha256": "046a123b4a863e6ea62208fe68ef6993a3a9a2be84725b28a2bfea8ca5db0e4d"
+      },
+      {
+        "path": "apps/api/src/production-provider-composition.test.ts",
+        "bytes": 81740,
+        "sha256": "48c325c614651747d2dbedb7110aac5b08da796c4536e8487c02f12ea9cbb908"
+      }
+    ],
+    "checks": {
+      "newUniqueCases": 2,
+      "affectedExistingCases": 1,
+      "finalFailures": 0,
+      "skips": 0,
+      "newRuntimeCases": "Original production factory + real service/reader/shared driver over scripted PG only. ALL returns nonzero total23 and3 items on page2, correct safe changes/6-digit timestamp; WAREHOUSE can read its real scoped object. Exact original nine filter parameters preserved, both member arrays22. SQL proof follows current identity lock on same lease, one count/page statement; one pool/no listener/no writers.",
+      "denialsAndFailures": "Source mismatch, claims mismatch, actor outside CORE49, salesperson, PRODUCT/CUSTOMER/ACCOUNT module all403 before page SQL; no cookie401. Out-of-scope actual SQL returns0 with page query observed. Driver query failure500, not fake empty200. No INSERT/UPDATE/DELETE by this reader.",
+      "testRuns": [
+        {
+          "chunk": "5df40b",
+          "result": "Initial two new cases failed because the synthetic exact26 fixture did not recognize existing commented maintenance administrator-lock SQL; production code was unchanged."
+        },
+        {
+          "chunk": "ef2e94",
+          "result": "Added that existing read-lock statement to the new fixture only; both failed cases rerun2/2PASS 0skip."
+        },
+        {
+          "chunk": "3c5927",
+          "result": "One affected original CORE legacy-login/same-RR store-settings integration1/1PASS 0skip; no old suites rerun."
+        }
+      ],
+      "strict": {
+        "roots": [
+          "apps/api/src/postgres-read-api.ts",
+          "apps/api/src/production-provider-composition.test.ts"
+        ],
+        "initialChunk": "aedd77/a99493",
+        "initialResult": "New test request helper typed payload unknown selected an incorrect inject overload. Changed only its compile-time type to Record<string,unknown>.",
+        "finalChunk": "0efdd6/da5270",
+        "finalExit": 0,
+        "flags": "strict noEmit ES2023 NodeNext noUncheckedIndexedAccess exactOptionalPropertyTypes noFallthroughCasesInSwitch noImplicitOverride verbatimModuleSyntax rewriteRelativeImportExtensions"
+      },
+      "databaseConnections": 0,
+      "databaseTests": 0,
+      "ssh": 0,
+      "builds": 0,
+      "listeners": 0,
+      "git": 0,
+      "frontendFilesEdited": 0,
+      "sharedContractFilesEdited": 0,
+      "D2FilesEdited": 0,
+      "prioritySQLLeavesChangedAfterHandoff": 0,
+      "oldSealedQAReruns": 0
+    },
+    "notTested": [
+      "Actual committed CORE/technical role ACL/current runtime metadata/API HTTP and exact audit SQL/row readback; C sole actual executor and original QB new scope review.",
+      "Browser drawer behavior/filtering and full page acceptance, including fixed Esc source289, owned by C/F3/QF2; no frontend file changed by D1.",
+      "No normal CORE success inferred before the corrected v14 two-function repair/new metadata/actual COMMIT and readback; C136 failed history remains.",
+      "No inventory/nonzero PUBLISH/full import, HISTORY, writer or production business opening enabled by this read wiring."
+    ],
+    "blockers": {
+      "source": [],
+      "actual": "C fixed successor includes exact2 D1 leaves + D2 SOURCE292 + prior SQL repair + intended frontend closure; new pack/QB and actual CORE proof required before stage/start. Old280 must not be started as if it has this endpoint."
+    },
+    "next": "C freeze exact2 D1 host/test leaves and route only the affected CORE host/reader delta to original QB, reuse D2 six cases and prior results. Complete actual two-function repair/new metadata and normal CORE independently, then compose the corrected complete source (incl Esc) and pack the intended first-page stage; verify true authenticated audit HTTP against committed22 members with original filters/total, no fake empty result or added writers. No whole-backend/old negative rerun."
+  },
+  "stage": "FIXED_SOURCE_HOST_CASES_AND_STRICT_ONLY_ACTUAL_CORE_SQL_REPAIR_AND_PG_HTTP_PENDING",
+  "actualPG": false,
+  "deployed": false
+}

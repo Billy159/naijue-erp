@@ -1,0 +1,49 @@
+/* Shared authoritative rule sequence. Keep import order in page entries. */
+.pc-mode .gold-head{align-items:center}
+.pc-mode .gold-head p{margin-top:3px}
+.pc-mode .toolbar{padding:10px;gap:10px}
+.pc-mode .toolbar .field:first-child{min-width:290px}
+.pc-list-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.pc-list-layout.has-tree{grid-template-columns:240px minmax(0,1fr)}
+.pc-filter-tree{padding:10px;align-self:start;max-height:calc(100vh - 190px);overflow:auto}
+.pc-filter-tree>input{width:100%;margin:8px 0;height:32px}
+.pc-tree-title{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.pc-tree-row{display:flex;align-items:center;min-height:32px}
+.pc-tree-row .btn{border-color:transparent;padding:0 6px;min-width:24px;height:30px;min-height:30px}
+.pc-tree-row.selected{background:var(--selected);color:var(--primary)}
+.pc-tree-spacer{width:24px;flex-shrink:0}
+.pc-tree-row .btn:last-child{text-align:left;white-space:normal;justify-content:start}
+.pc-tree-row .btn:first-child:not(:last-child){flex-shrink:0}
+.pc-list-table{min-width:0}
+.pc-list-table .table-scroll{max-height:calc(100vh - 274px)}
+.pc-list-table table{min-width:1100px}
+.pc-mode th{white-space:nowrap}
+.pc-list-table th{position:sticky;top:0;z-index:2;background:var(--ca-table-head)}
+.pc-list-table td{height:34px;white-space:nowrap}
+.pc-list-table td:nth-child(2){max-width:210px;white-space:normal}
+.pc-list-table a{color:var(--text)}
+.pc-list-table a:hover{color:var(--primary);text-decoration:underline}
+.pc-stopped{display:inline-block;margin-left:5px;color:var(--secondary)}
+.pc-pagination{display:flex;align-items:center;gap:8px;padding:8px 10px;border-top:1px solid var(--border)}
+.pc-pagination select{height:32px;border:1px solid var(--strong);background:var(--surface);border-radius:3px}
+.pc-editor-body{padding:16px}
+.pc-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:1000px;margin:0 0 18px}
+.pc-form-grid input,.pc-form-grid select{width:100%}
+.pc-form-grid .btn{justify-content:flex-start;white-space:normal;height:auto;min-height:32px}
+.pc-form-grid textarea{width:100%}
+.pc-bottom-setting{border-top:1px solid var(--border);padding-top:18px;margin-top:30px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.pc-section-line{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0}
+.pc-text-block{padding:10px;background:var(--subtle);border:1px solid var(--border);line-height:1.8}
+.pc-spec-summary{padding:14px 0;font-size:14px}
+.pc-chips{display:flex;gap:8px;flex-wrap:wrap}
+.pc-chips .btn{height:24px;min-height:24px;padding:0 5px}
+.pc-detail-table{max-height:calc(100vh - 340px)}
+.pc-detail-table table{width:100%}
+.pc-detail-table th{position:sticky;top:0;background:var(--ca-table-head);z-index:1}
+.pc-stock-overview{max-width:700px}
+.pc-stock-overview td{height:36px}
+.pc-block{display:block}
+.pc-category-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:12px}
+.pc-category-layout .pc-form-grid{margin-top:20px}
+.pc-mode input:not([type=checkbox]):not([type=file]),.pc-mode select,.pc-mode textarea,#pc-dialog input:not([type=checkbox]):not([type=file]),#pc-dialog select,#pc-dialog textarea{border:1px solid var(--strong);border-radius:var(--ca-radius-control);padding:5px 8px;background:var(--surface)}
+

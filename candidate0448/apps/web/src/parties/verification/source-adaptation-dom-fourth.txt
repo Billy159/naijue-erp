@@ -1,0 +1,24 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 1: actual frozen Arco table/control structure, normal-status route-activation page only, reset applies defaults, independent kind lists; unsupported audit explicit.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 2: actual520px source Modal/Fields readonly code, create reads nothing, exact name-only create, dirty-close guard and source-style close/refresh after confirmation.
+PASS DOM 3: fresh-target edit and readonly original code, native CAS conflict preserves name+state and requires explicit reconciliation.
+PASS DOM 4: uncertain outcome locks name/state and original key; receipt404 not rollback proof; explicit exact atomic replay closes only on confirmation.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected clickable element
+    at click (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/run-dom-tests.mjs:52:43)
+    at selectOption (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/run-dom-tests.mjs:59:319)
+    at async file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/run-dom-tests.mjs:87:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

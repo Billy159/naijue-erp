@@ -1,0 +1,68 @@
+[
+  {
+    "command": "node --test tests/unified-source-occurrence-reconciliation.test.mjs",
+    "runtime": "v24.22.1",
+    "exit_code": 0,
+    "stdout_stderr": "initial-tests.log"
+  },
+  {
+    "command": "node --test tests/unified-source-occurrence-reconciliation.test.mjs",
+    "runtime": "v24.22.1",
+    "exit_code": 0,
+    "stdout_stderr": "target-pin-tests.log"
+  },
+  {
+    "command": "node --test tests/unified-source-occurrence-reconciliation.test.mjs",
+    "runtime": "v24.22.1",
+    "exit_code": 1,
+    "stdout_stderr": "hall-classification-tests.log"
+  },
+  {
+    "command": "node --test tests/unified-source-occurrence-reconciliation.test.mjs",
+    "runtime": "v24.22.1",
+    "exit_code": 0,
+    "stdout_stderr": "full-entry-tests.log"
+  },
+  {
+    "command": "node --test tests/unified-source-occurrence-reconciliation.test.mjs",
+    "runtime": "v24.22.1",
+    "exit_code": 0,
+    "stdout_stderr": "cleaned-entry-tests.log"
+  },
+  {
+    "command": "node --test tests/unified-source-occurrence-reconciliation.test.mjs tests/unified-import-package.test.ts tests/unified-import-stream-preflight.test.mjs tests/zero-amount-archive-intake.test.mjs tests/unified-explicit-zero-approval.test.ts",
+    "runtime": "v24.22.1",
+    "exit_code": 0,
+    "stdout_stderr": "regression-tests.log"
+  },
+  {
+    "command": "node_modules/.bin/tsc --noEmit -p tsconfig.json",
+    "runtime": "v24.22.1",
+    "exit_code": 2,
+    "stdout_stderr": "typecheck.log"
+  },
+  {
+    "command": "node_modules/.bin/tsc --noEmit -p evidence/source-occurrence-reconciliation-20261105/tsconfig.json",
+    "runtime": "v24.22.1",
+    "exit_code": 2,
+    "stdout_stderr": "focused-typecheck.log"
+  },
+  {
+    "command": "node_modules/.bin/tsc --noEmit -p evidence/source-occurrence-reconciliation-20261105/tsconfig.json",
+    "runtime": "v24.22.1",
+    "exit_code": 0,
+    "stdout_stderr": "final-focused-typecheck.log"
+  },
+  {
+    "command": "env -u NODE_PATH /workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/unified-source-occurrence-reconciliation.test.mjs tests/unified-import-package.test.ts tests/unified-import-stream-preflight.test.mjs tests/zero-amount-archive-intake.test.mjs tests/unified-explicit-zero-approval.test.ts",
+    "runtime": "v24.21.0",
+    "exit_code": 0,
+    "stdout_stderr": "pinned-final-regression.log"
+  },
+  {
+    "command": "env -u NODE_PATH /workspace/dot-tools/node-v24.21.0-linux-x64/bin/node node_modules/typescript/bin/tsc --noEmit -p evidence/source-occurrence-reconciliation-20261105/tsconfig.json",
+    "runtime": "v24.21.0",
+    "exit_code": 0,
+    "stdout_stderr": "pinned-final-typecheck.log"
+  }
+]

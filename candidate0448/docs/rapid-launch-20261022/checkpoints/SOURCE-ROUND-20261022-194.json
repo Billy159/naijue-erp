@@ -1,0 +1,375 @@
+{
+  "atUtc": "2026-10-23T18:03:41.979782+00:00",
+  "parent": "f904b5a3b3abd1bf0e50bb1b0d53c263993a15ba",
+  "taskId": "B02_V11_GROUP_ONLY_SAME_SAVE_ADAPTER_AND_DEFERRED_SQL",
+  "files": [
+    {
+      "path": "packages/application/src/document-specification.ts",
+      "bytes": 2957,
+      "sha256": "f8c8013b2b62548ed077e935c93b3aa3a4ecdc9fe8350a756a684734419b01cd",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/ports.ts",
+      "bytes": 7264,
+      "sha256": "ff95a7a3b952848ca788f56f24b1fb333ce326f4bb74eb3861f25b5906464628",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/transfer-ports.ts",
+      "bytes": 7792,
+      "sha256": "594212c7992c234185d2a76bf9fb39569c15bc3e1842d86c3f260693f2894120",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/sales-service.ts",
+      "bytes": 15925,
+      "sha256": "a8d4f8263b8af8289c7ec788781874b34ddde8e5e944c1456421bb27fc234ec7",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/transfer-service.ts",
+      "bytes": 14060,
+      "sha256": "5b553d46ccb237da655e0077898292a7ce41781dbf9148d3deed70e49d6cf6e0",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/native-sales-preparation.ts",
+      "bytes": 39678,
+      "sha256": "ce8f19c54a1f3c609c6101cc40f3c83c8d7092436e833a87ec5163618a5f2118",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/native-transfer-preparation.ts",
+      "bytes": 23428,
+      "sha256": "f948e06e16fc227b15eec3b576b66b4ddd7e15ab990d61ffa575d3d18d7e12d2",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/input.ts",
+      "bytes": 6973,
+      "sha256": "728f383a9f183b3c3ebaaba26c885c9de49ffd3985931f5793c4824c7c54baa2",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/transfer-input.ts",
+      "bytes": 4733,
+      "sha256": "dbedc7158f45791d2d0952afc6a92cca5fca90af82cace28c9ace16c512fd24c",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/sales-http.ts",
+      "bytes": 11724,
+      "sha256": "094f3526885e0783fe77c23b57bd2525ce2f1f3b046ce344b4d9fafa088f0a37",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/transfer-http.ts",
+      "bytes": 12499,
+      "sha256": "5ffc51f40cf0b6fcd5ef1213d2df20d7db1893f9668efbb9f66c346c4f44a2b9",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/sales-unit-of-work.ts",
+      "bytes": 37447,
+      "sha256": "7b646d087a7e6b20b2bcfdf49793e8dc3239003f2b27a8be0433cd1035fbde0e",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "bytes": 26710,
+      "sha256": "7682da0a1187f4757a6bdbed854df959d6a622df409c72d7ed3eb35fbb6839c8",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-document-specification.ts",
+      "bytes": 7287,
+      "sha256": "9c4ef0bd4f62c737224e84315243161477ead5a1e1169b7db4a6af6783ef2e1e",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "bytes": 23111,
+      "sha256": "a9b0402ac6b897deceaa80304a5e9a1cf96d52e6cdac571815ec3ea57adfe4cc",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+      "bytes": 3881,
+      "sha256": "d07ab458c0fc3a34f3240e1dbf9cb7dc22ac6005487f84189808f33c5d74d29a",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/catalogue-completeness.ts",
+      "bytes": 49577,
+      "sha256": "e1ed6303448384565079c3cbb630fac1cb7da62a865ae55406f7f23215f6edeb",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 62663,
+      "sha256": "fc7227b65e9869c401259740d5b9e7570cca1a722f45bb7a506ca2f4b02b3bd3",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+      "bytes": 14384,
+      "sha256": "5d60b860bc0261ad8103947baac642b20cfc2da5b3f07a88b87ad9135a22a227",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/document-specification-save.test.ts",
+      "bytes": 9673,
+      "sha256": "e90d41d75a63309062f9c4569b999926b22e155406b0e7b83e7145d1671753bb",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/document-specification-postgres-protocol.test.ts",
+      "bytes": 11156,
+      "sha256": "9fe6bd21ab569028d7d83f0e03f1a4e46090c61fd81eaa80f80b4ad96a59e722",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-transfer-preparation.test.ts",
+      "bytes": 16753,
+      "sha256": "1888dd324896fbb1450778e9504e8f60fd269d90de7fd8bfe92cd9428ca7b1eb",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/runtime-document-number-postgres-protocol.test.ts",
+      "bytes": 11626,
+      "sha256": "033649c2737b8d7d3425d853449774fc7b923e9c3df00ef3d35ec7788c5a97b2",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 16965,
+      "sha256": "e2238ce037fb93ce6c602c71838d3bdcfe0de07196aa7f4340022b011a6e10aa",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/product-media-write-capability.test.ts",
+      "bytes": 8793,
+      "sha256": "471cfc88a0db10c7a8b1e57a0b4b0dffa9ed6b9072ae85cfec735629b7be0569",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V11-GROUP-SAVE-SOURCE-RESULT-v1.json",
+  "ownerReceiptSha256": "e94d9df1ed897e73aa8d1152e3ae3a13025eee223efe62e3ce9bc75fcb1bf562",
+  "ownerDelivery": {
+    "status": "D1_EXACT19_SOURCE_FROZEN_READY_FOR_C_QB_NOT_PG_NOT_RELEASED",
+    "approval": "docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json confirmed revised v11 group-only details",
+    "productionScope": {
+      "D1": 19,
+      "D2": 3,
+      "D3": 0,
+      "frontendModifiedByD1": false,
+      "sharedContractModifiedByD1": false,
+      "newUrls": 0,
+      "newTables": 0,
+      "newColumns": 0,
+      "inventoryKeyAdmissionChanged": false
+    },
+    "summary": [
+      "Original SAVE exclusive proposal variant; all original draft fingerprints and preparation routes retained.",
+      "Server rereads actual product group and exact tuple under sorted original product locks. Existing tuple retained; only used missing tuples append once per product via D2 helper, new actual UUID + NJNEW code, same actual actor and outerclient.",
+      "Full committed baseline captured before first append. Only registered original-client completion may advance same-SAVE proof; exact audit/receipt/root/complete SKU set replay remains mandatory. No arbitrary current-xid or STAGED admission.",
+      "Narrow delegated PRODUCT EDIT has exact version-only root delta and exact new SKU set; original general maintenance authorization unchanged.",
+      "Manual proven SKU with actual no enabled MAIN returns NULL from a separate originalclient fact read. Missing/ambiguous/failed facts reject; scanner code untouched.",
+      "Sales proposal uses its original client proof only after proposal resolution; original host/config and legacy verifier paths unchanged.",
+      "SQL successor2replacement+1newfunction+1deferredaudittrigger; actual parent sameactor/SAVE/DRAFT/nonzero line/new SKU9-column closure required. Native warehouse v10 record scope retained."
+    ],
+    "tests": {
+      "newUnique": 10,
+      "newUniquePass": 10,
+      "affectedOriginalUnique": 7,
+      "affectedOriginalPass": 7,
+      "skip": 0,
+      "strictExit": 0,
+      "firstProtocolFailuresPreserved": 2,
+      "failureCorrection": "new scripted UPDATE incorrectly assigned WHERE previous version back to root; corrected only test harness and repeated failed2; extra proof tamper assertions repeated affected1 only",
+      "D2TestsReportedSeparately": 9
+    },
+    "sql": {
+      "patchLevel": "26_v11_document_specification_save",
+      "expectedRoutineCount": 122,
+      "newTrigger": {
+        "table": "audit_change",
+        "name": "document_specification_commit",
+        "function": "validate_document_specification_commit",
+        "eventType": 5,
+        "enabled": "O",
+        "deferrable": true,
+        "initiallyDeferred": true
+      },
+      "bodyPins": {
+        "guard_maintenance_audit_actor": "ac0ce9c91f34b9d8d34eb5e7d26f595319bfa6ad3dfe3ae33a4f2f5edf1eb217",
+        "guard_native_creation_identity": "4827b76ff4df9beae18411033d2e6e13a04eea2d648aa58bb67d179145d107dc",
+        "validate_document_specification_commit": "b02bff6115bcf2c87758f8313a57a1a693733ba3ea192fcb1657bd176c587c06"
+      },
+      "actualMetadataExport": "C_ONLY_PENDING",
+      "actualPostgresApply": "C_ONLY_PENDING",
+      "actualBusinessValidation": "C_ONLY_PENDING",
+      "rollbackBodyPins": {
+        "guard_maintenance_audit_actor": "e07e156d8f221b51b06c394e8f6d854e2d2119a37a3e5d3f23acff04c21bc9e7",
+        "guard_native_creation_identity": "08e70b819b36f93f853e1ad2650c51a05758a5271bb47474d931af8ee3fdfff2"
+      }
+    },
+    "CNext": [
+      "Commit exact19 with D2 exact3 only; do not mix B07 store/test/v12 WIP.",
+      "QB review exact proposed SQL/source and source pin closure. C alone applies reviewed v11 and exports actual metadata; do not reuse v10 catalog digest or expand old purpose review.",
+      "C coordinate one targeted actual PostgreSQL validation set below, no sealed18/QA80/H06 same-target replay."
+    ],
+    "pgCasesPending": [
+      "One sales SAVE with two missing same-group specs and duplicate same tuple rows: actual IDs reused pertuple, one product version advance/audit/receipt, DRAFT document audit/receipt sameoutercommit, no inventory changes.",
+      "One transfer SAVE using existing+missing in-group tuple including actual absent MAIN: real SKU/code, no barcode creation, readback closure, no stock posting.",
+      "Foreign group / arbitrary group field / ungrouped unsized/trouser coordinates / disabled existing tuple reject; no partial product/doc/receipt/ledger/balance writes.",
+      "Known existing tuple original code/UUID/barcode/null import creation op retained; no PRODUCT EDIT when no missing specs.",
+      "Current salesperson original scope success; revoked/foreign hall/forged currentactor / direct generic product EDIT deny.",
+      "Failure after append or at parent receipt/deferred trigger rolls back all; orphan append, missing parent, wrong parentactor/action/tx, unused or zero line, extra SKU or altered oldroot cannot commit.",
+      "Same original key exact replay no extra IDs/product version/audit/receipt; changedpayload409; revoked before replay403; uncertain COMMIT discard and originalkeyread only.",
+      "Postcommit original maintained catalogue read/reopen and approval firstuse stock proof continue, including source-only legacy/ imported committed baseline; no old alias/source/person/time rewrite."
+    ],
+    "notClaimed": [
+      "PostgreSQL engine or deployment PASS",
+      "Full real import",
+      "Business publishing restrictions lifted",
+      "Any sealed18/QA80/H06 rerun"
+    ],
+    "D2FrozenPins": {
+      "packages/application/src/product-maintenance-service.ts": "13ac4d13252e30d11c8faafc00ac5365078f9c05ec9e1a7f74e864742b59ee55",
+      "packages/application/src/product-maintenance-ports.ts": "2ce19430be4a92c90e959eedd077a2be9cecf67b39891e8e79f7280570567be6",
+      "adapters/postgres/src/product-maintenance-store.ts": "3cc36901fefbc5e0e2a573f2385c1983b28b900db3f228d35b6fd98a6be3b44c"
+    },
+    "files": [
+      {
+        "path": "packages/application/src/document-specification.ts",
+        "bytes": 2957,
+        "sha256": "f8c8013b2b62548ed077e935c93b3aa3a4ecdc9fe8350a756a684734419b01cd"
+      },
+      {
+        "path": "packages/application/src/ports.ts",
+        "bytes": 7264,
+        "sha256": "ff95a7a3b952848ca788f56f24b1fb333ce326f4bb74eb3861f25b5906464628"
+      },
+      {
+        "path": "packages/application/src/transfer-ports.ts",
+        "bytes": 7792,
+        "sha256": "594212c7992c234185d2a76bf9fb39569c15bc3e1842d86c3f260693f2894120"
+      },
+      {
+        "path": "packages/application/src/sales-service.ts",
+        "bytes": 15925,
+        "sha256": "a8d4f8263b8af8289c7ec788781874b34ddde8e5e944c1456421bb27fc234ec7"
+      },
+      {
+        "path": "packages/application/src/transfer-service.ts",
+        "bytes": 14060,
+        "sha256": "5b553d46ccb237da655e0077898292a7ce41781dbf9148d3deed70e49d6cf6e0"
+      },
+      {
+        "path": "packages/application/src/native-sales-preparation.ts",
+        "bytes": 39678,
+        "sha256": "ce8f19c54a1f3c609c6101cc40f3c83c8d7092436e833a87ec5163618a5f2118"
+      },
+      {
+        "path": "packages/application/src/native-transfer-preparation.ts",
+        "bytes": 23428,
+        "sha256": "f948e06e16fc227b15eec3b576b66b4ddd7e15ab990d61ffa575d3d18d7e12d2"
+      },
+      {
+        "path": "apps/api/src/input.ts",
+        "bytes": 6973,
+        "sha256": "728f383a9f183b3c3ebaaba26c885c9de49ffd3985931f5793c4824c7c54baa2"
+      },
+      {
+        "path": "apps/api/src/transfer-input.ts",
+        "bytes": 4733,
+        "sha256": "dbedc7158f45791d2d0952afc6a92cca5fca90af82cace28c9ace16c512fd24c"
+      },
+      {
+        "path": "apps/api/src/sales-http.ts",
+        "bytes": 11724,
+        "sha256": "094f3526885e0783fe77c23b57bd2525ce2f1f3b046ce344b4d9fafa088f0a37"
+      },
+      {
+        "path": "apps/api/src/transfer-http.ts",
+        "bytes": 12499,
+        "sha256": "5ffc51f40cf0b6fcd5ef1213d2df20d7db1893f9668efbb9f66c346c4f44a2b9"
+      },
+      {
+        "path": "adapters/postgres/src/sales-unit-of-work.ts",
+        "bytes": 37447,
+        "sha256": "7b646d087a7e6b20b2bcfdf49793e8dc3239003f2b27a8be0433cd1035fbde0e"
+      },
+      {
+        "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+        "bytes": 26710,
+        "sha256": "7682da0a1187f4757a6bdbed854df959d6a622df409c72d7ed3eb35fbb6839c8"
+      },
+      {
+        "path": "adapters/postgres/src/native-document-specification.ts",
+        "bytes": 7287,
+        "sha256": "9c4ef0bd4f62c737224e84315243161477ead5a1e1169b7db4a6af6783ef2e1e"
+      },
+      {
+        "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "bytes": 23111,
+        "sha256": "a9b0402ac6b897deceaa80304a5e9a1cf96d52e6cdac571815ec3ea57adfe4cc"
+      },
+      {
+        "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+        "bytes": 3881,
+        "sha256": "d07ab458c0fc3a34f3240e1dbf9cb7dc22ac6005487f84189808f33c5d74d29a"
+      },
+      {
+        "path": "adapters/postgres/src/catalogue-completeness.ts",
+        "bytes": 49577,
+        "sha256": "e1ed6303448384565079c3cbb630fac1cb7da62a865ae55406f7f23215f6edeb"
+      },
+      {
+        "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 62663,
+        "sha256": "fc7227b65e9869c401259740d5b9e7570cca1a722f45bb7a506ca2f4b02b3bd3"
+      },
+      {
+        "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+        "bytes": 14384,
+        "sha256": "5d60b860bc0261ad8103947baac642b20cfc2da5b3f07a88b87ad9135a22a227"
+      }
+    ],
+    "testFiles": [
+      {
+        "path": "tests/document-specification-save.test.ts",
+        "bytes": 9673,
+        "sha256": "e90d41d75a63309062f9c4569b999926b22e155406b0e7b83e7145d1671753bb"
+      },
+      {
+        "path": "tests/document-specification-postgres-protocol.test.ts",
+        "bytes": 11156,
+        "sha256": "9fe6bd21ab569028d7d83f0e03f1a4e46090c61fd81eaa80f80b4ad96a59e722"
+      },
+      {
+        "path": "tests/native-transfer-preparation.test.ts",
+        "bytes": 16753,
+        "sha256": "1888dd324896fbb1450778e9504e8f60fd269d90de7fd8bfe92cd9428ca7b1eb"
+      },
+      {
+        "path": "tests/runtime-document-number-postgres-protocol.test.ts",
+        "bytes": 11626,
+        "sha256": "033649c2737b8d7d3425d853449774fc7b923e9c3df00ef3d35ec7788c5a97b2"
+      },
+      {
+        "path": "tests/native-runtime26-capability.test.ts",
+        "bytes": 16965,
+        "sha256": "e2238ce037fb93ce6c602c71838d3bdcfe0de07196aa7f4340022b011a6e10aa"
+      },
+      {
+        "path": "tests/product-media-write-capability.test.ts",
+        "bytes": 8793,
+        "sha256": "471cfc88a0db10c7a8b1e57a0b4b0dffa9ed6b9072ae85cfec735629b7be0569"
+      }
+    ]
+  },
+  "qualification": "SOURCE_FIXED_OWNER_TARGETED_CHECKS_ONLY. No actual PostgreSQL/HTTP/frontend-runtime/SAVE/performance/release accepted. Existing independent results reused; only new affected delta route to original QA. User narrowed exact22 approval only, original D1=19+D2=3. Source190/185 bounded independent reused; new8adaptersSQL +affectedtests require QB. New runtime v11 122routines/committrigger not installed; v10 121 cannot authorize it. B07 store/test/v12 WIP excluded."
+}

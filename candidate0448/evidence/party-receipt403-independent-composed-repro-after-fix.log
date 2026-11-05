@@ -1,0 +1,38 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+{
+  "status": "OPEN DEFECT: pre-existing party403 destroys unresolved-command recovery",
+  "before": {
+    "appPhase": "ready",
+    "route": "customers",
+    "authenticated": true,
+    "input": "INDEPENDENT ORIGINAL UNKNOWN COMMAND",
+    "originalCommand": {
+      "action": "EDIT",
+      "requestKey": "00000000-0000-0000-0000-000000000991",
+      "id": "00000000-0000-0000-0000-000000000401",
+      "expectedVersion": 1,
+      "name": "INDEPENDENT ORIGINAL UNKNOWN COMMAND",
+      "enabled": true
+    },
+    "replayVisible": true
+  },
+  "after": {
+    "appPhase": "ready",
+    "route": "customers",
+    "authenticated": true,
+    "input": "INDEPENDENT ORIGINAL UNKNOWN COMMAND",
+    "replayVisible": true,
+    "keys": 1,
+    "writes": 1
+  },
+  "calls": [
+    "https://synthetic.test/api/auth/session",
+    "https://synthetic.test/api/customers?search=&enabled=ENABLED&page=1&pageSize=20",
+    "https://synthetic.test/api/customers/00000000-0000-0000-0000-000000000401",
+    "https://synthetic.test/api/customers/commands",
+    "https://synthetic.test/api/customers/receipts/00000000-0000-0000-0000-000000000991"
+  ],
+  "expected": "A receipt403 does not prove the original dispatched command was rejected or did not commit. Preserve exact original command/key and recovery state; do not reclassify it as a safe disposable read-only transfer route."
+}

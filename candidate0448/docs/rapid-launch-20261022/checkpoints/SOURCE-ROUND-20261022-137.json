@@ -1,0 +1,36 @@
+{
+  "atUtc": "2026-10-23T05:06:17.365594+00:00",
+  "parent": "d2324ec3fd5b16a577faefcfc5ae13873ddf80c4",
+  "owner": "F1",
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-73/DELIVERY.json",
+  "receiptSnapshot": {
+    "chunk": 73,
+    "taskId": "F1-S01-EMPTY-PAGER-CURRENT-PAGE-01",
+    "atUtc": "2026-10-23T05:05:29.261807+00:00",
+    "status": "READY_EXACT1_SOURCE_EMPTY_CURRENT_PAGE_ONLY",
+    "files": [
+      {
+        "path": "apps/web/src/components/standard-pagination.tsx",
+        "beforeSha256": "d22a2615e23d46165fe8174000afa20d286953a22a4e1b800305db9e4f3a6511",
+        "sha256": "c3470465b107f55ad05a550d37e473d680bc0b98cc438806a28ced91af67a04b"
+      }
+    ],
+    "checks": {
+      "types-1": "EXIT0_DIRECT_SHARED_AND_SALES_TRANSFER_CONSUMERS",
+      "empty-1": "EXIT0_TARGETED_REAL_CONSUMERS_SYNTHETIC_ONLY"
+    },
+    "wholePagePass": false,
+    "realBusinessPass": false,
+    "performance": "NOT_MEASURED",
+    "blockers": [],
+    "next": "C pin exact1 and include next necessary whole candidate; original QF success-empty current1 affected retest only; do not represent134/135 as including73",
+    "evidence": [
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-73/REPORT.md",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-73/SOURCE.diff",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-73/EMPTY-PAGER-RESULT.json",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-73/empty-1.log",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-73/types-1.log"
+    ]
+  },
+  "scope": "Empty total0/current1 exactbutton source display only, totals/queries unchanged. Owner new/affectedchecks adopted; one nextcompletecandidate consumer actualQF pending."
+}

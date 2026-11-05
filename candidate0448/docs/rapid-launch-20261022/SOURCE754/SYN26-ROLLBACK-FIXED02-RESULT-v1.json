@@ -1,0 +1,50 @@
+{
+  "status": "SOURCE_READY_TARGETED_CHECK_PASS_NOT_ACTUAL_DB",
+  "scope": "C registered parent and test only; fixed rollback-companion-01 to rollback-companion-02",
+  "priorCarrier": "T45 confirmed terminal 2026-10-27T07:28:59.979077Z; clients/review/gate closed and own PG stopped",
+  "oldRootPreserved": true,
+  "newFixedRoot": "rollback-companion-02",
+  "negativeRoots": [
+    "credential-continuation-04",
+    "rollback-companion-01",
+    "rollback-companion-03",
+    "other"
+  ],
+  "checks": {
+    "targetedParentTest": {
+      "pass": 1,
+      "fail": 0,
+      "skip": 0
+    },
+    "parentSyntaxExit": 0
+  },
+  "files": [
+    {
+      "path": "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 95557,
+      "sha256": "2531bd8bf99dc886f258c077bafb65c81346d5bc0d038fcc68906aecb2f58eb5",
+      "mirrorEqual": true
+    },
+    {
+      "path": "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 52244,
+      "sha256": "4c2b61ecf23d9501eebef5d8c0a300e03a822d1872038cc8f110caa9c2de9fdb",
+      "mirrorEqual": true
+    }
+  ],
+  "unchanged": [
+    "original request key and IDs",
+    "account/auth 3/3",
+    "source750 raw client observer and genuine issuer lease",
+    "normal two accepted cases",
+    "original04 pins",
+    "frontend and shared contracts"
+  ],
+  "actualDatabaseExecutedByD1": false,
+  "normalCasesReexecuted": false,
+  "loginExecuted": false,
+  "credentialRenewalExecuted": false,
+  "nextOwner": "T45 strict two-purpose gate consumer and original QB one combined affected-scope review",
+  "realFullImportCompleted": false,
+  "publishRestrictionLifted": false
+}

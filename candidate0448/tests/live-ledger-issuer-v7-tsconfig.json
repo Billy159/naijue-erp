@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../adapters/postgres/src/native-import-accounting-capability.ts",
+    "./live-ledger-issuer-v7.test.ts",
+    "../apps/api/src/production-provider-composition.test.ts"
+  ]
+}

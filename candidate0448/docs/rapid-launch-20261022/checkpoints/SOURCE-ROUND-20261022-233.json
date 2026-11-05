@@ -1,0 +1,77 @@
+{
+  "atUtc": "2026-10-23T22:54:49.034750+00:00",
+  "parent": "43d897c73f5950cb197f99f6febd94735ede8c2f",
+  "taskId": "F1_O_S14_SELECTED_UNFINISHED_STATE_MAPPING",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 54502,
+      "sha256": "66fd0373bfd85c2fd7f0cb6b148af787dc52ad6689b154f2e5dc79f3be424223",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-118/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "03fdc87ced140bec251c20c562bd9af5a49a8e9d1e70855003559553d92a7ab2",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh; Fast not verified",
+    "finding": "O-S14 same actual229 selected working line classification",
+    "status": "SOURCE_READY_SELECTED_WORKING_CONFIRM_GATE_ACTUAL_PENDING",
+    "files": [
+      {
+        "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+        "bytes": 54502,
+        "sha256": "66fd0373bfd85c2fd7f0cb6b148af787dc52ad6689b154f2e5dc79f3be424223"
+      }
+    ],
+    "change": "Confirm if completed lines or entries with selected product, without treating bare query as a selected line. Retain original modal/224 model/native SAVE identity/unknown keys.",
+    "checks": {
+      "before-1": "RED prior229 exact form in original full new document: selected product with no completed lines loses selection/changes mode without confirmation, matching original QF229 actual.",
+      "after-1": "PASS original full new page selected-default quantity1/priceblank and selected edited12/10: original confirmation appears while exact draft+entries+note unchanged; cancel/X/native cancel event preserve original selected work. Query-only control stays immediate, no key/command/preparation/document created.",
+      "types-1": "PASS exact changed form root strict imported closure; include=[] no source exclusions.",
+      "adoptedActual": "Original QF229 actual C05/C07 vsD06 selected difference and D07 cancel retained; new C relay D12→D14 vsC09→C11 proves query-only no-confirm/clear/note preserved. Whole final receipt still in progress; F1 does not issue actual acceptance.",
+      "adoptedNotRerun": "Original QFv069/source224 completed-line confirmation effects preserved and not retested; underlying sourceModel exact original112/224 hash unchanged.",
+      "correction": "Original116 four-state GREEN represented a wrong expected selected branch, not evidence of Demo parity. Preserve history and supersede only selected classification with actual business-state mapping."
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-118/REPORT.md",
+        "bytes": 1388,
+        "sha256": "0fa6c0af77b7d1bb7c85124f0fb07c92e0424dec19cdb0bae1735a5092b2e415"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-118/PROOF.json",
+        "bytes": 2958,
+        "sha256": "9ba5eb725d87aae5a53a0ab1a8a41a8411d4db3048be039d577c054ff62f0749"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-118/CHECKS.json",
+        "bytes": 1283,
+        "sha256": "7860933f20f04bff54db5158f184030ff245eafee3be567bf7577e6aeff26e04"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-118/RESULT.json",
+        "bytes": 1153,
+        "sha256": "eab4243a9ed930e57d332a9817f284146b706e40af812e2671cf2f870b0b85ae"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-118/BEFORE-STATE.json",
+        "bytes": 124,
+        "sha256": "0ef86f428393ef862fbccd71a7344ebcbcf3d7dd10ec5dbe257c4eec0b70b653"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-118/SOURCE.diff",
+        "bytes": 1063,
+        "sha256": "067f1367e0604098e88c37f9d4508f0fd94f3f2e2f9b81c65a2d054982bc6ad0"
+      }
+    ],
+    "limitations": [
+      "No Chrome/HTTP/PG/new backend/build/service/Git/F2 or C writes.",
+      "Native dialog cancel event checked locally is not actual Chrome Escape; successor actual remains required.",
+      "Selected after-confirm effects not newly changed or claimed by this gate/dismiss receipt; original224 completed-effects accepted scope preserved.",
+      "117 datefont CSS and227Today JS untouched."
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "Only affected realFrame selectors or selected-workline state mapping correction. Original owner minimal RED/GREEN adopted; independent source/nextfixed browser actual pending; not in229, no business/performance or wholepage pass."
+}

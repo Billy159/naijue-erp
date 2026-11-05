@@ -1,0 +1,34 @@
+{
+  "atUtc": "2026-10-22T08:19:25.367344+00:00",
+  "sourceCommit": "877136977ad5ec8977824623dee59cb71c17293f",
+  "originalSourceReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/c02-preparation/boot-persistence/SOURCE-READY-RESULT-v1.json",
+    "sha256": "847c78a5d060f4fb55120e3352ac09a3b799bd0a55723f888eb1a75bfcf8aafc",
+    "explains": "Immutable exact prior receipt pinned in SOURCE-ROUND12; RESULT later received report-only job16 evidence"
+  },
+  "latestReport": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/c02-preparation/boot-persistence/RESULT.json",
+    "sha256": "f8f373aed188e6ff670b5b3dc05df84af7095d51183eec65e24ba034353f0069"
+  },
+  "status": "OFFLINE_SOURCE_READY_PLUS_READONLY_ACTOR_PROJECTIONS_NOT_DEPLOYED",
+  "actualOldEntryStarters": [
+    "naijue-prod.service",
+    "naijue-t48-prod-runtime.service"
+  ],
+  "remaining": [
+    {
+      "path": "/srv/naijue-erp/t16/bin/safety.py",
+      "pathStatus": "EXACT_SIBLING_IMPORT_CANDIDATE_RUNTIME_RESOLUTION_NOT_COLLECTED",
+      "reason": "monitor.py imports safety; pin actual resolved module path/hash and reuse or inspect module initialization plus digest/load_contract/no_symlinks/run/write_json relevant control flow. Direct monitor AST does not prove delegated run or contract/JSON helper behavior. No helper execution or full unit scan is needed."
+    }
+  ],
+  "notTested": [
+    "actual systemd install/enable/drop-in evaluation",
+    "actual boot or Docker service restart",
+    "actual candidate activation/public HTTPS/business validation",
+    "actual stop or zero-write policy restoration",
+    "integration into deploy-candidate.py or rollback-candidate.py",
+    "subsequent-release boot owner migration"
+  ],
+  "noTechnicalRetest": true
+}

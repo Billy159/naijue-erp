@@ -1,0 +1,7 @@
+PASS multi shell 1: idle is inert; CSS gates views/data; replacement, Escape and late CSS cannot revive dismissed owners.
+PASS multi shell 2: reopen gets an independent child; Escape restores safe focus and hiding the list drops ownership/view/data.
+PASS multi shell 3: CSS failure is visible, never starts data, and explicit retry opens once without changing selection.
+PASS multi shell 4: identity/permission replacement drops every child/style/view, and unmount leaves no retained popup.
+PASS multi shell 5: disabling a focus-only pending preparation disposes its lease without popup ownership; reenable starts a clean action.
+PASS multi shell 6: provider/target identity replacement closes the old child synchronously, drops its view and waits for another explicit action.
+All 6 synthetic shared multi-select shell groups passed. Injected action/style lifecycle only; actual TreeSelect behavior has separate sales/transfer DOM tests. No browser, network, PG or pixel acceptance.

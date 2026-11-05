@@ -1,0 +1,16 @@
+Recorded stdout from the completed 2026-10-21 run before the final encoded-separator/public-root-symlink hardening. The three build/fixture tests remain unchanged. The two server tests were rerun after that hardening; see server-final.log.
+Command: node --test apps/web/visual-acceptance-host/tests/server.test.mjs apps/web/visual-acceptance-host/tests/fixtures.test.ts apps/web/visual-acceptance-host/tests/build.test.mjs
+
+✔ independent app emits actual lazy routes/actions and separately owned CSS (2228.169505ms)
+✔ finite visual inventory candidates and target facts agree (1038.978668ms)
+✔ sales and transfer use six matching finite warehouse candidates (166.540205ms)
+✔ explicit request paths and MIME fail closed (10.237147ms)
+✔ read-only static responder denies traversal and all symlinks without a listener (87.288828ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3099.395844

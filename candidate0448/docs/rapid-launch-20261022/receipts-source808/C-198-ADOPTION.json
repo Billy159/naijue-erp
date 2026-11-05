@@ -1,0 +1,38 @@
+{
+  "status": "C_EXACT_ACL_ONLY_SINGLE_EXECUTION_AUTHORIZED_AFTER_QB485",
+  "jobId": "t45-r1-eight-table-exact-column-acl-20261028-198",
+  "atUtc": "2026-10-27T19:18:37.803402+00:00",
+  "model": "gpt-6.1-sol/medium",
+  "Fast": "UNVERIFIED",
+  "authority": "Original user continuous implementation/import/operations authorization; originalT45 uniqueDBowner; minimal already-approved nativebarcode/payment/history staging capability ACL installation only. No new field/constraint/write-contract.",
+  "review": {
+    "id": "QB485",
+    "bytes": 5174,
+    "sha256": "63fa0022e75b74a1bf407064288c23690416f52e909b199e81859619daf5b94c"
+  },
+  "exactSql": {
+    "name": "grant-exact-197-columns.sql",
+    "bytes": 60600,
+    "sha256": "0936ab9cac570e5b94f8f760330a1d57d9bc5f23e266f94dc61a0ab705cf97ed"
+  },
+  "rollbackOnlyIfSeparatelyNeeded": {
+    "name": "revoke-only-exact-197-added-columns.sql",
+    "bytes": 60519,
+    "sha256": "929ec2180c722b271a0297d69a9e559e65fcb2e0ef504c8a549b31ae3cba3a40",
+    "rule": "Not automatic replay; prove exactforwardreceipt/no laterACLdrift. Restore only76bits, do not promiseNULL/emptyattacl rawtext canonical restoration or business rollback."
+  },
+  "target": {
+    "database": "erp_rewrite_20261022_r1",
+    "oid": "1027659",
+    "runtimeRole": "erp_rewrite_runtime_20261022",
+    "ownerRole": "erp_rewrite_owner_20261022",
+    "postmaster": "2026-10-04 08:16:07.895273+00",
+    "socket": "/proc/1780/root/run/postgresql",
+    "systemIdentifier": "7691989034661916697"
+  },
+  "precondition": "Exact fixed197 embeddedwhole8table/OID/rawACL/RLS/columns/roleattributes/zeromemberships/schemaUSAGE as reviewedSQL; any mismatch rollback stop, no rewriteprestate. Prior195terminal/196bothbarcodeabsent/BINDonly evidence preserved. No live writer started.",
+  "scope": "One boundednew198 execute exactSQL once viaexistingowner channel; sixteencolumnGRANT only9SELECT+59INSERT+8singlecolumnUPDATE existinglocks. Preserve oldallbits; nofunction/tablelevel/GRANTOPTION/PUBLIC/newrole/profile/trigger/businessDML. Existingbarcodeonlyv1 neverexecute.",
+  "after": "Capture returnedCOMMIT/exactbeforeafter76bits+alloldpreserved and ordinaryrole currentfullcatalog/currenttarget/roles using existingmetadataexport; preserve newcanonical thenoriginalQB currentACLreview beforeconsumer/config/purpose/externalwritergrant. Metadataonly no businessfunction/DML.",
+  "failure": "Preservefailure; unknownCOMMIT read exactcurrentACLagainstoriginalpre/post beforeanyreplay. No blindnew198retry/noPGcatalogmanualedits.",
+  "notAuthorized": "No source148regeneration/INIT/BIND/ACCOUNT/PUBLISH/replay195/APP/publicURLswitch; no executionbudget change here; newwriter authority separatelyrequired."
+}

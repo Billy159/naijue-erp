@@ -1,0 +1,139 @@
+{
+  "atUtc": "2026-10-23T14:02:21.634797+00:00",
+  "parent": "21bc982c920b0bda7df08790b9e6187aa20e9dcb",
+  "taskId": "F2-PRODUCT-NATIVE-SIX-TABS-03",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-page.css",
+      "beforeSha256": "20786c23e24a5c880c37410cb235d5f6487711f4239704f1584396e0c94a351c",
+      "beforeBytes": 37567,
+      "sha256": "21fb11837ec650667e3ce9066815f222b46a9d2f6442c411fc8ab7efe6303402",
+      "bytes": 8180,
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-editor-base.tsx",
+      "beforeSha256": "57bd486dad5971570a119021e135cfc85be1a1e2e264a08c8c7859f1d502e4f3",
+      "beforeBytes": 21346,
+      "sha256": "32e6fc1c65da6ccf7de3e517462ae45d483b7b633e770b1bc36497958ca8625a",
+      "bytes": 21708,
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-base.tsx",
+      "beforeSha256": "7027b1d4fd41b1caa69589f32d268f90cf67695d584986a1e9e924652bc5c0ed",
+      "beforeBytes": 2762,
+      "sha256": "9fe2065d0afd526e6b67a17b1079a0a365f0ed020a3e0e3658571324ea7bffe1",
+      "bytes": 2931,
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-editor.tsx",
+      "beforeSha256": "0f517c4b1a0cf624e7dc2a9e248900a9bceccf36802e1d9d1052e59f1a7d2838",
+      "beforeBytes": 27959,
+      "sha256": "a7cd269ca0ad9b823bb5bb3be5109778c4a9baa6497664d0348c2ff566440124",
+      "bytes": 27981,
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-editor-barcodes.tsx",
+      "beforeSha256": "c91e4209dec398fec347c93a73bb01acf17628f27e950316a8069b8ed1902965",
+      "beforeBytes": 12012,
+      "sha256": "106139478232145fb04e5c7bc8bea5d60d0ba0c2b64f0c3485a6152936658f86",
+      "bytes": 12028,
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-barcodes.tsx",
+      "beforeSha256": "cb60532f882caf16a2d20b197dd5da94509a903514cc77c55db743acf620360a",
+      "beforeBytes": 7021,
+      "sha256": "a346cd15e13de58eb9cc687d2b3177dc4d422251735519dc59f2608f1244e8d9",
+      "bytes": 7043,
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/product-tab-specifications.tsx",
+      "beforeSha256": "c83e9769f19a215bbd0c1a45db45799580060e7381b07f761ab5d56e3306e232",
+      "beforeBytes": 3008,
+      "sha256": "1dbdeac9576c4178ee8ed6b4600a4b05b7511c99f90f3230022295a1d61a2c97",
+      "bytes": 3029,
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/demo-source/product-current.css",
+      "beforeSha256": "37f3626b8031192da80c36708d2c3eca9eacaa3c307b56fcdbe7e87b22cf2d7b",
+      "beforeBytes": 17939,
+      "sha256": "59854348f82f8177e3c218d4474c921fb5c6539793c55f8864c78ba99ed37643",
+      "bytes": 35517,
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/demo-source/product-inventory-unified.css",
+      "beforeSha256": "2d74f53841bfd02ebafc30d1a6c24bebd9c938b4721222e124b965fa0150dc74",
+      "beforeBytes": 14063,
+      "sha256": "aa3a3322b8b6118460a3ae1f08af48a70a58879a0e6eb84a63485611a029ba40",
+      "bytes": 22040,
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/demo-source/product-rework.css",
+      "beforeSha256": "3927f3d85ed2d217adb6892eb292d1938f47da7390156c965fdffa4b935383fc",
+      "beforeBytes": 22430,
+      "sha256": "8b1258b336cbf7d3b7cd3aad5b3bfaeb10266013f92d3793e3b71813caf78b48",
+      "bytes": 39574,
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-NATIVE-SIX-TABS-03/RESULT.json",
+  "ownerReceiptSha256": "fa98c636211878f6df4337c4d8b4733d83bbaf7ab7209fbf172bffadd3ebef26",
+  "scope": [
+    "Product editor and independent readonly six tabs now use complete frozen source style entry in original file order, original control hosts and native error carrier",
+    "Remove old product-page.css reconstructed layout pile and its drawer-sheet dependency; 37567 to 8180 bytes; keep genuine existing business recovery/candidate/native-extra-SKU adapters",
+    "Native source scopes support full readonly root and descendants outside product route; body/page shell policy stays route-only; hidden retained list excluded from visible-list predicates; preserve zero-specificity Arco internal isolation from original ShadowDOM",
+    "Reuse existing six native bodies, first-visit leaf loading, DTO/permissions/IDs/precision/save/recovery; no new write/numbering/global-size/delegation/schema"
+  ],
+  "checksAdopted": [
+    {
+      "name": "Affected actual transitive strict TypeScript graph",
+      "result": "PASS_DIAGNOSTICS_0",
+      "log": "strict.log"
+    },
+    {
+      "name": "Actual editor + external readonly six leaves under StrictMode; synthetic native read/client ports; no UI component replacement",
+      "result": "PASS",
+      "log": "dom.log",
+      "details": "dom-result.json",
+      "captures": [
+        "editor-dom.html",
+        "readonly-external-dom.html"
+      ]
+    },
+    {
+      "name": "All native declaration blocks/order identical; CSS dependency bundle warning0; selector eligibility root/route/hidden/Arco boundaries",
+      "result": "PASS",
+      "log": "css.log"
+    }
+  ],
+  "qualification": "SOURCE_FIXED_OWNER_SELFCHECK_ONLY. New whole associated six-tab runtime and independent QF2 actual needed. Source178 P01 prior evidence preserved; shared CSS changes affect current consumers only; no full48/backend retest.",
+  "untested": [
+    "No Chrome or browser computed cascade/pixel/real layout comparison",
+    "No real HTTP/backend/PG/business save/media upload or representative performance timing",
+    "No complete preview build, server/Git/release or production deployment",
+    "No independent QF/whole-six-tab business acceptance; all104/partial48/whole0 not incremented"
+  ],
+  "frozenDemoSource": {
+    "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo",
+    "declaredCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+    "access": "READ_ONLY_NO_GIT_BUILD_OR_MUTATION",
+    "nativeCssRuleBlocks": 442,
+    "nativeCssTopLevelSelectors": 491,
+    "nativeCssDeclarations": 1368,
+    "allDeclarationBlocksAndOrder": "IDENTICAL",
+    "map": "css-source-map.json",
+    "additionalSourceDependencies": [
+      "frontend/product-arco.jsx Choice css and modalCss",
+      "frontend/styles.css126-130,172 native error/empty/spaced",
+      "frontend/sales-current.css33 readonly text"
+    ]
+  }
+}

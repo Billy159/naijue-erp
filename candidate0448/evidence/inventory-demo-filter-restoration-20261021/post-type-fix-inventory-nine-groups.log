@@ -1,0 +1,30 @@
+PASS inventory StrictMode: replay abandons its old query but keeps the visible form live; idle makes no reads; one explicit submit starts exactly one bounded transport.
+PASS inventory retry/cancel: error retains labelled prior success; one retry recovers; cancellation aborts and ignores a late rejected transport.
+PASS inventory route close/reopen: unmount aborts immediately without closing the parent; late failure cannot reattach; reopening is fresh and waits for its own explicit query.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS inventory identity: active-parent replacement clears prior facts and aborts; permission/session revocation aborts inventory and candidate reads together; a new scope reads only the new identity.
+PASS candidate StrictMode/debounce: recent history sends no catalogue read; direct inline input starts only the latest bounded search; Enter never submits inventory; close aborts and rejects late facts.
+PASS candidate error/retry/history: retry recovers source-style code/name options; selection uses actual provider identities without rereading; code tags and bounded local recent history survive closing only.
+PASS final cleanup: category arrays reread only candidates; identity abort and real unmount immediately abort pending candidates; history/facts are cleared; no product prefetch occurs before active suggestions.
+PASS active preview: exactly one target gets basics/specifications/thumbnails; hover aborts prior target and ignores late facts; actual retail price is displayed; candidate Enter selects without inventory query or original-image fetch.
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+PASS inventory shared filters: native category hierarchy preserves explicit multi-branch IDs, refuses ALL-minus/parent-minus-child, deliberate replacement works; warehouse source tags select a true subset; changing controls never auto-submits inventory.

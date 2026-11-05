@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{readFile}from'node:fs/promises';
+test('restoration PLpgSQL IF comparisons parenthesize all five CASE operands',async()=>{const sql=await readFile(new URL('../adapters/postgres/patches/0027_historical-original-restoration_successor.sql',import.meta.url),'utf8'),extension=sql.split('$restoration_proof$')[1];assert.doesNotMatch(extension,/IS DISTINCT FROM\s+CASE\b/);assert.equal((extension.match(/IS DISTINCT FROM \(CASE/g)||[]).length,5);assert.match(extension,/allowed_header:=CASE step.action/);});

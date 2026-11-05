@@ -1,0 +1,722 @@
+[
+  {
+    "path": "adapters/postgres/migrations/0001_runtime_sales.sql",
+    "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+  },
+  {
+    "path": "adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+    "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+  },
+  {
+    "path": "adapters/postgres/migrations/0003_auth_sessions.sql",
+    "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+  },
+  {
+    "path": "adapters/postgres/migrations/0004_transfer_runtime.sql",
+    "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+  },
+  {
+    "path": "adapters/postgres/migrations/0005_product_read_fields.sql",
+    "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+  },
+  {
+    "path": "adapters/postgres/migrations/0006_party_maintenance.sql",
+    "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+  },
+  {
+    "path": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+    "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+  },
+  {
+    "path": "adapters/postgres/migrations/0008_runtime_sparse_first_use.sql",
+    "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+  },
+  {
+    "path": "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+    "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e"
+  },
+  {
+    "path": "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+    "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"
+  },
+  {
+    "path": "adapters/postgres/migrations/0011_history_storage.sql",
+    "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965"
+  },
+  {
+    "path": "adapters/postgres/migrations/0012_history_header_native_reference.sql",
+    "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512"
+  },
+  {
+    "path": "adapters/postgres/migrations/0013_native_party_import.sql",
+    "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54"
+  },
+  {
+    "path": "adapters/postgres/migrations/0014_native_catalogue_import.sql",
+    "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022"
+  },
+  {
+    "path": "adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+    "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a"
+  },
+  {
+    "path": "adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+    "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620"
+  },
+  {
+    "path": "adapters/postgres/migrations/0017_native_payment_import.sql",
+    "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"
+  },
+  {
+    "path": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+    "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+  },
+  {
+    "path": "adapters/postgres/migrations/0019_history_typed_publish_gate.sql",
+    "sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b"
+  },
+  {
+    "path": "adapters/postgres/migrations/0020_runtime_document_numbers.sql",
+    "sha256": "8e56bbd0124bea56364753c0332a6cd17eaf2d389e843d95ea40c4d291ffc5d4"
+  },
+  {
+    "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+    "sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61"
+  },
+  {
+    "path": "adapters/postgres/migrations/0022_product_media_retained_delete.sql",
+    "sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163"
+  },
+  {
+    "path": "adapters/postgres/migrations/0023_inventory_key_admission.sql",
+    "sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65"
+  },
+  {
+    "path": "adapters/postgres/migrations/0024_history_effective_revisions.sql",
+    "sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696"
+  },
+  {
+    "path": "adapters/postgres/migrations/0025_product_season_selection.sql",
+    "sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248"
+  },
+  {
+    "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+    "sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c"
+  },
+  {
+    "path": "adapters/postgres/migrations/0027_unified_business_documents.sql",
+    "sha256": "d42954acf56445b803ae126b364b1b2a7b0cfe70a98accaeef5cc13a9082c317"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-category-depth-successor.sql",
+    "sha256": "6341b48840bf60a6f20fa76ec1ef08a0909e42f9138335db81bfb1eb200f227f"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+    "sha256": "09fb597e7b89e77cfb9711ca7ddba8e3d4fa898bf142e77796d0f68be964b1a3"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+    "sha256": "eb5937320e017b89790a5dd5aa2d08601087e21b35b771f902f55b02ad6f4aaa"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+    "sha256": "2e6829ea72db20d5fdf62372dd9c52d44d32d9dd67d0ea0e9b02b57b082c65eb"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+    "sha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+    "sha256": "0eb5785c7e050c0b1eac5fe0fd8949dfd126f466130c841cef098247ef62cb38"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql",
+    "sha256": "41c491cca5f04cc19d15f0c05113cfb3c81fa39a648a5dc349874ba52ef588c9"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+    "sha256": "9e7c5f0864f19d2f60bd856aa965b12db81d53db40040bbfef521731d76e5d17"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+    "sha256": "5d60b860bc0261ad8103947baac642b20cfc2da5b3f07a88b87ad9135a22a227"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+    "sha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+    "sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+    "sha256": "bebad118d5519b9e899215230e16fce92cbee9148ebbf35ba03af513c1f4f475"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+    "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750"
+  },
+  {
+    "path": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+    "sha256": "8bc9bbacafc64181a7aece848e4aac3ad565247ceb5498023e979fe2e7bf05de"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_document_product_reference_lock_permissions.sql",
+    "sha256": "3f26d275e3ca31abd861a0adc526cd69ef6a61e16b43796adc38b5f387e3634d"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_document_specification_barcodes_permissions.psql",
+    "sha256": "df40620771666ee37edbd3249bccecca9114ad4d48702251e51eb542750a6c5a"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_document_specification_barcodes_successor.sql",
+    "sha256": "13f45eb0ea10dcfd6d2cc42cf3efe251218debe499cf9d2f0b20fce61117cc0e"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_explicit_zero_evidence_successor.sql",
+    "sha256": "709e76b6d6f00ce06a8468f3605f938919d2e721c82798fa0ca278dc7b8b5db2"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_fit_numeric_business_codes_successor.sql",
+    "sha256": "a21da5528e0f1d1423309c7b469706d0119cd50216e523eadbb831dc7587080d"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_fresh_core_history_fk_successor.sql",
+    "sha256": "ae1c61594696bce1aac263bbb6c8c9a44a43c815162e4246277ba8e7ba22fcd0"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_historical-original-restoration_successor.sql",
+    "sha256": "18ab7894162c9bd9053b7d6fd8126a70fcd81896c1fbb103972e4110fbe7b8de"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_historical_missing_settlement_successor.sql",
+    "sha256": "a0464dbeb0764c371319c2d8230ddb75eb89a00a607fa0ff15d77864fef910ea"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_historical_restoration_acl_hardening_v1.sql",
+    "sha256": "3b676e85ee4b41da5fd85e93a2c2b878a1b4bdefc1f953932c7c7a05deb5bfda"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_historical_sales_source_profile_successor.sql",
+    "sha256": "4dafd8ec9c64d7ac99f659711e50b27e4c7aacd30db3dc9897b19d886ba49e96"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_historical_staff_null_hall_successor.sql",
+    "sha256": "38a07279c703ec72c7f72af2894de6794103f582627d3da6f1e2800e8a52dc6f"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_product_maintenance_permissions.psql",
+    "sha256": "59a2ece00884e2768c45af742cb14a5fbd9f7642375726240da9944149aa70e2"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_product_nullable_scheme_successor.sql",
+    "sha256": "e95a32baf0f4bf4a49a8fd1e3ddcf01a92e30817881688d37fff1d5691509d40"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_published_settlement_identity_successor.sql",
+    "sha256": "317a8aee1ba8cd3d26faab32d7b4710ee9369650468753a5777f3d213107be2b"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_staff_departure_date_successor.sql",
+    "sha256": "dcfbd60eaf7397eaefbbf0270b15adbdf0f72b716c5a74cac4596cdac683482f"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_category_alias_successor.sql",
+    "sha256": "886e63d9d7c308f1704c60cdd103e1b607180a6e02eb61cd65add7bb1d509bd5"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_initialization.sql",
+    "sha256": "680fdac8120d35122f8414924ed40fb175c1533a7cfd6b656077cec7242332f1"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_initialization_precedence_successor.sql",
+    "sha256": "92f7e48edef705ee5acc9cad06191e6470abe41e3b00ca18320731c476733ea4"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_master_chunks_v2_successor.sql",
+    "sha256": "970ce6bf96832816d3fd97020e2d7e3db2e3fa5db87e463c39708646b186cca4"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_publish_verify_disambiguation_successor.sql",
+    "sha256": "df3d3698830dfe38baca73bf3cf71c756357d55b1f473d799cb4252ec51cb9f5"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_settlement_identity_successor.sql",
+    "sha256": "f360d17b11cdd42b54f55bc9de91426728e5870a6668ba82785c1061bf844190"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_whole_package_access_v2.sql",
+    "sha256": "a4210b92e4589dc31b5bf5f49af66b166d24dface7523095bc21adf2e8d9d5a8"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+    "sha256": "ed96bc73a7f8bf2919f3015542e87628ee6d402f2992ddc5ad5c5f275361177f"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_whole_package_intent_v2.sql",
+    "sha256": "9e560885a1eec48846a595dc8bb642ae2106a8cf01647118297102589500a9a7"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_whole_package_preflight_v2.sql",
+    "sha256": "b6ee0aaaced4d88ec17e962e2797b5c4aeddff87f4c9c9615a8cd6d12f851d32"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_whole_package_search_path_v2.sql",
+    "sha256": "5f15bcfb6196431aa279dde8d5e05d37ece152fc19d32c0ffbba810ddfec5ef4"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_whole_package_source_commit_v2.sql",
+    "sha256": "d5a934a891723ac80f97e3527f13793cd4a6d8a88c2d4983724dab6376f929d5"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_whole_package_v2.sql",
+    "sha256": "f784d786f47255dcaa2958df07d3f3bf2d0056b5bdb2d77c5565ea5ee782f435"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_whole_package_verify_v2.sql",
+    "sha256": "06fddf797c0eb964e2ec1eddcfe1797dfee6ae844dbdbb0df70887f3fcc0aa71"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_import_whole_package_zero_balance_v2.sql",
+    "sha256": "5b37a3f7719cb5be7c653f44ff4399da51997db5127517264f27ec7b5dcbee91"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_known_balance_runtime_v2.sql",
+    "sha256": "0bf30934472cca7a11e1f321b530e925da84c336f706424dc9c150fe8476ff92"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_whole_closure_batch_binding_candidate.sql",
+    "sha256": "3d6d3df968d2926a45d50efb89c158961e8e2f58a1f07d451fd81f117dc7b608"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_standard_whole_closure_singletons_candidate.sql",
+    "sha256": "81e568fb146c239668f7cc57ad370a2a9a0a65ee81cd23ef7d1876f66829277c"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_unified_live_history_dispatch_successor.sql",
+    "sha256": "15b400196725446d04757e431f27d815ed586a08b8c95ab73438ea1f1ead726f"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_whole_conversion_prefix_counts_v2.sql",
+    "sha256": "1eb96fbb0ca66042dd2a84473dacc95eeedc46948f2f2ad539a0271fb130433a"
+  },
+  {
+    "path": "adapters/postgres/patches/0027_zero_amount_archive_successor.sql",
+    "sha256": "5159e75a04a0c20a9c47b8853df30c4233645509af0f352bc506dbd9a6ce30e6"
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+  },
+  {
+    "path": "package.json",
+    "sha256": "df132518fffedcac3dd2842f773de1f191b563a12887788a06c196a4ce753902"
+  },
+  {
+    "path": "packages/application/src/calendar-date.ts",
+    "sha256": "3d12245db7fc90f2f985e50a0436b18ba8e2157cb92d9d214665cf06a36e658e"
+  },
+  {
+    "path": "packages/application/src/canonical-request-value.ts",
+    "sha256": "29daee138b2d5c802eb915610adef8448be447a7531df7883276896cbf9633fb"
+  },
+  {
+    "path": "packages/application/src/history-import-lifecycle.ts",
+    "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+  },
+  {
+    "path": "packages/application/src/history-storage-contract.ts",
+    "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+  },
+  {
+    "path": "packages/application/src/history-typed-closure.ts",
+    "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+  },
+  {
+    "path": "packages/application/src/history-typed-publication.ts",
+    "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+  },
+  {
+    "path": "packages/application/src/import-v2-contract.ts",
+    "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+  },
+  {
+    "path": "packages/application/src/inventory-cutoff-import.ts",
+    "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+  },
+  {
+    "path": "packages/application/src/native-barcode-import.ts",
+    "sha256": "5aaee52b0f624b774f2105131ecffd9f26c62187ba6afb3dc5e22d823fcb5f02"
+  },
+  {
+    "path": "packages/application/src/native-import-record-accounting.ts",
+    "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+  },
+  {
+    "path": "packages/application/src/native-import-schema-contract.ts",
+    "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053"
+  },
+  {
+    "path": "packages/application/src/request-hash.ts",
+    "sha256": "5cf9de26135fceb57d0e40564316e14c314a356ab9357fa6780522c7bd0114e4"
+  },
+  {
+    "path": "packages/application/src/unified-explicit-zero-approval.ts",
+    "sha256": "5a1bd3813c64d8f3b50584b0c65af35d9935c54fc31ec1441aaf2296d47e7b5c"
+  },
+  {
+    "path": "packages/application/src/unified-historical-staff-hall-approval.ts",
+    "sha256": "281ff8fc48e7946ad5f01edb976b7113f6c5ce896cd407ca6c8ff822b1d785da"
+  },
+  {
+    "path": "packages/application/src/unified-import-contract.ts",
+    "sha256": "0625260af2ada586fc40f322632f759e0ae60b63838ecd1976a5e53af69b7494"
+  },
+  {
+    "path": "packages/application/src/unified-import-execution-v2-client.ts",
+    "sha256": "215928b797459fbd1c38633875efcda04a42745562816f598fe4d7c162963f5e"
+  },
+  {
+    "path": "packages/application/src/unified-import-execution-v2.ts",
+    "sha256": "66ba4a76c0bbad26ae4547c3d554fadd2ff9c829c7062a76977d80d7b93cae70"
+  },
+  {
+    "path": "packages/application/src/unified-import-execution.ts",
+    "sha256": "693c11092e1c42f78ef93cbf5e40add9e14082d29a200f113974a9f224198ec5"
+  },
+  {
+    "path": "packages/application/src/unified-import-historical-sales.ts",
+    "sha256": "692867f7622ec0cc6d0e28bd7b2b92170d91538a6e88c9f80f7c1fee4eafc0aa"
+  },
+  {
+    "path": "packages/application/src/unified-import-master-chunks-v2.ts",
+    "sha256": "e2145d1844af7e9d4564f89d79e226f1806e1b3f7445261fc7d0782f848a29a7"
+  },
+  {
+    "path": "packages/application/src/unified-import-stable-identity.ts",
+    "sha256": "56745c0364145b15d881d27ccf3e139ead2d72e36c16c13f252f88ed7b32f644"
+  },
+  {
+    "path": "packages/application/src/unified-import-whole-package-profile.ts",
+    "sha256": "f1250bab51d979beab88841797f885669bade865b9274c9b7f957e111ecb7658"
+  },
+  {
+    "path": "packages/application/src/unified-source-registration.ts",
+    "sha256": "56df246b0c2e03b4b411d71e8f85b9d1d7e5496495b15aaef1149115adc86df0"
+  },
+  {
+    "path": "packages/application/src/unified-zero-amount-archive.ts",
+    "sha256": "97c2e976faa20556a3deac6bcd06e5f5474ce758213aa2043c2eb0fa01c5f24b"
+  },
+  {
+    "path": "packages/authentication/src/passwords.ts",
+    "sha256": "f570e5f696ae71df145edb202e18b41eae7798f9d862cb67be6a156b6bf2fafd"
+  },
+  {
+    "path": "packages/authentication/src/ports.ts",
+    "sha256": "17f485fc75194aab0d4d182c4540f3c05d6a306447a5ce0cf425c41c92bab7f5"
+  },
+  {
+    "path": "packages/domain/src/errors.ts",
+    "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+  },
+  {
+    "path": "packages/domain/src/sales-money.ts",
+    "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30"
+  },
+  {
+    "path": "packages/domain/src/values.ts",
+    "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh27-legacy-rowtypes.mjs",
+    "sha256": "8a46b94861f052fcfa1ea5eca0a3015dfb807104b37e527e8bce3f8a6289853b"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh27-plan.mjs",
+    "sha256": "1f15a288d25541154232cf96f58f252418c0732d7ac8ccded890960499f09534"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh27-portable-successors.mjs",
+    "sha256": "2c9b937fecdb2c352c52b7b47ca90bad884b61f367dfe4c4bada29828d0eedb8"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh27-publication-isolation.mjs",
+    "sha256": "cd959a6dce0dae5e9e61236a91a7da5c672f261c504755a967615395b5ae4bca"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh27-sql-bundle.mjs",
+    "sha256": "63b2da64053afb9b55e89fdc71ebf9e8a54e0bf7c0cbe6116ff89448a96b8a1b"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-catalog-collector.mjs",
+    "sha256": "c1550324f98ccf299c4601c7e63d06bdec9b5db272833bfe82da7dd7f7d6dc47"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-catalog-contract.mjs",
+    "sha256": "ff9c0db13266ddbfe4ef17eeee41c5cee33273948f4fb7920ba5938d1bea742d"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-catalog-evidence-v2-adapter.mjs",
+    "sha256": "c6fb6bb3c9ad08df0b7f55e1ba8b97b3bd8b04413331a2fc1a23328266ecfef6"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-catalog-evidence-v2-query.mjs",
+    "sha256": "c64d105ec3c0b8ad346cf14f65bfb13f4885ccb27c53795ad56aedb037c0affc"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-catalog-evidence-v2.mjs",
+    "sha256": "f91471c11826e131fb9ce66b665283e578457c110a83c9923a4d5e21982b441d"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-catalog-postconditions.mjs",
+    "sha256": "989b3d7aeb33b2fa008f468130e55819b56f0ba0a34f599666256bbfb752af35"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-catalog-record-draft.mjs",
+    "sha256": "8975df4ee4a553065eb7559c0046ff38f2845905df8f4518a8f76702442508d6"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-catalog-schema-diff.mjs",
+    "sha256": "9fea40432f4b0678d24bb22962688dc1a8fd27d9f7ddd9a6c389dffcef37eda8"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-core-guards.mjs",
+    "sha256": "963a7447b0af71e306c125d944215d9f38ade476c871b13cea24070a9638d869"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-retirement-identity.mjs",
+    "sha256": "9794b98b8b4d2db401036334bb9b53a420538bbd910962e2d88be521df41824d"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-retirement-install.mjs",
+    "sha256": "f18f7b64150af5edccae498735aa70f7c1e9a3268e35a796c63018c4464761c2"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-retirement-metadata.mjs",
+    "sha256": "76bffc138fd9b4f9871b2cad3e98e955214f30c203590dcf4321fcf1ca45b931"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-retirement-plan.mjs",
+    "sha256": "017f1c59f18bd602cb9b2f2c1847783bd24d97fc88ec9854e5423df6da6c1efe"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-retirement-schema.mjs",
+    "sha256": "a0c91b1972ed928ed89875d42d8e6fb803cee3d6b49686f30f99fec5e6fdb151"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-retirement-source.mjs",
+    "sha256": "769053161ee12a9674e6cc0e6fb05114fe3a14010cd0d5d05fe27d89d047a470"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-retirement-v2-install-candidate.mjs",
+    "sha256": "c0e255eefc303db1eddbfe9e65410a709e838f03b57b4e185e58e9d4ae0b679c"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-retirement-v2-projection.mjs",
+    "sha256": "4f38ab9d834e44be22c9ba8e7514f56f692410ed07907fc910e759e00c165700"
+  },
+  {
+    "path": "scripts/release/unified-install/install-whole-sales-record-v1.mjs",
+    "sha256": "abf23d5ee16fa2f6ab4c65e9f077d119d786880b82c9013166bb6a4f0e14c511"
+  },
+  {
+    "path": "scripts/release/unified-install/launch-whole-sales-install-v1.py",
+    "sha256": "d52822e17d19b9ef8c24da3c879454de7c01698b72d2076fde3fb68c21a5f970"
+  },
+  {
+    "path": "scripts/release/unified-install/legacy-dependency-source-report.mjs",
+    "sha256": "6b404decadc415b5f103e729d6289ada57349b18ecf2f0ccb3c87d4e327b26b6"
+  },
+  {
+    "path": "scripts/release/unified-install/preload-whole-sales-install-v1.mjs",
+    "sha256": "7f8d0175b938342d486af1596ac17015710a314012018412373320502f115187"
+  },
+  {
+    "path": "scripts/release/unified-install/publish-installation-record.mjs",
+    "sha256": "3f63fbc4bf2785453d79d6a11f0915cce6cc59dd0f6ccaeda0d181fad4ae6b53"
+  },
+  {
+    "path": "scripts/release/unified-install/record-whole-installation.mjs",
+    "sha256": "f2bfdad1950999fcf8cb76c0ece3adda315502e13052c24e53e0bfa44a2994ae"
+  },
+  {
+    "path": "scripts/release/unified-install/render-whole-package-local.mjs",
+    "sha256": "3128b307ddfb69e44ef65626df4b071e664f1f012597daa87fe4d467c65ca71a"
+  },
+  {
+    "path": "scripts/release/unified-install/trusted-install-path.mjs",
+    "sha256": "24caac5f0b2bcd8a2f8a4c19887b7453652a73a365c623bf33735bd1a1281e6f"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-catalog-gate.mjs",
+    "sha256": "0ec3ff7e2f8b0bb2711e86153013f4ece5537c28a93c5ba4e0d48a4786ef46f3"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-closure-integration-candidate.mjs",
+    "sha256": "a08a305b185b38bc71e268e0a70b1dc732b3b46a3dc628b7dbf908ae85bbba65"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-explicit-zero-integration-candidate.mjs",
+    "sha256": "41768498b284e1154415be3934aba16f5a450b2d7e13cca02838d2634065e712"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-installation-record.mjs",
+    "sha256": "a93e687b311d510dd4a2a418085c4b9928b5a3762475bb50553419cb70a67a8c"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-sales-admission-v1.mjs",
+    "sha256": "62d14ee930fe777eeb5737438489c1a5f543c3f6d036098e9c7ec8927ed74db0"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-sales-catalog-v1.mjs",
+    "sha256": "8d7b5da1b76eab9c21ed75b2a9677d9a367e9b01b8ff877c77620344737da1d1"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-sales-integration-candidate.mjs",
+    "sha256": "2eaa1912c1c81b2ecc8dcd43471493801e4cb0fdb6499cee66da68921b47cc70"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-sales-module-boundary.mjs",
+    "sha256": "1ead0cbcfe1374a0b2914673ddde6a33fe23dab40e9b02ffcfb17950d8807026"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-sales-platform-layout.mjs",
+    "sha256": "183fd37d44b9c2f5df7ad868768b929111b89a71d4c18c2c4c3b5dd0e8b1fcc4"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-sales-record-v1.mjs",
+    "sha256": "f5e171a9a985c2d6f018d0dea8df20d24eda32a038b5ac3489363b7c36367df8"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-sales-trusted-path.mjs",
+    "sha256": "ee0d9ea8147bf7ae56d658caff700fc83dd1c5b7f05e4518ff00fa86f0574628"
+  },
+  {
+    "path": "scripts/release/unified-install/whole-search-path-source.mjs",
+    "sha256": "c3e7d976c3eca53f9dad1ad7f510aee6fc7e29f3d0d39dadcfbddc49e311426d"
+  },
+  {
+    "path": "tools/unified-import/cli.mjs",
+    "sha256": "350ea68bd0bc69d424e9cc3f64cf33aee815dfa37497ef9afdccea2151225ef5"
+  },
+  {
+    "path": "tools/unified-import/cli.ts",
+    "sha256": "e03c3aa35c1950b56e13346d740a7ca596858519adae676b324cdb5fe06035ce"
+  },
+  {
+    "path": "tools/unified-import/execution-client.ts",
+    "sha256": "4da1d4e7ee4c4152002e05a9f70a32cda3cc58680233fbe1e5442e69dc109da7"
+  },
+  {
+    "path": "tools/unified-import/execution-plan.ts",
+    "sha256": "fb4e6856438f72bd505ff950c46508d942b0d783cc7341cec026b7a47b74efef"
+  },
+  {
+    "path": "tools/unified-import/execution-v2-admission.ts",
+    "sha256": "c5eae33b4e502e29ab89549bce11a895ccfb3fafd8ae88a86232aa951228107c"
+  },
+  {
+    "path": "tools/unified-import/explicit-zero-cli-input.mjs",
+    "sha256": "6e0d2bbb9f6ef99e2504bae2913b21c18c0be99cb58803894b98ee547f21a815"
+  },
+  {
+    "path": "tools/unified-import/fresh35-host-session.mjs",
+    "sha256": "a6f9b29d4cdf30b63072b1cacf9baf8bd66d54e9c9f72eac3505931d9a935d04"
+  },
+  {
+    "path": "tools/unified-import/fresh35-receiver-diagnostics.ts",
+    "sha256": "a305079b2f95180cb14451c04ddb858bec2a2bd0a21022d326d24d3d0268e831"
+  },
+  {
+    "path": "tools/unified-import/package-reader.ts",
+    "sha256": "4afc29dfa2dba07aa087bdc7ae0daa0ad862fd7b5b27dfd965772cae57fb372a"
+  },
+  {
+    "path": "tools/unified-import/source-registration.mjs",
+    "sha256": "bd358099b43428145b11ec3d74fdeed674680c1bb0fe63b373a2879dbdd0400c"
+  },
+  {
+    "path": "tools/unified-import/stream-baseline-requests.mjs",
+    "sha256": "3836d6b65ec507e30422bd13a70a58ecfc68a7b2ed85e5d7f041b3659561b740"
+  },
+  {
+    "path": "tools/unified-import/stream-binding.mjs",
+    "sha256": "44b717ef2e7873e9b4799bb07f780d2d6eb07a082a3e95d69d14bfabdb8027e0"
+  },
+  {
+    "path": "tools/unified-import/stream-document-requests.mjs",
+    "sha256": "d057e808dc624e44117b6ffb9a146b808d511ff1ecd11514f6ac28f2b97a365b"
+  },
+  {
+    "path": "tools/unified-import/stream-import-cli.mjs",
+    "sha256": "e43218ea85f0584630222cbdfc79f53b7784d9e68804114da78bcd0b40e8e070"
+  },
+  {
+    "path": "tools/unified-import/stream-master-graph.mjs",
+    "sha256": "df00c9b8b0d51c3cd378ca9b5569b6490246cc6de2f289f1120cb46fc224e802"
+  },
+  {
+    "path": "tools/unified-import/stream-package-metadata.mjs",
+    "sha256": "18e47a2ab2752f734fd120d217fc8ffb52b4c781cd76159e774fa7bcb5ba6151"
+  },
+  {
+    "path": "tools/unified-import/stream-plan.mjs",
+    "sha256": "b7f45eb01a7f126246b3421d4ab553590cdeaf51a0a72fc51d9cbca01ec3f295"
+  },
+  {
+    "path": "tools/unified-import/stream-preflight-cli.mjs",
+    "sha256": "8856761084ceba5e45092024840430c278ddd517c2201736ea9d41a750bd1180"
+  },
+  {
+    "path": "tools/unified-import/stream-preflight.mjs",
+    "sha256": "efc380047511cd80131f5e194cfcb25c29abd7a8c2b24b099913571f25df6bcc"
+  },
+  {
+    "path": "tools/unified-import/stream-prepare-cli.mjs",
+    "sha256": "b63cbc086af156dc66f4e892beb5bd4b32254d25552839de03f6fb1e5729aad8"
+  },
+  {
+    "path": "tools/unified-import/stream-program.mjs",
+    "sha256": "5968e233af4288daa571d0b77ae040248a436eacd0ec950d509695fe84f66b5e"
+  },
+  {
+    "path": "tools/unified-import/stream-relations.mjs",
+    "sha256": "3e8e644c335be4d11c0d0fd0801a579ea436a303211d0513d2ecbf4dd86fa608"
+  },
+  {
+    "path": "tools/unified-import/stream-typed-hash.mjs",
+    "sha256": "9e48167e3e3df337bc7d34a8bbde1b1dc8b59c853fcc287d59c0c7a2f479441d"
+  },
+  {
+    "path": "tools/unified-import/whole-host-session.mjs",
+    "sha256": "7b0d8e576af4fdb8812a93fc3176bec7a4a95e0eabb15bb55f119e5641e0e81d"
+  },
+  {
+    "path": "tools/unified-import/whole-package-client.ts",
+    "sha256": "ed105f0f7fd126fa848b1a06a021e367ebab1ab2bfd0deac914ef25d7968ca58"
+  },
+  {
+    "path": "tools/unified-import/whole-package-host.mjs",
+    "sha256": "e77b9298c81ed03fbcf964fd0ea02937d256f254a66dc2b74191b9e1c50362b0"
+  },
+  {
+    "path": "tools/unified-import/whole-package-inspect.ts",
+    "sha256": "4ca8e95f46de50f2adb06258f331cbdbcf00e0ece2aa816f22a1b59d5bc05af2"
+  },
+  {
+    "path": "tools/unified-import/whole-package-reconcile.mjs",
+    "sha256": "c04e709de46a61bc6026a06f60bdd917e5b132644542f69e3d2d2eeae3de3ad1"
+  },
+  {
+    "path": "tools/unified-import/whole-package-sql-kernel.ts",
+    "sha256": "af75e5f0b83ce5b0091ff68e248e1d2ae606469bcd61381c03d103a06df3593d"
+  },
+  {
+    "path": "tools/unified-import/whole-sales-host.mjs",
+    "sha256": "4acdbd4d9a3f5a7c263864eb30f48fcb6483773ffa0eb97425d057ee6b8a445a"
+  }
+]

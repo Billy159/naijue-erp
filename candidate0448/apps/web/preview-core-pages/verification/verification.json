@@ -1,0 +1,942 @@
+{
+  "file": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/three-core-pages-synthetic-test-only-38a1a9d00ce5.html",
+  "bytes": 1364619,
+  "sha256": "e24befa91f2909a69c386a183be2dd252a8d90f9a5cce8a7cafb862489084374",
+  "embedLimitBytes": 262144,
+  "referenceLimitBytes": 10485760,
+  "fitsEmbedLimit": false,
+  "baseCommit": "38a1a9d00ce5060879af409c6e7e1febad07ab5f",
+  "sourceState": "Every actual UI/native runtime source input matches the named commit. Preview-only derivative inputs are separately hashed and may be uncommitted; this is not a production release.",
+  "sourceSnapshotSha256": "faa4a72f7fb493aaba0c13a7d2070cc95266cfd9197c54f87640b525f7792d94",
+  "sourceInputs": [
+    {
+      "file": "apps/web/preview-core-pages/catalog.ts",
+      "sha256": "298a9780b6b59d0dc2b4e3146c64b0040ebb007846cbb93e571e65a80f7a6101"
+    },
+    {
+      "file": "apps/web/preview-core-pages/inventory-fixture.ts",
+      "sha256": "ab56d69bd0fbb7e2d914992b266518701807113985732b839abdf6b1f0cc80ce"
+    },
+    {
+      "file": "apps/web/preview-core-pages/main.tsx",
+      "sha256": "37baae3d449ddec2fac418afa2ec4951f75f1337c2f905a6aae03a25cb1473b7"
+    },
+    {
+      "file": "apps/web/preview-core-pages/preview.css",
+      "sha256": "0f10b3f602bf96a97819b0d8a3848a81b6d07f1ef30cdf73964d0fbf5e7fb147"
+    },
+    {
+      "file": "apps/web/preview-core-pages/product-fixture.ts",
+      "sha256": "4bc8c9ce6ff990b71ad4b743e49a1c95644e1a9964cc8790a75411db302ce2ac"
+    },
+    {
+      "file": "apps/web/preview-core-pages/sales-fixture.ts",
+      "sha256": "d0a5c7a440f7c591e618dde896f4dd37edbc536e2fad5e7f462de718a86c707f"
+    },
+    {
+      "file": "apps/web/preview-core-pages/transfer-fixture.ts",
+      "sha256": "82d60d5b9494c1b8f9c88fb5768a1e851c051d0b287acdce42bd3d40ad839f0a"
+    },
+    {
+      "file": "apps/web/src/components/candidate-selector.tsx",
+      "sha256": "9f4c1446dd8a09f34f183a4b68ef27f71faf7dea2c33088ca02e76964b143d18"
+    },
+    {
+      "file": "apps/web/src/components/pagination.tsx",
+      "sha256": "e535ddd99d01eeb25493cb024ea3f1e8228e613d0db99a7af8bc81b444be748d"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/anchored-popover.ts",
+      "sha256": "bd1c737b946159131acc6dd7aa6f4b1d57037a6a9147f3e9472e44cd72f31f27"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/controls.css",
+      "sha256": "d03119b81ee1a5c065ea01c6b62509d6fadc2cb3133c482568645fc95be681ac"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/demo-frame.tsx",
+      "sha256": "e92fe288acb75244ac142ecb2e1827959f004259ac2e9b81a5f195c57cc0ffce"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/frame.css",
+      "sha256": "8d55a960b6708429ac7af0a199f377b6f9d23241f432b90cb18e5d6abc8877be"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/icons.tsx",
+      "sha256": "39f988ac49335c65a3be7587f129cf76a85546e001221ca921dc57d7d20a80d2"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/popover-position.ts",
+      "sha256": "e57ec5192609b20cbe9bc5975dfd3e7ec41d482513d6c90ad5bab80ee257c02e"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/tokens.css",
+      "sha256": "8ba3b7e1c9133524295d562cc712662a1045bb0804e4e0c3e77df4e2f3455054"
+    },
+    {
+      "file": "apps/web/src/inventory/contracts.ts",
+      "sha256": "8098eb2be7c8598b1c0f2143107198455e9b728434e640a53539f6a99a856d4b"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-matrix.tsx",
+      "sha256": "ef5c7755c399eb66298b18aee3005d656f88b35bc8f99fd221f7f6cec13d4ae7"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-page.tsx",
+      "sha256": "cd2daf0b66e1968b93917ef727c9b31f36359b1dd7f2af7caddca2275fdb1606"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-route.tsx",
+      "sha256": "7ef69531311f90f4b1a05d162afe1b763c95011c824ce86e1f3542f394ab5047"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory.css",
+      "sha256": "64bc4908eb77d067eb67759e10eb79f0739b259f9a6c794d1bc4a736c287bf99"
+    },
+    {
+      "file": "apps/web/src/inventory/model.ts",
+      "sha256": "c59bf3731acbd02eda96863b6249a340f559d54fb6a0875d1d7597e00da51cb1"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer-frame.css",
+      "sha256": "0c34778a74bfa84866fc9cd6438b68fe7fc14c4424d921d9e92628d12326c5b5"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer-host.tsx",
+      "sha256": "c1cbe251432653846974d4e97a79ca01d582710afcab6ed009367617120050a7"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer.css",
+      "sha256": "36fa176427f39a7e02ac2e845373a352906875ae794db2305cd789f2db155f94"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer.tsx",
+      "sha256": "6d424ff47967410c3fa7a8ef6c3cbcbfc87af27b61bd49c5a7eb1379f5a2ba12"
+    },
+    {
+      "file": "apps/web/src/inventory/product-model.ts",
+      "sha256": "c96fcacf2d9e68441c9aa28d71e1ea7f3acfd23cf4e8813ef1e34afdf415972c"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-basics.tsx",
+      "sha256": "0642e99744b96ebc15748b80ecfbe67658f7e7a6c44c1d667e90886fa8afc995"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-images.tsx",
+      "sha256": "1491cdfaa42e23769efb32dce4ccf8a6c304c703a69062615f2166315388deef"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-specifications.tsx",
+      "sha256": "5f73741dc5067b2ac92e505594f84a92958d114efb1cea79d4fc921478c4f46e"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-state.tsx",
+      "sha256": "09ac0884e4c8103e6f5c15cff83aea5ac30abfd604541a5be132133c35633f19"
+    },
+    {
+      "file": "apps/web/src/inventory/windowing/model.ts",
+      "sha256": "daf4e35efbe55fc373ed68a6942d914a07ab658920c8007a0aa98a2005c1a66c"
+    },
+    {
+      "file": "apps/web/src/inventory/windowing/render-plan.ts",
+      "sha256": "45933eed83fdc1daeb96ea1a6b294821a1a80694b2d98683e69b5b19b371147c"
+    },
+    {
+      "file": "apps/web/src/loading/async-leaf-registry.ts",
+      "sha256": "9c2a5d30cf1b658be423d87580c4b0570e8afc271e9a52c6ee5c87c1161104e8"
+    },
+    {
+      "file": "apps/web/src/loading/latest-query.ts",
+      "sha256": "bc15322380805ddca6ec7b357ae6ba51b978002468f7d275d774c72072308cff"
+    },
+    {
+      "file": "apps/web/src/loading/query-parameters.ts",
+      "sha256": "28f13131f6c952d13a070a4ed9d8460a64c1a840a291f33aa465117116151ea5"
+    },
+    {
+      "file": "apps/web/src/loading/read-scope.ts",
+      "sha256": "1f087b8cb2e99170d9dc51ce90010dc1af7f8b5d46611db2a3f24e16515cdb5a"
+    },
+    {
+      "file": "apps/web/src/sales/contracts.ts",
+      "sha256": "d68e175724a0be1d081d9d2fbd811c524675f61eb795ad88a75e552faf8e303b"
+    },
+    {
+      "file": "apps/web/src/sales/controller.ts",
+      "sha256": "e8276b66365b76572ac41204b2d33ce5c9c4e972cb6504c62b2253b7eb0bee86"
+    },
+    {
+      "file": "apps/web/src/sales/detail-content.tsx",
+      "sha256": "64be90248f9a32e6ba235d94429b7142651b065d95de095fd8c51fdcd31be592"
+    },
+    {
+      "file": "apps/web/src/sales/detail-host.tsx",
+      "sha256": "4fea6abc29d96453a175cb0209960cff92cb56f13de18a17656d1baeb4984aec"
+    },
+    {
+      "file": "apps/web/src/sales/model.ts",
+      "sha256": "bb88ed8ed1f2297ad873f88a79cc8cf4cc670ad990e591269194524931c398b4"
+    },
+    {
+      "file": "apps/web/src/sales/owned-scope.ts",
+      "sha256": "a87b9b5fedb4cbccf0ed9cbde2f4489b0cd8773f1c6a39b468be28ebd36d0725"
+    },
+    {
+      "file": "apps/web/src/sales/reference-selector.tsx",
+      "sha256": "d7fa577a399b4165fcbe0997677832efc7c4ec40dc19a00a30b316797309741d"
+    },
+    {
+      "file": "apps/web/src/sales/response-validation.ts",
+      "sha256": "5d34d190170869f17602f61d1b111a77e6711313ec9dd6eca29672fe47fb5ae5"
+    },
+    {
+      "file": "apps/web/src/sales/sales-page.tsx",
+      "sha256": "48f0d89f8feaf9a86e05a2065e769a0e74887d4e6bfdc2c0fb445ecb79e8f241"
+    },
+    {
+      "file": "apps/web/src/sales/sales-pagination.tsx",
+      "sha256": "30cbab87bc13f3ea3cfc26187b61cd5c07ee2d15ea859cb2c3a10febc9fc2799"
+    },
+    {
+      "file": "apps/web/src/sales/sales-route.tsx",
+      "sha256": "bfea039cdd6e0b01a42929d56b607f81bc90f2a39a155f51b9b21c3c34574a1c"
+    },
+    {
+      "file": "apps/web/src/sales/sales.css",
+      "sha256": "0384ff45ea09be96901c4c4dda4c1eff3618303a7ddaddb3c1882e6965cc37ca"
+    },
+    {
+      "file": "apps/web/src/transfers/contracts.ts",
+      "sha256": "a02c2f62d10d1abc6282bb47d3f35dd9ae29a97694a91e78b3c05bc3939e1ac1"
+    },
+    {
+      "file": "apps/web/src/transfers/controller.ts",
+      "sha256": "809784d8bfb441c873590bd02a5b894323e63252c0bb46a47d1ce03d878c4cc9"
+    },
+    {
+      "file": "apps/web/src/transfers/detail-content.tsx",
+      "sha256": "9ea63ac55fa6defa09174d583effb68a5535dd8e1842bc78c2ee17e31cf199c5"
+    },
+    {
+      "file": "apps/web/src/transfers/detail-host.tsx",
+      "sha256": "65ee296922568a5e1d70233c909651e49fe60f95a957025f0c87d47cfcc32167"
+    },
+    {
+      "file": "apps/web/src/transfers/detail.css",
+      "sha256": "78d69080d13aeb164cd3a72b977b2f6d35a43f006bdf1ec165af74a1060a7336"
+    },
+    {
+      "file": "apps/web/src/transfers/filter-controls.tsx",
+      "sha256": "fc2641860c79d9c45be0f01e97bef0cea561a6ae18972bd85263b218726fae80"
+    },
+    {
+      "file": "apps/web/src/transfers/format.ts",
+      "sha256": "b2d4b983825ac8b4c9bbfa986f19907f6d3e332f96ca354874b51a793e3d4c27"
+    },
+    {
+      "file": "apps/web/src/transfers/matrix.ts",
+      "sha256": "4d93e01b3da0c4f106bb8247a8789fb9e5a52ca925ad4ab242453be67f62f859"
+    },
+    {
+      "file": "apps/web/src/transfers/model.ts",
+      "sha256": "ebefedd3938be47ef6aab36a0ba360d014b7d184139fb6190c696fb70fc2fdee"
+    },
+    {
+      "file": "apps/web/src/transfers/owned-scope.ts",
+      "sha256": "e0a6d2f715e8a7e8cad7e7453a99da1ffe8324138ab4731e13b6403275de8aae"
+    },
+    {
+      "file": "apps/web/src/transfers/pagination.tsx",
+      "sha256": "d3a9a7f4e4e5b3e5bfdd5d20b7b61ab0a5bf8081da283b523af5ea72e8ad9660"
+    },
+    {
+      "file": "apps/web/src/transfers/product-activation.tsx",
+      "sha256": "9161939c06c3898d60d321f9473c5f0193a2635229d5b7bee55c1b2c774dcdd7"
+    },
+    {
+      "file": "apps/web/src/transfers/response-validation.ts",
+      "sha256": "ba667eb51d51f2180ab251d76b2efe51af6a64a060671e0addd79536af1be676"
+    },
+    {
+      "file": "apps/web/src/transfers/saved-records.tsx",
+      "sha256": "8f02c60984171033a237db56704e5ccbb61c59a7be418a29ecf4df85502af73f"
+    },
+    {
+      "file": "apps/web/src/transfers/scope.ts",
+      "sha256": "cc90480e1a302722ca3addb9da18a3e46ecfa1e1c90f839e0efc4d3cec3a4040"
+    },
+    {
+      "file": "apps/web/src/transfers/sparse-lines.tsx",
+      "sha256": "ef037f47e7d965495614ff075cf7219b7d699b3059993806977c4c775ae8b1e0"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers-page.tsx",
+      "sha256": "fa328080c79024e850f0e0e5414c8c52aff3c35465375dcb1953697afc9790ab"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers-route.tsx",
+      "sha256": "75bb0b3db8a6cebd691b3a07253151f9f706d710182e51ee7f7049a778d1fa03"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers.css",
+      "sha256": "5ad7aa20466439656eaca2ae31241b209d1e951fa695106ab72938417f25a9c2"
+    },
+    {
+      "file": "apps/web/src/transport/http-query.ts",
+      "sha256": "39332b02e0512aa85a1cae14ad940ea6629aaa07794ff32825fff689cb08fd2d"
+    },
+    {
+      "file": "packages/application/src/sales-query-validation.ts",
+      "sha256": "2f927b17caef3ddaf9090110cd512474673c5e67ca99245e1165210cf758ac61"
+    },
+    {
+      "file": "packages/application/src/transfer-query-ports.ts",
+      "sha256": "edddaa5f2e9bb592c1713e01ce54c869098c5f4ca94c7bcf9c67f88f05b0532f"
+    },
+    {
+      "file": "packages/application/src/transfer-query-validation.ts",
+      "sha256": "60d04be8c2ac2e9c51cb498c4d464beba4d48fc28e78a1ac2c10d7e5f0c264b1"
+    },
+    {
+      "file": "packages/domain/src/errors.ts",
+      "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+    },
+    {
+      "file": "packages/domain/src/values.ts",
+      "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+    }
+  ],
+  "productionSourceInputs": [
+    {
+      "file": "apps/web/src/components/candidate-selector.tsx",
+      "sha256": "9f4c1446dd8a09f34f183a4b68ef27f71faf7dea2c33088ca02e76964b143d18"
+    },
+    {
+      "file": "apps/web/src/components/pagination.tsx",
+      "sha256": "e535ddd99d01eeb25493cb024ea3f1e8228e613d0db99a7af8bc81b444be748d"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/anchored-popover.ts",
+      "sha256": "bd1c737b946159131acc6dd7aa6f4b1d57037a6a9147f3e9472e44cd72f31f27"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/controls.css",
+      "sha256": "d03119b81ee1a5c065ea01c6b62509d6fadc2cb3133c482568645fc95be681ac"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/demo-frame.tsx",
+      "sha256": "e92fe288acb75244ac142ecb2e1827959f004259ac2e9b81a5f195c57cc0ffce"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/frame.css",
+      "sha256": "8d55a960b6708429ac7af0a199f377b6f9d23241f432b90cb18e5d6abc8877be"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/icons.tsx",
+      "sha256": "39f988ac49335c65a3be7587f129cf76a85546e001221ca921dc57d7d20a80d2"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/popover-position.ts",
+      "sha256": "e57ec5192609b20cbe9bc5975dfd3e7ec41d482513d6c90ad5bab80ee257c02e"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/tokens.css",
+      "sha256": "8ba3b7e1c9133524295d562cc712662a1045bb0804e4e0c3e77df4e2f3455054"
+    },
+    {
+      "file": "apps/web/src/inventory/contracts.ts",
+      "sha256": "8098eb2be7c8598b1c0f2143107198455e9b728434e640a53539f6a99a856d4b"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-matrix.tsx",
+      "sha256": "ef5c7755c399eb66298b18aee3005d656f88b35bc8f99fd221f7f6cec13d4ae7"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-page.tsx",
+      "sha256": "cd2daf0b66e1968b93917ef727c9b31f36359b1dd7f2af7caddca2275fdb1606"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-route.tsx",
+      "sha256": "7ef69531311f90f4b1a05d162afe1b763c95011c824ce86e1f3542f394ab5047"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory.css",
+      "sha256": "64bc4908eb77d067eb67759e10eb79f0739b259f9a6c794d1bc4a736c287bf99"
+    },
+    {
+      "file": "apps/web/src/inventory/model.ts",
+      "sha256": "c59bf3731acbd02eda96863b6249a340f559d54fb6a0875d1d7597e00da51cb1"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer-frame.css",
+      "sha256": "0c34778a74bfa84866fc9cd6438b68fe7fc14c4424d921d9e92628d12326c5b5"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer-host.tsx",
+      "sha256": "c1cbe251432653846974d4e97a79ca01d582710afcab6ed009367617120050a7"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer.css",
+      "sha256": "36fa176427f39a7e02ac2e845373a352906875ae794db2305cd789f2db155f94"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer.tsx",
+      "sha256": "6d424ff47967410c3fa7a8ef6c3cbcbfc87af27b61bd49c5a7eb1379f5a2ba12"
+    },
+    {
+      "file": "apps/web/src/inventory/product-model.ts",
+      "sha256": "c96fcacf2d9e68441c9aa28d71e1ea7f3acfd23cf4e8813ef1e34afdf415972c"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-basics.tsx",
+      "sha256": "0642e99744b96ebc15748b80ecfbe67658f7e7a6c44c1d667e90886fa8afc995"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-images.tsx",
+      "sha256": "1491cdfaa42e23769efb32dce4ccf8a6c304c703a69062615f2166315388deef"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-specifications.tsx",
+      "sha256": "5f73741dc5067b2ac92e505594f84a92958d114efb1cea79d4fc921478c4f46e"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-state.tsx",
+      "sha256": "09ac0884e4c8103e6f5c15cff83aea5ac30abfd604541a5be132133c35633f19"
+    },
+    {
+      "file": "apps/web/src/inventory/windowing/model.ts",
+      "sha256": "daf4e35efbe55fc373ed68a6942d914a07ab658920c8007a0aa98a2005c1a66c"
+    },
+    {
+      "file": "apps/web/src/inventory/windowing/render-plan.ts",
+      "sha256": "45933eed83fdc1daeb96ea1a6b294821a1a80694b2d98683e69b5b19b371147c"
+    },
+    {
+      "file": "apps/web/src/loading/async-leaf-registry.ts",
+      "sha256": "9c2a5d30cf1b658be423d87580c4b0570e8afc271e9a52c6ee5c87c1161104e8"
+    },
+    {
+      "file": "apps/web/src/loading/latest-query.ts",
+      "sha256": "bc15322380805ddca6ec7b357ae6ba51b978002468f7d275d774c72072308cff"
+    },
+    {
+      "file": "apps/web/src/loading/query-parameters.ts",
+      "sha256": "28f13131f6c952d13a070a4ed9d8460a64c1a840a291f33aa465117116151ea5"
+    },
+    {
+      "file": "apps/web/src/loading/read-scope.ts",
+      "sha256": "1f087b8cb2e99170d9dc51ce90010dc1af7f8b5d46611db2a3f24e16515cdb5a"
+    },
+    {
+      "file": "apps/web/src/sales/contracts.ts",
+      "sha256": "d68e175724a0be1d081d9d2fbd811c524675f61eb795ad88a75e552faf8e303b"
+    },
+    {
+      "file": "apps/web/src/sales/controller.ts",
+      "sha256": "e8276b66365b76572ac41204b2d33ce5c9c4e972cb6504c62b2253b7eb0bee86"
+    },
+    {
+      "file": "apps/web/src/sales/detail-content.tsx",
+      "sha256": "64be90248f9a32e6ba235d94429b7142651b065d95de095fd8c51fdcd31be592"
+    },
+    {
+      "file": "apps/web/src/sales/detail-host.tsx",
+      "sha256": "4fea6abc29d96453a175cb0209960cff92cb56f13de18a17656d1baeb4984aec"
+    },
+    {
+      "file": "apps/web/src/sales/model.ts",
+      "sha256": "bb88ed8ed1f2297ad873f88a79cc8cf4cc670ad990e591269194524931c398b4"
+    },
+    {
+      "file": "apps/web/src/sales/owned-scope.ts",
+      "sha256": "a87b9b5fedb4cbccf0ed9cbde2f4489b0cd8773f1c6a39b468be28ebd36d0725"
+    },
+    {
+      "file": "apps/web/src/sales/reference-selector.tsx",
+      "sha256": "d7fa577a399b4165fcbe0997677832efc7c4ec40dc19a00a30b316797309741d"
+    },
+    {
+      "file": "apps/web/src/sales/response-validation.ts",
+      "sha256": "5d34d190170869f17602f61d1b111a77e6711313ec9dd6eca29672fe47fb5ae5"
+    },
+    {
+      "file": "apps/web/src/sales/sales-page.tsx",
+      "sha256": "48f0d89f8feaf9a86e05a2065e769a0e74887d4e6bfdc2c0fb445ecb79e8f241"
+    },
+    {
+      "file": "apps/web/src/sales/sales-pagination.tsx",
+      "sha256": "30cbab87bc13f3ea3cfc26187b61cd5c07ee2d15ea859cb2c3a10febc9fc2799"
+    },
+    {
+      "file": "apps/web/src/sales/sales-route.tsx",
+      "sha256": "bfea039cdd6e0b01a42929d56b607f81bc90f2a39a155f51b9b21c3c34574a1c"
+    },
+    {
+      "file": "apps/web/src/sales/sales.css",
+      "sha256": "0384ff45ea09be96901c4c4dda4c1eff3618303a7ddaddb3c1882e6965cc37ca"
+    },
+    {
+      "file": "apps/web/src/transfers/contracts.ts",
+      "sha256": "a02c2f62d10d1abc6282bb47d3f35dd9ae29a97694a91e78b3c05bc3939e1ac1"
+    },
+    {
+      "file": "apps/web/src/transfers/controller.ts",
+      "sha256": "809784d8bfb441c873590bd02a5b894323e63252c0bb46a47d1ce03d878c4cc9"
+    },
+    {
+      "file": "apps/web/src/transfers/detail-content.tsx",
+      "sha256": "9ea63ac55fa6defa09174d583effb68a5535dd8e1842bc78c2ee17e31cf199c5"
+    },
+    {
+      "file": "apps/web/src/transfers/detail-host.tsx",
+      "sha256": "65ee296922568a5e1d70233c909651e49fe60f95a957025f0c87d47cfcc32167"
+    },
+    {
+      "file": "apps/web/src/transfers/detail.css",
+      "sha256": "78d69080d13aeb164cd3a72b977b2f6d35a43f006bdf1ec165af74a1060a7336"
+    },
+    {
+      "file": "apps/web/src/transfers/filter-controls.tsx",
+      "sha256": "fc2641860c79d9c45be0f01e97bef0cea561a6ae18972bd85263b218726fae80"
+    },
+    {
+      "file": "apps/web/src/transfers/format.ts",
+      "sha256": "b2d4b983825ac8b4c9bbfa986f19907f6d3e332f96ca354874b51a793e3d4c27"
+    },
+    {
+      "file": "apps/web/src/transfers/matrix.ts",
+      "sha256": "4d93e01b3da0c4f106bb8247a8789fb9e5a52ca925ad4ab242453be67f62f859"
+    },
+    {
+      "file": "apps/web/src/transfers/model.ts",
+      "sha256": "ebefedd3938be47ef6aab36a0ba360d014b7d184139fb6190c696fb70fc2fdee"
+    },
+    {
+      "file": "apps/web/src/transfers/owned-scope.ts",
+      "sha256": "e0a6d2f715e8a7e8cad7e7453a99da1ffe8324138ab4731e13b6403275de8aae"
+    },
+    {
+      "file": "apps/web/src/transfers/pagination.tsx",
+      "sha256": "d3a9a7f4e4e5b3e5bfdd5d20b7b61ab0a5bf8081da283b523af5ea72e8ad9660"
+    },
+    {
+      "file": "apps/web/src/transfers/product-activation.tsx",
+      "sha256": "9161939c06c3898d60d321f9473c5f0193a2635229d5b7bee55c1b2c774dcdd7"
+    },
+    {
+      "file": "apps/web/src/transfers/response-validation.ts",
+      "sha256": "ba667eb51d51f2180ab251d76b2efe51af6a64a060671e0addd79536af1be676"
+    },
+    {
+      "file": "apps/web/src/transfers/saved-records.tsx",
+      "sha256": "8f02c60984171033a237db56704e5ccbb61c59a7be418a29ecf4df85502af73f"
+    },
+    {
+      "file": "apps/web/src/transfers/scope.ts",
+      "sha256": "cc90480e1a302722ca3addb9da18a3e46ecfa1e1c90f839e0efc4d3cec3a4040"
+    },
+    {
+      "file": "apps/web/src/transfers/sparse-lines.tsx",
+      "sha256": "ef037f47e7d965495614ff075cf7219b7d699b3059993806977c4c775ae8b1e0"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers-page.tsx",
+      "sha256": "fa328080c79024e850f0e0e5414c8c52aff3c35465375dcb1953697afc9790ab"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers-route.tsx",
+      "sha256": "75bb0b3db8a6cebd691b3a07253151f9f706d710182e51ee7f7049a778d1fa03"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers.css",
+      "sha256": "5ad7aa20466439656eaca2ae31241b209d1e951fa695106ab72938417f25a9c2"
+    },
+    {
+      "file": "apps/web/src/transport/http-query.ts",
+      "sha256": "39332b02e0512aa85a1cae14ad940ea6629aaa07794ff32825fff689cb08fd2d"
+    },
+    {
+      "file": "packages/application/src/sales-query-validation.ts",
+      "sha256": "2f927b17caef3ddaf9090110cd512474673c5e67ca99245e1165210cf758ac61"
+    },
+    {
+      "file": "packages/application/src/transfer-query-ports.ts",
+      "sha256": "edddaa5f2e9bb592c1713e01ce54c869098c5f4ca94c7bcf9c67f88f05b0532f"
+    },
+    {
+      "file": "packages/application/src/transfer-query-validation.ts",
+      "sha256": "60d04be8c2ac2e9c51cb498c4d464beba4d48fc28e78a1ac2c10d7e5f0c264b1"
+    },
+    {
+      "file": "packages/domain/src/errors.ts",
+      "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+    },
+    {
+      "file": "packages/domain/src/values.ts",
+      "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+    }
+  ],
+  "previewSourceInputs": [
+    {
+      "file": "apps/web/preview-core-pages/catalog.ts",
+      "sha256": "298a9780b6b59d0dc2b4e3146c64b0040ebb007846cbb93e571e65a80f7a6101"
+    },
+    {
+      "file": "apps/web/preview-core-pages/inventory-fixture.ts",
+      "sha256": "ab56d69bd0fbb7e2d914992b266518701807113985732b839abdf6b1f0cc80ce"
+    },
+    {
+      "file": "apps/web/preview-core-pages/main.tsx",
+      "sha256": "37baae3d449ddec2fac418afa2ec4951f75f1337c2f905a6aae03a25cb1473b7"
+    },
+    {
+      "file": "apps/web/preview-core-pages/preview.css",
+      "sha256": "0f10b3f602bf96a97819b0d8a3848a81b6d07f1ef30cdf73964d0fbf5e7fb147"
+    },
+    {
+      "file": "apps/web/preview-core-pages/product-fixture.ts",
+      "sha256": "4bc8c9ce6ff990b71ad4b743e49a1c95644e1a9964cc8790a75411db302ce2ac"
+    },
+    {
+      "file": "apps/web/preview-core-pages/sales-fixture.ts",
+      "sha256": "d0a5c7a440f7c591e618dde896f4dd37edbc536e2fad5e7f462de718a86c707f"
+    },
+    {
+      "file": "apps/web/preview-core-pages/transfer-fixture.ts",
+      "sha256": "82d60d5b9494c1b8f9c88fb5768a1e851c051d0b287acdce42bd3d40ad839f0a"
+    }
+  ],
+  "ownPreviewSourceHashes": [
+    {
+      "file": "apps/web/preview-core-pages/.gitignore",
+      "sha256": "f162171ded7ff8c1d6032f7cb50317bc19cc4d1bbd4757be9f8ea75cdec540f1"
+    },
+    {
+      "file": "apps/web/preview-core-pages/README.md",
+      "sha256": "6362ffcfdafad80fd9a94a0e99932356810a486bcf77308406352f1d207d81c9"
+    },
+    {
+      "file": "apps/web/preview-core-pages/build.mjs",
+      "sha256": "4a215587511a670ccfb7eca1098a3b1bb9f0dfd978a5cb5b36590dbf97c093a3"
+    },
+    {
+      "file": "apps/web/preview-core-pages/catalog.ts",
+      "sha256": "298a9780b6b59d0dc2b4e3146c64b0040ebb007846cbb93e571e65a80f7a6101"
+    },
+    {
+      "file": "apps/web/preview-core-pages/inventory-fixture.ts",
+      "sha256": "ab56d69bd0fbb7e2d914992b266518701807113985732b839abdf6b1f0cc80ce"
+    },
+    {
+      "file": "apps/web/preview-core-pages/main.tsx",
+      "sha256": "37baae3d449ddec2fac418afa2ec4951f75f1337c2f905a6aae03a25cb1473b7"
+    },
+    {
+      "file": "apps/web/preview-core-pages/preview.css",
+      "sha256": "0f10b3f602bf96a97819b0d8a3848a81b6d07f1ef30cdf73964d0fbf5e7fb147"
+    },
+    {
+      "file": "apps/web/preview-core-pages/product-fixture.ts",
+      "sha256": "4bc8c9ce6ff990b71ad4b743e49a1c95644e1a9964cc8790a75411db302ce2ac"
+    },
+    {
+      "file": "apps/web/preview-core-pages/sales-fixture.ts",
+      "sha256": "d0a5c7a440f7c591e618dde896f4dd37edbc536e2fad5e7f462de718a86c707f"
+    },
+    {
+      "file": "apps/web/preview-core-pages/smoke.mjs",
+      "sha256": "590ce1a005dde70b5367fe4a224eb6762cbfb859d1fadb330ce7ab1f50c0f634"
+    },
+    {
+      "file": "apps/web/preview-core-pages/transfer-fixture.ts",
+      "sha256": "82d60d5b9494c1b8f9c88fb5768a1e851c051d0b287acdce42bd3d40ad839f0a"
+    },
+    {
+      "file": "apps/web/preview-core-pages/tsconfig.json",
+      "sha256": "e0ba3959a10e58c34f4d6069a165bb13c8135ddc820a199d4a96e8fb3f694ca0"
+    }
+  ],
+  "sourceFreezeHashes": [
+    {
+      "file": "apps/web/src/components/candidate-selector.tsx",
+      "sha256": "9f4c1446dd8a09f34f183a4b68ef27f71faf7dea2c33088ca02e76964b143d18"
+    },
+    {
+      "file": "apps/web/src/components/pagination.tsx",
+      "sha256": "e535ddd99d01eeb25493cb024ea3f1e8228e613d0db99a7af8bc81b444be748d"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/anchored-popover.ts",
+      "sha256": "bd1c737b946159131acc6dd7aa6f4b1d57037a6a9147f3e9472e44cd72f31f27"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/controls.css",
+      "sha256": "d03119b81ee1a5c065ea01c6b62509d6fadc2cb3133c482568645fc95be681ac"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/demo-frame.tsx",
+      "sha256": "e92fe288acb75244ac142ecb2e1827959f004259ac2e9b81a5f195c57cc0ffce"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/frame.css",
+      "sha256": "8d55a960b6708429ac7af0a199f377b6f9d23241f432b90cb18e5d6abc8877be"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/icons.tsx",
+      "sha256": "39f988ac49335c65a3be7587f129cf76a85546e001221ca921dc57d7d20a80d2"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/popover-position.ts",
+      "sha256": "e57ec5192609b20cbe9bc5975dfd3e7ec41d482513d6c90ad5bab80ee257c02e"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/tokens.css",
+      "sha256": "8ba3b7e1c9133524295d562cc712662a1045bb0804e4e0c3e77df4e2f3455054"
+    },
+    {
+      "file": "apps/web/src/inventory/contracts.ts",
+      "sha256": "8098eb2be7c8598b1c0f2143107198455e9b728434e640a53539f6a99a856d4b"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-matrix.tsx",
+      "sha256": "ef5c7755c399eb66298b18aee3005d656f88b35bc8f99fd221f7f6cec13d4ae7"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-page.tsx",
+      "sha256": "cd2daf0b66e1968b93917ef727c9b31f36359b1dd7f2af7caddca2275fdb1606"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-route.tsx",
+      "sha256": "7ef69531311f90f4b1a05d162afe1b763c95011c824ce86e1f3542f394ab5047"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory.css",
+      "sha256": "64bc4908eb77d067eb67759e10eb79f0739b259f9a6c794d1bc4a736c287bf99"
+    },
+    {
+      "file": "apps/web/src/inventory/model.ts",
+      "sha256": "c59bf3731acbd02eda96863b6249a340f559d54fb6a0875d1d7597e00da51cb1"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer-frame.css",
+      "sha256": "0c34778a74bfa84866fc9cd6438b68fe7fc14c4424d921d9e92628d12326c5b5"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer-host.tsx",
+      "sha256": "c1cbe251432653846974d4e97a79ca01d582710afcab6ed009367617120050a7"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer.css",
+      "sha256": "36fa176427f39a7e02ac2e845373a352906875ae794db2305cd789f2db155f94"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer.tsx",
+      "sha256": "6d424ff47967410c3fa7a8ef6c3cbcbfc87af27b61bd49c5a7eb1379f5a2ba12"
+    },
+    {
+      "file": "apps/web/src/inventory/product-model.ts",
+      "sha256": "c96fcacf2d9e68441c9aa28d71e1ea7f3acfd23cf4e8813ef1e34afdf415972c"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-basics.tsx",
+      "sha256": "0642e99744b96ebc15748b80ecfbe67658f7e7a6c44c1d667e90886fa8afc995"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-images.tsx",
+      "sha256": "1491cdfaa42e23769efb32dce4ccf8a6c304c703a69062615f2166315388deef"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-specifications.tsx",
+      "sha256": "5f73741dc5067b2ac92e505594f84a92958d114efb1cea79d4fc921478c4f46e"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-state.tsx",
+      "sha256": "09ac0884e4c8103e6f5c15cff83aea5ac30abfd604541a5be132133c35633f19"
+    },
+    {
+      "file": "apps/web/src/inventory/windowing/model.ts",
+      "sha256": "daf4e35efbe55fc373ed68a6942d914a07ab658920c8007a0aa98a2005c1a66c"
+    },
+    {
+      "file": "apps/web/src/inventory/windowing/render-plan.ts",
+      "sha256": "45933eed83fdc1daeb96ea1a6b294821a1a80694b2d98683e69b5b19b371147c"
+    },
+    {
+      "file": "apps/web/src/loading/async-leaf-registry.ts",
+      "sha256": "9c2a5d30cf1b658be423d87580c4b0570e8afc271e9a52c6ee5c87c1161104e8"
+    },
+    {
+      "file": "apps/web/src/loading/latest-query.ts",
+      "sha256": "bc15322380805ddca6ec7b357ae6ba51b978002468f7d275d774c72072308cff"
+    },
+    {
+      "file": "apps/web/src/loading/query-parameters.ts",
+      "sha256": "28f13131f6c952d13a070a4ed9d8460a64c1a840a291f33aa465117116151ea5"
+    },
+    {
+      "file": "apps/web/src/loading/read-scope.ts",
+      "sha256": "1f087b8cb2e99170d9dc51ce90010dc1af7f8b5d46611db2a3f24e16515cdb5a"
+    },
+    {
+      "file": "apps/web/src/sales/contracts.ts",
+      "sha256": "d68e175724a0be1d081d9d2fbd811c524675f61eb795ad88a75e552faf8e303b"
+    },
+    {
+      "file": "apps/web/src/sales/controller.ts",
+      "sha256": "e8276b66365b76572ac41204b2d33ce5c9c4e972cb6504c62b2253b7eb0bee86"
+    },
+    {
+      "file": "apps/web/src/sales/detail-content.tsx",
+      "sha256": "64be90248f9a32e6ba235d94429b7142651b065d95de095fd8c51fdcd31be592"
+    },
+    {
+      "file": "apps/web/src/sales/detail-host.tsx",
+      "sha256": "4fea6abc29d96453a175cb0209960cff92cb56f13de18a17656d1baeb4984aec"
+    },
+    {
+      "file": "apps/web/src/sales/model.ts",
+      "sha256": "bb88ed8ed1f2297ad873f88a79cc8cf4cc670ad990e591269194524931c398b4"
+    },
+    {
+      "file": "apps/web/src/sales/owned-scope.ts",
+      "sha256": "a87b9b5fedb4cbccf0ed9cbde2f4489b0cd8773f1c6a39b468be28ebd36d0725"
+    },
+    {
+      "file": "apps/web/src/sales/reference-selector.tsx",
+      "sha256": "d7fa577a399b4165fcbe0997677832efc7c4ec40dc19a00a30b316797309741d"
+    },
+    {
+      "file": "apps/web/src/sales/response-validation.ts",
+      "sha256": "5d34d190170869f17602f61d1b111a77e6711313ec9dd6eca29672fe47fb5ae5"
+    },
+    {
+      "file": "apps/web/src/sales/sales-page.tsx",
+      "sha256": "48f0d89f8feaf9a86e05a2065e769a0e74887d4e6bfdc2c0fb445ecb79e8f241"
+    },
+    {
+      "file": "apps/web/src/sales/sales-pagination.tsx",
+      "sha256": "30cbab87bc13f3ea3cfc26187b61cd5c07ee2d15ea859cb2c3a10febc9fc2799"
+    },
+    {
+      "file": "apps/web/src/sales/sales-route.tsx",
+      "sha256": "bfea039cdd6e0b01a42929d56b607f81bc90f2a39a155f51b9b21c3c34574a1c"
+    },
+    {
+      "file": "apps/web/src/sales/sales.css",
+      "sha256": "0384ff45ea09be96901c4c4dda4c1eff3618303a7ddaddb3c1882e6965cc37ca"
+    },
+    {
+      "file": "apps/web/src/transfers/contracts.ts",
+      "sha256": "a02c2f62d10d1abc6282bb47d3f35dd9ae29a97694a91e78b3c05bc3939e1ac1"
+    },
+    {
+      "file": "apps/web/src/transfers/controller.ts",
+      "sha256": "809784d8bfb441c873590bd02a5b894323e63252c0bb46a47d1ce03d878c4cc9"
+    },
+    {
+      "file": "apps/web/src/transfers/detail-content.tsx",
+      "sha256": "9ea63ac55fa6defa09174d583effb68a5535dd8e1842bc78c2ee17e31cf199c5"
+    },
+    {
+      "file": "apps/web/src/transfers/detail-host.tsx",
+      "sha256": "65ee296922568a5e1d70233c909651e49fe60f95a957025f0c87d47cfcc32167"
+    },
+    {
+      "file": "apps/web/src/transfers/detail.css",
+      "sha256": "78d69080d13aeb164cd3a72b977b2f6d35a43f006bdf1ec165af74a1060a7336"
+    },
+    {
+      "file": "apps/web/src/transfers/filter-controls.tsx",
+      "sha256": "fc2641860c79d9c45be0f01e97bef0cea561a6ae18972bd85263b218726fae80"
+    },
+    {
+      "file": "apps/web/src/transfers/format.ts",
+      "sha256": "b2d4b983825ac8b4c9bbfa986f19907f6d3e332f96ca354874b51a793e3d4c27"
+    },
+    {
+      "file": "apps/web/src/transfers/matrix.ts",
+      "sha256": "4d93e01b3da0c4f106bb8247a8789fb9e5a52ca925ad4ab242453be67f62f859"
+    },
+    {
+      "file": "apps/web/src/transfers/model.ts",
+      "sha256": "ebefedd3938be47ef6aab36a0ba360d014b7d184139fb6190c696fb70fc2fdee"
+    },
+    {
+      "file": "apps/web/src/transfers/owned-scope.ts",
+      "sha256": "e0a6d2f715e8a7e8cad7e7453a99da1ffe8324138ab4731e13b6403275de8aae"
+    },
+    {
+      "file": "apps/web/src/transfers/pagination.tsx",
+      "sha256": "d3a9a7f4e4e5b3e5bfdd5d20b7b61ab0a5bf8081da283b523af5ea72e8ad9660"
+    },
+    {
+      "file": "apps/web/src/transfers/product-activation.tsx",
+      "sha256": "9161939c06c3898d60d321f9473c5f0193a2635229d5b7bee55c1b2c774dcdd7"
+    },
+    {
+      "file": "apps/web/src/transfers/response-validation.ts",
+      "sha256": "ba667eb51d51f2180ab251d76b2efe51af6a64a060671e0addd79536af1be676"
+    },
+    {
+      "file": "apps/web/src/transfers/saved-records.tsx",
+      "sha256": "8f02c60984171033a237db56704e5ccbb61c59a7be418a29ecf4df85502af73f"
+    },
+    {
+      "file": "apps/web/src/transfers/scope.ts",
+      "sha256": "cc90480e1a302722ca3addb9da18a3e46ecfa1e1c90f839e0efc4d3cec3a4040"
+    },
+    {
+      "file": "apps/web/src/transfers/sparse-lines.tsx",
+      "sha256": "ef037f47e7d965495614ff075cf7219b7d699b3059993806977c4c775ae8b1e0"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers-page.tsx",
+      "sha256": "fa328080c79024e850f0e0e5414c8c52aff3c35465375dcb1953697afc9790ab"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers-route.tsx",
+      "sha256": "75bb0b3db8a6cebd691b3a07253151f9f706d710182e51ee7f7049a778d1fa03"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers.css",
+      "sha256": "5ad7aa20466439656eaca2ae31241b209d1e951fa695106ab72938417f25a9c2"
+    },
+    {
+      "file": "apps/web/src/transport/http-query.ts",
+      "sha256": "39332b02e0512aa85a1cae14ad940ea6629aaa07794ff32825fff689cb08fd2d"
+    }
+  ],
+  "dependencyLockHashes": [
+    {
+      "file": "package.json",
+      "sha256": "f850fcb3d63232892b0da2e0c10599f28594e81353258798db84aacb53ddfdf9"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "1f39850320ab4391e0d504ae38aad76e255e9dd3d37b39ef2c2c4f57ca5f294d"
+    }
+  ],
+  "workingTreeStatus": "?? apps/web/preview-core-pages/",
+  "generatedAt": "2026-10-20T20:34:28.832Z",
+  "runtime": "Actual shared DemoFrame + actual inventory/sales/transfers readonly leaves; explicit isolated synthetic providers. No network/backend/authentication/write operations.",
+  "limitations": [
+    "All-in-one portable derivative, not production split/lazy-load performance evidence.",
+    "No real-browser, screenshot/pixel, real-data or Space embed acceptance.",
+    "Over-limit HTML is a downloadable file; no features cut to force embedding."
+  ],
+  "smoke": {
+    "status": "PASS",
+    "groups": [
+      "built artifact: actual shared menu, exactly three enabled routes, truthful test notice, no initial/idle provider reads",
+      "actual inventory query: negative/zero/non-applicable cells, distinct FIT/full size labels; target-only product basics/specs/images and close cleanup",
+      "actual sales query/detail: exact synthetic sale+return, one target per action, close during pending read cannot revive detail, list preserved without refetch",
+      "actual transfer route/query/full-page detail: native sparse matrix, current FIT/full size facts, blank vs unsupported cells, saved snapshots, action-only shared drawer, back clears detail without list refetch",
+      "actual artifact route/page/back/interruption cleanup: fresh scopes, no stale results or late detail revival, no external resource/network request or runtime error"
+    ],
+    "externalResourceRequests": [],
+    "networkAttempts": [],
+    "runtimeErrors": [],
+    "limitation": "JSDOM built-artifact DOM smoke only; not native-browser, screenshots/pixels, network waterfall/performance, real data or Space embed acceptance."
+  },
+  "ownPreviewManifestSha256": "87e6c7ac22cc15c43b7c905ea6c81f4f931f34f020bf2ffcaae1c31b4499d2da"
+}

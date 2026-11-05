@@ -1,0 +1,130 @@
+{
+  "atUtc": "2026-10-24T07:50:34.682864+00:00",
+  "parent": "ea4c59affe320bb68f3dc22a50afa84e2f9addb4",
+  "taskId": "F1_C297_T02_DATE_OUTER_ALIAS_RESIDUAL",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "owner": "F1",
+      "bytes": 35330,
+      "sha256": "f733047f350ed08fcd4263a8fdf1d50e632e47c2cb91628e0410e9228175b62c"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-140/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "0fa5ff472355ec3eb6fda10864a6b561e06e5130ffabfe3f643c88adb9087c74",
+  "ownerDelivery": {
+    "taskId": "F01_F02_USER_UI_DATES_EXISTING_PARENT",
+    "finding": "QF-C297-T02-DATE-NORMAL-RESIDUAL-01",
+    "parent": "QF-C295-DOC-DATE-NESTED-INPUT-01",
+    "status": "SOURCE_READY_FROZEN_RELEASED_LOCAL_PASS_ACTUAL_PENDING",
+    "atUtc": "2026-10-24T07:48:01.103878+00:00",
+    "baseline": {
+      "source": "f22b30126bce13323f8b3c80b6ef2bc3ab1d15a0",
+      "build": "ui-preview-f22b301-01-build01"
+    },
+    "sourceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/transfer-proposal-form.tsx",
+        "bytes": 35330,
+        "sha256": "f733047f350ed08fcd4263a8fdf1d50e632e47c2cb91628e0410e9228175b62c"
+      }
+    ],
+    "sourceFrozenUntilCPin": true,
+    "sourceWriterReleased": true,
+    "implementation": "Remove only T02 UIDate className=iw-control (23bytes); original public date state/handlers/shared CSS unchanged",
+    "root": "Generic iw-control applies extra12px horizontal padding+1px border to Arco outergroup; real297 160→134 explains26px narrower and13px shift",
+    "regressionAttribution": "UNKNOWN_NO_295_T02_ACTUAL_BASELINE",
+    "checks": {
+      "check-1": "EXIT0 actual public UIDate + same T02 structure + fixed297 styles: generic surface class only before, flat carrier unchanged",
+      "types-1": "EXIT0 sole changed TSX imported strict closure",
+      "exactDelta": "Only one23byte className removed; all remaining source bytes preserved",
+      "chunk139Leaves": "All4 byte pins unchanged, actual S02/danger results reused"
+    },
+    "issueInput": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-f22b301-document-controls-retest/ISSUE-DATE-T02-RESIDUAL.json",
+      "bytes": 10482,
+      "sha256": "dd9659d1b10bd5a4532fde2f26ec9455af67a8c8fe126fe2ab46bcb0bf0fffe9"
+    },
+    "unchangedSharedSource": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-controls.css",
+        "bytes": 5108,
+        "sha256": "caa459666a8bf7e763d733b5763de1932960d0baee1df2fb9a14ba5c460893a6"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-existing-document-form.tsx",
+        "bytes": 6456,
+        "sha256": "da9687eb4b598f025653f8e0a4be2777f3bae2e52b991bb3fe37da92169a124f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal.css",
+        "bytes": 79689,
+        "sha256": "a19810e11534faed0ae5b4be89b12b3f397b369b2d5db3eb9de35e2998ded69e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-overlay.css",
+        "bytes": 9181,
+        "sha256": "47d3cf8d6cfcc0e13831f4ebaffd2bc87861120d1dd7fff1042f05167eff87f8"
+      }
+    ],
+    "sourceRootReference": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/demo-presentation/controls.css",
+      "bytes": 17750,
+      "sha256": "a6284392289d36978a0d82ab77b21b5e9ee7e0b739257f55a91cec1d76b39bae"
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-140/REPORT.md",
+        "bytes": 1917,
+        "sha256": "78b9173c6c4a092296b73752cc56d48909a411c7676ca888ec6ed7bb7fe88f80"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-140/SOURCE.diff",
+        "bytes": 4508,
+        "sha256": "7ffb218a28f4030c27410f154306ddaec7b6282b9e35186a27e48040c6993422"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-140/RESULT.json",
+        "bytes": 1840,
+        "sha256": "3899402c0d4a42fcdad5da333e33efa9144bac08df8471219fa96da874cc6eb1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-140/check-1.log",
+        "bytes": 116,
+        "sha256": "e4dfb05487abe8472c12df0e2e92124a7f228a55294ba0289455aa50d94fcb1e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-140/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-140/tsconfig.json",
+        "bytes": 487,
+        "sha256": "d535913d77d99d7db713865c7c78a725be2edc3e0927e75719d59a5828109127"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-140/t02-date-consumer-check.mjs",
+        "bytes": 7325,
+        "sha256": "fb247ca1972312934b4c95209d6797663987743192f0529c5c1888c003732cb2"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-140/before-transfer-proposal-form.tsx",
+        "bytes": 35353,
+        "sha256": "589536f0c85a5bd982c459483e8879bf540e6761ab83273a78c8b3a076a79267"
+      }
+    ],
+    "notTested": [
+      "No new actual browser geometry/focus",
+      "No PG/SSH/Git/fullbuild/service",
+      "No business save",
+      "No whole date lifecycle or old completed page suite"
+    ],
+    "next": "C fixedone + containing build, originalQF actualT02 date only; combine only further concrete297 findings; preserve accepted S02/danger",
+    "blocker": "No source/type blocker. Actual new-containing T02 x233/w125 confirmation pending"
+  },
+  "stage": "FIXED_SOURCE_LOCAL_STRUCTURAL_AND_STRICT_PASS_NATIVE_GEOMETRY_PENDING",
+  "qualification": "Remove only exact extra iw-control class; no speculative offset/width workaround. Preserve297 S02/danger actualpassed scope; T02 newactual stillrequired, not298alreadyPASS.",
+  "actualPG": false,
+  "deployed": false
+}

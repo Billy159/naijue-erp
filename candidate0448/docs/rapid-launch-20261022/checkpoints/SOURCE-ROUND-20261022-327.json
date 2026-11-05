@@ -1,0 +1,208 @@
+{
+  "atUtc": "2026-10-24T13:58:18.865472+00:00",
+  "parent": "4a87b70011dd2529481126a8ccfaa5cde29705fc",
+  "taskId": "F1_V16_DOCUMENT_CREATOR_RESPONSIBLE_UI_01",
+  "files": [
+    {
+      "path": "apps/web/src/application/controller.ts",
+      "bytes": 62265,
+      "sha256": "7316f77fec9e9f302b6a3d6449804aede77e795da7acb13494bbc7098fd2795a",
+      "baseSha256": "a1f1dc667b4239b22cbdf7c81d3c50829d30316c0edc914bf3e9f598814440c2",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/sales-commands.tsx",
+      "bytes": 5211,
+      "sha256": "e27b88f79e50fc7902041f54218b685f6ad118c7690584e530ab0dab621978a8",
+      "baseSha256": "ddea0cc9aec133c8a0bee6c9796bc7abe27c7337381ca65f7cae405db781a240",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/transfers.tsx",
+      "bytes": 9984,
+      "sha256": "b36fbe496ff35144680e32110cbabe59b5fe67aca346544d43b4dd14f9ddad93",
+      "baseSha256": "e5ebc7a62e31a4f4e2c86c06777c1dd38684a1e3eb74b9fabf335e56376d8bb7",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/existing-document-preparation.ts",
+      "bytes": 13462,
+      "sha256": "6590bcd94c3c45f67eca3213a8dd37c866ab4908cc9244d16b220ec0b0095e10",
+      "baseSha256": "c426744142cdb8e52a435be4384145236a4ce255a17745df0ab7630c976d1411",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-create.ts",
+      "bytes": 16002,
+      "sha256": "a9a3e320d73aa97aed0bcfbbf966c998c90b2fa3aebf8c9fdc126503702d1068",
+      "baseSha256": "93017a53973065b954dc657e6e8bb621d9caaccd4dd783b7a631f5ffa91f16bb",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-existing-document-form.tsx",
+      "bytes": 7044,
+      "sha256": "0ef46a038cac4425d689d2af2dd7172ebbd8a3266290eac167fc6e6910c5db8b",
+      "baseSha256": "8abc8a29560b7ea4a44f0d2e905de523b9da3894f2ca242b227d0490b973dee9",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-existing-document.ts",
+      "bytes": 21131,
+      "sha256": "78d456c4a46b7ecc6a86b6281b4683d3221d628d5a394ad6a16eba3ec6c75b13",
+      "baseSha256": "9e4319036da44e1f79431c5431467947d7d97c300b4c54c92d6318eaddba07e0",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-new-document-form.tsx",
+      "bytes": 3744,
+      "sha256": "92c8417bc7ef9cb1ddec4a1995a9402db942ff478eeb0143951d83eef6f3e0c6",
+      "baseSha256": "6722234fac4f5169e729a6d84b900984fb48e11214f28cbab56f55b5836d73d8",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 56198,
+      "sha256": "fed30308001d92dae1e1d4e50bec4a55498f155a4cec9654a113b0462de7bb23",
+      "baseSha256": "49d7035c1f502ae8eee32d91e4f5ba99a2fd4768434b85f45f2e5a25a6f7c212",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal.ts",
+      "bytes": 57969,
+      "sha256": "36dc983ac2c973d47b1ed6a91fc99908de14dd21a7f8c2b9d0acc1a26a097583",
+      "baseSha256": "58eae944652e83df9f9a27ae1b625539d1588aa29368b1dede7c499b65bbf5aa",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-create.ts",
+      "bytes": 11414,
+      "sha256": "68630ccd59e936cb29fbe347b06fb7eb288e978c3fb2ee6d914a53d9e29431ad",
+      "baseSha256": "b04f7acf7e43395b956299dbe9305e6d8bf432a99f1407c7ebb92c18ba193ffa",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+      "bytes": 6279,
+      "sha256": "b3e6f4a48d8fb9db2f1aa1ee87d38a39bac1b07b5d884e5a99fc5b8869727cbd",
+      "baseSha256": "52b95738d2667805a6a17324b49173a227c68401c16e30fc959a0362a5d13179",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document.ts",
+      "bytes": 14905,
+      "sha256": "4326f415c423aef4e76b143e40ec2436a55cc74050f7b59c66088338df5d8744",
+      "baseSha256": "e0f894dfd7e779bcd5c3d5453a6c1b600e59429c252f03e20c7ac673f569712c",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-new-document-form.tsx",
+      "bytes": 4185,
+      "sha256": "c4807c9a4b553b4cd95214b3ba9b4a2f348d9c85595f700eb5bcdc32561ae2f8",
+      "baseSha256": "4299db490d4e409bfb288c884c38b67e6869dc628a4b32faaf59e4b0d938d948",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "bytes": 36201,
+      "sha256": "a08899324f555d83e169964e4b6f58e0c3ded6d0ce18e29c9254879a33436403",
+      "baseSha256": "c169fc69902af123334d0854214de768381e4eac5ab00942a3f2022b1c4179bf",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal.ts",
+      "bytes": 46156,
+      "sha256": "81bb64307d36b926858d6cee388142542a89f9ff722cc8a514b9708e7c84727b",
+      "baseSha256": "48e3baecb4835b45b366d8265286c344b7161316b6d305de04c95094cf6198bf",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/production-host/configuration.ts",
+      "bytes": 10408,
+      "sha256": "aa60d1abc5a7dfae593340c841c95ac4d92f50bf88b59f9ac8a9f2750344fa36",
+      "baseSha256": "7b4cae3ee29f2068143f1faf48e51813325e1ee64c709b1edbeb103acd70e7cb",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 18882,
+      "sha256": "199f99cd4969e41f9b4f41df52e675e6895a3d0cc50103fad3e322017d7f7b09",
+      "baseSha256": "5fc9192cdb2174e576bb81723252b454c6ec12d49d4bda94b33093558dcb653e",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/editor-session.ts",
+      "bytes": 15625,
+      "sha256": "9b0b607db7cc813fb0f4418cc1d6ae2c332ad4679deca36babc8f635cd05cf90",
+      "baseSha256": "bd80a5747ff54ad547132d9e42d9e33db2f18a307ea65d8ed06b52bf375eaa1b",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/form.tsx",
+      "bytes": 24500,
+      "sha256": "2ccccda89a63ee5835bd2b21941d10c5b2ab01f40233854639ba0963c4110dff",
+      "baseSha256": "db56f03ec3e59093ffbbcc2b92efc3516aafde71ea644d512861de2973e9d258",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/validation.ts",
+      "bytes": 10417,
+      "sha256": "f6a0fa9109973d055886afeea0149c935bdaa7382a47619e64eaa13d84a50319",
+      "baseSha256": "dc9f4606c093ef27082eefc224021e26e439e60cd2b3e1158a259b0dcd433565",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/detail-content.tsx",
+      "bytes": 10129,
+      "sha256": "6bcbfffa69014d0bb27948b4606e26d0537575a3792f0f82374765cc17ca507c",
+      "baseSha256": "07e3ec689617e671d19b1adfdc8feed747726fed73e994cab84266c06205175d",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/contracts.ts",
+      "bytes": 5371,
+      "sha256": "597add145ca7eec42feb1078dd5385809dc8db499d4402eec11ed32b1db655a0",
+      "baseSha256": "a39d33ddc502959d53b08eb28e4bd5f91680f31aaef1858afee6d218d2207e80",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/controller.ts",
+      "bytes": 28861,
+      "sha256": "ba7264796ad6e03316077889b5e3fd4e72db83307e14306ef600bd4be5fe7dcc",
+      "baseSha256": "6820589fac350c6f0007da5ba062d1e379a7f35473be71c98b04880b800372ce",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/form.tsx",
+      "bytes": 17135,
+      "sha256": "e75eb5b278ecf6ebdba06ee3941cdfb13578d365d936391e568b3f5f0c64283f",
+      "baseSha256": "e5ed50dd8307c0d9b7eb7ac464e6e492f8f8e21f3d8f5262934d814185604a71",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/validation.ts",
+      "bytes": 7588,
+      "sha256": "86fc8b7807a1da76d5bd68f29f3a13304f739fa9c1d1def17cb481225723171d",
+      "baseSha256": "5a826679ec0976492c41f219b27006e2cf1f76dd38efb9ec5c4d1769089c425e",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/components/document-responsibility.tsx",
+      "bytes": 6302,
+      "sha256": "bc795c985e218141970a19fc3ec50f41ceb66a4f464296a29650e249096f46e4",
+      "baseSha256": null,
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-154/DELIVERY.json",
+  "ownerReceiptBytes": 9840,
+  "ownerReceiptSha256": "b9f72a7ed3429f6b7ccbb3502ebe89c3e74b7a598f6667dcfb045cc9e055c29d",
+  "stage": "SOURCE_PROTOCOL_COMPONENT_HOST_AND_SCOPED27TYPES_PASS_NOT_BROWSER_OR_BUSINESS",
+  "unconnected": [
+    "WAREHOUSE_SALESPERSON_reference_only_staff_port",
+    "true_history_write_bridge",
+    "actual pairedR1 backend and flaggedrelease"
+  ],
+  "currentProductionFlag": false,
+  "wholePageAccepted": false,
+  "deployed": false
+}

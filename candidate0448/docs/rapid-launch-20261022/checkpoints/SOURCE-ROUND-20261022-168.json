@@ -1,0 +1,51 @@
+{
+  "atUtc": "2026-10-23T12:16:29.540933+00:00",
+  "parent": "780521e7702ce4f2d07b90f50883aba663945e27",
+  "taskId": "F01_C165_ACTUAL_LIST_FONT_AND_NATIVE_BUTTON_ONLY",
+  "findings": [
+    "DOC-165-LISTS-HEADER-FONT-01",
+    "DOC-165-LISTS-NATIVE-BUTTON-01"
+  ],
+  "files": [
+    {
+      "path": "apps/web/src/sales/sales.css",
+      "bytes": 10131,
+      "beforeSha256": "d4eb009edad507d380373b043753d54bc37742b1a1352fa8c383f0ea239b44ee",
+      "sha256": "16714e9b85e2035be0603ffaa308ab73c939f1296fe19fa80b5776bb91070666",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/transfers.css",
+      "bytes": 9963,
+      "beforeSha256": "af8655c5f15a416b0c077562f58aabc2635651bc8349a8face0291e25df30057",
+      "sha256": "e1da23f151ee151967c241c6a5fba0d945eddba17d727dcafd147de0e552ae6c",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-84/DELIVERY.json",
+  "ownerReceiptBytes": 2820,
+  "ownerReceiptSha256": "59655914aae3c7a39038cbd6215de3b1999ab4b137ff8174474251c65366336f",
+  "change": [
+    "Both existing native list th font-size12px",
+    "Both existing native .btn source foundation padding4px9px and weight400",
+    "Only T01 existing table tc-link gets source height26px; S01 row height unchanged without actual finding"
+  ],
+  "preserved": [
+    "all columns,widths,header40,row44,cell4x10/background",
+    "number field334/430 and existing draft/pending/detail return",
+    "shared Arco base and C167 exact5 CSS-sharing sources",
+    "TSX,default values,buttons/actions,cancel/nativequery/role/data/amount contracts"
+  ],
+  "checksAdopted": {
+    "runtime": "Node24.21.0",
+    "before-2": "EXIT1_header_expected12_not_applied",
+    "after-1": "EXIT0_real_current_list_SSR_consumers_with_shared_base_and_current_route_CSS",
+    "warnings": "Only existing React19 dependency ref warnings"
+  },
+  "qualification": "JSDOM CSS declaration model only; CSS vars/inherited fonts not fully resolved (before S01 model14px while QF Chrome13px). No actual85px width/26px button rect/Chrome/performance claims. before-1 lacked window for browser-only filter consumer; fixed harness only, logs retained.",
+  "notTested": [
+    "ActualChrome twofailedfindings onfixed168",
+    "Noactualfirstscreen/network/formalperformance orwholepage"
+  ],
+  "next": "Latest168 completeUI candidate includes167 CSSsharing andthese2minorliststylefixes; QF onlyfaileditems plus affectedsharedCSS consumers, noold48/158/geometry/pager/fullbackend repeat."
+}

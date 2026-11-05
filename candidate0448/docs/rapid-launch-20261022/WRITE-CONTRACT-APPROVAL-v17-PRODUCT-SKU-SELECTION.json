@@ -1,0 +1,13 @@
+{
+  "version": "v17",
+  "status": "EXPLICIT_HUMAN_APPROVED",
+  "atUtc": "2026-10-24T18:39:29.956214+00:00",
+  "source": "Direct human reply to request_user_input_async call_ab06ee7d793347118464b4eaecbfa7c4 in controller01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+  "answer": "确认 v17 商品规格生成方案",
+  "document": "WRITE-CONTRACT-SUPPLEMENT-v17-PRODUCT-SKU-SELECTION.md",
+  "documentSha256": "81d23efbc17213fe2de7885d969f1891bf0e18b68af9f71f8550e7d9da4588de",
+  "noNewTablesOrColumns": true,
+  "implementationOwner": "D2",
+  "consumerOwner": "F2",
+  "actualBusinessPassed": false
+}

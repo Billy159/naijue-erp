@@ -1,0 +1,72 @@
+{
+  "atUtc": "2026-10-22T23:12:47.680426+00:00",
+  "status": "PASS_ORIGINAL_PRODUCTION_BUILD_PACK_ONLY",
+  "sourceCommit": "d3c2188a3cd6df472ce85d221fae575682ba7301",
+  "buildId": "r1-d3c2188-20261023-01",
+  "buildSeconds": 4.257,
+  "packSeconds": 2.64,
+  "originalArchiveExtractions": 1,
+  "controllerExtractions": 0,
+  "members": 229,
+  "sourceInputs": 1489,
+  "buildFiles": 231,
+  "artifactRefs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build103-20261023-01/BUILD-ATTEMPT.json",
+      "bytes": 9085,
+      "sha256": "26f8d380497236427506203ec4051328ac022733f735b446d0b08957da6bf02f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build103-20261023-01/PACK-ATTEMPT.json",
+      "bytes": 2399,
+      "sha256": "f4d3ac4e9afc1cb3b406161c9ff2046824a5df85e04da629136392acf649d9dc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build103-20261023-01/manifests01/build-receipt.json",
+      "bytes": 6796,
+      "sha256": "77d43baef570f7a5c0eb00218c70bf0a07199355f970fd087f9b94bcfe0dc3f7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build103-20261023-01/manifests01/source-manifest.json",
+      "bytes": 281001,
+      "sha256": "5125dbe1aa8c724b0eb4623a4ba3fb254d7f7bda15b4ba8f6cf310865d6e6f8b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build103-20261023-01/manifests01/build-manifest.json",
+      "bytes": 369672,
+      "sha256": "77cea06d7fe94a194f3396506d8a797a289b5a5e5b1dca59f88e2449d91ef5d8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build103-20261023-01/pack01/release-manifest.json",
+      "bytes": 365726,
+      "sha256": "8f15c555981e01dbe2f9db11b16df11e4790a3acd132c04a57ebbc5ecc520330"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build103-20261023-01/pack01/pack-receipt.json",
+      "bytes": 561,
+      "sha256": "9de0f01b7ae0bd46171215bde0e237285ce2eca0ec9022444a8977f794a99f61"
+    }
+  ],
+  "archive": {
+    "file": "release.tar.gz",
+    "bytes": 3913162,
+    "sha256": "161ee57b2d05b39b2c7611275339033a254b11a697a02113c44adcbf04818264"
+  },
+  "priorFailuresRetained": [
+    "C91_NON_PRODUCTION_SOURCE",
+    "C98_EMBEDDED_SVG_EXTERNAL_CLASSIFICATION"
+  ],
+  "appStarted": false,
+  "stageExecuted": false,
+  "actualBusinessAcceptance": false,
+  "realImportExecuted": false,
+  "productionSwitch": false,
+  "notTested": [
+    "Linux original npm stage",
+    "final private config/live host",
+    "49 accounts",
+    "SOURCE MAIN publication",
+    "real role HTTP business",
+    "boot activation"
+  ]
+}

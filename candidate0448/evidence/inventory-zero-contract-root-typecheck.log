@@ -1,0 +1,112 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+apps/web/src/parties/party-pagination.tsx(11,873): error TS2532: Object is possibly 'undefined'.
+apps/web/src/parties/party-route.tsx(7,24): error TS7016: Could not find a declaration file for module '@arco-design/web-react/icon/react-icon/IconSearch/index.js'. '/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconSearch/index.js' implicitly has an 'any' type.
+  If the '@arco-design/web-react' package actually exposes this module, try adding a new declaration (.d.ts) file containing `declare module '@arco-design/web-react/icon/react-icon/IconSearch/index.js';`
+apps/web/src/parties/party-route.tsx(53,234): error TS2604: JSX element type 'Tag' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(53,234): error TS2786: 'Tag' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Tag/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(53,435): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(53,435): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(53,526): error TS7006: Parameter 'event' implicitly has an 'any' type.
+apps/web/src/parties/party-route.tsx(55,91): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(55,91): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(55,182): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(55,182): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(55,232): error TS7006: Parameter 'event' implicitly has an 'any' type.
+apps/web/src/parties/party-route.tsx(56,158): error TS2604: JSX element type 'Input' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(56,158): error TS2786: 'Input' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Input/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(56,711): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(56,711): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(56,814): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(56,814): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(58,101): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(58,101): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(59,129): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(59,129): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(60,95): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(60,95): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(61,95): error TS2604: JSX element type 'Table' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(61,95): error TS2786: 'Table' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Table/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(61,237): error TS2604: JSX element type 'Empty' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(61,237): error TS2786: 'Empty' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Empty/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(70,287): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(70,287): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(70,484): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(70,484): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(70,656): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(70,656): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-route.tsx(70,718): error TS2604: JSX element type 'Button' does not have any construct or call signatures.
+apps/web/src/parties/party-route.tsx(70,718): error TS2786: 'Button' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Button/index")' is not a valid JSX element type.
+apps/web/src/parties/party-single-select.tsx(8,77): error TS2604: JSX element type 'Select' does not have any construct or call signatures.
+apps/web/src/parties/party-single-select.tsx(8,77): error TS2786: 'Select' cannot be used as a JSX component.
+  Its type 'typeof import("/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Select/index")' is not a valid JSX element type.
+apps/web/src/parties/party-single-select.tsx(10,19): error TS7006: Parameter 'option' implicitly has an 'any' type.
+apps/web/src/transport/http-readers.test.ts(33,118): error TS2322: Type '{ knownQuantity: string; completeness: "complete"; unknownCells: number; }' is not assignable to type 'StockTotal'.
+  Types of property 'unknownCells' are incompatible.
+    Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(36,91): error TS2322: Type '{ knownQuantity: string; completeness: "complete"; unknownCells: number; }' is not assignable to type 'StockTotal'.
+  Types of property 'unknownCells' are incompatible.
+    Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(36,98): error TS2322: Type '{ s1: { knownQuantity: string; completeness: "complete"; unknownCells: number; }; s2: { knownQuantity: string; completeness: "complete"; unknownCells: number; }; s3: { knownQuantity: string; completeness: "complete"; unknownCells: number; }; s4: { ...; }; }' is not assignable to type 'Readonly<Record<string, StockTotal>>'.
+  Property 's1' is incompatible with index signature.
+    Type '{ knownQuantity: string; completeness: "complete"; unknownCells: number; }' is not assignable to type 'StockTotal'.
+      Types of property 'unknownCells' are incompatible.
+        Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(37,69): error TS2322: Type '{ knownQuantity: string; completeness: "complete"; unknownCells: number; }' is not assignable to type 'StockTotal'.
+  Types of property 'unknownCells' are incompatible.
+    Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(39,109): error TS2322: Type '{ s1: { knownQuantity: string; completeness: "complete"; unknownCells: number; }; s2: { knownQuantity: string; completeness: "complete"; unknownCells: number; }; s3: { knownQuantity: string; completeness: "complete"; unknownCells: number; }; s4: { ...; }; }' is not assignable to type 'Readonly<Record<string, StockTotal>>'.
+  Property 's1' is incompatible with index signature.
+    Type '{ knownQuantity: string; completeness: "complete"; unknownCells: number; }' is not assignable to type 'StockTotal'.
+      Types of property 'unknownCells' are incompatible.
+        Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(39,129): error TS2322: Type '{ knownQuantity: string; completeness: "complete"; unknownCells: number; }' is not assignable to type 'StockTotal'.
+  Types of property 'unknownCells' are incompatible.
+    Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(271,133): error TS2322: Type '{ knownQuantity: string; unknownCells: number; completeness: "complete"; }' is not assignable to type 'StockTotal'.
+  Types of property 'unknownCells' are incompatible.
+    Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(273,47): error TS2322: Type '{ [x: string]: { knownQuantity: string; unknownCells: number; completeness: "complete"; }; }' is not assignable to type 'Readonly<Record<string, StockTotal>>'.
+  'string' index signatures are incompatible.
+    Type '{ knownQuantity: string; unknownCells: number; completeness: "complete"; }' is not assignable to type 'StockTotal'.
+      Types of property 'unknownCells' are incompatible.
+        Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(273,77): error TS2322: Type '{ knownQuantity: string; unknownCells: number; completeness: "complete"; }' is not assignable to type 'StockTotal'.
+  Types of property 'unknownCells' are incompatible.
+    Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(274,90): error TS2322: Type '{ [x: string]: { knownQuantity: string; unknownCells: number; completeness: "complete"; }; }' is not assignable to type 'Readonly<Record<string, StockTotal>>'.
+  'string' index signatures are incompatible.
+    Type '{ knownQuantity: string; unknownCells: number; completeness: "complete"; }' is not assignable to type 'StockTotal'.
+      Types of property 'unknownCells' are incompatible.
+        Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(274,120): error TS2322: Type '{ knownQuantity: string; unknownCells: number; completeness: "complete"; }' is not assignable to type 'StockTotal'.
+  Types of property 'unknownCells' are incompatible.
+    Type 'number' is not assignable to type '0'.
+apps/web/src/transport/http-readers.test.ts(275,9): error TS2322: Type '{ warehouse: { id: string; label: string; }; cells: { [x: string]: { state: "known"; skuId: string; quantity: string; }; }; total: { knownQuantity: string; unknownCells: number; completeness: "complete"; }; }[]' is not assignable to type 'readonly InventoryRow[]'.
+  Type '{ warehouse: { id: string; label: string; }; cells: { [x: string]: { state: "known"; skuId: string; quantity: string; }; }; total: { knownQuantity: string; unknownCells: number; completeness: "complete"; }; }' is not assignable to type 'InventoryRow'.
+    The types of 'total.unknownCells' are incompatible between these types.
+      Type 'number' is not assignable to type '0'.
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

@@ -1,0 +1,59 @@
+[
+  {
+    "mode": "ordinary",
+    "label": "changed",
+    "command": [
+      "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node",
+      "tools/unified-import/cli.mjs",
+      "validate",
+      "--package",
+      "/tmp/synthetic-unified-history-7MUOGz/package",
+      "--report",
+      "/tmp/synthetic-unified-history-7MUOGz/ordinary-changed",
+      "--allow-synthetic",
+      "--offline",
+      "--manifest-sha256",
+      "1d7cc305a1c91f766334bc26eb3c164da153330aa772cb509717124e63333190",
+      "--historical-hall-approval",
+      "/tmp/synthetic-unified-history-7MUOGz/hall-review.json",
+      "--historical-hall-approval-sha256",
+      "4af33de741074e1937d4b0e04da730b85cc421d4b67bd7b23d4113ec532091c1",
+      "--historical-line-amount-evidence",
+      "/tmp/synthetic-unified-history-7MUOGz/amount-review.json",
+      "--historical-line-amount-evidence-sha256",
+      "a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0"
+    ],
+    "exit_code": 1,
+    "signal": null,
+    "stdout": "{\n  \"format_version\": \"UNIFIED_STANDARD_PACKAGE_V1\",\n  \"valid\": false,\n  \"import_eligible\": false,\n  \"database_import_implemented\": false,\n  \"package_kind\": \"SYNTHETIC\",\n  \"stage\": \"READY\",\n  \"counts\": {\n    \"barcode_scheme\": 6,\n    \"color\": 1,\n    \"customer\": 1,\n    \"fit\": 1,\n    \"hall\": 1,\n    \"inventory_baseline\": 2,\n    \"payment_account\": 1,\n    \"payment_account_hall\": 1,\n    \"payment_method\": 1,\n    \"product\": 1,\n    \"product_category\": 1,\n    \"product_image\": 1,\n    \"sales_header\": 1,\n    \"sales_line\": 6,\n    \"sales_settlement\": 1,\n    \"season\": 1,\n    \"size\": 1,\n    \"size_group\": 1,\n    \"size_group_member\": 1,\n    \"sku\": 1,\n    \"sku_barcode\": 1,\n    \"staff\": 1,\n    \"supplier\": 1,\n    \"transfer_header\": 1,\n    \"transfer_line\": 1,\n    \"warehouse\": 2\n  },\n  \"issues\": [\n    {\n      \"code\": \"HISTORICAL_HALL_PROFILE_REQUIRED\",\n      \"path\": \"sales_header\",\n      \"message\": \"New hall evidence cannot enter a legacy source profile\",\n      \"severity\": \"BLOCK_REFERENCE\"\n    },\n    {\n      \"code\": \"HISTORICAL_HALL_PROFILE_REQUIRED\",\n      \"path\": \"sales_header[0].historical_hall_evidence\",\n      \"message\": \"Hall source or derivation evidence must exactly match separately reviewed facts\",\n      \"severity\": \"BLOCK_REFERENCE\"\n    }\n  ],\n  \"historical_line_amount_differences\": [\n    {\n      \"sales_source_key\": \"sales_header:01\",\n      \"sales_id\": \"247ad997-ce44-28b2-4722-9dfb83c05b23\",\n      \"line_source_key\": \"SYNTHETIC-UNIFIED-DIFFERENCE-1\",\n      \"line_id\": \"1aa91f17-f8a3-b1f9-4d7e-2b2232df637a\",\n      \"quantity\": \"3\",\n      \"deal_price\": \"1.01\",\n      \"line_amount\": \"3.04\",\n      \"calculated_line_amount\": \"3.03\",\n      \"difference\": \"0.01\",\n      \"source_refs\": [\n        {\n          \"file_sha256\": \"69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7\",\n          \"sheet\": \"SYNTHETIC\",\n          \"row\": 100\n        }\n      ],\n      \"evidence_sha256\": \"4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1\",\n      \"attestation_sha256\": \"a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0\",\n      \"disposition\": \"PRESERVED_SOURCE_DIFFERENCE\",\n      \"execution_boundary\": \"OFFLINE_ARCHIVE_ONLY\"\n    },\n    {\n      \"sales_source_key\": \"sales_header:01\",\n      \"sales_id\": \"247ad997-ce44-28b2-4722-9dfb83c05b23\",\n      \"line_source_key\": \"SYNTHETIC-UNIFIED-DIFFERENCE-2\",\n      \"line_id\": \"1caf2b88-e381-c69e-37d7-063631be59b8\",\n      \"quantity\": \"-3\",\n      \"deal_price\": \"1.01\",\n      \"line_amount\": \"-3.02\",\n      \"calculated_line_amount\": \"-3.03\",\n      \"difference\": \"0.01\",\n      \"source_refs\": [\n        {\n          \"file_sha256\": \"69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7\",\n          \"sheet\": \"SYNTHETIC\",\n          \"row\": 101\n        }\n      ],\n      \"evidence_sha256\": \"4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1\",\n      \"attestation_sha256\": \"a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0\",\n      \"disposition\": \"PRESERVED_SOURCE_DIFFERENCE\",\n      \"execution_boundary\": \"OFFLINE_ARCHIVE_ONLY\"\n    },\n    {\n      \"sales_source_key\": \"sales_header:01\",\n      \"sales_id\": \"247ad997-ce44-28b2-4722-9dfb83c05b23\",\n      \"line_source_key\": \"SYNTHETIC-UNIFIED-DIFFERENCE-3\",\n      \"line_id\": \"ee6b7348-2fd5-527a-b0b4-6d296c9a2e3f\",\n      \"quantity\": \"1\",\n      \"deal_price\": \"90071992547409.91\",\n      \"line_amount\": \"90071992547409.92\",\n      \"calculated_line_amount\": \"90071992547409.91\",\n      \"difference\": \"0.01\",\n      \"source_refs\": [\n        {\n          \"file_sha256\": \"69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7\",\n          \"sheet\": \"SYNTHETIC\",\n          \"row\": 102\n        }\n      ],\n      \"evidence_sha256\": \"4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1\",\n      \"attestation_sha256\": \"a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0\",\n      \"disposition\": \"PRESERVED_SOURCE_DIFFERENCE\",\n      \"execution_boundary\": \"OFFLINE_ARCHIVE_ONLY\"\n    },\n    {\n      \"sales_source_key\": \"sales_header:01\",\n      \"sales_id\": \"247ad997-ce44-28b2-4722-9dfb83c05b23\",\n      \"line_source_key\": \"SYNTHETIC-UNIFIED-DIFFERENCE-4\",\n      \"line_id\": \"e62005d0-4297-f5df-76bf-1cc5309709e6\",\n      \"quantity\": \"16\",\n      \"deal_price\": \"1.00\",\n      \"line_amount\": \"15.99\",\n      \"calculated_line_amount\": \"16.00\",\n      \"difference\": \"-0.01\",\n      \"source_refs\": [\n        {\n          \"file_sha256\": \"69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7\",\n          \"sheet\": \"SYNTHETIC\",\n          \"row\": 103\n        }\n      ],\n      \"evidence_sha256\": \"4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1\",\n      \"attestation_sha256\": \"a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0\",\n      \"disposition\": \"PRESERVED_SOURCE_DIFFERENCE\",\n      \"execution_boundary\": \"OFFLINE_ARCHIVE_ONLY\"\n    },\n    {\n      \"sales_source_key\": \"sales_header:01\",\n      \"sales_id\": \"247ad997-ce44-28b2-4722-9dfb83c05b23\",\n      \"line_source_key\": \"SYNTHETIC-UNIFIED-DIFFERENCE-5\",\n      \"line_id\": \"11f7234f-fe9b-5f72-5338-673405bdcfff\",\n      \"quantity\": \"1\",\n      \"deal_price\": \"0.00\",\n      \"line_amount\": \"0.01\",\n      \"calculated_line_amount\": \"0.00\",\n      \"difference\": \"0.01\",\n      \"source_refs\": [\n        {\n          \"file_sha256\": \"69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7\",\n          \"sheet\": \"SYNTHETIC\",\n          \"row\": 104\n        }\n      ],\n      \"evidence_sha256\": \"4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1\",\n      \"attestation_sha256\": \"a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0\",\n      \"disposition\": \"PRESERVED_SOURCE_DIFFERENCE\",\n      \"execution_boundary\": \"OFFLINE_ARCHIVE_ONLY\"\n    },\n    {\n      \"sales_source_key\": \"sales_header:01\",\n      \"sales_id\": \"247ad997-ce44-28b2-4722-9dfb83c05b23\",\n      \"line_source_key\": \"SYNTHETIC-UNIFIED-DIFFERENCE-6\",\n      \"line_id\": \"81cd8994-d7c8-af18-90bf-8f1e822d73a8\",\n      \"quantity\": \"-1\",\n      \"deal_price\": \"5.00\",\n      \"line_amount\": \"-4.99\",\n      \"calculated_line_amount\": \"-5.00\",\n      \"difference\": \"0.01\",\n      \"source_refs\": [\n        {\n          \"file_sha256\": \"69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7\",\n          \"sheet\": \"SYNTHETIC\",\n          \"row\": 105\n        }\n      ],\n      \"evidence_sha256\": \"4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1\",\n      \"attestation_sha256\": \"a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0\",\n      \"disposition\": \"PRESERVED_SOURCE_DIFFERENCE\",\n      \"execution_boundary\": \"OFFLINE_ARCHIVE_ONLY\"\n    }\n  ],\n  \"manifest_sha256\": \"1d7cc305a1c91f766334bc26eb3c164da153330aa772cb509717124e63333190\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "mode": "stream",
+    "label": "changed",
+    "command": [
+      "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node",
+      "tools/unified-import/cli.mjs",
+      "stream-preflight",
+      "--package",
+      "/tmp/synthetic-unified-history-7MUOGz/package",
+      "--report",
+      "/tmp/synthetic-unified-history-7MUOGz/stream-changed",
+      "--allow-synthetic",
+      "--manifest-sha256",
+      "1d7cc305a1c91f766334bc26eb3c164da153330aa772cb509717124e63333190",
+      "--historical-hall-approval",
+      "/tmp/synthetic-unified-history-7MUOGz/hall-review.json",
+      "--historical-hall-approval-sha256",
+      "4af33de741074e1937d4b0e04da730b85cc421d4b67bd7b23d4113ec532091c1",
+      "--historical-line-amount-evidence",
+      "/tmp/synthetic-unified-history-7MUOGz/amount-review.json",
+      "--historical-line-amount-evidence-sha256",
+      "a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0"
+    ],
+    "exit_code": 1,
+    "signal": null,
+    "stdout": "{\"historical_hall_approval\":{\"sha256\":\"4af33de741074e1937d4b0e04da730b85cc421d4b67bd7b23d4113ec532091c1\",\"record_count\":1},\"timings_ms\":{\"metadata_ms\":31.403513999999973,\"registry_ms\":5.132272,\"records_ms\":36.42658600000004,\"relations_and_reconciliation_ms\":41.917058999999995,\"index_hash_ms\":1.1423040000000242,\"total_ms\":116.66398800000002,\"jsonl_read_ms\":6.746238000000062,\"jsonl_decode_parse_ms\":2.7415349999998284},\"source_namespace\":\"synthetic.unified.v1\",\"schema_declarations_sha256\":\"e929e89fe7f026d10e6fd35af37d1eb48cd07db2f7da4eed76352e497b134cb9\",\"package_stage\":\"READY\",\"manifest_sha256\":\"1d7cc305a1c91f766334bc26eb3c164da153330aa772cb509717124e63333190\",\"index_schema_version\":\"UNIFIED_STREAM_FACTS_V3\",\"index_sha256\":\"c9dd7f8b8cab665e5a5a041272e29235a9bff5b0c8e11b17999c699ad73259a6\",\"index_bytes\":159744,\"validation_scope\":\"STANDARD_PACKAGE_OFFLINE_V1\",\"state\":\"STREAM_PREFLIGHT_COMPLETE\",\"checks_passed\":false,\"complete_package_validation\":true,\"import_eligible\":false,\"business_database_writes\":false,\"counts\":{\"barcode_scheme\":6,\"color\":1,\"customer\":1,\"fit\":1,\"hall\":1,\"inventory_baseline\":2,\"payment_account\":1,\"payment_account_hall\":1,\"payment_method\":1,\"product\":1,\"product_category\":1,\"product_image\":1,\"sales_header\":1,\"sales_line\":6,\"sales_settlement\":1,\"season\":1,\"size\":1,\"size_group\":1,\"size_group_member\":1,\"sku\":1,\"sku_barcode\":1,\"staff\":1,\"supplier\":1,\"transfer_header\":1,\"transfer_line\":1,\"warehouse\":2},\"issue_count\":18,\"bytes_scanned\":40396,\"peak_rss_bytes\":114741248,\"limits\":{\"line_bytes\":1048576,\"total_bytes\":8589934592,\"rows\":5000000,\"issues\":100000,\"sqlite_cache_kib\":4096},\"remaining_checks\":[\"source truth beyond declared evidence\",\"target authorization, live database state and execution\"]}\n",
+    "stderr": ""
+  }
+]

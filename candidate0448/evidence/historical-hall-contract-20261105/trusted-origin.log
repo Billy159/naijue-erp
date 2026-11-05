@@ -1,0 +1,29 @@
+✔ native sales rules: original transaction capability is mandatory, never use request/form fallback facts (7.571689ms)
+✔ native sales rules: unknown minimum is not known absent; exact minimum remains authoritative (5.76503ms)
+✔ native sales rules: enabled same-hall refs and actual method are required; staff role/hall and account hall are not invented (1.401009ms)
+✔ native sales rules: new/replaced snapshots require current labels; unchanged stored observations survive rename/disabled old barcode (1.241236ms)
+✔ native sales rules: raw observations must bind exact enabled SKU; null manual observation is not a fake MAIN barcode (1.54836ms)
+✔ sales service: awaits both async original-tx rules gates before document/effects; rejection rolls back and original key can retry (10.528557ms)
+✔ native sales pg facts: original-query bounded target locks, actual member pairs, product prices read once and verifier uses same transaction (13.372776ms)
+✔ native sales pg facts: missing real verifier, schema10 and incomplete/invalid nine-price facts fail closed (3.989605ms)
+✔ native sales pg facts: original raw barcode targets preserve leading zero and do not load every alias/MAIN or document history (1.098058ms)
+✔ native sales pg facts: captured document cannot be redirected during async completeness and a closed scope cannot return facts (2.423685ms)
+✔ native sales UoW: missing verifier fails native capability on original bound actor/target and an escaped transaction stays closed (3.079969ms)
+✔ native sales UoW/service: real seam uses one original scripted client through locks, explicit completeness, SAVE/audit/receipt and commit (4.245625ms)
+✔ native sales UoW/service: unproven complete prices reject before native writes and roll back the same client (1.050173ms)
+✔ native method intent: runtime SAVE unchanged/amount and APPROVE reject account reassignment without effects; same method rename is identity-stable (3.877878ms)
+✔ native method intent: first SAVE retains selected M1 intent and rejects actual M2 before any document/receipt/effect (0.688948ms)
+✔ exact2 native sales facts: original object proof selects same-client predicate and propagates missing source/function (2.51551ms)
+✔ exact2 sales UoW: renewed object proof failure releases borrowed client before any SQL or callback (0.664471ms)
+✔ ordinary SAVE requires staff on new creation; untouched original NULL survives edits and committed-key reauthorization (4.949527ms)
+✔ native sales catalogue locks are product then SKU after nonlocking discovery (7.401766ms)
+✔ native sales association changed between discovery and locking fails closed (0.731493ms)
+✔ historical null and source-confirmed cross-hall references survive unchanged SAVE and APPROVE, but new or changed references stay strict (1.3342ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 498.29465

@@ -1,0 +1,34 @@
+✔ ordinary intake rejects a derived key whose dimension cannot resolve (87.889585ms)
+✔ stream intake rejects the same derived-key reference mismatch (99.937542ms)
+✔ ordinary and stream accept generated existing-field records and legacy keys (166.216171ms)
+✔ both intake paths retain equal business details under separate permanent occurrence IDs after reorder (154.954412ms)
+✔ both intake paths reject a valid-shaped but wrong dimension UUID (69.27983ms)
+✔ both intake paths accept sales_line permanent quoted Unicode identities (56.697592ms)
+✔ both intake paths reject sales_line wrong parent UUID (81.886199ms)
+✔ both intake paths accept transfer_line permanent quoted Unicode identities (68.719226ms)
+✔ both intake paths reject transfer_line wrong parent UUID (59.857436ms)
+✔ both intake paths resolve quoted delimiter and Unicode dimension keys exactly (57.332102ms)
+✔ both intake paths preserve duplicate settlement business occurrences through reorder and provenance changes (124.959872ms)
+✔ both intake paths reject settlement wrong parent and missing parent key (152.922036ms)
+✔ both intake paths reject duplicate settlement permanent occurrence identity (74.823104ms)
+✔ ordinary and stream import programs/readback preserve settlement IDs, source keys and replay record IDs (350.232113ms)
+✔ 131 four-dimensional candidates keep identities across reorder and provenance changes (26.495259ms)
+✔ SKU keys preserve text boundaries and source groups; unknown activation is not enabled (1.278489ms)
+✔ permanent header and occurrence identities preserve duplicate business lines across order and incremental additions (0.740876ms)
+✔ shared resolver enforces actual dimension and parent references without reinterpreting legacy keys (2.921284ms)
+✔ quoted delimiter and Unicode keys round-trip exactly without tuple collisions or normalization (2.138377ms)
+✔ settlement permanent occurrence keys bind the sales parent and preserve persisted ledger UUIDs (1.03752ms)
+✔ 22 original zero records remain traceable and create zero money actions (9.770139ms)
+✔ reorder stable, parent and record identity distinct (11.556054ms)
+✔ nonzero, unknown, claimed direction or forged metadata do not enter archive (0.551164ms)
+✔ duplicate stable source record rejected, duplicate original values retained with distinct identity (0.540429ms)
+✔ archive cannot accept prototype/secret fields or empty source content (0.47422ms)
+✔ astral source text uses exact UTF16 limits without widening valid inputs (0.659794ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1909.494585

@@ -1,0 +1,97 @@
+{
+  "atUtc": "2026-10-22T23:45:05.386000+00:00",
+  "parent": "6241fc07a1ff952f9c34fe3af27345339dcbecac",
+  "groups": [
+    {
+      "slice": "fix: align readonly product stock overview geometry",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P13-READONLY-OVERVIEW-DELIVERY-v1.json",
+      "receiptSha256": "cb89c72db305dbf4805a96196347d69a3051e1521005de147b301a681f5fad75",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "PROD-RO-P13-01 overview-visible-geometry readonly CSS slice",
+        "role": "F2",
+        "atUtc": "2026-10-22T23:44:09.969907+00:00",
+        "status": "SOURCE_READY_FOUR_SCOPED_RULES_CHECK_PASS_BROWSER_PENDING_WHOLEPAGE_NOT_ACCEPTED",
+        "authority": {
+          "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "sourceStart": "C109 exact2 fixed a922fcc9e39fc8bae0b9ce5992776f452ded0ba6 and CSS released; final C105 evidence verified before edits; existing sole F2 CSS ownership"
+        },
+        "modelRequested": "gpt-6.1-sol/xhigh",
+        "fastRequested": false,
+        "input": {
+          "result": "reports/ui-demo-comparison-20261022/v018-9a52d0f/RESULT.json",
+          "resultSha256": "2b92cf7ec8dc8618480ea5d1abcb8c0ea73e4daec38c91eb150a07b7bff77562",
+          "residualsSha256": "befe450bf0e8bbba17146e0281c73d8c7c3a7c87314f9911a3f7152ab9f8b4b2",
+          "mdSha256": "d203077e59a60d9a3af71543b2d3d7d8ebf81c3a978373fcfffd6c03990222c9",
+          "actualSourceBindingSha256": "0c2ae5e94becf09eca41a154a697594df6563c17492aa58b06b434d995002d20",
+          "actualStockAllSha256": "0604050c15db75e1d234fe5629218fff41309b3da7fe36f6cdf745496146fdfc",
+          "frozenStockAllSha256": "5817174eae00259dedac554ec231ceb7aa9ef23aecfd08bebb2dca36809eef98"
+        },
+        "completedScope": [
+          "Readonly overview table restores max-width700 while retaining width:min760 responsive source rule.",
+          "Readonly stock head min-height28 rather than common toolbar32; native28buttons and existing margin8 target36 relative head-to-table offset.",
+          "Readonly head action group gap4.",
+          "Readonly stock UIButton normal/disabled border0 using specificity0,3,1; actual late Arco text-button border1 specificity0,2,0 no longer forces measured94instead92. No guessed hardcoded button width.",
+          "Only4 scoped CSS rules and comment added; previous CSS bytes including glyph/P11/P12/P10 retained. Native stock component/reader/UNKNOWN/subset/mode/nav/source unchanged."
+        ],
+        "changedFiles": [
+          {
+            "path": "apps/web/src/products/product-page.css",
+            "sha256": "55f820dc22ae834fb61cf7fc008834583b6723b07d62b3e2ae6c0a107af0aa4b",
+            "beforeSha256": "24bd1910e355ad5236e2ec6cc5e0611792dc9334dcaba173c391035f6e5725ce",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P13-READONLY-OVERVIEW-source.css"
+          }
+        ],
+        "newApplicationFiles": 0,
+        "unchangedStockSource": {
+          "path": "apps/web/src/products/product-page-stock.tsx",
+          "sha256": "fa8f08bd390ad30bdcbdf8c91a892d809b883a43099a7bfaa7ead6679805c846"
+        },
+        "checks": {
+          "capture": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P13-READONLY-OVERVIEW-capture-v1.log",
+            "sha256": "691ae621ee180713342e393a945b2b9b94e4ae5a79d38d86394625961bb5744b",
+            "exitCode": 0,
+            "qualification": "Actual renderer DOM for style matching only, explicit syntheticUNKNOWN/subset1, singleNON_ZEROread, no modes/nav or businesssuite repeated."
+          },
+          "cascade": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P13-READONLY-OVERVIEW-cascade-v1.log",
+            "sha256": "b8963e7cba94b451853aa5d7723e5ef0003548bfccf44cbea5e035f1738f4ebf",
+            "exitCode": 0
+          },
+          "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P13-READONLY-OVERVIEW-cascade-result-v1.json",
+          "method": "Immutable actual C105 complete inline CSS+current actual component DOM; stock source rules in priorR confirmed byte-identical to actual C105; new scoped rules before/after entire stylesheet both win. Matched source only, not browser computedgeometry.",
+          "assertions": [
+            "old headmin32/gap8/no tablemax and enabled+disabled Arco border1 actual winners found",
+            "new headmin28/gap4/tablemax700/normal+disabledborder0; old button28/pad7/fontcascade preserved",
+            "readonly root removed gives identical nonreadonly stock matchedwinners; previous CSS bytes identical"
+          ],
+          "types": "NOT_RUN_CSS_ONLY"
+        },
+        "qualification": "Width700/relative36/button92 are source-layout inferences awaiting new browser measurement. Font inherit chain preserved; no claimed fresh computedfont/glyph metrics.",
+        "reused": "C final48 scoped logical partial cases incl native UNKNOWN/subset1 bothmodes adopted at exact original scope; new nativePassCount0. Old row/table/mode/45suites not repeated.",
+        "notRun": [
+          "New fixed candidate browser geometry/buttonhover/pointer",
+          "KNOWN0/negative/empty/error inventory states/realroles/PG/businessdeployment",
+          "Nested detailed inventory journey still F1WIP; no handler/composition change",
+          "Independent readonly wholeframe x/y+4 not repaired"
+        ],
+        "blockers": {
+          "thisCSSSlice": null,
+          "wholeP13": "Browser geometry and original C/F1 nested navigation not completed; fullpage remainsWAITING/notaccepted."
+        },
+        "nextStep": "C fix singleCSS+receipt/QF only4scoped rules; next necessary preview only P13 tablewidth/head/gap/button sizing, nativevalues/modes old evidence reused. No whole data state comparison to frozen51zero warehouses."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "owner": "F2",
+          "bytes": 22017,
+          "sha256": "55f820dc22ae834fb61cf7fc008834583b6723b07d62b3e2ae6c0a107af0aa4b"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only readonly overview max700/headmin28/gap4/buttonborder0. Native unknown/subset/modes, navigation, otherstyle and independent shellxy+4 unchanged; actual newgeometry pending. Existing48 actual local conclusions reused without addingcount."
+}

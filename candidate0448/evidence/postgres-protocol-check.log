@@ -1,0 +1,41 @@
+✔ pg protocol: exact decimal(18,2)/bigint codecs preserve extremes and reject rounding/overflow (7.626865ms)
+✔ pg protocol: BEGIN/COMMIT use one client, and leaked handles close (1.806409ms)
+✔ pg protocol: callback failure requests rollback and never commit (2.445515ms)
+✔ pg protocol: BEGIN/connect failures do not run callback (1.309237ms)
+✔ pg protocol: uncertain COMMIT failure is not retried and client is discarded (1.832856ms)
+✔ pg protocol: failed rollback reports both errors and discards client (1.203621ms)
+✔ pg protocol: new SAVE writes native rows, snapshots, audit and actor/key receipt without stock writes (15.771593ms)
+✔ pg protocol: APPROVE locks balances in one stable order and CAS allows negative inventory (16.604736ms)
+✔ pg protocol: repeated SKU actual lines retain distinct ledger sources and advance one cached balance twice (8.719712ms)
+✔ pg protocol: missing inventory coverage fails closed without insert/upsert/default zero (3.059721ms)
+✔ pg protocol: UNAPPROVE appends a linked inverse without mutating original ledger or settlements (15.961846ms)
+✔ pg protocol: same actor/key replay returns original result only after current authorization (4.985169ms)
+✔ pg protocol: changed content under original actor/key conflicts without re-executing (0.508285ms)
+✔ pg protocol: cutoff history remains queryable but commands fail before balance/ledger mutation (1.855352ms)
+✔ pg protocol: settlement mismatch still blocks APPROVE before any mutation (1.463255ms)
+✔ pg protocol: ledger write failure requests ROLLBACK, not COMMIT (not durability evidence) (1.663517ms)
+✔ pg protocol: balance write failure requests ROLLBACK, not COMMIT (not durability evidence) (2.659634ms)
+✔ pg protocol: header write failure requests ROLLBACK, not COMMIT (not durability evidence) (1.00048ms)
+✔ pg protocol: line write failure requests ROLLBACK, not COMMIT (not durability evidence) (2.021908ms)
+✔ pg protocol: settlement write failure requests ROLLBACK, not COMMIT (not durability evidence) (1.548973ms)
+✔ pg protocol: audit write failure requests ROLLBACK, not COMMIT (not durability evidence) (1.372324ms)
+✔ pg protocol: receipt write failure requests ROLLBACK, not COMMIT (not durability evidence) (2.966682ms)
+✔ pg protocol: document CAS zero-row result rejects stale update and requests rollback (0.791435ms)
+✔ pg protocol: balance CAS zero-row result rejects stale quantity and requests rollback (0.959965ms)
+✔ pg protocol: foreign line ownership failure cannot silently skip a line write (0.983057ms)
+✔ pg SQL-text contract: versioned bounded migration has no business seed or execution runner (29.015422ms)
+✔ pg SQL-text contract: native parties, product price and four-dimensional SKU remain separate (2.061565ms)
+✔ pg SQL-text contract: actual lines/settlements are native facts, not hidden whole-document JSON (1.372966ms)
+✔ pg SQL-text contract: quantities have no zero floor and balance coverage cannot be auto-created by sales (1.875228ms)
+✔ pg SQL-text contract: source, reversal, receipt/audit uniqueness and deferred atomic references are declared (2.512307ms)
+✔ pg SQL-text contract: historical branch stays closed, settlement equality uses final approved state (3.834382ms)
+✔ pg SQL-text contract: ISO business dates do not depend on session DateStyle (0.58219ms)
+✔ pg SQL-text contract: missing or JSON-null receipt IDs cannot exploit nullable CHECK equality (0.344289ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2120.190142

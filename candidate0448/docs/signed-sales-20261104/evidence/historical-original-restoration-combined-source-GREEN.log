@@ -1,0 +1,19 @@
+✔ missing settlement successor preserves exact migration proof and rejects ordinary approval bypass (9.748342ms)
+✔ candidate builds exactly on missing-settlement successor with literal single anchors and pins (33.936825ms)
+✔ ordinary historical absence including zero net requires proof, normal settlement equality remains strict (10.621329ms)
+✔ origin requires immutable version-one approved SALE, digest, source and published baseline closure (1.905507ms)
+✔ all actual rows and non-lifecycle header columns must still equal source origin exactly (2.915523ms)
+✔ every audit and receipt version is covered without truncation or gaps (3.108098ms)
+✔ any line or settlement delta or economic header delta anywhere in the chain rejects (1.631781ms)
+✔ sparse header pairs reject omissions, preserve explicit null and compare timestamps as instants (1.342338ms)
+✔ source body leaves ordinary actor, exact line effects and native mutation validators intact (5.794822ms)
+✔ known header, signed-line and allocation contradictions reject before missing-evidence exception (3.156693ms)
+✔ explicit profile successor pins exact predecessor and only four schema decision changes (5.043512ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 350.484132

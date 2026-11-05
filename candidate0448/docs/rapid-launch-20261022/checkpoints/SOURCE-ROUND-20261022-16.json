@@ -1,0 +1,93 @@
+{
+  "atUtc": "2026-10-22T08:26:39.323809+00:00",
+  "parent": "ecec0bd0a4546a75ee4d8d7761c6e7f11b1136d9",
+  "groups": [
+    {
+      "slice": "F1_DOC02_03_04_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-17/DELIVERY.json",
+      "receiptSha256": "ebda7dd67f189de055f2b7c5b1a84bb283b16ee94314dc1d3d422a8f5c17bb8d",
+      "files": [
+        {
+          "path": "apps/web/src/current-form/sales-proposal.ts",
+          "bytes": 25203,
+          "sha256": "d3eda4a571db12e4e9b7154ff1b57715c1e31cfd548c5ab0933ce06180b9b702",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "bytes": 23648,
+          "sha256": "ff43e1949fc7ca04f63a58bee355bbfe4cb574b0bca74555ac1049ee54be7e5d",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal.css",
+          "bytes": 12459,
+          "sha256": "9af62f1665b30a392c9d8a17fc714119b46eb41a074e55ece1b135197afd0edb",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "F2_SEASON_V2_AND_MEDIA_RELOAD_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-SEASON-V2-DELIVERY-v1.json",
+      "receiptSha256": "22aa8d55921dda04f7cc4cd9413ee43b4d415665816f9749813beca416f96f6b",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-contracts.ts",
+          "sha256": "c2569d56641a60c2dbc910e5e9e2389973f24fbb8f0039812d427b2c1a0a5a1f",
+          "owner": "F2",
+          "registered": true
+        },
+        {
+          "path": "apps/web/src/products/product-maintenance-http-client.ts",
+          "sha256": "b9081a75e5e92447ca6ff325fdf6a8f6a4cbe2bde7f812322cd90c8d7e72eccc",
+          "owner": "F2",
+          "registered": true
+        },
+        {
+          "path": "apps/web/src/products/product-editor-state.ts",
+          "sha256": "eb662b89e255e47dec03da5b28ce693713eb6ca91790761dbc2ed7e1fd705b51",
+          "owner": "F2",
+          "registered": true
+        },
+        {
+          "path": "apps/web/src/products/product-editor-base.tsx",
+          "sha256": "8ab960c7afe3c99106eace535dd5b781b4eefef17ad5529765379bf29a7cdd0b",
+          "owner": "F2",
+          "registered": true
+        },
+        {
+          "path": "apps/web/src/products/product-editor.tsx",
+          "sha256": "6db3ef5fc6e52b8e3efee422934e52ca4daceb02c5a085a3ef2fbfbe960857ea",
+          "owner": "F2",
+          "registered": true
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "sha256": "00f83660f95e74b4d1254eed3d90126a9fbd9e13c0ec8b74cd56d2bb0ba2e1aa",
+          "owner": "F2",
+          "registered": true
+        },
+        {
+          "path": "apps/web/src/products/product-editor-media.tsx",
+          "sha256": "f7dc556463f1298b0d571e89af5a29d5d610e666c794f91fe6a238f9988706a9",
+          "owner": "F2",
+          "registered": true
+        }
+      ]
+    },
+    {
+      "slice": "C_STAFF_OPTIONAL_ROOT_COMMAND_CONTRACT",
+      "files": [
+        {
+          "path": "apps/web/src/application/contracts.ts",
+          "sha256": "a891c7297f3d9e3ca5f97c13328e6ed0f94457e578ce81ca4adf9a0798db73cc",
+          "owner": "C"
+        }
+      ],
+      "qualification": "Root wiring pending F1; production write gates unchanged"
+    }
+  ],
+  "fileCount": 11,
+  "scope": "New targeted UI/source repairs; independent QF/browser and actualPG remain pending"
+}

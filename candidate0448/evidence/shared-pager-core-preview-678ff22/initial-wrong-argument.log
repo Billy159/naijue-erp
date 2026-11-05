@@ -1,0 +1,11 @@
+file:///workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/smoke.mjs:8
+if (!commit || !/^[0-9a-f]{40}$/.test(commit)) throw new Error('Pass the exact reviewed runtime commit used by the checkpoint-specific portable build. Historical delivered artifacts are not relabelled as current.');
+                                                     ^
+
+Error: Pass the exact reviewed runtime commit used by the checkpoint-specific portable build. Historical delivered artifacts are not relabelled as current.
+    at file:///workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/smoke.mjs:8:54
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

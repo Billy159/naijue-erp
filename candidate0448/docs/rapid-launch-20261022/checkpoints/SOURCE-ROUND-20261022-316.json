@@ -1,0 +1,49 @@
+{
+  "atUtc": "2026-10-24T12:31:39.418939+00:00",
+  "parent": "20b52c6ea6aae2ee4465494388d4b9a8c2545c85",
+  "taskId": "F1_S01_S04_DEMO_BODY_PURE_PRESENTATION_316",
+  "files": [
+    {
+      "path": "apps/web/src/sales/document-presentation.tsx",
+      "bytes": 19457,
+      "sha256": "cefa53cdbea1d4057027251eb3a511d03f927507c9f781731df5103a065dcbc0",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 55351,
+      "sha256": "703229439a0dd941824c064429792ec4572e6fcf741ce89f2d307edc39dbadd8",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-existing-document-form.tsx",
+      "bytes": 6664,
+      "sha256": "8abc8a29560b7ea4a44f0d2e905de523b9da3894f2ca242b227d0490b973dee9",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/detail-content.tsx",
+      "bytes": 9770,
+      "sha256": "07e3ec689617e671d19b1adfdc8feed747726fed73e994cab84266c06205175d",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/detail-host.tsx",
+      "bytes": 2942,
+      "sha256": "f5d02249d31bea8df6f5771a50bbce789ccd8a06233e9715eef0c5d609f102bf",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/form.tsx",
+      "bytes": 23619,
+      "sha256": "db56f03ec3e59093ffbbcc2b92efc3516aafde71ea644d512861de2973e9d258",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-148/DELIVERY.json",
+  "ownerSourceReleased": true,
+  "stage": "SOURCE_UI_READY_TSX_SYNTAX_AND_DIFF_PASS_NOT_TYPES_NORMALSTATES_OR_BROWSER",
+  "executionModel": "gpt-6-luna/max requested after directusermanualswitchconfirmation",
+  "wholePageAccepted": false,
+  "deployed": false
+}

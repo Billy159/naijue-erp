@@ -1,0 +1,102 @@
+{
+  "status": "TERMINAL_PARTIAL_NORMAL_SALES_TRANSFER_PASS_ROLLBACK_ASSERTION_FAILED_NO_REPLAY",
+  "sourceCommit": "d36a6c173680f2752479ca6f72d86dd3e5e96f62",
+  "execSession": 62422,
+  "finishedAtUtc": "2026-10-27T06:10:15.933068+00:00",
+  "elapsedSeconds": 2.52079675,
+  "currentReadOnlyProofReady": true,
+  "currentPurposeIssued": true,
+  "qaCredentialActual": true,
+  "committedCredentialTransition": "2_TO3",
+  "approvedActual": {
+    "status": "FAILED_STOP_NO_RETRY",
+    "sourceKind": "SYNTHETIC_ONLY",
+    "realSourceImportVerified": false,
+    "cases": [
+      {
+        "kind": "sales",
+        "status": "PASS_NORMAL_HTTP_SYN_APPROVED_DELTA_READBACK_AUDIT_REPLAY_CAS",
+        "operationId": "e3eee080-c3e7-46c4-8a14-8ab681c8285e",
+        "revisionId": "6f987c7e-b6fa-4f70-b44f-62c3ee7b8010",
+        "version": 2,
+        "ledgerEntryIds": [
+          "61b2ee8e-962c-4a5a-9a0d-7c8d1a721ad1"
+        ]
+      },
+      {
+        "kind": "transfers",
+        "status": "PASS_NORMAL_HTTP_SYN_APPROVED_DELTA_READBACK_AUDIT_REPLAY_CAS",
+        "operationId": "4855c67f-df31-48fa-bf4e-d0e4cc81e7d3",
+        "revisionId": "362563e2-0bb3-4814-bc39-6e19e1b48dfc",
+        "version": 2,
+        "ledgerEntryIds": [
+          "0568019e-d3dc-49ce-84c6-f233729514fb",
+          "564fe744-6737-4fd7-af20-036e9d579f93"
+        ]
+      }
+    ],
+    "automaticRetry": false,
+    "notTested": [
+      "Real-source APPROVED sample/import",
+      "Originally NULL-date approved money",
+      "Actual UNKNOWN COMMIT",
+      "Full roles/browser/HTTPS/formal business"
+    ],
+    "failedPhase": "DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_ROLLBACK",
+    "requestKey": "B07_SYN_APPROVED_V1_ROLLBACK",
+    "errorCode": "ERR_ASSERTION"
+  },
+  "directRollbackRequestArtifactPresent": true,
+  "directRollbackOutcome": "NOT_PROVEN_ASSERTION_FAILED_DO_NOT_REPLAY",
+  "businessAcceptance": false,
+  "realSourceImportVerified": false,
+  "clientsClosed": true,
+  "reviewWorkerClosed": true,
+  "gateWorkerClosed": true,
+  "ownPgStopped": true,
+  "noSeedOrUpgradeOrRoleOrGrantOrPublish": true,
+  "automaticReplay": false,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-AUTH2-SESSION-CONTINUATION-20261027-04/OS-LIFECYCLE.json",
+      "bytes": 547,
+      "sha256": "402e0c6c1e80cd060478e9f773989a81a8535ab411bb1f8ab6e385c33725739a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-AUTH2-SESSION-CONTINUATION-20261027-04/NODE-PIPELINE-RESULT.json",
+      "bytes": 588,
+      "sha256": "51d75ed322732d2b25f7b50ec8a5f2216879a9c29354b13f28d6013940db92c8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-04/PARENT-RESULT.json",
+      "bytes": 1382,
+      "sha256": "690084029c1a0c66fac09cc56263f771d5e65ebad5744d423629aa7d47a8965c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-04/APPROVED-ACTUAL-RESULT.json",
+      "bytes": 1217,
+      "sha256": "00234117a33419d0fde210b6c6dbdabdd93d99f50e375b1ac2bf31d56d726756"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice459-source747-auth2-normal04-purpose/QB459-LIVE-RESULT.json",
+      "bytes": 11181,
+      "sha256": "7561eda2039754765d0441d51a6c83f3f5ed1bfee35d361e6da4b39703e19e02"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-04/REQUEST-NORMAL_HTTP_sales.json",
+      "bytes": 794,
+      "sha256": "1f7d839b82a3fe1ab2accecb1d9b0f2a4f63360a0faefd14d5fc7877adf81191"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-04/REQUEST-DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_ROLLBACK.json",
+      "bytes": 1068,
+      "sha256": "2d6eb543f1daf7f8db6665499196f827bfe61c7f6317b62fb4a909989f0e87bf"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-04/REQUEST-NORMAL_HTTP_transfers.json",
+      "bytes": 806,
+      "sha256": "88332cdb2d5befb34ecec83491a2182fd756f29b3d4b0e95f55afc345f4e9988"
+    }
+  ],
+  "remaining": "Only unpassed direct23505 rollback case; reuse both committed normal case PASS, use original request key readonly if outcome uncertain; do not repeat credential transition or original normal saves."
+}

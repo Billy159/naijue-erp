@@ -1,0 +1,34 @@
+{
+  "atUtc": "2026-10-23T23:01:22.319546+00:00",
+  "jobId": "c03-c229-linux-install-only-20261024-01",
+  "status": "PASS_ISOLATED_C229_LINUX_INSTALL_AND_NATIVE_LOAD_ONLY",
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c229-linux-install-only-20261024-01/release-submission/release-receipts/c03-c229-linux-install-only-20261024-01/engine-result.json",
+      "bytes": 7687,
+      "sha256": "9a625f960e4c42bf3a17d5674091edfecbd8c7a1cc2aa8892bfc202be09131c8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c229-linux-install-only-20261024-01/release-submission/release-receipts/c03-c229-linux-install-only-20261024-01/job.json",
+      "bytes": 540,
+      "sha256": "6c781efde11a7240251669543df747613e48198a2dc4057ad7cc2049f3c07cab"
+    }
+  ],
+  "actualBusinessProductionAcceptance": false,
+  "sourceCommit": "5669bd5411061818055c44789a1892574e3dfb94",
+  "buildId": "r1-5669bd5-20261024-01",
+  "installedPayloadSha256": "1efdac672f12ea7a50541b6283b3ad7f11b06fe8469667638677d954aa0902e8",
+  "installedPackageRecords": 111,
+  "nativeLoad": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "24.21.0",
+    "sharp": "0.35.5",
+    "vips": "8.18.7",
+    "nativeLoaded": true
+  },
+  "existingContainersUnchanged": true,
+  "newApp": false,
+  "metadata": false,
+  "publicSwitch": false
+}

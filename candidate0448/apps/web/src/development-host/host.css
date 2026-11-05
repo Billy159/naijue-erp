@@ -1,0 +1,8 @@
+/* Development document only. No business selectors, route assets or replacement theme. */
+html { color-scheme: light; background: #fff; color: #243246; }
+body { margin: 0; min-width: 320px; background: #fff; }
+.development-host-state { padding: 16px 0; }
+.development-host-state p { margin: 0 0 12px; }
+.development-host-state button + button { margin-left: 8px; }
+.development-host-actions { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+#naijue-erp-root > [role=alert] { margin: 20px; font: 14px/1.5 system-ui, sans-serif; }

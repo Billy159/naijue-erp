@@ -1,0 +1,32 @@
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (5.478717ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (0.927989ms)
+✔ historical signed discount remains exact on memo save without invented allocation (1.195115ms)
+✖ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (26.371797ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 268.225839
+
+✖ failing tests:
+
+test at apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:31:1
+✖ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (26.371797ms)
+  AssertionError [ERR_ASSERTION]: ["请完成当前商品组内的规格、数量、价格及收退款资料；普通零价须确认。"]
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/signed-sale-economic-edit.test.ts:38:115)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

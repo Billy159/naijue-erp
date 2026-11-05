@@ -1,0 +1,23 @@
+{
+  "syntheticOnly": true,
+  "postgresExecuted": false,
+  "budget": 8323072,
+  "commandLimit": 8388608,
+  "headerReserve": 65536,
+  "old89": {
+    "wireBytes": 8261667,
+    "projectedJsonbTextBytes": 8629504
+  },
+  "newChunks": [
+    {
+      "records": 85,
+      "wireBytes": 7890355,
+      "projectedJsonbTextBytes": 8241660
+    },
+    {
+      "records": 45,
+      "wireBytes": 4177395,
+      "projectedJsonbTextBytes": 4363380
+    }
+  ]
+}

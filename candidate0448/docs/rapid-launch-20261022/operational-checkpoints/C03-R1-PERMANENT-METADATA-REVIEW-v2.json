@@ -1,0 +1,54 @@
+{
+  "version": "C_R1_PERMANENT_METADATA_REVIEW_PATH_FREEZE_V2",
+  "atUtc": "2026-10-22T22:26:47.708314+00:00",
+  "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+  "decision": "ACCEPT_EXACT_CLOSED8_REVIEW_BYTES_WITH_PERMANENT_CONTAINER_INDEPENDENT_REVIEW_PATH",
+  "review": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/runtime26-r1-permanent-metadata-five-purpose-review-v2.json",
+    "bytes": 1050,
+    "sha256": "359b2286d57069a787139b6b7f250d59338af80142809412d411f381e3c4ad2d"
+  },
+  "previousTemporaryReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/runtime26-r1-metadata-five-purpose-review-v1.json",
+    "sha256": "e48df42739ab79eecebe2f740713ceee3d880ec7025ad2483814bf50b66b13d8",
+    "independentReviewPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c03-r1-runtime26-five-purpose-20261023-42/bundle/INDEPENDENT-REVIEW.json",
+    "remainsUnchanged": true
+  },
+  "onlyDifference": "independentReview.path -> /run/naijue-rewrite/runtime26/INDEPENDENT-REVIEW.json",
+  "independentReviewUnchanged": {
+    "path": "/run/naijue-rewrite/runtime26/INDEPENDENT-REVIEW.json",
+    "sha256": "73c879a85bd5c1318648fd96ea3e0de6970521c93109eacb729dec9d74c1594f",
+    "result": "PASS"
+  },
+  "targetUnchanged": {
+    "database": "erp_rewrite_20261022_r1",
+    "databaseOid": "1027659",
+    "actingRole": "erp_rewrite_runtime_20261022",
+    "sessionUser": "erp_rewrite_runtime_20261022",
+    "serverAddress": "172.18.0.3/32",
+    "serverPort": 5432,
+    "postmasterStart": "2026-10-04 08:16:07.895273+00"
+  },
+  "catalogUnchanged": {
+    "format": "EXACT26_RUNTIME_CATALOG_EXPORT_V1",
+    "sha256": "f62de0a301d485da548324a89e97bd902f184ca45e0778901ab8d4be8dab15c7",
+    "patchLevel": "26_v7_media_color_swap"
+  },
+  "purposesUnchanged": [
+    "PRODUCT_SEASONS_READ",
+    "CURRENT_CUSTOMER_READ_WRITE",
+    "CURRENT_FORM_READ",
+    "HISTORY_READ",
+    "INVENTORY_ADMISSION"
+  ],
+  "scope": "EXACT_TARGET_METADATA_ONLY",
+  "actualJob42EvidenceAdopted": "C03-ACTUAL-R1-FIVE-PURPOSE-JOB42.json",
+  "serverInstallation": "NOT_DONE",
+  "finalPrivateRuntimeConfiguration": "NOT_WRITTEN",
+  "dataReady": false,
+  "actualH06OrR3Composition": false,
+  "realImportExecutionAuthorized": false,
+  "mainAuthorized": false,
+  "publishAuthorized": false,
+  "credentialValuesReadOrHashed": false
+}

@@ -1,0 +1,51 @@
+{
+  "atUtc": "2026-10-23T11:14:05.323137+00:00",
+  "parent": "fb65d3cb98eb9a8151de1ab7245e0a5b7b0ff40e",
+  "taskId": "F01_S01_T01_WHOLE_LIST_REMAINING_DEMO_SOURCE",
+  "files": [
+    {
+      "path": "apps/web/src/sales/sales-page.tsx",
+      "bytes": 15778,
+      "beforeSha256": "f935793c44458d6d341852c130fef75f7710f1c6dc9ad0529c58e33e722b2672",
+      "sha256": "3a3422739e7aaa0b3767a423ca846234f1eeb5083f4c1f17d689a35e359056c5",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/sales.css",
+      "bytes": 10103,
+      "beforeSha256": "c229ee180be366ca39ddc00bf55c0e6dabdda6059a8b330c009f6c3224588baf",
+      "sha256": "d4eb009edad507d380373b043753d54bc37742b1a1352fa8c383f0ea239b44ee",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/transfers-page.tsx",
+      "bytes": 15278,
+      "beforeSha256": "fca76b7b29cd35b9802b90532d9acdba97e3f1c0d6d9509ea57400834e9e8954",
+      "sha256": "39c7ac29a574e03675fb87355963f36658281b583055ce632b01c061b283e564",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/transfers.css",
+      "bytes": 9889,
+      "beforeSha256": "3f7bc83d38bfd612bbb87b05e590b272c1c226b5814bb1c97bcab9816353feba",
+      "sha256": "af8655c5f15a416b0c077562f58aabc2635651bc8349a8face0291e25df30057",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-81/DELIVERY.json",
+  "ownerReceiptBytes": 3728,
+  "ownerReceiptSha256": "ee27ff099dce4b89c4b4a205f0e49ec6acbf9af00f0f8daad7cf29c1ef8a3078",
+  "scope": "S01 original native table and effective date/type/pager retained; T01 source native complete table/head/rows/actions including empty10head, bothnative source toolbar/query/reset/numberinput/loading/cancel surface. Original server filter/page/exactTotal/sum/permissions/readers/controllers/latecancel and draft-vs-executed remain.",
+  "checksAdopted": {
+    "runtime": "Node24.21.0",
+    "salesAffectedCompositions": "pages-2 completed sales, PROGRESS-2.json exact proof reused in final RESULT",
+    "transferAffectedCompositions": "pages-4 EXIT0 original native HTTP/decoder/layout source/return flow",
+    "strict": "types-1 EXIT0",
+    "css": "css-1 EXIT0 both final sheets"
+  },
+  "notTested": [
+    "Actual Chrome complete lists/geometry/keyboard/focus/representative-scale rendering/actualPG or business."
+  ],
+  "previousFailuresPreserved": "pages1-3 OS exit137 cause unproven; fixture wrongly asserted same DOM across original keyedT01remount and dumped fullDOM; corrected value/scroll/focus boolean assertions passed sameproduction code, original formkey unchanged.",
+  "next": "One latest complete165 candidate includes164 localfocus and162savedview/160recovery; do not build intermediate164. QFonlynewlists/source4 then wholeactual and exactfailedfocus afterQF2 recoverycleanrelease; oldvalid48/closedPager reused."
+}

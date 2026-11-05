@@ -1,0 +1,33 @@
+{
+  "baseCommit": "6b3e5647fb174201f028518f677f7cb43e2da0e3",
+  "status": "Scoped CSS repair source frozen; parent coherent compiler/build and actual-browser comparison pending.",
+  "passingGroups": {
+    "salesMain": 18,
+    "referencePopupIsolated": 5,
+    "sharedShell": 7,
+    "sharedLayoutCascade": 4,
+    "transferMain": 11,
+    "transferFilter": 4
+  },
+  "totalPassingDomGroups": 49,
+  "additionalChecks": [
+    "Frozen-source mapping passes",
+    "Owned-path git diff --check passes",
+    "Eight source hashes verified"
+  ],
+  "aggregateAttempt": "npm run test:web:sales terminated EXIT137 during reference-popup harness after18 passing main groups. Raw failure preserved; no aggregate-command pass is claimed.",
+  "isolatedReferenceCondition": {
+    "nodeHeapCapMiB": 768,
+    "elapsedMs": 41194,
+    "maxRSSKiB": 324380,
+    "passed": 5
+  },
+  "knownBoundaries": [
+    "JSDOM authored CSS cascade and DOM only, not real flex layout/pixels/baseline centers",
+    "No resolved checkmark-color or halo-pixel assertion",
+    "No browser, network, DB, production, deployment, install or commit action by worker",
+    "No compiler run in this checkpoint",
+    "Concurrent inventory sources excluded from this source manifest"
+  ],
+  "sourceStateSha256": "1a87dbceaf56d0fa16f011825ebb8da48039bfe0c5fd5e441fbb3d4e6752eaa6"
+}

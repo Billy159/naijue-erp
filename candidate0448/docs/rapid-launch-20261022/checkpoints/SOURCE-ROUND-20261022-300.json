@@ -1,0 +1,27 @@
+{
+  "atUtc": "2026-10-24T10:02:43.564220+00:00",
+  "parent": "7966e90b0921034f4b769cf64c74d4c45b8197d4",
+  "taskId": "D3-C154-REAL49-APPROVED-FOUR-NULL-BATCH-SEAM",
+  "files": [
+    {
+      "path": "scripts/import-v3/native-bootstrap.mjs",
+      "owner": "D3",
+      "bytes": 31360,
+      "sha256": "723559bdc4de1e461f4a582355491029d51d2a4b8a8711d2e7a18b8ba3dbe8d7"
+    },
+    {
+      "path": "scripts/import-v3/native-bootstrap.test.mjs",
+      "owner": "D3",
+      "bytes": 39113,
+      "sha256": "33e8cefb2640d9d093037eda7c8581eea1e9a3ba4f59952f1d8b24020eacfa08"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json#v14CoreImplementation.real49C154BatchSeamFix",
+  "ownerReceiptSha256AtPin": "31e4371ef3454e36ada906eacc2b21a002ffe868e5706fb1d16363f3cea43527",
+  "ownerSourceReleased": true,
+  "checks": "Owner targeted2 test pattern RED original thenGREEN fixed;5 necessary guardrejection variants; original49identity/QA suites reused",
+  "scope": "ExplicitNULL batch only with full original exactPlanLink; row originalNULL preserved; nofield/SQL/credential/role/source fact change",
+  "stage": "FIXED_SOURCE_LOCAL2_PASS_PENDING_ORIGINAL_QB_DELTA_AND_REAL_CORE",
+  "actualPG": false,
+  "deployed": false
+}

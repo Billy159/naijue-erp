@@ -1,0 +1,28 @@
+{
+  "verificationKind": "Synthetic Fastify.inject plus scripted pg protocol; source composition only",
+  "observedAtUtc": "2026-10-20T21:28:34.168478+00:00",
+  "ownedSourceSha256": {
+    "apps/api/src/postgres-read-api.ts": "02694b4e9ae55726c3d82fc8a71704c9d979f3e591f0d4512171037c416f3455",
+    "apps/api/src/postgres-read-api.test.ts": "1f069791d9320e50c61baf81a0114d27b04a413f1fdfaaabf0aeb7fb08c10111",
+    "docs/postgres-read-api.md": "2a3608be9de69cb2edb28aadcaaaa77f9a77d9461b80b382dd8a30622f0571be"
+  },
+  "checks": [
+    {
+      "command": "node --test --test-concurrency=1 apps/api/src/postgres-read-api.test.ts apps/api/src/transfer-authentication.test.ts",
+      "result": "PASS",
+      "tests": 24,
+      "evidence": "evidence/native-policy-profile-scripted-tests.log"
+    },
+    {
+      "command": "./node_modules/.bin/tsc --noEmit -p tsconfig.json",
+      "result": "PASS on current shared tree; adapter owner final patch requires its own final recheck",
+      "evidence": "evidence/native-policy-profile-typecheck.log"
+    }
+  ],
+  "notEstablished": [
+    "Actual PostgreSQL acceptance for the source-confirmed-native profile",
+    "Listening HTTP server, TLS/browser flow or network/pg-wire cancellation",
+    "Media delivery, performance, credentials discovery, migration or deployment"
+  ],
+  "ownership": "One factory-owned BoundedPostgresPool; native policy adapter lifecycle remains owned by the factory, no second pool or ambient selection"
+}

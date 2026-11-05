@@ -1,0 +1,15 @@
+{
+  "source": "Direct main Chat human reply",
+  "callId": "call_fcbc01113b4d42bea015ddd58a1d5513",
+  "reply": "系统货号手工必填，不允许空值自动分配。选择尺码组后生成整组尺码规格；新增颜色时补齐该颜色对应的完整规格及条码。请按此修订 v19，其他已批准内容保留并继续推进。",
+  "status": "APPROVED_WITH_CORRECTION",
+  "withdrawnNotImplemented": [
+    "Empty systemItemCode automatic allocation",
+    "New internal identity field",
+    "Optional generation intent switch",
+    "Per-size incremental selection examples",
+    "New birth audit marker"
+  ],
+  "retained": "Existing approved directions and exact six-scheme controlled initialization; original transaction/permission/idempotency/version/olddata protections",
+  "newSchemaBeyondV19Allowed": false
+}

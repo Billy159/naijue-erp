@@ -1,0 +1,1681 @@
+{
+  "reviewId": "QB477",
+  "decision": "PASS_LOCAL_V22_PHYSICAL_CONSUMER_CLOSURE_ONLY_NOT_EXECUTION",
+  "scope": "182fixed physicalpackage/moduleclosure and runtime proof pathbinding only; reuseQB472/475/476/474, no sourcereview/test replay",
+  "fixedInputs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-shared-source-package-preparation-20261027-182/CARRIER-AND-WINDOW.DRAFT.json",
+      "bytes": 9978,
+      "sha256": "6b763a333e46fa2d2006a9e0dcd7a5ad857cdd22a594a646c374c6a58d624432"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-shared-source-package-preparation-20261027-182/bundle/shared-code-package.json",
+      "bytes": 1923085,
+      "sha256": "ef5cb4971e4590a972c68fb6bf64dad25db5fc49f575efb42eae22eb3bf1b8a6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/evidence/V22-CONSUMER-REVIEW.DRAFT.json",
+      "bytes": 85408,
+      "sha256": "84eff6dd382aa56931d9740f0cd5b038f6d5f2976d08a227f32526719ce6344b"
+    }
+  ],
+  "checks": {
+    "package87files85runtimeplus2metadataProvenanceAllUniqueSafePathsBytesSha": true,
+    "module121UniquePaths115unchangedSixUniqueDeltaRoles": {
+      "UNCHANGED": 115,
+      "CONSUMER_PREFIX_STORE": 1,
+      "CONSUMER_PREFIX_ISSUER": 1,
+      "CONSUMER_HOST": 1,
+      "CONSUMER_PROVIDER": 1,
+      "CONSUMER_RUN": 1,
+      "ADDED_PREFIX_ADAPTER": 1
+    },
+    "original120BaselineRefsExactlyAccepted164": true,
+    "all115UNCHANGEDBytesShaOriginalAccepted": true,
+    "sixChangedCurrentPinsExactQB472Final": true,
+    "issuerBaselineActual160Old148247cNotGit730": true,
+    "newAdapterBaselineNull": true,
+    "package85currentRefsMatch": true,
+    "external36CurrentRefsExactlyPreviousAccepted164": true,
+    "all15recipeCODEstrictUNCHANGEDcurrentRefsMatch": true,
+    "allStaticRelativeRuntimeImportsCovered": true,
+    "noDependencyInstallOrRuntimeResolutionClaim": true
+  },
+  "acceptedModules": [
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/prepare-retained-sales-header-window-20261026.mjs",
+        "bytes": 5566,
+        "sha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/prepare-retained-sales-header-window-20261026.mjs",
+        "bytes": 5566,
+        "sha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/prepare-retained-sales-options-20261026.mjs",
+        "bytes": 6716,
+        "sha256": "b73b34b9df14e7694acfc68f7329216b7db4136f0e8d223e1cba0df957939480"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/prepare-retained-sales-options-20261026.mjs",
+        "bytes": 6716,
+        "sha256": "b73b34b9df14e7694acfc68f7329216b7db4136f0e8d223e1cba0df957939480"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/prepare-retained-transfer-header-window-20261025-v2.mjs",
+        "bytes": 3481,
+        "sha256": "aaea814af3db254c4801a7e07cadef7ddefd056d2b2f56f0a11c09c38ae70eac"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/prepare-retained-transfer-header-window-20261025-v2.mjs",
+        "bytes": 3481,
+        "sha256": "aaea814af3db254c4801a7e07cadef7ddefd056d2b2f56f0a11c09c38ae70eac"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source713-full-preparation-20261027-146/inputs/helpers/retained-native-closure-streams-20261026.mjs",
+        "bytes": 15247,
+        "sha256": "ada8e60d789c4ded205f901a12326658057a784e97ea5ffd62801e0d6f96ba24"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source713-full-preparation-20261027-146/inputs/helpers/retained-native-closure-streams-20261026.mjs",
+        "bytes": 15247,
+        "sha256": "ada8e60d789c4ded205f901a12326658057a784e97ea5ffd62801e0d6f96ba24"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/retained-sales-settlement-consumer-20261025.mjs",
+        "bytes": 20002,
+        "sha256": "2213f351e195e2927b2b7625e43c26f87a3e07dde41de7703482c031e16d7c1e"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/retained-sales-settlement-consumer-20261025.mjs",
+        "bytes": 20002,
+        "sha256": "2213f351e195e2927b2b7625e43c26f87a3e07dde41de7703482c031e16d7c1e"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/sales-header-closure-session-20261026.mjs",
+        "bytes": 11485,
+        "sha256": "c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/inputs/helpers/sales-header-closure-session-20261026.mjs",
+        "bytes": 11485,
+        "sha256": "c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/bounded-pool.ts",
+        "bytes": 15825,
+        "sha256": "e9b8643a48a64d8a1aa529e90ac662600d3b34628954ef7bda8d8bd27e0c5c67"
+      },
+      "current": {
+        "bytes": 15825,
+        "sha256": "e9b8643a48a64d8a1aa529e90ac662600d3b34628954ef7bda8d8bd27e0c5c67",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/bounded-pool.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/catalogue-completeness.ts",
+        "bytes": 49577,
+        "sha256": "e1ed6303448384565079c3cbb630fac1cb7da62a865ae55406f7f23215f6edeb"
+      },
+      "current": {
+        "bytes": 49577,
+        "sha256": "e1ed6303448384565079c3cbb630fac1cb7da62a865ae55406f7f23215f6edeb",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/catalogue-completeness.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/codec.ts",
+        "bytes": 2896,
+        "sha256": "18496bac8de90fce54cdcb861ef057c51d38ce826ebd103456dc203e288b553c"
+      },
+      "current": {
+        "bytes": 2896,
+        "sha256": "18496bac8de90fce54cdcb861ef057c51d38ce826ebd103456dc203e288b553c",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/codec.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/history-import-lifecycle.ts",
+        "bytes": 35552,
+        "sha256": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51"
+      },
+      "current": {
+        "bytes": 35552,
+        "sha256": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/history-import-lifecycle.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/history-typed-closure19.ts",
+        "bytes": 10920,
+        "sha256": "1a15fd9ed19e3641e45df57035276773701b8ef49df90f90bd1f9829cc82ced7"
+      },
+      "current": {
+        "bytes": 10920,
+        "sha256": "1a15fd9ed19e3641e45df57035276773701b8ef49df90f90bd1f9829cc82ced7",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/history-typed-closure19.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/history-typed-publication.ts",
+        "bytes": 6754,
+        "sha256": "0e563c20a8a0eba2fe8d87593d0d437a06ae83323412e338ee7c9932eee3d597"
+      },
+      "current": {
+        "bytes": 6754,
+        "sha256": "0e563c20a8a0eba2fe8d87593d0d437a06ae83323412e338ee7c9932eee3d597",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/history-typed-publication.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+        "bytes": 10672,
+        "sha256": "349970b9ef191013a21c715ca5c48bb1c0497bf8b977b4ba6629fb44b5bd3552"
+      },
+      "current": {
+        "bytes": 10672,
+        "sha256": "349970b9ef191013a21c715ca5c48bb1c0497bf8b977b4ba6629fb44b5bd3552",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/import-v3-history-header-native-reference-store.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/import-v3-history-header-staging-store.ts",
+        "bytes": 12089,
+        "sha256": "2563ee91ca1d4167ea893f3e7ddd734707e682a7fe5e313e9691ab824b20dbf9"
+      },
+      "current": {
+        "bytes": 12089,
+        "sha256": "2563ee91ca1d4167ea893f3e7ddd734707e682a7fe5e313e9691ab824b20dbf9",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/import-v3-history-header-staging-store.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+        "bytes": 19561,
+        "sha256": "cd32df6cdf256b17e5387bc00bf33bf9ee2d2d5483b6a3a329089fa15065f5f5"
+      },
+      "current": {
+        "bytes": 19561,
+        "sha256": "cd32df6cdf256b17e5387bc00bf33bf9ee2d2d5483b6a3a329089fa15065f5f5",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+        "bytes": 17927,
+        "sha256": "c104b91ec37659e6a410da720ec1ce7b252b21a4920e8dc7bae325dfc289c8c7"
+      },
+      "current": {
+        "bytes": 17927,
+        "sha256": "c104b91ec37659e6a410da720ec1ce7b252b21a4920e8dc7bae325dfc289c8c7",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/import-v3-history-settlement-staging-store.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/import-v3-history-staging-store.ts",
+        "bytes": 7114,
+        "sha256": "52dbe7eb58fa081e46976259f539c0e9a014b7ed7b3e579f45a8489de707b7a0"
+      },
+      "current": {
+        "bytes": 7114,
+        "sha256": "52dbe7eb58fa081e46976259f539c0e9a014b7ed7b3e579f45a8489de707b7a0",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/import-v3-history-staging-store.ts"
+      }
+    },
+    {
+      "role": "CONSUMER_PREFIX_STORE",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "bytes": 71310,
+        "sha256": "855069e8bbb857bf99452bcb33b57616f0522b856ebd93f3dd2d6a0d3fc9c6ad"
+      },
+      "current": {
+        "bytes": 72282,
+        "sha256": "c0064daa8c74960814b236f8280c48b9c051bc8843a1ac265c3ef44b67ba61f6",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/inventory-cutoff-import-store.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/inventory-publication-guards.ts",
+        "bytes": 2658,
+        "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872"
+      },
+      "current": {
+        "bytes": 2658,
+        "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/inventory-publication-guards.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "bytes": 28921,
+        "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1"
+      },
+      "current": {
+        "bytes": 28921,
+        "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/maintenance-command-unit-of-work.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-barcode-import.ts",
+        "bytes": 13292,
+        "sha256": "ccb8e66279029919033f00e2e8cef47ce03ad7ad4111c60ebf21704c70c7d921"
+      },
+      "current": {
+        "bytes": 13292,
+        "sha256": "ccb8e66279029919033f00e2e8cef47ce03ad7ad4111c60ebf21704c70c7d921",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-barcode-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-catalogue-import.ts",
+        "bytes": 17699,
+        "sha256": "4dc578d581bc2156f4eed42b74634456c641b060c98fd8556e29a4e1229b65a3"
+      },
+      "current": {
+        "bytes": 17699,
+        "sha256": "4dc578d581bc2156f4eed42b74634456c641b060c98fd8556e29a4e1229b65a3",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-catalogue-import.ts"
+      }
+    },
+    {
+      "role": "CONSUMER_PREFIX_ISSUER",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 78034,
+        "sha256": "247cea8edd239f0ef8eaf453546d7757b638d47b992240f2fe5145687bd9757d"
+      },
+      "current": {
+        "bytes": 79436,
+        "sha256": "bf138b170144a15bcd5d68fad059e68705f4f7e67ae4906b93420d5cee4d0931",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-import-accounting-capability.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-import-record-accounting.ts",
+        "bytes": 63678,
+        "sha256": "6576013975d496acbbcc76ee6026a1e7f2af8608926a291725f8cc939bf7c2b4"
+      },
+      "current": {
+        "bytes": 63678,
+        "sha256": "6576013975d496acbbcc76ee6026a1e7f2af8608926a291725f8cc939bf7c2b4",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-import-record-accounting.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-party-import.ts",
+        "bytes": 19643,
+        "sha256": "12b81cef1bfe3ea37f4240abca2b88d292e5cb42691615341883d611bb0b9455"
+      },
+      "current": {
+        "bytes": 19643,
+        "sha256": "12b81cef1bfe3ea37f4240abca2b88d292e5cb42691615341883d611bb0b9455",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-party-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-payment-import.ts",
+        "bytes": 12693,
+        "sha256": "600b4455db8a46565a64c830cdff2bf97d232a87665a4f4161724074dcefc673"
+      },
+      "current": {
+        "bytes": 12693,
+        "sha256": "600b4455db8a46565a64c830cdff2bf97d232a87665a4f4161724074dcefc673",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-payment-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-product-import.ts",
+        "bytes": 17107,
+        "sha256": "d2667af2a5e27f2a42a5728256960e853cc15e176357f24e5b7e4809cdd34f0c"
+      },
+      "current": {
+        "bytes": 17107,
+        "sha256": "d2667af2a5e27f2a42a5728256960e853cc15e176357f24e5b7e4809cdd34f0c",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-product-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-sku-import.ts",
+        "bytes": 19582,
+        "sha256": "a83372608cce9c7eecb2a986d9d5af330a8e0272fcc4c5fdfb805711cfcca770"
+      },
+      "current": {
+        "bytes": 19582,
+        "sha256": "a83372608cce9c7eecb2a986d9d5af330a8e0272fcc4c5fdfb805711cfcca770",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-sku-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-stock-contributor-import.ts",
+        "bytes": 16843,
+        "sha256": "63eba52f1c0f7db05f6f95398d9a5ff9c33c1ed9d00f2fa071715c9e18537c48"
+      },
+      "current": {
+        "bytes": 16843,
+        "sha256": "63eba52f1c0f7db05f6f95398d9a5ff9c33c1ed9d00f2fa071715c9e18537c48",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-stock-contributor-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/catalogue-maintenance-validation.ts",
+        "bytes": 7511,
+        "sha256": "83efc7884cb2ff02773a17582c84e275c0bb08aa13046e943254bd2b5f9e1fc7"
+      },
+      "current": {
+        "bytes": 7511,
+        "sha256": "83efc7884cb2ff02773a17582c84e275c0bb08aa13046e943254bd2b5f9e1fc7",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/catalogue-maintenance-validation.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/catalogue-price-input.ts",
+        "bytes": 1945,
+        "sha256": "d1a713379e03532dda0d2812945ad1be1324cfb02520e50de2f3dd56e43199d7"
+      },
+      "current": {
+        "bytes": 1945,
+        "sha256": "d1a713379e03532dda0d2812945ad1be1324cfb02520e50de2f3dd56e43199d7",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/catalogue-price-input.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/catalogue-settings-read-ports.ts",
+        "bytes": 3219,
+        "sha256": "e22e2e3892cd9593763f72ee0f5914daf1af099c9fd89d78801627d0eae95a1a"
+      },
+      "current": {
+        "bytes": 3219,
+        "sha256": "e22e2e3892cd9593763f72ee0f5914daf1af099c9fd89d78801627d0eae95a1a",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/catalogue-settings-read-ports.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/catalogue-source-proof.ts",
+        "bytes": 3286,
+        "sha256": "b1481007ce402158186023a6cb670d6214d62e51588f8466b56421566c3baaa7"
+      },
+      "current": {
+        "bytes": 3286,
+        "sha256": "b1481007ce402158186023a6cb670d6214d62e51588f8466b56421566c3baaa7",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/catalogue-source-proof.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-import-lifecycle.ts",
+        "bytes": 2871,
+        "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+      },
+      "current": {
+        "bytes": 2871,
+        "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/history-import-lifecycle.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-storage-contract.ts",
+        "bytes": 6913,
+        "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+      },
+      "current": {
+        "bytes": 6913,
+        "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/history-storage-contract.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-temporal-mapping.ts",
+        "bytes": 5699,
+        "sha256": "274a09cc4567d1aec860ae0d8679480b71a5003188b261ab9f26c8474663bb1c"
+      },
+      "current": {
+        "bytes": 5699,
+        "sha256": "274a09cc4567d1aec860ae0d8679480b71a5003188b261ab9f26c8474663bb1c",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/history-temporal-mapping.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-typed-closure.ts",
+        "bytes": 37914,
+        "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+      },
+      "current": {
+        "bytes": 37914,
+        "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/history-typed-closure.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-typed-publication.ts",
+        "bytes": 4011,
+        "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+      },
+      "current": {
+        "bytes": 4011,
+        "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/history-typed-publication.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v2-contract.ts",
+        "bytes": 20742,
+        "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+      },
+      "current": {
+        "bytes": 20742,
+        "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/import-v2-contract.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v2.ts",
+        "bytes": 10869,
+        "sha256": "de808fcf2d8a2b4ffa919d0d680474b594bb824b72516cae943605f910070294"
+      },
+      "current": {
+        "bytes": 10869,
+        "sha256": "de808fcf2d8a2b4ffa919d0d680474b594bb824b72516cae943605f910070294",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/import-v2.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-header-native-reference.ts",
+        "bytes": 20603,
+        "sha256": "70d5f165464d86abde0a3d3bed09f199ff5835360d45f6f3106249f3fea4b293"
+      },
+      "current": {
+        "bytes": 20603,
+        "sha256": "70d5f165464d86abde0a3d3bed09f199ff5835360d45f6f3106249f3fea4b293",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/import-v3-history-header-native-reference.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-header-staging.ts",
+        "bytes": 5574,
+        "sha256": "f6a2e2ff3d4f38b60aa87c4ae508705a7afbf21b164e588f60152c25e09ad22c"
+      },
+      "current": {
+        "bytes": 5574,
+        "sha256": "f6a2e2ff3d4f38b60aa87c4ae508705a7afbf21b164e588f60152c25e09ad22c",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/import-v3-history-header-staging.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-header.ts",
+        "bytes": 14908,
+        "sha256": "07a1b6e832b5b501c375391a3d566263b3ad1a599eece7296349a1467d29962b"
+      },
+      "current": {
+        "bytes": 14908,
+        "sha256": "07a1b6e832b5b501c375391a3d566263b3ad1a599eece7296349a1467d29962b",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/import-v3-history-header.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-sales-detail.ts",
+        "bytes": 13704,
+        "sha256": "ed6558d6382a36da46f9a28082847a6e48f8c30673c82f21eea491c8b55a52d7"
+      },
+      "current": {
+        "bytes": 13704,
+        "sha256": "ed6558d6382a36da46f9a28082847a6e48f8c30673c82f21eea491c8b55a52d7",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/import-v3-history-sales-detail.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-settlement.ts",
+        "bytes": 12631,
+        "sha256": "c7684de01216f8df950f5c903dc231843665df428093a3edeb5e7caa5c637616"
+      },
+      "current": {
+        "bytes": 12631,
+        "sha256": "c7684de01216f8df950f5c903dc231843665df428093a3edeb5e7caa5c637616",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/import-v3-history-settlement.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-staging.ts",
+        "bytes": 8722,
+        "sha256": "8e5fe853f52c012b8b754cbe8a8c5212162c47808a88262338f9c0fe1144c104"
+      },
+      "current": {
+        "bytes": 8722,
+        "sha256": "8e5fe853f52c012b8b754cbe8a8c5212162c47808a88262338f9c0fe1144c104",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/import-v3-history-staging.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/inventory-cutoff-import.ts",
+        "bytes": 28775,
+        "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+      },
+      "current": {
+        "bytes": 28775,
+        "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/inventory-cutoff-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/maintenance-commit-ports.ts",
+        "bytes": 4107,
+        "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e"
+      },
+      "current": {
+        "bytes": 4107,
+        "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/maintenance-commit-ports.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-barcode-import.ts",
+        "bytes": 16051,
+        "sha256": "5aaee52b0f624b774f2105131ecffd9f26c62187ba6afb3dc5e22d823fcb5f02"
+      },
+      "current": {
+        "bytes": 16051,
+        "sha256": "5aaee52b0f624b774f2105131ecffd9f26c62187ba6afb3dc5e22d823fcb5f02",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/native-barcode-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-catalogue-import.ts",
+        "bytes": 20487,
+        "sha256": "2b7e6894158fea6a0948d4128c84f305ad03fedf71deb2fae55f990047eb8008"
+      },
+      "current": {
+        "bytes": 20487,
+        "sha256": "2b7e6894158fea6a0948d4128c84f305ad03fedf71deb2fae55f990047eb8008",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/native-catalogue-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+      },
+      "current": {
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/native-import-record-accounting.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-import-schema-contract.ts",
+        "bytes": 14388,
+        "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053"
+      },
+      "current": {
+        "bytes": 14388,
+        "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/native-import-schema-contract.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-party-import.ts",
+        "bytes": 13813,
+        "sha256": "acbbd139de873581a1b7baab99ad8df0bb01188b54b491d9eba1b06b9bd2bb03"
+      },
+      "current": {
+        "bytes": 13813,
+        "sha256": "acbbd139de873581a1b7baab99ad8df0bb01188b54b491d9eba1b06b9bd2bb03",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/native-party-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-payment-import.ts",
+        "bytes": 11101,
+        "sha256": "2d2d1d109211f3c4ec2df6c8fdbae246e5453c1735814d3b1dbba26fdf71702c"
+      },
+      "current": {
+        "bytes": 11101,
+        "sha256": "2d2d1d109211f3c4ec2df6c8fdbae246e5453c1735814d3b1dbba26fdf71702c",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/native-payment-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-product-import.ts",
+        "bytes": 25503,
+        "sha256": "bd4bf41b1d9dbe4dd3db30dc38056658c242f1b6db1c757943da5d0449a73659"
+      },
+      "current": {
+        "bytes": 25503,
+        "sha256": "bd4bf41b1d9dbe4dd3db30dc38056658c242f1b6db1c757943da5d0449a73659",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/native-product-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-sku-import.ts",
+        "bytes": 17796,
+        "sha256": "3720bbf699e2702aa7026fac4333db74db1492aa72b25176fcaed43b3807695b"
+      },
+      "current": {
+        "bytes": 17796,
+        "sha256": "3720bbf699e2702aa7026fac4333db74db1492aa72b25176fcaed43b3807695b",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/native-sku-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-stock-contributor-import.ts",
+        "bytes": 10901,
+        "sha256": "87f43586fd737755e6bebcb046116ce8de0d447525e5bfebb2abe1fae6463448"
+      },
+      "current": {
+        "bytes": 10901,
+        "sha256": "87f43586fd737755e6bebcb046116ce8de0d447525e5bfebb2abe1fae6463448",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/native-stock-contributor-import.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/party-maintenance-validation.ts",
+        "bytes": 4755,
+        "sha256": "9dccee7922e9fd16cebecdd232ffe32ce3f4fc29cf6b74216f30c95006587a23"
+      },
+      "current": {
+        "bytes": 4755,
+        "sha256": "9dccee7922e9fd16cebecdd232ffe32ce3f4fc29cf6b74216f30c95006587a23",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/party-maintenance-validation.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/product-evidence-staging.ts",
+        "bytes": 8249,
+        "sha256": "753efac4a2e1d142bba66683233725db13912037510d9dc60eec8542a1872177"
+      },
+      "current": {
+        "bytes": 8249,
+        "sha256": "753efac4a2e1d142bba66683233725db13912037510d9dc60eec8542a1872177",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/product-evidence-staging.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/request-hash.ts",
+        "bytes": 1488,
+        "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb"
+      },
+      "current": {
+        "bytes": 1488,
+        "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/request-hash.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/sales-business-rules.ts",
+        "bytes": 8242,
+        "sha256": "925bb3d5a0da89f18e4c0535e5a7db0930ca8b4fb33caa14c245955d95b44b8f"
+      },
+      "current": {
+        "bytes": 8242,
+        "sha256": "925bb3d5a0da89f18e4c0535e5a7db0930ca8b4fb33caa14c245955d95b44b8f",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/sales-business-rules.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/sales-native-facts.ts",
+        "bytes": 6869,
+        "sha256": "675c80f71671471fa23947bb6fb73c437df8d8ea081f97307b1d6fb740cd025e"
+      },
+      "current": {
+        "bytes": 6869,
+        "sha256": "675c80f71671471fa23947bb6fb73c437df8d8ea081f97307b1d6fb740cd025e",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/application/src/sales-native-facts.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/domain/src/errors.ts",
+        "bytes": 353,
+        "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+      },
+      "current": {
+        "bytes": 353,
+        "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/domain/src/errors.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/domain/src/sales-money.ts",
+        "bytes": 2022,
+        "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30"
+      },
+      "current": {
+        "bytes": 2022,
+        "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/domain/src/sales-money.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/domain/src/values.ts",
+        "bytes": 4820,
+        "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+      },
+      "current": {
+        "bytes": 4820,
+        "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/packages/domain/src/values.ts"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-header-reader.mjs",
+        "bytes": 27766,
+        "sha256": "d16ee579794f5a5ca6d8710e30d2de9265fad1dee3bc79d1788261affd2bac0d"
+      },
+      "current": {
+        "bytes": 27766,
+        "sha256": "d16ee579794f5a5ca6d8710e30d2de9265fad1dee3bc79d1788261affd2bac0d",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v2/authorized-header-reader.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-history-closure-reader.mjs",
+        "bytes": 13906,
+        "sha256": "8c197db5cc4ce50b7cd6d032cef30c2b47cb2f23033f014af1e7110c163235d6"
+      },
+      "current": {
+        "bytes": 13906,
+        "sha256": "8c197db5cc4ce50b7cd6d032cef30c2b47cb2f23033f014af1e7110c163235d6",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v2/authorized-history-closure-reader.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-native-product-reader.mjs",
+        "bytes": 22468,
+        "sha256": "f731c2f70fcc1499c3fd9413e63f6710a3fc80e70fd52a2ef382e01161e2be2f"
+      },
+      "current": {
+        "bytes": 22468,
+        "sha256": "f731c2f70fcc1499c3fd9413e63f6710a3fc80e70fd52a2ef382e01161e2be2f",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v2/authorized-native-product-reader.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-reader.mjs",
+        "bytes": 12683,
+        "sha256": "3cd141bd2a2623973b0f632e9fb90ee5c7919f9b6e4872b5de4a1d69a9fcee23"
+      },
+      "current": {
+        "bytes": 12683,
+        "sha256": "3cd141bd2a2623973b0f632e9fb90ee5c7919f9b6e4872b5de4a1d69a9fcee23",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v2/authorized-reader.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      },
+      "current": {
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v2/authorized-sales-detail-reader.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-settlement-reader.mjs",
+        "bytes": 3551,
+        "sha256": "c02f0e75bd8ab3f5d2ab7aaa37a09a1d9fb26fe41d8009af215b020cb8f0dcc5"
+      },
+      "current": {
+        "bytes": 3551,
+        "sha256": "c02f0e75bd8ab3f5d2ab7aaa37a09a1d9fb26fe41d8009af215b020cb8f0dcc5",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v2/authorized-settlement-reader.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/run.mjs",
+        "bytes": 41512,
+        "sha256": "76a1094a56fedeb06b8c0f418393604f9e36acde8af1bb3219c9ad59813d487b"
+      },
+      "current": {
+        "bytes": 41512,
+        "sha256": "76a1094a56fedeb06b8c0f418393604f9e36acde8af1bb3219c9ad59813d487b",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v2/run.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/sealed-payment-source.mjs",
+        "bytes": 17868,
+        "sha256": "8ec14d73f882c73ef217a1b31d765b5f06c2d1b85277fc17738aad149cd5bb70"
+      },
+      "current": {
+        "bytes": 17868,
+        "sha256": "8ec14d73f882c73ef217a1b31d765b5f06c2d1b85277fc17738aad149cd5bb70",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v2/sealed-payment-source.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/historical-customer-source.mjs",
+        "bytes": 11040,
+        "sha256": "fc7297be39fe007df60393ae1063bebe2ebf361ecb19f92facb857d7666f679c"
+      },
+      "current": {
+        "bytes": 11040,
+        "sha256": "fc7297be39fe007df60393ae1063bebe2ebf361ecb19f92facb857d7666f679c",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/historical-customer-source.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/native-party-source26.mjs",
+        "bytes": 23690,
+        "sha256": "df9044648d60c9d6cd8c909d04a28df8e01a1f8c1821373c17fa9f61df9d521a"
+      },
+      "current": {
+        "bytes": 23690,
+        "sha256": "df9044648d60c9d6cd8c909d04a28df8e01a1f8c1821373c17fa9f61df9d521a",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/native-party-source26.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/native-payment-source26.mjs",
+        "bytes": 10819,
+        "sha256": "491deae8ce6660038d45ea8c4bc745c91fd7daf4614f3e319d0cec7ba546a077"
+      },
+      "current": {
+        "bytes": 10819,
+        "sha256": "491deae8ce6660038d45ea8c4bc745c91fd7daf4614f3e319d0cec7ba546a077",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/native-payment-source26.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/native-product-source26.mjs",
+        "bytes": 9068,
+        "sha256": "1c41c5c2a4c1a7d35504fbde9675b1ea6978df56764337d181212d9b4370d886"
+      },
+      "current": {
+        "bytes": 9068,
+        "sha256": "1c41c5c2a4c1a7d35504fbde9675b1ea6978df56764337d181212d9b4370d886",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/native-product-source26.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/native-sku-source26.mjs",
+        "bytes": 18848,
+        "sha256": "bc8bd34ea9676eacc62b95bb20cad17a2fc4e81b1e98e9a8f2743921a361bc20"
+      },
+      "current": {
+        "bytes": 18848,
+        "sha256": "bc8bd34ea9676eacc62b95bb20cad17a2fc4e81b1e98e9a8f2743921a361bc20",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/native-sku-source26.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/native-source-authorizers.mjs",
+        "bytes": 50941,
+        "sha256": "56b712ccdf523047e629444a20f0581e90b7dcc6b246c7937198ffff78adcaa7"
+      },
+      "current": {
+        "bytes": 50941,
+        "sha256": "56b712ccdf523047e629444a20f0581e90b7dcc6b246c7937198ffff78adcaa7",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/native-source-authorizers.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/native-stock-source26.mjs",
+        "bytes": 20345,
+        "sha256": "65f317c9706a5013d2b938b271ee4cd00f3e9c04489f891ca55d9c1cf692cb8c"
+      },
+      "current": {
+        "bytes": 20345,
+        "sha256": "65f317c9706a5013d2b938b271ee4cd00f3e9c04489f891ca55d9c1cf692cb8c",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/native-stock-source26.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/native-transfer-header-source26.mjs",
+        "bytes": 25454,
+        "sha256": "9c4026f871a49d17385b06597e8832734c9af7b54642719c2ec909850283c2cd"
+      },
+      "current": {
+        "bytes": 25454,
+        "sha256": "9c4026f871a49d17385b06597e8832734c9af7b54642719c2ec909850283c2cd",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/native-transfer-header-source26.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/native-transfer-line-source26.mjs",
+        "bytes": 35303,
+        "sha256": "587128f1534b5466f0b627d9fc1a1bf513dcf3ee381a1acf9f5e4486cf6b73c9"
+      },
+      "current": {
+        "bytes": 35303,
+        "sha256": "587128f1534b5466f0b627d9fc1a1bf513dcf3ee381a1acf9f5e4486cf6b73c9",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/native-transfer-line-source26.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/prepare-native-bindings.mjs",
+        "bytes": 40456,
+        "sha256": "26204d29b788ea9df119ba63e681452d332ee1ffdaea2a440ee39496e8b1b7bd"
+      },
+      "current": {
+        "bytes": 40456,
+        "sha256": "26204d29b788ea9df119ba63e681452d332ee1ffdaea2a440ee39496e8b1b7bd",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/prepare-native-bindings.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/prepare-native-stock26-bindings.mjs",
+        "bytes": 7058,
+        "sha256": "a3a90d355179a0b79a9b64bce87a7e81f698d938ab7653e1f6c9301d8734f418"
+      },
+      "current": {
+        "bytes": 7058,
+        "sha256": "a3a90d355179a0b79a9b64bce87a7e81f698d938ab7653e1f6c9301d8734f418",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/prepare-native-stock26-bindings.mjs"
+      }
+    },
+    {
+      "role": "CONSUMER_HOST",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/production-source-host.mjs",
+        "bytes": 38934,
+        "sha256": "8780c82def3daa2c955fe605c053a824618c8b792687be61b4241008903e6306"
+      },
+      "current": {
+        "bytes": 42203,
+        "sha256": "9399bf46e465c14ddc7c9306b20e70a416e17142d45a44b757fefc6620b8b6f8",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/production-source-host.mjs"
+      }
+    },
+    {
+      "role": "CONSUMER_PROVIDER",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 118693,
+        "sha256": "9c7a055a269fd9257131cbec436a5a6c4177395cd9b6540dc9734b73f68bed4e"
+      },
+      "current": {
+        "bytes": 138840,
+        "sha256": "4928eb821359aab4f954ecda9ed733dcb4da174035676529d4d1fe63d7ece150",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/production-source-provider26.mjs"
+      }
+    },
+    {
+      "role": "CONSUMER_RUN",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/run.mjs",
+        "bytes": 30303,
+        "sha256": "52c70e6fc50489a38ad0b3311efd55b5e5225debf563fd72afd632d29f89580e"
+      },
+      "current": {
+        "bytes": 30492,
+        "sha256": "5f6d0242f8cbf875f3f88ba8a4bbcde719699a28c338aa7796d26876b13f0245",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/run.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/verified-offset-source.mjs",
+        "bytes": 14481,
+        "sha256": "3da64bdb8ba59a9675863cb622606fcc95ee46a2b817aec3bf01e3cc54fe0b64"
+      },
+      "current": {
+        "bytes": 14481,
+        "sha256": "3da64bdb8ba59a9675863cb622606fcc95ee46a2b817aec3bf01e3cc54fe0b64",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/scripts/import-v3/verified-offset-source.mjs"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/bounded-pool.ts",
+        "bytes": 15825,
+        "sha256": "e9b8643a48a64d8a1aa529e90ac662600d3b34628954ef7bda8d8bd27e0c5c67"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/bounded-pool.ts",
+        "bytes": 15825,
+        "sha256": "e9b8643a48a64d8a1aa529e90ac662600d3b34628954ef7bda8d8bd27e0c5c67"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+        "bytes": 19561,
+        "sha256": "cd32df6cdf256b17e5387bc00bf33bf9ee2d2d5483b6a3a329089fa15065f5f5"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+        "bytes": 19561,
+        "sha256": "cd32df6cdf256b17e5387bc00bf33bf9ee2d2d5483b6a3a329089fa15065f5f5"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+        "bytes": 17927,
+        "sha256": "c104b91ec37659e6a410da720ec1ce7b252b21a4920e8dc7bae325dfc289c8c7"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+        "bytes": 17927,
+        "sha256": "c104b91ec37659e6a410da720ec1ce7b252b21a4920e8dc7bae325dfc289c8c7"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/inventory-publication-guards.ts",
+        "bytes": 2658,
+        "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/inventory-publication-guards.ts",
+        "bytes": 2658,
+        "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "bytes": 28921,
+        "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "bytes": 28921,
+        "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 78034,
+        "sha256": "247cea8edd239f0ef8eaf453546d7757b638d47b992240f2fe5145687bd9757d"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 78034,
+        "sha256": "247cea8edd239f0ef8eaf453546d7757b638d47b992240f2fe5145687bd9757d"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/catalogue-maintenance-validation.ts",
+        "bytes": 7511,
+        "sha256": "83efc7884cb2ff02773a17582c84e275c0bb08aa13046e943254bd2b5f9e1fc7"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/catalogue-maintenance-validation.ts",
+        "bytes": 7511,
+        "sha256": "83efc7884cb2ff02773a17582c84e275c0bb08aa13046e943254bd2b5f9e1fc7"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/catalogue-settings-read-ports.ts",
+        "bytes": 3219,
+        "sha256": "e22e2e3892cd9593763f72ee0f5914daf1af099c9fd89d78801627d0eae95a1a"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/catalogue-settings-read-ports.ts",
+        "bytes": 3219,
+        "sha256": "e22e2e3892cd9593763f72ee0f5914daf1af099c9fd89d78801627d0eae95a1a"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-import-lifecycle.ts",
+        "bytes": 2871,
+        "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-import-lifecycle.ts",
+        "bytes": 2871,
+        "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-storage-contract.ts",
+        "bytes": 6913,
+        "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-storage-contract.ts",
+        "bytes": 6913,
+        "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-typed-closure.ts",
+        "bytes": 37914,
+        "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-typed-closure.ts",
+        "bytes": 37914,
+        "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-typed-publication.ts",
+        "bytes": 4011,
+        "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/history-typed-publication.ts",
+        "bytes": 4011,
+        "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v2-contract.ts",
+        "bytes": 20742,
+        "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v2-contract.ts",
+        "bytes": 20742,
+        "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v2.ts",
+        "bytes": 10869,
+        "sha256": "de808fcf2d8a2b4ffa919d0d680474b594bb824b72516cae943605f910070294"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v2.ts",
+        "bytes": 10869,
+        "sha256": "de808fcf2d8a2b4ffa919d0d680474b594bb824b72516cae943605f910070294"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-sales-detail.ts",
+        "bytes": 13704,
+        "sha256": "ed6558d6382a36da46f9a28082847a6e48f8c30673c82f21eea491c8b55a52d7"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-sales-detail.ts",
+        "bytes": 13704,
+        "sha256": "ed6558d6382a36da46f9a28082847a6e48f8c30673c82f21eea491c8b55a52d7"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-settlement.ts",
+        "bytes": 12631,
+        "sha256": "c7684de01216f8df950f5c903dc231843665df428093a3edeb5e7caa5c637616"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/import-v3-history-settlement.ts",
+        "bytes": 12631,
+        "sha256": "c7684de01216f8df950f5c903dc231843665df428093a3edeb5e7caa5c637616"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/inventory-cutoff-import.ts",
+        "bytes": 28775,
+        "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/inventory-cutoff-import.ts",
+        "bytes": 28775,
+        "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/maintenance-commit-ports.ts",
+        "bytes": 4107,
+        "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/maintenance-commit-ports.ts",
+        "bytes": 4107,
+        "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-import-schema-contract.ts",
+        "bytes": 14388,
+        "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-import-schema-contract.ts",
+        "bytes": 14388,
+        "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-payment-import.ts",
+        "bytes": 11101,
+        "sha256": "2d2d1d109211f3c4ec2df6c8fdbae246e5453c1735814d3b1dbba26fdf71702c"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/native-payment-import.ts",
+        "bytes": 11101,
+        "sha256": "2d2d1d109211f3c4ec2df6c8fdbae246e5453c1735814d3b1dbba26fdf71702c"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/party-maintenance-validation.ts",
+        "bytes": 4755,
+        "sha256": "9dccee7922e9fd16cebecdd232ffe32ce3f4fc29cf6b74216f30c95006587a23"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/party-maintenance-validation.ts",
+        "bytes": 4755,
+        "sha256": "9dccee7922e9fd16cebecdd232ffe32ce3f4fc29cf6b74216f30c95006587a23"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/request-hash.ts",
+        "bytes": 1488,
+        "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/application/src/request-hash.ts",
+        "bytes": 1488,
+        "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/domain/src/errors.ts",
+        "bytes": 353,
+        "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/domain/src/errors.ts",
+        "bytes": 353,
+        "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/domain/src/values.ts",
+        "bytes": 4820,
+        "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/packages/domain/src/values.ts",
+        "bytes": 4820,
+        "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-settlement-reader.mjs",
+        "bytes": 3551,
+        "sha256": "c02f0e75bd8ab3f5d2ab7aaa37a09a1d9fb26fe41d8009af215b020cb8f0dcc5"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/authorized-settlement-reader.mjs",
+        "bytes": 3551,
+        "sha256": "c02f0e75bd8ab3f5d2ab7aaa37a09a1d9fb26fe41d8009af215b020cb8f0dcc5"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/run.mjs",
+        "bytes": 41512,
+        "sha256": "76a1094a56fedeb06b8c0f418393604f9e36acde8af1bb3219c9ad59813d487b"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/run.mjs",
+        "bytes": 41512,
+        "sha256": "76a1094a56fedeb06b8c0f418393604f9e36acde8af1bb3219c9ad59813d487b"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/sealed-payment-source.mjs",
+        "bytes": 17868,
+        "sha256": "8ec14d73f882c73ef217a1b31d765b5f06c2d1b85277fc17738aad149cd5bb70"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v2/sealed-payment-source.mjs",
+        "bytes": 17868,
+        "sha256": "8ec14d73f882c73ef217a1b31d765b5f06c2d1b85277fc17738aad149cd5bb70"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/verified-offset-source.mjs",
+        "bytes": 14481,
+        "sha256": "3da64bdb8ba59a9675863cb622606fcc95ee46a2b817aec3bf01e3cc54fe0b64"
+      },
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/scripts/import-v3/verified-offset-source.mjs",
+        "bytes": 14481,
+        "sha256": "3da64bdb8ba59a9675863cb622606fcc95ee46a2b817aec3bf01e3cc54fe0b64"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/provenance/git730-metadata/package.json",
+        "bytes": 6121,
+        "sha256": "ddd3baaa2bd447914bbd9172b32f00408074af284860554aed99824a4d06f2f3"
+      },
+      "current": {
+        "bytes": 6121,
+        "sha256": "ddd3baaa2bd447914bbd9172b32f00408074af284860554aed99824a4d06f2f3",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/package.json"
+      }
+    },
+    {
+      "role": "UNCHANGED",
+      "baseline": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/provenance/git730-metadata/package-lock.json",
+        "bytes": 105770,
+        "sha256": "72dc3028e4519890d7970c1569f1587249d039e1181b40b99fd937b37d889770"
+      },
+      "current": {
+        "bytes": 105770,
+        "sha256": "72dc3028e4519890d7970c1569f1587249d039e1181b40b99fd937b37d889770",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/package-lock.json"
+      }
+    },
+    {
+      "role": "ADDED_PREFIX_ADAPTER",
+      "baseline": null,
+      "current": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/source/adapters/postgres/src/native-core-staged-prefix-bind.ts",
+        "bytes": 23570,
+        "sha256": "536f85177ab432e4ca0c35e844182c563252869f4e874f8b978d0f879f034a99"
+      }
+    }
+  ],
+  "runtimePathBindings": [
+    {
+      "review": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice477-v22-physical-consumer-closure/LINUX-CURRENT-R1-V22-RUNTIME-REVIEW.json",
+        "bytes": 1087,
+        "sha256": "f3bdfa864e41e9f808d93508056647b7e29e4678bb576353a319c6128baa4508"
+      },
+      "linuxReviewDestination": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/reviews/CURRENT-R1-V22-RUNTIME-REVIEW.json",
+      "report": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice476-r1-v22-current-runtime/QB476-RESULT.json",
+        "bytes": 5936,
+        "sha256": "3935e4293a417e9f5f0a0f6b8ff147d0b8016768875da15d4bdaf85d5bdb804a"
+      },
+      "linuxReportDestination": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/reviews/QB476-RESULT.json",
+      "linuxMaterialized": false
+    },
+    {
+      "review": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice477-v22-physical-consumer-closure/LINUX-CURRENT-QA178-V22-RUNTIME-REVIEW.json",
+        "bytes": 1033,
+        "sha256": "20d451f07efdcec87de1b12fbd06957be42b9fde68badd1c67c47dbb10ce108f"
+      },
+      "linuxReviewDestination": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/reviews/CURRENT-QA178-V22-RUNTIME-REVIEW.json",
+      "report": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice474-qa178-v22-installed-metadata/QB474-RESULT.json",
+        "bytes": 4954,
+        "sha256": "16a4952128cc8f39ed323add335c9fd705bfdb84566fc1fbe5669ddc32a68296"
+      },
+      "linuxReportDestination": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/reviews/QB474-RESULT.json",
+      "linuxMaterialized": false
+    }
+  ],
+  "Standards": {
+    "blockingFindings": [],
+    "result": "No new physicalprovenance issue in exactreviewedclosure"
+  },
+  "Spec": {
+    "blockingFindings": [],
+    "result": "Sixconsumer roles/currentcode closure conforms. Remainingdraft fields are explicitfinalization work, not runnableapprovedcarrier."
+  },
+  "finalizationRequired": [
+    "C creates final strict6key consumerreview, decisionACCEPT_EXACT_CONSUMER_ONLY_SUCCESSOR/closureCompleteSOURCE_DERIVATION_CLOSURE_COMPLETE/independentQB477report, removesdraftOnly/requiresflags; exact121modules unchanged. Recompute derivedadopted/INPUT/grantpins; avoid hashcycles.",
+    "C/T45 replace draftinline stagedPrefixBinding26 with strictfileRef to smallversion/initializationRecord evidence; originalINIT4214/dcf816 and original148/109refs unchanged. T45acknowledged separate evidencefile now prepared.",
+    "Use new reboundreviewSHA and copy BOTH unchangedQB476 and QB474reports at exactproposed182paths. QA474report omitted draftlist but now explicitly required.",
+    "T45 acknowledged hostjob sources.sourceRoot must182physical in finalversion;169draft path not final runtimecode. Preserve148logicalbinding.",
+    "Fresh C absolutewindows/registration/externalgrant/QAfixtureauthority/budgets and allderivedpins remain required, draftnulls not executed.",
+    "T45 Linux materialization/immutablefiles/dependencyrefs existence notobserved locally; no upload/execute claim."
+  ],
+  "preservedSourceInputDigest": "a29c494174acf28faf350a3ad67c80f3a341a09da388dc7afc5380deffbd1748",
+  "originalDataRefBasis": "Reuseaccepted148/164/469 refs, no businessdata rehash or sourceIO",
+  "notValidated": [
+    "Linuxmaterialization/dependencies/live36externalrefs",
+    "ActualQAreadonlycontent/timing",
+    "OriginalR1samepool/BIND/109/PUBLISH"
+  ],
+  "executionReady": false,
+  "linuxMaterialized": false,
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "qbNo": [
+    "server/DB/SSH",
+    "sourceedits",
+    "businessdatareads",
+    "newjob/chat/subagent",
+    "fullsuite"
+  ]
+}

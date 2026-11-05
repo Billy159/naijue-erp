@@ -1,0 +1,81 @@
+{
+  "status": "BLOCKED_EXACT_PREFLIGHT_GENUINE_POOL_AND_ISSUER_VERIFIED",
+  "jobTerminal": {
+    "jobId": "t45-native189-v19-product-readonly-preflight-20261027-156",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-d52ab696eb79",
+    "atUTC": "2026-10-27T06:28:25.110629+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 2.323047074023634,
+    "exports": [
+      "preflight-engine.json",
+      "product-readonly-preflight.json"
+    ],
+    "finishedAtUTC": "2026-10-27T06:28:27.469328+00:00"
+  },
+  "actualReport": {
+    "status": "BLOCKED_EXACT_PREFLIGHT",
+    "target": {
+      "database": "erp_qa_rapid26_native_20261023_01",
+      "role": "erp_qa_v14_core_runtime_20261024_01",
+      "oid": "1032586"
+    },
+    "missing": [
+      "ACTUAL_APPROVED_2026_SCHEME_CURRENT15",
+      "TWO_REAL_ENABLED_NUMERIC3_COLORS",
+      "REAL_APPROVED_FIT_CODE",
+      "COMPLETE_REAL_SIZE_GROUP_WITH_AT_LEAST_ONE_CODED_SIZE"
+    ],
+    "counts": {
+      "scheme": 0,
+      "colors": 2,
+      "fits": 1,
+      "fullGroupSizes": 1,
+      "codedSizes": 0,
+      "nullSizeCodes": 0
+    },
+    "multiSizeWitness": false,
+    "normalHostSession": "NOT_VERIFIED",
+    "writeAclAndRowLocks": "NOT_PROVEN_BY_COLUMN_SELECT_ONLY",
+    "businessWrites": false
+  },
+  "sourceCommit": "746b73f39118453a5112ecad0b1bd59b28d07064",
+  "genuineIssuerReturned": true,
+  "sameIssuedPool": true,
+  "traceSummary": {
+    "acquired": 2,
+    "released": 2,
+    "live": 0,
+    "rollbacks": 1,
+    "commits": 0,
+    "businessDML": 0,
+    "businessDDL": 0,
+    "endReturned": true
+  },
+  "protectedContainersPreserved": true,
+  "fourSAVEExecuted": false,
+  "initializationOrDataFabrication": false,
+  "businessAcceptance": false,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-v19-product-readonly-preflight-20261027-156/release-submission/release-receipts/t45-native189-v19-product-readonly-preflight-20261027-156/job.json",
+      "bytes": 561,
+      "sha256": "d46bc2c1d5e5e6637f024507b71032cabe901af052bc6d1c7d5c08626ff49be6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-v19-product-readonly-preflight-20261027-156/release-submission/release-receipts/t45-native189-v19-product-readonly-preflight-20261027-156/preflight-engine.json",
+      "bytes": 408,
+      "sha256": "9f7256a3d8562fd57ced9f514e00d3b62179cbe70204a2877041f16946061388"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-v19-product-readonly-preflight-20261027-156/release-submission/release-receipts/t45-native189-v19-product-readonly-preflight-20261027-156/product-readonly-preflight.json",
+      "bytes": 2428,
+      "sha256": "8ea0e8ea2dd73c888d3e0a25fd0ef95292f85c24ba6a8250c1f2faf118a3ebaa"
+    }
+  ]
+}

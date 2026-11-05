@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "runtimeCommit": "38a1a9d00ce5060879af409c6e7e1febad07ab5f",
+  "runtimeSourceInputs": 67,
+  "ownPreviewFiles": 12,
+  "sourceSnapshotSha256": "faa4a72f7fb493aaba0c13a7d2070cc95266cfd9197c54f87640b525f7792d94",
+  "ownPreviewManifestSha256": "87e6c7ac22cc15c43b7c905ea6c81f4f931f34f020bf2ffcaae1c31b4499d2da",
+  "htmlBytes": 1364619,
+  "htmlSha256": "e24befa91f2909a69c386a183be2dd252a8d90f9a5cce8a7cafb862489084374",
+  "embedded": false,
+  "allFrozenRuntimeInputsMatchNamedCommit": true,
+  "artifactAndOwnManifestUnchangedAfterSmoke": true
+}

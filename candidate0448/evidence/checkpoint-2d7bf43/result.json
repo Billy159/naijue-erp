@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "2d7bf43b431c4e0adbdc5c25a4004424bde1afca",
+  "sourceFrozenArchive": true,
+  "status": "ALL_REQUESTED_LOCAL_STAGES_PASS_WITH_RECORDED_OFFLINE_CONTINUATION",
+  "initialAggregate": "Interrupted after dependencies, root type/build and emitted smoke passed: npm update notifier attempted registry network denied by policy. No registry access retry, installation or proxy bypass. Original log retained.",
+  "continuation": "Remaining npm test and check:web completed exit0 with npm offline and update notifier disabled, using existing pinned dependencies.",
+  "tests": 993,
+  "passed": 993,
+  "failed": 0,
+  "checks": {
+    "lockedDependencies": 176,
+    "rootTypecheck": "PASS",
+    "rootBuild": "PASS",
+    "emittedImportArithmeticSmoke": "PASS",
+    "webTypecheck": "PASS",
+    "previewBuild": "PASS",
+    "DOMGroups": {
+      "inventoryAndProduct": 14,
+      "authentication": 7,
+      "sales": 9,
+      "parties": 11,
+      "application": 8,
+      "transfers": 11,
+      "composedTransfers": 6,
+      "productStyles": 4,
+      "sharedProductLifecycle": 8
+    },
+    "builtPortableSmoke": "PASS"
+  },
+  "boundaries": {
+    "realBrowser": false,
+    "pixelParity": false,
+    "runtimePerformance": false,
+    "production": false,
+    "databaseRunInThisCheckpoint": false,
+    "separateRealPostgresEvidence": "318440a sparse suite12/12, evidence/postgres-real-acceptance-318440a",
+    "newBackendSuiteIncluded": false,
+    "nativeServerCompositionIncluded": false
+  },
+  "rollback": "Use exact parent/runtime commits; no production deployment or database action occurred in this check."
+}

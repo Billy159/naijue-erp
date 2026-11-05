@@ -1,0 +1,50 @@
+✖ combined initializer candidate is one transaction with both guarded successors then exact access verifier (2.920988ms)
+✖ catalog proposal changes one exact routine pin without fabricating a trusted spec or installation record (2.404542ms)
+✖ batch candidate drift fails closed and original singleton output remains stable (31.374617ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 162.122614
+
+✖ failing tests:
+
+test at tests/whole-package-batch-integration-candidate.test.mjs:7:1
+✖ combined initializer candidate is one transaction with both guarded successors then exact access verifier (2.920988ms)
+  TypeError [Error]: renderWholeBatchClosureIntegrationCandidate is not a function
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-batch-integration-candidate.test.mjs:9:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/whole-package-batch-integration-candidate.test.mjs:17:1
+✖ catalog proposal changes one exact routine pin without fabricating a trusted spec or installation record (2.404542ms)
+  TypeError [Error]: renderWholeBatchClosureIntegrationCandidate is not a function
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-batch-integration-candidate.test.mjs:19:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/whole-package-batch-integration-candidate.test.mjs:31:1
+✖ batch candidate drift fails closed and original singleton output remains stable (31.374617ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /WHOLE_BATCH_INTEGRATION_SOURCE_DIFFERS/. Input:
+  
+  'TypeError: m.compileWholeBatchClosureIntegrationCandidate is not a function'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-batch-integration-candidate.test.mjs:35:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: m.compileWholeBatchClosureIntegrationCandidate is not a function
+        at file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-batch-integration-candidate.test.mjs:35:25
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-batch-integration-candidate.test.mjs:35:10)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /WHOLE_BATCH_INTEGRATION_SOURCE_DIFFERS/,
+    operator: 'throws',
+    diff: 'simple'
+  }

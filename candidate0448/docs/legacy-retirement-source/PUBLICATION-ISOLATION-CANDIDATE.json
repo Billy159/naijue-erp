@@ -1,0 +1,132 @@
+{
+  "format": "FRESH27_PUBLICATION_ISOLATION_SOURCE_CANDIDATE_V1",
+  "scope": "FRESH_EMPTY_TARGET_ONLY_NOT_REGISTERED_OR_ENGINE_TESTED",
+  "existing_data_upgrade": false,
+  "physical_retirement": false,
+  "new_tables": 0,
+  "new_functions": 0,
+  "predecessor_sources": [
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "sha256": "ed96bc73a7f8bf2919f3015542e87628ee6d402f2992ddc5ad5c5f275361177f"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_import_initialization.sql",
+      "sha256": "680fdac8120d35122f8414924ed40fb175c1533a7cfd6b656077cec7242332f1"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "scripts/release/unified-install/fresh27-publication-isolation.mjs",
+      "sha256": "cd959a6dce0dae5e9e61236a91a7da5c672f261c504755a967615395b5ae4bca"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_publication_legacy_isolation_successor.sql",
+      "sha256": "c42ad6191082fbc3ac926b92008c9026eb09620b9944ba890aee547bce6b0d1a"
+    },
+    {
+      "path": "tests/publication-legacy-isolation-source.test.mjs",
+      "sha256": "e6e7c676e76d6a0c8ec8838b3a1a31e94b2cdeb2d22d315f4b0b923d212124cc"
+    }
+  ],
+  "routines": [
+    {
+      "name": "is_native_party_import_insert",
+      "signature": "naijue_erp.is_native_party_import_insert(pg_catalog.text,pg_catalog.jsonb)",
+      "source": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "before_sha256": "9e9842673283ceabe9b1c48a45d8a3dd829f6c1217b7e46cfb27ac0ffd65998b",
+      "after_sha256": "8561c5a4837eb85e0a13a8ec63a7326b2cf3c9df4d0da5d371534d3ddee3368e",
+      "security_definer": true,
+      "volatility": "v",
+      "return_type": "bool"
+    },
+    {
+      "name": "guard_history_publication",
+      "signature": "naijue_erp.guard_history_publication()",
+      "source": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "before_sha256": "1368f91865d8d694fa9685e6b6c54485cb31d3d19a7deae1c8d521408ae5c84b",
+      "after_sha256": "06d8c74d5571d3e7093e0845b7dccd17184b5a302a196c0d4af7bb654c538ea6",
+      "security_definer": false,
+      "volatility": "v",
+      "return_type": "trigger"
+    },
+    {
+      "name": "guard_header_native_reference_publication",
+      "signature": "naijue_erp.guard_header_native_reference_publication()",
+      "source": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "before_sha256": "ba5b4b041d9986c25cb3d0b195c5e4e5a08e9c8465fc95046c96e776cd53fa62",
+      "after_sha256": "917f5a7fcc48a0da093da9cc36ea7fa3d58bb6d0524c1da2373c6d69f7ed5fbf",
+      "security_definer": false,
+      "volatility": "v",
+      "return_type": "trigger"
+    },
+    {
+      "name": "guard_native_catalogue_publication",
+      "signature": "naijue_erp.guard_native_catalogue_publication()",
+      "source": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "before_sha256": "eb30d86ff11a3ed314ab82f80bf6a4e3c840efe0f59cba9693a76af04c460844",
+      "after_sha256": "917f5a7fcc48a0da093da9cc36ea7fa3d58bb6d0524c1da2373c6d69f7ed5fbf",
+      "security_definer": false,
+      "volatility": "v",
+      "return_type": "trigger"
+    },
+    {
+      "name": "guard_native_payment_publication",
+      "signature": "naijue_erp.guard_native_payment_publication()",
+      "source": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "before_sha256": "5a8c4a4ae7e0fdc0c6ce2590676b18254c335be6af1d72364ffdf16e9dd791a9",
+      "after_sha256": "917f5a7fcc48a0da093da9cc36ea7fa3d58bb6d0524c1da2373c6d69f7ed5fbf",
+      "security_definer": false,
+      "volatility": "v",
+      "return_type": "trigger"
+    },
+    {
+      "name": "guard_history_typed_publication",
+      "signature": "naijue_erp.guard_history_typed_publication()",
+      "source": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "before_sha256": "8fb4e55740e80cea6fbe87b3419b1e1dd6c2824376d7bea990b16ed0cf464e70",
+      "after_sha256": "6907bdc9cbe683e5a3f839a5ab7a6456824bc04ec3d2f5fb84768f1cd9f6ce38",
+      "security_definer": false,
+      "volatility": "v",
+      "return_type": "trigger"
+    },
+    {
+      "name": "guard_import_accounting_publication",
+      "signature": "naijue_erp.guard_import_accounting_publication()",
+      "source": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "before_sha256": "874e33905c6d75eceafec0c554e0b28af5ed495825b21cbc694522d7d4d57863",
+      "after_sha256": "06d8c74d5571d3e7093e0845b7dccd17184b5a302a196c0d4af7bb654c538ea6",
+      "security_definer": false,
+      "volatility": "v",
+      "return_type": "trigger"
+    },
+    {
+      "name": "guard_successor_publication26",
+      "signature": "naijue_erp.guard_successor_publication26()",
+      "source": "adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "before_sha256": "edb6cbed80a77826cb2b698af14ae1ac6ee8cd99b0da3d4f8985a7c2563e0699",
+      "after_sha256": "f14a1b571542a6d13e31b8b86fee4bc1a4a1988cdf08cb91b1ba0a59e96d23d0",
+      "security_definer": false,
+      "volatility": "v",
+      "return_type": "trigger"
+    },
+    {
+      "name": "is_exact_historical_customer_only",
+      "signature": "naijue_erp.is_exact_historical_customer_only(pg_catalog.uuid)",
+      "source": "adapters/postgres/patches/0027_standard_import_initialization.sql",
+      "before_sha256": "2e253ed5b4c84c85771d218eebc644664af1c376f470db0b7a7f00d6d887a4e5",
+      "after_sha256": "8b3985b2e5e7f1db46b2a4a8c632acef1d10ec230bcca9e11ff538dae3965e7f",
+      "security_definer": true,
+      "volatility": "s",
+      "return_type": "bool"
+    }
+  ],
+  "verification": {
+    "runtime": "Node v24.22.1",
+    "offline_tests": 49,
+    "passed": 49,
+    "postgresql_run": false,
+    "typecheck_run": false,
+    "full_suite_run": false
+  }
+}

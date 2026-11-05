@@ -1,0 +1,53 @@
+{
+  "atUtc": "2026-10-22T20:51:08.703511+00:00",
+  "parent": "1dc0844cf73eb430c53019381ba266dc09aab8ae",
+  "groups": [
+    {
+      "slice": "OPTIONAL_CATALOGUE_SHARED_OVERLAY_PRESENTATION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-48/DELIVERY.json",
+      "receiptSha256": "56414f1dcb0d7a4f645af473a8111385ce1d656c77f3a25495568586d9598fc6",
+      "receiptSnapshot": {
+        "chunk": 48,
+        "status": "READY_FOR_C_PIN_OPTIONAL_CATALOGUE_OVERLAY_PRESENTATION",
+        "files": [
+          {
+            "path": "apps/web/src/components/standard-overlay.tsx",
+            "sha256": "97c22b8d5f917814ce27b77af9efaebd486e6768d9dd349011934ba17137d852"
+          },
+          {
+            "path": "apps/web/src/components/standard-overlay.css",
+            "sha256": "65bb58e5efba8548bd077a9c08b4e60d606b130551e371e8d9b463cc60967084"
+          }
+        ],
+        "scope": "SCHEME-UI-01 optional presentation=catalogue seam only, default unchanged. Existing Arco Modal shared owner, local portal, focus/ready/keyboard/dismiss unchanged; catalogue header11px14px/body12px14px/footer9px14px, native22.001 line height, token border/white secondary footer close and Arco IconClose. Drawer/default overlay spacing untouched.",
+        "evidence": "v010-d6ad29c/DEMO-SCHEME-MODAL-GEOMETRY.json versus CANDIDATE-SCHEME-MODAL-GEOMETRY.json, actual source catalogue popup480 width. No forced data-dependent height.",
+        "checks": {
+          "types-1.log": "exit0",
+          "overlay-1.log": "exit0 actual StrictMode optional/default class, icon, labelled role, local token ancestor, one footer-close callback; no old full keyboard/capture rerun"
+        },
+        "consumerRequired": "F2 actual barcode-scheme-view.tsx StandardOverlay adds presentation=catalogue after C pin. F1 did not cross-write leaf; without opt-in current Scheme appearance unchanged.",
+        "notTested": [
+          "F2 leaf opt-in at fixed version",
+          "latest candidate Chrome padding/white-close/header-border/modal geometry"
+        ],
+        "blockers": [],
+        "next": "C exact2 pin, relay minimal one-prop F2 consumer, then original Demo narrow SCHEME01 comparison."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/components/standard-overlay.tsx",
+          "owner": "F1",
+          "sha256": "97c22b8d5f917814ce27b77af9efaebd486e6768d9dd349011934ba17137d852",
+          "bytes": 7283
+        },
+        {
+          "path": "apps/web/src/components/standard-overlay.css",
+          "owner": "F1",
+          "sha256": "65bb58e5efba8548bd077a9c08b4e60d606b130551e371e8d9b463cc60967084",
+          "bytes": 2572
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact checkpoint only. Scoped author checks adopted; new technical acceptance independently assigned, no controller duplicate QA."
+}

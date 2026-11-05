@@ -1,0 +1,113 @@
+{
+  "atUtc": "2026-10-23T14:26:15.067708+00:00",
+  "parent": "bb89f32f2d5aa8255028734b6cbb624e330783ea",
+  "taskId": "B02_V11_GROUP_ONLY_SAVE_PROPOSAL_INTERFACE",
+  "files": [
+    {
+      "path": "packages/application/src/document-specification.ts",
+      "bytes": 2957,
+      "sha256": "f8c8013b2b62548ed077e935c93b3aa3a4ecdc9fe8350a756a684734419b01cd",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/ports.ts",
+      "bytes": 7264,
+      "sha256": "ff95a7a3b952848ca788f56f24b1fb333ce326f4bb74eb3861f25b5906464628",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/transfer-ports.ts",
+      "bytes": 7792,
+      "sha256": "594212c7992c234185d2a76bf9fb39569c15bc3e1842d86c3f260693f2894120",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/sales-service.ts",
+      "bytes": 15925,
+      "sha256": "a8d4f8263b8af8289c7ec788781874b34ddde8e5e944c1456421bb27fc234ec7",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/transfer-service.ts",
+      "bytes": 14060,
+      "sha256": "5b553d46ccb237da655e0077898292a7ce41781dbf9148d3deed70e49d6cf6e0",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/native-sales-preparation.ts",
+      "bytes": 39678,
+      "sha256": "ce8f19c54a1f3c609c6101cc40f3c83c8d7092436e833a87ec5163618a5f2118",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/native-transfer-preparation.ts",
+      "bytes": 23428,
+      "sha256": "f948e06e16fc227b15eec3b576b66b4ddd7e15ab990d61ffa575d3d18d7e12d2",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/input.ts",
+      "bytes": 6973,
+      "sha256": "728f383a9f183b3c3ebaaba26c885c9de49ffd3985931f5793c4824c7c54baa2",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/transfer-input.ts",
+      "bytes": 4733,
+      "sha256": "dbedc7158f45791d2d0952afc6a92cca5fca90af82cace28c9ace16c512fd24c",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/sales-http.ts",
+      "bytes": 11724,
+      "sha256": "094f3526885e0783fe77c23b57bd2525ce2f1f3b046ce344b4d9fafa088f0a37",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/transfer-http.ts",
+      "bytes": 12499,
+      "sha256": "5ffc51f40cf0b6fcd5ef1213d2df20d7db1893f9668efbb9f66c346c4f44a2b9",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/document-specification-save.test.ts",
+      "bytes": 9673,
+      "sha256": "e90d41d75a63309062f9c4569b999926b22e155406b0e7b83e7145d1671753bb",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V11-SAVE-PROPOSAL-INTERFACE-v1.json",
+  "ownerReceiptSha256": "b1124c7a2490b31c07e131cd09ee9f99555fa2fb49c9ad40497df1210b53fd1e",
+  "scope": null,
+  "checksAdopted": {
+    "newTargetedTests": 6,
+    "pass": 6,
+    "skip": 0,
+    "strictAffectedRootsExit": 0,
+    "pgAttempted": false
+  },
+  "qualification": "SOURCE_FIXED_OWNER_AFFECTED_SELFCHECK_ONLY. Independent new source and actual consumer tests remain; no real HTTP/PG/SAVE/wholepage/performance/release accepted. Current184 runtime and next189 runtime do not include this new fixed source. D1 adapter/SQL/deferred-parent closure WIP; D2 module185 source approved only; not completev11 or installedmetadata.",
+  "remaining": [
+    "Actual resolver protocol, committed-before baseline and same-SAVE exact-proof tests",
+    "SQL v11 only proposed source, C/QB review and C actualapply/metadata",
+    "Database tests C coordinated; no old sealed18/QA80/H06 replays",
+    "No full real import or release claim"
+  ],
+  "publicInterface": {
+    "approval": "human confirmed revised v11 group-only details via C; original22, D1=19,D2=3",
+    "endpoints": {
+      "SALES": "POST /sales/commands",
+      "TRANSFER": "POST /transfers/commands"
+    },
+    "envelope": {
+      "action": "SAVE",
+      "requestKey": "original stable nonempty key",
+      "expectedVersion": "null new; original integer existing",
+      "proposal": "exact NativeSalesSaveProposal or NativeTransferSaveProposal"
+    },
+    "proposal": "salesId/transferId:null for new or actual ID for existing; no inner expectedVersion. Each line existingLineId:null or actual current pointer. Exactly one skuId or spec:{productId,colorId,fitId,sizeId}; no client group/code/barcode/native UUID guesses. All existing sales header, pricing and settlement intent fields preserved. Settlement pointer existingSettlementId. Server quantity nonzero; transfer positive; limits unchanged.",
+    "originalPreparation": "prepare-create/existing remain known-SKU-only read-only; never send pending spec there. New SAVE proposal resolves under original SAVE callback.",
+    "response": "Original SalesResult/TransferResult: actual document ID, operationId, version,status,ledgerEntryIds. No prepared draft or generated SKU fields. On confirmed success reopen original document read to obtain actual persisted SKU/snapshots; uncertain outcome retains original key.",
+    "replay": "Submitted proposal original actor/key/hash; current permission before original-key result; replay before allocation/resolution. Legacy draft hash unchanged."
+  }
+}

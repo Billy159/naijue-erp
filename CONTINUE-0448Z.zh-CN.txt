@@ -1,0 +1,8 @@
+本分支为0448Z集成WIP，不是上线包。
+唯一应用根：candidate0448/。根目录旧工程只作Git历史基底，不是本次构建或启动入口。
+输入原包SHA256：53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f。
+固定Node24.21.0 / npm11.9.0；candidate0448/package-lock.json未改。
+reference-inputs仅原包DDL/catalog元数据，既有摘要保持；原云端路径不可当本机路径。
+D1金额/厅plan请求合成31项与launch类型检查通过；D3来源核对48项及608916合成规模通过；干净安装和native模块加载通过。
+实际PG安装、完整真实导入、权限业务、浏览器和发布未验证；fresh35 host/production入口尚待接线。
+真实数据、凭据、node_modules和本机缓存不入Git。唯一状态源仍原K/TASKS.json、PROGRESS.md、HANDOFF.md。

@@ -1,0 +1,77 @@
+{
+  "checkpoint": "Native PostgreSQL inventory query reader source/protocol owner verification only",
+  "parent_commit": "112624b819bd8f584939f8a020a365578e7fe0f7",
+  "approved_foundation_commit": "361b14d",
+  "committed": false,
+  "verified_at_utc": "2026-10-20T19:06:00Z",
+  "files": [
+    {
+      "path": "adapters/postgres/src/inventory-query-reader.ts",
+      "sha256": "6bed8e3ec64639d4869e2119006186d76892b1dffb3f9755f9a0e2d723466846",
+      "change": "new file"
+    },
+    {
+      "path": "tests/inventory-query-postgres-protocol.test.ts",
+      "sha256": "ff69c69021e6f99692c0a3a9eae96028c0c467a40422714566349debb174cb77",
+      "change": "new file"
+    },
+    {
+      "path": "docs/native-inventory-query-reader.md",
+      "sha256": "b6614342cb22f668d6d4956835f000022cf954454d0f6266ce3758078eb1938c",
+      "change": "new file"
+    }
+  ],
+  "checks": [
+    {
+      "command": "node --test tests/inventory-query-postgres-protocol.test.ts",
+      "exit_status": 0,
+      "tests": 23,
+      "passed": 23,
+      "failed": 0,
+      "output": "evidence/inventory-native-reader-owner-tests.log",
+      "capture": "Completed PTY output restored from the existing tool capture. The command was not rerun for evidence persistence."
+    },
+    {
+      "command": "./node_modules/.bin/tsc --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --skipLibCheck --rewriteRelativeImportExtensions --types node --lib ES2023,DOM tests/inventory-query-postgres-protocol.test.ts",
+      "exit_status": 0,
+      "output": "evidence/inventory-native-reader-owner-typecheck.log",
+      "capture": "The successful command emitted no stdout/stderr; zero-byte log is intentional. Owner scoped tsc ran before the final one-line test-only assertion correction distinguishing pg_catalog metadata references from inventory-balance data queries. Reader source hash is unchanged. Independent reviewer separately compiled the final source and test hashes successfully."
+    },
+    {
+      "command": "node --test tests/inventory-query.test.ts tests/inventory-cutoff-import.test.ts tests/inventory-cutoff-postgres-protocol.test.ts tests/inventory-cutoff-schema-contract.test.ts tests/inventory-query-postgres-protocol.test.ts",
+      "exit_status": 0,
+      "tests": 109,
+      "passed": 109,
+      "failed": 0,
+      "output": "evidence/inventory-native-reader-owner-regression.log",
+      "capture": "This regression command had already started before the parent requested evidence persistence; its existing completed output was saved without a rerun."
+    }
+  ],
+  "evidence_sha256": {
+    "evidence/inventory-native-reader-owner-tests.log": "3f34ec148e9c5ef4105a5c06b5e6aa953a30196c0e4e476281a4fd7ea8e7216a",
+    "evidence/inventory-native-reader-owner-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/inventory-native-reader-owner-regression.log": "345fa1776f67bb69391a18567bffc0d8847adcbdce493470dbf095c97724a471"
+  },
+  "scope_limits": [
+    "Scripted protocol and source assertions only; no PostgreSQL SQL execution or plans.",
+    "No database/network/server/install/browser/migration/commit/push/deploy.",
+    "No shared schema/contracts/cutoff/frontend/root/package edits by this worker."
+  ],
+  "rollback": {
+    "method": "Remove only the listed new worker-owned files. Do not reset or overwrite other workers' changes.",
+    "paths": [
+      "adapters/postgres/src/inventory-query-reader.ts",
+      "tests/inventory-query-postgres-protocol.test.ts",
+      "docs/native-inventory-query-reader.md",
+      "evidence/inventory-native-reader-owner-tests.log",
+      "evidence/inventory-native-reader-owner-typecheck.log",
+      "evidence/inventory-native-reader-owner-regression.log",
+      "evidence/inventory-native-reader-owner-manifest.json"
+    ],
+    "preserves": [
+      "All pre-existing repository files and cutoff foundation files.",
+      "All unrelated concurrent web/rendering edits.",
+      "Independent reviewer evidence, which is separately owned."
+    ]
+  }
+}

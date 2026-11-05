@@ -1,0 +1,21 @@
+{
+  "status": "C_EXACT_OUTER194_COMPLETE_NEVER_STARTED_INNER193_AUTHORIZED",
+  "jobId": "t45-r1-193-materialization-successor-20261028-194",
+  "atUtc": "2026-10-27T18:43:43.142597+00:00",
+  "innerJob": "t45-r1-committed-prefix-original108-continuation-20261028-193",
+  "innerTerminalResult": {
+    "bytes": 2441,
+    "sha256": "f713810ec2a7f70cfa1e387b295d0ab50e734e4adbb141ced2b76b599c1dcd6a"
+  },
+  "precondition": "Original193 own engine/control-flow proves materialization stop before credential/PG/preflight/host; no live193 process/no inner ATTEMPT/native runtime RESULT. Exact84source+3final existing immutablefiles equal signed refs. Any drift/unknown/attempt stops, not replay.",
+  "allowedFix": "Only fixed accepted package8e65587members:85source+2originalprovenance. Verify existing members hashes/stat; wx create only missing exact1source+2provenance and4fixedmetadata, verify closure/deps refs; no arbitrary inputs glob/path relaxation/overwrites. Correct materialization allowlist from original accepted exact package members.",
+  "execution": "One new outer194 may complete never-started signedinner193 preflight and originalhost only after exact193 authority/env/deadline/currentcommittedBINDchecks; original107ACCOUNT/PUBLISH only, no duplicateBIND/sourceprepare/INIT/oldjob replay. Preserve originalkeys and signatures.",
+  "deadlineUtc": "2026-10-27T20:45:00Z",
+  "maxWallSeconds": 7200,
+  "maxSteps": 4096,
+  "statementTimeoutMs": 12000,
+  "innerAuthority": "193/C-authorized-final-01/C-R1-193-ADOPTION.json; grantc433,inputc538,host0575; no modifying193originalgrant/input/package/sourcefiles",
+  "notAuthorized": "No SQLACL/schema/clear/reimport/APP/publicURL switch or timeout/step increase. Failure originalkey readback before repair.",
+  "model": "gpt-6.1-sol/medium",
+  "Fast": "UNVERIFIED"
+}

@@ -1,0 +1,108 @@
+{
+  "startedAt": "2026-11-05T04:34:42.060Z",
+  "completedAt": "2026-11-05T04:35:17.991Z",
+  "node": "v24.21.0",
+  "nodePath": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node",
+  "command": [
+    "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node",
+    "--test",
+    "tests/fresh35-source-review-candidate.test.mjs",
+    "tests/historical-sales-source-review.test.ts",
+    "tests/historical-sales-source-review-cli.test.mjs",
+    "tests/fresh35-combined-catalog.test.mjs",
+    "tests/fresh35-combined-lifecycle.test.mjs",
+    "tests/fresh35-combined-source.test.mjs",
+    "tests/fresh35-combined-target.test.mjs",
+    "tests/fresh35-sales-hall-candidate.test.mjs",
+    "tests/fresh35-historical-amount-candidate.test.mjs"
+  ],
+  "exitCode": 0,
+  "sourcePinsUnchanged": true,
+  "changedPaths": [],
+  "predecessorSha256": "5fc8508ea96062898a42dc4c03c3a6ebe166158037cc6c7c3130a13d3ee14931",
+  "candidateSqlSha256": "daf8f4db446dc85d96f641944c31f836f2853836e121df71f5cfd43d3fa46a43",
+  "projectedTables": 35,
+  "projectedRoutines": 166,
+  "newRoutines": 14,
+  "changedExistingRoutines": 13,
+  "sourceSetSha256": "17d877c92243ede70bb77ff30b1e2cb74bdf098e9ee10d1d160709ba6270a8e7",
+  "sourcePins": [
+    {
+      "path": "adapters/postgres/patches/0035_source_review_kernel_candidate.sql",
+      "sha256": "f61f4c7a0912fd47c574dc27d7b25a01b6d80d1062151d9064296433b31126c5"
+    },
+    {
+      "path": "evidence/historical-hall-contract-20261105/source-review-contract.md",
+      "sha256": "82bc2c89dd116142a47c1f66c34b682374702693a067098518b040f2d32bf6b3"
+    },
+    {
+      "path": "packages/application/src/historical-sales-source-review.ts",
+      "sha256": "d69a9fa3668f26bb647d08aae48e7e73054e74c19d2bf2b1de1002af9064a1d9"
+    },
+    {
+      "path": "packages/application/src/unified-historical-sales-source-review.ts",
+      "sha256": "f97e147703c92f82a76321bddd81108ebb2c18b76201b0e2fbcd9c2a7a79702f"
+    },
+    {
+      "path": "tools/unified-import/source-review-preflight-cli.mjs",
+      "sha256": "1503ec0c56fc3c3703638c785aed8916d98ef5c92581eb3fb3d10a4fc8224237"
+    },
+    {
+      "path": "evidence/source-review-contract-20261105/WIRE.md",
+      "sha256": "810e54d7c7774259c7dc67506dbf9b9d2807615dc2ee936160e55675b81cc235"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-source-review-candidate.mjs",
+      "sha256": "f4449ef91df856925f75338a5a80f896c145a4634ac9ac860f57090c03e809a8"
+    }
+  ],
+  "testPins": [
+    {
+      "path": "tests/fresh35-source-review-candidate.test.mjs",
+      "sha256": "0f16ab8eef6203dcb4a5b05e12b7828a344dbb3527aa2fc1d9cbe23ee822acd7"
+    },
+    {
+      "path": "tests/historical-sales-source-review.test.ts",
+      "sha256": "72a0ed39c78aed43c5147ec26f8fe8c9a52decbe5813a2b495f0fa829e1b909d"
+    },
+    {
+      "path": "tests/historical-sales-source-review-cli.test.mjs",
+      "sha256": "e187f946334a90c1cc1e6d22b12d2f2d2c01468b1b9d97f20baf21de25a5560d"
+    },
+    {
+      "path": "tests/fresh35-combined-catalog.test.mjs",
+      "sha256": "90b1d94d709815a1fc3cb612847ba460f2fa0ee6c5c3f368885e0e0f4825d157"
+    },
+    {
+      "path": "tests/fresh35-combined-lifecycle.test.mjs",
+      "sha256": "9063b994fb856ad31dd7e1bbedeb3e0a7d1e0c13f6cb44413869a7b8068b8c3b"
+    },
+    {
+      "path": "tests/fresh35-combined-source.test.mjs",
+      "sha256": "650b30b09814b99dd78838155f4939c133759fb05474452c080792c72849228d"
+    },
+    {
+      "path": "tests/fresh35-combined-target.test.mjs",
+      "sha256": "8cb903e3520e79cd88276335972910fecaf5d731fc91c63018f35360fb442fdd"
+    },
+    {
+      "path": "tests/fresh35-sales-hall-candidate.test.mjs",
+      "sha256": "9383186cd51c8f0f9de9d1a82a859713f9ab6dfc98afe873456688406bef4b27"
+    },
+    {
+      "path": "tests/fresh35-historical-amount-candidate.test.mjs",
+      "sha256": "1c7ccff3e57fcb2a97689359adf2ee27f8cbf3c309927c753311995af37b5536"
+    }
+  ],
+  "sourceOnly": true,
+  "postgresConnected": false,
+  "postgresParsed": false,
+  "postgresEngineVerified": false,
+  "finalReportFromSqlSubreviewerReceived": false,
+  "reviewFailureEvidence": "independent-review-status.json",
+  "independentFullAdmission": false,
+  "installationReady": false,
+  "persisted": false,
+  "freshBootstrapClosed": false,
+  "reprocessingImplemented": false
+}

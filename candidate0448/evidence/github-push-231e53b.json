@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/Billy159/naijue-erp",
+  "branch": "codex/clean-erp-foundation",
+  "remoteCommit": "231e53bbae1e161bec0da913c576637a348f885e",
+  "verification": "Mac task reported git remote ref and GitHub API readback matched exact commit",
+  "taskId": "01a15a22-7038-728d-8baa-3b64791af0c1",
+  "reportedAtUtc": "2026-10-20T16:29:16Z",
+  "bundleSha256": "495aeb37890bff278f360a7ca8a413f18348da591b0620e99614e021f5cdbad1",
+  "mainUnchanged": true,
+  "deployed": false,
+  "buildOrTestsRunOnMac": false,
+  "automaticDeploymentWorkflowsReported": false,
+  "webhooksReported": false
+}

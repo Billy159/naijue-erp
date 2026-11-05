@@ -1,0 +1,8 @@
+apps/web/src/inventory/product-drawer-host.tsx: OK
+apps/web/src/inventory/product-drawer.tsx: OK
+apps/web/src/inventory/product-tab-state.tsx: OK
+apps/web/src/inventory/product-tab-images.tsx: OK
+apps/web/src/inventory/tests/product-drawer-lifecycle-entry.tsx: OK
+apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs: OK
+PASS: frozen production diff whitespace check.
+ac39e5cbc2b8b757b0358439f1cdaf3d0eccdcec67c58fd2cffda7808f15a59c  evidence/product-drawer-lifecycle-independent-source.sha256

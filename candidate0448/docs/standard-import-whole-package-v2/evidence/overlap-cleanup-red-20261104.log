@@ -1,0 +1,36 @@
+✔ direct COMMIT acceptance cases register without invoking setup or database work (136.877881ms)
+✔ real-client runner never substitutes finish, constraint forcing or synthetic SQL replies for direct COMMIT (5.952955ms)
+✔ no target binding or non-synthetic target is rejected before registration (0.718414ms)
+✔ physical target uses PostgreSQL host normalization rather than CIDR text (1.110412ms)
+✔ loopback aliases cannot admit the same physical database twice (0.446306ms)
+✔ one explicitly selected case can use one independently installed trusted target record (0.58482ms)
+✔ exclusive-client and no-admin-change window acknowledgment is required before registration (0.539754ms)
+✔ successor admission selection is a fixed enum, not a callback or approval boolean (0.559573ms)
+✖ overlapping setup closes only its fresh client without touching the active shared client (1.673791ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 298.150989
+
+✖ failing tests:
+
+test at tests/whole-package-direct-commit-runner.test.mjs:66:1
+✖ overlapping setup closes only its fresh client without touching the active shared client (1.673791ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-direct-commit-runner.test.mjs:86:76)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

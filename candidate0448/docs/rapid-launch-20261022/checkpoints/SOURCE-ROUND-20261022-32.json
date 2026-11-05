@@ -1,0 +1,135 @@
+{
+  "atUtc": "2026-10-22T11:50:42.557462+00:00",
+  "parent": "a9079af66a92b62223ec53ba62173198e109b133",
+  "groups": [
+    {
+      "slice": "MAIN26_CLOSURE_ACCOUNTING_PUBLICATION_SEAMS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/MAIN26-SEAMS-RESULT.json",
+      "receiptSha256": "343d5092aa35389bd6d52b8883a61a90446f87a1341c96e60f9b3bce8baeb9ca",
+      "reportedStatus": "SOURCE_PROTOCOL_READY_MAIN_BOOTSTRAP_AND_ACTUAL_ISSUER_PENDING",
+      "files": [
+        {
+          "path": "adapters/postgres/src/history-typed-closure19.ts",
+          "owner": "D1",
+          "bytes": 10920,
+          "sha256": "1a15fd9ed19e3641e45df57035276773701b8ef49df90f90bd1f9829cc82ced7"
+        },
+        {
+          "path": "adapters/postgres/src/history-typed-publication.ts",
+          "owner": "D1",
+          "bytes": 6754,
+          "sha256": "0e563c20a8a0eba2fe8d87593d0d437a06ae83323412e338ee7c9932eee3d597"
+        },
+        {
+          "path": "adapters/postgres/src/native-import-record-accounting.ts",
+          "owner": "D1",
+          "bytes": 40053,
+          "sha256": "3728813adaf3c835752a61704c490beb6116898be971e7832580a972639e884a"
+        },
+        {
+          "path": "tests/history-typed-closure26-postgres-protocol.test.ts",
+          "owner": "D1",
+          "bytes": 6407,
+          "sha256": "dcb5a326aa96d2099f095cb3521e41b8ca2d2a99c1f4bf3d5e33c5d9a9d88b1d"
+        },
+        {
+          "path": "tests/native-import-history-publication-seams.test.ts",
+          "owner": "D1",
+          "bytes": 10673,
+          "sha256": "9c4c4bdffe4ef529b3942a9a66d1a5af308159acfe3d18a00deb9c58d5d665eb"
+        },
+        {
+          "path": "tests/native-import-record-accounting-postgres-protocol.test.ts",
+          "owner": "D1",
+          "bytes": 17954,
+          "sha256": "19900e7a1b3f10a4b42ae9557adbee865d649d6aec050fc6a2a819ecd5e564a2"
+        }
+      ]
+    },
+    {
+      "slice": "REAL_LOCAL_SHARP_CODEC_AND_LIMITS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W16-CODEC-RECEIPT.json",
+      "receiptSha256": "3fb09ab1a0964b15832b1e67986d9fe0de16c3982f2e61de0f7a50bb295dd5f2",
+      "reportedStatus": "SOURCE_AND_ACTUAL_LOCAL_CODEC_FIXTURES_PASS",
+      "files": [
+        {
+          "path": "adapters/media/src/sharp-product-image-codec.ts",
+          "owner": "D2",
+          "bytes": 11440,
+          "sha256": "7f2106b30784cc22c92aa268e20ac4c20a229cf14f15757691e87d592666b9d5"
+        },
+        {
+          "path": "tests/sharp-product-image-codec.test.ts",
+          "owner": "D2",
+          "bytes": 5733,
+          "sha256": "e2f7657e47271d05134e413e549f4c512d1be0c244cf8e713f770ae9bcd0ea23"
+        }
+      ]
+    },
+    {
+      "slice": "READONLY_CLASSIFIED_MEDIA_AND_RETURN_LABEL",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DEMO-P12-DELIVERY-v2.json",
+      "receiptSha256": "a622cbcb90fca144c6166a8313b85ca9de753eb5694f059ccfee24de3de6d3ca",
+      "reportedStatus": "SOURCE_DOM_READY_EXTERNAL_F1_TYPES_BLOCKED",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-page-contracts.ts",
+          "owner": "F2",
+          "bytes": 2981,
+          "sha256": "b18aeb0a88fb82d756789cd985143345425615a66fa2727576a9b473a777b83e"
+        },
+        {
+          "path": "apps/web/src/products/product-page-configuration.ts",
+          "owner": "F2",
+          "bytes": 5342,
+          "sha256": "943272e018f4ccd69505cc7fe2690ee1a885ac2e0e9796b862d91bf84bdbcc2e"
+        },
+        {
+          "path": "apps/web/src/products/product-page-reader.ts",
+          "owner": "F2",
+          "bytes": 2669,
+          "sha256": "d66544bec480c1b4002b1451b880ac54fe4754bbcf8bc89d03272614512481b0"
+        },
+        {
+          "path": "apps/web/src/products/product-page-http-reader.ts",
+          "owner": "F2",
+          "bytes": 5018,
+          "sha256": "530721538a699b42da10d5ca24acdb441ac3fd6168e6187d07d0cf288ab957c9"
+        },
+        {
+          "path": "apps/web/src/products/product-page-images.tsx",
+          "owner": "F2",
+          "bytes": 870,
+          "sha256": "3a2389e9e76689bfc37ed635c67f71c9840073f950c9d72f6056e7b8b193bcb1"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-media.tsx",
+          "owner": "F2",
+          "bytes": 9580,
+          "sha256": "3ce36961bc19682b011cfdbbac0ee4868da77475f96e03e64c6943c00e4ccad1"
+        },
+        {
+          "path": "apps/web/src/products/product-page-host.tsx",
+          "owner": "F2",
+          "bytes": 4202,
+          "sha256": "e1412ae76d5ef4424ec6d9e00699a1f17946d30bd9f1d91e602c547be3625332"
+        }
+      ]
+    },
+    {
+      "slice": "BOOTSTRAP26_FIXED_SQL_EXPORT_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/bootstrap26-sql-slice1/SQL-CLOSED4.json",
+      "receiptSha256": "f7f7eae4df8e1c57750dd769a7d01d0874dfe04d2a74bb8b8e606b6c7cc3d455",
+      "files": [
+        {
+          "path": "scripts/import-v3/native-bootstrap.mjs",
+          "owner": "D3",
+          "bytes": 21222,
+          "sha256": "678003978cdeccc24cc0102835d784c8ac1c982bad2d00a10aa7e2ee76819713"
+        }
+      ]
+    }
+  ],
+  "fileCount": 16,
+  "scope": "New independent bounded slices only; F2 types explicitly blocked by in-flight F1 closure, not passed. Codec local synthetic real decode only; MAIN26 actual issuer/runtime/import unverified."
+}

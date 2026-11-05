@@ -1,0 +1,32 @@
+SYNTHETIC and scripted pg protocol tests only. No real database/server/listener.
+Command: node --test tests/sales-query.test.ts tests/sales-query-postgres-protocol.test.ts apps/api/src/sales-query-http.test.ts
+✔ SYNTHETIC sales query HTTP: four read routes use current trusted actor/policy, no listener, exact bigint strings (1912.743573ms)
+✔ SYNTHETIC sales query HTTP: authentication missing/malformed/failing and missing providers never default to global (95.81659ms)
+✔ SYNTHETIC sales query HTTP: actor, role, scope and unknown filters cannot be granted from client data (146.284569ms)
+✔ SYNTHETIC sales query HTTP: current authorization denial and empty/malformed policy scope cannot touch reader (102.615779ms)
+✔ SYNTHETIC sales query HTTP: safe allowlisted errors and unknown SQL/provider messages remain redacted (213.607322ms)
+✔ SYNTHETIC sales query HTTP: strict transport rejects query strings, invalid JSON/media type and oversized body (64.709441ms)
+✔ sales query pg protocol: mandatory pool never connects at construction; no aborted or invalid-scope connection (148.771614ms)
+✔ sales query pg protocol: exact count and relational page share scoped RR snapshot, no hydration/catalog/N+1 (74.477638ms)
+✔ sales query pg protocol: empty out-of-range page retains exact total without global recount or fallback (31.929712ms)
+✔ sales query pg protocol: detail reads authorized native header/current snapshots/settlements in three bounded reads (128.204524ms)
+✔ sales query pg protocol: hidden/missing detail and history rollback without reading child facts (131.452408ms)
+✔ sales query pg protocol: oversized detail fails closed rather than truncating current lines (140.448208ms)
+✔ sales query pg protocol: audit metadata exact count/page reapply current scope and SALES kind with stable tie-break (14.418957ms)
+✔ sales query pg protocol: settlement summary includes approved full scope only and exact unbounded numeric sums, account page separately (39.320717ms)
+✔ sales query pg protocol: decoding failure rolls back, unknown commit outcome is not retried and discards client (21.665901ms)
+✔ sales query pg protocol: begin/connect/rollback errors release or discard correctly; no hidden retries (38.556197ms)
+✔ sales query pg protocol: abort while SQL is in flight requests rollback and stops remaining reads (21.445986ms)
+✔ sales query: required providers and empty/malformed trusted scopes fail closed (68.810834ms)
+✔ sales query: filters are strict, bounded, canonical and include actual calendar/range validation (9.664723ms)
+✔ sales query: actor, filters and granted clauses are isolated before and after policy await (8.495384ms)
+✔ sales query: abort and invalid actor stop before policy/reader, and current policy is called on every request (12.699878ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12634.059678
+Exit code: 0

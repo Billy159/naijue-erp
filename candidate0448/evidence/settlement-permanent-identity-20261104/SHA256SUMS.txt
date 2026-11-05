@@ -1,0 +1,3 @@
+9401476aa476a9efc8858fb36b4034de47984cdd8868a198b777eea60d956d55  packages/application/src/unified-import-stable-identity.ts
+a0b939464917cfe32efdbf557f6bccdb26375f41a18ea3db05b3623bad7ca933  tests/unified-import-stable-identity.test.ts
+44919f0d505660fd3e5528ef509cfce7c760541663a86cc2e168e1e6007d6503  tests/unified-import-stable-identity-preflight.test.mjs

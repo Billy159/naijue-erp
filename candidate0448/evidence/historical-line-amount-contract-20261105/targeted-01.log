@@ -1,0 +1,18 @@
+✔ six synthetic original discrepancies are retained and read back exactly in ordinary and streaming intake (212.04082ms)
+✔ a source flag or valid-looking copied evidence never grants the discrepancy exception (306.243881ms)
+✔ new runtime documents cannot borrow reviewed historical differences (121.05576ms)
+✔ changed original amount, price, quantity or exact source occurrence fails closed (509.934883ms)
+✔ foreign namespace, source inventory, parent identity and missing header provenance cannot reuse evidence (289.939459ms)
+✔ known header and receipt contradictions remain blocking despite line evidence (124.533565ms)
+✔ every reviewed discrepancy must remain present and exact, not a partial allow-list (82.183825ms)
+✔ evidence rejects wrong digest, duplicate identities/occurrences, malformed money and unknown fields (3.651458ms)
+✔ immutable capability does not accept a JSON clone or leak mutable source aliases (2.681179ms)
+✔ offline source reception cannot create an executable import plan, even with a scrubbed summary (76.589258ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2041.062094

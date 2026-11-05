@@ -1,0 +1,44 @@
+{
+  "atUtc": "2026-10-23T05:58:55.212583+00:00",
+  "parent": "f7606b0bb666113e1ebcf892403345cb2569fb55",
+  "taskId": "F03_QF2_FOUR_NATIVE_UI_FINDINGS_AND_EXISTING_LEDGER_CONSUMERS",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/inventory-page.tsx",
+      "owner": "F2",
+      "bytes": 17333,
+      "sha256": "c4c334ded5ac828ab4a7b8adb3d19ec4a686f19caf55bf67755b96dd6fb9e86a"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger-drawer.tsx",
+      "owner": "F2",
+      "bytes": 6481,
+      "sha256": "81cfb974018bb41be17f187b6337456d3fe9f2397597e0ff73ad2301eb81e6fa"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger.css",
+      "owner": "F2",
+      "bytes": 809,
+      "sha256": "25ad71c2c62881f8af702123cab51673f728780e775f6e024f9207022137c1e8"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "owner": "F2",
+      "bytes": 54498,
+      "sha256": "c565b3fcfd19569e94b66f54f8fb82b75bc13467fce2545a116b1d0bb4afb22f"
+    }
+  ],
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F03-LEDGER-OUTPUT-SEAMS-v1.json",
+  "scope": [
+    "Native original inherited tokens/actions/btn rules under inventory source consumer only",
+    "Fix QF2-I01-QUERY-PRIMARY-01,QF2-I01-RESULTS-FRAME-01,QF2-I01-TOOLS-ROW-01,QF2-OI05-POPOVER-SURFACE-01 and actual sticky consumer",
+    "Existing ledger20/page and head reads only same executed readReference/SKU/cell facts; no DTO/API/DB changes"
+  ],
+  "checksAdopted": "Original existingledger4/4, affectedstrict TS exit0, CSS esbuild parsers0 warnings0; no controller duplicate tests",
+  "notTested": [
+    "Actual fixedbrowser styles/scroll/realcap ledger",
+    "No fullfilteroutput/ledger missing projections provided",
+    "No realPG/query/formalperformance/wholepage pass"
+  ],
+  "next": "Integrate with F174 fullconsumer batch and productprimary141 into one necessary immutable completecandidate. QF2 only4/P01 and affected actualconsumers, QF onlyF174 affected; no perCSSbuild."
+}

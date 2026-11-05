@@ -1,0 +1,19 @@
+{
+  "atUtc": "2026-10-22T08:39:25.310661+00:00",
+  "status": "PUSH_BLOCKED_NETWORK_LOCAL_COMMITS_PRESERVED",
+  "lastVerifiedRemote": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "lastVerifiedRemoteMethod": "gh API exact branch ref readback after two git transport failures",
+  "attempts": [
+    {
+      "target": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+      "error": "HTTP2 framing layer"
+    },
+    {
+      "target": "947db3a58006d65c4b45314f283d4c07054ac9ac",
+      "transportOverride": "HTTP/1.1 only for this command",
+      "error": "github.com:443 connect timeout after75620ms"
+    }
+  ],
+  "localHead": "93ce7b61e5b0bb3573b7a2d6a66bda59eaf5214d",
+  "safety": "No force push, credential upload, secret output or remote change; continue independent work and retry on changed transport evidence"
+}

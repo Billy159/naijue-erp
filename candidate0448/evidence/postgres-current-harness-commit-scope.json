@@ -1,0 +1,8 @@
+{
+  "parent_commit": "f188f48f8873d23fe27c2411cf7d8ba38054eda9",
+  "scope": "Prepared current0001\u20130008 acceptance source only; historical selector refuses before driver construction",
+  "checks": "36 frozen hashes, scoped strict types, syntax checks,12 pure regressions and driver/network-blocked plan probes",
+  "engine_status": "NOT_RUN",
+  "target_required": "Separately authorized fresh disposable direct-loopback target; never current/production ERP",
+  "rollback": "Revert source commit; no database changes to roll back."
+}

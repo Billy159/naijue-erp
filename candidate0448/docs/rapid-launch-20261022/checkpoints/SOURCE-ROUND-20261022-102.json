@@ -1,0 +1,197 @@
+{
+  "atUtc": "2026-10-22T22:46:31.451350+00:00",
+  "parent": "d03f64304e69b2afc872094599f17f85e99e0c6c",
+  "groups": [
+    {
+      "slice": "feat: bind genuine transfer line sources through fixed native references",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/RESULT.json",
+      "receiptSha256": "abca2b7345dd9e4cdbe9309689b5a158cf34236e10dea876fcd61be1e6322fa7",
+      "receiptSnapshot": {
+        "taskId": "D3_GENUINE_TRANSFER_LINES26_SOURCE_CONSUMER",
+        "atUtc": "2026-10-22T22:43:50.308214+00:00",
+        "status": "SOURCE_READY_SYNTHETIC_ONLY_NO_PHYSICAL_SOURCE_GRANT",
+        "sourceExact2": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-line-source26.mjs",
+            "bytes": 32974,
+            "sha256": "a8ac7e2a5f847d386a825d1ad0769e3d0db47a5ba0cebaaf3d46d1eb6aebbcbe"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-line-source26.test.mjs",
+            "bytes": 24389,
+            "sha256": "00ba449d8be148c410a1e536f503f7636a9a5d336b7f250ab13282b4bb03b738"
+          }
+        ],
+        "preparer": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/prepare-once.mjs",
+          "bytes": 23847,
+          "sha256": "f096f9a7eee025ba15bdfc528d19a629d57068dd98b95aed589c8113aa3b2705"
+        },
+        "sourceDependencies": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-bindings.mjs",
+            "bytes": 16213,
+            "sha256": "0bd42f0cd8c196f5260c488f204b59e92a0fed3abe249a9bf62862c0556ae15b"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/verified-offset-source.mjs",
+            "bytes": 13069,
+            "sha256": "2fa3a40c2df8710fe5ba7d1d5e93cee0d041d5bddad7ec75bed070ea5e1d3fbf"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/import-v3-history-staging.ts",
+            "bytes": 8722,
+            "sha256": "8e5fe853f52c012b8b754cbe8a8c5212162c47808a88262338f9c0fe1144c104"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-storage-contract.ts",
+            "bytes": 6913,
+            "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/inventory-cutoff-import.ts",
+            "bytes": 10553,
+            "sha256": "70e728e8c1b348f0e687c5e8aa5533a0064e897c1858d2606b4064262770fa2d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-typed-closure.ts",
+            "bytes": 36837,
+            "sha256": "0a995599ed1a78b9f319b41365362a655a243e7b043e58a2104281cea06b2446"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/import-v2.ts",
+            "bytes": 10869,
+            "sha256": "de808fcf2d8a2b4ffa919d0d680474b594bb824b72516cae943605f910070294"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/import-v2-contract.ts",
+            "bytes": 20742,
+            "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/request-hash.ts",
+            "bytes": 1488,
+            "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/import-v3-history-settlement.ts",
+            "bytes": 12610,
+            "sha256": "113c8ffb4fce7e7b045039eb0c41cdc7a07a9a506630412b0054de44a7979bbc"
+          }
+        ],
+        "newSyntheticPassed": 6,
+        "checks": {
+          "initialFailedLog": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/protocol-first.log",
+            "bytes": 1931,
+            "sha256": "aaff97a70863109a0dc5298c9480d2c538482889741b62cb5039bd42abd8709d"
+          },
+          "allSixProtocolPassBeforeFinalMetadataDelta": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/protocol-final.log",
+            "bytes": 1061,
+            "sha256": "cc390a6a4d01ba2c31fac358fc13abe8557525984d7d23d911c598e445394ff4"
+          },
+          "finalAffectedCategory2Only": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/protocol-affected-category2-only.log",
+            "bytes": 287,
+            "sha256": "32ac0aab898627905e3fe5431f1b7e99de3df020ea6b23f6074497a9c3432b87"
+          },
+          "finalDelta": "Only export the same stager evidence12 helper and pin/validate the C-assigned private per-header count artifact. Final exact2 category2 checked; remaining5 reuse previous passed scopes. No old mapper/consumer QA or actual data reread.",
+          "preparerSyntax": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/preparer-syntax-final.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "preparerGuardInitial": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/preparer-guard-synthetic.log",
+            "bytes": 395,
+            "sha256": "3e84ed2efe54320de4d402116fc97ac7fcf7e4d9aa0f20d789ccaf16f67bf5ce"
+          },
+          "preparerGuardInitialQualification": "Three assertions passed, but eval import also triggered CLI and exit1. Original safe disabled failure retained.",
+          "preparerGuard3Affected": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/preparer-guard3-affected.log",
+            "bytes": 138,
+            "sha256": "fef7291dad136eb7b76ce5c6d602174b7032a5f7ad373c4f2ae301c45f97446c"
+          },
+          "preparerGuardCorrection": "Exclude eval entry points from CLI autostart; only affected guard3 repeated. Guard1/2 reused. Actual positive file-writing/budget/preparation path not executed."
+        },
+        "API": [
+          "createNativeTransferLine26BindingPreparer({binding,selection,headers,skus,expectedRows}) -> prepare({rawLine,canonical}) / finish / close; pure, never a grant",
+          "transferLineSourceEvidence26(preparedRow,selection) -> unchanged complete physical/source projection12 with exact stager provenance",
+          "openReviewedTransferLineSource26({binding,authorizedPayloadHash,sourceReviewFile,trustedSourceReviewSha256,referenceReviewFile,trustedReferenceReviewSha256[,signal]}) -> report/verify/chunks/authorize/openClosure/close"
+        ],
+        "behavior": [
+          "Strict two outside C source-copy/reference pins plus QB PASS, separate old source-index/header/SKU pins. Original source paths are metadata only; constructor consumes reviewed finite raw/canonical copies and original approved offset index.",
+          "Whole raw/canonical/index/decisions EOF/hash/count and actual row/native/fingerprint/global identity/header coverage complete before any external yield; source12/typed13, empty documents iterator.",
+          "Full original lexical snapshots, signed quantity, current stableImportId/header.id and old->canonical alias provenance. No new native UUID or changed mapper/SQL/DTO/permissions/unit/status/amount rule.",
+          "Compact native facts; stream offset/raw/decisions; packed canonical lookup discarded at construction; bounded200row/4MiB chunks. Original physical data/resource behavior still unmeasured.",
+          "Active checks after awaited reads/verification and before yields; close/abort revocation; source copies retained, no C parent deletion or broad cleanup.",
+          "Actual payload null denies closure; actual true document SHA waits separately authorized complete Header session; all11/MAIN49/PG/PUBLISH not inferred."
+        ],
+        "sourceKeysClarification": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/SOURCE-KEYS-CLARIFICATION.json",
+          "bytes": 3782,
+          "sha256": "071fe2e24e3f184023c7f037502ff4c8cb7f09d44e33853caa7bb4ddc10dd051"
+        },
+        "sourceProjectionKeys": [
+          "id",
+          "batch_id",
+          "entity_type",
+          "source_key",
+          "file_ref",
+          "sheet",
+          "row_no",
+          "source_file_sha256",
+          "row_sha256",
+          "raw_fields",
+          "normalized_fields",
+          "field_provenance"
+        ],
+        "sourceProjectionKeyCount": 12,
+        "typedLineProjectionKeyCount": 13,
+        "CProtocolRequirements": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/C-PROTOCOL-REQUIREMENTS.json",
+          "bytes": 3197,
+          "sha256": "684b62172b910d9ae212a9a7f13f71a7db9353f8d0e7a6bbe37c8ec6489fec34"
+        },
+        "consumedUnsignedDraftSha256AsMetadataOnly": "cf2657bffbcb0f6cba3bf6f578eee6b6fccb37941f5b109a27e366785f4b0721",
+        "notTested": [
+          "Actual261641 source/native binding/14279 header coverage/lineCount or digests",
+          "Actual positive K preparer read/write/budget/resource path",
+          "New actual genuine consumer over business artifacts",
+          "Actual PG/runtime/bootstrap49/MAIN/import/publication/all11",
+          "Actual complete Header source/document SHA or SalesNULL branch"
+        ],
+        "nonActions": {
+          "originalOffsetComponentReads": 0,
+          "originalSnapshotRowReads": 0,
+          "originalCSVReads": 0,
+          "nativeHeader32MBReads": 0,
+          "nativeSku35MBReads": 0,
+          "registryReads": 0,
+          "originalGzipReads": 0,
+          "newNativeUUIDs": 0,
+          "SQL": 0,
+          "newPrivateParentCreated": false,
+          "newCSourceOrReferenceAuthorityWritten": false
+        },
+        "next": "C freeze exact2+K preparer+receipt and dependency pins; separately sign precise operational window and create fresh parent/actual stat identity. Do not execute draft. Only one authorized physical prep attempt, first failure preserved, no automatic reread/expanded cap. After completed new joint candidate C/QB source-preservation/ref adoption is separate."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/native-transfer-line-source26.mjs",
+          "owner": "D3",
+          "bytes": 32974,
+          "sha256": "a8ac7e2a5f847d386a825d1ad0769e3d0db47a5ba0cebaaf3d46d1eb6aebbcbe"
+        },
+        {
+          "path": "scripts/import-v3/native-transfer-line-source26.test.mjs",
+          "owner": "D3",
+          "bytes": 24389,
+          "sha256": "00ba449d8be148c410a1e536f503f7636a9a5d336b7f250ab13282b4bb03b738"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "D3 new source-only exact2; purepreparer no execution grant, genuineconstructor requires external C source/reference pins. Existing mapper/stager/SQL/DTO/run untouched; source12/typed13 no fieldchange. Original261641/header/SKU/CSV/gzip notread, all11payloadNULL. K oncepreparer f096f9a7... waits C separately signed freshparent window and sourceQA."
+}

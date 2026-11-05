@@ -1,0 +1,8 @@
+{
+  "basis": "HEAD:adapters/postgres/src/inventory-query-reader.ts",
+  "guardSQLBytes": 2428,
+  "guardSQLSHA256": "b4364d9b6926e95e3f2cc8769a766b415c8f5772aa0079a2bdc3d4817a7a02e6",
+  "byteIdentical": true,
+  "existingReaderOtherBytesPreserved": true,
+  "note": "Only the original guard constant was extracted and imported. No SQL behavior or predicates changed; this is source evidence, not PostgreSQL execution."
+}

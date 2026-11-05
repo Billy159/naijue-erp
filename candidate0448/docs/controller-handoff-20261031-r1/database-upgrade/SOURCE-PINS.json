@@ -1,0 +1,314 @@
+{
+  "format": "static-source-pins-only",
+  "combined": "recovery/ui-combined-source-0201",
+  "stable": "recovery/staff-admission-worktree-2334",
+  "stable_commit_supplied_by_parent": "6a85f14b1b3b18f0c72f40d36d9bbece448f9140",
+  "files": [
+    {
+      "path": "adapters/postgres/migrations/0001_runtime_sales.sql",
+      "combined_sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf",
+      "stable_sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+      "combined_sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98",
+      "stable_sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0003_auth_sessions.sql",
+      "combined_sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29",
+      "stable_sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0004_transfer_runtime.sql",
+      "combined_sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e",
+      "stable_sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0005_product_read_fields.sql",
+      "combined_sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a",
+      "stable_sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0006_party_maintenance.sql",
+      "combined_sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c",
+      "stable_sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+      "combined_sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7",
+      "stable_sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0008_runtime_sparse_first_use.sql",
+      "combined_sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262",
+      "stable_sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+      "combined_sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e",
+      "stable_sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+      "combined_sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f",
+      "stable_sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0011_history_storage.sql",
+      "combined_sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965",
+      "stable_sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0012_history_header_native_reference.sql",
+      "combined_sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512",
+      "stable_sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0013_native_party_import.sql",
+      "combined_sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54",
+      "stable_sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0014_native_catalogue_import.sql",
+      "combined_sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022",
+      "stable_sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+      "combined_sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a",
+      "stable_sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+      "combined_sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620",
+      "stable_sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0017_native_payment_import.sql",
+      "combined_sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874",
+      "stable_sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+      "combined_sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da",
+      "stable_sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0019_history_typed_publish_gate.sql",
+      "combined_sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b",
+      "stable_sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0020_runtime_document_numbers.sql",
+      "combined_sha256": "8e56bbd0124bea56364753c0332a6cd17eaf2d389e843d95ea40c4d291ffc5d4",
+      "stable_sha256": "8e56bbd0124bea56364753c0332a6cd17eaf2d389e843d95ea40c4d291ffc5d4",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+      "combined_sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61",
+      "stable_sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0022_product_media_retained_delete.sql",
+      "combined_sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163",
+      "stable_sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0023_inventory_key_admission.sql",
+      "combined_sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65",
+      "stable_sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0024_history_effective_revisions.sql",
+      "combined_sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696",
+      "stable_sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0025_product_season_selection.sql",
+      "combined_sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248",
+      "stable_sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+      "combined_sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c",
+      "stable_sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-category-depth-successor.sql",
+      "combined_sha256": "6341b48840bf60a6f20fa76ec1ef08a0909e42f9138335db81bfb1eb200f227f",
+      "stable_sha256": "6341b48840bf60a6f20fa76ec1ef08a0909e42f9138335db81bfb1eb200f227f",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+      "combined_sha256": "09fb597e7b89e77cfb9711ca7ddba8e3d4fa898bf142e77796d0f68be964b1a3",
+      "stable_sha256": "09fb597e7b89e77cfb9711ca7ddba8e3d4fa898bf142e77796d0f68be964b1a3",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-effective-value-disambiguation.sql",
+      "combined_sha256": "c8fb573e62af9055cd4532266890b64e680e0db4556edeb3e33c1bf6c5c33d57",
+      "stable_sha256": "c8fb573e62af9055cd4532266890b64e680e0db4556edeb3e33c1bf6c5c33d57",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+      "combined_sha256": "2e6829ea72db20d5fdf62372dd9c52d44d32d9dd67d0ea0e9b02b57b082c65eb",
+      "stable_sha256": "2e6829ea72db20d5fdf62372dd9c52d44d32d9dd67d0ea0e9b02b57b082c65eb",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+      "combined_sha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e",
+      "stable_sha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+      "combined_sha256": "0eb5785c7e050c0b1eac5fe0fd8949dfd126f466130c841cef098247ef62cb38",
+      "stable_sha256": "0eb5785c7e050c0b1eac5fe0fd8949dfd126f466130c841cef098247ef62cb38",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql",
+      "combined_sha256": "41c491cca5f04cc19d15f0c05113cfb3c81fa39a648a5dc349874ba52ef588c9",
+      "stable_sha256": "41c491cca5f04cc19d15f0c05113cfb3c81fa39a648a5dc349874ba52ef588c9",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+      "combined_sha256": "9e7c5f0864f19d2f60bd856aa965b12db81d53db40040bbfef521731d76e5d17",
+      "stable_sha256": "9e7c5f0864f19d2f60bd856aa965b12db81d53db40040bbfef521731d76e5d17",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+      "combined_sha256": "5d60b860bc0261ad8103947baac642b20cfc2da5b3f07a88b87ad9135a22a227",
+      "stable_sha256": "5d60b860bc0261ad8103947baac642b20cfc2da5b3f07a88b87ad9135a22a227",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v12-history-numeric-revision.sql",
+      "combined_sha256": "60cb26b523738347ec03d672111eaa8824795399ab9ea17d88f8da4d3d08c965",
+      "stable_sha256": "60cb26b523738347ec03d672111eaa8824795399ab9ea17d88f8da4d3d08c965",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v14-core-heap-xmin-repair.sql",
+      "combined_sha256": "0d29a04138d7ab30db8e52c7adde5821df5a5a52a05589fd2875fd1777f1c409",
+      "stable_sha256": "0d29a04138d7ab30db8e52c7adde5821df5a5a52a05589fd2875fd1777f1c409",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+      "combined_sha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d",
+      "stable_sha256": "78fd94e1292057736d11e7e42a5b308c036d45176c4194d8fce26bb1dd6e767d",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql",
+      "combined_sha256": "85045e37db7468db82050f536589241d6f5e36156e8a23029fca67ab080fb6d6",
+      "stable_sha256": "85045e37db7468db82050f536589241d6f5e36156e8a23029fca67ab080fb6d6",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+      "combined_sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef",
+      "stable_sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+      "combined_sha256": "bebad118d5519b9e899215230e16fce92cbee9148ebbf35ba03af513c1f4f475",
+      "stable_sha256": "bebad118d5519b9e899215230e16fce92cbee9148ebbf35ba03af513c1f4f475",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+      "combined_sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750",
+      "stable_sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql",
+      "combined_sha256": "f1e0438c8a75bdee8850c55c86b842e7db0a863cb36ed1674423a2344bef9cc3",
+      "stable_sha256": "f1e0438c8a75bdee8850c55c86b842e7db0a863cb36ed1674423a2344bef9cc3",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+      "combined_sha256": "8bc9bbacafc64181a7aece848e4aac3ad565247ceb5498023e979fe2e7bf05de",
+      "stable_sha256": "8bc9bbacafc64181a7aece848e4aac3ad565247ceb5498023e979fe2e7bf05de",
+      "same_bytes": true
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "combined_sha256": "b1a25522163d444b891a87c2e27bb0ccd34bbfcecfda9657aa4ff8ab75e05a99",
+      "stable_sha256": "b1a25522163d444b891a87c2e27bb0ccd34bbfcecfda9657aa4ff8ab75e05a99",
+      "same_bytes": true
+    },
+    {
+      "path": "scripts/release/prepare-runtime26-v6.mjs",
+      "combined_sha256": "8c3ef5b3dda046e83c6c9995eb6a5a588561fa07e13a4a12fb188f2c30e613a1",
+      "stable_sha256": "8c3ef5b3dda046e83c6c9995eb6a5a588561fa07e13a4a12fb188f2c30e613a1",
+      "same_bytes": true
+    },
+    {
+      "path": "config/release-contract.json",
+      "combined_sha256": "3b7c53fcbfe7801195c40265dc538fcfe3fb61bf0aa6b97659c0b3fa2d666178",
+      "stable_sha256": "3b7c53fcbfe7801195c40265dc538fcfe3fb61bf0aa6b97659c0b3fa2d666178",
+      "same_bytes": true
+    },
+    {
+      "path": "scripts/release/manifest.mjs",
+      "combined_sha256": "2539f52cd19d17710b7e5f3c8d0ac0c615ca02a3e5fa8e473c75cb72fbd3283c",
+      "stable_sha256": "2539f52cd19d17710b7e5f3c8d0ac0c615ca02a3e5fa8e473c75cb72fbd3283c",
+      "same_bytes": true
+    },
+    {
+      "path": "scripts/release/provision-database.py",
+      "combined_sha256": "fcf79dd2eb85c8e9380b549541a9f237c0ef564d93975317aedad2c56a051676",
+      "stable_sha256": "fcf79dd2eb85c8e9380b549541a9f237c0ef564d93975317aedad2c56a051676",
+      "same_bytes": true
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "combined_sha256": "7b7f59e7c547d4ee73249109ec0e3ecaa84c32d2087adbfc71e1207bac798e15",
+      "stable_sha256": "7b7f59e7c547d4ee73249109ec0e3ecaa84c32d2087adbfc71e1207bac798e15",
+      "same_bytes": true
+    },
+    {
+      "path": "docs/repair-review-20261029/COMPLETE-WRITE-V6.md",
+      "combined_sha256": "0e6c952d017cec33f4b6429cbd5d2deb081af1a72fd52058fdd78c7a893502ef",
+      "stable_sha256": "0e6c952d017cec33f4b6429cbd5d2deb081af1a72fd52058fdd78c7a893502ef",
+      "same_bytes": true
+    }
+  ]
+}

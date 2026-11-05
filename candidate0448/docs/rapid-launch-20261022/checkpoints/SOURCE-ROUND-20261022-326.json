@@ -1,0 +1,17 @@
+{
+  "atUtc": "2026-10-24T13:30:38.208945+00:00",
+  "parent": "7fd456417b9c252d96d84e979dacda15ca7c0c7e",
+  "taskId": "C_V16_OPTIONAL_DOCUMENT_STAFF_FRONTEND_READ_PORT",
+  "files": [
+    {
+      "path": "apps/web/src/application/contracts.ts",
+      "owner": "C",
+      "bytes": 13362,
+      "sha256": "8d56b1fb38ee5451f912df5cbb3e9fd853aba5ce7c27c784139c998885fc2608"
+    }
+  ],
+  "stage": "OPTIONAL_FRONTEND_READ_CAPABILITY_ONLY_NOT_ENABLED_NO_BACKEND_PERMISSION_CHANGE",
+  "checks": "Exact optional fields and type-only import; affected consumer type closure belongs to original F1 v16 module, no full regression",
+  "wholePageAccepted": false,
+  "deployed": false
+}

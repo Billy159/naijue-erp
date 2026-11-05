@@ -1,0 +1,125 @@
+{
+  "atUtc": "2026-10-24T02:28:03.724464+00:00",
+  "parent": "c7ea2361084a75b5ab93d5f97001fcc0f58644e5",
+  "taskId": "B06_C144_RETAINED_CAPTURED_SOURCE12_TYPED21_11_EXISTING_READERS",
+  "files": [
+    {
+      "path": "scripts/import-v2/authorized-sales-detail-reader.mjs",
+      "bytes": 28365,
+      "sha256": "7b5cbed45b8fc878e8956b8b8833840587134935b3ec1ac8a228fd2cc30886f3",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v2/authorized-sales-detail-reader.test.mjs",
+      "bytes": 31010,
+      "sha256": "1950942396a1b95c34e9944414d953ed52c55f4e3a42d73235b2793149ce61e7",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v2/authorized-settlement-reader.mjs",
+      "bytes": 3551,
+      "sha256": "c02f0e75bd8ab3f5d2ab7aaa37a09a1d9fb26fe41d8009af215b020cb8f0dcc5",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v2/authorized-settlement-reader.test.mjs",
+      "bytes": 21151,
+      "sha256": "6777e7b12b77238ba4d8142a4c55035927928cbc1bf14d8c989844cd16ac9892",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json#capturedC144Continuation",
+  "ownerDelivery": {
+    "atUtc": "2026-10-24T02:23:58.101907+00:00",
+    "taskId": "D3-B06-C144-RETAINED-SALES-SETTLEMENT-CONSUMER",
+    "status": "SOURCE_IMPLEMENTED_FROZEN_NEW6PASS_NO_REAL_PAYLOAD_READ_OR_NATIVE_EXECUTION",
+    "authority": "C currentCapturedContinuation release on these original4 D3 registered leaves; original human 01a161f7-a5e8-7e10-9059-9537c28910c2 meaningful seven-field reporting to C. Existing fields/source-only consumer, no new DB write/schema contract. gpt-6.1-sol/xhigh, Fast switch not verified.",
+    "files": [
+      {
+        "path": "scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 28365,
+        "sha256": "7b5cbed45b8fc878e8956b8b8833840587134935b3ec1ac8a228fd2cc30886f3"
+      },
+      {
+        "path": "scripts/import-v2/authorized-sales-detail-reader.test.mjs",
+        "bytes": 31010,
+        "sha256": "1950942396a1b95c34e9944414d953ed52c55f4e3a42d73235b2793149ce61e7"
+      },
+      {
+        "path": "scripts/import-v2/authorized-settlement-reader.mjs",
+        "bytes": 3551,
+        "sha256": "c02f0e75bd8ab3f5d2ab7aaa37a09a1d9fb26fe41d8009af215b020cb8f0dcc5"
+      },
+      {
+        "path": "scripts/import-v2/authorized-settlement-reader.test.mjs",
+        "bytes": 21151,
+        "sha256": "6777e7b12b77238ba4d8142a4c55035927928cbc1bf14d8c989844cd16ac9892"
+      }
+    ],
+    "releasedFrozenForC": true,
+    "implementation": [
+      "Existing openAuthorizedSalesDetailReader/openAuthorizedSettlementReader accept an explicit capturedSource option before entering original/materialized source IO. The shared finite helper lives in the existing sales reader and is reused by the existing settlement reader; no new producer/file/endpoint or PAYMENT collector changes.",
+      "Reads and pins only the small accepted manifest; selects its exact source12/typed21 or source12/typed11 descriptors, checks reference-only/noPG/noMAIN/noPUBLISH/all11false/fullhashNULL meaning and exact coverage. All actual retained data IO is through the C-owned reader capability, not this module filesystem reads or large-file hash scans.",
+      "Restores the deterministic original unaugmented source provenance used by C144; original mapper recomputes complete32 money, raw versus normalized cells, source identity, old alias/native SKU/header/account/method bindings, original row fingerprints and complete source12 round trip. Captured typed projection is then matched to the original complete21/11 schema, not partial fields.",
+      "Current independent resolveNativeBinding remains mandatory for authorize even though captured staging evidence contains source-reference IDs; missing/wrong binding rejects. Source-only rows/report remain importReadyfalse/nativeBindingsVerifiedfalse. No guessed hall/SKU/unique-candidate adoption or MAIN/PUBLISH grant.",
+      "Compact original source/binding/fingerprint index avoids re-reading/re-hashing retained data during repeated authorization; capability verification rechecks original accepted source proof/current lease. Post-await close/revocation refuses, C-owned resources close once and construction failures close as well.",
+      "Original original/materialized reader branches remain; sealed-payment-source.mjs and all original PAYMENT code were not edited. Original v14 source8 leaves remain frozen."
+    ],
+    "originalCallInterface": {
+      "exports": [
+        "scripts/import-v2/authorized-sales-detail-reader.mjs:openAuthorizedSalesDetailReader(options)",
+        "scripts/import-v2/authorized-settlement-reader.mjs:openAuthorizedSettlementReader(options)"
+      ],
+      "options": "Existing batchId/fixedSourceNamespace/trustedApprovalSha256/approvedMoneyOverlaySha256/resolveNativeBinding plus explicit capturedSource. Captured entry does not need original base/v3Amendment/spoolParent or a materialized re-producer.",
+      "capturedSource": {
+        "manifestFile": "Original C144 .../sales-settlement-source-closure-20261023-C-run1/MANIFEST.json",
+        "trustedManifestSha256": "107ba2909e041d7f1e974138b8894e2765f77585a95f6b92cdba66acbbf160ed",
+        "selection": "Original exact per-entity independently authorized source selection including alias/money pins; must equal persisted C144 staging selection",
+        "moneyApprovals": "Original complete approved32 Map, structural identity and current source review must match the original overlay; never per-chunk subset",
+        "read": {
+          "sourceRows": "async iterable sourceRows(exact original source artifact descriptor) -> complete {relation:import_source_row,key,projection} in existing global key byte order",
+          "typedRow": "async typedRow(exact original typed artifact descriptor,original native row key) -> full {relation:history_sales_line|history_sales_settlement,key,projection}; C retained lookup/lease supplies exact already-verified bytes, no new raw source capture"
+        },
+        "verify": "async verify(context) -> undefined only. C actual retained-read capability verifies current lease and prior accepted exact-byte/source proof for the pinned manifest/descriptors, selection/batch/namespace and original whole32 fingerprint; not bool or an unverified report, and no large-file rehash per authorization. Context contains the exact expected original input references.",
+        "close": "async close() releases the original reader-owned C retained lease/handles, called once by the reader; caller still closes reader in finally"
+      },
+      "returns": "Original report/rows(entity?)/authorize(prepared)/close. Report.preflight:null, rawRowsScanned:0, importReady:false, nativeBindingsVerified:false, capturedSource context. rows must be consumed for exact original source proof before authorizing that prepared row. Existing stores and all11 provider composition remain the caller.",
+      "nativeResolverContract": "Same original query {entity,sourceKey,rawFields,normalizedFields}; independently returns exact {header,sku} or {header,account,method}. It must prove current authorized source/native identity, not echo or self-authorize the captured proof."
+    },
+    "checks": {
+      "newTests": 6,
+      "pass": 6,
+      "fail": 0,
+      "salesCommand": "node --test --test-name-pattern='captured C144 sales' scripts/import-v2/authorized-sales-detail-reader.test.mjs",
+      "settlementCommand": "node --test --test-name-pattern='captured C144 settlement' scripts/import-v2/authorized-settlement-reader.test.mjs",
+      "scope": [
+        "Original sales negative quantity/negative amount, approved tail, leading-zero snapshots and NULL remain exact; same row fingerprint and alias retained",
+        "Refund amount absolute/direction preserved, original methodB independent from accountA, optional original method missing stays missing/NULL; blank names become existing NULL",
+        "Missing/current wrong native header/SKU/account/method binding, source fingerprint change, typed fact rewrite, unapproved money/partial32, source authority revoke/boolean and short coverage deny",
+        "Close during retained typed read or native callback denies after await; invalid manifest closes before retained read; repeated auth consumes source1/typed1perrow only, no data-file hash scans"
+      ],
+      "onlyNecessaryReruns": [
+        "Initial new sales synthetic fixture missed realpath import; corrected test fixture and reran only failed new3",
+        "Settlement report kind preserved original HISTORY_SETTLEMENT_SOURCE_READER, added assertion and reran only affected positive new1"
+      ],
+      "oldSuitesRepeated": false,
+      "syntax": "Original two reader module parse checks passed; test runner imports real application mapper/projection modules"
+    },
+    "notPerformed": {
+      "realC144DataRead": false,
+      "credentialRead": false,
+      "newCapture": false,
+      "largeDataRehash": false,
+      "identityRegistryRead": false,
+      "PG": false,
+      "SSH": false,
+      "build": false,
+      "deploy": false,
+      "MAIN": false,
+      "PUBLISH": false,
+      "realNativeBindingEstablished": false
+    },
+    "next": "C fixes these exact4 pins and original QB reviews only captured delta; C/D1 registered original full provider supplies retained sourceRows/typedRow/verify/close capability and independently authorized native-binding resolver under its actual read window. Reuse C144 four existing files/whole32 and existing final transfer adapter. No source8 v14 edits or new producer. Remaining user hall-v5/scheme6 branches and true full hash stay as previously tracked."
+  },
+  "qualification": "Only original4 existing-reader leaves; captured input consumes retained source12/typed21|11 under independent native binding/source authority, source-only does not become MAIN/fullhash. Owner6 new affected tests adopted, no actual payload scan/rehash/physicalcapture or PG. Shared sealed-payment unchanged, actual native binding/fullMAIN/source hall v5/schemes still unresolved. OriginalQB newdelta pending."
+}

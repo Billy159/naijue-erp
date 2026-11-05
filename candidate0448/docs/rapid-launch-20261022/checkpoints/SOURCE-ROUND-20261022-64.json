@@ -1,0 +1,326 @@
+{
+  "atUtc": "2026-10-22T20:03:57.381464+00:00",
+  "parent": "61517de362bfc6d5be1a682d35714f1325ceb5ab",
+  "groups": [
+    {
+      "slice": "B04_STOCK_READ26_MISSING_BRANCH",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/stock-read26-v1/RESULT.json",
+      "receiptSha256": "4c73ef910d51503c4f3c23a5fec88e231c720f8be0134cec98fd62f5a7fc6d2a",
+      "receiptSnapshot": {
+        "format": "D2_STOCK_READ26_DELTA_RECEIPT_V1",
+        "taskId": "B04_STOCK_READ26_MISSING_BRANCH",
+        "recordedAtUtc": "2026-10-22T20:00:45.016058+00:00",
+        "status": "SOURCE_DONE_NEW3_PROTOCOL_AND_EXACT2_STRICT_PASS_NOT_ACTUAL_PG",
+        "authority": {
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "humanProgressAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "ownership": "C explicit D3 release + roles/D2 registration + ownershipTransfers; original exact2 unchanged before writes",
+          "requestedModel": "gpt-6.1-sol/xhigh",
+          "fastObserved": "UNKNOWN_TOOL_DOES_NOT_EXPOSE_SETTING"
+        },
+        "sourceBaselineHeadObserved": "0bc99573c606ef30c17dd8689ed06239c14a4fd9",
+        "candidateCommit": null,
+        "files": [
+          {
+            "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+            "beforeSha256": "ec8ce97299f3409a30253b9f4e8b6477ba144b82183307d84b9451bab0cc5975",
+            "afterSha256": "fc911a3b6e0db054814c7c9f5890bb8235a7850b7595ca1a87875b70d8537baa"
+          },
+          {
+            "path": "tests/product-warehouse-stock-postgres-protocol.test.ts",
+            "beforeSha256": "b75b3f45d6659575e6d1b7aba0b4d2119712edad8c243ec13bbab10512b4564c",
+            "afterSha256": "03b3ad531e0b73a37b8e23893003937cb4c9f541a6d8ab8699ef3810dc703a22"
+          }
+        ],
+        "change": "readStock adds a separate exact1..26 profile branch that calls reviewed runtime26.assertReady(original leased client, INVENTORY_ADMISSION) inside the original REPEATABLE READ READ ONLY snapshot before product/publication/key reads.",
+        "preserved": [
+          "Legacy19 and explicit23/24 paths/union unchanged",
+          "readOverview body unchanged",
+          "Original inventory authorization before connect",
+          "Completed single publication/checkpoint checks",
+          "Original hall/warehouse scope, warehouse x SKU SQL count, page/offset and native key decisions",
+          "Negative quantities, explicit zero and unadmitted UNKNOWN/null; no inventory writes"
+        ],
+        "checks": [
+          {
+            "name": "red reproduction",
+            "scope": "K-only new3 tests imported original unchanged R; 0pass/3fail for missing26 branch",
+            "log": "red.log",
+            "sha256": "584945535a926418ec3418667ee8c1965da32d68c894f18b5f0d8e28ffb329a2"
+          },
+          {
+            "name": "new exact26 protocol delta",
+            "command": "Node24 --test --test-concurrency=1 --test-name-pattern=stock exact26 tests/product-warehouse-stock-postgres-protocol.test.ts",
+            "status": "PASS",
+            "passed": 3,
+            "failed": 0,
+            "log": "green.log",
+            "sha256": "5ca8815239a367d16170db185a7375b86f704384555d393bef32ac282a85fda9"
+          },
+          {
+            "name": "exact2 strict types",
+            "status": "PASS",
+            "exitCode": 0,
+            "flags": [
+              "noEmit",
+              "strict",
+              "noUncheckedIndexedAccess",
+              "exactOptionalPropertyTypes",
+              "noFallthroughCasesInSwitch",
+              "noImplicitOverride",
+              "verbatimModuleSyntax",
+              "allowImportingTsExtensions",
+              "module NodeNext",
+              "moduleResolution NodeNext",
+              "target ES2023",
+              "skipLibCheck",
+              "types node",
+              "lib ES2023,DOM"
+            ],
+            "log": "types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "exact2 diff whitespace check",
+            "status": "PASS",
+            "exitCode": 0
+          }
+        ],
+        "newCases": [
+          "Original leased client and INVENTORY_ADMISSION purpose, authorized read-only snapshot, real pagination/count binding and UNKNOWN key result",
+          "Denied inventory before connection; absent runtime, rejected verifier and boolean substitute fail before product read",
+          "Verified runtime does not replace completed inventory publication; missing publication rolls back before count/page/key data"
+        ],
+        "notTested": [
+          "Actual PostgreSQL/ACL/full inventory runtime26 issuer",
+          "Browser/HTTP inventory or page performance",
+          "Deployment or production acceptance",
+          "Legacy stock/overview whole suites not rerun; unchanged valid evidence reused"
+        ],
+        "notClaimed": [
+          "Synthetic protocol capability is not real reviewed issuer evidence",
+          "C35 maintenance-only purpose is not an inventory runtime grant",
+          "Source completion is not independent QA PASS"
+        ],
+        "newRPaths": [],
+        "databaseConnection": false,
+        "gitMutation": false,
+        "schemaOrContractMutation": false,
+        "buildOrHostActivation": false,
+        "proposalPatchSha256": "12278b9970441628c8d5320dd66db2135a33ee14a25d1508ca58c97a542b5383",
+        "appliedDiffSha256": "7660d095059c0c1ad588a3af52e1aba255ab311c8b3ad7c5f3056775ce51d989",
+        "blockers": [],
+        "next": "C fixes/pins this exact2 and chooses scoped independent new26 review. Actual host must independently provide reviewed inventory-purpose original-client capability and published inventory; no default activation."
+      },
+      "files": [
+        {
+          "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+          "sha256": "fc911a3b6e0db054814c7c9f5890bb8235a7850b7595ca1a87875b70d8537baa",
+          "bytes": 22060,
+          "owner": "D2"
+        },
+        {
+          "path": "tests/product-warehouse-stock-postgres-protocol.test.ts",
+          "sha256": "03b3ad531e0b73a37b8e23893003937cb4c9f541a6d8ab8699ef3810dc703a22",
+          "bytes": 27525,
+          "owner": "D2"
+        }
+      ]
+    },
+    {
+      "slice": "F1_TRANSFER_ANCHOR",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/CURRENT-FORM-EXACT26-RESULT-v1.json",
+      "receiptSha256": "a3311c1bda6d482eb5b676aed67e2344efff4ddb21d7ff08fc38faba591f47f6",
+      "receiptSnapshot": {
+        "version": "D1_CURRENT_FORM_EXPLICIT_EXACT26_SOURCE_V1",
+        "role": "D1",
+        "status": "SOURCE_READY_C_CHECKPOINT_AND_INDEPENDENT_REVIEW_PENDING",
+        "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "files": [
+          {
+            "path": "adapters/postgres/src/current-form-reader.ts",
+            "bytes": 34634,
+            "sha256": "9c1c7ce16af6e74b5c2a2987c31bca2fd6d574b2ed11c15b2b1c9f5c4f62ebf3"
+          },
+          {
+            "path": "tests/current-form-reader.test.ts",
+            "bytes": 59430,
+            "sha256": "ce7610b0c62a43ec8944c4357fa8ce04fb82768b71d935b302b37f4b37b1d702"
+          }
+        ],
+        "changes": [
+          "Optional checked NativeRuntime26Capability. Every call checks original borrowed client CURRENT_FORM_READ before BEGIN and again inside the same RR READ ONLY snapshot before native identity/authorization.",
+          "Barcode explicit26 requires exact dense own-data 1..26. Default no-capability path remains exact19; no shared reviewed-schema enum/prefix union expanded.",
+          "Original current identity, grant, warehouse facts, retained/enabled references and import-source publication filters unchanged. STAGED/unpublished binding returns UNAVAILABLE with null binding/SKU.",
+          "Original COMMIT/ROLLBACK/release/error semantics retained. No connection during construction."
+        ],
+        "validation": {
+          "receipt": "CURRENT-FORM-EXACT26-VALIDATION-v1.json",
+          "sha256": "5d2f41ad7e4db852fbce6e965c9edf166de3bdfa489d0a18f3852de395ad8497",
+          "uniquePass": 7,
+          "newUnique": 4,
+          "affectedUnique": 3,
+          "skipped": 0,
+          "strictDirectExit": 0,
+          "firstFailurePreserved": true,
+          "onlyFailedScopeRerun": true
+        },
+        "boundaries": {
+          "actualDatabase": false,
+          "actualRuntimeGrant": false,
+          "hostActivation": false,
+          "historyOwnedByD3": true,
+          "frontendChanged": false,
+          "sharedCContractsChanged": false,
+          "sourcePublishAuthorized": false,
+          "fullRealImportCompleted": false
+        },
+        "next": "C exact2 checkpoint; independent new exact26 scope only. Actual R1 grant/catalog/issuer review remains C-owned; ephemeral QA C35 pins are inapplicable."
+      },
+      "files": [
+        {
+          "path": "adapters/postgres/src/current-form-reader.ts",
+          "sha256": "9c1c7ce16af6e74b5c2a2987c31bca2fd6d574b2ed11c15b2b1c9f5c4f62ebf3",
+          "bytes": 34634,
+          "owner": "D1"
+        },
+        {
+          "path": "tests/current-form-reader.test.ts",
+          "sha256": "ce7610b0c62a43ec8944c4357fa8ce04fb82768b71d935b302b37f4b37b1d702",
+          "bytes": 59430,
+          "owner": "D1"
+        }
+      ]
+    },
+    {
+      "slice": "TR-UI-02 actual Arco wrapper anchor alignment only",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-41/DELIVERY.json",
+      "receiptSha256": "b921359840197bf19bf30c44fb31fbdb31729543b3023408a861872ef5a7430f",
+      "receiptSnapshot": {
+        "chunk": 41,
+        "status": "READY_FOR_C_PIN",
+        "scope": "TR-UI-02 actual Arco wrapper anchor alignment only",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "sha256": "136bc84ae7c0f42cb81cbeb459a1fcae2875796a8207c0b6b7a7682c01cd2642"
+          }
+        ],
+        "evidence": "v010-d6ad29c/TRANSFER-FINDER-FIXED-DOM.json x250 inner input versus x236 outer wrapper; finder measured wrapper282.523 but positioned on inner input. Sales theme/alignment accepted and untouched.",
+        "change": "Resolve the actual full Arco input-group wrapper once for both installed Trigger getTargetDOMNode and finder measurement; source native inner input remains focus/raw/keyboard owner. No new tokens/CSS/body/scanner behavior.",
+        "checks": {
+          "types-1.log": "exit0",
+          "anchor-1.log": "exit0 actual Application Transfer with injected outer280 versus inner244/x250; measured finder280/root670, token container, raw/focus/cleanup. Does not prove browser CSS/pixel positioning."
+        },
+        "notTested": [
+          "Actual next-candidate x/width equality versus visible outer control; C Demo required"
+        ],
+        "blockers": [],
+        "next": "C pin and actual Demo narrow TR02 retest; no Sale/capture/theme or full keyboard suite repeats"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "sha256": "136bc84ae7c0f42cb81cbeb459a1fcae2875796a8207c0b6b7a7682c01cd2642",
+          "bytes": 25150,
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "D3_GENUINE_PRODUCT26_ORIGINAL_SOURCE_AND_FULL_REFERENCE_FACTORY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product-source26-consumer1/RESULT.json",
+      "receiptSha256": "3f2917602a69cfa6affde35884c3ebc1e52ee6995d87489cfbb2949422fb48b9",
+      "receiptSnapshot": {
+        "taskId": "D3_GENUINE_PRODUCT26_ORIGINAL_SOURCE_AND_FULL_REFERENCE_FACTORY",
+        "status": "SOURCE_READY_NEW4PASS_ACTUAL2956_EXACT_PRIOR_NOT_EXECUTION",
+        "atUtc": "2026-10-22T20:00:19.025699+00:00",
+        "registeredSourceExact2": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-product-source26.mjs",
+            "bytes": 9068,
+            "sha256": "1c41c5c2a4c1a7d35504fbde9675b1ea6978df56764337d181212d9b4370d886"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-product-source26.test.mjs",
+            "bytes": 10078,
+            "sha256": "9a78d54865e5d5446432172ddd38d6b4c6c5d1e253f909cbad5c760f5e9ab791"
+          }
+        ],
+        "api": "openReviewedProductSource26({binding,authorizedPayloadHash,source,reference,chunkRows})",
+        "checks": {
+          "newProtocol": {
+            "pass": 4,
+            "fail": 0,
+            "log": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product-source26-consumer1/protocol-first.log",
+              "bytes": 668,
+              "sha256": "181d8602642ecb63725eba8779ed1a5d5db7af9f877b0992af9ae567ca5c2350"
+            }
+          },
+          "actual": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product-source26-consumer1/ACTUAL2956-RESULT.json",
+            "bytes": 5114,
+            "sha256": "d34a8c166051c7ec2d80d3bc561c2ff3922538c7079df593851540f00151dc5d"
+          },
+          "products": 2956,
+          "chunks": 30,
+          "unknownSeasons": 48,
+          "multipleSeasons": 310,
+          "allChunkFingerprintsEqualPriorAccepted": true,
+          "unknownActualMainScopeRejected": true,
+          "elapsedMilliseconds": 20306.0335,
+          "nodeResourceUsageMaxRSSRaw": 532720
+        },
+        "authorityBoundaries": {
+          "originalSource": "Actual reviewed original2956 component, not prepared-input cache",
+          "fullReferences": "Separate C-adopted fullV2 reference manifest and five pinned mapping artifacts",
+          "actualPayloadHash": null,
+          "actualClosure": "REFUSED_WITHOUT_ACTUAL_PAYLOAD_HASH",
+          "syntheticClosure": "Full source26/product25 for UNKNOWN and MULTIPLE checked",
+          "executionAuthorized": false
+        },
+        "reviewOnlyNewScope": [
+          "New genuine source factory composition and ownership/lifetime/chunk coverage",
+          "Original2956 factory rebuild compared to prior accepted full30 chunk fingerprints",
+          "Synthetic full25 closure plus actual unknown MAIN denial"
+        ],
+        "reuseNotRepeat": [
+          "QB73 full2956 reference decisions",
+          "Original source/season derivation and historical accepted QA"
+        ],
+        "notTested": [
+          "Actual PostgreSQL or runtime capability",
+          "Actual all11 closure",
+          "Actual SOURCE/MAIN49 execution or publication",
+          "Full-import performance/capacity"
+        ],
+        "nonActions": {
+          "originalWorkbooksRead": 0,
+          "materializedFullSourceRescans": 0,
+          "headerGzipReads": 0,
+          "registryReread": 0,
+          "newNativeUUIDs": 0,
+          "sql": 0
+        },
+        "next": "C freeze exact2 and route only new source consumer/closure lifetime checks; complete remaining11 producer gaps via original queue."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/native-product-source26.mjs",
+          "sha256": "1c41c5c2a4c1a7d35504fbde9675b1ea6978df56764337d181212d9b4370d886",
+          "bytes": 9068,
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/native-product-source26.test.mjs",
+          "sha256": "9a78d54865e5d5446432172ddd38d6b4c6c5d1e253f909cbad5c760f5e9ab791",
+          "bytes": 10078,
+          "owner": "D3"
+        }
+      ]
+    }
+  ],
+  "fileCount": 7,
+  "scope": "D2 stock26 explicit branch2; D1 currentform26 sameclient2; F1 Transfer sameanchor1; D3 genuineproduct consumer2. No actual import/host/browser claim."
+}

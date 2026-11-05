@@ -1,0 +1,19 @@
+/* Authoritative page composition; shared rules have one source. Bundled at build time. */
+@import "./shared/product-toolbar.css";
+@import "./pages/products-1.css";
+@import "./shared/product-dialog.css";
+@import "./shared/inventory-controls.css";
+@import "./shared/entity-picker.css";
+@import "./shared/settings-account.css";
+@import "./shared/inventory-query.css";
+@import "./shared/surface-controls.css";
+@import "./shared/confirmations.css";
+@import "./shared/product-filters.css";
+@import "./shared/catalogue-layout.css";
+@import "./pages/products-2.css";
+@import "./shared/catalogue-search.css";
+@import "./pages/products-3.css";
+@import "./shared/catalogue-tables.css";
+@import "./pages/products-4.css";
+@import "./shared/product-detail.css";
+@import "./shared/approved-header-navigation.css";

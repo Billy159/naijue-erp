@@ -1,0 +1,35 @@
+{
+  "format": "PRIVATE_GITHUB_DRAFT_SOURCE_RECOVERY_CHECKPOINT_V1",
+  "atUtc": "2026-10-22T20:07:48.806692+00:00",
+  "sourceCommit": "03fb221ba7cae10a0304a32cb73afc8cc699d206",
+  "branch": "codex/local-takeover-wip-20261022-082411",
+  "normalGitHubBranchObserved": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "normalPushSucceeded": false,
+  "bundle": {
+    "name": "naijue-erp-source-03fb221.bundle",
+    "bytes": 1290636,
+    "sha256": "61fe995af94adeb576b908789625e28c27575293e9beb694c2784b2f597df047",
+    "requiredBaseCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+    "headRef": "HEAD"
+  },
+  "repository": "Billy159/naijue-erp",
+  "draftTag": "codex-checkpoint-20261022-a7e817b",
+  "scope": "Exact source throughC64/current docs; actual C35 temporary issuer and C36 actual application media three-case delta; no private business data/credentials/authority originals",
+  "restore": "Verify SHA and git bundle verify with exact base object; fetch HEAD into a new codex/recovery branch without resetting current checkout. Read docs/rapid-launch-20261022/HANDOFF.md. K/A/private-data/operational references require separately authorized access; no inferred grants.",
+  "businessRelease": false,
+  "uploadOutcome": "UNCONFIRMED_UNTIL_DOWNLOAD_SHA_AND_BUNDLE_VERIFY",
+  "verifiedReadback": {
+    "atUtc": "2026-10-22T20:08:56.024339+00:00",
+    "sourceCommit": "03fb221ba7cae10a0304a32cb73afc8cc699d206",
+    "url": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-2c2d506edb2c8167f485",
+    "isDraft": true,
+    "downloadSha256": "61fe995af94adeb576b908789625e28c27575293e9beb694c2784b2f597df047",
+    "bytes": 1290636,
+    "bundleVerify": true,
+    "metadataByteIdentical": true,
+    "notesReadbackMatched": true,
+    "normalPushSucceeded": false,
+    "businessRelease": false
+  },
+  "status": "UPLOADED_DOWNLOADED_SHA_AND_BUNDLE_VERIFIED"
+}

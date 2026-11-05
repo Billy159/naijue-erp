@@ -1,0 +1,40 @@
+{
+  "task": "Frozen-source sales list and read-only detail presentation adaptation",
+  "sourceRevision": "b8bcfe3",
+  "checks": {
+    "salesScopedTypecheck": {
+      "exitCode": 0,
+      "log": "frozen-typecheck.txt"
+    },
+    "syntheticDom": {
+      "exitCode": 0,
+      "groups": 9,
+      "log": "frozen-dom-tests.txt"
+    },
+    "frozenSourceStatic": {
+      "exitCode": 0,
+      "sourceHashes": 10,
+      "log": "frozen-source-check.txt"
+    },
+    "existingSplitBuild": {
+      "exitCode": 0,
+      "log": "frozen-build-check.txt"
+    },
+    "scopedDiffWhitespace": {
+      "exitCode": 0
+    }
+  },
+  "sourceManifest": "frozen-adaptation-source.sha256",
+  "remainingGaps": [
+    "No native saved historical category snapshot; category cell remains explicit unavailable fact.",
+    "Detail remains in existing safe modal, not the frozen full document route.",
+    "Native single filters and native date inputs, not frozen multi/Shadow Arco controls.",
+    "Detail body CSS remains sales-route lazy, while JavaScript/data remain explicit-detail-action lazy."
+  ],
+  "notRun": [
+    "real browser after prior denial",
+    "network/server/database",
+    "performance/waterfall/memory measurements",
+    "commit/push/deployment"
+  ]
+}

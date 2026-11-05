@@ -1,0 +1,13 @@
+{
+  "scope": "Independent TRANSFER_LINE staging unknown-COMMIT correction; not part of frozen metadata/Mac overlay",
+  "files": {
+    "adapters/postgres/src/import-v3-history-staging-store.ts": "2506f5395c471fc6829d22f9e5a03f906d66fd4bf6194866a6f35e72a716d8fd",
+    "tests/import-v3-history-staging.test.ts": "e3bd28aa04fbead8caf6620789b2ee21df5bae4bea740faf99fbcdb966ee7012"
+  },
+  "behavior": "ROLLBACK only before COMMIT attempt; either actual COMMIT outcome preserves original error/discards without rollback or retry",
+  "syntheticTests": "PASS 11/11; unknown-COMMIT covers applied/not-applied x rollback-would-fail/succeed",
+  "focusedTypecheck": "PASS (old transfer staging test + sales-detail planning skeleton, isolated temporary config; no build/config edits)",
+  "postgres": "NOT_RUN",
+  "frozenMetadataFourFilesChanged": false,
+  "frozenDdlChanged": false
+}

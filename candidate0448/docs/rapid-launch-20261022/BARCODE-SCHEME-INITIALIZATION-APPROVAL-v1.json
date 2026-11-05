@@ -1,0 +1,107 @@
+{
+  "version": "BARCODE_SCHEME_INITIALIZATION_APPROVAL_V1",
+  "decision": "APPROVED_2026_CURRENT_OTHER5_HISTORICAL_WITH_SEPARATE_GENERATION_AND_COMPATIBLE_CODE_REQUIREMENTS",
+  "source": {
+    "kind": "DIRECT_HUMAN_REPLY_IN_CONTROLLER_CHAT",
+    "threadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+    "questionCallId": "call_be36b94f79b64f1280fc743ca246172f",
+    "answer": "确认：2026方案设为当前，其余5套保留为历史方案。新建商品时，主条码方案自动默认选择2026，后续新生成的货品条码按该规则生成。\n已有商品、SKU和条码不批量修改、不重编。保留商品编辑中的“补充历史／兼容条码”入口，允许后续将旧条码补录到准确的颜色、版型、尺码规格，补录不替换主条码。\n请分别落实“方案分类”“新建默认值”“实际生成规则”和“旧码补录保存”，不要只改分类就记为完成。"
+  },
+  "proposal": "BARCODE-SCHEME-INITIALIZATION-PROPOSAL-v1.json",
+  "proposalSha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00",
+  "approvedInitializationRows": [
+    {
+      "sourceSchemeKey": "2020",
+      "native": {
+        "id": "82656465-2758-4be8-a965-412a971e9c4b",
+        "name": "2020年新方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。2020颜色1位、尺码2位的最后补充优先于原表旧备注。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 14,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2018",
+      "native": {
+        "id": "c0b009e7-6f61-447a-b87e-ceea62711ec9",
+        "name": "18年货品",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 9,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2021",
+      "native": {
+        "id": "bc7ff32c-1025-4c30-8950-0b33a492c538",
+        "name": "2021年条码方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 13,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2021fit",
+      "native": {
+        "id": "48c4fe44-7521-44c1-a0e3-c547a1691028",
+        "name": "2021年版型条码方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 14,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2023",
+      "native": {
+        "id": "9c584ada-9d42-4159-9e51-208577657021",
+        "name": "2023年条码方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 14,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2026",
+      "native": {
+        "id": "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef",
+        "name": "2026年条码方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 15,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "CURRENT"
+      }
+    }
+  ],
+  "approvedInitializationWriteContract": [
+    "Run only after first empty bootstrap admission and before BARCODE stage, in same source-bound controlled import transaction/actor/receipt/audit closure. No pre-seeding before existing empty admission.",
+    "Exact name/source-key/UUID/full-seven-field snapshot frozen after approval. First create only or byte-equivalent exact replay; any drift/missing or extra row rejects.",
+    "Do not broaden empty admission, seed generic test rows, change raw code/SKU/source identity/approved21 demotions, enable a barcode regeneration engine, or infer per-barcode validity from scheme length/status.",
+    "No source/MAIN/PUBLISH permission is conferred by approval of six descriptive rows. Later actual execution retains all existing gates."
+  ],
+  "businessRequirements": {
+    "classification": "2026 CURRENT;2018/2020/2021/2021fit/2023 HISTORICAL",
+    "newProductDefault": "Default main barcode scheme2026 for new products;do not overwrite existing product selection",
+    "newBarcodeGeneration": "Newly generated product barcodes follow actual2026 scheme;implementation must trace exact approved/frozen rule, no guessed code or source rewrite",
+    "compatibleOldCode": "Keep supplement historical/compatible barcode entry;bind exact real color/fit/size SKU and retain main barcode unchanged",
+    "existingData": "No bulk modification or re-encoding of existing product/SKU/barcode"
+  },
+  "scopeBoundary": "Business direction approved. New fields/constraints/dependent write-contract changes beyond approved exact six-row initialization require accurate consolidated delta per existing user rule. No automatic new schema or generated code algorithm assumed approved.",
+  "execution": {
+    "initialization": "NOT_EXECUTED",
+    "newDefault": "NOT_IMPLEMENTED_OR_VERIFIED",
+    "actualGeneration": "NOT_IMPLEMENTED_OR_VERIFIED",
+    "compatibleCodeSave": "NOT_IMPLEMENTED_OR_VERIFIED",
+    "realImportOrReleasePassed": false
+  }
+}

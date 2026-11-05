@@ -1,0 +1,289 @@
+{
+  "job": {
+    "jobId": "t45-v22-clone-catalog-diff-resource-readonly-20261027-176",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-6b197c9d0a77",
+    "atUTC": "2026-10-27T13:17:57.276431+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 1.1202981530223042,
+    "exports": [
+      "clone-diff-resources.json"
+    ],
+    "finishedAtUTC": "2026-10-27T13:17:58.435624+00:00"
+  },
+  "actual": {
+    "catalogDiff": {
+      "cloneEntries": 1968,
+      "differences": [
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "history_revision",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "history_sales_effective",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "history_sales_line_effective",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "history_sales_settlement_effective",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "history_transfer_effective",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "history_transfer_line_effective",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "import_native_catalogue_binding",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "import_native_payment_binding",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "import_sku_alias",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "import_source_row",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "import_stock_contributor",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{erp_rewrite_owner_20261022=arwdDxtm/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "4de199be7c6b007a4dc7b8c8cff213995fee2113a6a35bd90532078337ddbaca"
+            }
+          ],
+          "kind": "relation",
+          "name": "native_party_import_evidence",
+          "sourceExists": true
+        },
+        {
+          "cloneExists": true,
+          "fields": [
+            {
+              "clone": null,
+              "cloneIsNull": true,
+              "cloneSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "field": "acl",
+              "source": "{=X/erp_rewrite_owner_20261022,erp_rewrite_owner_20261022=X/erp_rewrite_owner_20261022}",
+              "sourceIsNull": false,
+              "sourceSha256": "a5d07fbbdead8b3c1fbcdfbd9c2ee6db76d46b10e74d2bbbb1853dbc4ca758b5"
+            }
+          ],
+          "kind": "routine",
+          "name": "naijue_erp.is_native_party_import_insert(kind text, snapshot jsonb)",
+          "sourceExists": true
+        }
+      ],
+      "differentEntries": 13,
+      "rawDefinitionsExported": false,
+      "sourceEntries": 1968
+    },
+    "databaseWrites": false,
+    "disk": {
+      "rootFree": 49939611648,
+      "srvFree": 49939611648
+    },
+    "existingPGImage": {
+      "architecture": "amd64",
+      "id": "sha256:b3721d9bd40bf0da8dde2ef10bb0557d5b6615cbf12f63c448acbf5279b417c2",
+      "os": "linux"
+    },
+    "finishedAtUtc": "2026-10-27T13:17:58.383213+00:00",
+    "jobId": "t45-v22-clone-catalog-diff-resource-readonly-20261027-176",
+    "memory": {
+      "MemAvailable": "14331864 kB",
+      "MemTotal": "16339208 kB",
+      "SwapFree": "4096524 kB",
+      "SwapTotal": "4194300 kB"
+    },
+    "originalArchivePinMatched": true,
+    "proposedContainer": {
+      "exists": false,
+      "name": "naijue-qa-v22-pg-20261027-01"
+    },
+    "proposedPrivateRoot": {
+      "exists": false,
+      "path": "/srv/naijue-erp/qa-v22-20261027-01"
+    },
+    "resourceChanges": false,
+    "status": "COMPLETED_CATALOG_DIFF_AND_PRIVATE_INSTANCE_RESOURCE_PREFLIGHT_ONLY"
+  },
+  "evidence": {
+    "job.json": {
+      "bytes": 527,
+      "sha256": "1b016a08857bc24898d7f8654ad28e65864d0f0896757b041f568de8db29e2b5"
+    },
+    "clone-diff-resources.json": {
+      "bytes": 8992,
+      "sha256": "375b966e4a69f801eda0916d29ba7c0e3d2af8bbce0b28eb03619720ab7fc31c"
+    }
+  }
+}

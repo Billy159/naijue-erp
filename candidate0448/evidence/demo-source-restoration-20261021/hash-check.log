@@ -1,0 +1,13 @@
+apps/web/src/demo-presentation/frame.css: OK
+apps/web/src/demo-presentation/demo-frame.tsx: OK
+apps/web/src/demo-presentation/tests/run-document-source-restoration.mjs: OK
+apps/web/src/sales/detail-content.tsx: OK
+apps/web/src/sales/detail.css: OK
+apps/web/src/sales/README.md: OK
+apps/web/src/sales/sales.test.ts: OK
+apps/web/src/sales/tests/run-dom-tests.mjs: OK
+apps/web/src/transfers/transfers.css: OK
+apps/web/src/transfers/transfers-page.tsx: OK
+apps/web/src/transfers/tests/run-dom-tests.mjs: OK
+apps/web/src/application/tests/run-build-check.mjs: OK
+apps/web/src/development-host/tests/run-build-check.mjs: OK

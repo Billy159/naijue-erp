@@ -1,0 +1,347 @@
+{
+  "format_version": "UNIFIED_STANDARD_PACKAGE_V1",
+  "stage": "READY",
+  "package_kind": "SYNTHETIC",
+  "source_namespace": "synthetic.unified.v1",
+  "schema_contract": {
+    "commit": "aa10f48d592b5200e6899a476e95340ad42b205a",
+    "source_declarations_sha256": "e929e89fe7f026d10e6fd35af37d1eb48cd07db2f7da4eed76352e497b134cb9",
+    "proposed_contract_version": "UNIFIED_STANDARD_PACKAGE_V1"
+  },
+  "enum_mapping_version": "ORDINARY_DOCUMENT_ENUMS_V1",
+  "decimal_scale": 2,
+  "quantity_unit": "PIECE",
+  "snapshot_mode": "CURRENT_EFFECTIVE",
+  "identity_registry": {
+    "relative_path": "identity-registry.jsonl",
+    "bytes": 15080,
+    "sha256": "68164ad8b98893d45a4558ef130e64e60e4bce783c1e94cdc9a2f742bfd46522",
+    "row_count": 44
+  },
+  "files": [
+    {
+      "table": "barcode_scheme",
+      "work_package": 4,
+      "relative_path": "barcode_scheme.jsonl",
+      "bytes": 3405,
+      "sha256": "c91f3eb818c4fe2c4a67e88aa30d3605d9547ec9dc064f92a028812935370da4",
+      "row_count": 6
+    },
+    {
+      "table": "color",
+      "work_package": 4,
+      "relative_path": "color.jsonl",
+      "bytes": 301,
+      "sha256": "88d54a56833df07ba7e2d0d1c7c6d4a75ed7ad3bedc9e92b1ec63470090eff82",
+      "row_count": 1
+    },
+    {
+      "table": "customer",
+      "work_package": 7,
+      "relative_path": "customer.jsonl",
+      "bytes": 322,
+      "sha256": "4c3219a30eb1f9904e12501ec43293257f48635335cd17722b44f12e56d6d726",
+      "row_count": 1
+    },
+    {
+      "table": "fit",
+      "work_package": 4,
+      "relative_path": "fit.jsonl",
+      "bytes": 296,
+      "sha256": "4de5324f3b8e7a88d68bb05e9b09e418c2e806641779ae06470116feb8b857dc",
+      "row_count": 1
+    },
+    {
+      "table": "hall",
+      "work_package": 5,
+      "relative_path": "hall.jsonl",
+      "bytes": 387,
+      "sha256": "7ec8130c3348d7ff0112d05cccf7b5c1f91603b117e54a39d7a111dc1f7cd63e",
+      "row_count": 1
+    },
+    {
+      "table": "inventory_baseline",
+      "work_package": 13,
+      "relative_path": "inventory_baseline.jsonl",
+      "bytes": 590,
+      "sha256": "dcd4d7b3c1b9a024cb43ae6ecfe656a73e1650aed81c5bbc90d2670d8e0162d0",
+      "row_count": 2
+    },
+    {
+      "table": "payment_account",
+      "work_package": 7,
+      "relative_path": "payment_account.jsonl",
+      "bytes": 328,
+      "sha256": "1db4d89263ba60472754a1762a004359238b880b0e64ee3ed24557c044244931",
+      "row_count": 1
+    },
+    {
+      "table": "payment_account_hall",
+      "work_package": 7,
+      "relative_path": "payment_account_hall.jsonl",
+      "bytes": 288,
+      "sha256": "c53e1734045139d606ae45276bfa52d60d8de6341d57c2db65a9a62396897894",
+      "row_count": 1
+    },
+    {
+      "table": "payment_method",
+      "work_package": 7,
+      "relative_path": "payment_method.jsonl",
+      "bytes": 268,
+      "sha256": "d4f406abf4eb5c559baba84b8cac49bc4892387f1997e5b90b5c4852c2483b40",
+      "row_count": 1
+    },
+    {
+      "table": "product",
+      "work_package": 3,
+      "relative_path": "product.jsonl",
+      "bytes": 918,
+      "sha256": "23dffc514783bcfd1f55eed47a8883b084d180b17327166ade1409527b2b90f6",
+      "row_count": 1
+    },
+    {
+      "table": "product_category",
+      "work_package": 3,
+      "relative_path": "product_category.jsonl",
+      "bytes": 308,
+      "sha256": "de93ec743ab9af018b0874309b1c0b360bb2bdafcbb672e25d42c426daee22db",
+      "row_count": 1
+    },
+    {
+      "table": "product_image",
+      "work_package": 3,
+      "relative_path": "product_image.jsonl",
+      "bytes": 480,
+      "sha256": "123edacf3db3d75b043ea4b859716a4c8ad7a2880ff496910e9256c886747e54",
+      "row_count": 1
+    },
+    {
+      "table": "sales_header",
+      "work_package": 10,
+      "relative_path": "sales_header.jsonl",
+      "bytes": 896,
+      "sha256": "0585ac92d7fbf05dc1459231e552a277c4a1471ee67d85fdd9cd89c0f5c48e25",
+      "row_count": 1
+    },
+    {
+      "table": "sales_line",
+      "work_package": 11,
+      "relative_path": "sales_line.jsonl",
+      "bytes": 688,
+      "sha256": "e048e4d81fdc595c79616ca4ea3dc272d2758c973d28d9fc7b274f659540a743",
+      "row_count": 1
+    },
+    {
+      "table": "sales_settlement",
+      "work_package": 12,
+      "relative_path": "sales_settlement.jsonl",
+      "bytes": 7534,
+      "sha256": "dac40aa51e65f0da414a8f2ac45c27a193f5648e75349da88c4d5fa59a6bb10c",
+      "row_count": 16
+    },
+    {
+      "table": "season",
+      "work_package": 4,
+      "relative_path": "season.jsonl",
+      "bytes": 275,
+      "sha256": "6ffe005d83b6b5928692f794f16e263ea7db5f9c523c9d0f420c75f600df1496",
+      "row_count": 1
+    },
+    {
+      "table": "size",
+      "work_package": 4,
+      "relative_path": "size.jsonl",
+      "bytes": 258,
+      "sha256": "e6a18556e43e39df306b2961f2094dc94f72e04d7b62bd3adc2f04a687b5a596",
+      "row_count": 1
+    },
+    {
+      "table": "size_group",
+      "work_package": 4,
+      "relative_path": "size_group.jsonl",
+      "bytes": 261,
+      "sha256": "2842593c77a7b832267fdd0197ade27c74203451df1b721505e0ce9135feebc5",
+      "row_count": 1
+    },
+    {
+      "table": "size_group_member",
+      "work_package": 4,
+      "relative_path": "size_group_member.jsonl",
+      "bytes": 298,
+      "sha256": "bea941315d7059f659a49d665b7ce1e0d90d9ea5bfc875d9b9a3f7056d3d7fee",
+      "row_count": 1
+    },
+    {
+      "table": "sku",
+      "work_package": 4,
+      "relative_path": "sku.jsonl",
+      "bytes": 488,
+      "sha256": "3f8719c93b6bbefd67266167dd9a39dd0afd389ef13a25a2e4dc5c47710e1c89",
+      "row_count": 1
+    },
+    {
+      "table": "sku_barcode",
+      "work_package": 4,
+      "relative_path": "sku_barcode.jsonl",
+      "bytes": 378,
+      "sha256": "427c748ecaf6463049c8440da083791bab0ce6c135a937f1ecfb2ed5e1efbd62",
+      "row_count": 1
+    },
+    {
+      "table": "staff",
+      "work_package": 6,
+      "relative_path": "staff.jsonl",
+      "bytes": 362,
+      "sha256": "4f22e5d3536c2f624cc4bb9753fa0caa7463a5ead4c36fa0747a9e6576f73890",
+      "row_count": 1
+    },
+    {
+      "table": "supplier",
+      "work_package": 7,
+      "relative_path": "supplier.jsonl",
+      "bytes": 322,
+      "sha256": "2c25d4242de6b57aa79e2548ee748f6607b70f136f9beb5c170de7224c5ca046",
+      "row_count": 1
+    },
+    {
+      "table": "transfer_header",
+      "work_package": 8,
+      "relative_path": "transfer_header.jsonl",
+      "bytes": 772,
+      "sha256": "6502b200204bafe4e8770073f0b2a5cdbdfa431e6757f87e27ef51c666ce2614",
+      "row_count": 1
+    },
+    {
+      "table": "transfer_line",
+      "work_package": 9,
+      "relative_path": "transfer_line.jsonl",
+      "bytes": 522,
+      "sha256": "de806f222f02fbcc6d14607682f899f14aebd0dcf4d6283df51f01e904d1ee73",
+      "row_count": 1
+    },
+    {
+      "table": "warehouse",
+      "work_package": 5,
+      "relative_path": "warehouse.jsonl",
+      "bytes": 692,
+      "sha256": "42208d776c3d4f12f2f74e6829fd3dce8f023b05231d336dc83050aa62386b42",
+      "row_count": 2
+    }
+  ],
+  "reports": [
+    {
+      "relative_path": "decisions.json",
+      "bytes": 719,
+      "sha256": "24bc91cd6261f6001910518f59205bd48fc38412fa0177c7bbe604305ad6a091",
+      "row_count": 1,
+      "role": "DECISIONS",
+      "encoding": "JSON"
+    },
+    {
+      "relative_path": "exceptions.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "role": "EXCEPTIONS",
+      "encoding": "JSONL"
+    },
+    {
+      "relative_path": "reconciliation.json",
+      "bytes": 1889,
+      "sha256": "5209da31c788e19941c553f70caa01dba0269f7a195c1850cd1f9a94473f4d15",
+      "row_count": 1,
+      "role": "RECONCILIATION",
+      "encoding": "JSON"
+    }
+  ],
+  "assets": [
+    {
+      "relative_path": "synthetic-images/example.png",
+      "file_ref": "synthetic-images/example.png",
+      "bytes": 68,
+      "sha256": "c7b3eced4744a86df1c2ec3eff42eb31b0d46411a531ad718a4fabd0abf86df8",
+      "mime": "image/png"
+    }
+  ],
+  "source_files": [
+    {
+      "relative_path": "SYNTHETIC-source-description.txt",
+      "bytes": 56,
+      "sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7"
+    },
+    {
+      "relative_path": "SYNTHETIC-alignment-evidence.txt",
+      "bytes": 40,
+      "sha256": "4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1"
+    }
+  ],
+  "work_packages": [
+    {
+      "number": 1,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 2,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 3,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 4,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 5,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 6,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 7,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 8,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 9,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 10,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 11,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 12,
+      "version": "SYNTHETIC_V1"
+    },
+    {
+      "number": 13,
+      "version": "SYNTHETIC_V1"
+    }
+  ],
+  "inventory_source": {
+    "kind": "SYNTHETIC_NEW_SNAPSHOT",
+    "source_file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+    "exported_at": "2026-11-02T16:00:00+08:00",
+    "source_timezone": "Asia/Shanghai",
+    "cutoff_at": "2026-11-02T16:00:00+08:00",
+    "unit": "PIECE",
+    "coverage_mode": "EXPLICIT_KEYS",
+    "warehouse_registry_sha256": "68164ad8b98893d45a4558ef130e64e60e4bce783c1e94cdc9a2f742bfd46522",
+    "sku_registry_sha256": "68164ad8b98893d45a4558ef130e64e60e4bce783c1e94cdc9a2f742bfd46522"
+  },
+  "document_cutoff_alignment": {
+    "scope": "CURRENT_EFFECTIVE",
+    "evidence_sha256": "4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1"
+  }
+}

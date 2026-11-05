@@ -1,0 +1,54 @@
+{
+  "atUtc": "2026-10-23T22:33:31.241880+00:00",
+  "preview": {
+    "sourceRound": 229,
+    "sourceCommit": "5669bd5411061818055c44789a1892574e3dfb94",
+    "buildId": "ui-preview-5669bd5-01-build01",
+    "url": "http://127.0.0.1:57876/synthetic-unified.html",
+    "resources": [
+      {
+        "path": "/synthetic-unified.html",
+        "status": 200,
+        "bytes": 3416386,
+        "sha256": "43b55c46543a2aec1bf477206bec6649bd833c8e05b768b197f0210ba668d05e",
+        "bodyMatched": true,
+        "identityHeadersMatched": true,
+        "evidence": "Original tool command asserts status200 and body==local before failing wrong-header lookup; response dumped exact three actual header values",
+        "repeatedGET": false
+      },
+      {
+        "path": "/candidate-identity.json",
+        "status": 200,
+        "bytes": 4556,
+        "sha256": "a47b129174b1ab0f445bd8a80e084b562b8db3d753baf3826d84af534669d2df",
+        "bodyMatched": true,
+        "identityHeadersMatched": true
+      },
+      {
+        "path": "/provenance.json",
+        "status": 200,
+        "bytes": 51504,
+        "sha256": "6eaff6ebe96af4fa8404d141db173c6214ef8e2c2c2328a197494cee8d64a884",
+        "bodyMatched": true,
+        "identityHeadersMatched": true
+      }
+    ],
+    "serverPid": 22315,
+    "serverSession": 61681,
+    "actualBuildInvocations": 1,
+    "actualHTTPGETRequests": 3,
+    "actualInputCount": 413,
+    "actualModuleInputCountIncludingDependencies": 1368,
+    "syntheticOnly": true,
+    "scope": "Contains223-229 fixedbusiness,18declaredfictiononlyoverlays. QF2SOLE actualDATE+carrier, thenQF O-S14. No business commands/PG/formalperformance acceptance.",
+    "wholePageAccepted": false,
+    "realBusinessAccepted": false,
+    "formalPerformanceAccepted": false,
+    "firstHTTPHeaderCheckScriptMistakePreserved": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-5669bd5-01/HTTP-FIRST-HEADER-NAME-MISMATCH.json"
+  },
+  "httpProof": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-5669bd5-01/HTTP-CHECKS.json",
+  "buildProof": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-5669bd5-01/BUILD.json",
+  "currentBrowserOwner": "QF2",
+  "sourceReview": "QFv068/069/072/073/074 limitedsourcePASS adopted; actual229pending",
+  "old222Preserved": true
+}

@@ -1,0 +1,5 @@
+apps/web/src/parties/controller.ts: OK
+apps/web/src/parties/receipt-access-recovery.test.ts: OK
+apps/web/src/parties/README.md: OK
+apps/web/src/application/routes/parties.tsx: OK
+apps/web/src/application/controller.ts: OK

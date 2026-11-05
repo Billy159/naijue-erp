@@ -1,0 +1,84 @@
+{
+  "historical_hall_approval": {
+    "utf8": "{\"format_version\":\"HISTORICAL_SALES_HALL_APPROVAL_V1\",\"source_namespace\":\"synthetic.unified.v1\",\"evidence_sha256\":\"4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1\",\"records\":[{\"source_key\":\"sales_header:01\",\"target_id\":\"247ad997-ce44-28b2-4722-9dfb83c05b23\",\"source_refs\":[{\"file_sha256\":\"69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7\",\"sheet\":\"SYNTHETIC\",\"row\":1}],\"evidence\":{\"format_version\":\"HISTORICAL_SALES_HALL_EVIDENCE_V1\",\"basis\":\"PENDING_REVIEW\",\"original_hall_id\":null,\"selected_hall_id\":null,\"warehouse_id\":\"2a529b01-f4f7-ec6e-dc5b-b398288024ab\",\"warehouse_hall_id_at_capture\":null,\"warehouse_version\":null,\"captured_at\":null,\"has_difference\":false,\"review_required\":true}}]}\n",
+    "sha256": "e29f2a7ea793145ca6c59829cb9e2a755d6f5a3ac5c6eff18f8c106c57bce612"
+  },
+  "historical_line_amount_differences": 6,
+  "historical_line_amount_execution_boundary": "OFFLINE_ARCHIVE_ONLY",
+  "historical_line_amount_report": {
+    "relative_path": "historical-line-amount-differences.jsonl",
+    "row_count": 6,
+    "bytes": 4171,
+    "sha256": "4de27bbf5c3e7150968b76f80500e357021769c8c4827a612b8098445e99ab60"
+  },
+  "historical_line_amount_evidence": {
+    "relative_path": "historical-line-amount-evidence.json",
+    "bytes": 3267,
+    "sha256": "a89736f232d243a2c65e2bc115eba4ba5beed303794acef56819ad1e629abad0"
+  },
+  "timings_ms": {
+    "metadata_ms": 38.82565699999998,
+    "registry_ms": 4.430895000000021,
+    "records_ms": 47.39071099999995,
+    "relations_and_reconciliation_ms": 9.063783,
+    "index_hash_ms": 1.3273339999999507,
+    "total_ms": 101.23182699999995,
+    "jsonl_read_ms": 12.852622999999937,
+    "jsonl_decode_parse_ms": 2.251141000000075
+  },
+  "source_namespace": "synthetic.unified.v1",
+  "schema_declarations_sha256": "f5d4e26d8cfae8cc96d42a43b01c6c49217a9927d1b0dc42af0c1b4c3ce29b66",
+  "package_stage": "READY",
+  "manifest_sha256": "40eac7e4e60dcd96e09c459d97b4dc65cfa7f760cf105f14d2c71a4b76f5c01c",
+  "index_schema_version": "UNIFIED_STREAM_FACTS_V3",
+  "index_sha256": "2d30fee869edc02580273067ae296e0faf2c0bec5411e4693dcbc85f7310eaa1",
+  "index_bytes": 159744,
+  "validation_scope": "STANDARD_PACKAGE_OFFLINE_V1",
+  "state": "STREAM_PREFLIGHT_COMPLETE",
+  "checks_passed": false,
+  "complete_package_validation": true,
+  "import_eligible": false,
+  "business_database_writes": false,
+  "counts": {
+    "barcode_scheme": 6,
+    "color": 1,
+    "customer": 1,
+    "fit": 1,
+    "hall": 1,
+    "inventory_baseline": 2,
+    "payment_account": 1,
+    "payment_account_hall": 1,
+    "payment_method": 1,
+    "product": 1,
+    "product_category": 1,
+    "product_image": 1,
+    "sales_header": 1,
+    "sales_line": 6,
+    "sales_settlement": 1,
+    "season": 1,
+    "size": 1,
+    "size_group": 1,
+    "size_group_member": 1,
+    "sku": 1,
+    "sku_barcode": 1,
+    "staff": 1,
+    "supplier": 1,
+    "transfer_header": 1,
+    "transfer_line": 1,
+    "warehouse": 2
+  },
+  "issue_count": 1,
+  "bytes_scanned": 40415,
+  "peak_rss_bytes": 114696192,
+  "limits": {
+    "line_bytes": 1048576,
+    "total_bytes": 8589934592,
+    "rows": 5000000,
+    "issues": 100000,
+    "sqlite_cache_kib": 4096
+  },
+  "remaining_checks": [
+    "source truth beyond declared evidence",
+    "target authorization, live database state and execution"
+  ]
+}

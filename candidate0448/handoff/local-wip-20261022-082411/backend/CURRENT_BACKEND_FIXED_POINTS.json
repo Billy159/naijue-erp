@@ -1,0 +1,625 @@
+{
+  "atUtc": "2026-10-21T22:49:25.818457+00:00",
+  "checkpoints": [
+    "accounting-0015-v2",
+    "history-typed-0016-v1",
+    "local-https-host-v1",
+    "management-read-v1",
+    "party-read-v1",
+    "unified-pg-https-v1",
+    "payment-typed-0017-v1",
+    "transfer-bounded-repair-v1",
+    "history-settlement-0017-v1",
+    "sealed-payment-readers-0017-v1",
+    "sealed-payment-spool-cap-v1",
+    "payment-relation-empty-source-v1",
+    "sealed-history-pg17-v1",
+    "header-resource-caps-sequential-v1",
+    "history18-canonical-plan-v1",
+    "history18-stage-projection-v1",
+    "history18-runtime-expected-v1",
+    "history18-native-writer-v1",
+    "history18-source-composite-v1",
+    "history18-source-composite-cleanup-v2",
+    "sealed-history18-run1-repair-v1"
+  ],
+  "effectiveSourceFiles": 119,
+  "activeDrift": [],
+  "exactPins": {
+    "adapters/postgres/migrations/0012_history_header_native_reference.sql": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 18141,
+      "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512"
+    },
+    "adapters/postgres/migrations/0013_native_party_import.sql": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 24529,
+      "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54"
+    },
+    "adapters/postgres/migrations/0014_native_catalogue_import.sql": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 12925,
+      "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022"
+    },
+    "adapters/postgres/migrations/0015_native_import_record_accounting.sql": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 18024,
+      "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a"
+    },
+    "adapters/postgres/migrations/0016_history_insert_dispatch.sql": {
+      "checkpoint": "history-typed-0016-v1",
+      "bytes": 6891,
+      "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620"
+    },
+    "adapters/postgres/migrations/0017_native_payment_import.sql": {
+      "checkpoint": "payment-typed-0017-v1",
+      "bytes": 11773,
+      "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"
+    },
+    "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 17878,
+      "sha256": "cb9b29cdd4cb029186a9d12ba77479db74c048ace92a1152f39e07d9eecf7ca5"
+    },
+    "adapters/postgres/src/import-v3-history-settlement-staging-store.ts": {
+      "checkpoint": "history-settlement-0017-v1",
+      "bytes": 16102,
+      "sha256": "564b3461d2c20ed67a8e957f8974320e840595ba668aab3ee27b8ba067dd04c9"
+    },
+    "adapters/postgres/src/inventory-cutoff-import-store.ts": {
+      "checkpoint": "history18-stage-projection-v1",
+      "bytes": 26699,
+      "sha256": "94c91ecce3937f36466a14fb3da3bc5a67403c2b8bcce807fbd589f4efd73426"
+    },
+    "adapters/postgres/src/native-catalogue-import.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 15576,
+      "sha256": "80281138152436533dcbaf5bb7f91e288714b5eff2ef095623572c7836df5caf"
+    },
+    "adapters/postgres/src/native-import-accounting-capability.ts": {
+      "checkpoint": "sealed-history18-run1-repair-v1",
+      "bytes": 23100,
+      "sha256": "7d522c6c7128ce506330065b6c2932aeac3c0794350694b1a9532d18acacd418"
+    },
+    "adapters/postgres/src/native-party-import.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 17192,
+      "sha256": "d3cb8c26b7aebce4606ff70e5386483d4b994c6e0d2c046f4540c6e427fe5dab"
+    },
+    "adapters/postgres/src/native-payment-import.ts": {
+      "checkpoint": "payment-typed-0017-v1",
+      "bytes": 11382,
+      "sha256": "07b06f9a1a705d70e2216cee6759d60ef489eadd14529ca2bce3cebc7eeddc4c"
+    },
+    "adapters/postgres/src/party-read-reader.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 5062,
+      "sha256": "37b2301c8a1f5433c7506f41d7b504a90463c47a3722a387151b90469aa1832c"
+    },
+    "adapters/postgres/src/product-management-query-reader.ts": {
+      "checkpoint": "unified-pg-https-v1",
+      "bytes": 18123,
+      "sha256": "2f32b233ac3da77d206ba9201e1cc803f90386c38de5f1431c21f16be90dc50a"
+    },
+    "apps/api/src/local-https-application-host.ts": {
+      "checkpoint": "local-https-host-v1",
+      "bytes": 9294,
+      "sha256": "d609d723dceaa3d3b247e3dff23ce207fae0aa411509b81cbe7ba15f953328e5"
+    },
+    "apps/api/src/party-read-http.test.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 5366,
+      "sha256": "651ce68f2a444015c546652bc7be0f6d48f444492411b4fe0b18650de6f22586"
+    },
+    "apps/api/src/party-read-http.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 4166,
+      "sha256": "78ebc59a71a49af8bed6eb1609183377bec83c2571e5c074173de921925dc25c"
+    },
+    "apps/api/src/postgres-application-api.test.ts": {
+      "checkpoint": "transfer-bounded-repair-v1",
+      "bytes": 21413,
+      "sha256": "28b4f80a2ca8b0018cc629516b6cd90e96578416b6a6cf948545cf4d469875d3"
+    },
+    "apps/api/src/postgres-read-api.test.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 45598,
+      "sha256": "e48db60d4e8d6139ad34ca7553ddc741d5418d2da8c08ee4160e7e7359c179bc"
+    },
+    "apps/api/src/postgres-read-api.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 24199,
+      "sha256": "675dbd22f36c1c2a3a83b5378aa35ed217fd6b17a69212dcb27c394c6fd34689"
+    },
+    "docs/history-sales-detail-phase-a-handoff.md": {
+      "checkpoint": "history-typed-0016-v1",
+      "bytes": 9271,
+      "sha256": "52289ef5e7a2e0f62da64967dd243c4a559c37d86cabac183c470ee9e5b27a4a"
+    },
+    "docs/native-import-record-accounting.md": {
+      "checkpoint": "history-typed-0016-v1",
+      "bytes": 29433,
+      "sha256": "ba0c9ba089fd14aadc24af9e343d38405198d3bbab64a8a48838c8463028bda9"
+    },
+    "packages/application/src/import-v3-history-settlement.ts": {
+      "checkpoint": "history-settlement-0017-v1",
+      "bytes": 12610,
+      "sha256": "113c8ffb4fce7e7b045039eb0c41cdc7a07a9a506630412b0054de44a7979bbc"
+    },
+    "packages/application/src/inventory-cutoff-import.ts": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 10553,
+      "sha256": "70e728e8c1b348f0e687c5e8aa5533a0064e897c1858d2606b4064262770fa2d"
+    },
+    "packages/application/src/native-import-record-accounting.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 19083,
+      "sha256": "a5fbd9acb4c7406035e089661779402113a666136d1a50e8598c0cbaf25c68a3"
+    },
+    "packages/application/src/native-import-schema-contract.ts": {
+      "checkpoint": "sealed-history18-run1-repair-v1",
+      "bytes": 11363,
+      "sha256": "2b17bcec52b05a7628c57ae989445f4aac40d9110a73ec4fdc99d1105719557f"
+    },
+    "packages/application/src/native-payment-import.ts": {
+      "checkpoint": "payment-typed-0017-v1",
+      "bytes": 11101,
+      "sha256": "2d2d1d109211f3c4ec2df6c8fdbae246e5453c1735814d3b1dbba26fdf71702c"
+    },
+    "packages/application/src/party-read-policy.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 1089,
+      "sha256": "a5b122ff8db94f910fd94557c100c488b5e7dc6ebbb8cc66e983d31f615e5a7b"
+    },
+    "packages/application/src/party-read-ports.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 1271,
+      "sha256": "68dacd0ec93b8676b413bc585924f1ac0e29b8eccd183eb25746daf56272e1b2"
+    },
+    "packages/application/src/party-read-service.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 6195,
+      "sha256": "08e026d9d519cd497d1fe29a6d7b16212cba1184531386d78f9ca62e23ab72a6"
+    },
+    "packages/application/src/transfer-policy.ts": {
+      "checkpoint": "transfer-bounded-repair-v1",
+      "bytes": 4048,
+      "sha256": "9a54a66edfb3f0d3d5f5ac6ccd26951fd234f336b2a26532b36f0d6c9df1a7e2"
+    },
+    "scripts/import-v2/authorized-native-payment-reader.d.mts": {
+      "checkpoint": "sealed-payment-spool-cap-v1",
+      "bytes": 1618,
+      "sha256": "3319a8a370010b53b7b24ef3731093742db750a7c4d39d8945c879c812c099f4"
+    },
+    "scripts/import-v2/authorized-native-payment-reader.mjs": {
+      "checkpoint": "sealed-payment-readers-0017-v1",
+      "bytes": 2318,
+      "sha256": "04da633418a52adf2d9109c39067cf30ccc49c7d1bad0739ecd5f4d675d0580c"
+    },
+    "scripts/import-v2/authorized-native-payment-reader.test.mjs": {
+      "checkpoint": "payment-relation-empty-source-v1",
+      "bytes": 9747,
+      "sha256": "5a3b16fc0d88d1455a3888b43714f3582b43b8f31cf5614354ddfd8f6a1daf3f"
+    },
+    "scripts/import-v2/authorized-settlement-reader.d.mts": {
+      "checkpoint": "sealed-payment-spool-cap-v1",
+      "bytes": 1702,
+      "sha256": "9aa04054658b8ece096f1403535d24c6d5decc43ae7fa76606f9085d774eb512"
+    },
+    "scripts/import-v2/authorized-settlement-reader.mjs": {
+      "checkpoint": "sealed-payment-readers-0017-v1",
+      "bytes": 2459,
+      "sha256": "710da51599c0a7860e034d8fda5c508b98a132d6c1ca5e827243a7691211e7bb"
+    },
+    "scripts/import-v2/authorized-settlement-reader.test.mjs": {
+      "checkpoint": "sealed-payment-spool-cap-v1",
+      "bytes": 6257,
+      "sha256": "468d10fa28ed5e9972f5e6b8f39942142b5db54f933ac46876ad47f0487d6b2a"
+    },
+    "scripts/import-v2/payment-source-fixture.test-support.mjs": {
+      "checkpoint": "sealed-payment-readers-0017-v1",
+      "bytes": 15558,
+      "sha256": "f5e9592ef0c6bbc771602e91873b5d6481b5d6126c9fb4141be74c28b1dc52cb"
+    },
+    "scripts/import-v2/sealed-payment-source.mjs": {
+      "checkpoint": "payment-relation-empty-source-v1",
+      "bytes": 14338,
+      "sha256": "944fc4bb426593121cd01396fa25263c778d8cebc9681a92b50f61e255613267"
+    },
+    "tests/backend-application-api-tsconfig.json": {
+      "checkpoint": "history-typed-0016-v1",
+      "bytes": 188,
+      "sha256": "b00fc4fe6a051a192ee9c451aea47b588d7f7ba98fecab242aed98f03e845ff8"
+    },
+    "tests/history-import-lifecycle.test.ts": {
+      "checkpoint": "history-typed-0016-v1",
+      "bytes": 16321,
+      "sha256": "2efa8181f2c14cec24433c16410a6c85daaa8319b3d8a8671032d1f2faaa58a2"
+    },
+    "tests/history-insert-dispatch-migration.test.ts": {
+      "checkpoint": "history-typed-0016-v1",
+      "bytes": 3095,
+      "sha256": "64dd56c2a6de6d9fdba39e4f650a89cd45cd7754997eb053491f08b2f1c8c7f8"
+    },
+    "tests/history-sales-detail-binding-resolver-postgres-protocol.test.ts": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 12406,
+      "sha256": "2865fb912b91e7eea7bea7ccf58e10529d176d107e0ee327a5838759ecdf4e62"
+    },
+    "tests/history-sales-detail-tsconfig.json": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 424,
+      "sha256": "0c05979c92632d3f99d7d68604a888ee8d36c77755ac4d4ba61e2a9d85b7ed2e"
+    },
+    "tests/history-settlement-postgres-protocol.test.ts": {
+      "checkpoint": "history-settlement-0017-v1",
+      "bytes": 6376,
+      "sha256": "e0ddbee2f7d016ea902c0eb64e600b9382022ba51e84fc76df5dd423543951d7"
+    },
+    "tests/history-settlement-tsconfig.json": {
+      "checkpoint": "history-settlement-0017-v1",
+      "bytes": 249,
+      "sha256": "3375097a26d1402dc1c40fa4179b572b15db42b1f78fd2109378cff626be8b05"
+    },
+    "tests/history-settlement.test.ts": {
+      "checkpoint": "history-settlement-0017-v1",
+      "bytes": 5065,
+      "sha256": "b4b5c28744f0f97f0dc9b03512f63dd1f92d51093f870866e239579d712829c4"
+    },
+    "tests/integration/history-native-reference-database.ts": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 3881,
+      "sha256": "84efa479981d80432af23a492086a5e09f700ab1742f8c19ed9d00d156ae88af"
+    },
+    "tests/integration/history-sales-detail.integration.ts": {
+      "checkpoint": "history-typed-0016-v1",
+      "bytes": 15090,
+      "sha256": "c2aeace353bfbeb2b9e4d739b1a4f96668760389788d2d4f92c0e9bbc5dab8c3"
+    },
+    "tests/integration/history-settlement-fixture.ts": {
+      "checkpoint": "history-settlement-0017-v1",
+      "bytes": 5958,
+      "sha256": "1f84773fda9108f00f35710675c589d5fafbd7fc4e38e7cceecfb755fd50dc2a"
+    },
+    "tests/integration/history-settlement.integration.ts": {
+      "checkpoint": "history-settlement-0017-v1",
+      "bytes": 7728,
+      "sha256": "8977f3d559b7ced7b460a4ef18629403904246e2a3a9218662af1db848784129"
+    },
+    "tests/integration/history-typed-database.ts": {
+      "checkpoint": "history-typed-0016-v1",
+      "bytes": 2075,
+      "sha256": "7d9f00cbaac2906ee71ed244672d43fe0770f240c69ca74a2bf2045ce52a0a1a"
+    },
+    "tests/integration/migration-manifest.ts": {
+      "checkpoint": "sealed-history18-run1-repair-v1",
+      "bytes": 7942,
+      "sha256": "f026d16f2229bcec192a58934badb04dce3a0e695c595c68fc252391aab44bed"
+    },
+    "tests/integration/native-import-accounting-database.ts": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 2568,
+      "sha256": "3cd0709a8963068b33d4b6d68315859361011d9ef99ddd4b3dc101860d146907"
+    },
+    "tests/integration/native-import-accounting-fixture.ts": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 18996,
+      "sha256": "c097bae960af55357068a511540a21a111aaab50462c860e0b83d8cb4c7f83f7"
+    },
+    "tests/integration/native-import-accounting.integration.ts": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 15094,
+      "sha256": "e8c3b8c6cd8a862d0f8a275da49667ac3158cd50cddd83ad2bbd5e17468754c4"
+    },
+    "tests/integration/native-payment-database.ts": {
+      "checkpoint": "payment-typed-0017-v1",
+      "bytes": 1267,
+      "sha256": "be11c2d9b1fb4793d89d1ec4b98dbfadcf361141c5a13e36362bab9439c20aa5"
+    },
+    "tests/integration/native-payment.integration.ts": {
+      "checkpoint": "payment-typed-0017-v1",
+      "bytes": 9008,
+      "sha256": "759b1374ee035dff14901cde16533072cb62722180cfaad83501343f9c842083"
+    },
+    "tests/integration/unified-https-acceptance.ts": {
+      "checkpoint": "local-https-host-v1",
+      "bytes": 10181,
+      "sha256": "f6853b447bc7739e3f5a2f228cfbfbb81960b4d62f757b19ceab11dc5660957e"
+    },
+    "tests/integration/unified-pg-https.integration.ts": {
+      "checkpoint": "unified-pg-https-v1",
+      "bytes": 19358,
+      "sha256": "8312af18e2693967651549ae7325b9d61091d3cdc26006b03f7f57877f6e37d2"
+    },
+    "tests/native-catalogue-import.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 29485,
+      "sha256": "0776046285dcd429f7276ddcca629b4b1869d28bf1134c52d97e464169c405b7"
+    },
+    "tests/native-import-accounting-manifest.test.ts": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 988,
+      "sha256": "8ff4d36a1570946693e6e100e47630936fb19229e44217827ff3473ed397fb9b"
+    },
+    "tests/native-import-accounting-store-postgres-protocol.test.ts": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 24161,
+      "sha256": "cc57ec06bf8571519d8e51a97396e24d8eaf616a2d411ee83bc698a4897fc8aa"
+    },
+    "tests/native-import-record-accounting-postgres-protocol.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 16365,
+      "sha256": "5605c1f5215a12242bf2d5430ddb5998e03c42a5d1fc2b408e25fae39590d772"
+    },
+    "tests/native-import-record-accounting-tsconfig.json": {
+      "checkpoint": "history-typed-0016-v1",
+      "bytes": 808,
+      "sha256": "8bae0e3708ce048ffdd9554ad363d36c141739301161b0903f70e965855f6f1a"
+    },
+    "tests/native-import-record-accounting.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 13344,
+      "sha256": "d5cea4640991c0c777e24baa1c9505ffeb45e2d0a602a7347209bf2dcd9853ce"
+    },
+    "tests/native-import-schema-contract.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 3508,
+      "sha256": "fe76c46341029d55030d9949e239848c87424c030eb35ee8db1eb38635d7d7a8"
+    },
+    "tests/native-party-import-migration.test.ts": {
+      "checkpoint": "accounting-0015-v2",
+      "bytes": 4030,
+      "sha256": "5fcc034f8075fc6ef2a524db0f83094dc0033e3baacd0701e3df564f0c353d33"
+    },
+    "tests/native-party-import.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 25304,
+      "sha256": "9a0afe0f510d795eace8bd2130faed3d2062393c51de9ce38b08fc6613cecf67"
+    },
+    "tests/native-payment-import-postgres-protocol.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 5899,
+      "sha256": "f32ca2d2d591f65cb99f4de1eea5ef46dd540a6f78f1e934b32c6e40b7ec48ea"
+    },
+    "tests/native-payment-import-tsconfig.json": {
+      "checkpoint": "payment-typed-0017-v1",
+      "bytes": 220,
+      "sha256": "255f097634991b2cd79a1c46d8ad7260da22193d3e8db0cbb014b40e7993f4cb"
+    },
+    "tests/native-payment-import.test.ts": {
+      "checkpoint": "payment-typed-0017-v1",
+      "bytes": 3768,
+      "sha256": "7f05b7f3243159aed0caf1e73598fa1ad4521a9c733bc54b6006ea7153b05c0c"
+    },
+    "tests/native-product-import.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 24036,
+      "sha256": "5b1298b65f41e876f4a07208aa22c9bd5894ee8ecd5756353ea6dc88cf619596"
+    },
+    "tests/native-sku-stock-import.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 23093,
+      "sha256": "4aa0df21cfeae13d179a2ec9e9ac446b8a361b32f79ff66d3b8affbf40dc3358"
+    },
+    "tests/party-read-postgres-protocol.test.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 5313,
+      "sha256": "c230a1502217e2095100a459960f026bf49fc01b4426f0cae7405f53daa2fa02"
+    },
+    "tests/party-read-service.test.ts": {
+      "checkpoint": "party-read-v1",
+      "bytes": 5561,
+      "sha256": "17bd375668a386f367180ff723472d07fd75f8ed63338312a0f5e0b13dc6d315"
+    },
+    "tests/party-read-tsconfig.json": {
+      "checkpoint": "party-read-v1",
+      "bytes": 262,
+      "sha256": "e183d0f1c2affe789b9c7c721ae4198d281828f8df0e574d1eb3199265911ac0"
+    },
+    "tests/schema16-accounting-closure.test.ts": {
+      "checkpoint": "payment-typed-0017-v1",
+      "bytes": 2321,
+      "sha256": "e7701eb2e999dbbfa156bc96312ae4e9d90e9ab5e4303671a615de220e394f84"
+    },
+    "tests/sealed-payment-reader-contract.ts": {
+      "checkpoint": "sealed-payment-readers-0017-v1",
+      "bytes": 1173,
+      "sha256": "b047d074efaa217930e71a214cba20c34ce504a6386aa11cdba5b135d63bae8b"
+    },
+    "tests/sealed-payment-readers-tsconfig.json": {
+      "checkpoint": "sealed-payment-readers-0017-v1",
+      "bytes": 217,
+      "sha256": "0d9a6307dd2d8e7d2de60d1d06908ecbb788e75fc7a45ae1b8bc3c25d2cf387e"
+    },
+    "tests/support/history-settlement-fixtures.ts": {
+      "checkpoint": "history-settlement-0017-v1",
+      "bytes": 2100,
+      "sha256": "021f8229246aa76f21e5c845ce4e0ad42719e63f3292bf6270015ec49b55102a"
+    },
+    "tests/support/native-payment-fixtures.ts": {
+      "checkpoint": "payment-typed-0017-v1",
+      "bytes": 3016,
+      "sha256": "7dc865a89d5b1073d490d6db33ece72997987f46f866d9d7da210afc967553a1"
+    },
+    "tests/transfer-bounded-http-tsconfig.json": {
+      "checkpoint": "transfer-bounded-repair-v1",
+      "bytes": 180,
+      "sha256": "33a4907e0e81d26f628eaab5e7f78c0a81c21f26c43f538ce4e289992d755fb8"
+    },
+    "tests/integration/sealed-history17-fixture.ts": {
+      "checkpoint": "sealed-history-pg17-v1",
+      "bytes": 20903,
+      "sha256": "29c2c16d815606ccd9412be1bc46d70cff67a3a8b00d57c69d28e835290f6e7a"
+    },
+    "tests/integration/sealed-history17.integration.ts": {
+      "checkpoint": "sealed-history-pg17-v1",
+      "bytes": 25582,
+      "sha256": "752728c554a146946d45ddb552549343f65ad50d2736f86a4f60b561ff4f6fb3"
+    },
+    "scripts/import-v2/extract-history-cell-evidence.py": {
+      "checkpoint": "header-resource-caps-sequential-v1",
+      "bytes": 25730,
+      "sha256": "320e3b327a875a4bec39fbe00218eb4143a20ec730c6c9153609df2b33116547"
+    },
+    "scripts/import-v2/authorized-header-reader.mjs": {
+      "checkpoint": "header-resource-caps-sequential-v1",
+      "bytes": 24175,
+      "sha256": "43a3614b9c87df06f20ee8d6881008359aa647fe08f1616ec6102332f4d7c90b"
+    },
+    "scripts/import-v2/authorized-header-reader.d.mts": {
+      "checkpoint": "header-resource-caps-sequential-v1",
+      "bytes": 2771,
+      "sha256": "6962295b436c834a97819c8d57551281662608d3f49beb70bfaaed967298632a"
+    },
+    "scripts/import-v2/authorized-header-reader.test.mjs": {
+      "checkpoint": "header-resource-caps-sequential-v1",
+      "bytes": 32631,
+      "sha256": "5c1834c837be1227c12c5af3179f548c6ff8e7054927c8fef2c596e2c9d2da8f"
+    },
+    "scripts/import-v2/test_history_cell_evidence.py": {
+      "checkpoint": "header-resource-caps-sequential-v1",
+      "bytes": 19882,
+      "sha256": "d01abebcb86735b5f151320af599ae006a7e8d1c860e547c6dd03e4d101b77d1"
+    },
+    "packages/application/src/history-typed-closure.ts": {
+      "checkpoint": "history18-runtime-expected-v1",
+      "bytes": 34265,
+      "sha256": "dd6041e0b195d2b99ddcc93bd8c93ab5dae47282522cd5d2bf7a9eb088d4c70f"
+    },
+    "tests/history-typed-closure-codec.test.ts": {
+      "checkpoint": "history18-canonical-plan-v1",
+      "bytes": 3800,
+      "sha256": "8ac37f3b9f2743d915405be2b765c53c9c3b81f0eb4338d8a82a9dc8b68e4206"
+    },
+    "adapters/postgres/src/history-typed-closure.ts": {
+      "checkpoint": "history18-stage-projection-v1",
+      "bytes": 8539,
+      "sha256": "c7d7c9eea986b211b698a2c6690731479ecab400e7daa48f8492023b01493bb9"
+    },
+    "adapters/postgres/migrations/0018_history_typed_publication.sql": {
+      "checkpoint": "sealed-history18-run1-repair-v1",
+      "bytes": 75119,
+      "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+    },
+    "tests/integration/history-closure-codec.integration.ts": {
+      "checkpoint": "history18-stage-projection-v1",
+      "bytes": 7245,
+      "sha256": "474192ec9b73aa0b7271689deda601b51f16428d4b7bf8464ed528a4633c6f5a"
+    },
+    "tests/integration/history-closure-projection.integration.ts": {
+      "checkpoint": "history18-stage-projection-v1",
+      "bytes": 7985,
+      "sha256": "2f9117b302d1bbcb63bca0afc065c5d6e4c064d24da008a92ca77bf204bce37c"
+    },
+    "tests/history-typed-closure-stage.test.ts": {
+      "checkpoint": "history18-stage-projection-v1",
+      "bytes": 6202,
+      "sha256": "ffe34cafbd19726ac15c09790a4232888e26c40d140cd8f50d15b95762339327"
+    },
+    "tests/history-typed-closure-stage-protocol.test.ts": {
+      "checkpoint": "sealed-history18-run1-repair-v1",
+      "bytes": 7397,
+      "sha256": "f3706d60ce3f63e50f27304b3055d66e884828b6e860a0a2797cff3bb29ddc8b"
+    },
+    "tests/support/history-closure-fixtures.ts": {
+      "checkpoint": "history18-stage-projection-v1",
+      "bytes": 1442,
+      "sha256": "0bc8fccff79502d31126cc0b415712f9b3d057a22996a1d9cd79c0c42616daa9"
+    },
+    "tests/history-typed-closure-tsconfig.json": {
+      "checkpoint": "history18-stage-projection-v1",
+      "bytes": 183,
+      "sha256": "bfef424a81b039c7be32fa6cf134052f96caea11fd0fcc4209d49b33e7595e71"
+    },
+    "tests/integration/history-closure-runtime.integration.ts": {
+      "checkpoint": "history18-runtime-expected-v1",
+      "bytes": 5333,
+      "sha256": "6c8a698a1c6a811cc9ad27b7c90ea5adba2e14f84fb28c7250ec9b05d51874ee"
+    },
+    "tests/support/history18-routine-source-pins.json": {
+      "checkpoint": "sealed-history18-run1-repair-v1",
+      "bytes": 11248,
+      "sha256": "1dd7087fa8ebd80f6c8061020d4562cbf43ed06df4aef6b52374ed8c394adeb3"
+    },
+    "tests/history-typed-closure-expected.test.ts": {
+      "checkpoint": "history18-runtime-expected-v1",
+      "bytes": 5603,
+      "sha256": "44c27bd3c7baa82c49a066a5a56d1550bf186baea77dae3c8051fc99eba9a3ef"
+    },
+    "tests/history-typed-closure-prepared.test.ts": {
+      "checkpoint": "history18-runtime-expected-v1",
+      "bytes": 13689,
+      "sha256": "0fc0b96ca8d59a182ca9160a5fd74f1264ef981105a8871e07822b14ac72afca"
+    },
+    "tests/support/history-closure-prepared-facts.ts": {
+      "checkpoint": "history18-runtime-expected-v1",
+      "bytes": 12259,
+      "sha256": "610caa27f7e041303b5603cf625bf12409434dfffacd75ef39eb666e5fc25ea0"
+    },
+    "adapters/postgres/src/native-product-import.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 12068,
+      "sha256": "a0981b7ba2cf1ecffb95251735e308046e41bc2c773d30780a271a457b0b4e62"
+    },
+    "adapters/postgres/src/native-sku-import.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 13195,
+      "sha256": "1f9442f8b5945d3d55e7a1ea74b71f51e469e329b018d7851783adb183c5e2e3"
+    },
+    "adapters/postgres/src/native-stock-contributor-import.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 10626,
+      "sha256": "b82d3d7861a662dc44cfa9cb02d8e51562f8aac75fa23f750199db6ca56723be"
+    },
+    "adapters/postgres/src/native-barcode-import.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 7560,
+      "sha256": "f572eaba9885528377d80dee89617c5c8db6d52b8faefa2ac81f64ee0ff742ad"
+    },
+    "tests/history-typed-closure-native18-protocol.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 6255,
+      "sha256": "6184adb29cd47457d6d97155154e14caa33b2c1d1820aa535cbbe84c5aef6618"
+    },
+    "tests/history-typed-closure-source-pin.test.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 2311,
+      "sha256": "ba01e1b71153a6e0d589796f6d397ee9c9f366d610f06542c6c392ad48f68529"
+    },
+    "tests/integration/history-closure-database.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 1311,
+      "sha256": "d34310a8a2110317c90811faf32dded9439c6e62bc9c6c6a112e25262a673c26"
+    },
+    "tests/integration/sealed-history18-source-pin.ts": {
+      "checkpoint": "history18-native-writer-v1",
+      "bytes": 1917,
+      "sha256": "b43b5c71340fb8e62d9155ee43e2ffdb8299b6ca2db39f4e9386b1ff5f2f0a68"
+    },
+    "tests/integration/sealed-history18.integration.ts": {
+      "checkpoint": "sealed-history18-run1-repair-v1",
+      "bytes": 35440,
+      "sha256": "b50b8a25d662698e41ba49bc08f168e450a2fd5500ed1a2ae98a85912c064627"
+    },
+    "scripts/import-v2/authorized-history-closure-reader.mjs": {
+      "checkpoint": "history18-source-composite-cleanup-v2",
+      "bytes": 12769,
+      "sha256": "ea1fc98729be0b597d4d41ab7ab7e732dc31832b864d7f19256f7e6f18541f39"
+    },
+    "scripts/import-v2/authorized-history-closure-reader.d.mts": {
+      "checkpoint": "history18-source-composite-v1",
+      "bytes": 3348,
+      "sha256": "5bb7e040707ca934abc4b4ef32551b35425c87ac294e3599efa985627485e9cf"
+    },
+    "scripts/import-v2/authorized-history-closure-reader.test.mjs": {
+      "checkpoint": "history18-source-composite-cleanup-v2",
+      "bytes": 21718,
+      "sha256": "80c73754ac1bd2bdfdd507f0a8fbfa17f22ef212076a6dd9516911eea407f744"
+    },
+    "tests/history-typed-closure-composite.test.ts": {
+      "checkpoint": "history18-source-composite-v1",
+      "bytes": 2376,
+      "sha256": "09c2f9cf78bf6446f3c65b3a3faa5cb17691777c1bb7b6536a2f3fb634d2f7e7"
+    }
+  }
+}

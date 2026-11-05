@@ -1,0 +1,107 @@
+{
+  "status": "STOP_SOURCE755_ORIGINAL_HOST_PREFLIGHT_INPUT_CHANGED_NO_REPLAY",
+  "jobId": "t45-source755-adopted148-consumer-continuation-20261027-158",
+  "source755": "3dd3ec824cdc6c9c70c672ee702413b50285cde1",
+  "hostSource749": "76531b2140a28ae0e727e893082192b9b84a6913",
+  "terminal": {
+    "jobId": "t45-source755-adopted148-consumer-continuation-20261027-158",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-dc1dfeb67197",
+    "atUTC": "2026-10-27T08:18:30.996766+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 3.426807163981721,
+    "exports": [
+      "consumer-engine-result.json",
+      "consumer-runtime-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T08:18:34.426465+00:00"
+  },
+  "runtime": {
+    "jobId": "t45-source755-adopted148-consumer-continuation-20261027-158",
+    "status": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+    "automaticReplay": false,
+    "sourceReadyOnly": false,
+    "MAINOrPublishExecuted": false,
+    "phase": "ORIGINAL_HOST_EVIDENCE_AND_RUNTIME_PREFLIGHT",
+    "errorCode": "PRODUCTION_PROVIDER26_INPUT_CHANGED",
+    "finishedAtUtc": "2026-10-27T08:18:34.332Z"
+  },
+  "engine": {
+    "actualMode": "FULL_NATIVE_CONTINUATION",
+    "actualPhase": "ORIGINAL_HOST_EVIDENCE_AND_RUNTIME_PREFLIGHT",
+    "applicationChanged": false,
+    "automaticReplay": false,
+    "checkedAtUtc": "2026-10-27T08:18:34.395190+00:00",
+    "errorCode": "ORIGINAL_CONSUMER_STOP_SEE_ORIGINAL_RESULT",
+    "externalGrant": {
+      "bytes": 37014,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source755-adopted148-consumer-continuation-20261027-158/bundle/C-EXECUTION-GRANT.json",
+      "sha256": "76445b63c95e5c6a4a246eacf1cd79abbdd86309dad0445e3ca995feb62787a8"
+    },
+    "finalInput": {
+      "bytes": 188613,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source755-adopted148-consumer-continuation-20261027-158/inputs/source-input.json",
+      "sha256": "ce1939fabd0d2e4b3a567ece7caa209e52ceb96978617fd73b364b96a6e130fd"
+    },
+    "initialState": "Original153 prefix0/109 remaining, original source/data preserved",
+    "jobId": "t45-source755-adopted148-consumer-continuation-20261027-158",
+    "newSecretChannelCreated": "[REDACTED]",
+    "node": {
+      "bytes": 126595440,
+      "mode": 493,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c03-maintenance-matrix-20261022-26/tools/node",
+      "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+      "uid": 0,
+      "version": "v24.21.0"
+    },
+    "nodeExitCode": 2,
+    "processOutcome": "RETURNED",
+    "runtimeStatus": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+    "status": "STOP_SOURCE_CONSUMER_OR_UNKNOWN_NO_REPLAY",
+    "stderrBytes": 0,
+    "stdoutBytes": 173
+  },
+  "facts": [
+    "Original host did not return; step runner and journal creation stage not entered",
+    "MAINOrPublishExecuted false; applicationChanged false",
+    "Original158 submitted exactly once after full bounded-upload byte/hash checks; no152 replay or148 preparation",
+    "Exact error is composite file length/stat/hash predicate in provider; failing logical ref or predicate not yet identified",
+    "Local executable job provider descriptor is exact75535137 pin; unchanged raw six data input objects retained"
+  ],
+  "limits": [
+    "Do not mark full evidence/runtime issuer/preflight/PG/MAIN/PUBLISH as PASS",
+    "Actual post-failure protected-container independent readback not present; do not claim it"
+  ],
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source755-adopted148-consumer-continuation-20261027-158/release-submission/release-receipts/t45-source755-adopted148-consumer-continuation-20261027-158/job.json",
+      "bytes": 563,
+      "sha256": "513340ef5795b6ea12d840f4513ee52176e7ac042fe0e9e1e5c8137223613fee"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source755-adopted148-consumer-continuation-20261027-158/release-submission/release-receipts/t45-source755-adopted148-consumer-continuation-20261027-158/consumer-runtime-result.json",
+      "bytes": 397,
+      "sha256": "4dbeb11debe9e130707aaaae96c21c73380a7b2a79a17b4bc5d39ddfd4c1bccc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source755-adopted148-consumer-continuation-20261027-158/release-submission/release-receipts/t45-source755-adopted148-consumer-continuation-20261027-158/consumer-engine-result.json",
+      "bytes": 1612,
+      "sha256": "a18f1aaea050c4e58e2db6ec3f2dd729752cb756b46e7c08275732ef00a26145"
+    }
+  ],
+  "sourceOnlyReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source755-adopted148-consumer-continuation-20261027-158/inputs/evidence/QB467-RESULT.json",
+    "bytes": 4042,
+    "sha256": "424e328b7b68b424ac6eb1f71e29609eb0b616bd3002e23aecb5f0a35cbb8981"
+  },
+  "transferEvidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source755-adopted148-consumer-continuation-20261027-158/UPLOAD-RECOVERY-RESULT.json",
+    "bytes": 1603,
+    "sha256": "1ba4252e8fa480f5e30cd396075c52396a1d21cd0b79f9c0ca8a6b67f929a0b6"
+  }
+}

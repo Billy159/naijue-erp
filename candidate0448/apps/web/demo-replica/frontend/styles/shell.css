@@ -1,0 +1,6 @@
+/* Authoritative page composition; shared rules have one source. Bundled at build time. */
+@import "./shared/entity-picker.css";
+@import "./shared/settings-account.css";
+@import "./shared/surface-controls.css";
+@import "./shared/confirmations.css";
+@import "./shared/approved-header-navigation.css";

@@ -1,0 +1,762 @@
+{
+  "atUtc": "2026-10-22T20:10:07.404598+00:00",
+  "parent": "03fb221ba7cae10a0304a32cb73afc8cc699d206",
+  "groups": [
+    {
+      "slice": "SALES_EXISTING_FULL_PROPOSAL_PAGE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-37/DELIVERY.json",
+      "receiptSha256": "4f71aa3d5f0e4f817b316f4a19ab3dc80e0baa6036d8a3f4353feb6af70a966e",
+      "receiptSnapshot": {
+        "chunk": 37,
+        "atUtc": "2026-10-22T20:06:26.151342+00:00",
+        "status": "READY_FOR_C_PIN_SALES_EXISTING_FULL_PAGE",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/sales-existing-document.ts",
+            "sha256": "f5df94938bac883be0d758ce085f1d75c36fb4bde98c72594b0370fe2085bae7"
+          },
+          {
+            "path": "apps/web/src/current-form/sales-existing-document-form.tsx",
+            "sha256": "92068d5a546afbed0839fda2b9122b4aa41b204026f8ebbec9d500889e791ba6"
+          },
+          {
+            "path": "apps/web/src/current-form/sales-proposal.ts",
+            "sha256": "6ba7ff53ef570dda9a02cfb299d45cdcb3b7ae5474f863b597c738514913ac65"
+          },
+          {
+            "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+            "sha256": "0c6f95f8a71febab2616ac11022fcedd9da622e3c98d8254f6bbc317678ecf1c"
+          },
+          {
+            "path": "apps/web/src/sales/commands/controller.ts",
+            "sha256": "d01ee963bfaf545d745ffd72702ff571fec6de17e4dc761dd160ab11d0488571"
+          },
+          {
+            "path": "apps/web/src/sales/commands/editor-session.ts",
+            "sha256": "fe8b58c959fbb6bedd5f8e3c764fb114542341c2fb56154b983978b49190a17b"
+          },
+          {
+            "path": "apps/web/src/sales/commands/form.tsx",
+            "sha256": "76392396710faf49af880fc91f1a368f7fc6a08ac555a6b4cbf44bc5d34e3acc"
+          },
+          {
+            "path": "apps/web/src/application/routes/sales-commands.tsx",
+            "sha256": "547d17736f2d16b0b60374b4b3817ddbfde7e9e17712714f8f9d55513e8651ea"
+          },
+          {
+            "path": "apps/web/src/production-host/configuration.ts",
+            "sha256": "443adc5c71d47dd9ba67c0daf0e592c51c3254858c5583a435dd87463d9827d7"
+          },
+          {
+            "path": "apps/web/src/production-host/mount.tsx",
+            "sha256": "51ad320fa9659f9b63915faf9efdf6c2cd9fd4c9438fe9ed8626be1a0a90f1f0"
+          }
+        ],
+        "scope": "Saved Sales full proposal under original native command owner. Actual SKU cold read, original line pointers/snapshots/reference, native existing-preparation read, CAS/key/uncertain guards and actual whole-page reuse. New local IDs never native facts.",
+        "checks": {
+          "types-4.log": "exit0",
+          "sales-existing-3.log": "exit0",
+          "sales-existing-page-2.log": "exit0"
+        },
+        "activation": "Explicit application sales.commands.existingPreparation or production routes.salesExistingEdit=true. Default missing/false unchanged; C must enable exact candidate. No release config JSON change.",
+        "notTested": [
+          "latest integrated build and Chrome Demo full saved Sales page",
+          "native isolated PostgreSQL prepare/save/approve/permissions/inventory/funds",
+          "Transfer saved full proposal bridge; next slice"
+        ],
+        "blockers": [],
+        "next": "C exact pin, existing QF affected range, next necessary real candidate comparison; F1 resumes Transfer saved bridge after C41 release. Historical same-version checks not replayed."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/sales-existing-document.ts",
+          "owner": "F1",
+          "sha256": "f5df94938bac883be0d758ce085f1d75c36fb4bde98c72594b0370fe2085bae7",
+          "bytes": 16896
+        },
+        {
+          "path": "apps/web/src/current-form/sales-existing-document-form.tsx",
+          "owner": "F1",
+          "sha256": "92068d5a546afbed0839fda2b9122b4aa41b204026f8ebbec9d500889e791ba6",
+          "bytes": 5089
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal.ts",
+          "owner": "F1",
+          "sha256": "6ba7ff53ef570dda9a02cfb299d45cdcb3b7ae5474f863b597c738514913ac65",
+          "bytes": 37470
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "0c6f95f8a71febab2616ac11022fcedd9da622e3c98d8254f6bbc317678ecf1c",
+          "bytes": 33706
+        },
+        {
+          "path": "apps/web/src/sales/commands/controller.ts",
+          "owner": "F1",
+          "sha256": "d01ee963bfaf545d745ffd72702ff571fec6de17e4dc761dd160ab11d0488571",
+          "bytes": 21398
+        },
+        {
+          "path": "apps/web/src/sales/commands/editor-session.ts",
+          "owner": "F1",
+          "sha256": "fe8b58c959fbb6bedd5f8e3c764fb114542341c2fb56154b983978b49190a17b",
+          "bytes": 13296
+        },
+        {
+          "path": "apps/web/src/sales/commands/form.tsx",
+          "owner": "F1",
+          "sha256": "76392396710faf49af880fc91f1a368f7fc6a08ac555a6b4cbf44bc5d34e3acc",
+          "bytes": 22253
+        },
+        {
+          "path": "apps/web/src/application/routes/sales-commands.tsx",
+          "owner": "F1",
+          "sha256": "547d17736f2d16b0b60374b4b3817ddbfde7e9e17712714f8f9d55513e8651ea",
+          "bytes": 4476
+        },
+        {
+          "path": "apps/web/src/production-host/configuration.ts",
+          "owner": "F1",
+          "sha256": "443adc5c71d47dd9ba67c0daf0e592c51c3254858c5583a435dd87463d9827d7",
+          "bytes": 7851
+        },
+        {
+          "path": "apps/web/src/production-host/mount.tsx",
+          "owner": "F1",
+          "sha256": "51ad320fa9659f9b63915faf9efdf6c2cd9fd4c9438fe9ed8626be1a0a90f1f0",
+          "bytes": 10826
+        }
+      ]
+    },
+    {
+      "slice": "RUNTIME26_READONLY_RETAINED_VIEW",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-RETAINED-DELETE-VIEW-RESULT-v1.json",
+      "receiptSha256": "14eb61bf9d2d84acef59abb99ce69c94117d1df6f1896bcc9f821212861296d8",
+      "receiptSnapshot": {
+        "version": "D1_R1_RETAINED_DELETE_READONLY_VIEW_V1",
+        "status": "SOURCE_READY_C_CHECKPOINT_AND_QB_NEW_SCOPE_PENDING",
+        "technicalFreeze": {
+          "path": "docs/rapid-launch-20261022/R1-RETAINED-DELETE-VIEW-TECHNICAL-FREEZE-v1.json",
+          "sha256": "c5dbe0433456a065c8fd829af96c9e6e4ab751d9e1f182dedf0f048ad9c975a1"
+        },
+        "files": [
+          {
+            "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+            "bytes": 62176,
+            "sha256": "5786e25dcaa3d549658f88390bc03702b226b278ef7a880c1690a24dac06ec96",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "tests/native-runtime26-capability.test.ts",
+            "bytes": 16953,
+            "sha256": "101dc9280ac4518cb3842fb74213ca057ce8501b68f792355a47c5f47d9a5995",
+            "singleTerminalLF": true
+          }
+        ],
+        "interface": "issuer.catalogueRetainedDelete: existing catalogue-retained-delete-v22 sync void view; only exact issuer.pool + existing PRODUCT_SEASONS_READ; checks original pinned files and monotonic revocation.",
+        "validation": {
+          "path": "R1-RETAINED-DELETE-VIEW-VALIDATION-v1.json",
+          "sha256": "5054fb00260730ca6b1305e1522b124ba9bd00a7b8258b5c9c3264041e804e8b",
+          "newUnique": 2,
+          "affectedUnique": 1,
+          "pass": 3,
+          "skip": 0,
+          "strictFinalDirectExit": 0,
+          "firstTS7006Preserved": true
+        },
+        "boundaries": {
+          "actualDatabase": false,
+          "newPurpose": false,
+          "acl": false,
+          "schema": false,
+          "businessWrite": false,
+          "importStageMainPublishAuthority": false,
+          "productionCompositionWipSeparate": true,
+          "legacy19Unchanged": true,
+          "priorQaProofsNotReplayed": true
+        }
+      },
+      "files": [
+        {
+          "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+          "owner": "D1",
+          "sha256": "5786e25dcaa3d549658f88390bc03702b226b278ef7a880c1690a24dac06ec96",
+          "bytes": 62176
+        },
+        {
+          "path": "tests/native-runtime26-capability.test.ts",
+          "owner": "D1",
+          "sha256": "101dc9280ac4518cb3842fb74213ca057ce8501b68f792355a47c5f47d9a5995",
+          "bytes": 16953
+        }
+      ]
+    },
+    {
+      "slice": "HISTORY26_SAME_CLIENT_READ",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/history-read26-slice1/RESULT.json",
+      "receiptSha256": "52664be50b6dd80e984f1f597bb7fd763621a9bcaae32e9b7d0b0650f65bfc18",
+      "receiptSnapshot": {
+        "taskId": "D3_HISTORY_READ26_ORIGINAL_CLIENT_CONSTRUCTOR_SLICE1",
+        "status": "SOURCE_READY_NEW4_AFFECTED2PASS_TYPES0_NOT_ACTUAL_RUNTIME",
+        "atUtc": "2026-10-22T20:07:00.761985+00:00",
+        "signature": "new PostgresImportedHistoryQueryReader(pool, {runtime26})",
+        "default": "constructor(pool) retains finite EXACT19 and original19 accounting guards; does not admit26",
+        "explicit26": "Closed own-data exactly1 runtime26 option, captured through checkedNativeRuntime26Capability. Every sales/transfer list/detail leases one original client and calls runtime26.assertReady(client,HISTORY_READ) before first reader SQL; then RR READ ONLY and exact prefix1..26. No query-wrapper substitute or19 fallback.",
+        "sourceExact2": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/imported-history-query-reader.ts",
+            "bytes": 18629,
+            "sha256": "62573b869be60a311fcd3d9bbc6f8c81fb70a47bd5dc691971641f88aba9f486"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/imported-history-query.test.ts",
+            "bytes": 23049,
+            "sha256": "a6bd84ba80a5f69862c66362322041bba64f3b9be69957c767b9a5fb16f42deb"
+          }
+        ],
+        "checks": {
+          "protocol": {
+            "new": 4,
+            "affectedOld": 2,
+            "pass": 6,
+            "fail": 0,
+            "evidence": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/history-read26-slice1/protocol-first.log",
+              "bytes": 873,
+              "sha256": "6e001425f65c2882dac5c19f95354380df641dfa916ceeca0171d6e1e23668ff"
+            }
+          },
+          "strictTypes": {
+            "exitCode": 0,
+            "config": "tests/imported-history-query-tsconfig.json",
+            "evidence": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/history-read26-slice1/types-second.log",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          },
+          "firstTypesCorrection": "Initial negative boolean-capability fixture needed explicit unknown cast; corrected only erased test typing and reran affected strict type check. Original first log retained.",
+          "beforeSql": [
+            "wrong target proof throws",
+            "boolean proof rejected",
+            "cancel in proof rejected"
+          ],
+          "preserved": [
+            "four original POST endpoints untouched",
+            "published-only COUNT/page/detail closure and final claim/receipt/audit filters",
+            "hall grant and exact money/NULL projections",
+            "unknown COMMIT discards once with no rollback/retry",
+            "legacy19 RR/guard path"
+          ]
+        },
+        "notTested": [
+          "Real D1 issued runtime or target capability",
+          "PostgreSQL engine read",
+          "HTTP endpoints reacceptance or sealed18 QA",
+          "SOURCE/MAIN/49accounts/import/publication"
+        ],
+        "nonActions": {
+          "SQL": 0,
+          "Git": 0,
+          "serverActions": 0,
+          "newSchemaOrWrites": 0
+        },
+        "next": "C freeze exact2 and relay constructor signature to D1 for H01/H04 entry wiring; scoped independent new26 review only."
+      },
+      "files": [
+        {
+          "path": "adapters/postgres/src/imported-history-query-reader.ts",
+          "owner": "D3",
+          "sha256": "62573b869be60a311fcd3d9bbc6f8c81fb70a47bd5dc691971641f88aba9f486",
+          "bytes": 18629
+        },
+        {
+          "path": "tests/imported-history-query.test.ts",
+          "owner": "D3",
+          "sha256": "a6bd84ba80a5f69862c66362322041bba64f3b9be69957c767b9a5fb16f42deb",
+          "bytes": 23049
+        }
+      ]
+    },
+    {
+      "slice": "CATALOGUE_DEMO_LEAF_UI_LAYER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT-UI-010203-DELIVERY-v1.json",
+      "receiptSha256": "1443f936d6771f438bb89069b89a13ad3d44e382d98ead2e0202753bd7ba1c77",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskIds": [
+          "CAT-UI-01",
+          "CAT-UI-02",
+          "CAT-UI-03"
+        ],
+        "owner": "F2",
+        "createdAt": "2026-10-22T20:06:44.666066+00:00",
+        "status": "LEAF_SOURCE_DOM_TYPE_READY_SHELL_INTEGRATION_BROWSER_PENDING",
+        "files": [
+          {
+            "path": "apps/web/src/product-settings/colors/entry-page.tsx",
+            "beforeSha256": "f2b8e215e71732d12e1b65439ea9e47e644f638673e21dd8dedda3df2bc0f3ab",
+            "sha256": "91049d582b2583e2118458e971694109888ec11a1ea4d160133b9692b4a81b36"
+          },
+          {
+            "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+            "beforeSha256": "11f91681cbe7a5aaa6730c7c3489aad1dd866a59aa9fcfc5fe574a377c0ae2ce",
+            "sha256": "1a7605dc48b77bbd0c098764aa971f89636abe3c332b51d7410bc12412854138"
+          },
+          {
+            "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+            "beforeSha256": "5581ae77e9fd515c5a6fabfb847ee61fc097dd7a6a00cce2e939c96b21b79761",
+            "sha256": "9e79f0a80b616e457e8d4bac7da15b70ed9c1099c3ecbd5933e243d960d3d51b"
+          }
+        ],
+        "newApplicationFiles": [],
+        "authority": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/product-settings-20261023/RESULT.json",
+          "sha256": "1900b5efd18036737e452516609c1aad7a89e830ac9784eb3523873ae9963fbf",
+          "candidate": "actual693e215d943fe4c23371aba4c19ace68b77b5720/build01",
+          "liveBeforeCheck": "All10 report inputs matched current source; no duplicate already-fixed source work",
+          "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3"
+        },
+        "sourceProvenance": [
+          {
+            "path": "frontend/product-current.js",
+            "lines": "193-201,208",
+            "sha256": "d5a3ae29d781aa725859196dac6ef4e64f0e3cea08b3cca5c199579c9527b0be"
+          },
+          {
+            "path": "frontend/product-inventory-unified.css",
+            "lines": "27-33,72-85",
+            "sha256": "645ae0acece1b438cb04b8e8b642a539f85ec506d2b72d079f02ca4de6ed0da0"
+          },
+          {
+            "path": "frontend/product-rework.css",
+            "lines": "79-88",
+            "sha256": "40d9ce96db6cfc4d6a1e4c531144a05f10a5e44df64073e2a9441468872d0254"
+          }
+        ],
+        "regions": [
+          {
+            "name": "page/table/search/tabs layer",
+            "classification": "最小适配",
+            "meaning": "Frozen full settings hierarchy consumed through existing Arco tabs/table native ownership, scoped final selectors; not original native DOM copied or class names alone claimed reused"
+          },
+          {
+            "name": "readonly substitute",
+            "classification": "removed replaced view UI",
+            "meaning": "No frozen counterpart: removed CatalogueEntryView and its state/row button; actual editor remains. No fake write path introduced."
+          },
+          {
+            "name": "modal editor",
+            "classification": "existing real native command path reused",
+            "meaning": "Existing CatalogueEntryEditor and permission/dirty/uncertain/receipt handlers retained; only synthetic explicit capability checked for opening/cancel, no new commit acceptance"
+          }
+        ],
+        "changes": [
+          "Restored header/title +4tabs +search/add +3column table +existing pager; removed extra refresh and constant technical readonly line, retaining dynamic real read/error/stale facts.",
+          "New/edit controls remain visible; absent maintenance or permission leaves disabled button with accurate title/aria-description. No hidden action or substitute view pretends availability.",
+          "Scoped tab font13/padding5x12/h34/min76/gap4/no first16 margin; active600/disabled state preserved.",
+          "Scoped Arco table winners header36/pad4x8/line18/12px, real action column100 and existing26px action; native reader, original UUID/code/leading zeros, page totals and callback preserved.",
+          "Native editor/capability/leave guards, CREATE/EDIT/status/delete/recovery logic not replaced or simulated."
+        ],
+        "checks": {
+          "dom": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT-UI-010203-dom-v1.log",
+            "exitCode": 0,
+            "cases": [
+              "actual CatalogueEntryPage color and fit with actual DemoFrame, native Arco controls",
+              "4 permission-aware tabs/3 columns/20 original typed records/leading-zero codes",
+              "no extra refresh, constant maintenance note or substitute view; missing capability leaves visible disabled new/edit with reason",
+              "actual page2 and debounced search/page1 reset pass real LatestQuery request parameters",
+              "native keyboard skips unimplemented tabs and emits only enabled colors/fits destination",
+              "explicit synthetic maintenance enables existing real edit/new forms and cancel; client execute asserts failure if called, writes0"
+            ],
+            "qualification": "Synthetic reader fixture plus actual strict DTO validation/real leaf controllers, not server/PG or production cap activation"
+          },
+          "cascade": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT-UI-010203-cascade-result-v1.json",
+            "sha256": "58a11569fef5199503eb00c9ed1ae3a0d8fbcb9c28d521233ce0497d9bf99f90",
+            "exitCode": 0,
+            "scope": "actual rendered catalogue DOM with shared Tabs/Table/installed Arco loaded AFTER leaf; matched selector/declaration specificity; old14px/first16/pad6x9/line20 reproduced, new13/0/pad4x8/line18/header36/action100 wins; unrelated source winners unchanged",
+            "qualification": "Real intrinsic row35, tabletop185, actual scroll/pixel and final preview winner remain browser pending"
+          },
+          "type": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT-UI-010203-types.log",
+            "entries": [
+              "apps/web/src/product-settings/colors/entry-page.tsx",
+              "apps/web/src/product-settings/colors/entry-view.tsx"
+            ],
+            "strict": true,
+            "exactOptionalPropertyTypes": true,
+            "noUncheckedIndexedAccess": true,
+            "actualTransitiveClosure": true,
+            "exitCode": 0,
+            "logBytes": 0
+          },
+          "harnessCorrections": [
+            "Used actual native Arco pagination li[aria-label=\"第 2 页\"] instead of assuming a button.",
+            "Matched-element cascade ignores pseudo-element rules such as vendor placeholders; these do not style target element itself. No application source changed for these fixture corrections."
+          ]
+        },
+        "perIssue": {
+          "CAT-UI-01": "SOURCE_SCOPED_CASCADE_READY; real geometry pending",
+          "CAT-UI-02": "F1 existing viewport opt-in seam requested; C says F1 READY awaiting fixed. F2 did not cross-write shell or use global body/height hack; final actual20row scroll pending",
+          "CAT-UI-03": "Normal leaf layout/visible unavailable controls restored; host maintenance not injected remains WAITING_INTEGRATION, not feature PASS"
+        },
+        "shellSeam": {
+          "owner": "F1/C",
+          "file": "apps/web/src/demo-presentation/demo-frame.tsx",
+          "request": "Use existing demo-frame-viewport for selected product-settings in addition to selected settings/stores; existing frame.css already constrains document and scrolls demo-page while topbar remains sibling",
+          "leafNoCrossWrite": true,
+          "next": "C fixed shell+this leaf in necessary preview and Demo repeats only20-row bottom/topbar and affected density/layout"
+        },
+        "maintenanceSeam": {
+          "existing": "CatalogueEntryPage maintenance + onCanLeaveChange both required; actual CatalogueMaintenanceCapability COLOR/FIT client+allowedActions+newRequestKey+recovery owner",
+          "hostGap": "Preview not injecting actual maintenance is distinct from page source readiness. Do not activate synthetic write success or call a row read snapshot an editor.",
+          "next": "C/F1 inject only explicit authorized native capability and leave guard when runtime ready; available source editor not proof production write readiness"
+        },
+        "protected": [
+          "all native readers, server pagination and role authorization",
+          "original dictionary identities/raw codes and CAS versions",
+          "dirty/uncertain writes and recovery/receipt",
+          "season/year/P12 accepted ranges",
+          "F1 shared files unchanged by F2"
+        ],
+        "notRun": [
+          "actual Chrome/browser control",
+          "real scroll/pixel/hover/bottom browser recheck",
+          "real maintenance save/delete/PG",
+          "full build/Git/release"
+        ],
+        "next": "C snapshot exact3 leaf; QF only new leaf scope/true handlers/type; combine C-owned fixed shell in next needed preview, Demo affected density/table/topbar-bottom only. F2 continues C61 search pair in separate fragment.",
+        "reportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+        "browserResourceStatement": "No actual Chrome/browser-harness control or active input/control handles. Exclusive Demo targets untouched."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/product-settings/colors/entry-page.tsx",
+          "owner": "F2",
+          "sha256": "91049d582b2583e2118458e971694109888ec11a1ea4d160133b9692b4a81b36",
+          "bytes": 7876
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+          "owner": "F2",
+          "sha256": "1a7605dc48b77bbd0c098764aa971f89636abe3c332b51d7410bc12412854138",
+          "bytes": 6829
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+          "owner": "F2",
+          "sha256": "9e79f0a80b616e457e8d4bac7da15b70ed9c1099c3ecbd5933e243d960d3d51b",
+          "bytes": 8447
+        }
+      ]
+    },
+    {
+      "slice": "BODY_PORTAL_CONTENT_THEME_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-04-v1-RESULT.json",
+      "receiptSha256": "55926045a939f471eaf937807b7f6e438fc779fc4200dd93152c953bb37b21f8",
+      "receiptSnapshot": {
+        "taskId": "F05/STORE-UI-04",
+        "owner": "F3",
+        "clientDate": "2026-10-23",
+        "generatedAtObservedUtc": "2026-10-22T20:07:06.859647+00:00",
+        "status": "SOURCE_READY_FOR_C_CHECKPOINT_AND_TARGETED_DEMO_RECHECK",
+        "findingPriority": "P1",
+        "newIssueCount": 0,
+        "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "baselineHead": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
+        "headObservedAtReceipt": "03fb221ba7cae10a0304a32cb73afc8cc699d206",
+        "modelRequirement": {
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "xhigh",
+          "fastEnabledByF3": false,
+          "actualFastUiState": "NOT_OBSERVED"
+        },
+        "scope": {
+          "main": [
+            "O-B02 new warehouse Modal",
+            "O-B01 new hall Modal"
+          ],
+          "sameThemeConsumers": [
+            "Staff settings Modal and read preparation",
+            "Payment method/account shared Modal and read preparation",
+            "Standalone W7 account Modal and read preparation",
+            "O-B08 audit Drawer"
+          ],
+          "implementation": "Apply existing demo-ui class to ten portal content constructors in nine registered F3 files. Existing tokens.css supplies ca/ui variables outside DemoFrame. No wrapper/body class."
+        },
+        "sourceEvidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v009-8755931/STORE-MODAL-RESULT.json",
+            "sha256": "58e2e566c1ae197b0de80c551f550103daa0f44a145e1d98922df07edecf223f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v009-8755931/STORE-MODAL-HALL-SUPPLEMENT.json",
+            "sha256": "316d68e2fc262ab156c0299077e53d0dcb8a22011fd9c15dd6124fafe41f3a6f"
+          }
+        ],
+        "files": [
+          {
+            "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+            "beforeSha256": "c462095e6d4a4ebda1821a22ec9c81a6e90b2ece73dc7436c2ca5eb7f0580195",
+            "afterSha256": "b09755a2d9593503e3aab3e21e78bf59525f33e04f5cd4f594016d97c793f0ca",
+            "addedThemeClassSites": 2,
+            "onlyThemeClassAdded": true
+          },
+          {
+            "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+            "beforeSha256": "7e0356a6084f27f7c2933f455bdea5b625017dc44a1075b8318675983a6ee397",
+            "afterSha256": "c96590ecca4b7a43b7b6c71c1da527a0bb32e14a6e2f5c64ebd8f32cd480107d",
+            "addedThemeClassSites": 1,
+            "onlyThemeClassAdded": true
+          },
+          {
+            "path": "apps/web/src/staff-settings/staff-form.tsx",
+            "beforeSha256": "0c67197164e654e98953c01bcfb91d96e087fa465cc5d8c4df5854839b10535f",
+            "afterSha256": "81e9936a5cb20e4b3da981375bb19b342d710deb106b90abd03f179563614d44",
+            "addedThemeClassSites": 1,
+            "onlyThemeClassAdded": true
+          },
+          {
+            "path": "apps/web/src/staff-settings/staff-page.tsx",
+            "beforeSha256": "4a27e3fc3d3c7a21e458a13d8643aafeb4fe2cc08974832d52f872f312f039ec",
+            "afterSha256": "98bad493391775c6b0d03dc3a8510115c163a9685efb0275362500016ee582bc",
+            "addedThemeClassSites": 1,
+            "onlyThemeClassAdded": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+            "beforeSha256": "019b11793fd4a36efc91b408e609b90700b7665a6dbca818444a23dc21f6a96d",
+            "afterSha256": "dcdadfe71b276d7dbdd442f61ad62faf99b0982f6b68c585d07479af66b5a797",
+            "addedThemeClassSites": 1,
+            "onlyThemeClassAdded": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/payment-page.tsx",
+            "beforeSha256": "6d024bb1e66256b8fa8b9857481cb8d9eee0ece0038743e8687b7e176ce0d2a9",
+            "afterSha256": "bb2c777b6291c2cbda62b6bd4c35da0a89989ac451b102d0a4d38397fd47f20f",
+            "addedThemeClassSites": 1,
+            "onlyThemeClassAdded": true
+          },
+          {
+            "path": "apps/web/src/account-settings/account-form.tsx",
+            "beforeSha256": "44c5fd1bf26f5ed6595496029498284543efa317be2b9543e359df5528a9130e",
+            "afterSha256": "c6fdab00451dab9881675d9b1e1e4b63314015f253c992d196e2fa34e92cc806",
+            "addedThemeClassSites": 1,
+            "onlyThemeClassAdded": true
+          },
+          {
+            "path": "apps/web/src/account-settings/account-page.tsx",
+            "beforeSha256": "26aa5fdb6da6785da7ea8ca32ea290ee65bd95157e37522c643b36b17590af74",
+            "afterSha256": "4d13fc52a5e448ce8b74a88e0aea8a3465f9bdf4b9480d23b07ff60063ff4fd1",
+            "addedThemeClassSites": 1,
+            "onlyThemeClassAdded": true
+          },
+          {
+            "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+            "beforeSha256": "94c9387b9002a819ee186f10b5c931f789e1ea4b889e2db557f91873dc0e904d",
+            "afterSha256": "fdf07c42e99392716c03f1035dc94ae4da5b355c16e95cbd4cd342af37923853",
+            "addedThemeClassSites": 1,
+            "onlyThemeClassAdded": true
+          }
+        ],
+        "patch": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-04-v1.patch",
+          "sha256": "d3dfe50ba45ec600641b4cc18d25a9b0afd99a734c6e7248a48127535f3c69e0"
+        },
+        "checks": [
+          {
+            "name": "Primary red reproduction",
+            "status": "EXPECTED_FAILURE_REPRODUCED",
+            "detail": "Two actual Arco body portal roots under JSDOM lack all eight observed ca/ui tokens before fix while frame has tokens."
+          },
+          {
+            "name": "Affected strict TypeScript",
+            "status": "PASS",
+            "scope": "Nine touched TSX roots and transitive dependencies",
+            "exitCode": 0,
+            "evidence": "store-ui-04-types.log",
+            "repeatedOnContinuation": false
+          },
+          {
+            "name": "Body portal token scope",
+            "status": "PASS",
+            "cases": 7,
+            "detail": "Current Arco Modal/Drawer DOM rendered into body under JSDOM; eight ca/ui tokens present on content root; body token empty; tested Modal confirmations disabled; audit case intentionally lacks read capability."
+          },
+          {
+            "name": "Primary local CSS declaration resolution",
+            "status": "PASS",
+            "cases": 2,
+            "expected": {
+              "contentPadding": "12px 20px",
+              "footerPadding": "12px 20px",
+              "inputBackground": "rgb(240, 241, 243)",
+              "requiredColor": "rgb(178, 61, 66)"
+            },
+            "limit": "Existing local CSS resolved with tokens from JSDOM body portal; not actual browser geometry."
+          },
+          {
+            "name": "Source normalization and protection",
+            "status": "PASS",
+            "classSites": 10,
+            "touchedFiles": 9,
+            "protectedFileCount": 47,
+            "detail": "Nine touched files equal baseline after removing only added theme class prefixes; other registered F3 files and shared theme/StandardOverlay unchanged. Separate committed C63 DemoFrame viewport delta documented."
+          },
+          {
+            "name": "Exact source whitespace check",
+            "status": "PASS",
+            "exitCode": 0
+          }
+        ],
+        "safetyFacts": {
+          "commands": 0,
+          "requestKeys": 0,
+          "writesEnabledGateRemoved": false,
+          "portalContainerChanged": false,
+          "handlersChanged": false,
+          "defaultWarehouseRulesOrMessagesChanged": false,
+          "newFieldsOrConstraints": false,
+          "sharedF1CSourceChangedByF3": false,
+          "newBodyOrGlobalCss": false,
+          "actualChromeUsed": false,
+          "actualBrowserHarnessUsed": false,
+          "activeActualBrowserOperations": false,
+          "integratedBuildRun": false,
+          "databaseUsed": false,
+          "gitMutationByF3": false,
+          "deploymentByF3": false
+        },
+        "reusedAcceptedEvidence": [
+          "Demo v009-8755931 closed three store list P2 locally; not rerun",
+          "Accepted Esc close/list draft retention; handlers unchanged; not rerun",
+          "Accepted native W4/W5/W7/W8/W13 source/protocol scope; unchanged; no broad retest"
+        ],
+        "notTested": [
+          "New candidate actual Chrome visual recheck for O-B01/O-B02 padding/input background/required-star color and initial blank Modal size/row height",
+          "Related staff/payment/account/audit actual Chrome overlays; local DOM token checks do not establish browser/business PASS",
+          "Read-before-edit/preparation runtime branches: class-only source/type checked, not separately rendered",
+          "Integrated build, database, actual command save or deployment"
+        ],
+        "blockers": [],
+        "next": "C pin exact nine hashes, then dedicated Demo minimum O-B01/O-B02 new-candidate recheck. Default outbound warehouse flow remains separate. Related actual overlays remain NOT_RUN.",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-04-v1-BASELINE.json",
+            "sha256": "42cbe36cfec979dcadd65e4564f063d47bf6721968ee6fa631ef4da908f808f2"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-04-v1-CLASS-ADAPTATION.json",
+            "sha256": "0de6242d396568d04fcf53ba42d4342dde2b1ebef490637b2ea7b81504a2ae25"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-04-v1-PRIMARY-CHECK.json",
+            "sha256": "2eb4326aed83ac8fe92f4317d050cdb6ff499145a746a2395d36541177feaeab"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-ui-04-before.log",
+            "sha256": "bed8e0d44872bf4f0e0e94222c2e7ff7dd34c2fbbcbe10ec9186ec8ff40add2f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-04-v1-PORTAL-CHECK.json",
+            "sha256": "c9ce0da2b6b06f58376e3699b91f4b2057f5ae06b4b32a2c42c1c63dbc65913f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-ui-04-after.log",
+            "sha256": "c2d1bd26f6c97d115547e7b8e635a0085acc0807c9483b3799b776bcf83eea4a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-04-v1-PRIMARY-STYLE-CHECK.json",
+            "sha256": "9a2d683eba881847476d2b6117a740a47783256c3601ae128ecf362dcb19c7e1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-ui-04-primary-style-resolution.log",
+            "sha256": "dbf906cd7e6ecad7cc3c67d09cc517d94836db24561c620d3a4b4875635b8837"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-ui-04-types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/tsconfig-store-ui-04-v1.json",
+            "sha256": "e0e8b8fc331ec0a2fb6661272b8c412320c83eda10fbf8ed92196fba8a38b42f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/check-store-ui-04-v1.mjs",
+            "sha256": "a18262234f9c2f17519765936486e8c4158735bdedadb0e43fea63d369fa4bfe"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-04-v1-SOURCE-PROTECTION.json",
+            "sha256": "d512f137fc6e199bee1cf260a2e850d6194edc4360e9fc5a08234b3594e1bf4e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-04-v1.patch",
+            "sha256": "d3dfe50ba45ec600641b4cc18d25a9b0afd99a734c6e7248a48127535f3c69e0"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+          "owner": "F3",
+          "sha256": "b09755a2d9593503e3aab3e21e78bf59525f33e04f5cd4f594016d97c793f0ca",
+          "bytes": 15858
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+          "owner": "F3",
+          "sha256": "c96590ecca4b7a43b7b6c71c1da527a0bb32e14a6e2f5c64ebd8f32cd480107d",
+          "bytes": 5711
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-form.tsx",
+          "owner": "F3",
+          "sha256": "81e9936a5cb20e4b3da981375bb19b342d710deb106b90abd03f179563614d44",
+          "bytes": 10688
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-page.tsx",
+          "owner": "F3",
+          "sha256": "98bad493391775c6b0d03dc3a8510115c163a9685efb0275362500016ee582bc",
+          "bytes": 13480
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+          "owner": "F3",
+          "sha256": "dcdadfe71b276d7dbdd442f61ad62faf99b0982f6b68c585d07479af66b5a797",
+          "bytes": 4290
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-page.tsx",
+          "owner": "F3",
+          "sha256": "bb2c777b6291c2cbda62b6bd4c35da0a89989ac451b102d0a4d38397fd47f20f",
+          "bytes": 15448
+        },
+        {
+          "path": "apps/web/src/account-settings/account-form.tsx",
+          "owner": "F3",
+          "sha256": "c6fdab00451dab9881675d9b1e1e4b63314015f253c992d196e2fa34e92cc806",
+          "bytes": 12326
+        },
+        {
+          "path": "apps/web/src/account-settings/account-page.tsx",
+          "owner": "F3",
+          "sha256": "4d13fc52a5e448ce8b74a88e0aea8a3465f9bdf4b9480d23b07ff60063ff4fd1",
+          "bytes": 10548
+        },
+        {
+          "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+          "owner": "F3",
+          "sha256": "fdf07c42e99392716c03f1035dc94ae4da5b355c16e95cbd4cd342af37923853",
+          "bytes": 10736
+        }
+      ]
+    }
+  ],
+  "fileCount": 26,
+  "scope": "Each owner exact ready slice only; actual source/DOM checks not full browser/PG/business. C35/C36 do not repeat for readonly view addition."
+}

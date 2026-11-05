@@ -1,0 +1,109 @@
+{
+  "atUtc": "2026-10-22T21:15:08.251179+00:00",
+  "parent": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
+  "groups": [
+    {
+      "slice": "CAT_COLOR_FIT_HEADER_INNER_PADDING_ONE_RULE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT01-HEADER-DELIVERY-v1.json",
+      "receiptSha256": "c09d40e5e6b273aaa857d9882c710fc04dec7b980b96bee263982b5f8da73b78",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "CAT-UI-01 residual header1px COLOR/FIT only",
+        "role": "F2",
+        "atUtc": "2026-10-22T21:09:15.180950+00:00",
+        "status": "SOURCE_READY_SOURCE_CASCADE_PASS_BROWSER_HEIGHT_PENDING",
+        "modelRequested": "gpt-6.1-sol/xhigh",
+        "authority": {
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "registeredExistingLeafOnly": true
+        },
+        "input": {
+          "path": "reports/ui-demo-comparison-20261022/v011-3fb36e8/CAT01-HEADER-PAIRED-BOX.json",
+          "sha256": "2222749d807e2f666f7b1469439ac5392386b6c67d581ba310ce1bb2cd9f72f5",
+          "previewUsedFor": "Old fixed69 paired evidence and immutable built CSS diagnosis ONLY; no claim old69 browser validates this new CSS."
+        },
+        "diagnosis": {
+          "actualPreviewHtmlSha256": "4b2b3246634e1b6fe9d48e64b918185e1049e9c4569e13ab81a60257738d7b4b",
+          "matchedOldLeafProvenance": "9e79f0a80b616e457e8d4bac7da15b70ed9c1099c3ecbd5933e243d960d3d51b",
+          "sharedPadding0Selector": ".erp-read-table .arco-table-th-item",
+          "sharedOffset": 34173,
+          "lateArcoPadding5x16Selector": ".arco-table-size-small .arco-table-th-item",
+          "lateArcoOffset": 600040,
+          "bothSpecificity": [
+            0,
+            2,
+            0
+          ],
+          "outerCell": {
+            "declaredHeight": 36,
+            "paddingTopBottom": 4,
+            "borderBottom": 1,
+            "lineHeight": 18
+          },
+          "beforeIntrinsicMinimum": 37,
+          "formula": "18 line + 5+5 inner padding + 4+4 outer padding + 1 border = 37",
+          "afterContentMinimum": 27,
+          "afterExpectedHeaderMinimum": 36,
+          "qualification": "After36 is source-bound minimum inference, NOT new browser measurement."
+        },
+        "completedScope": [
+          "One specific header-inner padding0 CSS rule for existing catalogue-workbench colors/fits only, plus explanatory comment.",
+          "No cell/column width or data binding change, native row35/action100/outer padding4x8/header declared36 unchanged.",
+          "No shared table/router/other page or app file changes."
+        ],
+        "changedFiles": [
+          {
+            "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+            "sha256": "d69895a7ae979323a217cbd038764b4df200b17e360df343e6110f396e772757",
+            "beforeSha256": "9e79f0a80b616e457e8d4bac7da15b70ed9c1099c3ecbd5933e243d960d3d51b",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT01-HEADER-source.css.txt"
+          }
+        ],
+        "newApplicationFiles": 0,
+        "checks": {
+          "exitCode": 0,
+          "artifacts": [
+            {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT01-HEADER-cascade-v1.log",
+              "sha256": "2f1031d0c3b0f84dd0ed0dbcdcca6a10da0ecfa6bdd8c5c8a9dfadc01ffdfc12",
+              "bytes": 382
+            },
+            {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/CAT01-HEADER-cascade-result-v1.json",
+              "sha256": "7845e43cdfa4411f6496f17e36ace6286ea4fbcb61374f4c310d959da22828ff",
+              "bytes": 71698
+            }
+          ],
+          "method": "Reuse actual leaf DOM; immutable actual fixed69 inline CSS and provenance; native selector matching/specificity. Exact added rule tested before and after actual CSS.",
+          "assertions": [
+            "Old header innerpad5x16 wins and contentmin37 agrees pairedactual37",
+            "New padding0 wins in either order; original outer headers remain36/pad4x8/native widths unchanged",
+            "td/action100/tab matched winners and unrelated table headers unchanged"
+          ],
+          "typeCheck": "NOT_RUN_CSS_ONLY_NO_TS_CHANGE",
+          "wholeSuite": "NOT_REPEATED_ACCEPTED_OLD_SCOPE"
+        },
+        "notRun": [
+          "New fixed candidate browser actual header36 measurement and scroll",
+          "groups/seasons/P19 unresolved cases not folded into this COLOR/FIT slice",
+          "full build/PG/business writes/deployment"
+        ],
+        "blockers": {
+          "sourceSlice": null,
+          "acceptance": "New candidate including this exact CSS needs browser specialist relevant header measurement; fixed82 prepared without this change cannot close it."
+        },
+        "nextStep": "C fix one CSS + receipt; QF only exact single rule; Demo next necessary preview including this CSS measure COLOR/FIT header only. Reuse accepted row35/op100 and do not rerun original color/fit business/page suites."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+          "owner": "F2",
+          "sha256": "d69895a7ae979323a217cbd038764b4df200b17e360df343e6110f396e772757",
+          "bytes": 8611
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact single source checkpoint only. Actual C83 preview does not include this fix; independent new scope and subsequent actual browser remain separate."
+}

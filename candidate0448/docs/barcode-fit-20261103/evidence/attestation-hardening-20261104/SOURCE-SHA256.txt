@@ -1,0 +1,4 @@
+c036b4441333942fd747ccb1f617acae5f1cb37e8f3190b77c9ee58676251a31  packages/application/src/historical-barcode-attestation.ts
+66050f1a11ef1ba9931e2100234354c074d8ab4efa154129c0b4bfbaf0799b43  tests/historical-barcode-attestation.test.ts
+46ef0fee9519c8da7f35799e6c2806269697ec3367e327712249d5be00c4f884  packages/application/src/unified-import-barcode-v2.ts
+1c69e8735848f1a6c46534b3a6d037e5cef9279440b5d2831b3bf353db1b5b1c  tests/unified-import-barcode-v2.test.ts

@@ -1,0 +1,50 @@
+490550323f239fd5e1ad9e648708b9f8dbaa7408d7770f5533af3ccabfa7a8c7  evidence/transfer-read-ui-independent-source.sha256
+apps/web/src/transfers/README.md: OK
+apps/web/src/transfers/SOURCE-ADAPTATION.md: OK
+apps/web/src/transfers/contracts.ts: OK
+apps/web/src/transfers/controller.ts: OK
+apps/web/src/transfers/detail-content.tsx: OK
+apps/web/src/transfers/detail-host.tsx: OK
+apps/web/src/transfers/detail.css: OK
+apps/web/src/transfers/filter-controls.tsx: OK
+apps/web/src/transfers/format.ts: OK
+apps/web/src/transfers/http-reader.ts: OK
+apps/web/src/transfers/index.ts: OK
+apps/web/src/transfers/matrix.ts: OK
+apps/web/src/transfers/model.ts: OK
+apps/web/src/transfers/owned-scope.ts: OK
+apps/web/src/transfers/pagination.tsx: OK
+apps/web/src/transfers/product-activation.tsx: OK
+apps/web/src/transfers/response-validation.ts: OK
+apps/web/src/transfers/saved-records.tsx: OK
+apps/web/src/transfers/scope.ts: OK
+apps/web/src/transfers/sparse-lines.tsx: OK
+apps/web/src/transfers/tests/dom-entry.tsx: OK
+apps/web/src/transfers/tests/fixtures.ts: OK
+apps/web/src/transfers/tests/run-build-check.mjs: OK
+apps/web/src/transfers/tests/run-dom-tests.mjs: OK
+apps/web/src/transfers/tests/run-frozen-source-check.mjs: OK
+apps/web/src/transfers/transfers-page.tsx: OK
+apps/web/src/transfers/transfers-route.tsx: OK
+apps/web/src/transfers/transfers.css: OK
+apps/web/src/transfers/transfers.test.ts: OK
+apps/web/src/transfers/tsconfig.json: OK
+apps/web/src/inventory/product-drawer-host.tsx: OK
+apps/web/src/inventory/product-drawer.tsx: OK
+apps/web/src/inventory/product-tab-state.tsx: OK
+apps/web/src/inventory/product-tab-images.tsx: OK
+apps/web/src/inventory/product-drawer.css: OK
+apps/web/src/inventory/product-drawer-frame.css: OK
+packages/application/src/transfer-query-ports.ts: OK
+packages/application/src/transfer-query-validation.ts: OK
+apps/web/src/inventory/product-drawer-host.tsx: OK
+apps/web/src/inventory/product-drawer.tsx: OK
+apps/web/src/inventory/product-tab-state.tsx: OK
+apps/web/src/inventory/product-tab-images.tsx: OK
+apps/web/src/inventory/product-drawer.css: OK
+apps/web/src/inventory/product-drawer-frame.css: OK
+apps/web/src/inventory/inventory.css: OK
+Command: node_modules/.bin/tsc -p apps/web/src/transfers/tsconfig.json --pretty false
+Working directory: /workspace/shared/naijue-erp-rewrite
+Exit code: 0
+81c29d32d1ee231d051a534c1cc7828c6d29b993

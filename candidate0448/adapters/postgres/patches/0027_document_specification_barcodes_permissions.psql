@@ -1,0 +1,35 @@
+\set ON_ERROR_STOP on
+-- LOCAL reviewed installation only. -v runtime_role=<exact existing role> required.
+-- No role creation, LOGIN, grants to PUBLIC, table-level write or DELETE.
+-- The only UPDATE added is product.version for the audited document-specification append.
+BEGIN;
+SELECT EXISTS(SELECT 1 FROM pg_roles WHERE rolname=:'runtime_role' AND rolname='erp_unified27_runtime_2393dbc6db9581c2' AND NOT rolsuper AND NOT rolcreaterole AND NOT rolcreatedb AND NOT rolreplication AND NOT rolbypassrls AND NOT rolcanlogin AND NOT rolinherit AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_auth_members m WHERE m.member=pg_roles.oid) AND oid<>current_user::regrole) AS role_ok \gset
+\if :role_ok
+\else
+  DO $$ BEGIN RAISE EXCEPTION 'DOCUMENT_RUNTIME_ROLE_INVALID' USING ERRCODE='23514'; END $$;
+\endif
+-- Installed guard must be the exact reviewed successor before permission expands.
+-- Exact prosrc hashes below are generated from the versioned SQL source.
+DO $guard$ DECLARE x record; BEGIN FOR x IN SELECT * FROM (VALUES ('guard_maintenance_before_root()', '76d30c01785877cfab4bb2bf167e1cdcd583677d204b7d7efa0c2cc2c79fa05c'),('validate_maintenance_root_commit()', 'bf853800c33c492dd0b8224e489c42dfb1c9a046231001a3d42be830a257f479'),('guard_maintenance_audit_actor()', '1635b883d65abb3938b277287ff7b0b1bf28cdae367b54b282b3e81810486e89'),('guard_native_creation_identity()', '765f060da0e51a0a18309502a412cc2196dcde633c3e9db0cbe4a2b6383d5111'),('validate_document_specification_commit()', '5c6dc02661516e469ebdada8469b4ac9626b77dbc26be026e11c06db759da047'),('guard_maintenance_child_write()', 'ceef464210d22280de7bc92ed900eebd3156ec65089ecdd8c55bbaca9c975d95'),('keep_barcode_binding_identity()', '14f6d02bca58955681e8d03236fb236cbfe3d041d35ecdb326cd3fa7e38d2733')) v(signature,sha) LOOP IF NOT EXISTS(SELECT 1 FROM pg_catalog.pg_proc p JOIN pg_catalog.pg_namespace n ON n.oid=p.pronamespace JOIN pg_catalog.pg_language l ON l.oid=p.prolang WHERE p.oid=pg_catalog.to_regprocedure('naijue_erp.'||x.signature) AND p.prokind='f' AND p.provolatile='v' AND p.prosqlbody IS NULL AND p.proowner=n.nspowner AND l.lanname='plpgsql' AND NOT p.prosecdef AND NOT p.proretset AND p.pronargs=0 AND p.prorettype='trigger'::regtype AND p.proconfig=ARRAY['search_path=pg_catalog, naijue_erp, pg_temp'] AND pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(p.prosrc,'UTF8')),'hex')=x.sha) THEN RAISE EXCEPTION 'DOCUMENT_APPEND_GUARD_NOT_INSTALLED' USING ERRCODE='23514'; END IF; END LOOP; END $guard$;
+-- Reject an installation whose precise root and child guards are not mounted.
+DO $mount$ BEGIN
+ IF NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.product'::regclass AND tgname='product_maintenance_before_root' AND tgfoid='naijue_erp.guard_maintenance_before_root()'::regprocedure AND tgtype=23 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.product'::regclass AND tgname='product_maintenance_final_consistency' AND tgfoid='naijue_erp.validate_maintenance_root_commit()'::regprocedure AND tgtype=21 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgdeferrable AND tginitdeferred AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.sku'::regclass AND tgname='sku_maintenance_write' AND tgfoid='naijue_erp.guard_maintenance_child_write()'::regprocedure AND tgtype=31 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.sku'::regclass AND tgname='sku_creation_identity' AND tgfoid='naijue_erp.guard_native_creation_identity()'::regprocedure AND tgtype=23 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.sku_barcode'::regclass AND tgname='barcode_maintenance_write' AND tgfoid='naijue_erp.guard_maintenance_child_write()'::regprocedure AND tgtype=31 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.sku_barcode'::regclass AND tgname='sku_barcode_retains_identity' AND tgfoid='naijue_erp.keep_barcode_binding_identity()'::regprocedure AND tgtype=27 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.audit_change'::regclass AND tgname='maintenance_audit_actor' AND tgfoid='naijue_erp.guard_maintenance_audit_actor()'::regprocedure AND tgtype=7 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgqual IS NULL AND tgattr=''::int2vector)
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger WHERE tgrelid='naijue_erp.audit_change'::regclass AND tgname='document_specification_commit' AND tgfoid='naijue_erp.validate_document_specification_commit()'::regprocedure AND tgtype=5 AND tgenabled='O' AND NOT tgisinternal AND tgnargs=0 AND tgdeferrable AND tginitdeferred AND tgqual IS NULL AND tgattr=''::int2vector)
+ THEN RAISE EXCEPTION 'DOCUMENT_APPEND_GUARD_MOUNT_MISMATCH' USING ERRCODE='23514'; END IF;
+END $mount$;
+GRANT INSERT (id,product_id,sku_code,color_id,fit_id,size_id,enabled,version,created_operation_id) ON naijue_erp.sku TO :"runtime_role";
+GRANT UPDATE (version) ON naijue_erp.product TO :"runtime_role";
+GRANT INSERT (id,barcode,sku_id,barcode_kind,scheme_id,enabled) ON naijue_erp.sku_barcode TO :"runtime_role";
+SELECT (SELECT bool_and(has_column_privilege(:'runtime_role','naijue_erp.sku',c,'INSERT')) FROM unnest(ARRAY['id','product_id','sku_code','color_id','fit_id','size_id','enabled','version','created_operation_id']) c) AND has_column_privilege(:'runtime_role','naijue_erp.product','version','UPDATE') AND bool_and(has_column_privilege(:'runtime_role','naijue_erp.sku_barcode',c,'INSERT')) AS installed_columns
+ FROM unnest(ARRAY['id','barcode','sku_id','barcode_kind','scheme_id','enabled']) c \gset
+\if :installed_columns
+\else
+ DO $$ BEGIN RAISE EXCEPTION 'DOCUMENT_COLUMN_GRANT_NOT_INSTALLED' USING ERRCODE='23514'; END $$;
+\endif
+COMMIT;

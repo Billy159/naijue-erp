@@ -1,0 +1,12 @@
+{
+  "atUtc": "2026-10-22T22:24:28.460716+00:00",
+  "remoteBranch": "codex/local-takeover-wip-20261022-082411",
+  "remoteCommitVerified": "3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7",
+  "priorRemote": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+  "method": "Existing authenticated GitHub Git Objects API; exact original15 tree and commit objects verified by identical SHA, then force=false fast-forward and separate ref GET. Git protocol pushes retained as failed, no force/rewrite.",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-3c61ec4-20261023-01/RESULT.json",
+  "evidenceSha256": "243574b557d3981bd327de3a716bdb34dff10765dc8964b525b763675062af90",
+  "normalGitProtocolPushSucceeded": false,
+  "remoteNormalBranchFastForwardSucceeded": true,
+  "businessRelease": false
+}

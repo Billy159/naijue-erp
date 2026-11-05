@@ -1,0 +1,34 @@
+✔ product DTOs validate target identity and preserve same-color/size different FIT legal SKUs (6.052769ms)
+✔ null/empty product facts are distinct from malformed success and unsafe media (2.876634ms)
+✔ product query is inert until activated; close clears facts and stale ignored transport cannot republish (2.758497ms)
+✔ synthetic provider reads target tabs independently and never reads originals for metadata (29.616953ms)
+✔ synthetic thumbnail fixture contains a decodable real PNG rather than passing only URL syntax (5.739056ms)
+✔ registration is inert; only activated leaf and its styles load, then code is reused (6.504418ms)
+✔ shared code load keeps consumer cancellation separate (5.682647ms)
+✔ failed code or style leaves can retry without exposing a half-ready module (0.830275ms)
+✔ retained module references are LRU bounded; no cache eviction starts a load (2.236995ms)
+✔ inactive scopes do not start imports (0.941806ms)
+✔ reads start only on run; frozen executed parameters do not follow editable draft (5.24911ms)
+✔ newer query aborts old transport; ignored cancellation cannot overwrite newest result (12.022732ms)
+✔ refresh failure retains last successful facts and their own executed range (0.910775ms)
+✔ switching account clears references immediately; late response cannot reopen a closed region (0.617192ms)
+✔ permission/session refresh invalidates even the same account; clear blocks new scopes (0.488017ms)
+✔ different entity scopes have no shared result state, and closing one leaves another alive (0.617182ms)
+✔ authoritative command result beats old detail read and rejects later older entity versions (2.226379ms)
+✔ cancel read is not dispose and does not clear previous successful facts (0.504993ms)
+✔ invalid parameter snapshot does not supersede a valid pending request (0.514071ms)
+✔ subscriber errors and reentrant disposal cannot bypass cleanup or start an unwanted read (0.343501ms)
+✔ plain parameter snapshots reject cyclic, nonfinite and accessor input without invoking getters (0.669194ms)
+✔ disposing during success notification returns discarded rather than actionable old data (0.469997ms)
+✔ cancel before any successful read returns waiting state rather than false empty success (0.282006ms)
+✔ registration snapshots factories and validates the retained-reference budget (1.795683ms)
+✔ clearing references during an import does not create unbounded duplicate in-flight loads (0.451349ms)
+✔ clear without reactivation does not retain an import after settlement (0.930522ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 727.097428

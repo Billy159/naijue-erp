@@ -1,0 +1,20 @@
+{
+  "atUtc": "2026-10-24T13:22:48.994577+00:00",
+  "parent": "32a76483bb69a372def84118fbafcd8b646f600c",
+  "taskId": "F1_T_UNKNOWN_DISCARD_GUARD_01",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "bytes": 35886,
+      "sha256": "c169fc69902af123334d0854214de768381e4eac5ab00942a3f2022b1c4179bf",
+      "baseSha256": "56bfaed05205f45a95ed7e357c43e8e25c41cc3c9325e65209ec6196b035b1c5",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-153/DELIVERY.json",
+  "ownerReceiptBytes": 1924,
+  "ownerReceiptSha256": "7ca8b3721c419282c84677a93acdb7f517df64d127ec8c252016cc465f4659e3",
+  "stage": "SOURCE_TARGETED_REAL_COMPONENT_JSDOM_PASS_BROWSER_FOCUS_PENDING",
+  "wholePageAccepted": false,
+  "deployed": false
+}

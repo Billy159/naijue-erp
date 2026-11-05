@@ -1,0 +1,114 @@
+{
+  "jobId": "t45-r1-v22-original109-controlled-continuation-20261027-184",
+  "job": {
+    "jobId": "t45-r1-v22-original109-controlled-continuation-20261027-184",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-7bab0ad69985",
+    "atUTC": "2026-10-27T14:13:36.491783+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 1225.3228072719648,
+    "exports": [
+      "consumer-engine-result.json",
+      "consumer-runtime-result.json",
+      "execution-progress.json"
+    ],
+    "finishedAtUTC": "2026-10-27T14:34:01.858737+00:00"
+  },
+  "runtime": {
+    "jobId": "t45-r1-v22-original109-controlled-continuation-20261027-184",
+    "status": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+    "automaticReplay": false,
+    "sourceReadyOnly": false,
+    "MAINOrPublishExecuted": false,
+    "phase": "ORIGINAL_NATIVE_SOURCE_STEP_SEQUENCE",
+    "originalHostReturned": true,
+    "adoptedFullEvidenceCheckedByOriginalBranch": true,
+    "actualRuntimeIssuerReturned": true,
+    "lastJournalEvent": {
+      "ordinal": 1,
+      "kind": "MAIN",
+      "digest": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+      "state": "FAILED_OUTCOME_UNVERIFIED",
+      "code": "CORE_STAGED_PREFIX_MISMATCH"
+    },
+    "errorCode": "CORE_STAGED_PREFIX_MISMATCH",
+    "originalHostClosed": true,
+    "finishedAtUtc": "2026-10-27T14:34:01.526Z"
+  },
+  "engine": {
+    "actualPhase": "ORIGINAL_NATIVE_SOURCE_STEP_SEQUENCE",
+    "applicationChanged": false,
+    "automaticReplay": false,
+    "checkedAtUtc": "2026-10-27T14:34:01.786520+00:00",
+    "errorCode": "ORIGINAL_CONSUMER_STOP_SEE_ORIGINAL_RESULT",
+    "existingDependenciesLinkedNoInstall": true,
+    "externalGrant": {
+      "bytes": 37302,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+      "sha256": "27878ca323190831fa1142901ed24bec8d6c012cd18b9a0c6884c6ba6e822581"
+    },
+    "finalInput": {
+      "bytes": 188917,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/provider-INPUT.FINAL.json",
+      "sha256": "c7e1a1b42952b3cb7fc42468c52f7e2b3add59b069d5904998c7458d362d3acd"
+    },
+    "finalMaterializedFiles": [
+      {
+        "bytes": 37302,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+        "sha256": "27878ca323190831fa1142901ed24bec8d6c012cd18b9a0c6884c6ba6e822581"
+      },
+      {
+        "bytes": 188917,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/provider-INPUT.FINAL.json",
+        "sha256": "c7e1a1b42952b3cb7fc42468c52f7e2b3add59b069d5904998c7458d362d3acd"
+      },
+      {
+        "bytes": 5007,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/executable-host-job26.json",
+        "sha256": "6a68c9bb8bac08e75bc6c406ba1a83ca0cc2be60ce92ff131461b49b0ee302f9"
+      }
+    ],
+    "initialState": "Original109 ordered commands and businesskeys preserved;164/169first BIND no committed receipt by original-key recovery",
+    "jobId": "t45-r1-v22-original109-controlled-continuation-20261027-184",
+    "newSecretChannelCreated": "[REDACTED]",
+    "node": {
+      "bytes": 126595440,
+      "mode": 493,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c03-maintenance-matrix-20261022-26/tools/node",
+      "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+      "uid": 0,
+      "version": "v24.21.0"
+    },
+    "nodeExitCode": 2,
+    "processOutcome": "RETURNED",
+    "runtimeStatus": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+    "status": "STOP_V22_CONSUMER_OR_UNKNOWN_NO_REPLAY",
+    "stderrBytes": 0,
+    "stdoutBytes": 157
+  },
+  "exports": {
+    "consumer-runtime-result.json": {
+      "bytes": 769,
+      "sha256": "4af5c8404d0d6642f0a29c83872d7ecb7f53010b6ef0169bca36a7a612b99542"
+    },
+    "consumer-engine-result.json": {
+      "bytes": 2594,
+      "sha256": "0caee187813081c8d683e8038ad4a77bed48d35f5c4a4a7963e64eb5b8e85fd3"
+    },
+    "job.json": {
+      "bytes": 595,
+      "sha256": "52f77e67572712d2f13e016484e69fce92c46b8f33c49d92d12eaba95489fd72"
+    },
+    "execution-progress.json": {
+      "bytes": 400,
+      "sha256": "1faf3437a37f07e7fdf8159c6fd114bd2f80f24d91d60b5d9d0ed0970b7caa5e"
+    }
+  },
+  "limits": "Terminal FAILED2; first MAIN actually attempted, outcome unverified pending original-key RRRO recovery. MAINOrPublishExecutedfalse only means no COMMITTED journal event; not proof of no writes. No replay or suffix continuation. Originalhost closed; APP unchanged. No SQLSTATE or detailed mismatch cause in current receipt."
+}

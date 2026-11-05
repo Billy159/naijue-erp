@@ -1,0 +1,162 @@
+{
+  "atUtc": "2026-10-23T19:04:40.745674+00:00",
+  "parent": "fa9dc429b62a317062dc98dc5dc8df5c79d0ada3",
+  "taskId": "D3-I07-I08-C205-LEDGER-NUMBERED-READ-SUCCESSOR",
+  "files": [
+    {
+      "path": "packages/application/src/inventory-ledger-query-contracts.ts",
+      "bytes": 6055,
+      "sha256": "715273a04bb0bcc04c5b4229cfff22df7ffd1c19a421fe625a49f6bbef8c8557",
+      "owner": "D3"
+    },
+    {
+      "path": "packages/application/src/inventory-ledger-query-validation.ts",
+      "bytes": 14774,
+      "sha256": "64dad9c339a23ab924e26d2188aada76b57d471d60331c676a7158a3338fc4bb",
+      "owner": "D3"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+      "bytes": 22274,
+      "sha256": "752c85031b21aa5e8c027583c938ebef7d46ee1c77d7c835c0ac74f2c0fe97df",
+      "owner": "D3"
+    },
+    {
+      "path": "tests/inventory-ledger-query-postgres-protocol.test.ts",
+      "bytes": 33139,
+      "sha256": "3d1595c975d084516156d5e3da34e9bfc0a2ae85291572c3ce684ccc9940fe34",
+      "owner": "D3"
+    },
+    {
+      "path": "tests/inventory-ledger-query.test.ts",
+      "bytes": 14494,
+      "sha256": "29db5d95064f0670f1c1c81f49279cbf5cca8106d16ea3543d0541e5b6712d89",
+      "owner": "D3"
+    },
+    {
+      "path": "tests/support/synthetic-inventory-ledger-query.ts",
+      "bytes": 3622,
+      "sha256": "60eafcd4b63eb1e9e62678149476bfe139739d44a5eec5d6820a8ac83e2d11b5",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+  "ownerReceiptSha256": "8411156645aabb23c31508ed84ef7f8949a396f039d31b9a5e491efa3bd7f4dc",
+  "ownerReceiptSection": "inventoryLedgerNumberedReadIncrement",
+  "ownerReleasedExact6CurrentBytesPinnedByC": true,
+  "ownerDelivery": {
+    "atUtc": "2026-10-23T19:01:53.733Z",
+    "taskId": "D3-I07-I08-C205-LEDGER-NUMBERED-READ-SUCCESSOR",
+    "status": "SOURCE_READY_ORIGINAL_EXACT6_NEW6_AFFECTED2_AND_STRICT_PASS_RELEASED_FOR_C_FREEZE",
+    "authority": "Current C delegation authorizes existing D3 seven ledger paths readonly successor; no new endpoint/DB/schema/write semantics. Original human proactive reporting01a161f7-a5e8-7e10-9059-9537c28910c2; requested model gpt-6.1-sol/xhigh, Fast tool unverifiable.",
+    "paths": [
+      "packages/application/src/inventory-ledger-query-contracts.ts",
+      "packages/application/src/inventory-ledger-query-validation.ts",
+      "adapters/postgres/src/inventory-ledger-query-reader.ts",
+      "tests/inventory-ledger-query-postgres-protocol.test.ts",
+      "tests/inventory-ledger-query.test.ts",
+      "tests/support/synthetic-inventory-ledger-query.ts"
+    ],
+    "authorizedButUnchanged": "packages/application/src/inventory-ledger-query-service.ts already invokes original parser/current inventory authorization/exact narrowed scope/reader/output validation. Optional numbered mode works through it without a code change. Original HTTP/host not modified.",
+    "originalReference": "Frozen Demo frontend/gold.js27-62 ledgerRender: actual date/type/source controls, exact filtered total,20-row numbered pager and six columns. Existing HISTORY_REVISION union not reopened.",
+    "wire": {
+      "endpoint": "POST /inventory/ledger/query",
+      "legacy": "Original exact4 fields warehouseId/skuId/pageSize/after, original response shape/keyset unchanged. No count/display for old requests.",
+      "numberedRequest": {
+        "warehouseId": "Original authorized actual warehouse UUID",
+        "skuId": "Original actual SKU UUID",
+        "pageSize": 20,
+        "after": null,
+        "page": 1,
+        "filter": {
+          "dateFrom": null,
+          "dateTo": null,
+          "businessType": null,
+          "source": ""
+        }
+      },
+      "rules": "page and filter occur together; page positive safe integer, pageSize exactly20, after null. Inclusive dateFrom/dateTo valid calendar days, ordered. Closed business types BASELINE/TRANSFER_IN/TRANSFER_OUT/SALE/RETURN/EXCHANGE/UNKNOWN. Source trimmed literal case-insensitive header-number substring via SQL lower/database locale, not LIKE wildcards; JS locale match not falsely re-applied.",
+      "numberedResponse": "Existing data + page:number + filteredTotal:exact nonnegative decimal string, nextCursor:null. Existing row fields + display:{date,businessType,sourceNumber:string|null,operator:{accountId:string|null,name:string|null,labelBasis:CURRENT_REFERENCE},balanceTransition:{state:UNKNOWN,before:null,after:null,reason:NO_RECORDED_BALANCE_TRANSITION},navigation:NOT_CHECKED}. All fields captured/closed by original validator; false known-transition or allowed-navigation claim rejected."
+    },
+    "facts": "Display date baseline businessDate; other rows postedAt at Asia/Shanghai (explicit wire documentation), original postedAt still exact6fraction UTC. Types from actual sales/business_type or actual transfer endpoint and baseline event, never delta sign or inferred PURCHASE. Source number from the matching native/history header, missing remainsNULL. Operator is the actual committed operation_receipt actor account -> staff current name; no login/password/source payload or assumed historical creator/time. No original history/status/identity change.",
+    "transaction": "Same original current inventory authorization before any reader/count; same warehouse/hall/SKU qualification, same RR READ ONLY/client/publication/native admission. One exact-key scoped CTE/predicate reused verbatim for SQL COUNT and numbered page LIMIT20/OFFSET bigint; values parameterized. Exact total independent of page size/out-of-range; output checks count-derived expected length and date/type predicates. No full history client preload, page concatenation, current balance read or SUM reconstruction. Failures roll back/release under existing original code; no DML.",
+    "checks": {
+      "newGroups": 6,
+      "affectedLegacyGroups": 2,
+      "pass": 8,
+      "fail": 0,
+      "strict": "PASS original PGprotocol+query test transitive closure; no project build/PG",
+      "environment": "Scripted PG driver, explicit runtime double where originally used, synthetic application and Fastify.inject for same existing HTTP route only.",
+      "coverage": "45 entries numbered page2→20/page3→5/page4→0 with total45; same count/page CTE and exact bound scope; source literal/date/type filters and no matches; source RETURN despite signed delta; unknown transition and navigation non-grant; contradictory total/display/operator/foreign key and read failure reject/release; strict paired input/calendar/page20/type validation; current permission before read; same original endpoint/no-store/newtotal. Existing keyset tie/newtop behavior and original current authorization scope passed.",
+      "corrections": "Initial focused run5pass1fail because no-SUM/balance-read assertion also scanned preexisting guard metadata mentioning inventory_balance; narrowed assertion to new count/page SQL and reran that failedcase PASS. Initial strict caught one local unknown-string narrowing, corrected and passed. Removed JavaScript source-lowercase recheck to respect PostgreSQL locale; reran affected negative group + strict PASS. No old full suites repeated."
+    },
+    "notTested": [
+      "Actual PostgreSQL SQL execution/EXPLAIN/real performance/representative volume",
+      "F2 native UI/date controls/numbered pager and source consumer integration",
+      "Recorded per-ledger balance transitions: schema has no such facts",
+      "Independent source-document navigation authorization",
+      "Actual HTTP/network/session/Origin/deployment",
+      "C79/C80/H06/old accepted source suites not repeated"
+    ],
+    "remainingIndependentDocNavigation": {
+      "status": "NOT_IMPLEMENTED_NOT_CHECKED",
+      "existingDestinations": [
+        "Sales: createSalesQueryService(...).readDetail(actor,{salesId},signal), original SalesQueryAuthorization.authorize(actor,{kind:detail,parameters:{salesId}},signal) plus exact target reader enforces the returned scope.",
+        "Transfer: createTransferQueryService(...).readDetail(currentTrustedTransferActor,{transferId},signal), original createSourceConfirmedTransferQueryAuthorization and exact target reader. Inventory actor alone cannot synthesize trusted role.",
+        "Historical: createImportedHistoryQueryService(...).readDetail(actor,kind,{documentId,linePage:1,linePageSize:20,settlementPage:1,settlementPageSize:20},signal) through original separate HISTORY authorization/target scope."
+      ],
+      "hostOwner": "D1 apps/api/src/postgres-read-api.ts supplies original existing policies/session actor/reader. No such document-navigation provider exists in ledger dependencies today. F2 may show sourceNumber as text but cannot claim independent navigation PASS or remove Demo button as an accepted exception.",
+      "next": "C/D1 should bind actual existing destination authorization at click or a narrowly registered bounded original policy seam if navigation eligibility must be precomputed. Do not use source ID, warehouse grant, route label or a fallback role as permission; no per-row detail preload/N+1 merely to mark links."
+    },
+    "beforeAfterFieldProposal": {
+      "status": "CANDIDATE_ONLY_PENDING_C_FIELD_CONFIRMATION_NO_DDL_OR_WRITER_CHANGE",
+      "existingEvidence": "inventory_ledger stores signed delta only. inventory_balance stores one latest quantity/version/last operation, overwritten by posting. operation_receipt/audit_change retain document/audit facts, not a per-effect locked balance transition. Same posted_at plus UUID tie order does not prove commit/lock application order. Full cumulative history or current balance subtraction cannot recover every actual prior before/after, especially cutoff source history.",
+      "candidate": {
+        "table": "naijue_erp.inventory_ledger",
+        "columns": [
+          {
+            "name": "quantity_before",
+            "type": "bigint",
+            "nullable": true,
+            "default": null
+          },
+          {
+            "name": "quantity_after",
+            "type": "bigint",
+            "nullable": true,
+            "default": null
+          }
+        ],
+        "semantics": "Actual balance immediately before/after this exact ledger effect while original key locks are held. BothNULL means not recorded/unknown; both nonNULL means recorded. Never infer historical0 or initialize migration values from delta/current balances.",
+        "candidateConstraint": "Pair bothNULL or bothNOTNULL; for recorded pair compare quantity_before::numeric + quantity_delta::numeric = quantity_after::numeric to avoid bigint intermediate overflow. Exact existing warehouse/SKU/operation/ledger identity remains authoritative.",
+        "oldData": "Retain all old ledger rows/IDs/deltas/source lineage; added fields stayNULL without source proof. CUTOFF_BASELINE before-cutoff source transitions may remainNULL even when a target quantity is known."
+      },
+      "writer": "D1 original PostgresPostingBalances/normal sales+transfer posting/UoWs and original createPostgresHistoryRevisionPosting: capture existing locked previous balance or original explicitly proven first-use zero, compute after, append pair with original ledger/receipt/audit/balance in same transaction. Do not add another posting path or bypass first-use/admission guards.",
+      "consumersAndOwners": [
+        {
+          "owner": "D1",
+          "scope": "Migration/constraints/ACL/runtime catalog proof and original posting ports/inventory-posting-balances; sales/transfer UoW callers and actual historical revision store already transferred D1. Same-transaction prepared balance facts, guards and necessary actual tests."
+        },
+        {
+          "owner": "D1",
+          "scope": "inventory-cutoff-import-store baseline insertion must preserve truthfulNULL unless actual transition is independently proven; import receipt/guards/explicit column closure must accept the two optional facts without treating source target as old0."
+        },
+        {
+          "owner": "D3",
+          "scope": "Existing ledger contracts/validator/reader and their exact original tests add a KNOWN recorded-transition branch with exact pair/delta relation; current UNKNOWN branch remains for old rows."
+        },
+        {
+          "owner": "F2",
+          "scope": "Existing ledger consumer parser/drawer six-column rendering preserves recorded strings/unknown; no reconstruction or truncation."
+        },
+        {
+          "owner": "C",
+          "scope": "Existing field confirmation and exact owner registration/runtime deployment/QA on approved schema; current source-only proposal is not permission to install."
+        }
+      ],
+      "next": "C submits only this concrete persistent-fact branch through original field confirmation if exact before→after is required. Current readonly filters/count/DTO proceed independently. No new fields, tests for hypothetical writer or migration executed by D3."
+    },
+    "next": "C freeze these6 actual files within authorized7 and original QB reviews new numbered scope only; relay exact same-endpoint DTO to original F2. Keep missing beforeAfter/nav explicitly open; do not claim whole I07/I08 acceptance. No further D3 edit to released6 until directed finding."
+  },
+  "qualification": "SOURCE_FIXED_ORIGINAL_READ_API_ONLY; independent QA/actualPG/UI/performance remain; optional balance fields are proposal only not approved or implemented"
+}

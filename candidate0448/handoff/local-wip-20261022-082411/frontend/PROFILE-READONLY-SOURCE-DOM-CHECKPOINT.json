@@ -1,0 +1,511 @@
+{
+  "schemaVersion": 1,
+  "atUtc": "2026-10-21T23:05:23.317104+00:00",
+  "ownerThreadId": "01a15f4b-3497-7521-ac21-3d4e0db5a033",
+  "status": "PROFILE_APP_DOM_GREEN_TOOLBAR_DOM_FAIL_RESOURCE_BLOCKED",
+  "repository": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+  "sourceVersion": {
+    "baseHead": "378c58089352ec9bdb93eec80639c1fb9b3a5124",
+    "workingTreePinsAreVersion": true,
+    "newCommitCreated": false,
+    "scope": "18 current batch files; combined59 is changed-source inventory, not complete build graph"
+  },
+  "sourcePins": [
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/review-profile.ts",
+      "bytes": 350,
+      "sha256": "0f44243d2002d55d56439ef73f37b8a2922ba75645a823ed9a7ca43c364989ac"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-session.ts",
+      "bytes": 5521,
+      "sha256": "e76add5bbfbe14c8023d478604ada4469bd971791deb75476287312950bcb324"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-session.test.ts",
+      "bytes": 7085,
+      "sha256": "3fdb10c5ccf8fea4ad2df9f9a9eed9cc269949fa09c49af76f938889544fa49f"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/readonly-transfer-fixtures.ts",
+      "bytes": 3382,
+      "sha256": "3d3ae2c1873492b0c558b69769b82fb1feff311aa218693ecaa08e39c855317c"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/readonly-transfer-fixtures.test.ts",
+      "bytes": 4670,
+      "sha256": "2f568c450fa06ea0a6589456abd82ef1b530666e7e0e73d4acb69466d4e86b5b"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/transfer-transport.ts",
+      "bytes": 10189,
+      "sha256": "37560b277fe920e1a3074b1d76e317da517c64322ed8a03f6b30a7e2c042c52c"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/synthetic-transport.ts",
+      "bytes": 7098,
+      "sha256": "2cfd97ee6c04747e34d6358bba5c72e1f14beb3f37c78d963e925f71abbaf7e4"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/harness-app.tsx",
+      "bytes": 3427,
+      "sha256": "9e668b8cc3b22521d196b316a62991fedba318de864b5b3bef7ca8b63b6da5fd"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-host.ts",
+      "bytes": 1052,
+      "sha256": "fcb39b4d9db771368da406542428db99f897a3bbd7d30371b35849065419e89e"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/run-profile-session-dom-tests.mjs",
+      "bytes": 11923,
+      "sha256": "edcf163e57377cead01ea4ed33bc7ea9ad519ece0866e23e6c3d505276998472"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-toolbar.tsx",
+      "bytes": 3774,
+      "sha256": "9a15d14280754072c5d27390b307b78a81cd35b2efb923ddac5489bf177f319c"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-toolbar.css",
+      "bytes": 318,
+      "sha256": "26ecf712e84a4a608993e822330f5c08995df2c87209cdef85215afda90dc242"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/main.tsx",
+      "bytes": 4114,
+      "sha256": "1e040bc4aa582b5654444c29b828913b19291f78e27ffa2e15d6c89f398b2b13"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/build.mjs",
+      "bytes": 7995,
+      "sha256": "a1891c651709f076c54bfb841e7ed46275f5fb12671a5a73a9349109c4e7937e"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/README.md",
+      "bytes": 7565,
+      "sha256": "4117a2e0785a7014ba0688de1879d94b2556a70c8ae3794a9df9473d2d2f5e24"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/run-profile-toolbar-dom-tests.mjs",
+      "bytes": 6399,
+      "sha256": "2215ea57aa661fc0cd8adbe2abe5f3da2b7ac910ad8e4d87cea12ae441b8bcbd"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/saved-records.tsx",
+      "bytes": 3454,
+      "sha256": "11b59c40db36d99e220b75a173e2c4e96609c11f166e8ab85c6e96e153362933"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/tests/run-saved-records-dom-tests.mjs",
+      "bytes": 8277,
+      "sha256": "69b885b5f04022945f823502de91fa18b54430eb2b4a0ad5d7ae14fea7f0e9d7"
+    }
+  ],
+  "sourceCount": 18,
+  "contract": {
+    "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/contracts.ts",
+    "bytes": 7384,
+    "sha256": "202d23bf77e2f4e8ae1632bcf778d2e8db9dd1fe7c49892cd5f44f3b83d282b2"
+  },
+  "currentAccepted": {
+    "version": "v13.1-arco-menu-background",
+    "artifact": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/review-builds/v13.1-arco-menu-background/synthetic-unified.html",
+      "bytes": 2190776,
+      "sha256": "e494b6cbe2c163dc8d3afd1309ea7d7990c8d7b43148ff4ec0430277b4f0ff9c"
+    },
+    "fixedPrompt": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/review-builds/v13.1-arco-menu-background/PROMPT.txt",
+      "bytes": 9743,
+      "sha256": "f257483924204636484dd9db6d81c7adec55851e835864023dd4caf9de14ded3"
+    },
+    "doesNotContainPendingBatch": true,
+    "historicalUrl": "http://127.0.0.1:57755/v13.1/synthetic-unified.html",
+    "runtimeStatus": "DOWN_CONTROLLER_CONFIRMED",
+    "runtimeEvidence": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/PREVIEW-RUNTIME-SECOND-EXIT-20261021.json",
+      "bytes": 1438,
+      "sha256": "d7b8d6a70a32c8ea8648e4d487bf7fdfa7d1812955c4ef4b51a0741ff727b4b5"
+    },
+    "previousPid": 81892,
+    "previousExecSession": 24964,
+    "cause": "UNKNOWN",
+    "frontendStartedOrRetriedListener": false
+  },
+  "resourceWindow": {
+    "controllerExclusiveBackendWindow": false,
+    "frontendTestIdle": true,
+    "noNewTemporaryTests": true,
+    "noBuildSnapshotDownload": true,
+    "status": "HOLD_BELOW_2GIB_RESERVE_CONTROLLER_EXPLICIT_STOP",
+    "lastFrontendGuardObservation": {
+      "freeBytes": 2094166016,
+      "reserveBytes": 2147483648,
+      "lightBudgetBytes": 33554432,
+      "lightThresholdBytes": 2181038080,
+      "lightDeficitBytes": 86872064,
+      "guardExitCode": 1,
+      "evidence": "Observed prior tool output in this frontend thread; not a new measurement or a fabricated logfile"
+    },
+    "controllerLatestApproximateFree": "1.89GB; delegated observation, not a frontend fresh measurement",
+    "applicationBudgetBytes": 134217728,
+    "applicationThresholdBytes": 2281701376,
+    "newFreshGuardAfterStop": false,
+    "budgetsReduced": false,
+    "oldEvidenceDeleted": false,
+    "backendWindowReleased": true,
+    "initialPassingLightPreflight": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-HEADLESS-LIGHT-BUDGET.json",
+      "bytes": 283,
+      "sha256": "7fee3c47e0d38318e7d03eccf036141d44a67f8385a624098e14affd673eb690"
+    }
+  },
+  "implementation": {
+    "headless": "Strict profile validator and one-business-owner generation facade; fake-owner6 cases cover orchestration only. Reentry and switch delegate authenticated dirty/uncertain guard to actual navigate(null). revoke/dispose invalidate generations even while busy.",
+    "actualProfile": "Explicit transfer-readonly configuration omits existing transfer commands and mounts actual Application in the same business container. Default standard commands remain unchanged. No ApplicationRoute/contracts/backend grants changed.",
+    "fixtures": "40/83/2000 actual readonly lines,200 canonical sizes; repeated SKU but globally unique line.id. Original matrix fallback is used, not a replacement forced UI. Exact decimal strings, null/empty/leading-zero barcodes, original snapshots and current catalogue references remain distinct.",
+    "actualDomScope": [
+      "inert switch then explicit enter; list3, NEW disabled; actual Sparse+Saved real Arco tables with40+40 rows/40 size members and1499 total elements",
+      "precise product Drawer/list trigger return",
+      "ignored-abort late detail cannot revive disposed owner; product-read revoke clears facts and portals",
+      "actual SALE dirty/uncertain reject both switch and reentry, preserve app/input/receipt key and one SAVE; original receipt verification allows safe disposal"
+    ],
+    "historicalMetadataFix": "Full CUTOFF_HISTORY warning retained in existing metadata paragraph. First1500-node FAIL retained; later1499 with original <1500 limit and40/40/40 unchanged.",
+    "toolbar": "Shared actual Arco UISelect/UIButton source wired, StrictMode tools root, main entry and template source changed; first toolbar DOM failed before selecting an option. Updated pointer helper has not run. No successful end-to-end visible-toolbar assembly claim.",
+    "roots": {
+      "maxLiveBusinessApplicationRoots": 1,
+      "independentToolsReactRoots": 1,
+      "totalMaxRoots": 2,
+      "sameUrl": true,
+      "iframe": false,
+      "linksDirectory": false,
+      "qualification": "Core actual Application tests exercise one business root. Initial toolbar mounting reached actual second tools root, but its full switching/focus suite has not passed."
+    },
+    "readme": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/README.md",
+      "scopeCorrection": "Per entered synthetic profile session shares one controller/session; switching creates a new owner. Business1+tools1 explicitly declared. This working README is not a replacement for the fixed accepted PROMPT."
+    }
+  },
+  "commands": [
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-SESSION-HEADLESS-FIRST.log",
+      "bytes": 746,
+      "sha256": "80d874bbf387872432c44d44a80be41106873830f727e05b9309dfa1c4d518ef",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "--test",
+        "apps/web/unified-browser-harness/profile-session.test.ts"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 0,
+      "result": "PASS_6_HEADLESS_FAKE_OWNERS",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-SESSION-TYPES-FIRST.log",
+      "bytes": 396,
+      "sha256": "dd0df20867bedc02e28f6504433ff780f28a5517b3d8d8a0f8856ac2b71ca6f5",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "apps/web/unified-browser-harness/tsconfig.json",
+        "--noEmit"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 2,
+      "result": "FAIL_TEST_FIXTURE_CIRCULAR_TYPES",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-SESSION-HEADLESS-GREEN.log",
+      "bytes": 739,
+      "sha256": "9712dc5f6836e401cf5c0d8dc61425bbdb611bd1982bc42b81d6450140364a85",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "--test",
+        "apps/web/unified-browser-harness/profile-session.test.ts"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 0,
+      "result": "PASS_6_AFTER_TEST_FIXTURE_REFACTOR",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-SESSION-TYPES-GREEN.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "apps/web/unified-browser-harness/tsconfig.json",
+        "--noEmit"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 0,
+      "result": "PASS_TYPES_AT_HEADLESS_CHECKPOINT",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-READONLY-FIXTURE-FIRST.log",
+      "bytes": 1172,
+      "sha256": "2167e77baa84760179e76813ac1cc6be05fc414ea716726e72df7fbfd4fba02a",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "--test",
+        "apps/web/unified-browser-harness/readonly-transfer-fixtures.test.ts",
+        "apps/web/unified-browser-harness/synthetic-transport.test.ts"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 0,
+      "result": "PASS_9_FIXTURE_AND_EXISTING_PROTOCOL",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-READONLY-TYPES-FIRST.log",
+      "bytes": 378,
+      "sha256": "b0f291f6ab00d9cd99d4a735791a338552b65cd6d156e659688456e0c228f894",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "apps/web/unified-browser-harness/tsconfig.json",
+        "--noEmit"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 2,
+      "result": "FAIL_READONLY_NEGATIVE_TEST_ASSIGNMENT",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-FIXTURE-GREEN.log",
+      "bytes": 357,
+      "sha256": "ee0e45cb43496b69ad8ef7f3042cd3f1d81ec778a0a9f747f3ecef34be9665ed",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "--test",
+        "apps/web/unified-browser-harness/readonly-transfer-fixtures.test.ts"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 0,
+      "result": "PASS_2_IMMUTABLE_NEGATIVE_CASE",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-READONLY-TYPES-GREEN.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "apps/web/unified-browser-harness/tsconfig.json",
+        "--noEmit"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 0,
+      "result": "PASS_TYPES_AT_FIXTURE_CHECKPOINT",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-ACTUAL-APPLICATION-FIRST.log",
+      "bytes": 882,
+      "sha256": "db58e28ba8aa88737ba4e4813de28acb561b0d013a1967c515d355bf788f33a3",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "apps/web/unified-browser-harness/run-profile-session-dom-tests.mjs"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 1,
+      "result": "FAIL_1500_NODES_WITH_UNCHANGED_LT1500_LIMIT",
+      "react19ElementRefWarningCount": 2,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-ACTUAL-APPLICATION-GREEN.log",
+      "bytes": 1251,
+      "sha256": "c446a13c0bb23473088359f79606b092208629db9d83ddf265536668eb1faef9",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "apps/web/unified-browser-harness/run-profile-session-dom-tests.mjs"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 0,
+      "result": "PASS_3_ACTUAL_APPLICATION_DOM_GROUPS_1499_NODES",
+      "react19ElementRefWarningCount": 4,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-HISTORY-SAVED-METADATA.log",
+      "bytes": 440,
+      "sha256": "b146e21e98b83999134244e9bd2bbb92e25d263c091ea03078ddffaaf2a4b13b",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "apps/web/src/transfers/tests/run-saved-records-dom-tests.mjs"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 0,
+      "result": "PASS_SAVED_METADATA_AND_BOUNDED_ROWS",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-ARCO-TOOLBAR-FIRST.log",
+      "bytes": 1266,
+      "sha256": "36e98aa9551a9194dd33576533ad77f0151162352c4921097325f3809c8c442a",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "apps/web/unified-browser-harness/run-profile-toolbar-dom-tests.mjs"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 1,
+      "result": "FAIL_OPTION_NOT_FOUND_CAUSE_UNCONFIRMED",
+      "react19ElementRefWarningCount": 2,
+      "actWarningCount": 0
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-ARCO-TOOLBAR-TYPES.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "apps/web/unified-browser-harness/tsconfig.json",
+        "--noEmit"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "exitCode": 0,
+      "result": "PASS_LATEST_TYPES",
+      "react19ElementRefWarningCount": 0,
+      "actWarningCount": 0
+    }
+  ],
+  "commandNotation": "Normalized Node24 argv and actual captured exit codes; no rerun performed while writing this checkpoint.",
+  "failureLedger": [
+    {
+      "id": "PROFILE_HEADLESS_TEST_TYPES",
+      "status": "SCOPED_FIXED",
+      "initialLog": "PROFILE-SESSION-TYPES-FIRST.log",
+      "greenLogs": [
+        "PROFILE-SESSION-HEADLESS-GREEN.log",
+        "PROFILE-SESSION-TYPES-GREEN.log"
+      ],
+      "change": "Separate makeOwner from fixture to remove circular inference."
+    },
+    {
+      "id": "PROFILE_FIXTURE_READONLY_TEST_TYPES",
+      "status": "SCOPED_FIXED",
+      "initialLog": "PROFILE-READONLY-TYPES-FIRST.log",
+      "greenLogs": [
+        "PROFILE-FIXTURE-GREEN.log",
+        "PROFILE-READONLY-TYPES-GREEN.log"
+      ],
+      "change": "Build immutable negative DTO instead of mutating readonly array."
+    },
+    {
+      "id": "PROFILE_HISTORY_DETAIL_1500",
+      "status": "SCOPED_FIXED_DOM_ONLY",
+      "initialLog": "PROFILE-ACTUAL-APPLICATION-FIRST.log",
+      "greenLogs": [
+        "PROFILE-ACTUAL-APPLICATION-GREEN.log",
+        "PROFILE-HISTORY-SAVED-METADATA.log"
+      ],
+      "change": "Merge full warning into existing metadata paragraph; no business fact removed or limit relaxed."
+    },
+    {
+      "id": "PROFILE_TOOLBAR_FIRST_SELECT",
+      "status": "FAIL_UNRESOLVED",
+      "initialLog": "PROFILE-ARCO-TOOLBAR-FIRST.log",
+      "known": "Option locator returned undefined after opening attempt. Product defect versus JSDOM event/portal lookup remains unresolved. Partial initial Arco mounting is not complete toolbar PASS."
+    },
+    {
+      "id": "PROFILE_TOOLBAR_NEWER_INTENT_FOCUS",
+      "status": "SOURCE_REVIEW_PENDING_REPRO_NOT_RUN_RESOURCE",
+      "source": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-toolbar.tsx",
+        "line": 22
+      },
+      "finding": "Restore allows BODY after prior outside focus has blurred, possibly stealing newer intent. This is a controller source-review concern, not an observed product FAIL. Existing prepared test only keeps outside focused.",
+      "newGatedCounterexampleWritten": false,
+      "fixImplemented": false
+    }
+  ],
+  "notExecuted": [
+    {
+      "name": "PROFILE-ARCO-TOOLBAR-POINTER",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "apps/web/unified-browser-harness/run-profile-toolbar-dom-tests.mjs"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "status": "NOT_RUN_RESOURCE",
+      "commandStarted": false,
+      "exitCode": null,
+      "logfile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-ARCO-TOOLBAR-POINTER.log",
+      "logExists": false,
+      "reason": "Preceding light-budget guard exit1; new pointer helper changes only, no test run."
+    },
+    {
+      "name": "Gated newer-focus/blur/Tab/Esc/outside-pointer counterexample",
+      "status": "NOT_WRITTEN_NOT_RUN_RESOURCE",
+      "commandStarted": false,
+      "exitCode": null
+    },
+    {
+      "name": "Application build and emitted CSS guard",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "apps/web/unified-browser-harness/build.mjs"
+      ],
+      "status": "NOT_RUN_RESOURCE",
+      "commandStarted": false
+    },
+    {
+      "name": "New immutable source-snapshot/source-only rebuild/browser",
+      "status": "NOT_RUN_RESOURCE_NOT_BUILT",
+      "commandStarted": false
+    }
+  ],
+  "validationLimits": {
+    "latestHarnessTypecheck": "PASS_PROFILE-ARCO-TOOLBAR-TYPES.log",
+    "typeOnlyAfterRuntimeGreen": "Explicit Owner app/transport getter return annotations added after runtime green; latest tsc covers these. Runtime bodies unchanged; no runtime retest claimed at final typed bytes.",
+    "toolbarPointerHelper": "Current mousedown/click/mouseup helper and added observation are unexecuted.",
+    "emittedCss": "NOT_RUN",
+    "newApplicationBuild": "NOT_RUN",
+    "newBrowser": "NOT_RUN",
+    "full35pages65overlays": "NOT_COMPLETE",
+    "strictVisualPass": 0,
+    "react19": "Existing element.ref warning counts retained per log; not warn-free and not all historical warnings attributed to this batch."
+  },
+  "priorPreparedCheckpoint": {
+    "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-SESSION-HEADLESS-SOURCE-PREPARED-v2.json",
+    "bytes": 5442,
+    "sha256": "9f1b2128064241c04cc11eeab07164ad6a97d021779f3673714230b3fe897ad6"
+  },
+  "priorCombinedScope": {
+    "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PENDING-COMBINED-FRONTEND-SOURCE-SCOPE-v4.json",
+    "bytes": 14881,
+    "sha256": "fdd90c1cc003d3f315bea7848953ed7515b0c11f1a669d85af09b89a1791d997"
+  },
+  "priorCheckpointsAndFailuresPreserved": true,
+  "nextActions": [
+    "Remain idle for tests/builds until space is released and controller gives a new resource window; preserve original 32MiB/128MiB budgets plus2GiB reserve.",
+    "After a passing permitted light guard, run the prepared full mousedown/click/mouseup toolbar option-opening probe. Distinguish portal locator/event simulation from actual product behavior before changing source.",
+    "Write and run a gated actual-toolbar red for outside focus then blur to BODY during pending switch/before restore frame; include explicit Tab/Esc/outside-pointer intent and stale-owner/unmount/revoke cases. This counterexample is not yet written or executed.",
+    "After a demonstrated red, use an operation-owned cancellable focus ticket, preserving ordinary successful Select focus restoration; rerun the same path and necessary affected lifecycle cases.",
+    "Only once toolbar DOM and resource gates pass, build a new immutable combined candidate containing Breadcrumb/Tag+SavedRecords+Sparse+explicit readonly profile. Controller alone mounts it; browser checks remain separate from DOM and the old accepted version."
+  ],
+  "productionWrites": false,
+  "newListenerStarted": false
+}

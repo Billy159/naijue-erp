@@ -1,0 +1,18 @@
+✔ SYNTHETIC transfer workspace: inert create, one SAVE, original snapshots and null CAS; no optimistic stock (8.810477ms)
+✔ SYNTHETIC existing edit: raw invalid quantity persists, blocks SAVE/APPROVE/navigation; endpoints/SKU/barcode unchanged (6.940844ms)
+✔ SYNTHETIC lifecycle: transitions only persisted state, exact two-end posting count, explicit read/adopt after commit (625.838947ms)
+✔ SYNTHETIC historical and VOID are fail-closed; no zero/negative/decimal/unknown quantity coercion (375.190238ms)
+✔ SYNTHETIC uncertain outcome retains exact original key/CAS/content; receipt404 never means uncommitted (2.86017ms)
+✔ SYNTHETIC cancellation/identity: pre-dispatch cancel is not sent, post-dispatch uncertain, late results cannot revive (2.262673ms)
+✔ SYNTHETIC conflict and regression: no force overwrite/rebase; original input stays until explicit current adoption (3.157766ms)
+✔ SYNTHETIC transfer HTTP client: inert exact native URLs, body, credentials and receipt correlation, no automatic retry (1819.453293ms)
+✔ SYNTHETIC transfer HTTP client: wire rejection is definitive; malformed result/network/redirect remain uncertain (331.014983ms)
+✔ SYNTHETIC transfer HTTP client: input/abort before dispatch sends nothing; receipt404 is read only (7.463749ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34051.488343

@@ -1,0 +1,33 @@
+{
+  "taskId": "B06-HISTORICAL-CUSTOMER-EXACT2-EXISTING-FIELDS-PROPOSAL",
+  "status": "CONTRACT_PROPOSAL_NO_SOURCE_OR_SCHEMA_CHANGE",
+  "verifiedGap": [
+    "Actual42561header source complete; exactly2 CUSTOMERreferences absent fromcurrent261party mappings",
+    "customer native schema existingid/code/name/enabled/version/timestamps only; currentparty reader ALLincludesdisabled, so disabledaloneviolates visibleInCurrentCustomerList=false",
+    "0013 nativeparty intent SQL requiresBASE_V2 +business/04客户.csv +CNfourcolumns; cannot disguise actualEnglishJSON asoriginalCSV"
+  ],
+  "proposedExistingFieldsOnly": {
+    "source": "Exactcurrentbase dictionaries/historical-customers.json raw8fields preserved; separate HISTORICAL_CUSTOMER_SUPPLEMENT_V1 source kind/path and originalJSON SHA/index locator; sourceKey retains HIST-CUSTOMER:prefix+originalPartyIdentity",
+    "native": "Two independentlyreviewed nativeCUSTOMER UUIDs only afterC allocationrecord; nativecode/name fromactualoriginalCode/Name,enabled=false,version1,created/updatedNULL. Do notmakeordinarydisabled261customers.",
+    "sourceEvidence": "Existingimport_source_row raw/normalized/field_provenance andnative_party_import_evidence keep actualhistoricalOnly=true,visibleInCurrentCustomerList=false,sourceDocumentNumber,originalPartyIdentity; no newcolumn/overloaddeletedAt/nameprefix forhiddenstate.",
+    "currentUIAndWrites": "D2 currentCUSTOMERlist/count/detail/newbillcandidate andmaintenance mustexclude/refuse exactnativeIDs with pinnedimmutable historicalOnly source/evidence; disabledfilteraloneinsufficient. Source markers remain inimmutabledata anddo not dependon displayname.",
+    "history": "Headernative refs onlyresolveexact originalsourceKey+originalPartyIdentity for2listedinvoices. NativehistorycustomerFKs retained; history detailreads nameallowed. No general customer substitution or droppingheaders.",
+    "guardsAndClosure": "D1 separateapproved newprofile/guard branch needed for actualsupplement selection/sourceequality; neveredit0013 sealedsource or loosenordinaryCSV branch. New2source/native/refrows included fulltypedclosure/counts; partial628sourcepin doesnotautomaticallyauthorize them."
+  },
+  "unknown": [
+    "C chosencentral guardversion/importorder",
+    "D2 maintainedcurrent/detail/bill/write scope contracts forhistoricalOnly",
+    "Independentexact2source/native bindings andoutsidepin",
+    "ActualPG/runtime/import/readback"
+  ],
+  "next": "C route exactexistingfieldproposal toD1/D2; no additionalbusinessquestionneeded forknownhistoricalOnly source meaning. IfnewDBcolumnrequired submitfulladditionalfielddiff beforeimplementation.",
+  "controllerAdoption": {
+    "status": "EXISTING_FIELDS_IMPLEMENTATION_CONTRACT_ACCEPTED_PENDING_EXACT_SOURCE_PIN_AND_SCOPED_QA",
+    "atUtc": "2026-10-22T07:57:37.625682+00:00",
+    "sourceSha256": "0ee9a501a85fe4528666dfbcabaaa0132ea9d690519fae220d14c20375213816",
+    "scope": "Only the existing two confirmed historicalOnly customer supplement identities; no new customer field/table, no expansion to ordinary CSV, no general hidden-state heuristic. Existing immutable source/evidence must actually pin exact source kind/path/hash/identity and both true/false flags. Newborn UUID allocation once, then independent review and C outside pin before actual write.",
+    "publicReadRule": "Current list/count/detail/newbill/maintenance must use the identical immutable-source exclusion. Historical header and history name reads retain exact FK references. enabled=false alone insufficient.",
+    "newSchemaPolicy": "Any genuinely new column/field needs user confirmation; any proposed guard change must enumerate exact approved source semantics and migration path to C before assignment.",
+    "executionGrant": false
+  }
+}

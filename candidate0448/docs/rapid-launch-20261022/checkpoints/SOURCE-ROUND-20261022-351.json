@@ -1,0 +1,22 @@
+{
+  "parent": "ee1674f887c7532a3ade94c54dfd7bc103049628",
+  "atUtc": "2026-10-24T19:42:15.248767+00:00",
+  "scope": "Original F2 document-scroll-host fix exact2 plus C shared-style module reuse; actual visual/browser/performance not accepted",
+  "files": [
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/detail.tsx",
+      "bytes": 18478,
+      "sha256": "9f8ef091d11a5d20e1443721a69455c2c0f35934a72554ee25507256e2f3ed53"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/product-tab-scroll.test.mjs",
+      "bytes": 8112,
+      "sha256": "655df27992516da9ba0ff1a1da38c4f3e8f68d73a4c1f3837e797277eef69672"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime-bootstrap.ts",
+      "bytes": 2094,
+      "sha256": "dfc62921ddc65d44616ceca5ed7f1d433afdce3e5f235e71068d1ccc9a348182"
+    }
+  ]
+}

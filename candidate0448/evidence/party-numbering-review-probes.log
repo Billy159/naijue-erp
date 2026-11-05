@@ -1,0 +1,16 @@
+✔ REVIEW pure: exact arithmetic beyond Number.MAX_SAFE_INTEGER and both near-bigint boundaries (2.661561ms)
+✔ REVIEW pure: 512 independent exact decimal model cases, preserving padded historical bytes (14.693266ms)
+✔ REVIEW injected pg: reservation scope rejects unloaded, existing, wrong-kind and repeated requests (9.989061ms)
+✔ REVIEW injected pg: exact large reservation uses lock-before-state-before-code-before-setval order (4.262658ms)
+✔ REVIEW injected pg: missing or malformed sequence state rolls back without reservation/native write (2.222358ms)
+✔ REVIEW injected pg: mismatching setval acknowledgement fails before native insert, and closed handles cannot reserve (2.552482ms)
+✔ REVIEW injected pg: same-table code conflict maps to explicit domain conflict and rollback, never recodes (2.019608ms)
+✔ REVIEW synthetic service: 20 concurrent exact-key creates converge once and next independent keys advance once (11.260785ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 898.783209

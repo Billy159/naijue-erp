@@ -1,0 +1,12 @@
+190e6613482ba96c677ce4f1035c8b20ab4f23b46e506da9afb70aa0953ebc72  apps/web/src/demo-controls/README.md
+9b6010fd2263e08d781afa94b9e71a7d03da70f6d904066f005744aa1fc06993  apps/web/src/demo-controls/category-branch-model.test.ts
+2c2423710e391f5ec3368f6688f20f4895d404528ab2d3b41e75ba4a92104499  apps/web/src/demo-controls/category-branch-model.ts
+e5c8927b148e379643193587bc403802fc5ded16ce9e874f8b18247a25482a0a  apps/web/src/demo-controls/category-branch-source-provenance.json
+2037dc958afb420161bd8053d9190279a73329762e307eeab3e0c8d8e7358485  apps/web/src/demo-controls/multi-select-action.tsx
+d1f1d1a3140c1a5848eca20d2e24fa54db53e4d0114ad96b1215db06e9e99614  apps/web/src/demo-controls/multi-select-source-provenance.json
+175658394e0e01507caf5f2f2ae46b90923833d3fda93115aeb65fecfb0cc9a6  apps/web/src/demo-controls/multi-select.css
+6d670e917c84c225292674249368a93c59e04d3e48949946c499fe8a3e8f1f7f  apps/web/src/demo-controls/tests/run-category-branch-dom-tests.mjs
+8a65a595c722b4fb2da6c63a94af8d7ec6d3289bc1b74358781f685ae03b3f5c  apps/web/src/demo-controls/tests/run-multi-select-layout-dom-tests.mjs
+a7bd984120181fd0276e8b32bfb1ff27213ff6ec79458127b98194cdda39c970  apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs
+487a5b6d0ff93f585185448b2e06a497ea35ef3cc670be2591c68d1b595fc3ef  apps/web/src/transfers/transfers-page.tsx
+aa0cc8207d66e66bc6e9414b7d11b3390d1bf7462c3c845bf2442e7b4c155ace  apps/web/src/transfers/transfers.css

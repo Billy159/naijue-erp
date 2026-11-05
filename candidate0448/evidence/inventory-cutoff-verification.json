@@ -1,0 +1,85 @@
+{
+  "status": "SOURCE_REFROZEN_AFTER_REVIEW_CORRECTIONS",
+  "scope": "Approved sparse cutoff/import foundation only",
+  "proposal_sha256": "90e310e4861deae3cad6be8dabdd9e13dd90353d6b076d3e418c90909c0f796b",
+  "focus_typecheck": {
+    "passed": true,
+    "command": "./node_modules/.bin/tsc --noEmit -p tests/inventory-cutoff-tsconfig.json"
+  },
+  "focused_tests": {
+    "passed": true,
+    "tests": 44,
+    "concurrency": 2,
+    "evidence": "inventory-cutoff-targeted-check.log"
+  },
+  "legacy_sales_transfer_regression": {
+    "passed": true,
+    "tests": 158,
+    "concurrency": 2,
+    "evidence": "inventory-cutoff-regression-check.log"
+  },
+  "full_typecheck": {
+    "last_run": "BLOCKED_OUTSIDE_TASK",
+    "diagnostic": "tests/postgres-bounded-pool.test.ts imports PgTransferPool not exported by transfer-unit-of-work.ts; concurrent pool work, not changed here",
+    "evidence": "inventory-cutoff-typecheck.log"
+  },
+  "source_files": [
+    "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+    "adapters/postgres/src/inventory-cutoff-import-store.ts",
+    "adapters/postgres/src/inventory-cutoff-scope-reader.ts",
+    "packages/application/src/inventory-cutoff-import.ts",
+    "packages/application/src/inventory-cutoff-scope.ts",
+    "tests/inventory-cutoff-import.test.ts",
+    "tests/inventory-cutoff-postgres-protocol.test.ts",
+    "tests/inventory-cutoff-schema-contract.test.ts",
+    "tests/inventory-cutoff-tsconfig.json",
+    "tests/support/synthetic-cutoff-fixtures.ts",
+    "docs/inventory-cutoff-foundation.md"
+  ],
+  "schema_additions": {
+    "tables": [
+      "import_batch",
+      "import_record"
+    ],
+    "columns": [
+      "sales_header.import_batch_id",
+      "transfer_header.import_batch_id",
+      "inventory_ledger.source_import_batch_id"
+    ],
+    "all_previously_approved": true
+  },
+  "no_per_chunk_growing_source_count": true,
+  "no_ordinary_write_history_sum": true,
+  "not_run": [
+    "SQL parsing/PostgreSQL execution",
+    "real database, network, installation, listener or deployment",
+    "real source/private data import",
+    "git commit or push"
+  ],
+  "unfinished_closed": [
+    "historical native import and first CUTOFF_HISTORY unapprove",
+    "native CREATE zero identity evidence",
+    "sparse first-use SALES/TRANSFER command integration",
+    "full PostgreSQL inventory query reader and HTTP import routes",
+    "strong generic arbitrary direct-SQL mutation proof"
+  ],
+  "important_limits": [
+    "Protocol and SQL-text tests are not engine/isolation/durability proof.",
+    "Native source-membership scope is O(warehouses+SKUs), plus sparse nonzero baseline sources.",
+    "Chunk counters advance only after actual INSERT success within the locked application transaction; exact global source/key reconciliation occurs once at publication.",
+    "Application role must not disable/drop guards or execute arbitrary stock writes.",
+    "0001-0005 left unchanged; 0006 independently revised by its owner and not edited in this task."
+  ],
+  "review_corrections": [
+    {
+      "finding": "0004 native ledger receipt-source trigger was unconditional and treated baseline NULL source as transfer",
+      "correction": "0007 recreates the deferred native trigger with APPROVE/UNAPPROVE dispatch and baseline trigger with CUTOFF_BASELINE dispatch; prior function and prior migrations remain untouched",
+      "evidence": "Composition-aware SQL-source regression; not engine proof"
+    },
+    {
+      "finding": "IMPORT checkpoint audit lookup lacked a suitable version index",
+      "correction": "0007 partial unique audit_import_checkpoint_version(object_id,new_version) WHERE object_type=IMPORT; equality keeps the indexed new_version column uncast",
+      "evidence": "SQL-source index/lookup contract; no planner/engine claim"
+    }
+  ]
+}

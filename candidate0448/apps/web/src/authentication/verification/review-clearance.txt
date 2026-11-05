@@ -1,0 +1,5 @@
+Independent authentication reviewer, 2026-10-20, reported these targeted rechecks after the correction:
+
+"Independent targeted rechecks clear both reported defects. 8,000-empty-chunk native stream with timeoutMs:5 now rejects timeout for both 200 and 401 while observer timer still false, cancels body (200 ~13.7ms/15chunks; 401 ~8.4ms/169chunks). Actual-click missing-loginName clears password/no call; missing-newPassword clears old+confirmation/no call; short newPassword clears all/no call. Deadline/checkpoint and noValidate diff reviewed."
+
+The implementation's own current unit, DOM and isolated strict-typecheck logs are separate files in this directory. This report does not establish real-browser cookie/TLS/proxy or live-login behavior.

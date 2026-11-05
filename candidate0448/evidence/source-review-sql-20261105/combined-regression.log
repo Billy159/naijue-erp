@@ -1,0 +1,31 @@
+✔ current source closure separately records old180 and the later application/installer changes (3389.348337ms)
+✔ full successor model changes only five routine bodies and sales hall nullability (19.452532ms)
+✔ new catalog guards every category plus raw type templates and real dependency boundaries (25.735898ms)
+✔ program is one atomic application transaction and contains no provisioning or legacy tables (0.904698ms)
+✔ valid authorization data cannot issue a trusted execution token (2.54407ms)
+✔ cloned catalog and invented actual observations cannot open the record or host (0.428487ms)
+✔ model runs base then hall then amount and full guard within one transaction (2.108658ms)
+✔ ordinary schema failure acknowledges exactly one rollback and never commits (0.566918ms)
+✔ rollback failure remains distinct from a confirmed rollback (0.596693ms)
+✔ unknown COMMIT quarantines without rollback, replay or further SQL (0.760981ms)
+✔ malformed COMMIT acknowledgement is unknown, never success (0.643712ms)
+✔ post-commit journal failure is committed/unpublished, never rollback (0.640636ms)
+✔ failure writing COMMIT_PENDING rolls back before any commit submission (0.494537ms)
+✔ source drift before beginning sends no SQL (0.320319ms)
+✔ caller objects cannot become a program, completion, authorization or record (1.176797ms)
+✔ native dump conversion removes only the matching restrict pair (1.923167ms)
+✔ only one exact patch transaction is absorbed and all internal guards stay (1.048691ms)
+✔ immutable r2 refusal is a pinned input and never a stripped SQL gate (24.702907ms)
+✔ new35 target is an immutable binding, not a database or authority (2.470191ms)
+✔ target rejects unknown fields, getters, nonlocal endpoints and privilege-shaped names (1.074774ms)
+✔ original 20 minute deadline cannot be reset, extended, or reused after expiry (0.578359ms)
+✔ guard binds real endpoint and birth, ordinary owner, exact roles and ACL without provisioning (9.343407ms)
+✔ journal path cannot write outside the target workspace already bound into authorization (0.726641ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3739.553582

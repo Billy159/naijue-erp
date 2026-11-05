@@ -1,0 +1,135 @@
+--- effective-before/adapters/postgres/migrations/0018_history_typed_publication.sql
++++ sealed-history18-run1-repair-v1/adapters/postgres/migrations/0018_history_typed_publication.sql
+@@ -414,7 +414,7 @@
+ -- source/prepared facts supplied by the trusted application authorizer, never SQL->expected.
+ CREATE FUNCTION naijue_erp.assert_history_typed_closure(selected_batch uuid,plan jsonb,documents jsonb) RETURNS void
+ LANGUAGE plpgsql SET search_path=pg_catalog,naijue_erp AS $$
+-DECLARE b naijue_erp.import_batch%ROWTYPE;actual_counts jsonb;entity_counts jsonb;d jsonb;h record;r record;
++DECLARE b naijue_erp.import_batch%ROWTYPE;actual_counts jsonb;entity_counts jsonb;d jsonb;closure_header_source record;r record;
+  expected_keys text[]:=ARRAY['version','selectionSha256','authorizedPayloadHash','sourceManifestSha256','typedManifestSha256','documentManifestSha256','expectedCounts','sourceEntityCounts','documentCount'];
+  doc_keys text[]:=ARRAY['kind','sourceKey','headerSourceRowId','headerId','headerSourceSha256','lineCount','settlementCount','sourceDocumentSha256','typedDocumentSha256'];
+  entity_keys text[]:=ARRAY['HALL','WAREHOUSE','STAFF','CUSTOMER','SUPPLIER','CATEGORY','COLOR','FIT','SIZE','SIZE_GROUP','SIZE_GROUP_MEMBER','SEASON','PRODUCT','SKU','BARCODE','INVENTORY_BASELINE','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','SALES_HEADER','SALES_LINE','SETTLEMENT','TRANSFER_HEADER','TRANSFER_LINE'];
+@@ -541,12 +541,12 @@
+    OR (d->>'lineCount')::integer=0 OR(d->>'kind'='TRANSFER' AND (d->>'settlementCount')::integer<>0) THEN
+    RAISE EXCEPTION 'bounded nonempty original document lines required; no implicit zero-header permission' USING ERRCODE='23514';END IF;
+   bytes:=bytes+octet_length(naijue_erp.history_closure_encode(d));IF bytes>67108864 THEN RAISE EXCEPTION 'closure document byte limit' USING ERRCODE='23514';END IF;
+-  SELECT s.*,actual_header.id header_id INTO STRICT h FROM naijue_erp.import_source_row s JOIN(
++  SELECT s.*,actual_header.id header_id INTO STRICT closure_header_source FROM naijue_erp.import_source_row s JOIN(
+     SELECT x.id,x.source_row_id FROM naijue_erp.history_sales_header x WHERE d->>'kind'='SALES' AND x.batch_id=selected_batch
+     UNION ALL SELECT x.id,x.source_row_id FROM naijue_erp.history_transfer_header x WHERE d->>'kind'='TRANSFER' AND x.batch_id=selected_batch
+    ) actual_header ON actual_header.source_row_id=s.id WHERE s.batch_id=selected_batch AND actual_header.id=(d->>'headerId')::uuid;
+-  IF h.id::text IS DISTINCT FROM d->>'headerSourceRowId' OR h.source_key IS DISTINCT FROM d->>'sourceKey'
+-   OR naijue_erp.history_closure_row_hash('import_source_row',h.id::text,naijue_erp.history_closure_projection('import_source_row',to_jsonb(h)-'header_id')) IS DISTINCT FROM d->>'headerSourceSha256' THEN
++  IF closure_header_source.id::text IS DISTINCT FROM d->>'headerSourceRowId' OR closure_header_source.source_key IS DISTINCT FROM d->>'sourceKey'
++   OR naijue_erp.history_closure_row_hash('import_source_row',closure_header_source.id::text,naijue_erp.history_closure_projection('import_source_row',to_jsonb(closure_header_source)-'header_id')) IS DISTINCT FROM d->>'headerSourceSha256' THEN
+    RAISE EXCEPTION 'document header/source identity or complete source hash differs' USING ERRCODE='23514';END IF;
+   SELECT count(*) FILTER(WHERE s.entity_type=CASE WHEN d->>'kind'='SALES' THEN 'SALES_LINE' ELSE 'TRANSFER_LINE' END),
+    count(*) FILTER(WHERE s.entity_type='SETTLEMENT') INTO source_lines,source_settlements FROM naijue_erp.import_source_row s
+@@ -562,9 +562,9 @@
+    OR naijue_erp.history_closure_digest(selected_batch,'document-typed:'||scope,'document-typed',d->>'kind',(d->>'headerId')::uuid) IS DISTINCT FROM d->>'typedDocumentSha256' THEN
+    RAISE EXCEPTION 'complete original/typed document digest differs' USING ERRCODE='23514';END IF;
+  END LOOP;
+- IF EXISTS(SELECT 1 FROM jsonb_array_elements(documents) d GROUP BY d->>'headerSourceRowId' HAVING count(*)<>1)
+-  OR EXISTS(SELECT 1 FROM jsonb_array_elements(documents) d GROUP BY d->>'kind',d->>'headerId' HAVING count(*)<>1)
+-  OR EXISTS(SELECT 1 FROM jsonb_array_elements(documents) d GROUP BY d->>'kind',d->>'sourceKey' HAVING count(*)<>1)
++ IF EXISTS(SELECT 1 FROM jsonb_array_elements(documents) closure_document_values(value) GROUP BY closure_document_values.value->>'headerSourceRowId' HAVING count(*)<>1)
++  OR EXISTS(SELECT 1 FROM jsonb_array_elements(documents) closure_document_values(value) GROUP BY closure_document_values.value->>'kind',closure_document_values.value->>'headerId' HAVING count(*)<>1)
++  OR EXISTS(SELECT 1 FROM jsonb_array_elements(documents) closure_document_values(value) GROUP BY closure_document_values.value->>'kind',closure_document_values.value->>'sourceKey' HAVING count(*)<>1)
+   OR jsonb_array_length(documents)<>(actual_counts->>'history_sales_header')::bigint+(actual_counts->>'history_transfer_header')::bigint THEN
+   RAISE EXCEPTION 'complete unique bidirectional document coverage required' USING ERRCODE='23514';END IF;
+  IF naijue_erp.history_closure_digest(selected_batch,'source:'||selected_batch::text,'source') IS DISTINCT FROM plan->>'sourceManifestSha256'
+--- effective-before/adapters/postgres/src/native-import-accounting-capability.ts
++++ sealed-history18-run1-repair-v1/adapters/postgres/src/native-import-accounting-capability.ts
+@@ -80,7 +80,7 @@
+ // Exact current18 source pins, including all original0013 creation/XID/time/no-adoption functions.
+ // Full native15/16/17 guards still precede this additive conjunction. Not permission to migrate.
+ export const HISTORY18_CLOSURE_CAPABILITY = `
+- NOT EXISTS(SELECT 1 FROM (VALUES ('reject_immutable_change()','7fd92638ea5903af835fd52e2740df66','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('cutoff_import_lock()','7aa5e2e7fbe4580302c34a8b678aba0c','sql','v',false,true,'search_path=pg_catalog,naijue_erp'),('import_source_key_lock(text,text,text)','01e33162d751072a8104f8f53c154bd9','sql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_history_insert()','300eb6c65679f408959a717015494f00','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_contributor_link()','ecc0554f1e8914067c7bed3c4fe74534','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_history_product_proofs(uuid)','7cc32bfbd28af764d83b26c8bedd466b','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_history_publication()','5f6862cc8715c07622e1ba6b14f9aa68','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_header_native_reference()','faf47176d49c0d978face1a778bf36f2','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_header_native_reference_publication()','44a507eed6e2e976a268e8527b010228','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_party_import_intent()','47a9d34680c90a31a9dfbda5e1ac608c','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('is_native_party_import_insert(text,jsonb)','7ee15ace84a76a9af4bcd8e17c91a2cc','sql','v',true,true,'search_path=pg_catalog,naijue_erp'),('validate_native_party_import_commit()','8dca79c15351860d83772154739f87f1','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('keep_party_native_identity()','48d51502fec9f9160d3ef6e710bd7e3f','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_party_native_commit()','d345ac470c4b19f1d54bd14f05a5b9d3','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_catalogue_binding()','debe8d23a074918b063fb0056197f4a1','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_catalogue_publication()','b3369c4c85ae5f59a826f8c5fd684b3b','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_import_accounting_claim()','834dc852808d74913841772fe00e32f0','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_import_accounting_claim_commit()','0f9be3cc9a993043144cfadd657f45d2','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_import_accounting_checkpoint_commit()','2eb1bc28552c1e5cb8d74cc2a4ae95e5','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_import_accounting_baseline_commit()','2d612a969054a1936bcbbe8d32d4fc18','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_import_accounting_final_record_commit()','8dc8e20662be36d8f84473a3bfc7420f','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_import_accounting_publication()','43d9bb4436e19fa4df94c1b51e08246e','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_payment_binding()','bb21b120553fa5b866bb8033a123a19c','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_payment_publication()','c51d89d40d0fcf5de709f75047ca75ce','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('history_closure_encode(jsonb,integer)','12ec166bc7ee379141cfe9095920754f','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_row_hash(text,text,jsonb)','804cae577014c088549e72af8e6472da','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_seed(text)','9f53b456f3e68d449d30ec590b28f8f3','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_fold(bytea,text)','f0f846476a0a37f256ac7e6d52f1842a','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_finish(text,bigint,bytea)','459720c834ed3991aa837112d8540552','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_count_map(jsonb,text[])','1d973666367e7c5f2c4a42202056a3dd','plpgsql','i',false,false,'search_path=pg_catalog'),('history_closure_projection_columns(text)','ca93d1438f9bde53fe4f5cafe09b2c37','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_projection(text,jsonb)','4b53ca33edbe417cbe1eb16c5b85b6b0','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_projection_key(text,jsonb)','22ba6f524c7c40d597fdb52ac4b79b0e','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_rows(uuid)','70ecff2a73dd659dca4cc52589bda85d','sql','s',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_document_rows(uuid,text,uuid,boolean)','68aca88b40b72f2829f4e1cb44b46bfb','plpgsql','s',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_digest(uuid,text,text,text,uuid,jsonb)','0addd270d5265c53aaeeaff8458bdb16','plpgsql','s',false,false,'search_path=pg_catalog,naijue_erp'),('assert_history_typed_closure(uuid,jsonb,jsonb)','60fe0d1d010f4458bc2306fc7e5a424e','plpgsql','v',false,false,'search_path=pg_catalog,naijue_erp'),('guard_history_closure_stage()','19d2125ffd289eebb0ec5c8e04528cff','plpgsql','v',false,false,'search_path=pg_catalog,naijue_erp'),('validate_history_closure_commit()','b42220adaac3e2e46ecc9feb8a3ec735','plpgsql','v',false,false,'search_path=pg_catalog,naijue_erp'),('guard_history_typed_publication()','2fa571b4582b80c131b45efeb8f76d48','plpgsql','v',false,false,'search_path=pg_catalog,naijue_erp')) required(signature,body_md5,language_name,volatility,is_definer,public_execute,search_path)
++ NOT EXISTS(SELECT 1 FROM (VALUES ('reject_immutable_change()','7fd92638ea5903af835fd52e2740df66','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('cutoff_import_lock()','7aa5e2e7fbe4580302c34a8b678aba0c','sql','v',false,true,'search_path=pg_catalog,naijue_erp'),('import_source_key_lock(text,text,text)','01e33162d751072a8104f8f53c154bd9','sql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_history_insert()','300eb6c65679f408959a717015494f00','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_contributor_link()','ecc0554f1e8914067c7bed3c4fe74534','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_history_product_proofs(uuid)','7cc32bfbd28af764d83b26c8bedd466b','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_history_publication()','5f6862cc8715c07622e1ba6b14f9aa68','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_header_native_reference()','faf47176d49c0d978face1a778bf36f2','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_header_native_reference_publication()','44a507eed6e2e976a268e8527b010228','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_party_import_intent()','47a9d34680c90a31a9dfbda5e1ac608c','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('is_native_party_import_insert(text,jsonb)','7ee15ace84a76a9af4bcd8e17c91a2cc','sql','v',true,true,'search_path=pg_catalog,naijue_erp'),('validate_native_party_import_commit()','8dca79c15351860d83772154739f87f1','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('keep_party_native_identity()','48d51502fec9f9160d3ef6e710bd7e3f','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_party_native_commit()','d345ac470c4b19f1d54bd14f05a5b9d3','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_catalogue_binding()','debe8d23a074918b063fb0056197f4a1','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_catalogue_publication()','b3369c4c85ae5f59a826f8c5fd684b3b','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_import_accounting_claim()','834dc852808d74913841772fe00e32f0','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_import_accounting_claim_commit()','0f9be3cc9a993043144cfadd657f45d2','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_import_accounting_checkpoint_commit()','2eb1bc28552c1e5cb8d74cc2a4ae95e5','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_import_accounting_baseline_commit()','2d612a969054a1936bcbbe8d32d4fc18','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('validate_import_accounting_final_record_commit()','8dc8e20662be36d8f84473a3bfc7420f','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_import_accounting_publication()','43d9bb4436e19fa4df94c1b51e08246e','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_payment_binding()','bb21b120553fa5b866bb8033a123a19c','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('guard_native_payment_publication()','c51d89d40d0fcf5de709f75047ca75ce','plpgsql','v',false,true,'search_path=pg_catalog,naijue_erp'),('history_closure_encode(jsonb,integer)','12ec166bc7ee379141cfe9095920754f','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_row_hash(text,text,jsonb)','804cae577014c088549e72af8e6472da','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_seed(text)','9f53b456f3e68d449d30ec590b28f8f3','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_fold(bytea,text)','f0f846476a0a37f256ac7e6d52f1842a','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_finish(text,bigint,bytea)','459720c834ed3991aa837112d8540552','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_count_map(jsonb,text[])','1d973666367e7c5f2c4a42202056a3dd','plpgsql','i',false,false,'search_path=pg_catalog'),('history_closure_projection_columns(text)','ca93d1438f9bde53fe4f5cafe09b2c37','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_projection(text,jsonb)','4b53ca33edbe417cbe1eb16c5b85b6b0','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_projection_key(text,jsonb)','22ba6f524c7c40d597fdb52ac4b79b0e','plpgsql','i',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_rows(uuid)','70ecff2a73dd659dca4cc52589bda85d','sql','s',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_document_rows(uuid,text,uuid,boolean)','68aca88b40b72f2829f4e1cb44b46bfb','plpgsql','s',false,false,'search_path=pg_catalog,naijue_erp'),('history_closure_digest(uuid,text,text,text,uuid,jsonb)','0addd270d5265c53aaeeaff8458bdb16','plpgsql','s',false,false,'search_path=pg_catalog,naijue_erp'),('assert_history_typed_closure(uuid,jsonb,jsonb)','0d7ea7603816f2ea9c80b4f554b006a5','plpgsql','v',false,false,'search_path=pg_catalog,naijue_erp'),('guard_history_closure_stage()','19d2125ffd289eebb0ec5c8e04528cff','plpgsql','v',false,false,'search_path=pg_catalog,naijue_erp'),('validate_history_closure_commit()','b42220adaac3e2e46ecc9feb8a3ec735','plpgsql','v',false,false,'search_path=pg_catalog,naijue_erp'),('guard_history_typed_publication()','2fa571b4582b80c131b45efeb8f76d48','plpgsql','v',false,false,'search_path=pg_catalog,naijue_erp')) required(signature,body_md5,language_name,volatility,is_definer,public_execute,search_path)
+  WHERE NOT EXISTS(SELECT 1 FROM pg_proc p JOIN pg_language l ON l.oid=p.prolang WHERE p.oid=to_regprocedure('naijue_erp.'||required.signature)
+   AND md5(p.prosrc)=required.body_md5 AND l.lanname=required.language_name AND p.provolatile::text=required.volatility
+   AND p.prosecdef=required.is_definer AND NOT p.proisstrict AND cardinality(p.proconfig)=1
+--- effective-before/packages/application/src/native-import-schema-contract.ts
++++ sealed-history18-run1-repair-v1/packages/application/src/native-import-schema-contract.ts
+@@ -94,7 +94,7 @@
+   Object.freeze({ id: "NATIVE_IMPORT_SCHEMA_18_V1", versions: Object.freeze([...REVIEWED_NATIVE_IMPORT_LEGACY_SCHEMA_CONTRACTS[6].versions,18] as const), extensions: Object.freeze([
+     ...REVIEWED_NATIVE_IMPORT_LEGACY_SCHEMA_CONTRACTS[6].extensions,
+     Object.freeze({ version: 18, file: "0018_history_typed_publication.sql",
+-      sha256: "6e966683d9559cebf532aefc2ce540827c0545bc03fdaaea4c3b5125219d4b64",
++      sha256: "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da",
+       compatibility: "Adds complete source-semantic closure manifests and SQL readback; all original provenance/no-adoption/accounting guards plus exact18 runtime routines/ACLs remain required; publication gate remains closed" })
+   ]) })
+ ] as const);
+--- effective-before/tests/integration/migration-manifest.ts
++++ sealed-history18-run1-repair-v1/tests/integration/migration-manifest.ts
+@@ -95,5 +95,5 @@
+ /** SQL-codec-only fresh18 preparation. Does not enable any application writer or publication. */
+ export const HISTORY_TYPED_CLOSURE_SCHEMA18_MIGRATIONS = [
+   ...NATIVE_PAYMENT_SCHEMA17_MIGRATIONS,
+-  [18, "0018_history_typed_publication.sql", "6e966683d9559cebf532aefc2ce540827c0545bc03fdaaea4c3b5125219d4b64"],
++  [18, "0018_history_typed_publication.sql", "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"],
+ ] as const;
+--- effective-before/tests/support/history18-routine-source-pins.json
++++ sealed-history18-run1-repair-v1/tests/support/history18-routine-source-pins.json
+@@ -326,7 +326,7 @@
+     },
+     {
+       "signature": "assert_history_typed_closure(uuid,jsonb,jsonb)",
+-      "md5": "60fe0d1d010f4458bc2306fc7e5a424e",
++      "md5": "0d7ea7603816f2ea9c80b4f554b006a5",
+       "language": "plpgsql",
+       "volatile": "v",
+       "definer": false,
+@@ -362,5 +362,5 @@
+     }
+   ],
+   "source": "Latest exact body bytes from frozen1\u201317/current18 SQL for original immutable/lock/source/publication/native guards; not database observed values",
+-  "ddl18Sha256": "6e966683d9559cebf532aefc2ce540827c0545bc03fdaaea4c3b5125219d4b64"
++  "ddl18Sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+ }
+--- effective-before/tests/integration/sealed-history18.integration.ts
++++ sealed-history18-run1-repair-v1/tests/integration/sealed-history18.integration.ts
+@@ -193,6 +193,8 @@
+   await t.test("same-count crossed document and missing-original/substitute typed line fail actual deep SQL coverage; rollback restores guards/data", async () => {
+    const line = facts.snapshot().typedRows.find(r => r.relation === "history_sales_line")!.projection as Record<string, string>;
+    const otherHeader = closureInput.documents.find(d => d.kind === "SALES" && d.headerId !== line.header_id)!.headerId;
++   const otherLine = facts.snapshot().typedRows.find(r => r.relation === "history_sales_line" && (r.projection as Record<string, string>).header_id === otherHeader && (r.projection as Record<string, string>).line_no === line.line_no)!.projection as Record<string, string>;
++   const expectedPerDocumentCounts = [line.header_id, otherHeader].map(header_id => { assert.ok(header_id); return { header_id, n: 16 }; }).sort((a, b) => a.header_id.localeCompare(b.header_id));
+    const substituteSource = facts.snapshot().sourceRows.find(r => (r.projection as Record<string, unknown>).entity_type === "PAYMENT_METHOD")!.key;
+    for (const change of ["crossed", "omitted"]) {
+     const c = await pool.connect();
+@@ -201,10 +203,18 @@
+      // Deliberate isolated corruption tests the SQL projection predicate directly. The real store
+      // separately refuses disabled runtime guards; none of these DDL changes can commit.
+      await c.query("ALTER TABLE naijue_erp.history_sales_line DISABLE TRIGGER history_sales_line_immutable");
+-     if (change === "crossed") await c.query("UPDATE naijue_erp.history_sales_line SET header_id=$2::uuid WHERE id=$1::uuid", [line.id, otherHeader]);
++     // Exchange two corresponding lines through one unused temporary line number.
++     // Every statement preserves unique(header,line_no). The final corruption keeps
++     // both the global32 and each document's16 counts and original line numbers.
++     if (change === "crossed") {
++      await c.query("UPDATE naijue_erp.history_sales_line SET line_no=(SELECT max(line_no)+1 FROM naijue_erp.history_sales_line WHERE batch_id=$2::uuid) WHERE id=$1::uuid", [line.id, options.batchId]);
++      await c.query("UPDATE naijue_erp.history_sales_line SET header_id=$2::uuid WHERE id=$1::uuid", [otherLine.id, line.header_id]);
++      await c.query("UPDATE naijue_erp.history_sales_line SET header_id=$2::uuid,line_no=$3::integer WHERE id=$1::uuid", [line.id, otherHeader, line.line_no]);
++     }
+      else await c.query("UPDATE naijue_erp.history_sales_line SET source_row_id=$2::uuid WHERE id=$1::uuid", [line.id, substituteSource]);
+      assert.equal(Number((await c.query("SELECT count(*) n FROM naijue_erp.history_sales_line")).rows[0]!.n), 32);
+-     await assert.rejects(c.query("SELECT naijue_erp.assert_history_typed_closure($1::uuid,$2::jsonb,$3::jsonb)", [options.batchId, JSON.stringify(closureInput.plan), JSON.stringify(closureInput.documents)]), e => e instanceof Error && (e as Error & { code?: string }).code === "23514");
++     assert.deepEqual((await c.query("SELECT header_id::text,count(*)::integer n FROM naijue_erp.history_sales_line WHERE batch_id=$1::uuid GROUP BY header_id ORDER BY header_id", [options.batchId])).rows, expectedPerDocumentCounts);
++     await assert.rejects(c.query("SELECT naijue_erp.assert_history_typed_closure($1::uuid,$2::jsonb,$3::jsonb)", [options.batchId, JSON.stringify(closureInput.plan), JSON.stringify(closureInput.documents)]), e => e instanceof Error && (e as Error & { code?: string }).code === "23514" && e.message === "original sales line missing or wrong document" && ((e as Error & { where?: string }).where ?? "").includes("assert_history_typed_closure(uuid,jsonb,jsonb)"));
+     } finally { await c.query("ROLLBACK"); c.release(); }
+     const verify = await pool.connect(); try { await assertNativeImportAccountingGuards(verify); } finally { verify.release(); }
+     assert.deepEqual(await pinSyntheticClosureSourceFiles(sourceRoots), initialFilePins);
+--- effective-before/tests/history-typed-closure-stage-protocol.test.ts
++++ sealed-history18-run1-repair-v1/tests/history-typed-closure-stage-protocol.test.ts
+@@ -75,7 +75,10 @@
+ test("finite18 schema recognition rejects17,19,missing,duplicate and unordered arrays; it grants no runtime capability", () => {
+  const prefix = Array.from({ length: 18 }, (_, i) => i + 1);
+  assert.doesNotThrow(() => assertHistoryTypedClosureSchema(prefix));
+- assert.throws(() => assertReviewedNativeImportSchema(prefix, { minimumVersion: 11, errorCode: "TEST_SCHEMA" }), { code: "TEST_SCHEMA" }, "General native writers remain closed before complete18 capability");
++ // The separately reviewed native-writer18 phase added finite recognition. Its
++ // mandatory runtime capability remains covered by the native18 writer protocol.
++ assert.equal(assertReviewedNativeImportSchema(prefix, { minimumVersion: 11, errorCode: "TEST_SCHEMA" }).id, "NATIVE_IMPORT_SCHEMA_18_V1");
++ assert.throws(() => assertReviewedNativeImportSchema([...prefix, 19], { minimumVersion: 11, errorCode: "TEST_SCHEMA" }), { code: "TEST_SCHEMA" });
+  let reads = 0; const getter = [...prefix]; Object.defineProperty(getter, "0", { enumerable: true, get() { reads++; return 1; } });
+  for (const v of [prefix.slice(0, 17), [...prefix, 19], prefix.filter(n => n !== 12), [...prefix, 18], [...prefix].reverse(), new Array(18), Object.assign([...prefix], { extra: 1 }), getter]) assert.throws(() => assertHistoryTypedClosureSchema(v), { code: "HISTORY_CLOSURE_SCHEMA_NOT_READY" });
+  assert.equal(reads, 0);

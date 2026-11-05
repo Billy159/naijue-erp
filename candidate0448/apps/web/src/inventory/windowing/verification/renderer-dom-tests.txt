@@ -1,0 +1,6 @@
+PASS bounded native DOM: 100/200/500 complete products each mount 8 detail rows, 48 stock buttons, 278 elements.
+PASS 1,200-size axis stays bounded and keyboard End reaches exact final size.
+PASS semantics/focus: negatives, valid zero, absent cells, exact SKU/readReference; arrows skip absent coordinates, End scrolls/mounts/focuses by ID.
+PASS retained offscreen focus stays bounded; product/color-FIT folds preserve source identities and totals without synthesizing stock.
+PASS invalid or changed natural geometry retains unclipped eager rendering; replaced reads cancel stale pending focus; disposed scope removes all matrix facts.
+jsdom only: real browser sticky geometry, wrapped row measurement, screen reader behavior and latency remain release gates. Default route remains eager.

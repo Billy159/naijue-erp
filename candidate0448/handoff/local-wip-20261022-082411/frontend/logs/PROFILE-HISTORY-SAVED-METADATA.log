@@ -1,0 +1,2 @@
+PASS SavedRecords bounded DOM [{"actualLines":40,"mountedRows":40,"nodes":656},{"actualLines":83,"mountedRows":40,"nodes":656},{"actualLines":2000,"mountedRows":40,"nodes":656}]
+PASS focused SavedRecords: actual Arco Table+Pagination;40 actual rows, duplicate SKU independent line keys, exact string quantity, barcode null/empty/leading zeros, snapshot/current separation, page/disclosure/newer focus, shrink/target/unmount cleanup, no IO.

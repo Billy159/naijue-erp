@@ -1,0 +1,48 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import {loadFresh35CombinedSource,describeFresh35CombinedSource,renderFresh35CombinedSchema} from '../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
+import {bindFresh35CombinedTarget,describeFresh35CombinedTarget} from '../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
+import {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation} from '../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
+import {compileFresh35CombinedProgram,describeFresh35CombinedProgram,validateFresh35CombinedAuthorization,runFresh35CombinedInstall} from '../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
+const root=fileURLToPath(new URL('../',import.meta.url)),base='/workspace/shared/fresh35-install-review-plan-20261105-r2';
+const modelPath='/workspace/shared/fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json',functionsPath='/workspace/scratch/f6bee04e937b/cloud-pg-schema178v2-20261105-r2/evidence/functions.json';
+const startsAt=Date.parse('2026-11-05T03:00:00Z');
+const target=bindFresh35CombinedTarget({proposal:{database:'synthetic_fresh35_20261105_r9',owner:'fresh35_owner_20261105_r9',controller:'fresh35_controller_20261105_r9',runtime:'fresh35_runtime_20261105_r9',admin:'fresh35_admin_20261105_r9',host:'127.0.0.1',port:57639,workspaceDirectory:'/tmp/cloud-pg-fresh35-20261105-r9'},physical:{systemIdentifier:'7703999999999999999',databaseOid:'16384',serverVersionNum:'170011',postmasterStart:'2026-11-05 03:00:00.123456+00'},startsAt,expiresAt:startsAt+1200000},startsAt);
+let cached;const bundle=()=>cached??=(async()=>{const source=await loadFresh35CombinedSource(root,{baselineDirectory:base}),catalog=await buildFresh35CombinedCatalog(source,target,{modelPath,functionsPath}),program=await compileFresh35CombinedProgram({source,target,catalog});return {source,catalog,program}})();
+test('current source closure separately records old180 and the later application/installer changes',async()=>{
+ const {source}=await bundle(),d=describeFresh35CombinedSource(source);assert.equal(d.capturedSourcePins.length,180);assert.ok(d.currentSourcePins.length>=198);assert.equal(d.capturedEvidenceAppliesToCurrentChanges,false);
+ for(const path of ['unified-historical-sales-hall-evidence.ts','unified-import-source-reconciliation.ts','unified-current-effective-alignment.ts','unified-historical-line-amount-evidence.ts','historical-sales-hall-evidence.ts'])assert.ok(d.currentSourcePins.some(p=>p.path==='packages/application/src/'+path),path);
+ for(const p of d.currentSourceDelta)if(p.predecessorSha256!==null)assert.notEqual(p.predecessorSha256,p.currentSha256);
+ const schema=renderFresh35CombinedSchema(source,describeFresh35CombinedTarget(target).proposal);assert.match(schema.schemaSql,/fresh35_owner_20261105_r9/);assert.doesNotMatch(schema.schemaSql,/fresh35_owner_20261105_r1/);assert.equal((schema.schemaSql.match(/^CREATE TABLE /gm)||[]).length,35);assert.doesNotMatch(schema.schemaSql,/CREATE TABLE "naijue_erp"\."history_sales_header"/);assert.equal(schema.patchBodies.length,2);
+});
+test('full successor model changes only five routine bodies and sales hall nullability',async()=>{
+ const {source,catalog}=await bundle(),d=describeFresh35CombinedCatalog(catalog),sql=fresh35CombinedCatalogSql(catalog,source,target);
+ const model=JSON.parse(sql.guardSql.split('$combined_model$')[1]),before=JSON.parse(await readFile(modelPath,'utf8'));
+ assert.equal(d.changes.length,6);assert.equal(new Set(d.changes.map(r=>r.signature)).size,5);assert.equal(model.routines.length,152);
+ assert.equal(model.routines.filter(r=>r.definitionSha256!==before.routines.find(b=>b.signature===r.signature).definitionSha256).length,5);
+ const columns=model.columns.map(c=>({...c}));for(const c of columns){const old=before.columns.find(o=>o.table===c.table&&o.name===c.name);if(c.table==='sales_header'&&c.name==='hall_id'){assert.equal(old.notNull,true);assert.equal(c.notNull,false);assert.equal(c.metadata.attnotnull,false)}else assert.deepEqual(c,old)}
+ for(const key of ['constraints','indexes','triggers','policies'])assert.deepEqual(model[key],before[key],key);
+ assert.deepEqual(model.columnAcls,before.columnAcls.map(row=>({...row,acl:row.acl?.map(acl=>acl.replace('/fresh35_owner_20261105_r1','/fresh35_owner_20261105_r9'))??null})),'column privileges stay exact; only the explicit grantor identity changes');
+ assert.ok(model.routines.every(r=>/^[a-f0-9]{64}$/.test(r.bodySha256)));assert.equal(d.independentSafetyReviewComplete,false);assert.equal(d.sqlParsedByPostgres,false);assert.equal(d.engineVerified,false);
+});
+test('new catalog guards every category plus raw type templates and real dependency boundaries',async()=>{
+ const {source,catalog}=await bundle(),{guardSql,observationSql}=fresh35CombinedCatalogSql(catalog,source,target);
+ for(const token of ['DEFAULTACLS_DIFFER','RELATIONS_DIFFER','COLUMNACLS_DIFFER','CONSTRAINTS_DIFFER','INDEXES_DIFFER','TRIGGERS_DIFFER','TABLES_DIFFER','COLUMNS_DIFFER','SEQUENCES_DIFFER','POLICIES_DIFFER','ROWTYPES_DIFFER','RAW_ROWTYPE_TEMPLATE_DIFFERS','EXTERNAL_DEPENDENCY','EXACT_LINEAGE_DIFFERS','BUSINESS_TABLE_NOT_EMPTY'])assert.ok(guardSql.includes(token),token);
+ assert.match(guardSql,/to_jsonb\(t\)-ARRAY\['oid','typname','typnamespace','typowner','typrelid','typarray'\]/);assert.match(guardSql,/'pg_catalog.pg_class'::regtype/);assert.match(observationSql,/'sharedDependencies'/);assert.match(observationSql,/to_jsonb\(r\)-'rolpassword'/);
+ assert.doesNotMatch(guardSql,/FRESH35_V2_GUARD_REVIEW_NOT_AUTHORIZED/);assert.match(await readFile(root+'scripts/release/unified-install/fresh35-catalog-v2-guard-review.mjs','utf8'),/RAISE EXCEPTION 'FRESH35_V2_GUARD_REVIEW_NOT_AUTHORIZED'/);
+});
+test('program is one atomic application transaction and contains no provisioning or legacy tables',async()=>{
+ const {program}=await bundle(),d=describeFresh35CombinedProgram(program);assert.equal(d.applicationTransactions,1);assert.deepEqual(d.statements.map(s=>s.name),['physical-empty-target','direct-35-schema','migration-lineage','historical-sales-hall','historical-line-amount','complete-successor-catalog','same-physical-target']);
+ for(const flag of ['createsCluster','createsRoles','createsCredentials','oldTablesRemoved','hostEnabled'])assert.equal(d[flag],false);
+});
+test('valid authorization data cannot issue a trusted execution token',async()=>{
+ const {program}=await bundle(),d=describeFresh35CombinedProgram(program),value={format:'FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1',decision:'AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY',programSha256:d.programSha256,sourceSetSha256:d.sourceSetSha256,targetSha256:d.targetSha256,startsAt,expiresAt:startsAt+1200000,independentSafetyReviewSha256:'a'.repeat(64),authorizationReference:'TEST DATA ONLY; NOT AN ACTUAL AUTHORIZATION'};
+ const parsed=validateFresh35CombinedAuthorization(value,program);await assert.rejects(()=>runFresh35CombinedInstall({program,authorization:parsed,client:{},journalDirectory:'/tmp/never-created'}),/GENUINE_UNUSED_TRUSTED_AUTHORIZATION/);
+ assert.throws(()=>validateFresh35CombinedAuthorization({...value,programSha256:'b'.repeat(64)},program),/BINDING/);
+ assert.throws(()=>validateFresh35CombinedAuthorization({...value,approved:true},program),/OWN_DATA/);
+});
+test('cloned catalog and invented actual observations cannot open the record or host',async()=>{
+ const {source,catalog}=await bundle();assert.throws(()=>fresh35CombinedCatalogSql({...catalog},source,target),/GENUINE_CATALOG/);assert.throws(()=>validateFresh35CombinedCatalogObservation('{}',catalog,source,target),/PHYSICAL_IDENTITY/);
+});

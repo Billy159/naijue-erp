@@ -1,0 +1,95 @@
+{
+  "atUtc": "2026-10-23T21:57:43.646506+00:00",
+  "parent": "3bb5f6958296073551ce672bf64fa0631711d214",
+  "taskId": "F01_I07_EXISTING_OVERLAY_HEADER_CLOSE_SEAM",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-overlay.tsx",
+      "bytes": 9069,
+      "sha256": "1652044e456d5a7eae992ce3148fd23dd024ab9e1bc5a65d4bc7b0c163b9ac06",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/components/standard-overlay.css",
+      "bytes": 9087,
+      "sha256": "98bfc12e982c089f4d4769fbd5229be8cc790a59ecaaa65dcf46d5350efc58da",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-113/DELIVERY.json",
+  "ownerReceiptSha256": "28efa1cfee71f913ba31d193486dc86cfa0b75b65ff7497b7e9c47b885feaef3",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh; Fast not verified",
+    "finding": "Original QF2-I07-CARRIER-INSET-01 common overlay close placement seam",
+    "status": "SOURCE_READY_OPTIONAL_HEADER_CLOSE_DEFAULT_UNCHANGED_LOCAL_ONLY",
+    "files": [
+      {
+        "path": "apps/web/src/components/standard-overlay.tsx",
+        "bytes": 9069,
+        "sha256": "1652044e456d5a7eae992ce3148fd23dd024ab9e1bc5a65d4bc7b0c163b9ac06"
+      },
+      {
+        "path": "apps/web/src/components/standard-overlay.css",
+        "bytes": 9087,
+        "sha256": "98bfc12e982c089f4d4769fbd5229be8cc790a59ecaaa65dcf46d5350efc58da"
+      }
+    ],
+    "api": {
+      "component": "StandardOverlay",
+      "prop": "closePlacement?: 'content' | 'header'",
+      "default": "omitted or content: original title, existing close at start of content, original root class and events",
+      "optIn": {
+        "example": "<StandardOverlay closePlacement=\"header\" ... />",
+        "rootClass": "erp-overlay-close-in-header",
+        "titleRowClass": "erp-overlay-title-row",
+        "sameClose": "Same existing UIButton with data-erp-overlay-close/label/onClick=original wrapped close; not rendered in content",
+        "flow": "Title row flex, width100%, space-between; its same close becomes static flex item. No size/height/padding constant added."
+      },
+      "consumerBoundary": "F2 owns I07 explicit optin, source30px close and auto header height/outer border/font. Existing shared close/ready/focus/Esc/returnFocus/dismiss state untouched. No C contracts/config changes.",
+      "source112Unchanged": true
+    },
+    "checks": {
+      "before-1": "Harness looked for aria-label on .erp-overlay inner class rather than native Arco role carrier; selector corrected only. Not production RED.",
+      "before-2": "RED original source: both default modal/drawer checks pass, but header optin ignored so sole close stays outside header.",
+      "after-1": "PASS original installed Arco StandardOverlay modal/drawer default and header optin (4 scenarios), one close only, expected parent and static flex optin, original native role/aria/ready, initial close focus, first/last Tab boundaries, callback once, keyboard Escape for optin, opener focus restore and no post-teardown ready work in bounded local wait.",
+      "types-1": "PASS standard-overlay.tsx full strict imported closure with explicit existing typeRoots, no exclusions.",
+      "css": "All original CSS unchanged byte-for-byte after removing exactly2 new optin-only rules. No output dimensions asserted."
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-113/API.json",
+        "bytes": 904,
+        "sha256": "774ea3f84f92e49bd1551e6e6fd2ac082e4e2b8a64065098b9b0de8b9c8021fd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-113/REPORT.md",
+        "bytes": 1314,
+        "sha256": "1d71e43e6e16f3a222f023229e3436e5f1cfec4d5bdb4cb3d5cd879f06c848e8"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-113/RESULT.json",
+        "bytes": 826,
+        "sha256": "071501ad3642e0da3d85bef481b55e5fc0fbcdc47178215b9d9b582c82ef2f2b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-113/CHECKS.json",
+        "bytes": 917,
+        "sha256": "d43b647601373bdfa2b86ff527a510d7624eb06d5aac49d9290cbc267ce92b87"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-113/SOURCE.diff",
+        "bytes": 3756,
+        "sha256": "64b59f5d10e318e3c07482c6d1ae73df3b0d7ae2e47f035ccc550250f03b2bdc"
+      }
+    ],
+    "limitations": [
+      "Actual I07 30px/header geometry/border/font and explicit ledger consumer optin are F2 source; F1 did not crosswrite.",
+      "Local JSDOM native keyboard/focus tests are not Chrome or actual consumer acceptance.",
+      "No whole common suite, old passed findings/48, browser/service/build/PG/Git/C records.",
+      "Original112 mode2 already frozen independently, no hash change from this work."
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "Optional closePlacement header reuses same ready/focus/aria/Escape control; default content unchanged. No fixedheight/size or F2consumer change; independentQA and realconsumer pending."
+}

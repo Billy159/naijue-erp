@@ -1,0 +1,1075 @@
+diff --git a/adapters/postgres/src/inventory-query-reader.ts b/adapters/postgres/src/inventory-query-reader.ts
+index 31aeeca..4d415b8 100644
+--- a/adapters/postgres/src/inventory-query-reader.ts
++++ b/adapters/postgres/src/inventory-query-reader.ts
+@@ -61,10 +61,10 @@ function quantities(sizes: readonly InventorySelection[], groups: readonly { rea
+ function checkedParameters(value: InventoryQuery): InventoryQuery {
+   // Reuse the public parser's ID, uniqueness, pagination and selection bounds without accepting labels as facts.
+   const input = record(value, ["filter", "page", "pageSize"]);
+-  const filter = record(input.filter, ["productIds", "categoryId", "warehouseIds", "supplierIds", "fitIds", "seasonIds"]);
++  const filter = record(input.filter, ["productIds", "categoryIds", "warehouseIds", "supplierIds", "fitIds", "seasonIds"]);
+   const selections = (value: unknown) => Array.isArray(value) ? value.map(id => ({ id, label: "native-id" })) : value;
+   return parseInventoryQuery({ page: input.page, pageSize: input.pageSize, filter: {
+-    products: selections(filter.productIds), category: filter.categoryId === null ? null : { id: filter.categoryId, label: "native-id" },
++    products: selections(filter.productIds), categories: selections(filter.categoryIds),
+     warehouses: selections(filter.warehouseIds), suppliers: selections(filter.supplierIds), fits: selections(filter.fitIds), seasons: selections(filter.seasonIds)
+   } });
+ }
+@@ -121,8 +121,8 @@ const CATALOG = `WITH published_scope AS (
+   SELECT w.id FROM naijue_erp.warehouse w WHERE w.id = ANY($1::uuid[]) AND w.hall_id = ANY($2::uuid[]) AND EXISTS (SELECT 1 FROM published_scope)
+ ), matched_products AS (
+   SELECT p.id, p.size_group_id FROM naijue_erp.product p WHERE EXISTS (SELECT 1 FROM authorized_warehouses)
+-    AND (cardinality($3::uuid[]) = 0 OR p.id = ANY($3::uuid[])) AND ($4::uuid IS NULL OR p.category_id = $4::uuid OR EXISTS (
+-      SELECT 1 FROM naijue_erp.product_category category WHERE category.id = p.category_id AND category.parent_id = $4::uuid))
++    AND (cardinality($3::uuid[]) = 0 OR p.id = ANY($3::uuid[])) AND (cardinality($4::uuid[]) = 0 OR p.category_id = ANY($4::uuid[]) OR EXISTS (
++      SELECT 1 FROM naijue_erp.product_category category WHERE category.id = p.category_id AND category.parent_id = ANY($4::uuid[])))
+     AND (cardinality($5::uuid[]) = 0 OR p.supplier_id = ANY($5::uuid[]))
+     AND (cardinality($7::uuid[]) = 0 OR p.season_id = ANY($7::uuid[]))
+     AND (cardinality($6::uuid[]) = 0 OR EXISTS (SELECT 1 FROM naijue_erp.sku sf WHERE sf.product_id = p.id AND sf.fit_id = ANY($6::uuid[])))
+@@ -131,7 +131,7 @@ const CATALOG = `WITH published_scope AS (
+     WHERE cardinality($6::uuid[]) = 0 OR s.fit_id = ANY($6::uuid[])
+ )`;
+ function parameters(scope: InventoryReadScope, filter: InventoryQuery["filter"], batchId: string): unknown[] {
+-  return [scope.warehouses.map(row => row.id), scope.hallIds, filter.productIds, filter.categoryId, filter.supplierIds, filter.fitIds, filter.seasonIds, batchId];
++  return [scope.warehouses.map(row => row.id), scope.hallIds, filter.productIds, filter.categoryIds, filter.supplierIds, filter.fitIds, filter.seasonIds, batchId];
+ }
+ async function catalogStatus(query: Query, values: unknown[]): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
+   const row = one(await query(`/* inventory:catalog-status */ ${CATALOG}
+@@ -313,7 +313,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
+     if (input.kind === "warehouse") requireDomain(input.selectedIds.every(id => scope.warehouses.some(warehouse => warehouse.id === id)), "FORBIDDEN", "Selected warehouse is outside authorized inventory scope");
+     return this.snapshot(read.signal, async query => {
+       const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId);
+-      const filter: InventoryQuery["filter"] = { productIds: [], categoryId: input.kind === "category" || input.kind === "warehouse" ? null : input.categoryId,
++      const filter: InventoryQuery["filter"] = { productIds: [], categoryIds: input.kind === "category" || input.kind === "warehouse" ? [] : input.categoryIds,
+         warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] };
+       const values = parameters(scope, filter, batchId);
+       const source = candidateSource(input.kind); values.push(input.search);
+@@ -325,7 +325,9 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
+       const items: InventoryQueryCandidate[] = rows.map(row => ({ id: id(input.kind, row.id), label: label(row.label),
+         ...(row.disabled === null ? {} : { disabled: booleanValue(row.disabled) }),
+         ...(row.parent_label === null ? {} : { parentLabel: label(row.parent_label) }),
+-        ...(row.depth === undefined ? {} : { depth: integerValue(row.depth) as 0 | 1 }) }));
++        ...(row.depth === undefined ? {} : { depth: integerValue(row.depth) as 0 | 1 }),
++        ...(input.kind === "product" ? { code: label(row.code), name: label(row.name) } : {}),
++        ...(input.kind === "category" ? { parentId: row.parent_id === null ? null : id("category", row.parent_id) } : {}) }));
+       await verifyCandidateMembership(query, values.slice(0, 8), input.kind, items.map(item => item.id));
+       return checkedCandidateSnapshot({ readReference: `inventory:${randomUUID()}`, readiness: "ready", data: { items, exactTotal, page: input.page } }, input, scope);
+     });
+@@ -336,9 +338,9 @@ function candidateSource(kind: InventoryCandidateQuery["kind"]): CandidateSource
+   switch (kind) {
+     case "warehouse": return { columns: "r.id, r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.warehouse r JOIN authorized_warehouses w ON w.id = r.id",
+       where: "strpos(r.name, $9::text) > 0", order: "array_position($1::uuid[], r.id), r.id" };
+-    case "product": return { columns: "r.id, r.product_code || ' ' || r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.product r JOIN matched_products p ON p.id = r.id",
+-      where: "(strpos(r.product_code, $9::text) > 0 OR strpos(r.name, $9::text) > 0)", order: 'r.product_code COLLATE "C", r.id' };
+-    case "category": return { columns: "r.id, r.name AS label, NULL::boolean AS disabled, parent.name AS parent_label, CASE WHEN r.parent_id IS NULL THEN 0 ELSE 1 END AS depth, (r.parent_id IS NULL OR (parent.id IS NOT NULL AND parent.parent_id IS NULL)) AS category_valid", from: "FROM naijue_erp.product_category r LEFT JOIN naijue_erp.product_category parent ON parent.id = r.parent_id",
++    case "product": return { columns: "r.id, r.product_code || ' ' || r.name AS label, r.product_code AS code, r.name, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.product r JOIN matched_products p ON p.id = r.id",
++      where: "(strpos(r.product_code, $9::text) > 0 OR strpos(r.name, $9::text) > 0 OR strpos(r.system_item_code, $9::text) > 0)", order: 'r.product_code COLLATE "C", r.id' };
++    case "category": return { columns: "r.id, r.name AS label, r.parent_id, NULL::boolean AS disabled, parent.name AS parent_label, CASE WHEN r.parent_id IS NULL THEN 0 ELSE 1 END AS depth, (r.parent_id IS NULL OR (parent.id IS NOT NULL AND parent.parent_id IS NULL)) AS category_valid", from: "FROM naijue_erp.product_category r LEFT JOIN naijue_erp.product_category parent ON parent.id = r.parent_id",
+       where: "EXISTS (SELECT 1 FROM authorized_warehouses) AND strpos(r.name, $9::text) > 0", order: 'r.display_order, r.name COLLATE "C", r.id' };
+     case "fit": return { columns: "r.id, r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.fit r",
+       where: "EXISTS (SELECT 1 FROM filtered_skus s WHERE s.fit_id = r.id) AND (strpos(r.code, $9::text) > 0 OR strpos(r.name, $9::text) > 0)", order: 'r.code COLLATE "C", r.id' };
+diff --git a/adapters/postgres/src/product-query-reader.ts b/adapters/postgres/src/product-query-reader.ts
+index f45505b..0a6cf41 100644
+--- a/adapters/postgres/src/product-query-reader.ts
++++ b/adapters/postgres/src/product-query-reader.ts
+@@ -23,6 +23,11 @@ function text(value: unknown): string {
+   const result = stringValue(value); requireDomain(result.trim().length > 0, "INVALID_DATABASE_VALUE", "Missing persisted product label"); return result;
+ }
+ function optionalText(value: unknown): string | null { const result = nullableString(value); return result === null ? null : text(result); }
++function retailPrice(value: unknown): string | null {
++  if (value === null) return null;
++  requireDomain(typeof value === "string" && /^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value), "INVALID_DATABASE_VALUE", "Invalid exact native retail price");
++  return value;
++}
+ function id(kind: EntityKind, value: unknown): string { return entityId(kind, stringValue(value)); }
+ function oneOrMissing(rows: readonly Record<string, unknown>[]): Record<string, unknown> | null {
+   requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Product target is not unique"); return rows[0] ?? null;
+@@ -77,7 +82,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader
+   async readBasics(read: ProductScopedRead<ProductQuery>): Promise<ProductBasicsDto | null> {
+     const parameters = parseProductQuery(read.parameters); this.validate(read, parameters);
+     return this.snapshot(read.signal, async query => {
+-      const row = oneOrMissing((await query(`SELECT p.id, p.product_code, p.name, p.year, p.system_item_code,
++      const row = oneOrMissing((await query(`SELECT p.id, p.product_code, p.name, p.year, p.system_item_code, p.retail_price::text,
+         c.name AS category_name, se.name AS season_name, su.name AS supplier_name
+         FROM naijue_erp.product p JOIN naijue_erp.product_category c ON c.id = p.category_id
+         LEFT JOIN naijue_erp.season se ON se.id = p.season_id LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
+@@ -86,7 +91,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader
+       requireDomain(id("product", row.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
+       return { productId: parameters.productId, code: text(row.product_code), name: text(row.name), categoryLabel: text(row.category_name),
+         yearLabel: row.year === null ? null : String(integerValue(row.year)), systemCode: optionalText(row.system_item_code),
+-        seasonLabel: optionalText(row.season_name), supplierLabel: optionalText(row.supplier_name) };
++        seasonLabel: optionalText(row.season_name), supplierLabel: optionalText(row.supplier_name), retailPrice: retailPrice(row.retail_price) };
+     });
+   }
+   async readSpecifications(read: ProductScopedRead<ProductQuery>): Promise<ProductSpecificationsDto | null> {
+diff --git a/apps/api/src/postgres-read-api.test.ts b/apps/api/src/postgres-read-api.test.ts
+index d10d4c5..22adecd 100644
+--- a/apps/api/src/postgres-read-api.test.ts
++++ b/apps/api/src/postgres-read-api.test.ts
+@@ -25,7 +25,7 @@ const TOKEN = Buffer.alloc(32, 23).toString("base64url");
+ const PASSWORD = "SYNTHETIC only password";
+ const SALT = Buffer.alloc(16, 19);
+ const HASH = `naijue:scrypt:1:32768:8:1:${SALT.toString("hex")}:${scryptSync(PASSWORD, SALT, 64, { N: 32768, r: 8, p: 1, maxmem: 64 * 1024 * 1024 }).toString("hex")}`;
+-const inventoryInput = () => ({ filter: { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
++const inventoryInput = () => ({ filter: { products: [], categories: [], warehouses: [], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
+ const salesInput = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null }, page: 1, pageSize: 20 });
+ const transferInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [], toWarehouseIds: [], number: null }, page: 1, pageSize: 20 });
+ const warehouse = { id: ids.warehouse, hallId: ids.hall, label: "SYNTHETIC warehouse" };
+@@ -168,7 +168,7 @@ test("SYNTHETIC native profile: one lazy pool creates genuine read policies and
+   for (const [url, payload, status] of [
+     ["/sales/query", salesInput(), 200], ["/transfers/query", transferInput(), 200],
+     ["/products/basics/query", { productId: sid("product", 130) }, 200], ["/inventory/query", inventoryInput(), 503],
+-    ["/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null }, 503],
++    ["/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] }, 503],
+     ["/inventory/ledger/query", { warehouseId: ids.warehouse, skuId: ids.sku, pageSize: 20, after: null }, 404]
+   ] as const) {
+     const response = await f.post(url, payload, { "x-role": "ADMIN", "x-hall-id": sid("hall", 131) });
+@@ -287,7 +287,7 @@ test("SYNTHETIC composition: all read families resolve the same current PG sessi
+   const cases = [["/sales/query", salesInput(), 200], ["/transfers/query", transferInput(), 200],
+     ["/products/basics/query", { productId }, 200], ["/products/specifications/query", { productId }, 200], ["/products/images/query", { productId }, 200],
+     ["/products/image/query", { productId, imageId: sid("operation", 122) }, 404], ["/inventory/query", inventoryInput(), 503],
+-    ["/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null }, 503],
++    ["/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] }, 503],
+     ["/inventory/ledger/query", { warehouseId: ids.warehouse, skuId: ids.sku, pageSize: 20, after: null }, 404]] as const;
+   for (const [url, payload, status] of cases) {
+     const response = await f.post(url, payload); assert.equal(response.statusCode, status, `${url}: ${response.body}`);
+diff --git a/apps/api/src/product-query-http.test.ts b/apps/api/src/product-query-http.test.ts
+index 3a6d704..6de0abc 100644
+--- a/apps/api/src/product-query-http.test.ts
++++ b/apps/api/src/product-query-http.test.ts
+@@ -20,7 +20,7 @@ async function setup(t: TestContext, options: { authenticate?: ProductQueryHttpO
+   const check = () => { readCalls++; if (options.failure) throw options.failure; };
+   const image = { id: imageId, productId, fileRef: "SYNTHETIC/private-file-reference", mime: "image/jpeg" as const, byteSize: 123n, displayOrder: 1 };
+   const reader: TrustedProductSnapshotReader = {
+-    async readBasics() { check(); return options.missing ? null : { productId, code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", categoryLabel: "完整分类名称", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null }; },
++    async readBasics() { check(); return options.missing ? null : { productId, code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", categoryLabel: "完整分类名称", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null }; },
+     async readSpecifications() { check(); return options.missing ? null : { productId, sizeGroup: { id: sid("sizeGroup", 903), label: "完整组名" }, colors: [{ id: sid("color", 904), label: "完整颜色名称" }], fits: [{ id: sid("fit", 905), label: "Y版（修身）" }], sizes: [{ id: sid("size", 906), label: "165/S" }], skus: [{ id: sid("sku", 907), colorId: sid("color", 904), fitId: sid("fit", 905), sizeId: sid("size", 906) }] }; },
+     async readImages() { check(); return options.missing ? null : { productId, productName: "SYNTHETIC PRODUCT", images: [image] }; },
+     async readImage() { check(); return options.missing ? null : image; }
+@@ -36,7 +36,7 @@ async function setup(t: TestContext, options: { authenticate?: ProductQueryHttpO
+ }
+ test("SYNTHETIC product HTTP: four DTO-compatible read routes use current trusted policy; thumbnails and originals are separate", async t => {
+   const f = await setup(t); assert.equal(f.app.server.listening, false);
+-  const basics = await f.post(routes[0], parameters); assert.equal(basics.statusCode, 200); assert.equal(basics.json().yearLabel, null); assert.equal(basics.json().systemCode, null);
++  const basics = await f.post(routes[0], parameters); assert.equal(basics.statusCode, 200); assert.equal(basics.json().yearLabel, null); assert.equal(basics.json().systemCode, null); assert.equal(basics.json().retailPrice, null);
+   assert.equal(basics.headers["cache-control"], "no-store"); assert.equal(basics.headers.pragma, "no-cache");
+   const specs = await f.post(routes[1], parameters); assert.equal(specs.statusCode, 200); assert.equal(specs.json().sizes[0].label, "165/S"); assert.equal(specs.json().fits[0].label, "Y版（修身）");
+   const images = await f.post(routes[2], parameters); assert.equal(images.statusCode, 200); assert.equal(images.json().images[0].thumbnailUrl, "https://synthetic.example/opaque-thumbnail");
+diff --git a/apps/web/preview-core-pages/inventory-fixture.ts b/apps/web/preview-core-pages/inventory-fixture.ts
+index 62b74d8..7773f01 100644
+--- a/apps/web/preview-core-pages/inventory-fixture.ts
++++ b/apps/web/preview-core-pages/inventory-fixture.ts
+@@ -22,13 +22,13 @@ export function createInventoryFixture(report: ReportRead): InventoryReader {
+     async readInventory(read) {
+       await syntheticRead(read.signal, report, 'inventory');
+       const { filter, page, pageSize } = read.parameters;
+-      const visible = matches(filter.products, { id: product.id, label: `${product.code} ${product.name}` }) && (!filter.category || filter.category.id === category.id) && matches(filter.suppliers, supplier) && matches(filter.seasons, season) && (filter.fits.length === 0 || fits.some(fit => matches(filter.fits, fit))) && (filter.warehouses.length === 0 || warehouses.some(warehouse => matches(filter.warehouses, warehouse)));
++      const visible = matches(filter.products, { id: product.id, label: `${product.code} ${product.name}` }) && matches(filter.categories, category) && matches(filter.suppliers, supplier) && matches(filter.seasons, season) && (filter.fits.length === 0 || fits.some(fit => matches(filter.fits, fit))) && (filter.warehouses.length === 0 || warehouses.some(warehouse => matches(filter.warehouses, warehouse)));
+       const item = syntheticProduct(filter);
+       return { page, pageSize, exactTotalProducts: visible ? 1 : 0, products: visible && page === 1 ? [item] : [], warehouseLabels: warehouses.filter(warehouse => matches(filter.warehouses, warehouse)).map(warehouse => warehouse.label), allMatchesTotal: visible ? item.total : total([]), readReference: `SYNTHETIC-ONLY-COMPLETE-${account}` };
+     },
+     async readCandidates(read) {
+       await syntheticRead(read.signal, report, 'inventoryCandidates');
+-      const options: Record<CandidateKind, readonly Candidate[]> = { product: [{ id: product.id, label: `${product.code} ${product.name}` }], category: [{ ...category, depth: 0 }], warehouse: warehouses, supplier: [supplier], fit: fits, season: [season] };
++      const options: Record<CandidateKind, readonly Candidate[]> = { product: [{ id: product.id, label: `${product.code} ${product.name}`, code: product.code, name: product.name }], category: [{ ...category, depth: 0, parentId: null }], warehouse: warehouses, supplier: [supplier], fit: fits, season: [season] };
+       const matching = options[read.parameters.kind].filter(item => item.label.toLowerCase().includes(read.parameters.search.toLowerCase()));
+       return { page: read.parameters.page, exactTotal: matching.length, items: matching.slice((read.parameters.page - 1) * 20, read.parameters.page * 20) };
+     },
+diff --git a/apps/web/preview-core-pages/product-fixture.ts b/apps/web/preview-core-pages/product-fixture.ts
+index 9983914..1734782 100644
+--- a/apps/web/preview-core-pages/product-fixture.ts
++++ b/apps/web/preview-core-pages/product-fixture.ts
+@@ -5,7 +5,7 @@ import { color, fits, product, season, sizes, sizeGroup, sku, supplier, syntheti
+ export function createProductFixture(report: ReportRead): ProductReadOnlyReader {
+   const check = (id: string) => { if (id !== product.id) throw new Error('SYNTHETIC ONLY：商品不在合成夹具范围。'); };
+   return {
+-    async readProductBasics(read) { check(read.parameters.productId); await syntheticRead(read.signal, report, 'productBasics'); return { productId: product.id, code: product.code, name: product.name, categoryLabel: '合成测试服装', yearLabel: '2026（合成测试）', seasonLabel: season.label, supplierLabel: supplier.label, systemCode: 'SYNTHETIC-ONLY-SYSTEM-001' }; },
++    async readProductBasics(read) { check(read.parameters.productId); await syntheticRead(read.signal, report, 'productBasics'); return { productId: product.id, code: product.code, name: product.name, categoryLabel: '合成测试服装', yearLabel: '2026（合成测试）', seasonLabel: season.label, supplierLabel: supplier.label, systemCode: 'SYNTHETIC-ONLY-SYSTEM-001', retailPrice: null }; },
+     async readProductSpecifications(read) { check(read.parameters.productId); await syntheticRead(read.signal, report, 'productSpecifications'); return { productId: product.id, sizeGroup, colors: [color], fits, sizes, skus: fits.flatMap((fit, fitIndex) => sizes.slice(0, 3).map((size, sizeIndex) => ({ id: sku(fitIndex, sizeIndex), colorId: color.id, fitId: fit.id, sizeId: size.id }))) }; },
+     async readProductImages(read) { check(read.parameters.productId); await syntheticRead(read.signal, report, 'productImages'); return { productId: product.id, images: [] }; },
+     async readProductImage(read) { check(read.parameters.productId); await syntheticRead(read.signal, report, 'productOriginal'); throw new Error('SYNTHETIC ONLY：本预览没有商品图片或原图。'); },
+diff --git a/apps/web/preview/synthetic-product-reader.ts b/apps/web/preview/synthetic-product-reader.ts
+index 5cffa29..d2ebaa1 100644
+--- a/apps/web/preview/synthetic-product-reader.ts
++++ b/apps/web/preview/synthetic-product-reader.ts
+@@ -36,7 +36,7 @@ export function createSyntheticProductReader(options: { readonly delayMs?: numbe
+     failNext(kind) { failure = kind; },
+     async readProductBasics(read): Promise<ProductBasics> {
+       const index = await prepare('base', read);
+-      return { productId: read.parameters.productId, code: `TEST-${String(index).padStart(3, '0')}`, name: `测试上衣${index}`, categoryLabel: '测试服装 / 测试上衣', yearLabel: '2026（测试）', seasonLabel: index % 2 ? '测试春季' : '测试秋季', supplierLabel: index % 2 ? '测试供应商甲' : '测试供应商乙', systemCode: `TEST-SYSTEM-${index}` };
++      return { productId: read.parameters.productId, code: `TEST-${String(index).padStart(3, '0')}`, name: `测试上衣${index}`, categoryLabel: '测试服装 / 测试上衣', yearLabel: '2026（测试）', seasonLabel: index % 2 ? '测试春季' : '测试秋季', supplierLabel: index % 2 ? '测试供应商甲' : '测试供应商乙', systemCode: `TEST-SYSTEM-${index}`, retailPrice: null };
+     },
+     async readProductSpecifications(read): Promise<ProductSpecifications> {
+       const index = await prepare('specs', read);
+diff --git a/apps/web/preview/synthetic-reader.ts b/apps/web/preview/synthetic-reader.ts
+index 726f775..4555ffb 100644
+--- a/apps/web/preview/synthetic-reader.ts
++++ b/apps/web/preview/synthetic-reader.ts
+@@ -11,10 +11,10 @@ const fits: readonly Selection[] = [
+ ];
+ const warehouses: readonly Selection[] = [{ id: 'test-warehouse-main', label: '测试总仓' }, { id: 'test-warehouse-store', label: '测试门店仓' }];
+ const colors: readonly Selection[] = [{ id: 'test-color-blue', label: '测试蓝' }, { id: 'test-color-gray', label: '测试灰' }];
+-const categories: readonly Candidate[] = [{ id: 'test-category-clothing', label: '测试服装', depth: 0 }, { id: 'test-category-top', label: '测试上衣', depth: 1, parentLabel: '测试服装' }];
++const categories: readonly Candidate[] = [{ id: 'test-category-clothing', label: '测试服装', depth: 0, parentId: null }, { id: 'test-category-top', label: '测试上衣', depth: 1, parentId: 'test-category-clothing', parentLabel: '测试服装' }];
+ const suppliers = [{ id: 'test-supplier-1', label: '测试供应商甲' }, { id: 'test-supplier-2', label: '测试供应商乙' }];
+ const seasons = [{ id: 'test-season-spring', label: '测试春季' }, { id: 'test-season-autumn', label: '测试秋季' }];
+-const productSelection = (index: number): Selection => ({ id: `test-product-${index}`, label: `TEST-${String(index).padStart(3, '0')} 测试上衣${index}` });
++const productSelection = (index: number): Candidate => ({ id: `test-product-${index}`, label: `TEST-${String(index).padStart(3, '0')} 测试上衣${index}`, code: `TEST-${String(index).padStart(3, '0')}`, name: `测试上衣${index}` });
+ const selectionMatches = (selected: readonly Selection[], value: Selection): boolean => !selected.length || selected.some(item => item.id === value.id);
+ function sumTotals(values: readonly StockTotal[]): StockTotal {
+   return { knownQuantity: String(values.reduce((sum, value) => sum + BigInt(value.knownQuantity), 0n)), unknownCells: 0, completeness: 'complete' };
+@@ -60,7 +60,7 @@ export function makeSyntheticInventoryProduct(index: number, filter: InventoryFi
+ }
+ function matches(index: number, filter: InventoryFilter): boolean {
+   return selectionMatches(filter.products, productSelection(index))
+-    && (!filter.category || categories.some(value => value.id === filter.category?.id))
++    && (!filter.categories.length || categories.some(value => filter.categories.some(selected => selected.id === value.id)))
+     && selectionMatches(filter.suppliers, suppliers[(index - 1) % 2]!)
+     && selectionMatches(filter.seasons, seasons[(index - 1) % 2]!)
+     && (!filter.fits.length || fits.slice(0, index === 1 ? 2 : 1).some(fit => selectionMatches(filter.fits, fit)))
+diff --git a/apps/web/src/application/tests/run-transfer-dom-tests.mjs b/apps/web/src/application/tests/run-transfer-dom-tests.mjs
+index d7ccb44..70f2f95 100644
+--- a/apps/web/src/application/tests/run-transfer-dom-tests.mjs
++++ b/apps/web/src/application/tests/run-transfer-dom-tests.mjs
+@@ -51,7 +51,7 @@ try {
+       return json(result);
+     }
+     if (url.endsWith('/transfers/warehouses/query')) return json({ page: body.page, pageSize: body.pageSize, exactTotal: '1', items: [warehouse()] });
+-    if (url.endsWith('/products/basics/query')) return json({ productId: body.productId, code: 'SYNTHETIC-PRODUCT', name: 'SYNTHETIC PRODUCT DETAIL', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
++    if (url.endsWith('/products/basics/query')) return json({ productId: body.productId, code: 'SYNTHETIC-PRODUCT', name: 'SYNTHETIC PRODUCT DETAIL', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
+     throw new Error('Unexpected synthetic endpoint');
+   } };
+   const count = suffix => calls.filter(call => call.url.endsWith(suffix)).length;
+diff --git a/apps/web/src/development-host/tests/run-dom-tests.mjs b/apps/web/src/development-host/tests/run-dom-tests.mjs
+index 0bca426..24ad526 100644
+--- a/apps/web/src/development-host/tests/run-dom-tests.mjs
++++ b/apps/web/src/development-host/tests/run-dom-tests.mjs
+@@ -45,7 +45,7 @@ try {
+       return json({ page: body.page, pageSize: body.pageSize, exactTotal: '1', items: [summary()] });
+     }
+     if (url.endsWith('/transfers/detail/query')) return json(detail());
+-    if (url.endsWith('/products/basics/query')) return json({ productId: body.productId, code: 'SYNTHETIC-PRODUCT', name: 'SYNTHETIC SHARED PRODUCT', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
++    if (url.endsWith('/products/basics/query')) return json({ productId: body.productId, code: 'SYNTHETIC-PRODUCT', name: 'SYNTHETIC SHARED PRODUCT', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
+     throw new Error('Unexpected synthetic endpoint');
+   };
+   const environment = { document, location: dom.window.location, fetch };
+diff --git a/apps/web/src/inventory/contracts.ts b/apps/web/src/inventory/contracts.ts
+index 112ca9b..19a6d31 100644
+--- a/apps/web/src/inventory/contracts.ts
++++ b/apps/web/src/inventory/contracts.ts
+@@ -8,7 +8,7 @@ export type CandidateKind = 'product' | 'category' | 'warehouse' | 'supplier' |
+ export interface Selection { readonly id: string; readonly label: string }
+ export interface InventoryFilter {
+   readonly products: readonly Selection[];
+-  readonly category: Selection | null;
++  readonly categories: readonly Selection[];
+   readonly warehouses: readonly Selection[];
+   readonly suppliers: readonly Selection[];
+   readonly fits: readonly Selection[];
+@@ -25,9 +25,14 @@ export interface CandidateParameters {
+   readonly page: number;
+   readonly pageSize: 20;
+   readonly selectedIds: readonly string[];
+-  readonly categoryId: string | null;
++  readonly categoryIds: readonly string[];
+ }
+ export interface Candidate extends Selection {
++  /** Required on product candidates; source code/name are not derived from label. */
++  readonly code?: string;
++  readonly name?: string;
++  /** Required on category candidates; null is an actual root. */
++  readonly parentId?: string | null;
+   readonly disabled?: boolean;
+   readonly parentLabel?: string;
+   readonly depth?: 0 | 1;
+@@ -103,5 +108,5 @@ export interface InventoryActions {
+   readonly onViewProduct?: (product: Selection) => void;
+ }
+ export function emptyInventoryFilter(): InventoryFilter {
+-  return { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] };
++  return { products: [], categories: [], warehouses: [], suppliers: [], fits: [], seasons: [] };
+ }
+diff --git a/apps/web/src/inventory/model.test.ts b/apps/web/src/inventory/model.test.ts
+index 5e1c0be..14c8445 100644
+--- a/apps/web/src/inventory/model.test.ts
++++ b/apps/web/src/inventory/model.test.ts
+@@ -69,7 +69,7 @@ test('identity replacement clears inventory references and stops future scope re
+ });
+ test('candidate fixture is paged and independent from inventory reads', async () => {
+   const s = setup(103);
+-  const result = await s.reader.readCandidates({ parameters: { kind: 'product', search: '', page: 1, pageSize: 20, selectedIds: ['test-product-103'], categoryId: null }, signal: s.scope.signal, identity: s.scope.identity, routeInstanceId: s.scope.routeInstanceId, entityId: null });
++  const result = await s.reader.readCandidates({ parameters: { kind: 'product', search: '', page: 1, pageSize: 20, selectedIds: ['test-product-103'], categoryIds: [] }, signal: s.scope.signal, identity: s.scope.identity, routeInstanceId: s.scope.routeInstanceId, entityId: null });
+   assert.equal(result.items.length, 20); assert.equal(result.exactTotal, 103); assert.deepEqual(s.reads, ['product']); assert.equal(s.query.getSnapshot().phase, 'idle'); s.context.clear();
+ });
+ 
+diff --git a/apps/web/src/inventory/product-contracts.ts b/apps/web/src/inventory/product-contracts.ts
+index a075520..f706037 100644
+--- a/apps/web/src/inventory/product-contracts.ts
++++ b/apps/web/src/inventory/product-contracts.ts
+@@ -12,6 +12,8 @@ export interface ProductBasics {
+   readonly seasonLabel: string | null;
+   readonly supplierLabel: string | null;
+   readonly systemCode: string | null;
++  /** Exact decimal(18,2) source text. Null means unavailable, never zero. */
++  readonly retailPrice: string | null;
+ }
+ export interface ProductSku {
+   readonly id: string;
+diff --git a/apps/web/src/inventory/product-model.test.ts b/apps/web/src/inventory/product-model.test.ts
+index eb9cf70..a782c37 100644
+--- a/apps/web/src/inventory/product-model.test.ts
++++ b/apps/web/src/inventory/product-model.test.ts
+@@ -7,7 +7,7 @@ import type { ProductBasics, ProductSpecifications } from './product-contracts.t
+ 
+ const identity = { accountId: 'SYNTHETIC-PRODUCT', sessionRevision: '1', permissionRevision: '1' };
+ const parameters = { productId: 'test-product-1' };
+-const basics: ProductBasics = { productId: parameters.productId, code: 'TEST-001', name: '测试上衣1', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null };
++const basics: ProductBasics = { productId: parameters.productId, code: 'TEST-001', name: '测试上衣1', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null };
+ const specs: ProductSpecifications = { productId: parameters.productId, sizeGroup: { id: 'test-group', label: '测试上衣' }, colors: [{ id: 'test-blue', label: '测试蓝' }], fits: [{ id: 'test-Y', label: 'Y版（修身）' }, { id: 'test-A', label: 'A版（标准）' }], sizes: [{ id: 'test-size', label: '165/S' }], skus: [{ id: 'test-sku-Y', colorId: 'test-blue', fitId: 'test-Y', sizeId: 'test-size' }, { id: 'test-sku-A', colorId: 'test-blue', fitId: 'test-A', sizeId: 'test-size' }] };
+ 
+ test('product DTOs validate target identity and preserve same-color/size different FIT legal SKUs', () => {
+diff --git a/apps/web/src/inventory/product-model.ts b/apps/web/src/inventory/product-model.ts
+index 1ceb4e1..6f1c247 100644
+--- a/apps/web/src/inventory/product-model.ts
++++ b/apps/web/src/inventory/product-model.ts
+@@ -21,6 +21,7 @@ function selections(values: readonly Selection[]): Set<string> {
+ export function assertProductBasics(value: ProductBasics | null, parameters: Readonly<ProductParameters>): void {
+   if (value === null) return;
+   target(value.productId, parameters); text(value.code); text(value.name);
++  if (value.retailPrice !== null && (typeof value.retailPrice !== 'string' || !/^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value.retailPrice))) throw new TypeError('商品零售价必须是精确的非负金额文本。');
+   for (const label of [value.categoryLabel, value.yearLabel, value.seasonLabel, value.supplierLabel, value.systemCode]) if (label !== null) text(label);
+ }
+ export function assertProductSpecifications(value: ProductSpecifications | null, parameters: Readonly<ProductParameters>): void {
+diff --git a/apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs b/apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs
+index 107120c..74f4010 100644
+--- a/apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs
++++ b/apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs
+@@ -49,7 +49,7 @@ try {
+   const tab = label => [...host.querySelectorAll('[role=tab]')].find(element => element.textContent === label);
+   const active = kind => requests.findLast(request => request.kind === kind && !request.read.signal.aborted);
+   const waitRead = async (kind, after = 0) => { await until(() => requests.length > after && active(kind), `Expected active ${kind} read`); await settle(); assert.equal(requests.slice(after).filter(request => request.kind === kind).length, 1, `Exactly one ${kind} transport start per actual action, including StrictMode replay`); return active(kind); };
+-  const base = (productId, name) => ({ productId, code: `CODE-${productId}`, name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
++  const base = (productId, name) => ({ productId, code: `CODE-${productId}`, name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
+   const emptySpecs = productId => ({ productId, sizeGroup: null, colors: [], fits: [], sizes: [], skus: [] });
+   const resolve = async (request, value) => { await act(async () => request.resolve(value)); await settle(); };
+   const png = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGOwq/78HwAFUwKs5SlCvgAAAABJRU5ErkJggg==';
+diff --git a/apps/web/src/transfers/tests/run-dom-tests.mjs b/apps/web/src/transfers/tests/run-dom-tests.mjs
+index b46d8c2..72855a7 100644
+--- a/apps/web/src/transfers/tests/run-dom-tests.mjs
++++ b/apps/web/src/transfers/tests/run-dom-tests.mjs
+@@ -89,7 +89,7 @@ try {
+   console.log('PASS DOM 8: adversarial 2,000-row × 200-size native document never materializes a Cartesian grid; visible actual/saved rows and full-size pages stay bounded and complete through paging.');
+   await act(async () => root.unmount()); root = createRoot(host); wide = false;
+   let finishProductStyles; let stylesReady = false; let pendingStyles; const productCalls = [];
+-  const productReader = { readProductBasics: async read => { productCalls.push('basics'); return { productId: read.parameters.productId, code: 'TEST-PRODUCT', name: 'TEST 显式商品资料', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null }; },
++  const productReader = { readProductBasics: async read => { productCalls.push('basics'); return { productId: read.parameters.productId, code: 'TEST-PRODUCT', name: 'TEST 显式商品资料', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null }; },
+     readProductSpecifications: async read => { productCalls.push('specifications'); return { productId: read.parameters.productId, sizeGroup: null, colors: [], fits: [], sizes: [], skus: [] }; },
+     readProductImages: async read => { productCalls.push('images'); return { productId: read.parameters.productId, images: [] }; }, readProductImage: async () => { throw new Error('Unexpected original image read'); } };
+   const product = { reader: productReader, loadStyles: async () => { if (stylesReady) return; if (!pendingStyles) pendingStyles = new Promise(resolve => { finishProductStyles = () => { stylesReady = true; resolve(); }; }); await pendingStyles; } };
+diff --git a/apps/web/src/transport/http-readers.test.ts b/apps/web/src/transport/http-readers.test.ts
+index 0344ed5..4546104 100644
+--- a/apps/web/src/transport/http-readers.test.ts
++++ b/apps/web/src/transport/http-readers.test.ts
+@@ -12,10 +12,10 @@ import { createInventoryHttpReader, createProductHttpReader, HttpQueryError, typ
+ const origin = 'https://erp.example.test';
+ const identity = { accountId: 'TEST-ACCOUNT', sessionRevision: 'TEST-SESSION', permissionRevision: 'TEST-PERMISSION' };
+ const inventoryParameters = (): InventoryParameters => ({ filter: emptyInventoryFilter(), page: 1, pageSize: 100 });
+-const candidateParameters: CandidateParameters = { kind: 'product', search: '完整标签', page: 1, pageSize: 20, selectedIds: [], categoryId: null };
++const candidateParameters: CandidateParameters = { kind: 'product', search: '完整标签', page: 1, pageSize: 20, selectedIds: [], categoryIds: [] };
+ const target = { productId: '00000000-0000-4000-8000-000000000001' };
+ const imageTarget = { ...target, imageId: '00000000-0000-4000-8000-000000000002' };
+-const basics: ProductBasics = { ...target, code: 'TEST-001', name: '测试商品', categoryLabel: null, yearLabel: null, seasonLabel: '原始季节标签', supplierLabel: null, systemCode: null };
++const basics: ProductBasics = { ...target, code: 'TEST-001', name: '测试商品', categoryLabel: null, yearLabel: null, seasonLabel: '原始季节标签', supplierLabel: null, systemCode: null, retailPrice: null };
+ const specs: ProductSpecifications = { ...target, sizeGroup: { id: 'group', label: '上衣' }, colors: [{ id: 'blue', label: '蓝' }],
+   fits: [{ id: 'Y', label: 'Y版（修身）' }, { id: 'A', label: 'A版（标准）' }], sizes: [{ id: 'size', label: '165/S' }],
+   skus: [{ id: 'sku-Y', colorId: 'blue', fitId: 'Y', sizeId: 'size' }, { id: 'sku-A', colorId: 'blue', fitId: 'A', sizeId: 'size' }] };
+@@ -49,7 +49,7 @@ async function flush(): Promise<void> { await new Promise<void>(resolve => setIm
+ test('constructors are inert; exact same-origin POSTs use session credentials/no-store and only projected DTO fields', async () => {
+   const calls: { url: string; init: RequestInit }[] = [];
+   const fetch: QueryFetch = async (url, init) => { calls.push({ url, init }); return json(url.endsWith('/candidates/query')
+-    ? { items: [{ id: target.productId, label: '完整标签', disabled: false, parentLabel: '父分类', depth: 1 }], exactTotal: 1, page: 1 } : inventoryPage()); };
++    ? { items: [{ id: target.productId, label: '完整标签', code: 'TEST-001', name: '测试商品', disabled: false }], exactTotal: 1, page: 1 } : inventoryPage()); };
+   const reader = createInventoryHttpReader(options(fetch)); assert.equal(calls.length, 0);
+   const parameters = { ...inventoryParameters(), actor: { role: 'admin' }, identity: { accountId: 'untrusted' } };
+   const result = await reader.readInventory(read(parameters));
+@@ -373,3 +373,45 @@ test('deadline cannot publish a success after synchronous JSON decode/parse or D
+     await assert.rejects(http.post('/products/basics/query', target, new AbortController().signal, value => { now = 2; return value; }), errorKind('timeout', 'QUERY_TIMEOUT'));
+   });
+ });
++
++test('category arrays and product projections cross HTTP explicitly, without scalar compatibility or label parsing', async () => {
++  const categoryIds = [imageTarget.imageId, target.productId]; const calls: RequestInit[] = [];
++  const product = { id: target.productId, label: 'display label is not a code/name parser input', code: 'ORIGINAL CODE', name: 'ORIGINAL NAME' };
++  const reader = createInventoryHttpReader(options(async (_url, init) => { calls.push(init); return json({ items: [product], exactTotal: 1, page: 1 }); }));
++  const response = await reader.readCandidates(read({ ...candidateParameters, categoryIds }));
++  assert.deepEqual(response.items[0], product); assert.deepEqual(JSON.parse(calls[0]!.body as string).categoryIds, categoryIds);
++  assert.ok(!Object.hasOwn(JSON.parse(calls[0]!.body as string), 'categoryId'));
++  for (const item of [{ id: target.productId, label: 'no projected columns' }, { ...product, code: '' }, { ...product, name: 12 }, { ...product, parentId: null }]) {
++    const malformed = createInventoryHttpReader(options(async () => json({ items: [item], exactTotal: 1, page: 1 })));
++    await assert.rejects(malformed.readCandidates(read(candidateParameters)), errorKind('malformed-response'));
++  }
++  const parameters = { ...inventoryParameters(), filter: { ...emptyInventoryFilter(), categories: categoryIds.map(id => ({ id, label: 'ignored label' })) } };
++  const inventory = createInventoryHttpReader(options(async (_url, init) => { calls.push(init); return json(inventoryPage()); }));
++  await inventory.readInventory(read(parameters)); const body = JSON.parse(calls[1]!.body as string);
++  assert.deepEqual(body.filter.categories, parameters.filter.categories); assert.ok(!Object.hasOwn(body.filter, 'category'));
++});
++
++test('category native parent identity is required and cannot be replaced by matching labels', async () => {
++  const parameters = { ...candidateParameters, kind: 'category' as const };
++  const root = { id: target.productId, label: 'same label', parentId: null, depth: 0 };
++  const child = { id: imageTarget.imageId, label: 'same label', parentId: target.productId, parentLabel: 'same label', depth: 1 };
++  for (const items of [[root], [child]]) {
++    const reader = createInventoryHttpReader(options(async () => json({ items, exactTotal: 1, page: 1 })));
++    assert.deepEqual((await reader.readCandidates(read(parameters))).items, items);
++  }
++  for (const item of [{ id: target.productId, label: 'root', depth: 0 }, { ...root, parentId: root.id }, { ...root, depth: 1 }, { ...child, parentLabel: undefined }, { ...root, parentLabel: 'not a root field' }, { ...child, code: 'not a category column' }]) {
++    const reader = createInventoryHttpReader(options(async () => json({ items: [item], exactTotal: 1, page: 1 })));
++    await assert.rejects(reader.readCandidates(read(parameters)), errorKind('malformed-response'));
++  }
++});
++
++test('retail price HTTP field preserves null versus exact zero and large decimal text; malformed or missing never defaults', async () => {
++  for (const retailPrice of [null, '0.00', '9007199254740993.01', '9999999999999999.99']) {
++    const reader = createProductHttpReader(options(async () => json({ ...basics, retailPrice })));
++    assert.equal((await reader.readProductBasics(read(target)))!.retailPrice, retailPrice);
++  }
++  for (const retailPrice of [undefined, 0, '0', '0.0', '-0.00', '-1.00', '1.234', '1e2', '01.00', '10000000000000000.00']) {
++    const reader = createProductHttpReader(options(async () => json({ ...basics, retailPrice })));
++    await assert.rejects(reader.readProductBasics(read(target)), errorKind('malformed-response'));
++  }
++});
+diff --git a/apps/web/src/transport/inventory-http-reader.ts b/apps/web/src/transport/inventory-http-reader.ts
+index 84308e4..d84187a 100644
+--- a/apps/web/src/transport/inventory-http-reader.ts
++++ b/apps/web/src/transport/inventory-http-reader.ts
+@@ -10,13 +10,13 @@ export function createInventoryHttpReader(options: HttpQueryOptions): InventoryR
+     readInventory(read) {
+       const { filter, page, pageSize } = read.parameters;
+       // Explicit projection prevents extra client identity/role fields from becoming authorization.
+-      const body = { filter: { products: filter.products.map(selection), category: filter.category === null ? null : selection(filter.category),
++      const body = { filter: { products: filter.products.map(selection), categories: filter.categories.map(selection),
+         warehouses: filter.warehouses.map(selection), suppliers: filter.suppliers.map(selection), fits: filter.fits.map(selection), seasons: filter.seasons.map(selection) }, page, pageSize };
+       return http.post('/inventory/query', body, read.signal, value => inventoryResponse(value, read.parameters));
+     },
+     readCandidates(read) {
+-      const { kind, search, page, pageSize, selectedIds, categoryId } = read.parameters;
+-      return http.post('/inventory/candidates/query', { kind, search, page, pageSize, selectedIds: [...selectedIds], categoryId },
++      const { kind, search, page, pageSize, selectedIds, categoryIds } = read.parameters;
++      return http.post('/inventory/candidates/query', { kind, search, page, pageSize, selectedIds: [...selectedIds], categoryIds: [...categoryIds] },
+         read.signal, value => candidatesResponse(value, read.parameters));
+     },
+   } satisfies InventoryReader);
+diff --git a/apps/web/src/transport/response-validation.ts b/apps/web/src/transport/response-validation.ts
+index fb72c17..cf36bf6 100644
+--- a/apps/web/src/transport/response-validation.ts
++++ b/apps/web/src/transport/response-validation.ts
+@@ -112,18 +112,26 @@ export function candidatesResponse(value: unknown, parameters: Readonly<Candidat
+   if (items.length !== expected) reject();
+   const ids = new Set<string>();
+   for (const item of items) {
+-    const row = record(item, ['id', 'label'], ['disabled', 'parentLabel', 'depth']);
++    const required = parameters.kind === 'product' ? ['id', 'label', 'code', 'name']
++      : parameters.kind === 'category' ? ['id', 'label', 'parentId', 'depth'] : ['id', 'label'];
++    const row = record(item, required, parameters.kind === 'category' ? ['disabled', 'parentLabel'] : ['disabled']);
+     text(row.id); text(row.label);
+     if (ids.has(row.id)) reject(); ids.add(row.id);
+     if (Object.hasOwn(row, 'disabled') && typeof row.disabled !== 'boolean') reject();
+     if (Object.hasOwn(row, 'parentLabel')) text(row.parentLabel);
+-    if (Object.hasOwn(row, 'depth') && row.depth !== 0 && row.depth !== 1) reject();
++    if (parameters.kind === 'product') { text(row.code); text(row.name); }
++    if (parameters.kind === 'category') {
++      if (row.depth !== 0 && row.depth !== 1) reject();
++      if (row.parentId !== null) text(row.parentId);
++      if (row.parentId === row.id || (row.parentId === null) !== (row.depth === 0)
++        || Object.hasOwn(row, 'parentLabel') !== (row.parentId !== null)) reject();
++    }
+   }
+   return value as CandidatePage;
+ }
+ export function productBasicsResponse(value: unknown, parameters: Readonly<ProductParameters>): ProductBasics | null {
+   if (value === null) return null;
+-  const row = record(value, ['productId', 'code', 'name', 'categoryLabel', 'yearLabel', 'seasonLabel', 'supplierLabel', 'systemCode']);
++  const row = record(value, ['productId', 'code', 'name', 'categoryLabel', 'yearLabel', 'seasonLabel', 'supplierLabel', 'systemCode', 'retailPrice']);
+   [row.productId, row.code, row.name].forEach(text);
+   for (const label of [row.categoryLabel, row.yearLabel, row.seasonLabel, row.supplierLabel, row.systemCode]) if (label !== null) text(label);
+   const data = value as ProductBasics; assertProductBasics(data, parameters); return data;
+diff --git a/apps/web/tests/run-dom-tests.mjs b/apps/web/tests/run-dom-tests.mjs
+index 3a3eb8c..cfa39c3 100644
+--- a/apps/web/tests/run-dom-tests.mjs
++++ b/apps/web/tests/run-dom-tests.mjs
+@@ -178,7 +178,7 @@ try {
+   await click(host.querySelector('.mx-view')); await settle(); assert.equal(requests.length, 1);
+   assert.match(drawer().textContent, /正在读取当前页签/);
+   await click(tab('规格')); await settle(); assert.equal(requests.length, 2); assert.equal(requests[0].read.signal.aborted, true);
+-  const basePayload = (id, name) => ({ productId: id, code: 'TEST-CONTROLLED', name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
++  const basePayload = (id, name) => ({ productId: id, code: 'TEST-CONTROLLED', name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
+   await act(async () => requests[0].resolve(basePayload('test-product-1', 'STALE FIRST RESPONSE'))); await settle();
+   assert.doesNotMatch(drawer().textContent, /STALE FIRST RESPONSE/);
+   await click(host.querySelector('button[aria-label="关闭商品资料"]')); assert.equal(requests[1].read.signal.aborted, true);
+diff --git a/packages/application/src/inventory-ledger-query-service.ts b/packages/application/src/inventory-ledger-query-service.ts
+index 7904b9e..238fdad 100644
+--- a/packages/application/src/inventory-ledger-query-service.ts
++++ b/packages/application/src/inventory-ledger-query-service.ts
+@@ -13,7 +13,7 @@ export function createInventoryLedgerQueryService(dependencies: InventoryLedgerQ
+   const authorize = dependencies.authorization.authorize.bind(dependencies.authorization); const readLedger = dependencies.reader.readLedger.bind(dependencies.reader);
+   return Object.freeze({ async readLedger(actor: ActorContext, input: unknown, signal: AbortSignal) {
+     const trustedActor = checkedInventoryActor(actor); const parameters = parseInventoryLedgerQuery(input); activeInventoryLedgerRead(signal);
+-    const inventory: InventoryQuery = Object.freeze({ page: 1, pageSize: 100, filter: Object.freeze({ productIds: Object.freeze([]), categoryId: null,
++    const inventory: InventoryQuery = Object.freeze({ page: 1, pageSize: 100, filter: Object.freeze({ productIds: Object.freeze([]), categoryIds: Object.freeze([]),
+       warehouseIds: Object.freeze([parameters.warehouseId]), supplierIds: Object.freeze([]), fitIds: Object.freeze([]), seasonIds: Object.freeze([]) }) });
+     const supplied = checkedInventoryScope(await authorize(trustedActor, Object.freeze({ kind: "inventory", parameters: inventory }), signal)); activeInventoryLedgerRead(signal);
+     const warehouse = supplied.warehouses.find(item => item.id === parameters.warehouseId);
+diff --git a/packages/application/src/inventory-query-contracts.ts b/packages/application/src/inventory-query-contracts.ts
+index 7a6cb4b..8dcf3fd 100644
+--- a/packages/application/src/inventory-query-contracts.ts
++++ b/packages/application/src/inventory-query-contracts.ts
+@@ -44,15 +44,21 @@ export interface InventoryQueryPage {
+ }
+ export interface InventoryQueryCandidate extends InventorySelection {
+   readonly disabled?: boolean; readonly parentLabel?: string; readonly depth?: 0 | 1;
++  /** Required only for product candidates; native projection, never parsed from label. */
++  readonly code?: string; readonly name?: string;
++  /** Required only for category candidates; null denotes a root. */
++  readonly parentId?: string | null;
+ }
+ export interface InventoryCandidatePage {
+   readonly items: readonly InventoryQueryCandidate[]; readonly exactTotal: number; readonly page: number;
+ }
+-/** Normalized immutable IDs only. Client selection labels never become reference or permission facts. */
++/** Normalized immutable IDs only. Client selection labels never become reference or permission facts.
++ * Every array is a positive OR selection; dimensions combine with AND inside the authorized scope.
++ * Category IDs match their own category or its native direct children; [] adds no category predicate. */
+ export interface InventoryQuery {
+   readonly filter: {
+     readonly productIds: readonly EntityId<"product">[];
+-    readonly categoryId: EntityId<"category"> | null;
++    readonly categoryIds: readonly EntityId<"category">[];
+     readonly warehouseIds: readonly EntityId<"warehouse">[];
+     readonly supplierIds: readonly EntityId<"supplier">[];
+     readonly fitIds: readonly EntityId<"fit">[];
+@@ -63,7 +69,7 @@ export interface InventoryQuery {
+ export interface InventoryCandidateQuery {
+   readonly kind: InventoryCandidateKind; readonly search: string;
+   readonly page: number; readonly pageSize: 20;
+-  readonly selectedIds: readonly string[]; readonly categoryId: EntityId<"category"> | null;
++  readonly selectedIds: readonly string[]; readonly categoryIds: readonly EntityId<"category">[];
+ }
+ export type InventoryReadIntent =
+   | { readonly kind: "inventory"; readonly parameters: InventoryQuery }
+diff --git a/packages/application/src/inventory-query-response.ts b/packages/application/src/inventory-query-response.ts
+index d0fe34e..9979d5e 100644
+--- a/packages/application/src/inventory-query-response.ts
++++ b/packages/application/src/inventory-query-response.ts
+@@ -134,12 +134,22 @@ export function checkedCandidateSnapshot(value: unknown, query: InventoryCandida
+   if (row.page !== query.page) reject();
+   const exactTotal = numberValue(row.exactTotal, 0, reject);
+   const items = list(row.items, 20).map((item): InventoryQueryCandidate => {
+-    const candidate = record(item, ["id", "label"], ["disabled", "parentLabel", "depth"], reject);
++    const required = query.kind === "product" ? ["id", "label", "code", "name"]
++      : query.kind === "category" ? ["id", "label", "parentId", "depth"] : ["id", "label"];
++    const candidate = record(item, required, query.kind === "category" ? ["disabled", "parentLabel"] : ["disabled"], reject);
+     const id = idValue(query.kind, candidate.id, reject); const label = textValue(candidate.label, reject);
+     if (query.kind === "warehouse" && !scope.warehouses.some(warehouse => warehouse.id === id && warehouse.label === label)) reject();
+     if (Object.hasOwn(candidate, "disabled") && typeof candidate.disabled !== "boolean") reject();
+-    if (Object.hasOwn(candidate, "depth") && candidate.depth !== 0 && candidate.depth !== 1) reject();
+-    return Object.freeze({ id, label, ...(Object.hasOwn(candidate, "disabled") ? { disabled: candidate.disabled as boolean } : {}),
++    if (query.kind === "category") {
++      if (candidate.depth !== 0 && candidate.depth !== 1) reject();
++      const parentId = candidate.parentId === null ? null : idValue("category", candidate.parentId, reject);
++      if (parentId === id || (parentId === null) !== (candidate.depth === 0)
++        || Object.hasOwn(candidate, "parentLabel") !== (parentId !== null)) reject();
++    }
++    return Object.freeze({ id, label,
++      ...(query.kind === "product" ? { code: textValue(candidate.code, reject), name: textValue(candidate.name, reject) } : {}),
++      ...(query.kind === "category" ? { parentId: candidate.parentId === null ? null : idValue("category", candidate.parentId, reject) } : {}),
++      ...(Object.hasOwn(candidate, "disabled") ? { disabled: candidate.disabled as boolean } : {}),
+       ...(Object.hasOwn(candidate, "parentLabel") ? { parentLabel: textValue(candidate.parentLabel, reject) } : {}),
+       ...(Object.hasOwn(candidate, "depth") ? { depth: candidate.depth as 0 | 1 } : {}) });
+   });
+diff --git a/packages/application/src/inventory-query-validation.ts b/packages/application/src/inventory-query-validation.ts
+index 955a2fd..be94af0 100644
+--- a/packages/application/src/inventory-query-validation.ts
++++ b/packages/application/src/inventory-query-validation.ts
+@@ -28,6 +28,7 @@ export function idValue<K extends EntityKind>(kind: K, value: unknown, reject: R
+ }
+ function arrayValue(value: unknown, max: number, reject: Reject): unknown[] {
+   if (!Array.isArray(value) || value.length > max) reject();
++  for (let index = 0; index < value.length; index++) if (!Object.hasOwn(value, index)) reject();
+   return value;
+ }
+ function selections<K extends EntityKind>(kind: K, value: unknown): readonly EntityId<K>[] {
+@@ -47,25 +48,25 @@ function pagination(page: unknown, pageSize: unknown, allowed: readonly number[]
+ }
+ export function parseInventoryQuery(value: unknown): InventoryQuery {
+   const row = record(value, ["filter", "page", "pageSize"]);
+-  const filter = record(row.filter, ["products", "category", "warehouses", "suppliers", "fits", "seasons"]);
+-  const category = filter.category === null ? null : record(filter.category, ["id", "label"]);
+-  if (category) textValue(category.label);
++  const filter = record(row.filter, ["products", "categories", "warehouses", "suppliers", "fits", "seasons"]);
+   const page = pagination(row.page, row.pageSize, [100, 200, 500]);
+   return Object.freeze({ page: page.page, pageSize: page.pageSize as InventoryQuery["pageSize"], filter: Object.freeze({
+-    productIds: selections("product", filter.products), categoryId: category ? idValue("category", category.id) : null,
++    productIds: selections("product", filter.products), categoryIds: selections("category", filter.categories),
+     warehouseIds: selections("warehouse", filter.warehouses), supplierIds: selections("supplier", filter.suppliers),
+     fitIds: selections("fit", filter.fits), seasonIds: selections("season", filter.seasons)
+   }) });
+ }
+ export function parseInventoryCandidateQuery(value: unknown): InventoryCandidateQuery {
+-  const row = record(value, ["kind", "search", "page", "pageSize", "selectedIds", "categoryId"]);
++  const row = record(value, ["kind", "search", "page", "pageSize", "selectedIds", "categoryIds"]);
+   if (!KINDS.includes(row.kind as InventoryCandidateKind)) rejectInventoryInput();
+   const kind = row.kind as InventoryCandidateKind;
+   const selectedIds = arrayValue(row.selectedIds, INVENTORY_MAX_SELECTIONS, rejectInventoryInput).map(id => idValue(kind, id));
+   if (new Set(selectedIds).size !== selectedIds.length) rejectInventoryInput();
++  const categoryIds = arrayValue(row.categoryIds, INVENTORY_MAX_SELECTIONS, rejectInventoryInput).map(id => idValue("category", id));
++  if (new Set(categoryIds).size !== categoryIds.length) rejectInventoryInput();
+   const page = pagination(row.page, row.pageSize, [20]);
+   return Object.freeze({ kind, search: textValue(row.search, rejectInventoryInput, true, 200), page: page.page, pageSize: 20,
+-    selectedIds: Object.freeze(selectedIds), categoryId: row.categoryId === null ? null : idValue("category", row.categoryId) });
++    selectedIds: Object.freeze(selectedIds), categoryIds: Object.freeze(categoryIds) });
+ }
+ export function checkedInventoryScope(value: InventoryReadScope): InventoryReadScope {
+   const reject = rejectInventoryResponse;
+diff --git a/packages/application/src/product-query-ports.ts b/packages/application/src/product-query-ports.ts
+index c562e1e..c8e7b8a 100644
+--- a/packages/application/src/product-query-ports.ts
++++ b/packages/application/src/product-query-ports.ts
+@@ -21,6 +21,8 @@ export interface ProductBasicsDto {
+   readonly productId: string; readonly code: string; readonly name: string;
+   readonly categoryLabel: string | null; readonly yearLabel: string | null; readonly seasonLabel: string | null;
+   readonly supplierLabel: string | null; readonly systemCode: string | null;
++  /** Nullable native product retail_price; exact nonnegative decimal(18,2) text, not minor units. */
++  readonly retailPrice: string | null;
+ }
+ export interface ProductSpecificationsDto {
+   readonly productId: string; readonly sizeGroup: ProductSelection | null;
+diff --git a/tests/integration/http-read-acceptance.ts b/tests/integration/http-read-acceptance.ts
+index f6cf3dd..6969eac 100644
+--- a/tests/integration/http-read-acceptance.ts
++++ b/tests/integration/http-read-acceptance.ts
+@@ -31,7 +31,7 @@ const salesInput = () => ({ filter: { startDate: null, endDate: null, statuses:
+ const transferInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [],
+   toWarehouseIds: [], number: "SYNTHETIC_PG_TRANSFER_4600" }, page: 1, pageSize: 20 });
+ const inventoryInput = (warehouseId = ids.warehouse) => ({ filter: { products: [{ id: ids.product, label: "SYNTHETIC ONLY PRODUCT" }],
+-  category: null, warehouses: [{ id: warehouseId, label: "CLIENT LABEL IS NOT A GRANT" }], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
++  categories: [], warehouses: [{ id: warehouseId, label: "CLIENT LABEL IS NOT A GRANT" }], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
+ 
+ /** Caller supplies the SAME validated target after all existing runner/freshness/hash gates.
+  * No env, URL, ambient driver setting, discovery or default target is consulted here. */
+@@ -184,7 +184,7 @@ export async function runHttpReadAcceptance(t: TestContext, pool: Pool, settings
+     const variants = data.products[0].colorFits;
+     ok(variants.length === 2 && variants.every((variant: { rows: { warehouse: { id: string } }[] }) => variant.rows.length === 1
+       && variant.rows[0]?.warehouse.id === ids.warehouse), "no out-of-scope warehouse matrix rows");
+-    const candidates = await successful(api, "/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null });
++    const candidates = await successful(api, "/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] });
+     ok(json(candidates).exactTotal === 1 && json(candidates).items.length === 1 && json(candidates).items[0].id === ids.warehouse, "bounded scoped warehouse candidates");
+     const ledger = await successful(api, "/inventory/ledger/query", { warehouseId: ids.warehouse, skuId: ids.sku, pageSize: 2, after: null });
+     const page = json(ledger);
+diff --git a/tests/integration/native-http-read-acceptance.ts b/tests/integration/native-http-read-acceptance.ts
+index eeb0e7b..eeee8a2 100644
+--- a/tests/integration/native-http-read-acceptance.ts
++++ b/tests/integration/native-http-read-acceptance.ts
+@@ -61,7 +61,7 @@ function nativeOptions(settings: IntegrationSettings): PostgresReadApiOptions {
+ const salesInput = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: PREFIX }, page: 1, pageSize: 20 });
+ const transferInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [], toWarehouseIds: [],
+   number: "SYNTHETIC_NATIVE_TRANSFER_" }, page: 1, pageSize: 20 });
+-const inventoryInput = () => ({ filter: { products: [{ id: ids.product, label: "CLIENT PRODUCT LABEL" }], category: null,
++const inventoryInput = () => ({ filter: { products: [{ id: ids.product, label: "CLIENT PRODUCT LABEL" }], categories: [],
+   warehouses: [], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
+ 
+ /** Explicit fixture maintenance only. Sanitize raw failing-row details, which can include a stored password hash.
+@@ -271,7 +271,7 @@ export async function runNativeHttpReadAcceptance(t: TestContext, pool: Pool, se
+           && inventory.allMatchesTotal.knownQuantity === "4", "all-warehouse native inventory includes actual A/B quantities");
+         ok(inventory.products[0].colorFits.every((variant: { rows: { warehouse: { id: string } }[] }) => variant.rows.length === 2
+           && variant.rows.some(row => row.warehouse.id === ids.toWarehouse)), "salesperson retains other-hall disabled historical warehouse rows");
+-        const candidates = await success(fixture, "/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null });
++        const candidates = await success(fixture, "/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] });
+         ok(candidates.exactTotal === 2 && candidates.items.length === 2 && candidates.items.some((item: { id: string }) => item.id === ids.toWarehouse),
+           "native candidates retain disabled other-hall warehouse identity");
+         const ledger = await success(fixture, "/inventory/ledger/query", { warehouseId: ids.toWarehouse, skuId: ids.sku, pageSize: 20, after: null });
+@@ -341,7 +341,7 @@ export async function runNativeHttpReadAcceptance(t: TestContext, pool: Pool, se
+       const signal = new AbortController().signal;
+       for (const attempt of [() => policies.sales.authorize(stale, { kind: "list", parameters: salesInput() }, signal),
+         () => policies.inventory.authorize(stale, { kind: "inventory", parameters: { page: 1, pageSize: 100,
+-          filter: { productIds: [], categoryId: null, warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } } }, signal),
++          filter: { productIds: [], categoryIds: [], warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } } }, signal),
+         () => policies.products.authorize(stale, { kind: "basics", parameters: { productId: ids.product } }, signal)]) {
+         let rejected = false;
+         try { await attempt(); } catch (error) { rejected = error instanceof Error && "code" in error && error.code === "FORBIDDEN"; }
+diff --git a/tests/integration/sparse-acceptance.ts b/tests/integration/sparse-acceptance.ts
+index 5394e2f..b604310 100644
+--- a/tests/integration/sparse-acceptance.ts
++++ b/tests/integration/sparse-acceptance.ts
+@@ -42,7 +42,7 @@ const publish: Extract<CutoffImportCommand, { readonly action: "IMPORT_PUBLISH"
+ const scope: InventoryReadScope = { hallIds: [ids.hall, ids.otherHall], warehouses: [
+   { id: ids.warehouse, hallId: ids.hall, label: "SYNTHETIC ONLY FROM" }, { id: ids.toWarehouse, hallId: ids.otherHall, label: "SYNTHETIC ONLY TO" }
+ ] };
+-const parameters: InventoryQuery = { filter: { productIds: [], categoryId: null, warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] }, page: 1, pageSize: 100 };
++const parameters: InventoryQuery = { filter: { productIds: [], categoryIds: [], warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] }, page: 1, pageSize: 100 };
+ const read = (input = parameters, granted = scope) => ({ actor, scope: granted, parameters: input, signal: new AbortController().signal });
+ const raceDraft = (number: number, count = "2"): SalesDraft => { const draft = salesDraft(number, { quantities: [count] }); return { ...draft, lines: draft.lines.map(line => ({ ...line, skuId: ids.raceSku })) }; };
+ async function importSnapshot(pool: Pool): Promise<unknown> {
+@@ -212,7 +212,7 @@ export async function runSparseAcceptance(t: TestContext, pool: Pool): Promise<v
+     await assert.rejects(reader.readInventory(read({ ...parameters, filter: { ...parameters.filter, warehouseIds: [ids.toWarehouse] } }, onlyFrom)), { code: "FORBIDDEN" });
+     for (const search of ["%", "' OR TRUE --", "\\"]) {
+       const candidates = await reader.readCandidates({ actor, scope, signal: new AbortController().signal,
+-        parameters: { kind: "product", search, page: 1, pageSize: 20, selectedIds: [], categoryId: null } });
++        parameters: { kind: "product", search, page: 1, pageSize: 20, selectedIds: [], categoryIds: [] } });
+       assert.equal(candidates.data.exactTotal, 0); assert.deepEqual(candidates.data.items, []);
+     }
+     assert.deepEqual(await importSnapshot(pool), before, "all native inventory reads must be non-mutating");
+diff --git a/tests/inventory-query-postgres-protocol.test.ts b/tests/inventory-query-postgres-protocol.test.ts
+index bada5ba..820d153 100644
+--- a/tests/inventory-query-postgres-protocol.test.ts
++++ b/tests/inventory-query-postgres-protocol.test.ts
+@@ -55,7 +55,7 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
+         return [this.negative, "0"].map((quantity, index) => ({ warehouse_id: this.scope.warehouses[0]!.id, sku_id: skuId(n, index), quantity, version: 1, last_operation_id: inventoryId("operation", 990 + n) }));
+       }); break;
+       case "candidate-count": rows = [{ exact_total: "1" }]; break;
+-      case "candidates": rows = Number(values[10]) === 0 ? [{ id: productId(0), label: "NATIVE-000000 Synthetic native product", disabled: false, parent_label: null }] : []; break;
++      case "candidates": rows = Number(values[10]) === 0 ? [{ id: productId(0), label: "NATIVE-000000 Synthetic native product", code: "NATIVE-000000", name: "Synthetic native product", disabled: false, parent_label: null }] : []; break;
+       default: assert.ok(["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "COMMIT", "ROLLBACK"].includes(stage), `Unexpected scripted statement: ${stage}`); rows = [];
+     }
+     rows = this.transform?.(stage, rows) ?? rows; this.afterQuery?.(stage);
+@@ -179,11 +179,11 @@ test("SYNTHETIC PG protocol: aggregate arithmetic exceeds signed bigint without
+ test("SYNTHETIC PG protocol: all identity filters are parameters in the full-filter count/summary and fit page queries", async () => {
+   const pool = new ScriptedPool(); const p = inventoryParameters();
+   const input = parseInventoryQuery({ ...p, filter: { ...p.filter, products: [{ id: productId(0), label: "not a fact" }],
+-    category: { id: inventoryId("category", 40), label: "not a fact" }, suppliers: [{ id: inventoryId("supplier", 41), label: "not a fact" }],
++    categories: [{ id: inventoryId("category", 40), label: "not a fact" }], suppliers: [{ id: inventoryId("supplier", 41), label: "not a fact" }],
+     fits: [{ id: fitId, label: "not a fact" }], seasons: [{ id: inventoryId("season", 42), label: "not a fact" }] } });
+   await new PostgresInventoryQueryReader(pool).readInventory(read(pool, input));
+   const status = pool.calls.find(call => call.sql.includes("inventory:catalog-status"))!;
+-  assert.deepEqual(status.values.slice(2), [[productId(0)], inventoryId("category", 40), [inventoryId("supplier", 41)], [fitId], [inventoryId("season", 42)], batchId]);
++  assert.deepEqual(status.values.slice(2), [[productId(0)], [inventoryId("category", 40)], [inventoryId("supplier", 41)], [fitId], [inventoryId("season", 42)], batchId]);
+   assert.deepEqual(pool.calls.find(call => call.sql.includes("inventory:skus"))!.values[1], [fitId]);
+   assert.ok(!JSON.stringify(pool.calls).includes("not a fact"));
+ });
+@@ -206,7 +206,8 @@ test("SYNTHETIC PG protocol: candidate kinds select closed native relations, sta
+     const pool = new ScriptedPool(); pool.transform = (stage, rows) => stage === "candidates" ? [{
+       id: kind === "warehouse" ? inventoryScope.warehouses[0]!.id : inventoryId(kind, 80),
+       label: kind === "warehouse" ? inventoryScope.warehouses[0]!.label : "Native candidate", disabled: kind === "season" || kind === "category" ? null : true,
+-      parent_label: kind === "category" ? "Native parent" : null, ...(kind === "category" ? { depth: 1, category_valid: true } : {})
++      parent_label: kind === "category" ? "Native parent" : null, ...(kind === "category" ? { parent_id: inventoryId("category", 79), depth: 1, category_valid: true } : {}),
++      ...(kind === "product" ? { code: "NATIVE", name: "Native candidate" } : {})
+     }] : rows;
+     const result = await new PostgresInventoryQueryReader(pool).readCandidates(candidate(pool, { kind }));
+     assert.equal(result.data.items[0]!.disabled, kind === "season" || kind === "category" ? undefined : true);
+@@ -222,7 +223,8 @@ test("SYNTHETIC PG protocol: candidate readiness uses only returned catalogue ID
+     pool.transform = (stage, rows) => stage === "candidates" ? [{
+       id: kind === "warehouse" ? inventoryScope.warehouses[0]!.id : inventoryId(kind, 80),
+       label: kind === "warehouse" ? inventoryScope.warehouses[0]!.label : "Native candidate", disabled: null, parent_label: null,
+-      ...(kind === "category" ? { depth: 0, category_valid: true } : {})
++      ...(kind === "category" ? { parent_id: null, depth: 0, category_valid: true } : {}),
++      ...(kind === "product" ? { code: "NATIVE", name: "Native candidate" } : {})
+     }] : rows;
+     await new PostgresInventoryQueryReader(pool).readCandidates(candidate(pool, { kind }));
+     assert.ok(!stages(pool).includes("catalog-status"));
+@@ -279,6 +281,99 @@ test("SOURCE CONTRACT ONLY: no global member/SKU preload, source-history reconci
+   assert.ok(source.includes('import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";'));
+   assert.ok(source.includes("query(GUARD_CAPABILITY)"));
+   assert.ok(source.includes("ORDER BY b.id LIMIT 2"));
+-  assert.ok(source.includes("category.parent_id = $4::uuid"));
++  assert.ok(source.includes("category.parent_id = ANY($4::uuid[])"));
+   assert.ok(source.includes("WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree"));
+ });
++
++test("inventory category SQL contract: one positive-array predicate is shared by list/count/full summary and never multiplies parent+child products", async () => {
++  const categories = [inventoryId("category", 40), inventoryId("category", 41)];
++  for (const categoryIds of [[], categories]) {
++    const pool = new ScriptedPool();
++    const parameters = parseInventoryQuery({ ...inventoryParameters(), filter: { ...inventoryParameters().filter,
++      categories: categoryIds.map(id => ({ id, label: "not a database fact" })) } });
++    const result = await new PostgresInventoryQueryReader(pool).readInventory(read(pool, parameters));
++    const queries = pool.calls.filter(call => ["catalog-status", "products", "balances"].some(stage => call.sql.includes(`inventory:${stage}`)));
++    const prefix = (sql: string) => /WITH published_scope[\s\S]*?filtered_skus AS \([\s\S]*?\n\)/.exec(sql)?.[0];
++    for (const call of queries) {
++      assert.deepEqual(call.values[3], categoryIds); assert.deepEqual(call.values[0], inventoryScope.warehouses.map(row => row.id));
++      assert.match(call.sql, /cardinality\(\$4::uuid\[\]\) = 0 OR p.category_id = ANY\(\$4::uuid\[\]\) OR EXISTS/);
++      assert.match(call.sql, /category.parent_id = ANY\(\$4::uuid\[\]\)/);
++      assert.equal(prefix(call.sql), prefix(queries[0]!.sql));
++      assert.ok(!/unnest\(\$4|JOIN.*\$4|\$4::uuid IS NULL/.test(call.sql));
++      assert.ok(!JSON.stringify(call.values).includes("not a database fact"));
++    }
++    assert.equal(result.data.exactTotalProducts, 1); assert.equal(result.data.products.length, 1);
++    assert.equal(result.data.allMatchesTotal.knownQuantity, "-2");
++  }
++});
++
++test("inventory candidate SQL contract: arrays and direct fields use the existing one-page query without eager details or per-row reads", async () => {
++  const categories = [inventoryId("category", 40), inventoryId("category", 41)];
++  const pool = new ScriptedPool();
++  const result = await new PostgresInventoryQueryReader(pool).readCandidates(candidate(pool, { categoryIds: categories }));
++  const page = pool.calls.find(call => call.sql.includes("inventory:candidates"))!;
++  assert.deepEqual(page.values[3], categories); assert.match(page.sql, /r.product_code AS code, r.name/);
++  assert.deepEqual(result.data.items[0], { id: productId(0), label: "NATIVE-000000 Synthetic native product", code: "NATIVE-000000", name: "Synthetic native product", disabled: false });
++  assert.equal(stages(pool).filter(stage => stage === "candidates").length, 1);
++  assert.ok(pool.calls.every(call => !/retail_price|product_image|product-query|inventory:products/.test(call.sql)));
++  for (const kind of ["category", "warehouse"] as const) {
++    const p = new ScriptedPool(); p.transform = (stage, rows) => stage === "candidates" ? [{
++      id: kind === "warehouse" ? inventoryScope.warehouses[0]!.id : inventoryId("category", 80),
++      label: kind === "warehouse" ? inventoryScope.warehouses[0]!.label : "Native root", disabled: null, parent_label: null,
++      ...(kind === "category" ? { parent_id: null, depth: 0, category_valid: true } : {}) }] : rows;
++    await new PostgresInventoryQueryReader(p).readCandidates(candidate(p, { kind, categoryIds: categories }));
++    const query = p.calls.find(call => call.sql.includes("inventory:candidates"))!;
++    assert.deepEqual(query.values[3], []);
++    if (kind === "category") assert.match(query.sql, /r.parent_id/);
++  }
++});
++
++test("SYNTHETIC product search SQL contract: native system-item-code shares bounded count/page predicate; percent/underscore are literal and null grants no match", async () => {
++  // Finite scripted model ONLY. This checks reader protocol plus the exact generated SQL shape;
++  // it does not claim to execute PostgreSQL or verify deployed migration 0005.
++  const rows = [
++    { id: productId(0), code: "STYLE-A", name: "Shirt", system: "SYS_%_Match" },
++    { id: productId(1), code: "STYLE-B", name: "Coat", system: null },
++    { id: productId(2), code: "STYLE-C", name: "Pants", system: "SYSAXMatch" }
++  ];
++  class SearchPool extends ScriptedPool {
++    override async query(sql: string, values: unknown[] = []): Promise<PgInventoryQueryResult> {
++      const response = await super.query(sql, values);
++      if (!/\/\* inventory:(candidate-count|candidates) \*\//.test(sql)) return response;
++      assert.match(sql, /WHERE \(strpos\(r.product_code, \$9::text\) > 0 OR strpos\(r.name, \$9::text\) > 0 OR strpos\(r.system_item_code, \$9::text\) > 0\)/);
++      assert.ok(!/\bI?LIKE\b|coalesce\(r.system_item_code|r.id::text/.test(sql));
++      const search = values[8] as string;
++      const matches = rows.filter(row => row.code.includes(search) || row.name.includes(search)
++        || (row.system !== null && row.system.includes(search)));
++      const result = sql.includes("inventory:candidate-count") ? [{ exact_total: String(matches.length) }]
++        : matches.slice(Number(values[10]), Number(values[10]) + Number(values[9])).map(row => ({
++          id: row.id, label: `${row.code} ${row.name}`, code: row.code, name: row.name, disabled: false, parent_label: null
++        }));
++      return { rows: result, rowCount: result.length };
++    }
++  }
++  for (const [search, expected] of [["SYS_%_Match", [productId(0)]], ["%", [productId(0)]], ["_", [productId(0)]],
++    ["SYS", [productId(0), productId(2)]], ["STYLE-B", [productId(1)]], ["Coat", [productId(1)]],
++    ["not present", []], ["%' OR TRUE --", []], ["", rows.map(row => row.id)]] as const) {
++    const pool = new SearchPool(); const categories = [inventoryId("category", 40)];
++    const result = await new PostgresInventoryQueryReader(pool).readCandidates(candidate(pool, { search, categoryIds: categories }));
++    assert.deepEqual(result.data.items.map(row => row.id), expected); assert.equal(result.data.exactTotal, expected.length);
++    const count = pool.calls.find(call => call.sql.includes("inventory:candidate-count"))!;
++    const page = pool.calls.find(call => call.sql.includes("inventory:candidates"))!;
++    const predicate = (sql: string) => /FROM naijue_erp.product r JOIN matched_products p ON p.id = r.id WHERE ([^\n]+)/.exec(sql)?.[1];
++    assert.equal(predicate(count.sql), predicate(page.sql)); assert.ok(predicate(count.sql));
++    assert.deepEqual(count.values, page.values.slice(0, 9)); assert.equal(count.values[8], search);
++    assert.deepEqual(page.values.slice(-2), [20, "0"]); assert.deepEqual(page.values[3], categories);
++    assert.deepEqual(page.values[0], inventoryScope.warehouses.map(row => row.id)); assert.deepEqual(page.values[1], inventoryScope.hallIds);
++    assert.match(page.sql, /ORDER BY r.product_code COLLATE "C", r.id LIMIT \$10 OFFSET \$11::bigint/);
++    if (search.length > 1) assert.ok(!page.sql.includes(search));
++    assert.equal(stages(pool).filter(stage => stage === "candidates").length, 1);
++  }
++  for (const search of [null, 123, {}, "bad\u0000text", "x".repeat(201)]) {
++    const pool = new SearchPool();
++    await assert.rejects(() => new PostgresInventoryQueryReader(pool).readCandidates({
++      actor: inventoryActor, scope: inventoryScope, signal: new AbortController().signal,
++      parameters: { ...candidateParameters(), search } as unknown as InventoryCandidateQuery
++    }), code("INVALID_INVENTORY_INPUT")); assert.equal(pool.connects, 0);
++  }
++});
+diff --git a/tests/inventory-query.test.ts b/tests/inventory-query.test.ts
+index 76662de..2e4b8b2 100644
+--- a/tests/inventory-query.test.ts
++++ b/tests/inventory-query.test.ts
+@@ -210,3 +210,83 @@ test("SYNTHETIC inventory application: incomplete off-page full-filter summary c
+   }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } });
+   await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVALID_INVENTORY_RESPONSE"));
+ });
++
++test("inventory categories: bounded positive arrays capture immutable IDs before authorization and preserve OR selection context", async () => {
++  const first = inventoryId("category", 70), second = inventoryId("category", 71);
++  let release!: () => void; let arrived!: () => void;
++  const gate = new Promise<void>(resolve => { release = resolve; });
++  const entered = new Promise<void>(resolve => { arrived = resolve; });
++  const input = { ...inventoryParameters(), filter: { ...inventoryParameters().filter,
++    categories: [{ id: first, label: "untrusted parent" }, { id: second, label: "untrusted child" }] } };
++  const s = service({ async readInventory(read) {
++    assert.deepEqual(read.parameters.filter.categoryIds, [first, second]);
++    assert.ok(Object.isFrozen(read.parameters.filter.categoryIds));
++    assert.ok(!JSON.stringify(read.parameters).includes("untrusted"));
++    return syntheticInventorySnapshot(read);
++  }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } }, { async authorize(_actor, intent) {
++    if (intent.kind === "inventory") assert.deepEqual(intent.parameters.filter.categoryIds, [first, second]);
++    arrived(); await gate; return inventoryScope;
++  } });
++  const pending = s.readInventory(inventoryActor, input, signal()); await entered;
++  input.filter.categories[0]!.id = inventoryId("category", 72); input.filter.categories.pop(); release();
++  await pending;
++  const candidates = { ...candidateParameters(), categoryIds: [first, second] };
++  let releaseCandidate!: () => void; let candidateArrived!: () => void;
++  const candidateGate = new Promise<void>(resolve => { releaseCandidate = resolve; });
++  const candidateEntered = new Promise<void>(resolve => { candidateArrived = resolve; });
++  const c = service({ async readInventory(read) { return syntheticInventorySnapshot(read); }, async readCandidates(read) {
++    assert.deepEqual(read.parameters.categoryIds, [first, second]); assert.ok(Object.isFrozen(read.parameters.categoryIds));
++    return syntheticCandidateSnapshot(read);
++  } }, { async authorize() { candidateArrived(); await candidateGate; return inventoryScope; } });
++  const candidatePending = c.readCandidates(inventoryActor, candidates, signal()); await candidateEntered;
++  candidates.categoryIds[0] = inventoryId("category", 72); candidates.categoryIds.length = 0; releaseCandidate(); await candidatePending;
++});
++
++test("inventory categories: scalar legacy, malformed, duplicate, sparse and over-bound arrays reject before authorization", async () => {
++  const id = inventoryId("category", 70);
++  const invalid = [null, id, {}, [{ id: "bad", label: "bad" }], [{ id, label: "a" }, { id, label: "b" }],
++    [{ id, label: "a", extra: true }], new Array(1), Array.from({ length: 101 }, (_, n) => ({ id: inventoryId("category", n), label: "over-bound" }))];
++  let calls = 0; const s = service(syntheticInventoryReader(), { async authorize() { calls++; return inventoryScope; } });
++  for (const categories of invalid) await assert.rejects(s.readInventory(inventoryActor, { ...inventoryParameters(), filter: { ...inventoryParameters().filter, categories } }, signal()), hasCode("INVALID_INVENTORY_INPUT"));
++  const legacy: any = inventoryParameters(); delete legacy.filter.categories; legacy.filter.category = null;
++  await assert.rejects(s.readInventory(inventoryActor, legacy, signal()), hasCode("INVALID_INVENTORY_INPUT"));
++  for (const categoryIds of [null, id, ["bad"], [id, id], new Array(1), Array.from({ length: 101 }, (_, n) => inventoryId("category", n))]) {
++    await assert.rejects(s.readCandidates(inventoryActor, { ...candidateParameters(), categoryIds }, signal()), hasCode("INVALID_INVENTORY_INPUT"));
++  }
++  const old: any = candidateParameters(); delete old.categoryIds; old.categoryId = null;
++  await assert.rejects(s.readCandidates(inventoryActor, old, signal()), hasCode("INVALID_INVENTORY_INPUT")); assert.equal(calls, 0);
++  await s.readInventory(inventoryActor, inventoryParameters(), signal());
++  await s.readCandidates(inventoryActor, candidateParameters(), signal()); assert.equal(calls, 2);
++});
++
++test("inventory categories: selected categories cannot bypass an absent or denied authorized warehouse scope", async () => {
++  const selected = [{ id: inventoryId("category", 70), label: "not an authorization fact" }]; let reads = 0;
++  const reader = { async readInventory(read: any) { reads++; return syntheticInventorySnapshot(read); }, async readCandidates(read: any) { reads++; return syntheticCandidateSnapshot(read); } };
++  for (const authorization of [{ async authorize() { return { hallIds: [], warehouses: [] }; } }, { async authorize(): Promise<InventoryReadScope> { throw new DomainError("FORBIDDEN", "Denied current scope"); } }]) {
++    const s = service(reader, authorization);
++    await assert.rejects(s.readInventory(inventoryActor, { ...inventoryParameters(), filter: { ...inventoryParameters().filter, categories: selected } }, signal()), hasCode("FORBIDDEN"));
++    await assert.rejects(s.readCandidates(inventoryActor, { ...candidateParameters(), categoryIds: selected.map(row => row.id) }, signal()), hasCode("FORBIDDEN"));
++  }
++  assert.equal(reads, 0);
++});
++
++test("inventory candidate projections: required product fields and native category identities are closed and immutable", async () => {
++  const result = await service().readCandidates(inventoryActor, candidateParameters(), signal());
++  assert.equal(result.data.items[0]!.code, "SYNTHETIC-000000"); assert.equal(result.data.items[0]!.name, "SYNTHETIC PRODUCT 0");
++  assert.ok(Object.isFrozen(result.data.items[0]));
++  for (const [kind, mutate] of [
++    ["product", (row: any) => { delete row.code; }], ["product", (row: any) => { row.name = ""; }],
++    ["product", (row: any) => { row.parentId = null; }], ["supplier", (row: any) => { row.code = "not a supplier field"; }],
++    ["category", (row: any) => { delete row.parentId; }], ["category", (row: any) => { row.parentId = row.id; }],
++    ["category", (row: any) => { row.parentId = inventoryId("category", 999); }],
++    ["category", (row: any) => { row.parentId = "bad"; row.depth = 1; row.parentLabel = "not a native identity"; }],
++    ["category", (row: any) => { row.depth = 1; }], ["category", (row: any) => { row.code = "not a category field"; }]
++  ] as const) {
++    const s = service({ async readInventory(read) { return syntheticInventorySnapshot(read); }, async readCandidates(read) {
++      const snapshot = structuredClone(syntheticCandidateSnapshot(read)); mutate(snapshot.data.items[0]); return snapshot;
++    } });
++    await assert.rejects(s.readCandidates(inventoryActor, { ...candidateParameters(), kind }, signal()), hasCode("INVALID_INVENTORY_RESPONSE"));
++  }
++  const categories = await service().readCandidates(inventoryActor, { ...candidateParameters(), kind: "category" }, signal());
++  assert.equal(categories.data.items[0]!.parentId, null); assert.equal(categories.data.items[0]!.depth, 0);
++});
+diff --git a/tests/native-read-authorization-postgres-protocol.test.ts b/tests/native-read-authorization-postgres-protocol.test.ts
+index 74054da..459d80b 100644
+--- a/tests/native-read-authorization-postgres-protocol.test.ts
++++ b/tests/native-read-authorization-postgres-protocol.test.ts
+@@ -55,7 +55,7 @@ const warehouses = (rows: Record<string, unknown>[] = warehouseRows()): Step =>
+   assert.ok(!/\bWHERE\b|\benabled\b|import|publication|inventory_balance|inventory_ledger|product|sku/i.test(sql));
+ } });
+ const inventoryIntent: InventoryReadIntent = { kind: "inventory", parameters: { page: 1, pageSize: 100,
+-  filter: { productIds: [], categoryId: null, warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } } };
++  filter: { productIds: [], categoryIds: [], warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } } };
+ const salesQuery = { page: 1, pageSize: 20 as const, filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [hallB], salespersonIds: [], customerIds: [], warehouseIds: [], number: null } };
+ const salesIntents: SalesReadIntent[] = [{ kind: "list", parameters: salesQuery }, { kind: "settlement-statistics", parameters: salesQuery },
+   { kind: "detail", parameters: { salesId: ids.sales } }, { kind: "history", parameters: { salesId: ids.sales, page: 1, pageSize: 20 } }];
+@@ -85,7 +85,7 @@ test("native read authorization: every canonical role retains ALL native warehou
+ test("native read authorization: inventory and all candidate kinds use the same current identity + warehouse grant, including disabled historical references", async () => {
+   for (const kind of ["product", "category", "warehouse", "supplier", "fit", "season"] as const) {
+     const client = new Client([begin(), identityStep(), warehouses(), commit()]);
+-    const result = await policies(client).inventory.authorize(actor, { kind: "candidates", parameters: { kind, search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null } }, signal());
++    const result = await policies(client).inventory.authorize(actor, { kind: "candidates", parameters: { kind, search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] } }, signal());
+     assert.deepEqual(result, expectedScope()); assert.equal(client.calls.length, 4); client.done();
+   }
+ });
+@@ -220,7 +220,7 @@ test("native read authorization: services await fresh authorization before reade
+   const deniedClient = new Client([begin(), identityStep([{ ...identity(), login_enabled: false }]), rollback()]); let businessReads = 0;
+   const read = async (): Promise<never> => { businessReads++; throw new Error("No business read permitted"); };
+   const inventory = createInventoryQueryService({ authorization: policies(deniedClient).inventory, reader: { readInventory: read, readCandidates: read } });
+-  await assert.rejects(() => inventory.readInventory(actor, { page: 1, pageSize: 100, filter: { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] } }, signal()), { code: "FORBIDDEN" });
++  await assert.rejects(() => inventory.readInventory(actor, { page: 1, pageSize: 100, filter: { products: [], categories: [], warehouses: [], suppliers: [], fits: [], seasons: [] } }, signal()), { code: "FORBIDDEN" });
+   assert.equal(businessReads, 0); deniedClient.done();
+   const productClient = new Client([begin(), identityStep(), commit()]);
+   const product = createProductQueryService({ authorization: policies(productClient).products, reader: { readBasics: async value => { businessReads++; assert.deepEqual(value.grant, { productId }); productClient.done(); throw new Error("Exact target native reader"); }, readSpecifications: read, readImages: read, readImage: read }, media: null });
+@@ -239,7 +239,7 @@ test("native read authorization: inventory and ledger narrow an ALL-warehouse gr
+       await assert.rejects(() => service.readLedger(actor, { warehouseId: warehouseB, skuId: ids.sku, pageSize: 20, after: null }, signal()), error => error === stopped);
+     } else {
+       const service = createInventoryQueryService({ authorization: policies(client).inventory, reader: { readInventory: read, readCandidates: read } });
+-      await assert.rejects(() => service.readInventory(actor, { page: 1, pageSize: 100, filter: { products: [], category: null,
++      await assert.rejects(() => service.readInventory(actor, { page: 1, pageSize: 100, filter: { products: [], categories: [],
+         warehouses: [{ id: warehouseB, label: "untrusted request label" }], suppliers: [], fits: [], seasons: [] } }, signal()), error => error === stopped);
+     }
+     assert.equal(reads, 1);
+diff --git a/tests/product-query-postgres-protocol.test.ts b/tests/product-query-postgres-protocol.test.ts
+index 739d7cf..c77c329 100644
+--- a/tests/product-query-postgres-protocol.test.ts
++++ b/tests/product-query-postgres-protocol.test.ts
+@@ -25,7 +25,7 @@ const productId = sid("product", 701), groupId = sid("sizeGroup", 702), colorId
+ const parameters = { productId }; const imageParameters = { productId, imageId };
+ const read = <P extends ProductQuery>(parameters: P, signal = new AbortController().signal): ProductScopedRead<P> => ({ actor, grant: { productId }, parameters, signal });
+ const reader = (client: Client) => new PostgresProductQueryReader({ async connect() { return client; } });
+-const basic = () => ({ id: productId, product_code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", year: null, system_item_code: null, category_name: "完整分类名称", season_name: null, supplier_name: null });
++const basic = () => ({ id: productId, product_code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", year: null, system_item_code: null, retail_price: null, category_name: "完整分类名称", season_name: null, supplier_name: null });
+ const group = () => ({ id: productId, size_group_id: groupId, size_group_name: "完整尺码组名称" });
+ const member = (id = size1, order = 20) => ({ id, name: id === size1 ? "165/S（完整标签）" : "无尺码（完整标签）", display_order: order });
+ const sku = (fit = fitId, index = 1) => ({ id: sid("sku", 800 + index), product_id: productId, color_id: colorId, color_name: "完整颜色名称", fit_id: fit, fit_name: fit === fitId ? "Y版（修身）" : "A版（标准）", size_id: size1, member_size_id: size1 });
+@@ -40,7 +40,7 @@ test("product pg protocol: constructor does not connect; invalid/aborted/mismatc
+ });
+ test("product pg protocol: basics parameterized target-only RR snapshot preserves actual nulls and original code", async () => {
+   const client = new Client([begin(), { sql: /^SELECT p.id, p.product_code/, rows: [basic()], inspect: target }, commit()]);
+-  assert.deepEqual(await reader(client).readBasics(read(parameters)), { productId, code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", categoryLabel: "完整分类名称", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
++  assert.deepEqual(await reader(client).readBasics(read(parameters)), { productId, code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", categoryLabel: "完整分类名称", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
+   assert.equal(client.calls.length, 3); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|FOR UPDATE/.test(call.sql))); client.done();
+   const present = new Client([begin(), { sql: /^SELECT p.id/, rows: [{ ...basic(), year: 2021, system_item_code: "EXISTING SYSTEM CODE", season_name: "真实季节名称", supplier_name: "真实供应商名称" }] }, commit()]);
+   const result = await reader(present).readBasics(read(parameters)); assert.equal(result!.yearLabel, "2021"); assert.equal(result!.systemCode, "EXISTING SYSTEM CODE"); present.done();
+@@ -113,3 +113,17 @@ test("product pg protocol: abort during SQL rolls back and stops subsequent read
+   const early = new AbortController(); const idle = new Client([]); const r = new PostgresProductQueryReader({ async connect() { early.abort(); return idle; } });
+   await assert.rejects(() => r.readBasics(read(parameters, early.signal)), { code: "PRODUCT_READ_ABORTED" }); assert.ok(idle.releases[0] instanceof Error); idle.done();
+ });
++
++test("product pg protocol: native retail price stays an exact nullable decimal in the existing target-only basics query", async () => {
++  for (const retailPrice of [null, "0.00", "18.20", "9007199254740993.01", "9999999999999999.99"]) {
++    const client = new Client([begin(), { sql: /^SELECT p.id/, rows: [{ ...basic(), retail_price: retailPrice }], inspect(values, sql) {
++      target(values, sql); assert.match(sql, /p.retail_price::text/); assert.ok(!/reference_price|sku|sum\(|min\(|max\(/i.test(sql));
++    } }, commit()]);
++    const result = await reader(client).readBasics(read(parameters)); assert.equal(result!.retailPrice, retailPrice);
++    assert.equal(client.calls.length, 3); client.done();
++  }
++  for (const retailPrice of [undefined, 0, "0", "0.0", "-0.00", "-1.00", "1.234", "1e2", "01.00", "10000000000000000.00", "NaN", "Infinity"]) {
++    const client = new Client([begin(), { sql: /^SELECT p.id/, rows: [{ ...basic(), retail_price: retailPrice }] }, rollback()]);
++    await assert.rejects(() => reader(client).readBasics(read(parameters)), { code: "INVALID_DATABASE_VALUE" }); client.done();
++  }
++});
+diff --git a/tests/product-query.test.ts b/tests/product-query.test.ts
+index de73714..385a7fe 100644
+--- a/tests/product-query.test.ts
++++ b/tests/product-query.test.ts
+@@ -18,7 +18,7 @@ const signal = () => new AbortController().signal;
+ function fixture(options: { missing?: boolean; empty?: boolean; media?: ControlledProductMedia | null; authorize?: ProductQueryDependencies["authorization"]["authorize"] } = {}) {
+   const intents: ProductReadIntent[] = []; let reads = 0; let thumbnails = 0; let originals = 0;
+   const reader: TrustedProductSnapshotReader = {
+-    async readBasics() { reads++; return options.missing ? null : { productId, code: "SYNTHETIC", name: "SYNTHETIC PRODUCT", categoryLabel: "SYNTHETIC CATEGORY", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null }; },
++    async readBasics() { reads++; return options.missing ? null : { productId, code: "SYNTHETIC", name: "SYNTHETIC PRODUCT", categoryLabel: "SYNTHETIC CATEGORY", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null }; },
+     async readSpecifications() { reads++; return options.missing ? null : { productId, sizeGroup: null, colors: [], fits: [], sizes: [], skus: [] }; },
+     async readImages() { reads++; return options.missing ? null : { productId, productName: "SYNTHETIC PRODUCT", images: options.empty ? [] : [image] }; },
+     async readImage() { reads++; return options.missing ? null : image; }
+diff --git a/tests/support/synthetic-inventory-query.ts b/tests/support/synthetic-inventory-query.ts
+index 0528b22..d69af72 100644
+--- a/tests/support/synthetic-inventory-query.ts
++++ b/tests/support/synthetic-inventory-query.ts
+@@ -10,8 +10,8 @@ export const inventoryScope: InventoryReadScope = { hallIds: [inventoryId("hall"
+   { id: inventoryId("warehouse", 3), hallId: inventoryId("hall", 2), label: "SYNTHETIC WAREHOUSE" }
+ ] };
+ export const inventoryParameters = (page = 1, pageSize = 100) => ({ page, pageSize,
+-  filter: { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] } });
+-export const candidateParameters = (page = 1) => ({ kind: "product", search: "", page, pageSize: 20, selectedIds: [], categoryId: null });
++  filter: { products: [], categories: [], warehouses: [], suppliers: [], fits: [], seasons: [] } });
++export const candidateParameters = (page = 1) => ({ kind: "product", search: "", page, pageSize: 20, selectedIds: [], categoryIds: [] });
+ function total(known: bigint): InventoryStockTotal {
+   return { knownQuantity: known.toString(), unknownCells: 0, completeness: "complete" };
+ }
+@@ -56,7 +56,9 @@ export function syntheticCandidateSnapshot(read: InventoryScopedRead<InventoryCa
+   const all = read.parameters.kind === "warehouse" ? read.scope.warehouses : Array.from({ length: 23 }, (_, n) => ({ id: inventoryId(read.parameters.kind, 1000 + n), label: `SYNTHETIC CANDIDATE ${n}` }));
+   const offset = (read.parameters.page - 1) * 20;
+   return { readReference: "SYNTHETIC-CANDIDATE-SNAPSHOT-1", readiness: "ready", data: {
+-    items: all.slice(offset, offset + 20).map(({ id, label }) => ({ id, label })), exactTotal: all.length, page: read.parameters.page
++    items: all.slice(offset, offset + 20).map(({ id, label }, n) => ({ id, label,
++      ...(read.parameters.kind === "product" ? { code: `SYNTHETIC-${String(offset + n).padStart(6, "0")}`, name: `SYNTHETIC PRODUCT ${offset + n}` } : {}),
++      ...(read.parameters.kind === "category" ? { parentId: null, depth: 0 as const } : {}) })), exactTotal: all.length, page: read.parameters.page
+   } };
+ }
+ export function syntheticInventoryReader(count = 1): TrustedInventorySnapshotReader {

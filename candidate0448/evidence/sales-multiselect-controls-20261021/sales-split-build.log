@@ -1,0 +1,2 @@
+PASS split browser build: route and detail are separate chunks; inert index has no UI/CSS/fixture imports; production graph excludes tests and contains separate route/shared and action-only sales-detail CSS outputs; route CSS has no saved-detail body rules.
+Not a deployed host, actual browser layout, network waterfall or Demo pixel comparison. Temporary outputs removed.

@@ -1,0 +1,14 @@
+{
+  "format": "WHOLE_CLOSURE_CATALOG_PIN_PROPOSAL_V1",
+  "independentlyReviewed": false,
+  "installedCatalogSha256": null,
+  "sourceSpecSha256": null,
+  "changes": [
+    {
+      "signature": "naijue_erp.standard_whole_package_closed_v2(uuid)",
+      "before": "71ef59766fc69b83dd6494352e4ca8a189d27a8f09fc881d3421574558823601",
+      "after": "bedd249a8d43efb15ece3326a754c8ac0be8efde18f910fe635fde3e04b83744"
+    }
+  ],
+  "requiredDisposition": "REVIEW_AND_VERSION_SOURCE_COHORT_THEN_INDEPENDENTLY_ATTEST_INSTALLED_CATALOG"
+}

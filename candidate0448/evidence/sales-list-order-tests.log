@@ -1,0 +1,27 @@
+$ node --test tests/sales-query-postgres-protocol.test.ts
+✔ sales query pg protocol: mandatory pool never connects at construction; no aborted or invalid-scope connection (21.131845ms)
+✔ sales query pg protocol: exact count, relational page and one page-batched quantity read share scoped RR snapshot, no hydration/catalog/N+1 (9.837009ms)
+✔ sales query pg protocol: list pages use updated time then binary business number and native identity, never business date (2.676016ms)
+✔ sales query pg protocol: one bounded batch preserves signed SALE/RETURN/EXCHANGE totals, bigint-min magnitude and gift-only zero (3.549627ms)
+✔ sales query pg protocol: incomplete, foreign, duplicate or malformed quantity facts fail closed (14.840007ms)
+✔ sales query pg protocol: empty out-of-range page retains exact total without global recount or fallback (1.135668ms)
+✔ sales query pg protocol: detail reads authorized native header/current snapshots/settlements in three bounded reads (7.062505ms)
+✔ sales query pg protocol: hidden/missing detail and history rollback without reading child facts (7.19483ms)
+✔ sales query pg protocol: oversized detail fails closed rather than truncating current lines (28.214847ms)
+✔ sales query pg protocol: audit metadata exact count/page reapply current scope and SALES kind with stable tie-break (3.895327ms)
+✔ sales query pg protocol: settlement summary includes approved full scope only and exact unbounded numeric sums, account page separately (5.117312ms)
+✔ sales query pg protocol: decoding failure rolls back, unknown commit outcome is not retried and discards client (1.536537ms)
+✔ sales query pg protocol: begin/connect/rollback errors release or discard correctly; no hidden retries (2.674941ms)
+✔ sales query pg protocol: abort while SQL is in flight requests rollback and stops remaining reads (1.598774ms)
+✔ sales filter references pg protocol: all four kinds query only observed authorized references including disabled history (6.927576ms)
+✔ sales filter references pg protocol: bigint totals, bounded page and exact empty out-of-range semantics (2.834456ms)
+✔ sales filter references pg protocol: invalid request/grant/abort never connects, malformed provider facts roll back (2.717173ms)
+✔ sales detail pg protocol: current master labels and authoritative settlement snapshots share the one authorized RR snapshot (4.389779ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 829.128557

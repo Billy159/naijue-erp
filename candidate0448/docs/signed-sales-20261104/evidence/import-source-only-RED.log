@@ -1,0 +1,49 @@
+✔ history mixed SALE retains both same-SKU rows and only actual net receipt (125.978278ms)
+✔ history mixed SALE retains source discount and unknown allocations without guessing (95.253507ms)
+✔ history mixed SALE retains exact known allocations, no invented proportional split (68.601677ms)
+✔ history known allocation contradiction remains rejected (57.270964ms)
+✔ history missing settlement evidence remains absent rather than zero (64.850336ms)
+✔ history explicitly contradictory receipt is still rejected (65.8405ms)
+✔ new SALE cannot claim signed historical rule (56.342953ms)
+✔ new mixed EXCHANGE cannot carry historical header discount (80.030178ms)
+✔ historical net refund keeps one real refund and unknown pricing (75.978399ms)
+✔ same SKU opposite quantity net-zero preserves both distinct original row identities (51.769703ms)
+✔ historical nonzero discount cannot bypass missing source evidence (81.460697ms)
+✔ CLEANED without generated history provenance fails signed SALE closed in both paths (83.004469ms)
+✔ new EXCHANGE signed net receipt preserves actual direction (67.588835ms)
+✔ unsettled new EXCHANGE draft may save facts but known approved mismatch blocks (56.405547ms)
+✔ explicit versioned CLEANED historical basis preserves signed facts and original discount (109.884869ms)
+✔ explicit CLEANED historical basis preserves absent settlements as unknown (89.948565ms)
+✔ CLEANED runtime basis cannot borrow historical discount exception (59.396435ms)
+✔ CLEANED historical source classification still requires pinned original references (74.435798ms)
+✔ old CLEANED profile still forbids source stock basis despite a pinned source locator (72.591312ms)
+✔ new CLEANED profile requires explicit classification and never accepts generated batch (161.746861ms)
+✔ successor declarations leave original profiles immutable and READY fields unchanged (83.150463ms)
+✔ READY existing profile compiler and streaming requests preserve signed historical rows exactly (109.504074ms)
+✖ source-only profile cannot produce a SQL program before versioned engine support (115.407466ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 22
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2146.079517
+
+✖ failing tests:
+
+test at tests/historical-signed-sale-preservation-preflight.test.mjs:84:1
+✖ source-only profile cannot produce a SQL program before versioned engine support (115.407466ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-signed-sale-preservation-preflight.test.mjs:89:10
+      at both (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-signed-sale-preservation-preflight.test.mjs:29:337)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-signed-sale-preservation-preflight.test.mjs:87:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /WHOLE_PACKAGE_PROFILE_SOURCE_ONLY/,
+    operator: 'throws',
+    diff: 'simple'
+  }

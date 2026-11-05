@@ -1,0 +1,126 @@
+✔ batch closure IF comparisons parenthesize SQL CASE expressions (8.538094ms)
+✔ finalizer main remains unconditionally disabled until independent pre-Node launch assurance exists (8.595106ms)
+✔ finalizer consumes independent fixed root review evidence, never creates approval from observation (5.745643ms)
+✔ finalizer is explicit, root-only, no-overwrite, source-stable and read-only toward PostgreSQL (3.92291ms)
+✔ review validator accepts only separately supplied exact reviewed binding, not observation or approval flags (140.737397ms)
+✔ versioned source spec changes only final closure pin and binds predecessor/combined artifact (702.254823ms)
+✔ versioned record validation binds exact format, predecessor, successor and final body (3.243791ms)
+✔ forged source spec refuses before any catalog query and cannot supply its own approval (11.659234ms)
+✔ historical reception installs zero archive before final exact verifier and keeps old sales composition intact (33.316882ms)
+✔ batch binding successor requires exact independently reviewed singleton predecessor (12.969543ms)
+✖ each published batch binds immutable INIT source identity, lifecycle and precise expected counts (11.890185ms)
+✔ batch successor retains every existing singleton, marker, receipt and batch predicate (4.770919ms)
+✔ candidate composes real closure and exact access verification into one atomic SQL unit (11.561108ms)
+✔ candidate access successor changes only the exact closure pin; retains all permissions and metadata guards (5.685225ms)
+✔ any byte drift of initializer kernel, candidate or access predecessor blocks rendering (5.359743ms)
+✔ renderer leaves existing initializer and runtime catalog wiring untouched (14.025875ms)
+✔ candidate replaces only closure after exact installed predecessor and owner check (23.01274ms)
+✔ closure independently requires exactly one seal, stage and final publication in order (3.024664ms)
+✔ child marker has the exact generated root and numeric ordinal with no caller extras (4.417897ms)
+✔ candidate preserves read-only committed inspection and original receipt/batch closure checks (6.94708ms)
+✔ all five successor bodies remain exact, once, in dependency order under one transaction (1.892641ms)
+✔ access verifier changes only profile-command pin beyond the prior closure pin; permissions are identical (1.70631ms)
+✔ exact chain proposals never claim installation or runtime admission (0.264396ms)
+✔ every additional exact source pin rejects byte drift, missing or unexpected inputs (7.32373ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 23
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 908.357975
+
+✖ failing tests:
+
+test at tests/whole-package-batch-closure-candidate.test.mjs:16:1
+✖ each published batch binds immutable INIT source identity, lifecycle and precise expected counts (11.890185ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /b\.checkpoint->'expected' IS DISTINCT FROM\s+CASE WHEN b\.id=baseline_id THEN init->'payload'->'expected' ELSE init->'payload'->'expected_documents' END/. Input:
+  
+  '\n' +
+    'DECLARE root_a naijue_erp.audit_change%ROWTYPE; root_r naijue_erp.operation_receipt%ROWTYPE;\n' +
+    ' a naijue_erp.audit_change%ROWTYPE; r naijue_erp.operation_receipt%ROWTYPE; b naijue_erp.import_batch%ROWTYPE;\n' +
+    " init jsonb; previous jsonb:='{}'; last_status jsonb:='{}'; expected_ordinal integer:=0; ordinal integer; command_phase text;\n" +
+    ' baseline_id uuid; documents_id uuid; final_result jsonb; rank integer; last_rank integer:=-1;\n' +
+    ' baseline_sealed boolean:=false; documents_staged boolean:=false; documents_published boolean:=false;\n' +
+    'BEGIN\n' +
+    ' SELECT * INTO STRICT root_a FROM naijue_erp.audit_change WHERE operation_id=root_operation;\n' +
+    ' SELECT * INTO STRICT root_r FROM naijue_erp.operation_receipt WHERE id=root_operation;\n' +
+    " init:=root_a.after_values->'request';baseline_id:=(init->>'batch_id')::uuid;documents_id:=(init->'payload'->>'document_batch_id')::uuid;\n" +
+    " IF root_a.after_values->'whole_package_v2'->>'root_operation' IS DISTINCT FROM root_operation::text\n" +
+    "  OR root_a.after_values->'whole_package_v2'->'ordinal' IS DISTINCT FROM '0'::jsonb\n" +
+    "  OR root_r.action IS DISTINCT FROM 'IMPORT_INITIALIZE_CURRENT_ADMIN' OR baseline_id=documents_id\n" +
+    " THEN RAISE EXCEPTION 'WHOLE_ROOT_CONTEXT_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    " FOR a IN SELECT * FROM naijue_erp.audit_change WHERE after_values->'whole_package_v2'->>'root_operation'=root_operation::text\n" +
+    "   ORDER BY (after_values->'whole_package_v2'->>'ordinal')::integer LOOP\n" +
+    "  ordinal:=(a.after_values->'whole_package_v2'->>'ordinal')::integer;\n" +
+    "  IF ordinal IS DISTINCT FROM expected_ordinal THEN RAISE EXCEPTION 'WHOLE_ORDINAL_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    "  IF ordinal>0 AND a.after_values->'whole_package_v2' IS DISTINCT FROM\n" +
+    "    jsonb_build_object('root_operation',root_operation,'ordinal',ordinal) THEN\n" +
+    "   RAISE EXCEPTION 'WHOLE_CHILD_MARKER_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    '  expected_ordinal:=expected_ordinal+1;\n' +
+    '  SELECT * INTO STRICT r FROM naijue_erp.operation_receipt WHERE id=a.operation_id;\n' +
+    "  rank:=CASE a.after_values->>'phase' WHEN 'INITIALIZE' THEN 0 WHEN 'MASTER' THEN 1 WHEN 'KEYS' THEN 2 WHEN 'BASELINE_SEAL' THEN 3 WHEN 'DOCUMENT_STAGE' THEN 4 WHEN 'DOCUMENTS' THEN 5 WHEN 'DOCUMENT_PUBLISH' THEN 6 ELSE NULL END;\n" +
+    "  command_phase:=CASE a.after_values->>'phase' WHEN 'BASELINE_SEAL' THEN 'PUBLISH' WHEN 'DOCUMENT_PUBLISH' THEN 'PUBLISH' WHEN 'DOCUMENT_STAGE' THEN 'DOCUMENTS' ELSE a.after_values->>'phase' END;\n" +
+    '  IF rank IS NULL OR rank<last_rank OR (ordinal=0) IS DISTINCT FROM (rank=0)\n' +
+    "   OR r.actor_account_id IS DISTINCT FROM root_r.actor_account_id OR r.status IS DISTINCT FROM 'COMMITTED'\n" +
+    "   OR r.target_type IS DISTINCT FROM 'IMPORT' OR r.target_id NOT IN (baseline_id,documents_id)\n" +
+    '   OR r.target_id IS DISTINCT FROM (CASE WHEN rank<=3 THEN baseline_id ELSE documents_id END)\n' +
+    "   OR a.object_type IS DISTINCT FROM 'IMPORT' OR a.object_id IS DISTINCT FROM r.target_id OR a.actor_account_id IS DISTINCT FROM r.actor_account_id\n" +
+    '   OR a.id IS DISTINCT FROM r.id OR a.action IS DISTINCT FROM r.action OR a.occurred_at IS DISTINCT FROM root_r.completed_at OR r.completed_at IS DISTINCT FROM root_r.completed_at\n' +
+    "   OR a.after_values->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1' OR r.result_data->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1'\n" +
+    "   OR a.after_values->'request'->>'namespace' IS DISTINCT FROM init->>'namespace'\n" +
+    "   OR a.after_values->'request'->>'plan_sha256' IS DISTINCT FROM init->>'plan_sha256'\n" +
+    "   OR a.after_values->'request'->>'package_manifest_sha256' IS DISTINCT FROM init->>'package_manifest_sha256'\n" +
+    "   OR a.after_values->'request'->>'cutoff_at' IS DISTINCT FROM init->>'cutoff_at'\n" +
+    "   OR a.after_values->'request'->>'operation_id' IS DISTINCT FROM r.id::text OR a.after_values->'request'->>'request_key' IS DISTINCT FROM r.request_key\n" +
+    "   OR (ordinal>0 AND r.request_hash IS DISTINCT FROM encode(sha256(convert_to(command_phase||':'||(a.after_values->'request')::text,'UTF8')),'hex'))\n" +
+    '   OR a.before_values IS DISTINCT FROM previous->(r.target_id::text)\n' +
+    "   OR a.new_version IS DISTINCT FROM (a.after_values->'checkpoint'->>'sequence')::integer+1\n" +
+    "  THEN RAISE EXCEPTION 'WHOLE_RECEIPT_CHAIN_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    '  -- A committed receipt must prove the whole lifecycle independently of the writer.\n' +
+    '  -- MASTER/KEYS/DOCUMENTS chunks may repeat; boundary transitions may not.\n' +
+    '  IF (rank=3 AND baseline_sealed) OR (rank>3 AND NOT baseline_sealed)\n' +
+    '   OR (rank=4 AND documents_staged) OR (rank>4 AND NOT documents_staged)\n' +
+    '   OR documents_published THEN\n' +
+    "   RAISE EXCEPTION 'WHOLE_SINGLETON_PHASE_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    '  baseline_sealed:=baseline_sealed OR rank=3;\n' +
+    '  documents_staged:=documents_staged OR rank=4;\n' +
+    '  documents_published:=documents_published OR rank=6;\n' +
+    "  last_rank:=rank;previous:=jsonb_set(previous,ARRAY[r.target_id::text],a.after_values->'checkpoint');\n" +
+    "  last_status:=jsonb_set(last_status,ARRAY[r.target_id::text],r.result_data->'status');final_result:=r.result_data;\n" +
+    ' END LOOP;\n' +
+    ' IF NOT baseline_sealed OR NOT documents_staged OR NOT documents_published\n' +
+    '  OR last_rank<>6 OR expected_ordinal<4 OR (SELECT count(*) FROM jsonb_object_keys(previous))<>2 THEN\n' +
+    "  RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n" +
+    ' FOR b IN SELECT * FROM naijue_erp.import_batch WHERE id IN (baseline_id,documents_id) LOOP\n' +
+    '  -- Reconcile both batch identities and declared totals to the immutable INIT,\n' +
+    '  -- not merely to mutually agreeing live checkpoint/count values.\n' +
+    "  IF b.source_manifest_ref IS DISTINCT FROM init->'payload'->>'manifest_ref'\n" +
+    "   OR b.cutoff_at IS DISTINCT FROM (init->>'cutoff_at')::timestamptz\n" +
+    "   OR b.mapping_version IS DISTINCT FROM (CASE WHEN b.id=baseline_id THEN 'STANDARD_INITIAL_EXPLICIT_KEYS_V1' ELSE 'DOCUMENT_CONVERSION_V1' END)\n" +
+    "   OR b.inventory_mode IS DISTINCT FROM (CASE WHEN b.id=baseline_id THEN 'CUTOFF_STOCK_BASELINE' ELSE 'DOCUMENT_CONVERSION' END)\n" +
+    '   OR b.created_at IS DISTINCT FROM root_r.completed_at\n' +
+    '   OR b.completed_at IS DISTINCT FROM root_r.completed_at\n' +
+    "   OR b.checkpoint->'expected' IS DISTINCT FROM\n" +
+    "     (CASE WHEN b.id=baseline_id THEN init->'payload'->'expected' ELSE init->'payload'->'expected_documents' END)\n" +
+    "  THEN RAISE EXCEPTION 'WHOLE_BATCH_INITIALIZATION_BINDING_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    "  IF b.status IS DISTINCT FROM 'IMPORTED' OR last_status->>b.id::text IS DISTINCT FROM 'IMPORTED'\n" +
+    "   OR b.checkpoint IS DISTINCT FROM previous->b.id::text OR b.checkpoint->'counts' IS DISTINCT FROM b.checkpoint->'expected'\n" +
+    "   OR b.source_hash IS DISTINCT FROM init->>'package_manifest_sha256' OR b.source_name IS DISTINCT FROM init->>'namespace'\n" +
+    "  THEN RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n" +
+    ' END LOOP;\n' +
+    " IF (SELECT count(*) FROM naijue_erp.import_batch WHERE id IN (baseline_id,documents_id))<>2 THEN RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n" +
+    ' RETURN final_result;\n' +
+    'END '
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-batch-closure-candidate.test.mjs:19:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "\nDECLARE root_a naijue_erp.audit_change%ROWTYPE; root_r naijue_erp.operation_receipt%ROWTYPE;\n a naijue_erp.audit_change%ROWTYPE; r naijue_erp.operation_receipt%ROWTYPE; b naijue_erp.import_batch%ROWTYPE;\n init jsonb; previous jsonb:='{}'; last_status jsonb:='{}'; expected_ordinal integer:=0; ordinal integer; command_phase text;\n baseline_id uuid; documents_id uuid; final_result jsonb; rank integer; last_rank integer:=-1;\n baseline_sealed boolean:=false; documents_staged boolean:=false; documents_published boolean:=false;\nBEGIN\n SELECT * INTO STRICT root_a FROM naijue_erp.audit_change WHERE operation_id=root_operation;\n SELECT * INTO STRICT root_r FROM naijue_erp.operation_receipt WHERE id=root_operation;\n init:=root_a.after_values->'request';baseline_id:=(init->>'batch_id')::uuid;documents_id:=(init->'payload'->>'document_batch_id')::uuid;\n IF root_a.after_values->'whole_package_v2'->>'root_operation' IS DISTINCT FROM root_operation::text\n  OR root_a.after_values->'whole_package_v2'->'ordinal' IS DISTINCT FROM '0'::jsonb\n  OR root_r.action IS DISTINCT FROM 'IMPORT_INITIALIZE_CURRENT_ADMIN' OR baseline_id=documents_id\n THEN RAISE EXCEPTION 'WHOLE_ROOT_CONTEXT_INVALID' USING ERRCODE='23514'; END IF;\n FOR a IN SELECT * FROM naijue_erp.audit_change WHERE after_values->'whole_package_v2'->>'root_operation'=root_operation::text\n   ORDER BY (after_values->'whole_package_v2'->>'ordinal')::integer LOOP\n  ordinal:=(a.after_values->'whole_package_v2'->>'ordinal')::integer;\n  IF ordinal IS DISTINCT FROM expected_ordinal THEN RAISE EXCEPTION 'WHOLE_ORDINAL_INVALID' USING ERRCODE='23514'; END IF;\n  IF ordinal>0 AND a.after_values->'whole_package_v2' IS DISTINCT FROM\n    jsonb_build_object('root_operation',root_operation,'ordinal',ordinal) THEN\n   RAISE EXCEPTION 'WHOLE_CHILD_MARKER_INVALID' USING ERRCODE='23514'; END IF;\n  expected_ordinal:=expected_ordinal+1;\n  SELECT * INTO STRICT r FROM naijue_erp.operation_receipt WHERE id=a.operation_id;\n  rank:=CASE a.after_values->>'phase' WHEN 'INITIALIZE' THEN 0 WHEN 'MASTER' THEN 1 WHEN 'KEYS' THEN 2 WHEN 'BASELINE_SEAL' THEN 3 WHEN 'DOCUMENT_STAGE' THEN 4 WHEN 'DOCUMENTS' THEN 5 WHEN 'DOCUMENT_PUBLISH' THEN 6 ELSE NULL END;\n  command_phase:=CASE a.after_values->>'phase' WHEN 'BASELINE_SEAL' THEN 'PUBLISH' WHEN 'DOCUMENT_PUBLISH' THEN 'PUBLISH' WHEN 'DOCUMENT_STAGE' THEN 'DOCUMENTS' ELSE a.after_values->>'phase' END;\n  IF rank IS NULL OR rank<last_rank OR (ordinal=0) IS DISTINCT FROM (rank=0)\n   OR r.actor_account_id IS DISTINCT FROM root_r.actor_account_id OR r.status IS DISTINCT FROM 'COMMITTED'\n   OR r.target_type IS DISTINCT FROM 'IMPORT' OR r.target_id NOT IN (baseline_id,documents_id)\n   OR r.target_id IS DISTINCT FROM (CASE WHEN rank<=3 THEN baseline_id ELSE documents_id END)\n   OR a.object_type IS DISTINCT FROM 'IMPORT' OR a.object_id IS DISTINCT FROM r.target_id OR a.actor_account_id IS DISTINCT FROM r.actor_account_id\n   OR a.id IS DISTINCT FROM r.id OR a.action IS DISTINCT FROM r.action OR a.occurred_at IS DISTINCT FROM root_r.completed_at OR r.completed_at IS DISTINCT FROM root_r.completed_at\n   OR a.after_values->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1' OR r.result_data->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1'\n   OR a.after_values->'request'->>'namespace' IS DISTINCT FROM init->>'namespace'\n   OR a.after_values->'request'->>'plan_sha256' IS DISTINCT FROM init->>'plan_sha256'\n   OR a.after_values->'request'->>'package_manifest_sha256' IS DISTINCT FROM init->>'package_manifest_sha256'\n   OR a.after_values->'request'->>'cutoff_at' IS DISTINCT FROM init->>'cutoff_at'\n   OR a.after_values->'request'->>'operation_id' IS DISTINCT FROM r.id::text OR a.after_values->'request'->>'request_key' IS DISTINCT FROM r.request_key\n   OR (ordinal>0 AND r.request_hash IS DISTINCT FROM encode(sha256(convert_to(command_phase||':'||(a.after_values->'request')::text,'UTF8')),'hex'))\n   OR a.before_values IS DISTINCT FROM previous->(r.target_id::text)\n   OR a.new_version IS DISTINCT FROM (a.after_values->'checkpoint'->>'sequence')::integer+1\n  THEN RAISE EXCEPTION 'WHOLE_RECEIPT_CHAIN_INVALID' USING ERRCODE='23514'; END IF;\n  -- A committed receipt must prove the whole lifecycle independently of the writer.\n  -- MASTER/KEYS/DOCUMENTS chunks may repeat; boundary transitions may not.\n  IF (rank=3 AND baseline_sealed) OR (rank>3 AND NOT baseline_sealed)\n   OR (rank=4 AND documents_staged) OR (rank>4 AND NOT documents_staged)\n   OR documents_published THEN\n   RAISE EXCEPTION 'WHOLE_SINGLETON_PHASE_INVALID' USING ERRCODE='23514'; END IF;\n  baseline_sealed:=baseline_sealed OR rank=3;\n  documents_staged:=documents_staged OR rank=4;\n  documents_published:=documents_published OR rank=6;\n  last_rank:=rank;previous:=jsonb_set(previous,ARRAY[r.target_id::text],a.after_values->'checkpoint');\n  last_status:=jsonb_set(last_status,ARRAY[r.target_id::text],r.result_data->'status');final_result:=r.result_data;\n END LOOP;\n IF NOT baseline_sealed OR NOT documents_staged OR NOT documents_published\n  OR last_rank<>6 OR expected_ordinal<4 OR (SELECT count(*) FROM jsonb_object_keys(previous))<>2 THEN\n  RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n FOR b IN SELECT * FROM naijue_erp.import_batch WHERE id IN (baseline_id,documents_id) LOOP\n  -- Reconcile both batch identities and declared totals to the immutable INIT,\n  -- not merely to mutually agreeing live checkpoint/count values.\n  IF b.source_manifest_ref IS DISTINCT FROM init->'payload'->>'manifest_ref'\n   OR b.cutoff_at IS DISTINCT FROM (init->>'cutoff_at')::timestamptz\n   OR b.mapping_version IS DISTINCT FROM (CASE WHEN b.id=baseline_id THEN 'STANDARD_INITIAL_EXPLICIT_KEYS_V1' ELSE 'DOCUMENT_CONVERSION_V1' END)\n   OR b.inventory_mode IS DISTINCT FROM (CASE WHEN b.id=baseline_id THEN 'CUTOFF_STOCK_BASELINE' ELSE 'DOCUMENT_CONVERSION' END)\n   OR b.created_at IS DISTINCT FROM root_r.completed_at\n   OR b.completed_at IS DISTINCT FROM root_r.completed_at\n   OR b.checkpoint->'expected' IS DISTINCT FROM\n     (CASE WHEN b.id=baseline_id THEN init->'payload'->'expected' ELSE init->'payload'->'expected_documents' END)\n  THEN RAISE EXCEPTION 'WHOLE_BATCH_INITIALIZATION_BINDING_INVALID' USING ERRCODE='23514'; END IF;\n  IF b.status IS DISTINCT FROM 'IMPORTED' OR last_status->>b.id::text IS DISTINCT FROM 'IMPORTED'\n   OR b.checkpoint IS DISTINCT FROM previous->b.id::text OR b.checkpoint->'counts' IS DISTINCT FROM b.checkpoint->'expected'\n   OR b.source_hash IS DISTINCT FROM init->>'package_manifest_sha256' OR b.source_name IS DISTINCT FROM init->>'namespace'\n  THEN RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n END LOOP;\n IF (SELECT count(*) FROM naijue_erp.import_batch WHERE id IN (baseline_id,documents_id))<>2 THEN RAISE EXCEPTION 'WHOLE_PACKAGE_INCOMPLETE' USING ERRCODE='23514'; END IF;\n RETURN final_result;\nEND ",
+    expected: /b\.checkpoint->'expected' IS DISTINCT FROM\s+CASE WHEN b\.id=baseline_id THEN init->'payload'->'expected' ELSE init->'payload'->'expected_documents' END/,
+    operator: 'match',
+    diff: 'simple'
+  }

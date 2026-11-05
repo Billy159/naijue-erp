@@ -1,0 +1,94 @@
+{
+  "atUtc": "2026-10-23T23:29:23.677484+00:00",
+  "parent": "3d4568ea3297a32b9ffb5f6f111d75b123e727ec",
+  "taskId": "F3_QF2_B01_B02_NATIVE_TAB_LINE_HEIGHT",
+  "files": [
+    {
+      "path": "apps/web/src/settings/stores/demo-store-ui.css",
+      "bytes": 22673,
+      "sha256": "c6a0d5d694d288f4cbc105cebf04979050b0a4424409ddf413a6b3533e191e4e",
+      "owner": "F3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-tab-line-height-v1/RESULT.json",
+  "ownerReceiptSha256AtPin": "25ac5e1c5797bfcd46e27964d6d8af60474abdc4d243db23161cf5f5fac806ef",
+  "ownerDelivery": {
+    "task": "F3-F05-QF2-B01B02-TAB-HEIGHT-01",
+    "clientDate": "2026-10-24",
+    "createdAt": "2026-10-23T23:24:28.008655+00:00",
+    "status": "SOURCE_READY_FOR_C_FIXED_DELTA_AND_QF2_TARGETED_ACTUAL_RETEST",
+    "finding": "QF2-B01B02-TAB-HEIGHT-01",
+    "baseline": "QF2 actual C233/2485e5b/build01/57877/1470x668/DPR2",
+    "files": [
+      {
+        "path": "apps/web/src/settings/stores/demo-store-ui.css",
+        "beforeSha256": "930b015945cff6e07c3d22b6e25b5513cb82582bc8aca9e9d96138da2e3d46c4",
+        "afterSha256": "c6a0d5d694d288f4cbc105cebf04979050b0a4424409ddf413a6b3533e191e4e",
+        "bytes": 22673
+      }
+    ],
+    "change": "Only the existing .demo-store-workbench .bs-tabs button rule gains line-height:1.15, plus its source comment. No fixed height, padding, toolbar/table position, shared Frame or other selectors change.",
+    "source": {
+      "frontend/basic-settings-v2.jsx": {
+        "commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+        "sha256": "c16e44268ac75f50784c0ce8c8b45826eb267ec85c8cee06596d24ab2a0761fa",
+        "workingFileMatchesFrozenCommit": true
+      },
+      "frontend/basic-settings-v2.css": {
+        "commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+        "sha256": "92f519c978f94fdefed31f513f3279f01a5d40705fff51b8f76cba2265f31393",
+        "workingFileMatchesFrozenCommit": true
+      },
+      "package.json": {
+        "commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+        "sha256": "f259d5f18ffcfcab72ed2fc20151978642f8b37924db5cf307626ff2e3697d4a",
+        "workingFileMatchesFrozenCommit": true
+      }
+    },
+    "sourceWinnerTrace": {
+      "frozen": "basic-settings-v2.jsx injects Arco2.66.16 CSS then basic-settings-v2.css; source tab rule specifies13px but no line-height, leaving Arco normalize forms1.15 as the final value measured by QF2",
+      "current": "F1 frame.css font13px/1.5 and font:inherit reset reaches native tab buttons; current module tab rule omitted line-height, matching QF2 observed19.5px",
+      "newScopedRule": "Explicit1.15 restores that dependency in the existing module tab selector with specificity0,2,1, applying to both native buttons and either selected state",
+      "arcoVersion": "2.66.16",
+      "normalizeRuleSha256": "6f771376df347879bd289e0f19ede1755ead385a3841aa529538cff56bcfc4b9"
+    },
+    "baselineAndTarget": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-tab-line-height-v1/BASELINE-AND-TARGET.json",
+      "sha256": "f5a2e598f4ac3920cf38b1e7c50f1804cea4f5dbd71e3896e555ffa99dda677e",
+      "actualBeforeLineHeight": [
+        19.5,
+        14.95
+      ],
+      "actualBeforeButtonHeight": [
+        36.5,
+        31.9453125
+      ],
+      "toolbarAndTableDeltaPx": 4.5546875,
+      "sourceTargetAt13px": 14.95,
+      "physicalGeometryAfter": "NOT_MEASURED_BY_F3"
+    },
+    "check": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/store-tab-line-height-v1/CSS-CHECK.json",
+      "sha256": "4a171be1970ba93e3aefad6299b5f23bec83b79dc969950bb8d73c269773b640",
+      "status": "PASS_SCOPED_STORE_TAB_CSS_DELTA",
+      "warnings": 0,
+      "write": false,
+      "fullApplicationBuild": false
+    },
+    "diffCheck": "PASS",
+    "unchanged": [
+      "C174 DOM and native tab behavior",
+      "all TS/TSX files and reader/HTTP/DTO/permission contracts",
+      "single-hall warehouse and existing default-customer field/provider boundary",
+      "audit/read-only capability boundaries",
+      "shared Frame/controls/global styles"
+    ],
+    "actualBrowser": false,
+    "server": false,
+    "database": false,
+    "gitMutation": false,
+    "oldReaderPublicControlBackendSuites": "NOT_RERUN",
+    "next": "C fixes exact1 delta into a new candidate; QF2 alone checks both-tab switching and tab→toolbar/table geometry at same viewport. Actual P2 remains open until that result."
+  },
+  "qualification": "Originalmodule owner necessary targeted source checks adopted; independent source/newfixed browser actual pending, not current233. No shareddefault glyph change/backendsave/schema/wholepage or formalperformance acceptance."
+}

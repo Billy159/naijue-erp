@@ -1,0 +1,23 @@
+{
+  "scope": "New apps/web/src/transfers/** only",
+  "verifiedAtUtc": "2026-10-20T20:23:09Z",
+  "pureTests": { "passed": 15, "failed": 0 },
+  "reactDomGroups": { "passed": 11, "failed": 0 },
+  "scopedStrictTypecheck": { "exitCode": 0, "provenance": "scoped-typecheck-exit.txt" },
+  "splitBrowserBuild": "passed",
+  "frozenSourceMapping": "passed",
+  "sourceManifest": "source.sha256",
+  "dependencyManifest": "dependencies.sha256",
+  "independentReview": {
+    "status": "passed",
+    "sourceManifestSha256": "490550323f239fd5e1ad9e648708b9f8dbaa7408d7770f5533af3ccabfa7a8c7",
+    "modelGroups": 7,
+    "reactDomGroups": 6,
+    "staticBundleGroups": 2,
+    "report": "evidence/transfer-read-ui-independent-review.md",
+    "reviewEvidenceSha256": "62d664105bd47c3aed7a9dd001f920d44a1ead16423a590b44889a58b2ec6bbd"
+  },
+  "notRun": ["real browser", "pixel comparison", "network", "server", "database", "installation", "production acceptance"],
+  "externalActions": { "commit": false, "push": false },
+  "knownWarnings": ["Pinned Arco 2.66.16 emits React 19 element.ref development deprecation warnings; not suppressed."]
+}

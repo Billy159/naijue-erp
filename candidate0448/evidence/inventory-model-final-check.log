@@ -1,0 +1,36 @@
+✔ inventory does not read before explicit run; bounded products and exact full-filter summary (156.025417ms)
+✔ preserves full size labels, FIT identities, unknown/zero/negative/nonexistent specifications (38.433466ms)
+✔ integer totals never coerce unknown to zero and keep large exact values (4.459224ms)
+✔ filter draft mutation cannot relabel executed facts; failure preserves its own prior scope (9.241076ms)
+✔ missing cell, malformed integer and pagination mismatch fail instead of zero-success (14.755388ms)
+✔ identity replacement clears inventory references and stops future scope reads (3.024966ms)
+✔ candidate fixture is paged and independent from inventory reads (3.94769ms)
+✔ registration is inert; only activated leaf and its styles load, then code is reused (22.258927ms)
+✔ shared code load keeps consumer cancellation separate (58.762537ms)
+✔ failed code or style leaves can retry without exposing a half-ready module (7.79095ms)
+✔ retained module references are LRU bounded; no cache eviction starts a load (12.939264ms)
+✔ inactive scopes do not start imports (5.544163ms)
+✔ reads start only on run; frozen executed parameters do not follow editable draft (35.781907ms)
+✔ newer query aborts old transport; ignored cancellation cannot overwrite newest result (9.034619ms)
+✔ refresh failure retains last successful facts and their own executed range (11.254136ms)
+✔ switching account clears references immediately; late response cannot reopen a closed region (21.914927ms)
+✔ permission/session refresh invalidates even the same account; clear blocks new scopes (2.236077ms)
+✔ different entity scopes have no shared result state, and closing one leaves another alive (4.314787ms)
+✔ authoritative command result beats old detail read and rejects later older entity versions (6.748502ms)
+✔ cancel read is not dispose and does not clear previous successful facts (0.604505ms)
+✔ invalid parameter snapshot does not supersede a valid pending request (3.480972ms)
+✔ subscriber errors and reentrant disposal cannot bypass cleanup or start an unwanted read (5.50687ms)
+✔ plain parameter snapshots reject cyclic, nonfinite and accessor input without invoking getters (6.219553ms)
+✔ disposing during success notification returns discarded rather than actionable old data (2.551959ms)
+✔ cancel before any successful read returns waiting state rather than false empty success (1.801936ms)
+✔ registration snapshots factories and validates the retained-reference budget (1.230549ms)
+✔ clearing references during an import does not create unbounded duplicate in-flight loads (6.053695ms)
+✔ clear without reactivation does not retain an import after settlement (4.827821ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3089.040674

@@ -1,0 +1,45 @@
+{
+  "atUtc": "2026-10-22T08:34:22.391412+00:00",
+  "parent": "947db3a58006d65c4b45314f283d4c07054ac9ac",
+  "groups": [
+    {
+      "slice": "F3_W8_PASSWORD_SESSION_STATE_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/QF-STAFF-PASSWORD-STATE-01-FIX-RESULT.json",
+      "receiptSha256": "705f630bf103dd800b7063a42d84920cd37c64dca0cd46b7cd4e07a6455dbcc7",
+      "files": [
+        {
+          "path": "apps/web/src/staff-settings/contracts.ts",
+          "beforeSha256": "f43a69cfaa18202cf66f069d3a961812ed268cc843cbcef0a737600f169f0189",
+          "sha256": "bfa45a11166e437ccd687b5fefb81a8144ddd41a5388753f001378dda8e34537",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/controller.ts",
+          "beforeSha256": "46cf3c96aee767e5a8aac0df96132ae2391342a4af4c0c7b4c68089db920bd09",
+          "sha256": "54d1593c921747c589d021b3e6974d2834175ef32d7ed0c57a5765b18caa0bc2",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/controller.test.ts",
+          "beforeSha256": "7490e9e36415ce6b7676e5236522483debb1b3afe49e630ae0875ddee6e8d797",
+          "sha256": "a6db50c43ff797bfd0014fb2c20d0c01378a201ccdf30e16fcf6e7cfb8dea999",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/response-validation.ts",
+          "beforeSha256": "995921228693847971b821b5aa240bc0f16bac5d085701179e3b6e7426803cca",
+          "sha256": "0d6f9002fa0007ecfe39d25a4df10e631e551c34b46100f5d04d5590299e77c3",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-form.tsx",
+          "beforeSha256": "537a45ef987c890f3cc224e40b96e0cad6ee87c1bd2ef2293416fb7ded2dec09",
+          "sha256": "a8fff6ef4ee2dc43a95c3144123ef2a9823dd61deb34e7961dd92148f642c9c4",
+          "owner": "F3"
+        }
+      ]
+    }
+  ],
+  "fileCount": 5,
+  "scope": "Single QF P2 targeted fix source; original failed version retained; no actual browser/PG"
+}

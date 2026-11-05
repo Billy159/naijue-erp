@@ -1,0 +1,19 @@
+{
+  "system_identifier": "7698856207892361241",
+  "version": "PostgreSQL 17.11 (Debian 17.11-0+deb13u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "postmaster_start": "2026-10-21T05:54:11.216533+09:00",
+  "listen_addresses": "127.0.0.1",
+  "port": 55432,
+  "address": "127.0.0.1",
+  "recovery": false,
+  "role_flags": {
+    "rolname": "naijue_erp_test",
+    "rolsuper": false,
+    "rolcreatedb": false,
+    "rolcreaterole": false,
+    "rolreplication": false,
+    "rolbypassrls": false,
+    "rolcanlogin": true
+  },
+  "isolation": "Separately initialized owned disposable physical cluster outside repository; direct loopback only, no tunnel/proxy/container mapping. Unix sockets disabled by the reviewed explicit startup options."
+}

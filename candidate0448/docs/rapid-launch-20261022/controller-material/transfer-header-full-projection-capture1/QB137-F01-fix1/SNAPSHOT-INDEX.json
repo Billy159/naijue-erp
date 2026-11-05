@@ -1,0 +1,57 @@
+{
+  "atUtc": "2026-10-23T03:02:06.253342+00:00",
+  "purpose": "QB139 accepted cleanup successor: public code/unsigned metadata only",
+  "files": [
+    {
+      "file": "RESULT.json",
+      "bytes": 4354,
+      "sha256": "cbc37609942b06fd0c59850cffa5290c5388ecbb954b369853532dd6fe3eda7f",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/RESULT.json"
+    },
+    {
+      "file": "capture-once.mjs",
+      "bytes": 29323,
+      "sha256": "36c89d89a1f3b98b4cee2ad4bd798ed35b480eb00c0a54caf3ba3edaae412d54",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/capture-once.mjs"
+    },
+    {
+      "file": "RUNTIME-CLOSURE.json",
+      "bytes": 27399,
+      "sha256": "28f85d8efac8378aa345e80a1ee85c809e94b4fb3b09cb822f47ce184e07fd2e",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/RUNTIME-CLOSURE.json"
+    },
+    {
+      "file": "build-closure.mjs",
+      "bytes": 2267,
+      "sha256": "ff1dcd523ff64ed22734247558ae0d8570b7668efbd115b694504c159315dc30",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/build-closure.mjs"
+    },
+    {
+      "file": "SYNTHETIC-RESULT.json",
+      "bytes": 2362,
+      "sha256": "e51a00aca0fb14cd5a3723f45a7130f97df8aa042c29e81f6ab9570e31fff4b2",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/SYNTHETIC-RESULT.json"
+    },
+    {
+      "file": "cleanup-targeted.test.mjs",
+      "bytes": 2233,
+      "sha256": "77a42064ab95a8a0a06d34366ece60106275c5519c8b3bc1160adf5a13d0a3c2",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/cleanup-targeted.test.mjs"
+    },
+    {
+      "file": "WINDOW-DRAFT-NOT-AUTHORIZED.json",
+      "bytes": 8357,
+      "sha256": "11c70c275b54700877d07937ca5768b2f5d2521abd9ee8969da4375debe71cf6",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/WINDOW-DRAFT-NOT-AUTHORIZED.json"
+    }
+  ],
+  "review": {
+    "id": "QB139",
+    "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice139-qb137-f01-cleanup-fix1/RESULT.json",
+    "evidenceBytes": 10956,
+    "evidenceSha256": "37a64dd31a8e8d866174feebc0c1898c9c66ca06ffc1336efff2de74f8e56cce",
+    "result": "PASS"
+  },
+  "physicalReadWindowAuthorized": false,
+  "realImportAuthorized": false
+}

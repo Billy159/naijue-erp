@@ -1,0 +1,145 @@
+{
+  "format_version": "HISTORICAL_LINE_AMOUNT_EVIDENCE_V1",
+  "source_namespace": "synthetic.unified.v1",
+  "evidence_sha256": "4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1",
+  "lines": [
+    {
+      "sales_source_key": "sales_header:01",
+      "sales_id": "247ad997-ce44-28b2-4722-9dfb83c05b23",
+      "sales_source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ],
+      "line_source_key": "SYNTHETIC-DIFFERENCE-1",
+      "line_id": "e733e372-8bd6-886d-2d8d-cb78c739916d",
+      "source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 100
+        }
+      ],
+      "quantity": "3",
+      "deal_price": "1.01",
+      "line_amount": "3.04"
+    },
+    {
+      "sales_source_key": "sales_header:01",
+      "sales_id": "247ad997-ce44-28b2-4722-9dfb83c05b23",
+      "sales_source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ],
+      "line_source_key": "SYNTHETIC-DIFFERENCE-2",
+      "line_id": "f9841d8c-7a39-dc61-43f4-35e8bdd7550e",
+      "source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 101
+        }
+      ],
+      "quantity": "-3",
+      "deal_price": "1.01",
+      "line_amount": "-3.02"
+    },
+    {
+      "sales_source_key": "sales_header:01",
+      "sales_id": "247ad997-ce44-28b2-4722-9dfb83c05b23",
+      "sales_source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ],
+      "line_source_key": "SYNTHETIC-DIFFERENCE-3",
+      "line_id": "077114b3-1d6e-dbf7-24ef-ddb9cd3b67ec",
+      "source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 102
+        }
+      ],
+      "quantity": "1",
+      "deal_price": "90071992547409.91",
+      "line_amount": "90071992547409.92"
+    },
+    {
+      "sales_source_key": "sales_header:01",
+      "sales_id": "247ad997-ce44-28b2-4722-9dfb83c05b23",
+      "sales_source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ],
+      "line_source_key": "SYNTHETIC-DIFFERENCE-4",
+      "line_id": "1d53854c-bfb2-bb74-a3c4-9f3b5e738674",
+      "source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 103
+        }
+      ],
+      "quantity": "16",
+      "deal_price": "1.00",
+      "line_amount": "15.99"
+    },
+    {
+      "sales_source_key": "sales_header:01",
+      "sales_id": "247ad997-ce44-28b2-4722-9dfb83c05b23",
+      "sales_source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ],
+      "line_source_key": "SYNTHETIC-DIFFERENCE-5",
+      "line_id": "4c378605-cb1a-614e-85e5-813aaa84948e",
+      "source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 104
+        }
+      ],
+      "quantity": "1",
+      "deal_price": "0.00",
+      "line_amount": "0.01"
+    },
+    {
+      "sales_source_key": "sales_header:01",
+      "sales_id": "247ad997-ce44-28b2-4722-9dfb83c05b23",
+      "sales_source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 1
+        }
+      ],
+      "line_source_key": "SYNTHETIC-DIFFERENCE-6",
+      "line_id": "42dfa0ae-c66c-d5f4-745e-cddb9ae69d07",
+      "source_refs": [
+        {
+          "file_sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7",
+          "sheet": "SYNTHETIC",
+          "row": 105
+        }
+      ],
+      "quantity": "-1",
+      "deal_price": "5.00",
+      "line_amount": "-4.99"
+    }
+  ]
+}

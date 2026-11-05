@@ -1,0 +1,40 @@
+// Install as runtime/products/drawer-mount-focus.test.mjs. Tests only.
+// Actual installed local helper and original ReadScopes; no environment fallback.
+import assert,{AssertionError} from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+import {JSDOM} from 'jsdom';
+import {createDrawerMountFocus} from './drawer-mount-focus.ts';
+import {ReadContext} from '../../../../src/loading/read-scope.ts';
+const here=path.dirname(fileURLToPath(import.meta.url));
+const repo=path.resolve(here,'../../../../../..');
+const receipts=[];
+const check=(value,label)=>assert.equal(value===true,true,label);
+const fixture=()=>{
+ const dom=new JSDOM('<!doctype html><body><button id="opener">查看</button><button id="other">其他</button><div id="panel" tabindex="-1"></div><button id="preview">图片顶层控制</button></body>',{url:'https://synthetic-owned-focus.invalid/',pretendToBeVisual:true});
+ const doc=dom.window.document,anchor=doc.getElementById('opener'),node=doc.getElementById('panel'),other=doc.getElementById('other'),preview=doc.getElementById('preview');
+ let focused=true;Object.defineProperty(doc,'hasFocus',{configurable:true,value:()=>focused});
+ const context=new ReadContext({accountId:'10000000-0000-4000-8000-000000000001',sessionRevision:'1',permissionRevision:'1'}),parent=context.createScope('parent'),scope=context.createScope('child');
+ const workbench={current:null},calls=[],nativeFocus=node.focus.bind(node);
+ node.focus=options=>{calls.push(options?.preventScroll===true);nativeFocus(options);};
+ anchor.focus();
+ const attach=createDrawerMountFocus({workbench,scope,parent,anchor});
+ return {dom,doc,anchor,node,other,preview,context,parent,scope,workbench,calls,attach,setFocused:v=>{focused=v;},close(){context.clear();dom.window.close();}};
+};
+const run=(name,fn)=>{const f=fixture();try{fn(f);receipts.push({name,status:'PASS'});}catch(error){receipts.push({name,status:'FAIL',assertion:error instanceof AssertionError});process.exitCode=1;}finally{f.close();}};
+run('eligible connected same-document opener receives one preventScroll mount focus',f=>{f.attach(f.node);check(f.calls.length===1&&f.calls[0]===true,'ONE_PREVENT_SCROLL_FOCUS');check(f.doc.activeElement===f.node,'WORKBENCH_ACTIVE');check(f.workbench.current===f.node,'REAL_WORKBENCH_REF_PRESERVED');});
+run('null ref before first real mount does not consume eligible first mount',f=>{f.attach(null);check(f.workbench.current===null,'NULL_REF');f.attach(f.node);check(f.calls.length===1,'FIRST_NON_NULL_FOCUS');});
+run('another active element is never stolen, including later ref remount',f=>{f.other.focus();f.attach(f.node);check(f.calls.length===0&&f.doc.activeElement===f.other,'OTHER_FOCUS_PRESERVED');f.anchor.focus();f.attach(null);f.attach(f.node);check(f.calls.length===0&&f.doc.activeElement===f.anchor,'REFUSED_ATTEMPT_NOT_RETRIED');});
+run('background document never focuses and refused first attempt is final',f=>{f.setFocused(false);f.attach(f.node);check(f.calls.length===0,'BACKGROUND_SKIP');f.setFocused(true);f.attach(null);f.attach(f.node);check(f.calls.length===0,'NO_BACKGROUND_LATE_RETRY');});
+run('disconnected opener is rejected',f=>{f.anchor.remove();f.attach(f.node);check(f.calls.length===0,'DISCONNECTED_OPENER');});
+run('null opener is rejected',f=>{const attach=createDrawerMountFocus({workbench:f.workbench,scope:f.scope,parent:f.parent,anchor:null});attach(f.node);check(f.calls.length===0,'NULL_OPENER');});
+run('other-document opener is rejected',f=>{const foreign=new JSDOM('<!doctype html><button>外部</button>');try{const attach=createDrawerMountFocus({workbench:f.workbench,scope:f.scope,parent:f.parent,anchor:foreign.window.document.querySelector('button')});attach(f.node);check(f.calls.length===0,'FOREIGN_DOCUMENT');}finally{foreign.window.close();}});
+run('child abort before actual DOM mount prevents focus and retry',f=>{f.scope.dispose();f.attach(f.node);check(f.calls.length===0,'CHILD_ABORT_SKIP');f.attach(null);f.attach(f.node);check(f.calls.length===0,'NO_CHILD_ABORT_RETRY');});
+run('parent abort before actual DOM mount prevents focus even if child still active',f=>{f.parent.dispose();check(f.scope.active===true,'INDEPENDENT_CHILD_SETUP');f.attach(f.node);check(f.calls.length===0,'PARENT_ABORT_SKIP');});
+run('disconnected first node consumes attempt and never schedules later focus',f=>{f.node.remove();f.attach(f.node);check(f.calls.length===0,'DISCONNECTED_NODE_SKIP');f.doc.body.append(f.node);f.attach(null);f.attach(f.node);check(f.calls.length===0,'NO_CONNECT_LATE_RETRY');});
+run('duplicate ref or remount never refocuses after an eligible mount',f=>{f.attach(f.node);f.anchor.focus();f.attach(f.node);f.attach(null);f.attach(f.node);check(f.calls.length===1&&f.doc.activeElement===f.anchor,'NO_DUPLICATE_FOCUS');});
+run('nested preview focus after opening survives ref remount',f=>{f.attach(f.node);f.preview.focus();f.attach(null);f.attach(f.node);check(f.calls.length===1&&f.doc.activeElement===f.preview,'PREVIEW_FOCUS_PRESERVED');});
+run('already active preview before first mount is not stolen',f=>{f.preview.focus();f.attach(f.node);check(f.calls.length===0&&f.doc.activeElement===f.preview,'PREEXISTING_PREVIEW_FOCUS_PRESERVED');});
+run('abort after first mount never refocuses on remount',f=>{f.attach(f.node);f.scope.dispose();f.parent.dispose();f.other.focus();f.attach(null);f.attach(f.node);check(f.calls.length===1&&f.doc.activeElement===f.other,'POST_ABORT_REF_REMOUNT_SKIP');});
+run('already focused drawer child is not reset to workbench',f=>{const child=f.doc.createElement('button');f.node.append(child);child.focus();f.attach(f.node);check(f.calls.length===0&&f.doc.activeElement===child,'EXISTING_CHILD_FOCUS_PRESERVED');});
+console.log(JSON.stringify({status:receipts.every(row=>row.status==='PASS')?'PASS_GUARD_UNIT_ONLY':'FAIL_GUARD_UNIT_ONLY',scope:'synthetic helper unit tests; no browser/Arco/native overlay PASS',repositoryDerivedFromImportMeta:path.join(repo,'apps/web/demo-replica/frontend/runtime/products')===here,cases:receipts},null,2));

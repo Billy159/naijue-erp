@@ -1,0 +1,77 @@
+{
+  "atUtc": "2026-10-22T18:32:41.457095+00:00",
+  "parent": "5b363f44d303415d26030622d4aee6690259c0d3",
+  "groups": [
+    {
+      "slice": "YEAR_DEMO_INTERACTION_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-SOURCE-01-YEAR-DELIVERY-v1.json",
+      "receiptSha256": "b63d2bfe3256b4dc5f3cf33345a69a14762660fce04b49f193f366dbc31eaf01",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-base.tsx",
+          "owner": "F2",
+          "sha256": "c9919c74544cbd5d6b1de69b9b7bdc2ac27b267798d7ddd153726d847af013a4",
+          "bytes": 16668
+        }
+      ]
+    },
+    {
+      "slice": "APPROVED_ACCOUNT_UI_LEAF_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/DEMO-ACCOUNT-UI-v1-RESULT.json",
+      "receiptSha256": "669f9695701ace8c01bcedd57ee14c02c80a9824cca46c10629a07644787944e",
+      "files": [
+        {
+          "path": "apps/web/src/account-settings/account-page.tsx",
+          "owner": "F3",
+          "sha256": "26aa5fdb6da6785da7ea8ca32ea290ee65bd95157e37522c643b36b17590af74",
+          "bytes": 10540
+        },
+        {
+          "path": "apps/web/src/account-settings/account-form.tsx",
+          "owner": "F3",
+          "sha256": "44c5fd1bf26f5ed6595496029498284543efa317be2b9543e359df5528a9130e",
+          "bytes": 12318
+        }
+      ]
+    },
+    {
+      "slice": "SALES_DETAIL_SETTLEMENT26_AND_RESOLVERS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/history-sales-settlement26-slice1/RESULT.json",
+      "receiptSha256": "f34ec3fd1f471934cdc7fff3b4b6fee7f3e1f3ca92ae4e5db85d483143696f5d",
+      "files": [
+        {
+          "path": "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+          "owner": "D3",
+          "sha256": "cd32df6cdf256b17e5387bc00bf33bf9ee2d2d5483b6a3a329089fa15065f5f5",
+          "bytes": 19561
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+          "owner": "D3",
+          "sha256": "c104b91ec37659e6a410da720ec1ce7b252b21a4920e8dc7bae325dfc289c8c7",
+          "bytes": 17927
+        },
+        {
+          "path": "tests/history-sales-detail-staging-postgres-protocol.test.ts",
+          "owner": "D3",
+          "sha256": "a714e9c113ea59448fc2d2ffc60ac0e421b90edb302d2b7f9f35c95eb8ab0269",
+          "bytes": 12836
+        },
+        {
+          "path": "tests/history-sales-detail-binding-resolver-postgres-protocol.test.ts",
+          "owner": "D3",
+          "sha256": "eae19f421b82b7f2b4062deaf103c54f7920cc104a4ad383f218b2dc195e3839",
+          "bytes": 15595
+        },
+        {
+          "path": "tests/history-settlement-postgres-protocol.test.ts",
+          "owner": "D3",
+          "sha256": "fa80c6758a6763334abfccc41ea205ede0290b2981e14ff82758c8356c0fc695",
+          "bytes": 10933
+        }
+      ]
+    }
+  ],
+  "fileCount": 8,
+  "scope": "Only listed source deltas; F2 developer whole types blocked by other in-flight files, fixed snapshot QF follows. Account root missing; native import/PG/business not accepted."
+}

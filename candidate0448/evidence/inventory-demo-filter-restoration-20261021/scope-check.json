@@ -1,0 +1,169 @@
+{
+  "baseCommit": "cdd15dbd59de1393849ac44d9dbdc154a793299e",
+  "ownedPaths": [
+    "apps/web/src/components/candidate-selector.tsx",
+    "apps/web/src/components/candidate-selector-contract.ts",
+    "apps/web/src/components/inventory-candidate-menu.tsx",
+    "apps/web/src/components/inventory-candidates.ts",
+    "apps/web/src/components/inventory-candidates.test.ts",
+    "apps/web/src/components/inventory-filter-popup-host.ts",
+    "apps/web/src/components/inventory-filter-source-provenance.json",
+    "apps/web/src/components/product-candidate-action.css",
+    "apps/web/src/components/product-candidate-action.tsx",
+    "apps/web/src/components/product-candidate-preview.tsx",
+    "apps/web/src/components/product-candidate-styles.ts",
+    "apps/web/src/components/product-candidate-styles.test.ts",
+    "apps/web/src/components/use-inventory-candidates.ts",
+    "apps/web/src/inventory/inventory-page.tsx",
+    "apps/web/src/inventory/inventory.css",
+    "apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+    "apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs",
+    "apps/web/src/inventory/tests/product-candidate-layout-entry.tsx",
+    "apps/web/src/inventory/tests/run-product-candidate-layout-dom-tests.mjs",
+    "apps/web/tests/run-dom-tests.mjs",
+    "apps/web/build-preview.mjs",
+    "apps/web/preview-core-pages/main.tsx",
+    "apps/web/preview-core-pages/build.mjs",
+    "apps/web/src/application/build-application.mjs",
+    "apps/web/src/application/tests/run-build-check.mjs",
+    "apps/web/src/development-host/tests/run-build-check.mjs"
+  ],
+  "trackedChangedPaths": [
+    "apps/web/build-preview.mjs",
+    "apps/web/preview-core-pages/build.mjs",
+    "apps/web/preview-core-pages/main.tsx",
+    "apps/web/src/application/build-application.mjs",
+    "apps/web/src/application/tests/run-build-check.mjs",
+    "apps/web/src/components/candidate-selector.tsx",
+    "apps/web/src/development-host/tests/run-build-check.mjs",
+    "apps/web/src/inventory/inventory-page.tsx",
+    "apps/web/src/inventory/inventory.css",
+    "apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+    "apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs",
+    "apps/web/tests/run-dom-tests.mjs"
+  ],
+  "untrackedAddedPaths": [
+    "apps/web/src/components/candidate-selector-contract.ts",
+    "apps/web/src/components/inventory-candidate-menu.tsx",
+    "apps/web/src/components/inventory-candidates.ts",
+    "apps/web/src/components/inventory-candidates.test.ts",
+    "apps/web/src/components/inventory-filter-popup-host.ts",
+    "apps/web/src/components/inventory-filter-source-provenance.json",
+    "apps/web/src/components/product-candidate-action.css",
+    "apps/web/src/components/product-candidate-action.tsx",
+    "apps/web/src/components/product-candidate-preview.tsx",
+    "apps/web/src/components/product-candidate-styles.ts",
+    "apps/web/src/components/product-candidate-styles.test.ts",
+    "apps/web/src/components/use-inventory-candidates.ts",
+    "apps/web/src/inventory/tests/product-candidate-layout-entry.tsx",
+    "apps/web/src/inventory/tests/run-product-candidate-layout-dom-tests.mjs"
+  ],
+  "sourceFiles": [
+    {
+      "file": "apps/web/src/components/candidate-selector.tsx",
+      "sha256": "4eb04b31ab32797c20c15d6ef0628ad43f481d46c48d1e8585f0b9c6179eb646"
+    },
+    {
+      "file": "apps/web/src/components/candidate-selector-contract.ts",
+      "sha256": "df54d248d7039fa228ce75f066380630069108ebb84d217d3247ca2c85de8d92"
+    },
+    {
+      "file": "apps/web/src/components/inventory-candidate-menu.tsx",
+      "sha256": "9bf34eca64a2d1b7c3ee0b4f049cc3a3909e42062b1834b7e0f37fb647eacaf9"
+    },
+    {
+      "file": "apps/web/src/components/inventory-candidates.ts",
+      "sha256": "372340cfa630a66b23a8c3e2e32f4c2c1834095104ad7b5e5f957315e3c4b190"
+    },
+    {
+      "file": "apps/web/src/components/inventory-candidates.test.ts",
+      "sha256": "29178493751dee6881bd03f03f2c93c65d7682fc71c3d0096db1d9f0a860c7bc"
+    },
+    {
+      "file": "apps/web/src/components/inventory-filter-popup-host.ts",
+      "sha256": "a3f2d411139ff7b00085d3608adb97b233f0a64f274b4afaec9a30ff097cda24"
+    },
+    {
+      "file": "apps/web/src/components/inventory-filter-source-provenance.json",
+      "sha256": "e38aa9a737e5fcc148c330f808b9a38de4c25f3bebeaef6d161de33137eb67aa"
+    },
+    {
+      "file": "apps/web/src/components/product-candidate-action.css",
+      "sha256": "341dd44945a0d10b4afd783ba3291fadf1e59a4798db77b1e471e1b7fe6f71a8"
+    },
+    {
+      "file": "apps/web/src/components/product-candidate-action.tsx",
+      "sha256": "4558483ceb53abea32b1ac0548a5b3527d6b9c3fc925f860ee7a5cfbd5383dc0"
+    },
+    {
+      "file": "apps/web/src/components/product-candidate-preview.tsx",
+      "sha256": "9938e888498d4575f111cc9666cd5148bd002343c85445573e968ff2936ddbe9"
+    },
+    {
+      "file": "apps/web/src/components/product-candidate-styles.ts",
+      "sha256": "56d7cfd83f0d1c2196c374d61931328dff6217aa68196c893fbd3ba1f0594199"
+    },
+    {
+      "file": "apps/web/src/components/product-candidate-styles.test.ts",
+      "sha256": "72487037550339cf3515af4eca4d91ba4fad522ad121ec7c5337a07f9f3926c6"
+    },
+    {
+      "file": "apps/web/src/components/use-inventory-candidates.ts",
+      "sha256": "8fe50cff10cbfc85c4f04c61a732b7513e01097727cec64e06e616f79f57ae84"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-page.tsx",
+      "sha256": "2d448f0f8f4ba4218f62de951f8f85fc8cdf2ee4b91f7d92cc933691d5be1979"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory.css",
+      "sha256": "576c5cc4907dde9809b8c2d32094200a677c76c9aeb9f5ba23438b1ec9064d03"
+    },
+    {
+      "file": "apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+      "sha256": "f7376cadd074a392a75b30fa28d5e9786d1ba94d5581c61cdc36512d56b25320"
+    },
+    {
+      "file": "apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs",
+      "sha256": "0740c469b023f043fd55aefa3726306e2870ee87e63acb074140d52295ffe1df"
+    },
+    {
+      "file": "apps/web/src/inventory/tests/product-candidate-layout-entry.tsx",
+      "sha256": "56a3447fe89230ccbd8e9e1bfa965a0992213839564c72514051b094e1647bc6"
+    },
+    {
+      "file": "apps/web/src/inventory/tests/run-product-candidate-layout-dom-tests.mjs",
+      "sha256": "dc3155a4b64ab374b3ab6675298dd8eb53d74101f68ce641af178fc7bcb0746c"
+    },
+    {
+      "file": "apps/web/tests/run-dom-tests.mjs",
+      "sha256": "903e4d3d7661ce306a43ae3079070d0421697db62f9f6282e0473fb6b2feba81"
+    },
+    {
+      "file": "apps/web/build-preview.mjs",
+      "sha256": "3f54ef10d33017df0f1c7290c321ca898edecd532594787ba91dadb85a8b61ec"
+    },
+    {
+      "file": "apps/web/preview-core-pages/main.tsx",
+      "sha256": "181a6ef907c88788dc796bcba8cd7a86729b6b4c525d272aa91379c8d5d8b446"
+    },
+    {
+      "file": "apps/web/preview-core-pages/build.mjs",
+      "sha256": "127d1b50be056c27a66bf5691d4d78742a97f41e9a6870d4e6b563c1ff247328"
+    },
+    {
+      "file": "apps/web/src/application/build-application.mjs",
+      "sha256": "7600620690dfce918f3b8fc4f5500aa8c06d775debdfa2f26f8c53f93a5687b6"
+    },
+    {
+      "file": "apps/web/src/application/tests/run-build-check.mjs",
+      "sha256": "4466187e2d71709399852badadc67f0c82101b8b12a219db33b8e6d01842f86d"
+    },
+    {
+      "file": "apps/web/src/development-host/tests/run-build-check.mjs",
+      "sha256": "bd1a34d1654425672124ac681186e446ac1547768f88737c0aaac4c3edb3c392"
+    }
+  ],
+  "excluded": "Other workers own shared demo-controls, read contracts/backend/transport and package scripts. This manifest does not claim those files.",
+  "followUp": "Real narrowing/conditional optional props fixed four root/web compiler diagnostics. Supplied orphan parent path is display-only; affected lifecycle9, pure9 and actualCSS2 checks passed. Root compilers must be rerun by parent."
+}

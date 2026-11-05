@@ -1,0 +1,30 @@
+✔ 131 four-dimensional candidates keep identities across reorder and provenance changes (42.002368ms)
+✔ SKU keys preserve text boundaries and source groups; unknown activation is not enabled (1.057576ms)
+✔ permanent header and occurrence identities preserve duplicate business lines across order and incremental additions (0.479068ms)
+✔ shared resolver enforces actual dimension and parent references without reinterpreting legacy keys (1.678473ms)
+✔ quoted delimiter and Unicode keys round-trip exactly without tuple collisions or normalization (1.855885ms)
+✖ settlement permanent occurrence keys bind the sales parent and preserve persisted ledger UUIDs (0.588697ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 515.823115
+
+✖ failing tests:
+
+test at tests/unified-import-stable-identity.test.ts:57:1
+✖ settlement permanent occurrence keys bind the sales parent and preserve persisted ledger UUIDs (0.588697ms)
+  Error: LINE_ENTITY_INVALID
+      at requireValue (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/packages/application/src/unified-import-stable-identity.ts:14:94)
+      at createLineImportIdentity (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/packages/application/src/unified-import-stable-identity.ts:39:2)
+      at make (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-import-stable-identity.test.ts:59:52)
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/unified-import-stable-identity.test.ts:60:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

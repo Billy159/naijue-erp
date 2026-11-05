@@ -1,0 +1,14 @@
+{
+  "baseCommit": "760c489d3aa5913aab02372940a5ae25b3964688",
+  "rootTypecheck": 0,
+  "webTypecheck": 0,
+  "build": 0,
+  "emittedSmoke": 0,
+  "notVerified": [
+    "genuine PostgreSQL",
+    "real browser appearance/performance",
+    "formal deployment/business acceptance"
+  ],
+  "rollback": "Revert this scoped commit; no schema changes",
+  "postCheckWhitespaceOnly": "Removed one extra EOF blank line in multi-select-action.tsx; no semantic changes."
+}

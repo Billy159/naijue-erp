@@ -1,0 +1,100 @@
+{
+  "atUtc": "2026-10-24T01:57:42.305733+00:00",
+  "parent": "f594673b1574e46021e1b7c1b80d345ce5d9b872",
+  "taskId": "P04_RETAIN_DISABLED_MAIN_RECORD_DETAIL_ACCESS",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-editor-barcodes.tsx",
+      "bytes": 9216,
+      "sha256": "fdee78547008fa533e8715f6628753be10340f0b4c557e83347a13026ccb5ac3",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P04-RETAINED-BARCODE-VIEW-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "b829cc3c2ddd2cf93ab825402cef0c907eee08a31c40f1425adf2506fc55f9b8",
+  "ownerDelivery": {
+    "task": "F2-P04-RETAINED-BARCODE-VIEW-01",
+    "status": "SOURCE_READY_LOCAL_CONSUMER_PASS_ACTUAL_UI_PENDING",
+    "atUtc": "2026-10-24T01:56:05.676336+00:00",
+    "reportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+    "continuationAuthorization": "C latest human reconstruction taskbook54 continuation, human01a16b94-1d51-7ab3-9d2e-a75efdc109f7 four development lines",
+    "requestedExecution": {
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
+      "fast": "REQUESTED_OFF_TOOL_SWITCH_NOT_EXPOSED_NOT_VERIFIED"
+    },
+    "scope": {
+      "module": "P04 original product editor barcode consumer only",
+      "finding": "Real group contains retained disabled MAIN bindings, but previous view-entry condition counted only enabled MAIN or OLD. The existing detail can render these records, yet no view trigger was displayed.",
+      "fix": "View action availability now uses actual group.barcodes.length>0. Existing active MAIN/extras presentation and exact record/coordinate/raw/disabled/unknown detail and write guards unchanged.",
+      "sourceDelta": "Exactly one condition expression; all other file bytes retained. No public control/style/endpoint/DTO/write/ownership registry edits.",
+      "oldScopeReused": "Actual243 P02 native grid/draft pass adopted; SOURCE255 P03, SOURCE256 P07, SOURCE258 P10 unchanged/not retested. Product category/settings/independent schemes stop-write pending F4 transfer."
+    },
+    "files": [
+      {
+        "path": "apps/web/src/products/product-editor-barcodes.tsx",
+        "bytes": 9216,
+        "sha256": "fdee78547008fa533e8715f6628753be10340f0b4c557e83347a13026ccb5ac3",
+        "beforeBytes": 9222,
+        "beforeSha256": "04cf4605cb13ed9689a286d5caeb03fe1eaaa76ef79ef95f83bc558da2426009"
+      }
+    ],
+    "checks": {
+      "before": "before.log: actual ProductEditorBarcodes has expected disabled MAIN-only row with native SKU identity but missing view entry; assertion fails on this exact condition.",
+      "after": {
+        "status": "PASS_LOCAL_P04_RETAINED_BINDING_VIEW",
+        "bundleWarnings": 0,
+        "actualComponent": "ProductEditorBarcodes with installed React19/Arco",
+        "retainedBinding": {
+          "skuId": "00000000-0000-4000-8000-000000000020",
+          "kind": "MAIN",
+          "enabled": false,
+          "barcode": " 000DISABLED ",
+          "viewable": true,
+          "activeMainNotInvented": true
+        },
+        "originalModes": [
+          "zero-binding row retained without invented view records",
+          "normal MAIN+OLD group remains reachable",
+          "read-disabled state still permits existing record viewing",
+          "hidden tab closes modal; return retains original native draft and label data"
+        ],
+        "specificationReads": 1,
+        "candidateReads": 0,
+        "changes": 0,
+        "denies": 0,
+        "originalDraftByteEquivalent": true,
+        "scope": "Only original P04 edit consumer; source258 readonly P10/source255 P03/source256 P07/frozen base geometry/public controls/F4 leaves not modified or retested. Synthetic local DOM, no browser/HTTPPG/write/roles/fullP04 acceptance."
+      },
+      "strict": {
+        "roots": [
+          "apps/web/src/products/product-editor-barcodes.tsx",
+          "apps/web/src/products/product-editor.tsx existing caller"
+        ],
+        "fullImportedGraphDiagnostics": 0,
+        "log": "strict-run.log"
+      },
+      "sourceOnlyExpressionChange": true,
+      "nonfatalExistingWarning": "Installed Arco React19 element.ref warning retained, not suppressed or patched."
+    },
+    "notTested": [
+      "Actual Chrome pixel and existing-candidate P04 native interaction followup",
+      "Real PG/HTTP/session/roles/save/production performance/fullP04 or allF04 acceptance",
+      "No other accepted product tabs/public controls/F4 page suite rerun"
+    ],
+    "blocking": "No F2 source blocker; C to freeze this exact one-leaf increment and put original QF actual P04 view-only consumer into a containing future batch. Chrome remains QF2 only.",
+    "next": "Original QF on containing candidate: one SKU with retained disabled-MAIN-only binding should have view action and original raw/disabled detail, with no save or new write operation. Do not repeat P02 grid/P03/P07/P10 passed work.",
+    "evidence": [
+      "SOURCE-MANIFEST.json",
+      "source.diff",
+      "before.log",
+      "after.log",
+      "CHECKS.json",
+      "strict-run.log",
+      "actual-consumer-dom.html",
+      "before/",
+      "source/"
+    ]
+  },
+  "qualification": "Only released exact original owner leaves. Owner necessary affected checks adopted, independent source/actual not accepted. Fixed258 unchanged; new complete module candidate to include next. No developer WIP/old test staged."
+}

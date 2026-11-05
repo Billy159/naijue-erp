@@ -1,0 +1,128 @@
+✖ restoration PLpgSQL IF comparisons parenthesize all five CASE operands (7.034397ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 151.600619
+
+✖ failing tests:
+
+test at tests/historical-restoration-case-parse-regression.test.mjs:2:1
+✖ restoration PLpgSQL IF comparisons parenthesize all five CASE operands (7.034397ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /IS DISTINCT FROM\s+CASE\b/. Input:
+  
+  ' -- A historical empty settlement set is UNKNOWN even when net_due is zero.\n' +
+    ' -- This narrowly admits exact original restoration; it never certifies an edit\n' +
+    ' -- and never invokes current-importer/current-actor checks against old events.\n' +
+    " IF h.status='APPROVED' AND h.stock_basis='CUTOFF_HISTORY' AND settlement_count=0 AND evidence.action<>'MIGRATE_DOCUMENT' THEN\n" +
+    "  IF current_setting('session_replication_role') IS DISTINCT FROM 'origin' OR r.action IS DISTINCT FROM 'APPROVE' OR h.version<=1 THEN\n" +
+    "   RAISE EXCEPTION 'HISTORICAL_ORIGINAL_RESTORATION_REQUIRED' USING ERRCODE='23514'; END IF;\n" +
+    '  SELECT * INTO STRICT origin_receipt FROM naijue_erp.operation_receipt rr\n' +
+    "   WHERE rr.target_type='SALES' AND rr.target_id=target AND rr.action='MIGRATE_DOCUMENT';\n" +
+    '  SELECT * INTO STRICT origin_audit FROM naijue_erp.audit_change aa WHERE aa.operation_id=origin_receipt.id;\n' +
+    '  origin_version:=origin_audit.new_version;\n' +
+    "  origin_snapshot:=origin_audit.after_values-ARRAY['baseline','sourceRecordId'];\n" +
+    "  origin_header:=origin_snapshot->'header';\n" +
+    "  current_snapshot:=naijue_erp.unified_document_snapshot('SALES',target);\n" +
+    "  IF origin_receipt.status IS DISTINCT FROM 'COMMITTED' OR origin_audit.object_type IS DISTINCT FROM 'SALES'\n" +
+    "   OR origin_audit.object_id IS DISTINCT FROM target OR origin_audit.action IS DISTINCT FROM 'MIGRATE_DOCUMENT'\n" +
+    '   OR origin_audit.actor_account_id IS DISTINCT FROM origin_receipt.actor_account_id\n' +
+    '   OR origin_audit.occurred_at IS DISTINCT FROM origin_receipt.completed_at OR origin_version IS NULL OR origin_version<1 OR origin_version>=h.version\n' +
+    '   OR origin_audit.old_version IS NOT NULL OR origin_audit.before_values IS NOT NULL\n' +
+    "   OR jsonb_typeof(origin_snapshot) IS DISTINCT FROM 'object' OR origin_snapshot-ARRAY['header','lines','settlements'] IS DISTINCT FROM '{}'::jsonb\n" +
+    "   OR jsonb_typeof(origin_header) IS DISTINCT FROM 'object' OR jsonb_typeof(origin_snapshot->'lines') IS DISTINCT FROM 'array'\n" +
+    '   OR (SELECT array_agg(key ORDER BY key) FROM jsonb_object_keys(origin_header) key) IS DISTINCT FROM\n' +
+    "    (SELECT array_agg(attname::text ORDER BY attname) FROM pg_catalog.pg_attribute WHERE attrelid='naijue_erp.sales_header'::regclass AND attnum>0 AND NOT attisdropped)\n" +
+    "   OR origin_snapshot->'settlements' IS DISTINCT FROM '[]'::jsonb\n" +
+    "   OR origin_header->>'id' IS DISTINCT FROM target::text OR origin_header->'version' IS DISTINCT FROM to_jsonb(origin_version)\n" +
+    "   OR origin_header->>'business_type' IS DISTINCT FROM 'SALE' OR origin_header->>'status' IS DISTINCT FROM 'APPROVED'\n" +
+    "   OR origin_header->>'stock_basis' IS DISTINCT FROM 'CUTOFF_HISTORY'\n" +
+    "   OR origin_receipt.result_data->>'operationId' IS DISTINCT FROM origin_receipt.id::text\n" +
+    "   OR origin_receipt.result_data->>'salesId' IS DISTINCT FROM target::text\n" +
+    "   OR origin_receipt.result_data->'version' IS DISTINCT FROM to_jsonb(origin_version)\n" +
+    "   OR origin_receipt.result_data->>'status' IS DISTINCT FROM 'APPROVED'\n" +
+    "   OR origin_receipt.result_data->'ledgerEntryIds' IS DISTINCT FROM '[]'::jsonb\n" +
+    "   OR origin_receipt.result_data->>'exposureDigest' IS DISTINCT FROM encode(sha256(convert_to(origin_snapshot::text,'UTF8')),'hex')\n" +
+    "   OR origin_receipt.result_data->'baseline' IS DISTINCT FROM origin_audit.after_values->'baseline'\n" +
+    "   OR origin_receipt.result_data->>'sourceRecordId' IS DISTINCT FROM origin_audit.after_values->>'sourceRecordId'\n" +
+    '   OR EXISTS(SELECT 1 FROM naijue_erp.inventory_ledger l WHERE l.operation_id=origin_receipt.id)\n' +
+    '   OR EXISTS(SELECT 1 FROM naijue_erp.inventory_balance q WHERE q.last_operation_id=origin_receipt.id) THEN\n' +
+    "   RAISE EXCEPTION 'RESTORATION_ORIGIN_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    '  -- Full physical line rows, including inactive/zero rows and nullable snapshots,\n' +
+    '  -- retain exactly their original identities, order, prices and economics.\n' +
+    "  mutable_header:=ARRAY['version','status','updated_at','approved_by_account_id','approved_by_staff_id','approved_at','note','responsible_staff_id'];\n" +
+    "  IF current_snapshot->'lines' IS DISTINCT FROM origin_snapshot->'lines'\n" +
+    "   OR current_snapshot->'settlements' IS DISTINCT FROM '[]'::jsonb\n" +
+    "   OR (current_snapshot->'header' - mutable_header) IS DISTINCT FROM (origin_header - mutable_header)\n" +
+    "   OR jsonb_array_length(origin_snapshot->'lines')=0 THEN\n" +
+    "   RAISE EXCEPTION 'RESTORATION_CURRENT_ROWS_DIFFER' USING ERRCODE='23514'; END IF;\n" +
+    '  IF h.gross_amount IS DISTINCT FROM (SELECT sum(ln.line_amount) FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current)\n' +
+    '   OR h.net_due IS DISTINCT FROM h.gross_amount-h.order_discount\n' +
+    '   OR EXISTS(SELECT 1 FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current\n' +
+    '    AND (ln.line_amount IS DISTINCT FROM ln.quantity::numeric*ln.deal_price OR ln.deal_price<0))\n' +
+    '   OR (SELECT coalesce(sum(ln.allocated_discount),0) FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current)>h.order_discount\n' +
+    '   OR (NOT EXISTS(SELECT 1 FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current AND ln.allocated_discount IS NULL)\n' +
+    '    AND (SELECT sum(ln.allocated_discount) FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current) IS DISTINCT FROM h.order_discount) THEN\n' +
+    "   RAISE EXCEPTION 'RESTORATION_KNOWN_ECONOMICS_DIFFER' USING ERRCODE='23514'; END IF;\n" +
+    '  SELECT * INTO STRICT documents_batch FROM naijue_erp.import_batch bb WHERE bb.id=h.import_batch_id;\n' +
+    "  SELECT * INTO STRICT baseline_batch FROM naijue_erp.import_batch bb WHERE bb.id=(origin_audit.after_values->'baseline'->>'baselineBatchId')::uuid;\n" +
+    "  baseline_evidence:=origin_audit.after_values->'baseline';\n" +
+    "  IF documents_batch.inventory_mode IS DISTINCT FROM 'DOCUMENT_CONVERSION' OR documents_batch.mapping_version IS DISTINCT FROM 'DOCUMENT_CONVERSION_V1'\n" +
+    "   OR documents_batch.status IS DISTINCT FROM 'IMPORTED' OR baseline_batch.status IS DISTINCT FROM 'IMPORTED'\n" +
+    "   OR baseline_batch.inventory_mode IS DISTINCT FROM 'CUTOFF_STOCK_BASELINE' OR baseline_batch.mapping_version IS DISTINCT FROM 'STANDARD_INITIAL_EXPLICIT_KEYS_V1'\n" +
+    '   OR documents_batch.source_name IS DISTINCT FROM baseline_batch.source_name OR documents_batch.source_hash IS DISTINCT FROM baseline_batch.source_hash\n' +
+    '   OR documents_batch.cutoff_at IS DISTINCT FROM baseline_batch.cutoff_at\n' +
+    "   OR origin_header->>'import_batch_id' IS DISTINCT FROM documents_batch.id::text\n" +
+    "   OR origin_receipt.result_data->>'batchId' IS DISTINCT FROM documents_batch.id::text\n" +
+    "   OR baseline_evidence-ARRAY['state','baselineBatchId','baselineManifestSha256','cutoffAt','coverageDigest'] IS DISTINCT FROM '{}'::jsonb\n" +
+    "   OR baseline_evidence->>'state' IS DISTINCT FROM 'CONFIRMED'\n" +
+    "   OR baseline_evidence->>'baselineManifestSha256' IS DISTINCT FROM baseline_batch.source_hash\n" +
+    "   OR (baseline_evidence->>'cutoffAt')::timestamptz IS DISTINCT FROM baseline_batch.cutoff_at\n" +
+    "   OR (baseline_evidence->>'coverageDigest' ~ '^[0-9a-f]{64}$') IS NOT TRUE THEN\n" +
+    "   RAISE EXCEPTION 'RESTORATION_BASELINE_INVALID' USING ERRCODE='23514'; END IF;\n" +
+    '  -- Both complete publications must be real immutable standard-import events.\n' +
+    "  FOR proof_batch IN SELECT documents_batch.id AS id, 'DOCUMENT_PUBLISH'::text AS phase, documents_batch.checkpoint AS checkpoint, documents_batch.completed_at AS completed_at\n" +
+    "   UNION ALL SELECT baseline_batch.id,'BASELINE_SEAL',baseline_batch.checkpoint,baseline_batch.completed_at LOOP\n" +
+    "   SELECT * INTO STRICT source_receipt FROM naijue_erp.operation_receipt rr WHERE rr.target_type='IMPORT' AND rr.target_id=proof_batch.id\n" +
+    "    AND rr.action='IMPORT_PUBLISH' AND rr.result_data->>'profile'='STANDARD_IMPORT_SQL_V1';\n" +
+    '   SELECT * INTO STRICT source_audit FROM naijue_erp.audit_change aa WHERE aa.operation_id=source_receipt.id;\n' +
+    "   source_request:=source_audit.after_values->'request';\n" +
+    "   IF source_receipt.status IS DISTINCT FROM 'COMMITTED' OR source_audit.object_type IS DISTINCT FROM 'IMPORT'\n" +
+    '    OR source_audit.object_id IS DISTINCT FROM proof_batch.id OR source_audit.action IS DISTINCT FROM source_receipt.action\n' +
+    '    OR source_audit.actor_account_id IS DISTINCT FROM source_receipt.actor_account_id\n' +
+    '    OR source_audit.occurred_at IS DISTINCT FROM source_receipt.completed_at OR source_receipt.completed_at IS DISTINCT FROM proof_batch.completed_at\n' +
+    "    OR source_receipt.result_data->>'operationId' IS DISTINCT FROM source_receipt.id::text\n" +
+    "    OR source_receipt.result_data->>'batchId' IS DISTINCT FROM proof_batch.id::text\n" +
+    "    OR source_receipt.result_data->>'phase' IS DISTINCT FROM proof_batch.phase\n" +
+    "    OR source_receipt.result_data->>'baselineBatchId' IS DISTINCT FROM baseline_batch.id::text\n" +
+    "    OR source_receipt.result_data->>'documentBatchId' IS DISTINCT FROM documents_batch.id::text\n" +
+    "    OR source_receipt.result_data->>'packageManifestSha256' IS DISTINCT FROM documents_batch.source_hash\n" +
+    "    OR source_receipt.result_data->>'status' IS DISTINCT FROM 'IMPORTED' OR source_receipt.result_data->'ledgerEntryIds' IS DISTINCT FROM '[]'::jsonb\n" +
+    "    OR source_audit.after_values->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1'\n" +
+    "    OR source_audit.after_values->>'phase' IS DISTINCT FROM proof_batch.phase\n" +
+    "    OR source_audit.after_values->'checkpoint' IS DISTINCT FROM proof_batch.checkpoint\n" +
+    "    OR proof_batch.checkpoint->'counts' IS DISTINCT FROM proof_batch.checkpoint->'expected'\n" +
+    "    OR source_request->>'operation_id' IS DISTINCT FROM source_receipt.id::text\n" +
+    "    OR source_request->>'request_key' IS DISTINCT FROM source_receipt.request_key\n" +
+    "    OR source_request->>'batch_id' IS DISTINCT FROM proof_batch.id::text\n" +
+    "    OR source_request->>'namespace' IS DISTINCT FROM documents_batch.source_name\n" +
+    "    OR source_request->>'package_manifest_sha256' IS DISTINCT FROM documents_batch.source_hash\n" +
+    "    OR (source_request->>'cutoff_at')::timestamptz IS DISTINCT FROM documents_batch.cutoff_at\n" +
+    "    OR source_receipt.request_hash IS DISTINCT FROM encode(sha256(convert_to('PUBLISH:'||source_request::text,'UTF8')),'hex')\n" +
+    "    OR source_receipt.completed_at<origin_receipt.completed_at AND proof_batch.phase='DOCUMENT_PUBLISH'\n" +
+    '    OR source_receipt.completed_at>r.completed_at THEN\n' +
+    "    RAISE EXCEPTION 'R"... 21247 more characters
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-restoration-case-parse-regression.test.mjs:2:282)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: " -- A historical empty settlement set is UNKNOWN even when net_due is zero.\n -- This narrowly admits exact original restoration; it never certifies an edit\n -- and never invokes current-importer/current-actor checks against old events.\n IF h.status='APPROVED' AND h.stock_basis='CUTOFF_HISTORY' AND settlement_count=0 AND evidence.action<>'MIGRATE_DOCUMENT' THEN\n  IF current_setting('session_replication_role') IS DISTINCT FROM 'origin' OR r.action IS DISTINCT FROM 'APPROVE' OR h.version<=1 THEN\n   RAISE EXCEPTION 'HISTORICAL_ORIGINAL_RESTORATION_REQUIRED' USING ERRCODE='23514'; END IF;\n  SELECT * INTO STRICT origin_receipt FROM naijue_erp.operation_receipt rr\n   WHERE rr.target_type='SALES' AND rr.target_id=target AND rr.action='MIGRATE_DOCUMENT';\n  SELECT * INTO STRICT origin_audit FROM naijue_erp.audit_change aa WHERE aa.operation_id=origin_receipt.id;\n  origin_version:=origin_audit.new_version;\n  origin_snapshot:=origin_audit.after_values-ARRAY['baseline','sourceRecordId'];\n  origin_header:=origin_snapshot->'header';\n  current_snapshot:=naijue_erp.unified_document_snapshot('SALES',target);\n  IF origin_receipt.status IS DISTINCT FROM 'COMMITTED' OR origin_audit.object_type IS DISTINCT FROM 'SALES'\n   OR origin_audit.object_id IS DISTINCT FROM target OR origin_audit.action IS DISTINCT FROM 'MIGRATE_DOCUMENT'\n   OR origin_audit.actor_account_id IS DISTINCT FROM origin_receipt.actor_account_id\n   OR origin_audit.occurred_at IS DISTINCT FROM origin_receipt.completed_at OR origin_version IS NULL OR origin_version<1 OR origin_version>=h.version\n   OR origin_audit.old_version IS NOT NULL OR origin_audit.before_values IS NOT NULL\n   OR jsonb_typeof(origin_snapshot) IS DISTINCT FROM 'object' OR origin_snapshot-ARRAY['header','lines','settlements'] IS DISTINCT FROM '{}'::jsonb\n   OR jsonb_typeof(origin_header) IS DISTINCT FROM 'object' OR jsonb_typeof(origin_snapshot->'lines') IS DISTINCT FROM 'array'\n   OR (SELECT array_agg(key ORDER BY key) FROM jsonb_object_keys(origin_header) key) IS DISTINCT FROM\n    (SELECT array_agg(attname::text ORDER BY attname) FROM pg_catalog.pg_attribute WHERE attrelid='naijue_erp.sales_header'::regclass AND attnum>0 AND NOT attisdropped)\n   OR origin_snapshot->'settlements' IS DISTINCT FROM '[]'::jsonb\n   OR origin_header->>'id' IS DISTINCT FROM target::text OR origin_header->'version' IS DISTINCT FROM to_jsonb(origin_version)\n   OR origin_header->>'business_type' IS DISTINCT FROM 'SALE' OR origin_header->>'status' IS DISTINCT FROM 'APPROVED'\n   OR origin_header->>'stock_basis' IS DISTINCT FROM 'CUTOFF_HISTORY'\n   OR origin_receipt.result_data->>'operationId' IS DISTINCT FROM origin_receipt.id::text\n   OR origin_receipt.result_data->>'salesId' IS DISTINCT FROM target::text\n   OR origin_receipt.result_data->'version' IS DISTINCT FROM to_jsonb(origin_version)\n   OR origin_receipt.result_data->>'status' IS DISTINCT FROM 'APPROVED'\n   OR origin_receipt.result_data->'ledgerEntryIds' IS DISTINCT FROM '[]'::jsonb\n   OR origin_receipt.result_data->>'exposureDigest' IS DISTINCT FROM encode(sha256(convert_to(origin_snapshot::text,'UTF8')),'hex')\n   OR origin_receipt.result_data->'baseline' IS DISTINCT FROM origin_audit.after_values->'baseline'\n   OR origin_receipt.result_data->>'sourceRecordId' IS DISTINCT FROM origin_audit.after_values->>'sourceRecordId'\n   OR EXISTS(SELECT 1 FROM naijue_erp.inventory_ledger l WHERE l.operation_id=origin_receipt.id)\n   OR EXISTS(SELECT 1 FROM naijue_erp.inventory_balance q WHERE q.last_operation_id=origin_receipt.id) THEN\n   RAISE EXCEPTION 'RESTORATION_ORIGIN_INVALID' USING ERRCODE='23514'; END IF;\n  -- Full physical line rows, including inactive/zero rows and nullable snapshots,\n  -- retain exactly their original identities, order, prices and economics.\n  mutable_header:=ARRAY['version','status','updated_at','approved_by_account_id','approved_by_staff_id','approved_at','note','responsible_staff_id'];\n  IF current_snapshot->'lines' IS DISTINCT FROM origin_snapshot->'lines'\n   OR current_snapshot->'settlements' IS DISTINCT FROM '[]'::jsonb\n   OR (current_snapshot->'header' - mutable_header) IS DISTINCT FROM (origin_header - mutable_header)\n   OR jsonb_array_length(origin_snapshot->'lines')=0 THEN\n   RAISE EXCEPTION 'RESTORATION_CURRENT_ROWS_DIFFER' USING ERRCODE='23514'; END IF;\n  IF h.gross_amount IS DISTINCT FROM (SELECT sum(ln.line_amount) FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current)\n   OR h.net_due IS DISTINCT FROM h.gross_amount-h.order_discount\n   OR EXISTS(SELECT 1 FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current\n    AND (ln.line_amount IS DISTINCT FROM ln.quantity::numeric*ln.deal_price OR ln.deal_price<0))\n   OR (SELECT coalesce(sum(ln.allocated_discount),0) FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current)>h.order_discount\n   OR (NOT EXISTS(SELECT 1 FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current AND ln.allocated_discount IS NULL)\n    AND (SELECT sum(ln.allocated_discount) FROM naijue_erp.sales_line ln WHERE ln.sales_id=target AND ln.is_current) IS DISTINCT FROM h.order_discount) THEN\n   RAISE EXCEPTION 'RESTORATION_KNOWN_ECONOMICS_DIFFER' USING ERRCODE='23514'; END IF;\n  SELECT * INTO STRICT documents_batch FROM naijue_erp.import_batch bb WHERE bb.id=h.import_batch_id;\n  SELECT * INTO STRICT baseline_batch FROM naijue_erp.import_batch bb WHERE bb.id=(origin_audit.after_values->'baseline'->>'baselineBatchId')::uuid;\n  baseline_evidence:=origin_audit.after_values->'baseline';\n  IF documents_batch.inventory_mode IS DISTINCT FROM 'DOCUMENT_CONVERSION' OR documents_batch.mapping_version IS DISTINCT FROM 'DOCUMENT_CONVERSION_V1'\n   OR documents_batch.status IS DISTINCT FROM 'IMPORTED' OR baseline_batch.status IS DISTINCT FROM 'IMPORTED'\n   OR baseline_batch.inventory_mode IS DISTINCT FROM 'CUTOFF_STOCK_BASELINE' OR baseline_batch.mapping_version IS DISTINCT FROM 'STANDARD_INITIAL_EXPLICIT_KEYS_V1'\n   OR documents_batch.source_name IS DISTINCT FROM baseline_batch.source_name OR documents_batch.source_hash IS DISTINCT FROM baseline_batch.source_hash\n   OR documents_batch.cutoff_at IS DISTINCT FROM baseline_batch.cutoff_at\n   OR origin_header->>'import_batch_id' IS DISTINCT FROM documents_batch.id::text\n   OR origin_receipt.result_data->>'batchId' IS DISTINCT FROM documents_batch.id::text\n   OR baseline_evidence-ARRAY['state','baselineBatchId','baselineManifestSha256','cutoffAt','coverageDigest'] IS DISTINCT FROM '{}'::jsonb\n   OR baseline_evidence->>'state' IS DISTINCT FROM 'CONFIRMED'\n   OR baseline_evidence->>'baselineManifestSha256' IS DISTINCT FROM baseline_batch.source_hash\n   OR (baseline_evidence->>'cutoffAt')::timestamptz IS DISTINCT FROM baseline_batch.cutoff_at\n   OR (baseline_evidence->>'coverageDigest' ~ '^[0-9a-f]{64}$') IS NOT TRUE THEN\n   RAISE EXCEPTION 'RESTORATION_BASELINE_INVALID' USING ERRCODE='23514'; END IF;\n  -- Both complete publications must be real immutable standard-import events.\n  FOR proof_batch IN SELECT documents_batch.id AS id, 'DOCUMENT_PUBLISH'::text AS phase, documents_batch.checkpoint AS checkpoint, documents_batch.completed_at AS completed_at\n   UNION ALL SELECT baseline_batch.id,'BASELINE_SEAL',baseline_batch.checkpoint,baseline_batch.completed_at LOOP\n   SELECT * INTO STRICT source_receipt FROM naijue_erp.operation_receipt rr WHERE rr.target_type='IMPORT' AND rr.target_id=proof_batch.id\n    AND rr.action='IMPORT_PUBLISH' AND rr.result_data->>'profile'='STANDARD_IMPORT_SQL_V1';\n   SELECT * INTO STRICT source_audit FROM naijue_erp.audit_change aa WHERE aa.operation_id=source_receipt.id;\n   source_request:=source_audit.after_values->'request';\n   IF source_receipt.status IS DISTINCT FROM 'COMMITTED' OR source_audit.object_type IS DISTINCT FROM 'IMPORT'\n    OR source_audit.object_id IS DISTINCT FROM proof_batch.id OR source_audit.action IS DISTINCT FROM source_receipt.action\n    OR source_audit.actor_account_id IS DISTINCT FROM source_receipt.actor_account_id\n    OR source_audit.occurred_at IS DISTINCT FROM source_receipt.completed_at OR source_receipt.completed_at IS DISTINCT FROM proof_batch.completed_at\n    OR source_receipt.result_data->>'operationId' IS DISTINCT FROM source_receipt.id::text\n    OR source_receipt.result_data->>'batchId' IS DISTINCT FROM proof_batch.id::text\n    OR source_receipt.result_data->>'phase' IS DISTINCT FROM proof_batch.phase\n    OR source_receipt.result_data->>'baselineBatchId' IS DISTINCT FROM baseline_batch.id::text\n    OR source_receipt.result_data->>'documentBatchId' IS DISTINCT FROM documents_batch.id::text\n    OR source_receipt.result_data->>'packageManifestSha256' IS DISTINCT FROM documents_batch.source_hash\n    OR source_receipt.result_data->>'status' IS DISTINCT FROM 'IMPORTED' OR source_receipt.result_data->'ledgerEntryIds' IS DISTINCT FROM '[]'::jsonb\n    OR source_audit.after_values->>'profile' IS DISTINCT FROM 'STANDARD_IMPORT_SQL_V1'\n    OR source_audit.after_values->>'phase' IS DISTINCT FROM proof_batch.phase\n    OR source_audit.after_values->'checkpoint' IS DISTINCT FROM proof_batch.checkpoint\n    OR proof_batch.checkpoint->'counts' IS DISTINCT FROM proof_batch.checkpoint->'expected'\n    OR source_request->>'operation_id' IS DISTINCT FROM source_receipt.id::text\n    OR source_request->>'request_key' IS DISTINCT FROM source_receipt.request_key\n    OR source_request->>'batch_id' IS DISTINCT FROM proof_batch.id::text\n    OR source_request->>'namespace' IS DISTINCT FROM documents_batch.source_name\n    OR source_request->>'package_manifest_sha256' IS DISTINCT FROM documents_batch.source_hash\n    OR (source_request->>'cutoff_at')::timestamptz IS DISTINCT FROM documents_batch.cutoff_at\n    OR source_receipt.request_hash IS DISTINCT FROM encode(sha256(convert_to('PUBLISH:'||source_request::text,'UTF8')),'hex')\n    OR source_receipt.completed_at<origin_receipt.completed_at AND proof_batch.phase='DOCUMENT_PUBLISH'\n    OR source_receipt.completed_at>r.completed_at THEN\n    RAISE EXCEPTION 'R"... 21247 more characters,
+    expected: /IS DISTINCT FROM\s+CASE\b/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

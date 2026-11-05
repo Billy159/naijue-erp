@@ -1,0 +1,36 @@
+✔ exact successor adds independently pinned INIT approval and STAFF SQL guard to unchanged predecessor (8.084194ms)
+✔ patch keeps metadata/ACL/owner unchanged and rejects wrong predecessor (4.404077ms)
+✔ SQL approval locator requires JSON number, int32 and duplicate-free references (1.338735ms)
+✔ SQL rejects duplicate keys before casting approval JSON to jsonb (2.151555ms)
+✖ STAFF source-ref containment groups JSON extraction before boolean containment (6.836819ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 142.773164
+
+✖ failing tests:
+
+test at tests/historical-staff-hall-sql-source.test.mjs:9:1
+✖ STAFF source-ref containment groups JSON extraction before boolean containment (6.836819ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(body.includes("(approved->'source_refs') @> (entry->'source_refs') AND (entry->'source_refs') @> (approved->'source_refs')"))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-staff-hall-sql-source.test.mjs:9:185)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,114 @@
+{
+  "atUtc": "2026-10-22T20:37:36.434732+00:00",
+  "parent": "3fb36e8b38203da8e7a0984daf9e024b758e9cd3",
+  "groups": [
+    {
+      "slice": "R2_EXACT26_SAME_CLIENT_INVENTORY_ADMISSION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R2-EXACT26-ADMISSION-RESULT-v1.json",
+      "receiptSha256": "d96f1d514c703e55c6f042530c07c9f605ce91f3d04ee46175ff1c1d2c27ff31",
+      "receiptSnapshot": {
+        "version": "D1_R2_EXACT26_COMMAND_INVENTORY_ADMISSION_BRIDGE_V1",
+        "status": "SOURCE_READY_EXACT4_FROZEN_FOR_C_CHECKPOINT_QB_NEW_SCOPE",
+        "role": "D1",
+        "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "files": [
+          {
+            "path": "adapters/postgres/src/inventory-posting-balances.ts",
+            "bytes": 22574,
+            "sha256": "c4407f234a615362567d620d1e84bec1018c569c0fb243db94c34cf887a3dab0",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "adapters/postgres/src/sales-unit-of-work.ts",
+            "bytes": 33357,
+            "sha256": "454cc1ae1c7bef479aec9555e5913d1fafeaabab911951202e3a525a7369954a",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+            "bytes": 22455,
+            "sha256": "01eb3a96a9bb02c90adeb7de9569fc396d3e62367e66efcc944ef9a85330152e",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "tests/runtime-document-commit-outcome.test.ts",
+            "bytes": 15280,
+            "sha256": "c52953206ba7a9ded838048d0676bf32fe586eb3a01986e49a32573896758032",
+            "singleTerminalLF": true
+          }
+        ],
+        "readOnlyUnmodifiedAffectedTest": {
+          "path": "tests/inventory-first-use-postgres-protocol.test.ts",
+          "bytes": 18378,
+          "sha256": "ae289ad8119987de61c34b2276853005ea99bb157219ba5f24884997e5bddb1f",
+          "singleTerminalLF": true
+        },
+        "changes": [
+          "Independent PostgresPostingBalances.forRuntime26(actualClient,checkedCapability,assertActive) derives all posting SQL from exactly that client. No separate query-wrapper/client pairing and no copied lease accepted by actual issuer proof.",
+          "Optional checked runtime26 on existing verified-catalogue SalesUOW options; new closed own-data {runtime26} TransferUOW option. Each actual client INVENTORY_ADMISSION check runs before BEGIN, inside transaction before work and after callback closes before COMMIT.",
+          "New26 balance lock and sparse zero admission use the original actual client. Unique fully published cutoff/checkpoint + original guards remain required; same-scope SQL inventory_key_admission must confirm real CUTOFF_MEMBER/POST_CUTOFF_CREATED evidence and unused balance/ledger.",
+          "No UNKNOWN-to-zero, zero placeholder, missing-ledger rebuild, first UNAPPROVE or HISTORY_REVISION opening. Original exact negative first effect, first INSERT DO NOTHING, exact rowCount/CAS, repeated-line behavior retained.",
+          "Original19 and EXACT23/24 constructor/default paths and catalogue completeness verifier unchanged. Metadata authority remains finite INVENTORY_ADMISSION; no enum/schema/SQL function/DDL/ACL widening.",
+          "Original callback handle closes before final asynchronous proof; pre-COMMIT proof rejection rolls back, truly attempted COMMIT failure keeps original error and outcome unknown, discards once and does not retry."
+        ],
+        "validation": {
+          "path": "R2-EXACT26-ADMISSION-VALIDATION-v1.json",
+          "sha256": "ebe505e28dbba7eefcbde46a79ecf48f26b1a1f9e0288b1cd5ef55206ed0e5bd",
+          "newUnique": 11,
+          "affectedUnique": 8,
+          "pass": 19,
+          "skip": 0,
+          "protocolFailures": 0,
+          "strictFinalDirectExit": 0,
+          "strictFailuresPreserved": true
+        },
+        "composition": {
+          "r1": "Unchanged C67 DISABLED; no write/prepare activation",
+          "r2": "Independent explicit composition technical freeze requested in R2-EXACT26-ADMISSION-SCOPE-PROPOSAL-v1.json phase2; not implemented or activated in this slice",
+          "newFileRegistration": "Not needed: exact4 only previously registered files. Existing first-use test read/run only, no edit."
+        },
+        "boundaries": {
+          "actualPG": false,
+          "grant": false,
+          "credentials": false,
+          "server": false,
+          "frontend": false,
+          "sharedContract": false,
+          "newSchemaPurpose": false,
+          "importedCatalogueProofRelaxed": false,
+          "maintainedProductProofR3": false,
+          "realSourceMainPublishAuthority": false,
+          "completeRealImport": false
+        },
+        "next": "C checkpoint/QB only new26 bridge and actually affected original cleanup/first-use scopes; actual engine/role grants and R2 explicit composition remain separately coordinated."
+      },
+      "files": [
+        {
+          "path": "adapters/postgres/src/inventory-posting-balances.ts",
+          "owner": "D1",
+          "sha256": "c4407f234a615362567d620d1e84bec1018c569c0fb243db94c34cf887a3dab0",
+          "bytes": 22574
+        },
+        {
+          "path": "adapters/postgres/src/sales-unit-of-work.ts",
+          "owner": "D1",
+          "sha256": "454cc1ae1c7bef479aec9555e5913d1fafeaabab911951202e3a525a7369954a",
+          "bytes": 33357
+        },
+        {
+          "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+          "owner": "D1",
+          "sha256": "01eb3a96a9bb02c90adeb7de9569fc396d3e62367e66efcc944ef9a85330152e",
+          "bytes": 22455
+        },
+        {
+          "path": "tests/runtime-document-commit-outcome.test.ts",
+          "owner": "D1",
+          "sha256": "c52953206ba7a9ded838048d0676bf32fe586eb3a01986e49a32573896758032",
+          "bytes": 15280
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact owner/hash checkpoint only; existing author checks adopted, independent technical QA assigned separately."
+}

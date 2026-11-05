@@ -1,0 +1,18 @@
+CHECK_START
+PARSE_OK tests/integration/adapter-helpers.ts
+PARSE_OK tests/integration/backend-acceptance.ts
+PARSE_OK tests/integration/backend-source.test.ts
+PARSE_OK tests/integration/database.ts
+PARSE_OK tests/integration/fixtures.ts
+PARSE_OK tests/integration/migration-manifest.ts
+PARSE_OK tests/integration/migration-source.test.ts
+PARSE_OK tests/integration/plan.ts
+PARSE_OK tests/integration/postgres.integration.test.ts
+PARSE_OK tests/integration/proof.test.ts
+PARSE_OK tests/integration/proof.ts
+PARSE_OK tests/integration/safety.test.ts
+PARSE_OK tests/integration/safety.ts
+PARSE_OK tests/integration/sparse-acceptance.ts
+TRACKED_DIFF_WHITESPACE_OK
+SPARSE_KERNEL_UNCHANGED_SINCE_318440a
+CHECK_EXIT=0

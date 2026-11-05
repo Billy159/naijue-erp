@@ -1,0 +1,721 @@
+{
+  "atUtc": "2026-10-23T05:00:44.519611+00:00",
+  "parent": "5a05b485cb3a9e38bfbce9e98af17c958abd8daf",
+  "groups": [
+    {
+      "owner": "F1",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-71/DELIVERY.json",
+      "receiptSnapshot": {
+        "chunk": 71,
+        "taskId": "F1-T02-SOURCE-MATRIX-REPLACEMENT-DIALOG",
+        "atUtc": "2026-10-23T04:54:52.733933+00:00",
+        "status": "READY_EXACT7_AFFECTED_T02_SOURCE_AND_SHARED_DIALOG_ONLY",
+        "files": [
+          {
+            "path": "apps/web/src/components/standard-overlay.tsx",
+            "beforeSha256": "97c22b8d5f917814ce27b77af9efaebd486e6768d9dd349011934ba17137d852",
+            "sha256": "9e51784f087036b408acaca2217300de604a6bb5ce05cc149dc97f14b019017e"
+          },
+          {
+            "path": "apps/web/src/components/standard-overlay.css",
+            "beforeSha256": "a399c700bce1dfcdbf0c477f9f5814ee8e00b965e4276bbb40ae3b3aa11d3a97",
+            "sha256": "dd764b72ada18631e8f83823479c2af0fe16aa68c6581a5ddcae911e4f5e8394"
+          },
+          {
+            "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+            "beforeSha256": "d9f573ccf3371d59f5e3fd22faa26cce7d6301844ca53a99558ea06d25e25169",
+            "sha256": "775311fc08b4b663d2724032b04227e1317c22eaaaca6a7871b69504b0a71edf"
+          },
+          {
+            "path": "apps/web/src/sales/detail.css",
+            "beforeSha256": "c1f300dedec47a05212b68608cfa4bd13f61f26602ea0cca2db902d60947db33",
+            "sha256": "436e6c71b7f57dd4b8a77164445c88a8deb91e2b6dd17daa0ca772502e0c94a9"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "beforeSha256": "164c81c1fb1bb498b82024807597a78cbb9c07cf5f23ac3581ae87639540416b",
+            "sha256": "915e756b0d40a9c325347ef5837660c992fd060d4d5d4e0a2ab29afc375c6039"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "beforeSha256": "13d55a95ecc575d99b01793e988cf7ff803421797deeb02f2b73b7abdb3be5e3",
+            "sha256": "9a82b3cf182a02303752be6fad34a352948a3e081ee6e2e747ab9cfab2a92012"
+          },
+          {
+            "path": "apps/web/src/transfers/document-presentation.tsx",
+            "beforeSha256": "ece3b366038994090e0d68afe066d7893fc9b299e72b30cacc668c9bc2082cc4",
+            "sha256": "990c655d5631bbc4eb0f1ade4c818c7e08fbd432f7386137f6b15e0036902a4f"
+          }
+        ],
+        "source": [
+          "transfer-matrix-experiment.js rowMarkup/renderTable/draftDock/replacementRow/dialog",
+          "matrix-experiments.css mx-dialog",
+          "confirmation-dialogs.css + styles.css btn/dialog + interaction-common close SVG",
+          "sales-current.js modal source moved to same existing shared leaf; ordinary Arco default unchanged"
+        ],
+        "checks": {
+          "types-1": "EXIT0",
+          "transfer-2": "EXIT0_NATIVE_SOURCE_FLOW_SYNTHETIC_ONLY",
+          "shared-sale-1": "EXIT0_AFFECTED_SHARED_CONSUMER_SYNTHETIC_ONLY",
+          "css-1": "EXIT0_NO_WARNING",
+          "existingArco": "DEFAULT_FUNCTION_AND_CSS_PREFIX_BYTE_IDENTICAL"
+        },
+        "wholePagePass": false,
+        "realBusinessPass": false,
+        "performance": "NOT_MEASURED",
+        "blockers": [],
+        "remaining": [
+          "Original QF actual T02 new/edit/readonly/longtable/pinning/dialog keyboard and geometry",
+          "Native save/approval/role/PG/scan and representative cold1repeat2 not covered",
+          "Current candidate transferInitialSizeGroupId presence not verified by F1; never infer default"
+        ],
+        "next": "C pin exact7; next necessary full integrated candidate and original QF only affected T02 plus shared SALE confirmation, existing C134 SALE69+70 may verify independently",
+        "evidence": [
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-71/REPORT.md",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-71/SOURCE.diff",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-71/TRANSFER-RESULT.json",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-71/SHARED-SALE-RESULT.json",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-71/transfer-2.log",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-71/shared-sale-1.log",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-71/types-1.log",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-71/css-1.log"
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/components/standard-overlay.tsx",
+          "owner": "F1",
+          "bytes": 8689,
+          "sha256": "9e51784f087036b408acaca2217300de604a6bb5ce05cc149dc97f14b019017e"
+        },
+        {
+          "path": "apps/web/src/components/standard-overlay.css",
+          "owner": "F1",
+          "bytes": 5663,
+          "sha256": "dd764b72ada18631e8f83823479c2af0fe16aa68c6581a5ddcae911e4f5e8394"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "bytes": 47356,
+          "sha256": "775311fc08b4b663d2724032b04227e1317c22eaaaca6a7871b69504b0a71edf"
+        },
+        {
+          "path": "apps/web/src/sales/detail.css",
+          "owner": "F1",
+          "bytes": 35142,
+          "sha256": "436e6c71b7f57dd4b8a77164445c88a8deb91e2b6dd17daa0ca772502e0c94a9"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "owner": "F1",
+          "bytes": 32320,
+          "sha256": "915e756b0d40a9c325347ef5837660c992fd060d4d5d4e0a2ab29afc375c6039"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "bytes": 14521,
+          "sha256": "9a82b3cf182a02303752be6fad34a352948a3e081ee6e2e747ab9cfab2a92012"
+        },
+        {
+          "path": "apps/web/src/transfers/document-presentation.tsx",
+          "owner": "F1",
+          "bytes": 13333,
+          "sha256": "990c655d5631bbc4eb0f1ade4c818c7e08fbd432f7386137f6b15e0036902a4f"
+        }
+      ]
+    },
+    {
+      "owner": "F1",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-72/DELIVERY.json",
+      "receiptSnapshot": {
+        "chunk": 72,
+        "taskId": "F1-T02-READONLY-MAXIMUM-SOURCE-AXIS",
+        "atUtc": "2026-10-23T04:57:48.430199+00:00",
+        "status": "READY_EXACT1_SOURCE_LAYOUT_ONLY",
+        "files": [
+          {
+            "path": "apps/web/src/transfers/detail-content.tsx",
+            "beforeSha256": "5099bb10933fcda7dfe32932c012f4cf01cc4a26da8bda121cd46ba2334b3340",
+            "sha256": "5e31fc3ca6b1fda518811f11efcf1e8e054a2b140acf837a3a66ad4ccc56e9fa"
+          }
+        ],
+        "dependency": "chunk71 TransferMatrixTable additive columnCount/empty display gap",
+        "checks": {
+          "types-1": "EXIT0_AFFECTED_READONLY_CHAIN"
+        },
+        "wholePagePass": false,
+        "realBusinessPass": false,
+        "performance": "NOT_MEASURED",
+        "blockers": [],
+        "remaining": [
+          "Original QF actual readonly multi-group/longtable/large sparse layout and performance"
+        ],
+        "next": "Pin exact1 alongside71, one next necessary full candidate; original QF affected readonly scope only",
+        "evidence": [
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-72/REPORT.md",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-72/SOURCE.diff",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-72/types-1.log"
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/transfers/detail-content.tsx",
+          "owner": "F1",
+          "bytes": 10255,
+          "sha256": "5e31fc3ca6b1fda518811f11efcf1e8e054a2b140acf837a3a66ad4ccc56e9fa"
+        }
+      ]
+    },
+    {
+      "owner": "F2",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-delivery-v1.json",
+      "receiptSnapshot": {
+        "taskId": "F2-PRODUCT-DIRECT-UI-01",
+        "owner": "F2",
+        "status": "SOURCE_READY_AFFECTED_DOM_TYPES_PASS_BROWSER_PENDING",
+        "createdAt": "2026-10-23T04:56:41.068237+00:00",
+        "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "authorization": "User01a161f7-a5e8-7e10-9059-9537c28910c2 current reporting authorization; C existing whole Demo-corresponding UI migration; C optional ordinary read decoder registration 2026-10-23",
+        "completedScope": [
+          "Actual product list original native ten-column table/header/filter controls and numeric enhancement; P01 consumer list16/20 separately from already aligned editor12/16.",
+          "Six-tab full-page editor and readonly use F1 original ProductDetailTabs; first-visit content and retained visited DOM, root drafts, native IDs, versions, precision remain under existing owners.",
+          "Full source base grid, 3-section specs and native Transfer, nine-price body/paste, barcode body/view/add carrier, stock overview controls/table, shared source ProductPhotos and native preview, leave/delete and dictionary creation forms.",
+          "Media File input uses actual existing raw upload HTTP protocol and existing V2 imageChanges CAS; upload/root key binding, original uncertain replay/receipt, stage retry, disposal and source tab restoration. resetAfterReload releases prior staged key.",
+          "Ordinary read optional thickness/collarPantsType/role/colorId projection consumed without maintenance reads; legacy response shapes remain accepted, no fabricated role/version/time. Drawer uses same base/spec/photo source widgets and source CSS."
+        ],
+        "files": [
+          {
+            "path": "apps/web/src/inventory/product-contracts.ts",
+            "sha256": "26c42a6ebd974d9b6ce7a451c2daf5dae65858e5d0670d250c7be9844dea6eb3",
+            "bytes": 2654,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/apps/web/src/inventory/product-contracts.ts",
+            "localBeforeSha256": "1a5ed625dcc69b65aa844e66cddd6855cf1051d4cd3fcbe675602ec3e2197027"
+          },
+          {
+            "path": "apps/web/src/inventory/product-drawer.css",
+            "sha256": "dbf934a5b56b2cebd9469cb405a118f383379c8b1a705dcd0fd20fde31af1342",
+            "bytes": 8100,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/apps/web/src/inventory/product-drawer.css",
+            "localBeforeSha256": "bbb596c0c33d1a7f63b75f5cd4f6a6f0f16a7c4cafeae6a442408f13dfbad122"
+          },
+          {
+            "path": "apps/web/src/inventory/product-model.ts",
+            "sha256": "9afd9386311821faf6aa908028df8e8aa5bb4194817574be49dd296641fc06b3",
+            "bytes": 4794,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/apps/web/src/inventory/product-model.ts",
+            "localBeforeSha256": "385d063339966593aa02a5c4e6c3c389b3a75a351dd0fe568d4333ee94ee33dc"
+          },
+          {
+            "path": "apps/web/src/inventory/product-tab-basics.tsx",
+            "sha256": "1b585a670b445747f0bf321eebffd830b823d734e18c43ac2fd86ca27f8d32ae",
+            "bytes": 855,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/apps/web/src/inventory/product-tab-basics.tsx",
+            "localBeforeSha256": "72c597b80c5f75e0d767cb8c9b46f721aafcae83f1bc42a49c775d55b45d0512"
+          },
+          {
+            "path": "apps/web/src/inventory/product-tab-images.tsx",
+            "sha256": "2b5ab18d34c3963dbecec94584fdf6f6f9813955bd6cb5c4eb3c3a8dc7339daa",
+            "bytes": 13297,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-tab-images.tsx",
+            "localBeforeSha256": "1cb3ac861e42fcf7ef51e38feff318015ef87b6415bf5ad573e4c0af3ac1046b"
+          },
+          {
+            "path": "apps/web/src/inventory/product-tab-specifications.tsx",
+            "sha256": "c83e9769f19a215bbd0c1a45db45799580060e7381b07f761ab5d56e3306e232",
+            "bytes": 3008,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-tab-specifications.tsx",
+            "localBeforeSha256": "a4deb4130ad7a27c49005edda33e91db820689fb5a11d71e3c8243c62dd59049"
+          },
+          {
+            "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+            "sha256": "07a112535c46b91d30b6a8442807d7766698f54b455b827e55657eca060582ed",
+            "bytes": 7742,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/entry-view.tsx",
+            "localBeforeSha256": "1a7605dc48b77bbd0c098764aa971f89636abe3c332b51d7410bc12412854138"
+          },
+          {
+            "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+            "sha256": "91f2d9019495f733f74ccee947837c0972feef19e824949e08cc9b4b0c3acbe4",
+            "bytes": 10608,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/apps/web/src/product-settings/colors/source-catalogue-settings.css",
+            "localBeforeSha256": "92997f30b67efeb13305dcf7d78c82cbc80867988437a4d2cb433579021f6d07"
+          },
+          {
+            "path": "apps/web/src/products/product-editor-barcodes.tsx",
+            "sha256": "c91e4209dec398fec347c93a73bb01acf17628f27e950316a8069b8ed1902965",
+            "bytes": 12012,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-editor-barcodes.tsx",
+            "localBeforeSha256": "7a9eb9549de16564b2ddf9e660c0204aae5f7d0b6115ae1188b8a6da4463109f"
+          },
+          {
+            "path": "apps/web/src/products/product-editor-base.tsx",
+            "sha256": "57bd486dad5971570a119021e135cfc85be1a1e2e264a08c8c7859f1d502e4f3",
+            "bytes": 21346,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-editor-base.tsx",
+            "localBeforeSha256": "75ea1a5eb8c3e982046fb390f2ab0260421706e04385950a0577035087d90ee2"
+          },
+          {
+            "path": "apps/web/src/products/product-editor-media.tsx",
+            "sha256": "e38ea798d9953e552c063b4f1e4f1dc099175b664b71cc5cd64b9d1ed60a87ad",
+            "bytes": 9984,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-editor-media.tsx",
+            "localBeforeSha256": "d4010f3fc4b2a9c3dcad80dc929cd2762ae85ac1bf46aeddddbc9d339ac8eea5"
+          },
+          {
+            "path": "apps/web/src/products/product-editor-prices.tsx",
+            "sha256": "ec34756d67684bb8d623370507da91851aba37878dfcc05967a5538ca52d7bb6",
+            "bytes": 2832,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-editor-prices.tsx",
+            "localBeforeSha256": "54fe586f8098f68f43d54718373288e5a92ec2c9a410467749d2fbf33d2323d0"
+          },
+          {
+            "path": "apps/web/src/products/product-editor-specs.tsx",
+            "sha256": "1bad20925a9c0fc8713245bd40ea49ab3a183052b660c54bfecde005b058b85f",
+            "bytes": 16826,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-editor-specs.tsx",
+            "localBeforeSha256": "4baf49a378a4c4d68d735cda9d6592760370a8c873ca9bfe37a503cd05fb41a3"
+          },
+          {
+            "path": "apps/web/src/products/product-editor-state.test.ts",
+            "sha256": "cea3201b9779c8460031615c624c562746cacbe21567f458c60c9f654f5eb2bb",
+            "bytes": 17393,
+            "localBefore": null,
+            "localBeforeSha256": null
+          },
+          {
+            "path": "apps/web/src/products/product-editor-state.ts",
+            "sha256": "2e6cde3c9b9dce6e35d79b7ac51b3a947a6e74d4e4a7fb4ed2fd649a735586e2",
+            "bytes": 7772,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-editor-state.ts",
+            "localBeforeSha256": "25b8154b21d41d35dc56188801c4f757cd278cee66f0ad5fc3d90cc095c705bc"
+          },
+          {
+            "path": "apps/web/src/products/product-editor.tsx",
+            "sha256": "0f517c4b1a0cf624e7dc2a9e248900a9bceccf36802e1d9d1052e59f1a7d2838",
+            "bytes": 27959,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-editor.tsx",
+            "localBeforeSha256": "c2fa66eb07e6e82f9d392283d754aefaf7f35774644ebfcec8e0a8bc34491757"
+          },
+          {
+            "path": "apps/web/src/products/product-maintenance-http-client.ts",
+            "sha256": "eaca93dffa5f12964a275649e4aba785d8be90c80f38f00a8a1c25a359c52aaa",
+            "bytes": 30045,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-maintenance-http-client.ts",
+            "localBeforeSha256": "b9081a75e5e92447ca6ff325fdf6a8f6a4cbe2bde7f812322cd90c8d7e72eccc"
+          },
+          {
+            "path": "apps/web/src/products/product-page-barcodes.tsx",
+            "sha256": "cb60532f882caf16a2d20b197dd5da94509a903514cc77c55db743acf620360a",
+            "bytes": 7021,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-page-barcodes.tsx",
+            "localBeforeSha256": "f91133e586ca6b5162ac0c4112c06a87ee523daccdf431fd767737604b3f2a74"
+          },
+          {
+            "path": "apps/web/src/products/product-page-base.tsx",
+            "sha256": "7027b1d4fd41b1caa69589f32d268f90cf67695d584986a1e9e924652bc5c0ed",
+            "bytes": 2762,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-page-base.tsx",
+            "localBeforeSha256": "ff4e5413033c1c86340dec5981abe802dc8181505b248efd153c74f0ae7c9539"
+          },
+          {
+            "path": "apps/web/src/products/product-page-host.tsx",
+            "sha256": "6a53197cc5bde6fcde4c93a864219d85591d897caab48b21018607ea10489298",
+            "bytes": 4944,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-page-host.tsx",
+            "localBeforeSha256": "e1412ae76d5ef4424ec6d9e00699a1f17946d30bd9f1d91e602c547be3625332"
+          },
+          {
+            "path": "apps/web/src/products/product-page-images.tsx",
+            "sha256": "79f7f4efa12718a4e281c37813748ce19c904d5c52d7f8299c948b0d85c8a811",
+            "bytes": 947,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-page-images.tsx",
+            "localBeforeSha256": "3a2389e9e76689bfc37ed635c67f71c9840073f950c9d72f6056e7b8b193bcb1"
+          },
+          {
+            "path": "apps/web/src/products/product-page-prices.tsx",
+            "sha256": "5906ee1b869b54097bc752c325106a754d5ad454adb14492b1ad0fea86bab7d2",
+            "bytes": 817,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-page-prices.tsx",
+            "localBeforeSha256": "168482ee60426987bf7a40fd99a6de829f3f2312a2c8e713dc0e277b30843ce0"
+          },
+          {
+            "path": "apps/web/src/products/product-page-stock.tsx",
+            "sha256": "cf20a3063bae089dbcd9c74aaebc33f22db8e0936c3552dc0d789ed90163c46b",
+            "bytes": 7139,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-page-stock.tsx",
+            "localBeforeSha256": "87fd47a7fe7757f5a3ea1c46af6eed9a7dc21872defddf2b9d163f2d7203f285"
+          },
+          {
+            "path": "apps/web/src/products/product-page-view.tsx",
+            "sha256": "a45d0fb665e59aa4ba6eeab07af59c5587f87f4e5de8e883e23945c159774e89",
+            "bytes": 8768,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-page-view.tsx",
+            "localBeforeSha256": "f06af2dcee9c1f474fdd988a32a37137282cbf6bbfec4cf6233f5c9109ca01f4"
+          },
+          {
+            "path": "apps/web/src/products/product-page.css",
+            "sha256": "20786c23e24a5c880c37410cb235d5f6487711f4239704f1584396e0c94a351c",
+            "bytes": 37567,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/product-page.css",
+            "localBeforeSha256": "3b6b4ef6790cd1310ed3c83359a9ac02dfb96b60fd67b4ff9b399a67ee25f224"
+          },
+          {
+            "path": "apps/web/src/products/products-page.tsx",
+            "sha256": "4008328981dba7f2143918d31d113501ca53afd3128c5e169d8036571eba0ec3",
+            "bytes": 22492,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/apps/web/src/products/products-page.tsx",
+            "localBeforeSha256": "39c429e293fd032d74839f33b1dc0a07886d915a7abd46ead328fbf3a40c5933"
+          },
+          {
+            "path": "apps/web/src/products/products.css",
+            "sha256": "3f3df6c27423d24eefa063a9b92b3db646aac2c59af30f1c9471f298db196da5",
+            "bytes": 8677,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/apps/web/src/products/products.css",
+            "localBeforeSha256": "198a639308f4c2d6327e826c595b64199ee64c7cb978d8d70045243b80426bd2"
+          },
+          {
+            "path": "apps/web/src/transport/response-validation.ts",
+            "sha256": "00df0be4143648e5304dafd9bd92bfe51a2f5b3972623d6fac1d61bc99328621",
+            "bytes": 10557,
+            "localBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-before/apps/web/src/transport/response-validation.ts",
+            "localBeforeSha256": "88a511142299fb8bdbcd0d6297487a4f556fa1ade4c8e24ebcdd2637b677fa77"
+          }
+        ],
+        "alreadyFrozenDependency": {
+          "path": "apps/web/src/products/product-editor-contracts.ts",
+          "sha256": "865d4edf7e9b89cb8e28f337c5319b534f6433573cb37f02f7d6353794d629ff",
+          "checkpoint": "C130",
+          "mutatedAfterC130": false
+        },
+        "beforeQualification": "Local before copies document original or intermediate WIP when that file was first touched. They are not an asserted common Git parent. C owns authoritative whole-diff checkpoint/freeze; no Git command executed by F2.",
+        "sourceReference": {
+          "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo",
+          "commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+          "mutated": false
+        },
+        "provenance": [
+          {
+            "class": "MINIMAL_REACT_TRANSPORT",
+            "source": "frontend/product-current.js list()72-81 + workspaceHead13; product-inventory-unified/refinement/rework final list layers; ui-review.js numeric cells",
+            "consumer": "products-page.tsx/products.css",
+            "adaptation": "JSX events/native server page facts, no client sort/slice/total or Number conversion of money; readonly authorized actions remain explicit."
+          },
+          {
+            "class": "MINIMAL_REACT_TRANSPORT",
+            "source": "product-current.js field/basicFields83-94/mountProductDetails138-153/readonlyEditor253/readonlyDrawerBody157-163",
+            "consumer": "product-page-base.tsx/product-editor-base.tsx/inventory/product-tab-basics.tsx",
+            "adaptation": "Formal native field slots; approved optional seasons and legacy category semantics; source single/multiple/category components. Original readonly direct span versus pc-arco-host carriers preserved."
+          },
+          {
+            "class": "MINIMAL_REACT_TRANSPORT",
+            "source": "product-current.js specSection99/specsBody107-110/editSpecs114/confirmSpecs115; product-arco.jsx SpecTransfer116-130",
+            "consumer": "product-editor-specs.tsx/inventory/product-tab-specifications.tsx",
+            "adaptation": "Remote candidate page/source search, explicit catalogue CREATE grant, native ID callback, permissions. No Cartesian formal SKU invention."
+          },
+          {
+            "class": "MINIMAL_REACT_TRANSPORT",
+            "source": "product-current.js priceBody119, product-master.js priceFields57",
+            "consumer": "product-editor-prices.tsx/product-page-prices.tsx",
+            "adaptation": "Exact formal nine price keys/precision/null and existing paste owner; native input/table source layout."
+          },
+          {
+            "class": "MINIMAL_REACT_TRANSPORT",
+            "source": "product-current.js barcodeBody214-222/viewBarcodes229/openCompatible231/openScheme212",
+            "consumer": "product-editor-barcodes.tsx/product-page-barcodes.tsx",
+            "adaptation": "Actual SKU/group facts instead of C.prepare; exact current page qualification; absent provenance/note/deletion stays unavailable. Scheme four original fields use native ruleDescription/codeLength."
+          },
+          {
+            "class": "MINIMAL_REACT_TRANSPORT",
+            "source": "product-current.js stockBody120-124, product-rework.css27",
+            "consumer": "product-page-stock.tsx",
+            "adaptation": "Existing exact authorized scope and UNKNOWN/quantity/read modes; no invented all-warehouse total."
+          },
+          {
+            "class": "MINIMAL_REACT_TRANSPORT",
+            "source": "product-arco.jsx ProductPhotos131-171/native Image.Preview; product-rework.css56-74",
+            "consumer": "inventory/product-tab-images.tsx shared by editor/readonly/Drawer",
+            "adaptation": "Typed route-owned callbacks/native metadata, controlled original URLs, active context cleanup; no global PRODUCT_MEDIA/store/root persistence. All actual images stay visible when role/color is unknown."
+          },
+          {
+            "class": "MINIMAL_REACT_TRANSPORT",
+            "source": "product-current.js allowLeave17/delete/openDict208; product-arco.jsx TextInput111-115/modalCss45-60; product-rework.css75-76",
+            "consumer": "product-editor.tsx/product-editor-specs.tsx/colors/entry-view.tsx",
+            "adaptation": "Existing StandardOverlay catalogue lifecycle and formal immutable command owners; source native footer/body, same Arco Input/Transfer components."
+          },
+          {
+            "class": "DIRECT_SOURCE_DECLARATIONS_SCOPED",
+            "source": "product-rework.css14-27,56-76,105-110; styles.css44-55,74-79; product-current.css21; sales-current.css33 pc-read-value",
+            "consumer": "product-page.css/product-drawer.css/products.css/source-catalogue-settings.css",
+            "adaptation": "Module/widget selector scoping and preserved original declarations; no shared F1 CSS modified."
+          },
+          {
+            "class": "FORMAL_ADDED_NOT_DEMO_REUSE",
+            "consumer": "Existing native manual SKU code/coordinate maintenance and enable/disable/restore; UNKNOWN/permissions/cancel/error notices; media stage status/retry; unclassified/unmatched native image visibility",
+            "reason": "Retains existing approved formal identities, backend writes and actual unknown facts. Not counted as Demo direct reuse."
+          }
+        ],
+        "checks": [
+          {
+            "name": "Affected strict TypeScript",
+            "exitCode": 0,
+            "actualSession": 35890,
+            "scope": "editor/list/fullpage host/client/Drawer base+images; strict exactOptional noUnchecked; ES2023 DOM DOM.Iterable; no full build"
+          },
+          {
+            "name": "Existing product-editor-state.test.ts",
+            "exitCode": 0,
+            "tests": 11,
+            "failed": 0,
+            "scope": "Original controller/HTTP semantics, raw File/root-media key/replay, fresh key after committed reload, CREATE no product header and actual404/409, optional ordinary fields/legacy shapes"
+          },
+          {
+            "name": "Existing PRODUCT-DIRECT-UI-01-editor-smoke.mjs",
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-DIRECT-UI-01-editor-smoke.mjs",
+            "exitCode": 0,
+            "actualSession": 47591,
+            "scope": "Synthetic real React19/Arco2.66.16 DOM and HTTP-port mocks. Filled/new base9, specs/Transfer cancel, root draft/SKU/barcode/price/version, actual File input/stage/unknown/retry/detach, ordinary read source fields/images/color/original action, native list10 and NULL/0.00, dictionary original form/native committed ID/name/code",
+            "warnings": "Four existing Arco/React19 element.ref warnings; not a browser-console pass"
+          },
+          {
+            "name": "Existing products/tests/run-dom-tests.mjs",
+            "exitCode": 1,
+            "status": "OBSOLETE_CAPTION_EXPECTATION_NOT_PASS",
+            "location": "line49 expects exact text 高级筛选 ▾; original source control now includes decorative ☷ and separate spans",
+            "action": "No modification of unregistered historical test. Current same-task affected DOM runner exercises native list and facts; QF actual version still required."
+          }
+        ],
+        "notTested": [
+          "Full build/bundle/release (C owner)",
+          "Actual Chrome/computed pixels and affected QF P01 geometry/new source bodies",
+          "Actual media HTTP host/session/PG activation, decode/CAS/write/read roundtrip (D1/D2/C)",
+          "Formal production data/business save, newly composed real SKU saving, whole product page acceptance",
+          "Complete old test suite (obsolete fullpage cancel-on-hide expectations are not reused)"
+        ],
+        "unconnected": [
+          "Readonly exact per-SKU barcode detail/provenance/history source projection; buttons remain unavailable instead of borrowing maintenance permissions.",
+          "Historical barcode note/provenance/manual-history subtype and persisted single-alias DELETE have no existing formal port; optional note disabled, persisted delete disabled, no enabled-toggle substitute.",
+          "Demo historical/unbound SKU explanatory section lacks an equivalent supplied projection; do not invent it."
+        ],
+        "counts": {
+          "denominator": 104,
+          "acceptedLogicalPartial": 48,
+          "wholePagePass": 0,
+          "delta": 0
+        },
+        "blocking": "No remaining local TypeScript/affected DOM failure. Unconnected business branches above require C decisions/backend scope; do not mark full page accepted. New ordinary projections must ship with D2 same batch.",
+        "next": "C freeze this exact full file set plus C130 shared source and D2 ordinary projection; C one build/display; QF only newly affected source bodies/media/read projection/P01, reusing accepted six-tab lifecycle. F2 available for concrete affected fixes or next ready same-role task."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/inventory/product-contracts.ts",
+          "owner": "F2",
+          "bytes": 2654,
+          "sha256": "26c42a6ebd974d9b6ce7a451c2daf5dae65858e5d0670d250c7be9844dea6eb3"
+        },
+        {
+          "path": "apps/web/src/inventory/product-drawer.css",
+          "owner": "F2",
+          "bytes": 8100,
+          "sha256": "dbf934a5b56b2cebd9469cb405a118f383379c8b1a705dcd0fd20fde31af1342"
+        },
+        {
+          "path": "apps/web/src/inventory/product-model.ts",
+          "owner": "F2",
+          "bytes": 4794,
+          "sha256": "9afd9386311821faf6aa908028df8e8aa5bb4194817574be49dd296641fc06b3"
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-basics.tsx",
+          "owner": "F2",
+          "bytes": 855,
+          "sha256": "1b585a670b445747f0bf321eebffd830b823d734e18c43ac2fd86ca27f8d32ae"
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-images.tsx",
+          "owner": "F2",
+          "bytes": 13297,
+          "sha256": "2b5ab18d34c3963dbecec94584fdf6f6f9813955bd6cb5c4eb3c3a8dc7339daa"
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-specifications.tsx",
+          "owner": "F2",
+          "bytes": 3008,
+          "sha256": "c83e9769f19a215bbd0c1a45db45799580060e7381b07f761ab5d56e3306e232"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+          "owner": "F2",
+          "bytes": 7742,
+          "sha256": "07a112535c46b91d30b6a8442807d7766698f54b455b827e55657eca060582ed"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+          "owner": "F2",
+          "bytes": 10608,
+          "sha256": "91f2d9019495f733f74ccee947837c0972feef19e824949e08cc9b4b0c3acbe4"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-barcodes.tsx",
+          "owner": "F2",
+          "bytes": 12012,
+          "sha256": "c91e4209dec398fec347c93a73bb01acf17628f27e950316a8069b8ed1902965"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-base.tsx",
+          "owner": "F2",
+          "bytes": 21346,
+          "sha256": "57bd486dad5971570a119021e135cfc85be1a1e2e264a08c8c7859f1d502e4f3"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-media.tsx",
+          "owner": "F2",
+          "bytes": 9984,
+          "sha256": "e38ea798d9953e552c063b4f1e4f1dc099175b664b71cc5cd64b9d1ed60a87ad"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-prices.tsx",
+          "owner": "F2",
+          "bytes": 2832,
+          "sha256": "ec34756d67684bb8d623370507da91851aba37878dfcc05967a5538ca52d7bb6"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-specs.tsx",
+          "owner": "F2",
+          "bytes": 16826,
+          "sha256": "1bad20925a9c0fc8713245bd40ea49ab3a183052b660c54bfecde005b058b85f"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-state.test.ts",
+          "owner": "F2",
+          "bytes": 17393,
+          "sha256": "cea3201b9779c8460031615c624c562746cacbe21567f458c60c9f654f5eb2bb"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-state.ts",
+          "owner": "F2",
+          "bytes": 7772,
+          "sha256": "2e6cde3c9b9dce6e35d79b7ac51b3a947a6e74d4e4a7fb4ed2fd649a735586e2"
+        },
+        {
+          "path": "apps/web/src/products/product-editor.tsx",
+          "owner": "F2",
+          "bytes": 27959,
+          "sha256": "0f517c4b1a0cf624e7dc2a9e248900a9bceccf36802e1d9d1052e59f1a7d2838"
+        },
+        {
+          "path": "apps/web/src/products/product-maintenance-http-client.ts",
+          "owner": "F2",
+          "bytes": 30045,
+          "sha256": "eaca93dffa5f12964a275649e4aba785d8be90c80f38f00a8a1c25a359c52aaa"
+        },
+        {
+          "path": "apps/web/src/products/product-page-barcodes.tsx",
+          "owner": "F2",
+          "bytes": 7021,
+          "sha256": "cb60532f882caf16a2d20b197dd5da94509a903514cc77c55db743acf620360a"
+        },
+        {
+          "path": "apps/web/src/products/product-page-base.tsx",
+          "owner": "F2",
+          "bytes": 2762,
+          "sha256": "7027b1d4fd41b1caa69589f32d268f90cf67695d584986a1e9e924652bc5c0ed"
+        },
+        {
+          "path": "apps/web/src/products/product-page-host.tsx",
+          "owner": "F2",
+          "bytes": 4944,
+          "sha256": "6a53197cc5bde6fcde4c93a864219d85591d897caab48b21018607ea10489298"
+        },
+        {
+          "path": "apps/web/src/products/product-page-images.tsx",
+          "owner": "F2",
+          "bytes": 947,
+          "sha256": "79f7f4efa12718a4e281c37813748ce19c904d5c52d7f8299c948b0d85c8a811"
+        },
+        {
+          "path": "apps/web/src/products/product-page-prices.tsx",
+          "owner": "F2",
+          "bytes": 817,
+          "sha256": "5906ee1b869b54097bc752c325106a754d5ad454adb14492b1ad0fea86bab7d2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-stock.tsx",
+          "owner": "F2",
+          "bytes": 7139,
+          "sha256": "cf20a3063bae089dbcd9c74aaebc33f22db8e0936c3552dc0d789ed90163c46b"
+        },
+        {
+          "path": "apps/web/src/products/product-page-view.tsx",
+          "owner": "F2",
+          "bytes": 8768,
+          "sha256": "a45d0fb665e59aa4ba6eeab07af59c5587f87f4e5de8e883e23945c159774e89"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "owner": "F2",
+          "bytes": 37567,
+          "sha256": "20786c23e24a5c880c37410cb235d5f6487711f4239704f1584396e0c94a351c"
+        },
+        {
+          "path": "apps/web/src/products/products-page.tsx",
+          "owner": "F2",
+          "bytes": 22492,
+          "sha256": "4008328981dba7f2143918d31d113501ca53afd3128c5e169d8036571eba0ec3"
+        },
+        {
+          "path": "apps/web/src/products/products.css",
+          "owner": "F2",
+          "bytes": 8677,
+          "sha256": "3f3df6c27423d24eefa063a9b92b3db646aac2c59af30f1c9471f298db196da5"
+        },
+        {
+          "path": "apps/web/src/transport/response-validation.ts",
+          "owner": "F2",
+          "bytes": 10557,
+          "sha256": "00df0be4143648e5304dafd9bd92bfe51a2f5b3972623d6fac1d61bc99328621"
+        }
+      ]
+    },
+    {
+      "owner": "D2",
+      "files": [
+        {
+          "path": "packages/application/src/product-query-ports.ts",
+          "owner": "D2",
+          "bytes": 5835,
+          "sha256": "c7c86ef200c1824df4f4980f52b31ada2e67b8b577de2318275d50ec21fb03b4"
+        },
+        {
+          "path": "packages/application/src/product-query-service.ts",
+          "owner": "D2",
+          "bytes": 6968,
+          "sha256": "50314aebb0ffc62f87f2fbf87d418f1adf18889379df45c8222c5d5c65aef94d"
+        },
+        {
+          "path": "adapters/postgres/src/product-query-reader.ts",
+          "owner": "D2",
+          "bytes": 18058,
+          "sha256": "0b2dfb055ede3c9e75d8f3ffca2182932fc57181553ff3591d32849ce535b9a8"
+        },
+        {
+          "path": "tests/product-query-postgres-protocol.test.ts",
+          "owner": "D2",
+          "bytes": 21497,
+          "sha256": "0268e308b7fbc946a51950f2379a116f90c3217a02281e0a50807d3349ff0ac6"
+        },
+        {
+          "path": "tests/product-query.test.ts",
+          "owner": "D2",
+          "bytes": 12668,
+          "sha256": "46f06b2276ca4d4e753d66036d6a940ec037723f38d4ab3dd9b7536e17d2af18"
+        }
+      ],
+      "checks": "Original D2 6new/affected checks + finalservice1 PASS/strict exact5; adopted. Source-protocol only no actualPG/HTTP.",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/product-read-projection-checks.log",
+      "change": "Existingordinary query optional thickness/collarPantsType/imagesrole/colorId from approvedDBcolumns; pairedF2 exactdecoder samecheckpoint. Legacyshape/capability preserved."
+    }
+  ],
+  "controllerScope": "Freeze paired ordinary backendread and fullproduct UI, native transfer edit/readonly matrix and sharedsource dialog. Originalowner necessary selfchecks adopted; actualChrome/business/performance pending. CurrentC13457853 doesnot containthis. No newDBfields/dependencies/grants or actualsave. Production132-02 install continues independently."
+}

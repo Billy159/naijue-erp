@@ -1,0 +1,7 @@
+PASS inventory StrictMode: replay abandons its old query but keeps the visible form live; idle makes no reads; one explicit submit starts exactly one bounded transport.
+PASS inventory retry/cancel: error retains labelled prior success; one retry recovers; cancellation aborts and ignores a late rejected transport.
+PASS inventory route close/reopen: unmount aborts immediately without closing the parent; late failure cannot reattach; reopening is fresh and waits for its own explicit query.
+PASS inventory identity: active-parent replacement clears prior facts and aborts; permission/session revocation aborts inventory and candidate reads together; a new scope reads only the new identity.
+PASS candidate StrictMode/debounce: close-before-start sends nothing; one open sends one actual transport; rapid search starts only its latest bounded read; Enter is default-cancelled before the parent form; close rejects late facts/failures.
+PASS candidate error/retry/reopen: one retry recovers actual options; selecting keeps labels without rereading; completion returns focus; reopening starts fresh and sends current selected IDs.
+PASS final cleanup: category changes reread only candidates; identity abort and real unmount immediately abort pending candidates; late failure is ignored; disposed queries retain no request/success/error references, and no product prefetch occurs.

@@ -1,0 +1,79 @@
+{
+  "taskId": "D3_QB142_F01_INCOMPLETE_MANIFEST_FD_CLOSE_FIX",
+  "findingId": "QB142-F01",
+  "status": "TARGETED_FIX_READY_NO_PHYSICAL_WINDOW",
+  "atUtc": "2026-10-23T03:24:31.682336+00:00",
+  "baselineMain": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-once.mjs",
+    "bytes": 21175,
+    "sha256": "9d4c0526b014dca81f5c60b5ff5acc929bf7fe5de046bda3866ab6393f74db9c"
+  },
+  "baselineLastReadyMetadata": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/header-outside-bound1/RESULT.json",
+    "bytes": 8318,
+    "sha256": "04b7367fe075e33d0cb494bfd189b433b2e58ec51a887cadd61884d41684567e"
+  },
+  "newMain": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/join-once.mjs",
+    "bytes": 21253,
+    "sha256": "8e0874922d78bd94d10b3dce4059ec804040a68927186873ebc74dda2767aee0"
+  },
+  "codeManifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/K-CODE-MANIFEST.json",
+    "bytes": 5907,
+    "sha256": "65749b3cdafbebcbd427182474130967b66f2acad431bdd258f2a23c9c5eee1a"
+  },
+  "syntheticResult": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/SYNTHETIC-RESULT.json",
+    "bytes": 4760,
+    "sha256": "b402f38c3d8696b8d5bb3ce19af10d1efe339fcbf572f8896de98927a83bb32c"
+  },
+  "unsignedDraft": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/WINDOW-DRAFT-NOT-AUTHORIZED.json",
+    "bytes": 18953,
+    "sha256": "32af1aa73d40624ddc249f2a6a4221a7ae0fcfc822ff6f4f417e404cbf523654"
+  },
+  "launchPreparation": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/C-LAUNCH-PREPARATION.json",
+    "bytes": 7066,
+    "sha256": "c387b42045f6523892396254cff0cb7944bea47100842360077f26702f5a0f8f"
+  },
+  "onlyCodeDifferences": [
+    "Catch temporary incomplete-manifest fd.close failure as INCOMPLETE_MANIFEST_FD_CLOSE_FAILED in the existing bounded cleanup array; subsequent writeState/safeJoinState assignment and original throw always run",
+    "Versioned main binds HERE to original parent, keeping exact unchanged core/io/guard paths"
+  ],
+  "newTests": {
+    "tests": 1,
+    "pass": 1,
+    "fail": 0,
+    "durationMs": 40.779125,
+    "primaryErrorStrictIdentityPreserved": true,
+    "safeJoinStateAssigned": true,
+    "temporaryCloseAttemptedExactlyOnce": true,
+    "stateWrittenAfterSecondaryCloseFailure": true,
+    "remainingWriterInputBootstrapStateFdsAttempted": true
+  },
+  "reused": [
+    "Original5 synthetic scopes",
+    "26-module app graph",
+    "Original unchanged join-core/join-io/guard",
+    "QB139/QB135/QB133/QB134/QB141",
+    "Header outside fbec2112 and Line48238f/c8016d",
+    "Exact11 descriptors/resources/source ordering/docSHA"
+  ],
+  "sourceAndBusinessNonActions": {
+    "RChanges": 0,
+    "originalMainModified": false,
+    "coreOrIoModified": false,
+    "actualMainFunctionRun": false,
+    "oldSuitesRun": false,
+    "HeaderOrLinePayloadRead": 0,
+    "originalGzipRead": 0,
+    "PG": 0,
+    "newUUIDs": 0,
+    "MAIN": false,
+    "publish": false,
+    "privateOutputParentCreated": false
+  },
+  "pending": "Original QB only F01 replay on fixed source; new main physical window remains unsigned/false. No Header or isolated Line session."
+}

@@ -1,0 +1,51 @@
+{
+  "atUtc": "2026-10-23T06:48:16.910208+00:00",
+  "parent": "ea1c261a9425245032210ef6421853f5058df58b",
+  "taskId": "F1_CHUNK76_THREE_EXISTING_CONSUMER_FIXES",
+  "files": [
+    {
+      "path": "apps/web/src/demo-controls/page-size-select.tsx",
+      "owner": "F1",
+      "bytes": 10005,
+      "sha256": "59b8d4893f2c9e1f7d2135793b398539d42ff01322b0c738e485b263bf26bafe"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-existing-document-form.tsx",
+      "owner": "F1",
+      "bytes": 5561,
+      "sha256": "cf6591c136179de066efdb82d1807915b1089b367e2685aa9fe449aaac7562f1"
+    },
+    {
+      "path": "apps/web/src/components/standard-overlay.css",
+      "owner": "F1",
+      "bytes": 8486,
+      "sha256": "6b2fef9317c8eebffca44571ff9018d691b4250ae1b0afdd59d3234f8169f6a8"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal.css",
+      "owner": "F1",
+      "bytes": 12147,
+      "sha256": "47a11634202257218f79df24ea3f554671a6ca6f6dd48f28a989336344b919cb"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/editable-lines.tsx",
+      "owner": "F1",
+      "bytes": 5790,
+      "sha256": "3b565a465b1ee972684dbb52699803a4e56d4f4bd9d9b5de7657617e0b3492a1"
+    }
+  ],
+  "scope": [
+    "Shared lazy page-size original first focus/press/release intent retained before native leaf mount",
+    "OriginalSALE oldworkspace consumes existing SourceDocumentDialog and same440 finalsourceCSS, discardEditor(true) unchanged",
+    "Transfer readonly actualconsumer passes existing longestaxis and renders size.empty before realSKU lookup"
+  ],
+  "checksAdopted": {
+    "F1": "Affected strict exit0; firstactivation before1→after0 originaluser-event; original publicSALE workspace/proposal DOM cancel/close/discard true no writes; sourceCSS move exact-equivalent parsed0warnings; no synthesized multigroup identity"
+  },
+  "notTested": [
+    "Actual newfixedbrowser firstclick/SALE+TRANSFER440 geometry/Esc/focus",
+    "Readonly multi-group actual absent validexisting sample",
+    "Realwrite/PG/wholepage/performance"
+  ],
+  "next": "OriginalQF exact5 source then necessary integratedcandidate onlyaffected actual; old74/75/48 reused"
+}

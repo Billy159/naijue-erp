@@ -1,0 +1,2 @@
+PASS three independent browser page bundles + scoped CSS; no frozen fixtures/global runtime/importers/backend graph or external style sources.
+NOT RUN: live native API/database acceptance and Mac browser visual comparison; no route or API registration is added.

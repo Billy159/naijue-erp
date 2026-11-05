@@ -1,0 +1,98 @@
+✖ SIGNED settlement diagnostics preserve exact difference and definitive historical rejections without leaking messages (178.415129ms)
+✖ SIGNED settlement real service mismatch returns exact minor amounts (13.464135ms)
+✖ SIGNED settlement rejection shows exact difference without receipt or replay recovery (22.642926ms)
+✖ SIGNED settlement diagnostics: historical rejections are definite; only bounded exact arithmetic survives (25.268497ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 625.009066
+
+✖ failing tests:
+
+test at apps/api/src/sales-http.test.ts:317:1
+✖ SIGNED settlement diagnostics preserve exact difference and definitive historical rejections without leaking messages (178.415129ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  500 !== 409
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/api/src/sales-http.test.ts:321:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/api/src/sales-http.test.ts:326:1
+✖ SIGNED settlement real service mismatch returns exact minor amounts (13.464135ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   difference: '249',
+  -   netDue: '250',
+  -   settled: '1'
+  - }
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/api/src/sales-http.test.ts:332:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { netDue: '250', settled: '1', difference: '249' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/sales/commands/controller.test.ts:232:1
+✖ SIGNED settlement rejection shows exact difference without receipt or replay recovery (22.642926ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'uncertain'
+  - 'rejected'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/controller.test.ts:236:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'uncertain',
+    expected: 'rejected',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/sales/commands/http-client.test.ts:167:1
+✖ SIGNED settlement diagnostics: historical rejections are definite; only bounded exact arithmetic survives (25.268497ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'malformed-response'
+  - 'conflict'
+  
+      at Object.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/http-client.test.ts:12:86)
+      at expectedException (node:assert:578:17)
+      at expectsError (node:assert:703:21)
+      at strict.rejects (node:assert:769:3)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/apps/web/src/sales/commands/http-client.test.ts:170:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'malformed-response',
+    expected: 'conflict',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

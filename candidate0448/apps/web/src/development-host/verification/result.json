@@ -1,0 +1,48 @@
+{
+  "scope": "Explicit development HTML host; offline source, static split build and mocked-fetch jsdom only",
+  "baseHead": "090ec77505bf470357d0539b330cb3d66feaab9a",
+  "checks": [
+    {
+      "command": "./node_modules/.bin/tsc --noEmit -p apps/web/src/development-host/tsconfig.json",
+      "exitCode": 0
+    },
+    {
+      "command": "node --test apps/web/src/development-host/configuration.test.ts",
+      "exitCode": 0,
+      "tests": 6
+    },
+    {
+      "command": "node apps/web/src/development-host/tests/run-dom-tests.mjs",
+      "exitCode": 0,
+      "syntheticDomGroups": 5
+    },
+    {
+      "command": "node apps/web/src/development-host/tests/run-build-check.mjs",
+      "exitCode": 0,
+      "actualEmittedEntryInJsdom": true,
+      "staticHtmlAndSplitAssetGraph": true
+    },
+    {
+      "command": "node apps/web/src/application/tests/run-build-check.mjs",
+      "exitCode": 0,
+      "unchangedBuilderRegression": true
+    }
+  ],
+  "evidence": "focused-checks.txt",
+  "sourceManifest": "source.sha256",
+  "applicationDependencyManifest": "application-dependencies.sha256",
+  "sourceManifestSha256": "5e6fda9e57a81398c44ca6bbf65a77d0c51fc937fdff864b7897f02b83035b77",
+  "warning": "Existing Arco components emit React 19 element.ref compatibility warnings in synthetic DOM tests; warnings were retained, not suppressed.",
+  "notPerformed": [
+    "server/listener startup",
+    "browser launch or CUA/CDP",
+    "real HTTP/cookie/TLS verification",
+    "database/schema/data changes",
+    "credentials/account/policy generation",
+    "deployment or production action",
+    "frozen-Demo visual/pixel acceptance",
+    "real browser performance acceptance",
+    "git commit or push"
+  ],
+  "aggregateScriptsUnchanged": true
+}

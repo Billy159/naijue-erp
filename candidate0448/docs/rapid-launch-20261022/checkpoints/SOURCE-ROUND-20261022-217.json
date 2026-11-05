@@ -1,0 +1,70 @@
+{
+  "atUtc": "2026-10-23T20:08:14.441512+00:00",
+  "parent": "ed3dd96ad4b3db5cbf0e21dfb008b5703e204c1d",
+  "taskId": "QF2-P01-IDLE-FILTER-RESIDUAL-01",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-controls.css",
+      "bytes": 2030,
+      "sha256": "2c2ebe646f3f2eb7a9a0b14636c559bfa00cd830bad42d5acf0d631fbd1c3cba",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/demo-controls/idle-selection-tokens.css",
+      "bytes": 3165,
+      "sha256": "0b33e6814f7bdc4b5e00b5ceaf1e1d45b2c642deca79e6986497c58258a732ab",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-107/DELIVERY.json",
+  "ownerReceiptSha256": "1b3b4131d5a8cd4e99eaaea1a7b082bcae181f383dfcdb0215f2fe8848711ce6",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "status": "SOURCE_READY_P01_ORIGINAL_REMAINING_TWO_CSS_DIFFERENCES_ONLY",
+    "files": [
+      {
+        "path": "apps/web/src/components/standard-controls.css",
+        "bytes": 2030,
+        "sha256": "2c2ebe646f3f2eb7a9a0b14636c559bfa00cd830bad42d5acf0d631fbd1c3cba"
+      },
+      {
+        "path": "apps/web/src/demo-controls/idle-selection-tokens.css",
+        "bytes": 3165,
+        "sha256": "0b33e6814f7bdc4b5e00b5ceaf1e1d45b2c642deca79e6986497c58258a732ab"
+      }
+    ],
+    "changes": [
+      "Only original reference idle carrier left8->4px; inner token padding8, natural80px/label48px facts, count budget and selected-product carrier unchanged",
+      "Only original unselected product finder adapter font-size14px; ordinary inputs, selected-product input, global tokens/fonts and page custom controls unchanged"
+    ],
+    "actualInput": "QF2/c214-product-list-fix-actual-01 browser native-filter/idle metrics: category label660vsDemo656, year858vs854, season1026vs1022; finder13vsDemo14. Frozen/installed Arco default multiple Select view has border1+padding3, so carrier4 plus original tagpadding8 reproduces measured12px text inset. No fresh browser measurement by F1.",
+    "checks": {
+      "before-1/after-1": "JSDOM cannot expand inset shorthand into left; auto diagnostic only, not real layout RED/PASS",
+      "after-2": "CSS consumers/closures pass with inset shorthand; original unresolved font variables prevented meaningful before/after typography comparison",
+      "before-3": "Exact local source token substitution exposes original inset8/font13, source cascade RED matches QF2 actual residual",
+      "after-3": "PASS actual original shared idle consumers with exact source tokens modeled: reference inset4, finder14, ordinary13 unchanged, token padding8/no-count100percent/real-count42 reserve retained;0 action/read/leaf link/popup; shell/products/inventory CSS closures0warnings"
+    },
+    "cascadeBefore": {
+      "referenceCarrierInset": "1px 31px 1px 8px",
+      "tokenPadding": "0px 8px",
+      "tokenMaxWidth": "100%",
+      "finderFontSize": "13px",
+      "ordinaryFontSize": "13px"
+    },
+    "cascadeAfter": {
+      "referenceCarrierInset": "1px 31px 1px 4px",
+      "tokenPadding": "0px 8px",
+      "tokenMaxWidth": "100%",
+      "finderFontSize": "14px",
+      "ordinaryFontSize": "13px"
+    },
+    "limitations": [
+      "Local JSDOM token/font substitution and source arithmetic only; no new Chrome x/width/height/font/focus/pixel acceptance",
+      "QF2 owns actual sole browser recheck on exact successor; P01 not whole public controls/page/48 PASS",
+      "No JS/identity/permissions/requests/PG/whole build changes;106/216 model remains untouched"
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "SOURCE_FIXED_ONLY; exact CSS carrier4/font14. Original source207 accepted branches reused. New Chrome consumer geometry and independent common-control source acceptance pending."
+}

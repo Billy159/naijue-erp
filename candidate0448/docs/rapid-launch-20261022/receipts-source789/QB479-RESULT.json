@@ -1,0 +1,54 @@
+{
+  "reviewId": "QB479",
+  "decision": "PASS_QA_ONLY_FIRST_MISMATCH_OBSERVER_SOURCE_INCREMENT",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.mjs",
+      "bytes": 34178,
+      "sha256": "1ae1e5a0b1214524a4e1c0aecbe1c4aa73230d3721b61fcc28c14b5a2a8f5cc6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.test.mjs",
+      "bytes": 19061,
+      "sha256": "bebd70b2c1012ba93f8721b722be50e017731491934afbbbf3bc79e8bd8a22df"
+    }
+  ],
+  "baseline": "ExactQB478 control29173/dbb2f336 andtest14728/00aae03b preservedSOURCE786; previoussource/SQL/controls accepted checks reused",
+  "Standards": {
+    "blockingFindings": []
+  },
+  "Spec": {
+    "blockingFindings": []
+  },
+  "verified": {
+    "placement": "ObservedPool.connect attaches observer on original rawclient before genuineissuer leases; same raw object, release/on unchanged. No issuerlease wrapper or replacement, query not reissued.",
+    "transparentQuery": "Reflect.apply captured originalquery with exactthis/args; return exact originalpromise/result. Original throw/rejection flows unchanged. Added observe.then handlers catch owninspection errors without changing original returnedpromise. Nonmatching fixed10relation tags directlyforward; no newSQL/parameters/businessreads.",
+    "firstMismatch": "Onlyfirst completeprojection mismatch recorded; finitegroup/segment/relation, batchordinal,rowindex,keyEquality, frozenprojectionfieldNAMES, two originalcodec canonicalrowSHA. No rawid/key/values/SQL/args/messages/stack. Output occurs only originalsafeReason COMPLETE_PROJECTION, never convertsfailure toPASS.",
+    "codec": "OriginalsourceRoot historyClosureProjectionRow26/rowHash/encode/spec imported; privateSKUrecord exact11fields/UTC6microsecond normalization matchesproductionadapter. Observation failures ->OBSERVATION_UNAVAILABLE with originalquery/result/exception retained.",
+    "inverseDiff": "Removing onlyobserverfunction/poolattachment/outputfield restorespreviouscontrolbyteforbyte. Originalsourceauthority/expected/SQL/fixture/permissions/runtime/issuer/recovery/transaction/normalresult unchanged.",
+    "tests": "Owner2newfiniteprotocoltestsPASS/syntax0 adopted; no oldsuite/fullprefix reruns. Tests check same this/args/promise/result/error/release/on, firstmismatchprivacy, actualcodec and privateSKUrecordmicroseconds, observerexception isolation."
+  },
+  "limits": [
+    "ActualPGpool/lease/observer behavior notexecuted byQB",
+    "No actualfirstmismatch diagnostic/rootcause yet",
+    "Additional observation hashing onlyQAcurrent returned128rowbatches; timings notmeasured",
+    "OriginalQA BINDpositive/membernegative/deferredguard incompatibility unchanged",
+    "OriginalR1BIND/109/import/PUBLISH notPASS"
+  ],
+  "separateStaticStockIssue": {
+    "status": "REPORTED_STATIC_CONTRACT_IMAGE_DIFFERENCE_NOT_ACTUAL_FIRST_FAILURE_CAUSE",
+    "fact": "D1/D3 report retained STOCK publication contributor baseline_ledger_id=futurestableId while originalSTAGE storesNULL. Prefix must use correctSTAGEimage; that sourcechange is not included orapproved bythis2controlreview.",
+    "owner": "D3 provider/test minimumdelta pendingC exactscope; no source/expected/guard mutation byQB orD1observer",
+    "noConflation": "Do not infer187firstfailure relation/rootcause or fullfix from staticstockfinding/observermapping."
+  },
+  "handoff": "C exactnewboundedreadonlydiagnosticcarrier updatescontrolpins/authority/fixture; T45 onlyactual. Preserve184/187terminal evidence, no replay/newkey/fakecursorrecovery/twofullprefixruns. AnyD3sourcechange needs accurateconsumerpins/review delta separately.",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "qbNo": [
+    "PG/SSH",
+    "originalbusinessrowreads",
+    "sourceedits",
+    "fullprefixrerun",
+    "newchat/subagent"
+  ]
+}

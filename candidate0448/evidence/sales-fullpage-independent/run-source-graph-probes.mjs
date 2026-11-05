@@ -1,0 +1,67 @@
+// Independent source and real emitted application graph checks. No runtime I/O.
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { readFile, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { buildApplication } from '../../apps/web/src/application/build-application.mjs';
+const here = path.dirname(fileURLToPath(import.meta.url));
+const repo = path.resolve(here, '../..');
+const frozen = '/workspace/shared/frozen-demo-ui/extracted/8877-ui-evidence-b8bcfe3/frontend';
+const sha = value => createHash('sha256').update(value).digest('hex');
+const read = file => readFile(path.join(repo, file), 'utf8');
+const temporary = await mkdtemp(path.join(here, '.graph-'));
+try {
+  const pinned = { 'sales-current.js': '846a217125cc7f0fe2800a7508a01131ad3648cdd4fe8a69cf8284a4b6b4d3a1', 'sales-detail-alignment.css': '8b903028a1fd91407347f71d63bd7cc3a891df66c84d7e179647475847ef833b', 'sales-summary.js': '069889073393a0bb33264067f1d8e259821cde4512dbcbfbd3822b310c990404' };
+  for (const [name, expected] of Object.entries(pinned)) assert.equal(sha(await readFile(path.join(frozen, name))), expected);
+  const files = ['package.json', 'package-lock.json', 'apps/web/src/sales/detail-header.tsx', 'apps/web/src/sales/detail-host.tsx', 'apps/web/src/sales/detail-content.tsx', 'apps/web/src/sales/detail.css', 'apps/web/src/sales/sales-page.tsx', 'apps/web/src/sales/reference-selector.tsx', 'apps/web/src/sales/sales-route.tsx', 'apps/web/src/sales/sales.css', 'apps/web/src/application/contracts.ts', 'apps/web/src/application/controller.ts', 'apps/web/src/application/routes/sales.tsx', 'apps/web/src/application/styles/sales-detail.css', 'apps/web/src/application/build-application.mjs', 'apps/web/src/application/tests/run-sales-dom-tests.mjs', 'apps/web/preview-core-pages/main.tsx', 'apps/web/preview-core-pages/build.mjs', 'apps/web/preview-core-pages/smoke.mjs'];
+  const before = await Promise.all(files.map(async file => [file, sha(await read(file))]));
+  const content = await read(files[4]), header = await read(files[2]), detailCss = await read(files[5]), page = await read(files[6]);
+  assert.match(header, /<div className="tc-head sale-head sales-document-state"><h1>查看销货单<\/h1>/);
+  assert.match(header, /· 已保存 · 只读/);
+  assert.match(header, /返回列表[\s\S]*\['导出', '打印', '操作历史'\]/);
+  assert.equal((content.match(/<SalesDetailHeader /g) ?? []).length, 2);
+  assert.match(detailCss, /\.sales-detail-facts\.sale-editor\{display:flex;flex-direction:column;gap:0;height:auto;min-height:0;overflow:visible/);
+  assert.match(detailCss, /grid-template-columns:160px repeat\(5,minmax\(0,1fr\)\)/);
+  assert.match(content, /\[270, 100, 122, 84, 80, 95, 90, 108, 99, 142\]/);
+  assert.doesNotMatch(content + await read(files[3]) + header + detailCss, /aria-modal|<dialog|showModal|::backdrop|position:fixed|event\.key/);
+  assert.match(page, /历史分类未提供/); assert.match(page, /hidden=/); assert.match(page, /useLayoutEffect/);
+  const unchangedEconomics = ['apps/web/src/sales/contracts.ts', 'apps/web/src/sales/model.ts', 'apps/web/src/sales/response-validation.ts', 'apps/web/src/sales/http-reader.ts'];
+  for (const file of unchangedEconomics) assert.equal(await read(file), execFileSync('git', ['show', `HEAD:${file}`], { cwd: repo, encoding: 'utf8' }), `Economics/protocol must not change in this presentation integration: ${file}`);
+  const pkg = JSON.parse(await read('package.json'));
+  assert.equal(pkg.scripts['test:web:application:sales'], 'node apps/web/src/application/tests/run-sales-dom-tests.mjs');
+  assert.equal(pkg.scripts['check:web'].split('npm run test:web:application:sales').length - 1, 1);
+  assert.equal(await read('package-lock.json'), execFileSync('git', ['show', 'HEAD:package-lock.json'], { cwd: repo, encoding: 'utf8' }));
+  console.log('PASS: pinned actual frozen source, one-row readonly header/action order, full-page body/grid/line layout, no modal keys/backdrop, explicit historical category gap, unchanged native economics/protocol/dependency lock, and aggregate sales-composition test discovery.');
+
+  const { metafile, manifest } = await buildApplication({ entryPoint: path.join(repo, 'apps/web/src/application/index.tsx'), outdir: temporary });
+  const workingDirectory = path.join(repo, 'apps/web/src/application');
+  const outputs = metafile.outputs;
+  const absolute = new Map(Object.keys(outputs).map(name => [path.resolve(workingDirectory, name), name]));
+  const entry = relative => Object.keys(outputs).find(name => outputs[name].entryPoint && path.resolve(workingDirectory, outputs[name].entryPoint) === path.resolve(workingDirectory, relative));
+  const closure = start => {
+    assert.ok(start); const visited = new Set();
+    const walk = name => { if (visited.has(name)) return; visited.add(name); for (const item of outputs[name].imports) if (!item.external && item.kind !== 'dynamic-import') { const child = absolute.get(path.resolve(workingDirectory, item.path)) ?? absolute.get(path.resolve(workingDirectory, path.dirname(name), item.path)); assert.ok(child); walk(child); } };
+    walk(start); return [...visited].flatMap(name => Object.keys(outputs[name].inputs));
+  };
+  const startup = closure(entry('index.tsx')), sales = closure(entry('routes/sales.tsx')), detail = closure(entry('../sales/detail-content.tsx'));
+  assert.equal(startup.some(name => /\/(?:sales|inventory|transfers|parties)\//.test(name)), false);
+  assert.equal(sales.some(name => /\/sales\/(?:detail-content\.tsx|detail\.css)$/.test(name)), false);
+  assert.equal(sales.some(name => /@arco-design\/|\/inventory\//.test(name)), false);
+  assert.ok(detail.some(name => /\/sales\/detail-content\.tsx$/.test(name)));
+  const css = Object.fromEntries(await Promise.all(Object.entries(manifest.styles).map(async ([name, file]) => [name, await readFile(path.join(temporary, file), 'utf8')])));
+  assert.doesNotMatch(css.application + css.sales, /sales-detail-facts|sale-editor|sale-doc-fields|sale-lines-table|sale-summary/);
+  assert.match(css['sales-detail'], /sales-detail-facts/);
+  const actionOutput = absolute.get(path.join(temporary, manifest.styles['sales-detail'])); assert.ok(actionOutput);
+  const actionInputs = Object.keys(outputs[actionOutput].inputs);
+  assert.ok(actionInputs.some(name => name.endsWith('/sales/detail.css')));
+  assert.equal(actionInputs.some(name => /inventory|@arco-design|\/sales\/sales\.css$/.test(name)), false);
+  for (const token of ['iw-control', 'iw-button', 'iw-pagination', '.demo-ui']) assert.ok(css.sales.includes(token));
+  const after = await Promise.all(files.map(async file => [file, sha(await read(file))])); assert.deepEqual(after, before, 'Reviewed source changed during actual emitted build');
+  const result = { checkedAt: new Date().toISOString(), baseCommit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim(), pinnedSource: pinned, startupInputs: startup, salesInputs: sales, detailInputs: detail, actionCssInputs: actionInputs, stylesheetBytes: Object.fromEntries(Object.entries(css).map(([name, value]) => [name, Buffer.byteLength(value)])), sourceHashes: Object.fromEntries(after), limits: 'Source and actual emitted-import/CSS graph only. No browser/history/layout/pixel/network/performance/production acceptance.' };
+  await writeFile(path.join(here, 'source-graph-result.json'), JSON.stringify(result, null, 2) + '\n');
+  await writeFile(path.join(here, 'reviewed-source.sha256'), after.map(([file, hash]) => `${hash}  ${file}`).join('\n') + '\n');
+  console.log(`PASS: actual emitted application graph keeps startup and sales static code/CSS free of document-body code/styles; separate sales-detail CSS ${result.stylesheetBytes['sales-detail']} bytes; native shared controls retained.`);
+  console.log(result.limits);
+} finally { await rm(temporary, { recursive: true, force: true }); }

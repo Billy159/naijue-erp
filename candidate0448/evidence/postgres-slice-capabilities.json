@@ -1,0 +1,74 @@
+{
+  "scope": "Runtime sales PostgreSQL adapter code and review-only migration artifact",
+  "commitBase": "69ab522773d33e86bcd3599f748cbe3ef6f7e94f",
+  "driver": "pg 8.23.1 (existing pinned dependency; not installed or downloaded in this slice)",
+  "checks": {
+    "scriptedProtocolAndSqlText": {
+      "command": "node --test tests/postgres-*.test.ts",
+      "passed": 33,
+      "failed": 0,
+      "evidence": "evidence/postgres-protocol-check.log",
+      "provesActualPostgres": false
+    },
+    "strictTypecheck": {
+      "command": "npm run typecheck",
+      "result": "passed"
+    },
+    "repositoryAggregate": {
+      "command": "npm run check",
+      "result": "passed",
+      "tests": 148,
+      "failed": 0,
+      "evidence": "evidence/stage2-full-check.log",
+      "coverage": "71 existing synthetic tests + 44 API tests + 33 PostgreSQL protocol/SQL-text tests; not browser or actual PostgreSQL validation"
+    },
+    "compiledAdapterImport": {
+      "result": "passed",
+      "constructsPoolOrClient": false,
+      "opensDatabase": false
+    }
+  },
+  "capabilities": [
+    {
+      "executable": "psql",
+      "available": false
+    },
+    {
+      "executable": "postgres",
+      "available": false
+    },
+    {
+      "executable": "initdb",
+      "available": false
+    },
+    {
+      "executable": "docker",
+      "available": false
+    }
+  ],
+  "neverExecuted": [
+    "database connection or SQL execution",
+    "migration/seed/import",
+    "real PostgreSQL concurrency/rollback/constraint validation",
+    "server listener",
+    "production or real-data operation",
+    "user computer/local task",
+    "remote push or deploy"
+  ],
+  "actualPostgresValidation": "BLOCKED: no PostgreSQL server/client/runtime or approved disposable database was supplied; protocol fakes and SQL-text checks are not substitute evidence",
+  "missing": [
+    "full approved catalog/identity maintenance",
+    "trusted production authorization and economics providers",
+    "read/report adapters and visual ERP",
+    "transfer persistence",
+    "cutoff import and baseline-aware historical edits"
+  ],
+  "review": {
+    "result": "Scoped pass after two bounded P2 fixes; no open P1/P2 in reviewed service scope",
+    "fixes": [
+      "Explicit ISO business date projection independent of DateStyle",
+      "Null-safe typed compact receipt identity CHECK"
+    ],
+    "actualDatabaseReview": false
+  }
+}

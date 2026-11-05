@@ -1,0 +1,41 @@
+✔ exact35 amount candidate is source-only and adds no tables, columns, grants, or routines (3461.832998ms)
+✔ candidate consumes independently reviewed evidence exactly and keeps all numeric source strings (2602.041203ms)
+✔ patch rejects drifted predecessor and requires exact unique replacement anchors (2103.807597ms)
+✔ amount successor composes after the hall change without replacing the hall provenance controls (2918.282405ms)
+✔ new evidence is restricted to the explicit new profile and cannot be self-issued by a detail entry (2228.12378ms)
+✔ INIT validates bounded exact strings, source occurrences, uniqueness and genuine discrepancies (2143.432522ms)
+✔ immutable proof includes source hash binding and final exact consumption; no partial allow-list (2081.273962ms)
+✔ current economic actions retain formula and approved settlement rules; no metadata-only bypass was silently added (2064.700991ms)
+✔ credential-bound fenced verification reads original and current separately, and numeric diagnostics do not replace stored amounts (2105.426523ms)
+✔ new-profile empty-settlement restoration hashes original hall/archive/zero extensions while old profiles keep their exact base hash (2046.302848ms)
+✔ restoration extension projection rejects omitted, changed and cross-kind evidence without weakening receipt or actor proof (offline model) (2298.250663ms)
+✔ old zero/archive restoration omission is source-reachable but remains unmodified outside the reviewed new profile (2247.324102ms)
+✔ fresh35 delta has only two exact retained routine changes, one nullable column and no legacy dependencies (9.719827ms)
+✔ the SQL itself refuses non35 tables/routine cohorts before locking or modifying the retained sales header (0.333948ms)
+✔ source drift and caller-constructed plans fail without changing any old loader or installation gate (1.176819ms)
+✔ new profile is explicit and requires separately pinned complete approval coverage; old profile cannot carry new evidence (0.324395ms)
+✔ new profile inherits only the existing exact source declaration cohorts, not permissions or runtime exemptions (0.363426ms)
+✔ historical exceptions need exact provenance and unchanged pair; changing current hall/warehouse returns to ordinary rules (0.500057ms)
+✔ approval is bounded, hash-pinned, duplicate-free and indexed once per chunk; evidence enters source hash and immutable audit records (0.430604ms)
+✔ source evidence preserves original conflicts and pending state, and verifies the warehouse capture only on intake (0.356577ms)
+✔ public loader exposes patch-only composition plus exact changed bodies, final152 pins and current source pins without evidence admission (1437.946303ms)
+✔ six synthetic original discrepancies are retained and read back exactly in ordinary and streaming intake (295.594958ms)
+✔ a source flag or valid-looking copied evidence never grants the discrepancy exception (401.135448ms)
+✔ new runtime documents cannot borrow reviewed historical differences (174.901419ms)
+✔ changed original amount, price, quantity or exact source occurrence fails closed (756.985555ms)
+✔ foreign namespace, source inventory, parent identity and missing header provenance cannot reuse evidence (634.935209ms)
+✔ known header and receipt contradictions remain blocking despite line evidence (116.600589ms)
+✔ every reviewed discrepancy must remain present and exact, not a partial allow-list (58.981153ms)
+✔ evidence rejects wrong digest, duplicate identities/occurrences, malformed money and unknown fields (4.966997ms)
+✔ immutable capability does not accept a JSON clone or leak mutable source aliases (3.274364ms)
+✔ existing sealed database codec retains all six price/quantity/amount facts without recomputation (synthetic protocol only) (5.718122ms)
+✔ offline source reception cannot create an executable import plan, even with a scrubbed summary (350.756727ms)
+✔ actual offline CLI accepts only separately pinned evidence and preserves the archive-only boundary (1788.968333ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28608.866412

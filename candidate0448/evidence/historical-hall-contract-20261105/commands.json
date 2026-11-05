@@ -1,0 +1,128 @@
+[
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-evidence.test.ts tests/historical-sales-hall-readback.test.ts tests/sales-query-postgres-protocol.test.ts tests/ordinary-document-list*.test.ts tests/imported-history-query.test.ts tests/sales-native-facts.test.ts tests/sales-authorization.test.ts tests/sales-migration-origin-reader.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/final-runtime-1.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test scripts/import-v2/authorized-header-reader.test.mjs scripts/import-v3/prepare-native-header26-bindings.test.mjs tests/history-header-mapping.test.ts tests/historical-sales-hall-evidence.test.ts tests/historical-sales-hall-readback.test.ts tests/sales-native-facts.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/final-core-1.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-cli.test.mjs tests/unified-stream-prepare-cli.test.mjs tests/unified-stream-prepare-staff-hall.test.mjs tests/unified-stream-import-cli.test.mjs tests/unified-explicit-zero-preflight-cli.test.mjs",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/cli-1.log",
+    "exit_code": 1
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-cli.test.mjs tests/unified-stream-prepare-cli.test.mjs tests/unified-stream-prepare-staff-hall.test.mjs tests/unified-stream-import-cli.test.mjs tests/unified-explicit-zero-preflight-cli.test.mjs",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/cli-2.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-readback.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/projection-structure.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test scripts/import-v3/production-source-provider26.test.mjs scripts/import-v3/native-transfer-header-source26.test.mjs tests/history-header-mapping.test.ts scripts/import-v3/prepare-native-header26-bindings.test.mjs",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/retained-provider-1.log",
+    "exit_code": 1
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test --test-name-pattern='source620 retained HEADERS' scripts/import-v3/production-source-provider26.test.mjs",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/legacy-overlay-red-confirmation.log",
+    "exit_code": 1
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test --test-name-pattern='historical hall observation|authenticated blank original' scripts/import-v2/authorized-header-reader.test.mjs",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/authorized-inference-final.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node node_modules/typescript/bin/tsc --noEmit",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/typecheck-3.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test --test-name-pattern='historical hall observation|authenticated blank original' scripts/import-v2/authorized-header-reader.test.mjs",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/authorized-inference-cleanup.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-readback.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/projection-pointer-red.log",
+    "exit_code": 1
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-readback.test.ts tests/sales-query-postgres-protocol.test.ts tests/ordinary-document-list*.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/projection-pointer-green.log",
+    "exit_code": 1
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-readback.test.ts tests/sales-query-postgres-protocol.test.ts tests/ordinary-document-list*.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/projection-pointer-green-2.log",
+    "exit_code": 1
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-readback.test.ts tests/sales-query-postgres-protocol.test.ts tests/ordinary-document-list*.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/projection-pointer-green-3.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node node_modules/typescript/bin/tsc --noEmit",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/typecheck-4.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-readback.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/projection-required-red.log",
+    "exit_code": 1
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-readback.test.ts tests/sales-query-postgres-protocol.test.ts tests/ordinary-document-list*.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/projection-required-green.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-evidence.test.ts tests/historical-sales-hall-readback.test.ts tests/sales-query-postgres-protocol.test.ts tests/ordinary-document-list*.test.ts tests/imported-history-query.test.ts tests/sales-native-facts.test.ts tests/sales-authorization.test.ts tests/sales-migration-origin-reader.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/final-runtime-2.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node --test tests/historical-sales-hall-evidence.test.ts tests/historical-sales-hall-readback.test.ts tests/sales-query-postgres-protocol.test.ts tests/ordinary-document-list*.test.ts tests/ordinary-sales-detail-postgres-protocol.test.ts tests/imported-history-query.test.ts tests/sales-native-facts.test.ts tests/sales-authorization.test.ts tests/sales-migration-origin-reader.test.ts",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/final-runtime-3.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node node_modules/typescript/bin/tsc --noEmit",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/typecheck-5.log",
+    "exit_code": 0
+  },
+  {
+    "command": "/workspace/dot-tools/node-v24.21.0-linux-x64/bin/node node_modules/typescript/bin/tsc --noEmit",
+    "cwd": "/workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source",
+    "log": "evidence/historical-hall-contract-20261105/typecheck-6.log",
+    "exit_code": 0
+  }
+]

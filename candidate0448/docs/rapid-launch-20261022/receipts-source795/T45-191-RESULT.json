@@ -1,0 +1,206 @@
+{
+  "jobId": "t45-r1-190-original-key-journal-recovery-readonly-20261027-191",
+  "job": {
+    "jobId": "t45-r1-190-original-key-journal-recovery-readonly-20261027-191",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-7476fc7db100",
+    "atUTC": "2026-10-27T17:35:28.881936+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.8692490900866687,
+    "exports": [
+      "engine-result.json",
+      "original-key-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T17:35:29.780184+00:00"
+  },
+  "actual": {
+    "jobId": "t45-r1-190-original-key-journal-recovery-readonly-20261027-191",
+    "status": "PASS_ORIGINAL_FIRST_MAIN_KEY_RRRO_READBACK",
+    "businessDML": 0,
+    "commandsIssued": 0,
+    "grantIssued": false,
+    "credentialsExported": false,
+    "originalRequestKey": "97d9c78b-d846-47af-a3d9-38d9f1ee83c8",
+    "failedOperationJob": "t45-r1-stock-stage-v22-original109-continuation-20261027-190",
+    "identity": {
+      "database": "erp_rewrite_20261022_r1",
+      "oid": "1027659",
+      "role": "erp_rewrite_runtime_20261022",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "server_address": null,
+      "server_port": null,
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "readonly": "on"
+    },
+    "originalKeyReceipts": [
+      {
+        "id": "4d8a0208-bee7-cc6f-da1a-3b060b210ce2",
+        "request_key": "97d9c78b-d846-47af-a3d9-38d9f1ee83c8",
+        "request_hash": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+        "action": "IMPORT_BIND_FULL_SOURCE",
+        "actor_account_id": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+        "target_id": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+        "status": "COMMITTED"
+      }
+    ],
+    "mainCommandReceipts": [
+      {
+        "id": "4d8a0208-bee7-cc6f-da1a-3b060b210ce2",
+        "request_key": "97d9c78b-d846-47af-a3d9-38d9f1ee83c8",
+        "request_hash": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+        "action": "IMPORT_BIND_FULL_SOURCE",
+        "status": "COMMITTED",
+        "sequence": "3",
+        "cursor": "22",
+        "result_status": "STAGED"
+      }
+    ],
+    "batch": [
+      {
+        "status": "STAGED",
+        "sequence": "3",
+        "cursor": "22",
+        "counts": {
+          "SKU": 0,
+          "WAREHOUSE": 22,
+          "IMPORT_BATCH": 0,
+          "INVENTORY_LEDGER": 0
+        },
+        "history_payload_hash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8"
+      }
+    ],
+    "receiptObservation": "ORIGINAL_KEY_RECEIPT_PRESENT",
+    "rollbackReturned": true,
+    "clientsClosed": true,
+    "finishedAtUtc": "2026-10-27T17:35:29.669Z"
+  },
+  "engine": {
+    "applicationChanged": false,
+    "businessDML": 0,
+    "checkedAtUtc": "2026-10-27T17:35:29.736113+00:00",
+    "commandsIssued": 0,
+    "grantIssued": false,
+    "jobId": "t45-r1-190-original-key-journal-recovery-readonly-20261027-191",
+    "nodeExitCode": 0,
+    "original190Journal": {
+      "bytes": 1190209,
+      "committedOrdinalsContiguousFrom1": true,
+      "committedOrdinalsCount": 4096,
+      "committedOrdinalsUnique": true,
+      "firstEvent": {
+        "digest": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+        "kind": "MAIN",
+        "ordinal": 1,
+        "receiptCounts": {},
+        "state": "ATTEMPTING"
+      },
+      "groups": {
+        "CATALOGUE": {
+          "committedWithReceiptCounts": 10,
+          "events": 20,
+          "inserted": 0,
+          "replayed": 344,
+          "states": {
+            "ATTEMPTING": 10,
+            "COMMITTED": 10
+          }
+        },
+        "MAIN": {
+          "committedWithReceiptCounts": 0,
+          "events": 2,
+          "inserted": 0,
+          "replayed": 0,
+          "states": {
+            "ATTEMPTING": 1,
+            "COMMITTED": 1
+          }
+        },
+        "PARTY": {
+          "committedWithReceiptCounts": 8,
+          "events": 16,
+          "inserted": 0,
+          "replayed": 515,
+          "states": {
+            "ATTEMPTING": 8,
+            "COMMITTED": 8
+          }
+        },
+        "PRODUCT": {
+          "committedWithReceiptCounts": 30,
+          "events": 60,
+          "inserted": 0,
+          "replayed": 2956,
+          "states": {
+            "ATTEMPTING": 30,
+            "COMMITTED": 30
+          }
+        },
+        "SKU": {
+          "committedWithReceiptCounts": 4047,
+          "events": 8094,
+          "inserted": 0,
+          "replayed": 4064,
+          "states": {
+            "ATTEMPTING": 4047,
+            "COMMITTED": 4047
+          }
+        }
+      },
+      "lastEvent": {
+        "digest": "71d6be3a8fcca2173885a2c101479f4293c8595984a18dbdc89e671761691631",
+        "kind": "SKU",
+        "ordinal": 4096,
+        "receiptCounts": {
+          "inserted": 0,
+          "replayed": 1
+        },
+        "state": "COMMITTED"
+      },
+      "lines": 8192,
+      "mainEvents": [
+        {
+          "digest": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+          "kind": "MAIN",
+          "ordinal": 1,
+          "receiptCounts": {},
+          "state": "ATTEMPTING"
+        },
+        {
+          "digest": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+          "kind": "MAIN",
+          "ordinal": 1,
+          "receiptCounts": {},
+          "state": "COMMITTED"
+        }
+      ],
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-stock-stage-v22-original109-continuation-20261027-190/results/original-native-step-journal.jsonl",
+      "rawBodyExported": false,
+      "sha256": "2bccee1acd5d9a0c5ca588a2a8c98c36a9ab6008b9fdfb627e72e708174cada6"
+    },
+    "runtimeStatus": "PASS_ORIGINAL_FIRST_MAIN_KEY_RRRO_READBACK",
+    "status": "PASS_ORIGINAL_FIRST_MAIN_KEY_READONLY_NO_REPLAY"
+  },
+  "exports": {
+    "original-key-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-190-original-key-journal-recovery-readonly-20261027-191/release-submission/release-receipts/t45-r1-190-original-key-journal-recovery-readonly-20261027-191/original-key-result.json",
+      "bytes": 2022,
+      "sha256": "4fd34ccdaea8c1130c1fa903628c5bd95b1278e94b756e1d2f6256e308a1a372"
+    },
+    "engine-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-190-original-key-journal-recovery-readonly-20261027-191/release-submission/release-receipts/t45-r1-190-original-key-journal-recovery-readonly-20261027-191/engine-result.json",
+      "bytes": 2912,
+      "sha256": "897eb80c566300c41858f606501179955c2521c8ad7c8e6982db84da466d6cbd"
+    },
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-190-original-key-journal-recovery-readonly-20261027-191/release-submission/release-receipts/t45-r1-190-original-key-journal-recovery-readonly-20261027-191/job.json",
+      "bytes": 557,
+      "sha256": "3374ca4fa67ebd2352080cd0bcdb542e0537fd93766dee504e726f8d64e8b37d"
+    }
+  },
+  "scope": "Exact original190 firstBINDkey and finite MAINreceipt set/checkpoint in ordinaryRRRO; existing journal safe metadata only. No new source/data/fullscan/replay or DML. 4096source-step commits differ from109 MAINcommands; 1BIND+4095idempotent source prelude steps. Account107/PUBLISH not executed in this job evidence."
+}

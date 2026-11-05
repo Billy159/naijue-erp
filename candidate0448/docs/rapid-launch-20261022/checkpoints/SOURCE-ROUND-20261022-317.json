@@ -1,0 +1,24 @@
+{
+  "atUtc": "2026-10-24T12:37:45.719107+00:00",
+  "parent": "df29482f220e58e68bf21982843b8d3eb7c08279",
+  "taskId": "D3_B06_ORIGINAL_ALL11_CONCRETE_PROVIDER26",
+  "files": [
+    {
+      "path": "scripts/import-v3/production-source-provider26.mjs",
+      "bytes": 17259,
+      "sha256": "fd7886652cb9af20eaa5614ea0515fd83a30ab82365c35f3522a63e3d797963c",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/production-source-provider26.test.mjs",
+      "bytes": 13969,
+      "sha256": "09eaefb75b0443c7112955ff0eaf1541ce4fa9e66d03289c7d17f9e897417cd6",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json#productionSourceProvider26Implementation",
+  "ownerSourceReleased": true,
+  "stage": "EXECUTABLE_ORIGINAL_PROVIDER_SOURCE_NEW6_MOCK_PASS_ACTUAL_AUTHORITY_AND_FULL_SOURCE_HASH_NOT_READY",
+  "actualMAINExecuted": false,
+  "deployed": false
+}

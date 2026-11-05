@@ -1,0 +1,156 @@
+{
+  "atUtc": "2026-10-23T19:38:52.087785+00:00",
+  "parent": "98536a445920c1c8f48fe29024caa8ad151f6640",
+  "taskId": "F1_I07_I08_ORIGINAL_READONLY_DOCUMENT_HOST",
+  "files": [
+    {
+      "path": "apps/web/src/application/contracts.ts",
+      "bytes": 11954,
+      "sha256": "ab273800c54ff3e89b517d2e9c107cba913c3cd701974701efcd0ce5f345a8d2",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/controller.ts",
+      "bytes": 56393,
+      "sha256": "51013461a202e8343671083882d3480727a85b98b5c2840539fb80642a8912f2",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/inventory.tsx",
+      "bytes": 2113,
+      "sha256": "59448d7c4169ec8c9d6c2bda9152027e202bf200bd2c9193e13a2c8fa2ef7268",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/sales.tsx",
+      "bytes": 3591,
+      "sha256": "280d1eaf12caeacdf85585ac68ec0d8d1f868df2ce693d8e47cca14fba507024",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/sales-commands.tsx",
+      "bytes": 5120,
+      "sha256": "ddea0cc9aec133c8a0bee6c9796bc7abe27c7337381ca65f7cae405db781a240",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/transfers.tsx",
+      "bytes": 9883,
+      "sha256": "e5ebc7a62e31a4f4e2c86c06777c1dd38684a1e3eb74b9fabf335e56376d8bb7",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/sales-route.tsx",
+      "bytes": 1854,
+      "sha256": "bdc73cdad56f3dbb0c7e5c7a1d661bba06d55f3704ae93592f48020fcae650ea",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/sales-page.tsx",
+      "bytes": 15954,
+      "sha256": "e3d22b491695e85e238cc9349b7f31dc145bbeaefc201e7c1c8fa9dafe72fafb",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/page-host.tsx",
+      "bytes": 6240,
+      "sha256": "ccb4edfee33a023618c47613f78d3724cdbb159535f0705eb2bf6b6ba4628e8c",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/transfers-route.tsx",
+      "bytes": 3394,
+      "sha256": "a4baa7d0297da0682e2553ff23b1a3d7122eaf3b189e338c4d984786166ab95d",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/transfers-page.tsx",
+      "bytes": 15411,
+      "sha256": "f91ab3f80d785a4becd656d481650b24155450fb69e973d3340dd103f30d530f",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-103/DELIVERY.json",
+  "ownerReceiptSha256": "d79d4289416940fa8987c7372ce7692c0d0b56a793512cdfd58c415225695b1b",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "status": "SOURCE_READY_LEDGER_ORIGINAL_SOURCE_DOCUMENT_HOST_ONLY_ACTUAL_OPEN",
+    "files": [
+      {
+        "path": "apps/web/src/application/contracts.ts",
+        "bytes": 11954,
+        "sha256": "ab273800c54ff3e89b517d2e9c107cba913c3cd701974701efcd0ce5f345a8d2"
+      },
+      {
+        "path": "apps/web/src/application/controller.ts",
+        "bytes": 56393,
+        "sha256": "51013461a202e8343671083882d3480727a85b98b5c2840539fb80642a8912f2"
+      },
+      {
+        "path": "apps/web/src/application/routes/inventory.tsx",
+        "bytes": 2113,
+        "sha256": "59448d7c4169ec8c9d6c2bda9152027e202bf200bd2c9193e13a2c8fa2ef7268"
+      },
+      {
+        "path": "apps/web/src/application/routes/sales.tsx",
+        "bytes": 3591,
+        "sha256": "280d1eaf12caeacdf85585ac68ec0d8d1f868df2ce693d8e47cca14fba507024"
+      },
+      {
+        "path": "apps/web/src/application/routes/sales-commands.tsx",
+        "bytes": 5120,
+        "sha256": "ddea0cc9aec133c8a0bee6c9796bc7abe27c7337381ca65f7cae405db781a240"
+      },
+      {
+        "path": "apps/web/src/application/routes/transfers.tsx",
+        "bytes": 9883,
+        "sha256": "e5ebc7a62e31a4f4e2c86c06777c1dd38684a1e3eb74b9fabf335e56376d8bb7"
+      },
+      {
+        "path": "apps/web/src/sales/sales-route.tsx",
+        "bytes": 1854,
+        "sha256": "bdc73cdad56f3dbb0c7e5c7a1d661bba06d55f3704ae93592f48020fcae650ea"
+      },
+      {
+        "path": "apps/web/src/sales/sales-page.tsx",
+        "bytes": 15954,
+        "sha256": "e3d22b491695e85e238cc9349b7f31dc145bbeaefc201e7c1c8fa9dafe72fafb"
+      },
+      {
+        "path": "apps/web/src/sales/commands/page-host.tsx",
+        "bytes": 6240,
+        "sha256": "ccb4edfee33a023618c47613f78d3724cdbb159535f0705eb2bf6b6ba4628e8c"
+      },
+      {
+        "path": "apps/web/src/transfers/transfers-route.tsx",
+        "bytes": 3394,
+        "sha256": "a4baa7d0297da0682e2553ff23b1a3d7122eaf3b189e338c4d984786166ab95d"
+      },
+      {
+        "path": "apps/web/src/transfers/transfers-page.tsx",
+        "bytes": 15411,
+        "sha256": "f91ab3f80d785a4becd656d481650b24155450fb69e973d3340dd103f30d530f"
+      }
+    ],
+    "checks": {
+      "before-1": "RED actual original inventory route has no source callback",
+      "after-1": "PASS14 original Application/native HTTP adapter source-port checks:8 current/history sale/transfer with/without commands, single exact target detail read, no eager list/reference/history/key/write; native close/list capabilities; stale callback/missing route/cutoff; identity changed while route CSS pending; native403/404 failures",
+      "retained-1": "Test fixture accessed nonexistent snapshot.header after affected clean/dirty flow; retained log includes act warnings, not counted PASS",
+      "retained-2": "PASS affected original retained clean sales editor -> source read, original DocumentNavigationContext NEW -> native form without duplicate read detail, actual original proposal dirty -> current inventory source callback denied, input/IO unchanged. Fixed harness uses draft.note and act",
+      "types-1": "PASS11 roots complete strict imported source closure0",
+      "types-2": "PASS exact final11 roots complete strict imported closure0 after final NEW-target release line"
+    },
+    "limitations": [
+      "Synthetic native HTTP ports and JSDOM source only; actual Chrome modal focus/keyboard/geometry/current permission and real document existence not accepted",
+      "F2 original5 ledger UI/source callback pending/false/late behaviors source210 are separate fixed ownership, not rewritten here",
+      "No build, Git, preview, Chrome, server or PostgreSQL actions by F1; C/QF current207 actual page checks remain separate",
+      "T02 local missing-SKU Enter/row-confirm and actual rapid input P1 remain open"
+    ],
+    "sourceFrozenUntilCPin": true,
+    "releaseAfterCPin": [
+      "apps/web/src/application/contracts.ts temporary sole F1 write returned to C reservation once exact11 pinned"
+    ]
+  },
+  "qualification": "SOURCE_FIXED_ONLY; original clicked source target through existing detail HTTP/current authorization; no browser/PG/fullmodule acceptance."
+}

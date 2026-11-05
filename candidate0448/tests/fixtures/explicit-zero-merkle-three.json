@@ -1,0 +1,94 @@
+{
+  "descriptor": {
+    "format_version": "EXPLICIT_ZERO_APPROVAL_MERKLE_V1",
+    "sha256": "a99680e2fff0f9fe0b2e03abdef8b2ca96d69fec40a866c479765a163f6f0008",
+    "inventory_file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "cutoff_at": "2026-11-02T12:00:00+08:00",
+    "source_namespace": "synthetic-zero-merkle",
+    "record_count": 3,
+    "merkle_root_sha256": "c5a6735fdb5b94a25cda258278ac4bb0b5513368ada4d4555b182b6a31a1a42f"
+  },
+  "rows": [
+    {
+      "source_key": "zero:1",
+      "fields": {
+        "warehouse_id": "10000000-0000-0000-0000-000000000001",
+        "sku_id": "20000000-0000-0000-0000-000000000001",
+        "quantity": "0"
+      },
+      "source_refs": [
+        {
+          "file_sha256": "a99680e2fff0f9fe0b2e03abdef8b2ca96d69fec40a866c479765a163f6f0008",
+          "sheet": null,
+          "row": 1
+        }
+      ],
+      "explicit_zero_evidence": {
+        "format_version": "EXPLICIT_ZERO_ABSENCE_V1",
+        "inventory_file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "cutoff_at": "2026-11-02T12:00:00+08:00",
+        "approval_sha256": "a99680e2fff0f9fe0b2e03abdef8b2ca96d69fec40a866c479765a163f6f0008",
+        "approval_row": 1,
+        "approval_line": "{\"format_version\":\"EXPLICIT_ZERO_APPROVAL_V1\",\"source_namespace\":\"synthetic-zero-merkle\",\"inventory_file_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"cutoff_at\":\"2026-11-02T12:00:00+08:00\",\"source_key\":\"zero:1\",\"warehouse_id\":\"10000000-0000-0000-0000-000000000001\",\"sku_id\":\"20000000-0000-0000-0000-000000000001\",\"quantity\":\"0\",\"decision\":\"CONFIRMED_ABSENT_IS_ZERO\"}",
+        "merkle_proof": [
+          "65aab27e2e0084ad037c58dd8882e2551d9c02c6c560edf81ce0cfd1d2531c05",
+          "25f43c2ebde696d41692bee0154faee917e62aecec5f71cd70e0fb2e560d7b09"
+        ]
+      }
+    },
+    {
+      "source_key": "zero:2",
+      "fields": {
+        "warehouse_id": "10000000-0000-0000-0000-000000000001",
+        "sku_id": "20000000-0000-0000-0000-000000000002",
+        "quantity": "0"
+      },
+      "source_refs": [
+        {
+          "file_sha256": "a99680e2fff0f9fe0b2e03abdef8b2ca96d69fec40a866c479765a163f6f0008",
+          "sheet": null,
+          "row": 2
+        }
+      ],
+      "explicit_zero_evidence": {
+        "format_version": "EXPLICIT_ZERO_ABSENCE_V1",
+        "inventory_file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "cutoff_at": "2026-11-02T12:00:00+08:00",
+        "approval_sha256": "a99680e2fff0f9fe0b2e03abdef8b2ca96d69fec40a866c479765a163f6f0008",
+        "approval_row": 2,
+        "approval_line": "{\"format_version\":\"EXPLICIT_ZERO_APPROVAL_V1\",\"source_namespace\":\"synthetic-zero-merkle\",\"inventory_file_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"cutoff_at\":\"2026-11-02T12:00:00+08:00\",\"source_key\":\"zero:2\",\"warehouse_id\":\"10000000-0000-0000-0000-000000000001\",\"sku_id\":\"20000000-0000-0000-0000-000000000002\",\"quantity\":\"0\",\"decision\":\"CONFIRMED_ABSENT_IS_ZERO\"}",
+        "merkle_proof": [
+          "d365df7db3569901ee4b58f34f6cafcf0bbb5694f5cd46d6dcd30fd993bab0cd",
+          "25f43c2ebde696d41692bee0154faee917e62aecec5f71cd70e0fb2e560d7b09"
+        ]
+      }
+    },
+    {
+      "source_key": "zero:3",
+      "fields": {
+        "warehouse_id": "10000000-0000-0000-0000-000000000001",
+        "sku_id": "20000000-0000-0000-0000-000000000003",
+        "quantity": "0"
+      },
+      "source_refs": [
+        {
+          "file_sha256": "a99680e2fff0f9fe0b2e03abdef8b2ca96d69fec40a866c479765a163f6f0008",
+          "sheet": null,
+          "row": 3
+        }
+      ],
+      "explicit_zero_evidence": {
+        "format_version": "EXPLICIT_ZERO_ABSENCE_V1",
+        "inventory_file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "cutoff_at": "2026-11-02T12:00:00+08:00",
+        "approval_sha256": "a99680e2fff0f9fe0b2e03abdef8b2ca96d69fec40a866c479765a163f6f0008",
+        "approval_row": 3,
+        "approval_line": "{\"format_version\":\"EXPLICIT_ZERO_APPROVAL_V1\",\"source_namespace\":\"synthetic-zero-merkle\",\"inventory_file_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"cutoff_at\":\"2026-11-02T12:00:00+08:00\",\"source_key\":\"zero:3\",\"warehouse_id\":\"10000000-0000-0000-0000-000000000001\",\"sku_id\":\"20000000-0000-0000-0000-000000000003\",\"quantity\":\"0\",\"decision\":\"CONFIRMED_ABSENT_IS_ZERO\"}",
+        "merkle_proof": [
+          "fdd4678e76bba62590581d1d57a1364c02fceda69b3e932a9bab2d25262e8693",
+          "b82528ffcb02ff64a18a34b198edf742475003fff14ea1f230d9b4abfc8aee11"
+        ]
+      }
+    }
+  ]
+}

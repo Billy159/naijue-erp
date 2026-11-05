@@ -1,0 +1,28 @@
+{
+  "atUtc": "2026-10-23T22:20:24.809338+00:00",
+  "ops": {
+    "c03-c101-c102-result-bytepair-20261024-104": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
+      "bytes": 2966,
+      "sha256": "c5c2cdf3c31a6f06188961177d14dd279cfb2d26253ef8ac6fb7e4f534ae3f74",
+      "status": "PASS_PRIVATE_ORIGINAL_AND_PUBLIC_EXPORT_EXACT_JSON_VALUES_PAIRED",
+      "phase": null,
+      "firstError": null
+    },
+    "c03-native-v11-normal-save-bytepair-resume-20261024-105": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-native-v11-normal-save-bytepair-resume-20261024-105/release-submission/release-receipts/c03-native-v11-normal-save-bytepair-resume-20261024-105/engine-result.json",
+      "bytes": 16714,
+      "sha256": "957fa90d752b5859c40ef1f011da42809bbb0b71c62d0a4c35d2a02254a00573",
+      "status": "FAILED_FIRST_ERROR_PRESERVED_NO_REPLAY",
+      "phase": "ONE_V11_NORMAL_GROUP_SAVE_REPLAY_ROLLBACK_AND_TRANSFER_CONSERVATION",
+      "firstError": {
+        "code": "PRODUCT_SCHEME_REQUIRED",
+        "phase": "NORMAL_PRODUCT_FIXTURE"
+      }
+    }
+  },
+  "failureRecovery": "C106 original-key readback+actualaccount/conditionalnormalDISABLE only; preserve5fixtures, neverSQLreset or old105 replay",
+  "metadataReviews": "QB191 and192 metadata only, not businesspass",
+  "model": "gpt-6.1-sol/xhigh",
+  "fastSwitchVerified": false
+}

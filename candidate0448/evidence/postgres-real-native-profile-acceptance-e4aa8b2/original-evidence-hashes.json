@@ -1,0 +1,7 @@
+{
+  "description": "TAP is byte-identical to original; result JSON has only local path sanitization. Original evidence retained unchanged.",
+  "sha256": {
+    "acceptance-03-e4aa8b2.tap": "19d442eb711df4fca89f90c87520f6ec7594d062f680dcfa720f8f1d2838a8a0",
+    "acceptance-03-e4aa8b2.tap.json": "1418c15090114bcd291a29da78b7d2d6d861a6db5503a5d2a4eefc2cdd20d1a6"
+  }
+}

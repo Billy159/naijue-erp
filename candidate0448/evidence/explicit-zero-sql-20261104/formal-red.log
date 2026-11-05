@@ -1,0 +1,34 @@
+✔ exact historical reception predecessor transforms without changing unrelated command logic (24.372886ms)
+✔ SQL evidence binds exact descriptor, leaf ordinal/raw line, bounded Merkle root and odd sibling (3.472351ms)
+✔ explicit zero audit keeps membership and publication requires every approved row once (3.249998ms)
+✔ offline installation binds exact successor and retains all predecessor permission statements (43.593406ms)
+✖ formal sales source spec binds zero successor SQL and trusted approval implementation (739.482688ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 999.859872
+
+✖ failing tests:
+
+test at tests/explicit-zero-sql-successor.test.mjs:13:1
+✖ formal sales source spec binds zero successor SQL and trusted approval implementation (739.482688ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ee14b4bcb024c7b4e99dece6d76de37f4e60dda7861d9ca5448719dac75a5f2e'
+  - 'c866062c12366dbcb85c526fc593e011c46d5635bd10a511094cab58988d01e3'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/explicit-zero-sql-successor.test.mjs:13:511)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ee14b4bcb024c7b4e99dece6d76de37f4e60dda7861d9ca5448719dac75a5f2e',
+    expected: 'c866062c12366dbcb85c526fc593e011c46d5635bd10a511094cab58988d01e3',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

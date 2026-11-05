@@ -1,0 +1,55 @@
+{
+  "atUtc": "2026-10-24T12:07:38.322324+00:00",
+  "parent": "cd5f2ee078d49f319676d6a0143b98fd523f84a0",
+  "taskId": "D2_STAFF_LOGIN_FILTER_V1",
+  "files": [
+    {
+      "path": "packages/application/src/organization-maintenance-ports.ts",
+      "bytes": 6565,
+      "sha256": "1b941ca53c04120b87ee82623e107cbc50505109a4e635cf98db29be9310fb43",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/organization-maintenance-validation.ts",
+      "bytes": 10182,
+      "sha256": "9ba5821a046d9c3516ce584ed1e58525e709430789548bdb1867cbfd432a5a7b",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/organization-maintenance-service.ts",
+      "bytes": 8954,
+      "sha256": "b97428f7a04091a07a56a3f3155968dcf9fb3cf7d40f8ae5537e5afaf18abfd2",
+      "owner": "D2"
+    },
+    {
+      "path": "adapters/postgres/src/organization-maintenance-store.ts",
+      "bytes": 17553,
+      "sha256": "8678fb93f082701ff5bbe965a01d8aa4fe50b35474b816ee5b0a1bb3d4880df3",
+      "owner": "D2"
+    },
+    {
+      "path": "apps/api/src/organization-maintenance-http.ts",
+      "bytes": 8014,
+      "sha256": "a0f6a179bd62aa386a4bdf3635fc0a2ac2e8d671f75fea2262cd6c403785bd65",
+      "owner": "D2"
+    },
+    {
+      "path": "apps/api/src/organization-maintenance-http.test.ts",
+      "bytes": 7717,
+      "sha256": "b3baa4d01f996593b471f446d8afdeebdbe9c48328f27f9e96d2f5b125273789",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+      "bytes": 21855,
+      "sha256": "4849be3e65371d8c31b5922ff104961ee205187762cbb16fd776f77ea122d7d5",
+      "owner": "D2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/STAFF-LOGIN-FILTER-SOURCE-PINS.json",
+  "ownerSourceReleased": true,
+  "stage": "SOURCE_ALL_OPEN_LOGIN_FILTER_5_TARGETED_PASS_STRICT_PASS_CLOSED_SEMANTICS_PENDING",
+  "noSchemaOrWriteContractChanged": true,
+  "actualPostgresAccepted": false,
+  "deployed": false
+}

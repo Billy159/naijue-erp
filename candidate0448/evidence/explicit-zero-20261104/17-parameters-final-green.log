@@ -1,0 +1,14 @@
+✔ raw host callback cannot bypass zero token with inspect (2.972493ms)
+✔ raw host callback cannot bypass zero token with prepare (0.542829ms)
+✔ raw host callback cannot bypass zero token with verify (1.772644ms)
+✔ host binds verified token through raw callback and rejects altered KEYS proof (2.454322ms)
+✔ host rejects copied token before its first physical query (0.67874ms)
+✔ host never forwards accessor-swapped query parameters (0.595075ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 312.622147

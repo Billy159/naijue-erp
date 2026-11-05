@@ -1,0 +1,379 @@
+{
+  "atUtc": "2026-10-24T02:03:39.435984+00:00",
+  "parent": "d8b94b94031e1fa68335e5af379dd44d3cd8be18",
+  "taskId": "P10_QUERY_SNAPSHOT_TO_STRICT_HTTP_OBJECT_PROJECTION",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-page-http-reader.ts",
+      "bytes": 5217,
+      "sha256": "78798e89c1262c2268231ea3a0a16ea258dfea4b4de1f55c855660cebfe84925",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-validation.test.ts",
+      "bytes": 13598,
+      "sha256": "3c0e66489da0d5db1314634b72a2660f5beb8184db3b3019af5d62b8109895a2",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-QUERY-SNAPSHOT-READ-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "ae9cc14b01fc4be21b354528e31ea9a66a54bdf8ecb0365eb58f7a6dd47064b7",
+  "ownerDelivery": {
+    "task": "QF2-C258-P10-SKU-LOAD-01_PLUS_F2_P04_RETAINED_VIEW",
+    "status": "SOURCE_FIXED_FULL_FRONTEND_CHAIN_LOCAL_PASS_ACTUAL_BROWSER_PENDING",
+    "atUtc": "2026-10-24T02:02:15.182209+00:00",
+    "requestedExecution": {
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
+      "fast": "REQUESTED_OFF_TOOL_SWITCH_UNAVAILABLE_NOT_VERIFIED"
+    },
+    "reportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+    "authority": "C targeted true P1 QF2-C258-P10-SKU-LOAD-01 explicitly releases necessary original F2 frozen258 HTTPreader/tests, and requests one combined barcode module delivery with in-flight P04 retained-view fix. No fixed258 scene modified.",
+    "finding": {
+      "actual": "QF2 source258/932cce3 readonly actual57881 firstopen/retry/reenter all error and zero rendered tables; editing local records do not prove readonly.",
+      "cause": "LatestQuery.run snapshots read.parameters through snapshotQueryParameters into Object.create(null) and freezes it; source258 barcode HTTP reader directly passed that object to parseProductBarcodeQuery, which requires Object.prototype. Local parser threw before any HTTP request.",
+      "proof": "before-chain.tap: real LatestQuery with asserted null prototype and frozen parameter object produces error and fetch calls=0 on SKU first request. Same exact regression test passes after private reader projection.",
+      "previousEvidenceLimit": "Prior source258 HTTP test supplied an ordinary object directly to SDK; old component test used a direct provider and bypassed HTTP factory, so neither covered this cross-boundary prototype contract.",
+      "fix": "Only barcode HTTP branch projects productId/page/pageSize and own-presence view/skuId into an explicit normal object before invoking the original strict parser. Optional-key presence preserved, no validator relaxation, snapshot mutation, exception swallowing or empty fallback.",
+      "companion": "P04 existing retained disabled MAIN-only binding view entry uses actual group.barcodes.length; exact already-delivered one-condition change retained."
+    },
+    "files": [
+      {
+        "path": "apps/web/src/products/product-page-http-reader.ts",
+        "bytes": 5217,
+        "sha256": "78798e89c1262c2268231ea3a0a16ea258dfea4b4de1f55c855660cebfe84925",
+        "beforeBytes": 4951,
+        "beforeSha256": "b0fa74c5d3659f63752210765021c7627a1593e1b39f2bfc1f7786087ff20038",
+        "beforeEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-QUERY-SNAPSHOT-READ-01/before/apps/web/src/products/product-page-http-reader.ts"
+      },
+      {
+        "path": "apps/web/src/products/product-page-validation.test.ts",
+        "bytes": 13598,
+        "sha256": "3c0e66489da0d5db1314634b72a2660f5beb8184db3b3019af5d62b8109895a2",
+        "beforeBytes": 13209,
+        "beforeSha256": "90e850a58d0006e452c7057635e8f9a006e012b6e6a19de8ed2ba1a9bfdd23d2",
+        "beforeEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-QUERY-SNAPSHOT-READ-01/before/apps/web/src/products/product-page-validation.test.ts"
+      },
+      {
+        "path": "apps/web/src/products/product-editor-barcodes.tsx",
+        "bytes": 9216,
+        "sha256": "fdee78547008fa533e8715f6628753be10340f0b4c557e83347a13026ccb5ac3",
+        "beforeBytes": 9222,
+        "beforeSha256": "04cf4605cb13ed9689a286d5caeb03fe1eaaa76ef79ef95f83bc558da2426009",
+        "beforeEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P04-RETAINED-BARCODE-VIEW-01/before/apps/web/src/products/product-editor-barcodes.tsx"
+      }
+    ],
+    "checks": {
+      "regression": {
+        "test": "P10 SKU LatestQuery HTTP branch preserves exact new modes and the original body with no construction request",
+        "before": "before-chain.tap expected FAIL captured HTTP calls0",
+        "after": "after-chain.tap 1PASS0fail0skip across SKU view, exactsku filter and old unfiltered request modes",
+        "assertions": "Every SDK input is actual frozen null-prototype read.parameters, exact HTTP bodies preserved, construction IO0"
+      },
+      "fullNewFrontendChain": {
+        "status": "PASS_ACTUAL_VIEW_LATESTQUERY_HTTPREADER_FETCH_RESPONSE_VALIDATOR_CHAIN",
+        "bundleWarnings": 0,
+        "chain": "Actual View/BarcodePagedRead -> LatestQuery.run snapshot frozen null-prototype -> existing guarded SDK HTTP reader -> projected strict parser -> fake fetch/Response -> actual response validator -> actual rendered consumer",
+        "checks": [
+          "View firstload emits exact SKU body; 503 is error, retry emits same target and renders21 realSKU rows",
+          "zero-binding/disabled nativeSKU and summary firstOLD/count exact",
+          "click-only exactSKU detail21 records with disabled last/raw codes and unknown source/spec",
+          "close/hide abort transport signal; late old403 cannot clear new target",
+          "tab return preserves existing21 list and does not reopen detail",
+          "same actual page consumer exactSKU and SKUlist each server20+1, independent total/totalSkus",
+          "empty later SKU page retains nonzero21 count and page3",
+          "natural0SKU page successful empty distinct from HTTP200 null target"
+        ],
+        "allInputSnapshotsNullPrototypeFrozen": true,
+        "wireInputs": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "view": "SKU"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "view": "SKU"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "skuId": "00000000-0000-4000-8000-000000000101"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "skuId": "00000000-0000-4000-8000-000000000101"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "skuId": "00000000-0000-4000-8000-000000000102"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "skuId": "00000000-0000-4000-8000-000000000101"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 20,
+            "view": "SKU"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 2,
+            "pageSize": 20,
+            "view": "SKU"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 20,
+            "skuId": "00000000-0000-4000-8000-000000000101"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 2,
+            "pageSize": 20,
+            "skuId": "00000000-0000-4000-8000-000000000101"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 3,
+            "pageSize": 20,
+            "view": "SKU"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000003",
+            "page": 1,
+            "pageSize": 50,
+            "view": "SKU"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000004",
+            "page": 1,
+            "pageSize": 50,
+            "view": "SKU"
+          }
+        ],
+        "requests": [
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 1,
+              "pageSize": 50,
+              "view": "SKU"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 1,
+              "pageSize": 50,
+              "view": "SKU"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 1,
+              "pageSize": 50,
+              "skuId": "00000000-0000-4000-8000-000000000101"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 1,
+              "pageSize": 50,
+              "skuId": "00000000-0000-4000-8000-000000000101"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 1,
+              "pageSize": 50,
+              "skuId": "00000000-0000-4000-8000-000000000102"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 1,
+              "pageSize": 50,
+              "skuId": "00000000-0000-4000-8000-000000000101"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 1,
+              "pageSize": 20,
+              "view": "SKU"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 2,
+              "pageSize": 20,
+              "view": "SKU"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 1,
+              "pageSize": 20,
+              "skuId": "00000000-0000-4000-8000-000000000101"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 2,
+              "pageSize": 20,
+              "skuId": "00000000-0000-4000-8000-000000000101"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000002",
+              "page": 3,
+              "pageSize": 20,
+              "view": "SKU"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000003",
+              "page": 1,
+              "pageSize": 50,
+              "view": "SKU"
+            }
+          },
+          {
+            "url": "https://synthetic.test/api/products/barcodes/query",
+            "body": {
+              "productId": "00000000-0000-4000-8000-000000000004",
+              "page": 1,
+              "pageSize": 50,
+              "view": "SKU"
+            }
+          }
+        ],
+        "wholeSpecificationsReads": 0,
+        "unexpectedDenials": 0,
+        "scope": "Synthetic HTTP responses, actual complete frontend chain and local installed React/Arco DOM. No actual listener/server/PG/role/browser pixels or fullP10 acceptance; source255P03/source256P07/name old suites not rerun."
+      },
+      "strict": {
+        "fullImportedGraphDiagnostics": 0,
+        "roots": [
+          "product-page-barcodes.tsx",
+          "product-editor-barcodes.tsx",
+          "product-page-contracts.ts",
+          "product-page-http-reader.ts",
+          "product-page-validation.ts",
+          "product-page-validation.test.ts"
+        ],
+        "log": "strict-run.log",
+        "flags": "Engineering strict unchanged"
+      },
+      "P04Reuse": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P04-RETAINED-BARCODE-VIEW-01/RESULT.json",
+        "bytes": 4365,
+        "sha256": "b829cc3c2ddd2cf93ab825402cef0c907eee08a31c40f1425adf2506fc55f9b8",
+        "exactSameSource": true,
+        "checks": {
+          "before": "before.log: actual ProductEditorBarcodes has expected disabled MAIN-only row with native SKU identity but missing view entry; assertion fails on this exact condition.",
+          "after": {
+            "status": "PASS_LOCAL_P04_RETAINED_BINDING_VIEW",
+            "bundleWarnings": 0,
+            "actualComponent": "ProductEditorBarcodes with installed React19/Arco",
+            "retainedBinding": {
+              "skuId": "00000000-0000-4000-8000-000000000020",
+              "kind": "MAIN",
+              "enabled": false,
+              "barcode": " 000DISABLED ",
+              "viewable": true,
+              "activeMainNotInvented": true
+            },
+            "originalModes": [
+              "zero-binding row retained without invented view records",
+              "normal MAIN+OLD group remains reachable",
+              "read-disabled state still permits existing record viewing",
+              "hidden tab closes modal; return retains original native draft and label data"
+            ],
+            "specificationReads": 1,
+            "candidateReads": 0,
+            "changes": 0,
+            "denies": 0,
+            "originalDraftByteEquivalent": true,
+            "scope": "Only original P04 edit consumer; source258 readonly P10/source255 P03/source256 P07/frozen base geometry/public controls/F4 leaves not modified or retested. Synthetic local DOM, no browser/HTTPPG/write/roles/fullP04 acceptance."
+          },
+          "strict": {
+            "roots": [
+              "apps/web/src/products/product-editor-barcodes.tsx",
+              "apps/web/src/products/product-editor.tsx existing caller"
+            ],
+            "fullImportedGraphDiagnostics": 0,
+            "log": "strict-run.log"
+          },
+          "sourceOnlyExpressionChange": true,
+          "nonfatalExistingWarning": "Installed Arco React19 element.ref warning retained, not suppressed or patched."
+        },
+        "notRerun": "No P04 source change after its completed local proof/checks; reused exact one-leaf evidence in this combined module."
+      },
+      "harnessCorrection": "Initial new HTTP-consumer wrapper had one extra parenthesis before execution; fixed test wrapper only. No source behavior or assertions weakened.",
+      "warning": "Existing installed Arco React19 element.ref warning retained; no shim/suppression."
+    },
+    "notTested": [
+      "Actual network listener/server/PG/session/role queries and production business facts",
+      "Actual Chrome successor candidate firstload/retry/interaction and geometry; original QF2 STOP pending new C candidate",
+      "True source/manual/originalSpec historical metadata; remain unavailable",
+      "FullP10/F04/all-site performance or production release",
+      "No date/name/P03/P07/backend/old254 suites repeated"
+    ],
+    "boundaries": {
+      "unchanged": "Global snapshotQueryParameters/LatestQuery, server application parser, backend routes/DTOs, name owner/default scheme behavior, other three source258 leaves, source255 P03/source256 P07, F4独立目录/public F1/app roots.",
+      "newFiles": "No new application files; tools/scripts are local report evidence only",
+      "integrate": "C freeze exact3-file module together with prior258/257 compatible sources and existing P04 source context. Existing explicitly enabled barcodes capability; no new public optin.",
+      "blocking": "No F2 source blocker. Original QF2 actual minimal chain still required on new containing candidate.",
+      "next": "C owns build/server/integration. Original QF2 only repaired readonly chain: SYN2 firstload/retry/reentry, real0binding and21records, exactSKU detail and pagination; existingP03/overview/date/name accepted scopes not repeated. Editing disabledMAIN-only view proof is supplemental, not readonly acceptance."
+    },
+    "evidence": [
+      "SOURCE-MANIFEST.json",
+      "source.diff",
+      "before-chain.tap",
+      "after-chain.tap",
+      "HTTP-CONSUMER-CHECKS.json",
+      "http-consumer.log",
+      "strict-run.log",
+      "source/",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P04-RETAINED-BARCODE-VIEW-01/RESULT.json"
+    ]
+  },
+  "qualification": "Actual258 P1 reproduced on real LatestQuery null-prototype parameters before fetch; fixed only original SDK plain projection retaining optional view/skuId, shared server validator/global snapshot unchanged. Owner complete actualView/guardedSDK/fetch/validator synthetic chain adopted, new browser actual pending; P04 leaf source264 same fdee785 retained, not duplicate modified file."
+}

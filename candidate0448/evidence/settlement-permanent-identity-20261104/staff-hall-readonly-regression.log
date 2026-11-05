@@ -1,0 +1,32 @@
+✔ all three real planners reject source profile without verified installation capability (757.892435ms)
+✔ caller declarations of installed profile, target and permissions are not authority (3075.509722ms)
+✔ actual stream-import must reach installation admission for historical source profile (3593.860449ms)
+✔ explicit whole-import exposes atomic non-streaming public entrypoint (343.50246ms)
+✔ non-streaming whole-import runs real reader and both compilers before legacy host admission (503.682619ms)
+✔ CLI staff approval needs independently supplied hash and cannot be package-owned (127.268033ms)
+✔ non-stream whole-import help never advertises the rejected stream coalescing option (0.487763ms)
+✔ legacy initialize/apply reject historical packages before connection and identify the explicit atomic route (1769.990542ms)
+✔ capability report distinguishes ordinary-package atomic route from unsupported legacy historical steps (459.66356ms)
+✔ exact successor adds independently pinned INIT approval and STAFF SQL guard to unchanged predecessor (22.751269ms)
+✔ patch keeps metadata/ACL/owner unchanged and rejects wrong predecessor (8.28448ms)
+✔ SQL approval locator requires JSON number, int32 and duplicate-free references (3.457602ms)
+✔ SQL rejects duplicate keys before casting approval JSON to jsonb (3.527097ms)
+✔ STAFF source-ref containment groups JSON extraction before boolean containment (3.664494ms)
+✔ approved exact historical departed staff admits null hall, not a general exception (3.585437ms)
+✔ missing, forged, tampered or unpinned approval cannot authorize a record (1.439493ms)
+✔ approval rejects duplicate IDs, keys and unsupported fields (0.922634ms)
+✔ approval rejects duplicate JSON keys and invalid UTF-8 even when digest is pinned (0.706761ms)
+✔ approval locator rejects non-int32 rows, controls, blank sheet and repeated refs (1.549593ms)
+✔ ordinary preflight admits only externally approved exact departed staff (124.922804ms)
+✔ stream relation check shares exact departed approval and rejects active or unapproved (28.107382ms)
+✔ whole compiler binds exact approval bytes in immutable initialization, without creating a login (322.080031ms)
+✔ full streaming preflight retains approval wire in its summary (1321.478436ms)
+✔ ordinary and full stream reject approval evidence absent from current manifest (3365.361854ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11111.197339

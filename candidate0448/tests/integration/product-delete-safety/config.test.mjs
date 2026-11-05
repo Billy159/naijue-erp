@@ -1,0 +1,5 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { parseDeleteSafetyTarget } from './target.mjs';
+const base={scenario:'zero-no-references',confirmedSynthetic:true,confirmedDisposable:true,host:'127.0.0.1',port:25432,database:'synthetic_delete_hidden',runtime:{user:'runtime',password:'x'},observer:{user:'observer',password:'y'},productId:'10000000-0000-4000-8000-000000000001',actorAccountId:'10000000-0000-4000-8000-000000000002'};
+test('only explicit disposable loopback target with distinct existing users is accepted',()=>{assert.deepEqual(parseDeleteSafetyTarget(JSON.stringify(base)),base);for(const changes of [{confirmedSynthetic:false},{confirmedDisposable:false},{host:'localhost'},{database:'erp'},{port:5432},{runtime:base.observer},{productId:'bad'},{scenario:'unknown'},{observer:{...base.observer,host:'remote.invalid'}},{runtime:{...base.runtime,database:'production'}},{ssl:true}])assert.throws(()=>parseDeleteSafetyTarget(JSON.stringify({...base,...changes})));assert.throws(()=>parseDeleteSafetyTarget(undefined));});

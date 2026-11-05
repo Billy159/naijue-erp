@@ -1,0 +1,56 @@
+{
+  "atUtc": "2026-10-24T11:48:28.730559+00:00",
+  "parent": "f430f2594d43759b05cfa16a03cfd438509d8abd",
+  "taskId": "F1_TRANSFER_DEMO_BODY_UI_307",
+  "files": [
+    {
+      "path": "apps/web/src/transfers/document-presentation.tsx",
+      "sha256": "4ff8570e61d9b50dcd3395222c28485688a1824fc1ff38b609d5b4e46cb8accd",
+      "owner": "F1",
+      "bytes": 16558
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "sha256": "6aed507491d9ffe1481a471dcfdc751cf7c97158739b83f6171763f55eb6e435",
+      "owner": "F1",
+      "bytes": 35467
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+      "sha256": "9968d74ef510aae4b1b4ce4f7b3df3ad96e2d0f33da607d4ca9cdb9753053601",
+      "owner": "F1",
+      "bytes": 6016
+    },
+    {
+      "path": "apps/web/src/transfers/detail-content.tsx",
+      "sha256": "b9ff0d90e67c8e0e76e6528953b3db073ee0da441ead9c5146cd2d563f451fbc",
+      "owner": "F1",
+      "bytes": 11001
+    },
+    {
+      "path": "apps/web/src/transfers/detail-host.tsx",
+      "sha256": "5e7c622113ae7a90e0fa0e39fe6f2315cc4de375aaa71a608113349582157252",
+      "owner": "F1",
+      "bytes": 3153
+    },
+    {
+      "path": "apps/web/src/transfers/commands/form.tsx",
+      "sha256": "ef39b7ea4c8164056946985c61544a171a2299fc983c444a13f8bb8e7f53da7e",
+      "owner": "F1",
+      "bytes": 16469
+    },
+    {
+      "path": "apps/web/src/transfers/commands/editable-lines.tsx",
+      "sha256": "41c55b0d91fb5c83f1c24008be887cc181534f32f9cbf71a535ef243923db913",
+      "owner": "F1",
+      "bytes": 5695
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-145/DELIVERY.json",
+  "ownerReceiptBytes": 5405,
+  "ownerReceiptSha256": "75dea2a78b80c92dad83c08d8e9a0066b6f54a4c79608ac67f1986e19725826c",
+  "ownerSourceReleased": true,
+  "stage": "PURE_PRESENTATION_SOURCE_UI_READY_TYPES_PASS_NOT_NORMAL_STATE_WIRING_OR_BROWSER",
+  "wholePageAccepted": false,
+  "deployed": false
+}

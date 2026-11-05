@@ -1,0 +1,17 @@
+{
+  "atUtc": "2026-10-23T05:11:28.348614+00:00",
+  "parent": "ad339df588d301dfab717ef09492a9c0f7bc500b",
+  "taskId": "C03_ORIGINAL_RELEASE_TRANSPORT_CONNECTION_REUSE",
+  "files": [
+    {
+      "path": "scripts/release/ssh-control.py",
+      "owner": "C",
+      "bytes": 14381,
+      "sha256": "4dcd7e152a9190f20c2c0465b23a4629dcd34a64b0cd0bfa9354b5804b2738ba"
+    }
+  ],
+  "observed": "60partialbigchunk timedout;62 smallerchunks all8observedfilescomplete butrequest/tmp/resultabsent anddispatcherREADY. Failed before execution; noinstall or oldjob replay. Repeated newSSH connection setup remains actual failure surface.",
+  "change": "Original CLI reuses one OpenSSH ControlMaster socket scoped to one process private temporary directory. Originalkey/auth/host/grant/file selection/manifest/no-replay/40sec percall unchanged. Finally sends explicit -O exit only own socket, removes temporary directory; no globalSSH config or service changes.",
+  "checks": "Python compile PASS; originalnew operation actualtransport/install to verify; no mirrored mock framework/newnetworkservice.",
+  "next": "OriginalQB exactdelta then samefixed132-02 package via fresh63 corrected submission.62partial/60/61 preserved; no npm timeout/cache/lock/packagechange."
+}

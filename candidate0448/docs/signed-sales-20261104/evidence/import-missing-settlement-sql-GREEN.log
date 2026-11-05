@@ -1,0 +1,9 @@
+✔ missing settlement successor preserves exact migration proof and rejects ordinary approval bypass (8128.243935ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16119.286306

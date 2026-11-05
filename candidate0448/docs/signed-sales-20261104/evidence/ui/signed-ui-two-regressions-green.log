@@ -1,0 +1,21 @@
+PASS ordinary common edit route renders all16 facts and memo SAVE preserves nullable economics and methods
+✔ apps/web/demo-replica/frontend/runtime/documents/ordinary-preserving-edit.test.mjs (1588.615019ms)
+✔ N34-S13: deduction minus is exact presentation, zero unsigned and typed negative remains invalid (24.286156ms)
+▶ N34-S03: runtime summary excludes only unselected queries; strict SAVE and selected unknown stay strict
+  ✔ SALE empty draft + no-match search is a known empty display, not a zero-priced line (174.09425ms)
+  ✔ RETURN_EXCHANGE empty draft + no-match search is a known empty display, not a zero-priced line (28.635775ms)
+  ✔ selected complete SKU with unknown price remains unknown even beside pure search text (141.52164ms)
+✔ N34-S03: runtime summary excludes only unselected queries; strict SAVE and selected unknown stay strict (421.104874ms)
+▶ F04 actual proposal form exposes effective zero and explicit cancel/confirm without rewriting price intent
+  ✔ existing lines and unfinished entries use displayed zero, not stale raw price (365.582073ms)
+  ✔ actual native dialog cancel keeps false, confirm sets true and discount editing resets it (148.311652ms)
+✔ F04 actual proposal form exposes effective zero and explicit cancel/confirm without rewriting price intent (548.312231ms)
+✔ QF51-S04-READ-DIRECTION-LABEL-01: actual shared readonly renderer preserves signed quantities and Demo direction in every native state (305.96093ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2190.287507

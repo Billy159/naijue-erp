@@ -1,0 +1,8 @@
+PASS independent 1: CSS-pending rapid product replacement retains real lazy imports, deduplicates styles, starts only final-target StrictMode reads, and publishes only the live query.
+PASS independent 2: no-op rerenders do not reread/reopen; a new same-identity/same-route parent reference owns fresh scopes and facts, and old-parent abort cannot affect it.
+PASS independent 3: native-handler focus loops/keyboard End stay coherent; originals remain action-lazy, mismatched image DTOs fail closed, and preview cancel restores trigger without closing drawer.
+PASS independent 4: Escape close/remount resets facts and scope; parent abort clears facts and defeats transports that ignore AbortSignal.
+PASS independent 5: useProductRead itself survives StrictMode, avoids no-op rereads, replaces same-route scope references, resets facts, and aborts/discards on revocation.
+PASS independent 7: same-account session-only and permission-only revision changes each clear old facts and require a fresh scope before any new-identity publication.
+PASS independent 6: immediate successful promises publish once across replay; all observed query instances and queried descendant scopes are dead after teardown.
+SUMMARY: 7 independent groups passed; 12 host transport starts, 20 total query runs. JSDOM dialog stubs are not real-browser modal, CSS, image-decode, focus-stack, or network acceptance.

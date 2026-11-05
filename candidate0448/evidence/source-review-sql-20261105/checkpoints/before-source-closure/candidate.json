@@ -1,0 +1,224 @@
+{
+  "format": "FRESH35_SOURCE_REVIEW_SOURCE_CANDIDATE_V1",
+  "predecessorSchemaSha256": "5fc8508ea96062898a42dc4c03c3a6ebe166158037cc6c7c3130a13d3ee14931",
+  "reviewedDesignSha256": "82bc2c89dd116142a47c1f66c34b682374702693a067098518b040f2d32bf6b3",
+  "kernelSha256": "f61f4c7a0912fd47c574dc27d7b25a01b6d80d1062151d9064296433b31126c5",
+  "reviewSqlSha256": "daf8f4db446dc85d96f641944c31f836f2853836e121df71f5cfd43d3fa46a43",
+  "tableCount": 35,
+  "newTables": 0,
+  "newColumns": 0,
+  "predecessorRoutineCount": 152,
+  "newRoutines": 14,
+  "routineCount": 166,
+  "permissionsChanged": true,
+  "routineChanges": [
+    {
+      "signature": "naijue_erp.guard_import_batch()",
+      "before": "b22fb07f37a04ef8ae7c03df0780c0025588947ce85693bd49a3c53f34c4d702",
+      "after": "de368fc092770d34f03d351b0a99b2240296197722e799d0d364eee604418131"
+    },
+    {
+      "signature": "naijue_erp.guard_history_typed_publication()",
+      "before": "6907bdc9cbe683e5a3f839a5ab7a6456824bc04ec3d2f5fb84768f1cd9f6ce38",
+      "after": "d87a7398449d6e70eac2cbea35f4e9a03ee451d95b11dbe6d25e203800b232ff"
+    },
+    {
+      "signature": "naijue_erp.guard_import_accounting_publication()",
+      "before": "06d8c74d5571d3e7093e0845b7dccd17184b5a302a196c0d4af7bb654c538ea6",
+      "after": "36ea7d745611b86ced7c06de7b5f08a6c3b15c79f284c114d07e0d7b9152b75d"
+    },
+    {
+      "signature": "naijue_erp.guard_header_native_reference_publication()",
+      "before": "917f5a7fcc48a0da093da9cc36ea7fa3d58bb6d0524c1da2373c6d69f7ed5fbf",
+      "after": "640e87fad218d887ac8f4d425ee4c6d2ab6ff066035459fb457537112dc23a02"
+    },
+    {
+      "signature": "naijue_erp.guard_history_publication()",
+      "before": "06d8c74d5571d3e7093e0845b7dccd17184b5a302a196c0d4af7bb654c538ea6",
+      "after": "36ea7d745611b86ced7c06de7b5f08a6c3b15c79f284c114d07e0d7b9152b75d"
+    },
+    {
+      "signature": "naijue_erp.guard_native_catalogue_publication()",
+      "before": "917f5a7fcc48a0da093da9cc36ea7fa3d58bb6d0524c1da2373c6d69f7ed5fbf",
+      "after": "640e87fad218d887ac8f4d425ee4c6d2ab6ff066035459fb457537112dc23a02"
+    },
+    {
+      "signature": "naijue_erp.guard_native_payment_publication()",
+      "before": "917f5a7fcc48a0da093da9cc36ea7fa3d58bb6d0524c1da2373c6d69f7ed5fbf",
+      "after": "640e87fad218d887ac8f4d425ee4c6d2ab6ff066035459fb457537112dc23a02"
+    },
+    {
+      "signature": "naijue_erp.guard_successor_publication26()",
+      "before": "f14a1b571542a6d13e31b8b86fee4bc1a4a1988cdf08cb91b1ba0a59e96d23d0",
+      "after": "98d8bf1da9a48aca8467ea27cfd2bf30c21217b8b40895376be3b04306d42dab"
+    },
+    {
+      "signature": "naijue_erp.validate_import_batch_commit()",
+      "before": "b6e35be539a377241faedf36c616fe941e26b4b132baf822b9fa35e9d7ffbe3d",
+      "after": "81e88e098e29af441077297c66077774b577dde5dd7b51720b542a2f45a57286"
+    },
+    {
+      "signature": "naijue_erp.validate_import_accounting_checkpoint_commit()",
+      "before": "b6e35be539a377241faedf36c616fe941e26b4b132baf822b9fa35e9d7ffbe3d",
+      "after": "81e88e098e29af441077297c66077774b577dde5dd7b51720b542a2f45a57286"
+    },
+    {
+      "signature": "naijue_erp.guard_import_record()",
+      "before": "11342296be2355918e0b305801db0c3506c436d0c95600a6c86ab2da2465c4eb",
+      "after": "94d0a5b21fe63fcd3a6075d956c67a641fd96b7ed72a996aecedda5cb7d55a1f"
+    },
+    {
+      "signature": "naijue_erp.validate_import_source_commit()",
+      "before": "72d8f8bb1e78de21848df2be29ba75dd8e5c97c5349164ca32c432b433e007ae",
+      "after": "f5f6e6637880404e2a01d1df2f93f2c95682b863228333c99d007fbdcc662565"
+    },
+    {
+      "signature": "naijue_erp.validate_import_operation()",
+      "before": "4f5f0c85675b2505cf8f86c17d43a7082e4cf1e0be990c4840e452cdaa03fae6",
+      "after": "772e0342bae82420462cf7bb87a038f16073e01eb50f53c77115a82f411386c7"
+    }
+  ],
+  "newRoutineSignatures": [
+    "naijue_erp.source_review_keys_v1(jsonb,text[])",
+    "naijue_erp.source_review_occurrence_v1(text,jsonb)",
+    "naijue_erp.source_review_record_id_v1(text)",
+    "naijue_erp.source_review_utf16_length_v1(text)",
+    "naijue_erp.source_review_source_v1(jsonb)",
+    "naijue_erp.source_review_wrapper_v1(text,jsonb)",
+    "naijue_erp.source_review_approval_v1(uuid)",
+    "naijue_erp.source_review_expected_v1(jsonb)",
+    "naijue_erp.source_review_operation_v1(uuid,boolean)",
+    "naijue_erp.source_review_transition_v1(jsonb,jsonb,text,boolean)",
+    "naijue_erp.source_review_record_proof_v1(jsonb,boolean)",
+    "naijue_erp.source_review_complete_operation_v1(uuid)",
+    "naijue_erp.source_review_command_v1(jsonb,text)",
+    "naijue_erp.source_review_read_v1(jsonb,text)"
+  ],
+  "unchangedDependencies": [
+    {
+      "name": "standard_import_identity",
+      "sha256": "beed603f4022389da9e3bd4dd9c6e3422549e0aa70f20301df3cd09376cff423"
+    },
+    {
+      "name": "standard_business_ready",
+      "sha256": "4f6893cc5ef4bbee1bd74d08435763fb3bfabf7dc5888ee72f03cf3387e412db"
+    },
+    {
+      "name": "import_source_key_lock",
+      "sha256": "07404b25633a5c48ae1a530a48cdebed11107e187d660c99a7e781bb4957fa24"
+    },
+    {
+      "name": "reject_immutable_change",
+      "sha256": "3daef49e525ad973be82350a1551e979198d21ff58f3f1bb92a4f7292e4d038c"
+    }
+  ],
+  "columnChanges": [
+    {
+      "table": "naijue_erp.import_batch",
+      "column": "cutoff_at",
+      "beforeNullable": false,
+      "afterNullable": true,
+      "scope": "NULL_ONLY_FOR_SOURCE_REVIEW"
+    }
+  ],
+  "changedConstraints": [
+    "import_batch_inventory_mode_check",
+    "receipt_result_by_kind"
+  ],
+  "newConstraints": [
+    "source_review_mode_cutoff",
+    "source_review_audit_shape"
+  ],
+  "replacementPolicies": [
+    {
+      "table": "import_batch",
+      "policy": "standard_published_runtime",
+      "predicate": "inventory_mode<>'SOURCE_REVIEW'",
+      "mode": "REPLACE_EXISTING_NOT_ADD_PERMISSIVE"
+    },
+    {
+      "table": "import_record",
+      "policy": "standard_published_runtime",
+      "predicate": "EXISTS(SELECT 1 FROM naijue_erp.import_batch b WHERE b.id=import_record.import_batch_id AND b.inventory_mode<>'SOURCE_REVIEW')",
+      "mode": "REPLACE_EXISTING_NOT_ADD_PERMISSIVE"
+    },
+    {
+      "table": "audit_change",
+      "policy": "standard_published_runtime",
+      "predicate": "(object_type<>'IMPORT' OR EXISTS(SELECT 1 FROM naijue_erp.import_batch b WHERE b.id=audit_change.object_id AND b.inventory_mode<>'SOURCE_REVIEW'))",
+      "mode": "REPLACE_EXISTING_NOT_ADD_PERMISSIVE"
+    },
+    {
+      "table": "operation_receipt",
+      "policy": "standard_published_runtime",
+      "predicate": "(target_type<>'IMPORT' OR EXISTS(SELECT 1 FROM naijue_erp.import_batch b WHERE b.id=operation_receipt.target_id AND b.inventory_mode<>'SOURCE_REVIEW'))",
+      "mode": "REPLACE_EXISTING_NOT_ADD_PERMISSIVE"
+    }
+  ],
+  "newApiExecutes": [
+    {
+      "signature": "naijue_erp.source_review_command_v1(jsonb,text)",
+      "grantee": "erp_unified27_importer_2393dbc6db9581c2"
+    },
+    {
+      "signature": "naijue_erp.source_review_read_v1(jsonb,text)",
+      "grantee": "erp_unified27_importer_2393dbc6db9581c2"
+    }
+  ],
+  "commandTransactionScope": "ISOLATED_TOP_LEVEL_NO_SAVEPOINT",
+  "capturePhases": [
+    "REVIEW_STAGE",
+    "REVIEW_APPROVAL",
+    "REVIEW_CAPTURE",
+    "REVIEW_SEAL"
+  ],
+  "resolutionPhase": "EXPLICIT_NOT_IMPLEMENTED",
+  "sourceOnly": true,
+  "engineParsed": false,
+  "engineVerified": false,
+  "installationReady": false,
+  "targetAdmitted": false,
+  "durableCaptureVerified": false,
+  "ordinaryPermissionsExpanded": false,
+  "freshBootstrapClosed": false,
+  "reprocessingImplemented": false,
+  "admissionGaps": [
+    "INDEPENDENT_SOURCE_AND_FULL_CATALOG_ACL_RLS_REVIEW",
+    "EXPLICIT_PROJECT_SCHEMA_SUCCESSOR_ADMISSION",
+    "AUTHORIZED_SYNTHETIC_POSTGRES_ENGINE_TESTS_AND_RECONNECT_READBACK",
+    "TRUSTED_HOST_EXTERNAL_APPROVAL_AND_RUNTIME_CAPABILITY",
+    "FRESH_BOOTSTRAP_PENDING_PARTITION_SUCCESSOR",
+    "RESOLUTION_DECISION_AND_ATOMIC_CONVERSION_SUCCESSOR"
+  ],
+  "sourcePins": [
+    {
+      "path": "adapters/postgres/patches/0035_source_review_kernel_candidate.sql",
+      "sha256": "f61f4c7a0912fd47c574dc27d7b25a01b6d80d1062151d9064296433b31126c5"
+    },
+    {
+      "path": "evidence/historical-hall-contract-20261105/source-review-contract.md",
+      "sha256": "82bc2c89dd116142a47c1f66c34b682374702693a067098518b040f2d32bf6b3"
+    },
+    {
+      "path": "packages/application/src/historical-sales-source-review.ts",
+      "sha256": "d69a9fa3668f26bb647d08aae48e7e73054e74c19d2bf2b1de1002af9064a1d9"
+    },
+    {
+      "path": "packages/application/src/unified-historical-sales-source-review.ts",
+      "sha256": "f97e147703c92f82a76321bddd81108ebb2c18b76201b0e2fbcd9c2a7a79702f"
+    },
+    {
+      "path": "tools/unified-import/source-review-preflight-cli.mjs",
+      "sha256": "1503ec0c56fc3c3703638c785aed8916d98ef5c92581eb3fb3d10a4fc8224237"
+    },
+    {
+      "path": "evidence/source-review-contract-20261105/WIRE.md",
+      "sha256": "810e54d7c7774259c7dc67506dbf9b9d2807615dc2ee936160e55675b81cc235"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-source-review-candidate.mjs",
+      "sha256": "f4449ef91df856925f75338a5a80f896c145a4634ac9ac860f57090c03e809a8"
+    }
+  ],
+  "sourceSetSha256": "17d877c92243ede70bb77ff30b1e2cb74bdf098e9ee10d1d160709ba6270a8e7"
+}

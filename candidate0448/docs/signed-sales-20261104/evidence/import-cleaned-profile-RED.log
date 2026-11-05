@@ -1,0 +1,61 @@
+✔ history mixed SALE retains both same-SKU rows and only actual net receipt (150.621891ms)
+✔ history mixed SALE retains source discount and unknown allocations without guessing (130.876822ms)
+✔ history mixed SALE retains exact known allocations, no invented proportional split (69.962788ms)
+✔ history known allocation contradiction remains rejected (78.692911ms)
+✔ history missing settlement evidence remains absent rather than zero (86.083934ms)
+✔ history explicitly contradictory receipt is still rejected (57.239452ms)
+✔ new SALE cannot claim signed historical rule (59.202098ms)
+✔ new mixed EXCHANGE cannot carry historical header discount (60.079726ms)
+✔ historical net refund keeps one real refund and unknown pricing (69.891191ms)
+✔ same SKU opposite quantity net-zero preserves both distinct original row identities (67.165115ms)
+✔ historical nonzero discount cannot bypass missing source evidence (73.24281ms)
+✔ CLEANED without generated history provenance fails signed SALE closed in both paths (69.38202ms)
+✔ new EXCHANGE signed net receipt preserves actual direction (67.489018ms)
+✔ unsettled new EXCHANGE draft may save facts but known approved mismatch blocks (71.790187ms)
+✖ explicit versioned CLEANED historical basis preserves signed facts and original discount (33.006782ms)
+✖ explicit CLEANED historical basis preserves absent settlements as unknown (36.401303ms)
+✖ CLEANED runtime basis cannot borrow historical discount exception (31.301174ms)
+✖ CLEANED historical source classification still requires pinned original references (29.886524ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 14
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1490.506275
+
+✖ failing tests:
+
+test at tests/historical-signed-sale-preservation-preflight.test.mjs:60:1
+✖ explicit versioned CLEANED historical basis preserves signed facts and original discount (33.006782ms)
+  Error: UNKNOWN_SCHEMA_PROFILE
+      at streamPreflight (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tools/unified-import/stream-preflight.mjs:68:163)
+      at async both (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-signed-sale-preservation-preflight.test.mjs:28:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/historical-signed-sale-preservation-preflight.test.mjs:61:1
+✖ explicit CLEANED historical basis preserves absent settlements as unknown (36.401303ms)
+  Error: UNKNOWN_SCHEMA_PROFILE
+      at streamPreflight (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tools/unified-import/stream-preflight.mjs:68:163)
+      at async both (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-signed-sale-preservation-preflight.test.mjs:28:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/historical-signed-sale-preservation-preflight.test.mjs:62:1
+✖ CLEANED runtime basis cannot borrow historical discount exception (31.301174ms)
+  Error: UNKNOWN_SCHEMA_PROFILE
+      at streamPreflight (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tools/unified-import/stream-preflight.mjs:68:163)
+      at async both (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-signed-sale-preservation-preflight.test.mjs:28:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/historical-signed-sale-preservation-preflight.test.mjs:63:1
+✖ CLEANED historical source classification still requires pinned original references (29.886524ms)
+  Error: UNKNOWN_SCHEMA_PROFILE
+      at streamPreflight (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tools/unified-import/stream-preflight.mjs:68:163)
+      at async both (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-signed-sale-preservation-preflight.test.mjs:28:18)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/historical-signed-sale-preservation-preflight.test.mjs:63:180)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

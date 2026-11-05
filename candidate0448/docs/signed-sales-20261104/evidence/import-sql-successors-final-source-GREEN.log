@@ -1,0 +1,10 @@
+✔ missing settlement successor preserves exact migration proof and rejects ordinary approval bypass (5.185727ms)
+✔ explicit profile successor pins exact predecessor and only four schema decision changes (2.605928ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 265.299378

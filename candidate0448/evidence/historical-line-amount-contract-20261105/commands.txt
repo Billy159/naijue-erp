@@ -1,0 +1,13 @@
+Working directory: /workspace/scratch/f6bee04e937b/erp-contract-0236/ERP-STAGE-SOURCE-20261105-0236Z/source
+Node: /workspace/dot-tools/node-v24.21.0-linux-x64/bin/node (v24.21.0)
+Dependencies reused without network: /workspace/scratch/f6bee04e937b/erp-runtime-restored-20261102/workcopy/node_modules
+1. node --test tests/historical-signed-sale-intake.test.ts -> baseline-after-contract.log, exit 0, 3 passed.
+2. HISTORICAL_AMOUNT_EVIDENCE_DIR=<evidence directory> node --test tests/historical-line-amount-evidence.test.mjs -> targeted-01.log, exit 0, 10 passed.
+3. node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> typecheck-01.log, exit 2, concurrent historical hall nullable changes. No historical amount error.
+4. node --test tests/historical-line-amount-evidence.test.mjs tests/historical-signed-sale-intake.test.ts tests/historical-signed-sale-preservation-preflight.test.mjs tests/sales-migration-origin-reader.test.ts tests/sales-business-rules.test.ts -> affected-02.log, status in affected-02.exit.
+Only synthetic fixtures. No PostgreSQL connection, production operation, reset, table deletion, deployment, push, or original user source read.
+5. node --test tests/historical-line-amount-evidence.test.mjs -> targeted-03.log, exit 0, 11 passed (sealed codec and execution-generator guards added).
+6. HISTORICAL_AMOUNT_EVIDENCE_DIR=<evidence>/final node --test tests/historical-line-amount-evidence.test.mjs -> targeted-04-cli.log, exit 0, 12 passed; actual offline CLI stdout/stderr/status in final/cli-raw-results.json.
+7. node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> typecheck-02.log, exit 2; remaining concurrent hall UI nullable issues and time-test optional assertion forwarded.
+8. node --test tests/historical-sales-hall-preflight.test.mjs tests/historical-line-amount-evidence.test.mjs -> strict-profile-05.log, exit 0, 18 passed.
+9. node --test tests/historical-sales-hall-preflight.test.mjs tests/historical-line-amount-evidence.test.mjs -> final-contract-06.log, status in final-contract-06.exit, final 19 tests.

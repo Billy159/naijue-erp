@@ -1,0 +1,115 @@
+{
+  "atUtc": "2026-10-24T01:16:57.545808+00:00",
+  "parent": "9f0f4f6bbc9a4c592f2ad7b6fe52c97f25d8b0b4",
+  "taskId": "F1_P07_EXPLICIT_EXISTING_STOCK_OVERVIEW_PRODUCTION_COMPOSITION",
+  "files": [
+    {
+      "path": "apps/web/src/production-host/configuration.ts",
+      "bytes": 9096,
+      "sha256": "dd75b87748b52d1b0a84d5b388b240432a7a60d8fa543fa1e5016985c264bb4b",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 14878,
+      "sha256": "cc180b81612d097fd88c7ca1e8c1e7ab54e573fa57823c7a23c970e92ae59379",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "d8a703cb121bceb30ddc4c19943e101d698e5a7e6a27287a9f25b4aa5d12ba87",
+  "ownerDelivery": {
+    "taskId": "F1_P07_EXISTING_STOCK_OVERVIEW_PRODUCTION_COMPOSITION",
+    "scope": "Only registered original production configuration and mount, after fixed251/253; no UI migration or new endpoint",
+    "sourceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/production-host/configuration.ts",
+        "bytes": 9096,
+        "sha256": "dd75b87748b52d1b0a84d5b388b240432a7a60d8fa543fa1e5016985c264bb4b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/production-host/mount.tsx",
+        "bytes": 14878,
+        "sha256": "cc180b81612d097fd88c7ca1e8c1e7ab54e573fa57823c7a23c970e92ae59379"
+      }
+    ],
+    "checks": {
+      "before-1": "EXIT1: original actual default host lacked overview in readonly/editor; explicit new option rejected by old strict public configuration",
+      "after-1": "EXIT0 actual ProductionHost/Application capture for product/sales/transfer; maintenance method identity; host/route/base zero overview reads; first actual original stock tab one exact existing POST, no legacy stock reads; synthetic authorized-subset UNKNOWN remains UNKNOWN; 403 current owner clears scopes/rows; dispose aborts pending HTTP",
+      "types-1": "EXIT0 strict original config+mount imported closure"
+    },
+    "notTested": [
+      "No actual candidate browser/Demo acceptance, no Chrome",
+      "No build/serve/C preview overlay changes",
+      "No backend SQL/profile/PG/real warehouse authorization/performance acceptance",
+      "No original overview parser/UI suite/backend suite repeated",
+      "No API/DB fields/writes/schema/contracts/source outside exact2"
+    ],
+    "sourceFrozenUntilCPin": true,
+    "next": "C fixes exact2, sets explicit productStockOverview:true only on original enabled actual-profile/synthetic reader consumer as appropriate; C preview factory options and its maintenance source must both use the same native overview capability, then original QF2 actual P07 editor/readonly two-column overview. Missing flag/oldLegacy is not Demo completion.",
+    "blocker": "C exact2 pin + C preview/real host explicit capability and next actual P07 verification",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/API.json",
+        "bytes": 2362,
+        "sha256": "21a5a48b667a3dfef8baff9ee6bbc0c82ca7bcc33e28061353a6cfa0ecdec469"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/PROOF.json",
+        "bytes": 2579,
+        "sha256": "e05f8a9f7a49aab4862f166666d6d31cd9b5730df1efad61afbb6d7cb4162b7e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/REPORT.md",
+        "bytes": 992,
+        "sha256": "4b56320d316d71e62766adca44806685526c42ef66926b8442e28817d47cc084"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/SOURCE.diff",
+        "bytes": 5479,
+        "sha256": "7068414999ace0dfacb5a5c1be3bc74057231d549788f42e892946fc029c36f4"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/BEFORE.json",
+        "bytes": 105,
+        "sha256": "553bd34313917e0fb43ebaa232b68acb887e28bdfbc3ce23bfae3d8ff5b2252b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/AFTER-DEFAULT.json",
+        "bytes": 105,
+        "sha256": "553bd34313917e0fb43ebaa232b68acb887e28bdfbc3ce23bfae3d8ff5b2252b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/RESULT.json",
+        "bytes": 1933,
+        "sha256": "f1e0c0d3355b04cc16f3a09a4526bc1beda0900ccb1b20991e8b33f2ad5c8b29"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/before-1.log",
+        "bytes": 1751,
+        "sha256": "9a9386c5936fd30392e78fc4d0664ba69fc872635909e40696280ce3d8a1717e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/after-1.log",
+        "bytes": 656,
+        "sha256": "983a8ce10f917f9a8dae211049cd3ec2f7daee8c243d7dc0c48189a5e40fe42a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/stock-overview-composition-check.mjs",
+        "bytes": 15053,
+        "sha256": "19322c8ff7342b849c3286f2d00c172df2179132f789233e6507ce42747c1a5e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-130/tsconfig.json",
+        "bytes": 691,
+        "sha256": "e1332e9c75cc9262385553abe933a3dad1a48a7036334b7684faafe9ad586187"
+      }
+    ]
+  },
+  "qualification": "Only originalconfig optional strictboolean productStockOverview and existingfullpagefactory explicitoption; omittedfalselegacy unchanged, parentfullpage required. Same readOverview method in3allowed entrances andmaintenance.stock, originalendpoint/grant/UNKNOWN semantics. OwnerrealProductionHost/JSDOM firststock/0preload/403/dispose strict adopted, no actualprofile/PG/browser/performance claim. Not infixed252/production252prep."
+}

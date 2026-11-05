@@ -1,0 +1,32 @@
+✔ V1 source plan and all original request IDs/hashes remain exact before/after V2 integration (96.77305ms)
+✔ V2 actually compiles 501 standard V1 synthetic masters into bounded finite requests (798.324873ms)
+✔ V2 actually compiles 4078 standard V1 synthetic masters into bounded finite requests (4959.00953ms)
+✔ V2 actually compiles 10000 standard V1 synthetic masters into bounded finite requests (20307.56452ms)
+✔ V2 binds public initialization identity, new versioned operation keys, and unchanged native/source IDs (71.567963ms)
+✔ V2 rejects plan/layout/bytes tamper and preserves unsupported historical account facts (56.195618ms)
+✔ V2 retains document aggregate500 and safe total cursor/sequence bounds (301.996777ms)
+✔ V2 plan cannot be sent to V1 execution and CLI apply rejects V2 before target/config/package access (485.449151ms)
+✔ offline CLI V2 consumes same pinned-byte loader, emits real4078-row plan/program/schedule and never overwrites package/report (15945.198123ms)
+✔ V2 second-pass schedule is deterministic, honors small technical bounds and propagates atomic pair rejection (62.857616ms)
+✔ V2 rejects closed identity extras, unknown historical document accounts and recomputed progress tamper (83.049674ms)
+✔ V2 final sequence leaves int32 audit.new_version plus-one headroom without allocating rows (0.387902ms)
+✔ compile explicit nullable departure null (429.223552ms)
+✔ compile explicit nullable departure 2024-02-29 (203.499554ms)
+✔ old compiler and absent original field remain byte-identical (119.778537ms)
+✔ different date binds different plan and keys before requests are emitted (144.064984ms)
+✔ invalid date and unknown schema cannot compile (52.356244ms)
+✔ accessor boundary rejects before any getter is invoked (11.255646ms)
+✔ 10k masters retain complete chunks and nullable date without changing original input (21780.541065ms)
+✔ departure profile retains numeric-fit support and still rejects missing role/date (57.597924ms)
+✔ one historical document larger than500 is split without early migration receipt (1069.501447ms)
+✔ formal stream-import CLI exposes safe usage and rejects missing options before any connection (1353.016516ms)
+✔ formal CLI preserves commit, rollback, unknown and verification exit semantics (1891.804368ms)
+✔ new real-source declaration is not restricted to historical fixed namespace (744.752938ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43672.946997

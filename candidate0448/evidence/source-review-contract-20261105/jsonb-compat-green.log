@@ -1,0 +1,25 @@
+✔ real standalone CLI reports only approved pending counts and explicit non-persistence (274.273949ms)
+✔ CLI cannot be converted into an execution entry and requires every external pin (1074.273744ms)
+✔ package-local or symlink-hidden approvals cannot self-authorize the pending partition (467.2007ms)
+✔ changed manifest or source approval does not get a successful pending receipt (403.448599ms)
+✔ unknown warehouse keeps exact original blank/null/decimal strings and no ordinary identity (3.783477ms)
+✔ orphan/ambiguous occurrences and duplicate business keys are retained separately, never guessed into groups (0.953106ms)
+✔ complete group closure requires exactly one matching original header and consistent classification (3.297827ms)
+✔ approval requires external exact SHA, namespace, manifest and original file pins (1.072721ms)
+✔ exact source tuple and deterministic capture UUID are cross-language reproducible, not a warehouse ID (0.61431ms)
+✔ cloned/self-declared approvals have no capability and internal bytes cannot be mutated through input (0.937448ms)
+✔ raw shape is closed, normalization is separate, and getters are never executed (0.291906ms)
+✔ PG-incompatible NUL and lone surrogates are rejected, never normalized or removed (0.392868ms)
+✔ duplicate JSON keys and unknown fields cannot hide an original occurrence (0.524352ms)
+✔ bounded approval byte segments and capture payloads preserve the full approved occurrence set (235.843006ms)
+✔ wide source objects are chunked below both exact wire and PostgreSQL jsonb text limits (1382.799997ms)
+✔ PostgreSQL byte projection counts structural spaces but not punctuation in escaped/Unicode strings (0.975292ms)
+✔ original numeric coordinate lexemes cannot be rounded into an integer by JS (4.904498ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2319.973133

@@ -1,0 +1,64 @@
+{
+  "reviewId": "QB486",
+  "decision": "PASS_STATIC_EMPTY_ACL_NORMALIZATION_DELTA_ONLY",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v3-EMPTY-ACL/grant-exact-197-columns.sql",
+      "bytes": 60726,
+      "sha256": "16d99000f90ab87be3a3471b0b64c0b9dbb8fd610e3282be6538fb82a0bd2b5f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v3-EMPTY-ACL/revoke-only-exact-197-added-columns.sql",
+      "bytes": 60645,
+      "sha256": "35097f0b90491bd203a66738919c823a78ed9e793c615311fa99c32475e98932"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v3-EMPTY-ACL/NORMALIZATION-DELTA.json",
+      "bytes": 2852,
+      "sha256": "8110be8b1ad71e1c80cf4aa3196db54a42bd6371aa26e738e7fbbad908ea1408"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v3-EMPTY-ACL/README.md",
+      "bytes": 2915,
+      "sha256": "25ebaa2cf555620ed580662cd65b28d7f8c864993b691cf15eb21663bc11aff8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v3-EMPTY-ACL/RESULT.json",
+      "bytes": 1709,
+      "sha256": "b28eb0c861fdc9fa656ce43d18c2b8b234ea870d07cd5357fdd9962ee937ab99"
+    }
+  ],
+  "scope": "TwoSQL/fournormalizationreads only; QB48576bits/16mirror/197prestate reuse, nofullreview/PGprobe replay",
+  "Standards": {
+    "blockingFindings": []
+  },
+  "Spec": {
+    "blockingFindings": []
+  },
+  "independentChecks": {
+    "inverseFourReadBlocksRestoresBothV2SqlExactly": true,
+    "fourEmbedded197BeforeAfterJsonBytesUnchanged": true,
+    "sixteenGrantAndSixteenRevokeStatementsBytesUnchanged": true,
+    "emptyNull": "CASEcardinalitycoalesce0 ->explicitcolumnprivileges[] withoutcallingaclexplode",
+    "nonempty": "Correlatedsubquery aclexplode(a.attacl) samegrantor/grantee/privilege/grantable JSON andordering, noacldefault/tableprivilege substitution",
+    "protection": "Alltarget/OID/role/socket/postmaster/prestate/RLS/oldbits/afterguard/readback/transaction checks outside4reads unchanged",
+    "authorizationDelta": "Same9SELECT59INSERT8singlecolumnUPDATE,noadditionalprivileges"
+  },
+  "adoptedActual199": {
+    "result": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/RESULT.json",
+      "bytes": 5829,
+      "sha256": "dc6f08ac83364c3724f12e6790e1c65117152c843c978af16d994c3efa0ed526"
+    },
+    "rawReceipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/release-submission/release-receipts/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/original-key-result.json",
+      "bytes": 46835,
+      "sha256": "86cf526c800678edaa26e567c8e67f7217763dcc894d0cf97749b7179a9b6912"
+    },
+    "scope": "ActualT45 read-onlywholecatalog/rawnormalizedprestate equals197/no198persistentdelta, oldNULL/emptyexpression22023 andnewNULL/empty/nonemptyCASEprobesPASS. Receiptpins verified locally; no newPGexecutions.",
+    "causality": "199 exactexpressionreproduction doesnotrecover original198context/line; historicalfailure retained"
+  },
+  "limits": "FullV3SQL PostgreSQL execution/commit nottested; source/staticPASS only. T45 needsC exactnewACL-onlycarrier thenordinarynewcatalog/QBdelta/currentreview andaffectedconfig/purpose/consumer/externalpins. No automaticreverse/198199replay/v2reuse, noBINDreplay/import/PUBLISHPASS.",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED"
+}

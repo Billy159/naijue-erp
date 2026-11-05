@@ -1,0 +1,43 @@
+✔ SYNTHETIC offline contract: exactly original 18 sheets / 154 ordered fields (11.169728ms)
+✔ SYNTHETIC exact yuan parser: no float, rounding, exponent, or blank-to-zero (3.314082ms)
+✔ SYNTHETIC intake: stable identities preserve leading zeros and do not depend on file/row order (7.975178ms)
+✔ SYNTHETIC intake: namespace and entity category isolate same source ID (2.793863ms)
+✔ SYNTHETIC intake: schema checks report changed headers and mistyped input sheets, skip exact guides only (1.293011ms)
+✔ SYNTHETIC precision: nine prices/raw blanks preserved; numeric precision risks do not silently normalize (2.816925ms)
+✔ SYNTHETIC formula and numeric IDs: preserve values and isolate affected facts, no guessed text conversion (10.060497ms)
+✔ SYNTHETIC cross-file references: forward/circular references resolve without row order or labels (2.432641ms)
+✔ SYNTHETIC staged/final: missing later-batch references are pending, final unresolved references errors (3.3615ms)
+✔ SYNTHETIC prior manifest: same namespace resolves later refs; wrong namespace/content remain blocked (5.364573ms)
+✔ SYNTHETIC uniqueness: source IDs, actual SKU tuple, original line numbers and same-valued balances all reject duplicates (4.866566ms)
+✔ SYNTHETIC historical barcode: preserve leading zeros, disabled bindings still conflict across SKUs (1.184734ms)
+✔ SYNTHETIC inventory: negative/zero explicit quantities retained, no absent-is-zero or Cartesian rows (9.510803ms)
+✔ SYNTHETIC histories: preserve approved state/unknown identity and raw Excel date, isolate whole document (9.545841ms)
+✔ SYNTHETIC safety: checking every supplied sheet is still not DB execution/import/publish acceptance (6.970522ms)
+✔ SYNTHETIC bounds: precise overlong cell and malformed JS numeric input fail rather than truncate/coerce (1.177892ms)
+✔ SYNTHETIC manifest safety: both unique-key conflict participants and dependent records are blocked (2.44358ms)
+✔ SYNTHETIC manifest safety: duplicate prior identities are all poisoned, not resolved to the first (2.152224ms)
+✔ SYNTHETIC source issue: unresolved original issue blocks the actual target and is never exported as imported identity (2.647873ms)
+✔ SYNTHETIC barcode conflict: first and later bindings all remain excluded from prior identity evidence (1.179985ms)
+✔ SYNTHETIC whole-document closure: one invalid child blocks header and all siblings from prior identities (18.029518ms)
+✔ SYNTHETIC unresolved source issue poisons prior-only target before current references resolve (1.963174ms)
+✔ SYNTHETIC barcode conflict related evidence remains bounded per affected row (13.248388ms)
+✔ SYNTHETIC source location aliases: duplicate basenames/row positions cannot validate the wrong record (8.203768ms)
+✔ SYNTHETIC nine-price contract: verified v0.3 blanks are UNSET, zero distinct, formulas UNKNOWN, never native authority (2.890154ms)
+✔ SYNTHETIC final pending capability/source issue does not turn dependent data into invented source errors (3.028972ms)
+✔ SYNTHETIC account/hall contract: original two headers remain optional historical recommendations, never permissions (2.109992ms)
+✔ SYNTHETIC optional account/hall sheet: omitted or empty in STAGED/FINAL never creates missing master/permission blockers (8.519267ms)
+✔ SYNTHETIC provided historical account/hall recommendation is retained without changing account identity or demanding reassignment (2.394573ms)
+✔ SYNTHETIC malformed optional recommendation reports only its source relation, not a false account permission failure (1.051198ms)
+✔ SYNTHETIC payment-method snapshot contract: original 18 sheets/154 columns and old eight headers unchanged, one optional trailing fact only (0.783516ms)
+✔ SYNTHETIC old settlement: absent method ID is permitted unknown, never inferred from matching display name or current account method (2.64601ms)
+✔ SYNTHETIC extended settlement: appended original method reference maps by source ID and preserves source values/identity (1.15654ms)
+✔ SYNTHETIC appended method ID: blank remains unknown; bad explicit reference has exact location; pending staged vs unresolved final (2.742347ms)
+✔ SYNTHETIC snapshot extension exactness: no inserted/reordered/renamed columns, numeric or formula IDs never inferred (5.481753ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2422.393918

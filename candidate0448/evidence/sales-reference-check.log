@@ -1,0 +1,43 @@
+✔ SYNTHETIC sales query HTTP: five read routes use current trusted actor/policy, no listener, exact bigint strings (575.756319ms)
+✔ SYNTHETIC sales query HTTP: authentication missing/malformed/failing and missing providers never default to global (59.09736ms)
+✔ SYNTHETIC sales query HTTP: actor, role, scope and unknown filters cannot be granted from client data (32.410037ms)
+✔ SYNTHETIC sales query HTTP: current authorization denial and empty/malformed policy scope cannot touch reader (72.792069ms)
+✔ SYNTHETIC sales query HTTP: safe allowlisted errors and unknown SQL/provider messages remain redacted (96.828703ms)
+✔ SYNTHETIC sales query HTTP: strict transport rejects query strings, invalid JSON/media type and oversized body (36.470884ms)
+✔ SYNTHETIC sales filter references HTTP: authority injection, unknown kind, form eligibility and invalid paging fail before policy (29.262451ms)
+✔ SYNTHETIC sales filter references HTTP: denied grants never read, provider failure cannot become empty success (29.044577ms)
+✔ SYNTHETIC sales reference/detail HTTP: current session adapter and trusted Origin are reused, no alternate authentication (25.173168ms)
+✔ SYNTHETIC sales filter references HTTP: simulated disconnect aborts forwarded scope and rejects late provider result (21.158133ms)
+✔ sales query pg protocol: mandatory pool never connects at construction; no aborted or invalid-scope connection (11.223308ms)
+✔ sales query pg protocol: exact count and relational page share scoped RR snapshot, no hydration/catalog/N+1 (10.161299ms)
+✔ sales query pg protocol: empty out-of-range page retains exact total without global recount or fallback (2.224178ms)
+✔ sales query pg protocol: detail reads authorized native header/current snapshots/settlements in three bounded reads (9.465022ms)
+✔ sales query pg protocol: hidden/missing detail and history rollback without reading child facts (6.73513ms)
+✔ sales query pg protocol: oversized detail fails closed rather than truncating current lines (42.469135ms)
+✔ sales query pg protocol: audit metadata exact count/page reapply current scope and SALES kind with stable tie-break (2.986782ms)
+✔ sales query pg protocol: settlement summary includes approved full scope only and exact unbounded numeric sums, account page separately (8.336001ms)
+✔ sales query pg protocol: decoding failure rolls back, unknown commit outcome is not retried and discards client (3.446446ms)
+✔ sales query pg protocol: begin/connect/rollback errors release or discard correctly; no hidden retries (3.162512ms)
+✔ sales query pg protocol: abort while SQL is in flight requests rollback and stops remaining reads (1.999964ms)
+✔ sales filter references pg protocol: all four kinds query only observed authorized references including disabled history (8.203585ms)
+✔ sales filter references pg protocol: bigint totals, bounded page and exact empty out-of-range semantics (2.82009ms)
+✔ sales filter references pg protocol: invalid request/grant/abort never connects, malformed provider facts roll back (5.901946ms)
+✔ sales detail pg protocol: current master labels and authoritative settlement snapshots share the one authorized RR snapshot (4.989352ms)
+✔ sales query: required providers and empty/malformed trusted scopes fail closed (10.283549ms)
+✔ sales query: filters are strict, bounded, canonical and include actual calendar/range validation (5.29683ms)
+✔ sales query: actor, filters and granted clauses are isolated before and after policy await (2.876415ms)
+✔ sales query: abort and invalid actor stop before policy/reader, and current policy is called on every request (3.14905ms)
+✔ sales filter references: strict bounded literal parser rejects authority, active-only form semantics and malformed paging (7.645391ms)
+✔ sales filter references: mandatory provider capability and validation before policy, no fallback empty reader (3.879475ms)
+✔ sales filter references: current neutral list grant, immutable input/actor/scope and no new catalog authorization (5.132678ms)
+✔ sales filter references: revocation, empty grant and aborted in-flight policy/reader results fail closed (3.887578ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1729.624071
+
+EXIT_CODE=0

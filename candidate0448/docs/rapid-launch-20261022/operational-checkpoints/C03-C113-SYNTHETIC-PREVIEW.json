@@ -1,0 +1,54 @@
+{
+  "atUtc": "2026-10-23T01:53:36.954793+00:00",
+  "status": "C113_FIXED_PREVIEW_SERVED_AND_THREE_HTTP_BYTES_VERIFIED_ONLY",
+  "server": {
+    "status": "PASS_THREE_EXACT_HTTP_INPUTS_SYNTHETIC_ONLY",
+    "atUtc": "2026-10-23T01:52:25.797522+00:00",
+    "pid": 30991,
+    "sessionId": 30700,
+    "source": "1578a5b0823af4c85a33aaecd629babdae3f4d5c",
+    "build": "ui-preview-1578a5b-01-build01",
+    "url": "http://127.0.0.1:57850/synthetic-unified.html",
+    "files": [
+      {
+        "path": "synthetic-unified.html",
+        "status": 200,
+        "bytes": 2914371,
+        "sha256": "748f119f360e29b6b34a05a1f0f0497614c8c928a7747385f92f642aa32285fa"
+      },
+      {
+        "path": "candidate-identity.json",
+        "status": 200,
+        "bytes": 2851,
+        "sha256": "0149220af4ec1b303e34d11e3f749f4fb8bb3331c28f9762906bc12662663055"
+      },
+      {
+        "path": "provenance.json",
+        "status": 200,
+        "bytes": 49833,
+        "sha256": "ac766a6fedb43bc7773dd6870d5693398f5bcc4cc622cb5f84dc3dd86331f208"
+      }
+    ],
+    "browserNotRunByC": true
+  },
+  "serverReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-1578a5b-01/SERVER.json",
+    "bytes": 882,
+    "sha256": "532ff5094332e5e9ce790bb79fe936061e81ecb8f0e8974d8aac14a6a46e118f"
+  },
+  "preparationResult": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-1578a5b-01/PREPARATION-RESULT.json",
+    "bytes": 11363,
+    "sha256": "ca4ff87120e784f860b6d167c089c3fbb3d4070491dd6c6065e164767e47ffe8"
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-1578a5b-01/MANIFEST.json",
+    "bytes": 618358,
+    "sha256": "ad98d9fb78a0922e09126d60583c3b06917eb95fa37ed0acbc032304f27828a9"
+  },
+  "syntheticOnly": true,
+  "browser": "Delegated original Demo only new affected scope; not C technically retested",
+  "source114NotInThisPreview": "Header backend export only",
+  "old48Reused": true,
+  "formalBusinessAcceptance": false
+}

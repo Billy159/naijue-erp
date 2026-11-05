@@ -1,0 +1,34 @@
+✔ all public CLI help declares independently pinned historical hall approval (3658.04901ms)
+✔ public preflight consumes hall evidence; prepare/import remain offline before private host access (4071.194816ms)
+✔ untrusted pin, package-contained approval and missing pair fail without host fallback (2819.36652ms)
+✔ standalone stream-preflight validates pinned explicit-zero evidence without connection inputs (7283.811684ms)
+✔ offline preflight accepts both independent staff-hall and zero approvals without printing staff facts (2142.738897ms)
+✔ formal stream-import CLI exposes safe usage and rejects missing options before any connection (3050.697288ms)
+✔ formal CLI preserves commit, rollback, unknown and verification exit semantics (5104.626447ms)
+✔ offline CLI builds complete bounded requests and does not claim DB admission (4429.767152ms)
+✔ prepare help offers the independent staff-hall approval pair (43.230283ms)
+✔ public prepare binds staff approval with combined=false, coalesce=false (4503.817678ms)
+✔ public prepare binds staff approval with combined=false, coalesce=true (2671.274724ms)
+✔ public prepare binds staff approval with combined=true, coalesce=false (6001.738936ms)
+✔ public prepare binds staff approval with combined=true, coalesce=true (2276.698232ms)
+✔ unapproved departed null-hall staff still fails preflight (1471.81701ms)
+✔ a valid approval never exempts an active salesperson from hall mapping (3728.22642ms)
+✔ valid staff approval does not bypass historical source host admission (2020.898669ms)
+✔ both approval pairs remain mandatory independently in a combined package (3023.382717ms)
+✔ staff approval parameters are paired and unique independently of zero parameters (71.803681ms)
+✔ wrong staff approval hash cannot be excused by valid explicit-zero approval (1196.513408ms)
+✔ wrong explicit-zero hash cannot be excused by valid staff approval (890.413482ms)
+✔ staff approval namespace mismatch fails closed (2257.67819ms)
+✔ staff approval source-hash mismatch fails closed (1090.04283ms)
+✔ staff approval locator mismatch fails closed (1219.951062ms)
+✔ staff approval package-contained file is rejected by the existing reader (2044.644967ms)
+✔ staff approval symlink file is rejected by the existing reader (771.618482ms)
+✔ staff-only preparation verifies manifest pin before reading approval (647.605601ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 37696.601497

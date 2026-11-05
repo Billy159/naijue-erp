@@ -1,0 +1,205 @@
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode, type Ref } from 'react';
+import { Trigger } from '@arco-design/web-react';
+import type { DictionaryBrowserReader, DictionarySizeGroup } from '../product-settings/size-groups/contracts.ts';
+import { validateDictionaryPage, validateDictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-validation.ts';
+import { entityId } from '../../../../packages/domain/src/values.ts';
+import { ReadScope } from '../loading/read-scope.ts';
+import { HttpQueryError } from '../transport/http-query.ts';
+import { UIButton } from '../components/standard-controls.tsx';
+
+/** Shared full-page shell for every transfer document state. It owns only the
+ * frozen Demo presentation frame; status, actions, data and handlers stay with
+ * the existing document owners. */
+export function TransferDocumentPage({ sectionRef, headingRef, ariaLabel, className, title, status, saveState, actions, children }: {
+  readonly sectionRef?: Ref<HTMLElement>;
+  readonly headingRef?: Ref<HTMLHeadingElement>;
+  readonly ariaLabel: string;
+  readonly className: string;
+  readonly title: ReactNode;
+  readonly status?: ReactNode;
+  readonly saveState?: ReactNode;
+  readonly actions?: ReactNode;
+  readonly children?: ReactNode;
+}) {
+  return <section ref={sectionRef} aria-label={ariaLabel} className={`tc-workbench tc-editor transfer-editor ${className}`}>
+    <div className="tc-head"><h1 ref={headingRef} tabIndex={-1}>{title}</h1>{status}{saveState}<div className="actions">{actions}</div></div>
+    {children}
+  </section>;
+}
+
+/** Shared frozen-Demo document body hierarchy. Callers keep ownership of the
+ * actual values, read/write permissions, status and callbacks; this component
+ * only places the existing presentation slots in one consistent order. */
+export function TransferDocumentBody({ beforeHeader, header, note, status, beforeLines, lines, afterLines, summary, records }: {
+  readonly beforeHeader?: ReactNode;
+  readonly header?: ReactNode;
+  readonly note?: ReactNode;
+  readonly status?: ReactNode;
+  readonly beforeLines?: ReactNode;
+  readonly lines?: ReactNode;
+  readonly afterLines?: ReactNode;
+  readonly summary?: ReactNode;
+  readonly records?: ReactNode;
+}) {
+  return <>
+    {beforeHeader}
+    {header !== undefined && <div className="tc-doc-header">{header}</div>}
+    {note}
+    {status}
+    <div className="tc-section-head"><strong>调拨明细</strong></div>
+    {beforeLines}
+    {lines}
+    {afterLines}
+    {summary}
+    {records}
+  </>;
+}
+
+export interface TransferSizeGroupCapability {
+  readonly id: string; readonly reader: Pick<DictionaryBrowserReader, 'readSizeGroups'>;
+  readonly onUnauthorized?: () => void;
+}
+/** Read-only complete dictionary axes. Missing-SKU member inputs are local
+ * coordinates; the dictionary never allocates or authorizes a native SKU. */
+export function useTransferSizeGroups(parent: ReadScope | undefined, capability: TransferSizeGroupCapability | undefined, requestedIds: readonly string[]) {
+  const [state, setState] = useState<{ parent: ReadScope; capability: TransferSizeGroupCapability; phase: 'loading' | 'ready' | 'error'; groups: readonly DictionarySizeGroup[] } | null>(null), [attempt, setAttempt] = useState(0);
+  const wanted = [...new Set(requestedIds.length ? requestedIds : capability ? [capability.id] : [])].sort(), key = wanted.join('|');
+  const cache = useRef<{ parent: ReadScope; capability: TransferSizeGroupCapability; values: Map<string, DictionarySizeGroup> } | null>(null);
+  useEffect(() => {
+    if (!parent?.active || !capability) return;
+    const scope = new ReadScope(parent.identity, `${parent.routeInstanceId}:transfer-size-axis:${key}`, capability.id, () => {});
+    let attached = true; const abort = () => { scope.dispose(); if (cache.current?.parent === parent) cache.current = null; if (attached) setState(null); }; parent.signal.addEventListener('abort', abort, { once: true });
+    const found = cache.current?.parent === parent && cache.current.capability === capability ? new Map(cache.current.values) : new Map<string, DictionarySizeGroup>();
+    setState({ parent, capability, phase: 'loading', groups: [...found.values()].filter(group => wanted.includes(group.id)) });
+    void (async () => {
+      try {
+        wanted.forEach(id => entityId('sizeGroup', id));
+        // Read the native paged dictionary until exact requested current product
+        // groups are found or its real total ends; no global-group fallback.
+        for (let page = 1; !wanted.every(id => found.has(id)); page++) {
+          const parameters = Object.freeze({ search: '', page, pageSize: 100 as const });
+          const result = await capability.reader.readSizeGroups({ parameters, signal: scope.signal, identity: scope.identity, routeInstanceId: scope.routeInstanceId, entityId: capability.id });
+          if (!attached || !scope.active || !parent.active) return;
+          const data = validateDictionaryPage(result, parameters, validateDictionarySizeGroup);
+          for (const group of data.items) if (wanted.includes(group.id)) found.set(group.id, group);
+          if (page * 100 >= data.total) break;
+        }
+        if (!attached || !scope.active || !parent.active) return;
+        cache.current = { parent, capability, values: found };
+        setState({ parent, capability, phase: wanted.every(id => found.has(id)) ? 'ready' : 'error', groups: [...found.values()].filter(group => wanted.includes(group.id)) });
+      } catch (error) {
+        if (!attached || !scope.active || !parent.active) return;
+        if (error instanceof HttpQueryError && ['unauthenticated', 'forbidden'].includes(error.kind)) { cache.current = null; found.clear(); if (error.kind === 'unauthenticated') capability.onUnauthorized?.(); }
+        setState({ parent, capability, phase: 'error', groups: [...found.values()].filter(group => wanted.includes(group.id)) });
+      }
+    })();
+    return () => { attached = false; parent.signal.removeEventListener('abort', abort); scope.dispose(); };
+  }, [parent, capability, key, attempt]);
+  const current = state && state.parent === parent && state.capability === capability && parent?.active ? state : null;
+  return { phase: current?.phase ?? 'unavailable', groups: current?.groups ?? [], retry: () => { cache.current = null; setAttempt(value => value + 1); } };
+}
+export interface TransferDisplaySize { readonly id: string; readonly label: string; readonly empty?: boolean }
+export function TransferMatrixTable({ sizes, children, showHeader = true, className = '', label, columnCount = sizes.length }: {
+  readonly sizes: readonly TransferDisplaySize[]; readonly children: (visible: readonly TransferDisplaySize[]) => ReactNode;
+  readonly showHeader?: boolean; readonly className?: string; readonly label: string; readonly columnCount?: number;
+}) {
+  // Frozen alignedGroup/tableSection: full horizontal size axis, equal group
+  // widths. Padding is presentation only and never an actual size/SKU identity.
+  const visible: readonly TransferDisplaySize[] = [...sizes, ...Array.from({ length: Math.max(0, columnCount - sizes.length) }, (_, index) => ({ id: `display-gap-${index}`, label: '', empty: true }))];
+  return <section className={`mx-section ${className}`} style={{ '--mx-table-width': `${592 + visible.length * 56}px` } as React.CSSProperties}>
+    <table className="mx-table"><caption className="sr-only">{label}</caption><colgroup><col style={{ width: 280 }} /><col style={{ width: 76 }} /><col style={{ width: 88 }} />{visible.map(size => <col key={size.id} style={{ width: 56 }} />)}<col style={{ width: 52 }} /><col style={{ width: 96 }} /></colgroup>
+      {showHeader && <thead><tr><th className="mx-product" scope="col">款号／商品名称</th><th className="mx-color" scope="col">颜色</th><th className="mx-fit-col" scope="col">版型</th>{visible.map(size => size.empty ? <th key={size.id} className="mx-size-gap" aria-hidden="true" /> : <th key={size.id} data-size-id={size.id} scope="col" title={size.label}>{size.label}</th>)}<th className="tc-subtotal" scope="col">小计</th><th className="ui-action-cell" scope="col">操作</th></tr></thead>}
+      <tbody>{children(visible)}</tbody>
+    </table>
+  </section>;
+}
+
+/** Shared Demo row hierarchy for actual document rows. Size cells and actions
+ * remain caller-owned nodes so source identity and each state’s current
+ * permission/interaction contract pass through unchanged. */
+export function TransferDocumentMatrixRow({ productCode, productName, color, colorTitle, fit, fitTitle, sizeCells, subtotal, actions, className }: {
+  readonly productCode: string;
+  readonly productName: string;
+  readonly color: ReactNode;
+  readonly colorTitle?: string;
+  readonly fit: ReactNode;
+  readonly fitTitle?: string;
+  readonly sizeCells: readonly ReactNode[];
+  readonly subtotal: ReactNode;
+  readonly actions: ReactNode;
+  readonly className?: string;
+}) {
+  return <tr className={className}>
+    <td className="mx-product"><span className="mx-product-line"><strong title={productCode}>{productCode}</strong><span title={productName}>{productName}</span></span></td>
+    <td className="mx-color" title={colorTitle}>{color}</td>
+    <td className="mx-fit-col" title={fitTitle}>{fit}</td>
+    {sizeCells}
+    <td className="tc-subtotal">{subtotal}</td>
+    <td className="ui-action-cell">{actions}</td>
+  </tr>;
+}
+export function transferDisplayQuantity(rows: readonly { readonly quantity: string }[]): string {
+  return rows.every(row => /^(?:0|[1-9]\d{0,18})$/.test(row.quantity)) ? rows.reduce((sum, row) => sum + BigInt(row.quantity), 0n).toString() : '待校验';
+}
+function TransferProposalSummaryTags({ items }: { readonly items: readonly { readonly id: string; readonly label: string; readonly count: string }[] }) {
+  const host = useRef<HTMLDivElement>(null), opener = useRef<HTMLButtonElement>(null), popup = useRef<HTMLDivElement>(null), id = useId();
+  const key = JSON.stringify(items), rest = items.slice(3);
+  const [state, setState] = useState({ key, open: false }), visible = rest.length > 0 && state.key === key && state.open;
+  const [popupNode, setPopupNode] = useState<HTMLDivElement | null>(null);
+  const [placement, setPlacement] = useState<{ node: HTMLDivElement; key: string; left: number; top: number } | null>(null);
+  const attachPopup = useCallback((node: HTMLDivElement | null) => { popup.current = node; setPopupNode(node); }, []);
+  useLayoutEffect(() => {
+    const view = popupNode?.ownerDocument.defaultView;
+    if (!popupNode || !view) { setPlacement(null); return; }
+    const place = () => {
+      if (!popupNode.isConnected || !opener.current?.isConnected) return;
+      const anchor = opener.current.getBoundingClientRect();
+      // Frozen transfer-golden.js clamps below the anchor into the viewport;
+      // it deliberately allows overlap near the bottom instead of flipping above.
+      const left = Math.max(8, Math.min(anchor.left, view.innerWidth - 240));
+      const top = Math.max(8, Math.min(anchor.bottom + 4, view.innerHeight - popupNode.offsetHeight - 8));
+      setPlacement(previous => previous?.node === popupNode && previous.key === key && previous.left === left && previous.top === top ? previous : { node: popupNode, key, left, top });
+    };
+    place(); const frame = view.requestAnimationFrame(place);
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(place) : null;
+    observer?.observe(popupNode); view.addEventListener('resize', place);
+    return () => { view.cancelAnimationFrame(frame); observer?.disconnect(); view.removeEventListener('resize', place); };
+  }, [popupNode, key]);
+  useEffect(() => { setState({ key, open: false }); }, [key]);
+  useEffect(() => {
+    if (!visible) return;
+    const doc = host.current?.ownerDocument;
+    const closeOnScroll = (event: Event) => { if (!(event.target instanceof Node && popup.current?.contains(event.target))) setState({ key, open: false }); };
+    doc?.addEventListener('scroll', closeOnScroll, true);
+    return () => doc?.removeEventListener('scroll', closeOnScroll, true);
+  }, [visible, key]);
+  const escape = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (!visible || event.nativeEvent.isComposing || event.key !== 'Escape') return;
+    event.preventDefault(); event.stopPropagation(); setState({ key, open: false }); opener.current?.focus({ preventScroll: true });
+  };
+  const positioned = placement?.node === popupNode && placement?.key === key ? placement : null;
+  return <div ref={host} className="tc-product-tags transfer-summary-tags" aria-label="商品信息">{items.slice(0, 3).map(item => <span className="tc-product-tag" key={item.id} title={`${item.label} ${item.count}`}>{item.label} {item.count}</span>)}{rest.length > 0 && <Trigger trigger="click" position="bl" popupAlign={{ bottom: 4 }} duration={0} autoFitPosition={false} unmountOnExit escToClose style={{ position: 'fixed', zIndex: 100, left: positioned ? `${positioned.left}px` : undefined, top: positioned ? `${positioned.top}px` : undefined, visibility: positioned ? 'visible' : 'hidden' }} popupVisible={visible} onVisibleChange={open => setState({ key, open })} getPopupContainer={node => node.closest('.demo-ui') ?? node.closest('.transfer-proposal-editor') ?? host.current ?? node} popupStyle={{ width: 220, maxWidth: 'calc(100vw - 16px)' }} popup={() => <div ref={attachPopup} id={id} className="tc-more-tags-pop transfer-summary-more" role="dialog" aria-label="其余商品信息" tabIndex={-1} onKeyDown={escape}><strong>其余商品信息</strong>{rest.map(item => <span key={item.id}>{item.label}<b>{item.count}</b></span>)}</div>}><UIButton ref={opener} className="tc-product-tag tc-more-tag" aria-haspopup="dialog" aria-expanded={visible} aria-controls={id} title={rest.map(item => `${item.label} ${item.count}`).join(' · ')} onKeyDown={escape}>+{rest.length} 更多</UIButton></Trigger>}</div>;
+}
+export function TransferDocumentSummary({ lines, presentation }: { readonly lines: readonly { readonly productId: string | undefined; readonly quantity: string; readonly category?: { readonly id: string; readonly label: string | null } }[]; readonly presentation?: 'proposal' }) {
+  const quantity = transferDisplayQuantity(lines), units = quantity === '待校验' ? quantity : `${quantity}件`;
+  const categories = new Map<string, { label: string; rows: typeof lines[number][] }>();
+  for (const line of lines) {
+    const id = line.category?.id ?? 'unknown', label = line.category?.label ?? '未知分类', category = categories.get(id) ?? { label, rows: [] };
+    if (category.label !== label) category.label = '未知分类'; category.rows.push(line); categories.set(id, category);
+  }
+  if (presentation === 'proposal') {
+    const facts = new Map<string, string>(), conflicts = new Set<string>();
+    for (const line of lines) if (line.productId) {
+      const fact = JSON.stringify([line.category?.id ?? null, line.category?.label ?? null]);
+      if (facts.has(line.productId) && facts.get(line.productId) !== fact) conflicts.add(line.productId);
+      facts.set(line.productId, fact);
+    }
+    const groups = new Map<string, { label: string; rows: typeof lines[number][] }>();
+    for (const line of lines) {
+      const conflict = !!line.productId && conflicts.has(line.productId), id = conflict ? 'unknown' : line.category?.id ?? 'unknown', label = conflict ? '未知分类' : line.category?.label ?? '未知分类', group = groups.get(id) ?? { label, rows: [] };
+      if (group.label !== label) group.label = '未知分类'; group.rows.push(line); groups.set(id, group);
+    }
+    return <footer className="tc-foot tc-gold-footer transfer-document-summary transfer-document-summary-proposal"><strong>{lines.some(line => !line.productId) ? '款数待读取' : `${new Set(lines.map(line => line.productId)).size}款`}</strong><strong>{units}</strong><TransferProposalSummaryTags items={[...groups].map(([id, group]) => ({ id, label: group.label, count: group.rows.some(line => !line.productId) ? '款数待读取' : String(new Set(group.rows.map(line => line.productId)).size) }))} /></footer>;
+  }
+  return <footer className="tc-foot tc-gold-footer transfer-document-summary"><strong>{lines.some(line => !line.productId) ? '款数待读取' : `${new Set(lines.map(line => line.productId)).size}款`}</strong><strong>{units}</strong><div>{[...categories].map(([id, group]) => <span className="tc-product-tag" key={id}>{group.label} {transferDisplayQuantity(group.rows)}</span>)}</div></footer>;
+}

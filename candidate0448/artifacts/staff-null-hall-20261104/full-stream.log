@@ -1,0 +1,12 @@
+✔ ordinary preflight admits only externally approved exact departed staff (71.905746ms)
+✔ stream relation check shares exact departed approval and rejects active or unapproved (12.490697ms)
+✔ whole compiler binds exact approval bytes in immutable initialization, without creating a login (78.427986ms)
+✔ full streaming preflight retains approval wire in its summary (125.698918ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 626.629793

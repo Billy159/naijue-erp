@@ -1,0 +1,36 @@
+{
+  "kind": "REAL_POSTGRESQL_WITH_IN_PROCESS_FASTIFY_INJECT_ONLY",
+  "native_read_routes_exercised": [
+    "/inventory/query",
+    "/inventory/candidates/query",
+    "/inventory/ledger/query",
+    "/sales/query",
+    "/sales/detail/query",
+    "/sales/history/query",
+    "/sales/references/query",
+    "/sales/settlement-statistics/query",
+    "/transfers/query",
+    "/transfers/detail/query",
+    "/transfers/warehouses/query",
+    "/products/basics/query",
+    "/products/specifications/query",
+    "/products/images/query",
+    "/products/image/query"
+  ],
+  "media_routes": "Both product image routes assert honest unavailable media behavior with productMedia:null. No file bytes or media delivery was exercised.",
+  "authentication_routes_exercised": [
+    "/auth/login",
+    "/auth/session",
+    "/auth/logout"
+  ],
+  "credential_scope": "One separate synthetic account; password generated only in test process memory, actual scrypt hash stored only in normal test database auth storage. No real user credentials.",
+  "policies": "Explicit fixed synthetic test-only authorization/employment/role/hall facts; not production policy approval.",
+  "negative_boundaries": [
+    "wrong password and original disabled fixture login",
+    "unauthenticated/revoked reads",
+    "out-of-scope warehouse/product and hidden sales/transfer documents",
+    "spoofed cookie/Authorization/header actor and request actor/role/scope",
+    "cross-origin logout without session revocation"
+  ],
+  "teardown": "Actual PG session revoked at logout, business-fixture snapshot unchanged, API-owned pools closed/idempotent, application-name connection count zero, no listening socket."
+}

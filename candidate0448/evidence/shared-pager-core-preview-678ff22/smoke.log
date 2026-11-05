@@ -1,0 +1,15 @@
+PASS built artifact: actual shared menu, exactly three enabled routes, truthful test notice, no initial/idle provider reads
+PASS actual pagination action: no initialized Arco/native select before focus/open; real Arco opens100/200/500 with configured150px popup, inline offline styles, pre-query selection performs no read
+PASS actual default FIT display: two exact read-only warehouse aggregates, merged cells unavailable; show FIT restores four original rows/negative stock, hide FIT returns the same totals without another read
+PASS actual inventory drawer: target-only basics, source three-section color/size-group/FIT specs instead of extra SKU table, truthful images and close cleanup
+PASS actual sales query/full-page readonly detail: inline test-only CSS readiness, no modal, exact synthetic sale+return, one target per action, Back during pending read cannot revive detail, list preserved without refetch
+PASS actual transfer warehouse action: finite two-warehouse toolbar and all-selected checkboxes, one bounded read only on open, no manual paging footer or background/list read on close
+PASS actual transfer route/query/full-page detail: native sparse matrix, current FIT/full size facts, blank vs unsupported cells, saved snapshots, action-only shared drawer, back clears detail without list refetch
+PASS actual artifact route/page/back/interruption cleanup: fresh scopes, no stale results or late detail revival, no external resource/network request or runtime error
+{
+  "file": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/678ff22c5885/three-core-pages-synthetic-test-only-678ff22c5885.html",
+  "bytes": 1393686,
+  "sha256": "0c927c0250bca47221f8eafa8b65dafa40f551f6de16f3d9ae4901d5d1ae0283",
+  "groups": 8
+}
+JSDOM built-artifact DOM smoke only; not native-browser, screenshots/pixels, network waterfall/performance, real data or Space embed acceptance.

@@ -1,0 +1,22 @@
+[
+  {
+    "strict": false,
+    "focusedFirstCheckbox": false,
+    "escapeClosed": false,
+    "escapePrevented": false,
+    "escapeReturnedFocus": true,
+    "outsideClosed": false,
+    "outsideFocusPreserved": true,
+    "reads": 0
+  },
+  {
+    "strict": true,
+    "focusedFirstCheckbox": false,
+    "escapeClosed": false,
+    "escapePrevented": false,
+    "escapeReturnedFocus": true,
+    "outsideClosed": false,
+    "outsideFocusPreserved": true,
+    "reads": 0
+  }
+]

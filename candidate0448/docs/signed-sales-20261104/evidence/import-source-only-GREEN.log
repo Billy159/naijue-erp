@@ -1,0 +1,31 @@
+✔ history mixed SALE retains both same-SKU rows and only actual net receipt (142.355242ms)
+✔ history mixed SALE retains source discount and unknown allocations without guessing (108.527007ms)
+✔ history mixed SALE retains exact known allocations, no invented proportional split (81.498331ms)
+✔ history known allocation contradiction remains rejected (73.707995ms)
+✔ history missing settlement evidence remains absent rather than zero (65.827845ms)
+✔ history explicitly contradictory receipt is still rejected (94.931219ms)
+✔ new SALE cannot claim signed historical rule (56.255599ms)
+✔ new mixed EXCHANGE cannot carry historical header discount (64.335808ms)
+✔ historical net refund keeps one real refund and unknown pricing (60.491313ms)
+✔ same SKU opposite quantity net-zero preserves both distinct original row identities (76.354174ms)
+✔ historical nonzero discount cannot bypass missing source evidence (62.851213ms)
+✔ CLEANED without generated history provenance fails signed SALE closed in both paths (63.036334ms)
+✔ new EXCHANGE signed net receipt preserves actual direction (68.590593ms)
+✔ unsettled new EXCHANGE draft may save facts but known approved mismatch blocks (57.483445ms)
+✔ explicit versioned CLEANED historical basis preserves signed facts and original discount (54.385627ms)
+✔ explicit CLEANED historical basis preserves absent settlements as unknown (70.518674ms)
+✔ CLEANED runtime basis cannot borrow historical discount exception (68.272546ms)
+✔ CLEANED historical source classification still requires pinned original references (69.73981ms)
+✔ old CLEANED profile still forbids source stock basis despite a pinned source locator (66.500759ms)
+✔ new CLEANED profile requires explicit classification and never accepts generated batch (130.376501ms)
+✔ successor declarations leave original profiles immutable and READY fields unchanged (68.343019ms)
+✔ READY existing profile compiler and streaming requests preserve signed historical rows exactly (133.65833ms)
+✔ source-only profile cannot produce a SQL program before versioned engine support (81.584533ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2044.350319

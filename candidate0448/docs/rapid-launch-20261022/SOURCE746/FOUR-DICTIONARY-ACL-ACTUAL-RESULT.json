@@ -1,0 +1,86 @@
+{
+  "status": "COMPLETED_FOUR_COLUMN_SELECT_GRANTS_AND_READONLY_ADMISSION",
+  "finishedAtUtc": "2026-10-27T05:51:13.625318+00:00",
+  "commitAttempted": true,
+  "commitReturned": true,
+  "exactChanges": [
+    {
+      "relation": "color",
+      "column": "id",
+      "beforeSelect": false,
+      "afterSelect": true
+    },
+    {
+      "relation": "fit",
+      "column": "id",
+      "beforeSelect": false,
+      "afterSelect": true
+    },
+    {
+      "relation": "size",
+      "column": "id",
+      "beforeSelect": false,
+      "afterSelect": true
+    },
+    {
+      "relation": "size_group_member",
+      "column": "size_group_id",
+      "beforeSelect": false,
+      "afterSelect": true
+    },
+    {
+      "relation": "size_group_member",
+      "column": "size_id",
+      "beforeSelect": false,
+      "afterSelect": true
+    }
+  ],
+  "admission": {
+    "sqlstate": null,
+    "admitted": true
+  },
+  "metadata": {
+    "catalogSha256": "d92797336281ddc4d831842ee4d8cd4468272aa5974a4ae04e5b91b053fa2632",
+    "sourceRoutinesMatch": true
+  },
+  "catalogRefreshed": true,
+  "noOldPurposeReused": true,
+  "businessDML": 0,
+  "loginOrCASOrSecretRead": false,
+  "clientsClosed": true,
+  "rollbackReturned": true,
+  "ownPgStopped": true,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-FOUR-DICTIONARY-COLUMN-SELECT-REPAIR-20261027-01/BEFORE-ACL.json",
+      "bytes": 2457,
+      "sha256": "c2d2cb0fb4c82dea792c64681ba5d08b9403d283acce581b8f55d000bbc43fe9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-FOUR-DICTIONARY-COLUMN-SELECT-REPAIR-20261027-01/AFTER-ACL-IN-TRANSACTION.json",
+      "bytes": 2702,
+      "sha256": "9410d335ec9d8e660157b9fa61682d5e1bf3250ad7948b3cc0ffe41c1539e64e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-FOUR-DICTIONARY-COLUMN-SELECT-REPAIR-20261027-01/NODE-RESULT.json",
+      "bytes": 3323,
+      "sha256": "7ed4c3e03f96f84f07dce000201a9abdaec03cc8ecbe04616bab34753c4f126f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-FOUR-DICTIONARY-COLUMN-SELECT-REPAIR-20261027-01/OS-RESULT.json",
+      "bytes": 237,
+      "sha256": "faf621dc437678409fbf60e7be22500c171d03071163c14f870a751a0ee29255"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-FOUR-DICTIONARY-COLUMN-SELECT-REPAIR-20261027-01/REFRESHED-METADATA.json",
+      "bytes": 796,
+      "sha256": "c40d8cdb30192b3489ad2038ce0efa1cd66675cc3b10c8aa89ce28dbd0ecf85e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-FOUR-DICTIONARY-COLUMN-SELECT-REPAIR-20261027-01/REFRESHED-CATALOG.json",
+      "bytes": 1388427,
+      "sha256": "2cd7de6f96c78dd882f917115c5016ef214ac562ee1cbb0d871145e9b71fbec0"
+    }
+  ],
+  "normalBusinessAcceptance": false
+}

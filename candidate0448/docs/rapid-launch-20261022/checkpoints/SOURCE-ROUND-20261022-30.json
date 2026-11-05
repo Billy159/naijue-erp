@@ -1,0 +1,50 @@
+{
+  "atUtc": "2026-10-22T10:11:20.790637+00:00",
+  "parent": "27c6ba6823749e2dc7d6d6527f53e9f9a59bfdf7",
+  "groups": [
+    {
+      "slice": "F1_WHOLE_NEW_SALES_UI_FIRST_CANDIDATE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-25/DELIVERY.json",
+      "receiptSha256": "c7ba7121fc3864b28a42761e44120946f22866ce0c039912bbbca508a090601d",
+      "files": [
+        {
+          "path": "apps/web/src/current-form/sales-proposal.ts",
+          "sha256": "6e2a4d7a2fffbf0e3ead7694ff0cacd247295f4aaea62404e7d2f5696b5fd9f6",
+          "owner": "F1",
+          "bytes": 34305
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "sha256": "2ef8adb1d4050cd8401160ed1c839b4baf55cc17f163f385b4865be8de5c568b",
+          "owner": "F1",
+          "bytes": 31931
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal.css",
+          "sha256": "c6e6ca1e3ca6ff4a7d7a7eefbab50b6f3234ccc38236011d6112ec9b736605f8",
+          "owner": "F1",
+          "bytes": 22434
+        },
+        {
+          "path": "apps/web/src/current-form/sales-create.ts",
+          "sha256": "dc8d944980d350476d3d31845b56efb362f1de92dd344e460ba3773888e079ba",
+          "owner": "F1",
+          "bytes": 13619
+        }
+      ]
+    },
+    {
+      "slice": "C_EXPLICIT_SALES_COMPLETE_PRODUCT_READONLY_CONFIGURATION",
+      "files": [
+        {
+          "path": "apps/web/src/application/contracts.ts",
+          "sha256": "bb8478d374e48294871081d22753ca6f51830d61535c9852eed2bae5160f7054",
+          "owner": "C",
+          "bytes": 10840
+        }
+      ]
+    }
+  ],
+  "fileCount": 5,
+  "scope": "New/create UI candidate with known remaining category/full-product/saved-edit seams; whole-page NOT_ACCEPTED. Optional shared type only; F1 owns runtime capture/consumer."
+}

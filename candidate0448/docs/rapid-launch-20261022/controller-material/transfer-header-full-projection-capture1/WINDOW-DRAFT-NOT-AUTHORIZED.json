@@ -1,0 +1,163 @@
+{
+  "version": "C_TRANSFER_HEADER_FULL_PROJECTION_WINDOW_V1",
+  "runtimeCodeVersion": "TRANSFER_HEADER_FULL_PROJECTION_RUNTIME_V1",
+  "id": null,
+  "decision": "DRAFT_NOT_AUTHORIZED",
+  "signedBy": null,
+  "signedAtUtc": null,
+  "deadlineUtc": null,
+  "physicalReadWindowAuthorized": false,
+  "realImportExecutionAuthorized": false,
+  "lineCopiesReadAuthorized": false,
+  "binding": {
+    "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+    "fixedSourceNamespace": "naijue:tplus:primary-ledger",
+    "cutoffAt": "2026-10-04T12:00:00+08:00",
+    "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba"
+  },
+  "codePins": {
+    "header": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-header-source26.mjs",
+      "bytes": 25454,
+      "sha256": "9c4026f871a49d17385b06597e8832734c9af7b54642719c2ec909850283c2cd"
+    },
+    "headerTest": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-header-source26.test.mjs",
+      "bytes": 18688,
+      "sha256": "32744bcd7eb6fef665a56daec5b059769174633892db45642b603e620ed791a0"
+    },
+    "line": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-line-source26.mjs",
+      "bytes": 32974,
+      "sha256": "a8ac7e2a5f847d386a825d1ad0769e3d0db47a5ba0cebaaf3d46d1eb6aebbcbe"
+    },
+    "codec": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-typed-closure.ts",
+      "bytes": 36837,
+      "sha256": "0a995599ed1a78b9f319b41365362a655a243e7b043e58a2104281cea06b2446"
+    },
+    "capture": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/capture-once.mjs",
+      "bytes": 28203,
+      "sha256": "ee62f1369d2995d3c277c5371e83f4568ced7db85c97b8afe61ef3cac61986f2"
+    },
+    "runtimeClosure": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/RUNTIME-CLOSURE.json",
+      "bytes": 26811,
+      "sha256": "42402a1c7e176095d447a6cc788fd53e8cb46b981073cca6cfbae555a5478634"
+    },
+    "exportResult": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-projection-export1/RESULT.json",
+      "bytes": 2697,
+      "sha256": "7c4b3008b85383603e988588e8d69cfcbc13f82dc277ecc79c34e11ac47233af"
+    },
+    "syntheticResult": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/SYNTHETIC-RESULT.json",
+      "bytes": 2299,
+      "sha256": "6675069a504d775314f4282fe18d2fc74a912ed68f6c0a83679862abe5b8d381"
+    },
+    "plan": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-plan1/PLAN.json",
+      "bytes": 25330,
+      "sha256": "610a059b0a78e8690a40e2209350b26111948c6a1fbcbe4c9d43293cdc7cbbae"
+    }
+  },
+  "registrationGate": {
+    "acceptedHeaderExport": {
+      "decision": "C_ACCEPTS_QB_PURE_EXPORT_INCREMENT",
+      "header": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-header-source26.mjs",
+        "bytes": 25454,
+        "sha256": "9c4026f871a49d17385b06597e8832734c9af7b54642719c2ec909850283c2cd"
+      },
+      "test": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-header-source26.test.mjs",
+        "bytes": 18688,
+        "sha256": "32744bcd7eb6fef665a56daec5b059769174633892db45642b603e620ed791a0"
+      },
+      "review": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice135-header-pure-projection-export-f8d563b7/RESULT.json",
+        "bytes": 6248,
+        "sha256": "d322db08282e0470fe9aa80d85ef3cd5c6ffd3978cb6007f8e078876b1d9e912"
+      },
+      "CAdoptedSourceCommit": "f8d563b72e022ba47d3804084fcfd0b555af3042",
+      "sourceRound": "C114"
+    }
+  },
+  "destination": {
+    "parent": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1",
+    "identity": null,
+    "children": [
+      {
+        "role": "FULL_TRANSFER_HEADER_SOURCE12",
+        "name": "transfer-header-source12-14279-PENDING.jsonl",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-source12-14279-PENDING.jsonl",
+        "mode": "0600",
+        "maxBytes": 268435456
+      },
+      {
+        "role": "FULL_TRANSFER_HEADER_TYPED22",
+        "name": "transfer-header-typed22-14279-PENDING.jsonl",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-typed22-14279-PENDING.jsonl",
+        "mode": "0600",
+        "maxBytes": 67108864
+      },
+      {
+        "role": "DOCUMENT_ALLOCATIONS4",
+        "name": "transfer-header-documents4-14279-PENDING.jsonl",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-documents4-14279-PENDING.jsonl",
+        "mode": "0600",
+        "maxBytes": 4194304
+      },
+      {
+        "role": "BOUNDED_PROJECTION_OFFSETS",
+        "name": "transfer-header-projection-index-PENDING.jsonl",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-projection-index-PENDING.jsonl",
+        "mode": "0600",
+        "maxBytes": 16777216
+      },
+      {
+        "role": "MANIFEST",
+        "name": "CANDIDATE-MANIFEST.json",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/CANDIDATE-MANIFEST.json",
+        "mode": "0600",
+        "maxBytes": 1048576
+      },
+      {
+        "role": "STATE",
+        "name": "CAPTURE-STATE.json",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/CAPTURE-STATE.json",
+        "mode": "0600",
+        "maxBytes": 65536
+      }
+    ]
+  },
+  "cacheParent": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-cache-20261023-D3-run1",
+    "identity": null
+  },
+  "budgets": {
+    "nodeVersion": "v24.21.0",
+    "maxOldSpaceSizeMiB": 1024,
+    "serial": 1,
+    "maxChunkRows": 100,
+    "maxChunkBytes": 4194304,
+    "permanentSlotCapsTotalBytes": 357629952,
+    "transientCacheHardMaxBytes": 398749141,
+    "peakAssignedDiskBytes": 756379093,
+    "maxMetadataBytes": 1048576,
+    "maxCodeBytes": 4194304
+  },
+  "scope": {
+    "constructorCalls": 1,
+    "originalGzipStreams": 1,
+    "containerRows": 42561,
+    "transferRows": 14279,
+    "salesMapping": false,
+    "chunkPasses": 1,
+    "lineConsumerOpens": 0,
+    "pg": false,
+    "newUUIDs": false
+  },
+  "CActionRequired": "Review exact carrier/manifest/synthetic receipt; create both fresh0700 parents, record dev/ino/uid/fullmode; verify disk/oneNode resource window, assign unique id/time/deadline and C signature, set decision AUTHORIZE_ONE_HEADER_FULL_PROJECTION_CAPTURE and physicalReadWindowAuthorized true. Do not authorize Line by changing this carrier; its gate expressly refuses Line. Produce a new A window and trustedSHA. Existing spent windows stay spent."
+}

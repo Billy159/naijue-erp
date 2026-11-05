@@ -1,0 +1,65 @@
+{
+  "status": "PASS_READONLY_DIAGNOSIS_NOT_BUSINESS_PASS",
+  "finishedAtUtc": "2026-10-27T05:38:08.758943+00:00",
+  "identity": {
+    "database": "naijue_erp_test_b07_syn_approved_20261027_01",
+    "role": "t45_b07_syn_approved_20261027_01",
+    "oid": "16385",
+    "readonly": "on"
+  },
+  "auth": [
+    {
+      "version": 2,
+      "auth_version": 2
+    }
+  ],
+  "snapshotSelectSteps": 27,
+  "observedSqlStates": [],
+  "allSnapshotTableSelectsPassed": true,
+  "functions": [
+    {
+      "signature": "naijue_erp.history_numeric_current_facts(text,uuid)",
+      "can_execute": true,
+      "security_definer": false,
+      "has_for_update": true,
+      "definitionSha256": "174fdad530129abc18ebe64a6c6767ece9ab815a7b457a2b46a6374c4762896b"
+    },
+    {
+      "signature": "naijue_erp.inventory_key_admission(uuid,uuid)",
+      "can_execute": true,
+      "security_definer": false,
+      "has_for_update": false,
+      "definitionSha256": "fe606835588c0eb093d56355a6526e8bd0b2be9e7c7ca874cc6b54f0c9f91a15"
+    }
+  ],
+  "tableUpdatePrivilegeAllFalse": true,
+  "actualFirst42501Object": "NOT_REPRODUCED_FUNCTION_NOT_INVOKED_IN_RO",
+  "limits": [
+    "Row-lock function intentionally not invoked; original first42501 exact internal object remains unproven",
+    "Table-level UPDATE false does not itself exclude column-level grants; column privilege and internal relation mapping need exact follow-up if required"
+  ],
+  "businessDML": 0,
+  "credentialRead": false,
+  "loginOrCAS": false,
+  "rollbackReturned": true,
+  "clientsClosed": true,
+  "ownPgStopped": true,
+  "postmasterPidAbsent": true,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-SNAPSHOT42501-READONLY-20261027-01/NODE-RESULT.json",
+      "bytes": 8136,
+      "sha256": "d8644ddff7155919630d0c6ae3000796fdac7db6a93448947b705cdd18e475fb"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-SNAPSHOT42501-READONLY-20261027-01/OS-RESULT.json",
+      "bytes": 226,
+      "sha256": "f1c64b648cdb6c6f5d37dce537e73a9a3cadb507070a82cbf467fe6fba4f9c91"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-SNAPSHOT42501-READONLY-20261027-01/EXECUTION-AUTHORITY.json",
+      "bytes": 1577,
+      "sha256": "2665e77322695b2b9cee512b104e5a67be0a8baada582b3a9431f1c4ab07f206"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "atUtc": "2026-10-24T03:02:20.953204+00:00",
+  "parent": "c1ec0ebd78d62dd2261f898d621e30d21b5e87e9",
+  "taskId": "D1_QB213_F01_RUNTIME_ERROR_ORIGIN_FIX_V1",
+  "files": [
+    {
+      "path": "adapters/postgres/src/bounded-pool.ts",
+      "bytes": 15825,
+      "sha256": "e9b8643a48a64d8a1aa529e90ac662600d3b34628954ef7bda8d8bd27e0c5c67",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 67844,
+      "sha256": "5eac355a13f62f815190297623a0681054d80285d148db9f338b0d8fb177d181",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 30656,
+      "sha256": "d4502c87e049a6ab0e61f895af8a1983f1398ffea11ce3d1b040910eff94c6ef",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/QB213-F01-ERROR-ORIGIN-FIX-v1.json",
+  "ownerReceiptSha256AtPin": "a1addaa391c99ada3ca2b7a4bb61c5b9457ab6e2900915b74f8370e0809749b8",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1_QB213_F01_RUNTIME_ERROR_ORIGIN_FIX_V1",
+      "atUtc": "2026-10-24T02:56:04.124097+00:00",
+      "model": "gpt-6.1-sol/xhigh",
+      "fastSwitchVerified": false,
+      "authority": "Original human01a161f7 reporting/targeted fix and performance01a16bb2; C explicitly assigned the necessary bounded-pool.ts internal sanitizer seam to D1"
+    },
+    "completedScope": {
+      "status": "F01_SOURCE_FIXED_TARGETED_HANDOFF_AND_LEASE_CHECKS_PASS_PENDING_ORIGINAL_QB_RECHECK",
+      "finding": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice213-c276-runtime-performance-availability/CLASSIFICATION-PROBE.json",
+        "bytes": 1343,
+        "sha256": "3d1aaec9650e05b088be4697a1e1af8d5cadfd3bc5c5099eb4221736397b9dca"
+      },
+      "cause": "PostgresQueryError.code===undefined conflated known transport with unknown SQLSTATE and unknown programming failure after the real sanitizer cleared their raw code. Missing code was not origin evidence.",
+      "fix": "The real BoundedPostgresPool driver-query rejection path privately records only sanitized error instances originating from an Error with an own known Node transport code. Module-private WeakSet membership is queried by internal export isKnownPostgresTransportQueryError; no public boolean tag, raw message/code/SQL/target/credential/cause retained. Constructing a PostgresQueryError, copying a tag or forging its prototype does not supply this provenance.",
+      "classifier": "An undefined-code PostgresQueryError is recoverable only when that private provenance is present. UnknownZZ001/wrappedTypeError/plainUnknown/forged markers remain permanently revoked. Known57014/server transient SQLSTATE and original closed-client resource cases remain bounded recoverable;42501 and confirmed catalog/target/file mismatches stay closed.",
+      "unchanged": "Original sanitizer public fields/messages/masking and bounded lease close/release logic remain unchanged. Metadata/Sales performance changes from276 are adopted, not re-reviewed or rerun. No retry, write replay, schema/public response field or general error platform added.",
+      "provenanceLimit": "A generic no-code Error or a timeout-looking message without a proven driver transport code is UNKNOWN, not silently recoverable. No message/stack heuristic was added."
+    },
+    "changedFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/bounded-pool.ts",
+        "bytes": 15825,
+        "sha256": "e9b8643a48a64d8a1aa529e90ac662600d3b34628954ef7bda8d8bd27e0c5c67"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 67844,
+        "sha256": "5eac355a13f62f815190297623a0681054d80285d148db9f338b0d8fb177d181"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/native-runtime26-capability.test.ts",
+        "bytes": 30656,
+        "sha256": "d4502c87e049a6ab0e61f895af8a1983f1398ffea11ce3d1b040910eff94c6ef"
+      }
+    ],
+    "checks": {
+      "newF01Scopes": 2,
+      "affectedIssuerScope": 1,
+      "affectedBoundedPoolScopes": 3,
+      "pass": 6,
+      "skip": 0,
+      "scopes": [
+        "Actual bounded sanitizer handoff: knownECONNRESET/EPIPE recognized privately; unknownZZ001/TypeError/permission/forged tag not recognized; public constructor/prototype cannot fake the private marker; output remains sanitized",
+        "Issuer consumes actual sanitized instances: knowntransport/57014/closed client fail current lease, blockCOMMIT, discard and require a new full probe; wrappedunknown/permission/handmade transport marker permanently revoke without another query",
+        "Only original timeout/transport/resource lease test was updated to use the real sanitizer for transport and rerun",
+        "Original SQLSTATE rollback/conflict metadata masking case",
+        "Original local read timeout retires connection and does not become SQL cancellation",
+        "Original five-character EPIPE remains non-SQLSTATE and discards connection"
+      ],
+      "scopeExecution": "New2+affected1 passed first targeted run15fbd2; affected bounded3 passed separately2a9cb9. No repeat of other20 runtime scopes/wholeSQL/SPEC/C100.",
+      "strict": {
+        "roots": [
+          "adapters/postgres/src/bounded-pool.ts",
+          "tests/native-runtime26-capability.test.ts"
+        ],
+        "exitCode": 0,
+        "scope": "Original strict ES2023/NodeNext noEmit flags and complete dependency graph",
+        "toolChunk": "0a23f8"
+      },
+      "databaseOperations": 0,
+      "sshOperations": 0,
+      "builds": 0,
+      "gitOperations": 0,
+      "listenersOpened": 0,
+      "browserOperations": 0,
+      "realCredentialsRead": false
+    },
+    "notTested": [
+      "OriginalQB213 independent F01 recheck on a newly fixed successor",
+      "C121 actual after measurements/real PG transient recovery and mismatch negative controls; original276 remains its own NEED_FIX evidence",
+      "Any new claim about production permission bypass, automatic replay or online503 cause; none asserted"
+    ],
+    "blockers": {
+      "source": "No remaining owner source/type/test failure for F01",
+      "acceptance": "Original QB must recheck this exact successor using the real bounded sanitizer/predicate handoff, not only a reconstructed error constructor fragment. C121 must use the newly fixed source/compiled graph; no release based on old276."
+    },
+    "next": {
+      "C": "Freeze exactly these3 changed leaves, reuse unchanged276sales UOW and valid scope results, send originalQB only F01 classification/sanitizer/affected lease recheck. Keep original276/probe evidence.",
+      "QBSeam": "Use exported isKnownPostgresTransportQueryError from actual bounded-pool.ts plus actual bounded driver failure path. Manual new PostgresQueryError({code:ECONNRESET}) deliberately has no private origin and must not substitute for the real transport handoff.",
+      "actual": "C alone runs the successor performance after group and actual engine negative controls; R1/CORE and other permitted work continue independently."
+    }
+  },
+  "stage": "FIXED_SOURCE_OWNER_CHECKS_ONLY_PENDING_ORIGINAL_QB_AFFECTED_REVIEW",
+  "actualPG": false,
+  "deployed": false
+}

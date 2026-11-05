@@ -1,0 +1,30 @@
+{
+  "version": "C_QA185_EXECUTION_ADOPTION_V1",
+  "atUtc": "2026-10-27T14:27:40.345745+00:00",
+  "registrationId": "t45-v22-qa-readonly-prefix-adapter-20261027-185",
+  "decision": "AUTHORIZE_ONE_READONLY_QA_PREFIX_ADAPTER_AFTER184_TERMINAL_OR_EXPLICIT_RESOURCE_HANDOFF",
+  "plan": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa-readonly-prefix-adapter-20261027-185/inputs/QA185-PLAN.json",
+    "bytes": 4546,
+    "sha256": "4bf0ad0e9b468d0e1b70bf5c9e3c2d63b8e6f512ec342f1c89fea80ed453d60e"
+  },
+  "authority": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa-readonly-prefix-adapter-20261027-185/inputs/C-QA185-AUTHORITY.json",
+    "bytes": 4333,
+    "sha256": "c776f42ea1c46810d55174e24b4a7a422bedeeaa18ae30cf98a8ea99ac4e5423"
+  },
+  "fixture": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-20261027-185/inputs/QA185-FIXTURE.json",
+    "bytes": 2197,
+    "sha256": "51a96313246415a91666169c0180f82eb78a257d3c5bd64a8b8f309f7316b234"
+  },
+  "prerequisite": "T45 must materialize sameproductionSQL80495/980c4f58 at exact182 sourcepath, and verify actual184 finalhost5007/6a68/input188917/c7e1/sourcegrant37302/2787 refs before run. No newserverjob competes with active184.",
+  "runtime": "Actualfrozen statement120000/maxconn1/connection10000/idle10000; outermax1800/deadline16:30Z. Proposedquery125000/lock3000/idletxn30000 notimplemented notclaimed; no codechanges.",
+  "scope": "Only source capture readonly/originalsourceDatabaseAccessPROHIBITED + genuineQA ordinary RRRO productionadapter fullnative content and coverage SELECT thenROLLBACK. NoBIND/businessDML/COMMIT/QAvariant/negativefixture/sourceDBconnection.",
+  "sourceEnvironment": {
+    "NAIJUE_IMPORT_PROVIDER26_INPUT_FILE": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/provider-INPUT.FINAL.json",
+    "NAIJUE_IMPORT_PROVIDER26_INPUT_SHA256": "c7e1a1b42952b3cb7fc42468c52f7e2b3add59b069d5904998c7458d362d3acd"
+  },
+  "authoritySource": "User explicitv22 plus existing isolatedQA/soleowner execution authority; C adoptsQB475source/QB474actualQAmetadata/QB477physicalclosure. No newhumanapproval required for this accepted readonlycheck.",
+  "notPassed": "No actualreadonly prefix/latency/BIND/trigger/UNKNOWN/formalbusiness pass inferred"
+}

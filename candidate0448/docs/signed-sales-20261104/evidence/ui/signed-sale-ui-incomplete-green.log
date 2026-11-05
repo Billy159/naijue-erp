@@ -1,0 +1,17 @@
+PASS historical signed SALE enters preserving editor without defaulting economics
+✔ apps/web/demo-replica/frontend/runtime/documents/ordinary-signed-preserving-edit.test.mjs (8895.592765ms)
+✔ historical SALE changes one complete row while preserving another unknown signed row and actual net receipt (35.47595ms)
+✔ historical signed SALE edits signed quantity and price without changing row identities (1.563169ms)
+✔ historical signed discount remains exact on memo save without invented allocation (1.300906ms)
+✔ saved signed SALE proposal exposes economic edits, retains unknown line facts and missing method (32.016257ms)
+✔ approved historical discount ruling: economic edits keep original discount without guessed allocation (10.921844ms)
+✔ historical missing settlement is shown unknown, never as zero or settled (0.607083ms)
+✔ changed historical unknown pricing saves explicit-price draft without invented intent (6.681038ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8906.608353

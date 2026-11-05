@@ -1,0 +1,125 @@
+✔ direct COMMIT acceptance cases register without invoking setup or database work (8.488462ms)
+✔ real-client runner never substitutes finish, constraint forcing or synthetic SQL replies for direct COMMIT (8.480077ms)
+✔ no target binding or non-synthetic target is rejected before registration (2.175679ms)
+✖ physical target uses PostgreSQL host normalization rather than CIDR text (5.248137ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.005181
+
+✖ failing tests:
+
+test at tests/whole-package-direct-commit-runner.test.mjs:32:1
+✖ physical target uses PostgreSQL host normalization rather than CIDR text (5.248137ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /pg_catalog\.host\(pg_catalog\.inet_server_addr\(\)\) AS server_address/. Input:
+  
+  '/** Opt-in REAL PostgreSQL acceptance cases. NOT EXECUTED by registration.\n' +
+    ' * Supply createSyntheticPgSetup(config, WHOLE_DIRECT_COMMIT_MODES) from the\n' +
+    ' * existing explicit local synthetic setup only after target authorization.\n' +
+    ' * Supply separately verified expectedTargets physical identities for all cases;\n' +
+    ' * no observed identity is promoted to an approved target automatically.\n' +
+    ' * This module creates no connection, reads no configuration, installs nothing\n' +
+    ' * and cannot authorize execution. Each case needs a distinct new-empty target. */\n' +
+    "import assert from 'node:assert/strict';\n" +
+    'export const WHOLE_DIRECT_COMMIT_MODES = Object.freeze([\n' +
+    "  'prepare-direct-commit-failure', 'baseline-direct-commit-failure', 'complete-direct-commit-success',\n" +
+    ']);\n' +
+    "const initializer = 'erp_unified27_initializer_2393dbc6db9581c2';\n" +
+    "const importer = 'erp_unified27_importer_2393dbc6db9581c2';\n" +
+    "const phases = { masterChunk: 'MASTER', baselineKeys: 'KEYS', documentChunk: 'DOCUMENTS', publish: 'PUBLISH' };\n" +
+    'async function control(client, sql, command) { assert.equal((await client.query(sql)).command, command); }\n' +
+    'async function call(client, sql, values) {\n' +
+    '  const result = await client.query(sql, values);\n' +
+    "  assert.equal(result.command, 'SELECT'); assert.equal(result.rowCount, 1);\n" +
+    '  return result.rows[0].result;\n' +
+    '}\n' +
+    'async function target(client) {\n' +
+    '  const result = await client.query("SELECT current_database() AS database_name, (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()) AS database_oid, inet_server_addr()::text AS server_address, inet_server_port() AS server_port, (SELECT system_identifier::text FROM pg_catalog.pg_control_system()) AS system_identifier, current_user=session_user AS unaltered_role");\n' +
+    "  assert.equal(result.command, 'SELECT'); assert.equal(result.rowCount, 1);\n" +
+    '  const row = result.rows[0];\n' +
+    '  assert.match(row.database_name, /^synthetic_whole_[a-z0-9_]{1,48}$/);\n' +
+    '  assert.match(row.database_oid, /^[1-9][0-9]*$/);\n' +
+    "  assert.ok(['127.0.0.1', '::1'].includes(row.server_address));\n" +
+    '  assert.match(row.system_identifier, /^[1-9][0-9]*$/);\n' +
+    '  assert.equal(row.unaltered_role, true);\n' +
+    '  return { database_name: row.database_name, database_oid: row.database_oid, system_identifier: row.system_identifier, server_address: row.server_address, server_port: row.server_port };\n' +
+    '}\n' +
+    'export function registerWholePackageDirectCommit(register, setup, expectedTargets) {\n' +
+    "  if (typeof register !== 'function' || typeof setup !== 'function') throw Error('EXPLICIT_SYNTHETIC_SETUP_REQUIRED');\n" +
+    "  if (!expectedTargets || Object.keys(expectedTargets).sort().join() !== [...WHOLE_DIRECT_COMMIT_MODES].sort().join()) throw Error('EXPLICIT_SYNTHETIC_TARGET_BINDINGS_REQUIRED');\n" +
+    '  expectedTargets = structuredClone(expectedTargets);\n' +
+    '  for (const entry of Object.values(expectedTargets)) {\n' +
+    "    if (!entry || Object.keys(entry).sort().join() !== 'database_name,database_oid,server_address,server_port,system_identifier' ||\n" +
+    "        typeof entry.database_name !== 'string' || !/^synthetic_whole_[a-z0-9_]{1,48}$/.test(entry.database_name) ||\n" +
+    "        typeof entry.database_oid !== 'string' || !/^[1-9][0-9]*$/.test(entry.database_oid) ||\n" +
+    "        typeof entry.system_identifier !== 'string' || !/^[1-9][0-9]*$/.test(entry.system_identifier) ||\n" +
+    "        !['127.0.0.1', '::1'].includes(entry.server_address) || !Number.isSafeInteger(entry.server_port) || entry.server_port < 1024 || entry.server_port > 65535)\n" +
+    "      throw Error('EXPLICIT_SYNTHETIC_TARGET_BINDINGS_REQUIRED');\n" +
+    '  }\n' +
+    '  const seenTargets = new Set();\n' +
+    "  for (const mode of WHOLE_DIRECT_COMMIT_MODES) register('actual SQL deferred direct commit: ' + mode, async () => {\n" +
+    '    const f = await setup(mode);\n' +
+    '    const { writer, observer, snapshot, encodedScrypt } = f;\n' +
+    '    let began = false;\n' +
+    '    try {\n' +
+    '      assert.equal(f.syntheticIsolated, true); assert.notEqual(writer, observer);\n' +
+    "      const bound = await target(writer); assert.deepEqual(bound, expectedTargets[mode], 'Writer must match the separately approved physical target'); assert.deepEqual(await target(observer), bound);\n" +
+    "      const targetKey = JSON.stringify(bound); assert.equal(seenTargets.has(targetKey), false, 'Each case requires a fresh distinct synthetic target'); seenTargets.add(targetKey);\n" +
+    '      const initialize = structuredClone(f.initialize), steps = structuredClone(f.steps);\n' +
+    '      assert.ok(steps.length >= 3);\n' +
+    "      const baselineIndex = steps.findIndex(s => s.method === 'publish' && s.request.payload.phase === 'BASELINE');\n" +
+    '      assert.ok(baselineIndex >= 0);\n' +
+    '      const before = await snapshot(observer);\n' +
+    "      assert.equal(before.tables?.schema_migration?.count, '27', 'Installed synthetic lineage required');\n" +
+    "      assert.ok(Object.entries(before.tables).every(([name, table]) => name === 'schema_migration' || table.count === '0'), 'Every synthetic business/audit table must be empty');\n" +
+    "      const inspect = () => call(writer, 'SELECT naijue_erp.standard_whole_package_inspect_v2($1::jsonb,$2::text) AS result', [initialize, encodedScrypt]);\n" +
+    "      await control(writer, 'BEGIN ISOLATION LEVEL READ COMMITTED', 'BEGIN'); began = true;\n" +
+    "      await control(writer, `SET LOCAL ROLE ${initializer}`, 'SET');\n" +
+    "      assert.equal((await inspect()).state, 'ABSENT');\n" +
+    "      await call(writer, 'SELECT naijue_erp.standard_whole_package_prepare_v2($1::jsonb,$2::text) AS result', [initialize, encodedScrypt]);\n" +
+    "      await control(writer, `SET LOCAL ROLE ${importer}`, 'SET');\n" +
+    "      const limit = mode === 'prepare-direct-commit-failure' ? 0 : mode === 'baseline-direct-commit-failure' ? baselineIndex + 1 : steps.length;\n" +
+    '      for (let i = 0; i < limit; i++) {\n' +
+    '        const step = steps[i]; assert.ok(phases[step.method]);\n' +
+    "        const result = await call(writer, 'SELECT naijue_erp.standard_whole_package_step_v2($1::uuid,$2::integer,$3::text,$4::jsonb) AS result', [initialize.operation_id, i + 1, phases[step.method], step.request]);\n" +
+    "        assert.equal(result.state, 'PENDING_TRANSACTION');\n" +
+    "        assert.deepEqual(await snapshot(observer), before, 'Uncommitted prefix must remain invisible');\n" +
+    '      }\n' +
+    '      assert.deepEqual(await snapshot(observer), before);\n' +
+    "      if (mode.endsWith('-failure')) {\n" +
+    "        await assert.rejects(() => writer.query('COMMIT'), error => error.code === '23514' && /WHOLE_PACKAGE_INCOMPLETE/.test(error.message));\n" +
+    '        began = false;\n' +
+    "        assert.deepEqual(await snapshot(observer), before, 'Rejected direct COMMIT leaves no business/audit/counter state');\n" +
+    '      } else {\n' +
+    "        await control(writer, 'COMMIT', 'COMMIT'); began = false;\n" +
+    '        assert.notDeepEqual(await snapshot(observer), before);\n' +
+    '      }\n' +
+    '      const after = await snapshot(observer);\n' +
+    "      await control(writer, 'BEGIN ISOLATION LEVEL READ COMMITTED READ ONLY', 'BEGIN'); began = true;\n" +
+    "      await control(writer, `SET LOCAL ROLE ${initializer}`, 'SET');\n" +
+    '      const receipt = await inspect();\n' +
+    "      assert.equal(receipt.state, mode.endsWith('-failure') ? 'ABSENT' : 'COMMITTED');\n" +
+    "      if (receipt.state === 'COMMITTED') await f.assertPublished(observer, receipt.summary);\n" +
+    "      await control(writer, 'ROLLBACK', 'ROLLBACK'); began = false;\n" +
+    "      assert.deepEqual(await snapshot(observer), after, 'Exact-key inspection is nonmutating');\n" +
+    '    } finally {\n' +
+    "      try { if (began) await control(writer, 'ROLLBACK', 'ROLLBACK'); }\n" +
+    '      finally { await f.close(); }\n' +
+    '    }\n' +
+    '  });\n' +
+    '}\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f6bee04e937b/erp-unified-latest-20261102/tests/whole-package-direct-commit-runner.test.mjs:34:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/** Opt-in REAL PostgreSQL acceptance cases. NOT EXECUTED by registration.\n * Supply createSyntheticPgSetup(config, WHOLE_DIRECT_COMMIT_MODES) from the\n * existing explicit local synthetic setup only after target authorization.\n * Supply separately verified expectedTargets physical identities for all cases;\n * no observed identity is promoted to an approved target automatically.\n * This module creates no connection, reads no configuration, installs nothing\n * and cannot authorize execution. Each case needs a distinct new-empty target. */\nimport assert from \'node:assert/strict\';\nexport const WHOLE_DIRECT_COMMIT_MODES = Object.freeze([\n  \'prepare-direct-commit-failure\', \'baseline-direct-commit-failure\', \'complete-direct-commit-success\',\n]);\nconst initializer = \'erp_unified27_initializer_2393dbc6db9581c2\';\nconst importer = \'erp_unified27_importer_2393dbc6db9581c2\';\nconst phases = { masterChunk: \'MASTER\', baselineKeys: \'KEYS\', documentChunk: \'DOCUMENTS\', publish: \'PUBLISH\' };\nasync function control(client, sql, command) { assert.equal((await client.query(sql)).command, command); }\nasync function call(client, sql, values) {\n  const result = await client.query(sql, values);\n  assert.equal(result.command, \'SELECT\'); assert.equal(result.rowCount, 1);\n  return result.rows[0].result;\n}\nasync function target(client) {\n  const result = await client.query("SELECT current_database() AS database_name, (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()) AS database_oid, inet_server_addr()::text AS server_address, inet_server_port() AS server_port, (SELECT system_identifier::text FROM pg_catalog.pg_control_system()) AS system_identifier, current_user=session_user AS unaltered_role");\n  assert.equal(result.command, \'SELECT\'); assert.equal(result.rowCount, 1);\n  const row = result.rows[0];\n  assert.match(row.database_name, /^synthetic_whole_[a-z0-9_]{1,48}$/);\n  assert.match(row.database_oid, /^[1-9][0-9]*$/);\n  assert.ok([\'127.0.0.1\', \'::1\'].includes(row.server_address));\n  assert.match(row.system_identifier, /^[1-9][0-9]*$/);\n  assert.equal(row.unaltered_role, true);\n  return { database_name: row.database_name, database_oid: row.database_oid, system_identifier: row.system_identifier, server_address: row.server_address, server_port: row.server_port };\n}\nexport function registerWholePackageDirectCommit(register, setup, expectedTargets) {\n  if (typeof register !== \'function\' || typeof setup !== \'function\') throw Error(\'EXPLICIT_SYNTHETIC_SETUP_REQUIRED\');\n  if (!expectedTargets || Object.keys(expectedTargets).sort().join() !== [...WHOLE_DIRECT_COMMIT_MODES].sort().join()) throw Error(\'EXPLICIT_SYNTHETIC_TARGET_BINDINGS_REQUIRED\');\n  expectedTargets = structuredClone(expectedTargets);\n  for (const entry of Object.values(expectedTargets)) {\n    if (!entry || Object.keys(entry).sort().join() !== \'database_name,database_oid,server_address,server_port,system_identifier\' ||\n        typeof entry.database_name !== \'string\' || !/^synthetic_whole_[a-z0-9_]{1,48}$/.test(entry.database_name) ||\n        typeof entry.database_oid !== \'string\' || !/^[1-9][0-9]*$/.test(entry.database_oid) ||\n        typeof entry.system_identifier !== \'string\' || !/^[1-9][0-9]*$/.test(entry.system_identifier) ||\n        ![\'127.0.0.1\', \'::1\'].includes(entry.server_address) || !Number.isSafeInteger(entry.server_port) || entry.server_port < 1024 || entry.server_port > 65535)\n      throw Error(\'EXPLICIT_SYNTHETIC_TARGET_BINDINGS_REQUIRED\');\n  }\n  const seenTargets = new Set();\n  for (const mode of WHOLE_DIRECT_COMMIT_MODES) register(\'actual SQL deferred direct commit: \' + mode, async () => {\n    const f = await setup(mode);\n    const { writer, observer, snapshot, encodedScrypt } = f;\n    let began = false;\n    try {\n      assert.equal(f.syntheticIsolated, true); assert.notEqual(writer, observer);\n      const bound = await target(writer); assert.deepEqual(bound, expectedTargets[mode], \'Writer must match the separately approved physical target\'); assert.deepEqual(await target(observer), bound);\n      const targetKey = JSON.stringify(bound); assert.equal(seenTargets.has(targetKey), false, \'Each case requires a fresh distinct synthetic target\'); seenTargets.add(targetKey);\n      const initialize = structuredClone(f.initialize), steps = structuredClone(f.steps);\n      assert.ok(steps.length >= 3);\n      const baselineIndex = steps.findIndex(s => s.method === \'publish\' && s.request.payload.phase === \'BASELINE\');\n      assert.ok(baselineIndex >= 0);\n      const before = await snapshot(observer);\n      assert.equal(before.tables?.schema_migration?.count, \'27\', \'Installed synthetic lineage required\');\n      assert.ok(Object.entries(before.tables).every(([name, table]) => name === \'schema_migration\' || table.count === \'0\'), \'Every synthetic business/audit table must be empty\');\n      const inspect = () => call(writer, \'SELECT naijue_erp.standard_whole_package_inspect_v2($1::jsonb,$2::text) AS result\', [initialize, encodedScrypt]);\n      await control(writer, \'BEGIN ISOLATION LEVEL READ COMMITTED\', \'BEGIN\'); began = true;\n      await control(writer, `SET LOCAL ROLE ${initializer}`, \'SET\');\n      assert.equal((await inspect()).state, \'ABSENT\');\n      await call(writer, \'SELECT naijue_erp.standard_whole_package_prepare_v2($1::jsonb,$2::text) AS result\', [initialize, encodedScrypt]);\n      await control(writer, `SET LOCAL ROLE ${importer}`, \'SET\');\n      const limit = mode === \'prepare-direct-commit-failure\' ? 0 : mode === \'baseline-direct-commit-failure\' ? baselineIndex + 1 : steps.length;\n      for (let i = 0; i < limit; i++) {\n        const step = steps[i]; assert.ok(phases[step.method]);\n        const result = await call(writer, \'SELECT naijue_erp.standard_whole_package_step_v2($1::uuid,$2::integer,$3::text,$4::jsonb) AS result\', [initialize.operation_id, i + 1, phases[step.method], step.request]);\n        assert.equal(result.state, \'PENDING_TRANSACTION\');\n        assert.deepEqual(await snapshot(observer), before, \'Uncommitted prefix must remain invisible\');\n      }\n      assert.deepEqual(await snapshot(observer), before);\n      if (mode.endsWith(\'-failure\')) {\n        await assert.rejects(() => writer.query(\'COMMIT\'), error => error.code === \'23514\' && /WHOLE_PACKAGE_INCOMPLETE/.test(error.message));\n        began = false;\n        assert.deepEqual(await snapshot(observer), before, \'Rejected direct COMMIT leaves no business/audit/counter state\');\n      } else {\n        await control(writer, \'COMMIT\', \'COMMIT\'); began = false;\n        assert.notDeepEqual(await snapshot(observer), before);\n      }\n      const after = await snapshot(observer);\n      await control(writer, \'BEGIN ISOLATION LEVEL READ COMMITTED READ ONLY\', \'BEGIN\'); began = true;\n      await control(writer, `SET LOCAL ROLE ${initializer}`, \'SET\');\n      const receipt = await inspect();\n      assert.equal(receipt.state, mode.endsWith(\'-failure\') ? \'ABSENT\' : \'COMMITTED\');\n      if (receipt.state === \'COMMITTED\') await f.assertPublished(observer, receipt.summary);\n      await control(writer, \'ROLLBACK\', \'ROLLBACK\'); began = false;\n      assert.deepEqual(await snapshot(observer), after, \'Exact-key inspection is nonmutating\');\n    } finally {\n      try { if (began) await control(writer, \'ROLLBACK\', \'ROLLBACK\'); }\n      finally { await f.close(); }\n    }\n  });\n}\n',
+    expected: /pg_catalog\.host\(pg_catalog\.inet_server_addr\(\)\) AS server_address/,
+    operator: 'match',
+    diff: 'simple'
+  }

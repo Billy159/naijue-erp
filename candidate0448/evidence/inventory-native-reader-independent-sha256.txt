@@ -1,0 +1,4 @@
+6bed8e3ec64639d4869e2119006186d76892b1dffb3f9755f9a0e2d723466846  adapters/postgres/src/inventory-query-reader.ts
+ff69c69021e6f99692c0a3a9eae96028c0c467a40422714566349debb174cb77  tests/inventory-query-postgres-protocol.test.ts
+b6614342cb22f668d6d4956835f000022cf954454d0f6266ce3758078eb1938c  docs/native-inventory-query-reader.md
+3fb79fa3efe34696c86a503bbedd917c27ac74f1d224464345486f96008e6454  evidence/inventory-native-reader-independent-probes.mjs

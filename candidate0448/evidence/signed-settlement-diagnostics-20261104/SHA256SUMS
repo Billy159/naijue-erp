@@ -1,0 +1,5 @@
+9242d8df770e1265c8e16b46ee192ba3b291e706d0c572d36742bfa246fb3b84  packages/domain/src/sales-settlement-error.ts
+1217957c28109d12408b792b9727959091bb2766c1f752f362f27001c9a60238  apps/api/src/sales-http.ts
+31ea97cc278bb27bcca4b6f32ca4895b6d4b5c0ea856469edfe6d94b25b7c2e5  apps/web/src/sales/commands/contracts.ts
+24b9a8a28f982e36e2f25ad0943e36f1b3b89d191287bf6831aaec16ce3fa6f4  apps/web/src/sales/commands/http-client.ts
+eb711825d67efa1a83f80a15e5afe42f40b3083ff308e76bcba0b2f777033497  apps/web/src/sales/commands/controller.ts

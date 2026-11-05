@@ -1,0 +1,94 @@
+{
+  "atUtc": "2026-10-23T14:30:14.779167+00:00",
+  "parent": "a9bc33e9ac845149dab88e69766853cfff60db13",
+  "taskId": "B05_STAFF_EXISTING_SEARCH_NAME_OR_REAL_LOGIN",
+  "files": [
+    {
+      "path": "adapters/postgres/src/organization-maintenance-store.ts",
+      "bytes": 17138,
+      "sha256": "af451a268262dde4cd09a0f1973d1cf990619b734e1346fbfb86966120bbbad1",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+      "bytes": 18584,
+      "sha256": "463a0e04a5dcb6bff746aed37702dc3bbc671840f3fd0f28735d9dbb2d41fb4b",
+      "owner": "D2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/STAFF-NAME-LOGIN-SEARCH-v1.json",
+  "ownerReceiptSha256": "af987441b1febdd6ead61fedd4cfabed711feb8fcfb57dea91b280d46359ee45",
+  "ownerDelivery": {
+    "task": "F05 STAFF existing search matches name or true linked login name",
+    "status": "FROZEN_SOURCE_AND_PROTOCOL_PASS_ACTUAL_PG_NOT_RUN",
+    "authority": {
+      "source": "C 2026-10-23 original F05 missing-read assignment under existing role routing and proactive reporting authorization",
+      "humanAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "modelRequired": "gpt-6.1-sol/xhigh",
+      "fastActuallyVerified": false
+    },
+    "filesChanged": [
+      {
+        "path": "adapters/postgres/src/organization-maintenance-store.ts",
+        "bytes": 17138,
+        "sha256": "af451a268262dde4cd09a0f1973d1cf990619b734e1346fbfb86966120bbbad1"
+      },
+      {
+        "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+        "bytes": 18584,
+        "sha256": "463a0e04a5dcb6bff746aed37702dc3bbc671840f3fd0f28735d9dbb2d41fb4b"
+      }
+    ],
+    "findings": {
+      "before": "Staff name search already worked. STAFF page only used strpos(lower(m.name),lower(search)); linked login name was projected but not searched.",
+      "relationship": "Existing LEFT JOIN user_account a ON a.staff_id=m.id. 0001_runtime_sales.sql35 has staff_id NOT NULL UNIQUE, so login search adds no join or duplicate staff rows.",
+      "owner": "Only original D2 organization read SQL and necessary original protocol tests changed."
+    },
+    "contract": {
+      "route": "POST /staff/query",
+      "request": "Original {search,status,hallId,page,pageSize}, optional existing STAFF role extension; no new key or DTO",
+      "search": "Case-insensitive literal substring in staff.name OR its real user_account.login_name, parenthesized before original status/hall/target/role predicates. NULL account login name is an empty search string only; staff display name/account facts unchanged.",
+      "pagination": "Same matched CTE supplies exact count and bounded page, same display_name/id ordering. No second source or N+1.",
+      "projection": "Original safe field whitelist only; no new credential field.",
+      "permission": "Original current identity and STAFF role authorization occurs before native read. Search never grants authority.",
+      "frontendPairing": "After C fixed-source/limited QB adoption, F3 may advertise loginNameSearch with existing search. Current staff name search is not disabled. C owns frontend handoff.",
+      "pendingLoginStatus": "No loginStatus input/filter/capability added. Whether closed includes no-account remains original pending human decision."
+    },
+    "implementation": "One fixed STAFF search expression in original page() uses current joined account alias; every other organization family retains its original search expression. No service/validation/schema/column/index/API change.",
+    "validation": {
+      "red": "New staff name-or-account SQL protocol assertion failed against original name-only expression; unrelated permission branch already passed.",
+      "greenCommand": "node --test --test-name-pattern=\"staff-search F05|detail scope and literal search|current WAREHOUSE role cannot read\" tests/organization-maintenance-postgres-protocol.test.ts",
+      "passed": 4,
+      "newCases": 2,
+      "affectedOriginalCases": 2,
+      "skipped": 0,
+      "covered": [
+        "Name and login search with original optional role/status/hall/page",
+        "Literal percent/underscore/quote SQL parameters",
+        "One shared matched count/page and original account projection",
+        "Account NULL does not replace staff name or infer login status",
+        "WAREHOUSE/SALESPERSON STAFF denial before matched SQL",
+        "Other warehouse/account search paths unchanged",
+        "Pending loginStatus rejected before connection"
+      ],
+      "strictNoEmitExit": 0,
+      "scope": "Exact reader + protocol test strict dependency graph, no excludes",
+      "actualPostgres": false
+    },
+    "unchangedFrozenWork": [
+      "C185/QB187 exact3 append service interfaces",
+      "Year170/QB182",
+      "Group membership guards",
+      "H06/main inventory/metadata/old whole maintenance acceptance"
+    ],
+    "operations": {
+      "databaseConnected": false,
+      "serverOrBuild": false,
+      "gitMutation": false,
+      "frontendChanged": false,
+      "newInterfaceOrSchema": false
+    },
+    "next": "C pins exact2 and routes original QB finite scope, then pairs original F3 loginNameSearch capability only after effective backend adoption. Actual PG remains C-only."
+  },
+  "qualification": "SOURCE_FIXED_PROTOCOL_ONLY. Existing STAFF name search was already effective; extends same search to actual linked login_name using existing uniqueleftjoin. No loginStatus contract or closed-noaccount decision. Actual PG, frontend paired cap and complete host business remain untested."
+}

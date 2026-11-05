@@ -1,0 +1,17 @@
+d067767fe53ebe7eaf20b5040a3fa900baa6b281b98d4838f7a940e5749ffb87  apps/web/src/application/contracts.ts
+5615dfc71f9fe34a2cc20565ec893487b8aaedb0567f2c09dc4deaa3e13ce86e  apps/web/src/application/controller.ts
+73e7b74e89817988d2360a00ce5a345ee8ecc5f1b329c1df45e9194a8476e54b  apps/web/src/application/routes/sales.tsx
+51ff3299b02d71a324b8e1a94bb7bf63a59a563d7a745c01dc2bc166162a57b6  apps/web/src/application/routes/sales-commands.tsx
+035b9b109d9f8a7917d157f62d612427e7106b3877839a68e9f356bfb9860e73  apps/web/src/sales/sales-page.tsx
+cb727ed813e1f805be306c7f59bd8a906a4f203a8c8d55df7db3ff000b9fb65d  apps/web/src/sales/sales-route.tsx
+d997a43b3695efdb6405397bf9c61a7c5a3a66ff52b0f71a7b613d56294444c0  apps/web/src/sales/commands/contracts.ts
+29cbacd4482d3ab7f70ab2261a82b2236e8cc14a4ab5cd5f612151db5b272826  apps/web/src/sales/commands/index.ts
+b31504102f768efb6789493aaf06f70cd09f9aeea44b22858c8dc92e09d45a64  apps/web/src/sales/commands/form-model.ts
+d13a08ce0bfe50bd3fb344244102a203cf18fd132cd076ded63ebd394f44a414  apps/web/src/sales/commands/form-model.test.ts
+9f69369591b3007e1fd51a3b5ec9fba1c0f1382566fe43580888d5f797c54f14  apps/web/src/sales/commands/editor-session.ts
+cac9e1b128adcbccbb91bc6440581b243faef365aced50c5929f9a9df4aab00c  apps/web/src/sales/commands/editor-session.test.ts
+01c0aadb5a1843970c9be7a90231bc30f0c94088e43c3cbf201743e10f2f28a1  apps/web/src/sales/commands/form.tsx
+e6f90d78017bdda7cb8d9d7c4c02e39f6f86c485e9b3f5fa9e224e1f4992c62a  apps/web/src/sales/commands/page-host.tsx
+c5c72af5c74ebc2a8746597642e39b3ef2fa54194db3d93896e15b8c64870015  apps/web/src/sales/commands/tests/dom-entry.tsx
+534c008bcbc07a278cbba39648dbc6bd348f0a8f876fd38551a860cbc9818bbc  apps/web/src/sales/commands/tests/run-dom-tests.mjs
+afb459d5833b48d502dbec8935d8977a9d8d14c64d1e2d37eb680ea757e76884  apps/web/src/sales/commands/README.md
