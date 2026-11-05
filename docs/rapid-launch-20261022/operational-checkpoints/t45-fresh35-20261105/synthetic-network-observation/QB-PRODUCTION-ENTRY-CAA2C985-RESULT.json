@@ -1,0 +1,192 @@
+{
+  "task": "C-0448-D1-PRODUCTION-ENTRY-AND-TWO-DO-9-LEAF",
+  "atUtc": "2026-11-05T22:33:36.199383+00:00",
+  "conclusion": "NEED_FIX",
+  "pins": {
+    "sourceCommit": "caa2c985cbb22fefc8a320ed6cfd9a16d2d973ae",
+    "parentSource": "cfcaf1747aae9689a8a9bebed17b09dfda6f8b3b",
+    "files": [
+      {
+        "path": "scripts/release/unified-install/fresh35-production-entry-v2.mjs",
+        "sha256": "1b6537637317337c93afae2ae3f70c6fafe0a16bab90d184eeaf07face907d62",
+        "bytes": 9726
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+        "sha256": "ed178a922209646b024c5ca7afa609ca009d37adb62d198508094d2f97816d60",
+        "bytes": 12599
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+        "sha256": "faaaa49c810c60e0500eab4ac3bc5ee216b13cfe468cbe15bf5b6ce0bdd4abc2",
+        "bytes": 18818
+      },
+      {
+        "path": "tests/fresh35-production-entry.test.mjs",
+        "sha256": "217bec0d0546dc14cb3b30630f14ec4f3bf10a8986105b0f80822244afa59322",
+        "bytes": 16852
+      },
+      {
+        "path": "tests/fresh35-isolated-entry.test.mjs",
+        "sha256": "f2b169eca5181e909f7005134c522dbfbe3e8112519ba0954c05092cbd2c04ec",
+        "bytes": 18076
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+        "sha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b",
+        "bytes": 31452
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "sha256": "a0bbffa392210fb456059f320f618599e2428fc1d638b6a1b2c126e03196caa8",
+        "bytes": 35732
+      },
+      {
+        "path": "tests/fresh35-combined-target.test.mjs",
+        "sha256": "5f51366f54e484ddc94f0e808d61d330c27af76e9eb0a8fb094e3afa20fb0659",
+        "bytes": 29654
+      },
+      {
+        "path": "tests/fresh35-combined-catalog.test.mjs",
+        "sha256": "c428074f2e32ec6fb13729e8b6dbb7b9b72f95763384bda46231c8c6f04f628e",
+        "bytes": 19996
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "PROD-ENTRY-F01",
+      "priority": "P2",
+      "status": "OPEN_FOR_EXACT_CAA2C985",
+      "file": "candidate0448/scripts/release/unified-install/fresh35-production-entry-v2.mjs",
+      "lines": [
+        79,
+        80
+      ],
+      "title": "Retain confirmed commit state when the original publisher fails before its annotated catch",
+      "problem": "After the original installer returns a confirmed COMMITTED_UNPUBLISHED completion, publishFresh35CombinedRecord can throw a plain Error during trust checks, existing-record detection or lstat errors, before its publishInstallationRecord catch. The new main does not retain the known completion phase. productionEntryFailure then returns exitCode1/installState null, violating the new entry contract for committed-but-unpublished failures.",
+      "actualCounterexamples": [
+        {
+          "phase": "existing-record",
+          "publisherError": "FRESH35_COMBINED_RECORD_ALREADY_EXISTS",
+          "knownCompletionState": "COMMITTED_UNPUBLISHED",
+          "actualExitCode": 1,
+          "actualInstallState": null,
+          "expectedExitCode": 2,
+          "expectedInstallState": "COMMITTED_UNPUBLISHED",
+          "clients": 1,
+          "closes": 1,
+          "retries": 0,
+          "rawSecretLeaked": false
+        },
+        {
+          "phase": "trusted-tree",
+          "publisherError": "UNTRUSTED_ROOT_INSTALL_PATH",
+          "knownCompletionState": "COMMITTED_UNPUBLISHED",
+          "actualExitCode": 1,
+          "actualInstallState": null,
+          "expectedExitCode": 2,
+          "expectedInstallState": "COMMITTED_UNPUBLISHED",
+          "clients": 1,
+          "closes": 1,
+          "retries": 0,
+          "rawSecretLeaked": false
+        },
+        {
+          "phase": "lstat-eacces",
+          "publisherError": "PRIVATE EACCES",
+          "knownCompletionState": "COMMITTED_UNPUBLISHED",
+          "actualExitCode": 1,
+          "actualInstallState": null,
+          "expectedExitCode": 2,
+          "expectedInstallState": "COMMITTED_UNPUBLISHED",
+          "clients": 1,
+          "closes": 1,
+          "retries": 0,
+          "rawSecretLeaked": false
+        }
+      ],
+      "testGap": "Author publicationFails stub preattaches installState COMMITTED_UNPUBLISHED, unlike these original publisher preflight exceptions.",
+      "minimumCorrection": "In the new entry post-completion publication phase, preserve COMMITTED_UNPUBLISHED for bare failures. Preserve an existing more specific PUBLISHED_DURABILITY_UNKNOWN classification. Do not retry, republish, change the original publisher/lifecycle or widen authority. Add only affected entry/test regression cases.",
+      "limits": "No wrong record, replay, secret leak or PG corruption demonstrated. The failure is loss of confirmed postcommit state/incorrect exit category."
+    }
+  ],
+  "passedScopeReusable": {
+    "entryAuthorization": "Fixed external exact six keys; root0600 single-link NOFOLLOW bounded stable UTF8 inputs; closed V2 target, fixed reference root and loaded-entry source hash; source loader includes actual new JS. Execute additionally uses unchanged original nine-key protected program authorization/one-shot marker.",
+    "modes": "Bootstrap renders SQL and describe compiles/prints only after authorization/source checks, without Client. Execute creates one native Client and uses original lifecycle/journal/publisher, with bounded early close fallback. No REAL import, capability, process provisioning or business enable. Postcommit publisher preflight is the one open finding.",
+    "V1Boundary": "Old isolated entry now explicitly accepts only its exact four-key synthetic input before proposal/source/client; production V2 shape refuses.",
+    "observerTwoDo": "Identical old strict observer IF is embedded inside the existing target/catalog DO blocks. Bootstrap retains standalone wrapper. Original business guard bytes unchanged after removing inserted check/target argument. Observer classification/source/ACL/dependencies/physical predicates and business35/152 remain unchanged.",
+    "nativeConsumer": "Unmodified pg8.23.1 Connection binary parser plus Client result accumulator and original host runtime/ordinary consumer bodies accept two DO results, refuse three DO and DO+SELECT. Synthetic frames are fragmented bytes, not fabricated result arrays; no socket/PG.",
+    "futureConsumer": "T45 new production Python and one source-loader successor are explicitly excluded until their own fixed increment."
+  },
+  "independentEvidence": [
+    {
+      "id": "NINE_FIXED_AUTHOR_LEAF_HASHES_MATCH",
+      "result": "PASS"
+    },
+    {
+      "id": "IDENTICAL_STRICT_OBSERVER_IF_AND_ORIGINAL_BUSINESS_GUARD",
+      "result": "PASS"
+    },
+    {
+      "id": "ACTUAL_PG8231_BINARY_PARSER_ACCUMULATOR_AND_ORIGINAL_HOST_CONSUMERS",
+      "result": "PASS",
+      "profiles": [
+        "V2 controller/runtime metadata",
+        "V2 ordinary metadata"
+      ],
+      "positive": "exactly two DO results",
+      "negative": [
+        "three DO results",
+        "two results with SELECT tag"
+      ],
+      "transport": "synthetic fragmented binary CommandComplete/ReadyForQuery frames through real Connection parser and Client accumulator; no sockets/PG; no fabricated result arrays",
+      "catalogModel": "prevalidated empty model/source providers; original generated guards and observer IF"
+    },
+    {
+      "id": "ORIGINAL_NEW_MAIN_TO_ORIGINAL_PUBLISHER_AND_FAILURE_DIAGNOSTICS",
+      "result": "REPRODUCED_DEFECT",
+      "counterexampleFile": "publication-counterexamples.json",
+      "boundaries": "Actual new main body and actual old publisher/diagnostic bodies; genuine target binding; completion/context/root/IO/native client are modeled; no PG/server/files published"
+    }
+  ],
+  "authorEvidenceAdopted": [
+    {
+      "sha256": "07108a66d648e076dd689a60632b4a2dbbcac8fb4c572b20833b06181fe9c579",
+      "passReported": 8,
+      "rerun": false
+    },
+    {
+      "sha256": "4a3adeed4d485e76514da9e2e40e3aa649e006f5b6a7b652c34efce4d22083f4",
+      "passReported": 3,
+      "rerun": false
+    }
+  ],
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actual": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "PGStarted": false,
+    "SQLParsedByPG": false,
+    "actualAclOrTargetExecution": false,
+    "buildPerformed": false,
+    "realInputsRead": false,
+    "nativeClientConnection": "MODELED_NO_SOCKET",
+    "publisherCompletionAndFsTrust": "MODELED; original function bodies executed",
+    "actualPublication": false
+  },
+  "notRepeated": [
+    "old13",
+    "old7",
+    "old64",
+    "private",
+    "78eedd accepted scope",
+    "current author8+3 full suites"
+  ],
+  "next": "Original D1 fixes only entry/test F01 in exact frozen successor. Reuse all other passed nine-leaf conclusions; recheck only bare postcommit failures and preserved durability-unknown/necessary success. T45 Python/loader consumers get separate fixed incremental review before one final combined build."
+}

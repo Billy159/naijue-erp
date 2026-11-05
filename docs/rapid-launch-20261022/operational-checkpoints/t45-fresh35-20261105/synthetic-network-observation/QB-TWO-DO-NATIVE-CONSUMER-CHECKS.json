@@ -1,0 +1,23 @@
+{
+  "checks": [
+    {
+      "id": "IDENTICAL_STRICT_OBSERVER_IF_AND_ORIGINAL_BUSINESS_GUARD",
+      "result": "PASS"
+    },
+    {
+      "id": "ACTUAL_PG8231_BINARY_PARSER_ACCUMULATOR_AND_ORIGINAL_HOST_CONSUMERS",
+      "result": "PASS",
+      "profiles": [
+        "V2 controller/runtime metadata",
+        "V2 ordinary metadata"
+      ],
+      "positive": "exactly two DO results",
+      "negative": [
+        "three DO results",
+        "two results with SELECT tag"
+      ],
+      "transport": "synthetic fragmented binary CommandComplete/ReadyForQuery frames through real Connection parser and Client accumulator; no sockets/PG; no fabricated result arrays",
+      "catalogModel": "prevalidated empty model/source providers; original generated guards and observer IF"
+    }
+  ]
+}

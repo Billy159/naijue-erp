@@ -30072,7 +30072,10 @@
           "twoDO": 3,
           "actualPG": false
         },
-        "QB": "OriginalQB scoped9leaf review active; F01 confirmed and originalD1 directed fix only entry/test; no repeated broaderQA."
+        "QB": "NEED_FIX_ONLY_PROD_ENTRY_F01; remaining exact9leaf scope independently accepted and reused, noPG",
+        "QBReceiptSHA256": "552b929755bca8249d0797a8ddcd6438e9b6d1c8e21bd852bcf3141eb5fe500f",
+        "nativeTwoDOIndependentSHA256": "d44ef80162e849b02dbc8a5d5e974d4ade3afc11e77231ff981dcf08cfbef056",
+        "next": "D1 F01only fix then QB affected recheck; T45 productionPython and finalsource closure increment; single final build."
       },
       "publicationF01": {
         "id": "PROD-ENTRY-F01",

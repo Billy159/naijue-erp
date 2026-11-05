@@ -1391,3 +1391,6 @@ D1发现新增observer独立DO使原host的严格两结果合同变成三结果�
 
 ### 2026-11-06 06:32 | 已完成模块交验并定向修已提交状态缺口
 C固定D1九叶caa2c985交原QB，采用作者生产入口8项/两DO3项，后续T45 Python/loader只补其新增接缝，不重复九叶或整套后台。QB用原main、原publisher及diagnostics函数体三反例确认PROD-ENTRY-F01/P2：数据库completion已确认后，发布前置抛错丢installState，错误exit1/null。C立即交原D1只修entry/test，要求保留COMMITTED_UNPUBLISHED/exit2及更准确durability unknown，连接/安全错误/原键及不重试均不放宽；QB完成本轮其余范围后仅复验该项。未连接PG，尚未称通过。生产执行排序同时沿既有record父目录watch，外叶落盘/必要清理在ordinary admit前完成，不增控制层。
+
+
+- 原QB九叶最终552b9297已采用：仅PROD-ENTRY-F01/P2需原D1修复，其他授权/模式/V1边界/source闭包与两DO接缝有效通过直接保留。独立两DO d44ef801使用真实pg8.23.1二进制parser、Client累计和原host消费者，正例2DO/反例3DO及错tag，仍是无PG模型，不冒充SQL/ACL真实验收。后继仅复验F01和新Python消费增量。
