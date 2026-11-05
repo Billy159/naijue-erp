@@ -1,4 +1,4 @@
-import {admitFresh35OrdinaryPoolV2,describeFresh35OrdinaryAdmissionV2,closeFresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+import {admitFresh35SyntheticOrdinaryPoolV1,admitFresh35OrdinaryPoolV2,describeFresh35OrdinaryAdmissionV2,closeFresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
 import type {Fresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
 import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
 import { Ordinary27ProductWarehouseStockReader } from '../../../adapters/postgres/src/ordinary27-product-warehouse-stock-reader.ts';
@@ -617,10 +617,20 @@ export async function createPostgresRuntime35ApplicationApi(options: PostgresApp
   return await composePostgresApi(options, createDriver, capabilities, undefined,
     Object.freeze({ sales: true, transfers: true }), media, undefined, true, true, productionV2) as PostgresApplicationApi;
 }
+/** Explicit isolated acceptance entry; never selected by the production parser or CLI. */
+export async function createPostgresSyntheticRuntime35ApplicationApi(options: PostgresApplicationApiOptions,
+  createDriver: PostgresPoolDriverFactory | undefined, media: Runtime26ProductMediaConfiguration,
+  capacityTarget: CapacityRuntimeTarget): Promise<PostgresApplicationApi> {
+  const capabilities = checkedApplicationCapabilities(options, true);
+  if (!capabilities.commands || capabilities.coreInitializationRead || !capacityTarget)
+    throw new TypeError('Explicit synthetic ordinary application and actual capacity target required');
+  return await composePostgresApi(options, createDriver, capabilities, undefined,
+    Object.freeze({ sales: true, transfers: true }), media, undefined, true, true, {capacityTarget}, true) as PostgresApplicationApi;
+}
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
   capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
   runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
-  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization, ordinary27 = false, ordinaryMaintenance = false, productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}): Promise<PostgresReadApi | PostgresApplicationApi> {
+  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization, ordinary27 = false, ordinaryMaintenance = false, productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}, synthetic35 = false): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
   if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || (capabilities?.productMaintenance && !ordinary27)) && runtime26Review === undefined && !ordinaryMaintenance) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   // Every non-CORE graph below mounts the new stored-pair ledger reader; command
@@ -644,8 +654,10 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     if(productionV2){
       if(!ordinaryMaintenance || !host.capacityRuntimePoolBinder || !productionV2.capacityTarget)throw new TypeError('Production V2 requires original owned-pool capacity target');
       const {host:connectHost,port,database,user}=options.postgres.target;
-      admission35=await admitFresh35OrdinaryPoolV2(ownedPool,{host:connectHost,port,database,user});
+      admission35=await (synthetic35 ? admitFresh35SyntheticOrdinaryPoolV1 : admitFresh35OrdinaryPoolV2)(ownedPool,{host:connectHost,port,database,user});
       const actual=describeFresh35OrdinaryAdmissionV2(admission35), expected=productionV2.capacityTarget;
+      if(synthetic35 && (actual.purpose!=='SYNTHETIC_ISOLATED_ORDINARY_V1' || !Number.isSafeInteger(actual.expiresAt) || actual.expiresAt! <= Date.now()))
+        throw new TypeError('Current genuine synthetic ordinary admission required');
       if(actual.connectHost!==expected.host || actual.connectPort!==expected.port || actual.database!==expected.database || actual.user!==expected.role
         || actual.databaseOid!==expected.databaseOid || actual.postmasterStart!==expected.postmasterStart)
         throw new TypeError('Production V2 admission and current capacity physical target differ');

@@ -12,7 +12,7 @@ import { createPasswordWorkGate } from "../../../packages/authentication/src/pas
 import { createLoginAdmission } from "./login-admission.ts";
 import type { LoginRateBudget } from "./login-admission.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
-import { createPostgresRuntime27DocumentApplicationApi, createPostgresRuntime35ApplicationApi } from "./postgres-read-api.ts";
+import { createPostgresRuntime27DocumentApplicationApi, createPostgresRuntime35ApplicationApi, createPostgresSyntheticRuntime35ApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26MediaApplicationApi, createPostgresRuntime26DocumentApplicationApi } from "./postgres-read-api.ts";
@@ -183,6 +183,19 @@ export async function createProductionRuntime35ApplicationApi(input: unknown, dr
   return createPostgresRuntime35ApplicationApi({ ...options, ...maintenanceOptions(config, staffCredentialRequestTag), documentCommands: commands },
     driver, { ...config.productMedia, publicRoots: [config.assets.root] },
     config.profile === 'source-confirmed-native-exact35-production-v2' ? {...(capacityTarget?{capacityTarget}:{})} : undefined);
+}
+
+/** Explicit in-process synthetic acceptance only. No production profile/CLI routing. */
+export async function createSyntheticRuntime35ApplicationApi(input: unknown, driver: PostgresPoolDriverFactory | undefined,
+  staffCredentialRequestTag: CredentialRequestTag | null, capacityAdmission: CapacityAdmission,
+  capacityTarget: CapacityRuntimeTarget): Promise<PostgresApplicationApi> {
+  const config = parseProductionRuntime35Configuration(input);
+  if(config.profile !== 'source-confirmed-native-exact35-v1' || !capacityAdmission || !capacityTarget)
+    throw new TypeError('Explicit isolated fresh35 configuration and real capacity required');
+  const options = productionApplicationOptions(productionRuntime35HostConfiguration(config), capacityAdmission);
+  const { catalogueCompleteness: _legacy, ...commands } = options.documentCommands!;
+  return createPostgresSyntheticRuntime35ApplicationApi({...options, ...maintenanceOptions(config,staffCredentialRequestTag), documentCommands:commands},
+    driver, {...config.productMedia,publicRoots:[config.assets.root]},capacityTarget);
 }
 
 /** A single owned bounded pool is constructed inside the existing application
