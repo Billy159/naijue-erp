@@ -14,14 +14,14 @@ NOW=1793851200000
 def authority():
     p={'database':'synthetic_fresh35_20261105_r91','host':'127.0.0.1','port':57639,'workspaceDirectory':str(m.PARENT/'cloud-pg-fresh35-20261105-r91')}
     p.update({role:'fresh35_'+role+'_20261105_r91' for role in ['admin','owner','controller','runtime']})
-    return {'format':'FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1','decision':'AUTHORIZE_EXACT_NEW35_TCP_BOOTSTRAP_AND_CLEANUP','deploymentManifestSha256':'a'*64,'sourceSetSha256':'b'*64,'proposal':p,'postgresUid':992,'postgresGid':992,'startsAt':NOW,'expiresAt':NOW+1200000,'independentSafetyReviewSha256':'c'*64,'authorizationReference':'OFFLINE_FIXTURE_NOT_PERMISSION'}
+    return {'format':'FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1','decision':'AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_CONTROLLER_HOST','deploymentManifestSha256':'a'*64,'sourceSetSha256':'b'*64,'proposal':p,'postgresUid':992,'postgresGid':992,'startsAt':NOW,'expiresAt':NOW+1200000,'independentSafetyReviewSha256':'c'*64,'authorizationReference':'OFFLINE_FIXTURE_NOT_PERMISSION'}
 
 class Tests(unittest.TestCase):
     def test_input_is_consistency_only(self):
         a=authority();self.assertIs(m.validate_authorization(a,NOW),a)
         self.assertFalse(hasattr(m,'issue_authorization'))
     def test_bad_target_and_authority(self):
-        changes=[lambda a:a.update(extra=True),lambda a:a.update(decision='allow'),lambda a:a.update(postgresUid=0),lambda a:a.update(postgresUid=True),lambda a:a.update(expiresAt=NOW+1200001),lambda a:a['proposal'].update(host='localhost'),lambda a:a['proposal'].update(port=57628),lambda a:a['proposal'].update(workspaceDirectory='/tmp/old'),lambda a:a['proposal'].update(owner='postgres')]
+        changes=[lambda a:a.update(decision='AUTHORIZE_EXACT_NEW35_TCP_BOOTSTRAP_AND_CLEANUP'),lambda a:a.update(extra=True),lambda a:a.update(decision='allow'),lambda a:a.update(postgresUid=0),lambda a:a.update(postgresUid=True),lambda a:a.update(expiresAt=NOW+1200001),lambda a:a['proposal'].update(host='localhost'),lambda a:a['proposal'].update(port=57628),lambda a:a['proposal'].update(workspaceDirectory='/tmp/old'),lambda a:a['proposal'].update(owner='postgres')]
         for change in changes:
             a=authority();change(a)
             with self.subTest(a=a),self.assertRaises(RuntimeError):m.validate_authorization(a,NOW)
@@ -30,9 +30,10 @@ class Tests(unittest.TestCase):
             with self.assertRaises(RuntimeError):m.validate_authorization(authority(),now)
     def test_duplicate_keys_fail(self):
         with self.assertRaises(RuntimeError):m.strict_json('{"x":1,"x":2}')
-    def test_hba_only_admin_owner(self):
+    def test_hba_only_admin_owner_and_exact_controller_database(self):
         p=authority()['proposal'];h=m.hba_text(p)
-        self.assertEqual(len(h.splitlines()),5);self.assertNotIn(p['runtime'],h);self.assertNotIn(p['controller'],h)
+        self.assertEqual(len(h.splitlines()),6);self.assertNotIn(p['runtime'],h)
+        self.assertIn(f"host {p['database']} {p['controller']} 127.0.0.1/32 scram-sha-256",h)
         self.assertIn('local all all reject',h);self.assertIn('host all all ::/0 reject',h)
         self.assertNotIn('trust',h)
     def test_server_loopback_no_socket(self):
@@ -43,7 +44,8 @@ class Tests(unittest.TestCase):
         a=authority();p=a['proposal'];fake={p[k]:'0'*64 for k in ['owner','admin','controller','runtime']}
         roles,db,acl=m.bootstrap_sql(a,fake)
         self.assertEqual(roles.count('CREATE ROLE'),6);self.assertEqual(roles.count('WITH ADMIN FALSE, INHERIT FALSE, SET TRUE'),3)
-        self.assertIn('pg_catalog.pg_control_system()',acl)
+        self.assertIn(f"GRANT EXECUTE ON FUNCTION pg_catalog.pg_control_system() TO {p['owner']},{p['controller']};",acl)
+        self.assertNotIn('schema_migration',acl) # exact column grant belongs to atomic owner install
         for text in ['pg_monitor','pg_read_all_data','SUPERUSER;', 'DROP ', 'TRUNCATE']:
             self.assertNotIn(text,roles+db+acl)
         self.assertEqual(db,f"CREATE DATABASE {p['database']} OWNER {p['owner']};\n")

@@ -1,16 +1,18 @@
 /** Root-deployed bridge for one disposable validation instance. It uses the
  * unchanged genuine combined authorization/install path. It never publishes a
- * record, grants privileges, issues authorization or enables a runtime host. */
+ * record from JSON, grants privileges or issues authorization. Host inspection
+ * is a separate ordinary-UID phase after actual durable publication. */
 import {readFile,lstat,open} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {resolve,join} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
 import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
-import {loadFresh35CombinedSource,describeFresh35CombinedSource} from './fresh35-combined-source-v1.mjs';
+import {loadFresh35CombinedSource,describeFresh35CombinedSource,resolveFresh35ReferenceInputPaths} from './fresh35-combined-source-v1.mjs';
 import {bindFresh35CombinedTarget} from './fresh35-combined-target-v1.mjs';
 import {buildFresh35CombinedCatalog} from './fresh35-combined-catalog-v1.mjs';
 import {compileFresh35CombinedProgram,describeFresh35CombinedProgram,loadFresh35CombinedAuthorization,runFresh35CombinedInstall,describeFresh35CombinedCompletion} from './fresh35-combined-lifecycle-v1.mjs';
+import {publishFresh35CombinedRecord} from './fresh35-combined-record-v1.mjs';
 const root='/opt/naijue-erp/fresh35-combined-v1';
 const authority='/etc/naijue-erp/fresh35-isolated-provision-v1.json';
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_ISOLATED_'+code)};
@@ -24,21 +26,40 @@ async function privateText(path){
 }
 export async function main(){
  need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0&&process.version==='v24.21.0','TRUSTED_ROOT_RUNTIME_REQUIRED');
- need(process.argv.length===3&&['--describe','--execute'].includes(process.argv[2])&&process.argv[1]===root+'/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs','FIXED_ENTRY_REQUIRED');
+ need(process.argv.length===3&&['--describe','--execute','--verify-host'].includes(process.argv[2])&&process.argv[1]===root+'/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs','FIXED_ENTRY_REQUIRED');
  need(!Object.keys(process.env).some(k=>k==='NODE_OPTIONS'||k==='NODE_PATH'||k==='DATABASE_URL'||k.startsWith('PG')||k.startsWith('LD_')||k.startsWith('DYLD_')),'CLEAN_ENV_REQUIRED');
  await assertTrustedRootTree(root);await assertTrustedRootPath(process.execPath);
  const a=parseStrictJson(await privateText(authority));
- need(a.format==='FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1'&&a.decision==='AUTHORIZE_EXACT_NEW35_TCP_BOOTSTRAP_AND_CLEANUP','EXTERNAL_PROVISION_AUTHORITY_REQUIRED');
+ need(a.format==='FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1'&&a.decision==='AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_CONTROLLER_HOST','EXTERNAL_PROVISION_AUTHORITY_REQUIRED');
  const workspace=a.proposal.workspaceDirectory;
  need(/^\/var\/lib\/naijue-erp\/fresh35-isolated\/cloud-pg-fresh35-[0-9]{8}-r[1-9][0-9]{0,3}$/.test(workspace),'FIXED_WORKSPACE_REQUIRED');
  const input=parseStrictJson(await privateText(join(workspace,'target-binding.json')));
  need(Object.keys(input.proposal).length===Object.keys(a.proposal).length&&Object.keys(a.proposal).every(k=>Object.hasOwn(input.proposal,k)&&input.proposal[k]===a.proposal[k])&&input.startsAt===a.startsAt&&input.expiresAt===a.expiresAt,'TARGET_PROVISION_BINDING_DIFFERS');
- const source=await loadFresh35CombinedSource(root,{baselineDirectory:root+'/review-inputs/base-r2'});
+ const paths=await resolveFresh35ReferenceInputPaths(root+'/reference-inputs');
+ const source=await loadFresh35CombinedSource(root,{baselineDirectory:paths.baselineDirectory});
  need(describeFresh35CombinedSource(source).sourceSetSha256===a.sourceSetSha256,'SOURCE_SET_DIFFERS');
  const target=bindFresh35CombinedTarget(input);
- const catalog=await buildFresh35CombinedCatalog(source,target,{modelPath:root+'/review-inputs/expected-catalog-model.json',functionsPath:root+'/review-inputs/functions.json'});
+ const catalog=await buildFresh35CombinedCatalog(source,target,paths);
  const program=await compileFresh35CombinedProgram({source,target,catalog});
  if(process.argv[2]==='--describe'){process.stdout.write(JSON.stringify(describeFresh35CombinedProgram(program))+'\n');return;}
+ if(process.argv[2]==='--verify-host'){
+  const raw=await privateText(join(workspace,'credentials',a.proposal.controller+'.pgpass'));
+  const prefix=`127.0.0.1:${a.proposal.port}:*:${a.proposal.controller}:`;
+  need(raw.startsWith(prefix)&&/^[a-f0-9]{64}\n$/.test(raw.slice(prefix.length)),'EXACT_CONTROLLER_CREDENTIAL_REQUIRED');
+  need(Number.isSafeInteger(a.postgresUid)&&a.postgresUid>0&&Number.isSafeInteger(a.postgresGid)&&a.postgresGid>0,'ORDINARY_HOST_UID_REQUIRED');
+  const config={host:a.proposal.host,port:a.proposal.port,database:a.proposal.database,user:a.proposal.controller,password:raw.slice(prefix.length,-1)};
+  process.setgroups([]);process.setgid(a.postgresGid);process.setuid(a.postgresUid);
+  need(process.getuid()===a.postgresUid&&process.geteuid()===a.postgresUid,'ORDINARY_HOST_UID_REQUIRED');
+  const {loadFresh35HostContext,fresh35HostContext,openReviewedFresh35Host}=await import('../../../tools/unified-import/fresh35-host-session.mjs');
+  const {assertWholeSalesAdmissionV1}=await import('./whole-sales-admission-v1.mjs');
+  const context=fresh35HostContext(await loadFresh35HostContext(root,root+'/reference-inputs'));
+  const standardTarget={protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:input.physical.systemIdentifier,database_oid:input.physical.databaseOid,database_name:input.proposal.database,catalog_sha256:context.record.catalogSha256};
+  const verification=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
+   assertWholeSalesAdmissionV1(admission,standardTarget,client);
+   return {state:'FRESH35_CONTROLLER_HOST_VERIFIED',businessVerified:false};
+  },{referenceDirectory:root+'/reference-inputs'});
+  process.stdout.write(JSON.stringify({state:'FRESH35_CONTROLLER_HOST_VERIFIED',hostVerification:verification.host_verification,ordinaryUid:process.getuid(),businessVerified:false})+'\n');return;
+ }
  const authorization=await loadFresh35CombinedAuthorization(program);
  const raw=await privateText(join(workspace,'credentials',a.proposal.owner+'.pgpass'));
  const prefix=`127.0.0.1:${a.proposal.port}:*:${a.proposal.owner}:`;
@@ -49,7 +70,8 @@ export async function main(){
   await client.connect();connected=true;
   const completion=await runFresh35CombinedInstall({program,authorization,client,journalDirectory:join(workspace,'installation-journal')});
   const result=describeFresh35CombinedCompletion(completion);
-  process.stdout.write(JSON.stringify({state:result.state,sourceSetSha256:result.program.sourceSetSha256,programSha256:result.program.programSha256,targetSha256:result.program.targetSha256,catalogSha256:result.catalogSha256,transactionReceipt:result.transactionReceipt,recordPublished:false,hostEnabled:false,businessVerified:false})+'\n');
+  const publication=await publishFresh35CombinedRecord(completion);
+  process.stdout.write(JSON.stringify({state:publication.state,installState:result.state,sourceSetSha256:result.program.sourceSetSha256,programSha256:result.program.programSha256,targetSha256:result.program.targetSha256,catalogSha256:result.catalogSha256,transactionReceipt:result.transactionReceipt,recordPublished:true,hostEnabled:false,businessVerified:false})+'\n');
  }finally{
   // Lifecycle closes its client on success and failure. A connect failure can
   // still leave a socket, so always close it here without issuing another SQL.

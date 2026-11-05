@@ -1,5 +1,5 @@
 /** Atomic application installation on an already authorized, newly provisioned
- * target. This module never creates/connects a client, grants access, starts PG,
+ * target. This module never creates/connects a client, starts PG,
  * removes old objects, retries a transaction, or enables an import host. */
 import {readFile,open,lstat,realpath,mkdir} from 'node:fs/promises';
 import {constants} from 'node:fs';
@@ -29,6 +29,7 @@ export async function compileFresh35CombinedProgram({source,target,catalog}){
   {name:'physical-empty-target',sql:fresh35CombinedTargetGuard(target,{requireEmpty:true})},
   {name:'direct-35-schema',sql:schema.schemaSql},
   {name:'migration-lineage',sql:schema.lineageSql},
+  {name:'controller-lineage-column-read',sql:'GRANT SELECT (version, description) ON TABLE naijue_erp.schema_migration TO '+t.proposal.controller+';'},
   ...schema.patchBodies,
   {name:'complete-successor-catalog',sql:sql.guardSql},
   {name:'same-physical-target',sql:fresh35CombinedTargetGuard(target,{requireEmpty:false})},

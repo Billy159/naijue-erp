@@ -24,7 +24,7 @@ test('full successor model changes only five routine bodies and sales hall nulla
  assert.equal(model.routines.filter(r=>r.definitionSha256!==before.routines.find(b=>b.signature===r.signature).definitionSha256).length,5);
  const columns=model.columns.map(c=>({...c}));for(const c of columns){const old=before.columns.find(o=>o.table===c.table&&o.name===c.name);if(c.table==='sales_header'&&c.name==='hall_id'){assert.equal(old.notNull,true);assert.equal(c.notNull,false);assert.equal(c.metadata.attnotnull,false)}else assert.deepEqual(c,old)}
  for(const key of ['constraints','indexes','triggers','policies'])assert.deepEqual(model[key],before[key],key);
- assert.deepEqual(model.columnAcls,before.columnAcls.map(row=>({...row,acl:row.acl?.map(acl=>acl.replace('/fresh35_owner_20261105_r1','/fresh35_owner_20261105_r9'))??null})),'column privileges stay exact; only the explicit grantor identity changes');
+ assert.deepEqual(model.columnAcls,before.columnAcls.map(row=>({...row,acl:row.relation==='schema_migration'&&['version','description'].includes(row.column)?['fresh35_controller_20261105_r9=r/fresh35_owner_20261105_r9']:row.acl?.map(acl=>acl.replace('/fresh35_owner_20261105_r1','/fresh35_owner_20261105_r9'))??null})),'only approved two-column controller read differs; all other ACLs stay exact');
  assert.ok(model.routines.every(r=>/^[a-f0-9]{64}$/.test(r.bodySha256)));assert.equal(d.independentSafetyReviewComplete,false);assert.equal(d.sqlParsedByPostgres,false);assert.equal(d.engineVerified,false);
 });
 test('new catalog guards every category plus raw type templates and real dependency boundaries',async()=>{
@@ -34,7 +34,7 @@ test('new catalog guards every category plus raw type templates and real depende
  assert.doesNotMatch(guardSql,/FRESH35_V2_GUARD_REVIEW_NOT_AUTHORIZED/);assert.match(await readFile(root+'scripts/release/unified-install/fresh35-catalog-v2-guard-review.mjs','utf8'),/RAISE EXCEPTION 'FRESH35_V2_GUARD_REVIEW_NOT_AUTHORIZED'/);
 });
 test('program is one atomic application transaction and contains no provisioning or legacy tables',async()=>{
- const {program}=await bundle(),d=describeFresh35CombinedProgram(program);assert.equal(d.applicationTransactions,1);assert.deepEqual(d.statements.map(s=>s.name),['physical-empty-target','direct-35-schema','migration-lineage','historical-sales-hall','historical-line-amount','complete-successor-catalog','same-physical-target']);
+ const {program}=await bundle(),d=describeFresh35CombinedProgram(program);assert.equal(d.applicationTransactions,1);assert.deepEqual(d.statements.map(s=>s.name),['physical-empty-target','direct-35-schema','migration-lineage','controller-lineage-column-read','historical-sales-hall','historical-line-amount','complete-successor-catalog','same-physical-target']);
  for(const flag of ['createsCluster','createsRoles','createsCredentials','oldTablesRemoved','hostEnabled'])assert.equal(d[flag],false);
 });
 test('valid authorization data cannot issue a trusted execution token',async()=>{

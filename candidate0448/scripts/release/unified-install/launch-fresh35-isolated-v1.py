@@ -76,7 +76,7 @@ def exact_keys(value, names):
 
 def validate_authorization(a, now_ms):
     exact_keys(a, ['format','decision','deploymentManifestSha256','sourceSetSha256','proposal','postgresUid','postgresGid','startsAt','expiresAt','independentSafetyReviewSha256','authorizationReference'])
-    need(a['format'] == 'FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1' and a['decision'] == 'AUTHORIZE_EXACT_NEW35_TCP_BOOTSTRAP_AND_CLEANUP', 'PROVISION_AUTHORITY_REQUIRED')
+    need(a['format'] == 'FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1' and a['decision'] == 'AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_CONTROLLER_HOST', 'PROVISION_AUTHORITY_REQUIRED')
     for key in ['deploymentManifestSha256','sourceSetSha256','independentSafetyReviewSha256']:
         need(type(a[key]) is str and re.fullmatch('[a-f0-9]{64}', a[key]), 'AUTHORITY_HASH')
     need(type(a['authorizationReference']) is str and 0 < len(a['authorizationReference']) <= 512, 'AUTHORITY_REFERENCE')
@@ -140,7 +140,7 @@ def clean_env(root, role=None):
     return out
 
 def hba_text(p):
-    return f"local all all reject\nhost postgres,{p['database']} {p['admin']} 127.0.0.1/32 scram-sha-256\nhost {p['database']} {p['owner']} 127.0.0.1/32 scram-sha-256\nhost all all 0.0.0.0/0 reject\nhost all all ::/0 reject\n"
+    return f"local all all reject\nhost postgres,{p['database']} {p['admin']} 127.0.0.1/32 scram-sha-256\nhost {p['database']} {p['owner']} 127.0.0.1/32 scram-sha-256\nhost {p['database']} {p['controller']} 127.0.0.1/32 scram-sha-256\nhost all all 0.0.0.0/0 reject\nhost all all ::/0 reject\n"
 
 def server_args(p):
     return [str(BIN/'postgres'),'-D',str(Path(p['workspaceDirectory'])/'data'),'-h','127.0.0.1','-p',str(p['port']),'-k','', *sum((['-c',s] for s in ['max_connections=8','shared_buffers=32MB','work_mem=4MB','max_parallel_workers=0','fsync=on','synchronous_commit=on','password_encryption=scram-sha-256','log_statement=none','log_min_error_statement=panic','log_min_duration_statement=-1','log_duration=off','log_connections=off','log_disconnections=off','log_min_messages=warning']), [])]
@@ -158,7 +158,7 @@ def bootstrap_sql(a, passwords):
     for r, member in [(INTERFACES[0],p['controller']),(INTERFACES[1],p['controller']),(INTERFACES[2],p['runtime'])]:
         roles += f'GRANT {r} TO {member} WITH ADMIN FALSE, INHERIT FALSE, SET TRUE;\n'
     database = f"CREATE DATABASE {p['database']} OWNER {p['owner']};\n"
-    acl = f"REVOKE ALL ON DATABASE {p['database']} FROM PUBLIC; GRANT CONNECT ON DATABASE {p['database']} TO {p['controller']},{p['runtime']};\nGRANT EXECUTE ON FUNCTION pg_catalog.pg_control_system() TO {p['owner']};\n"
+    acl = f"REVOKE ALL ON DATABASE {p['database']} FROM PUBLIC; GRANT CONNECT ON DATABASE {p['database']} TO {p['controller']},{p['runtime']};\nGRANT EXECUTE ON FUNCTION pg_catalog.pg_control_system() TO {p['owner']},{p['controller']};\n"
     return roles, database, acl
 
 def process_identity(pid):
@@ -470,7 +470,7 @@ def main():
     os.umask(0o077);root.mkdir(mode=0o700);os.chmod(root,0o711)
     (root/'credentials').mkdir(mode=0o700);(root/'pg-private').mkdir(mode=0o700)
     os.chown(root/'pg-private',a['postgresUid'],a['postgresGid'])
-    watch=None;success=False;passwords={};deadline=time.monotonic()+max(0,a['expiresAt']/1000-time.time())
+    watch=None;success=False;record_published=None;host_verified=False;passwords={};deadline=time.monotonic()+max(0,a['expiresAt']/1000-time.time())
     def remaining():
         need(time.monotonic()<deadline-60,'CLEANUP_RESERVE');return max(1,min(60,deadline-time.monotonic()-45))
     def interrupted(*_):raise RuntimeError('FRESH35_ISOLATED_PARENT_STOP')
@@ -513,7 +513,7 @@ def main():
         obs=strict_json(psql(a,p['admin'],p['database'],identity_sql));need(obs['systemIdentifier']==sid and obs['dataDirectory']==str(root/'data'),'POST_BOOTSTRAP_IDENTITY')
         need((root/'data/pg_hba.conf').read_text()==hba,'HBA_BYTES_CHANGED')
         hba_rows=strict_json(psql(a,p['admin'],p['database'],"SELECT coalesce(json_agg(json_build_object('type',type,'database',database,'user_name',user_name,'address',address,'auth_method',auth_method,'error',error) ORDER BY rule_number),'[]'::json)::text FROM pg_catalog.pg_hba_file_rules;"))
-        need(len(hba_rows)==5 and all(row['error'] is None for row in hba_rows),'HBA_PARSE_DIFFERS')
+        need(len(hba_rows)==6 and all(row['error'] is None for row in hba_rows),'HBA_PARSE_DIFFERS')
         json_new(root/'hba-observation.json',hba_rows)
         target={'proposal':p,'physical':{k:obs[k] for k in ['systemIdentifier','databaseOid','serverVersionNum','postmasterStart']},'startsAt':a['startsAt'],'expiresAt':a['expiresAt']}
         json_new(root/'target-binding.json',target)
@@ -529,7 +529,11 @@ def main():
             remaining();need(watch.poll() is None and owned_listener(owned,p['port']),'GUARDIAN_OR_TARGET_LOST');time.sleep(.25)
         read_private(INSTALL_AUTH);verify_deployment(a);need(owned_listener(owned,p['port']),'PRE_INSTALL_LISTENER')
         r=subprocess.run(argv+['--execute'],capture_output=True,env=clean_env(root),timeout=max(1,deadline-time.monotonic()-45));need(r.returncode==0,'INSTALL_FAILED_OR_OUTCOME_UNKNOWN')
-        result=strict_json(r.stdout);need(result.get('state')=='COMMITTED_UNPUBLISHED' and result.get('sourceSetSha256')==a['sourceSetSha256'],'INSTALL_COMPLETION_REQUIRED');json_new(root/'installation-result.json',result);success=True
+        result=strict_json(r.stdout);need(result.get('state')=='RECORD_DURABLY_PUBLISHED' and result.get('recordPublished') is True and result.get('sourceSetSha256')==a['sourceSetSha256'],'INSTALL_COMPLETION_REQUIRED');json_new(root/'installation-result.json',result);record_published=True
+        remaining();need(watch.poll() is None and owned_listener(owned,p['port']),'PRE_HOST_TARGET_LOST')
+        r=subprocess.run(argv+['--verify-host'],capture_output=True,env=clean_env(root),timeout=max(1,deadline-time.monotonic()-45));need(r.returncode==0,'CONTROLLER_HOST_FAILED')
+        host_result=strict_json(r.stdout);need(host_result.get('state')=='FRESH35_CONTROLLER_HOST_VERIFIED' and host_result.get('ordinaryUid')==a['postgresUid'] and host_result.get('businessVerified') is False,'CONTROLLER_HOST_RESULT_REQUIRED')
+        json_new(root/'host-result.json',host_result);host_verified=True;success=True
     except Exception as error:
         json_new(root/'failure.json',{'code':str(error) if re.fullmatch('FRESH35_[A-Z0-9_]+',str(error)) else type(error).__name__,'automaticRetry':False,'commitOutcome':'CONSULT_APPLICATION_JOURNAL_NOT_INFERRED'})
     finally:
@@ -544,8 +548,8 @@ def main():
         files_clear=retry_parent_credential_cleanup(watch,lambda:clear_credentials(root,p))
         cleanup=strict_json((root/'cleanup.json').read_bytes()) if (root/'cleanup.json').is_file() else {'cleanupComplete':False}
         success=success and files_clear and cleanup.get('cleanupComplete') is True
-        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':False,'hostEnabled':False,'businessVerified':False})
-        print(json.dumps({'state':'ISOLATED_INSTALL_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':False,'workspace':str(root)}))
+        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_AND_HOST_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':record_published,'hostVerified':host_verified,'hostEnabled':False,'businessVerified':False})
+        print(json.dumps({'state':'ISOLATED_INSTALL_AND_HOST_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':record_published,'hostVerified':host_verified,'businessVerified':False,'workspace':str(root)}))
     return 0 if success else 1
 
 if __name__=='__main__':

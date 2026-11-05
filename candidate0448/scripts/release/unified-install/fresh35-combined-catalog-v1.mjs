@@ -155,8 +155,16 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
  model.routines=model.routines.map(r=>({...r,definitionSha256:hash(definitions.get(normal(r.signature))),bodySha256:hash(bodies.get(normal(r.signature)))}));
  const finalPins=data.patches.at(-1).manifest.successorRoutinePins;need(finalPins.length===152&&finalPins.every(pin=>hash(bodies.get(normal(pin.signature)))===pin.sha256),'FINAL_SUCCESSOR_PIN_COHORT_DIFFERS');
  const mapped=remap(model,{'fresh35_owner_20261105_r1':t.proposal.owner,'fresh35_controller_20261105_r1':t.proposal.controller});
+ // User-approved B: controller reads exactly the two lineage columns. The
+ // relation/table ACL and applied_at column remain the captured baseline.
+ for(const column of ['version','description']){
+  const row=mapped.columnAcls.find(r=>r.relation==='schema_migration'&&r.column===column);
+  need(row&&row.acl===null,'EXACT_CONTROLLER_LINEAGE_ACL_PREDECESSOR_REQUIRED');
+  row.acl=[t.proposal.controller+'=r/'+t.proposal.owner];
+ }
+
  const lineage=Array.isArray(data.lineage)?data.lineage:data.lineage.rows;need(Array.isArray(lineage)&&lineage.length===27,'EXACT27_LINEAGE_REQUIRED');
- const sql=guardSql(mapped,lineage),observation=observationSql(s),descriptor=freeze({format:'FRESH35_COMBINED_CATALOG_SPEC_V1',sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),modelSha256:hash(JSON.stringify(mapped)),evidencePins:{model:MODEL_SHA,functions:FUNCTIONS_SHA},changes,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation),completeMetadataGuard:true,
+ const sql=guardSql(mapped,lineage),observation=observationSql(s),descriptor=freeze({format:'FRESH35_COMBINED_CATALOG_SPEC_V1',sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),modelSha256:hash(JSON.stringify(mapped)),evidencePins:{model:MODEL_SHA,functions:FUNCTIONS_SHA},changes,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation),completeMetadataGuard:true,controllerLineageReadColumns:['version','description'],
   rawRowtypeComparison:'ALL_NONIDENTITY_FIELDS_AGAINST_NATIVE_PG17_11_TABLE_AND_ARRAY_TEMPLATES_PLUS_EXACT70_IDENTITIES',dependencyValidation:'PHYSICAL_DEPENDENCY_SCHEMA_BOUNDARY_NOT_DYNAMIC_BUSINESS_EXECUTION',captureMissingEvidencePreserved:original.missingEvidence,independentSafetyReviewComplete:false,sqlParsedByPostgres:false,engineVerified:false,hostEnabled:false});
  const token=Object.freeze({profile:'FRESH35_COMBINED_CATALOG_SPEC_V1'});
  catalogs.set(token,{source,target,model:mapped,lineage,sql,observation,modelPath,functionsPath,descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});
