@@ -1,0 +1,61 @@
+{
+  "status": "SOURCE_ONLY_FIXED_PUBLIC_NETWORK_EVIDENCE_EXPORT_READY_UNBOUND",
+  "checkedAtUtc": "2026-11-05T18:47:40.704012+00:00",
+  "parent": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-768dd6-ops-preparation-01/fresh35-container-successor.py",
+  "parentSha256": "8c002b0ec0b870cb8b964ba50ba39ec200e954acbbe58a5f80ddbb5b3da6c872",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-evidence-wrapper-01/fresh35-container-successor.py",
+      "bytes": 33646,
+      "sha256": "9c33aca96400144f496e066fb04d9ae7bff9b8aa22b93e2ffc855a2ef1d46888"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-evidence-wrapper-01/test_fresh35_container_successor.py",
+      "bytes": 29576,
+      "sha256": "ed2f6c0771e40af98481b623985fb39c51c033b129910a9eed882c2a9dff2a9c"
+    }
+  ],
+  "changedFunctions": [
+    "observation"
+  ],
+  "newExport": "bootstrap-network-observation.json",
+  "exportBound": 65536,
+  "exportPrivateFlag": false,
+  "existingOtherEvidencePrivateFlag": true,
+  "exactFields": 13,
+  "originalBytesDigestField": "evidenceSha256[bootstrap-network-observation.json]",
+  "sourceSetMustMatchFrozenInput": true,
+  "tests": [
+    {
+      "tests": 1,
+      "result": "PASS_SCOPED_OFFLINE",
+      "scope": "fixed public proof export, exact original-byte SHA, old private inputs, unlisted input excluded, extra key/wrong source refused"
+    },
+    {
+      "tests": 3,
+      "result": "PASS_SCOPED_OFFLINE",
+      "scope": "pending does not stop/pass; forced stop does not prove clean; exact source and stopped conditions remain required"
+    }
+  ],
+  "unchangedOld768Sha256": "c7d3a47b2a1be8f92d4cac1361b3a9750578559ff3e976ee6c052610af211a21",
+  "binding": {
+    "SOURCE": null,
+    "ARCHIVE_SHA": null,
+    "ARCHIVE_BYTES": null,
+    "FILE_COUNT": null,
+    "MANIFEST_SHA": null,
+    "KEY": null
+  },
+  "executionReady": false,
+  "remaining": [
+    "C freezes next combined source and artifact; original T45 binds exact new carrier/keys and obtains original reviewed finite window before any operation.",
+    "Actual root-owned 0444 proof under 0711 ancestors readable/watchable by ordinary UID without EACCES remains NOT_TESTED.",
+    "Change/rename/error revocation and missing/replaced proof actual behavior remain for exact new carrier; D1 model results do not replace it."
+  ],
+  "serverActions": 0,
+  "pgActions": 0,
+  "old5dOr768Modified": false,
+  "approvalCreated": false,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}

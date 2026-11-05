@@ -1,9 +1,11 @@
 /** New-target contract for the additive 35-table combined installer.
  * No credentials, roles, processes, connections or grants are created here. */
-import {resolve} from 'node:path';
-import {readFile} from 'node:fs/promises';
+import {resolve,join} from 'node:path';
+import {constants} from 'node:fs';
+import {assertTrustedRootPath} from './trusted-install-path.mjs';
+import {readFile,open,lstat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {validateOffsetInstant} from '../../../packages/application/src/unified-import-contract.ts';
+import {parseStrictJson,validateOffsetInstant} from '../../../packages/application/src/unified-import-contract.ts';
 export const FRESH35_COMBINED_TARGET_MODULE_SHA256=createHash('sha256').update(await readFile(new URL(import.meta.url))).digest('hex');
 const targets=new WeakMap();
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_'+code)};
@@ -45,6 +47,35 @@ export function bindFresh35CombinedTarget(input,now=Date.now()){
  return token;
 }
 export function describeFresh35CombinedTarget(target){need(targets.has(target),'GENUINE_TARGET_REQUIRED');return targets.get(target)}
+const bootstrapNetworks=new WeakMap();
+const networkIdentity=s=>[s.dev,s.ino,s.uid,s.mode,s.nlink,s.size,s.mtimeNs,s.ctimeNs].map(String).join(':');
+async function readBootstrapNetwork(target){
+ const t=describeFresh35CombinedTarget(target),path=join(t.proposal.workspaceDirectory,'bootstrap-network-observation.json');
+ await assertTrustedRootPath(path);const file=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW);
+ try{const before=await file.stat({bigint:true});need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o7777n)===0o444n&&before.size>0n&&before.size<=16384n,'BOOTSTRAP_NETWORK_PROTECTED_FILE_REQUIRED');
+  const bytes=await file.readFile(),after=await file.stat({bigint:true}),current=await lstat(path,{bigint:true});
+  need(BigInt(bytes.length)===before.size&&networkIdentity(before)===networkIdentity(after)&&networkIdentity(before)===networkIdentity(current),'BOOTSTRAP_NETWORK_FILE_CHANGED');
+  return {value:snapshot(parseStrictJson(bytes.toString('utf8')),['format','systemIdentifier','databaseOid','serverVersionNum','postmasterStart','host','port','listenAddresses','unixSocketDirectories','adminActor','startsAt','expiresAt','sourceSetSha256']),sha256:createHash('sha256').update(bytes).digest('hex'),identity:networkIdentity(before)};
+ }finally{await file.close()}
+}
+function checkBootstrapNetwork(target,observation,sourceSetSha256){
+ const t=describeFresh35CombinedTarget(target),v=observation.value;
+ need(v.format==='FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1'&&['systemIdentifier','databaseOid','serverVersionNum','postmasterStart'].every(k=>v[k]===t.physical[k])&&v.host===t.proposal.host&&v.port===t.proposal.port&&v.listenAddresses==='127.0.0.1'&&v.unixSocketDirectories===''&&v.adminActor===t.proposal.admin&&v.startsAt===t.startsAt&&v.expiresAt===t.expiresAt&&typeof sourceSetSha256==='string'&&/^[a-f0-9]{64}$/.test(sourceSetSha256)&&v.sourceSetSha256===sourceSetSha256,'BOOTSTRAP_NETWORK_BINDING_DIFFERS');
+ need(Date.now()>=t.startsAt&&Date.now()<t.expiresAt,'BOOTSTRAP_NETWORK_WINDOW_EXPIRED');
+}
+/** This consumes only the original root/admin observation. JSON supplied by a
+ * caller cannot establish the network fact or change a loaded baseline. */
+export async function loadFresh35SyntheticBootstrapNetwork(target,sourceSetSha256){
+ const t=describeFresh35CombinedTarget(target);if(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')return null;
+ const observation=await readBootstrapNetwork(target);checkBootstrapNetwork(target,observation,sourceSetSha256);
+ const original=bootstrapNetworks.get(target);if(original)need(original.sha256===observation.sha256&&original.identity===observation.identity,'BOOTSTRAP_NETWORK_FILE_CHANGED');
+ else bootstrapNetworks.set(target,Object.freeze({...observation,value:freeze(observation.value)}));
+ return observation.sha256;
+}
+export async function assertFresh35SyntheticBootstrapNetworkCurrent(target,sourceSetSha256){
+ const t=describeFresh35CombinedTarget(target);if(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')return null;
+ need(bootstrapNetworks.has(target),'BOOTSTRAP_NETWORK_REQUIRED');return loadFresh35SyntheticBootstrapNetwork(target,sourceSetSha256);
+}
 export function fresh35CombinedTargetGuard(target,{requireEmpty}={requireEmpty:false}){
  need(typeof requireEmpty==='boolean','EXPLICIT_EMPTY_TARGET_FLAG_REQUIRED');
  return targetGuard(target,{requireEmpty,runtime:false});
@@ -56,6 +87,7 @@ export function fresh35CombinedRuntimeTargetGuard(target){
 }
 function targetGuard(target,{requireEmpty,runtime}){
  const binding=describeFresh35CombinedTarget(target),{proposal:p,physical:b,startsAt,expiresAt}=binding,q=quote,production=binding.purpose==='PRODUCTION_NEW_EMPTY_EXACT35';
+ const network=production?null:bootstrapNetworks.get(target);need(production||network,'BOOTSTRAP_NETWORK_REQUIRED');if(network)checkBootstrapNetwork(target,network,network.value.sourceSetSha256);
  const interfaces=Object.values(FRESH35_COMBINED_INTERFACE_ROLES),logins=production?[p.owner,p.controller]:[p.owner,p.controller,p.runtime],roles=[p.admin,p.owner,p.controller,p.runtime,...interfaces];
  const members=[[p.controller,FRESH35_COMBINED_INTERFACE_ROLES.initializer],[p.controller,FRESH35_COMBINED_INTERFACE_ROLES.importer],[p.runtime,FRESH35_COMBINED_INTERFACE_ROLES.runtime]];
  const empty=requireEmpty?`
@@ -75,7 +107,7 @@ BEGIN
  AND pg_catalog.current_setting('server_version_num')=${q(b.serverVersionNum)}
  AND pg_catalog.pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(b.postmasterStart.replace(/\+00$/,''))}
  AND pg_catalog.host(pg_catalog.inet_server_addr())=${q(p.host)} AND pg_catalog.inet_server_port()=${p.port}
- ${production?'':"AND pg_catalog.current_setting('listen_addresses')='127.0.0.1' AND pg_catalog.current_setting('unix_socket_directories')=''"}
+ ${production?'':`AND pg_catalog.current_setting('listen_addresses')='127.0.0.1' AND ${q(network.value.unixSocketDirectories)}='' /* root bootstrap network ${network.sha256} */`}
  AND pg_catalog.current_setting('session_replication_role')='origin' AND NOT pg_catalog.pg_is_in_recovery()
  AND pg_catalog.current_setting('transaction_isolation')=${q(runtime?'repeatable read':'read committed')} AND pg_catalog.current_setting('transaction_read_only')=${q(runtime?'on':'off')}
  AND extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt} AND extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}

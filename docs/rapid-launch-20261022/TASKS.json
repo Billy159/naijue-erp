@@ -28154,7 +28154,12 @@
         "existing server execution outputs and private factual evidence only",
         "candidate0448/scripts/release/ssh-control.py typed artifact staging and tests/test_ssh_artifact_staging.py only; original operational client unchanged",
         "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
-        "tests/test_fresh35_isolated_launcher.py"
+        "tests/test_fresh35_isolated_launcher.py",
+        "scripts/release/deploy-candidate.py (C reassigns original release compatibility scope; only same-file original tests)",
+        "scripts/release/rollback-candidate.py (C reassigns original release compatibility scope; only same-file original tests)",
+        "scripts/release/boot-entry.py (C reassigns original release compatibility scope; only same-file original tests)",
+        "config/release-contract.json (C reassigns original release compatibility scope; only same-file original tests)",
+        "scripts/release/generate-release-contract.mjs (C reassigns original release compatibility scope; only same-file original tests)"
       ],
       "D3": [
         "packages/application/src/unified-import-source-reconciliation.ts",
@@ -28211,16 +28216,8 @@
         "adapters/postgres/src/runtime27-command-issuer.ts",
         "apps/api/src/postgres-read-api.ts",
         "adapters/postgres/src/catalogue-settings-read-reader.ts and direct tests (frozen9 accepted)",
-        "scripts/release/deploy-candidate.py (explicit release seam handoff; no server execution)",
-        "config/release-contract.json (explicit release seam handoff)",
-        "scripts/release/generate-release-contract.mjs and original direct tests",
-        "scripts/release/boot-entry.py functional branches and direct tests; approval marker unchanged",
-        "scripts/release/rollback-candidate.py functional branches and direct tests; approval marker unchanged",
         "scripts/release/build-production.mjs native35 exact closure only",
         "scripts/release/manifest.mjs exact native35 member validation only",
-        "config/release-contract.json native35 exact source members",
-        "scripts/release/generate-release-contract.mjs and direct tests",
-        "scripts/release/deploy-candidate.py GENERATED RELEASE CONTRACT block only; function/approval marker frozen",
         "tests/integration/live-ledger-balance-pairs.integration.test.ts exact finite fresh35 branch only; D2 unique owner after interface handoff; original V8 route unchanged"
       ]
     },
@@ -28475,7 +28472,7 @@
     },
     "productionInstallProofGap": "Source contract approved call_6e09... item1; implementation pending; no actual production proof, target or grants approved.",
     "currentParallelQueue": {
-      "critical": "D1/T45 actual install root cause; QB adopted source pass; D2 builds fixed768dd closure",
+      "critical": "Freeze11 network-proof leaves; D2 fixed full package; QB completes release5 narrow review then network-root affected review; T45 binds only new carrier/window",
       "independentPreparation": {
         "D2": "REAL/app config/release seams: actual helper/profile mismatch identified, T45 unique owner follows; no fake production config",
         "D3": "Independent actual post-import expected inputs ready08404372; no missing cleaning fields, no source rescan; awaits real target/plan/result"
@@ -29392,13 +29389,13 @@
       "state": "ACTIVE"
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "C_APPROVED_MINIMAL_SOURCE_CONTRACT_UNDER_HUMAN_NOON_DELEGATION_IMPLEMENTING",
+      "state": "STABLE_ELEVEN_SOURCE_LEAVES_FROZEN_PENDING_QB_AND_REAL_UID_PG",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
       },
       "decision": "Use existing actual admin network observation, root-owned fixed readonly proof bound to same physical target/postmaster birth/window/program; ordinary owner/controller never read restricted GUC",
-      "fields": "closed format/physical4/host/port/listenAddresses/unixSocketDirectories/adminActor/startsAt/expiresAt; optional exact provision sourceSet by owner seam agreement",
+      "fields": "Closed flat13 including mandatory sourceSetSha256",
       "invariants": [
         "No new table/column/routine/GRANT/membership",
         "No pg_read_all_settings/super/pg_monitor",
@@ -29414,6 +29411,23 @@
         "launcherSHA256": "3d4bda9b21584d1aea4b4263f294555d5ada06a6504ad5ed284a27ce2fbe2548",
         "proof": "Fixed flat13 fields including mandatory sourceSet, root0444/parent711; actual admin obs, no extra SQL or DB grant",
         "D1Consumer": "IMPLEMENTING_TARGET_CATALOG_PROGRAM_BINDING"
+      },
+      "ordinaryWatcher": {
+        "owner": "D1",
+        "file": "tools/unified-import/fresh35-host-session.mjs",
+        "scope": "Synthetic only original finite invalidation watch on fixed readable proof; preserve production REAL; do not watch private0711 parent blindly or expand permissions",
+        "test": "original ordinary-production-v2.test.mjs affected model",
+        "state": "C_APPROVED_IMPLEMENTING"
+      },
+      "D1Consumer": {
+        "receiptSHA256": "535d9cab98412a4aecb29432f4a2322667aaa8a2a04c16a717e6109d463d17ee",
+        "affectedChecksPassed": 27,
+        "actualUIDAndPG": false
+      },
+      "T45EvidenceWrapper": {
+        "sha256": "9c33aca96400144f496e066fb04d9ae7bff9b8aa22b93e2ffc855a2ef1d46888",
+        "constantsBound": false,
+        "modelOnly": true
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -29435,6 +29449,32 @@
         "No manual approval marker/fingerprint bypass",
         "No parallel writer or hot replacement of5d/f87/768"
       ]
-    }
+    },
+    "writerTransferHistory": [
+      {
+        "at": "2026-11-06T02:44:00+08:00",
+        "from": "D2 historical release seam ownership",
+        "to": "T45 original server/release owner",
+        "files": [
+          "scripts/release/deploy-candidate.py",
+          "scripts/release/rollback-candidate.py",
+          "scripts/release/boot-entry.py",
+          "config/release-contract.json",
+          "scripts/release/generate-release-contract.mjs"
+        ],
+        "previousEntriesRetainedHere": [
+          "scripts/release/deploy-candidate.py (explicit release seam handoff; no server execution)",
+          "config/release-contract.json (explicit release seam handoff)",
+          "scripts/release/generate-release-contract.mjs and original direct tests",
+          "scripts/release/boot-entry.py functional branches and direct tests; approval marker unchanged",
+          "scripts/release/rollback-candidate.py functional branches and direct tests; approval marker unchanged",
+          "config/release-contract.json native35 exact source members",
+          "scripts/release/generate-release-contract.mjs and direct tests",
+          "scripts/release/deploy-candidate.py GENERATED RELEASE CONTRACT block only; function/approval marker frozen"
+        ],
+        "reason": "D2 completed readonly preparation and no source writes; C delegates exact V2 deploy compatibility, preserve current synthetic root excluding WIP",
+        "authority": "C under latest direct human ERP decision delegation until noon"
+      }
+    ]
   }
 }

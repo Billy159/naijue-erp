@@ -1,3 +1,5 @@
+import {createFresh35BootstrapNetworkModel,prepareFresh35CatalogProgramModel,rewriteFresh35ModelModule} from './fixtures/fresh35-bootstrap-network-model.mjs';
+import {after} from 'node:test';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {resolve} from 'node:path';
@@ -13,13 +15,17 @@ import {withVerifiedFresh35AdmissionV1,assertWholeSalesAdmissionV1} from '../scr
 const root=resolve(fileURLToPath(new URL('../',import.meta.url)));
 const proof={protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:'7703999999999999999',database_oid:'16384',database_name:'synthetic_fresh35_20261105_r9',catalog_sha256:'a'.repeat(64)};
 function client(){let status='I',closed=0;const calls=[];return {calls,get closed(){return closed},on(){},readyForQuery:true,_queryable:true,_ending:false,pipeline:false,_activeQuery:null,_queryQueue:[],_sentQueryQueue:[],getTransactionStatus(){return status},async query(sql){calls.push(sql);if(sql.startsWith('BEGIN')){status='T';return {command:'BEGIN'}}if(sql==='ROLLBACK'||sql==='COMMIT'){status='I';return {command:sql}}return {command:'SELECT'}},async end(){closed++}}}
-let cached;async function binding(){return cached??=(async()=>{
- const startsAt=Date.now()-1000,expiresAt=startsAt+1200000;
- const target=bindFresh35CombinedTarget({proposal:{database:proof.database_name,owner:'fresh35_owner_20261105_r9',controller:'fresh35_controller_20261105_r9',runtime:'fresh35_runtime_20261105_r9',admin:'fresh35_admin_20261105_r9',host:'127.0.0.1',port:57639,workspaceDirectory:'/tmp/cloud-pg-fresh35-20261105-r9'},physical:{systemIdentifier:proof.system_identifier,databaseOid:proof.database_oid,serverVersionNum:'170011',postmasterStart:new Date(startsAt).toISOString().replace('T',' ').replace('Z','+00')},startsAt,expiresAt});
- const paths=await resolveFresh35ReferenceInputPaths(resolve(root,'../reference-inputs'));
- const source=await loadFresh35CombinedSource(root,paths),catalog=await buildFresh35CombinedCatalog(source,target,paths),program=await compileFresh35CombinedProgram({source,target,catalog}),d=describeFresh35CombinedProgram(program);
- const record={format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',installedAt:new Date().toISOString(),binding:{sourceSetSha256:d.sourceSetSha256,targetSha256:d.targetSha256},target:describeFresh35CombinedTarget(target),transactionReceipt:{nonce:'a'.repeat(48),database:proof.database_name,actor:'fresh35_owner_20261105_r9',transactionId:'123',backendPid:1234},programSha256:d.programSha256,catalogSpecSha256:d.catalogSha256,catalogSha256:proof.catalog_sha256,authorizationSha256:'b'.repeat(64),state:'COMMITTED_AND_CATALOG_CHECKED'};
- return {program,record,target};
+let cached,legacyNetworkModel;after(async()=>{await legacyNetworkModel?.close()});async function binding(){return cached??=(async()=>{
+ const m=legacyNetworkModel=await createFresh35BootstrapNetworkModel({proposalDate:'20261105'}),target=m.target,paths=await resolveFresh35ReferenceInputPaths(resolve(root,'../reference-inputs'));
+ const source=await loadFresh35CombinedSource(root,paths),graph=await prepareFresh35CatalogProgramModel(m,source,paths),program=graph.program,d=graph.lifecycleAPI.describeFresh35CombinedProgram(program);
+ const record={format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',installedAt:new Date().toISOString(),binding:{sourceSetSha256:d.sourceSetSha256,targetSha256:d.targetSha256},target:m.api.describeFresh35CombinedTarget(target),transactionReceipt:{nonce:'a'.repeat(48),database:proof.database_name,actor:'fresh35_owner_20261105_r9',transactionId:'123',backendPid:1234},programSha256:d.programSha256,catalogSpecSha256:d.catalogSha256,catalogSha256:proof.catalog_sha256,authorizationSha256:'b'.repeat(64),state:'COMMITTED_AND_CATALOG_CHECKED'};
+ const recordURL=await rewriteFresh35ModelModule(m,'../../scripts/release/unified-install/fresh35-combined-record-v1.mjs',[['./fresh35-combined-lifecycle-v1.mjs',graph.lifecycleURL],['./fresh35-combined-target-v1.mjs',m.moduleURL]]),recordAPI=await import(recordURL);
+ const stub=text=>'data:text/javascript;base64,'+Buffer.from(text).toString('base64');
+ const recordHash=(await import('node:crypto')).createHash('sha256').update(await m.fs.readFile(new URL('../scripts/release/unified-install/fresh35-combined-record-v1.mjs',import.meta.url))).digest('hex');
+ const protectedRecordModel=stub(`import {validateFresh35CombinedRecord} from ${JSON.stringify(recordURL)};export {validateFresh35CombinedRecord};const record=${JSON.stringify(record)};export async function loadFresh35CombinedRecordEnvelope(){return record}export const FRESH35_COMBINED_RECORD_PATH='/EXPLICIT_MODEL_RECORD',FRESH35_COMBINED_RECORD_MODULE_SHA256=${JSON.stringify(recordHash)};export function describeFresh35ProtectedRecordSnapshot(){throw Error('NOT_USED_V1_MODEL')}export async function assertFresh35ProtectedRecordSnapshotCurrent(){throw Error('NOT_USED_V1_MODEL')}`);
+ const hostURL=await rewriteFresh35ModelModule(m,'../../tools/unified-import/fresh35-host-session.mjs',[['../../scripts/release/unified-install/fresh35-combined-target-v1.mjs',m.moduleURL],['../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs',graph.catalogURL],['../../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs',graph.lifecycleURL],['../../scripts/release/unified-install/fresh35-combined-record-v1.mjs',protectedRecordModel]]),hostAPI=await import(hostURL);
+ const hostContext=await hostAPI.loadFresh35HostContext(root,resolve(root,'../reference-inputs'));
+ return {program,record,target,validateRecord:recordAPI.validateFresh35CombinedRecord,hostAPI,hostContext,model:m};
  })()}
 test('fixed record is required before configuration, any connection, or host work',async()=>{
  let accessed=false;const config=new Proxy({},{get(){accessed=true;throw Error('credentials must not be inspected')}});
@@ -28,9 +34,9 @@ test('fixed record is required before configuration, any connection, or host wor
  assert.equal(accessed,false);
 });
 test('valid-looking record data checks exact source/program/physical receipt without granting authority',async()=>{
- const {record,program}=await binding();assert.equal(validateFresh35CombinedRecord(record,program).catalogSha256,proof.catalog_sha256);
+ const {record,program,validateRecord,hostAPI,hostContext}=await binding();assert.equal(validateRecord(record,program).catalogSha256,proof.catalog_sha256);assert.equal(hostAPI.fresh35HostContext(hostContext).record.programSha256,record.programSha256);assert.throws(()=>fresh35HostContext(hostContext),/GENUINE_FIXED_CONTEXT/);
  for(const mutate of [r=>r.target={...r.target,physical:{...r.target.physical,databaseOid:'16385'}},r=>r.programSha256='c'.repeat(64),r=>r.binding.sourceSetSha256='c'.repeat(64),r=>r.transactionReceipt.actor='postgres',r=>r.state='STAGED',r=>r.catalogSha256='invalid']){
-  const r=structuredClone(record);mutate(r);assert.throws(()=>validateFresh35CombinedRecord(r,program),/FRESH35_COMBINED_RECORD_/);
+  const r=structuredClone(record);mutate(r);assert.throws(()=>validateRecord(r,program),/FRESH35_COMBINED_RECORD_/);
  }
  assert.throws(()=>fresh35HostContext(record),/GENUINE_FIXED_CONTEXT_REQUIRED/);
  assert.throws(()=>consumeFresh35VerificationV1(record,{}),/VERIFIED_INSTANCE_REQUIRED/);

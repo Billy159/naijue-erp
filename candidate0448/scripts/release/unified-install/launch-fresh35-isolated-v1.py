@@ -170,8 +170,18 @@ def write_new(path, data, mode=0o400, owner=None):
     finally:
         os.close(fd)
 
-def json_new(path, value):
-    write_new(path, (json.dumps(value, sort_keys=True) + '\n').encode())
+def json_new(path, value, mode=0o400):
+    write_new(path, (json.dumps(value, sort_keys=True) + '\n').encode(),mode=mode)
+
+def persist_bootstrap_network_observation(a, obs, system_id):
+    p=a['proposal'];root=trusted(Path(p['workspaceDirectory']))
+    need(stat.S_IMODE(root.lstat().st_mode)==0o711,'NETWORK_OBSERVATION_PARENT_MODE')
+    need(obs['systemIdentifier']==system_id and type(obs['databaseOid']) is str and re.fullmatch('[1-9][0-9]*',obs['databaseOid']) and obs['serverVersionNum']=='170011' and type(obs['postmasterStart']) is str and bool(obs['postmasterStart']),'POST_BOOTSTRAP_PHYSICAL_IDENTITY')
+    need(obs['address']==p['host']=='127.0.0.1' and obs['port']==p['port'] and type(obs['port']) is int and obs['actor']==p['admin'] and obs['listenAddresses']=='127.0.0.1' and obs['unixSocketDirectories']=='' and obs['dataDirectory']==str(root/'data') and obs['hbaFile']==str(root/'data/pg_hba.conf'),'POST_BOOTSTRAP_NETWORK_IDENTITY')
+    proof={'format':'FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1',**{k:obs[k] for k in ['systemIdentifier','databaseOid','serverVersionNum','postmasterStart']},'host':obs['address'],'port':obs['port'],'listenAddresses':obs['listenAddresses'],'unixSocketDirectories':obs['unixSocketDirectories'],'adminActor':obs['actor'],'startsAt':a['startsAt'],'expiresAt':a['expiresAt'],'sourceSetSha256':a['sourceSetSha256']}
+    path=root/'bootstrap-network-observation.json';json_new(path,proof,mode=0o444);trusted(path)
+    info=path.lstat();need(stat.S_ISREG(info.st_mode) and info.st_nlink==1 and stat.S_IMODE(info.st_mode)==0o444,'NETWORK_OBSERVATION_FILE_METADATA')
+    return proof
 
 def clean_env(root, role=None):
     out = {'PATH':'/usr/bin:/bin','LC_ALL':'C','HOME':str(root),'TZ':'UTC'}
@@ -958,7 +968,7 @@ def main():
         for database,sql in [('postgres',role_sql),('postgres',db_sql),(p['database'],acl_sql)]:
             remaining();need(owned_listener(owned,p['port']),'BOOTSTRAP_LISTENER');psql(a,p['admin'],database,sql)
         passwords.clear();role_sql=None;sql=None;pw=None
-        obs=strict_json(psql(a,p['admin'],p['database'],identity_sql));need(obs['systemIdentifier']==sid and obs['dataDirectory']==str(root/'data'),'POST_BOOTSTRAP_IDENTITY')
+        obs=strict_json(psql(a,p['admin'],p['database'],identity_sql));persist_bootstrap_network_observation(a,obs,sid)
         need((root/'data/pg_hba.conf').read_text()==hba,'HBA_BYTES_CHANGED')
         hba_rows=strict_json(psql(a,p['admin'],p['database'],"SELECT coalesce(json_agg(json_build_object('type',type,'database',database,'user_name',user_name,'address',address,'auth_method',auth_method,'error',error) ORDER BY rule_number),'[]'::json)::text FROM pg_catalog.pg_hba_file_rules;"))
         need(len(hba_rows)==7 and all(row['error'] is None for row in hba_rows),'HBA_PARSE_DIFFERS')

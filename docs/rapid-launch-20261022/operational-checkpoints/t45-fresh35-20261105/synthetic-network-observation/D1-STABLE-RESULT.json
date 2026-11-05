@@ -1,0 +1,144 @@
+{
+  "task_id": "D1-SYNTHETIC-BOOTSTRAP-NETWORK-SOURCE-20261106-01",
+  "state": "SOURCE_AND_AFFECTED_MODELS_PASS_NOT_ACTUAL_PG_OR_UID",
+  "recorded_at": "2026-11-06T02:47:40.803474+08:00",
+  "workspace": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "head_observed": "f5c0824664778d1b5c5e30b1ba68156c6420c90c",
+  "delivery": "NINE_STABLE_UNCOMMITTED_D1_LEAVES",
+  "leaves": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "bytes": 21044,
+      "sha256": "f6877abf7dbffbfa415b5c35ee6ef2f380afe7e0831cffdef49fbea65f1de167"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "bytes": 35377,
+      "sha256": "46c922f5bb081c43d457dbec64fb5d7148522eab6310d8f05953b2015a4316d8"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "bytes": 19885,
+      "sha256": "dffde933bed168bf8269e9ad9e5c93a6c623d87267969d050e5b7c0f63154ba6"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "bytes": 33028,
+      "sha256": "63a4fba90214b982ba9799d39dfe0c041b6373df6f91decd141000535da4c33d"
+    },
+    {
+      "path": "tests/fresh35-combined-target.test.mjs",
+      "bytes": 16368,
+      "sha256": "0b0577306bde739d636d3cdfa9bc527fd14d1bebb8a13997ec7b9d6b0a96a923"
+    },
+    {
+      "path": "tests/fresh35-combined-catalog.test.mjs",
+      "bytes": 13644,
+      "sha256": "6de4abfa03d0212c621bc1a56861fd74171f593f044ba1e18f619fe3b5c60638"
+    },
+    {
+      "path": "tests/fresh35-host-session.test.mjs",
+      "bytes": 32956,
+      "sha256": "cb01758ca86bb28e7c35da2387f10cbe4d49ffe91d01703552efa2bca951b290"
+    },
+    {
+      "path": "tests/fresh35-ordinary-production-v2.test.mjs",
+      "bytes": 19357,
+      "sha256": "2a06a5faffc5d8b9d30b36b72901b81f444f9350a3ab83acc7c75648d91222e8"
+    },
+    {
+      "path": "tests/fixtures/fresh35-bootstrap-network-model.mjs",
+      "bytes": 5158,
+      "sha256": "1f7c7137b27f59bd7bac7daa6da9cdca995f28dcbce5aadaf8e3cfa05808f18b"
+    }
+  ],
+  "authorization": "C approved original-admin/root network-observation handoff, flat thirteen fields, necessary directly affected fixtures, plus synthetic-only fixed-inode ordinary watcher. T45 remains launcher/wrapper/server owner.",
+  "contract": {
+    "file": "workspace/bootstrap-network-observation.json",
+    "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+    "closed_flat_keys": [
+      "format",
+      "systemIdentifier",
+      "databaseOid",
+      "serverVersionNum",
+      "postmasterStart",
+      "host",
+      "port",
+      "listenAddresses",
+      "unixSocketDirectories",
+      "adminActor",
+      "startsAt",
+      "expiresAt",
+      "sourceSetSha256"
+    ],
+    "producer": "T45 original post-bootstrap admin identity observation; sourceSet from exact provision; no new query/connection",
+    "file_mode": "root0444 regular nlink1; trusted root parent chain; workspace0711",
+    "binding": "Exact original target tuple, original window, sourceSet, original byte SHA and nanosecond identity. V1 target/installation record shapes unchanged.",
+    "descriptor_field": "bootstrapNetworkObservationSha256 on synthetic catalog and program only"
+  },
+  "behavior": [
+    "Synthetic catalog construction must consume protected actual-root observation before any guard compilation. Missing/malformed/mismatched/expired/unreadable/nonroot/writable/linked/swapped proof fails. Same-target proof cannot acquire a new baseline.",
+    "Only the restricted unix_socket_directories reread is replaced by verified bootstrap evidence; original listen read and same sid/OID/version/postmaster birth/IP/port/empty-db/role/membership/ACL/window SQL checks remain. PGC_POSTMASTER active socket setting cannot change without a new postmaster; exact birth check remains.",
+    "Original catalog-current checks re-read proof identity/hash. Program compile now calls original catalog-current first, closing reproduced stale-proof recompilation gap. Catalog and program fingerprints include exact proof byte digest; proof is not install/import authority.",
+    "V1 controller host reconstruction goes through original catalog middle seam; modeled original host loader compiles/validates exact record/program using protected-OS I/O model. Real module rejects modeled target/program/host tokens.",
+    "Synthetic ordinary watcher adds only fixed readable proof inode AFTER original parent-expansion loop. No root0711 parent watch; existing rename/change/error revokes same lease and closes existing watchers. No per-request full proof hash/catalog rescan or new control layer.",
+    "No new tables/columns/routines/GRANT/membership/superuser, no pg_monitor/pg_read_all_settings, no parameter SET rights. Production proof loader returns null without file access; no production target/record shape or REAL execution semantics changed.",
+    "Only original compile and synthetic watcher changed in previously frozen modules; diagnostic drive/entry/error fields untouched."
+  ],
+  "fixture_migration": {
+    "changed": [
+      "original target SQL fixtures",
+      "original catalog/program synthetic bundle",
+      "original V1 host record/context bundle",
+      "original ordinary watcher model"
+    ],
+    "shared": "tests/fixtures/fresh35-bootstrap-network-model.mjs",
+    "scope": "Actual target/catalog/program/record/host implementation bodies with modeled root metadata/trust path and real isolated temporary files. No PG/network; no capability usable by real private modules. Old synthetic raw-target-only fixture was correctly rejected by new missing-proof contract and was migrated, not bypassed."
+  },
+  "verification": {
+    "red": "Original HEAD lacks protected network consumer: four new cases failed. New integration test then reproduced missing proof-current check during recompilation; corrected in original compiler. Logs retain safe summaries and original /tmp paths.",
+    "target_catalog": {
+      "tests": 21,
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "command": "Node24.21.0 --test tests/fresh35-combined-target.test.mjs tests/fresh35-combined-catalog.test.mjs"
+    },
+    "v1_host_affected": {
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "command": "Node24.21.0 --test --test-name-pattern='valid-looking record|expired record|fixed record is required' tests/fresh35-host-session.test.mjs"
+    },
+    "ordinary_affected": {
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "command": "Node24.21.0 --test --test-name-pattern='ordinary startup uses|synthetic V1 admission|synthetic ordinary watches' tests/fresh35-ordinary-production-v2.test.mjs"
+    },
+    "total_passed": 27,
+    "types_exit": 0,
+    "build_exit": 0,
+    "diff_check_exit": 0,
+    "logs": {
+      "target-catalog-final": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/BOOTSTRAP-NETWORK-target-catalog-final.log",
+      "host-final": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/BOOTSTRAP-NETWORK-host-final.log",
+      "watch-final": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/BOOTSTRAP-NETWORK-watch-final.log",
+      "types-final": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/BOOTSTRAP-NETWORK-types-final.log",
+      "build-final": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/BOOTSTRAP-NETWORK-build-final.log",
+      "red-summary": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/BOOTSTRAP-NETWORK-red-summary.log"
+    }
+  },
+  "paired_owner": "T45 producer READY 5176c26a5f1cb63f8d331ad4b250c8d512a01f49b7b04222198ff6801ad69bc1 / RESULT 3078b75880b6376d79103fe8b403e5e86de88c2ac11a4bc520d53f5ff443bc23, reported by T45. Wrapper fixed proof evidence filename inclusion requested from same owner; D1 does not write T45 leaves.",
+  "unverified": [
+    "Actual root-owned0444/0711 traversal and inotify/fs.watch by ordinary UID on exact Linux carrier not exercised in this source/model run. T45 next exact window must verify read and watch success, no EACCES.",
+    "No PG start/connect/install/replay/real data read/deploy. Old 5d70 scene and prepared768 target not changed. Original ROLLBACK_UNCONFIRMED remains; no DB outcome inferred.",
+    "No full ERP/REAL64 or diagnostic8 regression replay. Only affected source/model cases above were rerun. No actual installation root-cause acceptance or business readiness claimed."
+  ],
+  "next": "C freeze these nine leaves with T45 exact producer/consumer evidence companions, update source closure, coordinate only this affected QB scope; later exact target/window binds actual root/ordinary read+watch and PG acceptance."
+}

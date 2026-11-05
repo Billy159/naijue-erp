@@ -1,0 +1,9 @@
+{
+  "status": "SOURCE_ONLY_FIXED_PUBLIC_NETWORK_EVIDENCE_EXPORT_READY_UNBOUND",
+  "wrapperPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-evidence-wrapper-01/fresh35-container-successor.py",
+  "wrapperSha256": "9c33aca96400144f496e066fb04d9ae7bff9b8aa22b93e2ffc855a2ef1d46888",
+  "resultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-evidence-wrapper-01/RESULT.json",
+  "resultSha256": "eb7b3a3d56dea78eb32c9b39ccc62670d556f7a5e17cdc45e67553980a99b65d",
+  "executionReady": false,
+  "serverActions": 0
+}

@@ -1570,3 +1570,10 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 
 - T45 network producer2 leaves stable3078b758,launcher3d4bda9b,4 targeted model checks; original admin same query fields only, root0444/parent711, mandatorysourceSet+flat13 closed fields. D1 consumer target/catalog/program in progress; no PG claim.
 - C registered T45 sole writer for original release3 scripts + exact config/release-contract.json and generator seam. Preserve synthetic profile, explicit productionProfile from already approved nativeV2; original review/registration still required and no marker bypass. This independent release WIP is excluded from synthetic fixed export; no overwriting parallel work.
+
+
+- Precise current writer registry synchronized: five release compatibility files transfer from historicalD2 entries to soleT45; previous entries retained in writerTransferHistory. D2 stays fixed build/config-readonly. D1 additionally owns only synthetic proof invalidation in original host finite watcher and its affected original test; no production REAL change or private-dir permission widening.
+
+
+### 2026-11-06 02:51｜原安装拒绝根因的最小接线已交付
+D1固定九叶（回执535d9cab）与T45固定producer两叶已逐文件核SHA；27项D1受影响检查通过，仅源码/模型。可信root0444网络事实绑定同一物理目标、出生时间、窗口、来源及程序摘要，普通角色不扩权。原wrapper另交固定文件只读消费后继9c33aca9（六绑定常量未填，不能执行）。下一固定候选仅包含这11叶，不含T45并行正式发布5叶。原5d失败现场、ROLLBACK_UNCONFIRMED及768准备包保留；真实ordinary UID读/watch与新PG安装尚待验证。今日12:00前依用户最新委托由C决定准确执行范围，T45唯一服务器执行者，不要求用户操作。

@@ -254,6 +254,9 @@ async function admitOrdinaryPool(pool,connection,synthetic){
   const watched=new Set([FRESH35_COMBINED_RECORD_PATH,...pins.map(p=>resolve(moduleRoot,p.path)),paths.modelPath,paths.functionsPath,paths.baselineDirectory,resolve(t.ordinary.referenceDirectory,'INDEX.json')].filter(x=>typeof x==='string'));
   for(const path of [...watched])watched.add(dirname(path));
   watched.add(moduleRoot);
+  // The isolated workspace is root0711: watch the readable fixed inode only,
+  // never its non-listable parent. Existing change/rename/error revokes the lease.
+  if(synthetic)watched.add(resolve(t.proposal.workspaceDirectory,'bootstrap-network-observation.json'));
   for(const path of watched){const watcher=watch(path,()=>revokeOrdinary(state));watcher.on('error',()=>revokeOrdinary(state));watcher.unref();state.watchers.push(watcher);}
   await assertFresh35CombinedSourcesCurrent(source);await assertFresh35CombinedCatalogCurrent(catalog);
   await assertFresh35ProtectedRecordSnapshotCurrent(envelope,true);need(state.active,'ORDINARY_STARTUP_SOURCE_CHANGED');

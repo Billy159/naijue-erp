@@ -5,7 +5,7 @@ import {readFile,realpath} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {isDeepStrictEqual} from 'node:util';
 import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
-import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard} from './fresh35-combined-target-v1.mjs';
+import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard,loadFresh35SyntheticBootstrapNetwork,assertFresh35SyntheticBootstrapNetworkCurrent} from './fresh35-combined-target-v1.mjs';
 import {parseFresh35DumpSections} from './fresh35-retirement-schema.mjs';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
 const catalogs=new WeakMap(),need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_CATALOG_'+code)};
@@ -128,6 +128,7 @@ function observationSql(source,{runtime=false,systemIdentifierExpression='(SELEC
 export async function buildFresh35CombinedCatalog(source,target,{modelPath,functionsPath}){
  const s=describeFresh35CombinedSource(source),data=fresh35CombinedSourceData(source),t=describeFresh35CombinedTarget(target);
  need(hash(await readFile(resolve(data.root,ownPath)))===ownHash,'RUNNING_MODULE_DIFFERS');
+ const bootstrapNetworkObservationSha256=await loadFresh35SyntheticBootstrapNetwork(target,s.sourceSetSha256);
  const original=await pinned(modelPath,MODEL_SHA),functions=await pinned(functionsPath,FUNCTIONS_SHA);
  need(original.mappedSchemaSha256===hash(data.schema)&&original.routines.length===152&&functions.length===178,'BASE_MODEL_AND_CAPTURE_BINDING_REQUIRED');
  for(const key of ['routines','constraints','indexes','triggers','relations','columnAcls','schema','tableNames','owner'])need(isDeepStrictEqual(original[key],data.core[key]),'BASE_MODEL_CORE_DIFFERS:'+key);
@@ -164,7 +165,7 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
  }
 
  const lineage=Array.isArray(data.lineage)?data.lineage:data.lineage.rows;need(Array.isArray(lineage)&&lineage.length===27,'EXACT27_LINEAGE_REQUIRED');
- const sql=guardSql(mapped,lineage),observation=observationSql(s),descriptor=freeze({format:'FRESH35_COMBINED_CATALOG_SPEC_V1',sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),modelSha256:hash(JSON.stringify(mapped)),evidencePins:{model:MODEL_SHA,functions:FUNCTIONS_SHA},changes,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation),completeMetadataGuard:true,controllerLineageReadColumns:['version','description'],
+ const sql=guardSql(mapped,lineage),observation=observationSql(s),descriptor=freeze({format:'FRESH35_COMBINED_CATALOG_SPEC_V1',...(bootstrapNetworkObservationSha256?{bootstrapNetworkObservationSha256}:{}),sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),modelSha256:hash(JSON.stringify(mapped)),evidencePins:{model:MODEL_SHA,functions:FUNCTIONS_SHA},changes,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation),completeMetadataGuard:true,controllerLineageReadColumns:['version','description'],
   rawRowtypeComparison:'ALL_NONIDENTITY_FIELDS_AGAINST_NATIVE_PG17_11_TABLE_AND_ARRAY_TEMPLATES_PLUS_EXACT70_IDENTITIES',dependencyValidation:'PHYSICAL_DEPENDENCY_SCHEMA_BOUNDARY_NOT_DYNAMIC_BUSINESS_EXECUTION',captureMissingEvidencePreserved:original.missingEvidence,independentSafetyReviewComplete:false,sqlParsedByPostgres:false,engineVerified:false,hostEnabled:false});
  const token=Object.freeze({profile:'FRESH35_COMBINED_CATALOG_SPEC_V1'});
  catalogs.set(token,{source,target,model:mapped,lineage,sql,observation,modelPath,functionsPath,descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});
@@ -172,7 +173,7 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
 }
 export function describeFresh35CombinedCatalog(catalog){need(catalogs.has(catalog),'GENUINE_CATALOG_REQUIRED');return catalogs.get(catalog).descriptor}
 export function fresh35CombinedCatalogSql(catalog,source,target){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);need(c.source===source&&c.target===target,'SAME_SOURCE_AND_TARGET_REQUIRED');return Object.freeze({guardSql:c.sql,observationSql:c.observation})}
-export async function assertFresh35CombinedCatalogCurrent(catalog){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);await assertFresh35CombinedSourcesCurrent(c.source);await pinned(c.modelPath,MODEL_SHA);await pinned(c.functionsPath,FUNCTIONS_SHA);return true}
+export async function assertFresh35CombinedCatalogCurrent(catalog){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);await assertFresh35CombinedSourcesCurrent(c.source);await assertFresh35SyntheticBootstrapNetworkCurrent(c.target,describeFresh35CombinedSource(c.source).sourceSetSha256);await pinned(c.modelPath,MODEL_SHA);await pinned(c.functionsPath,FUNCTIONS_SHA);return true}
 export function fresh35CombinedRuntimeCatalogSql(catalog,source,target){
  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog);
  return Object.freeze({guardSql:fresh35CombinedRuntimeTargetGuard(target)+'\n'+guardSql(c.model,c.lineage,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true})});
