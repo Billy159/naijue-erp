@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T02:07:41.172184+00:00",
+  "updatedAt": "2026-11-05T02:52:51.571702+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "2276fdfb3928b2b5fa4af72b3883bbd478dd672d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -25977,14 +25977,14 @@
     },
     "sourceAcceptance": {
       "threadId": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
-      "current": "V5 source delta and real JSON physical-line applicability delivered",
+      "current": "New0236Z fixed snapshot current cleaning receiver delta readonly review",
       "model": "gpt-6.1-terra",
       "reasoningEffort": "medium",
       "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-      "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v5-received-20261105-01/ERP-STAGE-WIP-20261104-1350-v5/owner-review",
+      "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-source-0236Z-received-20261105-01/ERP-STAGE-SOURCE-20261105-0236Z/owner-review",
       "sourceReadOnly": true,
-      "next": "No more review without new changed source or exact unresolved consumer",
-      "status": "DELIVERED_WAITING_EXACT_NEW_INPUT",
+      "next": "Deliver precise resolved/remaining receiver seams; no install/PG/fulltest",
+      "status": "IN_PROGRESS",
       "turnId": "01a1a728-0c3d-7690-9f54-d6ecae922e7f"
     }
   },
@@ -27881,5 +27881,50 @@
     "PGImported": false,
     "deployed": false,
     "priorCandidatesPreserved": true
+  },
+  "latestReceivedStageSource0236Z": {
+    "zip": "/Users/billy/Downloads/ERP-STAGE-SOURCE-20261105-0236Z.zip",
+    "zipSHA256": "05f6582586a2927764c0b56090d3f899dba5a719400641c092264c293d37555e",
+    "expectedMatched": true,
+    "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-source-0236Z-received-20261105-01/ERP-STAGE-SOURCE-20261105-0236Z",
+    "packageHashCount": 5417,
+    "sourceEntries": 5398,
+    "noExistingWorkOverwritten": true,
+    "applicationScriptsExecuted": false,
+    "databaseExecuted": false,
+    "sourceManifestSHA256": "1c513b622a1beec7e2512ed7a3410d6c7d8d68cbdae8c44f175e71724165f131",
+    "baseline": "051bbe14a4cba4e1849b8547665f13df85dd8fe0",
+    "workingTree": "UNCOMMITTED_WIP",
+    "reportedTests": {
+      "node": "24.22.1",
+      "expectedNode": "24.21.0",
+      "npm": "11.9.0",
+      "typecheck": "reported exit0, not rerun locally",
+      "build": "reported exit0, not rerun locally",
+      "smoke": "reported exit0, no live startup",
+      "fullTest": {
+        "pass": 4757,
+        "fail": 26,
+        "skip": 1,
+        "todo": 1
+      },
+      "fresh35": {
+        "pass": 2,
+        "skip": 16,
+        "realPG": false
+      }
+    },
+    "reviewOwner": {
+      "threadId": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
+      "model": "gpt-6.1-terra",
+      "thinking": "medium",
+      "scope": "Only changed current cleaning receivers; source readonly"
+    },
+    "windowsColonLogNames": "Preserved unchanged; portability limitation not renamed",
+    "productionAuthorized": false,
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-source-0236Z-received-20261105-01/INTAKE-RECEIPT.json",
+    "receiptSHA256": "d2326a7268990b9f1bc21f43f107ad9fcc653b37e743973b015359028d24070b",
+    "currentCleanedPackage": "D3-40 remains fixed; newsource compatibility not yet verified",
+    "status": "INTEGRITY_VERIFIED_NARROW_RECEIVER_DELTA_REVIEW_RUNNING_NOT_ACCEPTED_RELEASE"
   }
 }
