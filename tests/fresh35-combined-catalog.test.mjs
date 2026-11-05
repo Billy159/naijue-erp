@@ -50,6 +50,22 @@ test('cloned catalog and invented actual observations cannot open the record or 
  const {source,catalog}=await bundle();assert.throws(()=>fresh35CombinedCatalogSql({...catalog},source,target),/GENUINE_CATALOG/);assert.throws(()=>validateFresh35CombinedCatalogObservation('{}',catalog,source,target),/PHYSICAL_IDENTITY/);
 });
 
+test('bootstrap observer joins the catalog/record closure on install, controller and both ordinary profiles without granting runtime execution',async()=>{
+ const {source,catalog}=await bundle(),physical=describeFresh35CombinedTarget(target).physical;
+ const variants=[fresh35CombinedCatalogSql(catalog,source,target),fresh35CombinedRuntimeCatalogSql(catalog,source,target),graph.catalogAPI.fresh35CombinedSyntheticOrdinaryCatalogSql(catalog,source,target,physical)];
+ const t=describeFresh35CombinedTarget(target),prod=networkModel.api.bindFresh35CombinedProductionTargetV2({proposal:{...t.proposal,database:'new_observer_erp',owner:'observer_owner',controller:'observer_controller',runtime:'observer_runtime',admin:'observer_admin'},physical:t.physical,startsAt:t.startsAt,expiresAt:t.expiresAt,purpose:'PRODUCTION_NEW_EMPTY_EXACT35',ordinary:{connectHost:'postgres',connectPort:5432,serverAddress:'172.20.0.4',serverPort:5432,runtimeLoginValidUntil:null,referenceDirectory:'/private/references'}});
+ const prodCatalog=await buildFresh35CombinedCatalog(source,prod,{modelPath,functionsPath});
+ variants.push(graph.catalogAPI.fresh35CombinedOrdinaryCatalogSql(prodCatalog,source,prod,physical));
+ for(const sql of variants){
+  assert(sql.guardSql.includes('DO $fresh35_observer_catalog$'));assert(sql.guardSql.includes('f.prosrc='));assert(sql.guardSql.includes('f.proacl'));
+  assert(sql.observationSql.includes("'bootstrapObserver'"));assert(sql.observationSql.includes('pg_get_functiondef(f.oid)'));
+  assert(sql.observationSql.includes('pg_shdepend d WHERE d.dbid='));assert(sql.observationSql.includes('pg_depend d WHERE d.classid='));
+ }
+ for(const ordinary of variants.slice(2))assert(!ordinary.guardSql.includes('physical_checks := ARRAY['),'ordinary interface inspects the helper but does not call it');
+ const entry=await readFile(root+'scripts/release/unified-install/fresh35-combined-record-v1.mjs','utf8');
+ assert(entry.includes('catalogSha256:c.catalogSha256'),'existing record binds the complete raw catalog including the observer');
+});
+
 test('runtime keeps complete metadata inspection without reading populated business tables as controller',async()=>{
  const {source,catalog}=await bundle(),runtime=fresh35CombinedRuntimeCatalogSql(catalog,source,target),install=fresh35CombinedCatalogSql(catalog,source,target);
  for(const token of ['ROUTINE_SOURCE_OR_ACL_DIFFERS','SCHEMA_ACL_DIFFERS','RELATIONS_DIFFER','COLUMNACLS_DIFFER','CONSTRAINTS_DIFFER','INDEXES_DIFFER','TRIGGERS_DIFFER','EXACT_LINEAGE_DIFFERS'])assert.ok(runtime.guardSql.includes(token),token);
@@ -70,7 +86,10 @@ test('production ordinary catalog reuses the complete model and observes after r
  const catalog=await buildFresh35CombinedCatalog(source,prod,{modelPath,functionsPath}),program=await compileFresh35CombinedProgram({source,target:prod,catalog});
  const sql=fresh35CombinedOrdinaryCatalogSql(catalog,source,prod,p.physical);
  for(const token of ['ROUTINE_SOURCE_OR_ACL_DIFFERS','RELATIONS_DIFFER','COLUMNACLS_DIFFER','POLICIES_DIFFER','EXACT_LINEAGE_DIFFERS'])assert(sql.guardSql.includes(token),token);
- assert(sql.guardSql.includes("session_user='new_runtime'"));assert(sql.guardSql.includes("current_user='erp_unified27_runtime_2393dbc6db9581c2'"));assert(!sql.guardSql.includes('BUSINESS_TABLE_NOT_EMPTY'));assert(!sql.guardSql.includes('pg_stat_activity'));
+ assert(sql.guardSql.includes("session_user='new_runtime'"));assert(sql.guardSql.includes("current_user='erp_unified27_runtime_2393dbc6db9581c2'"));assert(!sql.guardSql.includes('BUSINESS_TABLE_NOT_EMPTY'));
+ assert(!sql.guardSql.includes('SELECT 1 FROM pg_catalog.pg_stat_activity WHERE'));
+ assert(!sql.guardSql.includes('physical_checks := ARRAY['));
+ assert(!sql.guardSql.includes('(pg_catalog.fresh35_exclusive_backends())'),'ordinary interface checks source metadata but never executes the observer');
  assert(!sql.observationSql.includes('pg_control_system()'));assert(sql.observationSql.includes("'systemIdentifier','"+p.physical.systemIdentifier+"'"));
  assert.throws(()=>fresh35CombinedOrdinaryCatalogSql(catalog,source,prod,{...p.physical,systemIdentifier:'99'}),/PHYSICAL_BINDING/);
  assert.throws(()=>validateFresh35CombinedOrdinaryCatalogObservation('{}',catalog,source,prod),/PHYSICAL_IDENTITY/);

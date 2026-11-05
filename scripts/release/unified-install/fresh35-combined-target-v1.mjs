@@ -86,6 +86,101 @@ export function fresh35CombinedTargetGuard(target,{requireEmpty}={requireEmpty:f
 export function fresh35CombinedRuntimeTargetGuard(target){
  return targetGuard(target,{requireEmpty:false,runtime:true});
 }
+export const FRESH35_COMBINED_OBSERVER_NAME='fresh35_exclusive_backends';
+// Only these native, database-less PG17.11 processes may coexist with the
+// caller. In particular a physical walsender also has no database, but has a
+// different type and must still refuse installation. NULL/unknown types refuse.
+const observerAllowedBackend=`(a.pid IS NOT NULL AND a.pid>0 AND ((a.backend_type='logical replication launcher' AND a.datid IS NULL AND a.usesysid=10)
+ OR (a.backend_type IN('checkpointer','background writer','walwriter','autovacuum launcher') AND a.datid IS NULL AND a.usesysid IS NULL))) IS TRUE`;
+function observerBody(target){
+ const {proposal:p,physical:b,startsAt,expiresAt}=describeFresh35CombinedTarget(target),q=quote;
+ return `
+BEGIN
+ IF (current_user=${q(p.admin)} AND session_user IN(${q(p.owner)},${q(p.controller)})
+  AND pg_catalog.current_setting('role') IN('none',session_user::text)
+  AND current_database()=${q(p.database)}
+  AND (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database())=${q(b.databaseOid)}
+  AND (SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(b.systemIdentifier)}
+  AND pg_catalog.current_setting('server_version_num')=${q(b.serverVersionNum)}
+  AND pg_catalog.pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(b.postmasterStart.replace(/\+00$/,''))}
+  AND pg_catalog.host(pg_catalog.inet_server_addr())=${q(p.host)} AND pg_catalog.inet_server_port()=${p.port}
+  AND pg_catalog.current_setting('session_replication_role')='origin' AND NOT pg_catalog.pg_is_in_recovery()
+  AND EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE oid=10 AND rolname=${q(p.admin)} AND rolsuper)
+  AND extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt}
+  AND extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}) IS DISTINCT FROM true THEN RETURN false; END IF;
+ PERFORM pg_catalog.pg_stat_clear_snapshot();
+ RETURN NOT EXISTS(SELECT 1 FROM pg_catalog.pg_stat_activity a
+  WHERE a.pid IS DISTINCT FROM pg_catalog.pg_backend_pid() AND NOT (${observerAllowedBackend}));
+END
+`;
+}
+const observerAcl=target=>{
+ const {proposal:p}=describeFresh35CombinedTarget(target);
+ return [p.admin,p.owner,p.controller].map(role=>role+'=X/'+p.admin).sort();
+};
+/** Root bootstrap renders this once; only its existing admin connection may
+ * execute it. There is no CREATE OR REPLACE, dynamic SQL or caller input. */
+export function fresh35CombinedBootstrapObserverSql(target){
+ const {proposal:p,physical:b,startsAt,expiresAt}=describeFresh35CombinedTarget(target),q=quote;
+ return `BEGIN;
+DO $fresh35_observer_bootstrap$ BEGIN
+ IF (current_user=${q(p.admin)} AND session_user=${q(p.admin)} AND current_database()=${q(p.database)}
+  AND (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database())=${q(b.databaseOid)}
+  AND (SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(b.systemIdentifier)}
+  AND pg_catalog.current_setting('server_version_num')=${q(b.serverVersionNum)}
+  AND pg_catalog.pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(b.postmasterStart.replace(/\+00$/,''))}
+  AND pg_catalog.host(pg_catalog.inet_server_addr())=${q(p.host)} AND pg_catalog.inet_server_port()=${p.port}
+  AND EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE oid=10 AND rolname=${q(p.admin)} AND rolsuper)
+  AND extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt}
+  AND extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}) IS DISTINCT FROM true
+ THEN RAISE EXCEPTION 'FRESH35_OBSERVER_BOOTSTRAP_TARGET_DIFFERS' USING ERRCODE='55000'; END IF;
+END $fresh35_observer_bootstrap$;
+CREATE FUNCTION pg_catalog.${FRESH35_COMBINED_OBSERVER_NAME}() RETURNS pg_catalog.bool
+ LANGUAGE plpgsql VOLATILE PARALLEL UNSAFE SECURITY DEFINER
+ SET search_path = pg_catalog, pg_temp
+ AS $fresh35_observer$${observerBody(target)}$fresh35_observer$;
+REVOKE ALL ON FUNCTION pg_catalog.${FRESH35_COMBINED_OBSERVER_NAME}() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION pg_catalog.${FRESH35_COMBINED_OBSERVER_NAME}() TO ${p.owner},${p.controller};
+${fresh35CombinedObserverGuard(target)}
+COMMIT;
+`;
+}
+/** The bootstrap object is outside the 152 business routines. Its full source,
+ * signature, owner, attributes and explicit ACL are checked before any call. */
+export function fresh35CombinedObserverGuard(target){
+ const {proposal:p}=describeFresh35CombinedTarget(target),q=quote;
+ return `DO $fresh35_observer_catalog$ BEGIN
+ IF (SELECT count(*) FROM pg_catalog.pg_proc WHERE pronamespace='pg_catalog'::pg_catalog.regnamespace AND proname=${q(FRESH35_COMBINED_OBSERVER_NAME)})<>1
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_proc f JOIN pg_catalog.pg_language l ON l.oid=f.prolang JOIN pg_catalog.pg_roles o ON o.oid=f.proowner
+  WHERE f.pronamespace='pg_catalog'::pg_catalog.regnamespace AND f.proname=${q(FRESH35_COMBINED_OBSERVER_NAME)}
+  AND f.proowner=10 AND o.rolname=${q(p.admin)} AND o.rolsuper AND l.lanname='plpgsql'
+  AND f.prokind='f' AND f.pronargs=0 AND f.pronargdefaults=0 AND f.proargtypes=''::pg_catalog.oidvector
+  AND f.prorettype='pg_catalog.bool'::pg_catalog.regtype AND NOT f.proretset AND f.prosecdef AND NOT f.proleakproof AND NOT f.proisstrict
+  AND f.provolatile='v' AND f.proparallel='u' AND f.procost=100 AND f.prorows=0 AND f.prosupport=0
+  AND f.proallargtypes IS NULL AND f.proargmodes IS NULL AND f.proargnames IS NULL AND f.proargdefaults IS NULL AND f.protrftypes IS NULL
+  AND f.probin IS NULL AND f.prosqlbody IS NULL AND f.proconfig=ARRAY['search_path=pg_catalog, pg_temp']
+  AND f.prosrc=${q(observerBody(target))}
+  AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_depend d CROSS JOIN LATERAL pg_catalog.pg_identify_object(d.refclassid,d.refobjid,d.refobjsubid) ref
+   WHERE d.classid='pg_catalog.pg_proc'::pg_catalog.regclass AND d.objid=f.oid
+   AND (d.refclassid='pg_catalog.pg_extension'::pg_catalog.regclass OR (ref.schema IS NOT NULL AND ref.schema<>'pg_catalog')))
+  AND (SELECT array_agg(e::text ORDER BY e::text COLLATE pg_catalog."C") FROM pg_catalog.unnest(f.proacl) e)=ARRAY[${observerAcl(target).map(q).join(',')}])
+ THEN RAISE EXCEPTION 'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_EXCLUSIVE_BACKENDS' USING ERRCODE='55000'; END IF;
+END $fresh35_observer_catalog$;`;
+}
+/** Full raw catalog/dependencies join the existing catalog hash in the record;
+ * it contains function metadata, never an activity row, PID, query or username. */
+export const fresh35CombinedObserverObservationSql=`(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object(
+ 'catalog',pg_catalog.to_jsonb(f),'definition',pg_catalog.pg_get_functiondef(f.oid),'owner',o.rolname,'language',l.lanname,
+ 'dependencies',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.to_jsonb(d)),'[]'::pg_catalog.jsonb) FROM pg_catalog.pg_depend d WHERE d.classid='pg_catalog.pg_proc'::pg_catalog.regclass AND d.objid=f.oid),
+ 'sharedDependencies',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.to_jsonb(d)),'[]'::pg_catalog.jsonb) FROM pg_catalog.pg_shdepend d WHERE d.dbid=(SELECT oid FROM pg_catalog.pg_database WHERE datname=current_database()) AND d.classid='pg_catalog.pg_proc'::pg_catalog.regclass AND d.objid=f.oid)
+ )),'[]'::pg_catalog.jsonb) FROM pg_catalog.pg_proc f JOIN pg_catalog.pg_roles o ON o.oid=f.proowner JOIN pg_catalog.pg_language l ON l.oid=f.prolang
+ WHERE f.pronamespace='pg_catalog'::pg_catalog.regnamespace AND f.proname='${FRESH35_COMBINED_OBSERVER_NAME}')`;
+export function validateFresh35CombinedObserverObservation(rows,target){
+ need(Array.isArray(rows)&&rows.length===1,'OBSERVER_RAW_COHORT_DIFFERS');
+ const row=rows[0],f=row?.catalog,{proposal:p}=describeFresh35CombinedTarget(target);
+ const expected={proname:FRESH35_COMBINED_OBSERVER_NAME,pronamespace:'11',proowner:'10',prokind:'f',pronargs:0,pronargdefaults:0,proargtypes:[],prorettype:'16',proretset:false,prosecdef:true,proleakproof:false,proisstrict:false,provolatile:'v',proparallel:'u',procost:100,prorows:0,prosupport:'-',proallargtypes:null,proargmodes:null,proargnames:null,proargdefaults:null,protrftypes:null,probin:null,prosqlbody:null,proconfig:['search_path=pg_catalog, pg_temp'],prosrc:observerBody(target)};
+ need(row.owner===p.admin&&row.language==='plpgsql'&&f&&Object.entries(expected).every(([k,v])=>JSON.stringify(f[k])===JSON.stringify(v))&&Array.isArray(f.proacl)&&JSON.stringify([...f.proacl].sort())===JSON.stringify(observerAcl(target))&&typeof row.definition==='string'&&row.definition.length>0&&Array.isArray(row.dependencies)&&Array.isArray(row.sharedDependencies),'OBSERVER_RAW_SOURCE_OR_ACL_DIFFERS');
+}
 function targetGuard(target,{requireEmpty,runtime}){
  const binding=describeFresh35CombinedTarget(target),{proposal:p,physical:b,startsAt,expiresAt}=binding,q=quote,production=binding.purpose==='PRODUCTION_NEW_EMPTY_EXACT35';
  const network=production?null:bootstrapNetworks.get(target);need(production||network,'BOOTSTRAP_NETWORK_REQUIRED');if(network)checkBootstrapNetwork(target,network,network.value.sourceSetSha256);
@@ -118,7 +213,7 @@ function targetGuard(target,{requireEmpty,runtime}){
   ['WINDOW_START',`extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt}`],
   ['WINDOW_END',`extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}`],
   ['DATABASE_OWNER',`(SELECT pg_catalog.pg_get_userbyid(datdba) FROM pg_catalog.pg_database WHERE datname=current_database())=${q(p.owner)}`],
-  ['EXCLUSIVE_BACKENDS',"NOT EXISTS(SELECT 1 FROM pg_catalog.pg_stat_activity WHERE (backend_type='client backend' OR usename IS NOT NULL) AND pid<>pg_catalog.pg_backend_pid())"],
+  ['EXCLUSIVE_BACKENDS',`pg_catalog.${FRESH35_COMBINED_OBSERVER_NAME}()`],
   ['DATABASE_SET',`NOT EXISTS(SELECT 1 FROM pg_catalog.pg_database WHERE datname NOT IN('postgres','template0','template1',${q(p.database)}))`],
   ['NAMESPACE_SET',"NOT EXISTS(SELECT 1 FROM pg_catalog.pg_namespace WHERE nspname NOT IN('public','pg_catalog','information_schema','pg_toast','naijue_erp'))"],
   ['ROLE_SET',`NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE left(rolname,3)<>'pg_' AND rolname NOT IN(${roles.map(q).join(',')}))`],
@@ -126,7 +221,8 @@ function targetGuard(target,{requireEmpty,runtime}){
   ['EXTENSION_SET',"NOT EXISTS(SELECT 1 FROM pg_catalog.pg_extension WHERE extname<>'plpgsql')"],
   ['PREPARED_XACT_SET','NOT EXISTS(SELECT 1 FROM pg_catalog.pg_prepared_xacts)'],
  ];
- return `DO $fresh35_combined_target$
+ return `${fresh35CombinedObserverGuard(target)}
+DO $fresh35_combined_target$
 DECLARE
  physical_checks boolean[];
  physical_failure_codes CONSTANT text[] := ARRAY[${physicalPredicates.map(([label])=>q('FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_'+label)).join(',')}];

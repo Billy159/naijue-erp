@@ -120,4 +120,126 @@ class StagingTests(unittest.TestCase):
   newassign={n.targets[0].id:ast.dump(n) for n in new.body if isinstance(n,ast.Assign) and isinstance(n.targets[0],ast.Name)}
   for name in oldassign:self.assertEqual(oldassign[name],newassign[name],name)
 
+
+ def private_authority(self,index=1):
+  a={k:v for k,v in self.a.items() if k!='sourceSetSha256'}
+  a.update(format='T45_PRIVATE_STANDARD_IMPORT_DATA_STAGING_V1',decision='AUTHORIZE_EXACT_PRIVATE_STANDARD_IMPORT_DATA_STAGING',kind='PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT',manifestSha256=self.m.PRIVATE_STANDARD_DATA_MANIFEST,targetDirectory=self.cfg['control']+'/private-standard-import-data/'+a['artifactKey'])
+  offset,size,digest=self.m.PRIVATE_STANDARD_DATA_PARTS[index-1]
+  a.update(fragmentIndex=index,fragmentOffset=offset,archiveBytes=size,archiveSha256=digest)
+  return a
+ def test_private_exact_45_metadata_bindings_client_and_receiver(self):
+  ns,_=self.receiver()
+  self.assertEqual(len(self.m.PRIVATE_STANDARD_DATA_PARTS),45)
+  self.assertEqual(ns['PRIVATE_STANDARD_DATA_PARTS'],self.m.PRIVATE_STANDARD_DATA_PARTS)
+  for index in range(1,46):
+   a=self.private_authority(index)
+   self.assertEqual(self.m.artifact_authority(json.dumps(a).encode(),self.cfg),a)
+   ns['private_standard_data_authority'](a,self.cfg['control'],self.cfg['grantId'])
+  self.assertEqual(sum(x[1] for x in self.m.PRIVATE_STANDARD_DATA_PARTS),93508914)
+ def test_private_bad_manifest_part_offset_hash_kind_or_extra_rejected(self):
+  ns,_=self.receiver();a=self.private_authority()
+  for change in [{'manifestSha256':'c'*64},{'fragmentIndex':0},{'fragmentIndex':46},{'fragmentIndex':True},{'fragmentOffset':True},{'fragmentOffset':1},{'archiveBytes':True},{'archiveBytes':a['archiveBytes']+1},{'archiveSha256':'c'*64},{'kind':'PRIVATE_DATA'},{'sourceSetSha256':self.a['sourceSetSha256']},{'targetDirectory':self.a['targetDirectory']},{'format':self.a['format']},{'decision':self.a['decision']}]:
+   with self.subTest(change=change):
+    bad={**a,**change}
+    with self.assertRaises(ValueError):self.m.artifact_authority(json.dumps(bad).encode(),self.cfg)
+    with self.assertRaises(ValueError):ns['private_standard_data_authority'](bad,self.cfg['control'],self.cfg['grantId'])
+ def test_private_full_is_exact_and_network_stage_refused(self):
+  a=self.private_authority();a.pop('fragmentIndex');a.pop('fragmentOffset');a.update(kind='PRIVATE_STANDARD_IMPORT_DATA',archiveBytes=self.m.PRIVATE_STANDARD_DATA_BYTES,archiveSha256=self.m.PRIVATE_STANDARD_DATA_ARCHIVE)
+  self.assertEqual(self.m.artifact_authority(json.dumps(a).encode(),self.cfg),a)
+  raw=json.dumps(a).encode();self.auth.write_bytes(raw);self.args.authorization_sha256=hashlib.sha256(raw).hexdigest();self.archive.unlink()
+  with patch.object(self.m,'remote',side_effect=AssertionError('network forbidden')),self.assertRaisesRegex(ValueError,'SERVER_LOCAL_RECEIVER_ONLY'):self.m.artifact_stage(self.cfg,self.args)
+  for change in [{'archiveSha256':'c'*64},{'archiveBytes':93508913},{'fragmentIndex':1}]:
+   with self.assertRaises(ValueError):self.m.artifact_authority(json.dumps({**a,**change}).encode(),self.cfg)
+ def test_private_authority_requires_actual_root_leaf_and_existing_window(self):
+  a=self.private_authority();raw=json.dumps(a).encode();context={'authoritySha256':hashlib.sha256(raw).hexdigest(),'authority':a,'grantId':self.cfg['grantId'],'control':self.cfg['control']}
+  ns={'__name__':'offline'};exec(compile(self.m.ARTIFACT_REMOTE.replace('CONTEXT_LITERAL',repr(context),1),'offline','exec'),ns)
+  with patch('pathlib.Path.lstat',return_value=types.SimpleNamespace(st_uid=0,st_mode=0o100444)):
+   ns['read_regular']=lambda *args:raw
+   self.assertEqual(ns['authority'](),a)
+   ns['read_regular']=lambda *args:b'{}'
+   with self.assertRaisesRegex(ValueError,'EXTERNAL_AUTHORITY_DIFFERS'):ns['authority']()
+  for change in [{'expiresAt':1},{'expiresAt':int((self.cfg['expiresAtEpoch']+1)*1000)}]:
+   with self.assertRaises(ValueError):self.m.artifact_authority(json.dumps({**a,**change}).encode(),self.cfg)
+ def test_private_synthetic_binary_receiver_receipt_and_no_replay(self):
+  # Exercise raw transfer mechanics with synthetic bytes, never real archive data.
+  ns,a=self.receiver();a.pop('sourceSetSha256');a.update(kind='PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT',manifestSha256=self.m.PRIVATE_STANDARD_DATA_MANIFEST,fragmentIndex=1,fragmentOffset=0)
+  result=ns['upload'](a,io.BytesIO(self.data));r=result['receipt'];self.assertNotIn('sourceSetSha256',r);self.assertEqual(r['manifestSha256'],self.m.PRIVATE_STANDARD_DATA_MANIFEST);self.assertEqual(r['fragmentIndex'],1)
+  target=Path(a['targetDirectory']);self.assertEqual(target.stat().st_mode&0o777,0o700);self.assertEqual((target/'archive.bin').stat().st_mode&0o777,0o600)
+  self.assertEqual(ns['snapshot'](a)['status'],'READY')
+  with self.assertRaises(FileExistsError):ns['upload'](a,io.BytesIO(self.data))
+  a['fragmentOffset']=2;self.assertEqual(ns['snapshot'](a)['status'],'PARTIAL_OR_UNKNOWN_NO_REPLAY')
+ def test_private_existing_readable_parent_is_refused_not_chmodded(self):
+  ns,a=self.receiver();a['kind']='PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT';parent=Path(a['targetDirectory']).parent;parent.mkdir(mode=0o755);parent.chmod(0o755)
+  with self.assertRaisesRegex(ValueError,'PRIVATE_STANDARD_DATA_DIRECTORY_REQUIRED'):ns['upload'](a,io.BytesIO(self.data))
+  self.assertEqual(parent.stat().st_mode&0o777,0o755);self.assertFalse(Path(a['targetDirectory']).exists())
+ def test_private_fragment_status_no_payload_read(self):
+  a=self.private_authority();raw=json.dumps(a).encode();self.auth.write_bytes(raw);self.args.authorization_sha256=hashlib.sha256(raw).hexdigest();self.args.action='artifact-status';self.archive.unlink()
+  with patch.object(self.m,'artifact_channel',return_value={'status':'ABSENT'}) as call,patch('builtins.print'):self.m.artifact_stage(self.cfg,self.args)
+  self.assertEqual(call.call_args.args[-1],'status');self.assertFalse((self.root/('artifact-staging-attempt-'+a['artifactKey']+'.json')).exists())
+
+
+class StandardDataAssemblyTests(unittest.TestCase):
+ def setUp(self):
+  self.temp=tempfile.TemporaryDirectory(dir=ROOT.parent);self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name).resolve()
+  spec=importlib.util.spec_from_file_location('standard_assembly',ROOT.parent/'assemble_standard_data.py');self.m=importlib.util.module_from_spec(spec);spec.loader.exec_module(self.m)
+ def test_unbound_assembly_refuses_before_job_or_process(self):
+  with patch.object(self.m.subprocess,'run',side_effect=AssertionError('process forbidden')),self.assertRaisesRegex(ValueError,'C_PRIVATE_DATA_BINDINGS_REQUIRED'):self.m.main()
+ def fixture(self):
+  m=self.m;m.ASSEMBLY_JOB='offline-one-shot';m.JOB_ROOT=self.root/'jobs';job=m.JOB_ROOT/m.ASSEMBLY_JOB;(job/'bundle').mkdir(parents=True);(job/'results').mkdir();m.CONTROL=self.root/'control';m.CONTROL.mkdir(mode=0o700);(m.CONTROL/'private-standard-import-data').mkdir(mode=0o700)
+  m.PART_KEYS=tuple('fixture-part-'+str(i+1) for i in range(45));m.PART_AUTHORITY_SHAS=tuple(hashlib.sha256(('authority'+str(i)).encode()).hexdigest() for i in range(45));m.FINAL_KEY='fixture-full'
+  chunks=[('synthetic-%02d'%i).encode() for i in range(45)];m.FULL_BYTES=sum(map(len,chunks));m.FULL_SHA=hashlib.sha256(b''.join(chunks)).hexdigest();parts=[];offset=0
+  def write(p,b):
+   p.write_bytes(b);p.chmod(0o600)
+  for i,b in enumerate(chunks):
+   digest=hashlib.sha256(b).hexdigest();parts.append((offset,len(b),digest));d=m.CONTROL/'private-standard-import-data'/m.PART_KEYS[i];d.mkdir(mode=0o700);write(d/'archive.bin',b);z=(d/'archive.bin').stat()
+   r={'status':'READY','artifactKey':m.PART_KEYS[i],'manifestSha256':m.MANIFEST,'archiveSha256':digest,'archiveBytes':len(b),'authoritySha256':m.PART_AUTHORITY_SHAS[i],'fileIdentity':m.identity(z),'fragmentIndex':i+1,'fragmentOffset':offset};write(d/'ready.json',json.dumps(r).encode());offset+=len(b)
+  m.PARTS=tuple(parts);receiver=(ROOT.parent/'artifact-receiver.private-candidate.py').read_bytes();write(job/'bundle/artifact-receiver.standard.py',receiver);self.assertEqual(hashlib.sha256(receiver).hexdigest(),m.RECEIVER_SHA)
+  now=int(time.time()*1000);final={'format':'T45_PRIVATE_STANDARD_IMPORT_DATA_STAGING_V1','decision':'AUTHORIZE_EXACT_PRIVATE_STANDARD_IMPORT_DATA_STAGING','taskId':'T45','grantId':m.GRANT,'kind':'PRIVATE_STANDARD_IMPORT_DATA','manifestSha256':m.MANIFEST,'artifactKey':m.FINAL_KEY,'archiveBytes':m.FULL_BYTES,'archiveSha256':m.FULL_SHA,'targetDirectory':str(m.CONTROL/'private-standard-import-data'/m.FINAL_KEY),'startsAt':now-1000,'expiresAt':now+60000,'decisionReference':'isolated synthetic external-authority fixture only'};raw=json.dumps(final).encode();m.FINAL_AUTHORITY_SHA=hashlib.sha256(raw).hexdigest();write(job/'bundle/final-stage-authorization.json',raw)
+  oldsmall=m.small
+  def small(path,uid):
+   if str(path).startswith('/usr/local/lib/naijue-erp-night/'):return raw
+   return oldsmall(path,uid)
+  oldfstat=os.fstat
+  def meta(z,uid=0,gid=0):
+   return types.SimpleNamespace(**{k:getattr(z,k) for k in ['st_dev','st_ino','st_size','st_mtime_ns','st_ctime_ns','st_mode','st_nlink']},st_uid=uid,st_gid=gid)
+  oldopen=m.fixed_open
+  def fixed(path,uid,maximum,exact=None):
+   fd,z=oldopen(path,0,maximum,exact);return fd,meta(z,uid,1000 if uid==1000 else 0)
+  def receive(args,**kw):
+   self.assertEqual(kw['timeout'],40);self.assertEqual(kw['user'],1000);self.assertEqual(kw['group'],1000);self.assertEqual(kw['extra_groups'],[]);self.assertEqual(os.read(kw['stdin'],m.FULL_BYTES+1),b''.join(chunks))
+   receipt={'artifactKey':m.FINAL_KEY,'manifestSha256':m.MANIFEST,'archiveSha256':m.FULL_SHA,'archiveBytes':m.FULL_BYTES,'authoritySha256':m.FINAL_AUTHORITY_SHA}
+   return types.SimpleNamespace(returncode=0,stdout=json.dumps({'status':'READY','receipt':receipt}).encode())
+  stack=__import__('contextlib').ExitStack();self.addCleanup(stack.close);stack.enter_context(patch.dict(os.environ,{'ERP_SHARED_TASK_ID':'T45','ERP_SHARED_JOB_DIR':str(job)}));stack.enter_context(patch.object(m.os,'getuid',return_value=0));stack.enter_context(patch.object(m.os,'geteuid',return_value=0));stack.enter_context(patch.object(m.os,'fstat',side_effect=lambda fd:meta(oldfstat(fd))));stack.enter_context(patch.object(m,'fixed_open',side_effect=fixed));stack.enter_context(patch.object(m,'small',side_effect=small));call=stack.enter_context(patch.object(m.subprocess,'run',side_effect=receive));return job,chunks,call
+ def test_45_synthetic_parts_stream_exactly_once_and_receiver_owns_ready(self):
+  job,chunks,call=self.fixture();self.m.main();self.assertEqual(call.call_count,1);self.assertEqual((job/'standard-import-data.tar.gz').read_bytes(),b''.join(chunks));r=json.loads((job/'results/standard-data-assembly.json').read_bytes());self.assertFalse(r['readyManuallyWritten']);self.assertEqual(r['partCount'],45);self.assertFalse((self.m.CONTROL/'private-standard-import-data'/self.m.FINAL_KEY).exists())
+  with self.assertRaises(FileExistsError):self.m.main()
+  self.assertEqual(call.call_count,1)
+ def test_changed_fragment_never_reaches_receiver(self):
+  job,chunks,call=self.fixture();p=self.m.CONTROL/'private-standard-import-data'/self.m.PART_KEYS[17]/'archive.bin';p.write_bytes(b'x'*len(chunks[17]))
+  with self.assertRaisesRegex(ValueError,'PRIVATE_FRAGMENT_IDENTITY_DIFFERS'):self.m.main()
+  self.assertEqual(call.call_count,0);self.assertFalse((job/'results/standard-data-assembly.json').exists())
+
+
+ def test_fragment_growth_is_refused_before_extra_bytes_are_written(self):
+  job,chunks,call=self.fixture();m=self.m;part=m.CONTROL/'private-standard-import-data'/m.PART_KEYS[0]/'archive.bin';oldread=os.read;grown=False
+  def read(fd,n):
+   nonlocal grown
+   b=oldread(fd,n)
+   if not grown and b==chunks[0]:
+    with part.open('ab') as f:f.write(b'EXTRA_GROWTH')
+    grown=True
+   return b
+  with patch.object(m.os,'read',side_effect=read),self.assertRaises(ValueError) as error:m.main()
+  self.assertTrue(grown);self.assertEqual((job/'standard-import-data.tar.gz').read_bytes(),chunks[0]);self.assertEqual(str(error.exception),'EXACT_FRAGMENT_EXTRA_STREAM');self.assertEqual(call.call_count,0);self.assertFalse((job/'results/standard-data-assembly.json').exists())
+ def test_expiry_after_fragment_read_refuses_write(self):
+  job,chunks,call=self.fixture();m=self.m;final=json.loads((job/'bundle/final-stage-authorization.json').read_bytes());oldread=os.read;now=time.time();expired=False
+  def read(fd,n):
+   nonlocal expired
+   b=oldread(fd,n)
+   if b==chunks[0]:expired=True
+   return b
+  def clock():return final['expiresAt']/1000+0.001 if expired else now
+  with patch.object(m.os,'read',side_effect=read),patch.object(m.time,'time',side_effect=clock),self.assertRaises(ValueError) as error:m.main()
+  self.assertTrue(expired);self.assertEqual((job/'standard-import-data.tar.gz').stat().st_size,0);self.assertEqual(str(error.exception),'PRIVATE_STANDARD_DATA_ASSEMBLY_DEADLINE_EXPIRED');self.assertEqual(call.call_count,0);self.assertFalse((job/'results/standard-data-assembly.json').exists())
+
 if __name__=='__main__':unittest.main()

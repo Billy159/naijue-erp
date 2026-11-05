@@ -12,7 +12,7 @@ import {pathToFileURL} from 'node:url';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
 import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
 import {loadFresh35CombinedSource,describeFresh35CombinedSource,resolveFresh35ReferenceInputPaths} from './fresh35-combined-source-v1.mjs';
-import {bindFresh35CombinedTarget} from './fresh35-combined-target-v1.mjs';
+import {bindFresh35CombinedTarget,fresh35CombinedBootstrapObserverSql} from './fresh35-combined-target-v1.mjs';
 import {buildFresh35CombinedCatalog} from './fresh35-combined-catalog-v1.mjs';
 import {compileFresh35CombinedProgram,describeFresh35CombinedProgram,loadFresh35CombinedAuthorization,runFresh35CombinedInstall,describeFresh35CombinedCompletion,describeFresh35CombinedInstallFailure} from './fresh35-combined-lifecycle-v1.mjs';
 import {publishFresh35CombinedRecord} from './fresh35-combined-record-v1.mjs';
@@ -29,7 +29,7 @@ async function privateText(path){
 }
 export async function main(){
  need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0&&process.version==='v24.21.0','TRUSTED_ROOT_RUNTIME_REQUIRED');
- need(['--describe','--execute','--verify-host','--verify-host-rollback','--verify-host-commit'].includes(process.argv[2])&&process.argv.length===(process.argv[2]==='--verify-host-commit'?4:3)&&(process.argv[2]!=='--verify-host-commit'||/^[a-f0-9]{64}$/.test(process.argv[3]))&&process.argv[1]===root+'/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs','FIXED_ENTRY_REQUIRED');
+ need(['--bootstrap-observer','--describe','--execute','--verify-host','--verify-host-rollback','--verify-host-commit'].includes(process.argv[2])&&process.argv.length===(process.argv[2]==='--verify-host-commit'?4:3)&&(process.argv[2]!=='--verify-host-commit'||/^[a-f0-9]{64}$/.test(process.argv[3]))&&process.argv[1]===root+'/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs','FIXED_ENTRY_REQUIRED');
  need(!Object.keys(process.env).some(k=>k==='NODE_OPTIONS'||k==='NODE_PATH'||k==='DATABASE_URL'||k.startsWith('PG')||k.startsWith('LD_')||k.startsWith('DYLD_')),'CLEAN_ENV_REQUIRED');
  await assertTrustedRootTree(root);await assertTrustedRootPath(process.execPath);
  const a=parseStrictJson(await privateText(authority));
@@ -42,6 +42,7 @@ export async function main(){
  const source=await loadFresh35CombinedSource(root,{baselineDirectory:paths.baselineDirectory});
  need(describeFresh35CombinedSource(source).sourceSetSha256===a.sourceSetSha256,'SOURCE_SET_DIFFERS');
  const target=bindFresh35CombinedTarget(input);
+ if(process.argv[2]==='--bootstrap-observer'){process.stdout.write(fresh35CombinedBootstrapObserverSql(target));return;}
  const catalog=await buildFresh35CombinedCatalog(source,target,paths);
  const program=await compileFresh35CombinedProgram({source,target,catalog});
  if(process.argv[2]==='--describe'){process.stdout.write(JSON.stringify(describeFresh35CombinedProgram(program))+'\n');return;}
