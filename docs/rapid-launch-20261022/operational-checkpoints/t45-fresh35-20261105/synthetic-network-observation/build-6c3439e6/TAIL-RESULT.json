@@ -1,0 +1,28 @@
+{
+  "status": "EXACT_PREFIX_TAIL_STREAM_PROVED",
+  "base": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-19b22326/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83681662,
+    "sha256": "f08cf2e73cae0ef469cdac86c103c03df990a5aba9e66b54bc0f8496242d07d3"
+  },
+  "prefix": {
+    "bytes": 80885307,
+    "sha256": "c2ac0bbf930e3dbc741488c213d479c28d158faeeaf0caab979b1dbaa24be418",
+    "byteCompared": true
+  },
+  "tail": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-6c3439e6/ordinary/recovery-tail-next-01/ordinary-transfer.tail-offset-80885307.bin",
+    "bytes": 2801867,
+    "sha256": "3ba86bf940b2dc0b8ec5c15ce53a4aa3a1984f67640e42fc6cb86730e005fe12"
+  },
+  "target": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-6c3439e6/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83687174,
+    "sha256": "de49799b1af12c01f6269d8a9fa0374276c3339013fbc8865cb0af25c200265e"
+  },
+  "streamReconstructionSha256": "de49799b1af12c01f6269d8a9fa0374276c3339013fbc8865cb0af25c200265e",
+  "recompressed": false,
+  "fullCopyWritten": false,
+  "transportNotTested": true,
+  "noServerActions": true
+}

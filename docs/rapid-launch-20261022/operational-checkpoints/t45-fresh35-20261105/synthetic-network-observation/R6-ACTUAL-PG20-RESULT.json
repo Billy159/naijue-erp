@@ -1,0 +1,106 @@
+{
+  "status": "INSTALL_FAILED_ROLLED_BACK_EXACT_R6_STOPPED_NO_REPLAY_NOT_BUSINESS_PASS",
+  "recordedAtUTC": "2026-11-05T23:33:05.161469+00:00",
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "sourceSetSha256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+  "archiveSha256": "f08cf2e73cae0ef469cdac86c103c03df990a5aba9e66b54bc0f8496242d07d3",
+  "manifestSha256": "9a9d52e0ea831443ce54c5a04a89f9cdbd3f210e104a0ae177e24d8842b54cbe",
+  "cid": "2788c02b95d4d5f096715fa8b4441c3b60782fe173526f4020bd6f47c397e97b",
+  "target": {
+    "expiresAt": 1793922198194,
+    "physical": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-05 23:25:49.299116+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7704832651633803311"
+    },
+    "proposal": {
+      "admin": "fresh35_admin_20261105_r1",
+      "controller": "fresh35_controller_20261105_r1",
+      "database": "synthetic_fresh35_20261105_r1",
+      "host": "127.0.0.1",
+      "owner": "fresh35_owner_20261105_r1",
+      "port": 18651,
+      "runtime": "fresh35_runtime_20261105_r1",
+      "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+    },
+    "startsAt": 1793920998194
+  },
+  "programSha256": "551e598879aa58e7a4824c4eb6a45c06ac81012f16716cef4f331db40fb36ea8",
+  "targetSha256": "15d28996da212498ca111617d1d84c404e5cff50ef409dcd7f7db4feb215471d",
+  "externalProvisionSha256": "1ee0aac051085a654c98f8382f964423d971676f224e6c173919e7e05a80639b",
+  "externalInstallSha256": "b06d297709012dc1792f580d30a837cc40f931e25ef7ddb17652972a74cc0161",
+  "startReceipt": {
+    "jobId": "t45-f35-19b223-start-20261106-01",
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-19b223-start-20261106-01/transport/release-receipts/t45-f35-19b223-start-20261106-01/fresh35-start-target-result.json",
+    "sha256": "9785ccd9ebf8baa77054483622852e23587b7109bc157310e698583e806b0371"
+  },
+  "installJob": {
+    "jobId": "t45-f35-19b223-install-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-c27bd0c3dea8",
+    "atUTC": "2026-11-05T23:30:55.547150+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 20.77101958822459,
+    "exports": [
+      "fresh35-deliver-install-result.json"
+    ],
+    "finishedAtUTC": "2026-11-05T23:31:16.342217+00:00"
+  },
+  "installReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-19b223-install-20261106-01/transport/release-receipts/t45-f35-19b223-install-20261106-01/fresh35-deliver-install-result.json",
+    "sha256": "f9df462af6c94feae1cda19a787aa3cbb401483d9be9560202efea136e4652b7",
+    "jobSha256": "4c899b976683b12af8551a39e339828bd5fa9a58761eaf2f6a75f44898b1da85"
+  },
+  "nativeSafeDiagnostic": {
+    "automaticRetry": false,
+    "code": "FRESH35_ISOLATED_ENTRY_FAILED",
+    "diagnosticUnavailable": false,
+    "exitCode": 1,
+    "installState": "ROLLED_BACK",
+    "originalInternalCode": null,
+    "originalSQLSTATE": "P0001",
+    "rollbackInternalCode": null,
+    "rollbackSQLSTATE": null,
+    "stage": "STEP",
+    "state": "INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+    "step": "complete-successor-catalog",
+    "validationCode": null,
+    "validationStage": null
+  },
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    },
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "containerStopped": true,
+  "launcherExitCode": 1,
+  "ordinaryProofEvidence": {},
+  "publishedRecordObserved": false,
+  "synthetic25ResultObserved": false,
+  "ordinaryBusinessResultObserved": false,
+  "specificFailureCause": "UNKNOWN_FROM_SAFE_DIAGNOSTIC_NO_INFERENCE",
+  "replayed": false,
+  "r5Reused": false,
+  "REALImported": false,
+  "productionChanged": false,
+  "sourceServerBuildHeavyReleased": true,
+  "next": "C-directed exact source successor or narrowly authorized existing-log read only; do not replay this key or reuse its target/window."
+}

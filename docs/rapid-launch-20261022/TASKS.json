@@ -28378,7 +28378,8 @@
       },
       "remoteReadbackAt": "2026-11-06T06:22:45+08:00",
       "verifiedIntegration": "951de47dfcb3526b8d374b78f00167671bae9c67",
-      "verifiedBuildRoot": "3de75b77f8be7fdb1be3f889e5b9521ff1d57b55"
+      "verifiedBuildRoot": "3de75b77f8be7fdb1be3f889e5b9521ff1d57b55",
+      "pendingLocalCheckpoint": "1517d619 plus current r6 failure receipts; GitHub commit_refs_rules server rejection twice; rulesets API empty; no force/bypass; last successful integration6ff2/root19b"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -29901,7 +29902,7 @@
         "businessAccepted": false
       },
       "r6Preparation": {
-        "state": "ACTUAL_MATERIALIZATION_PASS_NEW_PG20_AUTHORIZED",
+        "state": "ACTUAL_INSTALL_FAILED_ROLLED_BACK_CLEANLY_STOPPED_NOT_REPLAYED",
         "buildRoot": "19b2232649ab07a7cd43a75596f43221333d7cdd",
         "integration": "1e7aaa130ab1eef576f262a7f78ea7623d95e2ae",
         "sourceSetSHA256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
@@ -29931,7 +29932,19 @@
         "resourceReceiptSHA256": "f19df126300c56dcd7bcc9a9b3173d08b75c56d3f579ffff975b4f3986f21a65",
         "provisionAuthoritySHA256": "1ee0aac051085a654c98f8382f964423d971676f224e6c173919e7e05a80639b",
         "pgStartsAt": 1793920998194,
-        "pgExpiresAt": 1793922198194
+        "pgExpiresAt": 1793922198194,
+        "installAuthoritySHA256": "b06d297709012dc1792f580d30a837cc40f931e25ef7ddb17652972a74cc0161",
+        "actualStartSHA256": "9785ccd9ebf8baa77054483622852e23587b7109bc157310e698583e806b0371",
+        "actualResultSHA256": "d4dc8510493aa3ba703401567388914067b245e3bf1c121f4d40fada82a82f94",
+        "installReceiptSHA256": "f9df462af6c94feae1cda19a787aa3cbb401483d9be9560202efea136e4652b7",
+        "failureStage": "complete-successor-catalog",
+        "sqlstate": "P0001",
+        "atomicOutcome": "ROLLED_BACK",
+        "cleanupComplete": true,
+        "containerStopped": true,
+        "syntheticImportPassed": false,
+        "ordinaryBusinessPassed": false,
+        "exactCause": "UNKNOWN_PENDING_D1_STATIC_RAISE_AND_T45_BOUNDED_STOPPED_LOG_READ"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30198,7 +30211,30 @@
       "fixedCandidate": "6ff2b607418da90f0d4dbf64449fdf5f8c46e958",
       "scope": "Only peer Name/Aliases DNS case equivalence; exact expected alias bytes remain; unaffected review reused.",
       "qbF01SHA256": "e07a2c22210927557d8feb5da87af2a2c1cceb7cb93cf06e08e9bc488c343acb",
-      "nextBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c"
+      "nextBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
+      "productionCarrierSource": {
+        "state": "FIXED_TWO_LEAF_AUTHOR_LOCAL6_PASS_QB_IN_PROGRESS_NOT_EXECUTED",
+        "readySHA256": "5aa4cd30b6ad90611791e3523fc58b3332814bc3e1839cdcc41b40b7fc006c19",
+        "sourceSHA256": "10f1cd5003e6d5a35a711ec9fae323f83e4ab31b76281ed945ddc930a15c3bae",
+        "unbound": true
+      },
+      "build6c3439": {
+        "state": "BUILD_PACK_INDEPENDENT_READBACK_PASS_NOT_RUNTIME",
+        "root": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
+        "integration": "6ff2b607418da90f0d4dbf64449fdf5f8c46e958",
+        "tree": "37d5fca109aaa084d49f28e3dcdc44e7fc718e81",
+        "resultSHA256": "019d448f3e04b4d45c9cd196ef55aec0d14dfca5708d2262bfb55bd44403cee0",
+        "sourceSetSHA256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+        "sourceSetScope": "App214/180 unchanged; release namespace7 leaves bound by newGit root and SOURCE-CLOSURE independently",
+        "archiveSHA256": "de49799b1af12c01f6269d8a9fa0374276c3339013fbc8865cb0af25c200265e",
+        "archiveBytes": 83687174,
+        "manifestSHA256": "be272923def11419d43bdf04861fdd7914ba07b5a10811fcab31bcf3b62de5ad",
+        "manifestBytes": 1084429,
+        "tailBytes": 2801867,
+        "tailSHA256": "3ba86bf940b2dc0b8ec5c15ce53a4aa3a1984f67640e42fc6cb86730e005fe12",
+        "prefixBytes": 80885307,
+        "prefixSHA256": "c2ac0bbf930e3dbc741488c213d479c28d158faeeaf0caab979b1dbaa24be418"
+      }
     }
   }
 }

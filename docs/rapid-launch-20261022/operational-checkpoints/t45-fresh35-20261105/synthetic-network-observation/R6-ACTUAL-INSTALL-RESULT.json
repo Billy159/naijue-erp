@@ -1,0 +1,106 @@
+{
+  "cid": "2788c02b95d4d5f096715fa8b4441c3b60782fe173526f4020bd6f47c397e97b",
+  "containerStopped": true,
+  "delivery": {
+    "approvalCreated": false,
+    "cid": "2788c02b95d4d5f096715fa8b4441c3b60782fe173526f4020bd6f47c397e97b",
+    "sha256": "b06d297709012dc1792f580d30a837cc40f931e25ef7ddb17652972a74cc0161",
+    "status": "EXTERNAL_INSTALL_BYTES_COPIED_ONCE"
+  },
+  "evidence": {
+    "bootstrap-network-observation.json": {
+      "adminActor": "fresh35_admin_20261105_r1",
+      "databaseOid": "16393",
+      "expiresAt": 1793922198194,
+      "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+      "host": "127.0.0.1",
+      "listenAddresses": "127.0.0.1",
+      "port": 18651,
+      "postmasterStart": "2026-11-05 23:25:49.299116+00",
+      "serverVersionNum": "170011",
+      "sourceSetSha256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+      "startsAt": 1793920998194,
+      "systemIdentifier": "7704832651633803311",
+      "unixSocketDirectories": ""
+    },
+    "cleanup.json": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "errors": [],
+      "initialization": {
+        "descendantsReaped": true,
+        "errors": [],
+        "initialized": true,
+        "initializerReaped": true,
+        "stopReason": "INITIALIZER_EXITED"
+      },
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "failure.json": {
+      "automaticRetry": false,
+      "code": "FRESH35_ISOLATED_INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+      "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+    },
+    "installation-child-failure.json": {
+      "automaticRetry": false,
+      "code": "FRESH35_ISOLATED_ENTRY_FAILED",
+      "diagnosticUnavailable": false,
+      "exitCode": 1,
+      "installState": "ROLLED_BACK",
+      "originalInternalCode": null,
+      "originalSQLSTATE": "P0001",
+      "rollbackInternalCode": null,
+      "rollbackSQLSTATE": null,
+      "stage": "STEP",
+      "state": "INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+      "step": "complete-successor-catalog",
+      "validationCode": null,
+      "validationStage": null
+    },
+    "runtime-dependencies.json": {
+      "arch": "x64",
+      "fastify": "5.12.5",
+      "libvips": "8.18.7",
+      "pg": "8.23.1",
+      "platform": "linux",
+      "sharp": "0.35.5"
+    }
+  },
+  "evidenceSha256": {
+    "bootstrap-network-observation.json": "3c5dfbbccbfd9ba81ec73c94abec3b7f18858de5552349d52d9d25eaa320e907"
+  },
+  "forcedStopIsNotCleanShutdownProof": true,
+  "launcherExitCode": 1,
+  "ordinaryProofEvidence": {},
+  "sourceResult": {
+    "businessVerified": false,
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "errors": [],
+      "initialization": {
+        "descendantsReaped": true,
+        "errors": [],
+        "initialized": true,
+        "initializerReaped": true,
+        "stopReason": "INITIALIZER_EXITED"
+      },
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "hostEnabled": false,
+    "hostVerified": false,
+    "independentSnapshotsVerified": false,
+    "ordinaryBusinessVerified": false,
+    "productionVerified": false,
+    "recordPublished": null,
+    "state": "FAILED_OR_CLEANUP_UNCONFIRMED",
+    "syntheticImportVerified": false
+  },
+  "status": "FAILED_OR_UNKNOWN_PRESERVED_NO_REPLAY"
+}

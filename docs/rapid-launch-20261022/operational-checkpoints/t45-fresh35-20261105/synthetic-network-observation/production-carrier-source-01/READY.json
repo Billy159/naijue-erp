@@ -1,0 +1,90 @@
+{
+  "status": "PRODUCTION_CARRIER_SOURCE_PREPARATION_LOCAL6_PASS_PENDING_C_FIXED_PINS_AND_QB_NOT_EXECUTED",
+  "recordedAtUTC": "2026-11-05T23:29:54.049041+00:00",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-source-01/fresh35-container-successor.py",
+      "bytes": 51381,
+      "sha256": "10f1cd5003e6d5a35a711ec9fae323f83e4ab31b76281ed945ddc930a15c3bae"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-source-01/test_production_carrier.py",
+      "bytes": 9373,
+      "sha256": "820d3c296c3bac5028b2e399923a12ac0c108f98bdcc52d701d45cc901b1af86"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-production-carrier-source-01/production-carrier-only.patch",
+      "bytes": 18426,
+      "sha256": "ad67a607b3adfb6661984530dd198d612f2d3f8129ea9b6ff9a0c143576ee67f"
+    }
+  ],
+  "parentR6OpsSha256": "3110fa97e86a4669c698346658a739d379c3d077b77ed9c46d8724ab5576ed31",
+  "changedOriginalFunctions": [
+    "main"
+  ],
+  "allSyntheticFunctionsExceptMainAstUnchanged": true,
+  "addedFunctions": [
+    "load_production_plan",
+    "owned_production",
+    "production_authority",
+    "production_common",
+    "production_factory",
+    "production_facts",
+    "production_front",
+    "production_info",
+    "production_process_namespace",
+    "production_start",
+    "recover_production_carrier"
+  ],
+  "newPhases": [
+    "production-start",
+    "production-facts"
+  ],
+  "additionalCPlanField": {
+    "productionCarrier": {
+      "format": "FRESH35_PRODUCTION_CONTAINER_V2",
+      "front": [
+        "id",
+        "name=naijue-prod-front"
+      ],
+      "futureAppName": "Exact C future naijue-rewrite-...-app name"
+    }
+  },
+  "externalAuthority": "Original C14 bytes+SHA through fixed job bundle; original production Python validator and durable native receipt checker reused. C6/9 remain independently C-issued, never manufactured here.",
+  "actualFactsOnly": [
+    "New carrier CID/image/start/PID/startticks/netns/frontEndpointId/fullalias-set",
+    "Original creation facts for C entry6",
+    "Shared namespace PLAN binding only after genuine durable native V2 record bytes/result, exact service-retained receipt, original PG process metadata and live same carrier birth"
+  ],
+  "network": "Initial existing front network plus unique future app alias during new carrier creation only; DNS case-equivalent conflicts refused. No connect/disconnect/old alias mutation, no published PG port or data attach.",
+  "lifetime": "Original production Python owns install20min and independent finite service lease plus original stop/reap. Carrier timeout uses service deadline plus existing caller30s cleanup wait only; no automatic renewal.",
+  "checks": {
+    "localSyntheticGroups": 6,
+    "result": "PASS_0_049_SECONDS",
+    "syntax": "PASS",
+    "whitespace": "NO_DIAGNOSTICS",
+    "existingGroupsRerun": false,
+    "noDockerPGOrNetwork": true
+  },
+  "parametersStillUnbound": [
+    "Final production SOURCE/archive/manifest/membercount/key constants",
+    "Independent production ROOT phaseb-application-production-* and NAME t45-fresh35-production-*; current copied r6 defaults deliberately refuse production plan",
+    "Actual existing front ID and future app name from C preflight",
+    "C14/6/9 and independent actual creation/install/service deadlines"
+  ],
+  "unknownOutcomes": "Original name/intent readback only; never create twice. No force stop inferred from an unknown native result; original production guardian and finite carrier lifetime remain authoritative, cleanup facts preserved for C target owner.",
+  "notCovered": [
+    "Actual container creation/front route/API Web reachability or SQL",
+    "External C6/9 transport phases are intentionally not introduced; original C delivery steps still required",
+    "No actual production target is authorized or created by this source READY"
+  ],
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "serverActions": 0,
+  "builds": 0,
+  "PGConnections": 0,
+  "productionCreated": false,
+  "r6FrozenOpsChanged": false,
+  "sharedNamespaceReviewed7LeavesChanged": false,
+  "commitsOrPushes": 0
+}
