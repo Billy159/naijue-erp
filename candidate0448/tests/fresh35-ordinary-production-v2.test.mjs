@@ -19,7 +19,7 @@ async function model({synthetic=false}={}){
  const prefix=`import {lstat,readFile} from 'node:fs/promises';import {watch as nativeWatch,writeFileSync,renameSync,unlinkSync} from 'node:fs';import {resolve,dirname} from 'node:path';import {createHash} from 'node:crypto';
  const moduleRoot=${JSON.stringify(root)},FRESH35_COMBINED_RECORD_PATH=${JSON.stringify(recordPath)},loadedHostSha256='a'.repeat(64),FRESH35_COMBINED_RECORD_MODULE_SHA256='c'.repeat(64),t=${JSON.stringify(t)},record=${JSON.stringify(record)};
  const hash=x=>createHash('sha256').update(x).digest('hex'),need=(ok,code)=>{if(!ok)throw Error('FRESH35_HOST_'+code)},ack=(r,tag)=>need(r?.command===tag,'ACK_INVALID');
- let clock=${now};const Date={now:()=>clock,parse:globalThis.Date.parse};export function expire(){clock=${expiry+1}};function bindFresh35CombinedTarget(){return {}};
+ let clock=${now};const Date={now:()=>clock,parse:globalThis.Date.parse};export function expire(){clock=${expiry+1}};export function setTime(value){clock=value};function bindFresh35CombinedTarget(){return {}};
  const snapshots=new WeakMap(),watchers=new Set();let swap;
  export function setSwap(value){swap=value}export function activeWatchers(){return watchers.size}
  function watch(path,callback){const w=nativeWatch(path,callback);watchers.add(w);const close=w.close.bind(w);w.close=()=>{watchers.delete(w);return close()};return w}
@@ -93,4 +93,23 @@ test('synthetic ordinary rejects non-V1 record, bad real identity/lifetime/membe
  }
  for(const failure of ['identity','catalog']){const m=await model({synthetic:true});try{m.fail(failure);await assert.rejects(()=>m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection),/MODEL_/);assert.equal(m.api.activeWatchers(),0);assert(m.clients.every(c=>c.released))}finally{await m.dispose()}}
  for(const stage of ['validate-replace','after-watch-replace','release-replace','release-error']){const m=await model({synthetic:true});try{m.api.setSwap(stage);await assert.rejects(()=>m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection),/PROTECTED_RECORD_|ORDINARY_|MODEL_RELEASE_ERROR/);assert.equal(m.api.activeWatchers(),0)}finally{await m.dispose()}}
+});
+
+
+test('synthetic capability expires at observed LOGIN cutoff even during an already borrowed transaction',async()=>{
+ for(const [check,offset] of ['current','describe','lease'].flatMap(check=>[0,1].map(offset=>[check,offset]))){
+  const m=await model({synthetic:true});let cap;const lease=m.client();
+  try{
+   cap=await m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection);
+   await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,lease);await lease.query('BEGIN ISOLATION LEVEL READ COMMITTED');
+   const cutoff=Date.parse(m.row.observedLoginValidUntil),d=m.api.describeFresh35OrdinaryAdmissionV2(cap);
+   m.api.setTime(cutoff-1);await m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool);
+   m.api.setTime(cutoff+offset);assert.equal(lease.getTransactionStatus(),'T');
+   if(check==='describe')assert.throws(()=>m.api.describeFresh35OrdinaryAdmissionV2(cap),/WINDOW_EXPIRED/);
+   else if(check==='lease'){await lease.query('ROLLBACK');await assert.rejects(()=>m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,lease),/WINDOW_EXPIRED/);}
+   else await assert.rejects(()=>m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/WINDOW_EXPIRED/);
+   assert.equal(m.api.activeWatchers(),0);assert.throws(()=>m.api.describeFresh35OrdinaryAdmissionV2(cap),/ACTIVE_ADMISSION/);
+   assert.equal(d.expiresAt,cutoff,'Public synthetic expiry is the effective earlier deadline');
+  }finally{await lease.query('ROLLBACK');if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);lease.release(true);await m.dispose();}
+ }
 });

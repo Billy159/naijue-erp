@@ -99,7 +99,12 @@ const ordinaryIdentitySql=`/* fresh35-ordinary:physical-before-role */ SELECT
  FROM pg_catalog.pg_roles r WHERE r.rolname=session_user`;
 const syntheticIdentitySql=ordinaryIdentitySql.replace("(CASE WHEN $1::text IS NULL THEN (r.rolvaliduntil IS NULL OR r.rolvaliduntil='infinity'::timestamptz) ELSE r.rolvaliduntil=$1::timestamptz END AND (r.rolvaliduntil IS NULL OR r.rolvaliduntil>clock_timestamp())) AS \"lifetimeMatches\",", "(r.rolvaliduntil>clock_timestamp() AND r.rolvaliduntil<=to_timestamp($1::double precision/1000)) AS \"lifetimeMatches\",r.rolvaliduntil::text AS \"observedLoginValidUntil\",");
 const ordinaryStatus=client=>client?.getTransactionStatus?.();
-function syntheticWindow(state){if(state.synthetic){try{need(Date.now()>=state.t.startsAt&&Date.now()<state.t.expiresAt,'SYNTHETIC_ORDINARY_WINDOW_EXPIRED')}catch(error){revokeOrdinary(state);throw error}}}
+function syntheticWindow(state){
+ if(!state.synthetic)return;
+ const deadline=Math.min(state.t.expiresAt,state.t.ordinary.runtimeLoginValidUntil===null?state.t.expiresAt:Date.parse(state.t.ordinary.runtimeLoginValidUntil));
+ try{need(Date.now()>=state.t.startsAt&&Date.now()<deadline,'SYNTHETIC_ORDINARY_WINDOW_EXPIRED')}catch(error){revokeOrdinary(state);throw error}
+ return deadline;
+}
 const identityQuery=state=>state.synthetic?syntheticIdentitySql:ordinaryIdentitySql;
 const identityParameter=state=>state.synthetic?state.t.expiresAt:state.t.ordinary.runtimeLoginValidUntil;
 function ordinaryState(cap,pool){const state=ordinaryAdmissions.get(cap);need(state&&state.active&&state.pool===pool,'ORDINARY_ACTIVE_SAME_POOL_REQUIRED');syntheticWindow(state);return state;}
@@ -156,7 +161,7 @@ async function admitOrdinaryPool(pool,connection,synthetic){
   const observed=await client.query(sql.observationSql);need(observed.rows?.length===1,'ORDINARY_CATALOG_PACKET_REQUIRED');(synthetic?module.validateFresh35CombinedSyntheticOrdinaryCatalogObservation:module.validateFresh35CombinedOrdinaryCatalogObservation)(observed.rows[0].catalog_json,catalog,source,target);
   ack(await client.query('ROLLBACK'),'ROLLBACK');began=false;
   need(ordinaryStatus(client)==='I'&&state.active,'ORDINARY_STARTUP_INVALIDATED');
-  syntheticWindow(state);state.description=Object.freeze({...(synthetic?{purpose:'SYNTHETIC_ISOLATED_ORDINARY_V1',expiresAt:t.expiresAt}:{}),systemIdentifier:t.physical.systemIdentifier,databaseOid:t.physical.databaseOid,database:t.proposal.database,user:t.proposal.runtime,connectHost:t.ordinary.connectHost,connectPort:t.ordinary.connectPort,serverAddress:t.ordinary.serverAddress,serverPort:t.ordinary.serverPort,postmasterStart:physical.postmasterStart,recordSha256,sourceSetSha256:record.binding.sourceSetSha256});
+  const effectiveExpiry=syntheticWindow(state);state.description=Object.freeze({...(synthetic?{purpose:'SYNTHETIC_ISOLATED_ORDINARY_V1',expiresAt:effectiveExpiry}:{}),systemIdentifier:t.physical.systemIdentifier,databaseOid:t.physical.databaseOid,database:t.proposal.database,user:t.proposal.runtime,connectHost:t.ordinary.connectHost,connectPort:t.ordinary.connectPort,serverAddress:t.ordinary.serverAddress,serverPort:t.ordinary.serverPort,postmasterStart:physical.postmasterStart,recordSha256,sourceSetSha256:record.binding.sourceSetSha256});
   const cap=Object.freeze({profile:'FRESH35_ORDINARY_POOL_ADMISSION_V2'});ordinaryAdmissions.set(cap,state);return cap;
  }catch(error){if(state)revokeOrdinary(state);throw error}finally{try{if(client){try{if(began)await client.query('ROLLBACK')}finally{client.release(true)}}if(state?.description){syntheticWindow(state);await assertFresh35ProtectedRecordSnapshotCurrent(state.envelope);syntheticWindow(state);need(state.active,'ORDINARY_STARTUP_INVALIDATED');}}catch(error){if(state)revokeOrdinary(state);throw error}finally{ordinaryPendingPools.delete(pool)}}
 }
