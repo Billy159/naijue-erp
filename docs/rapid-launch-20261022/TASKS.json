@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T17:28:43.977967+00:00",
+  "updatedAt": "2026-11-05T17:43:31.816796+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -29103,10 +29103,10 @@
       },
       "materialization": {
         "job": "t45-f35-5d70-materialize-20261106-01",
-        "state": "FAILED_124_AT_JOB_180_SECONDS_NOT_MATERIALIZED_PASS",
+        "state": "PASS_SCOPED_MISSING_ONLY_MATERIALIZATION_AND_FIXED_READBACK_NO_PG",
         "elapsedSeconds": 180.1178,
         "serverOwner": "T45",
-        "currentAction": "Only exact missing files; preserve old bytes. Wait original-key actual final closure; then external exact PG scope.",
+        "currentAction": "Original T45 begins exact20min isolated target, return actual target/program; C installation authorization only after exact description.",
         "receipt": "Owner reported; exact diagnostic receipt pending",
         "receiptSHA256": "7d8ca53a0e8e7fda40bec0daf917f89818f02891626692da7df6cfdef36f3330",
         "diagnosis": "Original180s stopped in file write loop. Original unit inactive/dead/PID0; no container. Not Linux/PG failure.",
@@ -29135,7 +29135,7 @@
         },
         "continuation": {
           "job": "t45-f35-5d70-materialize-remaining-20261106-01",
-          "state": "ORIGINAL_T45_SUBMITTING_ONCE_RESULT_PENDING",
+          "state": "COMPLETED_EXIT0_FULL_FINAL_FILE_VERIFY_AND_FIXED_READBACK",
           "planSHA256": "841da7e3ddf644367e4cf230985e1313e0a5f11e2a48e6609f7dab0d96d05b40",
           "newPreparationCreatedAt": 1793899557049,
           "newPreparationDeadline": 1793900457049,
@@ -29143,8 +29143,37 @@
           "oldPreparationDeadlineUnchanged": 1793899386630,
           "oldFailureUnchanged": true,
           "stagingAuthorityRenewed": false,
-          "PGAuthorized": false
+          "PGAuthorized": false,
+          "elapsedSeconds": 208.590716,
+          "receiptSHA256": "5a43920780f96ea31524b5bc8cec9d8617236f4dd45033cf19d2dad72fb2b700",
+          "filesWritten": 3420,
+          "filesOverwritten": 0
+        },
+        "nodeStartBindingGap": {
+          "existingNodeBytes": 126595440,
+          "existingSHA256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+          "originalStartReadMaximumBytes": 67108864,
+          "owner": "T45",
+          "state": "R5_FIXED_AND_QB_SINGLE_LINE_PASS_NOT_NODE_EXECUTION",
+          "preserve": "Actual fixed dependency version/bytes/SHA/path/owner guards; no app rebuild or materialization repeat.",
+          "commit": "9844dd092dba84ed768eaca8fc79b720bb005b75",
+          "wrapperSHA256": "1be390f665386dd1a447694d38fdc694a5962b692b79cd5da4f035e6591a330c",
+          "reviewSHA256": "b4d6d2aefa125ca202cd6fe34295aa3afac9c8398b0dc3a4a4419254dc13dd1b",
+          "actualReadonlyJob": "t45-f35-5d70-node-bound-readonly-20261106-01",
+          "actualReadonlyExit": 0
         }
+      },
+      "PG20": {
+        "startsAt": 1793900432043,
+        "expiresAt": 1793901632043,
+        "scope": "Original exact5d70/source190de synthetic only; same approved target/image/roles/UID61035/networknone/2CPU3GiB256; includes guardian cleanup",
+        "provisionSHA256": "cc1f6bc6021e313b44db1148cc4bfb125294ede87eda2fafbb41e07da109144e",
+        "planSHA256": "2cd729331e78a74e655b5f5153f261eb082ba843cf830cdcffbe73f08c0d56b8",
+        "wrapperSHA256": "1be390f665386dd1a447694d38fdc694a5962b692b79cd5da4f035e6591a330c",
+        "state": "SCOPE_BOUND_ORIGINAL_T45_PRECHECK_START_PENDING_NOT_INSTALL_PASS",
+        "installerAuthority": "Not issued until actual target/program descriptor",
+        "humanAuthorization": "call_e4aeea80 plus explicit same-kind future isolation preauthorization/current goal",
+        "productionOrRealAuthorized": false
       }
     },
     "productionRealImportContinuation": {

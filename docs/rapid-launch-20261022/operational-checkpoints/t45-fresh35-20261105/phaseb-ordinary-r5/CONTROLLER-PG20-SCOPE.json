@@ -1,0 +1,27 @@
+{
+  "createdAt": 1793900432043,
+  "expiresAt": 1793901632043,
+  "purpose": "Separate original20min synthetic35 target provision/install/import/replay/newconnection-readback/ordinaryADMIN+SALESPERSON business and original guardian cleanup; exact new installation authority still needs real target/program description.",
+  "humanSource": "call_e4aeea80 exact isolation scope plus explicit same-kind future isolation preauthorization and current implementation goal",
+  "sourceCommit": "5d70b3ee9038b4d0fe66328e2a172b688c07d9c9",
+  "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+  "wrapperSHA256": "1be390f665386dd1a447694d38fdc694a5962b692b79cd5da4f035e6591a330c",
+  "exactImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+  "container": "t45-fresh35-deb13-20261105-r1",
+  "applicationRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r1",
+  "budget": {
+    "cpu": 2,
+    "memoryBytes": 3221225472,
+    "pids": 256,
+    "network": "none",
+    "publishedPorts": 0
+  },
+  "constraints": [
+    "Original T45 sole execution; actual resources and no previous target before start",
+    "No image build, new archive transfer, real inputs, formal target or other service changes",
+    "Original20min deadline includes cleanup; preserve target and evidence, no automatic renewal",
+    "Only original exact roles/ACL/HBA/bootstrap and same existing pool/observer/cleanup budget",
+    "C only issues original install authorization after actual program and target hashes; client does not approve itself"
+  ],
+  "PGExecuted": false
+}

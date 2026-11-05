@@ -1,0 +1,167 @@
+{
+  "status": "PASS_SCOPED_MISSING_ONLY_MATERIALIZATION_AND_FIXED_READBACK_NO_PG",
+  "job": {
+    "jobId": "t45-f35-5d70-materialize-remaining-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-a6bc253b45d1",
+    "atUTC": "2026-11-05T17:27:44.860375+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 208.5907162949443,
+    "exports": [
+      "fresh35-materialize-remaining-result.json"
+    ],
+    "finishedAtUTC": "2026-11-05T17:31:13.490293+00:00"
+  },
+  "applicationResult": {
+    "application": {
+      "archiveSHA256": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+      "deploymentManifestSha256": "4954bb15a5800071ad0d633574e29f80bd62fd724ef02f4ee6066617d518ca92",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-5d70-ordinary-20261106-01",
+      "sourceSet": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252"
+    },
+    "environmentReceiptUnchanged": true,
+    "existingExactFilesReused": 3879,
+    "existingFilesOverwritten": 0,
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "imageBuilt": false,
+    "missingFilesWritten": 3420,
+    "postgresStarted": false,
+    "status": "CURRENT_APPLICATION_REMAINING_MATERIALIZED_NO_DB_WINDOW"
+  },
+  "postReadback": {
+    "checkedAtUTC": "2026-11-05T17:32:31.367299+00:00",
+    "writes": 0,
+    "files": {
+      "metadata/deployment-manifest.json": {
+        "bytes": 1084128,
+        "sha256": "4954bb15a5800071ad0d633574e29f80bd62fd724ef02f4ee6066617d518ca92",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o644",
+        "nlink": 1,
+        "inode": 13517669
+      },
+      "metadata/source-descriptor.json": {
+        "bytes": 326197,
+        "sha256": "13777c9edb5fca9fef00f1bb806b913c69f35603b4a6df5c50051b468cc06e6e",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o644",
+        "nlink": 1,
+        "inode": 13517670
+      },
+      "metadata/base-image-registry-result.json": {
+        "bytes": 927,
+        "sha256": "de5bb850a845e94325b762978e7c7cd6a196a04dafc35110635e1815169d1bb1",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o644",
+        "nlink": 1,
+        "inode": 13517667
+      },
+      "metadata/debian-runtime-dependency-lock.json": {
+        "bytes": 76254,
+        "sha256": "0aaf271430d37313a4e83ff58d8af7c58c36b3d38b629eca9b3cdfe1681f9e9b",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o644",
+        "nlink": 1,
+        "inode": 13517668
+      },
+      "authority/fresh35-isolated-deployment-v1.json": {
+        "bytes": 1084128,
+        "sha256": "4954bb15a5800071ad0d633574e29f80bd62fd724ef02f4ee6066617d518ca92",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o400",
+        "nlink": 1,
+        "inode": 13517674
+      },
+      "state/capacity/owner-profile.json": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o644",
+        "nlink": 1,
+        "inode": 13517675
+      }
+    },
+    "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+    "directories": {
+      "authority": {
+        "uid": 0,
+        "mode": "0o711"
+      },
+      "state": {
+        "uid": 0,
+        "mode": "0o755"
+      },
+      "state/capacity": {
+        "uid": 0,
+        "mode": "0o700"
+      }
+    },
+    "originalUnit": {
+      "exitCode": 0,
+      "fields": {
+        "MainPID": "0",
+        "Result": "success",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      }
+    },
+    "matchingContainers": [],
+    "dockerQueryExitCode": 0,
+    "status": "SCOPED_READBACK_ONLY"
+  },
+  "fullFinalVerification": "Original r4 verify_materialized_application called by original materialize_remaining; passed against all7292 registered deploy files including fixed empty members, exact authority and source descriptor. Not rerun after success.",
+  "reused": {
+    "existingDeployFiles": 3878,
+    "prepareMarker": 1,
+    "stagedArchiveBytes": 83652102,
+    "archiveSHA256": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+    "environmentImageRebuilt": false,
+    "oldFailedJobState": "FAILED124 preserved"
+  },
+  "writeScope": {
+    "newMissingFiles": 3420,
+    "overwrittenExistingFiles": 0,
+    "PGOrContainerStarts": 0,
+    "formalOrRealDataOperations": 0,
+    "newUploadOrBuild": 0,
+    "r4SourceEdits": 0
+  },
+  "authority": {
+    "jobId": "t45-f35-5d70-materialize-remaining-20261106-01",
+    "phase": "materialize-remaining",
+    "wrapperSHA256": "3940464664de13f7627ce822c9618bf05b6fafc43890544324a87914ade62067",
+    "CPlanSHA256": "841da7e3ddf644367e4cf230985e1313e0a5f11e2a48e6609f7dab0d96d05b40",
+    "QBResultAdoptedWithoutRerun": "257d5dcabbba2c31c44e29af145ffd0c8f5d586648117a3a0c7450e0445eef55",
+    "processMaximumSeconds": 360,
+    "externalPreparationDeadlineMs": 1793900457049,
+    "scope": "Only exact retained5d70 partial root missing files. No PG/container start, no upload/build, no oldjob replay.",
+    "original180sFailurePreserved": true
+  },
+  "notVerified": [
+    "Linux native dependency actual loader",
+    "Actual PostgreSQL installation/ordinary runtime/business checks",
+    "Production release or business acceptance"
+  ],
+  "next": "C must bind a separate exact20minute PG provision scope before any start-target; this result authorizes no PG action.",
+  "evidence": {
+    "evidence/preflight-materialize-preflight.json": "190706dd2dda113e1d95c4f06545ed66e1a19c36ad90b0669592387a594a333b",
+    "evidence/execution-fresh35-materialize-remaining-result.json": "e2f6299ceddc272d0697b0e4db1beaa36eeed409e81b0117b1a2d709c16846c6",
+    "evidence/execution-job.json": "c2b8e7b22cab31e0e28e561f0ad97f60de815d8de0645fcdaf58716878430d05",
+    "evidence/preflight-job.json": "fcde1d50cf3e2b47fdf118d2c7f3ed3ae89d9500fab32bea2e5b8016f36bb421",
+    "evidence/readback-job.json": "251e20c45f55eb718b94f610c3e00061315b0acd02dc9d19ca4bb2a70f37de87",
+    "evidence/readback-remaining-readback.json": "7232bae2eaa4309493a0a466429c54a5a42a0b5496f5c11b4e9ca9c27b31ab03"
+  }
+}

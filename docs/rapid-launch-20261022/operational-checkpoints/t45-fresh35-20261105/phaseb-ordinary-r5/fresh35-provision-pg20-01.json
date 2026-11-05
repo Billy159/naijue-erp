@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "4954bb15a5800071ad0d633574e29f80bd62fd724ef02f4ee6066617d518ca92",
+  "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793900432043,
+  "expiresAt": 1793901632043,
+  "independentSafetyReviewSha256": "8becc8c5fbae37042f30618fa8490bb3f78b8bbc56fd36ed177e735db8acfdab",
+  "authorizationReference": "C 01a161ca implements human call_e4aeea80 exact fresh35 isolation and subsequent same-kind preauthorization. Exact synthetic5d70/source190de, original T45 only;20min incl guardian cleanup, no REAL/production. Main QB8becc plus r4/257d and r5/b4d6 accepted; original immutable image reused."
+}

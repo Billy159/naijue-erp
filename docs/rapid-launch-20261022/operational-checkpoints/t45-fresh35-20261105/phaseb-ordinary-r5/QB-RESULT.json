@@ -1,0 +1,87 @@
+{
+  "task_id": "QB-T45-NODE-R5-9844dd09-20261106",
+  "verdict": "PASS_SCOPED_SINGLE_LINE_SOURCE_AND_ADOPTED_READONLY_EVIDENCE_NOT_EXECUTION",
+  "findings": [],
+  "recorded_at": "2026-11-06T01:39:19.071053+08:00",
+  "commit": "9844dd092dba84ed768eaca8fc79b720bb005b75",
+  "parent": "777db6bfebb9574cafca7104db5dd48d4a5b56df",
+  "source_comparison": "Only one Node read_file bound64*1024*1024 ->126595440; all other bytes equal",
+  "wrapper_sha256": "1be390f665386dd1a447694d38fdc694a5962b692b79cd5da4f035e6591a330c",
+  "parent_r4_wrapper_sha256": "3940464664de13f7627ce822c9618bf05b6fafc43890544324a87914ade62067",
+  "ready_sha256": "a8aa5bde0babd56aee2a329c5a7a82aedbf91fda601751acea9342785041b66b",
+  "owner_result_sha256": "5a113ad91da9530bff5a4bb8b28436cff03f6064f3b0c30c306689c98fcb6770",
+  "checks": [
+    {
+      "name": "Exact byte replacement only",
+      "state": "PASS"
+    },
+    {
+      "name": "Fixed inventory Node size126595440/mode0755/SHA and existing5d70 source+manifest anchors",
+      "state": "PASS"
+    },
+    {
+      "name": "Original read_file and exact NODE_SHA guard retained byte-for-byte",
+      "state": "PASS"
+    },
+    {
+      "name": "Two original readonly evidence JSON files equal fixed receipt fields",
+      "state": "PASS"
+    }
+  ],
+  "adopted_readonly_check": {
+    "jobId": "t45-f35-5d70-node-bound-readonly-20261106-01",
+    "checkedAtUTC": "2026-11-05T17:35:53.021615+00:00",
+    "writes": 0,
+    "NodeExecuted": false,
+    "PGStarted": false,
+    "actualFile": {
+      "bytes": 126595440,
+      "uid": 0,
+      "mode": "0o755",
+      "nlink": 1
+    },
+    "old64MiB": "BOUNDED_REGULAR_FILE_REQUIRED",
+    "newExactBound": {
+      "bytes": 126595440,
+      "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c"
+    },
+    "status": "PASS_ACTUAL_FIXED_NODE_OLD_REFUSAL_NEW_EXACT_READ_ONLY",
+    "elapsedSeconds": 0.355034
+  },
+  "adopted_job": {
+    "jobId": "t45-f35-5d70-node-bound-readonly-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-27346cdf3521",
+    "atUTC": "2026-11-05T17:35:52.967847+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.4181398060172796,
+    "exports": [
+      "node-bound-readonly.json"
+    ],
+    "finishedAtUTC": "2026-11-05T17:35:53.410124+00:00"
+  },
+  "scope": "Only exact dependency consumer bound; 64MiB is smaller than locked126595440B binary. New exact byte bound supports original SHA comparison without broadening generic reader. Existing r4/main/r2/fixture/REAL and PG conclusions reused.",
+  "tests": "No new constant-mirroring test or full suite. No second large Node read, build or source copy. Only fixed source byte comparison, fixed inventory single row and small existing evidence read.",
+  "unverified": [
+    "Node execution, PG/container startup or any downstream isolated/business acceptance.",
+    "Actual server permission/root/filesystem checks are adopted T45 observations, not QB host execution.",
+    "Any new exact PG20-minute binding or execution; source approval is not execution authorization."
+  ],
+  "actual_model_effort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "boundaries": {
+    "server_access": false,
+    "node_binary_read": false,
+    "node_executed": false,
+    "pg_or_container_started": false,
+    "source_edited": false,
+    "source_tree_copied": false,
+    "rebuild": false,
+    "ops_writer": "T45 only"
+  }
+}
