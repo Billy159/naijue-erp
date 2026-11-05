@@ -28389,9 +28389,10 @@
       "lockUnchanged": true
     },
     "sourceFactGaps": [
-      "Real PostgreSQL install/import/rollback/replay/ordinary business and independent readback remain NOT_RUN.",
-      "Real production target/identity/configuration and exact REAL-batch execution binding not yet established.",
-      "Raw full-universe source_truth_verified remains false by scope; declared full EOF/preflight passed, narrow7color/4stock issues closed with original approvals."
+      "New35 successful actual installation/import/ordinarybusiness/independent readback unverified; r4 actual install refused and rolledback, r5 actual start then noinstall and clean stop, failures retained.",
+      "Exact REAL production target/identity/configuration/execution binding not established; original real private archive is transportREADY only.",
+      "Current formal API front/data namespace cannot reach newPG loopback by address substitution; originalT45 minimal explicitnative35 namespace/release successor inprogress, no current productionnetwork claim.",
+      "Raw full-universe source_truth_verified remains false by scope; full declaredEOF/preflight valid evidence reused, no source rescan invented as prerequisite."
     ],
     "portableReferences": {
       "resolver": "resolveFresh35ReferenceInputPaths(directory)",
@@ -28483,7 +28484,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "Finalfixedproduction consumer3leaf QB increment + D2 onebuild in parallel; prior9leaf andF01 scoped PASS adopted. T45 next freshisolated ops exactpins after artifactdescriptor, no oldr5 replay.",
+      "critical": "T45 actualnewr6 stagepreflight/currentgate/baseidentity then C exacttail/full scope; originalonce materialization→actualresource→freshPG20 exactprogram/target→install/ordinarybusiness/readback/cleanup. SourceQB3f351 andD2build3f5a valid adopted.",
       "independentPreparation": {
         "D1": "Production JS entry+source loader/strict V1 refusal, fixed source handoff and necessary scoped checks.",
         "T45": "Production Python consumer source only in independent new files, creation authority then actualfacts/entry/install; finite serviceLease separates installation. r5 actual run priority.",
@@ -29412,7 +29413,9 @@
         "Retain originals, explicit retained files, backups, stopped failure scenes and recovery path; preserve unknown business facts",
         "Reuse completed evidence and original roles; minimal necessary changes and affected verification"
       ],
-      "state": "ACTIVE"
+      "state": "ACTIVE",
+      "latestHumanSource": "2026-11-06 current user: 到今天12:00前都别让我决策; 决策权给你; 所有权限",
+      "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
       "state": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING",
@@ -29896,6 +29899,31 @@
         },
         "containerStopped": true,
         "businessAccepted": false
+      },
+      "r6Preparation": {
+        "state": "C_EXACT_STAGING_AUTHORIZED_T45_BINDING_AND_MATERIALIZATION",
+        "buildRoot": "19b2232649ab07a7cd43a75596f43221333d7cdd",
+        "integration": "1e7aaa130ab1eef576f262a7f78ea7623d95e2ae",
+        "sourceSetSHA256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+        "manifestSHA256": "9a9d52e0ea831443ce54c5a04a89f9cdbd3f210e104a0ae177e24d8842b54cbe",
+        "manifestBytes": 1084429,
+        "archiveBytes": 83681662,
+        "archiveSHA256": "f08cf2e73cae0ef469cdac86c103c03df990a5aba9e66b54bc0f8496242d07d3",
+        "deployRegularFiles": 7294,
+        "archiveRegularFiles": 7298,
+        "baseArchiveSHA256": "035081fa42e686e4b687ed3ace0d2ab99e2b02f1e18a09ca8a4585b0bc9528fe",
+        "prefixBytes": 81194870,
+        "prefixSHA256": "221ea00efdf4ee37984ab05dbb6d30bcf19e662c9b1707d3f911d0c9cdafa861",
+        "tailBytes": 2486792,
+        "tailSHA256": "0a7b689faa3d1dfd9f5ad79240ce615576476af61b3313a9476bf76398b573b1",
+        "tailReceiptSHA256": "a24e0416f930dcbc165982e63aa72f0533174b18e24f5cabed6444980752a8c1",
+        "actualPG": false,
+        "scope": "Newphaseb-application-r6/name20261106-r6 only; originalnone syntheticprofile and originalreceiver/budget; nooldr5 replay orproductionnetworkclaim.",
+        "stagePreflightSHA256": "aeda53553613a6b25519a8c19e9bde9b413d398986f2e92e874f5902654ec381",
+        "tailAuthoritySHA256": "74acb16281bb7e38437d73e7861141e33f97b8e0ff2181781a193a18752456f6",
+        "fullAuthoritySHA256": "3bde7166622bb3395a8d3cc568837b8a4d1aef2942ad698efd466a4019c09264",
+        "stagingStartsAt": 1793920134994,
+        "stagingExpiresAt": 1793921934994
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30039,7 +30067,7 @@
     },
     "productionBootstrapConsumerSourceDecision": {
       "authority": "C under direct human decision delegation until2026-11-06T12:00+08",
-      "state": "FINAL_THREE_LEAF_SOURCE_FROZEN_NEXT_INCREMENT_QB_AND_BUILD",
+      "state": "QB_SOURCE_AND_SCOPED_OFFLINE_MODELS_PASS_BUILD_PACK_PASS_ACTUAL_TARGET_PENDING",
       "writers": {
         "D1": "production JS entry/source loader/strict V1 refusal/direct tests",
         "T45": "new production Python bootstrap/direct tests"
@@ -30116,7 +30144,15 @@
           "path": "tests/test_fresh35_production_launcher.py",
           "sha256": "4077edb2ba2492c8009fc38eaeebe96c90e471c48be91671dec426f39f49b406"
         }
-      ]
+      ],
+      "integrationCommit": "1e7aaa130ab1eef576f262a7f78ea7623d95e2ae",
+      "buildRoot": "19b2232649ab07a7cd43a75596f43221333d7cdd",
+      "buildTree": "e57796ce638e29aebbe403bf7cbf2a46e12cc2a8",
+      "QBReceiptSHA256": "3f351a20587b685fa88508dcc0a12fb72a68d560bfd7d9296eeb4ec7d530a0ab",
+      "buildState": "D2_COMPLETE_BUILD_PACK_MEMBER_READBACK_PASS_NOT_PG",
+      "D2ReceiptSHA256": "3f5a25606170c3e5832dae1907d7bb87d2b497b172e8526c0da30d81c7b26db7",
+      "productionArchiveSHA256": "b9bb9a3928a9cc2cdac537ebc8981d8430a81c8130affb8f0cdb5004a865bda5",
+      "productionArchiveBytes": 3348966
     },
     "coreBrowserPreparation": {
       "owner": "QF",
@@ -30137,6 +30173,19 @@
         "Existing live-production/all-document-actions browser scripts constrain synthetic-management.invalid fixtures; not genuine35 business evidence",
         "Need fixedfinalsource/build/target/HTTPSURL, normal auth/three role identities and exact isolated writable businessscope fromT45; no usercomputer requests"
       ]
+    },
+    "productionNetworkNamespaceContinuation": {
+      "state": "T45_FIXED_SEVEN_LEAF_SOURCE_DELIVERED_PENDING_QB_INCREMENT",
+      "reportSHA256": "fcbc70aea32fb0acd8e95754447dc1850dbee483784f3af0fb258f3ce9ecd4b2",
+      "reportCandidate": "47f1c4b0af84c2d8cf1cd2cf816d380f05e9adf0:candidate0448",
+      "facts": "Formal API usesfront then data;127meansAPIownnamespace. ExistingsharedPGnetns branch isQAexact26only andcannotclaimformalV2support.",
+      "authority": "C under directhuman delegation until2026-11-06T12:00+08",
+      "sourceDirection": "Reuse original controlled sharedPGnetns mode in explicitnative35productionV2 branch, bindexactownedPGCID/PID/birth/netns/source/target/record/lease; preserve loopback/HBA and genuineWebfront→app_name:3000 via accurateownedroute/uniquealias if supported. No QAconstant substitution, newpool/tunnel/platform, oldservicechange or HBAexpansion.",
+      "owner": "T45 original releasehelper/config/generator/boot/rollback and necessary directtests only; D2readonly; Ccontracts/Gitcoordination",
+      "actualServerExecuted": false,
+      "current19b": "Retain as fixednew35synthetic candidate; build/pack/r6preparation continue, notformalnetworkPASS.",
+      "readySHA256": "3cec625efe21a711c0824a62a0332352936c014a0043f44f29e7714a2ac7fa95",
+      "runtimeOrProductionVerified": false
     }
   }
 }

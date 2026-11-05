@@ -1,0 +1,65 @@
+{
+  "status": "READONLY_R6_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+  "checkedAtEpochMillis": 1793919705287,
+  "gateSha256": "11fa3eea7743274463e7c24bb626b7e2a1668761137276c3fda51c805a924dc7",
+  "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-19b223-stage-preflight-20261106-01/staging-policy-before.json",
+  "baseIdentity": [
+    66304,
+    393593,
+    83672636,
+    1793916258069598787,
+    1793916258904599826
+  ],
+  "baseArchiveSha256": "035081fa42e686e4b687ed3ace0d2ab99e2b02f1e18a09ca8a4585b0bc9528fe",
+  "baseHashNotRereadUntilOriginalAssembler": true,
+  "privateFullIdentityUnchanged": true,
+  "privateFullIdentity": [
+    66304,
+    393585,
+    93508914,
+    1793915257822987699,
+    1793915258790984345
+  ],
+  "r6RootAbsent": true,
+  "r6ContainerAbsent": true,
+  "r6ArtifactDirectoriesFound": [],
+  "samePrefixOtherSubmissions": [],
+  "priorExactJobs": [
+    {
+      "jobId": "t45-f35-3de75b-start-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    {
+      "jobId": "t45-f35-3de75b-stop-before-install-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    }
+  ],
+  "r5Stopped": {
+    "id": "812799160c67e848baa2249712de8789163afd2d0ebaaf47e1bf591b9aab411e",
+    "running": false,
+    "pid": 0,
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+  },
+  "fixedEnvironment": {
+    "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "os": "linux",
+    "arch": "amd64"
+  },
+  "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+  "resources": {
+    "cpuCount": 4,
+    "loadAverage": [
+      0.1982421875,
+      0.0615234375,
+      0.09375
+    ],
+    "diskFreeBytes": 15723311104,
+    "MemAvailable": 14324412416
+  },
+  "sourceOrTargetWrites": 0,
+  "PGConnections": 0,
+  "networkOrServiceChanges": 0,
+  "dataExtraction": false
+}

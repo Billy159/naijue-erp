@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-19b223-tail-20261106-01",
+  "sourceSetSha256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+  "archiveSha256": "0a7b689faa3d1dfd9f5ad79240ce615576476af61b3313a9476bf76398b573b1",
+  "archiveBytes": 2486792,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-19b223-tail-20261106-01",
+  "startsAt": 1793920134994,
+  "expiresAt": 1793921934994,
+  "decisionReference": "C under direct human delegation 2026-11-06 through 12:00+08. Actual r6 preflight aeda5355 and QB final 3f351 adopted. Exact 19b223/source2be5 r6 preparation: retained035081 prefix81194870 plus tail0a7b to fullf08c/83681662 via original receiver. Original40s/900s and30min hard cap unchanged. Preserve privatefc831c and oldtargets. No PG, REAL unpack/import or production; newPG20 scope follows actual preparation/resources.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

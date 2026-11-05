@@ -1,0 +1,156 @@
+{
+  "status": "SOURCE_LOCAL_CHECKS_PASS_PENDING_C_INTEGRATION_AND_QB_NOT_DEPLOYMENT",
+  "recordedAtUTC": "2026-11-05T23:06:07.274533+00:00",
+  "files": [
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/deploy-candidate.py",
+      "bytes": 198960,
+      "sha256": "2aae0a2bc9a6225430adf7c4f9a3053b66405670e65794a04d6640464fd98d9e",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-source-01/source/scripts/release/deploy-candidate.py",
+      "parentSha256": "6e1edabece28677feb99ee011cd742d11e41ddc2534656206a75aa4205e3ac45"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/config/release-contract.json",
+      "bytes": 7438,
+      "sha256": "e0759cab44451af3e20c94a2b87ff6142be3a222f4bdca78721ee56d38120a72",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-source-01/source/config/release-contract.json",
+      "parentSha256": "bea9c9c79025f0f9def215fd72c9c71d6003ea4165ead1a9ecebf8c8bb289871"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/generate-release-contract.mjs",
+      "bytes": 11180,
+      "sha256": "9a11628e2bd048fe50f7555504536014fd437d66984f2eb2328275f8b842b02e",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-source-01/source/scripts/release/generate-release-contract.mjs",
+      "parentSha256": "56c56bc77d7d8b3f560aa0ff3affac53864345e31b75cca7b37a035b488dde32"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/boot-entry.py",
+      "bytes": 49869,
+      "sha256": "92e0ccb60d962abe20f877e2cd39bc74fd897a36e685b98402beb176fc335722",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-source-01/source/scripts/release/boot-entry.py",
+      "parentSha256": "b89f416918a4634ebc23bc1ea1bd87ccd0977d6a2f3741a9ed9cf56384a22b7b"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/rollback-candidate.py",
+      "bytes": 7665,
+      "sha256": "28fce7227cdd10e032ec7b2c2832aafac545e9430a7ab6ab76cc7fb3c41ab7fd",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-source-01/source/scripts/release/rollback-candidate.py",
+      "parentSha256": "3b14e8b259e3974236e60a1fcbd1442d6e2cb950d25e068362ebf4323fe3bf63"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/release-file-contract.test.mjs",
+      "bytes": 6713,
+      "sha256": "77fd611a1b36ef17c275b25117edf30524d1ee5a11290cf3a86b0ad093fa676b",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-source-01/source/scripts/release/release-file-contract.test.mjs",
+      "parentSha256": "989258ecaedfafdd799fe3f6aa587db93a484953fc25b643cc65fc66673e72cc"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/test_native35_shared_namespace.py",
+      "bytes": 11191,
+      "sha256": "afd5e69233b72262b74e53ceef4fd9f44585e76061f3e629369bac03e5936a97",
+      "frozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-source-01/source/scripts/release/test_native35_shared_namespace.py",
+      "parentSha256": null
+    }
+  ],
+  "patch": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-native35-shared-namespace-source-01/shared-namespace-only.patch",
+    "sha256": "5772ea55720ab0ddbd5a0adbd6261b40b30cbbe889c55546268f8e085a6a06ff"
+  },
+  "changedFunctions": {
+    "scripts/release/deploy-candidate.py": {
+      "changed": [
+        "exact35_selected",
+        "runtime_binding",
+        "assert_own",
+        "release_capacity_fifo",
+        "create_capacity_gate_app",
+        "capacity_process_tuple",
+        "health",
+        "current_stage"
+      ],
+      "added": [
+        "check_production_shared_namespace",
+        "process_network_namespace",
+        "production_shared_namespace_binding"
+      ],
+      "removed": []
+    },
+    "scripts/release/boot-entry.py": {
+      "changed": [
+        "deployment_binding",
+        "boot_start"
+      ],
+      "added": [],
+      "removed": []
+    }
+  },
+  "checks": {
+    "newPythonGroups": 9,
+    "newPythonResult": "PASS_0_008_SECONDS",
+    "existingAffectedNormalBridgeGroup": "PASS_1_GROUP_0_001_SECONDS",
+    "releaseContractGenerationAndNewMode": "PASS_2_TARGETED_NODE_TESTS_NODE24_21_0",
+    "bootConditionalRefinement": "ONLY_AFFECTED_BOOT_GROUP_RERUN_PASS_0_004_SECONDS",
+    "syntax": "PASS_ALL_PYTHON",
+    "whitespace": "NO_DIAGNOSTICS",
+    "unaffectedSuitesRerun": false
+  },
+  "CPlanField": "runtime35.sharedPostgresNamespace",
+  "closedBindingKeys": [
+    "format",
+    "container",
+    "creationOperationId",
+    "sourceSetSha256",
+    "targetSha256",
+    "installationRecordSha256",
+    "serviceLeaseExpiresAt"
+  ],
+  "closedContainerKeys": [
+    "id",
+    "name",
+    "imageId",
+    "startedAt",
+    "hostPid",
+    "startTicks",
+    "networkNamespace",
+    "frontEndpoint"
+  ],
+  "closedNamespaceKeys": [
+    "device",
+    "inode"
+  ],
+  "closedEndpointKeys": [
+    "id",
+    "aliases"
+  ],
+  "requiredMode": "OWNED_POSTGRES_SHARED_NAMESPACE_V1",
+  "behavior": [
+    "Only native35 installation RECORD_V2 selects required explicit shared container mode. Missing or invalid binding refuses, V1 cannot borrow this binding",
+    "Original C deployment PLAN carries exact new PG CID/image/name/birth PID/startticks/netns, creator operation/source, target and record SHA, independent finite service lease",
+    "PG must already own exact original front endpoint and full expected alias set including future app_name; each selected front peer checked for conflicting DNS alias",
+    "Helper never attaches or disconnects PG, changes aliases, widens HBA, exposes PG port, or creates another bridge/pool/tunnel",
+    "API uses --network container:exactPGCID without network-alias or data attach. Actual host namespace compared with owned PG during capacity tuple/final FIFO release/health/current stage/boot",
+    "Native35 V2 boot checks exact new PG/lease; old ordinary branch retains prior old-PG health checks. Original healthz/readyz and reverse Web proxy checks remain",
+    "Failure, rollback and expired-lease cleanup stop only immutable owned API; PG and its front endpoint remain with original C target lifecycle"
+  ],
+  "fixedR6NotModified": {
+    "buildRoot": "19b2232649ab07a7cd43a75596f43221333d7cdd",
+    "sourceSetSha256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1"
+  },
+  "stillRequired": [
+    "C integration and independent QB exact new 7-leaf increment",
+    "Actual new production carrier/front endpoint/alias set/PG and API namespace and physical SQL identity/finite service lease facts",
+    "Original HTTP ready/health/reverse Web route verification; local simulated facts are not live network or production proof"
+  ],
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "notPerformed": {
+    "serverChanges": 0,
+    "PGConnections": 0,
+    "builds": 0,
+    "newCarrierOrNetworkCreated": 0,
+    "productionActions": 0,
+    "REALImport": 0,
+    "appReleaseOrSwitch": 0,
+    "commitsOrPushes": 0
+  }
+}

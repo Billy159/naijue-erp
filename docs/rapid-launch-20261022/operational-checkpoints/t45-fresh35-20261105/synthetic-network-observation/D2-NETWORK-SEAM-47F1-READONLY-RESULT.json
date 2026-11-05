@@ -1,0 +1,80 @@
+{
+  "status": "SOURCE_SEAM_GAP_FORMAL_BRIDGE_ENTRY_HAS_NO_EXISTING_NEW35_LOOPBACK_SHARED_NAMESPACE_MODE",
+  "sourceCommit": "47f1c4b0af84c2d8cf1cd2cf816d380f05e9adf0",
+  "candidate0448Tree": "3eb2926c0453f1d6881223158fa815e99262c821",
+  "scope": "Only fixed Git consumer source; no build, QA rerun, server/network/config/permission mutation or credential read. New T45 production Python f2adbe41 facts supplied by C, not independently inspected here.",
+  "conclusion": "Existing production deploy helper creates API on front bridge then attaches data bridge. Setting postgres.target.host=127.0.0.1 addresses that API namespace, not an unverified separate PG namespace. Existing shared-PG namespace branch is hard-bound QA exact26-r1 and explicitly excluded from formal deploy/boot; it is a reusable implementation pattern, not an admitted new35 production option. No currently verified connectHost mapping or production shared-namespace topology was provided.",
+  "evidence": [
+    {
+      "file": "scripts/release/deploy-candidate.py",
+      "lines": "1431-1443",
+      "fact": "Formal create_capacity_gate_app uses --network front id and network connect data id; payload /app, private runtime /run/naijue-rewrite/runtime.json."
+    },
+    {
+      "file": "scripts/release/deploy-candidate.py",
+      "lines": "1764-1776,1790-1798,2037-2050",
+      "fact": "--network container:CAPACITY_QA_PG exists only for fixed QA CID/image/PID/start, exact26-r1, UID10001, bounded QA cases. create_capacity_qa_gate_app explicitly says never used by formal deploy/boot."
+    },
+    {
+      "file": "scripts/release/deploy-candidate.py",
+      "lines": "685-705",
+      "fact": "V2 uses record.target.ordinary.connectHost/connectPort in both postgres.target and capacityLaunch.target, rather than substituting proposal.host. This validation does not create network reachability."
+    },
+    {
+      "file": "apps/api/src/production-main.ts",
+      "lines": "58-95,117-123",
+      "fact": "Normal --exact35 CLI consumes one canonical private <=64KiB runtime path, creates original capacity then API/same-owned-pool preflight before listen; no JSON namespace selector or automatic connection proxy."
+    },
+    {
+      "file": "apps/api/src/production-provider-composition.ts",
+      "lines": "96-104,178-185",
+      "fact": "Runtime config.postgres passed through unchanged into normal exact35 API composition."
+    },
+    {
+      "file": "apps/api/src/postgres-read-api.ts",
+      "lines": "646-666",
+      "fact": "One original BoundedPostgresPool uses postgres.target; original ordinary admission bound to the same host/port/database/user and actual physical capacity identity."
+    },
+    {
+      "file": "adapters/postgres/src/bounded-pool.ts",
+      "lines": "107-112,144-148",
+      "fact": "Driver passes target settings to original pg.Pool; no implicit tunnel/pool replacement."
+    },
+    {
+      "file": "tools/unified-import/fresh35-host-session.mjs",
+      "lines": "219-220,229-243",
+      "fact": "Connect endpoint must equal protected V2 ordinary endpoint, while SQL-observed serverAddress/serverPort must equal recorded physical endpoint. A bridge peer cannot be substituted for loopback observation."
+    },
+    {
+      "file": "scripts/release/deploy-candidate.py",
+      "lines": "321-324,2176-2185",
+      "fact": "Normal web runs on front bridge and proxies app_name:3000. A potential same-PG-namespace launch must also establish actual HTTP reachability/identity for this existing consumer; PG connectivity alone is insufficient."
+    }
+  ],
+  "reuse": "Retain exact35 normal CLI, original pg.Pool/capacity/admission, private runtime mount and fixed V2 record. Existing QA container-namespace pattern can inform original T45 minimal producer/consumer work, but cannot be selected as production by merely filling config or changing fixed QA IDs. No new pool or control platform needed or proposed.",
+  "requiredActualFactsFromOriginalT45": [
+    "Actual new PG PID/CID, network namespace identity and 127.0.0.1 listener port; no host-vs-container inference",
+    "Actual API process/container namespace and owner-approved original launch carrier; if shared namespace, matching ns identity must be real",
+    "If using an existing controlled mapping instead, actual ownership/route/endpoints and successful original API-namespace connection with SQL-observed serverAddress127.0.0.1; no mapping presumed or invented",
+    "Private runtime postgres.target host/port/database/user must match protected V2 ordinary.connectHost/connectPort and same capacity target; actual credentials/key/record/reference/media/assets mounts remain private owner inputs",
+    "Normal web app_name:3000 routing, accepted Host and original health/readiness identity must remain consumable; not proven by changing PG endpoint alone"
+  ],
+  "configurationLocations": {
+    "hostPlan": "runtimeConfiguration.path plus pinned identity in original deployment PLAN",
+    "apiContainer": "/run/naijue-rewrite/runtime.json",
+    "payload": "/app",
+    "selector": "--exact35",
+    "profile": "source-confirmed-native-exact35-production-v2",
+    "fields": "postgres.target + capacityLaunch.target + protected record.target.ordinary; physical serverAddress stays actual127.0.0.1",
+    "record": "/etc/naijue-erp/fresh35-combined-installation-v1.json"
+  },
+  "unverified": [
+    "Live PG/API/Web topology, CID/PID/ns identities and mapping ownership",
+    "Reachability, HBA/login/physical SQL observation",
+    "Production install/runtime/service lease and public/browser acceptance"
+  ],
+  "executionSettings": {
+    "requested": "gpt-6.1-sol/high",
+    "Fast": "UNVERIFIED"
+  }
+}

@@ -46,8 +46,8 @@ RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CU
 FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
 # BEGIN GENERATED RELEASE CONTRACT
 # Generated from config/release-contract.json; edit that source, then regenerate.
-RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}},"exact35":{"profile":"source-confirmed-native-exact35-v1","migrationCount":27,"installationRecord":"/etc/naijue-erp/fresh35-combined-installation-v1.json","productionProfile":"source-confirmed-native-exact35-production-v2"},"native35":{"root":"backend/native35-source","entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","fixturePins":[{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702"}],"boundaries":[{"entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","importers":["apps/api/src/postgres-read-api.ts","adapters/postgres/src/runtime27-command-issuer.ts"]},{"entry":"scripts/release/unified-install/whole-sales-admission-v1.mjs","external":"./native35-source/scripts/release/unified-install/whole-sales-admission-v1.mjs","importers":["packages/application/src/unified-import-execution.ts","packages/application/src/unified-import-whole-package-profile.ts"]}]}}''')
-RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":7371,"sha256":"bea9c9c79025f0f9def215fd72c9c71d6003ea4165ead1a9ecebf8c8bb289871"}''')
+RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}},"exact35":{"profile":"source-confirmed-native-exact35-v1","migrationCount":27,"installationRecord":"/etc/naijue-erp/fresh35-combined-installation-v1.json","productionProfile":"source-confirmed-native-exact35-production-v2","productionNetworkMode":"OWNED_POSTGRES_SHARED_NAMESPACE_V1"},"native35":{"root":"backend/native35-source","entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","fixturePins":[{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702"}],"boundaries":[{"entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","importers":["apps/api/src/postgres-read-api.ts","adapters/postgres/src/runtime27-command-issuer.ts"]},{"entry":"scripts/release/unified-install/whole-sales-admission-v1.mjs","external":"./native35-source/scripts/release/unified-install/whole-sales-admission-v1.mjs","importers":["packages/application/src/unified-import-execution.ts","packages/application/src/unified-import-whole-package-profile.ts"]}]}}''')
+RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":7438,"sha256":"e0759cab44451af3e20c94a2b87ff6142be3a222f4bdca78721ee56d38120a72"}''')
 # END GENERATED RELEASE CONTRACT
 FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
 FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
@@ -382,7 +382,7 @@ def exact35_selected(p):
     need('runtime26' not in p and 'runtime26Full' not in p, 'EXACT35_MUST_NOT_BORROW_EXACT26_REFERENCES')
     native = p.get('runtime35')
     need(isinstance(native, dict) and {'references', 'media'} <= set(native) <=
-         {'references', 'media', 'inventorySpool', 'credentialRequestKey'}, 'CLOSED_EXACT35_INPUTS_REQUIRED')
+         {'references', 'media', 'inventorySpool', 'credentialRequestKey', 'sharedPostgresNamespace'}, 'CLOSED_EXACT35_INPUTS_REQUIRED')
     refs = native['references']
     need(isinstance(refs, dict) and set(refs) == {'installationRecord', 'sourceSet', 'program', 'metadata',
          'buildReceipt', 'sourceManifest', 'buildManifest', 'backupCoverage'}, 'CLOSED_EXACT35_REFERENCES_REQUIRED')
@@ -517,6 +517,8 @@ def runtime_binding(p):
             value['capacityQaObserver'] = p['capacityQaObserver']
         if 'credentialRequestKey' in native:
             value['credentialRequestKey'] = credential_key_binding(p)
+        if 'sharedPostgresNamespace' in native:
+            value['sharedPostgresNamespace'] = native['sharedPostgresNamespace']
         return digest(encoded(value))
     if not exact26_selected(p):
         return None
@@ -1193,6 +1195,9 @@ def assert_own(info, p, role, public=False):
          'CANDIDATE_LOG_ROTATION_CHANGED')
     ports = info['HostConfig'].get('PortBindings') or {}
     need(ports == ({'8080/tcp': [{'HostIp': '127.0.0.1', 'HostPort': '18080'}]} if public else {}), 'CANDIDATE_PUBLIC_BINDING_CHANGED')
+    shared = p.get('runtime35', {}).get('sharedPostgresNamespace') if p.get('runtimeSelector') == 'exact35' else None
+    if role == 'app' and shared is not None:
+        need(info['HostConfig'].get('NetworkMode') == 'container:' + shared['container']['id'], 'EXACT35_API_NETWORK_MODE_CHANGED')
 
 
 def logging_config(p, key):
@@ -1419,6 +1424,7 @@ def release_capacity_fifo(p, docker, cid, process, final_identity, final_guard):
         need(actual.st_ino == gate['identity']['inode'] and actual.st_dev == gate['identity']['device'] and stat.S_ISFIFO(actual.st_mode), 'OPENED_CAPACITY_FIFO_CHANGED')
         need(file_identity(p['runtimeConfiguration']['path']) == final_identity and Path(p['runtimeConfiguration']['path']).lstat().st_ctime_ns == frozen_ctime and time.monotonic() < deadline and time.time()*1000 < gate['deadlineAt'], 'FINAL_RELEASE_CAS_OR_DEADLINE_CHANGED')
         data=(gate['nonce']+'\n').encode('ascii')
+        check_production_shared_namespace(p, docker, cid)
         need(os.write(fd, data) == len(data), 'CAPACITY_FIFO_RELEASE_NOT_COMPLETE')
         return {'released': True, 'runtimeIdentity': final_identity, 'process': process, 'containerId': cid}
     except Exception:
@@ -1428,10 +1434,122 @@ def release_capacity_fifo(p, docker, cid, process, final_identity, final_guard):
         if fd is not None: os.close(fd)
 
 
+def production_shared_namespace_binding(p):
+    """C's exact existing carrier, never authority to create or reconnect PG."""
+    native = p.get('runtime35', {})
+    if p.get('runtimeSelector') != 'exact35':
+        need('sharedPostgresNamespace' not in native, 'SHARED_NAMESPACE_REQUIRES_NATIVE35_PRODUCTION')
+        return None
+    record = runtime35_record(p)
+    binding = native.get('sharedPostgresNamespace')
+    if record['format'] != 'FRESH35_COMBINED_INSTALLATION_RECORD_V2':
+        need(binding is None, 'SHARED_NAMESPACE_REQUIRES_NATIVE35_PRODUCTION')
+        return None
+    need(type(binding) is dict and set(binding) == {'format', 'container', 'creationOperationId', 'sourceSetSha256',
+         'targetSha256', 'installationRecordSha256', 'serviceLeaseExpiresAt'} and
+         binding['format'] == RELEASE_CONTRACT['exact35']['productionNetworkMode'], 'EXACT35_SHARED_NAMESPACE_BINDING_REQUIRED')
+    container = binding['container']
+    need(type(container) is dict and set(container) == {'id', 'name', 'imageId', 'startedAt', 'hostPid', 'startTicks', 'networkNamespace', 'frontEndpoint'} and
+         HASH.fullmatch(container.get('id', '')) and IMAGE.fullmatch(container.get('imageId', '')) and
+         isinstance(container.get('name'), str) and re.fullmatch(r't45-fresh35-[a-z0-9-]{1,90}', container['name']) and
+         isinstance(container.get('startedAt'), str) and container['startedAt'] and
+         type(container.get('hostPid')) is int and container['hostPid'] > 1 and
+         isinstance(container.get('startTicks'), str) and re.fullmatch(r'[1-9][0-9]*', container['startTicks']),
+         'EXACT35_PG_CARRIER_IDENTITY_REQUIRED')
+    namespace = container['networkNamespace']
+    need(type(namespace) is dict and set(namespace) == {'device', 'inode'} and
+         all(type(namespace[k]) is int and namespace[k] > 0 for k in namespace), 'EXACT35_PG_NETNS_REQUIRED')
+    endpoint = container['frontEndpoint']
+    need(type(endpoint) is dict and set(endpoint) == {'id', 'aliases'} and HASH.fullmatch(endpoint.get('id', '')) and
+         type(endpoint.get('aliases')) is list and all(isinstance(v, str) and v for v in endpoint['aliases']) and
+         len(set(endpoint['aliases'])) == len(endpoint['aliases']) and p['names']['app'] in endpoint['aliases'],
+         'EXACT35_PINNED_FRONT_ENDPOINT_REQUIRED')
+    need(isinstance(binding['creationOperationId'], str) and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,95}', binding['creationOperationId']) and
+         binding['sourceSetSha256'] == record['binding']['sourceSetSha256'] and
+         binding['targetSha256'] == record['binding']['targetSha256'] and
+         binding['installationRecordSha256'] == native['references']['installationRecord']['sha256'],
+         'EXACT35_NETWORK_SOURCE_TARGET_RECORD_DIFFER')
+    target = record['target']; ordinary = target['ordinary']
+    need(target.get('purpose') == 'PRODUCTION_NEW_EMPTY_EXACT35' and target['proposal']['host'] ==
+         ordinary['connectHost'] == ordinary['serverAddress'] == '127.0.0.1' and
+         ordinary['connectPort'] == ordinary['serverPort'] == target['proposal']['port'], 'EXACT35_SHARED_LOOPBACK_ENDPOINT_REQUIRED')
+    lease = binding['serviceLeaseExpiresAt']
+    need(type(lease) is int and target['expiresAt'] < lease < 2**53 and time.time()*1000 < lease,
+         'EXACT35_SHARED_SERVICE_LEASE_EXPIRED')
+    if ordinary['runtimeLoginValidUntil'] is not None:
+        until = dt.datetime.fromisoformat(ordinary['runtimeLoginValidUntil'].replace('Z', '+00:00')).timestamp()*1000
+        need(lease <= until, 'EXACT35_SHARED_SERVICE_OUTLIVES_LOGIN')
+    return binding
+
+
+def process_network_namespace(pid):
+    """Host metadata only; bind namespace inode to the same Linux process birth."""
+    root = Path('/proc') / str(pid)
+    before = (root / 'stat').read_text()
+    ticks = before.rsplit(')', 1)[1].split()[19]
+    namespace = (root / 'ns/net').stat()
+    need((root / 'stat').read_text().rsplit(')', 1)[1].split()[19] == ticks, 'EXACT35_NAMESPACE_PROCESS_CHANGED')
+    return {'startTicks': ticks, 'networkNamespace': {'device': namespace.st_dev, 'inode': namespace.st_ino}}
+
+
+def check_production_shared_namespace(p, docker, app_id=None):
+    binding = production_shared_namespace_binding(p)
+    if binding is None:
+        return None
+    expected = binding['container']; cid = expected['id']; front = p['networks']['front']
+    info = docker.inspect(cid, 3)
+    def exact_pg(value):
+        need(value['Id'] == cid and value['Name'] == '/' + expected['name'] and value['Image'] == expected['imageId'] and
+             value['State']['Running'] and not value['State'].get('Paused') and not value['State'].get('Restarting') and
+             value['State']['StartedAt'] == expected['startedAt'] and value['State']['Pid'] == expected['hostPid'] and
+             value['Config'].get('Labels', {}).get('t45.operation') == binding['creationOperationId'] and
+             value['Config']['Labels'].get('t45.source') == binding['sourceSetSha256'] and
+             value['HostConfig']['NetworkMode'] in (front['id'], front['name']) and
+             not value['HostConfig'].get('PortBindings') and not value['HostConfig'].get('Privileged'),
+             'EXACT35_OWNED_LIVE_PG_CARRIER_CHANGED')
+    exact_pg(info)
+    actual = process_network_namespace(expected['hostPid'])
+    need(actual == {'startTicks': expected['startTicks'], 'networkNamespace': expected['networkNamespace']}, 'EXACT35_PG_NAMESPACE_BIRTH_CHANGED')
+    network = json.loads(docker.run(['network', 'inspect', front['id']], 3))[0]
+    need(network['Id'] == front['id'] and network['Name'] == front['name'] and network['Driver'] == 'bridge' and
+         network['Internal'] is True and cid in network.get('Containers', {}), 'EXACT35_EXISTING_FRONT_ENDPOINT_REQUIRED')
+    endpoint = info['NetworkSettings']['Networks'].get(front['name'], {})
+    alias = p['names']['app']
+    need(endpoint.get('NetworkID') == front['id'] and
+         sorted(endpoint.get('Aliases') or []) == sorted(expected['frontEndpoint']['aliases']) and
+         network['Containers'][cid].get('EndpointID') == endpoint.get('EndpointID') == expected['frontEndpoint']['id'],
+         'EXACT35_OWNED_APP_ALIAS_REQUIRED')
+    # Inspect only this already selected bridge's peers. Never overwrite an
+    # existing alias, attach PG, create a bridge, or infer a host mapping.
+    for peer_id in network['Containers']:
+        if peer_id == cid:
+            continue
+        peer = docker.inspect(peer_id, 3)
+        aliases = peer['NetworkSettings']['Networks'].get(front['name'], {}).get('Aliases') or []
+        need(peer['Name'] != '/' + alias and alias not in aliases, 'EXACT35_APP_ALIAS_CONFLICT')
+    if app_id is not None:
+        app = docker.inspect(app_id, 3); assert_own(app, p, 'app')
+        need(app['Id'] == app_id and app['State']['Running'] and
+             app['Config'].get('Labels', {}).get('naijue.rapid-launch.created-by') == p['operationId'] and
+             app['HostConfig']['NetworkMode'] == 'container:' + cid, 'EXACT35_API_SHARED_NAMESPACE_REQUIRED')
+        app_namespace = process_network_namespace(app['State']['Pid'])
+        need(app_namespace['networkNamespace'] == actual['networkNamespace'], 'EXACT35_API_PG_NETNS_DIFFER')
+        latest_app = docker.inspect(app_id, 3)
+        need(latest_app['State']['Pid'] == app['State']['Pid'] and latest_app['State']['StartedAt'] == app['State']['StartedAt'] and
+             latest_app['State']['Running'] and process_network_namespace(app['State']['Pid']) == app_namespace, 'EXACT35_API_PROCESS_CHANGED')
+    exact_pg(docker.inspect(cid, 3))
+    need(process_network_namespace(expected['hostPid']) == actual and time.time()*1000 < binding['serviceLeaseExpiresAt'],
+         'EXACT35_SHARED_NAMESPACE_OR_LEASE_CHANGED')
+    return binding
+
+
 def create_capacity_gate_app(p, docker):
     capacity_host_binding(p)
     gate = capacity_gate_binding(p)
-    args = ['create', '--name', p['names']['app'], '--pull=never', '--network', p['networks']['front']['id'], '--network-alias', p['names']['app'], '--read-only', '--cap-drop=ALL',
+    shared = check_production_shared_namespace(p, docker)
+    network = (['--network', 'container:' + shared['container']['id']] if shared else
+               ['--network', p['networks']['front']['id'], '--network-alias', p['names']['app']])
+    args = ['create', '--name', p['names']['app'], '--pull=never', *network, '--read-only', '--cap-drop=ALL',
             '--security-opt=no-new-privileges', '--restart=no', '--user', p['limits']['app']['user'], '--workdir', '/app',
             '--tmpfs', '/tmp:rw,noexec,nosuid,size=16m', *limits_args(p, 'app'), *labels(p, 'app'),
             *mount(Path(p['releaseDirectory']) / 'payload', '/app'), *mount(p['runtimeConfiguration']['path'], '/run/naijue-rewrite/runtime.json')]
@@ -1440,7 +1558,12 @@ def create_capacity_gate_app(p, docker):
     args += capacity_gate_arguments(p)
     cid = docker.run(args).decode().strip()
     need(HASH.fullmatch(cid), 'CREATED_CANDIDATE_ID_REQUIRED')
-    docker.run(['network', 'connect', p['networks']['data']['id'], cid])
+    if shared is None:
+        docker.run(['network', 'connect', p['networks']['data']['id'], cid])
+    else:
+        spec = docker.inspect(cid, 3); assert_own(spec, p, 'app')
+        need(spec['HostConfig']['NetworkMode'] == 'container:' + shared['container']['id'], 'EXACT35_CREATED_API_NETWORK_CHANGED')
+        check_production_shared_namespace(p, docker)
     return cid
 
 
@@ -1448,6 +1571,7 @@ def create_capacity_gate_app(p, docker):
 def capacity_process_tuple(p, docker, cid, phase='shell'):
     """Finite metadata-only exec in the same container namespace; never starts application code."""
     gate = capacity_gate_binding(p); host = capacity_host_binding(p)
+    check_production_shared_namespace(p, docker, cid)
     code = "const f=require('node:fs'),c=require('node:crypto');const s=f.readFileSync('/proc/1/stat','utf8'),e=s.lastIndexOf(')'),ticks=s.slice(e+2).split(/\\s+/)[19],boot=f.readFileSync('/proc/sys/kernel/random/boot_id','utf8').trim();const hash=p=>c.createHash('sha256').update(f.readFileSync(p)).digest('hex');process.stdout.write(JSON.stringify({pid:1,linuxStartTicks:ticks,linuxBootId:boot,nodeSha256:hash('/usr/local/bin/node'),shellSha256:hash('/bin/sh'),pidOneExeSha256:hash('/proc/1/exe')}));"
     value = json.loads(docker.run(['exec', cid, '/usr/local/bin/node', '-e', code], 5))
     need(type(value) is dict and set(value) == {'pid', 'linuxStartTicks', 'linuxBootId', 'nodeSha256', 'shellSha256', 'pidOneExeSha256'} and value['pid'] == 1 and
@@ -2187,6 +2311,7 @@ def create_web(p, docker, public=False):
 
 
 def health(p, docker, app_id, via_web=None):
+    check_production_shared_namespace(p, docker, app_id)
     # Identity/liveness is not readiness: issue both freshly against the same target.
     script = r"""const h=require('node:http');
 function probe(path,accept,next){
@@ -2418,6 +2543,7 @@ def current_stage(p, docker, manifest):
         info = docker.inspect(expected['id'])
         assert_own(info, p, 'app' if role == 'app' else 'web')
         need(own_container_fingerprint(info) == expected['specSha256'] and info['State']['Running'], 'STAGED_CONTAINER_CHANGED_OR_STOPPED')
+    check_production_shared_namespace(p, docker, stage['containers']['app']['id'])
     return stage
 
 

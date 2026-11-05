@@ -1,0 +1,123 @@
+{
+  "task": "C-0448-PRODUCTION-PYTHON-AND-LOADER-THREE-LEAF",
+  "atUtc": "2026-11-05T23:00:27.182644+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODELS",
+  "findings": [],
+  "pins": {
+    "sourceCommit": "1e7aaa130ab1eef576f262a7f78ea7623d95e2ae",
+    "buildRoot": "19b2232649ab07a7cd43a75596f43221333d7cdd",
+    "tree": "e57796ce638e29aebbe403bf7cbf2a46e12cc2a8",
+    "files": [
+      {
+        "path": "scripts/release/unified-install/launch-fresh35-production-v2.py",
+        "sha256": "f2adbe41b24faeaf38b89cf4a633ba6f6a6f462b9bee06e34231ded4a5c2ab73",
+        "bytes": 34240
+      },
+      {
+        "path": "tests/test_fresh35_production_launcher.py",
+        "sha256": "4077edb2ba2492c8009fc38eaeebe96c90e471c48be91671dec426f39f49b406",
+        "bytes": 19295
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+        "sha256": "58db5fc564bebd8e712205558b9e755b66942ea75f9e2994f9b65c611f3a851f",
+        "bytes": 12665
+      }
+    ]
+  },
+  "reusedReviews": [
+    {
+      "sha256": "552b929755bca8249d0797a8ddcd6438e9b6d1c8e21bd852bcf3141eb5fe500f",
+      "scope": "other nine-leaf passed source/authority/two-DO scope"
+    },
+    {
+      "sha256": "17ebcb1b585ac8167578e75fd9aba9e7d7af56db20ceda5ed9944af10eeca821",
+      "scope": "PROD-ENTRY-F01 closed exact JS43dd0f86 successor"
+    }
+  ],
+  "authorEvidenceAdopted": {
+    "T45ReadySha256": "f4e5d2e8f4eea1f518d06f1b266584e60f2f213d934a01fd9477c00a4916b343",
+    "groupsReported": 16,
+    "rerun": false,
+    "D1DescriptorSha256": "cb9c4ed8f3552dcdd1940d9459b6ad6c4d867b9b6e9c43e0fd8de1b6f76587ae",
+    "sourceSetSha256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+    "currentPinsReported": 214,
+    "capturedPinsReported": 180,
+    "wholeLoaderRerun": false
+  },
+  "independentChecks": [
+    {
+      "id": "THREE_AUTHOR_SOURCE_AND_BUILD_LEAVES_PLUS_TREE",
+      "result": "PASS",
+      "unchangedPrimitiveAndJs43dd0f86": true
+    },
+    {
+      "id": "ACTUAL_JS_PUBLISHER_BYTES_ENTRY_STDOUT_TO_ORIGINAL_PYTHON_READER_RETENTION",
+      "result": "PASS",
+      "recordBytes": 1705,
+      "recordMode": "0644",
+      "sameParsedJsonDifferentBytesRefused": "FRESH35_PRODUCTION_DURABLE_RECORD_BYTES_DIFFER",
+      "childZeroOrIncompleteJsonRefused": "FRESH35_PRODUCTION_DURABLE_NATIVE_RESULT_REQUIRED",
+      "metadataRootAcl": "MODELED; original reader bodies used",
+      "productionPublication": false,
+      "localSyntheticPublication": true
+    },
+    {
+      "id": "MATCHING_HELPER_BUT_MISMATCHING_SELF_BLOCKS_ALL_IMPORTS",
+      "result": "PASS",
+      "refusal": "FRESH35_PRODUCTION_DEPLOYED_PYTHON_LEAF_DIFFERS",
+      "importAttempts": 0,
+      "manifestAndLeafRead": "ACTUAL_SMALL_FILES",
+      "trustedProtectedBodies": "ORIGINAL; OS owner/ACL modeled"
+    },
+    {
+      "id": "SAME_JS_V2_TARGET_AND_DESCRIPTOR_CONSUMED_BY_14_6_9_CONTRACTS",
+      "result": "PASS",
+      "independentAuthorities": "MODEL_DATA_ONLY_NO_FILES_ISSUED"
+    },
+    {
+      "id": "ADOPTED_REAL_SOURCE_DESCRIPTOR_DOUBLE_PYTHON_JS_AND_LOADER_PINS",
+      "result": "PASS",
+      "currentReported": 214,
+      "capturedReported": 180,
+      "onlySeamPinsRead": 4,
+      "wholeLoaderRerun": false
+    }
+  ],
+  "sourceReview": {
+    "authorityChain": "Closed14 external creation intent before new root; exact physical observations precede independent entry6 and original program9 authority. Parent rechecks original creation/entry bytes and protected deployment. Original JS43dd owns only install native Client, transaction/journal/record; Python does not issue authority, REAL import or runtime capability.",
+    "preImportTrust": "Protected manifest digest from C creation intent; original primitive and new caller both hash checked before import; original module verify_deployment follows. D1 actual loader descriptor includes both Python leaves, JS and source loader; no missing-file bypass.",
+    "retention": "Child zero/JSON alone insufficient; closed V2 record target/program/catalog/transaction receipt plus exact original published byte hash required in parent and guardian. Native result must indicate durable publication and business/host false.",
+    "lifetime": "Original <=20min install and45s cleanup reserve remain separate from explicit finite serviceLease. Runtime login expiry is explicit and covers service lease. Admin/owner/controller expiry fixed in bootstrap; no postrecord role/helper/catalog mutation or authority-directory sibling changes.",
+    "failureAndStop": "Guardian accepts only exact live creating parent/consumed intent, owns exact direct process, and stops on pipe/parent loss, stop or deadline; PID identity checked before signals. Failure/unknown and early retained stop preserve private original-key recovery material/data. Genuine completed service deadline clears only registered owned secrets after confirmed stop. No cross-target SQL cleanup/retry.",
+    "network": "Original loopback server arguments, empty Unix socket directory and seven HBA rules reused; ordinary.serverAddress must equal127.0.0.1 and exact port. No guessed external peer rule."
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "serverCalls": 0,
+    "PGStarted": false,
+    "PGConnections": 0,
+    "realInputsRead": false,
+    "actualProductionPublication": false,
+    "localSyntheticPublication": true,
+    "localSyntheticRecordBytes": 1705,
+    "rootOwnerAclCompletionContext": "MODELED; original function bodies used",
+    "actualProductionGuardianAndNativeInstall": "NOT_TESTED",
+    "actualNetworkOrAcl": "NOT_TESTED",
+    "buildByQB": false,
+    "D2Build": "separate owner, not established here"
+  },
+  "notRepeated": [
+    "prior nine-leaf source review",
+    "F01 six cases",
+    "old13/7/64/private",
+    "T45 author16",
+    "whole214/180 loader"
+  ],
+  "remaining": "No open source finding in this exact three-leaf increment. Combine reused prior QA for final build decision. Actual creation/PG/ACL/native install/ordinary/REAL/service lifetime and deployment require separately exact bound authorized execution; this receipt does not grant it."
+}
