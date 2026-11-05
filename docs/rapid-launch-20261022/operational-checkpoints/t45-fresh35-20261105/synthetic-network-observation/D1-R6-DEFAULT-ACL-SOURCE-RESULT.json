@@ -1,0 +1,98 @@
+{
+  "scope": "R6_SOURCE_PROVEN_DEFAULT_ACL_REPRESENTATION_ONLY",
+  "status": "SOURCE_FIXED_DIRECT_REGRESSION_PASS_NOT_PG_VERIFIED",
+  "authorization": "Controller C explicit minimal lifecycle single-leaf/default-ACL materialization approval received this turn; necessary direct regression only",
+  "source": {
+    "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+    "previousSourceSetSha256": "2be5e72a97b785c3f7cbc6aff62ea80775b4727c0493d3189ce39c33495151a1",
+    "currentSourcePins": 214,
+    "capturedSourcePins": 180,
+    "delta": [
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+        "sha256": "c5a4349dae4a4525960d15ac2eadb028563424f03a434fa61681bb9429718fcc",
+        "beforeSha256": "7b4f48001367c65fcb717009a4b00d803ba855e4bea91b03339ac75c712feff9"
+      }
+    ],
+    "pins": [
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+        "bytes": 22158,
+        "sha256": "c5a4349dae4a4525960d15ac2eadb028563424f03a434fa61681bb9429718fcc",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R6-DEFAULT-ACL-SOURCE-01/fresh35-combined-lifecycle-v1.mjs"
+      },
+      {
+        "path": "tests/fresh35-combined-catalog.test.mjs",
+        "bytes": 23112,
+        "sha256": "f05abdb31a8eb9834f4446822de53d96035c3bd2674b3a1ebd4132a8f9c4faa3",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R6-DEFAULT-ACL-SOURCE-01/fresh35-combined-catalog.test.mjs"
+      }
+    ]
+  },
+  "sourceOnlyChangedPins": 1,
+  "unchangedCurrentSourcePins": 213,
+  "fixedSQL": "GRANT EXECUTE ON FUNCTION naijue_erp.is_native_party_import_insert(text,jsonb) TO PUBLIC;",
+  "placement": "Existing direct-35-schema statement tail, same application transaction; statement names/count10 unchanged",
+  "sourceProof": {
+    "signatureSha256": "a76a3b92fdec1d9ffb0a145b9c27dc7f671b65db7425519fbccc1b241529ab70",
+    "capturedExplicitRoutineAclCount": 64,
+    "dumpRoutineAclSections": 63,
+    "defaultRepresentationMismatches": 1,
+    "projection": "Reuse already completed exact source/model scan, not rescanned152 routines",
+    "before": "No dumped ACL section leaves CREATE FUNCTION raw proacl NULL; captured expected raw ACL explicitly owner/PUBLIC EXECUTE",
+    "after": "Existing effective PUBLIC EXECUTE materialized as captured explicit default ACL; no grant option, role, body or owner change",
+    "postgresImplementation": "REL_17_11 aclchk.c ExecGrant_common (NULL -> acldefault -> merge -> stored new ACL); pg_dump/dumputils.c buildACLCommands (default diff omitted)"
+  },
+  "observedFailure": {
+    "tag": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS",
+    "tagReceiptSHA256": "9f9858fa85d7821cdad93d9c81aa5b74e6d7cb3fbb9b702bcfb3ed44ee3b4d1b",
+    "r6State": "ROLLED_BACK_AND_STOPPED",
+    "actualFirstOrOnlyRoutine": "NOT_OBSERVED; source-proven mismatch is consistent with tag but stopped log lacks signature/ordinal"
+  },
+  "checks": [
+    {
+      "name": "new targeted offline SQL projection of actual compiler statement block and compiled descriptor binding",
+      "before": {
+        "exitCode": 1,
+        "failed": 1,
+        "reason": "same direct schema step must materialize the one captured default ACL"
+      },
+      "after": {
+        "exitCode": 0,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "covers": [
+        "sealed mapped schema prefix exact",
+        "pre-fix raw NULL differs from captured ACL",
+        "post-fix captured raw ACL equals projected ACL",
+        "effective privileges unchanged",
+        "genuine compiled program SQL digest binding",
+        "same10statement names/count"
+      ]
+    },
+    {
+      "name": "node --check lifecycle and direct test; git diff --check for both leaves",
+      "exitCode": 0
+    }
+  ],
+  "preserved": [
+    "catalog guard/model and raw ACL comparison",
+    "sealed reference files and original capture",
+    "target guard and two DO result protocol",
+    "all routine bodies/owners/effective rights",
+    "roles/tables and original application transaction",
+    "stopped r6 and previous receipts"
+  ],
+  "notExecuted": [
+    "PG/SQL connection or execution",
+    "old target replay",
+    "real source import",
+    "production/server/browser operations",
+    "prior passed tests/full suite/build",
+    "commit/index/root controller document edits"
+  ],
+  "nextOwner": "C fixes new source package, coordinates QB only this install delta and T45 once on a wholly new target; source pass is not native PG or production pass",
+  "readback": "All fixed source copies equal current source and sourceSet delta has only lifecycle; receipt/source files below read back by D1"
+}

@@ -1,0 +1,1207 @@
+{
+  "status": "LIVE_READONLY_CARRIER_PREPARATION_FACTS_COLLECTED_NOT_CREATION_OR_DEPLOYMENT_APPROVAL",
+  "inspectionTimeUTC": "2026-11-05T23:46:25.548776+00:00",
+  "missingMetadataSupplementTimeUTC": "2026-11-05T23:48:15.660173+00:00",
+  "jobs": [
+    {
+      "jobId": "t45-production-carrier-preparation-facts-readonly-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 1.3703507808968425,
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-production-carrier-preparation-facts-readonly-20261106-01/transport/release-receipts/t45-production-carrier-preparation-facts-readonly-20261106-01/production-carrier-preparation-facts.json",
+      "receiptSha256": "56dcf52b347ea5b9ddf46e021e4a21a80e3e7361a808289fe28f8c48451a2721",
+      "jobSha256": "d41c9f59eafbd1aa1817d58adc7a130dae64ca835d1d73d5832fb8598ba51ec5"
+    },
+    {
+      "jobId": "t45-production-carrier-service-metadata-supplement-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.7689530947245657,
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-production-carrier-service-metadata-supplement-20261106-01/transport/release-receipts/t45-production-carrier-service-metadata-supplement-20261106-01/service-metadata-supplement.json",
+      "receiptSha256": "93675b1c910f05459d6032e20375ebd1e09d06281f664c3f6c4e55f1379ca10f",
+      "jobSha256": "bc5da28ebbad0ac87f7ce42de6eede6d20a15070871c122ebf405eb55c2b7188"
+    }
+  ],
+  "networks": {
+    "front": {
+      "Id": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "Name": "naijue-prod-front",
+      "Driver": "bridge",
+      "Internal": true,
+      "Scope": "local",
+      "endpointCount": 19
+    },
+    "data": {
+      "Id": "428db63aace9e1a9ae07a8b50eec172bee07a29ad8ca25f46158b8fb55ce3bd2",
+      "Name": "naijue-prod-data",
+      "Driver": "bridge",
+      "Internal": true,
+      "Scope": "local",
+      "endpointCount": 16
+    },
+    "ingress": {
+      "Id": "7778526dcf5696648813ab923c9b023f2d9c482b2dd8caa081c967703e3a2e22",
+      "Name": "naijue-prod-ingress",
+      "Driver": "bridge",
+      "Internal": false,
+      "Scope": "local",
+      "endpointCount": 1
+    }
+  },
+  "frontEndpoints": [
+    {
+      "containerId": "0742609acdca8ad41df57da109a59525f210753e31a511aaa2040b52b4a483c9",
+      "containerName": "/naijue-rewrite-source447-20261025-18-app",
+      "networkEndpointName": "naijue-rewrite-source447-20261025-18-app",
+      "endpointId": "12985acc361fe681cd4b5465b9d46765676c544a2d32e376a11d5dacfd98538d",
+      "aliases": [
+        "naijue-rewrite-source447-20261025-18-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "096f23670c3f1e26c3537581b8451d5bafed18b8e4c296b32735ea4d94630257",
+      "containerName": "/naijue-prod-web-1",
+      "networkEndpointName": "naijue-prod-web-1",
+      "endpointId": "3f9b3b158b505c916fac5e7b23d00e5bfc65ee894e8c7f6fd3fc0a5676bbb92d",
+      "aliases": [
+        "naijue-prod-web-1",
+        "web"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "09a5605c5aa26235c9cc964f9f03dfde404c2733d6b04dbc59acc349638fae21",
+      "containerName": "/naijue-rewrite-source438-20261025-14-app",
+      "networkEndpointName": "naijue-rewrite-source438-20261025-14-app",
+      "endpointId": "5f1fec5a7ac897f5bcf41eac8dd3c640a0830b828804d26aefa64b4d3291f857",
+      "aliases": [
+        "naijue-rewrite-source438-20261025-14-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "1cec6139b42ae969e53e542d7e5a96bc17995dfb07afd542ef8d3c209ed10cc3",
+      "containerName": "/naijue-rewrite-source519-20261026-55-app",
+      "networkEndpointName": "naijue-rewrite-source519-20261026-55-app",
+      "endpointId": "d98ffbb24ecbb3041d6d149f037befcfd5a7b7862209d1986ab6534c4e5e7744",
+      "aliases": [
+        "naijue-rewrite-source519-20261026-55-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "2efb28bc263fe9fa670fbf27ae2e8a21a40d30b2260bb81844fa92855b55f9cf",
+      "containerName": "/naijue-rewrite-source598-20261026-114-app",
+      "networkEndpointName": "naijue-rewrite-source598-20261026-114-app",
+      "endpointId": "dd992166a19843715fb7c24f273c47d211977be522d6908b647f6d42b5ead50d",
+      "aliases": [
+        "naijue-rewrite-source598-20261026-114-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "2f66213f1b5106da05e4fd9fd027f93853b1b71392edf3f6bf45d3a4df981123",
+      "containerName": "/naijue-rewrite-copied382-20261025-216-app",
+      "networkEndpointName": "naijue-rewrite-copied382-20261025-216-app",
+      "endpointId": "3bf3faa033b79a86f90460723c2805ecae3fbc90042801a92659ba271e483849",
+      "aliases": [
+        "naijue-rewrite-copied382-20261025-216-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "46666e0fb847223aa88b3691345ea13816f39ffbfe6a3df71cd6810128249286",
+      "containerName": "/naijue-rewrite-source483-20261025-30-app",
+      "networkEndpointName": "naijue-rewrite-source483-20261025-30-app",
+      "endpointId": "448599a846752657517d9539de29dc857dd1f136cb6643d6ef53223e98790c33",
+      "aliases": [
+        "naijue-rewrite-source483-20261025-30-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "5d172e5e86cb6d5ba9cea69e662e7dcbd566b1faf24b22248749babd68066db1",
+      "containerName": "/naijue-rewrite-source494-20261026-40-app",
+      "networkEndpointName": "naijue-rewrite-source494-20261026-40-app",
+      "endpointId": "c617809f4b9349bd47260aa2ab476f0f842ffe427059b549cdcac576ea570f22",
+      "aliases": [
+        "naijue-rewrite-source494-20261026-40-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "761010eaa63c265393526edb2c39f2aa8a18be5361fcadb30844f24dea221477",
+      "containerName": "/naijue-rewrite-r1-5669bd5-20261024-01-stage-web",
+      "networkEndpointName": "naijue-rewrite-r1-5669bd5-20261024-01-stage-web",
+      "endpointId": "a60d07535b1c9b70517b710f5fe8a7320d2862c0e796892e5b500713e0c9103d",
+      "aliases": [],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "7c34e25f30d81fe0946b37fb6d8b3d84366b0a44c32a75b238738aaa8eb1c877",
+      "containerName": "/naijue-rewrite-copied380-20261025-210-app",
+      "networkEndpointName": "naijue-rewrite-copied380-20261025-210-app",
+      "endpointId": "8438c2b61419b703f213044a9b2ab60b040e859b90ade4f87bd6585103ff68a9",
+      "aliases": [
+        "naijue-rewrite-copied380-20261025-210-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "8a389ad5cb9b800498f3fa175f32e639e42b534d440f73b90b4ce621adc62418",
+      "containerName": "/naijue-rewrite-source519-20261026-58-app",
+      "networkEndpointName": "naijue-rewrite-source519-20261026-58-app",
+      "endpointId": "16ef05e584aee269bba72247e6436ce74e3ced13994c840c4749b032147c238e",
+      "aliases": [
+        "naijue-rewrite-source519-20261026-58-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "ac49236638d8e254806d0131e57c3b33e45876ff266db391f242b9642b32356c",
+      "containerName": "/naijue-rewrite-r1-c28ea3f-20261023-02-app",
+      "networkEndpointName": "naijue-rewrite-r1-c28ea3f-20261023-02-app",
+      "endpointId": "db47217c80b6f365909275e48165c72b0fe103a6ff551de3a2e30caa41e0dd37",
+      "aliases": [
+        "naijue-rewrite-r1-c28ea3f-20261023-02-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "ba1c3880cd07076d9df56b622b9bb03a2978715898a0a4a038db021bf24b9657",
+      "containerName": "/naijue-rewrite-r1-5669bd5-20261024-01-app",
+      "networkEndpointName": "naijue-rewrite-r1-5669bd5-20261024-01-app",
+      "endpointId": "2439b422ee7f954e054f965bb59e85b1346fadaff6f2b855cd490596e3b4a7b9",
+      "aliases": [
+        "naijue-rewrite-r1-5669bd5-20261024-01-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "bc77a250364fb3589effcfe7aa4d0270244f0f55c83ce8cd343c9f93f0e10d13",
+      "containerName": "/naijue-rewrite-r1-f43e943-20261024-01-stage-web",
+      "networkEndpointName": "naijue-rewrite-r1-f43e943-20261024-01-stage-web",
+      "endpointId": "94ceb3a455a797159dc32626fdee9b4c4319d90be9b1a509b94318d597559eb3",
+      "aliases": [],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "c0645f7700b0325d1da9dedd3501918e94cc000ba03aac1f78de3a14ad1bf51b",
+      "containerName": "/naijue-rewrite-source519-20261026-74-app",
+      "networkEndpointName": "naijue-rewrite-source519-20261026-74-app",
+      "endpointId": "3cf21c4065233f517ee55e581f510e938197ac796ef6f00305e42af773da437c",
+      "aliases": [
+        "naijue-rewrite-source519-20261026-74-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "c28f5d5e8ec0811f4eced5973dbe32e9f81033aea03f79c24b7ca8499ef0ba53",
+      "containerName": "/naijue-rewrite-r1-f43e943-20261024-01-app",
+      "networkEndpointName": "naijue-rewrite-r1-f43e943-20261024-01-app",
+      "endpointId": "5d7d231725ef517c2911ee8d8ea5c0bec0087a93fd550b2187301a684225abcb",
+      "aliases": [
+        "naijue-rewrite-r1-f43e943-20261024-01-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "c3c2769ee01a85691f6251e56c43ae66413470738126bdfdecde1f89c83c5881",
+      "containerName": "/naijue-prod-app-1",
+      "networkEndpointName": "naijue-prod-app-1",
+      "endpointId": "ee60cfa70c86a9bc6ba20d2da598ae216b14c119c689c01933c87576bee0159c",
+      "aliases": [
+        "naijue-prod-app-1",
+        "app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "c5c83dc4e0e4dd9f87fd03af7d26db76c69d9f714219439ebad85f55eff6536b",
+      "containerName": "/naijue-rewrite-r1-c28ea3f-20261023-02-stage-web",
+      "networkEndpointName": "naijue-rewrite-r1-c28ea3f-20261023-02-stage-web",
+      "endpointId": "60f14555a9d58ab48169d4600c028d028d48a431eb76e38bd09ab59f22b1e183",
+      "aliases": [],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    },
+    {
+      "containerId": "fea0a222416bb7a451db0ad5acf7f352b138d7718132576711b5a90458353788",
+      "containerName": "/naijue-rewrite-source459-20261025-21-app",
+      "networkEndpointName": "naijue-rewrite-source459-20261025-21-app",
+      "endpointId": "db20da394488856945ab1d9ccea315df973ad0b101103a529914c127f3462036",
+      "aliases": [
+        "naijue-rewrite-source459-20261025-21-app"
+      ],
+      "candidateNameDNSConflict": false,
+      "candidateAliasDNSConflicts": []
+    }
+  ],
+  "proposedNames": {
+    "futureAppName": "naijue-rewrite-exact35-20261106-app",
+    "container": "t45-fresh35-production-20261106-r1",
+    "root": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261106-r1"
+  },
+  "proposedRoot": {
+    "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261106-r1",
+    "exists": false
+  },
+  "proposedContainerNameExists": false,
+  "DNSCaseEquivalentNameAndAliasConflicts": {
+    "naijue-rewrite-exact35-20261106-app": [],
+    "t45-fresh35-production-20261106-r1": []
+  },
+  "productionServices": [
+    {
+      "id": "c3c2769ee01a85691f6251e56c43ae66413470738126bdfdecde1f89c83c5881",
+      "name": "/naijue-prod-app-1",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-19T00:37:33.773668947Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": "healthy",
+      "networkMode": "naijue-prod-data",
+      "portBindings": {},
+      "memoryBytes": 2147483648,
+      "nanoCPUs": 0,
+      "pidsLimit": 128
+    },
+    {
+      "id": "3d428c7fc107996d315fc1e32d32e805ef7f6b284c08a5bfdef97b3ec1ec8baf",
+      "name": "/naijue-prod-db-1",
+      "imageId": "sha256:b3721d9bd40bf0da8dde2ef10bb0557d5b6615cbf12f63c448acbf5279b417c2",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-04T08:15:55.884806205Z",
+      "finishedAt": "2026-10-04T08:15:45.069464467Z",
+      "restartCount": 0,
+      "health": "healthy",
+      "networkMode": "naijue-prod-data",
+      "portBindings": {},
+      "memoryBytes": 8589934592,
+      "nanoCPUs": 1750000000,
+      "pidsLimit": 128
+    },
+    {
+      "id": "096f23670c3f1e26c3537581b8451d5bafed18b8e4c296b32735ea4d94630257",
+      "name": "/naijue-prod-web-1",
+      "imageId": "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-17T23:14:04.03396614Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": "healthy",
+      "networkMode": "naijue-prod-front",
+      "portBindings": {
+        "8080/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18080"
+          }
+        ]
+      },
+      "memoryBytes": 268435456,
+      "nanoCPUs": 250000000,
+      "pidsLimit": 128
+    }
+  ],
+  "productionIdentitySameAsEarlierRecordedMetadata": {
+    "/naijue-prod-app-1": true,
+    "/naijue-prod-db-1": true,
+    "/naijue-prod-web-1": true
+  },
+  "legacyStageServices": [
+    {
+      "id": "f540ba16e0ee5e68c4c518bebdc1654c7e096eb85d8f6a1f54bea33086025873",
+      "name": "/naijue-stage-app-1",
+      "imageId": "sha256:9bbcc3483818820a983b45fc4939bb2ae2be02ddf08e9cfd749dbb20fd0462fe",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-16T03:30:10.201127508Z",
+      "finishedAt": "2026-10-16T03:37:51.607976441Z",
+      "restartCount": 0,
+      "health": "unhealthy",
+      "networkMode": "naijue-stage-data",
+      "portBindings": {},
+      "memoryBytes": 268435456,
+      "nanoCPUs": 500000000,
+      "pidsLimit": 128
+    },
+    {
+      "id": "d83afb40178208208fe079d2bf8bee326886f685ec6f5a5432812ecd7b1eb937",
+      "name": "/naijue-stage-db-1",
+      "imageId": "sha256:f4364543d56b22b144c5707dc6f3aba205135c242b7db1e4728bd54135826061",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-16T03:30:08.99386442Z",
+      "finishedAt": "2026-10-16T03:37:53.775634404Z",
+      "restartCount": 0,
+      "health": "unhealthy",
+      "networkMode": "naijue-stage-data",
+      "portBindings": {},
+      "memoryBytes": 1073741824,
+      "nanoCPUs": 750000000,
+      "pidsLimit": 128
+    },
+    {
+      "id": "a1c2390698a33c8c87541619847662e84c485a96efb380433197ed77f3d24a10",
+      "name": "/naijue-stage-web-1",
+      "imageId": "sha256:5e71d367bd0b8c8b0197737b50b0bfbfd9d7f47213bf11c2204468e073fe2b02",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-16T03:30:22.652024807Z",
+      "finishedAt": "2026-10-16T03:37:49.120811558Z",
+      "restartCount": 0,
+      "health": "unhealthy",
+      "networkMode": "naijue-stage-front",
+      "portBindings": {
+        "8443/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18081"
+          }
+        ]
+      },
+      "memoryBytes": 201326592,
+      "nanoCPUs": 250000000,
+      "pidsLimit": 128
+    }
+  ],
+  "otherExistingCandidateServicesMetadata": [
+    {
+      "id": "4436fe1c37b1e95442c3aa65b81c648daef68bcc9abe94fdc138dd405bce3b56",
+      "name": "/naijue-qa-v22-pg-20261027-01",
+      "imageId": "sha256:b3721d9bd40bf0da8dde2ef10bb0557d5b6615cbf12f63c448acbf5279b417c2",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-27T13:22:18.856118481Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "7c34e25f30d81fe0946b37fb6d8b3d84366b0a44c32a75b238738aaa8eb1c877",
+      "name": "/naijue-rewrite-copied380-20261025-210-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-25T00:55:12.523813873Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "2f66213f1b5106da05e4fd9fd027f93853b1b71392edf3f6bf45d3a4df981123",
+      "name": "/naijue-rewrite-copied382-20261025-216-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-25T01:22:25.687725697Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "ba1c3880cd07076d9df56b622b9bb03a2978715898a0a4a038db021bf24b9657",
+      "name": "/naijue-rewrite-r1-5669bd5-20261024-01-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-23T23:13:35.357562914Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "761010eaa63c265393526edb2c39f2aa8a18be5361fcadb30844f24dea221477",
+      "name": "/naijue-rewrite-r1-5669bd5-20261024-01-stage-web",
+      "imageId": "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-23T23:13:40.024071947Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "8f467327253afd24807698549c2026d705f9ee5b81a11043e5b2cce72ded8b7b",
+      "name": "/naijue-rewrite-r1-c103-layout-20261023-54-installer",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T03:33:31.868840172Z",
+      "finishedAt": "2026-10-23T03:33:32.431016809Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "72645b9ae53ddbc76bcc6b3a337e4b3da154b5fa1af271414eae0764ca38e2ab",
+      "name": "/naijue-rewrite-r1-c103-layout-20261023-54-installer-npm",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T03:33:35.357150471Z",
+      "finishedAt": "2026-10-23T03:33:39.881231413Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "e4763c792b8cf08e6862f43f3cb12c65c2e409a559f284a55af70018a379f965",
+      "name": "/naijue-rewrite-r1-c103-offline-20261023-48-installer",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T02:41:55.408188048Z",
+      "finishedAt": "2026-10-23T02:41:55.978940894Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "d0a24142efa9a694fc03edae87fae75e8717297c6bd45962d7123931deb03c0a",
+      "name": "/naijue-rewrite-r1-c103-offline-20261023-48-installer-npm",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T02:41:58.69176845Z",
+      "finishedAt": "2026-10-23T02:42:00.800470674Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "8050917fc3b86094768d91a740589a6dfaaa439ac0aaa43021af2e7497b93984",
+      "name": "/naijue-rewrite-r1-c28ea3f-20261023-01-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T04:56:13.445947853Z",
+      "finishedAt": "2026-10-23T04:56:20.200515223Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "ca738b92d7301db2ffb7ef2b21f95cab16736e890eaa41465c55690d586f9590",
+      "name": "/naijue-rewrite-r1-c28ea3f-20261023-01-installer",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T04:55:51.903608625Z",
+      "finishedAt": "2026-10-23T04:55:52.517404333Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "f1109b9f440713d52c2898dd60da01d0c7adf1bd6ddfd211c87b7bfb7a2b3188",
+      "name": "/naijue-rewrite-r1-c28ea3f-20261023-01-installer-npm",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T04:55:55.095189256Z",
+      "finishedAt": "2026-10-23T04:56:00.343465387Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "f1f470b264ae950ff91a31d7cf48e0ef2fd2a2e839340f83619b6efc3f763d7d",
+      "name": "/naijue-rewrite-r1-c28ea3f-20261023-01-stage-web",
+      "imageId": "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T04:56:17.912561107Z",
+      "finishedAt": "2026-10-23T04:56:18.80012575Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "ac49236638d8e254806d0131e57c3b33e45876ff266db391f242b9642b32356c",
+      "name": "/naijue-rewrite-r1-c28ea3f-20261023-02-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-23T05:19:24.919687968Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "f9c142e9c4127ffb06f8a01bc2e0530130864b6c84e207a35ec88f6157c291d4",
+      "name": "/naijue-rewrite-r1-c28ea3f-20261023-02-installer",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T05:19:04.761530763Z",
+      "finishedAt": "2026-10-23T05:19:05.370009722Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "92f661ffa09670e14e0674e00f9153626594a0f1e3faa5d79427a289d97a6522",
+      "name": "/naijue-rewrite-r1-c28ea3f-20261023-02-installer-npm",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T05:19:07.861548945Z",
+      "finishedAt": "2026-10-23T05:19:11.826595752Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "c5c83dc4e0e4dd9f87fd03af7d26db76c69d9f714219439ebad85f55eff6536b",
+      "name": "/naijue-rewrite-r1-c28ea3f-20261023-02-stage-web",
+      "imageId": "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-23T05:19:29.54462906Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "75383fb79cfc8bfc7f52e711bd5f0c9afdbb56a6e7d5dfa34483518875209f7b",
+      "name": "/naijue-rewrite-r1-d3c2188-20261023-01-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T04:13:58.534880858Z",
+      "finishedAt": "2026-10-23T04:14:04.22746546Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "ced8a30f2f6e1af45ac715a86a6da5363181d6a63dcb5c018363b9bbeb9b89d4",
+      "name": "/naijue-rewrite-r1-d3c2188-20261023-01-installer",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-22T23:36:12.197512551Z",
+      "finishedAt": "2026-10-22T23:36:13.019761747Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "7778526dcf5696648813ab923c9b023f2d9c482b2dd8caa081c967703e3a2e22",
+      "portBindings": {}
+    },
+    {
+      "id": "34eb12bf4b1dc80a7a38e9448337bf53793c62815de872cdd985366efc631308",
+      "name": "/naijue-rewrite-r1-d3c2188-20261023-01-installer-npm",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-22T23:36:15.739045116Z",
+      "finishedAt": "2026-10-22T23:54:53.041518447Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "7778526dcf5696648813ab923c9b023f2d9c482b2dd8caa081c967703e3a2e22",
+      "portBindings": {}
+    },
+    {
+      "id": "438ba050cc3a50451cb540c0fd850a67a21b61367fc2b98d7eb1b8c2d936b651",
+      "name": "/naijue-rewrite-r1-d3c2188-20261023-01-stage-web",
+      "imageId": "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-23T04:14:01.179539204Z",
+      "finishedAt": "2026-10-23T04:14:02.150805628Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "c28f5d5e8ec0811f4eced5973dbe32e9f81033aea03f79c24b7ca8499ef0ba53",
+      "name": "/naijue-rewrite-r1-f43e943-20261024-01-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-24T11:26:01.832083328Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "bc77a250364fb3589effcfe7aa4d0270244f0f55c83ce8cd343c9f93f0e10d13",
+      "name": "/naijue-rewrite-r1-f43e943-20261024-01-stage-web",
+      "imageId": "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-24T11:26:06.398501003Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "09a5605c5aa26235c9cc964f9f03dfde404c2733d6b04dbc59acc349638fae21",
+      "name": "/naijue-rewrite-source438-20261025-14-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-25T10:08:01.851563378Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "0742609acdca8ad41df57da109a59525f210753e31a511aaa2040b52b4a483c9",
+      "name": "/naijue-rewrite-source447-20261025-18-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-25T10:27:08.080245139Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "fea0a222416bb7a451db0ad5acf7f352b138d7718132576711b5a90458353788",
+      "name": "/naijue-rewrite-source459-20261025-21-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-25T13:12:15.971077081Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "46666e0fb847223aa88b3691345ea13816f39ffbfe6a3df71cd6810128249286",
+      "name": "/naijue-rewrite-source483-20261025-30-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-25T14:38:47.601846046Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "5d172e5e86cb6d5ba9cea69e662e7dcbd566b1faf24b22248749babd68066db1",
+      "name": "/naijue-rewrite-source494-20261026-40-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-25T16:27:45.91219556Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "1cec6139b42ae969e53e542d7e5a96bc17995dfb07afd542ef8d3c209ed10cc3",
+      "name": "/naijue-rewrite-source519-20261026-55-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-25T19:16:33.982124504Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "8a389ad5cb9b800498f3fa175f32e639e42b534d440f73b90b4ce621adc62418",
+      "name": "/naijue-rewrite-source519-20261026-58-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-25T19:34:13.847904061Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "c0645f7700b0325d1da9dedd3501918e94cc000ba03aac1f78de3a14ad1bf51b",
+      "name": "/naijue-rewrite-source519-20261026-74-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-26T00:11:31.56312418Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "3fc51810832da554815711eeb5ec01d0273dcef43706d721f6869f39f2d8b134",
+      "name": "/naijue-rewrite-source561-20261026-91-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-26T02:40:43.484784688Z",
+      "finishedAt": "2026-10-26T05:10:05.998389086Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "a96923b047033f8648b0080fd082c150db79abedf04536345fe4dda1b7ae6910",
+      "name": "/naijue-rewrite-source598-20261026-105-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-10-26T05:19:54.316699535Z",
+      "finishedAt": "2026-10-26T06:21:45.392346826Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    },
+    {
+      "id": "2efb28bc263fe9fa670fbf27ae2e8a21a40d30b2260bb81844fa92855b55f9cf",
+      "name": "/naijue-rewrite-source598-20261026-114-app",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "state": "running",
+      "running": true,
+      "startedAt": "2026-10-26T06:28:08.011594758Z",
+      "finishedAt": "0001-01-01T00:00:00Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "portBindings": {}
+    }
+  ],
+  "stoppedRetainedTargets": [
+    {
+      "id": "812799160c67e848baa2249712de8789163afd2d0ebaaf47e1bf591b9aab411e",
+      "name": "/t45-fresh35-deb13-20261106-r5",
+      "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-11-05T22:16:25.807544714Z",
+      "finishedAt": "2026-11-05T22:21:53.588855712Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "2788c02b95d4d5f096715fa8b4441c3b60782fe173526f4020bd6f47c397e97b",
+      "name": "/t45-fresh35-deb13-20261106-r6",
+      "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-11-05T23:25:38.824192271Z",
+      "finishedAt": "2026-11-05T23:31:14.576609406Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    },
+    {
+      "id": "0bc507347f9674aca4bdb12d4a6e10d7f8a35044f9d8fc8437b701ab099e28e5",
+      "name": "/naijue-c12-legacy15-restore-20261101-01",
+      "imageId": "sha256:b3721d9bd40bf0da8dde2ef10bb0557d5b6615cbf12f63c448acbf5279b417c2",
+      "state": "exited",
+      "running": false,
+      "startedAt": "2026-11-02T02:58:14.049804094Z",
+      "finishedAt": "2026-11-02T03:56:11.901771344Z",
+      "restartCount": 0,
+      "health": null,
+      "networkMode": "none",
+      "portBindings": {}
+    }
+  ],
+  "fixedEnvironmentImage": {
+    "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "fixedEnvironmentReceipt": {
+    "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/image-receipt.json",
+    "exists": true,
+    "uid": 0,
+    "gid": 0,
+    "mode": "0o600",
+    "bytes": 598,
+    "mtimeNs": 1793886843796988185,
+    "symlink": false,
+    "directory": false,
+    "regular": true
+  },
+  "fixedEnvironmentRecipe": {
+    "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/exact-five-recipe-r1.json",
+    "exists": true,
+    "uid": 0,
+    "gid": 0,
+    "mode": "0o600",
+    "bytes": 744,
+    "mtimeNs": 1793886415014880386,
+    "symlink": false,
+    "directory": false,
+    "regular": true
+  },
+  "resources": {
+    "cpuCount": 4,
+    "loadAverage": [
+      0.21533203125,
+      0.0830078125,
+      0.1962890625
+    ],
+    "memoryBytes": {
+      "MemTotal": 16731348992,
+      "MemAvailable": 14296719360,
+      "SwapTotal": 4294963200,
+      "SwapFree": 4203982848
+    },
+    "disk": {
+      "device": 66304,
+      "freeBytes": 15222112256,
+      "totalBytes": 489861931008
+    },
+    "proposedCarrierBudget": {
+      "cpus": 2,
+      "memoryBytes": 3221225472,
+      "pidsLimit": 256,
+      "PGPublishedPorts": 0
+    },
+    "capacityAdmissionOrStorageDemandCalculated": false
+  },
+  "backupMetadata": {
+    "root": {
+      "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01",
+      "exists": true,
+      "uid": 0,
+      "gid": 0,
+      "mode": "0o700",
+      "bytes": 4096,
+      "mtimeNs": 1793506464450678817,
+      "symlink": false,
+      "directory": true,
+      "regular": false
+    },
+    "files": [
+      {
+        "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01/backup-result.private.json",
+        "exists": true,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o600",
+        "bytes": 3331,
+        "mtimeNs": 1793506295744130489,
+        "symlink": false,
+        "directory": false,
+        "regular": true
+      },
+      {
+        "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01/completion-successor-01.private.json",
+        "exists": true,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o600",
+        "bytes": 3766,
+        "mtimeNs": 1793506464451678820,
+        "symlink": false,
+        "directory": false,
+        "regular": true
+      },
+      {
+        "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01/erp_prod.dump",
+        "exists": true,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o400",
+        "bytes": 1091073645,
+        "mtimeNs": 1793506279149070983,
+        "symlink": false,
+        "directory": false,
+        "regular": true
+      },
+      {
+        "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01/media.protected.tar",
+        "exists": true,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o400",
+        "bytes": 83947520,
+        "mtimeNs": 1793506290563112031,
+        "symlink": false,
+        "directory": false,
+        "regular": true
+      },
+      {
+        "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01/configuration.protected.tar",
+        "exists": true,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o400",
+        "bytes": 552960,
+        "mtimeNs": 1793506291497115366,
+        "symlink": false,
+        "directory": false,
+        "regular": true
+      },
+      {
+        "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01/actual-app.protected.tar",
+        "exists": true,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o400",
+        "bytes": 36208640,
+        "mtimeNs": 1793506294763127002,
+        "symlink": false,
+        "directory": false,
+        "regular": true
+      },
+      {
+        "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01/actual-web.successor-01.protected.tar",
+        "exists": true,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o400",
+        "bytes": 96847872,
+        "mtimeNs": 1793506438458600388,
+        "symlink": false,
+        "directory": false,
+        "regular": true
+      },
+      {
+        "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01/runtime-images.successor-01.protected.tar",
+        "exists": true,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o400",
+        "bytes": 736457728,
+        "mtimeNs": 1793506462081671750,
+        "symlink": false,
+        "directory": false,
+        "regular": true
+      },
+      {
+        "path": "/srv/naijue-erp/prod/backups/c12-before-tests-20261101-01/dump-toc.private.txt",
+        "exists": true,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o400",
+        "bytes": 93431,
+        "mtimeNs": 1793506285422093609,
+        "symlink": false,
+        "directory": false,
+        "regular": true
+      }
+    ],
+    "contentsRead": false,
+    "newDumpOrRestore": false
+  },
+  "recoveryPathMetadata": [
+    {
+      "path": "/srv/naijue-erp/restore-checks/c12-legacy15-restore-20261101-01",
+      "exists": true,
+      "uid": 0,
+      "gid": 0,
+      "mode": "0o700",
+      "bytes": 4096,
+      "mtimeNs": 1793522465120831692,
+      "symlink": false,
+      "directory": true,
+      "regular": false
+    },
+    {
+      "path": "/srv/naijue-erp/restore-checks/c12-legacy15-restore-20261101-01/data",
+      "exists": true,
+      "uid": 999,
+      "gid": 999,
+      "mode": "0o700",
+      "bytes": 4096,
+      "mtimeNs": 1793591771895946902,
+      "symlink": false,
+      "directory": true,
+      "regular": false
+    },
+    {
+      "path": "/srv/naijue-erp/restore-checks/c12-legacy15-restore-20261101-01/data/PG_VERSION",
+      "exists": true,
+      "uid": 999,
+      "gid": 999,
+      "mode": "0o600",
+      "bytes": 3,
+      "mtimeNs": 1793522474406933222,
+      "symlink": false,
+      "directory": false,
+      "regular": true
+    },
+    {
+      "path": "/srv/naijue-erp/restore-checks/c12-legacy15-restore-20261101-01/data/global/pg_control",
+      "exists": true,
+      "uid": 999,
+      "gid": 999,
+      "mode": "0o600",
+      "bytes": 8192,
+      "mtimeNs": 1793591771774946452,
+      "symlink": false,
+      "directory": false,
+      "regular": true
+    },
+    {
+      "path": "/srv/naijue-erp/restore-checks/c12-legacy15-restore-20261101-01/media",
+      "exists": true,
+      "uid": 0,
+      "gid": 0,
+      "mode": "0o700",
+      "bytes": 4096,
+      "mtimeNs": 1793522465950840795,
+      "symlink": false,
+      "directory": true,
+      "regular": false
+    },
+    {
+      "path": "/srv/naijue-erp/restore-checks/c12-legacy15-restore-20261101-01/config-inert",
+      "exists": true,
+      "uid": 0,
+      "gid": 0,
+      "mode": "0o700",
+      "bytes": 4096,
+      "mtimeNs": 1793522466520847043,
+      "symlink": false,
+      "directory": true,
+      "regular": false
+    },
+    {
+      "path": "/srv/naijue-erp/restore-checks/c12-legacy15-restore-20261101-01/auth",
+      "exists": true,
+      "uid": 0,
+      "gid": 0,
+      "mode": "0o700",
+      "bytes": 4096,
+      "mtimeNs": 1793522465120831692,
+      "symlink": false,
+      "directory": true,
+      "regular": false
+    }
+  ],
+  "originalRestoreReceiptMetadata": {
+    "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-c12-phase-a-stdin-continuation-20261101-01.json",
+    "exists": true,
+    "uid": 1000,
+    "gid": 1000,
+    "mode": "0o644",
+    "bytes": 509,
+    "mtimeNs": 1793524327335035532,
+    "symlink": false,
+    "directory": false,
+    "regular": true
+  },
+  "historicalRestoreProof": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261101-c12-phase-a-restore-01/SEAMS-RESULT.json",
+    "sha256": "503a103fd20ed01e0ee0b8d6ca787dc83d38f906aec1f641be3f306f58de5180",
+    "recordedAtUTC": "2026-11-01T09:25:05.417044+00:00",
+    "status": "PASS_PHASE_A_THREE_SCOPED_READONLY_SEAMS_NOT_APPLICATION_OR_BUSINESS_ACCEPTANCE",
+    "currentRestorationRevalidated": false
+  },
+  "privateRealPackageMetadata": {
+    "archive": {
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/private-standard-import-data/t45-real-r3-full-20261106-01/archive.bin",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0o600",
+      "bytes": 93508914,
+      "mtimeNs": 1793915257822987699,
+      "symlink": false,
+      "directory": false,
+      "regular": true
+    },
+    "ready": {
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/private-standard-import-data/t45-real-r3-full-20261106-01/ready.json",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0o600",
+      "bytes": 435,
+      "mtimeNs": 1793915258807984286,
+      "symlink": false,
+      "directory": false,
+      "regular": true
+    },
+    "contentsRead": false,
+    "archiveRehashed": false,
+    "priorVerifiedArchiveSha256": "fc831c282f982ca22c840906aae96bf69acf23e785a42c199655e0ccf297365e",
+    "samePriorVerifiedFileIdentity": true
+  },
+  "initialPartialReceiptPreserved": true,
+  "initialFormatterGap": "Direct .State.Health failed for37 entries lacking the key. Only those failed metadata entries were read using map index/with in a separate original key; no successful network/resource/backup reads repeated.",
+  "remainingLimits": [
+    "Existing Docker health metadata only; no new HTTP/readiness/login/reverse-route/SQL checks",
+    "New production carrier/front endpoint and actual PG/API namespace do not exist and remain untested",
+    "No C14/6/9 authority was issued, read or consumed; final exact source/artifact/target/lease bindings still required",
+    "Existing backup and recovery files were statted only. No backup contents, hashes, restore or quantity reconciliation rerun",
+    "r6 catalog failure remains unresolved by this separate environment metadata task"
+  ],
+  "mutations": 0,
+  "PGConnections": 0,
+  "realDataExtracted": false,
+  "productionCreated": false,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}

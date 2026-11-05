@@ -28377,7 +28377,7 @@
         "remoteVerified": true
       },
       "remoteReadbackAt": "2026-11-06T06:22:45+08:00",
-      "verifiedIntegration": "b58b9b8b0c89e18f0a09f9d097843378a3df2584",
+      "verifiedIntegration": "d07513bc8aa2c8b30d8a4e5a245d1149dc1dbd58",
       "verifiedBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
       "pendingLocalCheckpoint": null,
       "pushRecovery": "Separate integration and root pushes succeeded after transient commit_refs_rules; exactremote readback2026-11-06 07:44"
@@ -29947,7 +29947,20 @@
         "ordinaryBusinessPassed": false,
         "exactCause": "COMBINED_ROUTINE_SOURCE_OR_ACL_BRANCH_ONLY; exact predicate pendingD1; noPGrestart",
         "exactFailureTag": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS",
-        "tagReceiptSHA256": "9f9858fa85d7821cdad93d9c81aa5b74e6d7cb3fbb9b702bcfb3ed44ee3b4d1b"
+        "tagReceiptSHA256": "9f9858fa85d7821cdad93d9c81aa5b74e6d7cb3fbb9b702bcfb3ed44ee3b4d1b",
+        "D1ApprovedFix": {
+          "state": "SOURCE_FIXED_AUTHOR_DIRECT_RED_GREEN_PASS_PENDING_QB_AND_NEW_PG",
+          "predicate": "ROUTINE_SOURCE_OR_ACL_DIFFERS",
+          "staticModelVsDDL": "64 explicitACL vs63 dump sections; one proven representation mismatch",
+          "signatureSHA256": "a76a3b92fdec1d9ffb0a145b9c27dc7f671b65db7425519fbccc1b241529ab70",
+          "fix": "Materialize already-effective default PUBLIC EXECUTE for is_native_party_import_insert(text,jsonb) inside original direct35 schema step; exactguard/model/permissionset/2DO unchanged",
+          "r6ExactFirstObjectProven": false,
+          "productionMutationAuthorizedByThisSourceDecision": false,
+          "sourceSetSHA256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+          "receiptSHA256": "a1400d4e55e515bdbe63e43ce53d6e1899598c3e67515298d1560fd5ca18e5f4",
+          "leafSHA256": "c5a4349dae4a4525960d15ac2eadb028563424f03a434fa61681bb9429718fcc",
+          "effectiveRightsExpanded": false
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30239,6 +30252,20 @@
         "tailSHA256": "3ba86bf940b2dc0b8ec5c15ce53a4aa3a1984f67640e42fc6cb86730e005fe12",
         "prefixBytes": 80885307,
         "prefixSHA256": "c2ac0bbf930e3dbc741488c213d479c28d158faeeaf0caab979b1dbaa24be418"
+      },
+      "actualReadonlyPreparation": {
+        "state": "READONLY_NETWORK_NAMES_OLD_SERVICES_RESOURCES_COMPLETE_NO_CREATION_OR_PG",
+        "receiptSHA256": "36ce9d7f04cdbdd31e9746a4a0019f46337d74b95ddb959b3aff7c5f9114137f",
+        "frontID": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+        "frontEndpoints": 19,
+        "futureAppName": "naijue-rewrite-exact35-20261106-app",
+        "futurePGName": "t45-fresh35-production-20261106-r1",
+        "nameConflict": false,
+        "oldProductionContainerIdentityChanged": false,
+        "oldProductionDockerHealth": "running/healthy",
+        "newPGCreated": false,
+        "sqlIdentityVerified": false,
+        "publicHTTPVerified": false
       }
     }
   }
