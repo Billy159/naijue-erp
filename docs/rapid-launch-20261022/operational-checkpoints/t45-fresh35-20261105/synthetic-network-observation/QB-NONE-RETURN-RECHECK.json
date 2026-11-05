@@ -1,0 +1,149 @@
+{
+  "task_id": "QB-PRODUCER-NONE-156f19d8-20261106",
+  "verdict": "PASS_SCOPED_RETURN_CONTRACT_SOURCE_AND_LOCAL_MODEL_NOT_NEW_PG",
+  "fixed_snapshot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-producer-none-return-01",
+  "source_pins": [
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-producer-none-return-01/source/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "bytes": 94658,
+      "sha256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
+      "parentSha256": "3d4bda9b21584d1aea4b4263f294555d5ada06a6504ad5ed284a27ce2fbe2548"
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-bootstrap-network-producer-none-return-01/source/tests/test_fresh35_isolated_launcher.py",
+      "bytes": 68807,
+      "sha256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
+      "parentSha256": "1ce5f6d25abf0d3a08c41eb26b65725eaed5ef649a43adee23d6170970836aae"
+    }
+  ],
+  "ready_sha256": "34da2e409888ab16c95e620639789206d750d85c4d66121ed16187f02dfc4263",
+  "owner_result_sha256": "f3bd4c5acb1ddb760c2f639e6347dd4c4f7821432efad628e8251417b51f3519",
+  "closed_findings": [
+    {
+      "id": "F01",
+      "state": "CLOSED_FOR_EXACT_SOURCE_SUCCESSOR",
+      "original_NEED_FIX_sha256": "60a9e4820287101b91ee06803721b4adc2b5a27a3443c712097e852422833c37",
+      "cause": "Validation-only trusted returns None; original owner/QB Path-return mocks hid producer assignment error.",
+      "fix": "Only construct Path first, then trusted(root); four existing mocks now return None.",
+      "red": "Actual original trusted body plus OS metadata model returns None and old source raises NoneType.lstat without proof.",
+      "green": "Same unchanged actual guard body returns None; exact156 fixed producer now writes original closed proof."
+    }
+  ],
+  "remaining_source_findings": [],
+  "independent_checks": {
+    "passed_groups": 4,
+    "exact_diff": "Only one producer root assignment split; original four test mocks changed return-Path to None, all other bytes equal",
+    "trusted_body_unchanged": true,
+    "actual_guard_checks": [
+      {
+        "name": "actual trusted body returns None; fixed producer retains Path and creates exact13-field0444 proof with original private0400 default",
+        "state": "PASS"
+      },
+      {
+        "name": "real None-return guard and original O_EXCL retain existing proof inode and bytes",
+        "state": "PASS"
+      },
+      {
+        "name": "trust enforcement, exact0711 parent and actual-observation refusal still precede writes",
+        "state": "PASS"
+      }
+    ],
+    "scope": "Exact fixed launcher loaded in memory, actual trusted body/API/None return untouched; only root ownership/ancestor-mode/absence-of-ACL metadata modeled on local temp files. No root, Linux carrier, server/PG or new authority."
+  },
+  "adopted_owner_red_green": [
+    {
+      "name": "RED.json",
+      "sha256": "94225f3989a594f075565918854de12c3e6953ad427da5ea4198a3020e73eb23",
+      "bytes": 640,
+      "tail": [
+        "  \"proofCreated\": false,",
+        "  \"scope\": \"Local original function + real return contract, mocked trust enforcement only; no server/PG\",",
+        "  \"serverFailureEvidence\": \"start-02 failure.json AttributeError; no server traceback claims\",",
+        "  \"sharedSourceModified\": false",
+        "}"
+      ]
+    },
+    {
+      "name": "RED-tests.log",
+      "sha256": "26a53082e16c982306ac92a5c32a532b0e863854d5345ef6219743d37372d53f",
+      "bytes": 14804,
+      "tail": [
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 4 tests in 0.006s",
+        "",
+        "FAILED (errors=14)"
+      ]
+    },
+    {
+      "name": "GREEN-tests.log",
+      "sha256": "b6a161abed43b9a0dba9259cd451b39b20b10425ac13cc14786554c0e6fac7f1",
+      "bytes": 102,
+      "tail": [
+        "....",
+        "----------------------------------------------------------------------",
+        "Ran 4 tests in 0.006s",
+        "",
+        "OK"
+      ]
+    }
+  ],
+  "actual_old_r2": {
+    "actual_result_path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-223598-pg20-execution-01/RESULT.json",
+    "actual_result_sha256": "48a3192d516c1ebc00a3965fe40d419591239693261464e6ebc1fd2b7f607666",
+    "independent_observe_path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-223598-observe-20261106-01/transport/release-receipts/t45-f35-223598-observe-20261106-01/fresh35-observe-result.json",
+    "independent_observe_sha256": "18ee90491d7bf11928f76cdc1c9201ed4c056885d2efcb551440456842219a96",
+    "container": {
+      "cid": "c396958456cb7e4ddb4a05ceb339dc092aa33afeca39c2a1a7ff58da7afc2dd0",
+      "name": "t45-fresh35-deb13-20261106-r2",
+      "hostRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r2",
+      "stopped": true,
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+    },
+    "failure": {
+      "automaticRetry": false,
+      "code": "AttributeError",
+      "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+    },
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "errors": [],
+      "initialization": {
+        "descendantsReaped": true,
+        "errors": [],
+        "initialized": true,
+        "initializerReaped": true,
+        "stopReason": "INITIALIZER_EXITED"
+      },
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "actualProgram": "NOT_CONFIRMED",
+    "bootstrapNetworkProof": "NOT_PRODUCED_OR_EXPORTED",
+    "actualOrdinaryUidReadWatchEpochChange": "NOT_TESTED",
+    "installed": false,
+    "installAuthorizationIssued": false,
+    "importExecuted": false,
+    "old_ROLLBACK_UNCONFIRMED": "UNCHANGED"
+  },
+  "reuse": "D1 nine leaves and unaffected network10/release15 groups adopted, no rerun. Original source/model and actual-failure receipts preserved. Only exact156 producer successor is cleared here.",
+  "unverified": [
+    "New build/root/r3/window or actual PG execution; ordinary UID read/watch/epoch and native same-pool revocation.",
+    "Actual server exported AttributeError only; local NoneType.lstat is not claimed as server traceback or SQLSTATE.",
+    "Old r2 remains failed/stopped with independent cleanup all true, no actual program/install approval/import; old5d70 ROLLBACK_UNCONFIRMED unchanged."
+  ],
+  "model": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "source_modified": false,
+  "server_or_pg": false,
+  "approval_changed": false,
+  "harness_note": "Local refusal assertion initially omitted original error prefix; corrected only harness, retained initial log and reused two passing groups. Report writer initially used relative Path parent; corrected report path only.",
+  "next": "C freeze exact2 leaves and coordinate original D2 new build plus T45 new r3/new bounded window. Do not replay old source/root/window or infer install from cleanup."
+}
