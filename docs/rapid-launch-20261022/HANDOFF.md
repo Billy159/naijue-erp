@@ -1470,3 +1470,9 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - D1八叶固定64c2cadb、D2四叶固定735ebfd2。QB e8451e7a仅发现LOGIN早于目标窗到期时借出事务未撤销；原D1两叶修复逐pin固定1149f17ee350dded91e88423d5b20b6586d23c2e，红1→绿8，报告b0f66472，已交原QB只复验该失败，其他有效结论直接复用。不能称实际PG通过。
 - 原D2沿同文件后继补真实ADMIN账户建立/重置和第二登录、隔离分支缺失accounts/commands挂载、61035私有场景路径；不重派其他writer。原T45继续原父launcher/wrapper的应用secret、场景、最小ACL/HBA和真实容量接线；D1已提供有限RO场景SQL(3c7bec4e)，标准导入historyPayloadHash可NULL，禁止伪造旧V8字段。
 - 容量只选择D2原模板de1de45f预算，实时设备/空间/target/子PID必须出生后实采；原成功镜像不重建。本机Sharp是Darwin不能冒充Linux依赖，cbcb3ff8仅准确依赖输入；最终Linux闭包、统一候选、QB及有效执行窗口仍未齐，PG未启动，无生产写入/导入/部署。所有真实数据和秘密留私域，不入Git。
+
+
+### LOGIN到期缺陷已独立关闭；普通账号业务后继已固定交原QB
+- 实际核QB回执2e0d07ab9cab03fd387c5daf3bab00c889d228cb83bef20b091bada81bb5716c，采用其1149f17e定向5向量PASS，关闭QB-SYNTHETIC-ORDINARY-F01；借出事务/describe/新lease/startup finally均沿实际LOGIN与target较早截止撤销，资源清理模型通过，正式PG尚未验。主控未重复技术验收。
+- 原D2三叶后继逐hash匹配7d1ea76f后固定95aba3b0c3bdf850feee826c452e487f14d74431；只合成staffMaintenance接原账户HTTP/UOW、真实ADMIN建/重置账号与第二员工登录、固定61035私域场景、真实STANDARD发布读回（historyPayloadHash可空）。作者定向7/type0/244输入编译0，仅模型/源码。与原735四叶组成同版4叶交原QB独立验收，不重复D1已过范围、不改旧V8或生产路由。
+- 新ordinary闭包11b3a1a0对旧7393准确新增两账户模块及原runner，动态raw record模块亦须绑定；T45继续原父入口/场景/容量/正确Linux依赖，最终候选及执行授权尚未生成。保留全部在途修改和三旧导出，无PG/生产/真实写入。Git远端已核28706d12；本段新checkpoint推送单独核验，未把旧build-root d77当新版本。
