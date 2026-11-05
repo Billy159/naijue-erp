@@ -27529,7 +27529,7 @@
   },
   "currentDotReceiverDelta20261105": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-wip-v4-received-20261104-01/CONTROLLER-DOT-RECEIVER-DELTA.zh-CN.md",
-    "sha256": "286ff2ad447e1a0f22e5b935fbdfe4ff215c39b07f2b4c2b91e3b25b06531cf6",
+    "sha256": "19e5da5bd5b80be353b99d769a85a06dde54bc6a40049b7c1c8287ddedf49fa8",
     "containsPrivateBusinessRows": false,
     "supersedesOldV4MissingGeneratorAndZeroSourceClaims": true
   },
@@ -27928,7 +27928,7 @@
     "status": "INTEGRITY_VERIFIED_RECEIVER_DELTA_REVIEW_DELIVERED_NOT_RELEASE",
     "review": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/stage-source-0236Z-received-20261105-01/ERP-STAGE-SOURCE-20261105-0236Z/owner-review/0236Z-CLEANING-CONTRACT-RECEIVER-01.md",
-      "sha256": "e9658203d5a1b89b6fe7288af679ad3f1308a24affaeb2ba1aa65437fc7c2e3e",
+      "sha256": "0dc4724f36e1b246550682924165378810d3439f752b874ae5d82b29389b8d67",
       "scope": "Static exactreceiver only, no realdata/PG/test execution",
       "remaining": [
         "Historical nullhall",
@@ -27936,7 +27936,8 @@
         "8table sourcecount semantics",
         "Unknown actualexported_at and independentcutofffact"
       ],
-      "explicitZeroSourceUnchanged": true
+      "explicitZeroSourceUnchanged": true,
+      "priorSHA256": "e9658203d5a1b89b6fe7288af679ad3f1308a24affaeb2ba1aa65437fc7c2e3e"
     }
   },
   "current0236ZTrialEntryReadiness": {
@@ -27972,9 +27973,21 @@
   },
   "goalContinuation0236ZEntryAudit": {
     "previousTurn": "PROGRESS:received verifiedsnapshot and exactreceiver review",
-    "currentTurn": "PROGRESS:actual262632096byteartifact selectsstream, disallowed oldCLI aliases distinguished, installerandbackup boundaries recorded",
+    "currentTurn": "PROGRESS:newactualhuman clarification verified and receivinghandoff corrected to exclude canceled department feature; no new source package",
     "consecutiveNoProgressGoalTurns": 0,
     "next": "Only accurate Dot receiver/installation successor or actual target-bound restore prerequisites, no unchanged fullpreflight rerun",
     "goalComplete": false
+  },
+  "noDepartmentRestorationClarification20261105": {
+    "authority": {
+      "threadId": "01a1a3ed-2e42-7ba0-b8d6-55d8f731fa5b",
+      "humanMessageId": "01a1a9a4-3f91-7882-b7a8-cddfad54069e",
+      "text": "为什么还有历史来源部门，不是没有了吗",
+      "directHumanRead": true
+    },
+    "rule": "Canceled department feature remains canceled. Original source evidence retention does not create a runtime department field/table/feature. Historical sales hall unknown and source-proven hall/warehouse difference require bounded receiver only;196candidate differences are not proven crosshall. No name/code/warehouse fallback.",
+    "businessDataChanged": false,
+    "sourceSQLChanged": false,
+    "correctedReviewSHA256": "0dc4724f36e1b246550682924165378810d3439f752b874ae5d82b29389b8d67"
   }
 }
