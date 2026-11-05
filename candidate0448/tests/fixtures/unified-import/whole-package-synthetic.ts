@@ -1,3 +1,6 @@
+import {requestHash} from '../../../packages/application/src/request-hash.ts';
+import {readHistoricalSettlementRetentionApproval} from '../../../packages/application/src/unified-historical-settlement-retention.ts';
+import type {HistoricalSettlementRetentionApproval} from '../../../packages/application/src/unified-historical-settlement-retention.ts';
 import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
 import {join,dirname} from 'node:path';
 import {HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256} from '../../../packages/application/src/unified-import-contract.ts';
@@ -63,7 +66,8 @@ export async function assertSyntheticPublished(observer:SyntheticObserver,baseli
 /** Fresh35 A-V2 + amount-successor business input only. All source observations,
  * identities, amounts and decisions here are explicitly synthetic. No database
  * identity, connection, permission, or installation receipt is invented. */
-export function createSyntheticFresh35WholePackageInput(targetCapturedAt:string|null){
+export function createSyntheticFresh35WholePackageInput(targetCapturedAt:string|null,variant:'default'|'settlement-retention25'='default'){
+ if(variant!=='default'&&variant!=='settlement-retention25')throw Error('SYNTHETIC_FRESH35_VARIANT_REQUIRED');
  const pkg=createSyntheticPackage(),namespace=pkg.manifest.source_namespace;
  const header=pkg.records.sales_header![0]!,warehouse=pkg.records.warehouse![0]!,hall=pkg.records.hall![0]!;
  const secondHall=structuredClone(hall);secondHall.source_key='hall:02';secondHall.fields.id=registryTargetId(namespace,'HALL',secondHall.source_key);secondHall.fields.name='SYNTHETIC alternate captured hall';secondHall.fields.default_customer_id=null;secondHall.fields.default_sales_warehouse_id=null;pkg.records.hall!.push(secondHall);
@@ -92,31 +96,58 @@ export function createSyntheticFresh35WholePackageInput(targetCapturedAt:string|
  header.fields.gross_amount=gross;header.fields.net_due=gross;
  const settlement=structuredClone(pkg.records.sales_settlement![0]!);settlement.fields.amount=gross;pkg.records.sales_settlement=[settlement];pkg.registry.push({entity_type:'SALES_SETTLEMENT',source_namespace:namespace,canonical_source_key:settlement.source_key,target_id:settlement.fields.id as string,aliases:[],identity_basis:'STABLE_IMPORT_ID_V1',source_refs:structuredClone(settlement.source_refs)});
  header.zero_amount_archive={profile:'ZERO_AMOUNT_SOURCE_ARCHIVE_V1',records:Array.from({length:22},(_,i)=>({source_key:'SYNTHETIC-FRESH35-ZERO-'+(i+1),amount:'0.00',source_refs:[{...header.source_refs[0]!,row:200+i}],original_values:{amount:'0',description:'SYNTHETIC ONLY zero source, no money or stock action',unknown:null}}))};
+ const retainedSalesIds:string[]=[];
+ if(variant==='settlement-retention25'){
+  // Artificial facts only. Do not accept an input path, real proof or caller rows.
+  if(pkg.manifest.package_kind!=='SYNTHETIC')throw Error('SYNTHETIC_FRESH35_INPUT_REQUIRED');
+  for(let i=0;i<25;i++){
+   const returned=i>=22,zeroDue=i===21,source_key='SYNTHETIC-FRESH35-RETENTION-'+(i+1),id=registryTargetId(namespace,'SALES_HEADER',source_key),source_refs=[{...header.source_refs[0]!,row:300+i}];
+   const h={...structuredClone(header),source_key,source_refs,fields:{...structuredClone(header.fields),id,number:source_key,business_type:returned?'RETURN':'SALE',gross_amount:zeroDue?'0.00':returned?'-16.00':'16.00',order_discount:'0.00',net_due:zeroDue?'0.00':returned?'-16.00':'16.00'}};delete h.zero_amount_archive;
+   pkg.records.sales_header!.push(h);retainedSalesIds.push(id);pkg.registry.push({entity_type:'SALES_HEADER',source_namespace:namespace,canonical_source_key:source_key,target_id:id,aliases:[],identity_basis:'STABLE_IMPORT_ID_V1',source_refs:structuredClone(source_refs)});
+   const line_key=source_key+'-LINE',line_id=registryTargetId(namespace,'SALES_LINE',line_key);
+   pkg.records.sales_line!.push({source_key:line_key,source_refs:structuredClone(source_refs),fields:{...structuredClone(line.fields),id:line_id,sales_id:id,line_no:1,quantity:returned?'-1':'1',deal_price:zeroDue?'0.00':'16.00',line_amount:h.fields.gross_amount,allocated_discount:null}});
+   pkg.registry.push({entity_type:'SALES_LINE',source_namespace:namespace,canonical_source_key:line_key,target_id:line_id,aliases:[],identity_basis:'STABLE_IMPORT_ID_V1',source_refs:structuredClone(source_refs)});
+   for(let j=0;j<(i<2?2:1);j++){
+    const key=source_key+'-SETTLEMENT-'+(j+1),sid=registryTargetId(namespace,'SALES_SETTLEMENT',key),refs=[{...source_refs[0]!,row:400+i*2+j}];
+    pkg.records.sales_settlement!.push({source_key:key,source_refs:refs,fields:{...structuredClone(settlement.fields),id:sid,sales_id:id,line_no:j+1,direction:returned?'REFUND':'RECEIVE',amount:i<11||returned||zeroDue?'1.00':'17.00'}});
+    pkg.registry.push({entity_type:'SALES_SETTLEMENT',source_namespace:namespace,canonical_source_key:key,target_id:sid,aliases:[],identity_basis:'STABLE_IMPORT_ID_V1',source_refs:structuredClone(refs)});
+   }
+  }
+ }
  const sourceHashes=new Set(pkg.manifest.source_files.map(f=>f.sha256));
- const hallBytes=Buffer.from(JSON.stringify({format_version:'HISTORICAL_SALES_HALL_APPROVAL_V2',source_namespace:namespace,evidence_sha256:sourcePins[0]!.sha256,records:[{source_key:header.source_key,target_id:header.fields.id,source_refs:header.source_refs,evidence:header.historical_hall_evidence,...(targetCapturedAt===null?{target_initialization:{warehouse_source_key:warehouse.source_key}}:{})}],source_captures:[capture],identity_bridges:[bridge],resolutions:[resolution]}));
+ const hallBytes=Buffer.from(JSON.stringify({format_version:'HISTORICAL_SALES_HALL_APPROVAL_V2',source_namespace:namespace,evidence_sha256:sourcePins[0]!.sha256,records:pkg.records.sales_header!.map(h=>({source_key:h.source_key,target_id:h.fields.id,source_refs:h.source_refs,evidence:h.historical_hall_evidence,...(targetCapturedAt===null?{target_initialization:{warehouse_source_key:warehouse.source_key}}:{})})),source_captures:[capture],identity_bridges:[bridge],resolutions:[resolution]}));
  const historicalSalesHallApproval=readHistoricalSalesHallApproval({bytes:hallBytes,trustedSha256:sha256(hallBytes),sourceNamespace:namespace,sourceHashes});
- const amountBytes=Buffer.from(JSON.stringify({format_version:'HISTORICAL_LINE_AMOUNT_EVIDENCE_V1',source_namespace:namespace,evidence_sha256:pkg.manifest.source_files[0]!.sha256,lines:pkg.records.sales_line.map(row=>({sales_source_key:header.source_key,sales_id:header.fields.id,sales_source_refs:header.source_refs,line_source_key:row.source_key,line_id:row.fields.id,source_refs:row.source_refs,quantity:row.fields.quantity,deal_price:row.fields.deal_price,line_amount:row.fields.line_amount}))}));
+ const amountBytes=Buffer.from(JSON.stringify({format_version:'HISTORICAL_LINE_AMOUNT_EVIDENCE_V1',source_namespace:namespace,evidence_sha256:pkg.manifest.source_files[0]!.sha256,lines:pkg.records.sales_line.filter(row=>row.fields.sales_id===header.fields.id).map(row=>({sales_source_key:header.source_key,sales_id:header.fields.id,sales_source_refs:header.source_refs,line_source_key:row.source_key,line_id:row.fields.id,source_refs:row.source_refs,quantity:row.fields.quantity,deal_price:row.fields.deal_price,line_amount:row.fields.line_amount}))}));
  const historicalLineAmountEvidence=readHistoricalLineAmountEvidence({bytes:amountBytes,trustedSha256:sha256(amountBytes),sourceNamespace:namespace,sourceHashes});
- const reconciliation=pkg.reports['reconciliation.json'] as {tables:Record<string,unknown>};for(const table of ['hall','sales_line','sales_settlement']){const n=pkg.records[table]!.length;reconciliation.tables[table]={source_rows:n,retained_rows:n,rejected_rows:0};}
+ let historicalSettlementRetentionApproval:HistoricalSettlementRetentionApproval|undefined;
+ if(variant==='settlement-retention25'){
+  const documents=pkg.records.sales_header!.filter(h=>retainedSalesIds.includes(h.fields.id as string)).map(h=>({sales_source_key:h.source_key,sales_id:h.fields.id,source_refs:h.source_refs,...Object.fromEntries(['business_type','status','gross_amount','order_discount','net_due'].map(k=>[k,h.fields[k]])),settlements:pkg.records.sales_settlement!.filter(r=>r.fields.sales_id===h.fields.id)}));
+  // SHA binds generated SYNTHETIC bytes only, never a production approval.
+  // Its source reference is already in this fixed synthetic manifest; no batch cycle.
+  const bytes=Buffer.from(JSON.stringify({format_version:'HISTORICAL_SETTLEMENT_RETENTION_V1',source_namespace:namespace,evidence_sha256:header.source_refs[0]!.file_sha256,documents}));
+  historicalSettlementRetentionApproval=readHistoricalSettlementRetentionApproval({bytes,trustedSha256:sha256(bytes),sourceNamespace:namespace,sourceHashes});
+ }
+ const reconciliation=pkg.reports['reconciliation.json'] as {tables:Record<string,unknown>};for(const table of ['hall','sales_header','sales_line','sales_settlement']){const n=pkg.records[table]!.length;reconciliation.tables[table]={source_rows:n,retained_rows:n,rejected_rows:0};}
  repinSyntheticPackage(pkg);
  const manifestBytes=Buffer.from(JSON.stringify(pkg.manifest,null,2)+'\n');
  const admin={staff_id:stableImportId('SYNTHETIC_FRESH35_CURRENT_ADMIN','staff'),account_id:stableImportId('SYNTHETIC_FRESH35_CURRENT_ADMIN','account'),login_name:'synthetic-fresh35-admin',staff_name:'SYNTHETIC Fresh35 fixture ADMIN'};
- return{packageKind:'SYNTHETIC' as const,sourceProfileSha256:HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256,pkg,manifestBytes,expectedManifestSha256:sha256(manifestBytes),admin,historicalSalesHallApproval,historicalLineAmountEvidence,syntheticSourceFiles:Object.fromEntries(sourcePins.map((p,i)=>[p.relative_path,Object.values(sourceTexts)[i]!])),syntheticWarehouseRows:pkg.records.warehouse!.map(r=>({id:r.fields.id as string,hallId:r.fields.hall_id as string,label:r.fields.name as string})),syntheticSkuId:pkg.records.sku![0]!.fields.id as string,targetSnapshotBasis:'SYNTHETIC_INITIALIZATION_REQUEST_MUST_BE_CHECKED_AGAINST_ACTUAL_ROW_IN_SAME_TRANSACTION' as const};
+ return{packageKind:'SYNTHETIC' as const,sourceProfileSha256:HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256,pkg,manifestBytes,expectedManifestSha256:sha256(manifestBytes),admin,historicalSalesHallApproval,historicalLineAmountEvidence,historicalSettlementRetentionApproval,retainedSalesIds,syntheticSourceFiles:Object.fromEntries(sourcePins.map((p,i)=>[p.relative_path,Object.values(sourceTexts)[i]!])),syntheticWarehouseRows:pkg.records.warehouse!.map(r=>({id:r.fields.id as string,hallId:r.fields.hall_id as string,label:r.fields.name as string})),syntheticSkuId:pkg.records.sku![0]!.fields.id as string,targetSnapshotBasis:'SYNTHETIC_INITIALIZATION_REQUEST_MUST_BE_CHECKED_AGAINST_ACTUAL_ROW_IN_SAME_TRANSACTION' as const};
 }
 
 /** Call ONLY inside the existing verified Fresh35 host callback with its actual
  * V2 admission and caller-bound physical target. This fixture issues no host or
  * capability. The repeatable steps keep original keys for the existing replay. */
-export async function buildSyntheticFresh35WholePackageFixture(target:StandardImportTarget,encodedScrypt:string,options:{historicalSalesAdmission:object;workspaceDirectory:string;targetCapturedAt:string|null}){
+export async function buildSyntheticFresh35WholePackageFixture(target:StandardImportTarget,encodedScrypt:string,options:{historicalSalesAdmission:object;workspaceDirectory:string;targetCapturedAt:string|null;variant?:'default'|'settlement-retention25'}){
  if(!isNodeScryptPasswordHash(encodedScrypt))throw TypeError('SYNTHETIC_SCRYPT_REQUIRED');
  if(assertWholeSalesAdmissionV1(options.historicalSalesAdmission,target)!==HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256)throw Error('SYNTHETIC_FRESH35_V2_ADMISSION_REQUIRED');
- const input=createSyntheticFresh35WholePackageInput(options.targetCapturedAt);
+ const input=createSyntheticFresh35WholePackageInput(options.targetCapturedAt,options.variant);
+ if(options.variant==='settlement-retention25'&&!/^synthetic_fresh35_[0-9]{8}_r[1-9][0-9]*$/.test(target.database_name))throw Error('SYNTHETIC_FRESH35_TARGET_REQUIRED');
  const scratch=await mkdtemp(join(options.workspaceDirectory,'fresh35-synthetic-fixture-')),packageDirectory=join(scratch,'package'),reportDirectory=join(scratch,'report'),syntheticEvidenceDirectory=join(scratch,'synthetic-evidence');
  let plan:Awaited<ReturnType<typeof prepareStreamPlan>>|undefined,disposed=false;
  const dispose=async()=>{if(disposed)return;disposed=true;try{await plan?.dispose()}finally{await rm(scratch,{recursive:true,force:true})}};
  try{
   await mkdir(packageDirectory);await mkdir(syntheticEvidenceDirectory);for(const [path,bytes] of Object.entries(input.pkg.artifacts)){await mkdir(dirname(join(packageDirectory,path)),{recursive:true});await writeFile(join(packageDirectory,path),bytes,{flag:'wx'});}for(const [path,text]of Object.entries(input.syntheticSourceFiles))await writeFile(join(syntheticEvidenceDirectory,path),text,{flag:'wx'});await writeFile(join(packageDirectory,'manifest.json'),input.manifestBytes,{flag:'wx'});
-  const validation={allowSynthetic:true,historicalSalesHallApproval:input.historicalSalesHallApproval,historicalLineAmountEvidence:input.historicalLineAmountEvidence};
+  const validation={...(input.historicalSettlementRetentionApproval?{historicalSettlementRetentionApproval:input.historicalSettlementRetentionApproval}:{}),allowSynthetic:true,historicalSalesHallApproval:input.historicalSalesHallApproval,historicalLineAmountEvidence:input.historicalLineAmountEvidence};
   const summary=await streamPreflight(packageDirectory,reportDirectory,{...validation,expectedManifestSha256:input.expectedManifestSha256});
   if(!summary.checks_passed||!summary.complete_package_validation)throw Error('SYNTHETIC_FRESH35_PREFLIGHT_REJECTED');
   const indexPath=join(reportDirectory,'index.sqlite');plan=await prepareStreamPlan(indexPath,summary,input.manifestBytes,{...validation,target,initialization_identity:input.admin,historicalSalesAdmission:options.historicalSalesAdmission});
@@ -125,6 +156,6 @@ export async function buildSyntheticFresh35WholePackageFixture(target:StandardIm
   // Only this fixed small fixture is materialized; the production stream path
   // and its limits stay unchanged. Each iteration returns original keyed data.
   const steps={async *[Symbol.asyncIterator](){if(disposed)throw Error('SYNTHETIC_FRESH35_FIXTURE_DISPOSED');for(const step of storedSteps)yield structuredClone(step)}};
-  return{packageKind:'SYNTHETIC' as const,sourceProfileSha256:input.sourceProfileSha256,targetSnapshotBasis:input.targetSnapshotBasis,program:{identity:native.identity,initialize:native.initialize,steps},identity:native.identity,expectedCounts:summary.counts,totals:plan.totals,stepCount:storedSteps.length,packageDirectory,reportDirectory,syntheticEvidenceDirectory,syntheticWarehouseRows:input.syntheticWarehouseRows,syntheticSkuId:input.syntheticSkuId,documentBatchId:native.identity.documentBatchId,dispose};
+  return{packageKind:'SYNTHETIC' as const,sourceProfileSha256:input.sourceProfileSha256,targetSnapshotBasis:input.targetSnapshotBasis,program:{identity:native.identity,initialize:native.initialize,steps},identity:native.identity,expectedCounts:summary.counts,totals:plan.totals,stepCount:storedSteps.length,packageDirectory,reportDirectory,syntheticEvidenceDirectory,syntheticWarehouseRows:input.syntheticWarehouseRows,syntheticSkuId:input.syntheticSkuId,documentBatchId:native.identity.documentBatchId,fixtureBinding:{manifestSha256:input.expectedManifestSha256,planSha256:native.identity.planSha256,initializerSha256:requestHash(native.initialize),stepsSha256:requestHash(storedSteps)},historicalSettlementRetentionApproval:input.historicalSettlementRetentionApproval,retainedSalesIds:input.retainedSalesIds,dispose};
  }catch(error){await dispose();throw error}
 }

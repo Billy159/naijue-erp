@@ -32,3 +32,38 @@ test('Fresh35 fixture cannot mint host capability or touch a workspace using cal
  const {buildSyntheticFresh35WholePackageFixture}=await import('./whole-package-synthetic.ts');const {mkdtemp,rm,readdir}=await import('node:fs/promises');const {join}=await import('node:path');const {tmpdir}=await import('node:os');const dir=await mkdtemp(join(tmpdir(),'fresh35-no-admission-'));
  try{await assert.rejects(buildSyntheticFresh35WholePackageFixture(target,secret,{historicalSalesAdmission:{profile:'FRESH35_EXECUTION_ADMISSION_V1'},workspaceDirectory:dir,targetCapturedAt:'2026-11-05T03:00:00Z'}),/WHOLE_SALES_ADMISSION_REQUIRED/);assert.deepEqual(await readdir(dir),[]);}finally{await rm(dir,{recursive:true,force:true})}
 });
+
+test('retention25 variant keeps default manifest bytes and adds only synthetic25 heads/27 actual-shape payments with source-side approval',async()=>{
+ const {createSyntheticFresh35WholePackageInput}=await import('./whole-package-synthetic.ts');
+ const {validateUnifiedPackage}=await import('../../../packages/application/src/unified-import-contract.ts');
+ const {historicalSettlementRetentionWire}=await import('../../../packages/application/src/unified-historical-settlement-retention.ts');
+ for(const [time,hash]of [[null,'bb9c3e49580b6ef103b6978a5b5d1f8515b459da73bf406d98adb68607f7a41d'],['2026-11-05T03:00:00Z','a25d1adf046dc3d0f54f98b4954cbe15c4c48118466bf661762f826703af7e3c']])assert.equal(createSyntheticFresh35WholePackageInput(time).expectedManifestSha256,hash,'default manifest bytes unchanged');
+ const a=createSyntheticFresh35WholePackageInput(null,'settlement-retention25'),b=createSyntheticFresh35WholePackageInput(null,'settlement-retention25');
+ assert.equal(a.expectedManifestSha256,b.expectedManifestSha256);assert.equal(a.retainedSalesIds.length,25);assert.equal(a.pkg.records.sales_header.length,26);assert.equal(a.pkg.records.sales_line.length,31);assert.equal(a.pkg.records.sales_settlement.length,28);assert.equal(a.historicalSalesHallApproval.records.length,26);assert.equal(a.historicalLineAmountEvidence.lines.length,6);assert.equal(a.pkg.records.sales_header[0].zero_amount_archive.records.length,22);
+ const approval=a.historicalSettlementRetentionApproval,wire=historicalSettlementRetentionWire(approval);assert.deepEqual(wire,historicalSettlementRetentionWire(b.historicalSettlementRetentionApproval));assert.equal(approval.documents.length,25);assert.equal(approval.documents.flatMap(d=>d.settlements).length,27);assert.equal(approval.documents.filter(d=>d.business_type==='RETURN').length,3);assert(approval.documents.some(d=>d.net_due==='0.00'));assert(a.pkg.manifest.source_files.every(p=>p.sha256!==wire.sha256));
+ const options={allowSynthetic:true,historicalSalesHallApproval:a.historicalSalesHallApproval,historicalLineAmountEvidence:a.historicalLineAmountEvidence,historicalSettlementRetentionApproval:approval};
+ assert.equal(validateUnifiedPackage(a.pkg,options).valid,true);assert.equal(validateUnifiedPackage(a.pkg,{...options,historicalSettlementRetentionApproval:undefined}).valid,false);assert.equal(validateUnifiedPackage(a.pkg,{...options,historicalSettlementRetentionApproval:structuredClone(approval)}).valid,false);assert.throws(()=>createSyntheticFresh35WholePackageInput(null,'production'),/VARIANT/);
+ const cents=s=>BigInt(s.replace('.',''));let under=0,over=0,refund=0;
+ for(const d of approval.documents){const signed=d.settlements.reduce((n,r)=>n+(r.fields.direction==='REFUND'?-1n:1n)*cents(r.fields.amount),0n);assert.notEqual(signed,cents(d.net_due));if(d.business_type==='RETURN')refund++;else if(signed<cents(d.net_due))under++;else over++;}
+ assert.deepEqual([under,over,refund],[11,11,3]);
+});
+
+test('retention25 variant runs real streaming preflight and immutable keyed request iteration; missing original row cannot consume its approval',async()=>{
+ const {createSyntheticFresh35WholePackageInput}=await import('./whole-package-synthetic.ts');const {repinSyntheticPackage}=await import('./synthetic-package.ts');
+ const {mkdtemp,mkdir,writeFile,readFile,rm}=await import('node:fs/promises');const {join,dirname}=await import('node:path');const {tmpdir}=await import('node:os');
+ const {streamPreflight}=await import('../../../tools/unified-import/stream-preflight.mjs');const {streamDocumentRequests}=await import('../../../tools/unified-import/stream-document-requests.mjs');const {sha256}=await import('../../../packages/application/src/unified-import-contract.ts');
+ for(const missing of [false,true]){
+  const input=createSyntheticFresh35WholePackageInput(null,'settlement-retention25'),p=input.pkg,dir=await mkdtemp(join(tmpdir(),'fresh35-retention25-fixture-'));
+  try{
+   if(missing){const index=p.records.sales_settlement.findIndex(r=>r.fields.sales_id===input.retainedSalesIds[0]),[removed]=p.records.sales_settlement.splice(index,1);p.registry=p.registry.filter(r=>r.target_id!==removed.fields.id);p.reports['reconciliation.json'].tables.sales_settlement={source_rows:27,retained_rows:27,rejected_rows:0};repinSyntheticPackage(p);}
+   const pkg=join(dir,'package'),report=join(dir,'report');await mkdir(pkg);for(const [path,bytes]of Object.entries(p.artifacts)){await mkdir(dirname(join(pkg,path)),{recursive:true});await writeFile(join(pkg,path),bytes);}const manifest=Buffer.from(JSON.stringify(p.manifest));await writeFile(join(pkg,'manifest.json'),manifest);
+   const options={allowSynthetic:true,expectedManifestSha256:sha256(manifest),historicalSalesHallApproval:input.historicalSalesHallApproval,historicalLineAmountEvidence:input.historicalLineAmountEvidence,historicalSettlementRetentionApproval:input.historicalSettlementRetentionApproval};
+   const summary=await streamPreflight(pkg,report,options);assert.equal(summary.checks_passed,!missing,await readFile(join(report,'issues.jsonl'),'utf8'));
+   if(missing){assert.match(await readFile(join(report,'issues.jsonl'),'utf8'),/HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED/);continue;}
+   assert.equal(summary.historical_line_amount_differences,6);assert.equal(summary.counts.sales_header,26);assert.equal(summary.counts.sales_settlement,28);
+   const binding={historicalSalesHallApproval:input.historicalSalesHallApproval,historicalLineAmountEvidence:input.historicalLineAmountEvidence,baselineBatchId:'00000000-0000-4000-8000-000000000001',documentBatchId:p.records.sales_header[0].fields.import_batch_id,planSha256:'b'.repeat(64),manifestSha256:sha256(manifest),namespace:p.manifest.source_namespace,cutoffAt:p.manifest.inventory_source.cutoff_at,expectedDocuments:{SALES_HEADER:26,SALES_LINE:31,SALES_SETTLEMENT:28,TRANSFER_HEADER:1,TRANSFER_LINE:1,IMPORT_BATCH:1}};
+   const first=[],second=[];for await(const step of streamDocumentRequests(join(report,'index.sqlite'),summary,binding))first.push(step);for await(const step of streamDocumentRequests(join(report,'index.sqlite'),summary,binding))second.push(step);assert.deepEqual(first,second);
+   const rows=first.flatMap(s=>s.request.payload.rows),retained=rows.filter(r=>r.entity_type==='SALES_SETTLEMENT'&&input.retainedSalesIds.includes(r.fields.sales_id));assert.equal(retained.length,27);assert.deepEqual(retained.map(r=>({fields:r.fields,source_refs:r.source_refs})),p.records.sales_settlement.filter(r=>input.retainedSalesIds.includes(r.fields.sales_id)).map(r=>({fields:r.fields,source_refs:r.source_refs})));
+  }finally{await rm(dir,{recursive:true,force:true})}
+ }
+});

@@ -1,3 +1,5 @@
+import {requestHash} from '../../../packages/application/src/request-hash.ts';
+import {historicalSettlementRetentionWire} from '../../../packages/application/src/unified-historical-settlement-retention.ts';
 /** Root-deployed bridge for one disposable validation instance. It uses the
  * unchanged genuine combined authorization/install path. It never publishes a
  * record from JSON, grants privileges or issues authorization. Host inspection
@@ -26,7 +28,7 @@ async function privateText(path){
 }
 export async function main(){
  need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0&&process.version==='v24.21.0','TRUSTED_ROOT_RUNTIME_REQUIRED');
- need(process.argv.length===3&&['--describe','--execute','--verify-host'].includes(process.argv[2])&&process.argv[1]===root+'/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs','FIXED_ENTRY_REQUIRED');
+ need(['--describe','--execute','--verify-host','--verify-host-rollback','--verify-host-commit'].includes(process.argv[2])&&process.argv.length===(process.argv[2]==='--verify-host-commit'?4:3)&&(process.argv[2]!=='--verify-host-commit'||/^[a-f0-9]{64}$/.test(process.argv[3]))&&process.argv[1]===root+'/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs','FIXED_ENTRY_REQUIRED');
  need(!Object.keys(process.env).some(k=>k==='NODE_OPTIONS'||k==='NODE_PATH'||k==='DATABASE_URL'||k.startsWith('PG')||k.startsWith('LD_')||k.startsWith('DYLD_')),'CLEAN_ENV_REQUIRED');
  await assertTrustedRootTree(root);await assertTrustedRootPath(process.execPath);
  const a=parseStrictJson(await privateText(authority));
@@ -42,7 +44,7 @@ export async function main(){
  const catalog=await buildFresh35CombinedCatalog(source,target,paths);
  const program=await compileFresh35CombinedProgram({source,target,catalog});
  if(process.argv[2]==='--describe'){process.stdout.write(JSON.stringify(describeFresh35CombinedProgram(program))+'\n');return;}
- if(process.argv[2]==='--verify-host'){
+ if(['--verify-host','--verify-host-rollback','--verify-host-commit'].includes(process.argv[2])){
   const raw=await privateText(join(workspace,'credentials',a.proposal.controller+'.pgpass'));
   const prefix=`127.0.0.1:${a.proposal.port}:*:${a.proposal.controller}:`;
   need(raw.startsWith(prefix)&&/^[a-f0-9]{64}\n$/.test(raw.slice(prefix.length)),'EXACT_CONTROLLER_CREDENTIAL_REQUIRED');
@@ -61,22 +63,50 @@ export async function main(){
   const {reconcileWholePackage}=await import('../../../tools/unified-import/whole-package-reconcile.mjs');
   const context=fresh35HostContext(await loadFresh35HostContext(root,root+'/reference-inputs'));
   const standardTarget={protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:input.physical.systemIdentifier,database_oid:input.physical.databaseOid,database_name:input.proposal.database,catalog_sha256:context.record.catalogSha256};
+  const stage=process.argv[2]==='--verify-host-rollback'?'rollback':process.argv[2]==='--verify-host-commit'?'commit':'all';
   const options={referenceDirectory:root+'/reference-inputs',sourceProfileSha256:HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256};
-  let fixture;
+  let fixture,fixtureBinding,fixtureBindingSha256;
   try{
    // This one small, explicit synthetic fixture is separate from the real
    // cleaning package. Its planned warehouse binding is checked by SQL in the
    // same transaction; it is not an observation of a real imported warehouse.
    const failed=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
     assertWholeSalesAdmissionV1(admission,standardTarget,client);
-    fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,NODE_SCRYPT_DUMMY_HASH,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:null});
+    fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,NODE_SCRYPT_DUMMY_HASH,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:null,variant:'settlement-retention25'});
+    const f=fixture.fixtureBinding;
+    need(f&&Object.keys(f).sort().join(',')==='initializerSha256,manifestSha256,planSha256,stepsSha256'&&Object.values(f).every(v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v))&&f.manifestSha256===fixture.program.initialize.package_manifest_sha256&&f.planSha256===fixture.program.initialize.plan_sha256&&f.initializerSha256===requestHash(fixture.program.initialize),'SYNTHETIC_RETENTION_FIXTURE_BINDING_REQUIRED');
+    const installed=describeFresh35CombinedProgram(program);
+    fixtureBinding={format:'FRESH35_SYNTHETIC_RETENTION25_STAGE_BINDING_V1',sourceSetSha256:installed.sourceSetSha256,installProgramSha256:installed.programSha256,targetSha256:installed.targetSha256,...fixture.fixtureBinding};
+    fixtureBindingSha256=requestHash(fixtureBinding);
+    if(stage==='commit'){need(fixtureBindingSha256===process.argv[3],'SYNTHETIC_RETENTION_STAGE_BINDING_CHANGED');}
+    need(fixture.retainedSalesIds?.length===25&&fixture.historicalSettlementRetentionApproval,'SYNTHETIC_RETENTION_FIXTURE_REQUIRED');
+    const retainedWire=historicalSettlementRetentionWire(fixture.historicalSettlementRetentionApproval),initializedWire=fixture.program.initialize.payload.historical_settlement_retention_approval;
+    need(initializedWire?.sha256===retainedWire.sha256&&initializedWire.utf8===retainedWire.utf8,'SYNTHETIC_RETENTION_INITIALIZE_BINDING_REQUIRED');
+    if(stage==='commit')return {state:'FIXTURE_BOUND',fixtureBindingSha256};
+    // Negative SQL paths start from the same valid, pure synthetic program.
+    // These changes cannot supply an alternative approval or a physical target.
+    const badApproval=structuredClone(fixture.program.initialize);
+    badApproval.payload.historical_settlement_retention_approval.sha256='0'.repeat(64);
+    const badApprovalResult=await executeWholePackage(client,fixture.identity,badApproval,fixture.program.steps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    if(!(badApprovalResult.state==='ROLLED_BACK'&&badApprovalResult.code==='HISTORICAL_SETTLEMENT_APPROVAL_HASH'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ROLLBACK_REQUIRED'),{validationStage:'BAD_APPROVAL',validationCode:badApprovalResult.code});
+    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH))).state==='ABSENT','SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED');
+    let removedSettlement=0;
+    const missingSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='documentChunk'&&step.request.payload.mode==='CHUNK')step.request.payload.rows=step.request.payload.rows.filter(row=>{if(removedSettlement===0&&row.entity_type==='SALES_SETTLEMENT'&&row.fields.sales_id===fixture.retainedSalesIds[0]){removedSettlement++;return false;}return true;});yield step;}}};
+    const missingResult=await executeWholePackage(client,fixture.identity,fixture.program.initialize,missingSteps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
+    if(!(removedSettlement===1&&missingResult.state==='ROLLED_BACK'&&['HISTORICAL_SETTLEMENT_MIGRATION_SOURCE_DIFFERS','HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED','STANDARD_PUBLICATION_INCOMPLETE'].includes(missingResult.code)))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_MISSING_SETTLEMENT_ROLLBACK_REQUIRED'),{validationStage:'MISSING_SETTLEMENT',validationCode:missingResult.code});
+    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH))).state==='ABSENT','SYNTHETIC_MISSING_SETTLEMENT_ABSENCE_REQUIRED');
     let reachedFinalPublish=false;
     const badSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='publish'&&step.request.payload.phase==='DOCUMENTS'){reachedFinalPublish=true;step.request.payload.expected_sequence=Number(step.request.payload.expected_sequence)+1;}yield step;}}};
     const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,badSteps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
     need(reachedFinalPublish&&result.state==='ROLLED_BACK','SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED');
-    return {state:result.state,reachedFinalPublish};
+    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH))).state==='ABSENT','SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED');
+    return {state:result.state,reachedFinalPublish,badApprovalRollback:true,badApprovalCode:badApprovalResult.code,missingSettlementRollback:true,missingSettlementCode:missingResult.code,originalBatchAbsent:true};
    },options);
    need(failed.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
+   if(stage==='rollback'){
+    await fixture.dispose();
+    process.stdout.write(JSON.stringify({state:'FRESH35_SYNTHETIC_ROLLBACK_VERIFIED',stage,fixtureBinding,fixtureBindingSha256,rollbackVerified:true,originalBatchAbsent:true,failedAttempt:failed.result,connectionCleanup:failed.cleanup,syntheticImportVerified:false,businessVerified:false})+'\n');return;
+   }
    const imported=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
     assertWholeSalesAdmissionV1(admission,standardTarget,client);
     const before=await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));
@@ -92,11 +122,12 @@ export async function main(){
     need(replay.state==='ALREADY_COMMITTED','SYNTHETIC_ORIGINAL_KEY_REPLAY_REQUIRED');
     const readback=await reconcileWholePackage(client,fixture.program.initialize,NODE_SCRYPT_DUMMY_HASH,fixture.expectedCounts,fixture.totals);
     need(readback.state==='VERIFIED','SYNTHETIC_NEW_CONNECTION_READBACK_REQUIRED');
-    return {state:'FRESH35_CONTROLLER_HOST_VERIFIED',importState:imported.result.state,replayState:replay.state,readbackState:readback.state,syntheticImportVerified:true,businessVerified:false};
+    return {state:'FRESH35_CONTROLLER_HOST_VERIFIED',importState:imported.result.state,replayState:replay.state,readbackState:readback.state,syntheticImportVerified:true,settlementRetentionVerified:true,retainedHeaders:25,retainedSettlements:27,businessVerified:false};
    },options);
    await fixture.dispose();
    need(verification.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
-   process.stdout.write(JSON.stringify({state:'FRESH35_CONTROLLER_HOST_VERIFIED',hostVerification:verification.host_verification,ordinaryUid:process.getuid(),syntheticImportVerified:true,failedAttempt:failed.result,importState:verification.result.importState,replayState:verification.result.replayState,readbackState:verification.result.readbackState,businessVerified:false})+'\n');return;
+   need(verification.result.settlementRetentionVerified===true&&verification.result.retainedHeaders===25&&verification.result.retainedSettlements===27,'SYNTHETIC_RETENTION_READBACK_REQUIRED');
+   process.stdout.write(JSON.stringify({state:'FRESH35_CONTROLLER_HOST_VERIFIED',hostVerification:verification.host_verification,ordinaryUid:process.getuid(),syntheticImportVerified:true,stage,fixtureBinding,fixtureBindingSha256,settlementRetentionVerified:verification.result.settlementRetentionVerified,retainedHeaders:verification.result.retainedHeaders,retainedSettlements:verification.result.retainedSettlements,failedAttempt:stage==='commit'?null:failed.result,importState:verification.result.importState,replayState:verification.result.replayState,readbackState:verification.result.readbackState,businessVerified:false})+'\n');return;
   }finally{await fixture?.dispose()}
  }
  const authorization=await loadFresh35CombinedAuthorization(program);
@@ -118,5 +149,5 @@ export async function main(){
  }
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
- try{await main()}catch(error){process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:typeof error?.installState==='string'?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',automaticRetry:false})+'\n');process.exitCode=1;}
+ try{await main()}catch(error){process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:typeof error?.installState==='string'?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',validationStage:['BAD_APPROVAL','MISSING_SETTLEMENT'].includes(error?.validationStage)?error.validationStage:null,validationCode:typeof error?.validationCode==='string'&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.validationCode)?error.validationCode:null,automaticRetry:false})+'\n');process.exitCode=1;}
 }
