@@ -1695,3 +1695,7 @@ D1发现新增observer独立DO使原host的严格两结果合同变成三结果�
 
 ### 2026-11-06 06:24 | r5启动事实与未安装收口分开
 原start0/35.400s真实取得SID7704814814886170671/OID16393/program1ac040a4/target5fda968c/proof4df13d62（941f115f）。确定消费缺陷下不签install，实际install authority/child/result均不存在，0安装/导入。T45精确核本次parent后一次SIGTERM走原guardian，原stop0/4.931s，回读8473a001确认cleanup/cleanShutdown/登录凭据/进程端口及容器停止，保全target；原PARENT_STOP通用failure结果原样留存，不能把它改写为安装失败或安装通过。C亲核两原回执及汇总58b74f7f。新生产JS五叶951de47d已GitHub推送并远端核实；下一固定候选仍待D1两DO修复+T45生产Python，3de75不是完整生产入口版本。
+
+
+### 2026-11-06 06:32 | 已完成模块交验并定向修已提交状态缺口
+C固定D1九叶caa2c985交原QB，采用作者生产入口8项/两DO3项，后续T45 Python/loader只补其新增接缝，不重复九叶或整套后台。QB用原main、原publisher及diagnostics函数体三反例确认PROD-ENTRY-F01/P2：数据库completion已确认后，发布前置抛错丢installState，错误exit1/null。C立即交原D1只修entry/test，要求保留COMMITTED_UNPUBLISHED/exit2及更准确durability unknown，连接/安全错误/原键及不重试均不放宽；QB完成本轮其余范围后仅复验该项。未连接PG，尚未称通过。生产执行排序同时沿既有record父目录watch，外叶落盘/必要清理在ordinary admit前完成，不增控制层。

@@ -1,0 +1,46 @@
+{
+  "finding": "PROD-ENTRY-F01",
+  "result": "REPRODUCED_DEFECT",
+  "cases": [
+    {
+      "phase": "existing-record",
+      "publisherError": "FRESH35_COMBINED_RECORD_ALREADY_EXISTS",
+      "knownCompletionState": "COMMITTED_UNPUBLISHED",
+      "actualExitCode": 1,
+      "actualInstallState": null,
+      "expectedExitCode": 2,
+      "expectedInstallState": "COMMITTED_UNPUBLISHED",
+      "clients": 1,
+      "closes": 1,
+      "retries": 0,
+      "rawSecretLeaked": false
+    },
+    {
+      "phase": "trusted-tree",
+      "publisherError": "UNTRUSTED_ROOT_INSTALL_PATH",
+      "knownCompletionState": "COMMITTED_UNPUBLISHED",
+      "actualExitCode": 1,
+      "actualInstallState": null,
+      "expectedExitCode": 2,
+      "expectedInstallState": "COMMITTED_UNPUBLISHED",
+      "clients": 1,
+      "closes": 1,
+      "retries": 0,
+      "rawSecretLeaked": false
+    },
+    {
+      "phase": "lstat-eacces",
+      "publisherError": "PRIVATE EACCES",
+      "knownCompletionState": "COMMITTED_UNPUBLISHED",
+      "actualExitCode": 1,
+      "actualInstallState": null,
+      "expectedExitCode": 2,
+      "expectedInstallState": "COMMITTED_UNPUBLISHED",
+      "clients": 1,
+      "closes": 1,
+      "retries": 0,
+      "rawSecretLeaked": false
+    }
+  ],
+  "boundaries": "Actual new main body and actual old publisher/diagnostic bodies; genuine target binding; completion/context/root/IO/native client are modeled; no PG/server/files published"
+}
