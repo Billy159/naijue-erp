@@ -29389,7 +29389,7 @@
       "state": "ACTIVE"
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "FIXED_SOURCE_BUILDING_QB_NEXT_NO_NEW_PG_YET",
+      "state": "QB_SCOPED_PASS_EXACT_NEW_CARRIER_MATERIALIZING_NOT_ACTUAL_PG",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29445,7 +29445,9 @@
         "expiresAt": 1793906984717,
         "scope": "Exact223598 transfer/prep only; original CAS/40s channel; newr2 ROOT;900s materialization/30min; noPG"
       },
-      "actualUidProbe": "Original T45 bounded actualUID read/watch, native catalog proof epoch and metadata change rejection; no extraPG/grant/real data. Same cap invalidation not implied."
+      "actualUidProbe": "Original T45 bounded actualUID read/watch, native catalog proof epoch and metadata change rejection; no extraPG/grant/real data. Same cap invalidation not implied.",
+      "QBReceiptSHA256": "b099a24289d881aa996874284b23f7bb8afe685208b4a793258b1ff0b2343480",
+      "oldRootCauseActualAccepted": false
     },
     "productionReleaseCompatibilityContinuation": {
       "state": "QB_IDENTIFIED_EXACT_V2_RUNTIME_RECORD_REFERENCE_MOUNTS_MISSING_T45_REPAIRING",

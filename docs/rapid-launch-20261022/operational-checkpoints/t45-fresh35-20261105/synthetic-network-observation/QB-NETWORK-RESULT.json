@@ -1,0 +1,238 @@
+{
+  "task_id": "QB-SYNTHETIC-NETWORK-216b8f2b-20261106",
+  "verdict": "PASS_SCOPED_SOURCE_AND_MODELS_NOT_ACTUAL_UID_OR_PG",
+  "findings": [],
+  "recorded_at": "2026-11-06T03:05:22.175535+08:00",
+  "integration_commit": "216b8f2b48ff1fa03a915a618eb71d3c302ecc45",
+  "parent": "f5c0824664778d1b5c5e30b1ba68156c6420c90c",
+  "build_root": "223598cb91a18f48ef0fdfe88eee879bdcaf2173",
+  "build_tree": "18451114459b40fdd88efca706bc6e2fc0c258ba",
+  "scope": "D1 nine leaves + T45 launcher/test two leaves + one unbound wrapper observation successor. No prior REAL64/diagnostics8/full suite review repeated.",
+  "fixed_source_pins": [
+    {
+      "path": "candidate0448/scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "bytes": 21044,
+      "sha256": "f6877abf7dbffbfa415b5c35ee6ef2f380afe7e0831cffdef49fbea65f1de167"
+    },
+    {
+      "path": "candidate0448/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "bytes": 35377,
+      "sha256": "46c922f5bb081c43d457dbec64fb5d7148522eab6310d8f05953b2015a4316d8"
+    },
+    {
+      "path": "candidate0448/scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "bytes": 19885,
+      "sha256": "dffde933bed168bf8269e9ad9e5c93a6c623d87267969d050e5b7c0f63154ba6"
+    },
+    {
+      "path": "candidate0448/tools/unified-import/fresh35-host-session.mjs",
+      "bytes": 33028,
+      "sha256": "63a4fba90214b982ba9799d39dfe0c041b6373df6f91decd141000535da4c33d"
+    },
+    {
+      "path": "candidate0448/tests/fresh35-combined-target.test.mjs",
+      "bytes": 16368,
+      "sha256": "0b0577306bde739d636d3cdfa9bc527fd14d1bebb8a13997ec7b9d6b0a96a923"
+    },
+    {
+      "path": "candidate0448/tests/fresh35-combined-catalog.test.mjs",
+      "bytes": 13644,
+      "sha256": "6de4abfa03d0212c621bc1a56861fd74171f593f044ba1e18f619fe3b5c60638"
+    },
+    {
+      "path": "candidate0448/tests/fresh35-host-session.test.mjs",
+      "bytes": 32956,
+      "sha256": "cb01758ca86bb28e7c35da2387f10cbe4d49ffe91d01703552efa2bca951b290"
+    },
+    {
+      "path": "candidate0448/tests/fresh35-ordinary-production-v2.test.mjs",
+      "bytes": 19357,
+      "sha256": "2a06a5faffc5d8b9d30b36b72901b81f444f9350a3ab83acc7c75648d91222e8"
+    },
+    {
+      "path": "candidate0448/tests/fixtures/fresh35-bootstrap-network-model.mjs",
+      "bytes": 5158,
+      "sha256": "1f7c7137b27f59bd7bac7daa6da9cdca995f28dcbce5aadaf8e3cfa05808f18b"
+    },
+    {
+      "path": "candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "bytes": 94653,
+      "sha256": "3d4bda9b21584d1aea4b4263f294555d5ada06a6504ad5ed284a27ce2fbe2548"
+    },
+    {
+      "path": "candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "bytes": 68851,
+      "sha256": "1ce5f6d25abf0d3a08c41eb26b65725eaed5ef649a43adee23d6170970836aae"
+    }
+  ],
+  "fixed_wrapper": {
+    "sha256": "9c33aca96400144f496e066fb04d9ae7bff9b8aa22b93e2ffc855a2ef1d46888",
+    "ready_sha256": "1d0d4231449b2204ce21e7b2d1c05500b572b315303245be9aeb3b7e4cb3daad",
+    "result_sha256": "eb7b3a3d56dea78eb32c9b39ccc62670d556f7a5e17cdc45e67553980a99b65d",
+    "parentSha256": "8c002b0ec0b870cb8b964ba50ba39ec200e954acbbe58a5f80ddbb5b3da6c872",
+    "changed_functions": [
+      "observation"
+    ],
+    "unbound_constants": {
+      "SOURCE": null,
+      "ARCHIVE_SHA": null,
+      "ARCHIVE_BYTES": null,
+      "FILE_COUNT": null,
+      "MANIFEST_SHA": null,
+      "KEY": null
+    },
+    "test_sha256": "ed2f6c0771e40af98481b623985fb39c51c033b129910a9eed882c2a9dff2a9c"
+  },
+  "fixed_owner_d1_result_sha256": "535d9cab98412a4aecb29432f4a2322667aaa8a2a04c16a717e6109d463d17ee",
+  "fixed_owner_producer_result_sha256": "3078b75880b6376d79103fe8b403e5e86de88c2ac11a4bc520d53f5ff443bc23",
+  "independent_checks": {
+    "passed_groups": 10,
+    "network": [
+      {
+        "name": "closed13 bindings including source/window cannot be substituted; proof required before guard",
+        "state": "PASS"
+      },
+      {
+        "name": "mode/owner/hardlink/missing/symlink and same-byte inode replacement reject without resetting baseline",
+        "state": "PASS"
+      },
+      {
+        "name": "expired original window rejects currentness; production V2 never opens missing synthetic proof",
+        "state": "PASS"
+      },
+      {
+        "name": "actual target module rejects model target capability; catalog-current compilation precedes digest use",
+        "state": "PASS"
+      },
+      {
+        "name": "synthetic watcher watches fixed file only and closes all leases/watchers on replacement/delete/error",
+        "state": "PASS"
+      },
+      {
+        "name": "missing synthetic watch inode fails before any pool lease; production never adds synthetic watch",
+        "state": "PASS"
+      }
+    ],
+    "producer_wrapper": [
+      {
+        "name": "producer exact13 public0444 with restrictive umask; original0711/credentials0700/private0400 and inode/no-overwrite retained",
+        "state": "PASS"
+      },
+      {
+        "name": "eleven actual-observation substitutions and non0711 parent refuse before proof creation",
+        "state": "PASS"
+      },
+      {
+        "name": "wrapper exports only fixed public proof raw SHA with private=False; old evidence private and failure preserved; bad source/extra/unlisted refused",
+        "state": "PASS"
+      }
+    ],
+    "cross_language": {
+      "state": "PASS",
+      "sha256": "f7df55e4572006e634c303bb9cb3f4c6b168d98f7ef810127e5194693dedb46f",
+      "bytes": 493,
+      "fields": 13,
+      "scope": "Original Python producer wrote actual local temp0444 proof; original Node consumer with explicit modeled root/trusted path accepted exact raw bytes and digest. No actual admin/ordinary UID/PG/native capability."
+    },
+    "scope": "Fixed Git source in memory. Existing explicit OS/source/capability model seed helpers reused with QB assertions. Real local temp O_EXCL/fsync/modes and fs.watch events under current user; no genuine root/ordinary admission or actual Linux carrier verification."
+  },
+  "reviewed": [
+    "Original admin post-bootstrap identity query reused with no new query/connection. Closed13-field public metadata proof only, private observation extras not copied. Root0444/nlink1 plus trusted ancestor chain and original workspace0711; private original0400/0700 retained.",
+    "Synthetic consumer requires exact original physical/host/port/listen/socket/admin/window/source binding and current window. O_NOFOLLOW/root0444/size/singlelink, before-after-path nanosecond identity, original raw byte SHA and private per-target baseline prevent changed proof acceptance.",
+    "Only restricted unix_socket_directories live reread replaced by exact original bootstrap fact. Original listen read, SID/OID/version/postmaster birth/address/port/window/empty database/role/membership/ACL SQL remains. No broad settings privileges, schema/routine/GRANT or parameter rights added.",
+    "Synthetic catalog/program descriptors bind raw proofSHA. Catalog-current rereads exact proof; original compiler calls catalog-current before description/guard compilation, preventing old proof recompilation. This latter full compilation behavior adopts owner affected graph test and source ordering check.",
+    "Production V2 loader/currentness returns null without touching synthetic proof. Original V1 target and record shapes, REAL and diagnostic drive/entry/cleanup logic remain.",
+    "Synthetic ordinary watcher adds fixed readable proof inode after original parent-expansion loop, never workspace0711 directory. Local replacement/deletion/error models revoke same admission and close all watchers; missing proof fails before pool lease. Production does not add watch. No per-request full proof hash rescan.",
+    "Unbound wrapper changes only observation. Fixed public proof uses65536/privateFalse while old listed evidence stays privateTrue; exact13 keys/format/source required; raw-byte SHA exported, unlisted data excluded and original failed result remains failed. Six binding constants remainNone; wrapper cannot execute."
+  ],
+  "adopted_owner_evidence": {
+    "d1": "Affected target/catalog21 + host3 + ordinary3 =27 PASS; local original log summaries read and hashes recorded (receipt lists log paths, not prior log digests). Red stale-proof gap preserved. No types/build/full suite rerun.",
+    "t45_producer": "Four targeted local model tests adopted pinned RESULT3078b758",
+    "t45_wrapper": "One export and three unchanged outcome tests adopted pinned RESULTeb7b3a3d",
+    "D2_build": {
+      "receipts": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-223598cb/RESULT.json",
+          "sha256": "6c74c69e50f1f4c859c7a48965a4f35b835a7b205814644032a31ed3565044bd",
+          "bytes": 15461,
+          "keys": [
+            "status",
+            "sourceCommit",
+            "sourceTree",
+            "integrationCommit",
+            "integrationCandidate0448TreeMatchesRoot",
+            "parents",
+            "buildId",
+            "sourceRoot",
+            "export",
+            "buildExecution",
+            "packExecution",
+            "buildReceiptSummary",
+            "packReceipt",
+            "sourceSet",
+            "ordinary",
+            "ordinaryClosure",
+            "artifacts",
+            "configurationScope",
+            "upstreamEvidence",
+            "preservation",
+            "boundaries",
+            "executionSettings",
+            "notVerified",
+            "nextStep"
+          ]
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-223598cb/ordinary/RESULT.json",
+          "sha256": "6d11ff0d05fd72d7c4d6faa25c706bbc3851968fa90abb252f8744d7cd4122a7",
+          "bytes": 4639,
+          "keys": [
+            "status",
+            "sourceCommit",
+            "buildId",
+            "sourceSetSha256",
+            "currentSourcePins",
+            "archive",
+            "manifest",
+            "inventory",
+            "sourceDescriptorSha256",
+            "runtimeIssuance",
+            "knownSizeReadback",
+            "collector",
+            "reusedCarrier",
+            "fullMemberBytesAndModesVerified",
+            "elapsedSeconds",
+            "noSourceWipServerDockerPgInstallOrSecrets",
+            "unverified",
+            "notes"
+          ]
+        }
+      ],
+      "C_confirmed_archive_sha256": "f3126f335c8d2afcd9d7975460357c3e3b790724d80c0fe2436dcaf30e52ed56",
+      "archive_bytes": 83663631,
+      "C_confirmed_manifest_sha256": "9fbe885be22279772a377bcd4ff1f50edd0e2f05c611e8bfb82a6a1233462e5d",
+      "sourceSetSha256": "b3d8e62ca216a710855145082e9ea69263823e1161dcbf3387a685a4219bd951",
+      "method": "Read and hash only two small exact receipt files; archive/manifest content verification adopted from C/D2, not repeated. Not PG."
+    }
+  },
+  "unverified": [
+    "Actual root-owned0444 under0711 Linux ancestors read/watch by ordinary UID, no EACCES; actual watcher change/rename/error cleanup and postmaster-epoch rejection on exact carrier.",
+    "Actual PG install/controller/ordinary readback/business, transaction/cleanup outcome and next exact target/window. Original failed5d70 journal and ROLLBACK_UNCONFIRMED remain historical; source/model pass is not现场根因或实际安装验收.",
+    "No actual new carrier binding/materialization/upload/Node execution/server/deploy or approval changes. Unbound wrapper is source-only until original C/T45 exact binding.",
+    "No full archive/member rehash or rebuild by QB; D2/C exact build/pack7296-member evidence adopted, not PG.",
+    "Production release adaptation F01 remains separately NEED_FIX; do not conflate with this synthetic packet."
+  ],
+  "actual_model": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "boundaries": {
+    "source_modified": false,
+    "source_copies_created": false,
+    "business_private_inputs_read": false,
+    "server_access": false,
+    "PG_or_Docker": false,
+    "approval_created": false,
+    "old_failures_replayed": false,
+    "ops_writer": "T45 only"
+  },
+  "next": "C may adopt exact integration216b/build-root2235 source-only result and coordinate original T45 exact bound successor plus next real UID/read/watch/epoch/PG scope. No user reapproval introduced by this review."
+}
