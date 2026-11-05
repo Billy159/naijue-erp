@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T03:00:21.158420+00:00",
+  "updatedAt": "2026-11-05T09:29:56.051263+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "2276fdfb3928b2b5fa4af72b3883bbd478dd672d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,14 +28126,14 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T08:55:35.401711+00:00",
+    "at": "2026-11-05T09:29:56.051263+00:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
     "branch": "codex/erp-0448z-integration-20261105",
     "worktree": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102",
     "applicationRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
-    "sourceStatus": "INTEGRATION_WIP_SYNTHETIC_PARTIAL_NOT_PG_NOT_RELEASE",
+    "sourceStatus": "FIXED_INCREMENT_REVIEWED_NOT_PG_NOT_RELEASE",
     "externalDotInFlight": "UNKNOWN; do not infer stopped",
     "goalToolStatus": "USER_RESUMED_ACTIVE_AND_UPDATED_OBJECTIVE_20261105",
     "model": "gpt-6.1-sol",
@@ -28264,7 +28264,7 @@
         "model": "gpt-6.1-sol",
         "effort": "high",
         "state": "FIXED_BACKEND_INCREMENT_QB_PASS_NOT_PG",
-        "next": "existing synthetic fixture then actual target warehouse/PG proof; no invented snapshot",
+        "next": "Source capture and bridge delivered; real target capture/intent contract gap requires exact supplement, not invented version/timestamp",
         "commit": "5a0f4fb3",
         "receiptSHA256": "04df7bcfa039f08ddf99cdeb25e11ec68ee40a5129668014de85db4fc93e2c0b"
       },
@@ -28272,9 +28272,9 @@
         "owner": "D2",
         "model": "gpt-6.1-sol",
         "effort": "high",
-        "state": "D2_FROZEN_9_LEAVES_INTEGRATED_NOT_PG",
+        "state": "QB_PASS_FIXED_RUNTIME35_SOURCE_INCREMENT_ONLY_NOT_PG",
         "scope": "production-main/provider and necessary focused tests; extra files require explicit owner handoff",
-        "next": "QB incremental review after B; actual ordinary role SQL/business not tested",
+        "next": "T45 exact isolated install then ordinary runtime SQL/business under separately bound scope",
         "commit": "0a3f763539a941407a69a56e59d9cfae2ac1b954",
         "receiptSHA256": "e2ec338513bc5469d25a7d8e06de4e250f8685a599853efe7fa9e171500e1ff1",
         "checks": "39 affected synthetic PASS, reused110 provider/capacity+12 issuer; launch typecheck PASS"
@@ -28292,35 +28292,49 @@
       },
       "C-0448-ISOLATED-B-03": {
         "owner": "C",
-        "state": "SOURCE_FIXED_QB_INCREMENT_REVIEW_PENDING_NOT_PG",
-        "checks": "32 Python launcher PASS; combined AB/C target/catalog/lifecycle/entry/UI 32 PASS; no actual PG",
-        "next": "D1 existing synthetic fixture integration, T45 exact new scope",
-        "commit": "878138a746cd92b034213380308fbbd5a6f3a4db"
+        "state": "QB_PASS_FIXED_SOURCE_INCREMENT_ONLY_NOT_PG",
+        "checks": "32 Python PASS; catalog+entry 11 PASS; original-key rollback/commit/replay/readback orchestration synthetic only",
+        "next": "T45 bind final exact synthetic environment scope; no actual execution under source-only approval",
+        "commit": "7fb173979935ea61beb499c30fc5312f2087795b",
+        "review": "QB/C-0448-B-SYNTHETIC-7FB173-20261105/RESULT.json",
+        "historicalFailure": "878138a7 F03 close-failure false success fixed in a6fee8c0; QB source/synthetic successor PASS; old NEED_FIX retained"
       },
       "C-0448-SYNTHETIC-FIXTURE-05": {
         "owner": "D1",
         "model": "gpt-6.1-sol",
         "effort": "high",
-        "state": "IN_PROGRESS_EXISTING_FIXTURE",
+        "state": "FROZEN_INTEGRATED_SYNTHETIC_PASS_NOT_PG",
         "scope": "tests/fixtures/unified-import/whole-package-synthetic.ts and direct tests only",
-        "next": "use original stream compiler and real admission callback; no new host/platform"
+        "next": "T45 original host callback consumes fixture on fixed candidate",
+        "commit": "a55022ce",
+        "checks": "original6+new3 tests PASS; typecheck PASS; real PG not run"
       },
       "C-0448-HELD-BRIDGES-06": {
         "owner": "D2",
         "model": "gpt-6.1-sol",
         "effort": "high",
-        "state": "DISPATCHED_NEXT_PRIVATE_EXACT_SCOPE",
-        "scope": "327SKU+1371barcode existing held source bridges, no central package writes",
-        "next": "D3 consume verified original identity only; no invented alias"
+        "state": "D2_36_SOURCE_CLASSIFIED_D3_45_PARTIAL_PRIVATE_CONSUMPTION",
+        "scope": "327 old SKU +1371 old barcode:1045 barcode traces received for1031 existing SKU in private candidate only; approved belt two lines reused; seven color-conflicting current lines not merged",
+        "next": "Keep 653 unreceived source rows and seven current transfer lines traceable; no invented identity merges",
+        "receiptSHA256": "d94ff309ca20a01f7f445b384c6b07ac232f7891c713e625feaff0c1ecc97f7c",
+        "consumerSHA256": "0b1db97f577115a6706487292b541b14ee2fae0864ebe623ac7556fbbd30af46"
+      },
+      "C-0448-HALL-TARGET-CAPTURE-07": {
+        "owner": "D1 proposal; C contract coordination; D3 original private consumers",
+        "model": "gpt-6.1-sol",
+        "effort": "high",
+        "state": "ACCURATE_CONTRACT_PROPOSAL_ONLY_NOT_IMPLEMENTED",
+        "scope": "Null input intent separately bound to exact MASTER source member; actual same-transaction capture audited without altering original source hash; completed V2 readback only",
+        "next": "Append precise supplement C to original confirmation file; only dependent real-data branch waits for human confirmation"
       }
     },
     "github": {
       "branch": "codex/erp-0448z-integration-20261105",
-      "commit": "878138a746cd92b034213380308fbbd5a6f3a4db",
+      "commit": "7fb173979935ea61beb499c30fc5312f2087795b",
       "remoteVerified": true,
-      "status": "FIXED_SOURCE_INCREMENT_NOT_PG_NOT_RELEASE",
+      "status": "SOURCE_INCREMENT_PUSHED_REMOTE_READBACK_VERIFIED_NOT_PG_NOT_RELEASE",
       "remotePriorVerifiedCommit": "eb22fd211e5f07ffc78d9ce6b7ec7a8749f13025",
-      "localHead": "0a3f763539a941407a69a56e59d9cfae2ac1b954",
+      "localHead": "7fb173979935ea61beb499c30fc5312f2087795b",
       "pushRoute": "existing system HTTP proxy, command scoped; direct connection timed out"
     },
     "cleanInstall": {
@@ -28332,9 +28346,10 @@
       "lockUnchanged": true
     },
     "sourceFactGaps": [
-      "V2 hall source/target exact evidence implementation in progress under approved A",
-      "complete ledger held source and final V2 hashes pending",
-      "same-version actual fresh35 PG/install/import/business not tested"
+      "Real target capture intent and same-transaction audit/readback exact contract supplement pending",
+      "653 held source trace reception boundary and seven current color-owner discrepancies unresolved; no fabricated aliases",
+      "Actual fresh35 install/record/three-connection import/cleanup and ordinary runtime business untested",
+      "Deployment selector still exact26-only; exact35 ordinary CLI is source-level only, not deployment ready"
     ],
     "portableReferences": {
       "resolver": "resolveFresh35ReferenceInputPaths(directory)",
@@ -28344,7 +28359,7 @@
     "approvedSourceDeltas": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/0448Z-HALL-AND-ISOLATED-SOURCE-DELTA.md",
       "A": "Approved by actual root human call_0c8e68fb69a04e2ab20ae7b4c6dfc8af reply0; V2 JSON/SQL only, no tables/ordinary permissions",
-      "B": "Approved by actual root human same call reply1; exact synthetic source/contract only, no environment execution or window extension"
+      "B": "Human call_0c8e68fb69a04e2ab20ae7b4c6dfc8af item1 explicitly approved source/contract only; exact new target and actual execution still T45-bound, no production or window extension"
     },
     "currentEffectiveAlignmentHumanFact": {
       "thread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
@@ -28353,6 +28368,22 @@
       "fact": "export period T+ no new or modified documents; all tables same state",
       "exported_at": null,
       "state": "USER_FACT_CONFIRMED_FINAL_SOURCE_HASH_BINDING_PENDING"
+    },
+    "integratedChecks": {
+      "node": "24.21.0",
+      "npm": "11.9.0",
+      "typecheckExitCode": 0,
+      "backendBuildExitCode": 0,
+      "logs": "integration-logs/integrated-typecheck.log; integration-logs/integrated-backend-build.log",
+      "PG": false,
+      "browser": false,
+      "production": false
+    },
+    "privateHallSourceHalf": {
+      "receiptSHA256": "16d5a80965a5945dbfa0335f51ddb6650377c880be4338aac79926422e42ceeb",
+      "warehouses": 51,
+      "historicalSalesHeads": 28894,
+      "state": "SOURCE_HALF_COMPLETE_FINAL_TARGET_CAPTURE_PENDING"
     }
   }
 }
