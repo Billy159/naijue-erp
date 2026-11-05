@@ -1,4 +1,5 @@
 import { stableImportId } from './inventory-cutoff-import.ts';
+import type {StandardRecord} from './unified-import-contract.ts';
 
 /** Additive source-key codec. Existing unprefixed registry identities are never migrated. */
 export const STABLE_SOURCE_IDENTITY_VERSION = 'NAIJUE_SOURCE_IDENTITY_V1';
@@ -33,6 +34,22 @@ export function createSkuImportIdentity(input:Base&{dimensions:{product:StableRe
  const dims=names.map((name,i)=>{const d=input.dimensions?.[name];requireValue(d&&d.entity_type===types[i]&&d.source_namespace===input.source_namespace&&text(d.canonical_source_key)&&uuid(d.target_id),'DIMENSION_IDENTITY_REQUIRED');if(d.identity_basis==='STABLE_IMPORT_ID_V1')requireValue(d.target_id===stableImportId('entity',d.source_namespace,d.entity_type,d.canonical_source_key),'DIMENSION_IDENTITY_ALGORITHM_MISMATCH');else requireValue(d.identity_basis==='EXISTING_VERIFIED','DIMENSION_IDENTITY_REQUIRED');return d;});
  const entry=identity(input,'SKU',key('SKU',dims.map(d=>d.canonical_source_key)));
  return {identity:entry,fields:{id:entry.target_id,product_id:dims[0]!.target_id,color_id:dims[1]!.target_id,fit_id:dims[2]!.target_id,size_id:dims[3]!.target_id,sku_code:`NJIMP1-${entry.target_id}`,enabled:input.enabled,version:1,created_operation_id:null}};
+}
+/** Materialize one new warehouse's approved initialization plan. Version 1 is
+ * a target plan value, never a source version or an observed target capture. */
+export function materializeWarehouseInitializationRecord(input:{stage:'CLEANED'|'READY';source_namespace:string;record:StandardRecord;identity:StableRegistryIdentity|undefined}):StandardRecord {
+ const {record,identity:entry}=input;
+ checkBase({source_namespace:input.source_namespace,source_refs:record.source_refs});
+ requireValue(entry&&entry.entity_type==='WAREHOUSE'&&entry.source_namespace===input.source_namespace&&entry.canonical_source_key===record.source_key&&uuid(entry.target_id),'WAREHOUSE_REGISTRY_IDENTITY_REQUIRED');
+ requireValue(input.stage==='CLEANED'||input.stage==='READY','WAREHOUSE_MATERIALIZATION_STAGE_INVALID');
+ const fields={...record.fields};
+ if(Object.hasOwn(fields,'id'))requireValue(fields.id===entry.target_id,'WAREHOUSE_REGISTRY_IDENTITY_MISMATCH');
+ else {requireValue(input.stage==='CLEANED','WAREHOUSE_READY_FIELDS_REQUIRED');fields.id=entry.target_id;}
+ if(Object.hasOwn(fields,'version'))requireValue(Number.isSafeInteger(fields.version)&&Number(fields.version)>0&&Number(fields.version)<=2147483647,'WAREHOUSE_INITIAL_VERSION_INVALID');
+ else {requireValue(input.stage==='CLEANED','WAREHOUSE_READY_FIELDS_REQUIRED');fields.version=1;}
+ if(Object.hasOwn(fields,'created_operation_id'))requireValue(fields.created_operation_id===null,'WAREHOUSE_INITIAL_OPERATION_INVALID');
+ else {requireValue(input.stage==='CLEANED','WAREHOUSE_READY_FIELDS_REQUIRED');fields.created_operation_id=null;}
+ return {...structuredClone(record),fields};
 }
 export function createDocumentImportIdentity(input:Base&{entity_type:Header;basis:Basis;original_id:string}) {requireValue(input.entity_type==='SALES_HEADER'||input.entity_type==='TRANSFER_HEADER','DOCUMENT_ENTITY_INVALID');permanent(input.basis,input.original_id);return identity(input,input.entity_type,key(input.entity_type,[input.basis,input.original_id]));}
 export function createLineImportIdentity(input:Base&{entity_type:Line;header:StableRegistryIdentity;basis:Basis;original_id:string}) {

@@ -2,15 +2,15 @@ import {createHash} from 'node:crypto';
 import {requestHash} from './request-hash.ts';
 import {decodeUtf8,parseStrictJson} from './unified-import-contract.ts';
 
-import {parseHistoricalSalesHallEvidence,parseHistoricalHallSourceCapture} from './historical-sales-hall-evidence.ts';
-import type {HistoricalSalesHallEvidence,HistoricalHallSourceCapture,HistoricalSalesHallEvidenceV2} from './historical-sales-hall-evidence.ts';
-export {parseHistoricalSalesHallEvidence,buildHistoricalSalesHallEvidence,buildHistoricalSalesHallEvidenceV2,parseHistoricalHallSourceCapture} from './historical-sales-hall-evidence.ts';
-export type {HistoricalSalesHallEvidence} from './historical-sales-hall-evidence.ts';
+import {parseHistoricalSalesHallEvidence,parseHistoricalSalesHallInputEvidence,isHistoricalHallInitializationIntent,parseHistoricalHallSourceCapture} from './historical-sales-hall-evidence.ts';
+import type {HistoricalSalesHallEvidence,HistoricalSalesHallInputEvidence,HistoricalSalesHallInitializationIntent,HistoricalHallSourceCapture,HistoricalSalesHallEvidenceV2} from './historical-sales-hall-evidence.ts';
+export {parseHistoricalSalesHallEvidence,buildHistoricalSalesHallEvidence,buildHistoricalSalesHallEvidenceV2,buildHistoricalSalesHallInitializationIntent,parseHistoricalSalesHallInputEvidence,isHistoricalHallInitializationIntent,parseHistoricalHallSourceCapture} from './historical-sales-hall-evidence.ts';
+export type {HistoricalSalesHallEvidence,HistoricalSalesHallInputEvidence,HistoricalSalesHallInitializationIntent} from './historical-sales-hall-evidence.ts';
 type Ref={readonly file_sha256:string;readonly sheet:string|null;readonly row:number};
 export interface HistoricalSalesHallApproval {
  readonly format_version:'HISTORICAL_SALES_HALL_APPROVAL_V1'|'HISTORICAL_SALES_HALL_APPROVAL_V2';readonly source_namespace:string;readonly evidence_sha256:string;
  readonly source_captures?:readonly HistoricalHallSourceCapture[];readonly identity_bridges?:readonly HistoricalHallIdentityBridge[];readonly resolutions?:readonly HistoricalHallResolution[];
- readonly records:readonly {readonly source_key:string;readonly target_id:string;readonly source_refs:readonly Ref[];readonly evidence:HistoricalSalesHallEvidence}[];
+ readonly records:readonly {readonly source_key:string;readonly target_id:string;readonly source_refs:readonly Ref[];readonly evidence:HistoricalSalesHallInputEvidence;readonly target_initialization?:{readonly warehouse_source_key:string}}[];
 }
 const verified=new WeakMap<object,{readonly utf8:string;readonly sha256:string;readonly records:ReadonlyMap<string,HistoricalSalesHallApproval['records'][number]>}>();
 const hash=(v:unknown):v is string=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
@@ -19,7 +19,7 @@ const text=(v:unknown):v is string=>typeof v==='string'&&v.length>0&&v.length<=6
 const closed=(v:unknown,fields:readonly string[]):v is Record<string,any>=>v!==null&&typeof v==='object'&&!Array.isArray(v)&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===fields.length&&fields.every(k=>{const d=Object.getOwnPropertyDescriptor(v,k);return d?.enumerable&&Object.hasOwn(d,'value');});
 const fail=(ok:unknown,code:string):void=>{if(!ok)throw Error(code);};
 const refKey=(refs:readonly Ref[])=>JSON.stringify(refs.map(r=>[r.file_sha256,r.sheet,r.row]).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b))));
-const same=(a:HistoricalSalesHallEvidence,b:HistoricalSalesHallEvidence)=>requestHash(a)===requestHash(b);
+const same=(a:HistoricalSalesHallInputEvidence,b:HistoricalSalesHallInputEvidence)=>requestHash(a)===requestHash(b);
 function validRefs(value:unknown,sourceHashes:ReadonlySet<string>):value is Ref[]{
  if(!Array.isArray(value)||value.length===0||value.length>100)return false;const seen=new Set<string>();
  return value.every(r=>{if(!closed(r,['file_sha256','sheet','row'])||!hash(r.file_sha256)||!sourceHashes.has(r.file_sha256)||(r.sheet!==null&&!text(r.sheet))||!Number.isSafeInteger(r.row)||r.row<1||r.row>2147483647)return false;const key=JSON.stringify([r.file_sha256,r.sheet,r.row]);if(seen.has(key))return false;seen.add(key);return true;});
@@ -34,8 +34,8 @@ export function readHistoricalSalesHallApproval(input:{bytes:Uint8Array;trustedS
  fail(Array.isArray(o.records)&&o.records.length>0&&o.records.length<=250000,'HISTORICAL_HALL_APPROVAL_RECORDS');
  const members=v2?readV2Members(o,input.sourceHashes,input.sourceNamespace):undefined;
  const records=new Map<string,HistoricalSalesHallApproval['records'][number]>(),sourceKeys=new Set<string>();
- for(const row of o.records){fail(closed(row,['source_key','target_id','source_refs','evidence'])&&text(row.source_key)&&uuid(row.target_id)&&!records.has(row.target_id)&&!sourceKeys.has(row.source_key)&&validRefs(row.source_refs,input.sourceHashes),'HISTORICAL_HALL_APPROVAL_RECORD');
-  const evidence=parseHistoricalSalesHallEvidence(row.evidence);fail((evidence.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2')===v2,'HISTORICAL_HALL_APPROVAL_VERSION');if(members)members.check(evidence as HistoricalSalesHallEvidenceV2);for(const r of row.source_refs)Object.freeze(r);Object.freeze(row.source_refs);row.evidence=evidence;Object.freeze(row);records.set(row.target_id,row);sourceKeys.add(row.source_key);
+ for(const row of o.records){const evidence=parseHistoricalSalesHallInputEvidence(row?.evidence),intent=isHistoricalHallInitializationIntent(evidence);fail(closed(row,['source_key','target_id','source_refs','evidence',...(intent?['target_initialization']:[])])&&text(row.source_key)&&uuid(row.target_id)&&!records.has(row.target_id)&&!sourceKeys.has(row.source_key)&&validRefs(row.source_refs,input.sourceHashes),'HISTORICAL_HALL_APPROVAL_RECORD');
+  if(intent)fail(v2&&closed(row.target_initialization,['warehouse_source_key'])&&text(row.target_initialization.warehouse_source_key),'HISTORICAL_HALL_INITIALIZATION_MEMBER_REQUIRED');if(intent)Object.freeze(row.target_initialization);fail((evidence.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2')===v2,'HISTORICAL_HALL_APPROVAL_VERSION');if(members)members.check(evidence as HistoricalSalesHallEvidenceV2|HistoricalSalesHallInitializationIntent);for(const r of row.source_refs)Object.freeze(r);Object.freeze(row.source_refs);row.evidence=evidence;Object.freeze(row);records.set(row.target_id,row);sourceKeys.add(row.source_key);
  }
  if(members)members.finish();
  Object.freeze(o.records);Object.freeze(o);verified.set(o,{utf8:decodeUtf8(input.bytes),sha256:input.trustedSha256,records});return o as HistoricalSalesHallApproval;
@@ -44,11 +44,15 @@ export function historicalSalesHallApprovalMatchesSource(approval:unknown,namesp
  if(!approval||typeof approval!=='object'||!verified.has(approval))return false;const a=approval as HistoricalSalesHallApproval;
  return a.source_namespace===namespace&&sourceHashes.has(a.evidence_sha256)&&a.records.every(r=>r.source_refs.every(ref=>sourceHashes.has(ref.file_sha256)));
 }
-export function validateHistoricalSalesHallEvidence(value:unknown,context:{sourceNamespace:string;sourceKey:string;targetId:unknown;sourceRefs:readonly Ref[];fields:Record<string,unknown>;approval:HistoricalSalesHallApproval|undefined;warehouse?:Record<string,unknown>}):HistoricalSalesHallEvidence {
- const evidence=parseHistoricalSalesHallEvidence(value),a=context.approval,proof=a&&verified.get(a),expected=proof&&typeof context.targetId==='string'?proof.records.get(context.targetId):undefined;
+export function validateHistoricalSalesHallEvidence(value:unknown,context:{sourceNamespace:string;sourceKey:string;targetId:unknown;sourceRefs:readonly Ref[];fields:Record<string,unknown>;approval:HistoricalSalesHallApproval|undefined;warehouse?:Record<string,unknown>;warehouseSourceKey?:string;warehouseTargetId?:unknown;requireInitializationMaster?:boolean}):HistoricalSalesHallInputEvidence {
+ const evidence=parseHistoricalSalesHallInputEvidence(value),a=context.approval,proof=a&&verified.get(a),expected=proof&&typeof context.targetId==='string'?proof.records.get(context.targetId):undefined;
  fail(a&&proof&&a.source_namespace===context.sourceNamespace&&expected&&expected.source_key===context.sourceKey&&refKey(expected.source_refs)===refKey(context.sourceRefs)&&same(expected.evidence,evidence),'HISTORICAL_HALL_APPROVAL_REQUIRED');
  fail(context.fields.stock_basis==='CUTOFF_HISTORY'&&context.fields.warehouse_id===evidence.warehouse_id&&context.fields.hall_id===evidence.selected_hall_id,'HISTORICAL_HALL_FIELDS_DIFFER');
- if(context.warehouse){const snapshot=evidence.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2'?evidence.target_snapshot:{warehouse_id:evidence.warehouse_id,hall_id:evidence.warehouse_hall_id_at_capture,version:evidence.warehouse_version};if(snapshot.version!==null)fail(context.warehouse.id===snapshot.warehouse_id&&context.warehouse.hall_id===snapshot.hall_id&&context.warehouse.version===snapshot.version,'HISTORICAL_HALL_CAPTURE_STALE');}
+ if(isHistoricalHallInitializationIntent(evidence)){
+  fail(expected?.target_initialization,'HISTORICAL_HALL_INITIALIZATION_MEMBER_REQUIRED');
+  if(context.requireInitializationMaster||context.warehouse)fail(context.warehouse&&context.warehouseSourceKey===expected!.target_initialization!.warehouse_source_key&&(context.warehouseTargetId??context.warehouse.id)===evidence.warehouse_id&&context.warehouse.hall_id===evidence.selected_hall_id&&Number.isSafeInteger(context.warehouse.version)&&context.warehouse.version===evidence.target_snapshot.version,'HISTORICAL_HALL_INITIALIZATION_MASTER_REQUIRED');
+ }
+ if(context.warehouse){const snapshot=evidence.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2'?evidence.target_snapshot:{warehouse_id:evidence.warehouse_id,hall_id:evidence.warehouse_hall_id_at_capture,version:evidence.warehouse_version};if(snapshot.version!==null)fail((context.warehouseTargetId??context.warehouse.id)===snapshot.warehouse_id&&context.warehouse.hall_id===snapshot.hall_id&&context.warehouse.version===snapshot.version,'HISTORICAL_HALL_CAPTURE_STALE');}
  return evidence;
 }
 export function historicalSalesHallApprovalWire(approval:HistoricalSalesHallApproval):{utf8:string;sha256:string}{const p=verified.get(approval);if(!p)throw Error('HISTORICAL_HALL_APPROVAL_UNVERIFIED');return {utf8:p.utf8,sha256:p.sha256};}
@@ -79,7 +83,7 @@ function readV2Members(o:Record<string,any>,sourceHashes:ReadonlySet<string>,nam
   fail(closed(r,['evidence_sha256','record_key','source_namespace','warehouse_source_key','runtime_warehouse_id','target_namespace','target_warehouse_id','source_capture_sha256','selected_target_hall_id','runtime_hall_ids','source_refs','scope'])&&common(r)&&uuid(r.selected_target_hall_id)&&Array.isArray(r.runtime_hall_ids)&&r.runtime_hall_ids.length>1&&r.runtime_hall_ids.length<=100&&r.runtime_hall_ids.every(uuid)&&new Set(r.runtime_hall_ids).size===r.runtime_hall_ids.length&&!resolutions.has(memberKey(r)),'HISTORICAL_HALL_RESOLUTION_MEMBER_INVALID');resolutions.set(memberKey(r),deepFreeze(r));
  }
  deepFreeze(o.source_captures);deepFreeze(o.identity_bridges);deepFreeze(o.resolutions);
- return {check(e:HistoricalSalesHallEvidenceV2){
+ return {check(e:HistoricalSalesHallEvidenceV2|HistoricalSalesHallInitializationIntent){
   const c=e.source_capture,ck=requestHash(c),bk=memberKey(e.identity_bridge),b=bridges.get(bk);
   fail(captures.has(ck),'HISTORICAL_HALL_CAPTURE_MEMBER_REQUIRED');
   fail(b&&b.source_namespace===c.source_namespace&&b.warehouse_source_key===c.warehouse_source_key&&b.runtime_warehouse_id===c.runtime_warehouse_id&&b.target_warehouse_id===e.warehouse_id&&b.source_capture_sha256===c.capture_evidence_sha256&&hallSet(b.hall_links.map(h=>h.runtime_hall_id))===hallSet(c.runtime_hall_ids),'HISTORICAL_HALL_BRIDGE_REQUIRED');
@@ -88,4 +92,8 @@ function readV2Members(o:Record<string,any>,sourceHashes:ReadonlySet<string>,nam
   else if(e.resolution){const rk=memberKey(e.resolution),r=resolutions.get(rk);fail(r&&r.source_namespace===c.source_namespace&&r.warehouse_source_key===c.warehouse_source_key&&r.runtime_warehouse_id===c.runtime_warehouse_id&&r.target_warehouse_id===e.warehouse_id&&r.source_capture_sha256===c.capture_evidence_sha256&&r.selected_target_hall_id===e.selected_hall_id&&hallSet(r.runtime_hall_ids)===hallSet(c.runtime_hall_ids)&&b!.hall_links.some(h=>h.target_hall_id===e.selected_hall_id)&&e.has_difference&&!e.review_required,'HISTORICAL_HALL_RESOLUTION_REQUIRED');usedResolution.add(rk);}
   else fail(e.review_required&&e.has_difference,'HISTORICAL_HALL_RESOLUTION_REQUIRED');
  },finish(){fail(usedCapture.size===captures.size&&usedBridge.size===bridges.size&&usedResolution.size===resolutions.size,'HISTORICAL_HALL_UNUSED_MEMBER');}};
+}
+
+export function historicalSalesHallInitializationMember(approval:HistoricalSalesHallApproval|undefined,targetId:unknown):Readonly<{warehouse_source_key:string}>|undefined{
+ const proof=approval&&verified.get(approval);if(!proof||typeof targetId!=='string')return undefined;return proof.records.get(targetId)?.target_initialization;
 }

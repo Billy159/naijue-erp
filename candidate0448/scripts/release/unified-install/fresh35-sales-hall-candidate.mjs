@@ -11,8 +11,8 @@ const need=(ok,code)=>{if(!ok)throw Error('FRESH35_SALES_HALL_'+code);};
 const modulePath='scripts/release/unified-install/fresh35-sales-hall-candidate.mjs';
 const loadedModuleSha256=hash(await readFile(new URL(import.meta.url)));
 const profile='f5d4e26d8cfae8cc96d42a43b01c6c49217a9927d1b0dc42af0c1b4c3ce29b66';
-export const FRESH35_SALES_HALL_SQL_PIN=Object.freeze({path:'adapters/postgres/patches/0035_historical_sales_hall_successor.sql',sha256:'c332304c57969db476b153020435b6ec2b40c4dae044db0083ca33196ed6b762'});
-const expectedSignatures=Object.freeze(['naijue_erp.guard_unified_document()','naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)']);
+export const FRESH35_SALES_HALL_SQL_PIN=Object.freeze({path:'adapters/postgres/patches/0035_historical_sales_hall_successor.sql',sha256:'0c9101adf318f72f61e2c1256ba7c160933b1411453c7e7f89684dc2ecc0edd1'});
+const expectedSignatures=Object.freeze(["naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)","naijue_erp.guard_unified_document()","naijue_erp.standard_import_record_proof(pg_catalog.uuid)","naijue_erp.assert_standard_import_operation(uuid)","naijue_erp.standard_whole_package_verify_v2(jsonb,text)"]);
 function payload(sql,tag){const parts=sql.split('$'+tag+'$');need(parts.length===3,'PAYLOAD_DIFFERS');return JSON.parse(parts[1]);}
 function transactionBody(sql){need((sql.match(/^BEGIN;$/gm)||[]).length===1&&(sql.match(/^COMMIT;$/gm)||[]).length===1&&sql.endsWith('COMMIT;\n'),'TRANSACTION_INVALID');return sql.replace(/^BEGIN;\n/m,'').slice(0,-'COMMIT;\n'.length);}
 export function compileFresh35SalesHallCandidate(plan,patch){
@@ -21,7 +21,7 @@ export function compileFresh35SalesHallCandidate(plan,patch){
  need(HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256===profile,'SOURCE_PROFILE_DIFFERS');
  need(typeof patch==='string'&&hash(patch)===FRESH35_SALES_HALL_SQL_PIN.sha256,'PATCH_SOURCE_DIFFERS');
  const replacements=payload(patch,'hall_source_changes'),dependencies=payload(patch,'hall_dependencies');
- need(replacements.length===2&&new Set(replacements.map(r=>r.signature)).size===2&&replacements.every(r=>expectedSignatures.includes(r.signature)),'EXACT_TWO_CHANGES_REQUIRED');
+ need(replacements.length===5&&new Set(replacements.map(r=>r.signature)).size===5&&replacements.every(r=>expectedSignatures.includes(r.signature)),'EXACT_FIVE_CHANGES_REQUIRED');
  for(const dep of dependencies)need(plan.retainedRoutines.some(r=>r.signature===dep.signature&&r.sha256===dep.sha256),'DEPENDENCY_DIFFERS:'+dep.signature);
  const changedBodies=[];
  const successorRoutinePins=plan.retainedRoutines.map(r=>{
@@ -31,7 +31,7 @@ export function compileFresh35SalesHallCandidate(plan,patch){
   need(findLegacyRoutineReferences(body).length===0,'OMITTED_TABLE_REFERENCE');
   changedBodies.push({signature:r.signature,body,sha256:hash(body)});return {signature:r.signature,sha256:hash(body)};
  });
- need(changedBodies.length===2,'ROUTINE_MISSING');
+ need(changedBodies.length===5,'ROUTINE_MISSING');
  need(!/\b(?:CREATE TABLE|CREATE ROLE|GRANT |REVOKE |DISABLE TRIGGER|DROP TABLE|TRUNCATE |DELETE FROM)\b/i.test(patch.replace(/^--.*$/gm,'')),'UNEXPECTED_MUTATION');
  need(findLegacyRoutineReferences(patch).length===0,'PATCH_RESTORES_LEGACY_REFERENCE');
  const body=transactionBody(patch);

@@ -13,10 +13,10 @@ const c=compileFresh35SalesHallCandidate(plan,patch),ordinary=c.changedBodies.fi
 const command=c.changedBodies.find(r=>r.signature.startsWith('naijue_erp.standard_whole_package_command_v2(')).body;
 const v2='b460db7ded610e6afe0fc8d506fedb8eda9d947819571211a25ecc5b52a39c0b';
 const profile='f5d4e26d8cfae8cc96d42a43b01c6c49217a9927d1b0dc42af0c1b4c3ce29b66';
-test('fresh35 delta has only two exact retained routine changes, one nullable column and no legacy dependencies',()=>{
+test('fresh35 delta has five exact retained routine changes, one nullable column and no legacy dependencies',()=>{
  assert.equal(c.manifest.tableCount,35);assert.equal(c.manifest.routineCount,152);
- assert.deepEqual(c.manifest.routineChanges.map(p=>p.signature),['naijue_erp.guard_unified_document()','naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)']);
- assert.equal(c.manifest.successorRoutinePins.filter(p=>plan.retainedRoutines.some(r=>r.signature===p.signature&&r.sha256===p.sha256)).length,150);
+ assert.deepEqual(c.manifest.routineChanges.map(p=>p.signature),['naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)','naijue_erp.guard_unified_document()','naijue_erp.standard_import_record_proof(pg_catalog.uuid)','naijue_erp.assert_standard_import_operation(uuid)','naijue_erp.standard_whole_package_verify_v2(jsonb,text)']);
+ assert.equal(c.manifest.successorRoutinePins.filter(p=>plan.retainedRoutines.some(r=>r.signature===p.signature&&r.sha256===p.sha256)).length,147);
  assert.deepEqual(c.manifest.columnChanges,[{table:'naijue_erp.sales_header',column:'hall_id',type:'uuid',beforeNullable:false,afterNullable:true}]);
  assert.deepEqual(findLegacyRoutineReferences(patch),[]);
  assert(!patch.includes('naijue_erp.history_sales_header'));assert(!patch.includes('guard_history_insert'));
@@ -86,7 +86,7 @@ test('source evidence preserves original conflicts and pending state, and verifi
 });
 test('public loader exposes patch-only composition plus exact changed bodies, final152 pins and current source pins without evidence admission',async()=>{
  const loaded=await loadFresh35SalesHallCandidate(root);
- assert.equal(loaded.patchSql,patch);assert.equal(loaded.changedBodies.length,2);assert.equal(loaded.manifest.successorRoutinePins.length,152);
+ assert.equal(loaded.patchSql,patch);assert.equal(loaded.changedBodies.length,5);assert.equal(loaded.manifest.successorRoutinePins.length,152);
  assert(loaded.manifest.sourcePins.some(p=>p.path==='scripts/release/unified-install/fresh35-sales-hall-candidate.mjs'));
  assert(loaded.manifest.sourcePins.some(p=>p.path==='packages/application/src/unified-historical-sales-hall-evidence.ts'));
  for(const name of ['unified-import-source-reconciliation','unified-current-effective-alignment','unified-historical-line-amount-evidence'])assert(loaded.manifest.sourcePins.some(p=>p.path==='packages/application/src/'+name+'.ts'));

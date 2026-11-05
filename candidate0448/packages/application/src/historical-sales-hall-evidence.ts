@@ -51,6 +51,9 @@ export interface HistoricalSalesHallEvidenceV2 {
  readonly resolution:HistoricalHallEvidenceReference|null;readonly has_difference:boolean;readonly review_required:boolean;
 }
 export type HistoricalSalesHallEvidence=HistoricalSalesHallEvidenceV1|HistoricalSalesHallEvidenceV2;
+export type HistoricalSalesHallInitializationIntent=Omit<HistoricalSalesHallEvidenceV2,'target_snapshot'>&{readonly target_snapshot:{readonly warehouse_id:string;readonly hall_id:string;readonly version:number;readonly captured_at:null}};
+export type HistoricalSalesHallInputEvidence=HistoricalSalesHallEvidence|HistoricalSalesHallInitializationIntent;
+export function isHistoricalHallInitializationIntent(value:HistoricalSalesHallInputEvidence):value is HistoricalSalesHallInitializationIntent{return value.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2'&&value.target_snapshot.captured_at===null;}
 const text=(v:unknown):v is string=>typeof v==='string'&&v.length>0&&v.length<=4096&&!/[\u0000-\u001f\u007f]/.test(v);
 const digest=(v:unknown):v is string=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 const version=(v:unknown,min:number)=>Number.isSafeInteger(v)&&Number(v)>=min&&Number(v)<=2147483647;
@@ -62,21 +65,27 @@ export function parseHistoricalHallSourceCapture(value:unknown):HistoricalHallSo
  fail(digest(v.capture_evidence_sha256)&&text(v.source_namespace)&&text(v.warehouse_source_key)&&uuid(v.runtime_warehouse_id)&&(v.source_native_version===null||version(v.source_native_version,0))&&version(v.effective_version,0)&&Array.isArray(v.runtime_hall_ids)&&v.runtime_hall_ids.length>=1&&v.runtime_hall_ids.length<=100&&v.runtime_hall_ids.every(uuid)&&new Set(v.runtime_hall_ids).size===v.runtime_hall_ids.length&&capturedInstant(v.captured_at)&&text(v.transaction_snapshot)&&text(v.relation_basis),'HISTORICAL_HALL_SOURCE_CAPTURE_SHAPE');
  return freeze(structuredClone(v)) as HistoricalHallSourceCapture;
 }
-export function parseHistoricalSalesHallEvidence(value:unknown):HistoricalSalesHallEvidence {
+function parseEvidence(value:unknown,allowIntent:boolean):HistoricalSalesHallInputEvidence {
  if(value&&typeof value==='object'&&Object.getOwnPropertyDescriptor(value,'format_version')?.value==='HISTORICAL_SALES_HALL_EVIDENCE_V1')return parseV1(value);
  fail(closed(value,['format_version','basis','original_hall_id','selected_hall_id','warehouse_id','target_snapshot','source_capture','identity_bridge','resolution','has_difference','review_required']),'HISTORICAL_HALL_EVIDENCE_SHAPE');
  const v=value as Record<string,any>;
  fail(v.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2'&&v.basis==='MIGRATION_DERIVED'&&v.original_hall_id===null&&uuid(v.selected_hall_id)&&uuid(v.warehouse_id)&&typeof v.has_difference==='boolean'&&typeof v.review_required==='boolean','HISTORICAL_HALL_EVIDENCE_SHAPE');
  const t=v.target_snapshot;
- fail(closed(t,['warehouse_id','hall_id','version','captured_at'])&&t.warehouse_id===v.warehouse_id&&t.hall_id===v.selected_hall_id&&version(t.version,1)&&capturedInstant(t.captured_at),'HISTORICAL_HALL_TARGET_SNAPSHOT_INVALID');
+ fail(closed(t,['warehouse_id','hall_id','version','captured_at'])&&t.warehouse_id===v.warehouse_id&&t.hall_id===v.selected_hall_id&&version(t.version,1)&&(capturedInstant(t.captured_at)||allowIntent&&t.captured_at===null),'HISTORICAL_HALL_TARGET_SNAPSHOT_INVALID');
  const capture=parseHistoricalHallSourceCapture(v.source_capture);
  fail(reference(v.identity_bridge)&&(v.resolution===null||reference(v.resolution)),'HISTORICAL_HALL_EVIDENCE_REFERENCE_INVALID');
  const difference=capture.runtime_hall_ids.length>1;
  fail(v.has_difference===difference&&v.review_required===(difference&&v.resolution===null)&&(!difference?v.resolution===null:true),'HISTORICAL_HALL_RESOLUTION_REQUIRED');
- return freeze({...structuredClone(v),source_capture:capture}) as HistoricalSalesHallEvidenceV2;
+ return freeze({...structuredClone(v),source_capture:capture}) as HistoricalSalesHallEvidenceV2|HistoricalSalesHallInitializationIntent;
 }
+/** Final readback never accepts an unobserved initialization intent. */
+export function parseHistoricalSalesHallEvidence(value:unknown):HistoricalSalesHallEvidence{return parseEvidence(value,false) as HistoricalSalesHallEvidence;}
+/** Input shape only; an external MASTER member and same-transaction SQL proof are still required. */
+export function parseHistoricalSalesHallInputEvidence(value:unknown):HistoricalSalesHallInputEvidence{return parseEvidence(value,true);}
 /** The caller supplies actual target and source observations separately. Parsing
  * neither authenticates the external members nor invents a target capture. */
 export function buildHistoricalSalesHallEvidenceV2(value:Omit<HistoricalSalesHallEvidenceV2,'format_version'>):HistoricalSalesHallEvidenceV2 {
  return parseHistoricalSalesHallEvidence({...value,format_version:'HISTORICAL_SALES_HALL_EVIDENCE_V2'}) as HistoricalSalesHallEvidenceV2;
 }
+
+export function buildHistoricalSalesHallInitializationIntent(value:Omit<HistoricalSalesHallInitializationIntent,'format_version'>):HistoricalSalesHallInitializationIntent{const parsed=parseHistoricalSalesHallInputEvidence({...value,format_version:'HISTORICAL_SALES_HALL_EVIDENCE_V2'});fail(isHistoricalHallInitializationIntent(parsed),'HISTORICAL_HALL_INITIALIZATION_INTENT_REQUIRED');return parsed as HistoricalSalesHallInitializationIntent;}

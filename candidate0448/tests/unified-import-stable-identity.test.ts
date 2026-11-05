@@ -78,3 +78,17 @@ test('occurrence helper rejects inconsistent parent derivation while retaining v
  const row=make(retained);assert.deepEqual(validateStableIdentityBinding(row,{sales_id:id},()=>retained),[]);
  assert.equal(make(h).target_id,row.target_id,'Child identity remains source-key based, not a migration of the parent target UUID');
 });
+
+import {materializeWarehouseInitializationRecord} from '../packages/application/src/unified-import-stable-identity.ts';
+test('warehouse initialization plans only registry identity and version one without mutating source or inventing capture',()=>{
+ const entry=dim('WAREHOUSE','warehouse:approved'),record={source_key:entry.canonical_source_key,source_refs:structuredClone(refs),fields:{name:'Synthetic warehouse',hall_id:dimensions.product.target_id,enabled:true}},before=JSON.stringify(record);
+ const materialized=materializeWarehouseInitializationRecord({stage:'CLEANED',source_namespace:ns,record,identity:entry});
+ assert.equal(materialized.fields.id,entry.target_id);assert.equal(materialized.fields.version,1);assert.equal(materialized.fields.created_operation_id,null);assert.equal(JSON.stringify(record),before);assert.deepEqual(materialized.source_refs,record.source_refs);assert.equal(Object.hasOwn(materialized.fields,'captured_at'),false);
+ assert.throws(()=>materializeWarehouseInitializationRecord({stage:'CLEANED',source_namespace:ns,record,identity:undefined}),/REGISTRY_IDENTITY_REQUIRED/);
+ assert.throws(()=>materializeWarehouseInitializationRecord({stage:'CLEANED',source_namespace:ns,record,identity:{...entry,canonical_source_key:'another'}}),/REGISTRY_IDENTITY_REQUIRED/);
+ assert.throws(()=>materializeWarehouseInitializationRecord({stage:'READY',source_namespace:ns,record,identity:entry}),/READY_FIELDS_REQUIRED/);
+ const ready={...materialized,fields:{...materialized.fields,version:7}},unchanged=JSON.stringify(ready);
+ assert.deepEqual(materializeWarehouseInitializationRecord({stage:'READY',source_namespace:ns,record:ready,identity:entry}),ready);assert.equal(JSON.stringify(ready),unchanged);
+ assert.throws(()=>materializeWarehouseInitializationRecord({stage:'READY',source_namespace:ns,record:{...ready,fields:{...ready.fields,id:dimensions.color.target_id}},identity:entry}),/IDENTITY_MISMATCH/);
+ assert.throws(()=>materializeWarehouseInitializationRecord({stage:'CLEANED',source_namespace:ns,record:{...record,fields:{...record.fields,version:0}},identity:entry}),/INITIAL_VERSION_INVALID/);
+});

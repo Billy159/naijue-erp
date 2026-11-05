@@ -69,7 +69,7 @@ export async function main(){
    // same transaction; it is not an observation of a real imported warehouse.
    const failed=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
     assertWholeSalesAdmissionV1(admission,standardTarget,client);
-    fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,NODE_SCRYPT_DUMMY_HASH,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:new Date().toISOString()});
+    fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,NODE_SCRYPT_DUMMY_HASH,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:null});
     let reachedFinalPublish=false;
     const badSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='publish'&&step.request.payload.phase==='DOCUMENTS'){reachedFinalPublish=true;step.request.payload.expected_sequence=Number(step.request.payload.expected_sequence)+1;}yield step;}}};
     const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,badSteps,createWholePackageSqlKernel(NODE_SCRYPT_DUMMY_HASH));

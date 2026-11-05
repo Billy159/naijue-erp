@@ -1,7 +1,7 @@
 import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
 import {join,dirname} from 'node:path';
 import {HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256} from '../../../packages/application/src/unified-import-contract.ts';
-import {buildHistoricalSalesHallEvidenceV2,readHistoricalSalesHallApproval} from '../../../packages/application/src/unified-historical-sales-hall-evidence.ts';
+import {buildHistoricalSalesHallEvidenceV2,buildHistoricalSalesHallInitializationIntent,readHistoricalSalesHallApproval} from '../../../packages/application/src/unified-historical-sales-hall-evidence.ts';
 import {readHistoricalLineAmountEvidence} from '../../../packages/application/src/unified-historical-line-amount-evidence.ts';
 import {assertWholeSalesAdmissionV1} from '../../../scripts/release/unified-install/whole-sales-admission-v1.mjs';
 import {streamPreflight} from '../../../tools/unified-import/stream-preflight.mjs';
@@ -63,7 +63,7 @@ export async function assertSyntheticPublished(observer:SyntheticObserver,baseli
 /** Fresh35 A-V2 + amount-successor business input only. All source observations,
  * identities, amounts and decisions here are explicitly synthetic. No database
  * identity, connection, permission, or installation receipt is invented. */
-export function createSyntheticFresh35WholePackageInput(targetCapturedAt:string){
+export function createSyntheticFresh35WholePackageInput(targetCapturedAt:string|null){
  const pkg=createSyntheticPackage(),namespace=pkg.manifest.source_namespace;
  const header=pkg.records.sales_header![0]!,warehouse=pkg.records.warehouse![0]!,hall=pkg.records.hall![0]!;
  const secondHall=structuredClone(hall);secondHall.source_key='hall:02';secondHall.fields.id=registryTargetId(namespace,'HALL',secondHall.source_key);secondHall.fields.name='SYNTHETIC alternate captured hall';secondHall.fields.default_customer_id=null;secondHall.fields.default_sales_warehouse_id=null;pkg.records.hall!.push(secondHall);
@@ -80,7 +80,8 @@ export function createSyntheticFresh35WholePackageInput(targetCapturedAt:string)
  const sourceTexts={capture:captureText,bridge:JSON.stringify({synthetic_only:true,record:bridgeRecord})+'\n',resolution:JSON.stringify({synthetic_only:true,record:resolutionRecord})+'\n'};
  const sourcePins=Object.entries(sourceTexts).map(([name,text])=>({relative_path:'SYNTHETIC-FRESH35-'+name+'.txt',bytes:Buffer.byteLength(text),sha256:sha256(text)}));pkg.manifest.source_files.push(...sourcePins);
  const bridge={evidence_sha256:sourcePins[1]!.sha256,...bridgeRecord},resolution={evidence_sha256:sourcePins[2]!.sha256,...resolutionRecord};
- header.historical_hall_evidence=buildHistoricalSalesHallEvidenceV2({basis:'MIGRATION_DERIVED',original_hall_id:null,selected_hall_id:hall.fields.id as string,warehouse_id:warehouse.fields.id as string,target_snapshot:{warehouse_id:warehouse.fields.id as string,hall_id:hall.fields.id as string,version:Number(warehouse.fields.version),captured_at:targetCapturedAt},source_capture:capture,identity_bridge:{evidence_sha256:bridge.evidence_sha256,record_key:bridge.record_key},resolution:{evidence_sha256:resolution.evidence_sha256,record_key:resolution.record_key},has_difference:true,review_required:false});
+ const hallInput={basis:'MIGRATION_DERIVED',original_hall_id:null,selected_hall_id:hall.fields.id as string,warehouse_id:warehouse.fields.id as string,target_snapshot:{warehouse_id:warehouse.fields.id as string,hall_id:hall.fields.id as string,version:Number(warehouse.fields.version),captured_at:targetCapturedAt},source_capture:capture,identity_bridge:{evidence_sha256:bridge.evidence_sha256,record_key:bridge.record_key},resolution:{evidence_sha256:resolution.evidence_sha256,record_key:resolution.record_key},has_difference:true,review_required:false};
+ header.historical_hall_evidence=targetCapturedAt===null?buildHistoricalSalesHallInitializationIntent({...hallInput,basis:'MIGRATION_DERIVED',original_hall_id:null,target_snapshot:{...hallInput.target_snapshot,captured_at:null}}):buildHistoricalSalesHallEvidenceV2({...hallInput,basis:'MIGRATION_DERIVED',original_hall_id:null,target_snapshot:{...hallInput.target_snapshot,captured_at:targetCapturedAt}});
  header.fields.hall_id=hall.fields.id;
  // Same six discrepancy shapes as the existing amount fixture, with exact
  // original strings retained. They are not copied from the six real records.
@@ -92,7 +93,7 @@ export function createSyntheticFresh35WholePackageInput(targetCapturedAt:string)
  const settlement=structuredClone(pkg.records.sales_settlement![0]!);settlement.fields.amount=gross;pkg.records.sales_settlement=[settlement];pkg.registry.push({entity_type:'SALES_SETTLEMENT',source_namespace:namespace,canonical_source_key:settlement.source_key,target_id:settlement.fields.id as string,aliases:[],identity_basis:'STABLE_IMPORT_ID_V1',source_refs:structuredClone(settlement.source_refs)});
  header.zero_amount_archive={profile:'ZERO_AMOUNT_SOURCE_ARCHIVE_V1',records:Array.from({length:22},(_,i)=>({source_key:'SYNTHETIC-FRESH35-ZERO-'+(i+1),amount:'0.00',source_refs:[{...header.source_refs[0]!,row:200+i}],original_values:{amount:'0',description:'SYNTHETIC ONLY zero source, no money or stock action',unknown:null}}))};
  const sourceHashes=new Set(pkg.manifest.source_files.map(f=>f.sha256));
- const hallBytes=Buffer.from(JSON.stringify({format_version:'HISTORICAL_SALES_HALL_APPROVAL_V2',source_namespace:namespace,evidence_sha256:sourcePins[0]!.sha256,records:[{source_key:header.source_key,target_id:header.fields.id,source_refs:header.source_refs,evidence:header.historical_hall_evidence}],source_captures:[capture],identity_bridges:[bridge],resolutions:[resolution]}));
+ const hallBytes=Buffer.from(JSON.stringify({format_version:'HISTORICAL_SALES_HALL_APPROVAL_V2',source_namespace:namespace,evidence_sha256:sourcePins[0]!.sha256,records:[{source_key:header.source_key,target_id:header.fields.id,source_refs:header.source_refs,evidence:header.historical_hall_evidence,...(targetCapturedAt===null?{target_initialization:{warehouse_source_key:warehouse.source_key}}:{})}],source_captures:[capture],identity_bridges:[bridge],resolutions:[resolution]}));
  const historicalSalesHallApproval=readHistoricalSalesHallApproval({bytes:hallBytes,trustedSha256:sha256(hallBytes),sourceNamespace:namespace,sourceHashes});
  const amountBytes=Buffer.from(JSON.stringify({format_version:'HISTORICAL_LINE_AMOUNT_EVIDENCE_V1',source_namespace:namespace,evidence_sha256:pkg.manifest.source_files[0]!.sha256,lines:pkg.records.sales_line.map(row=>({sales_source_key:header.source_key,sales_id:header.fields.id,sales_source_refs:header.source_refs,line_source_key:row.source_key,line_id:row.fields.id,source_refs:row.source_refs,quantity:row.fields.quantity,deal_price:row.fields.deal_price,line_amount:row.fields.line_amount}))}));
  const historicalLineAmountEvidence=readHistoricalLineAmountEvidence({bytes:amountBytes,trustedSha256:sha256(amountBytes),sourceNamespace:namespace,sourceHashes});
@@ -106,7 +107,7 @@ export function createSyntheticFresh35WholePackageInput(targetCapturedAt:string)
 /** Call ONLY inside the existing verified Fresh35 host callback with its actual
  * V2 admission and caller-bound physical target. This fixture issues no host or
  * capability. The repeatable steps keep original keys for the existing replay. */
-export async function buildSyntheticFresh35WholePackageFixture(target:StandardImportTarget,encodedScrypt:string,options:{historicalSalesAdmission:object;workspaceDirectory:string;targetCapturedAt:string}){
+export async function buildSyntheticFresh35WholePackageFixture(target:StandardImportTarget,encodedScrypt:string,options:{historicalSalesAdmission:object;workspaceDirectory:string;targetCapturedAt:string|null}){
  if(!isNodeScryptPasswordHash(encodedScrypt))throw TypeError('SYNTHETIC_SCRYPT_REQUIRED');
  if(assertWholeSalesAdmissionV1(options.historicalSalesAdmission,target)!==HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256)throw Error('SYNTHETIC_FRESH35_V2_ADMISSION_REQUIRED');
  const input=createSyntheticFresh35WholePackageInput(options.targetCapturedAt);

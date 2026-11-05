@@ -67,3 +67,63 @@ test('V2 SQL composition retains V1 provenance and ordinary rules while binding 
  for(const token of ["r.action='MIGRATE_DOCUMENT'","original_header->'warehouse_id' IS NOT DISTINCT FROM o->'warehouse_id'",'SALES_CURRENT_WAREHOUSE_HALL_MISMATCH','HISTORICAL_SALES_HALL_EVIDENCE_V1','HISTORICAL_SALES_HALL_EVIDENCE_V2'])assert(guard.includes(token),token);
  assert(!/w\.version=\(hall_capture->>'effective_version'\)/.test(command));assert.equal(c.manifest.newTables,0);assert.equal(c.manifest.newColumns,0);assert.equal(c.manifest.permissionsChanged,false);
 });
+
+function initializationFixture(dual=false){
+ const f=fixture(dual);f.bundle.records[0].evidence.target_snapshot.captured_at=null;
+ f.bundle.records[0].target_initialization={warehouse_source_key:'canonical:target:warehouse'};
+ return {...f,evidence:f.bundle.records[0].evidence,context:{...f.context,warehouseSourceKey:'canonical:target:warehouse',warehouseTargetId:id(11),requireInitializationMaster:true}};
+}
+test('initialization intent is input-only and requires the closed external MASTER member without altering source capture',async()=>{
+ const {parseHistoricalSalesHallInputEvidence,buildHistoricalSalesHallInitializationIntent}=await import('../packages/application/src/historical-sales-hall-evidence.ts');
+ for(const dual of [false,true]){
+  const f=initializationFixture(dual),approval=f.read(f.bundle),original=JSON.stringify(f.evidence),wire=historicalSalesHallApprovalWire(approval);
+  assert.equal(parseHistoricalSalesHallInputEvidence(f.evidence).target_snapshot.captured_at,null);
+  assert.equal(validateHistoricalSalesHallEvidence(f.evidence,{...f.context,approval}).target_snapshot.captured_at,null);
+  const {format_version,...intent}=f.evidence;assert.deepEqual(buildHistoricalSalesHallInitializationIntent(intent),f.evidence);
+  assert.throws(()=>parseHistoricalSalesHallEvidence(f.evidence),/TARGET_SNAPSHOT_INVALID/);
+  assert.equal(JSON.stringify(f.evidence),original);assert.equal(sha256(wire.utf8),wire.sha256);
+  assert.equal(f.evidence.source_capture.effective_version,0);assert.equal(f.evidence.source_capture.runtime_hall_ids.length,dual?2:1);
+  for(const mutate of [b=>delete b.records[0].target_initialization,b=>b.records[0].target_initialization.extra=true,b=>b.records[0].target_initialization.warehouse_source_key='',b=>b.records[0].evidence.target_snapshot.captured_at='2026-11-05T03:00:00Z']){
+   const b=structuredClone(f.bundle);mutate(b);assert.throws(()=>f.read(b),/HISTORICAL_HALL_/);
+  }
+ }
+});
+test('initialization final relation requires the actual MASTER key, registry ID, hall and explicit version; early shape approval is not capture',()=>{
+ const f=initializationFixture(),approval=f.read(f.bundle),{warehouse,warehouseSourceKey,warehouseTargetId,requireInitializationMaster,...early}=f.context;
+ assert.equal(validateHistoricalSalesHallEvidence(f.evidence,{...early,approval}).target_snapshot.captured_at,null);
+ for(const delta of [{warehouse:undefined},{warehouseSourceKey:'SOURCE-CODE'},{warehouseTargetId:id(99)},{warehouse:{...warehouse,hall_id:id(99)}},{warehouse:{...warehouse,version:2}},{warehouse:{id:id(11),hall_id:id(12)}}]){
+  assert.throws(()=>validateHistoricalSalesHallEvidence(f.evidence,{...f.context,approval,...delta}),/INITIALIZATION_MASTER_REQUIRED/);
+ }
+ assert.throws(()=>validateHistoricalSalesHallEvidence(f.evidence,{...f.context,approval:structuredClone(approval)}),/APPROVAL_REQUIRED/);
+});
+test('ordinary and stream READY intake carry the authenticated null intent with the original byte hash, never a fabricated capture',async()=>{
+ const {createSyntheticPackage,repinSyntheticPackage}=await import('./fixtures/unified-import/synthetic-package.ts');
+ const {validateUnifiedPackage}=await import('../packages/application/src/unified-import-contract.ts');
+ const {streamPreflight}=await import('../tools/unified-import/stream-preflight.mjs');
+ const {mkdtemp,mkdir,writeFile,readFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join,dirname}=await import('node:path');
+ const p=createSyntheticPackage(),h=p.records.sales_header[0],w=p.records.warehouse[0],f=initializationFixture(true),pin=p.manifest.source_files[0].sha256;
+ const convert=x=>Array.isArray(x)?x.map(convert):x&&typeof x==='object'?Object.fromEntries(Object.entries(x).map(([k,v])=>[k,convert(v)])):x===id(11)?w.fields.id:x===id(12)?w.fields.hall_id:x===id(20)?h.fields.id:x==='target:batch'?p.manifest.source_namespace:typeof x==='string'&&[1,2,3,4].map(dig).includes(x)?pin:x;
+ const bundle=convert(f.bundle);bundle.records[0].source_key=h.source_key;bundle.records[0].source_refs=structuredClone(h.source_refs);bundle.records[0].target_initialization.warehouse_source_key=w.source_key;
+ bundle.identity_bridges[0].source_refs=structuredClone(w.source_refs);bundle.resolutions[0].source_refs=structuredClone(w.source_refs);
+ h.historical_hall_evidence=bundle.records[0].evidence;p.manifest.schema_contract.source_declarations_sha256=V2;for(const s of p.records.staff)s.fields.departure_date=null;repinSyntheticPackage(p);
+ const bytes=Buffer.from(JSON.stringify(bundle)),approval=readHistoricalSalesHallApproval({bytes,trustedSha256:sha256(bytes),sourceNamespace:p.manifest.source_namespace,sourceHashes:new Set(p.manifest.source_files.map(x=>x.sha256))}),before=JSON.stringify(h);
+ assert.equal(validateUnifiedPackage(p,{allowSynthetic:true,historicalSalesHallApproval:approval}).valid,true);
+ const wrong=structuredClone(p);wrong.records.warehouse[0].fields.version=2;repinSyntheticPackage(wrong);assert(validateUnifiedPackage(wrong,{allowSynthetic:true,historicalSalesHallApproval:approval}).issues.some(i=>i.code==='HISTORICAL_HALL_INITIALIZATION_MASTER_REQUIRED'));
+ const dir=await mkdtemp(join(tmpdir(),'hall-intent-'));
+ try{
+  const pkg=join(dir,'source'),report=join(dir,'report');await mkdir(pkg);for(const [path,bytes]of Object.entries(p.artifacts)){await mkdir(dirname(join(pkg,path)),{recursive:true});await writeFile(join(pkg,path),bytes)}const manifest=Buffer.from(JSON.stringify(p.manifest));await writeFile(join(pkg,'manifest.json'),manifest);
+  const summary=await streamPreflight(pkg,report,{expectedManifestSha256:sha256(manifest),allowSynthetic:true,historicalSalesHallApproval:approval});assert.equal(summary.checks_passed,true,await readFile(join(report,'issues.jsonl'),'utf8'));
+  assert.equal(JSON.stringify(h),before);assert.equal(h.historical_hall_evidence.target_snapshot.captured_at,null);
+ }finally{await rm(dir,{recursive:true,force:true})}
+});
+test('C SQL source binds locked MASTER and raw row hash to receipt capture map; replay and rollback still use existing whole transaction entry',async()=>{
+ const {loadFresh35SalesHallCandidate}=await import('../scripts/release/unified-install/fresh35-sales-hall-candidate.mjs');
+ const c=await loadFresh35SalesHallCandidate(process.cwd()),body=name=>c.changedBodies.find(r=>r.signature.includes('.'+name+'(')).body,command=body('standard_whole_package_command_v2'),proof=body('standard_import_record_proof');
+ for(const text of ['hall_master_proof:=naijue_erp.standard_import_record_proof(hall_master_id)',"hall_master_audit.after_values->>'phase' IS DISTINCT FROM 'MASTER'",'FOR SHARE',"clock_timestamp() AT TIME ZONE 'UTC'",'historical_hall_target_captures','historicalHallTargetCapturesSha256',"jsonb_build_object('input_source_record_hash',source_hash)",'WHOLE_EXISTING_OPERATION_REQUIRES_INSPECT'])assert(command.includes(text),text);
+ for(const text of ['HISTORICAL_HALL_INPUT_HASH_INVALID','HISTORICAL_HALL_CAPTURE_MAP_INVALID','HISTORICAL_HALL_CAPTURE_MASTER_LINK_INVALID','master_s.source_record_hash','WHERE aa.operation_id=master_a.operation_id) IS DISTINCT FROM root_xid',"approved->'target_initialization'->>'warehouse_source_key'",'historical_hall_target_capture'])assert(proof.includes(text),text);
+ assert(command.indexOf("source_hash:=encode(sha256(convert_to(parsed::text,'UTF8')),'hex')")<command.indexOf("jsonb_build_object('input_source_record_hash',source_hash)"));
+ assert(command.indexOf('historicalHallTargetCapturesSha256')<command.indexOf('INSERT INTO naijue_erp.operation_receipt'));
+ assert.doesNotMatch(proof,/master_proof->>'source_hash'/,'batch manifest digest cannot substitute for source_record_hash');
+ for(const name of ['guard_unified_document','assert_standard_import_operation','standard_whole_package_verify_v2'])assert(body(name).includes('historical_hall_target_capture'));
+ assert.doesNotMatch(command,/UPDATE naijue_erp\.audit_change|created_operation_id\s*=/);
+});

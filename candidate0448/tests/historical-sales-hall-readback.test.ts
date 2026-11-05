@@ -57,3 +57,19 @@ test('required new-profile missing, damaged or wrong-batch proof sentinels fail 
  assert.match(sql,/NOT EXISTS\(SELECT 1 FROM hall_proofs p WHERE p\.document_id=roots\.document_id\)/);
  assert.match(sql,/f5d4e26d8cfae8cc96d42a43b01c6c49217a9927d1b0dc42af0c1b4c3ce29b66/);
 });
+
+test('V2 final readback preserves source zero and dual history while refusing an unobserved target even with a true proof flag',()=>{
+ const evidence={format_version:'HISTORICAL_SALES_HALL_EVIDENCE_V2',basis:'MIGRATION_DERIVED',original_hall_id:null,selected_hall_id:id(2),warehouse_id:id(1),
+  target_snapshot:{warehouse_id:id(1),hall_id:id(2),version:1,captured_at:'2026-11-05T03:02:00.123456Z'},
+  source_capture:{capture_evidence_sha256:'1'.repeat(64),source_namespace:'synthetic:source',warehouse_source_key:'old-code',runtime_warehouse_id:id(10),source_native_version:0,effective_version:0,runtime_hall_ids:[id(20),id(21)],captured_at:'2026-11-05T03:00:00Z',transaction_snapshot:'100:102:101',relation_basis:'OBSERVED_EXACT_RUNTIME_RELATIONS'},
+  identity_bridge:{evidence_sha256:'2'.repeat(64),record_key:'bridge'},resolution:{evidence_sha256:'3'.repeat(64),record_key:'resolution'},has_difference:true,review_required:false};
+ const projected=decodeHistoricalSalesHallProjection({...row(),historical_hall_proofs:[{verified:true,evidence}]});
+ assert.deepEqual(projected.historicalHallEvidence,evidence);assert.equal(projected.historicalHallDiffersFromCurrent,false);
+ assert.throws(()=>decodeHistoricalSalesHallProjection({...row(),historical_hall_proofs:[{verified:true,evidence:{...evidence,target_snapshot:{...evidence.target_snapshot,captured_at:null}}}]}),{code:'INVALID_DATABASE_VALUE'});
+ assert.equal(decodeHistoricalSalesHallProjection({...row(),hall_id:id(5),historical_hall_proofs:[{verified:true,evidence}]}).historicalHallDiffersFromCurrent,true);
+});
+test('authorized V2 projection checks original null input and immutable capture/master linkage before the completed target DTO',()=>{
+ const sql=HISTORICAL_SALES_HALL_BATCH_CTES;
+ for(const token of ['hall_capture_proofs AS','historicalHallTargetCapturesSha256',"c.capture->>'input_source_record_hash'=s.pointer_hash",'ms.source_record_hash=encode(sha256',"master.item->'fields'->'version'=c.capture->'version'",'ma.xmin=roots.root_xmin',"ms.source_key=approved.item->'target_initialization'->>'warehouse_source_key'",'captured.capture_verified IS TRUE',"jsonb_set(s.source_record->'historical_hall_evidence','{target_snapshot}'"])assert(sql.includes(token),token);
+ assert.doesNotMatch(sql,/clock_timestamp|transaction_timestamp|naijue_erp\.warehouse/,'readback does not recapture current target');
+});

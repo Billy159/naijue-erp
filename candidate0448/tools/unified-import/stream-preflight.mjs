@@ -135,7 +135,7 @@ export async function streamPreflight(directory,reportDirectory,{expectedManifes
    try{
     function* records(table){for(const r of db.prepare('SELECT * FROM facts WHERE entity=? ORDER BY rowid').iterate(table))yield {source_key:r.source_key,fields:JSON.parse(r.fields),source_refs:JSON.parse(r.source_refs),...(r.historical_hall_evidence?{historical_hall_evidence:JSON.parse(r.historical_hall_evidence)}:{}),...(r.explicit_zero_evidence?{explicit_zero_evidence:JSON.parse(r.explicit_zero_evidence)}:{}),...(r.zero_amount_archive?{zero_amount_archive:JSON.parse(r.zero_amount_archive)}:{})};}
     function* registry(){for(const r of db.prepare('SELECT raw_json FROM registry_rows ORDER BY ordinal').iterate())yield JSON.parse(r.raw_json);}
-    const reconciled=reconcileSourceOccurrenceEvidence(sourceOccurrenceEvidence,{manifest,registry:registry(),records,storage:occurrenceStorage(sourceOccurrenceEvidence),...(explicitZeroApproval?{explicitZeroApproval}:{})});
+    const reconciled=reconcileSourceOccurrenceEvidence(sourceOccurrenceEvidence,{manifest,registry:registry(),records,storage:occurrenceStorage(sourceOccurrenceEvidence),...(historicalSalesHallApproval?{historicalSalesHallApproval}:{}),...(explicitZeroApproval?{explicitZeroApproval}:{})});
     const reportHash=await writeOccurrenceReport(join(report,'source-occurrence-reconciliation.json'),reconciled);
     sourceOccurrenceReconciliation={evidence_sha256:reconciled.evidence_sha256,report_sha256:reportHash,counts:reconciled.counts,state:reconciled.state};
    }catch(error){await issue(error instanceof Error&&/^[A-Z_]+$/.test(error.message)?error.message:'SOURCE_RECONCILIATION_REJECTED','source_occurrence_evidence',null,'$');}

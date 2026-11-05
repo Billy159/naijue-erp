@@ -52,3 +52,44 @@ import {spawnSync} from 'node:child_process';
 test('offline CLI accepts only independently pinned, external occurrence evidence and prints counts rather than raw originals',async()=>{const p=fixture(),root=await mkdtemp(join(tmpdir(),'source-occurrence-cli-'));try{const input=join(root,'input');await mkdir(input);for(const[name,bytes]of Object.entries(p.artifacts)){await mkdir(dirname(join(input,name)),{recursive:true});await writeFile(join(input,name),bytes);}const manifest=Buffer.from(JSON.stringify(p.manifest));await writeFile(join(input,'manifest.json'),manifest);const bytes=Buffer.from(JSON.stringify(ledger(p))),path=join(root,'original-occurrences.json');await writeFile(path,bytes);const args=['tools/unified-import/cli.mjs','stream-preflight','--package',input,'--report',join(root,'report'),'--manifest-sha256',sha256(manifest),'--allow-synthetic','--source-occurrence-evidence',path,'--source-occurrence-evidence-sha256',sha256(bytes)];const run=spawnSync(process.execPath,args,{encoding:'utf8'});assert.equal(run.status,0,run.stdout+run.stderr);const result=JSON.parse(run.stdout);assert.equal(result.source_occurrence_reconciliation.counts.zero_amount_archive_occurrences,22);assert.equal(run.stdout.includes('original-zero:0'),false);assert.equal(result.business_database_writes,false);assert.equal(result.import_eligible,false);const copied=join(input,'occurrences.json');await writeFile(copied,bytes);await assert.rejects(()=>readSourceOccurrenceCliEvidence(input,p.manifest,copied,sha256(bytes)),/OUTSIDE_PACKAGE_REQUIRED/);await assert.rejects(()=>readSourceOccurrenceCliEvidence(input,p.manifest,path,'f'.repeat(64)),/EVIDENCE_HASH/);const incomplete=spawnSync(process.execPath,args.filter((_,i)=>i<args.length-2),{encoding:'utf8'});assert.notEqual(incomplete.status,0);}finally{await rm(root,{recursive:true,force:true});}});
 import {TABLE_SCHEMAS} from '../packages/application/src/unified-import-contract.ts';
 test('CLEANED records resolve existing registry targets without generating IDs or mutating source rows',async()=>{const p=createSyntheticPackage();p.manifest.stage='CLEANED';for(const[table,rows]of Object.entries(p.records))for(const row of rows)for(const[key,rule]of Object.entries(TABLE_SCHEMAS[table]))if(rule.generated)delete row.fields[key];repinSyntheticPackage(p);const before=JSON.stringify(p.records),r=await both(p);assert.equal(r.ordinary.valid,true,JSON.stringify(r.ordinary.issues));assert.equal(r.stream.checks_passed,true,r.issues);assert.deepEqual(r.report,r.ordinary.source_occurrence_reconciliation);const sku=r.report.source_to_target.find(x=>x.target.table==='sku');assert.equal(sku.target_id,p.registry.find(x=>x.entity_type==='SKU').target_id);assert.equal(JSON.stringify(p.records),before);assert.equal(Object.hasOwn(p.records.sku[0].fields,'id'),false);});
+
+import {HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256} from '../packages/application/src/unified-import-contract.ts';
+import {readHistoricalSalesHallApproval,parseHistoricalSalesHallEvidence} from '../packages/application/src/unified-historical-sales-hall-evidence.ts';
+function initializationFixture(){
+ const p=createSyntheticPackage(),hash=p.manifest.source_files[0].sha256,warehouses=new Map(p.records.warehouse.map(w=>[w.fields.id,w]));
+ const captures=[],bridges=[],records=[];for(const row of p.records.staff)row.fields.departure_date=null;
+ for(const row of p.records.sales_header){
+  if(row.fields.stock_basis!=='CUTOFF_HISTORY')continue;
+  const w=warehouses.get(row.fields.warehouse_id),key=w.source_key;
+  let bridge=bridges.find(b=>b.target_warehouse_id===w.fields.id);
+  if(!bridge){
+   const capture={capture_evidence_sha256:hash,source_namespace:'synthetic:legacy-capture',warehouse_source_key:'OLD:'+key,runtime_warehouse_id:w.fields.id,source_native_version:0,effective_version:0,runtime_hall_ids:[w.fields.hall_id],captured_at:'2026-11-05T03:00:00Z',transaction_snapshot:'123:125:124',relation_basis:'SYNTHETIC_SOURCE_OBSERVATION'};
+   captures.push(capture);bridge={evidence_sha256:hash,record_key:'bridge:'+key,entity_type:'WAREHOUSE',source_namespace:capture.source_namespace,warehouse_source_key:capture.warehouse_source_key,runtime_warehouse_id:capture.runtime_warehouse_id,target_namespace:p.manifest.source_namespace,target_warehouse_id:w.fields.id,source_capture_sha256:hash,hall_links:[{runtime_hall_id:w.fields.hall_id,target_hall_id:w.fields.hall_id}],source_refs:w.source_refs,scope:'FIXED_CAPTURE_SCOPE_ONLY'};bridges.push(bridge);
+  }
+  const source_capture=captures.find(c=>c.runtime_warehouse_id===w.fields.id);
+  row.historical_hall_evidence={format_version:'HISTORICAL_SALES_HALL_EVIDENCE_V2',basis:'MIGRATION_DERIVED',original_hall_id:null,selected_hall_id:w.fields.hall_id,warehouse_id:w.fields.id,target_snapshot:{warehouse_id:w.fields.id,hall_id:w.fields.hall_id,version:w.fields.version,captured_at:null},source_capture,identity_bridge:{evidence_sha256:hash,record_key:bridge.record_key},resolution:null,has_difference:false,review_required:false};
+  records.push({source_key:row.source_key,target_id:row.fields.id,source_refs:row.source_refs,evidence:row.historical_hall_evidence,target_initialization:{warehouse_source_key:key}});
+ }
+ const bundle={format_version:'HISTORICAL_SALES_HALL_APPROVAL_V2',source_namespace:p.manifest.source_namespace,evidence_sha256:hash,source_captures:captures,identity_bridges:bridges,resolutions:[],records};
+ p.manifest.schema_contract.source_declarations_sha256=HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256;repinSyntheticPackage(p);
+ const approve=b=>{const bytes=Buffer.from(JSON.stringify(b));return readHistoricalSalesHallApproval({bytes,trustedSha256:sha256(bytes),sourceNamespace:p.manifest.source_namespace,sourceHashes:new Set(p.manifest.source_files.map(f=>f.sha256))});};
+ return {p,bundle,approve};
+}
+test('source reconciliation preserves authenticated null initialization input and original record hashes, requiring exact MASTER binding',()=>{
+ const {p,bundle,approve}=initializationFixture(),approval=approve(bundle),before=JSON.stringify(p.records),result=reconcile(p,ledger(p),{historicalSalesHallApproval:approval});
+ const relation=result.historical_hall_relations.find(r=>r.historical_hall_evidence?.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2');
+ assert.equal(relation.historical_hall_evidence.target_snapshot.captured_at,null);assert.equal(relation.historical_hall_evidence.source_capture.effective_version,0);assert.equal(JSON.stringify(p.records),before);
+ assert.throws(()=>parseHistoricalSalesHallEvidence(relation.historical_hall_evidence),/TARGET_SNAPSHOT/);
+ assert.throws(()=>reconcile(p),/APPROVAL_REQUIRED/);
+ const wrong=structuredClone(bundle);wrong.records[0].target_initialization.warehouse_source_key=wrong.records[0].evidence.source_capture.warehouse_source_key;
+ assert.throws(()=>reconcile(p,ledger(p),{historicalSalesHallApproval:approve(wrong)}),/INITIALIZATION_MASTER_REQUIRED/);
+ const w=p.records.warehouse.find(w=>w.fields.id===bundle.records[0].evidence.warehouse_id),version=w.fields.version;delete w.fields.version;repinSyntheticPackage(p);
+ assert.throws(()=>reconcile(p,ledger(p),{historicalSalesHallApproval:approval}),/INITIALIZATION_MASTER_REQUIRED/);w.fields.version=version+1;repinSyntheticPackage(p);
+ assert.throws(()=>reconcile(p,ledger(p),{historicalSalesHallApproval:approval}),/INITIALIZATION_MASTER_REQUIRED/);
+});
+test('stream initialization plus source ledger authenticates MASTER canonical key',async()=>{
+ const {p,bundle,approve}=initializationFixture(),approval=approve(bundle),run=await both(p,ledger(p),{historicalSalesHallApproval:approval});
+ assert.equal(run.stream.checks_passed,true,run.issues);assert.equal(run.report.historical_hall_relations[0].historical_hall_evidence.target_snapshot.captured_at,null);
+ const wrong=structuredClone(bundle);wrong.records[0].target_initialization.warehouse_source_key=wrong.records[0].evidence.source_capture.warehouse_source_key;
+ const rejected=await both(p,ledger(p),{historicalSalesHallApproval:approve(wrong)});assert.equal(rejected.stream.checks_passed,false);assert.match(rejected.issues,/INITIALIZATION_MASTER_REQUIRED/);
+});

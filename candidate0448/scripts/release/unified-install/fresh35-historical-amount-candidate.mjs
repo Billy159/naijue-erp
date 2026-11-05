@@ -10,7 +10,7 @@ const hash=x=>createHash('sha256').update(x).digest('hex');
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_HISTORICAL_AMOUNT_'+code);};
 const modulePath='scripts/release/unified-install/fresh35-historical-amount-candidate.mjs';
 const loadedModuleSha256=hash(await readFile(new URL(import.meta.url)));
-export const FRESH35_HISTORICAL_AMOUNT_SQL_PIN=Object.freeze({path:'adapters/postgres/patches/0035_historical_line_amount_successor.sql',sha256:'e6950fda20ee1695e55c9398491c0ac18685212d5910b155b4982e38b2d6e6a6'});
+export const FRESH35_HISTORICAL_AMOUNT_SQL_PIN=Object.freeze({path:'adapters/postgres/patches/0035_historical_line_amount_successor.sql',sha256:'829f2fc6d28d616e3af6d0cc4a2ea8db02643e1c5f3d0ed7025c388203c84b44'});
 const expectedNames=['standard_whole_package_command_v2','assert_document_migration','validate_sales_settlement','standard_whole_package_verify_v2'];
 const normalized=normalizeRetirementSignature;
 export function applyHistoricalAmountReplacement(before,spec){

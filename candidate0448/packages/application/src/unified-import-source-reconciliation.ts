@@ -1,8 +1,10 @@
 import {createHash} from 'node:crypto';
-import {parseStrictJson,decodeUtf8,findCredentialPath,TABLE_SCHEMAS} from './unified-import-contract.ts';
+import {parseStrictJson,decodeUtf8,findCredentialPath,TABLE_SCHEMAS,historicalSalesHallEvidenceMatchesProfile} from './unified-import-contract.ts';
 import type {PackageManifest,IdentityEntry,StandardRecord,SourceRef} from './unified-import-contract.ts';
-import {parseHistoricalSalesHallEvidence} from './unified-historical-sales-hall-evidence.ts';
-import type {HistoricalSalesHallEvidence} from './unified-historical-sales-hall-evidence.ts';
+import {validateHistoricalSalesHallEvidence,historicalSalesHallApprovalMatchesSource} from './unified-historical-sales-hall-evidence.ts';
+import {parseHistoricalSalesHallInputEvidence} from './historical-sales-hall-evidence.ts';
+import type {HistoricalSalesHallApproval} from './unified-historical-sales-hall-evidence.ts';
+import type {HistoricalSalesHallInputEvidence} from './historical-sales-hall-evidence.ts';
 import {requestHash} from './request-hash.ts';
 import {validateZeroAmountArchive} from './unified-zero-amount-archive.ts';
 import {explicitZeroApproved,explicitZeroApprovalDescriptor} from './unified-explicit-zero-approval.ts';
@@ -15,7 +17,7 @@ export interface SourceOccurrence {entity_type:string;source_key:string;source_p
 export interface SourceOccurrenceMapping {entity_type:string;source_key:string;source_parent_key:string|null;target_record_sha256:string;target:{table:string;source_key:string;archive_source_key:string|null};}
 interface Ledger {format_version:'SOURCE_OCCURRENCE_LEDGER_V1';source_namespace:string;manifest_value_sha256:string;source_occurrences:SourceOccurrence[];mappings:SourceOccurrenceMapping[];}
 export interface SourceOccurrenceEvidence {readonly sha256:string;readonly source_namespace:string;readonly manifest_value_sha256:string;readonly occurrence_count:number;}
-export interface SourceReconciliationContext {manifest:PackageManifest;registry:Iterable<IdentityEntry>;records:(table:string)=>Iterable<StandardRecord>;explicitZeroApproval?:ExplicitZeroApproval;storage?:SourceOccurrenceStorage;}
+export interface SourceReconciliationContext {manifest:PackageManifest;registry:Iterable<IdentityEntry>;records:(table:string)=>Iterable<StandardRecord>;explicitZeroApproval?:ExplicitZeroApproval;storage?:SourceOccurrenceStorage;historicalSalesHallApproval?:HistoricalSalesHallApproval;}
 const ledgers=new WeakMap<object,any>();
 export const SOURCE_OCCURRENCE_STREAM_MAX_ROWS=5_000_000;
 /** Disk collections are supplied only by the offline bounded reader. */
@@ -77,9 +79,9 @@ export function reconcileSourceOccurrenceEvidence(evidence:SourceOccurrenceEvide
  const byTable:Record<string,{original_source_occurrences:number;standard_target_rows:number;approved_absence_zero_targets:number;zero_amount_archive_occurrences:number;many_to_one_targets:number}>={};
  for(const table of Object.keys(TABLE_SCHEMAS))byTable[table]={original_source_occurrences:0,standard_target_rows:0,approved_absence_zero_targets:0,zero_amount_archive_occurrences:0,many_to_one_targets:0};
  const approvedZeros:{source_key:string;warehouse_id:string;sku_id:string;quantity:'0';inventory_file_sha256:string;cutoff_at:string;approval_sha256:string;approval_jsonl_line:number;locator_role:'APPROVAL_JSONL_LINE_NOT_INVENTORY_SOURCE_ROW';target_record_sha256:string}[]=store?.list()??[];
- const historicalHalls:{sales_source_key:string;sales_id:string|null;selected_hall_id:unknown;original_hall_id:string|null;warehouse_id:unknown;warehouse_current_hall_id:unknown;salesperson_id:unknown;salesperson_current_hall_id:unknown;source_refs:SourceRef[];historical_hall_evidence:HistoricalSalesHallEvidence|null;target_record_sha256:string}[]=store?.list()??[];
+ const historicalHalls:{sales_source_key:string;sales_id:string|null;selected_hall_id:unknown;original_hall_id:string|null;warehouse_id:unknown;warehouse_current_hall_id:unknown;salesperson_id:unknown;salesperson_current_hall_id:unknown;source_refs:SourceRef[];historical_hall_evidence:HistoricalSalesHallInputEvidence|null;target_record_sha256:string}[]=store?.list()??[];
  const warehouses=store?.map()??new Map<string,unknown>(),staff=store?.map()??new Map<string,unknown>();
- let referenceRows=0;for(const r of context.records('warehouse')){if(++referenceRows>limit)fail('SOURCE_RECONCILIATION_TARGET_LIMIT');const id=aliases.get(JSON.stringify(['WAREHOUSE',r.source_key]));if(id)warehouses.set(id,r.fields.hall_id);}
+ let referenceRows=0;for(const r of context.records('warehouse')){if(++referenceRows>limit)fail('SOURCE_RECONCILIATION_TARGET_LIMIT');const id=aliases.get(JSON.stringify(['WAREHOUSE',r.source_key]));if(id)warehouses.set(id,{source_key:r.source_key,target_id:id,fields:r.fields});}
  for(const r of context.records('staff')){if(++referenceRows>limit)fail('SOURCE_RECONCILIATION_TARGET_LIMIT');const id=aliases.get(JSON.stringify(['STAFF',r.source_key]));if(id)staff.set(id,r.fields.hall_id);}
  let sourceRecords=0,targetRows=0,archiveRows=0,fundsActions=0,listedZeroRows=0;
  const usedGroups=store?.set()??new Set<string>(),approvalRows=store?.set()??new Set<number>();
@@ -132,9 +134,16 @@ export function reconcileSourceOccurrenceEvidence(evidence:SourceOccurrenceEvide
    if(table==='sales_header'){
     if(row.fields.stock_basis==='CUTOFF_HISTORY'){
      const raw=(row as StandardRecord & {historical_hall_evidence?:unknown}).historical_hall_evidence;
-     const hallEvidence=raw===undefined?null:parseHistoricalSalesHallEvidence(raw);
+     const hallEvidence=raw===undefined?null:parseHistoricalSalesHallInputEvidence(raw);
+     if(hallEvidence?.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2'&&hallEvidence.target_snapshot.captured_at===null){
+      if(!historicalSalesHallEvidenceMatchesProfile(hallEvidence,m.schema_contract.source_declarations_sha256))fail('HISTORICAL_HALL_PROFILE_VERSION');
+      if(!historicalSalesHallApprovalMatchesSource(context.historicalSalesHallApproval,m.source_namespace,sourceHashes))fail('HISTORICAL_HALL_APPROVAL_REQUIRED');
+      const warehouse=warehouses.get(String(row.fields.warehouse_id)) as {source_key:string;target_id:string;fields:Record<string,unknown>}|undefined;
+      if(!warehouse)fail('HISTORICAL_HALL_CAPTURE_REQUIRED');
+      validateHistoricalSalesHallEvidence(hallEvidence,{sourceNamespace:m.source_namespace,sourceKey:row.source_key,targetId:aliases.get(JSON.stringify(['SALES_HEADER',row.source_key])),sourceRefs:row.source_refs,fields:row.fields,approval:context.historicalSalesHallApproval,warehouse:warehouse.fields,warehouseSourceKey:warehouse.source_key,warehouseTargetId:warehouse.target_id,requireInitializationMaster:true});
+     }
      if(hallEvidence&&(hallEvidence.selected_hall_id!==row.fields.hall_id||hallEvidence.warehouse_id!==row.fields.warehouse_id))fail('SOURCE_RECONCILIATION_HALL_FIELDS_MISMATCH');
-     historicalHalls.push({sales_source_key:row.source_key,sales_id:aliases.get(JSON.stringify(['SALES_HEADER',row.source_key]))??null,selected_hall_id:row.fields.hall_id,original_hall_id:hallEvidence?.original_hall_id??null,warehouse_id:row.fields.warehouse_id,warehouse_current_hall_id:warehouses.get(String(row.fields.warehouse_id))??null,salesperson_id:row.fields.salesperson_id,salesperson_current_hall_id:staff.get(String(row.fields.salesperson_id))??null,source_refs:structuredClone(row.source_refs),historical_hall_evidence:hallEvidence?structuredClone(hallEvidence):null,target_record_sha256:requestHash(row)});
+     historicalHalls.push({sales_source_key:row.source_key,sales_id:aliases.get(JSON.stringify(['SALES_HEADER',row.source_key]))??null,selected_hall_id:row.fields.hall_id,original_hall_id:hallEvidence?.original_hall_id??null,warehouse_id:row.fields.warehouse_id,warehouse_current_hall_id:(warehouses.get(String(row.fields.warehouse_id)) as {fields:Record<string,unknown>}|undefined)?.fields.hall_id??null,salesperson_id:row.fields.salesperson_id,salesperson_current_hall_id:staff.get(String(row.fields.salesperson_id))??null,source_refs:structuredClone(row.source_refs),historical_hall_evidence:hallEvidence?structuredClone(hallEvidence):null,target_record_sha256:requestHash(row)});
     }
     if(row.zero_amount_archive!==undefined){for(const archive of validateZeroAmountArchive(row.zero_amount_archive,{sourceNamespace:m.source_namespace,salesSourceKey:row.source_key,sourceFileHashes:sourceHashes})){archiveRows++;bind(table,row,recordHash,archive);}}
    }else if(row.zero_amount_archive!==undefined)fail('SOURCE_RECONCILIATION_ARCHIVE_PARENT_INVALID');
