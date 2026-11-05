@@ -1,0 +1,51 @@
+{
+  "status": "RELATIVE_WINDOW_BINDING_ONLY_NO_LIVE_AUTHORITY",
+  "artifactKey": "f35-5d70-ordinary-20261106-01",
+  "operationId": "t45-f35-5d70-ordinary-20261106-01",
+  "preparationJobId": "t45-f35-5d70-materialize-20261106-01",
+  "startTargetJobId": "t45-f35-5d70-start-20261106-01",
+  "deliverJobId": "t45-f35-5d70-install-20261106-01",
+  "observeJobId": "t45-f35-5d70-observe-20261106-01",
+  "freshWindowAtExecutionOnly": {
+    "stagingPreparationMaximumMs": 1800000,
+    "PGMaximumMs": 1200000,
+    "startsAt": null,
+    "expiresAt": null,
+    "stagingAuthoritySha256": null,
+    "independentSafetyReviewSha256": null
+  },
+  "environment": {
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "receiptSHA256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "sourceSet": "0e6b01ec154bd089dbfad61715cf194d339ed6e3bb56311bbd91971e5aa5cf2f",
+    "rebuild": false
+  },
+  "unchangedTargetProposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "hostApplicationRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r1",
+  "containerName": "t45-fresh35-deb13-20261105-r1",
+  "budget": {
+    "cpu": 2,
+    "memoryBytes": 3221225472,
+    "pids": 256,
+    "network": "none",
+    "publishedPorts": 0,
+    "guardianDeadlineReserved": true
+  },
+  "forbidden": [
+    "Formal data or formal target",
+    "Real business inputs/import",
+    "Environment image rebuild",
+    "New controller or permission relaxation",
+    "Reuse expired authority or old job replay"
+  ],
+  "currentExistenceOrPreviousOperation": "NOT_REFRESHED_THIS_PREPARATION; original-key check required before execution, do not infer absence."
+}

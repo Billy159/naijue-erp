@@ -1,0 +1,13 @@
+{
+  "authorityFile": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/staging-5d70-external-01/artifact-staging-5d70-authorization-01.json",
+  "authoritySHA256": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c",
+  "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+  "humanSource": "call_e4aeea80dafb49ef8648ab7f180fc68f item0 plus subsequent same-kind isolation preauthorization",
+  "scope": "Existing binary artifact channel and exact CAS successor only. No PG window or production execution granted by this staging leaf.",
+  "oldGateSHA256": "a24505c9670723303c24dbd9ccf39da9a152ef8f3a92a1226a0ae85c4a83025a",
+  "CASParentSHA256": "49b0fae3c57cb95d6891c893b3dc642abd15869a440eca9d4e8ee423da5920ea",
+  "allowedCASChanges": "Only old/new authority hashes, exact fixed key/archive/bytes,input filename,temp suffix and truthful receipt wording/filename. All original trust/CAS/preservation/fsync guards remain.",
+  "startsAt": 1793897586630,
+  "expiresAt": 1793899386630,
+  "executed": false
+}

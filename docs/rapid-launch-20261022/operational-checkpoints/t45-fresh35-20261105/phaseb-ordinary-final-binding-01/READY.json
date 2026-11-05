@@ -1,0 +1,32 @@
+{
+  "status": "READY_FOR_C_EXACT_SCOPE_BINDING_NOT_EXECUTION",
+  "preparedAtUTC": "2026-11-05T16:42:03.181200+00:00",
+  "sixConstantsOnly": true,
+  "serverRequests": 0,
+  "remoteTransfers": 0,
+  "PGOrContainerActions": 0,
+  "newBuilds": 0,
+  "originalR1R2Preserved": true,
+  "files": {
+    "fresh35-container-successor.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-ordinary-binding-01/fresh35-container-successor.py",
+      "sha256": "7b239be925bd29783f264a4bf903770cb07505011209af13724fa12125862a78",
+      "bytes": 28435
+    },
+    "SOURCE-BINDING.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-ordinary-binding-01/SOURCE-BINDING.json",
+      "sha256": "a4105fa0ea45e12fd0870976b38f7db774c951176a7a35b11fc38e3b471d24a3",
+      "bytes": 976
+    },
+    "TRANSPORT-PLAN.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-ordinary-binding-01/TRANSPORT-PLAN.json",
+      "sha256": "998d55785fa167b7e451c88bf9b8750ef41b294c2da6902fa6ad76626ca47111",
+      "bytes": 19138
+    },
+    "WINDOW-PLAN.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-5d70-ordinary-binding-01/WINDOW-PLAN.json",
+      "sha256": "00a491156e6dadcdc7054296415ed7dbdffde42b512c7cd17e78246301eed8af",
+      "bytes": 2033
+    }
+  }
+}

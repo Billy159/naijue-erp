@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "5d70b3ee9038b4d0fe66328e2a172b688c07d9c9",
+  "buildId": "erp-5d70b3ee9038-full-20261106",
+  "sixConstants": {
+    "SOURCE": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+    "ARCHIVE_SHA": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+    "ARCHIVE_BYTES": 83652102,
+    "FILE_COUNT": 7292,
+    "MANIFEST_SHA": "4954bb15a5800071ad0d633574e29f80bd62fd724ef02f4ee6066617d518ca92",
+    "KEY": "f35-5d70-ordinary-20261106-01"
+  },
+  "parentOpsCommit": "4ef61a80e22b9a7c6b02f2571576418d0afc8f32",
+  "parentWrapperSHA256": "f539ac73ddc8f34b806b31fb5aa114e266a2fb26a1c01da95aab179cda8cdb87",
+  "QBResultSHA256": "e5123b7815fa4c595f809d4a371ebbeace85bcb7a0040840a341577a9417cdab",
+  "D2ResultSHA256": "e2fcdf9d8bdccf2ef3fc2c40e6aeecb2bfa7ee1de8a213a28e0636b84e3b8035",
+  "sourceSetScope": "current212/captured180",
+  "deploymentFiles": 7292,
+  "tarRegularMembers": 7296,
+  "actualTarByteModeClosureReusedFromD2": true
+}

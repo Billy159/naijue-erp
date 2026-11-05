@@ -1,0 +1,44 @@
+{
+  "status": "ORIGINAL_BINARY_CARRIER_SELECTED_BY_C_NO_NEW_ASSEMBLER",
+  "recordedAtUTC": "2026-11-05T16:45:29.924525+00:00",
+  "supersedes": "TRANSPORT-PLAN.json batch execution choice only; prepared28 leaves retained and will not execute",
+  "carrier": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261105-c0448-facts-readonly-01/artifact-staging-source-01/ssh-control.candidate.py",
+    "sha256": "590be0a4b24841764c96a759dc17ce04f0b90f29251d4cf22efd64f5732618d6",
+    "actions": [
+      "artifact-stage",
+      "artifact-status"
+    ],
+    "archiveBytesRule": "integer 0<bytes<2**53, exact local and remote bytes/hash match",
+    "authorityMaximumBytes": 65536,
+    "streamChunkMaximumBytes": 1048576,
+    "originalRemoteTimeoutSeconds": 40,
+    "runBundleLimitsDoNotApply": true,
+    "changesToCarrier": 0
+  },
+  "authorityFields": [
+    "format",
+    "decision",
+    "taskId",
+    "grantId",
+    "artifactKey",
+    "sourceSetSha256",
+    "archiveSha256",
+    "archiveBytes",
+    "targetDirectory",
+    "startsAt",
+    "expiresAt",
+    "decisionReference",
+    "kind"
+  ],
+  "existingNarrowCASUpdater": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-offline-staging-policy-20261105-01/bundle/install_offline_policy.py",
+    "sha256": "49b0fae3c57cb95d6891c893b3dc642abd15869a440eca9d4e8ee423da5920ea",
+    "oldGateSHA256": "a24505c9670723303c24dbd9ccf39da9a152ef8f3a92a1226a0ae85c4a83025a",
+    "preserve": "Old bytes0400 plus uid/gid/mode/sha; oldartifact/ready unchanged; old inode/bytes CAS, O_EXCL new temp, atomic replace+dirsync, newroot0444 hash readback",
+    "pending": "C external exact new authority bytes/hash/current startsAt and expiresAt; no new bytes invented here"
+  },
+  "serverWrites": 0,
+  "remoteArtifactUpload": false,
+  "PGWindowStarted": false
+}

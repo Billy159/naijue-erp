@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T15:50:53.217166+00:00",
+  "updatedAt": "2026-11-05T16:54:35.962232+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28969,7 +28969,7 @@
       "deleted": false
     },
     "native35SyntheticOrdinaryContinuation": {
-      "state": "D1_D2_SOURCE_FIXED_QB_ACCEPTED_T45_FINALIZING_SOURCE_NOT_PG",
+      "state": "FIXED_FULL_BUILD_ARCHIVE_READY_ORIGINAL_BINARY_STAGING_NOT_PG",
       "authority": "Current full user goal requires genuine synthetic35 ordinary business; source-only existing module adaptation, no production or new permission execution",
       "D1": [
         "tools/unified-import/fresh35-host-session.mjs",
@@ -29008,8 +29008,8 @@
       "D1ReviewState": "QB_F01_CLOSED_SOURCE_AND_TARGETED_MODELS_ONLY",
       "D1ExpiryFixCommit": "1149f17ee350dded91e88423d5b20b6586d23c2e",
       "D1ExpiryFixReceiptSHA256": "b0f66472ca730e49974bd5debc4b28fc22958f67003229f80cabcb5b03100470",
-      "D2Next": "Frozen dependency preparation returned read-only; final application build/ordinary packaging waits sole T45 four-leaf delivery + fixed merged source. No new ci/download or duplicate build.",
-      "T45Next": "Current launcher/wrapper main wiring active, C runtime template and locked Linux archive now delivered. Return fixed four-leaf pins/checks; C merges/QB/final build and explicit same-target fresh execution binding then T45 only executes.",
+      "D2Next": "Full5d70 build and ordinary archive delivered, no duplicate build during T45 staging.",
+      "T45Next": "Original binary staging via exact external C authority and original root CAS preserving expired bytes. Then distinct20min synthetic35 window and ordinary business. No new assembler/image rebuild.",
       "sourceOwnerSceneHandoffSHA256": "3c7bec4ee55c661942f44749e58d2c6ad6878cc593346798c8f07b26ebbf2f08",
       "capacityTemplateReviewSHA256": "de1de45ff4256a8f58c760e5f30af75d1e487fe5777ea2e44f9f1beb2b34226a",
       "linuxDependencyInputSHA256": "cbcb3ff8485957959a773e76cfc9bdb733ac6932636750c928f67c6f6e028dd6",
@@ -29041,7 +29041,7 @@
         "archiveMembers": 3288,
         "bytes": 10798748
       },
-      "D1Next": "Read-only original production35 target/record/CLI and identity preparation seam; no server/PG/credentials. Exact missing production input only, no new platform or regression.",
+      "D1Next": "Frozen6ed REAL source accepted by QB; exact real target/inputs still missing, no duplicate source task.",
       "T45FinalSource": {
         "commit": "d0bd2c35f461ee385857e57fd0363c0c4f395ed8",
         "readySHA256": "2fcc452b3ff205b91a1f1af845ff1e7adab98deb2d223ab9acb5167c2c7880ce",
@@ -29066,7 +29066,33 @@
         "manifestSHA256": "4954bb15a5800071ad0d633574e29f80bd62fd724ef02f4ee6066617d518ca92",
         "owner": "T45",
         "next": "Only two private-wrapper manifest reads finite2MiB and directed boundary check in preserved r2; original launcher4MiB unchanged",
-        "state": "IMPLEMENTING_NOT_READY_FOR_EXECUTION"
+        "state": "QB_PASS_SOURCE_AND_TARGETED_READS_NOT_PG",
+        "commit": "4ef61a80e22b9a7c6b02f2571576418d0afc8f32",
+        "reviewSHA256": "e5123b7815fa4c595f809d4a371ebbeace85bcb7a0040840a341577a9417cdab"
+      },
+      "finalBinding": {
+        "readySHA256": "110472733578968e94f437159e607ca3a01314543f13521261ed84bcb244a67f",
+        "wrapperSHA256": "7b239be925bd29783f264a4bf903770cb07505011209af13724fa12125862a78",
+        "onlySixConstantsChanged": true,
+        "sourceCommit": "5d70b3ee9038b4d0fe66328e2a172b688c07d9c9",
+        "buildId": "erp-5d70b3ee9038-full-20261106",
+        "SOURCE": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+        "ARCHIVE_SHA": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+        "ARCHIVE_BYTES": 83652102,
+        "FILE_COUNT": 7292,
+        "MANIFEST_SHA": "4954bb15a5800071ad0d633574e29f80bd62fd724ef02f4ee6066617d518ca92",
+        "KEY": "f35-5d70-ordinary-20261106-01",
+        "transport": "Original independent binary artifact-stage, run bundle limits do not apply",
+        "unused28ChunkLeaves": "RETAINED_NOT_EXECUTED",
+        "PGExecuted": false
+      },
+      "stagingExternalBinding": {
+        "authoritySHA256": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c",
+        "startsAt": 1793897586630,
+        "expiresAt": 1793899386630,
+        "scope": "Exact ordinary synthetic artifact, original CAS; not PG or production",
+        "execution": "DISPATCHED_TO_ORIGINAL_T45_NOT_YET_RECEIPTED",
+        "priorGateSHA256": "a24505c9670723303c24dbd9ccf39da9a152ef8f3a92a1226a0ae85c4a83025a"
       }
     },
     "productionRealImportContinuation": {
@@ -29076,7 +29102,7 @@
       "proposalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/SYNTHETIC25-SPLIT-HANDOFF.md",
       "proposalSHA256": "b3bb8fb9d4ad57bf48b93d8cf9bb3f48459893114b7bf9319daf1b38ceeef107",
       "approval": "Human call_bcc0d925fe484649ad0daba1d55bf889 item0: 确认本项源码与合同修订",
-      "state": "SOURCE_IMPLEMENTING_ONLY_ENVIRONMENT_NOT_AUTHORIZED_BY_THIS_APPROVAL",
+      "state": "QB_PASS_SOURCE_AND_MODELS_NOT_PG_NOT_PRODUCTION_EXECUTION",
       "files": [
         "tools/unified-import/fresh35-host-session.mjs",
         "tools/unified-import/fresh35-host-session.d.mts",
@@ -29092,7 +29118,12 @@
         "Original V1 refusal of V2 retained; installation record is not import authority",
         "Existing controller external exact batch binding and original Client, transaction, keys, deadline, unknown recovery; no new control platform",
         "Synthetic fixed candidate exports Git only and does not wait for REAL WIP"
-      ]
+      ],
+      "commit": "6ed4b679cb58b55e9af056e2f9b676d3d2c16a03",
+      "remoteVerified": true,
+      "receiptSHA256": "6d175da17248dbdd9cf6fbc573d25bd4f2a028326eac788b1c5c5248a2d6250b",
+      "reviewSHA256": "6e9e0305c4382bbc8841ccb740e06f341689347fd1f4b7ffeba3960b1ea93145",
+      "next": "Original QB source-only conclusion adopted; D1 readonly. Later distinct REAL root/build; keep current synthetic5d70 immutable."
     },
     "releaseFixturePinSynchronization": {
       "commit": "bd99c1012643c7bc32cd2f9df6e90f5385ecd956",
@@ -29126,7 +29157,31 @@
         "Post-Nov2-cutoff activity; only aggregate followup requested"
       ],
       "mutations": 0,
-      "productionDeployment": false
+      "productionDeployment": false,
+      "postCutoffFollowup": {
+        "receiptSHA256": "16fbd3dc61409eacba2d8c9fcee12819574f35bb6e4c0d8e9fd6489539287114",
+        "job": "t45-formal-cutoff-presence-readonly-20261106-01",
+        "checkedAtShanghai": "2026-11-06 00:37:07-08",
+        "exitCode": 0,
+        "scope": "Five actual old runtime tables and six timestamp columns strictly after2026-11-02T04:00:00Z",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "maxValues": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "boundary": "No inference about untimed projections or all production business; no mutation."
+      }
     }
   }
 }

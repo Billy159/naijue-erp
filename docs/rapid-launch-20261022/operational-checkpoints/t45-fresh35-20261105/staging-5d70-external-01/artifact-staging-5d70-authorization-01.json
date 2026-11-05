@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-5d70-ordinary-20261106-01",
+  "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+  "archiveSha256": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+  "archiveBytes": 83652102,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-5d70-ordinary-20261106-01",
+  "startsAt": 1793897586630,
+  "expiresAt": 1793899386630,
+  "decisionReference": "C 01a161ca-f5d5-7de1-a8ad-1cdd43c96915 implements human call_e4aeea80dafb49ef8648ab7f180fc68f item0 and subsequent explicit same-kind isolated execution preauthorization. Exact synthetic5d70 ordinary artifact only; no REAL/production; original CAS retains prior root gate bytes.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

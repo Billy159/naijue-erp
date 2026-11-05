@@ -1,0 +1,368 @@
+{
+  "status": "LOCAL_PARTS_PREPARED_NO_REMOTE_TRANSFER",
+  "artifactKey": "f35-5d70-ordinary-20261106-01",
+  "sourceArchive": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-5d70b3ee/ordinary/ordinary-transfer.tar.gz",
+  "archiveSHA256": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+  "archiveBytes": 83652102,
+  "parts": [
+    {
+      "index": 0,
+      "batch": 1,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-01/part-000.json",
+      "offset": 0,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "6d6b9bb114d49a89f1442c4f22ca0948c6ade9fe0184d929ed85aa2e7dc32ecf",
+      "encodedBytes": 4000191,
+      "encodedSHA256": "f523fa10618e3ed29571c748e592a1492e9faeb4325516c19c103497cd8e40c1"
+    },
+    {
+      "index": 1,
+      "batch": 1,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-01/part-001.json",
+      "offset": 3000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "22eaeb6c8fadd520f65bfd22a5332647e04cf2bd0edc9b1948562802218513ef",
+      "encodedBytes": 4000197,
+      "encodedSHA256": "9c4583b68776209802e7a6a52b168d9405e0ebb5d6a69eaf87230e12f689cdab"
+    },
+    {
+      "index": 2,
+      "batch": 1,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-01/part-002.json",
+      "offset": 6000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "f150c7c7550f0581dcde18d2f0a53124abb910af5588b7748ac27703874897a6",
+      "encodedBytes": 4000197,
+      "encodedSHA256": "fbe4243231b093685d813db24f1ab8e716924b6c6d23e22b7e41bbfc7ef3f9b9"
+    },
+    {
+      "index": 3,
+      "batch": 1,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-01/part-003.json",
+      "offset": 9000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "7a513d7fd7f6aa0d0007b58fcb66030754786c008148acc8eb313117df70ad04",
+      "encodedBytes": 4000197,
+      "encodedSHA256": "70e407fad6f33b629dd634a3dde27fbe299adf4b89ea28dc63456ecf6bd5f419"
+    },
+    {
+      "index": 4,
+      "batch": 1,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-01/part-004.json",
+      "offset": 12000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "9b7539d5d9f7e92cbc904280aa6165364dfa1f50f50d1e73ec2d32e8b6eaa63a",
+      "encodedBytes": 4000198,
+      "encodedSHA256": "ad46e420830e63d3fe45b8a4988fb89ed064a6c6fa354be8a3f51ffad5bca1ae"
+    },
+    {
+      "index": 5,
+      "batch": 1,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-01/part-005.json",
+      "offset": 15000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "2f2999d8b223bdd30ef3a73ea107daafcba063403c29d5313b06013996dd1277",
+      "encodedBytes": 4000198,
+      "encodedSHA256": "c41e761ec6074de9a8c41f2dde4225bc3130c60b94698897864cddfc63678401"
+    },
+    {
+      "index": 6,
+      "batch": 1,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-01/part-006.json",
+      "offset": 18000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "e46cd83e4d7cebdbe00ba0ee7c62f3d09620289e9d824360be6fcf83287abece",
+      "encodedBytes": 4000198,
+      "encodedSHA256": "7e5af77acb23d1d4a5481bd465d18a4c273a559bb4e9ef6c6e2c198d5593b9ce"
+    },
+    {
+      "index": 7,
+      "batch": 2,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-02/part-007.json",
+      "offset": 21000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "2e8e91796033b41e0cb020c6d0e88428ca5b3c81d75cd5c3e52abfdd44d9079d",
+      "encodedBytes": 4000198,
+      "encodedSHA256": "df13db603eb8ad4006e96275e30090a271f904f1e6441faaeebd804070b249a7"
+    },
+    {
+      "index": 8,
+      "batch": 2,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-02/part-008.json",
+      "offset": 24000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "4fdce63ad8916433749be0605833e6f89e4bd9501d30f92f29997a3897d4731c",
+      "encodedBytes": 4000198,
+      "encodedSHA256": "2d75ceba6bba0c9b052e256547f45772eca47dace108fee37896d09e355a7d4b"
+    },
+    {
+      "index": 9,
+      "batch": 2,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-02/part-009.json",
+      "offset": 27000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "7c455a8519a874e6c18f4a6c994a99479bf38372773bc0440f40a4d2feec7e8f",
+      "encodedBytes": 4000198,
+      "encodedSHA256": "3deddb966f38e9dab086eb4a04de10da95a3a842488e7691a693af72fc1b270f"
+    },
+    {
+      "index": 10,
+      "batch": 2,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-02/part-010.json",
+      "offset": 30000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "90617ec8cae8c54faa535849bcaabc01c1076c72a3bb69ba65fbcb1a65bd9a39",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "4e365d630f7167a01e7838391f76e13b74e1e04e57bb968d5c7618e0b4032e5c"
+    },
+    {
+      "index": 11,
+      "batch": 2,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-02/part-011.json",
+      "offset": 33000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "3d00d64aaa87dfbd7a8a2c164dc781440c4f76baf015efe93068f9f6fcef2b47",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "74b05e3e877b55840a044f72f0df8b5e250f07335ed38e758a5b890179af9426"
+    },
+    {
+      "index": 12,
+      "batch": 2,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-02/part-012.json",
+      "offset": 36000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "c1a75f132fee6ff8caeefee98fbc770cc5c4e82bcdf435abc8fb4672042f6160",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "1a2d0546a85fa6fb476f1cd052409f6156bb547b8ad3e7db9250f3857b05f173"
+    },
+    {
+      "index": 13,
+      "batch": 2,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-02/part-013.json",
+      "offset": 39000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "c80298c8dca6c2cd5a907d2cb9dd1c10f110fa0cad860d3c13e472f328e95894",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "a16605190da54714325f6a396121544e809cf15aa6297d34ea74affc27529152"
+    },
+    {
+      "index": 14,
+      "batch": 3,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-03/part-014.json",
+      "offset": 42000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "074b3133efd31ac35a740ed47245b7bb407d73623fad31cd612825f7db17f843",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "82c28ac1bd9633a69d81f8046def09933f5fafa50a3b4f2dacedc9890a394034"
+    },
+    {
+      "index": 15,
+      "batch": 3,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-03/part-015.json",
+      "offset": 45000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "e73acdf5641e0a150645a33cf855bc88964dac39a26dd1f3efdeea6175d11523",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "54cb6225ca776cf55d0da6eb76eacc98d2ddce51ff78921535fff84a8e1c5c29"
+    },
+    {
+      "index": 16,
+      "batch": 3,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-03/part-016.json",
+      "offset": 48000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "171c635291a75826f306feb62d553cb4311fd10f249432f2cd65bcebaed43c62",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "6e1bfcbd8b7f5400cc77c7a68f3c609bfc6dddcb2cc1b3f5338e97ae26a24869"
+    },
+    {
+      "index": 17,
+      "batch": 3,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-03/part-017.json",
+      "offset": 51000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "dbfbe96b14045bd3ccf1c435a166c48443aa032dcb528cc82a25b0ad0475bcc6",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "205c2dfa5263db42b5fda0e0f260f39301cde88d923f2da6c2d7d861f20471b8"
+    },
+    {
+      "index": 18,
+      "batch": 3,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-03/part-018.json",
+      "offset": 54000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "78ee301a88dc942813f2fc25c78c2eb234b74152d2e52600e1c74964ad90445b",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "27768fa9cd3c3a4e0f630fc4b3b29931cde9399753f75e95b0867b4b534d4c25"
+    },
+    {
+      "index": 19,
+      "batch": 3,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-03/part-019.json",
+      "offset": 57000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "53e2b71dc7eccdc4c84b6b06e7bad629582915fc39ef8d0704077c2ca1bff25d",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "f376ebc2e9c4bbc35b548535c97f09a6be6b84d3c1fca25fab14b45754671da8"
+    },
+    {
+      "index": 20,
+      "batch": 3,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-03/part-020.json",
+      "offset": 60000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "c4658aeca2bc1d23b34dc7e6cbcdecfa702902de0ed47058aa6a51ba4f4c1efb",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "dadb2cd364f645f6ccba10754a47cb2fb6cf78e2a2941769995802b27039be87"
+    },
+    {
+      "index": 21,
+      "batch": 4,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-04/part-021.json",
+      "offset": 63000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "348caad2228f73c6c014e4d2dfdd13e86f6adb8aaad46ea67838c0613f0a16f9",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "e6a420cd94f30016a111af17c648a5f1fd6db5b7370408dbe09a17d84a93a091"
+    },
+    {
+      "index": 22,
+      "batch": 4,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-04/part-022.json",
+      "offset": 66000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "912577fce422be485bfb4feafde41d2df2c774d4a2cc662b292f7b64d368b006",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "9a2da27f37a897e9c7b36e1e88a398c2793b5b7e8b23c5a066ad9d03d05c3a10"
+    },
+    {
+      "index": 23,
+      "batch": 4,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-04/part-023.json",
+      "offset": 69000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "a3b97ce893a6eb07410fdd2fe8db4c448812c23b4a8d598d6ebfe5cbca9d275c",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "ece3d3ffb72126fcc522a69749113a446db0121d46183f44b3e527c8cbdc2135"
+    },
+    {
+      "index": 24,
+      "batch": 4,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-04/part-024.json",
+      "offset": 72000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "7f307c9128e33378c7fdf1ef0882e360107aa9dd2a9b97b3fcba719517e7b878",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "07ab53735e10365443b30b2cd06df3f96ac4d3a649a203f1fadedbdfcd917cba"
+    },
+    {
+      "index": 25,
+      "batch": 4,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-04/part-025.json",
+      "offset": 75000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "34a15c1b28dc1e9e5281697969f9df5fd18f8713f14ad73611dacd73ad7becfa",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "f4cc0e909c19e838eb069430f27f9e3dbebab5642f21a1e03e80649757414c13"
+    },
+    {
+      "index": 26,
+      "batch": 4,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-04/part-026.json",
+      "offset": 78000000,
+      "decodedBytes": 3000000,
+      "decodedSHA256": "4460984b4a862809f9bf9c220877c574132cc3cd15ba16fb518e5e658064bbf5",
+      "encodedBytes": 4000199,
+      "encodedSHA256": "2595618d3efa9de57f7133c7be4ff0615132a50869b1d441832bac65e86bd838"
+    },
+    {
+      "index": 27,
+      "batch": 4,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-04/part-027.json",
+      "offset": 81000000,
+      "decodedBytes": 2652102,
+      "decodedSHA256": "28978730e9a73877c95df43d15e61a8b9f600ed8251a360e1a5c1694c9add308",
+      "encodedBytes": 3536335,
+      "encodedSHA256": "2fb547ad799a11ef4c81cf1de9e7710a3d8be57fa993cf2bea5725c1883ea91a"
+    }
+  ],
+  "batches": [
+    {
+      "batch": 1,
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-01",
+      "proposedJobId": "t45-f35-5d70-parts-01-20261106-01",
+      "partIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "encodedBytes": 28001376,
+      "submitted": false
+    },
+    {
+      "batch": 2,
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-02",
+      "proposedJobId": "t45-f35-5d70-parts-02-20261106-01",
+      "partIndexes": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "encodedBytes": 28001390,
+      "submitted": false
+    },
+    {
+      "batch": 3,
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-03",
+      "proposedJobId": "t45-f35-5d70-parts-03-20261106-01",
+      "partIndexes": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "encodedBytes": 28001393,
+      "submitted": false
+    },
+    {
+      "batch": 4,
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-parts-preparation-20261106-01/batch-04",
+      "proposedJobId": "t45-f35-5d70-parts-04-20261106-01",
+      "partIndexes": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "encodedBytes": 27537529,
+      "submitted": false
+    }
+  ],
+  "leafMaximum": 4194304,
+  "batchMaximum": 33554432,
+  "rawChunkBytes": 3000000,
+  "leavesPerBatch": 7,
+  "partCount": 28,
+  "reassembledLocalStreamMatchesD2": true,
+  "remoteFinalArchive": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-5d70-ordinary-20261106-01/archive.bin",
+  "requiredBeforeAnyWrite": [
+    "Read exact existing artifact directory/ready/binding and original request keys; reuse exact ready bytes only, unknown state no replay.",
+    "C exact current-window authority and approved original transfer carrier; preserve original root gate/registry/channel bounds.",
+    "Final assembly must match 83652102 bytes and SHA9dc78883, exact UID1000 private regular inode and original ready fileIdentity, source190de and authority hash."
+  ],
+  "carrierNote": "Original retained artifact-stage client streams one complete archive and does not expose append/part actions. This plan honors the newly specified run leaf/batch limits. No new remote append/assembler controller has been invented; exact existing bounded assembly path must be bound before part jobs can execute."
+}
