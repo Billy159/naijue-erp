@@ -74,7 +74,7 @@ def persist_install_child_failure(root, result, descriptor):
             keys={'state','installState','code','validationStage','validationCode','automaticRetry','stage','step','originalSQLSTATE','originalInternalCode','rollbackSQLSTATE','rollbackInternalCode'}
             need(type(v) is dict and set(v)==keys,'INSTALL_DIAGNOSTIC_FIELDS')
             need(v['state']=='INSTALL_FAILED_OR_OUTCOME_UNKNOWN' and v['code']=='FRESH35_ISOLATED_ENTRY_FAILED' and v['automaticRetry'] is False,'INSTALL_DIAGNOSTIC_STATE')
-            need(v['installState'] in [None,'NOT_STARTED','IN_TRANSACTION','ROLLED_BACK','ROLLBACK_UNCONFIRMED','COMMIT_OUTCOME_UNKNOWN','COMMITTED_UNPUBLISHED'],'INSTALL_DIAGNOSTIC_INSTALL_STATE')
+            need(v['installState'] in [None,'NOT_STARTED','IN_TRANSACTION','ROLLED_BACK','ROLLBACK_UNCONFIRMED','COMMIT_OUTCOME_UNKNOWN','COMMITTED_UNPUBLISHED','FAILED_NO_INSTALLED_RESULT'],'INSTALL_DIAGNOSTIC_INSTALL_STATE')
             need(v['stage'] in ['BOUND','BEGIN','STEP','OBSERVE','COMMIT','ROLLBACK','CLOSE','UNKNOWN'],'INSTALL_DIAGNOSTIC_STAGE')
             need((v['stage']=='STEP' and type(v['step']) is str and re.fullmatch('[A-Za-z0-9_./:-]{1,160}',v['step']) and v['step'] in {step['name'] for step in descriptor['statements']}) or (v['stage']!='STEP' and v['step'] is None),'INSTALL_DIAGNOSTIC_STEP')
             need(v['validationStage'] in [None,'BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'],'INSTALL_DIAGNOSTIC_VALIDATION_STAGE')
