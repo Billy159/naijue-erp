@@ -1,0 +1,122 @@
+{
+  "status": "PASS_SCOPED_EXACT_BINARY_ARTIFACT_STAGED_AND_READBACK_ONLY",
+  "checkedAtShanghai": "2026-11-06T00:56:41.453664+08:00",
+  "sourceCommit": "5d70b3ee9038b4d0fe66328e2a172b688c07d9c9",
+  "buildId": "erp-5d70b3ee9038-full-20261106",
+  "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+  "wrapperSHA256": "7b239be925bd29783f264a4bf903770cb07505011209af13724fa12125862a78",
+  "CASSourceSHA256": "bcb8b0085ace06fe8c0324ccef31a98322a8b91e6a330a4cfc2c36e21d390e9a",
+  "CASParentSHA256": "49b0fae3c57cb95d6891c893b3dc642abd15869a440eca9d4e8ee423da5920ea",
+  "CASChanges": "Only C-approved old/new hashes, exact artifact key/hash/bytes, input filename, temp suffix and truthful receipt labels/filename. Original trust, private old backup, inode+bytes CAS, atomic replace and fsync retained.",
+  "CASJob": {
+    "jobId": "t45-f35-5d70-staging-policy-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-7e38b11183ef",
+    "atUTC": "2026-11-05T16:54:54.108748+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.2680318891070783,
+    "exports": [
+      "ordinary-policy-readback.json"
+    ],
+    "finishedAtUTC": "2026-11-05T16:54:54.403412+00:00"
+  },
+  "CASReadback": {
+    "status": "EXTERNAL_ORDINARY_POLICY_INSTALLED_OLD_BYTES_PRESERVED",
+    "before": {
+      "uid": 0,
+      "gid": 0,
+      "mode": "0o444",
+      "sha256": "a24505c9670723303c24dbd9ccf39da9a152ef8f3a92a1226a0ae85c4a83025a",
+      "backupPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-5d70-staging-policy-20261106-01/staging-policy-before.json"
+    },
+    "after": {
+      "uid": 0,
+      "gid": 0,
+      "mode": "0o444",
+      "nlink": 1,
+      "sha256": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c"
+    },
+    "approvalCreated": false,
+    "oldSourceArtifactOrReadyChanged": false,
+    "restore": "Use retained exact old bytes and metadata via original root controlled channel only after no live ordinary staging consumption; preserve new policy evidence."
+  },
+  "stage": {
+    "artifactKey": "f35-5d70-ordinary-20261106-01",
+    "startedAtUTC": "2026-11-05T16:55:54.707713+00:00",
+    "mode": "ORIGINAL_BINARY_ARTIFACT_STAGE_ONCE",
+    "originalRemoteTimeoutSeconds": 40,
+    "finishedAtUTC": "2026-11-05T16:56:15.761172+00:00",
+    "elapsedSeconds": 21.053,
+    "exitCode": 0,
+    "result": {
+      "status": "READY",
+      "receipt": {
+        "status": "READY",
+        "artifactKey": "f35-5d70-ordinary-20261106-01",
+        "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+        "archiveSha256": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+        "archiveBytes": 83652102,
+        "authoritySha256": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c",
+        "fileIdentity": [
+          66304,
+          393377,
+          83652102,
+          1793897775297276837,
+          1793897776045282735
+        ]
+      }
+    }
+  },
+  "originalKeyStatusAfter": {
+    "checkedAtUTC": "2026-11-05T16:56:41.453664+00:00",
+    "exitCode": 0,
+    "result": {
+      "status": "READY",
+      "receipt": {
+        "archiveBytes": 83652102,
+        "archiveSha256": "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7",
+        "artifactKey": "f35-5d70-ordinary-20261106-01",
+        "authoritySha256": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c",
+        "fileIdentity": [
+          66304,
+          393377,
+          83652102,
+          1793897775297276837,
+          1793897776045282735
+        ],
+        "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+        "status": "READY"
+      }
+    }
+  },
+  "matchingStageReceipts": true,
+  "authority": {
+    "sha256": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c",
+    "startsAt": 1793897586630,
+    "expiresAt": 1793899386630,
+    "source": "External C exact13-field authority, original artifact_authority validates actual grant/window; no client-created approval",
+    "scope": "Existing binary staging only. Not a PG or production authorization."
+  },
+  "retained28PartLeaves": "Retained unused; not transferred and no assembler added.",
+  "replayedOldJobs": 0,
+  "serverImageBuilds": 0,
+  "PGOrContainerActions": 0,
+  "productionOrRealDataOperations": 0,
+  "integrationSourceChanges": 0,
+  "actualModelEffort": "UNVERIFIED",
+  "requestedModelEffort": "gpt-6.1-sol/high",
+  "Fast": "UNVERIFIED",
+  "next": "No PG/container/materialization action until exact separate external C execution binding and valid new window. Reuse existing immutable image and staged archive; unknown outcome only original-key readback.",
+  "evidence": {
+    "CAS-READY.json": "b595cbcc7c1e8f525f1d2b2e306bb29fc158b80cf0bbb2adb9ff500b1d947f93",
+    "CAS-EXACT.diff": "1e050cbecbcbeba55c0b86d13deae16bde1a9c4382794c1f3cfcec90ce6e8484",
+    "BINARY-STAGE-RESULT.json": "0836e6b172b1e1490109f9deb8db54e9b876d38fa9570249fa7e40b5cde64520",
+    "BINARY-STATUS-AFTER.json": "a3575a7fd2a289abee910901b0ed70ea0532e9e10ed93d3600e4a3b260023b4f",
+    "install_ordinary_policy.py": "bcb8b0085ace06fe8c0324ccef31a98322a8b91e6a330a4cfc2c36e21d390e9a"
+  }
+}

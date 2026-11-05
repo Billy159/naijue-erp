@@ -1,0 +1,49 @@
+{
+  "jobId": "t45-f35-5d70-staging-policy-20261106-01",
+  "CASSourceSHA256": "bcb8b0085ace06fe8c0324ccef31a98322a8b91e6a330a4cfc2c36e21d390e9a",
+  "CASParentSHA256": "49b0fae3c57cb95d6891c893b3dc642abd15869a440eca9d4e8ee423da5920ea",
+  "authoritySHA256": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c",
+  "authoritySource": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/staging-5d70-external-01/artifact-staging-5d70-authorization-01.json",
+  "exactListedLiteralChangesOnly": true,
+  "listedChanges": [
+    [
+      "oldhash='04ef37b35ffc358cf7fbea564fd3cc31dca2ab971cf211b9bc2e3db0f8038bec';newhash='a24505c9670723303c24dbd9ccf39da9a152ef8f3a92a1226a0ae85c4a83025a'",
+      "oldhash='a24505c9670723303c24dbd9ccf39da9a152ef8f3a92a1226a0ae85c4a83025a';newhash='b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c'"
+    ],
+    [
+      "artifact-staging-offline-base-authorization-01.json",
+      "artifact-staging-5d70-authorization-01.json"
+    ],
+    [
+      "t45-f35-fixed-base-offline-20261105-01",
+      "f35-5d70-ordinary-20261106-01"
+    ],
+    [
+      "19739f1489ea6a3a4bb8ce7a8529e422235c306b6593904ce56f54aa4d200342",
+      "9dc78883dc896a7498ef6d9023692e12222feaa5c215b7a26d8eadc4c12008b7"
+    ],
+    [
+      "29870080",
+      "83652102"
+    ],
+    [
+      "artifact-staging-authorization.offline-01.tmp",
+      "artifact-staging-authorization.ordinary-5d70-01.tmp"
+    ],
+    [
+      "EXTERNAL_OFFLINE_POLICY_INSTALLED_OLD_BYTES_PRESERVED",
+      "EXTERNAL_ORDINARY_POLICY_INSTALLED_OLD_BYTES_PRESERVED"
+    ],
+    [
+      "no live offline staging/load consumption",
+      "no live ordinary staging consumption"
+    ],
+    [
+      "offline-policy-readback.json",
+      "ordinary-policy-readback.json"
+    ]
+  ],
+  "unchangedGuards": true,
+  "remoteActionsStarted": false,
+  "binaryClientSHA256": "590be0a4b24841764c96a759dc17ce04f0b90f29251d4cf22efd64f5732618d6"
+}

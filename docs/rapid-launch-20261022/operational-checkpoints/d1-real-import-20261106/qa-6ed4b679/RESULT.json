@@ -1,0 +1,184 @@
+{
+  "task_id": "QB-D1-FRESH35-PRODUCTION-REAL-IMPORT-6ed4b679-20261106",
+  "verdict": "PASS_SOURCE_AND_MODELS_NOT_PG",
+  "findings": [],
+  "scope": "Fixed six runtime leaves plus four direct tests only; no integration, release, database or production acceptance",
+  "repository": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102",
+  "commit": "6ed4b679cb58b55e9af056e2f9b676d3d2c16a03",
+  "parent": "4ef61a80e22b9a7c6b02f2571576418d0afc8f32",
+  "model": {
+    "continuation_requested": "gpt-6.1-sol/high",
+    "actual_runtime_model": "UNVERIFIED",
+    "fast": "UNVERIFIED",
+    "note": "Requested settings are not a claim of an actual model switch."
+  },
+  "recorded_at": "2026-11-06T00:52:31.977026+08:00",
+  "fixed_leaves": [
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "bytes": 32761,
+      "sha256": "efab525579d44c593cf3b9f74e4654f9f15494c958543eaacef829e413506890"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.d.mts",
+      "bytes": 3842,
+      "sha256": "0671fe4bddbd979ba40ffaee1306bfc3204eeae5432807810911016e1894cea1"
+    },
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "bytes": 19864,
+      "sha256": "fdae12f6b7a6962bf9b9b8764fa3075f7bd7d85391e9d6cb1cbfe2c85ea3cb7b"
+    },
+    {
+      "path": "tools/unified-import/stream-import-cli.mjs",
+      "bytes": 23112,
+      "sha256": "6605c956342b05cad0d74907e54a2ca30b0fcd7a9cbe9a55d133cb073ef68c75"
+    },
+    {
+      "path": "tools/unified-import/fresh35-receiver-diagnostics.ts",
+      "bytes": 2449,
+      "sha256": "7e25d5917cc5ec423a2d943f2fad5f7cfb9d1d2d6c4b83f968f0bfd626904657"
+    },
+    {
+      "path": "tools/unified-import/cli.mjs",
+      "bytes": 3345,
+      "sha256": "3163a0db7713f005c26f34265ec650a17e1e67179a5f06fb15aa4bd0e9641463"
+    },
+    {
+      "path": "tests/fresh35-host-session.test.mjs",
+      "bytes": 31193,
+      "sha256": "45ecc65ec4e59f6fcbf9fe46d5119d7d09129d965eb86f1c373ae2ba30f70614"
+    },
+    {
+      "path": "tests/fresh35-receiver-diagnostics.test.ts",
+      "bytes": 7530,
+      "sha256": "12102a8dc5007185072cae3f8452370c9af8e7de48c4b07dd51c522c36a27dfb"
+    },
+    {
+      "path": "tests/unified-stream-import-cli.test.mjs",
+      "bytes": 4674,
+      "sha256": "b3df62a0a8a360503ddb1add66bbc7cec4ad1813db1d2118882964706ac06cdf"
+    },
+    {
+      "path": "tests/unified-stream-import-outcome.test.mjs",
+      "bytes": 22929,
+      "sha256": "f3e6d48523db3225dfa60f3eb374e8723d36204626d5cdbe78d1b9b45d7c43aa"
+    }
+  ],
+  "source_documents": [
+    {
+      "path": "docs/rapid-launch-20261022/operational-checkpoints/d1-real-import-20261106/PRODUCTION-REAL-IMPORT-SOURCE-RESULT.json",
+      "sha256": "6d175da17248dbdd9cf6fbc573d25bd4f2a028326eac788b1c5c5248a2d6250b"
+    },
+    {
+      "path": "docs/rapid-launch-20261022/operational-checkpoints/d1-real-import-20261106/PRODUCTION-REAL-IMPORT-SOURCE-HANDOFF.md",
+      "sha256": "45835894110b882e27134bc0b85831071d0344c8b25326fd3ff0bba9c2506198"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Fixed 10 leaf SHA256 and size match owner packet",
+      "state": "PASS",
+      "count": 10
+    },
+    {
+      "name": "Original seven log SHA256 match owner packet",
+      "state": "PASS",
+      "count": 7
+    },
+    {
+      "name": "QB independent targeted checks",
+      "state": "PASS",
+      "passed": 9,
+      "details": [
+        {
+          "name": "all seventeen exact external binding fields reject independent tampering",
+          "state": "PASS"
+        },
+        {
+          "name": "unserialized authority, context, prepared-object and token cannot cross models",
+          "state": "PASS"
+        },
+        {
+          "name": "hard-linked authority rejected; same bytes on a new inode revoke prior authority",
+          "state": "PASS"
+        },
+        {
+          "name": "authorization cannot predate birth, extend expiry, start in future or survive its own expiry",
+          "state": "PASS"
+        },
+        {
+          "name": "extra, removed, reordered and cross-method full streams cannot finish or commit",
+          "state": "PASS"
+        },
+        {
+          "name": "exact complete stream permits finish and commit; arbitrary SQL and reused prepare refused",
+          "state": "PASS"
+        },
+        {
+          "name": "actual fixed private host rejects every modeled context and authority",
+          "state": "PASS"
+        },
+        {
+          "name": "owned wire refuses extending its original deadline and closes once",
+          "state": "PASS"
+        },
+        {
+          "name": "deadline crossed during asynchronous authorization sends no business SQL and closes once",
+          "state": "PASS"
+        }
+      ],
+      "scope": "Exact Git source in memory; explicit OS metadata/context seed model; no installation, connection, genuine capability or PG",
+      "method": "Reads commit via git show in memory. Existing explicit OS/context seed helper reused; QB writes independent assertions. Real private module rejects model capabilities."
+    },
+    {
+      "name": "Owner affected direct tests",
+      "state": "ADOPTED_PASS",
+      "passed": 32,
+      "failed": 0,
+      "note": "Matching fixed test leaves and pinned direct-final log; not rerun."
+    },
+    {
+      "name": "Owner original coordinator/inspect/kernel/host tests",
+      "state": "ADOPTED_PASS",
+      "passed": 32,
+      "failed": 0,
+      "note": "Pinned original-core log; not rerun."
+    },
+    {
+      "name": "Owner types and formal build",
+      "state": "ADOPTED_EXIT_0",
+      "note": "Source packet records exit0 and hashes match the empty final logs. QB did not rerun these commands."
+    }
+  ],
+  "reviewed_behavior": [
+    "Explicit production REAL selector; legacy V1 context continues refusing V2; production rejects whole-import and allow-synthetic.",
+    "Prepare is issued genuine same-client planner admission by original factory; no controlled writer is passed to the preparation callback. Whole original stream is compiled before exact external authorization.",
+    "External authority binds original installation bytes, install program/sourceSet/target/catalog, REAL manifest/plan, private initialization aggregate, complete typed step stream and original operation/request keys.",
+    "Fixed root authorization is exact-keyed, single-link and nonwritable by group/other. Reads compare original/final/path nanosecond identities. Auth token and binding use private WeakMaps.",
+    "Each business send checks authorization generation, installed-record snapshot and current window on original controlled wire; cumulative stream hash is checked before finish and commit.",
+    "Original allowlist, private parameter copies, role checks, acknowledgments, transaction status, poisoning, rollback and single-close owner remain. New deadline can only shorten original installation window.",
+    "COMMITTED and ALREADY_COMMITTED close first, then reopen original factory for new admission/full compilation/authorization/source reconciliation. UNKNOWN and ROLLED_BACK do not retry or open readback. Post-commit failures preserve actual commit and mark verification unknown.",
+    "Prepared success status requires CLOSED, local cleanup not FAILED, business_database_writes false, verification NOT_RUN."
+  ],
+  "harness_note": "Initial QB harness incorrectly asserted 19 binding keys; exact source has 17. Corrected harness only, retained initial log. No product finding or source edit.",
+  "unverified": [
+    "Actual production V2 protected OS/root record, reference/source trust and catalog/ACL admission on a real host.",
+    "Actual external authorization installation/rotation/expiry and genuine capability issuance.",
+    "Real 13-package import, PostgreSQL transaction rollback/commit/replay, source readback/conservation/audit, timing and performance.",
+    "Packaging of this newly frozen source closure, deployment and business opening. Existing 5d70 synthetic target does not contain this REAL increment and is not blocked by this source review."
+  ],
+  "boundaries": {
+    "source_modified": false,
+    "new_source_checkout_or_copy": false,
+    "mutable_wip_consumed": false,
+    "database_connection": false,
+    "server_access": false,
+    "browser": false,
+    "production_input_read": false,
+    "authorization_file_installed": false,
+    "release_approved": false
+  },
+  "prior_acceptance": "Reuse prior main/fixture/r2 source results; no full suite or previously accepted PG run repeated. T45 remains sole server/database owner.",
+  "next": "C may adopt this source-only result for exact 6ed4b679 ten leaves. Any actual REAL operation remains separately coordinated with an exact complete source closure, valid external batch authorization and original window; not authorized by this QB result."
+}

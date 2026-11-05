@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T16:54:35.962232+00:00",
+  "updatedAt": "2026-11-05T16:59:20.475376+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -29091,8 +29091,15 @@
         "startsAt": 1793897586630,
         "expiresAt": 1793899386630,
         "scope": "Exact ordinary synthetic artifact, original CAS; not PG or production",
-        "execution": "DISPATCHED_TO_ORIGINAL_T45_NOT_YET_RECEIPTED",
-        "priorGateSHA256": "a24505c9670723303c24dbd9ccf39da9a152ef8f3a92a1226a0ae85c4a83025a"
+        "execution": "PASS_SCOPED_EXACT_BINARY_ARTIFACT_STAGED_AND_READBACK_ONLY",
+        "priorGateSHA256": "a24505c9670723303c24dbd9ccf39da9a152ef8f3a92a1226a0ae85c4a83025a",
+        "planSHA256": "a8743b2b25131d51a23f6fb4a97fb5a7bc5dc05ccffdc32c7e91180c0da8580c",
+        "receiptSHA256": "81454014e4ed8d6cdcb3c5a90aad07650390dc1c7970913c3452aa2d1001fb19",
+        "elapsedSeconds": 21.053,
+        "exitCode": 0,
+        "rootGateReadback": "b7b9015ba3feed3bf400ea3652c93a5b59c9b13bb052f318fd1b610bb8990f6c",
+        "oldGatePreserved": true,
+        "PGExecuted": false
       }
     },
     "productionRealImportContinuation": {
@@ -29123,7 +29130,15 @@
       "remoteVerified": true,
       "receiptSHA256": "6d175da17248dbdd9cf6fbc573d25bd4f2a028326eac788b1c5c5248a2d6250b",
       "reviewSHA256": "6e9e0305c4382bbc8841ccb740e06f341689347fd1f4b7ffeba3960b1ea93145",
-      "next": "Original QB source-only conclusion adopted; D1 readonly. Later distinct REAL root/build; keep current synthetic5d70 immutable."
+      "next": "Original QB source-only conclusion adopted; D1 readonly. Later distinct REAL root/build; keep current synthetic5d70 immutable.",
+      "buildRoot": {
+        "commit": "f87c5e9589af7b04d1c27b1ef013cd7ffe2ed211",
+        "tree": "fde5a227232f110745947db9f0f9de69865406fe",
+        "parentSyntheticRoot": "5d70b3ee9038b4d0fe66328e2a172b688c07d9c9",
+        "remoteVerified": true,
+        "owner": "D2",
+        "state": "BUILDING_FIXED_ACCEPTED_REAL_SOURCE_NOT_DEPLOYMENT"
+      }
     },
     "releaseFixturePinSynchronization": {
       "commit": "bd99c1012643c7bc32cd2f9df6e90f5385ecd956",
