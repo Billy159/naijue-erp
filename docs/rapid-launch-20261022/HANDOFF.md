@@ -1414,3 +1414,10 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 - 原QB对f2f0be08两叶增量PASS，回执2dea06aa；原脚本可逆/五base版本/guard及期限、错误HEAD与上下文负例采用，实际dpkg/APT未由模型代替。C据已有效同类隔离授权在执行端外生成新六键71ae03e6，截止1793888034541；原T45一次提交t45-f35-5b26-exact-five-downgrades-20261105-01，最新原键实际RUNNING。未有终态收据，不能写84安装/ldd或派生image通过，不重复提交。PG20分钟仍未启。
 - 独立回滚快照的真实缺口已明确：原controller无35表SELECT，旧verify-host内rollback/commit/replay没有中间观察点。原D1在已批四叶内补两阶段且同fixture指纹，原T45后续在既有admin/私有psql边界做受控只读观察；无新权限/帐号/连接池，业务写仍原controller，whole_verify不冒称独立全表snapshot。
 - 仅三个旧构建导出删除仍待真人准确清单确认，未删；原件/当前7393/Git/日志/构建包均保留。容量相关全源核账与预检未重跑，不记通过。
+
+
+### 隔离依赖镜像真实完成，数据库窗口尚未启动
+- 原T45新exact-five作业COMPLETED/exit0/431.949秒，21:46:52—21:54:04；聚合22479274。原84锁版本/下载哈希及限定5项前置guard由冻结脚本强制且实际build退出0，日志明确STANDARD_LDD_DEPENDENCIES_RESOLVED_NO_PG_START。公开尾部16KiB未保留首个5项标记，不能冒称该标记可见或另行独立gpg验证。
+- 唯一原root只读export job退出0/0.118秒，原image-receipt root0600/e475f85c已回读；actual Engine imageID6de44f43（manifest index）、amd64 manifest c926c0b7、config5aba3fb1，linux/amd64，RepoDigests空，按实际ID消费不造registry digest。新script d3279106、原lock0aaf/5项版本及iid一致；旧失败全部保留。
+- 原目标container实际不存在、start/container receipt未建、PG20分钟未启动；服务器/srv余量18,295,119,872字节，内存事实已回。镜像仍绑定原5b环境source0e6b和旧b91归档，不能改写为当前S_test业务通过。
+- 下一沿原D1四叶固定/原QB增量与T45唯一应用source/环境proof分绑、普通transfer及两阶段只读observer接缝推进35表安装与真实合成验证。不重建环境、不扩大帐号权限或另起平台。全源本地核账仍等待准确3旧导出清理确认，未执行。
