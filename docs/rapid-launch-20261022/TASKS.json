@@ -29233,7 +29233,22 @@
         "containerStopped": true,
         "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED",
         "actualSQLSTATE": "NOT_EXPORTED",
-        "next": "Original T45 bounded stopped-state journal read; original D1 readonly error propagation. No retry/restart/inference."
+        "next": "Original D1 examines fixed pg8.23.1 protocol and safe error diagnostics; T45 sole launcher writer preserves closed safe child fields. No install replay.",
+        "diagnostic": {
+          "receiptSHA256": "7cc188b89eb0c7fba8500cf27754ecf26d0c637a3a430f0c45cf58b1e2e0f4b8",
+          "readonlyJob": "t45-f35-5d70-journal-exact-readonly-20261106-01",
+          "exitCode": 0,
+          "elapsedSeconds": 0.067,
+          "events": 5,
+          "eventBytes": 3027,
+          "lastPending": "physical-empty-target",
+          "failureState": "ROLLBACK_UNCONFIRMED",
+          "errorCode": "INSTALL_ERROR",
+          "clientClosed": true,
+          "SQLSTATE": "NOT_RECORDED",
+          "mutations": 0,
+          "PGConnections": 0
+        }
       }
     },
     "productionRealImportContinuation": {

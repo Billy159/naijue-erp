@@ -1,0 +1,107 @@
+{
+  "status": "READONLY_FAILURE_BOUNDARY_IDENTIFIED_UNDERLYING_CAUSE_UNRECORDED",
+  "actualJournal": {
+    "checkedAtUTC": "2026-11-05T17:55:29.806420+00:00",
+    "writes": 0,
+    "PGConnections": 0,
+    "events": [
+      {
+        "file": "000001.json",
+        "sha256": "0d37b0064b578dba0800b0cd9ef014527556117bfd0f4c77a0551164a1ca606d",
+        "index": 1,
+        "at": "2026-11-05T17:50:48.040Z",
+        "event": {
+          "state": "BOUND"
+        }
+      },
+      {
+        "file": "000002.json",
+        "sha256": "d47150e2ef4f5d2858d50c3f0cff342e60b8cfcc23c857e6cb53910f4947efe9",
+        "index": 2,
+        "at": "2026-11-05T17:50:48.421Z",
+        "event": {
+          "state": "INSTALL_PENDING"
+        }
+      },
+      {
+        "file": "000003.json",
+        "sha256": "e64d5c802e1ff55944eeac8b95478306fcbd447d13d86f7beaa0537ee0c75aa1",
+        "index": 3,
+        "at": "2026-11-05T17:50:48.687Z",
+        "event": {
+          "state": "STEP_PENDING",
+          "name": "physical-empty-target"
+        }
+      },
+      {
+        "file": "000004.json",
+        "sha256": "b75935d7c2558acbaffaca3a80d6cc93b6c1b91a3ff9a5589ef81e794de42a42",
+        "index": 4,
+        "at": "2026-11-05T17:50:48.764Z",
+        "event": {
+          "state": "ROLLBACK_UNCONFIRMED",
+          "errorCode": "INSTALL_ERROR"
+        }
+      },
+      {
+        "file": "000005.json",
+        "sha256": "202b1d863d60bfdd47ea52df0c5d164567b067213e6f89afb0ee3005deb5ba8a",
+        "index": 5,
+        "at": "2026-11-05T17:50:48.819Z",
+        "event": {
+          "state": "CLIENT_CLOSED",
+          "confirmed": true
+        }
+      }
+    ],
+    "actualStoppedCID": "1a3c2aafedec0e0dae4dcd59945229bdb41525ab6dca44afb668c4ba77aac7e3",
+    "actualStateBind": {
+      "source": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r1/state",
+      "destination": "/var/lib/naijue-erp/fresh35-isolated",
+      "RW": true
+    },
+    "directoryExists": true,
+    "eventBytesRead": 3027,
+    "status": "EXACT_EXISTING_JOURNAL_SAFE_FIELDS_ONLY"
+  },
+  "boundary": "STEP_PENDING physical-empty-target -> ROLLBACK_UNCONFIRMED INSTALL_ERROR -> CLIENT_CLOSED confirmed. No STEP_ACKNOWLEDGED, COMMIT_PENDING or ROLLED_BACK event in retained five-event journal. Does not establish committed/rolledback database outcome.",
+  "SQLSTATE": "NOT_RECORDED_IN_SAFE_RECEIPTS",
+  "captureGaps": [
+    {
+      "file": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "lines": [
+        957,
+        958,
+        987,
+        988
+      ],
+      "gap": "execute subprocess capture_output stdout/stderr discarded on nonzero need; failure receipt only genericcode."
+    },
+    {
+      "file": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "line": 155,
+      "gap": "catch reports generic ENTRY_FAILED/installState and limited validation fields; no nested PG error SQLSTATE or failing step."
+    },
+    {
+      "file": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "lines": [
+        95,
+        97,
+        99
+      ],
+      "gap": "Rollback AggregateError loses original top-level code; journal fallback INSTALL_ERROR omits nested cause and failing step diagnostics."
+    }
+  ],
+  "nextForCAndOriginalSourceOwner": "Minimal closed safe capture of stage/step/public validationCode/SQLSTATE and bounded nested causes, plus launcher persistence of those safe fields before generic failure; never log SQL, parameters, credentials or raw environment. Source change/review only, not a new install retry.",
+  "limits": {
+    "eventMaxFiles": 64,
+    "eventMaxBytes": 65536,
+    "eventTotalMaxBytes": 262144,
+    "actualEvents": 5,
+    "actualBytes": 3027,
+    "catalogCanonicalRead": false,
+    "rawPrivateLogsExported": false,
+    "PGRestartOrConnection": false,
+    "writes": 0
+  }
+}
