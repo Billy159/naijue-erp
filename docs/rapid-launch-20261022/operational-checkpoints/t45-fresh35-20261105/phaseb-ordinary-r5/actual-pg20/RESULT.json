@@ -1,0 +1,150 @@
+{
+  "status": "FAILED_INSTALL_UNKNOWN_COMMIT_OUTCOME_CLEANUP_CONFIRMED_NO_REPLAY",
+  "start": {
+    "status": "WAITING_EXTERNAL_INSTALL_AUTHORITY",
+    "job": {
+      "jobId": "t45-f35-5d70-start-20261106-01",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "unit": "naijue-erp-op-5cc58239-7a02eb76196b",
+      "atUTC": "2026-11-05T17:42:38.900883+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 0,
+      "elapsedSeconds": 27.335950108710676,
+      "exports": [
+        "fresh35-start-target-result.json"
+      ],
+      "finishedAtUTC": "2026-11-05T17:43:06.268079+00:00"
+    },
+    "cid": "1a3c2aafedec0e0dae4dcd59945229bdb41525ab6dca44afb668c4ba77aac7e3",
+    "program": {
+      "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+      "sourceSetSha256": "190de4e0244c9c18c0a7d5469b6990f24ef16699866f323cbab42900ce124252",
+      "programSha256": "fe37b2246041116ccabd503798118ca2af1bf3c8facf30db81dd700c601d5a29",
+      "targetSha256": "81f7c51802fd92d378fc85fca4512efa68a9f1404305e37d45b1610c46de3ccf"
+    },
+    "target": {
+      "expiresAt": 1793901632043,
+      "physical": {
+        "databaseOid": "16393",
+        "postmasterStart": "2026-11-05 17:42:55.317508+00",
+        "serverVersionNum": "170011",
+        "systemIdentifier": "7704744287653146671"
+      },
+      "proposal": {
+        "admin": "fresh35_admin_20261105_r1",
+        "controller": "fresh35_controller_20261105_r1",
+        "database": "synthetic_fresh35_20261105_r1",
+        "host": "127.0.0.1",
+        "owner": "fresh35_owner_20261105_r1",
+        "port": 18651,
+        "runtime": "fresh35_runtime_20261105_r1",
+        "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+      },
+      "startsAt": 1793900432043
+    },
+    "serverDescriptionRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-r1/state/cloud-pg-fresh35-20261105-r1",
+    "originalExportPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5d70-start-20261106-01/transport/release-receipts/t45-f35-5d70-start-20261106-01/fresh35-start-target-result.json",
+    "originalExportSHA256": "120dd5fca037e2c4eb2be10ba47cd638c7d37645bb51d037a498c6c84385d07a",
+    "installAuthorityCreatedOrDelivered": false,
+    "deadlineMs": 1793901632043,
+    "secretsExported": false
+  },
+  "installJob": {
+    "jobId": "t45-f35-5d70-install-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-0a092febe18f",
+    "atUTC": "2026-11-05T17:50:37.944843+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 13.650586345233023,
+    "exports": [
+      "fresh35-deliver-install-result.json"
+    ],
+    "finishedAtUTC": "2026-11-05T17:50:51.601495+00:00"
+  },
+  "delivery": {
+    "approvalCreated": false,
+    "cid": "1a3c2aafedec0e0dae4dcd59945229bdb41525ab6dca44afb668c4ba77aac7e3",
+    "sha256": "cae445353d5adea0dceff799612ac3af369cfe50453fca2a543e4a7c2726ee6f",
+    "status": "EXTERNAL_INSTALL_BYTES_COPIED_ONCE"
+  },
+  "originalFailure": {
+    "automaticRetry": false,
+    "code": "FRESH35_ISOLATED_INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+    "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+  },
+  "runtimeDependencyActualLoad": {
+    "arch": "x64",
+    "fastify": "5.12.5",
+    "libvips": "8.18.7",
+    "pg": "8.23.1",
+    "platform": "linux",
+    "sharp": "0.35.5"
+  },
+  "sourceResult": {
+    "businessVerified": false,
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "errors": [],
+      "initialization": {
+        "descendantsReaped": true,
+        "errors": [],
+        "initialized": true,
+        "initializerReaped": true,
+        "stopReason": "INITIALIZER_EXITED"
+      },
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "hostEnabled": false,
+    "hostVerified": false,
+    "independentSnapshotsVerified": false,
+    "ordinaryBusinessVerified": false,
+    "productionVerified": false,
+    "recordPublished": null,
+    "state": "FAILED_OR_CLEANUP_UNCONFIRMED",
+    "syntheticImportVerified": false
+  },
+  "container": {
+    "cid": "1a3c2aafedec0e0dae4dcd59945229bdb41525ab6dca44afb668c4ba77aac7e3",
+    "stopped": true,
+    "launcherExitCode": 1,
+    "forcedStopIsNotCleanShutdownProof": true,
+    "cleanProof": "Independent original source cleanup fields, not container-stop alone"
+  },
+  "actualSQLSTATE": "NOT_EXPORTED",
+  "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED",
+  "boundInputs": {
+    "wrapperSHA256": "1be390f665386dd1a447694d38fdc694a5962b692b79cd5da4f035e6591a330c",
+    "planSHA256": "2cd729331e78a74e655b5f5153f261eb082ba843cf830cdcffbe73f08c0d56b8",
+    "provisionSHA256": "cc1f6bc6021e313b44db1148cc4bfb125294ede87eda2fafbb41e07da109144e",
+    "installSHA256": "cae445353d5adea0dceff799612ac3af369cfe50453fca2a543e4a7c2726ee6f",
+    "deadlineMs": 1793901632043
+  },
+  "scopeLimits": [
+    "No production/REAL/f87c operations, build, upload or materialization repeated.",
+    "No raw private logs or credentials exported.",
+    "Start/install original keys terminal, no replay or retry.",
+    "Live dependency loading passed; installation commit/rollback and ordinary API business are not proven."
+  ],
+  "next": "Only original-key bounded readonly application-journal/failure-stage evidence after C specifies exact safe route. No PG restart/reinstall or changed target to infer outcome.",
+  "actualModelEffort": "UNVERIFIED",
+  "requestedModelEffort": "gpt-6.1-sol/high",
+  "Fast": "UNVERIFIED",
+  "evidenceSHA256": {
+    "evidence/install-job.json": "0728ddd7c4d6d9f8007ae7bce34c668657add32ad1b4e31abf1c9daceff0bd27",
+    "evidence/install-fresh35-deliver-install-result.json": "56f1ce9fcef1f5d4bc2d42ca1c268c5ab0110f896d62366f9169cdc12c7c1cf7",
+    "evidence/start-job.json": "e9d56921dc20fe1405f885921fe4bea2b3ba470b8bf76b32f21f2751f148c2d9"
+  }
+}

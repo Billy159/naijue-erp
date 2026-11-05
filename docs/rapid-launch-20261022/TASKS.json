@@ -29170,8 +29170,8 @@
         "provisionSHA256": "cc1f6bc6021e313b44db1148cc4bfb125294ede87eda2fafbb41e07da109144e",
         "planSHA256": "2cd729331e78a74e655b5f5153f261eb082ba843cf830cdcffbe73f08c0d56b8",
         "wrapperSHA256": "1be390f665386dd1a447694d38fdc694a5962b692b79cd5da4f035e6591a330c",
-        "state": "ACTUAL_TARGET_STARTED_EXTERNAL_INSTALL_ISSUED_DELIVERY_PENDING",
-        "installerAuthority": "C-issued original exact9key external install bytes; original deadline unchanged",
+        "state": "FAILED_INSTALL_UNKNOWN_COMMIT_OUTCOME_CLEANUP_CONFIRMED_NO_REPLAY",
+        "installerAuthority": "C-issued original9key bytes copied once; no replay",
         "humanAuthorization": "call_e4aeea80 plus explicit same-kind future isolation preauthorization/current goal",
         "productionOrRealAuthorized": false,
         "startJob": "t45-f35-5d70-start-20261106-01",
@@ -29187,7 +29187,53 @@
           "postmasterStart": "2026-11-05 17:42:55.317508+00"
         },
         "PGInstallPassed": false,
-        "ordinaryBusinessPassed": false
+        "ordinaryBusinessPassed": false,
+        "receiptSHA256": "c7594bfc1132a7e5d755a37adbf8d86ce5ea7a45be1f236d214833ffbe98799c",
+        "installJob": {
+          "jobId": "t45-f35-5d70-install-20261106-01",
+          "taskId": "T45",
+          "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+          "status": "FAILED",
+          "unit": "naijue-erp-op-5cc58239-0a092febe18f",
+          "atUTC": "2026-11-05T17:50:37.944843+00:00",
+          "grantId": "5cc58239751e4e2a",
+          "privateLogsExported": false,
+          "businessAcceptanceClaimed": false,
+          "exitCode": 2,
+          "elapsedSeconds": 13.650586345233023,
+          "exports": [
+            "fresh35-deliver-install-result.json"
+          ],
+          "finishedAtUTC": "2026-11-05T17:50:51.601495+00:00"
+        },
+        "runtimeDependencyActualLoad": {
+          "arch": "x64",
+          "fastify": "5.12.5",
+          "libvips": "8.18.7",
+          "pg": "8.23.1",
+          "platform": "linux",
+          "sharp": "0.35.5"
+        },
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          },
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true
+        },
+        "containerStopped": true,
+        "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED",
+        "actualSQLSTATE": "NOT_EXPORTED",
+        "next": "Original T45 bounded stopped-state journal read; original D1 readonly error propagation. No retry/restart/inference."
       }
     },
     "productionRealImportContinuation": {

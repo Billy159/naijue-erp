@@ -1237,3 +1237,7 @@ Official Linux artifacts acquired in the independent local artifact directory, n
 
 
 - PG20 actual original start completed0/27.335950s; safe actual target/source/window matched provision: OID16393/system7704744287653146671/PG170011, programfe37b224/target81f7c518/source190de. C issued original9key synthetic-only external install authoritycae44535 and delivered it to original T45 route for once install job. Original deadline1793901632043 remains; no client-issued approval, no REAL/production. Installation, import and ordinary business still await actual receipts.
+
+
+- Actual PG20 install job failed2/13.650586s after exact external authority copied once. Linux/x64 fastify5.12.5/pg8.23.1/sharp0.35.5/libvips8.18.7 actual load PASS only. Original wrapper swallowed execute child stderr; published failure generic FRESH35_ISOLATED_INSTALL_FAILED_OR_OUTCOME_UNKNOWN, commit state not yet inferred. No install record/import/ordinary business PASS.
+- Original independent cleanup fields cleanShutdown/cleanupComplete/credentialsRemoved/loginsRevoked/ownedPidAbsent/portAbsent true, errors[], initializer and descendants reaped; owned container stopped. Receipt c7594bfc actual hash verified; old failure retained, no replay/restart/production. T45 reads only bounded original installation-journal states/codes; D1 examines minimal existing error propagation while awaiting factual stage, no speculative DB changes.
