@@ -36,3 +36,48 @@ test('whole profile pins hardened function path without widening the legacy prof
  const queries:string[]=[];const raw={async query(sql:string){queries.push(sql);if(sql.startsWith('SET'))return{rows:[],rowCount:0,command:'SET'};return{rows:[{database:'synthetic_test',role:'erp_unified27_runtime_2393dbc6db9581c2',session_user:'runtime',server_port:5432,row_security:'on',search_path:'pg_catalog',replication_role:'origin',superuser:false,bypass:false,session_superuser:false,session_bypass:false,runtime_inherit:false,runtime_membership:false,can_create:false,version_ok:true,gate_ok:true,policies_ok:true}],rowCount:1,command:'SELECT'}},release(){}};
  for(const profile of ['STANDARD_V1','WHOLE_V2'] as const){queries.length=0;const i=createRuntime27CommandIssuer({async connect(){return statusful(raw);}},{database:'synthetic_test',user:'runtime',port:5432},profile),c=await i.pool.connect();const sql=queries.find(q=>q.includes('runtime27-command:identity'));assert.ok(sql);assert.ok(sql.includes(profile==='WHOLE_V2'?"ARRAY['search_path=pg_catalog, naijue_erp, pg_temp']":"ARRAY['search_path=pg_catalog, naijue_erp']"));if(profile==='STANDARD_V1')assert.ok(!sql.includes("ARRAY['search_path=pg_catalog, naijue_erp, pg_temp']"));c.release();}
 });
+
+import { createRuntime27MaintenanceCapabilities } from '../adapters/postgres/src/runtime27-command-issuer.ts';
+import { PostgresMaintenanceCommandUnitOfWork } from '../adapters/postgres/src/maintenance-command-unit-of-work.ts';
+import type { MaintenancePgContext } from '../adapters/postgres/src/maintenance-command-unit-of-work.ts';
+function nativeMaintenanceFixture(observation: Record<string, unknown> = {guards:true,triggers:true,columns:true}) {
+ const calls:string[]=[];let connects=0,discarded=0;
+ const pool={async connect(){connects++;
+  return statusful({async query(sql:string){calls.push(sql);
+   if(sql.startsWith('SET'))return {rows:[],rowCount:0,command:'SET'};
+   if(sql.startsWith('BEGIN'))return {rows:[],rowCount:0,command:'BEGIN'};
+   if(sql==='ROLLBACK'||sql==='COMMIT')return {rows:[],rowCount:0,command:sql};
+   if(sql.includes('ordinary27-maintenance:retained-guards'))return {rows:[observation],rowCount:1,command:'SELECT'};
+   assert.match(sql,/runtime27-command:identity/);
+   return {rows:[{database:'synthetic_test',role:'erp_unified27_runtime_2393dbc6db9581c2',session_user:'runtime',server_port:5432,row_security:'on',search_path:'pg_catalog',replication_role:'origin',superuser:false,bypass:false,session_superuser:false,session_bypass:false,runtime_inherit:false,runtime_membership:false,can_create:false,version_ok:true,gate_ok:true,policies_ok:true,read_only:'off',isolation:'read committed'}],rowCount:1,command:'SELECT'};
+  },release(discard?:unknown){assert.equal(discard,true);discarded++;}});
+ }};
+ const issuer=createRuntime27CommandIssuer(pool,{database:'synthetic_test',user:'runtime',port:5432},'WHOLE_V2');
+ return {issuer,calls,counts:()=>({connects,discarded}),driver:new PostgresMaintenanceCommandUnitOfWork(issuer.pool),
+  proof:createRuntime27MaintenanceCapabilities(issuer.pool,issuer.runtime27)};
+}
+test('fresh35 retained maintenance capabilities use original ordinary lease and reject borrowed or expired contexts',async()=>{
+ const f=nativeMaintenanceFixture(),other=nativeMaintenanceFixture();
+ assert.throws(()=>createRuntime27MaintenanceCapabilities(other.issuer.pool,f.issuer.runtime27));
+ assert.throws(()=>f.proof.productMediaWrite.assertVerified(other.driver));
+ f.proof.productMediaWrite.assertVerified(f.driver);
+ let retained:MaintenancePgContext|undefined;
+ await f.driver.transaction(async context=>{retained=context;
+  await f.proof.productMediaWrite.assertReady(context);
+  await f.proof.categoryOrderWrite.assertReady(context);
+  await assert.rejects(f.proof.productMediaWrite.assertReady({client:context.client,evidence:context.evidence}));
+  await assert.rejects(f.proof.productMediaWrite.assertPrepared(context,{} as never));
+ });
+ await assert.rejects(f.proof.productMediaWrite.assertReady(retained!));
+ assert.deepEqual(f.counts(),{connects:1,discarded:1});
+ assert.equal(f.calls.filter(s=>s.includes('ordinary27-maintenance:retained-guards')).length,2);
+ assert.equal(f.calls.filter(s=>s==='COMMIT').length,1);
+ assert.ok(f.calls.every(s=>!s.includes('import_source_row')&&!s.includes('history_sales')));
+});
+for(const bad of [{guards:false,triggers:true,columns:true},{guards:true,triggers:false,columns:true},{guards:true,triggers:true,columns:false},{guards:true,triggers:true}])
+ test(`fresh35 maintenance rejects wrong guard/trigger or missing native permissions ${JSON.stringify(bad)}`,async()=>{
+  const f=nativeMaintenanceFixture(bad);
+  await assert.rejects(f.driver.transaction(context=>f.proof.productMediaWrite.assertReady(context)));
+  assert.ok(f.calls.includes('ROLLBACK'));assert.ok(!f.calls.includes('COMMIT'));
+  assert.deepEqual(f.counts(),{connects:1,discarded:1});
+ });

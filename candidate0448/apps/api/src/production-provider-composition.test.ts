@@ -29,6 +29,7 @@ import { createPostgresApplicationApi, createPostgresRuntime26ApplicationApi, cr
 import {CapacityAdmissionRejected} from './capacity-admission.ts';
 import type {CapacityAdmission} from './capacity-admission.ts';
 import type {ProductionMainDependencies} from './production-main.ts';
+import { parseProductionRuntime35Configuration, productionRuntime35HostConfiguration } from './production-provider-composition.ts';
 // Explicit protocol-test resource only, not a real capacity window/probe or production approval.
 // A fresh instance is passed at each legacy composition call; A02 missing-resource negatives stay unmodified.
 function syntheticCapacity(): CapacityAdmission {
@@ -54,6 +55,28 @@ function config(): ProductionRuntimeConfiguration {
       lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000 } };
 }
 const account = entityId("account", "00000000-0000-4000-8000-000000000001"), hall = entityId("hall", "00000000-0000-4000-8000-000000000002");
+test('fresh35 configuration preserves host pool budgets and explicit maintenance without an exact26 review', () => {
+  const base = config();
+  const input = { ...base, profile: 'source-confirmed-native-exact35-v1', productMedia: { root: '/private/product-media', rootKey: 'private35' },
+    organizationMaintenance: true, catalogueMaintenance: true, paymentMaintenance: true, partyMaintenance: true,
+    productMaintenance: true, staffMaintenance: true, staffCredentialRequestKeyFile: '/private/staff-request-key' };
+  const parsed = parseProductionRuntime35Configuration(input);
+  assert.equal(parsed.profile, 'source-confirmed-native-exact35-v1');
+  assert.deepEqual(parsed.postgres, base.postgres);
+  assert.deepEqual(parsed.authentication, base.authentication);
+  assert.equal(parsed.staffCredentialRequestKeyFile, '/private/staff-request-key');
+  assert.equal(parsed.organizationMaintenance, true);
+  assert.equal(parsed.partyMaintenance, true);
+  assert.deepEqual(productionRuntime35HostConfiguration(input), base);
+  assert.throws(() => parseProductionRuntimeConfiguration(input), TypeError);
+  for (const extra of [{ runtime26Review: {} }, { capacityAdmission: {} }, { existingPreparation: { sales: true, transfers: true } }])
+    assert.throws(() => parseProductionRuntime35Configuration({ ...input, ...extra }), TypeError);
+  assert.throws(() => parseProductionRuntime35Configuration({ ...input, documentCommands: 'DISABLED' }), TypeError);
+  assert.throws(() => parseProductionRuntime35Configuration({ ...input, profile: 'source-confirmed-native-exact27-v1' }), TypeError);
+  assert.throws(() => parseProductionRuntime35Configuration({ ...input, staffMaintenance: false }), TypeError);
+  const { staffMaintenance: _staff, ...withoutStaff } = input;
+  assert.throws(() => parseProductionRuntime35Configuration(withoutStaff), TypeError);
+});
 test('A02 composition carries the original trusted singleton separately while all JSON parsers stay closed',()=>{
   const capacity:CapacityAdmission={async acquire(){throw new CapacityAdmissionRejected('SYNTHETIC_UNKNOWN',2);},close(){}};
   const c=config(),r1={...c,profile:'source-confirmed-native-exact26-r1-v1' as const,documentCommands:'DISABLED' as const,

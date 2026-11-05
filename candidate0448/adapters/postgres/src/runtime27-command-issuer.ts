@@ -2,6 +2,9 @@ import { requireDomain } from '../../../packages/domain/src/errors.ts';
 import type { PgSalesClient, PgSalesPool } from './sales-unit-of-work.ts';
 import type { Runtime27CommandCapability } from '../../../packages/application/src/runtime27-command-capability.ts';
 import type { OrdinaryDocumentRuntime27Capability } from './ordinary-document-list-reader.ts';
+import type { ProductMediaWriteCapability, ProductImageColorSwapCapability } from './product-maintenance-store.ts';
+import type { CategoryOrderWriteCapability } from './catalogue-maintenance-store.ts';
+import { assertMaintenanceDriverPool, maintenanceContextClient, assertMaintenanceProductImagesPrepared, bindMaintenanceCategoryOrderGuard } from './maintenance-command-unit-of-work.ts';
 
 /** Bind ordinary 27 command checks to a live pool lease, not to request data.
  * Database RLS, ordinary role grants and actual triggers remain authoritative. */
@@ -10,6 +13,70 @@ export function assertIssuedRuntime27Pool(runtime: object, pool: PgSalesPool): v
  requireDomain(issued.get(runtime) === pool, 'NATIVE_RUNTIME27_NOT_READY', 'Actual runtime27 issuer and its original pool required');
 }
 const RUNTIME_ROLE = 'erp_unified27_runtime_2393dbc6db9581c2';
+/** Existing native maintenance protocols on the same ordinary-role lease.
+ * These checks consume the retained native guards, not retired import tables. */
+export function createRuntime27MaintenanceCapabilities(pool: PgSalesPool, runtime: Runtime27CommandCapability): {
+ readonly productMediaWrite: ProductMediaWriteCapability;
+ readonly imageColorSwap: ProductImageColorSwapCapability;
+ readonly categoryOrderWrite: CategoryOrderWriteCapability;
+} {
+ assertIssuedRuntime27Pool(runtime, pool);
+ const verify = async (context: Parameters<ProductMediaWriteCapability['assertReady']>[0], images: boolean): Promise<void> => {
+  const client = maintenanceContextClient(context, pool);
+  await runtime.assertReady(client, 'DOCUMENT_COMMAND');
+  const result = await client.query(`/* ordinary27-maintenance:retained-guards */ SELECT
+   NOT EXISTS(SELECT 1 FROM (VALUES
+    ('guard_maintenance_before_root()','76d30c01785877cfab4bb2bf167e1cdcd583677d204b7d7efa0c2cc2c79fa05c'),
+    ('guard_maintenance_child_write()','ceef464210d22280de7bc92ed900eebd3156ec65089ecdd8c55bbaca9c975d95'),
+    ('guard_product_image_color()','a49cc6bc4c49931eb50c81dd95e08a760b2ea6de73e19a0496611fe63fe22b18'),
+    ('maintenance_check_category_order(naijue_erp.audit_change)','77c86d2788e88f2922a66c662a91b95c0f76d6ea00587148c36421feabde281e'),
+    ('validate_maintenance_root_commit()','bf853800c33c492dd0b8224e489c42dfb1c9a046231001a3d42be830a257f479'),
+    ('lock_category_tree_statement()','fe2f9bd7ed49d52697cb8a5aab6100bc61f2246c0f8ad02f945a7dbbd4a54834')) needed(signature,hash)
+    WHERE NOT EXISTS(SELECT 1 FROM pg_catalog.pg_proc f JOIN pg_catalog.pg_namespace n ON n.oid=f.pronamespace
+     WHERE f.oid=pg_catalog.to_regprocedure('naijue_erp.'||needed.signature) AND f.proowner=n.nspowner AND NOT f.prosecdef
+      AND f.prokind='f' AND f.provolatile='v' AND NOT f.proretset AND NOT f.proleakproof
+      AND f.prolang=(SELECT oid FROM pg_catalog.pg_language WHERE lanname='plpgsql')
+      AND f.prorettype=CASE WHEN needed.signature LIKE 'maintenance_check_category_order(%' THEN 'void'::regtype ELSE 'trigger'::regtype END
+      AND f.proconfig=ARRAY['search_path=pg_catalog, naijue_erp, pg_temp']
+      AND pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(f.prosrc,'UTF8')),'hex')=needed.hash)) AS guards,
+   NOT EXISTS(SELECT 1 FROM (VALUES
+    ('product_image','image_maintenance_write','guard_maintenance_child_write()',31,false),
+    ('product_image','product_image_color_membership','guard_product_image_color()',23,false),
+    ('product','product_maintenance_before_root','guard_maintenance_before_root()',23,false),
+    ('product','product_maintenance_final_consistency','validate_maintenance_root_commit()',21,true),
+    ('product_category','product_category_maintenance_final_consistency','validate_maintenance_root_commit()',21,true),
+    ('product_category','category_tree_statement_lock','lock_category_tree_statement()',30,false)) needed(tbl,trg,fn,typ,deferred)
+    WHERE NOT EXISTS(SELECT 1 FROM pg_catalog.pg_trigger t WHERE t.tgrelid=pg_catalog.to_regclass('naijue_erp.'||needed.tbl)
+     AND t.tgname=needed.trg AND t.tgfoid=pg_catalog.to_regprocedure('naijue_erp.'||needed.fn)
+     AND t.tgenabled='O' AND NOT t.tgisinternal AND t.tgtype=needed.typ AND t.tgnargs=0 AND t.tgqual IS NULL
+     AND t.tgdeferrable=needed.deferred AND t.tginitdeferred=needed.deferred)) AS triggers,
+   CASE WHEN $1::boolean THEN
+    pg_catalog.has_table_privilege(current_user,'naijue_erp.product_image','SELECT') AND
+    (SELECT bool_and(pg_catalog.has_column_privilege(current_user,'naijue_erp.product_image',name,'INSERT')) FROM unnest(ARRAY['id','product_id','file_ref','mime','byte_size','display_order','created_at','created_by_account_id','image_role','color_id','version']) name) AND
+    (SELECT bool_and(pg_catalog.has_column_privilege(current_user,'naijue_erp.product_image',name,'UPDATE')) FROM unnest(ARRAY['file_ref','mime','byte_size','display_order','image_role','color_id','version']) name) AND
+    pg_catalog.has_table_privilege(current_user,'naijue_erp.product_image','DELETE')
+   ELSE pg_catalog.has_column_privilege(current_user,'naijue_erp.product_category','display_order','UPDATE') AND
+    pg_catalog.has_column_privilege(current_user,'naijue_erp.product_category','version','UPDATE') END AS columns`, [images]);
+  const row = result.rows[0];
+  requireDomain(result.rows.length === 1 && row?.guards === true && row.triggers === true && row.columns === true,
+   'NATIVE_RUNTIME27_NOT_READY', 'Retained maintenance guards and native column permissions required');
+  maintenanceContextClient(context, pool);
+ };
+ const productMediaWrite: ProductMediaWriteCapability = Object.freeze({ profile: 'product-media-write-v22',
+  assertVerified(driver: object) { assertIssuedRuntime27Pool(runtime, pool); assertMaintenanceDriverPool(driver, pool); },
+  async assertReady(context: Parameters<ProductMediaWriteCapability['assertReady']>[0]) { await verify(context, true); },
+  async assertPrepared(context: Parameters<ProductMediaWriteCapability['assertPrepared']>[0], completion: Parameters<ProductMediaWriteCapability['assertPrepared']>[1]) {
+   assertMaintenanceProductImagesPrepared(context, pool, completion);
+   await verify(context, true);
+   assertMaintenanceProductImagesPrepared(context, pool, completion);
+  } });
+ return Object.freeze({ productMediaWrite,
+  imageColorSwap: Object.freeze({ profile: 'product-image-color-swap-v4', assertVerified: productMediaWrite.assertVerified, assertReady: productMediaWrite.assertPrepared }),
+  categoryOrderWrite: Object.freeze({ profile: 'CATEGORY_ORDER_UNDO_V15', async assertReady(context: Parameters<CategoryOrderWriteCapability['assertReady']>[0]) {
+   await verify(context, false);
+   bindMaintenanceCategoryOrderGuard(context, pool, () => verify(context, false));
+  } }) });
+}
 const IDENTITY = `/* runtime27-command:identity */ SELECT current_database()::text AS database,current_user::text AS role,
  session_user::text AS session_user,inet_server_port() AS server_port,current_setting('row_security') AS row_security,current_setting('search_path') AS search_path,
  current_setting('session_replication_role') AS replication_role,r.rolsuper AS superuser,r.rolbypassrls AS bypass, sr.rolsuper AS session_superuser,sr.rolbypassrls AS session_bypass,r.rolinherit AS runtime_inherit,EXISTS(SELECT 1 FROM pg_catalog.pg_auth_members m WHERE m.member=r.oid) AS runtime_membership,

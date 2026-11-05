@@ -5,16 +5,17 @@ test('formal runtime27 document composition is an explicit available entry and r
  await assert.rejects((api as any).createPostgresRuntime27DocumentApplicationApi({},{sales:false,transfers:false}));
 });
 import { EventEmitter } from 'node:events';
-import { mkdtemp,writeFile,rm } from 'node:fs/promises';
+import { mkdtemp,writeFile,rm,realpath } from 'node:fs/promises';
 import { tmpdir } from 'node:os';import path from 'node:path';
 import { runProductionCli } from '../apps/api/src/production-main.ts';
-import { createProductionRuntime27ApplicationApi } from '../apps/api/src/production-provider-composition.ts';
+import { createProductionRuntime27ApplicationApi, createProductionRuntime35ApplicationApi } from '../apps/api/src/production-provider-composition.ts';
 import { productionApplicationOptions, PRODUCTION_PUBLIC_ORIGIN } from '../apps/api/src/production-provider-composition.ts';
-test('runtime27 composes actual application with an owned bounded pool and both document routes',async()=>{
+for (const fresh35 of [false,true]) test(`${fresh35?'fresh35 full maintenance':'runtime27'} composes actual application with an owned bounded pool and both document routes`,async()=>{
  const config={schemaVersion:1,profile:'source-confirmed-native-v1',documentCommands:'NATIVE_RUNTIME',publicOrigin:PRODUCTION_PUBLIC_ORIGIN,
   http:{host:'0.0.0.0',port:3000,acceptedHosts:['1n5635n614.goho.co']},assets:{root:'/unopened',entry:'index.html'},build:{sourceCommit:'f'.repeat(40),buildId:'SYNTHETIC'},
   authentication:{sessionTtlSeconds:900,policy:'source-confirmed-v1',passwordWork:{maxConcurrent:1,maxAnonymous:1,retryAfterSeconds:1},loginAdmission:{global:{burst:10,tokens:10,intervalMillis:1000},source:{burst:10,tokens:10,intervalMillis:1000},sourceAccount:{burst:10,tokens:10,intervalMillis:1000},entryTtlMillis:1000,maxEntries:100,maxRetryAfterSeconds:1}},
   postgres:{target:{host:'synthetic.invalid',port:5432,database:'synthetic_test',user:'runtime',password:'not-a-secret',ssl:false},max:2,maxPendingAcquisitions:2,connectionTimeoutMillis:1000,acquisitionTimeoutMillis:1000,queryTimeoutMillis:1100,statementTimeoutMillis:900,lockTimeoutMillis:800,idleInTransactionTimeoutMillis:1000,idlePoolTimeoutMillis:1000,disposeGraceMillis:0,disposeTimeoutMillis:1000}};
+ if(fresh35)config.postgres.max=1;
  const capacity={async acquire(){return {assertValid(){},release(){}}},close(){}};
  const original=productionApplicationOptions(config,capacity); const {catalogueCompleteness:_,...commands}=original.documentCommands!;
  const calls:string[]=[];let releases=0,ends=0;
@@ -36,14 +37,16 @@ test('runtime27 composes actual application with an owned bounded pool and both 
   if(sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff')&&!sql.includes('application-read:identity'))return{rows:[{account_id:account,staff_id:staff,login_name:'synthetic',password_hash:'synthetic',login_enabled:true,auth_version:1,role:'ADMIN',employment_status:'在职',hall_id:null,hall_enabled:null,staff_name:'synthetic'}],rowCount:1,command:'SELECT'};
   if(sql.includes('auth:query-session-snapshot'))return{rows:[{account_id:account,staff_id:staff,login_name:'synthetic',login_enabled:true,auth_version:1,role:'ADMIN',employment_status:'在职',hall_id:null,hall_enabled:null,staff_name:'synthetic',token_hash:values[0],session_account_id:account,session_auth_version:1,created_at:'2020-01-01T00:00:00.000Z',expires_at:'2099-01-01T00:00:00.000Z',revoked_at:null}],rowCount:1,command:'SELECT'};
   if(sql.includes('application-read:identity'))return{rows:[{account_id:account,staff_id:staff,login_enabled:true,role:'ADMIN',employment_status:'在职',hall_id:null,native_hall_id:null,hall_enabled:null}],rowCount:1,command:'SELECT'};
+  if(sql.includes('FROM naijue_erp.color WHERE')){if(fresh35)assert.match(sql,/deleted_at IS NULL/);return sql.startsWith('SELECT count')?{rows:[{total:'0'}],rowCount:1,command:'SELECT'}:{rows:[],rowCount:0,command:'SELECT'};}
   if(sql.includes('product-management:count'))return{rows:[{exact_total:'0',invalid_category_tree:false}],rowCount:1,command:'SELECT'};
   if(sql.includes('product-management:ordinary-stock-coverage'))return{rows:[{invalid_size:false,missing_sizes:false,invalid_balance:false}],rowCount:1,command:'SELECT'};
   if(sql.includes('product-management:page'))return{rows:[],rowCount:0,command:'SELECT'};throw Error('Unexpected '+sql);}
   release(error?:unknown){assert.equal(error,true);releases++;}}
  class Driver extends EventEmitter {async connect(){return new Client()}async end(){ends++}}
- const ready=await api.createPostgresRuntime27DocumentApplicationApi({...original,productMaintenance:true,documentCommands:commands},{sales:true,transfers:true},()=>new Driver());
- try {const routes=ready.app.printRoutes();assert.match(routes,/sales/);assert.match(routes,/transfers/);assert.notEqual((await ready.app.inject({method:'POST',url:'/products/v2/commands',payload:{}})).statusCode,404);assert.notEqual((await ready.app.inject({method:'POST',url:'/product-management/query',payload:{}})).statusCode,404);
+ const ready=fresh35?await api.createPostgresRuntime35ApplicationApi({...original,productMaintenance:true,organizationMaintenance:true,catalogueMaintenance:true,paymentMaintenance:true,partyMaintenance:true,staffMaintenance:{credentialRequestTag:null},documentCommands:commands},()=>new Driver(),{root:'/unopened-private-media',rootKey:'private35',publicRoots:[config.assets.root]}):await api.createPostgresRuntime27DocumentApplicationApi({...original,productMaintenance:true,documentCommands:commands},{sales:true,transfers:true},()=>new Driver());
+ try {if(fresh35)for(const url of ['/catalogue/categories/commands','/organization/halls/commands','/staff/commands','/payment/methods/commands','/customers/commands'])assert.notEqual((await ready.app.inject({method:'POST',url,payload:{}})).statusCode,404,url);assert.ok(ready.app.hasRoute({method:'POST',url:'/sales/query'}));assert.ok(ready.app.hasRoute({method:'POST',url:'/transfers/query'}));if(fresh35){assert.ok(ready.app.hasRoute({method:'POST',url:'/sales/history/query'}));assert.equal(ready.app.hasRoute({method:'POST',url:'/imported-history/sales/query'}),false);}assert.notEqual((await ready.app.inject({method:'POST',url:'/products/v2/commands',payload:{}})).statusCode,404);assert.notEqual((await ready.app.inject({method:'POST',url:'/product-management/query',payload:{}})).statusCode,404);
  const headers={origin:PRODUCTION_PUBLIC_ORIGIN,cookie:'__Host-naijue_session='+('A'.repeat(43))};
+ if(fresh35){const response=await ready.app.inject({method:'POST',url:'/catalogue-settings-read/colors/query',headers,payload:{search:'',page:1,pageSize:20}});assert.equal(response.statusCode,200,response.body);assert.deepEqual(response.json().items,[]);assert.equal(calls.filter(s=>s.includes('FROM naijue_erp.color WHERE')).length,2);}
  const productResponse=await ready.app.inject({method:'POST',url:'/current-form/products/query',headers,payload:{context:{kind:'TRANSFER'},search:'SYNTHETIC',page:1,pageSize:20}});
  assert.equal(productResponse.statusCode,200,productResponse.body+' CALLS '+JSON.stringify(calls));assert.equal(productResponse.json().items[0].retailPrice,null);
  const batchResponse=await ready.app.inject({method:'POST',url:'/current-form/saved-edit-sku-batch-v2/query',headers,payload:{context:{kind:'TRANSFER'},skuIds:['00000000-0000-4000-8000-000000000104']}});
@@ -58,15 +61,17 @@ test('runtime27 composes actual application with an owned bounded pool and both 
  const empty=await ready.app.inject({method:'POST',url:'/current-form/barcode/query',headers,payload:{context:scanContext,barcode:''}});assert.equal(empty.statusCode,400);
  const response=await ready.app.inject({method:'POST',url:'/product-management/query',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:'__Host-naijue_session='+('A'.repeat(43))},payload:{filter:{productIds:[],categoryIds:[],years:[],seasonIds:[],supplierIds:[],fitIds:[],thicknesses:[],shapeCodes:[]},page:1,pageSize:100}});assert.equal(response.statusCode,200,response.body+" CALLS "+JSON.stringify(calls));assert.ok(calls.some(sql=>sql.includes('product-management:ordinary-stock-coverage')));assert.ok(!calls.some(sql=>sql.includes('product-management:publication')));assert.equal(await ready.readiness!(),true);assert.ok(calls.includes('BEGIN ISOLATION LEVEL READ COMMITTED'));assert.ok(calls.includes('ROLLBACK'));}finally{await ready.close()}
  assert.ok(releases>=2);assert.equal(ends,1);
- const dir=await mkdtemp(path.join(tmpdir(),'runtime27-cli-')),file=path.join(dir,'config.json'),started:string[]=[];
- await writeFile(file,JSON.stringify({...config,profile:'source-confirmed-native-exact27-v1'}),{mode:0o600});
+ const dir=await realpath(await mkdtemp(path.join(tmpdir(),'runtime27-cli-'))),file=path.join(dir,'config.json'),started:string[]=[];
+ const cliConfig=fresh35?{...config,profile:'source-confirmed-native-exact35-v1',productMedia:{root:'/unopened-private-media',rootKey:'private35'},organizationMaintenance:true,catalogueMaintenance:true,paymentMaintenance:true,partyMaintenance:true,productMaintenance:true,staffMaintenance:true,staffCredentialRequestKeyFile:file+'.key'}: {...config,profile:'source-confirmed-native-exact27-v1'};
+ if(fresh35)await writeFile(file+'.key',Buffer.alloc(32,7),{mode:0o600});
+ await writeFile(file,JSON.stringify(cliConfig),{mode:0o600});
  let cliApi:Awaited<ReturnType<typeof createProductionRuntime27ApplicationApi>>|undefined;
  const beforeTerm=new Set(process.listeners('SIGTERM')),beforeInt=new Set(process.listeners('SIGINT'));
- try {await runProductionCli(['--exact27',file],{createCapacity:async()=>({...capacity,async preflight(){}}) as never,
-  async createApi(mode,c,cap){assert.equal(mode,'r27');cliApi=await createProductionRuntime27ApplicationApi(c,()=>new Driver(),cap);return cliApi;},
-  async startHost(mode){assert.equal(mode,'r27');return {publicOrigin:PRODUCTION_PUBLIC_ORIGIN,async close(){await cliApi?.close()}} as never;},
+ try {await runProductionCli([fresh35?'--exact35':'--exact27',file],{createCapacity:async()=>({...capacity,async preflight(){}}) as never,
+  async createApi(mode,c,cap,tag){assert.equal(mode,fresh35?'r35':'r27');if(fresh35)assert.equal(typeof tag,'function');cliApi=fresh35?await createProductionRuntime35ApplicationApi(c,()=>new Driver(),tag,cap):await createProductionRuntime27ApplicationApi(c,()=>new Driver(),cap);return cliApi;},
+  async startHost(mode){assert.equal(mode,fresh35?'r35':'r27');return {publicOrigin:PRODUCTION_PUBLIC_ORIGIN,async close(){await cliApi?.close()}} as never;},
   writeStarted(line){started.push(line)}});
-  assert.equal(JSON.parse(started[0]!).event,'PRODUCTION_EXACT27_HOST_STARTED');
+  assert.equal(JSON.parse(started[0]!).event,fresh35?'PRODUCTION_EXACT35_HOST_STARTED':'PRODUCTION_EXACT27_HOST_STARTED');
   const productionResponse=await cliApi!.app.inject({method:'POST',url:'/current-form/products/query',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:'__Host-naijue_session='+('A'.repeat(43))},payload:{context:{kind:'TRANSFER'},search:'SYNTHETIC',page:1,pageSize:20}});
   assert.equal(productionResponse.statusCode,200,productionResponse.body);
  }finally{for(const listener of process.listeners('SIGTERM'))if(!beforeTerm.has(listener))process.off('SIGTERM',listener as (...args:any[])=>void);for(const listener of process.listeners('SIGINT'))if(!beforeInt.has(listener))process.off('SIGINT',listener as (...args:any[])=>void);await cliApi?.close();await rm(dir,{recursive:true,force:true});}

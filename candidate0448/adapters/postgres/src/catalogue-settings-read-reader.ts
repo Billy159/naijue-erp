@@ -5,6 +5,7 @@ import { activeCatalogueSettingsRead, catalogueSettingsId, checkedCatalogueSetti
 import { DomainError, requireDomain } from '../../../packages/domain/src/errors.ts';
 import { booleanValue, integerValue, stringValue } from './codec.ts';
 import { catalogueRetainedDeleteEnabled, type CatalogueRetainedDeleteCapability } from './product-query-reader.ts';
+import { checkedOrdinaryDocumentListOptions, type OrdinaryDocumentRuntime27Capability } from './ordinary-document-list-reader.ts';
 
 export interface PgCatalogueSettingsResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
 export interface PgCatalogueSettingsClient { query(text: string, values?: unknown[]): Promise<PgCatalogueSettingsResult>; release(error?: Error | boolean): void }
@@ -31,9 +32,14 @@ export class PostgresCatalogueSettingsReadReader implements CatalogueSettingsRea
   private readonly coreRead: CatalogueSettingsCoreReadCapability | null;
   private readonly pool: PgCatalogueSettingsPool;
   private readonly retainedDelete: boolean;
-  constructor(pool: PgCatalogueSettingsPool, capability: CatalogueRetainedDeleteCapability | null = null, coreRead: CatalogueSettingsCoreReadCapability | null = null) { this.coreRead = coreRead;
+  private readonly ordinaryRead: OrdinaryDocumentRuntime27Capability | undefined;
+  constructor(pool: PgCatalogueSettingsPool, capability: CatalogueRetainedDeleteCapability | null = null, coreRead: CatalogueSettingsCoreReadCapability | null = null,
+    ordinaryRead?: OrdinaryDocumentRuntime27Capability) { this.coreRead = coreRead;
     this.pool = pool; if (typeof pool?.connect !== 'function') throw new TypeError('Catalogue settings reader requires an explicit PostgreSQL pool');
-    this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
+    if (coreRead && ordinaryRead) throw new TypeError('Conflicting CORE and ordinary catalogue read profiles');
+    this.ordinaryRead = ordinaryRead ? checkedOrdinaryDocumentListOptions({ profile: 'source-confirmed-unified-native-v1', runtime27: ordinaryRead }).runtime27 : undefined;
+    const retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
+    this.retainedDelete = this.ordinaryRead !== undefined || retainedDelete;
   }
   private validate(read: CatalogueSettingsScopedRead, kind: CatalogueSettingsKind) {
     const intent = checkedCatalogueSettingsIntent(read.intent); checkedCatalogueSettingsActor(read.actor);
@@ -45,6 +51,7 @@ export class PostgresCatalogueSettingsReadReader implements CatalogueSettingsRea
     const query: Query = (sql, values = []) => { activeCatalogueSettingsRead(signal); return client.query(sql, values); };
     try {
       activeCatalogueSettingsRead(signal); await query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'); began = true;
+      if (this.ordinaryRead) { await this.ordinaryRead.assertReady(client, 'ORDINARY_DOCUMENT_READ'); activeCatalogueSettingsRead(signal); }
       const value = await work(query, client); activeCatalogueSettingsRead(signal); committing = true; await query('COMMIT'); activeCatalogueSettingsRead(signal); return value;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error('Catalogue snapshot failed');
