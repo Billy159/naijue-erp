@@ -3245,3 +3245,9 @@ test('synthetic35 factory requires original owned-pool capacity binder rather th
  await assert.rejects(createSyntheticRuntime35ApplicationApi(input,()=>({async connect(){connected++;throw Error('must not connect');},async end(){},on(){return this;}} as never),null,syntheticCapacity(),{} as never),/original owned-pool capacity target/);
  assert.equal(connected,0);
 });
+
+test('synthetic35 selected account setup rejects missing credential providers before pool construction',async()=>{
+ const {createSyntheticRuntime35ApplicationApi}=await import('./production-provider-composition.ts');let constructed=0;
+ const input={...config(),profile:'source-confirmed-native-exact35-v1',staffMaintenance:true,productMedia:{root:'/private/synthetic35',rootKey:'synthetic35'}};
+ await assert.rejects(createSyntheticRuntime35ApplicationApi(input,()=>{constructed++;throw Error('must not construct');},null,syntheticCapacity(),{} as never),/real credential providers/);assert.equal(constructed,0);
+});

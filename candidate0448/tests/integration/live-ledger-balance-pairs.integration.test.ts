@@ -6,8 +6,9 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {lstat, readFile, realpath} from 'node:fs/promises';
-import {isAbsolute, resolve} from 'node:path';
+import {lstat, readFile, realpath, open} from 'node:fs/promises';
+import {constants} from 'node:fs';
+import {isAbsolute, resolve, dirname} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {Client, Pool} from 'pg';
 import {decimalToMinor} from '../../packages/domain/src/values.ts';
@@ -283,18 +284,71 @@ export interface Fresh35OrdinaryScenario {
  readonly initialInventory:LiveLedgerBalancePairsScenario['initialInventory'];
  readonly keys:{readonly salesPositive:Keys;readonly salesMixed:Keys;readonly transfer:Keys};
  /** An existing, genuinely logged-in salesperson and an actual out-of-scope sales proposal. */
- readonly forbidden:{readonly login:Fresh35OrdinaryScenario['login'];readonly sales:NativeSalesSaveProposal;readonly requestKey:string};
+ readonly forbidden:{readonly staffId:string;readonly loginName:string;readonly password:string;readonly setupRequestKey:string;readonly sales:NativeSalesSaveProposal;readonly requestKey:string};
 }
+/** Original D1 STANDARD publish/initialize receipt+audit readback; nullable history hash retained. */
+export const FRESH35_ORDINARY_PUBLICATION_SQL=`WITH init AS (
+ SELECT r.id AS root_operation,r.actor_account_id,r.target_id AS baseline_id,
+        a.after_values->'request' AS request
+ FROM naijue_erp.operation_receipt r
+ JOIN naijue_erp.audit_change a ON a.operation_id=r.id
+ WHERE r.target_type='IMPORT' AND r.action='IMPORT_INITIALIZE_CURRENT_ADMIN'
+   AND r.status='COMMITTED' AND a.object_type='IMPORT'
+   AND a.object_id=r.target_id AND a.actor_account_id=r.actor_account_id
+   AND a.action=r.action AND a.occurred_at=r.completed_at
+   AND a.after_values->>'phase'='INITIALIZE'
+   AND a.after_values->'whole_package_v2'->>'root_operation'=r.id::text
+   AND a.after_values->'request'->>'namespace'='synthetic.unified.v1'
+   AND a.after_values->'request'->>'package_manifest_sha256'=$1::text
+   AND a.after_values->'request'->>'plan_sha256'=$2::text
+   AND a.after_values->'request'->'payload'->'admin'->>'login_name'='synthetic-fresh35-admin'
+), published AS (
+ SELECT b.id,b.source_name,b.source_hash,b.history_payload_hash,b.inventory_mode,
+        b.checkpoint,b.completed_at,r.id AS publication_operation,a.after_values
+ FROM naijue_erp.import_batch b
+ JOIN naijue_erp.operation_receipt r ON r.target_type='IMPORT' AND r.target_id=b.id
+ JOIN naijue_erp.audit_change a ON a.operation_id=r.id
+ WHERE b.status='IMPORTED' AND b.completed_at IS NOT NULL
+   AND b.source_name='synthetic.unified.v1' AND b.source_hash=$1::text
+   AND r.action='IMPORT_PUBLISH' AND r.status='COMMITTED'
+   AND r.result_data->>'profile'='STANDARD_IMPORT_SQL_V1'
+   AND r.result_data->>'planSha256'=$2::text
+   AND r.result_data->>'packageManifestSha256'=$1::text
+   AND r.result_data->>'status'='IMPORTED'
+   AND a.object_type='IMPORT' AND a.object_id=b.id AND a.action=r.action
+   AND a.actor_account_id=r.actor_account_id AND a.occurred_at=r.completed_at
+   AND b.completed_at=r.completed_at AND a.after_values->'checkpoint'=b.checkpoint
+   AND b.checkpoint->'counts'=b.checkpoint->'expected'
+)
+SELECT i.root_operation::text AS "initializerOperationId",base.id::text AS "baselineBatchId",
+       docs.id::text AS "documentBatchId",docs.source_hash AS "sourceHash",
+       docs.history_payload_hash AS "historyPayloadHash",
+       base.publication_operation::text AS "baselinePublicationOperationId",
+       docs.publication_operation::text AS "documentPublicationOperationId",
+       u.id::text AS "accountId",u.login_name AS "loginName",u.login_enabled AS "loginEnabled",
+       st.id::text AS "adminStaffId",st.role AS "adminRole",st.employment_status AS "adminEmployment"
+FROM init i
+JOIN published base ON base.id=i.baseline_id AND base.inventory_mode='CUTOFF_STOCK_BASELINE'
+ AND base.after_values->>'phase'='BASELINE_SEAL'
+ AND base.after_values->'whole_package_v2'->>'root_operation'=i.root_operation::text
+JOIN published docs ON docs.id=(i.request->'payload'->>'document_batch_id')::uuid
+ AND docs.inventory_mode='DOCUMENT_CONVERSION' AND docs.after_values->>'phase'='DOCUMENT_PUBLISH'
+ AND docs.after_values->'whole_package_v2'->>'root_operation'=i.root_operation::text
+JOIN naijue_erp.user_account u ON u.id=i.actor_account_id
+ AND u.id=(i.request->'payload'->'admin'->>'account_id')::uuid
+JOIN naijue_erp.staff st ON st.id=u.staff_id
+ AND st.id=(i.request->'payload'->'admin'->>'staff_id')::uuid;`;
 export interface Fresh35OrdinaryContext {
  readonly configuration:unknown;
  readonly capacityLaunch:unknown;
  readonly staffCredentialRequestTag:CredentialRequestTag|null;
- readonly publication:LiveLedgerBalancePairsContext['publication'];
+ readonly publication:Omit<LiveLedgerBalancePairsContext['publication'],'historyPayloadHash'>&{readonly historyPayloadHash:string|null;readonly planSha256:string};
  readonly privateScenarioFile:string;
 }
 export function checkFresh35OrdinaryScenario(value:Fresh35OrdinaryScenario):Fresh35OrdinaryScenario {
  assert.equal(value.syntheticOnly,true);
- for(const login of [value.login,value.forbidden?.login])assert.ok(login&&typeof login.accountId==='string'&&typeof login.loginName==='string'&&typeof login.password==='string'&&login.password.length>0);
+ assert.ok(value.login&&typeof value.login.accountId==='string'&&typeof value.login.loginName==='string'&&typeof value.login.password==='string'&&value.login.password.length>0);
+ assert.ok(value.forbidden&&typeof value.forbidden.staffId==='string'&&typeof value.forbidden.loginName==='string'&&value.forbidden.loginName.length>0&&typeof value.forbidden.password==='string'&&value.forbidden.password.length>0);
  const positive=parseNativeSalesSaveProposal(value.salesPositive),mixed=parseNativeSalesSaveProposal(value.salesMixed),transfer=parseNativeTransferSaveProposal(value.transfer);
  assert.ok(positive.salesId===null&&positive.businessType==='SALE'&&positive.lines.length===1&&int(positive.lines[0]!.quantity)>0n);
  assert.ok(mixed.salesId===null&&mixed.businessType==='SALE'&&mixed.lines.length===2&&Number(mixed.orderDiscount)===0&&mixed.lines.some(l=>int(l.quantity)>0n)&&mixed.lines.some(l=>int(l.quantity)<0n));
@@ -303,9 +357,9 @@ export function checkFresh35OrdinaryScenario(value:Fresh35OrdinaryScenario):Fres
   assert.ok(proposal.settlements.length>0&&proposal.settlements.every(s=>s.existingSettlementId===null&&s.direction==='RECEIVE'));
  }
  assert.ok(transfer.transferId===null&&transfer.fromWarehouseId!==transfer.toWarehouseId&&transfer.lines.length===1&&transfer.lines.every(l=>'skuId'in l&&l.existingLineId===null&&int(l.quantity)>0n));
- const denied=parseNativeSalesSaveProposal(value.forbidden.sales);assert.equal(denied.salesId,null);assert.notEqual(value.forbidden.login.accountId,value.login.accountId);
- const keys=[...Object.values(value.keys.salesPositive),...Object.values(value.keys.salesMixed),...Object.values(value.keys.transfer),value.forbidden.requestKey];
- assert.equal(keys.length,22);assert.equal(new Set(keys).size,22);assert.ok(keys.every(k=>typeof k==='string'&&/^[A-Za-z0-9._:-]{1,128}$/.test(k)));
+ const denied=parseNativeSalesSaveProposal(value.forbidden.sales);assert.equal(denied.salesId,null);
+ const keys=[...Object.values(value.keys.salesPositive),...Object.values(value.keys.salesMixed),...Object.values(value.keys.transfer),value.forbidden.requestKey,value.forbidden.setupRequestKey];
+ assert.equal(keys.length,23);assert.equal(new Set(keys).size,23);assert.ok(keys.every(k=>typeof k==='string'&&/^[A-Za-z0-9._:-]{1,128}$/.test(k)));
  const pairs=[...positive.lines.map(l=>key(positive.warehouseId,l.skuId)),...mixed.lines.map(l=>key(mixed.warehouseId,l.skuId)),...transfer.lines.flatMap(l=>[key(transfer.fromWarehouseId,l.skuId),key(transfer.toWarehouseId,l.skuId)])];
  assert.deepEqual([...new Set(value.initialInventory.map(b=>key(b.warehouseId,b.skuId)))].sort(),[...new Set(pairs)].sort());assert.equal(new Set(value.initialInventory.map(b=>key(b.warehouseId,b.skuId))).size,value.initialInventory.length);
  value.initialInventory.forEach(b=>{int(b.quantity);assert.ok(Number.isSafeInteger(b.version)&&b.version>0);});
@@ -316,17 +370,44 @@ export function assertFresh35PostingChain(before:unknown,effects:readonly Row[],
  while(pending.length){const i=pending.findIndex(l=>int(l.quantity_before)===quantity);assert.ok(i>=0,'Exact per-entry before/after chain');const [row]=pending.splice(i,1);quantity+=int(row!.quantity_delta);assert.equal(int(row!.quantity_after),quantity);}
  assert.equal(int(after),quantity);
 }
+/** Real original account API on the already admitted app and authenticated ADMIN session. */
+export async function prepareFresh35Salesperson(api:Pick<PostgresApplicationApi,'app'>,headers:Record<string,string>,input:Fresh35OrdinaryScenario['forbidden']):Promise<{accountId:string;loginName:string;operationId:string;version:number;action:'CREATE'|'RESET_PASSWORD'}>{
+ const detail=async(path:string,id:string)=>{const response:LightMyRequestResponse=await api.app.inject({method:'POST',url:path+'/detail/query',headers,payload:{id}});assert.equal(response.statusCode,200);return response.json<Record<string,unknown>>();};
+ const staff=await detail('/staff',input.staffId);assert.ok(staff&&staff.kind==='STAFF'&&staff.id===input.staffId&&staff.role==='SALESPERSON'&&staff.employmentStatus==='在职');
+ const existing=staff.account as {id:string;loginName:string;loginEnabled:boolean;version:number}|null;
+ if(existing)assert.ok(existing.loginEnabled===true,'Existing disabled account requires explicit original maintenance handling, never implicit restore');
+ const action=existing?'RESET_PASSWORD' as const:'CREATE' as const;
+ const command=existing?{action,requestKey:input.setupRequestKey,id:existing.id,expectedVersion:existing.version,password:input.password}:{action,requestKey:input.setupRequestKey,values:{staffId:input.staffId,loginName:input.loginName,loginEnabled:true,password:input.password}};
+ const absent:LightMyRequestResponse=await api.app.inject({method:'GET',url:'/accounts/receipts/'+encodeURIComponent(input.setupRequestKey),headers});assert.equal(absent.statusCode,404,'Fresh setup key must be unused');
+ const saved:LightMyRequestResponse=await api.app.inject({method:'POST',url:'/accounts/commands',headers,payload:command});assert.equal(saved.statusCode,200);
+ const result=saved.json<{kind:string;targetId:string;operationId:string;version:number}>();assert.ok(result.kind==='ACCOUNT'&&typeof result.targetId==='string'&&typeof result.operationId==='string');
+ if(existing)assert.equal(result.targetId,existing.id);assert.equal(result.version,existing?existing.version+1:1);
+ const account=await detail('/accounts',result.targetId),actualStaff=account.staff as {id:string;role:string;employmentStatus:string};assert.ok(account.kind==='ACCOUNT'&&account.id===result.targetId&&actualStaff.id===input.staffId&&actualStaff.role==='SALESPERSON'&&actualStaff.employmentStatus==='在职'&&account.loginEnabled===true&&account.version===result.version);assert.equal(account.loginName,existing?existing.loginName:input.loginName);
+ const receipt:LightMyRequestResponse=await api.app.inject({method:'GET',url:'/accounts/receipts/'+encodeURIComponent(input.setupRequestKey),headers});assert.equal(receipt.statusCode,200);const recovery=receipt.json<{status:string;action:string;result:unknown}>();assert.equal(recovery.status,'COMMITTED');assert.equal(recovery.action,action);assert.deepEqual(recovery.result,result);
+ const replay:LightMyRequestResponse=await api.app.inject({method:'POST',url:'/accounts/commands',headers,payload:command});assert.equal(replay.statusCode,200);assert.deepEqual(replay.json(),result);assert.deepEqual(await detail('/accounts',result.targetId),account);
+ const linked=await detail('/staff',input.staffId);assert.equal((linked.account as {id:string}).id,result.targetId);
+ return {accountId:result.targetId,loginName:String(account.loginName),operationId:result.operationId,version:result.version,action};
+}
+export function assertFresh35StandardPublication(rows:readonly Row[],publication:Fresh35OrdinaryContext['publication'],accountId:string):void {
+ assert.ok(rows.length===1&&rows[0]!.documentBatchId===publication.batchId&&rows[0]!.sourceHash===publication.sourceHash&&rows[0]!.historyPayloadHash===publication.historyPayloadHash&&rows[0]!.accountId===accountId&&rows[0]!.loginEnabled===true&&rows[0]!.adminRole==='ADMIN'&&rows[0]!.adminEmployment==='在职');
+}
 export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryContext):Promise<void>{
  let api:PostgresApplicationApi|undefined,capacity:Awaited<ReturnType<typeof createProductionCapacityLaunch>>|undefined,phase='PRIVATE_INPUT',failure:Error|undefined;
  try{
   const c=parseProductionRuntime35Configuration(context.configuration),t=parseProductionCapacityLaunch(context.capacityLaunch).target;
-  assert.equal(c.profile,'source-confirmed-native-exact35-v1');assert.match(t.database,/^synthetic_fresh35_[0-9]{8}_r[1-9][0-9]*$/);
+  assert.equal(c.profile,'source-confirmed-native-exact35-v1');assert.equal(c.staffMaintenance,true);assert.equal(typeof context.staffCredentialRequestTag,'function');assert.match(t.database,/^synthetic_fresh35_[0-9]{8}_r[1-9][0-9]*$/);
   assert.equal(t.database,c.postgres.target.database);assert.equal(t.role,c.postgres.target.user);
-  const path=context.privateScenarioFile;assert.ok(path.endsWith('/credentials/fresh35-ordinary-scenario.json')&&isAbsolute(path)&&resolve(path)===path&&await realpath(path)===path);
-  const before=await lstat(path);assert.ok(before.isFile()&&!before.isSymbolicLink()&&before.uid===process.getuid?.()&&(before.mode&0o077)===0&&before.size>0&&before.size<=262144);
-  const bytes=await readFile(path),after=await lstat(path);assert.ok(before.dev===after.dev&&before.ino===after.ino&&before.mtimeMs===after.mtimeMs&&before.ctimeMs===after.ctimeMs&&before.size===bytes.length);
+  assert.equal(process.getuid?.(),61035);
+  const {loadFresh35CombinedRecordEnvelope}=await import(new URL('../../scripts/release/unified-install/fresh35-combined-record-v1.mjs',import.meta.url).href) as {loadFresh35CombinedRecordEnvelope():Promise<{format:unknown;target:unknown}>};
+  const envelope=await loadFresh35CombinedRecordEnvelope();assert.equal(envelope.format,'FRESH35_COMBINED_INSTALLATION_RECORD_V1');
+  const workspace=(envelope.target as {proposal:{workspaceDirectory:string}}).proposal.workspaceDirectory;assert.ok(typeof workspace==='string'&&isAbsolute(workspace)&&resolve(workspace)===workspace);
+  const path=context.privateScenarioFile;assert.ok(path===workspace+'/ordinary-private/fresh35-ordinary-scenario.json'&&isAbsolute(path)&&resolve(path)===path&&await realpath(path)===path);
+  const dir=await lstat(dirname(path));assert.ok(dir.isDirectory()&&!dir.isSymbolicLink()&&dir.uid===process.getuid?.()&&(dir.mode&0o777)===0o700);
+  const before=await lstat(path);assert.ok(before.isFile()&&!before.isSymbolicLink()&&before.nlink===1&&before.uid===process.getuid?.()&&(before.mode&0o777)===0o600&&before.size>0&&before.size<=262144);
+  const handle=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW);let bytes:Buffer;
+  try{const first=await handle.stat();assert.ok(first.dev===before.dev&&first.ino===before.ino&&first.size===before.size&&first.mtimeMs===before.mtimeMs&&first.ctimeMs===before.ctimeMs&&first.nlink===1);bytes=await handle.readFile();const after=await handle.stat(),linked=await lstat(path);assert.ok(first.dev===after.dev&&first.ino===after.ino&&first.mtimeMs===after.mtimeMs&&first.ctimeMs===after.ctimeMs&&first.size===bytes.length&&linked.dev===first.dev&&linked.ino===first.ino&&linked.nlink===1&&!linked.isSymbolicLink());}finally{await handle.close();}
   const s=checkFresh35OrdinaryScenario(JSON.parse(bytes.toString('utf8')) as Fresh35OrdinaryScenario),fault=observedDriver(true);
-  const allKeys=[...Object.values(s.keys.salesPositive),...Object.values(s.keys.salesMixed),...Object.values(s.keys.transfer),s.forbidden.requestKey],known={sales:[] as string[],transfers:[] as string[]};
+  const allKeys=[...Object.values(s.keys.salesPositive),...Object.values(s.keys.salesMixed),...Object.values(s.keys.transfer),s.forbidden.requestKey],known={sales:[] as string[],transfers:[] as string[]};let deniedAccountId:string|undefined;
   phase='REAL_CAPACITY';capacity=await createProductionCapacityLaunch(context.capacityLaunch,c);
   phase='REAL_SYNTHETIC_ADMISSION';api=await createSyntheticRuntime35ApplicationApi(c,fault.driver,context.staffCredentialRequestTag,capacity,t);await capacity.preflight();assert.equal(api.app.server.listening,false);
   const observe=async():Promise<Snapshot>=>{
@@ -339,9 +420,9 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
     assert.ok(id.db===t.database&&id.oid===t.databaseOid&&id.started===t.postmasterStart&&id.session_user===t.role&&id.actor===t.role&&id.ordinary===true&&!fault.pids.has(Number((await client.query('SELECT pg_backend_pid() pid')).rows[0].pid)));
     assert.deepEqual(id.memberships,[['erp_unified27_runtime_2393dbc6db9581c2',false,false,true]]);
     await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');begun=true;await client.query('SET LOCAL ROLE erp_unified27_runtime_2393dbc6db9581c2');
-    const pub=importedHistoryReadSql('sales'),p=context.publication;
-    const published=(await client.query(`SELECT b.id,b.source_hash,b.history_payload_hash,(${pub.publishedPredicate}) published FROM ${pub.publicationFrom} WHERE b.id=$2::uuid`,[pub.values[0],p.batchId])).rows;
-    assert.ok(published.length===1&&published[0].published===true&&published[0].source_hash===p.sourceHash&&published[0].history_payload_hash===p.historyPayloadHash);
+    const p=context.publication;
+    const published=(await client.query(FRESH35_ORDINARY_PUBLICATION_SQL,[p.sourceHash,p.planSha256])).rows;
+    assertFresh35StandardPublication(published,p,s.login.accountId);
     const bound=[s.initialInventory.map(x=>x.warehouseId),s.initialInventory.map(x=>x.skuId)];
     const balances=(await client.query('SELECT b.warehouse_id,b.sku_id,b.quantity::text,b.version,b.last_operation_id,b.updated_at::text FROM naijue_erp.inventory_balance b JOIN unnest($1::uuid[],$2::uuid[]) k(w,s) ON k.w=b.warehouse_id AND k.s=b.sku_id ORDER BY b.warehouse_id,b.sku_id',bound)).rows as Row[];assert.equal(balances.length,s.initialInventory.length);
     const ledger=(await client.query('SELECT l.id,l.operation_id,l.event_kind,l.warehouse_id,l.sku_id,l.quantity_delta::text,l.quantity_before::text,l.quantity_after::text,l.source_sales_line_id,l.source_transfer_line_id,l.source_import_batch_id,l.source_history_revision_id,l.endpoint,l.source_document_version,l.reverses_entry_id,l.posted_at::text FROM naijue_erp.inventory_ledger l JOIN unnest($1::uuid[],$2::uuid[]) k(w,s) ON k.w=l.warehouse_id AND k.s=l.sku_id ORDER BY l.id LIMIT 10001',bound)).rows as Row[];assert.ok(ledger.length<10001);
@@ -352,14 +433,14 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
      lines.push(...(await client.query(`SELECT '${family}' family,id,${f}_id document_id,line_no,sku_id,quantity::text,is_current${family==='sales'?',deal_price::text,line_amount::text,allocated_discount::text':''} FROM naijue_erp.${f}_line WHERE ${f}_id=ANY($1::uuid[]) ORDER BY document_id,line_no,id`,[known[family]])).rows);
     }
     const settlements=(await client.query('SELECT id,sales_id,line_no,payment_account_id,payment_method_id_snapshot,direction,amount::text FROM naijue_erp.sales_settlement WHERE sales_id=ANY($1::uuid[]) ORDER BY sales_id,line_no,id',[known.sales])).rows as Row[];
-    const receipts=(await client.query('SELECT id,actor_account_id,request_key,action,target_id,status,result_data,completed_at::text FROM naijue_erp.operation_receipt WHERE actor_account_id=ANY($1::uuid[]) AND request_key=ANY($2::text[]) ORDER BY id',[[s.login.accountId,s.forbidden.login.accountId],allKeys])).rows as Row[];
+    const receipts=(await client.query('SELECT id,actor_account_id,request_key,action,target_id,status,result_data,completed_at::text FROM naijue_erp.operation_receipt WHERE actor_account_id=ANY($1::uuid[]) AND request_key=ANY($2::text[]) ORDER BY id',[[s.login.accountId,deniedAccountId??s.login.accountId],allKeys])).rows as Row[];
     const audits=(await client.query('SELECT id,operation_id,actor_account_id,object_id,action,old_version,new_version,occurred_at::text FROM naijue_erp.audit_change WHERE operation_id=ANY($1::uuid[]) ORDER BY id',[receipts.map(r=>r.id)])).rows as Row[];
     await client.query('ROLLBACK');begun=false;return{balances,ledger,headers,lines,settlements,receipts,audits};
    }finally{try{if(begun)await client.query('ROLLBACK');}finally{await client.end();}}
   };
   let initial=await observe();assert.equal(initial.receipts.length,0);for(const b of s.initialInventory){const actual=initial.balances.find(x=>key(x.warehouse_id,x.sku_id)===key(b.warehouseId,b.skuId));assert.ok(actual);assert.equal(actual.quantity,b.quantity);assert.equal(actual.version,b.version);}
-  const login=async(credentials:Fresh35OrdinaryScenario['login'])=>{const r=await api!.app.inject({method:'POST',url:'/auth/login',headers:{origin:c.publicOrigin,'content-type':'application/json'},payload:{loginName:credentials.loginName,password:credentials.password}});assert.equal(r.statusCode,200);const cookie=r.headers['set-cookie'];assert.ok(typeof cookie==='string'&&cookie.startsWith('__Host-naijue_session='));const headers={origin:c.publicOrigin,cookie:cookie.split(';')[0]!,'content-type':'application/json'};const session:LightMyRequestResponse=await api!.app.inject({method:'GET',url:'/auth/session',headers});assert.equal(session.statusCode,200);const principal=session.json<{principal:{accountId:string;role:string}}>().principal;assert.equal(principal.accountId,credentials.accountId);if(credentials.accountId===s.forbidden.login.accountId)assert.equal(principal.role,'SALESPERSON');return headers;};
-  const headers=await login(s.login),deniedHeaders=await login(s.forbidden.login);
+  const login=async(credentials:Fresh35OrdinaryScenario['login'])=>{const r=await api!.app.inject({method:'POST',url:'/auth/login',headers:{origin:c.publicOrigin,'content-type':'application/json'},payload:{loginName:credentials.loginName,password:credentials.password}});assert.equal(r.statusCode,200);const cookie=r.headers['set-cookie'];assert.ok(typeof cookie==='string'&&cookie.startsWith('__Host-naijue_session='));const headers={origin:c.publicOrigin,cookie:cookie.split(';')[0]!,'content-type':'application/json'};const session:LightMyRequestResponse=await api!.app.inject({method:'GET',url:'/auth/session',headers});assert.equal(session.statusCode,200);const principal=session.json<{principal:{accountId:string;role:string}}>().principal;assert.equal(principal.accountId,credentials.accountId);assert.equal(principal.role,credentials.accountId===deniedAccountId?'SALESPERSON':'ADMIN');return headers;};
+  const headers=await login(s.login);phase='REAL_ADMIN_ACCOUNT_SETUP';const setup=await prepareFresh35Salesperson(api,headers,s.forbidden);deniedAccountId=setup.accountId;const deniedHeaders=await login({accountId:setup.accountId,loginName:setup.loginName,password:s.forbidden.password});
   const post=(family:Family,body:object,h=headers)=>api!.app.inject({method:'POST',url:`/${family}/commands`,headers:h,payload:body});
   const result=(r:LightMyRequestResponse):Result=>{assert.equal(r.statusCode,200);return r.json<Result>();};
   const idOf=(f:Family,r:Result)=>{const id=f==='sales'?r.salesId:r.transferId;assert.ok(typeof id==='string');return id;};
@@ -413,15 +494,43 @@ test('fresh35 scenario rejects missing actual keys, reused keys and invalid mixe
  const line={skuId:id(1),existingLineId:null,quantity:'2',dealPrice:'1.00',pricingRule:'UNIT_PRICE' as const,discountTenths:null,isGift:false,zeroConfirmed:false};
  const sale={salesId:null,businessType:'SALE' as const,businessDate:'2026-11-05',note:null,hallId:id(2),customerId:id(3),salespersonId:id(4),warehouseId:id(5),orderDiscount:'0.00',lines:[line],settlements:[{existingSettlementId:null,paymentAccountId:id(6),paymentMethodId:id(7),direction:'RECEIVE' as const,amount:'2.00'}]};
  const keys=(prefix:string)=>Object.fromEntries(['save','approve','unapprove','reopen','reapprove','rollback','unknownCommit'].map(k=>[k,prefix+':'+k])) as unknown as Keys;
- const raw:Fresh35OrdinaryScenario={syntheticOnly:true,login:{accountId:id(8),loginName:'model-admin',password:'model-only'},salesPositive:sale,salesMixed:{...sale,lines:[line,{...line,quantity:'-1'}],settlements:[{...sale.settlements[0]!,amount:'1.00'}]},transfer:{transferId:null,businessDate:'2026-11-05',note:null,fromWarehouseId:id(5),toWarehouseId:id(9),lines:[{skuId:id(1),existingLineId:null,quantity:'1'}]},initialInventory:[{warehouseId:id(5),skuId:id(1),quantity:'100',version:1},{warehouseId:id(9),skuId:id(1),quantity:'0',version:1}],keys:{salesPositive:keys('positive'),salesMixed:keys('mixed'),transfer:keys('transfer')},forbidden:{login:{accountId:id(10),loginName:'model-denied',password:'model-only'},sales:sale,requestKey:'denied:save'}};
+ const raw:Fresh35OrdinaryScenario={syntheticOnly:true,login:{accountId:id(8),loginName:'model-admin',password:'model-only'},salesPositive:sale,salesMixed:{...sale,lines:[line,{...line,quantity:'-1'}],settlements:[{...sale.settlements[0]!,amount:'1.00'}]},transfer:{transferId:null,businessDate:'2026-11-05',note:null,fromWarehouseId:id(5),toWarehouseId:id(9),lines:[{skuId:id(1),existingLineId:null,quantity:'1'}]},initialInventory:[{warehouseId:id(5),skuId:id(1),quantity:'100',version:1},{warehouseId:id(9),skuId:id(1),quantity:'0',version:1}],keys:{salesPositive:keys('positive'),salesMixed:keys('mixed'),transfer:keys('transfer')},forbidden:{staffId:id(10),loginName:'model-denied',password:'model-only',setupRequestKey:'denied:setup',sales:sale,requestKey:'denied:save'}};
  assert.equal(checkFresh35OrdinaryScenario(raw).salesMixed.lines.length,2);
- for(const mutate of [(s:Fresh35OrdinaryScenario)=>({...s,initialInventory:s.initialInventory.slice(0,1)}),(s:Fresh35OrdinaryScenario)=>({...s,keys:{...s.keys,transfer:s.keys.salesPositive}}),(s:Fresh35OrdinaryScenario)=>({...s,salesMixed:{...s.salesMixed,lines:[line,line]}}),(s:Fresh35OrdinaryScenario)=>({...s,salesMixed:{...s.salesMixed,orderDiscount:'1'}}),(s:Fresh35OrdinaryScenario)=>({...s,forbidden:{...s.forbidden,login:s.login}})])assert.throws(()=>checkFresh35OrdinaryScenario(mutate(structuredClone(raw))));
+ for(const mutate of [(s:Fresh35OrdinaryScenario)=>({...s,initialInventory:s.initialInventory.slice(0,1)}),(s:Fresh35OrdinaryScenario)=>({...s,keys:{...s.keys,transfer:s.keys.salesPositive}}),(s:Fresh35OrdinaryScenario)=>({...s,salesMixed:{...s.salesMixed,lines:[line,line]}}),(s:Fresh35OrdinaryScenario)=>({...s,salesMixed:{...s.salesMixed,orderDiscount:'1'}}),(s:Fresh35OrdinaryScenario)=>({...s,forbidden:{...s.forbidden,setupRequestKey:s.forbidden.requestKey}})])assert.throws(()=>checkFresh35OrdinaryScenario(mutate(structuredClone(raw))));
 });
 test('fresh35 mixed same-SKU ledger chain keeps both effects and rejects omitted or broken pairs',()=>{
  const rows=[{quantity_before:'98',quantity_delta:'1',quantity_after:'99'},{quantity_before:'100',quantity_delta:'-2',quantity_after:'98'}];
  assertFresh35PostingChain('100',rows,'99');
  assert.throws(()=>assertFresh35PostingChain('100',rows.slice(1),'99'));
  assert.throws(()=>assertFresh35PostingChain('100',[rows[0]!,{...rows[1]!,quantity_after:'97'}],'99'));
+});
+
+test('fresh35 real-account setup uses returned CREATE identity or actual existing RESET version',async()=>{
+ for(const exists of [false,true]){
+  const input={staffId:'staff-existing',loginName:'desired-login',password:'model-only',setupRequestKey:'setup-key',requestKey:'denied-key',sales:{} as NativeSalesSaveProposal};
+  const prior=exists?{id:'existing-account',loginName:'actual-existing-login',loginEnabled:true,version:3}:null;
+  const accountId=prior?.id??'server-generated-account',version=exists?4:1,action=exists?'RESET_PASSWORD':'CREATE';
+  const result={kind:'ACCOUNT',targetId:accountId,operationId:'actual-operation',version};
+  const account={kind:'ACCOUNT',id:accountId,loginName:prior?.loginName??input.loginName,loginEnabled:true,version,staff:{id:input.staffId,role:'SALESPERSON',employmentStatus:'在职'}};
+  const staff={kind:'STAFF',id:input.staffId,role:'SALESPERSON',employmentStatus:'在职',account:prior};
+  const responses=[{statusCode:200,body:staff},{statusCode:404,body:{}},{statusCode:200,body:result},{statusCode:200,body:account},{statusCode:200,body:{status:'COMMITTED',action,result}},{statusCode:200,body:result},{statusCode:200,body:account},{statusCode:200,body:{...staff,account:{id:accountId}}}];const requests:Record<string,unknown>[]=[];
+  const api={app:{async inject(request:Record<string,unknown>){requests.push(request);const r=responses.shift();assert.ok(r);return{statusCode:r.statusCode,json:()=>r.body};}}};
+  const actual=await prepareFresh35Salesperson(api as never,{'content-type':'application/json'},input);assert.equal(responses.length,0);assert.equal(actual.accountId,accountId);assert.equal(actual.loginName,account.loginName);assert.ok(!('password'in actual));
+  const command=requests[2]!.payload as Record<string,unknown>;assert.equal(command.action,action);if(exists){assert.equal(command.id,prior!.id);assert.equal(command.expectedVersion,3);}else{assert.ok(!('id'in command));assert.equal((command.values as {staffId:string}).staffId,input.staffId);}assert.deepEqual(requests[2]!.payload,requests[5]!.payload);
+ }
+});
+test('fresh35 account setup cannot replace real staff authorization with a guessed account',async()=>{
+ const api={app:{async inject(){return{statusCode:403,json:()=>({error:{code:'FORBIDDEN'}})};}}};
+ await assert.rejects(prepareFresh35Salesperson(api as never,{}, {staffId:'actual-staff',loginName:'model',password:'model-only',setupRequestKey:'setup',requestKey:'deny',sales:{} as NativeSalesSaveProposal}));
+});
+
+test('fresh35 STANDARD publication keeps actual NULL history hash and exact admin binding',()=>{
+ const p={batchId:'actual-doc-batch',sourceHash:'actual-manifest',planSha256:'actual-plan',historyPayloadHash:null};
+ const row={documentBatchId:p.batchId,sourceHash:p.sourceHash,historyPayloadHash:null,accountId:'actual-admin',loginEnabled:true,adminRole:'ADMIN',adminEmployment:'在职'};
+ assertFresh35StandardPublication([row],p,'actual-admin');
+ assert.throws(()=>assertFresh35StandardPublication([{...row,historyPayloadHash:'invented-old-v8-hash'}],p,'actual-admin'));
+ assert.throws(()=>assertFresh35StandardPublication([row,row],p,'actual-admin'));
+ assert.throws(()=>assertFresh35StandardPublication([row],p,'different-admin'));
 });
 
 }

@@ -1,3 +1,5 @@
+import {createAccountMaintenanceHttpPlugin} from './account-maintenance-http.ts';
+import {PostgresAccountMaintenanceUnitOfWork} from '../../../adapters/postgres/src/account-maintenance-store.ts';
 import {admitFresh35SyntheticOrdinaryPoolV1,admitFresh35OrdinaryPoolV2,describeFresh35OrdinaryAdmissionV2,closeFresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
 import type {Fresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
 import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
@@ -622,6 +624,7 @@ export async function createPostgresSyntheticRuntime35ApplicationApi(options: Po
   createDriver: PostgresPoolDriverFactory | undefined, media: Runtime26ProductMediaConfiguration,
   capacityTarget: CapacityRuntimeTarget): Promise<PostgresApplicationApi> {
   const capabilities = checkedApplicationCapabilities(options, true);
+  if(capabilities.staffMaintenance?.credentialRequestTag===null)throw new TypeError('Synthetic account setup requires real credential providers');
   if (!capabilities.commands || capabilities.coreInitializationRead || !capacityTarget)
     throw new TypeError('Explicit synthetic ordinary application and actual capacity target required');
   return await composePostgresApi(options, createDriver, capabilities, undefined,
@@ -748,6 +751,9 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
           now: host.now, newId: () => randomUUID() } }));
       if (capabilities?.staffMaintenance) {
         const tag = capabilities.staffMaintenance.credentialRequestTag;
+        if(synthetic35)app.register(createAccountMaintenanceHttpPlugin({authenticate,
+          dependencies:{unitOfWork:new PostgresAccountMaintenanceUnitOfWork(work),now:host.now,newId:()=>randomUUID(),
+            credentials:tag===null?null:{passwords:gatePasswordCodec(createNodeScryptPasswords(),host.authenticationWork.passwordGate,'authenticated'),credentialRequestTag:tag,assertNewPassword:host.policy.assertNewPassword.bind(host.policy)}}}));
         app.register(createStaffMaintenanceHttpPlugin({ authenticate,
           dependencies: { unitOfWork: new PostgresStaffMaintenanceUnitOfWork(work), now: host.now, newId: () => randomUUID(),
             credentials: tag === null ? null : { passwords: gatePasswordCodec(createNodeScryptPasswords(), host.authenticationWork.passwordGate, 'authenticated'), credentialRequestTag: tag,
