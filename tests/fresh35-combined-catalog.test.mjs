@@ -4,7 +4,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
-import {loadFresh35CombinedSource,describeFresh35CombinedSource,renderFresh35CombinedSchema,resolveFresh35ReferenceInputPaths} from '../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
+import {loadFresh35CombinedSource,describeFresh35CombinedSource,renderFresh35CombinedSchema,resolveFresh35ReferenceInputPaths,combinedSha256} from '../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
+import {parseFresh35DumpSections} from '../scripts/release/unified-install/fresh35-retirement-schema.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const {baselineDirectory:base,modelPath,functionsPath}=await resolveFresh35ReferenceInputPaths(fileURLToPath(new URL('../../reference-inputs',import.meta.url)));
 const networkModel=await createFresh35BootstrapNetworkModel({proposalDate:'20261105'});after(()=>networkModel.close());
@@ -14,6 +15,30 @@ const source=await loadFresh35CombinedSource(root,{baselineDirectory:base}),grap
 const {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation,fresh35CombinedRuntimeCatalogSql,validateFresh35CombinedRuntimeCatalogObservation}=graph.catalogAPI;
 const {compileFresh35CombinedProgram,describeFresh35CombinedProgram,validateFresh35CombinedAuthorization,runFresh35CombinedInstall}=graph.lifecycleAPI;
 const bundle=async()=>({source,catalog:graph.catalog,program:graph.program});
+test('direct schema materializes captured default routine ACL without changing effective privileges (offline SQL projection, not PG)',async()=>{
+ const signature='naijue_erp.is_native_party_import_insert(text,jsonb)',t=describeFresh35CombinedTarget(target);
+ const schema=renderFresh35CombinedSchema(source,t.proposal),sql=fresh35CombinedCatalogSql(graph.catalog,source,target),model=JSON.parse(sql.guardSql.split('$combined_model$')[1]);
+ const routine=model.routines.find(row=>row.signature===signature),owner=t.proposal.owner;
+ const defaults=['=X/'+owner,owner+'=X/'+owner];assert.deepEqual(routine.acl,defaults);assert.deepEqual(model.defaultAcls,[]);
+ const sections=parseFresh35DumpSections(schema.schemaSql),definition=sections.filter(s=>s.type==='FUNCTION'&&s.name.startsWith('is_native_party_import_insert('));
+ assert.equal(definition.length,1);assert.equal(sections.filter(s=>s.type==='ACL'&&s.name.includes('is_native_party_import_insert(')).length,0,'pg_dump omits an explicit ACL equal to its default');
+ const oldRawAcl=null;assert.notDeepEqual(oldRawAcl,routine.acl,'a fresh CREATE leaves NULL and the unchanged strict raw ACL guard must reject it');
+ // Evaluate the real compiler statement construction, then bind it to the
+ // genuine compiled program digest. This does not simulate a native PG result.
+ const lifecycle=await readFile(root+'scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs','utf8'),start=lifecycle.indexOf(' const statements=['),end=lifecycle.indexOf(' const descriptor=',start);
+ assert(start>=0&&end>start);
+ const statements=new Function('schema','target','t','sql','fresh35CombinedTargetGuard',lifecycle.slice(start,end)+'return statements;')(schema,target,t,sql,networkModel.api.fresh35CombinedTargetGuard);
+ const direct=statements.find(s=>s.name==='direct-35-schema'),compiled=describeFresh35CombinedProgram(graph.program);
+ assert.equal(combinedSha256(direct.sql),compiled.statements.find(s=>s.name===direct.name).sha256);
+ assert.equal(direct.sql.slice(0,schema.schemaSql.length),schema.schemaSql,'the sealed mapped schema, function body and owner remain exact');
+ const tail=direct.sql.slice(schema.schemaSql.length),grant=tail.trim().match(/^GRANT EXECUTE ON FUNCTION naijue_erp\.is_native_party_import_insert\(text,jsonb\) TO (PUBLIC);$/);
+ assert(grant,'the same direct schema step must materialize the one captured default ACL');
+ const projectedRawAcl=grant?[...defaults]:oldRawAcl;
+ assert.deepEqual(projectedRawAcl,routine.acl,'the raw ACL now matches the captured model without normalizing the guard');
+ assert.deepEqual(oldRawAcl??defaults,projectedRawAcl??defaults,'effective owner/PUBLIC EXECUTE and grant options do not change');
+ assert.deepEqual(statements.map(s=>s.name),compiled.statements.map(s=>s.name));assert.equal(statements.length,10);
+ assert.equal(statements.filter(s=>s.name!=='direct-35-schema').map(s=>s.sql).join('\n').match(/is_native_party_import_insert\(text,jsonb\) TO PUBLIC/g)?.length??0,0);
+});
 test('current source closure separately records old180 and the later application/installer changes',async()=>{
  const {source}=await bundle(),d=describeFresh35CombinedSource(source);assert.equal(d.capturedSourcePins.length,180);assert.ok(d.currentSourcePins.length>=198);assert.equal(d.capturedEvidenceAppliesToCurrentChanges,false);
  for(const path of ['unified-historical-sales-hall-evidence.ts','unified-import-source-reconciliation.ts','unified-current-effective-alignment.ts','unified-historical-line-amount-evidence.ts','historical-sales-hall-evidence.ts'])assert.ok(d.currentSourcePins.some(p=>p.path==='packages/application/src/'+path),path);

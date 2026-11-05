@@ -33,7 +33,8 @@ export async function compileFresh35CombinedProgram({source,target,catalog}){
  const schema=renderFresh35CombinedSchema(source,t.proposal,...(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'?[{profile:t.purpose}]:[]));
  const statements=[
   {name:'physical-empty-target',sql:fresh35CombinedTargetGuard(target,{requireEmpty:true})},
-  {name:'direct-35-schema',sql:schema.schemaSql},
+  // pg_dump omits this captured explicit default ACL; retain its raw form for the strict catalog guard.
+  {name:'direct-35-schema',sql:schema.schemaSql+'\nGRANT EXECUTE ON FUNCTION naijue_erp.is_native_party_import_insert(text,jsonb) TO PUBLIC;\n'},
   {name:'migration-lineage',sql:schema.lineageSql},
   {name:'controller-lineage-column-read',sql:'GRANT SELECT (version, description) ON TABLE naijue_erp.schema_migration TO '+t.proposal.controller+';'},
   ...schema.patchBodies,
