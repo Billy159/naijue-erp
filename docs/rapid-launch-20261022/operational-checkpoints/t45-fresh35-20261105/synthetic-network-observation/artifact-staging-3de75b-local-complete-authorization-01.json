@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-3de75b-ordinary-local-20261106-01",
+  "sourceSetSha256": "19604d9f060a29ffef149a660841c3221e2964dc52ce83a08c89f203267183ac",
+  "archiveSha256": "035081fa42e686e4b687ed3ace0d2ab99e2b02f1e18a09ca8a4585b0bc9528fe",
+  "archiveBytes": 83672636,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-3de75b-ordinary-local-20261106-01",
+  "startsAt": 1793915933463,
+  "expiresAt": 1793917733463,
+  "decisionReference": "C under direct human decision delegation until2026-11-06 noon. Exact3de75b/source19604/rootr5 preparation only: retained4d full72a3 prefix81221497 + exact tail171298 to full035081/83672636 through original reviewed receiver. Original40s/900s materialization cap and30min hard total unchanged. Preserve private full54cd and all old targets; no PG, REAL data import or production. PG requires new scope after actual prep and QB observer result.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

@@ -1366,3 +1366,7 @@ T45 original46 CAS jobs COMPLETED/0 and45 fragments READY; original one-shot ass
 
 ### 2026-11-06 05:54 | Exact observer successor eight leaves ready
 D1 six leaves5939aaf5 and original T45 launcher two leaves7797bb7c have exact size/SHA readback. Author13+7 necessary model checks PASS, syntax/diff checks PASS; no actualPG/security-definer/ACL/install evidence yet. Helper returns only boolean with precise admin ownership/owner-controller execute, all other physical guards and35/152 business model preserved; ordinary consumers validate metadata only. Launcher creates helper with original admin once before describe; exact target-binding cleanup uses target database to revoke local helper rights, no-binding keeps original global-role cleanup and never cross-DB fallback. C integrates only these8 leaves, then one fixed root for originalQB scoped review and D2 build in parallel; old r4 not replayed.
+
+
+### 2026-11-06 06:00 | Fixed successor build and r5 preparation
+Integration cfcaf174 / build-root3de75b77 (tree4d9d7fdb) remote readback verified. D2 full build11.218s/pack8.913s,451 production and7296 ordinary member bytes/hash/mode PASS, receiptdeb82189; source19604d9f/manifestd5d1857e/full83,672,636B SHA035081fa. Actual4d-base prefix81,221,497B plus persisted2,451,139B tail171298 independently stream-rebuilds exact full. C original13-key tail17704b73/full11fa3eea scope1793915933463..1793917733463 only newr5 preparation; preserve current private full54cd and old roots, unchanged40s/900s, noPG until actualprep+QB then new exact scope.
