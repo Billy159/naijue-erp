@@ -605,7 +605,7 @@ def scene_readback_sql(binding):
         queries.append((kind,query))
     sql=snapshot_sql().split("SELECT json_build_object('kind','table'",1)[0]
     for kind,query in queries:
-        sql+="SELECT json_build_object('kind','"+kind+"','rows',coalesce(json_agg(q),'[]'::json))::text FROM (\n"+query+'\n) q;\n'
+        sql+="SELECT json_build_object('kind','"+kind+"','rows',coalesce(json_agg(q),'[]'::json))::jsonb::text FROM (\n"+query+'\n) q;\n'
     return sql+'ROLLBACK;\n'
 
 def observe_scene(a,target,binding,seconds):
