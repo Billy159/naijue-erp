@@ -2143,3 +2143,12 @@ Original11key C11c8e60528 new20min1793966923503..1793968123503 binds exactr20 an
 Originalstart bf813054 COMPLETED0/38.103s, safeSTARTd16d0cd9; actualCIDf15977e9/SID7705029757595115567/OID16393/birth12:10:42.942775UTC/PG170011, programf1527567/targetae365fa3/sourcece32. C adopted actualpins, bound original9keyC9 SHA380a7e19 same C11deadline1793968123503 without extension.
 
 OriginalT45 soleexecutor now runs one exact schema/record/negative/normal/replay/newconnection/ordinaryCLI/API/cleanup chain. No ordinary business or installPASS yet; latest prior actualnormalr19 remains separately recorded. NoREAL/production and no oldcommittedkey replay.
+
+
+## 2026-11-06 — r20 actual import committed; ordinary advanced then middleware failed, stopped
+
+Uniqueinstall FAILED2/144.833s,12:13:44..12:16:08UTC, rawd217532e/51509B, safe62d7b09b. PG170011 schema/recordPublished, normal COMMITTED/ALREADY_COMMITTED/VERIFIED25headers27settlements/CLOSED; rollback verified/originalbatchabsent, postinstall=postrollback/postcommitdifferent and3snapshotsCLOSED. These actual scoped results adopted, not whole-chainPASS.
+
+Ordinary advanced beyond PRIVATE_SCENARIO into REAL_PG_AND_MIDDLEWARE, then FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN. Exact underlying exception/errno/SQLSTATE and ordinary result absent; do not infer solecause, business success, or commit outcome. ActualCIDf15977e9 stopped,6cleanuptrue/errors[], ordinarychild/initializer/descendantsreaped. NoAPI/readback/probePASS. NoREAL/production.
+
+OriginalT45 only precise retained-evidence readonly diagnosis now; no restart/newPG/install/write or unknown-request retry. Thisr20 normalcommit and oldr17-r19commits must not replay. Source859d85b1/root07e250d5 remains fixed.

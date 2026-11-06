@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R20_ACTUAL_PG170011_STARTED_EXACT_C9_INSTALL_DISPATCHED",
+      "critical": "R20_ACTUAL_IMPORT_COMMITTED_ORDINARY_MIDDLEWARE_FAILED_STOPPED_EXACT_DIAGNOSIS",
       "independentPreparation": {
         "D1": "Two fixture leaves frozen; no further writes.",
         "QB": "Exact two-leaf order/failure-close increment PASS, no repeated author13.",
         "D2": "One fullbuild/pack/member/tailPASS; noactualPG.",
-        "T45": "Exact C9 same original20min; unique r20 install/ordinary runtime and cleanup dispatched; no REAL/production.",
+        "T45": "r20 stopped and cleanup complete; only exact retained child-error/original-receipt readonly diagnosis, no new execution.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31907,7 +31907,7 @@
         }
       },
       "r20Preparation": {
-        "state": "R20_ACTUAL_PG170011_STARTED_EXACT_C9_INSTALL_DISPATCHED",
+        "state": "R20_ACTUAL_IMPORT_COMMITTED_ORDINARY_MIDDLEWARE_FAILED_STOPPED_EXACT_DIAGNOSIS",
         "integration": "859d85b16245b2312bdcebb18d5acdda369a2501",
         "buildRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
         "tree": "54738afbbbe35836ebd75bb37ff08afca26a3481",
@@ -31929,7 +31929,7 @@
             1793963516720318950
           ]
         },
-        "next": "Collect unique r20 install actual schema/record/negative/normal/replay/readback/ordinary API and owned cleanup; no repeated old commits.",
+        "next": "Original T45 reads only retained r20 child error and original request receipts, no restart/install/write/replay; identify minimal affected owner fix.",
         "QBReceiptSHA256": "3532dbe5b65c79c77902ecd2fbb7b532bc93f6dea5284431eded7660b946039e",
         "D2ReceiptSHA256": "7aa9216ed363ccaba18b7b78a7f003c24bd2eb6c25cac323f9d69ee2d0a85dae",
         "archiveSHA256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f",
@@ -32017,7 +32017,70 @@
           "postmasterStart": "2026-11-06 12:10:42.942775+00"
         },
         "programSHA256": "f152756760a48ea65a0eda5f0541fd29ba7481c1845ac227123c3ab93fce5003",
-        "targetSHA256": "ae365fa3dcf4b7ec09bc4c142eb3b42d4b45d30a0cf8e75feb7ffb550d147343"
+        "targetSHA256": "ae365fa3dcf4b7ec09bc4c142eb3b42d4b45d30a0cf8e75feb7ffb550d147343",
+        "safeActualReceiptSHA256": "62d7b09bbb60dd989d1be33edfeab9a8389443989805179edd9ef1e6c7fa5a34",
+        "actualReceiptSHA256": "d217532ef00fcf9902512bf03f9cd47948ecf8ec903f126a377b3b98e87faa47",
+        "installation": {
+          "state": "RECORD_DURABLY_PUBLISHED",
+          "installState": "COMMITTED_UNPUBLISHED",
+          "recordPublished": true,
+          "catalogSha256": "f1b807b3b7d8aa23b7442f61a92ed8b4d8cf31740769b52cb12a28df20858332",
+          "hostEnabled": false,
+          "businessVerified": false
+        },
+        "normalSyntheticImport": {
+          "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+          "importState": "COMMITTED",
+          "replayState": "ALREADY_COMMITTED",
+          "readbackState": "VERIFIED",
+          "retainedHeaders": 25,
+          "retainedSettlements": 27,
+          "connectionCleanup": "CLOSED"
+        },
+        "rollback": {
+          "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+          "rollbackVerified": true,
+          "originalBatchAbsent": true,
+          "connectionCleanup": "CLOSED"
+        },
+        "snapshots": {
+          "postInstallEqualsPostRollback": true,
+          "postCommitDiffers": true,
+          "connectionsAndSQLSTATE": {
+            "snapshot-after-install.json": {
+              "connectionCleanup": "CLOSED",
+              "sqlstate": null
+            },
+            "snapshot-after-rollback.json": {
+              "connectionCleanup": "CLOSED",
+              "sqlstate": null
+            },
+            "snapshot-after-commit.json": {
+              "connectionCleanup": "CLOSED",
+              "sqlstate": null
+            }
+          }
+        },
+        "ordinaryFailure": {
+          "automaticRetry": false,
+          "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+          "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+          "phase": "REAL_PG_AND_MIDDLEWARE",
+          "state": "FAILED_OR_OUTCOME_UNKNOWN"
+        },
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true,
+          "errors": [],
+          "initializerReaped": true,
+          "descendantsReaped": true
+        },
+        "containerStopped": true,
+        "thisR20NormalCommitMustNotReplay": true
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32426,22 +32489,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T20:13:37+08:00",
-      "phase": "R20_ACTUAL_PG170011_STARTED_EXACT_C9_INSTALL_DISPATCHED",
+      "at": "2026-11-06T20:19:11+08:00",
+      "phase": "R20_ACTUAL_IMPORT_COMMITTED_ORDINARY_MIDDLEWARE_FAILED_STOPPED_EXACT_DIAGNOSIS",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 actual r20 install and ordinary runtime chain",
+      "currentOwner": "Original T45 exact retained-evidence diagnosis",
       "nextOwner": "C binds C11 after actual materialization and fresh resource result",
-      "latestActualReceiptSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760",
+      "latestActualReceiptSHA256": "d217532ef00fcf9902512bf03f9cd47948ecf8ec903f126a377b3b98e87faa47",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": false,
-      "installationRecordPublished": false,
-      "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
+      "initializationPassed": true,
+      "negativeRollbackConfirmed": true,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Collect unique r20 install actual schema/record/negative/normal/replay/readback/ordinary API and owned cleanup; no repeated old commits.",
+      "next": "Original T45 reads only retained r20 child error and original request receipts, no restart/install/write/replay; identify minimal affected owner fix.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "859d85b16245b2312bdcebb18d5acdda369a2501",
       "buildRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
@@ -32452,13 +32515,13 @@
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
       "latestActualRuntime": {
-        "root": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
-        "sourceCommit": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
-        "state": "ACTUAL_NORMAL_COMMITTED_ORDINARY_PRIVATE_SCENARIO_PERMISSION_STOPPED",
-        "receiptSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760"
+        "root": "07e250d53fec34d8b5199043075263268ff1e32f",
+        "sourceCommit": "859d85b16245b2312bdcebb18d5acdda369a2501",
+        "state": "R20_REAL_SYNTHETIC_INSTALL_IMPORT_PASS_ORDINARY_REAL_PG_MIDDLEWARE_FAILED_STOPPED_NO_REPLAY",
+        "receiptSHA256": "d217532ef00fcf9902512bf03f9cd47948ecf8ec903f126a377b3b98e87faa47"
       },
-      "syntheticImportPassed": false,
-      "independentSnapshotsPassed": false,
+      "syntheticImportPassed": true,
+      "independentSnapshotsPassed": true,
       "previousCandidateEvidence": {
         "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
         "QBReceiptSHA256": "6bed41316097db897096bb5e3e249602291ecdcd4c0b9351088688b0c07c188d",
