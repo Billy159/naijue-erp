@@ -1867,3 +1867,7 @@ Actualstageba95/three originalreceipts hashes verified:tail/fullCAS0 and assembl
 
 ### 2026-11-06T12:33+08:00 | r12 actual target/C9 bound
 Originalstart16cd0b60 passed0/35.096s, actualCIDf0ffc8b4/SID7704911450310836271/OID16393/PG170011/birth04:31:36.153926UTC. C verified originalreceipt and signed original9key e10f8151 binding actualprogramd07c/targetbe5b/sourcef911/QB4f1b in same1793939417582..1793940617582/ref448. T45 continues original one install/negative/synthetic25/ordinary/readback/probe/ownedcleanup under standing same-kind isolation, noREAL/production/replay/extension. Source2parentheses QA/build passed is not nativePG or business PASS; await actual staged evidence.
+
+
+### 2026-11-06T12:36+08:00 | r12 native INITIALIZE42702, no false rollback claim
+Actualinstall6f5f0677 FAILED2/47.981s; schema COMMITTED/record durably PUBLISHED and postinstall snapshot present. Original negative BAD_APPROVAL now firstSQLSTATE42702 atINITIALIZE/internalnull/publicTRANSACTION_OUTCOME_UNKNOWN/OUTCOME_UNKNOWN_NO_REPLAY; original42601 no longer observed. Originalstatement/variable ambiguity not yet located, negative transaction rollback not confirmed, cannot call negativePASS or schema rollback. Safe summarycfd4e306/originalreceipt hash verified; cleanup6true/errors[]/initializer+descendants reaped/CIDf0ffc8b4 stopped. OriginalD1 only exactprepare/command42702 and rollback-unknown investigation dispatched, no fullaudit/guard relaxation/oldr12 replay/newPG blind retry. Synthetic25/ordinary/readback/probe/REAL/production remain NOT PASSED.

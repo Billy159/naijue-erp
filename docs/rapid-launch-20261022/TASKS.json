@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T12:17:00+08:00",
+    "at": "2026-11-06T12:36:00+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -30486,7 +30486,7 @@
         }
       },
       "r12Preparation": {
-        "state": "ACTUAL_START_PASSED_C9_DELIVERED_INSTALL_VALIDATION_IN_PROGRESS",
+        "state": "INSTALL_RECORD_PUBLISHED_POSTINSTALL_SNAPSHOT_PRESENT_NEGATIVE_INITIALIZE_42702_OUTCOME_UNKNOWN_CLEAN_STOPPED",
         "integration": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
         "buildRoot": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
         "tree": "5fc3954272588c6c0bbb9c381790c3e47b76bbf5",
@@ -30526,7 +30526,7 @@
         "fullAuthoritySHA256": "b1bfe841f21d1ec0cf23ac9d8dca156f89bb9c1cf3eae15a5eb4035b750b4ece",
         "stagingStartsAt": 1793938777629,
         "stagingExpiresAt": 1793940577629,
-        "next": "T45 start once then C binds actual program/physical target via original C9 before single install; preserve oldr11",
+        "next": "Original D1 locates exact INITIALIZE42702 ambiguity and rollback-unknown seam; no r12 replay or newPG without concrete changed candidate. Source CASE fix retained, no semantic guard relaxation.",
         "actualStageSHA256": "ba95c0b0d625fdf2c74d41127474a4228f2b644ae3665f99dc06fa50ba277c8f",
         "materializationSHA256": "4616ebdd1f206016befbe76300dabef81ff57315fa53725546a8318017213bab",
         "materializationExitCode": 0,
@@ -30548,7 +30548,45 @@
         "programSHA256": "d07c8775163ab411c11eeac0c65e480321284c63fdf905e9c893da38bee65a61",
         "targetSHA256": "be5bf6f9162c36781793ee6bda1206af08cd0efc8b1e088d52c9d48815dbd414",
         "installAuthoritySHA256": "e10f815199bec84336b08bccfb663dc917657dd4b6c789a66bd828ff46acc313",
-        "wholeChainPassed": false
+        "wholeChainPassed": false,
+        "actualInstallReceiptSHA256": "6f5f0677e0557105c8e1a88db23f33c13f2d92c625ae35e9af273366a8682215",
+        "actualInstallExitCode": 2,
+        "actualInstallSeconds": 47.9811499081552,
+        "safeResultSHA256": "cfd4e3066c735ac52f10d0eb383da6aeffe2db0c9d09d00f91d68ccb71b3b468",
+        "nativeSchemaInstallCommitted": true,
+        "recordPublished": true,
+        "postInstallSnapshotPresent": true,
+        "negativeCase": {
+          "automaticRetry": false,
+          "exitCode": 1,
+          "stage": "rollback",
+          "state": "OUTCOME_UNKNOWN_NO_REPLAY",
+          "validationCode": "TRANSACTION_OUTCOME_UNKNOWN",
+          "validationInternalCode": null,
+          "validationSQLSTATE": "42702",
+          "validationStage": "BAD_APPROVAL",
+          "validationStep": "INITIALIZE"
+        },
+        "negativeTransactionRollbackConfirmed": false,
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          },
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true
+        },
+        "containerStopped": true,
+        "ordinaryBusinessPassed": false,
+        "synthetic25Passed": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
