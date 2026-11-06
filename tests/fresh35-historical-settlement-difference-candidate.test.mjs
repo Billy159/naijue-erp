@@ -55,9 +55,9 @@ test('hall SQL aliases do not collide with the command import_batch record and r
  const prior=c.predecessorBodies.find(s=>s.signature===spec.signature).body;
  assert.throws(()=>applyRetirementSourceReplacement(prior,{...spec,replacements:[...spec.replacements,changes[0]]}),/ANCHOR|REPLACEMENT/,'an extra alias correction still fails the exact anchor guard');
 });
-test('approved difference successor composes exactly after210 and modifies only the four existing routines',async()=>{
- const c=await load();assert.equal(c.specs.length,4);assert.equal(c.manifest.successorRoutinePins.length,152);
- assert.deepEqual(c.specs.map(s=>s.signature.slice('naijue_erp.'.length,s.signature.indexOf('('))),['standard_whole_package_command_v2','assert_document_migration','validate_sales_settlement','standard_whole_package_verify_v2']);
+test('approved difference successor composes exactly after210 and includes only the four retention routines and deferred final record syntax correction',async()=>{
+ const c=await load();assert.equal(c.specs.length,5);assert.equal(c.manifest.successorRoutinePins.length,152);
+ assert.deepEqual(c.specs.map(s=>s.signature.slice('naijue_erp.'.length,s.signature.indexOf('('))),['standard_whole_package_command_v2','assert_document_migration','validate_sales_settlement','standard_whole_package_verify_v2','validate_import_accounting_final_record_commit']);
  for(const s of c.specs){const before=c.predecessorBodies.find(r=>r.signature===s.signature).body;assert.equal(hash(applyRetirementSourceReplacement(before,s)),s.successor_sha256);assert.throws(()=>applyRetirementSourceReplacement(before+' ',s),/PREDECESSOR/);}
  assert.equal(c.specs.find(s=>s.signature.includes('.validate_sales_settlement(')).predecessor_sha256,'6264718f906a4d90a12547bbdf2c7aee91b49374beee2b1372147af2f13af953');
  for(const pin of c.manifest.sourcePins)assert.equal(hash(await readFile(new URL('../'+pin.path,import.meta.url))),pin.sha256,pin.path);
@@ -84,4 +84,25 @@ test('credential-bound readback validates all25 original snapshots and27 immutab
  for(const marker of ['standard_whole_package_inspect_v2(init_request,encoded_scrypt)','WHOLE_VERIFY_COMMITTED_PACKAGE_REQUIRED','FOR SHARE','STANDARD_VERIFY_ORDINARY_CHAIN_INVALID','HISTORICAL_SETTLEMENT_ORIGINAL_READBACK_DIFFERS','sr_rows<>27','sr_count<>25',"sr_origin->'header'->>'stock_basis' IS DISTINCT FROM 'CUTOFF_HISTORY'","sr_row->'fields' IS DISTINCT FROM sr_proof->'fields'",'sr_total:=sr_total+'])assert(body.includes(marker),marker);
  const ret=" RETURN jsonb_build_object('historical_line_amount_differences'";assert.equal(body.slice(body.indexOf(ret)),old.slice(old.indexOf(ret)),'no new response or business balance field');
  assert.doesNotMatch(body,/UPDATE naijue_erp\.sales_|INSERT INTO naijue_erp\.sales_/);assert(c.reviewSql.includes("RAISE EXCEPTION 'FRESH35_SETTLEMENT_DIFFERENCE_REVIEW_ONLY'"));
+});
+
+test('deferred final record IF groups all three CASE expressions while preserving the exact original predicate and routine metadata',async()=>{
+ const c=await load(),signature='naijue_erp.validate_import_accounting_final_record_commit()',spec=c.specs.find(s=>s.signature===signature);
+ assert(spec,'the current installer must correct the deferred final record function, not just the command');
+ assert.equal(spec.predecessor_sha256,'5bd65ec325d3158d9f56e4366eb0222464bc109b40aa13efe0c09c3a67f2ad92');
+ assert.equal(spec.successor_sha256,'7a337f3a2e9b2c961790c6f6a5adbb55850067a765898ce4fa13fce33828a15c');
+ assert.equal(spec.returns,'trigger');assert.equal(spec.security_definer,false);assert.equal(spec.replacements.length,3);
+ const before=c.predecessorBodies.find(r=>r.signature===signature).body,body=c.changedBodies.find(r=>r.signature===signature).body;
+ const cases=["CASE b.inventory_mode WHEN 'CUTOFF_STOCK_BASELINE' THEN 'STANDARD_BASELINE_APPROVAL' ELSE 'DOCUMENT_CONVERSION_APPROVAL' END","CASE b.inventory_mode WHEN 'CUTOFF_STOCK_BASELINE' THEN 'FINAL_EXPLICIT_KEYS' ELSE 'FINAL_DOCUMENT_CONVERSION' END","CASE b.inventory_mode WHEN 'CUTOFF_STOCK_BASELINE' THEN 'BASELINE_SEAL' ELSE 'DOCUMENT_PUBLISH' END"];
+ let reversed=body;
+ for(const [i,change] of spec.replacements.entries()){
+  assert.equal(change.before,'IS DISTINCT FROM '+cases[i]);assert.equal(change.after,'IS DISTINCT FROM ('+cases[i]+')');
+  assert.equal(before.split(change.before).length,2);assert.equal(body.split(change.after).length,2);
+  reversed=reversed.replace(change.after,()=>change.before);
+ }
+ assert.equal(reversed,before,'all other deferred validation, immutable proof checks and RAISE bytes stay exact');
+ assert.equal(body.length-before.length,6);assert.equal(applyRetirementSourceReplacement(before,spec),body);
+ assert.equal(c.manifest.successorRoutinePins.find(p=>p.signature===signature).sha256,spec.successor_sha256);
+ assert.throws(()=>applyRetirementSourceReplacement(before,{...spec,replacements:spec.replacements.slice(0,2)}),/SUCCESSOR/,'partial grouping cannot claim the corrected routine pin');
+ assert.throws(()=>applyRetirementSourceReplacement(before,{...spec,replacements:[...spec.replacements,spec.replacements[0]]}),/ANCHOR/,'duplicate grouping remains rejected');
 });
