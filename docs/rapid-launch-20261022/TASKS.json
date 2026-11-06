@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R21_EXACT_STAGE_READY_UNIQUE_MATERIALIZATION_RUNNING",
+      "critical": "R21_ACTUAL_PG170011_START_PASS_EXACT_C9_INSTALL_DISPATCHED",
       "independentPreparation": {
         "D1": "One integration-test leaf delivered/frozen, author3pureofflinePASS; no new work fabricated.",
         "QB": "Exact3leaf diagnostic seam independently PASS, author checks reused; no repeated QA.",
         "D2": "One fixed148b5716 build13.538s/pack10.247s/fullmembersPASS; no runtime.",
-        "T45": "Unique original materialization submitted once; collect terminal and one fresh-resource result. No PG/install/new source or old-key replay.",
+        "T45": "Unique original r21 install/ordinary chain dispatched; sameC11/C9deadline, no REAL/production/old-key replay.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -32104,7 +32104,7 @@
         }
       },
       "r21Preparation": {
-        "state": "R21_EXACT_STAGE_READY_UNIQUE_MATERIALIZATION_RUNNING",
+        "state": "R21_ACTUAL_PG170011_START_PASS_EXACT_C9_INSTALL_DISPATCHED",
         "integration": "7698d68d578bf42727b67da85848db154b560dda",
         "buildRoot": "148b5716864681b77498ff58ea82bc18c853199b",
         "tree": "64f4365f1880398f9d5bb8800eedb2941477e9e2",
@@ -32113,7 +32113,7 @@
         "D1InterfaceSHA256": "bfa38bcddc7ad47f63fccba282cee348765ce2bcd8d736c49ada338361506196",
         "T45AuthorReceiptSHA256": "3720aee61a8fce8dd62ae343db4354d0baf3c10ba84363b64b45d73384b32d57",
         "scope": "Same exact3source leaves, closed safe diagnostic transport only; no business/assertion/SQL/ACL change. Native r20 cause and ordinary outcomes UNKNOWN; old commits not replayed.",
-        "actualPG": false,
+        "actualPG": true,
         "REAL": false,
         "production": false,
         "actualBase": {
@@ -32127,7 +32127,7 @@
             1793966384023683928
           ]
         },
-        "next": "Collect t45-f35-148b57-local-materialize-20261106-01 terminal and fresh resources, then exact original C11/C9. No PG yet.",
+        "next": "Collect original r21 install/ordinary result and ownedcleanup; exact closed failure metadata if failed, no replay of any prior committed or unknown request.",
         "QBReceiptSHA256": "9c101e24fc3c4f0f05429d4859b935dc4b4c70f60d411bc50678be75bb5d4fae",
         "D2ReceiptSHA256": "2fe30edaeb253fc77bfa35b3d4eee80e5fa4d2ebec552f594125ab9b5c08fc57",
         "sourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
@@ -32172,7 +32172,33 @@
         "boundAssemblerSHA256": "5287746725ca3f1e65c25b18672b48130cdf419751c5fecb6165b4d9d35371d1",
         "operationsPlanSHA256": "a79e965d777391d08a8d5327fad11698d35b53fee0a50bef4e9b9da4b6aafcc2",
         "materializationJob": "t45-f35-148b57-local-materialize-20261106-01",
-        "materializationStatus": "SUBMITTED_ONCE"
+        "materializationStatus": "COMPLETED",
+        "materializationExitCode": 0,
+        "materializationSeconds": 371.03529626410455,
+        "materializedReadySHA256": "cc3246a2e322d8800d273fed6aee6524aca4bd21cc99a67f1d1184d494aaf592",
+        "materializeReceiptSHA256": "8c60ba70755404fd311965c08c85a3945a9a4e9b68ae09cbe1c35f028a929bf8",
+        "resourceReceiptSHA256": "a39ee87727c295cc0b1bec2660ae53c8b74345b341419269b28a6f3c2cc0391b",
+        "C11": {
+          "sha256": "fabe5b3524e22094723c9f29ff7ff997772ea7930930e113ae2c1d3bc6e24c6e",
+          "startsAt": 1793970450786,
+          "expiresAt": 1793971650786
+        },
+        "C9": {
+          "sha256": "744e7cf73961e46fdc68cde193630c36362a622d4b7361eab501aff2462519f3",
+          "startsAt": 1793970450786,
+          "expiresAt": 1793971650786
+        },
+        "safeStartSHA256": "835e05895cfbfbc69f6ac5249b716381129d5452f2bc9159838a79910e664893",
+        "startReceiptSHA256": "cf3b56bd084658d911bd25148ae938b2a5c9da6732ab88de347db0fd2e05f92c",
+        "physical": {
+          "cid": "c3030d1785ede662fc762154e1624d12fe45e06814375182bb94e7441ab4e728",
+          "systemIdentifier": "7705044956020457519",
+          "databaseOid": "16393",
+          "serverVersionNum": "170011",
+          "postmasterStart": "2026-11-06 13:09:40.547704+00"
+        },
+        "programSHA256": "bc1f95c46816ac81e2d22278116ecf680c6bac0bfa4aa61cc04e548944db49dc",
+        "targetSHA256": "1e40bee803812ac9716b1ac70a30cdc5ec9b8aabfe0c161b410d591ba70e6b58"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32581,11 +32607,11 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T20:59:28+08:00",
-      "phase": "R21_EXACT_STAGE_READY_UNIQUE_MATERIALIZATION_RUNNING",
+      "at": "2026-11-06T21:14:05+08:00",
+      "phase": "R21_ACTUAL_PG170011_START_PASS_EXACT_C9_INSTALL_DISPATCHED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 collects unique materialization",
+      "currentOwner": "Original T45 actual r21 install and ordinary runtime",
       "nextOwner": "C binds C11 after actual materialization and fresh resource result",
       "latestActualReceiptSHA256": "d217532ef00fcf9902512bf03f9cd47948ecf8ec903f126a377b3b98e87faa47",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
@@ -32596,7 +32622,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Collect t45-f35-148b57-local-materialize-20261106-01 terminal and fresh resources, then exact original C11/C9. No PG yet.",
+      "next": "Collect original r21 install/ordinary result and ownedcleanup; exact closed failure metadata if failed, no replay of any prior committed or unknown request.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
       "buildRoot": "148b5716864681b77498ff58ea82bc18c853199b",

@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "eda9da81b14d5f2a27fae8319ea05982a6de0ff0b6c33af38656c5de7a5106ac",
+  "sourceSetSha256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793970450786,
+  "expiresAt": 1793971650786,
+  "independentSafetyReviewSha256": "9c101e24fc3c4f0f05429d4859b935dc4b4c70f60d411bc50678be75bb5d4fae",
+  "authorizationReference": "C consumes standing human same-kind bounded isolation approval, not expired noon delegation. Exactr21 root148b5716/sourceb7805bc4/manifesteda9da81/container t45-fresh35-deb13-20261106-r21. Actualmaterial8c60ba70/resourcesa39ee877/combinedcc3246a2/QB9c101e24. Original2CPU3GiB/PID256/guardian/2DO; PG170011/install/negative/normal/ordinary/readback/probe/ownedcleanup. NoREAL/production/committed-or-unknown-keyreplay/windowextension; actualprogram C9 follows."
+}

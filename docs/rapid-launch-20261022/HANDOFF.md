@@ -2189,3 +2189,17 @@ C original13keys taild3f4bfcc/full317e258b new30min1793969407549..1793971207549 
 Originaltail/finalpolicy COMPLETED0, tail23a2dc3c/2474322 firstattemptREADY. Originalassembler COMPLETED0/3.376s, exactfullffbe0e9c/83701245 READY/sourceb780/C13full317e; actualidentity[66304,393721,83701245,1793969619825383731,1793969620935386411]. Stagef64f4164 adopted; boundassembler52877467/plan a79e965d, wrappere653/probe0af unchanged.
 
 Unique t45-f35-148b57-local-materialize-20261106-01 submitted once with original900s cap, only source/tools materialization. Await originalterminal and onefreshresource before exactC11. NoPG/REALprod or oldnormal/unknownordinary key replay.
+
+
+## 2026-11-06 — r21 materialization completed; exact new20min actual startup dispatched
+
+Originalmaterial8c60ba70 COMPLETED0/371.035s; freshresourcesa39ee877 at13:05:05UTC confirms exactb780/fullffbe/manifesteda9, no target/startartifacts,14.36GBmem/5.76GBdisk. Combinedcc3246a2 adopted; no repeatedmaterialization.
+
+Original11key C11fabe5b35 new20min1793970450786..1793971650786 binds originalr21/QB9c101e24 under standing human same-kind isolation approval, not expirednoondelegation. OriginalT45 soleexecutor actualPG170011 startup now; C9 awaits actualCID/SID/OID/birth/program/target. No ordinary/import/installPASS yet on thiscandidate, noREAL/production or oldcommitted/unknownkeyreplay.
+
+
+## 2026-11-06 — actual r21 PG17.11 startup passed; exact C9 original install dispatched
+
+Originalstart cf3b56bd COMPLETED0/37.555s, safe835e0589; actualCIDc3030d17/SID7705044956020457519/OID16393/birth13:09:40.547704UTC/PG170011, programbc1f95c4/target1e40bee8/sourceb780. C original9keyC9 SHA744e7cf7 binds sameC11deadline1793971650786 without extension, QB9c101e24 adopted.
+
+OriginalT45 soleexecutor one install/ordinaryCLI/capacity/readyz/API/cleanup chain dispatched; if failed exactnewcloseddiagnostic retained, no rawprivate text. Currentinstall/ordinary/REAL/prod not yet passed; oldcommitted and unknownrequests never replay.
