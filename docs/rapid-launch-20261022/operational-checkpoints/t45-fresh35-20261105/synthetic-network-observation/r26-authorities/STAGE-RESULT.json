@@ -1,0 +1,135 @@
+{
+  "status": "R26_READONLY_STAGE_PREFLIGHT_COMPLETED_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+  "jobId": "t45-f35-10fc5e-stage-preflight-20261107-01",
+  "step": "stage-preflight",
+  "checkedAtBeijing": "2026-11-07T02:42:57.290000+08:00",
+  "submittedAtUTC": "2026-11-06T18:42:57.035724+00:00",
+  "finishedAtUTC": "2026-11-06T18:42:57.333013+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 0.2679295018315315,
+  "exactScriptSHA256": "9cf809feca1d1fa3fd249b8ededd1e507866f76b12e6e9a55e47cb6fad76a5f0",
+  "buildBindingPointerSHA256": "36eddc03fd9c97aaa78000070fa80cfd191a80fff1bc6f146d813748c6b5e947",
+  "QBScopedOpsResultSHA256": "e4bbd65fbf2065e4256215f22101f855351460fb40f2b5e90277c884de4364c7",
+  "originalKeyBefore": {
+    "jobId": "t45-f35-10fc5e-stage-preflight-20261107-01",
+    "checkedAtEpochMillis": 1793990559839,
+    "exists": {
+      "jobDirectory": false,
+      "request": false,
+      "partialRequest": false,
+      "result": false
+    }
+  },
+  "realTimeFacts": {
+    "r26RootAbsent": true,
+    "r26ContainerAbsent": true,
+    "r26ArtifactDirectoriesFound": [],
+    "samePrefixOtherSubmissions": [],
+    "priorExactJobs": [
+      {
+        "jobId": "t45-f35-56fb33-start-20261107-01",
+        "status": "COMPLETED",
+        "exitCode": 0
+      },
+      {
+        "jobId": "t45-f35-56fb33-install-20261107-01",
+        "status": "FAILED",
+        "exitCode": 2
+      }
+    ],
+    "privateFullIdentityUnchanged": true,
+    "r25Stopped": {
+      "cid": "768519a2c193012362db9ebeb5dded1f57f997eab5c6f55a1fb64ed08cbb2692",
+      "stopped": true,
+      "processAbsent": true,
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+    },
+    "fixedEnvironment": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.037109375,
+        0.05859375,
+        0.078125
+      ],
+      "diskFreeBytes": 3649843200,
+      "MemAvailable": 14370779136
+    }
+  },
+  "base": {
+    "artifact": "f35-56fb33-ordinary-local-20261107-01",
+    "archiveSha256": "58ccbfd5ba053d3105e1e2093074fb1bf1ca50027201e7b770ad57a42b9594ed",
+    "bytes": 83704196,
+    "fileIdentityMatched": true,
+    "authoritySHA256": "6d14e96224e275704999ea372f3f4e84208cb9c5535f5a5ff48e5bbeb327ff99",
+    "wholeArchiveHashNotReread": true
+  },
+  "predecessor": {
+    "privateResultSHA256": "ab491e7d7325442de09533751ad402ebeed5dc595e99deefd5fb8b8b8a8a9621",
+    "cleanupSHA256": "aabd24d5db1c9c6a600aee639e73b10f7d2bc181cf4d4163d1b591ddfbd436da",
+    "originalNativeResult": {
+      "recordPublished": true,
+      "state": "RECORD_DURABLY_PUBLISHED",
+      "installState": "COMMITTED_UNPUBLISHED",
+      "postInstallFailureCode": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+      "sourceSetSha256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67"
+    },
+    "retainedRecordMetadata": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o644",
+      "bytes": 1516,
+      "contentsNotExported": true,
+      "hashNotRepeated": true
+    },
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": false,
+      "credentialsRemoved": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": false
+    },
+    "errors": [],
+    "portAbsence": "NOT_DIRECTLY_VERIFIED",
+    "cleanupPass": false,
+    "ordinaryOriginalRequests": "UNKNOWN_NO_REPLAY_DB_NOT_QUERIED",
+    "oldPortObservation": "Original01:42 retained only; no new namespace or port sampling"
+  },
+  "evidence": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-10fc5e-stage-preflight-20261107-01/transport/release-receipts/t45-f35-10fc5e-stage-preflight-20261107-01/job.json",
+      "bytes": 507,
+      "sha256": "2ff02abd03289d6b1bdc3f4676931364592cd37b97927c5c36ca6aa0309a951a"
+    },
+    "stage-preflight.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-10fc5e-stage-preflight-20261107-01/transport/release-receipts/t45-f35-10fc5e-stage-preflight-20261107-01/stage-preflight.json",
+      "bytes": 3392,
+      "sha256": "1c2711711d03f39927da2a8fa69b87d04c44840058899f939cb71f03fb4a06da"
+    }
+  },
+  "boundaries": {
+    "sourceOrTargetWrites": 0,
+    "PGConnections": 0,
+    "networkOrServiceChanges": 0,
+    "dataExtraction": false,
+    "transport": 0,
+    "oldKeyReplay": false,
+    "C13C11C9IssuedByT45": false,
+    "productionOrRealChanges": false,
+    "note": "Only existing controlled job/receipt bookkeeping and exact old-policy retention; no business or configuration changes."
+  },
+  "notVerified": [
+    "r26 actual transport/materialization",
+    "r26 current new PG target identity/epoch",
+    "r26 ordinary business chain",
+    "business acceptance/release"
+  ],
+  "nextStep": "C independently issues accurate fresh C13; no transfer/policy replacement before that. Preserve frozen7 and all original results.",
+  "actualModelEffortFast": "UNVERIFIED"
+}

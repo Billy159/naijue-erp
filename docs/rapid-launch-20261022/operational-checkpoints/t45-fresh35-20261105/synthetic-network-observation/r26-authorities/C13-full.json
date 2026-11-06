@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-10fc5e-ordinary-local-20261107-01",
+  "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+  "archiveSha256": "7b10bb912af07d26ef5f6f9339ba789b5e4f8f22191245b998c8741494a7c9be",
+  "archiveBytes": 83707334,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-10fc5e-ordinary-local-20261107-01",
+  "startsAt": 1793990704808,
+  "expiresAt": 1793992504808,
+  "decisionReference": "C decision under direct user delegation until2026-11-07T12:00+08; bounded isolation standing authorization; actual stage1e649b7e; QB ops e4bbd65f; fixed10fc5e only",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}
