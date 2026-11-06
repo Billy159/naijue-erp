@@ -28507,7 +28507,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "QB_AND_BUILD_ADOPTED_R15_ORIGINAL_C13_STAGE_RUNNING",
+      "critical": "ACTUAL_MATERIALIZE_PASS_FRESH_R15_PG20_BOUND",
       "independentPreparation": {
         "D1": "Fixed5leaf frozen/readonly; brief RESULT closing, no new checks.",
         "QB": "Fiveleaf verdict adopted; no repeat.",
@@ -30927,7 +30927,7 @@
         }
       },
       "r15Preparation": {
-        "state": "QB_AND_BUILD_ADOPTED_R15_ORIGINAL_C13_STAGE_RUNNING",
+        "state": "ACTUAL_MATERIALIZE_PASS_FRESH_R15_PG20_BOUND",
         "integration": "14bf71eba77876df321dba0ce946385e4ba51381",
         "buildRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
         "tree": "409ac01e2ddc90952ff52f37a31cc7bd832e0040",
@@ -30940,7 +30940,7 @@
         "actualPG": false,
         "REAL": false,
         "production": false,
-        "next": "OriginalT45 CAS/tail/assembler/materialize then one resource preflight; C exact newPG20 only after actual facts.",
+        "next": "OriginalT45 actual start; C exact original9key on actualprogram/target in samePG20, noREAL/production/replay.",
         "D1ReceiptSHA256": "1fde5215612140b0af3d7900b98aba7f58b5f78448880745ebd0f279642055bb",
         "QBReceiptSHA256": "c46191f13712f25a6c99369f4d4da4db5db748fbca5265397597d5cc1815d0c4",
         "D2ReceiptSHA256": "ff43c259b42c19f90c672512b4b21523138d50b840cafb44de2eda6c2b323f62",
@@ -30964,7 +30964,18 @@
         "tailAuthoritySHA256": "21156814b1a78b9b9fe2628193ee1217d0343333980bec7610c0cb5e0845b42b",
         "fullAuthoritySHA256": "714c5b1a7106787822e8ed23401fe186b0e4392a435f64e235ba7f5adecae385",
         "stagingStartsAt": 1793948472311,
-        "stagingExpiresAt": 1793950272311
+        "stagingExpiresAt": 1793950272311,
+        "actualStageSHA256": "318660c20416a1bb6c22d9c9cc589d8a12653a8b4f63f4e9108b3690301f9958",
+        "actualStageReceiptsVerifiedByC": true,
+        "fullActualReady": true,
+        "materializationSHA256": "887f9162aa3d3caa5d1c0a8240f4f7b7c9448c41ca70c6a44920837d58177468",
+        "materializationExitCode": 0,
+        "materializationSeconds": 364.2188704451546,
+        "resourceSHA256": "55be0ad99c961d3e8cbc62b8888a9c59f7f1c76fbdb5ad084d60ca92b4a74db5",
+        "safePreparationSHA256": "f564bead7170d658fa607c56a5318026bdd41b4c11d0b8d53d0f41b292ddbbc3",
+        "provisionSHA256": "7c748d3f2ffe77ba956ef370785134e099d01913d9ce32230750913759c15254",
+        "provisionStartsAt": 1793949289732,
+        "provisionExpiresAt": 1793950489732
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31373,12 +31384,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T15:02:07+08:00",
-      "phase": "QB_AND_BUILD_ADOPTED_R15_ORIGINAL_C13_STAGE_RUNNING",
+      "at": "2026-11-06T15:15:33+08:00",
+      "phase": "ACTUAL_MATERIALIZE_PASS_FRESH_R15_PG20_BOUND",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "T45 original r15 artifact/materialize",
-      "nextOwner": "C actualready/resources precisePG20",
+      "currentOwner": "T45 actual r15 start",
+      "nextOwner": "C actual target C9 then originalT45 install/business/cleanup",
       "latestActualReceiptSHA256": "eaab1fb39a1f26637e9960168eeb312c4dbf6768d922f0ca5e4a860dc6b14c15",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31388,7 +31399,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 CAS/tail/assembler/materialize then one resource preflight; C exact newPG20 only after actual facts.",
+      "next": "OriginalT45 actual start; C exact original9key on actualprogram/target in samePG20, noREAL/production/replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "14bf71eba77876df321dba0ce946385e4ba51381",
       "buildRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
