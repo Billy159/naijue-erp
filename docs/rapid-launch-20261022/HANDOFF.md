@@ -2447,3 +2447,6 @@ T45接唯一local ops实际绑定，把真实最终pins与恢复的private65ed0d
 
 
 2026-11-07 02:45 r26实际stage原键COMPLETED0/.268秒，safe1e649b7e/raw1c271171；旧r25PRIVATE/cleanup及同CID停止核实，新r26ROOT/CID/artifact均缺席，当前可用内存14370779136B/磁盘3649843200B。C在用户今日12:00授权内签新原30min C13：tail1f89c0c6/fullfdabb6aa，1793990704808—1793992504808；仅固定制品接收、原base流组装及material，未签C11/C9、无PG/REAL/正式放行。原T45继续，旧cleanupfalse/端口未直接证明不改。
+
+
+2026-11-07 r26材料实际完成e210b05b：原键COMPLETED0/373.040秒，完整READY7b10bb91/83707334B，原collector0755。当前02:56:40只读facts b0d60bed核新CID/四启动文件缺席，4CPU/可用内存14391304192B/磁盘3216379904B。C签独立原20min C11 1c0a55b3（1793991556029—1793992756029），T45仅启动本批新隔离目标，C9待实际身份；无REAL或正式操作、普通业务仍未验证。

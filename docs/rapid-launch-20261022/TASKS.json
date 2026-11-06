@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T18:46:03.112375+00:00",
-      "phase": "R26_READONLY_STAGE_PASS_C13_STAGING_AUTHORIZED",
+      "at": "2026-11-06T19:00:14.641946+00:00",
+      "phase": "R26_MATERIALIZED_C11_NEW_ISOLATED_START_AUTHORIZED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "T45 original sole server executor",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 exact tail receiver/full reconstruction/materialization, then fresh resources and original C11",
+      "next": "T45 start exact new r26 target once; actual identity/program/target then C9 same deadline",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33383,6 +33383,13 @@
         "startsAt": 1793990704808,
         "expiresAt": 1793992504808,
         "scope": "Exact ordinary source artifact staging only; no PG provision/install/business"
+      },
+      "materializedReceiptSHA256": "e210b05b338503e99f9780fee1193418e03fbcf48fdc651816c37a3d4ea1c474",
+      "C11": {
+        "sha256": "1c0a55b33087982a27c49921c7ec39f67a6ebcf934e8175bbaf1918256d7916b",
+        "startsAt": 1793991556029,
+        "expiresAt": 1793992756029,
+        "scope": "Exact new isolated synthetic target only; no REAL/formal"
       }
     },
     "delayReviewAdoption": {

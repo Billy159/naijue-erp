@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "0a5d705bfbe65a820348ab3bf2128ae811ea0896b56309320fc442fa64b71aee",
+  "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793991556029,
+  "expiresAt": 1793992756029,
+  "independentSafetyReviewSha256": "e4bbd65fbf2065e4256215f22101f855351460fb40f2b5e90277c884de4364c7",
+  "authorizationReference": "C under direct human delegation through2026-11-07T12:00+08 and standing isolated execution scope; fixed10fc5e/r26 only; actualmaterial e210b05b/currentfacts02:56:40; original plan880f96e9; QB e4bbd65f with6fec/23b source; new20min only, no REAL/formal/oldkey replay"
+}
