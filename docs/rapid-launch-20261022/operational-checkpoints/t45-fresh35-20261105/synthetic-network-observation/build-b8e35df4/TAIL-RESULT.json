@@ -1,0 +1,34 @@
+{
+  "status": "EXACT_PREFIX_TAIL_STREAM_PROVED",
+  "base": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-5effb61d/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83687082,
+    "sha256": "28176d3b7dbb999e262cad532ad75573747ae601a205e8e55957dd2bebef4f97"
+  },
+  "prefix": {
+    "bytes": 80445453,
+    "sha256": "d6727cb2e55d9a37d2c5fe01fce01c16e0082f8c139325fc321abae4abcf6b3e",
+    "byteCompared": true
+  },
+  "tail": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-b8e35df4/ordinary/recovery-tail-next-01/ordinary-transfer.tail-offset-80445453.bin",
+    "bytes": 3243353,
+    "sha256": "40fa99a077b837448603e72d14339f3ad2bb89af705f48eca4306fb0698a2321"
+  },
+  "target": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-b8e35df4/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83688806,
+    "sha256": "97952e46730a14ff923fb4dcd83dfe2fc89b26b6ce818f67a7e04165b3043b1c"
+  },
+  "streamReconstruction": {
+    "bytes": 83688806,
+    "sha256": "97952e46730a14ff923fb4dcd83dfe2fc89b26b6ce818f67a7e04165b3043b1c",
+    "persistedTailReread": true
+  },
+  "requestedOldOffset81221531Usable": false,
+  "offsetCorrectionReason": "first changed archive member index6753 deploy/adapters/postgres/patches/0035_historical_settlement_difference_successor.sql occurs before prior diagnostics script changes",
+  "recompression": false,
+  "fullReconstructedCopy": false,
+  "transportExecuted": false,
+  "serverExecuted": false
+}

@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T12:09:00+08:00",
+    "at": "2026-11-06T12:17:00+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -30456,7 +30456,7 @@
         "ordinaryBusinessPassed": false,
         "synthetic25Passed": false,
         "syntaxFix": {
-          "state": "FIXED_INTEGRATION_QB_AND_BUILD_IN_PROGRESS",
+          "state": "SOURCE_QB_AND_BUILD_PASS_NOT_NATIVE_PG",
           "authority": "C11:59:59 decision within human noon delegation; implementation remains original authorized task",
           "owner": "D1",
           "files": [
@@ -30480,8 +30480,47 @@
           },
           "QB": "Original QB only3leaves/finalbody/dynamiccatalog increment",
           "build": "Original D2 one fixed full candidate/tail; actual5eff28176d3b base",
-          "T45": "Local purepin preparation only; no new job/PG before accurate build/QA/bound scope"
+          "T45": "Local purepin preparation only; no new job/PG before accurate build/QA/bound scope",
+          "QBReceiptSHA256": "4f1bcef14eaebf8554a026ad8e33cf6277f1b1c8c18a4666e84723e78b353383",
+          "D2ReceiptSHA256": "8584b19facac3d03d451da2c6a9d4d9a28cf34f301d9c53f1767a456b0e12e3e"
         }
+      },
+      "r12Preparation": {
+        "state": "FIXED_BUILD_READY_EXACT_STAGE_PREFLIGHT_AUTHORIZED",
+        "integration": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
+        "buildRoot": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
+        "tree": "5fc3954272588c6c0bbb9c381790c3e47b76bbf5",
+        "sourceSetSHA256": "f91172b2cc6637bbdb5ddec6c5677af7925b219826e03a0c800910d6524e9286",
+        "QBReceiptSHA256": "4f1bcef14eaebf8554a026ad8e33cf6277f1b1c8c18a4666e84723e78b353383",
+        "D2ReceiptSHA256": "8584b19facac3d03d451da2c6a9d4d9a28cf34f301d9c53f1767a456b0e12e3e",
+        "buildSeconds": 10.792812875000003,
+        "packSeconds": 9.058242750000005,
+        "archiveSHA256": "97952e46730a14ff923fb4dcd83dfe2fc89b26b6ce818f67a7e04165b3043b1c",
+        "archiveBytes": 83688806,
+        "manifestSHA256": "7ab0d42b05eb01a4d85fe946f121d688ffeb338d29ed28c394fc3cddc6fb5c8e",
+        "descriptorSHA256": "adf7a0561cebcfc8ed1d6a131d095c2d05adf88d4b7b6ae04f3ccf5029e027af",
+        "base": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-5effb61d/ordinary/ordinary-transfer.tar.gz",
+          "bytes": 83687082,
+          "sha256": "28176d3b7dbb999e262cad532ad75573747ae601a205e8e55957dd2bebef4f97"
+        },
+        "prefix": {
+          "bytes": 80445453,
+          "sha256": "d6727cb2e55d9a37d2c5fe01fce01c16e0082f8c139325fc321abae4abcf6b3e",
+          "byteCompared": true
+        },
+        "tail": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-b8e35df4/ordinary/recovery-tail-next-01/ordinary-transfer.tail-offset-80445453.bin",
+          "bytes": 3243353,
+          "sha256": "40fa99a077b837448603e72d14339f3ad2bb89af705f48eca4306fb0698a2321"
+        },
+        "previous81221531OffsetUsable": false,
+        "smallBindingAndActualTailVerifiedByC": true,
+        "T45Scope": "One original bounded readonly stagepreflight only; no transfer/PG until accurate actual facts and separate original leaves",
+        "authority": "Standing user same-kind bounded isolated operations approval; not extension of expired temporary delegation",
+        "actualPG": false,
+        "REAL": false,
+        "production": false
       }
     },
     "productionReleaseCompatibilityContinuation": {

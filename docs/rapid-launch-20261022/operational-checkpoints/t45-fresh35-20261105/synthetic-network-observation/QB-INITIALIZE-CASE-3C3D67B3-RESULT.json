@@ -1,0 +1,128 @@
+{
+  "task": "C-0448-R11-INITIALIZE-CASE-SYNTAX",
+  "atUtc": "2026-11-06T04:13:20.807476+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
+    "root": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
+    "tree": "5fc3954272588c6c0bbb9c381790c3e47b76bbf5",
+    "parent": "fbb10bb7041b2ccaf3a87bafbc2bf994a0d60290",
+    "sourceSet": "f91172b2cc6637bbdb5ddec6c5677af7925b219826e03a0c800910d6524e9286"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+        "sha256": "1508620dc618b3560181694aea2591638ce885b337f86ee5d6e51f8659918565",
+        "bytes": 25346,
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R11-INITIALIZE-SYNTAX-SOURCE-01/0035_historical_settlement_difference_successor.sql"
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+        "sha256": "b04646442382baff967bf43d5957eba49ac1f4e5595dde2632966f4d8b85dad2",
+        "bytes": 5016,
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R11-INITIALIZE-SYNTAX-SOURCE-01/fresh35-historical-settlement-difference-candidate.mjs"
+      },
+      {
+        "path": "tests/fresh35-historical-settlement-difference-candidate.test.mjs",
+        "sha256": "1de0135f48d4885279eb0a58493a1e2dc404ddbcc9a6a133701757928e7310b1",
+        "bytes": 7591,
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R11-INITIALIZE-SYNTAX-SOURCE-01/fresh35-historical-settlement-difference-candidate.test.mjs"
+      }
+    ],
+    "onlyCommandSpecSuccessorHashAndOneAppendedReplacementChanged": true,
+    "patchJsonInverseWholeFileExact": true,
+    "candidateModuleOnlyOneSQLPinChanged": true,
+    "replacementOnlyTwoGroupingCharacters": true,
+    "otherThreeSpecObjectsUnchanged": true,
+    "authorParserEvidence": {
+      "sha256": "fafed03d58c2fa7a8d4caa2587ac9b7497c031eef8f8a90779b88c7ad7e4e62b",
+      "result": {
+        "parser": "v7.21",
+        "postgresGrammar": [
+          17,
+          7
+        ],
+        "results": {
+          "COMMAND-BEFORE.sql": {
+            "parsed": false,
+            "error": "syntax error at end of input"
+          },
+          "COMMAND-AFTER.sql": {
+            "parsed": true,
+            "error": null
+          },
+          "unparenthesized": {
+            "parsed": false
+          },
+          "parenthesized": {
+            "parsed": true
+          }
+        },
+        "onlyTwoParenthesesAdded": true,
+        "reverseExactlyRestoresOriginal": true,
+        "sqlPredicateASTEqualIgnoringSourcePositions": true,
+        "nativePGExecuted": false,
+        "nativePG17_11Validated": false
+      },
+      "rerunByQB": false
+    },
+    "tree": "5fc3954272588c6c0bbb9c381790c3e47b76bbf5",
+    "rootTree": "5fc3954272588c6c0bbb9c381790c3e47b76bbf5"
+  },
+  "independentFinalConsumer": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "sourceSet": "f91172b2cc6637bbdb5ddec6c5677af7925b219826e03a0c800910d6524e9286",
+    "originalCandidateBodySha256": "df1d6f79037bb7c5bb1276ce1730b4273d0af5b3036ede6089cac7208248b52f",
+    "reverseOnlyTwoCharactersToPriorBody": true,
+    "currentLastPatchAndCompiledProgramConsumeExactNewSpecs": true,
+    "catalogBodySha256": "df1d6f79037bb7c5bb1276ce1730b4273d0af5b3036ede6089cac7208248b52f",
+    "catalogDefinitionSha256": "024554b760aaec06a20e1f4488f302a5cafdf0c9081ce98e8159104532ff0fca",
+    "definitionHashIndependentlyReconstructedFromPinnedCaptureAndFinalBody": true,
+    "terminal152PinMatchesBody": true,
+    "programPatchHashMatchesRenderedCurrentPatch": true,
+    "programCatalogHashMatchesDynamicGuard": true,
+    "sourceGraphUsesOSNetworkFixtureOnly": true,
+    "PGExecuted": false,
+    "serverCalls": 0
+  },
+  "closure": {
+    "sourceSetHashRecomputed": true,
+    "currentPins": 214,
+    "capturedPins": 180,
+    "changedCurrentPins": [
+      "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+      "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs"
+    ],
+    "unchangedCurrentPins": 212,
+    "capturedAndBaseArtifactsUnchanged": true,
+    "earlierSuccessorManifestsUnchanged": true
+  },
+  "authorEvidenceAdopted": {
+    "D1ResultSha256": "51853c65fbdd744830bd3827970a4995cd3ff5cbd3cac2417f4d367ddb63a9d5",
+    "directChecksPassed": 2,
+    "parserEvidence": "pglast7.21 using PostgreSQL17.7 grammar; exact before red/after green, predicateAST equal ignoring positions; not runtimePG17.11",
+    "parserRerunByQB": false
+  },
+  "primarySourceVerified": "https://github.com/postgres/postgres/blob/REL_17_11/src/pl/plpgsql/src/pl_gram.y#L2281-L2283 and #L2551-L2575; IF expression consumes THEN at zero paren depth, parentheses tracked.",
+  "preserved": "Only one replacement appended to terminal command spec and its successor hash; one SQL pin. Complete patch and candidate module inverse exact. Earlier sealed hall/amount, other3specs, catalog source, diagnostic consumers/Python, roles/permissions and negative assertions unchanged. Existing accepted scopes reused.",
+  "r11ActualState": "C reported schema COMMITTED/record PUBLISHED, admin snapshot passed; BAD_APPROVAL negative INITIALIZE42601; target stopped. Not installation rollback.",
+  "r11FirstErrorPosition": "NOT_OBSERVED",
+  "r11SoleCause": "NOT_PROVEN",
+  "boundaries": {
+    "sourceModified": false,
+    "WIPReviewed": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "r11ReplayOrRestart": false,
+    "nativePG17_11Verified": false,
+    "wholeBusinessOrREALPassed": false,
+    "oldCatalogLFAclBackendFullSuiteRerun": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return exact narrow source QA to C. Actual native17.11/whole-chain/REAL require separately valid successor target authorization; do not reuse old key/window."
+}
