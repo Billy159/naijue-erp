@@ -6,6 +6,8 @@
 import type {RuntimeDatabaseReadPool, RuntimeDatabaseTargetIdentity} from './runtime-database-read-ports.ts';
 import {CAPACITY_VOLUMES, createCapacityAdmission} from './capacity-admission.ts';
 import type {CapacityAdmission, ObservableCapacityAdmission, CapacityBinding, CapacityBytes, CapacityReading, CapacityWindow} from './capacity-admission.ts';
+import {describeFresh35OrdinaryAdmissionV2,assertFresh35OrdinaryAdmissionCurrentV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+import type {Fresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
 
 export interface CapacityRuntimeTarget {
   readonly host: string; readonly port: number; readonly database: string;
@@ -37,7 +39,7 @@ export interface PreparedOwnedPoolCapacityAdmission extends ObservableCapacityAd
 // Keep callers' complete target type (including private operator fields) opaque
 // while consuming only the identity subset. Generic acceptance also preserves
 // the existing inline bounded-target call sites without widening this port.
-type PoolBinder = <Target extends RuntimeDatabaseTargetIdentity>(pool: RuntimeDatabaseReadPool, target: Target) => void;
+type PoolBinder = <Target extends RuntimeDatabaseTargetIdentity>(pool: RuntimeDatabaseReadPool, target: Target, fresh35?: Fresh35OrdinaryAdmissionV2) => void;
 const binders = new WeakMap<CapacityAdmission, PoolBinder>();
 
 /** Capture before the API's first await, alongside its original singleton.
@@ -58,6 +60,14 @@ const STORAGE_SQL = `/* capacity-inventory:storage */ SELECT
  pg_indexes_size('naijue_erp.auth_session'::regclass)::text AS index_bytes,
  pg_total_relation_size('naijue_erp.auth_session'::regclass)::text AS total_relation_bytes,
  pg_database_size(current_database())::text AS database_bytes`;
+// Fresh35 LOGIN has CONNECT but NOINHERIT. Its existing runtime interface owns
+// schema USAGE, so keep each finite statistic under its original authorized role.
+const FRESH35_DATABASE_SQL = `/* capacity-runtime:database-storage */ SELECT pg_database_size(current_database())::text AS database_bytes`;
+const FRESH35_RUNTIME_ROLE = 'erp_unified27_runtime_2393dbc6db9581c2';
+const FRESH35_RELATION_SQL = `/* capacity-runtime:relation-storage */ SELECT
+ pg_relation_size('naijue_erp.auth_session'::regclass)::text AS relation_bytes,
+ pg_indexes_size('naijue_erp.auth_session'::regclass)::text AS index_bytes,
+ pg_total_relation_size('naijue_erp.auth_session'::regclass)::text AS total_relation_bytes`;
 const unknown = (): CapacityReading => ({status: 'UNKNOWN'});
 const timestamp = (value: unknown): value is number => typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;
 const decimal = (value: unknown): value is string => typeof value === 'string' && /^(?:0|[1-9][0-9]*)$/.test(value);
@@ -78,6 +88,7 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
     || typeof input.readVolumeFacts !== 'function') throw new TypeError('Explicit capacity runtime target and authorized fresh volume facts required');
   const expected = structuredClone(t), readVolumeFacts = input.readVolumeFacts.bind(input), {now, probeTtlMillis, probeTimeoutMillis} = options;
   let pool: RuntimeDatabaseReadPool | undefined, closed = false;
+  let fresh35: Fresh35OrdinaryAdmissionV2 | undefined;
   let startup: AbortController | undefined, probing = false;
   const probe: Parameters<typeof createCapacityAdmission>[0]['probe'] = async ({window, signal}) => {
     if (probing) return unknown();
@@ -97,6 +108,7 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
     let result: CapacityReading = unknown();
     try {
       active();
+      if (fresh35) {await assertFresh35OrdinaryAdmissionCurrentV2(fresh35,pool);active();}
       // Operational IO finishes BEFORE borrowing the database lease. The original
       // admission retains its in-flight slot until this entire worker settles,
       // even if a provider ignores abort or a bounded acquisition is still pending.
@@ -114,7 +126,22 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
       if (identity.rows.length !== 1 || !id || id.database !== expected.database || id.role !== expected.role
         || id.session_user !== expected.role || id.database_oid !== expected.databaseOid || id.postmaster_start !== expected.postmasterStart
         || id.read_only !== 'on' || id.isolation !== 'repeatable read') throw new Error('Capacity runtime target mismatch');
-      const storage = await client.query(STORAGE_SQL); active();
+      let storage: Awaited<ReturnType<typeof client.query>>;
+      if (fresh35) {
+        const database = await client.query(FRESH35_DATABASE_SQL);active();
+        if (database.rows.length!==1 || !decimal(database.rows[0]?.database_bytes)) throw new Error('Capacity runtime storage unavailable');
+        await assertFresh35OrdinaryAdmissionCurrentV2(fresh35,pool);active();
+        const switched=await client.query('SET LOCAL ROLE '+FRESH35_RUNTIME_ROLE);active();
+        if ((switched as {command?:unknown}).command!=='SET') throw new Error('Capacity runtime role unavailable');
+        const roleIdentity=await client.query(IDENTITY_SQL);active();const actor=roleIdentity.rows[0];
+        if (roleIdentity.rows.length!==1 || !actor || actor.database!==expected.database || actor.role!==FRESH35_RUNTIME_ROLE
+          || actor.session_user!==expected.role || actor.database_oid!==expected.databaseOid || actor.postmaster_start!==expected.postmasterStart
+          || actor.read_only!=='on' || actor.isolation!=='repeatable read') throw new Error('Capacity runtime target mismatch');
+        const relations=await client.query(FRESH35_RELATION_SQL);active();
+        if (relations.rows.length!==1) throw new Error('Capacity runtime storage unavailable');
+        await assertFresh35OrdinaryAdmissionCurrentV2(fresh35,pool);active();
+        storage={rows:[{...relations.rows[0],database_bytes:database.rows[0]!.database_bytes}],rowCount:1};
+      } else {storage=await client.query(STORAGE_SQL);active();}
       const bytes = storage.rows[0];
       if (storage.rows.length !== 1 || !bytes || !['relation_bytes', 'index_bytes', 'total_relation_bytes', 'database_bytes'].every(k => decimal(bytes[k])))
         throw new Error('Capacity runtime storage unavailable');
@@ -128,7 +155,17 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
     } catch {discard = new Error('Capacity runtime probe failed'); result = unknown();}
     finally {
       if (client) {
-        if (began) try {await client.query('ROLLBACK');} catch {discard = new Error('Capacity runtime rollback unconfirmed'); result = unknown();}
+        if (began) try {
+          const rollback=await client.query('ROLLBACK');
+          if (fresh35) {
+            if ((rollback as {command?:unknown}).command!=='ROLLBACK') throw new Error('Capacity runtime rollback unconfirmed');
+            const restored=await client.query(IDENTITY_SQL);active();const actor=restored.rows[0];
+            if (restored.rows.length!==1 || !actor || actor.database!==expected.database || actor.role!==expected.role
+              || actor.session_user!==expected.role || actor.database_oid!==expected.databaseOid || actor.postmaster_start!==expected.postmasterStart)
+              throw new Error('Capacity runtime role restoration unconfirmed');
+            await assertFresh35OrdinaryAdmissionCurrentV2(fresh35,pool);active();
+          }
+        } catch {discard = new Error('Capacity runtime rollback unconfirmed'); result = unknown();}
         try {client.release(discard);} catch {result = unknown();}
       }
     }
@@ -153,10 +190,16 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
       } finally {clearTimeout(timer); if (startup === controller) startup = undefined;}
     },
     close() {closed = true; startup?.abort(); admission.close();}});
-  binders.set(owned, (original, target) => {
+  binders.set(owned, (original, target, proof) => {
     if (closed || pool || !original || typeof original.connect !== 'function' || target.host !== expected.host || target.port !== expected.port
       || target.database !== expected.database || target.user !== expected.role) throw new TypeError('Capacity runtime requires its one exact owned pool target');
-    pool = original;
+    if (proof!==undefined) {
+      const actual=describeFresh35OrdinaryAdmissionV2(proof);
+      if (actual.connectHost!==expected.host || actual.connectPort!==expected.port || actual.database!==expected.database
+        || actual.user!==expected.role || actual.databaseOid!==expected.databaseOid || actual.postmasterStart!==expected.postmasterStart)
+        throw new TypeError('Capacity runtime requires its original Fresh35 admission target');
+    }
+    pool = original;fresh35=proof;
   });
   return owned;
 }

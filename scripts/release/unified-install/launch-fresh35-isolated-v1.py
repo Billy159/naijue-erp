@@ -524,12 +524,41 @@ def same_process(identity):
     except FileNotFoundError:
         return False
 
-def port_absent(port):
-    for name in ['/proc/net/tcp','/proc/net/tcp6']:
-        for line in Path(name).read_text().splitlines()[1:]:
-            if int(line.split()[1].split(':')[1],16) == port:
-                return False
-    return True
+def port_absent(port, observation=None):
+    if observation is None:
+        for name in ['/proc/net/tcp','/proc/net/tcp6']:
+            for line in Path(name).read_text().splitlines()[1:]:
+                if int(line.split()[1].split(':')[1],16) == port:
+                    return False
+        return True
+    # One cleanup sample in this same namespace; no recheck, retry or relaxation.
+    states=tuple(f'{state:02X}' for state in range(1,13))+('UNKNOWN',)
+    observation.update({'format':'FRESH35_CLEANUP_PORT_OBSERVATION_V1',
+        'stage':'AFTER_OWNED_PG_WAIT_AND_CREDENTIAL_CLEANUP_BEFORE_CONTAINER_STOP',
+        'startedAtUTC':datetime.now(timezone.utc).isoformat(),'finishedAtUTC':None,
+        'namespace':None,'reading':'netns','readError':None,'complete':False,
+        'matchingRows':0,'matchingStates':{table:{state:0 for state in states} for table in ('tcp','tcp6')},'portAbsent':None})
+    try:
+        namespace=Path('/proc/self/ns/net').stat()
+        observation['namespace']={'device':namespace.st_dev,'inode':namespace.st_ino}
+        for table in ('tcp','tcp6'):
+            observation['reading']=table
+            for line in Path('/proc/net/'+table).read_text().splitlines()[1:]:
+                fields=line.split()
+                if int(fields[1].split(':')[1],16)==port:
+                    state=fields[3].upper()
+                    observation['matchingStates'][table][state if state in states else 'UNKNOWN']+=1
+                    observation['matchingRows']+=1
+        absent=observation['matchingRows']==0
+        observation.update(complete=True,portAbsent=absent,reading=None)
+        return absent
+    except Exception as error:
+        observation['readError']=('DENIED' if isinstance(error,PermissionError) else
+            'NOT_FOUND' if isinstance(error,FileNotFoundError) else
+            'INVALID_DATA' if isinstance(error,(ValueError,IndexError,UnicodeError)) else 'READ_FAILED')
+        raise
+    finally:
+        observation['finishedAtUTC']=datetime.now(timezone.utc).isoformat()
 
 def owned_listener(identity, port):
     if not same_process(identity):
@@ -775,7 +804,8 @@ def cleanup_owned_server(a, proc, identity, system_id, deadline):
         except Exception as e:errors.append({'phase':'credentials','type':type(e).__name__})
         try:
             result['ownedPidAbsent']=proc is None or proc.poll() is not None
-            result['portAbsent']=port_absent(p['port'])
+            result['portObservation']={}
+            result['portAbsent']=port_absent(p['port'],result['portObservation'])
             if proc and result['ownedPidAbsent'] and not (root/'data/postmaster.pid').exists():
                 r=subprocess.run([str(BIN/'pg_controldata'),'-D',str(root/'data')],capture_output=True,env=clean_env(root),timeout=5)
                 control=r.stdout.decode(errors='replace')

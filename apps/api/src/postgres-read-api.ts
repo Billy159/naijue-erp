@@ -649,7 +649,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   let admission35: Fresh35OrdinaryAdmissionV2 | undefined;
   const revoke35=():void=>{if(admission35)closeFresh35OrdinaryAdmissionV2(admission35,ownedPool);};
   try {
-    host.capacityRuntimePoolBinder?.(ownedPool, options.postgres.target);
+    if(!productionV2)host.capacityRuntimePoolBinder?.(ownedPool, options.postgres.target);
     const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, {
       ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1",
       ...(runtime26HistoryAuthorization !== undefined ? { requiredObservation: "HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8" as const } : requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8" as const } : {})
@@ -664,6 +664,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       if(actual.connectHost!==expected.host || actual.connectPort!==expected.port || actual.database!==expected.database || actual.user!==expected.role
         || actual.databaseOid!==expected.databaseOid || actual.postmasterStart!==expected.postmasterStart)
         throw new TypeError('Production V2 admission and current capacity physical target differ');
+      host.capacityRuntimePoolBinder(ownedPool,options.postgres.target,admission35);
     }
     const issuer27 = ordinary27 ? createRuntime27CommandIssuer(ownedPool, {database:options.postgres.target.database,user:options.postgres.target.user,port:options.postgres.target.port}, 'WHOLE_V2', admission35) : null;
     const pool = issuer27?.pool ?? (issuer === null ? ownedPool : issuer.pool);

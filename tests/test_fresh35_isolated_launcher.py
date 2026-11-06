@@ -95,6 +95,64 @@ class Tests(unittest.TestCase):
         self.assertNotIn('os.killpg',source)
         self.assertNotIn('shutil.rmtree',source)
 
+class CleanupPortObservationTests(unittest.TestCase):
+    def observe(self,rows=None,read_error=None,netns_error=None):
+        rows=rows or {};observation={};reads=[]
+        def read(path,*args,**kwargs):
+            reads.append(str(path))
+            if read_error:raise read_error
+            return 'header\n'+rows.get(str(path),'')
+        def netstat(path,*args,**kwargs):
+            self.assertEqual(str(path),'/proc/self/ns/net')
+            if netns_error:raise netns_error
+            return SimpleNamespace(st_dev=4,st_ino=99)
+        with patch.object(m.Path,'read_text',read),patch.object(m.Path,'stat',netstat):
+            try:value=m.port_absent(18651,observation);error=None
+            except Exception as e:value=None;error=e
+        return value,observation,error,reads
+    def test_matching_listen_and_nonlisten_both_refuse_with_distinct_counts(self):
+        for state in ['0A','06','01','FF']:
+            with self.subTest(state=state):
+                value,o,error,reads=self.observe({'/proc/net/tcp':f'0: 0100007F:48DB SECRET_ADDRESS:ABCD {state} PRIVATE_ROW\n'})
+                self.assertFalse(value);self.assertIsNone(error);self.assertTrue(o['complete'])
+                self.assertEqual(o['matchingStates']['tcp'][state if state!='FF' else 'UNKNOWN'],1)
+                self.assertEqual(o['matchingRows'],1);self.assertFalse(o['portAbsent'])
+                self.assertNotIn('SECRET',json.dumps(o));self.assertNotIn('PRIVATE',json.dumps(o))
+                self.assertEqual(reads,['/proc/net/tcp','/proc/net/tcp6'])
+    def test_ipv6_match_and_unrelated_port_kept_separate(self):
+        value,o,error,_=self.observe({'/proc/net/tcp':'0: 0100007F:48DC hidden:0000 0A hidden\n','/proc/net/tcp6':'0: ABCD:48DB hidden:0000 06 hidden\n'})
+        self.assertFalse(value);self.assertIsNone(error);self.assertEqual(o['matchingStates']['tcp6']['06'],1);self.assertEqual(o['matchingRows'],1)
+    def test_absence_has_complete_timing_and_namespace_metadata(self):
+        value,o,error,_=self.observe();self.assertTrue(value);self.assertIsNone(error)
+        self.assertEqual(o['namespace'],{'device':4,'inode':99});self.assertEqual(o['matchingRows'],0)
+        self.assertEqual(o['stage'],'AFTER_OWNED_PG_WAIT_AND_CREDENTIAL_CLEANUP_BEFORE_CONTAINER_STOP')
+        self.assertTrue(o['startedAtUTC'].endswith('+00:00'));self.assertTrue(o['finishedAtUTC'].endswith('+00:00'))
+    def test_read_failures_remain_unknown_and_never_export_error_text(self):
+        for error,code in [(PermissionError('SECRET'),'DENIED'),(FileNotFoundError('SECRET'),'NOT_FOUND'),(ValueError('SECRET'),'INVALID_DATA')]:
+            with self.subTest(code=code):
+                value,o,caught,_=self.observe(read_error=error)
+                self.assertIsNone(value);self.assertIsNotNone(caught);self.assertFalse(o['complete']);self.assertIsNone(o['portAbsent'])
+                self.assertEqual(o['readError'],code);self.assertEqual(o['reading'],'tcp');self.assertNotIn('SECRET',json.dumps(o))
+    def test_cleanup_preserves_observation_and_original_all_conditions_rule(self):
+        for matched in [True,False]:
+            with self.subTest(matched=matched):
+                class Child:
+                    done=False
+                    def poll(self):return 0 if self.done else None
+                    def send_signal(self,signal):self.done=True
+                    def wait(self,timeout):return 0
+                p=authority()['proposal'];port=p['port']
+                def read(path,*args,**kwargs):
+                    return 'header\n'+(f'0: 0100007F:{port:04X} SECRET:0000 06 SECRET\n' if matched and str(path)=='/proc/net/tcp' else '')
+                with patch.object(m,'owned_listener',return_value=True),patch.object(m,'same_process',return_value=True),patch.object(m,'psql',return_value=''),patch.object(m,'clear_credentials',return_value=True),patch.object(m.Path,'exists',return_value=False),patch.object(m.Path,'is_symlink',return_value=False),patch.object(m.Path,'read_text',read),patch.object(m.Path,'stat',return_value=SimpleNamespace(st_dev=4,st_ino=99)),patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout=b'Database system identifier: 999\nDatabase cluster state: shut down\n')):
+                    result=m.cleanup_owned_server(authority(),Child(),{'pid':999},'999',m.time.monotonic()+20)
+                self.assertEqual(result['portAbsent'],not matched);self.assertEqual(result['cleanupComplete'],not matched)
+                self.assertTrue(all(result[k] for k in ['cleanShutdown','credentialsRemoved','ownedPidAbsent','loginsRevoked']))
+                self.assertEqual(result['errors'],[]);self.assertEqual(result['portObservation']['matchingRows'],int(matched));self.assertNotIn('SECRET',json.dumps(result))
+    def test_namespace_failure_never_claims_known_port_absence(self):
+        value,o,error,reads=self.observe(netns_error=PermissionError('SECRET'))
+        self.assertIsNone(value);self.assertIsNotNone(error);self.assertEqual(o['readError'],'DENIED');self.assertEqual(o['reading'],'netns');self.assertFalse(o['complete']);self.assertEqual(reads,[]);self.assertNotIn('SECRET',json.dumps(o))
+
 class InitializationModelTests(unittest.TestCase):
     def model(self, events=None, status=None, descendants=None, cleanup=None, subreaper_error=False,time_step=0,signal_after_launch=False):
         log=[]; events=list(events or [None]); statuses=list(status or [0]); children=list(descendants or [])
