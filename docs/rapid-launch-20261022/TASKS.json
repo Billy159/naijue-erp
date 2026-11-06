@@ -28224,7 +28224,8 @@
         "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
         "corresponding declarations and affected existing direct tests only",
         "scripts/release/unified-install/fresh35-retirement-identity.mjs production-profile identity mapping seam only",
-        "scripts/release/unified-install/fresh35-combined-source-v1.mjs production-profile pass-through only"
+        "scripts/release/unified-install/fresh35-combined-source-v1.mjs production-profile pass-through only",
+        "tools/unified-import/fresh35-host-session.mjs synthetic-only fixed installation record parent watch seam; tests/fresh35-ordinary-production-v2.test.mjs exact direct regressions, conditional on original RED reproduction; preserve production/record inode watch/revocation/bytes-generation guards and directory ACL"
       ],
       "D2": [
         "apps/api/src/production-main.ts",
@@ -28508,9 +28509,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R22_CAPACITY_ADVANCED_ADMISSION_EACCES_STOPPED_D1_PRECISE_DIAGNOSIS",
+      "critical": "R22_ADMISSION_WATCH_RED_REPRODUCED_D1_TWO_LEAF_MINIMUM_FIX_WIP",
       "independentPreparation": {
-        "D1": "Exact readonly admission EACCES seam diagnosis; source frozen until precise minimum proposal.",
+        "D1": "Original body RED EACCES reproduced in scoped permission projection; exact synthetic record-parent watch repair/direct revoke tests in progress, two-leaf WIP preserved.",
         "QB": "r22 mode-only PASS adopted; no new QA absent new source.",
         "D2": "r22 fixed build/source complete; no duplicate build.",
         "T45": "r22 terminal stopped/6cleanup; no new server/PG/replay, only existing local metadata if D1 needs.",
@@ -32445,6 +32446,27 @@
           "capacityConstructionAdvanced": true,
           "capacityPreflightPassed": false,
           "normalCommitMustNotReplay": true
+        },
+        "sourceDiagnosisContinuation": {
+          "state": "RED_REPRODUCED_TWO_LEAF_WIP_NOT_ACCEPTED",
+          "owner": "original D1",
+          "files": [
+            "tools/unified-import/fresh35-host-session.mjs",
+            "tests/fresh35-ordinary-production-v2.test.mjs"
+          ],
+          "candidate": "Synthetic admission attempts fs.watch on root0711 fixed-record parent; original T45 metadata supports directory mode; actual unique Linux throw not exported.",
+          "sameCauseCheck": "Bootstrap observation file is added after dirname expansion; its root0711 parent is not watched already. Preserve existing correct implementation and add assertion only.",
+          "invariants": [
+            "No chmod or ACL expansion",
+            "Production branch unchanged",
+            "Keep record and observation inode watch, revoke on change/rename/error and original bytes/generation/lease/source/reference guards"
+          ],
+          "notVerified": [
+            "New source fixed delivery",
+            "Independent QB increment",
+            "New fixed build",
+            "Actual Linux ordinary run after fix"
+          ]
         }
       }
     },
@@ -32854,12 +32876,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T22:12:47.440186+08:00",
-      "phase": "R22_CAPACITY_ADVANCED_ADMISSION_EACCES_STOPPED_D1_PRECISE_DIAGNOSIS",
+      "at": "2026-11-06T22:26:53.545450+08:00",
+      "phase": "R22_ADMISSION_WATCH_RED_REPRODUCED_D1_TWO_LEAF_MINIMUM_FIX_WIP",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original D1 exact REAL_SYNTHETIC_ADMISSION EACCES source diagnosis",
-      "nextOwner": "C exact file ownership/minimum fix after evidence",
+      "currentOwner": "Original D1 sole writer host-session and exact existing direct tests",
+      "nextOwner": "Original QB affected source increment after fixed D1 delivery",
       "latestActualReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -32869,7 +32891,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "D1 exact frozen createSyntheticRuntime35ApplicationApi/capacity.preflight seam readonly diagnosis and necessary pureoffline repro; no new server/install/oldkey replay.",
+      "next": "D1 complete exact model RED; if established implement registered two-leaf synthetic fixed record parent watch repair, preserving record watch/revoke and all guards. No chmod/ACL/prod path change.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
       "buildRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",

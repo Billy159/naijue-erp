@@ -2266,3 +2266,10 @@ T45实际只读preflight602feb33退出0/0.319秒，确认r21 stopped及六项清
 唯一install退出2/150.153秒，raw `55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2`/safe `c0cd06b08cc0633f9b1995afbff5b32a707df4e6b8efc9b78191272e9bddf79d`已核。普通函数已越过REAL_CAPACITY，后继REAL_SYNTHETIC_ADMISSION抛Error/errno EACCES，其他guardCode/sqlstate/integer空。此阶段含createSyntheticRuntime35ApplicationApi及capacity.preflight，catch不是原throw行，具体路径/syscall尚未知；不能扩权限或把整链算PASS。
 
 同版本35表安装完成记录已发布；正常合成COMMITTED/ALREADY_COMMITTED/新连接VERIFIED25头27结算，负例回滚及三个CLOSED快照通过。容器停止、ordinary/initializer/descendants回收、6cleanuptrue/errors[]，新normalcommit必须保留不重放。无REAL/prod。原D1只读精确接入/容量预检接缝，必要offline最小复现；原T45留终态，不新server/PG，不重复诊断，仅已有非敏感metadata必要时支持。上轮容量权限交付缺陷本轮actual已修，当前为证据改变后的下一失败，不是同一无进展阻塞。
+
+
+## 2026-11-06 — r22接入父目录监看反例已复现，原D1两叶修复在途
+
+原D1沿准确frozen host body及既有directtest，以有限root0711/UID61035权限投影复现watch固定record父目录EACCES，移除该synthetic精确parent要求的内存候选可继续准入；这是离线模型，不冒称Linux唯一throw或实库通过。C登记host-session.mjs与原fresh35-ordinary-production-v2.test.mjs两叶唯一D1 writer，在途WIP不覆盖/不先提交半成品。保留record inode watch及变更/rename/error撤销、原bytes/generation/lease/其他source和reference guards，production路径与目录权限不变。
+
+同类核查发现bootstrap文件在dirname扩展之后才加入watch，现有代码已不监看其0711父目录；该正确实现直接保留，只补准确集合断言，不加无关runtime修改。原QB待固定交付后仅验受影响增量，D2/T45暂不新build/PG/重放。r22实际安装/合成commit/rollback/readback及cleanup结果仍有效，ordinary业务未通过。源码两叶当前WIP，主控仅提交三记录。
