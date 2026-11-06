@@ -1,6 +1,50 @@
 import {requestHash} from '../packages/application/src/request-hash.ts';
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
-import {isolatedClientOptions} from '../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs';
+import {isolatedClientOptions,isolatedEntryFailure} from '../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs';
+test('rollback CLI uses sequential native wires for every expected SQL error and independent absence readback (no PG)',async()=>{
+ const {Client}=await import('pg'),{withReviewedWholeSession}=await import('../tools/unified-import/whole-host-session.mjs');
+ const {executeWholePackage}=await import('../tools/unified-import/whole-package-client.ts'),{inspectWholePackage}=await import('../tools/unified-import/whole-package-inspect.ts');
+ const source=await readFile(new URL('../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',import.meta.url),'utf8');
+ const start=source.indexOf('  const stage='),end=source.indexOf('\n }\n const authorization=',start),AsyncFunction=Object.getPrototypeOf(async()=>{}).constructor;
+ const names=['root','workspace','standardTarget','config','HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256','join','openReviewedFresh35Host','assertWholeSalesAdmissionV1','buildSyntheticFresh35WholePackageFixture','encodedScrypt','executeWholePackage','createWholePackageSqlKernel','inspectWholePackage','reconcileWholePackage','need','process','historicalSettlementRetentionWire','describeFresh35CombinedProgram','program','requestHash'];
+ const run=new AsyncFunction(...names,source.slice(start,end));
+ const need=new Function(source.split('\n').find(line=>line.startsWith('const need='))+';return need')();
+ async function scenario({unknown=false,disposeFails=false,wrongApprovalCode=false,readbackUnknown=false,closeFails=false}={}){
+  const target={protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:'7703999999999999999',database_oid:'16384',database_name:'synthetic_fresh35_20261105_r9',catalog_sha256:'a'.repeat(64)};
+  const meta={batchId:'11111111-1111-4111-8111-111111111111',documentBatchId:'22222222-2222-4222-8222-222222222222',packageSha256:'a'.repeat(64),planSha256:'b'.repeat(64),namespace:'synthetic',cutoffAt:'2026-11-02T04:00:00Z'};
+  const wire={sha256:'c'.repeat(64),utf8:'SYNTHETIC_ONLY'},encoded='SYNTHETIC_ONLY',connections=[],events=[],output=[],executed=[],inspected=[],records=new WeakMap();let disposed=0;
+  const request=(n,batch,payload)=>({protocol:'STANDARD_IMPORT_SQL_V1',operation_id:'00000000-0000-4000-8000-'+String(n).padStart(12,'0'),request_key:'native-cli-'+n,batch_id:batch,plan_sha256:meta.planSha256,package_manifest_sha256:meta.packageSha256,namespace:meta.namespace,cutoff_at:meta.cutoffAt,payload});
+  const initialize=request(1,meta.batchId,{admin:{},document_batch_id:meta.documentBatchId,historical_settlement_retention_approval:wire});
+  const steps=[{method:'publish',request:request(2,meta.batchId,{phase:'BASELINE'})},{method:'documentChunk',request:request(3,meta.documentBatchId,{mode:'STAGE',rows:[]})},{method:'documentChunk',request:request(4,meta.documentBatchId,{mode:'CHUNK',rows:[{entity_type:'SALES_SETTLEMENT',fields:{sales_id:'retained-0'}}]})},{method:'publish',request:request(5,meta.documentBatchId,{phase:'DOCUMENTS',expected_sequence:4})}];
+  const fixture={fixtureBinding:{manifestSha256:meta.packageSha256,planSha256:meta.planSha256,initializerSha256:requestHash({initialize,encodedScrypt:encoded}),stepsSha256:'d'.repeat(64)},retainedSalesIds:Array.from({length:25},(_,i)=>'retained-'+i),historicalSettlementRetentionApproval:{synthetic:true},identity:meta,program:{initialize,steps:{async *[Symbol.asyncIterator](){for(const step of steps)yield structuredClone(step)}}},async dispose(){disposed++;events.push('fixture-dispose');if(disposeFails)throw Error('PRIVATE cleanup path or credential')}};
+  const open=async(_config,_root,_target,work)=>{
+   assert(connections.every(r=>r.closed===1),'previous raw client must close before opening another');
+   const c=new Client({pipeline:false}),con=c.connection,record={number:connections.length+1,sent:[],closed:0,nextError:null},timers=[];connections.push(record);events.push('open-'+record.number);
+   c.on('error',()=>{});c._attachListeners(con);c._connecting=true;con.emit('readyForQuery',{status:'I'});
+   const end=c.end.bind(c);c.end=async(...args)=>{record.closed++;events.push('close-'+record.number);await end(...args);if(closeFails&&record.number===1)throw Error('PRIVATE native close failure')};
+   con.query=sql=>{record.sent.push(sql);queueMicrotask(()=>{
+    if(sql.startsWith('SELECT ')){con.emit('errorMessage',Object.assign(Error(record.nextError),{code:'23514'}));if(!unknown)timers.push(setTimeout(()=>con.emit('readyForQuery',{status:'E'}),5))}
+    else{const command=sql.startsWith('BEGIN')?'BEGIN':sql.startsWith('SET ')?'SET':sql;con.emit('commandComplete',{text:command});con.emit('readyForQuery',{status:command==='BEGIN'?'T':command==='SET'?'T':'I'})}
+   })};
+   try{return await withReviewedWholeSession(c,{},target,target,async controlled=>{
+    const observer={query:(...args)=>controlled.query(...args),discard:()=>controlled.discard()};records.set(observer,record);return work(observer,{});
+   },()=>target,'FRESH35_RETIRED152_V1',{fresh35ExpiresAt:Date.now()+(unknown?30:1000)})}
+   finally{for(const timer of timers)clearTimeout(timer);con.stream.destroy()}
+  };
+  const fail=(client,code)=>{records.get(client).nextError=code;return client.query('SELECT naijue_erp.standard_whole_package_finish_v2($1::uuid)::text AS result_json')};
+  const kernel=()=>({async lockAndInspect(){return{state:'ABSENT'}},async initialize(client,_id,init){if(init.payload.historical_settlement_retention_approval.sha256==='0'.repeat(64))await fail(client,wrongApprovalCode?'PERMISSION_DENIED':'HISTORICAL_SETTLEMENT_APPROVAL_HASH')},async applyStep(client,step){if(step.method==='documentChunk'&&step.request.payload.mode==='CHUNK'&&step.request.payload.rows.length===0)await fail(client,'HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED');if(step.method==='publish'&&step.request.payload.phase==='DOCUMENTS'&&step.request.payload.expected_sequence!==4)await fail(client,'STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT')},async summarize(){return{}}});
+  const execute=async(...args)=>{const result=await executeWholePackage(...args);executed.push(result);return result},inspect=async(...args)=>{const result=await inspectWholePackage(...args);inspected.push(result);return readbackUnknown?{state:'UNKNOWN'}:result};
+  let error;try{await run('/source','/owned',target,{},'MODEL_V2',(...p)=>p.join('/'),open,()=>{},async()=>fixture,encoded,execute,kernel,inspect,async()=>{throw Error('UNEXPECTED_RECONCILE')},need,{argv:['node','entry','--verify-host-rollback'],getuid:()=>1234,stdout:{write:line=>output.push(line)}},()=>wire,()=>({sourceSetSha256:'1'.repeat(64),programSha256:'2'.repeat(64),targetSha256:'3'.repeat(64)}),{},requestHash)}catch(e){error=e}
+  assert(connections.every(r=>r.closed===1));assert.equal(disposed,1);assert.equal(events.at(-1),'fixture-dispose');assert(connections.every(r=>!r.sent.includes('COMMIT')));
+  return{error,connections,events,output,executed,inspected};
+ }
+ const ok=await scenario();assert.ifError(ok.error);assert.equal(ok.connections.length,6);assert.equal(ok.executed.length,3);assert.equal(ok.inspected.length,3);assert.equal(ok.inspected.every(r=>r.state==='ABSENT'),true);assert.equal(JSON.parse(ok.output[0]).rollbackVerified,true);
+ assert.deepEqual(ok.executed.map(r=>r.code),['HISTORICAL_SETTLEMENT_APPROVAL_HASH','HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED','STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT']);
+ for(const options of [{unknown:true},{wrongApprovalCode:true},{unknown:true,disposeFails:true},{wrongApprovalCode:true,closeFails:true}]){const r=await scenario(options);assert(r.error);assert.equal(r.connections.length,1);assert.equal(r.executed.length,1);assert.equal(r.output.length,0);assert.equal(r.error.validationStage,'BAD_APPROVAL','first classified error survives fixture or native cleanup failure');const receipt=isolatedEntryFailure(r.error);assert.equal(receipt.validationSQLSTATE,'23514');assert.equal(receipt.validationStep,'INITIALIZE');assert.equal(receipt.validationCode,options.wrongApprovalCode?'PERMISSION_DENIED':'TRANSACTION_OUTCOME_UNKNOWN');}
+ const absent=await scenario({readbackUnknown:true,disposeFails:true});assert.equal(absent.connections.length,2);assert.match(absent.error.message,/FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED/);assert.equal(absent.output.length,0);
+ const absentReceipt=isolatedEntryFailure(absent.error);assert.equal(absentReceipt.validationCode,'FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED');assert.equal(absentReceipt.validationStage,'BAD_APPROVAL');assert.equal(absentReceipt.validationSQLSTATE,null);assert.doesNotMatch(JSON.stringify(absentReceipt),/PRIVATE|credential|path/);
+ const cleanup=await scenario({disposeFails:true});assert.equal(cleanup.connections.length,6);assert.equal(cleanup.output.length,0);assert.equal(isolatedEntryFailure(cleanup.error).validationCode,'FRESH35_ISOLATED_SYNTHETIC_FIXTURE_CLEANUP_FAILED');
+});
 test('entry failure JSON exports only private branded finite diagnostic and keeps the bad approval assertion closed (no PG)',async()=>{
  const {executeWholePackage,describeWholePackageFailure}=await import('../tools/unified-import/whole-package-client.ts');
  const source=await readFile(new URL('../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',import.meta.url),'utf8');
@@ -11,11 +55,16 @@ test('entry failure JSON exports only private branded finite diagnostic and keep
  const assertion=new Function('badApprovalResult',source.split('\n').find(line=>line.includes("'FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ROLLBACK_REQUIRED'")));
  let rejected;try{assertion(result)}catch(error){rejected=error}assert(rejected);assert.equal(rejected.validationStage,'BAD_APPROVAL');
  const marker='try{await main()}catch(error){',start=source.indexOf(marker)+marker.length,end=source.indexOf('process.exitCode=1;',start)+'process.exitCode=1;'.length;assert(start>=marker.length&&end>start);
- const serialize=new Function('error','process','describeFresh35CombinedInstallFailure','describeWholePackageFailure',source.slice(start,end));
- const emit=error=>{const lines=[],process={stderr:{write:line=>lines.push(line)}};serialize(error,process,()=>({stage:'UNKNOWN',step:null,originalSQLSTATE:null,originalInternalCode:null,rollbackSQLSTATE:null,rollbackInternalCode:null}),describeWholePackageFailure);assert.equal(process.exitCode,1);assert.equal(lines.length,1);return JSON.parse(lines[0])};
+ const serialize=new Function('error','process','isolatedEntryFailure',source.slice(start,end));
+ const emit=error=>{const lines=[],process={stderr:{write:line=>lines.push(line)}};serialize(error,process,isolatedEntryFailure);assert.equal(process.exitCode,1);assert.equal(lines.length,1);return JSON.parse(lines[0])};
  const actual=emit(rejected);assert.equal(actual.validationCode,'IMPORT_FAILED');assert.equal(actual.validationSQLSTATE,'42501');assert.equal(actual.validationStep,'LOCK_AND_INSPECT');assert.equal(actual.validationInternalCode,null);assert.doesNotMatch(JSON.stringify(actual),/PRIVATE|parameter|business|detail|validationResult/);
  const forged=emit(Object.assign(Error('PRIVATE'),{validationResult:{...result},validationSQLSTATE:'42501',validationStep:'OTHER',validationInternalCode:'NOT_ALLOWED'}));
  for(const key of ['validationSQLSTATE','validationStep','validationInternalCode'])assert.equal(forged[key],null,'unbranded supplied fields cannot become diagnostics');
+ for(const [code,stage] of [['SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED','BAD_APPROVAL'],['SYNTHETIC_MISSING_SETTLEMENT_ABSENCE_REQUIRED','MISSING_SETTLEMENT'],['SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED','FINAL_PUBLISH'],['SYNTHETIC_RETENTION_FIXTURE_BINDING_REQUIRED',null],['SYNTHETIC_FIXTURE_CLEANUP_FAILED',null]]){
+  const exact='FRESH35_ISOLATED_'+code,r=emit(Error(exact));assert.equal(r.validationCode,exact);assert.match(exact,/^[A-Z][A-Z0-9_]{0,80}$/);assert.equal(r.validationStage,stage);assert.equal(r.validationSQLSTATE,null);assert.equal(r.validationStep,null);assert.equal(r.validationInternalCode,null);
+ }
+ for(const message of ['PRIVATE credential path','FRESH35_ISOLATED_NOT_A_DECLARED_CODE','FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED PRIVATE'])assert.equal(emit(Error(message)).validationCode,null);
+ let accessed=0;const accessor=Error();Object.defineProperty(accessor,'message',{get(){accessed++;return 'PRIVATE'}});assert.equal(emit(accessor).validationCode,null);assert.equal(accessed,0);
 });
 test('isolated native client has an explicit owner TCP target and no inherited PG configuration',()=>{
  const proposal={host:'127.0.0.1',port:57639,database:'synthetic_fresh35_20261105_r91',owner:'fresh35_owner_20261105_r91'};
@@ -69,17 +118,17 @@ test('fixed synthetic CLI stages retain original keys, stop uncertain outcomes a
   let error;try{await run(...args)}catch(e){error=e}
   return {opened,executed,disposed,lines,iterations,error};
  }
- const ok=await scenario();assert.ifError(ok.error);assert.equal(ok.opened,3);assert.equal(ok.lines.length,1);assert.equal(JSON.parse(ok.lines[0]).syntheticImportVerified,true);assert.equal(JSON.parse(ok.lines[0]).businessVerified,false);
+ const ok=await scenario();assert.ifError(ok.error);assert.equal(ok.opened,8);assert.equal(ok.lines.length,1);assert.equal(JSON.parse(ok.lines[0]).syntheticImportVerified,true);assert.equal(JSON.parse(ok.lines[0]).businessVerified,false);
  assert.deepEqual(ok.iterations.map(rows=>rows.at(-1).request.payload.expected_sequence),[4,4,5,4,4]);assert.ok(ok.iterations.every(rows=>rows.at(-1).request.request_key==='original-final-key'));
  assert.equal(ok.iterations[1][0].request.payload.rows.length,0);assert.equal(ok.iterations[3][0].request.payload.rows.length,1);assert.equal(JSON.parse(ok.lines[0]).retainedHeaders,25);assert.equal(JSON.parse(ok.lines[0]).retainedSettlements,27);
- for(const bad of [{badApprovalState:'COMMITTED'},{badApprovalCode:'PERMISSION_DENIED'},{missingState:'UNKNOWN'},{missingCode:'CONNECTION_FAILED'}]){const r=await scenario(bad);assert(r.error);assert.equal(r.opened,1);assert.equal(r.lines.length,0);assert.equal(r.disposed,1);}
- const rollback=await scenario({stage:'rollback'});assert.ifError(rollback.error);assert.equal(rollback.opened,1);assert.equal(rollback.executed,3);const rb=JSON.parse(rollback.lines[0]);assert.equal(rb.state,'FRESH35_SYNTHETIC_ROLLBACK_VERIFIED');assert.equal(rb.syntheticImportVerified,false);assert.equal(rb.fixtureBindingSha256,requestHash(rb.fixtureBinding));
- for(const stage of ['all','rollback'])for(const finalCode of ['PERMISSION_DENIED','IMPORT_FAILED','STANDARD_PUBLICATION_INCOMPLETE',undefined]){const rejected=await scenario({stage,finalCode:finalCode??null});assert.match(rejected.error?.message??'',/SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED/);assert.equal(rejected.error.validationStage,'FINAL_PUBLISH');assert.equal(rejected.error.validationCode,finalCode??null);assert.equal(rejected.executed,3,'No COMMIT after wrong final classification');assert.equal(rejected.opened,1);assert.equal(rejected.lines.length,0);assert.equal(rejected.disposed,1);}
+ for(const bad of [{badApprovalState:'COMMITTED'},{badApprovalCode:'PERMISSION_DENIED'},{missingState:'UNKNOWN'},{missingCode:'CONNECTION_FAILED'}]){const r=await scenario(bad);assert(r.error);assert.equal(r.opened,Object.hasOwn(bad,'missingState')||Object.hasOwn(bad,'missingCode')?3:1);assert.equal(r.lines.length,0);assert.equal(r.disposed,1);}
+ const rollback=await scenario({stage:'rollback'});assert.ifError(rollback.error);assert.equal(rollback.opened,6);assert.equal(rollback.executed,3);const rb=JSON.parse(rollback.lines[0]);assert.equal(rb.state,'FRESH35_SYNTHETIC_ROLLBACK_VERIFIED');assert.equal(rb.syntheticImportVerified,false);assert.equal(rb.fixtureBindingSha256,requestHash(rb.fixtureBinding));
+ for(const stage of ['all','rollback'])for(const finalCode of ['PERMISSION_DENIED','IMPORT_FAILED','STANDARD_PUBLICATION_INCOMPLETE',undefined]){const rejected=await scenario({stage,finalCode:finalCode??null});assert.match(rejected.error?.message??'',/SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED/);assert.equal(rejected.error.validationStage,'FINAL_PUBLISH');assert.equal(rejected.error.validationCode,finalCode??null);assert.equal(rejected.executed,3,'No COMMIT after wrong final classification');assert.equal(rejected.opened,5);assert.equal(rejected.lines.length,0);assert.equal(rejected.disposed,1);}
  assert.equal(rb.failedAttempt.finalFailureStage,'FINAL_PUBLISH');assert.equal(rb.failedAttempt.finalFailureCode,'STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT');
  const commit=await scenario({stage:'commit',expectedBindingSha256:rb.fixtureBindingSha256});assert.ifError(commit.error);assert.equal(commit.opened,3);assert.equal(commit.executed,2);assert.equal(JSON.parse(commit.lines[0]).fixtureBindingSha256,rb.fixtureBindingSha256);assert.equal(JSON.parse(commit.lines[0]).connectionCleanup,'CLOSED');
  const secretDrift=await scenario({stage:'commit',privateCredential:'other-synthetic-hash',expectedBindingSha256:rb.fixtureBindingSha256});assert.match(secretDrift.error.message,/STAGE_BINDING_CHANGED/);assert.equal(secretDrift.executed,0);assert.equal(secretDrift.lines.length,0);assert(!commit.lines[0].includes('synthetic-hash'));
  const drift=await scenario({stage:'commit',expectedBindingSha256:'0'.repeat(64)});assert.match(drift.error.message,/STAGE_BINDING_CHANGED/);assert.equal(drift.executed,0);assert.equal(drift.opened,1);assert.equal(drift.lines.length,0);
- const unknown=await scenario({firstState:'UNKNOWN'});assert.match(unknown.error.message,/SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED/);assert.equal(unknown.opened,1);assert.equal(unknown.lines.length,0);assert.equal(unknown.disposed,1);
+ const unknown=await scenario({firstState:'UNKNOWN'});assert.match(unknown.error.message,/SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED/);assert.equal(unknown.opened,5);assert.equal(unknown.lines.length,0);assert.equal(unknown.disposed,1);
  const unclosed=await scenario({closeFailureAt:2});assert.match(unclosed.error.message,/CONTROLLER_HOST_CLEANUP_UNCONFIRMED/);assert.equal(unclosed.opened,2);assert.equal(unclosed.lines.length,0);
  const wrong=await scenario({readbackState:'VERIFICATION_FAILED'});assert.match(wrong.error.message,/SYNTHETIC_NEW_CONNECTION_READBACK_REQUIRED/);assert.equal(wrong.lines.length,0);
 });
