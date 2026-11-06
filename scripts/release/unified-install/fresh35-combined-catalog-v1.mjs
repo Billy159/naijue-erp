@@ -131,6 +131,16 @@ function observationSql(source,{runtime=false,systemIdentifierExpression='(SELEC
 
 // The sealed token projection lost the leading LF emitted by PG17's CASE
 // deparser. Restore only that byte, proven against each exact pinned dump column.
+function applyCaptureReceiptConstraint(model,changes){
+ need(Array.isArray(changes)&&changes.length===1,'CAPTURE_RECEIPT_CONSTRAINT_SET_DIFFERS');
+ const change=changes[0];
+ need(change?.relation==='operation_receipt'&&change?.name==='receipt_result_by_kind'&&typeof change.before?.definition==='string'&&typeof change.after?.definition==='string','CAPTURE_RECEIPT_CONSTRAINT_IDENTITY_DIFFERS');
+ need(hash(change.before.definition)==='d381f58ff5c741d08ea257c95ff4b991cdfdaf0b17b2a7fea3f0432f555210a4'&&hash(change.after.definition)==='5fdd40b5fbb91274b469d196ed344a2c3141f2f7bed390cd2fc8cc469354c7be','CAPTURE_RECEIPT_CONSTRAINT_DEFINITION_DIFFERS');
+ need(isDeepStrictEqual({...change.after,definition:change.before.definition},change.before),'CAPTURE_RECEIPT_CONSTRAINT_METADATA_DIFFERS');
+ const matches=model.constraints.map((row,index)=>({row,index})).filter(({row})=>row.relation===change.relation&&row.name===change.name);
+ need(matches.length===1&&isDeepStrictEqual(matches[0].row,change.before),'CAPTURE_RECEIPT_CONSTRAINT_PREDECESSOR_DIFFERS');
+ model.constraints[matches[0].index]=structuredClone(change.after);
+}
 function restoreGeneratedExpressionPrefixes(model,declarations,sections){
  const generated=declarations.columns.filter(c=>c.generated==='s');
  need(generated.length===33&&model.columns.filter(c=>c.generated==='s').length===33,'GENERATED_EXPRESSION_COHORT_DIFFERS');
@@ -171,6 +181,7 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
    need(change.table==='naijue_erp.sales_header'&&change.column==='hall_id'&&change.beforeNullable===false&&change.afterNullable===true,'ONLY_SALES_HALL_NULLABILITY_ALLOWED');
    const column=model.columns.find(c=>c.table==='sales_header'&&c.name==='hall_id');need(column?.notNull===true&&column.metadata.attnotnull===true,'EXACT_COLUMN_PREDECESSOR_REQUIRED');column.notNull=false;column.metadata.attnotnull=false;
   }
+  if(patch.manifest.constraintChanges!==undefined){need(patch.name==='historical-settlement-difference'&&patch.manifest.newConstraints===0,'CAPTURE_RECEIPT_CONSTRAINT_PATCH_DIFFERS');applyCaptureReceiptConstraint(model,patch.manifest.constraintChanges);}
  }
  model.routines=model.routines.map(r=>({...r,definitionSha256:hash(definitions.get(normal(r.signature))),bodySha256:hash(bodies.get(normal(r.signature)))}));
  const finalPins=data.patches.at(-1).manifest.successorRoutinePins;need(finalPins.length===152&&finalPins.every(pin=>hash(bodies.get(normal(pin.signature)))===pin.sha256),'FINAL_SUCCESSOR_PIN_COHORT_DIFFERS');
