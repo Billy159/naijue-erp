@@ -1810,3 +1810,7 @@ D2短附录44ecda50及原D1一次静态核准正常员工EDIT+account已有入�
 ### 2026-11-06T10:28:13+08:00 | 快照producer修复固定，r10原两线并行
 T45用官方PG17.11 network.c1108–1150/pg_proc.dat证明text(inet)含mask而host返回纯地址，C已准确条件批准，仅原snapshot_sql一行生产值改host(inet_server_addr())；原validate_snapshot及其他函数/全部身份guard不减。READYd631cf76，Pythondc916c6b/testbbbbe0b1，单项RED→GREEN含10错身份拒绝、逆替换及其余AST不变，0PG。固定integration12784ad9/rootac19b271/tree42774b22；原QB窄验及D2同版构建/权威source闭包/从服务器实际24e3e7f底包提tail并行。r9已提交schema/record停机保留，不称回滚、不重放；实际首快照差异及整链业务仍未验。
 独立初始化ADMIN私有材料已沿锁定Node24.21原codec生成一次并0400保留，原r3钉住STAFF103/资金账户80两个成员做UUID不碰撞核对，不把资金账户当登录，不扫全量registry。真实初始化与正常login还未执行；密码/hash只私域不Git/不Dot，既有employee稳定身份及离职禁登保持。至12点用户无需操作或决策。
+
+
+### 2026-11-06T10:38:06+08:00 | r10固定制品及独立窄验已采用，开始准确准备
+QB4ac1d121仅12784快照地址producer两叶窄验PASS，原guard/其余AST不变；D21419c213实际build0/11.025s、pack0/10.377s，production453/ordinary7298逐成员bytes/hash/mode通过。C核必要小绑定文件及真实tail24060b85/2,463,136B，source d518权威重算一致；不是PG/业务通过。原T45一次实际预检8c69bee8核24e3e7f底包稳定身份、新r10无遗留、r9已提交record仍留且PID0/cleanup六true。C原13键两叶8d845a4d/cb439008绑定同30min1793932686293..1793934486293，原40s/900s不变；T45继续原通道receiver/材料化，再按实际资源签新PG20。旧r9不重放/不称回滚；正式服务、REAL、备份保持。至12点直接人类委托有效，不再要求用户决策/电脑操作。

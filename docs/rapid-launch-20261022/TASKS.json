@@ -28491,13 +28491,13 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "Original QB only snapshot producer delta; D2 original full build/pack/readback/tail; T45 purepin then stagepreflight on accurate artifacts, no oldr9 replay.",
+      "critical": "T45 original r10 CAS/tail/full receiver/materialize; C freshPG20 only after actual readiness/resources; r9 committed record preserved no replay.",
       "independentPreparation": {
         "D1": "Readonly/no WIP/no repeated account route or old source review.",
-        "T45": "r10 purepin preparation only pending precise artifact hashes; r9 committed schema/record stopped preserved; privateADMIN original codec material now ready.",
-        "D2": "Buildac19 source closure/readback/tail from retained24e exactbase; no source writes.",
+        "T45": "Only once original r10 exact staged preparation; freshPG20 after actualmaterialize/resource.",
+        "D2": "ac19 full build/pack/7298 members/tail delivered; no new independent source work; wait actual input.",
         "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
-        "QB": "Only fixed12784ad9 launcher address producer and guard unchanged narrowincrement, not old whole catalog.",
+        "QB": "12784 exact snapshot two-leaf source/offline PASS adopted; wait actual increment.",
         "QF": "Delivered exactnormalhost prerequisites; preserve report; actualbrowser core pendingnew35host, no repeatedDemo or fixtureQA."
       },
       "noFiller": true
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R10_FIXED_SOURCE_BUILD_QB_PENDING",
+      "state": "R10_QB_AND_BUILD_ADOPTED_EXACT_STAGING_AUTHORIZED",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "Original QB only snapshot producer delta; D2 original full build/pack/readback/tail; T45 purepin then stagepreflight on accurate artifacts, no oldr9 replay.",
+      "next": "T45 original r10 CAS/tail/full receiver/materialize; C freshPG20 only after actual readiness/resources; r9 committed record preserved no replay.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30291,7 +30291,7 @@
         }
       },
       "r10Preparation": {
-        "state": "FIXED_SOURCE_D2_BUILD_AND_QB_NARROW_INCREMENT_IN_PROGRESS",
+        "state": "QB_AND_BUILD_PASS_EXACT_STAGING_IN_PROGRESS",
         "integration": "12784ad9e6135e2b253887c4a55bbd74e564e91b",
         "buildRoot": "ac19b2719332ed6755affb849bfcd65bd70249d9",
         "tree": "42774b2242d252766cb5fb549dff19db17a8134f",
@@ -30302,7 +30302,18 @@
         "root": "phaseb-application-r10",
         "container": "t45-fresh35-deb13-20261106-r10",
         "actualPG": false,
-        "next": "Original QB only snapshot producer delta; D2 original full build/pack/readback/tail; T45 purepin then stagepreflight on accurate artifacts, no oldr9 replay."
+        "next": "Original QB only snapshot producer delta; D2 original full build/pack/readback/tail; T45 purepin then stagepreflight on accurate artifacts, no oldr9 replay.",
+        "QBReceiptSHA256": "4ac1d12183cbe21d9f764c8b490a6b0ce571a5a697d13e49b68aff609f4f1f5f",
+        "D2ReceiptSHA256": "1419c2134984fbe3d4fb92cf45dbd80d5d72b9b35172916757b32ea777ba54df",
+        "sourceSetSHA256": "d518aeff0ac48c57305bd742516cda58d54e0de4364e460fd32a2c4026e90ad1",
+        "archiveSHA256": "40cd65d9af46182bd77e97f97de8e3ad131fe17f8a755a91b041acb1851a1afa",
+        "archiveBytes": 83684667,
+        "manifestSHA256": "608a7349c0e0e0e433f61eb0f33f407500a4ae809c53a2eb4fe56a577a8642fc",
+        "stagePreflightSHA256": "8c69bee89e837f3eb66f0b5a2507b43a421089392a4faf97ccee4b1be9cce066",
+        "tailAuthoritySHA256": "8d845a4dd40fdd93f771ec9c4bafbc16c2eb0f31f35ad9cc19fca1122b0d3afd",
+        "fullAuthoritySHA256": "cb43900807857804bdd118841f1d667d77467a19abf5c4e8c90aa9f28948ecb9",
+        "startsAt": 1793932686293,
+        "expiresAt": 1793934486293
       }
     },
     "productionReleaseCompatibilityContinuation": {

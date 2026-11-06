@@ -1,0 +1,121 @@
+{
+  "status": "READONLY_R10_STAGE_PREFLIGHT_COMPLETE_WAITING_C13",
+  "recordedAtUTC": "2026-11-06T02:36:42.905168+00:00",
+  "sourceSetSha256": "d518aeff0ac48c57305bd742516cda58d54e0de4364e460fd32a2c4026e90ad1",
+  "fixedRootCommit": "ac19b2719332ed6755affb849bfcd65bd70249d9",
+  "sourceReviewSha256": "4ac1d12183cbe21d9f764c8b490a6b0ce571a5a697d13e49b68aff609f4f1f5f",
+  "D2ResultSha256": "1419c2134984fbe3d4fb92cf45dbd80d5d72b9b35172916757b32ea777ba54df",
+  "job": {
+    "jobId": "t45-f35-ac19b2-stage-preflight-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-c4a785a428a6",
+    "atUTC": "2026-11-06T02:36:13.121794+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.21740606287494302,
+    "exports": [
+      "stage-preflight.json"
+    ],
+    "finishedAtUTC": "2026-11-06T02:36:13.341223+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-ac19b2-stage-preflight-20261106-01/transport/release-receipts/t45-f35-ac19b2-stage-preflight-20261106-01/stage-preflight.json",
+    "sha256": "8c69bee89e837f3eb66f0b5a2507b43a421089392a4faf97ccee4b1be9cce066"
+  },
+  "safeResult": {
+    "status": "READONLY_R10_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+    "checkedAtEpochMillis": 1793932573295,
+    "gateSha256": "5aead88f4fb9a702a83c32b566b8f54cb3062cf12aaacd6cd1304862eee3a324",
+    "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-ac19b2-stage-preflight-20261106-01/staging-policy-before.json",
+    "baseIdentity": [
+      66304,
+      393625,
+      83684342,
+      1793929720411388133,
+      1793929722093398175
+    ],
+    "baseArchiveSha256": "3e7fbbdb05c19c4ad4e580dce0ba4766cdb87987f57c984f0ad11a1698b4907e",
+    "baseHashNotRereadUntilOriginalAssembler": true,
+    "privateFullIdentityUnchanged": true,
+    "privateFullIdentity": [
+      66304,
+      393585,
+      93508914,
+      1793915257822987699,
+      1793915258790984345
+    ],
+    "r10RootAbsent": true,
+    "r10ContainerAbsent": true,
+    "r10ArtifactDirectoriesFound": [],
+    "samePrefixOtherSubmissions": [],
+    "priorExactJobs": [
+      {
+        "jobId": "t45-f35-24e347-start-20261106-01",
+        "status": "COMPLETED",
+        "exitCode": 0
+      },
+      {
+        "jobId": "t45-f35-24e347-install-20261106-01",
+        "status": "FAILED",
+        "exitCode": 2
+      }
+    ],
+    "r9OriginalNativeResult": {
+      "recordPublished": true,
+      "state": "RECORD_DURABLY_PUBLISHED",
+      "installState": "COMMITTED_UNPUBLISHED",
+      "postInstallFailureCode": "FRESH35_ISOLATED_SNAPSHOT_PHYSICAL_TARGET_DIFFERS",
+      "sourceSetSha256": "57c105ecd47171976602e85825af3b7ed8abd8f6c5de1cf5f755848b7c80c7e2"
+    },
+    "r9PublishedRecordRetainedMetadata": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o644",
+      "bytes": 1516,
+      "contentsNotExported": true,
+      "hashNotRepeated": true
+    },
+    "r9Stopped": {
+      "id": "846d897a93afdcd09278c95dc34f79ed6a2d99f1cf8ef7aaae95246e5b0575f2",
+      "running": false,
+      "pid": 0,
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+    },
+    "r9Cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "r9CleanupErrors": [],
+    "fixedEnvironment": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.19580078125,
+        0.080078125,
+        0.12255859375
+      ],
+      "diskFreeBytes": 11721621504,
+      "MemAvailable": 14329421824
+    },
+    "sourceOrTargetWrites": 0,
+    "PGConnections": 0,
+    "networkOrServiceChanges": 0,
+    "dataExtraction": false
+  },
+  "PGConnections": 0,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}
