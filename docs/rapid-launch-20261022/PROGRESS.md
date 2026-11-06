@@ -1977,3 +1977,10 @@ sourceSet仅host一pin/214变为b0f8cb29；当前为源码和本机有限模型�
 ## 2026-11-06 — r23最小watch源码已固定，原QB两叶增量验收
 
 固定source4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81/root1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf/tree7b2edb79378e1576ff6333d247fbf1a314975a50。实际源码仅host及原directtest两叶，collector0755等原有效实现保留。原QB只验撤销/启动代次/资源清理等受影响接缝，作者3项定向结论复用；不全suite/PG。T45并行只做必要r23本地准确资源/终态绑定准备，新buildpins保持UNBOUND，无server/PG/传输或新窗口。r23未构建未实测，r22实际安装/合成及新失败完整保留，不混算本版。
+
+
+## 2026-11-06 — r23原QB两叶独立增量通过，原D2统一构建中
+
+原QB `378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817`已核并采用。作者3项RED/GREEN复用，独立补2项：暂停回调时同内容原子替换仍因inode代次拒绝并关全部watch；最后bootstrap watch构造EACCES后先前watch清零、未取连接、再准入拒绝。无新源码发现，不重跑作者三项/全suite/PG。真实Linux新候选ordinary仍未验。
+
+原D2固定root1e6ba071一次build在途，actualsourceSet待构建，不把expectedb0f8当实测。原T45必要本地r23准备17781c49已核，旧actualfull464d/83702682/393729为后续基底，新制品及窗口保持UNBOUND。原r22实际失败与normalcommit保留，不重放。

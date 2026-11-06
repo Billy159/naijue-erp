@@ -1,0 +1,121 @@
+{
+  "format": "QB_R23_ORDINARY_WATCH_EXACT_DELTA_REVIEW_V1",
+  "recordedAt": "2026-11-06T22:37:33.964707+08:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "findings": [],
+  "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
+  "rootCommit": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
+  "candidateTree": "7b2edb79378e1576ff6333d247fbf1a314975a50",
+  "comparisonSource": "80c84f5f83c7406213129ce158d92add47003931",
+  "files": [
+    {
+      "path": "tests/fresh35-ordinary-production-v2.test.mjs",
+      "bytes": 23203,
+      "sha256": "6e41fec1662dc2dc43bda6300e82153a34a8ece20a9217c093f8fb33b1841521"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "bytes": 33227,
+      "sha256": "f09c93e1ad50ec259c7ce60338a1af5b8c7af7d7b7d17faa95a7d0c248a11a3a"
+    }
+  ],
+  "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+  "sourceSetEvidence": "D1 fixed RESULT and closure artifact digest verified; not independently regenerated from the full 214-pin source set",
+  "independentSourceChecks": {
+    "hostInverseExact": true,
+    "productionAndOtherParentsUnchanged": true,
+    "recordInodeWatcherAndChangeRenameErrorRevocationUnchanged": true,
+    "bootstrapAddedAfterParentExpansionUnchanged": true,
+    "startupByteGenerationAndLeaseChecksUnchanged": true,
+    "catchFinallyCleanupUnchanged": true,
+    "onlyTwoCandidateLeavesChanged": true,
+    "sourceFilesReadBackExactAfterChecks": true
+  },
+  "adoptedAuthorEvidence": {
+    "resultSHA256": "10be0f307de093341cce6fc3371c19febf28d328ee124c2d0530cd63c20aecd6",
+    "afterFixTests": 3,
+    "passed": 3,
+    "skipped": 0,
+    "rerun": false,
+    "scope": "Actual host body + finite Linux permission projection + native local inode events; overwrite/rename/unlink/replacement/error, startup swaps/deletion/release-error and production denial",
+    "verifiedArtifacts": {
+      "TEST-red.log": {
+        "sha256": "3dc9a0dfb8f9b6a3f1bde54e647e44292b78f80b96521b5215ace94b5aef775f",
+        "bytes": 108263
+      },
+      "TEST-green.log": {
+        "sha256": "9b901271a6a0a928db71986398f383594035f7913640ffc0013eaa33f91232d4",
+        "bytes": 699
+      },
+      "SOURCE-CHECKS.json": {
+        "sha256": "c77b80ce27e577f0e397efbdec4714bb6d02b8c2587be86110352c0c97a13486",
+        "bytes": 672
+      },
+      "CLOSURE-CHECKS.json": {
+        "sha256": "733a5b526d2756585767809ca231d8504f737719e4d792045db35795db86c3af",
+        "bytes": 302
+      }
+    }
+  },
+  "independentComplement": {
+    "format": "QB_R23_MINIMAL_COMPLEMENT_V1",
+    "status": "PASS",
+    "executionExitCode": 0,
+    "checks": [
+      {
+        "case": "same-byte atomic replacement before watch callback",
+        "result": "PASS",
+        "allWatchersClosed": true,
+        "noFurtherModelQueries": true
+      },
+      {
+        "case": "late watcher construction failure",
+        "result": "PASS",
+        "allEarlierWatchersClosed": true,
+        "modelConnections": 0,
+        "readmissionRejected": true
+      }
+    ],
+    "scope": "Original host admission body with existing finite IO/scripted-pool helper; two explicit watch seams, native local file replacement. No author tests, Linux permission claim, PG, source writes or real capability."
+  },
+  "reusedEvidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/R22-CAPACITY-MODE-80C84F5F-20261106/RESULT.json",
+      "sha256": "6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e",
+      "action": "REUSED_NOT_RETESTED"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/R20-SAFE-DIAGNOSTIC-7698D68D-20261106/RESULT.json",
+      "sha256": "9c101e24fc3c4f0f05429d4859b935dc4b4c70f60d411bc50678be75bb5d4fae",
+      "action": "REUSED_NOT_RETESTED"
+    }
+  ],
+  "boundaries": {
+    "PGQueries": 0,
+    "serverJobs": 0,
+    "builds": 0,
+    "sourceWrites": 0,
+    "wholeSuites": 0,
+    "authorTestBodiesRerun": 0,
+    "newInstallOrOldKeyReplay": false,
+    "nativeLinux0711InotifyVerified": false,
+    "nativePGOrOrdinaryAPIChainVerified": false,
+    "actualR22FirstLinuxThrow": "UNKNOWN",
+    "actualModelEffortFast": "UNVERIFIED"
+  },
+  "next": "C may adopt this exact source-only verdict and continue original D2 one build; any T45 successor must be accurately rebound. No old committed/unknown request replay.",
+  "artifacts": {
+    "SOURCE-CHECKS.json": {
+      "sha256": "6b36cc1c8dee5e729276244725f4e5cbd06d82cc1feb281e39b7ba15c771fe20",
+      "bytes": 2335
+    },
+    "INDEPENDENT-CHECKS.json": {
+      "sha256": "fca32aa49d6aff1a933dc6d6d9c60a7422f6a7a80e118399a0431ddc55300d3f",
+      "bytes": 701
+    },
+    "independent-check.mjs": {
+      "sha256": "f815a670328fd9429ac0bf138c676612fdd5b3cd3c13e212ba1684e032a6fbf5",
+      "bytes": 3595
+    }
+  }
+}

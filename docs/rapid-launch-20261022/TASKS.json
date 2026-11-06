@@ -28509,12 +28509,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R23_FIXED_WATCH_SOURCE_QB_AFFECTED_INCREMENT_IN_PROGRESS",
+      "critical": "R23_WATCH_QB_PASS_D2_ONE_FIXED_BUILD_RUNNING",
       "independentPreparation": {
         "D1": "Two exact leaves frozen; author3/3 scopedPASS10be0f30, no Linux/PG claim.",
-        "QB": "r23 exact2leaf affected watch review on fixed4adb9fa2/root1e6ba071.",
-        "D2": "Wait exact r23QB then one fixed build; no repeated r22 checks.",
-        "T45": "Only local r23 required ops prep, new build pins unbound; no new server/PG/stage/window.",
+        "QB": "Exact r23 twoleaf PASS378854ec, 2independent edge checks; author3 reused.",
+        "D2": "One fixed1e6ba071 build in progress, verify actual sourceSet/members and prepare prefix+tail from r22 actual full.",
+        "T45": "Local r23 names/base ready17781c49, build pins remain unbound; no newserver/PG.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -32471,6 +32471,28 @@
           "tests": "3/3 passed no skip, record inode revoke and startup generations preserved; existing suite not repeated",
           "sourceSetAfter": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f"
         }
+      },
+      "r23Preparation": {
+        "state": "R23_WATCH_QB_PASS_D2_ONE_FIXED_BUILD_RUNNING",
+        "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
+        "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
+        "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
+        "expectedSourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+        "sourceSetActualBuildNotYetVerified": true,
+        "T45LocalPreparationSHA256": "17781c4904b5b00ff77151b4f303fa7394c65a68ea5e9c6429f0d8448be9cbf9",
+        "oldActualFullBase": {
+          "sha256": "464d6ca3c0f2d3f86f34dc27267fe4203c66d04e50c0767ce33ecac34510ac21",
+          "bytes": 83702682,
+          "fileIdentity": [
+            66304,
+            393729,
+            83702682,
+            1793973038836939048,
+            1793973039953934261
+          ]
+        },
+        "newServerOrPGExecuted": false,
+        "oldKeysMayReplay": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32879,12 +32901,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T22:32:08.172588+08:00",
-      "phase": "R23_FIXED_WATCH_SOURCE_QB_AFFECTED_INCREMENT_IN_PROGRESS",
+      "at": "2026-11-06T22:39:31.473132+08:00",
+      "phase": "R23_WATCH_QB_PASS_D2_ONE_FIXED_BUILD_RUNNING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original QB exact two-leaf affected watch increment",
-      "nextOwner": "Original D2 one fixed build after scoped QB acceptance",
+      "currentOwner": "Original D2 one fixed1e6ba071 full build",
+      "nextOwner": "Original T45 exact newr23 artifact binding and bounded readonly preflight",
       "latestActualReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,
@@ -32899,7 +32921,7 @@
       "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "tree": "7b2edb79378e1576ff6333d247fbf1a314975a50",
-      "sourceQA": "PENDING_R23_TWO_LEAF_INCREMENT",
+      "sourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "buildPassed": false,
       "latestAuthorSourceCommit": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
@@ -32924,7 +32946,7 @@
       },
       "githubSourceAndRootReadback": true,
       "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
-      "QBReceiptSHA256": null,
+      "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
       "D2ReceiptSHA256": null,
       "currentCandidateActualRuntime": {
         "state": "NOT_EXECUTED",

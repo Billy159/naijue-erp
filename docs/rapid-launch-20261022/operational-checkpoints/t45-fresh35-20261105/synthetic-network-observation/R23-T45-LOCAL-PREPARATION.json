@@ -1,0 +1,103 @@
+{
+  "status": "R23_LOCAL_NAMES_AND_R22_TERMINAL_BASE_PREPARED_UNBOUND_NO_SERVER",
+  "recordedAtUTC": "2026-11-06T14:33:00.457947+00:00",
+  "candidateRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
+  "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
+  "sourceTree": "7b2edb79378e1576ff6333d247fbf1a314975a50",
+  "sourceSetSHA256": null,
+  "QBResultSHA256": null,
+  "D2ResultSHA256": null,
+  "newNames": {
+    "container": "t45-fresh35-deb13-20261106-r23",
+    "root": "phaseb-application-r23",
+    "artifact": "f35-1e6ba0-ordinary-local-20261106-01",
+    "tail": "f35-1e6ba0-tail-20261106-01"
+  },
+  "files": {
+    "artifact-receiver.original.py": {
+      "bytes": 6230,
+      "sha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653"
+    },
+    "fresh35-container-successor.UNBOUND.py": {
+      "bytes": 36887,
+      "sha256": "40081c64c4d65857176096d88908cfcfbb7d526e0a7aa6f0b651caf082629da3"
+    },
+    "ordinary-proof-evidence.PARENT.py": {
+      "bytes": 10262,
+      "sha256": "0af42b59dd9601c6f03de864a07583fb4d28724be227b74e52ca8484e81c5c3e"
+    },
+    "assemble_original_receiver.UNBOUND.py": {
+      "bytes": 9318,
+      "sha256": "468458119c6bfdfdb73d97506309044c0011a20462ab5c781cf92ec35f9b68e1"
+    }
+  },
+  "baseHistoricalActualReady": {
+    "archiveBytes": 83702682,
+    "archiveSha256": "464d6ca3c0f2d3f86f34dc27267fe4203c66d04e50c0767ce33ecac34510ac21",
+    "artifactKey": "f35-f16218-ordinary-local-20261106-01",
+    "authoritySha256": "86904f155ff79ceb78fdc8c350276110aaf6a745a2e7e8dfb300526e2ba76db7",
+    "fileIdentity": [
+      66304,
+      393729,
+      83702682,
+      1793973038836939048,
+      1793973039953934261
+    ],
+    "sourceSetSha256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+    "status": "READY"
+  },
+  "r22TerminalEvidence": {
+    "safeResultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r22-pg20-execution-01/RESULT.json",
+    "safeResultSHA256": "c0cd06b08cc0633f9b1995afbff5b32a707df4e6b8efc9b78191272e9bddf79d",
+    "jobId": "t45-f35-f16218-install-20261106-01",
+    "status": "FAILED",
+    "exitCode": 2,
+    "normal": {
+      "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+      "importState": "COMMITTED",
+      "replayState": "ALREADY_COMMITTED",
+      "readbackState": "VERIFIED",
+      "retainedHeaders": 25,
+      "retainedSettlements": 27,
+      "connectionCleanup": "CLOSED"
+    },
+    "ordinaryFailure": {
+      "automaticRetry": false,
+      "childDiagnosticUnavailable": false,
+      "childFailure": {
+        "actualInteger": null,
+        "errno": "EACCES",
+        "errorType": "Error",
+        "expectedInteger": null,
+        "format": "FRESH35_ORDINARY_FAILURE_V1",
+        "guardCode": null,
+        "phase": "REAL_SYNTHETIC_ADMISSION",
+        "source": "runFresh35OrdinaryIntegration:catch",
+        "sqlstate": null
+      },
+      "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+      "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+      "phase": "REAL_PG_AND_MIDDLEWARE",
+      "state": "FAILED_OR_OUTCOME_UNKNOWN"
+    },
+    "containerStopped": true,
+    "sixCleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "unknownOrdinaryKeys": "PRESERVE_NO_REPLAY"
+  },
+  "futureBuildManifestFullTailPrefix": "UNBOUND; no expected sourceSet consumed",
+  "futureC13C11C9": "NOT_ISSUED; old windows never reused",
+  "serverActions": 0,
+  "PGConnections": 0,
+  "sourceOrPermissionChanges": false,
+  "oldCommittedOrUnknownKeysReplayed": false,
+  "REALOrFormalChanged": false,
+  "actualModelEffortFast": "UNVERIFIED",
+  "scope": "Only required fixed names and build-binding constants changed; assembler reconstructed basename updated. Original wrapper function bodies, collector0755 lstat/result guard and40s/900s unchanged."
+}
