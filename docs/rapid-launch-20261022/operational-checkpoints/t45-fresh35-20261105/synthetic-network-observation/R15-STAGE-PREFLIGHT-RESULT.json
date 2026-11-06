@@ -1,0 +1,117 @@
+{
+  "status": "READONLY_R15_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+  "job": {
+    "jobId": "t45-f35-af9078-stage-preflight-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-cf9e62146a56",
+    "atUTC": "2026-11-06T06:56:27.566489+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.3180490802042186,
+    "exports": [
+      "stage-preflight.json"
+    ],
+    "finishedAtUTC": "2026-11-06T06:56:27.918881+00:00"
+  },
+  "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-af9078-stage-preflight-20261106-01/transport/release-receipts/t45-f35-af9078-stage-preflight-20261106-01/stage-preflight.json",
+  "receiptSha256": "0eebbe2b1d902d79ccd3376d29b473ffa05a9481b2894dce287a873f75fb863c",
+  "safeResult": {
+    "status": "READONLY_R15_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+    "checkedAtEpochMillis": 1793948187874,
+    "gateSha256": "4cb5b903d43276c71e5a98fb3cea732b7e664771933762a608d8927de5de01fb",
+    "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-af9078-stage-preflight-20261106-01/staging-policy-before.json",
+    "baseIdentity": [
+      66304,
+      393665,
+      83692408,
+      1793944819386807041,
+      1793944820503803688
+    ],
+    "baseArchiveSha256": "2de0e6192ef162188f68cad32a2994d9d13dac536391523edc140c2d9189b548",
+    "baseHashNotRereadUntilOriginalAssembler": true,
+    "privateFullIdentityUnchanged": true,
+    "privateFullIdentity": [
+      66304,
+      393585,
+      93508914,
+      1793915257822987699,
+      1793915258790984345
+    ],
+    "r15RootAbsent": true,
+    "r15ContainerAbsent": true,
+    "r15ArtifactDirectoriesFound": [],
+    "samePrefixOtherSubmissions": [],
+    "priorExactJobs": [
+      {
+        "jobId": "t45-f35-d60dee-start-20261106-01",
+        "status": "COMPLETED",
+        "exitCode": 0
+      },
+      {
+        "jobId": "t45-f35-d60dee-install-20261106-01",
+        "status": "FAILED",
+        "exitCode": 2
+      }
+    ],
+    "r14OriginalNativeResult": {
+      "recordPublished": true,
+      "state": "RECORD_DURABLY_PUBLISHED",
+      "installState": "COMMITTED_UNPUBLISHED",
+      "postInstallFailureCode": "FRESH35_ISOLATED_CONTROLLER_HOST_FAILED_OR_OUTCOME_UNKNOWN",
+      "sourceSetSha256": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec"
+    },
+    "r14PublishedRecordRetainedMetadata": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o644",
+      "bytes": 1516,
+      "contentsNotExported": true,
+      "hashNotRepeated": true
+    },
+    "r14Stopped": {
+      "id": "1320805403ad688709c050973642e74d568c1a8f9f2452d645e475c9affa805b",
+      "running": false,
+      "pid": 0,
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+    },
+    "r14Cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "r14CleanupErrors": [],
+    "fixedEnvironment": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.0615234375,
+        0.0703125,
+        0.11083984375
+      ],
+      "diskFreeBytes": 9265287168,
+      "MemAvailable": 14324875264
+    },
+    "sourceOrTargetWrites": 0,
+    "PGConnections": 0,
+    "networkOrServiceChanges": 0,
+    "dataExtraction": false
+  },
+  "D2ResultSha256": "ff43c259b42c19f90c672512b4b21523138d50b840cafb44de2eda6c2b323f62",
+  "QBResultSha256": null,
+  "QBPending": true,
+  "noC13Yet": true,
+  "PGStarted": false,
+  "productionActions": 0
+}

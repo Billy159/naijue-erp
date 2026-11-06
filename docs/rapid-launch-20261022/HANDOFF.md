@@ -1944,3 +1944,8 @@ D1静态定位：command在DOCUMENTS回执写historicalHallTargetCapturesSha256�
 ### 2026-11-06T14:49:35+08:00 | 回执约束5叶固定，原QB与D2并行
 C核准确5叶前后SHA及无额外tracked改动，提交14bf71eba77876df321dba0ce946385e4ba51381，统一rootaf9078ea822921cf5d68ccdbe1fbcf32ce2ba491/tree409ac01e。原D1只对最后successor/candidate/catalog及两directtests补已批准receipt摘要严格CHECK；原4routine/host/entry/冻结catalog原件不改。作者4项定向PASS/25有限AST正反例/逆向恢复已保留，不是PG17.11 canonical或业务证明。
 原QB仅5叶独立窄验、原D2一次完整构建及相对服务器实际READY d60dee包的新实测tail并行；D1交还只读、仅简短RESULT收尾。待固定QA/build再原T45准确r15，不重放r14/旧窗口，不套旧tail。r14首constraint/ordinal仍UNKNOWN，schema提交与普通业务未过分开记录。
+
+
+### 2026-11-06T15:02:07+08:00 | r15窄验/构建采用，准确制品窗已交原T45
+原QB c46191f1五叶PASS：必要NULL/缺键负例仍拒绝、动态catalog与唯一新CHECK一致、其他325约束和原4routine不变；作者原定向证据采用。SOURCE-CHECKS终态32b2341f与D1 RESULT一致，派工999e前快照保留、5源pin未漂移。原D2 ff43c259构建11.419s/打包8.824s/7298成员读回PASS。C核3metadata与实际tail，fullbc9537fd/83696036B，实测d60基包prefix80445453/d672+tail3250583/703e，不能套旧offset。
+原T45唯一readonly0eebbe2b退出0/0.318s：actuald60 READY身份稳定、r14停止与记录保留、r15目录/容器/制品不存在，REAL仅文件身份未变。C核原回执后原C13两叶21156814/714c5b1a准确绑定新30分钟1793948472311..1793950272311。原CAS/receiver40s/assembler/materialize900s后一次资源；PG等实际材料再原20分钟。本轮不REAL/正式/旧key重放。Git统一源码14bf71eb/rootaf9078已推送，真实PG17.11 canonical与业务仍待测。

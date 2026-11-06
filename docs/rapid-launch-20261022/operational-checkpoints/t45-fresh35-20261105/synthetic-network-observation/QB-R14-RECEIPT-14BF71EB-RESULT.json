@@ -1,0 +1,162 @@
+{
+  "task": "C-0448-R14-RECEIPT-14BF71EB",
+  "atUtc": "2026-11-06T06:55:36.781518+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "14bf71eba77876df321dba0ce946385e4ba51381",
+    "root": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
+    "tree": "409ac01e2ddc90952ff52f37a31cc7bd832e0040",
+    "parentRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
+    "sourceSet": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+        "beforeSha256": "57f25d9fec9385640ca63e672ffb7f6f94fd3a95f8c40fea25200dda6df669ee",
+        "afterSha256": "260a9d5869b878ed0ad9f9fdbb1004c5c8e4cc8a510a4ea1cda01230d5335fb6",
+        "bytes": 69696
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+        "beforeSha256": "92f5912953860774f63871c083c75c2b5e9d4e0d71558bfe0bebffe94eea88cb",
+        "afterSha256": "69754737f21e19643df03fc9f238a1fc98ff1cc8cbe16793bf5d106bc45ee1d0",
+        "bytes": 6909
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "beforeSha256": "6c83e4c9b6a98af245993ee7c769cbe32fa5f5165b007f5279a8f21f1799f8ab",
+        "afterSha256": "33e622ee6d3e0a10795b7c9c02bec04b67e257936f4b701855687ec18bb99156",
+        "bytes": 38614
+      },
+      {
+        "path": "tests/fresh35-historical-settlement-difference-candidate.test.mjs",
+        "beforeSha256": "ae885cf200107fde02c3991cf28856ed334e2c6593f843c4be3c6ee17ba6969b",
+        "afterSha256": "f71b398492f67d012fa1d95c23ea691726877f27a3d520f39dc6d6aef1f6f79f",
+        "bytes": 12062
+      },
+      {
+        "path": "tests/fresh35-combined-catalog.test.mjs",
+        "beforeSha256": "d531b49eae8e418c22b63da1c0728a8b05c9458b85bcf35943ee10bcf2cb22ab",
+        "afterSha256": "d7b4d59c81b5fd1c1a82698777d895369f8bbbc136e2ffb3bef3585555b1d710",
+        "bytes": 31748
+      }
+    ],
+    "fourRoutineSpecsExactParentBytes": true,
+    "onePinnedConstraintBlockInsideOriginalFinalTransaction": true,
+    "oldExactDropAddPostExactAndQuoteRestoreOrder": true,
+    "blockSha256": "0cdf022e0b0663f9f63e11804283dcc1b06074a3a85f8d7245de569ac2b26b34",
+    "sourceChecksReceiptDrift": {
+      "dispatchSha256": "999e480846a6e5b0f647901478a6a4f44308de3f20bbc9474810e18ab4f62727",
+      "currentSha256": "32b2341fc9dd996f9377022e034e557ca455b65ef6c115376fb9995c55deccf2",
+      "currentMatchesCompletedD1Result": true,
+      "fixedFiveSourcePinsMatchDispatch": true
+    },
+    "completedD1ResultSha256": "1fde5215612140b0af3d7900b98aba7f58b5f78448880745ebd0f279642055bb",
+    "tree": "409ac01e2ddc90952ff52f37a31cc7bd832e0040",
+    "rootTree": "409ac01e2ddc90952ff52f37a31cc7bd832e0040",
+    "completedD1ResultBytes": 16929
+  },
+  "independentNullBoundary": {
+    "conclusion": "PASS_FINITE_NULL_AND_MISSING_KEY_BOUNDARY",
+    "parserVersion": [
+      17,
+      7
+    ],
+    "rootIS_TRUEPreserved": true,
+    "cases": [
+      {
+        "case": "original13 no map",
+        "before": true,
+        "after": true
+      },
+      {
+        "case": "approved map",
+        "before": false,
+        "after": true
+      },
+      {
+        "case": "phase JSON null with map",
+        "before": false,
+        "after": false
+      },
+      {
+        "case": "missing phase with map",
+        "before": false,
+        "after": false
+      },
+      {
+        "case": "cursor JSON null with map",
+        "before": false,
+        "after": false
+      },
+      {
+        "case": "map JSON null",
+        "before": false,
+        "after": false
+      },
+      {
+        "case": "missing cursor with map",
+        "before": false,
+        "after": false
+      }
+    ],
+    "independentFiniteThreeValuedInterpreter": true,
+    "PGEngineExecuted": false,
+    "canonical17_11Verified": false
+  },
+  "independentQuoteMetadata": {
+    "generatedDynamicADDParsedFromActualPrefixAndPinnedDefinition": true,
+    "singleExactSchemaTableCheckAndIS_TRUE": true,
+    "fullConstraintMetadataExceptDefinitionEqual": true,
+    "nativeCanonical17_11NotExecuted": true
+  },
+  "independentInstallCatalogSeam": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "sourceSet": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+    "current214Captured180": true,
+    "changedCurrentPins": 3,
+    "other211AndCapturedUnchanged": true,
+    "exactSingleConstraintSuccessor": true,
+    "other325ConstraintRowsExact": true,
+    "metadataOutsideDefinitionExact": true,
+    "originalFrozenModelUnmodified": true,
+    "lastPatchPayloadEqualsCatalogMetadata": true,
+    "originalCompiledProgramHasPinnedPatchThenExactCatalog": true,
+    "oneOuterApplicationTransactionNoInnerBEGINCOMMIT": true,
+    "OSNetworkFixtureOnly": true,
+    "PGExecuted": false,
+    "native17_11CanonicalVerified": false
+  },
+  "authorEvidenceAdopted": {
+    "finalResultSha256": "1fde5215612140b0af3d7900b98aba7f58b5f78448880745ebd0f279642055bb",
+    "pinsSha256": "51615e5d0e6e2373e4b5612e6cf527362c664a4b787ae97567d9190a57ef4d3e",
+    "astSha256": "4726e40a3e84139d827240f2f9e3852d6f9ef9147804176b3fea942a1a2fc028",
+    "targetedMethodsPassed": 4,
+    "rawAstFiniteCases": 25,
+    "parser": "pglast7.21 / PG17.7 grammar; not nativePG17.11",
+    "repeatedOldSuites": false
+  },
+  "authority": "Existing approved K/C4/C6 receipt digest and same-operation readback synchronization; doc lines49/51/57/61 reviewed. No new business approval inferred.",
+  "nullConclusion": "Root CASE IS TRUE retained; independent finite actual-AST interpretation rejects JSON-null phase/cursor/map and missing phase/cursor. Native CHECK NULL-pass behavior therefore does not weaken these tested branches. Two control cases preserve old13 and allow exact approved map. Not actual SQL engine execution.",
+  "metadataConclusion": "Exact native before projection -> DROP/ADD -> exact after/raw metadata comparison excluding only oid/conbin, with saved quote context restored. Prefix plus pinned after definition independently parses as exactly one ADD CHECK with IS TRUE. Original compiled final patch precedes exact catalog and uses one outer transaction.",
+  "preserved": "Four routine spec payload bytes unchanged; only one constraint definition changes with complete other metadata exact, other325 constraints unchanged; frozen model/capture originals and permission/negative/runtime contracts unchanged.",
+  "actualR14": "C/T45 reports schema+record COMMITTED/PUBLISHED; MISSING_SETTLEMENT STEP23514 IMPORT_FAILED/internalnull, CID13208054 stopped. Actual first constraint/ordinal UNKNOWN, negative group not rollbackPASS.",
+  "sourceBlockers": [],
+  "boundaries": {
+    "sourceModified": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "buildOrFullSuiteByQB": false,
+    "nativePG17_11CanonicalVerified": false,
+    "actualR14CauseProven": false,
+    "actualRollbackGroupOrBusinessPassed": false,
+    "oldTargetOrKeyReplayed": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return fixed source verdict to C; D2 build and T45 separately authorized nativePG17.11 canonical/host successor remain with owners. Preserve actual stopped/UNKNOWN evidence."
+}

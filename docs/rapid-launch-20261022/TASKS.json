@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "FIXED_FIVELEAF_QB_AND_ONEBUILD_PARALLEL",
+      "critical": "QB_AND_BUILD_ADOPTED_R15_ORIGINAL_C13_STAGE_RUNNING",
       "independentPreparation": {
         "D1": "Fixed5leaf frozen/readonly; brief RESULT closing, no new checks.",
-        "QB": "Only new exact5leaf; original7leaf evidence reused.",
-        "D2": "One af9078 fullbuild/tail against actuald60dee READY, no source writes.",
-        "T45": "r14 cleanstopped; waiting fixed successor.",
+        "QB": "Fiveleaf verdict adopted; no repeat.",
+        "D2": "One af9078 build/7298members/tail PASS adopted; no repeat.",
+        "T45": "OriginalT45 CAS/tail/assembler/materialize then one resource preflight; C exact newPG20 only after actual facts.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -30919,11 +30919,15 @@
           "SOURCE_CHECKS_SHA256": "999e480846a6e5b0f647901478a6a4f44308de3f20bbc9474810e18ab4f62727",
           "AST_RESULT_SHA256": "4726e40a3e84139d827240f2f9e3852d6f9ef9147804176b3fea942a1a2fc028",
           "authorChecks": "4 targeted PASS/skip0;25finiteAST cases/inverse, parserPG17.7 only; actualPG17.11 canonical and business UNVERIFIED",
-          "D1ReceiptSHA256": "1fde5215612140b0af3d7900b98aba7f58b5f78448880745ebd0f279642055bb"
+          "D1ReceiptSHA256": "1fde5215612140b0af3d7900b98aba7f58b5f78448880745ebd0f279642055bb",
+          "QBReceiptSHA256": "c46191f13712f25a6c99369f4d4da4db5db748fbca5265397597d5cc1815d0c4",
+          "D2ReceiptSHA256": "ff43c259b42c19f90c672512b4b21523138d50b840cafb44de2eda6c2b323f62",
+          "SOURCE_CHECKS_FINAL_SHA256": "32b2341fc9dd996f9377022e034e557ca455b65ef6c115376fb9995c55deccf2",
+          "sourceChecksEarlierPinPreserved": true
         }
       },
       "r15Preparation": {
-        "state": "FIXED_FIVELEAF_QB_AND_ONEBUILD_PARALLEL",
+        "state": "QB_AND_BUILD_ADOPTED_R15_ORIGINAL_C13_STAGE_RUNNING",
         "integration": "14bf71eba77876df321dba0ce946385e4ba51381",
         "buildRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
         "tree": "409ac01e2ddc90952ff52f37a31cc7bd832e0040",
@@ -30936,8 +30940,31 @@
         "actualPG": false,
         "REAL": false,
         "production": false,
-        "next": "OriginalQB narrow5leaf and originalD2 onebuild/tail; then exact originalT45 readonlypreflight/staging, no blind PG/replay.",
-        "D1ReceiptSHA256": "1fde5215612140b0af3d7900b98aba7f58b5f78448880745ebd0f279642055bb"
+        "next": "OriginalT45 CAS/tail/assembler/materialize then one resource preflight; C exact newPG20 only after actual facts.",
+        "D1ReceiptSHA256": "1fde5215612140b0af3d7900b98aba7f58b5f78448880745ebd0f279642055bb",
+        "QBReceiptSHA256": "c46191f13712f25a6c99369f4d4da4db5db748fbca5265397597d5cc1815d0c4",
+        "D2ReceiptSHA256": "ff43c259b42c19f90c672512b4b21523138d50b840cafb44de2eda6c2b323f62",
+        "archiveSHA256": "bc9537fd54e91247ade52a62b2d75a443a80b4659bdc9678dbf87af70f117dc5",
+        "archiveBytes": 83696036,
+        "manifestSHA256": "78ac59556c52bffc102bb51dc97b21ea9e4edb7689897306ae8df49c40f4485b",
+        "descriptorSHA256": "0bab92760dbfb34e33d89911ea7e21d7918409cc81de46c49ec4b7f8208ade04",
+        "runtimeSHA256": "dfcb70a018c2b31433799ef05c75af330fb652f786fccd52a5f33d288fe65fad",
+        "prefix": {
+          "bytes": 80445453,
+          "sha256": "d6727cb2e55d9a37d2c5fe01fce01c16e0082f8c139325fc321abae4abcf6b3e",
+          "byteCompared": true
+        },
+        "tail": {
+          "bytes": 3250583,
+          "sha256": "703e047eab278e493b3046fce83b36dc1ee0c9e305f0a17dbd4464049a934670"
+        },
+        "smallBindingsAndActualTailVerifiedByC": true,
+        "stagePreflightReceiptSHA256": "0eebbe2b1d902d79ccd3376d29b473ffa05a9481b2894dce287a873f75fb863c",
+        "stagePreflightSafeSHA256": "bd04da8e1c23e1199b9f62adc5214f073ff81c01bb735dba060528d11457c6b9",
+        "tailAuthoritySHA256": "21156814b1a78b9b9fe2628193ee1217d0343333980bec7610c0cb5e0845b42b",
+        "fullAuthoritySHA256": "714c5b1a7106787822e8ed23401fe186b0e4392a435f64e235ba7f5adecae385",
+        "stagingStartsAt": 1793948472311,
+        "stagingExpiresAt": 1793950272311
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31346,12 +31373,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T14:49:35+08:00",
-      "phase": "FIXED_FIVELEAF_QB_AND_ONEBUILD_PARALLEL",
+      "at": "2026-11-06T15:02:07+08:00",
+      "phase": "QB_AND_BUILD_ADOPTED_R15_ORIGINAL_C13_STAGE_RUNNING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "QB narrow5leaf and D2 onebuild in parallel",
-      "nextOwner": "T45 exact r15 readiness after scope QA/build",
+      "currentOwner": "T45 original r15 artifact/materialize",
+      "nextOwner": "C actualready/resources precisePG20",
       "latestActualReceiptSHA256": "eaab1fb39a1f26637e9960168eeb312c4dbf6768d922f0ca5e4a860dc6b14c15",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31361,17 +31388,17 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalQB narrow5leaf and originalD2 onebuild/tail; then exact originalT45 readonlypreflight/staging, no blind PG/replay.",
+      "next": "OriginalT45 CAS/tail/assembler/materialize then one resource preflight; C exact newPG20 only after actual facts.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "14bf71eba77876df321dba0ce946385e4ba51381",
       "buildRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
       "tree": "409ac01e2ddc90952ff52f37a31cc7bd832e0040",
       "sourceSetSHA256": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
-      "sourceQA": "PENDING_ORIGINAL_QB_NEW_FIVELEAF_ONLY",
-      "buildPassed": false,
+      "sourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+      "buildPassed": true,
       "githubSourceAndRootReadback": true,
-      "QBReceiptSHA256": "dd4945a6a76f013dbfec34cd00aef108d07b41c6c41e1a036f7cf7cf97228609",
-      "D2ReceiptSHA256": "cac2ed2ec7f308dd3c790cdf9f186df8492ed9117393ec504986b67511d484b7"
+      "QBReceiptSHA256": "c46191f13712f25a6c99369f4d4da4db5db748fbca5265397597d5cc1815d0c4",
+      "D2ReceiptSHA256": "ff43c259b42c19f90c672512b4b21523138d50b840cafb44de2eda6c2b323f62"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",

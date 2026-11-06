@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-af9078-tail-20261106-01",
+  "sourceSetSha256": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+  "archiveSha256": "703e047eab278e493b3046fce83b36dc1ee0c9e305f0a17dbd4464049a934670",
+  "archiveBytes": 3250583,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-af9078-tail-20261106-01",
+  "startsAt": 1793948472311,
+  "expiresAt": 1793950272311,
+  "decisionReference": "C consumes standing human same-kind bounded isolation authorization, not expired noon delegation. Exactr15 rootaf9078/source761a/D2ff43c/QBc46191/preflight0eebbe. Actuald60 READY2de0 base prefix80445453/d6727cb2 + tail703e/3250583 -> fullbc9537/83696036. Original receiver40s/materialize900s/30min. Preserve r14 committed/MISSING_SETTLEMENT23514/stopped and REALfc831. NoPG/REAL/production/replay; PG20 only after actual preparation/resources and separate exact binding.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}
