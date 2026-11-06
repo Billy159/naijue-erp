@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T11:52:00+08:00",
+    "at": "2026-11-06T11:55:00+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -30353,7 +30353,7 @@
         "wholeChainPassed": false
       },
       "r11Preparation": {
-        "state": "ACTUAL_START_PASSED_INSTALL_AUTHORITY_DELIVERED",
+        "state": "INSTALL_RECORD_PUBLISHED_POSTINSTALL_SNAPSHOT_COMPLETED_NEGATIVE_INITIALIZE_42601_CLEAN_STOPPED",
         "integration": "fbb10bb7041b2ccaf3a87bafbc2bf994a0d60290",
         "root": "5effb61d9cae2236a0c1a565b3347f98928513e2",
         "tree": "6cf6d0f25f2ac95c2a9c52b2fdd7130d9744769a",
@@ -30408,7 +30408,44 @@
         "wholeChainPassed": false,
         "REAL": false,
         "production": false,
-        "next": "T45 sole executor consumes exact C9 once in original window; obtain actual finite diagnostic or unchanged successful negative assertion, preserve failure and cleanup. No old target replay."
+        "next": "Original D1 diagnoses exact INITIALIZE/42601 SQL syntax in kernel prepare_v2 path; source owner only, no replay or new PG before concrete fix. Original T45 target stopped and preserved.",
+        "actualInstallReceiptSHA256": "b65ce266faac86d25966e04eae8e5418efd0e981a61ef10fde49ce8a768c21e9",
+        "actualInstallExitCode": 2,
+        "actualInstallSeconds": 46.37366846576333,
+        "safeResultSHA256": "c8cc9e86f8acda6f6014a440793cdaf79a9d24a36c39aa216932a9811e911332",
+        "nativeSchemaInstallCommitted": true,
+        "recordPublished": true,
+        "postInstallSnapshotPassed": true,
+        "negativeCase": {
+          "automaticRetry": false,
+          "exitCode": 1,
+          "stage": "rollback",
+          "state": "OUTCOME_UNKNOWN_NO_REPLAY",
+          "validationCode": "IMPORT_FAILED",
+          "validationInternalCode": null,
+          "validationSQLSTATE": "42601",
+          "validationStage": "BAD_APPROVAL",
+          "validationStep": "INITIALIZE"
+        },
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          },
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true
+        },
+        "containerStopped": true,
+        "ordinaryBusinessPassed": false,
+        "synthetic25Passed": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
