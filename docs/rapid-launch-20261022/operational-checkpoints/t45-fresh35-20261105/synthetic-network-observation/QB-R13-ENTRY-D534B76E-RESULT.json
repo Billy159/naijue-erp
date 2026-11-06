@@ -1,0 +1,117 @@
+{
+  "task": "C-0448-R13-ENTRY-D534B76E",
+  "atUtc": "2026-11-06T05:51:20.052519+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "d534b76ef82681288f270128723a1c6b0bc68867",
+    "root": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
+    "tree": "91d9793a362e9f33e295248c322eff2b72052eda",
+    "parentRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",
+    "sourceSet": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+        "beforeSha256": "f445ed0e8755ebb2cf7b98ece9eddcf1c61d63e207afc02d6b495e5205ec6399",
+        "afterSha256": "4176ecb6036a66072aeafd054e43253a3b0c4b84db94ae2c21af4e377ad258ff",
+        "bytes": 21700
+      },
+      {
+        "path": "tests/fresh35-isolated-entry.test.mjs",
+        "beforeSha256": "1df70d8e1a1842c5cebd06820a74d961a26186bdbc84bffee7822df6216e8ad0",
+        "afterSha256": "c39887f1dec1d8eba016b8d55db976e5a6df3d0f0c83713c9b604362b859f99c",
+        "bytes": 30962
+      }
+    ],
+    "installerBranchBytesUnchanged": true,
+    "mainInputAuthorityTargetSourceAndCredentialChecksBeforeStageUnchanged": true,
+    "r12FiveLeavesBytesUnchanged": true,
+    "staticEntryCodeCount": 31,
+    "allStaticEntryCodesAppearInActualSourceOutsideWhitelist": true,
+    "tree": "91d9793a362e9f33e295248c322eff2b72052eda",
+    "rootTree": "91d9793a362e9f33e295248c322eff2b72052eda",
+    "original3NegativeAssertionsOtherwiseExact": true,
+    "adoptedArtifactHashesVerified": {
+      "PYTHON-CONSUMER-RESULT.json": "04a77751d4470862c145457dfb2dfa03493ea080dfba2f5594d7ead909d42fea",
+      "ENTRY-DIAGNOSTIC-RECEIPTS.json": "f7fa0b77e8f5cfc030120c0ef7364e45e14a85cfb534f74a2faeaba4446b5483",
+      "SOURCE-CHECKS.json": "3753f9c71e15873da0015fa66ce890b6c892f481992610b0f96ba91f45444965"
+    }
+  },
+  "independentAsyncBoundaryChecks": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "cases": [
+      {
+        "case": "all deferred closes plus deferred fixture disposal",
+        "result": "PASS",
+        "opens": 6,
+        "maxActive": 1,
+        "admissionPerConnection": true,
+        "sameConfigRootTargetOptions": true,
+        "nextOpenWaitsForPriorClose": true,
+        "successWaitsForFixtureDispose": true,
+        "fixtureDisposedExactlyOnce": true,
+        "successEmitted": true
+      },
+      {
+        "case": "unconfirmed deferred second close",
+        "result": "PASS",
+        "opens": 2,
+        "maxActive": 1,
+        "admissionPerConnection": true,
+        "sameConfigRootTargetOptions": true,
+        "nextOpenWaitsForPriorClose": true,
+        "successWaitsForFixtureDispose": true,
+        "fixtureDisposedExactlyOnce": true,
+        "successEmitted": false
+      }
+    ],
+    "exactStageSourceExecuted": true,
+    "hostsAndKernelModeled": true,
+    "PGExecuted": false,
+    "serverCalls": 0
+  },
+  "closure": {
+    "sourceSet": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec",
+    "originalLoaderHashesCurrentSources": true,
+    "currentPins": 214,
+    "capturedPins": 180,
+    "changedCurrentPins": [
+      "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs"
+    ],
+    "other213AndCapturedUnchanged": true,
+    "original15DiagnosticKeysExact": true
+  },
+  "authorEvidenceAdopted": {
+    "resultSha256": "26d80844ea3f1794236cf03fb1c5f135ea24fca68fe60b56ffca2d9a36cae7b8",
+    "twoPinsSha256": "78b950f5d7dd3223956704ff20729c6df9e3236c740d1f7434531a2d07ed95f3",
+    "uniqueAffectedTests": 4,
+    "nativeEvidence": "Original pg8.23.1 Client handlers and original entry/host/coordinator/inspect models; no TCP/PG/SQL kernel/admission claim",
+    "oldReadOnlyReproSha256": "b0bb880030cf1bf9a5937592db28ed7599080950af88182fce99ea6de20b3311",
+    "oldReproLimit": "Injected need omitted real prefix; accepted only call-path limitation. New regression uses exact source need/prefix.",
+    "pythonConsumer": "Adopt original3 functions/2enums31of31 finite entry-code passthrough; unchanged source verified via priorR12 pins",
+    "repeat": false
+  },
+  "scopeResult": "Negative and independent ABSENT paths use sequential new original reviewed hosts; each host/admission binds same config/root/target/options, original close awaited and CLOSED required. Commit3/all8 and native first-error/cleanup behavior adopted, rollback6 asynchronous ordering independently checked. Fixture dispose once and awaited before success. Exact31 source constants in existing validationCode, original15keys/3stages and branded diagnostic contract retained.",
+  "preserved": "Original3 negative assertion lines unchanged except surrounding host ownership; old R12 fiveleaf bytes and installer/input authority/target/source/credential checks unchanged. Poisoned wire never reset, no new pool.",
+  "r13ActualState": "C reports schema+record COMMITTED/PUBLISHED, rollback child failure with5null diagnostic fields, STOPPED. Negative rollback/SQL semantic PASS not established.",
+  "r13ActualFirstCause": "UNKNOWN",
+  "sourceBlockers": [],
+  "boundaries": {
+    "sourceModified": false,
+    "WIPReviewed": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "actualR13RollbackPassed": false,
+    "SQLSemanticOrBusinessPassed": false,
+    "oldTargetOrKeyReplay": false,
+    "fullSuiteRerun": false,
+    "buildByQB": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return fixed two-leaf source verdict to C. D2 owns once-only build. T45/C own any separately authorized actual successor; preserve r13 UNKNOWN/stopped facts."
+}
