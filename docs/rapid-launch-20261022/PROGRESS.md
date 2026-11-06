@@ -1631,3 +1631,8 @@ C核材料化86ac8939退出0/372.094s及一次资源70d6d14d；准确full2de0/so
 ### 2026-11-06T14:27:54+08:00 | 已批C回执摘要与CHECK互斥，原D1五叶唯一owner
 D1静态定位：command在DOCUMENTS回执写historicalHallTargetCapturesSha256，既有读回依赖，但receipt_result_by_kind仍只允许原13键；非空捕获第14键必被CHECK拒绝。它是确定源码缺口，尚非r14实际首约束/ordinal证明。C核原修订单C第49/51/57/61行及人类call_66e02fc批准：原回执增加map摘要及新连接核摘要已明确批准，不新增业务决策。
 登记原D1唯一5叶：最后settlement-difference successor、原candidate、combined-catalog及两原directtests。只对原准确STANDARD_IMPORT_SQL_V1/IMPORT_CHUNK/DOCUMENTS增加严格64小写hex摘要接缝，原13键/其他分支/未知附加键/权限不放宽，冻结basecatalog不改；必要定向检查后再窄验/一次构建，不加PG或取证。其他已验源码/真实数据保持。
+
+
+### 2026-11-06T14:49:35+08:00 | 回执约束5叶固定，原QB与D2并行
+C核准确5叶前后SHA及无额外tracked改动，提交14bf71eba77876df321dba0ce946385e4ba51381，统一rootaf9078ea822921cf5d68ccdbe1fbcf32ce2ba491/tree409ac01e。原D1只对最后successor/candidate/catalog及两directtests补已批准receipt摘要严格CHECK；原4routine/host/entry/冻结catalog原件不改。作者4项定向PASS/25有限AST正反例/逆向恢复已保留，不是PG17.11 canonical或业务证明。
+原QB仅5叶独立窄验、原D2一次完整构建及相对服务器实际READY d60dee包的新实测tail并行；D1交还只读、仅简短RESULT收尾。待固定QA/build再原T45准确r15，不重放r14/旧窗口，不套旧tail。r14首constraint/ordinal仍UNKNOWN，schema提交与普通业务未过分开记录。

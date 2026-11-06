@@ -1,0 +1,433 @@
+{
+  "format": "D1_R14_APPROVED_CAPTURE_RECEIPT_CONSTRAINT_SOURCE_RESULT_V1",
+  "status": "EXACT_FIVE_LEAF_SOURCE_FIX_TARGETED_AND_FINITE_AST_CHECKS_COMPLETE_NOT_PG",
+  "checkedAtUTC": "2026-11-06T06:48:28.297899+00:00",
+  "approval": {
+    "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/0448Z-HALL-AND-ISOLATED-SOURCE-DELTA.md",
+    "sha256": "2ebd8f4d54476d6b370d3effaaa60ba755c30ad12553ab409f399c18989fdfaf",
+    "existingApprovedScope": "C item4 adds immutable historical_hall_target_captures map digest to original receipt result_data; item6 requires same-operation digest on independent readback; existing SQL/combined consumers synchronize",
+    "lines": [
+      49,
+      51,
+      57,
+      61
+    ],
+    "originalHumanApproval": "call_66e02fc29e8e45e6bef014891af81ec0 item0",
+    "CRegisteredExactFiveLeaves": true,
+    "supersedesReadOnlyReportPendingApprovalOnly": true,
+    "newUserBusinessApprovalRequired": false
+  },
+  "sourceFiles": [
+    {
+      "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+      "beforeSha256": "57f25d9fec9385640ca63e672ffb7f6f94fd3a95f8c40fea25200dda6df669ee",
+      "afterSha256": "260a9d5869b878ed0ad9f9fdbb1004c5c8e4cc8a510a4ea1cda01230d5335fb6",
+      "bytes": 69696
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+      "beforeSha256": "92f5912953860774f63871c083c75c2b5e9d4e0d71558bfe0bebffe94eea88cb",
+      "afterSha256": "69754737f21e19643df03fc9f238a1fc98ff1cc8cbe16793bf5d106bc45ee1d0",
+      "bytes": 6909
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "beforeSha256": "6c83e4c9b6a98af245993ee7c769cbe32fa5f5165b007f5279a8f21f1799f8ab",
+      "afterSha256": "33e622ee6d3e0a10795b7c9c02bec04b67e257936f4b701855687ec18bb99156",
+      "bytes": 38614
+    },
+    {
+      "path": "tests/fresh35-historical-settlement-difference-candidate.test.mjs",
+      "beforeSha256": "ae885cf200107fde02c3991cf28856ed334e2c6593f843c4be3c6ee17ba6969b",
+      "afterSha256": "f71b398492f67d012fa1d95c23ea691726877f27a3d520f39dc6d6aef1f6f79f",
+      "bytes": 12062
+    },
+    {
+      "path": "tests/fresh35-combined-catalog.test.mjs",
+      "beforeSha256": "d531b49eae8e418c22b63da1c0728a8b05c9458b85bcf35943ee10bcf2cb22ab",
+      "afterSha256": "d7b4d59c81b5fd1c1a82698777d895369f8bbbc136e2ffb3bef3585555b1d710",
+      "bytes": 31748
+    }
+  ],
+  "sourceSet": {
+    "before": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec",
+    "D1LocalAfter": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+    "pinCount": 214,
+    "changed": 3,
+    "unchanged": 211,
+    "finalCIntegrationRoot": "NOT_CLAIMED"
+  },
+  "rootCause": {
+    "sourceProven": "current DOCUMENTS command can emit the already approved14th capture digest while original strict receipt CHECK permits only13 keys, making the necessary closed-key clause false",
+    "readOnlyEvidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R14-MISSING-SETTLEMENT-SOURCE-01/RESULT.json",
+    "readOnlyResultSha256": "af36c0fcdb2375322fc469962af1b89b76acd39b2f3edfcdbf905f6d08b47ab5",
+    "readOnlyProofSha256": "b952a7b1ce1f46b9321d3f804f26abe75b9270ba126115fbbfb07d2710d5d08e",
+    "actualR14FirstConstraintOrOrdinal": "UNKNOWN"
+  },
+  "implementation": {
+    "nativeSuccessor": "append one exact CHECK synchronization block inside the existing final SQL transaction; same35 tables/152 routines/326 constraint count, no new routines/tables/columns/grants",
+    "constraintIdentity": "operation_receipt.receipt_result_by_kind",
+    "beforeDefinitionSha256": "d381f58ff5c741d08ea257c95ff4b991cdfdaf0b17b2a7fea3f0432f555210a4",
+    "afterDefinitionSha256": "5fdd40b5fbb91274b469d196ed344a2c3141f2f7bed390cd2fc8cc469354c7be",
+    "blockSha256": "0cdf022e0b0663f9f63e11804283dcc1b06074a3a85f8d7245de569ac2b26b34",
+    "captureScope": {
+      "key": "historicalHallTargetCapturesSha256",
+      "target_type": "IMPORT",
+      "profile": "STANDARD_IMPORT_SQL_V1",
+      "action": "IMPORT_CHUNK",
+      "phase": "DOCUMENTS",
+      "type": "JSON string",
+      "format": "exact64 lowercase hexadecimal"
+    },
+    "strictUnchanged": [
+      "original13 mandatory keys and original field/identity/hash/array/status checks",
+      "all other CASE branches",
+      "unknown additional keys denied",
+      "original receipt producer/map/digest and readback closure",
+      "source hash algorithm, input mappings, permissions and source/routine profiles",
+      "original missing-settlement/final-publish negative expectations",
+      "original four current routine successor specs and bodies",
+      "original entry and nativeReady fixes",
+      "all other constraint metadata and other325 constraint rows",
+      "frozen model/captures/dumps"
+    ],
+    "metadataProtection": "exact native constraint projection before and after; native raw pg_constraint fields compare unchanged excluding only OID/conbin; quote context locally off for canonical comparison and restored",
+    "candidate": "exact full approved CHECK-block pin; one constraintChanges descriptor; original mutation denial remains on all SQL outside the exact block",
+    "catalog": "exact before/after definition pins and metadata comparison; original final patch identity only; one model constraint definition replaced with all other metadata retained",
+    "transaction": "original BEGIN/COMMIT and combined patch step retained, whole-host/publication transaction/authorization unchanged"
+  },
+  "verification": {
+    "red": {
+      "candidate": "TEST-candidate-red.log1/1 expected missing constraintChanges fails",
+      "catalog": "TEST-catalog-red.log1/1 expected absent model CHECK successor fails"
+    },
+    "green": {
+      "candidate": {
+        "pass": 2,
+        "fail": 0,
+        "skipped": 0,
+        "log": "TEST-candidate-green.log",
+        "scope": "new approved CHECK identity/metadata/mutation guard and affected existing SQL mutation assertion"
+      },
+      "catalog": {
+        "pass": 2,
+        "fail": 0,
+        "skipped": 0,
+        "log": "TEST-catalog-green.log",
+        "scope": "new exact constraint successor including8 metadata/set negatives, affected full model constraint comparison"
+      },
+      "totalDistinctAffectedTests": 4,
+      "oldUnaffected4_5_2LeafEvidence": "REUSED_NOT_REPLAYED",
+      "finalCommentOnlyUpdate": "source loader validates final SQL/module pins; final SQL differs from parsed tested plan only documented header comments, raw text and AST equivalence checked"
+    },
+    "finiteActualRawAst": {
+      "format": "D1_R14_STRICT_CAPTURE_CONSTRAINT_AST_RESULT_V1",
+      "parser": {
+        "pglast": "v7.21",
+        "postgresGrammar": [
+          17,
+          7
+        ],
+        "actualPg1711CanonicalDefinition": "NOT_VERIFIED",
+        "actualSqlEngineExecution": false
+      },
+      "fullPatchSqlAndBothDoBodiesParse": true,
+      "onlyFirstStandardImportBranchChanged": true,
+      "inverseApprovedTwoAndArgsRestoresEntireOriginalAst": true,
+      "allOtherCaseBranchesUnchanged": true,
+      "metadataChangedOnlyDefinition": true,
+      "beforeDefinitionSha256": "d381f58ff5c741d08ea257c95ff4b991cdfdaf0b17b2a7fea3f0432f555210a4",
+      "afterDefinitionSha256": "5fdd40b5fbb91274b469d196ed344a2c3141f2f7bed390cd2fc8cc469354c7be",
+      "cases": [
+        {
+          "name": "original13 document receipt",
+          "before": true,
+          "after": true,
+          "expected": true
+        },
+        {
+          "name": "approved64 lowercase capture hint",
+          "before": false,
+          "after": true,
+          "expected": true
+        },
+        {
+          "name": "capture rejects uppercase",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "capture rejects short",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "capture rejects long",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "capture rejects empty",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "capture rejects number",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "capture rejects boolean",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "capture rejects null",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "capture rejects object",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "capture rejects array",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "wrong action",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "wrong phase",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "unknown extra",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "missing mandatory cursor",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "original plan hash still strict",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "original receipt id binding still strict",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "original array type still strict",
+          "before": false,
+          "after": false,
+          "expected": false
+        },
+        {
+          "name": "legacy INITIALIZE",
+          "before": true,
+          "after": true,
+          "expected": true
+        },
+        {
+          "name": "legacy MASTER",
+          "before": true,
+          "after": true,
+          "expected": true
+        },
+        {
+          "name": "legacy KEYS",
+          "before": true,
+          "after": true,
+          "expected": true
+        },
+        {
+          "name": "legacy BASELINE_SEAL",
+          "before": true,
+          "after": true,
+          "expected": true
+        },
+        {
+          "name": "legacy DOCUMENT_STAGE",
+          "before": true,
+          "after": true,
+          "expected": true
+        },
+        {
+          "name": "legacy DOCUMENTS",
+          "before": true,
+          "after": true,
+          "expected": true
+        },
+        {
+          "name": "legacy DOCUMENT_PUBLISH",
+          "before": true,
+          "after": true,
+          "expected": true
+        }
+      ],
+      "caseCount": 25,
+      "interpretation": "finite evaluator over actual PG17 raw AST of the two CHECK expressions; not a PostgreSQL semantic execution or actual r14 first-error proof",
+      "networkConnections": 0,
+      "pgInstances": 0
+    },
+    "sourceChecks": {
+      "registeredFiles": 5,
+      "currentSourcePins": 214,
+      "changedPins": [
+        {
+          "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+          "before": "57f25d9fec9385640ca63e672ffb7f6f94fd3a95f8c40fea25200dda6df669ee",
+          "after": "260a9d5869b878ed0ad9f9fdbb1004c5c8e4cc8a510a4ea1cda01230d5335fb6"
+        },
+        {
+          "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+          "before": "6c83e4c9b6a98af245993ee7c769cbe32fa5f5165b007f5279a8f21f1799f8ab",
+          "after": "33e622ee6d3e0a10795b7c9c02bec04b67e257936f4b701855687ec18bb99156"
+        },
+        {
+          "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+          "before": "92f5912953860774f63871c083c75c2b5e9d4e0d71558bfe0bebffe94eea88cb",
+          "after": "69754737f21e19643df03fc9f238a1fc98ff1cc8cbe16793bf5d106bc45ee1d0"
+        }
+      ],
+      "allFourRoutineSpecificationsUnchanged": true,
+      "originalEntryAndNativeReadySourceUnchanged": true,
+      "originalFrozenModelSha256": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+      "finalSqlEqualsParsedPlanWithOnlyDocumentedHeaderCommentChange": true,
+      "finalSqlAstEqualsPlanIgnoringOnlySourcePositionFields": [
+        "location",
+        "stmt_location",
+        "stmt_len",
+        "arg_location"
+      ],
+      "gitOperations": 0,
+      "sourceCopiesReadbackEqual": true,
+      "noTrailingWhitespace": true,
+      "patchForwardAndReverse": {
+        "tool": "/usr/bin/patch -C -p1 -i",
+        "forwardExitCode": 0,
+        "reverseExitCode": 0,
+        "checkOnlyCopiesRehashedUnchanged": 5,
+        "gitUsed": false
+      }
+    },
+    "frozenModelSha256": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+    "nativePg1711CanonicalDefinition": "NOT_VERIFIED_FAIL_CLOSED_BY_NATIVE_POSTCONDITION_AND_CURRENT_CATALOG_GUARD"
+  },
+  "actualR14": {
+    "sourceRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
+    "integration": "d534b76ef82681288f270128723a1c6b0bc68867",
+    "safeResultSha256": "8c4f9c48363f9daeefdd7f1edcddf7d934f26dee07e2ff4b4f3c856401dd9553",
+    "nativeReceiptSha256": "eaab1fb39a1f26637e9960168eeb312c4dbf6768d922f0ca5e4a860dc6b14c15",
+    "validationStage": "MISSING_SETTLEMENT",
+    "validationStep": "STEP",
+    "validationSQLSTATE": "23514",
+    "validationCode": "IMPORT_FAILED",
+    "validationInternalCode": null,
+    "schemaAndRecord": "COMMITTED_PUBLISHED",
+    "negativeGroup": "FAILED_OUTCOME_UNKNOWN_NO_REPLAY_NOT_PASS",
+    "actualConstraintAndOrdinal": "UNKNOWN",
+    "stopped": true,
+    "cleanupSixTrue": true
+  },
+  "notRun": [
+    "PostgreSQL or native constraint execution/canonical deparse",
+    "new environment or old stopped target/key replay",
+    "new log extraction/real data input/production action",
+    "all-backend regression/old alias or nativeReady or entry replay",
+    "build/independentQB",
+    "Git operations"
+  ],
+  "nextOwner": "C fixes exact root/pins, original QB reviews only this5-leaf CHECK delta, original D2 builds once; original T45/C coordinate any new native17.11 canonical/host validation",
+  "artifacts": {
+    "BEFORE-PINS.json": {
+      "sha256": "b47217acaa4fedcb602090ffc44c8fb3e9434bdba5923402423f9cdadd446b27",
+      "bytes": 991
+    },
+    "PINS.json": {
+      "sha256": "51615e5d0e6e2373e4b5612e6cf527362c664a4b787ae97567d9190a57ef4d3e",
+      "bytes": 1427
+    },
+    "SOURCE.patch": {
+      "sha256": "78f14795e9ab980a6b9d776c7e17ae084a349ab70bef131cd38d8db9a895c26a",
+      "bytes": 46218
+    },
+    "SOURCE.reverse.patch": {
+      "sha256": "f646b9328d209065f86df493a21c87fcb6ef5c8537c4409cbade1af5c98dbf5c",
+      "bytes": 46218
+    },
+    "SOURCE-CHECKS.json": {
+      "sha256": "32b2341fc9dd996f9377022e034e557ca455b65ef6c115376fb9995c55deccf2",
+      "bytes": 1590
+    },
+    "CONSTRAINT-CHANGE.json": {
+      "sha256": "bc13d71b269a2bf59e7e42c551a8e8ba04ef54fb06657d86517e300763e2321c",
+      "bytes": 22733
+    },
+    "CONSTRAINT-PINS.json": {
+      "sha256": "4fca53bff87bc1000b97cd4558fd543a5e864779fc5a46720db512ec7810cf19",
+      "bytes": 1332
+    },
+    "CONSTRAINT-BLOCK.sql": {
+      "sha256": "0cdf022e0b0663f9f63e11804283dcc1b06074a3a85f8d7245de569ac2b26b34",
+      "bytes": 25268
+    },
+    "AST-RESULT.json": {
+      "sha256": "4726e40a3e84139d827240f2f9e3852d6f9ef9147804176b3fea942a1a2fc028",
+      "bytes": 3936
+    },
+    "LOCAL-SOURCE-DESCRIPTION.json": {
+      "sha256": "0bab92760dbfb34e33d89911ea7e21d7918409cc81de46c49ec4b7f8208ade04",
+      "bytes": 350853
+    },
+    "TEST-candidate-red.log": {
+      "sha256": "1731a54d84be73d2611f55a3929bbbf1f75c5bb931f03b826e96ecc6c4d600fc",
+      "bytes": 1086
+    },
+    "TEST-catalog-red.log": {
+      "sha256": "cbd47ca068d525be557509aba05de58d75a1c866fa1431749d6b875cf97695a5",
+      "bytes": 1001
+    },
+    "TEST-candidate-green.log": {
+      "sha256": "6ddb9b2e0bfe0e439f2c97d9cc3ca02e778a3527f1439917382c5b2884694531",
+      "bytes": 393
+    },
+    "TEST-catalog-green.log": {
+      "sha256": "a4dc268fa24a545cef2a6f50fe8230ac3fdd4875d64ec44eb79ae7ed213792c3",
+      "bytes": 347
+    },
+    "prepare-constraint.py": {
+      "sha256": "ef71cf2e36b6c9c6b77574df1decf4ad737bdda89c74ecf73467e24621961ae0",
+      "bytes": 3832
+    },
+    "verify-constraint-ast.py": {
+      "sha256": "e4eff7b2f84d18571f69f847de55ef56f308a8a42941f9062a2d7f91d23302d0",
+      "bytes": 7658
+    }
+  }
+}
