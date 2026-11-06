@@ -1,0 +1,139 @@
+{
+  "status": "MATERIALIZED_START_ARTIFACTS_ABSENT_NO_PG_WINDOW",
+  "checkedAtUTC": "2026-11-06T06:07:40.848854+00:00",
+  "sourceRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
+  "sourceSet": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec",
+  "actualModelEffortFast": "UNVERIFIED",
+  "PGStarted": false,
+  "productionActions": 0,
+  "wholeChainPassed": false,
+  "newBuildsByT45": 0,
+  "C13RemainingSeconds": 1195.596,
+  "materializePlanRemainingSeconds": 395.348,
+  "windowsNotExtended": true,
+  "materialize": {
+    "job": {
+      "jobId": "t45-f35-d60dee-local-materialize-20261106-01",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "unit": "naijue-erp-op-5cc58239-321d284cb886",
+      "atUTC": "2026-11-06T06:00:22.602639+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 0,
+      "elapsedSeconds": 372.09446578705683,
+      "exports": [
+        "fresh35-materialize-app-result.json"
+      ],
+      "finishedAtUTC": "2026-11-06T06:06:34.725555+00:00"
+    },
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-d60dee-local-materialize-20261106-01/transport/release-receipts/t45-f35-d60dee-local-materialize-20261106-01/fresh35-materialize-app-result.json",
+    "receiptSha256": "86ac89398bfe7aee6c19ae43bf193472ee20a93e46d10bec70cba955c2bcdbf3",
+    "result": {
+      "application": {
+        "archiveSHA256": "2de0e6192ef162188f68cad32a2994d9d13dac536391523edc140c2d9189b548",
+        "deploymentManifestSha256": "5158215d9b584e1893b6e3e993a6c62518c182b59584d6379bfb9abf749df9eb",
+        "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+        "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+        "operationId": "t45-f35-d60dee-application-20261106-01",
+        "sourceSet": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec"
+      },
+      "environmentReceiptUnchanged": true,
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "imageBuilt": false,
+      "postgresStarted": false,
+      "status": "CURRENT_APPLICATION_MATERIALIZED_NO_DB_WINDOW"
+    }
+  },
+  "preflight": {
+    "job": {
+      "jobId": "t45-f35-d60dee-local-start-preflight-20261106-01",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "unit": "naijue-erp-op-5cc58239-3747cd027067",
+      "atUTC": "2026-11-06T06:07:16.234136+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 0,
+      "elapsedSeconds": 0.11797386081889272,
+      "exports": [
+        "materialize-preflight.json"
+      ],
+      "finishedAtUTC": "2026-11-06T06:07:16.398440+00:00"
+    },
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-d60dee-local-start-preflight-20261106-01/transport/release-receipts/t45-f35-d60dee-local-start-preflight-20261106-01/materialize-preflight.json",
+    "receiptSha256": "70d6d14d46c9bc94a87de2aa46365aa5b24461385dc400529d51310fbae27fb0",
+    "result": {
+      "jobId": "t45-f35-d60dee-local-start-preflight-20261106-01",
+      "checkedAtUTC": "2026-11-06T06:07:16.318049+00:00",
+      "mutations": 0,
+      "targetParent": {
+        "uid": 0,
+        "mode": "0o700",
+        "symlink": false
+      },
+      "applicationRoot": {
+        "exists": true,
+        "uid": 0,
+        "mode": "0o700",
+        "symlink": false
+      },
+      "resources": {
+        "cpuCount": 4,
+        "loadAverage": [
+          1.0029296875,
+          1.25439453125,
+          0.71435546875
+        ],
+        "memoryBytes": {
+          "MemTotal": 16731348992,
+          "MemAvailable": 14333693952,
+          "SwapTotal": 4294963200,
+          "SwapFree": 4203982848
+        },
+        "disk": {
+          "freeBytes": 9320345600,
+          "totalBytes": 489861931008,
+          "device": 66304
+        }
+      },
+      "image": {
+        "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+        "os": "linux",
+        "arch": "amd64"
+      },
+      "materializeOriginalKey": {
+        "jobId": "t45-f35-d60dee-local-materialize-20261106-01",
+        "requestPresent": true,
+        "resultPresent": true,
+        "status": "COMPLETED",
+        "exitCode": 0
+      },
+      "CASOriginalKey": {
+        "jobId": "t45-f35-d60dee-final-staging-policy-20261106-01",
+        "status": "COMPLETED",
+        "exitCode": 0
+      },
+      "matchingContainerIDs": [],
+      "currentApplication": {
+        "archiveSHA256": "2de0e6192ef162188f68cad32a2994d9d13dac536391523edc140c2d9189b548",
+        "deploymentManifestSha256": "5158215d9b584e1893b6e3e993a6c62518c182b59584d6379bfb9abf749df9eb",
+        "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+        "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+        "operationId": "t45-f35-d60dee-application-20261106-01",
+        "sourceSet": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec"
+      },
+      "startArtifactsPresent": {
+        "start-intent.json": false,
+        "container-receipt.json": false,
+        "authority/fresh35-isolated-provision-v1.json": false,
+        "authority/fresh35-combined-execution-v1.json": false
+      },
+      "status": "READONLY_FACTS_COLLECTED"
+    }
+  }
+}

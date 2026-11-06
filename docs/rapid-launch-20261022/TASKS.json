@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R14_SCOPED_QA_AND_BUILD_ADOPTED_C13_ARTIFACT_STAGE_IN_PROGRESS",
+      "critical": "ACTUAL_MATERIALIZATION_PASS_FRESH_PG20_PROVISION_BOUND",
       "independentPreparation": {
         "D1": "Twoleaf fix frozen; readonly until concrete new finding.",
         "QB": "New twoleaf scoped verdict adopted; no repeated review.",
         "D2": "One d60dee full build and actual0adc prefix/tail PASS; no rebuild.",
-        "T45": "Original r14 bounded artifact/materialize; C13 exact binding, PG not yet authorized.",
+        "T45": "OriginalT45 one fresh actualstart then C exact original9key in samePG20; noREAL/production/replay.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -30777,7 +30777,7 @@
         }
       },
       "r14Preparation": {
-        "state": "R14_SCOPED_QA_AND_BUILD_ADOPTED_C13_ARTIFACT_STAGE_IN_PROGRESS",
+        "state": "ACTUAL_MATERIALIZATION_PASS_FRESH_PG20_PROVISION_BOUND",
         "integration": "d534b76ef82681288f270128723a1c6b0bc68867",
         "buildRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
         "tree": "91d9793a362e9f33e295248c322eff2b72052eda",
@@ -30794,7 +30794,7 @@
         "actualPG": false,
         "REAL": false,
         "production": false,
-        "next": "Original CAS/tail/assembler/materialize then one actual resource preflight; bind fresh original PG20 only afterward.",
+        "next": "OriginalT45 one fresh actualstart then C exact original9key in samePG20; noREAL/production/replay.",
         "QBReceiptSHA256": "dd4945a6a76f013dbfec34cd00aef108d07b41c6c41e1a036f7cf7cf97228609",
         "D2ReceiptSHA256": "cac2ed2ec7f308dd3c790cdf9f186df8492ed9117393ec504986b67511d484b7",
         "buildSeconds": 11.28,
@@ -30820,7 +30820,18 @@
         "fullAuthoritySHA256": "4cb5b903d43276c71e5a98fb3cea732b7e664771933762a608d8927de5de01fb",
         "stagingStartsAt": 1793944656444,
         "stagingExpiresAt": 1793946456444,
-        "authority": "Standing human same-kind bounded isolation authorization, not expired noon temporary delegation"
+        "authority": "Standing human same-kind bounded isolation authorization, not expired noon temporary delegation",
+        "actualStageSHA256": "fd029374887b85456668e2c51792819bd32e10691a36332b081729914d45fe4e",
+        "actualStageReceiptsVerifiedByC": true,
+        "fullActualReady": true,
+        "materializationSHA256": "86ac89398bfe7aee6c19ae43bf193472ee20a93e46d10bec70cba955c2bcdbf3",
+        "materializationExitCode": 0,
+        "materializationSeconds": 372.09446578705683,
+        "resourceSHA256": "70d6d14d46c9bc94a87de2aa46365aa5b24461385dc400529d51310fbae27fb0",
+        "safePreparationSHA256": "98f2272bd7077f7196e32073f6d87ebfa73d6e70d73aecdcbf54205d8ffffe35",
+        "provisionSHA256": "e16d05aa7040fac6424cf8f96fa7d8b60a74b8a309e26dc493077896e8d24084",
+        "provisionStartsAt": 1793945319803,
+        "provisionExpiresAt": 1793946519803
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31229,12 +31240,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T13:59:42+08:00",
-      "phase": "R14_SCOPED_QA_AND_BUILD_ADOPTED_C13_ARTIFACT_STAGE_IN_PROGRESS",
+      "at": "2026-11-06T14:09:25+08:00",
+      "phase": "ACTUAL_MATERIALIZATION_PASS_FRESH_PG20_PROVISION_BOUND",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "T45 original r14 bounded staging/materialize",
-      "nextOwner": "C accurate PG20 provision after actual preparation/resources;T45 sole server",
+      "currentOwner": "T45 actual fresh r14 start",
+      "nextOwner": "C actualprogram/target original9key then originalT45 one install/business/cleanup",
       "latestActualReceiptSHA256": "2412f60905ca7627ffa28565099eee6572f3260a60ec665b94b502395fb79253",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31244,7 +31255,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original CAS/tail/assembler/materialize then one actual resource preflight; bind fresh original PG20 only afterward.",
+      "next": "OriginalT45 one fresh actualstart then C exact original9key in samePG20; noREAL/production/replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "d534b76ef82681288f270128723a1c6b0bc68867",
       "buildRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
