@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T12:36:00+08:00",
+    "at": "2026-11-06T12:41:00+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -30586,7 +30586,20 @@
         },
         "containerStopped": true,
         "ordinaryBusinessPassed": false,
-        "synthetic25Passed": false
+        "synthetic25Passed": false,
+        "ambiguityFix": {
+          "state": "EXACT_MINIMUM_SOURCE_REPAIR_AUTHORIZED_ORIGINAL_D1_IN_PROGRESS",
+          "owner": "D1",
+          "files": [
+            "candidate0448/adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+            "candidate0448/scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+            "candidate0448/tests/fresh35-historical-settlement-difference-candidate.test.mjs"
+          ],
+          "candidate": "Original command declares b import_batch%ROWTYPE while4SQL JSON aliases also b; first INITIALIZE bridge select precedes badSHA guard",
+          "scope": "Rename only4SQLlocal aliases; preserve globalrecord, schema, variable_conflict=error, predicate and all permissions. Require exactanchor/ASTnormalization/inverse proof. Actualbackend firstcolumn/line unknown.",
+          "rollbackUnknown": "Separate original connection/rollback receipt investigation only; no assumption rollback success or permission/guard relaxation",
+          "authority": "Original user implementation goal and exact original source owner bug repair; not expired noon delegation"
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
