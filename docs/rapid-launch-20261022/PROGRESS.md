@@ -1941,3 +1941,13 @@ T45实际只读preflight602feb33退出0/0.319秒，确认r21 stopped及六项清
 ## 2026-11-06 — r22服务器完整包已READY，唯一物化在途
 
 采用T45 STAGE-RESULT.02 ba26e068，原receiver确认完整包464d6ca3/83702682字节READY，服务器fileIdentity393729，原baseffbe不变，原receiver哈希ad0afee1；实际完整重组而非仅传尾包。唯一t45-f35-f16218-local-materialize-20261106-01已运行，原900秒上限，等待实际collector0755读回和fresh resource。原PG/旧服务/REAL未启动未改，未重放已提交或unknown业务键。上轮目标推进为实际source修复、独立增量QA、固定构建及服务器READY；当前为准确live作业等待，不是无进展重盘。
+
+
+## 2026-11-06 — r22实际物化和执行位通过，新PG窗口接续
+
+原物化退出0/365.969秒，原收据c4d0876c直接Linux lstat collectorMode0o755，未临时chmod。freshresource ee422413退出0/0.168秒，4CPU/14.368GB可用内存/5.250GB磁盘、新CID及4启动事实缺席，READY6bbc48a4已核。C按现有同类隔离授权签新11键C11 `36b80320de3f1a108294d2d62d7ab2a96632bef516a0c587d9937ec1338b3b14`，starts1793973593002/expires1793974793002，准确r22新容器/原有界预算和guardian。T45仅先启动新PG并回实际身份/program，C9尚未签。r22当前尚无schema/install/合成/ordinaryPASS；r21同名阶段历史证据保留在latestActualRuntime，不混算到r22。REAL/prod未动。
+
+
+## 2026-11-06 — r22新隔离PG已启动，准确C9实际验证接续
+
+唯一start退出0/37.303秒，raw365f566f/safe5a4ed1b7已核；CID99d3e16f、SID7705058234245836847、OID16393、PG170011、birth14:01:12.551676UTC，programcfb8d4a9/target38a17939/sourceb780。C签原9键C9 `539823ca20d23dbe55ff974e9467536f9eda3dc22f0f2ac27e6bfb6b604dca39`，与本轮C11同截止1793974793002，不扩窗。原T45接实际install/负例/正常25头27结算/ordinary102assert及读回probe/ownedcleanup。当前仅启动通过，后续阶段未验；不得把r21提交算到此版本，不重放旧target/unknown键，无REAL/prod。

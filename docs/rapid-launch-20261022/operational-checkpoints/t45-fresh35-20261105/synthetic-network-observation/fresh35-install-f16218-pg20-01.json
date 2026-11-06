@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "cfb8d4a9dea525a829d55dd0a48be09e9e899a6c0f43ed171fcaa2e95f319595",
+  "sourceSetSha256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+  "targetSha256": "38a1793997a11906312a3854c88c355420e96b09a3c98b64e491545b7cd189ff",
+  "startsAt": 1793973593002,
+  "expiresAt": 1793974793002,
+  "independentSafetyReviewSha256": "6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e",
+  "authorizationReference": "C consumes human standing same-kind bounded isolation approval. Exactr22 rootf162184a/source80c84f5f/manifest05878d5c/QB6c5d9ca9; actualstart365f566f CID99d3e16f SID7705058234245836847/OID16393/PG170011 birth14:01:12.551676UTC. SameC11 deadline1793974793002. One install/negative/normal/ordinary/readback/probe/ownedcleanup; originalcaps/ACL/guards. NoREAL/production/oldcommitted-or-unknown-keyreplay/windowextension."
+}

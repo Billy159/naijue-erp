@@ -28508,12 +28508,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R22_ACTUAL_FULL_READY_UNIQUE_MATERIALIZATION_RUNNING",
+      "critical": "R22_ACTUAL_NEW_PG_STARTED_C9_INSTALL_AND_ORDINARY_VALIDATION",
       "independentPreparation": {
         "D1": "Exact source diagnosis closed81ba5198; source frozen.",
         "QB": "Mode-only source scopedPASS6c5d9ca9, no repeated review.",
         "D2": "Fixed f162184a build12.331s/pack9.282s and7298 membersPASS; no runtime.",
-        "T45": "Full464d READY on server; same unique material job currently running, no PG/start before material/resource/C11.",
+        "T45": "Actual r22PG start completed; exact C9 issued, original actual install/ordinary run next.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -32283,7 +32283,7 @@
         "diagnosticActualEffective": true
       },
       "r22Preparation": {
-        "state": "R22_ACTUAL_FULL_READY_UNIQUE_MATERIALIZATION_RUNNING",
+        "state": "R22_ACTUAL_NEW_PG_STARTED_C9_INSTALL_AND_ORDINARY_VALIDATION",
         "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
         "buildRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
         "QBReceiptSHA256": "6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e",
@@ -32353,9 +32353,42 @@
         },
         "materialization": {
           "jobId": "t45-f35-f16218-local-materialize-20261106-01",
-          "state": "RUNNING_CONFIRMED_BY_ORIGINAL_EXECUTOR",
-          "timeoutSeconds": 900,
-          "pgStarted": false
+          "state": "COMPLETED",
+          "exitCode": 0,
+          "elapsedSeconds": 365.96867404086515,
+          "receiptSHA256": "c4d0876c2f80a8d43dd400d8e75b7bc13490dd92d45071213bdd947794b2af59",
+          "collectorLinuxLstatMode": "0o755",
+          "adHocChmod": false
+        },
+        "materializedReadySHA256": "6bbc48a476a5329147e4d1192a8f55221902ecc1b337cb1acb42fdab9025f93f",
+        "resourceReceiptSHA256": "ee422413a4fce814e66c1ba8443a575b97db48722c048aba32f7a98ae3780b46",
+        "C11": {
+          "sha256": "36b80320de3f1a108294d2d62d7ab2a96632bef516a0c587d9937ec1338b3b14",
+          "startsAt": 1793973593002,
+          "expiresAt": 1793974793002,
+          "sameKindStandingHumanAuthority": true,
+          "C9NotYetIssued": false
+        },
+        "start": {
+          "jobId": "t45-f35-f16218-start-20261106-01",
+          "state": "COMPLETED",
+          "exitCode": 0,
+          "elapsedSeconds": 37.303467188961804,
+          "safeSHA256": "5a4ed1b717d521a0075332aff9e9bd07c9bd84aea0840c984d0e53c0b123d000",
+          "rawSHA256": "365f566fcf1b647872816080b246b38073b49b24a12891f792ce22096afb951d",
+          "CID": "99d3e16fd399507fcca4a67f4e82d02d81398d1040e59a6cd7f8f8dc73c14013",
+          "SID": "7705058234245836847",
+          "databaseOid": "16393",
+          "postgresVersion": "170011",
+          "postmasterStart": "2026-11-06 14:01:12.551676+00",
+          "programSHA256": "cfb8d4a9dea525a829d55dd0a48be09e9e899a6c0f43ed171fcaa2e95f319595",
+          "targetSHA256": "38a1793997a11906312a3854c88c355420e96b09a3c98b64e491545b7cd189ff"
+        },
+        "C9": {
+          "sha256": "539823ca20d23dbe55ff974e9467536f9eda3dc22f0f2ac27e6bfb6b604dca39",
+          "startsAt": 1793973593002,
+          "expiresAt": 1793974793002,
+          "scope": "Exact new r22 synthetic target only, original install/negative/normal/ordinary/readback/probe/ownedcleanup. No REAL/prod or old-key replay."
         }
       }
     },
@@ -32765,18 +32798,18 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T21:54:55.589577+08:00",
-      "phase": "R22_ACTUAL_FULL_READY_UNIQUE_MATERIALIZATION_RUNNING",
+      "at": "2026-11-06T22:05:16.370648+08:00",
+      "phase": "R22_ACTUAL_NEW_PG_STARTED_C9_INSTALL_AND_ORDINARY_VALIDATION",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 live t45-f35-f16218-local-materialize-20261106-01",
-      "nextOwner": "C fresh C11 after actual material/0755/current resource result",
+      "currentOwner": "Original T45 r22 exact actual install/import/ordinary/cleanup",
+      "nextOwner": "C adopt actual result, dispatch precise failure or next REAL prerequisite",
       "latestActualReceiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": true,
-      "installationRecordPublished": true,
-      "initializationPassed": true,
-      "negativeRollbackConfirmed": true,
+      "schemaInstalled": false,
+      "installationRecordPublished": false,
+      "initializationPassed": false,
+      "negativeRollbackConfirmed": false,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
@@ -32796,8 +32829,8 @@
         "state": "R21_INSTALL_AND_SYNTHETIC_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_NO_REPLAY",
         "receiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa"
       },
-      "syntheticImportPassed": true,
-      "independentSnapshotsPassed": true,
+      "syntheticImportPassed": false,
+      "independentSnapshotsPassed": false,
       "previousCandidateEvidence": {
         "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
         "QBReceiptSHA256": "6bed41316097db897096bb5e3e249602291ecdcd4c0b9351088688b0c07c188d",
