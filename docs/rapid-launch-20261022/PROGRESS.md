@@ -1675,3 +1675,7 @@ T45 readonly02 completed0/0.1173205s, read5716B without truncation after exact i
 ## 2026-11-06T16:28:30+08:00 - Fixed cc9d6472 build passed; exact ordinary staging authorized
 
 Original D2 build0/11.231s and pack0/8.702s passed,453production files/30directories/7298ordinary members verified. D2 RESULT1281210891dddb373197e10b7c3e26af83e910fb050f4e02d2766136da57becc adopted; C checked three metadata pins and actual2471087B tail. Exact original C13 staging window1793953567294..1793955367294 binds actual af9078 base,81224313B prefix,8e8162b6 tail and cf2e58a1 full83695400B. T45 original stage preflight e4fd0c8e passed and preserved r15 stopped/unknown. Staging/materialization only; no PG/REAL/production. New PG authorization follows actual preparation/resource evidence.
+
+## 2026-11-06T16:44:16+08:00 - R16 materialized; bounded new isolated PG start
+
+Original materialization bf96b0b5 completed0/362.762783s; actual resource preflight dca402c4 passed (MemAvailable14340349952B/freeDisk8321622016B). Exact C11 4124c08a binds only new r16 synthetic target and window1793954584607..1793955784607. Original limits and guardian remain. Actual start/physical/program are pending, followed by separate C9 in the same window. No REAL or production; r15 unknown outcome preserved.

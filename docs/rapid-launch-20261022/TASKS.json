@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R16_FIXED_BUILD_PASS_EXACT_ORDINARY_STAGING_IN_PROGRESS_NOT_PG",
+      "critical": "R16_MATERIALIZED_NEW_PG20_START_BOUND",
       "independentPreparation": {
         "D1": "Two-leaf fixed and QB adopted; no further source writes until actual diagnosis.",
         "QB": "Two-leaf 7a27839d PASS adopted; no actual PG claim or repeated check.",
         "D2": "cc9d6472 build0/11.231s pack0/8.702s;453production and7298ordinary proof adopted, actualtail verified; no repeat.",
-        "T45": "Exact C13 staging dispatched, no PG until actual materialization and new C11/C9.",
+        "T45": "T45 exact r16 start then C bind actual program/physical target in same PG20 C9, no extension.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31098,7 +31098,7 @@
         }
       },
       "r16Preparation": {
-        "state": "D2_FIXED_BUILD_PASS_C13_EXACT_STAGING_DISPATCHED_NOT_PG",
+        "state": "MATERIALIZED_RESOURCE_VERIFIED_NEW_PG20_START_BOUND",
         "integration": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
         "buildRoot": "cc9d647202113aa52bddc2e990aeab878277ad89",
         "tree": "c3f9da827a8c0772ed0f9a78d94eb3fb98d1bd09",
@@ -31109,11 +31109,11 @@
           "archiveSHA256": "bc9537fd54e91247ade52a62b2d75a443a80b4659bdc9678dbf87af70f117dc5",
           "bytes": 83696036
         },
-        "actualPG": false,
+        "actualPG": "START_DISPATCHED_NOT_YET_VERIFIED",
         "REAL": false,
         "production": false,
         "reason": "Stopped-r15 finite evidence exhausted without normal error match. Consume independently verified branded diagnostic fix through original new-target isolated path; never replay r15 unknown key.",
-        "next": "Original D2 one full build/member closure and prefix-tail. Original T45 prepare only; exact C13/C11/C9 remain before actual stages.",
+        "next": "T45 exact r16 start then C bind actual program/physical target in same PG20 C9, no extension.",
         "D2ReceiptSHA256": "1281210891dddb373197e10b7c3e26af83e910fb050f4e02d2766136da57becc",
         "buildSeconds": 11.231270375000001,
         "packSeconds": 8.701906707999996,
@@ -31144,7 +31144,23 @@
           83696036,
           1793948655079252857,
           1793948656209247895
-        ]
+        ],
+        "fullActualReady": true,
+        "fullFileIdentity": [
+          66304,
+          393681,
+          83695400,
+          1793953924228739383,
+          1793953925376689924
+        ],
+        "materializationSHA256": "bf96b0b5290f8da82ad899aab0545c7a8f984d6aec7af9546f9649dd6ac95417",
+        "materializationExitCode": 0,
+        "materializationSeconds": 362.762783,
+        "resourceSHA256": "dca402c4afeb743c8abf38984d3a216e83fcb805d77a98f885c96ed55614d04a",
+        "materializedReadySHA256": "5ce7397192c0c21d33acb60bdf79059ea4c55e8d366b96e6c170c68b6eefee76",
+        "provisionSHA256": "4124c08a2ac0ad23f35eb184b031e20e89f189a685816972aef9f25358fce0ba",
+        "provisionStartsAt": 1793954584607,
+        "provisionExpiresAt": 1793955784607
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31553,12 +31569,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T16:28:30+08:00",
-      "phase": "R16_FIXED_BUILD_PASS_EXACT_ORDINARY_STAGING_IN_PROGRESS_NOT_PG",
+      "at": "2026-11-06T16:44:16+08:00",
+      "phase": "R16_MATERIALIZED_NEW_PG20_START_BOUND",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "T45 sole ordinary staging/materialization",
-      "nextOwner": "C bind fresh PG20 after actual materialization and resource readback",
+      "currentOwner": "T45 exact new r16 isolated start",
+      "nextOwner": "C actual target/program C9 same deadline",
       "latestActualReceiptSHA256": "7cb680c311d29111bd3168683796489f488880fc371d8e94459ef0ebbf2b29ce",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
