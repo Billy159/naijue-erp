@@ -28509,10 +28509,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "C activated3 exact leaf writer; LOGIN/role storage split, CONNECT and USAGE finite counterexamples; no DB ACL changes",
-      "QB": "Wait fixed combined r25 source, no repeat prior QA",
-      "D2": "No new build; wait exact combined delivery and original QB",
-      "T45": "Cleanup observation2 leaves delivered14804377 and frozen; no new server jobs",
+      "D1": "Three leaves delivered frozen d8a9ba1f, no new work absent actual finding",
+      "QB": "Fixed sourcef6d73/root399d8594 exact5-leaf incremental review in progress",
+      "D2": "Await scoped QB pass before one build399d8594",
+      "T45": "Original local-only r25 stage successor prep with unknown actual build pins UNBOUND",
       "D3": "REAL package and independent readback ready, waits exact target",
       "QF": "Core browser prerequisites ready, waits actual normal host/login"
     },
@@ -32784,7 +32784,7 @@
         }
       },
       "r25Preparation": {
-        "state": "SOURCE_IN_PROGRESS_NOT_QA_OR_BUILT",
+        "state": "R25_COMBINED_FIXED_SOURCE_ORIGINAL_QB_SCOPED_REVIEW",
         "D1Scope": "apps/api/src/capacity-runtime-probe.ts, apps/api/src/postgres-read-api.ts, tests/capacity-runtime-probe.test.ts",
         "technicalFinding": "Current NOINHERIT LOGIN lacks schema USAGE for regclass; runtime role lacks DB CONNECT for pg_database_size, so split reads under existing privileges within same transaction required. Source model proves candidate defect, not unique actual r24 rootcause.",
         "T45ReceiptSHA256": "148043779e584a5004135571f32b3acc6f86d3b8d9beea8ac7cf9f27bc44549f",
@@ -32795,7 +32795,15 @@
         },
         "newDBPermissions": false,
         "newPG": false,
-        "oldKeysReplay": false
+        "oldKeysReplay": false,
+        "sourceCommit": "f6d73b388e0184e16609d62d3f7b9512ae85c8e6",
+        "buildRoot": "399d85945f2fe3afcc5985668b8aa6cb6fc98c48",
+        "tree": "4fa366d57ddd5f814d6bdcc783d4c114d637f8f0",
+        "D1ReceiptSHA256": "d8a9ba1f4e923cacd1d95a40bcfde9a4bf50d9d591987aa20a0f4068e93d1219",
+        "D1AuthorTests": "16/16 finite and exact3-root dependency noEmit0diagnostics; no PG",
+        "sourceSetSHA256": "UNBOUND",
+        "QB": "Original scoped5-leaf review in progress; existing evidence reused",
+        "T45": "Local-only next ops successor preparation, no server jobs"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -33230,28 +33238,28 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T00:31:35.567998+08:00",
-      "phase": "R25_CAPACITY_ROLE_SEAM_FIX_IN_PROGRESS_CLEANUP_OBSERVATION_DELIVERED",
+      "at": "2026-11-07T00:44:57.143016+08:00",
+      "phase": "R25_COMBINED_FIXED_SOURCE_ORIGINAL_QB_SCOPED_REVIEW",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original D1 exact3 TypeScript leaves; original T45 two Python leaves delivered frozen",
-      "nextOwner": "C freeze combined source then original QB scoped increment",
+      "currentOwner": "Original QB five affected leaves independently; T45 local-only next ops preparation",
+      "nextOwner": "Original D2 one fixed build only after scoped QB pass",
       "latestActualReceiptSHA256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": true,
-      "installationRecordPublished": true,
-      "initializationPassed": true,
-      "negativeRollbackConfirmed": true,
+      "schemaInstalled": false,
+      "installationRecordPublished": false,
+      "initializationPassed": false,
+      "negativeRollbackConfirmed": false,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Same existing owned pool/readonly transaction: LOGIN database_bytes, genuine Fresh35 cap-bound runtime-role table storage, preserve legacy branch and all capacity guards; no new PG/build until delivery +QA.",
+      "next": "Adopt exact scoped source result, then one combined build. No new PG/REAL/formal yet.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
-      "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
-      "buildRoot": "9315643006a574986abacf5bba631e7c34cf23f1",
-      "tree": "29d3fc11e0da9b9cc8c0905082c846a80f51c222",
-      "sourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_DIAGNOSTIC",
-      "buildPassed": true,
+      "sourceCommit": "f6d73b388e0184e16609d62d3f7b9512ae85c8e6",
+      "buildRoot": "399d85945f2fe3afcc5985668b8aa6cb6fc98c48",
+      "tree": "4fa366d57ddd5f814d6bdcc783d4c114d637f8f0",
+      "sourceQA": "PENDING_ORIGINAL_QB",
+      "buildPassed": false,
       "latestAuthorSourceCommit": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
@@ -33266,29 +33274,28 @@
         "realImported": false,
         "productionDeployed": false
       },
-      "syntheticImportPassed": true,
-      "independentSnapshotsPassed": true,
+      "syntheticImportPassed": false,
+      "independentSnapshotsPassed": false,
       "previousCandidateEvidence": {
-        "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
-        "QBReceiptSHA256": "6bed41316097db897096bb5e3e249602291ecdcd4c0b9351088688b0c07c188d",
-        "D2ReceiptSHA256": "8ac3424ec7c971d8f6f6dbd926766102cec3e91690eb3c1321088039d470baf4",
-        "githubSourceAndRootReadback": true
+        "root": "9315643006a574986abacf5bba631e7c34cf23f1",
+        "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
+        "sourceSetSHA256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+        "QBAppReceiptSHA256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
+        "D2ReceiptSHA256": "619445a4e8197ad99c4cfba5579e1f38254da6bd568b4dfb4525339d9907ebd2",
+        "actualSafeSHA256": "81b79340fa4d962a34e0faae884a8fb43e695c617abf0bf70935059b836f01f4"
       },
-      "githubSourceAndRootReadback": true,
-      "sourceSetSHA256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
-      "QBReceiptSHA256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
-      "D2ReceiptSHA256": "619445a4e8197ad99c4cfba5579e1f38254da6bd568b4dfb4525339d9907ebd2",
+      "githubSourceAndRootReadback": false,
+      "sourceSetSHA256": "UNBOUND_UNTIL_ACTUAL_BUILD_LOADER",
+      "QBReceiptSHA256": null,
+      "D2ReceiptSHA256": null,
       "currentCandidateActualRuntime": {
-        "state": "R24_INSTALL_SYNTHETIC_PASS_ORDINARY_CAPACITY_PREFLIGHT_FAILED_STOPPED",
+        "state": "NOT_BUILT_OR_EXECUTED",
         "ordinaryBusinessPassed": false,
         "realImported": false,
-        "productionDeployed": false,
-        "containerStopped": true,
-        "cleanupComplete": false,
-        "portAbsent": false
+        "productionDeployed": false
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
-      "githubReadbackCommit": "5adf73d1abd48672028b86a9b7fd0128df520566"
+      "githubReadbackCommit": "PENDING_NEW_SOURCE_PUSH"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",

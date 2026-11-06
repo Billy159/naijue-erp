@@ -2079,3 +2079,10 @@ C依据原用户同类隔离免重复审批授权，独立签发新30分钟C13�
 D1有限模型证实当前NOINHERIT LOGIN下schemaUSAGE缺失会拒绝regclass定位；进一步核PG17数据库容量函数需要CONNECT，而接口角色未获CONNECT，最初5例未覆盖这一限制，原有限证据保留并明确局限。C激活仅3TS叶：真实Fresh35 cap+原ownedPool绑定，LOGIN先读database_bytes，原接口角色只读relation/index/total，同RR readonly事务及ROLLBACK恢复，旧legacy分支不变；原权限/预算/窗口/新鲜事实/未知拒绝不改。该源码缺陷尚不能称r24唯一实测根因。
 
 T45两Python叶有限端口观察交付14804377/13例PASS，原任意匹配TCP行仍失败、不重采样、不延时或权限变化；源187b6e1a/测试34c29ec3冻结。与D1修复合批后原QB增量验收，不单独启动PG取日志。真实数据和生产未动。
+
+
+## 2026-11-07T00:44:57.143016+08:00 — r25五叶组合冻结，原QB独立验收
+
+固定source f6d73b388e0184e16609d62d3f7b9512ae85c8e6，build-root399d85945f2fe3afcc5985668b8aa6cb6fc98c48，tree4fa366d57ddd5f814d6bdcc783d4c114d637f8f0。D1三叶交付d8a9ba1f，最终16/16定向无skip、三根实际依赖noEmit0diagnostics；原T45两叶14804377/13例采用。五叶唯一writer均交还，原QB仅受影响增量，已有检查复用。
+
+新候选尚未构建或PG执行，r24安装及合成PASS不能记到r25；实际loader sourceSet/制品保持UNBOUND。T45仅并行本地新stage后继准备，不启动服务/传输/PG；QB通过后原D2才做一次组合构建。未启动REAL或正式操作。
