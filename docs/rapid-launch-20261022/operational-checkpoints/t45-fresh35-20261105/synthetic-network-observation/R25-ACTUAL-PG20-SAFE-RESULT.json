@@ -1,0 +1,145 @@
+{
+  "status": "FAILED_ADMIN_ACCOUNT_SETUP_HTTP500_AND_STRICT_PORT_CLEANUP_INCOMPLETE_NO_REPLAY",
+  "jobId": "t45-f35-56fb33-install-20261107-01",
+  "jobStatus": "FAILED",
+  "exitCode": 2,
+  "elapsedSeconds": 156.06937960768119,
+  "finishedAtAsiaShanghai": "2026-11-07T01:42:33.941662+08:00",
+  "receipts": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-install-20261107-01/transport/release-receipts/t45-f35-56fb33-install-20261107-01/job.json",
+      "sha256": "9832fe8559b0d2f9daf90d4ab4d1849dddf3e7c12d7fc8168217cbf8209d09b3"
+    },
+    "fresh35-deliver-install-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-install-20261107-01/transport/release-receipts/t45-f35-56fb33-install-20261107-01/fresh35-deliver-install-result.json",
+      "sha256": "aa6ac4e364c5056872d7e799a1782c65858bdbb6107c7a73543d800c4b612717"
+    }
+  },
+  "sourceSetSha256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+  "programSha256": "5f5fc9bbaaee53cdf659f0d6d9134b1ea94f94f289a9b264049e615a549d4441",
+  "targetSha256": "c1d54014cee9faf8ce2651b67cc6d8ffa68254fb444491d0d7ede1fe1b789685",
+  "C9Sha256": "c64a6ff8e370539369f22baefbbc50abaab5f5ad2adc6593758f07b099799da5",
+  "installation": {
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "recordPublished": true,
+    "hostEnabled": false,
+    "businessVerified": false
+  },
+  "syntheticNormal": {
+    "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+    "importState": "COMMITTED",
+    "replayState": "ALREADY_COMMITTED",
+    "readbackState": "VERIFIED",
+    "retainedHeaders": 25,
+    "retainedSettlements": 27,
+    "connectionCleanup": "CLOSED"
+  },
+  "syntheticRollback": {
+    "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+    "rollbackVerified": true,
+    "originalBatchAbsent": true,
+    "connectionCleanup": "CLOSED"
+  },
+  "snapshots": {
+    "installMatchesRollback": true,
+    "commitDiffersFromInstall": true,
+    "allConnectionsClosed": true
+  },
+  "ordinaryFailure": {
+    "automaticRetry": false,
+    "childDiagnosticUnavailable": false,
+    "childFailure": {
+      "actualInteger": 500,
+      "errno": null,
+      "errorType": "AssertionError",
+      "expectedInteger": 200,
+      "format": "FRESH35_ORDINARY_FAILURE_V1",
+      "guardCode": "ERR_ASSERTION",
+      "phase": "REAL_ADMIN_ACCOUNT_SETUP",
+      "source": "runFresh35OrdinaryIntegration:catch",
+      "sqlstate": null
+    },
+    "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+    "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+    "phase": "REAL_PG_AND_MIDDLEWARE",
+    "state": "FAILED_OR_OUTCOME_UNKNOWN"
+  },
+  "ordinaryBusinessVerified": false,
+  "containerStopped": true,
+  "launcherExitCode": 1,
+  "ordinaryChildReaped": true,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": false,
+    "credentialsRemoved": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    },
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": false,
+    "portObservation": {
+      "complete": true,
+      "finishedAtUTC": "2026-11-06T17:42:31.439802+00:00",
+      "format": "FRESH35_CLEANUP_PORT_OBSERVATION_V1",
+      "matchingRows": 4,
+      "matchingStates": {
+        "tcp": {
+          "01": 0,
+          "02": 0,
+          "03": 0,
+          "04": 0,
+          "05": 0,
+          "06": 4,
+          "07": 0,
+          "08": 0,
+          "09": 0,
+          "0A": 0,
+          "0B": 0,
+          "0C": 0,
+          "UNKNOWN": 0
+        },
+        "tcp6": {
+          "01": 0,
+          "02": 0,
+          "03": 0,
+          "04": 0,
+          "05": 0,
+          "06": 0,
+          "07": 0,
+          "08": 0,
+          "09": 0,
+          "0A": 0,
+          "0B": 0,
+          "0C": 0,
+          "UNKNOWN": 0
+        }
+      },
+      "namespace": {
+        "device": 4,
+        "inode": 4026533833
+      },
+      "portAbsent": false,
+      "readError": null,
+      "reading": null,
+      "stage": "AFTER_OWNED_PG_WAIT_AND_CREDENTIAL_CLEANUP_BEFORE_CONTAINER_STOP",
+      "startedAtUTC": "2026-11-06T17:42:31.438309+00:00"
+    }
+  },
+  "ordinaryProofEvidence": {},
+  "capacityConclusion": "Retained failure phase progressed beyond REAL_CAPACITY_PREFLIGHT to REAL_ADMIN_ACCOUNT_SETUP; no standalone capacity/performance acceptance claimed",
+  "rootCause": "UNKNOWN; branded assertion expected200/actual500, SQLSTATE/errno null; response body/raw logs not exported",
+  "TCPInterpretation": "One pre-container-stop sample only: tcp06=4, tcp0A=0, tcp6 all0, UNKNOWN0. No claim about earlier r23/r24 TCP states or later port absence; existing all-matching-rows failure rule unchanged.",
+  "frozenSevenFilesUnchanged": true,
+  "oldKeysReplayed": false,
+  "REALOrFormalChanges": false,
+  "businessAcceptance": false,
+  "actualModelEffortFast": "UNVERIFIED",
+  "nextStep": "Original C/D1 bounded source diagnosis of precise admin setup failure. No new job or poststop sampling authorized by this report."
+}

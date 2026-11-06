@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T17:35:22.139582+00:00",
+  "updatedAt": "2026-11-06T17:47:15.498423+00:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28509,10 +28509,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Frozen, exact source already independently accepted",
-      "QB": "Final precise ops binding PASS cd4b69cd adopted; no repeat",
-      "D2": "Build56fb33ed +package/tail delivered1c7f54f9; frozen, no repeat or new build",
-      "T45": "C13 exact56fb tail/full issued after real readonly; stage+material only, no PG yet",
+      "D1": "Precise admin setup500 source diagnosis, awaiting exact write leaves",
+      "QB": "Valid r25 source/ops evidence adopted; await only actual changed leaves",
+      "D2": "Fixed56fb build retained; no new build until exact source repair independently accepted",
+      "T45": "Stopped r25; existing port state semantics readonly source assessment only, no new target or replay",
       "D3": "REAL package and independent readback ready, waits exact target",
       "QF": "Core browser prerequisites ready, waits actual normal host/login"
     },
@@ -33302,22 +33302,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T17:39:17.037823+00:00",
-      "phase": "R25_ACTUAL_NEW_TARGET_STARTED_C9_ISSUED",
+      "at": "2026-11-06T17:47:15.498423+00:00",
+      "phase": "R25_INSTALLED_SYNTHETIC_PASS_ADMIN_ACCOUNT_SETUP_HTTP500_STOPPED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 actual install and ordinary chain in same C11 window",
-      "nextOwner": "C receives precise terminal; original owner targeted fix only on real new failure",
-      "latestActualReceiptSHA256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
+      "currentOwner": "Original D1 precise admin setup HTTP500 source diagnosis; no server replay",
+      "nextOwner": "C exact ownership activation then original QB narrow changed scope",
+      "latestActualReceiptSHA256": "aa6ac4e364c5056872d7e799a1782c65858bdbb6107c7a73543d800c4b612717",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": false,
-      "installationRecordPublished": false,
-      "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
+      "initializationPassed": true,
+      "negativeRollbackConfirmed": true,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Actual install+synthetic25/27+ordinary chain, exact current target only; preserve all terminal failures and cleanup observations",
+      "next": "Locate exact admin request failure without weakening authority; original T45 readonly evaluates TIME_WAIT cleanup semantics on already retained evidence, no new server sampling",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "753574ccb4178a740f31e5c82441e5c4462a9535",
       "buildRoot": "56fb33edf7d2a7953df9cd013592b63c0e53bab3",
@@ -33328,18 +33328,21 @@
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
       "latestActualRuntime": {
-        "root": "9315643006a574986abacf5bba631e7c34cf23f1",
-        "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
-        "sourceSetSHA256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
-        "state": "R24_INSTALL_SYNTHETIC_PASS_ORDINARY_CAPACITY_PREFLIGHT_FAILED_STOPPED",
-        "receiptSHA256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
-        "safeSHA256": "81b79340fa4d962a34e0faae884a8fb43e695c617abf0bf70935059b836f01f4",
+        "root": "56fb33edf7d2a7953df9cd013592b63c0e53bab3",
+        "sourceCommit": "753574ccb4178a740f31e5c82441e5c4462a9535",
+        "sourceSetSHA256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+        "state": "ACTUAL_INSTALL_AND_SYNTHETIC_PASS_ORDINARY_ADMIN_SETUP_FAILED",
+        "safeSHA256": "941f4bb7f758f4489c8362718ce13dd9cecebf151ca5948d5524630316d474fe",
         "ordinaryBusinessPassed": false,
         "realImported": false,
-        "productionDeployed": false
+        "productionDeployed": false,
+        "containerStopped": true,
+        "cleanupComplete": false,
+        "portObservation": "single sample tcp06TIME_WAIT4; all other states0; does not prove later absence",
+        "receiptSHA256": "aa6ac4e364c5056872d7e799a1782c65858bdbb6107c7a73543d800c4b612717"
       },
-      "syntheticImportPassed": false,
-      "independentSnapshotsPassed": false,
+      "syntheticImportPassed": true,
+      "independentSnapshotsPassed": true,
       "previousCandidateEvidence": {
         "root": "9315643006a574986abacf5bba631e7c34cf23f1",
         "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
@@ -33353,10 +33356,14 @@
       "QBReceiptSHA256": "843048ff3c30766cd69cd732212c07368ac4d83192e69e7a65918259a950193d",
       "D2ReceiptSHA256": "1c7f54f9354faa5c61ddae43e4366eb15b1ed91fa3acaa3f3cd89bdd120707e6",
       "currentCandidateActualRuntime": {
-        "state": "BUILD_AND_PACK_PASS_NO_NEW_R25_PG",
+        "state": "ACTUAL_INSTALL_AND_SYNTHETIC_PASS_ORDINARY_ADMIN_SETUP_FAILED",
+        "safeSHA256": "941f4bb7f758f4489c8362718ce13dd9cecebf151ca5948d5524630316d474fe",
         "ordinaryBusinessPassed": false,
         "realImported": false,
-        "productionDeployed": false
+        "productionDeployed": false,
+        "containerStopped": true,
+        "cleanupComplete": false,
+        "portObservation": "single sample tcp06TIME_WAIT4; all other states0; does not prove later absence"
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
       "githubReadbackCommit": "9cf2cf045ace7be3b1e1567613070127b3647d83",
@@ -33396,6 +33403,19 @@
       "opsQBReceiptSHA256": "cd4b69cd38ec7b9956fa3b6b99ec7482ea4888eeaccde4605eb99a1b8c4b4f5a",
       "stageReadonlySHA256": "aa026f80ebc328bf1db9a8318eaa867ec6936cac66cbb275fe4fa9ca89c9b5c7",
       "C13ExpiresAt": 1793987506483
-    }
+    },
+    "actualRuntimeHistory": [
+      {
+        "root": "9315643006a574986abacf5bba631e7c34cf23f1",
+        "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
+        "sourceSetSHA256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+        "state": "R24_INSTALL_SYNTHETIC_PASS_ORDINARY_CAPACITY_PREFLIGHT_FAILED_STOPPED",
+        "receiptSHA256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
+        "safeSHA256": "81b79340fa4d962a34e0faae884a8fb43e695c617abf0bf70935059b836f01f4",
+        "ordinaryBusinessPassed": false,
+        "realImported": false,
+        "productionDeployed": false
+      }
+    ]
   }
 }

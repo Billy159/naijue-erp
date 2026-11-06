@@ -2115,3 +2115,6 @@ T45接唯一local ops实际绑定，把真实最终pins与恢复的private65ed0d
 
 
 2026-11-07 r25安装材料：原receiver58ccbfd5完整READY；材料d1a1c0e1退出0/371.394秒、实际collector0755，当前facts3d06d7f8于01:33核新CID/四启动文件均缺席。C已签独立C11 64ae40b1，原20分钟，T45唯一启动准确新目标；收到实际物理身份再签同截止C9，不重放r24。GitHub已回读integration9cf2cf045ace7be3b1e1567613070127b3647d83/root56fb33edf7d2a7953df9cd013592b63c0e53bab3。普通账号、REAL、正式尚未通过。
+
+
+2026-11-07 r25真实终态：install唯一键FAILED2/156.069秒；安装记录已发布，合成25头27结算提交/防重/新连接读回、失败回滚及独立快照通过。普通链越过capacity preflight，在REAL_ADMIN_ACCOUNT_SETUP期望200实际500，具体请求/根因UNKNOWN；原D1定向定位，不重放旧键。safe941f4bb7/rawaa6ac4e3保留。新有限TCP观察同次停止前仅4条06TIME_WAIT、其余状态0；原六项cleanup仍四真两假，未改PASS，容器和child已停。原T45只读评估清理语义接缝，不新增服务器操作；REAL和正式仍未执行。
