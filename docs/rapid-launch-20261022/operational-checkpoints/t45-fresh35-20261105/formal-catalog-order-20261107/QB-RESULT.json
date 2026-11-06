@@ -1,0 +1,22 @@
+{
+  "status": "PASS_SCOPED_FORMAL_CATALOG_ACL_ORDER_SOURCE",
+  "handoffSha256": "58921963b258b30dccf99e763af17a88c8cb6e2935c3f58039b4d583ae6b5193",
+  "parentSha256": "0fa9f8cceafc60a0790a07b4566e3c344b57c3c9c82b9fcff2bc7a3c63b9c9bf",
+  "sourceSha256": "3847364e935754e7d0e55a6adb5daf7cc77ac332aaf441ba835648e25c94c44c",
+  "bytes": 39791,
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": "CHECKS.json; pure actual remap finite Node24 cases, outside-remap bytes identical, exact parent/source metadata",
+  "author4": "red/green and genuine oldaf75/e250 source reconstruction adopted, not rerun",
+  "originalR26Evidence": "effective existing PG/business scope reused, not rerun",
+  "diagnostic": "typed7f50 actual RAISE matched; per-routine actual metadata unobserved, cannot establish absence of other issues",
+  "optionalRestore": "EXCLUDED",
+  "actualSuccessorPGInstall": "NOT_TESTED",
+  "genuineNewRootSourceSetProgramBuildPack": "NOT_DERIVED_OR_RUN",
+  "oldR2": "No restart/replay, original failure preserved",
+  "server": "NOT_ACCESSED",
+  "formalBusinessAcceptance": false,
+  "requestedModel": "gpt-6.1-sol/high",
+  "actualModel": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}

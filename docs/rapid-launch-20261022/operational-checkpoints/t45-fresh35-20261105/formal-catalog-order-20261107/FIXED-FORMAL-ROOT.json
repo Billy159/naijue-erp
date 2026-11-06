@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-07T07:22:34.511026+08:00",
+  "state": "FIXED_FORMAL_SOURCE_ROOT_ONE_LEAF_NOT_BUILD_OR_PG_PASS",
+  "branch": "codex/erp-0448z-formal-catalog-root-20261107",
+  "commit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+  "tree": "67b383c24d3ab66a74f252af9afc3e8dc810ec7c",
+  "parent": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+  "onlyChangedPath": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+  "parentFileSha256": "0fa9f8cceafc60a0790a07b4566e3c344b57c3c9c82b9fcff2bc7a3c63b9c9bf",
+  "fileSha256": "3847364e935754e7d0e55a6adb5daf7cc77ac332aaf441ba835648e25c94c44c",
+  "D1HandoffSha256": "58921963b258b30dccf99e763af17a88c8cb6e2935c3f58039b4d583ae6b5193",
+  "QBResultSha256": "93c32470c7653c10af315a4f203a6b734a782108a3101938370beba33c1d4b11",
+  "mainWIPOverwritten": false,
+  "restoreOnlyMixed": false,
+  "actualBuild": "NOT_RUN",
+  "actualPG": "NOT_RUN",
+  "remoteVerified": true
+}

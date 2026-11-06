@@ -1,0 +1,20 @@
+[
+  {
+    "branch": "FORMAL_10FC_SUCCESSOR",
+    "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "parentSha256": "0fa9f8cceafc60a0790a07b4566e3c344b57c3c9c82b9fcff2bc7a3c63b9c9bf",
+    "sha256": "3847364e935754e7d0e55a6adb5daf7cc77ac332aaf441ba835648e25c94c44c",
+    "bytes": 39791,
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/CATALOG-ACL-ORDER-SOURCE-01/formal/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "patch": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/CATALOG-ACL-ORDER-SOURCE-01/formal/source.patch"
+  },
+  {
+    "branch": "OPTIONAL_RESTORE_ONLY_SUCCESSOR",
+    "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "parentSha256": "ba455bb0e07f14c0fa598931834b0f7b682d78fcc6237225e5fadba940b5913f",
+    "sha256": "36862013f0e0b426c7d4a906e4ef26c7ce166018648829424caba60e11f282b5",
+    "bytes": 40740,
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/CATALOG-ACL-ORDER-SOURCE-01/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "patch": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/CATALOG-ACL-ORDER-SOURCE-01/restore-only.patch"
+  }
+]

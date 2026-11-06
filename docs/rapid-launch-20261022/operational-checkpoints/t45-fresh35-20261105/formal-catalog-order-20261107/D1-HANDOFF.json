@@ -1,0 +1,78 @@
+{
+  "task": "CATALOG-ACL-ORDER-SOURCE-01",
+  "state": "FORMAL_ONE_LEAF_SOURCE_FIX_READY_FOR_ORIGINAL_QB_INCREMENTAL_REVIEW",
+  "atUtc": "2026-11-06T23:18:50.125637+00:00",
+  "requestedModel": "gpt-6.1-sol/high",
+  "actualModel": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "primaryScope": "Formal successor from fixed original10fc root; only remap ACL canonical ordering. No restore-only functions in formal leaf. Independent optional restore-only leaf retains its existing ba455 changes.",
+  "leaves": [
+    {
+      "branch": "FORMAL_10FC_SUCCESSOR",
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "parentSha256": "0fa9f8cceafc60a0790a07b4566e3c344b57c3c9c82b9fcff2bc7a3c63b9c9bf",
+      "sha256": "3847364e935754e7d0e55a6adb5daf7cc77ac332aaf441ba835648e25c94c44c",
+      "bytes": 39791,
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/CATALOG-ACL-ORDER-SOURCE-01/formal/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "patch": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/CATALOG-ACL-ORDER-SOURCE-01/formal/source.patch"
+    },
+    {
+      "branch": "OPTIONAL_RESTORE_ONLY_SUCCESSOR",
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "parentSha256": "ba455bb0e07f14c0fa598931834b0f7b682d78fcc6237225e5fadba940b5913f",
+      "sha256": "36862013f0e0b426c7d4a906e4ef26c7ce166018648829424caba60e11f282b5",
+      "bytes": 40740,
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/CATALOG-ACL-ORDER-SOURCE-01/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "patch": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/CATALOG-ACL-ORDER-SOURCE-01/restore-only.patch"
+    }
+  ],
+  "originalBinding": {
+    "root": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+    "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+    "programSha256": "e250f69af5c9a0ce945288f47da2da4599d2619205c3b4cd66822a2cc2ec8041",
+    "targetSha256": "6f4cf96e6791ae445c94ff5806e4d66e206033494bf56e724e864fcce8dbb006",
+    "systemIdentifier": "7705197122612510756",
+    "resultSha256": "6ff956b729d3a2977c8fc7f595e1a443876153ec9611d0abb1635ca415b6b54b"
+  },
+  "observedDiagnostic": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-r2-install-failure-01/t45-prod35-r2-saved-diagnostic-20261107-01/saved-catalog-diagnostic.json",
+    "sha256": "7f50bd54be898e382bec6ed007e5a6abe82ac39215d19623aa2abfa6e8469abb",
+    "guardCode": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS",
+    "SQLSTATE": "P0001",
+    "DOBlockLine": 43,
+    "meaning": "Original saved PostgreSQL error whitelist from T45; DO block line is not source file line. Specific actual routine and attribute remain unexported. No r2 restart or probe."
+  },
+  "confirmedSourceDefect": "Genuine original source loader/catalog/compiler with actual r2 target recreates exact af75/e250. In this exact program, remap renames fresh35 owner/controller to erp35 while retaining predecessor ACL array order, but guard aclSql orders actual ACL by COLLATE C. 54 expected ACL arrays therefore cannot equal the SQL-ordered corresponding arrays. First contradictory expected routine is routines[4]; schema and other object ACLs also affected. Reported actual RAISE is the same routine source/ACL guard. This proves a necessary source fix and matches the observed guard; without actual per-routine catalog values it does not establish absence of other issues.",
+  "fix": "Only canonicalize each mapped object acl array using lexical ASCII/C order after remapping. Original ASCII identifier policy makes comparison match SQL C byte ordering. Keep all principals/privileges/grantors, all non-ACL fields, strict full SQL guard and metadata/body/definition checks. No grants, privilege expansion, directory-policy changes or swallowed errors.",
+  "r26Evidence": "Original QB actual10fc r26 scoped PG/synthetic/ordinary/cleanup PASS reused, not rerun. Original/synthetic fresh35 role names retain their order relative to fixed erp_unified interface roles; changed production erp35 ordering is the affected difference, not evidence of r26 failure.",
+  "localVerification": {
+    "testFile": "acl-order.test.mjs",
+    "exactFailedProgramReconstructed": true,
+    "deterministicParentRed": {
+      "exitCode": 1,
+      "output": "parent-red.txt",
+      "meaning": "Original identical remap predicate fails exact production model ordering expectations."
+    },
+    "formalSuccessorGreen": {
+      "exitCode": 0,
+      "tests": 4,
+      "passed": 4,
+      "skipped": 0,
+      "meaning": "Exact formal parent/source remap; ordering corrected, all ACL contents/non-ACL metadata preserved, corrupted privilege remains distinguishable, unchanged synthetic order, full SQL guard/source tail byte-identical."
+    },
+    "optionalRestoreGreen": "Original local same 4 cases before primary formal leaf switch; exact same remap delta, no PG or build.",
+    "fullClosureOrR26BusinessRerun": false
+  },
+  "notTested": [
+    "PostgreSQL execution of successor generated SQL",
+    "new genuine formal root/sourceSet/program/build/pack",
+    "new target install/import/ordinary app or real data acceptance"
+  ],
+  "preservation": [
+    "Frozen10fc/sourceSetaf75 and failed r2 unchanged; no publication or retained service on r2; stopped target never restarted/replayed",
+    "Main T45 four-leaf formal caller work/fdd990/bb0 untouched",
+    "Main/source/restore modules and root contracts not written; only this independent partial snapshot",
+    "No server or PG connection, no new target, no full business re-run"
+  ],
+  "next": "C gives original QB the formal 0fa9->3847364e one-leaf delta and precise red/green evidence, reusing previous business PASS. After fixed source adoption, original D2 builds only actual new formal root starting10fc plus approved changes; rederive genuine sourceSet/program and use a separately authorized new target, never failed r2 replay. Do not use a801/restore branch as formal root or overwrite T45 caller leaves. Original T45 actual PG verification remains necessary."
+}

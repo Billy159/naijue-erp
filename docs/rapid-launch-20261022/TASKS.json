@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T07:19:12.142667+08:00",
+  "updatedAt": "2026-11-07T07:25:22.247050+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T07:19:12.142667+08:00",
-      "phase": "ACTUAL_R2_INSTALL_ROLLED_BACK_CLEANLY_STOPPED_CATALOG_GENERATION_DEFECT_REPAIR",
+      "at": "2026-11-07T07:25:22.247050+08:00",
+      "phase": "CATALOG_ORDER_SOURCE_ADOPTED_NEW_FORMAL_BUILD_IN_PROGRESS",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 sole server execution",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original D1 exact formal10fc catalog-only remap ACL ordering repair -> originalQB delta -> originalD2 genuine fixedroot/build; T45 prepare bounded exact material reuse without extra1GB copy. No r2 replay.",
+      "next": "OriginalD2 genuine3b82 sourceSet/manifest/build/pack; T45 exact readonlyRAW ops delta, originalQB only that increment. Then new exacttarget installation; failedr2 never replayed.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33814,7 +33814,7 @@
       },
       "integrationCheckpoint": {
         "branch": "codex/erp-0448z-integration-20261105",
-        "remoteVerifiedSHA": "bb0ecad0a72082452a494ac58f583515f02f1198",
+        "remoteVerifiedSHA": "4ae67b01560fe5e65f1e00440f044b718f8e4558",
         "buildRootRemoteVerifiedSHA": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
         "uncommittedOwner": "Only C current operational records; caches/logs preserved"
       },
@@ -34018,7 +34018,7 @@
         "receiptAdoption": "C actual readback adopted current material and no-owned-copy-process facts; original copy FAILED preserved",
         "PGStarted": true,
         "C14Issued": true,
-        "next": "Original D1 exact formal10fc catalog-only remap ACL ordering repair -> originalQB delta -> originalD2 genuine fixedroot/build; T45 prepare bounded exact material reuse without extra1GB copy. No r2 replay.",
+        "next": "OriginalD2 genuine3b82 sourceSet/manifest/build/pack; T45 exact readonlyRAW ops delta, originalQB only that increment. Then new exacttarget installation; failedr2 never replayed.",
         "actualReadinessSHA256": "59b33e6161b5ddf03e9dd0e8a2917d8d1ec0d5e7854ba8bea1ffd6191d2d814a",
         "actualReadbackSHA256": "2a97f3555a37a4319d5b82fa9f0c9e2f6c738d20699805d84df6e6aa574b7acb",
         "pastParentWaitReapProven": false,
@@ -34134,6 +34134,29 @@
         "actualDeploymentApproval": "NOT_ISSUED_BY_SOURCE_ADOPTION",
         "actualBackupRestore": "NOT_TESTED",
         "formal10fcSourceUnchanged": true
+      },
+      "formalCatalogSourceSuccessor": {
+        "at": "2026-11-07T07:22:34.511026+08:00",
+        "state": "FIXED_FORMAL_SOURCE_ROOT_ONE_LEAF_NOT_BUILD_OR_PG_PASS",
+        "branch": "codex/erp-0448z-formal-catalog-root-20261107",
+        "commit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+        "tree": "67b383c24d3ab66a74f252af9afc3e8dc810ec7c",
+        "parent": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+        "onlyChangedPath": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "parentFileSha256": "0fa9f8cceafc60a0790a07b4566e3c344b57c3c9c82b9fcff2bc7a3c63b9c9bf",
+        "fileSha256": "3847364e935754e7d0e55a6adb5daf7cc77ac332aaf441ba835648e25c94c44c",
+        "D1HandoffSha256": "58921963b258b30dccf99e763af17a88c8cb6e2935c3f58039b4d583ae6b5193",
+        "QBResultSha256": "93c32470c7653c10af315a4f203a6b734a782108a3101938370beba33c1d4b11",
+        "mainWIPOverwritten": false,
+        "restoreOnlyMixed": false,
+        "actualBuild": "IN_PROGRESS_NOT_PASS",
+        "actualPG": "NOT_RUN",
+        "remoteVerified": true,
+        "mainAdoptionReceiptSha256": "188b27f7555aac4ea7791fc2d3d8cdd8ae7b3e0fc4afcae605a1ed172e45f5fb",
+        "currentOwner": "Original D2 actual newformal build and pack; originalT45 accurate readonly package bind source",
+        "sourceSetSha256": null,
+        "actualPGInstall": "NOT_TESTED",
+        "optionalRestoreLeaf": "EXCLUDED"
       }
     }
   }
