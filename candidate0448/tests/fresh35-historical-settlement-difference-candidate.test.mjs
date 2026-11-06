@@ -12,11 +12,33 @@ test('current successor groups the hall approval CASE inside the PLpgSQL IF with
  const fix=spec.replacements.find(r=>r.before.startsWith("OR hall_approval->>'format_version' IS DISTINCT FROM CASE WHEN"));assert(fix,'the final current successor must include the exact syntax correction');
  assert.equal(fix.after,fix.before.replace('FROM CASE','FROM (CASE')+')');
  assert.equal(body.split(fix.after).length,2);assert.equal(body.includes(fix.before),false);
- assert.equal(hash(body.replace(fix.after,fix.before)),'2c5e902fa97ce4961aa0932ac49a1f7fab786ae2fc32e430ef90692fce11c531','reversing only this pair restores the exact original final body');
+ let beforeAliases=body;for(const change of spec.replacements.slice(4).toReversed())beforeAliases=beforeAliases.replace(change.after,()=>change.before);
+ assert.equal(hash(beforeAliases.replace(fix.after,fix.before)),'2c5e902fa97ce4961aa0932ac49a1f7fab786ae2fc32e430ef90692fce11c531','reversing the later alias fixes and this pair restores the exact original final body');
  assert.equal(hash(body),spec.successor_sha256);assert.equal(c.manifest.permissionsChanged,false);assert.deepEqual(c.manifest.columnChanges,[]);
  const prior=c.predecessorBodies.find(s=>s.signature===spec.signature).body;
  const output=applyRetirementSourceReplacement(prior,spec);assert.equal(output,body);
  assert.throws(()=>applyRetirementSourceReplacement(prior,{...spec,replacements:[...spec.replacements,fix]}),/ANCHOR|REPLACEMENT/,'a duplicate syntax correction must not be silently applied');
+});
+test('hall SQL aliases do not collide with the command import_batch record and reverse to the exact syntax-corrected body',async()=>{
+ const c=await load(),spec=c.specs.find(s=>s.signature.includes('.standard_whole_package_command_v2(')),body=c.changedBodies.find(s=>s.signature===spec.signature).body;
+ const changes=spec.replacements.slice(4);assert.equal(changes.length,4);
+ const aliases=['hall_bridge_member','hall_registered_bridge_member','hall_registered_resolution_member','hall_step_bridge_member'];
+ assert.match(body,/\bb naijue_erp\.import_batch%ROWTYPE;/);
+ assert.doesNotMatch(body,/jsonb_array_elements\(hall_approval->'(?:identity_bridges|resolutions)'\) b\b/);
+ let reversed=body;
+ for(const [index,change] of changes.entries()){
+  const before=change.before.split('\n').at(-1),after=change.after.split('\n').at(-1);
+  assert.equal(change.after.slice(0,-after.length),change.before.slice(0,-before.length),'anchor context is unchanged');
+  assert.equal(after,before.replace(/\bb\b/g,aliases[index]),'only this SQL alias and its references change');
+  assert.equal(body.split(change.after).length,2);
+ }
+ for(const change of changes.toReversed()){assert.equal(reversed.split(change.after).length,2);reversed=reversed.replace(change.after,()=>change.before);}
+ assert.equal(hash(reversed),'df1d6f79037bb7c5bb1276ce1730b4273d0af5b3036ede6089cac7208248b52f','no other command body bytes change');
+ for(const alias of aliases)assert.equal(reversed.includes(alias),false,'new SQL alias was absent from the entire original PL namespace');
+ assert.equal(hash(body),spec.successor_sha256);
+ assert.doesNotMatch(c.patchSql,/#variable_conflict|plpgsql\.variable_conflict/);
+ const prior=c.predecessorBodies.find(s=>s.signature===spec.signature).body;
+ assert.throws(()=>applyRetirementSourceReplacement(prior,{...spec,replacements:[...spec.replacements,changes[0]]}),/ANCHOR|REPLACEMENT/,'an extra alias correction still fails the exact anchor guard');
 });
 test('approved difference successor composes exactly after210 and modifies only the four existing routines',async()=>{
  const c=await load();assert.equal(c.specs.length,4);assert.equal(c.manifest.successorRoutinePins.length,152);
