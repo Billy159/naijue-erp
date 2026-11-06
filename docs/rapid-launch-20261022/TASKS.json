@@ -30291,7 +30291,7 @@
         }
       },
       "r10Preparation": {
-        "state": "QB_AND_BUILD_PASS_EXACT_STAGING_IN_PROGRESS",
+        "state": "ACTUAL_MATERIALIZATION_PASS_NEW_PG20_START_AUTHORIZED",
         "integration": "12784ad9e6135e2b253887c4a55bbd74e564e91b",
         "buildRoot": "ac19b2719332ed6755affb849bfcd65bd70249d9",
         "tree": "42774b2242d252766cb5fb549dff19db17a8134f",
@@ -30313,7 +30313,17 @@
         "tailAuthoritySHA256": "8d845a4dd40fdd93f771ec9c4bafbc16c2eb0f31f35ad9cc19fca1122b0d3afd",
         "fullAuthoritySHA256": "cb43900807857804bdd118841f1d667d77467a19abf5c4e8c90aa9f28948ecb9",
         "startsAt": 1793932686293,
-        "expiresAt": 1793934486293
+        "expiresAt": 1793934486293,
+        "materializeReceiptSHA256": "917c062c6a09bac4f2e6aa55e05aaf2998ab3f3337b6ae81e209df5f325d9842",
+        "materializeSeconds": 371.7440463202074,
+        "resourceReceiptSHA256": "4a76dad29cc0aed5d50cddaa3647bfbe6d5a76acaf66a1714593b181fe1246c0",
+        "stageSummarySHA256": "326cd845d2771a12566c2d6063d5e29fd87bc16929912826a35035dd89c322bd",
+        "provision": {
+          "sha256": "34b6ec8b35322f58cdb289dee6ba8a9a0262ccd2d0269147b41fc35b3863032e",
+          "startsAt": 1793933754662,
+          "expiresAt": 1793934954662,
+          "actualProgramAndTargetPending": true
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
